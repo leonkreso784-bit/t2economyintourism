@@ -1527,6 +1527,24 @@ body {
     color: var(--primary);
 }
 
+/* ===== FOOTER ===== */
+.footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    padding-bottom: calc(1.5rem + 70px + var(--safe-bottom));
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        padding-bottom: 1.5rem;
+    }
+}
+
 /* ===== UTILITIES ===== */
 .hidden {
     display: none !important;
