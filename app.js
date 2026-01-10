@@ -1,4 +1,4 @@
-// ===== STUDY MASTER - MAIN APPLICATION =====
+// ===== SOKRAT STUDY - MAIN APPLICATION =====
 // Supports multiple subjects: TE2 and Business Entrepreneurship
 
 // ========== SUBJECT DATA MAPPING ==========
@@ -138,7 +138,7 @@ function selectSubject(subject) {
     
     // Update UI
     document.getElementById('logoText').textContent = subjectDataMap[subject].shortName + ' Study';
-    document.getElementById('homeTitle').textContent = `🎓 Welcome to ${subjectDataMap[subject].shortName} Study Master`;
+    document.getElementById('homeTitle').textContent = `🎓 Welcome to ${subjectDataMap[subject].shortName} - Sokrat Study`;
     
     // Show navigation
     document.getElementById('mainNav').style.display = 'flex';
@@ -177,7 +177,7 @@ function showSubjectSelector() {
     document.querySelector('.mobile-nav').style.display = 'none';
     
     // Reset logo
-    document.getElementById('logoText').textContent = 'Study Master';
+    document.getElementById('logoText').textContent = 'Sokrat Study';
     
     // Reset nav active states
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
