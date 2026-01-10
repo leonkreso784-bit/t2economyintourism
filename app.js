@@ -857,7 +857,7 @@ function renderLearnContent() {
         
         card.innerHTML = `
             <div class="learn-card-header" style="background: linear-gradient(135deg, ${data.color}, ${data.color}dd)">
-                <h3><i class="fas ${data.icon}"></i> ${data.name}</h3>
+                <h2 class="learn-card-title"><i class="fas ${data.icon}"></i> ${data.name}</h2>
                 <span>${data.flashcards.length} terms</span>
             </div>
             <div class="learn-card-content">

@@ -221,6 +221,10 @@ body {
     color: #312e81;
 }
 
+[data-theme="dark"] .mobile-nav-btn.active {
+    color: #a5b4fc;
+}
+
 .mobile-nav-btn.active i {
     transform: scale(1.1);
 }
@@ -529,25 +533,32 @@ div.subject-card {
 .about-link-container {
     margin-top: 3rem;
     text-align: center;
+    padding-bottom: 2rem;
 }
 
 .about-link-btn {
     background: rgba(99, 102, 241, 0.1);
     border: 2px solid rgba(99, 102, 241, 0.3);
     color: var(--primary);
-    padding: 0.75rem 1.5rem;
+    padding: 0.875rem 1.75rem;
     border-radius: 50px;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
     font-family: inherit;
+    min-height: var(--touch-target);
+    min-width: 150px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-.about-link-btn:hover {
+.about-link-btn:hover,
+.about-link-btn:active {
     background: var(--primary);
     border-color: var(--primary);
     color: white;
@@ -555,9 +566,18 @@ div.subject-card {
     box-shadow: 0 8px 20px -5px rgba(99, 102, 241, 0.4);
 }
 
+.about-link-btn:active {
+    transform: scale(0.98);
+}
+
 .about-link-btn:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+.about-link-btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
 }
 
 [data-theme="dark"] .about-link-btn {
@@ -566,7 +586,8 @@ div.subject-card {
     color: #a5b4fc;
 }
 
-[data-theme="dark"] .about-link-btn:hover {
+[data-theme="dark"] .about-link-btn:hover,
+[data-theme="dark"] .about-link-btn:active {
     background: var(--primary);
     color: white;
 }
@@ -1162,7 +1183,7 @@ div.subject-card {
     font-family: inherit;
     font-weight: 500;
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     transition: var(--transition);
     white-space: nowrap;
     min-height: var(--touch-target);
@@ -1203,10 +1224,15 @@ div.subject-card {
     justify-content: space-between;
 }
 
-.learn-card-header h3 {
+.learn-card-header h2,
+.learn-card-header h3,
+.learn-card-title {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
 }
 
 .learn-card-content {
