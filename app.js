@@ -186,6 +186,10 @@ function showSubjectSelector() {
     document.querySelector('.mobile-nav-btn[data-section="home"]').classList.add('active');
 }
 
+// Make selectSubject globally available for onclick handlers
+window.selectSubject = selectSubject;
+window.showSubjectSelector = showSubjectSelector;
+
 function updateCategoryButtons() {
     const container = document.querySelector('.categories');
     if (!container || !currentData) return;
