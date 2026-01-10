@@ -55,10 +55,36 @@ let progress = {
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
+    // Always start with subject selector - reset UI state
+    resetToSubjectSelector();
     initSubjectSelector();
     initTheme();
-    // Always start with subject selector - don't auto-load previous subject
 });
+
+// Reset UI to show subject selector on page load
+function resetToSubjectSelector() {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    
+    // Show only subject selector
+    document.getElementById('subject-selector').classList.add('active');
+    
+    // Hide navigation elements
+    const mainNav = document.getElementById('mainNav');
+    const backBtn = document.getElementById('backToSubjects');
+    const mobileNav = document.querySelector('.mobile-nav');
+    
+    if (mainNav) mainNav.style.display = 'none';
+    if (backBtn) backBtn.style.display = 'none';
+    if (mobileNav) mobileNav.style.display = 'none';
+    
+    // Reset logo text
+    document.getElementById('logoText').textContent = 'Sokrat Study';
+    
+    // Reset current data
+    currentData = null;
+    currentSubject = null;
+}
 
 // ========== SUBJECT SELECTOR ==========
 function initSubjectSelector() {
