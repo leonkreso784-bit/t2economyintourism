@@ -532,13 +532,13 @@ div.subject-card {
 }
 
 .about-link-btn {
-    background: transparent;
-    border: 2px solid var(--border);
-    color: var(--text-secondary);
+    background: rgba(99, 102, 241, 0.1);
+    border: 2px solid rgba(99, 102, 241, 0.3);
+    color: var(--primary);
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     display: inline-flex;
@@ -552,6 +552,23 @@ div.subject-card {
     border-color: var(--primary);
     color: white;
     transform: translateY(-2px);
+    box-shadow: 0 8px 20px -5px rgba(99, 102, 241, 0.4);
+}
+
+.about-link-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3);
+}
+
+[data-theme="dark"] .about-link-btn {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] .about-link-btn:hover {
+    background: var(--primary);
+    color: white;
 }
 
 /* ===== ABOUT US SECTION ===== */
