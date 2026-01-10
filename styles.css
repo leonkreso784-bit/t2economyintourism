@@ -115,8 +115,11 @@ body {
 
 .logo-img {
     height: 36px;
+    max-height: 36px;
+    max-width: 120px;
     width: auto;
     object-fit: contain;
+    flex-shrink: 0;
 }
 
 .logo i {
@@ -152,7 +155,7 @@ body {
 }
 
 .nav-btn.active {
-    background: var(--primary);
+    background: var(--primary-dark);
     color: white;
 }
 
@@ -215,7 +218,7 @@ body {
 }
 
 .mobile-nav-btn.active {
-    color: var(--primary);
+    color: var(--primary-dark);
 }
 
 .mobile-nav-btn.active i {
@@ -503,11 +506,11 @@ div.subject-card {
 /* Back to Subjects Button */
 .back-to-subjects-btn {
     background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
+    border: 2px solid var(--primary-dark);
+    color: var(--primary-dark);
     padding: 0.5rem 1rem;
     border-radius: 25px;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 0.85rem;
     cursor: pointer;
     transition: var(--transition);
@@ -603,9 +606,12 @@ div.subject-card {
     margin-bottom: 0.25rem;
 }
 
-.stat-card h3 {
+.stat-card h3,
+.stat-card .stat-number {
     font-size: 1.5rem;
+    font-weight: 700;
     color: var(--text-primary);
+    display: block;
 }
 
 .stat-card p {
@@ -1857,6 +1863,8 @@ div.subject-card {
     
     .logo-img {
         height: 42px;
+        max-height: 42px;
+        max-width: 150px;
     }
     
     .logo i {
@@ -1897,7 +1905,8 @@ div.subject-card {
         font-size: 2rem;
     }
     
-    .stat-card h3 {
+    .stat-card h3,
+    .stat-card .stat-number {
         font-size: 2rem;
     }
     
@@ -2050,7 +2059,8 @@ div.subject-card {
         font-size: 1.3rem;
     }
     
-    .stat-card h3 {
+    .stat-card h3,
+    .stat-card .stat-number {
         font-size: 1.25rem;
     }
     
