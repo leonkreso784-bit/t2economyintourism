@@ -749,14 +749,29 @@ function shuffleArray(array) {
     return array;
 }
 
+let toastTimeout = null;
+
 function showToast(message) {
     const toast = document.getElementById('toast');
     document.getElementById('toastMessage').textContent = message;
+    
+    // Clear any existing timeout
+    if (toastTimeout) {
+        clearTimeout(toastTimeout);
+    }
+    
+    // Remove and re-add class to restart animation
+    toast.classList.remove('show');
+    
+    // Force reflow
+    void toast.offsetWidth;
+    
     toast.classList.add('show');
     
-    setTimeout(() => {
+    toastTimeout = setTimeout(() => {
         toast.classList.remove('show');
-    }, 3000);
+        toastTimeout = null;
+    }, 2500);
 }
 
 // ========== PROGRESS STORAGE ==========

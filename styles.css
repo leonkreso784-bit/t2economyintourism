@@ -1509,14 +1509,18 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: transform 0.3s ease;
-    z-index: 1000;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 9999;
     max-width: calc(100% - 2rem);
     font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .toast.show {
     transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .toast i {
