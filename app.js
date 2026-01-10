@@ -101,9 +101,15 @@ function resetToSubjectSelector() {
     const backBtn = document.getElementById('backToSubjects');
     const mobileNav = document.querySelector('.mobile-nav');
     
-    if (mainNav) mainNav.style.display = 'none';
+    if (mainNav) {
+        mainNav.classList.remove('nav-visible');
+        mainNav.style.display = '';
+    }
     if (backBtn) backBtn.style.display = 'none';
-    if (mobileNav) mobileNav.style.display = 'none';
+    if (mobileNav) {
+        mobileNav.classList.remove('nav-visible');
+        mobileNav.style.display = '';
+    }
     
     // Reset logo text
     document.getElementById('logoText').textContent = 'Sokrat Study';
@@ -188,10 +194,10 @@ function selectSubject(subject) {
     document.getElementById('logoText').textContent = subjectDataMap[subject].shortName + ' Study';
     document.getElementById('homeTitle').textContent = `🎓 Welcome to ${subjectDataMap[subject].shortName} - Sokrat Study`;
     
-    // Show navigation
-    document.getElementById('mainNav').style.display = 'flex';
+    // Show navigation - use class instead of inline style to respect media queries
+    document.getElementById('mainNav').classList.add('nav-visible');
     document.getElementById('backToSubjects').style.display = 'flex';
-    document.querySelector('.mobile-nav').style.display = 'flex';
+    document.querySelector('.mobile-nav').classList.add('nav-visible');
     
     // Hide subject selector, show home
     document.getElementById('subject-selector').classList.remove('active');
@@ -219,10 +225,12 @@ function showSubjectSelector() {
     document.getElementById('subject-selector').classList.add('active');
     currentSection = 'subject-selector';
     
-    // Hide navigation
-    document.getElementById('mainNav').style.display = 'none';
+    // Hide navigation - remove class and clear inline styles
+    document.getElementById('mainNav').classList.remove('nav-visible');
+    document.getElementById('mainNav').style.display = '';
     document.getElementById('backToSubjects').style.display = 'none';
-    document.querySelector('.mobile-nav').style.display = 'none';
+    document.querySelector('.mobile-nav').classList.remove('nav-visible');
+    document.querySelector('.mobile-nav').style.display = '';
     
     // Reset logo
     document.getElementById('logoText').textContent = 'Sokrat Study';
