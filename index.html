@@ -8,15 +8,15 @@
     <!-- PWA & iOS Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="TE2 Study">
+    <meta name="apple-mobile-web-app-title" content="Study Master">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#6366f1">
     <meta name="format-detection" content="telephone=no">
     
     <!-- SEO & Social -->
-    <meta name="description" content="Interactive study app for Tourism Economics 2 - Flashcards, Quizzes, and more!">
+    <meta name="description" content="Interactive study app for Tourism Economics 2 and Business Entrepreneurship - Flashcards, Quizzes, and more!">
     
-    <title>TE2 Study Master - Tourism Economics</title>
+    <title>Study Master - Interactive Learning</title>
     
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,11 +29,14 @@
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="logo">
+        <div class="logo" id="logoBtn">
             <i class="fas fa-graduation-cap"></i>
-            <span>TE2 Study Master</span>
+            <span id="logoText">Study Master</span>
         </div>
-        <nav class="nav-menu">
+        <button class="back-to-subjects-btn" id="backToSubjects" style="display: none;">
+            <i class="fas fa-arrow-left"></i> Subjects
+        </button>
+        <nav class="nav-menu" id="mainNav" style="display: none;">
             <button class="nav-btn active" data-section="home"><i class="fas fa-home"></i> Home</button>
             <button class="nav-btn" data-section="learn"><i class="fas fa-book-open"></i> Learn</button>
             <button class="nav-btn" data-section="flashcards"><i class="fas fa-clone"></i> Flashcards</button>
@@ -49,11 +52,47 @@
     <!-- Main Content -->
     <main class="main-content">
         
+        <!-- SUBJECT SELECTOR SECTION -->
+        <section id="subject-selector" class="section active">
+            <div class="subject-hero">
+                <h1>🎓 Study Master</h1>
+                <p class="subtitle">Choose a subject to start studying</p>
+                
+                <div class="subject-cards">
+                    <div class="subject-card" data-subject="te2">
+                        <div class="subject-icon" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <h2>Tourism Economics 2</h2>
+                        <p>Pricing, TSA, Expenditure, Environment, Sustainability</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-layer-group"></i> 6 Categories</span>
+                            <span><i class="fas fa-question-circle"></i> 50+ Questions</span>
+                        </div>
+                        <button class="subject-start-btn">Start Studying <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    
+                    <div class="subject-card" data-subject="entrepreneurship">
+                        <div class="subject-icon" style="background: linear-gradient(135deg, #10b981, #0ea5e9);">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h2>Business Entrepreneurship</h2>
+                        <p>Planning, Failure & Learning, Social Entrepreneurship, Trends</p>
+                        <div class="subject-meta">
+                            <span><i class="fas fa-layer-group"></i> 5 Categories</span>
+                            <span><i class="fas fa-question-circle"></i> 40+ Questions</span>
+                        </div>
+                        <button class="subject-start-btn">Start Studying <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- HOME SECTION -->
-        <section id="home" class="section active">
+        <section id="home" class="section">
             <div class="hero">
-                <h1>🎓 Welcome to TE2 Study Master</h1>
-                <p class="subtitle">Your interactive guide to Tourism Economics 2</p>
+                <h1 id="homeTitle">🎓 Welcome to Study Master</h1>
+                <p class="subtitle" id="homeSubtitle">Your interactive study guide</p>
                 
                 <div class="stats-overview">
                     <div class="stat-card">
@@ -63,7 +102,7 @@
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-layer-group"></i>
-                        <h3>6</h3>
+                        <h3 id="totalCategories">6</h3>
                         <p>Categories</p>
                     </div>
                     <div class="stat-card">
@@ -81,36 +120,7 @@
                 <div class="category-selector">
                     <h2>📚 Choose a category to study</h2>
                     <div class="categories">
-                        <button class="category-btn" data-category="pricing">
-                            <i class="fas fa-tags"></i>
-                            <span>Pricing & Strategies</span>
-                            <small>9 terms</small>
-                        </button>
-                        <button class="category-btn" data-category="expenditure">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span>Expenditure & Multipliers</span>
-                            <small>9 terms</small>
-                        </button>
-                        <button class="category-btn" data-category="tsa">
-                            <i class="fas fa-chart-pie"></i>
-                            <span>TSA & Measurement</span>
-                            <small>8 terms</small>
-                        </button>
-                        <button class="category-btn" data-category="environment">
-                            <i class="fas fa-leaf"></i>
-                            <span>Environment & Resources</span>
-                            <small>7 terms</small>
-                        </button>
-                        <button class="category-btn" data-category="sustainability">
-                            <i class="fas fa-recycle"></i>
-                            <span>Sustainable Tourism</span>
-                            <small>8 terms</small>
-                        </button>
-                        <button class="category-btn" data-category="impacts">
-                            <i class="fas fa-balance-scale"></i>
-                            <span>Costs & Benefits</span>
-                            <small>5 terms</small>
-                        </button>
+                        <!-- Categories loaded dynamically by JavaScript -->
                     </div>
                 </div>
 
@@ -140,12 +150,7 @@
                 <h1><i class="fas fa-book-open"></i> Learn - Complete Material</h1>
                 
                 <div class="learn-filter">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="pricing">Pricing</button>
-                    <button class="filter-btn" data-filter="expenditure">Expenditure</button>
-                    <button class="filter-btn" data-filter="tsa">TSA</button>
-                    <button class="filter-btn" data-filter="environment">Environment</button>
-                    <button class="filter-btn" data-filter="sustainability">Sustainability</button>
+                    <!-- Filter buttons loaded dynamically by JavaScript -->
                 </div>
 
                 <div class="learn-content" id="learnContent">
@@ -230,13 +235,7 @@
                         <div class="option-group">
                             <label>Category:</label>
                             <select id="quizCategory">
-                                <option value="all">All categories</option>
-                                <option value="pricing">Pricing & Strategies</option>
-                                <option value="expenditure">Expenditure & Multipliers</option>
-                                <option value="tsa">TSA & Measurement</option>
-                                <option value="environment">Environment & Resources</option>
-                                <option value="sustainability">Sustainable Tourism</option>
-                                <option value="impacts">Costs & Benefits</option>
+                                <!-- Categories loaded dynamically by JavaScript -->
                             </select>
                         </div>
                         <div class="option-group">
@@ -488,7 +487,8 @@
         <p>© 2026 All Rights Reserved by Leon Kreso</p>
     </footer>
 
-    <script src="data.js"></script>
+    <script src="data-te2.js"></script>
+    <script src="data-entrepreneurship.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

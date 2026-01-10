@@ -1,7 +1,26 @@
-// ===== TE2 STUDY MASTER - MAIN APPLICATION =====
+// ===== STUDY MASTER - MAIN APPLICATION =====
+// Supports multiple subjects: TE2 and Business Entrepreneurship
+
+// ========== SUBJECT DATA MAPPING ==========
+const subjectDataMap = {
+    te2: {
+        data: typeof studyData !== 'undefined' ? studyData : {},
+        name: 'Tourism Economics 2',
+        shortName: 'TE2',
+        storageKey: 'te2-progress'
+    },
+    entrepreneurship: {
+        data: typeof entrepreneurshipData !== 'undefined' ? entrepreneurshipData : {},
+        name: 'Business Entrepreneurship',
+        shortName: 'Entrepreneurship',
+        storageKey: 'entrepreneurship-progress'
+    }
+};
 
 // ========== GLOBAL STATE ==========
-let currentSection = 'home';
+let currentSubject = null;
+let currentData = null;
+let currentSection = 'subject-selector';
 let currentCategory = 'all';
 
 // Flashcard state
@@ -36,15 +55,170 @@ let progress = {
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
+    initSubjectSelector();
+    initTheme();
+    
+    // Check if a subject was previously selected
+    const savedSubject = localStorage.getItem('study-master-current-subject');
+    if (savedSubject && subjectDataMap[savedSubject]) {
+        selectSubject(savedSubject);
+    }
+});
+
+// ========== SUBJECT SELECTOR ==========
+function initSubjectSelector() {
+    const subjectCards = document.querySelectorAll('.subject-card');
+    subjectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const subject = card.dataset.subject;
+            selectSubject(subject);
+        });
+    });
+    
+    // Back to subjects button
+    const backBtn = document.getElementById('backToSubjects');
+    if (backBtn) {
+        backBtn.addEventListener('click', showSubjectSelector);
+    }
+    
+    // Logo click - back to subjects
+    const logoBtn = document.getElementById('logoBtn');
+    if (logoBtn) {
+        logoBtn.addEventListener('click', showSubjectSelector);
+        logoBtn.style.cursor = 'pointer';
+    }
+}
+
+function selectSubject(subject) {
+    currentSubject = subject;
+    currentData = subjectDataMap[subject].data;
+    
+    // Save selection
+    localStorage.setItem('study-master-current-subject', subject);
+    
+    // Update UI
+    document.getElementById('logoText').textContent = subjectDataMap[subject].shortName + ' Study';
+    document.getElementById('homeTitle').textContent = `🎓 Welcome to ${subjectDataMap[subject].shortName} Study Master`;
+    
+    // Show navigation
+    document.getElementById('mainNav').style.display = 'flex';
+    document.getElementById('backToSubjects').style.display = 'flex';
+    document.querySelector('.mobile-nav').style.display = 'flex';
+    
+    // Hide subject selector, show home
+    document.getElementById('subject-selector').classList.remove('active');
+    document.getElementById('home').classList.add('active');
+    currentSection = 'home';
+    
+    // Initialize app with selected subject
     loadProgress();
     initNavigation();
-    initTheme();
     initFlashcards();
     initFill();
     updateHomeStats();
     renderLearnContent();
+    updateCategoryButtons();
     renderProgressPage();
-});
+    updateLearnFilters();
+    updateQuizCategories();
+}
+
+function showSubjectSelector() {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    
+    // Show subject selector
+    document.getElementById('subject-selector').classList.add('active');
+    currentSection = 'subject-selector';
+    
+    // Hide navigation
+    document.getElementById('mainNav').style.display = 'none';
+    document.getElementById('backToSubjects').style.display = 'none';
+    document.querySelector('.mobile-nav').style.display = 'none';
+    
+    // Reset logo
+    document.getElementById('logoText').textContent = 'Study Master';
+    
+    // Reset nav active states
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-section="home"]').classList.add('active');
+    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.mobile-nav-btn[data-section="home"]').classList.add('active');
+}
+
+function updateCategoryButtons() {
+    const container = document.querySelector('.categories');
+    if (!container || !currentData) return;
+    
+    container.innerHTML = '';
+    
+    Object.keys(currentData).forEach(category => {
+        const data = currentData[category];
+        const btn = document.createElement('button');
+        btn.className = 'category-btn';
+        btn.dataset.category = category;
+        btn.innerHTML = `
+            <i class="fas ${data.icon}"></i>
+            <span>${data.name}</span>
+            <small>${data.flashcards.length} terms</small>
+        `;
+        btn.addEventListener('click', () => {
+            currentCategory = category;
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            showToast(`Category: ${data.name}`);
+        });
+        container.appendChild(btn);
+    });
+}
+
+function updateLearnFilters() {
+    const container = document.querySelector('.learn-filter');
+    if (!container || !currentData) return;
+    
+    container.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>';
+    
+    Object.keys(currentData).forEach(category => {
+        const data = currentData[category];
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.filter = category;
+        btn.textContent = data.name.split(' ')[0]; // First word only
+        container.appendChild(btn);
+    });
+    
+    // Re-attach filter listeners
+    container.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.learn-card').forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+}
+
+function updateQuizCategories() {
+    const select = document.getElementById('quizCategory');
+    if (!select || !currentData) return;
+    
+    select.innerHTML = '<option value="all">All Categories</option>';
+    
+    Object.keys(currentData).forEach(category => {
+        const data = currentData[category];
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = data.name;
+        select.appendChild(option);
+    });
+}
 
 // ========== NAVIGATION ==========
 function initNavigation() {
@@ -84,19 +258,7 @@ function initNavigation() {
         });
     });
     
-    // Category buttons
-    const categoryBtns = document.querySelectorAll('.category-btn');
-    categoryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const category = btn.dataset.category;
-            currentCategory = category;
-            
-            categoryBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            
-            showToast(`Category: ${studyData[category].name}`);
-        });
-    });
+    // Category buttons are now handled by updateCategoryButtons()
 }
 
 // Sync mobile navigation
@@ -112,6 +274,12 @@ function syncMobileNav(section) {
 }
 
 function switchSection(section) {
+    // Don't allow switching if no subject selected
+    if (!currentSubject) {
+        showSubjectSelector();
+        return;
+    }
+    
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(section).classList.add('active');
     currentSection = section;
@@ -172,13 +340,14 @@ function initFlashcards() {
 }
 
 function getAllFlashcards() {
+    if (!currentData) return [];
     let all = [];
-    Object.keys(studyData).forEach(category => {
-        studyData[category].flashcards.forEach(card => {
+    Object.keys(currentData).forEach(category => {
+        currentData[category].flashcards.forEach(card => {
             all.push({
                 ...card,
                 category: category,
-                categoryName: studyData[category].name
+                categoryName: currentData[category].name
             });
         });
     });
@@ -281,24 +450,25 @@ function startQuiz() {
 }
 
 function getQuizQuestions(category, count) {
+    if (!currentData) return [];
     let questions = [];
     
     if (category === 'all') {
-        Object.keys(studyData).forEach(cat => {
-            studyData[cat].quiz.forEach(q => {
+        Object.keys(currentData).forEach(cat => {
+            currentData[cat].quiz.forEach(q => {
                 questions.push({
                     ...q,
                     category: cat,
-                    categoryName: studyData[cat].name
+                    categoryName: currentData[cat].name
                 });
             });
         });
     } else {
-        studyData[category].quiz.forEach(q => {
+        currentData[category].quiz.forEach(q => {
             questions.push({
                 ...q,
                 category: category,
-                categoryName: studyData[category].name
+                categoryName: currentData[category].name
             });
         });
     }
@@ -477,14 +647,15 @@ function initFill() {
 }
 
 function getAllFillQuestions() {
+    if (!currentData) return [];
     let all = [];
-    Object.keys(studyData).forEach(category => {
-        if (studyData[category].fillBlanks) {
-            studyData[category].fillBlanks.forEach(q => {
+    Object.keys(currentData).forEach(category => {
+        if (currentData[category].fillBlanks) {
+            currentData[category].fillBlanks.forEach(q => {
                 all.push({
                     ...q,
                     category: category,
-                    categoryName: studyData[category].name
+                    categoryName: currentData[category].name
                 });
             });
         }
@@ -582,10 +753,11 @@ function updateFillStats() {
 // ========== LEARN MODE ==========
 function renderLearnContent() {
     const container = document.getElementById('learnContent');
+    if (!container || !currentData) return;
     container.innerHTML = '';
     
-    Object.keys(studyData).forEach(category => {
-        const data = studyData[category];
+    Object.keys(currentData).forEach(category => {
+        const data = currentData[category];
         
         const card = document.createElement('div');
         card.className = 'learn-card';
@@ -625,6 +797,8 @@ function renderLearnContent() {
 
 // ========== PROGRESS PAGE ==========
 function renderProgressPage() {
+    if (!currentData) return;
+    
     // Overall progress
     const totalFlashcards = getAllFlashcards().length;
     const learned = progress.flashcardsLearned.length;
@@ -653,10 +827,11 @@ function renderProgressPage() {
     
     // Category bars
     const barsContainer = document.getElementById('categoryBars');
+    if (!barsContainer || !currentData) return;
     barsContainer.innerHTML = '';
     
-    Object.keys(studyData).forEach(category => {
-        const data = studyData[category];
+    Object.keys(currentData).forEach(category => {
+        const data = currentData[category];
         const catProgress = progress.categoryProgress[category] || 0;
         
         const bar = document.createElement('div');
@@ -679,8 +854,19 @@ function renderProgressPage() {
 
 // ========== HOME STATS ==========
 function updateHomeStats() {
-    const totalQ = getAllFlashcards().length + Object.keys(studyData).reduce((acc, cat) => acc + studyData[cat].quiz.length, 0);
+    if (!currentData) return;
+    
+    const totalQ = getAllFlashcards().length + Object.keys(currentData).reduce((acc, cat) => acc + currentData[cat].quiz.length, 0);
     document.getElementById('totalQuestions').textContent = `${totalQ}+`;
+    
+    // Update categories count
+    document.getElementById('totalCategories').textContent = Object.keys(currentData).length;
+    
+    // Update subtitle
+    const subtitle = document.getElementById('homeSubtitle');
+    if (subtitle && currentSubject) {
+        subtitle.textContent = `Your interactive guide to ${subjectDataMap[currentSubject].name}`;
+    }
     
     const bestScore = progress.quizScores.length > 0 ? Math.max(...progress.quizScores) : 0;
     document.getElementById('bestScore').textContent = `${bestScore}%`;
@@ -746,9 +932,22 @@ function showToast(message) {
 
 // ========== PROGRESS STORAGE ==========
 function loadProgress() {
-    const saved = localStorage.getItem('te2-progress');
+    if (!currentSubject) return;
+    
+    const storageKey = subjectDataMap[currentSubject].storageKey;
+    const saved = localStorage.getItem(storageKey);
     if (saved) {
         progress = JSON.parse(saved);
+    } else {
+        // Reset progress for new subject
+        progress = {
+            flashcardsLearned: [],
+            quizScores: [],
+            fillSolved: 0,
+            lastStudy: null,
+            streak: 0,
+            categoryProgress: {}
+        };
     }
     
     // Check streak
@@ -766,8 +965,11 @@ function loadProgress() {
 }
 
 function saveProgress() {
+    if (!currentSubject) return;
+    
     progress.lastStudy = new Date().toISOString();
-    localStorage.setItem('te2-progress', JSON.stringify(progress));
+    const storageKey = subjectDataMap[currentSubject].storageKey;
+    localStorage.setItem(storageKey, JSON.stringify(progress));
     updateHomeStats();
 }
 
