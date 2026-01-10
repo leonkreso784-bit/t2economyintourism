@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Mobile viewport with safe area support for iPhone notch/Dynamic Island -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
+    
+    <!-- PWA & iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TE2 Study">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- SEO & Social -->
+    <meta name="description" content="Interactive study app for Tourism Economics 2 - Flashcards, Quizzes, and more!">
+    
+    <title>TE2 Study Master - Tourism Economics</title>
+    
+    <!-- Preconnect for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>TE2 Study Master</span>
+        </div>
+        <nav class="nav-menu">
+            <button class="nav-btn active" data-section="home"><i class="fas fa-home"></i> Home</button>
+            <button class="nav-btn" data-section="learn"><i class="fas fa-book-open"></i> Learn</button>
+            <button class="nav-btn" data-section="flashcards"><i class="fas fa-clone"></i> Flashcards</button>
+            <button class="nav-btn" data-section="quiz"><i class="fas fa-question-circle"></i> Quiz</button>
+            <button class="nav-btn" data-section="fill"><i class="fas fa-pen"></i> Fill</button>
+            <button class="nav-btn" data-section="progress"><i class="fas fa-chart-line"></i> Progress</button>
+        </nav>
+        <button class="theme-toggle" id="themeToggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- HOME SECTION -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <h1>🎓 Welcome to TE2 Study Master</h1>
+                <p class="subtitle">Your interactive guide to Tourism Economics 2</p>
+                
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <i class="fas fa-brain"></i>
+                        <h3 id="totalQuestions">50+</h3>
+                        <p>Questions</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>6</h3>
+                        <p>Categories</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-trophy"></i>
+                        <h3 id="bestScore">0%</h3>
+                        <p>Best Score</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-fire"></i>
+                        <h3 id="streak">0</h3>
+                        <p>Day Streak</p>
+                    </div>
+                </div>
+
+                <div class="category-selector">
+                    <h2>📚 Choose a category to study</h2>
+                    <div class="categories">
+                        <button class="category-btn" data-category="pricing">
+                            <i class="fas fa-tags"></i>
+                            <span>Pricing & Strategies</span>
+                            <small>9 terms</small>
+                        </button>
+                        <button class="category-btn" data-category="expenditure">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Expenditure & Multipliers</span>
+                            <small>9 terms</small>
+                        </button>
+                        <button class="category-btn" data-category="tsa">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>TSA & Measurement</span>
+                            <small>8 terms</small>
+                        </button>
+                        <button class="category-btn" data-category="environment">
+                            <i class="fas fa-leaf"></i>
+                            <span>Environment & Resources</span>
+                            <small>7 terms</small>
+                        </button>
+                        <button class="category-btn" data-category="sustainability">
+                            <i class="fas fa-recycle"></i>
+                            <span>Sustainable Tourism</span>
+                            <small>8 terms</small>
+                        </button>
+                        <button class="category-btn" data-category="impacts">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Costs & Benefits</span>
+                            <small>5 terms</small>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quick-start">
+                    <h2>🚀 Quick Start</h2>
+                    <div class="quick-actions">
+                        <button class="action-btn primary" onclick="startQuickQuiz()">
+                            <i class="fas fa-bolt"></i>
+                            Quick Quiz (10 questions)
+                        </button>
+                        <button class="action-btn secondary" onclick="startFlashcards()">
+                            <i class="fas fa-clone"></i>
+                            All Flashcards
+                        </button>
+                        <button class="action-btn tertiary" onclick="startLearning()">
+                            <i class="fas fa-book-reader"></i>
+                            Start Learning
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEARN SECTION -->
+        <section id="learn" class="section">
+            <div class="learn-container">
+                <h1><i class="fas fa-book-open"></i> Learn - Complete Material</h1>
+                
+                <div class="learn-filter">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pricing">Pricing</button>
+                    <button class="filter-btn" data-filter="expenditure">Expenditure</button>
+                    <button class="filter-btn" data-filter="tsa">TSA</button>
+                    <button class="filter-btn" data-filter="environment">Environment</button>
+                    <button class="filter-btn" data-filter="sustainability">Sustainability</button>
+                </div>
+
+                <div class="learn-content" id="learnContent">
+                    <!-- Content will be loaded by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FLASHCARDS SECTION -->
+        <section id="flashcards" class="section">
+            <div class="flashcard-container">
+                <h1><i class="fas fa-clone"></i> Flashcards</h1>
+                
+                <div class="flashcard-progress">
+                    <span id="cardProgress">1 / 50</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="cardProgressBar"></div>
+                    </div>
+                </div>
+
+                <div class="flashcard-wrapper">
+                    <div class="flashcard" id="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <div class="card-category" id="cardCategory">Category</div>
+                                <p id="cardQuestion">Question will appear here</p>
+                                <span class="flip-hint"><i class="fas fa-sync-alt"></i> Click for answer</span>
+                            </div>
+                            <div class="flashcard-back">
+                                <p id="cardAnswer">Answer will appear here</p>
+                                <div class="explanation" id="cardExplanation"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard-controls">
+                    <button class="control-btn wrong" id="btnWrong">
+                        <i class="fas fa-times"></i> Don't Know
+                    </button>
+                    <button class="control-btn prev" id="btnPrev">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <button class="control-btn next" id="btnNext">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="control-btn correct" id="btnCorrect">
+                        <i class="fas fa-check"></i> Know
+                    </button>
+                </div>
+
+                <div class="flashcard-stats">
+                    <div class="stat correct">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="knownCount">0</span> Know
+                    </div>
+                    <div class="stat wrong">
+                        <i class="fas fa-times-circle"></i>
+                        <span id="unknownCount">0</span> Don't Know
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUIZ SECTION -->
+        <section id="quiz" class="section">
+            <div class="quiz-container">
+                <div class="quiz-setup" id="quizSetup">
+                    <h1><i class="fas fa-question-circle"></i> Quiz Mode</h1>
+                    <p>Test your knowledge!</p>
+                    
+                    <div class="quiz-options">
+                        <div class="option-group">
+                            <label>Number of questions:</label>
+                            <select id="questionCount">
+                                <option value="5">5 questions</option>
+                                <option value="10" selected>10 questions</option>
+                                <option value="20">20 questions</option>
+                                <option value="all">All questions</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Category:</label>
+                            <select id="quizCategory">
+                                <option value="all">All categories</option>
+                                <option value="pricing">Pricing & Strategies</option>
+                                <option value="expenditure">Expenditure & Multipliers</option>
+                                <option value="tsa">TSA & Measurement</option>
+                                <option value="environment">Environment & Resources</option>
+                                <option value="sustainability">Sustainable Tourism</option>
+                                <option value="impacts">Costs & Benefits</option>
+                            </select>
+                        </div>
+                        <div class="option-group">
+                            <label>Difficulty:</label>
+                            <select id="quizDifficulty">
+                                <option value="easy">Easy</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="hard">Hard</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="start-quiz-btn" onclick="startQuiz()">
+                        <i class="fas fa-play"></i> Start Quiz
+                    </button>
+                </div>
+
+                <div class="quiz-game hidden" id="quizGame">
+                    <div class="quiz-header">
+                        <div class="quiz-progress">
+                            <span id="quizProgress">Question 1/10</span>
+                            <div class="timer" id="timer">
+                                <i class="fas fa-clock"></i> <span id="timeLeft">30</span>s
+                            </div>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="quizProgressBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="question-card">
+                        <div class="question-category" id="questionCategory">Category</div>
+                        <h2 id="questionText">Question?</h2>
+                        <div class="answers" id="answersContainer">
+                            <!-- Answers loaded by JS -->
+                        </div>
+                    </div>
+
+                    <div class="quiz-score">
+                        <span><i class="fas fa-check text-success"></i> <span id="correctCount">0</span></span>
+                        <span><i class="fas fa-times text-danger"></i> <span id="wrongCount">0</span></span>
+                    </div>
+                </div>
+
+                <div class="quiz-results hidden" id="quizResults">
+                    <div class="results-card">
+                        <div class="results-icon" id="resultsIcon">🎉</div>
+                        <h1 id="resultsTitle">Excellent!</h1>
+                        <div class="score-circle">
+                            <span id="finalScore">85%</span>
+                        </div>
+                        <p id="resultsMessage">Fantastic result!</p>
+                        
+                        <div class="results-stats">
+                            <div class="result-stat">
+                                <i class="fas fa-check-circle"></i>
+                                <span id="finalCorrect">8</span>
+                                <small>Correct</small>
+                            </div>
+                            <div class="result-stat">
+                                <i class="fas fa-times-circle"></i>
+                                <span id="finalWrong">2</span>
+                                <small>Wrong</small>
+                            </div>
+                            <div class="result-stat">
+                                <i class="fas fa-clock"></i>
+                                <span id="totalTime">2:30</span>
+                                <small>Time</small>
+                            </div>
+                        </div>
+
+                        <div class="wrong-answers-review" id="wrongAnswersReview">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Review Wrong Answers</h3>
+                            <div id="wrongAnswersList"></div>
+                        </div>
+
+                        <div class="results-actions">
+                            <button class="action-btn primary" onclick="retryQuiz()">
+                                <i class="fas fa-redo"></i> Try Again
+                            </button>
+                            <button class="action-btn secondary" onclick="showQuizSetup()">
+                                <i class="fas fa-cog"></i> New Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILL IN THE BLANK SECTION -->
+        <section id="fill" class="section">
+            <div class="fill-container">
+                <h1><i class="fas fa-pen"></i> Fill in the Blank</h1>
+                
+                <div class="fill-progress">
+                    <span id="fillProgress">1 / 20</span>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="fillProgressBar"></div>
+                    </div>
+                </div>
+
+                <div class="fill-card">
+                    <div class="fill-category" id="fillCategory">Category</div>
+                    <p class="fill-sentence" id="fillSentence">
+                        <!-- Sentence with blank -->
+                    </p>
+                    <div class="fill-input-wrapper">
+                        <input type="text" id="fillInput" placeholder="Type your answer..." autocomplete="off">
+                        <button class="check-btn" id="checkFill">
+                            <i class="fas fa-check"></i> Check
+                        </button>
+                    </div>
+                    <div class="fill-feedback hidden" id="fillFeedback">
+                        <p id="feedbackText"></p>
+                        <p class="correct-answer">Correct answer: <strong id="correctFillAnswer"></strong></p>
+                    </div>
+                    <div class="fill-hint hidden" id="fillHint">
+                        <i class="fas fa-lightbulb"></i> <span id="hintText"></span>
+                    </div>
+                </div>
+
+                <div class="fill-controls">
+                    <button class="control-btn hint" id="btnHint">
+                        <i class="fas fa-lightbulb"></i> Hint
+                    </button>
+                    <button class="control-btn skip" id="btnSkip">
+                        Skip <i class="fas fa-forward"></i>
+                    </button>
+                    <button class="control-btn next hidden" id="btnNextFill">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="fill-stats">
+                    <div class="stat correct">
+                        <i class="fas fa-check-circle"></i>
+                        <span id="fillCorrect">0</span> Correct
+                    </div>
+                    <div class="stat wrong">
+                        <i class="fas fa-times-circle"></i>
+                        <span id="fillWrong">0</span> Wrong
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROGRESS SECTION -->
+        <section id="progress" class="section">
+            <div class="progress-container">
+                <h1><i class="fas fa-chart-line"></i> Your Progress</h1>
+                
+                <div class="progress-overview">
+                    <div class="progress-card main">
+                        <h2>Overall Progress</h2>
+                        <div class="big-progress-circle">
+                            <svg viewBox="0 0 36 36">
+                                <path class="circle-bg"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                                <path class="circle-progress" id="overallProgress"
+                                    stroke-dasharray="0, 100"
+                                    d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                            </svg>
+                            <span id="overallPercent">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-card">
+                        <h3><i class="fas fa-clone"></i> Flashcards</h3>
+                        <p><span id="flashcardsLearned">0</span> / <span id="flashcardsTotal">50</span> learned</p>
+                        <div class="mini-progress">
+                            <div class="mini-fill" id="flashcardsProgress"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-card">
+                        <h3><i class="fas fa-question-circle"></i> Quiz</h3>
+                        <p>Average score: <span id="avgQuizScore">0%</span></p>
+                        <p>Total quizzes: <span id="totalQuizzes">0</span></p>
+                    </div>
+
+                    <div class="progress-card">
+                        <h3><i class="fas fa-pen"></i> Fill in the Blank</h3>
+                        <p>Accuracy: <span id="fillAccuracy">0%</span></p>
+                        <p>Solved: <span id="fillSolved">0</span></p>
+                    </div>
+                </div>
+
+                <div class="category-progress">
+                    <h2>Progress by Category</h2>
+                    <div class="category-bars" id="categoryBars">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <div class="study-history">
+                    <h2>Study History</h2>
+                    <div class="history-list" id="historyList">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <button class="reset-btn" onclick="resetProgress()">
+                    <i class="fas fa-trash-alt"></i> Reset Progress
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <button class="mobile-nav-btn active" data-section="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="mobile-nav-btn" data-section="learn">
+            <i class="fas fa-book-open"></i>
+            <span>Learn</span>
+        </button>
+        <button class="mobile-nav-btn" data-section="flashcards">
+            <i class="fas fa-clone"></i>
+            <span>Cards</span>
+        </button>
+        <button class="mobile-nav-btn" data-section="quiz">
+            <i class="fas fa-question-circle"></i>
+            <span>Quiz</span>
+        </button>
+        <button class="mobile-nav-btn" data-section="fill">
+            <i class="fas fa-pen"></i>
+            <span>Fill</span>
+        </button>
+        <button class="mobile-nav-btn" data-section="progress">
+            <i class="fas fa-chart-line"></i>
+            <span>Progress</span>
+        </button>
+    </nav>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage">Message</span>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
