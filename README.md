@@ -9,7 +9,7 @@ An interactive study application for Tourism Economics 2 course preparation.
 
 - **📖 Learn Mode** - Comprehensive study materials organized by topic
 - **🃏 Flashcards** - Interactive flashcards with flip animation
-- **❓ Quiz Mode** - Multiple choice questions with timer
+- **❓ Quiz Mode** - Multiple choice questions
 - **✏️ Fill-in-the-blank** - Test your knowledge with fill exercises
 - **📊 Progress Tracking** - Track your learning progress
 

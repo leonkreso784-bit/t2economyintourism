@@ -922,15 +922,6 @@ body {
     font-size: 0.9rem;
 }
 
-.timer {
-    background: var(--bg-secondary);
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--radius);
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--accent);
-}
-
 .question-card {
     background: var(--bg-secondary);
     padding: 1.25rem;

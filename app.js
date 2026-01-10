@@ -16,7 +16,6 @@ let currentQuestionIndex = 0;
 let correctAnswers = 0;
 let wrongAnswers = 0;
 let quizStartTime = null;
-let timerInterval = null;
 let wrongAnswersList = [];
 
 // Fill state
@@ -279,7 +278,6 @@ function startQuiz() {
     document.getElementById('quizResults').classList.add('hidden');
     
     showQuestion();
-    startTimer();
 }
 
 function getQuizQuestions(category, count) {
@@ -373,33 +371,7 @@ function selectAnswer(selected, correct) {
     }, 1500);
 }
 
-function startTimer() {
-    let timeLeft = 30;
-    document.getElementById('timeLeft').textContent = timeLeft;
-    
-    if (timerInterval) clearInterval(timerInterval);
-    
-    timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timeLeft').textContent = timeLeft;
-        
-        if (timeLeft <= 0) {
-            // Auto-skip on timeout
-            wrongAnswers++;
-            wrongAnswersList.push({
-                question: quizQuestions[currentQuestionIndex].question,
-                yourAnswer: 'Time expired',
-                correctAnswer: quizQuestions[currentQuestionIndex].options[quizQuestions[currentQuestionIndex].correct]
-            });
-            currentQuestionIndex++;
-            timeLeft = 30;
-            showQuestion();
-        }
-    }, 1000);
-}
-
 function endQuiz() {
-    clearInterval(timerInterval);
     
     const totalTime = Math.floor((Date.now() - quizStartTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
@@ -470,11 +442,9 @@ function retryQuiz() {
     document.getElementById('quizGame').classList.remove('hidden');
     
     showQuestion();
-    startTimer();
 }
 
 function showQuizSetup() {
-    clearInterval(timerInterval);
     document.getElementById('quizResults').classList.add('hidden');
     document.getElementById('quizGame').classList.add('hidden');
     document.getElementById('quizSetup').classList.remove('hidden');
