@@ -207,9 +207,34 @@ function showSubjectSelector() {
     document.querySelector('.mobile-nav-btn[data-section="home"]').classList.add('active');
 }
 
+// ========== ABOUT US FUNCTIONS ==========
+function showAboutUs() {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    
+    // Show about us
+    document.getElementById('about-us').classList.add('active');
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideAboutUs() {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    
+    // Show subject selector
+    document.getElementById('subject-selector').classList.add('active');
+    
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // Make selectSubject globally available for onclick handlers
 window.selectSubject = selectSubject;
 window.showSubjectSelector = showSubjectSelector;
+window.showAboutUs = showAboutUs;
+window.hideAboutUs = hideAboutUs;
 
 function updateCategoryButtons() {
     const container = document.querySelector('.categories');
