@@ -275,7 +275,8 @@ body {
     margin: 0 auto;
 }
 
-.subject-hero > h1 {
+.subject-hero > h1,
+.main-title {
     font-size: 2.5rem;
     margin-bottom: 0.75rem;
     background: linear-gradient(135deg, var(--primary), var(--secondary));
@@ -284,10 +285,101 @@ body {
     background-clip: text;
 }
 
-.subject-hero > .subtitle {
+.subject-hero > .subtitle,
+.main-subtitle {
     color: var(--text-secondary);
     font-size: 1.2rem;
     margin-bottom: 3rem;
+}
+
+/* Card Titles - Light Mode (Dark text for visibility) */
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.te2-title {
+    color: #4338ca !important; /* Dark indigo for light mode */
+}
+
+.ent-title {
+    color: #047857 !important; /* Dark emerald for light mode */
+}
+
+/* Card Titles - Dark Mode (Light text) */
+[data-theme="dark"] .te2-title {
+    color: #a5b4fc !important; /* Light indigo for dark mode */
+}
+
+[data-theme="dark"] .ent-title {
+    color: #6ee7b7 !important; /* Light emerald for dark mode */
+}
+
+/* Card Description */
+.card-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Subject Icons */
+.subject-icon {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.75rem !important;
+    font-size: 2.25rem !important;
+    color: white !important;
+    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.3);
+}
+
+.te2-icon {
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+}
+
+.ent-icon {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+}
+
+/* Subject Buttons */
+.subject-btn {
+    color: white !important;
+    border: none !important;
+    padding: 1rem 2.5rem !important;
+    border-radius: 50px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: inherit;
+}
+
+.te2-btn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+}
+
+.ent-btn {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+}
+
+.subject-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.subject-btn:active {
+    transform: scale(0.98);
 }
 
 .subject-cards {
@@ -342,19 +434,6 @@ div.subject-card {
     transform: translateY(-4px) scale(0.98);
 }
 
-div.subject-card .subject-icon {
-    width: 90px !important;
-    height: 90px !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.75rem !important;
-    font-size: 2.25rem !important;
-    color: white !important;
-    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.3);
-}
-
 .subject-card h2 {
     font-size: 1.5rem;
     font-weight: 700;
@@ -392,39 +471,6 @@ div.subject-card .subject-icon {
 .subject-meta span i {
     color: var(--primary);
     font-size: 1rem;
-}
-
-button.subject-start-btn {
-    background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
-    color: white !important;
-    border: none !important;
-    padding: 1rem 2.5rem !important;
-    border-radius: 50px !important;
-    font-weight: 600 !important;
-    font-size: 1rem !important;
-    cursor: pointer !important;
-    transition: all 0.3s ease;
-    display: inline-flex !important;
-    align-items: center;
-    gap: 0.75rem;
-    font-family: inherit;
-}
-
-.subject-start-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.5);
-}
-
-.subject-start-btn:active {
-    transform: scale(0.98);
-}
-
-.subject-start-btn i {
-    transition: transform 0.3s ease;
-}
-
-.subject-card:hover .subject-start-btn i {
-    transform: translateX(4px);
 }
 
 /* Back to Subjects Button */
