@@ -67,31 +67,71 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ========== SUBJECT SELECTOR ==========
 function initSubjectSelector() {
+    // Event listener on entire card
     const subjectCards = document.querySelectorAll('.subject-card');
     subjectCards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            e.preventDefault();
             const subject = card.dataset.subject;
+            console.log('Card clicked:', subject);
             selectSubject(subject);
+        });
+    });
+    
+    // Also add listener to buttons inside cards
+    const startButtons = document.querySelectorAll('.subject-start-btn');
+    startButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation(); // Prevent double-firing from card click
+            const card = btn.closest('.subject-card');
+            if (card) {
+                const subject = card.dataset.subject;
+                console.log('Button clicked:', subject);
+                selectSubject(subject);
+            }
         });
     });
     
     // Back to subjects button
     const backBtn = document.getElementById('backToSubjects');
     if (backBtn) {
-        backBtn.addEventListener('click', showSubjectSelector);
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSubjectSelector();
+        });
     }
     
     // Logo click - back to subjects
     const logoBtn = document.getElementById('logoBtn');
     if (logoBtn) {
-        logoBtn.addEventListener('click', showSubjectSelector);
+        logoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSubjectSelector();
+        });
         logoBtn.style.cursor = 'pointer';
     }
+    
+    console.log('Subject selector initialized');
 }
 
 function selectSubject(subject) {
+    if (!subject || !subjectDataMap[subject]) {
+        console.error('Invalid subject:', subject);
+        return;
+    }
+    
     currentSubject = subject;
     currentData = subjectDataMap[subject].data;
+    
+    // Check if data loaded
+    if (!currentData || Object.keys(currentData).length === 0) {
+        console.error('No data loaded for subject:', subject);
+        showToast('Error loading subject data');
+        return;
+    }
+    
+    console.log('Selecting subject:', subject, currentData);
     
     // Save selection
     localStorage.setItem('study-master-current-subject', subject);
