@@ -57,12 +57,7 @@ let progress = {
 document.addEventListener('DOMContentLoaded', () => {
     initSubjectSelector();
     initTheme();
-    
-    // Check if a subject was previously selected
-    const savedSubject = localStorage.getItem('study-master-current-subject');
-    if (savedSubject && subjectDataMap[savedSubject]) {
-        selectSubject(savedSubject);
-    }
+    // Always start with subject selector - don't auto-load previous subject
 });
 
 // ========== SUBJECT SELECTOR ==========
