@@ -82,6 +82,9 @@ window.hideAboutUs = hideAboutUs;
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
+    // Clear any saved subject selection - always start fresh with subject selector
+    localStorage.removeItem('study-master-current-subject');
+    
     // Always start with subject selector - reset UI state
     resetToSubjectSelector();
     initSubjectSelector();
@@ -186,9 +189,6 @@ function selectSubject(subject) {
     }
     
     console.log('Selecting subject:', subject, currentData);
-    
-    // Save selection
-    localStorage.setItem('study-master-current-subject', subject);
     
     // Update UI
     document.getElementById('logoText').textContent = subjectDataMap[subject].shortName + ' Study';
