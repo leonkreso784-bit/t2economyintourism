@@ -126,28 +126,36 @@ body {
     font-size: 1.5rem;
 }
 
-/* Desktop navigation - hidden on mobile, shown on desktop when nav-visible */
+/* Desktop navigation - ALWAYS hidden on mobile, shown on desktop when nav-visible */
 .nav-menu {
     display: none !important;
     gap: 0.5rem;
 }
 
-/* Mobile navigation - hidden by default, shown when nav-visible on mobile */
+/* Mobile navigation - hidden by default */
 .mobile-nav {
     display: none !important;
 }
 
-/* Show mobile nav on mobile when visible */
+/* MOBILE: Show only mobile bottom nav, hide desktop nav completely */
 @media (max-width: 767px) {
+    .nav-menu {
+        display: none !important;
+    }
+    
     .mobile-nav.nav-visible {
         display: flex !important;
     }
 }
 
-/* Show desktop nav on desktop when visible */
+/* DESKTOP: Show desktop nav, hide mobile nav */
 @media (min-width: 768px) {
     .nav-menu.nav-visible {
         display: flex !important;
+    }
+    
+    .mobile-nav {
+        display: none !important;
     }
 }
 
