@@ -12,7 +12,7 @@ const subjectDataMap = {
     entrepreneurship: {
         data: typeof entrepreneurshipData !== 'undefined' ? entrepreneurshipData : {},
         name: 'Business Entrepreneurship',
-        shortName: 'Entrepreneurship',
+        shortName: 'Entrep',
         storageKey: 'entrepreneurship-progress'
     }
 };
