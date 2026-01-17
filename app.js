@@ -1142,12 +1142,8 @@ function renderLearnContent() {
         container.appendChild(card);
     });
     
-    // MOBILE FIX: Remove all inline styles from learn content for mobile responsiveness
-    if (window.innerWidth <= 767) {
-        container.querySelectorAll('[style]').forEach(el => {
-            el.removeAttribute('style');
-        });
-    }
+    // MOBILE FIX: Clean up content for better mobile display
+    cleanupLearnContentForMobile();
     
     // Filter functionality
     document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -1580,3 +1576,54 @@ window.resetAnalytics = function() {
 };
 
 window.getAnalytics = getAnalyticsSummary;
+
+// ========== MOBILE LEARN CONTENT CLEANUP ==========
+// This function removes inline styles that interfere with mobile CSS
+function cleanupLearnContentForMobile() {
+    if (window.innerWidth > 767) return; // Only on mobile
+    
+    const container = document.getElementById('learnContent');
+    if (!container) return;
+    
+    // Remove inline styles from all elements inside learn content
+    container.querySelectorAll('.learn-card-content [style]').forEach(el => {
+        // Keep only essential styles, remove sizing/spacing that breaks mobile
+        const keepStyles = ['color', 'background', 'background-color', 'border-color'];
+        const currentStyle = el.getAttribute('style');
+        
+        if (currentStyle) {
+            const newStyles = [];
+            keepStyles.forEach(prop => {
+                const match = currentStyle.match(new RegExp(`${prop}\\s*:\\s*[^;]+`, 'i'));
+                if (match) {
+                    newStyles.push(match[0]);
+                }
+            });
+            
+            if (newStyles.length > 0) {
+                el.setAttribute('style', newStyles.join('; '));
+            } else {
+                el.removeAttribute('style');
+            }
+        }
+    });
+    
+    // Ensure all content fits within viewport
+    container.querySelectorAll('.learn-card-content *').forEach(el => {
+        if (el.scrollWidth > el.clientWidth) {
+            el.style.overflowX = 'auto';
+        }
+    });
+}
+
+// Re-apply mobile cleanup on window resize
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        cleanupLearnContentForMobile();
+    }, 250);
+});
+
+// Make cleanup function globally available
+window.cleanupLearnContentForMobile = cleanupLearnContentForMobile;

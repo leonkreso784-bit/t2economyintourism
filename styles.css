@@ -5369,410 +5369,507 @@ div.subject-card {
     }
 }
 
-/* ===== FORCE LEARN MOBILE STYLES - ALL PHONES ===== */
+/* =====================================================
+   MOBILE LEARN SECTION - COMPLETE REBUILD
+   Clean, organized styles for all mobile devices
+   ===================================================== */
+
 @media screen and (max-width: 767px) {
-    /* Learn Container Force */
+    /* ===== LEARN SECTION BASE ===== */
+    #learn {
+        width: 100%;
+        padding: 0;
+        overflow-x: hidden;
+    }
+    
     #learn .learn-container {
-        padding: 0 !important;
-        padding-bottom: calc(85px + env(safe-area-inset-bottom, 0px)) !important;
-        max-width: 100% !important;
+        padding: 10px;
+        padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px));
+        max-width: 100%;
     }
     
-    #learn .learn-container h1 {
-        font-size: 0.9rem !important;
-        padding: 0.5rem 0.75rem !important;
-        margin: 0.35rem 0.5rem !important;
-        text-align: left !important;
-        justify-content: flex-start !important;
-        background: var(--bg-secondary) !important;
-        border-radius: 8px !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.35rem !important;
+    /* ===== LEARN HEADER/TITLE ===== */
+    #learn .learn-container > h1 {
+        font-size: 1.1rem;
+        padding: 12px 16px;
+        margin: 0 0 12px 0;
+        background: linear-gradient(135deg, var(--primary), #8b5cf6);
+        border-radius: 12px;
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
     }
     
-    #learn .learn-container h1 i {
-        font-size: 0.95rem !important;
-        color: var(--primary) !important;
+    #learn .learn-container > h1 i {
+        font-size: 1.1rem;
     }
     
-    /* Learn Filter Force - SMALLER */
+    /* ===== FILTER BUTTONS ===== */
     #learn .learn-filter {
-        padding: 0 0.5rem 0.35rem !important;
-        margin-bottom: 0.35rem !important;
-        gap: 0.3rem !important;
-        display: flex !important;
-        flex-wrap: nowrap !important;
-        overflow-x: auto !important;
+        display: flex;
+        gap: 8px;
+        padding: 0 0 12px 0;
+        margin-bottom: 8px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    
+    #learn .learn-filter::-webkit-scrollbar {
+        display: none;
     }
     
     #learn .filter-btn {
-        padding: 0.35rem 0.6rem !important;
-        font-size: 0.68rem !important;
-        min-height: 28px !important;
-        border-radius: 14px !important;
-        flex-shrink: 0 !important;
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        min-height: 36px;
+        border-radius: 18px;
+        flex-shrink: 0;
+        white-space: nowrap;
     }
     
-    /* Learn Content Force */
+    /* ===== LEARN CONTENT CONTAINER ===== */
     #learn .learn-content {
-        gap: 0.4rem !important;
-        padding: 0 !important;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 0;
     }
     
-    /* Learn Card Force */
+    /* ===== LEARN CARDS ===== */
     #learn .learn-card {
-        margin: 0 0.5rem 0.4rem !important;
-        border-radius: 8px !important;
-        overflow: hidden !important;
+        margin: 0;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--bg-secondary);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
-    /* Learn Card Header Force - COMPACT */
+    /* ===== CARD HEADER ===== */
     #learn .learn-card-header {
-        padding: 0.5rem 0.75rem !important;
-        flex-wrap: wrap !important;
-        gap: 0.25rem !important;
+        padding: 12px 14px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 6px;
     }
     
     #learn .learn-card-header h2,
     #learn .learn-card-header h3,
     #learn .learn-card-title {
-        font-size: 0.8rem !important;
-        gap: 0.25rem !important;
+        font-size: 0.95rem;
+        color: white;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
     
     #learn .learn-card-header span {
-        font-size: 0.65rem !important;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.85);
     }
     
     #learn .learn-card-header i {
-        font-size: 0.85rem !important;
+        font-size: 1rem;
     }
     
-    /* Learn Card Content - VERY COMPACT */
+    /* ===== CARD CONTENT ===== */
     #learn .learn-card-content {
-        padding: 0.65rem 0.75rem !important;
-        line-height: 1.4 !important;
-        font-size: 0.8rem !important;
+        padding: 14px;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        color: var(--text-primary);
     }
     
-    /* Headings inside content - TIGHT */
+    /* Force all content to fit */
+    #learn .learn-card-content * {
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        box-sizing: border-box;
+    }
+    
+    /* ===== HEADINGS IN CONTENT ===== */
     #learn .learn-card-content h3 {
-        font-size: 0.9rem !important;
-        margin-bottom: 0.35rem !important;
-        padding-bottom: 0.25rem !important;
-        border-bottom: 1px solid var(--border) !important;
-        margin-top: 0 !important;
-        line-height: 1.25 !important;
+        font-size: 1.05rem;
+        color: var(--primary);
+        margin: 16px 0 10px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid var(--border);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+    
+    #learn .learn-card-content h3:first-child {
+        margin-top: 0;
     }
     
     #learn .learn-card-content h4 {
-        font-size: 0.82rem !important;
-        margin-top: 0.5rem !important;
-        margin-bottom: 0.25rem !important;
-        padding-top: 0.25rem !important;
-        line-height: 1.25 !important;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        margin: 14px 0 8px 0;
+        font-weight: 600;
+        line-height: 1.3;
     }
     
     #learn .learn-card-content h5 {
-        font-size: 0.78rem !important;
-        margin-top: 0.35rem !important;
-        margin-bottom: 0.15rem !important;
-        line-height: 1.25 !important;
+        font-size: 0.9rem;
+        color: var(--primary);
+        margin: 12px 0 6px 0;
+        font-weight: 600;
+        line-height: 1.3;
     }
     
-    /* Paragraphs - TIGHT */
+    /* ===== PARAGRAPHS ===== */
     #learn .learn-card-content p {
-        font-size: 0.75rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 0.35rem !important;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        margin: 0 0 10px 0;
+        color: var(--text-secondary);
     }
     
-    /* Lists - VERY TIGHT */
+    /* ===== LISTS ===== */
     #learn .learn-card-content ul {
-        margin: 0.2rem 0 !important;
-        padding-left: 0 !important;
+        margin: 10px 0;
+        padding-left: 0;
+        list-style: none;
     }
     
     #learn .learn-card-content ul li {
-        font-size: 0.75rem !important;
-        line-height: 1.35 !important;
-        padding: 0.08rem 0 !important;
-        padding-left: 1.1rem !important;
+        font-size: 0.86rem;
+        line-height: 1.5;
+        padding: 6px 0 6px 24px;
+        position: relative;
+        color: var(--text-secondary);
     }
     
     #learn .learn-card-content ul li::before {
-        font-size: 0.7rem !important;
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: var(--success);
+        font-weight: bold;
+        font-size: 0.85rem;
     }
     
     #learn .learn-card-content ol {
-        margin: 0.2rem 0 !important;
-        padding-left: 0.9rem !important;
+        margin: 10px 0;
+        padding-left: 20px;
     }
     
     #learn .learn-card-content ol li {
-        font-size: 0.75rem !important;
-        line-height: 1.35 !important;
-        padding: 0.05rem 0 !important;
+        font-size: 0.86rem;
+        line-height: 1.5;
+        padding: 4px 0;
+        color: var(--text-secondary);
     }
     
-    /* Dividers - THIN */
+    /* ===== HORIZONTAL RULES ===== */
     #learn .learn-card-content hr {
-        margin: 0.4rem 0 !important;
+        margin: 16px 0;
+        border: none;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--border), transparent);
     }
     
-    /* Formula Box - VERY COMPACT */
-    #learn .formula-box {
-        padding: 0.4rem 0.5rem !important;
-        font-size: 0.68rem !important;
-        line-height: 1.4 !important;
-        margin: 0.35rem 0 !important;
-        border-radius: 5px !important;
-        overflow-x: auto !important;
-        white-space: pre-wrap !important;
-        word-wrap: break-word !important;
-        border-width: 1px !important;
+    /* ===== FORMULA BOX ===== */
+    #learn .formula-box,
+    #learn .learn-card-content .formula-box {
+        background: var(--bg-tertiary);
+        padding: 12px 14px;
+        margin: 12px 0;
+        border-radius: 10px;
+        border: 2px dashed var(--border);
+        border-left: 4px solid var(--primary);
+        font-family: 'Courier New', monospace;
+        font-size: 0.82rem;
+        line-height: 1.7;
+        overflow-x: auto;
+        white-space: pre-wrap;
     }
     
-    #learn .formula-box strong {
-        font-size: 0.7rem !important;
+    #learn .formula-box strong,
+    #learn .learn-card-content .formula-box strong {
+        color: var(--primary-dark);
+        font-weight: 700;
+        font-size: 0.85rem;
     }
     
-    /* Info Boxes - SUPER COMPACT */
+    /* ===== TIP BOX ===== */
     #learn .tip-box,
-    #learn .warning-box,
-    #learn .example-box {
-        padding: 0.4rem 0.5rem !important;
-        margin: 0.35rem 0 !important;
-        border-radius: 0 5px 5px 0 !important;
-        border-left-width: 2px !important;
+    #learn .learn-card-content .tip-box {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.15));
+        border-left: 4px solid var(--secondary);
+        padding: 12px 14px;
+        margin: 12px 0;
+        border-radius: 0 10px 10px 0;
     }
     
     #learn .tip-box h4,
-    #learn .warning-box h4,
-    #learn .example-box h4 {
-        font-size: 0.75rem !important;
-        margin-bottom: 0.15rem !important;
-        margin-top: 0 !important;
-        line-height: 1.25 !important;
+    #learn .learn-card-content .tip-box h4 {
+        color: var(--secondary);
+        font-size: 0.9rem;
+        margin: 0 0 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
     
     #learn .tip-box p,
-    #learn .warning-box p,
-    #learn .example-box p {
-        font-size: 0.7rem !important;
-        line-height: 1.35 !important;
-        margin-bottom: 0.15rem !important;
+    #learn .learn-card-content .tip-box p {
+        font-size: 0.84rem;
+        margin: 0 0 6px 0;
     }
     
     #learn .tip-box ul,
-    #learn .warning-box ul,
-    #learn .example-box ul {
-        margin: 0.1rem 0 0 !important;
+    #learn .learn-card-content .tip-box ul {
+        margin: 6px 0 0 0;
     }
     
     #learn .tip-box ul li,
-    #learn .warning-box ul li,
-    #learn .example-box ul li {
-        font-size: 0.7rem !important;
-        padding: 0.05rem 0 !important;
-        line-height: 1.3 !important;
+    #learn .learn-card-content .tip-box ul li {
+        font-size: 0.84rem;
+        padding: 3px 0 3px 20px;
     }
     
-    /* Centered tip box */
-    #learn .tip-box[style*="text-align"] {
-        text-align: center !important;
-        padding: 0.35rem 0.5rem !important;
+    /* ===== WARNING BOX ===== */
+    #learn .warning-box,
+    #learn .learn-card-content .warning-box {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.12));
+        border-left: 4px solid var(--danger);
+        padding: 12px 14px;
+        margin: 12px 0;
+        border-radius: 0 10px 10px 0;
     }
     
-    #learn .tip-box[style*="text-align"] h4 {
-        font-size: 0.78rem !important;
+    #learn .warning-box h4,
+    #learn .learn-card-content .warning-box h4 {
+        color: var(--danger);
+        font-size: 0.9rem;
+        margin: 0 0 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
     
-    #learn .tip-box[style*="text-align"] p {
-        font-size: 0.65rem !important;
-        margin: 0 !important;
+    #learn .warning-box p,
+    #learn .learn-card-content .warning-box p {
+        font-size: 0.84rem;
+        margin: 0 0 6px 0;
     }
     
-    /* Tables - COMPACT */
+    /* ===== EXAMPLE BOX ===== */
+    #learn .example-box,
+    #learn .learn-card-content .example-box {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(99, 102, 241, 0.12));
+        border-left: 4px solid var(--primary);
+        padding: 12px 14px;
+        margin: 12px 0;
+        border-radius: 0 10px 10px 0;
+    }
+    
+    #learn .example-box h4,
+    #learn .learn-card-content .example-box h4 {
+        color: var(--primary);
+        font-size: 0.9rem;
+        margin: 0 0 8px 0;
+    }
+    
+    #learn .example-box p,
+    #learn .learn-card-content .example-box p {
+        font-size: 0.84rem;
+        margin: 0 0 6px 0;
+    }
+    
+    /* ===== TABLES ===== */
     #learn .learn-card-content table {
-        display: block !important;
-        overflow-x: auto !important;
-        font-size: 0.68rem !important;
-        margin: 0.35rem 0 !important;
-        border-radius: 5px !important;
-        width: 100% !important;
+        width: 100%;
+        margin: 12px 0;
+        border-collapse: collapse;
+        font-size: 0.8rem;
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
-    #learn .learn-card-content table th,
-    #learn .learn-card-content table td {
-        padding: 0.25rem 0.35rem !important;
-        white-space: nowrap !important;
+    #learn .learn-card-content th,
+    #learn .learn-card-content td {
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        text-align: left;
+        white-space: nowrap;
     }
     
-    /* Images - COMPACT */
-    #learn .learn-image {
-        max-width: 100% !important;
-        height: auto !important;
-        margin: 0.35rem auto !important;
-        border-radius: 5px !important;
+    #learn .learn-card-content th {
+        background: var(--bg-tertiary);
+        font-weight: 600;
+        color: var(--text-primary);
     }
     
-    /* Highlight text */
+    #learn .learn-card-content td {
+        color: var(--text-secondary);
+    }
+    
+    /* ===== IMAGES ===== */
+    #learn .learn-image,
+    #learn .learn-card-content img {
+        max-width: 100%;
+        height: auto;
+        margin: 12px auto;
+        display: block;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* ===== HIGHLIGHT TEXT ===== */
     #learn .learn-card-content .highlight {
-        padding: 0.05rem 0.2rem !important;
-        font-size: 0.7rem !important;
-        border-radius: 2px !important;
+        background: linear-gradient(120deg, rgba(99, 102, 241, 0.15), rgba(99, 102, 241, 0.25));
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: var(--primary);
     }
     
-    /* Strong/Bold */
+    /* ===== STRONG/BOLD TEXT ===== */
     #learn .learn-card-content strong {
-        font-size: inherit !important;
+        color: var(--text-primary);
+        font-weight: 600;
     }
     
-    /* Code/Pre */
-    #learn .learn-card-content pre,
-    #learn .learn-card-content code {
-        font-size: 0.68rem !important;
-        padding: 0.25rem !important;
-        overflow-x: auto !important;
+    /* ===== CODE BLOCKS ===== */
+    #learn .learn-card-content code,
+    #learn .learn-card-content pre {
+        font-family: 'Courier New', monospace;
+        font-size: 0.82rem;
+        background: var(--bg-tertiary);
+        padding: 2px 6px;
+        border-radius: 4px;
+        overflow-x: auto;
     }
     
-    /* OVERRIDE INLINE STYLES FROM JS DATA FILES */
-    #learn .learn-card-content .tip-box[style],
-    #learn .learn-card-content .warning-box[style],
-    #learn .learn-card-content .example-box[style],
-    #learn .learn-card-content .formula-box[style] {
-        padding: 0.4rem 0.5rem !important;
-        margin: 0.35rem 0 !important;
-    }
-    
-    #learn .learn-card-content .tip-box[style] h4[style],
-    #learn .learn-card-content .warning-box[style] h4[style],
-    #learn .learn-card-content .example-box[style] h4[style] {
-        font-size: 0.78rem !important;
-        margin: 0 0 0.15rem 0 !important;
-    }
-    
-    #learn .learn-card-content .tip-box[style] p[style],
-    #learn .learn-card-content .warning-box[style] p[style],
-    #learn .learn-card-content .example-box[style] p[style] {
-        font-size: 0.68rem !important;
-        margin: 0 !important;
-    }
-    
-    #learn .learn-card-content .formula-box[style] strong,
-    #learn .learn-card-content .formula-box strong {
-        font-size: 0.7rem !important;
-    }
-    
-    #learn .learn-card-content br {
-        display: block !important;
-        content: "" !important;
-        margin-top: 0.15rem !important;
+    #learn .learn-card-content pre {
+        padding: 10px;
+        margin: 10px 0;
     }
 }
 
-/* ===== OVERRIDE ALL INLINE STYLES ON MOBILE ===== */
-@media screen and (max-width: 767px) {
-    /* Force all elements in learn to use mobile styles regardless of inline styles */
-    section#learn .learn-card-content * {
-        max-width: 100% !important;
-        box-sizing: border-box !important;
+/* ===== EXTRA SMALL SCREENS (iPhone SE, etc.) ===== */
+@media screen and (max-width: 374px) {
+    #learn .learn-container {
+        padding: 8px;
     }
     
-    section#learn .learn-card-content h3,
-    section#learn .learn-card-content h4,
-    section#learn .learn-card-content h5 {
-        font-size: inherit !important;
+    #learn .learn-container > h1 {
+        font-size: 1rem;
+        padding: 10px 12px;
     }
     
-    section#learn .learn-card-content h3 { font-size: 0.9rem !important; }
-    section#learn .learn-card-content h4 { font-size: 0.82rem !important; }
-    section#learn .learn-card-content h5 { font-size: 0.78rem !important; }
-    
-    section#learn .learn-card-content p {
-        font-size: 0.75rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 0.35rem !important;
+    #learn .filter-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        min-height: 32px;
     }
     
-    /* Specifically target divs with style attribute */
-    section#learn .learn-card-content div[style] {
-        padding: 0.4rem 0.5rem !important;
-        margin: 0.35rem 0 !important;
-        font-size: 0.7rem !important;
+    #learn .learn-card-header {
+        padding: 10px 12px;
     }
     
-    section#learn .learn-card-content div[style] h4 {
-        font-size: 0.75rem !important;
+    #learn .learn-card-header h2,
+    #learn .learn-card-header h3,
+    #learn .learn-card-title {
+        font-size: 0.88rem;
     }
     
-    section#learn .learn-card-content div[style] p {
-        font-size: 0.68rem !important;
-        margin: 0 !important;
+    #learn .learn-card-content {
+        padding: 12px;
+        font-size: 0.84rem;
+    }
+    
+    #learn .learn-card-content h3 {
+        font-size: 0.98rem;
+    }
+    
+    #learn .learn-card-content h4 {
+        font-size: 0.9rem;
+    }
+    
+    #learn .learn-card-content h5 {
+        font-size: 0.86rem;
+    }
+    
+    #learn .learn-card-content p,
+    #learn .learn-card-content li {
+        font-size: 0.82rem;
+    }
+    
+    #learn .formula-box,
+    #learn .tip-box,
+    #learn .warning-box,
+    #learn .example-box {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+    
+    #learn .learn-card-content table {
+        font-size: 0.75rem;
+    }
+    
+    #learn .learn-card-content th,
+    #learn .learn-card-content td {
+        padding: 6px 8px;
     }
 }
 
-/* ===== ACCESSIBILITY CONTRAST FIXES ===== */
-/* Fix h5 contrast in learn cards */
-.learn-card-content h5 {
+/* ===== DARK MODE ADJUSTMENTS FOR LEARN ===== */
+[data-theme="dark"] #learn .formula-box strong {
+    color: #a5b4fc;
+}
+
+[data-theme="dark"] #learn .tip-box {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.2));
+}
+
+[data-theme="dark"] #learn .warning-box {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(239, 68, 68, 0.18));
+}
+
+[data-theme="dark"] #learn .example-box {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.12), rgba(99, 102, 241, 0.18));
+}
+
+[data-theme="dark"] #learn .learn-card-content .highlight {
+    background: linear-gradient(120deg, rgba(99, 102, 241, 0.25), rgba(99, 102, 241, 0.35));
+}
+
+/* ===== LANDSCAPE MODE ===== */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+    #learn .learn-container {
+        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
+    }
+    
+    #learn .learn-card-content {
+        padding: 12px;
+    }
+}
+
+/* ===== ACCESSIBILITY - ENSURE GOOD CONTRAST ===== */
+#learn .learn-card-content h5 {
     color: var(--text-primary);
-    font-weight: 600;
 }
 
-/* Fix strong elements in formula boxes */
-.formula-box strong,
-.tip-box strong,
-.warning-box strong,
-.example-box strong {
-    color: var(--text-primary);
+#learn .formula-box strong,
+#learn .tip-box strong,
+#learn .warning-box strong,
+#learn .example-box strong {
     font-weight: 700;
 }
 
-[data-theme="dark"] .formula-box strong,
-[data-theme="dark"] .tip-box strong {
-    color: #e0e7ff;
-}
-
-[data-theme="dark"] .warning-box strong {
-    color: #fecaca;
-}
-
-[data-theme="dark"] .example-box strong {
-    color: #fef3c7;
-}
-
-/* Fix category filter buttons contrast */
-.category-btn,
-button[data-filter] {
-    color: var(--text-primary);
-}
-
-.category-btn.active,
-button[data-filter].active {
-    color: white;
-    background: var(--primary);
-}
-
-/* Fix study-nav-btn active state */
-.study-nav-btn.active,
-.study-nav-btn.active span,
-.study-nav-btn.active i {
-    color: white !important;
-}
-
-/* Fix mobile nav button text */
-.mobile-nav-btn span {
-    color: var(--text-primary);
-}
-
-.mobile-nav-btn.active span,
-.mobile-nav-btn.active i {
-    color: var(--primary);
-}
-
-/* Ensure all text in learn cards has good contrast */
 .learn-card-content,
 .learn-card-content p,
 .learn-card-content li,
