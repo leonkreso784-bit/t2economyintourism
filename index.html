@@ -25,26 +25,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Critical Mobile Learn Styles - Inline to ensure they apply -->
+    <!-- Critical Mobile Learn Styles - ULTRA COMPACT -->
     <style>
         @media screen and (max-width: 767px) {
-            #learn .learn-container { padding: 0 !important; padding-bottom: 85px !important; }
-            #learn .learn-container h1 { font-size: 0.9rem !important; padding: 0.5rem 0.75rem !important; margin: 0.35rem 0.5rem !important; }
-            #learn .learn-card { margin: 0 0.5rem 0.4rem !important; border-radius: 8px !important; }
-            #learn .learn-card-header { padding: 0.5rem 0.75rem !important; }
-            #learn .learn-card-header h2, #learn .learn-card-title { font-size: 0.8rem !important; }
-            #learn .learn-card-content { padding: 0.5rem 0.65rem !important; line-height: 1.35 !important; font-size: 0.78rem !important; }
-            #learn .learn-card-content h3 { font-size: 0.85rem !important; margin: 0 0 0.3rem 0 !important; }
-            #learn .learn-card-content h4 { font-size: 0.8rem !important; margin: 0.4rem 0 0.2rem 0 !important; }
-            #learn .learn-card-content h5 { font-size: 0.75rem !important; margin: 0.3rem 0 0.15rem 0 !important; }
-            #learn .learn-card-content p { font-size: 0.72rem !important; line-height: 1.35 !important; margin-bottom: 0.25rem !important; }
-            #learn .learn-card-content ul, #learn .learn-card-content ol { margin: 0.15rem 0 !important; padding-left: 1rem !important; }
-            #learn .learn-card-content li { font-size: 0.72rem !important; line-height: 1.3 !important; padding: 0.05rem 0 !important; }
-            #learn .learn-card-content hr { margin: 0.35rem 0 !important; }
-            #learn .formula-box, #learn .tip-box, #learn .warning-box, #learn .example-box { padding: 0.35rem 0.45rem !important; margin: 0.25rem 0 !important; font-size: 0.68rem !important; }
-            #learn .formula-box strong, #learn .tip-box h4, #learn .warning-box h4, #learn .example-box h4 { font-size: 0.7rem !important; margin: 0 0 0.1rem 0 !important; }
-            #learn .formula-box br { margin-bottom: 0.1rem !important; }
-            #learn div[style], #learn p[style], #learn h4[style] { font-size: inherit !important; }
+            /* Container */
+            #learn .learn-container, .learn-container { padding: 0 !important; margin: 0 !important; padding-bottom: 80px !important; }
+            #learn .learn-container h1, .learn-container h1 { font-size: 0.85rem !important; padding: 0.3rem 0.5rem !important; margin: 0.2rem 0.3rem !important; }
+            
+            /* Cards - minimal spacing */
+            #learn .learn-card, .learn-card { margin: 0 0.3rem 0.25rem !important; border-radius: 6px !important; }
+            #learn .learn-card-header, .learn-card-header { padding: 0.35rem 0.5rem !important; min-height: auto !important; }
+            #learn .learn-card-header h2, .learn-card-header h2, #learn .learn-card-title, .learn-card-title { font-size: 0.75rem !important; margin: 0 !important; line-height: 1.2 !important; }
+            
+            /* Content - super tight */
+            #learn .learn-card-content, .learn-card-content { padding: 0.3rem 0.4rem !important; line-height: 1.25 !important; font-size: 0.7rem !important; }
+            #learn .learn-card-content *, .learn-card-content * { line-height: 1.25 !important; }
+            #learn .learn-card-content h3, .learn-card-content h3 { font-size: 0.78rem !important; margin: 0 0 0.15rem 0 !important; padding: 0 !important; }
+            #learn .learn-card-content h4, .learn-card-content h4 { font-size: 0.72rem !important; margin: 0.2rem 0 0.1rem 0 !important; padding: 0 !important; }
+            #learn .learn-card-content h5, .learn-card-content h5 { font-size: 0.68rem !important; margin: 0.15rem 0 0.05rem 0 !important; padding: 0 !important; }
+            #learn .learn-card-content p, .learn-card-content p { font-size: 0.68rem !important; line-height: 1.2 !important; margin: 0 0 0.15rem 0 !important; padding: 0 !important; }
+            #learn .learn-card-content ul, .learn-card-content ul, #learn .learn-card-content ol, .learn-card-content ol { margin: 0.1rem 0 !important; padding-left: 0.8rem !important; }
+            #learn .learn-card-content li, .learn-card-content li { font-size: 0.68rem !important; line-height: 1.2 !important; padding: 0 !important; margin: 0 !important; }
+            #learn .learn-card-content hr, .learn-card-content hr { margin: 0.2rem 0 !important; }
+            
+            /* Boxes - minimal */
+            #learn .formula-box, .formula-box, #learn .tip-box, .tip-box, #learn .warning-box, .warning-box, #learn .example-box, .example-box { 
+                padding: 0.25rem 0.35rem !important; margin: 0.15rem 0 !important; font-size: 0.65rem !important; line-height: 1.2 !important;
+            }
+            #learn .formula-box *, .formula-box *, #learn .tip-box *, .tip-box *, #learn .warning-box *, .warning-box *, #learn .example-box *, .example-box * {
+                font-size: 0.65rem !important; line-height: 1.2 !important; margin: 0 !important; padding: 0 !important;
+            }
+            
+            /* Override ANY inline styles */
+            #learn [style], .learn-card-content [style] { 
+                padding: 0.2rem 0.3rem !important; margin: 0.1rem 0 !important; font-size: 0.65rem !important; line-height: 1.2 !important;
+            }
+            #learn div[style*="background"], .learn-card-content div[style*="background"] {
+                padding: 0.25rem 0.35rem !important; margin: 0.15rem 0 !important;
+            }
+            #learn br, .learn-card-content br { display: block !important; content: "" !important; margin: 0.05rem 0 !important; }
         }
     </style>
 </head>
