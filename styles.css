@@ -5493,11 +5493,11 @@ div.subject-card {
         font-size: 1.1rem;
     }
     
-    /* ===== CARD CONTENT ===== */
+    /* ===== CARD CONTENT - COMPACT ===== */
     #learn .learn-card-content {
-        padding: 16px;
-        font-size: 0.92rem;
-        line-height: 1.7;
+        padding: 10px 12px !important;
+        font-size: 0.78rem !important;
+        line-height: 1.45 !important;
         color: var(--text-primary);
     }
     
@@ -5509,15 +5509,15 @@ div.subject-card {
         box-sizing: border-box;
     }
     
-    /* ===== HEADINGS IN CONTENT ===== */
+    /* ===== HEADINGS IN CONTENT - COMPACT ===== */
     #learn .learn-card-content h3 {
-        font-size: 1.1rem;
+        font-size: 0.88rem !important;
         color: var(--primary);
-        margin: 20px 0 12px 0;
-        padding-bottom: 10px;
-        border-bottom: 2px solid var(--primary);
-        font-weight: 700;
-        line-height: 1.35;
+        margin: 10px 0 6px 0 !important;
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--primary);
+        font-weight: 600;
+        line-height: 1.3;
     }
     
     #learn .learn-card-content h3:first-child {
@@ -5525,43 +5525,43 @@ div.subject-card {
     }
     
     #learn .learn-card-content h4 {
-        font-size: 1rem;
+        font-size: 0.82rem !important;
         color: var(--text-primary);
-        margin: 18px 0 10px 0;
+        margin: 8px 0 5px 0 !important;
         font-weight: 600;
-        line-height: 1.35;
+        line-height: 1.3;
     }
     
     #learn .learn-card-content h5 {
-        font-size: 0.95rem;
+        font-size: 0.78rem !important;
         color: var(--primary);
-        margin: 14px 0 8px 0;
+        margin: 6px 0 4px 0 !important;
         font-weight: 600;
-        line-height: 1.35;
+        line-height: 1.3;
     }
     
-    /* ===== PARAGRAPHS ===== */
+    /* ===== PARAGRAPHS - COMPACT ===== */
     #learn .learn-card-content p {
-        font-size: 0.92rem;
-        line-height: 1.7;
-        margin: 0 0 12px 0;
+        font-size: 0.75rem !important;
+        line-height: 1.45 !important;
+        margin: 0 0 6px 0 !important;
         color: var(--text-secondary);
     }
     
-    /* ===== LISTS ===== */
+    /* ===== LISTS - COMPACT ===== */
     #learn .learn-card-content ul {
-        margin: 12px 0;
+        margin: 6px 0 !important;
         padding-left: 0;
         list-style: none;
     }
     
     #learn .learn-card-content ul li {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        padding: 8px 0 8px 28px;
+        font-size: 0.75rem !important;
+        line-height: 1.4 !important;
+        padding: 3px 0 3px 20px !important;
         position: relative;
         color: var(--text-secondary);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     }
     
     #learn .learn-card-content ul li:last-child {
@@ -5574,18 +5574,18 @@ div.subject-card {
         left: 0;
         color: var(--success);
         font-weight: bold;
-        font-size: 0.95rem;
+        font-size: 0.72rem;
     }
     
     #learn .learn-card-content ol {
-        margin: 12px 0;
-        padding-left: 24px;
+        margin: 6px 0 !important;
+        padding-left: 18px;
     }
     
     #learn .learn-card-content ol li {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        padding: 6px 0;
+        font-size: 0.75rem !important;
+        line-height: 1.4 !important;
+        padding: 2px 0 !important;
         color: var(--text-secondary);
     }
     
@@ -5597,19 +5597,19 @@ div.subject-card {
         background: linear-gradient(90deg, transparent, var(--border), transparent);
     }
     
-    /* ===== FORMULA BOX ===== */
+    /* ===== FORMULA BOX - COMPACT ===== */
     #learn .formula-box,
     #learn .learn-card-content .formula-box,
     #learn .learn-card-content div.formula-box {
-        background: linear-gradient(135deg, var(--bg-tertiary), rgba(99, 102, 241, 0.05));
-        padding: 14px 16px;
-        margin: 16px 0;
-        border-radius: 12px;
-        border: 2px dashed rgba(99, 102, 241, 0.3);
-        border-left: 5px solid var(--primary);
+        background: rgba(99, 102, 241, 0.06);
+        padding: 8px 10px !important;
+        margin: 8px 0 !important;
+        border-radius: 6px;
+        border: 1px dashed rgba(99, 102, 241, 0.25);
+        border-left: 3px solid var(--primary) !important;
         font-family: 'Inter', -apple-system, sans-serif;
-        font-size: 0.88rem;
-        line-height: 1.8;
+        font-size: 0.75rem !important;
+        line-height: 1.5 !important;
         overflow-x: auto;
         white-space: pre-wrap;
     }
@@ -5617,130 +5617,144 @@ div.subject-card {
     #learn .formula-box strong,
     #learn .learn-card-content .formula-box strong {
         color: var(--primary);
-        font-weight: 700;
-        font-size: 0.92rem;
+        font-weight: 600;
+        font-size: 0.78rem !important;
         display: inline-block;
-        margin-bottom: 4px;
+        margin-bottom: 2px;
     }
     
-    /* ===== TIP BOX ===== */
+    #learn .formula-box p,
+    #learn .learn-card-content .formula-box p {
+        font-size: 0.75rem !important;
+        margin: 2px 0 !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* ===== TIP BOX - COMPACT ===== */
     #learn .tip-box,
     #learn .learn-card-content .tip-box,
     #learn .learn-card-content div.tip-box {
-        background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.15));
-        border-left: 5px solid var(--secondary);
-        padding: 14px 16px;
-        margin: 16px 0;
-        border-radius: 0 12px 12px 0;
+        background: rgba(16, 185, 129, 0.08);
+        border-left: 3px solid var(--secondary) !important;
+        padding: 8px 10px !important;
+        margin: 8px 0 !important;
+        border-radius: 0 6px 6px 0;
     }
     
     #learn .tip-box h4,
     #learn .learn-card-content .tip-box h4 {
         color: var(--secondary);
-        font-size: 0.95rem;
-        margin: 0 0 10px 0 !important;
+        font-size: 0.78rem !important;
+        margin: 0 0 4px 0 !important;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 5px;
         font-weight: 600;
     }
     
     #learn .tip-box p,
     #learn .learn-card-content .tip-box p {
-        font-size: 0.88rem;
-        margin: 0 0 8px 0 !important;
-        line-height: 1.6;
+        font-size: 0.75rem !important;
+        margin: 0 0 4px 0 !important;
+        line-height: 1.4 !important;
     }
     
     #learn .tip-box ul,
     #learn .learn-card-content .tip-box ul {
-        margin: 8px 0 0 0;
+        margin: 4px 0 0 0 !important;
     }
     
     #learn .tip-box ul li,
     #learn .learn-card-content .tip-box ul li {
-        font-size: 0.88rem;
-        padding: 5px 0 5px 24px;
+        font-size: 0.75rem !important;
+        padding: 2px 0 2px 18px !important;
         border-bottom: none;
     }
     
-    /* ===== WARNING BOX ===== */
+    /* ===== WARNING BOX - COMPACT ===== */
     #learn .warning-box,
     #learn .learn-card-content .warning-box,
     #learn .learn-card-content div.warning-box {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(239, 68, 68, 0.15));
-        border-left: 5px solid var(--danger);
-        padding: 14px 16px;
-        margin: 16px 0;
-        border-radius: 0 12px 12px 0;
+        background: rgba(239, 68, 68, 0.08);
+        border-left: 3px solid var(--danger) !important;
+        padding: 8px 10px !important;
+        margin: 8px 0 !important;
+        border-radius: 0 6px 6px 0;
     }
     
     #learn .warning-box h4,
     #learn .learn-card-content .warning-box h4 {
         color: var(--danger);
-        font-size: 0.95rem;
-        margin: 0 0 10px 0 !important;
+        font-size: 0.78rem !important;
+        margin: 0 0 4px 0 !important;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 5px;
         font-weight: 600;
     }
     
     #learn .warning-box p,
     #learn .learn-card-content .warning-box p {
-        font-size: 0.88rem;
-        margin: 0 0 8px 0 !important;
-        line-height: 1.6;
+        font-size: 0.75rem !important;
+        margin: 0 0 4px 0 !important;
+        line-height: 1.4 !important;
     }
     
     /* ===== EXAMPLE BOX ===== */
     #learn .example-box,
     #learn .learn-card-content .example-box,
     #learn .learn-card-content div.example-box {
-        background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.15));
-        border-left: 5px solid var(--accent);
-        padding: 14px 16px;
-        margin: 16px 0;
-        border-radius: 0 12px 12px 0;
+        background: rgba(245, 158, 11, 0.08);
+        border-left: 3px solid var(--accent) !important;
+        padding: 8px 10px !important;
+        margin: 8px 0 !important;
+        border-radius: 0 6px 6px 0;
     }
     
     #learn .example-box h4,
     #learn .learn-card-content .example-box h4 {
         color: var(--accent);
-        font-size: 0.95rem;
-        margin: 0 0 10px 0 !important;
+        font-size: 0.78rem !important;
+        margin: 0 0 4px 0 !important;
         font-weight: 600;
     }
     
     #learn .example-box p,
     #learn .learn-card-content .example-box p {
-        font-size: 0.88rem;
-        margin: 0 0 8px 0 !important;
-        line-height: 1.6;
+        font-size: 0.75rem !important;
+        margin: 0 0 4px 0 !important;
+        line-height: 1.4 !important;
     }
     
-    /* ===== TABLES ===== */
+    #learn .example-box ul li,
+    #learn .learn-card-content .example-box ul li {
+        font-size: 0.75rem !important;
+        padding: 2px 0 2px 18px !important;
+    }
+    
+    /* ===== TABLES - COMPACT ===== */
     #learn .learn-card-content table {
         width: 100%;
-        margin: 16px 0;
+        margin: 8px 0 !important;
         border-collapse: collapse;
-        font-size: 0.85rem;
+        font-size: 0.7rem !important;
         display: block;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        border-radius: 8px;
+        border-radius: 4px;
     }
     
     #learn .learn-card-content th,
     #learn .learn-card-content td {
-        padding: 10px 12px;
+        padding: 5px 8px !important;
         border: 1px solid var(--border);
         text-align: left;
         white-space: nowrap;
+        font-size: 0.7rem !important;
     }
     
     #learn .learn-card-content th {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        background: var(--primary);
         font-weight: 600;
         color: white;
     }
