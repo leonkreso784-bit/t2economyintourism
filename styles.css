@@ -5601,73 +5601,97 @@ div.subject-card {
     #learn .formula-box,
     #learn .learn-card-content .formula-box,
     #learn .learn-card-content div.formula-box {
+        width: calc(100% - 6px) !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         background: rgba(99, 102, 241, 0.06);
-        padding: 8px 10px !important;
-        margin: 8px 0 !important;
-        border-radius: 6px;
-        border: 1px dashed rgba(99, 102, 241, 0.25);
+        padding: 6px 8px !important;
+        margin: 6px 0 !important;
+        border-radius: 4px;
+        border: none !important;
         border-left: 3px solid var(--primary) !important;
         font-family: 'Inter', -apple-system, sans-serif;
-        font-size: 0.75rem !important;
-        line-height: 1.5 !important;
-        overflow-x: auto;
-        white-space: pre-wrap;
+        font-size: 0.72rem !important;
+        line-height: 1.4 !important;
+        overflow-x: hidden !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
+        white-space: normal !important;
+    }
+    
+    #learn .formula-box *,
+    #learn .learn-card-content .formula-box * {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
     }
     
     #learn .formula-box strong,
     #learn .learn-card-content .formula-box strong {
         color: var(--primary);
         font-weight: 600;
-        font-size: 0.78rem !important;
+        font-size: 0.74rem !important;
         display: inline-block;
         margin-bottom: 2px;
     }
     
     #learn .formula-box p,
     #learn .learn-card-content .formula-box p {
-        font-size: 0.75rem !important;
+        font-size: 0.72rem !important;
         margin: 2px 0 !important;
-        line-height: 1.4 !important;
+        line-height: 1.35 !important;
     }
     
     /* ===== TIP BOX - COMPACT ===== */
     #learn .tip-box,
     #learn .learn-card-content .tip-box,
     #learn .learn-card-content div.tip-box {
+        width: calc(100% - 6px) !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         background: rgba(16, 185, 129, 0.08);
+        border: none !important;
         border-left: 3px solid var(--secondary) !important;
-        padding: 8px 10px !important;
-        margin: 8px 0 !important;
-        border-radius: 0 6px 6px 0;
+        padding: 6px 8px !important;
+        margin: 6px 0 !important;
+        border-radius: 0 4px 4px 0;
+        overflow: hidden !important;
+    }
+    
+    #learn .tip-box *,
+    #learn .learn-card-content .tip-box * {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
     }
     
     #learn .tip-box h4,
     #learn .learn-card-content .tip-box h4 {
         color: var(--secondary);
-        font-size: 0.78rem !important;
-        margin: 0 0 4px 0 !important;
+        font-size: 0.74rem !important;
+        margin: 0 0 3px 0 !important;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
         font-weight: 600;
     }
     
     #learn .tip-box p,
     #learn .learn-card-content .tip-box p {
-        font-size: 0.75rem !important;
-        margin: 0 0 4px 0 !important;
-        line-height: 1.4 !important;
+        font-size: 0.72rem !important;
+        margin: 0 0 3px 0 !important;
+        line-height: 1.35 !important;
     }
     
     #learn .tip-box ul,
     #learn .learn-card-content .tip-box ul {
-        margin: 4px 0 0 0 !important;
+        margin: 3px 0 0 0 !important;
     }
     
     #learn .tip-box ul li,
     #learn .learn-card-content .tip-box ul li {
-        font-size: 0.75rem !important;
-        padding: 2px 0 2px 18px !important;
+        font-size: 0.72rem !important;
+        padding: 1px 0 1px 16px !important;
         border-bottom: none;
     }
     
@@ -5675,47 +5699,71 @@ div.subject-card {
     #learn .warning-box,
     #learn .learn-card-content .warning-box,
     #learn .learn-card-content div.warning-box {
+        width: calc(100% - 6px) !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         background: rgba(239, 68, 68, 0.08);
+        border: none !important;
         border-left: 3px solid var(--danger) !important;
-        padding: 8px 10px !important;
-        margin: 8px 0 !important;
-        border-radius: 0 6px 6px 0;
+        padding: 6px 8px !important;
+        margin: 6px 0 !important;
+        border-radius: 0 4px 4px 0;
+        overflow: hidden !important;
+    }
+    
+    #learn .warning-box *,
+    #learn .learn-card-content .warning-box * {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
     }
     
     #learn .warning-box h4,
     #learn .learn-card-content .warning-box h4 {
         color: var(--danger);
-        font-size: 0.78rem !important;
-        margin: 0 0 4px 0 !important;
+        font-size: 0.74rem !important;
+        margin: 0 0 3px 0 !important;
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 4px;
         font-weight: 600;
     }
     
     #learn .warning-box p,
     #learn .learn-card-content .warning-box p {
-        font-size: 0.75rem !important;
-        margin: 0 0 4px 0 !important;
-        line-height: 1.4 !important;
+        font-size: 0.72rem !important;
+        margin: 0 0 3px 0 !important;
+        line-height: 1.35 !important;
     }
     
     /* ===== EXAMPLE BOX ===== */
     #learn .example-box,
     #learn .learn-card-content .example-box,
     #learn .learn-card-content div.example-box {
+        width: calc(100% - 6px) !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
         background: rgba(245, 158, 11, 0.08);
+        border: none !important;
         border-left: 3px solid var(--accent) !important;
-        padding: 8px 10px !important;
-        margin: 8px 0 !important;
-        border-radius: 0 6px 6px 0;
+        padding: 6px 8px !important;
+        margin: 6px 0 !important;
+        border-radius: 0 4px 4px 0;
+        overflow: hidden !important;
+    }
+    
+    #learn .example-box *,
+    #learn .learn-card-content .example-box * {
+        max-width: 100% !important;
+        overflow-wrap: break-word !important;
+        word-break: break-word !important;
     }
     
     #learn .example-box h4,
     #learn .learn-card-content .example-box h4 {
         color: var(--accent);
-        font-size: 0.78rem !important;
-        margin: 0 0 4px 0 !important;
+        font-size: 0.74rem !important;
+        margin: 0 0 3px 0 !important;
         font-weight: 600;
     }
     
