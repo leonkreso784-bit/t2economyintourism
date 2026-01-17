@@ -14,7 +14,7 @@
     
     --text-primary: #1e293b;
     --text-secondary: #64748b;
-    --text-muted: #94a3b8;
+    --text-muted: #64748b; /* Changed from #94a3b8 for better contrast */
     
     --border: #e2e8f0;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -47,6 +47,19 @@
     
     --border: #475569;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* ===== ACCESSIBILITY ===== */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /* ===== RESET & BASE ===== */
@@ -5607,5 +5620,80 @@ div.subject-card {
         font-size: 0.68rem !important;
         padding: 0.25rem !important;
         overflow-x: auto !important;
+    }
+    
+    /* OVERRIDE INLINE STYLES FROM JS DATA FILES */
+    #learn .learn-card-content .tip-box[style],
+    #learn .learn-card-content .warning-box[style],
+    #learn .learn-card-content .example-box[style],
+    #learn .learn-card-content .formula-box[style] {
+        padding: 0.4rem 0.5rem !important;
+        margin: 0.35rem 0 !important;
+    }
+    
+    #learn .learn-card-content .tip-box[style] h4[style],
+    #learn .learn-card-content .warning-box[style] h4[style],
+    #learn .learn-card-content .example-box[style] h4[style] {
+        font-size: 0.78rem !important;
+        margin: 0 0 0.15rem 0 !important;
+    }
+    
+    #learn .learn-card-content .tip-box[style] p[style],
+    #learn .learn-card-content .warning-box[style] p[style],
+    #learn .learn-card-content .example-box[style] p[style] {
+        font-size: 0.68rem !important;
+        margin: 0 !important;
+    }
+    
+    #learn .learn-card-content .formula-box[style] strong,
+    #learn .learn-card-content .formula-box strong {
+        font-size: 0.7rem !important;
+    }
+    
+    #learn .learn-card-content br {
+        display: block !important;
+        content: "" !important;
+        margin-top: 0.15rem !important;
+    }
+}
+
+/* ===== OVERRIDE ALL INLINE STYLES ON MOBILE ===== */
+@media screen and (max-width: 767px) {
+    /* Force all elements in learn to use mobile styles regardless of inline styles */
+    section#learn .learn-card-content * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    section#learn .learn-card-content h3,
+    section#learn .learn-card-content h4,
+    section#learn .learn-card-content h5 {
+        font-size: inherit !important;
+    }
+    
+    section#learn .learn-card-content h3 { font-size: 0.9rem !important; }
+    section#learn .learn-card-content h4 { font-size: 0.82rem !important; }
+    section#learn .learn-card-content h5 { font-size: 0.78rem !important; }
+    
+    section#learn .learn-card-content p {
+        font-size: 0.75rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 0.35rem !important;
+    }
+    
+    /* Specifically target divs with style attribute */
+    section#learn .learn-card-content div[style] {
+        padding: 0.4rem 0.5rem !important;
+        margin: 0.35rem 0 !important;
+        font-size: 0.7rem !important;
+    }
+    
+    section#learn .learn-card-content div[style] h4 {
+        font-size: 0.75rem !important;
+    }
+    
+    section#learn .learn-card-content div[style] p {
+        font-size: 0.68rem !important;
+        margin: 0 !important;
     }
 }

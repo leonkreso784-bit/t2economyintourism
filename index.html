@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260117h">
+    <link rel="stylesheet" href="styles.css?v=20260117i">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -104,24 +104,26 @@
         </main>
 
         <!-- Features Section -->
-        <section class="landing-features">
+        <!-- Features Section -->
+        <section class="landing-features" aria-labelledby="features-heading">
+            <h2 id="features-heading" class="visually-hidden">App Features</h2>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-book-reader"></i>
+                    <i class="fas fa-book-reader" aria-hidden="true"></i>
                 </div>
                 <h3>Multiple Subjects</h3>
                 <p>Study various subjects with organized lessons and materials</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-trophy"></i>
+                    <i class="fas fa-trophy" aria-hidden="true"></i>
                 </div>
                 <h3>Track Progress</h3>
                 <p>Monitor your learning journey with detailed analytics</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-mobile-alt"></i>
+                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
                 </div>
                 <h3>Study Anywhere</h3>
                 <p>Fully responsive design for learning on any device</p>
@@ -139,8 +141,9 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <h2><i class="fas fa-compass"></i> Choose Subject</h2>
-            <button class="close-sidebar-btn" id="closeSidebar">
-                <i class="fas fa-times"></i>
+            <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
+                <i class="fas fa-times" aria-hidden="true"></i>
+                <span class="visually-hidden">Close</span>
             </button>
         </div>
         <div class="sidebar-content">
