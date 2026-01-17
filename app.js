@@ -1129,7 +1129,7 @@ function renderLearnContent() {
         card.dataset.category = category;
         
         card.innerHTML = `
-            <div class="learn-card-header" style="background: linear-gradient(135deg, ${data.color}, ${data.color}dd)">
+            <div class="learn-card-header">
                 <h2 class="learn-card-title"><i class="fas ${data.icon}"></i> ${data.name}</h2>
                 <span>${data.flashcards.length} terms</span>
             </div>
@@ -1141,6 +1141,13 @@ function renderLearnContent() {
         
         container.appendChild(card);
     });
+    
+    // MOBILE FIX: Remove all inline styles from learn content for mobile responsiveness
+    if (window.innerWidth <= 767) {
+        container.querySelectorAll('[style]').forEach(el => {
+            el.removeAttribute('style');
+        });
+    }
     
     // Filter functionality
     document.querySelectorAll('.filter-btn').forEach(btn => {
