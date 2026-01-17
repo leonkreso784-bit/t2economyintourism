@@ -21,124 +21,230 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260117j">
+    <link rel="stylesheet" href="styles.css?v=20260117k">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Critical Mobile Learn Styles - BEAUTIFUL & READABLE -->
+    <!-- ====== MOBILE LEARN - PREMIUM DESIGN ====== -->
     <style>
         @media screen and (max-width: 767px) {
-            /* FORCE FIT SCREEN */
-            html, body { overflow-x: hidden !important; max-width: 100vw !important; }
-            #learn, #learn * { max-width: 100% !important; box-sizing: border-box !important; overflow-wrap: break-word !important; word-wrap: break-word !important; }
-            
-            /* Container */
-            #learn, section#learn { width: 100% !important; max-width: 100vw !important; padding: 0 !important; margin: 0 !important; overflow-x: hidden !important; }
-            #learn .learn-container, .learn-container { 
-                width: 100% !important; max-width: 100% !important; 
-                padding: 8px !important; margin: 0 !important; padding-bottom: 90px !important; 
-                overflow-x: hidden !important;
-            }
-            
-            /* Title - bigger */
-            #learn .learn-container h1, .learn-container h1 { 
-                font-size: 1.1rem !important; 
-                padding: 0.5rem 0.75rem !important; 
-                margin: 0 0 10px 0 !important; 
-                width: 100% !important;
-                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-                border-radius: 12px !important;
-                color: white !important;
-            }
-            
-            /* BEAUTIFUL CARDS */
-            #learn .learn-card, .learn-card { 
-                width: 100% !important; 
+            /* === RESET & FIT === */
+            html, body { overflow-x: hidden !important; }
+            #learn, #learn *, .learn-container, .learn-container * { 
                 max-width: 100% !important; 
-                margin: 0 0 12px 0 !important; 
-                border-radius: 16px !important; 
-                overflow: hidden !important;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.15) !important;
-                border: 1px solid rgba(255,255,255,0.1) !important;
-            }
-            #learn .learn-card-header, .learn-card-header { 
-                padding: 12px 14px !important; 
-                width: 100% !important;
-                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-            }
-            #learn .learn-card-header h2, .learn-card-header h2, .learn-card-title { 
-                font-size: 1rem !important; 
-                margin: 0 !important; 
-                line-height: 1.3 !important;
-                color: white !important;
-                font-weight: 600 !important;
+                box-sizing: border-box !important; 
+                overflow-wrap: break-word !important;
             }
             
-            /* READABLE CONTENT - BIGGER TEXT */
-            #learn .learn-card-content, .learn-card-content { 
-                padding: 14px 12px !important; 
+            /* === MAIN CONTAINER === */
+            #learn, section#learn { 
                 width: 100% !important; 
-                max-width: 100% !important;
-                font-size: 0.92rem !important; 
-                line-height: 1.5 !important;
+                padding: 0 !important; 
+                margin: 0 !important; 
                 overflow-x: hidden !important;
+                background: var(--bg-primary) !important;
+            }
+            .learn-container { 
+                padding: 10px !important; 
+                padding-bottom: 100px !important;
+            }
+            
+            /* === SECTION TITLE === */
+            .learn-container > h1, #learn h1:first-of-type { 
+                font-size: 1.15rem !important; 
+                font-weight: 700 !important;
+                padding: 14px 16px !important; 
+                margin: 0 0 14px 0 !important; 
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%) !important;
+                border-radius: 16px !important;
+                color: white !important;
+                text-align: center !important;
+                box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35) !important;
+                letter-spacing: 0.3px !important;
+            }
+            
+            /* === CATEGORY PILLS === */
+            .learn-categories, .category-filters { 
+                display: flex !important;
+                gap: 8px !important;
+                overflow-x: auto !important;
+                padding: 8px 4px 14px 4px !important;
+                margin-bottom: 10px !important;
+            }
+            .learn-categories button, .category-btn {
+                flex-shrink: 0 !important;
+                padding: 8px 16px !important;
+                border-radius: 20px !important;
+                font-size: 0.82rem !important;
+                font-weight: 600 !important;
+                border: 2px solid transparent !important;
+                background: var(--card-bg) !important;
+                color: var(--text-primary) !important;
+                transition: all 0.2s !important;
+            }
+            .learn-categories button.active, .category-btn.active {
+                background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+                color: white !important;
+                box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4) !important;
+            }
+            
+            /* === LEARN CARDS - PREMIUM === */
+            .learn-card { 
+                width: 100% !important; 
+                margin: 0 0 16px 0 !important; 
+                border-radius: 20px !important; 
+                overflow: hidden !important;
+                background: var(--card-bg) !important;
+                box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+                border: 1px solid rgba(99, 102, 241, 0.15) !important;
+            }
+            
+            /* Card Header - Gradient */
+            .learn-card-header { 
+                padding: 14px 16px !important; 
+                background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+                border-bottom: none !important;
+            }
+            .learn-card-header h2, .learn-card-title { 
+                font-size: 1.05rem !important; 
+                margin: 0 !important; 
+                line-height: 1.35 !important;
+                color: white !important;
+                font-weight: 700 !important;
+                text-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+            }
+            .learn-card-header .card-meta, .learn-card-header span {
+                color: rgba(255,255,255,0.85) !important;
+                font-size: 0.78rem !important;
+            }
+            
+            /* Card Content - Clean & Readable */
+            .learn-card-content { 
+                padding: 18px 16px !important; 
+                font-size: 0.95rem !important; 
+                line-height: 1.65 !important;
+                color: var(--text-primary) !important;
                 background: var(--card-bg) !important;
             }
-            #learn .learn-card-content h3, .learn-card-content h3 { 
-                font-size: 1.05rem !important; 
-                margin: 0.5rem 0 0.4rem 0 !important;
-                color: var(--primary-color) !important;
+            
+            /* Headings in content */
+            .learn-card-content h3 { 
+                font-size: 1.1rem !important; 
+                margin: 1rem 0 0.6rem 0 !important;
+                color: #6366f1 !important;
                 font-weight: 700 !important;
+                padding-bottom: 6px !important;
+                border-bottom: 2px solid rgba(99, 102, 241, 0.2) !important;
             }
-            #learn .learn-card-content h4, .learn-card-content h4 { 
-                font-size: 0.95rem !important; 
-                margin: 0.4rem 0 0.3rem 0 !important;
+            .learn-card-content h4 { 
+                font-size: 1rem !important; 
+                margin: 0.8rem 0 0.4rem 0 !important;
+                font-weight: 600 !important;
+                color: var(--text-primary) !important;
+            }
+            .learn-card-content h5 {
+                font-size: 0.92rem !important;
+                margin: 0.6rem 0 0.3rem 0 !important;
                 font-weight: 600 !important;
             }
-            #learn .learn-card-content p, .learn-card-content p { 
+            
+            /* Paragraphs */
+            .learn-card-content p { 
+                font-size: 0.92rem !important; 
+                line-height: 1.7 !important; 
+                margin: 0 0 0.75rem 0 !important;
+                color: var(--text-primary) !important;
+            }
+            
+            /* Lists - Beautiful */
+            .learn-card-content ul, .learn-card-content ol { 
+                margin: 0.6rem 0 !important; 
+                padding-left: 1.4rem !important;
+            }
+            .learn-card-content li { 
                 font-size: 0.9rem !important; 
-                line-height: 1.55 !important; 
-                margin: 0 0 0.5rem 0 !important;
+                line-height: 1.6 !important; 
+                margin-bottom: 0.4rem !important;
+                padding-left: 4px !important;
             }
-            #learn .learn-card-content ul, .learn-card-content ul, #learn .learn-card-content ol, .learn-card-content ol { 
-                margin: 0.4rem 0 !important; padding-left: 1.3rem !important; width: 100% !important; 
-            }
-            #learn .learn-card-content li, .learn-card-content li { 
-                font-size: 0.88rem !important; 
-                line-height: 1.5 !important; 
-                margin-bottom: 0.25rem !important;
+            .learn-card-content li::marker {
+                color: #6366f1 !important;
             }
             
-            /* BEAUTIFUL BOXES */
-            #learn .formula-box, .formula-box, #learn .tip-box, .tip-box, #learn .warning-box, .warning-box, #learn .example-box, .example-box { 
-                padding: 12px 14px !important; 
-                margin: 10px 0 !important; 
-                font-size: 0.88rem !important; 
-                width: 100% !important;
+            /* === INFO BOXES - MODERN === */
+            .formula-box, .tip-box, .warning-box, .example-box,
+            .learn-card-content div[style*="background"] { 
+                padding: 14px 16px !important; 
+                margin: 14px 0 !important; 
+                font-size: 0.9rem !important; 
+                border-radius: 14px !important;
+                line-height: 1.6 !important;
+                border-left: 4px solid !important;
+            }
+            .formula-box {
+                background: rgba(99, 102, 241, 0.08) !important;
+                border-left-color: #6366f1 !important;
+            }
+            .tip-box {
+                background: rgba(16, 185, 129, 0.08) !important;
+                border-left-color: #10b981 !important;
+            }
+            .warning-box {
+                background: rgba(239, 68, 68, 0.08) !important;
+                border-left-color: #ef4444 !important;
+            }
+            .example-box {
+                background: rgba(245, 158, 11, 0.08) !important;
+                border-left-color: #f59e0b !important;
+            }
+            
+            /* Box titles */
+            .formula-box strong:first-child, .tip-box h4:first-child, 
+            .warning-box h4:first-child, .example-box h4:first-child {
+                display: block !important;
+                font-size: 0.88rem !important;
+                font-weight: 700 !important;
+                margin-bottom: 8px !important;
+            }
+            
+            /* === OVERRIDE INLINE STYLES === */
+            #learn [style], .learn-card-content [style] { 
                 max-width: 100% !important;
-                box-sizing: border-box !important;
-                overflow-x: hidden !important;
-                border-radius: 12px !important;
-                line-height: 1.5 !important;
+                padding: 14px 16px !important; 
+                margin: 12px 0 !important; 
+                font-size: 0.9rem !important; 
+                border-radius: 14px !important;
+                line-height: 1.6 !important;
             }
             
-            /* Override inline styles - BIGGER */
-            #learn [style], .learn-card-content [style], #learn div[style], #learn p[style], #learn span[style] { 
-                width: 100% !important;
-                max-width: 100% !important;
-                padding: 10px 12px !important; 
-                margin: 8px 0 !important; 
-                font-size: 0.88rem !important; 
-                box-sizing: border-box !important;
-                overflow-x: hidden !important;
-                border-radius: 10px !important;
-                line-height: 1.5 !important;
+            /* HR dividers */
+            .learn-card-content hr {
+                margin: 1rem 0 !important;
+                border: none !important;
+                height: 2px !important;
+                background: linear-gradient(90deg, transparent, rgba(99,102,241,0.3), transparent) !important;
             }
             
-            /* Tables & code */
-            #learn table, .learn-card-content table { width: 100% !important; font-size: 0.82rem !important; display: block !important; overflow-x: auto !important; }
-            #learn pre, .learn-card-content pre, #learn code, .learn-card-content code { 
-                white-space: pre-wrap !important; word-break: break-all !important; max-width: 100% !important; font-size: 0.82rem !important;
+            /* Code & Tables */
+            .learn-card-content pre, .learn-card-content code { 
+                font-size: 0.82rem !important;
+                background: rgba(99, 102, 241, 0.06) !important;
+                padding: 2px 6px !important;
+                border-radius: 6px !important;
+                white-space: pre-wrap !important;
+            }
+            .learn-card-content table { 
+                width: 100% !important; 
+                font-size: 0.82rem !important;
+                border-collapse: collapse !important;
+            }
+            .learn-card-content th, .learn-card-content td {
+                padding: 10px 8px !important;
+                border: 1px solid rgba(99, 102, 241, 0.2) !important;
+            }
+            .learn-card-content th {
+                background: rgba(99, 102, 241, 0.1) !important;
+                font-weight: 600 !important;
             }
         }
     </style>
