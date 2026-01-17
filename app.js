@@ -1585,26 +1585,37 @@ function cleanupLearnContentForMobile() {
     const container = document.getElementById('learnContent');
     if (!container) return;
     
-    // FORCE remove ALL inline styles from everything
-    container.querySelectorAll('[style]').forEach(el => {
-        el.removeAttribute('style');
+    // AGGRESSIVE: Remove ALL inline styles from EVERYTHING
+    container.querySelectorAll('*').forEach(el => {
+        if (el.hasAttribute('style')) {
+            el.removeAttribute('style');
+        }
     });
     
-    // FORCE box widths with inline styles
-    const boxes = container.querySelectorAll('.formula-box, .tip-box, .warning-box, .example-box, [class*="box"]');
-    boxes.forEach(box => {
-        box.style.cssText = 'width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; overflow: hidden !important;';
+    // FORCE widths with inline critical styles
+    container.querySelectorAll('.formula-box, .tip-box, .warning-box, .example-box, div[class*="box"]').forEach(box => {
+        box.setAttribute('style', 'width:100%!important;max-width:100%!important;box-sizing:border-box!important;overflow:hidden!important;font-size:0.72rem!important;padding:6px 8px!important;margin:6px 0!important;');
     });
     
-    // Force all elements to respect width
-    container.querySelectorAll('.learn-card-content *').forEach(el => {
-        el.style.maxWidth = '100%';
-        el.style.boxSizing = 'border-box';
-        el.style.overflowWrap = 'break-word';
-        el.style.wordBreak = 'break-word';
+    // Force tables to be small
+    container.querySelectorAll('table').forEach(table => {
+        table.setAttribute('style', 'width:100%!important;font-size:0.65rem!important;');
+    });
+    container.querySelectorAll('th, td').forEach(cell => {
+        cell.setAttribute('style', 'padding:4px 6px!important;font-size:0.65rem!important;');
     });
     
-    console.log('Mobile learn content cleaned up - FORCED');
+    // Force headings in boxes
+    container.querySelectorAll('.formula-box h4, .tip-box h4, .warning-box h4, .example-box h4').forEach(h => {
+        h.setAttribute('style', 'font-size:0.74rem!important;margin:0 0 3px 0!important;');
+    });
+    
+    // Force paragraphs
+    container.querySelectorAll('.formula-box p, .tip-box p, .warning-box p, .example-box p').forEach(p => {
+        p.setAttribute('style', 'font-size:0.72rem!important;margin:2px 0!important;line-height:1.35!important;');
+    });
+    
+    console.log('Mobile learn content AGGRESSIVELY cleaned up');
 }
 
 // Re-apply mobile cleanup on window resize
