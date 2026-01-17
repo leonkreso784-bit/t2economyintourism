@@ -129,6 +129,7 @@ function saveCurrentPosition(page, data) {
 function restoreLastPosition() {
     try {
         const saved = localStorage.getItem('sokrat-last-position');
+        console.log('Restoring position:', saved);
         if (saved) {
             const position = JSON.parse(saved);
             // Only restore if saved within last 24 hours
@@ -137,12 +138,15 @@ function restoreLastPosition() {
             if (hoursSinceSave < 24 && position.page && position.page !== 'landing') {
                 if (position.page === 'study' && position.subject && position.lesson) {
                     currentCategory = position.category || 'all';
+                    currentSection = position.section || 'home';
                     navigateTo('study', { subject: position.subject, lesson: position.lesson });
                     // Restore section after a short delay to let page render
                     if (position.section && position.section !== 'home') {
                         setTimeout(() => {
-                            showSection(position.section);
-                        }, 100);
+                            if (typeof switchSection === 'function') {
+                                switchSection(position.section);
+                            }
+                        }, 200);
                     }
                     return;
                 } else if (position.page === 'lessons' && position.subject) {
@@ -290,7 +294,7 @@ window.hideAboutUs = hideAboutUs;
 window.navigateTo = navigateTo;
 window.openSidebar = openSidebar;
 window.closeSidebar = closeSidebar;
-window.showSection = switchSection; // Alias for restore functionality
+window.switchSection = switchSection;
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
