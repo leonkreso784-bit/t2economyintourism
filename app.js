@@ -113,9 +113,57 @@ let analytics = {
 
 let sessionStartTime = null;
 
+// ========== POSITION PERSISTENCE ==========
+function saveCurrentPosition(page, data) {
+    const position = {
+        page: page,
+        subject: data.subject || currentSubject,
+        lesson: data.lesson || currentLesson,
+        section: currentSection,
+        category: currentCategory,
+        timestamp: Date.now()
+    };
+    localStorage.setItem('sokrat-last-position', JSON.stringify(position));
+}
+
+function restoreLastPosition() {
+    try {
+        const saved = localStorage.getItem('sokrat-last-position');
+        if (saved) {
+            const position = JSON.parse(saved);
+            // Only restore if saved within last 24 hours
+            const hoursSinceSave = (Date.now() - position.timestamp) / (1000 * 60 * 60);
+            
+            if (hoursSinceSave < 24 && position.page && position.page !== 'landing') {
+                if (position.page === 'study' && position.subject && position.lesson) {
+                    currentCategory = position.category || 'all';
+                    navigateTo('study', { subject: position.subject, lesson: position.lesson });
+                    // Restore section after a short delay to let page render
+                    if (position.section && position.section !== 'home') {
+                        setTimeout(() => {
+                            showSection(position.section);
+                        }, 100);
+                    }
+                    return;
+                } else if (position.page === 'lessons' && position.subject) {
+                    navigateTo('lessons', { subject: position.subject });
+                    return;
+                }
+            }
+        }
+    } catch (e) {
+        console.log('Could not restore position:', e);
+    }
+    // Default to landing
+    navigateTo('landing');
+}
+
 // ========== PAGE NAVIGATION ==========
 function navigateTo(page, data = {}) {
     currentPage = page;
+    
+    // Save current position to localStorage
+    saveCurrentPosition(page, data);
     
     // Hide all pages
     document.querySelectorAll('.landing-page, .lessons-page, .study-page, .about-page').forEach(p => {
@@ -242,6 +290,7 @@ window.hideAboutUs = hideAboutUs;
 window.navigateTo = navigateTo;
 window.openSidebar = openSidebar;
 window.closeSidebar = closeSidebar;
+window.showSection = switchSection; // Alias for restore functionality
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -251,8 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Set up event listeners
     setupEventListeners();
     
-    // Start on landing page
-    navigateTo('landing');
+    // Restore last position or go to landing
+    restoreLastPosition();
 });
 
 function setupEventListeners() {
@@ -338,6 +387,9 @@ window.showSubjectSelector = showSubjectSelector;
 // ========== SECTION NAVIGATION ==========
 function switchSection(section) {
     currentSection = section;
+    
+    // Save position when section changes
+    saveCurrentPosition(currentPage, { subject: currentSubject, lesson: currentLesson });
     
     // Update nav buttons
     document.querySelectorAll('.study-nav-btn').forEach(btn => {
@@ -580,6 +632,9 @@ function switchSection(section) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(section).classList.add('active');
     currentSection = section;
+    
+    // Save position when section changes
+    saveCurrentPosition(currentPage, { subject: currentSubject, lesson: currentLesson });
     
     // Scroll to top when switching sections
     window.scrollTo({ top: 0, behavior: 'smooth' });
