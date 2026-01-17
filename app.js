@@ -1585,37 +1585,39 @@ function cleanupLearnContentForMobile() {
     const container = document.getElementById('learnContent');
     if (!container) return;
     
-    // AGGRESSIVE: Remove ALL inline styles from EVERYTHING
+    // STEP 1: Remove ALL inline styles from EVERYTHING first
     container.querySelectorAll('*').forEach(el => {
-        if (el.hasAttribute('style')) {
-            el.removeAttribute('style');
-        }
+        el.removeAttribute('style');
     });
     
-    // FORCE widths with inline critical styles
-    container.querySelectorAll('.formula-box, .tip-box, .warning-box, .example-box, div[class*="box"]').forEach(box => {
-        box.setAttribute('style', 'width:100%!important;max-width:100%!important;box-sizing:border-box!important;overflow:hidden!important;font-size:0.72rem!important;padding:6px 8px!important;margin:6px 0!important;');
+    // STEP 2: Force 10px font size on ALL text elements
+    const allText = container.querySelectorAll('p, span, li, td, th, strong, em, a, div, h4, h5');
+    allText.forEach(el => {
+        el.style.fontSize = '10px';
+        el.style.lineHeight = '1.35';
+        el.style.maxWidth = '100%';
     });
     
-    // Force tables to be small
-    container.querySelectorAll('table').forEach(table => {
-        table.setAttribute('style', 'width:100%!important;font-size:0.65rem!important;');
-    });
-    container.querySelectorAll('th, td').forEach(cell => {
-        cell.setAttribute('style', 'padding:4px 6px!important;font-size:0.65rem!important;');
+    // STEP 3: Force box styles
+    const boxes = container.querySelectorAll('.formula-box, .tip-box, .warning-box, .example-box, [class*="-box"]');
+    boxes.forEach(box => {
+        box.style.cssText = 'width:100%!important;max-width:100%!important;padding:4px 6px!important;margin:4px 0!important;font-size:10px!important;overflow:hidden!important;box-sizing:border-box!important;';
     });
     
-    // Force headings in boxes
-    container.querySelectorAll('.formula-box h4, .tip-box h4, .warning-box h4, .example-box h4').forEach(h => {
-        h.setAttribute('style', 'font-size:0.74rem!important;margin:0 0 3px 0!important;');
+    // STEP 4: Force h3 headings
+    container.querySelectorAll('h3').forEach(h => {
+        h.style.cssText = 'font-size:12px!important;margin:8px 0 4px 0!important;';
     });
     
-    // Force paragraphs
-    container.querySelectorAll('.formula-box p, .tip-box p, .warning-box p, .example-box p').forEach(p => {
-        p.setAttribute('style', 'font-size:0.72rem!important;margin:2px 0!important;line-height:1.35!important;');
+    // STEP 5: Force tables
+    container.querySelectorAll('table').forEach(t => {
+        t.style.cssText = 'width:100%!important;font-size:9px!important;';
+    });
+    container.querySelectorAll('th, td').forEach(c => {
+        c.style.cssText = 'padding:3px 4px!important;font-size:9px!important;';
     });
     
-    console.log('Mobile learn content AGGRESSIVELY cleaned up');
+    console.log('Mobile cleanup: 10px fonts applied');
 }
 
 // Re-apply mobile cleanup on window resize

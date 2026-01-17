@@ -1,0 +1,357 @@
+/* =====================================================
+   MOBILE LEARN STYLES
+   Separate file for easier maintenance
+   Optimized for iPhone and all mobile devices
+   ===================================================== */
+
+/* ===== MOBILE ONLY (max-width: 767px) ===== */
+@media screen and (max-width: 767px) {
+    
+    /* ===== LEARN SECTION BASE ===== */
+    #learn {
+        width: 100% !important;
+        max-width: 100vw !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+    }
+    
+    #learn .learn-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px !important;
+        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* ===== LEARN TITLE/HEADER ===== */
+    #learn .learn-container > h1 {
+        font-size: 0.9rem !important;
+        padding: 10px 12px !important;
+        margin: 0 0 8px 0 !important;
+        background: linear-gradient(135deg, var(--primary), #8b5cf6) !important;
+        border-radius: 10px !important;
+        color: white !important;
+        text-align: center !important;
+    }
+    
+    #learn .learn-container > h1 i {
+        font-size: 1rem !important;
+    }
+    
+    /* ===== FILTER BUTTONS ===== */
+    #learn .learn-filter {
+        display: flex !important;
+        gap: 6px !important;
+        padding: 4px 0 8px 0 !important;
+        margin-bottom: 6px !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+    
+    #learn .learn-filter::-webkit-scrollbar {
+        display: none !important;
+    }
+    
+    #learn .filter-btn {
+        padding: 6px 10px !important;
+        font-size: 0.7rem !important;
+        min-height: 30px !important;
+        border-radius: 15px !important;
+        flex-shrink: 0 !important;
+        white-space: nowrap !important;
+    }
+    
+    /* ===== LEARN CARDS ===== */
+    #learn .learn-card {
+        margin: 0 0 8px 0 !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+        background: var(--bg-secondary) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
+        border: 1px solid var(--border) !important;
+    }
+    
+    /* ===== CARD HEADER - like bottom nav ===== */
+    #learn .learn-card-header {
+        padding: 8px 10px !important;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    }
+    
+    #learn .learn-card-header h2,
+    #learn .learn-card-header h3,
+    #learn .learn-card-title {
+        font-size: 0.8rem !important;
+        color: white !important;
+        margin: 0 !important;
+        font-weight: 600 !important;
+    }
+    
+    #learn .learn-card-header span {
+        font-size: 0.6rem !important;
+        padding: 2px 6px !important;
+        border-radius: 8px !important;
+    }
+    
+    #learn .learn-card-header i {
+        font-size: 0.9rem !important;
+    }
+    
+    /* ===== CARD CONTENT ===== */
+    #learn .learn-card-content {
+        padding: 8px 10px !important;
+        font-size: 11px !important;
+        line-height: 1.4 !important;
+    }
+    
+    /* Force everything to fit */
+    #learn .learn-card-content,
+    #learn .learn-card-content * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* ===== HEADINGS ===== */
+    #learn .learn-card-content h3 {
+        font-size: 12px !important;
+        color: var(--primary) !important;
+        margin: 8px 0 4px 0 !important;
+        padding-bottom: 3px !important;
+        border-bottom: 1px solid var(--primary) !important;
+        font-weight: 600 !important;
+    }
+    
+    #learn .learn-card-content h3:first-child {
+        margin-top: 0 !important;
+    }
+    
+    #learn .learn-card-content h4 {
+        font-size: 11px !important;
+        margin: 6px 0 3px 0 !important;
+        font-weight: 600 !important;
+    }
+    
+    #learn .learn-card-content h5 {
+        font-size: 10px !important;
+        margin: 4px 0 2px 0 !important;
+        font-weight: 600 !important;
+    }
+    
+    /* ===== PARAGRAPHS ===== */
+    #learn .learn-card-content p {
+        font-size: 10px !important;
+        line-height: 1.4 !important;
+        margin: 0 0 4px 0 !important;
+    }
+    
+    /* ===== LISTS ===== */
+    #learn .learn-card-content ul,
+    #learn .learn-card-content ol {
+        margin: 4px 0 !important;
+        padding-left: 16px !important;
+    }
+    
+    #learn .learn-card-content li {
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+        padding: 1px 0 !important;
+    }
+    
+    /* ===== ALL BOXES - COMPACT ===== */
+    #learn .formula-box,
+    #learn .tip-box,
+    #learn .warning-box,
+    #learn .example-box,
+    #learn [class*="-box"],
+    .learn-card-content .formula-box,
+    .learn-card-content .tip-box,
+    .learn-card-content .warning-box,
+    .learn-card-content .example-box,
+    .learn-card-content [class*="-box"] {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        padding: 4px 6px !important;
+        margin: 4px 0 !important;
+        border-radius: 4px !important;
+        border: none !important;
+        border-left: 2px solid !important;
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+        overflow: hidden !important;
+    }
+    
+    /* Formula box colors */
+    #learn .formula-box,
+    .learn-card-content .formula-box {
+        background: rgba(99, 102, 241, 0.08) !important;
+        border-left-color: var(--primary) !important;
+    }
+    
+    /* Tip box colors */
+    #learn .tip-box,
+    .learn-card-content .tip-box {
+        background: rgba(16, 185, 129, 0.08) !important;
+        border-left-color: var(--secondary) !important;
+    }
+    
+    /* Warning box colors */
+    #learn .warning-box,
+    .learn-card-content .warning-box {
+        background: rgba(239, 68, 68, 0.08) !important;
+        border-left-color: var(--danger) !important;
+    }
+    
+    /* Example box colors */
+    #learn .example-box,
+    .learn-card-content .example-box {
+        background: rgba(245, 158, 11, 0.08) !important;
+        border-left-color: var(--accent) !important;
+    }
+    
+    /* Box content */
+    #learn .formula-box *,
+    #learn .tip-box *,
+    #learn .warning-box *,
+    #learn .example-box *,
+    .learn-card-content .formula-box *,
+    .learn-card-content .tip-box *,
+    .learn-card-content .warning-box *,
+    .learn-card-content .example-box * {
+        font-size: 10px !important;
+        line-height: 1.35 !important;
+        max-width: 100% !important;
+    }
+    
+    #learn .formula-box h4,
+    #learn .tip-box h4,
+    #learn .warning-box h4,
+    #learn .example-box h4 {
+        font-size: 10px !important;
+        margin: 0 0 2px 0 !important;
+        font-weight: 600 !important;
+    }
+    
+    #learn .formula-box p,
+    #learn .tip-box p,
+    #learn .warning-box p,
+    #learn .example-box p {
+        font-size: 10px !important;
+        margin: 1px 0 !important;
+    }
+    
+    #learn .formula-box strong,
+    #learn .tip-box strong,
+    #learn .warning-box strong,
+    #learn .example-box strong {
+        font-size: 10px !important;
+        font-weight: 600 !important;
+    }
+    
+    /* ===== TABLES ===== */
+    #learn .learn-card-content table {
+        width: 100% !important;
+        margin: 4px 0 !important;
+        font-size: 9px !important;
+        border-collapse: collapse !important;
+    }
+    
+    #learn .learn-card-content th,
+    #learn .learn-card-content td {
+        padding: 3px 4px !important;
+        font-size: 9px !important;
+        border: 1px solid var(--border) !important;
+    }
+    
+    #learn .learn-card-content th {
+        background: var(--primary) !important;
+        color: white !important;
+        font-weight: 600 !important;
+    }
+    
+    /* ===== HORIZONTAL RULES ===== */
+    #learn .learn-card-content hr {
+        margin: 6px 0 !important;
+        border: none !important;
+        height: 1px !important;
+        background: var(--border) !important;
+    }
+    
+    /* ===== IMAGES ===== */
+    #learn .learn-card-content img {
+        max-width: 100% !important;
+        height: auto !important;
+        margin: 4px 0 !important;
+        border-radius: 4px !important;
+    }
+    
+    /* ===== CODE/PRE ===== */
+    #learn .learn-card-content code,
+    #learn .learn-card-content pre {
+        font-size: 9px !important;
+        padding: 2px 4px !important;
+        border-radius: 2px !important;
+        background: var(--bg-tertiary) !important;
+    }
+    
+    /* ===== HIGHLIGHT ===== */
+    #learn .learn-card-content .highlight {
+        padding: 1px 3px !important;
+        border-radius: 2px !important;
+        font-size: 10px !important;
+    }
+}
+
+/* ===== EXTRA SMALL SCREENS (iPhone SE) ===== */
+@media screen and (max-width: 374px) {
+    #learn .learn-container {
+        padding: 6px !important;
+    }
+    
+    #learn .learn-container > h1 {
+        font-size: 0.8rem !important;
+        padding: 8px 10px !important;
+    }
+    
+    #learn .filter-btn {
+        padding: 5px 8px !important;
+        font-size: 0.65rem !important;
+    }
+    
+    #learn .learn-card-header {
+        padding: 6px 8px !important;
+    }
+    
+    #learn .learn-card-header h2,
+    #learn .learn-card-header h3 {
+        font-size: 0.75rem !important;
+    }
+    
+    #learn .learn-card-content {
+        padding: 6px 8px !important;
+        font-size: 10px !important;
+    }
+    
+    #learn .learn-card-content h3 {
+        font-size: 11px !important;
+    }
+    
+    #learn .learn-card-content p,
+    #learn .learn-card-content li {
+        font-size: 9px !important;
+    }
+    
+    #learn .formula-box,
+    #learn .tip-box,
+    #learn .warning-box,
+    #learn .example-box {
+        padding: 3px 5px !important;
+        font-size: 9px !important;
+    }
+}
