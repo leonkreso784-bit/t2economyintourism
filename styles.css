@@ -13,8 +13,8 @@
     --bg-tertiary: #f1f5f9;
     
     --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-muted: #64748b; /* Changed from #94a3b8 for better contrast */
+    --text-secondary: #475569; /* Darkened from #64748b for better contrast */
+    --text-muted: #475569; /* Darkened for better contrast */
     
     --border: #e2e8f0;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -42,8 +42,8 @@
     --bg-tertiary: #334155;
     
     --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #9ca3af; /* Improved contrast for dark mode */
+    --text-secondary: #e2e8f0; /* Lightened for better contrast on dark bg */
+    --text-muted: #d1d5db; /* Lightened for better contrast on dark bg */
     
     --border: #475569;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
@@ -51,7 +51,7 @@
 
 /* Subject item meta needs higher contrast */
 .subject-item-meta span {
-    color: var(--text-secondary);
+    color: var(--text-primary);
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -2494,10 +2494,16 @@ div.subject-card {
     margin: 2rem 0;
     border: 2px dashed var(--border);
     line-height: 2;
+    color: var(--text-primary);
 }
 
 .formula-box strong {
-    color: var(--primary);
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+[data-theme="dark"] .formula-box strong {
+    color: #a5b4fc; /* Lighter purple for dark mode */
 }
 
 /* ===== FLASHCARDS SECTION ===== */
@@ -5706,4 +5712,75 @@ div.subject-card {
         font-size: 0.68rem !important;
         margin: 0 !important;
     }
+}
+
+/* ===== ACCESSIBILITY CONTRAST FIXES ===== */
+/* Fix h5 contrast in learn cards */
+.learn-card-content h5 {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Fix strong elements in formula boxes */
+.formula-box strong,
+.tip-box strong,
+.warning-box strong,
+.example-box strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+[data-theme="dark"] .formula-box strong,
+[data-theme="dark"] .tip-box strong {
+    color: #e0e7ff;
+}
+
+[data-theme="dark"] .warning-box strong {
+    color: #fecaca;
+}
+
+[data-theme="dark"] .example-box strong {
+    color: #fef3c7;
+}
+
+/* Fix category filter buttons contrast */
+.category-btn,
+button[data-filter] {
+    color: var(--text-primary);
+}
+
+.category-btn.active,
+button[data-filter].active {
+    color: white;
+    background: var(--primary);
+}
+
+/* Fix study-nav-btn active state */
+.study-nav-btn.active,
+.study-nav-btn.active span,
+.study-nav-btn.active i {
+    color: white !important;
+}
+
+/* Fix mobile nav button text */
+.mobile-nav-btn span {
+    color: var(--text-primary);
+}
+
+.mobile-nav-btn.active span,
+.mobile-nav-btn.active i {
+    color: var(--primary);
+}
+
+/* Ensure all text in learn cards has good contrast */
+.learn-card-content,
+.learn-card-content p,
+.learn-card-content li,
+.learn-card-content span {
+    color: var(--text-primary);
+}
+
+.learn-card-content strong {
+    color: var(--text-primary);
+    font-weight: 700;
 }
