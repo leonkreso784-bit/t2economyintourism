@@ -1,26 +1,65 @@
 // ===== SOKRAT STUDY - MAIN APPLICATION =====
 // Supports multiple subjects: TE2 and Business Entrepreneurship
+// New Architecture: Landing → Subjects → Lessons → Study Activities
 
 // ========== SUBJECT DATA MAPPING ==========
 const subjectDataMap = {
     te2: {
         data: typeof studyData !== 'undefined' ? studyData : {},
-        name: 'Tourism Economics 2',
-        shortName: 'TE2',
-        storageKey: 'te2-progress'
+        name: 'Tourism Economics',
+        shortName: 'TE',
+        icon: 'fa-plane',
+        color: '#6366f1',
+        description: 'Pricing, TSA, Expenditure, Environment, Sustainability',
+        storageKey: 'te2-progress',
+        lessons: [
+            {
+                id: 'exam-prep',
+                name: 'Exam Preparation',
+                description: 'Complete study material for the exam'
+            }
+        ]
     },
     entrepreneurship: {
         data: typeof entrepreneurshipData !== 'undefined' ? entrepreneurshipData : {},
         name: 'Business Entrepreneurship',
         shortName: 'Entrep',
-        storageKey: 'entrepreneurship-progress'
+        icon: 'fa-rocket',
+        color: '#8b5cf6',
+        description: 'Planning, Failure & Learning, Social Entrepreneurship, Trends',
+        storageKey: 'entrepreneurship-progress',
+        lessons: [
+            {
+                id: 'business-fundamentals',
+                name: 'Business Fundamentals',
+                description: 'Core concepts and planning tools'
+            }
+        ]
+    },
+    accounting: {
+        data: typeof accountingData !== 'undefined' ? accountingData : {},
+        name: 'Accounting Theory',
+        shortName: 'Accounting',
+        icon: 'fa-coins',
+        color: '#059669',
+        description: 'Cash Control, Budgeting, SEC Reports, Financial Analysis',
+        storageKey: 'accounting-progress',
+        lessons: [
+            {
+                id: 'accounting-fundamentals',
+                name: 'Accounting Fundamentals',
+                description: 'Complete accounting theory for hospitality'
+            }
+        ]
     }
 };
 
 // ========== GLOBAL STATE ==========
+let currentPage = 'landing'; // landing, lessons, study, about
 let currentSubject = null;
+let currentLesson = null;
 let currentData = null;
-let currentSection = 'subject-selector';
+let currentSection = 'home';
 let currentCategory = 'all';
 
 // Flashcard state
@@ -55,7 +94,7 @@ let progress = {
 
 // Analytics state
 let analytics = {
-    totalStudyTime: 0,           // in seconds
+    totalStudyTime: 0,
     sessionsCount: 0,
     quizzesTaken: 0,
     quizzesCompleted: 0,
@@ -64,8 +103,8 @@ let analytics = {
     wrongAnswers: 0,
     flashcardsReviewed: 0,
     fillExercisesDone: 0,
-    categoryStats: {},           // per category stats
-    dailyActivity: {},           // date -> { studyTime, quizzes, flashcards }
+    categoryStats: {},
+    dailyActivity: {},
     averageQuizScore: 0,
     bestQuizScore: 0,
     lastSessionDate: null,
@@ -74,200 +113,335 @@ let analytics = {
 
 let sessionStartTime = null;
 
-// ========== ABOUT US FUNCTIONS (must be global immediately) ==========
-function showAboutUs() {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+// ========== PAGE NAVIGATION ==========
+function navigateTo(page, data = {}) {
+    currentPage = page;
     
-    // Show about us
-    document.getElementById('about-us').classList.add('active');
+    // Hide all pages
+    document.querySelectorAll('.landing-page, .lessons-page, .study-page, .about-page').forEach(p => {
+        p.classList.remove('active');
+    });
     
-    // Scroll to top
+    // Show target page
+    switch(page) {
+        case 'landing':
+            document.getElementById('landing-page').classList.add('active');
+            closeSidebar();
+            break;
+            
+        case 'lessons':
+            if (data.subject) {
+                currentSubject = data.subject;
+                renderLessonsPage(data.subject);
+            }
+            document.getElementById('lessons-page').classList.add('active');
+            closeSidebar();
+            break;
+            
+        case 'study':
+            if (data.subject && data.lesson) {
+                currentSubject = data.subject;
+                currentLesson = data.lesson;
+                initStudyPage(data.subject, data.lesson);
+            }
+            document.getElementById('study-page').classList.add('active');
+            break;
+            
+        case 'about':
+            document.getElementById('about-page').classList.add('active');
+            break;
+    }
+    
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== SIDEBAR FUNCTIONS ==========
+function openSidebar() {
+    document.getElementById('subjectsSidebar').classList.add('active');
+    document.getElementById('subjectsOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeSidebar() {
+    document.getElementById('subjectsSidebar').classList.remove('active');
+    document.getElementById('subjectsOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// ========== LESSONS PAGE ==========
+function renderLessonsPage(subjectId) {
+    const subject = subjectDataMap[subjectId];
+    if (!subject) return;
+    
+    // Update header
+    document.getElementById('currentSubjectTitle').textContent = subject.name;
+    document.getElementById('subjectDescription').textContent = subject.description;
+    
+    // Render lessons
+    const grid = document.getElementById('lessonsGrid');
+    grid.innerHTML = '';
+    
+    subject.lessons.forEach((lesson, index) => {
+        const card = document.createElement('div');
+        card.className = 'lesson-card';
+        card.innerHTML = `
+            <div class="lesson-number">${index + 1}</div>
+            <div class="lesson-info">
+                <h3>${lesson.name}</h3>
+                <p>${lesson.description}</p>
+            </div>
+            <i class="fas fa-chevron-right lesson-arrow"></i>
+        `;
+        card.addEventListener('click', () => {
+            navigateTo('study', { subject: subjectId, lesson: lesson.id });
+        });
+        grid.appendChild(card);
+    });
+}
+
+// ========== STUDY PAGE ==========
+function initStudyPage(subjectId, lessonId) {
+    const subject = subjectDataMap[subjectId];
+    if (!subject) return;
+    
+    currentData = subject.data;
+    
+    // Update breadcrumb
+    document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > Lessons`;
+    document.getElementById('currentLessonTitle').textContent = subject.lessons.find(l => l.id === lessonId)?.name || 'Lesson';
+    
+    // Load progress
+    loadProgress();
+    
+    // Initialize all study sections
+    initNavigation();
+    updateCategoryButtons();
+    updateLearnFilters();
+    updateQuizCategories();
+    initFlashcards();
+    initFill();
+    renderLearnContent();
+    renderProgressPage();
+    
+    // Show home section by default
+    switchSection('home');
+}
+
+// ========== ABOUT US FUNCTIONS ==========
+function showAboutUs() {
+    navigateTo('about');
 }
 
 function hideAboutUs() {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    
-    // Show subject selector
-    document.getElementById('subject-selector').classList.add('active');
-    
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigateTo('landing');
 }
 
-// Make About Us functions globally available immediately
+// Make functions globally available
 window.showAboutUs = showAboutUs;
 window.hideAboutUs = hideAboutUs;
+window.navigateTo = navigateTo;
+window.openSidebar = openSidebar;
+window.closeSidebar = closeSidebar;
 
 // ========== INITIALIZATION ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // Clear any saved subject selection - always start fresh with subject selector
-    localStorage.removeItem('study-master-current-subject');
-    
-    // Always start with subject selector - reset UI state
-    resetToSubjectSelector();
-    initSubjectSelector();
+    // Initialize theme
     initTheme();
+    
+    // Set up event listeners
+    setupEventListeners();
+    
+    // Start on landing page
+    navigateTo('landing');
 });
 
-// Reset UI to show subject selector on page load
-function resetToSubjectSelector() {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    
-    // Show only subject selector
-    document.getElementById('subject-selector').classList.add('active');
-    
-    // Hide navigation elements
-    const mainNav = document.getElementById('mainNav');
-    const backBtn = document.getElementById('backToSubjects');
-    const mobileNav = document.querySelector('.mobile-nav');
-    
-    if (mainNav) {
-        mainNav.classList.remove('nav-visible');
-        mainNav.style.display = '';
-    }
-    if (backBtn) backBtn.style.display = 'none';
-    if (mobileNav) {
-        mobileNav.classList.remove('nav-visible');
-        mobileNav.style.display = '';
+function setupEventListeners() {
+    // Open Study button
+    const openStudyBtn = document.getElementById('openStudyBtn');
+    if (openStudyBtn) {
+        openStudyBtn.addEventListener('click', openSidebar);
     }
     
-    // Reset logo text
-    document.getElementById('logoText').textContent = 'Sokrat Study';
+    // Close sidebar
+    const closeSidebarBtn = document.getElementById('closeSidebar');
+    if (closeSidebarBtn) {
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+    }
     
-    // Reset current data
-    currentData = null;
-    currentSubject = null;
-}
-
-// ========== SUBJECT SELECTOR ==========
-function initSubjectSelector() {
-    // Event listener on entire card
-    const subjectCards = document.querySelectorAll('.subject-card');
-    subjectCards.forEach(card => {
-        card.addEventListener('click', (e) => {
-            e.preventDefault();
-            const subject = card.dataset.subject;
-            console.log('Card clicked:', subject);
-            selectSubject(subject);
+    // Overlay click closes sidebar
+    const overlay = document.getElementById('subjectsOverlay');
+    if (overlay) {
+        overlay.addEventListener('click', closeSidebar);
+    }
+    
+    // Subject items in sidebar
+    document.querySelectorAll('.subject-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const subjectId = item.dataset.subject;
+            navigateTo('lessons', { subject: subjectId });
         });
     });
     
-    // Also add listener to buttons inside cards
-    const startButtons = document.querySelectorAll('.subject-start-btn');
-    startButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation(); // Prevent double-firing from card click
-            const card = btn.closest('.subject-card');
-            if (card) {
-                const subject = card.dataset.subject;
-                console.log('Button clicked:', subject);
-                selectSubject(subject);
-            }
+    // Back buttons
+    const backToLanding = document.getElementById('backToLanding');
+    if (backToLanding) {
+        backToLanding.addEventListener('click', () => navigateTo('landing'));
+    }
+    
+    const backToLessons = document.getElementById('backToLessons');
+    if (backToLessons) {
+        backToLessons.addEventListener('click', () => navigateTo('lessons', { subject: currentSubject }));
+    }
+    
+    const backFromAbout = document.getElementById('backFromAbout');
+    if (backFromAbout) {
+        backFromAbout.addEventListener('click', () => navigateTo('landing'));
+    }
+    
+    // Theme toggles (multiple on different pages)
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+        btn.addEventListener('click', toggleTheme);
+    });
+    
+    // Study nav buttons
+    document.querySelectorAll('.study-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.dataset.section;
+            switchSection(section);
         });
     });
     
-    // Back to subjects button
-    const backBtn = document.getElementById('backToSubjects');
-    if (backBtn) {
-        backBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSubjectSelector();
+    // Mobile nav buttons in study page
+    document.querySelectorAll('.study-mobile-nav .mobile-nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const section = btn.dataset.section;
+            switchSection(section);
         });
-    }
-    
-    // Logo click - back to subjects
-    const logoBtn = document.getElementById('logoBtn');
-    if (logoBtn) {
-        logoBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showSubjectSelector();
-        });
-        logoBtn.style.cursor = 'pointer';
-    }
-    
-    console.log('Subject selector initialized');
+    });
 }
 
+// ========== LEGACY FUNCTIONS - Keep for compatibility ==========
+
+// This function is kept for backward compatibility but redirects to new system
 function selectSubject(subject) {
-    if (!subject || !subjectDataMap[subject]) {
-        console.error('Invalid subject:', subject);
-        return;
-    }
-    
-    currentSubject = subject;
-    currentData = subjectDataMap[subject].data;
-    
-    // Check if data loaded
-    if (!currentData || Object.keys(currentData).length === 0) {
-        console.error('No data loaded for subject:', subject);
-        showToast('Error loading subject data');
-        return;
-    }
-    
-    console.log('Selecting subject:', subject, currentData);
-    
-    // Update UI
-    document.getElementById('logoText').textContent = subjectDataMap[subject].shortName + ' Study';
-    document.getElementById('homeTitle').textContent = `🎓 Welcome to ${subjectDataMap[subject].shortName} - Sokrat Study`;
-    
-    // Show navigation - use class instead of inline style to respect media queries
-    document.getElementById('mainNav').classList.add('nav-visible');
-    document.getElementById('backToSubjects').style.display = 'flex';
-    document.querySelector('.mobile-nav').classList.add('nav-visible');
-    
-    // Hide subject selector, show home
-    document.getElementById('subject-selector').classList.remove('active');
-    document.getElementById('home').classList.add('active');
-    currentSection = 'home';
-    
-    // Initialize app with selected subject
-    loadProgress();
-    loadAnalytics();
-    initNavigation();
-    initFlashcards();
-    initFill();
-    updateHomeStats();
-    renderLearnContent();
-    updateCategoryButtons();
-    renderProgressPage();
-    updateLearnFilters();
-    updateQuizCategories();
+    navigateTo('lessons', { subject: subject });
 }
 
 function showSubjectSelector() {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    
-    // Show subject selector
-    document.getElementById('subject-selector').classList.add('active');
-    currentSection = 'subject-selector';
-    
-    // Hide navigation - remove class and clear inline styles
-    document.getElementById('mainNav').classList.remove('nav-visible');
-    document.getElementById('mainNav').style.display = '';
-    document.getElementById('backToSubjects').style.display = 'none';
-    document.querySelector('.mobile-nav').classList.remove('nav-visible');
-    document.querySelector('.mobile-nav').style.display = '';
-    
-    // Reset logo
-    document.getElementById('logoText').textContent = 'Sokrat Study';
-    
-    // Reset nav active states
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('[data-section="home"]').classList.add('active');
-    document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.mobile-nav-btn[data-section="home"]').classList.add('active');
+    navigateTo('landing');
 }
 
 // Make selectSubject globally available for onclick handlers
 window.selectSubject = selectSubject;
 window.showSubjectSelector = showSubjectSelector;
 
+// ========== SECTION NAVIGATION ==========
+function switchSection(section) {
+    currentSection = section;
+    
+    // Update nav buttons
+    document.querySelectorAll('.study-nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === section);
+    });
+    
+    // Update mobile nav buttons
+    document.querySelectorAll('.study-mobile-nav .mobile-nav-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === section);
+    });
+    
+    // Show/hide sections
+    document.querySelectorAll('.study-content .section').forEach(s => {
+        s.classList.remove('active');
+    });
+    
+    const targetSection = document.getElementById(section);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
+}
+
+// ========== NAVIGATION (Old - kept for compatibility) ==========
+function initNavigation() {
+    // Study nav buttons already set up in setupEventListeners
+    console.log('Navigation initialized');
+}
+
+// ========== LOAD AND SAVE PROGRESS ==========
+function loadProgress() {
+    if (!currentSubject) return;
+    
+    const storageKey = subjectDataMap[currentSubject].storageKey;
+    const saved = localStorage.getItem(storageKey);
+    
+    if (saved) {
+        progress = JSON.parse(saved);
+    } else {
+        progress = {
+            flashcardsLearned: [],
+            quizScores: [],
+            fillSolved: 0,
+            lastStudy: null,
+            streak: 0,
+            categoryProgress: {}
+        };
+    }
+    
+    // Check streak
+    checkStreak();
+}
+
+function saveProgress() {
+    if (!currentSubject) return;
+    
+    const storageKey = subjectDataMap[currentSubject].storageKey;
+    progress.lastStudy = new Date().toISOString();
+    localStorage.setItem(storageKey, JSON.stringify(progress));
+}
+
+function checkStreak() {
+    if (!progress.lastStudy) {
+        progress.streak = 1;
+        return;
+    }
+    
+    const last = new Date(progress.lastStudy);
+    const now = new Date();
+    const diffDays = Math.floor((now - last) / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+        progress.streak++;
+    } else if (diffDays > 1) {
+        progress.streak = 1;
+    }
+}
+
+// ========== UPDATE HOME STATS ==========
+function updateHomeStats() {
+    if (!currentData) return;
+    
+    // Count total questions
+    let totalQuestions = 0;
+    Object.values(currentData).forEach(cat => {
+        if (cat.quiz) totalQuestions += cat.quiz.length;
+    });
+    
+    const totalQuestionsEl = document.getElementById('totalQuestions');
+    if (totalQuestionsEl) totalQuestionsEl.textContent = totalQuestions + '+';
+    
+    const totalCategoriesEl = document.getElementById('totalCategories');
+    if (totalCategoriesEl) totalCategoriesEl.textContent = Object.keys(currentData).length;
+    
+    const bestScoreEl = document.getElementById('bestScore');
+    if (bestScoreEl) {
+        const best = progress.quizScores.length > 0 ? Math.max(...progress.quizScores) : 0;
+        bestScoreEl.textContent = best + '%';
+    }
+    
+    const streakEl = document.getElementById('streak');
+    if (streakEl) streakEl.textContent = progress.streak || 0;
+}
+
+// ========== CATEGORY BUTTONS ==========
 function updateCategoryButtons() {
     const container = document.querySelector('.categories');
     if (!container || !currentData) return;
@@ -282,7 +456,7 @@ function updateCategoryButtons() {
         btn.innerHTML = `
             <i class="fas ${data.icon}"></i>
             <span>${data.name}</span>
-            <small>${data.flashcards.length} terms</small>
+            <small>${data.flashcards ? data.flashcards.length : 0} terms</small>
         `;
         btn.addEventListener('click', () => {
             currentCategory = category;
@@ -294,6 +468,7 @@ function updateCategoryButtons() {
     });
 }
 
+// ========== LEARN FILTERS ==========
 function updateLearnFilters() {
     const container = document.querySelector('.learn-filter');
     if (!container || !currentData) return;
@@ -305,11 +480,10 @@ function updateLearnFilters() {
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
         btn.dataset.filter = category;
-        btn.textContent = data.name.split(' ')[0]; // First word only
+        btn.textContent = data.name.split(' ')[0];
         container.appendChild(btn);
     });
     
-    // Re-attach filter listeners
     container.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -327,6 +501,7 @@ function updateLearnFilters() {
     });
 }
 
+// ========== QUIZ CATEGORIES ==========
 function updateQuizCategories() {
     const select = document.getElementById('quizCategory');
     if (!select || !currentData) return;
@@ -420,25 +595,24 @@ function switchSection(section) {
 
 // ========== THEME ==========
 function initTheme() {
-    const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('te2-theme') || 'light';
-    
+    const savedTheme = localStorage.getItem('sokrat-theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
-    
-    themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const newTheme = current === 'light' ? 'dark' : 'light';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('te2-theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
+    updateThemeIcons(savedTheme);
 }
 
-function updateThemeIcon(theme) {
-    const icon = document.querySelector('#themeToggle i');
-    icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const newTheme = current === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('sokrat-theme', newTheme);
+    updateThemeIcons(newTheme);
+}
+
+function updateThemeIcons(theme) {
+    document.querySelectorAll('.theme-toggle i').forEach(icon => {
+        icon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+    });
 }
 
 // ========== FLASHCARDS ==========
