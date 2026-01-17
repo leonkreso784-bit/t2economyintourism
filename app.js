@@ -1585,35 +1585,64 @@ function cleanupLearnContentForMobile() {
     const container = document.getElementById('learnContent');
     if (!container) return;
     
-    // Remove inline styles from all elements inside learn content
+    // List of style properties to ALWAYS remove on mobile
+    const removeProperties = [
+        'font-size', 'padding', 'margin', 'width', 'height', 
+        'max-width', 'min-width', 'line-height', 'text-align',
+        'display', 'flex', 'gap'
+    ];
+    
+    // Remove problematic inline styles from all elements inside learn content
     container.querySelectorAll('.learn-card-content [style]').forEach(el => {
-        // Keep only essential styles, remove sizing/spacing that breaks mobile
-        const keepStyles = ['color', 'background', 'background-color', 'border-color'];
         const currentStyle = el.getAttribute('style');
+        if (!currentStyle) return;
         
-        if (currentStyle) {
-            const newStyles = [];
-            keepStyles.forEach(prop => {
-                const match = currentStyle.match(new RegExp(`${prop}\\s*:\\s*[^;]+`, 'i'));
-                if (match) {
-                    newStyles.push(match[0]);
-                }
-            });
-            
-            if (newStyles.length > 0) {
-                el.setAttribute('style', newStyles.join('; '));
-            } else {
-                el.removeAttribute('style');
+        // Parse current styles
+        const styles = currentStyle.split(';').filter(s => s.trim());
+        const newStyles = [];
+        
+        styles.forEach(style => {
+            const [prop] = style.split(':').map(s => s.trim().toLowerCase());
+            // Only keep color and background related styles
+            if (prop && (
+                prop === 'color' || 
+                prop === 'background' || 
+                prop === 'background-color' ||
+                prop === 'border-color' ||
+                prop === 'border-left-color'
+            )) {
+                newStyles.push(style.trim());
             }
+        });
+        
+        if (newStyles.length > 0) {
+            el.setAttribute('style', newStyles.join('; '));
+        } else {
+            el.removeAttribute('style');
         }
     });
     
-    // Ensure all content fits within viewport
-    container.querySelectorAll('.learn-card-content *').forEach(el => {
-        if (el.scrollWidth > el.clientWidth) {
-            el.style.overflowX = 'auto';
+    // Ensure proper classes are applied to special boxes
+    container.querySelectorAll('.learn-card-content div').forEach(el => {
+        const className = el.className.toLowerCase();
+        // Make sure boxes have proper styling
+        if (className.includes('formula') || className.includes('tip') || 
+            className.includes('warning') || className.includes('example')) {
+            el.style.removeProperty('padding');
+            el.style.removeProperty('margin');
+            el.style.removeProperty('font-size');
         }
     });
+    
+    // Handle any elements that might overflow
+    container.querySelectorAll('.learn-card-content *').forEach(el => {
+        if (el.scrollWidth > el.clientWidth + 5) {
+            el.style.overflowX = 'auto';
+            el.style.webkitOverflowScrolling = 'touch';
+        }
+    });
+    
+    console.log('Mobile learn content cleaned up');
 }
 
 // Re-apply mobile cleanup on window resize
