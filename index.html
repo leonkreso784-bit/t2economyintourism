@@ -21,9 +21,32 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260117i">
+    <link rel="stylesheet" href="styles.css?v=20260117j">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Critical Mobile Learn Styles - Inline to ensure they apply -->
+    <style>
+        @media screen and (max-width: 767px) {
+            #learn .learn-container { padding: 0 !important; padding-bottom: 85px !important; }
+            #learn .learn-container h1 { font-size: 0.9rem !important; padding: 0.5rem 0.75rem !important; margin: 0.35rem 0.5rem !important; }
+            #learn .learn-card { margin: 0 0.5rem 0.4rem !important; border-radius: 8px !important; }
+            #learn .learn-card-header { padding: 0.5rem 0.75rem !important; }
+            #learn .learn-card-header h2, #learn .learn-card-title { font-size: 0.8rem !important; }
+            #learn .learn-card-content { padding: 0.5rem 0.65rem !important; line-height: 1.35 !important; font-size: 0.78rem !important; }
+            #learn .learn-card-content h3 { font-size: 0.85rem !important; margin: 0 0 0.3rem 0 !important; }
+            #learn .learn-card-content h4 { font-size: 0.8rem !important; margin: 0.4rem 0 0.2rem 0 !important; }
+            #learn .learn-card-content h5 { font-size: 0.75rem !important; margin: 0.3rem 0 0.15rem 0 !important; }
+            #learn .learn-card-content p { font-size: 0.72rem !important; line-height: 1.35 !important; margin-bottom: 0.25rem !important; }
+            #learn .learn-card-content ul, #learn .learn-card-content ol { margin: 0.15rem 0 !important; padding-left: 1rem !important; }
+            #learn .learn-card-content li { font-size: 0.72rem !important; line-height: 1.3 !important; padding: 0.05rem 0 !important; }
+            #learn .learn-card-content hr { margin: 0.35rem 0 !important; }
+            #learn .formula-box, #learn .tip-box, #learn .warning-box, #learn .example-box { padding: 0.35rem 0.45rem !important; margin: 0.25rem 0 !important; font-size: 0.68rem !important; }
+            #learn .formula-box strong, #learn .tip-box h4, #learn .warning-box h4, #learn .example-box h4 { font-size: 0.7rem !important; margin: 0 0 0.1rem 0 !important; }
+            #learn .formula-box br { margin-bottom: 0.1rem !important; }
+            #learn div[style], #learn p[style], #learn h4[style] { font-size: inherit !important; }
+        }
+    </style>
 </head>
 <body>
     
@@ -228,8 +251,8 @@
     <section id="study-page" class="study-page">
         <!-- Study Header -->
         <header class="study-header">
-            <button class="back-btn" id="backToLessons">
-                <i class="fas fa-arrow-left"></i>
+            <button class="back-btn" id="backToLessons" aria-label="Go back to lessons">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </button>
             <div class="study-title">
                 <span class="breadcrumb" id="studyBreadcrumb">Subject > Lesson</span>

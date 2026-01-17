@@ -43,10 +43,15 @@
     
     --text-primary: #f1f5f9;
     --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
+    --text-muted: #9ca3af; /* Improved contrast for dark mode */
     
     --border: #475569;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+}
+
+/* Subject item meta needs higher contrast */
+.subject-item-meta span {
+    color: var(--text-secondary);
 }
 
 /* ===== ACCESSIBILITY ===== */
@@ -862,6 +867,11 @@ body {
 
 .study-nav-btn.active {
     background: var(--primary);
+    color: white;
+}
+
+.study-nav-btn.active span,
+.study-nav-btn.active i {
     color: white;
 }
 
