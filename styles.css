@@ -6009,3 +6009,454 @@ div.subject-card {
     color: var(--text-primary);
     font-weight: 700;
 }
+
+/* =====================================================
+   COMPREHENSIVE RESPONSIVE DESIGN - ALL DEVICES
+   ===================================================== */
+
+/* ===== EXTRA SMALL DEVICES (iPhone SE, small phones) ===== */
+@media screen and (max-width: 374px) {
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .cta-button {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .subject-card {
+        padding: 12px;
+    }
+    
+    .lesson-card {
+        padding: 12px;
+    }
+    
+    .flashcard {
+        min-height: 280px;
+    }
+    
+    .quiz-option {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== SMALL PHONES (iPhone 12 mini, small Android) ===== */
+@media screen and (min-width: 375px) and (max-width: 413px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .subject-card {
+        padding: 14px;
+    }
+    
+    .flashcard {
+        min-height: 300px;
+    }
+}
+
+/* ===== STANDARD PHONES (iPhone 14/15, most Android) ===== */
+@media screen and (min-width: 414px) and (max-width: 479px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .subject-card {
+        padding: 16px;
+    }
+    
+    .flashcard {
+        min-height: 320px;
+    }
+}
+
+/* ===== LARGE PHONES (iPhone Pro Max, Galaxy Ultra) ===== */
+@media screen and (min-width: 480px) and (max-width: 599px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .subjects-grid {
+        gap: 16px;
+    }
+    
+    .flashcard {
+        min-height: 350px;
+    }
+    
+    .quiz-container {
+        padding: 20px;
+    }
+}
+
+/* ===== SMALL TABLETS (iPad Mini, small Android tablets) ===== */
+@media screen and (min-width: 600px) and (max-width: 767px) {
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .flashcard {
+        min-height: 380px;
+    }
+}
+
+/* ===== TABLETS (iPad, Android tablets) ===== */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        max-width: 500px;
+    }
+    
+    .hero-actions {
+        flex-direction: row;
+        gap: 16px;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .subject-card {
+        padding: 24px;
+    }
+    
+    .lesson-card {
+        padding: 20px;
+    }
+    
+    .flashcard {
+        min-height: 400px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .quiz-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 24px;
+    }
+    
+    .fill-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .learn-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .bottom-nav {
+        max-width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* ===== LARGE TABLETS & SMALL LAPTOPS ===== */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+    .hero-title {
+        font-size: 3.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.25rem;
+        max-width: 550px;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .flashcard {
+        min-height: 420px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .quiz-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .learn-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .bottom-nav {
+        max-width: 700px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 20px 20px 0 0;
+    }
+}
+
+/* ===== DESKTOPS ===== */
+@media screen and (min-width: 1280px) and (max-width: 1535px) {
+    .hero-title {
+        font-size: 4rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.3rem;
+        max-width: 600px;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .flashcard {
+        min-height: 450px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .quiz-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .learn-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .bottom-nav {
+        max-width: 800px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 24px 24px 0 0;
+    }
+}
+
+/* ===== LARGE DESKTOPS ===== */
+@media screen and (min-width: 1536px) {
+    .hero-title {
+        font-size: 4.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.4rem;
+        max-width: 700px;
+    }
+    
+    .hero-content {
+        padding: 60px;
+    }
+    
+    .subjects-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .subject-card {
+        padding: 28px;
+    }
+    
+    .lesson-card {
+        padding: 24px;
+    }
+    
+    .flashcard {
+        min-height: 500px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .quiz-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 32px;
+    }
+    
+    .fill-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    .learn-container {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    
+    .bottom-nav {
+        max-width: 900px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 28px 28px 0 0;
+        box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* ===== LANDSCAPE MODE - PHONES ===== */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .landing-hero {
+        padding-top: 60px;
+    }
+    
+    .hero-title {
+        font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+    
+    .hero-actions {
+        flex-direction: row;
+        gap: 12px;
+    }
+    
+    .cta-button {
+        padding: 10px 20px;
+    }
+    
+    .flashcard {
+        min-height: 220px;
+    }
+    
+    .bottom-nav {
+        padding: 8px 16px;
+    }
+    
+    .nav-btn {
+        padding: 6px 10px;
+    }
+}
+
+/* ===== LANDSCAPE MODE - TABLETS ===== */
+@media screen and (min-height: 501px) and (max-height: 900px) and (orientation: landscape) {
+    .flashcard {
+        min-height: 300px;
+        max-width: 70%;
+        margin: 0 auto;
+    }
+    
+    .quiz-container {
+        max-width: 70%;
+        margin: 0 auto;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .gradient-orb {
+        animation: none !important;
+    }
+    
+    .flashcard-inner {
+        transition: none !important;
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #374151;
+        --text-secondary: #374151;
+    }
+    
+    .subject-card,
+    .lesson-card,
+    .flashcard,
+    .quiz-container {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .landing-page,
+    .bottom-nav,
+    .subjects-sidebar,
+    .subjects-overlay,
+    .flashcard-nav,
+    .theme-toggle {
+        display: none !important;
+    }
+    
+    .study-page {
+        padding: 0;
+    }
+    
+    .learn-card {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}

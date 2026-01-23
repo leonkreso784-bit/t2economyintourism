@@ -26,13 +26,18 @@ const subjectDataMap = {
         shortName: 'Entrep',
         icon: 'fa-rocket',
         color: '#8b5cf6',
-        description: 'Planning, Failure & Learning, Social Entrepreneurship, Trends',
+        description: 'Planning, Innovation, Social Entrepreneurship, Tourism, Final Exam Prep',
         storageKey: 'entrepreneurship-progress',
         lessons: [
             {
-                id: 'business-fundamentals',
-                name: 'Business Fundamentals',
-                description: 'Core concepts and planning tools'
+                id: 'second-exam-prep',
+                name: 'Second Exam Preparation',
+                description: 'Core concepts: Planning, Failure, Economy, Social Entrepreneurship, Trends'
+            },
+            {
+                id: 'final-exam-prep',
+                name: 'Final Exam Preparation',
+                description: 'Complete review: History, Psychology, Innovation, Franchising, Tourism, Value Measurement'
             }
         ]
     },
@@ -251,12 +256,39 @@ function renderLessonsPage(subjectId) {
     });
 }
 
+// ========== LESSON CATEGORY MAPPING ==========
+// Defines which categories belong to each lesson
+const lessonCategoryMap = {
+    'entrepreneurship': {
+        'second-exam-prep': ['planning', 'failure', 'economy', 'social', 'trends'],
+        'final-exam-prep': null  // null means ALL categories
+    }
+};
+
 // ========== STUDY PAGE ==========
 function initStudyPage(subjectId, lessonId) {
     const subject = subjectDataMap[subjectId];
     if (!subject) return;
     
-    currentData = subject.data;
+    // Get the full data
+    let fullData = subject.data;
+    
+    // Check if this subject has lesson-specific category filtering
+    const subjectLessonMap = lessonCategoryMap[subjectId];
+    if (subjectLessonMap && subjectLessonMap[lessonId]) {
+        // Filter categories based on lesson
+        const allowedCategories = subjectLessonMap[lessonId];
+        const filteredData = {};
+        for (const key of allowedCategories) {
+            if (fullData[key]) {
+                filteredData[key] = fullData[key];
+            }
+        }
+        currentData = filteredData;
+    } else {
+        // Use all categories (final exam or subjects without lesson filtering)
+        currentData = fullData;
+    }
     
     // Update breadcrumb
     document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > Lessons`;

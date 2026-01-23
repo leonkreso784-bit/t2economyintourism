@@ -1,7 +1,7 @@
 {
-  "name": "te2-study-master",
-  "version": "1.0.0",
-  "description": "Interactive study application for Tourism Economics 2 - Flashcards, Quizzes, Fill-in-the-blank exercises",
+  "name": "sokrat-study",
+  "version": "2.0.0",
+  "description": "Interactive study application for Tourism Economics, Business Entrepreneurship, and Accounting - Flashcards, Quizzes, Fill-in-the-blank exercises",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
@@ -10,11 +10,12 @@
   "keywords": [
     "tourism",
     "economics",
+    "entrepreneurship",
+    "accounting",
     "education",
     "flashcards",
     "quiz",
-    "study",
-    "TE2"
+    "study"
   ],
   "author": "Leon Kreso",
   "license": "MIT",
