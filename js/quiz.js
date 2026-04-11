@@ -11,7 +11,19 @@ function startQuiz() {
     correctAnswers = 0;
     wrongAnswers = 0;
     wrongAnswersList = [];
+    quizAnswers = [];
     quizStartTime = Date.now();
+    
+    // Pre-shuffle options for every question so they stay stable when revisiting
+    quizQuestions.forEach(q => {
+        const opts = q.options.map((option, index) => ({
+            text: option,
+            originalIndex: index
+        }));
+        shuffleArray(opts);
+        q._shuffledOptions = opts;
+        q._shuffledCorrectIndex = opts.findIndex(o => o.originalIndex === q.correct);
+    });
     
     document.getElementById('quizSetup').classList.add('hidden');
     document.getElementById('quizGame').classList.remove('hidden');
@@ -62,6 +74,7 @@ function showQuestion() {
     }
     
     const q = quizQuestions[currentQuestionIndex];
+    const answered = quizAnswers[currentQuestionIndex];
     
     document.getElementById('quizProgress').textContent = 
         `Question ${currentQuestionIndex + 1}/${quizQuestions.length}`;
@@ -73,9 +86,7 @@ function showQuestion() {
     document.getElementById('questionText').textContent = q.question;
 
     const existingImage = document.getElementById('questionImage');
-    if (existingImage) {
-        existingImage.remove();
-    }
+    if (existingImage) existingImage.remove();
 
     if (q.image) {
         const img = document.createElement('img');
@@ -90,30 +101,74 @@ function showQuestion() {
     const container = document.getElementById('answersContainer');
     container.innerHTML = '';
     
-    // Shuffle answer options
-    const optionsWithIndex = q.options.map((option, index) => ({
-        text: option,
-        originalIndex: index
-    }));
-    shuffleArray(optionsWithIndex);
-    
+    // Use pre-shuffled options
+    const optionsWithIndex = q._shuffledOptions;
     currentShuffledOptions = optionsWithIndex;
-    currentShuffledCorrectIndex = optionsWithIndex.findIndex(opt => opt.originalIndex === q.correct);
+    currentShuffledCorrectIndex = q._shuffledCorrectIndex;
     
     const letters = ['A', 'B', 'C', 'D'];
     optionsWithIndex.forEach((option, index) => {
         const btn = document.createElement('button');
         btn.className = 'answer-btn';
         btn.innerHTML = `<span class="answer-letter">${letters[index]}</span><span>${option.text}</span>`;
-        btn.addEventListener('click', () => selectAnswer(index));
+        
+        if (answered) {
+            // Reviewing a previously answered question
+            btn.classList.add('disabled');
+            if (index === q._shuffledCorrectIndex) {
+                btn.classList.add('correct');
+            }
+            if (index === answered.selected && !answered.isCorrect) {
+                btn.classList.add('wrong');
+            }
+        } else {
+            btn.addEventListener('click', () => selectAnswer(index));
+        }
         container.appendChild(btn);
     });
     
     document.getElementById('correctCount').textContent = correctAnswers;
     document.getElementById('wrongCount').textContent = wrongAnswers;
+    
+    // Update nav buttons
+    updateQuizNavButtons();
+}
+
+function updateQuizNavButtons() {
+    const prevBtn = document.getElementById('quizPrevBtn');
+    const nextBtn = document.getElementById('quizNextBtn');
+    if (!prevBtn || !nextBtn) return;
+    
+    // Show prev if not on first question
+    prevBtn.style.display = currentQuestionIndex > 0 ? '' : 'none';
+    
+    // Show next only if current question is answered and there are more questions
+    const answered = quizAnswers[currentQuestionIndex];
+    if (answered && currentQuestionIndex < quizQuestions.length - 1) {
+        nextBtn.style.display = '';
+    } else {
+        nextBtn.style.display = 'none';
+    }
+}
+
+function quizPrev() {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion();
+    }
+}
+
+function quizNext() {
+    if (currentQuestionIndex < quizQuestions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion();
+    }
 }
 
 function selectAnswer(selected) {
+    // Prevent double-answering
+    if (quizAnswers[currentQuestionIndex]) return;
+    
     const buttons = document.querySelectorAll('.answer-btn');
     buttons.forEach(btn => btn.classList.add('disabled'));
     
@@ -134,11 +189,18 @@ function selectAnswer(selected) {
         });
     }
     
+    // Store answer
+    quizAnswers[currentQuestionIndex] = {
+        selected: selected,
+        isCorrect: isCorrect
+    };
+    
     trackQuizAnswer(isCorrect, quizQuestions[currentQuestionIndex].category || 'general');
     
     document.getElementById('correctCount').textContent = correctAnswers;
     document.getElementById('wrongCount').textContent = wrongAnswers;
     
+    // Auto-advance after delay
     setTimeout(() => {
         currentQuestionIndex++;
         showQuestion();
@@ -206,8 +268,20 @@ function retryQuiz() {
     correctAnswers = 0;
     wrongAnswers = 0;
     wrongAnswersList = [];
+    quizAnswers = [];
     shuffleArray(quizQuestions);
     quizStartTime = Date.now();
+    
+    // Re-shuffle options for each question
+    quizQuestions.forEach(q => {
+        const opts = q.options.map((option, index) => ({
+            text: option,
+            originalIndex: index
+        }));
+        shuffleArray(opts);
+        q._shuffledOptions = opts;
+        q._shuffledCorrectIndex = opts.findIndex(o => o.originalIndex === q.correct);
+    });
     
     document.getElementById('quizResults').classList.add('hidden');
     document.getElementById('quizGame').classList.remove('hidden');
@@ -224,3 +298,5 @@ function showQuizSetup() {
 window.startQuiz = startQuiz;
 window.retryQuiz = retryQuiz;
 window.showQuizSetup = showQuizSetup;
+window.quizPrev = quizPrev;
+window.quizNext = quizNext;

@@ -582,6 +582,15 @@
                         <span><i class="fas fa-check text-success"></i> <span id="correctCount">0</span></span>
                         <span><i class="fas fa-times text-danger"></i> <span id="wrongCount">0</span></span>
                     </div>
+
+                    <div class="quiz-nav-buttons">
+                        <button class="quiz-nav-btn" id="quizPrevBtn" onclick="quizPrev()" style="display:none">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="quiz-nav-btn" id="quizNextBtn" onclick="quizNext()" style="display:none">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="quiz-results hidden" id="quizResults">

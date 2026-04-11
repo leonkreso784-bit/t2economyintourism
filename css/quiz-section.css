@@ -182,6 +182,40 @@
 .text-success { color: var(--success); }
 .text-danger { color: var(--danger); }
 
+/* Quiz Navigation (Prev/Next) */
+.quiz-nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    gap: 0.75rem;
+}
+
+.quiz-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: var(--touch-target);
+}
+
+.quiz-nav-btn:hover {
+    border-color: var(--primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.quiz-nav-btn:active {
+    transform: scale(0.97);
+}
+
 /* Quiz Results */
 .quiz-results { animation: fadeIn 0.5s ease; }
 

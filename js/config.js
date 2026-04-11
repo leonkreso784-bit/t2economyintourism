@@ -173,6 +173,7 @@ let quizStartTime = null;
 let wrongAnswersList = [];
 let currentShuffledOptions = [];
 let currentShuffledCorrectIndex = 0;
+let quizAnswers = []; // stores { selected, shuffledOptions, shuffledCorrectIndex, isCorrect } per question
 
 // Fill state
 let fillQuestions = [];
