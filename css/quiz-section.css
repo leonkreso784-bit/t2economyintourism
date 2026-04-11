@@ -216,6 +216,15 @@
     transform: scale(0.97);
 }
 
+.quiz-restart-btn {
+    border-color: var(--danger, #ef4444);
+    color: var(--danger, #ef4444);
+}
+.quiz-restart-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger, #ef4444);
+}
+
 /* Quiz Results */
 .quiz-results { animation: fadeIn 0.5s ease; }
 
