@@ -16,6 +16,7 @@ function toggleTheme() {
 // ========== DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
+    renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initLearnImageModal();
     setupEventListeners();
     restoreLastPosition();

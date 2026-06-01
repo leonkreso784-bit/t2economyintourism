@@ -17,6 +17,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - `tests/smoke.spec.js` — sve sekcije × svih 8 predmeta (render, protok podataka,
   JS greške, overflow). Potvrđuje da A2 catalog refaktor ništa ne ruši.
 ### Changed
+- Sidebar predmeta sada se renderira iz `data/catalog.js` (`renderSubjectsSidebar()`
+  u `js/navigation.js`, pozvan iz `js/init.js`). Uklonjen ručno pisani `.subject-item`
+  HTML iz `index.html`. Dodan `iconGradient` u catalog (vizualna parnost). Dodavanje
+  predmeta sada = samo unos u catalog. (M0/A3; test: `tests/sidebar.spec.js`.)
+- Bumpani svi `?v=` tokeni skripti/CSS-a u `index.html` na 20260602 (cache).
 - Ažuriran root `README.md` — opisuje platformu, predmete (FMTU/Hospitality Mgmt)
   i poveznice na `docs/`.
 - `js/config.js` — `subjectDataMap` i `getSubjectData()` sada se izvode iz

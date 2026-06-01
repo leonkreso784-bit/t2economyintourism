@@ -34,12 +34,15 @@
      id: 'my-subject', programId: 'hospitality-management',
      year: 2, semester: 1,
      name: 'My Subject', shortName: 'MS', icon: 'fa-book', color: '#6366f1',
+     iconGradient: ['#6366f1', '#818cf8'],   // boje ikone u sidebaru
      description: '...', storageKey: 'my-subject-progress',
      features: { blindMap: false },
      lessons: [ { id: 'midterm-1', name: 'Midterm 1', description: '...' } ],
      content: { scripts: ['data-my-subject.js'], resolve: { '*': 'mySubjectData' } }
    }
    ```
+   > Sidebar se renderira automatski iz catalog-a (`renderSubjectsSidebar()`), pa NE
+   > treba ručno dodavati HTML u `index.html` — dovoljan je ovaj unos.
 3. **(Privremeno, do koraka A4 lazy-load)** uključi datoteku u `index.html` `<script>`
    blok. Nakon koraka A4 ovo više neće trebati — učitavat će se automatski.
 4. **Test** (vidi [TESTING.md](TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).

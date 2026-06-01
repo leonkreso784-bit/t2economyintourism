@@ -96,6 +96,42 @@ function closeSidebar() {
     document.body.style.overflow = '';
 }
 
+// ========== SIDEBAR SUBJECT LIST (rendered from catalog) ==========
+function renderSubjectsSidebar() {
+    const list = document.getElementById('subjectsList');
+    if (!list || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) {
+        return;
+    }
+
+    const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+    list.innerHTML = SOKRAT_CATALOG.subjects.map((s) => {
+        const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
+            ? s.iconGradient
+            : [s.color, s.color];
+        const lessonCount = (s.lessons || []).length;
+        const lessonLabel = lessonCount === 1 ? 'Lesson' : 'Lessons';
+        return `
+                <div class="subject-item" data-subject="${esc(s.id)}">
+                    <div class="subject-item-icon" style="background: linear-gradient(135deg, ${esc(grad[0])}, ${esc(grad[1])});">
+                        <i class="fas ${esc(s.icon)}"></i>
+                    </div>
+                    <div class="subject-item-info">
+                        <h3>${esc(s.name)}</h3>
+                        <p>${esc(s.description)}</p>
+                        <div class="subject-item-meta">
+                            <span><i class="fas fa-book"></i> ${lessonCount} ${lessonLabel}</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right subject-arrow"></i>
+                </div>`;
+    }).join('');
+}
+
 // ========== LESSONS PAGE ==========
 function renderLessonsPage(subjectId) {
     const subject = subjectDataMap[subjectId];
@@ -287,3 +323,4 @@ window.navigateTo = navigateTo;
 window.openSidebar = openSidebar;
 window.closeSidebar = closeSidebar;
 window.switchSection = switchSection;
+window.renderSubjectsSidebar = renderSubjectsSidebar;

@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 7: A3 — sidebar iz catalog-a
+**Napravljeno**
+- Zapamćeno trajno (memorija): CSS/JS cache pravilo (bump `?v=`).
+- A3.1: `iconGradient` (2 boje) za svih 8 predmeta u catalog (vizualna parnost).
+- A3.2: `renderSubjectsSidebar()` u `navigation.js` (gradi listu iz catalog-a,
+  escape HTML-a), pozvan u `init.js` prije vezanja listenera.
+- A3.3: uklonjen hardkodirani `.subject-item` HTML iz `index.html` (programski,
+  pouzdano) → `#subjectsList` prazan + komentar.
+- Bumpani svi `?v=` tokeni (30) na 20260602 (init/navigation/catalog promijenjeni →
+  bez bumpa bi keširani stari init.js dao PRAZAN sidebar).
+
+**Testirano**
+- `tests/sidebar.spec.js`: 8/8 predmeta, ispravan redoslijed, klik → lekcije, 0 grešaka.
+- Puna suite (responsive+smoke+sidebar × 4 profila): **12 passed**, problems=0, errors=0.
+- Vizualna potvrda (screenshot iPhone 16): gradijent ikone + layout vjerni originalu.
+
+**Sljedeće**
+- Deploy (push) pa A4 (lazy loading sadržaja).
+
+---
+
 ## 2026-06-02 — Sesija 6: širi smoke test + deploy
 **Napravljeno**
 - Potvrđeno (iPhone 16 render + h1 dijagnostika) da je Learn popravak ispravan
