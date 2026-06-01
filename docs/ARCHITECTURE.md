@@ -1,0 +1,92 @@
+# Arhitektura i tehnička razrada
+
+> Živi dokument. Cilj: pretvoriti statički study app u skalabilnu platformu.
+> Gradi se **korak po korak**; svaki korak je malen, testabilan i ne smije
+> srušiti live verziju. Napredak se prati u [ROADMAP.md](ROADMAP.md) i [PROGRESS.md](PROGRESS.md).
+
+## Ciljana arhitektura
+
+```
+FRONTEND (Vercel, vanilla JS — minimalne izmjene)
+   • dohvat lakog "catalog" manifesta
+   • lazy load sadržaja predmeta tek na otvaranje
+   • postojeći Learn / Flashcards / Quiz / Fill / Progress UI (nepromijenjen)
+        │ public read                         │ admin (login — samo ja)
+        ▼                                      ▼
+SUPABASE                                  ADMIN UI (/admin, zaštićen)
+   • Postgres (katalog + sadržaj)            • CRUD hijerarhije i sadržaja
+   • Auth                                    • (kasnije) upload + AI generacija
+   • Storage (kasnije: PPT/PDF/slike)
+   • Edge Functions (kasnije: ingest+Claude)
+```
+
+Postojeća schema kategorije ostaje **identična** — UI logika se ne dira.
+
+## Hijerarhija podataka
+
+```
+institutions (sveučilište)      ← spremno za buduće širenje
+└── faculties (fakultet)        → FMTU Opatija
+    └── programs (smjer)        → Hospitality Management
+        └── (year, semester)    → year=studijska godina; semester∈{1,2} unutar godine
+            └── subjects (predmet)
+                └── lessons (lekcija / kolokvij)
+                    └── categories (tema)
+                        └── content_items: flashcard | quiz | fill | learn (JSONB)
+```
+
+**Trenutni raspored (2. godina, Hospitality Management):**
+- Semestar 1: Tourism Economics, E-Business, Accounting
+- Semestar 2: Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+
+## Model baze (ciljano, Supabase/Postgres)
+
+```
+institutions   (id, name)
+faculties      (id, institution_id→, name)
+programs       (id, faculty_id→, name)
+subjects       (id, program_id→, slug, name, short_name, icon, color,
+                description, year, semester, features JSONB, status)
+lessons        (id, subject_id→, slug, name, description, sort)
+categories     (id, lesson_id→, slug, name, icon, color, sort)
+content_items  (id, category_id→, type['flashcard'|'quiz'|'fill'|'learn'],
+                payload JSONB, sort, status)
+-- Faza 1+ (rezervirano): users, subscriptions, source_docs, shares, scores
+```
+`payload JSONB` čuva **postojeći oblik** (npr. flashcard `{question,answer,explanation}`),
+pa migracija ne mijenja UI.
+
+## Content pipeline (Faza 1+, PPT/PDF → gradivo)
+Upload → ekstrakcija teksta/slika → chunking → Claude generira po postojećoj schemi
+→ draft → ljudski pregled/uredi → publish. Kontrola troška: kvote, kasnije "donesi
+svoj API ključ".
+
+---
+
+## Razrada po koracima (M0 — Faza 0)
+
+Redoslijed je namjeran: prvo frontend postaje data-driven **lokalno** (bez backenda,
+nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
+
+### Blok A — Frontend data-driven (lokalno)
+- **A1 — `data/catalog.js`** ✅ — jedinstveni izvor istine; `content.resolve`
+  generalizira `getSubjectData()`. Additivno, ne koristi se još.
+- **A2 — refaktor `js/config.js`** 🟦 — `subjectDataMap`/`getSubjectData()` iz
+  catalog-a, uz fallback. Test: app radi identično.
+- **A3 — sidebar iz catalog-a** — render predmeta iz catalog-a (`index.html` + `js/navigation.js`).
+- **A4 — lazy loading** — `data-*.js` dinamički tek na otvaranje predmeta.
+- **A5 — UI hijerarhije** — smjer/godina/semestar u navigaciji.
+
+### Blok B — Supabase backend
+- **B6** — Supabase projekt + schema. **B7** — migracija catalog+8 predmeta → baza.
+- **B8** — data-access sloj (Supabase + lokalni fallback/keš).
+- **B9** — admin login (samo ja). **B10** — admin CRUD.
+
+### Blok C — priprema za budućnost (ne gradi se sad)
+Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.
+
+## Pravila rada
+1. Mali koraci, svaki testabilan zasebno.
+2. Live verzija radi nakon svakog koraka.
+3. Postojeća schema sadržaja se ne mijenja bez jako dobrog razloga.
+4. Ništa se ne briše dok zamjena nije dokazano ispravna.

@@ -1,0 +1,90 @@
+# Content Schema — kanonski oblik sadržaja
+
+> Jedini izvor istine za oblik podataka učenja. Svaki predmet, lekcija i (kasnije)
+> AI-generacija MORA slijediti ovaj spec. Ako mijenjaš oblik, prvo ažuriraj ovaj
+> dokument i zabilježi odluku u [DECISIONS.md](DECISIONS.md).
+
+## Hijerarhija
+
+```
+Predmet (subject)            → vidi data/catalog.js
+└── Lekcija (lesson)         → kolokvij / ispit (npr. "first-midterm")
+    └── Kategorija (category)→ tema; ključ objekta u data-*.js
+        ├── flashcards[]
+        ├── quiz[]
+        ├── fillBlanks[]
+        └── learn{}
+```
+
+Podaci jednog predmeta žive u globalnoj varijabli (npr. `marketingData`), a katalog
+preko `content.resolve` kaže koja varijabla pripada kojoj lekciji.
+
+## Kategorija (category)
+
+```js
+{
+  name: "Marketing Concept",     // obavezno — prikazani naziv
+  icon: "fa-bullseye",           // obavezno — Font Awesome klasa (bez "fas")
+  color: "#ec4899",              // obavezno — hex boja teme kategorije
+
+  flashcards: [ /* Flashcard[] */ ],
+  quiz:       [ /* QuizQuestion[] */ ],
+  fillBlanks: [ /* FillBlank[] */ ],
+  learn:      { /* Learn */ }
+}
+```
+Ključ kategorije u objektu predmeta je `camelCase` (npr. `marketingConcept`) i služi
+kao stabilan ID (filteri, napredak). **Ne mijenjaj ključ nakon objave** — veže se uz
+spremljeni napredak korisnika.
+
+## Flashcard
+```js
+{
+  question: "What is the marketing concept?",   // obavezno
+  answer: "Find out what customers need...",     // obavezno; \n za nove redove, • za bullete
+  explanation: "Customer needs drive strategy."  // opcionalno — kratka dopuna
+}
+```
+
+## QuizQuestion
+```js
+{
+  question: "The marketing concept starts with:",          // obavezno
+  options: ["Production", "Customer needs", "Ads", "Quotas"], // obavezno — 2–6 opcija
+  correct: 1                                                // obavezno — INDEX točne (0-based)
+}
+```
+Pravila: `correct` mora biti valjan indeks u `options`. Opcije se u aplikaciji
+nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE miješanja.
+
+## FillBlank
+```js
+{
+  sentence: "Modern marketing creates and exchanges _______.", // obavezno; _______ = praznina
+  answer: "value",                                              // obavezno; provjera nije osjetljiva na velika/mala slova
+  hint: "Utility for customers..."                              // opcionalno
+}
+```
+
+## Learn
+```js
+{
+  content: "<h3>Naslov</h3><p>HTML sadržaj...</p>", // obavezno — HTML string
+  image: "assets/geography/map-counties.jpg"        // opcionalno — putanja do slike
+}
+```
+`content` je HTML (dozvoljeni `<h3> <p> <ul> <li> <strong> <em> <table>` itd.). Slike
+unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po kategoriji.
+
+## Posebni slučaj: Blind Map (samo Tourism Geography)
+Geografija ima dodatnu interaktivnu kartu. Konfiguracija (točke, koordinate, razine:
+cities/islands/nationalParks/natureParks/regions) dokumentira se zasebno kad budemo
+dirali taj modul. Predmet je u catalogu označen `features.blindMap: true`.
+
+## Checklist prije dodavanja sadržaja
+- [ ] Kategorija ima `name`, `icon`, `color`.
+- [ ] Svaka flashcard ima `question` + `answer`.
+- [ ] Svaki quiz ima `options` i valjan `correct` indeks.
+- [ ] Svaki fillBlank ima `_______` u `sentence` i `answer`.
+- [ ] Learn `content` je validan HTML.
+- [ ] Ključ kategorije je stabilan `camelCase` i jedinstven unutar predmeta.
