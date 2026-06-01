@@ -27,6 +27,7 @@
    };
    if (typeof window !== 'undefined') window.mySubjectData = mySubjectData;
    ```
+   > Obavezno: `window.mySubjectData = ...` na kraju (catalog razrješava podatke po imenu).
 2. **Dodaj unos u `data/catalog.js` → `subjects[]`:**
    ```js
    {

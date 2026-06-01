@@ -3,6 +3,9 @@
 > Nemamo automatske testove (zasad), pa je ovo naša zaštita od regresija.
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
 
+## Automatska provjera catalog-a (uvijek prvo)
+- [ ] `node scripts/verify-catalog.js` → 0 grešaka (mapiranje, datoteke, window-izvoz).
+
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
 - [ ] Landing → "Start Studying" otvara sidebar s predmetima.

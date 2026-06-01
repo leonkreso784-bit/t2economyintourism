@@ -9,11 +9,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   fakultet → smjer → godina → semestar → predmet → lekcija (M0/A1).
 - `docs/` — profesionalna projektna dokumentacija (PRD, ROADMAP, ARCHITECTURE,
   PROGRESS, BUGS, DECISIONS, CONTENT_SCHEMA, CONTENT_GUIDE, TESTING, BACKLOG).
+- `scripts/verify-catalog.js` — checker integriteta catalog-a (pokreni nakon
+  dodavanja predmeta).
 ### Changed
 - Ažuriran root `README.md` — opisuje platformu, predmete (FMTU/Hospitality Mgmt)
   i poveznice na `docs/`.
+- `js/config.js` — `subjectDataMap` i `getSubjectData()` sada se izvode iz
+  `data/catalog.js` (uklonjeni hardkodirani if-lanci). Ponašanje nepromijenjeno
+  (verificirano).
+- Svi `data-*.js` sada izlažu svoj objekt na `window` (standardizacija za
+  catalog lookup i lazy loading).
+- `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Napomena
-- Promjene su zasad **additivne**; live ponašanje nepromijenjeno.
+- Live ponašanje nepromijenjeno; promjene verificirane skriptom + parse-checkom.
 
 ## [2.0.0] — baseline (postojeća live verzija)
 ### Added

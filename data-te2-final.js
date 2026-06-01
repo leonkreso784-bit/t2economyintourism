@@ -1013,3 +1013,6 @@ const te2FinalData = {
         }
     }
 };
+
+// Expose on window for catalog-based loading (see data/catalog.js)
+if (typeof window !== "undefined") { window.te2FinalData = te2FinalData; }

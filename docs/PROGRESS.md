@@ -5,6 +5,31 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-01 — Sesija 3: A2 refaktor config.js (data-driven) + verifikacija
+**Napravljeno**
+- Commitan baseline (710ebc5): catalog + docs + README.
+- ✅ A2: `js/config.js` — `getSubjectData()` sada razrješava podatke preko
+  `SokratCatalog.resolveDataVar()` (catalog), a `subjectDataMap` se gradi iz
+  `SOKRAT_CATALOG.subjects`. Uklonjeni hardkodirani if-lanci i ručni literal.
+- Standardiziran `window`-izvoz u svih 8 predmeta: dodano `window.X = X` u 6
+  data-*.js koji to nisu imali (ebusiness/food/accounting su već imali). Nužno za
+  catalog lookup i budući lazy loading (A4).
+- `data/catalog.js` uključen u `index.html` prije `js/config.js`.
+- Dodan `scripts/verify-catalog.js` (ponovo-iskoristiv checker).
+
+**Testirano**
+- `node scripts/verify-catalog.js` → **0 grešaka**: resolveDataVar identičan
+  starom getSubjectData za svih 8 predmeta; sve datoteke postoje; sve ciljane
+  varijable deklarirane i na window.
+- `node --check` na svim izmijenjenim JS datotekama → sintaksa OK.
+- Provjereni svi vanjski korisnici `subjectDataMap`/`getSubjectData` (analytics,
+  storage, progress, navigation) — koriste samo polja koja i dalje postoje.
+
+**Sljedeće**
+- 🟦 A3: renderirati popis predmeta u sidebaru iz catalog-a (ukloniti ručni HTML).
+
+---
+
 ## 2026-06-01 — Sesija 2: dokumentacijski set + README
 **Napravljeno**
 - Dodani docovi: `CONTENT_SCHEMA.md` (kanonski oblik sadržaja), `CONTENT_GUIDE.md`

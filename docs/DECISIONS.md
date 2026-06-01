@@ -4,6 +4,15 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-004 — Svi data-*.js izlažu objekt na `window`
+**Datum:** 2026-06-01 · **Status:** prihvaćeno
+**Kontekst:** `getSubjectData()` sada razrješava podatke po IMENU varijable iz
+catalog-a (`content.resolve`). Top-level `const` u skripti nije dostupan kao
+`window[ime]`, a samo su 3 od 8 predmeta to imala.
+**Odluka:** Standardizirati: svaki `data-*.js` na kraju radi `window.X = X`.
+**Posljedice:** Catalog lookup radi uniformno; ujedno preduvjet za lazy loading
+(A4) gdje se skripte učitavaju dinamički i moraju biti dostupne preko `window`.
+
 ## ADR-003 — Catalog kao jedinstveni izvor istine
 **Datum:** 2026-06-01 · **Status:** prihvaćeno
 **Kontekst:** Predmeti su bili hardkodirani na 3 mjesta (`subjectDataMap`,

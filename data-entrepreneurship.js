@@ -2347,3 +2347,6 @@ const entrepreneurshipData = {
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = entrepreneurshipData;
 }
+
+// Expose on window for catalog-based loading (see data/catalog.js)
+if (typeof window !== "undefined") { window.entrepreneurshipData = entrepreneurshipData; }

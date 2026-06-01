@@ -7,8 +7,9 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 
 **Blok A — Frontend data-driven (lokalno, bez backenda)**
 - ✅ A1 — `data/catalog.js` (jedinstveni izvor istine, hijerarhija FMTU→HM→2.god)
-- 🟦 A2 — `js/config.js` čita iz catalog-a (subjectDataMap + getSubjectData)
-- ⬜ A3 — sidebar render iz catalog-a (umjesto ručnog HTML-a)
+- ✅ A2 — `js/config.js` čita iz catalog-a (subjectDataMap + getSubjectData);
+  svi data-*.js izloženi na `window`; verificirano `scripts/verify-catalog.js` (0 grešaka)
+- 🟦 A3 — sidebar render iz catalog-a (umjesto ručnog HTML-a)
 - ⬜ A4 — lazy loading sadržaja (data-*.js tek na otvaranje predmeta)
 - ⬜ A5 — UI hijerarhije (smjer/godina/semestar)
 
