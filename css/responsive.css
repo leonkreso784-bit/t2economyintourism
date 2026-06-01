@@ -1201,38 +1201,7 @@
 
 
     
-    .topic-card {
-        padding: 1rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .topic-header {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: flex-start;
-    }
-    
-    .topic-title {
-        font-size: 1rem;
-        width: 100%;
-    }
-    
-    .topic-body {
-        font-size: 0.9rem;
-        line-height: 1.5;
-    }
-    
-    .topic-footer {
-        flex-direction: column;
-        gap: 0.5rem;
-        align-items: stretch;
-    }
-    
-    .topic-footer .btn {
-        justify-content: center;
-        width: 100%;
-    }
-}
+    /* (removed orphaned .topic-* rules + stray brace — dead/malformed CSS) */
 
 /* --- FLASHCARDS SECTION MOBILE --- */
 @media (max-width: 767px) {
@@ -1605,9 +1574,6 @@
         min-height: 150px;
         max-height: 200px;
     }
-    
-    .quiz-section,
-    .fill-section,
 }
 
 /* --- ENSURE STUDY MOBILE NAV ALWAYS VISIBLE WHEN IN STUDY PAGE --- */

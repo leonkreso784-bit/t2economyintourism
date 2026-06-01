@@ -20,8 +20,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - Svi `data-*.js` sada izlažu svoj objekt na `window` (standardizacija za
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
+### Fixed
+- `responsive.css` — dva slomljena CSS pravila (nedovršeni `.quiz-section,
+  .fill-section,` selektor i sirotinjski `.topic-*` blok + višak `}`). Zagrade
+  sada balansirane (520/520). Vidi BUG-001, BUG-002.
+- Learn sekcija (mobilna responzivnost, BUG-003): smanjen nagomilani donji padding
+  (learn-container 90px→24px) i dodan bočni safe-area inset u landscape za moderne
+  iPhone (notch/Dynamic Island).
 ### Napomena
-- Live ponašanje nepromijenjeno; promjene verificirane skriptom + parse-checkom.
+- Live ponašanje (osim ciljanih CSS popravaka) nepromijenjeno; promjene verificirane
+  skriptom + parse-checkom + brace-balance provjerom.
 
 ## [2.0.0] — baseline (postojeća live verzija)
 ### Added

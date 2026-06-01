@@ -20,7 +20,9 @@
     max-width: 100%;
     margin: 0;
     padding: 14px;
-    padding-bottom: calc(90px + env(safe-area-inset-bottom, 20px));
+    /* Bottom clearance for the fixed mobile nav is provided by .study-content /
+       .study-page; keep this modest to avoid a large empty gap below content. */
+    padding-bottom: 24px;
     box-sizing: border-box;
 }
 
@@ -749,6 +751,19 @@ body.modal-open {
         -webkit-overflow-scrolling: touch;
         -webkit-text-size-adjust: 100%;
         text-size-adjust: 100%;
+    }
+}
+
+/* =====================================================
+   LANDSCAPE SAFE-AREA (modern iPhone notch / Dynamic Island)
+   Applies at ALL widths in landscape so the side notch never
+   clips the reading content. Placed late to win over breakpoints.
+   ===================================================== */
+
+@media (orientation: landscape) {
+    #learn .learn-container {
+        padding-left: max(14px, env(safe-area-inset-left, 0px));
+        padding-right: max(14px, env(safe-area-inset-right, 0px));
     }
 }
 

@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-01 — Sesija 4: pregled bugova + Learn responzivnost (iPhone)
+**Napravljeno**
+- Regresija: `verify-catalog.js` → PASS.
+- Pregled cijelog CSS-a (responsive.css, learn.css, pages.css, variables.css).
+- Nađena i popravljena 2 slomljena CSS pravila u `responsive.css` (BUG-001, BUG-002)
+  koja su error-recoveryjem gutala valjana pravila. Zagrade sada 520/520.
+- Learn responzivnost (BUG-003): donji padding 90px→24px (uklonjen prazan prostor);
+  dodan landscape safe-area L/R za learn-container (notch na modernim iPhonima).
+- Uočeno: `responsive.css` ima dosta MRTVOG CSS-a (klase kojih nema u HTML-u:
+  `.quiz-section`, `.topic-*`, `.flashcards-section`, ...). Dobro-oblikovana mrtva
+  pravila ostavljena; predloženo zasebno čišćenje.
+
+**Testirano**
+- Brace-balance svih CSS datoteka → OK (responsive 520/520, learn 124/124).
+- ⚠️ Vizualno NIJE potvrđeno u pregledniku (nema browsera u ovom okruženju) —
+  čeka screenshot/potvrdu korisnika ili Playwright harness.
+
+**Sljedeće**
+- Vizualna potvrda Learn sekcije (iPhone portret + landscape); po potrebi fini tuning.
+- Zatim nastavak A3 (sidebar render iz catalog-a).
+
+---
+
 ## 2026-06-01 — Sesija 3: A2 refaktor config.js (data-driven) + verifikacija
 **Napravljeno**
 - Commitan baseline (710ebc5): catalog + docs + README.
