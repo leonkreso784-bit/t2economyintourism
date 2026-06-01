@@ -11,6 +11,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   PROGRESS, BUGS, DECISIONS, CONTENT_SCHEMA, CONTENT_GUIDE, TESTING, BACKLOG).
 - `scripts/verify-catalog.js` — checker integriteta catalog-a (pokreni nakon
   dodavanja predmeta).
+- Playwright vizualni responsive testovi (`tests/responsive.spec.js`,
+  `playwright.config.js`, `scripts/static-server.js`) — emulira iPhone SE/15Pro/
+  ProMax + landscape, automatski hvata horizontalni overflow. `npm run test:responsive`.
 ### Changed
 - Ažuriran root `README.md` — opisuje platformu, predmete (FMTU/Hospitality Mgmt)
   i poveznice na `docs/`.
@@ -24,9 +27,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - `responsive.css` — dva slomljena CSS pravila (nedovršeni `.quiz-section,
   .fill-section,` selektor i sirotinjski `.topic-*` blok + višak `}`). Zagrade
   sada balansirane (520/520). Vidi BUG-001, BUG-002.
-- Learn sekcija (mobilna responzivnost, BUG-003): smanjen nagomilani donji padding
-  (learn-container 90px→24px) i dodan bočni safe-area inset u landscape za moderne
-  iPhone (notch/Dynamic Island).
+- Learn sekcija (mobilna responzivnost, BUG-003): **riješen horizontalni overflow** —
+  `.study-content` (flex-dijete) dobio `min-width:0` + `width:100%` da se ne širi do
+  `max-width:1200` na mobitelu; obrambeni `min-width:0` na `#learn`/`.learn-container`/
+  `.learn-content`. Plus dedupliciran donji padding i landscape safe-area inset.
+  Verificirano Playwrightom (4 iPhone profila × 8 predmeta, 0 overflowa).
 ### Napomena
 - Live ponašanje (osim ciljanih CSS popravaka) nepromijenjeno; promjene verificirane
   skriptom + parse-checkom + brace-balance provjerom.

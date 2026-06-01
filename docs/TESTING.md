@@ -3,8 +3,11 @@
 > Nemamo automatske testove (zasad), pa je ovo naša zaštita od regresija.
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
 
-## Automatska provjera catalog-a (uvijek prvo)
-- [ ] `node scripts/verify-catalog.js` → 0 grešaka (mapiranje, datoteke, window-izvoz).
+## Automatske provjere (uvijek prvo)
+- [ ] `npm run verify:catalog` → 0 grešaka (mapiranje, datoteke, window-izvoz).
+- [ ] `npm run test:responsive` → 4/4 iPhone profila prolaze, bez horizontalnog
+  overflowa u Learn sekciji. Screenshotovi: `test-results/learn-shots/`.
+  (Prvi put: `npm install` + `npx playwright install chromium`.)
 
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).

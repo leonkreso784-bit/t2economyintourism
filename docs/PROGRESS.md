@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-01 — Sesija 5: Playwright + riješen Learn horizontalni overflow
+**Napravljeno**
+- Postavljen Playwright (chromium) + `scripts/static-server.js` + `playwright.config.js`
+  (iPhone SE/15Pro/ProMax + landscape) + `tests/responsive.spec.js`. ADR-005.
+- Probom utvrđen TOČAN uzrok overflowa (BUG-003): `.study-content` (flex-dijete bez
+  `min-width:0`) naraste na `max-width:1200` zbog nerazlomljivog sadržaja → stranica
+  šira od ekrana. Popravak: `min-width:0` + `width:100%` na `.study-content`, obrambeni
+  `min-width:0` na `#learn`/`.learn-container`/`.learn-content`.
+- npm skripte: `test:responsive`, `verify:catalog`, `serve:test`.
+
+**Testirano**
+- `npm run test:responsive` → **4/4 profila PASS**, svih 8 predmeta, portret (375/393/
+  430) i landscape (852): `innerWidth==docScrollW==deviceWidth`, 0 page overflowa.
+- `verify-catalog` PASS; brace-balance CSS OK.
+
+**Sljedeće**
+- A3: sidebar render iz catalog-a.
+
+---
+
 ## 2026-06-01 — Sesija 4: pregled bugova + Learn responzivnost (iPhone)
 **Napravljeno**
 - Regresija: `verify-catalog.js` → PASS.

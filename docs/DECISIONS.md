@@ -4,6 +4,17 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-005 — Playwright za vizualne responsive testove
+**Datum:** 2026-06-01 · **Status:** prihvaćeno
+**Kontekst:** Responzivnost mora biti savršena na svim uređajima; vizualne bugove
+(npr. horizontalni overflow) ne hvataju logički testovi, a ručno testiranje na
+svakom iPhoneu nije održivo.
+**Odluka:** Dodati Playwright (chromium) kao dev-dependency + `tests/responsive.spec.js`
+koji emulira iPhone širine (375/393/430 + landscape 852), mjeri overflow i radi
+screenshotove. Mali vlastiti static server (`scripts/static-server.js`).
+**Posljedice:** Regresije responzivnosti hvatamo automatski. `node_modules` i
+Playwright artefakti su u `.gitignore`.
+
 ## ADR-004 — Svi data-*.js izlažu objekt na `window`
 **Datum:** 2026-06-01 · **Status:** prihvaćeno
 **Kontekst:** `getSubjectData()` sada razrješava podatke po IMENU varijable iz

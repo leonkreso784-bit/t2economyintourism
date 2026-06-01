@@ -221,7 +221,12 @@
 
 .study-content {
     padding: 1rem;
+    width: 100%;
     max-width: 1200px;
+    /* min-width:0 lets this flex child shrink to the viewport instead of growing
+       to the min-content width of non-wrapping content (e.g. the Learn filter bar),
+       which previously pushed the whole page wider than the screen on phones. */
+    min-width: 0;
     margin: 0 auto;
 }
 
