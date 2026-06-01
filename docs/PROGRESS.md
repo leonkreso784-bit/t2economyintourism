@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 8: priprema za masovni sadržaj (struktura + template)
+**Kontekst:** korisnik uskoro dodaje cijelu 1. godinu (po predmetu k1/k2/završni).
+Dogovoreno: autorstvo u datotekama SADA (migracijski sigurno), uz alate za kvalitetu.
+Tok rada: korisnik donese PDF materijale → ja generiram gradivo po schemi → pregled.
+
+**Napravljeno (korak 1: struktura + template)**
+- `data/_template/lesson.template.js` — kalup lekcije (komentiran, po CONTENT_SCHEMA).
+- `scripts/scaffold-subject.js` — `npm run scaffold -- <id> "<Naziv>" <god> <sem>`
+  kreira `data/<id>/{midterm-1,midterm-2,final}.js` + ispiše gotov catalog unos.
+- npm: `verify` (sad = catalog check; korak 3 proširuje na sadržaj), `scaffold`.
+- CONTENT_GUIDE: standardna struktura (mapa/predmet, datoteka/lekcija) + scaffold.
+- ADR-006. Postojeći predmeti se NE prepravljaju.
+
+**Testirano**
+- Scaffold na probnom predmetu → `node --check` valjan na sve 3 generirane datoteke; obrisano.
+
+**Sljedeće (preporuka prije masovnog sadržaja)**
+- Korak 2: "coming-soon" lekcije iz catalog-a (umjesto hardkodiranog 'second-midterm').
+- Korak 3: validator sadržaja (`npm run verify` provjerava CONTENT_SCHEMA).
+- Korak 4: lazy-load seam (`loadSubjectContent`).
+
+---
+
 ## 2026-06-02 — Sesija 7: A3 — sidebar iz catalog-a
 **Napravljeno**
 - Zapamćeno trajno (memorija): CSS/JS cache pravilo (bump `?v=`).

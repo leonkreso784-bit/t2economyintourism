@@ -8,7 +8,9 @@
     "dev": "npx serve . -l 3000",
     "serve:test": "node scripts/static-server.js",
     "test:responsive": "playwright test",
-    "verify:catalog": "node scripts/verify-catalog.js"
+    "verify": "node scripts/verify-catalog.js",
+    "verify:catalog": "node scripts/verify-catalog.js",
+    "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
     "tourism",

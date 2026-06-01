@@ -19,6 +19,27 @@
 
 ## B) Dodati potpuno NOVI predmet
 
+### Standardna struktura (preporučeno za nove predmete)
+```
+data/<subject-id>/
+   midterm-1.js   -> window.<subjectVar>M1
+   midterm-2.js   -> window.<subjectVar>M2
+   final.js       -> window.<subjectVar>Final
+```
+Jedna datoteka po lekciji (k1 / k2 / završni). Čisto za pisanje, čisto za kasniju
+migraciju u bazu. Template: [`data/_template/lesson.template.js`](../data/_template/lesson.template.js).
+
+### Najbrže: scaffold
+```bash
+npm run scaffold -- <subject-id> "<Naziv>" <godina> <semestar>
+# npr: npm run scaffold -- micro-economics "Microeconomics" 1 1
+```
+Kreira mapu + 3 lekcije iz templatea i ispiše GOTOV unos za `data/catalog.js`
+(+ privremene `<script>` linije za index.html, dok ne stigne lazy-load seam).
+Zatim: popuni sadržaj → zalijepi catalog unos → `npm run verify` → testovi.
+
+### Ručno (alternativa / stari jedno-datotečni način)
+
 1. **Napravi datoteku** `data-<predmet>.js` s globalnom varijablom:
    ```js
    const mySubjectData = {

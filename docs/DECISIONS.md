@@ -4,6 +4,18 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-006 — Struktura sadržaja: mapa po predmetu, datoteka po lekciji
+**Datum:** 2026-06-02 · **Status:** prihvaćeno
+**Kontekst:** Uskoro se dodaje cijela 1. godina (po predmetu: k1, k2, završni) →
+~15 novih lekcija. Postojeći nered (jedna velika datoteka vs modularni accounting)
+ne skalira za autorstvo.
+**Odluka:** Novi predmeti idu u `data/<subject-id>/{midterm-1,midterm-2,final}.js`
+(jedna datoteka po lekciji, svaka izlaže `window.<var>`), uz `data/_template/
+lesson.template.js` i `scripts/scaffold-subject.js`. Postojeći 2. god. predmeti se
+NE prepravljaju (rade; catalog ih već apstrahira; migracija u bazu ih svejedno
+normalizira). Autorstvo u datotekama je migracijski sigurno (Blok B uvozi 1:1).
+**Posljedice:** Brže i dosljednije dodavanje; čista migracija u Supabase kasnije.
+
 ## ADR-005 — Playwright za vizualne responsive testove
 **Datum:** 2026-06-01 · **Status:** prihvaćeno
 **Kontekst:** Responzivnost mora biti savršena na svim uređajima; vizualne bugove

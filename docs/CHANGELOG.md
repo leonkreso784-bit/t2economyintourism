@@ -16,6 +16,10 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   ProMax + landscape, automatski hvata horizontalni overflow. `npm run test:responsive`.
 - `tests/smoke.spec.js` — sve sekcije × svih 8 predmeta (render, protok podataka,
   JS greške, overflow). Potvrđuje da A2 catalog refaktor ništa ne ruši.
+- Content authoring tooling: `data/_template/lesson.template.js`,
+  `scripts/scaffold-subject.js` (generira mapu+lekcije+catalog unos), npm skripte
+  `scaffold` i `verify`. Standardna struktura: mapa po predmetu, datoteka po lekciji
+  (ADR-006).
 ### Changed
 - Sidebar predmeta sada se renderira iz `data/catalog.js` (`renderSubjectsSidebar()`
   u `js/navigation.js`, pozvan iz `js/init.js`). Uklonjen ručno pisani `.subject-item`
