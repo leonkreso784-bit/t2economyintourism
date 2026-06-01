@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 6: širi smoke test + deploy
+**Napravljeno**
+- Potvrđeno (iPhone 16 render + h1 dijagnostika) da je Learn popravak ispravan
+  lokalno; korisnikov telefon je pokazivao staru verziju jer popravak nije bio deployan.
+  Prazan ljubičasti naslov-box = simptom istog overflowa (naslov centriran u 1176px
+  širokom kontejneru → odguran izvan ekrana); popravak overflowa rješava i to.
+- Dodan `tests/smoke.spec.js`: sve sekcije × svih 8 predmeta.
+
+**Testirano**
+- `npm run test:responsive` (responsive + smoke) → 4/4 profila, subjects=8,
+  problems=0, JS errors=0, overflow=0. A2 refaktor potvrđeno ne ruši nijednu sekciju.
+
+**Sljedeće**
+- Deploy (push origin main → Vercel) pa nastavak A3.
+
+---
+
 ## 2026-06-01 — Sesija 5: Playwright + riješen Learn horizontalni overflow
 **Napravljeno**
 - Postavljen Playwright (chromium) + `scripts/static-server.js` + `playwright.config.js`

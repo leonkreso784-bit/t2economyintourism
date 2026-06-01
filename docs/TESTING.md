@@ -5,9 +5,12 @@
 
 ## Automatske provjere (uvijek prvo)
 - [ ] `npm run verify:catalog` → 0 grešaka (mapiranje, datoteke, window-izvoz).
-- [ ] `npm run test:responsive` → 4/4 iPhone profila prolaze, bez horizontalnog
-  overflowa u Learn sekciji. Screenshotovi: `test-results/learn-shots/`.
-  (Prvi put: `npm install` + `npx playwright install chromium`.)
+- [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
+  - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
+    `test-results/learn-shots/`).
+  - `smoke.spec.js` — SVE sekcije × svih 8 predmeta: renderiranje, protok podataka
+    kroz catalog, 0 JS grešaka, 0 overflowa.
+  - (Prvi put: `npm install` + `npx playwright install chromium`.)
 
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).

@@ -14,6 +14,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - Playwright vizualni responsive testovi (`tests/responsive.spec.js`,
   `playwright.config.js`, `scripts/static-server.js`) — emulira iPhone SE/15Pro/
   ProMax + landscape, automatski hvata horizontalni overflow. `npm run test:responsive`.
+- `tests/smoke.spec.js` — sve sekcije × svih 8 predmeta (render, protok podataka,
+  JS greške, overflow). Potvrđuje da A2 catalog refaktor ništa ne ruši.
 ### Changed
 - Ažuriran root `README.md` — opisuje platformu, predmete (FMTU/Hospitality Mgmt)
   i poveznice na `docs/`.
