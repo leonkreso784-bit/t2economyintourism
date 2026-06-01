@@ -34,9 +34,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `max-width:1200` na mobitelu; obrambeni `min-width:0` na `#learn`/`.learn-container`/
   `.learn-content`. Plus dedupliciran donji padding i landscape safe-area inset.
   Verificirano Playwrightom (4 iPhone profila × 8 predmeta, 0 overflowa).
+- Cache-busting: dodan `?v=20260602` na sve CSS `@import` u `styles.css` (+ bump
+  `styles.css?v=` u index.html) — bez toga `immutable` cache servira stari CSS
+  nakon deploya (BUG-004).
 ### Napomena
 - Live ponašanje (osim ciljanih CSS popravaka) nepromijenjeno; promjene verificirane
-  skriptom + parse-checkom + brace-balance provjerom.
+  skriptom + parse-checkom + brace-balance provjerom + Playwright smoke/responsive.
 
 ## [2.0.0] — baseline (postojeća live verzija)
 ### Added

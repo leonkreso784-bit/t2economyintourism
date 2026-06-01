@@ -1,9 +1,13 @@
 /* =====================================================
    SOKRAT STUDY - MAIN STYLESHEET
    =====================================================
-   
+
    This file imports all CSS modules for better organization.
-   
+
+   ⚠ CACHE: vercel.json sets `immutable` 1-year cache on all .css. When you change
+   ANY css/*.css file, BUMP the `?v=` token below (and styles.css?v= in index.html),
+   otherwise browsers keep serving the old cached file. Use today's date (YYYYMMDD).
+
    Structure:
    1. variables.css      - CSS Variables, Reset, Base styles
    2. landing.css        - Landing page, hero, features
@@ -13,35 +17,35 @@
    6. study-sections.css - Subject Selector, Home, Quiz, etc.
    7. learn.css          - Learn section (separate for easy maintenance)
    8. responsive.css     - All media queries
-   
+
    ===================================================== */
 
 /* Core variables and base styles */
-@import url('css/variables.css');
+@import url('css/variables.css?v=20260602');
 
 /* Landing page styles */
-@import url('css/landing.css');
+@import url('css/landing.css?v=20260602');
 
 /* Subjects sidebar */
-@import url('css/sidebar.css');
+@import url('css/sidebar.css?v=20260602');
 
 /* Pages (Lessons, Study, About) */
-@import url('css/pages.css');
+@import url('css/pages.css?v=20260602');
 
 /* Components (Header, Navigation, Main Content) */
-@import url('css/components.css');
+@import url('css/components.css?v=20260602');
 
 /* Study sections (split into modular files) */
-@import url('css/subject-selector.css');
-@import url('css/home-section.css');
-@import url('css/flashcards-section.css');
-@import url('css/quiz-section.css');
-@import url('css/fill-blanks-section.css');
-@import url('css/progress-section.css');
-@import url('css/blind-map.css');
+@import url('css/subject-selector.css?v=20260602');
+@import url('css/home-section.css?v=20260602');
+@import url('css/flashcards-section.css?v=20260602');
+@import url('css/quiz-section.css?v=20260602');
+@import url('css/fill-blanks-section.css?v=20260602');
+@import url('css/progress-section.css?v=20260602');
+@import url('css/blind-map.css?v=20260602');
 
 /* Responsive styles (all media queries) */
-@import url('css/responsive.css');
+@import url('css/responsive.css?v=20260602');
 
 /* Learn section - LAST to override responsive.css conflicts */
-@import url('css/learn.css');
+@import url('css/learn.css?v=20260602');
