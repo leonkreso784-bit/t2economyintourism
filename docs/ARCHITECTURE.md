@@ -20,6 +20,9 @@ SUPABASE                                  ADMIN UI (/admin, zaštićen)
    • Edge Functions (kasnije: ingest+Claude)
 ```
 
+**Backend hosting:** Vercel serverless `/api` funkcije + Supabase (Postgres/Auth/Storage) — vidi
+[BACKEND.md](BACKEND.md) (ADR-008). Frontend zove `/api` običnim `fetch`-om; baza/admin dolaze u Bloku B.
+
 Postojeća schema kategorije ostaje **identična** — UI logika se ne dira.
 
 ## Hijerarhija podataka
@@ -35,9 +38,10 @@ institutions (sveučilište)      ← spremno za buduće širenje
                         └── content_items: flashcard | quiz | fill | learn (JSONB)
 ```
 
-**Trenutni raspored (2. godina, Hospitality Management):**
-- Semestar 1: Tourism Economics, E-Business, Accounting
-- Semestar 2: Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+**Trenutni raspored (Hospitality Management):**
+- 2. god, sem 1: Tourism Economics, E-Business, Accounting
+- 2. god, sem 2: Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+- 1. god, sem 1: **Business Informatics ✅ (KOMPLETAN)** — ostalih 10 predmeta 1. god ⬜ (čeka materijale)
 
 ## Model baze (ciljano, Supabase/Postgres)
 
@@ -69,18 +73,16 @@ Redoslijed je namjeran: prvo frontend postaje data-driven **lokalno** (bez backe
 nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 
 ### Blok A — Frontend data-driven (lokalno)
-- **A1 — `data/catalog.js`** ✅ — jedinstveni izvor istine; `content.resolve`
-  generalizira `getSubjectData()`. Additivno, ne koristi se još.
-- **A2 — refaktor `js/config.js`** 🟦 — `subjectDataMap`/`getSubjectData()` iz
-  catalog-a, uz fallback. Test: app radi identično.
-- **A3 — sidebar iz catalog-a** — render predmeta iz catalog-a (`index.html` + `js/navigation.js`).
-- **A4 — lazy loading** — `data-*.js` dinamički tek na otvaranje predmeta.
-- **A5 — UI hijerarhije** — smjer/godina/semestar u navigaciji.
+- **A1 — `data/catalog.js`** ✅ — jedinstveni izvor istine; `content.resolve` generalizira `getSubjectData()`.
+- **A2 — refaktor `js/config.js`** ✅ — `subjectDataMap`/`getSubjectData()` iz catalog-a; svi `data-*.js` na `window`. Verificirano.
+- **A3 — sidebar iz catalog-a** ✅ — `renderSubjectsSidebar()`, uklonjen ručni HTML. LIVE.
+- **A4 — lazy loading** ⬜ — spojeno u **M0.5 (K4) / Blok B** (DB fetch je inherentno lazy).
+- **A5 — UI hijerarhije** ⬜ — = **puni drill-down nav u M0.5** (ADR-007).
 
-### Blok B — Supabase backend
-- **B6** — Supabase projekt + schema. **B7** — migracija catalog+8 predmeta → baza.
-- **B8** — data-access sloj (Supabase + lokalni fallback/keš).
-- **B9** — admin login (samo ja). **B10** — admin CRUD.
+### Blok B — Backend: Vercel Functions + Supabase (ADR-008, [BACKEND.md](BACKEND.md))
+- **B6** — Supabase projekt + schema. **B7** — migracija catalog + svi `data/*` → baza (JEDNOM).
+- **B8** — `/api/catalog` + `/api/subject` (Vercel Functions); frontend `loadSubjectContent` → `/api`.
+- **B9** — admin login (Supabase Auth). **B10** — admin CRUD.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

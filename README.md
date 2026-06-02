@@ -18,37 +18,45 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 - **Blind Map** — interaktivna karta (samo Tourism Geography)
 - PWA, dark tema, mobile-first
 
-## 🎯 Predmeti (8) — Hospitality Management, 2. godina
-- **Semestar 1:** Tourism Economics, E-Business, Accounting
-- **Semestar 2:** Business Entrepreneurship, Economics in Hospitality, Marketing,
-  Tourism Geography, Food & Nutrition
+## 🎯 Predmeti — FMTU Opatija, Hospitality Management
+**2. godina (8):**
+- Semestar 1: Tourism Economics, E-Business, Accounting
+- Semestar 2: Business Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+
+**1. godina (u izradi):**
+- Semestar 1: **Business Informatics ✅** (Midterm 1 + Midterm 2 + Final) — ostalih 10 predmeta slijedi
 
 ## 🛠️ Tehnologije
 HTML5 · CSS3 · Vanilla JS (ES6+) · Font Awesome · Google Fonts · PWA.
-Backend (u izradi): Supabase (Postgres + Auth + Storage).
+Backend (u izradi): **Vercel Functions (`/api`) + Supabase** (Postgres + Auth + Storage).
+Dev/test: Node + Playwright (responsive/smoke testovi), `pdf-parse` (čitanje materijala).
 
 ## 📁 Struktura projekta
 ```
+CLAUDE.md               # ★ Ključni kontekst (auto-učitava se svaku sesiju)
 index.html              # Glavni HTML (sekcije svih modova)
 styles.css / css/       # Stilovi
 js/                     # App moduli (config, navigation, quiz, flashcards, ...)
 data/catalog.js         # ★ Jedinstveni izvor istine za predmete (hijerarhija)
-data-*.js, data/        # Sadržaj predmeta po schemi
+data/<predmet>/, data-*.js  # Sadržaj predmeta po schemi
+scripts/                # verify-catalog, scaffold-subject, pdf-text, static-server
+tests/                  # Playwright (responsive, smoke, sidebar)
 docs/                   # ★ Projektna dokumentacija (vidi niže)
 manifest.json, vercel.json
 ```
 
-## 📖 Dokumentacija (`docs/`)
-Projekt se vodi profesionalno i progresivno. Počni od [docs/README.md](docs/README.md):
+## 📖 Dokumentacija
+Brzi kontekst je u [CLAUDE.md](CLAUDE.md) (root, auto-učitava se svaku sesiju). Puni docovi su u
+[`docs/`](docs/README.md):
 
 | Dokument | Svrha |
 |----------|-------|
 | [PRD](docs/PRD.md) | Što gradimo, za koga, opseg po fazama |
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Arhitektura, model baze, razrada po koracima |
-| [ROADMAP](docs/ROADMAP.md) | Milestones M0–M4 |
-| [CONTENT_SCHEMA](docs/CONTENT_SCHEMA.md) | Kanonski oblik sadržaja |
-| [CONTENT_GUIDE](docs/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju |
-| [TESTING](docs/TESTING.md) | Ručna QA checklista |
+| [BACKEND](docs/BACKEND.md) | Vercel Functions + Supabase, API, migracija |
+| [ROADMAP](docs/ROADMAP.md) | Milestones + status (done/next) |
+| [CONTENT_SCHEMA](docs/CONTENT_SCHEMA.md) · [CONTENT_GUIDE](docs/CONTENT_GUIDE.md) · [CONTENT_INTAKE](docs/CONTENT_INTAKE.md) | Oblik sadržaja, kako dodati predmet, kako slagati materijale |
+| [TESTING](docs/TESTING.md) | QA + automatske provjere |
 | [CHANGELOG](docs/CHANGELOG.md) · [PROGRESS](docs/PROGRESS.md) | Verzije i dnevnik rada |
 | [DECISIONS](docs/DECISIONS.md) · [BUGS](docs/BUGS.md) · [BACKLOG](docs/BACKLOG.md) | Odluke, greške, ideje |
 

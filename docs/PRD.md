@@ -1,6 +1,6 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.1 · **Zadnja izmjena:** 2026-06-01
+**Status:** živi dokument · **Verzija PRD-a:** 0.2 · **Zadnja izmjena:** 2026-06-02
 
 ## 1. Vizija
 Sokrat Study je platforma za učenje koja studentima pretvara nastavne materijale
@@ -15,13 +15,19 @@ generiraju i dijele skripte te se natječu.
 - **(Faza 1+) Korisnik-autor:** uploada svoj materijal i radi privatne skripte.
 - **(Faza 4) Pretplatnik:** plaća premium funkcionalnosti.
 
-## 3. Trenutno stanje (baseline)
+## 3. Trenutno stanje (2026-06-02)
 - Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com).
-- 8 predmeta, kurirani sadržaj u `data-*.js`, hardkodiran registar.
+- **Data-driven katalog** (`data/catalog.js`) = jedinstveni izvor istine; `config.js` i sidebar
+  se izvode iz njega (M0 Blok A: A1–A3 **gotovi i live**). Hardkodiranje uklonjeno.
+- Sadržaj: **8 predmeta 2. godine** + **Business Informatics (1. god, sem 1) KOMPLETAN**
+  (K1+K2+Final, 11 kategorija) — pilot manualnog content pipelinea uspješan.
 - 5 modova učenja: Learn, Flashcards, Quiz, Fill, Progress (+ Blind Map za geografiju).
+- Alati: `npm run verify`, `npm run test:responsive` (Playwright), `scaffold`, `scripts/pdf-text.js`.
+- **Sljedeće:** M0.5 (redizajn + drill-down nav) → ostali predmeti 1. god → backend (Blok B).
 
 ## 4. Opseg po fazama
-- **Faza 0 (sada):** data-driven katalog + Supabase backend + migracija 8 predmeta.
+- **Faza 0 (u tijeku):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +
+  backend **Vercel Functions + Supabase** (Blok B) uz migraciju datoteka → baza JEDNOM.
   Hijerarhija fakultet→smjer→godina→semestar→predmet. Bez novih korisničkih funkcija.
 - **Faza 1:** UGC MVP — korisnik uploada PDF/PPT → AI radi privatnu skriptu. Kvote troška.
 - **Faza 2:** dijeljenje — javna biblioteka, pretraga, kopiranje tuđih skripti.

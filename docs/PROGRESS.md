@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 12: CLAUDE.md + sinkronizacija svih docova
+**Napravljeno**
+- Dodan `CLAUDE.md` (root) — auto-učitava se svaku sesiju (preživljava /compact).
+  Objašnjeno: MORA biti u rootu da se auto-učita (pod-mapni se ne učita globalno).
+- Sinkronizirani svi docovi sa stvarnim stanjem:
+  - ROADMAP: dodan "📍 STANJE" sažetak (done/next); A1–A3 ✅, A4/A5 spojeni u M0.5; BI pilot ✅.
+  - PRD: trenutno stanje (data-driven + BI), backend = Vercel Functions + Supabase.
+  - ARCHITECTURE: statusi A1–A5, backend hosting, 1. god BI dodan.
+  - README (root) + docs/README: CLAUDE.md, BACKEND, CONTENT_INTAKE, 1. god BI.
+**Bez koda/deploya** (samo dokumentacija).
+
+---
+
 ## 2026-06-03 — Sesija 11: Business Informatics KOMPLETAN (K1 + K2 + Final)
 **Napravljeno**
 - K1 (Ch1–6) i K2 (Ch7–11) generirani iz PDF-ova, vjerno gradivu:
