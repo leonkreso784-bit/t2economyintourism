@@ -17,6 +17,8 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderLandingMeta();       // keep landing counts in sync with the catalog
+    renderLandingSubjects();   // build landing subject showcase from catalog
+    initLandingSubjects();     // bind showcase click → lessons
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
     initLearnImageModal();
@@ -25,11 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function setupEventListeners() {
-    // Open Study button → drill-down browse (Faculty → Program → Year → Subject)
-    const openStudyBtn = document.getElementById('openStudyBtn');
-    if (openStudyBtn) {
-        openStudyBtn.addEventListener('click', enterBrowse);
-    }
+    // All "Start studying" triggers (nav, hero, final CTA, footer) → drill-down browse
+    document.querySelectorAll('.start-trigger').forEach((btn) => {
+        btn.addEventListener('click', enterBrowse);
+    });
 
     // Browse page back button (steps back through the drill-down, then to landing)
     const backFromBrowse = document.getElementById('backFromBrowse');

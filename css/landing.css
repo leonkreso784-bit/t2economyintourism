@@ -522,17 +522,442 @@
     .stat-divider { height: 1.75rem; }
 }
 
-/* Landing Footer */
-.landing-footer {
-    padding: 1.75rem 1.5rem;
+/* =====================================================
+   M0.5 LANDING REBUILD — nav, sections, showcase, modes, CTA, footer
+   ===================================================== */
+
+/* ----- Fixed top navigation ----- */
+.landing-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.7rem 1.5rem;
+    padding-top: calc(0.7rem + var(--safe-top));
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.landing-nav .landing-logo {
+    text-decoration: none;
+}
+
+.landing-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    margin-left: auto;
+}
+
+.landing-nav-links a,
+.nav-link-btn {
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 0;
+}
+
+.landing-nav-links a:hover,
+.nav-link-btn:hover {
+    color: var(--primary-light);
+}
+
+.cta-button.nav-cta {
+    padding: 0.6rem 1.15rem;
+    font-size: 0.9rem;
+    min-height: 0;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}
+
+/* Offset hero below the fixed nav; anchor targets clear it too */
+.landing-hero {
+    padding-top: calc(5rem + var(--safe-top));
+}
+
+.landing-section,
+.landing-cta,
+#top {
+    scroll-margin-top: 84px;
+}
+
+/* ----- Hero trust row ----- */
+.hero-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    list-style: none;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .hero-trust { justify-content: flex-start; }
+}
+
+.hero-trust li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.hero-trust i {
+    color: var(--success);
+    font-size: 0.8rem;
+}
+
+/* ----- Generic landing section + heading ----- */
+.landing-section {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    min-width: 0;
+}
+
+.section-head {
+    max-width: 640px;
+    margin: 0 auto 2.5rem;
     text-align: center;
+}
+
+.section-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+}
+
+.section-head h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+}
+
+.section-head p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* ----- Subjects showcase ----- */
+.landing-subjects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+.landing-subject-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.landing-subject-card:hover,
+.landing-subject-card:focus-visible {
+    transform: translateY(-4px);
+    border-color: var(--card-accent, var(--primary));
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+    outline: none;
+}
+
+.landing-subject-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.landing-subject-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.landing-subject-info h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.landing-subject-info p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.landing-subject-arrow {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.landing-subject-card:hover .landing-subject-arrow {
+    color: var(--card-accent, var(--primary));
+    transform: translateX(4px);
+}
+
+/* ----- How it works ----- */
+.how-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.how-step {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem 1.75rem;
+    text-align: center;
+}
+
+.how-step-num {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+}
+
+.how-step-icon {
+    font-size: 1.8rem;
+    color: var(--primary-light);
+    margin: 0.5rem 0 1rem;
+}
+
+.how-step h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.how-step p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+}
+
+/* ----- Study modes ----- */
+.modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+.mode-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.mode-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--card-accent, var(--primary));
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+.mode-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 1.4rem;
+    color: var(--card-accent, var(--primary));
+    background: color-mix(in srgb, var(--card-accent, var(--primary)) 16%, transparent);
+    border: 1px solid color-mix(in srgb, var(--card-accent, var(--primary)) 35%, transparent);
+}
+
+.mode-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.4rem;
+}
+
+.mode-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* ----- Final CTA band ----- */
+.landing-cta {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+}
+
+.landing-cta-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.08));
+    border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.landing-cta-inner h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(1.6rem, 5vw, 2.3rem);
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+}
+
+.landing-cta-inner p {
+    color: var(--text-secondary);
+    margin-bottom: 1.75rem;
+}
+
+.landing-cta-inner .cta-button {
+    margin: 0 auto;
+}
+
+/* ----- Footer (structured) ----- */
+.landing-footer {
+    padding: 2.5rem 1.5rem 2rem;
     color: var(--text-muted);
     font-size: 0.875rem;
     position: relative;
     z-index: 10;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .landing-footer i {
     color: var(--danger);
+}
+
+.footer-cols {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.footer-brand p {
+    margin-top: 0.85rem;
+    max-width: 32ch;
+    line-height: 1.55;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+
+.footer-col h4 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.footer-col a,
+.footer-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    text-align: left;
+}
+
+.footer-col a:hover,
+.footer-link-btn:hover {
+    color: var(--primary-light);
+}
+
+.footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    max-width: 1000px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 0.8rem;
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 720px) {
+    .landing-nav-links { display: none; }
+    .landing-section { padding: 3rem 1.25rem; }
+    .footer-cols { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-bottom { justify-content: center; text-align: center; }
 }

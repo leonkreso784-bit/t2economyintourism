@@ -6,12 +6,13 @@ Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
-kategorija) · **M0.5: puni drill-down navigacija (`#browse-page`) + „čisto i bogato" redizajn
-browse/landing ✅** (Fakultet→Smjer→Godina→Predmet, 100% iz catalog-a; ADR-007).
-**Sljedeće:** ostali predmeti 1. godine (10 kom., kad stignu materijali) → **Blok B** (Vercel
-Functions + Supabase; migracija JEDNOM).
+kategorija) · **M0.5: puni drill-down navigacija (`#browse-page`) + „čisto i bogato" redizajn ✅** ·
+**Landing rebuild u punu „pravu stranicu" ✅** (nav, subjects showcase iz catalog-a, How it works,
+5 modova, CTA, strukturiran footer) + **SEO meta popravljen**.
+**Sljedeće (Tier 2):** Privacy Policy + Contact + FAQ (bitno za Google Ads) → ostali predmeti 1. godine
+(10 kom., kad stignu materijali) → **Blok B** (Vercel Functions + Supabase; migracija JEDNOM).
 **Sadržaj:** 2. god = 8 predmeta ✅ · 1. god = Business Informatics ✅, ostalih 10 ⬜.
-**Deploy:** zadnji live = A3 + fiksevi; BI sadržaj + M0.5 redizajn su commitani ali **NISU deployani** (čeka potvrdu).
+**Deploy:** zadnji live = A3 + fiksevi; BI sadržaj + M0.5 + landing rebuild su commitani ali **NISU deployani** (čeka potvrdu).
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
@@ -48,7 +49,10 @@ uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadrža
   breadcrumbs (`#browse-page`, `renderBrowse()`; test `browse.spec.js`)
 - ✅ Frontend redesign (browse + landing): „čisto i bogato", dosljedne kartice (gradijent-ikone,
   napredak), responzivno (Playwright zeleno, 4 iPhone profila). Logo nepromijenjen.
+- ✅ **Landing rebuild** u punu višesekcijsku „pravu stranicu": fixed nav, subjects showcase (iz catalog-a),
+  How it works, 5 modova, završni CTA, strukturiran footer + **SEO meta**. Test `landing.spec.js`.
   Preostaje: redizajn study/lessons unutarnjih ekrana (kasnije po potrebi).
+- ⬜ **Tier 2 (povjerenje / priprema za Google Ads):** Privacy Policy + Contact + FAQ stranica/sekcija
 - ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](CONTENT_INTAKE.md)
 - **DoD:** uđeš → fakultet → smjer → godina → predmeti po semestru; izgled uglađen; sve responzivno
   (Playwright zeleno); dodavanje predmeta = catalog + scaffold. **(Navigacija + redizajn browse/landing: ispunjeno ✅)**

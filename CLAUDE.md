@@ -52,6 +52,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **M0.5 (lokalno, čeka deploy):** **puni drill-down nav** (`#browse-page`: Fakultet→Smjer→Godina→Predmet,
   100% iz catalog-a; `renderBrowse()`/`initBrowse()` u `js/navigation.js`, `css/browse.css`) + **„čisto i bogato"
   redizajn** browse/landing. Coming-soon data-driven (`isLessonComingSoon`). Test `tests/browse.spec.js`. (A5 ✅, ADR-007 ✅)
+- **Landing rebuild (lokalno, čeka deploy):** puna „prava stranica" — fixed nav, **subjects showcase iz catalog-a**
+  (`renderLandingSubjects()`), How it works, 5 modova, CTA band, strukturiran footer + **SEO meta** popravljen.
+  Svi „Start" gumbi = klasa `.start-trigger` → `enterBrowse`. Test `tests/landing.spec.js`.
+  Sljedeće (Tier 2): Privacy/Contact/FAQ (za Google Ads).
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
 - **Sljedeće:** ostali predmeti 1. godine (kad stignu materijali), pa **Blok B** (Supabase; migracija datoteka → baza JEDNOM).
   Po želji: redizajn unutarnjih study/lessons ekrana.

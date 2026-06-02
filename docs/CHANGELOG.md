@@ -38,7 +38,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   fakulteta/smjera/godine/predmeta u catalog kartice se pojave bez izmjene UI-a. Test:
   `tests/browse.spec.js` (drill-down + overflow guard, 4 iPhone profila).
 - `SokratCatalog.isLessonComingSoon()` — data-driven "coming soon" (lekcija bez resolve mapiranja).
+- **Landing rebuild — "prava stranica"** (M0.5 Tier 1): fixed nav traka (logo + linkovi + "Start studying"),
+  hero trust red, **subjects showcase iz catalog-a** (`renderLandingSubjects()`/`initLandingSubjects()`, klik → lekcije),
+  "How it works" (3 koraka), "Study modes" (5 modova), završni CTA band, strukturiran footer
+  (brand/Explore/About + copyright). Svi "Start" gumbi vežu se preko klase `.start-trigger`. CSS u `css/landing.css`.
+  Test: `tests/landing.spec.js` (nav, showcase=catalog, navigacija, overflow guard, 4 iPhone profila).
 ### Changed
+- **SEO `<head>`:** osvježen `description`/`keywords`/`<title>`; dodan `canonical` + `og:site_name`;
+  `og:url`/`twitter` → `https://www.sokratstudy.com/`; `og:image` → `/icon-512.png` (bilo zastarjelo: vercel.app + samo 3 predmeta).
+- Bump `?v=20260605` (landing.css, styles.css, navigation.js, init.js) za landing rebuild.
 - Landing: CTA "Start Studying" sada vodi na **browse drill-down** (umjesto slide-in sidebara;
   sidebar ostaje kao bezopasan legacy fallback). Back s Lessons vraća na popis predmeta (čuva drill-down poziciju).
 - Landing: broj predmeta sada dinamičan iz catalog-a (`renderLandingMeta()` + `data-meta="subjectCount"`);

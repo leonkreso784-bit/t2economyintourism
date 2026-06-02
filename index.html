@@ -20,31 +20,33 @@
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
-    <meta name="description" content="Sokrat Study - Interactive learning app for Tourism Economics, Business Entrepreneurship, and Accounting. Flashcards, Quizzes, and comprehensive study materials!">
-    <meta name="keywords" content="study, flashcards, quiz, tourism economics, entrepreneurship, accounting, education, exam preparation">
+    <meta name="description" content="Free interactive exam prep for FMTU Opatija — Hospitality Management. Lessons, flashcards, quizzes and fill-in-the-blank exercises across Year 1 & Year 2 subjects. No sign-up, works offline.">
+    <meta name="keywords" content="Sokrat Study, FMTU Opatija, Hospitality Management, study app, flashcards, quiz, exam preparation, tourism economics, accounting, marketing, business informatics, e-business">
     <meta name="author" content="Leon Kreso">
     <meta name="robots" content="index, follow">
-    
+    <link rel="canonical" href="https://www.sokratstudy.com/">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="Sokrat Study - Master Your Knowledge">
-    <meta property="og:description" content="Interactive study app with flashcards, quizzes, and comprehensive materials for Tourism Economics, Entrepreneurship, and Accounting.">
+    <meta property="og:title" content="Sokrat Study — Free Exam Prep: Lessons, Flashcards & Quizzes">
+    <meta property="og:description" content="Master your exams with interactive lessons, flashcards, quizzes and fill-in-the-blanks across Year 1 & 2 of Hospitality Management (FMTU Opatija). Free, no sign-up.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://t2economyintourism.vercel.app">
-    <meta property="og:image" content="https://t2economyintourism.vercel.app/icon-512.png">
-    
+    <meta property="og:site_name" content="Sokrat Study">
+    <meta property="og:url" content="https://www.sokratstudy.com/">
+    <meta property="og:image" content="https://www.sokratstudy.com/icon-512.png">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Sokrat Study - Master Your Knowledge">
-    <meta name="twitter:description" content="Interactive study app with flashcards, quizzes, and comprehensive materials.">
-    <meta name="twitter:image" content="https://t2economyintourism.vercel.app/icon-512.png">
+    <meta name="twitter:title" content="Sokrat Study — Free Exam Prep: Lessons, Flashcards & Quizzes">
+    <meta name="twitter:description" content="Interactive lessons, flashcards, quizzes and fill-in-the-blanks for Hospitality Management at FMTU Opatija. Free, no sign-up, works offline.">
+    <meta name="twitter:image" content="https://www.sokratstudy.com/icon-512.png">
     
-    <title>Sokrat Study - Master Your Knowledge</title>
+    <title>Sokrat Study — Free Exam Prep: Lessons, Flashcards & Quizzes</title>
     
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260604">
+    <link rel="stylesheet" href="styles.css?v=20260605">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -63,13 +65,22 @@
             <div class="grid-overlay"></div>
         </div>
 
-        <!-- Landing Header -->
-        <header class="landing-header">
-            <div class="landing-logo">
+        <!-- Top Navigation (fixed) -->
+        <header class="landing-nav" id="top">
+            <a class="landing-logo" href="#top" aria-label="Sokrat Study home">
                 <div class="logo-wrapper"><img src="logo.png" alt="Sokrat Study Logo" class="logo-image"></div>
                 <span class="logo-text">Sokrat Study</span>
-            </div>
-
+            </a>
+            <nav class="landing-nav-links" aria-label="Primary">
+                <a href="#subjects">Subjects</a>
+                <a href="#how">How it works</a>
+                <a href="#modes">Study modes</a>
+                <button type="button" class="nav-link-btn" onclick="showAboutUs()">About</button>
+            </nav>
+            <button type="button" class="cta-button primary nav-cta start-trigger">
+                <i class="fas fa-bolt"></i>
+                <span>Start studying</span>
+            </button>
         </header>
 
         <!-- Hero Section -->
@@ -88,16 +99,21 @@
                     subjects from Year 1 &amp; Year 2. Built for students who want results, not just notes.
                 </p>
                 <div class="hero-actions">
-                    <button class="cta-button primary" id="openStudyBtn">
+                    <button class="cta-button primary start-trigger" id="openStudyBtn">
                         <i class="fas fa-book-open"></i>
                         <span>Start Studying</span>
                         <i class="fas fa-arrow-right"></i>
                     </button>
-                    <button class="cta-button secondary" onclick="showAboutUs()">
-                        <i class="fas fa-info-circle"></i>
-                        <span>About Us</span>
-                    </button>
+                    <a class="cta-button secondary" href="#subjects">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Browse subjects</span>
+                    </a>
                 </div>
+                <ul class="hero-trust">
+                    <li><i class="fas fa-check"></i> 100% free</li>
+                    <li><i class="fas fa-check"></i> No sign-up</li>
+                    <li><i class="fas fa-check"></i> Works offline</li>
+                </ul>
             </div>
             
             <!-- Hero Visual -->
@@ -146,35 +162,123 @@
             </div>
         </div>
 
-        <!-- Features Section -->
-        <section class="landing-features" aria-labelledby="features-heading">
-            <h2 id="features-heading" class="visually-hidden">App Features</h2>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-layer-group" aria-hidden="true"></i>
-                </div>
-                <h3><span data-meta="subjectCount">8</span> Subjects Ready</h3>
-                <p>Year 1 &amp; Year 2 of Hospitality Management &mdash; economics, accounting, marketing, informatics, geography and more</p>
+        <!-- Subjects Showcase (rendered from catalog) -->
+        <section class="landing-section" id="subjects" aria-labelledby="subjects-heading">
+            <div class="section-head">
+                <span class="section-eyebrow">Catalog</span>
+                <h2 id="subjects-heading">Everything you need to study</h2>
+                <p>Year 1 &amp; Year 2 of Hospitality Management at FMTU Opatija &mdash; pick a subject and start in seconds.</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt" aria-hidden="true"></i>
-                </div>
-                <h3>5 Study Modes</h3>
-                <p>Learn, Flashcards, Quiz, Fill-in-Blanks and Progress &mdash; all in one place</p>
+            <div class="landing-subjects" id="landingSubjects">
+                <!-- Rendered from data/catalog.js by renderLandingSubjects() -->
             </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+        </section>
+
+        <!-- How It Works -->
+        <section class="landing-section" id="how" aria-labelledby="how-heading">
+            <div class="section-head">
+                <span class="section-eyebrow">Simple</span>
+                <h2 id="how-heading">How it works</h2>
+                <p>Three steps from lecture notes to exam-ready.</p>
+            </div>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="how-step-num">1</div>
+                    <i class="fas fa-compass how-step-icon" aria-hidden="true"></i>
+                    <h3>Pick your subject</h3>
+                    <p>Browse by faculty, program and year, then open the lesson you need.</p>
                 </div>
-                <h3>Works Everywhere</h3>
-                <p>Install as a PWA, works offline and fully optimized for mobile</p>
+                <div class="how-step">
+                    <div class="how-step-num">2</div>
+                    <i class="fas fa-dumbbell how-step-icon" aria-hidden="true"></i>
+                    <h3>Learn &amp; practice</h3>
+                    <p>Read the material, then drill it with flashcards, quizzes and fill-in-the-blanks.</p>
+                </div>
+                <div class="how-step">
+                    <div class="how-step-num">3</div>
+                    <i class="fas fa-chart-line how-step-icon" aria-hidden="true"></i>
+                    <h3>Track your progress</h3>
+                    <p>See your best scores and streaks, and focus on what you haven't mastered yet.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Modes -->
+        <section class="landing-section" id="modes" aria-labelledby="modes-heading">
+            <div class="section-head">
+                <span class="section-eyebrow">5 modes</span>
+                <h2 id="modes-heading">Five ways to master the material</h2>
+                <p>Every subject comes with all five &mdash; switch any time.</p>
+            </div>
+            <div class="modes-grid">
+                <article class="mode-card" style="--card-accent:#6366f1">
+                    <div class="mode-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
+                    <h3>Learn</h3>
+                    <p>Complete, organised study material by topic.</p>
+                </article>
+                <article class="mode-card" style="--card-accent:#8b5cf6">
+                    <div class="mode-icon"><i class="fas fa-clone" aria-hidden="true"></i></div>
+                    <h3>Flashcards</h3>
+                    <p>Flip cards to test recall and mark what you know.</p>
+                </article>
+                <article class="mode-card" style="--card-accent:#0ea5e9">
+                    <div class="mode-icon"><i class="fas fa-question-circle" aria-hidden="true"></i></div>
+                    <h3>Quiz</h3>
+                    <p>Multiple-choice with instant feedback and scoring.</p>
+                </article>
+                <article class="mode-card" style="--card-accent:#ec4899">
+                    <div class="mode-icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
+                    <h3>Fill-in-the-blank</h3>
+                    <p>Type the missing term to lock in key definitions.</p>
+                </article>
+                <article class="mode-card" style="--card-accent:#22c55e">
+                    <div class="mode-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                    <h3>Progress</h3>
+                    <p>Scores, streaks and per-topic mastery in one place.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="landing-cta">
+            <div class="landing-cta-inner">
+                <h2>Ready to ace your exams?</h2>
+                <p>Jump into any subject &mdash; it's free and works right on your phone.</p>
+                <button type="button" class="cta-button primary start-trigger">
+                    <i class="fas fa-bolt"></i>
+                    <span>Start studying</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </section>
 
         <!-- Landing Footer -->
         <footer class="landing-footer">
-            <p>Built with <i class="fas fa-heart"></i> for students by <strong>Leon Kreso</strong></p>
+            <div class="footer-cols">
+                <div class="footer-brand">
+                    <div class="landing-logo">
+                        <div class="logo-wrapper"><img src="logo.png" alt="Sokrat Study Logo" class="logo-image"></div>
+                        <span class="logo-text">Sokrat Study</span>
+                    </div>
+                    <p>Interactive exam prep for FMTU Opatija &mdash; built by students, for students.</p>
+                </div>
+                <nav class="footer-col" aria-label="Explore">
+                    <h4>Explore</h4>
+                    <a href="#subjects">Subjects</a>
+                    <a href="#how">How it works</a>
+                    <a href="#modes">Study modes</a>
+                    <button type="button" class="footer-link-btn start-trigger">Start studying</button>
+                </nav>
+                <nav class="footer-col" aria-label="About">
+                    <h4>About</h4>
+                    <button type="button" class="footer-link-btn" onclick="showAboutUs()">About us</button>
+                    <a href="mailto:leonkreso784@gmail.com">Contact</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
+                <p class="footer-made">Made with <i class="fas fa-heart"></i> for students</p>
+            </div>
         </footer>
     </section>
 
@@ -888,13 +992,13 @@
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>
-    <script src="js/navigation.js?v=20260604"></script>
+    <script src="js/navigation.js?v=20260605"></script>
     <script src="js/flashcards.js?v=20260602"></script>
     <script src="js/quiz.js?v=20260602"></script>
     <script src="js/fill-blanks.js?v=20260602"></script>
     <script src="js/learn.js?v=20260602"></script>
     <script src="js/progress.js?v=20260602"></script>
     <script src="js/blind-map.js?v=20260602"></script>
-    <script src="js/init.js?v=20260604"></script>
+    <script src="js/init.js?v=20260605"></script>
 </body>
 </html>

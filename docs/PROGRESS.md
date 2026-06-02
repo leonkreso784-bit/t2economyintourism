@@ -5,6 +5,33 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 14: Landing rebuild („prava stranica") + SEO fix
+**Odluka korisnika:** landing ne smije biti „jedan ekran" — treba izgledati kao prava,
+kompletna stranica. Tier 1 (struktura/sadržaj) + popravak SEO meta.
+
+**Napravljeno (sve statički, showcase iz catalog-a)**
+- **Fixed nav traka:** logo + linkovi (Subjects / How it works / Study modes / About) + „Start studying" CTA;
+  na mobitelu se linkovi sklope (logo + Start). Hero offset za fixed nav; `scroll-margin-top` za anchor skok.
+- **Hero:** trust red (100% free · No sign-up · Works offline); sekundarni CTA → „Browse subjects".
+- **Subjects showcase** (`#subjects`, `renderLandingSubjects()`): grid svih predmeta IZ catalog-a
+  (gradijent-ikone, godina + broj lekcija); klik → lekcije. Raste automatski s catalog-om.
+- **How it works** (`#how`): 3 koraka. **Study modes** (`#modes`): 5 modova s tintanim ikonama.
+- **Završni CTA band** + **strukturiran footer** (brand / Explore / About + copyright). Svi „Start" gumbi (`.start-trigger`) → browse.
+- **SEO `<head>`:** točan description/keywords, `canonical`, `og:site_name`, `og:url`/`twitter` → `www.sokratstudy.com`,
+  `og:image` → `icon-512.png`, osvježen `<title>`.
+- Cache bump `?v=20260605` (landing.css, styles.css, navigation.js, init.js).
+
+**Testirano**
+- `tests/landing.spec.js` (novo): nav, showcase = broj predmeta iz catalog-a, 3 koraka, 5 modova, footer,
+  klik showcase → lekcije, „Start" → browse, **overflow guard** — 8/8 zeleno.
+- Puni Playwright suite (responsive + smoke + sidebar + browse + landing) × 4 iPhone profila: **28/28 zeleno**. verify 0 grešaka.
+- Vizualno provjereno (mobile fullPage + desktop): izgleda kao kompletna „prava stranica".
+
+**Stanje:** Landing rebuild gotov (Tier 1 + SEO). Bez deploya (čeka potvrdu).
+**Sljedeće (Tier 2):** Privacy Policy + Contact + FAQ (bitno za Google Ads) → ostali predmeti 1. god → Blok B.
+
+---
+
 ## 2026-06-02 — Sesija 13: M0.5 — puni drill-down navigacija + „čisto i bogato" redizajn
 **Odluka korisnika:** frontend prvo (prije novih predmeta); stil = **„čisto i bogato"
 (Brilliant/Quizlet), NE preminimalistički** — „prava stranica". Puni eksplicitni drill-down:

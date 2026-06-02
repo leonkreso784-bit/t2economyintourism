@@ -385,6 +385,40 @@ function renderLandingMeta() {
     });
 }
 
+// ========== LANDING SUBJECTS SHOWCASE (rendered from catalog) ==========
+function renderLandingSubjects() {
+    const wrap = document.getElementById('landingSubjects');
+    if (!wrap || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
+    wrap.innerHTML = SOKRAT_CATALOG.subjects.map((s) => {
+        const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
+            ? s.iconGradient : [s.color, s.color];
+        const lessonCount = (s.lessons || []).length;
+        return `
+            <button type="button" class="landing-subject-card" data-landing-subject="${browseEsc(s.id)}" style="--card-accent:${browseEsc(grad[0])}">
+                <div class="landing-subject-icon" style="background:linear-gradient(135deg, ${browseEsc(grad[0])}, ${browseEsc(grad[1])});">
+                    <i class="fas ${browseEsc(s.icon)}"></i>
+                </div>
+                <div class="landing-subject-info">
+                    <h3>${browseEsc(s.name)}</h3>
+                    <p>Year ${browseEsc(s.year)} &middot; ${lessonCount} ${lessonCount === 1 ? 'lesson' : 'lessons'}</p>
+                </div>
+                <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+            </button>`;
+    }).join('');
+}
+
+// Delegirani click za showcase kartice (veže se jednom) → otvori lekcije predmeta.
+function initLandingSubjects() {
+    const wrap = document.getElementById('landingSubjects');
+    if (!wrap || wrap.dataset.bound === '1') return;
+    wrap.dataset.bound = '1';
+    wrap.addEventListener('click', (e) => {
+        const card = e.target.closest('[data-landing-subject]');
+        if (!card) return;
+        navigateTo('lessons', { subject: card.dataset.landingSubject });
+    });
+}
+
 // ========== LESSONS PAGE ==========
 function renderLessonsPage(subjectId) {
     const subject = subjectDataMap[subjectId];
@@ -585,3 +619,5 @@ window.enterBrowse = enterBrowse;
 window.browseBack = browseBack;
 window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
+window.renderLandingSubjects = renderLandingSubjects;
+window.initLandingSubjects = initLandingSubjects;
