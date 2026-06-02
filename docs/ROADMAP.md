@@ -24,6 +24,21 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 **Definicija gotovog (M0):** svih 8 predmeta dolazi iz baze, app radi identično,
 prvo učitavanje brže, mogu dodati novi predmet kroz admin bez diranja koda.
 
+## M0.5 — Spremnost za sadržaj: hijerarhija + redesign (PRIJE masovnog unosa)  🟦
+Cilj: stranica strukturirana Fakultet → Smjer → Godina → (Semestar) → Predmet, i
+uglađen minimalistički frontend, spremno za ~19+ predmeta. Logo se zadržava.
+
+- ⬜ Sadržajni alati: ✅ struktura+template+scaffold (K1); ⬜ coming-soon iz catalog-a
+  (K2); ⬜ validator sadržaja (K3); ⬜ lazy-load seam (K4)
+- ⬜ Catalog: dodati 1. godinu (11 predmeta) kao stubove (coming-soon) + semestar mapping
+- ⬜ Hijerarhijska navigacija: Start → Smjerovi → Godine → Predmeti (po semestru) +
+  breadcrumbs; dosljedno na svim ekranima
+- ⬜ Frontend redesign: minimalistički, dosljedan sustav (tipografija, razmaci, kartice),
+  responzivno (čuva ga Playwright). Logo nepromijenjen.
+- ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](CONTENT_INTAKE.md)
+- **DoD:** uđeš → smjer → godina → predmeti po semestru; izgled uglađen; sve responzivno
+  (Playwright zeleno); dodavanje predmeta = catalog + scaffold.
+
 ## M1 — UGC MVP (Faza 1)  ⬜
 Upload PDF/PPT → ekstrakcija → Claude generira skriptu → privatno učenje.
 Kvote troška od prvog dana. Ljudski pregled prije objave.

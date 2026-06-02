@@ -36,6 +36,9 @@ build/
 # Vercel
 .vercel
 
+# Source materials (professor PPT/PDF/JPG) — copyright, never commit
+_materials/
+
 # Python / dev artifacts
 .venv/
 extract_pdfs.py

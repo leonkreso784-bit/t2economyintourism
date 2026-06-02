@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 9: analiza 1. godine + plan M0.5 (hijerarhija + redesign)
+**Analiza materijala (samo pregled, ništa dirano):**
+- `C:\...\Documentos\1. godina Hospitality Managament`: 11 predmeta, ~168 datoteka
+  (100 JPG + 68 PDF). 4 predmeta još prazna. Math je formule/JPG (rizik za točnost).
+- Procjena: 1. god. do ~33 lekcije; sa 2. god. = ~19 predmeta za smjer.
+
+**Odluke/plan:**
+- Dodan `docs/CONTENT_INTAKE.md` (kako slagati materijale: PDF>JPG, po predmetu/kolokviju,
+  Math caveat) + `_materials/` u .gitignore.
+- Novi milestone **M0.5** u ROADMAP: hijerarhijska navigacija (Fakultet→Smjer→Godina→
+  Predmet) + minimalistički frontend redesign (logo se zadržava), PRIJE masovnog unosa.
+- Catalog data-model već podržava hijerarhiju (faculties/programs/year/semester).
+
+**Čeka korisnika:** potvrda smjera dizajna navigacije + semestar-mapping za 1. godinu.
+**Bez koda ove sesije (planiranje).** Sljedeće: K2 coming-soon → catalog 1.god stubovi → nav → redesign.
+
+---
+
 ## 2026-06-02 — Sesija 8: priprema za masovni sadržaj (struktura + template)
 **Kontekst:** korisnik uskoro dodaje cijelu 1. godinu (po predmetu k1/k2/završni).
 Dogovoreno: autorstvo u datotekama SADA (migracijski sigurno), uz alate za kvalitetu.
