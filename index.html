@@ -44,7 +44,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260602">
+    <link rel="stylesheet" href="styles.css?v=20260604">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -77,15 +77,15 @@
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    <span>Free exam toolkit &mdash; 8 subjects ready</span>
+                    <span>Free exam toolkit &mdash; <span data-meta="subjectCount">8</span> subjects ready</span>
                 </div>
                 <h1 class="hero-title">
                     Study Smart.<br>
                     <span class="gradient-text">Score Higher.</span>
                 </h1>
                 <p class="hero-subtitle">
-                    Flashcards, quizzes, and in-depth lessons across 8 university subjects.
-                    Built for students who want results, not just notes.
+                    Flashcards, quizzes, and in-depth lessons across <span data-meta="subjectCount">8</span> university
+                    subjects from Year 1 &amp; Year 2. Built for students who want results, not just notes.
                 </p>
                 <div class="hero-actions">
                     <button class="cta-button primary" id="openStudyBtn">
@@ -126,7 +126,7 @@
         <!-- Stats Bar -->
         <div class="hero-stats">
             <div class="stat-item">
-                <span class="stat-num">8</span>
+                <span class="stat-num" data-meta="subjectCount">8</span>
                 <span class="stat-label">Subjects</span>
             </div>
             <div class="stat-divider"></div>
@@ -153,8 +153,8 @@
                 <div class="feature-icon">
                     <i class="fas fa-layer-group" aria-hidden="true"></i>
                 </div>
-                <h3>8 Subjects Ready</h3>
-                <p>Tourism, Accounting, Marketing, E-Business, Entrepreneurship, Hospitality, Geography and Food &amp; Nutrition</p>
+                <h3><span data-meta="subjectCount">8</span> Subjects Ready</h3>
+                <p>Year 1 &amp; Year 2 of Hospitality Management &mdash; economics, accounting, marketing, informatics, geography and more</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">
@@ -197,6 +197,28 @@
             </div>
         </div>
     </aside>
+
+    <!-- ==================== BROWSE PAGE (drill-down: Faculty → Program → Year → Subject) ==================== -->
+    <section id="browse-page" class="browse-page">
+        <header class="browse-header">
+            <button class="back-btn" id="backFromBrowse" aria-label="Go back">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </button>
+            <div class="browse-title">
+                <span class="breadcrumb" id="browseBreadcrumb">Sokrat Study</span>
+                <h1 id="browseHeading">Choose your faculty</h1>
+            </div>
+            <div class="browse-logo">
+                <div class="logo-wrapper"><img src="logo.png" alt="Sokrat Study" class="logo-image"></div>
+            </div>
+        </header>
+        <main class="browse-content">
+            <p class="browse-intro" id="browseIntro"></p>
+            <div class="browse-grid" id="browseGrid">
+                <!-- Cards rendered from catalog by renderBrowse() in js/navigation.js -->
+            </div>
+        </main>
+    </section>
 
     <!-- ==================== LESSONS PAGE ==================== -->
     <section id="lessons-page" class="lessons-page">
@@ -859,20 +881,20 @@
     <script src="data/business-informatics/final.js?v=20260603"></script>
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260602"></script>
+    <script src="data/catalog.js?v=20260604"></script>
 
     <!-- App modules (split from app.js) -->
     <script src="js/config.js?v=20260602"></script>
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>
-    <script src="js/navigation.js?v=20260602"></script>
+    <script src="js/navigation.js?v=20260604"></script>
     <script src="js/flashcards.js?v=20260602"></script>
     <script src="js/quiz.js?v=20260602"></script>
     <script src="js/fill-blanks.js?v=20260602"></script>
     <script src="js/learn.js?v=20260602"></script>
     <script src="js/progress.js?v=20260602"></script>
     <script src="js/blind-map.js?v=20260602"></script>
-    <script src="js/init.js?v=20260602"></script>
+    <script src="js/init.js?v=20260604"></script>
 </body>
 </html>

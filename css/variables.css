@@ -120,6 +120,7 @@ body {
 
 /* Hide all pages by default */
 .landing-page,
+.browse-page,
 .lessons-page,
 .study-page,
 .about-page {
@@ -127,6 +128,7 @@ body {
 }
 
 .landing-page.active,
+.browse-page.active,
 .lessons-page.active,
 .study-page.active,
 .about-page.active {

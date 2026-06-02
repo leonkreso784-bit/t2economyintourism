@@ -1,0 +1,329 @@
+/* =====================================================
+   BROWSE PAGE
+   Sokrat Study — drill-down catalog explorer
+   Faculty → Program → Year → Subject (sve iz data/catalog.js)
+
+   ⚠ CACHE: pri izmjeni bumpaj ?v= token u styles.css (@import) i deploy provjeri.
+   ===================================================== */
+
+.browse-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg-primary);
+}
+
+/* ===== HEADER (reuses global .back-btn and .breadcrumb) ===== */
+.browse-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    padding-top: calc(1rem + var(--safe-top));
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.browse-title {
+    flex: 1;
+    min-width: 0;
+}
+
+.browse-title h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.browse-logo .logo-wrapper {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+}
+
+/* ===== CONTENT ===== */
+.browse-content {
+    padding: 1.5rem;
+    padding-bottom: calc(2rem + var(--safe-bottom));
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    min-width: 0;
+}
+
+.browse-intro {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.browse-intro:empty {
+    display: none;
+}
+
+/* The container JS fills: stacks sections (or a single grid) vertically. */
+.browse-grid-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 0;
+}
+
+/* ===== SEMESTER / GROUP SECTION ===== */
+.browse-section {
+    min-width: 0;
+}
+
+.browse-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.browse-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+/* ===== GRID OF CARDS ===== */
+.browse-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    min-width: 0;
+}
+
+/* ===== CARD (faculty / program / year / subject share the base) ===== */
+.browse-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.35rem;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 0;
+    overflow: hidden;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+}
+
+/* subtle accent glow on hover, tinted by the card's --accent (set inline) */
+.browse-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 120% at 0% 0%,
+        color-mix(in srgb, var(--card-accent, var(--primary)) 14%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.browse-card:hover,
+.browse-card:focus-visible {
+    border-color: var(--card-accent, var(--primary));
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    outline: none;
+}
+
+.browse-card:hover::before,
+.browse-card:focus-visible::before {
+    opacity: 1;
+}
+
+.browse-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 0;
+}
+
+.browse-card-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+}
+
+/* Year cards: show the year number big inside the icon tile */
+.browse-card-icon.is-year {
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+.browse-card-headings {
+    flex: 1;
+    min-width: 0;
+}
+
+.browse-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.25;
+    word-break: break-word;
+}
+
+.browse-card-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.15rem;
+}
+
+.browse-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.browse-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.browse-card-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.browse-card-meta i {
+    color: var(--card-accent, var(--primary));
+}
+
+/* chevron, pinned bottom-right */
+.browse-card-arrow {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.browse-card:hover .browse-card-arrow {
+    color: var(--card-accent, var(--primary));
+    transform: translateX(4px);
+}
+
+/* ===== SUBJECT PROGRESS BAR ===== */
+.browse-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.15rem;
+}
+
+.browse-progress-track {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-tertiary);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.browse-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--card-accent, var(--primary)), var(--primary-light));
+    transition: width 0.4s ease;
+}
+
+.browse-progress-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    min-width: 2.5rem;
+    text-align: right;
+}
+
+/* ===== COMING-SOON / DISABLED STATE ===== */
+.browse-card.is-soon {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.browse-card.is-soon:hover {
+    transform: none;
+    border-color: var(--border);
+    box-shadow: none;
+}
+
+.browse-card.is-soon:hover::before {
+    opacity: 0;
+}
+
+.browse-badge {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+}
+
+/* ===== EMPTY STATE ===== */
+.browse-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 3rem 1rem;
+}
+
+.browse-empty i {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    opacity: 0.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .browse-content {
+        padding: 1.25rem 1rem;
+    }
+    .browse-grid {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+    .browse-card {
+        padding: 1.1rem;
+    }
+}

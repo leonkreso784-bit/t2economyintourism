@@ -6,7 +6,7 @@
 ## Što je projekt
 Interaktivna platforma za učenje (flashcards / quiz / fill / learn). Live: **www.sokratstudy.com**.
 Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na cijeli fakultet
-(pa sveučilište), kasnije UGC + natjecanje. Vlasnik/jedini autor: **Leon**.
+(pa sveučilište), kasnije UGC + natjecanje. Vlasnik/jedini autor: **Leon Kreso**.
 
 ## Stack
 - Frontend: **statički, vanilla JS, BEZ build-a / frameworka**. Hosting: **Vercel** (git push → auto-deploy).
@@ -49,15 +49,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 
 ## Stanje (ažuriraj po potrebi)
 - **Live:** M0 Blok A gotov (A1 catalog, A2 config-iz-catalog, A3 sidebar-iz-catalog) + Learn responsive/overflow fix.
+- **M0.5 (lokalno, čeka deploy):** **puni drill-down nav** (`#browse-page`: Fakultet→Smjer→Godina→Predmet,
+  100% iz catalog-a; `renderBrowse()`/`initBrowse()` u `js/navigation.js`, `css/browse.css`) + **„čisto i bogato"
+  redizajn** browse/landing. Coming-soon data-driven (`isLessonComingSoon`). Test `tests/browse.spec.js`. (A5 ✅, ADR-007 ✅)
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
-- **Sljedeće:** **M0.5** = minimalistički redizajn + **puni drill-down nav** (Fakultet→Smjer→Godina→Predmet, ADR-007),
-  pa ostali predmeti 1. godine (kad stignu materijali), pa **Blok B** (Supabase; migracija datoteka → baza JEDNOM).
+- **Sljedeće:** ostali predmeti 1. godine (kad stignu materijali), pa **Blok B** (Supabase; migracija datoteka → baza JEDNOM).
+  Po želji: redizajn unutarnjih study/lessons ekrana.
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
-- ADR-007: navigacija = puni drill-down.
-- Logo se NE mijenja. Vizualni stil: minimalistički, dark.
+- ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).
+- Logo se NE mijenja. Vizualni stil: **„čisto i bogato" (clean & rich, Brilliant/Quizlet-feel), dark** — NE preminimalistički.
 
 ## Dokumentacija (`docs/`)
 `README` (index) · `PRD` · `ARCHITECTURE` · `BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` ·

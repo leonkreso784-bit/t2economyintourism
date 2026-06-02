@@ -17,13 +17,22 @@ postojećem no-build statičkom setupu (Vercel sam servira `/api`).
 **Migracija sadržaja:** ne sad; jednom u Bloku B (datoteke → DB 1:1). Vidi [BACKEND.md](BACKEND.md).
 
 ## ADR-007 — Navigacija: puni drill-down (Fakultet → Smjer → Godina → Predmet)
-**Datum:** 2026-06-02 · **Status:** prihvaćeno
+**Datum:** 2026-06-02 · **Status:** ✅ implementirano (2026-06-02, M0.5)
 **Kontekst:** Stranica treba biti strukturirana po fakultetu/smjeru/godini; korisnik
 želi da se eksplicitno vidi hijerarhija ("uđeš na fakultete → smjerovi → godine").
 **Odluka:** Puni drill-down korak po korak: Start → Fakulteti → Smjerovi → Godine →
 Predmeti (po semestru), čak i kad razina ima samo jednu opciju. Breadcrumbs na svakom
 ekranu. (Razmatran "pametni skip" jednolične razine — odbijen jer korisnik želi
-eksplicitnu strukturu.) Logo se zadržava; vizualni stil minimalistički, dark.
+eksplicitnu strukturu.) Logo se zadržava.
+**Vizualni stil (revidirano 2026-06-02):** **„čisto i bogato" (clean & rich, Brilliant/
+Quizlet-feel), dark** — NE preminimalistički; treba izgledati kao „prava stranica"
+(bogate kartice s gradijent-ikonama, breadcrumb, napredak). Mijenja raniji opis
+„minimalistički".
+**Implementacija:** zasebna `#browse-page` stranica; render iz `data/catalog.js` preko
+helpera `SokratCatalog.faculties()/programsOf()/yearsOf()/subjectsOf()/semestersOf()`
+u `js/navigation.js` (`renderBrowse()` + `initBrowse()`), stil u `css/browse.css`.
+Dodavanjem fakulteta/smjera/godine/predmeta u catalog kartice se pojave bez izmjene UI-a.
+Test: `tests/browse.spec.js` (drill-down + overflow guard, sva 4 iPhone profila).
 **Posljedice:** Par dodatnih klikova dok je 1 fakultet/smjer, ali jasna struktura i
 spremnost za više smjerova/fakulteta bez promjene toka.
 

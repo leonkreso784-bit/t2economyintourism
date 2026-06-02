@@ -21,13 +21,16 @@
    ===================================================== */
 
 /* Core variables and base styles */
-@import url('css/variables.css?v=20260602');
+@import url('css/variables.css?v=20260604');
 
 /* Landing page styles */
-@import url('css/landing.css?v=20260602');
+@import url('css/landing.css?v=20260604');
 
 /* Subjects sidebar */
 @import url('css/sidebar.css?v=20260602');
+
+/* Browse page (drill-down: Faculty → Program → Year → Subject) */
+@import url('css/browse.css?v=20260604');
 
 /* Pages (Lessons, Study, About) */
 @import url('css/pages.css?v=20260602');

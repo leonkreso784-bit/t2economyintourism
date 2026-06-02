@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-02 — Sesija 13: M0.5 — puni drill-down navigacija + „čisto i bogato" redizajn
+**Odluka korisnika:** frontend prvo (prije novih predmeta); stil = **„čisto i bogato"
+(Brilliant/Quizlet), NE preminimalistički** — „prava stranica". Puni eksplicitni drill-down:
+Fakultet → Smjer → Godina → Predmet (sve iz catalog-a, spremno za širenje).
+
+**Napravljeno**
+- `SokratCatalog` helperi (data/catalog.js): `faculties()`, `programsOf()`, `yearsOf()`,
+  `subjectsOf()`, `semestersOf()`, `isLessonComingSoon()` — hijerarhija izvedena iz catalog-a.
+- Nova `#browse-page` (index.html) + `css/browse.css` (bogate kartice, gradijent-ikone,
+  breadcrumb, progress bar, coming-soon stanje, responsive grid).
+- `js/navigation.js`: `renderBrowse()` (po razinama faculties→programs→years→subjects),
+  `initBrowse()` (delegirani click), `browseBack()`, `enterBrowse()`, `renderLandingMeta()`.
+  CTA „Start Studying" → browse; back s Lessons → popis predmeta (čuva poziciju).
+- `renderLessonsPage()`: coming-soon sada data-driven (`isLessonComingSoon`).
+- Landing: dinamičan broj predmeta (`data-meta="subjectCount"` → 9), osvježen copy (Year 1 & 2).
+- Sidebar = legacy fallback (markup/kod ostaje, nije primarni ulaz).
+- Cache bump `?v=20260604` (catalog.js, navigation.js, init.js, variables.css, styles.css, browse.css).
+
+**Testirano**
+- `tests/browse.spec.js` (novo): puni drill-down + Year 1 BI + back + **overflow guard** — 8/8 zeleno.
+- Puni Playwright suite (responsive + smoke + sidebar + browse) na 4 iPhone profila: **20/20 zeleno**, subjects=9, problems=0, 0 JS grešaka.
+- `npm run verify`: 0 grešaka. Vizualna provjera screenshotovima (landing/faculties/years/subjects) — izgled uglađen.
+
+**Stanje:** M0.5 navigacija + redizajn browse/landing **gotovo** (ADR-007 ✅, A5 ✅). Bez deploya (čeka potvrdu).
+**Sljedeće:** ostali predmeti 1. godine (kad stignu materijali) → Blok B (Supabase). Po želji: redizajn unutarnjih study/lessons ekrana.
+
+---
+
 ## 2026-06-02 — Sesija 12: CLAUDE.md + sinkronizacija svih docova
 **Napravljeno**
 - Dodan `CLAUDE.md` (root) — auto-učitava se svaku sesiju (preživljava /compact).

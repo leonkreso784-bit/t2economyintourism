@@ -256,6 +256,49 @@ const SokratCatalog = {
     if (!s || !s.content) return null;
     const r = s.content.resolve || {};
     return r[lessonId] || r['*'] || null;
+  },
+
+  // ---- Drill-down hijerarhija (sve izvedeno iz catalog-a) -------------------
+  // Fakulteti → Smjerovi → Godine → Predmeti. Dodavanjem novog fakulteta/smjera/
+  // godine/predmeta u SOKRAT_CATALOG, navigacija ih AUTOMATSKI prikaže (bez UI izmjena).
+
+  // Svi fakulteti.
+  faculties() { return SOKRAT_CATALOG.faculties || []; },
+
+  // Smjerovi (programs) jednog fakulteta.
+  programsOf(facultyId) {
+    const f = (SOKRAT_CATALOG.faculties || []).find(x => x.id === facultyId);
+    return f ? (f.programs || []) : [];
+  },
+
+  // Distinct studijske godine za zadani smjer (sortirano uzlazno).
+  yearsOf(programId) {
+    const ys = new Set();
+    for (const s of SOKRAT_CATALOG.subjects) {
+      if (s.programId === programId && s.year != null) ys.add(s.year);
+    }
+    return [...ys].sort((a, b) => a - b);
+  },
+
+  // Predmeti za (smjer[, godina]). Ako je `year` izostavljen, vraća sve predmete smjera.
+  subjectsOf(programId, year) {
+    return SOKRAT_CATALOG.subjects.filter(s =>
+      s.programId === programId && (year == null || s.year === year));
+  },
+
+  // Distinct semestri za (smjer, godina), sortirano.
+  semestersOf(programId, year) {
+    const set = new Set();
+    for (const s of this.subjectsOf(programId, year)) {
+      if (s.semester != null) set.add(s.semester);
+    }
+    return [...set].sort((a, b) => a - b);
+  },
+
+  // Je li lekcija "coming soon"? Data-driven: nema mapiranja u content.resolve
+  // (ni eksplicitnog ni '*') ⇒ nema sadržaja ⇒ coming soon.
+  isLessonComingSoon(subjectId, lessonId) {
+    return this.resolveDataVar(subjectId, lessonId) == null;
   }
 };
 
