@@ -205,6 +205,26 @@ const SOKRAT_CATALOG = {
         scripts: ['data-food-nutrition.js'],
         resolve: { 'first-midterm': 'foodNutritionData' }
       }
+    },
+    {
+      id: 'business-informatics',
+      programId: 'hospitality-management',
+      year: 1, semester: 1,
+      name: 'Business Informatics',
+      shortName: 'BI',
+      icon: 'fa-laptop-code',
+      color: '#2563eb',
+      iconGradient: ['#2563eb', '#60a5fa'],
+      description: 'System approach, data & information, hardware, software, networks, WWW, e-business, security',
+      storageKey: 'business-informatics-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'midterm-1', name: 'Midterm 1', description: 'Chapters 1–6: system approach, data, hardware, software, networks, WWW' }
+      ],
+      content: {
+        scripts: ['data/business-informatics/midterm-1.js'],
+        resolve: { 'midterm-1': 'businessInformaticsM1' }
+      }
     }
   ]
 };

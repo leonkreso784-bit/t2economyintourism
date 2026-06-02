@@ -20,6 +20,10 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `scripts/scaffold-subject.js` (generira mapu+lekcije+catalog unos), npm skripte
   `scaffold` i `verify`. Standardna struktura: mapa po predmetu, datoteka po lekciji
   (ADR-006).
+- `scripts/pdf-text.js` + `pdf-parse` (devDep) — ekstrakcija teksta iz profesorskih PDF-ova.
+- **PILOT Business Informatics (1. godina, sem 1):** `data/business-informatics/midterm-1.js`
+  s 1. poglavljem (System Approach & Informatics) + catalog unos. K1=Ch1-6, K2=Ch7-11,
+  završni=oba. (CH1 kao uzorak; ostatak slijedi nakon potvrde stila.)
 ### Changed
 - Sidebar predmeta sada se renderira iz `data/catalog.js` (`renderSubjectsSidebar()`
   u `js/navigation.js`, pozvan iz `js/init.js`). Uklonjen ručno pisani `.subject-item`

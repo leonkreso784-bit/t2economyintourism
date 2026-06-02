@@ -30,6 +30,7 @@
   },
   "homepage": "https://t2economyintourism.vercel.app",
   "devDependencies": {
-    "@playwright/test": "^1.60.0"
+    "@playwright/test": "^1.60.0",
+    "pdf-parse": "^2.4.5"
   }
 }

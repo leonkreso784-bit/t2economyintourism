@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 10: pilot Business Informatics (CH1 uzorak)
+**Napravljeno**
+- PDF čitanje preko slika (pdftoppm) nedostupno → riješeno ekstrakcijom teksta:
+  `scripts/pdf-text.js` + `pdf-parse` (devDep). Radi za tekstualne PDF-ove.
+- Iz introductory utvrđeno: 15 cjelina (U1–U15), 2 kolokvija + završni. Poglavlja
+  CH1–11 = teorija (U1–U11); U12–U15 praktične vježbe. **Korisnik potvrdio raspodjelu:**
+  K1 = Ch1–6, K2 = Ch7–11, **završni = oba kolokvija zajedno** (merge).
+- Kreiran `data/business-informatics/midterm-1.js` s CH1 (System Approach & Informatics):
+  9 flashcards, 5 quiz, 4 fill, learn HTML — vjerno PDF-u. Catalog unos (year 1, sem 1),
+  index.html wiring (?v=20260603).
+- `verify-catalog.js` poopćen (uklonjena stara A2 usporedba) → sad opći validator.
+
+**Testirano**
+- `npm run verify` → 0 grešaka (9 predmeta). Smoke (iPhone 15Pro) subjects=9, problems=0.
+- Screenshot BI Learn (CH1) → uredno, čitljivo, vjerno gradivu.
+
+**Čeka korisnika:** potvrda stila/dubine CH1 → onda Ch2–6 (K1), pa K2 + final merge.
+**Bez deploya** (pilot za lokalni pregled).
+
+---
+
 ## 2026-06-02 — Sesija 9: analiza 1. godine + plan M0.5 (hijerarhija + redesign)
 **Analiza materijala (samo pregled, ništa dirano):**
 - `C:\...\Documentos\1. godina Hospitality Managament`: 11 predmeta, ~168 datoteka

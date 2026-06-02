@@ -16,20 +16,7 @@ const fail = (m) => { console.error('  ✗ ' + m); errors++; };
 const warn = (m) => { console.warn('  ! ' + m); warnings++; };
 const ok = (m) => console.log('  ✓ ' + m);
 
-// Referentno ponašanje STAROG getSubjectData() — služi za usporedbu.
-function oldResolve(subjectId, lessonId) {
-  switch (subjectId) {
-    case 'te2': return lessonId === 'final-test-prep' ? 'te2FinalData' : 'studyData';
-    case 'entrepreneurship': return 'entrepreneurshipData';
-    case 'accounting': return 'accountingData';
-    case 'ebusiness': return 'ebusinessData';
-    case 'econ-hospitality': return lessonId === 'first-midterm' ? 'economicsHospitalityData' : null;
-    case 'marketing': return lessonId === 'first-midterm' ? 'marketingData' : null;
-    case 'geography': return lessonId === 'first-midterm' ? 'geographyData' : null;
-    case 'food-nutrition': return lessonId === 'first-midterm' ? 'foodNutritionData' : null;
-    default: return null;
-  }
-}
+// (Stara A2 regresijska usporedba uklonjena — ovo je sad opći validator catalog-a.)
 
 const REQUIRED_FIELDS = ['name', 'shortName', 'icon', 'color', 'description', 'storageKey', 'lessons'];
 
@@ -67,10 +54,7 @@ for (const s of SOKRAT_CATALOG.subjects) {
   // 5) resolveDataVar == staro ponašanje + var postoji i izvozi se na window
   for (const lesson of (s.lessons || [])) {
     const got = SokratCatalog.resolveDataVar(s.id, lesson.id);
-    const expected = oldResolve(s.id, lesson.id);
-    if (got !== expected) {
-      fail(`lekcija "${lesson.id}": resolveDataVar="${got}" ali staro očekuje "${expected}"`);
-    } else if (got) {
+    if (got) {
       // varijabla mora biti deklarirana i izložena na window u nekoj od skripti
       const declared = scripts.some((rel) => {
         const src = readFile(rel) || '';
@@ -90,7 +74,7 @@ for (const s of SOKRAT_CATALOG.subjects) {
 console.log('================ REZULTAT ================');
 console.log(`Greške: ${errors} · Upozorenja: ${warnings}`);
 if (errors === 0) {
-  console.log('✅ Catalog je konzistentan — A2 mapiranje identično starom getSubjectData.');
+  console.log('✅ Catalog je konzistentan (struktura, datoteke, varijable + window).');
   process.exit(0);
 } else {
   console.log('❌ Ima grešaka — popravi prije nastavka.');
