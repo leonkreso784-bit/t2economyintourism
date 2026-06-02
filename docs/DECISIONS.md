@@ -4,6 +4,18 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-008 — Backend hosting: Vercel Functions + Supabase
+**Datum:** 2026-06-03 · **Status:** prihvaćeno
+**Kontekst:** Treba odlučiti gdje hostati backend. Razmatrano: Vercel Functions +
+Supabase, all-Vercel (Neon+Blob+auth), i Railway (always-on server+Postgres).
+**Odluka:** **Vercel serverless funkcije (`/api`) + Supabase** (Postgres/Auth/Storage).
+Frontend ostaje statički na istom Vercel projektu/deployu. Railway se razmatra KASNIJE
+samo kao zaseban worker za dugotrajni AI ingest (serverless timeout), ne za cijeli backend.
+**Razlozi:** besplatno na startu, Auth+Storage+DB u jednom, minimalno održavanja, paše
+postojećem no-build statičkom setupu (Vercel sam servira `/api`).
+**Posljedice:** Serverless timeout (10–60s) → tešku AI obradu chunkamo / kasnije worker.
+**Migracija sadržaja:** ne sad; jednom u Bloku B (datoteke → DB 1:1). Vidi [BACKEND.md](BACKEND.md).
+
 ## ADR-007 — Navigacija: puni drill-down (Fakultet → Smjer → Godina → Predmet)
 **Datum:** 2026-06-02 · **Status:** prihvaćeno
 **Kontekst:** Stranica treba biti strukturirana po fakultetu/smjeru/godini; korisnik

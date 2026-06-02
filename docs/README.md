@@ -7,6 +7,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 |----------|-------|
 | [PRD.md](PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Tehnička arhitektura, model podataka, razrada po koracima |
+| [BACKEND.md](BACKEND.md) | Backend plan: Vercel Functions + Supabase, API, migracija |
 | [ROADMAP.md](ROADMAP.md) | Milestones (M0–M4) s konkretnim isporukama |
 | [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn) |
 | [CONTENT_GUIDE.md](CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |

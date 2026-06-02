@@ -14,12 +14,13 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 - 🟦 A4 — lazy loading sadržaja (data-*.js tek na otvaranje predmeta)
 - ⬜ A5 — UI hijerarhije (smjer/godina/semestar)
 
-**Blok B — Supabase backend**
+**Blok B — Backend: Vercel Functions + Supabase** (ADR-008, [BACKEND.md](BACKEND.md))
 - ⬜ B6 — Supabase projekt + schema (tablice)
-- ⬜ B7 — migracijska skripta catalog + 8 predmeta → baza
-- ⬜ B8 — data-access sloj (dohvat iz Supabasea + lokalni fallback/keš)
-- ⬜ B9 — admin login (samo ja)
+- ⬜ B7 — migracijska skripta: catalog + `data/*` → baza (JEDNOM, kad je sadržaj unutra)
+- ⬜ B8 — `/api/catalog` + `/api/subject` (Vercel Functions); frontend `loadSubjectContent` → `/api`
+- ⬜ B9 — admin login (Supabase Auth, samo ja)
 - ⬜ B10 — admin CRUD (hijerarhija + sadržaj)
+- Napomena: sadržaj se NE migrira sad — datoteke ostaju izvor do Bloka B.
 
 **Definicija gotovog (M0):** svih 8 predmeta dolazi iz baze, app radi identično,
 prvo učitavanje brže, mogu dodati novi predmet kroz admin bez diranja koda.
