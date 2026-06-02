@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 11: Business Informatics KOMPLETAN (K1 + K2 + Final)
+**Napravljeno**
+- K1 (Ch1–6) i K2 (Ch7–11) generirani iz PDF-ova, vjerno gradivu:
+  - M1: systemApproach, dataInfoKnowledge, hardware, software, networks, www
+  - M2: eBusiness, itTrends, managementSupport, expertSystems, security
+- `final.js` = Object.assign(M1, M2) → 11 kategorija (završni = oba kolokvija).
+- Catalog: 3 lekcije (midterm-1, midterm-2, final) + content.scripts/resolve.
+- index.html: m1/m2/final skripte (final POSLIJE m1+m2).
+
+**Testirano**
+- verify 0 grešaka; node final-merge = 11 kategorija.
+- Browser (iPhone 15Pro): M1=6, M2=5, Final=11 kartica; 0 overflow; 0 pageerrors.
+- Smoke subjects=9 problems=0.
+
+**Stanje:** BI gotov (pilot uspješan — content pipeline radi). Bez deploya (lokalni pregled).
+**Sljedeće:** redizajn + drill-down nav (M0.5), pa drugi predmeti.
+
+---
+
 ## 2026-06-03 — Sesija 10: pilot Business Informatics (CH1 uzorak)
 **Napravljeno**
 - PDF čitanje preko slika (pdftoppm) nedostupno → riješeno ekstrakcijom teksta:

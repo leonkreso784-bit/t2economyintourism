@@ -219,11 +219,21 @@ const SOKRAT_CATALOG = {
       storageKey: 'business-informatics-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'midterm-1', name: 'Midterm 1', description: 'Chapters 1–6: system approach, data, hardware, software, networks, WWW' }
+        { id: 'midterm-1', name: 'Midterm 1', description: 'Chapters 1–6: system approach, data, hardware, software, networks, WWW' },
+        { id: 'midterm-2', name: 'Midterm 2', description: 'Chapters 7–11: e-business, IT trends, management support, expert systems, security' },
+        { id: 'final', name: 'Final Exam', description: 'All chapters 1–11 (both midterms combined)' }
       ],
       content: {
-        scripts: ['data/business-informatics/midterm-1.js'],
-        resolve: { 'midterm-1': 'businessInformaticsM1' }
+        scripts: [
+          'data/business-informatics/midterm-1.js',
+          'data/business-informatics/midterm-2.js',
+          'data/business-informatics/final.js'
+        ],
+        resolve: {
+          'midterm-1': 'businessInformaticsM1',
+          'midterm-2': 'businessInformaticsM2',
+          'final': 'businessInformaticsFinal'
+        }
       }
     }
   ]

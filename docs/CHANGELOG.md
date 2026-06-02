@@ -21,10 +21,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `scaffold` i `verify`. Standardna struktura: mapa po predmetu, datoteka po lekciji
   (ADR-006).
 - `scripts/pdf-text.js` + `pdf-parse` (devDep) — ekstrakcija teksta iz profesorskih PDF-ova.
-- **PILOT Business Informatics (1. godina, sem 1):** `data/business-informatics/midterm-1.js`.
-  **K1 kompletan (Ch1–6):** System Approach, Data/Info/Knowledge, Hardware, Software,
-  Networks, WWW — 51 flashcards, 30 quiz, 24 fill (vjerno PDF-ovima). Catalog unos.
-  Slijedi: K2 (Ch7–11) + završni (merge M1+M2).
+- **Business Informatics (1. godina, sem 1) — KOMPLETAN:**
+  - Midterm 1 (Ch1–6): System Approach, Data/Info/Knowledge, Hardware, Software, Networks, WWW
+  - Midterm 2 (Ch7–11): E-Business, IT Trends, Management Support, Expert Systems, Security
+  - Final (`final.js`) = merge M1+M2 → 11 kategorija
+  - Ukupno ~86 flashcards, 55 quiz, 44 fill (vjerno profesorskim PDF-ovima).
+  - Provjereno: verify 0 grešaka; browser → M1=6, M2=5, Final=11 kartica, 0 overflow, 0 JS grešaka.
 ### Changed
 - Sidebar predmeta sada se renderira iz `data/catalog.js` (`renderSubjectsSidebar()`
   u `js/navigation.js`, pozvan iz `js/init.js`). Uklonjen ručno pisani `.subject-item`
