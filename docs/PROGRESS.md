@@ -18,8 +18,9 @@ testirano, što slijedi.
   Predmet) + minimalistički frontend redesign (logo se zadržava), PRIJE masovnog unosa.
 - Catalog data-model već podržava hijerarhiju (faculties/programs/year/semester).
 
-**Čeka korisnika:** potvrda smjera dizajna navigacije + semestar-mapping za 1. godinu.
-**Bez koda ove sesije (planiranje).** Sljedeće: K2 coming-soon → catalog 1.god stubovi → nav → redesign.
+**Odlučeno:** navigacija = PUNI drill-down (ADR-007), dark minimalistički, logo ostaje.
+**Čeka korisnika:** semestar-mapping za 11 predmeta 1. godine (koji su zimski/ljetni).
+**Bez koda ove sesije (planiranje).** Sljedeće: K2 coming-soon → catalog 1.god stubovi → puni drill-down nav → redesign.
 
 ---
 

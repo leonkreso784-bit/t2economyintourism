@@ -4,6 +4,17 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-007 — Navigacija: puni drill-down (Fakultet → Smjer → Godina → Predmet)
+**Datum:** 2026-06-02 · **Status:** prihvaćeno
+**Kontekst:** Stranica treba biti strukturirana po fakultetu/smjeru/godini; korisnik
+želi da se eksplicitno vidi hijerarhija ("uđeš na fakultete → smjerovi → godine").
+**Odluka:** Puni drill-down korak po korak: Start → Fakulteti → Smjerovi → Godine →
+Predmeti (po semestru), čak i kad razina ima samo jednu opciju. Breadcrumbs na svakom
+ekranu. (Razmatran "pametni skip" jednolične razine — odbijen jer korisnik želi
+eksplicitnu strukturu.) Logo se zadržava; vizualni stil minimalistički, dark.
+**Posljedice:** Par dodatnih klikova dok je 1 fakultet/smjer, ali jasna struktura i
+spremnost za više smjerova/fakulteta bez promjene toka.
+
 ## ADR-006 — Struktura sadržaja: mapa po predmetu, datoteka po lekciji
 **Datum:** 2026-06-02 · **Status:** prihvaćeno
 **Kontekst:** Uskoro se dodaje cijela 1. godina (po predmetu: k1, k2, završni) →
