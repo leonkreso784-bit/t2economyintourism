@@ -5,6 +5,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- `CLAUDE.md` (root) — sažeti ključni kontekst koji se učitava svaku sesiju (preživljava
+  kompaktiranje razgovora): stack, arhitektura, kritična pravila (cache bump, deploy uz potvrdu),
+  komande, stanje, odluke. Detalji ostaju u `docs/`.
 - `data/catalog.js` — jedinstveni izvor istine za predmete s hijerarhijom
   fakultet → smjer → godina → semestar → predmet → lekcija (M0/A1).
 - `docs/` — profesionalna projektna dokumentacija (PRD, ROADMAP, ARCHITECTURE,
