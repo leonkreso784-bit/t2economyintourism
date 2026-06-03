@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 17: DEPLOY (M0.5 + landing + lazy-loading idu LIVE)
+**Kontekst:** Nakupilo se 13 commitova lokalno (A3 → A4), live je zaostajao na A3.
+Pregled + analiza cijelog projekta prije deploya: `git` čisto, `npm run verify` 0 grešaka,
+**Playwright 32/32** (4 iPhone profila, problems=0, errors=0). Kod ↔ docovi se slažu.
+
+**Napravljeno**
+- `git push origin main` (`f234f68..7c09d19`) → Vercel auto-deploy. Sada LIVE:
+  Business Informatics (K1+K2+Final), M0.5 drill-down nav (`#browse-page`) + „čisto i bogato"
+  redizajn, landing rebuild + SEO meta, **lazy-loading sadržaja (A4)**.
+- Docovi osvježeni (ROADMAP STANJE/Deploy).
+
+**Post-deploy (preporuka korisniku):** hard refresh (Ctrl+F5) na www.sokratstudy.com,
+proći Smoke test, provjeriti na pravom iPhoneu (Safari — `color-mix`/`backdrop-filter`),
+Network tab: `data-*.js` se NE učitavaju na startu nego tek na otvaranje predmeta.
+**Sljedeće:** Blok B (Supabase + Auth + /api) kao temelj vizije, ili Tier 2 (Privacy/FAQ/Contact).
+
+---
+
 ## 2026-06-03 — Sesija 16: Lazy loading sadržaja (A4) — ciglu po ciglu
 **Cilj:** sadržaj predmeta (~777 KB, 19 datoteka) više se ne učitava na startu, nego tek na
 otvaranje predmeta. Ujedno = šav prema backendu (Blok B: `loadSubjectContent` → `/api`).

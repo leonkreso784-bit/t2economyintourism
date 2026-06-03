@@ -2,7 +2,7 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-02)
+## 📍 STANJE (2026-06-03)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -13,7 +13,7 @@ kategorija) · **M0.5: puni drill-down navigacija (`#browse-page`) + „čisto i
 **Sljedeće (Tier 2):** Privacy Policy + Contact + FAQ (bitno za Google Ads) → ostali predmeti 1. godine
 (10 kom., kad stignu materijali) → **Blok B** (Vercel Functions + Supabase; migracija JEDNOM).
 **Sadržaj:** 2. god = 8 predmeta ✅ · 1. god = Business Informatics ✅, ostalih 10 ⬜.
-**Deploy:** zadnji live = A3 + fiksevi; BI sadržaj + M0.5 + landing rebuild su commitani ali **NISU deployani** (čeka potvrdu).
+**Deploy:** **2026-06-03 — sve pushano na `origin/main` → Vercel auto-deploy** (BI sadržaj + M0.5 drill-down nav + „čisto i bogato" redizajn + landing rebuild + SEO + **lazy-loading A4** sada LIVE). Post-deploy: hard refresh (Ctrl+F5) + provjera na pravom iPhoneu.
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
