@@ -79,6 +79,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Fixed
+- **Landing hero offset (BUG-005):** bedž "Free exam toolkit" više ne pada pod fiksnu nav-traku na
+  mobitelu. Uzrok: `responsive.css` (učitava se zadnji) imao mobilni `.landing-hero { padding-top:1.5rem }`
+  koji je tiho gazio `landing.css` offset. Uveden `--nav-h` (variables.css) kao jedinstveni izvor; hero
+  `padding-top` + `scroll-margin-top` (landing.css + responsive.css) vezani uz nju; logo `white-space:nowrap`
+  + slim nav na ≤480px. Regresijski test ("hero badge clears the fixed top nav", 4 profila). Suite 36/36.
+  Bump `?v=20260606` (variables.css, landing.css, responsive.css + styles.css token).
 - `responsive.css` — dva slomljena CSS pravila (nedovršeni `.quiz-section,
   .fill-section,` selektor i sirotinjski `.topic-*` blok + višak `}`). Zagrade
   sada balansirane (520/520). Vidi BUG-001, BUG-002.

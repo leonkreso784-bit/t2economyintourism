@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 18: Fix BUG-005 (landing hero bedž pod nav-trakom na mobitelu)
+**Kontekst:** Korisnik javio (screenshot s iPhonea) da bedž "Free exam toolkit" stoji ispod
+fiksne gornje trake. Dogovorena Opcija B (čisti CSS, jedinstveni izvor visine trake).
+
+**Dijagnoza (Playwright + computed styles):** hero `padding-top` na mobitelu = **24px**,
+traka ~63px → bedž na y=24 pod trakom. `--nav-h` definiran, ali `calc()` iz `landing.css`
+pregazio `css/responsive.css` (`@media ≤767px .landing-hero { padding-top: 1.5rem }`, učitava se zadnji).
+Pravi uzrok ≠ flexbox (hero nije collapsan) → izvorni override iz vremena prije fiksne trake.
+
+**Napravljeno**
+- `variables.css`: `--nav-h: 72px` (jedinstveni izvor visine fiksne trake).
+- `landing.css`: hero `padding-top` + sekcijski `scroll-margin-top` = `calc(var(--nav-h) + safe + jastuk)`;
+  logo `white-space:nowrap`; `@media ≤480px` slim nav (padding/CTA/logo) da traka ostane ≤ --nav-h.
+- `responsive.css`: mobilni `.landing-hero` override vezan uz `--nav-h` (bio fiksni 1.5rem = uzrok).
+- `landing.spec.js`: regresijski test "hero badge clears the fixed top nav" (`badge.top ≥ nav.bottom`).
+- Cache bump `?v=20260606` (variables/landing/responsive css + styles.css token u index.html). BUG-005 zabilježen.
+
+**Testirano:** Puni Playwright suite **36/36** (4 iPhone profila; badge test zelen na svima). verify 0 grešaka.
+**Stanje:** Fix gotov i dokazan. **Lokalni commitovi, NIJE deployano** (čeka potvrdu).
+**Sljedeće:** deploy fixa (push) → pa Blok B / Tier 2 po dogovoru.
+
+---
+
 ## 2026-06-03 — Sesija 17: DEPLOY (M0.5 + landing + lazy-loading idu LIVE)
 **Kontekst:** Nakupilo se 13 commitova lokalno (A3 → A4), live je zaostajao na A3.
 Pregled + analiza cijelog projekta prije deploya: `git` čisto, `npm run verify` 0 grešaka,

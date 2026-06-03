@@ -334,7 +334,8 @@
     .landing-hero {
         padding: 1.5rem 1rem;
         gap: 2rem;
-        padding-top: calc(1.5rem + var(--safe-top));
+        /* Mora čistiti fiksnu nav-traku — vezano uz --nav-h (prije: 1.5rem → bedž je padao pod traku). */
+        padding-top: calc(var(--nav-h) + var(--safe-top) + 1.25rem);
     }
     
     .hero-content {

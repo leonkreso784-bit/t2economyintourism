@@ -38,6 +38,10 @@
     /* Touch-friendly sizes */
     --touch-target: 44px;
     --touch-target-large: 48px;
+
+    /* Fixed landing nav height (bez safe-area) — jedinstveni izvor za hero offset
+       i scroll-margin sidrenih linkova. Drži ≥ stvarne visine trake (logo 50px + padding). */
+    --nav-h: 72px;
 }
 
 /* ===== DARK THEME ===== */

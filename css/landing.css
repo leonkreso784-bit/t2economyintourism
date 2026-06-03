@@ -154,6 +154,7 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
     font-weight: 700;
+    white-space: nowrap; /* logo nikad u dva reda → visina trake ostaje predvidiva (= --nav-h) */
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -582,15 +583,16 @@
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
 }
 
-/* Offset hero below the fixed nav; anchor targets clear it too */
+/* Offset hero below the fixed nav; anchor targets clear it too.
+   Vezano uz --nav-h (jedinstveni izvor) + safe-area + jastuk, umjesto magičnog broja. */
 .landing-hero {
-    padding-top: calc(5rem + var(--safe-top));
+    padding-top: calc(var(--nav-h) + var(--safe-top) + 1.25rem);
 }
 
 .landing-section,
 .landing-cta,
 #top {
-    scroll-margin-top: 84px;
+    scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 0.5rem);
 }
 
 /* ----- Hero trust row ----- */
@@ -960,4 +962,13 @@
     .landing-section { padding: 3rem 1.25rem; }
     .footer-cols { grid-template-columns: 1fr; gap: 1.5rem; }
     .footer-bottom { justify-content: center; text-align: center; }
+}
+
+/* Uske mobilne širine: logo (nowrap) + CTA moraju stati u JEDAN red bez overflowa,
+   da visina fiksne trake ostane ≤ --nav-h (inače bedž sklizne pod traku). */
+@media (max-width: 480px) {
+    .landing-nav { padding-left: 1rem; padding-right: 1rem; gap: 0.75rem; }
+    .landing-nav .logo-text { font-size: 1.15rem !important; } /* !important: nadjača .logo-text iz responsive.css */
+    .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
+    .landing-logo { flex-shrink: 0; }
 }

@@ -60,3 +60,20 @@ test('landing CTAs and showcase navigate correctly', async ({ page }) => {
 
   expect(errors).toEqual([]);
 });
+
+// Regression: hero badge must clear the fixed top nav (it was tucked UNDER the bar
+// because the hero offset was a hardcoded magic number < real nav height on mobile).
+test('hero badge clears the fixed top nav (no overlap)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('.landing-nav');
+  await page.waitForSelector('.hero-badge');
+
+  const { navBottom, badgeTop } = await page.evaluate(() => {
+    const nav = document.querySelector('.landing-nav').getBoundingClientRect();
+    const badge = document.querySelector('.hero-badge').getBoundingClientRect();
+    return { navBottom: nav.bottom, badgeTop: badge.top };
+  });
+
+  // Badge must start at or below the bottom edge of the fixed nav (1px tolerance).
+  expect(badgeTop).toBeGreaterThanOrEqual(navBottom - 1);
+});

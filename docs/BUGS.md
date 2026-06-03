@@ -67,6 +67,29 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - Lekcija: pri SVAKOJ izmjeni CSS-a bumpaj `?v=` token (komentar je u `styles.css`).
   Inače deploy izgleda kao da "nije prošao".
 
+### BUG-005 — Landing hero "Free exam toolkit" bedž pada pod fiksnu nav-traku (mobitel)
+- Status: ✅ riješen i VERIFICIRAN (Playwright) · Težina: srednji · Datum: 2026-06-03
+- Opis: Na iPhoneu gornji dio hero sadržaja (bedž "Free exam toolkit", ponekad i naslov)
+  bio je djelomično skriven ispod fiksne `.landing-nav` trake.
+- Dijagnoza (Playwright, iPhone 393): `padding-top` hero-a računao se na **24px**, a traka je
+  visoka ~63px → bedž na y=24, unutar trake. `--nav-h` (72px) je bio definiran, ali se moj
+  `calc()` u `landing.css` nije primjenjivao na mobitelu.
+- Uzrok: `css/responsive.css` (učitava se ZADNJI, POSLIJE `landing.css`) ima
+  `@media (max-width:767px) .landing-hero { padding-top: calc(1.5rem + var(--safe-top)) }` (=24px),
+  iz vremena PRIJE fiksne trake. Landing rebuild (sesija 14) dodao je fiksni nav + `padding-top:5rem`
+  u `landing.css`, ali stari mobilni override u responsive.css ga je **tiho pregazio** (ista
+  specifičnost → kasniji import pobjeđuje). Desktop je radio; svi telefoni (≤767px) ne.
+- Rješenje: uveden `--nav-h` (variables.css) kao **jedinstveni izvor**; hero `padding-top`
+  (landing.css + mobilni override u responsive.css) i `scroll-margin-top` vezani uz
+  `calc(var(--nav-h) + var(--safe-top) + jastuk)`. Logo `white-space:nowrap` + slim nav na ≤480px
+  (da traka ostane predvidive visine = `--nav-h`). Bump `?v=20260606`.
+- Verifikacija: novi `landing.spec.js` test "hero badge clears the fixed top nav"
+  (`badge.top ≥ nav.bottom`) na sva 4 iPhone profila. Suite **36/36**.
+- Lekcija: (1) `responsive.css` se učitava ZADNJI i **tiho gazi modul-CSS na mobitelu** — pri
+  dodavanju layout pravila u `landing.css`/`pages.css` provjeri postoji li mobilni override u
+  `responsive.css`. (2) Vizualni testovi trebaju hvatati i **PREKLAPANJE fiksnih elemenata**, ne
+  samo horizontalni overflow. (3) Magični brojevi za offset fiksne trake → vezati uz jednu varijablu.
+
 ---
 
 ### Predložak (kopiraj za novi bug)
