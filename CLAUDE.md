@@ -67,5 +67,6 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - Logo se NE mijenja. Vizualni stil: **„čisto i bogato" (clean & rich, Brilliant/Quizlet-feel), dark** — NE preminimalistički.
 
 ## Dokumentacija (`docs/`)
-`README` (index) · `PRD` · `ARCHITECTURE` · `BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` ·
-`CONTENT_GUIDE` · `CONTENT_INTAKE` · `TESTING` · `CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG`.
+`README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·
+`BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` · `CONTENT_GUIDE` · `CONTENT_INTAKE` · `TESTING` ·
+`CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG`.

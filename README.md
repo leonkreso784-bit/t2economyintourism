@@ -52,6 +52,7 @@ Brzi kontekst je u [CLAUDE.md](CLAUDE.md) (root, auto-učitava se svaku sesiju).
 | Dokument | Svrha |
 |----------|-------|
 | [PRD](docs/PRD.md) | Što gradimo, za koga, opseg po fazama |
+| [VISION](docs/VISION.md) | Dugoročna full-stack vizija (AI tutor, UGC, dijeljenje, natjecanje) + ključne odluke |
 | [ARCHITECTURE](docs/ARCHITECTURE.md) | Arhitektura, model baze, razrada po koracima |
 | [BACKEND](docs/BACKEND.md) | Vercel Functions + Supabase, API, migracija |
 | [ROADMAP](docs/ROADMAP.md) | Milestones + status (done/next) |

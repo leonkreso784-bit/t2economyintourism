@@ -4,17 +4,22 @@
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
 
 ## Automatske provjere (uvijek prvo)
-- [ ] `npm run verify:catalog` → 0 grešaka (mapiranje, datoteke, window-izvoz).
+- [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz). *(alias: `verify:catalog`)*
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
-  - `smoke.spec.js` — SVE sekcije × svih 8 predmeta: renderiranje, protok podataka
+  - `smoke.spec.js` — SVE sekcije × svih 9 predmeta: renderiranje, protok podataka
     kroz catalog, 0 JS grešaka, 0 overflowa.
+  - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
+  - `landing.spec.js` — landing nav, subjects showcase (= broj predmeta iz catalog-a),
+    navigacija CTA-ova, overflow guard.
+  - `sidebar.spec.js` — legacy sidebar render iz catalog-a.
   - (Prvi put: `npm install` + `npx playwright install chromium`.)
 
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
-- [ ] Landing → "Start Studying" otvara sidebar s predmetima.
+- [ ] Landing → "Start Studying" otvara **drill-down browse** (Fakultet→Smjer→Godina→Predmet).
+- [ ] Showcase predmeta na landingu: klik na predmet otvara njegove lekcije.
 - [ ] Otvori jedan predmet → lekcija → Home sekcija se prikaže.
 - [ ] Prebaci kroz: Learn, Flashcards, Quiz, Fill, Progress — svaka se otvori.
 
@@ -30,7 +35,7 @@ Za **svaki** pogođeni predmet:
 - [ ] (Geografija) **Blind Map** se prikaže i prima klikove.
 
 ## Regresija nakon refaktora (A2–A5)
-- [ ] Svih 8 predmeta radi **identično** kao prije refaktora.
+- [ ] Svih 9 predmeta radi **identično** kao prije refaktora.
 - [ ] Napredak spremljen prije refaktora i dalje se učita (storageKey nepromijenjen).
 - [ ] Nema novih grešaka u konzoli.
 

@@ -9,6 +9,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | Dokument | Svrha |
 |----------|-------|
 | [PRD.md](PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
+| [VISION.md](VISION.md) | Dugoročna full-stack vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Tehnička arhitektura, model podataka, razrada po koracima |
 | [BACKEND.md](BACKEND.md) | Backend plan: Vercel Functions + Supabase, API, migracija |
 | [ROADMAP.md](ROADMAP.md) | Milestones + status (done/next) |

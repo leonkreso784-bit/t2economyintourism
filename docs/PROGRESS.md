@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 15: VISION.md + pregled svih docova (priprema za lazy-loading)
+**Napravljeno**
+- **`docs/VISION.md`** (novo) — dugoročna full-stack vizija zapisana da se ne izgubi:
+  5 funkcija (AI tutor, profili, UGC upload→AI, dijeljenje, natjecanje, „donesi svoj ključ"),
+  mapirane na Faze 1–4; **mapa ovisnosti** (sve ovisi o Backend+Auth; lazy-loading = šav);
+  **6 gating-odluka** (AI trošak, plaćanje/PDV+MoR, autorska prava/moderacija, sigurnost,
+  anti-cheat, kapacitet); redoslijed; popis docova koje dodajemo kad faza dođe.
+- **Pregled svih `.md`** (na zahtjev): BACKLOG/BACKEND/BUGS aktualni; **TESTING.md osvježen**
+  (8→9 predmeta, „Start Studying → drill-down browse" umjesto sidebara, dodani
+  `browse.spec.js`/`landing.spec.js`/`sidebar.spec.js`, `npm run verify`).
+- VISION uvezan u indekse: `docs/README`, root `README`, `CLAUDE.md`.
+
+**Odluka:** danas radimo preporuku — VISION zapisan + krećemo **lazy-loading** (A4) polako, ciglu po ciglu.
+**Sljedeće:** lazy-loading (`loadSubjectContent`) → kasnije Backend (Blok B) kao temelj vizije.
+
+---
+
 ## 2026-06-02 — Sesija 14: Landing rebuild („prava stranica") + SEO fix
 **Odluka korisnika:** landing ne smije biti „jedan ekran" — treba izgledati kao prava,
 kompletna stranica. Tier 1 (struktura/sadržaj) + popravak SEO meta.
