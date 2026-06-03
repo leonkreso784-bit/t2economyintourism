@@ -395,6 +395,11 @@
 
         <!-- Study Content Area -->
         <main class="study-content">
+            <!-- Lazy-load overlay (shown while a subject's content is fetched) -->
+            <div class="study-loading" id="studyLoading" hidden>
+                <div class="study-loading-spinner"></div>
+                <p>Loading subject…</p>
+            </div>
             <!-- HOME SECTION -->
             <section id="home" class="section active">
             <div class="hero">
@@ -960,35 +965,17 @@
         <p>© 2026 All Rights Reserved by Leon Kreso</p>
     </footer>
 
-    <script src="data-te2.js?v=20260602"></script>
-    <script src="data-te2-final.js?v=20260602"></script>
-    <script src="data-entrepreneurship.js?v=20260602"></script>
-    
-    <!-- Accounting Modules (Modular Structure) -->
-    <script src="data/accounting/cash-control.js?v=20260602"></script>
-    <script src="data/accounting/budgeting.js?v=20260602"></script>
-    <script src="data/accounting/sec-reports.js?v=20260602"></script>
-    <script src="data/accounting/accounting-cycle.js?v=20260602"></script>
-    <script src="data/accounting/hotel-statements.js?v=20260602"></script>
-    <script src="data/accounting/financial-analysis.js?v=20260602"></script>
-    <script src="data/accounting/final-practice.js?v=20260602"></script>
-    <script src="data/accounting/index.js?v=20260602"></script>
-    <script src="data-ebusiness.js?v=20260602"></script>
-    <script src="data-econ-hospitality.js?v=20260602"></script>
-    <script src="data-marketing.js?v=20260602"></script>
-    <script src="data-geography.js?v=20260602"></script>
-    <script src="data-food-nutrition.js?v=20260602"></script>
-
-    <!-- Year 1 — Business Informatics (per-lesson files; final.js must load AFTER m1+m2) -->
-    <script src="data/business-informatics/midterm-1.js?v=20260603"></script>
-    <script src="data/business-informatics/midterm-2.js?v=20260603"></script>
-    <script src="data/business-informatics/final.js?v=20260603"></script>
+    <!-- LAZY LOADING (A4): subject content (data-*.js) is NO LONGER loaded here.
+         js/content-loader.js fetches a subject's content.scripts on demand (when its
+         study page opens), driven by data/catalog.js. This is the seam to the backend
+         (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
     <script src="data/catalog.js?v=20260604"></script>
 
     <!-- App modules (split from app.js) -->
     <script src="js/config.js?v=20260602"></script>
+    <script src="js/content-loader.js?v=20260605"></script>
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>

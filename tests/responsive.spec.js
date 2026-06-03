@@ -73,12 +73,16 @@ test('Learn section has no horizontal overflow on iPhone widths', async ({ page 
   const report = [];
 
   for (const s of subjects) {
+    // initStudyPage is async (lazy-loads subject content). Navigate first, then wait for
+    // the Learn content to be RENDERED (cards attached even while Home is active), and only
+    // THEN switch to Learn — otherwise we'd race the async init / its trailing switch to Home.
     await page.evaluate(({ subjectId, lessonId }) => {
       window.navigateTo('study', { subject: subjectId, lesson: lessonId });
-      window.switchSection('learn');
     }, s);
 
-    await page.waitForSelector('#learn .learn-card', { timeout: 10000 }).catch(() => {});
+    await page.waitForSelector('#learn .learn-card', { state: 'attached', timeout: 15000 }).catch(() => {});
+    await page.evaluate(() => window.switchSection('learn'));
+    await page.waitForSelector('#learn .learn-card', { state: 'visible', timeout: 10000 }).catch(() => {});
     await page.waitForTimeout(250);
 
     const m = await measureOverflow(page, deviceWidth);

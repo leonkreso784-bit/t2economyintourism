@@ -8,7 +8,8 @@ catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, 
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
 kategorija) · **M0.5: puni drill-down navigacija (`#browse-page`) + „čisto i bogato" redizajn ✅** ·
 **Landing rebuild u punu „pravu stranicu" ✅** (nav, subjects showcase iz catalog-a, How it works,
-5 modova, CTA, strukturiran footer) + **SEO meta popravljen**.
+5 modova, CTA, strukturiran footer) + **SEO meta popravljen** · **Lazy-loading sadržaja ✅ (A4)**
+(`content-loader.js`; ~777 KB se više ne učitava na startu, nego po predmetu) · **VISION.md** zapisan.
 **Sljedeće (Tier 2):** Privacy Policy + Contact + FAQ (bitno za Google Ads) → ostali predmeti 1. godine
 (10 kom., kad stignu materijali) → **Blok B** (Vercel Functions + Supabase; migracija JEDNOM).
 **Sadržaj:** 2. god = 8 predmeta ✅ · 1. god = Business Informatics ✅, ostalih 10 ⬜.
@@ -23,7 +24,8 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
   svi data-*.js izloženi na `window`; verificirano `scripts/verify-catalog.js` (0 grešaka)
 - ✅ A3 — sidebar render iz catalog-a (`renderSubjectsSidebar()`); uklonjen ručni
   HTML; `iconGradient` u catalogu; verificirano Playwrightom (sidebar.spec.js)
-- ⬜ A4 — lazy loading → **spojeno u M0.5 (K4) / Blok B** (DB fetch je inherentno lazy)
+- ✅ A4 — **lazy loading** (`js/content-loader.js`: `loadSubjectContent()` učita sadržaj predmeta
+  tek na otvaranje; statički `data-*.js` maknuti iz `index.html`). Šav prema `/api` (Blok B). Test `lazy-load.spec.js`.
 - ✅ A5 — UI hijerarhije = **puni drill-down nav** (`#browse-page`, M0.5, ADR-007); test `browse.spec.js`
 
 **Blok B — Backend: Vercel Functions + Supabase** (ADR-008, [BACKEND.md](BACKEND.md))
@@ -42,7 +44,7 @@ Cilj: stranica strukturirana Fakultet → Smjer → Godina → (Semestar) → Pr
 uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadržava.
 
 - Sadržajni alati: ✅ struktura+template+scaffold (K1); ✅ coming-soon iz catalog-a (K2,
-  `isLessonComingSoon`); ⬜ validator sadržaja (K3); ⬜ lazy-load seam (K4)
+  `isLessonComingSoon`); ⬜ validator sadržaja (K3); ✅ **lazy-load seam (K4)** = `js/content-loader.js`
 - ✅ Pilot sadržaja: **Business Informatics** (Ch1–11, K1+K2+Final) — dokaz da content pipeline radi
 - ⬜ Catalog: dodati ostalih 10 predmeta 1. godine + semestar mapping (čeka materijale)
 - ✅ Hijerarhijska navigacija: Start → Fakulteti → Smjerovi → Godine → Predmeti (po semestru) +

@@ -28,6 +28,9 @@ test('all sections render for all subjects without errors or overflow', async ({
 
   for (const s of subjects) {
     await page.evaluate(({ id, lesson }) => window.navigateTo('study', { subject: id, lesson }), s);
+    // Lazy loading: wait until the subject's content is actually loaded (and study init
+    // has rendered) before probing sections — a fixed delay would race the async fetch.
+    await page.waitForFunction((id) => window.isSubjectContentLoaded && window.isSubjectContentLoaded(id), s.id, { timeout: 15000 });
     await page.waitForTimeout(120);
 
     const sections = [...SECTIONS, ...(s.blindMap ? ['blind-map'] : [])];

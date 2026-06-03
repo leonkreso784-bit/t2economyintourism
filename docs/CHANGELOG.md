@@ -38,6 +38,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   fakulteta/smjera/godine/predmeta u catalog kartice se pojave bez izmjene UI-a. Test:
   `tests/browse.spec.js` (drill-down + overflow guard, 4 iPhone profila).
 - `SokratCatalog.isLessonComingSoon()` — data-driven "coming soon" (lekcija bez resolve mapiranja).
+- **Lazy loading sadržaja (A4)** — `js/content-loader.js` (`loadSubjectContent`/`loadScriptOnce`/
+  `isSubjectContentLoaded`, `CONTENT_VERSION`): sadržaj predmeta (`data-*.js`, ~777 KB) više se NE
+  učitava na startu, nego **tek na otvaranje predmeta** (driven by `catalog.content.scripts`).
+  `initStudyPage` je sada `async` (+ loader overlay `#studyLoading`). Statički `data-*.js` tagovi
+  uklonjeni iz `index.html` (ostaje samo `catalog.js` + app moduli). Šav prema backendu (Blok B:
+  `loadSubjectContent` → `fetch('/api/...')`). `restoreLastPosition` prosljeđuje sekciju kroz
+  `initStudyPage` (bez `setTimeout` utrke). Test: `tests/lazy-load.spec.js`.
+- **`docs/VISION.md`** — dugoročna full-stack vizija (AI tutor, profili, UGC, dijeljenje, natjecanje,
+  "donesi svoj ključ") + 6 gating-odluka + mapa ovisnosti.
 - **Landing rebuild — "prava stranica"** (M0.5 Tier 1): fixed nav traka (logo + linkovi + "Start studying"),
   hero trust red, **subjects showcase iz catalog-a** (`renderLandingSubjects()`/`initLandingSubjects()`, klik → lekcije),
   "How it works" (3 koraka), "Study modes" (5 modova), završni CTA band, strukturiran footer
@@ -47,6 +56,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - **SEO `<head>`:** osvježen `description`/`keywords`/`<title>`; dodan `canonical` + `og:site_name`;
   `og:url`/`twitter` → `https://www.sokratstudy.com/`; `og:image` → `/icon-512.png` (bilo zastarjelo: vercel.app + samo 3 predmeta).
 - Bump `?v=20260605` (landing.css, styles.css, navigation.js, init.js) za landing rebuild.
+- Lazy loading: `responsive.spec.js` i `smoke.spec.js` prilagođeni async `initStudyPage`
+  (čekaju da je sadržaj učitan/renderiran prije provjere, umjesto fiksnog delaya).
+- Bump `?v=20260605`: novi `js/content-loader.js` + `css/pages.css` (loader overlay).
 - Landing: CTA "Start Studying" sada vodi na **browse drill-down** (umjesto slide-in sidebara;
   sidebar ostaje kao bezopasan legacy fallback). Back s Lessons vraća na popis predmeta (čuva drill-down poziciju).
 - Landing: broj predmeta sada dinamičan iz catalog-a (`renderLandingMeta()` + `data-meta="subjectCount"`);

@@ -18,6 +18,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   Svaki subject ima `content.scripts` (koje datoteke) + `content.resolve` (lessonId → ime window varijable).
 - `js/config.js`: `subjectDataMap` i `getSubjectData()` se izvode IZ catalog-a (ne hardkodirano).
 - Svi `data-*.js` izlažu svoj objekt na `window` (catalog ih traži po imenu).
+- **LAZY LOADING (A4):** `data-*.js` se NE učitavaju u `index.html`. `js/content-loader.js`
+  (`loadSubjectContent(subjectId)`) ih učita TEK na otvaranje predmeta (po `content.scripts`).
+  `initStudyPage` je `async`. Pri izmjeni `data/*` bumpaj `CONTENT_VERSION` (u content-loader.js).
+  Ovo je šav prema backendu (Blok B: `loadSubjectContent` → `fetch('/api/...')`).
 - Sidebar predmeta se renderira iz catalog-a (`renderSubjectsSidebar()` u `js/navigation.js`).
 - Konvencija semestra: `year` = studijska godina; `semester` ∈ {1,2} unutar godine.
 
@@ -55,7 +59,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Landing rebuild (lokalno, čeka deploy):** puna „prava stranica" — fixed nav, **subjects showcase iz catalog-a**
   (`renderLandingSubjects()`), How it works, 5 modova, CTA band, strukturiran footer + **SEO meta** popravljen.
   Svi „Start" gumbi = klasa `.start-trigger` → `enterBrowse`. Test `tests/landing.spec.js`.
-  Sljedeće (Tier 2): Privacy/Contact/FAQ (za Google Ads).
+- **Lazy loading sadržaja (A4) ✅ (lokalno, čeka deploy):** `js/content-loader.js`; statički `data-*.js`
+  maknuti iz `index.html`; sadržaj se učita po predmetu. Test `tests/lazy-load.spec.js`. Suite 32/32.
+- **Vizija:** `docs/VISION.md` (full-stack: AI tutor, UGC, dijeljenje, natjecanje, „donesi ključ" + gating-odluke).
+  Sljedeće (Tier 2): Privacy/Contact/FAQ (za Google Ads), pa **Backend (Blok B: Supabase+Auth+/api)** kao temelj vizije.
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
 - **Sljedeće:** ostali predmeti 1. godine (kad stignu materijali), pa **Blok B** (Supabase; migracija datoteka → baza JEDNOM).
   Po želji: redizajn unutarnjih study/lessons ekrana.

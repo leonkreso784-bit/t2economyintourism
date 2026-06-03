@@ -76,8 +76,11 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 - **A1 — `data/catalog.js`** ✅ — jedinstveni izvor istine; `content.resolve` generalizira `getSubjectData()`.
 - **A2 — refaktor `js/config.js`** ✅ — `subjectDataMap`/`getSubjectData()` iz catalog-a; svi `data-*.js` na `window`. Verificirano.
 - **A3 — sidebar iz catalog-a** ✅ — `renderSubjectsSidebar()`, uklonjen ručni HTML. LIVE.
-- **A4 — lazy loading** ⬜ — spojeno u **M0.5 (K4) / Blok B** (DB fetch je inherentno lazy).
-- **A5 — UI hijerarhije** ⬜ — = **puni drill-down nav u M0.5** (ADR-007).
+- **A4 — lazy loading** ✅ — `js/content-loader.js` (`loadSubjectContent(subjectId)`) učita
+  `content.scripts` predmeta **tek na otvaranje** (`initStudyPage` je async + loader); statički
+  `data-*.js` maknuti iz `index.html`. Ovo je **šav prema backendu**: u Bloku B `loadSubjectContent`
+  postaje `fetch('/api/subject/...')` bez izmjene ostatka app-a. Test `lazy-load.spec.js`.
+- **A5 — UI hijerarhije** ✅ — **puni drill-down nav** (`#browse-page`, M0.5, ADR-007).
 
 ### Blok B — Backend: Vercel Functions + Supabase (ADR-008, [BACKEND.md](BACKEND.md))
 - **B6** — Supabase projekt + schema. **B7** — migracija catalog + svi `data/*` → baza (JEDNOM).

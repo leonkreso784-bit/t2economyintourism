@@ -5,6 +5,32 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-03 — Sesija 16: Lazy loading sadržaja (A4) — ciglu po ciglu
+**Cilj:** sadržaj predmeta (~777 KB, 19 datoteka) više se ne učitava na startu, nego tek na
+otvaranje predmeta. Ujedno = šav prema backendu (Blok B: `loadSubjectContent` → `/api`).
+
+**Napravljeno (6 cigli, svaka testirana)**
+1. `js/content-loader.js` — `loadSubjectContent()` (učita `catalog.content.scripts` predmeta,
+   sekvencijalno, keširano; dedup po putanji), `loadScriptOnce`, `isSubjectContentLoaded`, `CONTENT_VERSION`.
+2. `initStudyPage` → `async` + `await loadSubjectContent` + loader overlay `#studyLoading` (CSS spinner u pages.css).
+3. Maknuti svi statički `data-*.js` `<script>` tagovi iz `index.html` (ostaje `catalog.js` + app moduli).
+4. `restoreLastPosition` prosljeđuje spremljenu sekciju kroz `initStudyPage(…, targetSection)` —
+   nema više `setTimeout(200)` utrke s async učitavanjem.
+5. `tests/lazy-load.spec.js` — dokaz: na startu 0 data-skripti i globalsa; nakon otvaranja predmeta
+   global postoji; neotvoreni predmeti i dalje neučitani. (4/4)
+6. Docs + commit.
+
+**Testirano**
+- Dijagnosticiran i popravljen utjecaj async-init na testove: `responsive.spec.js` i `smoke.spec.js`
+  sada čekaju da je sadržaj učitan/renderiran (umjesto fiksnog delaya). (To NIJE bila greška aplikacije.)
+- **Puni Playwright suite 32/32 zeleno** (responsive+smoke+sidebar+browse+landing+lazy-load × 4 iPhone profila),
+  `subjects=9 problems=0 errors=0`. `npm run verify` 0 grešaka.
+
+**Stanje:** A4 (lazy loading) gotovo i dokazano. Bez deploya (čeka potvrdu).
+**Sljedeće:** po dogovoru — Backend (Blok B: Supabase+Auth+/api) kao temelj vizije, ili Tier 2 (Privacy/FAQ/Contact), ili novi predmeti.
+
+---
+
 ## 2026-06-03 — Sesija 15: VISION.md + pregled svih docova (priprema za lazy-loading)
 **Napravljeno**
 - **`docs/VISION.md`** (novo) — dugoročna full-stack vizija zapisana da se ne izgubi:

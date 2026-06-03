@@ -23,15 +23,13 @@ function restoreLastPosition() {
             if (hoursSinceSave < 24 && position.page && position.page !== 'landing') {
                 if (position.page === 'study' && position.subject && position.lesson) {
                     currentCategory = position.category || 'all';
-                    currentSection = position.section || 'home';
-                    navigateTo('study', { subject: position.subject, lesson: position.lesson });
-                    if (position.section && position.section !== 'home') {
-                        setTimeout(() => {
-                            if (typeof switchSection === 'function') {
-                                switchSection(position.section);
-                            }
-                        }, 200);
-                    }
+                    // Pass the saved section into init; it switches there AFTER lazy content
+                    // loads (no setTimeout race with async loading).
+                    navigateTo('study', {
+                        subject: position.subject,
+                        lesson: position.lesson,
+                        section: position.section || 'home'
+                    });
                     return;
                 } else if (position.page === 'lessons' && position.subject) {
                     navigateTo('lessons', { subject: position.subject });
@@ -76,7 +74,7 @@ function navigateTo(page, data = {}) {
             if (data.subject && data.lesson) {
                 currentSubject = data.subject;
                 currentLesson = data.lesson;
-                initStudyPage(data.subject, data.lesson);
+                initStudyPage(data.subject, data.lesson, data.section);
             }
             document.getElementById('study-page').classList.add('active');
             break;
@@ -462,11 +460,31 @@ function renderLessonsPage(subjectId) {
 }
 
 // ========== STUDY PAGE INIT ==========
-function initStudyPage(subjectId, lessonId) {
+function showStudyLoading(on) {
+    const el = document.getElementById('studyLoading');
+    if (el) el.hidden = !on;
+}
+
+async function initStudyPage(subjectId, lessonId, targetSection) {
     const subject = subjectDataMap[subjectId];
     if (!subject) {
         console.error('Subject not found:', subjectId);
         return;
+    }
+
+    // Lazy-load: dohvati sadržaj predmeta TEK sad (ako već nije učitan). Catalog zna
+    // koje datoteke (subject.content.scripts). Šav prema backendu (kasnije fetch /api).
+    if (typeof loadSubjectContent === 'function') {
+        showStudyLoading(true);
+        try {
+            await loadSubjectContent(subjectId);
+        } catch (e) {
+            showStudyLoading(false);
+            console.error(e);
+            if (typeof showToast === 'function') showToast('Could not load this subject. Please try again.');
+            return;
+        }
+        showStudyLoading(false);
     }
 
     let fullData = getSubjectData(subjectId, lessonId);
@@ -512,7 +530,7 @@ function initStudyPage(subjectId, lessonId) {
         if (bmMob) bmMob.style.display = 'none';
     }
 
-    switchSection('home');
+    switchSection(targetSection || 'home');
 }
 
 // ========== SECTION SWITCHING ==========

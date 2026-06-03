@@ -13,6 +13,7 @@
   - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
   - `landing.spec.js` — landing nav, subjects showcase (= broj predmeta iz catalog-a),
     navigacija CTA-ova, overflow guard.
+  - `lazy-load.spec.js` — sadržaj predmeta se NE učita na startu, nego tek na otvaranje (A4).
   - `sidebar.spec.js` — legacy sidebar render iz catalog-a.
   - (Prvi put: `npm install` + `npx playwright install chromium`.)
 

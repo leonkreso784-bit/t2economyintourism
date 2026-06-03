@@ -146,6 +146,36 @@
     padding-bottom: calc(80px + var(--safe-bottom));
 }
 
+/* Lazy-load overlay — shown while a subject's content scripts are being fetched */
+.study-loading {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.study-loading[hidden] { display: none; }
+
+.study-loading-spinner {
+    width: 44px;
+    height: 44px;
+    border: 3px solid var(--bg-tertiary);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: studySpin 0.8s linear infinite;
+}
+
+@keyframes studySpin { to { transform: rotate(360deg); } }
+
 .study-header {
     display: flex;
     align-items: center;
