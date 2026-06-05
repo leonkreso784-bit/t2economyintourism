@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Marketing 2. kolokvij (T9–T13) — `second-midterm` popunjen:** novi sibling fajl `data-marketing-m2.js`
+  (`window.marketingM2Data`, obrazac kao `data-te2-final.js`) s **5 kategorija** — Distribution, Promotion (IMC),
+  New Trends in Promotion, Marketing Planning, Organizing &amp; Controlling (**45 flashcards · 25 quiz · 20 fill ·
+  5 learn**). Catalog: `scripts` += `data-marketing-m2.js`, `resolve.second-midterm = marketingM2Data`,
+  coming-soon uklonjen. Izvori: 4 prezentacije (T9 27str · T10 33 · T11 31 · T12/13 27).
+  `CONTENT_VERSION` 20260607→20260608 + bump `?v=20260608` (content-loader.js, catalog.js).
+  Verify 0; Playwright 36/36; + ciljani K2 render-test (4 profila, 0 problema/overflowa, obrisan).
 - **Marketing 1. kolokvij dopunjen — T7 (Product) + T8 (Price):** `data-marketing.js` dobio dvije nove
   kategorije (`product`, `price`) po `CONTENT_SCHEMA` (svaka 9 flashcards · 5 quiz · 4 fill · learn).
   1. kolokvij sada pokriva pune teme **T1–T8** (bio T1,2,3,5,6). Izvor: `TJ 7_The product` (28 str.) +

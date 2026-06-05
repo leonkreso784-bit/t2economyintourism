@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-05 — Sesija 21: Marketing 2. kolokvij (T9–T13) — `second-midterm` popunjen
+**Kontekst:** Nakon dopune 1. kolokvija (S20), korisnik: kreni na 2. kolokvij, **finalni NE dirati još**.
+2. kolokvij = T9 → kraj (potvrđeno ranije).
+
+**Pristup (arhitektura):** novi **sibling fajl** `data-marketing-m2.js` → `window.marketingM2Data`
+(isti obrazac kao te2: `data-te2-final.js`/`te2FinalData`). Catalog `second-midterm` → `marketingM2Data`.
+Stari `data-marketing.js` (K1) netaknut.
+
+**Napravljeno (ciglu po ciglu)**
+- Ekstrakcija 4 izvora: `TJ 9_The distribution` (27 str.) · `10_The promotion` (33) ·
+  `11_New trends in promotional activities` (31) · `12_13_Planning_Organizing_Controlling` (27).
+- `data-marketing-m2.js` — **5 kategorija** po `CONTENT_SCHEMA`:
+  `distribution` · `promotion` (IMC) · `newTrendsPromotion` · `marketingPlanning` · `organizingControlling`.
+  Ukupno **45 flashcards · 25 quiz · 20 fill · 5 learn**. (T12+T13 namjerno razdvojeni na Planning vs
+  Organizing&Controlling radi ravnoteže/pedagogije.)
+- `catalog.js`: `scripts: ['data-marketing.js','data-marketing-m2.js']`, `resolve.second-midterm = marketingM2Data`,
+  opis lekcije (Topics 9–13) — **coming-soon uklonjen**.
+- Cache: `CONTENT_VERSION` 20260607 → **20260608**; bump `?v=20260608` (`content-loader.js`, `catalog.js`).
+
+**Testirano:**
+- `node --check` OK · `npm run verify` **0 grešaka** (second-midterm → `marketingM2Data` deklariran + na window).
+- **Strukturni validator** (privremena skripta, obrisana): 5 kat. / 45 fc / 25 quiz / 20 fill, svi quiz `correct`
+  indeksi valjani, svi fill imaju `_______`, learn neprazan → **0 problema**.
+- Playwright **36/36** (puni suite). **Napomena:** smoke/responsive testiraju PRVU lekciju s podacima po
+  predmetu (za marketing = `first-midterm`), pa K2 ne renderiraju vizualno → dodan **ciljani temp-test**
+  baš za `second-midterm` (sve sekcije × 4 iPhone profila): **0 problema, 0 grešaka, 0 overflowa,
+  quizOptions=6** (All + 5 kat.); zatim obrisan.
+
+**Stanje:** 2. kolokvij Marketinga **kompletan (T9–T13)**, lokalni commit (NIJE deployano).
+**Sljedeće (NE krećem bez naloga):** **Finalni** = spoj K1 (T1–T8) + K2 (T9–T13), NOVA lekcija u catalogu
+(uzor: BI `Object.assign`/te2 zaseban final). Korisnik izričito rekao da finalni još NE radim.
+
+---
+
 ## 2026-06-05 — Sesija 20: Marketing 1. kolokvij dopunjen (T7 Product + T8 Price)
 **Kontekst:** Postojeći `data-marketing.js` imao samo 5 tema (T1,T2,T3,T5,T6); 1. kolokvij = T1–T8 →
 **falili T7 (Product) i T8 (Price).** Korisnik: popraviti 1. kolokvij prvo, pa stati prije 2. kolokvija.

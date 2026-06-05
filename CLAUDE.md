@@ -67,10 +67,13 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **LIVE (deployano 2026-06-05):** sve gore + fix BUG-005 (landing hero offset).
 - **Lokalni commitovi, NIJE deployano:** `responsive.css` razbijen na `css/responsive/01..06-*.css`
   (refaktor, ponašanje 1:1, **suite 36/36**); KaTeX-plan docovi (ADR-009); Marketing intake;
-  **Marketing 1. kolokvij dopunjen T7+T8** (Sesija 20). Deploy uz cijeli Marketing kad bude gotov.
-- **▶ SLJEDEĆE — Marketing 2. kolokvij** (plan: `docs/CONTENT_INTAKE.md` §Marketing):
-  korak 1 (T7 Product + T8 Price u 1. kolokvij) **✅ GOTOVO**; korak 2 = **2. kolokvij T9–T13**
-  (Distribution, Promotion, New trends, Planning, Organizing & Controlling); pa finalni (merge K1+K2).
+  **Marketing 1. kolokvij dopunjen T7+T8** (S20) + **Marketing 2. kolokvij T9–T13 kompletan**
+  (`data-marketing-m2.js`, S21). Deploy uz cijeli Marketing kad bude gotov.
+- **Marketing K1 (T1–T8) ✅ i K2 (T9–T13) ✅ gotovi** (lokalno). K2 = sibling fajl `data-marketing-m2.js`
+  (`marketingM2Data`, 5 kategorija); catalog `second-midterm` → ta varijabla.
+- **▶ SLJEDEĆE — Marketing FINALNI** (plan: `docs/CONTENT_INTAKE.md` §Marketing): NOVA lekcija u catalogu,
+  merge K1+K2 (uzor: te2 `te2FinalData` / BI `Object.assign`). **⚠ Korisnik izričito rekao da finalni JOŠ NE radim** —
+  čekati nalog.
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

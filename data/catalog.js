@@ -157,11 +157,11 @@ const SOKRAT_CATALOG = {
       features: { blindMap: false },
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Topics 1-8: concept, environment, market, segmentation, consumer behaviour, product, and price' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Coming soon' }
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 9-13: distribution, promotion, new trends in promotion, planning, organizing & controlling' }
       ],
       content: {
-        scripts: ['data-marketing.js'],
-        resolve: { 'first-midterm': 'marketingData' }
+        scripts: ['data-marketing.js', 'data-marketing-m2.js'],
+        resolve: { 'first-midterm': 'marketingData', 'second-midterm': 'marketingM2Data' }
       }
     },
     {
