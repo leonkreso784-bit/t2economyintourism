@@ -90,6 +90,23 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   `responsive.css`. (2) Vizualni testovi trebaju hvatati i **PREKLAPANJE fiksnih elemenata**, ne
   samo horizontalni overflow. (3) Magični brojevi za offset fiksne trake → vezati uz jednu varijablu.
 
+### BUG-006 — Learn filter-bar reže nazive kategorija ("The Product" → "The")
+- Status: ✅ riješen · Težina: nizak (kozmetički) · Datum: 2026-06-06
+- Opis: korisnik prijavio (Marketing → Final Exam) da su čipovi u gornjem learn-baru
+  nečitljivi/dvosmisleni: "The" (= The Product), "Price" (= The Price), "Segmentati", "Distributi".
+- Uzrok: `updateLearnFilters()` u `js/progress.js` namjerno je radio "shortName" =
+  PRVA riječ naziva rezana na 10 znakova (uz 2.-riječ fallback na koliziju). Radilo dok su
+  nazivi bili kratke jedne riječi (npr. BI "Hardware"); Marketing finalni spaja 13 kategorija s
+  višerječnim i "The X" nazivima koje heuristika mrcvari. **NIJE funkcionalni bug** —
+  `data-filter` koristi puni ključ kategorije, filtriranje je radilo ispravno.
+- Rješenje (Opcija A): čip pokazuje **puni `data.name`**. Bar je već `overflow-x:auto` +
+  `white-space:nowrap`, pa dugi nazivi samo skrolaju vodoravno (potvrđeno: 0 page-overflowa).
+  Uklonjena `usedNames`/`substring` logika. Bump `progress.js?v=20260609`.
+- Verifikacija: ciljani temp-test (4 profila) — čipovi = puni nazivi (npr. "The Product",
+  "Segmentation and Positioning", "Exam Practice (All Topics)"), `pageOverflow=false`; suite **36/36**.
+- Lekcija: heuristike za skraćivanje teksta su krhke kad se podaci prošire — kad UI već ima
+  skrolabilni kontejner, radije pokaži puni tekst nego "pametno" rezanje koje stvara dvosmislenost.
+
 ---
 
 ### Predložak (kopiraj za novi bug)

@@ -34,31 +34,15 @@ function updateLearnFilters() {
     
     container.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>';
     
-    const usedNames = new Set();
-    
     Object.keys(currentData).forEach(category => {
         const data = currentData[category];
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
         btn.dataset.filter = category;
-        
-        let shortName = data.name.split(' ')[0];
-        
-        if (usedNames.has(shortName)) {
-            const words = data.name.split(' ');
-            if (words.length > 1) {
-                shortName = words[1].substring(0, 8);
-            } else {
-                let suffix = 2;
-                while (usedNames.has(shortName + suffix)) suffix++;
-                shortName = shortName + suffix;
-            }
-        }
-        
-        shortName = shortName.substring(0, 10);
-        usedNames.add(shortName);
-        
-        btn.textContent = shortName;
+        // Puni naziv kategorije. Bar je overflow-x:auto + nowrap → dugi/višerječni
+        // nazivi samo skrolaju vodoravno, ne lome layout. (Prije: skraćivanje na ~10
+        // znakova davalo nečitljive čipove npr. "The Product" → "The".)
+        btn.textContent = data.name;
         container.appendChild(btn);
     });
     

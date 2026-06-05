@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-06 — Sesija 23: Fix BUG-006 (learn filter-bar rezao nazive kategorija)
+**Kontekst:** Korisnik prijavio (screenshot, Marketing → Final Exam) da su čipovi u gornjem learn-baru
+nečitljivi: „The" (= The Product), „Price" (= The Price), „Segmentati", „Distributi".
+
+**Dijagnoza:** `updateLearnFilters()` (`js/progress.js`) radio „shortName" = prva riječ naziva rezana na
+10 znakova (uz 2.-riječ fallback). Latentno otprije (kratki nazivi OK); Marketing finalni (13 kat., „The X"
+i višerječni nazivi) razotkrio. **Kozmetički, ne funkcionalni** — `data-filter` = puni ključ, filtriranje radilo.
+
+**Popravak (Opcija A, izbor korisnika):** čip = **puni `data.name`**. Bar je već `overflow-x:auto` + nowrap →
+dugi nazivi skrolaju, ne lome layout. Uklonjena `usedNames`/`substring` logika. Bump `progress.js?v=20260609`.
+Globalno (svi predmeti dobivaju čitljive čipove).
+
+**Testirano:** verify 0; ciljani temp-test (4 profila): čipovi = puni nazivi, `pageOverflow=false`; puni suite **36/36**.
+**Stanje:** lokalni commit (NIJE deployano) — ide u isti deploy paket kao Marketing. BUG-006 zabilježen.
+
+---
+
 ## 2026-06-06 — Sesija 22: Marketing FINALNI ispit (T1–T13) — hibrid (spoj + Exam Practice)
 **Kontekst:** Nakon K1 (S20) i K2 (S21), korisnik: kreni na finalni. Odluka strukture (AskUserQuestion):
 **HIBRID** = spoj svih kategorija K1+K2 **+** dodatna kurirana „Exam Practice" kategorija kroz sve teme.

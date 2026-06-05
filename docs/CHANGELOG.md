@@ -106,6 +106,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Fixed
+- **Learn filter-bar rezao nazive kategorija (BUG-006):** čipovi u learn-baru pokazivali skraćene/
+  dvosmislene labele (npr. „The Product" → „The", „Segmentation and Positioning" → „Segmentati").
+  Uzrok: `updateLearnFilters()` (`js/progress.js`) skraćivao naziv na prvu riječ / 10 znakova.
+  Popravak (Opcija A): prikaz **punog `data.name`** (bar je već `overflow-x:auto` + nowrap → skrola).
+  Globalno (svi predmeti). Bump `progress.js?v=20260609`. Suite 36/36, 0 page-overflowa.
 - **Landing hero offset (BUG-005):** bedž "Free exam toolkit" više ne pada pod fiksnu nav-traku na
   mobitelu. Uzrok: `responsive.css` (učitava se zadnji) imao mobilni `.landing-hero { padding-top:1.5rem }`
   koji je tiho gazio `landing.css` offset. Uveden `--nav-h` (variables.css) kao jedinstveni izvor; hero
