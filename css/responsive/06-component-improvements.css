@@ -1,0 +1,436 @@
+/* =====================================================
+   ENHANCED RESPONSIVE DESIGN - ALL DEVICES
+   Added for better tablet and large phone support
+   ===================================================== */
+
+/* ===== CATEGORIES RESPONSIVE GRID ===== */
+@media (min-width: 480px) {
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .stats-overview {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .quick-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .action-btn {
+        flex: 1;
+        min-width: 200px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .categories {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== FLASHCARD IMPROVEMENTS ===== */
+@media (min-width: 480px) {
+    .flashcard-container {
+        padding: 0 1rem;
+    }
+    
+    .flashcard-wrapper {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .flashcard-controls {
+        max-width: 500px;
+        margin: 1rem auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .flashcard-container h1 {
+        font-size: 1.5rem;
+    }
+    
+    .flashcard-wrapper {
+        max-width: 600px;
+    }
+    
+    .flashcard-controls {
+        max-width: 600px;
+        gap: 1rem;
+    }
+    
+    .control-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+/* ===== QUIZ IMPROVEMENTS ===== */
+@media (min-width: 480px) {
+    .quiz-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .quiz-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .results-actions {
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .results-actions .action-btn {
+        flex: 0 1 auto;
+        min-width: 150px;
+    }
+}
+
+@media (min-width: 768px) {
+    .quiz-container {
+        max-width: 650px;
+    }
+    
+    .question-card {
+        padding: 2rem;
+    }
+    
+    .question-card h2 {
+        font-size: 1.25rem;
+    }
+    
+    .answer-btn {
+        padding: 1rem 1.25rem;
+        font-size: 1rem;
+    }
+    
+    .score-circle {
+        width: 140px;
+        height: 140px;
+    }
+    
+    .score-circle span {
+        font-size: 2.5rem;
+    }
+}
+
+/* ===== FILL SECTION IMPROVEMENTS ===== */
+@media (min-width: 480px) {
+    .fill-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .fill-input-wrapper {
+        flex-direction: row;
+    }
+    
+    .fill-input-wrapper input {
+        flex: 1;
+    }
+    
+    .check-btn {
+        width: auto;
+        padding: 1rem 2rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .fill-container {
+        max-width: 650px;
+    }
+    
+    .fill-card {
+        padding: 2rem;
+    }
+    
+    .fill-sentence {
+        font-size: 1.2rem;
+    }
+    
+    .fill-controls {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== PROGRESS SECTION IMPROVEMENTS ===== */
+@media (min-width: 480px) {
+    .progress-overview {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .progress-card.main {
+        grid-column: span 2;
+    }
+}
+
+@media (min-width: 768px) {
+    .progress-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .progress-overview {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .progress-card.main {
+        grid-column: span 3;
+    }
+    
+    .category-bars {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .progress-overview {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .progress-card.main {
+        grid-column: span 4;
+    }
+}
+
+/* ===== SUBJECT SIDEBAR TABLET IMPROVEMENTS ===== */
+@media (min-width: 768px) {
+    .subjects-sidebar {
+        max-width: 450px;
+    }
+    
+    .subject-item {
+        padding: 1.25rem;
+    }
+    
+    .subject-item-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .subject-item-info h3 {
+        font-size: 1.1rem;
+    }
+    
+    .subject-item-info p {
+        font-size: 0.9rem;
+    }
+}
+
+/* ===== LESSONS PAGE TABLET/DESKTOP IMPROVEMENTS ===== */
+@media (min-width: 768px) {
+    .lessons-content {
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .lessons-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .lesson-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lessons-content {
+        max-width: 1000px;
+    }
+    
+    .lessons-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== STUDY PAGE CONTENT CENTERING ===== */
+@media (min-width: 768px) {
+    .study-content {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 1.5rem 2rem;
+    }
+    
+    #home .hero {
+        padding: 2rem;
+    }
+    
+    #home .hero h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .study-content {
+        max-width: 1100px;
+    }
+}
+
+/* ===== IMPROVED TOUCH TARGETS FOR MOBILE ===== */
+@media (max-width: 767px) and (hover: none) and (pointer: coarse) {
+    .answer-btn,
+    .control-btn,
+    .action-btn,
+    .filter-btn,
+    .category-btn {
+        min-height: 48px;
+    }
+    
+    .flashcard {
+        min-height: 280px;
+    }
+}
+
+/* ===== BETTER SPACING FOR LANDSCAPE TABLETS ===== */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+    .study-content {
+        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    }
+    
+    .flashcard-wrapper {
+        max-width: 70%;
+    }
+    
+    .quiz-container {
+        max-width: 70%;
+    }
+}
+
+/* ===== LOGO RESPONSIVE STYLES ===== */
+@media (max-width: 480px) {
+    .logo-wrapper {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        max-width: 40px;
+        max-height: 40px;
+    }
+    
+    .logo-text {
+        font-size: 1.25rem !important;
+    }
+    
+    .sidebar-logo .logo-wrapper {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        max-width: 36px;
+        max-height: 36px;
+    }
+    
+    .sidebar-logo span {
+        font-size: 1rem;
+    }
+    
+    .logo-wrapper-large {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 100px;
+        max-height: 100px;
+    }
+    
+    /* Flashcard mobile fixes */
+    .flashcard {
+        min-height: 200px;
+    }
+    
+    .flashcard-inner {
+        min-height: 200px;
+    }
+    
+    .flashcard-front,
+    .flashcard-back {
+        min-height: 200px;
+        padding: 0.75rem;
+    }
+    
+    .flashcard-front p {
+        font-size: 0.8rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .flashcard-back p {
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    .flashcard-back .explanation {
+        font-size: 0.65rem !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .logo-wrapper {
+        width: 50px;
+        height: 50px;
+        min-width: 50px;
+        min-height: 50px;
+        max-width: 50px;
+        max-height: 50px;
+    }
+    
+    .logo-text {
+        font-size: 1.6rem !important;
+    }
+    
+    .logo-wrapper-large {
+        width: 150px;
+        height: 150px;
+        min-width: 150px;
+        min-height: 150px;
+        max-width: 150px;
+        max-height: 150px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .logo-wrapper {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
+        max-width: 48px;
+        max-height: 48px;
+    }
+    
+    .logo-wrapper-large {
+        width: 140px;
+        height: 140px;
+        min-width: 140px;
+        min-height: 140px;
+        max-width: 140px;
+        max-height: 140px;
+    }
+}
+
+/* ===== IPHONE 16 PRO / PRO MAX SPECIFIC ===== */
+@media screen and (min-width: 393px) and (max-width: 440px) {
+    
+    
+    
+    
+}

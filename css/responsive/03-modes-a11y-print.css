@@ -1,0 +1,223 @@
+/* ===== LANDSCAPE MODE FOR PHONES ===== */
+@media (max-height: 500px) and (orientation: landscape) {
+    body {
+        padding-bottom: calc(var(--safe-bottom) + 60px);
+    }
+    
+    .mobile-nav {
+        padding-bottom: calc(var(--safe-bottom) / 2);
+    }
+    
+    .mobile-nav-btn {
+        min-height: 50px;
+        padding: 0.35rem 0.25rem;
+    }
+    
+    .flashcard {
+        height: 200px;
+    }
+    
+    .hero {
+        padding: 0.5rem 0;
+    }
+    
+    .stats-overview {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ===== iPAD PORTRAIT (768px - 1024px) ===== */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .quiz-options {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ===== HOVER STATES - Only for devices that support hover ===== */
+@media (hover: hover) and (pointer: fine) {
+    .category-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .action-btn.primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+}
+
+/* ===== TOUCH DEVICES - Disable hover effects ===== */
+@media (hover: none) {
+    .category-btn:hover,
+    .action-btn:hover,
+    .stat-card:hover {
+        transform: none;
+    }
+    
+    .theme-toggle:hover {
+        transform: none;
+    }
+    
+    /* Better active states for touch */
+    .category-btn:active,
+    .action-btn:active,
+    .cta-button:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+    
+    .answer-btn:active:not(.disabled) {
+        transform: scale(0.99);
+    }
+    
+    .subject-card:active {
+        transform: translateY(-2px) scale(0.99);
+    }
+    
+    .flashcard:active {
+        transform: scale(0.99);
+    }
+}
+
+/* ===== DARK MODE ADJUSTMENTS FOR MOBILE ===== */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+    :root {
+        --border: #000;
+    }
+    
+    .answer-btn {
+        border-width: 3px;
+    }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .flashcard-inner {
+        transition: none;
+    }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .mobile-nav,
+    .header,
+    .theme-toggle {
+        display: none !important;
+    }
+    
+    body {
+        padding: 0;
+    }
+    
+    .main-content {
+        max-width: 100%;
+    }
+}
+
+/* ===== MOBILE SWIPE INDICATOR ===== */
+.swipe-indicator {
+    display: none;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.swipe-indicator i {
+    margin: 0 0.25rem;
+    animation: swipeHint 2s ease-in-out infinite;
+}
+
+@keyframes swipeHint {
+    0%, 100% { transform: translateX(0); opacity: 0.5; }
+    50% { transform: translateX(5px); opacity: 1; }
+}
+
+@media (max-width: 767px) and (hover: none) {
+    .swipe-indicator {
+        display: block;
+    }
+}
+
+/* ===== iOS NOTCH/DYNAMIC ISLAND SUPPORT ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+    .landing-header {
+        padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+    
+    .header {
+        padding-top: calc(0.75rem + env(safe-area-inset-top));
+    }
+    
+    .about-header {
+        padding-top: calc(1rem + env(safe-area-inset-top));
+    }
+    
+    .mobile-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .footer {
+        padding-bottom: calc(1rem + 65px + env(safe-area-inset-bottom));
+    }
+    
+    @media (max-width: 767px) {
+        .main-content {
+            padding-bottom: calc(0.75rem + 70px + env(safe-area-inset-bottom));
+        }
+        
+        .toast {
+            bottom: calc(70px + env(safe-area-inset-bottom) + 10px);
+        }
+    }
+}
+
+/* ===== PULL TO REFRESH STYLING (if implemented) ===== */
+.pull-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+}
+
+.pull-indicator.visible {
+    transform: translateY(0);
+}
+
+.pull-indicator i {
+    font-size: 1.5rem;
+    color: var(--primary);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+

@@ -53,6 +53,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (brand/Explore/About + copyright). Svi "Start" gumbi vežu se preko klase `.start-trigger`. CSS u `css/landing.css`.
   Test: `tests/landing.spec.js` (nav, showcase=catalog, navigacija, overflow guard, 4 iPhone profila).
 ### Changed
+- **`css/responsive.css` (2470 linija) razbijen na 6 uređenih dijelova** u `css/responsive/`
+  (`01-up-and-phone-breakpoints` → `06-component-improvements`). Čista podjela po SUSJEDNIM sekcijama
+  (bez premještanja) → konkatenacija 01→06 = bivši fajl 1:1; redoslijed očuvan (responsive se učitava
+  ZADNJI i gazi module → premještanje bi promijenilo kaskadu). Provjereno: kontiguitet + identičnost
+  sadržaja (rebuild iz fajlova = original) + balans `{}` po fajlu + **Playwright 36/36** (ponašanje
+  nepromijenjeno). Bump `?v=20260607` (styles.css token + dijelovi). Dublje čišćenje (3 preklapajuća
+  prolaza) ostaje zaseban posao.
 - **SEO `<head>`:** osvježen `description`/`keywords`/`<title>`; dodan `canonical` + `og:site_name`;
   `og:url`/`twitter` → `https://www.sokratstudy.com/`; `og:image` → `/icon-512.png` (bilo zastarjelo: vercel.app + samo 3 predmeta).
 - Bump `?v=20260605` (landing.css, styles.css, navigation.js, init.js) za landing rebuild.

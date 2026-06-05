@@ -1,0 +1,330 @@
+/* =====================================================
+   RESPONSIVE STYLES
+   All media queries for different screen sizes
+   ===================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+/* ===== RESPONSIVE - TABLET & UP (768px+) ===== */
+@media (min-width: 768px) {
+    body {
+        padding-bottom: 0;
+    }
+    
+    .header {
+        padding: 1rem 2rem;
+    }
+    
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .logo-img {
+        height: 42px !important;
+        max-height: 42px !important;
+        max-width: 80px !important;
+    }
+    
+    .logo i {
+        font-size: 2rem;
+    }
+    
+    /* Desktop/mobile nav visibility is now controlled via nav-visible class */
+    
+    .main-content {
+        padding: 2rem;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .stats-overview {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .stat-card {
+        padding: 1.5rem;
+    }
+    
+    .stat-card i {
+        font-size: 2rem;
+    }
+    
+    .stat-card h3,
+    .stat-card .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-card p {
+        font-size: 0.9rem;
+    }
+    
+    .categories {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .category-btn {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    
+    .category-btn i {
+        font-size: 2rem;
+        width: auto;
+    }
+    
+    .quick-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .action-btn {
+        width: auto;
+    }
+    
+    .flashcard {
+        height: 350px;
+    }
+    
+    .flashcard-front p {
+        font-size: 1.4rem;
+    }
+    
+    .flashcard-back p {
+        font-size: 1.2rem;
+    }
+    
+    .flashcard-controls {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .quiz-setup {
+        padding: 2.5rem;
+    }
+    
+    .quiz-options {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+    
+    .option-group {
+        flex: 1;
+    }
+    
+    .start-quiz-btn {
+        width: auto;
+    }
+    
+    .question-card {
+        padding: 2rem;
+    }
+    
+    .question-card h2 {
+        font-size: 1.3rem;
+    }
+    
+    .fill-input-wrapper {
+        flex-direction: row;
+    }
+    
+    .fill-input-wrapper input {
+        max-width: 300px;
+    }
+    
+    .check-btn {
+        width: auto;
+    }
+    
+    .fill-controls {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .progress-overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .progress-card.main {
+        grid-row: 1 / 3;
+    }
+    
+    .results-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .toast {
+        bottom: 2rem;
+    }
+}
+
+/* ===== RESPONSIVE - DESKTOP (1024px+) ===== */
+@media (min-width: 1024px) {
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .categories {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .progress-overview {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    
+    .big-progress-circle {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .big-progress-circle span {
+        font-size: 2.5rem;
+    }
+}
+
+/* ===== RESPONSIVE - LARGE DESKTOP (1200px+) ===== */
+@media (min-width: 1200px) {
+    .main-content {
+        padding: 2rem 3rem;
+    }
+}
+
+/* ===== SMALL PHONES (320px-374px) - iPhone SE, older devices ===== */
+@media (max-width: 374px) {
+    .hero h1 {
+        font-size: 1.3rem;
+    }
+    
+    .stat-card h3,
+    .stat-card .stat-number {
+        font-size: 1.25rem;
+    }
+    
+    .category-btn span {
+        font-size: 0.8rem;
+    }
+    
+    .flashcard {
+        height: 280px;
+    }
+    
+    .flashcard-front p {
+        font-size: 1rem;
+    }
+    
+    .mobile-nav-btn {
+        font-size: 0.6rem;
+    }
+    
+    .mobile-nav-btn i {
+        font-size: 1.1rem;
+    }
+    
+    /* Landing page small phones */
+    .hero-title {
+        font-size: 2rem !important;
+    }
+    
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    
+    .hero-visual {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .float-card {
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .float-card i {
+        font-size: 1.1rem;
+    }
+    
+    /* Subject cards small phones */
+    .subject-card {
+        padding: 1.5rem 1rem !important;
+    }
+    
+    .subject-icon {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 1.75rem !important;
+    }
+    
+    .card-title {
+        font-size: 1.2rem;
+    }
+    
+    /* Quiz small phones */
+    .question-card h2 {
+        font-size: 1rem;
+    }
+    
+    .answer-btn {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+    
+    
+}
+
+/* ===== iPhone 14/15/16 (390px) ===== */
+@media (min-width: 390px) and (max-width: 427px) {
+    .flashcard {
+        height: 320px;
+    }
+    
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+    
+    .hero-visual {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+/* ===== iPhone 14/15/16 Pro Max & Plus (428px+) ===== */
+@media (min-width: 428px) and (max-width: 767px) {
+    .stats-overview {
+        gap: 1rem;
+    }
+    
+    .stat-card {
+        padding: 1.25rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .flashcard {
+        height: 340px;
+    }
+    
+    .hero-visual {
+        width: 320px;
+        height: 320px;
+    }
+}
+
