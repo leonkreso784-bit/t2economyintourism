@@ -53,21 +53,24 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 
 ## Stanje (ažuriraj po potrebi)
 - **Live:** M0 Blok A gotov (A1 catalog, A2 config-iz-catalog, A3 sidebar-iz-catalog) + Learn responsive/overflow fix.
-- **M0.5 (lokalno, čeka deploy):** **puni drill-down nav** (`#browse-page`: Fakultet→Smjer→Godina→Predmet,
+- **M0.5 ✅ LIVE:** **puni drill-down nav** (`#browse-page`: Fakultet→Smjer→Godina→Predmet,
   100% iz catalog-a; `renderBrowse()`/`initBrowse()` u `js/navigation.js`, `css/browse.css`) + **„čisto i bogato"
   redizajn** browse/landing. Coming-soon data-driven (`isLessonComingSoon`). Test `tests/browse.spec.js`. (A5 ✅, ADR-007 ✅)
-- **Landing rebuild (lokalno, čeka deploy):** puna „prava stranica" — fixed nav, **subjects showcase iz catalog-a**
+- **Landing rebuild ✅ LIVE:** puna „prava stranica" — fixed nav, **subjects showcase iz catalog-a**
   (`renderLandingSubjects()`), How it works, 5 modova, CTA band, strukturiran footer + **SEO meta** popravljen.
   Svi „Start" gumbi = klasa `.start-trigger` → `enterBrowse`. Test `tests/landing.spec.js`.
-- **Lazy loading sadržaja (A4) ✅ (lokalno, čeka deploy):** `js/content-loader.js`; statički `data-*.js`
-  maknuti iz `index.html`; sadržaj se učita po predmetu. Test `tests/lazy-load.spec.js`. Suite 32/32.
+- **Lazy loading sadržaja (A4) ✅ LIVE:** `js/content-loader.js`; statički `data-*.js`
+  maknuti iz `index.html`; sadržaj se učita po predmetu. Test `tests/lazy-load.spec.js`.
 - **Vizija:** `docs/VISION.md` (full-stack: AI tutor, UGC, dijeljenje, natjecanje, „donesi ključ" + gating-odluke).
-  Sljedeće (Tier 2): Privacy/Contact/FAQ (za Google Ads), pa **Backend (Blok B: Supabase+Auth+/api)** kao temelj vizije.
+  Temelj svega = **Backend (Blok B: Supabase+Auth+/api)**; Tier 2 (Privacy/FAQ/Contact) = brzi quick-win za Google Ads kad zatreba.
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
-- **Sve gore je LIVE** (deployano 2026-06-05, + fix BUG-005 landing hero offset). Suite 36/36.
-- **Sljedeće (odluka 2026-06-05):** PRVO kompletirati sadržaj (1.+2. god) PA **Blok B** (migracija JEDNOM na punom katalogu).
-  Kvantitativni predmeti (Math/Micro/Macro/Stat) preko **KaTeX**-a (ADR-009), Math zadnja. Inventar materijala: `docs/CONTENT_INTAKE.md`.
-  Materijali 1. god (folder `1. godina Hospitality Managament`): Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
+- **LIVE (deployano 2026-06-05):** sve gore + fix BUG-005 (landing hero offset).
+- **Lokalni commitovi, NIJE deployano:** `responsive.css` razbijen na `css/responsive/01..06-*.css`
+  (refaktor, ponašanje 1:1, **suite 36/36**); KaTeX-plan docovi (ADR-009); Marketing intake. Deploy uz Marketing kad bude gotov.
+- **▶ SLJEDEĆE — Marketing** (plan: `docs/CONTENT_INTAKE.md` §Marketing): korak 1 = dodati
+  **T7 (Product) + T8 (Price) u 1. kolokvij**; pa 2. kolokvij (T9–T13); pa finalni (merge K1+K2).
+- **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
+  (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
