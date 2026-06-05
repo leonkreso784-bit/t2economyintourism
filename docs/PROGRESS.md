@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-05 — Sesija 20: Marketing 1. kolokvij dopunjen (T7 Product + T8 Price)
+**Kontekst:** Postojeći `data-marketing.js` imao samo 5 tema (T1,T2,T3,T5,T6); 1. kolokvij = T1–T8 →
+**falili T7 (Product) i T8 (Price).** Korisnik: popraviti 1. kolokvij prvo, pa stati prije 2. kolokvija.
+
+**Napravljeno (ciglu po ciglu)**
+- Ekstrakcija izvora: `TJ 7_The product` (28 str.) + `TJ 8_The price` (21 str.) preko `scripts/pdf-text.js`.
+- Dvije nove kategorije u `data-marketing.js` po `CONTENT_SCHEMA` (1:1 stil postojećih):
+  - **`product`** ("The Product"): 9 flashcards · 5 quiz · 4 fill · learn (total product concept, B2C/B2B
+    klasifikacija, product programme, elementi/brand, NPD proces, difuzija, životni ciklus + odgovori, usluge + 3P).
+  - **`price`** ("The Price"): 9 flashcards · 5 quiz · 4 fill · learn (atributi/ciljevi, interni/eksterni faktori,
+    fiksni/varijabilni troškovi, kanal-markupi, tržišne strukture, cjenovne strategije, metode: cost/demand/competitor).
+- `catalog.js`: osvježen opis (Marketing sad „Topics 1–8"); subject description proširen (product, price).
+- Cache: `CONTENT_VERSION` 20260603 → **20260607** (busta lazy-loadane data-fajlove); bump `?v=20260607`
+  za `content-loader.js` + `catalog.js` u `index.html`.
+
+**Testirano:** `node --check` OK · `npm run verify` **0 grešaka** · Playwright **36/36** (smoke testira nove
+T7/T8 kroz sve sekcije × 4 profila; marketing `✓ ok`, 0 page-overflowa — tablice/filter skrolaju interno kao
+kod postojećih predmeta).
+**Stanje:** 1. kolokvij Marketinga **kompletan (T1–T8)**, lokalni commit (NIJE deployano).
+**Sljedeće (čeka potvrdu korisnika):** 2. kolokvij = T9–T13 (Distribution, Promotion, New trends, Planning,
+Organizing & Controlling) → popunjava `second-midterm`; pa finalni (merge K1+K2).
+
+---
+
 ## 2026-06-05 — Sesija 19: razbijanje `responsive.css` (2470 linija → 6 dijelova)
 **Kontekst:** `responsive.css` narastao na ~2.4k linija (3 naslagana prolaza) → teško za snalaženje;
 djelomično doprinijelo BUG-005 (pravilo zakopano). Odluka korisnika: razbiti PRIJE rada na Marketingu.

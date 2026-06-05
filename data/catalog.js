@@ -152,11 +152,11 @@ const SOKRAT_CATALOG = {
       icon: 'fa-bullhorn',
       color: '#ec4899',
       iconGradient: ['#ec4899', '#f472b6'],
-      description: 'Marketing concept, environment, market exchange, segmentation, consumer behaviour, and market research',
+      description: 'Marketing concept, environment, market exchange, segmentation, consumer behaviour, market research, product, and price',
       storageKey: 'marketing-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'first-midterm', name: 'First Midterm', description: 'Comprehensive preparation from 6 presentations' },
+        { id: 'first-midterm', name: 'First Midterm', description: 'Topics 1-8: concept, environment, market, segmentation, consumer behaviour, product, and price' },
         { id: 'second-midterm', name: 'Second Midterm', description: 'Coming soon' }
       ],
       content: {

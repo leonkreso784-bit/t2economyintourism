@@ -66,9 +66,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
 - **LIVE (deployano 2026-06-05):** sve gore + fix BUG-005 (landing hero offset).
 - **Lokalni commitovi, NIJE deployano:** `responsive.css` razbijen na `css/responsive/01..06-*.css`
-  (refaktor, ponašanje 1:1, **suite 36/36**); KaTeX-plan docovi (ADR-009); Marketing intake. Deploy uz Marketing kad bude gotov.
-- **▶ SLJEDEĆE — Marketing** (plan: `docs/CONTENT_INTAKE.md` §Marketing): korak 1 = dodati
-  **T7 (Product) + T8 (Price) u 1. kolokvij**; pa 2. kolokvij (T9–T13); pa finalni (merge K1+K2).
+  (refaktor, ponašanje 1:1, **suite 36/36**); KaTeX-plan docovi (ADR-009); Marketing intake;
+  **Marketing 1. kolokvij dopunjen T7+T8** (Sesija 20). Deploy uz cijeli Marketing kad bude gotov.
+- **▶ SLJEDEĆE — Marketing 2. kolokvij** (plan: `docs/CONTENT_INTAKE.md` §Marketing):
+  korak 1 (T7 Product + T8 Price u 1. kolokvij) **✅ GOTOVO**; korak 2 = **2. kolokvij T9–T13**
+  (Distribution, Promotion, New trends, Planning, Organizing & Controlling); pa finalni (merge K1+K2).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

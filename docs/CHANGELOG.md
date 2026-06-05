@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Marketing 1. kolokvij dopunjen — T7 (Product) + T8 (Price):** `data-marketing.js` dobio dvije nove
+  kategorije (`product`, `price`) po `CONTENT_SCHEMA` (svaka 9 flashcards · 5 quiz · 4 fill · learn).
+  1. kolokvij sada pokriva pune teme **T1–T8** (bio T1,2,3,5,6). Izvor: `TJ 7_The product` (28 str.) +
+  `TJ 8_The price` (21 str.). `CONTENT_VERSION` 20260603→20260607 (busta lazy-loadane data-fajlove) +
+  bump `?v=20260607` za `content-loader.js`/`catalog.js`. Verify 0 grešaka; Playwright 36/36.
 - `CLAUDE.md` (root) — sažeti ključni kontekst koji se učitava svaku sesiju (preživljava
   kompaktiranje razgovora): stack, arhitektura, kritična pravila (cache bump, deploy uz potvrdu),
   komande, stanje, odluke. Detalji ostaju u `docs/`.

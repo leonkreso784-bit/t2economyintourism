@@ -55,15 +55,16 @@ T5 Segmentation · T6 Consumer behaviour · **T7 Product** · **T8 Price** · T9
 T11 New trends in promotion · T12 Planning · T13 Organizing & Controlling.
 
 **Podjela kolokvija (potvrdio korisnik): 2. kolokvij = T9 → kraj.**
-- **1. kolokvij = T1–T8.** ⚠ Postojeći `data-marketing.js` ima samo 5 tema (T1,T2,T3,T5,T6) →
-  **FALE T7 (Product) i T8 (Price)** → korisnik potvrdio: **dodati ih u 1. kolokvij**.
+- **1. kolokvij = T1–T8. ✅ GOTOVO (Sesija 20, 2026-06-05).** Dodane kategorije `product` (T7) i `price` (T8)
+  u `data-marketing.js` (bilo T1,2,3,5,6). Verify 0, Playwright 36/36. Lokalni commit, NIJE deployano.
 - **2. kolokvij = T9–T13** (4 PDF-a: `TJ 9_The distribution` 27str · `10_The promotion` 33 ·
   `11_New trends…` 31 · `12_13_Planning_Organizing_Controlling…` 27). Popunjava „second-midterm" (sad coming-soon).
 - **Finalni = spoj K1 (potpun T1–T8) + K2** (kao BI final). **Finalni = NOVA lekcija** u catalogu.
 
 **Redoslijed rada (ciglu po ciglu, verify + Playwright + pregled nakon svake):**
-1. T7 + T8 → postojeći 1. kolokvij (`data-marketing.js`).
-2. 2. kolokvij T9–T13 (nova `marketingData` 2. kolokvija; ukloniti coming-soon).
+1. ~~T7 + T8 → postojeći 1. kolokvij (`data-marketing.js`).~~ ✅ **GOTOVO**
+2. **◀ SLJEDEĆE:** 2. kolokvij T9–T13 (nova varijabla `marketingM2Data` 2. kolokvija; catalog `resolve`
+   `second-midterm` → ta varijabla; ukloniti coming-soon). Izvori: 4 PDF-a gore.
 3. Finalni (nova lekcija; merge K1+K2).
 **Catalog sad:** marketing ima `first-midterm` (✅) + `second-midterm` (coming-soon). Provjeri kako su drugi
 predmeti riješili „final" (te2 ima zaseban `te2FinalData`; BI radi `Object.assign(M1,M2)`).

@@ -722,6 +722,360 @@ const marketingData = {
                 </div>
             `
         }
+    },
+
+    product: {
+        name: "The Product",
+        icon: "fa-box-open",
+        color: "#8b5cf6",
+
+        flashcards: [
+            {
+                question: "What is a product in marketing (total product concept)?",
+                answer: "An object of exchange on the market that resolves a problem and provides utility (value) for the consumer. The total product concept is the totality of tangible and intangible attributes a consumer gains by buying it.",
+                explanation: "Product is the primary marketing-mix element on which the other elements are built."
+            },
+            {
+                question: "What are the two dimensions of product value?",
+                answer: "The primary dimension (the core utility that satisfies the need or want) and the auxiliary dimension (design, quality, brand, packaging, repair, warranty, delivery).",
+                explanation: "Auxiliary attributes differentiate competing products."
+            },
+            {
+                question: "How are B2C (consumer) products classified?",
+                answer: "Convenience products (staple, impulse, emergency), shopping products (bought occasionally, need more information), and specialty products (special characteristics/brands; no substitutes accepted).",
+                explanation: "Classification reflects buying effort and frequency."
+            },
+            {
+                question: "How are B2B (business) products classified?",
+                answer: "Raw materials, manufacturing materials and parts, capital goods, accessory equipment, consumable supplies, and services.",
+                explanation: "Based on their role in production and their value."
+            },
+            {
+                question: "What four characteristics describe a product programme (mix)?",
+                answer: "Width (number of product lines), depth (products within each line), length (total products across all lines), and consistency (how closely related the lines are).",
+                explanation: "Describes the breadth of a company's offering."
+            },
+            {
+                question: "What are the elements of a product, and how do brand name, brand mark and trademark differ?",
+                answer: "Elements: attributes, brand, packaging, label, support. Brand name = the pronounceable part; brand mark = a symbol that cannot be expressed in words; trademark = a brand (or part) that is registered and legally protected.",
+                explanation: "Brands can be manufacturer, private, or generic."
+            },
+            {
+                question: "What are the steps of the new product development process?",
+                answer: "Idea generation, idea screening, product concept development, business analysis, product development, test marketing, and commercialization.",
+                explanation: "Many ideas terminate at the product-development stage."
+            },
+            {
+                question: "What are the four product life-cycle phases and the diffusion adopter groups?",
+                answer: "Phases: introduction, growth, maturity, decline. Adopters: innovators (2.5%), early adopters (13.5%), early majority (34%), late majority (34%), laggards (16%).",
+                explanation: "Marketing responses (product, price, promotion, distribution) change in each phase."
+            },
+            {
+                question: "What is a service and how does it differ from a physical product?",
+                answer: "A service is a mainly intangible activity or benefit that does not result in ownership; it is produced and consumed simultaneously, cannot be stored, and the customer participates in delivery. Quality is judged by comparing perception with expectation. Services add 3 Ps: people, physical evidence, processes.",
+                explanation: "Service quality: satisfaction = perception - expectation."
+            }
+        ],
+
+        quiz: [
+            {
+                question: "The primary marketing-mix element upon which the others are built is:",
+                options: ["Price", "Promotion", "Product", "Distribution"],
+                correct: 2
+            },
+            {
+                question: "Staple, impulse and emergency goods are subtypes of:",
+                options: ["Specialty products", "Convenience products", "Capital goods", "Shopping products"],
+                correct: 1
+            },
+            {
+                question: "The new product development process begins with:",
+                options: ["Business analysis", "Idea generation", "Test marketing", "Commercialization"],
+                correct: 1
+            },
+            {
+                question: "Which sequence of product life-cycle phases is correct?",
+                options: ["Growth -> Introduction -> Maturity -> Decline", "Introduction -> Growth -> Maturity -> Decline", "Introduction -> Maturity -> Growth -> Decline", "Maturity -> Growth -> Introduction -> Decline"],
+                correct: 1
+            },
+            {
+                question: "In the diffusion process, the first 2.5% of adopters are called:",
+                options: ["Early adopters", "Laggards", "Innovators", "Early majority"],
+                correct: 2
+            }
+        ],
+
+        fillBlanks: [
+            {
+                sentence: "The product is the primary element of the marketing _______ upon which other elements are built.",
+                answer: "mix",
+                hint: "The 4 Ps..."
+            },
+            {
+                sentence: "Convenience products include staple, impulse and _______ products.",
+                answer: "emergency",
+                hint: "Bought for an urgent need..."
+            },
+            {
+                sentence: "The depth of a product programme is the number of products within each product _______.",
+                answer: "line",
+                hint: "A group of related products..."
+            },
+            {
+                sentence: "In the product life cycle, the phase that comes after growth is _______.",
+                answer: "maturity",
+                hint: "Sales peak, many competitors..."
+            }
+        ],
+
+        learn: {
+            title: "Unit 7 - The Product",
+            content: `
+                <h3>1) Concept and Nature of a Product</h3>
+                <p>A product is an <strong>object of exchange</strong> used to resolve a problem and meet a specific need or want. The <strong>total product concept</strong> is the totality of tangible and intangible attributes the consumer gains by buying it (a physical product, a service, or an idea).</p>
+                <div class="formula-box">
+                    <p><strong>Product value = primary dimension</strong> (core utility) <strong>+ auxiliary dimension</strong> (design, quality, brand, packaging, repair, warranty, delivery)</p>
+                </div>
+
+                <h3>2) Product Classification</h3>
+                <ul>
+                    <li><strong>B2C:</strong> convenience (staple, impulse, emergency), shopping, and specialty products.</li>
+                    <li><strong>B2B:</strong> raw materials, manufacturing materials &amp; parts, capital goods, accessory equipment, consumable supplies, and services.</li>
+                </ul>
+
+                <h3>3) Product Programme</h3>
+                <ul>
+                    <li><strong>Width:</strong> number of product lines</li>
+                    <li><strong>Depth:</strong> number of products within each line</li>
+                    <li><strong>Length:</strong> total number of products across all lines</li>
+                    <li><strong>Consistency:</strong> how related the lines are (end use, channels, price ranges)</li>
+                </ul>
+
+                <h3>4) Product Elements</h3>
+                <ul>
+                    <li><strong>Attributes:</strong> physical (size, weight, durability, quality, design) and non-physical (warranty, image, delivery, instructions)</li>
+                    <li><strong>Brand:</strong> name, phrase, symbol or design that makes a product distinctive. <em>Brand name</em> = pronounceable part; <em>brand mark</em> = symbol that cannot be spoken; <em>trademark</em> = registered and legally protected.</li>
+                    <li><strong>Packaging:</strong> protects the product, communicates messages, supports promotion</li>
+                    <li><strong>Label:</strong> informs consumers; regulations require vital information</li>
+                    <li><strong>Support:</strong> pre-sales and post-sales services</li>
+                </ul>
+                <div class="example-box">
+                    <p><strong>Brand categories:</strong> manufacturer brand (owned by the producer), private brand (owned by wholesalers/retailers), generic brand (brandless, basic packaging, lower price).</p>
+                </div>
+
+                <h3>5) New Product Development Process</h3>
+                <ul>
+                    <li>Idea generation -> idea screening -> product concept development -> business analysis -> product development -> test marketing -> commercialization</li>
+                </ul>
+                <p>Many projects <strong>often terminate at the product-development stage</strong>; commercialization is the most difficult phase to finance.</p>
+
+                <h3>6) Diffusion of Innovations</h3>
+                <ul>
+                    <li>Innovators 2.5% - younger, better educated, financially better off</li>
+                    <li>Early adopters 13.5% - careerists, educated, middle class</li>
+                    <li>Early majority 34% &middot; Late majority 34% &middot; Laggards 16% - conservative, older, traditional</li>
+                </ul>
+
+                <h3>7) Product Life Cycle and Marketing Responses</h3>
+                <table>
+                    <tr><th>Phase</th><th>Focus of marketing responses</th></tr>
+                    <tr><td><strong>Introduction</strong></td><td>Make the product distinctive, encourage trials, recover development costs, build distribution</td></tr>
+                    <tr><td><strong>Growth</strong></td><td>Differentiate, ensure repeat buys, expand channels, build brand loyalty</td></tr>
+                    <tr><td><strong>Maturity</strong></td><td>Defend market share, modify products, flexible pricing, remind the market</td></tr>
+                    <tr><td><strong>Decline</strong></td><td>Cut marketing costs, eliminate unprofitable products, keep loyal consumers, rationalize channels</td></tr>
+                </table>
+
+                <h3>8) Services</h3>
+                <p>A service is a mainly <strong>intangible</strong> activity or benefit that does not result in ownership. Key differences from physical products:</p>
+                <ul>
+                    <li>Produced and consumed simultaneously; <strong>cannot be stored</strong></li>
+                    <li>The customer <strong>participates</strong> in delivery (a partner in creating the service)</li>
+                    <li>Goal is uniqueness, not uniformity; quality = perception vs expectation</li>
+                </ul>
+                <div class="formula-box">
+                    <p><strong>Satisfaction = perception - expectation.</strong> Perception &ge; expectation -> satisfaction, recommendation, loyalty.</p>
+                </div>
+                <p>Services add <strong>3 extra Ps</strong>: <strong>people</strong>, <strong>physical evidence</strong>, and <strong>processes</strong>.</p>
+
+                <div class="tip-box">
+                    <h4><i class="fas fa-lightbulb"></i> Midterm Focus</h4>
+                    <p>Know the total product concept, B2C/B2B classification, product programme dimensions, the 7-step NPD process, the 4 life-cycle phases with responses, and the specific characteristics of services.</p>
+                </div>
+            `
+        }
+    },
+
+    price: {
+        name: "The Price",
+        icon: "fa-tag",
+        color: "#f59e0b",
+
+        flashcards: [
+            {
+                question: "What is price and why is it special in the marketing mix?",
+                answer: "Price is the monetary expression that consumers pay for a product. It is the only marketing-mix element that generates revenue (the others create costs).",
+                explanation: "It directly determines profit."
+            },
+            {
+                question: "What are the objectives of pricing?",
+                answer: "The primary objective is to make a profit; others include winning new markets and developing new products. Marketers may set low (penetration), moderate (competitive), or high prices.",
+                explanation: "High prices fit offerings that clearly differ from competitors and are valued by consumers."
+            },
+            {
+                question: "What internal factors influence price?",
+                answer: "Business objectives, available resources and costs, and the other marketing-mix elements (e.g., a luxury product with exclusive distribution implies a higher price).",
+                explanation: "Internal factors are controllable by the firm."
+            },
+            {
+                question: "What is the difference between fixed and variable costs?",
+                answer: "Fixed costs remain the same regardless of the volume of production; variable costs are tied to volume and increase proportionally with output.",
+                explanation: "Cost structure sets the price floor."
+            },
+            {
+                question: "What external factors influence price?",
+                answer: "Consumers (demand and its elasticity), distribution (channel mark-ups), competition (market structure), and government policies (taxes, regulation, price control, trade agreements).",
+                explanation: "External factors are monitored, not controlled."
+            },
+            {
+                question: "How do distribution mark-ups build the retail price?",
+                answer: "Cost price + manufacturer mark-up (10-15%) + wholesaler mark-up (20-40%) + retailer mark-up (40-100%) = retail price.",
+                explanation: "Each channel member adds a margin."
+            },
+            {
+                question: "Who sets the price in different market structures?",
+                answer: "Perfectly competitive market - the market; oligopoly - agreements between firms; monopoly - the monopolist; limited competitive market - product differentiation.",
+                explanation: "Pricing freedom rises with differentiation and market power."
+            },
+            {
+                question: "What are the main price strategies?",
+                answer: "For existing products: keep or modify prices. Consumer-oriented strategies: penetration pricing (low), price skimming (high), psychological pricing (seemingly lower), and value-based pricing (as expected).",
+                explanation: "Strategy depends on segment price-sensitivity."
+            },
+            {
+                question: "What are the three groups of pricing methods?",
+                answer: "Cost-based (average cost, mark-up, break-even point), demand-based (differential prices per segment), and competitor-based (price relative to rivals).",
+                explanation: "The break-even point method sets a price that yields a target profit."
+            }
+        ],
+
+        quiz: [
+            {
+                question: "The only marketing-mix element that generates revenue is:",
+                options: ["Product", "Promotion", "Price", "Distribution"],
+                correct: 2
+            },
+            {
+                question: "Fixed costs are costs that:",
+                options: ["Increase proportionally with output", "Remain the same regardless of production volume", "Occur only in services", "Are set by the government"],
+                correct: 1
+            },
+            {
+                question: "Setting a low initial price to quickly win price-sensitive buyers is:",
+                options: ["Price skimming", "Penetration pricing", "Psychological pricing", "Value-based pricing"],
+                correct: 1
+            },
+            {
+                question: "Average cost, mark-up and break-even point are all examples of:",
+                options: ["Demand-based methods", "Competitor-based methods", "Cost-based methods", "Price strategies"],
+                correct: 2
+            },
+            {
+                question: "In a monopoly market, the price is set by:",
+                options: ["The market", "Agreements between firms", "The monopolist", "Product differentiation"],
+                correct: 2
+            }
+        ],
+
+        fillBlanks: [
+            {
+                sentence: "Price is the only marketing-mix element that generates _______.",
+                answer: "revenue",
+                hint: "Income from sales..."
+            },
+            {
+                sentence: "_______ costs remain the same regardless of the volume of production.",
+                answer: "fixed",
+                hint: "Opposite of variable..."
+            },
+            {
+                sentence: "Price _______ sets a high initial price to skim profit from price-insensitive buyers.",
+                answer: "skimming",
+                hint: "Cream off the top..."
+            },
+            {
+                sentence: "The break-_______ point method sets a price that enables a certain profit to be made.",
+                answer: "even",
+                hint: "Total revenue = total costs..."
+            }
+        ],
+
+        learn: {
+            title: "Unit 8 - The Price",
+            content: `
+                <h3>1) Price Attributes and Objectives</h3>
+                <p>Price is the <strong>monetary expression</strong> consumers pay for a product. It is the <strong>only marketing-mix element that generates revenue</strong> - all the others create costs.</p>
+                <div class="formula-box">
+                    <p><strong>Primary objective: make a profit.</strong> Also: win new markets, develop new products. Marketers set <em>low</em> (penetration), <em>moderate</em> (competitive), or <em>high</em> prices.</p>
+                </div>
+
+                <h3>2) Internal Factors</h3>
+                <ul>
+                    <li><strong>Business objectives</strong> (e.g., social responsibility -> recycled packaging -> higher price)</li>
+                    <li><strong>Available resources and costs</strong> - fixed costs (independent of volume) vs variable costs (proportional to volume)</li>
+                    <li><strong>Other marketing-mix elements</strong> (e.g., a luxury product -> exclusive distribution -> higher price)</li>
+                </ul>
+
+                <h3>3) External Factors</h3>
+                <ul>
+                    <li><strong>Consumers:</strong> demand and its elasticity (elastic vs inelastic demand; curve shifts)</li>
+                    <li><strong>Distribution:</strong> mark-ups along the channel</li>
+                    <li><strong>Competition:</strong> market structure</li>
+                    <li><strong>Government policies:</strong> anti-monopoly laws, price control, taxes, trade agreements</li>
+                </ul>
+                <div class="example-box">
+                    <p><strong>Channel mark-ups:</strong> cost price + manufacturer 10-15% + wholesaler 20-40% + retailer 40-100% = retail price.</p>
+                </div>
+                <table>
+                    <tr><th>Market structure</th><th>Who sets the price?</th></tr>
+                    <tr><td>Perfectly competitive (large, non-differentiated)</td><td>The market</td></tr>
+                    <tr><td>Oligopoly (few, differentiated/substitutes)</td><td>Agreements</td></tr>
+                    <tr><td>Monopoly (one, no substitutes)</td><td>The monopolist</td></tr>
+                    <tr><td>Limited competitive (large, differentiated)</td><td>Product differentiation</td></tr>
+                </table>
+
+                <h3>4) Price Strategies</h3>
+                <ul>
+                    <li><strong>Existing products:</strong> keep existing levels or modify (reduce / increase)</li>
+                    <li><strong>Penetration pricing:</strong> price below product value to win price-sensitive buyers quickly</li>
+                    <li><strong>Price skimming:</strong> high price to skim profit from the price-insensitive segment</li>
+                    <li><strong>Psychological pricing:</strong> price seemingly lower than it is (emotional decision)</li>
+                    <li><strong>Value-based pricing:</strong> the highest price acceptable to the broad public</li>
+                </ul>
+
+                <h3>5) Pricing Methods</h3>
+                <ul>
+                    <li><strong>Cost-based:</strong>
+                        <ul>
+                            <li><em>Average cost method</em> - price from forecast average total cost per unit</li>
+                            <li><em>Mark-up method</em> - add a percentage of cost or selling price to average total costs</li>
+                            <li><em>Break-even point method</em> - set a price that enables a certain profit (total revenue = total costs)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Demand-based:</strong> differential prices for individual markets/segments</li>
+                    <li><strong>Competitor-based:</strong> price relative to rivals (useful when products do not differ much); good for growing sales and market share</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Mistake</h4>
+                    <p>Confusing strategies (penetration vs skimming) with methods (cost / demand / competitor-based). Strategy = the pricing intent; method = how the number is calculated.</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4><i class="fas fa-lightbulb"></i> Midterm Focus</h4>
+                    <p>Explain price attributes and objectives, internal vs external factors, the four price strategies, and the three groups of pricing methods (especially the three cost-based methods).</p>
+                </div>
+            `
+        }
     }
 };
 
