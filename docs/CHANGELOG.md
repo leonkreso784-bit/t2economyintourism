@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Marketing FINALNI ispit (T1–T13) — hibrid:** novi `data-marketing-final.js`
+  (`window.marketingFinalData = Object.assign({}, marketingData, marketingM2Data, { examPractice })`,
+  uzor BI `final.js`; učitava se ZADNJI). Spaja svih 12 provjerenih kategorija + dodaje kuriranu
+  **`examPractice`** („Exam Practice (All Topics)", cross-topic: 12 flashcards · 10 quiz · 8 fill + „Final Exam
+  Roadmap" learn). Catalog: nova lekcija `final`, `scripts` += final (zadnji), `resolve.final = marketingFinalData`.
+  `CONTENT_VERSION` 20260608→20260609 + bump `?v=20260609`. Ukupno final = **13 kat. / 113 fc / 66 quiz / 56 fill**.
+  Verify 0; strukturni validator 0; Playwright 36/36 + ciljani final render-test (4 profila, quizOptions=14, 0 overflowa).
+  → **Marketing predmet KOMPLETAN (K1+K2+Final).**
 - **Marketing 2. kolokvij (T9–T13) — `second-midterm` popunjen:** novi sibling fajl `data-marketing-m2.js`
   (`window.marketingM2Data`, obrazac kao `data-te2-final.js`) s **5 kategorija** — Distribution, Promotion (IMC),
   New Trends in Promotion, Marketing Planning, Organizing &amp; Controlling (**45 flashcards · 25 quiz · 20 fill ·

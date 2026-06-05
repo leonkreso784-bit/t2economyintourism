@@ -61,14 +61,16 @@ T11 New trends in promotion · T12 Planning · T13 Organizing & Controlling.
   (`marketingM2Data`) s 5 kategorija (distribution, promotion, newTrendsPromotion, marketingPlanning,
   organizingControlling). Catalog `second-midterm` → `marketingM2Data`, coming-soon uklonjen. Verify 0,
   Playwright 36/36 + ciljani K2 render-test (4 profila, 0 problema). Lokalni commit, NIJE deployano.
-- **Finalni = spoj K1 (potpun T1–T8) + K2** (kao BI final). **Finalni = NOVA lekcija** u catalogu. **NIJE još rađen** (korisnik izričito rekao da finalni čeka).
+- **Finalni ✅ GOTOVO (Sesija 22, 2026-06-06).** Struktura = **HIBRID** (odluka korisnika): `data-marketing-final.js`
+  → `marketingFinalData = Object.assign({}, marketingData, marketingM2Data, { examPractice })`. Spaja svih 12
+  kategorija K1+K2 + kurirana `examPractice` (cross-topic). Catalog: lekcija `final`, script zadnji, `resolve.final`.
+  Verify 0, strukturni validator 0 (13 kat.), Playwright 36/36 + ciljani final render-test (4 profila). Lokalno, NIJE deployano.
 
 **Redoslijed rada (ciglu po ciglu, verify + Playwright + pregled nakon svake):**
 1. ~~T7 + T8 → postojeći 1. kolokvij (`data-marketing.js`).~~ ✅ **GOTOVO (S20)**
 2. ~~2. kolokvij T9–T13 (`data-marketing-m2.js` → `marketingM2Data`; catalog resolve; ukloniti coming-soon).~~ ✅ **GOTOVO (S21)**
-3. **◀ SLJEDEĆE (čeka nalog korisnika):** Finalni — NOVA lekcija u catalogu; merge K1+K2.
-   Obrazac: te2 ima zaseban `te2FinalData`; BI radi `Object.assign(M1,M2)`. Odlučiti: poseban kurirani final
-   ili spoj svih 13 kategorija. Bump `CONTENT_VERSION` + catalog `?v=`.
+3. ~~Finalni — NOVA lekcija (hibrid: spoj K1+K2 + Exam Practice).~~ ✅ **GOTOVO (S22)**
+→ **Marketing predmet KOMPLETAN.** Sljedeće: deploy paketa (uz potvrdu) pa drugi predmeti.
 **Catalog sad:** marketing ima `first-midterm` (✅) + `second-midterm` (coming-soon). Provjeri kako su drugi
 predmeti riješili „final" (te2 ima zaseban `te2FinalData`; BI radi `Object.assign(M1,M2)`).
 

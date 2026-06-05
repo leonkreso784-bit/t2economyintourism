@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-06 — Sesija 22: Marketing FINALNI ispit (T1–T13) — hibrid (spoj + Exam Practice)
+**Kontekst:** Nakon K1 (S20) i K2 (S21), korisnik: kreni na finalni. Odluka strukture (AskUserQuestion):
+**HIBRID** = spoj svih kategorija K1+K2 **+** dodatna kurirana „Exam Practice" kategorija kroz sve teme.
+
+**Pristup (arhitektura):** novi `data-marketing-final.js` → `window.marketingFinalData` =
+`Object.assign({}, window.marketingData, window.marketingM2Data, { examPractice })` (uzor: BI `final.js`).
+**MORA se učitati ZADNJI** (čita prethodne dvije varijable) → catalog `scripts` ga stavlja na kraj.
+
+**Napravljeno**
+- `data-marketing-final.js`: merge 12 postojećih (PROVJERENIH) kategorija + nova **`examPractice`**
+  („Exam Practice (All Topics)") = cross-topic capstone: **12 flashcards · 10 quiz · 8 fill** + learn
+  „Final Exam Roadmap" (poveznice: 4P+3P, PLC↔price/promo, push/pull↔promo/distrib, STP↔mix, plan→organize→control).
+- `catalog.js`: nova lekcija `final` („Final Exam"); `scripts` += `data-marketing-final.js` (ZADNJI);
+  `resolve.final = marketingFinalData`.
+- Cache: `CONTENT_VERSION` 20260608 → **20260609**; bump `?v=20260609` (`content-loader.js`, `catalog.js`).
+
+**Testirano:**
+- `node --check` OK · `npm run verify` **0 grešaka** (final → `marketingFinalData` deklariran + na window).
+- **Strukturni validator** (privremen, obrisan; učitao K1+K2+final redom): **13 kategorija**
+  (12 spojenih + examPractice), **113 flashcards · 66 quiz · 56 fill**, svi quiz indeksi valjani,
+  svi fill imaju `_______`, learn neprazan → **0 problema**.
+- **Ciljani 'final' render-test** (privremen, obrisan; sve sekcije × 4 iPhone profila):
+  **0 problema, 0 grešaka, 0 overflowa, quizOptions=14** (All + 13 kat.) → potvrda da runtime-merge radi.
+- Puni Playwright suite **36/36**.
+
+**Stanje:** **Marketing KOMPLETAN** — K1 (T1–T8) ✅, K2 (T9–T13) ✅, Finalni ✅ (sve lokalno, NIJE deployano).
+**Sljedeće:** spreman **deploy cijelog Marketing paketa** (uz potvrdu korisnika) zajedno s ranijim
+lokalnim commitovima (responsive split, KaTeX docovi). Pa dalje sadržaj (1.+2. god) → Blok B.
+
+---
+
 ## 2026-06-05 — Sesija 21: Marketing 2. kolokvij (T9–T13) — `second-midterm` popunjen
 **Kontekst:** Nakon dopune 1. kolokvija (S20), korisnik: kreni na 2. kolokvij, **finalni NE dirati još**.
 2. kolokvij = T9 → kraj (potvrđeno ranije).

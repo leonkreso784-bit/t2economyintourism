@@ -157,11 +157,13 @@ const SOKRAT_CATALOG = {
       features: { blindMap: false },
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Topics 1-8: concept, environment, market, segmentation, consumer behaviour, product, and price' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 9-13: distribution, promotion, new trends in promotion, planning, organizing & controlling' }
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 9-13: distribution, promotion, new trends in promotion, planning, organizing & controlling' },
+        { id: 'final', name: 'Final Exam', description: 'All topics 1-13 (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-marketing.js', 'data-marketing-m2.js'],
-        resolve: { 'first-midterm': 'marketingData', 'second-midterm': 'marketingM2Data' }
+        // data-marketing-final.js MUST load last (Object.assign of marketingData + marketingM2Data)
+        scripts: ['data-marketing.js', 'data-marketing-m2.js', 'data-marketing-final.js'],
+        resolve: { 'first-midterm': 'marketingData', 'second-midterm': 'marketingM2Data', 'final': 'marketingFinalData' }
       }
     },
     {
