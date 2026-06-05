@@ -76,6 +76,27 @@ nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE 
 `content` je HTML (dozvoljeni `<h3> <p> <ul> <li> <strong> <em> <table>` itd.). Slike
 unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po kategoriji.
 
+## Matematika / formule — LaTeX + KaTeX (kvantitativni predmeti)
+> Status: **plan** (ADR-009). KaTeX rendering se dodaje kao zasebna cigla PRIJE prvog kvantitativnog
+> predmeta. Konvencija autorstva je već fiksirana ovdje da sadržaj bude spreman i migracijski siguran.
+
+Za Math / Micro / Macro / Statistiku formule se pišu kao **LaTeX** unutar delimitera:
+- `$ ... $`  — inline (npr. `Elastičnost je $E_d = \frac{\%\Delta Q}{\%\Delta P}$.`)
+- `$$ ... $$` — blok / centriran (vlastiti red, za istaknute formule i korake rješenja).
+
+Vrijedi u SVIM tekstualnim poljima: `learn.content`, flashcard `question/answer/explanation`,
+quiz `question/options`, fillBlank `sentence/answer/hint`. `renderMath()` (KaTeX) ih renderira nakon
+prikaza sekcije. Payload ostaje običan string → **migracijski sigurno** (struktura scheme nepromijenjena).
+
+Smjernice:
+- **Riješeni primjeri** (worked examples) idu u `learn.content`, korak-po-korak (svaki korak svoj red/`<p>`).
+- **Quiz za zadatke:** numerički odgovori; **distraktori = tipične greške** (zamijenjen brojnik/nazivnik,
+  krivi predznak, zaboravljen eksponent…).
+- **Grafovi** (ponuda/potražnja, tangenta, distribucije): zasad **slika** u `learn.image`
+  (croppani slajd ili SVG). Interaktivni grafovi nisu u schemi.
+- ⚠️ **Escape u JS datotekama:** LaTeX `\` se u stringu piše `\\` (npr. `"$\\frac{1}{x}$"`,
+  `"$x^{n}$"`). Inače se backslash pojede.
+
 ## Posebni slučaj: Blind Map (samo Tourism Geography)
 Geografija ima dodatnu interaktivnu kartu. Konfiguracija (točke, koordinate, razine:
 cities/islands/nationalParks/natureParks/regions) dokumentira se zasebno kad budemo

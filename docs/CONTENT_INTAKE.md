@@ -13,11 +13,38 @@
 3. **Izbjegavaj**: niskorezolucijske screenshotove, jako kompresirane slike, "spojene"
    prezentacije u jedan fajl bez reda.
 
-## ⚠️ Matematika / formule — najveći rizik
-Formule (eksponenti, razlomci, indeksi) najlakše se iskvare iz slika. Za Math:
-- preferiraj **PDF s pravim tekstom**; ako je samo slika, očekuj da ja transkribiram
-  formule i **ti ih obavezno pregledaš**;
-- po potrebi ključne formule napiši ručno (tekst) uz slajd.
+## ⚠️ Kvantitativni predmeti (Math / Micro / Macro / Statistika) — poseban tretman
+Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](DECISIONS.md) ADR-009):
+- **Formule → KaTeX/LaTeX.** Pišu se kao `$...$` u poljima (vidi [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md)).
+  **KaTeX rendering dodajemo kao zasebnu ciglu PRIJE prvog takvog predmeta.**
+- **Slike (JPG slajdovi):** čitam ih (Read alat čita JPG/PNG) i **transkribiram formule u LaTeX**.
+  Math materijal su tipkani PPT slajdovi (provjereno čitljivi) → izvedivo, ali **ti OBAVEZNO pregledaš matematiku**.
+- **Grafovi** (tangente, ponuda/potražnja, distribucije): zasad croppani slajd kao slika u `learn.image`.
+- **Pedagogija:** worked-problems na postojećim modovima (Learn = riješeni primjeri korak-po-korak;
+  Quiz = numerički, distraktori = tipične greške).
+- **Redoslijed:** čista **Matematika ZADNJA** (najveća gustoća formula); pilot na predmetu s najviše konceptualnog + materijalima.
+- **Rizik:** točnost → male serije, `verify` + tvoj pregled nakon svake cigle.
+
+## Inventar 1. godine (stanje materijala, 2026-06-05)
+Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
+
+| Predmet | Materijali | Bilješka |
+|---|---|---|
+| Business Informatics | 12 PDF | ✅ GOTOVO (pilot — tekstualni pipeline dokazan) |
+| Macroeconomics | 19 PDF | dobar tekstualni izvor (kvantitativni elementi) |
+| Management | 11 PDF | tekstualni |
+| Special interest in tourism | 13 PDF + txt | tekstualni |
+| Math | 100 JPG + 8 PDF + docx | PPT slajdovi (čitljivi): realni brojevi, funkcije, derivacije, integrali, Gauss-Jordan, ekon. primjene → KaTeX + grafovi-kao-slike |
+| Microeconomics | 3 PDF | **tanko** — vjerojatno treba još |
+| English | 2 PDF | malo |
+| Academic writing | 0 | **PRAZNO** |
+| Introduction to hospitality | 0 | **PRAZNO** |
+| Statistics | 0 | **PRAZNO** — nema za pilot |
+| Traffic in tourism | 0 | **PRAZNO** |
+
+**Posljedica za plan:** Statistika nema materijala (ne može biti pilot); Micro tanak. Kvantitativni pilot
+realno = **Math** (bogato) ili **Macro** (19 PDF). 4 prazna predmeta čekaju da doneseš materijale.
+Najbrži dobici (tekstualni, bez KaTeX-a): **Management, Macroeconomics, Special interest in tourism**.
 
 ## Struktura mapa (gitignored)
 ```

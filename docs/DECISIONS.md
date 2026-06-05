@@ -4,6 +4,29 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-009 — Kvantitativni predmeti (Math/Micro/Macro/Statistika): KaTeX + "worked problems"
+**Datum:** 2026-06-05 · **Status:** prihvaćeno (plan; implementacija pending)
+**Kontekst:** Math, Microeconomics, Macroeconomics i Statistika su **formula- i zadatak-orijentirani**;
+postojeća schema (Learn/Flashcards/Quiz/Fill) rađena je za konceptualno, tekstualno gradivo. Tri problema:
+(1) prikaz **formula** (HTML tekst ne prikazuje razlomke/eksponente/sume/integrale), (2) bit je
+**rješavanje zadataka korak-po-korak** (ne prepoznavanje), (3) **grafovi** (ponuda/potražnja, tangente,
+distribucije). Math materijal je u JPG slajdovima (PPT export).
+**Odluka:**
+1. **Rendering formula = KaTeX** (CDN `<link>` + `<script>`, bez build-a; isti alat kao Khan/Brilliant).
+   Sadržaj se piše kao **LaTeX** unutar `$...$` / `$$...$$` u POSTOJEĆIM poljima (flashcard/quiz/fill/learn).
+   Jedan helper `renderMath(container)` (KaTeX auto-render) zove se nakon što sekcija ubaci HTML.
+   **Migracijski sigurno** — payload ostaje string (LaTeX), struktura scheme se NE mijenja.
+2. **Pedagogija = "worked problems" konvencija na POSTOJEĆIM modovima** (bez novog moda zasad):
+   Learn = teorija + formule + riješeni primjeri; Flashcards = zadatak → puno rješenje; Quiz = numerički,
+   **distraktori = tipične greške**; Fill = popuni formulu/korak. Namjenski "Problems" mod (otkrivanje
+   koraka jedan-po-jedan) gradimo TEK ako se reuse pokaže nedovoljnim.
+3. **Grafovi = statične SVG / croppane slike u Learn** (`learn.image` već postoji). Interaktivni grafovi = ne sad.
+**Posljedice:** KaTeX integracija je stvaran (ali kontroliran) posao u rendererima (learn/flashcards/quiz/
+fill) → cache bump + test. Točnost formula iz slika = glavni rizik → male serije + **obavezan ljudski pregled**.
+**Redoslijed:** prvo lagani tekstualni predmeti; KaTeX cigla PRIJE prvog kvantitativnog; pilot na predmetu
+s materijalima (Statistika je PRAZNA, Micro tanak → realno Math ili Macro); **čista Matematika ZADNJA**.
+Detalji: [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) (LaTeX konvencija) + [CONTENT_INTAKE.md](CONTENT_INTAKE.md) (image→LaTeX, inventar).
+
 ## ADR-008 — Backend hosting: Vercel Functions + Supabase
 **Datum:** 2026-06-03 · **Status:** prihvaćeno
 **Kontekst:** Treba odlučiti gdje hostati backend. Razmatrano: Vercel Functions +

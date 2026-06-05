@@ -65,6 +65,12 @@ Upload → ekstrakcija teksta/slika → chunking → Claude generira po postoje�
 → draft → ljudski pregled/uredi → publish. Kontrola troška: kvote, kasnije "donesi
 svoj API ključ".
 
+## Math rendering (kvantitativni predmeti — KaTeX)
+Frontend sposobnost (plan, ADR-009): **KaTeX** (CDN, bez build-a) za prikaz LaTeX formula
+(`$...$`/`$$...$$`) u Learn/Flashcards/Quiz/Fill. Helper `renderMath(container)` poziva se nakon
+što sekcija ubaci HTML. Math/Micro/Macro/Statistika koriste „worked problems" konvenciju + grafove
+kao slike. Schema struktura se NE mijenja (LaTeX je običan string u payloadu → migracijski sigurno).
+
 ---
 
 ## Razrada po koracima (M0 — Faza 0)

@@ -2,7 +2,7 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-03)
+## 📍 STANJE (2026-06-05)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -10,10 +10,15 @@ kategorija) · **M0.5: puni drill-down navigacija (`#browse-page`) + „čisto i
 **Landing rebuild u punu „pravu stranicu" ✅** (nav, subjects showcase iz catalog-a, How it works,
 5 modova, CTA, strukturiran footer) + **SEO meta popravljen** · **Lazy-loading sadržaja ✅ (A4)**
 (`content-loader.js`; ~777 KB se više ne učitava na startu, nego po predmetu) · **VISION.md** zapisan.
-**Sljedeće (Tier 2):** Privacy Policy + Contact + FAQ (bitno za Google Ads) → ostali predmeti 1. godine
-(10 kom., kad stignu materijali) → **Blok B** (Vercel Functions + Supabase; migracija JEDNOM).
-**Sadržaj:** 2. god = 8 predmeta ✅ · 1. god = Business Informatics ✅, ostalih 10 ⬜.
-**Deploy:** **2026-06-03 — sve pushano na `origin/main` → Vercel auto-deploy** (BI sadržaj + M0.5 drill-down nav + „čisto i bogato" redizajn + landing rebuild + SEO + **lazy-loading A4** sada LIVE). Post-deploy: hard refresh (Ctrl+F5) + provjera na pravom iPhoneu.
+**Odluka smjera (2026-06-05):** prvo **kompletirati sadržaj** (1. i 2. godina) PA Blok B — autorstvo u
+datotekama je migracijski sigurno (ADR-006), migracija ide JEDNOM na punom katalogu. Tier 2 (Privacy/FAQ/
+Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
+**Kvantitativni predmeti (Math/Micro/Macro/Statistika):** poseban tretman — **KaTeX** rendering formula +
+„worked problems" konvencija + grafovi-kao-slike (**ADR-009**). KaTeX = zasebna cigla PRIJE prvog takvog
+predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](CONTENT_INTAKE.md).
+**Sadržaj:** 2. god = 8 predmeta ✅ (4 fale 2. kolokvij: econ-hosp, marketing, geo, food) · 1. god =
+Business Informatics ✅, ostalih 10 ⬜ (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
+**Deploy:** sve LIVE na `origin/main` → Vercel (M0.5 + landing + lazy-loading A4 + **fix BUG-005 landing hero offset, 2026-06-05**).
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
@@ -44,7 +49,8 @@ Cilj: stranica strukturirana Fakultet → Smjer → Godina → (Semestar) → Pr
 uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadržava.
 
 - Sadržajni alati: ✅ struktura+template+scaffold (K1); ✅ coming-soon iz catalog-a (K2,
-  `isLessonComingSoon`); ⬜ validator sadržaja (K3); ✅ **lazy-load seam (K4)** = `js/content-loader.js`
+  `isLessonComingSoon`); ⬜ validator sadržaja (K3); ✅ **lazy-load seam (K4)** = `js/content-loader.js`;
+  ⬜ **KaTeX math rendering (K5)** = `renderMath()` + LaTeX konvencija za kvantitativne predmete (ADR-009)
 - ✅ Pilot sadržaja: **Business Informatics** (Ch1–11, K1+K2+Final) — dokaz da content pipeline radi
 - ⬜ Catalog: dodati ostalih 10 predmeta 1. godine + semestar mapping (čeka materijale)
 - ✅ Hijerarhijska navigacija: Start → Fakulteti → Smjerovi → Godine → Predmeti (po semestru) +

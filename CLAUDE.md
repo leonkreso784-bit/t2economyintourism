@@ -64,13 +64,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Vizija:** `docs/VISION.md` (full-stack: AI tutor, UGC, dijeljenje, natjecanje, „donesi ključ" + gating-odluke).
   Sljedeće (Tier 2): Privacy/Contact/FAQ (za Google Ads), pa **Backend (Blok B: Supabase+Auth+/api)** kao temelj vizije.
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
-- **Sljedeće:** ostali predmeti 1. godine (kad stignu materijali), pa **Blok B** (Supabase; migracija datoteka → baza JEDNOM).
-  Po želji: redizajn unutarnjih study/lessons ekrana.
+- **Sve gore je LIVE** (deployano 2026-06-05, + fix BUG-005 landing hero offset). Suite 36/36.
+- **Sljedeće (odluka 2026-06-05):** PRVO kompletirati sadržaj (1.+2. god) PA **Blok B** (migracija JEDNOM na punom katalogu).
+  Kvantitativni predmeti (Math/Micro/Macro/Stat) preko **KaTeX**-a (ADR-009), Math zadnja. Inventar materijala: `docs/CONTENT_INTAKE.md`.
+  Materijali 1. god (folder `1. godina Hospitality Managament`): Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
 - ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).
+- ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (LaTeX `$...$`) + „worked problems" na
+  postojećim modovima + grafovi-kao-slike. KaTeX = cigla PRIJE prvog takvog predmeta; **Math zadnja**. (plan)
 - Logo se NE mijenja. Vizualni stil: **„čisto i bogato" (clean & rich, Brilliant/Quizlet-feel), dark** — NE preminimalistički.
 
 ## Dokumentacija (`docs/`)
