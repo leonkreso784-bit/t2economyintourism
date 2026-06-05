@@ -46,6 +46,28 @@ Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 realno = **Math** (bogato) ili **Macro** (19 PDF). 4 prazna predmeta čekaju da doneseš materijale.
 Najbrži dobici (tekstualni, bez KaTeX-a): **Management, Macroeconomics, Special interest in tourism**.
 
+## Marketing (2. god) — intake & plan (2026-06-05) ← SLJEDEĆE
+Folder: `C:\Users\leonk\OneDrive\Documentos\2. godina Hospitaliy Managament\Marketing`
+Svi PDF-ovi, **čista ekstrakcija teksta** (PPT-export, provjereno) → **bez KaTeX-a** (konceptualni predmet).
+
+**Teme (TJ = tema):** T1 Concept · T2 Environment · T3 Market · **T4 = `Market Research.pdf`** (nenumeriran) ·
+T5 Segmentation · T6 Consumer behaviour · **T7 Product** · **T8 Price** · T9 Distribution · T10 Promotion ·
+T11 New trends in promotion · T12 Planning · T13 Organizing & Controlling.
+
+**Podjela kolokvija (potvrdio korisnik): 2. kolokvij = T9 → kraj.**
+- **1. kolokvij = T1–T8.** ⚠ Postojeći `data-marketing.js` ima samo 5 tema (T1,T2,T3,T5,T6) →
+  **FALE T7 (Product) i T8 (Price)** → korisnik potvrdio: **dodati ih u 1. kolokvij**.
+- **2. kolokvij = T9–T13** (4 PDF-a: `TJ 9_The distribution` 27str · `10_The promotion` 33 ·
+  `11_New trends…` 31 · `12_13_Planning_Organizing_Controlling…` 27). Popunjava „second-midterm" (sad coming-soon).
+- **Finalni = spoj K1 (potpun T1–T8) + K2** (kao BI final). **Finalni = NOVA lekcija** u catalogu.
+
+**Redoslijed rada (ciglu po ciglu, verify + Playwright + pregled nakon svake):**
+1. T7 + T8 → postojeći 1. kolokvij (`data-marketing.js`).
+2. 2. kolokvij T9–T13 (nova `marketingData` 2. kolokvija; ukloniti coming-soon).
+3. Finalni (nova lekcija; merge K1+K2).
+**Catalog sad:** marketing ima `first-midterm` (✅) + `second-midterm` (coming-soon). Provjeri kako su drugi
+predmeti riješili „final" (te2 ima zaseban `te2FinalData`; BI radi `Object.assign(M1,M2)`).
+
 ## Struktura mapa (gitignored)
 ```
 _materials/
