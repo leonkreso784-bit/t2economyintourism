@@ -11,7 +11,35 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ---
 
 ## Aktivni
-*(nema)*
+
+### BUG-007 — Learn filter-bar: čipovi rezani na rubovima + skriveni scroll (svi predmeti)
+- Status: 🔴 otvoren (ODGOĐENO — riješiti nakon trenutnih zadataka) · Težina: srednji (UX/kozmetički) · Prijavljeno: 2026-06-06
+- **Opis:** Nakon BUG-006 (rezanje imena → riješeno, čipovi sad pune nazive), ostaje vizualni problem
+  gornjeg learn-bara: čipovi su **odrezani na rubovima** — lijevo se vidi pola čipa, desno je zadnji čip
+  odsječen (npr. „Promotic…"). Bar zahtijeva vodoravno skrolanje ali **nema vidljivog scrollbara ni
+  naznake** da se skrola. Korisnik javio da je **na SVIM predmetima** (dijeljena komponenta), a najgore na
+  lekcijama s puno kategorija (Marketing Final 13, BI Final 11).
+- **Komponenta:** `.learn-filter` (`css/learn.css`) + `updateLearnFilters()` (`js/progress.js`). Čipovi se
+  generiraju dinamički; `.learn-filter { display:flex; overflow-x:auto; white-space:nowrap }`, čipovi `flex-shrink:0`.
+- **Mogući uzroci (istraženo):**
+  1. **`justify-content: center` na skrolabilnom flex-baru** — `css/learn.css:607`, unutar `@media (min-width:1024px)`.
+     Kad je sadržaj širi od kontejnera, `center` gura prve čipove preko LIJEVOG ruba, a lijevi overflow je u
+     mnogim preglednicima **nedohvatljiv skrolom** → trajno odrezan prvi čip lijevo. **Najvjerojatniji uzrok lijevog reza.**
+  2. **Skriven scrollbar:** `scrollbar-width:none` + `::-webkit-scrollbar { display:none }` (`learn.css:63,67`).
+     Nema vizualne naznake da se skrola → desni odrezani čip („Promotic…") izgleda kao greška, ne kao „ima još".
+  3. **Inherentno:** jedan red s 14 čipova + vodoravni scroll je nezgodan na DESKTOPU (nema touch; treba shift+kotačić).
+  4. Nema „fade"/gradijenta ni strelica na rubovima kao afordancije za skrol.
+- **Opcije popravka (za poslije, NIJE odlučeno):**
+  - **A (preporuka): `flex-wrap: wrap`** umjesto `overflow-x:auto` → svi čipovi vidljivi u više redova, bez skrola
+    i bez rezanja. Ukloniti/uskladiti `justify-content:center`. Najjednostavnije i najčitljivije; troši nešto više visine.
+  - **B:** zadržati skrol ali: maknuti `justify-content:center` (→ `flex-start`), dodati tanak scrollbar ILI
+    rubni gradijent-fade ILI strelice lijevo/desno.
+  - **C:** zamijeniti čipove `<select>` padajućim izbornikom (kao Quiz kategorija) — kompaktno, skalira na bilo koji broj.
+  - **D:** hibrid — `wrap` na desktopu, skrol na mobitelu.
+- **Napomena:** provjeriti i `.learn-filter` u responsive dijelovima (04/06) da se popravak ne pregazi
+  (responsive se učitava ZADNJI — vidi lekciju iz BUG-005). Cache-bump `learn.css`/`progress.js` pri popravku.
+- **Lekcija (preliminarno):** `justify-content:center` + `overflow:auto` = poznata zamka (reže/zaključava rubove);
+  za listu nepoznate duljine radije `flex-wrap` ili dropdown nego horizontalni scroll bez afordancije.
 
 ---
 
