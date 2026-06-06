@@ -526,3 +526,63 @@
     color: var(--text-secondary);
     font-size: 0.9rem;
 }
+
+/* ===== TOAST NOTIFICATION =====
+   Bazni stil je nedostajao (ostali su samo responsive override-i) → toast se prikazivao
+   kao goli blok "Message" na dnu svake stranice. Sada: fiksan, skriven dok showToast()
+   ne doda .show. (Mobilni override-i u css/responsive/ mijenjaju samo poziciju/transform.) */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    max-width: min(90vw, 420px);
+    padding: 0.85rem 1.25rem;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    font-size: 0.9rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(140px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast i {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+/* ===== GLOBAL FOOTER =====
+   Bazni stil je nedostajao → copyright se prikazivao kao goli blok lijevo-dolje, gazeći
+   sadržaj (BUG-008). Sada: uredan, centriran, suptilan footer u normalnom toku na dnu.
+   Skriva se na Landing/Browse (Landing ima svoj bogati footer; Browse je biranje predmeta). */
+.footer {
+    margin-top: auto;
+    padding: 1.75rem 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* Globalni footer je sibling svih stranica → sakrij ga gdje nije poželjan. */
+body:has(.landing-page.active) .footer,
+body:has(.browse-page.active) .footer {
+    display: none;
+}

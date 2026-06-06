@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-06 — Sesija 25: Fix BUG-008 (globalni footer + toast bez baznog CSS-a)
+**Kontekst:** Korisnik javio (screenshot) da „© 2026 All Rights Reserved by Leon Kreso" stoji ružno lijevo-dolje
+preko sadržaja na svim stranicama (Landing ima i svoj footer → duplikat); tik iznad i toast „ⓘ Message".
+
+**Dijagnoza:** bazni CSS za `.toast` i `.footer` **ne postoji** (u `css/` samo responsive override-i — vjerojatno
+izgubljeno u ranijem refaktoru). Bez baze: toast (koji `showToast()` toggla preko `.show`) = stalni goli blok;
+globalni `<footer>` (sibling svih stranica) = goli copyright blok na dnu svake stranice.
+
+**Napravljeno (`css/pages.css`):** bazni `.toast` (fiksan, `opacity:0`+`pointer-events:none`, otkriva se `.show`) +
+bazni `.footer` (centriran, suptilan, `border-top`); globalni footer **skriven na Landing/Browse** preko
+`body:has(.landing-page.active) .footer` / `:has(.browse-page.active)`. Bump `pages.css`/`styles.css` `?v=20260611`.
+
+**Testirano:** verify 0; ciljani temp-test (4 profila, obrisan): footer `display` landing=none/browse=none/**study=block**;
+toast `opacity=0`, `position=fixed`, bez `.show`; puni suite **36/36**.
+**Stanje:** BUG-008 ✅ riješen, lokalni commit (NIJE deployano — pitati korisnika za deploy).
+
+---
+
 ## 2026-06-06 — Sesija 24: Fix BUG-007 (learn filter-bar — rezanje na rubovima + skriven scroll)
 **Kontekst:** Nakon BUG-006 (puni nazivi), korisnik javio da bar i dalje reže čipove na rubovima (lijevo pola,
 desno „Promotic…") i nema naznake skrola. Odluka (AskUserQuestion): **Opcija B** — zadržati skrol + dodati naznake.

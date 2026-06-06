@@ -106,6 +106,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Fixed
+- **Globalni footer + toast bez baznog CSS-a → goli blokovi lijevo-dolje (BUG-008):** bazni `.toast`/`.footer`
+  stilovi nedostajali (ostali samo responsive override-i) → toast se stalno prikazivao kao „Message", a globalni
+  copyright-footer kao goli blok na dnu svake stranice (uz duplikat na Landingu). Dodan bazni `.toast` (fiksan,
+  skriven dok `showToast()` ne doda `.show`) i `.footer` (centriran, suptilan) u `css/pages.css`; globalni footer
+  skriven na Landing/Browse preko `:has()`. Bump `pages.css`/`styles.css` `?v=20260611`. Suite 36/36.
 - **Learn filter-bar rezao čipove na rubovima + skriven scroll (BUG-007):** maknut uzrok lijevog reza
   (`justify-content:center` na skrolabilnom `.learn-filter` @≥1024px — sad `flex-start` preko klase
   `.is-scrollable`, koja se aktivira samo kad bar prelazi širinu). Dodan **vidljiv tanak scrollbar** +

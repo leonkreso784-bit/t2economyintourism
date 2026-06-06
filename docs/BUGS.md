@@ -128,6 +128,24 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - Lekcija: `justify-content:center` + `overflow:auto` reže/zaključava rubove — centriraj samo kad NEMA overflowa
   (`is-scrollable` klasa). `ResizeObserver` na skrolabilnom elementu je pouzdan okidač za remjeru kad postane vidljiv.
 
+### BUG-008 — Globalni footer + toast bez baznog CSS-a (goli blokovi lijevo-dolje)
+- Status: ✅ riješen · Težina: srednji (UX) · Datum: 2026-06-06
+- Opis: korisnik javio da „© 2026 All Rights Reserved by Leon Kreso" stoji ružno lijevo-dolje, preko sadržaja,
+  na svim stranicama (a Landing ima i svoj bogati footer → duplikat). Tik iznad njega i toast „ⓘ Message".
+- Uzrok: **bazni CSS za `.toast` i `.footer` nije postojao** (u `css/` su ostali samo responsive override-i;
+  vjerojatno izgubljeno u ranijem refaktoru). Bez baznog stila: (1) `.toast` (koji `showToast()` u `js/utils.js`
+  pokazuje preko `.show`) renderirao se kao stalni goli blok „Message"; (2) globalni `<footer class="footer">`
+  (sibling svih stranica u `index.html`) prikazivao se kao goli blok copyrighta na dnu svake stranice.
+- Rješenje (`css/pages.css`): dodan bazni `.toast` (fiksan, `opacity:0`/`pointer-events:none`, otkriva se s `.show`)
+  i bazni `.footer` (centriran, suptilan, `border-top`, normalan tok). Globalni footer **skriven na Landing/Browse**
+  preko `body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer { display:none }`
+  (Landing ima svoj footer; Browse je biranje predmeta). Bump `pages.css`/`styles.css` `?v=20260611`.
+- Verifikacija: ciljani temp-test (4 profila) — footer `display`: landing=none, browse=none, **study=block**;
+  toast `opacity=0`, `position=fixed`, bez `.show`; puni suite **36/36**.
+- Lekcija: pri modularizaciji/refaktoru CSS-a lako se izgubi BAZNO pravilo a ostanu samo override-i u media
+  queryjima (koji bez baze ne rade) — provjeri da svaki override ima bazu. `:has()` čisto rješava „sakrij globalni
+  element ovisno o aktivnoj stranici" bez JS-a.
+
 ---
 
 ### Predložak (kopiraj za novi bug)
