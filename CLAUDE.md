@@ -71,11 +71,16 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`first-midterm`/`second-midterm`/`final`). Final = 13 kat. / 113 fc / 66 quiz / 56 fill.
 - **Fixevi LIVE:** BUG-006 (learn filter-bar puni nazivi); BUG-007 (filter-bar vidljiv scrollbar + rubni fade,
   `is-scrollable` gazi `center`; `learn.css`/`progress.js`, ResizeObserver). Globalni (svi predmeti).
-- **Lokalni commit, NIJE deployano (1, `9206424`):** **fix BUG-008** (S25) — bazni `.toast`/`.footer` CSS je
-  nedostajao → goli blokovi lijevo-dolje; dodan u `css/pages.css`, globalni footer skriven na Landing/Browse
-  preko `:has()`, toast popravljen. Suite 36/36. (Bump `pages.css`/`styles.css` `?v=20260611`.)
-- **▶ SLJEDEĆE:** (1) po želji deploy BUG-008 (uz izričitu potvrdu); (2) dalje **sadržaj** (1.+2. god, najbrži
-  tekstualni: Management/Macroeconomics/SIT) → kasnije **Blok B** (Supabase+Auth+/api).
+- **Lokalni commiti, NIJE deployano (3):** `9206424` **fix BUG-008** (S25, bazni `.toast`/`.footer` CSS je
+  nedostajao → goli blokovi lijevo-dolje; `css/pages.css`, footer skriven na Landing/Browse preko `:has()`,
+  bump `?v=20260611`) · `afcd99e` doc osvježenje · `7a3e827` **catalog ispravak** (S26): „Business
+  Entrepreneurship" → **„Entrepreneurship and Innovation", sem 2→1** (id nedirnut → napredak očuvan;
+  `catalog.js?v=20260612`). Sve uz suite 36/36.
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **dovršiti 2. godinu** — korisnik stavlja **sve
+  PDF-ove 2. god u poseban folder** (~2026-06-07); praznine = 2. kolokvij za `econ-hospitality`/`geography`/
+  `food-nutrition`. (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi
+  smjerovi** (1.+2. god, novi `programs` u catalogu). → kasnije **Blok B** (Supabase+Auth+/api).
+  Po želji + uz izričitu potvrdu: deploy 3 lokalna commita.
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
