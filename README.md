@@ -20,8 +20,8 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 
 ## 🎯 Predmeti — FMTU Opatija, Hospitality Management
 **2. godina (8):**
-- Semestar 1: Tourism Economics, E-Business, Accounting
-- Semestar 2: Business Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+- Semestar 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
+- Semestar 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
 
 **1. godina (u izradi):**
 - Semestar 1: **Business Informatics ✅** (Midterm 1 + Midterm 2 + Final) — ostalih 10 predmeta slijedi

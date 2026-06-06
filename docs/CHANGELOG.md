@@ -73,6 +73,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (brand/Explore/About + copyright). Svi "Start" gumbi vežu se preko klase `.start-trigger`. CSS u `css/landing.css`.
   Test: `tests/landing.spec.js` (nav, showcase=catalog, navigacija, overflow guard, 4 iPhone profila).
 ### Changed
+- **Predmet preimenovan + premješten: „Business Entrepreneurship" → „Entrepreneurship and Innovation",
+  sem 2 → sem 1** (`data/catalog.js`, id `entrepreneurship` nepromijenjen → napredak/storageKey očuvan).
+  Ispravak prema stvarnom silabusu (predmet je u zimskom semestru). Posljedica: u browse navigaciji se
+  sada prikazuje pod 2. god / Semestar 1 (data-driven, bez UI izmjena). Sadržaj lekcija nepromijenjen.
+  Bump `data/catalog.js?v=20260612` (index.html). Usklađeni i `README.md`, `package.json`, `docs/ARCHITECTURE.md`.
+  Verify 0; Playwright 36/36.
 - **`css/responsive.css` (2470 linija) razbijen na 6 uređenih dijelova** u `css/responsive/`
   (`01-up-and-phone-breakpoints` → `06-component-improvements`). Čista podjela po SUSJEDNIM sekcijama
   (bez premještanja) → konkatenacija 01→06 = bivši fajl 1:1; redoslijed očuvan (responsive se učitava

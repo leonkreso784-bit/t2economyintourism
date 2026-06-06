@@ -1,7 +1,7 @@
 {
   "name": "sokrat-study",
   "version": "2.0.0",
-  "description": "Interactive study application for Tourism Economics, Business Entrepreneurship, and Accounting - Flashcards, Quizzes, Fill-in-the-blank exercises",
+  "description": "Interactive study application for Tourism Economics, Entrepreneurship and Innovation, and Accounting - Flashcards, Quizzes, Fill-in-the-blank exercises",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",

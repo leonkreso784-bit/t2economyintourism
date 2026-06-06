@@ -39,8 +39,8 @@ institutions (sveučilište)      ← spremno za buduće širenje
 ```
 
 **Trenutni raspored (Hospitality Management):**
-- 2. god, sem 1: Tourism Economics, E-Business, Accounting
-- 2. god, sem 2: Entrepreneurship, Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
+- 2. god, sem 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
+- 2. god, sem 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
 - 1. god, sem 1: **Business Informatics ✅ (KOMPLETAN)** — ostalih 10 predmeta 1. god ⬜ (čeka materijale)
 
 ## Model baze (ciljano, Supabase/Postgres)

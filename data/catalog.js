@@ -54,8 +54,8 @@ const SOKRAT_CATALOG = {
     {
       id: 'entrepreneurship',
       programId: 'hospitality-management',
-      year: 2, semester: 2,
-      name: 'Business Entrepreneurship',
+      year: 2, semester: 1,
+      name: 'Entrepreneurship and Innovation',
       shortName: 'Entrep',
       icon: 'fa-rocket',
       color: '#8b5cf6',

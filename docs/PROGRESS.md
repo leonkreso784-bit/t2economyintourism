@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-06 — Sesija 26: Ispravak catalog-a — „Entrepreneurship and Innovation" (sem 1)
+**Kontekst:** Korisnik javio da je predmet zapravo **„Entrepreneurship and Innovation"** (ne „Business
+Entrepreneurship") i da je u **1. semestru** 2. godine (bio krivo upisan kao sem 2).
+
+**Napravljeno (`data/catalog.js`):** `name` → „Entrepreneurship and Innovation", `semester: 2 → 1`.
+**`id: 'entrepreneurship'` NIJE diran** → `storageKey`/napredak korisnika i sve reference očuvane; sadržaj
+lekcija nepromijenjen. Navigacija (browse, data-driven) ga sad sama prikazuje pod Sem 1. Bump `catalog.js?v=20260612`
+(index.html). Usklađeni `README.md`, `package.json`, `docs/ARCHITECTURE.md` (povijesni PROGRESS zapisi se ne diraju).
+
+**Testirano:** `verify` 0 grešaka (ispisuje „Entrepreneurship and Innovation"); **Playwright 36/36**.
+**Stanje:** lokalni commit (NIJE deployano) — ide u isti deploy paket kao BUG-008.
+
+---
+
 ## 2026-06-06 — Sesija 25: Fix BUG-008 (globalni footer + toast bez baznog CSS-a)
 **Kontekst:** Korisnik javio (screenshot) da „© 2026 All Rights Reserved by Leon Kreso" stoji ružno lijevo-dolje
 preko sadržaja na svim stranicama (Landing ima i svoj footer → duplikat); tik iznad i toast „ⓘ Message".
