@@ -57,15 +57,48 @@
     display: flex;
     gap: 10px;
     margin-bottom: 14px;
-    padding: 4px 0;
+    padding: 4px 0 10px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    /* Tanak vidljiv scrollbar = naznaka da se bar skrola (BUG-007). */
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
 }
 
+/* WebKit tanki scrollbar (naznaka skrola) */
 #learn .learn-filter::-webkit-scrollbar {
-    display: none;
+    height: 6px;
+}
+#learn .learn-filter::-webkit-scrollbar-track {
+    background: transparent;
+}
+#learn .learn-filter::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+#learn .learn-filter::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary, var(--border));
+}
+
+/* Rubni gradijent-fade — nagovještava da ima još čipova izvan vidljivog.
+   JS (updateLearnFilterScrollHints) dodaje can-scroll-left/right ovisno o poziciji skrola. */
+#learn .learn-filter.can-scroll-right {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+}
+#learn .learn-filter.can-scroll-left {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 36px);
+            mask-image: linear-gradient(to right, transparent, #000 36px);
+}
+#learn .learn-filter.can-scroll-left.can-scroll-right {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+            mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+}
+
+/* Kad sadržaj prelazi širinu, poravnaj lijevo da prvi čip NE bude odrezan
+   (gazi justify-content:center iz @media >=1024px — uzrok BUG-007 lijevog reza). */
+#learn .learn-filter.is-scrollable {
+    justify-content: flex-start;
 }
 
 #learn .filter-btn {

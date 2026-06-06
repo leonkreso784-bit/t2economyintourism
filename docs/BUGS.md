@@ -11,35 +11,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ---
 
 ## Aktivni
-
-### BUG-007 — Learn filter-bar: čipovi rezani na rubovima + skriveni scroll (svi predmeti)
-- Status: 🔴 otvoren (ODGOĐENO — riješiti nakon trenutnih zadataka) · Težina: srednji (UX/kozmetički) · Prijavljeno: 2026-06-06
-- **Opis:** Nakon BUG-006 (rezanje imena → riješeno, čipovi sad pune nazive), ostaje vizualni problem
-  gornjeg learn-bara: čipovi su **odrezani na rubovima** — lijevo se vidi pola čipa, desno je zadnji čip
-  odsječen (npr. „Promotic…"). Bar zahtijeva vodoravno skrolanje ali **nema vidljivog scrollbara ni
-  naznake** da se skrola. Korisnik javio da je **na SVIM predmetima** (dijeljena komponenta), a najgore na
-  lekcijama s puno kategorija (Marketing Final 13, BI Final 11).
-- **Komponenta:** `.learn-filter` (`css/learn.css`) + `updateLearnFilters()` (`js/progress.js`). Čipovi se
-  generiraju dinamički; `.learn-filter { display:flex; overflow-x:auto; white-space:nowrap }`, čipovi `flex-shrink:0`.
-- **Mogući uzroci (istraženo):**
-  1. **`justify-content: center` na skrolabilnom flex-baru** — `css/learn.css:607`, unutar `@media (min-width:1024px)`.
-     Kad je sadržaj širi od kontejnera, `center` gura prve čipove preko LIJEVOG ruba, a lijevi overflow je u
-     mnogim preglednicima **nedohvatljiv skrolom** → trajno odrezan prvi čip lijevo. **Najvjerojatniji uzrok lijevog reza.**
-  2. **Skriven scrollbar:** `scrollbar-width:none` + `::-webkit-scrollbar { display:none }` (`learn.css:63,67`).
-     Nema vizualne naznake da se skrola → desni odrezani čip („Promotic…") izgleda kao greška, ne kao „ima još".
-  3. **Inherentno:** jedan red s 14 čipova + vodoravni scroll je nezgodan na DESKTOPU (nema touch; treba shift+kotačić).
-  4. Nema „fade"/gradijenta ni strelica na rubovima kao afordancije za skrol.
-- **Opcije popravka (za poslije, NIJE odlučeno):**
-  - **A (preporuka): `flex-wrap: wrap`** umjesto `overflow-x:auto` → svi čipovi vidljivi u više redova, bez skrola
-    i bez rezanja. Ukloniti/uskladiti `justify-content:center`. Najjednostavnije i najčitljivije; troši nešto više visine.
-  - **B:** zadržati skrol ali: maknuti `justify-content:center` (→ `flex-start`), dodati tanak scrollbar ILI
-    rubni gradijent-fade ILI strelice lijevo/desno.
-  - **C:** zamijeniti čipove `<select>` padajućim izbornikom (kao Quiz kategorija) — kompaktno, skalira na bilo koji broj.
-  - **D:** hibrid — `wrap` na desktopu, skrol na mobitelu.
-- **Napomena:** provjeriti i `.learn-filter` u responsive dijelovima (04/06) da se popravak ne pregazi
-  (responsive se učitava ZADNJI — vidi lekciju iz BUG-005). Cache-bump `learn.css`/`progress.js` pri popravku.
-- **Lekcija (preliminarno):** `justify-content:center` + `overflow:auto` = poznata zamka (reže/zaključava rubove);
-  za listu nepoznate duljine radije `flex-wrap` ili dropdown nego horizontalni scroll bez afordancije.
+*(nema)*
 
 ---
 
@@ -134,6 +106,27 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   "Segmentation and Positioning", "Exam Practice (All Topics)"), `pageOverflow=false`; suite **36/36**.
 - Lekcija: heuristike za skraćivanje teksta su krhke kad se podaci prošire — kad UI već ima
   skrolabilni kontejner, radije pokaži puni tekst nego "pametno" rezanje koje stvara dvosmislenost.
+
+### BUG-007 — Learn filter-bar: čipovi rezani na rubovima + skriveni scroll (svi predmeti)
+- Status: ✅ riješen · Težina: srednji (UX) · Prijavljeno+riješeno: 2026-06-06
+- Opis: nakon BUG-006 (puni nazivi), bar je rezao čipove na rubovima — lijevo pola čipa, desno
+  zadnji odsječen („Promotic…") — i nije bilo naznake da se skrola (skriven scrollbar). Na svim
+  predmetima, najgore kod finala (Marketing 13 / BI 11 kategorija).
+- Uzrok: (1) **`justify-content: center`** na skrolabilnom `.learn-filter` (`learn.css`, `@media ≥1024px`)
+  gurao prve čipove preko lijevog ruba (lijevi overflow nedohvatljiv skrolom) → trajni lijevi rez.
+  (2) Skriven scrollbar (`scrollbar-width:none` + `::-webkit-scrollbar{display:none}`) → nema afordancije skrola.
+- Rješenje (Opcija B — izbor korisnika): u `css/learn.css` — tanak **vidljiv scrollbar** (`scrollbar-width:thin`
+  + stilizirani webkit thumb, 6px), **rubni gradijent-fade** preko `mask-image` (klase `.can-scroll-left/right`),
+  i `.learn-filter.is-scrollable { justify-content:flex-start }` koji gazi `center` SAMO kad bar prelazi širinu
+  (kratke liste i dalje centrirane). U `js/progress.js` dodan `updateLearnFilterScrollHints()` (postavlja
+  is-scrollable/can-scroll-* na temelju `scrollLeft`/`scrollWidth`), pozvan iz `updateLearnFilters` + vezan na
+  `scroll` i **`ResizeObserver`** (hvata i prijelaz skriveno→vidljivo). Bump `learn.css`+`progress.js` `?v=20260610`
+  (+ `styles.css` token).
+- Verifikacija: ciljani temp-test (4 iPhone profila + desktop 1280px): na startu `can-scroll-right`, na kraju
+  `can-scroll-left`, **prvi čip nije odrezan** (`firstLeftClip=0`), desktop `justify=flex-start`, `pageOverflow=false`;
+  puni suite **36/36**.
+- Lekcija: `justify-content:center` + `overflow:auto` reže/zaključava rubove — centriraj samo kad NEMA overflowa
+  (`is-scrollable` klasa). `ResizeObserver` na skrolabilnom elementu je pouzdan okidač za remjeru kad postane vidljiv.
 
 ---
 

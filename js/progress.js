@@ -50,7 +50,7 @@ function updateLearnFilters() {
         btn.addEventListener('click', () => {
             container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            
+
             const filter = btn.dataset.filter;
             document.querySelectorAll('.learn-card').forEach(card => {
                 if (filter === 'all' || card.dataset.category === filter) {
@@ -61,6 +61,32 @@ function updateLearnFilters() {
             });
         });
     });
+
+    // Scroll afordancije (BUG-007): vidljiv scrollbar + rubni fade; poravnanje lijevo kad bar prelazi.
+    updateLearnFilterScrollHints();
+    if (!container.dataset.scrollHintsBound) {
+        container.dataset.scrollHintsBound = '1';
+        container.addEventListener('scroll', updateLearnFilterScrollHints, { passive: true });
+        // ResizeObserver hvata i prijelaz iz skrivenog (display:none) u vidljivo (mjere postanu stvarne).
+        if (typeof ResizeObserver !== 'undefined') {
+            new ResizeObserver(updateLearnFilterScrollHints).observe(container);
+        } else {
+            window.addEventListener('resize', updateLearnFilterScrollHints, { passive: true });
+        }
+    }
+}
+
+// Naznake skrola za learn filter-bar (BUG-007): koja strana ima još čipova izvan vidljivog.
+// Postavlja klase is-scrollable / can-scroll-left / can-scroll-right (CSS: scrollbar + rubni fade).
+function updateLearnFilterScrollHints() {
+    const container = document.querySelector('.learn-filter');
+    if (!container) return;
+    const max = container.scrollWidth - container.clientWidth;
+    const scrollable = max > 1;
+    const x = container.scrollLeft;
+    container.classList.toggle('is-scrollable', scrollable);
+    container.classList.toggle('can-scroll-left', scrollable && x > 1);
+    container.classList.toggle('can-scroll-right', scrollable && x < max - 1);
 }
 
 // ========== QUIZ CATEGORIES ==========

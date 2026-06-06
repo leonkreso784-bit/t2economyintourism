@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-06 — Sesija 24: Fix BUG-007 (learn filter-bar — rezanje na rubovima + skriven scroll)
+**Kontekst:** Nakon BUG-006 (puni nazivi), korisnik javio da bar i dalje reže čipove na rubovima (lijevo pola,
+desno „Promotic…") i nema naznake skrola. Odluka (AskUserQuestion): **Opcija B** — zadržati skrol + dodati naznake.
+
+**Uzrok:** (1) `justify-content:center` na skrolabilnom `.learn-filter` (`learn.css`, `@media ≥1024px`) gurao prve
+čipove preko lijevog ruba (nedohvatljivo skrolom) → trajni lijevi rez. (2) Skriven scrollbar → nema afordancije.
+
+**Napravljeno**
+- `css/learn.css`: tanak **vidljiv scrollbar** (`scrollbar-width:thin` + webkit thumb 6px); **rubni fade**
+  preko `mask-image` (klase `.can-scroll-left/right`); `.learn-filter.is-scrollable { justify-content:flex-start }`
+  — gazi `center` SAMO kad bar prelazi širinu (kratke liste i dalje centrirane).
+- `js/progress.js`: `updateLearnFilterScrollHints()` (postavlja is-scrollable/can-scroll-* iz `scrollLeft`/`scrollWidth`),
+  pozvan iz `updateLearnFilters` + vezan na `scroll` i **`ResizeObserver`** (hvata i prijelaz skriveno→vidljivo).
+- Cache: bump `learn.css` (@import u styles.css) + `styles.css?v=` + `progress.js?v=` → **20260610**.
+
+**Testirano:** verify 0; ciljani temp-test (obrisan; 4 iPhone profila + **desktop 1280px**): start `can-scroll-right`,
+kraj `can-scroll-left`, **prvi čip nije odrezan** (`firstLeftClip=0`), desktop `justify=flex-start`, `pageOverflow=false`;
+puni suite **36/36**.
+**Stanje:** BUG-007 ✅ riješen, lokalni commit (NIJE deployano) — ide u isti deploy paket.
+
+---
+
 ## 2026-06-06 — Sesija 23: Fix BUG-006 (learn filter-bar rezao nazive kategorija)
 **Kontekst:** Korisnik prijavio (screenshot, Marketing → Final Exam) da su čipovi u gornjem learn-baru
 nečitljivi: „The" (= The Product), „Price" (= The Price), „Segmentati", „Distributi".

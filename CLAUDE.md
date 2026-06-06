@@ -71,11 +71,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Marketing KOMPLETAN ✅ (lokalno):** K1 (T1–T8, `data-marketing.js`) + K2 (T9–T13, `data-marketing-m2.js`)
   + Finalni (`data-marketing-final.js` = `Object.assign(K1,K2,{examPractice})`, hibrid). Catalog: 3 lekcije
   (`first-midterm`/`second-midterm`/`final`). Final = 13 kat. / 113 fc / 66 quiz / 56 fill.
-- **Fix BUG-006 ✅** (learn filter-bar rezao imena → puni nazivi, `js/progress.js`, S23). **BUG-007 🔴 OTVOREN**
-  (ODGOĐENO, korisnikov nalog): learn filter-bar reže čipove na rubovima + skriven scroll (svi predmeti;
-  vjerojatno `justify-content:center` na skrolabilnom baru `learn.css:607` @≥1024px). Detalji+opcije: `docs/BUGS.md` BUG-007.
-- **▶ SLJEDEĆE — DEPLOY paketa** (uz izričitu potvrdu korisnika): Marketing + responsive split + KaTeX docovi +
-  fix BUG-006. Pa **BUG-007** (filter-bar UX). Pa dalje sadržaj (1.+2. god, najbrži tekstualni: Management/Macro/SIT) → Blok B.
+- **Fix BUG-006 ✅** (learn filter-bar rezao imena → puni nazivi, S23) + **Fix BUG-007 ✅** (filter-bar rezao
+  čipove na rubovima + skriven scroll → vidljiv tanak scrollbar + rubni fade + `is-scrollable` gazi `center`;
+  `learn.css`/`progress.js`, ResizeObserver, S24). Oba globalna (svi predmeti). Detalji: `docs/BUGS.md`.
+- **▶ SLJEDEĆE — DEPLOY paketa** (uz izričitu potvrdu korisnika): Marketing (K1+K2+Final) + responsive split +
+  KaTeX docovi + fix BUG-006 + fix BUG-007. Pa dalje sadržaj (1.+2. god, najbrži tekstualni: Management/Macro/SIT) → Blok B.
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

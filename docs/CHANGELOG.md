@@ -106,6 +106,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Fixed
+- **Learn filter-bar rezao čipove na rubovima + skriven scroll (BUG-007):** maknut uzrok lijevog reza
+  (`justify-content:center` na skrolabilnom `.learn-filter` @≥1024px — sad `flex-start` preko klase
+  `.is-scrollable`, koja se aktivira samo kad bar prelazi širinu). Dodan **vidljiv tanak scrollbar** +
+  **rubni gradijent-fade** (`mask-image`, klase `.can-scroll-left/right`) kao naznaka skrola. JS:
+  `updateLearnFilterScrollHints()` (`js/progress.js`) vezan na `scroll` + `ResizeObserver`. Globalno
+  (svi predmeti). Bump `learn.css`/`progress.js`/`styles.css` `?v=20260610`. Suite 36/36 + desktop 1280px provjera.
 - **Learn filter-bar rezao nazive kategorija (BUG-006):** čipovi u learn-baru pokazivali skraćene/
   dvosmislene labele (npr. „The Product" → „The", „Segmentation and Positioning" → „Segmentati").
   Uzrok: `updateLearnFilters()` (`js/progress.js`) skraćivao naziv na prvu riječ / 10 znakova.
