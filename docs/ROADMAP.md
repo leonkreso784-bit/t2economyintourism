@@ -2,7 +2,7 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-05)
+## 📍 STANJE (2026-06-06)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -16,9 +16,12 @@ Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
 **Kvantitativni predmeti (Math/Micro/Macro/Statistika):** poseban tretman — **KaTeX** rendering formula +
 „worked problems" konvencija + grafovi-kao-slike (**ADR-009**). KaTeX = zasebna cigla PRIJE prvog takvog
 predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](CONTENT_INTAKE.md).
-**Sadržaj:** 2. god = 8 predmeta ✅ (4 fale 2. kolokvij: econ-hosp, marketing, geo, food) · 1. god =
-Business Informatics ✅, ostalih 10 ⬜ (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
-**Deploy:** sve LIVE na `origin/main` → Vercel (M0.5 + landing + lazy-loading A4 + **fix BUG-005 landing hero offset, 2026-06-05**).
+**Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1 T1–T8 + K2 T9–T13 + Finalni hibrid, 13 kat.) ·
+preostala 3 fale 2. kolokvij: econ-hosp, geo, food · 1. god = Business Informatics ✅, ostalih 10 ⬜
+(Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
+**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-06 deployano (`822d788`):** cijeli Marketing +
+responsive split + KaTeX docovi + fixevi BUG-005/006/007. **Lokalno (1 commit, nije deployano):** fix BUG-008
+(bazni `.toast`/`.footer` CSS).
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.

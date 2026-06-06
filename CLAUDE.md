@@ -64,18 +64,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Vizija:** `docs/VISION.md` (full-stack: AI tutor, UGC, dijeljenje, natjecanje, „donesi ključ" + gating-odluke).
   Temelj svega = **Backend (Blok B: Supabase+Auth+/api)**; Tier 2 (Privacy/FAQ/Contact) = brzi quick-win za Google Ads kad zatreba.
 - **Sadržaj:** 8 predmeta 2. godine + **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, pilot uspješan).
-- **LIVE (deployano 2026-06-05):** sve gore + fix BUG-005 (landing hero offset).
-- **Lokalni commitovi, NIJE deployano:** `responsive.css` razbijen na `css/responsive/01..06-*.css`
-  (refaktor, ponašanje 1:1, **suite 36/36**); KaTeX-plan docovi (ADR-009); Marketing intake;
-  **cijeli Marketing predmet** (K1 T7+T8 S20, K2 T9–T13 S21, Finalni S22). Spremno za deploy paketa.
-- **Marketing KOMPLETAN ✅ (lokalno):** K1 (T1–T8, `data-marketing.js`) + K2 (T9–T13, `data-marketing-m2.js`)
+- **LIVE (deployano 2026-06-06, commit `822d788`):** sve gore + **cijeli Marketing predmet** + responsive split
+  (`css/responsive/01..06`) + KaTeX-plan docovi (ADR-009) + **fixevi BUG-005, BUG-006, BUG-007**.
+- **Marketing KOMPLETAN ✅ LIVE:** K1 (T1–T8, `data-marketing.js`) + K2 (T9–T13, `data-marketing-m2.js`)
   + Finalni (`data-marketing-final.js` = `Object.assign(K1,K2,{examPractice})`, hibrid). Catalog: 3 lekcije
   (`first-midterm`/`second-midterm`/`final`). Final = 13 kat. / 113 fc / 66 quiz / 56 fill.
-- **Fix BUG-006 ✅** (learn filter-bar rezao imena → puni nazivi, S23) + **Fix BUG-007 ✅** (filter-bar rezao
-  čipove na rubovima + skriven scroll → vidljiv tanak scrollbar + rubni fade + `is-scrollable` gazi `center`;
-  `learn.css`/`progress.js`, ResizeObserver, S24). Oba globalna (svi predmeti). Detalji: `docs/BUGS.md`.
-- **▶ SLJEDEĆE — DEPLOY paketa** (uz izričitu potvrdu korisnika): Marketing (K1+K2+Final) + responsive split +
-  KaTeX docovi + fix BUG-006 + fix BUG-007. Pa dalje sadržaj (1.+2. god, najbrži tekstualni: Management/Macro/SIT) → Blok B.
+- **Fixevi LIVE:** BUG-006 (learn filter-bar puni nazivi); BUG-007 (filter-bar vidljiv scrollbar + rubni fade,
+  `is-scrollable` gazi `center`; `learn.css`/`progress.js`, ResizeObserver). Globalni (svi predmeti).
+- **Lokalni commit, NIJE deployano (1, `9206424`):** **fix BUG-008** (S25) — bazni `.toast`/`.footer` CSS je
+  nedostajao → goli blokovi lijevo-dolje; dodan u `css/pages.css`, globalni footer skriven na Landing/Browse
+  preko `:has()`, toast popravljen. Suite 36/36. (Bump `pages.css`/`styles.css` `?v=20260611`.)
+- **▶ SLJEDEĆE:** (1) po želji deploy BUG-008 (uz izričitu potvrdu); (2) dalje **sadržaj** (1.+2. god, najbrži
+  tekstualni: Management/Macroeconomics/SIT) → kasnije **Blok B** (Supabase+Auth+/api).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
