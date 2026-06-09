@@ -1632,7 +1632,7 @@ const entrepreneurshipData = {
         
         fillBlanks: [
             {
-                sentence: "Tourism entrepreneurship requires ______-term investment.",
+                sentence: "Tourism entrepreneurship requires _______-term investment.",
                 answer: "long",
                 hint: "Not short..."
             },

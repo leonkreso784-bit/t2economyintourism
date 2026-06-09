@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Potpuna revizija cijelog rada + fix BUG-009 (Entrepreneurship fill-blank)
+**Kontekst:** korisnik: „pregledaj jako detaljno cijeli rad". Prošla cijela provjera zdravlja projekta:
+git (sinkroniziran, čisto, sve LIVE `71e53b5`), `verify` **0/0**, cache tokeni dosljedni (20260618),
+svi izvorni materijali gitignorani, docs/memorija konzistentni, **0 aktivnih bugova**, Playwright **36/36**.
+
+**Potpuni content-audit (svih 9 predmeta):** strukturni validator po lekciji — 0 loših quiz-indeksa,
+0 kategorija bez Learn, 0 loših fill **osim** jednog. Accounting „greška" u auditu = lažno pozitivna
+(CommonJS module-scope vs. browserov dijeljeni `<script>` scope; preko `vm` sa zajedničkim contextom
+zdrav: 7 kat. / 124 fc / 107 quiz / 70 fill).
+
+**BUG-009 (nađen + riješen):** `data-entrepreneurship.js` (kat. `tourism`, fill #0) imao `______` (6) umjesto
+`_______` (7) → `js/fill-blanks.js` traži točno 7-znakovni token, pa se praznina nije renderirala. Ispravljeno
+na 7. Re-audit: Entrepreneurship 53 fill / 0 loših. `CONTENT_VERSION` 20260618→20260619 + bump
+`content-loader.js?v=20260619`. Verify 0; Playwright 36/36. Lokalni commit; **NIJE deployano** (čeka potvrdu).
+
+**▶ Sljedeće:** po potvrdi — deploy fixa; zatim **Food & Nutrition 2. kolokvij** (zadnje na 2. godini).
+
+---
+
 ## 2026-06-10 — DEPLOY ✅ (`a8e7371`) — cijeli Tourism Geography LIVE
 Korisnik autorizirao: „pushaj sva 4 commita". `git push origin main` (`33b9f72..a8e7371`) → produkcija (Vercel).
 LIVE: **cijeli Tourism Geography** — 1. kolokvij popravak (`09eb48d`, S30) + 2. kolokvij „svjetska geografija"

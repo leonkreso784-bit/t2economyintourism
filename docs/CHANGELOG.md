@@ -174,6 +174,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   catalog lookup i lazy loading).
 - `index.html` — učitava `data/catalog.js` prije `js/config.js`.
 ### Fixed
+- **Entrepreneurship fill-blank se nije renderirao — 6 umjesto 7 podvlaka (BUG-009):** u `data-entrepreneurship.js`
+  (kat. `tourism`, fill #0) praznina je imala `______` (6) umjesto `_______` (7). `js/fill-blanks.js` zamjenjuje
+  **točno** 7-znakovni token → praznina se nije prikazivala (korisnik vidio `______-term`, bez polja za upis).
+  Ispravljeno na 7 podvlaka. Nađeno tijekom potpune content-revizije (audit svih predmeta: 53 fill u Entrepreneurshipu,
+  sad 0 loših; cijeli projekt 0 loših quiz-indeksa / 0 loših fill / 0 kategorija bez Learn). `CONTENT_VERSION`
+  20260618→20260619 + bump `content-loader.js?v=20260619`. Verify 0; Playwright 36/36.
 - **Globalni footer + toast bez baznog CSS-a → goli blokovi lijevo-dolje (BUG-008):** bazni `.toast`/`.footer`
   stilovi nedostajali (ostali samo responsive override-i) → toast se stalno prikazivao kao „Message", a globalni
   copyright-footer kao goli blok na dnu svake stranice (uz duplikat na Landingu). Dodan bazni `.toast` (fiksan,

@@ -17,6 +17,20 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-009 — Entrepreneurship fill-blank se ne renderira (6 umjesto 7 podvlaka)
+- Status: ✅ riješen · Težina: nizak (kozmetički, 1 predmet) · Datum: 2026-06-10
+- Opis: U `data-entrepreneurship.js` (kategorija `tourism`, fill-blank #0) rečenica je glasila
+  „Tourism entrepreneurship requires `______`-term investment." — praznina je imala **6** podvlaka.
+- Uzrok: `js/fill-blanks.js` (renderQuestion) radi `q.sentence.replace('_______', …)` — traži **točno
+  7-znakovni** token `_______`. Niz od 6 podvlaka se ne podudara → praznina se ne zamijeni span-om.
+- Posljedica: korisnik vidi doslovno `______-term` bez polja za upis; pitanje se ne može riješiti.
+- Dijagnoza: potpuna content-revizija (audit svih predmeta) — strukturni validator prijavio `badFill:1`
+  baš u Entrepreneurshipu; lokaliziran na taj jedan blank.
+- Rješenje: 6 → 7 podvlaka (`_______-term`). Re-audit: Entrepreneurship 53 fill / 0 loših; cijeli projekt
+  0 loših fill. `CONTENT_VERSION` 20260618→20260619 + bump `content-loader.js?v=20260619`. Verify 0, Playwright 36/36.
+- Lekcija: fill-blank token je **fiksnih 7 podvlaka** — bilo koji drugi broj tiho razbije render.
+  Strukturni audit (`includes('_______')`) treba pokretati pri svakoj content-izmjeni; sad je dio rutinske revizije.
+
 ### BUG-001 — Slomljen CSS: nedovršeno pravilo `.quiz-section, .fill-section,`
 - Status: ✅ riješen · Težina: visok · Datum: 2026-06-01
 - Opis: U `responsive.css` (landscape blok) stajao je selektor `.quiz-section,
