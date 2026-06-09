@@ -5,6 +5,35 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — Sesija 28: Economics in Hospitality 2. kolokvij (Unit 6–10) — NOVA lekcija
+**Kontekst:** Nakon 1. kolokvija (S27), korisnik: „kreni s 2. kolokvijem, prezentacije su 6–10". Iz silabusa:
+2. kolokvij = **Unit 6–10 = teme T8–T12**. Svaka jedinica ima glavnu prezentaciju + „add" dodatak (oba pročitana).
+
+**Mapiranje (potvrđeno iz naslova slajdova):** U6 The business result · U7 Success & economic indicators (KPI) ·
+U8 Price policy · U9 Principles of sales · U10 Profitability of investments.
+
+**Napravljeno**
+- **Novi sibling fajl `data-econ-hospitality-m2.js`** (`window.economicsHospitalityM2Data`, obrazac kao
+  `data-marketing-m2.js`) — **5 kategorija, 75 flashcards · 50 quiz · 40 fill** + bogat learn. Ključno gradivo:
+  U6 financijska izvješća, **USALI** (1926, NY), bilanca (Assets=Liabilities+Equity), P&L, načela računovodstva,
+  vrednovanje poduzeća (Vk=Ik−Ok, Vl=Il−Ol, Vr=Ir−Or; statičke/dinamičke metode); U7 produktivnost/ekonomičnost
+  (E>1/=1/<1)/rentabilnost + **hotelski KPI-jevi s formulama** (ARR, ADR=RoomRev/SoldRooms, RevPAR=RoomRev/AvailRooms,
+  TRevPAR, GOP, GOPPAR, NOP, EBITDA — iz „add" prezentacije); U8 cjenovne metode (troškovne/tržišne/konkurentske),
+  kriteriji diferencijacije, kalkulacija (cijena koštanja→prodajna+PDV), marža, divizijska/dodatna metoda; U9 prodaja,
+  marketinški splet 4P+3P (Booms&Bitner 1981), direktni/indirektni kanali, rezervacije, ugovori (alotman/zakup/
+  rezervacijski), provizije (domaće 3% / strane 11%, ~50% kapaciteta agencijama), internet (Booking.com); U10
+  investicije (bruto/neto/nove; zamjenske/racionalizacijske/proširenja), struktura, odluka, faze projekta, analize
+  (tržište/lokacija „location, location, location"–Hilton/ekon.-fin.), solventnost (NCF≥0), metode ocjene
+  (anuitetna=najčešća, NPV, ROI; linearno programiranje–Dantzig).
+- **Catalog:** `scripts` += `data-econ-hospitality-m2.js`, `resolve.second-midterm = economicsHospitalityM2Data`,
+  coming-soon uklonjen, opis ažuriran. Cache: `CONTENT_VERSION` 20260613→**20260614** + bump `catalog.js`/`content-loader.js` `?v=20260614`.
+
+**Testirano:** strukturni node-check (5 kat., 75/50/40, 0 loših `correct`); `verify` 0 grešaka (second-midterm →
+economicsHospitalityM2Data); **ciljani temp-test** (4 profila: quizOpts=6, 0 problema/0 grešaka, obrisan); puni Playwright.
+**Stanje:** Economics in Hospitality **KOMPLETAN** (1.+2. kolokvij). Lokalni commit (NIJE deployano).
+
+---
+
 ## 2026-06-09 — Sesija 27: Economics in Hospitality 1. kolokvij — pregled + veliki rebuild iz izvora
 **Kontekst:** Korisnik dodao prave PDF-ove u `2. godina Hospitaliy Managament/Economics of hospitality`
 (intro + Unit 1–10; Unit 6–10 imaju „add"). Zadatak: napravi **samo 1. kolokvij**, pregledaj postojeći i prepravi.

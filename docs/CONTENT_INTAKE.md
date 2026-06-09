@@ -81,8 +81,13 @@ T2–T6 = Unit 1–5**, 2. kolokvij = Unit 6–10 (Unit 6–10 imaju i „add" v
 
 **1. kolokvij ✅ GOTOVO (Sesija 27).** Postojeći `data-econ-hospitality.js` (5 jedinica) imao **točnu strukturu** ali
 **pretanak sadržaj** (~15–25% slajdova; U3/U4/U5 = 48–55 slajdova). Rebuild iz izvora → **73 fc / 46 quiz / 36 fill** +
-bogat learn. Catalog opis 1. kolokvija ispravljen (bio pogrešno „seminarski"). **2. kolokvij = Unit 6–10 → SLJEDEĆE.**
-Napomena: postoji i zaseban folder `seminar Hospitality economics` (seminarski dio, drugačiji od predavanja).
+bogat learn. Catalog opis 1. kolokvija ispravljen (bio pogrešno „seminarski").
+
+**2. kolokvij ✅ GOTOVO (Sesija 28).** Unit 6–10 (teme T8–T12: business result, success & KPIs, price policy, sales,
+investment profitability) → novi `data-econ-hospitality-m2.js` (`economicsHospitalityM2Data`, 5 kat., **75 fc / 50 quiz /
+40 fill**). Pročitane i glavne i „add" prezentacije (KPI formule iz „add": ADR/RevPAR/TRevPAR/GOP/GOPPAR/NOP/EBITDA).
+→ **Economics in Hospitality KOMPLETAN.** Napomena: postoji i zaseban folder `seminar Hospitality economics`
+(seminarski dio, drugačiji od predavanja) — nije obrađen.
 
 ## Struktura mapa (gitignored)
 ```

@@ -136,11 +136,11 @@ const SOKRAT_CATALOG = {
       features: { blindMap: false },
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Units 1-5: hospitality basics, business economics, the hospitality business, assets of reproduction, and cost theory' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Coming soon' }
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Units 6-10: business result, success & economic indicators (KPIs), price policy, sales, and investment profitability' }
       ],
       content: {
-        scripts: ['data-econ-hospitality.js'],
-        resolve: { 'first-midterm': 'economicsHospitalityData' }  // second-midterm = prazno
+        scripts: ['data-econ-hospitality.js', 'data-econ-hospitality-m2.js'],
+        resolve: { 'first-midterm': 'economicsHospitalityData', 'second-midterm': 'economicsHospitalityM2Data' }
       }
     },
     {
