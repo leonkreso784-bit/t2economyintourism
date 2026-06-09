@@ -5,6 +5,14 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — DEPLOY ✅ (`24f2b6f`)
+Korisnik izričito autorizirao deploy. `git push origin main` (`822d788..24f2b6f`) → produkcija (Vercel).
+LIVE: cijeli **Economics in Hospitality** (K1 rebuild + K2 + finalni, S27–S29), **fix BUG-008** (S25),
+**Entrepreneurship→sem 1** (S26) + sva doc osvježenja. `origin/main` sinkroniziran, radno stablo čisto,
+ništa lokalno nedeployano. (Pre-flight: `verify` 0, Playwright 36/36.)
+
+---
+
 ## 2026-06-09 — Sesija 29: Economics in Hospitality FINALNI ispit — hibrid (kompletira predmet)
 **Kontekst:** Nakon 1. i 2. kolokvija, korisnik: „napravi završni ispit, polako s analizom i todo listom".
 Silabus (intro) potvrđuje **MODUL 3: FINAL EXAM (written) = 30%**, pokriva sve teme T2–T12 (Unit 1–10).

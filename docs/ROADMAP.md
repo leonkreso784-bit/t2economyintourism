@@ -2,7 +2,7 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-06)
+## 📍 STANJE (2026-06-09)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -16,12 +16,13 @@ Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
 **Kvantitativni predmeti (Math/Micro/Macro/Statistika):** poseban tretman — **KaTeX** rendering formula +
 „worked problems" konvencija + grafovi-kao-slike (**ADR-009**). KaTeX = zasebna cigla PRIJE prvog takvog
 predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](CONTENT_INTAKE.md).
-**Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1 T1–T8 + K2 T9–T13 + Finalni hibrid, 13 kat.) ·
-preostala 3 fale 2. kolokvij: econ-hosp, geo, food · 1. god = Business Informatics ✅, ostalih 10 ⬜
+**Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1+K2+Finalni, 13 kat.) · **Economics in Hospitality
+KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) · preostala 2 fale 2. kolokvij:
+**geography** (+ tekst za popravak), **food-nutrition** · 1. god = Business Informatics ✅, ostalih 10 ⬜
 (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
-**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-06 deployano (`822d788`):** cijeli Marketing +
-responsive split + KaTeX docovi + fixevi BUG-005/006/007. **Lokalno (1 commit, nije deployano):** fix BUG-008
-(bazni `.toast`/`.footer` CSS).
+**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-09 deployano (`24f2b6f`):** cijeli Economics in Hospitality
+(K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (Ranije `822d788`, 2026-06-06: Marketing + responsive split +
+fixevi BUG-005/006/007.) Radno stablo čisto, ništa lokalno nedeployano.
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
