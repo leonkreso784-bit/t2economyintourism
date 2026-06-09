@@ -110,7 +110,13 @@ sad = 6 kat. / 58 fc / 72 quiz / 43 fill. Verify 0, Playwright 36/36, `CONTENT_V
 `data-geography-m2.js` (`geographyM2Data`) sa **6 kategorija po kontinentu** (globalIntro/europe/asia/africa/
 australiaOceania/americas; 56 fc / 45 quiz / 33 fill). Catalog `second-midterm` → `geographyM2Data`, coming-soon
 uklonjen. Slijepa karta ostaje vezana uz 1. kolokvij (m2 nema blind-map). Verify 0, Playwright 36/36, `CONTENT_VERSION`
-20260617. → **Tourism Geography 100% KOMPLETAN (1. + 2. kolokvij).** (2. god ostaje samo Food & Nutrition 2. kolokvij.)
+20260617.
+
+**Finalni ✅ GOTOVO (Sesija 32).** Hibrid `data-geography-final.js` = `Object.assign({}, geographyData, geographyM2Data,
+{ examPractice })` → **13 kat. / 128 fc / 127 quiz / 84 fill** (12 kategorija oba kolokvija + cross-topic „Exam Practice
+(Croatia + World)"). Silabus: finalni = 30 bodova, ista struktura kao kolokviji. Catalog: lekcija `final`, script zadnji,
+`resolve.final`. `CONTENT_VERSION` 20260618. → **Tourism Geography 100% KOMPLETAN (K1 + K2 + finalni).** (2. god ostaje
+samo Food & Nutrition 2. kolokvij.)
 
 ## Struktura mapa (gitignored)
 ```

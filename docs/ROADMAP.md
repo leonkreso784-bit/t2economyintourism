@@ -18,14 +18,14 @@ Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
 predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](CONTENT_INTAKE.md).
 **Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1+K2+Finalni, 13 kat.) · **Economics in Hospitality
 KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) · **Tourism Geography KOMPLETAN**
-(S30 1. kolokvij popravljen/obogaćen iz izvora: + `introToGeography`, croatiaFeatures, parks/UNESCO, karta netaknuta;
-S31 2. kolokvij „svjetska geografija" `data-geography-m2.js` 6 kat./56 fc po kontinentu) · preostaje 1: **food-nutrition**
-2. kolokvij · 1. god = Business Informatics ✅, ostalih 10 ⬜
+(S30 1. kolokvij popravljen iz izvora: + `introToGeography`, croatiaFeatures, parks/UNESCO, karta netaknuta;
+S31 2. kolokvij „svjetska geografija" 6 kat. po kontinentu; **S32 Finalni hibrid** `data-geography-final.js`
+13 kat. / 128 fc) · preostaje 1: **food-nutrition** 2. kolokvij · 1. god = Business Informatics ✅, ostalih 10 ⬜
 (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
 **Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-09 deployano (`24f2b6f`):** cijeli Economics in Hospitality
 (K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (Ranije `822d788`, 2026-06-06: Marketing + responsive split +
-fixevi BUG-005/006/007.) **Lokalno (NIJE deployano):** Tourism Geography 1. kolokvij popravak (`09eb48d`) + 2. kolokvij
-(`8efeaf3`) — **2 commita ispred `origin/main`**, čekaju deploy (planirano zajedno s geografskim finalnim).
+fixevi BUG-005/006/007.) **Lokalno (NIJE deployano) — cijeli Tourism Geography:** 1. kolokvij popravak (`09eb48d`) +
+2. kolokvij (`8efeaf3`) + doc fix (`b858440`) + finalni (S32) — **ispred `origin/main`**, čekaju deploy (sve odjednom).
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.

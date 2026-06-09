@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Sesija 32: Tourism Geography FINALNI ispit (hibrid) — predmet 100% gotov
+**Kontekst:** Nakon 1. i 2. kolokvija (S30/S31), korisnik: „napravimo pripremu za završni iz geografije". Silabus
+(prez. 0): finalni = **30 bodova, ista struktura kao kolokviji** (10 pitanja: 5 zatvorenih + 5 otvorenih), pokriva
+SVE (Hrvatska + svijet); 35 bodova je uvjet za izlazak na završni.
+
+**Struktura = HIBRID** (isti obrazac kao Marketing/Economics/BI finalni): novi `data-geography-final.js` →
+`geographyFinalData = Object.assign({}, geographyData, geographyM2Data, { examPractice })`. Spaja svih **12 kategorija**
+oba kolokvija (nema kolizija ključeva: K1 examFramework/introToGeography/blindMapDrill/croatiaFeatures/
+protectedAndTouristRegions/cityImageRecognition + K2 globalIntro/europe/asia/africa/australiaOceania/americas) i dodaje
+kuriranu **`examPractice`** („Exam Practice (Croatia + World)", 14 fc / 10 quiz / 8 fill + „Final Exam Roadmap" learn
+s must-know tablicom po kontinentu). Učitava se **ZADNJI** (ovisi o `window.geographyData` + `window.geographyM2Data`).
+
+**Catalog:** nova lekcija `final`, `scripts` += `data-geography-final.js` (zadnji), `resolve.final = geographyFinalData`.
+
+**Provjere:** `CONTENT_VERSION` 20260617→20260618 + bump `catalog.js`/`content-loader.js` `?v=20260618`. **Verify 0**
+(geography: 3 lekcije sve zelene), strukturni validator finalnog merge-a 0 (**13 kat. / 128 fc / 127 quiz / 84 fill**;
+0 loših quiz-indeksa, 0 fill bez praznine), **Playwright 36/36** + ciljani final render-test (4 profila: merged=true =
+croatiaFeatures+americas+examPractice aktivni, 0 problema/overflowa, obrisan). Lokalni commit; **NIJE deployano**.
+→ **Tourism Geography 100% KOMPLETAN (K1 + K2 + finalni).**
+
+**▶ Sljedeće (dogovoreno):** **deploy svega** (geo K1+K2+finalni + doc fix), pa **priprema za compact**. Zatim Food & Nutrition 2. kolokvij.
+
+---
+
 ## 2026-06-09 — Sesija 31: Tourism Geography 2. kolokvij („svjetska geografija") — predmet kompletiran
 **Kontekst:** Nakon popravka 1. kolokvija (S30), korisnik: „idemo prvo na drugi kolokvij". Prezentacije 7–12
 (oznaka `_2K_`) = **„Tourism Geography of the World"** — svjetska turistička geografija po kontinentima.

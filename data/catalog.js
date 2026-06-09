@@ -182,11 +182,13 @@ const SOKRAT_CATALOG = {
       features: { blindMap: true },               // posebna "Map" sekcija
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Introduction to Geography + Tourism Geography of Croatia (regions, parks, UNESCO) + blind map' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Tourism Geography of the World: Europe, Asia, Africa, Australia & Oceania, and the Americas' }
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Tourism Geography of the World: Europe, Asia, Africa, Australia & Oceania, and the Americas' },
+        { id: 'final', name: 'Final Exam', description: 'All topics — Croatia + the World (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-geography.js', 'data-geography-m2.js'],
-        resolve: { 'first-midterm': 'geographyData', 'second-midterm': 'geographyM2Data' }
+        // data-geography-final.js MUST load last (Object.assign of the two midterm window objects)
+        scripts: ['data-geography.js', 'data-geography-m2.js', 'data-geography-final.js'],
+        resolve: { 'first-midterm': 'geographyData', 'second-midterm': 'geographyM2Data', 'final': 'geographyFinalData' }
       }
     },
     {

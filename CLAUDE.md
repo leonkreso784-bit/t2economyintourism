@@ -84,7 +84,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `croatiaFeatures` (prez. 2+3), dopunjen `protectedAndTouristRegions` (prez. 4–6); **slijepa karta + examFramework
   NETAKNUTI**; 6 kat. / 58 fc). **2. kolokvij** „Tourism Geography of the World" = novi `data-geography-m2.js`
   (`geographyM2Data`, 6 kat. po kontinentu: globalIntro/europe/asia/africa/australiaOceania/americas; prez. 7–12;
-  56 fc / 45 quiz / 33 fill). Catalog: 2 lekcije + 2 scripta. Cache `20260617`. Verify 0, Playwright 36/36.
+  56 fc / 45 quiz / 33 fill). **Finalni (S32)** = `data-geography-final.js` (`Object.assign(K1,K2,{examPractice})`, hibrid;
+  učitava se ZADNJI; **13 kat. / 128 fc / 127 quiz / 84 fill**). Catalog: 3 lekcije + 3 scripta. Cache `20260618`.
+  Verify 0, strukturni validator 0, Playwright 36/36. **Lokalno NIJE deployano** (geo K1 `09eb48d` + K2 `8efeaf3` +
+  doc fix `b858440` + finalni — čekaju deploy svega odjednom).
 - **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god — preostalo: SAMO Food & Nutrition 2. kolokvij.**
   (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi smjerovi**
   (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).

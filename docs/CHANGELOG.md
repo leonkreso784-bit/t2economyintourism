@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Tourism Geography FINALNI ispit (Hrvatska + svijet) — hibrid:** novi `data-geography-final.js`
+  (`window.geographyFinalData = Object.assign({}, geographyData, geographyM2Data, { examPractice })`, uzor
+  Marketing/Economics/BI final; učitava se ZADNJI). Spaja svih 12 kategorija oba kolokvija (bez kolizija ključeva)
+  + dodaje kuriranu **`examPractice`** („Exam Practice (Croatia + World)", cross-topic: 14 fc · 10 quiz · 8 fill +
+  „Final Exam Roadmap" learn). Silabus (prez. 0): finalni = 30 bodova, ista struktura kao kolokviji (10 pitanja:
+  5 zatvorenih + 5 otvorenih), pokriva sve. Catalog: nova lekcija `final`, `scripts` += final (zadnji),
+  `resolve.final = geographyFinalData`. `CONTENT_VERSION` 20260617→20260618 + bump `catalog.js`/`content-loader.js`
+  `?v=20260618`. Ukupno final = **13 kat. / 128 fc / 127 quiz / 84 fill**. Verify 0; strukturni validator 0
+  (0 loših quiz-indeksa); Playwright 36/36 + ciljani final render-test (4 profila, merged=true:
+  croatiaFeatures+americas+examPractice aktivni, 0 problema/overflowa). → **Tourism Geography KOMPLETAN (K1+K2+finalni).**
 - **Tourism Geography 2. kolokvij („Tourism Geography of the World") — `second-midterm` popunjen:** novi sibling
   fajl `data-geography-m2.js` (`window.geographyM2Data`, obrazac kao `data-*-m2.js`) sa **6 kategorija po kontinentu** —
   Global Tourism & World Regions (uvod/UNWTO), Europe, Asia, Africa, Australia & Oceania, The Americas
