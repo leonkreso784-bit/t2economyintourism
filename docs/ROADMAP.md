@@ -2,7 +2,7 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-09)
+## 📍 STANJE (2026-06-10)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -22,10 +22,10 @@ KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) 
 S31 2. kolokvij „svjetska geografija" 6 kat. po kontinentu; **S32 Finalni hibrid** `data-geography-final.js`
 13 kat. / 128 fc) · preostaje 1: **food-nutrition** 2. kolokvij · 1. god = Business Informatics ✅, ostalih 10 ⬜
 (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
-**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-09 deployano (`24f2b6f`):** cijeli Economics in Hospitality
-(K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (Ranije `822d788`, 2026-06-06: Marketing + responsive split +
-fixevi BUG-005/006/007.) **Lokalno (NIJE deployano) — cijeli Tourism Geography:** 1. kolokvij popravak (`09eb48d`) +
-2. kolokvij (`8efeaf3`) + doc fix (`b858440`) + finalni (S32) — **ispred `origin/main`**, čekaju deploy (sve odjednom).
+**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-10 deployano (`a8e7371`):** **cijeli Tourism Geography**
+(K1 popravak + K2 svjetska geo. + finalni hibrid, S30–S32). **Ranije `24f2b6f`** (2026-06-09): Economics in Hospitality
+(K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (`822d788`, 2026-06-06: Marketing + responsive split +
+fixevi BUG-005/006/007.) Radno stablo čisto, ništa lokalno nedeployano.
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.

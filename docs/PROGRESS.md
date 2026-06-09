@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — DEPLOY ✅ (`a8e7371`) — cijeli Tourism Geography LIVE
+Korisnik autorizirao: „pushaj sva 4 commita". `git push origin main` (`33b9f72..a8e7371`) → produkcija (Vercel).
+LIVE: **cijeli Tourism Geography** — 1. kolokvij popravak (`09eb48d`, S30) + 2. kolokvij „svjetska geografija"
+(`8efeaf3`, S31) + ROADMAP doc fix (`b858440`) + **finalni hibrid** (`a8e7371`, S32). `origin/main` sinkroniziran,
+radno stablo čisto, ništa lokalno nedeployano. (Pre-flight: `verify` 0, Playwright 36/36.) Cache `20260618`.
+→ **Tourism Geography 100% KOMPLETAN i LIVE (K1 + K2 + finalni).**
+
+**▶ Sljedeće:** priprema za compact (gotovo); zatim **Food & Nutrition 2. kolokvij** (zadnje na 2. godini).
+
+---
+
 ## 2026-06-10 — Sesija 32: Tourism Geography FINALNI ispit (hibrid) — predmet 100% gotov
 **Kontekst:** Nakon 1. i 2. kolokvija (S30/S31), korisnik: „napravimo pripremu za završni iz geografije". Silabus
 (prez. 0): finalni = **30 bodova, ista struktura kao kolokviji** (10 pitanja: 5 zatvorenih + 5 otvorenih), pokriva
