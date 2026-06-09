@@ -204,12 +204,12 @@ const SOKRAT_CATALOG = {
       storageKey: 'food-nutrition-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'first-midterm', name: 'First Midterm', description: '8 lectures: Food Quality, Components, Preservation, Cereals, Fruits & Veg, Coffee/Tea/Cocoa, Wine, Beer' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Coming soon' }
+        { id: 'first-midterm', name: 'First Midterm', description: 'Topics 1–7: Food Quality, Components, Preservation, Cereals, Fruits & Vegetables, Coffee/Tea/Cocoa, and Wine' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 8–14: Beer, Distilled spirits & liqueurs, Meat, Fish, Milk & dairy, Eggs, and Healthy diet' }
       ],
       content: {
-        scripts: ['data-food-nutrition.js'],
-        resolve: { 'first-midterm': 'foodNutritionData' }
+        scripts: ['data-food-nutrition.js', 'data-food-nutrition-m2.js'],
+        resolve: { 'first-midterm': 'foodNutritionData', 'second-midterm': 'foodNutritionM2Data' }
       }
     },
     {

@@ -118,6 +118,24 @@ uklonjen. Slijepa karta ostaje vezana uz 1. kolokvij (m2 nema blind-map). Verify
 `resolve.final`. `CONTENT_VERSION` 20260618. → **Tourism Geography 100% KOMPLETAN (K1 + K2 + finalni).** (2. god ostaje
 samo Food & Nutrition 2. kolokvij.)
 
+## Food & Nutrition (2. god) — intake & nalaz (2026-06-10)
+Folder: `2. godina Hospitaliy Managament/food and nutrition` (FAN 1–14 + `FAN Introduction`, čista PDF ekstrakcija).
+Prof. dr. sc. Greta Krešić. **Podjela kolokvija iz silabusa (FAN Introduction, slajd 3):** 1. kolokvij = Teme **1–7**
+(13.04., „Topics No 1–7"), 2. kolokvij = Teme **8–14** (25.05., „Topics No 8–14"). Bodovi: 2×24% kolokviji + finalni 30%
+(min 15%); kolokvij = 14 pitanja (12 kratkih × 1.5% + 2 esejska × 3%); finalni = 16 pitanja (12 + 4 esejska).
+
+**1. kolokvij ✅ VERIFICIRAN + USKLAĐEN (2026-06-10).** Sadržaj Tema 1–7 usporedjen s izvorima FAN 1–7 — **0 činjeničnih
+grešaka** (energetske vrijednosti 4/4/9 kcal/g; klasifikacije; procesne temperature; postoci sastava — sve točno i vjerno).
+**Strukturna ispravka:** postojeći K1 je pogrešno uključivao **Beer (Tema 8)**; po silabusu Beer pripada 2. kolokviju → Beer
+**premješten** iz `data-food-nutrition.js` u K2 (sadržaj identičan, ključ `beer` nepromijenjen → napredak učenika očuvan).
+K1 sad = 7 kat. (Topics 1–7, završava na Wine; 89 fc / 86 quiz / 58 fill).
+
+**2. kolokvij ✅ GOTOVO (2026-06-10).** FAN 8–14 → novi sibling `data-food-nutrition-m2.js` (`foodNutritionM2Data`) sa
+**7 kategorija po temi** (beer / distilledSpirits / meat / fish / milkDairy / eggs / healthyDiet; **71 fc / 84 quiz / 56 fill**).
+Catalog: `scripts` += m2, `resolve.second-midterm = foodNutritionM2Data`, coming-soon uklonjen, opisi lekcija osvježeni.
+Verify 0, strukturni validator 0, Playwright 36/36 + ciljani K2 render-test (4 profila). `CONTENT_VERSION` 20260620.
+→ **Food & Nutrition KOMPLETAN (1. + 2. kolokvij).** Opcija kasnije: finalni hibrid (uzor Marketing/Econ/Geo).
+
 ## Struktura mapa (gitignored)
 ```
 _materials/

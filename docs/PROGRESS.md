@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Sesija: Food & Nutrition 2. kolokvij + usklađivanje podjele sa silabusom
+**Kontekst:** korisnik: „krenimo na food and nutrition… pregledaj jeli se podudara sa prvim midtermom". Izvori = mapa
+`2. godina Hospitaliy Managament/food and nutrition` (FAN 1–14 + Introduction). Ekstrakcija `node scripts/pdf-text.js` → `tmp-fan/`.
+
+**Ključni nalaz (silabus, FAN Introduction slajd 3):** 1. kolokvij = Teme **1–7**, 2. kolokvij = Teme **8–14**. Postojeći
+1. kolokvij je pogrešno uključivao **Beer (Tema 8)**. Uz korisnikovo odobrenje (uskladi sa silabusom): **Beer premješten** u K2
+(sadržaj identičan, ključ `beer` nepromijenjen → napredak očuvan). K1 sada 7 kat. (Teme 1–7, završava na Wine).
+
+**Verifikacija K1 (na zahtjev korisnika):** sadržaj Tema 1–7 usporedjen s izvorima FAN 1–7 — **0 činjeničnih grešaka**,
+sve brojke/definicije točne i vjerne (energetske vrijednosti, klasifikacije, temperature procesa, postoci sastava…).
+
+**K2 izgrađen** = `data-food-nutrition-m2.js` (`foodNutritionM2Data`, 7 kat. po temi: Beer / Distilled Spirits & Liqueurs /
+Meat / Fish / Milk & Dairy / Eggs / Healthy Diet; **71 fc / 84 quiz / 56 fill / 7 learn**). Catalog: `scripts` += m2,
+`resolve.second-midterm = foodNutritionM2Data`, opisi lekcija osvježeni, coming-soon uklonjen.
+
+**Provjere:** `CONTENT_VERSION` 20260619→20260620 + bump `catalog.js`/`content-loader.js` `?v=20260620`. **Verify 0**;
+strukturni validator K2 0 (0 loših quiz-indeksa, 0 fill bez `_______`, 0 kat. bez Learn); **Playwright 36/36** + ciljani
+K2 render-test (4 profila). Lokalni commit; **NIJE deployano** (čeka potvrdu). `tmp-fan/` obrisan prije commita.
+→ **Food & Nutrition KOMPLETAN (1. + 2. kolokvij).**
+
+**▶ Sljedeće:** opcija — finalni hibrid za Food & Nutrition (uzor Marketing/Econ/Geo); zatim **1. godina**.
+
+---
+
 ## 2026-06-10 — Potpuna revizija cijelog rada + fix BUG-009 (Entrepreneurship fill-blank)
 **Kontekst:** korisnik: „pregledaj jako detaljno cijeli rad". Prošla cijela provjera zdravlja projekta:
 git (sinkroniziran, čisto, sve LIVE `71e53b5`), `verify` **0/0**, cache tokeni dosljedni (20260618),

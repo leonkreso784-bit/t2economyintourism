@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Food & Nutrition 2. kolokvij („Topics 8–14") — `second-midterm` popunjen + podjela usklađena sa silabusom:**
+  novi sibling fajl `data-food-nutrition-m2.js` (`window.foodNutritionM2Data`, obrazac kao ostali `data-*-m2.js`)
+  sa **7 kategorija po temi** — Beer, Distilled Spirits & Liqueurs, Meat, Fish, Milk & Dairy, Eggs, Healthy Diet
+  (**71 flashcards · 84 quiz · 56 fill · 7 learn**). Izvori: prezentacije FAN 8–14. **Ključna ispravka podjele:**
+  silabus (FAN Introduction, slajd 3) propisuje 1. kolokvij = Teme **1–7** i 2. kolokvij = Teme **8–14**, a postojeći
+  1. kolokvij je pogrešno uključivao **Beer (Tema 8)**. Beer je **premješten** iz `data-food-nutrition.js` u K2 (sadržaj
+  nepromijenjen, ključ `beer` isti → napredak učenika očuvan). K1 sada = 7 kat. (Teme 1–7, završava na Wine; 89 fc / 86
+  quiz / 58 fill). **Sadržaj K1 (Teme 1–7) verificiran prema izvorima FAN 1–7 — 0 činjeničnih grešaka** (sve brojke/
+  definicije točne). Catalog: `scripts` += `data-food-nutrition-m2.js`, `resolve.second-midterm = foodNutritionM2Data`,
+  coming-soon uklonjen, opisi obje lekcije osvježeni. `CONTENT_VERSION` 20260619→20260620 + bump `catalog.js`/
+  `content-loader.js` `?v=20260620`. Verify 0; strukturni validator 0 (0 loših quiz-indeksa, 0 fill bez praznine);
+  Playwright 36/36 + ciljani K2 render-test (4 profila). → **Food & Nutrition KOMPLETAN (1. + 2. kolokvij).**
 - **Tourism Geography FINALNI ispit (Hrvatska + svijet) — hibrid:** novi `data-geography-final.js`
   (`window.geographyFinalData = Object.assign({}, geographyData, geographyM2Data, { examPractice })`, uzor
   Marketing/Economics/BI final; učitava se ZADNJI). Spaja svih 12 kategorija oba kolokvija (bez kolizija ključeva)

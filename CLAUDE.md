@@ -88,9 +88,15 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   učitava se ZADNJI; **13 kat. / 128 fc / 127 quiz / 84 fill**). Catalog: 3 lekcije + 3 scripta. Cache `20260618`.
   Verify 0, strukturni validator 0, Playwright 36/36. **LIVE — deployano 2026-06-10 (`a8e7371`):** geo K1 `09eb48d` +
   K2 `8efeaf3` + doc fix `b858440` + finalni `a8e7371`. `origin/main` sinkroniziran, radno stablo čisto.
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god — preostalo: SAMO Food & Nutrition 2. kolokvij.**
-  (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi smjerovi**
-  (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
+- **Food & Nutrition KOMPLETAN ✅ (2026-06-10, lokalno — čeka deploy):** **1. kolokvij** sadržajno verificiran prema izvorima
+  FAN 1–7 (0 činjeničnih grešaka) + **strukturna ispravka:** silabus (FAN Introduction) propisuje K1=Teme 1–7, K2=Teme 8–14,
+  a K1 je pogrešno imao **Beer (Tema 8)** → Beer **premješten** u K2 (ključ `beer` isti, napredak očuvan); K1 sad 7 kat. (do Wine).
+  **2. kolokvij** = novi `data-food-nutrition-m2.js` (`foodNutritionM2Data`, 7 kat. po temi: beer/distilledSpirits/meat/fish/
+  milkDairy/eggs/healthyDiet; FAN 8–14; **71 fc / 84 quiz / 56 fill**). Catalog: 2 lekcije + 2 scripta. Cache `20260620`.
+  Verify 0, strukturni validator 0, Playwright 36/36 + ciljani K2 render. (Opcija kasnije: finalni hibrid.)
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god SADRŽAJNO KOMPLETNA** (svih 9 predmeta K1+K2/finalni);
+  opcija: finalni hibridi gdje fale (Food & Nutrition). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
+  Business Informatics već gotov). (3) **pa drugi smjerovi** (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
