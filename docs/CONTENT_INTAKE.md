@@ -106,8 +106,11 @@ GDP 23.200 EUR/80%, 170.723 dozvole, 31%/31%, Top 10 noćenja 2024), nego da je 
 istočno-slavonska regija). **Slijepa karta (`blindMapDrill`) i `examFramework` NETAKNUTI** (uputa korisnika). Geografija
 sad = 6 kat. / 58 fc / 72 quiz / 43 fill. Verify 0, Playwright 36/36, `CONTENT_VERSION` 20260616.
 
-**2. kolokvij ⬜ TODO.** Prez. 7–12 (`_2K_` = svjetska turistička geografija) → novi sibling `data-geography-m2.js`
-(`geographyM2Data`), catalog `second-midterm` resolve + ukloniti coming-soon. Slijepa karta ostaje vezana uz 1. kolokvij.
+**2. kolokvij ✅ GOTOVO (Sesija 31).** Prez. 7–12 (`_2K_` = „Tourism Geography of the World") → novi sibling
+`data-geography-m2.js` (`geographyM2Data`) sa **6 kategorija po kontinentu** (globalIntro/europe/asia/africa/
+australiaOceania/americas; 56 fc / 45 quiz / 33 fill). Catalog `second-midterm` → `geographyM2Data`, coming-soon
+uklonjen. Slijepa karta ostaje vezana uz 1. kolokvij (m2 nema blind-map). Verify 0, Playwright 36/36, `CONTENT_VERSION`
+20260617. → **Tourism Geography 100% KOMPLETAN (1. + 2. kolokvij).** (2. god ostaje samo Food & Nutrition 2. kolokvij.)
 
 ## Struktura mapa (gitignored)
 ```

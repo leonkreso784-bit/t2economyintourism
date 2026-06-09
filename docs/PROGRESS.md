@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — Sesija 31: Tourism Geography 2. kolokvij („svjetska geografija") — predmet kompletiran
+**Kontekst:** Nakon popravka 1. kolokvija (S30), korisnik: „idemo prvo na drugi kolokvij". Prezentacije 7–12
+(oznaka `_2K_`) = **„Tourism Geography of the World"** — svjetska turistička geografija po kontinentima.
+
+**Izvori (ekstrakcija `scripts/pdf-text.js`):** 7 = uvod (globalni turizam, UNWTO; slikovno) · 8 = Europa ·
+9 = Azija · 10 = Afrika · 11 = Australija i Oceanija · 12 = Amerike (SAD, Meksiko, Brazil).
+
+**Napravljeno:** novi sibling fajl **`data-geography-m2.js`** (`window.geographyM2Data` + `module.exports`) sa **6
+kategorija po kontinentu**: `globalIntro`, `europe`, `asia`, `africa`, `australiaOceania`, `americas`
+(**56 fc / 45 quiz / 33 fill / 6 learn**). Brojke doslovno sa slajdova (Azija 44,5 mil. km²/~60% čovječanstva i
+Indija+Kina; Europa ~740 mil. + Golfska struja +4/+8–10 °C; Afrika 30 mil. km²/Gibraltar 14 km/Suez 163 km;
+Australija 7,7 mil. km²/Gondwana; SAD GDP/cap ~80.000$/Yellowstone 1872/61 NP; Brazil/Brasília UNESCO 1987/Rio).
+**Catalog:** `scripts` += `data-geography-m2.js`, `resolve.second-midterm = geographyM2Data`, coming-soon uklonjen,
+opisi lekcija osvježeni. **Slijepa karta ostaje na 1. kolokviju** (m2 nema blind-map kategoriju).
+
+**Provjere:** `CONTENT_VERSION` 20260616→20260617 + bump `catalog.js`/`content-loader.js` `?v=20260617`. **Verify 0**,
+strukturni validator 0 (6 kat. / 56 / 45 / 33; 0 loših quiz-indeksa, 0 fill bez praznine), **Playwright 36/36** +
+ciljani K2 render-test (4 profila: kategorije `europe`/`americas` aktivne, 0 problema/overflowa, obrisan).
+Lokalni commit; **NIJE deployano** (čeka potvrdu). → **Tourism Geography KOMPLETAN (1. + 2. kolokvij).**
+
+**▶ Sljedeće:** **Food & Nutrition 2. kolokvij** (zadnje na 2. godini); zatim 1. godina.
+
+---
+
 ## 2026-06-09 — Sesija 30: Tourism Geography 1. kolokvij — popravak + obogaćivanje iz izvora
 **Kontekst:** Korisnik: „geografija nije dobro napravljena, samo je karta dobra" → uputa: pregledaj trenutno
 stanje (slijepu kartu NE dirati), proučii prez. 1–6, pa popravi 1. kolokvij. Folder `Tourism Geography` ima

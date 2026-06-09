@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Tourism Geography 2. kolokvij („Tourism Geography of the World") — `second-midterm` popunjen:** novi sibling
+  fajl `data-geography-m2.js` (`window.geographyM2Data`, obrazac kao `data-*-m2.js`) sa **6 kategorija po kontinentu** —
+  Global Tourism & World Regions (uvod/UNWTO), Europe, Asia, Africa, Australia & Oceania, The Americas
+  (**56 flashcards · 45 quiz · 33 fill · 6 learn**). Izvori: prezentacije 7–12 (`_2K_`): 7 uvod, 8 Europa, 9 Azija,
+  10 Afrika, 11 Australija/Oceanija, 12 Amerike (SAD/Meksiko/Brazil). Sve brojke doslovno sa slajdova (npr. Azija 44,5
+  mil. km²/~60% čovječanstva; Europa ~740 mil./Golfska struja; Suez 163 km; Yellowstone 1872 = najstariji NP; Brasília
+  UNESCO 1987). Catalog: `scripts` += `data-geography-m2.js`, `resolve.second-midterm = geographyM2Data`, coming-soon
+  uklonjen, opisi lekcija osvježeni. **Slijepa karta ostaje vezana uz 1. kolokvij** (m2 nema blind-map kategoriju).
+  `CONTENT_VERSION` 20260616→20260617 + bump `catalog.js`/`content-loader.js` `?v=20260617`. Verify 0; strukturni
+  validator 0 (0 loših quiz-indeksa); Playwright 36/36 + ciljani K2 render-test (4 profila, kategorije
+  europe/americas aktivne, 0 problema/overflowa, obrisan). → **Tourism Geography KOMPLETAN (1. + 2. kolokvij).**
 - **Economics in Hospitality FINALNI ispit (Unit 1–10) — hibrid:** novi `data-econ-hospitality-final.js`
   (`window.economicsHospitalityFinalData = Object.assign({}, economicsHospitalityData, economicsHospitalityM2Data,
   { examPractice })`, uzor Marketing/BI final; učitava se ZADNJI). Spaja svih 10 provjerenih jedinica + dodaje
