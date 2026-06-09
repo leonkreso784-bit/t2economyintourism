@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — Sesija 29: Economics in Hospitality FINALNI ispit — hibrid (kompletira predmet)
+**Kontekst:** Nakon 1. i 2. kolokvija, korisnik: „napravi završni ispit, polako s analizom i todo listom".
+Silabus (intro) potvrđuje **MODUL 3: FINAL EXAM (written) = 30%**, pokriva sve teme T2–T12 (Unit 1–10).
+
+**Struktura = HIBRID** (isti obrazac kao Marketing finalni, koji je korisnik odobrio): novi `data-econ-hospitality-final.js`
+→ `economicsHospitalityFinalData = Object.assign({}, economicsHospitalityData, economicsHospitalityM2Data, { examPractice })`.
+Spaja svih **10 jedinica** (5 iz 1. + 5 iz 2. kolokvija, ključevi se ne sudaraju) + dodaje kuriranu **cross-topic
+`examPractice`** kategoriju (14 fc / 10 quiz / 8 fill + „Final Exam Roadmap" learn) koja povezuje gradivo
+(troškovi→break-even→KPI; imovina+amortizacija→vrednovanje→investicije; kalkulacija cijene↔ekonomičnost↔kanali).
+
+**Napravljeno**
+- `data-econ-hospitality-final.js` (učitava se ZADNJI; ovisi o m1+m2 na `window`; ima i `module.exports` za node-validaciju).
+- **Catalog:** nova lekcija `final`, `scripts` += final (zadnji), `resolve.final = economicsHospitalityFinalData`.
+  Cache: `CONTENT_VERSION` 20260614→**20260615** + bump `catalog.js`/`content-loader.js` `?v=20260615`.
+
+**Testirano:** strukturni node-check učitavanjem m1→m2→final redom = **11 kategorija / 162 fc / 106 quiz / 84 fill, 0 loših
+`correct`**; `verify` 0 grešaka (final → economicsHospitalityFinalData); **ciljani temp-test** finalnog (4 profila:
+quizOpts=12, learnChips=12, 0 problema/0 grešaka, obrisan); puni Playwright.
+**Stanje:** **Economics in Hospitality 100% KOMPLETAN** (1. kolokvij + 2. kolokvij + finalni). Lokalni commit (NIJE deployano).
+
+---
+
 ## 2026-06-09 — Sesija 28: Economics in Hospitality 2. kolokvij (Unit 6–10) — NOVA lekcija
 **Kontekst:** Nakon 1. kolokvija (S27), korisnik: „kreni s 2. kolokvijem, prezentacije su 6–10". Iz silabusa:
 2. kolokvij = **Unit 6–10 = teme T8–T12**. Svaka jedinica ima glavnu prezentaciju + „add" dodatak (oba pročitana).

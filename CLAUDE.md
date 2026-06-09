@@ -71,16 +71,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`first-midterm`/`second-midterm`/`final`). Final = 13 kat. / 113 fc / 66 quiz / 56 fill.
 - **Fixevi LIVE:** BUG-006 (learn filter-bar puni nazivi); BUG-007 (filter-bar vidljiv scrollbar + rubni fade,
   `is-scrollable` gazi `center`; `learn.css`/`progress.js`, ResizeObserver). Globalni (svi predmeti).
-- **Lokalni commiti, NIJE deployano (3):** `9206424` **fix BUG-008** (S25, bazni `.toast`/`.footer` CSS je
-  nedostajao → goli blokovi lijevo-dolje; `css/pages.css`, footer skriven na Landing/Browse preko `:has()`,
-  bump `?v=20260611`) · `afcd99e` doc osvježenje · `7a3e827` **catalog ispravak** (S26): „Business
-  Entrepreneurship" → **„Entrepreneurship and Innovation", sem 2→1** (id nedirnut → napredak očuvan;
-  `catalog.js?v=20260612`). Sve uz suite 36/36.
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **dovršiti 2. godinu** — korisnik stavlja **sve
-  PDF-ove 2. god u poseban folder** (~2026-06-07); praznine = 2. kolokvij za `econ-hospitality`/`geography`/
-  `food-nutrition`. (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi
-  smjerovi** (1.+2. god, novi `programs` u catalogu). → kasnije **Blok B** (Supabase+Auth+/api).
-  Po želji + uz izričitu potvrdu: deploy 3 lokalna commita.
+- **Economics in Hospitality KOMPLETAN ✅ (2026-06-09, lokalno):** 1. kolokvij (Unit 1–5, `data-econ-hospitality.js`
+  rebuild iz izvora 30→73 fc) + 2. kolokvij (Unit 6–10, `data-econ-hospitality-m2.js`, 75 fc s hotelskim KPI-jevima) +
+  Finalni (`data-econ-hospitality-final.js` = `Object.assign(m1,m2,{examPractice})`, hibrid; 11 kat. / 162 fc / 106 quiz /
+  84 fill). Catalog: 3 lekcije. Cache `20260615`. (S27–S29.)
+- **Lokalni commiti, NIJE deployano (~9):** fix **BUG-008** (`9206424`) · **Entrepreneurship→sem 1** catalog ispravak
+  (`7a3e827`) · plan sadržaja (`0c2bb93`) · **Economics in Hospitality** (K1 rebuild + K2 + finalni) + doc osvježenja.
+  Sve uz `verify` 0 i Playwright **36/36**. (Sve čeka jedan `git push` uz izričitu potvrdu.)
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god — preostalo:** **Tourism Geography**
+  (korisnik javio: samo karta dobra, tekst slab → popraviti iz izvora) + **Food & Nutrition** 2. kolokvij.
+  (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi smjerovi**
+  (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api). Po želji + uz izričitu potvrdu: deploy.
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

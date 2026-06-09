@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Economics in Hospitality FINALNI ispit (Unit 1–10) — hibrid:** novi `data-econ-hospitality-final.js`
+  (`window.economicsHospitalityFinalData = Object.assign({}, economicsHospitalityData, economicsHospitalityM2Data,
+  { examPractice })`, uzor Marketing/BI final; učitava se ZADNJI). Spaja svih 10 provjerenih jedinica + dodaje
+  kuriranu **`examPractice`** („Exam Practice (All Units)", cross-topic: 14 fc · 10 quiz · 8 fill + „Final Exam Roadmap"
+  learn). Catalog: nova lekcija `final`, `scripts` += final (zadnji), `resolve.final = economicsHospitalityFinalData`.
+  `CONTENT_VERSION` 20260614→20260615 + bump `catalog.js`/`content-loader.js` `?v=20260615`. Ukupno final =
+  **11 kat. / 162 fc / 106 quiz / 84 fill**. Verify 0; strukturni validator 0; Playwright 36/36 + ciljani final
+  render-test (4 profila, quizOpts=12, 0 problema). → **Economics in Hospitality KOMPLETAN (1.+2. kolokvij + finalni).**
 - **Economics in Hospitality 2. kolokvij (Unit 6–10) — `second-midterm` popunjen:** novi sibling fajl
   `data-econ-hospitality-m2.js` (`window.economicsHospitalityM2Data`, obrazac kao `data-marketing-m2.js`) s **5
   kategorija** — Business Result, Success & KPIs, Price Policy, Principles of Sales, Investment Profitability

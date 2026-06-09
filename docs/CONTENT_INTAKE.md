@@ -86,8 +86,11 @@ bogat learn. Catalog opis 1. kolokvija ispravljen (bio pogrešno „seminarski")
 **2. kolokvij ✅ GOTOVO (Sesija 28).** Unit 6–10 (teme T8–T12: business result, success & KPIs, price policy, sales,
 investment profitability) → novi `data-econ-hospitality-m2.js` (`economicsHospitalityM2Data`, 5 kat., **75 fc / 50 quiz /
 40 fill**). Pročitane i glavne i „add" prezentacije (KPI formule iz „add": ADR/RevPAR/TRevPAR/GOP/GOPPAR/NOP/EBITDA).
-→ **Economics in Hospitality KOMPLETAN.** Napomena: postoji i zaseban folder `seminar Hospitality economics`
-(seminarski dio, drugačiji od predavanja) — nije obrađen.
+
+**Finalni ✅ GOTOVO (Sesija 29).** Hibrid `data-econ-hospitality-final.js` = `Object.assign({}, m1, m2, { examPractice })`
+→ 11 kat. / 162 fc / 106 quiz / 84 fill (10 jedinica + cross-topic Exam Practice). Catalog: lekcija `final`, script zadnji,
+`resolve.final`. → **Economics in Hospitality 100% KOMPLETAN (K1 + K2 + finalni).** Napomena: postoji i zaseban folder
+`seminar Hospitality economics` (seminarski dio, drugačiji od predavanja) — nije obrađen.
 
 ## Struktura mapa (gitignored)
 ```
