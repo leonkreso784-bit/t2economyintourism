@@ -5,6 +5,39 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — Sesija 30: Tourism Geography 1. kolokvij — popravak + obogaćivanje iz izvora
+**Kontekst:** Korisnik: „geografija nije dobro napravljena, samo je karta dobra" → uputa: pregledaj trenutno
+stanje (slijepu kartu NE dirati), proučii prez. 1–6, pa popravi 1. kolokvij. Folder `Tourism Geography` ima
+prez. 0–12; imena otkrivaju podjelu: **0–6 = 1. kolokvij** (Welcome, Introduction, HM-TG 2–6), **7–12 = 2. kolokvij**
+(oznaka `_2K_` = „Tourism Geography of the World").
+
+**Nalaz (važno):** ekstrakcija svih 6 prezentacija (`scripts/pdf-text.js`) pokazala je da **„sumnjive" brojke NISU
+pogrešne** — GDP 23.200 EUR (80% EU), 170.723 radne dozvole (građevinarstvo 31% / turizam 31% / industrija 14% /
+promet 8% / trgovina 5% / ostalo 11%), Top 10 noćenja 2024 (Dubrovnik 4.192.151 …) — sve doslovno sa slajdova prez. 3.
+Pravi problem: **falio je cijeli konceptualni „Introduction to Geography"** koji silabus (prez. 0) eksplicitno traži za
+1. kolokvij, a postojeći tekst je bio tanak i nepovezan sa slajdovima.
+
+**Napravljeno (`data-geography.js`):**
+- **+ nova kategorija `introToGeography`** (prez. 1): definicija/podrijetlo geografije, deduktivni pristup, regionalna
+  geografija, humana geografija (stanovništvo/ekonomija/naselja), što proučava turistička geografija, definicija
+  turističke destinacije, 3 kriterija regionalizacije. (10 fc / 9 quiz / 7 fill / learn)
+- **`croatiaFeatures` prepisan** vjerno prez. 2 (relief+Alpide orogeneza, 3 tipa krša, klima, hidrografija 38‰,
+  biogeo. regije) + prez. 3 (GDP/EU, transport A1–A12/Učka/Krk/Pelješac/Drava, Helsinki 1997, demografski procesi,
+  gustoća, **puni raspored radnih dozvola 2025** po djelatnostima i državama). fc 11→16, quiz 12→14, fill 8→9.
+- **`protectedAndTouristRegions` dopunjen** prez. 4–6: okvir zaštite (Zakon = 9 kategorija; 2 stroga rezervata + 8 NP +
+  12 PP; 5.930 km² ≈ 10,1%), statistika 2017 (17 mil./89% strani; 4 mil. NP-PP, 3 mil. Plitvice+Krka; 96% strani u NP),
+  komponente prirodnih atrakcija, planinska regija (Gorski kotar/Risnjak/Platak/Fužine/Cerovac), istočna Slavonija
+  (Vukovar-Vučedol, Ilok, Đakovo-lipicanci, Požega-vino). fc 12→18, quiz 18→25, fill 10→14.
+- **NETAKNUTO (uputa korisnika):** `blindMapDrill` (slijepa karta) i `examFramework`.
+
+**Rezultat:** geografija = **6 kat. / 58 fc / 72 quiz / 43 fill** (bilo 5 / 39 / 56 / 36). `CONTENT_VERSION`
+20260615→20260616 + bump `content-loader.js?v=20260616`. **Verify 0**, strukturni validator 0 (0 loših quiz-indeksa,
+0 fill bez praznine), **Playwright 36/36**. Lokalni commit; **NIJE deployano** (čeka potvrdu).
+
+**▶ Sljedeće:** Tourism Geography **2. kolokvij** (prez. 7–12 = „Tourism Geography of the World"); pa Food & Nutrition 2. kolokvij.
+
+---
+
 ## 2026-06-09 — DEPLOY ✅ (`24f2b6f`)
 Korisnik izričito autorizirao deploy. `git push origin main` (`822d788..24f2b6f`) → produkcija (Vercel).
 LIVE: cijeli **Economics in Hospitality** (K1 rebuild + K2 + finalni, S27–S29), **fix BUG-008** (S25),

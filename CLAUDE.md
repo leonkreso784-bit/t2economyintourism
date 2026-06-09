@@ -79,8 +79,13 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `css/pages.css`, footer skriven na Landing/Browse preko `:has()`) + **Entrepreneurship→sem 1** catalog ispravak
   (id nedirnut → napredak očuvan) + **cijeli Economics in Hospitality** (K1 rebuild + K2 + finalni). `origin/main`
   sinkroniziran, radno stablo čisto. Sve uz `verify` 0 i Playwright **36/36**.
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god — preostalo:** **Tourism Geography**
-  (korisnik javio: samo karta dobra, tekst slab → popraviti iz izvora) + **Food & Nutrition** 2. kolokvij.
+- **Tourism Geography 1. kolokvij POPRAVLJEN (S30, lokalno, NIJE deployano):** nalaz — statistike NISU bile pogrešne
+  (sve sa slajdova prez. 3), nego je falio konceptualni uvod. `data-geography.js`: + nova kat. `introToGeography`
+  (prez. 1), `croatiaFeatures` prepisan (prez. 2+3), `protectedAndTouristRegions` dopunjen (prez. 4–6: okvir zaštite,
+  statistika 2017, planinska + ist. Slavonija). **Slijepa karta + examFramework NETAKNUTI** (uputa). 6 kat. / 58 fc /
+  72 quiz / 43 fill. Cache `20260616`. Verify 0, Playwright 36/36. (Prez. 0–6 = 1.K; 7–12 = 2.K = svjetska geo.)
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god — preostalo:** **Tourism Geography 2. kolokvij**
+  (prez. 7–12 = „Tourism Geography of the World", novi `data-geography-m2.js`) + **Food & Nutrition** 2. kolokvij.
   (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT). (3) **pa drugi smjerovi**
   (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni

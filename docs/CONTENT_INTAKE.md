@@ -92,6 +92,23 @@ investment profitability) → novi `data-econ-hospitality-m2.js` (`economicsHosp
 `resolve.final`. → **Economics in Hospitality 100% KOMPLETAN (K1 + K2 + finalni).** Napomena: postoji i zaseban folder
 `seminar Hospitality economics` (seminarski dio, drugačiji od predavanja) — nije obrađen.
 
+## Tourism Geography (2. god) — intake & nalaz (2026-06-09)
+Folder: `2. godina Hospitaliy Managament/Tourism Geography` (svi PDF, čista ekstrakcija teksta — PPT-export, sažeti slajdovi).
+Prof. H. Grofelnik. **Podjela kolokvija iz imena datoteka + silabusa (prez. 0):** 1. kolokvij = „Introduction to Geography +
+Tourism Geography of Croatia" (prez. **0–6**: `0 Welcome`, `1 Introduction`, `2–6 HM-TG`); 2. kolokvij = „Tourism Geography
+of the World" (prez. **7–12**, oznaka `_2K_`). Bodovi: 1.K 20 + 2.K 20 + slijepa karta 10 + seminar 20 + finalni 30; testovi =
+10 pitanja (5 zatvorenih + 5 otvorenih).
+
+**1. kolokvij ✅ POPRAVLJEN (Sesija 30).** Pregled je pokazao da **statistike NISU pogrešne** (sve doslovno sa slajdova prez. 3:
+GDP 23.200 EUR/80%, 170.723 dozvole, 31%/31%, Top 10 noćenja 2024), nego da je **falio konceptualni uvod**. Izmjene u
+`data-geography.js`: + nova kategorija `introToGeography` (prez. 1); `croatiaFeatures` prepisan vjerno prez. 2+3;
+`protectedAndTouristRegions` dopunjen prez. 4–6 (okvir zaštite 9 kat./5.930 km²/10,1%; statistika 2017; planinska +
+istočno-slavonska regija). **Slijepa karta (`blindMapDrill`) i `examFramework` NETAKNUTI** (uputa korisnika). Geografija
+sad = 6 kat. / 58 fc / 72 quiz / 43 fill. Verify 0, Playwright 36/36, `CONTENT_VERSION` 20260616.
+
+**2. kolokvij ⬜ TODO.** Prez. 7–12 (`_2K_` = svjetska turistička geografija) → novi sibling `data-geography-m2.js`
+(`geographyM2Data`), catalog `second-midterm` resolve + ukloniti coming-soon. Slijepa karta ostaje vezana uz 1. kolokvij.
+
 ## Struktura mapa (gitignored)
 ```
 _materials/

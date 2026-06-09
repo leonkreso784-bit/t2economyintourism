@@ -89,6 +89,23 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (brand/Explore/About + copyright). Svi "Start" gumbi vežu se preko klase `.start-trigger`. CSS u `css/landing.css`.
   Test: `tests/landing.spec.js` (nav, showcase=catalog, navigacija, overflow guard, 4 iPhone profila).
 ### Changed
+- **Tourism Geography — 1. kolokvij popravljen i obogaćen iz izvornih prezentacija (0–6).** Pregled je pokazao
+  da „sumnjive" statistike NISU pogrešne (GDP 23.200 EUR/80% EU, 170.723 dozvole, građevinarstvo 31% / turizam 31%,
+  Top 10 noćenja 2024 — sve doslovno sa slajdova prez. 3), nego da je falio **cijeli konceptualni uvod** koji silabus
+  eksplicitno traži za 1. kolokvij („Introduction to Geography + Tourism Geography of Croatia"). Izmjene u
+  `data-geography.js`: **(1)** nova kategorija **`introToGeography`** (prez. 1 — definicija/grane geografije, humana
+  geografija: stanovništvo/ekonomija/naselja, turistička geografija, turistička destinacija, regionalizacija; 10 fc /
+  9 quiz / 7 fill / learn); **(2)** `croatiaFeatures` prepisan vjerno prez. 2+3 (relief/orogeneza, 3 tipa krša,
+  hidrografija 38‰, biogeo. regije; GDP, transport A1–A12/mostovi/Helsinki 1997, demografija, **puni raspored radnih
+  dozvola 2025** po djelatnostima i državama) — fc 11→16, quiz 12→14, fill 8→9; **(3)** `protectedAndTouristRegions`
+  dopunjen (prez. 4–6): **okvir zaštite** (Zakon o zaštiti prirode = 9 kategorija; 2 stroga rezervata + 8 NP + 12 PP;
+  5.930 km² ≈ 10,1%), **statistika 2017** (17 mil. turista/89% stranih; 4 mil. posjeta NP/PP, 3 mil. Plitvice+Krka;
+  96% stranih u NP), komponente prirodnih atrakcija, **planinska regija** (Gorski kotar/Risnjak/Platak/Fužine) i
+  **istočna Slavonija** (Vukovar/Vučedol, Ilok, Đakovo/lipicanci, Požega) — fc 12→18, quiz 18→25, fill 10→14.
+  **Slijepa karta (`blindMapDrill`) i `examFramework` namjerno netaknuti** (uputa korisnika). Geografija ukupno =
+  **6 kat. / 58 fc / 72 quiz / 43 fill** (bilo 5 / 39 / 56 / 36). `CONTENT_VERSION` 20260615→20260616 + bump
+  `content-loader.js?v=20260616` (index.html). Verify 0; strukturni validator 0 (0 loših quiz-indeksa); Playwright 36/36.
+  **2. kolokvij (prez. 7–12, oznaka `_2K_` = „Tourism Geography of the World") ostaje „coming soon".**
 - **Economics in Hospitality — 1. kolokvij pregledan i bitno obogaćen iz izvornih prezentacija.** Postojeća
   struktura (5 jedinica = Unit 1–5 = teme T2–T6: hospitality basics, business economics, hospitality business,
   assets of reproduction, cost theory) **potvrđena točnom**, ali sadržaj bio pretanak → rebuild `data-econ-hospitality.js`:
