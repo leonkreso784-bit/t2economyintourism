@@ -24,7 +24,8 @@ S31 2. kolokvij „svjetska geografija" `data-geography-m2.js` 6 kat./56 fc po k
 (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
 **Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-09 deployano (`24f2b6f`):** cijeli Economics in Hospitality
 (K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (Ranije `822d788`, 2026-06-06: Marketing + responsive split +
-fixevi BUG-005/006/007.) Radno stablo čisto, ništa lokalno nedeployano.
+fixevi BUG-005/006/007.) **Lokalno (NIJE deployano):** Tourism Geography 1. kolokvij popravak (`09eb48d`) + 2. kolokvij
+(`8efeaf3`) — **2 commita ispred `origin/main`**, čekaju deploy (planirano zajedno s geografskim finalnim).
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
