@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-09 — Sesija 27: Economics in Hospitality 1. kolokvij — pregled + veliki rebuild iz izvora
+**Kontekst:** Korisnik dodao prave PDF-ove u `2. godina Hospitaliy Managament/Economics of hospitality`
+(intro + Unit 1–10; Unit 6–10 imaju „add"). Zadatak: napravi **samo 1. kolokvij**, pregledaj postojeći i prepravi.
+
+**Analiza izvora:** intro (`1 Introductory information 2026.pdf`) daje silabus — **T7 = 1. midterm**, T13 = 2. →
+**1. kolokvij = T2–T6 = Unit 1–5** (Basics · Business economics · Hospitality business · Assets of reproduction ·
+Cost theory). Potvrđeno „do 5 / na pola" (10 prezentacija). Ekstrakcija teksta (`scripts/pdf-text.js`) za svih 5 + intro.
+
+**Nalaz:** postojeća struktura (5 jedinica) **se točno poklapa** s T2–T6 i sadržaj je bio **točan, ali pretanak**
+(~15–25% pokrivenosti; Unit 3/4/5 = 48–55 slajdova s velikim izostavljenim cjelinama). Catalog opis 1. kolokvija
+bio **pogrešan** („seminarski: sezonalnost/konkurentnost" — to je zaseban seminar, ne predavanja).
+
+**Napravljeno**
+- **Rebuild `data-econ-hospitality.js`** vjerno slajdovima: **30→73 flashcards · 20→46 quiz · 15→36 fill** + bogat learn.
+  Dodano što je falilo: U2 povijesni razvoj (Savary 1675, Smith 1776, Marshall, Schmalenbach 1906, Taylor/Ford/Fayol,
+  socijalistička ekonomika); U3 asocijacije/koncentracija (sinergija „2+2=5", konzorcij, kartel, konglomerat, holding,
+  trust), poslovna načela (produktivnost/ekonomičnost/rentabilnost + kontinuitet), poslovna politika i planiranje;
+  U4 likvidnost (>1)/solventnost, koef. obrtaja, **amortizacijski rokovi po hrv. zakonu** (20/10/5/4/2 god), metode
+  (linearna `a%=100/t`, progresivna, degresivna, funkcionalna), tekuće/investicijsko održavanje; U5 mjesta/nositelji
+  troška, direktni/indirektni, aktivni/pasivni centri, fiksni 60–80% hotelskih troškova, **zone troškova**,
+  **koef. reaktivnosti `h=T%/Q%`**, model materijalnih troškova 35/22/50%, **break-even**, funkcionalna analiza.
+- **Catalog opis** 1. kolokvija ispravljen na stvarni (Unit 1–5). Cache: `CONTENT_VERSION` 20260609→**20260613** +
+  bump `catalog.js`/`content-loader.js` `?v=20260613` (index.html).
+
+**Testirano:** strukturni node-check (5 kat., 73/46/36, svi `correct` u rasponu = 0 bad); `verify` 0 grešaka;
+Playwright (smoke testira PRVU lekciju = econ first-midterm). 2. kolokvij (Unit 6–10) NIJE rađen (po dogovoru).
+**Stanje:** lokalni commit (NIJE deployano).
+
+---
+
 ## 2026-06-06 — Sesija 26: Ispravak catalog-a — „Entrepreneurship and Innovation" (sem 1)
 **Kontekst:** Korisnik javio da je predmet zapravo **„Entrepreneurship and Innovation"** (ne „Business
 Entrepreneurship") i da je u **1. semestru** 2. godine (bio krivo upisan kao sem 2).

@@ -73,6 +73,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (brand/Explore/About + copyright). Svi "Start" gumbi vežu se preko klase `.start-trigger`. CSS u `css/landing.css`.
   Test: `tests/landing.spec.js` (nav, showcase=catalog, navigacija, overflow guard, 4 iPhone profila).
 ### Changed
+- **Economics in Hospitality — 1. kolokvij pregledan i bitno obogaćen iz izvornih prezentacija.** Postojeća
+  struktura (5 jedinica = Unit 1–5 = teme T2–T6: hospitality basics, business economics, hospitality business,
+  assets of reproduction, cost theory) **potvrđena točnom**, ali sadržaj bio pretanak → rebuild `data-econ-hospitality.js`:
+  **flashcards 30→73 · quiz 20→46 · fill 15→36** + prošireni `learn` (povijesni razvoj ekonomije; asocijacije/koncentracija
+  poduzeća; poslovna načela/politika/planiranje; likvidnost/solventnost, amortizacijski rokovi RH + metode `a%=100/t`;
+  fiksni/varijabilni, zone troškova, koef. reaktivnosti `h=T%/Q%`, break-even). Catalog opis 1. kolokvija ispravljen
+  (bio pogrešno „seminarski: sezonalnost/konkurentnost"). `CONTENT_VERSION` 20260609→20260613 + bump `catalog.js`/
+  `content-loader.js` `?v=20260613`. Verify 0; Playwright 36/36. **2. kolokvij (Unit 6–10) ostaje „coming soon".**
 - **Predmet preimenovan + premješten: „Business Entrepreneurship" → „Entrepreneurship and Innovation",
   sem 2 → sem 1** (`data/catalog.js`, id `entrepreneurship` nepromijenjen → napredak/storageKey očuvan).
   Ispravak prema stvarnom silabusu (predmet je u zimskom semestru). Posljedica: u browse navigaciji se

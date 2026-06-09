@@ -135,7 +135,7 @@ const SOKRAT_CATALOG = {
       storageKey: 'econ-hospitality-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'first-midterm', name: 'First Midterm', description: 'Seminar-based preparation: macro importance, seasonality, case studies, competitiveness' },
+        { id: 'first-midterm', name: 'First Midterm', description: 'Units 1-5: hospitality basics, business economics, the hospitality business, assets of reproduction, and cost theory' },
         { id: 'second-midterm', name: 'Second Midterm', description: 'Coming soon' }
       ],
       content: {

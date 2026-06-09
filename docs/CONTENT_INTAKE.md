@@ -74,6 +74,16 @@ T11 New trends in promotion · T12 Planning · T13 Organizing & Controlling.
 **Catalog sad:** marketing ima `first-midterm` (✅) + `second-midterm` (coming-soon). Provjeri kako su drugi
 predmeti riješili „final" (te2 ima zaseban `te2FinalData`; BI radi `Object.assign(M1,M2)`).
 
+## Economics in Hospitality (2. god) — intake & nalaz (2026-06-09)
+Folder: `2. godina Hospitaliy Managament/Economics of hospitality` (svi PDF, čista ekstrakcija teksta).
+Intro (`1 Introductory information 2026.pdf`) = silabus: **T7 = 1. midterm, T13 = 2. midterm** → **1. kolokvij =
+T2–T6 = Unit 1–5**, 2. kolokvij = Unit 6–10 (Unit 6–10 imaju i „add" verzije). Kolegij: K. Mikinac, FTHM, sem IV, 9 ECTS.
+
+**1. kolokvij ✅ GOTOVO (Sesija 27).** Postojeći `data-econ-hospitality.js` (5 jedinica) imao **točnu strukturu** ali
+**pretanak sadržaj** (~15–25% slajdova; U3/U4/U5 = 48–55 slajdova). Rebuild iz izvora → **73 fc / 46 quiz / 36 fill** +
+bogat learn. Catalog opis 1. kolokvija ispravljen (bio pogrešno „seminarski"). **2. kolokvij = Unit 6–10 → SLJEDEĆE.**
+Napomena: postoji i zaseban folder `seminar Hospitality economics` (seminarski dio, drugačiji od predavanja).
+
 ## Struktura mapa (gitignored)
 ```
 _materials/
