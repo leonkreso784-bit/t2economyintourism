@@ -148,7 +148,7 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - [x] **B0.8** Provjere Faze 0: verify (0/0) + node unit (60/60) + Playwright **44/44** (36 bazni + 8 temp: accounting tab+prazno
       stanje, te2 nema tab, geography zadržava Map). **Usput popravljeno:** Playwright je `testMatch`-om hvatao `tests/unit/*.test.js`
       i `process.exit()` je rušio cijeli run → dodan `testIgnore:['unit/**']` u `playwright.config.js`. Temp spec obrisan. *Done ✅.*
-- [ ] **B0.9** Commit lokalno: `feat(exercises): engine scaffold + accounting feature flag (no content)`.
+- [x] **B0.9** Commit lokalno ✅: `feat(exercises): engine scaffold + accounting feature flag (no content)` (`3324e72`, 15 datoteka). **NEDEPLOYANO** (push čeka izričitu potvrdu). → **FAZA 0 KOMPLETNA.**
 
 ### FAZA 1 — Generički tipovi widgeta (1 cigla = 1 tip; svaki s demo vježbom + node testom grader-a)
 - [ ] **B1.1** `choice` (TF + MC): renderer + grader + 1 demo + node test. *Done:* točan/netočan unos → ispravan feedback.
@@ -208,6 +208,7 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 ---
 
 ## 8. Stanje / recovery nakon compacta
-- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **sve `[ ]` (kreće B0.1).**
+- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZA 0 GOTOVA (B0.1–B0.9, commit `3324e72`, lokalno/nedeployano); kreće B1.1 (`choice` widget).**
+- Provjere: `npm run test:unit` (60/60), `npm run verify` (0/0), `npm run test:responsive` (44/44 sa Faze 0). Engine = `js/exercises-core.js` + `js/exercises.js` + `css/exercises.css`; content pack = `data/accounting/exercises.js` (`window.accountingExercises`, prazno). `acc-kernel.js` (B2.1) još NE postoji.
 - Izvori: `tmp-acc/img/` (133 JPG, gitignored) + docx (`…/Accounting/`). Renderer: `tmp-acc/pdf2img.mjs`.
 - Analiza/katalog: [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**
