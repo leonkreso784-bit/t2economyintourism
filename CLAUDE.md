@@ -101,8 +101,15 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   ali NEMAJU strukturu „2 kolokvija + finalni" — **realno svi imaju 2 kolokvija + završni → trebaju restrukturu na K1/K2/finalni**
   (plan + trenutno stanje po predmetu: `docs/BACKLOG.md`; čeka materijale/silabus). ADR-006 „ne preslagivati stare predmete" je
   za sadržajno upotpunjavanje nadjačan; migracija u bazu i dalje JEDNOM u Bloku B.
+- **▶ AKTIVNO (2026-06-10): ACCOUNTING — Exercises engine + restruktura.** Cijeli izvor pregledan (43 datoteke; silabus:
+  K1=Ch1–6, K2=Ch7–16). Gradi se **generički, reusable Exercises sustav** (pravo računovodstvo, auto-ocjenjivanje):
+  engine = čista mehanika + `acc-kernel`, sadržaj = „content pack" (`data/<subject>/exercises.js`, jezik/domena iz podataka →
+  hrvatski/drugi fakulteti = samo nova data + catalog, NULA izmjena enginea). Tipovi: choice/numeric/ratio/statement/classify/journal
+  + parametrizirano + 3 moda (practice/exam/walkthrough). **Cigla-po-cigla checklist s kvačicama: `docs/EXERCISES_ENGINE.md` §6**
+  (kreće B0.1). Analiza/katalog: `docs/ACCOUNTING_PLAN.md`. Izvori (133 JPG iz „nečitljivih" PDF-ova + docx): `tmp-acc/` (gitignored).
+  Nalaz: postojećih 7 kat. = ~cijeli K2; **K1 (Ch1–6) treba dopisati.** **Ništa još nije implementirano** (samo planski docovi).
 - **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god sem 1 — restruktura 4 predmeta** na K1/K2/finalni
-  (čeka materijale; obrazac kao Marketing/Geo/F&N). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
+  (Accounting prvi, u tijeku; obrazac kao Marketing/Geo/F&N). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
   Business Informatics već gotov). (3) **pa drugi smjerovi** (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
@@ -118,4 +125,5 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 ## Dokumentacija (`docs/`)
 `README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·
 `BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` · `CONTENT_GUIDE` · `CONTENT_INTAKE` · `TESTING` ·
-`CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG`.
+`CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG` ·
+**`EXERCISES_ENGINE`** (reusable sustav vježbi + cigla-po-cigla plan) · **`ACCOUNTING_PLAN`** (analiza izvora + katalog).
