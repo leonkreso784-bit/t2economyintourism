@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Sesija: Food & Nutrition FINALNI ispit (hibrid) — predmet 100% gotov
+**Kontekst:** korisnik: „nemamo još završni ispit iz food and nutritiona, molim te ga napravi… polako, koncentrirano,
+s provjerama i velikom todo listom". Silabus (FAN Introduction): finalni = **30% (min 15%), obavezan**, prag za izlazak
+**35%**; **16 pitanja** (12 kratkih × 1.5% + 4 esejska × 3%), pokriva sve Teme 1–14.
+
+**Struktura = HIBRID** (isti obrazac kao Marketing/Economics/Geography/BI): novi `data-food-nutrition-final.js` →
+`foodNutritionFinalData = Object.assign({}, foodNutritionData, foodNutritionM2Data, { examPractice })`. Spaja svih
+**14 kategorija** oba kolokvija (7 K1 Teme 1–7 + 7 K2 Teme 8–14; nema kolizija ključeva) i dodaje kuriranu
+**`examPractice`** („Exam Practice (All Topics)", 14 fc / 12 quiz / 8 fill + „Final Exam Roadmap" learn: must-know po temi
++ cross-topic niti fermentacija/alkohol-ljestvica/sigurnost hrane/kvaliteta proteina). Učitava se **ZADNJI** (ovisi o
+`window.foodNutritionData` + `window.foodNutritionM2Data`).
+
+**Catalog:** nova lekcija `final`, `scripts` += `data-food-nutrition-final.js` (zadnji), `resolve.final = foodNutritionFinalData`.
+
+**Provjere:** `CONTENT_VERSION` 20260620→20260621 + bump `catalog.js`/`content-loader.js` `?v=20260621`. **Verify 0**
+(food-nutrition: 3 lekcije zelene), strukturni validator merge-a 0 (**15 kat. / 174 fc / 182 quiz / 122 fill**; 0 loših
+quiz-indeksa, 0 fill bez `_______`, 0 kat. bez Learn; merge potvrđen: wine+healthyDiet+examPractice prisutni), **Playwright**
++ ciljani final render-test (4 profila, quizOpts=16). Lokalni commit; **NIJE deployano** (čeka potvrdu). `tmp-*` obrisani.
+→ **Food & Nutrition 100% KOMPLETAN (K1 + K2 + finalni).**
+
+**▶ Sljedeće:** opcija — deploy (3 lokalna commita: BUG-009 + F&N K2 + F&N finalni); zatim **1. godina** (Management/Macroeconomics/SIT).
+
+---
+
 ## 2026-06-10 — Sesija: Food & Nutrition 2. kolokvij + usklađivanje podjele sa silabusom
 **Kontekst:** korisnik: „krenimo na food and nutrition… pregledaj jeli se podudara sa prvim midtermom". Izvori = mapa
 `2. godina Hospitaliy Managament/food and nutrition` (FAN 1–14 + Introduction). Ekstrakcija `node scripts/pdf-text.js` → `tmp-fan/`.

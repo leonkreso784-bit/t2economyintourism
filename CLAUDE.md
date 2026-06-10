@@ -92,8 +92,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   FAN 1–7 (0 činjeničnih grešaka) + **strukturna ispravka:** silabus (FAN Introduction) propisuje K1=Teme 1–7, K2=Teme 8–14,
   a K1 je pogrešno imao **Beer (Tema 8)** → Beer **premješten** u K2 (ključ `beer` isti, napredak očuvan); K1 sad 7 kat. (do Wine).
   **2. kolokvij** = novi `data-food-nutrition-m2.js` (`foodNutritionM2Data`, 7 kat. po temi: beer/distilledSpirits/meat/fish/
-  milkDairy/eggs/healthyDiet; FAN 8–14; **71 fc / 84 quiz / 56 fill**). Catalog: 2 lekcije + 2 scripta. Cache `20260620`.
-  Verify 0, strukturni validator 0, Playwright 36/36 + ciljani K2 render. (Opcija kasnije: finalni hibrid.)
+  milkDairy/eggs/healthyDiet; FAN 8–14; **71 fc / 84 quiz / 56 fill**). **Finalni** = `data-food-nutrition-final.js`
+  (`Object.assign(K1,K2,{examPractice})`, hibrid; učitava se ZADNJI; **15 kat. / 174 fc / 182 quiz / 122 fill**).
+  Catalog: 3 lekcije + 3 scripta. Cache `20260621`. Verify 0, strukturni validator 0, Playwright + ciljani render-testovi.
+  → **Food & Nutrition 100% KOMPLETAN (K1 + K2 + finalni).**
 - **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god SADRŽAJNO KOMPLETNA** (svih 9 predmeta K1+K2/finalni);
   opcija: finalni hibridi gdje fale (Food & Nutrition). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
   Business Informatics već gotov). (3) **pa drugi smjerovi** (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).

@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Food & Nutrition FINALNI ispit (Teme 1–14) — hibrid:** novi `data-food-nutrition-final.js`
+  (`window.foodNutritionFinalData = Object.assign({}, foodNutritionData, foodNutritionM2Data, { examPractice })`,
+  uzor Marketing/Economics/Geography/BI final; učitava se ZADNJI). Spaja svih **14 kategorija** oba kolokvija
+  (7 K1 Teme 1–7 + 7 K2 Teme 8–14; nema kolizija ključeva) + dodaje kuriranu **`examPractice`** („Exam Practice
+  (All Topics)", cross-topic: 14 fc · 12 quiz · 8 fill + „Final Exam Roadmap" learn s tablicom must-know po temi i
+  cross-topic nitima). Silabus (FAN Introduction): finalni = **30% (min 15%), obavezan, prag 35%; 16 pitanja
+  (12 kratkih × 1.5% + 4 esejska × 3%)**, pokriva sve. Catalog: nova lekcija `final`, `scripts` += final (zadnji),
+  `resolve.final = foodNutritionFinalData`. `CONTENT_VERSION` 20260620→20260621 + bump `catalog.js`/`content-loader.js`
+  `?v=20260621`. Ukupno final = **15 kat. / 174 fc / 182 quiz / 122 fill**. Verify 0; strukturni validator merge-a 0
+  (0 loših quiz-indeksa, 0 fill bez praznine, 0 kat. bez Learn); Playwright + ciljani final render-test (4 profila,
+  merged=true: wine + healthyDiet + examPractice aktivni, quizOpts=16). → **Food & Nutrition 100% KOMPLETAN (K1 + K2 + finalni).**
 - **Food & Nutrition 2. kolokvij („Topics 8–14") — `second-midterm` popunjen + podjela usklađena sa silabusom:**
   novi sibling fajl `data-food-nutrition-m2.js` (`window.foodNutritionM2Data`, obrazac kao ostali `data-*-m2.js`)
   sa **7 kategorija po temi** — Beer, Distilled Spirits & Liqueurs, Meat, Fish, Milk & Dairy, Eggs, Healthy Diet

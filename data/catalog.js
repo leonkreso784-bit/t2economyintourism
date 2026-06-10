@@ -205,11 +205,13 @@ const SOKRAT_CATALOG = {
       features: { blindMap: false },
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Topics 1–7: Food Quality, Components, Preservation, Cereals, Fruits & Vegetables, Coffee/Tea/Cocoa, and Wine' },
-        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 8–14: Beer, Distilled spirits & liqueurs, Meat, Fish, Milk & dairy, Eggs, and Healthy diet' }
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Topics 8–14: Beer, Distilled spirits & liqueurs, Meat, Fish, Milk & dairy, Eggs, and Healthy diet' },
+        { id: 'final', name: 'Final Exam', description: 'All topics 1–14 (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-food-nutrition.js', 'data-food-nutrition-m2.js'],
-        resolve: { 'first-midterm': 'foodNutritionData', 'second-midterm': 'foodNutritionM2Data' }
+        // data-food-nutrition-final.js MUST load last (Object.assign of the two midterm window objects)
+        scripts: ['data-food-nutrition.js', 'data-food-nutrition-m2.js', 'data-food-nutrition-final.js'],
+        resolve: { 'first-midterm': 'foodNutritionData', 'second-midterm': 'foodNutritionM2Data', 'final': 'foodNutritionFinalData' }
       }
     },
     {

@@ -133,8 +133,13 @@ K1 sad = 7 kat. (Topics 1–7, završava na Wine; 89 fc / 86 quiz / 58 fill).
 **2. kolokvij ✅ GOTOVO (2026-06-10).** FAN 8–14 → novi sibling `data-food-nutrition-m2.js` (`foodNutritionM2Data`) sa
 **7 kategorija po temi** (beer / distilledSpirits / meat / fish / milkDairy / eggs / healthyDiet; **71 fc / 84 quiz / 56 fill**).
 Catalog: `scripts` += m2, `resolve.second-midterm = foodNutritionM2Data`, coming-soon uklonjen, opisi lekcija osvježeni.
-Verify 0, strukturni validator 0, Playwright 36/36 + ciljani K2 render-test (4 profila). `CONTENT_VERSION` 20260620.
-→ **Food & Nutrition KOMPLETAN (1. + 2. kolokvij).** Opcija kasnije: finalni hibrid (uzor Marketing/Econ/Geo).
+Verify 0, strukturni validator 0, Playwright 40/40 + ciljani K2 render-test (4 profila). `CONTENT_VERSION` 20260620.
+
+**Finalni ✅ GOTOVO (2026-06-10).** Hibrid `data-food-nutrition-final.js` = `Object.assign({}, foodNutritionData,
+foodNutritionM2Data, { examPractice })` → **15 kat. / 174 fc / 182 quiz / 122 fill** (14 kategorija oba kolokvija +
+cross-topic „Exam Practice (All Topics)"). Silabus: finalni = 30% (min 15%), obavezan, prag 35%; 16 pitanja (12 kratkih +
+4 esejska). Catalog: lekcija `final`, script zadnji, `resolve.final`. `CONTENT_VERSION` 20260621. Verify 0, strukturni
+validator 0, Playwright + ciljani final render (4 profila, quizOpts=16). → **Food & Nutrition 100% KOMPLETAN (K1 + K2 + finalni).**
 
 ## Struktura mapa (gitignored)
 ```
