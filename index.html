@@ -46,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260611">
+    <link rel="stylesheet" href="styles.css?v=20260622">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -390,6 +390,10 @@
             <button class="study-nav-btn" data-section="blind-map" id="blindMapNavBtn" style="display: none;">
                 <i class="fas fa-map-marked-alt"></i>
                 <span>Map</span>
+            </button>
+            <button class="study-nav-btn" data-section="exercises" id="exercisesNavBtn" style="display: none;">
+                <i class="fas fa-calculator"></i>
+                <span>Exercises</span>
             </button>
         </nav>
 
@@ -849,6 +853,22 @@
                 </div>
             </div>
         </section>
+
+        <!-- EXERCISES SECTION (subjects with features.exercises only) -->
+        <section id="exercises" class="section">
+            <div class="ex-container">
+                <div class="ex-header">
+                    <h1><i class="fas fa-calculator"></i> Exercises</h1>
+                    <p>Interactive, auto-graded practice problems.</p>
+                </div>
+                <div id="exercisesContent">
+                    <div class="ex-empty">
+                        <i class="fas fa-pen-ruler"></i>
+                        <p>No exercises yet for this lesson.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         </main>
 
         <!-- Mobile Bottom Navigation for Study Page -->
@@ -880,6 +900,10 @@
             <button class="mobile-nav-btn" data-section="blind-map" id="blindMapMobileBtn" style="display: none;">
                 <i class="fas fa-map-marked-alt"></i>
                 <span>Map</span>
+            </button>
+            <button class="mobile-nav-btn" data-section="exercises" id="exercisesMobileBtn" style="display: none;">
+                <i class="fas fa-calculator"></i>
+                <span>Exercises</span>
             </button>
         </nav>
     </section>
@@ -971,21 +995,23 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260621"></script>
+    <script src="data/catalog.js?v=20260622"></script>
 
     <!-- App modules (split from app.js) -->
     <script src="js/config.js?v=20260602"></script>
-    <script src="js/content-loader.js?v=20260621"></script>
+    <script src="js/content-loader.js?v=20260622"></script>
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>
-    <script src="js/navigation.js?v=20260605"></script>
+    <script src="js/navigation.js?v=20260622"></script>
     <script src="js/flashcards.js?v=20260602"></script>
     <script src="js/quiz.js?v=20260602"></script>
     <script src="js/fill-blanks.js?v=20260602"></script>
     <script src="js/learn.js?v=20260602"></script>
     <script src="js/progress.js?v=20260610"></script>
     <script src="js/blind-map.js?v=20260602"></script>
+    <script src="js/exercises-core.js?v=20260622"></script>
+    <script src="js/exercises.js?v=20260622"></script>
     <script src="js/init.js?v=20260605"></script>
 </body>
 </html>

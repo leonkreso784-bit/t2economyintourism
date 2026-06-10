@@ -15,6 +15,10 @@ const iphone = (width, height) => ({
 
 module.exports = defineConfig({
   testDir: './tests',
+  // Node unit tests (tests/unit/*.test.js) run via `npm run test:unit`, NOT Playwright.
+  // Without this, Playwright's default testMatch picks up *.test.js, executes its
+  // top-level process.exit(), and aborts the whole browser run.
+  testIgnore: ['unit/**'],
   timeout: 60000,
   fullyParallel: false,
   workers: 1,

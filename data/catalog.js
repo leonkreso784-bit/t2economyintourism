@@ -83,12 +83,13 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#059669', '#10b981'],
       description: 'Cash Control, Budgeting, SEC Reports, Financial Analysis',
       storageKey: 'accounting-progress',
-      features: { blindMap: false },
+      features: { blindMap: false, exercises: true },
       lessons: [
         { id: 'accounting-fundamentals', name: 'Accounting Fundamentals', description: 'Complete accounting theory for hospitality' }
       ],
       content: {
-        // index.js mora biti ZADNJI — kombinira ostale module u accountingData
+        // index.js mora biti ZADNJI — kombinira ostale module u accountingData.
+        // exercises.js je neovisan (window.accountingExercises) → može prije index.js.
         scripts: [
           'data/accounting/cash-control.js',
           'data/accounting/budgeting.js',
@@ -97,9 +98,11 @@ const SOKRAT_CATALOG = {
           'data/accounting/hotel-statements.js',
           'data/accounting/financial-analysis.js',
           'data/accounting/final-practice.js',
+          'data/accounting/exercises.js',
           'data/accounting/index.js'
         ],
-        resolve: { '*': 'accountingData' }
+        resolve: { '*': 'accountingData' },
+        exercises: 'accountingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
     {

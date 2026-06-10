@@ -5,6 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Exercises engine — FAZA 0 (scaffold, bez sadržaja):** temelj generičkog, reusable sustava interaktivnih
+  auto-ocjenjivih vježbi (plan: `docs/EXERCISES_ENGINE.md`). **Engine (subject-agnostic):** `js/exercises-core.js`
+  — čiste funkcije bez DOM-a (`parseAmount` s EU/US + zagrade-negativ, `formatAmount`, `numEq`, `numEqMoney` na razini
+  centi, `gradeSet` multiset/redoslijed-neovisno, `seededRandom` mulberry32, `pickParams`); `js/exercises.js`
+  — `initExercises()` (lista kartica iz content packa, filtrirana po lekciji, prazno stanje, shell na klik);
+  `css/exercises.css` (`ex-`-prefiks, mode-tabovi/kartice/feedback/mobilni scroll-x). **Povezivanje (data-driven):**
+  `navigation.js` `applyFeatureNav()` prikazuje tab po `catalog features` — **blindMap refaktoriran** s hardkodiranog
+  `subjectId==='geography'` na `features.blindMap`; novi `features.exercises` + `content.exercises` (ime window var).
+  index.html: `#exercises` sekcija + 2 skrivena nav gumba. **Content pack:** `data/accounting/exercises.js`
+  (`window.accountingExercises = {meta:{lang,currency,version}, exercises:[]}`) — accounting dobio `features.exercises:true`.
+  **Testovi:** novi `npm run test:unit` (60/60, node, bez frameworka); `playwright.config.js` dobio `testIgnore:['unit/**']`
+  (spriječeno da Playwright pokupi node `*.test.js` i `process.exit` mu sruši run). `CONTENT_VERSION`/`styles.css`/
+  `catalog.js`/`content-loader.js`/`navigation.js` `?v=20260622`. Verify **0/0**, Playwright **44/44** (ostali predmeti netaknuti).
+  **Ništa vidljivo dok predmet nema flag → nula utjecaja na ostatak appa.**
 - **Food & Nutrition FINALNI ispit (Teme 1–14) — hibrid:** novi `data-food-nutrition-final.js`
   (`window.foodNutritionFinalData = Object.assign({}, foodNutritionData, foodNutritionM2Data, { examPractice })`,
   uzor Marketing/Economics/Geography/BI final; učitava se ZADNJI). Spaja svih **14 kategorija** oba kolokvija

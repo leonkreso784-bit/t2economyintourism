@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Accounting Exercises engine: FAZA 0 (scaffold) GOTOVA (lokalno, nedeployano)
+**Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
+Cilj Faze 0: kompletan engine temelj iza feature-flaga, **nula vidljivih promjena** dok predmet nema flag.
+
+**Napravljeno (B0.1–B0.9):**
+- **`js/exercises-core.js`** (čista jezgra, bez DOM-a): `parseAmount` (EU/US format, valuta, zagrade=neg), `formatAmount`,
+  `numEq` (apsolutna tol), `numEqMoney` (centi, float-safe `toCents`), `gradeSet` (multiset, redoslijed-neovisno,
+  case/space-insensitive ključ), `seededRandom` (mulberry32), `pickParams` (deterministički; `{min,max,step}`/`choices`/literal).
+- **`tests/unit/exercises-core.test.js`** + `npm run test:unit` — mali runner bez frameworka, **60/60** (EU/US, 1.005 rub, multiset, determinizam).
+- **`css/exercises.css`** (`ex-`-prefiks) + `@import` u styles.css; **`js/exercises.js`** `initExercises()` (lista/prazno stanje/shell).
+- **`index.html`**: `#exercises` sekcija + 2 skrivena nav gumba (desktop+mobile).
+- **`js/navigation.js`**: `applyFeatureNav()` data-driven (catalog `features`); **blindMap refaktoriran** (`geography` hardkod → `features.blindMap`); `switchSection('exercises')→initExercises()`.
+- **`data/catalog.js`**: accounting → `features.exercises:true` + `content.exercises:'accountingExercises'` + script. **`data/accounting/exercises.js`** skeleton (`window.accountingExercises`, prazna lista).
+
+**Testirano:** verify **0/0** (9 predmeta); node unit **60/60**; Playwright **44/44** (36 bazni + 8 ciljanih: accounting tab+prazno
+stanje, te2 bez taba, geography zadržava Map; smoke 9 predmeta 0 problema 0 errora). **Usput popravljeno:** Playwright je `*.test.js`
+node-runnera tretirao kao svoj test pa ga `process.exit()` rušio → `testIgnore:['unit/**']` u `playwright.config.js`. Cache svuda `?v=20260622`.
+
+**Stanje:** sve commitano lokalno (FAZA 0), **ništa deployano**. **▶ Sljedeće:** FAZA 1 — generički tipovi widgeta (B1.1 `choice`: renderer+grader+demo+test).
+
+---
+
 ## 2026-06-10 — Ispravak opsega 2. god + plan restrukture sem-1 predmeta (SAMO dokumentacija)
 **Kontekst:** korisnik provjerom otkrio da predmeti **2. god semestra 1** (Tourism Economics, Entrepreneurship, Accounting,
 E-Business) realno **imaju 2 kolokvija + završni**, ali u aplikaciji NISU u toj strukturi (stari root `data-*.js`, ad-hoc

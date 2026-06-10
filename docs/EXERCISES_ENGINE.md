@@ -130,26 +130,24 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 > Legenda: `[ ]` todo · `[x]` gotovo. Svaka cigla ima **done-kriterij**. Drži app zelenim na svakoj.
 
 ### FAZA 0 — Engine temelj (ništa vidljivo korisnicima dok flag nije upaljen)
-- [ ] **B0.1** `js/exercises-core.js`: `parseAmount, formatAmount, numEq, numEqMoney, gradeSet` + `module.exports`.
-      *Done:* node test datoteka pokriva rubne slučajeve (EU/US format, cente, multiset) — sve prolazi.
-- [ ] **B0.2** `js/exercises-core.js`: `seededRandom(seed)` + `pickParams(spec, seed)` (deterministički).
-      *Done:* isti seed → isti parametri (node test).
-- [ ] **B0.3** `css/exercises.css` (kostur: kartice, polja, feedback, mobile scroll-x) + `@import` u `styles.css` (+ `?v=`).
-      *Done:* import učitan, nema vizualne regresije drugih sekcija.
-- [ ] **B0.4** `index.html`: `<section id="exercises" class="section">` (prazno stanje) + 2 nav gumba
-      (`#exercisesNavBtn` desktop, `#exercisesMobileBtn` mobile, `data-section="exercises"`, `style="display:none"`).
-      *Done:* markup postoji, skriven.
-- [ ] **B0.5** `js/navigation.js`: u otvaranju predmeta prikaži exercises gumbe kad `subject.features?.exercises`
-      (data-driven; usput refaktoriraj blindMap na isti `features.blindMap` obrazac). `switchSection('exercises')→initExercises()`.
-      *Done:* tab se pojavi samo za predmete s flagom.
-- [ ] **B0.6** `js/exercises.js`: `initExercises()` — pročita `window[SokratCatalog var]`, filtrira po `currentLesson`,
-      renderira LISTU kartica (samo naslovi + status), prazno stanje ako nema vježbi.
-      *Done:* lista se renderira; klik (zasad) otvara prazan widget shell.
-- [ ] **B0.7** `data/catalog.js`: accounting → `features:{exercises:true}`, `content.exercises:'accountingExercises'`,
-      dodaj `'data/accounting/exercises.js'` u `scripts`. `data/accounting/exercises.js`: `accountingExercises={meta:{lang:'en',currency:'$',version:1},exercises:[]}` + window/module export. Bump `?v=`/`CONTENT_VERSION`.
-      *Done:* `npm run verify` 0 grešaka.
-- [ ] **B0.8** Provjere Faze 0: verify + Playwright + `tests/_tmp-exercises.spec.js` (tab postoji za accounting, prazno
-      stanje, OSTALI predmeti netaknuti). *Done:* sve zeleno; obriši temp spec.
+- [x] **B0.1** `js/exercises-core.js`: `parseAmount, formatAmount, numEq, numEqMoney, gradeSet` (+ `canonicalKey`, `toCents`) + `module.exports` i `window.ExercisesCore`.
+      *Done ✅:* `tests/unit/exercises-core.test.js` (mali runner, bez frameworka) — **51/51 prolazi** (EU/US format, zagrade=neg, cente, 1.005 rub, multiset/redoslijed-neovisno). Pokreni: **`npm run test:unit`**.
+- [x] **B0.2** `js/exercises-core.js`: `seededRandom(seed)` (mulberry32) + `pickParams(spec, seed)` (deterministički; spec: `{min,max,step}` / `{choices:[…]}` / literal).
+      *Done ✅:* isti seed → isti parametri; raspon/step/choices poštovani — **60/60** (`npm run test:unit`).
+- [x] **B0.3** `css/exercises.css` (kostur: kontejner, mode-tabovi, kartice, polja, feedback, prazno stanje, mobilni scroll-x; sve `ex-`-prefiks) + `@import` u `styles.css` (`?v=20260622`) + `styles.css?v=20260622` u index.html.
+      *Done ✅:* import učitan; nula `.ex-*` markupa zasad → nema vizualne regresije drugih sekcija.
+- [x] **B0.4** `index.html`: `<section id="exercises" class="section">` (prazno stanje, `#exercisesContent`) + 2 nav gumba
+      (`#exercisesNavBtn` desktop, `#exercisesMobileBtn` mobile, `data-section="exercises"`, `style="display:none"`). *Done ✅:* markup postoji, skriven.
+- [x] **B0.5** `js/navigation.js`: novi `applyFeatureNav(subjectId)` (data-driven preko `SokratCatalog.getSubject().features`) prikazuje exercises gumbe kad `features.exercises`; **blindMap refaktoriran** s hardkodiranog `subjectId==='geography'` na isti `features.blindMap`. `switchSection('exercises')` → `initExercises()` (guarded). `navigation.js?v=20260622`. *Done ✅:* tab se pojavi samo za predmete s flagom (geography map i dalje radi).
+- [x] **B0.6** `js/exercises.js`: `initExercises()` — pročita `window[subject.content.exercises]`, filtrira po `currentLesson`,
+      renderira LISTU kartica (naslov + status + tagovi tip/poglavlje), prazno stanje ako nema vježbi; delegirani click → `openExercise()` shell. Statički `<script>` (exercises-core.js + exercises.js, `?v=20260622`) prije `init.js`.
+      *Done ✅:* lista/prazno stanje se renderira; klik otvara shell (rendereri po tipu = FAZA 1).
+- [x] **B0.7** `data/catalog.js`: accounting → `features:{blindMap:false, exercises:true}`, `content.exercises:'accountingExercises'`,
+      `'data/accounting/exercises.js'` dodan u `scripts` (prije index.js). `data/accounting/exercises.js`: `accountingExercises={meta:{lang:'en',currency:'$',version:1},exercises:[]}` + window/module export. Bump `CONTENT_VERSION=20260622` + catalog.js/content-loader.js `?v=`.
+      *Done ✅:* `npm run verify` **0 grešaka / 0 upozorenja** (9 predmeta); data pack parsira u node.
+- [x] **B0.8** Provjere Faze 0: verify (0/0) + node unit (60/60) + Playwright **44/44** (36 bazni + 8 temp: accounting tab+prazno
+      stanje, te2 nema tab, geography zadržava Map). **Usput popravljeno:** Playwright je `testMatch`-om hvatao `tests/unit/*.test.js`
+      i `process.exit()` je rušio cijeli run → dodan `testIgnore:['unit/**']` u `playwright.config.js`. Temp spec obrisan. *Done ✅.*
 - [ ] **B0.9** Commit lokalno: `feat(exercises): engine scaffold + accounting feature flag (no content)`.
 
 ### FAZA 1 — Generički tipovi widgeta (1 cigla = 1 tip; svaki s demo vježbom + node testom grader-a)

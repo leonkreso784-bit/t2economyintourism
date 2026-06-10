@@ -465,6 +465,26 @@ function showStudyLoading(on) {
     if (el) el.hidden = !on;
 }
 
+// Show/hide a paired (desktop + mobile) nav button.
+function setNavButtonVisible(navId, mobileId, visible) {
+    [navId, mobileId].forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (visible) el.style.removeProperty('display');
+        else el.style.display = 'none';
+    });
+}
+
+// Data-driven optional sections: show a subject's special tabs based on its catalog
+// `features` flags (e.g. blindMap for Geography, exercises for Accounting). Adding a
+// flag in data/catalog.js is all it takes — no per-subject code here.
+function applyFeatureNav(subjectId) {
+    const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(subjectId) : null;
+    const features = (subject && subject.features) || {};
+    setNavButtonVisible('blindMapNavBtn', 'blindMapMobileBtn', !!features.blindMap);
+    setNavButtonVisible('exercisesNavBtn', 'exercisesMobileBtn', !!features.exercises);
+}
+
 async function initStudyPage(subjectId, lessonId, targetSection) {
     const subject = subjectDataMap[subjectId];
     if (!subject) {
@@ -519,16 +539,8 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
     renderProgressPage();
     updateHomeStats();
 
-    // Show blind map button for Geography
-    if (subjectId === 'geography') {
-        document.getElementById('blindMapNavBtn')?.style.removeProperty('display');
-        document.getElementById('blindMapMobileBtn')?.style.removeProperty('display');
-    } else {
-        const bmNav = document.getElementById('blindMapNavBtn');
-        const bmMob = document.getElementById('blindMapMobileBtn');
-        if (bmNav) bmNav.style.display = 'none';
-        if (bmMob) bmMob.style.display = 'none';
-    }
+    // Data-driven optional tabs (blind map, exercises, …) from catalog `features`.
+    applyFeatureNav(subjectId);
 
     switchSection(targetSection || 'home');
 }
@@ -601,6 +613,8 @@ function switchSection(section) {
         cleanupLearnContentForMobile();
     } else if (section === 'blind-map') {
         initBlindMap();
+    } else if (section === 'exercises') {
+        if (typeof initExercises === 'function') initExercises();
     }
 }
 
