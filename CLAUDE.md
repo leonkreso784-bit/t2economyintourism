@@ -96,8 +96,13 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`Object.assign(K1,K2,{examPractice})`, hibrid; učitava se ZADNJI; **15 kat. / 174 fc / 182 quiz / 122 fill**).
   Catalog: 3 lekcije + 3 scripta. Cache `20260621`. Verify 0, strukturni validator 0, Playwright + ciljani render-testovi.
   → **Food & Nutrition 100% KOMPLETAN (K1 + K2 + finalni).**
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god SADRŽAJNO KOMPLETNA** (svih 9 predmeta K1+K2/finalni);
-  opcija: finalni hibridi gdje fale (Food & Nutrition). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
+- **2. god — stanje (2026-06-10):** **sem 2 = 4/4 KOMPLETNO** (Econ Hospitality, Marketing, Geography, Food & Nutrition,
+  svi K1+K2+finalni i LIVE). **sem 1 = 4 stara root-predmeta** (te2/Entrepreneurship/Accounting/E-Business) imaju sadržaj
+  ali NEMAJU strukturu „2 kolokvija + finalni" — **realno svi imaju 2 kolokvija + završni → trebaju restrukturu na K1/K2/finalni**
+  (plan + trenutno stanje po predmetu: `docs/BACKLOG.md`; čeka materijale/silabus). ADR-006 „ne preslagivati stare predmete" je
+  za sadržajno upotpunjavanje nadjačan; migracija u bazu i dalje JEDNOM u Bloku B.
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god sem 1 — restruktura 4 predmeta** na K1/K2/finalni
+  (čeka materijale; obrazac kao Marketing/Geo/F&N). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
   Business Informatics već gotov). (3) **pa drugi smjerovi** (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.

@@ -5,14 +5,35 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Ispravak opsega 2. god + plan restrukture sem-1 predmeta (SAMO dokumentacija)
+**Kontekst:** korisnik provjerom otkrio da predmeti **2. god semestra 1** (Tourism Economics, Entrepreneurship, Accounting,
+E-Business) realno **imaju 2 kolokvija + završni**, ali u aplikaciji NISU u toj strukturi (stari root `data-*.js`, ad-hoc
+lekcije). → Ranija tvrdnja „2. god 100% kompletna (9/9)" je **netočna i ispravljena** u svim docovima (CLAUDE/ROADMAP/PROGRESS/memorija).
+
+**Točno stanje 2. god (8 predmeta):**
+- **sem 2 = 4/4 KOMPLETNO i LIVE:** Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition (svi K1+K2+finalni).
+- **sem 1 = 4 predmeta trebaju restrukturu na K1/K2/finalni:** te2 (2 lekcije: `studyData` 6 kat + `te2FinalData` 9 kat),
+  Entrepreneurship (1 blok `entrepreneurshipData` 11 kat pod 2 imena lekcije), Accounting (1 lekcija `accountingData` 7 kat /
+  7 modula), E-Business (1 lekcija `ebusinessData` 14 kat / „15 units").
+
+**Plan (detaljno u [BACKLOG.md](BACKLOG.md)):** po predmetu — silabus → K1/K2 split → finalni hibrid (`Object.assign({},K1,K2,
+{examPractice})`), catalog 3 lekcije + 3 scripta, bump verzija, verify + Playwright. Dio posla je SPLIT postojećeg sadržaja
+(ne pisanje od nule) + kurirana `examPractice`. **Čeka materijale/silabus po predmetu.** ADR-006 „ne preslagivati stare predmete"
+nadjačan za sadržajno upotpunjavanje; migracija u bazu i dalje JEDNOM u Bloku B. **Ovaj korak = samo dokumentacija (bez koda); priprema za compact.**
+
+**▶ Sljedeće:** 2. god sem 1 restruktura (kad stignu materijali) → pa **1. godina**.
+
+---
+
 ## 2026-06-10 — DEPLOY ✅ (`05cb0af`) — cijeli Food & Nutrition + BUG-009 LIVE
 Korisnik autorizirao: „deploy svega na github". `git push origin main` (`71e53b5..05cb0af`) → produkcija (Vercel).
 LIVE 3 commita: **fix BUG-009** (Entrepreneurship fill-blank, `9f32df4`) + **Food & Nutrition 2. kolokvij** (Teme 8–14 +
 Beer premješten iz K1 + K1 verificiran, `1c52a5f`) + **Food & Nutrition finalni hibrid** (15 kat. / 174 fc, `05cb0af`).
 `origin/main` sinkroniziran, radno stablo čisto, ništa lokalno nedeployano. (Pre-flight: verify 0, Playwright 40/40.) Cache `20260621`.
-→ **Food & Nutrition 100% KOMPLETAN i LIVE → 2. godina potpuno gotova (9/9 predmeta).**
+→ **Food & Nutrition 100% KOMPLETAN i LIVE.** (Ispravak: 2. god NIJE potpuno gotova — sem 2 = 4/4, ali sem 1 = 4 stara
+predmeta trebaju restrukturu; vidi unos iznad + [BACKLOG.md](BACKLOG.md).)
 
-**▶ Sljedeće:** **1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT; Business Informatics već gotov).
+**▶ Sljedeće:** restruktura 4 predmeta 2. god sem 1, pa **1. godina**.
 
 ---
 
