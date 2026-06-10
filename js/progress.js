@@ -147,7 +147,34 @@ function renderProgressPage() {
         const bmSection = document.getElementById('blindMapProgressSection');
         if (bmSection) bmSection.style.display = 'none';
     }
-    
+
+    // Exercises progress (subjects with features.exercises) — reads the same
+    // localStorage key the Exercises tab writes (<subject>-exercises-progress).
+    const exSection = document.getElementById('exercisesProgressSection');
+    if (exSection) {
+        const exSubject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(currentSubject) : null;
+        const exVar = exSubject && exSubject.content && exSubject.content.exercises;
+        const exData = (exVar && typeof window !== 'undefined') ? window[exVar] : null;
+        const all = (exData && Array.isArray(exData.exercises)) ? exData.exercises : [];
+        const list = all.filter((e) => !e.lesson || e.lesson === currentLesson);
+        if (list.length) {
+            let store = {};
+            try { store = JSON.parse(localStorage.getItem(currentSubject + '-exercises-progress') || '{}'); } catch (e) { store = {}; }
+            let done = 0, attempts = 0, bestSum = 0;
+            list.forEach((e) => {
+                const p = store[e.id];
+                if (p) { if (p.done) done++; attempts += (p.attempts || 0); bestSum += (p.best || 0); }
+            });
+            exSection.style.display = 'block';
+            document.getElementById('exercisesDone').textContent = done;
+            document.getElementById('exercisesTotal').textContent = list.length;
+            document.getElementById('exercisesAttempts').textContent = attempts;
+            document.getElementById('exercisesAvg').textContent = (list.length ? Math.round((bestSum / list.length) * 100) : 0) + '%';
+        } else {
+            exSection.style.display = 'none';
+        }
+    }
+
     const barsContainer = document.getElementById('categoryBars');
     if (!barsContainer || !currentData) return;
     barsContainer.innerHTML = '';

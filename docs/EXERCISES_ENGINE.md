@@ -151,15 +151,15 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - [x] **B0.9** Commit lokalno ✅: `feat(exercises): engine scaffold + accounting feature flag (no content)` (`3324e72`, 15 datoteka). **NEDEPLOYANO** (push čeka izričitu potvrdu). → **FAZA 0 KOMPLETNA.**
 
 ### FAZA 1 — Generički tipovi widgeta (1 cigla = 1 tip; svaki s demo vježbom + node testom grader-a)
-- [ ] **B1.1** `choice` (TF + MC): renderer + grader + 1 demo + node test. *Done:* točan/netočan unos → ispravan feedback.
-- [ ] **B1.2** `numeric`: renderer (1+ polja, jedinice, hint) + grader (`numEq`) + demo + test.
-- [ ] **B1.3** `ratio`: renderer (givens + polja) + grader + demo + test.
-- [ ] **B1.4** `statement`: renderer (sekcije, linije, totali, balancing figure) + grader (`numEqMoney`) + demo + test.
-- [ ] **B1.5** `classify`: renderer (account+class+effect dropdowni) + grader (`gradeSet`, redoslijed-neovisno) + demo + test.
-- [ ] **B1.6** **3 moda** (practice/exam/walkthrough) u zajedničkom widget shell-u + render `solution[]`. *Done:* prebacivanje moda radi na svim tipovima.
-- [ ] **B1.7** **Randomizacija** (`params/generate/solve`) za `numeric`+`ratio` + gumb „New numbers". *Done:* determinizam po seedu (test).
-- [ ] **B1.8** **Napredak**: `accounting-exercises-progress` (done/best/attempts) + blok na Progress stranici. *Done:* napredak preživi reload.
-- [ ] **B1.9** Provjere Faze 1: verify + svi node testovi + Playwright (+ temp spec po tipu). Commit lokalno.
+- [x] **B1.1** `choice` (TF + MC): čisti grader `gradeChoice` u jezgri (node) + DOM widget (render/collect/mark) + **WIDGET REGISTRY** obrazac (render+collect+grader-ime+mark) + check-flow (skupi→grader→feedback→napredak) + 1 demo (`k1-choice-intro-1`, 5 stavki) + CSS. *Done ✅:* node 67/67; ciljani Playwright 8/8 (otvori→svi točni→„Correct" + napredak `done`; 1 krivi→„4/5" + označen točan). **Cache bump odgođen na B1.9** (ništa deployano).
+- [x] **B1.2** `numeric`: čisti `gradeNumeric` (jezgra, `parseAmount`+`numEq` po polju, tol po polju) + DOM widget (polja/jedinice/hint/mark) + demo (`k1-numeric-equity-1`, 2 polja). *Done ✅:* node 73/73; Playwright 8/8 (grouping unos „103,000" točan; 1 krivi→„1/2" + polje označeno).
+- [x] **B1.3** `ratio`: renderer (givens tablica + polja) + grader (reuse `gradeNumeric`, isti field-numEq) + demo (`k2-ratio-restaurant-1`, avg check + seat turnover) + test. *Done ✅:* node 74/74; Playwright 8/8 (givens 513,000 prikazan; tol poštovan).
+- [x] **B1.4** `statement`: `statementCells` (stabilni ključevi, dijele grader+widget) + `gradeStatement` (`numEqMoney` po liniji/totalu) + DOM widget (sekcije/linije/totali/balancing) + demo (`k1-statement-bs-1`, Balance Sheet, common stock = balancing). *Done ✅:* node 79/79; Playwright 8/8 (svi točni→„Correct"; kriv balancing→„9/10" + označen). **Test-fix:** `'10200.004'` (string, 3 znamenke iza) je ISPRAVNO grupiranje → cents-safety testiran na *float*.
+- [x] **B1.5** `classify`: `gradeClassify` (po-slotu: zadani račun + odabir klase i efekta; cls&effect oboje točni) + DOM widget (account label + 2 dropdowna) + demo (`k1-classify-ch6-1`, 3 transakcije). *Napomena:* račun je ZADAN u slotu → per-slot jednakost (čišći feedback); `gradeSet` (redoslijed-neovisno) rezerviran za `journal` (FAZA 2) gdje student sam dodaje linije.
+- [x] **B1.6** **3 moda** (practice/exam/walkthrough) u zajedničkom widget shell-u (mode-bar) + render `solution[]` (walkthrough = bez unosa/Check; exam = bez hintova; feedback s %). *Done ✅:* Playwright 12/12 (numeric hint vidljiv→skriven→solution; choice walkthrough; novi otvor reset na practice).
+- [x] **B1.7** **Randomizacija** (`params`+`generate(p)`) za `numeric`/`ratio` + gumb „New numbers" (novi seed). `resolveExercise` spaja generirani payload (prompt/fields/odgovori) preko definicije; demo `k2-numeric-depreciation-1` (straight-line). *Done ✅:* node determinizam (isti seed→isti odgovor; answer=(cost−salvage)/life za 40 seedova) + Playwright 12/12 (prikazani brojevi se ocijene točno; „New numbers" mijenja zadatak; odsutan za nerandomizirane).
+- [x] **B1.8** **Napredak**: `<subject>-exercises-progress` (done/best/attempts/lastTs; piše `saveProgress` na Check, čita lista + Progress) + kartica „Exercises: done/total, attempts, avg best%" na Progress stranici (data-driven preko `features.exercises`). *Done ✅:* Playwright 8/8 (napredak preživi reload; skriven za te2).
+- [x] **B1.9** Provjere Faze 1: verify **0/0** + node **86/86** + Playwright **36/36** (smoke 9 predmeta, 0 problema/errora). Cache bump `?v=20260623` (exercises-core/exercises/progress.js, exercises.css @import, CONTENT_VERSION+content-loader). Temp specovi obrisani. Commit lokalno. → **FAZA 1 KOMPLETNA.**
 
 ### FAZA 2 — `journal` tip (pravi double-entry; najtemeljitije testirati)
 - [ ] **B2.1** `js/acc-kernel.js`: `postEntries(begBalances, entries)`, `isBalanced(entries)`, `deriveEndingBalances`,

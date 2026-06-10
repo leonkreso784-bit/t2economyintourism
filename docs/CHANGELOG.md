@@ -5,6 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Exercises engine — FAZA 1 (generički tipovi widgeta + modovi + randomizacija + napredak):** svih **5 tipova vježbi**
+  interaktivno i auto-ocjenjivano, svaki = **čisti grader u jezgri (node-testabilan) + tanki DOM widget** (registry obrazac
+  render/collect/grader/mark). Tipovi: **choice** (TF+MC), **numeric** (`numEq`, jedinice/hint), **ratio** (givens tablica +
+  polja), **statement** (sekcije/linije/totali + **balancing figure**, `numEqMoney`), **classify** (zadani račun → klasa+efekt).
+  **3 moda** (practice s hintovima / exam bez / walkthrough = `solution[]` koraci) u zajedničkom shellu. **Randomizacija**
+  (`params`+`generate(p)` deterministički po seedu preko `pickParams`) + gumb **„New numbers"** (demo: straight-line amortizacija).
+  **Napredak** u `<subject>-exercises-progress` (done/best/attempts) + kartica na Progress stranici (data-driven). 6 demo vježbi
+  u `data/accounting/exercises.js` (pravi K1/K2 sadržaj). Jezgra dobila gradere `gradeChoice/gradeNumeric/gradeStatement/
+  gradeClassify` + `statementCells`. **Testovi:** node **86/86** (`npm run test:unit`), Playwright **36/36** (0 regresija; smoke
+  9 predmeta 0 errora). Cache `?v=20260623`. **Sve i dalje iza `features.exercises` → ostali predmeti netaknuti.**
 - **Exercises engine — FAZA 0 (scaffold, bez sadržaja):** temelj generičkog, reusable sustava interaktivnih
   auto-ocjenjivih vježbi (plan: `docs/EXERCISES_ENGINE.md`). **Engine (subject-agnostic):** `js/exercises-core.js`
   — čiste funkcije bez DOM-a (`parseAmount` s EU/US + zagrade-negativ, `formatAmount`, `numEq`, `numEqMoney` na razini

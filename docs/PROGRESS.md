@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — Accounting Exercises engine: FAZA 1 (svih 5 tipova + modovi + randomizacija + napredak) GOTOVA (lokalno)
+**Nastavak** Faze 0. Cilj: generički, auto-ocjenjivi tipovi vježbi iza feature-flaga.
+
+**Napravljeno (B1.1–B1.9):**
+- **5 tipova** (svaki: čisti grader u `js/exercises-core.js` + DOM widget u `js/exercises.js` kroz **WIDGET registry**):
+  `choice` (TF+MC, `gradeChoice`), `numeric` (`gradeNumeric`/`numEq`), `ratio` (givens + reuse `gradeNumeric`),
+  `statement` (`statementCells`+`gradeStatement`/`numEqMoney`, balancing figure), `classify` (`gradeClassify`, zadani račun→klasa+efekt).
+- **3 moda** (practice/exam/walkthrough) + mode-bar; walkthrough crta `solution[]`; exam skriva hintove; feedback s %.
+- **Randomizacija**: `params`+`generate(p)` (deterministički preko `pickParams`/seed) + „New numbers"; demo straight-line amortizacija.
+- **Napredak**: `saveProgress`→`<subject>-exercises-progress` (done/best/attempts); kartica na Progress stranici (`js/progress.js` + markup).
+- **6 demo vježbi** u `data/accounting/exercises.js` (pravi K1/K2 sadržaj: intro choice, equity numeric, restaurant ratio, BS statement, Ch6 classify, depreciation random).
+
+**Testirano:** node **86/86** (`npm run test:unit`); verify **0/0**; Playwright **36/36** (0 regresija; smoke 9 predmeta 0 errora) + ciljani temp
+specovi po cigli (choice/numeric/ratio/statement/classify/modes/random/progress — svi prošli pa obrisani). Cache `?v=20260623`.
+**Nalaz usput:** test je krivo tretirao `'10200.004'` kao decimalu — `parseAmount` to ISPRAVNO čita kao grupiranje (3 znamenke iza); cents-safety testiran na floatu.
+
+**Stanje:** commitano lokalno (FAZA 1), **ništa deployano**. **▶ Sljedeće:** FAZA 2 — `journal` tip (pravi double-entry, `acc-kernel.js`); pa FAZA 3 (sadržaj po poglavlju).
+
+---
+
 ## 2026-06-10 — Accounting Exercises engine: FAZA 0 (scaffold) GOTOVA (lokalno, nedeployano)
 **Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
 Cilj Faze 0: kompletan engine temelj iza feature-flaga, **nula vidljivih promjena** dok predmet nema flag.

@@ -204,6 +204,107 @@
         return out;
     }
 
+    // ========================================================================
+    // TYPE GRADERS — čiste funkcije po tipu vježbe (node-testabilne, bez DOM-a).
+    // DOM sloj (js/exercises.js) samo SKUPLJA unos i poziva ovo. Svaki vraća
+    // jednoličan oblik: { score, max, perField:[{…, ok, expected, got}], correct }.
+    // ========================================================================
+
+    // --- gradeChoice(ex, answers) -------------------------------------------
+    // ex.items: [{ q, kind:'tf'|'mc', options?, answer }]
+    // answers:  [ <bool za tf> | <index za mc> | null ]  (po stavci, isti redoslijed)
+    function gradeChoice(ex, answers) {
+        const items = (ex && Array.isArray(ex.items)) ? ex.items : [];
+        answers = Array.isArray(answers) ? answers : [];
+        const perField = items.map((item, i) => {
+            const got = answers[i] === undefined ? null : answers[i];
+            const ok = got !== null && got === item.answer; // tf: bool===bool; mc: idx===idx
+            return { index: i, ok: !!ok, expected: item.answer, got: got };
+        });
+        const score = perField.filter((f) => f.ok).length;
+        return { score: score, max: items.length, perField: perField, correct: items.length > 0 && score === items.length };
+    }
+
+    // --- gradeNumeric(ex, answers) ------------------------------------------
+    // ex.fields: [{ key, label, answer, tol?, unit?, hint? }]
+    // answers:   { <key>: <raw string ili Number> }  → parsira se preko parseAmount
+    function gradeNumeric(ex, answers) {
+        const fields = (ex && Array.isArray(ex.fields)) ? ex.fields : [];
+        answers = answers || {};
+        const perField = fields.map((f) => {
+            const got = parseAmount(answers[f.key]);
+            const tol = f.tol != null ? f.tol : 0.005;
+            const ok = numEq(got, f.answer, tol);
+            return { key: f.key, ok: ok, expected: f.answer, got: Number.isFinite(got) ? got : null };
+        });
+        const score = perField.filter((p) => p.ok).length;
+        return { score: score, max: fields.length, perField: perField, correct: fields.length > 0 && score === fields.length };
+    }
+
+    // --- statementCells(ex) → [{key,label,answer,isTotal?,derived?,section?}] -
+    // Pljosnati popis svih ćelija (linije po sekcijama + totali) s STABILNIM ključem.
+    // Dijele ga grader I widget (render/collect) → nula drifta. Ključ: line.key/total.key
+    // (eksplicitan u podacima) uz indeksni fallback.
+    function statementCells(ex) {
+        const cells = [];
+        const sections = (ex && Array.isArray(ex.sections)) ? ex.sections : [];
+        sections.forEach((sec, si) => {
+            (sec.lines || []).forEach((line, li) => {
+                cells.push({
+                    key: line.key || ('s' + si + '-l' + li),
+                    label: line.label, answer: line.answer,
+                    section: sec.key || ('s' + si)
+                });
+            });
+        });
+        const totals = (ex && Array.isArray(ex.totals)) ? ex.totals : [];
+        totals.forEach((t, ti) => {
+            cells.push({ key: t.key || ('t' + ti), label: t.label, answer: t.answer, isTotal: true, derived: !!t.derived });
+        });
+        return cells;
+    }
+
+    // --- gradeStatement(ex, answers) ----------------------------------------
+    // Ocjenjuje svaku liniju i total kao novac (numEqMoney). answers: { <key>: raw }.
+    function gradeStatement(ex, answers) {
+        answers = answers || {};
+        const cells = statementCells(ex);
+        const perField = cells.map((c) => {
+            const got = parseAmount(answers[c.key]);
+            const ok = numEqMoney(got, c.answer);
+            return { key: c.key, ok: ok, expected: c.answer, got: Number.isFinite(got) ? got : null };
+        });
+        const score = perField.filter((p) => p.ok).length;
+        return { score: score, max: cells.length, perField: perField, correct: cells.length > 0 && score === cells.length };
+    }
+
+    // --- gradeClassify(ex, answers) -----------------------------------------
+    // ex.rows: [{ text, entries:[{account, cls, effect}] }]  (račun je ZADAN u slotu)
+    // answers: [ [ {cls, effect}, … ] ]  (po retku, po slotu; account se ne unosi)
+    // Per-slot: točno ako su I klasa I efekt točni. (gradeSet/redoslijed-neovisno = journal.)
+    function gradeClassify(ex, answers) {
+        const rows = (ex && Array.isArray(ex.rows)) ? ex.rows : [];
+        answers = Array.isArray(answers) ? answers : [];
+        const perField = [];
+        rows.forEach((row, ri) => {
+            const ansRow = Array.isArray(answers[ri]) ? answers[ri] : [];
+            (row.entries || []).forEach((entry, ei) => {
+                const got = ansRow[ei] || {};
+                const gotCls = got.cls != null ? got.cls : null;
+                const gotEff = got.effect != null ? got.effect : null;
+                const ok = gotCls === entry.cls && gotEff === entry.effect;
+                perField.push({
+                    key: ri + '-' + ei, row: ri, entry: ei, ok: ok,
+                    expected: { cls: entry.cls, effect: entry.effect },
+                    got: { cls: gotCls, effect: gotEff },
+                    account: entry.account
+                });
+            });
+        });
+        const score = perField.filter((p) => p.ok).length;
+        return { score: score, max: perField.length, perField: perField, correct: perField.length > 0 && score === perField.length };
+    }
+
     const ExercisesCore = {
         parseAmount,
         formatAmount,
@@ -213,7 +314,12 @@
         canonicalKey,
         toCents,
         seededRandom,
-        pickParams
+        pickParams,
+        gradeChoice,
+        gradeNumeric,
+        statementCells,
+        gradeStatement,
+        gradeClassify
     };
 
     if (typeof module !== 'undefined' && module.exports) module.exports = ExercisesCore;

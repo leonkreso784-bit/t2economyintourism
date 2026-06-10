@@ -140,6 +140,7 @@
     font-weight: 600;
     color: var(--text-muted);
 }
+.ex-unit { font-weight: 500; opacity: 0.8; }
 .ex-input,
 .ex-select {
     background: var(--bg-primary);
@@ -249,6 +250,121 @@
     font-size: 0.72rem;
     letter-spacing: 0.03em;
 }
+
+/* ---- choice widget (True/False + Multiple Choice) ---- */
+.ex-choice { display: grid; gap: 1.1rem; }
+.ex-choice-item {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+}
+.ex-choice-q {
+    color: var(--text-primary);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 0.7rem;
+}
+.ex-choice-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.ex-opt {
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: var(--radius);
+    padding: 0.55rem 1rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    min-height: var(--touch-target);
+    transition: var(--transition);
+}
+.ex-opt:hover { border-color: var(--primary); }
+.ex-opt.selected {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+/* Marks after checking */
+.ex-opt.is-correct {
+    border-color: var(--success);
+    box-shadow: inset 0 0 0 1px var(--success);
+}
+.ex-opt.selected.is-correct { background: var(--success); border-color: var(--success); }
+.ex-opt.is-incorrect {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: var(--danger);
+    color: var(--text-primary);
+}
+
+/* ---- statement widget (financial statement build) ---- */
+.ex-statement { display: grid; gap: 1rem; }
+.ex-st-section {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.9rem;
+}
+.ex-st-section-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    padding: 0.5rem 0 0.35rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.25rem;
+}
+.ex-st-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+}
+.ex-st-label { color: var(--text-secondary); font-size: 0.92rem; }
+.ex-st-input {
+    width: 140px;
+    max-width: 45%;
+    text-align: right;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.95rem;
+    min-height: 40px;
+}
+.ex-st-row.is-total {
+    border-top: 2px solid var(--border);
+    margin-top: 0.25rem;
+    padding-top: 0.7rem;
+}
+.ex-st-row.is-total .ex-st-label { font-weight: 800; color: var(--text-primary); }
+
+/* ---- classify widget (account given → class + effect) ---- */
+.ex-classify { display: grid; gap: 1.1rem; }
+.ex-cl-row {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+}
+.ex-cl-text { color: var(--text-primary); font-weight: 600; line-height: 1.5; margin-bottom: 0.7rem; }
+.ex-cl-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    padding: 0.45rem 0.55rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    margin-bottom: 0.4rem;
+}
+.ex-cl-account { flex: 1 1 140px; color: var(--text-secondary); font-weight: 600; font-size: 0.92rem; }
+.ex-cl-selects { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ex-cl-select { min-height: 40px; padding: 0.4rem 0.55rem; font-size: 0.9rem; }
+.ex-cl-entry.is-correct { border-color: var(--success); background: rgba(34, 197, 94, 0.08); }
+.ex-cl-entry.is-incorrect { border-color: var(--danger); background: rgba(239, 68, 68, 0.08); }
 
 /* ---- Empty state ---- */
 .ex-empty {

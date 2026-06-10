@@ -7,7 +7,8 @@
 const assert = require('assert');
 const path = require('path');
 const {
-    parseAmount, formatAmount, numEq, numEqMoney, gradeSet, toCents, seededRandom, pickParams
+    parseAmount, formatAmount, numEq, numEqMoney, gradeSet, toCents, seededRandom, pickParams,
+    gradeChoice, gradeNumeric, gradeStatement, statementCells, gradeClassify
 } = require(path.join(__dirname, '..', '..', 'js', 'exercises-core.js'));
 
 let passed = 0;
@@ -180,6 +181,204 @@ test('pickParams: decimal step float-clean', () => {
 });
 test('pickParams: empty/invalid spec → {}', () => {
     assert.deepStrictEqual(pickParams(null, 1), {});
+});
+
+// ---------------------------------------------------------------- gradeChoice
+const choiceEx = {
+    type: 'choice',
+    items: [
+        { q: 'A prepaid expense is an asset.', kind: 'tf', answer: true },
+        { q: 'Revenue decreases equity.', kind: 'tf', answer: false },
+        { q: 'Which statement is a point-in-time snapshot?', kind: 'mc', options: ['IS', 'Balance sheet', 'Cash flows'], answer: 1 }
+    ]
+};
+test('gradeChoice: all correct', () => {
+    const r = gradeChoice(choiceEx, [true, false, 1]);
+    assert.ok(r.correct && r.score === 3 && r.max === 3);
+});
+test('gradeChoice: one tf wrong', () => {
+    const r = gradeChoice(choiceEx, [false, false, 1]);
+    assert.ok(!r.correct && r.score === 2);
+    assert.strictEqual(r.perField[0].ok, false);
+    assert.strictEqual(r.perField[0].expected, true);
+});
+test('gradeChoice: mc wrong index', () => {
+    const r = gradeChoice(choiceEx, [true, false, 0]);
+    assert.ok(!r.correct && r.score === 2 && r.perField[2].ok === false);
+});
+test('gradeChoice: unanswered item counts wrong', () => {
+    const r = gradeChoice(choiceEx, [true, false, null]);
+    assert.ok(!r.correct && r.score === 2 && r.perField[2].got === null);
+});
+test('gradeChoice: missing answers array → all wrong', () => {
+    const r = gradeChoice(choiceEx, undefined);
+    assert.ok(!r.correct && r.score === 0 && r.max === 3);
+});
+test('gradeChoice: tf must match type (1 !== true)', () => {
+    const r = gradeChoice(choiceEx, [1, false, 1]); // got=1 (number) vs expected true
+    assert.strictEqual(r.perField[0].ok, false);
+});
+test('gradeChoice: empty items → not correct', () => {
+    const r = gradeChoice({ items: [] }, []);
+    assert.ok(!r.correct && r.max === 0);
+});
+
+// ---------------------------------------------------------------- gradeNumeric
+const numEx = {
+    type: 'numeric',
+    fields: [
+        { key: 'endRE', label: 'Ending RE', answer: 103000, tol: 0.005, unit: '$' },
+        { key: 'endEquity', label: 'Total equity', answer: 153000, tol: 0.005, unit: '$' }
+    ]
+};
+test('gradeNumeric: both correct (plain)', () => {
+    const r = gradeNumeric(numEx, { endRE: '103000', endEquity: '153000' });
+    assert.ok(r.correct && r.score === 2 && r.max === 2);
+});
+test('gradeNumeric: accepts thousands grouping', () => {
+    const r = gradeNumeric(numEx, { endRE: '103,000', endEquity: '$153,000.00' });
+    assert.ok(r.correct);
+});
+test('gradeNumeric: one wrong', () => {
+    const r = gradeNumeric(numEx, { endRE: '103000', endEquity: '150000' });
+    assert.ok(!r.correct && r.score === 1 && r.perField[1].ok === false && r.perField[1].got === 150000);
+});
+test('gradeNumeric: blank input → not finite, wrong', () => {
+    const r = gradeNumeric(numEx, { endRE: '', endEquity: '153000' });
+    assert.ok(!r.correct && r.perField[0].ok === false && r.perField[0].got === null);
+});
+test('gradeNumeric: tolerance respected', () => {
+    const ex = { type: 'numeric', fields: [{ key: 'r', answer: 1.9, tol: 0.1 }] };
+    assert.ok(gradeNumeric(ex, { r: '1.85' }).correct);
+    assert.ok(!gradeNumeric(ex, { r: '2.1' }).correct);
+});
+test('gradeNumeric: missing answers object → all wrong', () => {
+    const r = gradeNumeric(numEx, undefined);
+    assert.ok(!r.correct && r.score === 0);
+});
+// ratio uses the same field-based grader (gradeNumeric) on a givens+fields shape
+test('gradeNumeric (ratio shape): both ratios correct', () => {
+    const ratioEx = {
+        type: 'ratio',
+        givens: [{ label: 'Covers', value: 34200 }],
+        fields: [
+            { key: 'avgCheck', answer: 15.0, tol: 0.01 },
+            { key: 'seatTurnover', answer: 1.9, tol: 0.05 }
+        ]
+    };
+    assert.ok(gradeNumeric(ratioEx, { avgCheck: '15', seatTurnover: '1.9' }).correct);
+    assert.ok(gradeNumeric(ratioEx, { avgCheck: '15.00', seatTurnover: '1.88' }).correct); // within tol
+    assert.ok(!gradeNumeric(ratioEx, { avgCheck: '16', seatTurnover: '1.9' }).correct);
+});
+
+// ---------------------------------------------------------------- gradeStatement
+const stEx = {
+    type: 'statement',
+    sections: [
+        { key: 'assets', label: 'Assets', lines: [
+            { key: 'cash', label: 'Cash', answer: 120000 },
+            { key: 'ar', label: 'AR', answer: 10200 }
+        ] },
+        { key: 'liab', label: 'Liabilities', lines: [
+            { key: 'ap', label: 'AP', answer: 15200 }
+        ] }
+    ],
+    totals: [
+        { key: 'totalAssets', label: 'Total assets', answer: 130200 },
+        { key: 'commonStock', label: 'Common stock', answer: 55000, derived: true }
+    ]
+};
+test('statementCells: flattens lines + totals with stable keys', () => {
+    const cells = statementCells(stEx);
+    assert.strictEqual(cells.length, 5); // 2 + 1 lines + 2 totals
+    assert.deepStrictEqual(cells.map((c) => c.key), ['cash', 'ar', 'ap', 'totalAssets', 'commonStock']);
+    assert.strictEqual(cells[4].derived, true);
+});
+test('gradeStatement: all correct', () => {
+    const r = gradeStatement(stEx, { cash: '120000', ar: '10,200', ap: '15200', totalAssets: '130200', commonStock: '55000' });
+    assert.ok(r.correct && r.score === 5 && r.max === 5);
+});
+test('gradeStatement: money cents-safe (float) + currency string input', () => {
+    // cash as currency string; ar as a raw float that must round to cents (10200.004 → 10200.00)
+    const r = gradeStatement(stEx, { cash: '$120,000.00', ar: 10200.004, ap: '15200', totalAssets: '130200', commonStock: '55000' });
+    assert.ok(r.correct);
+});
+test('gradeStatement: wrong balancing figure flagged', () => {
+    const r = gradeStatement(stEx, { cash: '120000', ar: '10200', ap: '15200', totalAssets: '130200', commonStock: '50000' });
+    assert.ok(!r.correct && r.score === 4);
+    const cs = r.perField.find((p) => p.key === 'commonStock');
+    assert.ok(cs.ok === false && cs.expected === 55000 && cs.got === 50000);
+});
+test('gradeStatement: blank line wrong', () => {
+    const r = gradeStatement(stEx, { cash: '', ar: '10200', ap: '15200', totalAssets: '130200', commonStock: '55000' });
+    assert.ok(!r.correct && r.perField[0].ok === false && r.perField[0].got === null);
+});
+
+// ---------------------------------------------------------------- gradeClassify
+const clEx = {
+    type: 'classify',
+    classes: ['Asset', 'Liability', 'Equity'],
+    effects: ['Increase', 'Decrease'],
+    rows: [
+        { text: 'Invest cash for stock', entries: [
+            { account: 'Cash', cls: 'Asset', effect: 'Increase' },
+            { account: 'Common Stock', cls: 'Equity', effect: 'Increase' }
+        ] },
+        { text: 'Pay cash for equipment', entries: [
+            { account: 'Equipment', cls: 'Asset', effect: 'Increase' },
+            { account: 'Cash', cls: 'Asset', effect: 'Decrease' }
+        ] }
+    ]
+};
+test('gradeClassify: all correct', () => {
+    const r = gradeClassify(clEx, [
+        [{ cls: 'Asset', effect: 'Increase' }, { cls: 'Equity', effect: 'Increase' }],
+        [{ cls: 'Asset', effect: 'Increase' }, { cls: 'Asset', effect: 'Decrease' }]
+    ]);
+    assert.ok(r.correct && r.score === 4 && r.max === 4);
+});
+test('gradeClassify: wrong effect flagged (cls right, effect wrong = whole slot wrong)', () => {
+    const r = gradeClassify(clEx, [
+        [{ cls: 'Asset', effect: 'Increase' }, { cls: 'Equity', effect: 'Increase' }],
+        [{ cls: 'Asset', effect: 'Increase' }, { cls: 'Asset', effect: 'Increase' }] // last should be Decrease
+    ]);
+    assert.ok(!r.correct && r.score === 3);
+    const last = r.perField[3];
+    assert.ok(last.ok === false && last.row === 1 && last.entry === 1);
+});
+test('gradeClassify: unanswered slot wrong', () => {
+    const r = gradeClassify(clEx, [[{ cls: 'Asset', effect: 'Increase' }]]); // most missing
+    assert.ok(!r.correct && r.score === 1 && r.max === 4);
+});
+test('gradeClassify: empty answers → all wrong', () => {
+    const r = gradeClassify(clEx, undefined);
+    assert.ok(!r.correct && r.score === 0 && r.max === 4);
+});
+
+// ---------------------------------------------------------------- randomized exercise (params/generate)
+const accData = require(path.join(__dirname, '..', '..', 'data', 'accounting', 'exercises.js'));
+const depEx = accData.exercises.find((e) => e.id === 'k2-numeric-depreciation-1');
+test('randomized demo exists with params + generate', () => {
+    assert.ok(depEx && depEx.params && typeof depEx.generate === 'function');
+});
+test('pickParams + generate: deterministic for a seed', () => {
+    const p1 = pickParams(depEx.params, 777);
+    const p2 = pickParams(depEx.params, 777);
+    assert.deepStrictEqual(p1, p2);
+    const g1 = depEx.generate(p1);
+    const g2 = depEx.generate(p2);
+    assert.strictEqual(g1.fields[0].answer, g2.fields[0].answer);
+    assert.strictEqual(g1.prompt, g2.prompt);
+});
+test('generate: answer equals (cost − salvage) / life', () => {
+    for (let seed = 0; seed < 40; seed++) {
+        const p = pickParams(depEx.params, seed);
+        const g = depEx.generate(p);
+        const expected = (p.cost - p.salvage) / p.life;
+        assert.ok(Math.abs(g.fields[0].answer - expected) < 1e-9);
+        // and the generated answer grades itself correct
+        assert.ok(gradeNumeric(g, { dep: String(Math.round(g.fields[0].answer * 100) / 100) }).correct);
+    }
 });
 
 // ---------------------------------------------------------------- rezultat
