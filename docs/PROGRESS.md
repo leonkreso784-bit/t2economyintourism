@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-10 — DEPLOY ✅ (`05cb0af`) — cijeli Food & Nutrition + BUG-009 LIVE
+Korisnik autorizirao: „deploy svega na github". `git push origin main` (`71e53b5..05cb0af`) → produkcija (Vercel).
+LIVE 3 commita: **fix BUG-009** (Entrepreneurship fill-blank, `9f32df4`) + **Food & Nutrition 2. kolokvij** (Teme 8–14 +
+Beer premješten iz K1 + K1 verificiran, `1c52a5f`) + **Food & Nutrition finalni hibrid** (15 kat. / 174 fc, `05cb0af`).
+`origin/main` sinkroniziran, radno stablo čisto, ništa lokalno nedeployano. (Pre-flight: verify 0, Playwright 40/40.) Cache `20260621`.
+→ **Food & Nutrition 100% KOMPLETAN i LIVE → 2. godina potpuno gotova (9/9 predmeta).**
+
+**▶ Sljedeće:** **1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT; Business Informatics već gotov).
+
+---
+
 ## 2026-06-10 — Sesija: Food & Nutrition FINALNI ispit (hibrid) — predmet 100% gotov
 **Kontekst:** korisnik: „nemamo još završni ispit iz food and nutritiona, molim te ga napravi… polako, koncentrirano,
 s provjerama i velikom todo listom". Silabus (FAN Introduction): finalni = **30% (min 15%), obavezan**, prag za izlazak

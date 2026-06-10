@@ -20,12 +20,14 @@ predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.
 KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) · **Tourism Geography KOMPLETAN**
 (S30 1. kolokvij popravljen iz izvora: + `introToGeography`, croatiaFeatures, parks/UNESCO, karta netaknuta;
 S31 2. kolokvij „svjetska geografija" 6 kat. po kontinentu; **S32 Finalni hibrid** `data-geography-final.js`
-13 kat. / 128 fc) · preostaje 1: **food-nutrition** 2. kolokvij · 1. god = Business Informatics ✅, ostalih 10 ⬜
+13 kat. / 128 fc) · **Food & Nutrition KOMPLETAN** (K1 Teme 1–7 verificiran + Beer premješten; K2 Teme 8–14; finalni hibrid;
+15 kat. / 174 fc) → **2. god SADRŽAJNO KOMPLETNA (9/9 predmeta)** · 1. god = Business Informatics ✅, ostalih 10 ⬜
 (Math/Macro/Mgmt/SIT imaju materijale; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO).
-**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-10 deployano (`a8e7371`):** **cijeli Tourism Geography**
-(K1 popravak + K2 svjetska geo. + finalni hibrid, S30–S32). **Ranije `24f2b6f`** (2026-06-09): Economics in Hospitality
-(K1+K2+finalni) + fix BUG-008 + Entrepreneurship→sem 1. (`822d788`, 2026-06-06: Marketing + responsive split +
-fixevi BUG-005/006/007.) Radno stablo čisto, ništa lokalno nedeployano.
+**Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-10 deployano (`05cb0af`):** **cijeli Food & Nutrition** (K1 Teme
+1–7 verificiran iz izvora + Beer premješten u K2 po silabusu; K2 Teme 8–14; finalni hibrid) + **fix BUG-009** (Entrepreneurship
+fill-blank). **Ranije `a8e7371`** (2026-06-10): cijeli Tourism Geography (S30–S32). **`24f2b6f`** (2026-06-09): Economics in
+Hospitality + BUG-008 + Entrepreneurship→sem 1. (`822d788`, 2026-06-06: Marketing + responsive split + BUG-005/006/007.)
+Radno stablo čisto, ništa lokalno nedeployano.
 
 ## M0 — Temelj: data-driven + backend (Faza 0)  🟦
 Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live verzije.
