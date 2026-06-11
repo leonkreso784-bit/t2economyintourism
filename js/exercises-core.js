@@ -284,6 +284,9 @@
     // Per-slot: točno ako su I klasa I efekt točni. (gradeSet/redoslijed-neovisno = journal.)
     function gradeClassify(ex, answers) {
         const rows = (ex && Array.isArray(ex.rows)) ? ex.rows : [];
+        // Effect dropdown je OPCIONALAN: ako ex.effects nije zadan, ocjenjuje se samo klasa
+        // (jednoosna klasifikacija, npr. račun → bilančna kategorija).
+        const hasEffects = !!(ex && Array.isArray(ex.effects) && ex.effects.length > 0);
         answers = Array.isArray(answers) ? answers : [];
         const perField = [];
         rows.forEach((row, ri) => {
@@ -292,7 +295,7 @@
                 const got = ansRow[ei] || {};
                 const gotCls = got.cls != null ? got.cls : null;
                 const gotEff = got.effect != null ? got.effect : null;
-                const ok = gotCls === entry.cls && gotEff === entry.effect;
+                const ok = gotCls === entry.cls && (!hasEffects || gotEff === entry.effect);
                 perField.push({
                     key: ri + '-' + ei, row: ri, entry: ei, ok: ok,
                     expected: { cls: entry.cls, effect: entry.effect },

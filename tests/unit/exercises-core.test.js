@@ -354,6 +354,27 @@ test('gradeClassify: empty answers → all wrong', () => {
     const r = gradeClassify(clEx, undefined);
     assert.ok(!r.correct && r.score === 0 && r.max === 4);
 });
+// single-axis classify (no effects) — account → category only
+const clNoEff = {
+    type: 'classify',
+    classes: [{ v: 'CA', label: 'Current Asset' }, { v: 'CL', label: 'Current Liability' }],
+    rows: [
+        { entries: [{ account: 'Cash', cls: 'CA' }] },
+        { entries: [{ account: 'Accounts Payable', cls: 'CL' }] }
+    ]
+};
+test('gradeClassify (no effects): grades on class only — all correct', () => {
+    const r = gradeClassify(clNoEff, [[{ cls: 'CA' }], [{ cls: 'CL' }]]);
+    assert.ok(r.correct && r.score === 2 && r.max === 2);
+});
+test('gradeClassify (no effects): wrong class flagged', () => {
+    const r = gradeClassify(clNoEff, [[{ cls: 'CA' }], [{ cls: 'CA' }]]);
+    assert.ok(!r.correct && r.score === 1);
+});
+test('gradeClassify (no effects): effect is ignored when ex.effects absent', () => {
+    const r = gradeClassify(clNoEff, [[{ cls: 'CA', effect: 'Increase' }], [{ cls: 'CL' }]]);
+    assert.ok(r.correct);
+});
 
 // ---------------------------------------------------------------- randomized exercise (params/generate)
 const accData = require(path.join(__dirname, '..', '..', 'data', 'accounting', 'exercises.js'));

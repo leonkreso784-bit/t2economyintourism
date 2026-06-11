@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises: FAZA 3 počela — Ch4 Balance Sheet sadržaj (B3.1) GOTOV (lokalno)
+Engine je gotov (faze 0–2); kreće autoriranje SADRŽAJA po poglavlju (K1 prvo). Izvor: `tmp-acc/img/` (133 JPG renderiranih iz
+„nečitljivih" PDF-ova) — Cote workbook + **službena rješenja** (`solutions-chapters-2-5`).
+
+**B3.1 (Ch4 — Balance Sheet):** 3 nove vježbe iz Assignment 4-1 (rješenja provjerena na izvoru):
+`k1-ch4-tf` (15 TF — npr. nalaz da je „china/glass/silver = P&E" **TR**, ne bi se pogodilo), `k1-ch4-terms` (8 pojmova MC),
+`k1-ch4-classify` (20 računa → bilančna kategorija). + postojeći `k1-statement-bs-1` (balance sheet build).
+**Mala engine generalizacija (unatrag-kompatibilna):** `classify` effect-dropdown opcionalan → jednoosna klasifikacija (samo klasa).
+**Testirano:** node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 8/8 (20 računa → „Correct"). Cache `?v=20260625`. Lokalno, nedeployano.
+**▶ Sljedeće:** B3.2 (Ch5 Income Statement), pa Ch6/Ch3/Ch1–2.
+
+---
+
 ## 2026-06-11 — Accounting Exercises engine: FAZA 2 (journal / pravi double-entry) GOTOVA (lokalno)
 **Nastavak** Faze 1. Cilj: `journal` tip s pravim knjiženjem, T-računima i ocjenom po saldima.
 

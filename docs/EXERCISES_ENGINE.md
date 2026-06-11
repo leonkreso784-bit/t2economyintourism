@@ -172,7 +172,9 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 
 ### FAZA 3 — Sadržaj (vertikalni rez po poglavlju; bulk autoriranje iz `tmp-acc/img` + docx)
 > Obrazac po poglavlju: teorija-kategorija (ako fali, vidi Fazu 4) + vježbe svih relevantnih tipova, vezano na `lesson`.
-- [ ] **B3.1 (K1 Ch4 — Balance Sheet):** TF/MC + `classify` + `statement` (balance sheet build). Bump cache. verify+test.
+- [x] **B3.1 (K1 Ch4 — Balance Sheet):** iz izvora (Cote workbook Assignment 4-1, rješenja provjerena na `tmp-acc/img/solutions-chapters-2-5`):
+      `k1-ch4-tf` (15 TF), `k1-ch4-terms` (8 MC pojmovi), `k1-ch4-classify` (20 računa → bilančna kategorija) + postojeći `k1-statement-bs-1`.
+      **Engine generalizacija (mala, unatrag-kompatibilna):** `classify` effect-dropdown je sad OPCIONALAN (`ex.effects` izostavljen → jednoosna klasifikacija); `gradeClassify` ocjenjuje samo klasu. *Done ✅:* node 95/95 + 13/13; Playwright 36/36 + ciljani 8/8 (20 računa točno → „Correct"; jedan dropdown po retku). Cache `?v=20260625`.
 - [ ] **B3.2 (K1 Ch5 — Income Statement):** TF/MC + `numeric` (COS, perpetual/periodic) + `statement` (IS). 
 - [ ] **B3.3 (K1 Ch6 — Bookkeeping):** `classify` (I/D effect, Assignment 6-2) + `journal` ALE (A/L/E samo).
 - [ ] **B3.4 (K1 Ch3 — Survey FS):** `numeric` (equity/retained earnings) + TF/MC + `statement` (3 izvještaja, Assignment 1).
@@ -209,8 +211,9 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 ---
 
 ## 8. Stanje / recovery nakon compacta
-- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZA 0 + FAZA 1 GOTOVE** (commits `3324e72`, `ac5315d`, lokalno/**nedeployano**); **kreće B2.1 (`acc-kernel.js` — pravi double-entry za `journal` tip).**
-- Provjere: `npm run test:unit` (**86/86**), `npm run verify` (0/0), `npm run test:responsive` (**36/36**). Engine = `js/exercises-core.js` (graderi: choice/numeric/statement/classify + parse/numEq/gradeSet/pickParams) + `js/exercises.js` (WIDGET registry, 3 moda, randomizacija, napredak) + `css/exercises.css`. Content pack = `data/accounting/exercises.js` (`window.accountingExercises`, **6 demo vježbi** svih 5 tipova). `acc-kernel.js` (B2.1) još NE postoji.
-- **Obrazac za novi tip:** grader `gradeX(ex, answers)` u jezgri (+ node test) → `WIDGETS.x = {grader, render, collect, mark}` u exercises.js → demo u data → temp Playwright → obriši.
+- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZE 0+1+2 GOTOVE — CIJELI ENGINE ZAVRŠEN** (commits `3324e72`, `ac5315d`, `7aa45bf`, lokalno/**nedeployano**). **▶ Kreće FAZA 3 (B3.x): autoriranje SADRŽAJA po poglavlju (K1 prvo), iz `tmp-acc/img/` (133 JPG) + docx.**
+- Provjere: `npm run test:unit` (**92/92 exercises-core + 13/13 acc-kernel**), `npm run verify` (0/0), `npm run test:responsive` (**36/36**). Engine = `js/exercises-core.js` (graderi choice/numeric/statement/classify/journal + parse/numEq/gradeSet/pickParams) + `js/acc-kernel.js` (double-entry) + `js/exercises.js` (WIDGET registry, 6 tipova, 3 moda, randomizacija, napredak, free journal+T-konta) + `css/exercises.css`. Content pack = `data/accounting/exercises.js` (`window.accountingExercises`, **8 demo vježbi**).
+- **Obrazac za novi tip:** grader `gradeX(ex, answers)` u jezgri (+ node test) → `WIDGETS.x = {render, collect, mark, grader|grade}` u exercises.js → demo u data → temp Playwright → obriši.
+- **Obrazac za novi SADRŽAJ (FAZA 3):** samo dodaj vježbe u `data/accounting/exercises.js` (`lesson:'accounting-fundamentals'` dok ne dođe restruktura u FAZI 4) → bump `CONTENT_VERSION` → verify + Playwright. NULA izmjena enginea.
 - Izvori: `tmp-acc/img/` (133 JPG, gitignored) + docx (`…/Accounting/`). Renderer: `tmp-acc/pdf2img.mjs`.
 - Analiza/katalog: [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**

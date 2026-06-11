@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Accounting Exercises — sadržaj Ch4 (Balance Sheet, K1) [FAZA 3 / B3.1]:** prve prave vježbe iz izvora (Cote
+  *Hotel & Restaurant Accounting* workbook, Assignment 4-1; **rješenja provjerena** na originalnim solution stranicama):
+  `k1-ch4-tf` (15 True/False), `k1-ch4-terms` (8 pojmova kao MC), `k1-ch4-classify` (20 računa → bilančna kategorija
+  CA/I/PE/OA/CL/LTL/EQ). Uz to mala **engine generalizacija** (unatrag-kompatibilna): `classify` effect-dropdown je sad
+  **opcionalan** — ako vježba nema `effects`, radi se jednoosna klasifikacija (račun → kategorija), `gradeClassify`
+  ocjenjuje samo klasu. Node **95/95** (+13/13 kernel), Playwright **36/36**. Cache `?v=20260625`. (Engine ostaje stabilan;
+  ovo je sadržaj + jedna generička dopuna.)
 - **Exercises engine — FAZA 2 (`journal` tip: pravi double-entry):** novi čisti **`js/acc-kernel.js`** (bez DOM-a, bez
   ovisnosti): `isBalanced`, `postEntries`/`deriveEndingBalances`, `classifyTotals` (A=L+E), `tAccounts`, `gradeEndingBalances`
   (`chartOfAccounts:[{name,normal,section}]`). Dva načina rada: **guided** (fiksne debit/credit linije po transakciji →

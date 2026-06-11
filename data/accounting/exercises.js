@@ -290,6 +290,120 @@ const accountingExercises = {
                 'Borrow: debit Cash 6,000; credit Note Payable 6,000.',
                 'Ending Cash = 40,000 − 9,000 + 6,000 = 37,000; Equipment 9,000; Note Payable 6,000; Common Stock 40,000.'
             ]
+        },
+
+        // ========================= CHAPTER 4 — BALANCE SHEET (K1) =========================
+        // Source: Cote, Hotel & Restaurant Accounting, Ch. 4 workbook (Assignment 4-1).
+
+        // --- B3.1: Ch4 True/False (Assignment 4-1, Part I) ---
+        {
+            id: 'k1-ch4-tf',
+            lesson: 'accounting-fundamentals',
+            chapter: 4,
+            type: 'choice',
+            title: 'Balance Sheet — True or False',
+            prompt: 'Mark each statement true or false.',
+            difficulty: 1,
+            items: [
+                { q: 'A prepaid expense is an asset.', kind: 'tf', answer: true },
+                { q: 'VISA and MasterCard credit card vouchers are generally treated as cash.', kind: 'tf', answer: true },
+                { q: 'In hospitality, china, glassware, and silverware are classified as Property and Equipment.', kind: 'tf', answer: true },
+                { q: 'Accrued expenses payable represent a liability for expenses incurred but not yet paid or recorded to another payables account.', kind: 'tf', answer: true },
+                { q: 'The net income of a proprietorship increases owner’s Capital.', kind: 'tf', answer: true },
+                { q: 'The net income of a corporation increases Retained Earnings.', kind: 'tf', answer: true },
+                { q: 'The declaration of dividends reduces Retained Earnings and creates a liability called Dividends Payable.', kind: 'tf', answer: true },
+                { q: 'Prepaid expenses are unexpired costs that will benefit the business in the short term.', kind: 'tf', answer: true },
+                { q: 'Property and Equipment are sometimes called Fixed Assets.', kind: 'tf', answer: true },
+                { q: 'Amortization allocates the expired cost of intangible assets to expense.', kind: 'tf', answer: true },
+                { q: 'Accounts called “Other Assets” are considered to be current assets.', kind: 'tf', answer: false },
+                { q: 'A worldwide-recognized trade name should be shown on the balance sheet at an analyst’s estimate (≥ $500,000) regardless of the company’s lower initial cost.', kind: 'tf', answer: false },
+                { q: 'Only purchased goodwill may appear on the financial statements.', kind: 'tf', answer: true },
+                { q: 'A $50,000, 20-year mortgage requiring monthly payments is reported entirely as $50,000 of long-term debt.', kind: 'tf', answer: false },
+                { q: 'The equity accounts for a proprietorship and a corporation are identical.', kind: 'tf', answer: false }
+            ],
+            solution: [
+                'Prepaid expenses and bank credit-card vouchers are assets/cash.',
+                '“Other Assets” are noncurrent, not current.',
+                'Internally generated goodwill/trade names are not written up — only purchased goodwill is recorded.',
+                'The portion of a mortgage due within one year is a current liability; the rest is long-term.',
+                'Proprietorship equity = Capital; corporation equity = paid-in capital + retained earnings.'
+            ]
+        },
+
+        // --- B3.1: Ch4 terminology matching as multiple-choice (Assignment 4-1, Part II) ---
+        {
+            id: 'k1-ch4-terms',
+            lesson: 'accounting-fundamentals',
+            chapter: 4,
+            type: 'choice',
+            title: 'Balance Sheet — Key Terms',
+            prompt: 'Choose the term that best fits each description.',
+            difficulty: 1,
+            items: [
+                { q: 'Debts of the business.', kind: 'mc', options: ['Assets', 'Liabilities', 'Equity', 'Retained Earnings'], answer: 1 },
+                { q: 'The account used when the owner invests in a proprietorship.', kind: 'mc', options: ['Common Stock', 'Owner’s Capital', 'Retained Earnings', 'Treasury Stock'], answer: 1 },
+                { q: 'Resources owned by the business that are expected to provide future benefits.', kind: 'mc', options: ['Assets', 'Liabilities', 'Expenses', 'Equity'], answer: 0 },
+                { q: 'The account used when shareholders purchase a new stock issue from the corporation.', kind: 'mc', options: ['Treasury Stock', 'Authorized Stock', 'Stock Issued', 'Retained Earnings'], answer: 2 },
+                { q: 'The net result of net income and dividends declared since inception of the business.', kind: 'mc', options: ['Owner’s Capital', 'Retained Earnings', 'Additional Paid-in Capital', 'Common Stock'], answer: 1 },
+                { q: 'Claims of owners.', kind: 'mc', options: ['Liabilities', 'Assets', 'Equity', 'Goodwill'], answer: 2 },
+                { q: 'A corporation’s repurchase of its previously issued stock.', kind: 'mc', options: ['Authorized Stock', 'Treasury Stock', 'Stock Issued', 'Common Stock'], answer: 1 },
+                { q: 'An asset without physical substance that provides certain rights and privileges.', kind: 'mc', options: ['Tangible', 'Intangible', 'Investment', 'Amortization'], answer: 1 }
+            ],
+            solution: [
+                'Liabilities = debts; Equity = owners’ claims; Assets = resources with future benefit.',
+                'Owner’s Capital (proprietorship) vs Stock Issued / Treasury Stock (corporation).',
+                'Retained Earnings = cumulative net income − dividends; intangible = no physical substance.'
+            ]
+        },
+
+        // --- B3.1: Ch4 classify accounts into balance-sheet categories (Assignment 4-1, Part III) ---
+        {
+            id: 'k1-ch4-classify',
+            lesson: 'accounting-fundamentals',
+            chapter: 4,
+            type: 'classify',
+            title: 'Classify Accounts on the Balance Sheet',
+            prompt: 'Classify each account into its balance sheet category.',
+            difficulty: 2,
+            classes: [
+                { v: 'CA', label: 'Current Asset' },
+                { v: 'I', label: 'Investment' },
+                { v: 'PE', label: 'Property & Equipment' },
+                { v: 'OA', label: 'Other Asset' },
+                { v: 'CL', label: 'Current Liability' },
+                { v: 'LTL', label: 'Long-term Liability' },
+                { v: 'EQ', label: 'Equity' }
+            ],
+            // no `effects` → single-axis classification (account → category only)
+            rows: [
+                { entries: [{ account: 'Prepaid Rent', cls: 'CA' }] },
+                { entries: [{ account: 'Trademarks', cls: 'OA' }] },
+                { entries: [{ account: 'Accounts Payable', cls: 'CL' }] },
+                { entries: [{ account: 'Furniture', cls: 'PE' }] },
+                { entries: [{ account: 'Owner’s Capital', cls: 'EQ' }] },
+                { entries: [{ account: 'Food Inventory', cls: 'CA' }] },
+                { entries: [{ account: 'Cash', cls: 'CA' }] },
+                { entries: [{ account: 'Security Deposits', cls: 'OA' }] },
+                { entries: [{ account: 'Accrued Payroll', cls: 'CL' }] },
+                { entries: [{ account: 'Sales Tax Payable', cls: 'CL' }] },
+                { entries: [{ account: 'Short-Term Investment', cls: 'CA' }] },
+                { entries: [{ account: 'Land', cls: 'PE' }] },
+                { entries: [{ account: 'Accounts Receivable', cls: 'CA' }] },
+                { entries: [{ account: 'Income Taxes Payable', cls: 'CL' }] },
+                { entries: [{ account: 'Common Stock Issued', cls: 'EQ' }] },
+                { entries: [{ account: 'China, Glassware, Silver', cls: 'PE' }] },
+                { entries: [{ account: 'Preopening Costs', cls: 'OA' }] },
+                { entries: [{ account: 'Retained Earnings', cls: 'EQ' }] },
+                { entries: [{ account: 'Dividends Payable', cls: 'CL' }] },
+                { entries: [{ account: 'Goodwill', cls: 'OA' }] }
+            ],
+            solution: [
+                'Current Assets: cash, receivables, inventories, short-term investments, prepaids.',
+                'Property & Equipment: land, furniture, china/glass/silver (capitalized operating equipment).',
+                'Other Assets (noncurrent): trademarks, security deposits, preopening costs, goodwill.',
+                'Current Liabilities: payables, accrued payroll, taxes payable, dividends payable.',
+                'Equity: common stock issued, owner’s capital, retained earnings.'
+            ]
         }
     ]
 };

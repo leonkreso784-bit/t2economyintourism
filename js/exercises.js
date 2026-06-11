@@ -224,6 +224,7 @@
             render(ex) {
                 const classes = normalizeOptions(ex.classes);
                 const effects = normalizeOptions(ex.effects);
+                const hasEffects = effects.length > 0;
                 const sel = (kind, opts) =>
                     '<select class="ex-select ex-cl-select" data-kind="' + kind + '">'
                     + '<option value="">—</option>'
@@ -234,11 +235,11 @@
                     const entriesHtml = (row.entries || []).map((entry, ei) =>
                         '<div class="ex-cl-entry" data-row="' + ri + '" data-entry="' + ei + '">'
                         + '<span class="ex-cl-account">' + esc(entry.account) + '</span>'
-                        + '<div class="ex-cl-selects">' + sel('cls', classes) + sel('effect', effects) + '</div>'
+                        + '<div class="ex-cl-selects">' + sel('cls', classes) + (hasEffects ? sel('effect', effects) : '') + '</div>'
                         + '</div>'
                     ).join('');
                     return '<div class="ex-cl-row">'
-                        + '<div class="ex-cl-text">' + (ri + 1) + '. ' + esc(row.text) + '</div>'
+                        + (row.text ? '<div class="ex-cl-text">' + (ri + 1) + '. ' + esc(row.text) + '</div>' : '')
                         + entriesHtml + '</div>';
                 }).join('') + '</div>';
             },
