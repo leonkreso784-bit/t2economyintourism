@@ -715,6 +715,192 @@ const accountingExercises = {
                 'Buy inventory for cash: debit Food Inventory 5,000; credit Cash 5,000.',
                 'Issue stock above par: debit Cash 30,000; credit Common Stock Issued 20,000 and Additional Paid-In Capital 10,000.'
             ]
+        },
+
+        // ===================== CHAPTER 3 — SURVEY OF FINANCIAL STATEMENTS (K1) =====================
+        // Source: Cote, Hotel & Restaurant Accounting, Ch. 3 workbook (Assignments 3-1, 3-2, 3-3).
+        // Answers verified against the official solution pages (solutions-chapters-2-5, pp. 2–4).
+
+        // --- B3.4: Ch3 True/False (Assignment 3-1, Part I) ---
+        {
+            id: 'k1-ch3-tf',
+            lesson: 'accounting-fundamentals',
+            chapter: 3,
+            type: 'choice',
+            title: 'Financial Statements — True or False',
+            prompt: 'Mark each statement true or false.',
+            difficulty: 2,
+            items: [
+                { q: 'Revenue and expenses appear on the income statement to present the results of operations.', kind: 'tf', answer: true },
+                { q: 'A business year is also called a fiscal year.', kind: 'tf', answer: true },
+                { q: 'The statement of retained earnings is prepared for both a corporation and a proprietorship.', kind: 'tf', answer: false },
+                { q: 'The balance sheet and the income statement apply to both a corporation and a proprietorship.', kind: 'tf', answer: true },
+                { q: 'Federal income taxes appear on the income statement of a proprietorship.', kind: 'tf', answer: false },
+                { q: 'The balance sheet reports financial information as of a specified date, not for a period of time.', kind: 'tf', answer: true },
+                { q: 'The income statement reports financial information as of a specified date, not for a period of time.', kind: 'tf', answer: false },
+                { q: 'For a corporation, the statement of retained earnings is the connecting link between the income statement and the balance sheet.', kind: 'tf', answer: true },
+                { q: 'For a proprietorship, the statement of owner’s equity is the connecting link between the income statement and the balance sheet.', kind: 'tf', answer: true },
+                { q: 'Dividends Payable is an equity account.', kind: 'tf', answer: false },
+                { q: 'If a $45,000 van is bought with a $5,000 down payment and a note payable for the balance, $45,000 appears in the investing activities section of the statement of cash flows.', kind: 'tf', answer: false },
+                { q: 'The proper date heading on the income statement uses the form “For the (period) Ended (date),” e.g., “For the Year Ended May 31, 20XX.”', kind: 'tf', answer: true },
+                { q: 'The proper date heading on the balance sheet uses the form “For the (period) Ended (date),” e.g., “For the Year Ended May 31, 20XX.”', kind: 'tf', answer: false },
+                { q: 'The full heading on a financial statement is: name of company, then name of the statement, then the time period of the information.', kind: 'tf', answer: true }
+            ],
+            solution: [
+                'Income statement = results of operations over a PERIOD; balance sheet = financial position AT a date.',
+                'Statement of retained earnings is for corporations; a proprietorship uses a statement of owner’s equity.',
+                'A proprietorship pays no entity-level income tax (the owner is taxed personally); Dividends Payable is a liability.',
+                'Investing activities show the CASH flow ($5,000 down payment), not the $45,000 total cost.',
+                'Date heading: income statement = “For the … Ended …”; balance sheet = a single date.'
+            ]
+        },
+
+        // --- B3.4: Ch3 terminology matching as multiple-choice (Assignment 3-1, Part II) ---
+        {
+            id: 'k1-ch3-terms',
+            lesson: 'accounting-fundamentals',
+            chapter: 3,
+            type: 'choice',
+            title: 'Financial Statements — Key Terms',
+            prompt: 'Choose the term that best fits each description.',
+            difficulty: 1,
+            items: [
+                { q: 'A statement showing where cash came from and how it was spent.', kind: 'mc', options: ['Balance Sheet', 'Income Statement', 'Statement of Cash Flows', 'Statement of Retained Earnings'], answer: 2 },
+                { q: 'A term used to represent a business year.', kind: 'mc', options: ['Calendar', 'Fiscal', 'Current', 'Periodic'], answer: 1 },
+                { q: 'A statement presenting the results of operations.', kind: 'mc', options: ['Balance Sheet', 'Income Statement', 'Statement of Cash Flows', 'Cash Budget'], answer: 1 },
+                { q: 'A statement presenting the financial condition of a business.', kind: 'mc', options: ['Income Statement', 'Balance Sheet', 'Statement of Cash Flows', 'Statement of Retained Earnings'], answer: 1 },
+                { q: 'Convertible to cash, or requiring an outlay of cash, within 12 months of the balance-sheet date.', kind: 'mc', options: ['Noncurrent Item', 'Current Item', 'Prepaid Insurance', 'Retained Earnings'], answer: 1 },
+                { q: 'Revenue less cost of sales.', kind: 'mc', options: ['Net Income', 'Gross Profit', 'Total Revenue', 'Operating Income'], answer: 1 },
+                { q: 'An example of a noncurrent asset.', kind: 'mc', options: ['Cash', 'Accounts Receivable', 'Land', 'Inventory'], answer: 2 },
+                { q: 'Shows the expense of food or liquor inventory used in the sales process.', kind: 'mc', options: ['Gross Profit', 'Cost of Sales', 'Food Used', 'Supplies'], answer: 1 },
+                { q: 'Depreciation is an example of a(n):', kind: 'mc', options: ['Asset', 'Liability', 'Expense', 'Revenue'], answer: 2 },
+                { q: 'Common Stock Issued is part of:', kind: 'mc', options: ['Assets', 'Liabilities', 'Equity', 'Revenue'], answer: 2 }
+            ],
+            solution: [
+                'Statement of Cash Flows = sources/uses of cash; Income Statement = results of operations; Balance Sheet = financial condition.',
+                'Fiscal = a business year. A Current Item is convertible to/from cash within 12 months.',
+                'Gross Profit = Revenue − Cost of Sales. Land is a noncurrent asset; Depreciation is an expense; Common Stock Issued is equity.'
+            ]
+        },
+
+        // --- B3.4: Ch3 classify items as Income Statement vs Balance Sheet (Assignment 3-2, #2) ---
+        {
+            id: 'k1-ch3-isbs',
+            lesson: 'accounting-fundamentals',
+            chapter: 3,
+            type: 'classify',
+            title: 'Income Statement or Balance Sheet?',
+            prompt: 'Decide whether each item appears on the Income Statement or the Balance Sheet.',
+            difficulty: 1,
+            classes: [
+                { v: 'IS', label: 'Income Statement' },
+                { v: 'BS', label: 'Balance Sheet' }
+            ],
+            // no `effects` → single-axis classification
+            rows: [
+                { entries: [{ account: 'Expenses', cls: 'IS' }] },
+                { entries: [{ account: 'Liabilities', cls: 'BS' }] },
+                { entries: [{ account: 'Assets', cls: 'BS' }] },
+                { entries: [{ account: 'Equity', cls: 'BS' }] },
+                { entries: [{ account: 'Sales', cls: 'IS' }] }
+            ],
+            solution: [
+                'Income statement: revenues and expenses (Sales, Expenses).',
+                'Balance sheet: assets, liabilities, and equity (financial position at a date).'
+            ]
+        },
+
+        // --- B3.4: Ch3 owner’s capital roll-forward, with distractor data (Assignment 3-2, #1) ---
+        {
+            id: 'k1-ch3-capital',
+            lesson: 'accounting-fundamentals',
+            chapter: 3,
+            type: 'ratio',
+            title: 'Owner’s Capital — End of Year',
+            prompt: 'Select only the relevant information and compute the balance in the owner’s capital account at year-end.',
+            difficulty: 2,
+            givens: [
+                { label: 'Capital at start of year', value: 40000 },
+                { label: 'Owner’s investments during the year', value: 5000 },
+                { label: 'Owner’s withdrawals during the year', value: 14000 },
+                { label: 'Net income for the year', value: 20000 },
+                { label: 'Accounts payable at end of year', value: 17000 },
+                { label: 'Accounts receivable at end of year', value: 8000 }
+            ],
+            fields: [
+                { key: 'endCapital', label: 'Owner’s capital, end of year', answer: 51000, tol: 0.005, unit: '$', hint: 'Start + Investments + Net income − Withdrawals. (Payables and receivables are not part of the capital account.)' }
+            ],
+            solution: [
+                'Owner’s capital roll-forward = 40,000 + 5,000 + 20,000 − 14,000 = 51,000.',
+                'Accounts payable (17,000) and accounts receivable (8,000) are balance-sheet items — they do not belong in the capital roll-forward.'
+            ]
+        },
+
+        // --- B3.4: Ch3 build the Income Statement (Assignment 3-3, Annie’s Restaurant, Inc.) ---
+        {
+            id: 'k1-ch3-income-statement',
+            lesson: 'accounting-fundamentals',
+            chapter: 3,
+            type: 'statement',
+            title: 'Build the Income Statement (Annie’s Restaurant)',
+            prompt: 'Enter each amount, then compute the subtotals and net income for the year ended April 30, 20X2. '
+                + 'Income taxes for the year are $31,500.',
+            difficulty: 3,
+            sections: [
+                {
+                    key: 'rev', label: 'Revenue',
+                    lines: [
+                        { key: 'foodSales', label: 'Food sales', answer: 510000 },
+                        { key: 'bevSales', label: 'Beverage sales', answer: 100000 }
+                    ]
+                },
+                {
+                    key: 'cos', label: 'Cost of Sales',
+                    lines: [
+                        { key: 'cosFood', label: 'Cost of food sales', answer: 170000 },
+                        { key: 'cosBev', label: 'Cost of beverage sales', answer: 30000 }
+                    ]
+                },
+                {
+                    key: 'opex', label: 'Operating Expenses',
+                    lines: [
+                        { key: 'payroll', label: 'Payroll', answer: 200000 },
+                        { key: 'payrollTax', label: 'Payroll taxes & employee benefits', answer: 30000 },
+                        { key: 'cgs', label: 'China, glassware & silverware', answer: 1800 },
+                        { key: 'laundry', label: 'Laundry & dry cleaning', answer: 5100 },
+                        { key: 'supplies', label: 'Supplies', answer: 12800 },
+                        { key: 'advertising', label: 'Advertising', answer: 6800 },
+                        { key: 'utilities', label: 'Utilities', answer: 10800 },
+                        { key: 'repairs', label: 'Repairs & maintenance', answer: 12000 }
+                    ]
+                },
+                {
+                    key: 'fixed', label: 'Fixed Charges',
+                    lines: [
+                        { key: 'propTax', label: 'Property taxes', answer: 4200 },
+                        { key: 'insurance', label: 'Insurance', answer: 5000 },
+                        { key: 'interest', label: 'Interest', answer: 15000 },
+                        { key: 'depreciation', label: 'Depreciation', answer: 18000 }
+                    ]
+                }
+            ],
+            totals: [
+                { key: 'totalRevenue', label: 'Total revenue', answer: 610000 },
+                { key: 'totalCOS', label: 'Total cost of sales', answer: 200000 },
+                { key: 'grossProfit', label: 'Gross profit', answer: 410000 },
+                { key: 'totalOpEx', label: 'Total operating expenses', answer: 279300 },
+                { key: 'incBeforeFixed', label: 'Income before fixed charges & income taxes', answer: 130700 },
+                { key: 'totalFixed', label: 'Total fixed charges', answer: 42200 },
+                { key: 'incBeforeTax', label: 'Income before income taxes', answer: 88500 },
+                { key: 'incomeTaxes', label: 'Income taxes', answer: 31500 },
+                { key: 'netIncome', label: 'Net income', answer: 57000, derived: true }
+            ],
+            solution: [
+                'Total revenue 610,000 − total cost of sales 200,000 = gross profit 410,000.',
+                'Gross profit 410,000 − operating expenses 279,300 = income before fixed charges 130,700.',
+                '130,700 − fixed charges 42,200 = income before income taxes 88,500.',
+                '88,500 − income taxes 31,500 = net income 57,000.'
+            ]
         }
     ]
 };

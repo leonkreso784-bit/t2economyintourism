@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch3 Survey of Financial Statements sadržaj (B3.4) GOTOV (lokalno)
+Nastavak K1. Izvor: Cote workbook **Assignments 3-1/3-2/3-3**; **sva rješenja provjerena** na službenim solution stranicama
+(`solutions-chapters-2-5` pp. 2–4) — uklj. sporne stavke (3-1 #11 SCF $5k vs $45k, 3-2 #4c „acc. depreciation NOT used for china/glass" = **TR**).
+
+**B3.4 (Ch3 — Survey FS):** 5 novih vježbi:
+`k1-ch3-tf` (14 T/F), `k1-ch3-terms` (10 pojmova → MC), `k1-ch3-isbs` (`classify` jednoosno: Income Statement vs Balance Sheet, 5 stavki),
+`k1-ch3-capital` (`ratio`: owner’s capital roll-forward 40k+5k+20k−14k = **51.000**; AP/AR su distraktori → uči „select the correct info"),
+`k1-ch3-income-statement` (`statement`: puni Income Statement „Annie’s Restaurant, Inc.", 16 linija + 9 kaskadnih totala; svi izračuni
+provjereni kernelom/ručno → **Net Income 57.000**).
+**Engine 0 izmjena.** (Reuse: `ratio` za roll-forward, `statement` za IS — isti obrazac kao Ch4 balance sheet.)
+**Testirano:** node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 5/5 (svih 5 vježbi → „Correct"). Cache `?v=20260628`. Lokalno, nedeployano.
+**▶ Sljedeće:** B3.5 (Ch1–2 — intro/GAAP/oblici poslovanja/stock, uglavnom choice) → time je **K1 sadržaj kompletan** → FAZA 4 (restruktura K1/K2/finalni).
+
+---
+
 ## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch6 Bookkeeping process sadržaj (B3.3) GOTOV (lokalno)
 Nastavak K1. Izvor: Cote workbook **Assignment 6-2** (Increase/Decrease Effect) + profesorski worked example **„Bookkeeping process"**
 (T-računi asset/liability/equity; entry-ji verificirani prema knjiženom ledgeru u `Exercise-bookkeeping-solutions`).

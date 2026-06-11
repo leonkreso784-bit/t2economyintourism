@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Accounting Exercises — sadržaj Ch3 (Survey of Financial Statements, K1) [FAZA 3 / B3.4]:** iz izvora (Cote *Hotel &
+  Restaurant Accounting* workbook Assignments 3-1/3-2/3-3; **rješenja provjerena** na originalnim solution stranicama):
+  `k1-ch3-tf` (14 True/False), `k1-ch3-terms` (10 pojmova → MC), `k1-ch3-isbs` (`classify`: stavka → Income Statement /
+  Balance Sheet), `k1-ch3-capital` (`ratio`: owner’s capital roll-forward = **51.000**, s distraktorima koje treba ignorirati),
+  `k1-ch3-income-statement` (`statement`: puni Income Statement „Annie’s Restaurant", 16 linija + 9 kaskadnih totala →
+  **Net Income 57.000**). **Engine nepromijenjen** — čisti sadržaj. Node **95/95** (+13/13 kernel), verify 0/0, Playwright
+  **36/36** + ciljani **5/5**. Cache `?v=20260628`. (Iza `features.exercises`.)
 - **Accounting Exercises — sadržaj Ch6 (Bookkeeping process, K1) [FAZA 3 / B3.3]:** iz izvora (Cote *Hotel & Restaurant
   Accounting* workbook Assignment 6-2 + profesorski worked example „Bookkeeping process"): `k1-ch6-classify` (10 transakcija →
   **dvoosna** klasifikacija klasa A/L/EQ/R/EX **+ Increase/Decrease efekt**), `k1-ch6-journal` (**guided journal**, 6 ALE

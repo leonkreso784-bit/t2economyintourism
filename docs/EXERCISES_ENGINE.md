@@ -183,7 +183,11 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       `k1-ch6-classify` (10 transakcija → **dvoosno** klasa Asset/Liability/Equity/Revenue/Expense **+ I/D efekt**; koristi `effects` granu iz B1.5),
       `k1-ch6-journal` (guided journal, **6 ALE transakcija**, perpetual; nastavlja otvoreni ledger preko `beginningBalances`; završni saldi provjereni kernelom — Cash 148.200, Food Inv 16.000, AP 4.200, CSI 178.500, APIC 10.000; 3-linijski entry kod izdavanja dionica iznad pari). **Engine nepromijenjen.**
       *Done ✅:* node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 2/2 (classify 26 linija točno → „Correct"; journal 6 tx → „Correct"). Cache `?v=20260627`.
-- [ ] **B3.4 (K1 Ch3 — Survey FS):** `numeric` (equity/retained earnings) + TF/MC + `statement` (3 izvještaja, Assignment 1).
+- [x] **B3.4 (K1 Ch3 — Survey FS):** iz izvora (Cote workbook Assignments 3-1/3-2/3-3; **rješenja provjerena** na `solutions-chapters-2-5` pp. 2–4):
+      `k1-ch3-tf` (14 T/F), `k1-ch3-terms` (10 pojmova → MC), `k1-ch3-isbs` (`classify` jednoosno: stavka → Income Statement / Balance Sheet),
+      `k1-ch3-capital` (`ratio`: owner’s capital roll-forward 40k+5k+20k−14k = **51.000**, s distraktorima AP/AR koje treba ignorirati),
+      `k1-ch3-income-statement` (`statement`: puni Income Statement „Annie’s Restaurant" — 16 linija + 9 kaskadnih totala; **Net Income 57.000**; svi totali provjereni). **Engine nepromijenjen.**
+      *Done ✅:* node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 5/5. Cache `?v=20260628`.
 - [ ] **B3.5 (K1 Ch1–2):** TF/MC (intro, GAAP, oblici poslovanja, stock). *(uglavnom choice — teorijski)*
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).
 - [ ] **B3.7 (K2 Inventory):** `numeric` (FIFO/LIFO/Average COGS).
