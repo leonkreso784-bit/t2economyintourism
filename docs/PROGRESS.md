@@ -17,8 +17,9 @@ među njima 2 K2 demoa (CH9 RevPAR, CH11 amortizacija) koji vire u K1. Uzrok: `r
 Sažeto: RV-1 = sortiraj listu po poglavlju + naslovi + (preporuka) makni demoe → čisti K1; RV-2 = Exam = samo rezultat bez po-stavci
 označavanja (Practice zadrži punu povratnu info). Oboje dira engine (`renderList`; `checkOpen`/`mark` po modu) → male generičke dopune.
 
-**Git stanje (na pauzi):** grana `main`, **6 commitova ispred `origin/main`, NEdeployano** (B3.2 `aac19c1`, B3.3 `46c6623`, B3.4 `18b1238`,
-B3.5 `68572be`, givens-fix `57fafdb`; + B3.1 `eeeb607` od prije). Radno stablo: čisto osim ovih doc-izmjena (BUGS/EXERCISES_ENGINE/PROGRESS).
+**Git stanje (na pauzi):** grana `main`, **12 commitova ispred `origin/main`, sve NEdeployano** — cijeli Exercises rad: engine (FAZA 0–2:
+`3324e72`/`ac5315d`/`7aa45bf` + doc), K1 sadržaj (B3.1 `eeeb607`, B3.2 `aac19c1`, B3.3 `46c6623`, B3.4 `18b1238`, B3.5 `68572be`),
+givens-fix `57fafdb`, doc-nalazi `1282997`. Radno stablo čisto (sve doc-izmjene commitane).
 **Sve testirano i zeleno** do zadnjeg commita (verify 0/0, node 95/95+13/13, Playwright 36/36). K1 SADRŽAJ KOMPLETAN (Ch1–6).
 **▶ Nastavak nakon compacta:** RV-1 → RV-2 → pa odluka **deploy (push) / FAZA 4 (restruktura+teorija) / K2 vježbe**. Ništa se ne pusha bez izričite potvrde.
 
