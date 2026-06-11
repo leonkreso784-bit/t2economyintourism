@@ -103,9 +103,17 @@ const accountingExercises = {
             chapter: 4,
             type: 'statement',
             title: 'Build the Balance Sheet',
-            prompt: 'Enter each amount and the totals. Common stock issued is the balancing figure '
-                + '(Total assets − Total liabilities − Retained earnings).',
+            prompt: 'Using the account balances below, build the balance sheet: place each amount in the correct section and '
+                + 'compute the totals. Common stock issued is the balancing figure (Total assets − Total liabilities − Retained earnings).',
             difficulty: 2,
+            givens: [
+                { label: 'Cash', value: 120000 },
+                { label: 'Accounts receivable', value: 10200 },
+                { label: 'Equipment', value: 61000 },
+                { label: 'Accounts payable', value: 15200 },
+                { label: 'Notes payable', value: 41000 },
+                { label: 'Retained earnings', value: 80000 }
+            ],
             sections: [
                 {
                     key: 'assets', label: 'Assets',
@@ -843,9 +851,28 @@ const accountingExercises = {
             chapter: 3,
             type: 'statement',
             title: 'Build the Income Statement (Annie’s Restaurant)',
-            prompt: 'Enter each amount, then compute the subtotals and net income for the year ended April 30, 20X2. '
-                + 'Income taxes for the year are $31,500.',
+            prompt: 'Using the account balances below, prepare the income statement for the year ended April 30, 20X2: '
+                + 'place each amount in the correct section and compute the subtotals and net income.',
             difficulty: 3,
+            givens: [
+                { label: 'Food sales', value: 510000 },
+                { label: 'Beverage sales', value: 100000 },
+                { label: 'Cost of food sales', value: 170000 },
+                { label: 'Cost of beverage sales', value: 30000 },
+                { label: 'Payroll', value: 200000 },
+                { label: 'Payroll taxes & employee benefits', value: 30000 },
+                { label: 'China, glassware & silverware', value: 1800 },
+                { label: 'Laundry & dry cleaning', value: 5100 },
+                { label: 'Supplies', value: 12800 },
+                { label: 'Advertising', value: 6800 },
+                { label: 'Utilities', value: 10800 },
+                { label: 'Repairs & maintenance', value: 12000 },
+                { label: 'Property taxes', value: 4200 },
+                { label: 'Insurance', value: 5000 },
+                { label: 'Interest', value: 15000 },
+                { label: 'Depreciation', value: 18000 },
+                { label: 'Income taxes', value: 31500 }
+            ],
             sections: [
                 {
                     key: 'rev', label: 'Revenue',

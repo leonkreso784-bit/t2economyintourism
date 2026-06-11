@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Exercises review-fix: `statement` givens tablica (Build BS + IS sad prikazuju izvorne brojeve)
+**Pregled (korisnik):** u „Build the Balance Sheet" nije bilo vidljivih brojeva iz kojih se gradi izvještaj — `statement` widget renderirao
+je samo prazna polja, a izvorni saldi su postojali samo kao odgovori u kodu. Isti problem i novi „Build the Income Statement".
+**Popravak:** mala generička engine dopuna — `statement` widget sad renderira **givens tablicu** kad vježba ima `ex.givens` (isti mehanizam
+kao `ratio`; izdvojen zajednički helper `givensTableHtml`, oba widgeta ga dijele). Dodani izvorni saldi: `k1-statement-bs-1` (6) i
+`k1-ch3-income-statement` (17). Unatrag-kompatibilno (bez `givens` → ponašanje nepromijenjeno). Ovo je 2. mala engine dopuna (nakon B3.1 classify),
+obje generičke i tražene stvarnim sadržajem.
+**Testirano:** verify 0/0; node 95/95 + 13/13; Playwright 36/36 + ciljani 3/3 (BS/IS prikazuju brojeve i ocjenjuju „Correct"; ratio bez regresije).
+Cache `?v=20260630` (exercises.js + content-loader.js + CONTENT_VERSION). Lokalno, nedeployano.
+
+---
+
 ## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch1–2 Intro/GAAP/Business Forms (B3.5) GOTOV → K1 SADRŽAJ KOMPLETAN (lokalno)
 Zadnje K1 poglavlje. **Nalaz:** Cote workbook NEMA zaseban numerički set za Ch1–2 (uvodna poglavlja; postoji samo answer-key za
 Assignment 2-1 bez teksta pitanja). Zato Ch1–2 = **konceptualna teorija** iz standardnih, nedvosmislenih računovodstvenih činjenica

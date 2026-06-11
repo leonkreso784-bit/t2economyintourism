@@ -164,13 +164,7 @@
         ratio: {
             grader: 'gradeNumeric',
             render(ex, opts) {
-                const rows = normalizeGivens(ex.givens);
-                const givensHtml = rows.length
-                    ? '<div class="ex-table-wrap"><table class="ex-table"><thead><tr><th>Given</th><th>Value</th></tr></thead><tbody>'
-                        + rows.map((r) => '<tr><td>' + esc(r.label) + '</td><td>' + esc(formatGiven(r.value)) + '</td></tr>').join('')
-                        + '</tbody></table></div>'
-                    : '';
-                return givensHtml + WIDGETS.numeric.render(ex, opts);
+                return givensTableHtml(ex) + WIDGETS.numeric.render(ex, opts);
             },
             collect(ex, root) { return WIDGETS.numeric.collect(ex, root); },
             mark(ex, root, result) { return WIDGETS.numeric.mark(ex, root, result); }
@@ -188,7 +182,8 @@
                     + '<input class="ex-input ex-st-input" data-key="' + esc(key) + '"'
                     + ' type="text" inputmode="decimal" autocomplete="off" spellcheck="false">'
                     + '</div>';
-                let html = '<div class="ex-statement">';
+                let html = givensTableHtml(ex, 'Account balance');
+                html += '<div class="ex-statement">';
                 sections.forEach((sec, si) => {
                     html += '<div class="ex-st-section">';
                     if (sec.label) html += '<div class="ex-st-section-title">' + esc(sec.label) + '</div>';
@@ -442,6 +437,17 @@
             return Core.formatAmount(v, { decimals: Number.isInteger(v) ? 0 : 2 });
         }
         return v == null ? '' : String(v);
+    }
+
+    // Tablica izvornih podataka ("givens") — dijele je `ratio` i `statement` widgeti.
+    // Vraća '' ako vježba nema givens (potpuno unatrag-kompatibilno).
+    function givensTableHtml(ex, col1) {
+        const rows = normalizeGivens(ex && ex.givens);
+        if (!rows.length) return '';
+        return '<div class="ex-table-wrap"><table class="ex-table"><thead><tr><th>'
+            + esc(col1 || 'Given') + '</th><th>Value</th></tr></thead><tbody>'
+            + rows.map((r) => '<tr><td>' + esc(r.label) + '</td><td>' + esc(formatGiven(r.value)) + '</td></tr>').join('')
+            + '</tbody></table></div>';
     }
 
     // Trenutno otvorena vježba (za "Check") + aktivni mod + seed/raw za randomizaciju.

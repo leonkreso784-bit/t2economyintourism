@@ -193,6 +193,10 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       `k1-ch2-business-forms` (13 TF/MC — proprietorship/partnership/corporation, limited vs unlimited liability, stock: par vs market,
       authorized≥issued≥outstanding, treasury, APIC, owner’s capital). **Engine nepromijenjen.** *Done ✅:* node 95/95 + 13/13; verify 0/0;
       Playwright 36/36 + ciljani 2/2. Cache `?v=20260629`. → **K1 SADRŽAJ KOMPLETAN (Ch1–6).**
+- [x] **Review-fix (statement givens):** `statement` „build" vježbe nisu prikazivale izvorne brojeve (samo prazna polja) → student nije imao iz čega graditi.
+      **Mala generička engine dopuna** (2. nakon B3.1 classify): `statement` widget sad renderira **givens tablicu** ako vježba ima `ex.givens` (isti
+      mehanizam kao `ratio`; izdvojen helper `givensTableHtml`, oba widgeta dijele). Dodani izvorni saldi u `k1-statement-bs-1` (6) i `k1-ch3-income-statement` (17).
+      Unatrag-kompatibilno (bez `givens` → ništa se ne mijenja). *Done ✅:* verify 0/0; node 95/95 + 13/13; Playwright 36/36 + ciljani 3/3 (BS/IS prikazuju brojeve i ocjenjuju „Correct"; ratio bez regresije). Cache `?v=20260630` (exercises.js + content-loader + CONTENT_VERSION).
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).
 - [ ] **B3.7 (K2 Inventory):** `numeric` (FIFO/LIFO/Average COGS).
 - [ ] **B3.8 (K2 Ch9/10 — Restaurant/Hotel ratios):** `ratio` (avg check, seat turnover, food/labor cost %, RevPAR…).

@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Fixed
+- **Exercises `statement` tip — prikaz izvornih podataka (review-fix):** „build the statement" vježbe (Build the Balance Sheet,
+  Build the Income Statement) prikazivale su **samo prazna polja** — izvorni saldi (iz kojih se izvještaj gradi) nisu se nigdje
+  vidjeli, pa se vježba nije mogla riješiti kako je zamišljeno. `statement` widget sad renderira **givens tablicu** kad vježba ima
+  `givens` (isti mehanizam kao `ratio` tip; izdvojen zajednički helper `givensTableHtml`). Dodani izvorni saldi: `k1-statement-bs-1`
+  (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
+  ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
 - **Accounting Exercises — sadržaj Ch1–2 (Intro/GAAP/oblici poslovanja/stock, K1) [FAZA 3 / B3.5]:** konceptualna teorija
   (Cote Ch1–2 su uvodni; workbook nema numerički set): `k1-ch1-concepts` (11 TF/MC — računovodstvena jednadžba, financijski
