@@ -5,7 +5,16 @@ testirano, što slijedi.
 
 ---
 
-## 2026-06-11 — Accounting FAZA 4: restruktura na K1/K2/finalni (3 lekcije) GOTOVA (lokalno)
+## 2026-06-11 — ✅ DEPLOYANO (push `a72d648`) — cijeli Exercises rad + FAZA 4 LIVE
+`origin/main` sinkroniziran (0 ispred). Na produkciju (sokratstudy.com) otišlo **17 commitova**: cijeli Exercises engine (FAZA 0–2),
+K1 interaktivne vježbe (B3.1–B3.5), review-fixevi RV-1/RV-2 (lista po poglavlju + demoi maknuti + Practice≠Exam), i **FAZA 4**
+(Accounting → 3 lekcije K1/K2/finalni + novo K1 study gradivo). **Poznato/očekivano:** Midterm 2 → Exercises tab prazan jer K2
+interaktivne vježbe još ne postoje (sljedeća faza B3.6–B3.11); Midterm 2 ipak ima pun study sadržaj (8 kat / 140 fc / 115 quiz / 78 fill / 8 learn).
+Cache `?v=20260632`.
+
+---
+
+## 2026-06-11 — Accounting FAZA 4: restruktura na K1/K2/finalni (3 lekcije) GOTOVA
 Predmet **Accounting** prebačen na standardnu strukturu „2 kolokvija + finalni" (kao sem-2 predmeti). Rađeno cigla-po-cigla, app zelen na svakom koraku
 (nove data-datoteke autorirane uz postojeću strukturu; catalog prebačen tek u zadnjoj cigli).
 
