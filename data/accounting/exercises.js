@@ -404,6 +404,120 @@ const accountingExercises = {
                 'Current Liabilities: payables, accrued payroll, taxes payable, dividends payable.',
                 'Equity: common stock issued, owner’s capital, retained earnings.'
             ]
+        },
+
+        // ========================= CHAPTER 5 — INCOME STATEMENT (K1) =========================
+        // Source: Cote, Hotel & Restaurant Accounting, Ch. 5 workbook (Assignments 5-1, 5-2).
+
+        // --- B3.2: Ch5 True/False (Assignment 5-1, Part I) ---
+        {
+            id: 'k1-ch5-tf',
+            lesson: 'accounting-fundamentals',
+            chapter: 5,
+            type: 'choice',
+            title: 'Income Statement — True or False',
+            prompt: 'Mark each statement true or false.',
+            difficulty: 2,
+            items: [
+                { q: 'The food department has cost of sales.', kind: 'tf', answer: true },
+                { q: 'Storeroom purchases in a perpetual system are recorded to the Cost of Sales account.', kind: 'tf', answer: false },
+                { q: 'Accumulated Depreciation is a contra-asset account.', kind: 'tf', answer: true },
+                { q: 'The rooms department has cost of sales.', kind: 'tf', answer: false },
+                { q: 'Direct purchases in a periodic system are recorded to a Cost of Sales account.', kind: 'tf', answer: false },
+                { q: 'Expenses represent costs incurred in operating the business and the expired portions of assets.', kind: 'tf', answer: true },
+                { q: 'Storeroom issues are recorded at cost to the Cost of Sales account in the periodic system.', kind: 'tf', answer: false },
+                { q: 'The periodic system provides better inventory control than the perpetual system.', kind: 'tf', answer: false },
+                { q: 'Deliveries that go directly to the storeroom are called Direct Purchases.', kind: 'tf', answer: false },
+                { q: 'Operating expenses include all expenses incurred in the day-to-day activities of the business.', kind: 'tf', answer: true }
+            ],
+            solution: [
+                'Rooms have no cost of sales; food and beverage departments do.',
+                'Perpetual: storeroom purchases go to Inventory (not COS); issues hit COS.',
+                'Periodic: purchases go to a Purchases account; COS is computed at period end.',
+                'Perpetual gives better inventory control. “Direct purchases” go straight to production, not the storeroom.'
+            ]
+        },
+
+        // --- B3.2: Ch5 classify accounts as A/L/EQ/R/EX (Assignment 5-1, Part II) ---
+        {
+            id: 'k1-ch5-classify',
+            lesson: 'accounting-fundamentals',
+            chapter: 5,
+            type: 'classify',
+            title: 'Classify Accounts — Asset / Liability / Equity / Revenue / Expense',
+            prompt: 'Classify each account into one of the five account types.',
+            difficulty: 2,
+            classes: [
+                { v: 'A', label: 'Asset' },
+                { v: 'L', label: 'Liability' },
+                { v: 'EQ', label: 'Equity' },
+                { v: 'R', label: 'Revenue' },
+                { v: 'EX', label: 'Expense' }
+            ],
+            // no `effects` → single-axis classification
+            rows: [
+                { entries: [{ account: 'Accumulated Depreciation', cls: 'A' }] },
+                { entries: [{ account: 'Payroll', cls: 'EX' }] },
+                { entries: [{ account: 'Rent', cls: 'EX' }] },
+                { entries: [{ account: 'Beverage Sales', cls: 'R' }] },
+                { entries: [{ account: 'Accounts Payable', cls: 'L' }] },
+                { entries: [{ account: 'Depreciation', cls: 'EX' }] },
+                { entries: [{ account: 'Cash', cls: 'A' }] },
+                { entries: [{ account: 'Sales Tax Payable', cls: 'L' }] },
+                { entries: [{ account: 'Accounts Receivable', cls: 'A' }] },
+                { entries: [{ account: 'Accrued Payroll', cls: 'L' }] },
+                { entries: [{ account: 'Cost of Sales', cls: 'EX' }] },
+                { entries: [{ account: 'Purchases (Periodic System)', cls: 'EX' }] },
+                { entries: [{ account: 'Prepaid Rent', cls: 'A' }] },
+                { entries: [{ account: 'Building', cls: 'A' }] },
+                { entries: [{ account: 'Owner’s Capital', cls: 'EQ' }] },
+                { entries: [{ account: 'Food Inventory', cls: 'A' }] },
+                { entries: [{ account: 'Food Sales', cls: 'R' }] },
+                { entries: [{ account: 'Income Taxes', cls: 'EX' }] },
+                { entries: [{ account: 'Income Taxes Payable', cls: 'L' }] },
+                { entries: [{ account: 'Retained Earnings', cls: 'EQ' }] },
+                { entries: [{ account: 'Employee Benefits', cls: 'EX' }] },
+                { entries: [{ account: 'Vehicles', cls: 'A' }] },
+                { entries: [{ account: 'Common Stock Issued', cls: 'EQ' }] },
+                { entries: [{ account: 'Repairs & Maintenance', cls: 'EX' }] },
+                { entries: [{ account: 'Equipment', cls: 'A' }] },
+                { entries: [{ account: 'Utilities', cls: 'EX' }] },
+                { entries: [{ account: 'Supplies', cls: 'EX' }] },
+                { entries: [{ account: 'Supplies Inventory', cls: 'A' }] },
+                { entries: [{ account: 'Furniture', cls: 'A' }] },
+                { entries: [{ account: 'Withdrawals', cls: 'EQ' }] }
+            ],
+            solution: [
+                'Revenue: sales accounts (Food Sales, Beverage Sales).',
+                'Expense: payroll, rent, depreciation, cost of sales, purchases, utilities, supplies, taxes, etc.',
+                'Asset: cash, receivables, inventories, prepaids, P&E, accumulated depreciation (contra-asset).',
+                'Liability: payables, accrued payroll, taxes payable. Equity: capital, retained earnings, stock issued, withdrawals (contra-equity).'
+            ]
+        },
+
+        // --- B3.2: Ch5 food cost of sales computation (Assignment 5-2, Part II) ---
+        {
+            id: 'k1-ch5-foodcost',
+            lesson: 'accounting-fundamentals',
+            chapter: 5,
+            type: 'ratio',
+            title: 'Food Cost of Sales',
+            prompt: 'Using the August figures below, compute the food available for use and the cost of food used.',
+            difficulty: 2,
+            givens: [
+                { label: 'Beginning food inventory (8/1)', value: 7595 },
+                { label: 'Direct purchases', value: 450 },
+                { label: 'Storeroom purchases', value: 27400 },
+                { label: 'Ending food inventory (8/31)', value: 10060 }
+            ],
+            fields: [
+                { key: 'available', label: 'Food available for use', answer: 35445, tol: 0.005, unit: '$', hint: 'Beginning inventory + Direct + Storeroom purchases' },
+                { key: 'costUsed', label: 'Cost of food used', answer: 25385, tol: 0.005, unit: '$', hint: 'Food available for use − Ending inventory' }
+            ],
+            solution: [
+                'Food available for use = 7,595 + 450 + 27,400 = 35,445.',
+                'Cost of food used = 35,445 − 10,060 = 25,385.'
+            ]
         }
     ]
 };

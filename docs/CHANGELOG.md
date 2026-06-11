@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Accounting Exercises — sadržaj Ch5 (Income Statement, K1) [FAZA 3 / B3.2]:** iz izvora (Cote *Hotel & Restaurant
+  Accounting* workbook Exercises-5; **rješenja provjerena** na originalnim solution stranicama): `k1-ch5-tf` (10 True/False),
+  `k1-ch5-classify` (30 računa → **5-osna** klasifikacija Asset/Liability/Equity/Revenue/Expense — koristi jednoosni
+  `classify` iz B3.1, bez izmjena enginea), `k1-ch5-foodcost` (`ratio`: Beginning+Direct+Storeroom → **Cost of Food Available**
+  35.445; −Ending → **Cost of Food Used** 25.385). **Engine nepromijenjen** — čisti sadržaj. Node **95/95** (+13/13 kernel),
+  Playwright **36/36** + ciljani **2/2**. Cache `?v=20260626`. (Iza `features.exercises` → ostali predmeti netaknuti.)
 - **Accounting Exercises — sadržaj Ch4 (Balance Sheet, K1) [FAZA 3 / B3.1]:** prve prave vježbe iz izvora (Cote
   *Hotel & Restaurant Accounting* workbook, Assignment 4-1; **rješenja provjerena** na originalnim solution stranicama):
   `k1-ch4-tf` (15 True/False), `k1-ch4-terms` (8 pojmova kao MC), `k1-ch4-classify` (20 računa → bilančna kategorija

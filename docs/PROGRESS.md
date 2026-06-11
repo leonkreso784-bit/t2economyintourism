@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch5 Income Statement sadržaj (B3.2) GOTOV (lokalno)
+Nastavak autoriranja K1 po poglavlju. Izvor: `tmp-acc/img/` (Cote workbook Exercises-5 + **službena rješenja** `solutions-chapters-2-5`).
+
+**B3.2 (Ch5 — Income Statement):** 3 nove vježbe (rješenja provjerena na izvoru):
+`k1-ch5-tf` (10 TF), `k1-ch5-classify` (30 računa → **5-osna** klasifikacija Asset/Liability/Equity/Revenue/Expense — reuse jednoosnog
+`classify` iz B3.1), `k1-ch5-foodcost` (`ratio`: Beginning+Direct+Storeroom → Cost of Food **Available** 35.445; −Ending → Cost of Food **Used** 25.385).
+**Engine nepromijenjen** — čisti sadržaj (0 izmjena enginea).
+**Testirano:** node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 2/2 (food cost → „Correct"; 30 računa → „Correct"). Cache `?v=20260626`. Lokalno, nedeployano.
+**▶ Sljedeće:** B3.3 (Ch6 Bookkeeping — `classify` I/D effect + `journal` ALE), pa Ch3/Ch1–2.
+
+---
+
 ## 2026-06-11 — Accounting Exercises: FAZA 3 počela — Ch4 Balance Sheet sadržaj (B3.1) GOTOV (lokalno)
 Engine je gotov (faze 0–2); kreće autoriranje SADRŽAJA po poglavlju (K1 prvo). Izvor: `tmp-acc/img/` (133 JPG renderiranih iz
 „nečitljivih" PDF-ova) — Cote workbook + **službena rješenja** (`solutions-chapters-2-5`).
