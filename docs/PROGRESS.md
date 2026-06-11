@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Korisnički pregled K1 vježbi: 2 nalaza zabilježena, rad PAUZIRAN (priprema za compact)
+Korisnik je proklikao K1 vježbe lokalno (`serve:test` na :5050, `v=20260630`) i javio **dva prava nalaza**. Odluka: **zapisati sve, NE dirati kod sada.**
+
+**Nalaz 1 (BUG-010) — lista „razbacana":** vježbe se prikazuju redoslijedom u nizu (nije po poglavlju); na vrhu stari demoi iz FAZE 1/2,
+među njima 2 K2 demoa (CH9 RevPAR, CH11 amortizacija) koji vire u K1. Uzrok: `renderList` ne sortira po `chapter`; sve je u jednoj lekciji
+`accounting-fundamentals` (nema K1/K2 splita — FAZA 4).
+**Nalaz 2 (BUG-011) — Practice ≈ Exam:** jedina razlika je skrivanje hintova na numeric/ratio; ostalo identično, „Check" feedback isti u oba moda.
+
+**Plan (čeka odluku korisnika):** detaljno u `docs/EXERCISES_ENGINE.md` §6 „Review-nalazi" (RV-1, RV-2) + `docs/BUGS.md` (BUG-010/011).
+Sažeto: RV-1 = sortiraj listu po poglavlju + naslovi + (preporuka) makni demoe → čisti K1; RV-2 = Exam = samo rezultat bez po-stavci
+označavanja (Practice zadrži punu povratnu info). Oboje dira engine (`renderList`; `checkOpen`/`mark` po modu) → male generičke dopune.
+
+**Git stanje (na pauzi):** grana `main`, **6 commitova ispred `origin/main`, NEdeployano** (B3.2 `aac19c1`, B3.3 `46c6623`, B3.4 `18b1238`,
+B3.5 `68572be`, givens-fix `57fafdb`; + B3.1 `eeeb607` od prije). Radno stablo: čisto osim ovih doc-izmjena (BUGS/EXERCISES_ENGINE/PROGRESS).
+**Sve testirano i zeleno** do zadnjeg commita (verify 0/0, node 95/95+13/13, Playwright 36/36). K1 SADRŽAJ KOMPLETAN (Ch1–6).
+**▶ Nastavak nakon compacta:** RV-1 → RV-2 → pa odluka **deploy (push) / FAZA 4 (restruktura+teorija) / K2 vježbe**. Ništa se ne pusha bez izričite potvrde.
+
+---
+
 ## 2026-06-11 — Exercises review-fix: `statement` givens tablica (Build BS + IS sad prikazuju izvorne brojeve)
 **Pregled (korisnik):** u „Build the Balance Sheet" nije bilo vidljivih brojeva iz kojih se gradi izvještaj — `statement` widget renderirao
 je samo prazna polja, a izvorni saldi su postojali samo kao odgovori u kodu. Isti problem i novi „Build the Income Statement".

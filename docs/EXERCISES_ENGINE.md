@@ -197,6 +197,25 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       **Mala generička engine dopuna** (2. nakon B3.1 classify): `statement` widget sad renderira **givens tablicu** ako vježba ima `ex.givens` (isti
       mehanizam kao `ratio`; izdvojen helper `givensTableHtml`, oba widgeta dijele). Dodani izvorni saldi u `k1-statement-bs-1` (6) i `k1-ch3-income-statement` (17).
       Unatrag-kompatibilno (bez `givens` → ništa se ne mijenja). *Done ✅:* verify 0/0; node 95/95 + 13/13; Playwright 36/36 + ciljani 3/3 (BS/IS prikazuju brojeve i ocjenjuju „Correct"; ratio bez regresije). Cache `?v=20260630` (exercises.js + content-loader + CONTENT_VERSION).
+
+> #### 🔎 Review-nalazi (2026-06-11, korisnički pregled lokalno) — ČEKAJU ODLUKU, NIŠTA JOŠ NIJE RAĐENO
+> Dva prava nalaza iz proklikavanja K1 vježbi (detaljno i u `BUGS.md` BUG-010/011). Korisnik tražio: zapisati, ne dirati kod još.
+>
+> - [ ] **RV-1 (BUG-010) — Lista nije po poglavlju + demoi zatrpavaju (uklj. 2 K2).** `renderList` u `js/exercises.js` iscrtava
+>   vježbe **redoslijedom u nizu** (autorski: 8 demoa prvo, pa Ch4→Ch5→Ch6→Ch3→Ch1–2); K2 demoi (`k2-ratio-restaurant-1` CH9,
+>   `k2-numeric-depreciation-1` CH11) vire u K1. **Plan:** (a) sortiraj `renderList` po `ex.chapter` (uzlazno) **+ naslovi poglavlja**
+>   („Chapter N") — radim svakako; (b) **demoi (čeka izbor):** A=makni demoe→čisti K1 (ukloni `k1-choice-intro-1`,`k1-numeric-equity-1`,
+>   `k1-classify-ch6-1`,`k1-journal-ale-1`,`k1-journal-free-1`,`k2-ratio-restaurant-1`,`k2-numeric-depreciation-1`; **zadrži**
+>   `k1-statement-bs-1`) · B=makni samo 2 K2 · C=ostavi sve. **Moja preporuka: A.** Dio ovoga prirodno riješi FAZA 4 (split lekcija).
+>   Dotiče: `js/exercises.js` (renderList sort+headeri), `data/accounting/exercises.js` (brisanje demoa). Cache bump + Playwright.
+> - [ ] **RV-2 (BUG-011) — Practice ≈ Exam (modovi se ne razlikuju).** Jedina razlika sad: `showHints=mode!=='exam'` u numeric/ratio;
+>   choice/classify/journal/statement nemaju polje-hintove → identično; „Check" feedback isti u oba moda. **Plan (preporuka):**
+>   Practice = hintovi + po-stavci zeleno/crveno + točni odgovori; **Exam** = bez hintova, na „Check" SAMO rezultat (npr. „11/14"),
+>   bez po-stavci označavanja i bez otkrivanja točnih; Walkthrough = rješenje. Alternativa: minimalno (Exam sakrije hintove + Walkthrough dugme).
+>   Dotiče engine: `checkOpen`/`mark`/feedback moraju primiti `currentMode` (sad ga ne primaju) → mala generička dopuna; node + Playwright.
+>
+> **Redoslijed kad se nastavi:** prvo RV-1 (brzo, vidljivo), pa RV-2 (dizajn modova), pa odluka deploy/FAZA 4/K2.
+
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).
 - [ ] **B3.7 (K2 Inventory):** `numeric` (FIFO/LIFO/Average COGS).
 - [ ] **B3.8 (K2 Ch9/10 — Restaurant/Hotel ratios):** `ratio` (avg check, seat turnover, food/labor cost %, RevPAR…).
