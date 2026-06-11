@@ -213,6 +213,83 @@ const accountingExercises = {
                 'Straight-line depreciation = (Cost − Salvage value) ÷ Useful life.',
                 'Subtract salvage from cost, then divide by the number of years.'
             ]
+        },
+
+        // --- B2.2 demo: journal (guided, ALE only — assets/liabilities/equity) ---
+        {
+            id: 'k1-journal-ale-1',
+            lesson: 'accounting-fundamentals',
+            chapter: 6,
+            type: 'journal',
+            title: 'Record Transactions (Assets, Liabilities, Equity)',
+            prompt: 'Record each transaction with the correct debit and credit. Each transaction has two lines.',
+            difficulty: 3,
+            chartOfAccounts: [
+                { name: 'Cash', normal: 'D', section: 'asset' },
+                { name: 'Equipment', normal: 'D', section: 'asset' },
+                { name: 'Accounts Payable', normal: 'C', section: 'liability' },
+                { name: 'Note Payable', normal: 'C', section: 'liability' },
+                { name: 'Common Stock', normal: 'C', section: 'equity' }
+            ],
+            beginningBalances: {},
+            transactions: [
+                {
+                    text: 'Owners invest $50,000 cash in exchange for common stock.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 50000 },
+                        { account: 'Common Stock', side: 'C', amount: 50000 }
+                    ]
+                },
+                {
+                    text: 'Purchase equipment for $12,000 on account (no cash paid yet).',
+                    entries: [
+                        { account: 'Equipment', side: 'D', amount: 12000 },
+                        { account: 'Accounts Payable', side: 'C', amount: 12000 }
+                    ]
+                },
+                {
+                    text: 'Borrow $15,000 cash from the bank, signing a note payable.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 15000 },
+                        { account: 'Note Payable', side: 'C', amount: 15000 }
+                    ]
+                }
+            ],
+            expectedEndingBalances: { Cash: 65000, Equipment: 12000, 'Accounts Payable': 12000, 'Note Payable': 15000, 'Common Stock': 50000 },
+            solution: [
+                'Investing cash for stock: debit Cash 50,000; credit Common Stock 50,000.',
+                'Equipment on account: debit Equipment 12,000; credit Accounts Payable 12,000.',
+                'Borrowing cash: debit Cash 15,000; credit Note Payable 15,000.',
+                'Every entry keeps total debits equal to total credits.'
+            ]
+        },
+
+        // --- B2.3 demo: journal FREE mode (build the whole ledger; graded by ending balances) ---
+        {
+            id: 'k1-journal-free-1',
+            lesson: 'accounting-fundamentals',
+            chapter: 6,
+            type: 'journal',
+            free: true,
+            title: 'Build the Ledger (free entry)',
+            prompt: 'Record every transaction as debits and credits using the lines below (add more as needed). '
+                + 'Transactions: (1) Owners invest $40,000 cash for common stock. (2) Buy equipment for $9,000 cash. '
+                + '(3) Borrow $6,000 cash on a note payable. Your ending balances must match.',
+            difficulty: 3,
+            chartOfAccounts: [
+                { name: 'Cash', normal: 'D', section: 'asset' },
+                { name: 'Equipment', normal: 'D', section: 'asset' },
+                { name: 'Note Payable', normal: 'C', section: 'liability' },
+                { name: 'Common Stock', normal: 'C', section: 'equity' }
+            ],
+            beginningBalances: {},
+            expectedEndingBalances: { Cash: 37000, Equipment: 9000, 'Note Payable': 6000, 'Common Stock': 40000 },
+            solution: [
+                'Invest: debit Cash 40,000; credit Common Stock 40,000.',
+                'Equipment: debit Equipment 9,000; credit Cash 9,000.',
+                'Borrow: debit Cash 6,000; credit Note Payable 6,000.',
+                'Ending Cash = 40,000 − 9,000 + 6,000 = 37,000; Equipment 9,000; Note Payable 6,000; Common Stock 40,000.'
+            ]
         }
     ]
 };

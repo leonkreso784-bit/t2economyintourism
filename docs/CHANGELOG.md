@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Exercises engine — FAZA 2 (`journal` tip: pravi double-entry):** novi čisti **`js/acc-kernel.js`** (bez DOM-a, bez
+  ovisnosti): `isBalanced`, `postEntries`/`deriveEndingBalances`, `classifyTotals` (A=L+E), `tAccounts`, `gradeEndingBalances`
+  (`chartOfAccounts:[{name,normal,section}]`). Dva načina rada: **guided** (fiksne debit/credit linije po transakciji →
+  `gradeJournal` u jezgri: `gradeSet` multiset + balance Σd=Σc, per-transakcija status) i **free** (`ex.free`: slobodno
+  dodaj/ukloni linije, account picker, **live auto-posting u T-račune** + **živa Σdebit=Σcredit i A=L+E traka**, ocjena po
+  završnim saldima). Widget sad podržava `widget.grade` (custom, free) uz imenovani grader iz jezgre. 3 demo vježbe
+  (ALE guided, ALE free build-the-ledger). **Testovi:** node `acc-kernel` **13/13** + `exercises-core` **92/92** (`npm run
+  test:unit` pokreće oba); Playwright **36/36** (0 regresija; smoke 9 predmeta 0 errora). Cache `?v=20260624`. **Iza
+  `features.exercises` → ostali predmeti netaknuti.**
 - **Exercises engine — FAZA 1 (generički tipovi widgeta + modovi + randomizacija + napredak):** svih **5 tipova vježbi**
   interaktivno i auto-ocjenjivano, svaki = **čisti grader u jezgri (node-testabilan) + tanki DOM widget** (registry obrazac
   render/collect/grader/mark). Tipovi: **choice** (TF+MC), **numeric** (`numEq`, jedinice/hint), **ratio** (givens tablica +

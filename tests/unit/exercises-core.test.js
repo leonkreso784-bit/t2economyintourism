@@ -8,7 +8,7 @@ const assert = require('assert');
 const path = require('path');
 const {
     parseAmount, formatAmount, numEq, numEqMoney, gradeSet, toCents, seededRandom, pickParams,
-    gradeChoice, gradeNumeric, gradeStatement, statementCells, gradeClassify
+    gradeChoice, gradeNumeric, gradeStatement, statementCells, gradeClassify, gradeJournal
 } = require(path.join(__dirname, '..', '..', 'js', 'exercises-core.js'));
 
 let passed = 0;
@@ -379,6 +379,72 @@ test('generate: answer equals (cost − salvage) / life', () => {
         // and the generated answer grades itself correct
         assert.ok(gradeNumeric(g, { dep: String(Math.round(g.fields[0].answer * 100) / 100) }).correct);
     }
+});
+
+// ---------------------------------------------------------------- gradeJournal
+const jrEx = {
+    type: 'journal',
+    chartOfAccounts: [
+        { name: 'Cash', normal: 'D', section: 'asset' },
+        { name: 'Common Stock', normal: 'C', section: 'equity' },
+        { name: 'Note Payable', normal: 'C', section: 'liability' }
+    ],
+    transactions: [
+        { text: 'Invest cash', entries: [
+            { account: 'Cash', side: 'D', amount: 50000 },
+            { account: 'Common Stock', side: 'C', amount: 50000 }
+        ] },
+        { text: 'Borrow cash', entries: [
+            { account: 'Cash', side: 'D', amount: 15000 },
+            { account: 'Note Payable', side: 'C', amount: 15000 }
+        ] }
+    ]
+};
+test('gradeJournal: all correct (exact order)', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Cash', side: 'D', amount: '50000' }, { account: 'Common Stock', side: 'C', amount: '50000' }],
+        [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
+    ]);
+    assert.ok(r.correct && r.score === 2 && r.max === 2);
+});
+test('gradeJournal: order-independent within a transaction', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Common Stock', side: 'C', amount: '50,000' }, { account: 'Cash', side: 'D', amount: '50000' }],
+        [{ account: 'Note Payable', side: 'C', amount: '15000' }, { account: 'Cash', side: 'D', amount: '15000' }]
+    ]);
+    assert.ok(r.correct);
+});
+test('gradeJournal: swapped debit/credit side → wrong', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Cash', side: 'C', amount: '50000' }, { account: 'Common Stock', side: 'D', amount: '50000' }],
+        [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
+    ]);
+    assert.ok(!r.correct && r.score === 1 && r.perField[0].ok === false);
+    // sides swapped still balances (D=C) but accounts/sides don't match expected
+    assert.strictEqual(r.perField[0].balanced, true);
+});
+test('gradeJournal: unbalanced transaction flagged', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Cash', side: 'D', amount: '50000' }, { account: 'Common Stock', side: 'C', amount: '40000' }],
+        [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
+    ]);
+    assert.ok(!r.correct && r.perField[0].ok === false && r.perField[0].balanced === false);
+    assert.strictEqual(r.perField[0].debits, 50000);
+    assert.strictEqual(r.perField[0].credits, 40000);
+});
+test('gradeJournal: blank amounts → wrong + not balanced', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Cash', side: 'D', amount: '' }, { account: 'Common Stock', side: 'C', amount: '' }],
+        [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
+    ]);
+    assert.ok(!r.correct && r.perField[0].ok === false && r.perField[0].balanced === false);
+});
+test('gradeJournal: wrong account flagged', () => {
+    const r = gradeJournal(jrEx, [
+        [{ account: 'Cash', side: 'D', amount: '50000' }, { account: 'Note Payable', side: 'C', amount: '50000' }],
+        [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
+    ]);
+    assert.ok(!r.correct && r.perField[0].ok === false);
 });
 
 // ---------------------------------------------------------------- rezultat

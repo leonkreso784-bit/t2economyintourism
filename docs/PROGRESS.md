@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises engine: FAZA 2 (journal / pravi double-entry) GOTOVA (lokalno)
+**Nastavak** Faze 1. Cilj: `journal` tip s pravim knjiženjem, T-računima i ocjenom po saldima.
+
+**Napravljeno (B2.1–B2.5):**
+- **`js/acc-kernel.js`** (čisto, bez DOM/ovisnosti): `isBalanced`, `postEntries`/`deriveEndingBalances`, `classifyTotals` (A=L+E),
+  `tAccounts`, `gradeEndingBalances`. `chartOfAccounts:[{name,normal:'D'|'C',section}]`. Node **13/13**.
+- **journal GUIDED** (B2.2): fiksne linije po transakciji; `gradeJournal` u jezgri (`gradeSet` multiset + Σd=Σc balance); per-transakcija status.
+- **journal FREE** (B2.3, `ex.free`): dodaj/ukloni linije, account picker, **live auto-posting u T-račune**, ocjena po završnim saldima (`gradeEndingBalances`).
+- **Živa traka** (B2.4): Σdebit=Σcredit + **A = L + E** (iz `classifyTotals`), prebacuje balanced↔unbalanced uživo dok korisnik tipka.
+- Widget registry proširen: `widget.grade` (custom, za free) uz imenovani grader iz jezgre. 3 demo journal vježbe.
+
+**Testirano:** verify **0/0**; node **92/92** (exercises-core) **+ 13/13** (acc-kernel); Playwright **36/36** (smoke 9 predmeta 0 errora) +
+ciljani temp specovi po cigli (guided/free/A=L+E — prošli pa obrisani). Cache `?v=20260624`.
+
+**Stanje:** commitano lokalno (FAZA 2), **ništa deployano**. **▶ Sljedeće:** FAZA 3 — autoriranje sadržaja po poglavlju (K1 prvo); pa FAZA 4 (restruktura K1/K2/finalni).
+
+---
+
 ## 2026-06-10 — Accounting Exercises engine: FAZA 1 (svih 5 tipova + modovi + randomizacija + napredak) GOTOVA (lokalno)
 **Nastavak** Faze 0. Cilj: generički, auto-ocjenjivi tipovi vježbi iza feature-flaga.
 

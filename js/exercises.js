@@ -262,8 +262,158 @@
                     el.classList.add(pf.ok ? 'is-correct' : 'is-incorrect');
                 });
             }
+        },
+
+        // --- journal: GUIDED (fiksne linije) ili FREE (slobodno, ocjena po saldima) ---
+        journal: {
+            render(ex) { return ex.free ? renderFreeJournal(ex) : renderGuidedJournal(ex); },
+            collect(ex, root) {
+                if (ex.free) return computeFreeRows(root);
+                const trans = Array.isArray(ex.transactions) ? ex.transactions : [];
+                return trans.map((t, ti) => (t.entries || []).map((e, li) => {
+                    const ln = root.querySelector('.ex-jr-line[data-trans="' + ti + '"][data-line="' + li + '"]');
+                    return readLine(ln);
+                }));
+            },
+            grade(ex, answers) {
+                if (ex.free) {
+                    const entries = (answers || [])
+                        .map((a) => ({ account: a.account, side: a.side, amount: Core.parseAmount(a.amount) }))
+                        .filter((e) => e.account && (e.side === 'D' || e.side === 'C') && Number.isFinite(e.amount));
+                    const K = (typeof window !== 'undefined' && window.AccKernel) || {};
+                    return K.gradeEndingBalances
+                        ? K.gradeEndingBalances(ex.beginningBalances || {}, entries, ex.chartOfAccounts || [], ex.expectedEndingBalances || {})
+                        : { score: 0, max: 0, perField: [], correct: false };
+                }
+                return Core.gradeJournal ? Core.gradeJournal(ex, answers) : { score: 0, max: 0, perField: [], correct: false };
+            },
+            mark(ex, root, result) {
+                if (ex.free) { updateLivePanel(root, ex); return; }
+                result.perField.forEach((pf) => {
+                    const block = root.querySelector('.ex-jr-trans[data-trans="' + pf.index + '"]');
+                    if (!block) return;
+                    block.classList.remove('is-correct', 'is-incorrect');
+                    block.classList.add(pf.ok ? 'is-correct' : 'is-incorrect');
+                    const status = block.querySelector('.ex-jr-status');
+                    if (status) {
+                        status.textContent = pf.ok
+                            ? '✓ Correct entry'
+                            : (pf.balanced ? '✗ Balanced, but not the right accounts/amounts' : '✗ Debits ≠ Credits (' + pf.debits + ' vs ' + pf.credits + ')');
+                    }
+                });
+            }
         }
     };
+
+    // ---- journal helpers ----------------------------------------------------
+    function accountOptions(ex) {
+        const accounts = (Array.isArray(ex.chartOfAccounts) ? ex.chartOfAccounts : []).map((c) => c.name);
+        return '<option value="">Account…</option>'
+            + accounts.map((n) => '<option value="' + esc(n) + '">' + esc(n) + '</option>').join('');
+    }
+    const SIDE_OPTS = '<option value="">DR/CR</option><option value="D">Debit</option><option value="C">Credit</option>';
+
+    function jrLineHtml(ex, opts) {
+        opts = opts || {};
+        const cls = 'ex-jr-line' + (opts.extraClass ? ' ' + opts.extraClass : '');
+        return '<div class="' + cls + '"' + (opts.data ? ' ' + opts.data : '') + '>'
+            + '<select class="ex-select ex-jr-acc" data-kind="account">' + accountOptions(ex) + '</select>'
+            + '<select class="ex-select ex-jr-side" data-kind="side">' + SIDE_OPTS + '</select>'
+            + '<input class="ex-input ex-jr-amount" data-kind="amount" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" placeholder="Amount">'
+            + (opts.withDelete ? '<button type="button" class="ex-jr-del" data-ex-jr-del="1" aria-label="Remove line">&times;</button>' : '')
+            + '</div>';
+    }
+    function readLine(ln) {
+        if (!ln) return { account: null, side: null, amount: '' };
+        const acc = ln.querySelector('.ex-jr-acc');
+        const side = ln.querySelector('.ex-jr-side');
+        const amt = ln.querySelector('.ex-jr-amount');
+        return {
+            account: acc && acc.value ? acc.value : null,
+            side: side && side.value ? side.value : null,
+            amount: amt ? amt.value : ''
+        };
+    }
+
+    function renderGuidedJournal(ex) {
+        const trans = Array.isArray(ex.transactions) ? ex.transactions : [];
+        return '<div class="ex-journal">' + trans.map((t, ti) => {
+            const lines = (t.entries || []).map((e, li) =>
+                jrLineHtml(ex, { data: 'data-trans="' + ti + '" data-line="' + li + '"' })
+            ).join('');
+            return '<div class="ex-jr-trans" data-trans="' + ti + '">'
+                + '<div class="ex-jr-text">' + (ti + 1) + '. ' + esc(t.text) + '</div>'
+                + '<div class="ex-jr-lines">' + lines + '</div>'
+                + '<div class="ex-jr-status"></div>'
+                + '</div>';
+        }).join('') + '</div>';
+    }
+
+    function renderFreeJournal(ex) {
+        const startLines = 4;
+        let lines = '';
+        for (let i = 0; i < startLines; i++) lines += jrLineHtml(ex, { extraClass: 'ex-jr-free-line', withDelete: true });
+        return '<div class="ex-journal ex-jr-free">'
+            + '<div class="ex-jr-free-lines">' + lines + '</div>'
+            + '<button type="button" class="ex-btn ex-btn-ghost ex-jr-add" data-ex-jr-add="1"><i class="fas fa-plus"></i> Add line</button>'
+            + '<div class="ex-jr-tpanel">' + renderTPanel(ex, []) + '</div>'
+            + '</div>';
+    }
+
+    // Pročitaj sve slobodne linije iz DOM-a → niz {account, side, amount(raw)}.
+    function computeFreeRows(root) {
+        return Array.from(root.querySelectorAll('.ex-jr-free-line')).map(readLine);
+    }
+    function freeEntries(root) {
+        return computeFreeRows(root)
+            .map((a) => ({ account: a.account, side: a.side, amount: Core.parseAmount(a.amount) }))
+            .filter((e) => e.account && (e.side === 'D' || e.side === 'C') && Number.isFinite(e.amount));
+    }
+
+    // Žive T-konta + Σdebit/Σcredit (auto-posting vizual).
+    function renderTPanel(ex, entries) {
+        const K = (typeof window !== 'undefined' && window.AccKernel) || {};
+        if (!K.tAccounts) return '';
+        const t = K.tAccounts(ex.beginningBalances || {}, entries, ex.chartOfAccounts || []);
+        const touched = Object.keys(t).filter((n) => t[n].debits || t[n].credits);
+        const fmt = (n) => (Core.formatAmount ? Core.formatAmount(n, { decimals: 0 }) : String(n));
+        const cards = touched.length ? touched.map((name) =>
+            '<div class="ex-tacc">'
+            + '<div class="ex-tacc-name">' + esc(name) + '</div>'
+            + '<div class="ex-tacc-cols"><span class="ex-tacc-dr">Dr ' + fmt(t[name].debits) + '</span>'
+            + '<span class="ex-tacc-cr">Cr ' + fmt(t[name].credits) + '</span></div>'
+            + '<div class="ex-tacc-bal">Balance: ' + fmt(t[name].balance) + '</div>'
+            + '</div>'
+        ).join('') : '<div class="ex-tacc-empty">Add lines above to see the T-accounts.</div>';
+        const sumD = K.sumSide ? K.sumSide(entries, 'D') : 0;
+        const sumC = K.sumSide ? K.sumSide(entries, 'C') : 0;
+        const balanced = K.cents && K.cents(sumD) === K.cents(sumC) && sumD > 0;
+        const barCls = balanced ? 'is-balanced' : (sumD || sumC ? 'is-unbalanced' : '');
+        const bar = '<div class="ex-jr-bar ' + barCls + '">'
+            + '<span>Σ Debits: ' + fmt(K.round2 ? K.round2(sumD) : sumD) + '</span>'
+            + '<span>Σ Credits: ' + fmt(K.round2 ? K.round2(sumC) : sumC) + '</span>'
+            + '<span class="ex-jr-bar-flag">' + (balanced ? '✓ Balanced' : (sumD || sumC ? '✗ Out of balance' : '—')) + '</span>'
+            + '</div>';
+        // Živa računovodstvena jednadžba A = L + E (iz tekućih završnih salda).
+        let eq = '';
+        if (K.classifyTotals && K.deriveEndingBalances) {
+            const tot = K.classifyTotals(K.deriveEndingBalances(ex.beginningBalances || {}, entries, ex.chartOfAccounts || []), ex.chartOfAccounts || []);
+            const rhs = (tot.liabilities || 0) + (tot.equity || 0);
+            const eqOk = tot.equationOk;
+            const eqCls = (sumD || sumC) ? (eqOk ? 'is-balanced' : 'is-unbalanced') : '';
+            eq = '<div class="ex-jr-bar ex-jr-eq ' + eqCls + '">'
+                + '<span>Assets ' + fmt(tot.assets) + '</span>'
+                + '<span>=</span>'
+                + '<span>Liabilities ' + fmt(tot.liabilities) + ' + Equity ' + fmt(tot.equity) + ' = ' + fmt(rhs) + '</span>'
+                + '<span class="ex-jr-bar-flag">' + ((sumD || sumC) ? (eqOk ? '✓ A = L + E' : '✗ A ≠ L + E') : '—') + '</span>'
+                + '</div>';
+        }
+        return '<h3 class="ex-tpanel-title">T-accounts (live)</h3>' + bar + eq + '<div class="ex-tacc-grid">' + cards + '</div>';
+    }
+    function updateLivePanel(root, ex) {
+        const panel = root.querySelector('.ex-jr-tpanel');
+        if (panel) panel.innerHTML = renderTPanel(ex, freeEntries(root));
+    }
 
     // Opcije dropdowna: string → {v,label}; ili {v|value, label} → normalizirano.
     function normalizeOptions(arr) {
@@ -406,9 +556,14 @@
         const cls = result.correct ? 'is-correct' : 'is-incorrect';
         const icon = result.correct ? 'fa-circle-check' : 'fa-circle-xmark';
         const pct = result.max ? Math.round((result.score / result.max) * 100) : 0;
-        const msg = result.correct
-            ? 'Correct — all answers right! (100%)'
-            : ('Score: ' + result.score + ' / ' + result.max + ' (' + pct + '%). Review the highlighted answers.');
+        let msg;
+        if (result.correct) {
+            msg = 'Correct — all answers right! (100%)';
+        } else if (result.balanced === false) {
+            msg = 'Out of balance: total debits ≠ total credits. Fix the entries, then check again.';
+        } else {
+            msg = 'Score: ' + result.score + ' / ' + result.max + ' (' + pct + '%). Review the highlighted answers.';
+        }
         fb.innerHTML = '<div class="ex-feedback ' + cls + '"><i class="fas ' + icon + '"></i> ' + esc(msg) + '</div>';
     }
 
@@ -428,11 +583,11 @@
         } catch (e) { /* storage off → preskoči */ }
     }
 
-    // "Check": skupi unos iz DOM-a → čisti grader iz jezgre → feedback + napredak.
+    // "Check": skupi unos iz DOM-a → grader (widget.grade ILI imenovani iz jezgre) → feedback + napredak.
     function checkOpen() {
         if (!openEx) return;
         const widget = WIDGETS[openEx.type];
-        const grader = widget && Core[widget.grader];
+        const grader = widget && (typeof widget.grade === 'function' ? widget.grade : Core[widget.grader]);
         const host = document.getElementById('exercisesContent');
         const root = host && host.querySelector('.ex-body');
         if (!widget || typeof grader !== 'function' || !root) return;
@@ -442,6 +597,24 @@
         if (typeof widget.mark === 'function') widget.mark(openEx, root, result);
         renderFeedback(host, result);
         saveProgress(openEx.id, result);
+    }
+
+    // Free-journal: dodaj/ukloni liniju + live osvježi T-konta.
+    function freeRoot() { return document.querySelector('#exercisesContent .ex-body'); }
+    function addFreeLine() {
+        const root = freeRoot();
+        const container = root && root.querySelector('.ex-jr-free-lines');
+        if (!container || !openEx) return;
+        const wrap = document.createElement('div');
+        wrap.innerHTML = jrLineHtml(openEx, { extraClass: 'ex-jr-free-line', withDelete: true });
+        if (wrap.firstChild) container.appendChild(wrap.firstChild);
+        updateLivePanel(root, openEx);
+    }
+    function removeFreeLine(btn) {
+        const line = btn.closest('.ex-jr-line');
+        const root = freeRoot();
+        if (line) line.remove();
+        if (root && openEx) updateLivePanel(root, openEx);
     }
 
     // Delegirani click na cijelu sekciju (veže se jednom).
@@ -454,12 +627,25 @@
             const modeBtn = e.target.closest('[data-ex-mode]');
             if (modeBtn) { setMode(modeBtn.getAttribute('data-ex-mode')); return; }
             if (e.target.closest('[data-ex-new]')) { newNumbers(); return; }
+            if (e.target.closest('[data-ex-jr-add]')) { addFreeLine(); return; }
+            const del = e.target.closest('[data-ex-jr-del]');
+            if (del) { removeFreeLine(del); return; }
             if (e.target.closest('[data-ex-check]')) { checkOpen(); return; }
             const opt = e.target.closest('.ex-opt');
             if (opt) { selectOption(opt); return; }
             const card = e.target.closest('.ex-card');
             if (card) openExercise(card.getAttribute('data-ex-id'));
         });
+
+        // Live auto-posting: osvježi T-konta dok korisnik tipka/bira (samo free journal).
+        const onLive = (e) => {
+            if (!openEx || !openEx.free) return;
+            if (!e.target.closest('.ex-jr-free')) return;
+            const root = freeRoot();
+            if (root) updateLivePanel(root, openEx);
+        };
+        section.addEventListener('input', onLive);
+        section.addEventListener('change', onLive);
     }
 
     function initExercises() {

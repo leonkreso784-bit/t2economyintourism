@@ -305,6 +305,36 @@
         return { score: score, max: perField.length, perField: perField, correct: perField.length > 0 && score === perField.length };
     }
 
+    // --- gradeJournal(ex, answers) ------------------------------------------
+    // ex.transactions: [{ text, entries:[{account, side:'D'|'C', amount}] }]
+    // answers:         [ [ {account, side, amount(raw)}, … ] ]  (po transakciji, po liniji)
+    // Po transakciji: multiset poklapanje stavki (gradeSet, redoslijed-neovisno) + balance
+    // (Σdebit=Σcredit). Točno = točan skup stavki za svaku transakciju.
+    function sumBySide(entries, side) {
+        return (entries || []).reduce((a, e) =>
+            a + (e && e.side === side && Number.isFinite(e.amount) ? e.amount : 0), 0);
+    }
+    function gradeJournal(ex, answers) {
+        const trans = (ex && Array.isArray(ex.transactions)) ? ex.transactions : [];
+        answers = Array.isArray(answers) ? answers : [];
+        const perField = trans.map((t, i) => {
+            const raw = Array.isArray(answers[i]) ? answers[i] : [];
+            const got = raw.map((g) => ({ account: g.account, side: g.side, amount: parseAmount(g.amount) }));
+            const setRes = gradeSet(t.entries || [], got);
+            const sumD = sumBySide(got, 'D');
+            const sumC = sumBySide(got, 'C');
+            const balanced = sumD > 0 && toCents(sumD) === toCents(sumC);
+            return {
+                index: i, ok: setRes.correct, balanced: balanced,
+                setScore: setRes.score, setMax: setRes.max,
+                debits: round2c(sumD), credits: round2c(sumC)
+            };
+        });
+        const score = perField.filter((p) => p.ok).length;
+        return { score: score, max: trans.length, perField: perField, correct: trans.length > 0 && score === trans.length };
+    }
+    function round2c(x) { return Number.isFinite(x) ? toCents(x) / 100 : 0; }
+
     const ExercisesCore = {
         parseAmount,
         formatAmount,
@@ -319,7 +349,9 @@
         gradeNumeric,
         statementCells,
         gradeStatement,
-        gradeClassify
+        gradeClassify,
+        gradeJournal,
+        sumBySide
     };
 
     if (typeof module !== 'undefined' && module.exports) module.exports = ExercisesCore;

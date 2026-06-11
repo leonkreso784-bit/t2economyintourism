@@ -162,12 +162,13 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - [x] **B1.9** Provjere Faze 1: verify **0/0** + node **86/86** + Playwright **36/36** (smoke 9 predmeta, 0 problema/errora). Cache bump `?v=20260623` (exercises-core/exercises/progress.js, exercises.css @import, CONTENT_VERSION+content-loader). Temp specovi obrisani. Commit lokalno. → **FAZA 1 KOMPLETNA.**
 
 ### FAZA 2 — `journal` tip (pravi double-entry; najtemeljitije testirati)
-- [ ] **B2.1** `js/acc-kernel.js`: `postEntries(begBalances, entries)`, `isBalanced(entries)`, `deriveEndingBalances`,
-      `classifyTotals` — čisto, bez DOM. *Done:* node test na poznatoj vježbi (Exercise 3 → aktiva=pasiva=259.700).
-- [ ] **B2.2** `journal` guided (fiksne linije po transakciji) + grader (`gradeSet` + balance check) + ALE demo + test.
-- [ ] **B2.3** `journal` free mode (dodaj/ukloni linije, account picker iz `chartOfAccounts`) + **auto-posting u T-račune** (vizual) + ocjena po ending saldima. *Done:* posting točan; nebalansirano se odbije.
-- [ ] **B2.4** Živa **A = L + E** / Σdebit=Σcredit traka. *Done:* uživo signalizira (ne)ravnotežu.
-- [ ] **B2.5** Provjere Faze 2: verify + kernel testovi + Playwright. Commit lokalno.
+- [x] **B2.1** `js/acc-kernel.js`: `isBalanced`, `sumSide`, `postEntries`/`deriveEndingBalances`, `classifyTotals` (+ `cents`/`round2`,
+      `normalOf`/`sectionOf`) — čisto, bez DOM, samostalno (bez ovisnosti). `chartOfAccounts:[{name,normal,section}]`. *Done ✅:*
+      `tests/unit/acc-kernel.test.js` **8/8** na poznatom uravnoteženom nalogu (A=L+E: 65.000=15.000+50.000); `test:unit` sad pokreće oba (86+8). Još NE u index.html (žica se u B2.2). NEDEPLOYANO.
+- [x] **B2.2** `journal` guided (fiksne linije po transakciji) + `gradeJournal` (jezgra: `gradeSet` multiset po transakciji + balance Σd=Σc) + DOM widget (account/side dropdown + amount; per-transakcija status) + ALE demo (`k1-journal-ale-1`). *Done ✅:* node 92/92; Playwright 12/12 (svi točni→„Correct"; zamijenjene strane→„Balanced, but not right"; nebalansirano→„Debits ≠ Credits").
+- [x] **B2.3** `journal` free mode (`ex.free`): dodaj/ukloni linije (account picker iz `chartOfAccounts`) + **auto-posting u T-račune** (live, `AccKernel.tAccounts`) + ocjena po ending saldima (`AccKernel.gradeEndingBalances` + `tAccounts`, node 13/13). Widget podržava `widget.grade` (free) uz imenovani grader (guided); demo `k1-journal-free-1`. *Done ✅:* Playwright 12/12 (dodaj→6 linija→točan nalog→„Correct"; live T-konta; nebalansirano→odbijeno; remove radi).
+- [x] **B2.4** Živa **Σdebit=Σcredit** + **A = L + E** traka u T-panelu (iz tekućih salda preko `classifyTotals`). *Done ✅:* Playwright 4/4 (jednadžba se prebacuje balanced↔unbalanced uživo).
+- [x] **B2.5** Provjere Faze 2: verify **0/0** + node **92/92 + 13/13** + Playwright **36/36** (smoke 9 predmeta 0 errora). Cache `?v=20260624` (exercises-core/exercises/acc-kernel, exercises.css, CONTENT_VERSION+content-loader). Temp specovi obrisani. Commit lokalno. → **FAZA 2 KOMPLETNA (journal/double-entry).**
 
 ### FAZA 3 — Sadržaj (vertikalni rez po poglavlju; bulk autoriranje iz `tmp-acc/img` + docx)
 > Obrazac po poglavlju: teorija-kategorija (ako fali, vidi Fazu 4) + vježbe svih relevantnih tipova, vezano na `lesson`.
@@ -208,7 +209,8 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 ---
 
 ## 8. Stanje / recovery nakon compacta
-- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZA 0 GOTOVA (B0.1–B0.9, commit `3324e72`, lokalno/nedeployano); kreće B1.1 (`choice` widget).**
-- Provjere: `npm run test:unit` (60/60), `npm run verify` (0/0), `npm run test:responsive` (44/44 sa Faze 0). Engine = `js/exercises-core.js` + `js/exercises.js` + `css/exercises.css`; content pack = `data/accounting/exercises.js` (`window.accountingExercises`, prazno). `acc-kernel.js` (B2.1) još NE postoji.
+- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZA 0 + FAZA 1 GOTOVE** (commits `3324e72`, `ac5315d`, lokalno/**nedeployano**); **kreće B2.1 (`acc-kernel.js` — pravi double-entry za `journal` tip).**
+- Provjere: `npm run test:unit` (**86/86**), `npm run verify` (0/0), `npm run test:responsive` (**36/36**). Engine = `js/exercises-core.js` (graderi: choice/numeric/statement/classify + parse/numEq/gradeSet/pickParams) + `js/exercises.js` (WIDGET registry, 3 moda, randomizacija, napredak) + `css/exercises.css`. Content pack = `data/accounting/exercises.js` (`window.accountingExercises`, **6 demo vježbi** svih 5 tipova). `acc-kernel.js` (B2.1) još NE postoji.
+- **Obrazac za novi tip:** grader `gradeX(ex, answers)` u jezgri (+ node test) → `WIDGETS.x = {grader, render, collect, mark}` u exercises.js → demo u data → temp Playwright → obriši.
 - Izvori: `tmp-acc/img/` (133 JPG, gitignored) + docx (`…/Accounting/`). Renderer: `tmp-acc/pdf2img.mjs`.
 - Analiza/katalog: [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**
