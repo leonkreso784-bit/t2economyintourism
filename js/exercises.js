@@ -46,6 +46,20 @@
             + '<p>No exercises yet for this lesson.</p></div>';
     }
 
+    function exCardHtml(ex, prog) {
+        const done = !!(prog[ex.id] && prog[ex.id].done);
+        return ''
+            + '<div class="ex-card" data-ex-id="' + esc(ex.id) + '">'
+            + '  <div class="ex-card-top">'
+            + '    <span class="ex-card-title">' + esc(ex.title || ex.id) + '</span>'
+            + '    <span class="ex-card-status ' + (done ? 'is-done' : 'is-todo') + '">'
+            + '      <i class="fas ' + (done ? 'fa-circle-check' : 'fa-circle') + '"></i>'
+            + '    </span>'
+            + '  </div>'
+            + '  <div class="ex-card-tags"><span class="ex-tag">' + esc(ex.type) + '</span></div>'
+            + '</div>';
+    }
+
     function renderList() {
         const host = document.getElementById('exercisesContent');
         if (!host) return;
@@ -53,20 +67,26 @@
         if (!list.length) { host.innerHTML = emptyState(); return; }
 
         const prog = readProgress();
-        host.innerHTML = '<div class="ex-list">' + list.map((ex) => {
-            const done = !!(prog[ex.id] && prog[ex.id].done);
-            const tags = [ex.type, ex.chapter ? ('Ch ' + ex.chapter) : null].filter(Boolean);
-            return ''
-                + '<div class="ex-card" data-ex-id="' + esc(ex.id) + '">'
-                + '  <div class="ex-card-top">'
-                + '    <span class="ex-card-title">' + esc(ex.title || ex.id) + '</span>'
-                + '    <span class="ex-card-status ' + (done ? 'is-done' : 'is-todo') + '">'
-                + '      <i class="fas ' + (done ? 'fa-circle-check' : 'fa-circle') + '"></i>'
-                + '    </span>'
-                + '  </div>'
-                + '  <div class="ex-card-tags">' + tags.map((t) => '<span class="ex-tag">' + esc(t) + '</span>').join('') + '</div>'
-                + '</div>';
-        }).join('') + '</div>';
+        // Sortiraj po poglavlju (uzlazno; bez broja poglavlja → na kraj), stabilno po izvornom redoslijedu.
+        const chOf = (ex) => (typeof ex.chapter === 'number' && isFinite(ex.chapter)) ? ex.chapter : Infinity;
+        const sorted = list
+            .map((ex, i) => ({ ex, i }))
+            .sort((a, b) => (chOf(a.ex) - chOf(b.ex)) || (a.i - b.i))
+            .map((o) => o.ex);
+
+        // Grupiraj u sekcije s naslovom poglavlja ("Chapter N"); bez poglavlja → "Other".
+        let html = '<div class="ex-list">';
+        let lastCh;
+        sorted.forEach((ex) => {
+            const ch = chOf(ex);
+            if (ch !== lastCh) {
+                lastCh = ch;
+                html += '<div class="ex-list-head">' + (ch === Infinity ? 'Other' : 'Chapter ' + ch) + '</div>';
+            }
+            html += exCardHtml(ex, prog);
+        });
+        html += '</div>';
+        host.innerHTML = html;
     }
 
     // ========================================================================
@@ -470,11 +490,19 @@
     }
     function newSeed() { return Math.floor(Math.random() * 1e9); }
 
+    // Kratak opis aktivnog moda (UI chrome — generički, engl.). Čini razliku modova vidljivom.
+    const MODE_DESC = {
+        practice: 'Hints on · checked field by field · highlights what’s right and wrong.',
+        exam: 'No hints · “Check” shows only your score — answers are not revealed.',
+        walkthrough: 'Read the worked solution — no input.'
+    };
     function modeBar() {
+        const desc = MODE_DESC[currentMode] || '';
         return '<div class="ex-modes">' + MODES.map((m) =>
             '<button type="button" class="ex-mode-btn' + (m[0] === currentMode ? ' active' : '') + '" data-ex-mode="' + m[0] + '">'
             + esc(m[1]) + '</button>'
-        ).join('') + '</div>';
+        ).join('') + '</div>'
+            + (desc ? '<div class="ex-mode-desc">' + esc(desc) + '</div>' : '');
     }
 
     // walkthrough: prikaže korake rješenja (solution[]), bez unosa.
@@ -557,14 +585,17 @@
         optBtn.classList.add('selected');
     }
 
-    function renderFeedback(host, result) {
+    function renderFeedback(host, result, mode) {
         const fb = host.querySelector('.ex-feedback-host');
         if (!fb) return;
         const cls = result.correct ? 'is-correct' : 'is-incorrect';
         const icon = result.correct ? 'fa-circle-check' : 'fa-circle-xmark';
         const pct = result.max ? Math.round((result.score / result.max) * 100) : 0;
         let msg;
-        if (result.correct) {
+        if (mode === 'exam') {
+            // Exam: samo rezultat — bez otkrivanja što je točno/krivo i bez markiranja polja.
+            msg = 'Score: ' + result.score + ' / ' + result.max + ' (' + pct + '%)';
+        } else if (result.correct) {
             msg = 'Correct — all answers right! (100%)';
         } else if (result.balanced === false) {
             msg = 'Out of balance: total debits ≠ total credits. Fix the entries, then check again.';
@@ -601,8 +632,9 @@
 
         const answers = widget.collect(openEx, root);
         const result = grader(openEx, answers);
-        if (typeof widget.mark === 'function') widget.mark(openEx, root, result);
-        renderFeedback(host, result);
+        // Exam mod: ne otkrivaj točno/krivo po stavci (preskoči markiranje) → samo ukupan rezultat.
+        if (currentMode !== 'exam' && typeof widget.mark === 'function') widget.mark(openEx, root, result);
+        renderFeedback(host, result, currentMode);
         saveProgress(openEx.id, result);
     }
 

@@ -377,9 +377,28 @@ test('gradeClassify (no effects): effect is ignored when ex.effects absent', () 
 });
 
 // ---------------------------------------------------------------- randomized exercise (params/generate)
-const accData = require(path.join(__dirname, '..', '..', 'data', 'accounting', 'exercises.js'));
-const depEx = accData.exercises.find((e) => e.id === 'k2-numeric-depreciation-1');
-test('randomized demo exists with params + generate', () => {
+// Samostalni fixture: ovo testira ENGINE svojstvo (pickParams+generate determinizam),
+// pa namjerno NE ovisi o content packu (demoi su maknuti iz data/accounting/exercises.js).
+const depEx = {
+    type: 'numeric',
+    params: {
+        cost: { min: 12000, max: 60000, step: 1000 },
+        salvage: { min: 0, max: 6000, step: 500 },
+        life: { choices: [3, 4, 5, 8, 10] }
+    },
+    generate: function (p) {
+        const annual = (p.cost - p.salvage) / p.life;
+        const money = (n) => n.toLocaleString('en-US');
+        return {
+            prompt: 'An asset costs $' + money(p.cost) + ', has a salvage value of $' + money(p.salvage)
+                + ', and a useful life of ' + p.life + ' years. Compute the annual straight-line depreciation.',
+            fields: [
+                { key: 'dep', label: 'Annual straight-line depreciation', answer: annual, tol: 0.01, unit: '$' }
+            ]
+        };
+    }
+};
+test('randomized fixture has params + generate', () => {
     assert.ok(depEx && depEx.params && typeof depEx.generate === 'function');
 });
 test('pickParams + generate: deterministic for a seed', () => {

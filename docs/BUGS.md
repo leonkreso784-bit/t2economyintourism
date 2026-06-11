@@ -12,36 +12,32 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-### BUG-011 — Exercises: Practice i Exam mod su funkcionalno isti
-- Status: 🔴 otvoren · Težina: srednji · Datum: 2026-06-11 (nalaz iz korisničkog pregleda)
-- Opis: Prebacivanje Practice ↔ Exam ne mijenja gotovo ništa. Korisnik: „nema nikakve razlike trenutno."
-- Uzrok: U `js/exercises.js` jedina razlika je `showHints = mode !== 'exam'` u **numeric/ratio** renderu
-  (sakrije `f.hint`). Tipovi **choice/classify/journal/statement** nemaju polje-hintove → izgledaju identično.
-  Povratna info na „Check" (po-stavci zeleno/crveno + točni odgovori preko `mark()`) je **ista** u oba moda
-  (mode se ne prosljeđuje u `checkOpen`/`mark`). `MODES=[practice,exam,walkthrough]`, `setMode` samo re-renderira shell.
-- Plan (preporuka, čeka potvrdu korisnika — vidi `EXERCISES_ENGINE.md` §6 „Review-nalazi"):
-  **Practice** = hintovi + po-stavci zeleno/crveno + točni odgovori (formativno). **Exam** = bez hintova; na „Check"
-  prikaže SAMO rezultat (npr. „11/14"), bez po-stavci označavanja i bez otkrivanja točnih (forsira znanje).
-  **Walkthrough** = rješenje (kao sad). Alternativa (minimalno): Exam samo sakrije hintove + Walkthrough dugme.
-- Napomena: implementacija dira engine (`checkOpen`/`mark`/feedback po modu) → mala, generička dopuna; uz node + Playwright testove.
-
-### BUG-010 — Exercises lista: nije po poglavlju + stari demoi (uklj. 2 K2) zatrpavaju K1
-- Status: 🔴 otvoren · Težina: srednji · Datum: 2026-06-11 (nalaz iz korisničkog pregleda)
-- Opis: Popis vježbi izgleda „razbacano": redoslijed nije po poglavlju, a na vrhu su demo-vježbe iz FAZE 1/2;
-  među njima **2 K2 vježbe** (`k2-ratio-restaurant-1` CH9 RevPAR, `k2-numeric-depreciation-1` CH11) koje vire u K1 popis.
-- Uzrok: `renderList` (`js/exercises.js`) iscrtava vježbe **redoslijedom u nizu** `data/accounting/exercises.js`
-  (autorski redoslijed: prvo 8 demoa, pa pravi sadržaj Ch4→Ch5→Ch6→Ch3→Ch1–2). Nema sortiranja po `chapter`.
-  Dublji uzrok: **sve je u jednoj lekciji** `accounting-fundamentals` (nema K1/K2/finalni splita — to je FAZA 4),
-  pa se i K2 demoi pojavljuju.
-- Plan (sort po poglavlju + naslovi poglavlja radim u svakom slučaju; čeka odluku o demoima — `EXERCISES_ENGINE.md` §6):
-  (A, preporuka) makni demoe → čisti K1 Ch1–6 (ukloni `k1-choice-intro-1`, `k1-numeric-equity-1`, `k1-classify-ch6-1`,
-  `k1-journal-ale-1`, `k1-journal-free-1`, `k2-ratio-restaurant-1`, `k2-numeric-depreciation-1`; **zadrži** `k1-statement-bs-1`
-  jer je pravi/popravljen). (B) makni samo 2 K2 demoa. (C) ostavi sve, samo sortiraj.
-- Napomena: dio ovoga prirodno rješava FAZA 4 (split na K1/K2/finalni lekcije → K2 vježbe odu u K2).
+*(trenutno nema aktivnih bugova)*
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-011 — Exercises: Practice i Exam mod su funkcionalno isti
+- Status: ✅ riješen · Težina: srednji · Datum: 2026-06-11 (nalaz i fix isti dan)
+- Opis: Prebacivanje Practice ↔ Exam ne mijenja gotovo ništa. Korisnik: „nema nikakve razlike trenutno."
+- Uzrok: jedina razlika bila je `showHints = mode !== 'exam'` (numeric/ratio); `checkOpen`/`mark`/feedback nisu primali mod
+  → po-stavci zeleno/crveno + točni odgovori bili isti u oba moda.
+- Fix (`js/exercises.js`): `checkOpen`/`renderFeedback` sad primaju `currentMode`. **Exam** preskače `widget.mark` (bez po-stavci
+  označavanja/otkrivanja) i prikazuje **SAMO rezultat** („Score: X / Y (Z%)"); **Practice** zadržava punu povratnu info + hintove.
+  Dodan **opis aktivnog moda** (`MODE_DESC` → `.ex-mode-desc`) ispod mode-bara da je razlika odmah vidljiva. Engine ostao generički.
+- Provjera: ciljani Playwright (exam = samo rezultat, 0 `.is-correct`; practice marks; hint practice↔exam) + node 95/95 + 36/36. Cache `?v=20260631`.
+
+### BUG-010 — Exercises lista: nije po poglavlju + stari demoi (uklj. 2 K2) zatrpavaju K1
+- Status: ✅ riješen · Težina: srednji · Datum: 2026-06-11 (nalaz i fix isti dan)
+- Opis: Popis vježbi „razbacano": redoslijed nije po poglavlju, na vrhu demo-vježbe iz FAZE 1/2; 2 K2 demoa
+  (`k2-ratio-restaurant-1` CH9, `k2-numeric-depreciation-1` CH11) virila u K1 popis.
+- Uzrok: `renderList` je iscrtavao redoslijedom u nizu (bez sortiranja po `chapter`); sve u jednoj lekciji `accounting-fundamentals`.
+- Fix: `renderList` (`js/exercises.js`) **sortira po `ex.chapter`** (uzlazno, stabilno) + **naslovi poglavlja** („Chapter N", `.ex-list-head`);
+  kartica više ne nosi „Ch N" tag. **Demoi maknuti** (odluka korisnika = opcija A) iz `data/accounting/exercises.js` — obrisano 7 demoa,
+  **zadržan** `k1-statement-bs-1` (pravi Ch4). Sadržaj sad **16 vježbi, čisti K1 (Ch1–6)**. Unit test prebačen na inline fixture
+  (ne ovisi o obrisanom demou). Dublji red (K2 vježbe odu u svoju lekciju) doći će s FAZOM 4 (split lekcija).
+- Provjera: ciljani Playwright (naslovi „Chapter 1..6" u redu, 16 kartica, 0 demo-ID-eva) + verify 0/0 + 36/36. Cache `?v=20260631`.
 
 ### BUG-009 — Entrepreneurship fill-blank se ne renderira (6 umjesto 7 podvlaka)
 - Status: ✅ riješen · Težina: nizak (kozmetički, 1 predmet) · Datum: 2026-06-10

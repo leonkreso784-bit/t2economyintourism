@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Exercises review-nalazi RV-1 + RV-2 RIJEŠENI (lista po poglavlju + demoi maknuti; Practice ≠ Exam)
+Nakon compacta korisnik je potvrdio odluke: **demoi = opcija A (makni sve)**, pa **stani za pregled**. Implementirano oboje.
+
+**RV-1 (BUG-010) — lista:** `renderList` (`js/exercises.js`) sad **sortira po `ex.chapter`** (uzlazno, stabilno) i ubacuje **naslove
+„Chapter N"** (`.ex-list-head`); kartica više ne nosi „Ch N" tag. **Maknuto 7 demo-vježbi** iz `data/accounting/exercises.js`
+(`k1-choice-intro-1`, `k1-numeric-equity-1`, `k2-ratio-restaurant-1`, `k1-classify-ch6-1`, `k2-numeric-depreciation-1`,
+`k1-journal-ale-1`, `k1-journal-free-1`); **zadržan** `k1-statement-bs-1` (pravi Ch4). Sadržaj sad **16 vježbi, čisti K1 (Ch1–6)**.
+Unit test (`exercises-core.test.js`) prebačen na **inline fixture** za randomizaciju (engine-svojstvo → ne ovisi o obrisanom demou).
+
+**RV-2 (BUG-011) — modovi:** `checkOpen`/`renderFeedback` sad primaju `currentMode`. **Exam** preskače markiranje i prikazuje
+**samo rezultat** („Score: X / Y (Z%)"), bez otkrivanja točnih/po-stavci; **Practice** = puna povratna info + hintovi. Dodan
+**opis aktivnog moda** (`MODE_DESC` → `.ex-mode-desc`) ispod mode-bara. Engine ostao generički (mod je već postojao).
+
+**Testirano:** verify **0/0**, node **95/95 + 13/13**, Playwright **36/36** + ciljani **3/3** (sortiranje+naslovi+nema demoa;
+exam=samo rezultat bez markiranja; hint practice↔exam). Cache **`?v=20260631`** (exercises.js + content-loader.js + exercises.css + CONTENT_VERSION).
+**Git:** lokalno commitano, **NEDEPLOYANO** (sad ~14 commitova ispred `origin/main`). **▶ Nastavak (čeka korisnika):** odluka
+**deploy (push) / FAZA 4 (split K1/K2/finalni + teorija) / K2 vježbe (B3.6–B3.11)**. Lokalni server :5050 za pregled.
+
+---
+
 ## 2026-06-11 — Korisnički pregled K1 vježbi: 2 nalaza zabilježena, rad PAUZIRAN (priprema za compact)
 Korisnik je proklikao K1 vježbe lokalno (`serve:test` na :5050, `v=20260630`) i javio **dva prava nalaza**. Odluka: **zapisati sve, NE dirati kod sada.**
 

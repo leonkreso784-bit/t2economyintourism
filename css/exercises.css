@@ -60,11 +60,29 @@
     color: #fff;
 }
 
+/* Kratak opis aktivnog moda — čini razliku practice/exam/walkthrough vidljivom. */
+.ex-modes:has(+ .ex-mode-desc) { margin-bottom: 0.5rem; }
+.ex-mode-desc {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+
 /* ---- List of exercise cards ---- */
 .ex-list {
     display: grid;
     gap: 0.85rem;
 }
+.ex-list-head {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-top: 0.5rem;
+}
+.ex-list-head:first-child { margin-top: 0; }
 .ex-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border);

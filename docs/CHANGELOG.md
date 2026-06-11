@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Fixed
+- **Exercises — Practice ≠ Exam (BUG-011, review-nalaz):** modovi su izgledali isto. Sad `checkOpen`/`renderFeedback` primaju
+  `currentMode`: **Exam** na „Check" preskače markiranje (`widget.mark`) i prikazuje **samo rezultat** („Score: X / Y (Z%)"),
+  bez po-stavci zeleno/crveno i bez otkrivanja točnih; hintovi i dalje skriveni. **Practice** = puna povratna info + hintovi.
+  Dodan **opis aktivnog moda** ispod mode-bara (`MODE_DESC` → `.ex-mode-desc`) da je razlika odmah vidljiva. Engine ostao generički.
+- **Exercises — lista po poglavlju + demoi maknuti (BUG-010, review-nalaz):** `renderList` sad **sortira po poglavlju**
+  + dodaje **naslove „Chapter N"** (`.ex-list-head`); kartica više ne nosi „Ch N" tag. **Maknuto 7 demo-vježbi** iz FAZE 1/2
+  (uklj. 2 K2 demoa koji su virili u K1) → `data/accounting/exercises.js` sad **16 vježbi, čisti K1 (Ch1–6)**; zadržan
+  `k1-statement-bs-1`. Unit test (`exercises-core.test.js`) prebačen na **inline fixture** (engine-svojstvo, ne ovisi o sadržaju).
+  verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260631`.
 - **Exercises `statement` tip — prikaz izvornih podataka (review-fix):** „build the statement" vježbe (Build the Balance Sheet,
   Build the Income Statement) prikazivale su **samo prazna polja** — izvorni saldi (iz kojih se izvještaj gradi) nisu se nigdje
   vidjeli, pa se vježba nije mogla riješiti kako je zamišljeno. `statement` widget sad renderira **givens tablicu** kad vježba ima

@@ -46,7 +46,7 @@
 @import url('css/fill-blanks-section.css?v=20260602');
 @import url('css/progress-section.css?v=20260602');
 @import url('css/blind-map.css?v=20260602');
-@import url('css/exercises.css?v=20260624');
+@import url('css/exercises.css?v=20260631');
 
 /* Responsive styles (all media queries) — razbijeno na uređene dijelove (css/responsive/).
    ⚠ REDOSLIJED JE BITAN: učitava se ZADNJI (prije learn.css) i gazi module po redoslijedu.

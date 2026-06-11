@@ -198,23 +198,22 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       mehanizam kao `ratio`; izdvojen helper `givensTableHtml`, oba widgeta dijele). Dodani izvorni saldi u `k1-statement-bs-1` (6) i `k1-ch3-income-statement` (17).
       Unatrag-kompatibilno (bez `givens` → ništa se ne mijenja). *Done ✅:* verify 0/0; node 95/95 + 13/13; Playwright 36/36 + ciljani 3/3 (BS/IS prikazuju brojeve i ocjenjuju „Correct"; ratio bez regresije). Cache `?v=20260630` (exercises.js + content-loader + CONTENT_VERSION).
 
-> #### 🔎 Review-nalazi (2026-06-11, korisnički pregled lokalno) — ČEKAJU ODLUKU, NIŠTA JOŠ NIJE RAĐENO
-> Dva prava nalaza iz proklikavanja K1 vježbi (detaljno i u `BUGS.md` BUG-010/011). Korisnik tražio: zapisati, ne dirati kod još.
+> #### 🔎 Review-nalazi (2026-06-11, korisnički pregled lokalno) — ✅ RIJEŠENO (commit lokalno, NEDEPLOYANO)
+> Dva prava nalaza iz proklikavanja K1 vježbi (BUG-010/011). Korisnik odlučio (2026-06-11): demoi = **opcija A (makni sve)**; nakon RV-1+RV-2 = **stani za pregled**.
 >
-> - [ ] **RV-1 (BUG-010) — Lista nije po poglavlju + demoi zatrpavaju (uklj. 2 K2).** `renderList` u `js/exercises.js` iscrtava
->   vježbe **redoslijedom u nizu** (autorski: 8 demoa prvo, pa Ch4→Ch5→Ch6→Ch3→Ch1–2); K2 demoi (`k2-ratio-restaurant-1` CH9,
->   `k2-numeric-depreciation-1` CH11) vire u K1. **Plan:** (a) sortiraj `renderList` po `ex.chapter` (uzlazno) **+ naslovi poglavlja**
->   („Chapter N") — radim svakako; (b) **demoi (čeka izbor):** A=makni demoe→čisti K1 (ukloni `k1-choice-intro-1`,`k1-numeric-equity-1`,
->   `k1-classify-ch6-1`,`k1-journal-ale-1`,`k1-journal-free-1`,`k2-ratio-restaurant-1`,`k2-numeric-depreciation-1`; **zadrži**
->   `k1-statement-bs-1`) · B=makni samo 2 K2 · C=ostavi sve. **Moja preporuka: A.** Dio ovoga prirodno riješi FAZA 4 (split lekcija).
->   Dotiče: `js/exercises.js` (renderList sort+headeri), `data/accounting/exercises.js` (brisanje demoa). Cache bump + Playwright.
-> - [ ] **RV-2 (BUG-011) — Practice ≈ Exam (modovi se ne razlikuju).** Jedina razlika sad: `showHints=mode!=='exam'` u numeric/ratio;
->   choice/classify/journal/statement nemaju polje-hintove → identično; „Check" feedback isti u oba moda. **Plan (preporuka):**
->   Practice = hintovi + po-stavci zeleno/crveno + točni odgovori; **Exam** = bez hintova, na „Check" SAMO rezultat (npr. „11/14"),
->   bez po-stavci označavanja i bez otkrivanja točnih; Walkthrough = rješenje. Alternativa: minimalno (Exam sakrije hintove + Walkthrough dugme).
->   Dotiče engine: `checkOpen`/`mark`/feedback moraju primiti `currentMode` (sad ga ne primaju) → mala generička dopuna; node + Playwright.
+> - [x] **RV-1 (BUG-010) — Lista po poglavlju + demoi maknuti.** `renderList` (`js/exercises.js`) sad **sortira po `ex.chapter`**
+>   (uzlazno, stabilno; bez broja → „Other") i ubacuje **naslove poglavlja** („Chapter N", `.ex-list-head`). Kartica više ne nosi „Ch N" tag
+>   (naslov to pokriva). **Demoi maknuti** iz `data/accounting/exercises.js` (opcija A): obrisani `k1-choice-intro-1`, `k1-numeric-equity-1`,
+>   `k2-ratio-restaurant-1`, `k1-classify-ch6-1`, `k2-numeric-depreciation-1`, `k1-journal-ale-1`, `k1-journal-free-1`; **zadržan**
+>   `k1-statement-bs-1` (pravi Ch4 statement). Sadržaj sad **16 vježbi, čisti K1 (Ch1–6)**. Unit test (`exercises-core.test.js`) više ne ovisi o
+>   obrisanom demou → randomizacija se testira na **inline fixtureu** (engine-svojstvo, ne content). CSS: `.ex-list-head` + `.ex-mode-desc`.
+> - [x] **RV-2 (BUG-011) — Practice ≠ Exam.** `checkOpen`/`renderFeedback` sad primaju `currentMode`. **Exam**: na „Check" **preskače markiranje**
+>   (`widget.mark`) i feedback prikazuje **SAMO rezultat** („Score: X / Y (Z%)"), bez otkrivanja točnih i bez po-stavci zeleno/crveno; hintovi i dalje
+>   skriveni. **Practice**: puna povratna info (markiranje + „Review the highlighted" + hintovi). Dodan **opis aktivnog moda** ispod mode-bara
+>   (`MODE_DESC` → `.ex-mode-desc`) da je razlika odmah vidljiva. Engine ostao generički (mod je već postojao; samo proširen tok).
 >
-> **Redoslijed kad se nastavi:** prvo RV-1 (brzo, vidljivo), pa RV-2 (dizajn modova), pa odluka deploy/FAZA 4/K2.
+> **Provjere:** verify 0/0 · node **95/95 + 13/13** · Playwright **36/36** + ciljani **3/3** (sortiranje+naslovi+nema demoa; exam=samo rezultat bez markiranja; hint practice↔exam). Cache `?v=20260631`.
+> **Nastavak (čeka korisnika nakon pregleda):** odluka **deploy** (push 13+1 commitova) / **FAZA 4** (split K1/K2/finalni) / **K2 sadržaj** (B3.6–B3.11).
 
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).
 - [ ] **B3.7 (K2 Inventory):** `numeric` (FIFO/LIFO/Average COGS).
