@@ -223,7 +223,7 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - [ ] **B3.11 (K2 Ch7/8/13/14/15-16):** TF/MC + po koji `numeric` (food cost, revenue allocation, budgeting).
 - [ ] **B3.x** Nakon svakog poglavlja: bump cache, verify, Playwright, ciljani render test, commit lokalno.
 
-### FAZA 4 — Restruktura teorije K1/K2/finalni ✅ GOTOVO (lokalno/NEDEPLOYANO; commits B4.1 `421322f`, B4.2+B4.3 `9e5ba15`, B4.4+B4.5 dolje)
+### FAZA 4 — Restruktura teorije K1/K2/finalni ✅ GOTOVO + **DEPLOYANO** (push `a72d648`, 2026-06-11; commits B4.1 `421322f`, B4.2+B4.3 `9e5ba15`, B4.4+B4.5 `a72d648`)
 - [x] **B4.1** K1 kategorije (Ch1–6) → `data/accounting/midterm-1.js` (`window.accountingM1`): `intro`, `businessFormation`,
       `financialStatements`, `balanceSheet`, `incomeStatement`, `bookkeeping`. **NOVI sadržaj** (predmet je prije imao samo ~K2).
       Autorirano iz Cote Ch1–6 + verificiranog znanja iz K1 vježbi. **87 fc / 74 quiz / 57 fill / 6 learn.** Commit `421322f`.
@@ -257,9 +257,10 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 ---
 
 ## 8. Stanje / recovery nakon compacta
-- **Prije izrade ničega:** otvori §6, nastavi od prve `[ ]` cigle. Trenutno: **FAZE 0+1+2 GOTOVE — CIJELI ENGINE ZAVRŠEN** (commits `3324e72`, `ac5315d`, `7aa45bf`, lokalno/**nedeployano**). **▶ Kreće FAZA 3 (B3.x): autoriranje SADRŽAJA po poglavlju (K1 prvo), iz `tmp-acc/img/` (133 JPG) + docx.**
+- **▶ STANJE 2026-06-11 (DEPLOYANO, `origin/main` @ `2ab7bd5`):** GOTOVO i LIVE → **engine (FAZA 0–2)** + **K1 vježbe (FAZA 3 B3.1–B3.5, Ch1–6)** + **review-fixevi RV-1/RV-2** (lista po poglavlju, demoi maknuti, Practice≠Exam) + **FAZA 4** (Accounting → 3 lekcije `first-midterm`/`second-midterm`/`final` + novo K1 study gradivo: `data/accounting/midterm-1.js`/`midterm-2.js`/`final.js`). Cache `?v=20260632`.
+- **▶ SLJEDEĆE — otvori §6, prva prazna cigla = `B3.6` (K2 vježbe).** Trenutno **K2 INTERAKTIVNE VJEŽBE NE POSTOJE** → na Midtermu 2 je „Exercises" tab prazan (očekivano; Midterm 2 ima pun *study* sadržaj, 8 kat). Plan B3.6–B3.11: depreciation (Ch11), inventory FIFO/LIFO (Ch?), Restaurant/Hotel ratios (Ch9/10), Analyzing FS (Ch12), K2 journal ALE+RE, te TF/MC za Ch7/8/13/14/15-16. Izvori = `tmp-acc/img/` (Exercises-9..16, gitignored). Sve nove vježbe `lesson:'second-midterm'` (ili `'final'` za examPractice-stil). Alternativa umjesto B3.6: restruktura sljedećeg sem-1 predmeta (Entrepreneurship/E-Business) po istom FAZA-4 obrascu.
 - Provjere: `npm run test:unit` (**92/92 exercises-core + 13/13 acc-kernel**), `npm run verify` (0/0), `npm run test:responsive` (**36/36**). Engine = `js/exercises-core.js` (graderi choice/numeric/statement/classify/journal + parse/numEq/gradeSet/pickParams) + `js/acc-kernel.js` (double-entry) + `js/exercises.js` (WIDGET registry, 6 tipova, 3 moda, randomizacija, napredak, free journal+T-konta) + `css/exercises.css`. Content pack = `data/accounting/exercises.js` (`window.accountingExercises`, **8 demo vježbi**).
 - **Obrazac za novi tip:** grader `gradeX(ex, answers)` u jezgri (+ node test) → `WIDGETS.x = {render, collect, mark, grader|grade}` u exercises.js → demo u data → temp Playwright → obriši.
-- **Obrazac za novi SADRŽAJ (FAZA 3):** samo dodaj vježbe u `data/accounting/exercises.js` (`lesson:'accounting-fundamentals'` dok ne dođe restruktura u FAZI 4) → bump `CONTENT_VERSION` → verify + Playwright. NULA izmjena enginea.
+- **Obrazac za novu VJEŽBU:** dodaj u `data/accounting/exercises.js` s `lesson:` = `'first-midterm'` (K1) / `'second-midterm'` (K2) / `'final'` (examPractice-stil) + `chapter:N` (sortira listu) → bump `CONTENT_VERSION` → verify + Playwright. NULA izmjena enginea. (Nakon FAZE 4 lekcije su podijeljene; vježbe se filtriraju po `currentLesson`.)
 - Izvori: `tmp-acc/img/` (133 JPG, gitignored) + docx (`…/Accounting/`). Renderer: `tmp-acc/pdf2img.mjs`.
 - Analiza/katalog: [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**
