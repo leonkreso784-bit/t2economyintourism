@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch6 Bookkeeping process sadržaj (B3.3) GOTOV (lokalno)
+Nastavak K1. Izvor: Cote workbook **Assignment 6-2** (Increase/Decrease Effect) + profesorski worked example **„Bookkeeping process"**
+(T-računi asset/liability/equity; entry-ji verificirani prema knjiženom ledgeru u `Exercise-bookkeeping-solutions`).
+
+**B3.3 (Ch6 — Bookkeeping):** 2 nove vježbe:
+`k1-ch6-classify` (10 nezavisnih transakcija → **dvoosno**: klasa A/L/EQ/R/EX **+ I/D efekt**; pokriva rent expense, kupnja imovine
+s kreditom, perpetual nabava/izdavanje, guest tab cash vs in-house kredit, split rate hipoteke principal/kamata, ulog vlasnika, isplata, remitiranje poreza),
+`k1-ch6-journal` (**guided journal ALE**, 6 transakcija; nastavlja otvoreni ledger preko `beginningBalances`; završni saldi provjereni
+kernelom: Cash 148.200 / AR 0 / Food Inv 16.000 / Prepaid Rent 4.000 / AP 4.200 / CSI 178.500 / APIC 10.000; uklj. 3-linijski entry — dionice iznad pari).
+**Engine 0 izmjena.** (Napomena: guided mod NE prikazuje A=L+E traku → djelomični `beginningBalances` su OK; grade je per-transakcija.)
+**Testirano:** node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 2/2 (classify 26 linija → „Correct"; journal 6 tx → „Correct"). Cache `?v=20260627`. Lokalno, nedeployano.
+**▶ Sljedeće:** B3.4 (Ch3 Survey FS — `numeric` equity/RE + `statement` 3 izvještaja), pa Ch1–2 (intro/GAAP, choice).
+
+---
+
 ## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch5 Income Statement sadržaj (B3.2) GOTOV (lokalno)
 Nastavak autoriranja K1 po poglavlju. Izvor: `tmp-acc/img/` (Cote workbook Exercises-5 + **službena rješenja** `solutions-chapters-2-5`).
 

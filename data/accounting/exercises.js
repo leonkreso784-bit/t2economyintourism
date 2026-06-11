@@ -518,6 +518,203 @@ const accountingExercises = {
                 'Food available for use = 7,595 + 450 + 27,400 = 35,445.',
                 'Cost of food used = 35,445 − 10,060 = 25,385.'
             ]
+        },
+
+        // ========================= CHAPTER 6 — BOOKKEEPING PROCESS (K1) =========================
+        // Sources: Cote, Hotel & Restaurant Accounting, Ch. 6 workbook (Assignment 6-2,
+        // Increase/Decrease Effect) + professor worked example "Bookkeeping process"
+        // (assets/liabilities/equity T-accounts; entries verified against the posted ledger).
+
+        // --- B3.3: Ch6 classify accounts WITH increase/decrease effect (Assignment 6-2) ---
+        {
+            id: 'k1-ch6-classify',
+            lesson: 'accounting-fundamentals',
+            chapter: 6,
+            type: 'classify',
+            title: 'Transactions — Classify Accounts & Effects',
+            prompt: 'For each transaction, name the accounts involved, classify each one, and identify whether it increases or decreases. '
+                + 'Each business transaction is independent.',
+            difficulty: 3,
+            classes: ['Asset', 'Liability', 'Equity', 'Revenue', 'Expense'],
+            effects: ['Increase', 'Decrease'],
+            rows: [
+                {
+                    text: 'On October 2, issued check #101 for $1,500 paying the October rent.',
+                    entries: [
+                        { account: 'Rent', cls: 'Expense', effect: 'Increase' },
+                        { account: 'Cash', cls: 'Asset', effect: 'Decrease' }
+                    ]
+                },
+                {
+                    text: 'On June 1, land ($50,000) and a building ($130,000) are purchased with a $45,000 down-payment (check #132) and a $135,000 bank loan.',
+                    entries: [
+                        { account: 'Land', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Building', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Cash', cls: 'Asset', effect: 'Decrease' },
+                        { account: 'Mortgage Payable', cls: 'Liability', effect: 'Increase' }
+                    ]
+                },
+                {
+                    text: 'The perpetual inventory system is used. On March 18, a $750 storeroom food purchase is made on open account.',
+                    entries: [
+                        { account: 'Food Inventory', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Accounts Payable', cls: 'Liability', effect: 'Increase' }
+                    ]
+                },
+                {
+                    text: 'The perpetual inventory system is used. A June 30 summary report shows $6,000 of food provisions issued from the storeroom to the kitchen.',
+                    entries: [
+                        { account: 'Cost of Sales', cls: 'Expense', effect: 'Increase' },
+                        { account: 'Food Inventory', cls: 'Asset', effect: 'Decrease' }
+                    ]
+                },
+                {
+                    text: 'A July 8 guest tab shows food $60 and sales tax $3.60; the guest pays the tab with cash.',
+                    entries: [
+                        { account: 'Cash', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Food Sales', cls: 'Revenue', effect: 'Increase' },
+                        { account: 'Sales Tax Payable', cls: 'Liability', effect: 'Increase' }
+                    ]
+                },
+                {
+                    text: 'A July 8 guest tab shows food $60 and sales tax $3.60; the guest pays with an in-house credit card.',
+                    entries: [
+                        { account: 'Accounts Receivable', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Food Sales', cls: 'Revenue', effect: 'Increase' },
+                        { account: 'Sales Tax Payable', cls: 'Liability', effect: 'Increase' }
+                    ]
+                },
+                {
+                    text: 'On October 11, check #934 pays the currently due monthly mortgage: principal $534 and interest $266.',
+                    entries: [
+                        { account: 'Mortgage Payable', cls: 'Liability', effect: 'Decrease' },
+                        { account: 'Interest', cls: 'Expense', effect: 'Increase' },
+                        { account: 'Cash', cls: 'Asset', effect: 'Decrease' }
+                    ]
+                },
+                {
+                    text: 'On February 21, the owner of a proprietorship invests $4,000 cash and land with a basis of $15,000 into the business.',
+                    entries: [
+                        { account: 'Cash', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Land', cls: 'Asset', effect: 'Increase' },
+                        { account: 'Owner’s Capital', cls: 'Equity', effect: 'Increase' }
+                    ]
+                },
+                {
+                    text: 'On April 3, check #877 for $2,000 is issued to the owner of a proprietorship for personal use.',
+                    entries: [
+                        { account: 'Withdrawals', cls: 'Equity', effect: 'Decrease' },
+                        { account: 'Cash', cls: 'Asset', effect: 'Decrease' }
+                    ]
+                },
+                {
+                    text: 'On November 30 the Sales Tax Payable balance is $3,682. On December 14, check #412 is issued to the state sales tax department.',
+                    entries: [
+                        { account: 'Sales Tax Payable', cls: 'Liability', effect: 'Decrease' },
+                        { account: 'Cash', cls: 'Asset', effect: 'Decrease' }
+                    ]
+                }
+            ],
+            solution: [
+                'Paying the current month’s rent: Rent (Expense) increases; Cash (Asset) decreases.',
+                'Asset bought with cash + loan: the assets increase, Cash decreases, and the loan (Liability) increases.',
+                'Perpetual purchase on account: Food Inventory (Asset) ↑, Accounts Payable (Liability) ↑.',
+                'Perpetual issue to kitchen: Cost of Sales (Expense) ↑, Food Inventory (Asset) ↓.',
+                'Cash sale: Cash ↑, Food Sales (Revenue) ↑, Sales Tax Payable (Liability) ↑. In-house credit instead of cash → Accounts Receivable ↑.',
+                'Mortgage payment splits into principal (reduces the Liability) and interest (an Expense); Cash ↓.',
+                'Owner investment increases assets and Owner’s Capital (Equity). A withdrawal decreases Equity and Cash.',
+                'Remitting collected sales tax: Sales Tax Payable (Liability) ↓, Cash ↓.'
+            ]
+        },
+
+        // --- B3.3: Ch6 guided journal — bookkeeping process, ALE only (professor worked example) ---
+        {
+            id: 'k1-ch6-journal',
+            lesson: 'accounting-fundamentals',
+            chapter: 6,
+            type: 'journal',
+            title: 'Record Transactions in the Ledger (Assets, Liabilities, Equity)',
+            prompt: 'Continue the hotel’s ledger. Record each transaction with the correct debit and credit. '
+                + 'The perpetual inventory system is used.',
+            difficulty: 3,
+            chartOfAccounts: [
+                { name: 'Cash', normal: 'D', section: 'asset' },
+                { name: 'Accounts Receivable', normal: 'D', section: 'asset' },
+                { name: 'Food Inventory', normal: 'D', section: 'asset' },
+                { name: 'Prepaid Rent', normal: 'D', section: 'asset' },
+                { name: 'Accounts Payable', normal: 'C', section: 'liability' },
+                { name: 'Common Stock Issued', normal: 'C', section: 'equity' },
+                { name: 'Additional Paid-In Capital', normal: 'C', section: 'equity' }
+            ],
+            beginningBalances: {
+                Cash: 120000,
+                'Accounts Receivable': 10200,
+                'Food Inventory': 8000,
+                'Accounts Payable': 4200,
+                'Common Stock Issued': 158500
+            },
+            transactions: [
+                {
+                    text: 'The hotel buys food inventory worth $3,000 for its storeroom on a previously arranged open account (perpetual system).',
+                    entries: [
+                        { account: 'Food Inventory', side: 'D', amount: 3000 },
+                        { account: 'Accounts Payable', side: 'C', amount: 3000 }
+                    ]
+                },
+                {
+                    text: 'The hotel pays the supplier $3,000 cash for inventory purchases previously made on open account.',
+                    entries: [
+                        { account: 'Accounts Payable', side: 'D', amount: 3000 },
+                        { account: 'Cash', side: 'C', amount: 3000 }
+                    ]
+                },
+                {
+                    text: 'In February the hotel pays $4,000 cash for the March and April rent (monthly rent is $2,000).',
+                    entries: [
+                        { account: 'Prepaid Rent', side: 'D', amount: 4000 },
+                        { account: 'Cash', side: 'C', amount: 4000 }
+                    ]
+                },
+                {
+                    text: 'A customer pays the $10,200 beginning-balance receivable with cash.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 10200 },
+                        { account: 'Accounts Receivable', side: 'C', amount: 10200 }
+                    ]
+                },
+                {
+                    text: 'The hotel buys food inventory worth $5,000 for its storeroom and pays cash on delivery (perpetual system).',
+                    entries: [
+                        { account: 'Food Inventory', side: 'D', amount: 5000 },
+                        { account: 'Cash', side: 'C', amount: 5000 }
+                    ]
+                },
+                {
+                    text: 'The stockholders additionally issue 1,000 common shares (par value $20) sold at $30 per share.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 30000 },
+                        { account: 'Common Stock Issued', side: 'C', amount: 20000 },
+                        { account: 'Additional Paid-In Capital', side: 'C', amount: 10000 }
+                    ]
+                }
+            ],
+            expectedEndingBalances: {
+                Cash: 148200,
+                'Accounts Receivable': 0,
+                'Food Inventory': 16000,
+                'Prepaid Rent': 4000,
+                'Accounts Payable': 4200,
+                'Common Stock Issued': 178500,
+                'Additional Paid-In Capital': 10000
+            },
+            solution: [
+                'Buy inventory on account: debit Food Inventory 3,000; credit Accounts Payable 3,000.',
+                'Pay the supplier: debit Accounts Payable 3,000; credit Cash 3,000.',
+                'Prepay two months’ rent: debit Prepaid Rent 4,000; credit Cash 4,000.',
+                'Collect a receivable: debit Cash 10,200; credit Accounts Receivable 10,200.',
+                'Buy inventory for cash: debit Food Inventory 5,000; credit Cash 5,000.',
+                'Issue stock above par: debit Cash 30,000; credit Common Stock Issued 20,000 and Additional Paid-In Capital 10,000.'
+            ]
         }
     ]
 };

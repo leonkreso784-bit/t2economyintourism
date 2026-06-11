@@ -179,7 +179,10 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       `k1-ch5-tf` (10 True/False), `k1-ch5-classify` (30 računa → **5-osna** klasifikacija Asset/Liability/Equity/Revenue/Expense, koristi jednoosni `classify` iz B3.1),
       `k1-ch5-foodcost` (`ratio`: Beginning+Direct+Storeroom→**Cost of Food Available** 35.445; −Ending→**Cost of Food Used** 25.385). **Engine nepromijenjen** (samo sadržaj).
       *Done ✅:* node 95/95 + 13/13; Playwright 36/36 + ciljani 2/2 (food cost računica → „Correct"; 30 računa točno → „Correct"). Cache `?v=20260626`.
-- [ ] **B3.3 (K1 Ch6 — Bookkeeping):** `classify` (I/D effect, Assignment 6-2) + `journal` ALE (A/L/E samo).
+- [x] **B3.3 (K1 Ch6 — Bookkeeping):** iz izvora (Cote workbook Assignment 6-2 + profesorski worked example „Bookkeeping process"):
+      `k1-ch6-classify` (10 transakcija → **dvoosno** klasa Asset/Liability/Equity/Revenue/Expense **+ I/D efekt**; koristi `effects` granu iz B1.5),
+      `k1-ch6-journal` (guided journal, **6 ALE transakcija**, perpetual; nastavlja otvoreni ledger preko `beginningBalances`; završni saldi provjereni kernelom — Cash 148.200, Food Inv 16.000, AP 4.200, CSI 178.500, APIC 10.000; 3-linijski entry kod izdavanja dionica iznad pari). **Engine nepromijenjen.**
+      *Done ✅:* node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 2/2 (classify 26 linija točno → „Correct"; journal 6 tx → „Correct"). Cache `?v=20260627`.
 - [ ] **B3.4 (K1 Ch3 — Survey FS):** `numeric` (equity/retained earnings) + TF/MC + `statement` (3 izvještaja, Assignment 1).
 - [ ] **B3.5 (K1 Ch1–2):** TF/MC (intro, GAAP, oblici poslovanja, stock). *(uglavnom choice — teorijski)*
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).

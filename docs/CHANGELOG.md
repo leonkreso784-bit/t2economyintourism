@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Accounting Exercises — sadržaj Ch6 (Bookkeeping process, K1) [FAZA 3 / B3.3]:** iz izvora (Cote *Hotel & Restaurant
+  Accounting* workbook Assignment 6-2 + profesorski worked example „Bookkeeping process"): `k1-ch6-classify` (10 transakcija →
+  **dvoosna** klasifikacija klasa A/L/EQ/R/EX **+ Increase/Decrease efekt**), `k1-ch6-journal` (**guided journal**, 6 ALE
+  transakcija u perpetual sustavu — nastavlja otvoreni ledger preko `beginningBalances`; završni saldi provjereni kernelom;
+  uključuje 3-linijski entry kod izdavanja dionica iznad pari). **Engine nepromijenjen** — čisti sadržaj. Node **95/95**
+  (+13/13 kernel), verify 0/0, Playwright **36/36** + ciljani **2/2**. Cache `?v=20260627`. (Iza `features.exercises`.)
 - **Accounting Exercises — sadržaj Ch5 (Income Statement, K1) [FAZA 3 / B3.2]:** iz izvora (Cote *Hotel & Restaurant
   Accounting* workbook Exercises-5; **rješenja provjerena** na originalnim solution stranicama): `k1-ch5-tf` (10 True/False),
   `k1-ch5-classify` (30 računa → **5-osna** klasifikacija Asset/Liability/Equity/Revenue/Expense — koristi jednoosni
