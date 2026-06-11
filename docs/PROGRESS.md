@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch1–2 Intro/GAAP/Business Forms (B3.5) GOTOV → K1 SADRŽAJ KOMPLETAN (lokalno)
+Zadnje K1 poglavlje. **Nalaz:** Cote workbook NEMA zaseban numerički set za Ch1–2 (uvodna poglavlja; postoji samo answer-key za
+Assignment 2-1 bez teksta pitanja). Zato Ch1–2 = **konceptualna teorija** iz standardnih, nedvosmislenih računovodstvenih činjenica
+(GAAP, oblici poslovanja, korporativni stock) — NE izmišljeni workbook-brojevi.
+
+**B3.5 (Ch1–2):** 2 nove choice vježbe: `k1-ch1-concepts` (11 TF/MC: računovodstvena jednadžba, 4 financijska izvještaja, GAAP —
+business entity/going concern/cost/accrual/matching/monetary unit/conservatism), `k1-ch2-business-forms` (13 TF/MC: proprietorship/
+partnership/corporation, unlimited vs limited liability, par vs market, authorized≥issued≥outstanding, treasury, APIC, owner’s capital).
+**Engine 0 izmjena.**
+**Testirano:** node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 2/2. Cache `?v=20260629`. Lokalno, nedeployano.
+
+### 🎯 K1 SADRŽAJ KOMPLETAN (Ch1–6)
+Sve poglavlje K1 sad ima prave, auto-ocjenjivane vježbe (sve iza `features.exercises`, engine nepromijenjen kroz B3.1–B3.5):
+Ch1 (intro/GAAP), Ch2 (business forms/stock), Ch3 (survey FS: TF/terms/IS-BS/capital/income statement),
+Ch4 (balance sheet: TF/terms/classify/build), Ch5 (income statement: TF/classify/food cost), Ch6 (bookkeeping: classify+effect / guided journal ALE).
+**▶ Sljedeće:** FAZA 4 — restruktura accounting catalog-a na K1/K2/finalni (3 lekcije) + dopis teorije-kategorija (Ch1–6) ili nastavak K2 sadržaja (Ch7–16). Čeka odluku/materijale.
+
+---
+
 ## 2026-06-11 — Accounting Exercises: FAZA 3 — Ch3 Survey of Financial Statements sadržaj (B3.4) GOTOV (lokalno)
 Nastavak K1. Izvor: Cote workbook **Assignments 3-1/3-2/3-3**; **sva rješenja provjerena** na službenim solution stranicama
 (`solutions-chapters-2-5` pp. 2–4) — uklj. sporne stavke (3-1 #11 SCF $5k vs $45k, 3-2 #4c „acc. depreciation NOT used for china/glass" = **TR**).

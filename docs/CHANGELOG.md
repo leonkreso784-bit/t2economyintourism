@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Accounting Exercises — sadržaj Ch1–2 (Intro/GAAP/oblici poslovanja/stock, K1) [FAZA 3 / B3.5]:** konceptualna teorija
+  (Cote Ch1–2 su uvodni; workbook nema numerički set): `k1-ch1-concepts` (11 TF/MC — računovodstvena jednadžba, financijski
+  izvještaji, GAAP pretpostavke/načela), `k1-ch2-business-forms` (13 TF/MC — proprietorship/partnership/corporation, limited
+  liability, korporativni stock: par vs market, authorized/issued/outstanding, treasury, APIC). **Engine nepromijenjen** — čisti
+  sadržaj. Node **95/95** (+13/13 kernel), verify 0/0, Playwright **36/36** + ciljani **2/2**. Cache `?v=20260629`.
+  → **K1 sadržaj kompletan (Ch1–6).**
 - **Accounting Exercises — sadržaj Ch3 (Survey of Financial Statements, K1) [FAZA 3 / B3.4]:** iz izvora (Cote *Hotel &
   Restaurant Accounting* workbook Assignments 3-1/3-2/3-3; **rješenja provjerena** na originalnim solution stranicama):
   `k1-ch3-tf` (14 True/False), `k1-ch3-terms` (10 pojmova → MC), `k1-ch3-isbs` (`classify`: stavka → Income Statement /

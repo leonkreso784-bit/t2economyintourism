@@ -188,7 +188,11 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
       `k1-ch3-capital` (`ratio`: owner’s capital roll-forward 40k+5k+20k−14k = **51.000**, s distraktorima AP/AR koje treba ignorirati),
       `k1-ch3-income-statement` (`statement`: puni Income Statement „Annie’s Restaurant" — 16 linija + 9 kaskadnih totala; **Net Income 57.000**; svi totali provjereni). **Engine nepromijenjen.**
       *Done ✅:* node 95/95 + 13/13; verify 0/0; Playwright 36/36 + ciljani 5/5. Cache `?v=20260628`.
-- [ ] **B3.5 (K1 Ch1–2):** TF/MC (intro, GAAP, oblici poslovanja, stock). *(uglavnom choice — teorijski)*
+- [x] **B3.5 (K1 Ch1–2):** konceptualna teorija (workbook nema numerički set za Ch1–2): `k1-ch1-concepts` (11 TF/MC — računovodstvena
+      jednadžba, 4 izvještaja, GAAP: business entity/going concern/cost/accrual/matching/monetary unit/conservatism),
+      `k1-ch2-business-forms` (13 TF/MC — proprietorship/partnership/corporation, limited vs unlimited liability, stock: par vs market,
+      authorized≥issued≥outstanding, treasury, APIC, owner’s capital). **Engine nepromijenjen.** *Done ✅:* node 95/95 + 13/13; verify 0/0;
+      Playwright 36/36 + ciljani 2/2. Cache `?v=20260629`. → **K1 SADRŽAJ KOMPLETAN (Ch1–6).**
 - [ ] **B3.6 (K2 Ch11 — Depreciation):** `numeric` randomiziran (straight-line/DDB/MACRS).
 - [ ] **B3.7 (K2 Inventory):** `numeric` (FIFO/LIFO/Average COGS).
 - [ ] **B3.8 (K2 Ch9/10 — Restaurant/Hotel ratios):** `ratio` (avg check, seat turnover, food/labor cost %, RevPAR…).

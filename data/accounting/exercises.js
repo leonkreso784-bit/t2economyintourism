@@ -901,6 +901,102 @@ const accountingExercises = {
                 '130,700 − fixed charges 42,200 = income before income taxes 88,500.',
                 '88,500 − income taxes 31,500 = net income 57,000.'
             ]
+        },
+
+        // ================= CHAPTERS 1–2 — INTRODUCTION, GAAP, BUSINESS FORMS & STOCK (K1) =================
+        // Conceptual theory (standard GAAP / forms-of-organization / corporate-stock facts), not workbook-numeric.
+        // Ch1–2 in Cote are introductory; the workbook has no numeric problem set for them.
+
+        // --- B3.5: Ch1 Introduction to Accounting & GAAP ---
+        {
+            id: 'k1-ch1-concepts',
+            lesson: 'accounting-fundamentals',
+            chapter: 1,
+            type: 'choice',
+            title: 'Introduction to Accounting & GAAP',
+            prompt: 'Answer each statement about basic accounting concepts and generally accepted accounting principles.',
+            difficulty: 1,
+            items: [
+                { q: 'The basic accounting equation is Assets = Liabilities + Owners’ Equity.', kind: 'tf', answer: true },
+                { q: 'Under the business entity assumption, the owner’s personal transactions are kept separate from the business’s records.', kind: 'tf', answer: true },
+                { q: 'The cost principle records assets at their current market value at the end of each period.', kind: 'tf', answer: false },
+                { q: 'The going concern assumption presumes the business will continue operating into the foreseeable future.', kind: 'tf', answer: true },
+                { q: 'Generally Accepted Accounting Principles (GAAP) are the common standards that guide financial accounting.', kind: 'tf', answer: true },
+                { q: 'Under accrual accounting, revenue is recorded only when cash is received.', kind: 'tf', answer: false },
+                { q: 'The matching principle records expenses in the same period as the revenues they help to generate.', kind: 'tf', answer: true },
+                { q: 'The monetary unit assumption means transactions are recorded in a common monetary measure.', kind: 'tf', answer: true },
+                {
+                    q: 'Which financial statement reports a business’s financial position at a single point in time?',
+                    kind: 'mc',
+                    options: ['Income statement', 'Balance sheet', 'Statement of cash flows', 'Statement of retained earnings'],
+                    answer: 1
+                },
+                {
+                    q: 'Which principle directs accountants to avoid overstating assets or income when there is uncertainty?',
+                    kind: 'mc',
+                    options: ['Matching', 'Conservatism', 'Going concern', 'Cost'],
+                    answer: 1
+                },
+                {
+                    q: 'The accounting equation can be rearranged so that Owners’ Equity equals:',
+                    kind: 'mc',
+                    options: ['Assets + Liabilities', 'Assets − Liabilities', 'Liabilities − Assets', 'Revenue − Expenses'],
+                    answer: 1
+                }
+            ],
+            solution: [
+                'Accounting equation: Assets = Liabilities + Owners’ Equity, so Owners’ Equity = Assets − Liabilities.',
+                'Cost principle = historical cost (not market); accrual = revenue when EARNED (not when cash is received).',
+                'Business entity, going concern, monetary unit, matching and conservatism are core GAAP assumptions/principles.',
+                'The balance sheet is a point-in-time snapshot; the other statements cover a period.'
+            ]
+        },
+
+        // --- B3.5: Ch2 Forms of Business Organization & Corporate Stock ---
+        {
+            id: 'k1-ch2-business-forms',
+            lesson: 'accounting-fundamentals',
+            chapter: 2,
+            type: 'choice',
+            title: 'Forms of Business Organization & Stock',
+            prompt: 'Answer each statement about proprietorships, partnerships, corporations, and corporate stock.',
+            difficulty: 2,
+            items: [
+                { q: 'A sole proprietorship is a separate legal entity from its owner.', kind: 'tf', answer: false },
+                { q: 'Owners of a corporation generally have limited liability for the corporation’s debts.', kind: 'tf', answer: true },
+                { q: 'A corporation is owned by its stockholders (shareholders).', kind: 'tf', answer: true },
+                { q: 'In a sole proprietorship, the owner has unlimited personal liability for the business’s debts.', kind: 'tf', answer: true },
+                { q: 'Par value represents the current market value of a share of stock.', kind: 'tf', answer: false },
+                { q: 'Treasury stock is stock that a corporation has repurchased from its stockholders.', kind: 'tf', answer: true },
+                { q: 'Issued shares can never exceed authorized shares.', kind: 'tf', answer: true },
+                { q: 'Outstanding shares equal issued shares minus treasury shares.', kind: 'tf', answer: true },
+                { q: 'The equity of a corporation consists of paid-in capital plus retained earnings.', kind: 'tf', answer: true },
+                { q: 'A partnership must have at least two owners.', kind: 'tf', answer: true },
+                {
+                    q: 'When a corporation issues stock for more than its par value, the amount above par is recorded in:',
+                    kind: 'mc',
+                    options: ['Common Stock Issued', 'Additional Paid-In Capital', 'Retained Earnings', 'Treasury Stock'],
+                    answer: 1
+                },
+                {
+                    q: 'The equity account used to record the owner’s investment in a proprietorship is:',
+                    kind: 'mc',
+                    options: ['Common Stock Issued', 'Owner’s Capital', 'Retained Earnings', 'Additional Paid-In Capital'],
+                    answer: 1
+                },
+                {
+                    q: 'Which form of business is itself a separate legal and taxable entity?',
+                    kind: 'mc',
+                    options: ['Sole proprietorship', 'Partnership', 'Corporation', 'None of these'],
+                    answer: 2
+                }
+            ],
+            solution: [
+                'Proprietorship: one owner, unlimited liability, NOT a separate legal entity (the owner is taxed personally).',
+                'Corporation: a separate legal/taxable entity owned by stockholders, who have limited liability.',
+                'Par value is a nominal (legal) amount, not market value; issue price above par goes to Additional Paid-In Capital.',
+                'Authorized ≥ issued ≥ outstanding; Outstanding = Issued − Treasury. Corporate equity = paid-in capital + retained earnings.'
+            ]
         }
     ]
 };
