@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — ✅ DEPLOYANO (push `a6a62e2`) — B3.6 + B3.7 LIVE + B3.8 lokalno
+**Deploy (uz potvrdu):** B3.6 (Ch11 Depreciation) + B3.7 (Inventory) gurnuti na produkciju (sokratstudy.com), `origin/main` @ `a6a62e2`, 0 ispred.
+Midterm 2 „Exercises" tab sad LIVE ima **Chapter 11** + **Other (inventory)**. Cache `?v=20260634`.
+
+## 2026-06-11 — Accounting B3.8: K2 Restaurant/Hotel ratios (Ch9/10)
+Nastavak K2 (brick-by-brick). **4 nove `ratio` vježbe** u `data/accounting/exercises.js`:
+- `k2-ch9-restaurant-ratios` (Ch9, fixni) — average check $16, seat turnover 1,5/dan, food cost 35%, labor 30% (120 sjedala × 300 dana).
+- `k2-ch9-restaurant-random` (Ch9, randomiziran) — average check + food cost % („New numbers").
+- `k2-ch10-hotel-ratios` (Ch10, fixni) — occupancy 75%, ADR $120, RevPAR $90 (200-sobni hotel, 73.000 room-nights).
+- `k2-ch10-hotel-random` (Ch10, randomiziran) — occupancy/ADR/RevPAR; `params` biraju roomsAvailable/occ/ADR tako da sve ispadne cijelo (RevPAR = ADR × occupancy).
+
+**Engine NEPROMIJENJEN.** Content pack sad **29 vježbi**. **USAR/USALI klasifikacija (Assignment 9-1/10-1) ODGOĐENA** — dvosmislene stavke
+(franchise fees/menus/telecom) bez službenog answer-keya za Ch9/10 (solutions = samo Ch2–5) → rizik krivog auto-ocjenjivanja; dodat će se ako se nađe key.
+**Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (restaurant 4/4, hotel 3/3) + randomizacija deterministična/čista i givens prisutni kroz 400
+seedova; Playwright **36/36**. Cache `?v=20260635`. **Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.9 (K2 Ch12 Analyzing FS) — `docs/EXERCISES_ENGINE.md` §6/§8.
+
+---
+
 ## 2026-06-11 — Accounting B3.7: K2 Inventory vježbe (FIFO/LIFO/Average)
 Nastavak K2 (brick-by-brick, bez deploya). **4 nove vježbe** u `data/accounting/exercises.js` (`lesson:'second-midterm'`,
 **bez `chapter`** → grupiraju se pod „Other" na Midterm 2 listi, jer inventory valuation nije numerirano Cote poglavlje nego zasebna prezentacija):

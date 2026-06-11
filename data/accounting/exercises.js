@@ -1148,6 +1148,158 @@ const accountingExercises = {
                 };
             },
             solution: ['Press “New numbers” for a fresh problem. FIFO sends the oldest costs to COGS; LIFO sends the newest costs to COGS.']
+        },
+
+        // ===================== CHAPTER 9 — RESTAURANT OPERATING RATIOS (K2) =====================
+        // Universal restaurant KPIs (USAR context): average check, seat turnover, food/labor cost %.
+        // Exact, self-checking formulas. (Workbook Assignment 9-1 is USAR expense/sales CLASSIFICATION —
+        // deferred until an official answer key is available; the ambiguous items risk wrong auto-grading.)
+
+        // --- B3.8: Ch9 restaurant ratios (fixed, clean figures) ---
+        {
+            id: 'k2-ch9-restaurant-ratios',
+            lesson: 'second-midterm',
+            chapter: 9,
+            type: 'ratio',
+            title: 'Restaurant Operating Ratios',
+            prompt: 'A restaurant with 120 seats operated 300 days. Using the annual figures below, compute the '
+                + 'average check, the daily seat turnover, the food cost percentage and the labor cost percentage.',
+            difficulty: 2,
+            givens: [
+                { label: 'Food sales', value: 864000 },
+                { label: 'Covers (guests served)', value: 54000 },
+                { label: 'Seats', value: 120 },
+                { label: 'Operating days', value: 300 },
+                { label: 'Cost of food sold', value: 302400 },
+                { label: 'Labor (payroll) cost', value: 259200 }
+            ],
+            fields: [
+                { key: 'avgCheck', label: 'Average check', answer: 16, tol: 0.005, unit: '$', hint: 'Food sales ÷ covers' },
+                { key: 'seatTurn', label: 'Seat turnover (per day)', answer: 1.5, tol: 0.005, unit: '×/day', hint: 'Covers ÷ (seats × operating days)' },
+                { key: 'foodPct', label: 'Food cost %', answer: 35, tol: 0.05, unit: '%', hint: 'Cost of food sold ÷ food sales × 100' },
+                { key: 'laborPct', label: 'Labor cost %', answer: 30, tol: 0.05, unit: '%', hint: 'Labor cost ÷ food sales × 100' }
+            ],
+            solution: [
+                'Average check = 864,000 ÷ 54,000 = $16.00.',
+                'Seat turnover per day = 54,000 ÷ (120 × 300) = 54,000 ÷ 36,000 = 1.5 turns/day.',
+                'Food cost % = 302,400 ÷ 864,000 = 35.0%.',
+                'Labor cost % = 259,200 ÷ 864,000 = 30.0%.'
+            ]
+        },
+
+        // --- B3.8: Ch9 restaurant ratios drill (randomized) ---
+        {
+            id: 'k2-ch9-restaurant-random',
+            lesson: 'second-midterm',
+            chapter: 9,
+            type: 'ratio',
+            title: 'Restaurant Ratios — Drill',
+            prompt: 'Compute the average check and the food cost percentage.',
+            difficulty: 2,
+            params: {
+                covers: { min: 20000, max: 50000, step: 5000 },
+                avgCheck: { choices: [12, 15, 16, 18, 20] },
+                foodCostPct: { choices: [28, 30, 32, 35] }
+            },
+            generate(p) {
+                const foodSales = p.covers * p.avgCheck;
+                const costOfFood = foodSales * p.foodCostPct / 100;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                const u = (n) => n.toLocaleString('en-US');
+                return {
+                    prompt: 'A restaurant served ' + u(p.covers) + ' covers and recorded food sales of ' + fmt(foodSales) + '. '
+                        + 'The cost of food sold was ' + fmt(costOfFood) + '. Compute the average check and the food cost percentage.',
+                    givens: [
+                        { label: 'Food sales', value: foodSales },
+                        { label: 'Covers (guests served)', value: p.covers },
+                        { label: 'Cost of food sold', value: costOfFood }
+                    ],
+                    fields: [
+                        { key: 'avgCheck', label: 'Average check', answer: p.avgCheck, tol: 0.005, unit: '$', hint: 'Food sales ÷ covers' },
+                        { key: 'foodPct', label: 'Food cost %', answer: p.foodCostPct, tol: 0.05, unit: '%', hint: 'Cost of food sold ÷ food sales × 100' }
+                    ],
+                    solution: [
+                        'Average check = ' + fmt(foodSales) + ' ÷ ' + u(p.covers) + ' = $' + p.avgCheck + '.00.',
+                        'Food cost % = ' + fmt(costOfFood) + ' ÷ ' + fmt(foodSales) + ' = ' + p.foodCostPct + '%.'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for fresh figures. Average check = food sales ÷ covers; food cost % = cost of food sold ÷ food sales × 100.']
+        },
+
+        // ===================== CHAPTER 10 — HOTEL ROOMS RATIOS (K2) =====================
+        // Universal lodging KPIs (USALI context): occupancy %, ADR, RevPAR. Exact, self-checking
+        // (RevPAR = ADR × occupancy = rooms revenue ÷ rooms available). (Assignment 10-1 USALI
+        // department classification deferred — needs an official answer key.)
+
+        // --- B3.8: Ch10 hotel rooms ratios (fixed, clean figures) ---
+        {
+            id: 'k2-ch10-hotel-ratios',
+            lesson: 'second-midterm',
+            chapter: 10,
+            type: 'ratio',
+            title: 'Hotel Rooms Ratios (Occupancy, ADR, RevPAR)',
+            prompt: 'A 200-room hotel was open all 365 days (rooms available = 200 × 365 = 73,000). Using the annual '
+                + 'rooms figures below, compute the occupancy percentage, the average daily rate (ADR) and RevPAR.',
+            difficulty: 2,
+            givens: [
+                { label: 'Rooms available', value: 73000 },
+                { label: 'Rooms sold (occupied)', value: 54750 },
+                { label: 'Rooms revenue', value: 6570000 }
+            ],
+            fields: [
+                { key: 'occ', label: 'Occupancy %', answer: 75, tol: 0.05, unit: '%', hint: 'Rooms sold ÷ rooms available × 100' },
+                { key: 'adr', label: 'Average daily rate (ADR)', answer: 120, tol: 0.005, unit: '$', hint: 'Rooms revenue ÷ rooms sold' },
+                { key: 'revpar', label: 'RevPAR', answer: 90, tol: 0.005, unit: '$', hint: 'Rooms revenue ÷ rooms available (= ADR × occupancy)' }
+            ],
+            solution: [
+                'Occupancy % = 54,750 ÷ 73,000 = 75.0%.',
+                'ADR = 6,570,000 ÷ 54,750 = $120.00.',
+                'RevPAR = 6,570,000 ÷ 73,000 = $90.00 (= ADR 120 × occupancy 0.75).'
+            ]
+        },
+
+        // --- B3.8: Ch10 hotel rooms ratios drill (randomized) ---
+        {
+            id: 'k2-ch10-hotel-random',
+            lesson: 'second-midterm',
+            chapter: 10,
+            type: 'ratio',
+            title: 'Hotel Ratios — Drill',
+            prompt: 'Compute the occupancy %, the ADR and RevPAR.',
+            difficulty: 2,
+            params: {
+                roomsAvailable: { choices: [10000, 12000, 15000, 20000] },
+                occupancyPct: { choices: [60, 70, 75, 80] },
+                adr: { choices: [100, 120, 140, 160] }
+            },
+            generate(p) {
+                const roomsSold = p.roomsAvailable * p.occupancyPct / 100;
+                const roomsRevenue = roomsSold * p.adr;
+                const revpar = roomsRevenue / p.roomsAvailable;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                const u = (n) => n.toLocaleString('en-US');
+                return {
+                    prompt: 'A hotel had ' + u(p.roomsAvailable) + ' available room-nights, sold ' + u(roomsSold) + ' of them, and '
+                        + 'earned rooms revenue of ' + fmt(roomsRevenue) + '. Compute the occupancy %, the ADR and RevPAR.',
+                    givens: [
+                        { label: 'Rooms available', value: p.roomsAvailable },
+                        { label: 'Rooms sold (occupied)', value: roomsSold },
+                        { label: 'Rooms revenue', value: roomsRevenue }
+                    ],
+                    fields: [
+                        { key: 'occ', label: 'Occupancy %', answer: p.occupancyPct, tol: 0.05, unit: '%', hint: 'Rooms sold ÷ rooms available × 100' },
+                        { key: 'adr', label: 'Average daily rate (ADR)', answer: p.adr, tol: 0.005, unit: '$', hint: 'Rooms revenue ÷ rooms sold' },
+                        { key: 'revpar', label: 'RevPAR', answer: revpar, tol: 0.005, unit: '$', hint: 'Rooms revenue ÷ rooms available (= ADR × occupancy)' }
+                    ],
+                    solution: [
+                        'Occupancy % = ' + u(roomsSold) + ' ÷ ' + u(p.roomsAvailable) + ' = ' + p.occupancyPct + '%.',
+                        'ADR = ' + fmt(roomsRevenue) + ' ÷ ' + u(roomsSold) + ' = $' + p.adr + '.00.',
+                        'RevPAR = ' + fmt(roomsRevenue) + ' ÷ ' + u(p.roomsAvailable) + ' = ' + fmt(revpar) + ' (= ADR × occupancy).'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for a fresh hotel. Occupancy = rooms sold ÷ rooms available; ADR = revenue ÷ rooms sold; RevPAR = revenue ÷ rooms available.']
         }
     ]
 };

@@ -21,6 +21,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — K2 Restaurant/Hotel ratios: Ch9/10 [B3.8]:** **4 nove `ratio` vježbe**: `k2-ch9-restaurant-ratios` (fixni — average check,
+  seat turnover, food/labor cost %), `k2-ch9-restaurant-random` (randomiziran), `k2-ch10-hotel-ratios` (fixni — occupancy/ADR/RevPAR),
+  `k2-ch10-hotel-random` (randomiziran; `params` daju cijele brojeve, RevPAR = ADR × occupancy). **Engine nepromijenjen.** USAR/USALI
+  klasifikacija (Assignment 9-1/10-1) odgođena — nema službenog answer-keya za Ch9/10 → rizik krivog ocjenjivanja. Content pack sad 29 vježbi.
+  verify 0/0, node 95/95 + 13/13, Playwright 36/36 + grade-check. Cache `?v=20260635`.
 - **Exercises — K2 Inventory: FIFO/LIFO/Average [B3.7]:** **4 nove vježbe** (`lesson:'second-midterm'`, bez `chapter` → grupa „Other"):
   `k2-inv-concepts` (TF/MC — cost-flow metode + rising-price efekt + COGS formula), `k2-inv-cogs-formula` (numeric randomiziran —
   Goods available = BI+Purchases, COGS = −EI), `k2-inv-methods` (numeric fixni — puna FIFO/LIFO/wtd-avg usporedba na čistim brojevima,
