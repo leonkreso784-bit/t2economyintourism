@@ -795,6 +795,201 @@ const accountingExercises = {
                 'Par value is a nominal (legal) amount, not market value; issue price above par goes to Additional Paid-In Capital.',
                 'Authorized ≥ issued ≥ outstanding; Outstanding = Issued − Treasury. Corporate equity = paid-in capital + retained earnings.'
             ]
+        },
+
+        // ========================= CHAPTER 11 — DEPRECIATION & AMORTIZATION (K2) =========================
+        // Source: Cote, Hotel & Restaurant Accounting, Ch. 11 workbook (Assignment 11-1):
+        //   #1 straight-line schedule (cost 31,000 / salvage 3,000 / life 4 → 7,000/yr),
+        //   #2 double-declining-balance schedule (rate 50%, never below salvage → year 4 expense = 875).
+        // Concepts align with the Midterm 2 `depreciation` study category (SL/DDB/MACRS/amortization/depletion).
+
+        // --- B3.6: Ch11 depreciation concepts & methods (TF + MC) ---
+        {
+            id: 'k2-ch11-concepts',
+            lesson: 'second-midterm',
+            chapter: 11,
+            type: 'choice',
+            title: 'Depreciation — Concepts & Methods',
+            prompt: 'Answer each statement about depreciation methods, book value, and related cost allocations.',
+            difficulty: 2,
+            items: [
+                { q: 'Depreciation allocates the cost of a tangible long-lived asset over its useful life.', kind: 'tf', answer: true },
+                { q: 'Book value equals cost minus accumulated depreciation.', kind: 'tf', answer: true },
+                { q: 'The depreciable base is cost minus salvage (residual) value.', kind: 'tf', answer: true },
+                { q: 'Straight-line depreciation records a larger expense in the early years than in the later years.', kind: 'tf', answer: false },
+                { q: 'Double-declining-balance is an accelerated method that ignores salvage value in the rate calculation.', kind: 'tf', answer: true },
+                { q: 'Under any method, an asset may be depreciated below its salvage value.', kind: 'tf', answer: false },
+                { q: 'Accumulated depreciation is a contra-asset account.', kind: 'tf', answer: true },
+                { q: 'MACRS is the depreciation system required for U.S. financial-statement (GAAP) reporting.', kind: 'tf', answer: false },
+                {
+                    q: 'Straight-line depreciation per year =',
+                    kind: 'mc',
+                    options: ['Cost ÷ Useful life', '(Cost − Salvage) ÷ Useful life', 'Cost × DDB rate', 'Cost − Salvage'],
+                    answer: 1
+                },
+                {
+                    q: 'The double-declining-balance rate for an asset with a 5-year life is:',
+                    kind: 'mc',
+                    options: ['10%', '20%', '40%', '50%'],
+                    answer: 2
+                },
+                {
+                    q: 'Allocating the cost of an intangible asset (e.g., a franchise) over its life is called:',
+                    kind: 'mc',
+                    options: ['Depreciation', 'Amortization', 'Depletion', 'Accrual'],
+                    answer: 1
+                },
+                {
+                    q: 'Allocating the cost of a natural resource (e.g., a mine) as it is used up is called:',
+                    kind: 'mc',
+                    options: ['Depreciation', 'Amortization', 'Depletion', 'Recognition'],
+                    answer: 2
+                }
+            ],
+            solution: [
+                'Depreciation (tangible assets), amortization (intangible assets) and depletion (natural resources) all allocate cost over time.',
+                'Book value = cost − accumulated depreciation; depreciable base = cost − salvage.',
+                'Straight-line is even each year; DDB is accelerated (more in early years). DDB rate = 2 × (1 ÷ life), e.g. 2 ÷ 5 = 40%.',
+                'No method depreciates below salvage value. MACRS is for U.S. TAX, not GAAP statements. Accumulated depreciation is a contra-asset.'
+            ]
+        },
+
+        // --- B3.6: Ch11 straight-line schedule (Assignment 11-1, #1 — exact textbook figures) ---
+        {
+            id: 'k2-ch11-sl-schedule',
+            lesson: 'second-midterm',
+            chapter: 11,
+            type: 'numeric',
+            title: 'Straight-Line Depreciation Schedule',
+            prompt: 'An asset costs $31,000, has a $3,000 salvage value, and a 4-year useful life. Complete the '
+                + 'straight-line depreciation schedule: for each year give the depreciation expense, the accumulated '
+                + 'depreciation, and the ending book value.',
+            difficulty: 2,
+            fields: [
+                { key: 'y1exp', label: 'Year 1 — Depreciation expense', answer: 7000, tol: 0.005, unit: '$', hint: '(31,000 − 3,000) ÷ 4 = 7,000 each year' },
+                { key: 'y1acc', label: 'Year 1 — Accumulated depreciation', answer: 7000, tol: 0.005, unit: '$' },
+                { key: 'y1bv', label: 'Year 1 — Ending book value', answer: 24000, tol: 0.005, unit: '$', hint: 'Cost − accumulated depreciation' },
+                { key: 'y2exp', label: 'Year 2 — Depreciation expense', answer: 7000, tol: 0.005, unit: '$' },
+                { key: 'y2acc', label: 'Year 2 — Accumulated depreciation', answer: 14000, tol: 0.005, unit: '$' },
+                { key: 'y2bv', label: 'Year 2 — Ending book value', answer: 17000, tol: 0.005, unit: '$' },
+                { key: 'y3exp', label: 'Year 3 — Depreciation expense', answer: 7000, tol: 0.005, unit: '$' },
+                { key: 'y3acc', label: 'Year 3 — Accumulated depreciation', answer: 21000, tol: 0.005, unit: '$' },
+                { key: 'y3bv', label: 'Year 3 — Ending book value', answer: 10000, tol: 0.005, unit: '$' },
+                { key: 'y4exp', label: 'Year 4 — Depreciation expense', answer: 7000, tol: 0.005, unit: '$' },
+                { key: 'y4acc', label: 'Year 4 — Accumulated depreciation', answer: 28000, tol: 0.005, unit: '$' },
+                { key: 'y4bv', label: 'Year 4 — Ending book value', answer: 3000, tol: 0.005, unit: '$', hint: 'Ends at the salvage value' }
+            ],
+            solution: [
+                'Annual straight-line depreciation = (31,000 − 3,000) ÷ 4 = 7,000 each year.',
+                'Accumulated depreciation grows 7,000 → 14,000 → 21,000 → 28,000.',
+                'Book value = cost − accumulated: 24,000 → 17,000 → 10,000 → 3,000.',
+                'After 4 years the book value equals the 3,000 salvage value.'
+            ]
+        },
+
+        // --- B3.6: Ch11 double-declining-balance schedule (Assignment 11-1, #2 — salvage floor in year 4) ---
+        {
+            id: 'k2-ch11-ddb-schedule',
+            lesson: 'second-midterm',
+            chapter: 11,
+            type: 'numeric',
+            title: 'Double-Declining-Balance Schedule',
+            prompt: 'Use the same asset (cost $31,000, salvage $3,000, 4-year life). Apply the double-declining-balance '
+                + 'method (round the DDB rate to a whole percentage). Give the DDB rate, then each year’s depreciation '
+                + 'expense and ending book value. Remember: the asset is never depreciated below its salvage value.',
+            difficulty: 3,
+            fields: [
+                { key: 'rate', label: 'DDB rate (%)', answer: 50, tol: 0.5, unit: '%', hint: '2 × straight-line rate = 2 × (1 ÷ 4) = 50%' },
+                { key: 'y1exp', label: 'Year 1 — Depreciation expense', answer: 15500, tol: 0.005, unit: '$', hint: '50% × 31,000' },
+                { key: 'y1bv', label: 'Year 1 — Ending book value', answer: 15500, tol: 0.005, unit: '$' },
+                { key: 'y2exp', label: 'Year 2 — Depreciation expense', answer: 7750, tol: 0.005, unit: '$', hint: '50% × 15,500' },
+                { key: 'y2bv', label: 'Year 2 — Ending book value', answer: 7750, tol: 0.005, unit: '$' },
+                { key: 'y3exp', label: 'Year 3 — Depreciation expense', answer: 3875, tol: 0.005, unit: '$', hint: '50% × 7,750' },
+                { key: 'y3bv', label: 'Year 3 — Ending book value', answer: 3875, tol: 0.005, unit: '$' },
+                { key: 'y4exp', label: 'Year 4 — Depreciation expense', answer: 875, tol: 0.005, unit: '$', hint: '50% × 3,875 = 1,938 would drop below salvage, so expense only 3,875 − 3,000 = 875' },
+                { key: 'y4bv', label: 'Year 4 — Ending book value', answer: 3000, tol: 0.005, unit: '$', hint: 'Floored at the salvage value' }
+            ],
+            solution: [
+                'DDB rate = 2 × straight-line rate = 2 × (1 ÷ 4) = 50%.',
+                'Year 1: 50% × 31,000 = 15,500 → book value 15,500.',
+                'Year 2: 50% × 15,500 = 7,750 → book value 7,750.',
+                'Year 3: 50% × 7,750 = 3,875 → book value 3,875.',
+                'Year 4: 50% × 3,875 = 1,938 would fall below the 3,000 salvage value, so depreciate only 875 (3,875 − 3,000); book value ends at 3,000.'
+            ]
+        },
+
+        // --- B3.6: Ch11 straight-line drill (randomized — "New numbers") ---
+        {
+            id: 'k2-ch11-sl-random',
+            lesson: 'second-midterm',
+            chapter: 11,
+            type: 'numeric',
+            title: 'Straight-Line Depreciation — Drill',
+            prompt: 'Compute straight-line depreciation for the asset below.',
+            difficulty: 2,
+            params: {
+                cost: { min: 20000, max: 60000, step: 1000 },
+                salvage: { min: 2000, max: 8000, step: 500 },
+                life: { choices: [4, 5, 10] }
+            },
+            generate(p) {
+                const annual = (p.cost - p.salvage) / p.life;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                return {
+                    prompt: 'An asset is purchased for ' + fmt(p.cost) + '. It has an estimated salvage (residual) value of '
+                        + fmt(p.salvage) + ' and a useful life of ' + p.life + ' years. Using the straight-line method, '
+                        + 'compute the annual depreciation expense and the book value at the end of years 1 and 2.',
+                    fields: [
+                        { key: 'annual', label: 'Annual depreciation expense', answer: annual, tol: 0.005, unit: '$', hint: '(Cost − Salvage) ÷ Useful life' },
+                        { key: 'bv1', label: 'Book value, end of year 1', answer: p.cost - annual, tol: 0.005, unit: '$', hint: 'Cost − one year of depreciation' },
+                        { key: 'bv2', label: 'Book value, end of year 2', answer: p.cost - 2 * annual, tol: 0.005, unit: '$', hint: 'Cost − two years of depreciation' }
+                    ],
+                    solution: [
+                        'Annual depreciation = (Cost − Salvage) ÷ Life = (' + fmt(p.cost) + ' − ' + fmt(p.salvage) + ') ÷ ' + p.life + ' = ' + fmt(annual) + '.',
+                        'Book value, end of year 1 = ' + fmt(p.cost) + ' − ' + fmt(annual) + ' = ' + fmt(p.cost - annual) + '.',
+                        'Book value, end of year 2 = ' + fmt(p.cost) + ' − 2 × ' + fmt(annual) + ' = ' + fmt(p.cost - 2 * annual) + '.'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for a fresh asset. Annual SL depreciation = (Cost − Salvage) ÷ Useful life; book value = cost − accumulated depreciation.']
+        },
+
+        // --- B3.6: Ch11 double-declining-balance drill (randomized — "New numbers") ---
+        {
+            id: 'k2-ch11-ddb-random',
+            lesson: 'second-midterm',
+            chapter: 11,
+            type: 'numeric',
+            title: 'Double-Declining-Balance — Drill',
+            prompt: 'Compute the DDB rate and the first two years of depreciation.',
+            difficulty: 3,
+            params: {
+                cost: { min: 20000, max: 60000, step: 1000 },
+                life: { choices: [4, 5, 10] }
+            },
+            generate(p) {
+                const rate = 2 / p.life;
+                const ratePct = rate * 100;
+                const y1 = p.cost * rate;
+                const y2 = (p.cost - y1) * rate;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                return {
+                    prompt: 'An asset is purchased for ' + fmt(p.cost) + ' with a useful life of ' + p.life + ' years. Using the '
+                        + 'double-declining-balance (DDB) method, give the DDB rate and the depreciation expense for years 1 and 2. '
+                        + '(Salvage value is ignored in the DDB rate calculation.)',
+                    fields: [
+                        { key: 'rate', label: 'DDB rate (%)', answer: ratePct, tol: 0.5, unit: '%', hint: '2 × straight-line rate = 2 × (1 ÷ Life)' },
+                        { key: 'y1', label: 'Year 1 depreciation expense', answer: y1, tol: 0.005, unit: '$', hint: 'DDB rate × beginning book value (= cost in year 1)' },
+                        { key: 'y2', label: 'Year 2 depreciation expense', answer: y2, tol: 0.005, unit: '$', hint: 'DDB rate × book value at the start of year 2' }
+                    ],
+                    solution: [
+                        'DDB rate = 2 × (1 ÷ ' + p.life + ') = ' + ratePct + '%.',
+                        'Year 1 = ' + ratePct + '% × ' + fmt(p.cost) + ' = ' + fmt(y1) + '.',
+                        'Year 2 = ' + ratePct + '% × (' + fmt(p.cost) + ' − ' + fmt(y1) + ') = ' + ratePct + '% × ' + fmt(p.cost - y1) + ' = ' + fmt(y2) + '.'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for a fresh asset. DDB rate = 2 × (1 ÷ life); each year’s expense = rate × beginning book value.']
         }
     ]
 };

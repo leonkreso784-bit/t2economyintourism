@@ -21,6 +21,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — prve K2 interaktivne vježbe: Ch11 Depreciation [B3.6]:** Midterm 2 „Exercises" tab više nije prazan. **5 novih vježbi**
+  u `data/accounting/exercises.js` (`lesson:'second-midterm'`, `chapter:11`), iz Cote Assignment 11-1: `k2-ch11-concepts` (TF/MC —
+  SL/DDB/MACRS/contra-asset/amortization vs depletion), `k2-ch11-sl-schedule` (točan udžbenički straight-line raspored 31.000/3.000/4 god),
+  `k2-ch11-ddb-schedule` (DDB 50% sa salvage-floorom, 4. god. ekspenz 875), te randomizirani drillovi `k2-ch11-sl-random` i
+  `k2-ch11-ddb-random` („New numbers", `params`+`generate`; `life∈{4,5,10}` → cjelobrojni odgovori). **Engine nepromijenjen** (samo sadržaj);
+  MACRS konceptualno (bez izmišljanja IRS tablica). Content pack sad 21 vježba. verify 0/0, node 95/95 + 13/13, Playwright 36/36 +
+  node grade-check 5/5. Cache `?v=20260633`.
 - **Accounting — restruktura na K1/K2/finalni (3 lekcije) [FAZA 4]:** predmet je dobio standardnu strukturu kao sem-2 predmeti.
   **NOVO K1 gradivo** (`data/accounting/midterm-1.js`, `window.accountingM1`): 6 kategorija Ch1–6 — `intro`, `businessFormation`,
   `financialStatements`, `balanceSheet`, `incomeStatement`, `bookkeeping` (**87 flashcards / 74 quiz / 57 fill / 6 learn**, autorirano iz

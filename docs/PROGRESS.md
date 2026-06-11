@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting B3.6: prve K2 interaktivne vježbe (Ch11 Depreciation)
+Popunjen prazan „Exercises" tab na **Midtermu 2** — prva K2 cigla. **5 novih vježbi** u `data/accounting/exercises.js`
+(`lesson:'second-midterm'`, `chapter:11`), iz izvora **Cote Assignment 11-1**:
+- `k2-ch11-concepts` (choice TF/MC) — depreciation/amortization/depletion, contra-asset, book value, SL vs DDB, DDB stopa, MACRS=tax.
+- `k2-ch11-sl-schedule` (numeric, fixni) — točan udžbenički straight-line raspored (cost 31.000 / salvage 3.000 / life 4 → 7.000/god),
+  12 ćelija (exp/accum/book value × 4 god), završava na salvage 3.000.
+- `k2-ch11-ddb-schedule` (numeric, fixni) — DDB stopa 50%, 4-godišnji raspored s **pravilom salvage-floora** (4. god. ekspenz 875, ne 1.938).
+- `k2-ch11-sl-random` + `k2-ch11-ddb-random` (numeric, randomizirani) — drillovi s „New numbers" (`params`+`generate`); `life∈{4,5,10}` →
+  svi odgovori ispadnu cijeli brojevi.
+
+**Engine NEPROMIJENJEN** (potvrđeno — samo sadržaj + bump cache). MACRS ostaje konceptualno (bez izmišljanja IRS postotnih tablica).
+Content pack sad **21 vježba** (16 K1 Ch1–6 + 5 K2 Ch11). **Testirano:** verify 0/0; node 95/95 + 13/13; node grade-check svih 5
+(SL 12/12, DDB 9/9, concepts 12/12) + randomizacija deterministična i cjelobrojna kroz 200 seedova; Playwright **36/36**. Cache `?v=20260633`.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.7 (K2 Inventory FIFO/LIFO/Average COGS) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+
+---
+
 ## 2026-06-11 — ✅ DEPLOYANO (push `a72d648`) — cijeli Exercises rad + FAZA 4 LIVE
 `origin/main` sinkroniziran (0 ispred). Na produkciju (sokratstudy.com) otišlo **17 commitova**: cijeli Exercises engine (FAZA 0–2),
 K1 interaktivne vježbe (B3.1–B3.5), review-fixevi RV-1/RV-2 (lista po poglavlju + demoi maknuti + Practice≠Exam), i **FAZA 4**
