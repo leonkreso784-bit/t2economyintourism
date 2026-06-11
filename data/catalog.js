@@ -81,15 +81,18 @@ const SOKRAT_CATALOG = {
       icon: 'fa-coins',
       color: '#059669',
       iconGradient: ['#059669', '#10b981'],
-      description: 'Cash Control, Budgeting, SEC Reports, Financial Analysis',
+      description: 'Financial statements, bookkeeping, restaurant & hotel accounting, depreciation, analysis',
       storageKey: 'accounting-progress',
       features: { blindMap: false, exercises: true },
       lessons: [
-        { id: 'accounting-fundamentals', name: 'Accounting Fundamentals', description: 'Complete accounting theory for hospitality' }
+        { id: 'first-midterm', name: 'Midterm 1', description: 'Chapters 1–6: Intro, Business Formation, Financial Statements, Balance Sheet, Income Statement, Bookkeeping' },
+        { id: 'second-midterm', name: 'Midterm 2', description: 'Chapters 7–16: Accounting Cycle, Restaurant & Hotel Accounting, Depreciation, Analysis, Annual Reports, Budgeting, Cash Control' },
+        { id: 'final', name: 'Final Exam', description: 'Comprehensive review — all chapters 1–16' }
       ],
       content: {
-        // index.js mora biti ZADNJI — kombinira ostale module u accountingData.
-        // exercises.js je neovisan (window.accountingExercises) → može prije index.js.
+        // Category modules define their *Data globals FIRST; lesson assemblers
+        // (midterm-1/2/final) reference those globals, so they load AFTER. final.js loads
+        // LAST (it spreads M1+M2). exercises.js is independent (window.accountingExercises).
         scripts: [
           'data/accounting/cash-control.js',
           'data/accounting/budgeting.js',
@@ -98,10 +101,16 @@ const SOKRAT_CATALOG = {
           'data/accounting/hotel-statements.js',
           'data/accounting/financial-analysis.js',
           'data/accounting/final-practice.js',
-          'data/accounting/exercises.js',
-          'data/accounting/index.js'
+          'data/accounting/midterm-1.js',
+          'data/accounting/midterm-2.js',
+          'data/accounting/final.js',
+          'data/accounting/exercises.js'
         ],
-        resolve: { '*': 'accountingData' },
+        resolve: {
+          'first-midterm': 'accountingM1',
+          'second-midterm': 'accountingM2',
+          'final': 'accountingFinal'
+        },
         exercises: 'accountingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },

@@ -19,7 +19,7 @@ const accountingExercises = {
         // --- Ch4 Balance Sheet — build (statement); common stock = balancing figure ---
         {
             id: 'k1-statement-bs-1',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 4,
             type: 'statement',
             title: 'Build the Balance Sheet',
@@ -77,7 +77,7 @@ const accountingExercises = {
         // --- B3.1: Ch4 True/False (Assignment 4-1, Part I) ---
         {
             id: 'k1-ch4-tf',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 4,
             type: 'choice',
             title: 'Balance Sheet — True or False',
@@ -112,7 +112,7 @@ const accountingExercises = {
         // --- B3.1: Ch4 terminology matching as multiple-choice (Assignment 4-1, Part II) ---
         {
             id: 'k1-ch4-terms',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 4,
             type: 'choice',
             title: 'Balance Sheet — Key Terms',
@@ -138,7 +138,7 @@ const accountingExercises = {
         // --- B3.1: Ch4 classify accounts into balance-sheet categories (Assignment 4-1, Part III) ---
         {
             id: 'k1-ch4-classify',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 4,
             type: 'classify',
             title: 'Classify Accounts on the Balance Sheet',
@@ -191,7 +191,7 @@ const accountingExercises = {
         // --- B3.2: Ch5 True/False (Assignment 5-1, Part I) ---
         {
             id: 'k1-ch5-tf',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 5,
             type: 'choice',
             title: 'Income Statement — True or False',
@@ -220,7 +220,7 @@ const accountingExercises = {
         // --- B3.2: Ch5 classify accounts as A/L/EQ/R/EX (Assignment 5-1, Part II) ---
         {
             id: 'k1-ch5-classify',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 5,
             type: 'classify',
             title: 'Classify Accounts — Asset / Liability / Equity / Revenue / Expense',
@@ -277,7 +277,7 @@ const accountingExercises = {
         // --- B3.2: Ch5 food cost of sales computation (Assignment 5-2, Part II) ---
         {
             id: 'k1-ch5-foodcost',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 5,
             type: 'ratio',
             title: 'Food Cost of Sales',
@@ -307,7 +307,7 @@ const accountingExercises = {
         // --- B3.3: Ch6 classify accounts WITH increase/decrease effect (Assignment 6-2) ---
         {
             id: 'k1-ch6-classify',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 6,
             type: 'classify',
             title: 'Transactions — Classify Accounts & Effects',
@@ -409,7 +409,7 @@ const accountingExercises = {
         // --- B3.3: Ch6 guided journal — bookkeeping process, ALE only (professor worked example) ---
         {
             id: 'k1-ch6-journal',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 6,
             type: 'journal',
             title: 'Record Transactions in the Ledger (Assets, Liabilities, Equity)',
@@ -503,7 +503,7 @@ const accountingExercises = {
         // --- B3.4: Ch3 True/False (Assignment 3-1, Part I) ---
         {
             id: 'k1-ch3-tf',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 3,
             type: 'choice',
             title: 'Financial Statements — True or False',
@@ -537,7 +537,7 @@ const accountingExercises = {
         // --- B3.4: Ch3 terminology matching as multiple-choice (Assignment 3-1, Part II) ---
         {
             id: 'k1-ch3-terms',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 3,
             type: 'choice',
             title: 'Financial Statements — Key Terms',
@@ -565,7 +565,7 @@ const accountingExercises = {
         // --- B3.4: Ch3 classify items as Income Statement vs Balance Sheet (Assignment 3-2, #2) ---
         {
             id: 'k1-ch3-isbs',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 3,
             type: 'classify',
             title: 'Income Statement or Balance Sheet?',
@@ -592,7 +592,7 @@ const accountingExercises = {
         // --- B3.4: Ch3 owner’s capital roll-forward, with distractor data (Assignment 3-2, #1) ---
         {
             id: 'k1-ch3-capital',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 3,
             type: 'ratio',
             title: 'Owner’s Capital — End of Year',
@@ -618,7 +618,7 @@ const accountingExercises = {
         // --- B3.4: Ch3 build the Income Statement (Assignment 3-3, Annie’s Restaurant, Inc.) ---
         {
             id: 'k1-ch3-income-statement',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 3,
             type: 'statement',
             title: 'Build the Income Statement (Annie’s Restaurant)',
@@ -708,7 +708,7 @@ const accountingExercises = {
         // --- B3.5: Ch1 Introduction to Accounting & GAAP ---
         {
             id: 'k1-ch1-concepts',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 1,
             type: 'choice',
             title: 'Introduction to Accounting & GAAP',
@@ -753,7 +753,7 @@ const accountingExercises = {
         // --- B3.5: Ch2 Forms of Business Organization & Corporate Stock ---
         {
             id: 'k1-ch2-business-forms',
-            lesson: 'accounting-fundamentals',
+            lesson: 'first-midterm',
             chapter: 2,
             type: 'choice',
             title: 'Forms of Business Organization & Stock',

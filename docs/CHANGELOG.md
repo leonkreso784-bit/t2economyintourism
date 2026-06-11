@@ -21,6 +21,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Accounting — restruktura na K1/K2/finalni (3 lekcije) [FAZA 4]:** predmet je dobio standardnu strukturu kao sem-2 predmeti.
+  **NOVO K1 gradivo** (`data/accounting/midterm-1.js`, `window.accountingM1`): 6 kategorija Ch1–6 — `intro`, `businessFormation`,
+  `financialStatements`, `balanceSheet`, `incomeStatement`, `bookkeeping` (**87 flashcards / 74 quiz / 57 fill / 6 learn**, autorirano iz
+  Cote Ch1–6 + verificiranog znanja iz K1 vježbi). **K2** (`midterm-2.js`, `window.accountingM2`): realign 7 postojećih modula
+  (cross-env wiring) + preimenovan `secReports`→`annualReports` + **2 nove kategorije** `restaurantAccounting` (Ch9) i `depreciation`
+  (Ch11). **Finalni** (`final.js`, `window.accountingFinal`) = `Object.assign({}, M1, M2, {examPractice: finalPracticeData})` = 15 kat.
+  `catalog.js` → 3 lekcije (`first-midterm`/`second-midterm`/`final`) + scripts reorder + resolve; interaktivne vježbe retagane na
+  `first-midterm` (svih 16 = K1); `data/accounting/index.js` više nije u scripts (neiskorišten). verify 0/0, node 95/95 + 13/13,
+  Playwright 36/36 + ciljani 3/3. Cache `?v=20260632`.
 - **Accounting Exercises — sadržaj Ch1–2 (Intro/GAAP/oblici poslovanja/stock, K1) [FAZA 3 / B3.5]:** konceptualna teorija
   (Cote Ch1–2 su uvodni; workbook nema numerički set): `k1-ch1-concepts` (11 TF/MC — računovodstvena jednadžba, financijski
   izvještaji, GAAP pretpostavke/načela), `k1-ch2-business-forms` (13 TF/MC — proprietorship/partnership/corporation, limited

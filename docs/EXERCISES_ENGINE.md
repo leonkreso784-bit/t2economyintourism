@@ -223,12 +223,22 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - [ ] **B3.11 (K2 Ch7/8/13/14/15-16):** TF/MC + po koji `numeric` (food cost, revenue allocation, budgeting).
 - [ ] **B3.x** Nakon svakog poglavlja: bump cache, verify, Playwright, ciljani render test, commit lokalno.
 
-### FAZA 4 — Restruktura teorije K1/K2/finalni (može se prepletati s Fazom 3; detalji §6 ACCOUNTING_PLAN)
-- [ ] **B4.1** Dopiši K1 kategorije (Ch1–6): `intro, businessFormation, financialStatements, balanceSheet, incomeStatement, bookkeeping` → `data/accounting/midterm-1.js`.
-- [ ] **B4.2** Realign K2 iz postojećih modula → `midterm-2.js` (+ NOVO `depreciation`, `restaurantAccounting`).
-- [ ] **B4.3** Finalni hibrid `final.js` = `Object.assign({}, K1, K2, { examPractice })` (bivši `finalPractice`); učitava ZADNJI.
-- [ ] **B4.4** `catalog.js`: accounting → 3 lekcije (`first-midterm`/`second-midterm`/`final`) + scripts + resolve. Bump cache.
-- [ ] **B4.5** Provjere: verify (mapiranja!) + Playwright + ciljani K2/finalni render. Napredak očuvan gdje ključ isti.
+### FAZA 4 — Restruktura teorije K1/K2/finalni ✅ GOTOVO (lokalno/NEDEPLOYANO; commits B4.1 `421322f`, B4.2+B4.3 `9e5ba15`, B4.4+B4.5 dolje)
+- [x] **B4.1** K1 kategorije (Ch1–6) → `data/accounting/midterm-1.js` (`window.accountingM1`): `intro`, `businessFormation`,
+      `financialStatements`, `balanceSheet`, `incomeStatement`, `bookkeeping`. **NOVI sadržaj** (predmet je prije imao samo ~K2).
+      Autorirano iz Cote Ch1–6 + verificiranog znanja iz K1 vježbi. **87 fc / 74 quiz / 57 fill / 6 learn.** Commit `421322f`.
+- [x] **B4.2** K2 realign → `midterm-2.js` (`window.accountingM2`, 8 kat.): referencira postojeće module (cross-env: browser globali /
+      node require) `accountingCycle`, `hotelStatements`, `financialAnalysis`, `budgeting`, `cashControl` + **preimenovan** `secReports`→`annualReports`
+      + **2 NOVE** kategorije `restaurantAccounting` (Ch9, 12/11/9) i `depreciation` (Ch11, 12/12/9). Commit `9e5ba15`.
+- [x] **B4.3** Finalni hibrid `final.js` (`window.accountingFinal`) = `Object.assign({}, M1, M2, { examPractice: finalPracticeData })` =
+      **15 kat.** (6 K1 + 8 K2 + examPractice). Učitava se ZADNJI. Commit `9e5ba15`.
+- [x] **B4.4** `catalog.js`: accounting → **3 lekcije** (`first-midterm`/`second-midterm`/`final`) + scripts (category moduli PRVO, pa
+      midterm-1/2, pa final ZADNJI; `index.js` maknut iz scripts → sad neiskorišten) + `resolve` (M1/M2/Final). **Vježbe retagane**
+      `accounting-fundamentals`→`first-midterm` (svih 16 = K1). Cache `?v=20260632` (catalog.js + content-loader.js + CONTENT_VERSION).
+- [x] **B4.5** Provjere: verify **0/0** (3-lekcija resolve), node **95/95 + 13/13**, Playwright **36/36** + ciljani **3/3**
+      (K1: 6 kat + learn + 16 vježbi + naslovi poglavlja; K2: 8 kat incl. nove; Final: 15 kat incl. examPractice).
+      **Napredak:** ključevi K2 kategorija isti (osim `secReports`→`annualReports`); lekcijski ID se mijenja (`accounting-fundamentals`
+      više ne postoji) → stari napredak pod tom lekcijom se re-buketira (očekivano kod restrukture; predmet je sem-1 staro gradivo).
 
 ### FAZA 5 — Capstone (KASNIJE, ne sad — da ne napušemo opseg)
 - [ ] **B5.1** Exam simulator (tempiran, MC+praktično, ocjena po stvarnim %).

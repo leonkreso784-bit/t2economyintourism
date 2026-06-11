@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting FAZA 4: restruktura na K1/K2/finalni (3 lekcije) GOTOVA (lokalno)
+Predmet **Accounting** prebačen na standardnu strukturu „2 kolokvija + finalni" (kao sem-2 predmeti). Rađeno cigla-po-cigla, app zelen na svakom koraku
+(nove data-datoteke autorirane uz postojeću strukturu; catalog prebačen tek u zadnjoj cigli).
+
+**B4.1 (K1, NOVI sadržaj):** `data/accounting/midterm-1.js` (`window.accountingM1`) — 6 kategorija Ch1–6: `intro`, `businessFormation`,
+`financialStatements`, `balanceSheet`, `incomeStatement`, `bookkeeping`. **87 fc / 74 quiz / 57 fill / 6 learn.** Predmet prije nije imao K1 teoriju
+(7 starih kat. = ~K2). Autorirano iz Cote Ch1–6 + koncept-mape (ACCOUNTING_PLAN §3) + verificiranog znanja iz K1 vježbi. Commit `421322f`.
+**B4.2 (K2):** `midterm-2.js` (`window.accountingM2`, 8 kat.) — referencira postojeće module (cross-env: browser globali / node `require`) +
+preimenovan `secReports`→`annualReports` + **2 NOVE** kat. `restaurantAccounting` (Ch9) i `depreciation` (Ch11). **B4.3 (finalni):** `final.js`
+(`window.accountingFinal`) = `Object.assign({}, M1, M2, {examPractice: finalPracticeData})` = 15 kat. Commit `9e5ba15`.
+**B4.4 (wiring):** `catalog.js` → 3 lekcije (`first-midterm`/`second-midterm`/`final`) + scripts reorder (category moduli → midterm-1/2 → final ZADNJI)
++ resolve (M1/M2/Final); `index.js` maknut iz scripts (neiskorišten). Vježbe retagane `accounting-fundamentals`→`first-midterm` (svih 16 = K1).
+Cache `?v=20260632` (catalog.js + content-loader.js + CONTENT_VERSION).
+**B4.5 (provjere):** verify **0/0**, node **95/95 + 13/13**, Playwright **36/36** + ciljani **3/3** (K1: 6 kat + learn + 16 vježbi + naslovi poglavlja;
+K2: 8 kat incl. nove; Final: 15 kat incl. examPractice).
+**Napomena o napretku:** ključevi K2 kat. ostaju isti (osim `secReports`→`annualReports`); lekcijski ID `accounting-fundamentals` više ne postoji →
+stari napredak pod tom lekcijom se re-buketira (očekivano kod restrukture, sem-1 staro gradivo). **Git: lokalno commitano, NEDEPLOYANO.**
+**▶ Sljedeće (čeka korisnika):** deploy / K2 vježbe (B3.6–B3.11) / sljedeći sem-1 predmet (Entrepreneurship/E-Business restruktura).
+
+---
+
 ## 2026-06-11 — Exercises review-nalazi RV-1 + RV-2 RIJEŠENI (lista po poglavlju + demoi maknuti; Practice ≠ Exam)
 Nakon compacta korisnik je potvrdio odluke: **demoi = opcija A (makni sve)**, pa **stani za pregled**. Implementirano oboje.
 
