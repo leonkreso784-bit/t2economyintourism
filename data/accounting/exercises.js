@@ -990,6 +990,164 @@ const accountingExercises = {
                 };
             },
             solution: ['Press “New numbers” for a fresh asset. DDB rate = 2 × (1 ÷ life); each year’s expense = rate × beginning book value.']
+        },
+
+        // ===================== INVENTORY VALUATION — FIFO / LIFO / AVERAGE (K2) =====================
+        // Source: course "Inventory accounting presentation" (FIFO / LIFO / Weighted average).
+        // Universal, well-defined cost-flow methods → exact, self-checking numbers (COGS + Ending = Goods available).
+        // Not a numbered Cote chapter → no `chapter` field (groups under "Other" on the Midterm 2 list).
+
+        // --- B3.7: inventory cost-flow concepts (TF + MC) ---
+        {
+            id: 'k2-inv-concepts',
+            lesson: 'second-midterm',
+            type: 'choice',
+            title: 'Inventory Valuation — Concepts',
+            prompt: 'Answer each statement about the FIFO, LIFO and weighted-average cost-flow methods. '
+                + '(Assume unit costs are rising over time, unless stated otherwise.)',
+            difficulty: 2,
+            items: [
+                { q: 'Cost of goods sold = Beginning inventory + Purchases − Ending inventory.', kind: 'tf', answer: true },
+                { q: 'FIFO assumes the first (oldest) units purchased are the first ones sold.', kind: 'tf', answer: true },
+                { q: 'LIFO assumes the most recently purchased units are the first ones sold.', kind: 'tf', answer: true },
+                { q: 'Goods available for sale = beginning inventory + net purchases.', kind: 'tf', answer: true },
+                { q: 'Under FIFO, ending inventory is valued at the most recent (newest) purchase costs.', kind: 'tf', answer: true },
+                { q: 'When unit costs are rising, FIFO produces a higher cost of goods sold than LIFO.', kind: 'tf', answer: false },
+                { q: 'When unit costs are rising, LIFO produces a lower ending inventory than FIFO.', kind: 'tf', answer: true },
+                { q: 'The weighted-average method assigns the same average unit cost to the units sold and the units remaining.', kind: 'tf', answer: true },
+                {
+                    q: 'When unit costs are rising, which method reports the HIGHEST ending inventory?',
+                    kind: 'mc',
+                    options: ['FIFO', 'LIFO', 'Weighted average', 'All three are equal'],
+                    answer: 0
+                },
+                {
+                    q: 'When unit costs are rising, which method reports the HIGHEST cost of goods sold (and thus the lowest net income)?',
+                    kind: 'mc',
+                    options: ['FIFO', 'LIFO', 'Weighted average', 'None of these'],
+                    answer: 1
+                },
+                {
+                    q: 'The weighted-average unit cost equals:',
+                    kind: 'mc',
+                    options: ['Cost of goods available ÷ Units available', 'Ending inventory ÷ Units sold', 'Purchases ÷ Beginning units', 'Cost of goods sold ÷ Units available'],
+                    answer: 0
+                }
+            ],
+            solution: [
+                'COGS = Beginning inventory + Purchases − Ending inventory; goods available = beginning + purchases.',
+                'FIFO: oldest costs flow to COGS, so ending inventory holds the newest (highest, when rising) costs → highest ending inventory, lowest COGS.',
+                'LIFO: newest costs flow to COGS → highest COGS, lowest ending inventory and lowest net income when costs rise.',
+                'Weighted-average unit cost = cost of goods available ÷ units available, applied to both units sold and units on hand.'
+            ]
+        },
+
+        // --- B3.7: cost-of-goods-sold formula drill (randomized) ---
+        {
+            id: 'k2-inv-cogs-formula',
+            lesson: 'second-midterm',
+            type: 'numeric',
+            title: 'Cost of Goods Sold — Formula',
+            prompt: 'Compute goods available for sale and cost of goods sold.',
+            difficulty: 1,
+            params: {
+                bi: { min: 5000, max: 20000, step: 500 },
+                purch: { min: 20000, max: 60000, step: 500 },
+                ei: { min: 4000, max: 15000, step: 500 }
+            },
+            generate(p) {
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                const ga = p.bi + p.purch;
+                const cogs = ga - p.ei;
+                return {
+                    prompt: 'A restaurant’s food inventory records show beginning inventory ' + fmt(p.bi) + ', purchases during the period '
+                        + fmt(p.purch) + ', and ending inventory ' + fmt(p.ei) + '. Compute the cost of goods available for sale and '
+                        + 'the cost of goods sold.',
+                    fields: [
+                        { key: 'ga', label: 'Cost of goods available for sale', answer: ga, tol: 0.005, unit: '$', hint: 'Beginning inventory + Purchases' },
+                        { key: 'cogs', label: 'Cost of goods sold', answer: cogs, tol: 0.005, unit: '$', hint: 'Goods available − Ending inventory' }
+                    ],
+                    solution: [
+                        'Goods available for sale = ' + fmt(p.bi) + ' + ' + fmt(p.purch) + ' = ' + fmt(ga) + '.',
+                        'Cost of goods sold = ' + fmt(ga) + ' − ' + fmt(p.ei) + ' = ' + fmt(cogs) + '.'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for fresh figures. Goods available = Beginning + Purchases; COGS = Goods available − Ending inventory.']
+        },
+
+        // --- B3.7: FIFO / LIFO / weighted-average comparison (fixed worked example, clean figures) ---
+        {
+            id: 'k2-inv-methods',
+            lesson: 'second-midterm',
+            type: 'numeric',
+            title: 'FIFO vs LIFO vs Weighted Average',
+            prompt: 'Periodic inventory. Beginning inventory: 100 units @ $10. Purchase 1: 100 units @ $12. '
+                + 'Purchase 2: 200 units @ $13. During the period 250 units were sold (150 units remain on hand). '
+                + 'Compute the cost of goods sold and the ending inventory under each method. '
+                + '(Goods available for sale = 400 units, $4,800.)',
+            difficulty: 3,
+            fields: [
+                { key: 'gaUnits', label: 'Goods available for sale (units)', answer: 400, tol: 0.005, unit: 'units', hint: '100 + 100 + 200' },
+                { key: 'gaCost', label: 'Goods available for sale (cost)', answer: 4800, tol: 0.005, unit: '$', hint: '1,000 + 1,200 + 2,600' },
+                { key: 'fifoCogs', label: 'FIFO — Cost of goods sold', answer: 2850, tol: 0.005, unit: '$', hint: 'Oldest first: 100@10 + 100@12 + 50@13' },
+                { key: 'fifoEnd', label: 'FIFO — Ending inventory', answer: 1950, tol: 0.005, unit: '$', hint: '150 newest units @ $13' },
+                { key: 'lifoCogs', label: 'LIFO — Cost of goods sold', answer: 3200, tol: 0.005, unit: '$', hint: 'Newest first: 200@13 + 50@12' },
+                { key: 'lifoEnd', label: 'LIFO — Ending inventory', answer: 1600, tol: 0.005, unit: '$', hint: '100@10 + 50@12 (oldest units remain)' },
+                { key: 'avgUnit', label: 'Weighted-average unit cost', answer: 12, tol: 0.005, unit: '$', hint: '$4,800 ÷ 400 units' },
+                { key: 'avgCogs', label: 'Average — Cost of goods sold', answer: 3000, tol: 0.005, unit: '$', hint: '250 units × average unit cost' },
+                { key: 'avgEnd', label: 'Average — Ending inventory', answer: 1800, tol: 0.005, unit: '$', hint: '150 units × average unit cost' }
+            ],
+            solution: [
+                'Goods available for sale = 400 units costing $4,800; in every method COGS + ending inventory = $4,800.',
+                'FIFO (oldest to COGS): 100@10 + 100@12 + 50@13 = 2,850; ending 150@13 = 1,950.',
+                'LIFO (newest to COGS): 200@13 + 50@12 = 3,200; ending 100@10 + 50@12 = 1,600.',
+                'Weighted average: 4,800 ÷ 400 = $12.00/unit → COGS 250 × 12 = 3,000; ending 150 × 12 = 1,800.'
+            ]
+        },
+
+        // --- B3.7: FIFO / LIFO drill (randomized, 2 inventory layers → integer answers) ---
+        {
+            id: 'k2-inv-fifo-lifo-random',
+            lesson: 'second-midterm',
+            type: 'numeric',
+            title: 'FIFO & LIFO — Drill',
+            prompt: 'Compute cost of goods sold and ending inventory under FIFO and LIFO.',
+            difficulty: 3,
+            params: {
+                begUnits: { min: 60, max: 140, step: 10 },
+                begPrice: { min: 8, max: 12, step: 1 },
+                purchUnits: { min: 100, max: 200, step: 10 },
+                purchPrice: { min: 13, max: 18, step: 1 }
+            },
+            generate(p) {
+                const total = p.begUnits + p.purchUnits;
+                const sold = p.purchUnits + p.begUnits / 2;   // > purchUnits and < total → crosses both layers
+                const endUnits = total - sold;                 // = begUnits / 2 (whole, since step 10)
+                const fifoCogs = p.begUnits * p.begPrice + (sold - p.begUnits) * p.purchPrice; // oldest first
+                const fifoEnd = endUnits * p.purchPrice;       // remaining units are the newest (purchase)
+                const lifoCogs = p.purchUnits * p.purchPrice + (sold - p.purchUnits) * p.begPrice; // newest first
+                const lifoEnd = endUnits * p.begPrice;         // remaining units are the oldest (beginning)
+                const u = (n) => n.toLocaleString('en-US');
+                const m = (n) => '$' + n.toLocaleString('en-US');
+                return {
+                    prompt: 'Periodic inventory. Beginning inventory: ' + u(p.begUnits) + ' units @ $' + p.begPrice + '. '
+                        + 'Purchased: ' + u(p.purchUnits) + ' units @ $' + p.purchPrice + '. ' + u(sold) + ' units were sold '
+                        + '(' + u(endUnits) + ' units remain). Compute cost of goods sold and ending inventory under FIFO and LIFO.',
+                    fields: [
+                        { key: 'fifoCogs', label: 'FIFO — Cost of goods sold', answer: fifoCogs, tol: 0.005, unit: '$', hint: 'Oldest units first: all beginning units, then the rest from the purchase' },
+                        { key: 'fifoEnd', label: 'FIFO — Ending inventory', answer: fifoEnd, tol: 0.005, unit: '$', hint: 'Remaining units are the newest (purchase price)' },
+                        { key: 'lifoCogs', label: 'LIFO — Cost of goods sold', answer: lifoCogs, tol: 0.005, unit: '$', hint: 'Newest units first: all purchase units, then the rest from beginning' },
+                        { key: 'lifoEnd', label: 'LIFO — Ending inventory', answer: lifoEnd, tol: 0.005, unit: '$', hint: 'Remaining units are the oldest (beginning price)' }
+                    ],
+                    solution: [
+                        'FIFO COGS = ' + u(p.begUnits) + '×$' + p.begPrice + ' + ' + u(sold - p.begUnits) + '×$' + p.purchPrice + ' = ' + m(fifoCogs) + '; FIFO ending = ' + u(endUnits) + '×$' + p.purchPrice + ' = ' + m(fifoEnd) + '.',
+                        'LIFO COGS = ' + u(p.purchUnits) + '×$' + p.purchPrice + ' + ' + u(sold - p.purchUnits) + '×$' + p.begPrice + ' = ' + m(lifoCogs) + '; LIFO ending = ' + u(endUnits) + '×$' + p.begPrice + ' = ' + m(lifoEnd) + '.',
+                        'Check: under each method COGS + ending inventory = cost of goods available (' + m(p.begUnits * p.begPrice + p.purchUnits * p.purchPrice) + ').'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for a fresh problem. FIFO sends the oldest costs to COGS; LIFO sends the newest costs to COGS.']
         }
     ]
 };

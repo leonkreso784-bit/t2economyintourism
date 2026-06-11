@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting B3.7: K2 Inventory vježbe (FIFO/LIFO/Average)
+Nastavak K2 (brick-by-brick, bez deploya). **4 nove vježbe** u `data/accounting/exercises.js` (`lesson:'second-midterm'`,
+**bez `chapter`** → grupiraju se pod „Other" na Midterm 2 listi, jer inventory valuation nije numerirano Cote poglavlje nego zasebna prezentacija):
+- `k2-inv-concepts` (choice TF/MC) — FIFO/LIFO/weighted-average, rising-price efekt (FIFO ↑ending/↓COGS, LIFO obrnuto), COGS = BI+Purchases−EI.
+- `k2-inv-cogs-formula` (numeric randomiziran) — Goods available = BI+Purchases; COGS = −EI („New numbers").
+- `k2-inv-methods` (numeric fixni) — puna usporedba FIFO/LIFO/wtd-avg na čistim brojevima (400 j / $4.800 → FIFO 2.850/1.950,
+  LIFO 3.200/1.600, avg $12 → 3.000/1.800); u sve tri metode COGS + ending = $4.800.
+- `k2-inv-fifo-lifo-random` (numeric randomiziran) — 2-slojni FIFO/LIFO COGS+ending; `params` biraju jedinice/cijene tako da
+  odgovori ispadnu cijeli i cross-check (COGS+ending = goods available) uvijek vrijedi.
+
+**Engine NEPROMIJENJEN.** Average držan samo u fixnoj vježbi (randomizirani prosjek = decimalni drift). Content pack sad **25 vježbi**
+(16 K1 + 5 K2 Ch11 + 4 K2 Inventory). **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 11/11, methods 9/9, sve metode
+COGS+end=4.800) + randomizacija deterministična/cjelobrojna i cross-check kroz 300–400 seedova; Playwright **36/36**. Cache `?v=20260634`.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.8 (K2 Restaurant/Hotel ratios, Ch9/10) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+
+---
+
 ## 2026-06-11 — Accounting B3.6: prve K2 interaktivne vježbe (Ch11 Depreciation)
 Popunjen prazan „Exercises" tab na **Midtermu 2** — prva K2 cigla. **5 novih vježbi** u `data/accounting/exercises.js`
 (`lesson:'second-midterm'`, `chapter:11`), iz izvora **Cote Assignment 11-1**:

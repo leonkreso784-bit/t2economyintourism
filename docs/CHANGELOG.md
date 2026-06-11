@@ -21,6 +21,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — K2 Inventory: FIFO/LIFO/Average [B3.7]:** **4 nove vježbe** (`lesson:'second-midterm'`, bez `chapter` → grupa „Other"):
+  `k2-inv-concepts` (TF/MC — cost-flow metode + rising-price efekt + COGS formula), `k2-inv-cogs-formula` (numeric randomiziran —
+  Goods available = BI+Purchases, COGS = −EI), `k2-inv-methods` (numeric fixni — puna FIFO/LIFO/wtd-avg usporedba na čistim brojevima,
+  sve metode COGS+ending=$4.800), `k2-inv-fifo-lifo-random` (numeric randomiziran — 2-slojni FIFO/LIFO, cjelobrojni odgovori + cross-check).
+  **Engine nepromijenjen.** Average samo u fixnoj vježbi (randomizirani prosjek = decimalni drift). Content pack sad 25 vježbi.
+  verify 0/0, node 95/95 + 13/13, Playwright 36/36 + grade-check. Cache `?v=20260634`.
 - **Exercises — prve K2 interaktivne vježbe: Ch11 Depreciation [B3.6]:** Midterm 2 „Exercises" tab više nije prazan. **5 novih vježbi**
   u `data/accounting/exercises.js` (`lesson:'second-midterm'`, `chapter:11`), iz Cote Assignment 11-1: `k2-ch11-concepts` (TF/MC —
   SL/DDB/MACRS/contra-asset/amortization vs depletion), `k2-ch11-sl-schedule` (točan udžbenički straight-line raspored 31.000/3.000/4 god),
