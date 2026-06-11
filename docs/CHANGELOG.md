@@ -21,6 +21,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — K2 Analyzing FS: Ch12 [B3.9]:** **5 novih vježbi**: `k2-ch12-concepts` (16 TF iz autentičnog Assignment 12-1; izbačene
+  dvosmislene stavke bez answer-keya), `k2-ch12-ratios` (current/quick/profit margin), `k2-ch12-ratios-random` (randomiziran current+quick,
+  ratiji ≤2 decimale), `k2-ch12-vertical` (common-size IS %), `k2-ch12-horizontal` ($ i % promjena Y1→Y2). Ratio definicije usklađene s
+  `financialAnalysis` study-kategorijom. **Engine nepromijenjen.** Content pack sad 34 vježbe. verify 0/0, node 95/95 + 13/13,
+  Playwright 36/36 + grade-check. Cache `?v=20260636`.
 - **Exercises — K2 Restaurant/Hotel ratios: Ch9/10 [B3.8]:** **4 nove `ratio` vježbe**: `k2-ch9-restaurant-ratios` (fixni — average check,
   seat turnover, food/labor cost %), `k2-ch9-restaurant-random` (randomiziran), `k2-ch10-hotel-ratios` (fixni — occupancy/ADR/RevPAR),
   `k2-ch10-hotel-random` (randomiziran; `params` daju cijele brojeve, RevPAR = ADR × occupancy). **Engine nepromijenjen.** USAR/USALI

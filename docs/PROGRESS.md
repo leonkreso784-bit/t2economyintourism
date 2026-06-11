@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-11 — Accounting B3.9: K2 Analyzing FS vježbe (Ch12)
+Nastavak K2 (brick-by-brick). **5 novih vježbi** u `data/accounting/exercises.js` (`chapter:12`):
+- `k2-ch12-concepts` (choice, 16 TF) — iz autentičnog Cote Assignment 12-1 „Terminology and Concepts"; **zadržane univerzalne** činjenice
+  (assurance levels compilation<review<audit, accrual≠cash, common-size=vertical, acid-test, profit margin), **izbačene dvosmislene**
+  (audit-vs-fraud, comparative-„common divisor") jer nema službenog answer-keya za Ch12.
+- `k2-ch12-ratios` (ratio, fixni) — current 2,5:1, quick (acid-test) 1,25:1, profit margin 10% (quick isključuje inventory+prepaid).
+- `k2-ch12-ratios-random` (ratio, randomiziran) — current + quick drill; `params` biraju salde tako da ratiji ispadnu ≤2 decimale.
+- `k2-ch12-vertical` (ratio) — common-size IS: svaka stavka kao % od net sales (35/65/45/20).
+- `k2-ch12-horizontal` (ratio) — $ i % promjena Y1→Y2 (dijeli s baznom godinom).
+
+Definicije ratija usklađene sa study-kategorijom `financialAnalysis`. **Engine NEPROMIJENJEN.** Content pack sad **34 vježbe**.
+**Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 16/16, ratios 3/3, vertical 4/4, horizontal 4/4) + randomizacija
+deterministična/≤2-decimale kroz 500 seedova; Playwright **36/36**. Cache `?v=20260636`. **Commit lokalno (NEDEPLOYANO).**
+**Slijedi:** B3.10 (K2 journal: revenue/expense/RE + ending BS) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+
+---
+
 ## 2026-06-11 — ✅ DEPLOYANO (push `a6a62e2`) — B3.6 + B3.7 LIVE + B3.8 lokalno
 **Deploy (uz potvrdu):** B3.6 (Ch11 Depreciation) + B3.7 (Inventory) gurnuti na produkciju (sokratstudy.com), `origin/main` @ `a6a62e2`, 0 ispred.
 Midterm 2 „Exercises" tab sad LIVE ima **Chapter 11** + **Other (inventory)**. Cache `?v=20260634`.

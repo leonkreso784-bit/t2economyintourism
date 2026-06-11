@@ -1300,6 +1300,187 @@ const accountingExercises = {
                 };
             },
             solution: ['Press “New numbers” for a fresh hotel. Occupancy = rooms sold ÷ rooms available; ADR = revenue ÷ rooms sold; RevPAR = revenue ÷ rooms available.']
+        },
+
+        // ===================== CHAPTER 12 — ANALYZING FINANCIAL STATEMENTS (K2) =====================
+        // Concepts: Cote workbook Assignment 12-1 ("Terminology and Concepts", True/False) — kept the items
+        // that are universal accounting facts (dropped a couple of textbook-specific/ambiguous ones, e.g.
+        // audit-vs-fraud). Ratios + vertical (common-size) + horizontal analysis = universal, exact formulas.
+        // Ratio definitions match the Midterm 2 `financialAnalysis` study category.
+
+        // --- B3.9: Ch12 terminology & concepts (True/False) ---
+        {
+            id: 'k2-ch12-concepts',
+            lesson: 'second-midterm',
+            chapter: 12,
+            type: 'choice',
+            title: 'Analyzing Financial Statements — Terminology',
+            prompt: 'Mark each statement true or false.',
+            difficulty: 2,
+            items: [
+                { q: 'The accountant’s letter (engagement report) attached to the financial statements explains the level of service performed.', kind: 'tf', answer: true },
+                { q: 'A review is a lower level of service (assurance) than a compilation.', kind: 'tf', answer: false },
+                { q: 'The income statement shows the cash net income for the period.', kind: 'tf', answer: false },
+                { q: 'Under the accrual system, sales and expenses are recorded only when cash is received or paid.', kind: 'tf', answer: false },
+                { q: 'A common-size analysis produces relative (percentage) values.', kind: 'tf', answer: true },
+                { q: 'The balance sheet reports the results of operations for a period of time.', kind: 'tf', answer: false },
+                { q: 'Sales less operating expenses equals gross profit.', kind: 'tf', answer: false },
+                { q: 'The profit margin ratio measures gross profit on sales.', kind: 'tf', answer: false },
+                { q: 'The statement of cash flows reports assets, liabilities, and equity as of a certain date.', kind: 'tf', answer: false },
+                { q: 'Property and equipment are long-lived intangible assets.', kind: 'tf', answer: false },
+                { q: 'Prepaid expenses appear on the income statement.', kind: 'tf', answer: false },
+                { q: 'Treasury stock is a short-term investment appearing under current assets on the balance sheet.', kind: 'tf', answer: false },
+                { q: 'A common-size analysis is also called horizontal analysis.', kind: 'tf', answer: false },
+                { q: 'The acid-test (quick) ratio is a tougher measure of liquidity than the current ratio.', kind: 'tf', answer: true },
+                { q: 'The statement of cash flows contains three activity sections: operating, investing, and financing.', kind: 'tf', answer: true },
+                { q: 'A food cost percentage of 33% can be interpreted as 33 cents of each sales dollar being the cost of food served to customers.', kind: 'tf', answer: true }
+            ],
+            solution: [
+                'Assurance levels (low → high): compilation < review < audit; the accountant’s report states which was performed.',
+                'The income statement is accrual-based (revenue when earned, expenses when incurred), not cash; gross profit = sales − cost of sales.',
+                'The balance sheet (and the statement of cash flows’ ending position) is at a date; the income statement and cash-flow activity cover a period.',
+                'Common-size = vertical analysis (relative %); horizontal = trend/comparative. Profit margin = net income ÷ sales; the acid-test excludes inventory.',
+                'Property & equipment are tangible; prepaid expenses and treasury stock are balance-sheet items (asset; contra-equity).'
+            ]
+        },
+
+        // --- B3.9: Ch12 liquidity & profitability ratios (fixed, clean figures) ---
+        {
+            id: 'k2-ch12-ratios',
+            lesson: 'second-midterm',
+            chapter: 12,
+            type: 'ratio',
+            title: 'Current Ratio, Quick Ratio & Profit Margin',
+            prompt: 'Using the balances below, compute the current ratio, the quick (acid-test) ratio, and the profit '
+                + 'margin. The quick ratio excludes inventory and prepaid expenses.',
+            difficulty: 2,
+            givens: [
+                { label: 'Cash', value: 25000 },
+                { label: 'Marketable securities', value: 5000 },
+                { label: 'Accounts receivable', value: 20000 },
+                { label: 'Inventory', value: 40000 },
+                { label: 'Prepaid expenses', value: 10000 },
+                { label: 'Total current assets', value: 100000 },
+                { label: 'Current liabilities', value: 40000 },
+                { label: 'Net income', value: 60000 },
+                { label: 'Net sales (revenue)', value: 600000 }
+            ],
+            fields: [
+                { key: 'current', label: 'Current ratio', answer: 2.5, tol: 0.005, unit: ': 1', hint: 'Total current assets ÷ current liabilities' },
+                { key: 'quick', label: 'Quick (acid-test) ratio', answer: 1.25, tol: 0.005, unit: ': 1', hint: '(Cash + securities + receivables) ÷ current liabilities' },
+                { key: 'margin', label: 'Profit margin %', answer: 10, tol: 0.05, unit: '%', hint: 'Net income ÷ net sales × 100' }
+            ],
+            solution: [
+                'Current ratio = 100,000 ÷ 40,000 = 2.5 : 1.',
+                'Quick ratio = (25,000 + 5,000 + 20,000) ÷ 40,000 = 50,000 ÷ 40,000 = 1.25 : 1 (inventory 40,000 and prepaid 10,000 excluded).',
+                'Profit margin = 60,000 ÷ 600,000 = 10.0%.'
+            ]
+        },
+
+        // --- B3.9: Ch12 liquidity ratios drill (randomized) ---
+        {
+            id: 'k2-ch12-ratios-random',
+            lesson: 'second-midterm',
+            chapter: 12,
+            type: 'ratio',
+            title: 'Current & Quick Ratios — Drill',
+            prompt: 'Compute the current ratio and the quick (acid-test) ratio.',
+            difficulty: 2,
+            params: {
+                cash: { choices: [20000, 25000, 30000] },
+                securities: { choices: [0, 5000, 10000] },
+                ar: { choices: [15000, 20000, 25000] },
+                inventory: { choices: [30000, 40000, 50000] },
+                curLiab: { choices: [20000, 25000, 50000] }
+            },
+            generate(p) {
+                const quickNum = p.cash + p.securities + p.ar;
+                const tca = quickNum + p.inventory;
+                const current = tca / p.curLiab;
+                const quick = quickNum / p.curLiab;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                return {
+                    prompt: 'A business reports cash ' + fmt(p.cash) + ', marketable securities ' + fmt(p.securities) + ', accounts '
+                        + 'receivable ' + fmt(p.ar) + ', inventory ' + fmt(p.inventory) + ', and current liabilities ' + fmt(p.curLiab)
+                        + '. Compute the current ratio and the quick (acid-test) ratio.',
+                    givens: [
+                        { label: 'Cash', value: p.cash },
+                        { label: 'Marketable securities', value: p.securities },
+                        { label: 'Accounts receivable', value: p.ar },
+                        { label: 'Inventory', value: p.inventory },
+                        { label: 'Total current assets', value: tca },
+                        { label: 'Current liabilities', value: p.curLiab }
+                    ],
+                    fields: [
+                        { key: 'current', label: 'Current ratio', answer: current, tol: 0.005, unit: ': 1', hint: 'Total current assets ÷ current liabilities' },
+                        { key: 'quick', label: 'Quick (acid-test) ratio', answer: quick, tol: 0.005, unit: ': 1', hint: '(Cash + securities + receivables) ÷ current liabilities' }
+                    ],
+                    solution: [
+                        'Current ratio = ' + fmt(tca) + ' ÷ ' + fmt(p.curLiab) + ' = ' + current + ' : 1.',
+                        'Quick ratio = ' + fmt(quickNum) + ' ÷ ' + fmt(p.curLiab) + ' = ' + quick + ' : 1 (inventory excluded).'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for fresh balances. Current ratio = total current assets ÷ current liabilities; quick ratio excludes inventory.']
+        },
+
+        // --- B3.9: Ch12 vertical (common-size) analysis of the income statement ---
+        {
+            id: 'k2-ch12-vertical',
+            lesson: 'second-midterm',
+            chapter: 12,
+            type: 'ratio',
+            title: 'Vertical (Common-Size) Analysis',
+            prompt: 'Perform a vertical (common-size) analysis of the income statement: express each item as a '
+                + 'percentage of net sales (the base = 100%).',
+            difficulty: 2,
+            givens: [
+                { label: 'Net sales', value: 600000 },
+                { label: 'Cost of sales', value: 210000 },
+                { label: 'Gross profit', value: 390000 },
+                { label: 'Operating expenses', value: 270000 },
+                { label: 'Net income', value: 120000 }
+            ],
+            fields: [
+                { key: 'cosPct', label: 'Cost of sales (% of net sales)', answer: 35, tol: 0.05, unit: '%', hint: '210,000 ÷ 600,000 × 100' },
+                { key: 'gpPct', label: 'Gross profit (% of net sales)', answer: 65, tol: 0.05, unit: '%', hint: '390,000 ÷ 600,000 × 100' },
+                { key: 'opexPct', label: 'Operating expenses (% of net sales)', answer: 45, tol: 0.05, unit: '%', hint: '270,000 ÷ 600,000 × 100' },
+                { key: 'niPct', label: 'Net income (% of net sales)', answer: 20, tol: 0.05, unit: '%', hint: '120,000 ÷ 600,000 × 100' }
+            ],
+            solution: [
+                'Vertical analysis expresses each line as a % of the base (net sales = 100%).',
+                'Cost of sales 210,000 ÷ 600,000 = 35%; gross profit 390,000 ÷ 600,000 = 65%.',
+                'Operating expenses 270,000 ÷ 600,000 = 45%; net income 120,000 ÷ 600,000 = 20%.'
+            ]
+        },
+
+        // --- B3.9: Ch12 horizontal analysis (dollar & percent change) ---
+        {
+            id: 'k2-ch12-horizontal',
+            lesson: 'second-midterm',
+            chapter: 12,
+            type: 'ratio',
+            title: 'Horizontal Analysis (Change Over Time)',
+            prompt: 'Perform a horizontal analysis: compute the dollar change and the percent change from Year 1 '
+                + '(base year) to Year 2 for each item.',
+            difficulty: 2,
+            givens: [
+                { label: 'Net sales — Year 1', value: 500000 },
+                { label: 'Net sales — Year 2', value: 600000 },
+                { label: 'Net income — Year 1', value: 80000 },
+                { label: 'Net income — Year 2', value: 120000 }
+            ],
+            fields: [
+                { key: 'salesChg', label: 'Net sales — dollar change', answer: 100000, tol: 0.005, unit: '$', hint: 'Year 2 − Year 1' },
+                { key: 'salesPct', label: 'Net sales — percent change', answer: 20, tol: 0.05, unit: '%', hint: 'Dollar change ÷ Year 1 × 100' },
+                { key: 'niChg', label: 'Net income — dollar change', answer: 40000, tol: 0.005, unit: '$', hint: 'Year 2 − Year 1' },
+                { key: 'niPct', label: 'Net income — percent change', answer: 50, tol: 0.05, unit: '%', hint: 'Dollar change ÷ Year 1 × 100' }
+            ],
+            solution: [
+                'Net sales change = 600,000 − 500,000 = 100,000; % change = 100,000 ÷ 500,000 = 20%.',
+                'Net income change = 120,000 − 80,000 = 40,000; % change = 40,000 ÷ 80,000 = 50%.',
+                'Horizontal analysis always divides the change by the base-year (Year 1) amount.'
+            ]
         }
     ]
 };
