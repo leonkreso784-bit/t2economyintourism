@@ -101,16 +101,21 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   ali NEMAJU strukturu „2 kolokvija + finalni" — **realno svi imaju 2 kolokvija + završni → trebaju restrukturu na K1/K2/finalni**
   (plan + trenutno stanje po predmetu: `docs/BACKLOG.md`; čeka materijale/silabus). ADR-006 „ne preslagivati stare predmete" je
   za sadržajno upotpunjavanje nadjačan; migracija u bazu i dalje JEDNOM u Bloku B.
-- **▶ AKTIVNO (2026-06-10): ACCOUNTING — Exercises engine + restruktura.** Cijeli izvor pregledan (43 datoteke; silabus:
-  K1=Ch1–6, K2=Ch7–16). Gradi se **generički, reusable Exercises sustav** (pravo računovodstvo, auto-ocjenjivanje):
-  engine = čista mehanika + `acc-kernel`, sadržaj = „content pack" (`data/<subject>/exercises.js`, jezik/domena iz podataka →
-  hrvatski/drugi fakulteti = samo nova data + catalog, NULA izmjena enginea). Tipovi: choice/numeric/ratio/statement/classify/journal
-  + parametrizirano + 3 moda (practice/exam/walkthrough). **Cigla-po-cigla checklist s kvačicama: `docs/EXERCISES_ENGINE.md` §6**
-  (kreće B0.1). Analiza/katalog: `docs/ACCOUNTING_PLAN.md`. Izvori (133 JPG iz „nečitljivih" PDF-ova + docx): `tmp-acc/` (gitignored).
-  Nalaz: postojećih 7 kat. = ~cijeli K2; **K1 (Ch1–6) treba dopisati.** **Ništa još nije implementirano** (samo planski docovi).
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** (1) **2. god sem 1 — restruktura 4 predmeta** na K1/K2/finalni
-  (Accounting prvi, u tijeku; obrazac kao Marketing/Geo/F&N). (2) **pa 1. godina** (najbrži tekstualni: Management/Macroeconomics/SIT;
-  Business Informatics već gotov). (3) **pa drugi smjerovi** (1.+2. god, novi `programs`). → kasnije **Blok B** (Supabase+Auth+/api).
+- **✅ ACCOUNTING 100% KOMPLETAN ✅ LIVE (2026-06-12, deployano do `a6b6fb0`):** prvi sem-1 predmet restrukturiran + dobio
+  interaktivne vježbe. **(a) Study gradivo:** 3 lekcije `first-midterm`/`second-midterm`/`final` (FAZA 4 — novo K1 gradivo
+  `data/accounting/midterm-1.js` 6 kat./87fc; K2 realign `midterm-2.js` 8 kat.; finalni hibrid `final.js` 15 kat.).
+  **(b) Reusable EXERCISES SUSTAV** (jedini na platformi): engine = `js/exercises-core.js` + `js/acc-kernel.js` +
+  `js/exercises.js` + `css/exercises.css` (6 tipova choice/numeric/ratio/statement/classify/journal; 3 moda; randomizacija) —
+  **NIKAD se ne mijenja za sadržaj** (sveto pravilo, dokazano kroz B3.1–B3.11); content pack `data/accounting/exercises.js`
+  = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/EXERCISES_ENGINE.md` §6/§8.
+  Cache `20260638`. **Poznato (opcionalno, NE blokira):** Final lekcija → „Exercises" tab prazan (sve vježbe tagane na
+  kolokvije; dosljedno sem-2 predmetima); USAR/USALI klasifikacija (Ch9-1/10-1) odgođena (nema službenog answer-keya).
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** **Accounting GOTOV → ide SLJEDEĆI sem-1 predmet** od preostala 3:
+  **Tourism Economics `te2`, Entrepreneurship, E-Business** — restruktura na K1/K2/finalni po obrascu Marketing/Geo/F&N
+  (split postojećeg sadržaja + finalni hibrid). Exercises sustav im NIJE nužan (bila je accounting-specifična nadogradnja).
+  **Čeka:** odabir predmeta + materijali/silabus (plan po predmetu: `docs/BACKLOG.md`). (2) pa 1. godina (Management/Macroeconomics/SIT;
+  Business Informatics gotov). (3) pa drugi smjerovi. → kasnije **Blok B** (Supabase+Auth+/api).
+  **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — NE vraćati se na Accounting osim na izričit zahtjev.**
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

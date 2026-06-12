@@ -4,10 +4,11 @@
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
 ## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
-**Status (2026-06-10):** semestar 2 = **4/4 predmeta KOMPLETNO** (K1+K2+finalni: Economics in Hospitality,
-Marketing, Tourism Geography, Food & Nutrition). Semestar 1 = **4 predmeta** (stari root `data-*.js`) imaju sadržaj,
-ali NISU u standardnoj strukturi „dva kolokvija + završni". **Potvrđeno (korisnik 2026-06-10): svi realno imaju
-2 kolokvija + finalni** → treba ih dovesti na isti standard kao sem-2.
+**Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **Accounting ✅ GOTOV i LIVE** (1/4) — restrukturiran na
+3 lekcije **+ dobio jedinstveni reusable Exercises sustav** (41 interaktivna vježba; vidi `docs/EXERCISES_ENGINE.md`).
+**Preostala 3 sem-1 predmeta** (`te2` / Entrepreneurship / E-Business) imaju sadržaj ali NISU u strukturi „2 kolokvija + finalni"
+→ treba restrukturu na isti standard kao sem-2. **▶ SLJEDEĆE = jedan od ta 3** (čeka odabir + materijale/silabus).
+**⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — ne vraćati se na Accounting (ni Final-tab ni USAR/USALI klasifikaciju) osim izričito.**
 
 **Obrazac (kao Marketing/Geo/F&N):** po predmetu — utvrditi K1/K2 granicu iz silabusa/materijala → sadržaj podijeliti
 na `first-midterm` (K1) + `second-midterm` (K2) → **finalni = hibrid** `Object.assign({}, K1, K2, { examPractice })`
@@ -20,7 +21,7 @@ za sadržajno upotpunjavanje; migracija u bazu i dalje ide JEDNOM u Bloku B.)
 |---|---|---|---|
 | **Tourism Economics** (`te2`) | 1 | 2 lekcije: „Exam Preparation" (`studyData`, 6 kat/46 fc) + „Final Test Preparation" (`te2FinalData`, 9 kat/59 fc) | Provjeriti pokriva li to K1 vs ostatak; preslagati u K1 + K2 + finalni hibrid |
 | **Entrepreneurship** (`entrepreneurship`) | 1 | 1 blok (`entrepreneurshipData`, 11 kat/92 fc) prikazan pod 2 imena lekcije (obje **iste**) | Podijeliti sadržaj na K1/K2; izgraditi finalni hibrid (3 zasebne lekcije) |
-| **Accounting Theory** (`accounting`) | 1 | 1 lekcija (`accountingData`, 7 kat/124 fc; 7 modul-datoteka u `data/accounting/`) | Mapirati 7 kategorija na K1/K2 (iz silabusa); finalni hibrid |
+| ~~**Accounting** (`accounting`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`accountingM1`/`accountingM2`/`accountingFinal`) + **41 interaktivna vježba** (`data/accounting/exercises.js`) | ✅ Restrukturirano + Exercises sustav (2026-06-12, LIVE `a6b6fb0`). Opcionalno: Final exercises-tab, USAR/USALI klasifikacija (treba answer-key) |
 | **E-Business** (`ebusiness`) | 1 | 1 lekcija („Final Exam Preparation", `ebusinessData`, 14 kat/129 fc; „15 units") | Mapirati 14 kat./15 units na K1/K2; finalni hibrid |
 
 **Napomena o opsegu:** ebusiness/accounting/entrepreneurship već imaju (vjerojatno) sav sadržaj u jednom bloku → dio

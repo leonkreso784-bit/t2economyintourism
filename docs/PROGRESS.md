@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — ✅ ACCOUNTING 100% KOMPLETAN i LIVE — predmet zatvoren, dalje NOVI predmet
+**Accounting je gotov.** Predmet sad ima puno study gradivo (3 lekcije: Midterm 1 / Midterm 2 / Final, FAZA 4) **+ jedinstveni
+reusable Exercises sustav** (41 interaktivna vježba — K1 Ch1–6: 16, K2 Ch9–16 + inventory + journal/RE: 25; 6 tipova × 3 moda × randomizacija).
+Sve LIVE na sokratstudy.com (`origin/main @ a6b6fb0`, 0 ispred, radno stablo čisto). **Engine NIKAD nije diran za sadržaj** —
+dokaz da je sustav vježbi stvarno reusable (novi predmet/jezik = samo nova data + catalog).
+
+**Opcionalno preostalo (NE blokira „gotovo", svjesna odluka):**
+- Final lekcija → „Exercises" tab prazan (svih 41 vježba tagano na kolokvije; dosljedno sem-2 predmetima koji na Finalu imaju samo `examPractice`).
+- USAR/USALI klasifikacija (Ch9-1/10-1) odgođena — nema službenog answer-keya (dvosmislene stavke); dodati samo ako se nađe key.
+
+**▶ SLJEDEĆA SESIJA = NOVI sem-1 predmet** (od preostala 3: **Tourism Economics `te2` / Entrepreneurship / E-Business**) — restruktura
+na K1/K2/finalni po obrascu Marketing/Geo/Food&Nutrition (split postojećeg sadržaja + finalni hibrid; **NE** treba exercises sustav).
+Čeka: odabir predmeta + materijali/silabus (plan: `docs/BACKLOG.md`). **⚠️ Korisnik je zasićen računovodstvom — ne vraćati se na Accounting osim izričito.**
+
+---
+
 ## 2026-06-12 — 🎉 Accounting B3.11: K2 PLAN KOMPLETAN (Ch13/14/15/16 koncepti)
 Zadnja K2 cigla. **4 nove `choice` vježbe** u `data/accounting/exercises.js`, iz autentičnih workbook assignmenta:
 - `k2-ch13-annual-reports` (Ch13, 8 MC) — Sarbanes-Oxley, SEC, Form 10-K, **audit opinion types** (unqualified/qualified/adverse/disclaimer),
