@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — ✅ DEPLOYANO (push `d241eaf`) — B3.8 + B3.9 LIVE + B3.10 lokalno
+**Deploy (uz potvrdu):** B3.8 (Ch9/10 ratios) + B3.9 (Ch12 Analyzing FS) na produkciju, `origin/main` @ `d241eaf`, 0 ispred.
+Midterm 2 „Exercises" tab sad LIVE ima **Chapter 9 / 10 / 11 / 12** + **Other (inventory)**.
+
+## 2026-06-12 — Accounting B3.10: K2 journal (revenue/expense/RE + BS)
+Nastavak K2. **3 nove vježbe** u `data/accounting/exercises.js` (bez `chapter` → „Other"):
+- `k2-journal-operations` (**guided journal**, 6 transakcija) — proširuje K1 bookkeeping (ALE) na **prihode/rashode**: cash sale,
+  sale on account, cost of sales (perpetual), wages, **depreciation adjusting entry** (D Depreciation Expense / C Accumulated
+  Depreciation = contra-asset), collection. Guided grader = po-transakciji (balance + multiset); A=L+E traka se NE prikazuje u
+  guided modu → otvoreni revenue/expense računi nisu problem.
+- `k2-net-income-re` (numeric, fixni) — net income → ending retained earnings → total equity → total assets (BS balansira).
+- `k2-net-income-random` (numeric, randomiziran) — NI + ending RE drill; `params` drže expenses<revenue (NI>0), sve cijelo.
+
+**Engine NEPROMIJENJEN** (potvrđeno: guided journal s revenue/expense radi bez izmjena). Content pack sad **37 vježbi**.
+**Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (journal 6/6 + swapped-sides odbijeno + sve tx balansirane; net-income 4/4)
++ randomizacija deterministična/cjelobrojna/bez-negativnih kroz 400 seedova; Playwright **36/36**. Cache `?v=20260637`.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.11 (TF/MC Ch7/8/13/14/15-16) → time je K2 plan KOMPLETAN.
+
+---
+
 ## 2026-06-11 — Accounting B3.9: K2 Analyzing FS vježbe (Ch12)
 Nastavak K2 (brick-by-brick). **5 novih vježbi** u `data/accounting/exercises.js` (`chapter:12`):
 - `k2-ch12-concepts` (choice, 16 TF) — iz autentičnog Cote Assignment 12-1 „Terminology and Concepts"; **zadržane univerzalne** činjenice

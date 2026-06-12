@@ -21,6 +21,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — K2 journal: revenue/expense + retained earnings [B3.10]:** **3 nove vježbe** (bez `chapter` → „Other"):
+  `k2-journal-operations` (guided journal, 6 transakcija — proširuje K1 ALE na prihode/rashode + **depreciation adjusting entry**;
+  guided grader po-transakciji, A=L+E traka nije u guided modu pa otvoreni revenue/expense rade), `k2-net-income-re` (numeric — net income →
+  ending RE → total equity → total assets), `k2-net-income-random` (numeric randomiziran — NI + ending RE, NI>0, cijeli brojevi).
+  **Engine nepromijenjen.** Content pack sad 37 vježbi. verify 0/0, node 95/95 + 13/13, Playwright 36/36 + grade-check. Cache `?v=20260637`.
 - **Exercises — K2 Analyzing FS: Ch12 [B3.9]:** **5 novih vježbi**: `k2-ch12-concepts` (16 TF iz autentičnog Assignment 12-1; izbačene
   dvosmislene stavke bez answer-keya), `k2-ch12-ratios` (current/quick/profit margin), `k2-ch12-ratios-random` (randomiziran current+quick,
   ratiji ≤2 decimale), `k2-ch12-vertical` (common-size IS %), `k2-ch12-horizontal` ($ i % promjena Y1→Y2). Ratio definicije usklađene s

@@ -1481,6 +1481,146 @@ const accountingExercises = {
                 'Net income change = 120,000 − 80,000 = 40,000; % change = 40,000 ÷ 80,000 = 50%.',
                 'Horizontal analysis always divides the change by the base-year (Year 1) amount.'
             ]
+        },
+
+        // ===================== K2 JOURNAL — REVENUE, EXPENSE & RETAINED EARNINGS =====================
+        // Extends the K1 bookkeeping (assets/liabilities/equity) to revenue, expense and the depreciation
+        // adjusting entry, then ties the period result into retained earnings and the ending balance sheet.
+        // Guided journal grades per transaction (balanced + correct accounts/amounts). Not a single numbered
+        // chapter → no `chapter` field (groups under "Other").
+
+        // --- B3.10: guided journal — record revenue & expense transactions ---
+        {
+            id: 'k2-journal-operations',
+            lesson: 'second-midterm',
+            type: 'journal',
+            title: 'Record Revenue & Expense Transactions',
+            prompt: 'Record each transaction with the correct debit and credit. The perpetual inventory system is used. '
+                + 'Use the chart of accounts shown in the dropdowns.',
+            difficulty: 3,
+            chartOfAccounts: [
+                { name: 'Cash', normal: 'D', section: 'asset' },
+                { name: 'Accounts Receivable', normal: 'D', section: 'asset' },
+                { name: 'Food Inventory', normal: 'D', section: 'asset' },
+                { name: 'Accumulated Depreciation', normal: 'C', section: 'asset' },
+                { name: 'Accounts Payable', normal: 'C', section: 'liability' },
+                { name: 'Food Sales', normal: 'C', section: 'revenue' },
+                { name: 'Cost of Sales', normal: 'D', section: 'expense' },
+                { name: 'Wages Expense', normal: 'D', section: 'expense' },
+                { name: 'Depreciation Expense', normal: 'D', section: 'expense' }
+            ],
+            transactions: [
+                {
+                    text: 'Guests pay cash for food, $8,000.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 8000 },
+                        { account: 'Food Sales', side: 'C', amount: 8000 }
+                    ]
+                },
+                {
+                    text: 'Food is sold to a hotel guest on an in-house account (open account), $3,000.',
+                    entries: [
+                        { account: 'Accounts Receivable', side: 'D', amount: 3000 },
+                        { account: 'Food Sales', side: 'C', amount: 3000 }
+                    ]
+                },
+                {
+                    text: 'The perpetual system shows $4,400 of food provisions used during the period (cost of food sold).',
+                    entries: [
+                        { account: 'Cost of Sales', side: 'D', amount: 4400 },
+                        { account: 'Food Inventory', side: 'C', amount: 4400 }
+                    ]
+                },
+                {
+                    text: 'The restaurant pays $5,000 cash for staff wages.',
+                    entries: [
+                        { account: 'Wages Expense', side: 'D', amount: 5000 },
+                        { account: 'Cash', side: 'C', amount: 5000 }
+                    ]
+                },
+                {
+                    text: 'Record $1,200 of depreciation on the kitchen equipment for the period.',
+                    entries: [
+                        { account: 'Depreciation Expense', side: 'D', amount: 1200 },
+                        { account: 'Accumulated Depreciation', side: 'C', amount: 1200 }
+                    ]
+                },
+                {
+                    text: 'A guest pays $2,000 of their account receivable in cash.',
+                    entries: [
+                        { account: 'Cash', side: 'D', amount: 2000 },
+                        { account: 'Accounts Receivable', side: 'C', amount: 2000 }
+                    ]
+                }
+            ],
+            solution: [
+                'Cash sale: debit Cash 8,000; credit Food Sales 8,000 (revenue).',
+                'Sale on account: debit Accounts Receivable 3,000; credit Food Sales 3,000.',
+                'Cost of food used (perpetual): debit Cost of Sales 4,400; credit Food Inventory 4,400.',
+                'Pay wages: debit Wages Expense 5,000; credit Cash 5,000.',
+                'Depreciation adjusting entry: debit Depreciation Expense 1,200; credit Accumulated Depreciation 1,200 (a contra-asset).',
+                'Collect a receivable: debit Cash 2,000; credit Accounts Receivable 2,000.'
+            ]
+        },
+
+        // --- B3.10: net income → ending retained earnings → ending balance sheet (numeric, fixed) ---
+        {
+            id: 'k2-net-income-re',
+            lesson: 'second-midterm',
+            type: 'numeric',
+            title: 'Net Income, Retained Earnings & the Balance Sheet',
+            prompt: 'For the year a restaurant reported total revenue of $600,000 and total expenses of $540,000. '
+                + 'Beginning retained earnings were $200,000 and $20,000 of dividends were declared. Common stock issued '
+                + 'is $260,000 and total liabilities are $300,000. Compute net income, ending retained earnings, total '
+                + 'stockholders’ equity, and total assets (= liabilities + equity).',
+            difficulty: 2,
+            fields: [
+                { key: 'netIncome', label: 'Net income', answer: 60000, tol: 0.005, unit: '$', hint: 'Total revenue − total expenses' },
+                { key: 'endRE', label: 'Ending retained earnings', answer: 240000, tol: 0.005, unit: '$', hint: 'Beginning RE + net income − dividends' },
+                { key: 'totalEquity', label: 'Total stockholders’ equity', answer: 500000, tol: 0.005, unit: '$', hint: 'Common stock + ending retained earnings' },
+                { key: 'totalAssets', label: 'Total assets', answer: 800000, tol: 0.005, unit: '$', hint: 'Total liabilities + total stockholders’ equity' }
+            ],
+            solution: [
+                'Net income = 600,000 − 540,000 = 60,000.',
+                'Ending retained earnings = 200,000 + 60,000 − 20,000 = 240,000.',
+                'Total stockholders’ equity = common stock 260,000 + retained earnings 240,000 = 500,000.',
+                'Total assets = liabilities 300,000 + equity 500,000 = 800,000 (the balance sheet balances).'
+            ]
+        },
+
+        // --- B3.10: net income & retained earnings drill (randomized) ---
+        {
+            id: 'k2-net-income-random',
+            lesson: 'second-midterm',
+            type: 'numeric',
+            title: 'Net Income & Retained Earnings — Drill',
+            prompt: 'Compute net income and ending retained earnings.',
+            difficulty: 2,
+            params: {
+                revenue: { min: 500000, max: 800000, step: 50000 },
+                expenses: { min: 300000, max: 480000, step: 20000 },
+                begRE: { choices: [100000, 150000, 200000] },
+                dividends: { choices: [0, 10000, 20000] }
+            },
+            generate(p) {
+                const ni = p.revenue - p.expenses;
+                const endRE = p.begRE + ni - p.dividends;
+                const fmt = (n) => '$' + n.toLocaleString('en-US');
+                return {
+                    prompt: 'A business reports total revenue of ' + fmt(p.revenue) + ' and total expenses of ' + fmt(p.expenses) + '. '
+                        + 'Beginning retained earnings were ' + fmt(p.begRE) + ' and dividends of ' + fmt(p.dividends) + ' were declared. '
+                        + 'Compute net income and ending retained earnings.',
+                    fields: [
+                        { key: 'netIncome', label: 'Net income', answer: ni, tol: 0.005, unit: '$', hint: 'Total revenue − total expenses' },
+                        { key: 'endRE', label: 'Ending retained earnings', answer: endRE, tol: 0.005, unit: '$', hint: 'Beginning RE + net income − dividends' }
+                    ],
+                    solution: [
+                        'Net income = ' + fmt(p.revenue) + ' − ' + fmt(p.expenses) + ' = ' + fmt(ni) + '.',
+                        'Ending retained earnings = ' + fmt(p.begRE) + ' + ' + fmt(ni) + ' − ' + fmt(p.dividends) + ' = ' + fmt(endRE) + '.'
+                    ]
+                };
+            },
+            solution: ['Press “New numbers” for fresh figures. Net income = revenue − expenses; ending RE = beginning RE + net income − dividends.']
         }
     ]
 };
