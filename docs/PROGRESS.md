@@ -5,6 +5,33 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-13 — ▶ BACKEND staza B (3. dio): AUTH PRELAZAK NA EMAIL+LOZINKU (magic-link maknut)
+**Implementiran dogovor od 2026-06-12** (korisnik rekao „kreni"): korisnici imaju **lozinku, profil i sve** — magic-link
+potpuno uklonjen. Sve u postojećim modulima, **baza/schema se NE mijenja**.
+
+- **`js/auth.js` (prepisan):** modal sad ima **2 taba — Sign in / Create account** + treći „skriveni" panel **Forgot password**.
+  - **Sign in:** `signInWithPassword`; prijateljske poruke („Wrong email or password." / „Please confirm your email first…").
+  - **Create account:** ime (`user_metadata.display_name`) + email + lozinka (min 8, `minlength`); `signUp` s
+    `emailRedirectTo` → **email potvrda obavezna** → status „Check your inbox…". Anti-enumeration slučaj Supabasea
+    (postojeći email → „lažni" user s `identities.length===0`) prepoznat → „account already exists — switch to Sign in".
+  - **Forgot password:** `resetPasswordForEmail` (prefill emaila iz sign-in forme) → klik na link u mailu →
+    **`PASSWORD_RECOVERY` event** → `recoveryMode` → modal pokaže „Set a new password" formu → `updateUser({password})`.
+  - Nav gumbi sad prikazuju **ime** (prva riječ `display_name`; fallback email-prefix za stare račune).
+- **`js/profile.js`:** account kartica prikazuje **ime kao naslov** + email ispod; novi gumb **„Change password"**
+  (inline forma → `updateUser`); `changePassword()` handler.
+- **`css/auth.css`:** tabovi (`.auth-modal__tabs/__tab`), tekst-linkovi (`.auth-modal__link`) + **kritični
+  `.auth-modal__form[hidden]{display:none}`** (display:flex bi pregazio `hidden` — ista zamka kao BUG kod modala).
+  `css/profile.css`: `.profile-pass-form` (+`[hidden]` fix), `.profile-meta--sub`.
+- **Pravne stranice ažurirane** (magic-link → lozinka): `privacy.html` (skupljamo ime + lozinka-hash; potvrdni/reset mailovi;
+  Last updated 13 June 2026), `terms.html` (odgovornost za povjerljivost lozinke), `faq.html`.
+- **Cache → `?v=20260642`** (styles.css, auth.css, profile.css, auth.js, profile.js).
+- **Test:** `tests/auth.spec.js` test 1 prepisan — tabovi, sign-in polja, signup polja (minlength=8), forgot tok, close.
+
+**Ručni korak korisnika (Supabase dashboard):** Authentication → Providers → Email → **min duljina lozinke 8**.
+**⚠️ Deploy gate i dalje vrijedi** — push tek kad korisnik potvrdi da je login UX potpun.
+
+---
+
 ## 2026-06-12 — ▶ BACKEND staza B (2. dio): Profile stranica + auth kroz cijeli frontend + Google Ads stranice
 **Korisnik testirao login lokalno — „radi fantastično" — ali postavio uvjet za deploy:** ne ide live dok login UX nije
 potpun (profil, prijava sa svih stranica) + dok ne postoji sve potrebno za **Google Ads** (pravne stranice). Sve napravljeno:

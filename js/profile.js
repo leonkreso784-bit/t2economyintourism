@@ -27,17 +27,27 @@ function renderProfilePage() {
     const memberSince = created
         ? created.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
         : '—';
+    // Ime iz registracije (user_metadata.display_name); stariji računi ga nemaju → email kao naslov.
+    const displayName = (user.user_metadata && user.user_metadata.display_name)
+        ? String(user.user_metadata.display_name).trim() : '';
 
     root.innerHTML =
         '<div class="profile-grid">' +
 
         '  <div class="profile-card">' +
         '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
-        '    <h2 class="profile-email">' + escapeHtmlProfile(user.email || '') + '</h2>' +
+        '    <h2 class="profile-email">' + escapeHtmlProfile(displayName || user.email || '') + '</h2>' +
+        (displayName ? '    <p class="profile-meta profile-meta--sub">' + escapeHtmlProfile(user.email || '') + '</p>' : '') +
         '    <p class="profile-meta">Member since ' + memberSince + '</p>' +
         '    <div class="profile-actions">' +
+        '      <button type="button" class="cta-button secondary" id="profileChangePassBtn"><i class="fas fa-key"></i><span>Change password</span></button>' +
         '      <button type="button" class="cta-button secondary" id="profileSignOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></button>' +
         '    </div>' +
+        '    <form id="profileChangePassForm" class="profile-pass-form" hidden>' +
+        '      <input type="password" id="profileNewPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+        '      <button type="submit" class="cta-button primary"><i class="fas fa-check"></i><span>Save new password</span></button>' +
+        '      <p class="profile-pass-status" id="profilePassStatus" hidden></p>' +
+        '    </form>' +
         '  </div>' +
 
         '  <div class="profile-card">' +
@@ -70,6 +80,12 @@ function renderProfilePage() {
     document.getElementById('profileSignOutBtn').addEventListener('click', function () {
         SokratAuth.signOut();
     });
+    document.getElementById('profileChangePassBtn').addEventListener('click', function () {
+        const form = document.getElementById('profileChangePassForm');
+        form.hidden = !form.hidden;
+        if (!form.hidden) document.getElementById('profileNewPassword').focus();
+    });
+    document.getElementById('profileChangePassForm').addEventListener('submit', changePassword);
     document.getElementById('profileSyncNowBtn').addEventListener('click', async function () {
         if (typeof CloudSync !== 'undefined') await CloudSync.pushNow();
         const el = document.getElementById('profileSyncStatus');
@@ -123,6 +139,28 @@ function renderProfileStats() {
         '  <div class="profile-total"><strong>' + totalQuizzes + '</strong><span>quizzes taken</span></div>' +
         '  <div class="profile-total"><strong>' + totalFill + '</strong><span>fill-ins solved</span></div>' +
         '</div>' + rows;
+}
+
+async function changePassword(e) {
+    e.preventDefault();
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    if (!client) return;
+    const input = document.getElementById('profileNewPassword');
+    const status = document.getElementById('profilePassStatus');
+    if (!input || !status) return;
+    status.hidden = false;
+    status.classList.remove('is-error');
+    status.textContent = 'Saving…';
+    const { error } = await client.auth.updateUser({ password: input.value });
+    if (error) {
+        status.classList.add('is-error');
+        status.textContent = error.message;
+        return;
+    }
+    status.hidden = true;
+    input.value = '';
+    document.getElementById('profileChangePassForm').hidden = true;
+    if (typeof showToast === 'function') showToast('Password updated.');
 }
 
 async function deleteCloudData() {

@@ -118,8 +118,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   tsa/environment/sustainability, 62fc). Finalni = 10 kat + `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. **Ispravljena
   činjenica:** stari je tvrdio „price NIJE najkritičnija" — slajd kaže suprotno. Stari root `data-te2*.js` obrisani; `lazy-load.spec.js`
   sentinel → `te2M1`. Cache `20260639`. Verify 0/0, node render-sanity 11/11, Playwright 36/36. **Deployano 2026-06-12 (`ca06158`).**
-- **▶ BACKEND staza B (MVP) — IMPLEMENTIRAN lokalno (2026-06-12, [[backend-track-b-start]]):** **Auth (email magic-link) +
-  cloud sync napretka.** Supabase projekt `naxjubnedhrbhsuasayu.supabase.co` (publishable key u `js/auth.js` — javan po dizajnu;
+- **▶ BACKEND staza B — IMPLEMENTIRAN lokalno (2026-06-12/13, [[backend-track-b-start]]):** **Auth + cloud sync napretka.**
+  Supabase projekt `naxjubnedhrbhsuasayu.supabase.co` (publishable key u `js/auth.js` — javan po dizajnu;
   **service key se NE koristi**, RLS štiti podatke; bez `/api` funkcija za MVP). Novo: `supabase/schema.sql` (tablica `progress`,
   1 red = 1 localStorage ključ, RLS) · `js/auth.js` (CDN supabase-js, tihi fallback ako CDN padne, modal) · `js/cloud-sync.js`
   (offline-first: pull+merge na login — unija/max, naučeno se ne gubi; diff-push 30 s) · `css/auth.css` · `tests/auth.spec.js`.
@@ -128,7 +128,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **Profile stranica** (`#profile-page`, `js/profile.js`, `css/profile.css`; account+sync+progress overview+GDPR delete),
   **auth ulazi posvuda** (`.auth-entry`: landing nav + `.header-auth-btn` na browse/lessons/study; odjavljen→modal,
   prijavljen→Profile), **Google Ads stranice** `privacy.html`/`terms.html`/`faq.html`/`contact.html` (+`css/legal.css`,
-  footer Legal linkovi, Terms/Privacy pristanak u modalu). Cache `20260641`. Testovi: `tests/auth.spec.js` + `tests/legal.spec.js`.
+  footer Legal linkovi, Terms/Privacy pristanak u modalu). Testovi: `tests/auth.spec.js` + `tests/legal.spec.js`.
+  **3. dio (2026-06-13): AUTH = EMAIL+LOZINKA, magic-link UKLONJEN** — modal s tabovima Sign in / Create account
+  (`signInWithPassword` / `signUp` + **obavezna email potvrda**; ime → `user_metadata.display_name`, na nav gumbu i profilu),
+  Forgot password (`resetPasswordForEmail` → `PASSWORD_RECOVERY` → nova lozinka), profil „Change password"; pravne stranice
+  ažurirane. Baza nepromijenjena. Cache `20260642`. Korisnikov dashboard korak: min duljina lozinke 8.
   **⚠️ DEPLOY GATE (korisnik, 2026-06-12): NE pushati dok korisnik ne potvrdi da je login UX + Ads-spremnost POTPUNA.**
   Detalji: `docs/BACKEND.md` §Staza B.
 - **Sadržaj-staza (parkirano, [[content-roadmap-sequencing]]):** preostala 2 sem-1 predmeta (**Entrepreneurship, E-Business**) —

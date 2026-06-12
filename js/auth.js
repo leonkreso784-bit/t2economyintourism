@@ -1,4 +1,4 @@
-// ===== SOKRAT STUDY — AUTH (Supabase magic-link) =====
+// ===== SOKRAT STUDY — AUTH (Supabase, email + lozinka) =====
 //
 // Backend staza B (ADR-001/008): Auth + cloud sinkronizacija napretka.
 // Sadržaj predmeta NE ide kroz ovo — ostaje u data/* fajlovima.
@@ -7,7 +7,10 @@
 //   ako CDN ne uspije, cijela funkcionalnost se tiho ugasi — app radi kao prije.
 // - Publishable key je javan po dizajnu (RLS u bazi štiti podatke);
 //   service key NIKAD ne ide u frontend.
-// - Login: email magic-link (signInWithOtp). Google se može dodati kasnije.
+// - Login: email + lozinka (signInWithPassword). Registracija (signUp) traži
+//   potvrdu emaila; ime ide u user_metadata.display_name. „Forgot password?"
+//   → resetPasswordForEmail → PASSWORD_RECOVERY event → forma za novu lozinku.
+//   Google login se može dodati kasnije.
 
 const SOKRAT_AUTH_CONFIG = {
     enabled: true,
@@ -19,6 +22,7 @@ const SOKRAT_AUTH_CONFIG = {
 const SokratAuth = (function () {
     let client = null;
     let currentUser = null;
+    let recoveryMode = false; // true nakon PASSWORD_RECOVERY (link iz reset emaila)
     const changeListeners = [];
 
     // ---------- Supabase client ----------
@@ -63,19 +67,23 @@ const SokratAuth = (function () {
             });
         });
 
-        // Postojeća sesija (i magic-link redirect — detectSessionInUrl je default).
+        // Postojeća sesija + redirecti iz emaila (potvrda registracije, reset
+        // lozinke) — detectSessionInUrl je default.
         client.auth.onAuthStateChange(function (event, session) {
             const wasSignedIn = !!currentUser;
             currentUser = session ? session.user : null;
+            if (!currentUser) recoveryMode = false;
+            if (event === 'PASSWORD_RECOVERY') recoveryMode = true;
             updateNavButton();
             renderModalState();
             changeListeners.forEach(function (fn) {
                 try { fn(currentUser, event); } catch (err) { console.warn('[auth] listener:', err); }
             });
-            if (event === 'SIGNED_IN' && !wasSignedIn) {
+            if (event === 'SIGNED_IN' && !wasSignedIn && !recoveryMode) {
                 closeModal();
                 if (typeof showToast === 'function') showToast('Signed in — your progress now syncs to the cloud.');
             }
+            if (event === 'PASSWORD_RECOVERY') openModal();
             // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
             if (typeof currentPage !== 'undefined' && currentPage === 'profile') {
                 if (currentUser && typeof renderProfilePage === 'function') renderProfilePage();
@@ -86,9 +94,19 @@ const SokratAuth = (function () {
 
     // ---------- UI ----------
 
+    function getDisplayName() {
+        if (!currentUser) return null;
+        const meta = currentUser.user_metadata || {};
+        const name = (meta.display_name || '').trim();
+        return name || null;
+    }
+
     function updateNavButton() {
+        const short = currentUser
+            ? (getDisplayName() || (currentUser.email || 'Account').split('@')[0]).split(/\s+/)[0]
+            : 'Sign in';
         document.querySelectorAll('.auth-entry-label').forEach(function (label) {
-            label.textContent = currentUser ? (currentUser.email || 'Account').split('@')[0] : 'Sign in';
+            label.textContent = short;
         });
         document.querySelectorAll('.auth-entry').forEach(function (btn) {
             btn.classList.toggle('is-signed-in', !!currentUser);
@@ -106,16 +124,46 @@ const SokratAuth = (function () {
             '<div class="auth-modal__backdrop" data-auth-close></div>' +
             '<div class="auth-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">' +
             '  <button type="button" class="auth-modal__close" data-auth-close aria-label="Close">&times;</button>' +
+
             '  <div id="authSignedOut">' +
             '    <h3 id="authModalTitle" class="auth-modal__title"><i class="fas fa-cloud"></i> Sync your progress</h3>' +
-            '    <p class="auth-modal__text">Sign in with your email to back up your study progress and continue on any device. No password needed &mdash; we send you a magic link.</p>' +
-            '    <form id="authForm" class="auth-modal__form">' +
-            '      <input type="email" id="authEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
-            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-paper-plane"></i><span>Send magic link</span></button>' +
+            '    <p class="auth-modal__text">Back up your study progress and continue on any device with a free account.</p>' +
+            '    <div class="auth-modal__tabs" role="tablist">' +
+            '      <button type="button" class="auth-modal__tab is-active" id="authTabSignIn" role="tab" aria-selected="true">Sign in</button>' +
+            '      <button type="button" class="auth-modal__tab" id="authTabSignUp" role="tab" aria-selected="false">Create account</button>' +
+            '    </div>' +
+            '    <form id="authSignInForm" class="auth-modal__form">' +
+            '      <input type="email" id="authSignInEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
+            '      <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="Password" required autocomplete="current-password">' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>Sign in</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authForgotLink">Forgot password?</button>' +
+            '    </form>' +
+            '    <form id="authSignUpForm" class="auth-modal__form" hidden>' +
+            '      <input type="text" id="authSignUpName" class="auth-modal__input" placeholder="Your name" required maxlength="60" autocomplete="name">' +
+            '      <input type="email" id="authSignUpEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
+            '      <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="Password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>Create account</span></button>' +
+            '    </form>' +
+            '    <form id="authForgotForm" class="auth-modal__form" hidden>' +
+            '      <p class="auth-modal__text auth-modal__text--tight">Enter your email and we will send you a link to reset your password.</p>' +
+            '      <input type="email" id="authForgotEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-envelope"></i><span>Send reset link</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authBackToSignIn">&larr; Back to sign in</button>' +
             '    </form>' +
             '    <p class="auth-modal__status" id="authStatus" hidden></p>' +
-            '    <p class="auth-modal__terms">By signing in you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>' +
+            '    <p class="auth-modal__terms">By signing in or creating an account you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>' +
             '  </div>' +
+
+            '  <div id="authRecovery" hidden>' +
+            '    <h3 class="auth-modal__title"><i class="fas fa-key"></i> Set a new password</h3>' +
+            '    <p class="auth-modal__text">Choose a new password for <strong id="authRecoveryEmail"></strong>.</p>' +
+            '    <form id="authRecoveryForm" class="auth-modal__form">' +
+            '      <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>Save new password</span></button>' +
+            '    </form>' +
+            '    <p class="auth-modal__status" id="authRecoveryStatus" hidden></p>' +
+            '  </div>' +
+
             '  <div id="authSignedIn" hidden>' +
             '    <h3 class="auth-modal__title"><i class="fas fa-user-check"></i> Signed in</h3>' +
             '    <p class="auth-modal__text">Signed in as <strong id="authUserEmail"></strong></p>' +
@@ -128,14 +176,45 @@ const SokratAuth = (function () {
         wrap.addEventListener('click', function (e) {
             if (e.target.closest('[data-auth-close]')) closeModal();
         });
-        document.getElementById('authForm').addEventListener('submit', sendMagicLink);
+        document.getElementById('authTabSignIn').addEventListener('click', function () { showPanel('signin'); });
+        document.getElementById('authTabSignUp').addEventListener('click', function () { showPanel('signup'); });
+        document.getElementById('authForgotLink').addEventListener('click', function () {
+            const email = document.getElementById('authSignInEmail').value;
+            if (email) document.getElementById('authForgotEmail').value = email;
+            showPanel('forgot');
+        });
+        document.getElementById('authBackToSignIn').addEventListener('click', function () { showPanel('signin'); });
+        document.getElementById('authSignInForm').addEventListener('submit', handleSignIn);
+        document.getElementById('authSignUpForm').addEventListener('submit', handleSignUp);
+        document.getElementById('authForgotForm').addEventListener('submit', handleForgot);
+        document.getElementById('authRecoveryForm').addEventListener('submit', handleRecovery);
         document.getElementById('authSignOutBtn').addEventListener('click', signOut);
+    }
+
+    // Panel unutar odjavljenog stanja: 'signin' | 'signup' | 'forgot'
+    // (forgot je podvarijanta Sign in taba, pa tab ostaje aktivan).
+    function showPanel(name) {
+        const signIn = document.getElementById('authSignInForm');
+        const signUp = document.getElementById('authSignUpForm');
+        const forgot = document.getElementById('authForgotForm');
+        if (!signIn || !signUp || !forgot) return;
+        signIn.hidden = name !== 'signin';
+        signUp.hidden = name !== 'signup';
+        forgot.hidden = name !== 'forgot';
+        const tabIn = document.getElementById('authTabSignIn');
+        const tabUp = document.getElementById('authTabSignUp');
+        tabIn.classList.toggle('is-active', name !== 'signup');
+        tabUp.classList.toggle('is-active', name === 'signup');
+        tabIn.setAttribute('aria-selected', name !== 'signup' ? 'true' : 'false');
+        tabUp.setAttribute('aria-selected', name === 'signup' ? 'true' : 'false');
+        setStatus('');
     }
 
     function openModal() {
         const m = document.getElementById('authModal');
         if (!m) return;
         renderModalState();
+        if (!currentUser) showPanel('signin');
         m.hidden = false;
     }
 
@@ -146,13 +225,18 @@ const SokratAuth = (function () {
 
     function renderModalState() {
         const out = document.getElementById('authSignedOut');
+        const rec = document.getElementById('authRecovery');
         const inn = document.getElementById('authSignedIn');
-        if (!out || !inn) return;
+        if (!out || !rec || !inn) return;
+        const showRecovery = !!(recoveryMode && currentUser);
         out.hidden = !!currentUser;
-        inn.hidden = !currentUser;
+        rec.hidden = !showRecovery;
+        inn.hidden = !currentUser || showRecovery;
         if (currentUser) {
             const el = document.getElementById('authUserEmail');
             if (el) el.textContent = currentUser.email || '';
+            const rel = document.getElementById('authRecoveryEmail');
+            if (rel) rel.textContent = currentUser.email || '';
         }
     }
 
@@ -164,23 +248,97 @@ const SokratAuth = (function () {
         el.classList.toggle('is-error', !!isError);
     }
 
+    function setRecoveryStatus(msg, isError) {
+        const el = document.getElementById('authRecoveryStatus');
+        if (!el) return;
+        el.hidden = !msg;
+        el.textContent = msg || '';
+        el.classList.toggle('is-error', !!isError);
+    }
+
     // ---------- Akcije ----------
 
-    async function sendMagicLink(e) {
+    async function handleSignIn(e) {
         e.preventDefault();
         if (!client) return;
-        const email = (document.getElementById('authEmail').value || '').trim();
+        const email = (document.getElementById('authSignInEmail').value || '').trim();
+        const password = document.getElementById('authSignInPassword').value;
+        if (!email || !password) return;
+        setStatus('Signing in…');
+        const { error } = await client.auth.signInWithPassword({ email: email, password: password });
+        if (error) {
+            const msg = /invalid login credentials/i.test(error.message)
+                ? 'Wrong email or password.'
+                : /email not confirmed/i.test(error.message)
+                    ? 'Please confirm your email first — check your inbox for the confirmation link.'
+                    : error.message;
+            setStatus(msg, true);
+        }
+        // Uspjeh: onAuthStateChange zatvara modal i javlja toast.
+    }
+
+    async function handleSignUp(e) {
+        e.preventDefault();
+        if (!client) return;
+        const name = (document.getElementById('authSignUpName').value || '').trim();
+        const email = (document.getElementById('authSignUpEmail').value || '').trim();
+        const password = document.getElementById('authSignUpPassword').value;
+        if (!name || !email || !password) return;
+        setStatus('Creating account…');
+        const { data, error } = await client.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: { display_name: name },
+                emailRedirectTo: window.location.origin + window.location.pathname
+            }
+        });
+        if (error) {
+            setStatus(error.message, true);
+            return;
+        }
+        // Uz uključenu potvrdu emaila Supabase za već registriran email vrati
+        // „lažnog" usera bez identities (anti-enumeration) — prepoznaj i uputi na login.
+        if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
+            setStatus('An account with this email already exists — switch to Sign in.', true);
+            return;
+        }
+        if (data && data.session) return; // potvrda isključena → odmah prijavljen (onAuthStateChange)
+        setStatus('Account created! Check your inbox and click the confirmation link, then sign in.');
+    }
+
+    async function handleForgot(e) {
+        e.preventDefault();
+        if (!client) return;
+        const email = (document.getElementById('authForgotEmail').value || '').trim();
         if (!email) return;
         setStatus('Sending…');
-        const { error } = await client.auth.signInWithOtp({
-            email: email,
-            options: { emailRedirectTo: window.location.origin + window.location.pathname }
+        const { error } = await client.auth.resetPasswordForEmail(email, {
+            redirectTo: window.location.origin + window.location.pathname
         });
         if (error) {
             setStatus(error.message, true);
         } else {
-            setStatus('Check your inbox — we sent you a sign-in link. You can close this window.');
+            setStatus('If an account exists for that email, a reset link is on its way — check your inbox.');
         }
+    }
+
+    async function handleRecovery(e) {
+        e.preventDefault();
+        if (!client) return;
+        const password = document.getElementById('authRecoveryPassword').value;
+        if (!password) return;
+        setRecoveryStatus('Saving…');
+        const { error } = await client.auth.updateUser({ password: password });
+        if (error) {
+            setRecoveryStatus(error.message, true);
+            return;
+        }
+        recoveryMode = false;
+        setRecoveryStatus('');
+        document.getElementById('authRecoveryPassword').value = '';
+        renderModalState();
+        if (typeof showToast === 'function') showToast('Password updated — you are signed in.');
     }
 
     async function signOut() {
@@ -190,12 +348,13 @@ const SokratAuth = (function () {
         if (typeof showToast === 'function') showToast('Signed out. Progress stays on this device.');
     }
 
-    // ---------- Javno API (koristi cloud-sync.js) ----------
+    // ---------- Javno API (koriste cloud-sync.js i profile.js) ----------
 
     return {
         init: init,
         getClient: function () { return client; },
         getUser: function () { return currentUser; },
+        getDisplayName: getDisplayName,
         onChange: function (fn) { changeListeners.push(fn); },
         openModal: openModal,
         signOut: signOut,

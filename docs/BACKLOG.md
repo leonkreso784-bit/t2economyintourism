@@ -3,20 +3,17 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
-## ▶ SLJEDEĆE — Auth prelazak na email+lozinku (dogovoreno 2026-06-12)  🔥
-**Korisnikova odluka:** magic-link NE — korisnici moraju imati **lozinku, profil i sve**. Dogovoreno (AskUserQuestion):
-1. **Email + lozinka** (signUp/signInWithPassword); **email POTVRDA obavezna** nakon registracije (Supabase default).
-2. **Magic-link se MIČE** (čisto: samo lozinka).
-3. **Ime pri registraciji** („Your name" → `user_metadata.display_name`; prikazuje se na profilu i nav gumbu).
-4. **Google login KASNIJE** (uz lozinku; treba korisnikov OAuth client u Google Cloud Consoleu).
+## ✅ GOTOVO (2026-06-13) — Auth prelazak na email+lozinku
+**Implementirano po dogovoru od 2026-06-12** (detalji: `docs/PROGRESS.md` 2026-06-13 + `docs/BACKEND.md` §Staza B):
+email+lozinka (signUp/signInWithPassword), email potvrda obavezna, magic-link UKLONJEN, ime pri registraciji
+(`display_name`, na profilu i nav gumbu), Forgot/Change password, pravne stranice ažurirane. Baza nepromijenjena.
+**Ručni korak korisnika:** Supabase dashboard → Auth → Providers → Email → min duljina lozinke 8.
+**Deploy gate i dalje vrijedi** (push tek uz potvrdu korisnika).
 
-**Implementacijski plan (sve u `js/auth.js` + modal; baza se NE mijenja):** modal s 2 kartice Sign in / Create account;
-„Forgot password?" → `resetPasswordForEmail` → `PASSWORD_RECOVERY` event → forma za novu lozinku (`updateUser`);
-profil dobiva „Change password" + ime; `privacy.html` ažurirati („no passwords" → „lozinke hashirane, Supabase").
-Supabase dashboard: min duljina lozinke 8 (Auth → Providers → Email). **Deploy gate i dalje vrijedi.**
-
-**Kasnije (uz puni backend/admin):** onboarding **anketa pri ulasku u sustav** — korisnikova ideja (2026-06-12); veže se
-na budući backend za izradu sadržaja iz PDF prezentacija (admin/ingest alati).
+**Ostaje za kasnije:**
+- **Google login** (uz lozinku; treba korisnikov OAuth client u Google Cloud Consoleu).
+- **Onboarding anketa pri ulasku u sustav** — korisnikova ideja (2026-06-12); veže se na budući backend za izradu
+  sadržaja iz PDF prezentacija (admin/ingest alati).
 
 ## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
 **Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **2/4 gotovo** — **Accounting ✅** (3 lekcije + jedinstveni

@@ -61,8 +61,8 @@
 /* Learn section - LAST to override responsive.css conflicts */
 @import url('css/learn.css?v=20260610');
 
-/* Auth (Sign-in gumb + magic-link modal) — samostalan modul, ne gazi ništa */
-@import url('css/auth.css?v=20260641');
+/* Auth (Sign-in gumb + email+lozinka modal) — samostalan modul, ne gazi ništa */
+@import url('css/auth.css?v=20260642');
 
 /* Profile stranica + header auth gumbi — samostalan modul */
-@import url('css/profile.css?v=20260641');
+@import url('css/profile.css?v=20260642');

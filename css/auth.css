@@ -1,5 +1,5 @@
 /* =====================================================
-   SOKRAT STUDY — AUTH (Sign-in gumb + magic-link modal)
+   SOKRAT STUDY — AUTH (Sign-in gumb + email+lozinka modal)
    ===================================================== */
 
 /* ---------- Nav gumb ---------- */
@@ -98,11 +98,68 @@
     color: var(--text-secondary);
 }
 
+/* ---------- Tabovi (Sign in / Create account) ---------- */
+
+.auth-modal__tabs {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    padding: 0.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.auth-modal__tab {
+    flex: 1;
+    padding: 0.5rem 0.6rem;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.auth-modal__tab:hover { color: var(--text-primary); }
+
+.auth-modal__tab.is-active {
+    background: rgba(99, 102, 241, 0.18);
+    color: var(--primary-light);
+}
+
+/* ---------- Forme ---------- */
+
 .auth-modal__form {
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
 }
+
+/* display:flex gore bi pregazio UA [hidden] { display:none } — vrati ga eksplicitno */
+.auth-modal__form[hidden] { display: none; }
+
+.auth-modal__text--tight { margin-bottom: 0.1rem; }
+
+/* Tekstualni gumb-link unutar forme (Forgot password? / Back to sign in) */
+.auth-modal__link {
+    align-self: center;
+    padding: 0.15rem 0.25rem;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.auth-modal__link:hover { color: var(--primary-light); }
 
 .auth-modal__input {
     width: 100%;

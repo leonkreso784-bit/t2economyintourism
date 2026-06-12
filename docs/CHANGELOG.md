@@ -20,6 +20,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `givens` (isti mehanizam kao `ratio` tip; izdvojen zajednički helper `givensTableHtml`). Dodani izvorni saldi: `k1-statement-bs-1`
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
+### Changed
+- **Backend staza B (3. dio) — auth prelazak na EMAIL+LOZINKU, magic-link uklonjen:** `js/auth.js` prepisan —
+  modal s tabovima **Sign in** (`signInWithPassword`, prijateljske greške) / **Create account** (ime →
+  `user_metadata.display_name`, email, lozinka min 8; `signUp` + **obavezna email potvrda**; anti-enumeration
+  „already exists" detekcija) + **Forgot password** tok (`resetPasswordForEmail` → `PASSWORD_RECOVERY` →
+  „Set a new password" forma, `updateUser`). Nav gumbi prikazuju ime; profil: ime kao naslov + **„Change password"**
+  inline forma. CSS: tabovi + `.auth-modal__form[hidden]`/`.profile-pass-form[hidden]` fixevi. Pravne stranice
+  ažurirane (privacy: ime+lozinka-hash; terms: povjerljivost lozinke; faq). `tests/auth.spec.js` prepisan
+  (tabovi/polja/forgot). Cache `?v=20260642`. Baza se NE mijenja. Dashboard korak: min duljina lozinke 8.
 ### Added
 - **Backend staza B (2. dio) — Profile + auth kroz frontend + Google Ads stranice:** **`#profile-page`**
   (`js/profile.js` + `css/profile.css` + ruta u `navigateTo`; ne sprema se kao last-position): account/sync/progress-overview

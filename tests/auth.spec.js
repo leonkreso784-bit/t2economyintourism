@@ -1,9 +1,9 @@
-// Backend staza B: auth UI (Sign in gumb + magic-link modal).
+// Backend staza B: auth UI (Sign in gumb + email+lozinka modal s tabovima).
 // Auth se tiho gasi ako je supabase-js CDN nedostupan — tada se test preskače
 // (offline okruženje), jer je upravo to željeno ponašanje appa.
 const { test, expect } = require('@playwright/test');
 
-test('auth: sign-in button appears and magic-link modal opens/closes', async ({ page }) => {
+test('auth: sign-in button opens password modal with tabs and forgot flow', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
@@ -18,11 +18,31 @@ test('auth: sign-in button appears and magic-link modal opens/closes', async ({ 
   }
   test.skip(!cdnOk, 'supabase-js CDN unreachable — auth disabled by design, app radi bez njega');
 
-  // Modal otvaranje
+  // Modal otvaranje → default je Sign in tab s email+password poljima
   await btn.click();
   await expect(page.locator('#authModal')).toBeVisible();
-  await expect(page.locator('#authEmail')).toBeVisible();
-  await expect(page.locator('#authForm .auth-modal__submit')).toBeVisible();
+  await expect(page.locator('#authTabSignIn')).toHaveClass(/is-active/);
+  await expect(page.locator('#authSignInEmail')).toBeVisible();
+  await expect(page.locator('#authSignInPassword')).toBeVisible();
+  await expect(page.locator('#authSignUpForm')).toBeHidden();
+
+  // Tab Create account → ime + email + lozinka (min 8)
+  await page.click('#authTabSignUp');
+  await expect(page.locator('#authTabSignUp')).toHaveClass(/is-active/);
+  await expect(page.locator('#authSignUpName')).toBeVisible();
+  await expect(page.locator('#authSignUpEmail')).toBeVisible();
+  await expect(page.locator('#authSignUpPassword')).toBeVisible();
+  await expect(page.locator('#authSignUpPassword')).toHaveAttribute('minlength', '8');
+  await expect(page.locator('#authSignInForm')).toBeHidden();
+
+  // Natrag na Sign in → Forgot password? → reset forma → Back to sign in
+  await page.click('#authTabSignIn');
+  await page.click('#authForgotLink');
+  await expect(page.locator('#authForgotEmail')).toBeVisible();
+  await expect(page.locator('#authSignInForm')).toBeHidden();
+  await page.click('#authBackToSignIn');
+  await expect(page.locator('#authSignInEmail')).toBeVisible();
+  await expect(page.locator('#authForgotForm')).toBeHidden();
 
   // Zatvaranje na X
   await page.click('.auth-modal__close');

@@ -12,10 +12,15 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   Service key NIJE potreban i NE koristi se; `/api` funkcije dolaze tek kad zatrebaju
   (AI tutor, admin, content-staza A).
 - **Shema:** `supabase/schema.sql` — pokrenuti u Supabase SQL editoru (idempotentno).
-- **Auth:** email magic-link (`signInWithOtp`), `js/auth.js`. Potrebna konfiguracija u
-  Supabase dashboardu: Auth → URL Configuration → **Site URL `https://www.sokratstudy.com`**
-  + additional redirect **`http://localhost:5050`** (lokalni test). Free tier šalje ~3-4
-  auth maila/sat — za skalu kasnije custom SMTP (Resend i sl.).
+- **Auth (od 2026-06-13): email + LOZINKA** (`js/auth.js`; magic-link uklonjen na korisnikov zahtjev).
+  Modal s tabovima **Sign in** (`signInWithPassword`) / **Create account** (ime →
+  `user_metadata.display_name` + email + lozinka min 8; `signUp` s `emailRedirectTo` →
+  **email potvrda obavezna**) + **Forgot password** (`resetPasswordForEmail` →
+  `PASSWORD_RECOVERY` event → forma za novu lozinku, `updateUser`). Profil ima „Change password".
+  Potrebna konfiguracija u Supabase dashboardu: Auth → URL Configuration → **Site URL
+  `https://www.sokratstudy.com`** + additional redirect **`http://localhost:5050`** (lokalni test);
+  Auth → Providers → Email → **min duljina lozinke 8**. Free tier šalje ~3-4 auth maila/sat
+  (potvrde + reseti) — za skalu kasnije custom SMTP (Resend i sl.).
 - **Sync (`js/cloud-sync.js`):** offline-first; pull+merge na login (brojevi=max,
   string-polja=unija, objekti rekurzivno — naučeno se nikad ne gubi), diff-push 30 s +
   visibility/beforeunload. App bez računa radi identično kao prije (auth je aditivan).

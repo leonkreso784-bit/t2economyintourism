@@ -15,7 +15,8 @@
     navigacija CTA-ova, overflow guard.
   - `lazy-load.spec.js` — sadržaj predmeta se NE učita na startu, nego tek na otvaranje (A4).
   - `sidebar.spec.js` — legacy sidebar render iz catalog-a.
-  - `auth.spec.js` — Sign-in gumb + magic-link modal (otvaranje/zatvaranje, bez overflowa);
+  - `auth.spec.js` — Sign-in gumb + email+lozinka modal: tabovi Sign in / Create account
+    (polja, minlength=8), Forgot password tok (forma + back), otvaranje/zatvaranje, bez overflowa;
     **skip ako je supabase-js CDN nedostupan** (auth se tada tiho gasi — željeno ponašanje).
     + Profile stranica: sign-in prompt za odjavljene, back na landing, NE sprema se u last-position.
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
