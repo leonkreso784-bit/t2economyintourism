@@ -21,13 +21,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
-- **Tourism Economics (te2) restrukturiran na K1/K2/finalni:** novi `data/te2/` (midterm-1 `te2M1` / midterm-2 `te2M2` /
-  final `te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`). Granica iz silabusa 2025/26 (slajd „Important dates"):
-  **K1 = Units 1–6** (fundamentals, demand, supply, marketStructure), **K2 = Units 7–12** (pricing, expenditure, tsa, environment,
-  sustainability). Finalni = 9 tematskih kat + nova `examPractice` (All Units) → **10 kat / 72 fc / 49 quiz / 23 fill**. Vjeran SPLIT
-  postojećeg `te2FinalData` (ključevi kat. nepromijenjeni → napredak očuvan). Catalog: lekcije `first-midterm`/`second-midterm`/`final`.
-  Stari root `data-te2.js`/`data-te2-final.js` obrisani; `lazy-load.spec.js` sentinel → `window.te2M1`. verify 0/0, node render-sanity,
-  Playwright. Cache `?v=20260639`.
+- **Tourism Economics (te2) restrukturiran + REBUILD iz PDF predavanja:** novi `data/te2/` (midterm-1 `te2M1` / midterm-2 `te2M2` /
+  final `te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`). Sadržaj **prepisan iz 10 profesorskih PDF-ova** (ne split
+  starog tankog `te2FinalData`). Granica iz silabusa 2025/26 (slajd „Important dates"): **K1 = Units 1–6** (fundamentals, demand,
+  **forecasting (nova kat.)**, supply, marketStructure — 61 fc), **K2 = Units 7–12** (pricing, expenditure, tsa, environment,
+  sustainability — 62 fc). **Ispravak činjenice:** stari sadržaj je tvrdio „price is NOT the most critical variable" — slajd kaže
+  suprotno (najkritičnija + najprilagodljivija). Dodano: 4 oblika elasticiteta, sve pricing podstrategije, 5 tipova multiplikatora +
+  realnost (≤2), 4 tipa dobara, Easterlin/decoupling/rebound, regenerativni turizam/degrowth. Finalni = 10 kat + obnovljena
+  `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. Catalog: lekcije `first-midterm`/`second-midterm`/`final`. Stari root
+  `data-te2.js`/`data-te2-final.js` obrisani; `lazy-load.spec.js` sentinel → `window.te2M1`. verify 0/0, node render-sanity, Playwright.
+  Cache `?v=20260639`.
 - **Exercises — K2 koncepti Ch13/14/15/16 → K2 KOMPLETAN [B3.11]:** **4 nove `choice` vježbe** iz autentičnih workbook assignmenta:
   `k2-ch13-annual-reports` (8 MC — SOX/SEC/10-K/audit opinions/consolidated), `k2-ch14-computerised` (6 MC — POS/merchant account/cards),
   `k2-ch15-breakeven` (6 MC — cost behavior/breakeven = FC ÷ contribution margin %), `k2-ch16-internal-control` (12 TF — segregation of duties/

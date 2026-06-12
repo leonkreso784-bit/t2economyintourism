@@ -19,67 +19,62 @@ const te2ExamPractice = {
         {
             question: "What is the structure and weight of the Tourism Economics final exam?",
             answer: "The final exam is worth 30% of the grade (minimum 15 points / 50% to pass it). It is written form with 10 questions: 5 close-ended + 5 open-ended, covering all units 1–12. The prerequisite to sit it is at least 35% from coursework (the two midterm tests + activities).",
-            explanation: "The two midterm tests are each worth 24% (Σ48%); the final adds 30%."
+            explanation: "Each midterm test is worth 24% (Σ48%); the final adds 30%."
         },
         {
             question: "Which units make up the two midterm 'halves' that the final combines?",
-            answer: "1st midterm = units 1–6: tourism key concepts & market, demand & elasticity, forecasting demand, supply factors & elasticity, supply production & costs, and market structure.\n2nd midterm = units 7–12: strategic pricing, economic impacts & tourist expenditure, economic contribution, measuring contribution (TSA), tourism & the environment, and sustainable tourism development.",
+            answer: "1st midterm (Units 1–6): tourism fundamentals & market, demand & elasticity, forecasting demand, supply & costs, and market structure.\n2nd midterm (Units 7–12): strategic pricing, economic impacts & expenditure, economic contribution & TSA, environment & market failure, and sustainable tourism development.",
             explanation: "Per the 2025/26 'Important dates' slide, Strategic Pricing (unit 7) belongs to the 2nd midterm."
         },
         {
-            question: "Where does ELASTICITY appear across the course (demand, supply, pricing)?",
-            answer: "Demand: Price Elasticity of Demand = %ΔQd / %ΔP (inverse Law of Demand). Supply: supply elasticity measures how output responds to price (often inelastic short-run because capacity is fixed). Pricing: elastic demand + higher price → fewer buyers; inelastic demand + lower price → small revenue.",
-            explanation: "Elasticity is the single thread linking demand (unit 2), supply (unit 4) and pricing (unit 7)."
+            question: "Where does ELASTICITY appear across the course, and how many forms of demand elasticity are there?",
+            answer: "There are FOUR forms of demand elasticity: price, income, cross-price, and marketing (advertising) — each = %ΔQuantity demanded / %Δdriver. Elasticity links demand (unit 2), supply (response to price), and pricing (elastic demand + higher price → fewer buyers; inelastic + lower price → small revenue). Firms differentiate to REDUCE elasticity and raise price/revenue.",
+            explanation: "The 'marketing/advertising' elasticity is the fourth form often forgotten."
         },
         {
-            question: "Explain the three types of tourist expenditure and how they build the multiplier.",
-            answer: "Direct (tourists pay hotels/restaurants directly) + Indirect (those firms buy inputs from other firms) + Induced (workers spend their wages downstream) = Total Effect. Multiplier = Total Impact / Direct Expenditure.",
-            explanation: "Direct + Indirect + Induced is the chain that makes one euro of tourist spending 'multiply' through the economy."
+            question: "Explain the expenditure chain and the realistic size of the tourism multiplier.",
+            answer: "Tourist expenditure → Direct (paid to suppliers) + Indirect (upstream supply chain) + Induced (recipients spend incomes) = Total Effect. Multiplier = Total Impact / Direct Expenditure. In reality it is unlikely to EXCEED 2 (when indirect = direct, multiplier = 2), so €100 m of new expenditure adds < €200 m to GDP. Leakages and factor constraints shrink it.",
+            explanation: "A key reality check from Dwyer's lectures against inflated multiplier claims."
         },
         {
-            question: "What is the difference between tourism's economic CONTRIBUTION and economic IMPACT, and how is contribution measured?",
-            answer: "Contribution = the ongoing effect of tourism spending on key economic variables (GDP, employment, value added). Impact = the CHANGE in that contribution caused by a specific event/activity. Contribution is measured with the TSA (Tourism Satellite Accounts) — needed because tourism is not a distinct sector in national accounts.",
-            explanation: "Contribution is a 'state', impact is a 'change'; the TSA is the standard measurement tool (units 9–10)."
+            question: "Distinguish economic CONTRIBUTION from economic IMPACT, and explain why the TSA is needed.",
+            answer: "Contribution = tourism's ongoing economic significance (its effect on GDP, household income, value added, FX, employment). Impact = the CHANGE in contribution from a specific event/policy. The TSA (Tourism Satellite Account, endorsed by the UN Statistical Commission) is needed because tourism is NOT a distinct sector in the national accounts — the TSA extends them to measure it.",
+            explanation: "Contribution is a 'state'; impact is a 'change'; the TSA measures the contribution."
         },
         {
-            question: "Why does tourism cause MARKET FAILURE, and what links this to sustainability?",
-            answer: "Three sources of market failure: lack of property rights to environmental resources, externalities, and public goods. Because no one owns/prices the environment, it gets overused (e.g. exceeding carrying capacity) — which is why sustainable & regenerative tourism and economic instruments (taxes on pollution) are needed.",
-            explanation: "Market failure (unit 11) is the economic reason sustainability policy (unit 12) is required."
+            question: "Why does tourism cause MARKET FAILURE, and what are the four types of goods?",
+            answer: "Three sources of market failure: lack of property rights, public goods, and externalities. Goods are classified by excludability × rivalry: Private (excl + rival), Common (non-excl + rival, e.g. oceans/forests), Club (excl + non-rival, e.g. Wi-Fi), Public (non-excl + non-rival). Common-pool resources lead to the 'tragedy of the commons'.",
+            explanation: "Because the environment is under-priced, it gets over-used — justifying carrying-capacity limits and eco-taxes."
         },
         {
-            question: "Compare the 4 market structures from most to least competitive.",
-            answer: "1. Perfect competition (many buyers & sellers, identical products). 2. Monopolistic competition (many sellers, differentiated products). 3. Oligopoly (a few firms dominate). 4. Monopoly (one seller). Structure shapes the firm's conduct (decisions) and performance (profit potential).",
-            explanation: "Airlines/large hotel chains often behave like an oligopoly; many small B&Bs resemble monopolistic competition."
+            question: "Compare the 4 market structures and give a tourism example of each.",
+            answer: "Perfect competition (many firms, identical products, price-taker → street stalls); Monopolistic competition (many, differentiated → restaurants, hotels, B&Bs, travel agencies); Oligopoly (a few interdependent firms, strong barriers → tour operators, airlines); Monopoly (one seller, no substitute → nationalized railways).",
+            explanation: "Structure shapes the firm's conduct and performance (the SCP framework)."
         },
         {
-            question: "List the costs and benefits of tourism across the three dimensions.",
-            answer: "Benefits: Economic (jobs, income, investment), Socio-cultural (exchange, heritage), Environmental (protection, awareness). Costs: Economic (↑ prices, cost of living, property taxes), Socio-cultural (hectic community, loss of authenticity), Environmental (water quality, coastal erosion).",
-            explanation: "The same three dimensions (economic / socio-cultural / environmental) carry both the upside and the downside of tourism growth."
+            question: "Summarise the three pricing strategies and a key tactic of each.",
+            answer: "Cost-based (e.g. cost-plus, profit max where MR=MC, peak-load); Market-based / customer-oriented (e.g. price discrimination, skimming, penetration, bundling); Competition-based (e.g. price leadership, predatory pricing, transfer pricing). Price is the MOST adjustable variable and signals quality.",
+            explanation: "Cost anchors to costs, market to willingness-to-pay, competition to rivals."
         },
         {
-            question: "What is the difference between SUSTAINABLE and REGENERATIVE tourism?",
-            answer: "Sustainable tourism seeks to LESSEN the harm done by tourism (do less damage). Regenerative tourism goes further: it actively contributes to the regeneration of ecosystems, economies and cultures — the goal is to leave a destination BETTER than it was found.",
-            explanation: "Sustainable = do less harm; Regenerative = do more good. Sustainable Development = Social + Economic + Environmental."
+            question: "What is the difference between SUSTAINABLE and REGENERATIVE tourism, and what is 'decoupling'?",
+            answer: "Sustainable tourism seeks to LESSEN the harm done by tourism; regenerative tourism aims for a NET POSITIVE benefit (restoration & regeneration). Decoupling = separating growth from environmental harm; absolute decoupling (output up while impact falls) has no real-world evidence — the 'decoupling myth'.",
+            explanation: "Sustainable = do less harm; regenerative = do more good. Sustainable Development = Economic + Social + Environmental."
         },
         {
-            question: "What are the 7 determinants of tourism prices?",
-            answer: "1. Firm's objective\n2. Ownership characteristics\n3. Market structure\n4. Distribution method\n5. Market position\n6. Degree of competition\n7. Cost structure",
-            explanation: "Note that 'market structure' (unit 6) is itself one of the price determinants — the course units interlock."
+            question: "Give the core cost and product formulas for a tourism firm.",
+            answer: "TC = FC + VC; AC = TC/Q; AFC = FC/Q; AVC = VC/Q; MC = dTC/dQ. Product: TP (total), AP = TP/Q (per worker), MP = change in TP from one extra unit of the variable factor. Explicit costs = payments to outsiders; implicit costs = opportunity cost of own resources.",
+            explanation: "Economies of scale lower long-run average cost (LRAC) as all inputs rise."
         },
         {
-            question: "Distinguish the special demand effects: Bandwagon, Snob, and Veblen.",
-            answer: "Bandwagon: demand MORE because others buy it (fashionable). Snob: demand LESS as more people consume it (exclusivity). Veblen: demand MORE of a 'high-status' good as its PRICE RISES (prestige).",
-            explanation: "Snob and Veblen both contradict the simple Law of Demand for status/luxury tourism products."
+            question: "What are the 5 types of multipliers and the 7 major impacts of tourist expenditure?",
+            answer: "5 multipliers: sales, output, income, value-added, employment. 7 impacts: increased local production/output, new business & employment, foreign-exchange earnings (international only), new investment, government revenue, regional development, and poverty reduction.",
+            explanation: "FX earnings arise only from INTERNATIONAL tourism (an export industry)."
         },
         {
-            question: "Give the core cost formulas for a tourism firm.",
-            answer: "TC = FC + VC (Total = Fixed + Variable). AC = TC/Q, AFC = FC/Q, AVC = VC/Q, MC = dTC/dQ. Explicit costs = direct payments to suppliers; Implicit costs = opportunity cost of own resources.",
-            explanation: "Fixed vs variable inputs and economies/diseconomies of scale drive a tourism firm's cost curves."
-        },
-        {
-            question: "What are the 5 A's of tourism and the 3 key dimensions that define tourism?",
-            answer: "5 A's: Attractions, Access, Amenities, Accommodation, Activities. 3 dimensions of tourism: Movement, Length of stay, Motivation. Visitors = Tourists (>24h) + Day-trippers (<24h).",
-            explanation: "The fundamentals (unit 1) frame everything else — what tourism IS before analysing its economics."
+            question: "What are the 5 A's of tourism and the 3 dimensions that define tourism?",
+            answer: "5 A's: Attractions, Access, Accommodation, Amenities, Activities. 3 dimensions of tourism: Movement, Length of stay, Motivation. Visitors = Tourists (>24 h, overnight) + Day-trippers (<24 h).",
+            explanation: "Unit 1 fundamentals frame the whole course before its economics."
         }
     ],
 
@@ -91,57 +86,57 @@ const te2ExamPractice = {
         },
         {
             question: "Which unit belongs to the 2nd midterm (units 7–12)?",
-            options: ["Market structure", "Tourism demand", "Strategic pricing", "Supply & costs"],
+            options: ["Market structure", "Forecasting demand", "Strategic pricing", "Tourism demand"],
             correct: 2
         },
         {
-            question: "Price Elasticity of Demand is calculated as:",
-            options: ["%ΔPrice / %ΔQuantity", "%ΔQuantity demanded / %ΔPrice", "Total Impact / Direct Expenditure", "TC / Q"],
+            question: "How many forms of tourism demand elasticity are there?",
+            options: ["2", "3", "4", "5"],
+            correct: 2
+        },
+        {
+            question: "The tourism multiplier is realistically unlikely to exceed:",
+            options: ["1", "2", "5", "10"],
             correct: 1
         },
         {
-            question: "The tourism multiplier equals:",
-            options: ["Direct / Total Impact", "Total Impact / Direct Expenditure", "Indirect + Induced", "TGVA / TGDP"],
+            question: "The TSA is needed because tourism:",
+            options: ["Pays no tax", "Is not a distinct sector in the national accounts", "Is too small", "Has no demand"],
             correct: 1
         },
         {
-            question: "Economic IMPACT (as opposed to contribution) refers to:",
-            options: ["Ongoing effect of tourism spending", "Changes in contribution from specific events", "The TSA framework", "Number of tourist arrivals"],
-            correct: 1
+            question: "Oceans and forests (non-excludable but rival) are examples of:",
+            options: ["Private goods", "Club goods", "Common goods", "Public goods"],
+            correct: 2
         },
         {
-            question: "Which is NOT a source of market failure in tourism?",
-            options: ["Externalities", "Public goods", "Lack of property rights", "Economies of scale"],
-            correct: 3
-        },
-        {
-            question: "Which market structure has a few dominant firms?",
+            question: "Airlines and tour operators are typical examples of:",
             options: ["Perfect competition", "Monopolistic competition", "Oligopoly", "Monopoly"],
             correct: 2
         },
         {
-            question: "Regenerative tourism differs from sustainable tourism because it:",
-            options: ["Only lessens harm", "Actively restores and improves the destination", "Maximises arrivals", "Ignores local communities"],
+            question: "Setting a low initial price to win market share is:",
+            options: ["Skimming", "Penetration pricing", "Predatory pricing", "Peak-load pricing"],
             correct: 1
         },
         {
-            question: "The Veblen Effect describes demand that:",
-            options: ["Falls as others buy", "Rises because a good is fashionable", "Rises as the price of a status good rises", "Is unaffected by price"],
-            correct: 2
+            question: "Regenerative tourism (vs sustainable) aims for:",
+            options: ["Only lessening harm", "A net positive benefit / restoration", "Maximum arrivals", "Lower taxes"],
+            correct: 1
         },
         {
-            question: "Total Cost is defined as:",
+            question: "Foreign-exchange earnings come from:",
+            options: ["Domestic tourism", "International tourism", "Government grants", "Local spending"],
+            correct: 1
+        },
+        {
+            question: "Total Cost is:",
             options: ["FC − VC", "FC + VC", "FC × VC", "VC / Q"],
             correct: 1
         },
         {
-            question: "TSA is needed because tourism:",
-            options: ["Is too small to measure", "Is not a distinct sector in national accounts", "Has no economic value", "Pays no taxes"],
-            correct: 1
-        },
-        {
-            question: "Sustainable Development combines:",
-            options: ["Social + Economic only", "Economic + Environmental only", "Social + Economic + Environmental", "Marketing + Sales + Finance"],
+            question: "Absolute decoupling means output grows while environmental impact:",
+            options: ["Grows faster", "Grows more slowly", "Falls in absolute terms", "Is unchanged"],
             correct: 2
         }
     ],
@@ -155,7 +150,7 @@ const te2ExamPractice = {
         {
             sentence: "Total Effect = Direct + Indirect + _______ expenditure.",
             answer: "Induced",
-            hint: "When workers spend their wages downstream..."
+            hint: "Recipients spending incomes downstream..."
         },
         {
             sentence: "Multiplier = Total Impact / _______ Expenditure.",
@@ -163,29 +158,29 @@ const te2ExamPractice = {
             hint: "The initial tourist spending..."
         },
         {
-            sentence: "Tourism is measured with the TSA = Tourism _______ Accounts.",
+            sentence: "Tourism is measured with the TSA = Tourism _______ Account.",
             answer: "Satellite",
-            hint: "Orbits the main national accounts..."
+            hint: "It orbits the national accounts..."
         },
         {
-            sentence: "The three sources of market failure are externalities, public goods, and lack of _______ rights.",
-            answer: "property",
-            hint: "Who owns the resource..."
+            sentence: "The four demand elasticities are price, income, cross-price and _______.",
+            answer: "marketing",
+            hint: "Also called advertising elasticity..."
         },
         {
-            sentence: "_______ tourism aims to leave a destination BETTER than it was found.",
+            sentence: "_______ tourism aims to leave a destination BETTER than it was found (net positive).",
             answer: "Regenerative",
             hint: "Beyond sustainable..."
         },
         {
-            sentence: "Sustainable Development = Social + Economic + _______.",
-            answer: "Environmental",
-            hint: "Nature, resources..."
+            sentence: "Price is the most _______ of the firm's decision variables.",
+            answer: "adjustable",
+            hint: "Quick to change..."
         },
         {
-            sentence: "Price and tourism demand have an _______ relationship (Law of Demand).",
-            answer: "inverse",
-            hint: "Opposite of direct..."
+            sentence: "Sustainable Development = Economic + Social + _______.",
+            answer: "Environmental",
+            hint: "Nature, resources..."
         }
     ],
 
@@ -193,41 +188,42 @@ const te2ExamPractice = {
         title: "Final Exam Roadmap (Units 1–12)",
         content: `
             <h3>📋 What the Final Covers</h3>
-            <p>The final exam is <strong>worth 30%</strong> (minimum <strong>15 points / 50%</strong> to pass it) and is written form: <strong>10 questions</strong> — 5 close-ended + 5 open-ended — across <strong>all units 1–12</strong>. Prerequisite to sit it: at least <strong>35%</strong> from coursework (the two midterm tests + activities).</p>
-            <p>Use this category to drill <strong>across units</strong>; the 9 topic categories remain available in this same lesson for deep revision.</p>
+            <p>The final exam is <strong>worth 30%</strong> (minimum <strong>15 points / 50%</strong> to pass it), written form: <strong>10 questions</strong> — 5 close-ended + 5 open-ended — across <strong>all units 1–12</strong>. Prerequisite: at least <strong>35%</strong> from coursework.</p>
+            <p>Use this category to drill <strong>across units</strong>; the per-unit topic categories remain available in this same lesson for deep revision.</p>
 
             <h3>📈 First Midterm Half — Units 1–6</h3>
             <table><tr><th>Unit</th><th>Must-know anchor</th></tr>
-            <tr><td>1. Fundamentals</td><td>'tour' = Latin tornus; 5 A's; visitors = tourists (&gt;24h) + day-trippers; UNWTO</td></tr>
-            <tr><td>2–3. Demand</td><td>Law of Demand (inverse); PED = %ΔQ/%ΔP; Bandwagon / Snob / Veblen; 3 forecasting methods</td></tr>
-            <tr><td>4–5. Supply &amp; Costs</td><td>Natural/human/human-made inputs; TC = FC + VC; explicit vs implicit; economies of scale</td></tr>
-            <tr><td>6. Market Structure</td><td>Perfect comp → monopolistic → oligopoly → monopoly; 3 competitive strategies</td></tr></table>
+            <tr><td>1. Fundamentals & Market</td><td>'tour' = Latin tornus; 5 A's; visitors = tourists + day-trippers; intangible product</td></tr>
+            <tr><td>2. Demand</td><td>Law of Demand (inverse); FOUR elasticities; Bandwagon / Snob / Veblen</td></tr>
+            <tr><td>3. Forecasting</td><td>Qualitative / Quantitative / AI; time-series vs causal; regression analysis</td></tr>
+            <tr><td>4–5. Supply & Costs</td><td>3 inputs; TC = FC + VC; explicit vs implicit; economies of scale</td></tr>
+            <tr><td>6. Market Structure</td><td>Perfect → monopolistic → oligopoly → monopoly; cost leadership / differentiation / focus</td></tr></table>
 
             <h3>💶 Second Midterm Half — Units 7–12</h3>
             <table><tr><th>Unit</th><th>Must-know anchor</th></tr>
-            <tr><td>7. Pricing</td><td>Price is NOT the most critical variable; 7 determinants; cost/market/competition-based</td></tr>
-            <tr><td>8. Expenditure</td><td>Direct + Indirect + Induced = Total Effect; Multiplier = Total Impact / Direct; 5 multiplier types</td></tr>
-            <tr><td>9–10. TSA</td><td>Contribution vs Impact; TGVA / TGDP; tourism not a distinct sector → use TSA</td></tr>
-            <tr><td>11. Environment</td><td>Market failure: property rights, externalities, public goods; carrying capacity; economic instruments</td></tr>
-            <tr><td>12. Sustainability</td><td>Sustainable = lessen harm; Regenerative = restore; Sustainable Dev = Social + Economic + Environmental</td></tr></table>
+            <tr><td>7. Strategic Pricing</td><td>Price is most adjustable; cost/market/competition-based; skimming vs penetration; price discrimination</td></tr>
+            <tr><td>8. Economic Impacts</td><td>Direct + Indirect + Induced; Multiplier = Total/Direct; 5 multiplier types; multiplier ≤ 2; leakages</td></tr>
+            <tr><td>9–10. Contribution & TSA</td><td>Contribution vs impact; tourism not a distinct sector → TSA; characteristic vs connected products</td></tr>
+            <tr><td>11. Environment</td><td>Market failure (property rights, public goods, externalities); 4 goods; carrying capacity</td></tr>
+            <tr><td>12. Sustainability</td><td>3 pillars; growth management vs degrowth; Easterlin Paradox; decoupling myth; regenerative tourism</td></tr></table>
 
             <h3>🔗 Cross-Unit Threads</h3>
             <ul>
-            <li><strong>Elasticity everywhere:</strong> demand (PED), supply (response to price), and pricing (elastic vs inelastic effect on revenue).</li>
-            <li><strong>The expenditure chain:</strong> Direct → Indirect → Induced builds the multiplier and the 7 effects of tourist spending.</li>
+            <li><strong>Elasticity everywhere:</strong> demand (4 elasticities), supply (response to price), pricing (revenue effects).</li>
+            <li><strong>The expenditure chain:</strong> Direct → Indirect → Induced builds the multiplier (realistically ≤ 2).</li>
             <li><strong>Measurement:</strong> contribution (ongoing) vs impact (change), both captured by the TSA.</li>
-            <li><strong>Market failure → policy:</strong> externalities + public goods justify carrying-capacity limits, taxes on pollution, and sustainable/regenerative tourism.</li>
+            <li><strong>Market failure → policy:</strong> public goods + externalities justify carrying-capacity limits, eco-taxes, and sustainable/regenerative tourism.</li>
             </ul>
 
             <h3>💡 Exam Strategy</h3>
-            <p>Close-ended questions reward <strong>exact definitions and formulas</strong> (TC = FC + VC, Multiplier = Total Impact / Direct Expenditure, the 7 price determinants). Open-ended questions reward a <strong>concept + an example</strong> (e.g. "externality → a resort's wastewater harms a public beach", or "oligopoly → a few airlines dominate a route"). Learn one strong anchor per unit, then practise linking units.</p>
+            <p>Close-ended questions reward <strong>exact definitions and formulas</strong> (TC = FC + VC, Multiplier = Total Impact / Direct, the 4 elasticities). Open-ended questions reward a <strong>concept + an example</strong> (e.g. "externality → a resort's wastewater harms a public beach"; "oligopoly → a few airlines dominate a route"). Learn one strong anchor per unit, then practise linking units.</p>
         `
     }
 };
 
 // Merge both midterms (read from window at load time) + the exam-practice category.
-// K1 (4 topic cats) and K2 (5 topic cats) have no key collisions, so this yields all
-// 9 topic categories + examPractice = 10 categories.
+// K1 (5 topic cats) and K2 (5 topic cats) have no key collisions, so this yields all
+// 10 topic categories + examPractice = 11 categories.
 const te2Final = Object.assign(
     {},
     (typeof window !== "undefined" && window.te2M1) ? window.te2M1 : {},

@@ -5,32 +5,36 @@ testirano, što slijedi.
 
 ---
 
-## 2026-06-12 — ✅ TOURISM ECONOMICS (te2) restrukturiran na K1/K2/finalni (2. sem-1 predmet)
-**te2 prešao sa starog 2-lekcijskog oblika („Exam Preparation" + „Final Test Preparation") na standard „2 kolokvija + finalni"**
-po obrascu Marketing/Geo/Food&Nutrition. **Granica kolokvija utvrđena iz silabusa** (`Tourism economics_introduction.pdf`,
-FMTU Opatija 2025/26): dva službena slajda se razlikuju samo oko jedinice 7 (Strategic Pricing) — uzeta podjela sa slajda
-**„Important dates"** (datumi ispita): **1. kolokvij = jedinice 1.–6., 2. kolokvij = 7.–12.** (potvrdio korisnik; ujedno
-savršeno uravnotežen sadržaj).
+## 2026-06-12 — ✅ TOURISM ECONOMICS (te2) restrukturiran + REBUILD iz PDF predavanja (2. sem-1 predmet)
+**te2 prešao sa starog 2-lekcijskog oblika na standard „2 kolokvija + finalni" — i sadržaj je PREPISAN IZ PROFESORSKIH
+PREDAVANJA (nije puki split starog).** Prvi prolaz je bio vjeran split starog `te2FinalData` (72 fc) — korisnik s pravom javio
+da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jurdana / Soldić Frleta / Dwyer, FMTU 2025/26).
+**Granica kolokvija iz silabusa** (slajd „Important dates"): **K1 = jedinice 1.–6., K2 = 7.–12.** (potvrdio korisnik).
 
-- **Nova mapa `data/te2/`** (po obrascu accounting/business-informatics): `midterm-1.js` (`window.te2M1`) + `midterm-2.js`
-  (`window.te2M2`) + `final.js` (`window.te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`, učitava se ZADNJI).
-- **K1 (Units 1–6)** = 4 kat: `fundamentals`, `demand`, `supply`, `marketStructure` (30 fc / 19 quiz / 8 fill).
-- **K2 (Units 7–12)** = 5 kat: `pricing`, `expenditure`, `tsa`, `environment`, `sustainability` (29 fc / 18 quiz / 7 fill).
-- **Finalni** = 9 tematskih kat + nova kurirana **`examPractice` (All Units)** cross-topic kategorija (format ispita iz silabusa:
-  30%, 10 pitanja 5+5; + sintetske veze: elasticitet kroz demand/supply/pricing, expenditure-lanac, contribution vs impact,
-  market failure → sustainability). **Ukupno finalni: 10 kat / 72 fc / 49 quiz / 23 fill.**
-- **Izvor = `te2FinalData`** (postojeći, već verificirani 9-kat superset cijelog kolegija) — vjeran **SPLIT** (bez pisanja novih
-  flashcards osim examPractice), ključevi kategorija nepromijenjeni → napredak očuvan. Stari `studyData` (podskup) ispao.
-- **Catalog:** te2 lekcije sad `first-midterm`/`second-midterm`/`final`; scripts → `data/te2/*`; `resolve` → te2M1/te2M2/te2Final.
-  **Stari root `data-te2.js` + `data-te2-final.js` obrisani** (više nereferencirani). `tests/lazy-load.spec.js` sentinel
-  `window.studyData` → `window.te2M1`.
-- **Cache:** bump `CONTENT_VERSION` + `catalog.js`/`content-loader.js` `?v=` → **`20260639`**.
+- **Nova mapa `data/te2/`**: `midterm-1.js` (`te2M1`) + `midterm-2.js` (`te2M2`) + `final.js`
+  (`te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`, učitava se ZADNJI).
+- **K1 (Units 1–6)** = 5 kat: `fundamentals` (U1 — + tourism market: features, intangibility, key players),
+  `demand` (U2 — **4 oblika elasticiteta**, bandwagon/snob/Veblen), **`forecasting` (U3 — NOVA kategorija**: qual/quant/AI,
+  regresija, time-series vs causal), `supply` (U4–5 — TC/AC/MC, TP/AP/MP, economies of scale), `marketStructure` (U6 — 4 strukture
+  s primjerima + cost leadership/differentiation/focus). **61 fc / 42 quiz / 28 fill.**
+- **K2 (Units 7–12)** = 5 kat: `pricing` (U7 — **ISPRAVAK: price JEST najkritičnija/najprilagodljivija varijabla**, stari je
+  tvrdio suprotno; sve podstrategije: skimming/penetration/price discrimination/peak-load/bundling…), `expenditure`
+  (U8 Dwyer — 7 učinaka, direct/indirect/induced, **5 tipova multiplikatora + realnost: multiplikator ≤ 2**, leakages, I-O/CGE),
+  `tsa` (U9–10 — tourism expenditure, contribution vs impact, TSA, characteristic vs connected, Code of Ethics), `environment`
+  (U11 — market failure, **4 tipa dobara** private/common/club/public, tragedy of the commons, carrying capacity), `sustainability`
+  (U12 Dwyer — 3 stupa, growth management vs degrowth, **Easterlin paradox, decoupling myth, rebound effects**, regenerativni turizam).
+  **62 fc / 40 quiz / 30 fill.**
+- **Finalni** = 10 tematskih kat + obnovljena **`examPractice` (All Units)** (format ispita 30%/10 pitanja 5+5 + cross-topic sinteza).
+  **Ukupno finalni: 11 kat / 135 fc / 94 quiz / 66 fill** (gotovo 2× više od splita; sve iz slajdova).
+- **Catalog:** te2 lekcije `first-midterm`/`second-midterm`/`final`; scripts → `data/te2/*`; `resolve` → te2M1/te2M2/te2Final.
+  **Stari root `data-te2.js` + `data-te2-final.js` obrisani.** `lazy-load.spec.js` sentinel `studyData` → `te2M1`.
+- **Cache:** `CONTENT_VERSION` + `catalog.js`/`content-loader.js` `?v=` → **`20260639`**.
 
-**Testirano:** `verify` 0/0; node render-sanity (10/10 kat validne, quiz `correct` indeksi u rasponu, svi fillBlanks imaju prazninu);
-Playwright (responsive + smoke svih sekcija × predmeta + sidebar). **Lokalno — NIJE još deployano** (čeka potvrdu korisnika za push).
+**Testirano:** `verify` 0/0; node render-sanity (11/11 kat validne, quiz `correct` indeksi u rasponu, svi fillBlanks imaju prazninu);
+Playwright. **Lokalno — NIJE još deployano** (čeka potvrdu korisnika za push). Izvori (PDF tekst) u temp-u, NISU u repou (autorska prava).
 
 **▶ SLJEDEĆE = preostala 2 sem-1 predmeta** (Entrepreneurship, E-Business) — **oba imaju PRAZNE foldere materijala**, čekaju
-PDF-ove/silabus. Pa 1. godina. **⚠️ Accounting zatvoren — ne vraćati se.**
+PDF-ove/silabus. **Pouka: za te2 sadržaj se RADI iz predavanja, ne preslaguje stari tanki sadržaj.** Pa 1. godina. **⚠️ Accounting zatvoren.**
 
 ---
 

@@ -110,17 +110,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/EXERCISES_ENGINE.md` §6/§8.
   Cache `20260638`. **Poznato (opcionalno, NE blokira):** Final lekcija → „Exercises" tab prazan (sve vježbe tagane na
   kolokvije; dosljedno sem-2 predmetima); USAR/USALI klasifikacija (Ch9-1/10-1) odgođena (nema službenog answer-keya).
-- **✅ TOURISM ECONOMICS (`te2`) restrukturiran (2026-06-12, 2. sem-1 predmet; lokalno, čeka deploy):** sa starog 2-lekcijskog
-  oblika na **K1/K2/finalni** po obrascu Marketing/Geo/F&N. Nova mapa `data/te2/`: `midterm-1.js` (`te2M1`) + `midterm-2.js`
-  (`te2M2`) + `final.js` (`te2Final` = `Object.assign({}, te2M1, te2M2, {examPractice})`, učitava se ZADNJI). **Granica iz silabusa**
-  (2025/26, slajd „Important dates"): **K1 = Units 1–6** (fundamentals/demand/supply/marketStructure, 30fc), **K2 = Units 7–12**
-  (pricing/expenditure/tsa/environment/sustainability, 29fc). Finalni = 9 tematskih kat + nova `examPractice` → **10 kat / 72 fc /
-  49 quiz / 23 fill**. Vjeran SPLIT postojećeg `te2FinalData` (ključevi kat. nepromijenjeni → napredak očuvan); stari root
-  `data-te2.js`+`data-te2-final.js` obrisani. Catalog: lekcije `first-midterm`/`second-midterm`/`final`. Cache `20260639`.
-  Verify 0/0, node render-sanity, Playwright. **NIJE deployano — čeka potvrdu push-a.**
+- **✅ TOURISM ECONOMICS (`te2`) restrukturiran + REBUILD iz predavanja (2026-06-12, 2. sem-1 predmet; lokalno, čeka deploy):**
+  sa starog 2-lekcijskog oblika na **K1/K2/finalni**. Sadržaj **PREPISAN IZ 10 PDF PREDAVANJA** (prvi split starog `te2FinalData`
+  bio je 72 fc — korisnik javio premalo/staro → rebuild). Nova mapa `data/te2/`: `midterm-1.js` (`te2M1`) + `midterm-2.js` (`te2M2`) +
+  `final.js` (`te2Final` = `Object.assign({}, te2M1, te2M2, {examPractice})`, ZADNJI). **Granica iz silabusa** (slajd „Important dates"):
+  **K1 = Units 1–6** (fundamentals/demand/**forecasting (nova)**/supply/marketStructure, 61fc), **K2 = Units 7–12** (pricing/expenditure/
+  tsa/environment/sustainability, 62fc). Finalni = 10 kat + `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. **Ispravljena
+  činjenica:** stari je tvrdio „price NIJE najkritičnija" — slajd kaže suprotno. Stari root `data-te2*.js` obrisani; `lazy-load.spec.js`
+  sentinel → `te2M1`. Cache `20260639`. Verify 0/0, node render-sanity 11/11, Playwright 36/36. **NIJE deployano — čeka potvrdu push-a.**
 - **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** **Accounting + te2 GOTOVI → preostala 2 sem-1 predmeta:**
-  **Entrepreneurship, E-Business** — restruktura na K1/K2/finalni po obrascu Marketing/Geo/F&N (split postojećeg + finalni hibrid;
-  exercises sustav im NIJE nužan). **⚠️ Oba imaju PRAZNE foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`)
+  **Entrepreneurship, E-Business** — restruktura na K1/K2/finalni. **⚠️ POUKA iz te2: NE preslagivati stari tanki sadržaj — RADITI
+  IZ PREDAVANJA** (split = premalo). **⚠️ Oba imaju PRAZNE foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`)
   → **čekaju da korisnik pošalje PDF-ove/silabus** prije početka. (2) pa 1. godina (Management/Macroeconomics/SIT; Business Informatics
   gotov). (3) pa drugi smjerovi. → kasnije **Blok B** (Supabase+Auth+/api).
   **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — NE vraćati se na Accounting osim na izričit zahtjev.**
