@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — 🎉 Accounting B3.11: K2 PLAN KOMPLETAN (Ch13/14/15/16 koncepti)
+Zadnja K2 cigla. **4 nove `choice` vježbe** u `data/accounting/exercises.js`, iz autentičnih workbook assignmenta:
+- `k2-ch13-annual-reports` (Ch13, 8 MC) — Sarbanes-Oxley, SEC, Form 10-K, **audit opinion types** (unqualified/qualified/adverse/disclaimer),
+  consolidated statements, §404.
+- `k2-ch14-computerised` (Ch14, 6 MC) — POS sustavi, merchant account, „card not present" fraud, POS komponente (verbatim 14-1).
+- `k2-ch15-breakeven` (Ch15, 6 MC) — forecasting, cost behavior (fixed/variable/semi-variable), **breakeven = FC ÷ contribution-margin %**
+  (ne ÷ variable cost %); item 6 preformuliran na jedan jasan odgovor.
+- `k2-ch16-internal-control` (Ch16, 12 TF) — segregation of duties, collusion, imprest sustav, deposit in transit, NSF check subtracted;
+  izbačene 2 dvosmisleno formulirane stavke.
+
+**Napomena:** stvarna poglavlja iz izvora ≠ približne oznake u planu (Ch14=computerised, Ch15=CVP, Ch16=internal control). **Engine NEPROMIJENJEN.**
+Content pack sad **41 vježba**. **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check svih 4 (8/8, 6/6, 6/6, 12/12) + indeksi validni;
+Playwright **36/36**. Cache `?v=20260638`.
+
+**🎉 K2 PLAN KOMPLETAN** — Midterm 2 „Exercises" tab pokriva **Chapter 9, 10, 11, 12, 13, 14, 15, 16 + Other** (inventory + journal/RE),
+ukupno 25 K2 vježbi (numeričke/ratio/journal/choice, s randomizacijom). **Deploy:** B3.10 + B3.11 spremni za push (korisnik tražio deploy nakon B3.11).
+
+---
+
 ## 2026-06-12 — ✅ DEPLOYANO (push `d241eaf`) — B3.8 + B3.9 LIVE + B3.10 lokalno
 **Deploy (uz potvrdu):** B3.8 (Ch9/10 ratios) + B3.9 (Ch12 Analyzing FS) na produkciju, `origin/main` @ `d241eaf`, 0 ispred.
 Midterm 2 „Exercises" tab sad LIVE ima **Chapter 9 / 10 / 11 / 12** + **Other (inventory)**.

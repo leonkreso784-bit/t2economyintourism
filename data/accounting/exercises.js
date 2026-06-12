@@ -1621,6 +1621,128 @@ const accountingExercises = {
                 };
             },
             solution: ['Press “New numbers” for fresh figures. Net income = revenue − expenses; ending RE = beginning RE + net income − dividends.']
+        },
+
+        // ===================== CHAPTER 13 — ANNUAL REPORTS, SEC & SARBANES-OXLEY (K2) =====================
+        // Source: Cote workbook Assignment 13-1 (terminology). Reframed fill-ins as multiple choice; all are
+        // universal facts (SOX, SEC, Form 10-K, audit opinion types, consolidated statements).
+
+        // --- B3.11: Ch13 annual reports / SOX / SEC / audit opinions (MC) ---
+        {
+            id: 'k2-ch13-annual-reports',
+            lesson: 'second-midterm',
+            chapter: 13,
+            type: 'choice',
+            title: 'Annual Reports, the SEC & Sarbanes-Oxley',
+            prompt: 'Choose the best answer for each statement about annual reports, regulation, and the auditor’s report.',
+            difficulty: 2,
+            items: [
+                { q: 'Which law improved financial reporting by public companies and added criminal provisions for management and the public accounting firm?', kind: 'mc', options: ['Securities Act of 1933', 'Sarbanes-Oxley Act', 'Dodd-Frank Act', 'Internal Revenue Code'], answer: 1 },
+                { q: 'Which government agency protects investors and maintains the integrity of the securities markets?', kind: 'mc', options: ['FASB', 'IRS', 'SEC', 'FDIC'], answer: 2 },
+                { q: 'Which form is the official annual report filed with the SEC?', kind: 'mc', options: ['Form 1040', 'Form 10-K', 'Form W-2', 'Form 8-K'], answer: 1 },
+                { q: 'An auditor’s report on statements that conform to GAAP with no exceptions gives which opinion?', kind: 'mc', options: ['Qualified', 'Unqualified (clean)', 'Adverse', 'Disclaimer'], answer: 1 },
+                { q: 'When the statements conform to GAAP but the report contains an “except for” clause, the opinion is:', kind: 'mc', options: ['Unqualified', 'Qualified', 'Adverse', 'Disclaimer'], answer: 1 },
+                { q: 'When the auditor’s work has been impeded by management or staff (a scope limitation), the result is a(n):', kind: 'mc', options: ['Unqualified opinion', 'Qualified opinion', 'Adverse opinion', 'Disclaimer of opinion'], answer: 3 },
+                { q: 'Statements that combine the financial data of a corporation and its controlled companies into a single entity are called:', kind: 'mc', options: ['Comparative statements', 'Consolidated statements', 'Common-size statements', 'Interim statements'], answer: 1 },
+                { q: 'Section 404 of the Sarbanes-Oxley Act requires an assessment of the company’s:', kind: 'mc', options: ['dividend policy', 'internal control system', 'marketing plan', 'inventory method'], answer: 1 }
+            ],
+            solution: [
+                'Sarbanes-Oxley (2002) tightened public-company reporting and added criminal provisions; the SEC regulates the securities markets.',
+                'The Form 10-K is the official annual report filed with the SEC.',
+                'Audit opinions: unqualified (clean), qualified (“except for”), adverse (not fairly stated), disclaimer (scope impeded).',
+                'Consolidated statements combine a parent and its controlled subsidiaries; SOX §404 covers internal control.'
+            ]
+        },
+
+        // ===================== CHAPTER 14 — COMPUTERISED ACCOUNTING, POS & CARDS (K2) =====================
+        // Source: Cote workbook Assignment 14-1 (multiple choice) — verbatim items/answers.
+
+        // --- B3.11: Ch14 computerised accounting / POS / credit cards (MC) ---
+        {
+            id: 'k2-ch14-computerised',
+            lesson: 'second-midterm',
+            chapter: 14,
+            type: 'choice',
+            title: 'Computerised Accounting, POS & Credit Cards',
+            prompt: 'Choose the best answer.',
+            difficulty: 1,
+            items: [
+                { q: 'A very important person in a hospitality business is the:', kind: 'mc', options: ['customer', 'computer expert', 'chef', 'menu designer'], answer: 0 },
+                { q: 'A merchant account provider may be a(n):', kind: 'mc', options: ['bank', 'independent sales organization', 'vendor', 'any of the above'], answer: 3 },
+                { q: 'A merchant account is a:', kind: 'mc', options: ['bank account', 'loan account', 'special account to process credit cards', 'special account to pay bills'], answer: 2 },
+                { q: 'Credit card fraud entails more risk on the Internet because:', kind: 'mc', options: ['transactions are “card not present” transactions', 'transactions are processed quickly', 'chargebacks occur', 'there is no software to flag fraudulent transactions'], answer: 0 },
+                { q: 'A point-of-sale (POS) system may have the capability to:', kind: 'mc', options: ['process credit cards', 'provide check guarantee services', 'process order entries', 'all of the above'], answer: 3 },
+                { q: 'Which of the following is a component of a point-of-sale system?', kind: 'mc', options: ['check reader', 'card swipe terminal', 'pole display device', 'all of the above'], answer: 3 }
+            ],
+            solution: [
+                'The customer is the most important person in a hospitality business.',
+                'A merchant account (provided by a bank, ISO, or vendor) is a special account used to process credit cards.',
+                'Internet card fraud is higher because transactions are “card not present.”',
+                'A POS system can process cards, guarantee checks, and handle order entry; its components include check readers, card-swipe terminals, and pole displays.'
+            ]
+        },
+
+        // ===================== CHAPTER 15 — COST BEHAVIOUR & BREAK-EVEN (K2) =====================
+        // Source: Cote workbook Assignment 15-1 (multiple choice). Item 6 reworded to a single clear answer.
+
+        // --- B3.11: Ch15 cost behaviour & break-even (MC) ---
+        {
+            id: 'k2-ch15-breakeven',
+            lesson: 'second-midterm',
+            chapter: 15,
+            type: 'choice',
+            title: 'Cost Behaviour & Break-Even',
+            prompt: 'Choose the best answer about cost behaviour, forecasting, and the break-even point.',
+            difficulty: 2,
+            items: [
+                { q: 'Which of the following should be analyzed when forecasting sales for a new or existing restaurant?', kind: 'mc', options: ['customer profile', 'competitors’ profiles', 'menu mix and menu pricing', 'all of the above'], answer: 3 },
+                { q: 'Which of the following formulas is INCORRECT?', kind: 'mc', options: ['Rooms × occupancy % × average room rate × days open = rooms sales', 'Seats × turnover × average food check × days open = food sales', 'Total cost = fixed cost + variable cost', 'Break-even point = fixed costs ÷ variable cost %'], answer: 3 },
+                { q: 'A variable expense:', kind: 'mc', options: ['is an incremental expense', 'has a percentage relationship to sales that remains constant', 'is zero if volume is zero', 'all of the above'], answer: 3 },
+                { q: 'A fixed expense:', kind: 'mc', options: ['is an incremental expense', 'has a percentage relationship to sales that remains constant', 'is zero if volume is zero', 'none of the above'], answer: 3 },
+                { q: 'A semi-variable expense:', kind: 'mc', options: ['does not have a predictable relationship to sales', 'consists of a fixed component and a variable component', 'has a percentage relationship to sales that is meaningless', 'all of the above'], answer: 1 },
+                { q: 'The break-even point is the level of sales at which:', kind: 'mc', options: ['net income is zero', 'a profit target is reached', 'fixed costs are zero', 'variable costs are zero'], answer: 0 }
+            ],
+            solution: [
+                'Forecasting sales considers the customer profile, competitors, and the menu mix/pricing.',
+                'Break-even = fixed costs ÷ contribution-margin % (1 − variable-cost %), NOT ÷ variable-cost % — so that formula is incorrect.',
+                'A variable expense is incremental, keeps a constant % of sales, and is zero at zero volume; a fixed expense is none of these.',
+                'A semi-variable expense has both a fixed and a variable component; break-even is where net income is zero.'
+            ]
+        },
+
+        // ===================== CHAPTER 16 — INTERNAL CONTROL OF CASH (K2) =====================
+        // Source: Cote workbook Assignment 16-1 (True/False). Kept the items with clear, universal answers
+        // (dropped a couple of ambiguously worded ones).
+
+        // --- B3.11: Ch16 internal control of cash (TF) ---
+        {
+            id: 'k2-ch16-internal-control',
+            lesson: 'second-midterm',
+            chapter: 16,
+            type: 'choice',
+            title: 'Internal Control of Cash',
+            prompt: 'Mark each statement true or false.',
+            difficulty: 2,
+            items: [
+                { q: 'Internal control includes safeguarding and maintaining the company’s assets.', kind: 'tf', answer: true },
+                { q: 'Collusion occurs when two or more employees conspire to commit a dishonest act.', kind: 'tf', answer: true },
+                { q: 'Bonding employees (theft insurance) will stop collusion.', kind: 'tf', answer: false },
+                { q: 'Customer checks received by mail should go directly to the accounts receivable clerk for immediate processing.', kind: 'tf', answer: false },
+                { q: 'House banks should be kept on the imprest (fixed-amount) system.', kind: 'tf', answer: true },
+                { q: 'The daily cashier’s report reconciles the register readings with the cash in the drawer.', kind: 'tf', answer: true },
+                { q: 'The person who issues checks should also prepare the bank reconciliation.', kind: 'tf', answer: false },
+                { q: 'A deposit in transit has been recorded by the company but not yet processed by the bank.', kind: 'tf', answer: true },
+                { q: 'Internal control is concerned only with cash receipts and cash disbursements.', kind: 'tf', answer: false },
+                { q: 'House funds should be subject to surprise audits (counts).', kind: 'tf', answer: true },
+                { q: 'A bank reconciliation is an internal control document.', kind: 'tf', answer: true },
+                { q: 'On a bank reconciliation, an unrecorded NSF check is added to the balance per books.', kind: 'tf', answer: false }
+            ],
+            solution: [
+                'Internal control safeguards all assets (not just cash) and relies on segregation of duties.',
+                'Collusion = two or more people conspiring; bonding is insurance and does not prevent it.',
+                'Segregation of duties: the person handling/recording receipts or issuing checks should not also reconcile the bank.',
+                'A deposit in transit is on the books but not yet at the bank; an NSF check is SUBTRACTED from the balance per books.'
+            ]
         }
     ]
 };

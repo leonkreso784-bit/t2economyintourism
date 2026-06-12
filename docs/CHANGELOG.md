@@ -21,6 +21,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Exercises — K2 koncepti Ch13/14/15/16 → K2 KOMPLETAN [B3.11]:** **4 nove `choice` vježbe** iz autentičnih workbook assignmenta:
+  `k2-ch13-annual-reports` (8 MC — SOX/SEC/10-K/audit opinions/consolidated), `k2-ch14-computerised` (6 MC — POS/merchant account/cards),
+  `k2-ch15-breakeven` (6 MC — cost behavior/breakeven = FC ÷ contribution margin %), `k2-ch16-internal-control` (12 TF — segregation of duties/
+  imprest/deposit in transit/NSF). **Engine nepromijenjen.** Content pack sad **41 vježba** → **K2 plan kompletan** (Ch9–16 + inventory + journal/RE).
+  verify 0/0, node 95/95 + 13/13, Playwright 36/36 + grade-check. Cache `?v=20260638`.
 - **Exercises — K2 journal: revenue/expense + retained earnings [B3.10]:** **3 nove vježbe** (bez `chapter` → „Other"):
   `k2-journal-operations` (guided journal, 6 transakcija — proširuje K1 ALE na prihode/rashode + **depreciation adjusting entry**;
   guided grader po-transakciji, A=L+E traka nije u guided modu pa otvoreni revenue/expense rade), `k2-net-income-re` (numeric — net income →
