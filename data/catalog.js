@@ -39,16 +39,18 @@ const SOKRAT_CATALOG = {
       icon: 'fa-plane',
       color: '#6366f1',
       iconGradient: ['#6366f1', '#818cf8'],
-      description: 'Pricing, TSA, Expenditure, Environment, Sustainability',
+      description: 'Demand, supply & costs, market structure, pricing, expenditure, TSA, environment, sustainability',
       storageKey: 'te2-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'exam-prep', name: 'Exam Preparation', description: 'Complete study material for the exam' },
-        { id: 'final-test-prep', name: 'Final Test Preparation', description: 'Comprehensive review for the final examination' }
+        { id: 'first-midterm', name: 'First Midterm', description: 'Units 1–6: tourism key concepts & market, demand & forecasting, supply & costs, and market structure' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Units 7–12: strategic pricing, economic impacts & expenditure, economic contribution & TSA, environment, and sustainable development' },
+        { id: 'final', name: 'Final Exam', description: 'All units 1–12 (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-te2.js', 'data-te2-final.js'],
-        resolve: { '*': 'studyData', 'final-test-prep': 'te2FinalData' }
+        // data/te2/final.js MUST load last (Object.assign of te2M1 + te2M2 window objects + examPractice)
+        scripts: ['data/te2/midterm-1.js', 'data/te2/midterm-2.js', 'data/te2/final.js'],
+        resolve: { 'first-midterm': 'te2M1', 'second-midterm': 'te2M2', 'final': 'te2Final' }
       }
     },
     {

@@ -20,7 +20,7 @@ test('subject content loads on demand, not at startup', async ({ page }) => {
   // 2) Heavy data globals are undefined before opening any subject.
   const before = await page.evaluate(() => ({
     ebiz: typeof window.ebusinessData,
-    te2: typeof window.studyData,
+    te2: typeof window.te2M1,
     bi: typeof window.businessInformaticsM1,
   }));
   expect(before).toEqual({ ebiz: 'undefined', te2: 'undefined', bi: 'undefined' });
@@ -32,7 +32,7 @@ test('subject content loads on demand, not at startup', async ({ page }) => {
   await page.waitForSelector('#learn .learn-card', { state: 'attached', timeout: 10000 });
 
   // 4) Subjects we did NOT open are still not loaded (only on-demand).
-  expect(await page.evaluate(() => typeof window.studyData)).toBe('undefined');
+  expect(await page.evaluate(() => typeof window.te2M1)).toBe('undefined');
   expect(await page.evaluate(() => window.isSubjectContentLoaded('te2'))).toBe(false);
 
   expect(errors).toEqual([]);

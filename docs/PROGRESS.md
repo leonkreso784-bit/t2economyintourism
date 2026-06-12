@@ -5,6 +5,35 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — ✅ TOURISM ECONOMICS (te2) restrukturiran na K1/K2/finalni (2. sem-1 predmet)
+**te2 prešao sa starog 2-lekcijskog oblika („Exam Preparation" + „Final Test Preparation") na standard „2 kolokvija + finalni"**
+po obrascu Marketing/Geo/Food&Nutrition. **Granica kolokvija utvrđena iz silabusa** (`Tourism economics_introduction.pdf`,
+FMTU Opatija 2025/26): dva službena slajda se razlikuju samo oko jedinice 7 (Strategic Pricing) — uzeta podjela sa slajda
+**„Important dates"** (datumi ispita): **1. kolokvij = jedinice 1.–6., 2. kolokvij = 7.–12.** (potvrdio korisnik; ujedno
+savršeno uravnotežen sadržaj).
+
+- **Nova mapa `data/te2/`** (po obrascu accounting/business-informatics): `midterm-1.js` (`window.te2M1`) + `midterm-2.js`
+  (`window.te2M2`) + `final.js` (`window.te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`, učitava se ZADNJI).
+- **K1 (Units 1–6)** = 4 kat: `fundamentals`, `demand`, `supply`, `marketStructure` (30 fc / 19 quiz / 8 fill).
+- **K2 (Units 7–12)** = 5 kat: `pricing`, `expenditure`, `tsa`, `environment`, `sustainability` (29 fc / 18 quiz / 7 fill).
+- **Finalni** = 9 tematskih kat + nova kurirana **`examPractice` (All Units)** cross-topic kategorija (format ispita iz silabusa:
+  30%, 10 pitanja 5+5; + sintetske veze: elasticitet kroz demand/supply/pricing, expenditure-lanac, contribution vs impact,
+  market failure → sustainability). **Ukupno finalni: 10 kat / 72 fc / 49 quiz / 23 fill.**
+- **Izvor = `te2FinalData`** (postojeći, već verificirani 9-kat superset cijelog kolegija) — vjeran **SPLIT** (bez pisanja novih
+  flashcards osim examPractice), ključevi kategorija nepromijenjeni → napredak očuvan. Stari `studyData` (podskup) ispao.
+- **Catalog:** te2 lekcije sad `first-midterm`/`second-midterm`/`final`; scripts → `data/te2/*`; `resolve` → te2M1/te2M2/te2Final.
+  **Stari root `data-te2.js` + `data-te2-final.js` obrisani** (više nereferencirani). `tests/lazy-load.spec.js` sentinel
+  `window.studyData` → `window.te2M1`.
+- **Cache:** bump `CONTENT_VERSION` + `catalog.js`/`content-loader.js` `?v=` → **`20260639`**.
+
+**Testirano:** `verify` 0/0; node render-sanity (10/10 kat validne, quiz `correct` indeksi u rasponu, svi fillBlanks imaju prazninu);
+Playwright (responsive + smoke svih sekcija × predmeta + sidebar). **Lokalno — NIJE još deployano** (čeka potvrdu korisnika za push).
+
+**▶ SLJEDEĆE = preostala 2 sem-1 predmeta** (Entrepreneurship, E-Business) — **oba imaju PRAZNE foldere materijala**, čekaju
+PDF-ove/silabus. Pa 1. godina. **⚠️ Accounting zatvoren — ne vraćati se.**
+
+---
+
 ## 2026-06-12 — ✅ ACCOUNTING 100% KOMPLETAN i LIVE — predmet zatvoren, dalje NOVI predmet
 **Accounting je gotov.** Predmet sad ima puno study gradivo (3 lekcije: Midterm 1 / Midterm 2 / Final, FAZA 4) **+ jedinstveni
 reusable Exercises sustav** (41 interaktivna vježba — K1 Ch1–6: 16, K2 Ch9–16 + inventory + journal/RE: 25; 6 tipova × 3 moda × randomizacija).

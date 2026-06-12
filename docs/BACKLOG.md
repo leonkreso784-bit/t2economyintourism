@@ -4,10 +4,11 @@
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
 ## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
-**Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **Accounting ✅ GOTOV i LIVE** (1/4) — restrukturiran na
-3 lekcije **+ dobio jedinstveni reusable Exercises sustav** (41 interaktivna vježba; vidi `docs/EXERCISES_ENGINE.md`).
-**Preostala 3 sem-1 predmeta** (`te2` / Entrepreneurship / E-Business) imaju sadržaj ali NISU u strukturi „2 kolokvija + finalni"
-→ treba restrukturu na isti standard kao sem-2. **▶ SLJEDEĆE = jedan od ta 3** (čeka odabir + materijale/silabus).
+**Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **2/4 gotovo** — **Accounting ✅** (3 lekcije + jedinstveni
+reusable Exercises sustav, 41 vježba; vidi `docs/EXERCISES_ENGINE.md`) i **Tourism Economics `te2` ✅** (restrukturiran na K1/K2/finalni,
+`data/te2/`, 10 kat finalni; lokalno, čeka deploy). **Preostala 2 sem-1 predmeta** (Entrepreneurship / E-Business) imaju sadržaj ali NISU
+u strukturi „2 kolokvija + finalni" → treba restrukturu na isti standard kao sem-2. **▶ SLJEDEĆE = jedan od ta 2 — ali OBA imaju PRAZNE
+foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`) → **čekaju da korisnik pošalje PDF-ove/silabus.**
 **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — ne vraćati se na Accounting (ni Final-tab ni USAR/USALI klasifikaciju) osim izričito.**
 
 **Obrazac (kao Marketing/Geo/F&N):** po predmetu — utvrditi K1/K2 granicu iz silabusa/materijala → sadržaj podijeliti
@@ -19,7 +20,7 @@ za sadržajno upotpunjavanje; migracija u bazu i dalje ide JEDNOM u Bloku B.)
 
 | Predmet | sem | Trenutno (lekcije → podaci, kategorija/flashcards) | Što treba |
 |---|---|---|---|
-| **Tourism Economics** (`te2`) | 1 | 2 lekcije: „Exam Preparation" (`studyData`, 6 kat/46 fc) + „Final Test Preparation" (`te2FinalData`, 9 kat/59 fc) | Provjeriti pokriva li to K1 vs ostatak; preslagati u K1 + K2 + finalni hibrid |
+| ~~**Tourism Economics** (`te2`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** `first-midterm`/`second-midterm`/`final` (`data/te2/`, te2M1/te2M2/te2Final); finalni 10 kat / 72 fc | ✅ Restrukturirano (2026-06-12): split `te2FinalData` po silabusu — K1=Units 1–6, K2=Units 7–12 + nova `examPractice`. Lokalno, čeka deploy |
 | **Entrepreneurship** (`entrepreneurship`) | 1 | 1 blok (`entrepreneurshipData`, 11 kat/92 fc) prikazan pod 2 imena lekcije (obje **iste**) | Podijeliti sadržaj na K1/K2; izgraditi finalni hibrid (3 zasebne lekcije) |
 | ~~**Accounting** (`accounting`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`accountingM1`/`accountingM2`/`accountingFinal`) + **41 interaktivna vježba** (`data/accounting/exercises.js`) | ✅ Restrukturirano + Exercises sustav (2026-06-12, LIVE `a6b6fb0`). Opcionalno: Final exercises-tab, USAR/USALI klasifikacija (treba answer-key) |
 | **E-Business** (`ebusiness`) | 1 | 1 lekcija („Final Exam Preparation", `ebusinessData`, 14 kat/129 fc; „15 units") | Mapirati 14 kat./15 units na K1/K2; finalni hibrid |

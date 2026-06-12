@@ -110,11 +110,19 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/EXERCISES_ENGINE.md` §6/§8.
   Cache `20260638`. **Poznato (opcionalno, NE blokira):** Final lekcija → „Exercises" tab prazan (sve vježbe tagane na
   kolokvije; dosljedno sem-2 predmetima); USAR/USALI klasifikacija (Ch9-1/10-1) odgođena (nema službenog answer-keya).
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** **Accounting GOTOV → ide SLJEDEĆI sem-1 predmet** od preostala 3:
-  **Tourism Economics `te2`, Entrepreneurship, E-Business** — restruktura na K1/K2/finalni po obrascu Marketing/Geo/F&N
-  (split postojećeg sadržaja + finalni hibrid). Exercises sustav im NIJE nužan (bila je accounting-specifična nadogradnja).
-  **Čeka:** odabir predmeta + materijali/silabus (plan po predmetu: `docs/BACKLOG.md`). (2) pa 1. godina (Management/Macroeconomics/SIT;
-  Business Informatics gotov). (3) pa drugi smjerovi. → kasnije **Blok B** (Supabase+Auth+/api).
+- **✅ TOURISM ECONOMICS (`te2`) restrukturiran (2026-06-12, 2. sem-1 predmet; lokalno, čeka deploy):** sa starog 2-lekcijskog
+  oblika na **K1/K2/finalni** po obrascu Marketing/Geo/F&N. Nova mapa `data/te2/`: `midterm-1.js` (`te2M1`) + `midterm-2.js`
+  (`te2M2`) + `final.js` (`te2Final` = `Object.assign({}, te2M1, te2M2, {examPractice})`, učitava se ZADNJI). **Granica iz silabusa**
+  (2025/26, slajd „Important dates"): **K1 = Units 1–6** (fundamentals/demand/supply/marketStructure, 30fc), **K2 = Units 7–12**
+  (pricing/expenditure/tsa/environment/sustainability, 29fc). Finalni = 9 tematskih kat + nova `examPractice` → **10 kat / 72 fc /
+  49 quiz / 23 fill**. Vjeran SPLIT postojećeg `te2FinalData` (ključevi kat. nepromijenjeni → napredak očuvan); stari root
+  `data-te2.js`+`data-te2-final.js` obrisani. Catalog: lekcije `first-midterm`/`second-midterm`/`final`. Cache `20260639`.
+  Verify 0/0, node render-sanity, Playwright. **NIJE deployano — čeka potvrdu push-a.**
+- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** **Accounting + te2 GOTOVI → preostala 2 sem-1 predmeta:**
+  **Entrepreneurship, E-Business** — restruktura na K1/K2/finalni po obrascu Marketing/Geo/F&N (split postojećeg + finalni hibrid;
+  exercises sustav im NIJE nužan). **⚠️ Oba imaju PRAZNE foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`)
+  → **čekaju da korisnik pošalje PDF-ove/silabus** prije početka. (2) pa 1. godina (Management/Macroeconomics/SIT; Business Informatics
+  gotov). (3) pa drugi smjerovi. → kasnije **Blok B** (Supabase+Auth+/api).
   **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — NE vraćati se na Accounting osim na izričit zahtjev.**
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
