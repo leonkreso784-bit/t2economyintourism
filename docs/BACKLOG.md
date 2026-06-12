@@ -3,6 +3,21 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ▶ SLJEDEĆE — Auth prelazak na email+lozinku (dogovoreno 2026-06-12)  🔥
+**Korisnikova odluka:** magic-link NE — korisnici moraju imati **lozinku, profil i sve**. Dogovoreno (AskUserQuestion):
+1. **Email + lozinka** (signUp/signInWithPassword); **email POTVRDA obavezna** nakon registracije (Supabase default).
+2. **Magic-link se MIČE** (čisto: samo lozinka).
+3. **Ime pri registraciji** („Your name" → `user_metadata.display_name`; prikazuje se na profilu i nav gumbu).
+4. **Google login KASNIJE** (uz lozinku; treba korisnikov OAuth client u Google Cloud Consoleu).
+
+**Implementacijski plan (sve u `js/auth.js` + modal; baza se NE mijenja):** modal s 2 kartice Sign in / Create account;
+„Forgot password?" → `resetPasswordForEmail` → `PASSWORD_RECOVERY` event → forma za novu lozinku (`updateUser`);
+profil dobiva „Change password" + ime; `privacy.html` ažurirati („no passwords" → „lozinke hashirane, Supabase").
+Supabase dashboard: min duljina lozinke 8 (Auth → Providers → Email). **Deploy gate i dalje vrijedi.**
+
+**Kasnije (uz puni backend/admin):** onboarding **anketa pri ulasku u sustav** — korisnikova ideja (2026-06-12); veže se
+na budući backend za izradu sadržaja iz PDF prezentacija (admin/ingest alati).
+
 ## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
 **Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **2/4 gotovo** — **Accounting ✅** (3 lekcije + jedinstveni
 reusable Exercises sustav, 41 vježba; vidi `docs/EXERCISES_ENGINE.md`) i **Tourism Economics `te2` ✅** (restrukturiran na K1/K2/finalni
