@@ -196,34 +196,46 @@ const te2M1 = {
         learn: {
             title: "Tourism Fundamentals & the Tourism Market",
             content: `
-                <h3>What is Tourism?</h3>
-                <p>The word <strong>'tour'</strong> comes from the Latin <span class="highlight">tornus</span> — 'a tool for making a circle'. The <strong>primary tourism industry</strong> = travel trade, transport, accommodation, catering, facilities and tourist attractions.</p>
+                <h3>🌍 What is Tourism?</h3>
+                <p>The word <strong>'tour'</strong> derives from the Latin <span class="highlight">tornus</span> — 'a tool for making a circle' — reflecting the circular nature of travel: you leave home and return. The <strong>primary tourism industry</strong> is composed of travel trade, transport, accommodation, catering, facilities and tourist attractions.</p>
+                <p><strong>3 key dimensions</strong> define what counts as tourism: <strong>Movement</strong>, <strong>Length of stay</strong>, and <strong>Motivation</strong>.</p>
 
                 <div class="formula-box">
                     <h4><i class="fas fa-star"></i> The 5 A's of Tourism</h4>
-                    <p>Attractions • Access • Accommodation • Amenities • Activities</p>
-                    <p>A suitable combination of these is at the heart of tourism planning.</p>
+                    <p><strong>Attractions • Access • Accommodation • Amenities • Activities</strong></p>
+                    <p>These are the essential requirements for successful tourism; developing a suitable combination of them is at the heart of tourism planning.</p>
                 </div>
 
-                <h4>Visitors</h4>
-                <ul>
-                    <li><strong>Tourists:</strong> travel &gt;24 h, stay overnight (short = 1–3 nights, long = &gt;3 nights)</li>
-                    <li><strong>Day-trippers:</strong> stay &lt;24 h, no overnight</li>
-                </ul>
+                <h3>👥 Visitors, Tourists & Day-trippers</h3>
+                <p><strong>Visitors = Tourists + Day-trippers.</strong></p>
+                <table><tr><th>Type</th><th>Stay</th><th>Detail</th></tr>
+                <tr><td><strong>Tourist</strong></td><td>&gt; 24 h (overnight)</td><td>Short holiday = 1–3 nights · Long holiday = &gt; 3 nights</td></tr>
+                <tr><td><strong>Day-tripper</strong></td><td>&lt; 24 h (no overnight)</td><td>Also called an excursionist</td></tr></table>
 
-                <h4>Types of Tourism</h4>
-                <ul>
-                    <li><strong>International:</strong> Inbound (entering a country) + Outbound (leaving the origin country)</li>
-                    <li><strong>Domestic:</strong> within one's own country (no documents, health checks or currency exchange)</li>
-                </ul>
+                <h3>🛫 Types of Tourism</h3>
+                <table><tr><th>Type</th><th>Description</th></tr>
+                <tr><td><strong>International – Inbound</strong></td><td>Tourists of outside origin ENTERING a country</td></tr>
+                <tr><td><strong>International – Outbound</strong></td><td>Tourists LEAVING their country of origin for another</td></tr>
+                <tr><td><strong>Domestic</strong></td><td>Travel within one's own country — no travel documents, health checks, currency exchange or language barriers</td></tr></table>
+                <p>The same trip is <em>inbound</em> for the destination and <em>outbound</em> for the origin country.</p>
+
+                <h3>📊 Why Tourists Matter</h3>
+                <p>Tourism <strong>boosts economic revenue, creates thousands of jobs, develops infrastructure, and fosters cultural exchange</strong>. According to UN Tourism (UNWTO) it is one of the largest and fastest-growing economic sectors — international arrivals grew from ~528 million (1995) to ~1,035 million (2012), with <strong>~1.8 billion forecast for 2030</strong>. (Croatia: ~19.5 m arrivals in 2023, ~20.2 m in 2024.) Tourism development brings <strong>4 types of impact</strong>: economic, environmental, social and cultural.</p>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Tourism Economics</h4>
-                    <p>An applied branch of economics studying the economic effects of tourism: expenditure & investment decisions, market structure (price, quantity, competition), policy & planning, and international tourism.</p>
+                    <h4><i class="fas fa-lightbulb"></i> What is Tourism Economics?</h4>
+                    <p>An <strong>applied branch of economics</strong> studying the economic effects of tourism activity: expenditure decisions, investment decisions, the structure & organization of markets (price, quantity, competition), tourism policy & planning, and international tourism.</p>
                 </div>
 
-                <h4>The Tourism Market</h4>
-                <p>Includes <strong>demand + intermediaries + supply</strong>. Key features: intangible product, no transfer of ownership, closely interrelated production/consumption, an assembled product, no movement of the product, unstable demand, and wider coverage. Tourists must be present and <strong>spend</strong> money where they travel.</p>
+                <h3>🤝 The Tourism Market</h3>
+                <p>It includes <strong>tourism demand + intermediaries + tourism supply</strong>, which meet in the receptive destination. Its distinctive <strong>features</strong>:</p>
+                <ul>
+                    <li><strong>Intangible product</strong> — service/pleasure/leisure that can't be visualised in advance</li>
+                    <li><strong>No transfer of ownership</strong> — you buy a service, not goods</li>
+                    <li><strong>Closely interrelated production & consumption</strong> — happen together, with the tourist present</li>
+                    <li><strong>Assembled product · no movement of the product · unstable demand · wider coverage</strong></li>
+                </ul>
+                <p>A basic characteristic: in a receptive destination, tourists <strong>spend money instead of earning it</strong>, and the product cannot be 'produced' without their personal presence.</p>
             `
         }
     },
@@ -391,31 +403,40 @@ const te2M1 = {
         learn: {
             title: "Tourism Demand",
             content: `
-                <h3>Definition</h3>
-                <p><strong>Tourism demand</strong> = the <span class="highlight">willingness AND ability</span> of consumers to buy different amounts of a tourism product at different prices during any period.</p>
+                <h3>📖 Definition</h3>
+                <p><strong>Tourism demand</strong> = the <span class="highlight">willingness AND ability</span> of consumers to buy different amounts of a tourism product at different prices during any period of time. Both desire <em>and</em> purchasing power are required — wanting a trip you can't afford is not demand.</p>
 
-                <h4>Two Types of Demand</h4>
+                <h3>🎯 Two Types of Demand</h3>
                 <ul>
-                    <li><strong>Travel to a destination</strong> (arrivals, overnights, expenditure)</li>
-                    <li><strong>A particular product/service</strong> (hotel rooms, restaurant meals)</li>
+                    <li><strong>Demand for travel to a destination</strong> — measured by visitor arrivals, overnights, expenditure</li>
+                    <li><strong>Demand for a particular product/service</strong> — e.g. hotel rooms, restaurant meals</li>
                 </ul>
+
+                <h3>🧭 What Drives Demand?</h3>
+                <p>The most important variables affecting demand for any good are <strong>price, consumer income, the number of consumers, the price of related products, consumer tastes, and marketing/promotion spend</strong>. In tourism specifically, also: <strong>market size (population), seasonality, product availability, prices of substitutes/complements, and leisure time</strong>. Determinants split into <strong>price factors</strong> (transport, accommodation, excursions, F&B, entertainment) and <strong>non-price factors</strong> (socio-economic, demographic, qualitative).</p>
 
                 <div class="formula-box">
                     <h4><i class="fas fa-balance-scale"></i> Law of Demand</h4>
-                    <p>Price ↓ → Quantity demanded ↑ &nbsp; (inverse relationship)</p>
-                    <p>Non-price factors SHIFT the demand curve at every price.</p>
+                    <p>Price ↓ → Quantity demanded ↑ &nbsp;(an <strong>inverse</strong> relationship)</p>
+                    <p>A price change MOVES along the curve; a change in a <strong>non-price factor SHIFTS</strong> the whole curve (more/less demanded at every price).</p>
                 </div>
 
-                <h4>Special Demand Effects</h4>
-                <ul>
-                    <li><strong>Bandwagon:</strong> buy because others buy (fashion) → demand ↑</li>
-                    <li><strong>Snob:</strong> buy less as more people consume (exclusivity)</li>
-                    <li><strong>Veblen:</strong> buy more of a status good as price rises (prestige)</li>
-                </ul>
+                <h3>🌀 Special Demand Effects</h3>
+                <table><tr><th>Effect</th><th>Behaviour</th></tr>
+                <tr><td><strong>Bandwagon</strong></td><td>Demand MORE because others are buying it (it's fashionable)</td></tr>
+                <tr><td><strong>Snob</strong></td><td>Demand LESS as more people consume it (seek exclusivity)</td></tr>
+                <tr><td><strong>Veblen</strong></td><td>Demand MORE of a 'high-status' good as its PRICE RISES (prestige)</td></tr></table>
+                <p>Snob and Veblen effects contradict the simple Law of Demand for status/luxury products.</p>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-calculator"></i> Four Elasticities (each = %ΔQd / %Δdriver)</h4>
-                    <p><strong>Price</strong> (own price) • <strong>Income</strong> • <strong>Cross-price</strong> (price of A vs B) • <strong>Marketing</strong> (advertising spend)</p>
+                    <h4><i class="fas fa-calculator"></i> The FOUR Forms of Elasticity</h4>
+                    <p>Each = <strong>% change in quantity demanded ÷ % change in the driver</strong>:</p>
+                    <ul>
+                    <li><strong>Price elasticity</strong> — driver is the product's OWN price</li>
+                    <li><strong>Income elasticity</strong> — driver is consumer income</li>
+                    <li><strong>Cross-price elasticity</strong> — %ΔQd of A ÷ %ΔPrice of B (substitutes/complements)</li>
+                    <li><strong>Marketing (advertising) elasticity</strong> — driver is marketing expenditure</li>
+                    </ul>
                 </div>
             `
         }
@@ -574,32 +595,33 @@ const te2M1 = {
         learn: {
             title: "Forecasting Tourism Demand",
             content: `
-                <h3>Why Forecast?</h3>
-                <p>Reliable short- and long-term forecasts support <strong>government policy</strong> and <strong>business planning</strong>. Tourism especially needs forecasting because the product is <span class="highlight">perishable</span>, behaviour is complex, production and consumption are inseparable, and demand is highly sensitive to disasters.</p>
+                <h3>🔮 Why Forecast?</h3>
+                <p>In a changing global environment, reliable short- and long-term forecasts of tourism activity are essential for both <strong>government policy development</strong> and <strong>business planning</strong>. Forecasts use <strong>3 time horizons</strong>: short run, intermediate run, and long range.</p>
+                <p><strong>7 reasons forecasting is special in tourism:</strong> the product is <span class="highlight">perishable</span>; behaviour is complex; people are inseparable from production–consumption; satisfaction depends on complementary products; demand is extremely sensitive to natural & human-made disasters; it aids long-term planning; and it is fundamental to modern business.</p>
+
+                <h3>🧰 Three Broad Methods</h3>
+                <table><tr><th>Method</th><th>Basis</th><th>When used</th></tr>
+                <tr><td><strong>Qualitative</strong> (judgmental)</td><td>Experience, knowledge, intuition</td><td>Scarce/unreliable data, rapidly changing macro environment, major disturbances (wars, terrorism, disasters, COVID-19), long-term forecasts</td></tr>
+                <tr><td><strong>Quantitative</strong></td><td>Mathematical techniques</td><td>Good historical data available</td></tr>
+                <tr><td><strong>Artificial Intelligence</strong></td><td>AI systems</td><td>Built to BRIDGE qualitative & quantitative approaches</td></tr></table>
+
+                <h3>📐 Quantitative Models</h3>
+                <ul>
+                    <li><strong>Time-series:</strong> assume a variable's past course is the key to its future</li>
+                    <li><strong>Causal (econometric):</strong> identify causal relationships between demand and its influencing factors</li>
+                    <li><strong>Mixed:</strong> combine time-series and structural (causal) elements</li>
+                </ul>
 
                 <div class="formula-box">
-                    <h4><i class="fas fa-clock"></i> 3 Time Horizons</h4>
-                    <p>Short run • Intermediate run • Long range</p>
+                    <h4><i class="fas fa-square-root-variable"></i> Regression Analysis (most common method)</h4>
+                    <p><strong>4 steps:</strong> (1) specify the model — identify the key variables → (2) collect the data → (3) determine the form (usually linear) → (4) evaluate the results.</p>
+                    <p><strong>Dependent variables:</strong> tourist arrivals, expenditures, length of stay.<br>
+                    <strong>Independent variables:</strong> income, relative prices, transport cost, marketing/promotion expenses, qualitative factors.</p>
                 </div>
 
-                <h4>3 Broad Methods</h4>
-                <ul>
-                    <li><strong>Qualitative</strong> — judgment, experience, intuition (used when data are scarce/unreliable or the environment is unstable)</li>
-                    <li><strong>Quantitative</strong> — mathematical models</li>
-                    <li><strong>Artificial Intelligence</strong> — bridges qualitative & quantitative</li>
-                </ul>
-
-                <h4>Quantitative Models</h4>
-                <ul>
-                    <li><strong>Time-series:</strong> past course predicts the future</li>
-                    <li><strong>Causal (econometric):</strong> identify causal relationships</li>
-                    <li><strong>Mixed:</strong> time-series + structural elements</li>
-                </ul>
-
                 <div class="tip-box">
-                    <h4><i class="fas fa-square-root-variable"></i> Regression Analysis (most common)</h4>
-                    <p>4 steps: specify the model → collect data → determine form (usually linear) → evaluate results.<br>
-                    Dependent: arrivals, expenditure, length of stay. Independent: income, relative prices, transport cost, marketing, qualitative factors.</p>
+                    <h4><i class="fas fa-bullseye"></i> Who uses forecasts?</h4>
+                    <p><strong>Marketers</strong> (set goals, explore markets, simulate future events) · <strong>Business managers</strong> (staffing, supplies, capacity, investment feasibility) · <strong>Planners & public agencies</strong> (predict economic, social and environmental effects). Poor forecasting → over/under-budgeting, wasted resources, degradation.</p>
                 </div>
             `
         }
@@ -768,33 +790,41 @@ const te2M1 = {
         learn: {
             title: "Supply, Production & Costs",
             content: `
-                <h3>Production Inputs</h3>
-                <ul>
-                    <li><strong>Natural</strong>, <strong>Human</strong>, and <strong>Human-made</strong> resources</li>
-                    <li><strong>Short run:</strong> ≥1 factor fixed · <strong>Long run:</strong> all factors variable</li>
-                    <li><strong>Variable</strong> inputs change at short notice; <strong>fixed</strong> inputs cannot be easily adjusted</li>
-                </ul>
+                <h3>🏭 Production & Inputs</h3>
+                <p>The production and supply of tourism products are based on inputs (factors of production) in three forms: <strong>natural, human, and human-made resources</strong>.</p>
+                <table><tr><th>Concept</th><th>Meaning</th></tr>
+                <tr><td><strong>Short run</strong></td><td>At least ONE factor of production is fixed</td></tr>
+                <tr><td><strong>Long run</strong></td><td>ALL factors can be varied</td></tr>
+                <tr><td><strong>Variable input</strong></td><td>Can be changed at short notice</td></tr>
+                <tr><td><strong>Fixed input</strong></td><td>Cannot be easily adjusted</td></tr></table>
 
-                <h4>Explicit vs Implicit Costs</h4>
+                <h3>💸 Explicit vs Implicit Costs</h3>
+                <p>Production costs depend on the <strong>quantity, price and productivity</strong> of the factors used.</p>
                 <ul>
-                    <li><strong>Explicit:</strong> direct payments to outside suppliers</li>
-                    <li><strong>Implicit:</strong> opportunity cost of using own resources (no direct payment)</li>
+                    <li><strong>Explicit costs:</strong> direct payments to outside suppliers (wages, rent, materials)</li>
+                    <li><strong>Implicit costs:</strong> the OPPORTUNITY cost of using the firm's OWN resources — no direct payment, sometimes hard to quantify</li>
                 </ul>
 
                 <div class="formula-box">
                     <h4><i class="fas fa-calculator"></i> Cost Formulas</h4>
-                    <p>TC = FC + VC<br>AC = TC / Q &nbsp;|&nbsp; AFC = FC / Q &nbsp;|&nbsp; AVC = VC / Q<br>MC = dTC / dQ (cost of one more unit)</p>
+                    <p><strong>TC = FC + VC</strong> (Total = Fixed + Variable)<br>
+                    AC = TC / Q &nbsp;(average / unit cost)<br>
+                    AFC = FC / Q &nbsp;|&nbsp; AVC = VC / Q<br>
+                    <strong>MC = dTC / dQ</strong> &nbsp;(extra cost of one more unit)</p>
                 </div>
 
                 <div class="formula-box">
-                    <h4><i class="fas fa-boxes-stacked"></i> Product</h4>
-                    <p>TP = total output · AP = TP / Q (per worker) · MP = change in TP from one extra unit of the variable factor</p>
+                    <h4><i class="fas fa-boxes-stacked"></i> Product Measures</h4>
+                    <p><strong>TP</strong> = total output from the factors employed<br>
+                    <strong>AP = TP / Q</strong> = output per unit of the variable factor (e.g. per worker)<br>
+                    <strong>MP</strong> = change in TP from ONE extra unit of the variable factor (e.g. extra meals from one extra chef)</p>
                 </div>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Scale Effects</h4>
-                    <p><strong>Economy of scale:</strong> inputs ↑% → output ↑ larger % → unit costs ↓ (aircraft, cruise ships, public transport).<br>
-                    <strong>Diseconomy of scale:</strong> output rises by a smaller %; can also come from external factor-cost increases.</p>
+                    <h4><i class="fas fa-arrows-up-down"></i> Scale Effects & Supply Chain</h4>
+                    <p><strong>Economy of scale:</strong> a % rise in all inputs → a LARGER % rise in output → lower long-run average cost (LRAC). Tourism examples: aircraft manufacture, mega cruise ships, public transport.<br>
+                    <strong>Diseconomy of scale:</strong> output rises by a SMALLER %; can also be caused externally (a tourism boom bidding up land/labour/capital costs).<br>
+                    <strong>Supply chain:</strong> the network of organisations, people, activities and resources moving a product from supplier to customer.</p>
                 </div>
             `
         }
@@ -943,23 +973,30 @@ const te2M1 = {
         learn: {
             title: "Tourism & Market Structure",
             content: `
-                <h3>What is Market Structure?</h3>
-                <p>The <strong>nature of the market</strong> a tourism firm operates in. It shapes the firm's <strong>conduct</strong> (decisions) and <strong>performance</strong> (profit, market share, efficiency) — the <span class="highlight">Structure–Conduct–Performance (SCP)</span> framework.</p>
+                <h3>🏢 What is Market Structure?</h3>
+                <p>Market structure is the <strong>nature of the market</strong> within which a tourism firm operates. It shapes the firm's <strong>conduct</strong> (decision-making) and its <strong>performance</strong> (profit potential, market share, efficiency) — the <span class="highlight">Structure–Conduct–Performance (SCP)</span> framework.</p>
+                <p><strong>Major determinants:</strong> number of sellers · number of buyers · nature of goods/services · entry & exit barriers · information about market conditions · economies of scale · degree of product differentiation. Which structure prevails depends mainly on the number of sellers, product differentiation, diversification, and barriers to entry.</p>
 
-                <h4>4 Market Structures (most → least competitive)</h4>
+                <h3>📊 The 4 Market Structures (most → least competitive)</h3>
                 <table>
-                    <tr><th>Structure</th><th>Key features</th><th>Tourism example</th></tr>
-                    <tr><td>Perfect competition</td><td>Many firms, identical products, perfect info, no barriers, price-taker</td><td>Street stalls</td></tr>
-                    <tr><td>Monopolistic competition</td><td>Many firms, slightly differentiated products, small price control, no barriers</td><td>Restaurants, hotels, B&Bs, travel agencies</td></tr>
-                    <tr><td>Oligopoly</td><td>Few dominant, interdependent firms, strong barriers</td><td>Tour operators, airlines</td></tr>
-                    <tr><td>Monopoly</td><td>One seller, no substitute, strong price control, very strong barriers</td><td>Nationalized railways</td></tr>
+                    <tr><th>Structure</th><th>Firms / price</th><th>Products / barriers</th><th>Tourism example</th></tr>
+                    <tr><td><strong>Perfect competition</strong></td><td>Many; price-TAKER (market sets price)</td><td>Identical products, perfect info, NO barriers</td><td>Street stalls</td></tr>
+                    <tr><td><strong>Monopolistic competition</strong></td><td>Many; limited price control</td><td>Similar but differentiated; no barriers</td><td>Restaurants, hotels, B&Bs, travel agencies</td></tr>
+                    <tr><td><strong>Oligopoly</strong></td><td>Few; strong but interdependent control</td><td>Identical/differentiated; strong barriers</td><td>Tour operators, airlines</td></tr>
+                    <tr><td><strong>Monopoly</strong></td><td>One; strong price control</td><td>Unique product, no substitute; very strong barriers</td><td>Nationalized railways</td></tr>
                 </table>
 
+                <h3>♟️ 3 Competitive Strategies</h3>
+                <p>Competitive firms pursue one or a combination of three broad strategies:</p>
+                <ul>
+                    <li><strong>Cost leadership</strong> — deliver at the LOWEST cost (cheaper inputs, a core product, economies of scale, volume discounts). Good when the market is price-sensitive; low cost can be a barrier to entry. <em>e.g. low-cost airlines.</em></li>
+                    <li><strong>Product differentiation</strong> — better product performance or perception → creates market power, REDUCES price elasticity, builds repeat business and brand.</li>
+                    <li><strong>Focus</strong> — concentrate on a particular geographical area, customer segment, or single product. <em>e.g. 6/7★ hotels targeting high-income guests with prestige pricing.</em></li>
+                </ul>
+
                 <div class="tip-box">
-                    <h4><i class="fas fa-chess"></i> 3 Competitive Strategies</h4>
-                    <p><strong>Cost leadership:</strong> lowest cost (cheaper inputs, economies of scale) → e.g. low-cost airlines<br>
-                    <strong>Product differentiation:</strong> better performance/perception → market power, brand, lower price elasticity<br>
-                    <strong>Focus:</strong> a niche area/segment/product → e.g. 6/7★ hotels with prestige pricing</p>
+                    <h4><i class="fas fa-lightbulb"></i> Remember</h4>
+                    <p>Structure shapes conduct and performance. More sellers + low differentiation + low barriers = more competition; fewer sellers + high barriers = more market power.</p>
                 </div>
             `
         }

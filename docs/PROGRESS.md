@@ -26,6 +26,8 @@ da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jur
   **62 fc / 40 quiz / 30 fill.**
 - **Finalni** = 10 tematskih kat + obnovljena **`examPractice` (All Units)** (format ispita 30%/10 pitanja 5+5 + cross-topic sinteza).
   **Ukupno finalni: 11 kat / 135 fc / 94 quiz / 66 fill** (gotovo 2× više od splita; sve iz slajdova).
+- **Learn sekcije proširene na punu dubinu** (korisnik javio „Learn je premali"): sa ~1.830 → **~3.200–3.300 znakova** po kategoriji
+  (razina jakih sem-2 predmeta), s `<h3>`/`<h4>`, usporednim `<table>` i listama — puni studijski tekst po jedinici, sve iz slajdova.
 - **Catalog:** te2 lekcije `first-midterm`/`second-midterm`/`final`; scripts → `data/te2/*`; `resolve` → te2M1/te2M2/te2Final.
   **Stari root `data-te2.js` + `data-te2-final.js` obrisani.** `lazy-load.spec.js` sentinel `studyData` → `te2M1`.
 - **Cache:** `CONTENT_VERSION` + `catalog.js`/`content-loader.js` `?v=` → **`20260639`**.

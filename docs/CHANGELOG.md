@@ -29,7 +29,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   suprotno (najkritičnija + najprilagodljivija). Dodano: 4 oblika elasticiteta, sve pricing podstrategije, 5 tipova multiplikatora +
   realnost (≤2), 4 tipa dobara, Easterlin/decoupling/rebound, regenerativni turizam/degrowth. Finalni = 10 kat + obnovljena
   `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. Catalog: lekcije `first-midterm`/`second-midterm`/`final`. Stari root
-  `data-te2.js`/`data-te2-final.js` obrisani; `lazy-load.spec.js` sentinel → `window.te2M1`. verify 0/0, node render-sanity, Playwright.
+  `data-te2.js`/`data-te2-final.js` obrisani; `lazy-load.spec.js` sentinel → `window.te2M1`. **Learn sekcije proširene na punu dubinu
+  (~3.200 znak/kat, bilo ~1.830) — tablice + naslovi, puni studijski tekst.** verify 0/0, node render-sanity, Playwright.
   Cache `?v=20260639`.
 - **Exercises — K2 koncepti Ch13/14/15/16 → K2 KOMPLETAN [B3.11]:** **4 nove `choice` vježbe** iz autentičnih workbook assignmenta:
   `k2-ch13-annual-reports` (8 MC — SOX/SEC/10-K/audit opinions/consolidated), `k2-ch14-computerised` (6 MC — POS/merchant account/cards),

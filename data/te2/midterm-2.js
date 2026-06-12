@@ -161,29 +161,39 @@ const te2M2 = {
         learn: {
             title: "Strategic Pricing in Tourism",
             content: `
-                <h3>Why Price Matters</h3>
-                <p>Price is <span class="highlight">perhaps the most critical</span> and the <strong>most adjustable</strong> decision variable — it can be changed quickly (unlike product, place, promotion). It is one of the <strong>4 P's</strong> and signals product quality/positioning. Firms differentiate to <strong>reduce demand elasticity</strong> and raise price & revenue.</p>
+                <h3>💲 Why Price Matters</h3>
+                <p>Price is not the only decision variable, but it is <span class="highlight">perhaps the most critical</span> — and the <strong>most adjustable</strong>. Unlike product, distribution and promotion (which take time to change), price can be altered QUICKLY. It is one of the <strong>4 P's</strong> (Product, Place, Price, Promotion) and triggers buyer perception of quality and positioning. Firms differentiate their product to <strong>reduce its demand elasticity</strong> and thereby raise price and total revenue.</p>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Elasticity & Revenue</h4>
+                    <h4><i class="fas fa-balance-scale"></i> Elasticity & Revenue</h4>
                     <p>Higher price + ELASTIC demand → fewer buyers, smaller revenue.<br>
                     Lower price + INELASTIC demand → more buyers but small revenue.</p>
+                    <p>Determinants of price include the firm's objective, ownership, market structure, distribution, position, competition, cost structure, seasonality, capacity constraints, brand strength, ease of substitution, perishability and government involvement.</p>
                 </div>
 
-                <h4>3 Pricing Strategies & Their Tactics</h4>
+                <h3>🏷️ The 3 Pricing Strategies & Their Tactics</h3>
                 <table>
-                    <tr><th>Strategy</th><th>Sub-strategies</th></tr>
-                    <tr><td><strong>Cost-based</strong></td><td>Cost-plus · Profit max (MR=MC) · Marginal-cost pricing · Peak-load pricing</td></tr>
-                    <tr><td><strong>Market-based</strong> (customer-oriented)</td><td>Price discrimination · Two-part tariff · Skimming · Penetration · Loss-leader · Promotional · Bundling</td></tr>
-                    <tr><td><strong>Competition-based</strong></td><td>Price leadership · Predatory pricing · Transfer pricing</td></tr>
+                    <tr><th>Strategy</th><th>Anchored to…</th><th>Key tactics</th></tr>
+                    <tr><td><strong>Cost-based</strong></td><td>The firm's costs</td><td>Cost-plus (mark-up on avg cost) · Profit max (MR=MC) · Marginal-cost pricing · Peak-load pricing</td></tr>
+                    <tr><td><strong>Market-based</strong> (customer-oriented)</td><td>Willingness to pay</td><td>Price discrimination · Two-part tariff · Skimming · Penetration · Loss-leader · Promotional · Bundling</td></tr>
+                    <tr><td><strong>Competition-based</strong></td><td>Rivals' prices</td><td>Price leadership · Predatory pricing · Transfer pricing</td></tr>
                 </table>
+
+                <h4>Key tactics explained</h4>
+                <ul>
+                    <li><strong>Skimming:</strong> sell HIGH first (temporary monopoly), then lower for price-sensitive buyers</li>
+                    <li><strong>Penetration:</strong> set a LOW initial price to win share from low-loyalty customers</li>
+                    <li><strong>Peak-load:</strong> charge more when demand peaks, to keep it within capacity</li>
+                    <li><strong>Loss-leader:</strong> sell very cheap (even at a loss) to stimulate overall interest</li>
+                    <li><strong>Predatory:</strong> price so low that rivals are driven out · <strong>Transfer:</strong> pricing between divisions of the same firm</li>
+                </ul>
 
                 <div class="formula-box">
                     <h4><i class="fas fa-tags"></i> Price Discrimination — 4 conditions</h4>
-                    <p>(1) some price-setting power · (2) identify groups with different willingness to pay · (3) elasticity differs across groups · (4) prevent resale between groups</p>
+                    <p>(1) the seller has some price-setting power · (2) can identify groups with different willingness to pay · (3) elasticity differs across groups · (4) can prevent resale between groups.</p>
                 </div>
 
-                <p><strong>Non-profit goals:</strong> some firms chase growth/sales over profit, or are driven by lifestyle choices.</p>
+                <p><strong>Non-profit goals:</strong> some firms chase growth/sales over profit, or are driven by lifestyle choices rather than profit maximization.</p>
             `
         }
     },
@@ -346,30 +356,31 @@ const te2M2 = {
         learn: {
             title: "Economic Impacts & the Multiplier",
             content: `
-                <h3>From Expenditure to Impact</h3>
-                <p>The economic contribution of tourism starts with <strong>tourist expenditure</strong> (measured by type of visitor, visitor night, length of stay). This 'new money' generates <strong>direct + secondary (indirect + induced)</strong> effects.</p>
+                <h3>💰 From Expenditure to Impact</h3>
+                <p>The economic contribution of tourism starts with <strong>tourist expenditure</strong> (the basic measure: expenditure by type of visitor, by visitor night, by length of stay). This is an injection of <strong>'new money'</strong> that boosts output and employment in local primary, secondary and tertiary industries — and it generates <strong>direct + secondary (indirect + induced)</strong> effects.</p>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-list-ol"></i> 7 Major Impacts</h4>
-                    <p>↑ production/output • new business & jobs • foreign-exchange earnings (international only) • new investment • government revenue • regional development • ↓ poverty</p>
+                    <h4><i class="fas fa-list-ol"></i> 7 Major Impacts of Tourist Expenditure</h4>
+                    <p>↑ local production/output · new business & jobs · <strong>foreign-exchange earnings (INTERNATIONAL tourism only)</strong> · new investment · government revenue (taxes) · regional development · ↓ poverty</p>
+                    <p>FX earnings depend on visitor numbers, average expenditure/day, length of stay and the exchange rate. Government gets DIRECT taxes (airport departure, visa) and INDIRECT taxes (sales, fuel, accommodation).</p>
                 </div>
 
-                <h4>The Three Effects</h4>
-                <ul>
-                    <li><strong>Direct:</strong> tourists pay suppliers (hotels, F&B, tours)</li>
-                    <li><strong>Indirect (upstream):</strong> those firms buy inputs along the supply chain</li>
-                    <li><strong>Induced (downstream):</strong> recipients spend their incomes</li>
-                </ul>
+                <h3>🔗 The Three Effects (the multiplier chain)</h3>
+                <table><tr><th>Effect</th><th>What happens</th><th>Example</th></tr>
+                <tr><td><strong>Direct</strong></td><td>Tourists pay suppliers directly</td><td>Accommodation, F&B, tours, attractions, shopping</td></tr>
+                <tr><td><strong>Indirect</strong> (upstream)</td><td>Those firms buy inputs from other firms, along the supply chain</td><td>Hotel buys linen, food, pool chemicals from suppliers</td></tr>
+                <tr><td><strong>Induced</strong> (downstream)</td><td>Recipients spend their increased incomes</td><td>Workers/owners spend wages at shops, theatres, holidays</td></tr></table>
 
                 <div class="formula-box">
-                    <h4><i class="fas fa-calculator"></i> Multiplier</h4>
-                    <p>Multiplier = Total Impact / Direct Expenditure<br>
-                    5 types: sales · output · income · value-added · employment</p>
+                    <h4><i class="fas fa-calculator"></i> The Multiplier</h4>
+                    <p><strong>Multiplier = Total Impact / Direct Expenditure</strong></p>
+                    <p>Total Effect = Direct + Indirect + Induced → increases in output, sales, value added, GDP, household income and employment.</p>
+                    <p><strong>5 types:</strong> sales (transactions) · output · income · value-added · employment.</p>
                 </div>
 
                 <div class="warning-box">
-                    <h4><i class="fas fa-triangle-exclamation"></i> Reality Check</h4>
-                    <p>The multiplier is unlikely to exceed <strong>2</strong> (when indirect = direct, multiplier = 2). €100 m of new expenditure adds &lt; €200 m to GDP. <strong>Leakages</strong> (imports, factor payments abroad), factor constraints (land, labour, capital) and exchange-rate appreciation all shrink the impact.</p>
+                    <h4><i class="fas fa-triangle-exclamation"></i> Reality Check (Dwyer)</h4>
+                    <p>The multiplier is <strong>unlikely to exceed 2</strong> — when indirect effects = direct effects, the multiplier value is 2, so €100 m of new expenditure adds <strong>&lt; €200 m</strong> to GDP. It is shrunk by <strong>leakages</strong> (imported goods, capital goods, factor payments abroad, external promotion), <strong>factor constraints</strong> (land, labour, capital), and real <strong>exchange-rate appreciation</strong>. Models used: Input-Output (I-O) and Computable General Equilibrium (CGE).</p>
                 </div>
             `
         }
@@ -543,25 +554,37 @@ const te2M2 = {
         learn: {
             title: "Economic Contribution & Tourism Satellite Account",
             content: `
-                <h3>Tourism Expenditure</h3>
-                <p>Total consumption expenditure by/for a visitor for goods & services during the trip (plus advance/after payments). Split by timing into <strong>before · during · after</strong> the trip, and by category (package, accommodation, F&B, transport, recreation, shopping). Indicators: total trip, per day, per person, per person per day.</p>
+                <h3>🧾 Tourism Expenditure</h3>
+                <p>The total consumption expenditure made by (or on behalf of) a visitor for goods & services during the trip and stay — including advance and after-trip payments. No economic impact occurs unless visitors actually spend.</p>
+                <ul>
+                    <li><strong>By timing:</strong> before the trip · during the trip · after the trip</li>
+                    <li><strong>By category:</strong> package travel, accommodation, food & drinks, transport, recreation/culture/sport, shopping, other</li>
+                    <li><strong>Indicators:</strong> total per trip · per day · total per person · per person per day</li>
+                </ul>
 
                 <div class="tip-box">
                     <h4><i class="fas fa-sliders"></i> Factors Influencing Expenditure</h4>
-                    <p><strong>Internal:</strong> income, property, family life cycle, education, motivation, culture.<br>
-                    <strong>External:</strong> destination price positioning, offering development, marketing, quality, safety.</p>
+                    <p><strong>Internal:</strong> income, property status, family life-cycle phase, education, motivation, culture.<br>
+                    <strong>External:</strong> destination price positioning, offering development, marketing, quality, travel safety.</p>
                 </div>
 
-                <h4>Economic Contribution</h4>
-                <p>Tourism's economic significance = contribution of expenditure to <strong>GDP, household income, value added, FX earnings, employment</strong>. But expenditure data alone can't show which sectors gain, profitability, or wider effects.</p>
+                <h3>📈 Economic Contribution</h3>
+                <p>Tourism's economic significance = the contribution of tourist expenditure to key variables: <strong>GDP, household income, value added, foreign-exchange earnings, employment</strong>. But expenditure data alone has limits — it doesn't show <em>which</em> sectors receive the revenue, profitability, or wider effects on other industries.</p>
 
                 <div class="formula-box">
-                    <h4><i class="fas fa-chart-bar"></i> The TSA</h4>
-                    <p>Tourism isn't a distinct sector in national accounts → the <strong>Tourism Satellite Account</strong> (endorsed by the UN Statistical Commission) extends them. It identifies the 'tourism industry' from the demand side: <strong>characteristic</strong> products (cease without visitors — accommodation, air transport) vs <strong>connected</strong> products (e.g. fuel retailing).</p>
-                    <p>Key measures: expenditure · consumption · output · TGVA · TGDP · employment · exports · imports.</p>
+                    <h4><i class="fas fa-chart-bar"></i> The Tourism Satellite Account (TSA)</h4>
+                    <p>Because tourism is NOT a distinct sector in the national accounts, the <strong>TSA</strong> (endorsed by the UN Statistical Commission) extends them to measure it from the demand side.</p>
+                    <p><strong>Characteristic</strong> products would cease without visitors (accommodation, air transport); <strong>connected</strong> products are linked but minor (fuel retailing).</p>
                 </div>
 
-                <p>Tourism's impact depends on the quality of direct services and how well the local economy can feed the tourism sector. The <strong>Global Code of Ethics for Tourism</strong> (1999; 10 articles; voluntary) guides responsible tourism.</p>
+                <h4>Key TSA measures</h4>
+                <table><tr><th>Measure</th><th>Meaning</th></tr>
+                <tr><td>Expenditure / Consumption</td><td>What visitors pay / total consumption during the trip</td></tr>
+                <tr><td>Output</td><td>Goods & services produced for use outside the establishment</td></tr>
+                <tr><td><strong>TGVA</strong></td><td>Tourism Gross Value Added = output of tourism products − inputs used</td></tr>
+                <tr><td><strong>TGDP</strong></td><td>Tourism GDP = market value of domestically produced goods consumed by visitors</td></tr>
+                <tr><td>Employment / Exports / Imports</td><td>Jobs · sales to international visitors · outbound consumption by residents abroad</td></tr></table>
+                <p>Impact on the economy depends on the quality of direct tourist services and how well the local economy can feed the tourism sector. The <strong>Global Code of Ethics for Tourism</strong> (adopted 1999; 10 articles; voluntary) guides responsible & sustainable tourism.</p>
             `
         }
     },
@@ -719,30 +742,31 @@ const te2M2 = {
         learn: {
             title: "Tourism & the Environment",
             content: `
-                <h3>Tourism and Resources</h3>
-                <p>Tourism interacts with <strong>natural, human and built</strong> resources. Its environmental effects are largely negative: resource depletion, biodiversity loss, habitat destruction, pollution & waste, and GHG emissions.</p>
+                <h3>🌿 Tourism and Resources</h3>
+                <p>The environment attracts tourism flows, and conserving valued features helps maintain visitation and tourism's economic contribution. Tourism interacts with <strong>natural, human and built</strong> resources — remember: <em>not all resources are attractions, but all attractions are resources.</em> Yet its overall environmental effect tends to be negative: resource depletion, biodiversity loss, habitat destruction, pollution & waste, and rising greenhouse-gas emissions.</p>
 
                 <div class="warning-box">
                     <h4><i class="fas fa-circle-exclamation"></i> Market Failure</h4>
-                    <p>When markets are missing or don't work, resource allocation isn't optimal. <strong>3 sources:</strong> lack of property rights · public goods · externalities.</p>
+                    <p>When there are no markets for valuable resources, OR markets don't function properly, resource allocation isn't optimal. <strong>3 sources relevant to tourism:</strong> lack of property rights · public goods · externalities. With clear property rights, resources are used efficiently; when it's unclear who has the right, destructive behaviour occurs because no one bears the cost.</p>
                 </div>
 
-                <h4>4 Types of Goods</h4>
+                <h3>📦 The 4 Types of Goods</h3>
+                <p>Classified by <strong>excludability</strong> (can you prevent access, e.g. by payment?) and <strong>rivalry</strong> (does one person's use prevent another's?):</p>
                 <table>
                     <tr><th></th><th>Rivalrous</th><th>Non-rivalrous</th></tr>
-                    <tr><td><strong>Excludable</strong></td><td>Private goods</td><td>Club goods (Wi-Fi, cinemas)</td></tr>
-                    <tr><td><strong>Non-excludable</strong></td><td>Common goods (oceans, forests)</td><td>Public goods</td></tr>
+                    <tr><td><strong>Excludable</strong></td><td>Private goods</td><td>Club goods (Wi-Fi, cinemas, cable TV)</td></tr>
+                    <tr><td><strong>Non-excludable</strong></td><td>Common goods (oceans, forests, fresh air)</td><td>Public goods</td></tr>
                 </table>
-                <p><strong>Externalities</strong> = costs/benefits to a third party (noise, crowding vs better infrastructure). The <strong>tragedy of the commons</strong>: self-interested users deplete shared resources.</p>
+                <p><strong>Externalities</strong> = costs/benefits to a third party not in the transaction (negative: noise, crowded roads; positive: more restaurants, better infrastructure). The <strong>tragedy of the commons</strong>: self-interested users deplete a shared (common-pool) resource — a core problem because many tourism resources are open-access. Valuing these impacts is hard: some costs/benefits show in market prices, others need <em>proxy prices</em>.</p>
 
                 <div class="formula-box">
                     <h4><i class="fas fa-users"></i> Carrying Capacity (UNWTO)</h4>
-                    <p>The max visitors at one time without destroying the environment or unacceptably reducing visitor satisfaction (fixed or fluid).</p>
+                    <p>The maximum number of people that may visit a destination at the same time WITHOUT destroying the physical, economic and socio-cultural environment, and without an unacceptable decrease in visitor satisfaction. It can be <strong>fixed</strong> or <strong>fluid</strong>.</p>
                 </div>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Economic Instruments</h4>
-                    <p>Controls on damaging activity: voluntary agreements, merger, subsidies for clean tech, taxes on output & pollution, education/codes. Sustainable development was set out in <strong>Agenda 21</strong> (Rio, 1992).</p>
+                    <h4><i class="fas fa-lightbulb"></i> Economic Instruments & Policy</h4>
+                    <p>Controls on damaging activity: <strong>voluntary agreements, merger, subsidies for clean technology, taxes on output & pollution, education/codes of conduct</strong>. Sustainable development was set out in <strong>Agenda 21</strong> (UN, Rio de Janeiro, 1992); the 21st-century question is HOW to implement it.</p>
                 </div>
             `
         }
@@ -921,28 +945,29 @@ const te2M2 = {
         learn: {
             title: "Sustainable Tourism Development",
             content: `
-                <h3>Growth Mania vs Sustainability</h3>
-                <p>Much tourism planning assumes endless growth, equating <strong>'more' with 'better'</strong> — yet GDP doesn't measure quality of life, and expansion can destroy the environments that attract visitors.</p>
+                <h3>📈 Growth Mania vs Sustainability</h3>
+                <p>Much tourism planning assumes the market requires ever-increasing growth, equating <strong>'more' (GDP, income, jobs) with 'better'</strong> and with social progress. But GDP doesn't measure quality of life or happiness, and tourism's drive for expansion can destroy the very environments that attract visitors.</p>
 
                 <div class="tip-box">
-                    <h4><i class="fas fa-scale-balanced"></i> Benefits vs Costs (3 dimensions)</h4>
-                    <p><strong>Benefits:</strong> jobs/income, tax revenue, cultural pride, conservation.<br>
-                    <strong>Costs:</strong> ↑ prices & cost of living, deindustrialisation, loss of authenticity, overtourism, carbon footprint.</p>
+                    <h4><i class="fas fa-scale-balanced"></i> Benefits vs Costs (same 3 dimensions)</h4>
+                    <p><strong>Benefits:</strong> Economic (jobs, income, tax revenue, remote-area development) · Socio-cultural (civic & cultural pride, understanding) · Environmental (conservation, revitalisation).<br>
+                    <strong>Costs:</strong> Economic (↑ prices/cost of living, deindustrialisation, dependency, leakages) · Socio-cultural (hectic lifestyle, loss of authenticity, overtourism) · Environmental (water/coastal damage, biodiversity loss, carbon footprint).</p>
                 </div>
 
-                <h4>Sustainable Tourism</h4>
-                <p>Takes full account of economic, social & environmental impacts for present AND future generations. <strong>3 pillars:</strong> environmental · socio-cultural · economic (+ holistic planning). Requires: viable long-term operations, respect for communities, fair benefit distribution, optimal resource use. Framework: UN <strong>17 SDGs</strong> (2030 Agenda).</p>
+                <h3>♻️ Sustainable Tourism</h3>
+                <p>Tourism that takes full account of its current AND future economic, social and environmental impacts, addressing the needs of all stakeholders. <strong>3 pillars:</strong> environmental · socio-cultural · economic (+ holistic, stakeholder-based planning). It requires viable long-term operations, respect for host communities, fairly distributed benefits, and optimal use of environmental resources. Global framework: the UN <strong>17 Sustainable Development Goals</strong> (230 indicators; 2030 Agenda).</p>
+                <p>The mainstream <strong>growth-management approach</strong> assumes problems can be solved by better management + technology ("growth is not the problem — it's how we manage it"), via green & inclusive growth.</p>
 
                 <div class="warning-box">
-                    <h4><i class="fas fa-triangle-exclamation"></i> Why Growth Management May Fail</h4>
-                    <p>1) Business as usual isn't working · 2) Growth may not raise resident well-being (<strong>Easterlin Paradox</strong>) · 3) <strong>Absolute decoupling</strong> isn't happening (the 'decoupling myth') · 4) <strong>Rebound effects</strong> undo efficiency gains.</p>
+                    <h4><i class="fas fa-triangle-exclamation"></i> Why Growth Management May Fail (4 countercriticisms)</h4>
+                    <p>1) Business as usual isn't working (SDGs not being met). 2) Growth may not raise resident well-being — the <strong>Easterlin Paradox</strong>. 3) <strong>Absolute decoupling</strong> (output up while impact falls) isn't happening anywhere — the 'decoupling myth' (vs relative decoupling, where impact just grows more slowly). 4) <strong>Rebound effects</strong> (direct, indirect, economy-wide, time-savings) undo efficiency gains.</p>
                 </div>
 
-                <h4>Heterodox Alternatives</h4>
+                <h3>🌱 Heterodox Alternatives</h3>
                 <ul>
-                    <li><strong>Regenerative tourism:</strong> net POSITIVE benefit (restoration), beyond just 'lessening harm'</li>
-                    <li><strong>Tourism degrowth:</strong> produce less to pollute less; redistribute; convivial society</li>
-                    <li><strong>Sustainable well-being:</strong> treat development as a stepping stone to resident well-being, not an end in itself</li>
+                    <li><strong>Regenerative tourism:</strong> a commitment to a NET POSITIVE benefit (restoration & regeneration) — further along the continuum than just 'lessening harm'. Sustainable = do less harm; regenerative = do more good.</li>
+                    <li><strong>Tourism degrowth:</strong> produce LESS to pollute less — a planned, gradual, equitable 'rightsizing'; reduce impact, redistribute wealth, build a convivial society.</li>
+                    <li><strong>Sustainable well-being:</strong> treat sustainable development not as an end in itself but as a stepping stone to enhanced resident well-being.</li>
                 </ul>
             `
         }
