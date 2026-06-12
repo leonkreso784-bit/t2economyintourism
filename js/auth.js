@@ -50,36 +50,50 @@ const SokratAuth = (function () {
         }
 
         injectModal();
-        const btn = document.getElementById('authNavBtn');
-        if (btn) {
+        // Svi ulazi u auth (landing nav + headeri browse/lessons/study):
+        // odjavljen → modal za prijavu; prijavljen → Profile stranica.
+        document.querySelectorAll('.auth-entry').forEach(function (btn) {
             btn.hidden = false;
-            btn.addEventListener('click', openModal);
-        }
+            btn.addEventListener('click', function () {
+                if (currentUser) {
+                    if (typeof navigateTo === 'function') navigateTo('profile');
+                } else {
+                    openModal();
+                }
+            });
+        });
 
         // Postojeća sesija (i magic-link redirect — detectSessionInUrl je default).
         client.auth.onAuthStateChange(function (event, session) {
+            const wasSignedIn = !!currentUser;
             currentUser = session ? session.user : null;
             updateNavButton();
             renderModalState();
             changeListeners.forEach(function (fn) {
                 try { fn(currentUser, event); } catch (err) { console.warn('[auth] listener:', err); }
             });
+            if (event === 'SIGNED_IN' && !wasSignedIn) {
+                closeModal();
+                if (typeof showToast === 'function') showToast('Signed in — your progress now syncs to the cloud.');
+            }
+            // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
+            if (typeof currentPage !== 'undefined' && currentPage === 'profile') {
+                if (currentUser && typeof renderProfilePage === 'function') renderProfilePage();
+                if (!currentUser && typeof navigateTo === 'function') navigateTo('landing');
+            }
         });
     }
 
     // ---------- UI ----------
 
     function updateNavButton() {
-        const label = document.getElementById('authNavLabel');
-        const btn = document.getElementById('authNavBtn');
-        if (!label || !btn) return;
-        if (currentUser) {
-            label.textContent = (currentUser.email || 'Account').split('@')[0];
-            btn.classList.add('is-signed-in');
-        } else {
-            label.textContent = 'Sign in';
-            btn.classList.remove('is-signed-in');
-        }
+        document.querySelectorAll('.auth-entry-label').forEach(function (label) {
+            label.textContent = currentUser ? (currentUser.email || 'Account').split('@')[0] : 'Sign in';
+        });
+        document.querySelectorAll('.auth-entry').forEach(function (btn) {
+            btn.classList.toggle('is-signed-in', !!currentUser);
+            btn.setAttribute('aria-label', currentUser ? 'My profile' : 'Sign in');
+        });
     }
 
     function injectModal() {
@@ -100,6 +114,7 @@ const SokratAuth = (function () {
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-paper-plane"></i><span>Send magic link</span></button>' +
             '    </form>' +
             '    <p class="auth-modal__status" id="authStatus" hidden></p>' +
+            '    <p class="auth-modal__terms">By signing in you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>' +
             '  </div>' +
             '  <div id="authSignedIn" hidden>' +
             '    <h3 class="auth-modal__title"><i class="fas fa-user-check"></i> Signed in</h3>' +
@@ -182,9 +197,13 @@ const SokratAuth = (function () {
         getClient: function () { return client; },
         getUser: function () { return currentUser; },
         onChange: function (fn) { changeListeners.push(fn); },
+        openModal: openModal,
+        signOut: signOut,
         setSyncInfo: function (text) {
             const el = document.getElementById('authSyncInfo');
             if (el) el.textContent = text;
+            const p = document.getElementById('profileSyncStatus');
+            if (p) p.textContent = text;
         }
     };
 })();

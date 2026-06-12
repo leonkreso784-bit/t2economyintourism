@@ -35,3 +35,29 @@ test('auth: sign-in button appears and magic-link modal opens/closes', async ({ 
 
   expect(errors).toEqual([]);
 });
+
+// Profile stranica: odjavljen korisnik vidi sign-in prompt; back vraća na landing.
+// Ne ovisi o CDN-u (renderProfilePage radi i bez supabase klijenta).
+test('profile page shows sign-in prompt when signed out and navigates back', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
+
+  await page.goto('/');
+  await page.waitForFunction(() => window.navigateTo && window.renderProfilePage);
+
+  await page.evaluate(() => navigateTo('profile'));
+  await expect(page.locator('#profile-page')).toBeVisible();
+  await expect(page.locator('#profileSignInBtn')).toBeVisible();
+
+  await page.click('#backFromProfile');
+  await expect(page.locator('#landing-page')).toHaveClass(/active/);
+
+  // Profile se NE sprema kao last-position (restore ovisi o auth sesiji)
+  const savedPage = await page.evaluate(() => {
+    try { return JSON.parse(localStorage.getItem('sokrat-last-position') || '{}').page || null; }
+    catch (e) { return null; }
+  });
+  expect(savedPage).not.toBe('profile');
+
+  expect(errors).toEqual([]);
+});

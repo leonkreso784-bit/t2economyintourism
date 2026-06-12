@@ -44,11 +44,18 @@ function restoreLastPosition() {
 }
 
 // ========== PAGE NAVIGATION ==========
-function navigateTo(page, data = {}) {
-    currentPage = page;
-    saveCurrentPosition(page, data);
+let profileReturnPage = null; // kamo vodi "back" s Profile stranice
 
-    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page').forEach(p => {
+function navigateTo(page, data = {}) {
+    // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
+    // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
+    if (page === 'profile' && currentPage !== 'profile') {
+        profileReturnPage = { page: currentPage, data: { subject: currentSubject, lesson: currentLesson } };
+    }
+    currentPage = page;
+    if (page !== 'profile') saveCurrentPosition(page, data);
+
+    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page').forEach(p => {
         p.classList.remove('active');
     });
 
@@ -80,6 +87,10 @@ function navigateTo(page, data = {}) {
             break;
         case 'about':
             document.getElementById('about-page').classList.add('active');
+            break;
+        case 'profile':
+            if (typeof renderProfilePage === 'function') renderProfilePage();
+            document.getElementById('profile-page').classList.add('active');
             break;
     }
 

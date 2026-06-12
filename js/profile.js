@@ -1,0 +1,164 @@
+// ===== SOKRAT STUDY — PROFILE PAGE =====
+//
+// Renderira #profile-page za prijavljenog korisnika: račun, sync status,
+// pregled napretka po predmetu (iz localStorage) i GDPR akcije.
+// Ulaz: klik na bilo koji .auth-entry gumb kad je korisnik prijavljen (js/auth.js).
+
+function renderProfilePage() {
+    const root = document.getElementById('profileContent');
+    if (!root) return;
+
+    const user = (typeof SokratAuth !== 'undefined') ? SokratAuth.getUser() : null;
+
+    if (!user) {
+        root.innerHTML =
+            '<div class="profile-card profile-card--center">' +
+            '  <div class="profile-empty-icon"><i class="fas fa-user-lock"></i></div>' +
+            '  <h2>You are not signed in</h2>' +
+            '  <p>Sign in to back up your progress and study on any device.</p>' +
+            '  <button type="button" class="cta-button primary" id="profileSignInBtn"><i class="fas fa-user"></i><span>Sign in</span></button>' +
+            '</div>';
+        const btn = document.getElementById('profileSignInBtn');
+        if (btn) btn.addEventListener('click', function () { SokratAuth.openModal(); });
+        return;
+    }
+
+    const created = user.created_at ? new Date(user.created_at) : null;
+    const memberSince = created
+        ? created.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '—';
+
+    root.innerHTML =
+        '<div class="profile-grid">' +
+
+        '  <div class="profile-card">' +
+        '    <div class="profile-avatar"><i class="fas fa-user-graduate"></i></div>' +
+        '    <h2 class="profile-email">' + escapeHtmlProfile(user.email || '') + '</h2>' +
+        '    <p class="profile-meta">Member since ' + memberSince + '</p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="cta-button secondary" id="profileSignOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></button>' +
+        '    </div>' +
+        '  </div>' +
+
+        '  <div class="profile-card">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-cloud"></i> Cloud sync</h3>' +
+        '    <p class="profile-meta" id="profileSyncStatus">Your progress is backed up automatically while you study.</p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="cta-button secondary" id="profileSyncNowBtn"><i class="fas fa-rotate"></i><span>Sync now</span></button>' +
+        '    </div>' +
+        '  </div>' +
+
+        '  <div class="profile-card profile-card--wide">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-chart-line"></i> Progress overview</h3>' +
+        '    <div class="profile-stats" id="profileStats"></div>' +
+        '  </div>' +
+
+        '  <div class="profile-card profile-card--wide profile-card--danger">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-triangle-exclamation"></i> Privacy &amp; data</h3>' +
+        '    <p class="profile-meta">Delete all study progress stored in the cloud. Progress saved on this device stays. ' +
+        'To delete your entire account, email <a href="mailto:leonkreso784@gmail.com">leonkreso784@gmail.com</a>. ' +
+        'See our <a href="privacy.html">Privacy Policy</a>.</p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="profile-danger-btn" id="profileDeleteCloudBtn"><i class="fas fa-trash"></i><span>Delete cloud data</span></button>' +
+        '    </div>' +
+        '  </div>' +
+
+        '</div>';
+
+    renderProfileStats();
+
+    document.getElementById('profileSignOutBtn').addEventListener('click', function () {
+        SokratAuth.signOut();
+    });
+    document.getElementById('profileSyncNowBtn').addEventListener('click', async function () {
+        if (typeof CloudSync !== 'undefined') await CloudSync.pushNow();
+        const el = document.getElementById('profileSyncStatus');
+        if (el) el.textContent = 'Synced just now — everything is backed up.';
+        if (typeof showToast === 'function') showToast('Progress synced to cloud');
+    });
+    document.getElementById('profileDeleteCloudBtn').addEventListener('click', deleteCloudData);
+}
+
+function renderProfileStats() {
+    const holder = document.getElementById('profileStats');
+    if (!holder || typeof subjectDataMap === 'undefined') return;
+
+    let rows = '';
+    let totalCards = 0, totalQuizzes = 0, totalFill = 0;
+
+    Object.keys(subjectDataMap).forEach(function (id) {
+        const meta = subjectDataMap[id];
+        if (!meta.storageKey) return;
+        let p = null;
+        try { p = JSON.parse(localStorage.getItem(meta.storageKey) || 'null'); } catch (e) { p = null; }
+        if (!p) return;
+
+        const cards = Array.isArray(p.flashcardsLearned) ? p.flashcardsLearned.length : 0;
+        const quizzes = Array.isArray(p.quizScores) ? p.quizScores.length : 0;
+        const avg = quizzes > 0 ? Math.round(p.quizScores.reduce(function (a, b) { return a + b; }, 0) / quizzes) : null;
+        const fill = p.fillSolved || 0;
+        if (cards === 0 && quizzes === 0 && fill === 0) return;
+
+        totalCards += cards; totalQuizzes += quizzes; totalFill += fill;
+
+        rows +=
+            '<div class="profile-stat-row">' +
+            '  <span class="profile-stat-subject"><i class="fas ' + (meta.icon || 'fa-book') + '"></i> ' + escapeHtmlProfile(meta.shortName || meta.name) + '</span>' +
+            '  <span class="profile-stat-vals">' +
+            '    <span title="Flashcards learned"><i class="fas fa-clone"></i> ' + cards + '</span>' +
+            '    <span title="Quizzes taken"><i class="fas fa-question-circle"></i> ' + quizzes + (avg !== null ? ' (avg ' + avg + '%)' : '') + '</span>' +
+            '    <span title="Fill-in exercises solved"><i class="fas fa-pen"></i> ' + fill + '</span>' +
+            '  </span>' +
+            '</div>';
+    });
+
+    if (!rows) {
+        holder.innerHTML = '<p class="profile-meta">No study activity yet — open a subject and start learning!</p>';
+        return;
+    }
+
+    holder.innerHTML =
+        '<div class="profile-stat-totals">' +
+        '  <div class="profile-total"><strong>' + totalCards + '</strong><span>cards learned</span></div>' +
+        '  <div class="profile-total"><strong>' + totalQuizzes + '</strong><span>quizzes taken</span></div>' +
+        '  <div class="profile-total"><strong>' + totalFill + '</strong><span>fill-ins solved</span></div>' +
+        '</div>' + rows;
+}
+
+async function deleteCloudData() {
+    const user = SokratAuth.getUser();
+    const client = SokratAuth.getClient();
+    if (!user || !client) return;
+
+    if (!confirm('Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.')) return;
+
+    const { error } = await client.from('progress').delete().neq('key', '');
+    if (error) {
+        if (typeof showToast === 'function') showToast('Could not delete cloud data: ' + error.message);
+        return;
+    }
+    // Odjava odmah gasi sync petlju — inače bi lokalni podaci bili ponovno uploadani.
+    await SokratAuth.signOut();
+    if (typeof showToast === 'function') showToast('Cloud data deleted.');
+    navigateTo('landing');
+}
+
+function escapeHtmlProfile(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const back = document.getElementById('backFromProfile');
+    if (back) {
+        back.addEventListener('click', function () {
+            const ret = (typeof profileReturnPage !== 'undefined' && profileReturnPage) ? profileReturnPage : null;
+            if (ret && ret.page && ret.page !== 'profile') {
+                navigateTo(ret.page, ret.data || {});
+            } else {
+                navigateTo('landing');
+            }
+        });
+    }
+});

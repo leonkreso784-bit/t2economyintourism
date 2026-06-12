@@ -46,7 +46,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260640">
+    <link rel="stylesheet" href="styles.css?v=20260641">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -77,9 +77,9 @@
                 <a href="#modes">Study modes</a>
                 <button type="button" class="nav-link-btn" onclick="showAboutUs()">About</button>
             </nav>
-            <button type="button" class="nav-auth-btn" id="authNavBtn" hidden>
+            <button type="button" class="nav-auth-btn auth-entry" id="authNavBtn" hidden>
                 <i class="fas fa-user"></i>
-                <span id="authNavLabel">Sign in</span>
+                <span class="auth-entry-label" id="authNavLabel">Sign in</span>
             </button>
             <button type="button" class="cta-button primary nav-cta start-trigger">
                 <i class="fas fa-bolt"></i>
@@ -276,7 +276,13 @@
                 <nav class="footer-col" aria-label="About">
                     <h4>About</h4>
                     <button type="button" class="footer-link-btn" onclick="showAboutUs()">About us</button>
-                    <a href="mailto:leonkreso784@gmail.com">Contact</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="faq.html">FAQ</a>
+                </nav>
+                <nav class="footer-col" aria-label="Legal">
+                    <h4>Legal</h4>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Use</a>
                 </nav>
             </div>
             <div class="footer-bottom">
@@ -316,6 +322,9 @@
                 <span class="breadcrumb" id="browseBreadcrumb">Sokrat Study</span>
                 <h1 id="browseHeading">Choose your faculty</h1>
             </div>
+            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
+                <i class="fas fa-user"></i>
+            </button>
             <div class="browse-logo">
                 <div class="logo-wrapper"><img src="logo.png" alt="Sokrat Study" class="logo-image"></div>
             </div>
@@ -338,7 +347,9 @@
                 <span class="breadcrumb">Sokrat Study</span>
                 <h1 id="currentSubjectTitle">Subject Name</h1>
             </div>
-
+            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
+                <i class="fas fa-user"></i>
+            </button>
         </header>
         
         <main class="lessons-content">
@@ -362,7 +373,9 @@
                 <span class="breadcrumb" id="studyBreadcrumb">Subject > Lesson</span>
                 <h1 id="currentLessonTitle">Lesson Name</h1>
             </div>
-
+            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
+                <i class="fas fa-user"></i>
+            </button>
         </header>
 
         <!-- Navigation Tabs -->
@@ -978,6 +991,20 @@
         </main>
     </section>
 
+    <!-- ==================== PROFILE PAGE (signed-in account) ==================== -->
+    <section id="profile-page" class="profile-page">
+        <header class="profile-header">
+            <button class="back-btn" id="backFromProfile" aria-label="Go back">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </button>
+            <h1>My Profile</h1>
+            <div style="width: 44px;"></div>
+        </header>
+        <main class="profile-content" id="profileContent">
+            <!-- Rendered by renderProfilePage() in js/profile.js -->
+        </main>
+    </section>
+
     <!-- Learn Image Viewer Modal -->
     <div class="image-modal hidden" id="imageModal" aria-hidden="true">
         <button class="image-modal-close" id="imageModalClose" aria-label="Close image viewer">
@@ -1015,7 +1042,7 @@
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>
-    <script src="js/navigation.js?v=20260622"></script>
+    <script src="js/navigation.js?v=20260641"></script>
     <script src="js/flashcards.js?v=20260602"></script>
     <script src="js/quiz.js?v=20260602"></script>
     <script src="js/fill-blanks.js?v=20260602"></script>
@@ -1025,8 +1052,9 @@
     <script src="js/exercises-core.js?v=20260625"></script>
     <script src="js/acc-kernel.js?v=20260624"></script>
     <script src="js/exercises.js?v=20260631"></script>
-    <script src="js/auth.js?v=20260640"></script>
+    <script src="js/auth.js?v=20260641"></script>
     <script src="js/cloud-sync.js?v=20260640"></script>
+    <script src="js/profile.js?v=20260641"></script>
     <script src="js/init.js?v=20260605"></script>
 </body>
 </html>

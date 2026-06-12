@@ -1,0 +1,227 @@
+/* =====================================================
+   SOKRAT STUDY — PROFILE PAGE + header auth gumbi
+   ===================================================== */
+
+.profile-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg-primary);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    padding-top: calc(1rem + var(--safe-top));
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-header h1 { font-size: 1.25rem; }
+
+.profile-content {
+    width: 100%;
+    padding: 1.5rem;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.profile-card {
+    background: var(--bg-card, var(--bg-secondary));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.4rem 1.3rem;
+    min-width: 0;
+}
+
+.profile-card--wide { grid-column: 1 / -1; }
+
+.profile-card--center {
+    text-align: center;
+    max-width: 420px;
+    margin: 2rem auto 0;
+}
+
+.profile-card--center h2 { margin: 0.75rem 0 0.5rem; }
+.profile-card--center p { color: var(--text-secondary); margin-bottom: 1.1rem; }
+.profile-card--center .cta-button { justify-content: center; }
+
+.profile-empty-icon {
+    font-size: 2rem;
+    color: var(--primary-light);
+}
+
+.profile-avatar {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.15);
+    color: var(--primary-light);
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.profile-email {
+    font-size: 1.05rem;
+    margin: 0 0 0.25rem;
+    overflow-wrap: anywhere;
+}
+
+.profile-meta {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    margin: 0 0 0.9rem;
+}
+
+.profile-meta a { color: var(--primary-light); }
+
+.profile-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-size: 1rem;
+    margin: 0 0 0.7rem;
+}
+
+.profile-card-title i { color: var(--primary-light); }
+
+.profile-actions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.profile-actions .cta-button {
+    padding: 0.55rem 1rem;
+    font-size: 0.88rem;
+    min-height: 0;
+}
+
+/* Statistika */
+.profile-stat-totals {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.profile-total {
+    flex: 1;
+    min-width: 120px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 12px;
+    padding: 0.75rem 0.9rem;
+    text-align: center;
+}
+
+.profile-total strong {
+    display: block;
+    font-size: 1.35rem;
+    color: var(--primary-light);
+}
+
+.profile-total span {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.profile-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0.2rem;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+.profile-stat-row:last-child { border-bottom: none; }
+
+.profile-stat-subject {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    min-width: 0;
+}
+
+.profile-stat-subject i { color: var(--primary-light); }
+
+.profile-stat-vals {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+}
+
+.profile-stat-vals i { margin-right: 0.25rem; }
+
+/* Danger zona */
+.profile-card--danger { border-color: rgba(248, 113, 113, 0.35); }
+.profile-card--danger .profile-card-title i { color: #f87171; }
+
+.profile-danger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.45);
+    border-radius: 10px;
+    color: #f87171;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.profile-danger-btn:hover { background: rgba(248, 113, 113, 0.2); }
+
+/* ---------- Header auth gumb (browse/lessons/study) ---------- */
+
+.header-auth-btn {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-auth-btn:hover {
+    color: var(--text-primary);
+    border-color: rgba(99, 102, 241, 0.55);
+    background: rgba(99, 102, 241, 0.12);
+}
+
+.header-auth-btn.is-signed-in { color: var(--primary-light); }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 640px) {
+    .profile-grid { grid-template-columns: 1fr; }
+    .profile-content { padding: 1rem; }
+    .profile-stat-vals { gap: 0.7rem; }
+}

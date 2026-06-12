@@ -5,6 +5,31 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — ▶ BACKEND staza B (2. dio): Profile stranica + auth kroz cijeli frontend + Google Ads stranice
+**Korisnik testirao login lokalno — „radi fantastično" — ali postavio uvjet za deploy:** ne ide live dok login UX nije
+potpun (profil, prijava sa svih stranica) + dok ne postoji sve potrebno za **Google Ads** (pravne stranice). Sve napravljeno:
+
+- **Profile stranica (`#profile-page`):** novi `js/profile.js` + `css/profile.css` + ruta `profile` u `navigateTo()`
+  (profile se NE sprema kao last-position — render ovisi o auth sesiji koja na reloadu kasni za CDN-om; back gumb vraća na
+  stranicu s koje se došlo, `profileReturnPage`). Sadržaj: account kartica (email, member since, Sign out), Cloud sync kartica
+  (status + „Sync now"), **Progress overview** (agregat po predmetu iz localStorage: kartice/kvizovi+prosjek/fill, totali),
+  **Privacy & data** (GDPR): „Delete cloud data" (briše SVE retke u `progress` pa odjava — da sync ne re-uploada; lokalno ostaje)
+  + mailto za potpuno brisanje računa + link na Privacy Policy. Odjavljen korisnik na profilu vidi sign-in prompt.
+- **Auth kroz cijeli frontend:** svi ulazi su `.auth-entry` (landing nav + **novi `.header-auth-btn` na browse/lessons/study
+  headerima**, okrugli 44px, ikona). Odjavljen → modal; prijavljen → Profile. Labeli/aria se ažuriraju na svim gumbima.
+  Login modal sad ima i **pristanak na Terms/Privacy** (compliance za Ads).
+- **Google Ads / pravne stranice (statične, crawlable, NE idu kroz SPA):** `privacy.html` (GDPR: što se skuplja, Supabase/EU,
+  prava, brisanje, AZOP), `terms.html` (free servis, study-aid disclaimer, IP, HR pravo), `faq.html` (8 pitanja),
+  `contact.html` — sve dijele novi `css/legal.css` (samostalan, dark), kanonski URL-ovi + meta description. **Footer na landingu:**
+  nova kolona Legal (Privacy/Terms) + Contact/FAQ linkovi (umjesto golog mailto). HTML se na Vercelu NE kešira immutable → OK.
+- **Cache → `?v=20260641`** (styles.css, variables.css, auth.css, profile.css, navigation.js, auth.js, profile.js).
+- **Testovi:** novi `tests/legal.spec.js` (4 stranice × render/h1/footer/mailto/overflow + footer linkovi na landingu)
+  + `auth.spec.js` prošireni (profile sign-in prompt, back na landing, profile NIJE u last-position).
+
+**⚠️ Deploy gate (korisnikova odluka):** NE pushati dok korisnik ne potvrdi da je login UX + Ads-spremnost potpuna.
+
+---
+
 ## 2026-06-12 — ▶ BACKEND staza B (MVP): Auth (magic-link) + cloud sync napretka — implementirano lokalno
 **Prvi backend kod na platformi.** Korisnik dao Supabase projekt (`naxjubnedhrbhsuasayu.supabase.co`) + **publishable key**
 (javan po dizajnu; service key NIJE korišten — za ovaj MVP nije ni potreban, RLS štiti podatke). Login = **email magic-link**

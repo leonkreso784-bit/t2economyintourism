@@ -132,6 +132,16 @@
 
 .auth-modal__sync { font-size: 0.82rem; opacity: 0.85; }
 
+.auth-modal__terms {
+    margin: 0.9rem 0 0;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    opacity: 0.85;
+}
+
+.auth-modal__terms a { color: var(--primary-light); }
+
 /* ---------- Mobile ---------- */
 
 @media (max-width: 640px) {

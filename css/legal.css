@@ -1,0 +1,120 @@
+/* =====================================================
+   SOKRAT STUDY — statične info/pravne stranice
+   (privacy.html, terms.html, faq.html, contact.html)
+   Samostalan CSS — ove stranice NE učitavaju styles.css.
+   ===================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --bg: #0b1220;
+    --bg-card: #0f172a;
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --primary: #6366f1;
+    --primary-light: #818cf8;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.legal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.9rem 1.5rem;
+    background: rgba(15, 23, 42, 0.85);
+    border-bottom: 1px solid var(--border);
+}
+
+.legal-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.legal-logo img { width: 34px; height: 34px; border-radius: 8px; }
+
+.legal-back {
+    color: var(--primary-light);
+    text-decoration: none;
+    font-size: 0.92rem;
+    white-space: nowrap;
+}
+
+.legal-back:hover { text-decoration: underline; }
+
+main.legal {
+    flex: 1;
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 3rem;
+}
+
+.legal h1 { font-size: 1.8rem; margin-bottom: 0.4rem; }
+
+.legal .legal-updated {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    margin-bottom: 2rem;
+}
+
+.legal h2 {
+    font-size: 1.2rem;
+    margin: 1.8rem 0 0.6rem;
+    color: var(--primary-light);
+}
+
+.legal p, .legal li { color: var(--text); font-size: 0.97rem; margin-bottom: 0.7rem; }
+
+.legal ul, .legal ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
+
+.legal a { color: var(--primary-light); }
+
+.legal .legal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.3rem 1.4rem;
+    margin: 1rem 0;
+}
+
+.legal .legal-card h2 { margin-top: 0; }
+
+.legal-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 1.5rem;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+.legal-footer nav {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.5rem;
+}
+
+.legal-footer a { color: var(--text-dim); text-decoration: none; }
+.legal-footer a:hover { color: var(--primary-light); }
+
+@media (max-width: 480px) {
+    main.legal { padding: 1.8rem 1.1rem 2.2rem; }
+    .legal h1 { font-size: 1.45rem; }
+}

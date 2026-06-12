@@ -123,9 +123,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **service key se NE koristi**, RLS štiti podatke; bez `/api` funkcija za MVP). Novo: `supabase/schema.sql` (tablica `progress`,
   1 red = 1 localStorage ključ, RLS) · `js/auth.js` (CDN supabase-js, tihi fallback ako CDN padne, modal) · `js/cloud-sync.js`
   (offline-first: pull+merge na login — unija/max, naučeno se ne gubi; diff-push 30 s) · `css/auth.css` · `tests/auth.spec.js`.
-  Cache `20260640`. **Sadržaj OSTAJE u fajlovima — NE migracija** (staza A / pravi „Blok B", JEDNOM kasnije). **Treba od korisnika
-  u Supabase dashboardu:** (1) SQL Editor → pokrenuti `supabase/schema.sql`; (2) Auth → URL Configuration → Site URL
-  `https://www.sokratstudy.com` + redirect `http://localhost:5050`. Detalji: `docs/BACKEND.md` §Staza B.
+  **Sadržaj OSTAJE u fajlovima — NE migracija** (staza A / pravi „Blok B", JEDNOM kasnije). Supabase dashboard koraci
+  (schema.sql + Auth URL config) **✅ korisnik odradio**; login lokalno testiran — „radi fantastično". **2. dio (isti dan):**
+  **Profile stranica** (`#profile-page`, `js/profile.js`, `css/profile.css`; account+sync+progress overview+GDPR delete),
+  **auth ulazi posvuda** (`.auth-entry`: landing nav + `.header-auth-btn` na browse/lessons/study; odjavljen→modal,
+  prijavljen→Profile), **Google Ads stranice** `privacy.html`/`terms.html`/`faq.html`/`contact.html` (+`css/legal.css`,
+  footer Legal linkovi, Terms/Privacy pristanak u modalu). Cache `20260641`. Testovi: `tests/auth.spec.js` + `tests/legal.spec.js`.
+  **⚠️ DEPLOY GATE (korisnik, 2026-06-12): NE pushati dok korisnik ne potvrdi da je login UX + Ads-spremnost POTPUNA.**
+  Detalji: `docs/BACKEND.md` §Staza B.
 - **Sadržaj-staza (parkirano, [[content-roadmap-sequencing]]):** preostala 2 sem-1 predmeta (**Entrepreneurship, E-Business**) —
   **prazni folderi materijala → čekaju PDF-ove/silabus.** **⚠️ POUKA iz te2: raditi IZ PREDAVANJA, ne preslagivati stari tanki sadržaj.**
   Pa 1. godina (Management/Macroeconomics/SIT). **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**

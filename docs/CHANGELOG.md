@@ -21,6 +21,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Backend staza B (2. dio) — Profile + auth kroz frontend + Google Ads stranice:** **`#profile-page`**
+  (`js/profile.js` + `css/profile.css` + ruta u `navigateTo`; ne sprema se kao last-position): account/sync/progress-overview
+  kartice + GDPR „Delete cloud data" (briše cloud retke pa odjava). Auth ulazi posvuda: `.auth-entry` klasa — landing nav +
+  novi okrugli `.header-auth-btn` na browse/lessons/study headerima (odjavljen→modal, prijavljen→Profile); modal dobio
+  Terms/Privacy pristanak. **4 statične stranice za Google Ads:** `privacy.html` (GDPR) / `terms.html` / `faq.html` /
+  `contact.html` + `css/legal.css`; landing footer dobio Legal kolonu + Contact/FAQ linkove. Novi `tests/legal.spec.js` +
+  prošireni `tests/auth.spec.js` (profile prompt + last-position guard). Cache `?v=20260641`. **Deploy gate:** korisnik
+  odlučuje kad je login UX potpun.
 - **Backend staza B (MVP) — Auth + cloud sync napretka:** prvi backend kod. **`supabase/schema.sql`** (tablica `progress`,
   1 red = 1 localStorage ključ, `jsonb data`, RLS samo-svoji-retci, `updated_at` trigger; idempotentno). **`js/auth.js`**
   (supabase-js v2 UMD s CDN-a nakon DOMContentLoaded, tihi fallback ako CDN padne; **email magic-link** `signInWithOtp`;

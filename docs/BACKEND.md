@@ -19,6 +19,14 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
 - **Sync (`js/cloud-sync.js`):** offline-first; pull+merge na login (brojevi=max,
   string-polja=unija, objekti rekurzivno — naučeno se nikad ne gubi), diff-push 30 s +
   visibility/beforeunload. App bez računa radi identično kao prije (auth je aditivan).
+- **Profile (`js/profile.js` + `css/profile.css`, `#profile-page`):** account info, sync status
+  + „Sync now", progress overview po predmetu (iz localStorage), **GDPR**: „Delete cloud data"
+  (briše sve `progress` retke korisnika pa odjava — da diff-push ne re-uploada lokalno) + mailto
+  za potpuno brisanje računa. Ulazi u auth: `.auth-entry` gumbi (landing nav + headeri
+  browse/lessons/study) — odjavljen→modal, prijavljen→Profile.
+- **Pravne/info stranice (Google Ads spremnost):** statične `privacy.html` / `terms.html` /
+  `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
+  (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
 
 ## Arhitektura
 ```
