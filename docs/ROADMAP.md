@@ -46,7 +46,13 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 - ✅ A5 — UI hijerarhije = **puni drill-down nav** (`#browse-page`, M0.5, ADR-007); test `browse.spec.js`
 
 **Blok B — Backend: Vercel Functions + Supabase** (ADR-008, [BACKEND.md](BACKEND.md))
-- ⬜ B6 — Supabase projekt + schema (tablice)
+
+> **✅ Staza B (MVP) — Auth + cloud sync napretka (2026-06-12):** Supabase projekt + `supabase/schema.sql`
+> (tablica `progress`, RLS) + `js/auth.js` (email magic-link) + `js/cloud-sync.js` (offline-first sync).
+> Bez `/api` funkcija (frontend → Supabase direktno, publishable key + RLS). Sadržaj i dalje u fajlovima —
+> stavke B6–B10 dolje su **staza A (migracija sadržaja)** i rade se JEDNOM kasnije. Detalji: `BACKEND.md` §Staza B.
+
+- 🟨 B6 — Supabase projekt + schema (✅ projekt + `progress` tablica; ⬜ content tablice — kasnije, staza A)
 - ⬜ B7 — migracijska skripta: catalog + `data/*` → baza (JEDNOM, kad je sadržaj unutra)
 - ⬜ B8 — `/api/catalog` + `/api/subject` (Vercel Functions); frontend `loadSubjectContent` → `/api`
 - ⬜ B9 — admin login (Supabase Auth, samo ja)

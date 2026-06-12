@@ -5,6 +5,36 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-12 — ▶ BACKEND staza B (MVP): Auth (magic-link) + cloud sync napretka — implementirano lokalno
+**Prvi backend kod na platformi.** Korisnik dao Supabase projekt (`naxjubnedhrbhsuasayu.supabase.co`) + **publishable key**
+(javan po dizajnu; service key NIJE korišten — za ovaj MVP nije ni potreban, RLS štiti podatke). Login = **email magic-link**
+(radi bez ikakve dodatne konfiguracije; Google OAuth se može dodati kasnije). **Sadržaj OSTAJE u fajlovima** — baza drži
+SAMO napredak (staza B; migracija sadržaja = staza A, jednom kasnije).
+
+- **`supabase/schema.sql`** — tablica `public.progress` (PK `user_id+key`, `data jsonb`, `updated_at` + trigger) + **RLS**
+  (select/insert/update/delete samo `auth.uid() = user_id`). Idempotentno; korisnik pokreće u Supabase SQL editoru.
+  Model: **1 red = 1 localStorage ključ** (`<storageKey>`, `<storageKey>-analytics`, `<subjectId>-exercises-progress`,
+  `sokrat-last-position`).
+- **`js/auth.js`** — supabase-js v2 **UMD s CDN-a (jsdelivr), učitava se TEK na DOMContentLoaded**; ako CDN padne, auth se
+  tiho gasi (console.warn) i app radi kao prije. Magic-link (`signInWithOtp`, `emailRedirectTo` = origin), `onAuthStateChange`
+  → nav gumb + modal + notifikacija sync sloja. Modal (email forma / signed-in stanje + Sign out) injektira se JS-om.
+- **`js/cloud-sync.js`** — **offline-first**: localStorage ostaje primarni store. Na login/startup **pull + MERGE** (pravila:
+  brojevi=max, polja stringova=unija → naučene kartice se NIKAD ne gube, ostala polja=dulje, objekti rekurzivno; ključevi s
+  drugih uređaja se povuku svi). Zatim **diff-push svakih 30 s** + na `visibilitychange:hidden` + `beforeunload` (upsert
+  `onConflict: user_id,key`). Meta `sokrat-sync-meta`. Guard za ponovljeni SIGNED_IN (token refresh). Ako je predmet otvoren
+  tijekom pulla → `loadProgress()`/`loadAnalytics()` refresh.
+- **UI:** gumb `#authNavBtn` u landing nav (skriven dok auth ne digne; na mobitelu samo ikona) + `css/auth.css`
+  (modal, dark „čisto i bogato"). `styles.css` +import. **Cache → `?v=20260640`** (styles.css, auth.css, auth.js, cloud-sync.js).
+- **Test:** novi `tests/auth.spec.js` (gumb se pojavi → modal open/close, bez overflowa; **skip ako je CDN nedostupan** —
+  upravo željeno degradiranje).
+
+**Treba od korisnika (Supabase dashboard):** (1) SQL Editor → pokrenuti `supabase/schema.sql`; (2) Auth → URL Configuration →
+Site URL `https://www.sokratstudy.com` + dodatni redirect `http://localhost:5050`. **Napomena:** free tier šalje ~3-4
+magic-link maila/sat (dovoljno za MVP; kasnije custom SMTP).
+**Testirano:** node --check OK, verify 0/0, Playwright (vidi niže/commit). **NIJE deployano — čeka potvrdu push-a.**
+
+---
+
 ## 2026-06-12 — ✅ TOURISM ECONOMICS (te2) restrukturiran + REBUILD iz PDF predavanja (2. sem-1 predmet)
 **te2 prešao sa starog 2-lekcijskog oblika na standard „2 kolokvija + finalni" — i sadržaj je PREPISAN IZ PROFESORSKIH
 PREDAVANJA (nije puki split starog).** Prvi prolaz je bio vjeran split starog `te2FinalData` (72 fc) — korisnik s pravom javio
@@ -33,12 +63,13 @@ da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jur
 - **Cache:** `CONTENT_VERSION` + `catalog.js`/`content-loader.js` `?v=` → **`20260639`**.
 
 **Testirano:** `verify` 0/0; node render-sanity (11/11 kat validne, quiz `correct` indeksi u rasponu, svi fillBlanks imaju prazninu);
-Playwright. **Lokalno — NIJE još deployano** (čeka potvrdu korisnika za push). Izvori (PDF tekst) u temp-u, NISU u repou (autorska prava).
+Playwright 36/36. **✅ DEPLOYANO 2026-06-12** (`git push` uz potvrdu korisnika, `35d8a70..ca06158`) — te2 LIVE na sokratstudy.com.
+Izvori (PDF tekst) u temp-u, NISU u repou (autorska prava).
 
 **▶ SLJEDEĆE (odluka 2026-06-12) = BACKEND, staza B:** Auth + cloud sinkronizacija napretka (Supabase + Vercel `/api`); **sadržaj OSTAJE
 u fajlovima (NE migracija — to je staza A, jednom kad je sadržaj gotov).** Treba: korisnik kreira Supabase projekt + ključevi. Detalji
 u memoriji [[backend-track-b-start]] + `docs/BACKEND.md`. **Sadržaj-staza parkirana:** preostala 2 sem-1 (Entrep/E-Biz) = prazni folderi
-materijala, čekaju PDF-ove (pouka iz te2: raditi IZ predavanja). **⚠️ te2 lokalno (3 commita), NIJE deployan — push čeka potvrdu.** **⚠️ Accounting zatvoren.**
+materijala, čekaju PDF-ove (pouka iz te2: raditi IZ predavanja). **✅ te2 deployan 2026-06-12 (`ca06158`).** **⚠️ Accounting zatvoren.**
 
 ---
 

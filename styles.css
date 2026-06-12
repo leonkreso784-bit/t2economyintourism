@@ -60,3 +60,6 @@
 
 /* Learn section - LAST to override responsive.css conflicts */
 @import url('css/learn.css?v=20260610');
+
+/* Auth (Sign-in gumb + magic-link modal) — samostalan modul, ne gazi ništa */
+@import url('css/auth.css?v=20260640');

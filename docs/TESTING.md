@@ -15,6 +15,8 @@
     navigacija CTA-ova, overflow guard.
   - `lazy-load.spec.js` — sadržaj predmeta se NE učita na startu, nego tek na otvaranje (A4).
   - `sidebar.spec.js` — legacy sidebar render iz catalog-a.
+  - `auth.spec.js` — Sign-in gumb + magic-link modal (otvaranje/zatvaranje, bez overflowa);
+    **skip ako je supabase-js CDN nedostupan** (auth se tada tiho gasi — željeno ponašanje).
   - (Prvi put: `npm install` + `npx playwright install chromium`.)
 
 ## Smoke test (uvijek, ~2 min)

@@ -3,6 +3,23 @@
 > Odluka: ADR-001 (Supabase) + ADR-008 (hosting na Vercelu). Frontend ostaje statički
 > na Vercelu; backend = Vercel serverless funkcije (`/api`) + Supabase (DB/Auth/Storage).
 
+## ✅ Staza B (MVP) — Auth + cloud sync napretka (implementirano 2026-06-12)
+**Što živi u bazi:** SAMO napredak korisnika (tablica `public.progress`, 1 red = 1 localStorage
+ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasnije, jednom).
+
+- **Bez `/api` funkcija za MVP:** frontend govori direktno sa Supabase preko supabase-js
+  (CDN UMD) + **publishable key** (javan po dizajnu) — podatke štiti **RLS** (`auth.uid() = user_id`).
+  Service key NIJE potreban i NE koristi se; `/api` funkcije dolaze tek kad zatrebaju
+  (AI tutor, admin, content-staza A).
+- **Shema:** `supabase/schema.sql` — pokrenuti u Supabase SQL editoru (idempotentno).
+- **Auth:** email magic-link (`signInWithOtp`), `js/auth.js`. Potrebna konfiguracija u
+  Supabase dashboardu: Auth → URL Configuration → **Site URL `https://www.sokratstudy.com`**
+  + additional redirect **`http://localhost:5050`** (lokalni test). Free tier šalje ~3-4
+  auth maila/sat — za skalu kasnije custom SMTP (Resend i sl.).
+- **Sync (`js/cloud-sync.js`):** offline-first; pull+merge na login (brojevi=max,
+  string-polja=unija, objekti rekurzivno — naučeno se nikad ne gubi), diff-push 30 s +
+  visibility/beforeunload. App bez računa radi identično kao prije (auth je aditivan).
+
 ## Arhitektura
 ```
 Frontend (statički, vanilla JS, fetch)

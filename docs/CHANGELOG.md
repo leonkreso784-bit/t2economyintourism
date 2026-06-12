@@ -21,6 +21,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Backend staza B (MVP) — Auth + cloud sync napretka:** prvi backend kod. **`supabase/schema.sql`** (tablica `progress`,
+  1 red = 1 localStorage ključ, `jsonb data`, RLS samo-svoji-retci, `updated_at` trigger; idempotentno). **`js/auth.js`**
+  (supabase-js v2 UMD s CDN-a nakon DOMContentLoaded, tihi fallback ako CDN padne; **email magic-link** `signInWithOtp`;
+  nav gumb `#authNavBtn` + injektirani modal). **`js/cloud-sync.js`** (offline-first: pull+merge na login — brojevi=max,
+  string-polja=unija, objekti rekurzivno → naučeno se ne gubi; diff-push svakih 30 s + visibilitychange/beforeunload;
+  upsert `onConflict user_id,key`; guard za ponovljeni SIGNED_IN). **`css/auth.css`** + import u `styles.css`.
+  Novi test `tests/auth.spec.js` (skip ako CDN nedostupan). **Sadržaj ostaje u fajlovima** (staza A kasnije). Publishable
+  key u frontendu je po dizajnu javan; service key se NE koristi. Cache `?v=20260640`.
 - **Tourism Economics (te2) restrukturiran + REBUILD iz PDF predavanja:** novi `data/te2/` (midterm-1 `te2M1` / midterm-2 `te2M2` /
   final `te2Final` = `Object.assign({}, te2M1, te2M2, { examPractice })`). Sadržaj **prepisan iz 10 profesorskih PDF-ova** (ne split
   starog tankog `te2FinalData`). Granica iz silabusa 2025/26 (slajd „Important dates"): **K1 = Units 1–6** (fundamentals, demand,

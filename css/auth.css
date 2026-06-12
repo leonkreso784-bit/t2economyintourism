@@ -1,0 +1,141 @@
+/* =====================================================
+   SOKRAT STUDY — AUTH (Sign-in gumb + magic-link modal)
+   ===================================================== */
+
+/* ---------- Nav gumb ---------- */
+
+.nav-auth-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+}
+
+.nav-auth-btn:hover {
+    color: var(--text-primary);
+    border-color: rgba(99, 102, 241, 0.55);
+    background: rgba(99, 102, 241, 0.12);
+}
+
+.nav-auth-btn.is-signed-in {
+    color: var(--primary-light);
+    border-color: rgba(99, 102, 241, 0.45);
+}
+
+/* ---------- Modal ---------- */
+
+.auth-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+/* display:flex gore bi pregazio UA [hidden] { display:none } — vrati ga eksplicitno */
+.auth-modal[hidden] { display: none; }
+
+.auth-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.auth-modal__card {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 1.75rem 1.6rem 1.6rem;
+    background: var(--bg-card, #0f172a);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.auth-modal__close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.85rem;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.auth-modal__close:hover { color: var(--text-primary); }
+
+.auth-modal__title {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin: 0 0 0.65rem;
+    font-size: 1.2rem;
+    color: var(--text-primary);
+}
+
+.auth-modal__title i { color: var(--primary-light); }
+
+.auth-modal__text {
+    margin: 0 0 1rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+}
+
+.auth-modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.auth-modal__input {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.auth-modal__input:focus { border-color: rgba(99, 102, 241, 0.65); }
+
+.auth-modal__submit { justify-content: center; }
+
+.auth-modal__status {
+    margin: 0.85rem 0 0;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #4ade80;
+}
+
+.auth-modal__status.is-error { color: #f87171; }
+
+.auth-modal__sync { font-size: 0.82rem; opacity: 0.85; }
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 640px) {
+    .nav-auth-btn { padding: 0.5rem 0.65rem; }
+    .nav-auth-btn span { display: none; } /* samo ikona, da nav ne pretrpa */
+    .auth-modal__card { padding: 1.4rem 1.15rem 1.25rem; }
+}

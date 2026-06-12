@@ -110,23 +110,26 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/EXERCISES_ENGINE.md` §6/§8.
   Cache `20260638`. **Poznato (opcionalno, NE blokira):** Final lekcija → „Exercises" tab prazan (sve vježbe tagane na
   kolokvije; dosljedno sem-2 predmetima); USAR/USALI klasifikacija (Ch9-1/10-1) odgođena (nema službenog answer-keya).
-- **✅ TOURISM ECONOMICS (`te2`) restrukturiran + REBUILD iz predavanja (2026-06-12, 2. sem-1 predmet; lokalno, čeka deploy):**
+- **✅ TOURISM ECONOMICS (`te2`) restrukturiran + REBUILD iz predavanja ✅ LIVE (2026-06-12, 2. sem-1 predmet):**
   sa starog 2-lekcijskog oblika na **K1/K2/finalni**. Sadržaj **PREPISAN IZ 10 PDF PREDAVANJA** (prvi split starog `te2FinalData`
   bio je 72 fc — korisnik javio premalo/staro → rebuild). Nova mapa `data/te2/`: `midterm-1.js` (`te2M1`) + `midterm-2.js` (`te2M2`) +
   `final.js` (`te2Final` = `Object.assign({}, te2M1, te2M2, {examPractice})`, ZADNJI). **Granica iz silabusa** (slajd „Important dates"):
   **K1 = Units 1–6** (fundamentals/demand/**forecasting (nova)**/supply/marketStructure, 61fc), **K2 = Units 7–12** (pricing/expenditure/
   tsa/environment/sustainability, 62fc). Finalni = 10 kat + `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. **Ispravljena
   činjenica:** stari je tvrdio „price NIJE najkritičnija" — slajd kaže suprotno. Stari root `data-te2*.js` obrisani; `lazy-load.spec.js`
-  sentinel → `te2M1`. Cache `20260639`. Verify 0/0, node render-sanity 11/11, Playwright 36/36. **NIJE deployano — čeka potvrdu push-a.**
-- **▶ SLJEDEĆE = BACKEND, staza B (odluka 2026-06-12, [[backend-track-b-start]]):** **Auth + cloud sinkronizacija napretka**
-  (sad `localStorage` → Supabase). **Sadržaj OSTAJE u fajlovima — NE migracija** (to je staza A / pravi „Blok B", radi se JEDNOM tek
-  kad je sadržaj gotov). Šav spreman: `loadSubjectContent()` → `fetch('/api/...')`. Stack: Vercel `/api` + Supabase (ADR-001/008,
-  `docs/BACKEND.md`). **Treba od korisnika:** Supabase projekt (free) + URL/ključevi (service key SAMO u Vercel env, nikad frontend)
-  + odluka o login načinu. Bez ključeva mogu odmah skelu `/api/` + SQL shemu (users+progress) + feature-flagged auth UI.
+  sentinel → `te2M1`. Cache `20260639`. Verify 0/0, node render-sanity 11/11, Playwright 36/36. **Deployano 2026-06-12 (`ca06158`).**
+- **▶ BACKEND staza B (MVP) — IMPLEMENTIRAN lokalno (2026-06-12, [[backend-track-b-start]]):** **Auth (email magic-link) +
+  cloud sync napretka.** Supabase projekt `naxjubnedhrbhsuasayu.supabase.co` (publishable key u `js/auth.js` — javan po dizajnu;
+  **service key se NE koristi**, RLS štiti podatke; bez `/api` funkcija za MVP). Novo: `supabase/schema.sql` (tablica `progress`,
+  1 red = 1 localStorage ključ, RLS) · `js/auth.js` (CDN supabase-js, tihi fallback ako CDN padne, modal) · `js/cloud-sync.js`
+  (offline-first: pull+merge na login — unija/max, naučeno se ne gubi; diff-push 30 s) · `css/auth.css` · `tests/auth.spec.js`.
+  Cache `20260640`. **Sadržaj OSTAJE u fajlovima — NE migracija** (staza A / pravi „Blok B", JEDNOM kasnije). **Treba od korisnika
+  u Supabase dashboardu:** (1) SQL Editor → pokrenuti `supabase/schema.sql`; (2) Auth → URL Configuration → Site URL
+  `https://www.sokratstudy.com` + redirect `http://localhost:5050`. Detalji: `docs/BACKEND.md` §Staza B.
 - **Sadržaj-staza (parkirano, [[content-roadmap-sequencing]]):** preostala 2 sem-1 predmeta (**Entrepreneurship, E-Business**) —
   **prazni folderi materijala → čekaju PDF-ove/silabus.** **⚠️ POUKA iz te2: raditi IZ PREDAVANJA, ne preslagivati stari tanki sadržaj.**
   Pa 1. godina (Management/Macroeconomics/SIT). **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
-- **⚠️ te2 NIJE deployan:** 3 commita ispred origin/main (`d0a0ba0` restruktura + `e0f8e12` rebuild + `e6ba5bf` Learn) — čeka izričitu potvrdu push-a.
+- **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 
