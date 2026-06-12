@@ -20,7 +20,8 @@ Content pack sad **41 vježba**. **Testirano:** verify 0/0; node 95/95 + 13/13; 
 Playwright **36/36**. Cache `?v=20260638`.
 
 **🎉 K2 PLAN KOMPLETAN** — Midterm 2 „Exercises" tab pokriva **Chapter 9, 10, 11, 12, 13, 14, 15, 16 + Other** (inventory + journal/RE),
-ukupno 25 K2 vježbi (numeričke/ratio/journal/choice, s randomizacijom). **Deploy:** B3.10 + B3.11 spremni za push (korisnik tražio deploy nakon B3.11).
+ukupno 25 K2 vježbi (numeričke/ratio/journal/choice, s randomizacijom). **✅ DEPLOYANO (push `d68c584`):** B3.10 + B3.11 LIVE,
+`origin/main` sinkroniziran (0 ispred) → **cijeli K2 vježbi-plan na produkciji**. Cache `?v=20260638`.
 
 ---
 
