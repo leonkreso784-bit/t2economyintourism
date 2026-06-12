@@ -118,12 +118,15 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   tsa/environment/sustainability, 62fc). Finalni = 10 kat + `examPractice` → **11 kat / 135 fc / 94 quiz / 66 fill**. **Ispravljena
   činjenica:** stari je tvrdio „price NIJE najkritičnija" — slajd kaže suprotno. Stari root `data-te2*.js` obrisani; `lazy-load.spec.js`
   sentinel → `te2M1`. Cache `20260639`. Verify 0/0, node render-sanity 11/11, Playwright 36/36. **NIJE deployano — čeka potvrdu push-a.**
-- **▶ SLJEDEĆE (plan, [[content-roadmap-sequencing]]):** **Accounting + te2 GOTOVI → preostala 2 sem-1 predmeta:**
-  **Entrepreneurship, E-Business** — restruktura na K1/K2/finalni. **⚠️ POUKA iz te2: NE preslagivati stari tanki sadržaj — RADITI
-  IZ PREDAVANJA** (split = premalo). **⚠️ Oba imaju PRAZNE foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`)
-  → **čekaju da korisnik pošalje PDF-ove/silabus** prije početka. (2) pa 1. godina (Management/Macroeconomics/SIT; Business Informatics
-  gotov). (3) pa drugi smjerovi. → kasnije **Blok B** (Supabase+Auth+/api).
-  **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — NE vraćati se na Accounting osim na izričit zahtjev.**
+- **▶ SLJEDEĆE = BACKEND, staza B (odluka 2026-06-12, [[backend-track-b-start]]):** **Auth + cloud sinkronizacija napretka**
+  (sad `localStorage` → Supabase). **Sadržaj OSTAJE u fajlovima — NE migracija** (to je staza A / pravi „Blok B", radi se JEDNOM tek
+  kad je sadržaj gotov). Šav spreman: `loadSubjectContent()` → `fetch('/api/...')`. Stack: Vercel `/api` + Supabase (ADR-001/008,
+  `docs/BACKEND.md`). **Treba od korisnika:** Supabase projekt (free) + URL/ključevi (service key SAMO u Vercel env, nikad frontend)
+  + odluka o login načinu. Bez ključeva mogu odmah skelu `/api/` + SQL shemu (users+progress) + feature-flagged auth UI.
+- **Sadržaj-staza (parkirano, [[content-roadmap-sequencing]]):** preostala 2 sem-1 predmeta (**Entrepreneurship, E-Business**) —
+  **prazni folderi materijala → čekaju PDF-ove/silabus.** **⚠️ POUKA iz te2: raditi IZ PREDAVANJA, ne preslagivati stari tanki sadržaj.**
+  Pa 1. godina (Management/Macroeconomics/SIT). **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
+- **⚠️ te2 NIJE deployan:** 3 commita ispred origin/main (`d0a0ba0` restruktura + `e0f8e12` rebuild + `e6ba5bf` Learn) — čeka izričitu potvrdu push-a.
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
 

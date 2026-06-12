@@ -35,8 +35,10 @@ da je **premalo i staro**, pa je sadržaj rebuildan iz 10 PDF-ova (Smolčić Jur
 **Testirano:** `verify` 0/0; node render-sanity (11/11 kat validne, quiz `correct` indeksi u rasponu, svi fillBlanks imaju prazninu);
 Playwright. **Lokalno — NIJE još deployano** (čeka potvrdu korisnika za push). Izvori (PDF tekst) u temp-u, NISU u repou (autorska prava).
 
-**▶ SLJEDEĆE = preostala 2 sem-1 predmeta** (Entrepreneurship, E-Business) — **oba imaju PRAZNE foldere materijala**, čekaju
-PDF-ove/silabus. **Pouka: za te2 sadržaj se RADI iz predavanja, ne preslaguje stari tanki sadržaj.** Pa 1. godina. **⚠️ Accounting zatvoren.**
+**▶ SLJEDEĆE (odluka 2026-06-12) = BACKEND, staza B:** Auth + cloud sinkronizacija napretka (Supabase + Vercel `/api`); **sadržaj OSTAJE
+u fajlovima (NE migracija — to je staza A, jednom kad je sadržaj gotov).** Treba: korisnik kreira Supabase projekt + ključevi. Detalji
+u memoriji [[backend-track-b-start]] + `docs/BACKEND.md`. **Sadržaj-staza parkirana:** preostala 2 sem-1 (Entrep/E-Biz) = prazni folderi
+materijala, čekaju PDF-ove (pouka iz te2: raditi IZ predavanja). **⚠️ te2 lokalno (3 commita), NIJE deployan — push čeka potvrdu.** **⚠️ Accounting zatvoren.**
 
 ---
 
