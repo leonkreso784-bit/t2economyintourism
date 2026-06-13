@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-13 — 🚀 DEPLOY: Backend staza B (auth email+lozinka + cloud sync + Profile + pravne stranice) + E-Business — SVE LIVE
+**Korisnik izričito odobrio push („mozes deployat na github") → deploy gate ISPUNJEN.** Pushano `ca06158..51e4e7b`
+(6 commitova): `d591f3f` Track B MVP · `21b1919` Profile + auth posvuda + Google Ads stranice · `aec6d47` backlog ·
+`47ba7f6` **email+lozinka (magic-link uklonjen)** · `94902a0` repeat-password + gumb-oko · `51e4e7b` **E-Business K1/K2/finalni**.
+Vercel auto-deploy na sokratstudy.com. Cache: app `20260643`, sadržaj `CONTENT_VERSION 20260644`.
+**Live je sada:** registracija/prijava s lozinkom (potvrda emaila obavezna), cloud sync napretka, Profile stranica,
+privacy/terms/faq/contact, te E-Business s 3 lekcije (15 kat / 152 fc u finalnom). `origin/main` sinkroniziran.
+**Podsjetnik korisniku:** Supabase dashboard → Auth → Providers → Email → min duljina lozinke 8 (ako već nije).
+
+---
+
 ## 2026-06-13 — ✅ E-BUSINESS restrukturiran na K1/K2/finalni + obogaćen iz 14 PDF predavanja (3. sem-1 predmet)
 **Korisnik dostavio kompletne materijale** (`…/2. godina Hospitaliy Managament/E-Business`, 14 PDF-ova: Ch 1–14 +
 PlatformEconomy + Challenges; ekstrakcija `node scripts/pdf-text.js` → `tmp-ebiz/`, gitignored). **Nalaz verifikacije

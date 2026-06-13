@@ -134,8 +134,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   Forgot password (`resetPasswordForEmail` → `PASSWORD_RECOVERY` → nova lozinka + repeat polje), profil „Change password"
   (+ repeat); **gumb-oko za prikaz lozinke** na svim password poljima. Pravne stranice ažurirane. Baza nepromijenjena.
   Cache `20260643`. Korisnikov dashboard korak: min duljina lozinke 8.
-  **⚠️ DEPLOY GATE (korisnik, 2026-06-12): NE pushati dok korisnik ne potvrdi da je login UX + Ads-spremnost POTPUNA.**
-  Detalji: `docs/BACKEND.md` §Staza B.
+  **✅ DEPLOY GATE ISPUNJEN — SVE LIVE (2026-06-13, push `ca06158..51e4e7b` uz izričito odobrenje):** auth email+lozinka,
+  cloud sync, Profile, pravne stranice + E-Business. `origin/main` sinkroniziran. Detalji: `docs/BACKEND.md` §Staza B.
 - **✅ E-BUSINESS restrukturiran + obogaćen ✅ lokalno (2026-06-13, 3. sem-1 predmet):** korisnik dostavio 14 PDF predavanja
   (`…/2. godina Hospitaliy Managament/E-Business`). **Nalaz: stari `data-ebusiness.js` (14 kat/129 fc) BIO vjeran predavanjima**
   (iznimka od te2-pouke; 1 ispravak: SEO ima ČETIRI potkategorije) → **split skriptom** (ključevi kat. + storageKey nedirnuti →
@@ -143,7 +143,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **K2=Units 8–15**, 8 kat) / `final.js` (`ebusinessFinal` hibrid + examPractice, ZADNJI) + **obogaćivanje +23 fc/+5 quiz** iz
   predavanja. **Finalni: 15 kat / 152 fc / 124 quiz / 75 fill.** Catalog 3 lekcije; stari root fajl obrisan; `lazy-load.spec.js`
   sentinel → `ebusinessM1`. `CONTENT_VERSION` `20260644`. `.gitignore` + `tmp-ebiz/`. Verify 0/0, validator OK, Playwright 64/64.
-  **Lokalno — čeka deploy (isti deploy gate kao auth).**
+  **✅ LIVE — deployano 2026-06-13 (`51e4e7b`).**
 - **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 3/4** — preostao SAMO **Entrepreneurship** (folder materijala
   PRAZAN → čeka PDF-ove/silabus). Pa 1. godina (Management/Macroeconomics/SIT imaju materijale). **⚠️ POUKA iz te2: provjeriti
   stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2), split+obogaćivanje ako je vjeran (E-Business).**
