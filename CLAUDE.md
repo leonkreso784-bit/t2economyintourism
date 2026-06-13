@@ -144,7 +144,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   predavanja. **Finalni: 15 kat / 152 fc / 124 quiz / 75 fill.** Catalog 3 lekcije; stari root fajl obrisan; `lazy-load.spec.js`
   sentinel → `ebusinessM1`. `CONTENT_VERSION` `20260644`. `.gitignore` + `tmp-ebiz/`. Verify 0/0, validator OK, Playwright 64/64.
   **✅ LIVE — deployano 2026-06-13 (`51e4e7b`).**
-- **✅ ENTREPRENEURSHIP restrukturiran + obogaćen ✅ lokalno (2026-06-13, 4./4. sem-1 → 2. GODINA 8/8 KOMPLETNA):** korisnik
+- **✅ ENTREPRENEURSHIP restrukturiran + obogaćen ✅ LIVE (2026-06-13, `8a37404`, 4./4. sem-1 → 2. GODINA 8/8 KOMPLETNA):** korisnik
   dostavio 11 PDF predavanja (`…/Entrepreneurship and Innovation`, Week 2–7 + 9–13; Week 8 = kolokvij). **Nalaz: stari
   `data-entrepreneurship.js` (11 kat/92 fc) TOČAN ali TANAK — 3 tjedna nepokrivena** → **split skriptom** (ključevi kat. +
   storageKey nedirnuti → napredak očuvan) + **4 NOVE kategorije + ~95 fc**: `data/entrepreneurship/` `midterm-1.js`
@@ -153,7 +153,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **developing**) / `final.js` (`entrepreneurshipFinal` hibrid + examPractice, ZADNJI). **Ispravci:** „linearni proces"
   kartica + W3 kritika; uklonjeni dupli influencer/push-pull iz `tourism`. **Finalni: 15 kat / 175 fc / 134 quiz / 80 fill**
   (najveći predmet). Catalog 3 lekcije; stari root fajl obrisan (`second-exam-prep`/`final-exam-prep` → standardne 3 lekcije).
-  `CONTENT_VERSION` `20260645`. `.gitignore` + `tmp-ent/`. Verify 0/0, validator 0, Playwright 64/64. **Lokalno, čeka deploy.**
+  `CONTENT_VERSION` `20260645`. `.gitignore` + `tmp-ent/`. Verify 0/0, validator 0, Playwright 64/64. **✅ LIVE — deployano 2026-06-13 (`8a37404`).**
 - **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** Dalje: **1. godina**
   (Management/SIT tekstualni prvi; Macro/**Statistics — 26 datoteka, NOVO**/Micro/Math preko KaTeX cigle, Math zadnja, ADR-009).
   **⚠️ Prije masovnog unosa 1. god: razmotriti odgođeni generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**

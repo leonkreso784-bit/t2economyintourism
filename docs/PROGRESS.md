@@ -53,7 +53,8 @@ nepokrivena** (W3 Creativity, W5 Financing, W13 Developing Countries) + velike r
 **→ sem-1: 4/4 KOMPLETNO (Accounting ✅, te2 ✅, E-Business ✅, Entrepreneurship ✅) → CIJELA 2. GODINA HM = 8/8
 PREDMETA KOMPLETNO.** Dalje: 1. godina (Management/SIT tekstualni prvi; Macro/**Statistics (26 datoteka — novo!)**/
 Micro/Math preko KaTeX cigle, ADR-009) — prije masovnog unosa razmotriti odgođeni generator-script za uštedu.
-**Lokalno, NIJE deployano (čeka izričito odobrenje).**
+**✅ DEPLOYANO 2026-06-13 (`4c66277..8a37404`, uz izričito odobrenje „mozes deployat") → LIVE na sokratstudy.com;
+`origin/main` sinkroniziran.** Cache `CONTENT_VERSION 20260645`.
 
 ---
 
