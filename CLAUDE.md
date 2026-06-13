@@ -144,9 +144,20 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   predavanja. **Finalni: 15 kat / 152 fc / 124 quiz / 75 fill.** Catalog 3 lekcije; stari root fajl obrisan; `lazy-load.spec.js`
   sentinel → `ebusinessM1`. `CONTENT_VERSION` `20260644`. `.gitignore` + `tmp-ebiz/`. Verify 0/0, validator OK, Playwright 64/64.
   **✅ LIVE — deployano 2026-06-13 (`51e4e7b`).**
-- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 3/4** — preostao SAMO **Entrepreneurship** (folder materijala
-  PRAZAN → čeka PDF-ove/silabus). Pa 1. godina (Management/Macroeconomics/SIT imaju materijale). **⚠️ POUKA iz te2: provjeriti
-  stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2), split+obogaćivanje ako je vjeran (E-Business).**
+- **✅ ENTREPRENEURSHIP restrukturiran + obogaćen ✅ lokalno (2026-06-13, 4./4. sem-1 → 2. GODINA 8/8 KOMPLETNA):** korisnik
+  dostavio 11 PDF predavanja (`…/Entrepreneurship and Innovation`, Week 2–7 + 9–13; Week 8 = kolokvij). **Nalaz: stari
+  `data-entrepreneurship.js` (11 kat/92 fc) TOČAN ali TANAK — 3 tjedna nepokrivena** → **split skriptom** (ključevi kat. +
+  storageKey nedirnuti → napredak očuvan) + **4 NOVE kategorije + ~95 fc**: `data/entrepreneurship/` `midterm-1.js`
+  (`entrepreneurshipM1`, **K1=Weeks 2–7**, 7 kat: history/psychology/**creativity**/innovation/**financing**/**franchising**/
+  planning) / `midterm-2.js` (`entrepreneurshipM2`, **K2=Weeks 9–13**, 7 kat: failure/economy/tourism/social/value/trends/
+  **developing**) / `final.js` (`entrepreneurshipFinal` hibrid + examPractice, ZADNJI). **Ispravci:** „linearni proces"
+  kartica + W3 kritika; uklonjeni dupli influencer/push-pull iz `tourism`. **Finalni: 15 kat / 175 fc / 134 quiz / 80 fill**
+  (najveći predmet). Catalog 3 lekcije; stari root fajl obrisan (`second-exam-prep`/`final-exam-prep` → standardne 3 lekcije).
+  `CONTENT_VERSION` `20260645`. `.gitignore` + `tmp-ent/`. Verify 0/0, validator 0, Playwright 64/64. **Lokalno, čeka deploy.**
+- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** Dalje: **1. godina**
+  (Management/SIT tekstualni prvi; Macro/**Statistics — 26 datoteka, NOVO**/Micro/Math preko KaTeX cigle, Math zadnja, ADR-009).
+  **⚠️ Prije masovnog unosa 1. god: razmotriti odgođeni generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**
+  **⚠️ POUKA: provjeriti stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2/Entrepreneurship-djelomično), split+obogaćivanje ako je vjeran (E-Business).**
   **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
 - **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni

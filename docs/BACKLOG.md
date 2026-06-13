@@ -15,12 +15,12 @@ email+lozinka (signUp/signInWithPassword), email potvrda obavezna, magic-link UK
 - **Onboarding anketa pri ulasku u sustav** — korisnikova ideja (2026-06-12); veže se na budući backend za izradu
   sadržaja iz PDF prezentacija (admin/ingest alati).
 
-## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
-**Status (2026-06-13):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **3/4 gotovo i LIVE** — **Accounting ✅** (3 lekcije + jedinstveni
-reusable Exercises sustav, 41 vježba; vidi `docs/EXERCISES_ENGINE.md`), **Tourism Economics `te2` ✅** (restrukturiran + rebuild iz
-PDF predavanja, LIVE) i **E-Business ✅** (2026-06-13: split starog vjernog sadržaja + obogaćivanje iz 14 PDF predavanja; finalni
-**15 kat / 152 fc**; **LIVE `51e4e7b`**). **▶ PREOSTAO SAMO Entrepreneurship** — folder materijala
-(`…/Entrepreneurship and Innovation`) **PRAZAN** → **čeka da korisnik pošalje PDF-ove/silabus.**
+## ✅ ZAVRŠENO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni → CIJELA 2. GODINA 8/8
+**Status (2026-06-13):** semestar 2 = **4/4 KOMPLETNO**, semestar 1 = **4/4 KOMPLETNO** → **2. godina HM = 8/8 predmeta.**
+**Accounting ✅** (3 lekcije + reusable Exercises sustav, 41 vježba; `docs/EXERCISES_ENGINE.md`), **Tourism Economics `te2` ✅**
+(restrukturiran + rebuild iz PDF-ova, LIVE), **E-Business ✅** (split + obogaćivanje iz 14 PDF-ova; finalni 15 kat/152 fc; **LIVE `51e4e7b`**),
+**Entrepreneurship ✅** (2026-06-13: split + 4 nove kategorije + obogaćivanje iz 11 PDF predavanja; finalni **15 kat / 175 fc / 134 quiz /
+80 fill** — najveći predmet; **lokalno, čeka deploy**). **▶ Dalje = 1. GODINA** (vidi [[content-roadmap-sequencing]]).
 **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — ne vraćati se na Accounting (ni Final-tab ni USAR/USALI klasifikaciju) osim izričito.**
 
 **Obrazac (kao Marketing/Geo/F&N):** po predmetu — utvrditi K1/K2 granicu iz silabusa/materijala → sadržaj podijeliti
@@ -33,7 +33,7 @@ za sadržajno upotpunjavanje; migracija u bazu i dalje ide JEDNOM u Bloku B.)
 | Predmet | sem | Trenutno (lekcije → podaci, kategorija/flashcards) | Što treba |
 |---|---|---|---|
 | ~~**Tourism Economics** (`te2`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** `first-midterm`/`second-midterm`/`final` (`data/te2/`, te2M1/te2M2/te2Final); finalni **11 kat / 135 fc / 94 quiz / 66 fill** | ✅ Restrukturirano + **REBUILD iz 10 PDF predavanja** (2026-06-12): K1=Units 1–6 (5 kat, +nova `forecasting`), K2=Units 7–12 (5 kat) + `examPractice`. Ispravljena činjenica (price = najkritičnija). Lokalno, čeka deploy |
-| **Entrepreneurship** (`entrepreneurship`) | 1 | 1 blok (`entrepreneurshipData`, 11 kat/92 fc) prikazan pod 2 imena lekcije (obje **iste**) | Podijeliti sadržaj na K1/K2; izgraditi finalni hibrid (3 zasebne lekcije) |
+| ~~**Entrepreneurship** (`entrepreneurship`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`entrepreneurshipM1`/`entrepreneurshipM2`/`entrepreneurshipFinal`, `data/entrepreneurship/`); finalni **15 kat / 175 fc / 134 quiz / 80 fill** | ✅ Split (stari točan ali tanak) + **4 nove kat.** (creativity W3, financing W5, franchising W6, developing W13) + obogaćen iz 11 PDF-ova (2026-06-13). K1=Weeks 2–7, K2=Weeks 9–13. Lokalno, čeka deploy |
 | ~~**Accounting** (`accounting`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`accountingM1`/`accountingM2`/`accountingFinal`) + **41 interaktivna vježba** (`data/accounting/exercises.js`) | ✅ Restrukturirano + Exercises sustav (2026-06-12, LIVE `a6b6fb0`). Opcionalno: Final exercises-tab, USAR/USALI klasifikacija (treba answer-key) |
 | ~~**E-Business** (`ebusiness`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`ebusinessM1`/`ebusinessM2`/`ebusinessFinal`, `data/ebusiness/`); finalni **15 kat / 152 fc / 124 quiz / 75 fill** | ✅ Split (stari sadržaj VJERAN predavanjima — iznimka od te2-pouke) + obogaćen iz 14 PDF-ova (+23 fc; SEO 3→4 fix). K1=Units 1–7, K2=Units 8–15. **LIVE 2026-06-13 (`51e4e7b`)** |
 

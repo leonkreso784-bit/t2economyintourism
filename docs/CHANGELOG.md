@@ -21,6 +21,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Entrepreneurship restrukturiran na K1/K2/finalni + obogaćen iz 11 PDF predavanja → 2. GODINA 100% KOMPLETNA:**
+  stari `data-entrepreneurship.js` (11 kat/92 fc) verificiran protiv predavanja — **točan ali tanak** (3 tjedna
+  potpuno nepokrivena) → **split skriptom** (ključevi kategorija i storageKey nedirnuti → napredak očuvan) +
+  **4 NOVE kategorije + ~95 fc**. `data/entrepreneurship/midterm-1.js` (`entrepreneurshipM1`, **Weeks 2–7**, 7 kat:
+  history/psychology/**creativity NOVA**/innovation/**financing NOVA**/**franchising NOVA**/planning; 91 fc) +
+  `midterm-2.js` (`entrepreneurshipM2`, **Weeks 9–13**, 7 kat: failure/economy/tourism/social/value/trends/
+  **developing NOVA**; 78 fc). **Ispravci sadržaja:** kartica „entrepreneurship = linearni proces" sada uključuje
+  W3 kritiku (proces je complex/chaotic, NE linearan); uklonjeni dupli influencer/push-pull iz `tourism` (žive u
+  `trends`). **Finalni** = `final.js` (`entrepreneurshipFinal`, hibrid `Object.assign` + examPractice;
+  **15 kat / 175 fc / 134 quiz / 80 fill** — najveći predmet na platformi). Catalog 3 lekcije + resolve; stari root
+  fajl obrisan (stare lekcije `second-exam-prep`/`final-exam-prep` → `first-midterm`/`second-midterm`/`final`).
+  `CONTENT_VERSION` → `20260645`. verify 0/0, strukturni validator 0, Playwright. → **sem-1 = 4/4, cijela 2. god = 8/8.**
 - **E-Business restrukturiran na K1/K2/finalni + obogaćen iz 14 PDF predavanja:** stari `data-ebusiness.js` (14 kat/129 fc)
   verificiran protiv predavanja — **vjeran** (1 ispravak: SEO ima ČETIRI potkategorije, ne tri) → **split skriptom**
   (ključevi kategorija i storageKey nedirnuti → napredak očuvan) na `data/ebusiness/midterm-1.js` (`ebusinessM1`,

@@ -62,16 +62,18 @@ const SOKRAT_CATALOG = {
       icon: 'fa-rocket',
       color: '#8b5cf6',
       iconGradient: ['#8b5cf6', '#a78bfa'],
-      description: 'Planning, Innovation, Social Entrepreneurship, Tourism, Final Exam Prep',
+      description: 'Theories, Creativity, Innovation, Financing, Franchising, Planning, Social Entrepreneurship',
       storageKey: 'entrepreneurship-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'second-exam-prep', name: 'Second Exam Preparation', description: 'Core concepts: Planning, Failure, Economy, Social Entrepreneurship, Trends' },
-        { id: 'final-exam-prep', name: 'Final Exam Preparation', description: 'Complete review: History, Psychology, Innovation, Franchising, Tourism, Value Measurement' }
+        { id: 'first-midterm', name: 'First Midterm', description: 'Weeks 2–7: concepts & theories, the entrepreneur, creativity & business idea, innovation, financing, franchising, planning' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Weeks 9–13: failure & learning, economy, tourism entrepreneurship, social entrepreneurship, measuring value, contemporary issues, developing countries' },
+        { id: 'final', name: 'Final Exam', description: 'All weeks 2–13 (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-entrepreneurship.js'],
-        resolve: { '*': 'entrepreneurshipData' }
+        // data/entrepreneurship/final.js MUST load last (Object.assign of entrepreneurshipM1 + entrepreneurshipM2 window objects + examPractice)
+        scripts: ['data/entrepreneurship/midterm-1.js', 'data/entrepreneurship/midterm-2.js', 'data/entrepreneurship/final.js'],
+        resolve: { 'first-midterm': 'entrepreneurshipM1', 'second-midterm': 'entrepreneurshipM2', 'final': 'entrepreneurshipFinal' }
       }
     },
     {

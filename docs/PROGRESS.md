@@ -5,6 +5,58 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-13 — ✅ ENTREPRENEURSHIP restrukturiran na K1/K2/finalni + REBUILD-obogaćivanje iz 11 PDF predavanja (4./4. sem-1 predmet → 2. GODINA 100% KOMPLETNA)
+**Korisnik dostavio materijale** (`…/2. godina Hospitaliy Managament/Entrepreneurship and Innovation`, 11 PDF-ova:
+Week 2–7 + 9–13; Week 8 = kolokvijski tjedan → **K1 = Weeks 2–7, K2 = Weeks 9–13**; ekstrakcija `node scripts/pdf-text.js`
+→ `tmp-ent/`, gitignored). **Nalaz verifikacije (hibrid te2/E-Business pouke): stari `data-entrepreneurship.js`
+(11 kat / 92 fc) BIO JE TOČAN gdje postoji** (sve brojke odgovaraju slajdovima), **ALI tanak — 3 tjedna potpuno
+nepokrivena** (W3 Creativity, W5 Financing, W13 Developing Countries) + velike rupe u ostalima → **split skriptom +
+4 NOVE kategorije + jako obogaćivanje (+~95 fc)**:
+
+- **Split po linijama** (`tmp-ent/split.js`, jednokratna): stare kategorije kopirane verbatim, **ključevi kat. +
+  storageKey (`entrepreneurship-progress`) NEDIRNUTI → napredak očuvan**. Stara `finalExam` kategorija ispuštena
+  (zamjenjuje je examPractice u finalnom, dosljedno ostalim predmetima).
+- **`data/entrepreneurship/midterm-1.js`** (`entrepreneurshipM1`, **K1 = Weeks 2–7**, 7 kat / 91 fc / 67 quiz / 42 fill):
+  history (W2, +6 fc: Smith/Say/Mises/Kirzner/„special individual"/socijalističke ekonomije) · psychology (W2, +6 fc:
+  start-up utjecaji, kritika trait-pristupa, social influences, **lifestyle businesses** ×2, mitovi; **FIX: kartica
+  „linearni proces" sada uključuje W3 kritiku — proces je complex/chaotic, NE linearan**) · **creativity (NOVA, W3,
+  13 fc:** mindset, opportunity, 3 oblika vrijednosti, 4 I's, finding vs building, prior knowledge + pattern recognition,
+  paying customer, design thinking) · innovation (W4, preimenovana iz „Innovation & Franchising", franchising kartice
+  premještene; +6 fc: Kanter def., „what innovation is NOT", innovation journey 4 koraka + scenariji, Bill Gross TIMING,
+  creativity→innovation→entrepreneurship) · **financing (NOVA, W5, 16 fc:** bootstrapping/affordable loss/sweat equity,
+  crowdfunding vs crowdsourcing, Kickstarter all-or-nothing + Coolest Cooler, JOBS Act, 4 tipa crowdfundinga,
+  overdraft vs loan, trade credit/leasing/factoring, faze equity financiranja, angels vs VCs s brojkama) ·
+  **franchising (NOVA, W6, 10 fc:** BFA def., **franšizoprimac = intrapreneur**, 2 formata, direct vs master, resource
+  scarcity + agency teorija, prednosti/nedostaci obje strane, 5× uspješniji / 10% vs 52%, tržišne brojke) ·
+  planning (W7, +3 fc: feasibility ≤10 str + 50 kupaca + go/no-go, Kawasaki 10 / Young 5 slajdova, redoslijed alata).
+- **`midterm-2.js`** (`entrepreneurshipM2`, **K2 = Weeks 9–13**, 7 kat / 78 fc / 57 quiz / 33 fill): failure (W9, +5 fc:
+  statistike ~90%/1-od-5/70% u god. 2–5/BLS/po zemljama, failure-kao-PROCES, kultura straha, Edison „1.000 koraka") ·
+  economy (W10, +4 fc: Say middleman, Menger, poduzetnik-vs-menadžer tablica, 3 definicije uloge) · tourism (W10;
+  **uklonjeni dupli influencer/push/pull** koji žive u trends; +6 fc: makro/mikro perspektive, javni vs privatni sektor,
+  9 karakteristika usluga, pros/cons, ICT promjene/disintermedijacija, menadžer vs poduzetnik u T&H) · social (W11,
+  +Thompson 2 grupe) · value (W11, +izazovi mjerenja) · trends (W12, +5 fc: najnovije statistike žena-poduzetnica
+  (39,2% firmi/849 dnevno/18% unicorna/24,3% exita/68,8% gap), Kanter 1977, D&I šire od roda + digital divide,
+  45% Fortune 500 migranti, oblici: refugee/enclave/transnational; Environment trends +Green Finance/Tech) ·
+  **developing (NOVA, W13, 12 fc:** social innovation 7% GDP-a, 3 prevladavajuća shvaćanja, Airbnb socio-prostorni
+  učinak 78%/1%, karakteristike zemalja u razvoju, mixed picture ≤2%, 4 case studyja: Phnom Penh mission drift /
+  Grootbos ovisnost / Eco-pads 4 strategije / Mageires 60% + 3 market capabilities).
+- **Finalni** = `data/entrepreneurship/final.js` (`entrepreneurshipFinal` = `Object.assign({}, M1, M2, {examPractice})`,
+  učitava se ZADNJI; examPractice = 6 cross-topic fc / 10 quiz / 5 fill + learn s mapom kolegija).
+  **Ukupno: 15 kat / 175 fc / 134 quiz / 80 fill — najveći predmet na platformi.**
+- **Catalog:** 3 lekcije (`first-midterm`/`second-midterm`/`final`) + 3 scripta + `resolve`; id/storageKey nedirnuti;
+  stare lekcije `second-exam-prep`/`final-exam-prep` zamijenjene. Stari root `data-entrepreneurship.js` OBRISAN.
+  `lazy-load.spec.js` bez izmjena (sentineli su ebusiness/te2). **`CONTENT_VERSION` → `20260645`** + `catalog.js`/
+  `content-loader.js` `?v=` bump. `.gitignore` + `tmp-ent/` (ekstrahirani tekst predavanja = copyright).
+- **Provjere:** verify 0/0 · strukturni node validator M1/M2/FINAL = 0 grešaka (correct-index u rasponu, `_______`
+  markeri, sva polja) · Playwright (rezultat zabilježen u commitu).
+
+**→ sem-1: 4/4 KOMPLETNO (Accounting ✅, te2 ✅, E-Business ✅, Entrepreneurship ✅) → CIJELA 2. GODINA HM = 8/8
+PREDMETA KOMPLETNO.** Dalje: 1. godina (Management/SIT tekstualni prvi; Macro/**Statistics (26 datoteka — novo!)**/
+Micro/Math preko KaTeX cigle, ADR-009) — prije masovnog unosa razmotriti odgođeni generator-script za uštedu.
+**Lokalno, NIJE deployano (čeka izričito odobrenje).**
+
+---
+
 ## 2026-06-13 — 🚀 DEPLOY: Backend staza B (auth email+lozinka + cloud sync + Profile + pravne stranice) + E-Business — SVE LIVE
 **Korisnik izričito odobrio push („mozes deployat na github") → deploy gate ISPUNJEN.** Pushano `ca06158..51e4e7b`
 (6 commitova): `d591f3f` Track B MVP · `21b1919` Profile + auth posvuda + Google Ads stranice · `aec6d47` backlog ·
