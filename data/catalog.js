@@ -129,11 +129,14 @@ const SOKRAT_CATALOG = {
       storageKey: 'ebusiness-progress',
       features: { blindMap: false },
       lessons: [
-        { id: 'final-exam-prep', name: 'Final Exam Preparation', description: 'Complete E-Business theory covering all 15 units' }
+        { id: 'first-midterm', name: 'First Midterm', description: 'Units 1–7: e-commerce context, distribution chain, internet platform, merchant/agent cash flows, computer graphics, platform economy' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Units 8–15: visual design, digital marketing, social media, Google Analytics, SEO/SEM, hotel PMS, security, challenges & trends' },
+        { id: 'final', name: 'Final Exam', description: 'All units 1–15 (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
-        scripts: ['data-ebusiness.js'],
-        resolve: { '*': 'ebusinessData' }
+        // data/ebusiness/final.js MUST load last (Object.assign of ebusinessM1 + ebusinessM2 window objects + examPractice)
+        scripts: ['data/ebusiness/midterm-1.js', 'data/ebusiness/midterm-2.js', 'data/ebusiness/final.js'],
+        resolve: { 'first-midterm': 'ebusinessM1', 'second-midterm': 'ebusinessM2', 'final': 'ebusinessFinal' }
       }
     },
     {

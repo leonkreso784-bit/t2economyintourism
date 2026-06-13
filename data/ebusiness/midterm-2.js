@@ -1,1214 +1,10 @@
-// ===== E-BUSINESS - FINAL EXAM PREPARATION =====
-// Comprehensive study material for E-Business final examination
-// 15 Units covering: E-Commerce, Distribution Chain, Internet, Digital Marketing, Social Media, SEO, PMS, Security
+// ===== E-BUSINESS — Second Midterm (K2) =====
+// Rebuilt 2026-06-13 from the 14 lecture PDFs (course "E-Business in Hospitality").
+// K2 = Units 8-15: visual design & identity, digital marketing, social media, Google Analytics & Trends, SEO/SEM/SERP, hotel PMS, e-business security, challenges & trends.
+// Schema: docs/CONTENT_SCHEMA.md (flashcards / quiz(correct=index) / fillBlanks / learn).
 
-const ebusinessData = {
-    
-    // ========== CATEGORY 1: E-COMMERCE CONTEXT (Unit 1) ==========
-    ecommerceContext: {
-        name: "E-Commerce Context",
-        icon: "fa-shopping-cart",
-        color: "#f59e0b",
-        
-        flashcards: [
-            {
-                question: "What is E-Commerce?",
-                answer: "E-commerce refers to the buying and selling of goods or services via the internet, including the transfer of money and data needed to complete transactions.\n\n• Takes place online\n• Involves products, services, payments, and data\n• Also called electronic commerce or internet commerce",
-                explanation: "The foundation of modern digital business."
-            },
-            {
-                question: "How has E-Commerce transformed the Hospitality Industry?",
-                answer: "Main transformation areas:\n\n• Online platforms replaced phone/in-person bookings\n• Customer interaction moved to digital channels\n• Services became faster, more personalized, and global\n• Hotels and travel companies now depend on digital systems",
-                explanation: "Traditionally, hospitality relied on face-to-face interaction."
-            },
-            {
-                question: "What are the benefits of Online Booking Systems?",
-                answer: "Benefits for businesses:\n\n• Better booking management\n• Higher occupancy rates\n• Reduced manual work\n• Customers can reserve rooms anytime from anywhere",
-                explanation: "Digital transformation in hospitality starts with booking systems."
-            },
-            {
-                question: "What is Dynamic Pricing?",
-                answer: "Prices change in real time depending on:\n\n• Demand\n• Seasonality\n• Competitor prices\n\nThis allows businesses to maximize revenue based on market conditions.",
-                explanation: "AI and algorithms enable real-time price optimization."
-            },
-            {
-                question: "How do Virtual Tours and AR enhance customer engagement?",
-                answer: "Customers can explore hotels digitally before booking.\n\nExample: The Ritz-Carlton Bali offers a 360-degree virtual tour of rooms and facilities.\n\nBenefits:\n• Reduces uncertainty\n• Increases booking confidence",
-                explanation: "Virtual reality creates immersive preview experiences."
-            },
-            {
-                question: "What is the difference between Hotel E-Commerce and General E-Commerce?",
-                answer: "HOTEL E-COMMERCE:\n• Focus: Accommodation and hospitality\n• Products: Hotel rooms, spa, restaurants\n• Platforms: Agoda, Expedia\n\nGENERAL E-COMMERCE:\n• Focus: Selling goods across many industries\n• Products: Electronics, clothing, groceries\n• Platforms: Amazon, eBay, Walmart\n\nKey difference: Hotel e-commerce is specialized, general is broad.",
-                explanation: "Understanding the specialization of hotel digital commerce."
-            },
-            {
-                question: "What are the 4 pillars of the Digital Future of Hospitality?",
-                answer: "1. INNOVATION - Constant technological improvement\n2. CUSTOMER FOCUS - Personalized and seamless experiences\n3. GLOBAL EXPANSION - Borderless business opportunities\n4. SUSTAINABILITY - Eco-conscious solutions",
-                explanation: "The main directions for hospitality digital transformation."
-            },
-            {
-                question: "What is B2C (Business to Consumer)?",
-                answer: "B2C = Business sells directly to consumers\n\nExamples:\n• Amazon\n• Walmart\n• Online retail stores",
-                explanation: "The most common e-commerce model."
-            },
-            {
-                question: "What is B2B (Business to Business)?",
-                answer: "B2B = Businesses sell to other businesses\n\nExamples:\n• Manufacturers to wholesalers\n• Software providers to companies\n• Wholesale platforms",
-                explanation: "Business-to-business transactions."
-            },
-            {
-                question: "What is D2C (Direct to Consumer)?",
-                answer: "D2C = Brands sell directly to customers WITHOUT intermediaries\n\n• No retailer or wholesaler involved\n• Often supported by social media\n• Brand-owned websites\n\nExample: Nike selling directly through nike.com",
-                explanation: "Cutting out the middleman."
-            },
-            {
-                question: "What is C2C (Consumer to Consumer)?",
-                answer: "C2C = Consumers sell to other consumers\n\nExamples:\n• eBay\n• Etsy\n• Facebook Marketplace\n• Craigslist",
-                explanation: "Peer-to-peer marketplace model."
-            },
-            {
-                question: "What is C2B (Consumer to Business)?",
-                answer: "C2B = Individuals offer products or services to companies\n\nExamples:\n• Influencers\n• Photographers\n• Freelancers\n• Stock photo contributors",
-                explanation: "Reverse of traditional business model."
-            },
-            {
-                question: "What are Physical Goods, Digital Goods, and Services in E-Commerce?",
-                answer: "PHYSICAL GOODS:\n• Tangible products with physical form\n• Need shipping\n\nDIGITAL GOODS:\n• Intangible products delivered electronically\n• E-books, software, music\n\nSERVICES:\n• Activities that deliver value\n• Consulting, design, bookings",
-                explanation: "Three types of products sold online."
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "E-commerce involves all EXCEPT:",
-                options: [
-                    "Buying and selling online",
-                    "Transfer of money and data",
-                    "Physical store visits only",
-                    "Internet transactions"
-                ],
-                correct: 2
-            },
-            {
-                question: "Dynamic pricing depends on:",
-                options: [
-                    "Fixed government rates",
-                    "Demand, seasonality, and competitor prices",
-                    "Employee preferences",
-                    "Random selection"
-                ],
-                correct: 1
-            },
-            {
-                question: "Which is an example of B2C e-commerce?",
-                options: [
-                    "Manufacturer to wholesaler",
-                    "Amazon selling to consumers",
-                    "Freelancer to company",
-                    "Government to citizens"
-                ],
-                correct: 1
-            },
-            {
-                question: "D2C (Direct to Consumer) means:",
-                options: [
-                    "Selling through retailers",
-                    "Brands sell directly without intermediaries",
-                    "Digital to consumer",
-                    "Discount to consumer"
-                ],
-                correct: 1
-            },
-            {
-                question: "Virtual tours in hotels help to:",
-                options: [
-                    "Replace actual visits permanently",
-                    "Reduce uncertainty and increase booking confidence",
-                    "Decrease hotel revenue",
-                    "Eliminate the need for websites"
-                ],
-                correct: 1
-            },
-            {
-                question: "C2C e-commerce examples include:",
-                options: [
-                    "Amazon and Walmart",
-                    "eBay and Etsy",
-                    "B2B platforms",
-                    "Government services"
-                ],
-                correct: 1
-            },
-            {
-                question: "Which is NOT a pillar of digital future of hospitality?",
-                options: [
-                    "Innovation",
-                    "Customer Focus",
-                    "Manual Processing",
-                    "Sustainability"
-                ],
-                correct: 2
-            },
-            {
-                question: "Digital goods are:",
-                options: [
-                    "Physical products",
-                    "Intangible products delivered electronically",
-                    "Only physical books",
-                    "Services"
-                ],
-                correct: 1
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "E-commerce refers to buying and selling via the _______.",
-                answer: "internet",
-                hint: "Online network..."
-            },
-            {
-                sentence: "_______ pricing changes in real time based on demand.",
-                answer: "Dynamic",
-                hint: "Opposite of static..."
-            },
-            {
-                sentence: "B2C stands for Business to _______.",
-                answer: "Consumer",
-                hint: "End customer..."
-            },
-            {
-                sentence: "D2C means brands sell _______ to customers without intermediaries.",
-                answer: "directly",
-                hint: "Without middlemen..."
-            },
-            {
-                sentence: "The 4 pillars of hospitality's digital future include Innovation, Customer Focus, Global Expansion, and _______.",
-                answer: "Sustainability",
-                hint: "Eco-friendly..."
-            }
-        ],
-        
-        learn: {
-            title: "The Context of Modern E-Commerce",
-            content: `
-                <h3>What is E-Commerce?</h3>
-                <div class="formula-box">
-                    <strong>E-Commerce =</strong> Buying and selling goods/services via the internet<br>
-                    Includes: Products + Services + Payments + Data
-                </div>
-                
-                <h4>Digital Transformation in Hospitality</h4>
-                <ul>
-                    <li><strong>Online Booking:</strong> Reserve rooms anytime, anywhere</li>
-                    <li><strong>Personalization:</strong> Customized experiences using data</li>
-                    <li><strong>Dynamic Pricing:</strong> Real-time price changes</li>
-                    <li><strong>Virtual Tours:</strong> 360° previews before booking</li>
-                </ul>
-                
-                <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> E-Commerce Business Models</h4>
-                    <ul>
-                        <li><strong>B2C:</strong> Business → Consumer (Amazon)</li>
-                        <li><strong>B2B:</strong> Business → Business (Wholesale)</li>
-                        <li><strong>C2C:</strong> Consumer → Consumer (eBay)</li>
-                        <li><strong>D2C:</strong> Direct to Consumer (Brand websites)</li>
-                        <li><strong>C2B:</strong> Consumer → Business (Freelancers)</li>
-                    </ul>
-                </div>
-                
-                <h4>4 Pillars of Digital Hospitality Future</h4>
-                <div class="example-box">
-                    <p>🚀 <strong>Innovation</strong> - Technology improvement</p>
-                    <p>👤 <strong>Customer Focus</strong> - Personalized experiences</p>
-                    <p>🌍 <strong>Global Expansion</strong> - Borderless business</p>
-                    <p>🌱 <strong>Sustainability</strong> - Eco-conscious solutions</p>
-                </div>
-            `
-        }
-    },
-    
-    // ========== CATEGORY 2: TOURISM DISTRIBUTION CHAIN (Unit 2) ==========
-    distributionChain: {
-        name: "Distribution Chain",
-        icon: "fa-link",
-        color: "#10b981",
-        
-        flashcards: [
-            {
-                question: "What is the Tourism Distribution System?",
-                answer: "The tourism distribution system explains how tourism products reach the customer.\n\nIt connects:\n• Primary suppliers\n• Intermediaries\n• Digital platforms\n• Final customers\n\nE-business platforms make this process faster, global, and automated.",
-                explanation: "The pathway from supplier to traveler."
-            },
-            {
-                question: "What is the difference between Tour Operator and Travel Agent?",
-                answer: "TOUR OPERATOR:\n• Creates its own tourism product\n• Combines services into package trips\n• Acts as organizer or wholesaler\n\nTRAVEL AGENT:\n• Does NOT create products\n• Sells products created by others\n• Acts only as intermediary\n• Earns income through commission",
-                explanation: "Tour operators produce, agents sell."
-            },
-            {
-                question: "Who are the Primary Suppliers in tourism?",
-                answer: "Primary suppliers create the core tourism product:\n\n• Accommodation providers (hotels)\n• Airlines\n• Transport companies\n• Cruise companies\n• Attractions and activities",
-                explanation: "The original producers of tourism services."
-            },
-            {
-                question: "What are Wholesalers or Bedbanks?",
-                answer: "Wholesalers/Bedbanks:\n\n• Buy services in bulk\n• Work with net rates\n• Focus on B2B relationships\n• Rarely sell directly to individuals\n• Platforms are often password-protected",
-                explanation: "Bulk buyers in the tourism chain."
-            },
-            {
-                question: "What is a Global Distribution System (GDS)?",
-                answer: "A GDS is:\n• A global network\n• Connecting travel suppliers with travel agencies\n• Enabling automated bookings\n\nMain users:\n• Airlines\n• Hotels\n• Car rental companies\n\nExamples: Amadeus, Sabre, Travelport",
-                explanation: "The backbone of travel bookings."
-            },
-            {
-                question: "What is a Property Management System (PMS)?",
-                answer: "PMS or CRS (Central Reservation System):\n\n• Internal systems used by suppliers\n• Manage reservations, availability, and operations\n• Do NOT sell directly to customers\n• Connect to other platforms for distribution",
-                explanation: "Hotel's internal operational software."
-            },
-            {
-                question: "What is a Booking Engine?",
-                answer: "A booking engine:\n\n• Allows online booking on the supplier's own website\n• Supports direct sales\n• Connects directly with PMS\n• Enables real-time availability",
-                explanation: "The 'Book Now' functionality on websites."
-            },
-            {
-                question: "What is a Channel Manager?",
-                answer: "A Channel Manager:\n\n• Manages room rates and availability\n• Synchronizes ALL sales channels in real time\n• Reduces overbooking risk\n• Modern versions often use AI",
-                explanation: "Keeps all booking channels in sync."
-            },
-            {
-                question: "What are Meta-Search Engines?",
-                answer: "Meta-search engines:\n\n• Compare offers from multiple OTAs and supplier websites\n• Show prices side-by-side\n• Simplify customer decision-making\n\nExamples: Google Hotels, Trivago, Kayak",
-                explanation: "Price comparison tools."
-            },
-            {
-                question: "Are communication channels part of the distribution system?",
-                answer: "NO! Communication channels are NOT part of the distribution system.\n\nThey include:\n• Media and social media\n• Blogs and forums\n• Email and telephone\n\nThey are:\n• Marketing tools\n• Promotional channels\n\nWhen primary suppliers use them directly = direct sales",
-                explanation: "Important exam distinction!"
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "A Tour Operator:",
-                options: [
-                    "Only sells products created by others",
-                    "Creates its own tourism product",
-                    "Works only online",
-                    "Never deals with hotels"
-                ],
-                correct: 1
-            },
-            {
-                question: "A Travel Agent earns money mainly through:",
-                options: [
-                    "Creating products",
-                    "Commission",
-                    "Manufacturing",
-                    "Government subsidies"
-                ],
-                correct: 1
-            },
-            {
-                question: "GDS stands for:",
-                options: [
-                    "General Data System",
-                    "Global Distribution System",
-                    "Guest Data Service",
-                    "Government Digital Service"
-                ],
-                correct: 1
-            },
-            {
-                question: "A Channel Manager's main function is to:",
-                options: [
-                    "Create hotel rooms",
-                    "Synchronize rates and availability across channels",
-                    "Handle guest complaints",
-                    "Design websites"
-                ],
-                correct: 1
-            },
-            {
-                question: "Meta-search engines like Trivago:",
-                options: [
-                    "Sell rooms directly",
-                    "Compare prices from multiple sources",
-                    "Create hotel packages",
-                    "Manage hotel operations"
-                ],
-                correct: 1
-            },
-            {
-                question: "Communication channels are:",
-                options: [
-                    "Part of distribution system",
-                    "Marketing and promotional tools",
-                    "Primary suppliers",
-                    "Tour operators"
-                ],
-                correct: 1
-            },
-            {
-                question: "Primary suppliers in tourism include all EXCEPT:",
-                options: [
-                    "Hotels",
-                    "Airlines",
-                    "Travel agents",
-                    "Attractions"
-                ],
-                correct: 2
-            },
-            {
-                question: "Bedbanks focus mainly on:",
-                options: [
-                    "Individual travelers",
-                    "B2B relationships",
-                    "Social media",
-                    "Government services"
-                ],
-                correct: 1
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "A _______ creates its own tourism product and combines services into packages.",
-                answer: "Tour Operator",
-                hint: "Organizer of trips..."
-            },
-            {
-                sentence: "GDS stands for Global _______ System.",
-                answer: "Distribution",
-                hint: "Sharing across networks..."
-            },
-            {
-                sentence: "A Channel _______ synchronizes rates across all booking platforms.",
-                answer: "Manager",
-                hint: "One who manages..."
-            },
-            {
-                sentence: "Travel agents earn income mainly through _______.",
-                answer: "commission",
-                hint: "Percentage of sales..."
-            },
-            {
-                sentence: "Communication channels are NOT part of the _______ system.",
-                answer: "distribution",
-                hint: "How products reach customers..."
-            }
-        ],
-        
-        learn: {
-            title: "Tourism Distribution Chain",
-            content: `
-                <h3>The Distribution System</h3>
-                <div class="formula-box">
-                    Primary Suppliers → Intermediaries → Digital Platforms → Customer
-                </div>
-                
-                <h4>Tour Operator vs Travel Agent</h4>
-                <div class="tip-box">
-                    <h4><i class="fas fa-plane"></i> Key Difference</h4>
-                    <p><strong>Tour Operator:</strong> CREATES products (packages)</p>
-                    <p><strong>Travel Agent:</strong> SELLS products (earns commission)</p>
-                </div>
-                
-                <h4>Key Systems</h4>
-                <ul>
-                    <li><strong>GDS:</strong> Global network connecting suppliers with agencies</li>
-                    <li><strong>PMS:</strong> Internal hotel management system</li>
-                    <li><strong>Channel Manager:</strong> Syncs availability across channels</li>
-                    <li><strong>Meta-Search:</strong> Compares prices (Trivago, Kayak)</li>
-                </ul>
-                
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Exam Alert!</h4>
-                    <p>Communication channels (social media, email) are NOT part of the distribution system - they are marketing tools!</p>
-                </div>
-            `
-        }
-    },
-    
-    // ========== CATEGORY 3: INTERNET AS BUSINESS PLATFORM (Unit 3) ==========
-    internetBusiness: {
-        name: "Internet & Business",
-        icon: "fa-globe",
-        color: "#6366f1",
-        
-        flashcards: [
-            {
-                question: "What are the key benefits of the Internet for businesses?",
-                answer: "• Faster and cheaper communication\n• Easy access to information\n• Cost reduction in operations\n• Higher efficiency and productivity\n• Discovery of new business opportunities\n• Closer relationships with customers and suppliers",
-                explanation: "The Internet transformed business operations."
-            },
-            {
-                question: "How did the Web revolutionize business activities?",
-                answer: "1. E-COMMERCE - Online buying and selling\n2. DIGITAL MARKETING - Measurable, targeted promotion\n3. REMOTE WORK - Location-independent employment\n4. DATA ANALYTICS - Data-driven decision-making\n5. IMPROVED COMMUNICATION - Real-time global interaction",
-                explanation: "Five key business transformations."
-            },
-            {
-                question: "What is Web 1.0 (The Read-Only Web)?",
-                answer: "Characteristics:\n• Static pages\n• No user interaction\n• Content created only by website owners\n\nUsers were PASSIVE readers.",
-                explanation: "The first generation of the web."
-            },
-            {
-                question: "What is Web 2.0 (The Social Web)?",
-                answer: "Characteristics:\n• User-generated content\n• Social media\n• Blogs, comments, tagging\n\nUsers became CONTENT CREATORS.",
-                explanation: "The participatory web."
-            },
-            {
-                question: "What is Web 3.0 (The Semantic Web)?",
-                answer: "Characteristics:\n• Machine-readable data\n• Artificial intelligence and machine learning\n• Internet of Things\n• 3D graphics and virtual environments\n\nThe web starts to UNDERSTAND users.",
-                explanation: "The intelligent web."
-            },
-            {
-                question: "What is Web 4.0 (The Symbiotic Web)?",
-                answer: "Characteristics:\n• Human-machine interaction\n• Advanced personalization\n• AI-driven experiences\n\nStill under development, no fixed definition.",
-                explanation: "The future of the web."
-            },
-            {
-                question: "What is HTTP?",
-                answer: "HTTP = HyperText Transfer Protocol\n\nRules that computers use to communicate over the Internet for web pages.",
-                explanation: "The protocol for web communication."
-            },
-            {
-                question: "What is DNS (Domain Name System)?",
-                answer: "DNS translates domain names into IP addresses.\n\nExample:\n• You type: google.com\n• DNS translates to: 142.250.190.78\n• Your browser connects to that IP",
-                explanation: "The internet's phonebook."
-            },
-            {
-                question: "What is the difference between .com and .edu domains?",
-                answer: ".com = Commercial organizations\n.edu = Educational institutions\n\nOther examples:\n.org = Non-profit organizations\n.gov = Government\n.net = Network providers",
-                explanation: "Domain extensions indicate organization type."
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "Web 1.0 is characterized by:",
-                options: [
-                    "User-generated content",
-                    "Static pages with no interaction",
-                    "AI and machine learning",
-                    "Social media"
-                ],
-                correct: 1
-            },
-            {
-                question: "Web 2.0 is also called:",
-                options: [
-                    "The Read-Only Web",
-                    "The Social Web",
-                    "The Semantic Web",
-                    "The Symbiotic Web"
-                ],
-                correct: 1
-            },
-            {
-                question: "Web 3.0 features include:",
-                options: [
-                    "Static pages only",
-                    "No user interaction",
-                    "AI, machine learning, and IoT",
-                    "Only email communication"
-                ],
-                correct: 2
-            },
-            {
-                question: "DNS translates:",
-                options: [
-                    "Images to text",
-                    "Domain names to IP addresses",
-                    "Audio to video",
-                    "Passwords to codes"
-                ],
-                correct: 1
-            },
-            {
-                question: "Which is NOT a benefit of Internet for business?",
-                options: [
-                    "Faster communication",
-                    "Cost reduction",
-                    "Guaranteed profit",
-                    "Global reach"
-                ],
-                correct: 2
-            },
-            {
-                question: ".edu domain is used for:",
-                options: [
-                    "Commercial companies",
-                    "Educational institutions",
-                    "Entertainment",
-                    "E-commerce"
-                ],
-                correct: 1
-            },
-            {
-                question: "In Web 2.0, users became:",
-                options: [
-                    "Passive readers only",
-                    "Content creators",
-                    "Website owners only",
-                    "IT professionals"
-                ],
-                correct: 1
-            },
-            {
-                question: "HTTP stands for:",
-                options: [
-                    "HyperText Transfer Protocol",
-                    "High Tech Transfer Program",
-                    "Hotel Transport Protocol",
-                    "Hybrid Text Processing"
-                ],
-                correct: 0
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "Web 1.0 is called the _______-Only Web.",
-                answer: "Read",
-                hint: "Passive consumption..."
-            },
-            {
-                sentence: "Web 2.0 is known as the _______ Web because of user-generated content.",
-                answer: "Social",
-                hint: "Community and sharing..."
-            },
-            {
-                sentence: "Web 3.0 features machine learning and is called the _______ Web.",
-                answer: "Semantic",
-                hint: "Meaning and understanding..."
-            },
-            {
-                sentence: "DNS translates domain names into _______ addresses.",
-                answer: "IP",
-                hint: "Internet Protocol..."
-            },
-            {
-                sentence: "The .com domain is for _______ organizations.",
-                answer: "commercial",
-                hint: "Business-related..."
-            }
-        ],
-        
-        learn: {
-            title: "Internet & WWW as Business Platform",
-            content: `
-                <h3>Benefits of Internet for Business</h3>
-                <ul>
-                    <li>Faster and cheaper communication</li>
-                    <li>Easy access to information</li>
-                    <li>Cost reduction in operations</li>
-                    <li>Higher efficiency and productivity</li>
-                    <li>Global reach and new opportunities</li>
-                </ul>
-                
-                <h4>Evolution of the Web</h4>
-                <div class="formula-box">
-                    <strong>Web 1.0</strong> = Read-Only (Static, passive)<br>
-                    <strong>Web 2.0</strong> = Social (User-generated content)<br>
-                    <strong>Web 3.0</strong> = Semantic (AI, IoT, machine learning)<br>
-                    <strong>Web 4.0</strong> = Symbiotic (Human-machine fusion)
-                </div>
-                
-                <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Key Terms</h4>
-                    <ul>
-                        <li><strong>HTTP:</strong> Protocol for web communication</li>
-                        <li><strong>DNS:</strong> Translates domains to IP addresses</li>
-                        <li><strong>.com:</strong> Commercial</li>
-                        <li><strong>.edu:</strong> Educational</li>
-                    </ul>
-                </div>
-            `
-        }
-    },
-    
-    // ========== CATEGORY 4: CASH FLOWS & BUSINESS MODELS (Unit 4-5) ==========
-    cashFlows: {
-        name: "Cash Flows & Models",
-        icon: "fa-money-bill-wave",
-        color: "#ef4444",
-        
-        flashcards: [
-            {
-                question: "What is the Merchant Model in tourism distribution?",
-                answer: "In the Merchant Model:\n\n• Suppliers negotiate NET RATES with intermediaries\n• Contracts include blocked rooms (allotment)\n• Intermediaries apply a MARK-UP (margin)\n• Clients pay the INTERMEDIARY, not supplier\n• Client receives a VOUCHER (no price shown)",
-                explanation: "Tour operators typically use this model."
-            },
-            {
-                question: "What are the advantages of Merchant Model for SUPPLIERS?",
-                answer: "Advantages:\n• Guaranteed room occupancy in advance\n• Predictable net revenues\n• Easier price list planning\n\nDisadvantages:\n• Lower bargaining power\n• Lower revenues (net rates)\n• Difficult rate parity control\n• Delayed payments (after guest departure)",
-                explanation: "Trade-off between security and revenue."
-            },
-            {
-                question: "What is the Agent Model in tourism distribution?",
-                answer: "In the Agent Model:\n\n• Suppliers set the FINAL selling price\n• Agents sell at the supplier's price\n• Suppliers pay COMMISSION to the agent\n• Commission is usually a percentage\n• Client gets booking confirmation WITH full price",
-                explanation: "OTAs typically use this model."
-            },
-            {
-                question: "What are advantages of Agent Model for SUPPLIERS?",
-                answer: "Advantages:\n• Higher revenues\n• Control over pricing\n• Easier rate parity management\n• Diversified intermediary network\n\nDisadvantages:\n• Complex management of many intermediaries",
-                explanation: "More control, more complexity."
-            },
-            {
-                question: "What is a Voucher?",
-                answer: "A voucher is a document that:\n\n• Confirms prepaid services\n• Does NOT show the price\n• Is used in the Merchant Model\n• Guest presents it at the hotel",
-                explanation: "Proof of prepayment without price disclosure."
-            },
-            {
-                question: "How does AI support the Merchant Model?",
-                answer: "AI in Merchant Model:\n\n• Demand and inventory forecasting\n• Automated contract analysis (NLP)\n• Dynamic pricing and margin optimization\n• Intelligent dynamic packaging\n\nAI predicts demand months ahead and adjusts automatically.",
-                explanation: "AI enhances but doesn't replace the model."
-            },
-            {
-                question: "How does AI support the Agent Model?",
-                answer: "AI in Agent Model (used by OTAs):\n\n• Personalized recommendation systems\n• Sentiment analysis of reviews\n• AI chatbots and virtual assistants\n• Predictive analytics for commission optimization\n\nAI improves conversion rates.",
-                explanation: "AI makes OTAs smarter."
-            },
-            {
-                question: "What is the difference between Intermediaries and Infomediaries?",
-                answer: "INTERMEDIARIES:\n• Participate directly in distribution\n• Influence pricing and payments\n• Handle transactions\n\nINFOMEDIARIES:\n• Provide information only\n• Do NOT handle payments\n• Support decision-making\n• Example: Review sites, comparison sites",
-                explanation: "Information vs transaction handling."
-            },
-            {
-                question: "When is the Merchant Model typically used?",
-                answer: "Merchant model is typically used by:\n\n• Tour operators\n• B2B platforms\n• Package trip organizers\n\nAgent model is typically used by:\n• Online Travel Agencies (OTAs)\n• Booking.com, Expedia",
-                explanation: "Different models for different business types."
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "In the Merchant Model, who sets the final price?",
-                options: [
-                    "The supplier",
-                    "The intermediary",
-                    "The government",
-                    "The customer"
-                ],
-                correct: 1
-            },
-            {
-                question: "A voucher does NOT show:",
-                options: [
-                    "Guest name",
-                    "Hotel name",
-                    "The price",
-                    "Dates"
-                ],
-                correct: 2
-            },
-            {
-                question: "In the Agent Model, agents earn through:",
-                options: [
-                    "Mark-up on net rates",
-                    "Commission from supplier",
-                    "Government subsidies",
-                    "Creating packages"
-                ],
-                correct: 1
-            },
-            {
-                question: "OTAs typically use which model?",
-                options: [
-                    "Merchant Model",
-                    "Agent Model",
-                    "Government Model",
-                    "Hybrid only"
-                ],
-                correct: 1
-            },
-            {
-                question: "Infomediaries:",
-                options: [
-                    "Handle payments",
-                    "Provide information only",
-                    "Create products",
-                    "Set prices"
-                ],
-                correct: 1
-            },
-            {
-                question: "AI in Merchant Model helps with:",
-                options: [
-                    "Only customer complaints",
-                    "Demand forecasting and dynamic pricing",
-                    "Building hotels",
-                    "Nothing"
-                ],
-                correct: 1
-            },
-            {
-                question: "Net rates are used in which model?",
-                options: [
-                    "Agent Model",
-                    "Merchant Model",
-                    "Customer Model",
-                    "None"
-                ],
-                correct: 1
-            },
-            {
-                question: "In Agent Model, suppliers have:",
-                options: [
-                    "No control over pricing",
-                    "Control over pricing",
-                    "No revenues",
-                    "No intermediaries"
-                ],
-                correct: 1
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "In the Merchant Model, clients receive a _______ that doesn't show the price.",
-                answer: "voucher",
-                hint: "Proof of booking..."
-            },
-            {
-                sentence: "Agents earn _______ from suppliers for selling their products.",
-                answer: "commission",
-                hint: "Percentage of sales..."
-            },
-            {
-                sentence: "_______ provide information only and don't handle payments.",
-                answer: "Infomediaries",
-                hint: "Information + intermediaries..."
-            },
-            {
-                sentence: "In Merchant Model, intermediaries apply a _______-up on net rates.",
-                answer: "mark",
-                hint: "Adding profit margin..."
-            },
-            {
-                sentence: "OTAs typically use the _______ Model.",
-                answer: "Agent",
-                hint: "Earning commission..."
-            }
-        ],
-        
-        learn: {
-            title: "Cash Flows & Business Models",
-            content: `
-                <h3>Two Core Distribution Models</h3>
-                
-                <div class="formula-box">
-                    <strong>MERCHANT MODEL</strong><br>
-                    Supplier → Net Rate → Intermediary adds Mark-up → Client pays Intermediary<br>
-                    Client gets: VOUCHER (no price shown)
-                </div>
-                
-                <div class="formula-box">
-                    <strong>AGENT MODEL</strong><br>
-                    Supplier sets Final Price → Agent sells at that price → Earns Commission<br>
-                    Client gets: Booking confirmation (price visible)
-                </div>
-                
-                <div class="tip-box">
-                    <h4><i class="fas fa-lightbulb"></i> Who Uses What?</h4>
-                    <p><strong>Merchant:</strong> Tour operators, B2B platforms</p>
-                    <p><strong>Agent:</strong> OTAs (Booking.com, Expedia)</p>
-                </div>
-                
-                <h4>Intermediaries vs Infomediaries</h4>
-                <ul>
-                    <li><strong>Intermediaries:</strong> Handle transactions, influence pricing</li>
-                    <li><strong>Infomediaries:</strong> Provide info only (reviews, comparisons)</li>
-                </ul>
-            `
-        }
-    },
-    
-    // ========== CATEGORY 5: COMPUTER GRAPHICS (Unit 6) ==========
-    computerGraphics: {
-        name: "Computer Graphics",
-        icon: "fa-palette",
-        color: "#ec4899",
-        
-        flashcards: [
-            {
-                question: "What is Visual Thinking?",
-                answer: "Visual thinking means thinking with images and visualizations.\n\nPeople process information through two channels:\n• Verbal\n• Visual\n\nExamples: Road signs, charts, icons, infographics\n\nText + Image works better than text alone.",
-                explanation: "How we process visual information."
-            },
-            {
-                question: "What are the 7 Elements of Graphic Design?",
-                answer: "The core elements are:\n\n1. LINE - Direction and connection\n2. COLOR - Emotions and importance\n3. SHAPE - Two-dimensional form\n4. TEXTURE - Surface quality\n5. SPACE - Positive and negative areas\n6. VALUE - Lightness or darkness\n7. FORM - 3D appearance",
-                explanation: "The building blocks of design."
-            },
-            {
-                question: "What is the difference between Warm and Cold Colors?",
-                answer: "WARM COLORS:\n• Red, orange, yellow, pink, brown\n• Energy, warmth, movement\n• Dominate and attract attention\n\nCOLD COLORS:\n• Green, blue, some purples\n• Calming and stable\n• Suitable for backgrounds",
-                explanation: "Color psychology in design."
-            },
-            {
-                question: "What is the difference between Vector and Raster Graphics?",
-                answer: "VECTOR GRAPHICS:\n• Based on mathematical formulas\n• Scalable without quality loss\n• Small file size\n• Not suitable for detailed photos\n\nRASTER GRAPHICS:\n• Based on pixels\n• Realistic color transitions\n• Large file size\n• Quality loss when resized",
-                explanation: "Two fundamental types of digital images."
-            },
-            {
-                question: "What is Resolution?",
-                answer: "Resolution describes image clarity/sharpness.\n\nMeasured as:\n• Pixels (for screens)\n• DPI - Dots Per Inch (for print)\n\nTypical values:\n• 72-75 DPI - digital display\n• 300 DPI - print\n\nHigher resolution = higher detail",
-                explanation: "Image quality measurement."
-            },
-            {
-                question: "What is the difference between RGB and CMYK color models?",
-                answer: "RGB:\n• Red, Green, Blue\n• Used for SCREENS and digital displays\n• Additive color model\n\nCMYK:\n• Cyan, Magenta, Yellow, Black\n• Used for PRINTING\n• Subtractive color model",
-                explanation: "Screen vs print colors."
-            },
-            {
-                question: "What is the minimum color contrast ratio for accessibility?",
-                answer: "Accessibility guidelines:\n\n• Normal text: minimum 4.5:1 contrast ratio\n• Large or bold text: minimum 3:1 contrast ratio\n\nThis ensures text is readable for people with visual impairments.",
-                explanation: "WCAG accessibility standards."
-            },
-            {
-                question: "What is the difference between 2D and 3D Graphics?",
-                answer: "2D GRAPHICS:\n• Flat images\n• Simulate depth using color and shadow\n\n3D GRAPHICS:\n• Store full spatial information\n• Objects can be viewed from any angle\n• Use the concept of 'world' or 'space'",
-                explanation: "Flat vs spatial graphics."
-            },
-            {
-                question: "What is Positive and Negative Space?",
-                answer: "POSITIVE SPACE:\n• Area occupied by objects\n• The main subject\n\nNEGATIVE SPACE:\n• Empty area around or between objects\n• White space\n\nGood use of space improves readability and focus.",
-                explanation: "Space in design composition."
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "Vector graphics are based on:",
-                options: [
-                    "Pixels",
-                    "Mathematical formulas",
-                    "Photographs only",
-                    "Audio files"
-                ],
-                correct: 1
-            },
-            {
-                question: "RGB is used for:",
-                options: [
-                    "Printing",
-                    "Screens and digital displays",
-                    "Audio",
-                    "Documents only"
-                ],
-                correct: 1
-            },
-            {
-                question: "The recommended print resolution is:",
-                options: [
-                    "72 DPI",
-                    "100 DPI",
-                    "300 DPI",
-                    "50 DPI"
-                ],
-                correct: 2
-            },
-            {
-                question: "Warm colors include:",
-                options: [
-                    "Blue and green",
-                    "Red, orange, and yellow",
-                    "Only black and white",
-                    "Purple only"
-                ],
-                correct: 1
-            },
-            {
-                question: "CMYK is used for:",
-                options: [
-                    "Screen displays",
-                    "Printing",
-                    "Video games",
-                    "Audio editing"
-                ],
-                correct: 1
-            },
-            {
-                question: "How many core elements of graphic design are there?",
-                options: [
-                    "5",
-                    "6",
-                    "7",
-                    "10"
-                ],
-                correct: 2
-            },
-            {
-                question: "Minimum contrast ratio for normal text accessibility is:",
-                options: [
-                    "2:1",
-                    "3:1",
-                    "4.5:1",
-                    "10:1"
-                ],
-                correct: 2
-            },
-            {
-                question: "Raster graphics quality loss occurs when:",
-                options: [
-                    "Viewing on screen",
-                    "Resizing or compressing",
-                    "Saving the file",
-                    "Never"
-                ],
-                correct: 1
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "_______ graphics are based on mathematical formulas and scale without quality loss.",
-                answer: "Vector",
-                hint: "Opposite of raster..."
-            },
-            {
-                sentence: "RGB stands for Red, Green, and _______.",
-                answer: "Blue",
-                hint: "Primary color..."
-            },
-            {
-                sentence: "The recommended resolution for print is _______ DPI.",
-                answer: "300",
-                hint: "Higher than screen..."
-            },
-            {
-                sentence: "_______ colors like blue and green are calming and suitable for backgrounds.",
-                answer: "Cold",
-                hint: "Opposite of warm..."
-            },
-            {
-                sentence: "CMYK is used for _______ rather than screens.",
-                answer: "printing",
-                hint: "Physical output..."
-            }
-        ],
-        
-        learn: {
-            title: "Computer Graphics",
-            content: `
-                <h3>7 Elements of Graphic Design</h3>
-                <div class="formula-box">
-                    Line • Color • Shape • Texture • Space • Value • Form
-                </div>
-                
-                <h4>Vector vs Raster</h4>
-                <div class="tip-box">
-                    <h4><i class="fas fa-vector-square"></i> Comparison</h4>
-                    <p><strong>Vector:</strong> Math-based, scalable, small files (logos)</p>
-                    <p><strong>Raster:</strong> Pixel-based, realistic, large files (photos)</p>
-                </div>
-                
-                <h4>Color Models</h4>
-                <ul>
-                    <li><strong>RGB:</strong> Screens (Red, Green, Blue)</li>
-                    <li><strong>CMYK:</strong> Print (Cyan, Magenta, Yellow, Black)</li>
-                </ul>
-                
-                <h4>Resolution</h4>
-                <div class="example-box">
-                    <p>📱 Screen: 72-75 DPI</p>
-                    <p>🖨️ Print: 300 DPI</p>
-                </div>
-                
-                <h4>Accessibility</h4>
-                <p>Minimum contrast: 4.5:1 (normal text) | 3:1 (large text)</p>
-            `
-        }
-    },
-    
-    // ========== CATEGORY 6: PLATFORM ECONOMY (Unit 7) ==========
-    platformEconomy: {
-        name: "Platform Economy",
-        icon: "fa-network-wired",
-        color: "#8b5cf6",
-        
-        flashcards: [
-            {
-                question: "What is the Platform Economy?",
-                answer: "The platform economy refers to economic activities enabled by digital platforms that:\n\n• Connect different groups of users\n• Facilitate interactions and transactions\n• Operate through digital technologies and algorithms\n\nIt includes: Sharing economy, Gig economy, Creative economy",
-                explanation: "The dominant form of digital business."
-            },
-            {
-                question: "What are the key features of Digital Platforms?",
-                answer: "Platforms typically:\n\n• Eliminate traditional gatekeepers\n• Bring together suppliers and consumers\n• Provide infrastructure for transactions\n• Govern value creation (don't produce it)\n• Operate as complex ecosystems\n• Use algorithms and data processing",
-                explanation: "How platforms function differently."
-            },
-            {
-                question: "How do platforms create value?",
-                answer: "Platform value creation is INDIRECT:\n\n• Facilitate interactions\n• Enable transactions\n• Act mainly as third parties\n\nValue emerges from:\n• Gathering many users in one digital space\n• Enabling new forms of consumer behavior\n• Reconfiguring how value is exchanged",
-                explanation: "Platforms don't produce, they enable."
-            },
-            {
-                question: "What are Network Effects?",
-                answer: "Network Effects mean:\n\nEach new user increases the value of the platform for existing users.\n\nMore users → More connections → More value → Even more users\n\nThis explains rapid platform growth.",
-                explanation: "Why platforms grow exponentially."
-            },
-            {
-                question: "What are examples of platforms in different industries?",
-                answer: "Platform examples:\n\n• Retail/Marketplaces: Amazon, Alibaba, eBay\n• Accommodation: Airbnb\n• Transportation: Uber, BlaBlaCar\n• OTAs: Booking.com, Expedia\n• Education: Coursera, edX\n• Media: YouTube, Netflix\n• Freelancing: Fiverr, TaskRabbit",
-                explanation: "Platforms across industries."
-            },
-            {
-                question: "How does AI transform tourism platforms?",
-                answer: "AI in tourism platforms:\n\n• Personalized recommendations based on user data\n• Dynamic pricing and revenue optimization\n• 24/7 automated customer support (chatbots)\n\nAdvanced functions:\n• Conversational search\n• Automatic translations\n• Fraud and fake review detection\n• Inventory and rate management",
-                explanation: "AI enhances platform performance."
-            },
-            {
-                question: "What are the challenges of the Platform Economy?",
-                answer: "Current challenges:\n\n• Unclear and evolving definitions\n• Complex role switching between users\n• Ethical, social, and environmental impacts\n• Regulation and market dominance issues\n\nFuture research focuses on:\n• Access-based vs asset-controlled models\n• Platform governance\n• Sustainability of ecosystems",
-                explanation: "Ongoing issues with platforms."
-            }
-        ],
-        
-        quiz: [
-            {
-                question: "Network effects mean:",
-                options: [
-                    "Internet speed increases",
-                    "Each new user increases value for all users",
-                    "Networks become smaller",
-                    "Platforms lose users"
-                ],
-                correct: 1
-            },
-            {
-                question: "Platforms create value by:",
-                options: [
-                    "Manufacturing products",
-                    "Facilitating interactions and transactions",
-                    "Hiring many employees",
-                    "Building physical stores"
-                ],
-                correct: 1
-            },
-            {
-                question: "Which is an accommodation platform?",
-                options: [
-                    "Amazon",
-                    "Uber",
-                    "Airbnb",
-                    "Coursera"
-                ],
-                correct: 2
-            },
-            {
-                question: "AI on platforms helps with:",
-                options: [
-                    "Nothing",
-                    "Personalized recommendations and dynamic pricing",
-                    "Building hotels",
-                    "Reducing internet speed"
-                ],
-                correct: 1
-            },
-            {
-                question: "The platform economy includes:",
-                options: [
-                    "Only e-commerce",
-                    "Sharing, gig, and creative economies",
-                    "Only physical stores",
-                    "Government services only"
-                ],
-                correct: 1
-            },
-            {
-                question: "Which is a freelancing platform?",
-                options: [
-                    "Netflix",
-                    "Fiverr",
-                    "Booking.com",
-                    "YouTube"
-                ],
-                correct: 1
-            },
-            {
-                question: "Platforms typically:",
-                options: [
-                    "Produce goods directly",
-                    "Eliminate traditional gatekeepers",
-                    "Avoid using data",
-                    "Have no users"
-                ],
-                correct: 1
-            },
-            {
-                question: "Platform challenges include all EXCEPT:",
-                options: [
-                    "Regulation issues",
-                    "Market dominance concerns",
-                    "Perfect definitions",
-                    "Ethical impacts"
-                ],
-                correct: 2
-            }
-        ],
-        
-        fillBlanks: [
-            {
-                sentence: "_______ effects mean more users increase value for everyone.",
-                answer: "Network",
-                hint: "Connections growing..."
-            },
-            {
-                sentence: "_______ is an accommodation sharing platform.",
-                answer: "Airbnb",
-                hint: "Alternative to hotels..."
-            },
-            {
-                sentence: "Platforms facilitate interactions and _______ between users.",
-                answer: "transactions",
-                hint: "Exchanges of value..."
-            },
-            {
-                sentence: "AI helps platforms with personalized _______ for users.",
-                answer: "recommendations",
-                hint: "Suggestions..."
-            },
-            {
-                sentence: "The platform economy includes sharing, gig, and _______ economies.",
-                answer: "creative",
-                hint: "Artists and content creators..."
-            }
-        ],
-        
-        learn: {
-            title: "Platform Economy",
-            content: `
-                <h3>What is Platform Economy?</h3>
-                <div class="formula-box">
-                    Digital Platforms = Technology + Algorithms + User Connections<br>
-                    Includes: Sharing Economy + Gig Economy + Creative Economy
-                </div>
-                
-                <h4>Network Effects</h4>
-                <div class="tip-box">
-                    <h4><i class="fas fa-users"></i> The Growth Formula</h4>
-                    <p>More Users → More Connections → More Value → Even More Users</p>
-                    <p>This explains why successful platforms grow exponentially!</p>
-                </div>
-                
-                <h4>Platform Examples</h4>
-                <ul>
-                    <li>🛒 <strong>Retail:</strong> Amazon, eBay</li>
-                    <li>🏠 <strong>Accommodation:</strong> Airbnb</li>
-                    <li>🚗 <strong>Transport:</strong> Uber</li>
-                    <li>✈️ <strong>Travel:</strong> Booking.com</li>
-                    <li>🎬 <strong>Media:</strong> YouTube, Netflix</li>
-                    <li>💼 <strong>Freelance:</strong> Fiverr</li>
-                </ul>
-                
-                <h4>AI on Platforms</h4>
-                <p>Personalization, dynamic pricing, chatbots, fraud detection</p>
-            `
-        }
-    },
-    
+const ebusinessM2 = {
+
     // ========== CATEGORY 7: VISUAL DESIGN & IDENTITY (Unit 8) ==========
     visualDesign: {
         name: "Visual Design & Identity",
@@ -1260,6 +56,11 @@ const ebusinessData = {
                 question: "What are examples of hidden meanings in logos?",
                 answer: "Famous logo hidden meanings:\n\n• Amazon - Arrow from A to Z + smile\n• FedEx - Hidden arrow symbolizing speed\n• BMW - Colors from Bavarian flag\n• Toblerone - Hidden bear in the mountain",
                 explanation: "Clever design creates memorable logos."
+            },
+            {
+                question: "What is the difference between a logomark and a combination logo?",
+                answer: "LOGOMARK (logo symbol):\n• A symbol alone, without text\n\nCOMBINATION LOGO:\n• Logo symbol PLUS logotype (text)\n\nTYPOGRAPHIC LOGO:\n• No symbol at all — consists only of letters (existing fonts or unique hand-drawn letters)\n\nA logo usually also has sub-variants (black, inverse, horizontal/vertical composition) — all considered ONE logo.",
+                explanation: "Logo terminology from Unit 8."
             }
         ],
         
@@ -1459,8 +260,23 @@ const ebusinessData = {
             },
             {
                 question: "What is Influencer Marketing?",
-                answer: "Influencer Marketing:\n\n• Uses trusted content creators\n• Leverages established audiences\n• Authentic and relatable\n\nInfluencers have built trust with their followers, making recommendations more effective.",
+                answer: "Influencer Marketing:\n\n• Uses trusted content creators\n• Leverages established audiences\n• Authentic and relatable\n\nInfluencers have built trust with their followers, making recommendations more effective.\n\nDifference vs affiliate: the influencer is paid a FLAT FEE regardless of sales; an affiliate earns only per sale.",
                 explanation: "Marketing through trusted voices."
+            },
+            {
+                question: "What are ALL 11 types of digital marketing from the lecture?",
+                answer: "1. Content marketing (blogs, ebooks, podcasts…)\n2. SEO\n3. SEM (paid search: Google Ads, Bing Ads)\n4. Social media marketing\n5. PPC (pay per click)\n6. Affiliate marketing\n7. Marketing automation (AI/ML)\n8. Email marketing\n9. Mobile/SMS marketing\n10. Video marketing\n11. Influencer marketing",
+                explanation: "The full list — exam questions often ask you to name several."
+            },
+            {
+                question: "What are Email marketing and Mobile (SMS) marketing?",
+                answer: "EMAIL MARKETING — direct marketing via strategic emails:\n• Newsletters, welcome emails, holiday promotions, post-purchase follow-ups\n• Still the quickest, most direct way to reach customers\n\nMOBILE/SMS MARKETING — tailored to mobile devices and wearables:\n• Timely one-on-one SMS messages (phones are with us 24/7)\n• Companies report ~102% ROI on SMS marketing",
+                explanation: "Two direct one-on-one channels."
+            },
+            {
+                question: "What do famous digital campaigns (Nike, Heineken, Airbnb) teach us?",
+                answer: "NIKE — #JustDoIt (since 1987): a forceful, commanding slogan can define a brand globally (viral marketing).\n\nHEINEKEN — \"Cheers to All\": reverse gender expectations, keep it lighthearted, create global (image-based) content, upload natively to each platform.\n\nAIRBNB — \"Made Possible by Hosts\": video-first, mute-friendly, real people via UGC (user-generated content), sentimental storytelling.",
+                explanation: "Campaign case studies from Unit 9."
             }
         ],
         
@@ -1542,6 +358,26 @@ const ebusinessData = {
                     "AI and automated workflows",
                     "No technology",
                     "Only print media"
+                ],
+                correct: 1
+            },
+            {
+                question: "Companies report approximately what ROI on SMS marketing?",
+                options: [
+                    "10%",
+                    "50%",
+                    "102%",
+                    "500%"
+                ],
+                correct: 2
+            },
+            {
+                question: "Unlike affiliates, influencers are typically paid:",
+                options: [
+                    "Only per sale",
+                    "A flat fee regardless of sales",
+                    "Nothing",
+                    "In products only"
                 ],
                 correct: 1
             }
@@ -1845,6 +681,11 @@ const ebusinessData = {
                 explanation: "Measuring success."
             },
             {
+                question: "What are the 5 key benefits of Google Analytics?",
+                answer: "1. ACCESS TO REAL-TIME DATA — live users, pageviews, top pages and locations\n2. INSIGHTS INTO YOUR AUDIENCE — visitors, sessions, new vs returning, interests\n3. ENHANCED AD MANAGEMENT — track Google Ads clicks, cost per click, campaign costs in one place\n4. UNDERSTANDING USER BEHAVIOR — most popular content, bounce rate, what drives conversions\n5. BETTER TRACKING OF GOALS & CONVERSIONS — what is completed, where, and its value",
+                explanation: "The lecture's '5 incredible benefits' list."
+            },
+            {
                 question: "What is Google Trends?",
                 answer: "Google Trends is a FREE tool that analyzes the popularity of search terms.\n\nIt:\n• Measures RELATIVE popularity, not absolute volume\n• Compares search interest across time and regions\n• Normalizes data for fair comparison",
                 explanation: "Understanding search popularity."
@@ -2022,8 +863,13 @@ const ebusinessData = {
             },
             {
                 question: "What is SEO?",
-                answer: "SEO = Search Engine Optimization\n\nFocuses on optimizing a website to:\n• Rank higher in ORGANIC search results\n• Attract UNPAID traffic\n\nThree areas:\n• On-page SEO\n• Off-page SEO\n• Technical SEO",
-                explanation: "Getting free search traffic."
+                answer: "SEO = Search Engine Optimization\n\nFocuses on optimizing a website to:\n• Rank higher in ORGANIC search results\n• Attract UNPAID traffic\n\nFOUR main subcategories:\n• On-page SEO\n• Off-page SEO\n• Technical SEO\n• User Interaction Signals\n\nGoogle uses 200+ ranking signals in its algorithm.",
+                explanation: "Getting free search traffic — note: FOUR subcategories, not three."
+            },
+            {
+                question: "What are User Interaction Signals in SEO?",
+                answer: "The 4th SEO subcategory — how users interact with your site tells Google whether your page matches the search:\n\n• High BOUNCE RATE → page may not answer the query → rankings can drop\n• CTR (click-through rate) → better titles/descriptions raise it\n• DWELL TIME → how long a visitor stays; longer = more relevant content",
+                explanation: "Same signals reappear as ranking factor #10 (on-page experience)."
             },
             {
                 question: "What is SEM?",
@@ -2037,8 +883,13 @@ const ebusinessData = {
             },
             {
                 question: "SEO vs SEM - Speed difference?",
-                answer: "SPEED:\n\nSEO:\n• Slow to show results\n• May take months or years\n• Long-term investment\n\nSEM (PPC):\n• Immediate visibility\n• Traffic can start same day\n• Quick results",
+                answer: "SPEED:\n\nSEO:\n• Slow to show results\n• On average it takes ~2 YEARS to rank on the first page of Google (many top pages are 3+ years old)\n• Long-tail keywords + best practices can bring first results within a few months\n\nSEM (PPC):\n• Immediate visibility — run an ad in the morning, get traffic in the afternoon\n• But positive ROI can still take months of testing and tweaking",
                 explanation: "Time to results."
+            },
+            {
+                question: "Is SEO really 'free traffic'?",
+                answer: "NO — you don't pay per click, but SEO is NOT free:\n\n• Quality, unique content costs many hours of labour\n• Building domain authority requires consistent top content + promotion\n• SEO tools (ahrefs, semrush…) can cost ~$350/month\n• You pay website designers and developers\n• It requires a broad knowledge base built over years",
+                explanation: "The 'SEO costs' reality check from the lecture."
             },
             {
                 question: "What is High-Quality Content in SEO?",
@@ -2258,6 +1109,11 @@ const ebusinessData = {
                 explanation: "Non-room revenue tracking."
             },
             {
+                question: "What does the Customer Data Management module do?",
+                answer: "Stores ALL guest data to build relationships during and after the stay:\n\n• Integrates with front desk + reservation system (derives guest info from them)\n• Should integrate with the hotel's existing CRM, if there is one\n• Supports marketing: measures guest experience through the stay and after\n• Powers PERSONALIZATION via membership and LOYALTY programs (especially important for chains and resorts)",
+                explanation: "The CRM side of the PMS."
+            },
+            {
                 question: "What is the future of PMS?",
                 answer: "Modern PMS developments:\n\n• Integration with hotel mobile applications\n• Remote check-in and digital ID upload\n• Mobile communication between guests and staff\n• Cloud-based systems\n• AI-powered features",
                 explanation: "Where PMS is heading."
@@ -2460,6 +1316,11 @@ const ebusinessData = {
                 question: "What should a secure hosting provider offer?",
                 answer: "A secure hosting provider offers:\n\n• Threat monitoring\n• Regular security upgrades\n• Fast issue resolution\n• Built-in security features\n• DDoS protection\n• Regular backups",
                 explanation: "Choosing secure infrastructure."
+            },
+            {
+                question: "What are the 10 e-commerce security tips to protect a business?",
+                answer: "1. Suggest STRONG PASSWORDS (unique per login)\n2. Implement MULTILAYER security\n3. Use a FIREWALL (blocks DDoS, SQL injection)\n4. Use a PAYMENT PROVIDER — never store customer financial data on company servers\n5. Install an SSL certificate (HTTPS) — 64% of users leave a site on a 'Not secure' warning\n6. UPDATE software and hardware (patches fix vulnerabilities)\n7. Follow PCI-DSS requirements\n8. BACK UP data routinely\n9. Establish best practices — educate employees and customers\n10. Choose the right HOSTING provider",
+                explanation: "The complete 10-tip checklist from Unit 14."
             }
         ],
         
@@ -2810,12 +1671,5 @@ const ebusinessData = {
     }
 };
 
-// Make data globally available for app.js
-if (typeof window !== 'undefined') {
-    window.ebusinessData = ebusinessData;
-}
-
-// Export for module use
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ebusinessData;
-}
+if (typeof window !== 'undefined') { window.ebusinessM2 = ebusinessM2; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = ebusinessM2; }

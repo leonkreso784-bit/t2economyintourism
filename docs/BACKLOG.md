@@ -16,11 +16,11 @@ email+lozinka (signUp/signInWithPassword), email potvrda obavezna, magic-link UK
   sadržaja iz PDF prezentacija (admin/ingest alati).
 
 ## ▶ AKTIVNO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni  🔥
-**Status (2026-06-12):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **2/4 gotovo** — **Accounting ✅** (3 lekcije + jedinstveni
-reusable Exercises sustav, 41 vježba; vidi `docs/EXERCISES_ENGINE.md`) i **Tourism Economics `te2` ✅** (restrukturiran na K1/K2/finalni
-+ **rebuild iz PDF predavanja**, `data/te2/`, finalni **11 kat / 135 fc**; lokalno, čeka deploy). **Preostala 2 sem-1 predmeta** (Entrepreneurship / E-Business) imaju sadržaj ali NISU
-u strukturi „2 kolokvija + finalni" → treba restrukturu na isti standard kao sem-2. **▶ SLJEDEĆE = jedan od ta 2 — ali OBA imaju PRAZNE
-foldere materijala** (`…/Entrepreneurship and Innovation`, `…/E-Business`) → **čekaju da korisnik pošalje PDF-ove/silabus.**
+**Status (2026-06-13):** semestar 2 = **4/4 KOMPLETNO**. Semestar 1: **3/4 gotovo** — **Accounting ✅** (3 lekcije + jedinstveni
+reusable Exercises sustav, 41 vježba; vidi `docs/EXERCISES_ENGINE.md`), **Tourism Economics `te2` ✅** (restrukturiran + rebuild iz
+PDF predavanja, LIVE) i **E-Business ✅** (2026-06-13: split starog vjernog sadržaja + obogaćivanje iz 14 PDF predavanja; finalni
+**15 kat / 152 fc**; lokalno, čeka deploy). **▶ PREOSTAO SAMO Entrepreneurship** — folder materijala
+(`…/Entrepreneurship and Innovation`) **PRAZAN** → **čeka da korisnik pošalje PDF-ove/silabus.**
 **⚠️ Korisnik je ZASIĆEN računovodstvom (2026-06-12) — ne vraćati se na Accounting (ni Final-tab ni USAR/USALI klasifikaciju) osim izričito.**
 
 **Obrazac (kao Marketing/Geo/F&N):** po predmetu — utvrditi K1/K2 granicu iz silabusa/materijala → sadržaj podijeliti
@@ -35,7 +35,7 @@ za sadržajno upotpunjavanje; migracija u bazu i dalje ide JEDNOM u Bloku B.)
 | ~~**Tourism Economics** (`te2`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** `first-midterm`/`second-midterm`/`final` (`data/te2/`, te2M1/te2M2/te2Final); finalni **11 kat / 135 fc / 94 quiz / 66 fill** | ✅ Restrukturirano + **REBUILD iz 10 PDF predavanja** (2026-06-12): K1=Units 1–6 (5 kat, +nova `forecasting`), K2=Units 7–12 (5 kat) + `examPractice`. Ispravljena činjenica (price = najkritičnija). Lokalno, čeka deploy |
 | **Entrepreneurship** (`entrepreneurship`) | 1 | 1 blok (`entrepreneurshipData`, 11 kat/92 fc) prikazan pod 2 imena lekcije (obje **iste**) | Podijeliti sadržaj na K1/K2; izgraditi finalni hibrid (3 zasebne lekcije) |
 | ~~**Accounting** (`accounting`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`accountingM1`/`accountingM2`/`accountingFinal`) + **41 interaktivna vježba** (`data/accounting/exercises.js`) | ✅ Restrukturirano + Exercises sustav (2026-06-12, LIVE `a6b6fb0`). Opcionalno: Final exercises-tab, USAR/USALI klasifikacija (treba answer-key) |
-| **E-Business** (`ebusiness`) | 1 | 1 lekcija („Final Exam Preparation", `ebusinessData`, 14 kat/129 fc; „15 units") | Mapirati 14 kat./15 units na K1/K2; finalni hibrid |
+| ~~**E-Business** (`ebusiness`)~~ ✅ **GOTOVO** | 1 | **3 lekcije** (`ebusinessM1`/`ebusinessM2`/`ebusinessFinal`, `data/ebusiness/`); finalni **15 kat / 152 fc / 124 quiz / 75 fill** | ✅ Split (stari sadržaj VJERAN predavanjima — iznimka od te2-pouke) + obogaćen iz 14 PDF-ova (+23 fc; SEO 3→4 fix). K1=Units 1–7, K2=Units 8–15. Lokalno, čeka deploy |
 
 **⚠️ Pouka iz te2 (2026-06-12):** puki **SPLIT postojećeg** tankog sadržaja daje premalo (te2 split = 72 fc → korisnik
 javio da je premalo i staro). Zato je te2 **rebuildan IZ PROFESORSKIH PREDAVANJA** (10 PDF-ova → 135 fc, + ispravljena

@@ -5,6 +5,39 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-13 — ✅ E-BUSINESS restrukturiran na K1/K2/finalni + obogaćen iz 14 PDF predavanja (3. sem-1 predmet)
+**Korisnik dostavio kompletne materijale** (`…/2. godina Hospitaliy Managament/E-Business`, 14 PDF-ova: Ch 1–14 +
+PlatformEconomy + Challenges; ekstrakcija `node scripts/pdf-text.js` → `tmp-ebiz/`, gitignored). **Nalaz verifikacije
+(za razliku od te2): stari `data-ebusiness.js` (14 kat / 129 fc) BIO JE vjeran predavanjima** — kategorije se mapiraju
+1:1 na predavanja, **0 činjeničnih grešaka osim jedne** (tvrdio „SEO ima TRI područja" — Unit 12 kaže ČETIRI
+potkategorije, +User Interaction Signals → ispravljeno). Zato pristup ≠ rebuild nego **split skriptom + ciljano
+obogaćivanje**:
+
+- **Split po linijama** (`tmp-ebiz/split.js`, jednokratna): `data/ebusiness/midterm-1.js` (`ebusinessM1`, **K1 = Units 1–7**,
+  6 kat: ecommerceContext/distributionChain/internetBusiness/cashFlows/computerGraphics/platformEconomy) +
+  `midterm-2.js` (`ebusinessM2`, **K2 = Units 8–15**, 8 kat: visualDesign/digitalMarketing/socialMedia/googleAnalytics/
+  seoSem/hotelPMS/ebusinessSecurity/challengesTrends). Formatiranje očuvano, ključevi kategorija NEPROMIJENJENI
+  (napredak korisnika očuvan). Granica: prirodna polovica predavanja (datumi: Ch2 07/10, Ch4-5 27/10, Platform 10/11).
+- **Obogaćivanje iz predavanja (+23 fc, +5 quiz):** K1 +8 fc (B2G/C2G modeli; switch companies; „online environment does
+  not change the business" + 10% GDP; 2 numerička cash-flow primjera (hotel 50→TO 80→marža 30; direktno 100/proviz. 10);
+  Web 5.0; def. računalne grafike + 3 klasifikacije; demand-side economies of scale) + 2 quiz (C2G, marža).
+  K2 +12 fc (SEO **4 potkategorije FIX** + User Interaction Signals; SEO „nije besplatan" + ~2 god do 1. stranice;
+  svih 11 tipova digital marketinga; email+SMS (102% ROI); kampanje Nike/Heineken/Airbnb; GA „5 benefits";
+  PMS Customer Data Management/CRM; 10 security savjeta; logomark vs combination logo; influencer flat-fee vs affiliate)
+  + 3 quiz.
+- **Finalni** = `data/ebusiness/final.js` (`ebusinessFinal` = `Object.assign({}, M1, M2, {examPractice})`, učitava se
+  ZADNJI; examPractice = 6 cross-topic fc / 8 quiz / 5 fill). **Ukupno: 15 kat / 152 fc / 124 quiz / 75 fill.**
+- **Catalog:** 3 lekcije (`first-midterm`/`second-midterm`/`final`) + 3 scripta + `resolve`; id/storageKey nedirnuti.
+  Stari root `data-ebusiness.js` OBRISAN. `lazy-load.spec.js` sentinel `ebusinessData`→`ebusinessM1` (+ provjera
+  `ebusinessFinal`), lekcija u testu → `first-midterm`. **`CONTENT_VERSION` → `20260644`** + `catalog.js`/`content-loader.js`
+  `?v=` bump. `.gitignore` + `tmp-ebiz/` (ekstrahirani tekst predavanja = copyright).
+- **Provjere:** verify 0/0 · strukturni node validator M1/M2/FINAL = valid (correct-index u rasponu, sva polja) ·
+  Playwright (u tijeku pri pisanju ovog unosa).
+
+**→ sem-1: 3/4 KOMPLETNO (Accounting ✅, te2 ✅, E-Business ✅). Preostao samo Entrepreneurship (čeka PDF-ove).**
+
+---
+
 ## 2026-06-13 — ▶ BACKEND staza B (3. dio): AUTH PRELAZAK NA EMAIL+LOZINKU (magic-link maknut)
 **Implementiran dogovor od 2026-06-12** (korisnik rekao „kreni"): korisnici imaju **lozinku, profil i sve** — magic-link
 potpuno uklonjen. Sve u postojećim modulima, **baza/schema se NE mijenja**.

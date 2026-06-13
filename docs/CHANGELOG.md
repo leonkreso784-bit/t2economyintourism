@@ -20,6 +20,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `givens` (isti mehanizam kao `ratio` tip; izdvojen zajednički helper `givensTableHtml`). Dodani izvorni saldi: `k1-statement-bs-1`
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
+### Added
+- **E-Business restrukturiran na K1/K2/finalni + obogaćen iz 14 PDF predavanja:** stari `data-ebusiness.js` (14 kat/129 fc)
+  verificiran protiv predavanja — **vjeran** (1 ispravak: SEO ima ČETIRI potkategorije, ne tri) → **split skriptom**
+  (ključevi kategorija i storageKey nedirnuti → napredak očuvan) na `data/ebusiness/midterm-1.js` (`ebusinessM1`,
+  Units 1–7, 6 kat) + `midterm-2.js` (`ebusinessM2`, Units 8–15, 8 kat) + **obogaćivanje +23 fc/+5 quiz** (B2G/C2G,
+  switch companies, numerički cash-flow primjeri, Web 5.0, 11 tipova digital marketinga, GA 5 benefits, PMS CRM,
+  10 security savjeta, logomark…). **Finalni** = `final.js` (`ebusinessFinal`, hibrid `Object.assign` + examPractice;
+  **15 kat / 152 fc / 124 quiz / 75 fill**). Catalog 3 lekcije + resolve; stari root fajl obrisan; `lazy-load.spec.js`
+  sentinel → `ebusinessM1`. `CONTENT_VERSION` → `20260644`. verify 0/0, strukturni validator valid, Playwright 64/64.
+  → **sem-1 = 3/4 kompletno** (još samo Entrepreneurship).
 ### Changed
 - **Backend staza B (3. dio) — auth prelazak na EMAIL+LOZINKU, magic-link uklonjen:** `js/auth.js` prepisan —
   modal s tabovima **Sign in** (`signInWithPassword`, prijateljske greške) / **Create account** (ime →
