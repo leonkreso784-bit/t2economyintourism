@@ -165,13 +165,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   65 fill.** Catalog: novi subject `sit` (year 1, sem 2, `fa-compass`/teal). `CONTENT_VERSION` `20260646`. Verify 0/0, validator 0.
   **⚠️ Nautical slajd slikovni → kat. iz općeg znanja (označena, treba verifikaciju); Event + Outdoor/Wildlife nepokriveni (nema materijala).**
   **✅ LIVE — deployano 2026-06-14 (`e0e9ca7`).** [[content-roadmap-sequencing]]
-- **✅ MANAGEMENT — NOVI predmet 1. god (2026-06-14, 3. predmet 1. god, ZADNJI čisto tekstualni; lokalno, čeka deploy):** iz 11 PDF
+- **✅ MANAGEMENT — NOVI predmet 1. god ✅ LIVE (2026-06-14, deployano `6e88030..06c96a8`, 3. predmet 1. god, ZADNJI čisto tekstualni):** iz 11 PDF
   predavanja (**Lussier *Management Fundamentals* 9e**; INTRO + TU2–TU11). `data/management/` `managementM1` (K1 = Part I–III:
   foundations/decisionMaking/strategicPlanning/organizing/teamwork/humanResources) + `managementM2` (K2 = Part IV–V:
   organizationalBehavior/motivation/leadership/controlSystems) + `managementFinal` (hibrid + examPractice). **11 kat / 89 fc /
   84 quiz / 55 fill.** Catalog: novi subject `management` (year 1, sem 2, `fa-user-tie`/indigo `#6366f1`). **K1/K2 granica iz
   strukture udžbenika** (5 dijelova; rez Organizing↔Leading). Teme 2/3/6/13/15 nemaju zaseban deck → neobrađene. `CONTENT_VERSION`
-  `20260647` + `.gitignore` `tmp-mgmt/`. Verify 0/0, node sanity 0, Playwright 64/64 (`subjects=11`). [[content-roadmap-sequencing]]
+  `20260647` + `.gitignore` `tmp-mgmt/`. Verify 0/0, node sanity 0, Playwright 64/64 (`subjects=11`). **✅ LIVE — deployano 2026-06-14
+  (`06c96a8`).** [[content-roadmap-sequencing]]
+- **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
+  `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
+  pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
+  `https://www.sokratstudy.com/**`, `https://sokratstudy.com/**`, `http://localhost:5050/**`. Doc `docs/BACKEND.md` (`06c96a8`). [[backend-track-b-start]]
 - **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** **1. godina: Business
   Informatics ✅ + SIT ✅ + Management ✅ (3 gotova).** Management je bio **ZADNJI čisto tekstualni** → dalje **KaTeX cigla (ADR-009)**
   otključava kvantitativnu trojku: Macro/**Statistics — 26 datoteka**/**Micro — 172-str deck**; Math zadnja.

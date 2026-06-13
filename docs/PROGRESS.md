@@ -46,8 +46,22 @@ Organizinga) i Organizational Behaviora (početak Leadinga).
   fill `_______` + answer, learn.content) · **Playwright 64/64** (smoke `subjects=11`, problems=0, errors=0).
 
 **→ 1. godina HM: Business Informatics ✅ + SIT ✅ + Management ✅ (3 gotova). Dalje: KaTeX cigla (ADR-009) → otključava
-kvantitativnu trojku Micro (172-str deck) / Statistics / Macro; Math zadnja.** **⏳ Lokalno gotovo, čeka deploy
-(`git push` = produkcija → samo uz izričito odobrenje korisnika).** Cache `CONTENT_VERSION 20260647`.
+kvantitativnu trojku Micro (172-str deck) / Statistics / Macro; Math zadnja.** **✅ DEPLOYANO 2026-06-14
+(`6e88030..06c96a8`, uz izričito „deployaj molim te") → LIVE na sokratstudy.com; `origin/main` sinkroniziran.**
+Cache `CONTENT_VERSION 20260647`. (U istom pushu i doc fix `06c96a8` za Supabase Redirect URL-ove — vidi unos ispod.)
+
+---
+
+## 2026-06-14 — 🐛 FIX: potvrda emaila → `{"error":"requested path is invalid"}` (Supabase Redirect URLs)
+**Korisnik javio:** klik na „Confirm email address" iz Supabase maila otvara `…supabase.co` s `{"error":"requested path
+is invalid"}` umjesto preusmjeravanja na stranicu. **Nalaz: NIJE bug u kodu** — `js/auth.js` ispravno šalje
+`emailRedirectTo: window.location.origin + window.location.pathname` (na produkciji `https://www.sokratstudy.com/`).
+**Uzrok = Supabase dashboard URL konfiguracija:** redirect allowlist je pokrivao samo `http://localhost:5050`, pa
+`redirect_to` produkcijskog URL-a nije bio dozvoljen → fallback na (krivo postavljen) Site URL → nevažeća putanja na
+`supabase.co`. **Popravak (dashboard-only, bez deploya koda):** Auth → URL Configuration → Site URL
+`https://www.sokratstudy.com` + Redirect URLs sa `/**` wildcardom: `https://www.sokratstudy.com/**`,
+`https://sokratstudy.com/**`, `http://localhost:5050/**`; testirati NOVOM registracijom (stari token potrošen).
+Dokumentirano u `docs/BACKEND.md` (commit `06c96a8`). [[backend-track-b-start]]
 
 ---
 
