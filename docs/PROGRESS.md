@@ -27,6 +27,12 @@ potpuno uklonjen. Sve u postojećim modulima, **baza/schema se NE mijenja**.
 - **Cache → `?v=20260642`** (styles.css, auth.css, profile.css, auth.js, profile.js).
 - **Test:** `tests/auth.spec.js` test 1 prepisan — tabovi, sign-in polja, signup polja (minlength=8), forgot tok, close.
 
+**Dopuna (isti dan, korisnikov zahtjev):** **repeat password** polje („Repeat new password" + provjera „Passwords do not
+match.") u recovery formi I u profilnoj „Change password" formi; **gumb-oko za prikaz lozinke** (`.auth-pass-wrap` +
+`.auth-pass-toggle`, fa-eye/fa-eye-slash, delegirani document-listener u `auth.js`) na SVIM password poljima (sign in,
+sign up, recovery ×2, profil ×2). Signup namjerno bez repeat polja (oko pokriva provjeru; manje trenja). Test proširen
+(toggle type password↔text). Cache → `?v=20260643`.
+
 **Ručni korak korisnika (Supabase dashboard):** Authentication → Providers → Email → **min duljina lozinke 8**.
 **⚠️ Deploy gate i dalje vrijedi** — push tek kad korisnik potvrdi da je login UX potpun.
 

@@ -176,6 +176,33 @@
 
 .auth-modal__input:focus { border-color: rgba(99, 102, 241, 0.65); }
 
+/* ---------- Password polje s gumbom-okom ---------- */
+
+.auth-pass-wrap { position: relative; }
+
+.auth-pass-wrap .auth-modal__input { padding-right: 2.8rem; }
+
+.auth-pass-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.4rem;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.auth-pass-toggle:hover { color: var(--text-primary); }
+
 .auth-modal__submit { justify-content: center; }
 
 .auth-modal__status {

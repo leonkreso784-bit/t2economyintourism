@@ -134,14 +134,20 @@ const SokratAuth = (function () {
             '    </div>' +
             '    <form id="authSignInForm" class="auth-modal__form">' +
             '      <input type="email" id="authSignInEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
-            '      <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="Password" required autocomplete="current-password">' +
+            '      <div class="auth-pass-wrap">' +
+            '        <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="Password" required autocomplete="current-password">' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>Sign in</span></button>' +
             '      <button type="button" class="auth-modal__link" id="authForgotLink">Forgot password?</button>' +
             '    </form>' +
             '    <form id="authSignUpForm" class="auth-modal__form" hidden>' +
             '      <input type="text" id="authSignUpName" class="auth-modal__input" placeholder="Your name" required maxlength="60" autocomplete="name">' +
             '      <input type="email" id="authSignUpEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
-            '      <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="Password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '      <div class="auth-pass-wrap">' +
+            '        <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="Password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>Create account</span></button>' +
             '    </form>' +
             '    <form id="authForgotForm" class="auth-modal__form" hidden>' +
@@ -158,7 +164,14 @@ const SokratAuth = (function () {
             '    <h3 class="auth-modal__title"><i class="fas fa-key"></i> Set a new password</h3>' +
             '    <p class="auth-modal__text">Choose a new password for <strong id="authRecoveryEmail"></strong>.</p>' +
             '    <form id="authRecoveryForm" class="auth-modal__form">' +
-            '      <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '      <div class="auth-pass-wrap">' +
+            '        <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '      </div>' +
+            '      <div class="auth-pass-wrap">' +
+            '        <input type="password" id="authRecoveryPassword2" class="auth-modal__input" placeholder="Repeat new password" required minlength="8" autocomplete="new-password">' +
+            '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+            '      </div>' +
             '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>Save new password</span></button>' +
             '    </form>' +
             '    <p class="auth-modal__status" id="authRecoveryStatus" hidden></p>' +
@@ -327,7 +340,12 @@ const SokratAuth = (function () {
         e.preventDefault();
         if (!client) return;
         const password = document.getElementById('authRecoveryPassword').value;
+        const repeat = document.getElementById('authRecoveryPassword2').value;
         if (!password) return;
+        if (password !== repeat) {
+            setRecoveryStatus('Passwords do not match.', true);
+            return;
+        }
         setRecoveryStatus('Saving…');
         const { error } = await client.auth.updateUser({ password: password });
         if (error) {
@@ -337,6 +355,7 @@ const SokratAuth = (function () {
         recoveryMode = false;
         setRecoveryStatus('');
         document.getElementById('authRecoveryPassword').value = '';
+        document.getElementById('authRecoveryPassword2').value = '';
         renderModalState();
         if (typeof showToast === 'function') showToast('Password updated — you are signed in.');
     }
@@ -369,4 +388,18 @@ const SokratAuth = (function () {
 
 document.addEventListener('DOMContentLoaded', function () {
     SokratAuth.init();
+});
+
+// Gumb-oko za prikaz/sakrivanje lozinke — delegirano na document jer se
+// password polja renderiraju dinamički (auth modal + profil Change password).
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.auth-pass-toggle');
+    if (!btn) return;
+    const input = btn.parentElement.querySelector('input');
+    if (!input) return;
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = show ? 'fas fa-eye-slash' : 'fas fa-eye';
 });

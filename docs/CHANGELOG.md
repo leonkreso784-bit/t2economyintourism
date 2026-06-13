@@ -28,7 +28,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   „Set a new password" forma, `updateUser`). Nav gumbi prikazuju ime; profil: ime kao naslov + **„Change password"**
   inline forma. CSS: tabovi + `.auth-modal__form[hidden]`/`.profile-pass-form[hidden]` fixevi. Pravne stranice
   ažurirane (privacy: ime+lozinka-hash; terms: povjerljivost lozinke; faq). `tests/auth.spec.js` prepisan
-  (tabovi/polja/forgot). Cache `?v=20260642`. Baza se NE mijenja. Dashboard korak: min duljina lozinke 8.
+  (tabovi/polja/forgot). Baza se NE mijenja. Dashboard korak: min duljina lozinke 8. **Dopuna:** repeat-password polje
+  (recovery + profil Change password, „Passwords do not match.") + **gumb-oko za prikaz lozinke** na svim password
+  poljima (`.auth-pass-wrap`/`.auth-pass-toggle`, delegirano na document). Cache `?v=20260643`.
 ### Added
 - **Backend staza B (2. dio) — Profile + auth kroz frontend + Google Ads stranice:** **`#profile-page`**
   (`js/profile.js` + `css/profile.css` + ruta u `navigateTo`; ne sprema se kao last-position): account/sync/progress-overview

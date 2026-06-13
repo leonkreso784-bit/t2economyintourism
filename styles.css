@@ -62,7 +62,7 @@
 @import url('css/learn.css?v=20260610');
 
 /* Auth (Sign-in gumb + email+lozinka modal) — samostalan modul, ne gazi ništa */
-@import url('css/auth.css?v=20260642');
+@import url('css/auth.css?v=20260643');
 
 /* Profile stranica + header auth gumbi — samostalan modul */
 @import url('css/profile.css?v=20260642');

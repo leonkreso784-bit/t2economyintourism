@@ -26,6 +26,14 @@ test('auth: sign-in button opens password modal with tabs and forgot flow', asyn
   await expect(page.locator('#authSignInPassword')).toBeVisible();
   await expect(page.locator('#authSignUpForm')).toBeHidden();
 
+  // Gumb-oko: prikaži/sakrij lozinku (type password ↔ text)
+  const signInToggle = page.locator('#authSignInForm .auth-pass-toggle');
+  await expect(page.locator('#authSignInPassword')).toHaveAttribute('type', 'password');
+  await signInToggle.click();
+  await expect(page.locator('#authSignInPassword')).toHaveAttribute('type', 'text');
+  await signInToggle.click();
+  await expect(page.locator('#authSignInPassword')).toHaveAttribute('type', 'password');
+
   // Tab Create account → ime + email + lozinka (min 8)
   await page.click('#authTabSignUp');
   await expect(page.locator('#authTabSignUp')).toHaveClass(/is-active/);

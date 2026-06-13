@@ -131,8 +131,9 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   footer Legal linkovi, Terms/Privacy pristanak u modalu). Testovi: `tests/auth.spec.js` + `tests/legal.spec.js`.
   **3. dio (2026-06-13): AUTH = EMAIL+LOZINKA, magic-link UKLONJEN** — modal s tabovima Sign in / Create account
   (`signInWithPassword` / `signUp` + **obavezna email potvrda**; ime → `user_metadata.display_name`, na nav gumbu i profilu),
-  Forgot password (`resetPasswordForEmail` → `PASSWORD_RECOVERY` → nova lozinka), profil „Change password"; pravne stranice
-  ažurirane. Baza nepromijenjena. Cache `20260642`. Korisnikov dashboard korak: min duljina lozinke 8.
+  Forgot password (`resetPasswordForEmail` → `PASSWORD_RECOVERY` → nova lozinka + repeat polje), profil „Change password"
+  (+ repeat); **gumb-oko za prikaz lozinke** na svim password poljima. Pravne stranice ažurirane. Baza nepromijenjena.
+  Cache `20260643`. Korisnikov dashboard korak: min duljina lozinke 8.
   **⚠️ DEPLOY GATE (korisnik, 2026-06-12): NE pushati dok korisnik ne potvrdi da je login UX + Ads-spremnost POTPUNA.**
   Detalji: `docs/BACKEND.md` §Staza B.
 - **Sadržaj-staza (parkirano, [[content-roadmap-sequencing]]):** preostala 2 sem-1 predmeta (**Entrepreneurship, E-Business**) —

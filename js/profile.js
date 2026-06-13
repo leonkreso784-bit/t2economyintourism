@@ -44,7 +44,14 @@ function renderProfilePage() {
         '      <button type="button" class="cta-button secondary" id="profileSignOutBtn"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></button>' +
         '    </div>' +
         '    <form id="profileChangePassForm" class="profile-pass-form" hidden>' +
-        '      <input type="password" id="profileNewPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+        '      <div class="auth-pass-wrap">' +
+        '        <input type="password" id="profileNewPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+        '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+        '      </div>' +
+        '      <div class="auth-pass-wrap">' +
+        '        <input type="password" id="profileNewPassword2" class="auth-modal__input" placeholder="Repeat new password" required minlength="8" autocomplete="new-password">' +
+        '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
+        '      </div>' +
         '      <button type="submit" class="cta-button primary"><i class="fas fa-check"></i><span>Save new password</span></button>' +
         '      <p class="profile-pass-status" id="profilePassStatus" hidden></p>' +
         '    </form>' +
@@ -146,9 +153,15 @@ async function changePassword(e) {
     const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
     if (!client) return;
     const input = document.getElementById('profileNewPassword');
+    const repeat = document.getElementById('profileNewPassword2');
     const status = document.getElementById('profilePassStatus');
-    if (!input || !status) return;
+    if (!input || !repeat || !status) return;
     status.hidden = false;
+    if (input.value !== repeat.value) {
+        status.classList.add('is-error');
+        status.textContent = 'Passwords do not match.';
+        return;
+    }
     status.classList.remove('is-error');
     status.textContent = 'Saving…';
     const { error } = await client.auth.updateUser({ password: input.value });
@@ -159,6 +172,7 @@ async function changePassword(e) {
     }
     status.hidden = true;
     input.value = '';
+    repeat.value = '';
     document.getElementById('profileChangePassForm').hidden = true;
     if (typeof showToast === 'function') showToast('Password updated.');
 }
