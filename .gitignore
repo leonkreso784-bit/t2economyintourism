@@ -42,6 +42,7 @@ tmp-acc/
 tmp-ebiz/
 tmp-ent/
 tmp-sit/
+tmp-mgmt/
 
 # Python / dev artifacts
 .venv/

@@ -5,6 +5,52 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-14 — ✅ MANAGEMENT — NOVI predmet 1. godine (zadnji čisto tekstualni; 3. predmet 1. god)
+**Treći predmet 1. godine HM** (uz Business Informatics + SIT) i **zadnji čisto tekstualni** prije KaTeX-skupine
+(Micro/Statistics/Macro). Izvori: 11 PDF predavanja (`…/1. godina Hospitality Managament/Management`: INTRO silabus +
+TU2–TU11; ekstrakcija `node scripts/pdf-text.js` → `tmp-mgmt/`, gitignored). **Udžbenik: Lussier, *Management
+Fundamentals*, 9. izd. (SAGE).** **K1/K2 granica iz strukture udžbenika (5 dijelova): K1 = Part I–III (Global
+Environment + Planning + Organizing), K2 = Part IV–V (Leading + Controlling)** — prirodni rez točno između HRM-a (kraj
+Organizinga) i Organizational Behaviora (početak Leadinga).
+- **`data/management/midterm-1.js`** (`managementM1`, **K1**, 6 kat / 53 fc / 48 quiz / 30 fill): foundations
+  (definicija + 4 funkcije, efficient vs effective, 4 resursa, 3 vještine, Mintzberg 10 uloga, 3 razine, povijest:
+  classical/behavioral/management-science/integrative), decisionMaking (problem vs odluka, 3 stila, 6-step model,
+  programmed/nonprogrammed, certainty/risk/uncertainty, maximizer/satisficer, kreativnost→inovacija, 5 grupnih tehnika,
+  kvantitativne tehnike, opportunity cost), strategicPlanning (strategic vs operational, 3 razine, 5-step proces, SWOT,
+  Porter 5 sila, competitive advantage/core competency/benchmarking, grand/growth strategije, BCG matrica, adaptive +
+  Porter competitive strategije, standing/single-use/contingency planovi), organizing (mechanistic vs organic, principi,
+  responsibility/authority/accountability/delegation, line vs staff, centralizirano vs decentralizirano, 6 tipova
+  departmentalizacije + matrix, 5 suvremenih dizajna, job design), teamwork (group vs team, group performance model,
+  group struktura/proces, two-pizza rule, Tuckman 5 faza → 4 stila vođenja), humanResources (4 dijela HRM, job analysis,
+  recruiting, 6-step selection, validity/reliability, training vs development, 360°, kompenzacija).
+- **`data/management/midterm-2.js`** (`managementM2`, **K2**, 4 kat / 29 fc / 28 quiz / 20 fill): organizationalBehavior
+  (OB cilj, self-esteem/confidence/doubt, thoughts/optimism/gratitude, locus of control, risk propensity,
+  Machiavellianism, **Big Five OCEAN**), motivation (**performance = ability × motivation × resources**, motivacijski
+  proces, sadržajne teorije: Maslow/ERG/Herzberg/McClelland; procesne: equity/goal-setting/expectancy E×I×V;
+  reinforcement: positive/avoidance/punishment/extinction), leadership (definicija + trust, leaders vs managers, 4 klase
+  teorija, Lewin 3 stila, Leadership Grid 5 stilova, situacijska/contingency, suvremeni: visionary/charismatic/
+  transformational/transactional/authentic), controlSystems (preliminary/concurrent/rework/damage/feedback, 4-step
+  control proces, 5 područja standarda, 3 frekvencije/10 metoda, master budget, 3 financijska izvještaja, bonds vs stock,
+  coaching/counseling/discipline).
+- **Finalni** = `data/management/final.js` (`managementFinal` = `Object.assign({}, managementM1, managementM2,
+  {examPractice})`, učitava se ZADNJI; examPractice = 7 cross-topic fc / 8 quiz / 5 fill + mapa kolegija).
+  **Ukupno: 11 kat / 89 fc / 84 quiz / 55 fill.**
+- **Catalog:** novi subject `management` (year 1, semester 2; ikona `fa-user-tie`, indigo `#6366f1`; storageKey
+  `management-progress`), 3 lekcije + 3 scripta + `resolve`. **`CONTENT_VERSION` → `20260647`** + `catalog.js`/
+  `content-loader.js` `?v=` bump u `index.html`. `.gitignore` + `tmp-mgmt/` (ekstrahirani tekst = copyright).
+- **Napomena:** udžbenik propisuje 15 tema; profesor je dostavio 10 lecture-deckova (TU2–TU11) → teme 2/3/6/13/15
+  (Environment-Ethics, Diversity, Managing Change-Innovation, Communication-IT, Operations-Quality) **nemaju zaseban
+  deck** → nisu obrađene (radi se s dostavljenim materijalom). Granica K1/K2 iz strukture udžbenika (silabus ne navodi
+  točan popis tema po kolokviju, samo datume 08.04. / 27.05.).
+- **Provjere:** verify **0/0** · strukturni node sanity **0 grešaka** (M1/M2/FINAL valid; quiz correct-index u rasponu,
+  fill `_______` + answer, learn.content) · **Playwright 64/64** (smoke `subjects=11`, problems=0, errors=0).
+
+**→ 1. godina HM: Business Informatics ✅ + SIT ✅ + Management ✅ (3 gotova). Dalje: KaTeX cigla (ADR-009) → otključava
+kvantitativnu trojku Micro (172-str deck) / Statistics / Macro; Math zadnja.** **⏳ Lokalno gotovo, čeka deploy
+(`git push` = produkcija → samo uz izričito odobrenje korisnika).** Cache `CONTENT_VERSION 20260647`.
+
+---
+
 ## 2026-06-14 — ✅ SPECIAL INTEREST TOURISM (SIT) — NOVI predmet 1. godine (prvi nakon Business Informaticsa)
 **Prvi predmet 1. godine HM nakon Business Informaticsa.** Korisnik izabrao SIT (najprirodniji flashcard-predmet,
 materijali spremni). Izvori: 12 PDF predavanja + DINP silabus (`…/1. godina Hospitality Managament/Special interest in tourism`;

@@ -285,6 +285,29 @@ const SOKRAT_CATALOG = {
         scripts: ['data/sit/midterm-1.js', 'data/sit/midterm-2.js', 'data/sit/final.js'],
         resolve: { 'first-midterm': 'sitM1', 'second-midterm': 'sitM2', 'final': 'sitFinal' }
       }
+    },
+    {
+      id: 'management',
+      programId: 'hospitality-management',
+      year: 1, semester: 2,
+      name: 'Management',
+      shortName: 'MGMT',
+      icon: 'fa-user-tie',
+      color: '#6366f1',
+      iconGradient: ['#6366f1', '#818cf8'],
+      description: 'Management fundamentals (Lussier): the four functions — planning, organizing, leading & controlling — plus decision making, strategy, teamwork, HRM, motivation, leadership & control systems',
+      storageKey: 'management-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Management & history, decision making, strategic planning, organizing, teamwork & HRM' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Organizational behavior, motivation, leadership & control systems/finances' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // data/management/final.js MUST load last (Object.assign of managementM1 + managementM2 window objects + examPractice)
+        scripts: ['data/management/midterm-1.js', 'data/management/midterm-2.js', 'data/management/final.js'],
+        resolve: { 'first-midterm': 'managementM1', 'second-midterm': 'managementM2', 'final': 'managementFinal' }
+      }
     }
   ]
 };

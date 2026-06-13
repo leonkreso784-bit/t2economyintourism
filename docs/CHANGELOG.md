@@ -21,6 +21,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Management — novi predmet 1. godine** (2026-06-14, 3. predmet 1. god, zadnji čisto tekstualni): iz 11 PDF predavanja
+  (Lussier *Management Fundamentals* 9e; INTRO + TU2–TU11). K1 (`data/management/midterm-1.js`, `managementM1`, 6 kat:
+  foundations/decisionMaking/strategicPlanning/organizing/teamwork/humanResources) + K2 (`midterm-2.js`, `managementM2`,
+  4 kat: organizationalBehavior/motivation/leadership/controlSystems) + finalni hibrid (`final.js`, `managementFinal`,
+  `Object.assign` + examPractice). **Ukupno 11 kat / 89 fc / 84 quiz / 55 fill.** Catalog: novi subject `management`
+  (year 1, sem 2, `fa-user-tie`/indigo). **K1/K2 granica iz strukture udžbenika** (Part I–III vs IV–V; rez Organizing↔Leading).
+  Teme 2/3/6/13/15 nemaju zaseban deck → neobrađene. `CONTENT_VERSION` `20260647`. verify 0/0, node sanity 0, Playwright 64/64.
 - **Special Interest Tourism (SIT) — novi predmet 1. godine** (2026-06-14, prvi nakon Business Informaticsa): iz 12 PDF
   predavanja + DINP silabus. K1 (`data/sit/midterm-1.js`, `sitM1`, 6 kat: intro/destination/massToSit/business/cultural/
   industrial) + K2 (`midterm-2.js`, `sitM2`, 6 kat: nautical/sports/luxury/dark/health/film) + finalni hibrid
