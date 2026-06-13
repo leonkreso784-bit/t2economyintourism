@@ -154,6 +154,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   kartica + W3 kritika; uklonjeni dupli influencer/push-pull iz `tourism`. **Finalni: 15 kat / 175 fc / 134 quiz / 80 fill**
   (najveći predmet). Catalog 3 lekcije; stari root fajl obrisan (`second-exam-prep`/`final-exam-prep` → standardne 3 lekcije).
   `CONTENT_VERSION` `20260645`. `.gitignore` + `tmp-ent/`. Verify 0/0, validator 0, Playwright 64/64. **✅ LIVE — deployano 2026-06-13 (`8a37404`).**
+- **✅ GOOGLE ANALYTICS (GA4) + GDPR cookie-consent ✅ LIVE (2026-06-13):** Measurement ID **`G-ME0V58NJ1Z`**. `js/consent.js`
+  (Consent Mode v2 default DENIED; cookie banner; **gtag.js učita se TEK na „Accept"**, `anonymize_ip`; izbor u localStorage
+  `sokrat-cookie-consent`; `window.openCookieSettings()`) + `css/consent.css` (samostalan dark banner). Consent blok u `<head>`
+  svih 5 stranica; „Cookie settings" u footerima; `privacy.html` §5 prepisan (pristanak/Art.6(1)(a)). Cache `?v=20260646`.
+  Mijenjati GA ponašanje SAMO u `js/consent.js` (ID je konstanta na vrhu). [[google-analytics-consent]]
 - **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** Dalje: **1. godina**
   (Management/SIT tekstualni prvi; Macro/**Statistics — 26 datoteka, NOVO**/Micro/Math preko KaTeX cigle, Math zadnja, ADR-009).
   **⚠️ Prije masovnog unosa 1. god: razmotriti odgođeni generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**

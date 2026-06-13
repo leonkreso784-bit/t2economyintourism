@@ -20,6 +20,8 @@
     otvaranje/zatvaranje, bez overflowa;
     **skip ako je supabase-js CDN nedostupan** (auth se tada tiho gasi — željeno ponašanje).
     + Profile stranica: sign-in prompt za odjavljene, back na landing, NE sprema se u last-position.
+    **`beforeEach` pred-postavlja `sokrat-cookie-consent='denied'`** da fiksni cookie-banner (na dnu) ne presreće
+    klikove na donje kontrole modala na niskom landscape ekranu (kao posjetitelj koji se vraća).
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
     bez overflowa) + landing footer linkovi na njih.
   - (Prvi put: `npm install` + `npx playwright install chromium`.)

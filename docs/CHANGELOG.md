@@ -21,6 +21,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Google Analytics (GA4) + GDPR cookie-consent (Consent Mode v2):** novi `js/consent.js` + `css/consent.css`.
+  Google Consent Mode v2 default **denied**; cookie banner (Accept/Reject); **gtag.js (`G-ME0V58NJ1Z`, `anonymize_ip`)
+  učita se TEK nakon pristanka**; izbor u `localStorage`; „Cookie settings" link u svim footerima → `openCookieSettings()`.
+  Consent blok u `<head>` svih 5 stranica (index + privacy/terms/faq/contact). `privacy.html` sekcija 5 prepisana
+  (analitika uz pristanak, IP-anonimizacija, pravna osnova = consent). Cache `?v=20260646`.
 - **Entrepreneurship restrukturiran na K1/K2/finalni + obogaćen iz 11 PDF predavanja → 2. GODINA 100% KOMPLETNA:**
   stari `data-entrepreneurship.js` (11 kat/92 fc) verificiran protiv predavanja — **točan ali tanak** (3 tjedna
   potpuno nepokrivena) → **split skriptom** (ključevi kategorija i storageKey nedirnuti → napredak očuvan) +

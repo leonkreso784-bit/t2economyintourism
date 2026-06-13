@@ -1,0 +1,101 @@
+/* ===== Sokrat Study — Cookie consent banner =====
+   Self-contained component (explicit colors) so it looks identical on the app
+   AND on the legal pages, regardless of which stylesheet is loaded.
+   GDPR: shown until the visitor accepts or rejects analytics cookies. */
+
+.cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2147483000; /* above app modals/toasts */
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    background: #11131a;
+    border-top: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
+    color: #e6e8ef;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    animation: cookieSlideUp 0.28s ease-out;
+}
+
+/* The recurring [hidden] trap: display:flex overrides the UA [hidden] rule. */
+.cookie-banner[hidden] { display: none; }
+
+@keyframes cookieSlideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cookie-banner { animation: none; }
+}
+
+.cookie-banner__inner {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.cookie-banner__text {
+    flex: 1 1 320px;
+    min-width: 0; /* allow text to shrink instead of forcing overflow */
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #c7cad6;
+}
+
+.cookie-banner__text strong { color: #fff; }
+
+.cookie-banner__text a {
+    color: #a5b4fc;
+    text-decoration: underline;
+}
+
+.cookie-banner__actions {
+    display: flex;
+    gap: 10px;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+}
+
+.cookie-btn {
+    box-sizing: border-box;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    transition: transform 0.12s ease, filter 0.12s ease, background 0.12s ease;
+    white-space: nowrap;
+}
+.cookie-btn:active { transform: translateY(1px); }
+
+.cookie-btn--accept {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+}
+.cookie-btn--accept:hover { filter: brightness(1.08); }
+
+.cookie-btn--reject {
+    background: transparent;
+    color: #c7cad6;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+}
+.cookie-btn--reject:hover { background: rgba(255, 255, 255, 0.06); }
+
+/* On narrow screens stack text over full-width buttons */
+@media (max-width: 560px) {
+    .cookie-banner { padding: 14px; }
+    .cookie-banner__actions { width: 100%; }
+    .cookie-btn { flex: 1 1 0; text-align: center; }
+}

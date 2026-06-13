@@ -3,6 +3,16 @@
 // (offline okruženje), jer je upravo to željeno ponašanje appa.
 const { test, expect } = require('@playwright/test');
 
+// Pre-set the cookie-consent choice so the fixed bottom banner (which legitimately
+// overlays the bottom of the viewport until dismissed) doesn't intercept clicks on
+// the auth modal's lower controls on short landscape viewports — mirrors a returning
+// visitor who already made a choice.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+  });
+});
+
 test('auth: sign-in button opens password modal with tabs and forgot flow', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));

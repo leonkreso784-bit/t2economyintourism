@@ -67,5 +67,6 @@ tanki blok.** Stoga **OBA trebaju izvorne PDF-ove/silabus od korisnika** (folder
 
 ## Tehničko / infra
 - ➖ Automatski testovi (barem za data-access sloj i schemu).
-- ➖ Analitika korištenja (privacy-friendly) za odluke o sadržaju.
+- ✅ **Analitika posjeta — GOTOVO (2026-06-13):** Google Analytics GA4 (`G-ME0V58NJ1Z`) uz GDPR cookie-consent
+  (Consent Mode v2, učita se tek na pristanak); vidi `js/consent.js`. Time je i **priprema za Google Ads** korak dalje.
 - 💤 i18n (hrvatski/engleski prebacivanje).

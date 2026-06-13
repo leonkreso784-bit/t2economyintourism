@@ -8,6 +8,19 @@
     <link rel="canonical" href="https://www.sokratstudy.com/privacy.html">
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="css/legal.css?v=20260641">
+
+    <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
+    <link rel="stylesheet" href="css/consent.css?v=20260646">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied', 'ad_user_data': 'denied',
+            'ad_personalization': 'denied', 'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <script src="js/consent.js?v=20260646" defer></script>
 </head>
 <body>
     <header class="legal-nav">
@@ -17,7 +30,7 @@
 
     <main class="legal">
         <h1>Privacy Policy</h1>
-        <p class="legal-updated">Last updated: 13 June 2026</p>
+        <p class="legal-updated">Last updated: 13 June 2026 (consent-based analytics added)</p>
 
         <p>Sokrat Study ("we", "us") is a free study platform available at
         <a href="https://www.sokratstudy.com">www.sokratstudy.com</a>, operated by
@@ -56,11 +69,21 @@
         (HTTPS), and database access is restricted so each user can only access their own records.
         The website is hosted on <strong>Vercel</strong>.</p>
 
-        <h2>5. Cookies and local storage</h2>
-        <p>We use browser local storage strictly for the platform to function: your study progress,
-        interface preferences, and (if signed in) your session token. We currently use
-        <strong>no advertising or analytics cookies</strong>. If that ever changes (e.g. if we show
-        ads), we will update this policy and ask for your consent first where required.</p>
+        <h2>5. Cookies and analytics</h2>
+        <p><strong>Essential local storage (always on):</strong> we use your browser's local storage
+        strictly for the platform to function — your study progress, interface preferences, and
+        (if signed in) your session token. This stays on your device and requires no consent.</p>
+        <p><strong>Analytics cookies (optional, consent-based):</strong> with your consent we use
+        <strong>Google Analytics (GA4)</strong> to understand how visitors use the site (for example,
+        which pages are viewed and roughly where visitors come from) so we can improve it. These
+        cookies are loaded <strong>only after you click "Accept"</strong> in the cookie banner; if you
+        click "Reject" (or do nothing), no analytics cookies are set. We use Google
+        <em>Consent Mode</em> and IP-anonymisation, and we do not use this data to identify you
+        personally. The legal basis is your <strong>consent</strong> (Art. 6(1)(a) GDPR).</p>
+        <p>You can change or withdraw your choice at any time via the <strong>"Cookie settings"</strong>
+        link in the website footer. Analytics data is processed by Google; see Google's own privacy
+        documentation for details. We use <strong>no advertising cookies</strong>; if that ever changes
+        (e.g. if we show ads), we will update this policy and ask for your consent first.</p>
 
         <h2>6. Data retention</h2>
         <p>Your account data is kept for as long as your account exists. If you delete your cloud
@@ -97,6 +120,7 @@
             <a href="terms.html">Terms of Use</a>
             <a href="faq.html">FAQ</a>
             <a href="contact.html">Contact</a>
+            <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;">Cookie settings</a>
         </nav>
         <p>&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
     </footer>

@@ -51,6 +51,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
+
+    <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
+    <link rel="stylesheet" href="css/consent.css?v=20260646">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied', 'ad_user_data': 'denied',
+            'ad_personalization': 'denied', 'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <script src="js/consent.js?v=20260646" defer></script>
 </head>
 <body>
     
@@ -283,6 +296,7 @@
                     <h4>Legal</h4>
                     <a href="privacy.html">Privacy Policy</a>
                     <a href="terms.html">Terms of Use</a>
+                    <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;">Cookie settings</a>
                 </nav>
             </div>
             <div class="footer-bottom">

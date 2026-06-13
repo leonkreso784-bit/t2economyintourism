@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-13 — ✅ GOOGLE ANALYTICS (GA4) + GDPR cookie-consent (Consent Mode v2)
+**Korisnik želi analitiku posjeta** (Measurement ID `G-ME0V58NJ1Z`). Izgrađen GDPR-ispravan sustav (korisnik izabrao
+„cookie banner + Consent Mode" umjesto golog GA-a):
+- **`js/consent.js`** (novo): Google Consent Mode v2, default **DENIED** (postavljeno inline u `<head>` PRIJE svega).
+  Cookie banner (Accept/Reject); **gtag.js se učita TEK nakon „Accept"** (`anonymize_ip: true`); izbor se pamti u
+  `localStorage` (`sokrat-cookie-consent`); `window.openCookieSettings()` za ponovni odabir. Placeholder-ID guard
+  (regex `^G-[A-Z0-9]{6,}$`) — dok ID nije pravi, banner radi ali se GA ne učita.
+- **`css/consent.css`** (novo): samostalan dark „clean & rich" banner (eksplicitne boje → isti izgled na app-u i legal
+  stranicama); `box-sizing:border-box` + `width:100%` (bez horizontalnog overflowa); `.cookie-banner[hidden]` fix; na
+  ≤560px gumbi pune širine.
+- **Svih 5 stranica** (index + privacy/terms/faq/contact): u `<head>` inline Consent-Mode-default snippet + `consent.css`
+  + `consent.js` (defer). **„Cookie settings"** link u footere (landing-footer + 4× legal-footer) → `openCookieSettings()`.
+- **privacy.html** sekcija 5 prepisana („Cookies and analytics"): bitno-localStorage (uvijek) vs analitički kolačići
+  (opcionalni, učitani tek na pristanak), Consent Mode, IP-anonimizacija, pravna osnova = pristanak (Art. 6(1)(a) GDPR),
+  povlačenje preko „Cookie settings". Datum dopunjen.
+- **Cache:** novi fajlovi → `?v=20260646` na svim referencama. Verify 0/0 (nepromijenjen catalog), Playwright (rezultat
+  u commitu). **Deploy odobren („mozes sve deployat") → push + Vercel.**
+
+---
+
 ## 2026-06-13 — ✅ ENTREPRENEURSHIP restrukturiran na K1/K2/finalni + REBUILD-obogaćivanje iz 11 PDF predavanja (4./4. sem-1 predmet → 2. GODINA 100% KOMPLETNA)
 **Korisnik dostavio materijale** (`…/2. godina Hospitaliy Managament/Entrepreneurship and Innovation`, 11 PDF-ova:
 Week 2–7 + 9–13; Week 8 = kolokvijski tjedan → **K1 = Weeks 2–7, K2 = Weeks 9–13**; ekstrakcija `node scripts/pdf-text.js`
