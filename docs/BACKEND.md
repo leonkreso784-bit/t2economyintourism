@@ -18,7 +18,11 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   **email potvrda obavezna**) + **Forgot password** (`resetPasswordForEmail` →
   `PASSWORD_RECOVERY` event → forma za novu lozinku, `updateUser`). Profil ima „Change password".
   Potrebna konfiguracija u Supabase dashboardu: Auth → URL Configuration → **Site URL
-  `https://www.sokratstudy.com`** + additional redirect **`http://localhost:5050`** (lokalni test);
+  `https://www.sokratstudy.com`** + **Redirect URLs (sa `/**` wildcardom!): `https://www.sokratstudy.com/**`,
+  `https://sokratstudy.com/**`, `http://localhost:5050/**`**. ⚠️ Ako redirect URL-ovi NISU pravilno
+  postavljeni, klik na potvrdu emaila završi na `…supabase.co` s `{"error":"requested path is invalid"}`
+  (jer `emailRedirectTo` = puni URL stranice nije na allowlisti → fallback na (krivi) Site URL). `/**` pokriva
+  i `/` i `/index.html`. Stari linkovi iz maila imaju potrošen token → testirati NOVOM registracijom.
   Auth → Providers → Email → **min duljina lozinke 8**. Free tier šalje ~3-4 auth maila/sat
   (potvrde + reseti) — za skalu kasnije custom SMTP (Resend i sl.).
 - **Sync (`js/cloud-sync.js`):** offline-first; pull+merge na login (brojevi=max,
