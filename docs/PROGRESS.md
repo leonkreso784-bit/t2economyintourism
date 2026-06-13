@@ -32,7 +32,8 @@ K1 = sve do 1. kolokvija, K2 = nakon.**
   rezultat u commitu).
 
 **→ 1. godina HM: Business Informatics ✅ + SIT ✅. Dalje: Management (tekstualni), pa KaTeX cigla za kvantitativne
-(Micro 172-str deck / Statistics / Macro). Lokalno, čeka deploy.**
+(Micro 172-str deck / Statistics / Macro).** **✅ DEPLOYANO 2026-06-14 (`712cc0e..e0e9ca7`, uz izričito odobrenje
+„deployaj") → LIVE na sokratstudy.com; `origin/main` sinkroniziran.** Cache `CONTENT_VERSION 20260646`.
 
 ---
 

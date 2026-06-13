@@ -23,8 +23,8 @@ S31 2. kolokvij „svjetska geografija" 6 kat. po kontinentu; **S32 Finalni hibr
 13 kat. / 128 fc) · **Food & Nutrition KOMPLETAN** (K1 Teme 1–7 verificiran + Beer premješten; K2 Teme 8–14; finalni hibrid;
 15 kat. / 174 fc). **2. god = 8/8 KOMPLETNO (2026-06-13)** — sem 2 (Econ Hospitality, Marketing, Geography, Food & Nutrition) + sem 1
 (Accounting, te2, E-Business, Entrepreneurship), svi K1/K2/finalni. (svi LIVE; Entrepreneurship deployano
-2026-06-13 `8a37404`. Detalji: [BACKLOG.md](BACKLOG.md).) · **▶ 1. god** = Business Informatics ✅ + **SIT ✅ (2026-06-14,
-13 kat/94 fc, lokalno čeka deploy)**, ostalih 9 ⬜ (Mgmt 11 tekstualni sljedeći; Macro 19 / **Stat 26** / **Micro 172-str deck** / Math 109 preko KaTeX-a, Math zadnja;
+2026-06-13 `8a37404`. Detalji: [BACKLOG.md](BACKLOG.md).) · **▶ 1. god** = Business Informatics ✅ + **SIT ✅ LIVE (2026-06-14
+`e0e9ca7`, 13 kat/94 fc)**, ostalih 9 ⬜ (Mgmt 11 tekstualni sljedeći; Macro 19 / **Stat 26** / **Micro 172-str deck** / Math 109 preko KaTeX-a, Math zadnja;
 Acad-writing/Intro-hosp/Traffic PRAZNO).
 **Deploy:** sve LIVE na `origin/main` → Vercel. **2026-06-10 deployano (`05cb0af`):** **cijeli Food & Nutrition** (K1 Teme
 1–7 verificiran iz izvora + Beer premješten u K2 po silabusu; K2 Teme 8–14; finalni hibrid) + **fix BUG-009** (Entrepreneurship
