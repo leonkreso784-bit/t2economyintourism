@@ -159,8 +159,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `sokrat-cookie-consent`; `window.openCookieSettings()`) + `css/consent.css` (samostalan dark banner). Consent blok u `<head>`
   svih 5 stranica; „Cookie settings" u footerima; `privacy.html` §5 prepisan (pristanak/Art.6(1)(a)). Cache `?v=20260646`.
   Mijenjati GA ponašanje SAMO u `js/consent.js` (ID je konstanta na vrhu). [[google-analytics-consent]]
-- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** Dalje: **1. godina**
-  (Management/SIT tekstualni prvi; Macro/**Statistics — 26 datoteka, NOVO**/Micro/Math preko KaTeX cigle, Math zadnja, ADR-009).
+- **✅ SPECIAL INTEREST TOURISM (SIT) — NOVI predmet 1. god (2026-06-14, prvi nakon Business Informaticsa):** iz 12 PDF
+  predavanja + DINP silabus. `data/sit/` `sitM1` (K1: intro/destination/massToSit/business/cultural/industrial) +
+  `sitM2` (K2: nautical/sports/luxury/dark/health/film) + `sitFinal` (hibrid + examPractice). **13 kat / 94 fc / 83 quiz /
+  65 fill.** Catalog: novi subject `sit` (year 1, sem 2, `fa-compass`/teal). `CONTENT_VERSION` `20260646`. Verify 0/0, validator 0.
+  **⚠️ Nautical slajd slikovni → kat. iz općeg znanja (označena, treba verifikaciju); Event + Outdoor/Wildlife nepokriveni (nema materijala).**
+  **Lokalno, čeka deploy.** [[content-roadmap-sequencing]]
+- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** **1. godina: Business
+  Informatics ✅ + SIT ✅.** Dalje: **Management** (tekstualni); Macro/**Statistics — 26 datoteka**/**Micro — 172-str deck**/Math preko KaTeX cigle, Math zadnja, ADR-009.
   **⚠️ Prije masovnog unosa 1. god: razmotriti odgođeni generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**
   **⚠️ POUKA: provjeriti stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2/Entrepreneurship-djelomično), split+obogaćivanje ako je vjeran (E-Business).**
   **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**

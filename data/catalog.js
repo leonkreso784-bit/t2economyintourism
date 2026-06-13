@@ -262,6 +262,29 @@ const SOKRAT_CATALOG = {
           'final': 'businessInformaticsFinal'
         }
       }
+    },
+    {
+      id: 'sit',
+      programId: 'hospitality-management',
+      year: 1, semester: 2,
+      name: 'Special Interest Tourism',
+      shortName: 'SIT',
+      icon: 'fa-compass',
+      color: '#14b8a6',
+      iconGradient: ['#14b8a6', '#2dd4bf'],
+      description: 'Tourism concepts & destination management, mass→SIT, and the special forms: business, cultural, industrial, nautical, sports, luxury, dark, health & film tourism',
+      storageKey: 'sit-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Intro to tourism, destination management, mass/over-tourism → SIT, business, cultural & industrial tourism' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'The special forms: nautical, sports, luxury, dark, health & film tourism' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // data/sit/final.js MUST load last (Object.assign of sitM1 + sitM2 window objects + examPractice)
+        scripts: ['data/sit/midterm-1.js', 'data/sit/midterm-2.js', 'data/sit/final.js'],
+        resolve: { 'first-midterm': 'sitM1', 'second-midterm': 'sitM2', 'final': 'sitFinal' }
+      }
     }
   ]
 };

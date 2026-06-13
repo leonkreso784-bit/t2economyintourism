@@ -21,6 +21,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Special Interest Tourism (SIT) — novi predmet 1. godine** (2026-06-14, prvi nakon Business Informaticsa): iz 12 PDF
+  predavanja + DINP silabus. K1 (`data/sit/midterm-1.js`, `sitM1`, 6 kat: intro/destination/massToSit/business/cultural/
+  industrial) + K2 (`midterm-2.js`, `sitM2`, 6 kat: nautical/sports/luxury/dark/health/film) + finalni hibrid
+  (`final.js`, `sitFinal`, `Object.assign` + examPractice). **Ukupno 13 kat / 94 fc / 83 quiz / 65 fill.** Catalog: novi
+  subject `sit` (year 1, sem 2). **⚠️ Nautical slajd slikovni → kategorija iz općeg znanja (označena, treba verifikaciju);
+  Event + Outdoor/Wildlife nepokriveni (nema materijala).** `CONTENT_VERSION` `20260646`. verify 0/0, validator 0, Playwright.
 - **Google Analytics (GA4) + GDPR cookie-consent (Consent Mode v2):** novi `js/consent.js` + `css/consent.css`.
   Google Consent Mode v2 default **denied**; cookie banner (Accept/Reject); **gtag.js (`G-ME0V58NJ1Z`, `anonymize_ip`)
   učita se TEK nakon pristanka**; izbor u `localStorage`; „Cookie settings" link u svim footerima → `openCookieSettings()`.

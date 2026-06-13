@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-14 — ✅ SPECIAL INTEREST TOURISM (SIT) — NOVI predmet 1. godine (prvi nakon Business Informaticsa)
+**Prvi predmet 1. godine HM nakon Business Informaticsa.** Korisnik izabrao SIT (najprirodniji flashcard-predmet,
+materijali spremni). Izvori: 12 PDF predavanja + DINP silabus (`…/1. godina Hospitality Managament/Special interest in tourism`;
+ekstrakcija `node scripts/pdf-text.js` → `tmp-sit/`, gitignored). **K1/K2 granica iz silabusa (raspored predavanja):
+K1 = sve do 1. kolokvija, K2 = nakon.**
+- **`data/sit/midterm-1.js`** (`sitM1`, **K1**, 6 kat / 49 fc / 40 quiz / 31 fill): intro (definicije turist/izletnik,
+  oblici turizma, destinacija, SDG, value chain), destination (6 elemenata, DMO, 4 koraka strateškog planiranja, izazovi/trendovi),
+  massToSit (Fordizam, leakages, overtourism/Doxey Irridex/tourismophobia, carrying capacity, SIT/GIT/MIT, Cohen 4 uloge,
+  beginner→fanatic), business (MICE, Silk Route, leisure vs business, conference/convention/congress, incentive, B2B/B2C,
+  ICCA/UIA), cultural (UNWTO def., tangible/intangible/contemporary, McKercher 5 tipova, heritage atrakcije, pilgrimage/Grand Tour),
+  industrial (active vs heritage, PR/marketing uloge, experience economy).
+- **`data/sit/midterm-2.js`** (`sitM2`, **K2**, 6 kat / 39 fc / 35 quiz / 29 fill): nautical, sports, luxury, dark, health, film.
+  **⚠️ NAUTICAL slajd je slikovni/skenirani (bez teksta) → kategorija pisana iz OPĆEG ZNANJA i jasno označena (warning-box + komentar);
+  treba verificirati protiv profesorovih slajdova.** Sports (UNWTO def., sports tourism vs tourism sport, Gibson 3, Kurtzman 5,
+  mega events/nation-branding), luxury (lux/luxuria, masstige, 4 leće Saviolo, „luxury is NOT", bluxury), dark (Stone spektar
+  7 suppliera, Alcatraz vs Robben Island, thanatourism), health (umbrella = wellness+medical, Dunn, holistic/spiritual,
+  medical tourism vs travel), film (Beeton, film vs film-induced, Macionis 3, **Dubrovnik/Game of Thrones** +37.9% dolazaka).
+  **Event + Outdoor/Wildlife tourism nisu pokriveni (nema materijala).**
+- **Finalni** = `data/sit/final.js` (`sitFinal` = `Object.assign({}, sitM1, sitM2, {examPractice})`, učitava se ZADNJI;
+  examPractice = 6 cross-topic fc / 8 quiz / 5 fill + mapa kolegija). **Ukupno: 13 kat / 94 fc / 83 quiz / 65 fill.**
+- **Catalog:** novi subject `sit` (year 1, semester 2; ikona `fa-compass`, teal `#14b8a6`; storageKey `sit-progress`),
+  3 lekcije (`first-midterm`/`second-midterm`/`final`) + 3 scripta + `resolve`. **`CONTENT_VERSION` → `20260646`** +
+  `catalog.js`/`content-loader.js` `?v=` bump. `.gitignore` + `tmp-sit/` (ekstrahirani tekst predavanja = copyright).
+- **Provjere:** verify 0/0 · strukturni validator 0 (M1/M2/FINAL valid) · Playwright (smoke automatski testira novi predmet;
+  rezultat u commitu).
+
+**→ 1. godina HM: Business Informatics ✅ + SIT ✅. Dalje: Management (tekstualni), pa KaTeX cigla za kvantitativne
+(Micro 172-str deck / Statistics / Macro). Lokalno, čeka deploy.**
+
+---
+
 ## 2026-06-13 — ✅ GOOGLE ANALYTICS (GA4) + GDPR cookie-consent (Consent Mode v2)
 **Korisnik želi analitiku posjeta** (Measurement ID `G-ME0V58NJ1Z`). Izgrađen GDPR-ispravan sustav (korisnik izabrao
 „cookie banner + Consent Mode" umjesto golog GA-a):
