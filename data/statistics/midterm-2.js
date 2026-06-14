@@ -155,12 +155,16 @@ const statisticsM2 = {
     learn: {
       content:
         '<h3>Confidence Interval Estimation</h3>' +
-        '<p>A <strong>point estimate</strong> (like \\(\\bar{x}\\)) is a single best guess; a <strong>confidence interval</strong> surrounds it with a range that reflects sampling variability. Every interval has the same shape:</p>' +
-        '<div class="formula-box">\\[ \\text{Point estimate} \\pm (\\text{reliability factor})\\times(\\text{standard error}) \\]</div>' +
+        '<p>K1 ended with the sampling distribution — the realisation that one sample’s \\(\\bar{x}\\) is just one draw from a distribution centred on \\(\\mu\\). Confidence intervals turn that insight into a practical tool: instead of reporting a single guess, we report a <strong>range</strong> that honestly admits sampling uncertainty. This is <strong>estimation</strong>, the first half of inference.</p>' +
 
-        '<h4>Interval for the mean</h4>' +
+        '<h4>Point vs. interval estimate</h4>' +
+        '<p>A <strong>point estimate</strong> like \\(\\bar{x}\\) is a single best guess for \\(\\mu\\) — simple, but it is almost certainly a little off, and it says nothing about <em>how</em> off it might be. A <strong>confidence interval</strong> surrounds the point estimate with a margin, and every interval ever built has the same three-part shape:</p>' +
+        '<div class="formula-box">\\[ \\text{Point estimate} \\pm \\underbrace{(\\text{reliability factor})}_{z \\text{ or } t}\\times\\underbrace{(\\text{standard error})}_{\\text{sampling variability}} \\]</div>' +
+        '<p>The <strong>reliability factor</strong> (a \\(z\\) or \\(t\\) value) is set by how confident you want to be; the <strong>standard error</strong> is the sampling variability from K1. Together they form the <strong>margin of error</strong> — the half-width of the interval.</p>' +
+
+        '<h4>Interval for the mean: z when σ known, t when unknown</h4>' +
         '<div class="formula-box">\\[ \\sigma \\text{ known:}\\quad \\bar{x} \\pm z_{\\alpha/2}\\frac{\\sigma}{\\sqrt{n}}, \\qquad \\sigma \\text{ unknown:}\\quad \\bar{x} \\pm t_{n-1,\\alpha/2}\\frac{s}{\\sqrt{n}} \\]</div>' +
-        '<p>When \\(\\sigma\\) is unknown we use the sample \\(s\\) and the <strong>Student’s t</strong> distribution (\\(df=n-1\\)), whose heavier tails account for the extra uncertainty. Common z factors: 90% → 1.645, 95% → 1.96, 99% → 2.58.</p>' +
+        '<p>In practice we almost never know the population \\(\\sigma\\), so we estimate it with the sample \\(s\\) — and that substitution adds extra uncertainty, because \\(s\\) itself wobbles from sample to sample. The <strong>Student’s t</strong> distribution (\\(df=n-1\\)) absorbs that with slightly <strong>heavier tails</strong>, giving a correctly wider interval; as \\(n\\) grows, \\(t\\) converges to \\(z\\). Common z factors: 90% → 1.645, 95% → 1.96, 99% → 2.58.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — 95% interval for μ (σ known)</h4>' +
@@ -169,13 +173,22 @@ const statisticsM2 = {
         '<p>With 95% confidence, the true mean shopping time lies between 70.1 and 79.9 minutes.</p>' +
         '</div>' +
 
+        '<h4>Precision vs. confidence — the central trade-off</h4>' +
+        '<p>The interval <strong>width</strong> is \\( w = 2\\,ME \\), and three forces widen it: a <strong>higher confidence level</strong> (bigger \\(z\\)/\\(t\\)), <strong>more variability</strong> (bigger \\(\\sigma\\)/\\(s\\)), and a <strong>smaller sample</strong> (\\(\\sqrt{n}\\) in the denominator). You cannot have it all: demanding 99% confidence buys certainty at the cost of a vaguer (wider) interval. The only way to be both more confident <em>and</em> more precise is to collect more data.</p>' +
+
         '<div class="tip-box">' +
         '<h4>Interval for a proportion</h4>' +
-        '<p>\\[ \\hat{p} \\pm z_{\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}}, \\qquad \\hat{p}=\\frac{x}{n} \\]</p>' +
-        '<p>The full width is \\( w = 2\\,ME \\). Wider intervals come from higher confidence, more variability, or smaller samples.</p>' +
+        '<p>For a population proportion, the point estimate is \\( \\hat{p}=x/n \\) and the standard error uses \\(\\hat{p}\\) itself:</p>' +
+        '<div class="formula-box">\\[ \\hat{p} \\pm z_{\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}} \\]</div>' +
+        '<p>It relies on the normal approximation, so it needs a reasonably large \\(n\\).</p>' +
         '</div>' +
 
-        '<p class="highlight">A 95% level means 95% of such intervals (over many samples) would capture the parameter — not that one particular interval has a 95% probability of doing so.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> What 95% confidence does and doesn’t mean</h4>' +
+        '<p>It means that <strong>over many repeated samples, about 95% of the intervals</strong> built this way would capture the true parameter. It does <strong>not</strong> mean a single realised interval has a 95% probability of containing \\(\\mu\\) — that interval either does or doesn’t; the randomness was in the sampling, not in the fixed parameter. And you can never be 100% confident without measuring the whole population.</p>' +
+        '</div>' +
+
+        '<p class="highlight">Confidence interval = best guess ± (how sure you want to be) × (how noisy the data are). Narrow it by collecting more data, not by lowering your confidence.</p>',
       image: null
     }
   },
@@ -325,16 +338,27 @@ const statisticsM2 = {
     learn: {
       content:
         '<h3>Hypothesis Testing (Single Population)</h3>' +
-        '<p>A hypothesis test weighs a claim about a parameter. The <strong>null</strong> \\(H_0\\) is the status quo (contains \\(=,\\le,\\ge\\)); the <strong>alternative</strong> \\(H_1\\) is what we try to support (\\(\\ne,<,>\\)). We assume \\(H_0\\) is true and reject it only with strong evidence — “innocent until proven guilty”.</p>' +
+        '<p>Confidence intervals <em>estimate</em> a parameter; hypothesis tests <strong>decide</strong> between two competing claims about it. This is the second half of inference, and the engine is identical — the same standard error from K1 — but now the question is yes/no: is there enough evidence to overturn the status quo?</p>' +
+
+        '<h4>The two hypotheses</h4>' +
+        '<p>Every test pits two statements against each other:</p>' +
+        '<ul>' +
+        '<li>The <strong>null hypothesis</strong> \\(H_0\\) is the status quo / “no effect” claim. It always contains an equality (\\(=,\\le,\\ge\\)) and is the statement we put on trial.</li>' +
+        '<li>The <strong>alternative</strong> \\(H_1\\) is its opposite (\\(\\ne,<,>\\)) — usually what the researcher actually hopes to show.</li>' +
+        '</ul>' +
+        '<p>The logic is a courtroom: <strong>“innocent until proven guilty.”</strong> We <em>assume</em> \\(H_0\\) is true and ask whether the data are too unlikely under that assumption to believe. So we only ever <strong>reject \\(H_0\\)</strong> (strong evidence for \\(H_1\\)) or <strong>fail to reject</strong> it (insufficient evidence) — we never “accept” or “prove” \\(H_0\\), just as a verdict of “not guilty” is not “proven innocent.”</p>' +
 
         '<h4>Two ways to be wrong</h4>' +
         '<ul>' +
-        '<li><strong>Type I error</strong> — reject a true \\(H_0\\); probability \\(\\alpha\\) (the significance level, set in advance).</li>' +
-        '<li><strong>Type II error</strong> — fail to reject a false \\(H_0\\); probability \\(\\beta\\). Power \\(=1-\\beta\\).</li>' +
+        '<li><strong>Type I error</strong> — rejecting a <em>true</em> \\(H_0\\) (a false alarm). Its probability is the <strong>significance level \\(\\alpha\\)</strong>, chosen in advance (typically 0.01, 0.05, 0.10).</li>' +
+        '<li><strong>Type II error</strong> — failing to reject a <em>false</em> \\(H_0\\) (a missed detection). Its probability is \\(\\beta\\); the test’s <strong>power</strong> is \\(1-\\beta\\).</li>' +
         '</ul>' +
+        '<p>The two trade off: shrinking \\(\\alpha\\) (fewer false alarms) raises \\(\\beta\\) (more misses) for a fixed \\(n\\). The only way to lower both at once is a larger sample.</p>' +
 
-        '<h4>Test statistics for a mean</h4>' +
+        '<h4>Test statistic — how many standard errors from H₀?</h4>' +
+        '<p>The test statistic measures how far the observed \\(\\bar{x}\\) sits from the hypothesised \\(\\mu_0\\), in standard-error units (exactly a Z-score built around the null):</p>' +
         '<div class="formula-box">\\[ \\sigma \\text{ known:}\\quad z=\\frac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}}, \\qquad \\sigma \\text{ unknown:}\\quad t=\\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}}\\ (df=n-1) \\]</div>' +
+        '<p>The <strong>tail</strong> follows the question: “different” → two-tailed (split \\(\\alpha\\) both sides); “greater/increased” → right tail; “less/decreased” → left tail.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — right-tailed z test</h4>' +
@@ -344,11 +368,18 @@ const statisticsM2 = {
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Critical value vs. p-value</h4>' +
-        '<p>Two equivalent rules: reject if the statistic passes the <strong>critical value</strong>, or reject if the <strong>p-value</strong> \\( p<\\alpha \\). For a proportion, \\( z=\\dfrac{\\hat{p}-P_0}{\\sqrt{P_0(1-P_0)/n}} \\).</p>' +
+        '<h4>Two equivalent decision rules</h4>' +
+        '<p><strong>Critical-value rule:</strong> reject \\(H_0\\) if the test statistic falls beyond the critical value. <strong>p-value rule:</strong> reject if \\( p<\\alpha \\), where the <strong>p-value</strong> is the probability of a result at least as extreme as observed <em>assuming \\(H_0\\) is true</em>. They always agree. For a proportion the statistic is \\( z=\\dfrac{\\hat{p}-P_0}{\\sqrt{P_0(1-P_0)/n}} \\) (note the standard error uses the <em>hypothesised</em> \\(P_0\\)).</p>' +
         '</div>' +
 
-        '<p class="highlight">Choose \\(H_1\\) to match the question: “different” → two-tailed; “greater/increased” → right tail; “less/decreased” → left tail.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• “Fail to reject \\(H_0\\)” is <strong>not</strong> “\\(H_0\\) is true” — only that evidence was insufficient.</p>' +
+        '<p>• A small <strong>p-value</strong> is evidence against \\(H_0\\); it is <strong>not</strong> the probability that \\(H_0\\) is true.</p>' +
+        '<p>• Decide the <strong>tail and \\(\\alpha\\) before</strong> seeing the data — choosing them afterwards to get significance invalidates the test.</p>' +
+        '</div>' +
+
+        '<p class="highlight">A hypothesis test asks one question: are the data too surprising to keep believing \\(H_0\\)? If \\(p<\\alpha\\) (or the statistic beats the critical value), yes — reject.</p>',
       image: null
     }
   },
@@ -500,31 +531,43 @@ const statisticsM2 = {
     learn: {
       content:
         '<h3>Regression Analysis</h3>' +
-        '<p>Regression models a relationship between a <strong>dependent</strong> variable \\(Y\\) and an <strong>independent</strong> variable \\(X\\). The population model carries a random error; we estimate it from a sample:</p>' +
+        '<p>Everything so far described <em>one</em> variable. Regression studies how <strong>two</strong> variables move together — and, crucially, lets us <strong>predict</strong> one from the other. Does advertising spend drive sales? How does room price affect occupancy? Regression fits a line that both summarises the relationship and produces forecasts.</p>' +
+
+        '<h4>The model: dependent vs. independent</h4>' +
+        '<p>The <strong>dependent</strong> variable \\(Y\\) is what we explain or predict; the <strong>independent</strong> variable \\(X\\) is the explanatory driver. The true population relationship includes a random error \\(\\varepsilon\\) (no real data sit exactly on a line); from a sample we estimate the line that strips the error away:</p>' +
         '<div class="formula-box">\\[ Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i \\quad\\xrightarrow{\\text{estimate}}\\quad \\hat{y}_i = b_0 + b_1 x_i \\]</div>' +
 
-        '<h4>Least squares</h4>' +
-        '<p>The fitted line minimizes the sum of squared residuals (\\(SSE\\)). Its coefficients are</p>' +
+        '<h4>Least squares — fitting the best line</h4>' +
+        '<p>Of all possible lines, <strong>least squares</strong> picks the one that minimises the sum of squared <strong>residuals</strong> (vertical gaps between actual \\(y_i\\) and fitted \\(\\hat{y}_i\\)). We square the residuals so positives and negatives don’t cancel and large misses are penalised more. The solution:</p>' +
         '<div class="formula-box">\\[ b_1 = \\frac{\\sum (x_i-\\bar{x})(y_i-\\bar{y})}{\\sum (x_i-\\bar{x})^2}, \\qquad b_0 = \\bar{y}-b_1\\bar{x} \\]</div>' +
-        '<p>Interpret \\(b_1\\) as the change in average \\(Y\\) per one-unit rise in \\(X\\); \\(b_0\\) is the average \\(Y\\) when \\(X=0\\).</p>' +
+        '<p><strong>Interpretation is everything:</strong> \\(b_1\\) (the slope) is the estimated change in <em>average</em> \\(Y\\) for a one-unit rise in \\(X\\) — the headline number. \\(b_0\\) (the intercept) is the average \\(Y\\) when \\(X=0\\), meaningful only if \\(X=0\\) is realistic. The fitted line always passes through \\((\\bar{x},\\bar{y})\\).</p>' +
 
-        '<h4>Goodness of fit</h4>' +
-        '<div class="formula-box">\\[ SST = SSR + SSE, \\qquad R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}, \\qquad s_e^2 = \\frac{SSE}{n-2} \\]</div>' +
+        '<h4>Goodness of fit: how good is the line?</h4>' +
+        '<p>Total variation in \\(Y\\) splits into the part the line <strong>explains</strong> and the part it leaves as <strong>error</strong>:</p>' +
+        '<div class="formula-box">\\[ \\underbrace{SST}_{\\text{total}} = \\underbrace{SSR}_{\\text{explained}} + \\underbrace{SSE}_{\\text{unexplained}}, \\qquad R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}, \\qquad s_e^2 = \\frac{SSE}{n-2} \\]</div>' +
+        '<p>The <strong>coefficient of determination</strong> \\(R^2\\) (between 0 and 1) is the share of \\(Y\\)’s variation explained by \\(X\\) — the single most quoted fit measure. We divide \\(SSE\\) by \\(n-2\\) for the error variance because <em>two</em> parameters (\\(b_0,b_1\\)) were estimated.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — slope, intercept and R²</h4>' +
         '<p>From \\(n=10\\): \\(\\bar{x}=40,\\ \\bar{y}=12\\), \\(\\sum(x-\\bar{x})(y-\\bar{y})=-720\\), \\(\\sum(x-\\bar{x})^2=1800\\), \\(SST=500\\).</p>' +
         '<div class="formula-box">\\[ b_1=\\frac{-720}{1800}=-0.4, \\qquad b_0=12-(-0.4)(40)=28 \\]</div>' +
         '<div class="formula-box">\\[ SSR=b_1^2\\sum(x-\\bar{x})^2=(0.4)^2(1800)=288, \\qquad R^2=\\frac{288}{500}=0.576 \\]</div>' +
-        '<p>So \\( \\hat{y}=28-0.4x \\) and 57.6% of the variation in \\(Y\\) is explained by \\(X\\).</p>' +
+        '<p>So \\( \\hat{y}=28-0.4x \\): each one-unit rise in \\(X\\) lowers predicted \\(Y\\) by 0.4, and 57.6% of the variation in \\(Y\\) is explained by \\(X\\).</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
         '<h4>Is the relationship significant?</h4>' +
-        '<p>Test \\(H_0:\\beta_1=0\\) with \\( t=\\dfrac{b_1-\\beta_1}{s_{b_1}} \\) (\\(df=n-2\\)). In simple regression the equivalent F test satisfies \\( F=t^2 \\) — both reject \\(H_0\\) together.</p>' +
+        '<p>A slope estimated from a sample could be non-zero by chance. Test \\(H_0:\\beta_1=0\\) (no linear relationship) with \\( t=\\dfrac{b_1-\\beta_1}{s_{b_1}} \\) (\\(df=n-2\\)); reject if \\(|t|\\) beats the critical value. In simple regression the equivalent F test satisfies \\( F=t^2 \\) — both reach the same verdict.</p>' +
         '</div>' +
 
-        '<p class="highlight">\\(R^2\\) (= \\(r^2\\)) is the share of \\(Y\\)’s variation explained by \\(X\\); it never proves causation, only the strength of the linear fit.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• <strong>Correlation is not causation:</strong> a high \\(R^2\\) shows a strong linear fit, never that \\(X\\) <em>causes</em> \\(Y\\).</p>' +
+        '<p>• <strong>Don’t extrapolate</strong> far outside the observed \\(X\\) range — the linear pattern may not hold there, and \\(b_0\\) is often meaningless.</p>' +
+        '<p>• \\(R^2\\) measures <em>linear</em> fit only; a curved relationship can have low \\(R^2\\) yet be strong.</p>' +
+        '</div>' +
+
+        '<p class="highlight">Slope \\(b_1\\) = how much \\(Y\\) moves per unit of \\(X\\); \\(R^2\\) = how much of \\(Y\\) the line explains. Both describe the fit — neither proves causation.</p>',
       image: null
     }
   }

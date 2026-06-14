@@ -200,6 +200,14 @@ const statisticsExamPractice = {
       '<p>Closed questions reward exact <strong>formulas and definitions</strong> (standard error, the empirical rule, \\(R^2=SSR/SST\\), Type I vs II). Open/numeric questions reward a clear <strong>method</strong>: write the formula, plug in, compute, then interpret in context (“with 95% confidence …”, “reject \\(H_0\\) because …”). Watch one/two-tailed wording and z-vs-t choice.</p>' +
       '</div>' +
 
+      '<div class="warning-box">' +
+      '<h4><i class="fas fa-exclamation-triangle"></i> Cross-topic traps that cost marks</h4>' +
+      '<p>• <strong>Standard error vs. standard deviation:</strong> use \\(\\sigma/\\sqrt{n}\\) for a sample mean, plain \\(\\sigma\\) for a single observation.</p>' +
+      '<p>• <strong>z vs. t:</strong> \\(\\sigma\\) known → z; \\(\\sigma\\) unknown (use \\(s\\)) → t with \\(df=n-1\\) (or \\(n-2\\) in regression).</p>' +
+      '<p>• <strong>Variance vs. SD</strong> in \\(N(\\mu,\\sigma^2)\\): take the square root before standardising.</p>' +
+      '<p>• <strong>One- vs. two-tailed:</strong> decide from the wording and split \\(\\alpha\\) only for “≠”; never read significance off causation.</p>' +
+      '</div>' +
+
       '<p class="highlight">The whole second half is one idea applied twice — point estimate ± reliability × standard error — once to build intervals and once (rearranged) to test hypotheses; regression then extends inference to the slope between two variables.</p>',
     image: null
   }
