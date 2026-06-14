@@ -5,7 +5,7 @@ testirano, što slijedi.
 
 ---
 
-## 2026-06-14 — ✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet (lokalno, čeka deploy)
+## 2026-06-14 — ✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet ✅ LIVE (deployano `236e303`)
 **Dovršen 2. kolokvij + finalni → Microeconomics je gotov.** Nastavak istog dana nakon K1 (vidi entry niže).
 - **K2 NAPISAN IZ DECKA — `data/microeconomics/midterm-2.js` (`microeconomicsM2`), 7 kategorija / 75 fc / 70 quiz / 56 fill:**
   `profitMaximization` (Ch8/TU7: π=TR−TC, MR=MC, price-taker P=MR=MC, shut-down P<AVC, SR supply, LR zero profit, ekonomska renta

@@ -173,7 +173,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   strukture udžbenika** (5 dijelova; rez Organizing↔Leading). Teme 2/3/6/13/15 nemaju zaseban deck → neobrađene. `CONTENT_VERSION`
   `20260647` + `.gitignore` `tmp-mgmt/`. Verify 0/0, node sanity 0, Playwright 64/64 (`subjects=11`). **✅ LIVE — deployano 2026-06-14
   (`06c96a8`).** [[content-roadmap-sequencing]]
-- **✅ KaTeX CIGLA (ADR-009) — lokalno, čeka deploy (2026-06-14):** infrastruktura za kvantitativne predmete PRIJE Microeconomicsa.
+- **✅ KaTeX CIGLA (ADR-009) — ✅ LIVE (deployano 2026-06-14, `236e303`):** infrastruktura za kvantitativne predmete PRIJE Microeconomicsa.
   `js/math.js` = jedan helper **`renderMath(container)`** (KaTeX auto-render; **tihi no-op ako CDN padne**) + KaTeX CDN **`0.16.9`**
   (cdnjs, `defer`; `0.16.11` ne postoji → bio 404) u `<head>` + `css/math.css` (dark + `.katex-display{overflow-x:auto}` za mobilni
   overflow). `renderMath` zvan na kraju **sva 4 renderera** (learn/flashcards/quiz/fill). **⚠️ Delimiteri CURRENCY-SAFE: inline `\( \)`,
@@ -181,7 +181,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   pojavljuju u tekstu (grep) → render globalan ali za tekst no-op. Cache `?v=20260648` (math.js + 4 renderera + styles.css + math.css);
   **`CONTENT_VERSION` ostaje `20260647`** (data nedirana). Verify 0/0, `tests/katex.spec.js` 4/4 (render + currency-safety). Konvencija:
   `docs/CONTENT_SCHEMA.md` §Matematika. **Dalje: Microeconomics (1. god) = prvi kvantitativni, K1/K2/finalni, RUČNO.** [[content-roadmap-sequencing]]
-- **✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet, KaTeX, lokalno (2026-06-14):** intake
+- **✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet, KaTeX, ✅ LIVE (deployano 2026-06-14, `236e303`):** intake
   `Microeconomics_2024_25.pdf` (172-str Pindyck&Rubinfeld) + **DINP silabus** → **K1/K2 granica AUTORITATIVNA iz službenog
   rasporeda: K1 = Ch 1–7, K2 = Ch 8,9,10,12,13,14,18** (TU→poglavlje mapiranje provjereno iz decka: TU7=Ch8 … TU13=Ch18).
   **K1** `data/microeconomics/midterm-1.js` (`microeconomicsM1`) — 7 kat / 77fc / 66quiz / 54fill. **K2** `midterm-2.js`
