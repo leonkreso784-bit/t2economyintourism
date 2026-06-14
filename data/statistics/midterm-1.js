@@ -154,30 +154,58 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Describing Data — Graphical</h3>' +
-        '<p>Statistics begins by separating the <strong>population</strong> (all items, size \\(N\\)) from a <strong>sample</strong> (a subset, size \\(n\\)). A <strong>parameter</strong> describes the population; a <strong>statistic</strong> describes the sample. <strong>Descriptive</strong> statistics summarize data; <strong>inferential</strong> statistics generalize from a sample to the population.</p>' +
+        '<p>Statistics is the science of turning <strong>data</strong> (raw numbers and labels) into <strong>information</strong> — knowledge we can actually act on. A long list of 500 customer ages tells you almost nothing at a glance; a single histogram of those ages reveals the shape, the center and the outliers instantly. That translation is the whole job of descriptive statistics, and it always begins with the right picture.</p>' +
 
-        '<h4>Types of data</h4>' +
+        '<h4>The vocabulary: population, sample, parameter, statistic</h4>' +
+        '<p>Everything in the course rests on one distinction. A <strong>population</strong> is the entire collection of items we care about (size \\(N\\)) — every guest a hotel will ever host, every unit a factory will ever make. We rarely measure it all (too costly, too slow, sometimes impossible), so we observe a <strong>sample</strong>: a manageable subset of size \\(n\\).</p>' +
         '<ul>' +
-        '<li><strong>Categorical</strong> (qualitative): nominal (no order) or ordinal (ordered).</li>' +
-        '<li><strong>Numerical</strong> (quantitative): discrete (counted) or continuous (measured); interval (no true zero) or ratio (true zero).</li>' +
+        '<li>A number that describes the <strong>population</strong> is a <strong>parameter</strong> (e.g. the true mean \\(\\mu\\)). It is usually unknown and fixed.</li>' +
+        '<li>A number computed from the <strong>sample</strong> is a <strong>statistic</strong> (e.g. the sample mean \\(\\bar{x}\\)). It varies from sample to sample, and we use it to <em>estimate</em> the parameter.</li>' +
         '</ul>' +
+        '<p>This is why <strong>descriptive</strong> statistics (summarising the data we have) and <strong>inferential</strong> statistics (drawing conclusions about the population we don’t fully see) are two halves of the same coin. To make the inference trustworthy the sample must be <strong>representative</strong> — <strong>simple random sampling</strong>, in which every member is equally likely to be picked and every possible sample is equally likely, is the gold standard because it removes selection bias.</p>' +
+
+        '<h4>Why the data type decides everything</h4>' +
+        '<p>Before you can summarise data you must know what <em>kind</em> it is, because the type dictates which graphs, averages and tests are even meaningful. The four <strong>levels of measurement</strong> form a ladder of increasing information:</p>' +
+        '<ul>' +
+        '<li><strong>Nominal</strong> (categorical, unordered) — labels only: eye colour, payment method. You can count them, nothing more.</li>' +
+        '<li><strong>Ordinal</strong> (categorical, ordered) — ranked but gaps not equal: satisfaction 1–5, hotel star rating. Order is meaningful; differences are not.</li>' +
+        '<li><strong>Interval</strong> (numerical, no true zero) — equal gaps but zero is arbitrary: temperature in °C. “0°” is not “no temperature”, so ratios (“twice as hot”) are meaningless.</li>' +
+        '<li><strong>Ratio</strong> (numerical, true zero) — equal gaps and a real zero: weight, income, time. Here every operation, including ratios, is valid.</li>' +
+        '</ul>' +
+        '<p>Numerical data are also <strong>discrete</strong> (counted, whole values — number of guests) or <strong>continuous</strong> (measured on a scale — a 4.7 kg bag). Mislabel the type and every later choice goes wrong: you cannot average eye colour, and a pie chart of continuous weights is nonsense.</p>' +
 
         '<h4>Choosing the right graph</h4>' +
-        '<p><strong>Categorical:</strong> frequency table, bar chart, pie chart, Pareto diagram. <strong>Numerical:</strong> histogram, ogive (cumulative line), stem-and-leaf, line chart (time series); scatter diagrams show two numerical variables together.</p>' +
+        '<p>Match the picture to the data type:</p>' +
+        '<ul>' +
+        '<li><strong>Categorical</strong> → frequency table, <strong>bar chart</strong> (compare category sizes), <strong>pie chart</strong> (shares of a whole), <strong>Pareto diagram</strong> (rank causes).</li>' +
+        '<li><strong>Numerical</strong> → <strong>histogram</strong> (shape of one variable), <strong>ogive</strong> (cumulative “how much is below x”), <strong>stem-and-leaf</strong> (shape that keeps the actual digits), <strong>line chart</strong> (a variable over time).</li>' +
+        '<li><strong>Two numerical variables</strong> → <strong>scatter diagram</strong>, the first look at whether they move together.</li>' +
+        '</ul>' +
+
+        '<h4>Building a frequency distribution, step by step</h4>' +
+        '<p>A frequency distribution groups numerical data into equal-width <strong>classes</strong> and counts how many fall in each. The art is choosing the number of classes \\(k\\): too few hides the shape, too many leaves a jagged, empty table. Pick \\(k\\) from the sample size, then size the classes so they are equal-width, inclusive and <strong>non-overlapping</strong> (every value belongs to exactly one class):</p>' +
+        '<div class="formula-box">\\[ w = \\frac{\\text{Largest} - \\text{Smallest}}{k} \\quad\\text{(always round UP)} \\]</div>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — building a frequency distribution</h4>' +
         '<p>Data range from 12 to 65 with \\(n = 28\\) observations. The quick guide suggests \\(k = 6\\) classes, so the width is</p>' +
-        '<div class="formula-box">\\[ w = \\frac{\\text{Max}-\\text{Min}}{k} = \\frac{65-12}{6} = 8.8 \\;\\rightarrow\\; 10 \\]</div>' +
-        '<p>(rounded up). Classes 10–20, 20–30, … must be equal width, inclusive and non-overlapping; a histogram plots their frequencies, an ogive their cumulative percentages.</p>' +
+        '<div class="formula-box">\\[ w = \\frac{\\text{Max}-\\text{Min}}{k} = \\frac{65-12}{6} = 8.83 \\;\\rightarrow\\; 10 \\]</div>' +
+        '<p>Rounding up to a clean 10 gives classes 10–20, 20–30, … 60–70. A <strong>histogram</strong> plots their frequencies as touching bars (the bars touch because the scale is continuous); an <strong>ogive</strong> plots the running cumulative percentage, so you can read off “what fraction of values is below 40?” directly.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>The Pareto idea</h4>' +
-        '<p>A Pareto diagram orders categories from most to least frequent and adds a cumulative line — it spotlights the <strong>“vital few”</strong> categories that explain most of the total, the basis of the 80/20 rule.</p>' +
+        '<h4>The Pareto idea (the 80/20 rule)</h4>' +
+        '<p>A Pareto diagram is a bar chart of categories sorted from <strong>most to least frequent</strong>, with a cumulative line on top. It makes the <strong>“vital few”</strong> jump out: typically a handful of categories (defect types, complaint sources) account for the large majority of the total. Managers fix those first — that is the practical payoff of graphing categorical data well.</p>' +
         '</div>' +
 
-        '<p class="highlight">Pick the graph from the data type: never a histogram for categories, never a pie chart for continuous measurements.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• Using a <strong>histogram</strong> for categories or a <strong>pie chart</strong> for continuous measurements — the graph must fit the data type.</p>' +
+        '<p>• <strong>Overlapping classes</strong> (e.g. 10–20 and 20–30 both claiming 20) make counts ambiguous — keep classes mutually exclusive.</p>' +
+        '<p>• A <strong>truncated vertical axis</strong> (not starting at 0) exaggerates small differences — a classic way graphs mislead.</p>' +
+        '</div>' +
+
+        '<p class="highlight">First ask “what type of data is this?” Everything — the right graph, the right average, the right test — follows from that single answer.</p>',
       image: null
     }
   },
@@ -323,27 +351,49 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Describing Data — Numerical</h3>' +
-        '<p>Two questions summarize a numerical data set: where is its <strong>center</strong>, and how much does it <strong>spread</strong>?</p>' +
+        '<p>A graph shows the shape of data; numerical measures pin it down with two numbers we can compute, compare and feed into later inference. Every numerical summary answers one of two questions: <strong>where is the center</strong> of the data, and <strong>how spread out</strong> is it around that center? Center without spread is only half the story — two hotels can have the same average occupancy while one is steady and the other swings wildly.</p>' +
 
-        '<h4>Central tendency</h4>' +
-        '<div class="formula-box">\\[ \\bar{x} = \\frac{\\sum x_i}{n} \\qquad \\text{(mean)}, \\qquad \\text{median at position } \\frac{n+1}{2}, \\qquad \\text{mode} = \\text{most frequent} \\]</div>' +
-        '<p>The mean uses every value but is pulled by outliers; the median resists them and better describes skewed data.</p>' +
+        '<h4>Measures of center (central tendency)</h4>' +
+        '<p>Three measures locate the “typical” value, and they answer subtly different questions:</p>' +
+        '<ul>' +
+        '<li><strong>Mean</strong> \\( \\bar{x} \\) — the arithmetic average. It uses <em>every</em> value, which makes it efficient but also <strong>sensitive to outliers</strong>: one billionaire lifts the “average income” of a room.</li>' +
+        '<li><strong>Median</strong> — the middle value of the ordered data (50% lie above, 50% below). It ignores how extreme the extremes are, so it is <strong>resistant</strong> and is the honest “typical” for incomes, house prices, anything skewed.</li>' +
+        '<li><strong>Mode</strong> — the most frequent value. The only center that works for <strong>categorical</strong> data (“the most common room type”), and a data set can have one, several, or no mode.</li>' +
+        '</ul>' +
+        '<div class="formula-box">\\[ \\bar{x} = \\frac{\\sum x_i}{n} \\qquad \\text{median at position } \\frac{n+1}{2} \\qquad Q_1 \\text{ at } 0.25(n{+}1),\\; Q_3 \\text{ at } 0.75(n{+}1) \\]</div>' +
+        '<p>The <strong>quartiles</strong> generalise the median: they cut the ordered data into four quarters, and \\(Q_2\\) is the median itself. When values have unequal importance (or come grouped with class midpoints) we use the <strong>weighted mean</strong> \\( \\bar{x}=\\frac{\\sum w_i x_i}{\\sum w_i} \\).</p>' +
 
-        '<h4>Variation</h4>' +
+        '<h4>Measures of spread (variation)</h4>' +
+        '<p>Spread tells us how reliable the center is. From crudest to most useful:</p>' +
+        '<ul>' +
+        '<li><strong>Range</strong> = Max − Min: trivial to compute but driven entirely by the two most extreme values.</li>' +
+        '<li><strong>Interquartile range</strong> \\( IQR = Q_3 - Q_1 \\): the span of the middle 50%, so it <strong>ignores outliers</strong> — the spread analogue of the median.</li>' +
+        '<li><strong>Variance &amp; standard deviation</strong>: the workhorses. They measure the average squared distance from the mean. We square the deviations so positives and negatives don’t cancel; the standard deviation then takes the square root to return to the original units (kg, euros, minutes), which is why \\(s\\) — not \\(s^2\\) — is what we interpret.</li>' +
+        '</ul>' +
         '<div class="formula-box">\\[ s^2 = \\frac{\\sum (x_i-\\bar{x})^2}{n-1}, \\qquad s = \\sqrt{s^2}, \\qquad CV = \\frac{s}{\\bar{x}}\\times 100\\%, \\qquad IQR = Q_3 - Q_1 \\]</div>' +
+        '<p><strong>Why divide by \\(n-1\\)?</strong> For a <em>sample</em> we lose one degree of freedom by using \\(\\bar{x}\\) (itself estimated from the data) in place of the true \\(\\mu\\); dividing by \\(n-1\\) instead of \\(n\\) corrects the resulting under-estimate so \\(s^2\\) is unbiased. A whole <em>population</em> uses \\(N\\) and gives \\(\\sigma^2\\).</p>' +
+        '<p>The <strong>coefficient of variation</strong> is spread <em>relative</em> to the mean, and being unit-free it is the only fair way to compare variability across different scales — e.g. is a stock with \\(s=\\,\\)2 € more volatile than one with \\(s=\\,\\)5 €? Only the CV, which divides by each price level, can say.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — variance &amp; standard deviation</h4>' +
-        '<p>Sample: 5, 9, 10, 2, 7, 9, 14. The mean is \\( \\bar{x} = \\dfrac{56}{7} = 8 \\). The squared deviations sum to 88, so</p>' +
+        '<p>Sample: 5, 9, 10, 2, 7, 9, 14. The mean is \\( \\bar{x} = \\dfrac{56}{7} = 8 \\). Squaring each deviation from 8 and adding gives \\(\\sum(x_i-\\bar{x})^2 = 88\\), so</p>' +
         '<div class="formula-box">\\[ s^2 = \\frac{88}{7-1} = 14.67, \\qquad s = \\sqrt{14.67} = 3.83 \\]</div>' +
+        '<p>Interpretation: a typical value sits about 3.83 units from the mean of 8.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Empirical rule vs. Chebyshev</h4>' +
-        '<p>For a <strong>bell-shaped</strong> distribution: about 68% / 95% / 99.7% of values fall within \\(\\mu\\pm 1\\sigma\\) / \\(2\\sigma\\) / \\(3\\sigma\\). For <strong>any</strong> shape, Chebyshev guarantees at least \\(1-\\tfrac{1}{k^2}\\) within \\(k\\) SDs (≥75% within \\(2\\sigma\\), ≥89% within \\(3\\sigma\\)).</p>' +
+        '<h4>How much data is “near” the mean? Empirical rule vs. Chebyshev</h4>' +
+        '<p>For a <strong>bell-shaped</strong> distribution the <strong>empirical rule</strong> is precise: about <strong>68% / 95% / 99.7%</strong> of values fall within \\(\\mu\\pm 1\\sigma\\) / \\(2\\sigma\\) / \\(3\\sigma\\). When the shape is unknown, <strong>Chebyshev’s theorem</strong> still guarantees a minimum for <em>any</em> distribution: at least \\(\\left(1-\\frac{1}{k^2}\\right)\\) of the data lie within \\(k\\) SDs — so ≥75% within \\(2\\sigma\\) and ≥89% within \\(3\\sigma\\). Chebyshev is weaker but universal; the empirical rule is sharper but needs the bell shape.</p>' +
         '</div>' +
 
-        '<p class="highlight">Compare the mean and median to read skew: mean &gt; median → right-skewed; mean &lt; median → left-skewed.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• Reporting the <strong>mean</strong> for clearly skewed data (incomes, prices) — the median is the honest center there.</p>' +
+        '<p>• Comparing standard deviations across <strong>different units or very different means</strong> — use the CV instead.</p>' +
+        '<p>• Forgetting the <strong>\\(n-1\\)</strong> on a sample, or interpreting the <strong>variance</strong> directly — its units are squared; interpret \\(s\\).</p>' +
+        '</div>' +
+
+        '<p class="highlight">Read the skew straight from center: mean &gt; median → right-skewed (long high tail); mean &lt; median → left-skewed; mean ≈ median → roughly symmetric.</p>',
       image: null
     }
   },
@@ -487,28 +537,44 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Probability Methods</h3>' +
-        '<p>A <strong>random experiment</strong> has uncertain outcomes; the <strong>sample space</strong> \\(S\\) lists them all, and an <strong>event</strong> is any subset. Every probability satisfies \\( 0 \\le P(A) \\le 1 \\) and \\( P(S)=1 \\).</p>' +
+        '<p>Descriptive statistics looked backward at data we already have. Probability looks <strong>forward</strong>: it is the language of uncertainty, and it is the bridge to all of inference. Every confidence interval and hypothesis test in K2 is ultimately a probability statement, so the rules here are the grammar for everything that follows.</p>' +
+
+        '<h4>The building blocks</h4>' +
+        '<p>A <strong>random experiment</strong> is any process whose outcome is uncertain in advance (rolling a die, surveying a customer). The <strong>sample space</strong> \\(S\\) is the set of <em>all</em> possible outcomes, and an <strong>event</strong> is any subset of \\(S\\) we care about (“an even number”, “a satisfied customer”). Two axioms anchor everything:</p>' +
+        '<div class="formula-box">\\[ 0 \\le P(A) \\le 1, \\qquad P(S) = 1 \\]</div>' +
+        '<p>A probability is never negative and never above 1, and <em>something</em> in the sample space must happen. Where do the numbers come from? Three approaches: <strong>classical</strong> (equally likely outcomes, \\(P(A)=N_A/N\\) — fair dice, cards); <strong>relative frequency</strong> (the long-run proportion observed over many repetitions); and <strong>subjective</strong> (a reasoned degree of belief when there is no experiment to repeat).</p>' +
 
         '<h4>Combining events</h4>' +
+        '<p>Real questions ask about <em>combinations</em> of events — “A or B”, “not A”, “A and B”. The <strong>complement</strong> trick is often the easiest route (the chance of “at least one” is 1 minus the chance of “none”), and the <strong>addition rule</strong> finds the probability that at least one of two events occurs:</p>' +
         '<div class="formula-box">\\[ P(\\bar A) = 1 - P(A), \\qquad P(A\\cup B) = P(A) + P(B) - P(A\\cap B) \\]</div>' +
-        '<p>If the events are <strong>mutually exclusive</strong> (\\(A\\cap B=\\varnothing\\)), the last term is zero.</p>' +
+        '<p>We subtract \\(P(A\\cap B)\\) because outcomes in both A and B were counted twice — once in \\(P(A)\\), once in \\(P(B)\\). If the events are <strong>mutually exclusive</strong> they cannot occur together (\\(A\\cap B=\\varnothing\\), so \\(P(A\\cap B)=0\\)) and the rule simplifies to \\(P(A)+P(B)\\). Events are <strong>collectively exhaustive</strong> when together they cover the whole sample space.</p>' +
 
         '<h4>Conditioning and independence</h4>' +
-        '<div class="formula-box">\\[ P(A\\mid B) = \\frac{P(A\\cap B)}{P(B)} \\;\\Rightarrow\\; P(A\\cap B) = P(A\\mid B)\\,P(B) \\]</div>' +
-        '<p>Events are <strong>independent</strong> when \\( P(A\\cap B)=P(A)P(B) \\) — knowing one tells you nothing about the other.</p>' +
+        '<p><strong>Conditional probability</strong> updates a probability once we learn that another event has happened — it shrinks the sample space down to B and asks how much of A survives inside it:</p>' +
+        '<div class="formula-box">\\[ P(A\\mid B) = \\frac{P(A\\cap B)}{P(B)} \\;\\Rightarrow\\; P(A\\cap B) = P(A\\mid B)\\,P(B) \\quad\\text{(multiplication rule)} \\]</div>' +
+        '<p>Rearranged, this is the <strong>multiplication rule</strong> for the joint probability of A <em>and</em> B. Two events are <strong>statistically independent</strong> when learning one tells you nothing about the other — formally \\(P(A\\mid B)=P(A)\\), equivalently:</p>' +
+        '<div class="formula-box">\\[ P(A\\cap B) = P(A)\\,P(B) \\]</div>' +
+        '<p>A <strong>marginal probability</strong> of A is recovered by summing its joint probabilities across a set of mutually exclusive, exhaustive events: \\(P(A)=\\sum_i P(A\\cap B_i)\\) — exactly the row/column totals of a cross table.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — addition rule</h4>' +
-        '<p>30% of customers ask for help, 20% make a purchase, and 15% do both. The chance a customer does at least one is</p>' +
+        '<p>30% of customers ask for help (A), 20% make a purchase (B), and 15% do both (\\(A\\cap B\\)). The chance a customer does at least one is</p>' +
         '<div class="formula-box">\\[ P(A\\cup B) = 0.30 + 0.20 - 0.15 = 0.35 \\]</div>' +
+        '<p>Check independence: \\(P(A)P(B)=0.30\\times0.20=0.06 \\ne 0.15\\), so help-seeking and buying are <strong>not</strong> independent — asking for help is associated with a higher chance of purchase.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
         '<h4>Counting with combinations</h4>' +
-        '<p>When outcomes are equally likely, \\(P(A)=N_A/N\\); counting the cases often uses combinations \\( \\binom{n}{k}=\\dfrac{n!}{k!(n-k)!} \\).</p>' +
+        '<p>For equally-likely outcomes, \\(P(A)=N_A/N\\) — so the work becomes <em>counting</em> the cases. When order does not matter (which 3 of 10 staff are chosen), the count is the number of <strong>combinations</strong>:</p>' +
+        '<div class="formula-box">\\[ \\binom{n}{k}=\\frac{n!}{k!\\,(n-k)!}, \\qquad 0! = 1 \\]</div>' +
         '</div>' +
 
-        '<p class="highlight">Mutually exclusive ≠ independent: exclusive events cannot happen together, while independent events simply do not influence each other.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Mutually exclusive ≠ independent</h4>' +
+        '<p>These get confused constantly. <strong>Mutually exclusive</strong> events <em>cannot</em> both happen, so they are actually highly <strong>dependent</strong> (knowing A happened means B definitely did <em>not</em>). <strong>Independent</strong> events <em>can</em> both happen; one simply carries no information about the other. They are opposite ideas, not the same one.</p>' +
+        '</div>' +
+
+        '<p class="highlight">“And” vs. “or”: use the multiplication rule for the joint chance of A <em>and</em> B; use the addition rule (and don’t double-count the overlap) for A <em>or</em> B.</p>',
       image: null
     }
   },
