@@ -64,7 +64,10 @@
             const trailing = s.length - pos - 1;
             // Jedan separator s točno 3 znamenke iza = grupiranje tisuća (npr. "120,000").
             // Inače (≠3 znamenke iza) = decimalni. Više od jednog = grupiranje.
-            if (occurrences === 1 && trailing !== 3) decimalPos = pos;
+            // IZNIMKA: dio prije separatora prazan ili same nule ("0.576", ".025") → decimalni
+            //   i kad ima 3 znamenke iza — grupirani broj nikad ne počinje nula-grupom
+            //   (generičko, unatrag-kompatibilno; npr. "120.000" ostaje 120000). Vidi stat-parse.test.js.
+            if (occurrences === 1 && (trailing !== 3 || /^0*$/.test(s.slice(0, pos)))) decimalPos = pos;
         }
 
         let intPart = decimalPos === -1 ? s : s.slice(0, decimalPos);

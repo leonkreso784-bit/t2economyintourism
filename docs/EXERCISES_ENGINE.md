@@ -98,6 +98,9 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - **U DATA:** svi iznosi su čisti `Number` (npr. `120000`, `63.60`). Nikad string brojevi.
 - **`parseAmount(str)`:** makni razmake/valutu; **konvencija unosa:** dopusti znamenke + **jedan** decimalni
   separator (`.` ili `,`), ostali razmaci/točke = grupiranje tisuća → makni. Vrati `Number` ili `NaN`.
+  *(B0.5, 2026-06-15)* iznimka radi sitnih decimala: dio prije separatora prazan/same-nule (`0.576`, `.025`) =
+  **decimalni** i pri 3 znamenke iza (grupirani broj nikad ne počinje nula-grupom; `120.000`→120000 nepromijenjeno).
+  Generičko, unatrag-kompatibilno — `tests/unit/stat-parse.test.js`.
 - **`numEqMoney(a,b)`:** zaokruži oba na 2 decimale (cente), usporedi kao cijele cente. (novac)
 - **`numEq(a,b,tol)`:** `Number.isFinite(a) && Math.abs(a-b) <= tol` (default `tol=0.005`). (ratio/postoci `tol` po polju)
 - **`gradeSet(expected[], got[])`:** multiset usporedba (redoslijed-neovisno) — za knjiženje/klasifikaciju.

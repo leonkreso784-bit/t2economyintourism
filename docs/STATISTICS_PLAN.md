@@ -115,12 +115,14 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
 
 ### TRACK B — Exercises
 #### Faza B0 — žica + de-risk (tab se pojavi, parsiranje dokazano)
-- [ ] **B0** `data/statistics/exercises.js` (`window.statisticsExercises = {meta:{lang:'en',currency:'',version:1}, exercises:[]}`)
-      + catalog: `features.exercises:true`, `content.exercises:'statisticsExercises'`, dodati script. Bump cache.
-      *Done:* verify 0/0; „Exercises" tab vidljiv kod statistike, prazno stanje; ostali predmeti netaknuti; Playwright zelen.
-- [ ] **B0.5 ⚠ DE-RISK parsiranje (PRIJE sadržaja):** node-test (`tests/unit/`) dokazuje da `parseAmount`/`numEq` ispravno gutaju
-      **negativne** (−2.64) i **sitne decimale** (0.0336), te po potrebi `1,96` (zarez-decimala). *Done:* test zelen; AKO fali →
-      minimalna **generička** (unatrag-kompatibilna) dopuna parsiranja + node test te dopune. Tek tad dalje.
+- [x] **B0** ✅ (`5101dcb`) `data/statistics/exercises.js` (`window.statisticsExercises = {meta:{lang:'en',currency:'',version:1}, exercises:[]}`)
+      + catalog: `features.exercises:true`, `content.exercises:'statisticsExercises'`, script dodan. „Exercises" tab vidljiv (prazno
+      stanje preko `emptyState()`); ostali predmeti netaknuti; verify 0/0, smoke 13/0, responsive 8/8.
+- [x] **B0.5 ⚠ DE-RISK parsiranje** ✅ `tests/unit/stat-parse.test.js` (28 testova; uvršten u `npm run test:unit`). NALAZ: negativne
+      (−2.64/−0.4) i ≠3-decimalne (0.0336/0.05) su radile; **rupa = vodeća nula + TOČNO 3 decimale** (`0.576→576`, `0.025→25`,
+      `0.001→1`) jer ih je pravilo „3 znamenke iza = grupiranje tisuća" gutalo kao tisuće. **Generička dopuna** `parseAmount`
+      (`js/exercises-core.js`): dio prije separatora prazan/same-nule → decimalni i pri 3 znamenke (grupirani broj nikad ne
+      počinje nula-grupom; `120.000`→120000 ostaje). Unatrag-kompatibilno: exercises-core + acc-kernel regresija zelena.
 
 #### Faza B1 — statistička matematika (content-layer)
 - [ ] **B1** `data/statistics/stat-lib.js` (MINIMALNO: `normalCdf`, lookup `Z`/`T_CRIT`, opc. `binomialP`/`poissonP`;
