@@ -125,9 +125,11 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       počinje nula-grupom; `120.000`→120000 ostaje). Unatrag-kompatibilno: exercises-core + acc-kernel regresija zelena.
 
 #### Faza B1 — statistička matematika (content-layer)
-- [ ] **B1** `data/statistics/stat-lib.js` (MINIMALNO: `normalCdf`, lookup `Z`/`T_CRIT`, opc. `binomialP`/`poissonP`;
-      elementarno ostaje inline u solve) + `tests/unit/stat-lib.test.js` + uvrstiti u `npm run test:unit`; učitava se preko
-      `content.scripts` PRIJE `exercises.js`. *Done:* node testovi prolaze (cross-check mathportal + answer-keyevi); **js/ engine NEPROMIJENJEN i bez novih datoteka.**
+- [x] **B1** ✅ `data/statistics/stat-lib.js` (`window.StatLib`/`module.exports`): `normalCdf` (Abramowitz-Stegun, |err|<7.5e-8) +
+      `normalSf`/`normalBetween` + `zCritical`/`zUpper` + `tCritical` (standardna t-tablica df 1–30, ∞→z). Elementarno ostaje inline u
+      solve (NIJE dodano binomialP/poissonP — YAGNI, doći će ako zatreba). `tests/unit/stat-lib.test.js` (25 testova, u `npm run test:unit`):
+      cross-check standardna z/t tablica + answer-keyevi (P(>1.83)=0.0336, P(>−2)=0.977, empirijsko 68/95%). Ožičen u
+      `content.scripts` PRIJE `exercises.js`. **js/ engine NEPROMIJENJEN, 0 novih datoteka u js/.** verify 0/0, test:unit 0, smoke 13/0.
 
 #### Faza B2 — sadržaj po temi (1 tema = 1 cigla; numeric/choice/ratio; vezano na `lesson` + `chapter`-stil tag)
 > Obrazac: par konceptualnih (`choice`) + izračunskih (`numeric`/`ratio`), bar 1 **randomizirana** po temi. Odgovori cijeli/zaokruživi.

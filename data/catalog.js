@@ -354,7 +354,8 @@ const SOKRAT_CATALOG = {
       content: {
         // final.js MUST load LAST (Object.assign of statisticsM1 + statisticsM2 + examPractice).
         // exercises.js is independent (window.statisticsExercises) — loads after final.js.
-        scripts: ['data/statistics/midterm-1.js', 'data/statistics/midterm-2.js', 'data/statistics/final.js', 'data/statistics/exercises.js'],
+        // stat-lib.js (window.StatLib) must load BEFORE exercises.js (its solve() may use it).
+        scripts: ['data/statistics/midterm-1.js', 'data/statistics/midterm-2.js', 'data/statistics/final.js', 'data/statistics/stat-lib.js', 'data/statistics/exercises.js'],
         resolve: { 'first-midterm': 'statisticsM1', 'second-midterm': 'statisticsM2', 'final': 'statisticsFinal' },
         exercises: 'statisticsExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
