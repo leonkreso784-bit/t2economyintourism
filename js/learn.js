@@ -69,6 +69,9 @@ function renderLearnContent() {
     
     enhanceLearnImages(container);
     cleanupLearnContentForMobile();
+
+    // ADR-009: render any LaTeX formulas in the learn HTML (no-op without KaTeX/formulas).
+    if (typeof renderMath === 'function') renderMath(container);
 }
 
 function enhanceLearnImages(container) {

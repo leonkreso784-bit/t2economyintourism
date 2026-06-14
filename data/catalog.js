@@ -308,6 +308,30 @@ const SOKRAT_CATALOG = {
         scripts: ['data/management/midterm-1.js', 'data/management/midterm-2.js', 'data/management/final.js'],
         resolve: { 'first-midterm': 'managementM1', 'second-midterm': 'managementM2', 'final': 'managementFinal' }
       }
+    },
+    {
+      id: 'microeconomics',
+      programId: 'hospitality-management',
+      year: 1, semester: 1,
+      name: 'Microeconomics',
+      shortName: 'MICRO',
+      icon: 'fa-chart-line',
+      color: '#0ea5e9',
+      iconGradient: ['#0ea5e9', '#38bdf8'],
+      description: 'Microeconomics (Pindyck & Rubinfeld 9e): supply & demand and elasticity, consumer behavior, production & costs, competitive markets, monopoly & oligopoly, game theory, factor markets and externalities — the first quantitative subject (KaTeX formulas & worked problems)',
+      storageKey: 'microeconomics-progress',
+      features: { blindMap: false },
+      // K1 (Ch 1–7) + K2 (Ch 8,9,10,12,13,14,18) + final (hybrid). KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Preliminaries, supply & demand and elasticity, consumer behavior, individual & market demand, uncertainty, production & the cost of production (Ch 1–7)' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Profit maximization & competitive supply, competitive markets, monopoly & monopsony, monopolistic competition & oligopoly, game theory, factor inputs, externalities (Ch 8,9,10,12,13,14,18)' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // final.js MUST load LAST (Object.assign of microeconomicsM1 + microeconomicsM2 + examPractice).
+        scripts: ['data/microeconomics/midterm-1.js', 'data/microeconomics/midterm-2.js', 'data/microeconomics/final.js'],
+        resolve: { 'first-midterm': 'microeconomicsM1', 'second-midterm': 'microeconomicsM2', 'final': 'microeconomicsFinal' }
+      }
     }
   ]
 };

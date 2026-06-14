@@ -19,7 +19,11 @@ module.exports = defineConfig({
   // Without this, Playwright's default testMatch picks up *.test.js, executes its
   // top-level process.exit(), and aborts the whole browser run.
   testIgnore: ['unit/**'],
-  timeout: 60000,
+  // Per-test timeout. Raised 60s→120s: the suite now sweeps 12 subjects and the
+  // responsive test takes a fullPage screenshot of each Learn page. Content-rich
+  // pages (esp. KaTeX-heavy Microeconomics with many rendered nodes) make those
+  // screenshots slow, tipping the sweep past 60s. No functional regression.
+  timeout: 120000,
   fullyParallel: false,
   workers: 1,
   reporter: [['list']],

@@ -77,16 +77,22 @@ nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE 
 unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po kategoriji.
 
 ## Matematika / formule — LaTeX + KaTeX (kvantitativni predmeti)
-> Status: **plan** (ADR-009). KaTeX rendering se dodaje kao zasebna cigla PRIJE prvog kvantitativnog
-> predmeta. Konvencija autorstva je već fiksirana ovdje da sadržaj bude spreman i migracijski siguran.
+> Status: **✅ implementirano** (ADR-009, KaTeX cigla, 2026-06-14). `renderMath()` (`js/math.js`) renderira
+> formule nakon prikaza svake sekcije (learn/flashcards/quiz/fill). KaTeX se učitava s CDN-a (`<head>`);
+> ako CDN padne, `renderMath` je tihi no-op (formula ostane sirovi LaTeX, ništa se ne ruši).
 
 Za Math / Micro / Macro / Statistiku formule se pišu kao **LaTeX** unutar delimitera:
-- `$ ... $`  — inline (npr. `Elastičnost je $E_d = \frac{\%\Delta Q}{\%\Delta P}$.`)
-- `$$ ... $$` — blok / centriran (vlastiti red, za istaknute formule i korake rješenja).
+- `\( ... \)` — **inline** (npr. `Elastičnost je \\(E_d = \\frac{\\%\\Delta Q}{\\%\\Delta P}\\).`)
+- `\[ ... \]` ili `$$ ... $$` — **blok / centriran** (vlastiti red, za istaknute formule i korake rješenja).
+
+> ⚠️ **JEDAN `$` NIJE delimiter — namjerno.** Postojeći sadržaj ima 120+ valutnih iznosa tipa `$25 per night`;
+> da je `$ ... $` bio inline-delimiter, KaTeX bi tekst između dva `$` parsirao kao matematiku i **vizualno
+> pokvario live sadržaj** u mnogo predmeta. Zato koristimo `\( \)` / `\[ \]` / `$$ $$` (te se sekvence ne
+> pojavljuju u običnom tekstu) — render je globalan, ali za netekstualne predmete je **no-op**.
 
 Vrijedi u SVIM tekstualnim poljima: `learn.content`, flashcard `question/answer/explanation`,
-quiz `question/options`, fillBlank `sentence/answer/hint`. `renderMath()` (KaTeX) ih renderira nakon
-prikaza sekcije. Payload ostaje običan string → **migracijski sigurno** (struktura scheme nepromijenjena).
+quiz `question/options`, fillBlank `sentence/answer/hint`. Payload ostaje običan string → **migracijski
+sigurno** (struktura scheme nepromijenjena).
 
 Smjernice:
 - **Riješeni primjeri** (worked examples) idu u `learn.content`, korak-po-korak (svaki korak svoj red/`<p>`).
@@ -94,8 +100,10 @@ Smjernice:
   krivi predznak, zaboravljen eksponent…).
 - **Grafovi** (ponuda/potražnja, tangenta, distribucije): zasad **slika** u `learn.image`
   (croppani slajd ili SVG). Interaktivni grafovi nisu u schemi.
-- ⚠️ **Escape u JS datotekama:** LaTeX `\` se u stringu piše `\\` (npr. `"$\\frac{1}{x}$"`,
-  `"$x^{n}$"`). Inače se backslash pojede.
+- ⚠️ **Escape u JS datotekama:** LaTeX `\` se u stringu piše `\\`, pa i sami delimiteri: inline =
+  `"\\(...\\)"`, blok = `"\\[...\\]"` (npr. `"\\(\\frac{1}{x}\\)"`, `"\\(x^{n}\\)"`). `$$...$$` ne treba escape.
+  Valutu u kvantitativnim predmetima piši kao `USD 25` ili `25 €` (ne miješaj s LaTeX-om bez potrebe).
+- 🛟 **Escape hatch:** element s klasom `no-math` KaTeX preskače (ako baš treba doslovni `\(` u tekstu).
 
 ## Posebni slučaj: Blind Map (samo Tourism Geography)
 Geografija ima dodatnu interaktivnu kartu. Konfiguracija (točke, koordinate, razine:

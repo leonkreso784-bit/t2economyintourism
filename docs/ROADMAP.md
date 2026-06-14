@@ -69,7 +69,9 @@ uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadrža
 
 - Sadržajni alati: ✅ struktura+template+scaffold (K1); ✅ coming-soon iz catalog-a (K2,
   `isLessonComingSoon`); ⬜ validator sadržaja (K3); ✅ **lazy-load seam (K4)** = `js/content-loader.js`;
-  ⬜ **KaTeX math rendering (K5)** = `renderMath()` + LaTeX konvencija za kvantitativne predmete (ADR-009)
+  ✅ **KaTeX math rendering (K5)** = `renderMath()` (`js/math.js`) + LaTeX konvencija (currency-safe `\( \)`/`\[ \]`/
+  `$$ $$`) za kvantitativne predmete (ADR-009). KaTeX CDN `0.16.9` + `css/math.css`; pozvan u sva 4 renderera;
+  test `tests/katex.spec.js`. **Implementirano 2026-06-14 (lokalno, čeka deploy s prvim kvant. predmetom).**
 - ✅ Pilot sadržaja: **Business Informatics** (Ch1–11, K1+K2+Final) — dokaz da content pipeline radi
 - ⬜ Catalog: dodati ostalih 10 predmeta 1. godine + semestar mapping (čeka materijale)
 - ✅ Hijerarhijska navigacija: Start → Fakulteti → Smjerovi → Godine → Predmeti (po semestru) +

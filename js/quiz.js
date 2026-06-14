@@ -132,6 +132,9 @@ function showQuestion() {
     
     // Update nav buttons
     updateQuizNavButtons();
+
+    // ADR-009: render LaTeX in the question text and answer options.
+    if (typeof renderMath === 'function') renderMath(document.getElementById('quizGame'));
 }
 
 function updateQuizNavButtons() {
@@ -255,7 +258,10 @@ function endQuiz() {
     } else {
         document.getElementById('wrongAnswersReview').style.display = 'none';
     }
-    
+
+    // ADR-009: render LaTeX in the wrong-answers review.
+    if (typeof renderMath === 'function') renderMath(document.getElementById('quizResults'));
+
     progress.quizScores.push(score);
     progress.lastStudy = new Date().toISOString();
     saveProgress();

@@ -63,7 +63,10 @@ function showFillQuestion() {
     
     const sentenceWithBlank = q.sentence.replace('_______', '<span class="blank">_______</span>');
     document.getElementById('fillSentence').innerHTML = sentenceWithBlank;
-    
+
+    // ADR-009: render LaTeX in the sentence (a formula with a blank renders around it).
+    if (typeof renderMath === 'function') renderMath(document.getElementById('fillSentence'));
+
     document.getElementById('fillInput').value = '';
     document.getElementById('fillInput').disabled = false;
     document.getElementById('checkFill').disabled = false;
@@ -94,7 +97,10 @@ function checkFillAnswer() {
     }
     
     document.getElementById('correctFillAnswer').textContent = fillQuestions[currentFillIndex].answer;
-    
+
+    // ADR-009: render LaTeX in the revealed correct answer (if it is a formula).
+    if (typeof renderMath === 'function') renderMath(document.getElementById('fillFeedback'));
+
     document.getElementById('fillInput').disabled = true;
     document.getElementById('checkFill').disabled = true;
     document.getElementById('btnNextFill').classList.remove('hidden');

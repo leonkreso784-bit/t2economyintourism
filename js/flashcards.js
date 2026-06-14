@@ -59,8 +59,11 @@ function updateFlashcard() {
     document.getElementById('cardQuestion').textContent = card.question;
     document.getElementById('cardAnswer').textContent = card.answer;
     document.getElementById('cardExplanation').textContent = card.explanation || '';
-    
+
     document.getElementById('flashcard').classList.remove('flipped');
+
+    // ADR-009: render LaTeX in question/answer/explanation (KaTeX walks the text nodes).
+    if (typeof renderMath === 'function') renderMath(document.getElementById('flashcard'));
 }
 
 function updateFlashcardProgress() {

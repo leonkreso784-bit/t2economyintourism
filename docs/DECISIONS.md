@@ -5,7 +5,15 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 ---
 
 ## ADR-009 — Kvantitativni predmeti (Math/Micro/Macro/Statistika): KaTeX + "worked problems"
-**Datum:** 2026-06-05 · **Status:** prihvaćeno (plan; implementacija pending)
+**Datum:** 2026-06-05 · **Status:** ✅ **implementirano** (KaTeX cigla, 2026-06-14)
+**Implementacija (2026-06-14):** `js/math.js` (`renderMath(container)` = KaTeX auto-render, tihi no-op ako
+CDN padne) + KaTeX CDN u `<head>` + `css/math.css` (dark + mobilni overflow). `renderMath` se zove na kraju
+sva četiri renderera (`learn.js`/`flashcards.js`/`quiz.js`/`fill-blanks.js`). Test `tests/katex.spec.js`.
+**⚠️ ISPRAVAK delimitera (currency-safe):** plan je predviđao `$...$` inline, ALI postojeći sadržaj ima 120+
+valutnih `$NN` (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
+**pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.** Te se
+sekvence ne pojavljuju u običnom tekstu (provjereno grep-om) → render je globalan ali za tekstualne predmete
+**no-op** (nije potreban opt-in flag). Konvencija autorstva: [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) § Matematika.
 **Kontekst:** Math, Microeconomics, Macroeconomics i Statistika su **formula- i zadatak-orijentirani**;
 postojeća schema (Learn/Flashcards/Quiz/Fill) rađena je za konceptualno, tekstualno gradivo. Tri problema:
 (1) prikaz **formula** (HTML tekst ne prikazuje razlomke/eksponente/sume/integrale), (2) bit je

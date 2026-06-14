@@ -5,6 +5,102 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-14 — ✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet (lokalno, čeka deploy)
+**Dovršen 2. kolokvij + finalni → Microeconomics je gotov.** Nastavak istog dana nakon K1 (vidi entry niže).
+- **K2 NAPISAN IZ DECKA — `data/microeconomics/midterm-2.js` (`microeconomicsM2`), 7 kategorija / 75 fc / 70 quiz / 56 fill:**
+  `profitMaximization` (Ch8/TU7: π=TR−TC, MR=MC, price-taker P=MR=MC, shut-down P<AVC, SR supply, LR zero profit, ekonomska renta
+  + riješeni primjer P=MC), `competitiveMarkets` (Ch9/TU8: consumer/producer surplus, deadweight loss, price ceiling→shortage /
+  floor→surplus, tax incidence po elastičnosti, subvencija, kvote/tarife + riješeni primjer CS=1800), `monopolyMonopsony`
+  (Ch10/TU9: MR<P, linearno MR=a−2bQ, Lerner index (P−MC)/P=−1/Ed, sources/social cost, natural monopoly, monopsony MV=ME
+  + riješeni primjer P=100−Q, MC=20 → Q=40/P=60), `monopolisticOligopoly` (Ch12/TU10: differentiated/excess capacity, Nash,
+  Cournot/Stackelberg/Bertrand, prisoners' dilemma, kinked demand/price leadership, kartel OPEC/CIPEC), `gameTheory`
+  (Ch13/TU11: dominant strategy, Nash, maximin, mixed, repeated/tit-for-tat, sequential/first-mover, credibility, entry
+  deterrence, winner's curse + riješeni primjer payoff-matrice), `factorMarkets` (Ch14/TU12: derived demand, MRP_L=P×MP_L,
+  hiring MRP=w, average/marginal expenditure, backward-bending labor supply, ekonomska renta, monopsony ME=MRP, unije
+  + riješeni primjer MRP=50), `externalitiesPublicGoods` (Ch18/TU13: MSC=MC+MEC, MSC=MSB, Pigouvian fee/standard/permits,
+  Coase theorem, common-pool/tragedy of commons, public goods nonrival+nonexclusive, free-rider + riješeni primjer MSC=14).
+- **Mapiranje TU→Pindyck poglavlje provjereno iz decka** (TU7=Ch8 … TU13=Ch18) → savršeno odgovara silabusnoj granici K2 = Ch 8,9,10,12,13,14,18.
+- **FINALNI — `data/microeconomics/final.js` (`microeconomicsFinal`)** = `Object.assign({}, microeconomicsM1, microeconomicsM2,
+  {examPractice})`, **učitava se ZADNJI** (čita `window.microeconomicsM1/M2`; node `module.exports` preko `require`). K1 (7) + K2 (7)
+  bez kolizije ključeva → **15 kategorija (14 tema + examPractice) / 164 fc / 148 quiz / 118 fill.** `examPractice` =
+  cross-topic „optimiziraj na margini" sinteza (sve optimum-uvjete: MR=MC, MRS=Px/Py, MRTS=w/r, MRP=w, MSC=MSB) + KaTeX
+  `aligned` master-popis formula + roadmap po poglavljima (`fa-graduation-cap`/indigo).
+- **Catalog:** sve 3 lekcije mapirane — `scripts: [midterm-1, midterm-2, final]` (final ZADNJI), `resolve` za
+  first/second-midterm/final. (Ranije „coming-soon" za K2/final maknuto.)
+- **KaTeX currency-safe potvrđeno:** kombinirano M1+M2+final → inline `\\(..\\)` 509/509 + display `\\[..\\]` 71/71 BALANSIRANO;
+  **0 jednostrukih `$` u K2/final/examPractice** (postojećih 8 `$` u K1 = valuta u uncertainty pitanjima, render literalno jer
+  delimiter je `$$` ne `$`). Delimiteri u `js/math.js`: `$$`/`\\[`/`\\(` — single `$` NIJE delimiter (dizajn).
+- **Cache:** cijeli neobjavljeni batch (KaTeX cigla + Micro) podignut `20260648 → 20260649` (`CONTENT_VERSION` + 8 `?v=` u
+  index.html + 1 u styles.css).
+- **Provjere:** verify **0/0** (12 predmeta, micro sve 3 lekcije → M1/M2/Final deklarirani+na window) · node struktura **0 grešaka**
+  (final 15 kat/164fc/148quiz/118fill) · **Playwright 68/68** (`subjects=12 problems=0 errors=0`, `microeconomics ✓ ok
+  docScrollW=852=deviceW` → NEMA horizontalnog overflowa).
+- **▶ Dalje:** Statistics (~26 datoteka) ili Macroeconomics (~19) — oba kvantitativna, KaTeX spreman; **Math ZADNJA.**
+  Razmotriti generator-script za masovni unos. [[content-roadmap-sequencing]]
+
+---
+
+## 2026-06-14 — ▶ MICROECONOMICS — 1. KOLOKVIJ KOMPLETAN (prvi kvantitativni predmet, KaTeX) (lokalno, čeka deploy)
+**Prvi predmet koji koristi KaTeX ciglu.** Korisnik izabrao tempo „pilot poglavlje prvo" → napisana 1 kategorija
+(Supply & Demand), korisnik potvrdio „KaTeX izgleda odlično" → dovršen **cijeli K1 (svih 7 poglavlja)**.
+- **Intake:** materijali `…/1. godina Hospitality Managament/Microeconomics` — `Microeconomics_2024_25.pdf` (**172-str
+  deck**, Pindyck & Rubinfeld; slajdovi rađeni po 8e, silabus traži 9e — isti sadržaj za ova poglavlja) + **DINP silabus**
+  (službeni raspored predavanja) + exam-literature. Ekstrakcija `node scripts/pdf-text.js` → `tmp-micro/` (gitignored).
+- **K1/K2 granica = AUTORITATIVNA, iz DINP rasporeda predavanja** (L7 = 1. kolokvij, L15 = 2.): **K1 = Pindyck Ch 1–7**
+  (Preliminaries · Supply&Demand+elasticity · Consumer Behavior · Individual&Market Demand · Uncertainty · Production ·
+  Cost of Production); **K2 = Ch 8,9,10,12,13,14,18** (Profit Max&Competitive Supply · Competitive Markets · Monopoly&
+  Monopsony · Monopolistic Comp&Oligopoly · Game Theory · Factor Inputs · Externalities). → K2 14 kat + examPractice (planirano).
+- **K1 NAPISAN — `data/microeconomics/midterm-1.js` (`microeconomicsM1`), 7 kategorija / 77 fc / 66 quiz / 54 fill:**
+  `preliminaries` (Ch1: scarcity/efficiency, positive vs normative, PPF & opportunity cost, factors, real vs nominal),
+  `supplyAndDemand` (Ch2: equilibrium, elasticity point & arc, income/cross, revenue + riješeni primjer |Ep|=2),
+  `consumerBehavior` (Ch3: indifference curves, MRS, budget line, optimum MRS=PF/PC, equal-marginal principle),
+  `individualMarketDemand` (Ch4: Engel, normal/inferior, substitution+income effects, consumer surplus, network ext.),
+  `uncertainty` (Ch5: expected value/variance/expected utility, risk attitudes, risk premium, diversification/insurance
+  + riješeni primjer E(X)), `production` (Ch6: Q=F(K,L), AP/MP, diminishing returns, isoquant, MRTS, returns to scale),
+  `costOfProduction` (Ch7: economic vs accounting, TC=FC+VC, MC, ATC/AFC/AVC, MC cuts min, long-run MRTS=w/r,
+  scale/scope + riješeni primjer). Sve formule KaTeX (inline `\\(..\\)`, display `\\[..\\]`); `.formula-box`/`.example-box`/`.tip-box`.
+- **Catalog:** subject `microeconomics` (year 1, **sem 1**, `fa-chart-line`/sky `#0ea5e9`). **Još `first-midterm` mapiran**
+  (`resolve.first-midterm = microeconomicsM1`); `second-midterm`+`final` ostaju **coming-soon** dok se ne napiše K2/finalni.
+  `CONTENT_VERSION` `20260648` + `catalog.js`/`content-loader.js` `?v=20260648`. `.gitignore` += `tmp-micro/`.
+- **Test infra:** Playwright per-test `timeout` 60s→**120s** (`playwright.config.js`) — suite sad mete 12 predmeta i
+  responsive radi `fullPage` screenshot svake Learn stranice; KaTeX-bogata micro stranica (puno čvorova) usporava snimak
+  pa je 60s bio pretijesan (nije funkcionalna regresija — overflow potvrđeno 0).
+- **Provjere:** verify **0/0** (12 predmeta) · node struktura **0 grešaka** (7 kat/77fc/66quiz/54fill) · responsive na 393
+  **potvrdio `microeconomics ✓ ok` `docScrollW=393=deviceW` → NEMA horizontalnog overflowa** (formule zadržane:
+  `.formula-box{overflow:hidden}` + `.katex-display{overflow-x:auto}`). Puna suite: (rezultat u nastavku).
+- **▶ Dalje:** K2 (Ch 8,9,10,12,13,14,18) pa finalni hibrid (`Object.assign(M1,M2,{examPractice})`, učitava se ZADNJI;
+  tad dodati `midterm-2.js`/`final.js` u catalog scripts + resolve). Zatim Statistics / Macro; Math zadnja.
+
+---
+
+## 2026-06-14 — ✅ KaTeX CIGLA (ADR-009) — infrastruktura za kvantitativne predmete (lokalno, čeka deploy)
+**Zašto:** Micro/Statistics/Macro/Math su formula-orijentirani; postojeća schema (learn/flashcards/quiz/fill) ne
+prikazuje razlomke/eksponente/sume. Prije prvog kvantitativnog predmeta (Microeconomics) gradi se zasebna cigla za
+LaTeX rendering — payload ostaje string → **migracijski sigurno** (struktura scheme nepromijenjena).
+- **`js/math.js`** — jedan helper `renderMath(container)` = KaTeX **auto-render**. **Tihi no-op** ako CDN padne
+  (formula degradira u sirovi LaTeX, ništa se ne ruši — ista filozofija kao Supabase CDN fallback u `js/auth.js`).
+- **KaTeX CDN** (`0.16.9`, cdnjs) u `<head>` index.html-a, `defer` (ne blokira prvi paint): `katex.min.css` +
+  `katex.min.js` + `contrib/auto-render.min.js`. (Prvi pokušaj bio `0.16.11` → **404**; cdnjs ima do `0.16.9`.)
+- **`css/math.css`** — dark tema (KaTeX nasljeđuje `currentColor`) + **mobilni overflow** (`.katex-display{overflow-x:auto}`
+  da široke formule skrolaju UNUTAR kutije, ne ruše layout — projekt strogo čuva od horizontalnog overflowa).
+- **`renderMath` se zove na kraju sva četiri renderera:** `learn.js` (`renderLearnContent`), `flashcards.js`
+  (`updateFlashcard` — KaTeX hoda po text-nodovima), `quiz.js` (`showQuestion` + `endQuiz` review), `fill-blanks.js`
+  (`showFillQuestion` + reveal odgovora). Svaki poziv `if (typeof renderMath === 'function')`.
+- **⚠️ KRITIČNA odluka — currency-safe delimiteri:** ADR-009 je predviđao `$...$` inline, ALI postojeći sadržaj ima
+  **123 valutna `$NN`** (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
+  **vizualno pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.**
+  Grep-om potvrđeno da se `\(`/`\[`/`$$` NIGDJE ne pojavljuju u postojećem tekstu → render je globalan ali za
+  tekstualne predmete **no-op** (nije potreban opt-in flag). Konvencija autorstva u `docs/CONTENT_SCHEMA.md`.
+- **Cache:** novi `js/math.js?v=20260648` + bump `learn/flashcards/quiz/fill .js?v=20260648`; `styles.css?v=20260648`
+  + novi `@import css/math.css?v=20260648`. (Data nije dirana → `CONTENT_VERSION` ostaje `20260647`.)
+- **Provjere:** verify **0/0** (11 predmeta) · **Playwright `tests/katex.spec.js` 4/4** (dokaz na sva 4 iPhone profila:
+  inline `\(..\)` + blok `$$..$$`/`\[..\]` renderiraju `.katex`; valutni `$25`/`$50` ostaje doslovan tekst, 0 `.katex`).
+  Puna responsive+smoke suite: u tijeku.
+- **Dalje:** **Microeconomics** (1. god, sem 2) = prvi kvantitativni predmet, K1/K2/finalni, RUČNO autorstvo
+  (172-str Pindyck deck). Worked examples u `learn.content`, quiz distraktori = tipične greške, grafovi = slike.
+
+---
+
 ## 2026-06-14 — ✅ MANAGEMENT — NOVI predmet 1. godine (zadnji čisto tekstualni; 3. predmet 1. god)
 **Treći predmet 1. godine HM** (uz Business Informatics + SIT) i **zadnji čisto tekstualni** prije KaTeX-skupine
 (Micro/Statistics/Macro). Izvori: 11 PDF predavanja (`…/1. godina Hospitality Managament/Management`: INTRO silabus +

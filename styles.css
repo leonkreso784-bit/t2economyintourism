@@ -66,3 +66,6 @@
 
 /* Profile stranica + header auth gumbi — samostalan modul */
 @import url('css/profile.css?v=20260642');
+
+/* KaTeX math (ADR-009) — dark theme + mobile overflow; samostalan modul, ne gazi ništa */
+@import url('css/math.css?v=20260649');

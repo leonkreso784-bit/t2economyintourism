@@ -46,10 +46,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260643">
+    <link rel="stylesheet" href="styles.css?v=20260649">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- KaTeX (ADR-009): formula rendering for quantitative subjects. Loaded with `defer`
+         so it never blocks first paint; js/math.js wraps it in a silent fallback if the
+         CDN is unavailable. Author convention: \( \) inline, \[ \] / $$ $$ display. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
@@ -1048,19 +1055,20 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260647"></script>
+    <script src="data/catalog.js?v=20260649"></script>
 
     <!-- App modules (split from app.js) -->
     <script src="js/config.js?v=20260602"></script>
-    <script src="js/content-loader.js?v=20260647"></script>
+    <script src="js/content-loader.js?v=20260649"></script>
     <script src="js/utils.js?v=20260602"></script>
     <script src="js/storage.js?v=20260602"></script>
     <script src="js/analytics.js?v=20260602"></script>
     <script src="js/navigation.js?v=20260641"></script>
-    <script src="js/flashcards.js?v=20260602"></script>
-    <script src="js/quiz.js?v=20260602"></script>
-    <script src="js/fill-blanks.js?v=20260602"></script>
-    <script src="js/learn.js?v=20260602"></script>
+    <script src="js/math.js?v=20260649"></script>
+    <script src="js/flashcards.js?v=20260649"></script>
+    <script src="js/quiz.js?v=20260649"></script>
+    <script src="js/fill-blanks.js?v=20260649"></script>
+    <script src="js/learn.js?v=20260649"></script>
     <script src="js/progress.js?v=20260623"></script>
     <script src="js/blind-map.js?v=20260602"></script>
     <script src="js/exercises-core.js?v=20260625"></script>

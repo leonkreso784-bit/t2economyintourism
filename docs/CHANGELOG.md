@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Added
+- **Microeconomics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet (KaTeX):** dodani
+  `data/microeconomics/midterm-2.js` (`microeconomicsM2`, **7 kat / 75 fc / 70 quiz / 56 fill** — Ch 8,9,10,12,13,14,18:
+  profit max & competitive supply, competitive markets, monopoly & monopsony, monopolistic competition & oligopoly, game
+  theory, factor inputs, externalities & public goods) + `final.js` (`microeconomicsFinal` = `Object.assign(M1,M2,{examPractice})`,
+  učitava se ZADNJI → **15 kat / 164 fc / 148 quiz / 118 fill**). `examPractice` = cross-topic „optimiziraj na margini" sinteza
+  s KaTeX `aligned` master-popisom (MR=MC, MRS=Px/Py, MRTS=w/r, MRP=w, MSC=MSB). Catalog: sve 3 lekcije mapirane. KaTeX
+  currency-safe (single `$` nije delimiter). Cache `?v=20260649` (batch 20260648→49). verify 0/0, Playwright 68/68.
 ### Fixed
 - **Exercises — Practice ≠ Exam (BUG-011, review-nalaz):** modovi su izgledali isto. Sad `checkOpen`/`renderFeedback` primaju
   `currentMode`: **Exam** na „Check" preskače markiranje (`widget.mark`) i prikazuje **samo rezultat** („Score: X / Y (Z%)"),
@@ -21,6 +29,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (6 računa) i `k1-ch3-income-statement` (17 računa „Annie’s"). Mala, generička, unatrag-kompatibilna engine dopuna (bez `givens`
   ponašanje nepromijenjeno). verify 0/0, node 95/95 + 13/13, Playwright 36/36 + ciljani 3/3. Cache `?v=20260630`.
 ### Added
+- **Microeconomics — 1. kolokvij KOMPLETAN (prvi kvantitativni predmet, KaTeX)** (2026-06-14): novi subject `microeconomics`
+  (year 1, **sem 1**, `fa-chart-line`/sky `#0ea5e9`) iz Pindyck & Rubinfeld 9e + DINP silabus. **K1/K2 granica autoritativna iz
+  službenog rasporeda predavanja: K1 = Ch 1–7, K2 = Ch 8,9,10,12,13,14,18.** Krenulo kao pilot (1 kategorija), korisnik potvrdio
+  KaTeX → dovršen cijeli K1: `data/microeconomics/midterm-1.js` (`microeconomicsM1`), **7 kategorija / 77 fc / 66 quiz / 54 fill**
+  (preliminaries, supplyAndDemand, consumerBehavior, individualMarketDemand, uncertainty, production, costOfProduction) — `learn`
+  s KaTeX formulama (elastičnost, MRS, budget line, E(X)/varijanca, AP/MP, MRTS, TC/MC/ATC) + 3 riješena primjera. **Catalog: samo
+  `first-midterm` mapiran**; K2/final coming-soon dok se ne dovrše. `CONTENT_VERSION` `20260648`. `.gitignore` += `tmp-micro/`.
+  Playwright per-test timeout 60s→120s (suite mete 12 predmeta + fullPage screenshoti KaTeX-bogatih stranica). verify 0/0,
+  node 0, responsive potvrdio `microeconomics ✓ ok` (docScrollW=deviceW → 0 horizontalnog overflowa).
+- **KaTeX cigla (ADR-009) — formula rendering za kvantitativne predmete** (2026-06-14, infrastruktura prije
+  Microeconomicsa): novi `js/math.js` (`renderMath(container)` = KaTeX auto-render, tihi no-op ako CDN padne) +
+  KaTeX CDN (`0.16.9`, cdnjs, `defer`) u `<head>` + `css/math.css` (dark + mobilni overflow). `renderMath` se zove
+  na kraju sva četiri renderera (learn/flashcards/quiz/fill). **Delimiteri currency-safe: inline `\( \)`, blok
+  `\[ \]` / `$$ $$`; jedan `$` se NE koristi** (postojećih 123 valutnih `$NN` ostaje doslovno — inače bi KaTeX
+  pokvario live sadržaj). Konvencija autorstva: `docs/CONTENT_SCHEMA.md`. Cache `?v=20260648` (math.js + learn/
+  flashcards/quiz/fill + styles.css). Test `tests/katex.spec.js` 4/4 (render + currency-safety), verify 0/0.
 - **Management — novi predmet 1. godine** (2026-06-14, 3. predmet 1. god, zadnji čisto tekstualni): iz 11 PDF predavanja
   (Lussier *Management Fundamentals* 9e; INTRO + TU2–TU11). K1 (`data/management/midterm-1.js`, `managementM1`, 6 kat:
   foundations/decisionMaking/strategicPlanning/organizing/teamwork/humanResources) + K2 (`midterm-2.js`, `managementM2`,
