@@ -336,7 +336,7 @@ const SOKRAT_CATALOG = {
     {
       id: 'statistics',
       programId: 'hospitality-management',
-      year: 1, semester: 2,
+      year: 1, semester: 1,
       name: 'Statistics',
       shortName: 'STAT',
       icon: 'fa-chart-simple',

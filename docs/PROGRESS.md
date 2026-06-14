@@ -24,7 +24,7 @@ testirano, što slijedi.
   **učitava se ZADNJI** (čita window vars; node `require`). K1 (6) + K2 (3) bez kolizije → **10 kat (9 tema + examPractice) /
   108 fc / 102 quiz / 80 fill.** `examPractice` = cross-topic luk (describe → probability → distributions → inference → regression)
   s KaTeX `aligned` master-popisom (mean/s², Z, SE, CI, test-stat, regresija) + roadmap T1–T9.
-- **Catalog:** novi subject `statistics` (year 1, **sem 2 — PRETPOSTAVKA, čeka potvrdu korisnika kao Micro**; `fa-chart-simple`/rose
+- **Catalog:** novi subject `statistics` (year 1, **sem 1 — POTVRĐENO (korisnik, 2026-06-15)**; `fa-chart-simple`/rose
   `#f43f5e`), sve 3 lekcije mapirane (scripts midterm-1/2/final, final ZADNJI). **KaTeX currency-safe** (kombinirano `\\(\\)` 540/540 +
   `\\[\\]` 45/45 balansirano; 0 single-`$`).
 - **Cache:** `CONTENT_VERSION` `20260649 → 20260650` + `catalog.js`/`content-loader.js` `?v=20260650` u index.html. `.gitignore` += `tmp-stats/`.

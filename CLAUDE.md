@@ -200,7 +200,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (describing data graphical & numerical, probability, discrete & continuous RV, sampling distributions/CLT). **K2** `midterm-2.js`
   (`statisticsM2`) — 3 kat / 35fc / 30quiz / 24fill (confidence intervals, hypothesis testing, regression). **Finalni** `final.js`
   (`statisticsFinal` = `Object.assign(M1,M2,{examPractice})`, ZADNJI) → **10 kat / 108fc / 102quiz / 80fill**; examPractice = cross-topic
-  luk + KaTeX `aligned` master-popis. Catalog: subject `statistics` (year 1, **sem 2 — PRETPOSTAVKA, čeka potvrdu kao Micro**;
+  luk + KaTeX `aligned` master-popis. Catalog: subject `statistics` (year 1, **sem 1 — POTVRĐENO (korisnik)**;
   `fa-chart-simple`/rose `#f43f5e`), sve 3 lekcije mapirane. KaTeX currency-safe (`\\(\\)` 540/540 + `\\[\\]` 45/45). Cache `20260650`.
   verify 0/0, node 0, **Playwright 68/68** (subjects=13). **Dalje: Macroeconomics (~19); Math ZADNJA.** [[content-roadmap-sequencing]]
 - **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
