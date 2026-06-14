@@ -719,29 +719,43 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Discrete Random Variables</h3>' +
-        '<p>A <strong>discrete random variable</strong> takes countable values. Its <strong>probability distribution</strong> assigns \\( P(x)\\ge 0 \\) to each value with \\( \\sum_x P(x)=1 \\). Its center and spread are</p>' +
-        '<div class="formula-box">\\[ \\mu = E(X) = \\sum_x x\\,P(x), \\qquad \\sigma^2 = \\sum_x (x-\\mu)^2 P(x) \\]</div>' +
+        '<p>A <strong>random variable</strong> attaches a number to each outcome of a random experiment — it turns “heads/tails” or “satisfied/unsatisfied” into something we can average and add. A <strong>discrete</strong> random variable takes a <em>countable</em> set of values (0, 1, 2, …): the number of defective items in a batch, claims filed in a day, guests who no-show. The point of this topic is that many business situations follow one of two famous patterns — the <strong>binomial</strong> and the <strong>Poisson</strong> — so once you recognise the pattern you get all the probabilities from a formula instead of collecting data.</p>' +
 
-        '<h4>Binomial distribution</h4>' +
-        '<p>For \\(n\\) independent success/failure trials with constant success probability \\(P\\):</p>' +
+        '<h4>The probability distribution and its summaries</h4>' +
+        '<p>A discrete <strong>probability distribution</strong> lists every value \\(x\\) with its probability \\(P(x)\\). Two rules make it valid: each \\(P(x)\\ge 0\\), and they sum to one (\\(\\sum_x P(x)=1\\)) — the variable must take <em>some</em> value. We summarise it just like a data set, but weighting by probability instead of counting:</p>' +
+        '<div class="formula-box">\\[ \\mu = E(X) = \\sum_x x\\,P(x), \\qquad \\sigma^2 = E[(X-\\mu)^2] = \\sum_x (x-\\mu)^2 P(x) \\]</div>' +
+        '<p>The <strong>expected value</strong> \\(E(X)\\) is the long-run average if the experiment were repeated endlessly — it need not be an attainable value (a family can’t have 1.93 days off, yet that is the expectation). The <strong>cumulative function</strong> \\(F(x_0)=P(X\\le x_0)\\) adds up probabilities from the bottom and is the key to “at most / at least / more than” questions.</p>' +
+
+        '<h4>Binomial distribution — counting successes</h4>' +
+        '<p>Use it when four conditions hold: a <strong>fixed number</strong> \\(n\\) of trials; each trial is a <strong>success/failure</strong> (Bernoulli); the success probability \\(P\\) is <strong>constant</strong>; and the trials are <strong>independent</strong>. Then \\(X=\\) number of successes follows:</p>' +
         '<div class="formula-box">\\[ P(x) = \\frac{n!}{x!\\,(n-x)!}\\,P^{x}(1-P)^{n-x}, \\qquad \\mu = nP, \\qquad \\sigma^2 = nP(1-P) \\]</div>' +
+        '<p>The combination \\(\\binom{n}{x}\\) counts the orderings (which of the \\(n\\) trials succeeded), while \\(P^{x}(1-P)^{n-x}\\) is the probability of any one such ordering. The mean \\(nP\\) is pure intuition: flip 10 coins and you expect \\(10\\times0.5=5\\) heads.</p>' +
 
-        '<h4>Poisson distribution</h4>' +
-        '<p>For counts of events in a fixed interval at average rate \\(\\lambda\\):</p>' +
+        '<h4>Poisson distribution — counting occurrences over an interval</h4>' +
+        '<p>Use it for the number of times an event happens in a fixed window of time, space or area, when events occur independently at an average rate \\(\\lambda\\): arrivals per minute, breakdowns per week, flaws per metre. There is no fixed \\(n\\) — only a rate.</p>' +
         '<div class="formula-box">\\[ P(x) = \\frac{e^{-\\lambda}\\lambda^{x}}{x!}, \\qquad \\mu = \\sigma^2 = \\lambda \\]</div>' +
+        '<p>Its signature property is that the <strong>mean equals the variance</strong> (both \\(\\lambda\\)) — a quick reality check on whether Poisson is the right model.</p>' +
 
         '<div class="example-box">' +
-        '<h4>Worked example — expected value</h4>' +
-        '<p>Days off: \\(P(0,1,2,3,4,5) = (0.05, 0.30, 0.45, 0.10, 0.07, 0.03)\\).</p>' +
+        '<h4>Worked example — expected value &amp; variance</h4>' +
+        '<p>Days off per employee: \\(P(0,1,2,3,4,5) = (0.05, 0.30, 0.45, 0.10, 0.07, 0.03)\\).</p>' +
         '<div class="formula-box">\\[ \\mu = \\sum x\\,P(x) = 1.93, \\qquad \\sigma^2 = \\sum (x-\\mu)^2 P(x) = 1.14, \\qquad \\sigma = 1.07 \\]</div>' +
+        '<p>So a typical employee takes about 1.93 days off, give or take roughly 1.07 days.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Which model?</h4>' +
-        '<p>Use the <strong>binomial</strong> for a fixed number of yes/no trials (defective or not in 6 items); use the <strong>Poisson</strong> for counts over a continuous interval (arrivals per minute, breakdowns per day).</p>' +
+        '<h4>Which model? Binomial vs. Poisson</h4>' +
+        '<p>Ask: is there a fixed number of yes/no trials? Then <strong>binomial</strong> (defective or not among 6 inspected items, \\(n=6\\)). Or are you counting occurrences over a continuous span with only a rate? Then <strong>Poisson</strong> (calls per hour, \\(\\lambda=4\\)). When \\(n\\) is large and \\(P\\) tiny, the binomial is well approximated by a Poisson with \\(\\lambda=nP\\).</p>' +
         '</div>' +
 
-        '<p class="highlight">“At least” / “more than” questions are easiest with the cumulative function: \\( P(X>a)=1-P(X\\le a) \\).</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• The binomial variance is \\(nP(1-P)\\), <strong>not</strong> \\(nP\\) — don’t reuse the mean.</p>' +
+        '<p>• Forgetting the <strong>combination</strong> factor \\(\\binom{n}{x}\\): you need all the orderings, not just one.</p>' +
+        '<p>• Using the binomial when trials are <strong>dependent</strong> or \\(P\\) drifts (e.g. sampling without replacement from a small lot) — the constant-\\(P\\), independence conditions fail.</p>' +
+        '</div>' +
+
+        '<p class="highlight">“At least / more than” is easiest through the complement: \\( P(X>a)=1-P(X\\le a) \\) using the cumulative function.</p>',
       image: null
     }
   },
@@ -886,25 +900,41 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Continuous Random Variables</h3>' +
-        '<p>A <strong>continuous</strong> random variable can take any value in an interval, so probability is described by a <strong>density function</strong> \\(f(x)\\): the area under the curve between two points is the probability of landing there. The area over all values is 1, and any single point has probability 0.</p>' +
-        '<div class="formula-box">\\[ P(a < X < b) = F(b) - F(a) = \\text{area under } f(x) \\text{ from } a \\text{ to } b \\]</div>' +
+        '<p>A <strong>continuous</strong> random variable can take <em>any</em> value in an interval — a guest’s weight could be 70 kg, 70.4 kg, 70.41 kg, and so on without limit. Because there are infinitely many possible values, the probability of any single exact value is <strong>zero</strong>, and we can only sensibly ask about <em>ranges</em>. This forces a different tool from the discrete world: instead of a list of probabilities we use a smooth curve.</p>' +
 
-        '<h4>The normal distribution</h4>' +
-        '<p>The most important continuous model: bell-shaped, symmetric, with mean = median = mode. Its location is \\(\\mu\\) and its spread \\(\\sigma\\). Any normal variable is converted to the <strong>standard normal</strong> \\(N(0,1)\\) by a Z-score:</p>' +
+        '<h4>From a list to a density curve</h4>' +
+        '<p>A continuous variable is described by a <strong>probability density function</strong> \\(f(x)\\). Two properties define it: \\(f(x)\\ge 0\\) everywhere, and the <strong>total area under the curve is 1</strong>. Probability is <strong>area</strong>: the chance of landing between \\(a\\) and \\(b\\) is the area under \\(f(x)\\) over that span, which the cumulative function \\(F\\) computes:</p>' +
+        '<div class="formula-box">\\[ P(a < X < b) = F(b) - F(a) = \\text{area under } f(x) \\text{ from } a \\text{ to } b \\]</div>' +
+        '<p>Because single points have zero probability, \\(P(X<a)\\) and \\(P(X\\le a)\\) are identical here — a sharp break from discrete variables, where the endpoint matters.</p>' +
+
+        '<h4>The normal distribution — the centrepiece</h4>' +
+        '<p>The <strong>normal</strong> (Gaussian) distribution is the most important continuous model in all of statistics. It is <strong>bell-shaped and symmetric</strong>, so its mean, median and mode coincide; \\(\\mu\\) sets its <em>location</em> (where the peak sits) and \\(\\sigma\\) its <em>spread</em> (how wide the bell is). It matters so much for three reasons: many natural and business quantities are approximately normal; the <strong>Central Limit Theorem</strong> (next topic) makes sample means normal even when the data are not; and it underpins nearly every confidence interval and test in K2.</p>' +
+
+        '<h4>Standardising: the Z-score</h4>' +
+        '<p>There is a different normal curve for every \\((\\mu,\\sigma)\\), so we can’t table them all. The trick is to convert any normal variable to one universal yardstick — the <strong>standard normal</strong> \\(N(0,1)\\), with mean 0 and variance 1 — using the <strong>Z-score</strong>:</p>' +
         '<div class="formula-box">\\[ Z = \\frac{X-\\mu}{\\sigma} \\sim N(0,1) \\]</div>' +
+        '<p>A Z-score answers “<strong>how many standard deviations is this value from the mean?</strong>” \\(Z=2\\) means two SDs above average. That single idea is what lets us compare a test score to a height, or read every normal probability off one standard table.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — a normal probability</h4>' +
-        '<p>\\( X \\sim N(\\mu=80,\\ \\sigma^2=100) \\), so \\( \\sigma = 10 \\). Find \\(P(X>60)\\):</p>' +
+        '<p>\\( X \\sim N(\\mu=80,\\ \\sigma^2=100) \\), so \\( \\sigma = \\sqrt{100} = 10 \\). Find \\(P(X>60)\\):</p>' +
         '<div class="formula-box">\\[ Z = \\frac{60-80}{10} = -2 \\;\\Rightarrow\\; P(X>60) = P(Z>-2) = 1 - P(Z<-2) \\approx 0.977 \\]</div>' +
+        '<p>So about 97.7% of the distribution lies above 60 — consistent with the empirical rule, since 60 is two SDs below the mean.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Using the Z-table</h4>' +
-        '<p>Tables give the LEFT-tail \\(P(Z<z)\\). For a right tail use \\(1-P(Z<z)\\); for a middle band subtract two cumulative values: \\(P(a<X<b)=P(Z<z_b)-P(Z<z_a)\\).</p>' +
+        '<h4>Reading the Z-table</h4>' +
+        '<p>Standard tables give the <strong>left-tail</strong> \\(P(Z<z)\\). For a right tail use \\(1-P(Z<z)\\); for a middle band subtract two cumulative values, \\(P(a<X<b)=P(Z<z_b)-P(Z<z_a)\\). By symmetry \\(P(Z<-z)=1-P(Z<z)\\), so the negative half of the table is just a mirror of the positive half.</p>' +
         '</div>' +
 
-        '<p class="highlight">A Z-score measures how many standard deviations a value sits from the mean — that is why it makes any two normal variables directly comparable.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• Mixing up <strong>variance and standard deviation</strong>: if \\(N(80,100)\\) gives the variance, you must use \\(\\sigma=10\\) in the Z-score, not 100.</p>' +
+        '<p>• Forgetting the table is <strong>left-tail</strong> — a “greater than” question needs the complement.</p>' +
+        '<p>• Treating the normal as bounded: it has an <strong>infinite</strong> theoretical range, even though almost all mass sits within \\(\\pm3\\sigma\\).</p>' +
+        '</div>' +
+
+        '<p class="highlight">Standardising is the universal move: turn \\(X\\) into \\(Z=(X-\\mu)/\\sigma\\), then every normal probability becomes one lookup on the same table.</p>',
       image: null
     }
   },
@@ -1049,25 +1079,38 @@ const statisticsM1 = {
     learn: {
       content:
         '<h3>Sampling Distributions</h3>' +
-        '<p>Take many samples of size \\(n\\) and compute a statistic (say the mean) for each — those values form a <strong>sampling distribution</strong>. Its spread is the <strong>standard error</strong>, which shrinks as the sample grows:</p>' +
-        '<div class="formula-box">\\[ \\mu_{\\bar{x}} = \\mu, \\qquad \\sigma_{\\bar{x}} = \\frac{\\sigma}{\\sqrt{n}} \\]</div>' +
+        '<p>This topic is the hinge between description and inference — the single most important idea in the course. The puzzle it solves: we take <em>one</em> sample and compute one \\(\\bar{x}\\), but a different sample would have given a different \\(\\bar{x}\\). So how far might our \\(\\bar{x}\\) be from the true \\(\\mu\\)? To answer that we imagine the statistic itself as a random variable with its own distribution.</p>' +
 
-        '<h4>The Central Limit Theorem</h4>' +
-        '<p>The key result of inference: for a large enough sample (\\(n>25\\), often \\(n\\ge 30\\)), the sample mean is approximately <strong>normal</strong> — even if the population is not. We then standardize:</p>' +
+        '<h4>What a sampling distribution is</h4>' +
+        '<p>Imagine drawing <em>every</em> possible sample of size \\(n\\), computing the mean of each, and collecting those means. Their distribution is the <strong>sampling distribution of the mean</strong>. It is centred on the true parameter, and its spread — called the <strong>standard error</strong> — measures the typical sample-to-sample variability of \\(\\bar{x}\\):</p>' +
+        '<div class="formula-box">\\[ \\mu_{\\bar{x}} = \\mu, \\qquad \\sigma_{\\bar{x}} = \\frac{\\sigma}{\\sqrt{n}} \\]</div>' +
+        '<p>Two things to read here. First, \\(\\mu_{\\bar{x}}=\\mu\\): the sample mean is <strong>unbiased</strong> — on average it hits the target. Second, the \\(\\sqrt{n}\\) in the denominator means the standard error <strong>shrinks as \\(n\\) grows</strong>, but only with the square root, so quartering the error needs four times the data. That is the precise cost of precision.</p>' +
+
+        '<h4>The Central Limit Theorem (CLT)</h4>' +
+        '<p>The result that makes inference possible: for a <strong>large enough</strong> sample, the sampling distribution of \\(\\bar{x}\\) is approximately <strong>normal</strong> — <em>regardless of the population’s shape</em>. Skewed incomes, lumpy sales, anything: average enough of them and the averages go normal. A common rule of thumb is \\(n>25\\) (often stated \\(n\\ge 30\\)); if the population is already normal, \\(\\bar{x}\\) is normal for <em>any</em> \\(n\\). Once we know \\(\\bar{x}\\) is normal we can standardise it:</p>' +
         '<div class="formula-box">\\[ Z = \\frac{\\bar{x}-\\mu}{\\sigma/\\sqrt{n}} \\]</div>' +
+        '<p>Note the denominator is the standard <em>error</em> \\(\\sigma/\\sqrt{n}\\), not \\(\\sigma\\) — we are standardising a sample mean, not a single observation.</p>' +
 
         '<div class="example-box">' +
         '<h4>Worked example — probability for a sample mean</h4>' +
         '<p>Annual raises are \\(N(\\mu=12.2\\%,\\ \\sigma=3.6\\%)\\). For a sample of \\(n=9\\), find \\(P(\\bar{x}>14.4\\%)\\):</p>' +
         '<div class="formula-box">\\[ Z = \\frac{14.4-12.2}{3.6/\\sqrt{9}} = \\frac{2.2}{1.2} = 1.83 \\;\\Rightarrow\\; P(\\bar{x}>14.4) = 1 - P(Z<1.83) \\approx 0.0336 \\]</div>' +
+        '<p>Only about a 3.4% chance the sample average exceeds 14.4% — the \\(\\sqrt{n}\\) makes the mean far less variable than a single raise would be.</p>' +
         '</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Proportions</h4>' +
-        '<p>The sample proportion \\( \\hat{p}=x/n \\) is also approximately normal (when \\(nP(1-P)>5\\)) with \\( E(\\hat{p})=P \\) and \\( \\sigma_{\\hat{p}}=\\sqrt{\\dfrac{P(1-P)}{n}} \\), standardized by \\( Z=\\dfrac{\\hat{p}-P}{\\sigma_{\\hat{p}}} \\).</p>' +
+        '<h4>Sample proportions work the same way</h4>' +
+        '<p>The sample proportion \\( \\hat{p}=x/n \\) (the fraction of “successes”) is also approximately normal when \\(nP(1-P)>5\\), with \\( E(\\hat{p})=P \\) and standard error \\( \\sigma_{\\hat{p}}=\\sqrt{\\frac{P(1-P)}{n}} \\), standardised by \\( Z=\\frac{\\hat{p}-P}{\\sigma_{\\hat{p}}} \\). When sampling <strong>without replacement</strong> and \\(n\\) exceeds about 5% of \\(N\\), multiply the standard error by the finite-population correction \\(\\sqrt{\\frac{N-n}{N-1}}\\).</p>' +
         '</div>' +
 
-        '<p class="highlight">The standard error \\( \\sigma/\\sqrt{n} \\) is the engine of inference: it is why bigger samples give tighter, more trustworthy estimates — and it sets up confidence intervals and hypothesis tests in K2.</p>',
+        '<div class="warning-box">' +
+        '<h4><i class="fas fa-exclamation-triangle"></i> Common pitfalls</h4>' +
+        '<p>• Using \\(\\sigma\\) instead of the <strong>standard error</strong> \\(\\sigma/\\sqrt{n}\\) when standardising a sample mean — the most common error in K2.</p>' +
+        '<p>• Thinking the CLT changes the <strong>population</strong>: it describes the distribution of the <em>mean</em>, not the raw data.</p>' +
+        '<p>• Confusing standard deviation (spread of individuals) with standard <strong>error</strong> (spread of the sample statistic).</p>' +
+        '</div>' +
+
+        '<p class="highlight">The standard error \\( \\sigma/\\sqrt{n} \\) is the engine of inference: it is why bigger samples give tighter, more trustworthy estimates — and it is exactly what confidence intervals and hypothesis tests in K2 are built on.</p>',
       image: null
     }
   }
