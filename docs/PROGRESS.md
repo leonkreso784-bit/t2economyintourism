@@ -5,6 +5,35 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-14 — ✅ STATISTICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet (lokalno, čeka deploy)
+**Drugi kvantitativni predmet (KaTeX), 2. predmet 1. godine nakon Micro u nizu.** Korisnik izabrao „Statistics, ručno (kao Micro)".
+- **Intake:** materijali `…/1. godina Hospitality Managament/Statistics` (26 datoteka) — **topic deckovi T1–T9** (Newbold/Carlson
+  *Statistics for Business & Economics*), formula-sheet + **midterm-example answer-keyevi** (1./2.). Ekstrakcija `node scripts/pdf-text.js`
+  → `tmp-stats/` (gitignored). **K1/K2 granica AUTORITATIVNA iz službenih midterm-materijala: K1 = T1–T6, K2 = T7–T9** (prep-doc za
+  1. kolokvij pokriva do CLT/sampling distributions; 2. midterm answer-key = CI + hypothesis testing + regression).
+- **K1 — `data/statistics/midterm-1.js` (`statisticsM1`), 6 kat / 61 fc / 60 quiz / 48 fill:** describingDataGraphical (T1: pop/uzorak/
+  parametar/statistika, tipovi podataka & razine mjerenja, grafovi, frekv. distribucija w=(max−min)/k), describingDataNumerical
+  (T2: mean/median/mode, range/IQR/var/SD/CV, Chebyshev, empirijsko pravilo 68-95-99.7), probability (T3: sample space, unija/presjek,
+  uvjetna, nezavisnost, kombinacije), discreteRandomVariables (T4: E(X), binomna μ=nP, Poisson μ=σ²=λ), continuousRandomVariables
+  (T5: PDF/CDF, normalna, Z=(X−μ)/σ, standard normal), samplingDistributions (T6: SE=σ/√n, CLT, p̂). + riješeni primjeri (varijanca, normalna, CLT).
+- **K2 — `data/statistics/midterm-2.js` (`statisticsM2`), 3 kat / 35 fc / 30 quiz / 24 fill:** confidenceIntervals (T7: point/interval,
+  z (σ poznata) & t (σ nepoznata, df=n−1), proporcija, ME, width=2ME), hypothesisTesting (T8: H0/H1, α, Type I/II + power, z/t test,
+  p-value, proporcija), regression (T9: least squares b1/b0, SST=SSR+SSE, R²=SSR/SST, se²=SSE/(n−2), slope t-test df=n−2, F=t²).
+  + riješeni primjeri (CI 95%, right-tailed z test, regresija b1=−0.4/R²=0.576).
+- **FINALNI — `data/statistics/final.js` (`statisticsFinal`)** = `Object.assign({}, statisticsM1, statisticsM2, {examPractice})`,
+  **učitava se ZADNJI** (čita window vars; node `require`). K1 (6) + K2 (3) bez kolizije → **10 kat (9 tema + examPractice) /
+  108 fc / 102 quiz / 80 fill.** `examPractice` = cross-topic luk (describe → probability → distributions → inference → regression)
+  s KaTeX `aligned` master-popisom (mean/s², Z, SE, CI, test-stat, regresija) + roadmap T1–T9.
+- **Catalog:** novi subject `statistics` (year 1, **sem 2 — PRETPOSTAVKA, čeka potvrdu korisnika kao Micro**; `fa-chart-simple`/rose
+  `#f43f5e`), sve 3 lekcije mapirane (scripts midterm-1/2/final, final ZADNJI). **KaTeX currency-safe** (kombinirano `\\(\\)` 540/540 +
+  `\\[\\]` 45/45 balansirano; 0 single-`$`).
+- **Cache:** `CONTENT_VERSION` `20260649 → 20260650` + `catalog.js`/`content-loader.js` `?v=20260650` u index.html. `.gitignore` += `tmp-stats/`.
+- **Provjere:** verify **0/0** (13 predmeta, statistics M1/M2/Final deklarirani+na window) · node struktura **0 grešaka**
+  (final 10 kat/108fc/102quiz/80fill) · **Playwright 68/68** (`subjects=13 problems=0 errors=0`, 0 horizontalnog overflowa).
+- **▶ Dalje:** Macroeconomics (~19 datoteka, kvantitativni, KaTeX spreman); **Math ZADNJA.** [[content-roadmap-sequencing]]
+
+---
+
 ## 2026-06-14 — ✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet ✅ LIVE (deployano `236e303`)
 **Dovršen 2. kolokvij + finalni → Microeconomics je gotov.** Nastavak istog dana nakon K1 (vidi entry niže).
 - **K2 NAPISAN IZ DECKA — `data/microeconomics/midterm-2.js` (`microeconomicsM2`), 7 kategorija / 75 fc / 70 quiz / 56 fill:**

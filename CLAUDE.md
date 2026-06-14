@@ -194,6 +194,15 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   midterm-1/2/final, final ZADNJI). **KaTeX currency-safe** (kombinirano `\\(\\)` 509/509 + `\\[\\]` 71/71 balansirano;
   0 single-`$` u K2/final — delimiter je `$$` ne `$`). Cache `20260649` (batch 20260648→49). verify 0/0, node struktura 0,
   **Playwright 68/68** (`microeconomics ✓ ok`, 0 overflowa). **Dalje: Statistics ili Macro (oba kvant., KaTeX spreman); Math ZADNJA.** [[content-roadmap-sequencing]]
+- **✅ STATISTICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet, KaTeX, lokalno (2026-06-14, čeka deploy):** iz 26
+  datoteka (Newbold *Statistics for Business & Economics*; topic deckovi T1–T9 + answer-keyevi). **K1/K2 granica AUTORITATIVNA iz službenih
+  midterm-materijala: K1 = T1–T6, K2 = T7–T9.** **K1** `data/statistics/midterm-1.js` (`statisticsM1`) — 6 kat / 61fc / 60quiz / 48fill
+  (describing data graphical & numerical, probability, discrete & continuous RV, sampling distributions/CLT). **K2** `midterm-2.js`
+  (`statisticsM2`) — 3 kat / 35fc / 30quiz / 24fill (confidence intervals, hypothesis testing, regression). **Finalni** `final.js`
+  (`statisticsFinal` = `Object.assign(M1,M2,{examPractice})`, ZADNJI) → **10 kat / 108fc / 102quiz / 80fill**; examPractice = cross-topic
+  luk + KaTeX `aligned` master-popis. Catalog: subject `statistics` (year 1, **sem 2 — PRETPOSTAVKA, čeka potvrdu kao Micro**;
+  `fa-chart-simple`/rose `#f43f5e`), sve 3 lekcije mapirane. KaTeX currency-safe (`\\(\\)` 540/540 + `\\[\\]` 45/45). Cache `20260650`.
+  verify 0/0, node 0, **Playwright 68/68** (subjects=13). **Dalje: Macroeconomics (~19); Math ZADNJA.** [[content-roadmap-sequencing]]
 - **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
   `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
   pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
@@ -206,7 +215,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
 - **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
-  (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god: Math/Macro/Mgmt/SIT imaju; Stat/Acad-writing/Intro-hosp/Traffic PRAZNO.
+  (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god (provjereno na disku 2026-06-14): **Statistics 26 · Macroeconomics 19 · Math 9** datoteka — IMAJU (uz Micro/Mgmt/SIT/BI gotove); **English 2** (tanko); **Academic writing / Introduction to hospitality / Traffic in tourism = 0 (PRAZNO).**
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).

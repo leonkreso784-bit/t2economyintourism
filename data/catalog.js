@@ -332,6 +332,30 @@ const SOKRAT_CATALOG = {
         scripts: ['data/microeconomics/midterm-1.js', 'data/microeconomics/midterm-2.js', 'data/microeconomics/final.js'],
         resolve: { 'first-midterm': 'microeconomicsM1', 'second-midterm': 'microeconomicsM2', 'final': 'microeconomicsFinal' }
       }
+    },
+    {
+      id: 'statistics',
+      programId: 'hospitality-management',
+      year: 1, semester: 2,
+      name: 'Statistics',
+      shortName: 'STAT',
+      icon: 'fa-chart-simple',
+      color: '#f43f5e',
+      iconGradient: ['#f43f5e', '#fb7185'],
+      description: 'Statistics for Business & Economics (Newbold): describing data (graphical & numerical), probability, discrete & continuous random variables, sampling distributions, confidence intervals, hypothesis testing and regression — a quantitative subject (KaTeX formulas & worked problems)',
+      storageKey: 'statistics-progress',
+      features: { blindMap: false },
+      // K1 (T1–T6) + K2 (T7–T9) + final (hybrid). KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Describing data (graphical & numerical), probability methods, discrete & continuous random variables, sampling distributions (T1–T6)' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Confidence interval estimation, hypothesis testing (single population) and regression analysis (T7–T9)' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // final.js MUST load LAST (Object.assign of statisticsM1 + statisticsM2 + examPractice).
+        scripts: ['data/statistics/midterm-1.js', 'data/statistics/midterm-2.js', 'data/statistics/final.js'],
+        resolve: { 'first-midterm': 'statisticsM1', 'second-midterm': 'statisticsM2', 'final': 'statisticsFinal' }
+      }
     }
   ]
 };

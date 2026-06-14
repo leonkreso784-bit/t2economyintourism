@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Statistics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet (KaTeX):** novi subject `statistics`
+  (year 1, sem 2). `data/statistics/midterm-1.js` (`statisticsM1`, **6 kat / 61 fc / 60 quiz / 48 fill** — T1–T6: describing data
+  graphical & numerical, probability, discrete & continuous random variables, sampling distributions) + `midterm-2.js` (`statisticsM2`,
+  **3 kat / 35 fc / 30 quiz / 24 fill** — T7–T9: confidence intervals, hypothesis testing, regression) + `final.js` (`statisticsFinal`
+  = `Object.assign(M1,M2,{examPractice})`, ZADNJI → **10 kat / 108 fc / 102 quiz / 80 fill**). K1/K2 granica iz službenih
+  midterm-materijala. KaTeX currency-safe. Cache `?v=20260650`. verify 0/0, Playwright 68/68 (subjects=13).
 - **Microeconomics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet (KaTeX):** dodani
   `data/microeconomics/midterm-2.js` (`microeconomicsM2`, **7 kat / 75 fc / 70 quiz / 56 fill** — Ch 8,9,10,12,13,14,18:
   profit max & competitive supply, competitive markets, monopoly & monopsony, monopolistic competition & oligopoly, game
