@@ -133,8 +133,11 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
 
 #### Faza B2 — sadržaj po temi (1 tema = 1 cigla; numeric/choice/ratio; vezano na `lesson` + `chapter`-stil tag)
 > Obrazac: par konceptualnih (`choice`) + izračunskih (`numeric`/`ratio`), bar 1 **randomizirana** po temi. Odgovori cijeli/zaokruživi.
-- [ ] **B2.1 (T1–T2 deskriptiva, `first-midterm`):** frekv. distribucija (k, w), mean/median/mode, range/IQR/var/SD/CV,
-      Chebyshev/empirijsko pravilo. Randomizirani: SD malog niza, CV, Chebyshev granica.
+- [x] **B2.1 (T1–T2 deskriptiva, `first-midterm`)** ✅ 8 vježbi u `data/statistics/exercises.js`: `choice` (10 koncepata: tipovi
+      podataka/skale/grafovi/empirijsko-vs-Chebyshev/CV) + statički `numeric` (mean/median/mode/range; var/SD/CV iz learn-primjera)
+      + `ratio` (IQR & range iz 5-broj sažetka) + **4 RANDOMIZIRANE** (SD malog niza, CV iz x̄&s, Chebyshev (1−1/k²), class-width ⌈range/k⌉).
+      Node-sanity 98/98 (točni 2dp odgovori zeleni kroz 5 seedova, krivi crveni; parseAmount B0.5 nosi decimale). verify 0/0,
+      test:unit 0, smoke 13/0, responsive 8/8. Cache `20260656`.
 - [ ] **B2.2 (T3 probability, `first-midterm`):** addition rule, uvjetna, nezavisnost, kombinacije \\(\\binom{n}{k}\\). Choice + numeric.
 - [ ] **B2.3 (T4 discrete RV, `first-midterm`):** E(X), binomna (μ=nP, σ²=nP(1−P), P(x)), Poisson (P(x), μ=σ²=λ). Numeric randomiziran.
 - [ ] **B2.4 (T5 continuous/normal, `first-midterm`):** **z-score** (mathportal!) + normalna vjerojatnost preko z-tablice
