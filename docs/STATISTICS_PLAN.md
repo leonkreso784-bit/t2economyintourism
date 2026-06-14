@@ -154,7 +154,7 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
 
 ## 5. Pravila procesa (na SVAKU ciglu) — isto kao EXERCISES_ENGINE §5
 1. **Additivno + iza flag-a:** dok nije gotovo, app radi identično za sve ostale predmete (Track B iza `features.exercises`).
-2. **Engine se NE dira za sadržaj.** Statistički sadržaj → `data/statistics/exercises.js`; matematika → `js/stat-kernel.js` (aditivno).
+2. **Engine se NE dira za sadržaj** (0 novih datoteka u `js/`). Statistički sadržaj → `data/statistics/exercises.js`; matematika → `data/statistics/stat-lib.js` (content-layer, lazy preko `content.scripts`).
 3. **Cache bump:** svaka izmjena `js/*`/`css/*`/`data/*` → `?v=` u index.html (+ `@import` u styles.css za CSS) + `CONTENT_VERSION`.
 4. **Provjere prije commita:** `npm run verify` (0/0) + `npm run test:unit` (ako dira core/kernel) + `npm run test:responsive`.
 5. **Commit lokalno OK; deploy SAMO uz izričitu potvrdu.**
