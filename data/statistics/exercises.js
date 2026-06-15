@@ -83,12 +83,12 @@ const statisticsExercises = {
       type: 'numeric',
       title: 'Variance, Standard Deviation & CV',
       prompt: 'For the sample 5, 9, 10, 2, 7, 9, 14 (mean = 8), compute the sample variance, the sample standard '
-        + 'deviation and the coefficient of variation (%). Round to 2 decimals.',
+        + 'deviation and the coefficient of variation (%). Round to 1 decimal place.',
       difficulty: 2,
       fields: [
-        { key: 'var', label: 'Sample variance s²', answer: 14.67, tol: 0.05, unit: '', hint: 'Σ(x − x̄)² ÷ (n − 1) = 88 ÷ 6' },
-        { key: 'sd', label: 'Sample standard deviation s', answer: 3.83, tol: 0.02, unit: '', hint: '√(s²) = √14.67' },
-        { key: 'cv', label: 'Coefficient of variation', answer: 47.87, tol: 0.1, unit: '%', hint: '(s ÷ x̄) × 100 = (3.83 ÷ 8) × 100' }
+        { key: 'var', label: 'Sample variance s²', answer: 14.6667, tol: 0.05, unit: '', hint: 'Σ(x − x̄)² ÷ (n − 1) = 88 ÷ 6' },
+        { key: 'sd', label: 'Sample standard deviation s', answer: 3.8297, tol: 0.05, unit: '', hint: '√(s²) = √14.67' },
+        { key: 'cv', label: 'Coefficient of variation', answer: 47.871, tol: 0.05, unit: '%', hint: '(s ÷ x̄) × 100 = (3.83 ÷ 8) × 100' }
       ],
       solution: [
         'Deviations from 8: −3, 1, 2, −6, −1, 1, 6 → squared: 9, 1, 4, 36, 1, 1, 36; sum = 88.',
@@ -148,11 +148,11 @@ const statisticsExercises = {
         const r2 = (x) => Math.round(x * 100) / 100;
         return {
           prompt: 'For the sample ' + xs.join(', ') + ', compute the mean, the sample variance s² and the sample '
-            + 'standard deviation s (divide by n − 1). Round to 2 decimals.',
+            + 'standard deviation s (divide by n − 1). Round to 1 decimal place.',
           fields: [
-            { key: 'mean', label: 'Mean x̄', answer: mean, tol: 0.01, unit: '', hint: 'Sum ÷ 5' },
-            { key: 'var', label: 'Sample variance s²', answer: variance, tol: 0.1, unit: '', hint: 'Σ(x − x̄)² ÷ (n − 1) = Σ(x − x̄)² ÷ 4' },
-            { key: 'sd', label: 'Sample standard deviation s', answer: sd, tol: 0.02, unit: '', hint: '√(s²)' }
+            { key: 'mean', label: 'Mean x̄', answer: mean, tol: 0.05, unit: '', hint: 'Sum ÷ 5' },
+            { key: 'var', label: 'Sample variance s²', answer: variance, tol: 0.05, unit: '', hint: 'Σ(x − x̄)² ÷ (n − 1) = Σ(x − x̄)² ÷ 4' },
+            { key: 'sd', label: 'Sample standard deviation s', answer: sd, tol: 0.05, unit: '', hint: '√(s²)' }
           ],
           solution: [
             'Mean = (' + xs.join(' + ') + ') ÷ 5 = ' + r2(mean) + '.',
@@ -182,7 +182,7 @@ const statisticsExercises = {
         const r2 = (x) => Math.round(x * 100) / 100;
         return {
           prompt: 'A data set has mean ' + p.mean + ' and standard deviation ' + p.sd + '. Compute the coefficient '
-            + 'of variation (%). Round to 2 decimals.',
+            + 'of variation (%). Round to 1 decimal place.',
           fields: [
             { key: 'cv', label: 'Coefficient of variation', answer: cv, tol: 0.05, unit: '%', hint: '(s ÷ x̄) × 100' }
           ],
@@ -207,7 +207,7 @@ const statisticsExercises = {
         const r2 = (x) => Math.round(x * 100) / 100;
         return {
           prompt: 'By Chebyshev’s theorem, at least what percentage of ANY data set lies within k = ' + p.k
-            + ' standard deviations of the mean? Round to 2 decimals.',
+            + ' standard deviations of the mean? Round to 1 decimal place.',
           fields: [
             { key: 'pct', label: 'Minimum percentage within k SD', answer: pct, tol: 0.05, unit: '%', hint: '(1 − 1 ÷ k²) × 100' }
           ],
