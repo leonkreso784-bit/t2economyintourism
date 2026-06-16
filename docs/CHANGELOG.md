@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Statistics — Learn teorija obogaćena (Track A) + interaktivne EXERCISES (Track B, T1–T9):** na postojećem reusable enginu
+  (`js/exercises-core.js`+`js/exercises.js`, NEDIRNUT). **Track A:** svih 10 Learn sekcija dobile pravu teoriju (def/intuicija/
+  interpretacija/zamke + warning-boxovi), KaTeX currency-safe. **Track B:** novi content pack `data/statistics/exercises.js`
+  (`window.statisticsExercises`) + content-layer matematika `data/statistics/stat-lib.js` (`window.StatLib`: normalCdf/normalSf/
+  normalBetween, z/t kritične tablice, combinations) — oba lazy preko `content.scripts`, **0 novih datoteka u `js/`**. **56 vježbi:**
+  35 first-midterm (T1 grafovi · T2 deskriptiva · T3 vjerojatnost · T4 diskretne RV · T5 normalna · T6 sampling) + 21 second-midterm
+  (T7 CI · T8 hipoteze · T9 regresija). Tipovi: choice (TF/MC) / numeric / ratio, s randomizacijom (`params`+`generate`). Tol-politika:
+  vjerojatnosti 2dp/0.01, deskriptivni brojevi 1–2dp/0.05, cijeli 0. Svaka cigla verificirana node brute-forceom (neovisni preračun +
+  grade-correct + diskriminacija kroz cijeli prostor parametara) + z/t-tablica cross-check. catalog `features.exercises:true`. Final
+  lekcija → Exercises prazan (sve tagano na kolokvije; dosljedno sem-2 predmetima). Cache `?v=20260664`. verify 0/0, test:unit 33/33
+  (+ stat-parse + stat-lib), Playwright 68/68.
 - **Statistics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet (KaTeX):** novi subject `statistics`
   (year 1, sem 2). `data/statistics/midterm-1.js` (`statisticsM1`, **6 kat / 61 fc / 60 quiz / 48 fill** — T1–T6: describing data
   graphical & numerical, probability, discrete & continuous random variables, sampling distributions) + `midterm-2.js` (`statisticsM2`,

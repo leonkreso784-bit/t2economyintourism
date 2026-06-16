@@ -160,15 +160,19 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       x̄ sampling, proporcija sampling). σ_x̄=σ/√n, σ_p̂=√(P(1−P)/n) inline; repovi preko `SL.normalCdf`/`normalSf`. Brojevi biranI da je
       SE čist (n perfektni kvadrat; P∈{0.2,0.5}) → z egzaktan, bez dvosmislenosti. Objektni `choices` (`pair`) potvrđeno radi s pickParams.
       Verify: z-tablica cross-check + grade-correct + diskriminacija (128 kombinacija, 108 clean-SE/clean-z asserta) 0 problema. Cache `20260661`.
-- [ ] **B2.6 (T7 confidence intervals, `second-midterm`):** CI za μ (z & t), CI za proporciju, ME, width=2·ME. `ratio`/`numeric` randomiziran.
-- [ ] **B2.7 (T8 hypothesis testing, `second-midterm`):** test-statistika (z/t), odluka (kritična vrijednost / p-value),
-      Type I/II (`choice`), test proporcije. Numeric + choice.
-- [ ] **B2.8 (T9 regression, `second-midterm`):** slope b1, intercept b0, predikcija ŷ, SST/SSR/SSE, R². `numeric`/`ratio` randomiziran.
+- [x] **B2.6 (T7 confidence intervals, `second-midterm`)** ✅ 7 vježbi (`1884dea`): CI za μ (σ poznata z & σ nepoznata t), CI za
+      proporciju, ME, width=2·ME. Faktor (z/t) naveden u promptu (nema z/t-tablice u UI). `SL.zCritical`/`tCritical`. **Bug ulovljen:**
+      α/2 = (1−conf/100)/2 zanosi na 0.0499… → promašaj t-tablica ključa → mapa conf→area. Verify 111 kombinacija.
+- [x] **B2.7 (T8 hypothesis testing, `second-midterm`)** ✅ 7 vježbi (`8f86dea`): koncepti + odluke (`choice` reject/fail) + z-test
+      srednje (dvostrani), t-test srednje, z-test proporcije (desni). p-value preko `SL.normalSf` (dvostrani = 2·P(Z>|z|)). Verify 102 kombinacije.
+- [x] **B2.8 (T9 regression, `second-midterm`)** ✅ 7 vježbi (`cc792f8`): least-squares b₁/b₀, predikcija ŷ, SST/SSR/SSE, R², s²ₑ.
+      Sve elementarno inline (stat-lib nije trebao). Randomizirani nagib preko ručno-provjerenih čistih data-setova. Verify neovisnom LSQ formulom, 58 kombinacija.
 
 #### Faza B3 — finiš
-- [ ] **B3.1** Napredak/Progress kartica radi za statistiku (već data-driven preko `features.exercises` — samo provjeriti).
-- [ ] **B3.2** Završna provjera (verify + node + Playwright + ciljani render po tipu), docovi (PROGRESS/CHANGELOG/EXERCISES_ENGINE §6 ref),
-      memory. Odluka korisnika: **deploy** (zajedno sa study + Track A).
+- [x] **B3.1** ✅ Progress kartica data-driven preko `features.exercises:true` (radi za statistiku kao za Accounting). 56 vježbi:
+      35 first-midterm (T1–T6) + 21 second-midterm (T7–T9). Final lekcija → Exercises prazan (sve tagano na kolokvije; dosljedno sem-2 predmetima).
+- [x] **B3.2** ✅ Završna provjera (verify 0/0, test:unit 33/33, Playwright 68/68, node brute-force po svakoj cigli), docovi (STATISTICS_PLAN/
+      PROGRESS/CHANGELOG/memory) ažurirani. **Deploy uz izričitu potvrdu korisnika ("kada zavrsis sa svime deployaj", 2026-06-16).**
 
 ### (KASNIJE, opcionalno) — interaktivni kalkulator-widget
 - [ ] **C1** „Stat calculator" inline (z-score / CI / test-stat) à la mathportal — **NOVI widget = engine dodatak**, radi se

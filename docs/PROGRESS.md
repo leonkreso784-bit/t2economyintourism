@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-16 — ✅ STATISTICS nadogradnja: Learn teorija (Track A) + interaktivne EXERCISES (Track B, T1–T9) — DEPLOYANO
+**Cigla-po-cigla po `docs/STATISTICS_PLAN.md`.** Korisnik (2026-06-15): Learn je bio preformulni („samo formule nabacane"), Statistika
+ima velik teorijski dio → **(A)** obogatiti teoriju + **(B)** dodati interaktivne vježbe kao Accounting. Odluka: dovršiti cijeli Track B
+pa **jedan čist deploy** (Exercises tab na K2 ne smije biti prazan). Korisnik morao otići → „kada zavrsis sa svime deployaj".
+- **Arhitektura (zaključana):** generički engine **NEDIRNUT** (`js/exercises-core.js`+`js/exercises.js`+`css/exercises.css`), **0 novih
+  datoteka u `js/`**. Statistika 100% u `data/`: `data/statistics/exercises.js` (content pack) + `data/statistics/stat-lib.js`
+  (content-layer matematika, `window.StatLib`+`module.exports`, lazy preko `content.scripts`, učitan PRIJE exercises.js). SL-most na
+  vrhu packa radi u pregledniku i nodeu.
+- **Track A (A1–A3, `37edca1`/`5022c6d`/`3f0725a`):** svih 10 Learn sekcija (K1 ×6 + K2 ×3 + finalni examPractice) dobile pravu teoriju
+  (def/intuicija/interpretacija/zamke + warning-boxovi). KaTeX currency-safe.
+- **Track B (B0→B3):** B0 žica (`5101dcb`) · B0.5 de-risk parsiranja `parseAmount` za leading-zero decimale (`cfc04a6`, +stat-parse.test) ·
+  B1 `stat-lib.js`+test (`bc1b0df`, 33 testa) · **B2.1** deskriptiva T1–T2 (`ad39a35`+tol-fix `3d15d61`) · **B2.2** vjerojatnost T3 (`82c06d5`) ·
+  **B2.3** diskretne RV T4 (`b824bba`) · **B2.4** normalna T5 (`c8806b8`) · **B2.5** sampling T6 (`0e17b1c`) · **B2.6** CI T7 (`1884dea`) ·
+  **B2.7** hipoteze T8 (`8f86dea`) · **B2.8** regresija T9 (`cc792f8`).
+- **Rezultat: 56 vježbi** — 35 first-midterm (T1–T6) + 21 second-midterm (T7–T9). Tipovi choice/numeric/ratio s randomizacijom. Tol-politika:
+  vjerojatnosti 2dp/0.01, deskriptivni 1–2dp/0.05, cijeli 0. **Final lekcija → Exercises prazan** (sve tagano na kolokvije; dosljedno sem-2).
+- **Verifikacija (obrazac na svakoj cigli):** node skripta koja (a) neovisno preračuna, (b) hrani grader student-zaokruženim točnim
+  odgovorom kroz CIJELI prostor parametara, (c) provjeri da promašaj pada. Ukupno >700 kombinacija + z/t-tablica cross-check.
+  **Bug ulovljen u B2.6:** α/2=(1−conf/100)/2 zanosio na 0.0499… → promašaj t-tablica ključa → eksplicitna mapa conf→area.
+- **Provjere:** verify 0/0, test:unit 33/33 (+ stat-parse + stat-lib), Playwright 68/68. Cache `20260658→20260664`.
+- **DEPLOY 2026-06-16:** sve gore (study gradivo iz prethodne sesije + Track A + Track B) gurnuto na `origin/main` uz izričito odobrenje.
+
 ## 2026-06-14 — ✅ STATISTICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet (lokalno, čeka deploy)
 **Drugi kvantitativni predmet (KaTeX), 2. predmet 1. godine nakon Micro u nizu.** Korisnik izabrao „Statistics, ručno (kao Micro)".
 - **Intake:** materijali `…/1. godina Hospitality Managament/Statistics` (26 datoteka) — **topic deckovi T1–T9** (Newbold/Carlson
