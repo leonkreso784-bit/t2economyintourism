@@ -417,6 +417,222 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for a fresh combination. C(n, k) = n! ÷ [k!(n − k)!] counts unordered selections.']
+    },
+
+    // ============================================================================
+    // B2.3 — T4 DISCRETE RANDOM VARIABLES (first-midterm)
+    //   Expected value & variance of a distribution; binomial P(x), μ=nP, σ²=nP(1−P);
+    //   Poisson P(x)=e^(−λ)λ^x/x!, μ=σ²=λ. Probabilities → 2 dp (tol 0.01); E(X)/μ/σ²/σ
+    //   are descriptive numbers → 1 dp (tol 0.05). Binomial reuses SL.combinations;
+    //   Poisson uses Math.exp + a tiny inline factorial (elementary → inline). chapter 4.
+    // ============================================================================
+
+    // --- T4 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't4-concepts',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'choice',
+      title: 'Discrete Random Variables — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'A discrete random variable can take only a countable number of values.', kind: 'tf', answer: true },
+        { q: 'For a discrete probability distribution, the probabilities P(x) must sum to 1.', kind: 'tf', answer: true },
+        { q: 'The expected value E(X) is always one of the possible values of X.', kind: 'tf', answer: false },
+        { q: 'In a binomial experiment, the success probability P stays constant across all trials.', kind: 'tf', answer: true },
+        { q: 'The binomial distribution requires the trials to be dependent.', kind: 'tf', answer: false },
+        { q: 'For the Poisson distribution, the mean and the variance are equal.', kind: 'tf', answer: true },
+        { q: 'The variance of a binomial distribution is nP.', kind: 'tf', answer: false },
+        { q: 'The mean of a binomial distribution is:', kind: 'mc', options: ['nP(1 − P)', 'nP', 'λ', 'P / n'], answer: 1 },
+        { q: 'The number of arrivals at a hotel front desk per hour is best modeled by the:', kind: 'mc', options: ['Binomial distribution', 'Poisson distribution', 'Normal distribution', 'Uniform distribution'], answer: 1 },
+        { q: 'The expected value of X is computed as:', kind: 'mc', options: ['Σ x', 'Σ P(x)', 'Σ x·P(x)', '√λ'], answer: 2 }
+      ],
+      solution: [
+        'E(X) is a probability-weighted average, so it need NOT equal any single possible value (e.g. average 1.7 children).',
+        'Binomial: fixed n, two outcomes, CONSTANT P, INDEPENDENT trials; its variance is nP(1 − P), not nP.',
+        'Poisson models counts of events in a fixed interval and has μ = σ² = λ.'
+      ]
+    },
+
+    // --- Expected value, variance & SD from a distribution table (numeric) ----
+    {
+      id: 't4-expected-1',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Expected Value, Variance & SD',
+      prompt: 'A hotel records the number of suites sold per day, X, with the distribution '
+        + 'P(0) = 0.10, P(1) = 0.30, P(2) = 0.40, P(3) = 0.20. Compute E(X), the variance σ² and the standard '
+        + 'deviation σ. Round to 1 decimal place.',
+      difficulty: 2,
+      fields: [
+        { key: 'ex', label: 'Expected value E(X)', answer: 1.7, tol: 0.05, unit: '', hint: 'Σ x·P(x) = 0(0.10) + 1(0.30) + 2(0.40) + 3(0.20)' },
+        { key: 'var', label: 'Variance σ²', answer: 0.81, tol: 0.05, unit: '', hint: 'Σ (x − μ)²·P(x), with μ = 1.7' },
+        { key: 'sd', label: 'Standard deviation σ', answer: 0.9, tol: 0.05, unit: '', hint: '√(σ²)' }
+      ],
+      solution: [
+        'E(X) = 0(0.10) + 1(0.30) + 2(0.40) + 3(0.20) = 0 + 0.30 + 0.80 + 0.60 = 1.7.',
+        'σ² = (0−1.7)²(0.10) + (1−1.7)²(0.30) + (2−1.7)²(0.40) + (3−1.7)²(0.20) = 0.289 + 0.147 + 0.036 + 0.338 = 0.81.',
+        'σ = √0.81 = 0.9.'
+      ]
+    },
+
+    // --- Binomial: P(x), mean, variance (numeric, fixed) ----------------------
+    {
+      id: 't4-binomial-1',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Binomial Distribution',
+      prompt: 'Each guest cancels with probability P = 0.30, independently. For n = 6 guests, let X be the number of '
+        + 'cancellations. Compute P(X = 2) (2 decimals), the mean μ and the variance σ² (1 decimal).',
+      difficulty: 2,
+      fields: [
+        { key: 'p2', label: 'P(X = 2)', answer: 0.324135, tol: 0.01, unit: '', hint: 'C(6,2)·0.30²·0.70⁴ = 15 · 0.09 · 0.2401' },
+        { key: 'mean', label: 'Mean μ', answer: 1.8, tol: 0.05, unit: '', hint: 'μ = nP = 6 × 0.30' },
+        { key: 'var', label: 'Variance σ²', answer: 1.26, tol: 0.05, unit: '', hint: 'σ² = nP(1 − P) = 6 × 0.30 × 0.70' }
+      ],
+      solution: [
+        'P(X = 2) = C(6, 2)·0.30²·0.70⁴ = 15 × 0.09 × 0.2401 = 0.3241 ≈ 0.32.',
+        'μ = nP = 6 × 0.30 = 1.8.',
+        'σ² = nP(1 − P) = 6 × 0.30 × 0.70 = 1.26 ≈ 1.3.'
+      ]
+    },
+
+    // --- Poisson: P(x) and SD (numeric, fixed) --------------------------------
+    {
+      id: 't4-poisson-1',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Poisson Distribution',
+      prompt: 'Calls arrive at a reception desk at an average rate of λ = 2 per minute (Poisson). Compute P(X = 0) and '
+        + 'P(X = 1) as decimals (2 places), and the standard deviation σ (1 decimal). Use e ≈ 2.71828.',
+      difficulty: 2,
+      fields: [
+        { key: 'p0', label: 'P(X = 0)', answer: Math.exp(-2), tol: 0.01, unit: '', hint: 'e^(−2)·2⁰ ÷ 0! = e^(−2)' },
+        { key: 'p1', label: 'P(X = 1)', answer: 2 * Math.exp(-2), tol: 0.01, unit: '', hint: 'e^(−2)·2¹ ÷ 1! = 2·e^(−2)' },
+        { key: 'sd', label: 'Standard deviation σ', answer: Math.sqrt(2), tol: 0.05, unit: '', hint: 'σ = √λ = √2' }
+      ],
+      solution: [
+        'P(X = 0) = e^(−2)·2⁰ ÷ 0! = e^(−2) = 0.1353 ≈ 0.14.',
+        'P(X = 1) = e^(−2)·2¹ ÷ 1! = 2 × 0.1353 = 0.2707 ≈ 0.27.',
+        'For Poisson, σ² = λ = 2, so σ = √2 = 1.41 ≈ 1.4.'
+      ]
+    },
+
+    // --- RANDOMIZED: expected value & variance of a 3-value distribution ------
+    {
+      id: 't4-expected-random',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Expected Value — Drill',
+      prompt: 'Compute the expected value, variance and standard deviation of the distribution below.',
+      difficulty: 2,
+      params: {
+        a: { choices: [0, 1, 2] },
+        b: { choices: [3, 4, 5] },
+        c: { choices: [6, 7, 8] }
+      },
+      generate(p) {
+        const xs = [p.a, p.b, p.c];
+        const ps = [0.2, 0.5, 0.3];
+        const mean = xs.reduce((s, x, i) => s + x * ps[i], 0);
+        const variance = xs.reduce((s, x, i) => s + (x - mean) * (x - mean) * ps[i], 0);
+        const sd = Math.sqrt(variance);
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'A discrete random variable X has P(' + p.a + ') = 0.2, P(' + p.b + ') = 0.5, P(' + p.c + ') = 0.3. '
+            + 'Compute E(X), the variance σ² and the standard deviation σ. Round to 1 decimal place.',
+          fields: [
+            { key: 'ex', label: 'Expected value E(X)', answer: mean, tol: 0.05, unit: '', hint: 'Σ x·P(x)' },
+            { key: 'var', label: 'Variance σ²', answer: variance, tol: 0.05, unit: '', hint: 'Σ (x − μ)²·P(x)' },
+            { key: 'sd', label: 'Standard deviation σ', answer: sd, tol: 0.05, unit: '', hint: '√(σ²)' }
+          ],
+          solution: [
+            'E(X) = ' + p.a + '(0.2) + ' + p.b + '(0.5) + ' + p.c + '(0.3) = ' + r2(mean) + '.',
+            'σ² = Σ (x − μ)²·P(x) = ' + r2(variance) + ';   σ = √' + r2(variance) + ' = ' + r2(sd) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for a fresh distribution. E(X) = Σ x·P(x); σ² = Σ (x − μ)²·P(x); σ = √(σ²).']
+    },
+
+    // --- RANDOMIZED: binomial P(x), mean, variance ----------------------------
+    {
+      id: 't4-binomial-random',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Binomial Distribution — Drill',
+      prompt: 'Compute a binomial probability together with the mean and variance.',
+      difficulty: 3,
+      params: {
+        n: { choices: [5, 6, 7, 8] },
+        Pp: { choices: [20, 30, 40, 50] }, // success probability in % (kept integer for clean prompts)
+        x: { choices: [1, 2, 3] }
+      },
+      generate(p) {
+        const P = p.Pp / 100;
+        const n = p.n, x = p.x;
+        const cnx = SL ? SL.combinations(n, x) : 0;
+        const prob = cnx * Math.pow(P, x) * Math.pow(1 - P, n - x);
+        const mean = n * P;
+        const variance = n * P * (1 - P);
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'In a binomial experiment with n = ' + n + ' trials and success probability P = ' + P.toFixed(2)
+            + ', compute P(X = ' + x + ') (2 decimals), the mean μ and the variance σ² (1 decimal).',
+          fields: [
+            { key: 'px', label: 'P(X = ' + x + ')', answer: prob, tol: 0.01, unit: '', hint: 'C(' + n + ',' + x + ')·P^' + x + '·(1−P)^' + (n - x) },
+            { key: 'mean', label: 'Mean μ', answer: mean, tol: 0.05, unit: '', hint: 'μ = nP' },
+            { key: 'var', label: 'Variance σ²', answer: variance, tol: 0.05, unit: '', hint: 'σ² = nP(1 − P)' }
+          ],
+          solution: [
+            'P(X = ' + x + ') = C(' + n + ', ' + x + ')·' + P.toFixed(2) + '^' + x + '·' + (1 - P).toFixed(2) + '^' + (n - x) + ' = ' + cnx + ' × ' + r2(Math.pow(P, x)) + ' × ' + r2(Math.pow(1 - P, n - x)) + ' = ' + r2(prob) + '.',
+            'μ = nP = ' + n + ' × ' + P.toFixed(2) + ' = ' + r2(mean) + ';   σ² = nP(1 − P) = ' + r2(variance) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. P(x) = C(n, x)·Pˣ·(1 − P)ⁿ⁻ˣ;   μ = nP;   σ² = nP(1 − P).']
+    },
+
+    // --- RANDOMIZED: Poisson P(x) and SD --------------------------------------
+    {
+      id: 't4-poisson-random',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Poisson Distribution — Drill',
+      prompt: 'Compute a Poisson probability and the standard deviation.',
+      difficulty: 3,
+      params: {
+        lam: { choices: [1, 2, 3, 4] },
+        x: { choices: [0, 1, 2] }
+      },
+      generate(p) {
+        const lam = p.lam, x = p.x;
+        let fact = 1;
+        for (let i = 2; i <= x; i++) fact *= i; // x ≤ 2 → 0!=1!=1, 2!=2
+        const prob = Math.exp(-lam) * Math.pow(lam, x) / fact;
+        const sd = Math.sqrt(lam);
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'Events occur at an average rate of λ = ' + lam + ' (Poisson). Compute P(X = ' + x + ') as a decimal '
+            + '(2 places) and the standard deviation σ (1 decimal). Use e ≈ 2.71828.',
+          fields: [
+            { key: 'px', label: 'P(X = ' + x + ')', answer: prob, tol: 0.01, unit: '', hint: 'e^(−λ)·λ^' + x + ' ÷ ' + x + '!' },
+            { key: 'sd', label: 'Standard deviation σ', answer: sd, tol: 0.05, unit: '', hint: 'σ = √λ' }
+          ],
+          solution: [
+            'P(X = ' + x + ') = e^(−' + lam + ')·' + lam + '^' + x + ' ÷ ' + x + '! = ' + r2(prob) + '.',
+            'σ = √λ = √' + lam + ' = ' + r2(sd) + ' (Poisson: μ = σ² = λ).'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. P(x) = e^(−λ)·λˣ ÷ x!;   for Poisson μ = σ² = λ, so σ = √λ.']
     }
   ]
 };
