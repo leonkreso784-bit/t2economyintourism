@@ -150,8 +150,11 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       binomna P(X=2)/μ/σ², Poisson P(0)/P(1)/σ + 3 randomizirana (expected value, binomna P(x)/μ/σ², Poisson P(x)/σ). Binomna
       `SL.combinations`; Poisson `Math.exp`+inline faktorijel (elementarno inline, engine nedirnut). Verify: neovisni preračun +
       brute-force grade-correct + diskriminacija (87 kombinacija) 0 problema. Cache `20260659`.
-- [ ] **B2.4 (T5 continuous/normal, `first-midterm`):** **z-score** (mathportal!) + normalna vjerojatnost preko z-tablice
-      (`normalCdf`). Numeric randomiziran (x,μ,σ → z; P(Z<z)). Cross-check s mathportal z-score kalkulatorom.
+- [x] **B2.4 (T5 continuous/normal, `first-midterm`)** ✅ 7 vježbi (`c8806b8`): `choice` (koncepti: P(point)=0, area, total=1, μ=med=mode,
+      N(0,1), negativan z = ispod, empirical rule) + fiksni z-score/repovi, P(a<X<b), empirical-rule granice + 3 randomizirana
+      (standardize+repovi, between, inverz „nađi x"). Normalne vjerojatnosti preko `SL.normalCdf`/`normalSf`/`normalBetween`; inverz
+      preko `SL.zUpper` (sve već u stat-lib, engine nedirnut). z-vrijednosti čiste (±0.5/1/1.5/2) za z-tablicu. Verify: z-tablica
+      cross-check + brute-force grade-correct + diskriminacija (180 kombinacija) 0 problema. Cache `20260660`.
 - [ ] **B2.5 (T6 sampling distributions, `first-midterm`):** standard error σ/√n, z za x̄, p̂ i z za proporciju, CLT-koncepti. Numeric.
 - [ ] **B2.6 (T7 confidence intervals, `second-midterm`):** CI za μ (z & t), CI za proporciju, ME, width=2·ME. `ratio`/`numeric` randomiziran.
 - [ ] **B2.7 (T8 hypothesis testing, `second-midterm`):** test-statistika (z/t), odluka (kritična vrijednost / p-value),
