@@ -837,6 +837,206 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. To find a cutoff for an upper-tail area α: c = μ + z_α·σ, where z_α is the critical z value.']
+    },
+
+    // ============================================================================
+    // B2.5 — T6 SAMPLING DISTRIBUTIONS (first-midterm)
+    //   Standard error of the mean σ_x̄ = σ/√n; z for x̄ = (x̄ − μ)/(σ/√n); standard
+    //   error of a proportion σ_p̂ = √(P(1−P)/n); z for p̂ = (p̂ − P)/σ_p̂. Probabilities
+    //   via SL.normalCdf/normalSf (engine untouched). Numbers chosen so SE is clean
+    //   (n = perfect square; P ∈ {0.2, 0.5}) → z is exact, no rounding ambiguity.
+    //   Probabilities & z → 2 dp (tol 0.01); SE → descriptive, 2 dp (tol 0.05). chapter 6.
+    // ============================================================================
+
+    // --- T6 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't6-concepts',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'choice',
+      title: 'Sampling Distributions — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The standard error of the mean equals σ ÷ √n.', kind: 'tf', answer: true },
+        { q: 'As the sample size increases, the standard error of the mean decreases.', kind: 'tf', answer: true },
+        { q: 'The Central Limit Theorem requires the population itself to be normal.', kind: 'tf', answer: false },
+        { q: 'The mean of the sampling distribution of x̄ equals the population mean μ.', kind: 'tf', answer: true },
+        { q: 'The standard error of a sample proportion is √[P(1 − P) ÷ n].', kind: 'tf', answer: true },
+        { q: 'For a normal population, x̄ is normal for any sample size n.', kind: 'tf', answer: true },
+        { q: 'The sampling distribution of x̄ becomes WIDER as n grows.', kind: 'tf', answer: false },
+        { q: 'The z-value for a sample mean uses which denominator?', kind: 'mc', options: ['σ', 'σ ÷ √n', 'n', 's²'], answer: 1 },
+        { q: 'A common rule of thumb for the CLT to apply is:', kind: 'mc', options: ['n > 5', 'n > 25 (often n ≥ 30)', 'n > 500', 'n = 1'], answer: 1 },
+        { q: 'The expected value of the sample proportion p̂ is:', kind: 'mc', options: ['P', '0', 'n', '1 − P'], answer: 0 }
+      ],
+      solution: [
+        'The CLT makes x̄ approximately normal for large n even if the POPULATION is not normal.',
+        'A larger n shrinks the standard error σ/√n, so the sampling distribution gets NARROWER (more precise).',
+        'E(p̂) = P; standardize x̄ with σ/√n in the denominator.'
+      ]
+    },
+
+    // --- Standard error of the mean (numeric, fixed) --------------------------
+    {
+      id: 't6-se-1',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Standard Error of the Mean',
+      prompt: 'A population has standard deviation σ = 20. A random sample of n = 25 is taken. Compute the standard '
+        + 'error of the sample mean. Round to 2 decimals.',
+      difficulty: 1,
+      fields: [
+        { key: 'se', label: 'Standard error σ_x̄', answer: 4, tol: 0.05, unit: '', hint: 'σ ÷ √n = 20 ÷ √25 = 20 ÷ 5' }
+      ],
+      solution: ['σ_x̄ = σ ÷ √n = 20 ÷ √25 = 20 ÷ 5 = 4.00.']
+    },
+
+    // --- SE + z + tail probability for the mean (numeric, fixed) --------------
+    {
+      id: 't6-zmean-1',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Sampling Distribution of the Mean',
+      prompt: 'A population has μ = 100 and σ = 15. For a sample of n = 9, compute the standard error, the z-value for '
+        + 'x̄ = 105, and P(x̄ > 105). Use a z-table; give probabilities to 2 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'se', label: 'Standard error σ_x̄', answer: 5, tol: 0.05, unit: '', hint: '15 ÷ √9 = 15 ÷ 3' },
+        { key: 'z', label: 'z-value for x̄ = 105', answer: 1.0, tol: 0.01, unit: '', hint: '(105 − 100) ÷ 5' },
+        { key: 'pMore', label: 'P(x̄ > 105)', answer: SL.normalSf(1.0), tol: 0.01, unit: '', hint: '1 − P(Z < 1.0) = 1 − 0.8413' }
+      ],
+      solution: [
+        'σ_x̄ = 15 ÷ √9 = 15 ÷ 3 = 5.',
+        'z = (105 − 100) ÷ 5 = 1.0.',
+        'P(x̄ > 105) = 1 − P(Z < 1.0) = 1 − 0.8413 = 0.1587 ≈ 0.16.'
+      ]
+    },
+
+    // --- SE + z + tail probability for a proportion (numeric, fixed) ----------
+    {
+      id: 't6-proportion-1',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Sampling Distribution of a Proportion',
+      prompt: 'A population proportion is P = 0.50. For a sample of n = 100, compute the standard error of p̂, the '
+        + 'z-value for p̂ = 0.60, and P(p̂ > 0.60). Use a z-table; give probabilities to 2 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'se', label: 'Standard error σ_p̂', answer: 0.05, tol: 0.01, unit: '', hint: '√[P(1 − P) ÷ n] = √(0.25 ÷ 100)' },
+        { key: 'z', label: 'z-value for p̂ = 0.60', answer: 2.0, tol: 0.01, unit: '', hint: '(0.60 − 0.50) ÷ 0.05' },
+        { key: 'pMore', label: 'P(p̂ > 0.60)', answer: SL.normalSf(2.0), tol: 0.01, unit: '', hint: '1 − P(Z < 2.0) = 1 − 0.9772' }
+      ],
+      solution: [
+        'σ_p̂ = √[0.50 × 0.50 ÷ 100] = √(0.0025) = 0.05.',
+        'z = (0.60 − 0.50) ÷ 0.05 = 2.0.',
+        'P(p̂ > 0.60) = 1 − P(Z < 2.0) = 1 − 0.9772 = 0.0228 ≈ 0.02.'
+      ]
+    },
+
+    // --- RANDOMIZED: standard error of the mean -------------------------------
+    {
+      id: 't6-se-random',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Standard Error — Drill',
+      prompt: 'Compute the standard error of the sample mean.',
+      difficulty: 1,
+      params: {
+        sigma: { choices: [10, 15, 20, 25, 30] },
+        n: { choices: [9, 16, 25, 100] }
+      },
+      generate(p) {
+        const se = p.sigma / Math.sqrt(p.n);
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A population has standard deviation σ = ' + p.sigma + '. For a sample of n = ' + p.n + ', compute the '
+            + 'standard error of the sample mean. Round to 2 decimals.',
+          fields: [
+            { key: 'se', label: 'Standard error σ_x̄', answer: se, tol: 0.05, unit: '', hint: 'σ ÷ √n = ' + p.sigma + ' ÷ √' + p.n }
+          ],
+          solution: ['σ_x̄ = σ ÷ √n = ' + p.sigma + ' ÷ ' + Math.sqrt(p.n) + ' = ' + r2(se) + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. The standard error of the mean is σ ÷ √n; it shrinks as n grows.']
+    },
+
+    // --- RANDOMIZED: SE + z + probability for the mean ------------------------
+    {
+      id: 't6-zmean-random',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Sampling Distribution of the Mean — Drill',
+      prompt: 'Compute the standard error, the z-value of the sample mean, and a tail probability.',
+      difficulty: 3,
+      params: {
+        pair: { choices: [{ s: 15, n: 9 }, { s: 20, n: 25 }, { s: 30, n: 9 }, { s: 10, n: 25 }, { s: 24, n: 16 }, { s: 40, n: 100 }] },
+        mu: { choices: [50, 100, 200] },
+        zc: { choices: [-1.5, -1, 1, 1.5, 2] }
+      },
+      generate(p) {
+        const sigma = p.pair.s, n = p.pair.n;
+        const se = sigma / Math.sqrt(n);     // clean integer by construction
+        const xbar = p.mu + p.zc * se;       // so the z-value is exactly zc
+        const pLess = SL ? SL.normalCdf(p.zc) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A population has μ = ' + p.mu + ' and σ = ' + sigma + '. For a sample of n = ' + n + ', compute the '
+            + 'standard error, the z-value for x̄ = ' + xbar + ', and P(x̄ < ' + xbar + '). Probabilities to 2 decimals.',
+          fields: [
+            { key: 'se', label: 'Standard error σ_x̄', answer: se, tol: 0.05, unit: '', hint: '' + sigma + ' ÷ √' + n },
+            { key: 'z', label: 'z-value for x̄ = ' + xbar, answer: p.zc, tol: 0.01, unit: '', hint: '(' + xbar + ' − ' + p.mu + ') ÷ ' + se },
+            { key: 'pLess', label: 'P(x̄ < ' + xbar + ')', answer: pLess, tol: 0.01, unit: '', hint: 'P(Z < ' + p.zc + ') from the z-table' }
+          ],
+          solution: [
+            'σ_x̄ = ' + sigma + ' ÷ √' + n + ' = ' + se + '.',
+            'z = (' + xbar + ' − ' + p.mu + ') ÷ ' + se + ' = ' + p.zc + ';   P(x̄ < ' + xbar + ') = P(Z < ' + p.zc + ') = ' + r2(pLess) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. σ_x̄ = σ ÷ √n; z = (x̄ − μ) ÷ σ_x̄; then read P(Z < z) from the z-table.']
+    },
+
+    // --- RANDOMIZED: SE + z + probability for a proportion --------------------
+    {
+      id: 't6-proportion-random',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Sampling Distribution of a Proportion — Drill',
+      prompt: 'Compute the standard error of p̂, its z-value, and a tail probability.',
+      difficulty: 3,
+      params: {
+        P: { choices: [0.2, 0.5] },
+        n: { choices: [25, 100, 400] },
+        zc: { choices: [1, 1.5, 2] }
+      },
+      generate(p) {
+        const se = Math.sqrt(p.P * (1 - p.P) / p.n); // clean (√(P(1−P)) ÷ √n) by construction
+        const phat = p.P + p.zc * se;                // so the z-value is exactly zc
+        const pMore = SL ? SL.normalSf(p.zc) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        const r4 = (v) => Math.round(v * 10000) / 10000;
+        return {
+          prompt: 'A population proportion is P = ' + p.P.toFixed(2) + '. For a sample of n = ' + p.n + ', compute the '
+            + 'standard error of p̂, the z-value for p̂ = ' + r4(phat) + ', and P(p̂ > ' + r4(phat) + '). '
+            + 'Probabilities to 2 decimals.',
+          fields: [
+            { key: 'se', label: 'Standard error σ_p̂', answer: se, tol: 0.01, unit: '', hint: '√[P(1 − P) ÷ n] = √(' + r4(p.P * (1 - p.P)) + ' ÷ ' + p.n + ')' },
+            { key: 'z', label: 'z-value', answer: p.zc, tol: 0.01, unit: '', hint: '(p̂ − P) ÷ σ_p̂' },
+            { key: 'pMore', label: 'P(p̂ > ' + r4(phat) + ')', answer: pMore, tol: 0.01, unit: '', hint: '1 − P(Z < ' + p.zc + ')' }
+          ],
+          solution: [
+            'σ_p̂ = √[' + p.P.toFixed(2) + ' × ' + (1 - p.P).toFixed(2) + ' ÷ ' + p.n + '] = ' + r2(se) + '.',
+            'z = (' + r4(phat) + ' − ' + p.P.toFixed(2) + ') ÷ ' + r2(se) + ' = ' + p.zc + ';   P(p̂ > ' + r4(phat) + ') = 1 − P(Z < ' + p.zc + ') = ' + r2(pMore) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. σ_p̂ = √[P(1 − P) ÷ n]; z = (p̂ − P) ÷ σ_p̂; then use the z-table.']
     }
   ]
 };
