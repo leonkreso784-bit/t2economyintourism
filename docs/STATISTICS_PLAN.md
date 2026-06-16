@@ -145,7 +145,11 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       → lib, reuse u T4 binomnoj) + 8 testova (stat-lib 33/33). **SL-most** u `exercises.js` (`window.StatLib` u pregledniku /
       `require('./stat-lib.js')` u nodeu) → content pack koristi lib u oba okruženja. Verifikacija: 180 999 provjera (neovisni
       izračun + grade-correct kroz pun prostor + diskriminacija). verify 0/0, test:unit 0, smoke 13/0, responsive 8/8. Cache `20260658`.
-- [ ] **B2.3 (T4 discrete RV, `first-midterm`):** E(X), binomna (μ=nP, σ²=nP(1−P), P(x)), Poisson (P(x), μ=σ²=λ). Numeric randomiziran.
+- [x] **B2.3 (T4 discrete RV, `first-midterm`)** ✅ 7 vježbi (`b824bba`): `choice` (10 koncepata: countable values, ΣP(x)=1,
+      E(X)≠value, binomna constant-P/independent, var=nP(1−P) ne nP, Poisson μ=σ²=λ) + fiksni `numeric` E(X)/σ²/σ iz tablice,
+      binomna P(X=2)/μ/σ², Poisson P(0)/P(1)/σ + 3 randomizirana (expected value, binomna P(x)/μ/σ², Poisson P(x)/σ). Binomna
+      `SL.combinations`; Poisson `Math.exp`+inline faktorijel (elementarno inline, engine nedirnut). Verify: neovisni preračun +
+      brute-force grade-correct + diskriminacija (87 kombinacija) 0 problema. Cache `20260659`.
 - [ ] **B2.4 (T5 continuous/normal, `first-midterm`):** **z-score** (mathportal!) + normalna vjerojatnost preko z-tablice
       (`normalCdf`). Numeric randomiziran (x,μ,σ → z; P(Z<z)). Cross-check s mathportal z-score kalkulatorom.
 - [ ] **B2.5 (T6 sampling distributions, `first-midterm`):** standard error σ/√n, z za x̄, p̂ i z za proporciju, CLT-koncepti. Numeric.
