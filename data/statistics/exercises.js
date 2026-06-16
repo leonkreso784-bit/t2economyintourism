@@ -1453,6 +1453,222 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. z = (p̂ − P₀) ÷ √[P₀(1 − P₀)/n]; one-tailed p = P(Z > z); reject H₀ if p < α.']
+    },
+
+    // ============================================================================
+    // B2.8 — T9 REGRESSION ANALYSIS (second-midterm)
+    //   Least-squares slope b₁ = Σ(x−x̄)(y−ȳ)/Σ(x−x̄)² and intercept b₀ = ȳ − b₁x̄;
+    //   prediction ŷ = b₀ + b₁x; variation SST = SSR + SSE; R² = SSR/SST; error variance
+    //   s²ₑ = SSE/(n−2). All elementary inline (no stat-lib needed). Randomized slope uses
+    //   hand-verified clean data sets (object-valued param choices). Coefficients/predictions
+    //   2 dp (tol 0.05); R² is a proportion → 2 dp (tol 0.01); SSR integer (tol 0). chapter 9.
+    // ============================================================================
+
+    // --- T9 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't9-concepts',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'Regression — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'In regression, Y is the dependent variable we predict.', kind: 'tf', answer: true },
+        { q: 'Least squares minimizes the sum of squared residuals (SSE).', kind: 'tf', answer: true },
+        { q: 'The regression line always passes through (x̄, ȳ).', kind: 'tf', answer: true },
+        { q: 'Total variation decomposes as SST = SSR + SSE.', kind: 'tf', answer: true },
+        { q: 'R² can be greater than 1 for a very strong relationship.', kind: 'tf', answer: false },
+        { q: 'The model error variance divides SSE by n − 1.', kind: 'tf', answer: false },
+        { q: 'The slope t test has null hypothesis H₀: β₁ = 0.', kind: 'tf', answer: true },
+        { q: 'The coefficient of determination R² equals:', kind: 'mc', options: ['SSE ÷ SST', 'SSR ÷ SST', 'SST ÷ SSR', '1 + SSE ÷ SST'], answer: 1 },
+        { q: 'The slope b₁ measures the change in average Y for a one-unit change in:', kind: 'mc', options: ['Y', 'X', 'the residual', 'SST'], answer: 1 },
+        { q: 'In simple regression, the F statistic equals:', kind: 'mc', options: ['t', 't²', '√t', 'R²'], answer: 1 }
+      ],
+      solution: [
+        '0 ≤ R² ≤ 1; the error variance divides SSE by n − 2 (two parameters b₀, b₁ were estimated).',
+        'R² = SSR/SST is the proportion of Y’s variation explained by X; the line passes through (x̄, ȳ).',
+        'For one predictor, F = t² and both test β₁ = 0.'
+      ]
+    },
+
+    // --- Least-squares line from a small data set (numeric, fixed) ------------
+    {
+      id: 't9-slope-1',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Least-Squares Line',
+      prompt: 'For the data (1, 2), (2, 4), (3, 5), (4, 4), (5, 5), find the least-squares slope b₁ and intercept b₀, '
+        + 'then predict ŷ at x = 6. (x̄ = 3, ȳ = 4.) Round to 2 decimals.',
+      difficulty: 3,
+      fields: [
+        { key: 'b1', label: 'Slope b₁', answer: 0.6, tol: 0.05, unit: '', hint: 'Σ(x − x̄)(y − ȳ) ÷ Σ(x − x̄)² = 6 ÷ 10' },
+        { key: 'b0', label: 'Intercept b₀', answer: 2.2, tol: 0.05, unit: '', hint: 'ȳ − b₁x̄ = 4 − 0.6 × 3' },
+        { key: 'yhat', label: 'Prediction ŷ at x = 6', answer: 5.8, tol: 0.05, unit: '', hint: 'b₀ + b₁ × 6' }
+      ],
+      solution: [
+        'Σ(x − x̄)(y − ȳ) = 6;  Σ(x − x̄)² = 10  →  b₁ = 6 ÷ 10 = 0.6.',
+        'b₀ = ȳ − b₁x̄ = 4 − 0.6 × 3 = 2.2.   ŷ(6) = 2.2 + 0.6 × 6 = 5.8.'
+      ]
+    },
+
+    // --- Variation decomposition & R² (numeric, fixed) ------------------------
+    {
+      id: 't9-rsquared-1',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'R² and the Error Variance',
+      prompt: 'A regression on n = 12 observations gives SST = 200 and SSE = 50. Compute the explained variation SSR, '
+        + 'the coefficient of determination R², and the estimated error variance s²ₑ. Round R² to 2 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'ssr', label: 'Explained variation SSR', answer: 150, tol: 0, unit: '', hint: 'SST − SSE = 200 − 50' },
+        { key: 'r2', label: 'Coefficient of determination R²', answer: 0.75, tol: 0.01, unit: '', hint: 'SSR ÷ SST = 150 ÷ 200' },
+        { key: 'se2', label: 'Error variance s²ₑ', answer: 5, tol: 0.05, unit: '', hint: 'SSE ÷ (n − 2) = 50 ÷ 10' }
+      ],
+      solution: [
+        'SSR = SST − SSE = 200 − 50 = 150.',
+        'R² = SSR ÷ SST = 150 ÷ 200 = 0.75 (75% of Y’s variation explained).',
+        's²ₑ = SSE ÷ (n − 2) = 50 ÷ 10 = 5.'
+      ]
+    },
+
+    // --- Prediction & slope interpretation (numeric, fixed) -------------------
+    {
+      id: 't9-predict-1',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Prediction from a Fitted Line',
+      prompt: 'A fitted regression line is ŷ = 10 + 2.5x. Predict ŷ at x = 8, predict ŷ at x = 4, and state the change '
+        + 'in average Y for a one-unit increase in X. Round to 2 decimals.',
+      difficulty: 1,
+      fields: [
+        { key: 'y8', label: 'Prediction ŷ at x = 8', answer: 30, tol: 0.05, unit: '', hint: '10 + 2.5 × 8' },
+        { key: 'y4', label: 'Prediction ŷ at x = 4', answer: 20, tol: 0.05, unit: '', hint: '10 + 2.5 × 4' },
+        { key: 'change', label: 'Change in Y per +1 in X', answer: 2.5, tol: 0.05, unit: '', hint: 'The slope b₁' }
+      ],
+      solution: [
+        'ŷ(8) = 10 + 2.5 × 8 = 30;   ŷ(4) = 10 + 2.5 × 4 = 20.',
+        'The slope b₁ = 2.5 is the change in average Y for each one-unit increase in X.'
+      ]
+    },
+
+    // --- RANDOMIZED: least-squares line from a data set -----------------------
+    {
+      id: 't9-slope-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Least-Squares Line — Drill',
+      prompt: 'Find the least-squares line for the data set and use it to predict.',
+      difficulty: 3,
+      params: {
+        ds: { choices: [
+          { pts: [[1, 2], [2, 4], [3, 5], [4, 4], [5, 5]], xn: 6 },
+          { pts: [[0, 1], [1, 1], [2, 3], [3, 3], [4, 5]], xn: 5 },
+          { pts: [[2, 3], [4, 7], [6, 8], [8, 12], [10, 15]], xn: 12 },
+          { pts: [[1, 5], [2, 4], [3, 4], [4, 2], [5, 1]], xn: 6 }
+        ] }
+      },
+      generate(p) {
+        const pts = p.ds.pts, xn = p.ds.xn, n = pts.length;
+        const xbar = pts.reduce((s, q) => s + q[0], 0) / n;
+        const ybar = pts.reduce((s, q) => s + q[1], 0) / n;
+        const sxy = pts.reduce((s, q) => s + (q[0] - xbar) * (q[1] - ybar), 0);
+        const sxx = pts.reduce((s, q) => s + (q[0] - xbar) * (q[0] - xbar), 0);
+        const b1 = sxy / sxx;
+        const b0 = ybar - b1 * xbar;
+        const yhat = b0 + b1 * xn;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        const ptsStr = pts.map((q) => '(' + q[0] + ', ' + q[1] + ')').join(', ');
+        return {
+          prompt: 'For the data ' + ptsStr + ', find the least-squares slope b₁ and intercept b₀, then predict ŷ at '
+            + 'x = ' + xn + '. (x̄ = ' + r2(xbar) + ', ȳ = ' + r2(ybar) + '.) Round to 2 decimals.',
+          fields: [
+            { key: 'b1', label: 'Slope b₁', answer: b1, tol: 0.05, unit: '', hint: 'Σ(x − x̄)(y − ȳ) ÷ Σ(x − x̄)² = ' + r2(sxy) + ' ÷ ' + r2(sxx) },
+            { key: 'b0', label: 'Intercept b₀', answer: b0, tol: 0.05, unit: '', hint: 'ȳ − b₁x̄' },
+            { key: 'yhat', label: 'Prediction ŷ at x = ' + xn, answer: yhat, tol: 0.05, unit: '', hint: 'b₀ + b₁ × ' + xn }
+          ],
+          solution: [
+            'b₁ = ' + r2(sxy) + ' ÷ ' + r2(sxx) + ' = ' + r2(b1) + ';   b₀ = ' + r2(ybar) + ' − ' + r2(b1) + ' × ' + r2(xbar) + ' = ' + r2(b0) + '.',
+            'ŷ(' + xn + ') = ' + r2(b0) + ' + ' + r2(b1) + ' × ' + xn + ' = ' + r2(yhat) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for a fresh data set. b₁ = Σ(x − x̄)(y − ȳ) ÷ Σ(x − x̄)²; b₀ = ȳ − b₁x̄; ŷ = b₀ + b₁x.']
+    },
+
+    // --- RANDOMIZED: SSR, R² and error variance -------------------------------
+    {
+      id: 't9-rsquared-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'R² and Error Variance — Drill',
+      prompt: 'From the variation totals, compute SSR, R² and the error variance.',
+      difficulty: 2,
+      params: {
+        ss: { choices: [{ sst: 400, sse: 100 }, { sst: 500, sse: 100 }, { sst: 200, sse: 50 }, { sst: 400, sse: 40 }, { sst: 300, sse: 120 }, { sst: 500, sse: 200 }] },
+        n: { choices: [12, 22, 52] }
+      },
+      generate(p) {
+        const sst = p.ss.sst, sse = p.ss.sse;
+        const ssr = sst - sse;
+        const r2v = ssr / sst;
+        const se2 = sse / (p.n - 2);
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A regression on n = ' + p.n + ' observations gives SST = ' + sst + ' and SSE = ' + sse + '. Compute '
+            + 'the explained variation SSR, the coefficient of determination R², and the estimated error variance s²ₑ. '
+            + 'Round R² to 2 decimals.',
+          fields: [
+            { key: 'ssr', label: 'Explained variation SSR', answer: ssr, tol: 0, unit: '', hint: 'SST − SSE = ' + sst + ' − ' + sse },
+            { key: 'r2', label: 'Coefficient of determination R²', answer: r2v, tol: 0.01, unit: '', hint: 'SSR ÷ SST' },
+            { key: 'se2', label: 'Error variance s²ₑ', answer: se2, tol: 0.05, unit: '', hint: 'SSE ÷ (n − 2) = ' + sse + ' ÷ ' + (p.n - 2) }
+          ],
+          solution: [
+            'SSR = ' + sst + ' − ' + sse + ' = ' + ssr + ';   R² = ' + ssr + ' ÷ ' + sst + ' = ' + r2(r2v) + '.',
+            's²ₑ = ' + sse + ' ÷ ' + (p.n - 2) + ' = ' + r2(se2) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh totals. SSR = SST − SSE; R² = SSR ÷ SST; s²ₑ = SSE ÷ (n − 2).']
+    },
+
+    // --- RANDOMIZED: prediction from a fitted line ----------------------------
+    {
+      id: 't9-predict-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Prediction — Drill',
+      prompt: 'Use the fitted regression line to predict and interpret.',
+      difficulty: 1,
+      params: {
+        b0: { choices: [2, 5, 10] },
+        b1: { choices: [0.5, 1.5, 2.5, 3] },
+        x: { choices: [4, 6, 10] }
+      },
+      generate(p) {
+        const yhat = p.b0 + p.b1 * p.x;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A fitted regression line is ŷ = ' + p.b0 + ' + ' + p.b1 + 'x. Predict ŷ at x = ' + p.x + ', and state '
+            + 'the change in average Y for a one-unit increase in X. Round to 2 decimals.',
+          fields: [
+            { key: 'yhat', label: 'Prediction ŷ at x = ' + p.x, answer: yhat, tol: 0.05, unit: '', hint: '' + p.b0 + ' + ' + p.b1 + ' × ' + p.x },
+            { key: 'change', label: 'Change in Y per +1 in X', answer: p.b1, tol: 0.05, unit: '', hint: 'The slope b₁' }
+          ],
+          solution: [
+            'ŷ(' + p.x + ') = ' + p.b0 + ' + ' + p.b1 + ' × ' + p.x + ' = ' + r2(yhat) + '.',
+            'The slope b₁ = ' + p.b1 + ' is the change in average Y per one-unit increase in X.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. ŷ = b₀ + b₁x; the slope b₁ is the change in average Y per one-unit increase in X.']
     }
   ]
 };
