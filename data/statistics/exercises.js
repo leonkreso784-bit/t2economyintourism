@@ -1037,6 +1037,228 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. σ_p̂ = √[P(1 − P) ÷ n]; z = (p̂ − P) ÷ σ_p̂; then use the z-table.']
+    },
+
+    // ============================================================================
+    // B2.6 — T7 CONFIDENCE INTERVALS (second-midterm)
+    //   Point estimate ± (reliability factor)·(standard error). CI for μ (σ known, z
+    //   via SL.zCritical), CI for μ (σ unknown, t via SL.tCritical(df, α/2)), CI for a
+    //   proportion. ME = factor·SE; width = 2·ME. The reliability factor (z or t) is
+    //   STATED in the prompt (no z/t-table widget) → exercise tests the CI mechanics,
+    //   not the lookup. SE kept clean. Means: bounds/ME/width 2 dp (tol 0.05);
+    //   proportions: 3 dp (tol 0.01). chapter 7. FIRST K2 (second-midterm) exercise.
+    // ============================================================================
+
+    // --- T7 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't7-concepts',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'Confidence Intervals — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'A point estimate is a single number; a confidence interval gives a range.', kind: 'tf', answer: true },
+        { q: 'Every confidence interval has the form: point estimate ± (reliability factor)(standard error).', kind: 'tf', answer: true },
+        { q: 'A 95% CI means there is a 95% probability that THIS particular interval contains μ.', kind: 'tf', answer: false },
+        { q: 'When σ is unknown, the CI for μ uses the t distribution with n − 1 degrees of freedom.', kind: 'tf', answer: true },
+        { q: 'Increasing the confidence level makes the interval narrower.', kind: 'tf', answer: false },
+        { q: 'A larger sample size produces a narrower confidence interval.', kind: 'tf', answer: true },
+        { q: 'The margin of error is the FULL width of the confidence interval.', kind: 'tf', answer: false },
+        { q: 'For a 95% CI with σ known, the z reliability factor is:', kind: 'mc', options: ['1.645', '1.96', '2.33', '2.58'], answer: 1 },
+        { q: 'The width of a confidence interval equals:', kind: 'mc', options: ['ME', '2·ME', 'ME ÷ 2', 'ME²'], answer: 1 },
+        { q: 'The confidence interval for a proportion uses the standard error:', kind: 'mc', options: ['√[p̂(1 − p̂) ÷ n]', 'σ ÷ √n', 's ÷ √n', 'p̂ ÷ n'], answer: 0 }
+      ],
+      solution: [
+        'A realized 95% interval either contains μ or not; the 95% refers to the long-run success rate of the METHOD, not one interval.',
+        'Higher confidence → larger z/t → WIDER interval; larger n → smaller SE → NARROWER interval.',
+        'ME is the HALF-width; the full width is 2·ME.'
+      ]
+    },
+
+    // --- CI for μ, σ known (numeric, fixed) -----------------------------------
+    {
+      id: 't7-ci-mean-known-1',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for the Mean (σ known)',
+      prompt: 'A sample of n = 25 gives x̄ = 50; the population σ = 10 is known. Build a 95% confidence interval for μ '
+        + '(use z = 1.96). Compute the margin of error, the lower and upper limits, and the width. Round to 2 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'me', label: 'Margin of error', answer: 3.92, tol: 0.05, unit: '', hint: 'z·σ/√n = 1.96 × (10 ÷ 5)' },
+        { key: 'lower', label: 'Lower limit', answer: 46.08, tol: 0.05, unit: '', hint: 'x̄ − ME = 50 − 3.92' },
+        { key: 'upper', label: 'Upper limit', answer: 53.92, tol: 0.05, unit: '', hint: 'x̄ + ME = 50 + 3.92' },
+        { key: 'width', label: 'Width', answer: 7.84, tol: 0.05, unit: '', hint: '2·ME' }
+      ],
+      solution: [
+        'SE = σ/√n = 10 ÷ 5 = 2.   ME = 1.96 × 2 = 3.92.',
+        'CI = 50 ± 3.92 = (46.08, 53.92).   Width = 2 × 3.92 = 7.84.'
+      ]
+    },
+
+    // --- CI for μ, σ unknown (t) (numeric, fixed) -----------------------------
+    {
+      id: 't7-ci-mean-unknown-1',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for the Mean (σ unknown, t)',
+      prompt: 'A sample of n = 9 gives x̄ = 100 and sample SD s = 12. Build a 95% confidence interval for μ using the t '
+        + 'distribution (df = 8, t = 2.306). Compute the margin of error and the lower and upper limits. Round to 2 decimals.',
+      difficulty: 3,
+      fields: [
+        { key: 'me', label: 'Margin of error', answer: 2.306 * 4, tol: 0.05, unit: '', hint: 't·s/√n = 2.306 × (12 ÷ 3)' },
+        { key: 'lower', label: 'Lower limit', answer: 100 - 2.306 * 4, tol: 0.05, unit: '', hint: 'x̄ − ME' },
+        { key: 'upper', label: 'Upper limit', answer: 100 + 2.306 * 4, tol: 0.05, unit: '', hint: 'x̄ + ME' }
+      ],
+      solution: [
+        'SE = s/√n = 12 ÷ 3 = 4.   ME = t·SE = 2.306 × 4 = 9.22.',
+        'CI = 100 ± 9.22 = (90.78, 109.22). The t value is larger than z because σ is unknown.'
+      ]
+    },
+
+    // --- CI for a proportion (numeric, fixed) ---------------------------------
+    {
+      id: 't7-ci-proportion-1',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for a Proportion',
+      prompt: 'In a sample of n = 100, the sample proportion is p̂ = 0.50. Build a 95% confidence interval for the '
+        + 'population proportion (use z = 1.96). Compute the margin of error and the lower and upper limits. Round to 3 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'me', label: 'Margin of error', answer: 1.96 * 0.05, tol: 0.01, unit: '', hint: 'z·√[p̂(1 − p̂)/n] = 1.96 × 0.05' },
+        { key: 'lower', label: 'Lower limit', answer: 0.5 - 1.96 * 0.05, tol: 0.01, unit: '', hint: 'p̂ − ME' },
+        { key: 'upper', label: 'Upper limit', answer: 0.5 + 1.96 * 0.05, tol: 0.01, unit: '', hint: 'p̂ + ME' }
+      ],
+      solution: [
+        'SE = √[0.50 × 0.50 ÷ 100] = √0.0025 = 0.05.   ME = 1.96 × 0.05 = 0.098.',
+        'CI = 0.50 ± 0.098 = (0.402, 0.598).'
+      ]
+    },
+
+    // --- RANDOMIZED: CI for μ, σ known ----------------------------------------
+    {
+      id: 't7-ci-mean-known-random',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for the Mean (σ known) — Drill',
+      prompt: 'Build a confidence interval for μ when σ is known.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [{ s: 20, n: 16 }, { s: 30, n: 9 }, { s: 12, n: 9 }, { s: 20, n: 25 }, { s: 15, n: 9 }, { s: 24, n: 16 }] },
+        xbar: { choices: [50, 100, 200] },
+        conf: { choices: [90, 95, 99] }
+      },
+      generate(p) {
+        const sigma = p.pair.s, n = p.pair.n;
+        const se = sigma / Math.sqrt(n);          // clean integer by construction
+        const z = SL ? SL.zCritical(p.conf) : 0;
+        const me = z * se;
+        const lower = p.xbar - me, upper = p.xbar + me, width = 2 * me;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A sample of n = ' + n + ' gives x̄ = ' + p.xbar + '; the population σ = ' + sigma + ' is known. Build a '
+            + p.conf + '% confidence interval for μ (use z = ' + z + '). Compute the margin of error, the lower and '
+            + 'upper limits, and the width. Round to 2 decimals.',
+          fields: [
+            { key: 'me', label: 'Margin of error', answer: me, tol: 0.05, unit: '', hint: 'z·σ/√n = ' + z + ' × (' + sigma + ' ÷ ' + Math.sqrt(n) + ')' },
+            { key: 'lower', label: 'Lower limit', answer: lower, tol: 0.05, unit: '', hint: 'x̄ − ME' },
+            { key: 'upper', label: 'Upper limit', answer: upper, tol: 0.05, unit: '', hint: 'x̄ + ME' },
+            { key: 'width', label: 'Width', answer: width, tol: 0.05, unit: '', hint: '2·ME' }
+          ],
+          solution: [
+            'SE = ' + sigma + ' ÷ ' + Math.sqrt(n) + ' = ' + se + ';   ME = ' + z + ' × ' + se + ' = ' + r2(me) + '.',
+            'CI = ' + p.xbar + ' ± ' + r2(me) + ' = (' + r2(lower) + ', ' + r2(upper) + ');   width = ' + r2(width) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. CI = x̄ ± z·(σ/√n); ME = z·σ/√n; width = 2·ME.']
+    },
+
+    // --- RANDOMIZED: CI for μ, σ unknown (t) ----------------------------------
+    {
+      id: 't7-ci-mean-unknown-random',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for the Mean (σ unknown, t) — Drill',
+      prompt: 'Build a confidence interval for μ using the t distribution (σ unknown).',
+      difficulty: 3,
+      params: {
+        pair: { choices: [{ s: 6, n: 9, df: 8 }, { s: 12, n: 9, df: 8 }, { s: 8, n: 16, df: 15 }, { s: 10, n: 25, df: 24 }, { s: 15, n: 25, df: 24 }] },
+        xbar: { choices: [50, 100, 200] },
+        conf: { choices: [90, 95, 99] }
+      },
+      generate(p) {
+        const s = p.pair.s, n = p.pair.n, df = p.pair.df;
+        const se = s / Math.sqrt(n);              // clean integer by construction
+        // α/2 upper-tail area as EXACT table keys (avoid float drift like 0.0499…).
+        const AREA = { 90: 0.05, 95: 0.025, 99: 0.005 };
+        const area = AREA[p.conf];
+        const t = SL ? SL.tCritical(df, area) : 0;
+        const me = t * se;
+        const lower = p.xbar - me, upper = p.xbar + me;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A sample of n = ' + n + ' gives x̄ = ' + p.xbar + ' and sample SD s = ' + s + '. Build a ' + p.conf
+            + '% confidence interval for μ using the t distribution (df = ' + df + ', t = ' + t + '). Compute the margin '
+            + 'of error and the lower and upper limits. Round to 2 decimals.',
+          fields: [
+            { key: 'me', label: 'Margin of error', answer: me, tol: 0.05, unit: '', hint: 't·s/√n = ' + t + ' × (' + s + ' ÷ ' + Math.sqrt(n) + ')' },
+            { key: 'lower', label: 'Lower limit', answer: lower, tol: 0.05, unit: '', hint: 'x̄ − ME' },
+            { key: 'upper', label: 'Upper limit', answer: upper, tol: 0.05, unit: '', hint: 'x̄ + ME' }
+          ],
+          solution: [
+            'SE = ' + s + ' ÷ ' + Math.sqrt(n) + ' = ' + se + ';   ME = ' + t + ' × ' + se + ' = ' + r2(me) + '.',
+            'CI = ' + p.xbar + ' ± ' + r2(me) + ' = (' + r2(lower) + ', ' + r2(upper) + ').'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. With σ unknown: CI = x̄ ± t·(s/√n), df = n − 1; ME = t·s/√n.']
+    },
+
+    // --- RANDOMIZED: CI for a proportion --------------------------------------
+    {
+      id: 't7-ci-proportion-random',
+      lesson: 'second-midterm',
+      chapter: 7,
+      type: 'numeric',
+      title: 'CI for a Proportion — Drill',
+      prompt: 'Build a confidence interval for a population proportion.',
+      difficulty: 3,
+      params: {
+        phat: { choices: [0.2, 0.5] },
+        n: { choices: [100, 400] },
+        conf: { choices: [90, 95, 99] }
+      },
+      generate(p) {
+        const se = Math.sqrt(p.phat * (1 - p.phat) / p.n); // clean by construction
+        const z = SL ? SL.zCritical(p.conf) : 0;
+        const me = z * se;
+        const lower = p.phat - me, upper = p.phat + me;
+        const r3 = (v) => Math.round(v * 1000) / 1000;
+        return {
+          prompt: 'In a sample of n = ' + p.n + ', the sample proportion is p̂ = ' + p.phat.toFixed(2) + '. Build a '
+            + p.conf + '% confidence interval for the population proportion (use z = ' + z + '). Compute the margin of '
+            + 'error and the lower and upper limits. Round to 3 decimals.',
+          fields: [
+            { key: 'me', label: 'Margin of error', answer: me, tol: 0.01, unit: '', hint: 'z·√[p̂(1 − p̂)/n] = ' + z + ' × ' + r3(se) },
+            { key: 'lower', label: 'Lower limit', answer: lower, tol: 0.01, unit: '', hint: 'p̂ − ME' },
+            { key: 'upper', label: 'Upper limit', answer: upper, tol: 0.01, unit: '', hint: 'p̂ + ME' }
+          ],
+          solution: [
+            'SE = √[' + p.phat.toFixed(2) + ' × ' + (1 - p.phat).toFixed(2) + ' ÷ ' + p.n + '] = ' + r3(se) + ';   ME = ' + z + ' × ' + r3(se) + ' = ' + r3(me) + '.',
+            'CI = ' + p.phat.toFixed(2) + ' ± ' + r3(me) + ' = (' + r3(lower) + ', ' + r3(upper) + ').'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. CI = p̂ ± z·√[p̂(1 − p̂)/n]; ME = z·SE.']
     }
   ]
 };
