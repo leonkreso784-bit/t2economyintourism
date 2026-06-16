@@ -1259,6 +1259,200 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. CI = p̂ ± z·√[p̂(1 − p̂)/n]; ME = z·SE.']
+    },
+
+    // ============================================================================
+    // B2.7 — T8 HYPOTHESIS TESTING (single population) (second-midterm)
+    //   z test for a mean (σ known) z=(x̄−μ₀)/(σ/√n); t test (σ unknown) t=(x̄−μ₀)/(s/√n),
+    //   df=n−1; z test for a proportion z=(p̂−P₀)/√(P₀(1−P₀)/n). p-value via SL.normalSf
+    //   (two-tailed = 2·P(Z>|z|)); decision by comparing to the critical value. Test
+    //   statistics & p-values → 2 dp (tol 0.01). SE kept clean → z exact. Decisions are
+    //   `choice` (reject / fail to reject). chapter 8.
+    // ============================================================================
+
+    // --- T8 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't8-concepts',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'choice',
+      title: 'Hypothesis Testing — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The null hypothesis H₀ contains the equality (=, ≤, ≥).', kind: 'tf', answer: true },
+        { q: 'A non-significant test PROVES that H₀ is true.', kind: 'tf', answer: false },
+        { q: 'The probability of a Type I error is α.', kind: 'tf', answer: true },
+        { q: 'The power of a test is 1 − β.', kind: 'tf', answer: true },
+        { q: 'A two-tailed test splits α between both tails.', kind: 'tf', answer: true },
+        { q: 'When σ is unknown, the test statistic for a mean uses the t distribution.', kind: 'tf', answer: true },
+        { q: 'Failing to reject a FALSE H₀ is a Type II error.', kind: 'tf', answer: true },
+        { q: 'Rejecting a TRUE H₀ is a:', kind: 'mc', options: ['Type I error', 'Type II error', 'Correct decision', 'p-value'], answer: 0 },
+        { q: 'Using the p-value, we reject H₀ when:', kind: 'mc', options: ['p ≥ α', 'p < α', 'p = 1', 'p > 0.5'], answer: 1 },
+        { q: 'The significance level α is chosen:', kind: 'mc', options: ['After seeing the data', 'In advance by the researcher', 'Always 0.5', 'By the sample size'], answer: 1 }
+      ],
+      solution: [
+        'We never “prove” H₀; we either reject it or fail to reject it (“innocent until proven guilty”).',
+        'Type I error = rejecting a true H₀ (probability α); Type II = failing to reject a false H₀ (probability β); power = 1 − β.',
+        'The p-value rule: reject H₀ when p < α.'
+      ]
+    },
+
+    // --- Decisions from a test statistic / p-value (choice) -------------------
+    {
+      id: 't8-decision',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'choice',
+      title: 'Reaching a Decision',
+      prompt: 'For each scenario, decide what to do with H₀.',
+      difficulty: 2,
+      items: [
+        { q: 'A test statistic beyond the critical value leads to rejecting H₀.', kind: 'tf', answer: true },
+        { q: 'If the p-value is greater than α, we fail to reject H₀.', kind: 'tf', answer: true },
+        { q: 'Two-tailed test: z = 2.50, critical values ±1.96. Decision?', kind: 'mc', options: ['Reject H₀', 'Fail to reject H₀'], answer: 0 },
+        { q: 'p-value = 0.08, α = 0.05. Decision?', kind: 'mc', options: ['Reject H₀', 'Fail to reject H₀'], answer: 1 },
+        { q: 'Right-tailed test: z = 1.20, critical value 1.645. Decision?', kind: 'mc', options: ['Reject H₀', 'Fail to reject H₀'], answer: 1 },
+        { q: 'Left-tailed test: z = −2.10, critical value −1.645. Decision?', kind: 'mc', options: ['Reject H₀', 'Fail to reject H₀'], answer: 0 },
+        { q: 'p-value = 0.003, α = 0.01. Decision?', kind: 'mc', options: ['Reject H₀', 'Fail to reject H₀'], answer: 0 }
+      ],
+      solution: [
+        'Critical-value rule: reject H₀ when the statistic falls in the rejection region (beyond the critical value).',
+        'p-value rule: reject H₀ when p < α. z = 2.50 > 1.96 → reject; z = 1.20 < 1.645 → fail to reject; z = −2.10 < −1.645 → reject.'
+      ]
+    },
+
+    // --- z test for a mean, two-tailed (numeric, fixed) -----------------------
+    {
+      id: 't8-ztest-mean-1',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'z Test for a Mean (σ known)',
+      prompt: 'Test H₀: μ = 50 vs H₁: μ ≠ 50 (two-tailed) at α = 0.05. A sample of n = 25 gives x̄ = 58; the population '
+        + 'σ = 20 is known. Compute the test statistic z and the two-tailed p-value (2 decimals).',
+      difficulty: 3,
+      fields: [
+        { key: 'z', label: 'Test statistic z', answer: 2.0, tol: 0.01, unit: '', hint: '(x̄ − μ₀) ÷ (σ/√n) = (58 − 50) ÷ (20 ÷ 5)' },
+        { key: 'p', label: 'Two-tailed p-value', answer: 2 * SL.normalSf(2.0), tol: 0.01, unit: '', hint: '2 × P(Z > |z|) = 2 × (1 − 0.9772)' }
+      ],
+      solution: [
+        'SE = 20 ÷ 5 = 4;   z = (58 − 50) ÷ 4 = 2.0.',
+        'p = 2 × P(Z > 2.0) = 2 × 0.0228 = 0.0456 ≈ 0.05. Since p < 0.05 (just), reject H₀.'
+      ]
+    },
+
+    // --- t test for a mean (numeric, fixed) -----------------------------------
+    {
+      id: 't8-ttest-mean-1',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 't Test for a Mean (σ unknown)',
+      prompt: 'Test H₀: μ = 50 vs H₁: μ ≠ 50 (two-tailed) at α = 0.05. A sample of n = 16 gives x̄ = 53 and sample SD '
+        + 's = 8. The critical value is t = ±2.131 (df = 15). Compute the degrees of freedom and the test statistic t.',
+      difficulty: 3,
+      fields: [
+        { key: 'df', label: 'Degrees of freedom', answer: 15, tol: 0, unit: '', hint: 'n − 1 = 16 − 1' },
+        { key: 't', label: 'Test statistic t', answer: 1.5, tol: 0.01, unit: '', hint: '(x̄ − μ₀) ÷ (s/√n) = (53 − 50) ÷ (8 ÷ 4)' }
+      ],
+      solution: [
+        'df = n − 1 = 15;   SE = 8 ÷ 4 = 2;   t = (53 − 50) ÷ 2 = 1.5.',
+        '|t| = 1.5 < 2.131, so the statistic is NOT in the rejection region → fail to reject H₀.'
+      ]
+    },
+
+    // --- z test for a proportion, right-tailed (numeric, fixed) ---------------
+    {
+      id: 't8-ztest-prop-1',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'z Test for a Proportion',
+      prompt: 'Test H₀: P = 0.50 vs H₁: P > 0.50 (right-tailed) at α = 0.05. A sample of n = 100 gives p̂ = 0.60. '
+        + 'Compute the test statistic z and the one-tailed p-value (2 decimals).',
+      difficulty: 3,
+      fields: [
+        { key: 'z', label: 'Test statistic z', answer: 2.0, tol: 0.01, unit: '', hint: '(p̂ − P₀) ÷ √[P₀(1 − P₀)/n] = (0.60 − 0.50) ÷ 0.05' },
+        { key: 'p', label: 'One-tailed p-value', answer: SL.normalSf(2.0), tol: 0.01, unit: '', hint: 'P(Z > z) = 1 − 0.9772' }
+      ],
+      solution: [
+        'SE = √[0.50 × 0.50 ÷ 100] = 0.05;   z = (0.60 − 0.50) ÷ 0.05 = 2.0.',
+        'p = P(Z > 2.0) = 0.0228 ≈ 0.02. Since p < 0.05, reject H₀.'
+      ]
+    },
+
+    // --- RANDOMIZED: z test for a mean, two-tailed ----------------------------
+    {
+      id: 't8-ztest-mean-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'z Test for a Mean — Drill',
+      prompt: 'Compute the test statistic and the two-tailed p-value.',
+      difficulty: 3,
+      params: {
+        pair: { choices: [{ s: 15, n: 9 }, { s: 20, n: 25 }, { s: 30, n: 9 }, { s: 12, n: 9 }, { s: 20, n: 16 }] },
+        mu0: { choices: [50, 100, 200] },
+        zc: { choices: [-2.5, -2, -1.5, 1.5, 2, 2.5] }
+      },
+      generate(p) {
+        const sigma = p.pair.s, n = p.pair.n;
+        const se = sigma / Math.sqrt(n);     // clean integer by construction
+        const xbar = p.mu0 + p.zc * se;      // so the test statistic is exactly zc
+        const pval = SL ? 2 * SL.normalSf(Math.abs(p.zc)) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'Test H₀: μ = ' + p.mu0 + ' vs H₁: μ ≠ ' + p.mu0 + ' (two-tailed). A sample of n = ' + n + ' gives '
+            + 'x̄ = ' + xbar + '; the population σ = ' + sigma + ' is known. Compute the test statistic z and the '
+            + 'two-tailed p-value (2 decimals).',
+          fields: [
+            { key: 'z', label: 'Test statistic z', answer: p.zc, tol: 0.01, unit: '', hint: '(' + xbar + ' − ' + p.mu0 + ') ÷ (' + sigma + ' ÷ ' + Math.sqrt(n) + ')' },
+            { key: 'p', label: 'Two-tailed p-value', answer: pval, tol: 0.01, unit: '', hint: '2 × P(Z > |z|)' }
+          ],
+          solution: [
+            'SE = ' + sigma + ' ÷ ' + Math.sqrt(n) + ' = ' + se + ';   z = (' + xbar + ' − ' + p.mu0 + ') ÷ ' + se + ' = ' + p.zc + '.',
+            'p = 2 × P(Z > ' + Math.abs(p.zc) + ') = ' + r2(pval) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. z = (x̄ − μ₀) ÷ (σ/√n); two-tailed p = 2 × P(Z > |z|); reject H₀ if p < α.']
+    },
+
+    // --- RANDOMIZED: z test for a proportion, right-tailed --------------------
+    {
+      id: 't8-ztest-prop-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'z Test for a Proportion — Drill',
+      prompt: 'Compute the test statistic and the one-tailed p-value.',
+      difficulty: 3,
+      params: {
+        P0: { choices: [0.2, 0.5] },
+        n: { choices: [100, 400] },
+        zc: { choices: [1.5, 2, 2.5] }
+      },
+      generate(p) {
+        const se = Math.sqrt(p.P0 * (1 - p.P0) / p.n); // clean by construction
+        const phat = p.P0 + p.zc * se;                 // so the test statistic is exactly zc
+        const pval = SL ? SL.normalSf(p.zc) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        const r4 = (v) => Math.round(v * 10000) / 10000;
+        return {
+          prompt: 'Test H₀: P = ' + p.P0.toFixed(2) + ' vs H₁: P > ' + p.P0.toFixed(2) + ' (right-tailed). A sample of '
+            + 'n = ' + p.n + ' gives p̂ = ' + r4(phat) + '. Compute the test statistic z and the one-tailed p-value (2 decimals).',
+          fields: [
+            { key: 'z', label: 'Test statistic z', answer: p.zc, tol: 0.01, unit: '', hint: '(p̂ − P₀) ÷ √[P₀(1 − P₀)/n]' },
+            { key: 'p', label: 'One-tailed p-value', answer: pval, tol: 0.01, unit: '', hint: 'P(Z > z)' }
+          ],
+          solution: [
+            'SE = √[' + p.P0.toFixed(2) + ' × ' + (1 - p.P0).toFixed(2) + ' ÷ ' + p.n + '] = ' + r2(se) + ';   z = (' + r4(phat) + ' − ' + p.P0.toFixed(2) + ') ÷ ' + r2(se) + ' = ' + p.zc + '.',
+            'p = P(Z > ' + p.zc + ') = ' + r2(pval) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. z = (p̂ − P₀) ÷ √[P₀(1 − P₀)/n]; one-tailed p = P(Z > z); reject H₀ if p < α.']
     }
   ]
 };
