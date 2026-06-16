@@ -155,7 +155,11 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       (standardize+repovi, between, inverz „nađi x"). Normalne vjerojatnosti preko `SL.normalCdf`/`normalSf`/`normalBetween`; inverz
       preko `SL.zUpper` (sve već u stat-lib, engine nedirnut). z-vrijednosti čiste (±0.5/1/1.5/2) za z-tablicu. Verify: z-tablica
       cross-check + brute-force grade-correct + diskriminacija (180 kombinacija) 0 problema. Cache `20260660`.
-- [ ] **B2.5 (T6 sampling distributions, `first-midterm`):** standard error σ/√n, z za x̄, p̂ i z za proporciju, CLT-koncepti. Numeric.
+- [x] **B2.5 (T6 sampling distributions, `first-midterm`)** ✅ 7 vježbi (`0e17b1c`): `choice` (CLT ne traži normalnu populaciju,
+      SE pada s n, E(p̂)=P, z-nazivnik σ/√n) + fiksni SE srednje, SE/z/rep za x̄, SE/z/rep za proporciju + 3 randomizirana (SE srednje,
+      x̄ sampling, proporcija sampling). σ_x̄=σ/√n, σ_p̂=√(P(1−P)/n) inline; repovi preko `SL.normalCdf`/`normalSf`. Brojevi biranI da je
+      SE čist (n perfektni kvadrat; P∈{0.2,0.5}) → z egzaktan, bez dvosmislenosti. Objektni `choices` (`pair`) potvrđeno radi s pickParams.
+      Verify: z-tablica cross-check + grade-correct + diskriminacija (128 kombinacija, 108 clean-SE/clean-z asserta) 0 problema. Cache `20260661`.
 - [ ] **B2.6 (T7 confidence intervals, `second-midterm`):** CI za μ (z & t), CI za proporciju, ME, width=2·ME. `ratio`/`numeric` randomiziran.
 - [ ] **B2.7 (T8 hypothesis testing, `second-midterm`):** test-statistika (z/t), odluka (kritična vrijednost / p-value),
       Type I/II (`choice`), test proporcije. Numeric + choice.
