@@ -633,6 +633,210 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. P(x) = e^(−λ)·λˣ ÷ x!;   for Poisson μ = σ² = λ, so σ = √λ.']
+    },
+
+    // ============================================================================
+    // B2.4 — T5 CONTINUOUS RANDOM VARIABLES / NORMAL (first-midterm)
+    //   Standardizing z = (x − μ)/σ; normal probabilities via the z-table
+    //   (SL.normalCdf / normalSf / normalBetween); inverse "find x" via SL.zUpper.
+    //   Probabilities & z-scores → 2 dp (tol 0.01); the inverse value x is in the
+    //   variable's units → 1 dp (tol 0.05). z-values kept clean (±0.5/1/1.5/2) so a
+    //   z-table lookup works. chapter 5.
+    // ============================================================================
+
+    // --- T5 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't5-concepts',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'choice',
+      title: 'Continuous & Normal — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'For a continuous random variable, the probability of any single exact value is 0.', kind: 'tf', answer: true },
+        { q: 'Probability for a continuous variable is the AREA under the density curve.', kind: 'tf', answer: true },
+        { q: 'The total area under a probability density function equals 1.', kind: 'tf', answer: true },
+        { q: 'In a normal distribution the mean, median and mode are equal.', kind: 'tf', answer: true },
+        { q: 'The standard normal distribution has mean 0 and standard deviation 1.', kind: 'tf', answer: true },
+        { q: 'A negative z-score means the value is above the mean.', kind: 'tf', answer: false },
+        { q: 'By the empirical rule, about 95% of values lie within ±1 standard deviation of the mean.', kind: 'tf', answer: false },
+        { q: 'The z-score of x is computed as:', kind: 'mc', options: ['xμ', '(x − μ)/σ', 'σ/μ', 'x − σ'], answer: 1 },
+        { q: 'If the z-table gives P(Z < z), then P(Z > z) equals:', kind: 'mc', options: ['P(Z < z)', '1 − P(Z < z)', '2·P(Z < z)', 'z'], answer: 1 },
+        { q: 'For X ~ N(80, 100) (variance 100), the standard deviation is:', kind: 'mc', options: ['100', '10', '80', '1'], answer: 1 }
+      ],
+      solution: [
+        'A negative z means BELOW the mean; the empirical rule is 68% within ±1σ, 95% within ±2σ, 99.7% within ±3σ.',
+        'Standardize with z = (x − μ)/σ; the table gives the left tail P(Z < z), so the right tail is its complement.',
+        'Variance 100 → σ = √100 = 10.'
+      ]
+    },
+
+    // --- z-score and tail probabilities (numeric, fixed) ----------------------
+    {
+      id: 't5-zscore-1',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Standardizing & Tail Probabilities',
+      prompt: 'Guest spending is normally distributed with mean μ = 70 and standard deviation σ = 10. For X = 85, '
+        + 'compute the z-score, P(X < 85) and P(X > 85). Use a z-table; give probabilities to 2 decimals.',
+      difficulty: 2,
+      fields: [
+        { key: 'z', label: 'z-score', answer: 1.5, tol: 0.01, unit: '', hint: 'z = (85 − 70) ÷ 10' },
+        { key: 'pLess', label: 'P(X < 85)', answer: SL.normalCdf(1.5), tol: 0.01, unit: '', hint: 'P(Z < 1.5) from the z-table ≈ 0.9332' },
+        { key: 'pMore', label: 'P(X > 85)', answer: SL.normalSf(1.5), tol: 0.01, unit: '', hint: '1 − P(Z < 1.5)' }
+      ],
+      solution: [
+        'z = (85 − 70) ÷ 10 = 1.5.',
+        'P(X < 85) = P(Z < 1.5) = 0.9332 ≈ 0.93.',
+        'P(X > 85) = 1 − 0.9332 = 0.0668 ≈ 0.07.'
+      ]
+    },
+
+    // --- Probability between two values (numeric, fixed) ----------------------
+    {
+      id: 't5-between-1',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Probability Between Two Values',
+      prompt: 'A process has output X ~ N(μ = 500, σ = 100). Compute P(400 < X < 650) using the z-table. '
+        + 'Give probabilities to 2 decimals.',
+      difficulty: 3,
+      fields: [
+        { key: 'zLow', label: 'z for 400', answer: -1.0, tol: 0.01, unit: '', hint: '(400 − 500) ÷ 100' },
+        { key: 'zHigh', label: 'z for 650', answer: 1.5, tol: 0.01, unit: '', hint: '(650 − 500) ÷ 100' },
+        { key: 'prob', label: 'P(400 < X < 650)', answer: SL.normalBetween(-1.0, 1.5), tol: 0.01, unit: '', hint: 'P(Z < 1.5) − P(Z < −1.0) = 0.9332 − 0.1587' }
+      ],
+      solution: [
+        'z₁ = (400 − 500) ÷ 100 = −1.0;   z₂ = (650 − 500) ÷ 100 = 1.5.',
+        'P(400 < X < 650) = P(Z < 1.5) − P(Z < −1.0) = 0.9332 − 0.1587 = 0.7745 ≈ 0.77.'
+      ]
+    },
+
+    // --- Empirical rule bounds (numeric, fixed) -------------------------------
+    {
+      id: 't5-empirical-1',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Empirical Rule (68–95–99.7)',
+      prompt: 'IQ scores are normal with μ = 100 and σ = 15. Using the empirical rule, find the interval μ ± 2σ and the '
+        + 'approximate percentage of values inside it.',
+      difficulty: 1,
+      fields: [
+        { key: 'lower', label: 'Lower bound (μ − 2σ)', answer: 70, tol: 0, unit: '', hint: '100 − 2 × 15' },
+        { key: 'upper', label: 'Upper bound (μ + 2σ)', answer: 130, tol: 0, unit: '', hint: '100 + 2 × 15' },
+        { key: 'pct', label: 'Approx. % within μ ± 2σ', answer: 95, tol: 0, unit: '%', hint: 'Empirical rule: ≈ 95% within ±2 SD' }
+      ],
+      solution: [
+        'μ − 2σ = 100 − 30 = 70;   μ + 2σ = 100 + 30 = 130.',
+        'By the empirical rule, about 95% of values lie within ±2 standard deviations of the mean.'
+      ]
+    },
+
+    // --- RANDOMIZED: z-score + tail probabilities -----------------------------
+    {
+      id: 't5-zscore-random',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Standardizing — Drill',
+      prompt: 'Standardize the value and find the two tail probabilities.',
+      difficulty: 2,
+      params: {
+        mu: { choices: [50, 60, 80, 100] },
+        sigma: { choices: [10, 20] },
+        zc: { choices: [-1.5, -1, 0.5, 1, 1.5, 2] }
+      },
+      generate(p) {
+        const x = p.mu + p.zc * p.sigma; // chosen so z is exactly zc (clean for the table)
+        const pLess = SL ? SL.normalCdf(p.zc) : 0;
+        const pMore = SL ? SL.normalSf(p.zc) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'A variable is X ~ N(μ = ' + p.mu + ', σ = ' + p.sigma + '). For X = ' + x + ', compute the z-score, '
+            + 'P(X < ' + x + ') and P(X > ' + x + '). Use a z-table; give probabilities to 2 decimals.',
+          fields: [
+            { key: 'z', label: 'z-score', answer: p.zc, tol: 0.01, unit: '', hint: 'z = (x − μ) ÷ σ = (' + x + ' − ' + p.mu + ') ÷ ' + p.sigma },
+            { key: 'pLess', label: 'P(X < ' + x + ')', answer: pLess, tol: 0.01, unit: '', hint: 'P(Z < ' + p.zc + ') from the z-table' },
+            { key: 'pMore', label: 'P(X > ' + x + ')', answer: pMore, tol: 0.01, unit: '', hint: '1 − P(Z < ' + p.zc + ')' }
+          ],
+          solution: [
+            'z = (' + x + ' − ' + p.mu + ') ÷ ' + p.sigma + ' = ' + p.zc + '.',
+            'P(X < ' + x + ') = P(Z < ' + p.zc + ') = ' + r2(pLess) + ';   P(X > ' + x + ') = 1 − ' + r2(pLess) + ' = ' + r2(pMore) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. z = (x − μ) ÷ σ; the z-table gives P(Z < z); the upper tail is 1 − P(Z < z).']
+    },
+
+    // --- RANDOMIZED: probability between two values ---------------------------
+    {
+      id: 't5-between-random',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Probability Between — Drill',
+      prompt: 'Find the probability that X falls between the two given values.',
+      difficulty: 3,
+      params: {
+        mu: { choices: [50, 60, 80, 100] },
+        sigma: { choices: [10, 20] },
+        z1: { choices: [-2, -1.5, -1] },
+        z2: { choices: [0.5, 1, 1.5, 2] }
+      },
+      generate(p) {
+        const a = p.mu + p.z1 * p.sigma;
+        const b = p.mu + p.z2 * p.sigma;
+        const prob = SL ? SL.normalBetween(p.z1, p.z2) : 0;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'For X ~ N(μ = ' + p.mu + ', σ = ' + p.sigma + '), compute the z-scores of ' + a + ' and ' + b
+            + ', then P(' + a + ' < X < ' + b + '). Use a z-table; give probabilities to 2 decimals.',
+          fields: [
+            { key: 'zLow', label: 'z for ' + a, answer: p.z1, tol: 0.01, unit: '', hint: '(' + a + ' − ' + p.mu + ') ÷ ' + p.sigma },
+            { key: 'zHigh', label: 'z for ' + b, answer: p.z2, tol: 0.01, unit: '', hint: '(' + b + ' − ' + p.mu + ') ÷ ' + p.sigma },
+            { key: 'prob', label: 'P(' + a + ' < X < ' + b + ')', answer: prob, tol: 0.01, unit: '', hint: 'P(Z < ' + p.z2 + ') − P(Z < ' + p.z1 + ')' }
+          ],
+          solution: [
+            'z₁ = (' + a + ' − ' + p.mu + ') ÷ ' + p.sigma + ' = ' + p.z1 + ';   z₂ = (' + b + ' − ' + p.mu + ') ÷ ' + p.sigma + ' = ' + p.z2 + '.',
+            'P(' + a + ' < X < ' + b + ') = P(Z < ' + p.z2 + ') − P(Z < ' + p.z1 + ') = ' + r2(prob) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. Standardize both ends, then P(a < X < b) = P(Z < z₂) − P(Z < z₁).']
+    },
+
+    // --- RANDOMIZED: inverse — find x for a given upper-tail area --------------
+    {
+      id: 't5-inverse-random',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Inverse Normal — Drill',
+      prompt: 'Find the value x above which a given proportion of the distribution lies.',
+      difficulty: 3,
+      params: {
+        mu: { choices: [400, 500, 600] },
+        sigma: { choices: [10, 15, 20] },
+        alpha: { choices: [0.10, 0.05, 0.025, 0.01] }
+      },
+      generate(p) {
+        const z = SL ? SL.zUpper(p.alpha) : 0;
+        const x = p.mu + z * p.sigma;
+        const r2 = (v) => Math.round(v * 100) / 100;
+        return {
+          prompt: 'Scores are X ~ N(μ = ' + p.mu + ', σ = ' + p.sigma + '). Find the score c such that '
+            + 'P(X > c) = ' + p.alpha.toFixed(3) + '. Use the upper-tail critical value z = ' + z + '. Round to 1 decimal place.',
+          fields: [
+            { key: 'c', label: 'Score c', answer: x, tol: 0.05, unit: '', hint: 'c = μ + z·σ = ' + p.mu + ' + ' + z + ' × ' + p.sigma }
+          ],
+          solution: ['c = μ + z·σ = ' + p.mu + ' + ' + z + ' × ' + p.sigma + ' = ' + r2(x) + ' (' + (p.alpha * 100) + '% of scores exceed it).']
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. To find a cutoff for an upper-tail area α: c = μ + z_α·σ, where z_α is the critical z value.']
     }
   ]
 };
