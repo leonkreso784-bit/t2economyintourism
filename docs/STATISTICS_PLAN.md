@@ -138,7 +138,13 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
       + `ratio` (IQR & range iz 5-broj sažetka) + **4 RANDOMIZIRANE** (SD malog niza, CV iz x̄&s, Chebyshev (1−1/k²), class-width ⌈range/k⌉).
       Node-sanity 98/98 (točni 2dp odgovori zeleni kroz 5 seedova, krivi crveni; parseAmount B0.5 nosi decimale). verify 0/0,
       test:unit 0, smoke 13/0, responsive 8/8. Cache `20260656`.
-- [ ] **B2.2 (T3 probability, `first-midterm`):** addition rule, uvjetna, nezavisnost, kombinacije \\(\\binom{n}{k}\\). Choice + numeric.
+- [x] **B2.2 (T3 probability, `first-midterm`)** ✅ 7 vježbi: `choice` (9 koncepata: sample space, mutually-exclusive≠independent,
+      addition/complement/conditional, combinations) + statički `numeric` (addition+complement+conditional; combinations C(n,k))
+      + `ratio` (marginal/joint/conditional iz 2×2 cross-tablice) + **3 RANDOMIZIRANE** (addition+P(A|B); combinations). Vjerojatnosti
+      = decimale, tol 0.01 (2dp); kombinacije = cijeli, tol 0. **stat-lib proširen `combinations(n,k)`** (faktorijeli „teško/dijeljeno"
+      → lib, reuse u T4 binomnoj) + 8 testova (stat-lib 33/33). **SL-most** u `exercises.js` (`window.StatLib` u pregledniku /
+      `require('./stat-lib.js')` u nodeu) → content pack koristi lib u oba okruženja. Verifikacija: 180 999 provjera (neovisni
+      izračun + grade-correct kroz pun prostor + diskriminacija). verify 0/0, test:unit 0, smoke 13/0, responsive 8/8. Cache `20260658`.
 - [ ] **B2.3 (T4 discrete RV, `first-midterm`):** E(X), binomna (μ=nP, σ²=nP(1−P), P(x)), Poisson (P(x), μ=σ²=λ). Numeric randomiziran.
 - [ ] **B2.4 (T5 continuous/normal, `first-midterm`):** **z-score** (mathportal!) + normalna vjerojatnost preko z-tablice
       (`normalCdf`). Numeric randomiziran (x,μ,σ → z; P(Z<z)). Cross-check s mathportal z-score kalkulatorom.

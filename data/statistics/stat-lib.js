@@ -91,6 +91,17 @@
     return row ? row[alphaUpper] : undefined;
   }
 
+  // --- combinations(n, k) → C(n,k) = n! / (k!(n−k)!) -------------------------
+  // Multiplikativni oblik (bez velikih faktorijela → bez overflowa/greške). Cijeli broj.
+  // Dijele ga T3 (kombinatorika) i T4 (binomna vjerojatnost). 0 ako k<0 ili k>n.
+  function combinations(n, k) {
+    if (k < 0 || k > n || n < 0) return 0;
+    k = Math.min(k, n - k);
+    var num = 1;
+    for (var i = 1; i <= k; i++) num = num * (n - k + i) / i;
+    return Math.round(num);
+  }
+
   var StatLib = {
     normalCdf: normalCdf,
     normalSf: normalSf,
@@ -98,6 +109,7 @@
     zCritical: zCritical,
     zUpper: zUpper,
     tCritical: tCritical,
+    combinations: combinations,
     Z_BY_CONFIDENCE: Z_BY_CONFIDENCE,
     Z_UPPER: Z_UPPER,
     T_TABLE: T_TABLE

@@ -14,6 +14,11 @@
 // B0 (žica): SKELETON — prazna lista. Tab "Exercises" se pojavi (prazno stanje); sadržaj
 //            se autorira po temi u FAZI B2 (T1–T9). meta.currency='' (statistika nije novac).
 
+// Pristup stat-lib matematici iz solve()/generate(): u pregledniku je window.StatLib
+// (učitan PRIJE ove datoteke preko content.scripts); u nodeu (testovi) require relativno.
+var SL = (typeof window !== 'undefined' && window.StatLib) ? window.StatLib
+  : (typeof require !== 'undefined' ? require('./stat-lib.js') : null);
+
 const statisticsExercises = {
   meta: { lang: 'en', currency: '', version: 1 },
   exercises: [
@@ -244,6 +249,174 @@ const statisticsExercises = {
         };
       },
       solution: ['Press “New numbers” for a fresh range. Class width = (Max − Min) ÷ number of classes, always rounded UP to a whole number.']
+    },
+
+    // ============================================================================
+    // B2.2 — T3 PROBABILITY METHODS (first-midterm)
+    //   Addition rule, complement, conditional probability, independence, combinations.
+    //   Probabilities entered as decimals (0–1), rounded to 2 places (tol 0.01);
+    //   combination counts are exact integers (tol 0). chapter 3.
+    // ============================================================================
+
+    // --- T3 concepts (TF + MC) ------------------------------------------------
+    {
+      id: 't3-concepts',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'choice',
+      title: 'Probability — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The sample space is the set of ALL possible outcomes of a random experiment.', kind: 'tf', answer: true },
+        { q: 'If two events are mutually exclusive, then P(A and B) = 0.', kind: 'tf', answer: true },
+        { q: 'Mutually exclusive events are always independent.', kind: 'tf', answer: false },
+        { q: 'For any event A, P(A) + P(not A) = 1.', kind: 'tf', answer: true },
+        { q: 'If A and B are independent, then P(A and B) = P(A) × P(B).', kind: 'tf', answer: true },
+        { q: 'A probability can be greater than 1 when an event is very likely.', kind: 'tf', answer: false },
+        { q: 'The probability that at LEAST ONE of two events occurs uses the:', kind: 'mc', options: ['Multiplication rule', 'Addition rule', 'Complement only', 'Independence'], answer: 1 },
+        { q: 'Choosing 3 people from 10 where order does NOT matter is counted with:', kind: 'mc', options: ['Permutations', 'Combinations', 'The addition rule', 'The complement'], answer: 1 },
+        { q: 'If P(A | B) = P(A), then events A and B are:', kind: 'mc', options: ['Mutually exclusive', 'Independent', 'Complementary', 'Collectively exhaustive'], answer: 1 }
+      ],
+      solution: [
+        'Mutually exclusive ≠ independent: exclusive events cannot both happen, so they are highly dependent.',
+        'P(A or B) uses the addition rule P(A) + P(B) − P(A and B); independence means P(A | B) = P(A).'
+      ]
+    },
+
+    // --- Addition rule, complement, conditional (numeric, fixed) --------------
+    {
+      id: 't3-addition-1',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Addition Rule, Complement & Conditional',
+      prompt: 'In a store, P(asks for help) = 0.30, P(makes a purchase) = 0.20, and P(both) = 0.15. Compute the '
+        + 'following probabilities as decimals, rounded to 2 places.',
+      difficulty: 2,
+      fields: [
+        { key: 'union', label: 'P(asks for help OR makes a purchase)', answer: 0.35, tol: 0.01, unit: '', hint: 'P(A) + P(B) − P(A and B) = 0.30 + 0.20 − 0.15' },
+        { key: 'notHelp', label: 'P(does NOT ask for help)', answer: 0.70, tol: 0.01, unit: '', hint: 'Complement: 1 − P(A)' },
+        { key: 'purchGivenHelp', label: 'P(purchase | asked for help)', answer: 0.50, tol: 0.01, unit: '', hint: 'P(A and B) ÷ P(A) = 0.15 ÷ 0.30' }
+      ],
+      solution: [
+        'P(A or B) = 0.30 + 0.20 − 0.15 = 0.35.',
+        'P(not A) = 1 − 0.30 = 0.70.',
+        'P(B | A) = P(A and B) ÷ P(A) = 0.15 ÷ 0.30 = 0.50.',
+        'Check independence: P(A)·P(B) = 0.30 × 0.20 = 0.06 ≠ 0.15, so the events are NOT independent.'
+      ]
+    },
+
+    // --- Combinations (numeric, fixed) ----------------------------------------
+    {
+      id: 't3-combinations-1',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Counting with Combinations',
+      prompt: 'Compute the number of unordered ways to choose the items. Use C(n, k) = n! ÷ [k!(n − k)!].',
+      difficulty: 2,
+      fields: [
+        { key: 'c103', label: 'C(10, 3)', answer: 120, tol: 0, unit: '', hint: '(10 × 9 × 8) ÷ (3 × 2 × 1)' },
+        { key: 'c62', label: 'C(6, 2)', answer: 15, tol: 0, unit: '', hint: '(6 × 5) ÷ (2 × 1)' },
+        { key: 'c80', label: 'C(8, 0)', answer: 1, tol: 0, unit: '', hint: 'Choosing none: exactly 1 way (0! = 1)' }
+      ],
+      solution: [
+        'C(10, 3) = (10 × 9 × 8) ÷ (3 × 2 × 1) = 720 ÷ 6 = 120.',
+        'C(6, 2) = (6 × 5) ÷ (2 × 1) = 30 ÷ 2 = 15.',
+        'C(8, 0) = 1 (there is exactly one way to choose nothing).'
+      ]
+    },
+
+    // --- Contingency table → marginal/joint/conditional (ratio, fixed) --------
+    {
+      id: 't3-crosstable-1',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'ratio',
+      title: 'Probabilities from a Cross Table',
+      prompt: 'A survey of 100 guests cross-classifies them by whether they are Members (A) and whether they Booked online (B), '
+        + 'as shown. Compute the probabilities as decimals, rounded to 2 places.',
+      difficulty: 2,
+      givens: [
+        { label: 'Member & Booked online', value: 30 },
+        { label: 'Member & did NOT book online', value: 10 },
+        { label: 'Non-member & Booked online', value: 20 },
+        { label: 'Non-member & did NOT book online', value: 40 },
+        { label: 'Total guests', value: 100 }
+      ],
+      fields: [
+        { key: 'pA', label: 'P(Member)', answer: 0.40, tol: 0.01, unit: '', hint: '(30 + 10) ÷ 100' },
+        { key: 'pAandB', label: 'P(Member AND Booked online)', answer: 0.30, tol: 0.01, unit: '', hint: '30 ÷ 100' },
+        { key: 'pAgivenB', label: 'P(Member | Booked online)', answer: 0.60, tol: 0.01, unit: '', hint: '30 ÷ (30 + 20) = 30 ÷ 50' }
+      ],
+      solution: [
+        'P(Member) = (30 + 10) ÷ 100 = 0.40.',
+        'P(Member and Booked) = 30 ÷ 100 = 0.30.',
+        'P(Member | Booked) = 30 ÷ 50 = 0.60 (restrict to the 50 who booked online).'
+      ]
+    },
+
+    // --- RANDOMIZED: addition rule + conditional ------------------------------
+    {
+      id: 't3-addition-random',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Addition Rule — Drill',
+      prompt: 'Compute P(A or B) and P(A | B) from the probabilities below.',
+      difficulty: 2,
+      params: {
+        a: { choices: [20, 30, 40, 50] },
+        b: { choices: [20, 30, 40, 50] },
+        ov: { choices: [5, 10, 15] }
+      },
+      generate(p) {
+        const pAB = Math.min(p.ov, p.a, p.b); // overlap ≤ each marginal (always = ov here)
+        const union = (p.a + p.b - pAB) / 100;
+        const aGivenB = pAB / p.b;
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'For two events, P(A) = ' + (p.a / 100).toFixed(2) + ', P(B) = ' + (p.b / 100).toFixed(2)
+            + ', and P(A and B) = ' + (pAB / 100).toFixed(2) + '. Compute P(A or B) and P(A | B) as decimals, '
+            + 'rounded to 2 places.',
+          fields: [
+            { key: 'union', label: 'P(A or B)', answer: union, tol: 0.01, unit: '', hint: 'P(A) + P(B) − P(A and B)' },
+            { key: 'aGivenB', label: 'P(A | B)', answer: aGivenB, tol: 0.01, unit: '', hint: 'P(A and B) ÷ P(B)' }
+          ],
+          solution: [
+            'P(A or B) = ' + (p.a / 100).toFixed(2) + ' + ' + (p.b / 100).toFixed(2) + ' − ' + (pAB / 100).toFixed(2) + ' = ' + r2(union) + '.',
+            'P(A | B) = P(A and B) ÷ P(B) = ' + (pAB / 100).toFixed(2) + ' ÷ ' + (p.b / 100).toFixed(2) + ' = ' + r2(aGivenB) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh probabilities. P(A or B) = P(A) + P(B) − P(A and B); P(A | B) = P(A and B) ÷ P(B).']
+    },
+
+    // --- RANDOMIZED: combinations ---------------------------------------------
+    {
+      id: 't3-combinations-random',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Combinations — Drill',
+      prompt: 'Compute the combination below.',
+      difficulty: 2,
+      params: {
+        n: { choices: [5, 6, 7, 8, 9, 10] },
+        k: { choices: [2, 3] }
+      },
+      generate(p) {
+        const c = SL ? SL.combinations(p.n, p.k) : 0;
+        return {
+          prompt: 'In how many unordered ways can you choose ' + p.k + ' items from ' + p.n + '? Compute C(' + p.n + ', ' + p.k + ').',
+          fields: [
+            { key: 'c', label: 'C(' + p.n + ', ' + p.k + ')', answer: c, tol: 0, unit: '', hint: 'n! ÷ [k!(n − k)!]' }
+          ],
+          solution: ['C(' + p.n + ', ' + p.k + ') = ' + p.n + '! ÷ [' + p.k + '!(' + p.n + ' − ' + p.k + ')!] = ' + c + '.']
+        };
+      },
+      solution: ['Press “New numbers” for a fresh combination. C(n, k) = n! ÷ [k!(n − k)!] counts unordered selections.']
     }
   ]
 };

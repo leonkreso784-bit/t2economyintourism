@@ -8,7 +8,7 @@
 const assert = require('assert');
 const path = require('path');
 const StatLib = require(path.join(__dirname, '..', '..', 'data', 'statistics', 'stat-lib.js'));
-const { normalCdf, normalSf, normalBetween, zCritical, zUpper, tCritical } = StatLib;
+const { normalCdf, normalSf, normalBetween, zCritical, zUpper, tCritical, combinations } = StatLib;
 
 let passed = 0;
 let failed = 0;
@@ -53,6 +53,16 @@ test('tCritical(29, 0.005) = 2.756', () => assert.strictEqual(tCritical(29, 0.00
 test('t > z for small df: t(5,0.025) > 1.96', () => assert.ok(tCritical(5, 0.025) > 1.96));
 test('tCritical(df>=31) falls back to z', () => assert.strictEqual(tCritical(40, 0.025), zUpper(0.025)));
 test('tCritical(Infinity) = z', () => assert.strictEqual(tCritical(Infinity, 0.05), 1.645));
+
+// ---------------------------------------------------------------- combinations
+test('C(10,3) = 120', () => assert.strictEqual(combinations(10, 3), 120));
+test('C(6,2) = 15', () => assert.strictEqual(combinations(6, 2), 15));
+test('C(8,2) = 28', () => assert.strictEqual(combinations(8, 2), 28));
+test('C(5,5) = 1', () => assert.strictEqual(combinations(5, 5), 1));
+test('C(7,0) = 1', () => assert.strictEqual(combinations(7, 0), 1));
+test('C(52,5) = 2598960', () => assert.strictEqual(combinations(52, 5), 2598960));
+test('C symmetry: C(9,2)=C(9,7)', () => assert.strictEqual(combinations(9, 2), combinations(9, 7)));
+test('C(5,6) = 0 (k>n)', () => assert.strictEqual(combinations(5, 6), 0));
 
 console.log('\n  ' + passed + ' passed, ' + failed + ' failed\n');
 process.exit(failed ? 1 : 0);
