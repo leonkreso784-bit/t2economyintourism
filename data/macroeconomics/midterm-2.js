@@ -121,27 +121,45 @@ const macroeconomicsM2 = {
 
     learn: {
       content:
-        '<h3>The medium run begins on the labour market</h3>' +
-        '<p>The IS-LM model assumed fixed prices. In the medium run that breaks down: higher output lowers unemployment, which raises wages, costs and finally prices. So the <strong>unemployment rate</strong> is the bridge between output \\(Y\\) and the price level \\(P\\) — and it is set on the labour market by two relations.</p>' +
+        '<h3>Why the medium run starts here</h3>' +
+        '<p>The IS-LM model rested on one big assumption: prices are fixed. Over a few quarters that is fine, but it cannot last. Trace the chain: higher output needs more workers → unemployment falls → workers gain bargaining power → wages rise → production costs rise → firms raise prices. So once we let prices move, output and the price level become linked — and the hinge that connects them is the <strong>unemployment rate</strong>. That is why, before we can draw the AS-AD model, we must understand how the labour market sets wages, prices and unemployment. Two relations do all the work.</p>' +
 
-        '<h4>Wage setting (WS)</h4>' +
+        '<h3>A quick tour of the labour market</h3>' +
+        '<p>The working-age population splits into employed \\(E\\), unemployed \\(U\\), and those out of the labour force. Two ratios summarise it: the <strong>participation rate</strong> (labour force ÷ working-age population) and the <strong>unemployment rate</strong> \\(u = U/L\\). Workers also flow constantly between these states — hires, quits, layoffs, and movements in and out of the labour force (including "discouraged workers" who stop searching).</p>' +
+
+        '<h3>Wage setting (WS): what determines wages</h3>' +
+        '<p>Wages are set by bargaining (collective or individual) and by firms’ desire to retain productive workers. Formally, the nominal wage depends on three things:</p>' +
         '<div class="formula-box">\\[ W = P^e\\, F(u, z) \\]</div>' +
-        '<p>Wages rise with the <strong>expected</strong> price level \\(P^e\\) (real wages are what matter, and wages are negotiated ahead), fall with unemployment \\(u\\) (weaker bargaining power), and rise with \\(z\\) — benefits, employment protection, the minimum wage.</p>' +
+        '<ul>' +
+        '<li><strong>The expected price level \\(P^e\\):</strong> workers and firms care about the <em>real</em> wage \\(W/P\\), and wages are negotiated for the future. If everyone expects higher prices, nominal wages are set higher to match.</li>' +
+        '<li><strong>Unemployment \\(u\\):</strong> higher unemployment <em>weakens</em> workers’ bargaining power (easier to replace, harder to find a new job), so it pushes wages <em>down</em>. \\(F\\) is decreasing in \\(u\\).</li>' +
+        '<li><strong>The catch-all \\(z\\):</strong> everything else that strengthens workers — unemployment benefits, employment protection, the minimum wage. Higher \\(z\\) → higher wages.</li>' +
+        '</ul>' +
+        '<p><strong>Efficiency wages</strong> explain why firms often pay <em>above</em> the reservation wage (the wage that leaves a worker indifferent between working and not): paying more cuts turnover and raises productivity.</p>' +
 
-        '<h4>Price setting (PS)</h4>' +
-        '<p>If one worker makes one unit of output, marginal cost is \\(W\\). Firms add a markup \\(\\mu\\):</p>' +
+        '<h3>Price setting (PS): what determines prices</h3>' +
+        '<p>By setting wages, the labour market also sets prices, because prices are built on costs. In the simplest case one worker produces one unit, so marginal cost equals the wage \\(W\\). Firms with some market power add a <strong>markup</strong> \\(\\mu\\):</p>' +
         '<div class="formula-box">\\[ P = (1+\\mu)\\,W \\quad\\Longrightarrow\\quad \\frac{W}{P} = \\frac{1}{1+\\mu} \\]</div>' +
+        '<p><strong>Interpretation:</strong> the price-setting relation pins down the real wage that firms are <em>willing to pay</em>. A bigger markup (more monopoly power, less competition) means higher prices relative to wages — i.e. a <em>lower</em> real wage for workers.</p>' +
 
-        '<h4>The natural rate of unemployment</h4>' +
-        '<p>The two relations describe the same real wage, so setting \\(P^e = P\\):</p>' +
-        '<div class="formula-box">\\[ F(u_n, z) = \\frac{1}{1+\\mu} \\]</div>' +
+        '<h3>Putting them together: the natural rate of unemployment</h3>' +
+        '<p>Here is the key insight: wage setting and price setting describe the <em>same</em> real wage from two sides, so in equilibrium they must agree. Setting expectations correct (\\(P^e = P\\)) and equating the two real wages:</p>' +
+        '<div class="formula-box">\\[ \\underbrace{F(u_n, z)}_{\\text{WS real wage}} = \\underbrace{\\frac{1}{1+\\mu}}_{\\text{PS real wage}} \\]</div>' +
+        '<p>The unemployment rate \\(u_n\\) that solves this is the <strong>natural rate of unemployment</strong> — the rate consistent with stable, correctly-expected prices. With a simple linear form \\(F = 1 - u + z\\):</p>' +
+        '<div class="formula-box">\\[ u_n = 1 - \\frac{1}{1+\\mu} + z \\]</div>' +
         '<div class="example-box">' +
-        '<h4>Worked example — natural rate</h4>' +
-        '<p>Take \\(F = 1 - u + z\\) with \\(z = 0\\) and markup \\(\\mu = 5\\%\\):</p>' +
+        '<h4>Worked example — computing the natural rate</h4>' +
+        '<p>Take \\(z = 0\\) and a markup \\(\\mu = 5\\%\\). The price-setting real wage is</p>' +
         '<div class="formula-box">\\[ \\frac{W}{P} = \\frac{1}{1.05} = 0.952, \\qquad u_n = 1 - 0.952 = 4.8\\% \\]</div>' +
-        '<p>If the markup rises to 10%: \\( \\tfrac{1}{1.10} = 0.909 \\Rightarrow u_n = 9.1\\% \\). More market power → higher natural unemployment.</p>' +
+        '<p>Now suppose competition weakens and the markup rises to 10%: \\( \\tfrac{1}{1.10} = 0.909 \\Rightarrow u_n = 9.1\\% \\).</p>' +
+        '<p><strong>Interpretation:</strong> more market power (or more generous benefits \\(z\\)) <em>raises</em> the natural rate of unemployment. The natural rate is therefore a <em>structural</em> feature of the economy, not something demand policy can permanently change.</p>' +
         '</div>' +
-        '<div class="tip-box"><h4>Natural level of output</h4><p>With \\(Y = N\\) and \\(N = L(1-u_n)\\), the <strong>natural level of output</strong> is \\(Y_n = L(1-u_n)\\). Short-run output simply fluctuates around \\(Y_n\\); the natural rate is set by structure (\\(z\\), \\(\\mu\\)), not by demand.</p></div>',
+        '<div class="tip-box">' +
+        '<h4>From the natural rate to the natural level of output</h4>' +
+        '<p>Once we know \\(u_n\\), employment is \\(N = L(1 - u_n)\\), and with one unit of output per worker the <strong>natural level of output</strong> is</p>' +
+        '<div class="formula-box">\\[ Y_n = L\\,(1 - u_n) \\]</div>' +
+        '<p>This is the anchor of the medium run: in the short run output fluctuates <em>around</em> \\(Y_n\\) (driven by demand), but \\(Y_n\\) itself is set by structure — the markup \\(\\mu\\) and labour-market flexibility \\(z\\) — not by demand.</p>' +
+        '</div>',
       image: null
     }
   },
@@ -247,22 +265,35 @@ const macroeconomicsM2 = {
 
     learn: {
       content:
-        '<h3>Putting all markets together: AS-AD</h3>' +
-        '<p>The AS-AD model analyses output and prices together. <strong>Aggregate Supply</strong> comes from the labour market; <strong>Aggregate Demand</strong> comes from IS-LM.</p>' +
+        '<h3>The complete short-and-medium-run picture</h3>' +
+        '<p>We now have both halves of the economy: the <strong>demand</strong> side (goods + money markets → IS-LM) and the <strong>supply</strong> side (the labour market → wages and prices). The <strong>AS-AD model</strong> combines them in a diagram of output \\(Y\\) against the price level \\(P\\), and it is the standard framework for analysing how \\(Y\\) and \\(P\\) move in the short and medium run. The whole story is the interaction of two curves.</p>' +
 
-        '<h4>Aggregate Supply (upward)</h4>' +
-        '<p>Combining wage and price setting with \\(u = 1 - Y/L\\):</p>' +
+        '<h3>Aggregate Supply (AS): upward-sloping</h3>' +
+        '<p>The AS curve comes straight from the labour market. Combine wage setting and price setting and substitute the link between output and unemployment, \\(u = 1 - Y/L\\):</p>' +
         '<div class="formula-box">\\[ P = P^e\\,(1+\\mu)\\,F\\!\\left(1 - \\frac{Y}{L},\\, z\\right) \\]</div>' +
-        '<p>Higher \\(Y\\) → lower \\(u\\) → higher \\(W\\) → higher \\(P\\). AS shifts with \\(P^e\\), \\(\\mu\\), \\(z\\).</p>' +
+        '<p><strong>Why it slopes up:</strong> follow the chain. Higher output \\(Y\\) → more employment → lower unemployment \\(u\\) → stronger worker bargaining → higher wages \\(W\\) → higher costs → higher prices \\(P\\). A positive relationship between \\(P\\) and \\(Y\\).</p>' +
+        '<p><strong>What shifts it:</strong> the expected price level \\(P^e\\), the markup \\(\\mu\\), and the catch-all \\(z\\). A rise in \\(P^e\\) in particular shifts AS <em>up</em> — the mechanism that drives the medium-run adjustment below.</p>' +
 
-        '<h4>Aggregate Demand (downward)</h4>' +
-        '<p>A higher \\(P\\) shrinks the real money supply \\(M/P\\), raising \\(i\\) and cutting demand:</p>' +
+        '<h3>Aggregate Demand (AD): downward-sloping</h3>' +
+        '<p>The AD curve comes from IS-LM. The key is the real money supply \\(M/P\\):</p>' +
         '<div class="formula-box">\\[ Y = Y\\!\\left(\\frac{M}{P},\\, G,\\, T\\right) \\]</div>' +
-        '<p>AD shifts with \\(M\\), \\(G\\), \\(T\\) — i.e. with monetary and fiscal policy.</p>' +
+        '<p><strong>Why it slopes down:</strong> a higher price level \\(P\\) shrinks the <em>real</em> money supply \\(M/P\\); that raises the interest rate \\(i\\), which cuts investment and demand, lowering output. So higher \\(P\\) ↔ lower \\(Y\\).</p>' +
+        '<p><strong>What shifts it:</strong> anything that shifts IS or LM — the money supply \\(M\\), government spending \\(G\\), or taxes \\(T\\). Expansionary monetary or fiscal policy shifts AD to the <strong>right</strong>.</p>' +
 
+        '<h3>Equilibrium — and the heart of the medium run</h3>' +
+        '<p>In the short run, AS and AD together fix \\(Y\\) and \\(P\\). The deep result concerns what happens to expectations over time:</p>' +
+        '<ul>' +
+        '<li>If \\(P = P^e\\): expectations are correct, \\(u = u_n\\), and output is at its natural level \\(Y = Y_n\\). This is <strong>medium-run equilibrium</strong>.</li>' +
+        '<li>If \\(Y > Y_n\\): unemployment is below \\(u_n\\), wages and prices rise above what was expected, so \\(P > P^e\\).</li>' +
+        '<li>If \\(Y < Y_n\\): the reverse, \\(P < P^e\\).</li>' +
+        '</ul>' +
+        '<div class="example-box">' +
+        '<h4>Worked example — a demand boom fades</h4>' +
+        '<p>Start at \\(Y_n\\). A monetary expansion shifts AD right, raising output to \\(Y > Y_n\\) and prices to \\(P > P^e\\). But now expectations are too low. As people revise \\(P^e\\) upward, the AS curve shifts <em>up</em>, pushing output back down. The process continues until \\(P = P^e\\) again and \\(Y = Y_n\\) — at a permanently <em>higher price level</em>.</p>' +
+        '</div>' +
         '<div class="tip-box">' +
-        '<h4>Short run vs. medium run</h4>' +
-        '<p>In <strong>medium-run equilibrium</strong> \\(P = P^e\\), so \\(u = u_n\\) and \\(Y = Y_n\\). In the short run, demand can push \\(Y\\) away from \\(Y_n\\): if \\(Y > Y_n\\) then \\(P > P^e\\), expectations rise, AS shifts up and output returns to \\(Y_n\\). <strong>Demand determines the short run; supply (structure) determines the medium run.</strong></p>' +
+        '<h4>The one-sentence takeaway</h4>' +
+        '<p><strong>Demand determines output in the short run; supply (structure) determines it in the medium run.</strong> A demand stimulus can lift output temporarily, but once expectations catch up the economy returns to \\(Y_n\\) and only the price level is permanently higher. This is the bridge to the long run, where \\(Y_n\\) itself grows.</p>' +
         '</div>',
       image: null
     }
@@ -377,24 +408,47 @@ const macroeconomicsM2 = {
 
     learn: {
       content:
-        '<h3>What makes countries rich: long-run growth</h3>' +
-        '<p>Over decades, trend growth dwarfs business-cycle fluctuations. Growth determines living standards, measured by <strong>GDP per capita at PPP</strong> (correcting for cross-country price differences).</p>' +
+        '<h3>From fluctuations to growth: the biggest question in economics</h3>' +
+        '<p>The short and medium run are about <em>fluctuations</em> — output bobbing up and down around its natural level. Zoom out to decades, though, and those wiggles vanish next to the dominant feature: the relentless, compounding rise of output. The long run asks the questions that matter most for human welfare: <em>why are some countries rich and others poor? What makes an economy grow? Why do some grow fast and others stagnate?</em></p>' +
+        '<p>Living standards are measured by <strong>GDP per capita</strong>, and for honest cross-country comparison by <strong>GDP per capita at PPP</strong> (purchasing power parity), which corrects for the fact that the same income buys different amounts of goods in different countries. Because growth compounds, even a 1% difference in the growth rate becomes an enormous gap in living standards over a generation.</p>' +
 
-        '<h4>The production function</h4>' +
+        '<h3>The engine room: the production function</h3>' +
+        '<p>What does an economy turn into output? Capital and labour:</p>' +
         '<div class="formula-box">\\[ Y = F(K, N) \\]</div>' +
-        '<p>It has <strong>constant returns to scale</strong> (\\(xY = F(xK, xN)\\)) but <strong>diminishing returns</strong> to each input. Per worker:</p>' +
+        '<p>where \\(K\\) = capital (machines, plants, buildings) and \\(N\\) = labour. Two properties shape everything that follows:</p>' +
+        '<ul>' +
+        '<li><strong>Constant returns to scale:</strong> double both inputs and you double output, \\(xY = F(xK, xN)\\).</li>' +
+        '<li><strong>Diminishing returns</strong> to each input separately: adding more capital to a fixed workforce raises output by less and less.</li>' +
+        '</ul>' +
+        '<p>Setting \\(x = 1/N\\) rewrites this in the form that matters for living standards — output per worker as a function of capital per worker:</p>' +
         '<div class="formula-box">\\[ \\frac{Y}{N} = F\\!\\left(\\frac{K}{N},\\, 1\\right) \\]</div>' +
-        '<p>More capital per worker raises output per worker — but by ever-smaller increments.</p>' +
+        '<p>More capital per worker raises output per worker — but, because of diminishing returns, by ever-smaller increments.</p>' +
 
-        '<h4>The Solow model: saving and the limits of capital</h4>' +
-        '<p>Capital is built by investment, financed by saving:</p>' +
+        '<h3>The Solow model: saving, and the limits of capital</h3>' +
+        '<p>Where does capital come from? From investment, which is financed by saving. Capital accumulates as old capital depreciates and new investment is added:</p>' +
         '<div class="formula-box">\\[ K_{t+1} = (1-\\delta)K_t + I_t, \\qquad I_t = sY_t \\]</div>' +
-        '<p>A higher saving rate \\(s\\) raises the <em>level</em> of \\(Y/N\\), but diminishing returns mean capital accumulation alone <strong>cannot sustain growth</strong> — its long-run contribution to the growth rate of \\(Y/N\\) is zero.</p>' +
+        '<p>where \\(\\delta\\) is the depreciation rate and \\(s\\) the saving rate. The chain is: the saving rate sets investment → investment builds capital → capital determines output per worker.</p>' +
+        '<div class="warning-box">' +
+        '<h4>The central — and surprising — result</h4>' +
+        '<p>A higher saving rate raises the <strong>level</strong> of output per worker (a richer steady state), and lifts growth <em>during the transition</em>. But because of <strong>diminishing returns</strong>, capital accumulation alone <strong>cannot sustain growth forever</strong> — its contribution to the long-run growth rate of \\(Y/N\\) is <em>zero</em>. You cannot get rich indefinitely just by saving more.</p>' +
+        '</div>' +
 
-        '<h4>Technology and human capital</h4>' +
-        '<p>Sustained growth needs sustained <strong>technological progress</strong>: \\( Y = F(K, N, A) \\), with \\(A\\) rising through R&D — driven by the <strong>fertility</strong> of research and the <strong>appropriability</strong> of its results (patents). Output per worker also depends on <strong>human capital</strong>:</p>' +
+        '<h3>What actually sustains growth: technology and human capital</h3>' +
+        '<p>If capital alone runs out of steam, what keeps living standards rising? <strong>Technological progress.</strong> Adding the state of technology \\(A\\) to the production function:</p>' +
+        '<div class="formula-box">\\[ Y = F(K, N, A) \\]</div>' +
+        '<p>A higher \\(A\\) produces more output from the same \\(K\\) and \\(N\\). Sustained growth requires <em>continuous</em> technological progress, which comes from investment in R&D. That investment depends on:</p>' +
+        '<ul>' +
+        '<li>the <strong>fertility</strong> of research — the interplay of basic and applied research, the education system, a culture of entrepreneurship;</li>' +
+        '<li>the <strong>appropriability</strong> of results — how much profit an innovator can capture, which is why patent protection matters.</li>' +
+        '</ul>' +
+        '<p>Output per worker also depends on <strong>human capital</strong> \\(H\\) — the knowledge and skills of workers:</p>' +
         '<div class="formula-box">\\[ \\frac{Y}{N} = f\\!\\left(\\frac{K}{N},\\, \\frac{H}{N}\\right) \\]</div>' +
-        '<div class="tip-box"><h4>Convergence</h4><p>Poorer economies tend to grow faster and catch up — but only <em>conditionally</em> (within groups like the OECD). Note: technological progress in tourism/hospitality (services) is on average slower than in industry.</p></div>',
+        '<p>So living standards depend on how much a society saves (physical capital) <em>and</em> how much it invests in education (human capital).</p>' +
+
+        '<div class="tip-box">' +
+        '<h4>Convergence — and a note for tourism</h4>' +
+        '<p>The model predicts <strong>convergence</strong>: poorer countries, starting with less capital, should grow faster and catch up. This holds <em>conditionally</em>, within similar groups like the OECD, but is not universal — many economies have not converged. One caution relevant to this faculty: technological progress in <strong>tourism and hospitality (services)</strong> is on average slower than in industry, which tends to dampen long-run productivity growth in service-heavy economies.</p>' +
+        '</div>',
       image: null
     }
   },
@@ -487,18 +541,30 @@ const macroeconomicsM2 = {
     learn: {
       content:
         '<h3>The future shapes the present</h3>' +
-        '<p>Consumers, firms and investors act on <strong>expectations</strong>. Two tools make this precise: the distinction between nominal and real interest rates, and present discounted value.</p>' +
+        '<p>Almost every important economic decision is forward-looking. A family deciding how much to consume thinks about its <em>future</em> income; a firm deciding whether to invest weighs <em>expected future</em> profits; an investor pricing an asset is buying a stream of <em>future</em> payments. So expectations are not a footnote — they are a driving force. To handle them we need two precise tools: the distinction between nominal and real interest rates, and the idea of present discounted value.</p>' +
 
-        '<h4>Nominal vs. real interest rate (Fisher)</h4>' +
+        '<h3>Nominal vs. real interest rates (the Fisher relation)</h3>' +
+        '<p>A 4% return is not really 4% if prices also rise. The <strong>real</strong> interest rate strips out <em>expected</em> inflation from the nominal rate:</p>' +
         '<div class="formula-box">\\[ r_t \\approx i_t - \\pi^e_{t+1}, \\qquad 1 + r_t = \\frac{1 + i_t}{1 + \\pi^e_{t+1}} \\]</div>' +
-        '<div class="example-box"><h4>Worked example</h4><p>Nominal rate 4%, expected inflation 2%:</p><div class="formula-box">\\[ r \\approx 4\\% - 2\\% = 2\\% \\]</div><p>A saver gives up goods today to get about 2% MORE goods next year — the real rate is what drives decisions.</p></div>' +
+        '<p>Notice it is <em>expected</em> inflation \\(\\pi^e\\), not past inflation — because borrowing and lending decisions are about the future.</p>' +
+        '<div class="example-box">' +
+        '<h4>Worked example — the real rate</h4>' +
+        '<p>Nominal rate 4%, expected inflation 2%:</p>' +
+        '<div class="formula-box">\\[ r \\approx 4\\% - 2\\% = 2\\% \\]</div>' +
+        '<p><strong>Interpretation:</strong> a saver gives up goods today to get about 2% <em>more goods</em> next year. That real, goods-denominated return — not the headline money return — is what actually shapes saving, borrowing and investment.</p>' +
+        '</div>' +
 
-        '<h4>Expected present discounted value</h4>' +
-        '<p>A future payment is worth less today. One year ahead, \\(z\\) is worth \\( \\dfrac{z}{1+r} \\); payments further out are discounted more. Summing the discounted expected payments gives an asset’s value today.</p>' +
+        '<h3>Expected present discounted value</h3>' +
+        '<p>Money tomorrow is worth less than money today, because today’s money could earn interest. To compare payments across time we <strong>discount</strong> them back to the present. A payment \\(z\\) one year ahead is worth</p>' +
+        '<div class="formula-box">\\[ \\frac{z}{1+r} \\]</div>' +
+        '<p>today; payments two years out are divided by \\((1+r)^2\\), and so on — the further away, the more heavily discounted. Summing the discounted <em>expected</em> payments gives the <strong>expected present discounted value</strong>, which is how any asset (a bond, a share, a factory) is valued. A higher interest rate lowers every present value.</p>' +
 
+        '<h3>Why this matters for the whole model</h3>' +
+        '<p>Because consumption and investment depend on <em>expected</em> future income, profits and interest rates, expectations feed straight into demand. Written with the real rate, the IS relation is:</p>' +
+        '<div class="formula-box">\\[ Y = C(Y - T) + I(Y, r) + G \\]</div>' +
         '<div class="tip-box">' +
-        '<h4>Expectations and the IS curve</h4>' +
-        '<p>Because \\(C\\) and \\(I\\) depend on <em>expected</em> future income, profits and rates, the IS relation \\( Y = C(Y-T) + I(Y, r) + G \\) shifts with the mood of the economy. Optimism shifts IS right and raises output today; pessimism does the reverse. This is also why credible signals about the future path of real rates make monetary policy more powerful.</p>' +
+        '<h4>Optimism, pessimism, and the power of credible policy</h4>' +
+        '<p>A wave of <strong>optimism</strong> (higher expected future income/profits, lower expected future rates) raises consumption and investment <em>today</em>, shifting IS right and lifting output now; <strong>pessimism</strong> does the reverse. This also explains why monetary policy works partly through expectations: a central bank that <em>credibly</em> signals lower rates "for longer" can boost demand more than a single rate cut, because spending responds to the whole <em>expected path</em> of real rates, not just today’s.</p>' +
         '</div>',
       image: null
     }
@@ -617,24 +683,49 @@ const macroeconomicsM2 = {
 
     learn: {
       content:
-        '<h3>Opening up: trade, the multiplier and the exchange rate</h3>' +
-        '<p>An open economy adds the foreign sector: \\( Y = C + I + G + X - IM \\). <strong>Openness</strong> is measured by trade shares (EX/GDP, IM/GDP, (EX−IM)/GDP, EX/IM).</p>' +
+        '<h3>Opening the economy to the world</h3>' +
+        '<p>Until now we assumed a closed economy. Reality is open: countries trade goods and services, move capital across borders, and exchange currencies. Opening up adds the foreign sector to demand:</p>' +
+        '<div class="formula-box">\\[ Y = C + I + G + X - IM \\]</div>' +
+        '<p>How open a country is can be measured by trade shares — exports/GDP and imports/GDP (and the balance \\((EX-IM)/GDP\\), and coverage \\(EX/IM\\)). The more open an economy, the larger its gains from trade <em>and</em> the more exposed it is to shocks from abroad — a point that matters enormously for a small, tourism-dependent economy like Croatia’s.</p>' +
 
-        '<h4>Imports and the multiplier</h4>' +
-        '<p>Imports grow with output: \\( IM = IM_0 + m\\,Y \\), where \\(m\\) is the <strong>marginal propensity to import</strong>. With consumption \\( C = \\beta(1-t)Y + c_0 \\), the open-economy multiplier is:</p>' +
+        '<h3>Imports and the multiplier</h3>' +
+        '<p>Exports \\(X\\) are largely set abroad (foreign demand), so we treat them as exogenous. Imports, by contrast, rise with domestic income — when we are richer, we buy more from abroad:</p>' +
+        '<div class="formula-box">\\[ IM = IM_0 + m\\,Y \\]</div>' +
+        '<p>where \\(m\\) is the <strong>marginal propensity to import</strong> (the extra import per unit of extra output). Imports are a new <em>leak</em> from the income–spending loop, so they shrink the multiplier. With consumption \\( C = \\beta(1-t)Y + c_0 \\):</p>' +
         '<div class="formula-box">\\[ \\text{multiplier} = \\frac{1}{1 - \\beta(1 - t) + m} \\]</div>' +
-        '<div class="example-box"><h4>Worked example — imports shrink the multiplier</h4><p>Let \\( \\beta = 0.8,\\ t = 0.1,\\ m = 0.12 \\). Without imports:</p><div class="formula-box">\\[ \\frac{1}{1 - 0.8(1-0.1)} = \\frac{1}{0.28} = 3.57 \\]</div><p>With imports:</p><div class="formula-box">\\[ \\frac{1}{1 - 0.8(0.9) + 0.12} = \\frac{1}{0.40} = 2.5 \\]</div><p>Imports leak demand abroad, so the multiplier falls from 3.57 to 2.5.</p></div>' +
+        '<div class="example-box">' +
+        '<h4>Worked example — imports shrink the multiplier</h4>' +
+        '<p>Let \\( \\beta = 0.8,\\ t = 0.1,\\ m = 0.12 \\). First ignore imports:</p>' +
+        '<div class="formula-box">\\[ \\frac{1}{1 - 0.8(1-0.1)} = \\frac{1}{0.28} = 3.57 \\]</div>' +
+        '<p>Now add the import leak:</p>' +
+        '<div class="formula-box">\\[ \\frac{1}{1 - 0.8(0.9) + 0.12} = \\frac{1}{0.40} = 2.5 \\]</div>' +
+        '<p><strong>Interpretation:</strong> the multiplier falls from 3.57 to 2.5 — part of every extra euro of income is now spent on <em>foreign</em> goods, so it stops circulating in the domestic economy. The smaller \\(m\\), the larger the multiplier.</p>' +
+        '</div>' +
 
-        '<h4>Domestic demand vs. demand for domestic goods</h4>' +
-        '<p><strong>Domestic demand</strong> is \\(C + I + G\\). <strong>Demand for domestic goods</strong> subtracts imports and adds exports, so equilibrium is \\( Y = (C + I + G) + NX \\) with \\(NX = X - IM\\). A trade surplus (\\(NX>0\\)) means demand for domestic goods exceeds domestic demand.</p>' +
-
-        '<h4>The exchange rate</h4>' +
+        '<h3>Two demands that are easy to confuse</h3>' +
+        '<p>Opening up forces a careful distinction:</p>' +
         '<ul>' +
-        '<li><strong>Appreciation / depreciation</strong> — market-driven rise / fall in a currency’s value.</li>' +
-        '<li><strong>Revaluation / devaluation</strong> — rise / fall set by the authorities (fixed-rate regime).</li>' +
-        '<li><strong>Real exchange rate</strong> — the price of domestic goods in terms of foreign goods. A <em>rise</em> makes domestic goods dearer → less competitive → \\(NX\\) falls.</li>' +
+        '<li><strong>Domestic demand for goods</strong> = \\(C + I + G\\) — what domestic residents want to buy (from anywhere).</li>' +
+        '<li><strong>Demand for domestic goods</strong> = \\(C + I + G - IM + X\\) — subtract the imports hidden inside \\(C+I+G\\), add exports. This is what is actually produced at home.</li>' +
         '</ul>' +
-        '<div class="warning-box"><h4>Marshall-Lerner</h4><p>A real <strong>depreciation</strong> improves net exports <em>only if</em> the sum of export and import demand elasticities exceeds 1. And note: a fiscal expansion raises output and thus imports, so it tends to <strong>worsen</strong> net exports.</p></div>',
+        '<p>So goods-market equilibrium is \\( Y = (C + I + G) + NX \\) with net exports \\(NX = X - IM\\). A <strong>trade surplus</strong> (\\(NX>0\\)) means the demand for domestic goods exceeds domestic demand — the country produces more than its residents absorb.</p>' +
+
+        '<h3>The exchange rate: nominal, real, and who moves it</h3>' +
+        '<p>Trade across currencies introduces the exchange rate. Keep four terms straight:</p>' +
+        '<ul>' +
+        '<li><strong>Appreciation / depreciation</strong> — a <em>market-driven</em> rise / fall in a currency’s value (flexible regime).</li>' +
+        '<li><strong>Revaluation / devaluation</strong> — a rise / fall set by the <em>monetary authorities</em> (fixed regime).</li>' +
+        '<li><strong>Real exchange rate</strong> — the price of domestic goods <em>in terms of foreign goods</em> (the nominal rate adjusted for price levels). This is the one that drives competitiveness.</li>' +
+        '</ul>' +
+        '<p><strong>How it drives trade:</strong> a <em>rise</em> in the real exchange rate makes domestic goods relatively more expensive (foreign goods cheaper) → exports fall, imports rise → \\(NX\\) falls. A <em>fall</em> (a real depreciation) does the reverse. Net exports also fall when domestic output rises (more imports) and rise when foreign output rises (more exports).</p>' +
+
+        '<div class="warning-box">' +
+        '<h4>Two results students get wrong</h4>' +
+        '<ul>' +
+        '<li><strong>Marshall-Lerner condition:</strong> a real depreciation improves net exports <em>only if</em> the sum of the price elasticities of export and import demand exceeds 1. A cheaper currency is not automatically good for the trade balance.</li>' +
+        '<li><strong>Fiscal expansion worsens \\(NX\\):</strong> raising \\(G\\) lifts output, which pulls in more imports, so net exports <em>fall</em>. Open-economy fiscal policy partly leaks abroad.</li>' +
+        '</ul>' +
+        '</div>',
       image: null
     }
   },
@@ -744,22 +835,32 @@ const macroeconomicsM2 = {
 
     learn: {
       content:
-        '<h3>Accounting for a country’s dealings with the world</h3>' +
-        '<p>The <strong>balance of payments</strong> records all transactions between residents and the rest of the world in a year. It has two main accounts:</p>' +
+        '<h3>The country’s ledger with the rest of the world</h3>' +
+        '<p>Just as a firm keeps accounts, so does a country. The <strong>balance of payments (BoP)</strong> is the summary statement of <em>all</em> monetary transactions between a country’s residents and the rest of the world over one year. It is organised into two main accounts:</p>' +
         '<ul>' +
-        '<li><strong>Current account</strong> — goods, services, primary income (wages, investment income) and secondary income (transfers).</li>' +
-        '<li><strong>Financial account</strong> — direct, portfolio and other investments, derivatives.</li>' +
+        '<li><strong>Current account</strong> — the "income statement" of trade: goods, services, <em>primary income</em> (wages, dividends, interest on cross-border investment) and <em>secondary income</em> (transfers with no quid pro quo — pensions, aid, gifts).</li>' +
+        '<li><strong>Financial account</strong> — the "capital" side: direct investment, portfolio investment, other investment and financial derivatives (the cross-border movement of assets and liabilities).</li>' +
         '</ul>' +
-        '<p>Together with the change in reserves, the whole balance of payments sums to <strong>zero</strong>: a current-account deficit must be financed by capital inflows.</p>' +
+        '<div class="tip-box">' +
+        '<h4>The BoP always balances to zero</h4>' +
+        '<p>Together with the change in official reserves, the whole balance of payments sums to <strong>zero</strong>. The deep implication: a <strong>current-account deficit must be financed by capital inflows</strong> (borrowing from or selling assets to the rest of the world), and a surplus means lending to it. The two accounts are mirror images.</p>' +
+        '</div>' +
 
-        '<h4>The tourism (travel) balance</h4>' +
+        '<h3>The tourism (travel) balance — the line that matters most here</h3>' +
+        '<p>Within the services account sits the <strong>travel (tourism) balance</strong>, defined exactly like any trade balance — income minus expenditure:</p>' +
         '<div class="formula-box">\\[ \\text{Travel balance} = \\underbrace{\\text{income from foreign tourists}}_{\\text{export, inflow}} - \\underbrace{\\text{spending of residents abroad}}_{\\text{import, outflow}} \\]</div>' +
-        '<p>A surplus marks a tourist-<strong>receptive</strong> country, a deficit a tourist-<strong>emitting</strong> one. For Croatia, the large travel surplus typically offsets the goods-trade deficit.</p>' +
+        '<p>Spending by foreigners <em>in</em> the country is an <strong>export</strong> (a foreign-exchange inflow); spending by residents abroad is an <strong>import</strong> (an outflow). A surplus marks a tourist-<strong>receptive</strong> country; a deficit a tourist-<strong>emitting</strong> one.</p>' +
+        '<p><strong>Why this is central for Croatia:</strong> the country runs a large, persistent <em>deficit</em> in the goods trade (it imports more merchandise than it exports). What keeps the current account afloat is the huge <strong>travel surplus</strong> — foreign tourists bring in foreign exchange that offsets the goods deficit. Tourism is, quite literally, the line item that balances the national accounts.</p>' +
 
-        '<h4>Capital flows and the BP curve</h4>' +
-        '<p>Net capital export falls as the domestic interest rate rises: \\( K = f(r),\\ \\tfrac{dK}{dr} < 0 \\). A higher \\(r\\) attracts capital, the currency appreciates, and the trade balance <em>deteriorates</em>. The <strong>BP curve</strong> gives the \\((Y, r)\\) pairs where \\(BP = 0\\).</p>' +
+        '<h3>Capital flows and the BP curve</h3>' +
+        '<p>Capital chases returns. Net capital <em>export</em> \\(K\\) (capital leaving minus capital entering) <strong>falls</strong> as the domestic interest rate rises — a higher \\(r\\) attracts foreign capital in:</p>' +
+        '<div class="formula-box">\\[ K = f(r), \\qquad \\frac{dK}{dr} < 0 \\]</div>' +
+        '<p>This creates an indirect link from interest rates to trade: a higher \\(r\\) → capital inflows → higher demand for the domestic currency → the currency <em>appreciates</em> → exports fall, imports rise → the trade balance <em>deteriorates</em>. The <strong>BP curve</strong> collects all combinations of output \\(Y\\) and interest rate \\(r\\) for which the balance of payments is in equilibrium (\\(BP = 0\\)); points below it are deficits, points above surpluses.</p>' +
 
-        '<div class="tip-box"><h4>Internal and external balance</h4><p><strong>Internal</strong> balance is IS = LM; <strong>external</strong> balance is a point on the BP curve. They interact: a BoP deficit drains reserves, shrinks the money supply (LM shifts left), raises \\(r\\) and cuts imports — pushing the economy toward simultaneous internal and external balance.</p></div>',
+        '<div class="tip-box">' +
+        '<h4>Internal and external balance are interdependent</h4>' +
+        '<p><strong>Internal</strong> balance is goods + money market equilibrium (IS = LM); <strong>external</strong> balance is a point on the BP curve. They do not move independently. A balance-of-payments deficit drains official reserves, which shrinks the money supply, shifts LM left and raises the interest rate; the higher rate cuts output and imports, nudging the external balance back toward zero. Left alone, the system tends to grind toward <em>simultaneous</em> internal and external balance.</p>' +
+        '</div>',
       image: null
     }
   }

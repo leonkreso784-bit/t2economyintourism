@@ -122,30 +122,56 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>What macroeconomics is about</h3>' +
-        '<p><strong>Macroeconomics</strong> studies the economy as a whole — total production, employment, the price level and foreign trade. Where microeconomics looks at a single market, macro <em>aggregates</em>: all households together form <strong>aggregate demand</strong>, all firms together form <strong>aggregate supply</strong>.</p>' +
-
-        '<h4>The four objectives and the four variables</h4>' +
-        '<p>Every economy pursues four <strong>objectives</strong>: high and growing production, high employment, price stability, and internal/external stability. We track progress through four <strong>variables</strong>:</p>' +
+        '<h3>Zooming out: the economy as a whole</h3>' +
+        '<p>Microeconomics puts a single market under the microscope — one good, one firm, one consumer. <strong>Macroeconomics</strong> does the opposite: it steps back to study the economy <em>as a whole</em> — total national production, overall employment, the general price level, and trade with the rest of the world. ("Macro" is Greek for big; "micro" for small.)</p>' +
+        '<p>The trick that makes this possible is <strong>aggregation</strong>. Instead of one buyer and one seller, macro works with two giant blocks:</p>' +
         '<ul>' +
-        '<li><strong>GDP</strong> (aggregate output)</li>' +
-        '<li>the <strong>unemployment rate</strong></li>' +
-        '<li>the <strong>inflation rate</strong></li>' +
-        '<li>the <strong>interest rate</strong></li>' +
+        '<li>all households together → <strong>aggregate demand</strong> (the total desire to buy);</li>' +
+        '<li>all firms together → <strong>aggregate supply</strong> (the total ability to produce).</li>' +
+        '</ul>' +
+        '<p>Almost every macro debate — growth, unemployment, inflation, policy — is ultimately about how these two aggregates interact.</p>' +
+
+        '<h3>What a healthy economy aims for: the four objectives</h3>' +
+        '<p>Governments and central banks judge an economy against four <strong>fundamental objectives</strong>:</p>' +
+        '<ol>' +
+        '<li><strong>A high and growing level of production</strong> — more output means more income and a higher standard of living.</li>' +
+        '<li><strong>High employment</strong> (low unemployment) — idle workers are lost output and lost welfare.</li>' +
+        '<li><strong>Price stability</strong> — low, predictable inflation so money keeps its value.</li>' +
+        '<li><strong>Internal and external stability</strong> — a balanced budget at home and a sustainable position abroad (foreign-exchange/trade balance).</li>' +
+        '</ol>' +
+
+        '<h3>The four variables we actually watch</h3>' +
+        '<p>To see whether those objectives are being met, macroeconomists track four headline <strong>variables</strong> — and the whole course is essentially the story of these four and how they move together:</p>' +
+        '<ul>' +
+        '<li><strong>GDP</strong> — aggregate output (objective 1).</li>' +
+        '<li>the <strong>unemployment rate</strong> (objective 2).</li>' +
+        '<li>the <strong>inflation rate</strong> (objective 3).</li>' +
+        '<li>the <strong>interest rate</strong> — the price of money, the main lever of policy.</li>' +
         '</ul>' +
 
-        '<h4>Economic policy</h4>' +
-        '<p>Governments steer these variables with <strong>economic policy</strong>. Any policy can be <strong>expansive</strong> (stimulating activity) or <strong>restrictive</strong> (cooling it). The main types are:</p>' +
+        '<h3>How governments steer the economy: economic policy</h3>' +
+        '<p>The objectives do not take care of themselves. <strong>Economic policy</strong> is the set of measures used to steer the four variables. Every policy comes in two directions:</p>' +
         '<ul>' +
-        '<li><strong>Fiscal</strong> — taxes (T) and government spending (G)</li>' +
-        '<li><strong>Monetary</strong> — the money supply and the interest rate</li>' +
-        '<li><strong>International</strong> — tariffs, quotas, the exchange rate</li>' +
-        '<li><strong>Income</strong> — wage and price control</li>' +
+        '<li><strong>Expansive (expansionary)</strong> — stimulate activity, push GDP up (used in recessions).</li>' +
+        '<li><strong>Restrictive</strong> — cool activity, slow GDP and inflation (used when the economy overheats).</li>' +
+        '</ul>' +
+        '<p>The main toolkits are:</p>' +
+        '<ul>' +
+        '<li><strong>Fiscal policy</strong> — taxes (T) and government spending (G). Cutting T or raising G is expansionary.</li>' +
+        '<li><strong>Monetary policy</strong> — the money supply and the interest rate, run by the central bank. More money / lower rates is expansionary.</li>' +
+        '<li><strong>International (trade) policy</strong> — tariffs, quotas, the exchange rate.</li>' +
+        '<li><strong>Income policy</strong> — direct control of wages and prices.</li>' +
         '</ul>' +
 
         '<div class="tip-box">' +
-        '<h4>The three horizons (why the short-run model is about demand)</h4>' +
-        '<p>In the <strong>short run</strong>, GDP moves with <strong>demand</strong>. In the <strong>medium run</strong>, output is pinned down by <strong>supply</strong> (capital, technology, the workforce). In the <strong>long run</strong>, growth depends on innovation, savings and institutions. The Goods-market, Financial-market and IS-LM models in this midterm all describe the <em>short run</em>, so they focus on aggregate demand.</p>' +
+        '<h4>The three horizons — the backbone of the whole course</h4>' +
+        '<p>The same variables behave differently depending on the time frame, and this is the single most important organising idea in macroeconomics:</p>' +
+        '<ul>' +
+        '<li><strong>Short run</strong> (a few years): GDP is driven by <strong>demand</strong>. If spending rises, output rises.</li>' +
+        '<li><strong>Medium run</strong> (~a decade): output is pinned down by <strong>supply</strong> factors — capital, technology, the size of the workforce.</li>' +
+        '<li><strong>Long run</strong> (decades): growth depends on <strong>innovation, savings and institutions</strong> (education, the quality of government).</li>' +
+        '</ul>' +
+        '<p>The Goods-market, Financial-market and IS-LM models in <em>this</em> midterm all describe the <strong>short run</strong> — which is exactly why they focus on aggregate demand. The second midterm then moves to the medium and long run, where supply takes over.</p>' +
         '</div>',
       image: null
     }
@@ -262,25 +288,47 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>Two costs the economy watches: idle workers and rising prices</h3>' +
-        '<h4>Unemployment</h4>' +
-        '<p>The <strong>labour force</strong> is everyone working or actively looking for work:</p>' +
-        '<div class="formula-box">\\[ L = E + U \\]</div>' +
-        '<p>Students, homemakers, retirees and those who do not want to work are <em>outside</em> the labour force. The headline rate is</p>' +
-        '<div class="formula-box">\\[ \\text{unemployment rate} = \\frac{U}{L} \\]</div>' +
-        '<p>Every unemployed worker is lost output: the <strong>economic cost of unemployment</strong> is the gap between potential output (full employment) and actual output.</p>' +
+        '<h3>Two things that hurt: idle workers and an unstable currency</h3>' +
+        '<p>Beyond producing a lot (GDP), a healthy economy must keep two other numbers under control: <strong>unemployment</strong> and <strong>inflation</strong>. Both are costly, both are watched constantly, and — as we will see — they are linked to each other and to output.</p>' +
 
-        '<h4>Inflation</h4>' +
-        '<p><strong>Inflation</strong> is a permanent rise in the general price level; <strong>deflation</strong> is a permanent fall. The price level is tracked by the <strong>CPI</strong> (a fixed basket; base = 100). Economists consider <strong>1–4%</strong> (≈2%) optimal — both runaway inflation and deflation breed uncertainty.</p>' +
-        '<div class="example-box">' +
-        '<h4>Worked example — real interest rate</h4>' +
-        '<p>If the nominal interest rate is 8% and prices rise by 3%, the real (purchasing-power) return is</p>' +
-        '<div class="formula-box">\\[ r \\approx i - \\pi = 8\\% - 3\\% = 5\\% \\]</div>' +
+        '<h3>Unemployment: measuring lost potential</h3>' +
+        '<p>Start by splitting the working-age population. The <strong>labour force</strong> is everyone who is either working or actively looking for work:</p>' +
+        '<div class="formula-box">\\[ L = E + U \\]</div>' +
+        '<p>where \\(E\\) = employed and \\(U\\) = unemployed. Crucially, many people are <em>outside</em> the labour force altogether: full-time students, homemakers, retirees, those unable to work, and those who simply do not want to. They are neither \\(E\\) nor \\(U\\). The two headline ratios are:</p>' +
+        '<div class="formula-box">\\[ \\text{unemployment rate} = \\frac{U}{L}, \\qquad \\text{employment rate} = \\frac{E}{L} \\]</div>' +
+        '<p><strong>Why we care:</strong> unemployment is not just a social problem, it is an <em>economic</em> one. Every unemployed worker represents output that was never produced. The <strong>economic cost of unemployment</strong> is exactly the gap between the potential output of full employment and the actual output — the higher unemployment, the further the economy falls below its potential. The unemployment rate also rises and falls with the business cycle: up in recessions, down in expansions.</p>' +
+
+        '<h3>Inflation: when money loses its value</h3>' +
+        '<p><strong>Inflation</strong> is a <em>permanent, ongoing</em> rise in the general price level; <strong>deflation</strong> is a permanent fall (a negative inflation rate — rare, e.g. Japan in the late 1990s). The general price level is measured by the <strong>Consumer Price Index (CPI)</strong>: the cost of a <em>fixed basket</em> of goods bought by a typical household, set to 100 in the base year.</p>' +
+        '<p>Surprisingly, economists do not aim for zero inflation — the target is <strong>low and stable inflation, around 1–4%</strong> (often ≈2%). Why not zero?</p>' +
+        '<ul>' +
+        '<li><strong>High inflation</strong> creates uncertainty, distorts relative prices, complicates investment, and quietly raises real tax burdens (as nominal incomes drift into higher brackets).</li>' +
+        '<li><strong>Deflation</strong> is also harmful: it signals a weak economy, encourages people to delay spending, and limits the power of monetary policy.</li>' +
+        '</ul>' +
+        '<div class="warning-box">' +
+        '<h4>"Pure" inflation would be harmless — but it never happens</h4>' +
+        '<p>If <em>all</em> prices and wages rose at exactly the same rate, inflation would not hurt anyone. The damage comes because the changes are <strong>not proportional</strong>: goods prices typically rise faster than wages, so real purchasing power and relative prices shift in unpredictable ways.</p>' +
         '</div>' +
 
+        '<h3>Real vs. nominal interest rates</h3>' +
+        '<p>Interest is the price of money. But a 10% return means little if prices also rose 10%. So we separate the <strong>nominal</strong> rate (how fast the money value of a deposit grows) from the <strong>real</strong> rate (how fast its <em>purchasing power</em> grows):</p>' +
+        '<div class="formula-box">\\[ \\text{real rate} \\approx \\text{nominal rate} - \\text{inflation rate} \\]</div>' +
+        '<div class="example-box">' +
+        '<h4>Worked example — the real interest rate</h4>' +
+        '<p>If the nominal interest rate is 8% and prices rise by 3%, the real (purchasing-power) return is</p>' +
+        '<div class="formula-box">\\[ r \\approx i - \\pi = 8\\% - 3\\% = 5\\% \\]</div>' +
+        '<p><strong>Interpretation:</strong> your money grew 8% in euros, but since everything costs 3% more, you are only about 5% better off in real terms. This is the rate that actually matters for saving and borrowing decisions.</p>' +
+        '</div>' +
+
+        '<h3>How the three connect: Okun and Phillips</h3>' +
+        '<p>Output, unemployment and inflation are not independent — two famous empirical relationships tie them together:</p>' +
+        '<ul>' +
+        '<li><strong>Okun’s law</strong> (output ↔ unemployment): when output grows <em>faster</em> than trend, unemployment falls; when it grows <em>slower</em> than trend, unemployment rises. (Roughly, a 2% shortfall of output below potential raises unemployment by about 1%.)</li>' +
+        '<li><strong>The Phillips curve</strong> (unemployment ↔ inflation): the two move <em>inversely</em>. Low unemployment strengthens workers’ bargaining power, pushing wages and prices up (higher inflation); high unemployment does the reverse.</li>' +
+        '</ul>' +
         '<div class="tip-box">' +
-        '<h4>Two empirical laws</h4>' +
-        '<p><strong>Okun’s law:</strong> output growth above trend lowers unemployment; below trend raises it. <strong>Phillips curve:</strong> unemployment and inflation move <em>inversely</em> — push unemployment down and inflation tends to rise. A country must choose its preferred trade-off.</p>' +
+        '<h4>The policy trade-off</h4>' +
+        '<p>Put together, Okun and Phillips imply a choice: a country can aim for <strong>lower unemployment but higher inflation</strong>, or <strong>higher unemployment but lower inflation</strong>. There is no free lunch in the short run — this tension is exactly what the AS-AD model in the second midterm formalises.</p>' +
         '</div>',
       image: null
     }
@@ -391,28 +439,64 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>Measuring output — and stripping out prices</h3>' +
-        '<p><strong>GDP</strong> is the market value of all <em>final</em> goods and services produced inside a country in a year. It is <strong>geographic</strong> (everything produced within the borders, regardless of who owns the firm) — unlike GNP, which follows <strong>ownership</strong>.</p>' +
-
-        '<h4>Nominal, real, potential</h4>' +
+        '<h3>Measuring an entire economy with one number</h3>' +
+        '<p>How do you summarise the activity of millions of firms and households in a single figure? That is the job of <strong>Gross Domestic Product (GDP)</strong> — the market value of all <em>final</em> goods and services produced inside a country during one year. It is the most comprehensive measure of a nation’s economic output, published monthly, quarterly and annually for every country (Eurostat, the IMF, national statistical offices).</p>' +
+        '<p>Two words in that definition do a lot of work:</p>' +
         '<ul>' +
-        '<li><strong>Nominal GDP</strong> — current prices (moves with quantity <em>and</em> prices).</li>' +
-        '<li><strong>Real GDP</strong> — constant prices (moves only with quantity); the honest measure of activity.</li>' +
-        '<li><strong>Potential GDP</strong> — the most the economy can produce at stable prices.</li>' +
+        '<li><strong>"Final"</strong> — only goods sold to their last user are counted. The flour a bakery buys is an <em>intermediate</em> good; counting both the flour and the bread would double-count. We count the bread only.</li>' +
+        '<li><strong>"Inside a country"</strong> — GDP is <strong>geographic</strong>. Everything produced within the borders counts, no matter who owns the firm. A foreign-owned bank operating in Croatia adds to <em>Croatian</em> GDP.</li>' +
         '</ul>' +
-        '<p>Convert with the deflator (or a base-100 index):</p>' +
-        '<div class="formula-box">\\[ \\text{Real GDP}_n = \\text{Nominal GDP}_n \\times \\frac{\\text{CPI}_{\\text{base}}}{\\text{CPI}_n} \\]</div>' +
-        '<div class="example-box">' +
-        '<h4>Worked example — deflating nominal GDP</h4>' +
-        '<p>Nominal GDP in 1990 is 325 (billion), the price index is 130 (base year = 100):</p>' +
-        '<div class="formula-box">\\[ \\text{Real GDP} = 325 \\times \\frac{100}{130} = 250 \\]</div>' +
-        '<p>So although nominal output rose, in <em>real</em> terms it is only 250.</p>' +
+
+        '<div class="tip-box">' +
+        '<h4>GDP vs. GNP — borders vs. owners</h4>' +
+        '<p><strong>GDP</strong> follows the <em>location</em> of production (within the borders). <strong>GNP</strong> (Gross National Product) follows <em>ownership</em> — output produced by a country’s factors of production, wherever in the world they sit. Most statistics switched from GNP to GDP after 1992.</p>' +
         '</div>' +
 
-        '<h4>Growth and the GDP gap</h4>' +
+        '<h3>Why we strip out prices: nominal, real and potential GDP</h3>' +
+        '<p>Suppose a country’s GDP "grows" from 300 to 330. Did it really produce more — or did prices simply rise? To answer this, economists always distinguish three versions of GDP:</p>' +
+        '<ul>' +
+        '<li><strong>Nominal GDP</strong> — valued at <em>current</em> market prices. It moves for two reasons at once: changes in quantities <em>and</em> changes in prices. Useful, but it can mislead.</li>' +
+        '<li><strong>Real GDP</strong> — valued at <em>constant</em> (base-year) prices, so it moves <em>only</em> when the volume of production changes. This is the honest measure of economic activity and the one economists care about.</li>' +
+        '<li><strong>Potential GDP</strong> — the maximum output the economy could produce at stable prices with a high level of employment. It is the benchmark the economy "should" reach.</li>' +
+        '</ul>' +
+        '<p>The bridge between nominal and real is the <strong>GDP deflator</strong> (or a price index such as the CPI, set to 100 in the base year):</p>' +
+        '<div class="formula-box">\\[ \\text{Nominal GDP} = \\text{Real GDP}\\times \\text{deflator} \\;\\;\\Longrightarrow\\;\\; \\text{Real GDP}_n = \\text{Nominal GDP}_n \\times \\frac{\\text{CPI}_{\\text{base}}}{\\text{CPI}_n} \\]</div>' +
+
+        '<div class="example-box">' +
+        '<h4>Worked example — deflating nominal GDP</h4>' +
+        '<p>Nominal GDP in 1990 is 325 (billion EUR), and the price index has risen to 130 (base year 1990 = 100). To express it in base-year purchasing power:</p>' +
+        '<div class="formula-box">\\[ \\text{Real GDP} = 325 \\times \\frac{100}{130} = 250 \\]</div>' +
+        '<p><strong>Interpretation:</strong> the headline (nominal) figure is 325, but once we remove the price increase, real output is only 250. The "growth" was largely inflation, not extra production. This is exactly why a country can have a rising nominal GDP and a <em>falling</em> standard of living.</p>' +
+        '</div>' +
+
+        '<div class="warning-box">' +
+        '<h4>Read the price effect correctly</h4>' +
+        '<p>The relationship between the two always follows the price movement:</p>' +
+        '<ul>' +
+        '<li>Prices <strong>rose</strong> → real GDP &lt; nominal GDP.</li>' +
+        '<li>Prices <strong>fell</strong> → real GDP &gt; nominal GDP.</li>' +
+        '<li>Prices <strong>unchanged</strong> → real GDP = nominal GDP.</li>' +
+        '</ul>' +
+        '<p>A common exam trap is to celebrate a big nominal rise — always check what happened to prices first.</p>' +
+        '</div>' +
+
+        '<h3>The GDP gap: is the economy under- or over-performing?</h3>' +
+        '<p>The <strong>GDP gap</strong> compares actual (real) output with potential output. Because of business cycles, the two rarely coincide:</p>' +
+        '<ul>' +
+        '<li><strong>Recessional gap</strong> — the economy produces <em>less</em> than its potential; resources sit idle (unemployment). This is the common situation, and policy aims to <em>raise</em> GDP.</li>' +
+        '<li><strong>Inflationary gap</strong> — the economy produces <em>more</em> than its sustainable capacity, straining resources and pushing prices up. Rare, and seen only in the most developed economies; policy aims to <em>cool</em> GDP.</li>' +
+        '</ul>' +
+
+        '<h3>Measuring growth and living standards</h3>' +
+        '<p>The pace of the economy is captured by the <strong>growth rate</strong> of real GDP:</p>' +
         '<div class="formula-box">\\[ \\text{growth rate} = \\frac{Y_t - Y_{t-1}}{Y_{t-1}}\\times 100 \\]</div>' +
-        '<p>Positive growth = <strong>expansion</strong>; negative growth in two consecutive quarters = <strong>recession</strong>. The <strong>GDP gap</strong> is potential minus actual output: a <strong>recessional gap</strong> (idle resources) is common, an <strong>inflationary gap</strong> (over-capacity) is rare.</p>' +
-        '<div class="tip-box"><h4>Watch the price effect</h4><p>If prices rose, real GDP &lt; nominal GDP; if they fell, real GDP &gt; nominal GDP; if unchanged, the two are equal. And to compare living standards across countries, always use <strong>real GDP per capita</strong>.</p></div>',
+        '<p>Sustained positive growth is an <strong>expansion</strong>; sustained negative growth is a <strong>recession</strong> — technically defined as at least <em>two consecutive quarters</em> of negative growth (which is why economists watch quarterly, not just annual, data).</p>' +
+        '<div class="tip-box">' +
+        '<h4>For living standards, use real GDP per capita</h4>' +
+        '<p>Total GDP tells you how <em>big</em> an economy is, not how <em>well-off</em> its people are. For that, divide by population:</p>' +
+        '<div class="formula-box">\\[ \\text{GDP per capita} = \\frac{\\text{real GDP}}{\\text{population}} \\]</div>' +
+        '<p>This is the standard measure of the average standard of living and the only fair way to compare a large country with a small one. (For cross-country comparisons it is refined further into PPP terms — see the Long Run.)</p>' +
+        '</div>',
       image: null
     }
   },
@@ -523,24 +607,35 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>Three ways to count the same thing</h3>' +
-        '<p>National accounts rest on one identity:</p>' +
+        '<h3>One economy, three ways to count it</h3>' +
+        '<p>National accounts are the bookkeeping system of a whole country. They rest on a single, almost philosophical identity: every euro of output is also a euro that someone spends and a euro that someone earns. In other words,</p>' +
         '<div class="formula-box">\\[ \\text{Total production} = \\text{Total consumption} = \\text{Total income} \\]</div>' +
-        '<p>So GDP can be measured three equivalent ways — the <strong>production</strong> approach (value of final output), the <strong>expenditure</strong> approach (who spends on it), and the <strong>income</strong> approach (who earns it). All give the same number.</p>' +
+        '<p>This is why GDP can be measured in <strong>three equivalent ways</strong>, each starting from a different side of the same circular flow:</p>' +
+        '<ol>' +
+        '<li><strong>Production approach</strong> — add up the value of all final output.</li>' +
+        '<li><strong>Expenditure (consumption) approach</strong> — add up what all buyers spend.</li>' +
+        '<li><strong>Income approach</strong> — add up all the income earned.</li>' +
+        '</ol>' +
+        '<p>All three <em>must</em> give the same number. If your textbook computes GDP three different ways and gets three answers, something is mis-measured, not three "kinds" of GDP.</p>' +
 
-        '<h4>The expenditure approach and the GDP models</h4>' +
-        '<p>The most-used identity for macro modelling is the expenditure form, built up sector by sector:</p>' +
-        '<div class="formula-box">\\[ Y = C \\;\\to\\; Y = C + I \\;\\to\\; Y = C + I + G \\;\\to\\; Y = C + I + G + (E - U) \\]</div>' +
-        '<p>with net exports \\( NX = E - U \\). The four-sector model gives the <strong>saving–investment identity</strong>:</p>' +
+        '<h3>The expenditure approach: building GDP sector by sector</h3>' +
+        '<p>The expenditure form is the one we use for modelling, because it names <em>who</em> does the spending. Adding one sector at a time gives the four classic models of GDP:</p>' +
+        '<div class="formula-box">\\[ \\underbrace{Y = C}_{\\text{1 sector}} \\;\\to\\; \\underbrace{Y = C + I}_{\\text{2 sectors}} \\;\\to\\; \\underbrace{Y = C + I + G}_{\\text{3 sectors}} \\;\\to\\; \\underbrace{Y = C + I + G + (E - U)}_{\\text{4 sectors}} \\]</div>' +
+        '<p>Each letter is one spender: <strong>C</strong> households, <strong>I</strong> firms (investment), <strong>G</strong> the government, and <strong>E − U</strong> the rest of the world (exports minus imports). Net exports are \\(NX = E - U\\). The goods-market model you study next is built directly on the three-sector version \\(Y = C + I + G\\).</p>' +
+
+        '<h4>The saving–investment identity</h4>' +
+        '<p>Rearranging the full four-sector model yields a deep relationship between a country’s saving, its government budget and its trade balance:</p>' +
         '<div class="formula-box">\\[ S - I = (G + TR - T) + NX \\]</div>' +
+        '<p><strong>Interpretation:</strong> the term \\(G + TR - T\\) is the government <em>budget deficit</em> (spending plus transfers minus taxes). So a country’s private saving over investment must equal the budget deficit <em>plus</em> net exports — the seed of the "twin deficits" idea that reappears in the open economy.</p>' +
 
-        '<h4>Production approach: value added</h4>' +
-        '<p>To avoid double-counting, the production approach sums <strong>value added</strong> across activities:</p>' +
+        '<h3>The production approach: value added (no double-counting)</h3>' +
+        '<p>If you simply summed every firm’s sales you would count the same output many times (the steel inside a car, the flour inside bread). The production approach avoids this by summing only the <strong>value added</strong> at each stage:</p>' +
         '<div class="formula-box">\\[ \\text{Value added} = \\text{gross value of production} - \\text{intermediate consumption} \\]</div>' +
+        '<p>where <strong>intermediate consumption</strong> is the value of inputs used up in production. Summed across all activities — organised by the <strong>NACE</strong> classification (primary, secondary, tertiary, quaternary, quintary sectors) — value added equals GDP.</p>' +
 
         '<div class="warning-box">' +
-        '<h4>Tourism is not an "activity"</h4>' +
-        '<p>In the NACE classification an activity is defined by the producer/product, so <strong>tourism is not a separate activity or sector</strong>. It spans many activities (accommodation, transport, food service…), which is exactly why a tourism <em>satellite account</em> is needed to measure it.</p>' +
+        '<h4>Tourism is not an "activity" — a key point for this faculty</h4>' +
+        '<p>In NACE an activity is defined by the producer and the product, so <strong>tourism does not exist as a separate activity or sector</strong> in any classification. A tourist’s spending is spread across accommodation, transport, food service, retail and more. This is precisely why measuring tourism requires a special construction — a tourism <em>satellite account</em> — rather than reading one line off the national accounts.</p>' +
         '</div>',
       image: null
     }
@@ -652,32 +747,57 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>What determines output in the short run? Demand.</h3>' +
-        '<p>The short-run model assumes firms supply whatever is demanded at the going price, so <strong>demand determines output</strong>. Start with consumption, the largest component of demand:</p>' +
+        '<h3>The big question of the short run: what sets the level of output?</h3>' +
+        '<p>Over a few quarters, prices and wages barely move ("sticky prices"), and firms are willing to supply whatever quantity is demanded. So in the short run a single force drives output: <strong>aggregate demand</strong>. If people and firms want to buy more, more gets produced; if demand falls, output falls (the dominant cause of recessions). The goods-market model makes this precise.</p>' +
+        '<p>Demand has four components — \\( Z = C + I + G + (X - IM) \\) — but to see the mechanism clearly we start with a <strong>closed economy</strong> (no trade, \\(X = IM = 0\\)), so \\( Z = C + I + G \\). The open-economy version comes back in the Open Economy topic.</p>' +
+
+        '<h3>Consumption: the engine of demand</h3>' +
+        '<p>Consumption \\(C\\) is by far the largest piece of demand (around two-thirds of GDP), and what mainly drives it is <strong>disposable income</strong> \\(Y_D\\) — income left after taxes and transfers, \\(Y_D = Y - T\\). The <strong>consumption function</strong> captures this:</p>' +
         '<div class="formula-box">\\[ C = c_0 + c_1 Y_D, \\qquad Y_D = Y - T \\]</div>' +
-        '<p>Here \\( c_0 \\) is <strong>autonomous consumption</strong> and \\( c_1 \\) is the <strong>marginal propensity to consume</strong> (MPC), with \\( 0 < c_1 < 1 \\): consumption rises with income, but less than one-for-one.</p>' +
+        '<ul>' +
+        '<li>\\(c_0\\) — <strong>autonomous consumption</strong>: what households consume even at zero disposable income (drawing on savings or borrowing). It captures confidence and other non-income influences.</li>' +
+        '<li>\\(c_1\\) — the <strong>marginal propensity to consume (MPC)</strong>: the fraction of each extra unit of disposable income that is spent, with \\(0 < c_1 < 1\\).</li>' +
+        '</ul>' +
+        '<p><strong>Intuition:</strong> when you earn one extra euro you spend part of it (\\(c_1\\)) and save the rest (\\(1 - c_1\\), the marginal propensity to save). So consumption rises with income, but <em>less than one-for-one</em> — that single fact is what later gives the multiplier its size.</p>' +
 
-        '<h4>Equilibrium</h4>' +
-        '<p>In a closed economy (\\(X = IM = 0\\)) demand is \\( Z = C + I + G \\). Equilibrium is \\( Y = Z \\):</p>' +
+        '<h3>Equilibrium: production equals demand</h3>' +
+        '<p>Because firms produce to meet demand, the goods market is in equilibrium when output equals the demand for goods, \\( Y = Z \\). Substituting consumption (and treating investment \\(I\\), spending \\(G\\) and taxes \\(T\\) as given) :</p>' +
         '<div class="formula-box">\\[ Y = c_0 + c_1(Y - T) + I + G \\]</div>' +
-        '<p>Solving for Y:</p>' +
+        '<p>This equation is a little subtle: \\(Y\\) appears on <em>both</em> sides, because income determines consumption, which is itself part of demand, which determines income. Solving for \\(Y\\) untangles the loop:</p>' +
         '<div class="formula-box">\\[ Y = \\underbrace{\\frac{1}{1 - c_1}}_{\\text{multiplier}}\\; \\underbrace{\\big[\\,c_0 + I + G - c_1 T\\,\\big]}_{\\text{autonomous spending}} \\]</div>' +
+        '<p>The bracket is <strong>autonomous spending</strong> — the part of demand that does <em>not</em> depend on current income. The fraction in front is the <strong>multiplier</strong>.</p>' +
+
+        '<h3>The multiplier: why a small push moves output a lot</h3>' +
+        '<p>The multiplier \\( \\dfrac{1}{1-c_1} \\) is greater than 1 (since \\(0<c_1<1\\)), so any change in autonomous spending changes output by <em>more</em> than itself:</p>' +
+        '<div class="formula-box">\\[ \\Delta Y = \\frac{1}{1 - c_1}\\times \\Delta(\\text{autonomous spending}) \\]</div>' +
+        '<p><strong>Why more than one-to-one?</strong> Trace the chain. Extra spending of 1 raises output and income by 1; that extra income raises consumption by \\(c_1\\); the new spending raises income again, lifting consumption by \\(c_1^2\\); and so on. The rounds form a geometric series:</p>' +
+        '<div class="formula-box">\\[ 1 + c_1 + c_1^2 + c_1^3 + \\cdots = \\frac{1}{1 - c_1} \\]</div>' +
+        '<p><strong>Interpretation:</strong> a higher MPC means each round leaks less into saving, so the chain runs longer and the multiplier is <em>larger</em>. (In the real world, taxes and imports leak demand out of the loop and shrink the multiplier — we add those later.)</p>' +
 
         '<div class="example-box">' +
-        '<h4>Worked example — the multiplier</h4>' +
-        '<p>Let \\( C = 250 + 0.75\\,Y_D \\). The multiplier is</p>' +
+        '<h4>Worked example 1 — the multiplier in action</h4>' +
+        '<p>Let \\( C = 250 + 0.75\\,Y_D \\), so the MPC is \\(c_1 = 0.75\\). The multiplier is</p>' +
         '<div class="formula-box">\\[ \\frac{1}{1 - 0.75} = \\frac{1}{0.25} = 4 \\]</div>' +
-        '<p>So a rise in government spending of \\( \\Delta G = 100 \\) raises output by</p>' +
+        '<p>A fiscal stimulus of \\( \\Delta G = 100 \\) therefore raises equilibrium output by</p>' +
         '<div class="formula-box">\\[ \\Delta Y = 4 \\times 100 = 400 \\]</div>' +
+        '<p>The initial 100 of spending ultimately generates 400 of output — the extra 300 comes from the induced consumption rounds.</p>' +
         '</div>' +
 
         '<div class="example-box">' +
-        '<h4>Worked example — equilibrium output</h4>' +
-        '<p>Given \\( C = 500 + 0.5\\,Y_D,\\; T = 600,\\; I = 300,\\; G = 2000 \\):</p>' +
+        '<h4>Worked example 2 — computing equilibrium output</h4>' +
+        '<p>Given \\( C = 500 + 0.5\\,Y_D,\\; T = 600,\\; I = 300,\\; G = 2000 \\). First the multiplier is \\( \\tfrac{1}{1-0.5} = 2 \\); then:</p>' +
         '<div class="formula-box">\\[ Y = \\frac{1}{1-0.5}\\,[\\,500 + 300 + 2000 - 0.5(600)\\,] = 2 \\times 2500 = 5000 \\]</div>' +
+        '<p><strong>Check the logic:</strong> notice taxes enter as \\(-c_1 T\\), not \\(-T\\). A tax only reduces demand through the part of income households would have <em>spent</em> (\\(c_1\\)); the part they would have saved never affected demand. This is why a tax cut is a weaker stimulus than an equal rise in \\(G\\).</p>' +
         '</div>' +
 
-        '<div class="tip-box"><h4>Why bigger than one-to-one?</h4><p>Extra spending → extra income → extra consumption \\(c_1\\) → extra income… The chain \\(1 + c_1 + c_1^2 + \\cdots = \\dfrac{1}{1-c_1}\\). A higher MPC makes the multiplier <strong>larger</strong>.</p></div>',
+        '<div class="warning-box">' +
+        '<h4>Common pitfalls</h4>' +
+        '<ul>' +
+        '<li>The multiplier uses \\(c_1\\) (the MPC), <em>not</em> the tax rate or the interest rate.</li>' +
+        '<li>Government spending \\(G\\) and taxes \\(T\\) are <strong>exogenous</strong> policy choices; output \\(Y\\), consumption \\(C\\) and disposable income are <strong>endogenous</strong> (determined inside the model).</li>' +
+        '<li>This is a <em>short-run, demand-driven</em> story. It does not describe the long run, where supply (capital, technology) sets output.</li>' +
+        '</ul>' +
+        '</div>',
       image: null
     }
   },
@@ -783,24 +903,45 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>Where the interest rate comes from</h3>' +
-        '<p>People hold wealth either as <strong>money</strong> (currency + checkable deposits — spendable, but no interest) or as <strong>bonds</strong> (interest, but not directly spendable). The choice gives the <strong>demand for money</strong>:</p>' +
-        '<div class="formula-box">\\[ M^d = \\$Y \\cdot L(i) \\]</div>' +
-        '<p>It rises with the level of transactions (proportional to nominal income \\( \\$Y \\)) and falls with the interest rate \\( i \\) — the opportunity cost of holding money. So the \\(M^d\\) curve slopes <strong>down</strong>; more income shifts it <strong>right</strong>.</p>' +
+        '<h3>The other half of the short run: where the interest rate is born</h3>' +
+        '<p>The goods-market model took the interest rate as given. But the interest rate is one of our four key variables, and it has enormous influence on investment and spending. So we now ask: <em>what determines the interest rate?</em> The answer comes from the financial market, using the same supply-and-demand logic as any other market — except the "good" being traded is <strong>money</strong> itself, and its price is the interest rate.</p>' +
 
-        '<h4>Equilibrium interest rate</h4>' +
-        '<p>The <strong>money supply</strong> \\( M^s = M \\) is set by the central bank (a vertical line). The interest rate adjusts so that supply meets demand:</p>' +
+        '<h3>Money vs. bonds: the portfolio choice</h3>' +
+        '<p>Imagine you have some financial wealth. You can hold it in two broad forms:</p>' +
+        '<ul>' +
+        '<li><strong>Money</strong> (currency + checkable deposits) — instantly spendable, but pays little or no interest.</li>' +
+        '<li><strong>Bonds</strong> (and similar interest-bearing assets) — pay a return, but cannot be used directly to buy goods.</li>' +
+        '</ul>' +
+        '<p>The <strong>demand for money</strong> is the decision of how much wealth to keep in spendable form. It depends on two things — how much you transact, and how costly it is to hold money instead of bonds:</p>' +
+        '<div class="formula-box">\\[ M^d = \\$Y \\cdot L(i) \\]</div>' +
+        '<ul>' +
+        '<li>It rises with the <strong>level of transactions</strong>, proportional to nominal income \\(\\$Y\\) (more income and spending → you need more money on hand).</li>' +
+        '<li>It falls with the <strong>interest rate</strong> \\(i\\), which is the <em>opportunity cost</em> of holding money rather than interest-bearing bonds.</li>' +
+        '</ul>' +
+        '<p>So the \\(M^d\\) curve slopes <strong>downward</strong> in \\(i\\), and a rise in income shifts the whole curve to the <strong>right</strong>.</p>' +
+
+        '<h3>Equilibrium: the interest rate that clears the money market</h3>' +
+        '<p>The <strong>money supply</strong> \\(M^s = M\\) is set by the central bank and does not depend on the interest rate — a vertical line. The interest rate then adjusts until people are willing to hold exactly the money that exists:</p>' +
         '<div class="formula-box">\\[ M^s = M^d \\quad\\Longrightarrow\\quad M = \\$Y\\,L(i) \\]</div>' +
         '<div class="example-box">' +
         '<h4>Worked example — equilibrium interest rate</h4>' +
-        '<p>Let money demand be \\( M^d = Y(0.4 - i) \\) with income \\( Y = 150 \\) and money supply \\( M^s = 50 \\):</p>' +
-        '<div class="formula-box">\\[ 50 = 150\\,(0.4 - i) \\;\\Rightarrow\\; 0.4 - i = \\tfrac{1}{3} \\;\\Rightarrow\\; i \\approx 0.067 = 6.7\\% \\]</div>' +
+        '<p>Let money demand be \\( M^d = Y(0.4 - i) \\) with income \\( Y = 150 \\) and a money supply \\( M^s = 50 \\). Set supply equal to demand and solve for \\(i\\):</p>' +
+        '<div class="formula-box">\\[ 50 = 150\\,(0.4 - i) \\;\\Rightarrow\\; 0.4 - i = \\tfrac{50}{150} = \\tfrac{1}{3} \\;\\Rightarrow\\; i \\approx 0.067 = 6.7\\% \\]</div>' +
+        '<p><strong>Interpretation:</strong> at 6.7% people are content to hold the 50 of money in existence. If the central bank printed more money, \\(i\\) would have to <em>fall</em> to persuade them to hold it; if income rose, money demand would rise and \\(i\\) would climb.</p>' +
         '</div>' +
 
-        '<h4>How the central bank moves i: open-market operations</h4>' +
-        '<p>The CB changes \\(M\\) by trading bonds. Bond prices and yields move inversely — for a 100-value one-year bond bought at \\(P_B\\):</p>' +
+        '<h3>How the central bank actually moves the rate</h3>' +
+        '<p>The central bank does not "set" the interest rate by decree — it changes the <strong>money supply</strong> by buying and selling government bonds (<strong>open-market operations</strong>). The link runs through bond prices, which move <em>inversely</em> to the interest rate. For a one-year bond of face value 100 bought at price \\(P_B\\):</p>' +
         '<div class="formula-box">\\[ i = \\frac{100 - P_B}{P_B} \\]</div>' +
-        '<div class="tip-box"><h4>The policy levers</h4><p><strong>Expansionary:</strong> CB <em>buys</em> bonds → prices up → \\(i\\) down → \\(M^s\\) up. <strong>Contractionary:</strong> CB <em>sells</em> bonds → prices down → \\(i\\) up → \\(M^s\\) down. And a rise in income pushes the equilibrium \\(i\\) up — the seed of the LM curve.</p></div>',
+        '<p>The higher the price you pay today, the smaller your return — so a higher bond price means a lower interest rate.</p>' +
+        '<div class="tip-box">' +
+        '<h4>The two policy levers</h4>' +
+        '<ul>' +
+        '<li><strong>Expansionary:</strong> the central bank <em>buys</em> bonds → bond demand and prices rise → \\(i\\) falls → money supply rises.</li>' +
+        '<li><strong>Contractionary:</strong> the central bank <em>sells</em> bonds → prices fall → \\(i\\) rises → money supply falls.</li>' +
+        '</ul>' +
+        '<p>One more result will matter enormously next: a rise in income raises money demand and pushes the equilibrium interest rate <strong>up</strong>. That positive link between output and the interest rate is exactly the <strong>LM curve</strong> of the IS-LM model.</p>' +
+        '</div>',
       image: null
     }
   },
@@ -910,30 +1051,38 @@ const macroeconomicsM1 = {
 
     learn: {
       content:
-        '<h3>Putting the goods market and money market on one graph</h3>' +
-        '<p>The <strong>IS-LM model</strong> combines the two short-run markets in a diagram of output \\(Y\\) (horizontal) against the interest rate \\(i\\) (vertical).</p>' +
+        '<h3>Bringing the two markets together</h3>' +
+        '<p>So far we have two separate short-run models: the <strong>goods market</strong> (which set output, taking the interest rate as given) and the <strong>financial market</strong> (which set the interest rate, taking income as given). But output and the interest rate clearly affect each other — higher income raises the interest rate; a higher interest rate lowers investment and output. The <strong>IS-LM model</strong> resolves this two-way dependence by putting both markets on a single diagram, with output \\(Y\\) on the horizontal axis and the interest rate \\(i\\) on the vertical. The economy settles where the two curves cross.</p>' +
 
-        '<h4>The IS curve — goods market</h4>' +
-        '<p>Now let investment depend on the interest rate. Goods-market equilibrium is:</p>' +
+        '<h3>The IS curve — equilibrium in the goods market</h3>' +
+        '<p>We now drop the simplification that investment is fixed and let it depend (negatively) on the interest rate. Goods-market equilibrium becomes:</p>' +
         '<div class="formula-box">\\[ Y = C(Y - T) + I(Y, i) + G \\]</div>' +
-        '<p>A higher \\(i\\) lowers investment → lowers demand → lowers output, so <strong>IS slopes down</strong>. It shifts <strong>right</strong> when \\(G\\), \\(C\\) or \\(I\\) rise or \\(T\\) falls; <strong>left</strong> for the opposite.</p>' +
+        '<p><strong>Why it slopes down:</strong> a higher interest rate \\(i\\) makes borrowing dearer, so investment \\(I\\) falls; lower investment means lower demand, and lower demand (through the multiplier) means lower output \\(Y\\). High \\(i\\) ↔ low \\(Y\\): the IS curve slopes <strong>downward</strong>.</p>' +
+        '<p><strong>What shifts it:</strong> anything that changes demand at a given interest rate. An increase in \\(G\\), \\(C\\) or \\(I\\), or a cut in \\(T\\), shifts IS to the <strong>right</strong>; the opposite shifts it <strong>left</strong>.</p>' +
 
-        '<h4>The LM curve — money market</h4>' +
+        '<h3>The LM curve — equilibrium in the money market</h3>' +
+        '<p>From the financial-market model, equilibrium requires the real money supply to equal real money demand:</p>' +
         '<div class="formula-box">\\[ \\frac{M}{P} = Y\\,L(i) \\]</div>' +
-        '<p>A higher \\(Y\\) raises money demand → raises \\(i\\), so <strong>LM slopes up</strong>. A change in the money supply \\(M\\) shifts it: more \\(M\\) → LM <strong>down</strong>; less \\(M\\) → LM <strong>up</strong>. (Income is a movement <em>along</em> LM, not a shift.)</p>' +
+        '<p><strong>Why it slopes up:</strong> a higher income \\(Y\\) raises the demand for money; with a fixed money supply, the interest rate \\(i\\) must rise to restore balance. High \\(Y\\) ↔ high \\(i\\): the LM curve slopes <strong>upward</strong>.</p>' +
+        '<p><strong>What shifts it:</strong> a change in the <em>money supply</em> \\(M\\). More money shifts LM <strong>down</strong> (a lower \\(i\\) at every \\(Y\\)); less money shifts it <strong>up</strong>. Note carefully: a change in income is a <em>movement along</em> the LM curve, not a shift of it.</p>' +
 
-        '<h4>Economic policy</h4>' +
+        '<h3>Reading economic policy off the diagram</h3>' +
+        '<p>The power of IS-LM is that every policy becomes a clean prediction about the direction of output and the interest rate. The golden rule: <em>a curve moves only if a variable in its own equation changes.</em></p>' +
         '<table>' +
         '<tr><th>Policy</th><th>Shift</th><th>Output</th><th>Interest rate</th></tr>' +
-        '<tr><td>Increase in taxes</td><td>IS left</td><td>Down</td><td>Down</td></tr>' +
-        '<tr><td>Decrease in taxes</td><td>IS right</td><td>Up</td><td>Up</td></tr>' +
+        '<tr><td>Increase in taxes (T)</td><td>IS left</td><td>Down</td><td>Down</td></tr>' +
+        '<tr><td>Decrease in taxes (T)</td><td>IS right</td><td>Up</td><td>Up</td></tr>' +
         '<tr><td>Increase in spending (G)</td><td>IS right</td><td>Up</td><td>Up</td></tr>' +
         '<tr><td>Decrease in spending (G)</td><td>IS left</td><td>Down</td><td>Down</td></tr>' +
         '<tr><td>Increase in money (M)</td><td>LM down</td><td>Up</td><td>Down</td></tr>' +
         '<tr><td>Decrease in money (M)</td><td>LM up</td><td>Down</td><td>Up</td></tr>' +
         '</table>' +
+        '<p>Notice the tell-tale signatures: a <strong>fiscal expansion</strong> raises output <em>and</em> the interest rate (it works on IS), whereas a <strong>monetary expansion</strong> raises output but <em>lowers</em> the interest rate (it works on LM). That difference is how you identify which policy was used just from what happened to \\(Y\\) and \\(i\\).</p>' +
 
-        '<div class="tip-box"><h4>The policy mix</h4><p>Fiscal and monetary policy are often combined. Notice fiscal expansion pushes \\(i\\) <em>up</em> while monetary expansion pushes it <em>down</em> — so a <strong>policy mix</strong> can raise output while controlling the interest rate (the typical COVID-crisis response).</p></div>',
+        '<div class="tip-box">' +
+        '<h4>The policy mix</h4>' +
+        '<p>Because fiscal expansion pushes \\(i\\) <em>up</em> while monetary expansion pushes it <em>down</em>, the two can be combined into a deliberate <strong>policy mix</strong> — for example, a fiscal stimulus paired with monetary easing to raise output <em>without</em> letting the interest rate spike. This is precisely the combination used in the COVID-19 crisis. The IS-LM model is the workhorse for analysing such combinations.</p>' +
+        '</div>',
       image: null
     }
   }

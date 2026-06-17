@@ -12,7 +12,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   expectations, open economy + balance of payments — **6 kat / 55 fc / 52 quiz / 47 fill**). Finalni `macroeconomicsFinal` =
   `Object.assign(M1,M2,{examPractice})` → **14 kat / 131 fc / 127 quiz / 112 fill**. KaTeX currency-safe (inline 248/248 + display 40/40).
   Riješeni primjeri cross-checkani protiv test-prep brojeva (multiplikator 3.57→2.5, Y=5000, i≈6.7%, uₙ=4.8%). **Šav za vježbe ožičen
-  (prazan pack + `features.exercises:true`)** — engine NEDIRNUT, Track B vježbe = kasniji blok. Cache `?v=20260665`. verify 0/0, Playwright 68/68 (subjects=14).
+  (prazan pack + `features.exercises:true`)** — engine NEDIRNUT, Track B vježbe = kasniji blok. **Learn sekcije obogaćene (svih 13 tematskih,
+  udžbenički stil 3–4× opširnije: motivacija/intuicija/interpretacija/zamke), na korisnikov zahtjev.** Cache `?v=20260666`. verify 0/0, Playwright 68/68 (subjects=14).
 - **Statistics — Learn teorija obogaćena (Track A) + interaktivne EXERCISES (Track B, T1–T9):** na postojećem reusable enginu
   (`js/exercises-core.js`+`js/exercises.js`, NEDIRNUT). **Track A:** svih 10 Learn sekcija dobile pravu teoriju (def/intuicija/
   interpretacija/zamke + warning-boxovi), KaTeX currency-safe. **Track B:** novi content pack `data/statistics/exercises.js`

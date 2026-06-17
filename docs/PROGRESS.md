@@ -24,6 +24,11 @@ testirano, što slijedi.
 - **Catalog:** novi subject `macroeconomics` (year 1, **sem 1**, `fa-chart-area`/amber `#f59e0b`), sve 3 lekcije mapirane (scripts midterm-1/2/final/exercises).
   **KaTeX currency-safe** (inline `\(\)` 248/248 + display `\[\]` 40/40 balansirano; 0 single-`$` u sadržaju, samo 3 u komentar-headerima). `tmp-macro/` gitignored.
 - **Provjere:** `CONTENT_VERSION 20260665` (catalog.js+content-loader.js `?v`). verify 0/0, node render-sanity (14 kat, 0 kolizija M1/M2), **Playwright 68/68** (subjects=14, 0 overflow).
+- **✅ LEARN OBOGAĆEN (isti dan, korisnik: „learn sekcije pre male i pre šture — povećat i obogatit puno više"):** svih 13 tematskih Learn sekcija
+  (7 K1 + 6 K2) prepisano u udžbenički stil (3–4× više sadržaja): konceptualna motivacija → def + **intuicija** → mehanizam korak-po-korak →
+  riješeni primjeri **s interpretacijom** → `warning-box` zamke + `tip-box` veze. examPractice (final) ostao bogat roadmap-capstone. Recept iz
+  Statistics Track A; zabilježeno kao trajna preferenca [[learn-sections-must-be-rich]] (vrijedi i za Math). KaTeX i dalje balansiran (K1 inline
+  122/122+display 27/27; K2 158/158+25/25; 0 single-`$` u sadržaju). Cache `20260666`. verify 0/0, Playwright 68/68 (0 overflow).
 - **Sljedeće:** Track B vježbe (kasnije, na zahtjev) · Math (ZADNJA). [[content-roadmap-sequencing]]
 
 ---
