@@ -194,7 +194,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   midterm-1/2/final, final ZADNJI). **KaTeX currency-safe** (kombinirano `\\(\\)` 509/509 + `\\[\\]` 71/71 balansirano;
   0 single-`$` u K2/final — delimiter je `$$` ne `$`). Cache `20260649` (batch 20260648→49). verify 0/0, node struktura 0,
   **Playwright 68/68** (`microeconomics ✓ ok`, 0 overflowa). **Dalje: Statistics ili Macro (oba kvant., KaTeX spreman); Math ZADNJA.** [[content-roadmap-sequencing]]
-- **✅ STATISTICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — drugi kvantitativni predmet, KaTeX, lokalno (2026-06-14, čeka deploy):** iz 26
+- **✅ STATISTICS 100% KOMPLETAN + NADOGRAĐEN ✅ LIVE (study deployano 2026-06-16 `d97ee0b`; drugi kvantitativni predmet, KaTeX):** iz 26
   datoteka (Newbold *Statistics for Business & Economics*; topic deckovi T1–T9 + answer-keyevi). **K1/K2 granica AUTORITATIVNA iz službenih
   midterm-materijala: K1 = T1–T6, K2 = T7–T9.** **K1** `data/statistics/midterm-1.js` (`statisticsM1`) — 6 kat / 61fc / 60quiz / 48fill
   (describing data graphical & numerical, probability, discrete & continuous RV, sampling distributions/CLT). **K2** `midterm-2.js`
@@ -202,7 +202,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`statisticsFinal` = `Object.assign(M1,M2,{examPractice})`, ZADNJI) → **10 kat / 108fc / 102quiz / 80fill**; examPractice = cross-topic
   luk + KaTeX `aligned` master-popis. Catalog: subject `statistics` (year 1, **sem 1 — POTVRĐENO (korisnik)**;
   `fa-chart-simple`/rose `#f43f5e`), sve 3 lekcije mapirane. KaTeX currency-safe (`\\(\\)` 540/540 + `\\[\\]` 45/45). Cache `20260650`.
-  verify 0/0, node 0, **Playwright 68/68** (subjects=13). **Dalje: Macroeconomics (~19); Math ZADNJA.** [[content-roadmap-sequencing]]
+  verify 0/0, node 0, **Playwright 68/68** (subjects=13).
+- **✅ STATISTICS NADOGRADNJA (Track A + B) ✅ LIVE (deployano 2026-06-16 `d97ee0b`):** plan `docs/STATISTICS_PLAN.md`, cigla-po-cigla.
+  **Track A:** svih 10 Learn sekcija obogaćeno pravom teorijom (def/intuicija/interpretacija/zamke + warning-boxovi). **Track B:** **56
+  interaktivnih vježbi** na POSTOJEĆEM reusable enginu (NEDIRNUT) — 35 first-midterm (T1–T6) + 21 second-midterm (T7–T9). Statistika 100%
+  u `data/`: `data/statistics/exercises.js` (`window.statisticsExercises`) + `data/statistics/stat-lib.js` (`window.StatLib`: normalCdf/
+  normalSf/normalBetween, z/t tablice, combinations), oba lazy preko `content.scripts` (stat-lib PRIJE exercises). **0 novih datoteka u
+  `js/`.** Tipovi choice/numeric/ratio + randomizacija (`params`+`generate`; objektni `choices` rade s pickParams). Tol-politika:
+  vjerojatnosti 2dp/0.01, deskriptivni 1–2dp/0.05, cijeli 0. Verify-obrazac svake cigle = node brute-force (neovisni preračun +
+  grade-correct + diskriminacija kroz cijeli prostor params) + z/t-tablica cross-check; **bug ulovljen B2.6 (α/2 float-zanos 0.0499…→
+  promašaj t-tablica ključa → eksplicitna mapa conf→area).** Final lekcija → Exercises prazan (tagano na kolokvije; dosljedno sem-2).
+  Cache `20260664`. verify 0/0, test:unit 33/33 (+stat-parse+stat-lib), Playwright 68/68. **Dalje: Macroeconomics (~19); Math ZADNJA.** [[content-roadmap-sequencing]] [[statistics-exercises-plan]]
 - **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
   `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
   pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
