@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-17 — ✅ MACROECONOMICS study gradivo (K1 + K2 + finalni hibrid) + šav za vježbe — LOKALNO (čeka pregled/deploy)
+**Treći kvantitativni predmet (KaTeX), cigla-po-cigla.** Iz 19 lecture PDF-ova (Blanchard-stil) u `…/1. godina Hospitality Managament/Macroeconomics`.
+- **K1/K2 granica AUTORITATIVNA iz službenih test-prep deckova:** `Preparation for Test1` (GDP → goods market → money market → IS-LM) i
+  `Lecture 11 Preparation for Test 2` (cijela open economy) + `PREPARATION FOR TEST LECTURE 7` (labour market). Rez = klasičan Blanchard:
+  **K1 = Intro + L2–L5** (kratki rok, demand), **K2 = Ch6 + AS-AD + Long Run + Expectations + Open Economy** (srednji/dugi rok + vanjski sektor).
+- **K1** `data/macroeconomics/midterm-1.js` (`macroeconomicsM1`, **7 kat / 64 fc / 63 quiz / 56 fill**): fundamentals, unemployment&inflation,
+  GDP (nominal/real/growth), national accounts, goods market, financial markets, IS-LM. **K2** `midterm-2.js` (`macroeconomicsM2`, **6 kat /
+  55 fc / 52 quiz / 47 fill**): labour market & natural rate, AS-AD (medium run), long-run growth, expectations, open economy (trade/FX),
+  balance of payments. **Finalni** `final.js` (`macroeconomicsFinal` = `Object.assign(M1,M2,{examPractice})`, ZADNJI) → **14 kat / 131 fc /
+  127 quiz / 112 fill**; examPractice = cross-topic luk (kratki↔srednji↔dugi rok) + KaTeX master-popis formula.
+- **Riješeni KaTeX primjeri provjereni protiv test-prep brojeva:** multiplikator `C=250+0.75YD`→4 (`ΔG=100→ΔY=400`); ravnoteža `C=500+0.5YD,
+  T=600,I=300,G=2000`→**Y=5000**; ravnotežna kamata `Mᵈ=Y(0.4−i),Y=150,Mˢ=50`→**i≈6.7%**; realni GDP `325·100/130`→**250**; prirodna stopa
+  `μ=5%→W/P=0.952→uₙ=4.8%`; otvoreni multiplikator `β=0.8,t=0.1,m=0.12`→**3.57→2.5**; Fisher `4%−2%=2%`.
+- **Šav za vježbe ožičen (prazan):** `data/macroeconomics/exercises.js` (`window.macroeconomicsExercises`, prazna lista) + catalog
+  `features.exercises:true` + `content.exercises:'macroeconomicsExercises'` (skripta učitana ZADNJA). Engine NEDIRNUT, 0 novih `js/`.
+  Makro matematika je elementarna algebra → ide inline u `generate()`, **NE treba stat-lib-stil biblioteku**. → Track B vježbe = zaseban kasniji blok.
+- **Catalog:** novi subject `macroeconomics` (year 1, **sem 1**, `fa-chart-area`/amber `#f59e0b`), sve 3 lekcije mapirane (scripts midterm-1/2/final/exercises).
+  **KaTeX currency-safe** (inline `\(\)` 248/248 + display `\[\]` 40/40 balansirano; 0 single-`$` u sadržaju, samo 3 u komentar-headerima). `tmp-macro/` gitignored.
+- **Provjere:** `CONTENT_VERSION 20260665` (catalog.js+content-loader.js `?v`). verify 0/0, node render-sanity (14 kat, 0 kolizija M1/M2), **Playwright 68/68** (subjects=14, 0 overflow).
+- **Sljedeće:** Track B vježbe (kasnije, na zahtjev) · Math (ZADNJA). [[content-roadmap-sequencing]]
+
+---
+
 ## 2026-06-16 — ✅ STATISTICS nadogradnja: Learn teorija (Track A) + interaktivne EXERCISES (Track B, T1–T9) — DEPLOYANO
 **Cigla-po-cigla po `docs/STATISTICS_PLAN.md`.** Korisnik (2026-06-15): Learn je bio preformulni („samo formule nabacane"), Statistika
 ima velik teorijski dio → **(A)** obogatiti teoriju + **(B)** dodati interaktivne vježbe kao Accounting. Odluka: dovršiti cijeli Track B

@@ -359,6 +359,33 @@ const SOKRAT_CATALOG = {
         resolve: { 'first-midterm': 'statisticsM1', 'second-midterm': 'statisticsM2', 'final': 'statisticsFinal' },
         exercises: 'statisticsExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
+    },
+    {
+      id: 'macroeconomics',
+      programId: 'hospitality-management',
+      year: 1, semester: 1,
+      name: 'Macroeconomics',
+      shortName: 'MACRO',
+      icon: 'fa-chart-area',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'Macroeconomics (Blanchard-style): GDP and national accounts, the goods market & multiplier, financial markets, the IS-LM model, the labour market & natural rate, AS-AD, long-run growth, expectations and the open economy — a quantitative subject (KaTeX formulas & worked problems)',
+      storageKey: 'macroeconomics-progress',
+      features: { blindMap: false, exercises: true },
+      // K1 (Intro + L2–L5) + K2 (Ch6 + AS-AD + Long Run + Expectations + Open Economy) + final (hybrid).
+      // K1/K2 boundary AUTHORITATIVE from the official Test-1 / Test-2 preparation decks. KaTeX (ADR-009).
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Fundamentals & objectives, unemployment & inflation, GDP (nominal/real/growth), national accounts, the goods market & multiplier, financial markets & money, the IS-LM model (Intro + L2–L5)' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'The labour market & natural rate, the medium run (AS-AD), long-run growth, expectations, and the open economy: trade, exchange rates & the balance of payments (Ch6 onward)' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // final.js MUST load LAST (Object.assign of macroeconomicsM1 + macroeconomicsM2 + examPractice).
+        // exercises.js is independent (window.macroeconomicsExercises) — loads after final.js (features.exercises).
+        scripts: ['data/macroeconomics/midterm-1.js', 'data/macroeconomics/midterm-2.js', 'data/macroeconomics/final.js', 'data/macroeconomics/exercises.js'],
+        resolve: { 'first-midterm': 'macroeconomicsM1', 'second-midterm': 'macroeconomicsM2', 'final': 'macroeconomicsFinal' },
+        exercises: 'macroeconomicsExercises'   // window var s interaktivnim vježbama (features.exercises)
+      }
     }
   ]
 };

@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Macroeconomics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — treći kvantitativni predmet (KaTeX):** novi subject `macroeconomics`
+  (year 1, sem 1, `fa-chart-area`/amber). Iz 19 lecture PDF-ova (Blanchard-stil). **K1/K2 granica autoritativna iz službenih test-prep
+  deckova:** K1 = Intro + L2–L5 (kratki rok: fundamentals, unemployment&inflation, GDP, national accounts, goods market & multiplier,
+  financial markets, IS-LM — **7 kat / 64 fc / 63 quiz / 56 fill**); K2 = Ch6 onward (labour market & natural rate, AS-AD, long-run growth,
+  expectations, open economy + balance of payments — **6 kat / 55 fc / 52 quiz / 47 fill**). Finalni `macroeconomicsFinal` =
+  `Object.assign(M1,M2,{examPractice})` → **14 kat / 131 fc / 127 quiz / 112 fill**. KaTeX currency-safe (inline 248/248 + display 40/40).
+  Riješeni primjeri cross-checkani protiv test-prep brojeva (multiplikator 3.57→2.5, Y=5000, i≈6.7%, uₙ=4.8%). **Šav za vježbe ožičen
+  (prazan pack + `features.exercises:true`)** — engine NEDIRNUT, Track B vježbe = kasniji blok. Cache `?v=20260665`. verify 0/0, Playwright 68/68 (subjects=14).
 - **Statistics — Learn teorija obogaćena (Track A) + interaktivne EXERCISES (Track B, T1–T9):** na postojećem reusable enginu
   (`js/exercises-core.js`+`js/exercises.js`, NEDIRNUT). **Track A:** svih 10 Learn sekcija dobile pravu teoriju (def/intuicija/
   interpretacija/zamke + warning-boxovi), KaTeX currency-safe. **Track B:** novi content pack `data/statistics/exercises.js`

@@ -45,6 +45,7 @@ tmp-sit/
 tmp-mgmt/
 tmp-micro/
 tmp-stats/
+tmp-macro/
 
 # Python / dev artifacts
 .venv/
