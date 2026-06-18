@@ -1441,6 +1441,195 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for a fresh shock. Demand shocks (money, fiscal) shift AD; supply shocks (P^e, μ, z) shift AS.']
+    },
+
+    // ============================================================================
+    // B9 — THE LONG RUN / GROWTH (second-midterm), chapter 10
+    //   Output per worker Y/N; investment from saving I = sY; capital accumulation
+    //   K_{t+1} = (1 - δ)K_t + I_t; compound growth Y_n = Y_0(1 + g)^n.
+    //   s, δ, g entered as PERCENT. Conventions: per-worker & amounts integer tol 0;
+    //   compounded output 1 dp tol 0.5. Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: production function, Solow, growth sources (TF + MC) -------
+    {
+      id: 'b9-concepts',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'choice',
+      title: 'The Long Run / Growth — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The aggregate production function Y = F(K, N) has diminishing returns to capital.', kind: 'tf', answer: true },
+        { q: 'Output per worker depends on capital per worker K/N.', kind: 'tf', answer: true },
+        { q: 'In the Solow model, investment is financed by saving.', kind: 'tf', answer: true },
+        { q: 'A higher saving rate sustains a permanently higher growth RATE of output per worker.', kind: 'tf', answer: false },
+        { q: 'Sustained long-run growth in output per worker requires technological progress.', kind: 'tf', answer: true },
+        { q: 'Convergence means poorer countries tend to grow faster and catch up.', kind: 'tf', answer: true },
+        { q: 'The production function Y = F(K, N) exhibits diminishing returns to:', kind: 'mc', options: ['Scale', 'Capital (and labour) separately', 'Saving', 'Depreciation'], answer: 1 },
+        { q: 'Because of diminishing returns, capital accumulation ALONE gives a long-run growth rate of Y/N equal to:', kind: 'mc', options: ['The saving rate', 'Zero', 'The depreciation rate', 'Infinity'], answer: 1 },
+        { q: 'What sustains long-run growth in output per worker?', kind: 'mc', options: ['A higher saving rate alone', 'Technological progress', 'A higher depreciation rate', 'More labour only'], answer: 1 }
+      ],
+      solution: [
+        'A higher saving rate raises the LEVEL of output per worker (a richer steady state), but — because of diminishing returns — not its long-run growth RATE.',
+        'Capital accumulation alone runs into diminishing returns; only technological progress sustains growth indefinitely.'
+      ]
+    },
+
+    // --- Output per worker (numeric, fixed) -----------------------------------
+    {
+      id: 'b9-perworker-fixed',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Output per Worker',
+      prompt: 'An economy produces output Y = 600 with N = 30 (million) workers. Compute output per worker Y/N.',
+      difficulty: 1,
+      fields: [
+        { key: 'yn', label: 'Output per worker (Y/N)', answer: 600 / 30, tol: 0, unit: '', hint: 'Y ÷ N = 600 ÷ 30' }
+      ],
+      solution: [
+        'Output per worker = Y ÷ N = 600 ÷ 30 = 20.',
+        'Living standards depend on output per worker, which rises with capital per worker (K/N) — but with diminishing returns.'
+      ]
+    },
+
+    // --- Investment from saving (numeric, fixed) ------------------------------
+    {
+      id: 'b9-investment-fixed',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Investment from Saving',
+      prompt: 'The saving rate is s = 20% and output is Y = 1000. With I = sY, compute investment I.',
+      difficulty: 1,
+      fields: [
+        { key: 'inv', label: 'Investment (I)', answer: 0.2 * 1000, tol: 0, unit: '', hint: 'I = sY = 0.20 × 1000' }
+      ],
+      solution: [
+        'I = sY = 0.20 × 1000 = 200.',
+        'Saving finances investment, which builds the capital stock — the engine of the Solow model.'
+      ]
+    },
+
+    // --- Capital accumulation (numeric, fixed) --------------------------------
+    {
+      id: 'b9-capital-accum-fixed',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Capital Accumulation',
+      prompt: 'The capital stock is K = 1000, the depreciation rate is δ = 10% and investment is I = 200. '
+        + 'Using K_next = (1 − δ)K + I, compute next period’s capital stock.',
+      difficulty: 2,
+      fields: [
+        { key: 'knext', label: 'Next-period capital', answer: (1 - 0.1) * 1000 + 200, tol: 0, unit: '', hint: 'K_next = (1 − 0.10) × 1000 + 200' }
+      ],
+      solution: [
+        'K_next = (1 − δ)K + I = 0.90 × 1000 + 200 = 900 + 200 = 1100.',
+        'Old capital depreciates (δK is lost) and new investment (I) is added.'
+      ]
+    },
+
+    // --- RANDOMIZED: output per worker ----------------------------------------
+    {
+      id: 'b9-perworker-random',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Output per Worker — Drill',
+      prompt: 'Compute output per worker from total output and the number of workers.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { Y: 600, N: 30 },
+          { Y: 1200, N: 40 },
+          { Y: 1000, N: 25 },
+          { Y: 840, N: 42 },
+          { Y: 1500, N: 50 }
+        ] }
+      },
+      generate(p) {
+        const Y = p.pair.Y, N = p.pair.N;
+        const yn = Y / N;
+        return {
+          prompt: 'An economy produces output Y = ' + Y + ' with N = ' + N + ' (million) workers. '
+            + 'Compute output per worker Y/N.',
+          fields: [
+            { key: 'yn', label: 'Output per worker (Y/N)', answer: yn, tol: 0, unit: '', hint: Y + ' ÷ ' + N }
+          ],
+          solution: ['Output per worker = ' + Y + ' ÷ ' + N + ' = ' + yn + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Output per worker = Y ÷ N.']
+    },
+
+    // --- RANDOMIZED: capital accumulation -------------------------------------
+    {
+      id: 'b9-capital-accum-random',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Capital Accumulation — Drill',
+      prompt: 'Compute next period’s capital from the current stock, depreciation and investment.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { K: 1000, d: 10, I: 200 },
+          { K: 800, d: 5, I: 100 },
+          { K: 1200, d: 10, I: 300 },
+          { K: 1500, d: 20, I: 400 },
+          { K: 900, d: 10, I: 150 }
+        ] }
+      },
+      generate(p) {
+        const K = p.pair.K, d = p.pair.d, I = p.pair.I;
+        const knext = (1 - d / 100) * K + I;
+        return {
+          prompt: 'The capital stock is K = ' + K + ', the depreciation rate is δ = ' + d + '% and investment is I = ' + I
+            + '. Using K_next = (1 − δ)K + I, compute next period’s capital stock.',
+          fields: [
+            { key: 'knext', label: 'Next-period capital', answer: knext, tol: 0, unit: '', hint: '(1 − ' + (d / 100) + ') × ' + K + ' + ' + I }
+          ],
+          solution: ['K_next = (1 − ' + (d / 100) + ') × ' + K + ' + ' + I + ' = ' + ((1 - d / 100) * K) + ' + ' + I + ' = ' + knext + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. K_next = (1 − δ)K + I.']
+    },
+
+    // --- RANDOMIZED: compound growth ------------------------------------------
+    {
+      id: 'b9-growth-compound-random',
+      lesson: 'second-midterm',
+      chapter: 10,
+      type: 'numeric',
+      title: 'Compound Growth — Drill',
+      prompt: 'Compute the level of output per capita after several years of compound growth.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { Y0: 100, g: 2, n: 3 },
+          { Y0: 100, g: 3, n: 5 },
+          { Y0: 200, g: 5, n: 2 },
+          { Y0: 100, g: 10, n: 2 },
+          { Y0: 150, g: 4, n: 3 }
+        ] }
+      },
+      generate(p) {
+        const Y0 = p.pair.Y0, g = p.pair.g, n = p.pair.n;
+        const yn = Y0 * Math.pow(1 + g / 100, n);
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'Output per capita starts at ' + Y0 + ' and grows by ' + g + '% per year for ' + n + ' years. '
+            + 'Compute the level after ' + n + ' years. Round to 1 decimal place.',
+          fields: [
+            { key: 'yn', label: 'Level after ' + n + ' years', answer: yn, tol: 0.5, unit: '', hint: Y0 + ' × (1 + ' + (g / 100) + ')^' + n }
+          ],
+          solution: ['Level = ' + Y0 + ' × (1 + ' + (g / 100) + ')^' + n + ' = ' + r1(yn) + '. Because growth compounds, even small rates add up over time.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Compounded level = Y₀ × (1 + g)ⁿ.']
     }
   ]
 };
