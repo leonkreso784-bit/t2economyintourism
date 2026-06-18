@@ -392,6 +392,168 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. Growth rate = (Yₜ − Yₜ₋₁) ÷ Yₜ₋₁ × 100; a fall is negative.']
+    },
+
+    // ============================================================================
+    // B3 — NATIONAL ACCOUNTS (first-midterm), chapter 4
+    //   Expenditure identity Y = C + I + G + (X − IM); missing component; value added.
+    //   All answers are integers (tol 0). Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: approaches, identity, value added, sectors (TF + MC) -------
+    {
+      id: 'b3-concepts',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'choice',
+      title: 'National Accounts — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The production, expenditure and income approaches to GDP give the same value.', kind: 'tf', answer: true },
+        { q: 'Net exports equal exports minus imports.', kind: 'tf', answer: true },
+        { q: 'Value added equals gross value of production minus intermediate consumption.', kind: 'tf', answer: true },
+        { q: 'Intermediate consumption is counted directly in GDP.', kind: 'tf', answer: false },
+        { q: 'In the NACE classification, tourism is a single, separate sector.', kind: 'tf', answer: false },
+        { q: 'In the identity S − I = (G + TR − T) + NX, the term (G + TR − T) is the government budget deficit.', kind: 'tf', answer: true },
+        { q: 'The three-sector model of GDP is:', kind: 'mc', options: ['Y = C', 'Y = C + I', 'Y = C + I + G', 'Y = C + I + G + NX'], answer: 2 },
+        { q: 'The expenditure approach to GDP is:', kind: 'mc', options: ['Y = C + I + G + (X − IM)', 'Y = wages + profits + rents', 'Y = sum of value added', 'Y = S + T'], answer: 0 },
+        { q: 'In the macro symbols, TR stands for:', kind: 'mc', options: ['Taxes', 'Transfers', 'Trade', 'Total revenue'], answer: 1 }
+      ],
+      solution: [
+        'Intermediate consumption is NOT counted directly — only final output is (value added avoids double-counting).',
+        'Tourism is not a separate NACE activity/sector; it spans many activities (hence the satellite account).',
+        '(G + TR − T) is the budget deficit: spending plus transfers minus taxes.'
+      ]
+    },
+
+    // --- GDP from expenditure components (numeric, fixed) ---------------------
+    {
+      id: 'b3-gdp-fixed',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'GDP from Expenditure',
+      prompt: 'An economy has C = 600, I = 150, G = 200, exports X = 80 and imports IM = 100. Compute net exports (NX) and GDP (Y).',
+      difficulty: 1,
+      fields: [
+        { key: 'nx', label: 'Net exports (NX)', answer: -20, tol: 0, unit: '', hint: 'NX = X − IM = 80 − 100' },
+        { key: 'y', label: 'GDP (Y)', answer: 930, tol: 0, unit: '', hint: 'Y = C + I + G + NX = 600 + 150 + 200 + (−20)' }
+      ],
+      solution: [
+        'NX = X − IM = 80 − 100 = −20 (a trade deficit).',
+        'Y = C + I + G + NX = 600 + 150 + 200 − 20 = 930.'
+      ]
+    },
+
+    // --- Missing expenditure component (numeric, fixed) -----------------------
+    {
+      id: 'b3-missing-fixed',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Find the Missing Component',
+      prompt: 'GDP is Y = 1000 with C = 600, I = 150 and net exports NX = 50. Compute government spending G.',
+      difficulty: 2,
+      fields: [
+        { key: 'g', label: 'Government spending (G)', answer: 200, tol: 0, unit: '', hint: 'G = Y − C − I − NX = 1000 − 600 − 150 − 50' }
+      ],
+      solution: [
+        'Rearrange Y = C + I + G + NX → G = Y − C − I − NX = 1000 − 600 − 150 − 50 = 200.'
+      ]
+    },
+
+    // --- Value added (ratio, given) -------------------------------------------
+    {
+      id: 'b3-valueadded-ratio',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'ratio',
+      title: 'Value Added',
+      prompt: 'Using the production figures below, compute value added.',
+      difficulty: 1,
+      givens: [
+        { label: 'Gross value of production', value: 500 },
+        { label: 'Intermediate consumption', value: 180 }
+      ],
+      fields: [
+        { key: 'va', label: 'Value added', answer: 320, tol: 0, unit: '', hint: 'Gross value − intermediate consumption = 500 − 180' }
+      ],
+      solution: [
+        'Value added = gross value of production − intermediate consumption = 500 − 180 = 320.',
+        'Summing value added across all activities (avoiding double-counting) gives GDP by the production approach.'
+      ]
+    },
+
+    // --- RANDOMIZED: GDP from components --------------------------------------
+    {
+      id: 'b3-gdp-random',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'GDP from Expenditure — Drill',
+      prompt: 'Compute net exports and GDP from the expenditure components.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { C: 600, I: 150, G: 200, X: 80, IM: 100 },
+          { C: 500, I: 120, G: 180, X: 120, IM: 90 },
+          { C: 700, I: 200, G: 250, X: 150, IM: 160 },
+          { C: 550, I: 100, G: 150, X: 100, IM: 70 },
+          { C: 640, I: 160, G: 220, X: 90, IM: 110 }
+        ] }
+      },
+      generate(p) {
+        const C = p.pair.C, I = p.pair.I, G = p.pair.G, X = p.pair.X, IM = p.pair.IM;
+        const nx = X - IM;
+        const y = C + I + G + nx;
+        return {
+          prompt: 'An economy has C = ' + C + ', I = ' + I + ', G = ' + G + ', exports X = ' + X
+            + ' and imports IM = ' + IM + '. Compute net exports (NX) and GDP (Y).',
+          fields: [
+            { key: 'nx', label: 'Net exports (NX)', answer: nx, tol: 0, unit: '', hint: 'NX = X − IM = ' + X + ' − ' + IM },
+            { key: 'y', label: 'GDP (Y)', answer: y, tol: 0, unit: '', hint: 'Y = C + I + G + NX' }
+          ],
+          solution: [
+            'NX = X − IM = ' + X + ' − ' + IM + ' = ' + nx + '.',
+            'Y = C + I + G + NX = ' + C + ' + ' + I + ' + ' + G + ' + (' + nx + ') = ' + y + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. NX = X − IM; Y = C + I + G + NX.']
+    },
+
+    // --- RANDOMIZED: missing component ----------------------------------------
+    {
+      id: 'b3-missing-random',
+      lesson: 'first-midterm',
+      chapter: 4,
+      type: 'numeric',
+      title: 'Missing Component — Drill',
+      prompt: 'Given GDP and three components, solve for government spending G.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { Y: 1000, C: 600, I: 150, NX: 50 },
+          { Y: 900, C: 550, I: 120, NX: -30 },
+          { Y: 1200, C: 700, I: 250, NX: -50 },
+          { Y: 850, C: 500, I: 200, NX: 0 },
+          { Y: 1100, C: 650, I: 180, NX: 20 }
+        ] }
+      },
+      generate(p) {
+        const Y = p.pair.Y, C = p.pair.C, I = p.pair.I, NX = p.pair.NX;
+        const g = Y - C - I - NX;
+        return {
+          prompt: 'GDP is Y = ' + Y + ' with C = ' + C + ', I = ' + I + ' and net exports NX = ' + NX
+            + '. Compute government spending G.',
+          fields: [
+            { key: 'g', label: 'Government spending (G)', answer: g, tol: 0, unit: '', hint: 'G = Y − C − I − NX' }
+          ],
+          solution: ['G = Y − C − I − NX = ' + Y + ' − ' + C + ' − ' + I + ' − (' + NX + ') = ' + g + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. From Y = C + I + G + NX, G = Y − C − I − NX.']
     }
   ]
 };
