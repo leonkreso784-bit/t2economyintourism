@@ -749,6 +749,190 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. Multiplier = 1/(1−c₁); ΔY = multiplier × ΔG.']
+    },
+
+    // ============================================================================
+    // B5 — FINANCIAL MARKETS (first-midterm), chapter 6
+    //   Money demand M = $Y·L(i); equilibrium Mˢ = Mᵈ pins down i; bond yield
+    //   i = (100 − P_B)/P_B; open-market operations; income → i (the LM logic).
+    //   Linear money demand M = Y(0.4 − i) (i in DECIMAL) → i% = (0.4 − M/Y)·100.
+    //   Conventions: interest rate / yield entered as PERCENT, 1 dp, tol 0.1.
+    //   Randomized: scalar param P read as p.P; object param read as p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: money demand, equilibrium, bonds (TF + MC) -----------------
+    {
+      id: 'b5-concepts',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'choice',
+      title: 'Financial Markets — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The demand for money rises with nominal income $Y.', kind: 'tf', answer: true },
+        { q: 'The demand for money rises with the interest rate i.', kind: 'tf', answer: false },
+        { q: 'The interest rate is the opportunity cost of holding money instead of bonds.', kind: 'tf', answer: true },
+        { q: 'Bond prices and the interest rate move in the same direction.', kind: 'tf', answer: false },
+        { q: 'The money supply is set by the central bank and is independent of the interest rate.', kind: 'tf', answer: true },
+        { q: 'A rise in income, with the money supply fixed, raises the equilibrium interest rate.', kind: 'tf', answer: true },
+        { q: 'The money-demand curve slopes downward because a higher interest rate:', kind: 'mc', options: ['Raises income', 'Raises the opportunity cost of holding money', 'Raises the money supply', 'Lowers bond prices forever'], answer: 1 },
+        { q: 'For a one-year bond of face value 100, the yield is:', kind: 'mc', options: ['i = P_B / 100', 'i = 100 / P_B', 'i = (100 − P_B) / P_B', 'i = (P_B − 100) / 100'], answer: 2 },
+        { q: 'Equilibrium in the money market occurs where:', kind: 'mc', options: ['Mˢ = Mᵈ', 'Y = C + I + G', 'i = inflation', 'S = I'], answer: 0 }
+      ],
+      solution: [
+        'Money demand FALLS as i rises: higher interest makes bonds more attractive, so people hold less money.',
+        'Bond prices and the interest rate move INVERSELY — a higher price means a lower yield (i = (100 − P_B)/P_B).',
+        'A higher income raises money demand; with supply fixed, the equilibrium interest rate must rise (the upward-sloping LM relation).'
+      ]
+    },
+
+    // --- Open-market operations: directions (TF + MC) -------------------------
+    {
+      id: 'b5-directions',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'choice',
+      title: 'Monetary Policy & Open-Market Operations',
+      prompt: 'Classify each statement about central-bank operations as true or false, then answer the MC items.',
+      difficulty: 2,
+      items: [
+        { q: 'When the central bank BUYS bonds, bond prices rise and the interest rate falls.', kind: 'tf', answer: true },
+        { q: 'Buying bonds increases the money supply (expansionary).', kind: 'tf', answer: true },
+        { q: 'Selling bonds is expansionary monetary policy.', kind: 'tf', answer: false },
+        { q: 'Selling bonds raises the interest rate.', kind: 'tf', answer: true },
+        { q: 'To lower the interest rate, the central bank should:', kind: 'mc', options: ['Sell bonds', 'Buy bonds', 'Raise taxes', 'Cut government spending'], answer: 1 },
+        { q: 'Contractionary monetary policy means the central bank:', kind: 'mc', options: ['Buys bonds and lowers i', 'Sells bonds and raises i', 'Buys bonds and raises i', 'Cuts taxes'], answer: 1 },
+        { q: 'An open-market PURCHASE of bonds leads to:', kind: 'mc', options: ['Higher i, lower Mˢ', 'Lower i, higher Mˢ', 'Higher i, higher Mˢ', 'No change'], answer: 1 }
+      ],
+      solution: [
+        'Selling bonds drains money from the economy → contractionary (bond prices fall, the interest rate rises).',
+        'Expansionary chain: buy bonds → bond demand up → bond prices up → yield (i) down → money supply up.'
+      ]
+    },
+
+    // --- Equilibrium interest rate (numeric, fixed) ---------------------------
+    {
+      id: 'b5-equilibrium-fixed',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Equilibrium Interest Rate',
+      prompt: 'Money demand is M = Y(0.4 − i), income Y = 150 and the money supply Mˢ = 50. '
+        + 'Compute the equilibrium interest rate i (%). Round to 1 decimal place.',
+      difficulty: 2,
+      fields: [
+        { key: 'i', label: 'Equilibrium interest rate', answer: (0.4 - 50 / 150) * 100, tol: 0.1, unit: '%', hint: 'Set Mˢ = Mᵈ: 50 = 150(0.4 − i) → i = 0.4 − 50/150, then ×100' }
+      ],
+      solution: [
+        'Set supply = demand: 50 = 150 × (0.4 − i).',
+        '0.4 − i = 50 ÷ 150 = 0.3333, so i = 0.0667 ≈ 6.7%.'
+      ]
+    },
+
+    // --- Bond yield from price (numeric, fixed) -------------------------------
+    {
+      id: 'b5-bond-yield-fixed',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Bond Yield',
+      prompt: 'A one-year bond with a face (nominal) value of 100 sells for P_B = 95. Compute its yield i (%). '
+        + 'Round to 1 decimal place.',
+      difficulty: 1,
+      fields: [
+        { key: 'i', label: 'Bond yield', answer: (100 - 95) / 95 * 100, tol: 0.1, unit: '%', hint: 'i = (100 − P_B) ÷ P_B = (100 − 95) ÷ 95' }
+      ],
+      solution: [
+        'i = (100 − P_B) ÷ P_B = (100 − 95) ÷ 95 = 5 ÷ 95 = 0.0526 ≈ 5.3%.',
+        'A higher price would mean a lower yield — bond prices and the interest rate move inversely.'
+      ]
+    },
+
+    // --- Income effect on i (numeric, fixed) ----------------------------------
+    {
+      id: 'b5-income-effect-fixed',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Income and the Interest Rate',
+      prompt: 'Money demand is M = Y(0.4 − i) and the money supply is fixed at Mˢ = 60. '
+        + 'Compute the equilibrium interest rate (%) when income Y = 200 and when Y = 300. Round to 1 decimal place.',
+      difficulty: 2,
+      fields: [
+        { key: 'i1', label: 'Interest rate at Y = 200', answer: (0.4 - 60 / 200) * 100, tol: 0.1, unit: '%', hint: 'i = (0.4 − 60/200) × 100' },
+        { key: 'i2', label: 'Interest rate at Y = 300', answer: (0.4 - 60 / 300) * 100, tol: 0.1, unit: '%', hint: 'i = (0.4 − 60/300) × 100' }
+      ],
+      solution: [
+        'At Y = 200: i = 0.4 − 60/200 = 0.4 − 0.30 = 0.10 → 10.0%.',
+        'At Y = 300: i = 0.4 − 60/300 = 0.4 − 0.20 = 0.20 → 20.0%.',
+        'Higher income raises money demand; with supply fixed, the equilibrium interest rate rises (the LM logic).'
+      ]
+    },
+
+    // --- RANDOMIZED: equilibrium interest rate --------------------------------
+    {
+      id: 'b5-equilibrium-random',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Equilibrium Interest Rate — Drill',
+      prompt: 'Compute the equilibrium interest rate from money demand M = Y(0.4 − i), income and the money supply.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { Y: 200, M: 70 },
+          { Y: 200, M: 60 },
+          { Y: 200, M: 50 },
+          { Y: 300, M: 105 },
+          { Y: 400, M: 120 }
+        ] }
+      },
+      generate(p) {
+        const Y = p.pair.Y, M = p.pair.M;
+        const i = (0.4 - M / Y) * 100;
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'Money demand is M = Y(0.4 − i), income Y = ' + Y + ' and the money supply Mˢ = ' + M
+            + '. Compute the equilibrium interest rate i (%). Round to 1 decimal place.',
+          fields: [
+            { key: 'i', label: 'Equilibrium interest rate', answer: i, tol: 0.1, unit: '%', hint: 'i = (0.4 − ' + M + '/' + Y + ') × 100' }
+          ],
+          solution: [
+            'Set ' + M + ' = ' + Y + '(0.4 − i) → 0.4 − i = ' + M + '/' + Y + ' = ' + r1((M / Y) * 100) / 100 + '.',
+            'i = 0.4 − ' + (M / Y) + ' = ' + r1(i) + '%.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. From Mˢ = Y(0.4 − i): i = (0.4 − Mˢ/Y) × 100.']
+    },
+
+    // --- RANDOMIZED: bond yield -----------------------------------------------
+    {
+      id: 'b5-bond-yield-random',
+      lesson: 'first-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Bond Yield — Drill',
+      prompt: 'Compute the yield of a one-year bond (face value 100) from its price.',
+      difficulty: 1,
+      params: {
+        P: { choices: [95, 90, 80, 96, 98] }
+      },
+      generate(p) {
+        const P = p.P;
+        const i = (100 - P) / P * 100;
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'A one-year bond with a face value of 100 sells for P_B = ' + P + '. Compute its yield i (%). '
+            + 'Round to 1 decimal place.',
+          fields: [
+            { key: 'i', label: 'Bond yield', answer: i, tol: 0.1, unit: '%', hint: 'i = (100 − ' + P + ') ÷ ' + P }
+          ],
+          solution: ['i = (100 − ' + P + ') ÷ ' + P + ' = ' + (100 - P) + ' ÷ ' + P + ' = ' + r1(i) + '%.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Bond yield i = (100 − P_B) ÷ P_B.']
     }
   ]
 };
