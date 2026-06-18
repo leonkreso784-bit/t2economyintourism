@@ -5,18 +5,26 @@ testirano, što slijedi.
 
 ---
 
-## 2026-06-18 — MACROECONOMICS: sem→2, Track B vježbe B1–B3, code review (LOKALNO, NIJE deployano)
-**Nastavak od 2026-06-17.** Sve lokalno, **7 commita ispred origin** (zadnji `0f5407b`); deploy čeka izričitu potvrdu.
+## 2026-06-18 — MACROECONOMICS: sem→2, Track B vježbe B1–B10, code review → ✅ DEPLOY
+**Nastavak od 2026-06-17.** Macro premješten + 10 ciglom-po-cigla vježbi; **deployano uz izričitu potvrdu korisnika** (B11–B12 ostaju za poslije).
 - **Macro → year 1, semestar 2** (`21afdf1`, korisnikov zahtjev; bilo sem 1). catalog.js `?v` 20260667. verify 0/0, browse 8/8.
 - **▶ TRACK B vježbe — interaktivne, cigla-po-cigla** (plan/status: [[macroeconomics-exercises-plan]]). Engine NEDIRNUT, sve u
-  `data/macroeconomics/exercises.js`; makro NE treba biblioteku (sve inline u `generate()`). Konvencije: stope % 1dp/tol 0.1, cijeli tol 0.
-  Verify svake cigle = node brute-force (neovisni preračun + grade-correct kroz cijeli prostor params + diskriminacija + NaN-provjera).
-  - ✅ **B1** fundamentals + unemployment&inflation (`51ef0a6`, 7 vj, 46 provjera 0).
-  - ✅ **B2** gdpMeasurement (`09458b8`) — **bug ulovljen prije commita: randomizirani `generate` koristio `p.nom`/`p.y1` umjesto
-    `p.pair.*` → NaN; popravljeno.** 60 provjera 0.
-  - ✅ **B3** nationalAccounts (`0f5407b`, 7 vj, 79 kumulativnih provjera 0).
-  - **Ostaje B4–B12:** goodsMarket · financialMarkets · isLmModel · labourMarket · mediumRun · longRun · expectations · openEconomyGoods · balanceOfPayments.
-  Cache zadnji `CONTENT_VERSION=20260670`. verify 0/0, Playwright 68/68 nakon svake cigle.
+  `data/macroeconomics/exercises.js`; makro NE treba biblioteku (sve inline u `generate()`). Konvencije: stope % 1dp/tol 0.1, cijeli tol 0,
+  multiplikator/omjeri 2dp/tol 0.05, output/PV 1dp/tol 0.5. Verify svake cigle = node brute-force (neovisni preračun drugom formulom/identitetom
+  + grade-correct kroz cijeli prostor params + diskriminacija + NaN-provjera). **⚠ Randomizirani `generate(p)` MORA čitati `p.pair.X`** (pickParams
+  sprema izabrani objekt iz `choices` pod ključ) — bug iz B2.
+  - ✅ **B1** fundamentals + unemployment&inflation (`51ef0a6`, 46 provjera).
+  - ✅ **B2** gdpMeasurement (`09458b8`) — **bug ulovljen prije commita: `p.nom`/`p.y1` umjesto `p.pair.*` → NaN; popravljeno.** 60 provjera.
+  - ✅ **B3** nationalAccounts (`0f5407b`, 79 provjera).
+  - ✅ **B4** goodsMarket (`0e41c6f`) — multiplikator/ravnotežni Y/ΔY/porezni mult.; 103 provjere (+neovisni fixed-point ravnoteže).
+  - ✅ **B5** financialMarkets (`dc33135`) — ravnotežni `i` iz `M=Y(0.4−i)`, bond yield, open-market; 89 provjera. **⚠ verifier-bug: stroga `===` na floatu → `Math.abs(...)<1e-9`.**
+  - ✅ **B6** isLmModel (`9b2ab98`) — IS/LM, fiskalna/monetarna, policy mix, randomizirani comparative-statics. KVALITATIVAN→choice. 152 provjere (+teorija smjerova). **→ FIRST-MIDTERM SET (B1–B6, 41 vj).**
+  - ✅ **B7** labourMarket (`130a2ff`) — `W/P=1/(1+μ)`, prirodna stopa `uₙ`, prirodni output `Yₙ`; 102 provjere (+neovisni identiteti).
+  - ✅ **B8** mediumRun AS-AD (`2573eda`) — AS/AD, money neutrality, Pᵉ proces, shock-drill. KVALITATIVAN→choice. 154 provjere (+teorija demand→AD/supply→AS).
+  - ✅ **B9** longRun (`982babd`) — `Y/N`, `I=sY`, `K_next=(1−δ)K+I`, compound `Y0(1+g)^n`; 98 provjera (+compound preko neovisne petlje).
+  - ✅ **B10** expectations (`a0754e7`) — Fisher `r=i−πᵉ`, present value `z/(1+r)ⁿ`, efekt kamate na PV; 83 provjere (+identiteti `r+πᵉ=i`, `PV·(1+r)ⁿ=z`).
+  - **Ostaje B11–B12** (poslije): openEconomyGoods · balanceOfPayments. **Final lekcija → Exercises prazan** (tagano na kolokvije).
+  Cache `CONTENT_VERSION=20260677`. **verify 0/0, Playwright 68/68 (subjects=14) nakon SVAKE cigle.** Test režim: puni Playwright po cigli (korisnik 2026-06-18).
 - **CODE REVIEW cijelog projekta (korisnik tražio):** stanje **vrlo dobro** — čista arhitektura (engine=čiste funkcije bez DOM-a, catalog SSOT,
   lazy-load seam, sigurnost OK: publishable key javan po dizajnu + RLS), 0 debug-ostataka, dobar test-suite. **Nalazi (ništa kritično, vidi BACKLOG):**
   (1) mrtav `lessonCategoryMap` u `js/config.js` (entrepreneurship `second-exam-prep`/`final-exam-prep` više ne postoje → fallback na sve kat., bezopasno);
