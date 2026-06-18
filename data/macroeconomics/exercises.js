@@ -218,6 +218,180 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh values. Real interest rate ≈ nominal rate − (expected) inflation rate.']
+    },
+
+    // ============================================================================
+    // B2 — GDP MEASUREMENT (first-midterm), chapter 3
+    //   Real GDP via deflator, growth rate, GDP per capita, nominal from real.
+    //   Conventions: GDP/output 1 dp tol 0.5; growth rate % 1 dp tol 0.1; per capita tol 0.
+    // ============================================================================
+
+    // --- Concepts: GDP definitions, nominal/real, gap (TF + MC) ---------------
+    {
+      id: 'b2-concepts',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'choice',
+      title: 'GDP Measurement — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'GDP counts only final goods and services, not intermediate ones.', kind: 'tf', answer: true },
+        { q: 'A foreign-owned firm producing inside Croatia adds to Croatian GDP.', kind: 'tf', answer: true },
+        { q: 'If prices rise during the year, real GDP is greater than nominal GDP.', kind: 'tf', answer: false },
+        { q: 'Potential GDP is the maximum output the economy can produce at stable prices.', kind: 'tf', answer: true },
+        { q: 'A recessional gap means the economy produces more than its potential.', kind: 'tf', answer: false },
+        { q: 'A recession is defined as at least two consecutive quarters of negative growth.', kind: 'tf', answer: true },
+        { q: 'Real GDP is measured at:', kind: 'mc', options: ['Current prices', 'Constant prices', 'Future prices', 'Black-market prices'], answer: 1 },
+        { q: 'The best measure of the average standard of living is:', kind: 'mc', options: ['Nominal GDP', 'GDP per capita', 'Total exports', 'The CPI'], answer: 1 },
+        { q: 'The measure of output that follows OWNERSHIP (factors wherever located) is:', kind: 'mc', options: ['GDP', 'GNP', 'CPI', 'Net exports'], answer: 1 }
+      ],
+      solution: [
+        'When prices rise, real GDP is LESS than nominal GDP (the price rise inflates the nominal figure).',
+        'A recessional gap = producing LESS than potential (idle resources); an inflationary gap = more than potential.',
+        'GDP is geographic (within borders); GNP follows ownership of the factors of production.'
+      ]
+    },
+
+    // --- Real GDP from nominal via the deflator (numeric, fixed) --------------
+    {
+      id: 'b2-realgdp-fixed',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Real GDP from Nominal',
+      prompt: 'Nominal GDP is 325 (billion EUR) and the price index is 130 (base year = 100). Compute real GDP (billion EUR).',
+      difficulty: 1,
+      fields: [
+        { key: 'real', label: 'Real GDP (billion)', answer: 250, tol: 0.5, unit: '', hint: 'Real = Nominal × (CPI_base ÷ CPI_n) = 325 × (100 ÷ 130)' }
+      ],
+      solution: [
+        'Real GDP = Nominal GDP × (CPI_base ÷ CPI_n) = 325 × (100 ÷ 130) = 250.',
+        'Although nominal output is 325, in constant prices it is only 250 — the rest was price increase.'
+      ]
+    },
+
+    // --- Real GDP growth rate (numeric, fixed) --------------------------------
+    {
+      id: 'b2-growth-fixed',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Real GDP Growth Rate',
+      prompt: 'Real GDP rose from 250 (last year) to 275 (this year). Compute the growth rate (%). Round to 1 decimal place.',
+      difficulty: 1,
+      fields: [
+        { key: 'g', label: 'Growth rate', answer: 10, tol: 0.1, unit: '%', hint: '(Yₜ − Yₜ₋₁) ÷ Yₜ₋₁ × 100 = (275 − 250) ÷ 250 × 100' }
+      ],
+      solution: [
+        'Growth rate = (Yₜ − Yₜ₋₁) ÷ Yₜ₋₁ × 100 = (275 − 250) ÷ 250 × 100 = 10.0%.',
+        'Positive growth = expansion; negative growth = contraction (recession if it lasts two quarters).'
+      ]
+    },
+
+    // --- GDP per capita (numeric, fixed) --------------------------------------
+    {
+      id: 'b2-percapita-fixed',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'GDP per Capita',
+      prompt: 'A country has a real GDP of 900 billion EUR and a population of 45 million. Compute GDP per capita (EUR).',
+      difficulty: 1,
+      fields: [
+        { key: 'pc', label: 'GDP per capita (EUR)', answer: 20000, tol: 0, unit: 'EUR', hint: 'GDP ÷ population = 900 billion ÷ 45 million' }
+      ],
+      solution: [
+        'GDP per capita = real GDP ÷ population = 900 billion ÷ 45 million = 20,000 EUR.',
+        'Per-capita GDP — not total GDP — is the standard gauge of average living standards.'
+      ]
+    },
+
+    // --- Nominal GDP from real (numeric, fixed) -------------------------------
+    {
+      id: 'b2-nominal-fixed',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Nominal GDP from Real',
+      prompt: 'Real GDP is 250 (billion EUR) and the GDP deflator (price index) is 130 (base year = 100). '
+        + 'Compute nominal GDP (billion EUR).',
+      difficulty: 2,
+      fields: [
+        { key: 'nom', label: 'Nominal GDP (billion)', answer: 325, tol: 0.5, unit: '', hint: 'Nominal = Real × (deflator ÷ 100) = 250 × (130 ÷ 100)' }
+      ],
+      solution: [
+        'Nominal = Real × deflator ÷ 100 = 250 × 130 ÷ 100 = 325.',
+        'This is just the deflator relationship rearranged: Nominal = Real × deflator.'
+      ]
+    },
+
+    // --- RANDOMIZED: real GDP from nominal -------------------------------------
+    {
+      id: 'b2-realgdp-random',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Real GDP — Drill',
+      prompt: 'Compute real GDP from nominal GDP and the price index.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { nom: 325, cpi: 130 },
+          { nom: 480, cpi: 120 },
+          { nom: 550, cpi: 110 },
+          { nom: 360, cpi: 120 },
+          { nom: 420, cpi: 105 }
+        ] }
+      },
+      generate(p) {
+        const nom = p.pair.nom, cpi = p.pair.cpi;
+        const real = nom * 100 / cpi;
+        return {
+          prompt: 'Nominal GDP is ' + nom + ' (billion EUR) and the price index is ' + cpi
+            + ' (base year = 100). Compute real GDP (billion EUR).',
+          fields: [
+            { key: 'real', label: 'Real GDP (billion)', answer: real, tol: 0.5, unit: '', hint: 'Real = Nominal × (100 ÷ CPI) = ' + nom + ' × (100 ÷ ' + cpi + ')' }
+          ],
+          solution: ['Real GDP = ' + nom + ' × (100 ÷ ' + cpi + ') = ' + real + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. Real GDP = Nominal GDP × (100 ÷ price index).']
+    },
+
+    // --- RANDOMIZED: GDP growth rate (incl. recessions) -----------------------
+    {
+      id: 'b2-growth-random',
+      lesson: 'first-midterm',
+      chapter: 3,
+      type: 'numeric',
+      title: 'Growth Rate — Drill',
+      prompt: 'Compute the real GDP growth rate between the two years.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { y1: 200, y2: 220 },
+          { y1: 250, y2: 240 },
+          { y1: 300, y2: 312 },
+          { y1: 400, y2: 380 },
+          { y1: 150, y2: 165 }
+        ] }
+      },
+      generate(p) {
+        const y1 = p.pair.y1, y2 = p.pair.y2;
+        const g = (y2 - y1) / y1 * 100;
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'Real GDP changed from ' + y1 + ' (last year) to ' + y2 + ' (this year). Compute the growth '
+            + 'rate (%). Round to 1 decimal place (a fall is negative).',
+          fields: [
+            { key: 'g', label: 'Growth rate', answer: g, tol: 0.1, unit: '%', hint: '(' + y2 + ' − ' + y1 + ') ÷ ' + y1 + ' × 100' }
+          ],
+          solution: ['Growth rate = (' + y2 + ' − ' + y1 + ') ÷ ' + y1 + ' × 100 = ' + r1(g) + '%.'
+            + (g < 0 ? ' A negative rate means the economy contracted.' : '')]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. Growth rate = (Yₜ − Yₜ₋₁) ÷ Yₜ₋₁ × 100; a fall is negative.']
     }
   ]
 };
