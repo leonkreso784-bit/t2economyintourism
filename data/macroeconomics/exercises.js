@@ -554,6 +554,201 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. From Y = C + I + G + NX, G = Y − C − I − NX.']
+    },
+
+    // ============================================================================
+    // B4 — THE GOODS MARKET (first-midterm), chapter 5
+    //   Multiplier 1/(1−c₁); equilibrium Y = 1/(1−c₁)·[c₀ + I + G − c₁T];
+    //   ΔY = multiplier·ΔG; tax multiplier −c₁/(1−c₁), ΔY = (−c₁/(1−c₁))·ΔT.
+    //   Clean c₁ ∈ {0.5,0.6,0.75,0.8} → multipliers 2/2.5/4/5 and integer Y.
+    //   Conventions: multiplier 2 dp tol 0.05; output Y tol 0.5; ΔY tol 0.5.
+    //   Randomized generate() reads p.pair.* (B2 lesson — pickParams stores the chosen object under the key).
+    // ============================================================================
+
+    // --- Concepts: equilibrium, multiplier, autonomous spending, taxes (TF + MC)
+    {
+      id: 'b4-concepts',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'choice',
+      title: 'The Goods Market — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'Goods-market equilibrium requires output Y to equal the demand for goods Z.', kind: 'tf', answer: true },
+        { q: 'The multiplier 1/(1−c₁) is greater than 1 because 0 < c₁ < 1.', kind: 'tf', answer: true },
+        { q: 'A higher marginal propensity to consume makes the multiplier smaller.', kind: 'tf', answer: false },
+        { q: 'An increase in taxes (T) raises equilibrium output.', kind: 'tf', answer: false },
+        { q: 'Autonomous spending is the part of demand that does not depend on current income.', kind: 'tf', answer: true },
+        { q: 'The tax multiplier is smaller in absolute value than the government-spending multiplier.', kind: 'tf', answer: true },
+        { q: 'If c₁ = 0.8, the multiplier 1/(1−c₁) equals:', kind: 'mc', options: ['2', '4', '5', '8'], answer: 2 },
+        { q: 'With a multiplier of 4, an increase in G of 100 raises equilibrium output by:', kind: 'mc', options: ['40', '100', '250', '400'], answer: 3 },
+        { q: 'In Y = 1/(1−c₁)·[c₀ + I + G − c₁T], the bracketed term is:', kind: 'mc', options: ['The multiplier', 'Autonomous spending', 'Disposable income', 'Net taxes'], answer: 1 }
+      ],
+      solution: [
+        'A HIGHER MPC makes the multiplier LARGER: more of each extra euro is re-spent, so 1/(1−c₁) rises.',
+        'Higher taxes cut disposable income and consumption, so they REDUCE equilibrium output (the tax multiplier is negative).',
+        'Government spending acts on the multiplier in full (1/(1−c₁)); taxes act through −c₁/(1−c₁), which is smaller because c₁ < 1.'
+      ]
+    },
+
+    // --- Multiplier from the MPC (numeric, fixed) -----------------------------
+    {
+      id: 'b4-multiplier-fixed',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'The Multiplier',
+      prompt: 'The marginal propensity to consume is c₁ = 0.75. Compute the multiplier 1/(1 − c₁). Round to 2 decimal places.',
+      difficulty: 1,
+      fields: [
+        { key: 'mult', label: 'Multiplier', answer: 4, tol: 0.05, unit: '', hint: '1 ÷ (1 − c₁) = 1 ÷ (1 − 0.75) = 1 ÷ 0.25' }
+      ],
+      solution: [
+        'Multiplier = 1 ÷ (1 − c₁) = 1 ÷ (1 − 0.75) = 1 ÷ 0.25 = 4.',
+        'A one-unit rise in autonomous spending ultimately raises output by 4 units.'
+      ]
+    },
+
+    // --- Equilibrium output (numeric, fixed) ----------------------------------
+    {
+      id: 'b4-equilibrium-fixed',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Equilibrium Output',
+      prompt: 'Consumption is C = 500 + 0.5·Y_D, taxes T = 600, investment I = 300 and government spending G = 2000. '
+        + 'Compute the multiplier and equilibrium output Y.',
+      difficulty: 2,
+      fields: [
+        { key: 'mult', label: 'Multiplier', answer: 2, tol: 0.05, unit: '', hint: '1 ÷ (1 − c₁) = 1 ÷ (1 − 0.5)' },
+        { key: 'Y', label: 'Equilibrium output (Y)', answer: 5000, tol: 0.5, unit: '', hint: 'Y = mult × [c₀ + I + G − c₁T] = 2 × [500 + 300 + 2000 − 0.5×600]' }
+      ],
+      solution: [
+        'Multiplier = 1 ÷ (1 − 0.5) = 2.',
+        'Autonomous spending = c₀ + I + G − c₁T = 500 + 300 + 2000 − 0.5×600 = 2800 − 300 = 2500.',
+        'Y = multiplier × autonomous spending = 2 × 2500 = 5000.'
+      ]
+    },
+
+    // --- Change in output from ΔG (numeric, fixed) ----------------------------
+    {
+      id: 'b4-deltaY-fixed',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Effect of Higher Spending',
+      prompt: 'The marginal propensity to consume is c₁ = 0.75. Government spending rises by ΔG = 100. '
+        + 'Compute the multiplier and the change in equilibrium output ΔY.',
+      difficulty: 2,
+      fields: [
+        { key: 'mult', label: 'Multiplier', answer: 4, tol: 0.05, unit: '', hint: '1 ÷ (1 − 0.75)' },
+        { key: 'dY', label: 'Change in output (ΔY)', answer: 400, tol: 0.5, unit: '', hint: 'ΔY = multiplier × ΔG = 4 × 100' }
+      ],
+      solution: [
+        'Multiplier = 1 ÷ (1 − 0.75) = 4.',
+        'ΔY = multiplier × ΔG = 4 × 100 = 400. Spending of 100 raises output by 400 through repeated rounds of consumption.'
+      ]
+    },
+
+    // --- Tax multiplier (numeric, fixed) --------------------------------------
+    {
+      id: 'b4-tax-effect-fixed',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'The Tax Multiplier',
+      prompt: 'The marginal propensity to consume is c₁ = 0.75. Taxes rise by ΔT = 100. Compute the tax multiplier '
+        + '−c₁/(1 − c₁) and the change in equilibrium output ΔY (a fall is negative).',
+      difficulty: 3,
+      fields: [
+        { key: 'taxmult', label: 'Tax multiplier', answer: -3, tol: 0.05, unit: '', hint: '−c₁ ÷ (1 − c₁) = −0.75 ÷ 0.25' },
+        { key: 'dY', label: 'Change in output (ΔY)', answer: -300, tol: 0.5, unit: '', hint: 'ΔY = tax multiplier × ΔT = −3 × 100' }
+      ],
+      solution: [
+        'Tax multiplier = −c₁ ÷ (1 − c₁) = −0.75 ÷ 0.25 = −3.',
+        'ΔY = tax multiplier × ΔT = −3 × 100 = −300. Higher taxes cut disposable income, consumption and output.',
+        'Note it is smaller in size than the spending multiplier (4): taxes act on demand only through consumption.'
+      ]
+    },
+
+    // --- RANDOMIZED: equilibrium output ---------------------------------------
+    {
+      id: 'b4-equilibrium-random',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Equilibrium Output — Drill',
+      prompt: 'Compute the multiplier and equilibrium output from the consumption function and the components.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { c1: 0.5, c0: 500, I: 300, G: 2000, T: 600 },
+          { c1: 0.6, c0: 400, I: 200, G: 1000, T: 500 },
+          { c1: 0.75, c0: 300, I: 400, G: 1200, T: 800 },
+          { c1: 0.8, c0: 200, I: 300, G: 900, T: 500 }
+        ] }
+      },
+      generate(p) {
+        const c1 = p.pair.c1, c0 = p.pair.c0, I = p.pair.I, G = p.pair.G, T = p.pair.T;
+        const mult = 1 / (1 - c1);
+        const auto = c0 + I + G - c1 * T;
+        const Y = mult * auto;
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'Consumption is C = ' + c0 + ' + ' + c1 + '·Y_D, taxes T = ' + T + ', investment I = ' + I
+            + ' and government spending G = ' + G + '. Compute the multiplier and equilibrium output Y.',
+          fields: [
+            { key: 'mult', label: 'Multiplier', answer: mult, tol: 0.05, unit: '', hint: '1 ÷ (1 − ' + c1 + ')' },
+            { key: 'Y', label: 'Equilibrium output (Y)', answer: Y, tol: 0.5, unit: '', hint: 'mult × [c₀ + I + G − c₁T]' }
+          ],
+          solution: [
+            'Multiplier = 1 ÷ (1 − ' + c1 + ') = ' + r2(mult) + '.',
+            'Autonomous spending = ' + c0 + ' + ' + I + ' + ' + G + ' − ' + c1 + '×' + T + ' = ' + auto + '.',
+            'Y = ' + r2(mult) + ' × ' + auto + ' = ' + Y + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Multiplier = 1/(1−c₁); Y = multiplier × [c₀ + I + G − c₁T].']
+    },
+
+    // --- RANDOMIZED: multiplier and ΔY from ΔG --------------------------------
+    {
+      id: 'b4-deltaY-random',
+      lesson: 'first-midterm',
+      chapter: 5,
+      type: 'numeric',
+      title: 'Multiplier Effect — Drill',
+      prompt: 'From the marginal propensity to consume and a change in government spending, compute the multiplier and ΔY.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { c1: 0.5, dG: 100 },
+          { c1: 0.6, dG: 200 },
+          { c1: 0.75, dG: 100 },
+          { c1: 0.8, dG: 50 },
+          { c1: 0.75, dG: 200 }
+        ] }
+      },
+      generate(p) {
+        const c1 = p.pair.c1, dG = p.pair.dG;
+        const mult = 1 / (1 - c1);
+        const dY = mult * dG;
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'The marginal propensity to consume is c₁ = ' + c1 + '. Government spending rises by ΔG = ' + dG
+            + '. Compute the multiplier and the change in equilibrium output ΔY.',
+          fields: [
+            { key: 'mult', label: 'Multiplier', answer: mult, tol: 0.05, unit: '', hint: '1 ÷ (1 − ' + c1 + ')' },
+            { key: 'dY', label: 'Change in output (ΔY)', answer: dY, tol: 0.5, unit: '', hint: 'ΔY = multiplier × ΔG = mult × ' + dG }
+          ],
+          solution: [
+            'Multiplier = 1 ÷ (1 − ' + c1 + ') = ' + r2(mult) + '.',
+            'ΔY = multiplier × ΔG = ' + r2(mult) + ' × ' + dG + ' = ' + dY + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Multiplier = 1/(1−c₁); ΔY = multiplier × ΔG.']
     }
   ]
 };
