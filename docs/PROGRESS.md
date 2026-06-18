@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-18 — MACROECONOMICS: sem→2, Track B vježbe B1–B3, code review (LOKALNO, NIJE deployano)
+**Nastavak od 2026-06-17.** Sve lokalno, **7 commita ispred origin** (zadnji `0f5407b`); deploy čeka izričitu potvrdu.
+- **Macro → year 1, semestar 2** (`21afdf1`, korisnikov zahtjev; bilo sem 1). catalog.js `?v` 20260667. verify 0/0, browse 8/8.
+- **▶ TRACK B vježbe — interaktivne, cigla-po-cigla** (plan/status: [[macroeconomics-exercises-plan]]). Engine NEDIRNUT, sve u
+  `data/macroeconomics/exercises.js`; makro NE treba biblioteku (sve inline u `generate()`). Konvencije: stope % 1dp/tol 0.1, cijeli tol 0.
+  Verify svake cigle = node brute-force (neovisni preračun + grade-correct kroz cijeli prostor params + diskriminacija + NaN-provjera).
+  - ✅ **B1** fundamentals + unemployment&inflation (`51ef0a6`, 7 vj, 46 provjera 0).
+  - ✅ **B2** gdpMeasurement (`09458b8`) — **bug ulovljen prije commita: randomizirani `generate` koristio `p.nom`/`p.y1` umjesto
+    `p.pair.*` → NaN; popravljeno.** 60 provjera 0.
+  - ✅ **B3** nationalAccounts (`0f5407b`, 7 vj, 79 kumulativnih provjera 0).
+  - **Ostaje B4–B12:** goodsMarket · financialMarkets · isLmModel · labourMarket · mediumRun · longRun · expectations · openEconomyGoods · balanceOfPayments.
+  Cache zadnji `CONTENT_VERSION=20260670`. verify 0/0, Playwright 68/68 nakon svake cigle.
+- **CODE REVIEW cijelog projekta (korisnik tražio):** stanje **vrlo dobro** — čista arhitektura (engine=čiste funkcije bez DOM-a, catalog SSOT,
+  lazy-load seam, sigurnost OK: publishable key javan po dizajnu + RLS), 0 debug-ostataka, dobar test-suite. **Nalazi (ništa kritično, vidi BACKLOG):**
+  (1) mrtav `lessonCategoryMap` u `js/config.js` (entrepreneurship `second-exam-prep`/`final-exam-prep` više ne postoje → fallback na sve kat., bezopasno);
+  (2) `resolveExercise` ([exercises.js:489](../js/exercises.js)) na throw u `generate()` vrati bazni `ex` bez polja; (3) stari root `data-*.js` (sem-2) još nelaazy-splitani (ADR-006, Blok B);
+  (4) cloud-sync „broj→max" pretpostavlja monotone brojače. **Potvrđeno: `resolveExercise` radi `Object.assign({},ex,generate(pickParams))` → moj brute-force verno replicira runtime.**
+
+---
+
 ## 2026-06-17 — ✅ MACROECONOMICS study gradivo (K1 + K2 + finalni hibrid) + šav za vježbe — LOKALNO (čeka pregled/deploy)
 **Treći kvantitativni predmet (KaTeX), cigla-po-cigla.** Iz 19 lecture PDF-ova (Blanchard-stil) u `…/1. godina Hospitality Managament/Macroeconomics`.
 - **K1/K2 granica AUTORITATIVNA iz službenih test-prep deckova:** `Preparation for Test1` (GDP → goods market → money market → IS-LM) i

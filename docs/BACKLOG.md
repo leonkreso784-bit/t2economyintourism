@@ -3,6 +3,16 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Code-review nalazi (2026-06-18) — čišćenje, ništa kritično
+Pregled cijelog koda (korisnik tražio): stanje vrlo dobro, bez bugova. Sitni dug za počistiti kad zgodno:
+- ➖ **Mrtav `lessonCategoryMap`** (`js/config.js`): referencira `entrepreneurship` lekcije `second-exam-prep`/`final-exam-prep`
+  koje više ne postoje (catalog je na `first-midterm`/`second-midterm`/`final`). Bezopasno — `js/navigation.js` pada na „sve kategorije".
+  **Akcija:** obrisati entry (par redaka) ili cijeli `lessonCategoryMap` ako ga ništa drugo ne koristi.
+- 💤 **`resolveExercise` robustnost** (`js/exercises.js:~489`): ako randomizirani `generate()` baci, vraća bazni `ex` (bez `fields`) →
+  vježba bi se prikazala prazna. Idealno: sakriti/označiti. Trenutno netriggerirano (naši `generate` su čista aritmetika).
+- 💤 **Stari root `data-*.js`** (12 sem-2 datoteka) nisu lazy-splitani po lekcijama kao noviji predmeti — namjerno (ADR-006), migracija u Bloku B.
+- 💤 **cloud-sync „broj→max"** (`js/cloud-sync.js:60`) pretpostavlja monotone brojače; ispravno za sad, ali pažnja pri budućim ne-monotonim numeričkim poljima.
+
 ## ✅ GOTOVO (2026-06-13) — Auth prelazak na email+lozinku
 **Implementirano po dogovoru od 2026-06-12** (detalji: `docs/PROGRESS.md` 2026-06-13 + `docs/BACKEND.md` §Staza B):
 email+lozinka (signUp/signInWithPassword), email potvrda obavezna, magic-link UKLONJEN, ime pri registraciji
