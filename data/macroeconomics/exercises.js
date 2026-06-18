@@ -1630,6 +1630,184 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. Compounded level = Y₀ × (1 + g)ⁿ.']
+    },
+
+    // ============================================================================
+    // B10 — EXPECTATIONS (second-midterm), chapter 11
+    //   Fisher relation r ≈ i − π^e; expected present discounted value z/(1+r)^n;
+    //   a higher r lowers every present value; expectations shift the IS curve.
+    //   Rates entered as PERCENT (1 dp, tol 0.1); present values 1 dp tol 0.5.
+    //   Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: Fisher, present value, expectations & IS (TF + MC) ---------
+    {
+      id: 'b10-concepts',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'choice',
+      title: 'Expectations — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The real interest rate approximately equals the nominal rate minus expected inflation.', kind: 'tf', answer: true },
+        { q: 'A higher interest rate lowers the present value of a given future payment.', kind: 'tf', answer: true },
+        { q: 'The real interest rate is the one that matters for spending and investment decisions.', kind: 'tf', answer: true },
+        { q: 'A payment received in the future is worth more today than the same payment received now.', kind: 'tf', answer: false },
+        { q: 'Optimistic expectations about the future shift the IS curve to the right.', kind: 'tf', answer: true },
+        { q: 'The real interest rate approximately equals the nominal rate minus:', kind: 'mc', options: ['The tax rate', 'Expected inflation', 'The growth rate', 'The markup'], answer: 1 },
+        { q: 'Expected present discounted value is found by ___ future payments:', kind: 'mc', options: ['Adding up', 'Discounting', 'Taxing', 'Doubling'], answer: 1 },
+        { q: 'More optimistic expectations about the future tend to:', kind: 'mc', options: ['Lower output today', 'Raise consumption and investment today', 'Raise the markup', 'Lower the money supply'], answer: 1 },
+        { q: 'Monetary policy affects demand partly through expectations of the future path of:', kind: 'mc', options: ['Taxes', 'Interest rates', 'Net exports', 'The markup'], answer: 1 }
+      ],
+      solution: [
+        'A future payment is worth LESS today (it is discounted), because money today could earn interest in the meantime.',
+        'Spending depends on the REAL interest rate and on expectations of future income, profits and rates — so optimism shifts the IS curve right.'
+      ]
+    },
+
+    // --- Fisher: real interest rate (numeric, fixed) --------------------------
+    {
+      id: 'b10-realrate-fixed',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'The Fisher Relation',
+      prompt: 'The nominal interest rate is i = 4% and expected inflation is π^e = 2%. Compute the real interest rate r (%).',
+      difficulty: 1,
+      fields: [
+        { key: 'r', label: 'Real interest rate', answer: 4 - 2, tol: 0.1, unit: '%', hint: 'r ≈ i − π^e = 4 − 2' }
+      ],
+      solution: [
+        'r ≈ i − π^e = 4% − 2% = 2%.',
+        'A saver gives up goods today for about 2% more goods next year — the real return is what shapes decisions.'
+      ]
+    },
+
+    // --- Present value, one year (numeric, fixed) -----------------------------
+    {
+      id: 'b10-pv-1yr-fixed',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Present Value (One Year)',
+      prompt: 'A payment of z = 1050 is due one year from now and the interest rate is r = 5%. '
+        + 'Compute its expected present discounted value.',
+      difficulty: 1,
+      fields: [
+        { key: 'pv', label: 'Present value', answer: 1050 / 1.05, tol: 0.5, unit: '', hint: 'PV = z ÷ (1 + r) = 1050 ÷ 1.05' }
+      ],
+      solution: [
+        'PV = z ÷ (1 + r) = 1050 ÷ 1.05 = 1000.',
+        'The future 1050 is worth only 1000 today — money tomorrow is discounted.'
+      ]
+    },
+
+    // --- Present value, two years (numeric, fixed) ----------------------------
+    {
+      id: 'b10-pv-2yr-fixed',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Present Value (Two Years)',
+      prompt: 'A payment of z = 1210 is due two years from now and the interest rate is r = 10%. '
+        + 'Compute its expected present discounted value.',
+      difficulty: 2,
+      fields: [
+        { key: 'pv', label: 'Present value', answer: 1210 / Math.pow(1.1, 2), tol: 0.5, unit: '', hint: 'PV = z ÷ (1 + r)^2 = 1210 ÷ 1.21' }
+      ],
+      solution: [
+        'PV = z ÷ (1 + r)^2 = 1210 ÷ 1.1^2 = 1210 ÷ 1.21 = 1000.',
+        'Payments further in the future are discounted more heavily (divided by (1+r) for each year).'
+      ]
+    },
+
+    // --- Present value: effect of the interest rate (numeric, fixed) ----------
+    {
+      id: 'b10-pv-rate-effect-fixed',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Interest Rates and Present Value',
+      prompt: 'A payment of z = 1200 is due one year from now. Compute its present value when r = 20% and when r = 50%. '
+        + 'What this shows: a higher interest rate lowers the present value.',
+      difficulty: 2,
+      fields: [
+        { key: 'pv20', label: 'Present value at r = 20%', answer: 1200 / 1.2, tol: 0.5, unit: '', hint: '1200 ÷ 1.20' },
+        { key: 'pv50', label: 'Present value at r = 50%', answer: 1200 / 1.5, tol: 0.5, unit: '', hint: '1200 ÷ 1.50' }
+      ],
+      solution: [
+        'At r = 20%: PV = 1200 ÷ 1.20 = 1000.',
+        'At r = 50%: PV = 1200 ÷ 1.50 = 800.',
+        'A higher interest rate discounts the future more heavily, so the present value falls.'
+      ]
+    },
+
+    // --- RANDOMIZED: Fisher real rate -----------------------------------------
+    {
+      id: 'b10-realrate-random',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Real Interest Rate — Drill',
+      prompt: 'Compute the real interest rate from the nominal rate and expected inflation.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { i: 4, pi: 2 },
+          { i: 6, pi: 2 },
+          { i: 5, pi: 1 },
+          { i: 8, pi: 3 },
+          { i: 7, pi: 4 }
+        ] }
+      },
+      generate(p) {
+        const i = p.pair.i, pi = p.pair.pi;
+        const r = i - pi;
+        return {
+          prompt: 'The nominal interest rate is i = ' + i + '% and expected inflation is π^e = ' + pi
+            + '%. Compute the real interest rate r (%).',
+          fields: [
+            { key: 'r', label: 'Real interest rate', answer: r, tol: 0.1, unit: '%', hint: 'r ≈ i − π^e = ' + i + ' − ' + pi }
+          ],
+          solution: ['r ≈ i − π^e = ' + i + '% − ' + pi + '% = ' + r + '%.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. Real rate ≈ nominal rate − expected inflation.']
+    },
+
+    // --- RANDOMIZED: present value over n years -------------------------------
+    {
+      id: 'b10-pv-random',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Present Value — Drill',
+      prompt: 'Compute the present value of a future payment.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { z: 1050, r: 5, n: 1 },
+          { z: 1260, r: 5, n: 1 },
+          { z: 1100, r: 10, n: 1 },
+          { z: 1210, r: 10, n: 2 },
+          { z: 1440, r: 20, n: 2 }
+        ] }
+      },
+      generate(p) {
+        const z = p.pair.z, r = p.pair.r, n = p.pair.n;
+        const pv = z / Math.pow(1 + r / 100, n);
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'A payment of z = ' + z + ' is due ' + n + ' year' + (n > 1 ? 's' : '') + ' from now and the interest '
+            + 'rate is r = ' + r + '%. Compute its expected present discounted value.',
+          fields: [
+            { key: 'pv', label: 'Present value', answer: pv, tol: 0.5, unit: '', hint: z + ' ÷ (1 + ' + (r / 100) + ')^' + n }
+          ],
+          solution: ['PV = ' + z + ' ÷ (1 + ' + (r / 100) + ')^' + n + ' = ' + r1(pv) + '.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. PV = z ÷ (1 + r)ⁿ.']
     }
   ]
 };
