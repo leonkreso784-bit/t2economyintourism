@@ -1093,6 +1093,195 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for a fresh policy. Fiscal: shifts IS (Y and i move together). Monetary: shifts LM (Y and i move in opposite directions).']
+    },
+
+    // ============================================================================
+    // B7 — THE LABOUR MARKET / NATURAL RATE (second-midterm), chapter 8
+    //   Price-setting real wage W/P = 1/(1+μ); wage-setting F = 1 − u + z;
+    //   natural rate u_n = 1 − 1/(1+μ) + z; natural output Y_n = L(1 − u_n).
+    //   μ and z entered as PERCENT. Conventions: real wage 2–3 dp tol 0.01;
+    //   natural rate % 1 dp tol 0.1; output (millions) integer tol 0.
+    //   Randomized: scalar p.mu; object p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: WS, PS, natural rate, natural output (TF + MC) -------------
+    {
+      id: 'b7-concepts',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'choice',
+      title: 'The Labour Market — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'In the wage-setting relation, a higher unemployment rate lowers the wage.', kind: 'tf', answer: true },
+        { q: 'The price-setting relation P = (1 + μ)W implies a real wage of 1/(1 + μ).', kind: 'tf', answer: true },
+        { q: 'A higher markup μ raises the natural rate of unemployment.', kind: 'tf', answer: true },
+        { q: 'More generous unemployment benefits (higher z) lower the natural rate.', kind: 'tf', answer: false },
+        { q: 'The natural rate of unemployment is set by aggregate demand.', kind: 'tf', answer: false },
+        { q: 'At the natural rate, the wage-setting and price-setting real wages are equal.', kind: 'tf', answer: true },
+        { q: 'The price-setting relation P = (1 + μ)W implies a real wage of:', kind: 'mc', options: ['1 + μ', '1/(1 + μ)', 'μ', 'W − μ'], answer: 1 },
+        { q: 'In the medium run, the natural rate of unemployment is determined by:', kind: 'mc', options: ['Aggregate demand', 'The structure of the labour and product markets (z and μ)', 'The money supply', 'Net exports'], answer: 1 },
+        { q: 'The natural level of output corresponds to:', kind: 'mc', options: ['Zero unemployment', 'Unemployment equal to the natural rate', 'Zero inflation', 'A balanced budget'], answer: 1 }
+      ],
+      solution: [
+        'Higher z (more generous benefits, stronger protection) RAISES the natural rate — workers can hold out for higher wages.',
+        'The natural rate is a STRUCTURAL feature (z and μ), not something demand can permanently change.',
+        'It is found by setting the WS real wage equal to the PS real wage (with P^e = P).'
+      ]
+    },
+
+    // --- Price-setting real wage (numeric, fixed) -----------------------------
+    {
+      id: 'b7-realwage-fixed',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Price-Setting Real Wage',
+      prompt: 'Firms set prices with a markup μ = 5% over wages, so P = (1 + μ)W. Compute the price-setting real wage W/P. '
+        + 'Round to 3 decimal places.',
+      difficulty: 1,
+      fields: [
+        { key: 'wp', label: 'Real wage W/P', answer: 1 / 1.05, tol: 0.01, unit: '', hint: 'W/P = 1 ÷ (1 + μ) = 1 ÷ 1.05' }
+      ],
+      solution: [
+        'W/P = 1 ÷ (1 + μ) = 1 ÷ 1.05 = 0.952.',
+        'A bigger markup would mean a lower real wage (more of the price goes to firms).'
+      ]
+    },
+
+    // --- Natural rate of unemployment (numeric, fixed) ------------------------
+    {
+      id: 'b7-natural-rate-fixed',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'The Natural Rate of Unemployment',
+      prompt: 'With the linear wage-setting form F = 1 − u + z, the markup is μ = 5% and z = 0. '
+        + 'Compute the price-setting real wage W/P and the natural rate of unemployment u_n (%). Round the rate to 1 decimal place.',
+      difficulty: 2,
+      fields: [
+        { key: 'wp', label: 'Real wage W/P', answer: 1 / 1.05, tol: 0.01, unit: '', hint: '1 ÷ (1 + 0.05)' },
+        { key: 'un', label: 'Natural rate u_n', answer: (1 - 1 / 1.05 + 0) * 100, tol: 0.1, unit: '%', hint: 'u_n = 1 − 1/(1+μ) + z = 1 − 0.952 + 0, then ×100' }
+      ],
+      solution: [
+        'W/P = 1 ÷ 1.05 = 0.952.',
+        'u_n = 1 − 1/(1+μ) + z = 1 − 0.952 + 0 = 0.048 ≈ 4.8%.'
+      ]
+    },
+
+    // --- Natural level of output (numeric, fixed) -----------------------------
+    {
+      id: 'b7-natural-output-fixed',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Natural Level of Output',
+      prompt: 'The labour force is L = 200 (million) and the natural rate of unemployment is u_n = 5%. '
+        + 'With one unit of output per worker, compute the natural level of output Y_n (millions).',
+      difficulty: 1,
+      fields: [
+        { key: 'yn', label: 'Natural output Y_n (millions)', answer: 200 * (1 - 0.05), tol: 0, unit: 'm', hint: 'Y_n = L(1 − u_n) = 200 × (1 − 0.05)' }
+      ],
+      solution: [
+        'Employment N = L(1 − u_n) = 200 × 0.95 = 190 million.',
+        'With one unit of output per worker, Y_n = N = 190.'
+      ]
+    },
+
+    // --- RANDOMIZED: price-setting real wage ----------------------------------
+    {
+      id: 'b7-realwage-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Real Wage — Drill',
+      prompt: 'Compute the price-setting real wage from the markup.',
+      difficulty: 1,
+      params: {
+        mu: { choices: [5, 10, 20, 25, 50] }
+      },
+      generate(p) {
+        const mu = p.mu;
+        const wp = 1 / (1 + mu / 100);
+        const r3 = (x) => Math.round(x * 1000) / 1000;
+        return {
+          prompt: 'Firms set prices with a markup μ = ' + mu + '% over wages (P = (1 + μ)W). Compute the price-setting '
+            + 'real wage W/P. Round to 3 decimal places.',
+          fields: [
+            { key: 'wp', label: 'Real wage W/P', answer: wp, tol: 0.01, unit: '', hint: 'W/P = 1 ÷ (1 + ' + (mu / 100) + ')' }
+          ],
+          solution: ['W/P = 1 ÷ (1 + ' + (mu / 100) + ') = ' + r3(wp) + '.']
+        };
+      },
+      solution: ['Press “New numbers” for a fresh markup. W/P = 1 ÷ (1 + μ).']
+    },
+
+    // --- RANDOMIZED: natural rate of unemployment -----------------------------
+    {
+      id: 'b7-natural-rate-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Natural Rate — Drill',
+      prompt: 'Compute the natural rate of unemployment from the markup and the wage-setting parameter z.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { mu: 5, z: 0 },
+          { mu: 10, z: 0 },
+          { mu: 25, z: 0 },
+          { mu: 5, z: 2 },
+          { mu: 10, z: 5 }
+        ] }
+      },
+      generate(p) {
+        const mu = p.pair.mu, z = p.pair.z;
+        const un = (1 - 1 / (1 + mu / 100) + z / 100) * 100;
+        const r1 = (x) => Math.round(x * 10) / 10;
+        return {
+          prompt: 'With F = 1 − u + z, the markup is μ = ' + mu + '% and z = ' + z + '%. Compute the natural rate of '
+            + 'unemployment u_n (%). Round to 1 decimal place.',
+          fields: [
+            { key: 'un', label: 'Natural rate u_n', answer: un, tol: 0.1, unit: '%', hint: 'u_n = (1 − 1/(1+' + (mu / 100) + ') + ' + (z / 100) + ') × 100' }
+          ],
+          solution: ['u_n = 1 − 1/(1+' + (mu / 100) + ') + ' + (z / 100) + ' = ' + r1(un) + '%.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. u_n = 1 − 1/(1+μ) + z (as a percent).']
+    },
+
+    // --- RANDOMIZED: natural level of output ----------------------------------
+    {
+      id: 'b7-natural-output-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Natural Output — Drill',
+      prompt: 'Compute the natural level of output from the labour force and the natural rate of unemployment.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { L: 200, un: 5 },
+          { L: 150, un: 4 },
+          { L: 300, un: 10 },
+          { L: 250, un: 8 },
+          { L: 400, un: 5 }
+        ] }
+      },
+      generate(p) {
+        const L = p.pair.L, un = p.pair.un;
+        const yn = L * (1 - un / 100);
+        return {
+          prompt: 'The labour force is L = ' + L + ' (million) and the natural rate of unemployment is u_n = ' + un
+            + '%. With one unit of output per worker, compute the natural level of output Y_n (millions).',
+          fields: [
+            { key: 'yn', label: 'Natural output Y_n (millions)', answer: yn, tol: 0, unit: 'm', hint: 'Y_n = L(1 − u_n) = ' + L + ' × (1 − ' + (un / 100) + ')' }
+          ],
+          solution: ['Y_n = L(1 − u_n) = ' + L + ' × ' + (1 - un / 100) + ' = ' + yn + ' million.']
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Y_n = L(1 − u_n).']
     }
   ]
 };
