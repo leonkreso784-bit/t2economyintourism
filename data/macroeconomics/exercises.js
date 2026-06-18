@@ -1282,6 +1282,165 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. Y_n = L(1 − u_n).']
+    },
+
+    // ============================================================================
+    // B8 — THE MEDIUM RUN / AS-AD (second-midterm), chapter 9
+    //   AS (from the labour market, upward) + AD (from IS-LM, downward); short-run
+    //   vs medium-run; money neutrality; the P^e adjustment process. Like IS-LM this
+    //   is QUALITATIVE in the Learn material → choice-based, with one randomized
+    //   shock drill (random shock → which curve shifts + short-run output effect).
+    //   Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: AS/AD derivation, slopes, equilibrium (TF + MC) ------------
+    {
+      id: 'b8-concepts',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'The Medium Run (AS-AD) — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The AS curve is derived from the labour market and slopes upward in the (Y, P) diagram.', kind: 'tf', answer: true },
+        { q: 'The AD curve is derived from the IS-LM model and slopes downward.', kind: 'tf', answer: true },
+        { q: 'In medium-run equilibrium, P = P^e and output equals the natural level Y_n.', kind: 'tf', answer: true },
+        { q: 'The AD curve slopes downward because a higher price level raises the real money supply.', kind: 'tf', answer: false },
+        { q: 'In the short run, output is determined by aggregate demand.', kind: 'tf', answer: true },
+        { q: 'The AS curve is derived from equilibrium in the:', kind: 'mc', options: ['Goods market', 'Labour market', 'Money market', 'Bond market'], answer: 1 },
+        { q: 'The AD curve slopes downward because a higher price level:', kind: 'mc', options: ['Raises the real money supply', 'Reduces the real money supply (M/P), raising i and lowering output', 'Raises output directly', 'Lowers the markup'], answer: 1 },
+        { q: 'In medium-run equilibrium, output equals:', kind: 'mc', options: ['Zero', 'The natural level Y_n', 'Aggregate demand only', 'Potential minus the markup'], answer: 1 }
+      ],
+      solution: [
+        'A higher price level REDUCES the real money supply M/P, which raises the interest rate and lowers output — that is why AD slopes downward.',
+        'AS comes from the labour market (upward); AD comes from IS-LM (downward); medium-run equilibrium is where P = P^e and Y = Y_n.'
+      ]
+    },
+
+    // --- What shifts AS and AD (TF + MC) --------------------------------------
+    {
+      id: 'b8-shifts',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'Shifting the AS and AD Curves',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'An increase in the money supply shifts the AD curve to the right.', kind: 'tf', answer: true },
+        { q: 'A rise in the expected price level P^e shifts the AS curve up.', kind: 'tf', answer: true },
+        { q: 'A fiscal expansion shifts the AD curve to the left.', kind: 'tf', answer: false },
+        { q: 'A higher markup μ shifts the AS curve up (lowering the natural level of output).', kind: 'tf', answer: true },
+        { q: 'An increase in the money supply shifts the AD curve:', kind: 'mc', options: ['To the left', 'To the right', 'It does not move', 'It shifts AS instead'], answer: 1 },
+        { q: 'A rise in the expected price level shifts the AS curve:', kind: 'mc', options: ['Down', 'Up', 'It does not move', 'It shifts AD instead'], answer: 1 },
+        { q: 'Which of these shifts the AS curve (not the AD curve)?', kind: 'mc', options: ['A change in the money supply', 'A change in government spending', 'A change in the expected price level', 'A change in autonomous investment'], answer: 2 }
+      ],
+      solution: [
+        'A fiscal expansion (higher G) shifts the AD curve to the RIGHT, not the left.',
+        'AD is shifted by demand factors (money, fiscal policy); AS is shifted by supply factors (P^e, the markup μ, z).'
+      ]
+    },
+
+    // --- Short-run effects of demand shocks (TF + MC) -------------------------
+    {
+      id: 'b8-shortrun',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'The Short Run',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'In the short run, a monetary expansion raises output above the natural level.', kind: 'tf', answer: true },
+        { q: 'In the short run, output can differ from the natural level.', kind: 'tf', answer: true },
+        { q: 'A demand contraction raises output in the short run.', kind: 'tf', answer: false },
+        { q: 'If output is above the natural level (Y > Y_n), then:', kind: 'mc', options: ['Unemployment is above the natural rate', 'Unemployment is below the natural rate', 'Prices must fall', 'The budget is balanced'], answer: 1 },
+        { q: 'In the short run, a fiscal expansion:', kind: 'mc', options: ['Lowers output', 'Raises output and the price level', 'Has no effect', 'Lowers prices only'], answer: 1 },
+        { q: 'In the short run, output is pinned down by:', kind: 'mc', options: ['The natural level Y_n', 'Aggregate demand', 'The markup', 'The labour force only'], answer: 1 }
+      ],
+      solution: [
+        'A demand CONTRACTION lowers output in the short run (it shifts AD left).',
+        'When Y > Y_n, unemployment is below the natural rate — the economy is overheating, which puts upward pressure on prices.'
+      ]
+    },
+
+    // --- Medium-run adjustment & money neutrality (TF + MC) -------------------
+    {
+      id: 'b8-mediumrun',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'The Medium Run & Money Neutrality',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'In the medium run, output returns to the natural level Y_n.', kind: 'tf', answer: true },
+        { q: 'In the medium run, a monetary expansion leaves output permanently higher.', kind: 'tf', answer: false },
+        { q: 'In the medium run, aggregate demand affects mainly the price level.', kind: 'tf', answer: true },
+        { q: 'In the medium run, a monetary expansion leads to:', kind: 'mc', options: ['Permanently higher output', 'The same output Y_n at a higher price level', 'Permanently lower prices', 'A lower natural rate'], answer: 1 },
+        { q: 'In the medium run, aggregate demand affects mainly the:', kind: 'mc', options: ['Natural level of output', 'Price level', 'Labour force', 'Markup'], answer: 1 },
+        { q: 'Money is said to be NEUTRAL in the medium run because it:', kind: 'mc', options: ['Changes the natural level of output', 'Affects only nominal variables (the price level), not Y_n', 'Lowers the markup', 'Raises real output forever'], answer: 1 }
+      ],
+      solution: [
+        'A monetary expansion does NOT leave output permanently higher — in the medium run output returns to Y_n, with only the price level permanently higher.',
+        'This is the neutrality of money: in the medium run, money affects the price level, not real output.'
+      ]
+    },
+
+    // --- The adjustment process (TF + MC) -------------------------------------
+    {
+      id: 'b8-adjustment',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'The Adjustment Process',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 3,
+      items: [
+        { q: 'After a monetary expansion, as people revise P^e upward, the AS curve shifts up.', kind: 'tf', answer: true },
+        { q: 'The adjustment stops when P = P^e and Y = Y_n again.', kind: 'tf', answer: true },
+        { q: 'The adjustment process permanently raises the natural level of output.', kind: 'tf', answer: false },
+        { q: 'Starting at Y_n, a monetary expansion in the SHORT run gives:', kind: 'mc', options: ['Y below Y_n', 'Y above Y_n with P above P^e', 'No change', 'Lower prices'], answer: 1 },
+        { q: 'The economy returns to Y_n because:', kind: 'mc', options: ['The money supply falls back', 'Expectations P^e adjust upward, shifting AS up', 'Taxes automatically rise', 'Net exports adjust'], answer: 1 },
+        { q: 'The end result of the adjustment is the same Y_n at a:', kind: 'mc', options: ['Lower price level', 'Higher price level', 'Lower markup', 'Higher natural rate'], answer: 1 }
+      ],
+      solution: [
+        'The natural level of output is structural — the adjustment process returns output TO Y_n, it does not change Y_n.',
+        'The mechanism: prices exceed expectations → P^e is revised up → AS shifts up → output falls back to Y_n at a higher price level.'
+      ]
+    },
+
+    // --- RANDOMIZED: shock → which curve shifts + short-run output ------------
+    {
+      id: 'b8-comparative-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'AS-AD Shocks — Drill',
+      prompt: 'For the given shock, identify which curve shifts and the short-run effect on output.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { shock: 'a monetary expansion (an increase in the money supply)', curve: 1, dY: 0, why: 'A monetary expansion shifts the AD curve right → in the short run output rises above Y_n.' },
+          { shock: 'a monetary contraction (a fall in the money supply)', curve: 1, dY: 1, why: 'A monetary contraction shifts the AD curve left → in the short run output falls below Y_n.' },
+          { shock: 'a fiscal expansion (an increase in government spending)', curve: 1, dY: 0, why: 'A fiscal expansion shifts the AD curve right → in the short run output rises above Y_n.' },
+          { shock: 'a rise in the expected price level P^e', curve: 0, dY: 1, why: 'A higher P^e shifts the AS curve up → in the short run output falls below Y_n.' },
+          { shock: 'a rise in the markup μ', curve: 0, dY: 1, why: 'A higher markup shifts the AS curve up (and lowers Y_n) → in the short run output falls.' }
+        ] }
+      },
+      generate(p) {
+        const s = p.pair;
+        return {
+          prompt: 'In the AS-AD model, consider ' + s.shock + '. Identify which curve shifts and the short-run effect on output.',
+          items: [
+            { q: 'Which curve shifts?', kind: 'mc', options: ['The AS curve', 'The AD curve'], answer: s.curve },
+            { q: 'In the short run, output:', kind: 'mc', options: ['Rises (above Y_n)', 'Falls (below Y_n)'], answer: s.dY }
+          ],
+          solution: [s.why]
+        };
+      },
+      solution: ['Press “New numbers” for a fresh shock. Demand shocks (money, fiscal) shift AD; supply shocks (P^e, μ, z) shift AS.']
     }
   ]
 };
