@@ -363,7 +363,7 @@ const SOKRAT_CATALOG = {
     {
       id: 'macroeconomics',
       programId: 'hospitality-management',
-      year: 1, semester: 1,
+      year: 1, semester: 2,
       name: 'Macroeconomics',
       shortName: 'MACRO',
       icon: 'fa-chart-area',
