@@ -933,6 +933,166 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. Bond yield i = (100 − P_B) ÷ P_B.']
+    },
+
+    // ============================================================================
+    // B6 — THE IS-LM MODEL (first-midterm), chapter 7
+    //   IS (goods market, downward) + LM (money market, upward); fiscal vs monetary
+    //   policy; the policy mix. IS-LM here is QUALITATIVE/comparative-statics (the
+    //   Learn gives no closed-form solution), so this brick is choice-based with one
+    //   randomized comparative-statics drill (random policy → direction of Y and i).
+    //   Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: IS / LM curves and their slopes (TF + MC) ------------------
+    {
+      id: 'b6-concepts',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'The IS-LM Model — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The IS curve represents goods-market equilibrium and slopes downward in the (Y, i) diagram.', kind: 'tf', answer: true },
+        { q: 'The LM curve represents money-market equilibrium and slopes upward.', kind: 'tf', answer: true },
+        { q: 'The IS curve slopes downward because a higher interest rate reduces investment.', kind: 'tf', answer: true },
+        { q: 'The LM curve slopes upward because a higher income lowers money demand.', kind: 'tf', answer: false },
+        { q: 'At the IS-LM intersection, both the goods market and the money market are in equilibrium.', kind: 'tf', answer: true },
+        { q: 'The IS curve represents equilibrium in the:', kind: 'mc', options: ['Money market', 'Goods market', 'Labour market', 'Bond market only'], answer: 1 },
+        { q: 'The LM curve represents equilibrium in the:', kind: 'mc', options: ['Goods market', 'Money market', 'Labour market', 'Foreign-exchange market'], answer: 1 },
+        { q: 'The IS curve is downward-sloping because a higher interest rate:', kind: 'mc', options: ['Raises investment', 'Reduces investment, hence demand and output', 'Raises the money supply', 'Lowers taxes'], answer: 1 }
+      ],
+      solution: [
+        'The LM curve slopes UPWARD because higher income RAISES money demand; with the money supply fixed, the interest rate must rise.',
+        'IS = goods-market equilibrium (downward); LM = money-market equilibrium (upward); their intersection clears both markets.'
+      ]
+    },
+
+    // --- What shifts each curve (TF + MC) -------------------------------------
+    {
+      id: 'b6-shifts',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'Shifting the IS and LM Curves',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'An increase in government spending shifts the IS curve to the right.', kind: 'tf', answer: true },
+        { q: 'An increase in taxes shifts the IS curve to the left.', kind: 'tf', answer: true },
+        { q: 'An increase in the money supply shifts the LM curve down (to the right).', kind: 'tf', answer: true },
+        { q: 'A fall in the money supply shifts the LM curve down.', kind: 'tf', answer: false },
+        { q: 'An increase in G shifts the IS curve:', kind: 'mc', options: ['To the left', 'To the right', 'It does not move', 'It shifts the LM curve instead'], answer: 1 },
+        { q: 'An increase in the money supply shifts the LM curve:', kind: 'mc', options: ['Up / to the left', 'Down / to the right', 'It does not move', 'It shifts the IS curve instead'], answer: 1 },
+        { q: 'Which of these shifts the LM curve (not the IS curve)?', kind: 'mc', options: ['A change in government spending G', 'A change in taxes T', 'A change in the money supply', 'A change in autonomous investment'], answer: 2 }
+      ],
+      solution: [
+        'A FALL in the money supply shifts the LM curve UP (to the left), raising the interest rate at each level of output.',
+        'Fiscal variables (G, T) shift the IS curve; the money supply shifts the LM curve.'
+      ]
+    },
+
+    // --- Fiscal policy effects (TF + MC) --------------------------------------
+    {
+      id: 'b6-fiscal-effects',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'Fiscal Policy in IS-LM',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'A fiscal expansion raises both output and the interest rate.', kind: 'tf', answer: true },
+        { q: 'A fiscal contraction (higher taxes) lowers output and lowers the interest rate.', kind: 'tf', answer: true },
+        { q: 'A cut in taxes is contractionary.', kind: 'tf', answer: false },
+        { q: 'A fiscal expansion (higher G) moves the economy to:', kind: 'mc', options: ['Higher Y, higher i', 'Lower Y, lower i', 'Higher Y, lower i', 'No change'], answer: 0 },
+        { q: 'A fiscal contraction (higher T) leads to:', kind: 'mc', options: ['Higher Y and higher i', 'Lower Y and lower i', 'Lower Y, higher i', 'Higher Y, lower i'], answer: 1 },
+        { q: 'Higher government spending raises the interest rate because:', kind: 'mc', options: ['The money supply falls', 'Higher output raises money demand', 'Taxes automatically rise', 'Prices fall'], answer: 1 }
+      ],
+      solution: [
+        'A tax cut raises disposable income and demand — it is EXPANSIONARY (it shifts the IS curve right).',
+        'A fiscal expansion shifts IS right: output rises, and the higher output raises money demand, pushing the interest rate up.'
+      ]
+    },
+
+    // --- Monetary policy effects (TF + MC) ------------------------------------
+    {
+      id: 'b6-monetary-effects',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'Monetary Policy in IS-LM',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'A monetary expansion raises output and lowers the interest rate.', kind: 'tf', answer: true },
+        { q: 'A monetary contraction raises the interest rate and lowers output.', kind: 'tf', answer: true },
+        { q: 'A monetary expansion raises the interest rate.', kind: 'tf', answer: false },
+        { q: 'A monetary expansion (higher M) moves the economy to:', kind: 'mc', options: ['Higher Y, higher i', 'Higher Y, lower i', 'Lower Y, lower i', 'No change'], answer: 1 },
+        { q: 'A monetary contraction leads to:', kind: 'mc', options: ['Higher Y, lower i', 'Lower Y, higher i', 'Higher Y, higher i', 'No change'], answer: 1 },
+        { q: 'A lower interest rate boosts output mainly by raising:', kind: 'mc', options: ['Taxes', 'Investment', 'Imports', 'Money demand'], answer: 1 }
+      ],
+      solution: [
+        'A monetary expansion shifts LM down: the interest rate FALLS (it does not rise), which raises investment and output.',
+        'Monetary policy works through the interest rate: lower i → more investment → higher output.'
+      ]
+    },
+
+    // --- The policy mix (TF + MC) ---------------------------------------------
+    {
+      id: 'b6-policy-mix',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'The Policy Mix',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 2,
+      items: [
+        { q: 'A policy mix is the combined use of fiscal and monetary policy.', kind: 'tf', answer: true },
+        { q: 'A fiscal expansion plus a monetary expansion can raise output while keeping the interest rate from rising.', kind: 'tf', answer: true },
+        { q: 'A policy mix can only ever be contractionary.', kind: 'tf', answer: false },
+        { q: 'To raise output while keeping the interest rate roughly unchanged, combine:', kind: 'mc', options: ['Fiscal expansion + monetary contraction', 'Fiscal expansion + monetary expansion', 'Fiscal contraction + monetary contraction', 'Higher taxes only'], answer: 1 },
+        { q: 'Using fiscal and monetary policy together is called a:', kind: 'mc', options: ['Multiplier', 'Policy mix', 'Liquidity trap', 'Crowding out'], answer: 1 },
+        { q: 'A fiscal expansion alone raises i; adding a monetary expansion:', kind: 'mc', options: ['Raises i even further', 'Offsets the rise in i', 'Lowers output', 'Raises taxes'], answer: 1 }
+      ],
+      solution: [
+        'A policy mix can be expansionary, contractionary, or designed to target output and the interest rate together.',
+        'Fiscal expansion pushes i up; a simultaneous monetary expansion pushes i down — together they can lift output with little change in i.'
+      ]
+    },
+
+    // --- RANDOMIZED: comparative statics (policy → Y and i directions) --------
+    {
+      id: 'b6-comparative-random',
+      lesson: 'first-midterm',
+      chapter: 7,
+      type: 'choice',
+      title: 'IS-LM Comparative Statics — Drill',
+      prompt: 'For the given policy, determine the direction of equilibrium output and the interest rate.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { policy: 'a fiscal expansion (an increase in government spending G)', dY: 0, di: 0, why: 'IS shifts right: output rises, and higher output raises money demand, so the interest rate rises.' },
+          { policy: 'a fiscal contraction (an increase in taxes T)', dY: 1, di: 1, why: 'IS shifts left: output falls, lower output reduces money demand, so the interest rate falls.' },
+          { policy: 'a monetary expansion (the central bank increases the money supply)', dY: 0, di: 1, why: 'LM shifts down: the interest rate falls, which raises investment and output.' },
+          { policy: 'a monetary contraction (the central bank reduces the money supply)', dY: 1, di: 0, why: 'LM shifts up: the interest rate rises, which lowers investment and output.' },
+          { policy: 'a cut in taxes (lower T)', dY: 0, di: 0, why: 'A tax cut is expansionary (IS shifts right): output rises and the interest rate rises.' }
+        ] }
+      },
+      generate(p) {
+        const s = p.pair;
+        const opts = ['Rises', 'Falls', 'Stays the same'];
+        return {
+          prompt: 'In the IS-LM model, consider ' + s.policy + '. Determine what happens to equilibrium output and to the interest rate.',
+          items: [
+            { q: 'What happens to equilibrium output Y?', kind: 'mc', options: opts, answer: s.dY },
+            { q: 'What happens to the equilibrium interest rate i?', kind: 'mc', options: opts, answer: s.di }
+          ],
+          solution: [s.why]
+        };
+      },
+      solution: ['Press “New numbers” for a fresh policy. Fiscal: shifts IS (Y and i move together). Monetary: shifts LM (Y and i move in opposite directions).']
     }
   ]
 };
