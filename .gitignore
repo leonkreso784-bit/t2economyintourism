@@ -38,6 +38,7 @@ build/
 
 # Source materials (professor PPT/PDF/JPG) — copyright, never commit
 _materials/
+tmp/
 tmp-acc/
 tmp-ebiz/
 tmp-ent/
