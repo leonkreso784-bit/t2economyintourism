@@ -371,8 +371,9 @@ const SOKRAT_CATALOG = {
       iconGradient: ['#a855f7', '#c084fc'],
       description: 'The Essentials of Academic Writing (Bogdan): acquiring knowledge & scientific method, the literature review, means & methods of scientific research, thesis structure, bibliographic databases & search, types of publications, research ethics — and the Chicago Manual of Style for citing books, journals and other sources.',
       storageKey: 'academic-writing-progress',
-      features: { blindMap: false, exercises: false },
+      features: { blindMap: false, exercises: true },
       // K1 (weeks 1–6) + K2 (weeks 8–14, exam at week 7) + final (hybrid). First subject built via the content generator pipeline.
+      // Interactive exercises (citation-focused) on the reusable engine — window.academicWritingExercises.
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Fundamentals of research, the literature review, methods of scientific research, thesis structure, bibliographic databases & search (weeks 1–6)' },
         { id: 'second-midterm', name: 'Second Midterm', description: 'Types of publications, Chicago Manual of Style (books, journals & other sources), research characteristics & qualities, ethics & Latin abbreviations (weeks 8–14)' },
@@ -380,8 +381,10 @@ const SOKRAT_CATALOG = {
       ],
       content: {
         // final.js MUST load LAST (Object.assign of academicWritingM1 + academicWritingM2).
-        scripts: ['data/academic-writing/midterm-1.js', 'data/academic-writing/midterm-2.js', 'data/academic-writing/final.js'],
-        resolve: { 'first-midterm': 'academicWritingM1', 'second-midterm': 'academicWritingM2', 'final': 'academicWritingFinal' }
+        // exercises.js is independent (window.academicWritingExercises) — loads after final.js.
+        scripts: ['data/academic-writing/midterm-1.js', 'data/academic-writing/midterm-2.js', 'data/academic-writing/final.js', 'data/academic-writing/exercises.js'],
+        resolve: { 'first-midterm': 'academicWritingM1', 'second-midterm': 'academicWritingM2', 'final': 'academicWritingFinal' },
+        exercises: 'academicWritingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
     {
