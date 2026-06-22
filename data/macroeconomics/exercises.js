@@ -2005,6 +2005,190 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. NX = X − (IM0 + m·Y).']
+    },
+
+    // ============================================================================
+    // B12 — BALANCE OF PAYMENTS (second-midterm), chapter 13  [LAST macro brick]
+    //   BoP = all transactions with the rest of the world over one year, in two
+    //   accounts: CURRENT (goods, services, primary & secondary income) and
+    //   FINANCIAL/capital. With the change in reserves, the whole BoP sums to ZERO,
+    //   so a current-account deficit must be financed by capital inflows.
+    //   Travel (tourism) balance = income from foreign tourists − spending of
+    //   residents abroad — Croatia's travel surplus offsets its goods deficit.
+    //   Net capital export K = f(r), dK/dr < 0 (a higher r attracts capital in →
+    //   currency appreciates → NX deteriorates). All items are accounting sums →
+    //   integer amounts, tol 0. Randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: accounts, sums-to-zero, travel balance, K=f(r) -------------
+    {
+      id: 'b12-concepts',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'choice',
+      title: 'Balance of Payments — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'The balance of payments records a country’s transactions with the rest of the world over one year.', kind: 'tf', answer: true },
+        { q: 'Including the change in official reserves, the whole balance of payments sums to zero.', kind: 'tf', answer: true },
+        { q: 'The travel balance equals income from foreign tourists minus spending of residents abroad.', kind: 'tf', answer: true },
+        { q: 'Net capital export K rises as the domestic interest rate rises.', kind: 'tf', answer: false },
+        { q: 'A current-account deficit must be financed by capital inflows.', kind: 'tf', answer: true },
+        { q: 'The two main accounts of the balance of payments are the current account and the:', kind: 'mc', options: ['Markup account', 'Financial (capital) account', 'Government account', 'Reserve ratio'], answer: 1 },
+        { q: 'Spending by foreign tourists inside the country is recorded as an:', kind: 'mc', options: ['Import (outflow)', 'Export (inflow)', 'Transfer abroad', 'Capital outflow'], answer: 1 },
+        { q: 'Net capital export K is a ___ function of the domestic interest rate:', kind: 'mc', options: ['Increasing', 'Decreasing', 'Constant', 'Random'], answer: 1 },
+        { q: 'A higher domestic interest rate tends to make the currency appreciate, so net exports:', kind: 'mc', options: ['Rise', 'Deteriorate', 'Stay fixed', 'Become zero'], answer: 1 }
+      ],
+      solution: [
+        'A higher r attracts foreign capital in (net capital export FALLS): K = f(r) with dK/dr < 0.',
+        'Because the accounts mirror each other and sum to zero, a current-account deficit is the counterpart of a financial-account (capital) surplus — the country borrows from or sells assets to the rest of the world.'
+      ]
+    },
+
+    // --- Travel (tourism) balance (numeric, fixed) ----------------------------
+    {
+      id: 'b12-travel-balance-fixed',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'The Travel (Tourism) Balance',
+      prompt: 'Foreign tourists spend 12000 in the country, while residents spend 4000 abroad. '
+        + 'Compute the travel (tourism) balance.',
+      difficulty: 1,
+      fields: [
+        { key: 'tb', label: 'Travel balance', answer: 12000 - 4000, tol: 0, unit: '', hint: 'income from foreign tourists − spending of residents abroad = 12000 − 4000' }
+      ],
+      solution: [
+        'Travel balance = income from foreign tourists − spending of residents abroad = 12000 − 4000 = 8000.',
+        'A positive travel balance (surplus) means the country is tourist-receptive: tourism is a net foreign-exchange earner.'
+      ]
+    },
+
+    // --- Current account from its components (numeric, fixed) -----------------
+    {
+      id: 'b12-current-account-fixed',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'The Current Account',
+      prompt: 'A country records: goods balance −5000, services balance +9000, primary income −800, '
+        + 'secondary income +300. Compute the current-account balance.',
+      difficulty: 2,
+      fields: [
+        { key: 'ca', label: 'Current account', answer: -5000 + 9000 - 800 + 300, tol: 0, unit: '', hint: 'goods + services + primary income + secondary income' }
+      ],
+      solution: [
+        'CA = −5000 + 9000 − 800 + 300 = 3500.',
+        'The services surplus (which contains the travel balance) more than offsets the goods deficit — a current-account surplus.'
+      ]
+    },
+
+    // --- Tourism offsets the goods deficit (numeric, fixed) -------------------
+    {
+      id: 'b12-tourism-offset-fixed',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'Tourism Offsets the Goods Deficit',
+      prompt: 'A small tourism economy runs a goods (trade) balance of −6000 (a merchandise deficit) but a '
+        + 'travel surplus of +8000. Compute their combined balance, which shows whether tourism covers the goods deficit.',
+      difficulty: 2,
+      fields: [
+        { key: 'comb', label: 'Combined balance', answer: -6000 + 8000, tol: 0, unit: '', hint: 'goods balance + travel balance = −6000 + 8000' }
+      ],
+      solution: [
+        'Combined = −6000 + 8000 = +2000.',
+        'The travel surplus more than covers the goods deficit — exactly the Croatian case, where tourism keeps the current account afloat.'
+      ]
+    },
+
+    // --- Financing a current-account deficit (numeric, fixed) -----------------
+    {
+      id: 'b12-financing-fixed',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'Financing a Current-Account Deficit',
+      prompt: 'A country has a current-account deficit of 2000 (CA = −2000) and official reserves are unchanged. '
+        + 'Because the balance of payments sums to zero, what financial-account balance is required, and what is the '
+        + 'resulting balance of payments?',
+      difficulty: 2,
+      fields: [
+        { key: 'fa', label: 'Required financial-account balance', answer: 2000, tol: 0, unit: '', hint: 'It must offset the current account: −(−2000)' },
+        { key: 'bop', label: 'Balance of payments', answer: 0, tol: 0, unit: '', hint: 'CA + financial account (reserves unchanged)' }
+      ],
+      solution: [
+        'BoP = 0 with reserves unchanged ⇒ financial account = −CA = −(−2000) = +2000 (a capital inflow).',
+        'BoP = −2000 + 2000 = 0: the current-account deficit is financed by borrowing from / selling assets to the rest of the world.'
+      ]
+    },
+
+    // --- RANDOMIZED: travel balance -------------------------------------------
+    {
+      id: 'b12-travel-balance-random',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'Travel Balance — Drill',
+      prompt: 'Compute the travel balance from tourist receipts and residents’ spending abroad.',
+      difficulty: 1,
+      params: {
+        pair: { choices: [
+          { inc: 12000, exp: 4000 },
+          { inc: 15000, exp: 6000 },
+          { inc: 9000, exp: 2500 },
+          { inc: 20000, exp: 7000 },
+          { inc: 11000, exp: 3000 }
+        ] }
+      },
+      generate(p) {
+        const inc = p.pair.inc, exp = p.pair.exp;
+        const tb = inc - exp;
+        return {
+          prompt: 'Foreign tourists spend ' + inc + ' in the country, while residents spend ' + exp + ' abroad. '
+            + 'Compute the travel (tourism) balance.',
+          fields: [
+            { key: 'tb', label: 'Travel balance', answer: tb, tol: 0, unit: '', hint: inc + ' − ' + exp }
+          ],
+          solution: ['Travel balance = ' + inc + ' − ' + exp + ' = ' + tb + (tb >= 0 ? ' (surplus).' : ' (deficit).')]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Travel balance = income from foreign tourists − spending of residents abroad.']
+    },
+
+    // --- RANDOMIZED: current account from components ---------------------------
+    {
+      id: 'b12-current-account-random',
+      lesson: 'second-midterm',
+      chapter: 13,
+      type: 'numeric',
+      title: 'Current Account — Drill',
+      prompt: 'Add up the four components to get the current-account balance.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { g: -5000, s: 9000, pi: -800, si: 300 },
+          { g: -6000, s: 11000, pi: -1000, si: 500 },
+          { g: -4000, s: 7000, pi: -500, si: 200 },
+          { g: -8000, s: 12000, pi: -1200, si: 400 },
+          { g: -3000, s: 6000, pi: -600, si: 100 }
+        ] }
+      },
+      generate(p) {
+        const g = p.pair.g, s = p.pair.s, pi = p.pair.pi, si = p.pair.si;
+        const ca = g + s + pi + si;
+        const sgn = (x) => (x >= 0 ? '+' + x : '' + x);
+        return {
+          prompt: 'A country records: goods balance ' + g + ', services balance ' + sgn(s) + ', primary income '
+            + pi + ', secondary income ' + sgn(si) + '. Compute the current-account balance.',
+          fields: [
+            { key: 'ca', label: 'Current account', answer: ca, tol: 0, unit: '', hint: g + ' + ' + s + ' + (' + pi + ') + ' + si }
+          ],
+          solution: ['CA = ' + g + ' + ' + s + ' + (' + pi + ') + ' + si + ' = ' + ca + (ca >= 0 ? ' (surplus).' : ' (deficit).')]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. Current account = goods + services + primary income + secondary income.']
     }
   ]
 };
