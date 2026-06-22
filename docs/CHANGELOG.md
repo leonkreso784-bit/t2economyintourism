@@ -5,14 +5,16 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **Macroeconomics — interaktivne EXERCISES (Track B, B1–B10):** na postojećem reusable enginu (`js/exercises-core.js`+`js/exercises.js`,
+- **Macroeconomics — interaktivne EXERCISES (Track B, B1–B12 ✅ 100% KOMPLETNO):** na postojećem reusable enginu (`js/exercises-core.js`+`js/exercises.js`,
   NEDIRNUT — 0 novih datoteka u `js/`). Sve u `data/macroeconomics/exercises.js`; makro NE treba biblioteku (sva matematika inline u
-  `generate()`). **~67 vježbi:** first-midterm KOMPLETAN (B1 fundamentals/unemployment · B2 GDP · B3 national accounts · B4 goods market &
-  multiplier · B5 financial markets · B6 IS-LM, 41 vj) + second-midterm dosad (B7 labour market/natural rate · B8 AS-AD · B9 long-run growth ·
-  B10 expectations). Tipovi choice/numeric/ratio + randomizacija (`params`+`generate`, čita `p.pair.*`). Tol-politika: stope % 1dp/0.1, cijeli 0,
+  `generate()`). **~81 vježbi:** first-midterm KOMPLETAN (B1 fundamentals/unemployment · B2 GDP · B3 national accounts · B4 goods market &
+  multiplier · B5 financial markets · B6 IS-LM, 41 vj) + second-midterm KOMPLETAN (B7 labour market/natural rate · B8 AS-AD · B9 long-run growth ·
+  B10 expectations · **B11 open-economy goods market** (otvoreni mult. `1/(1−β(1−t)+m)`, `NX=X−IM`, demand for domestic goods) ·
+  **B12 balance of payments** (travel balance `income−expenditure`, current account, financiranje CA deficita, `K=f(r)`)). Tipovi
+  choice/numeric/ratio + randomizacija (`params`+`generate`, čita `p.pair.*`). Tol-politika: stope % 1dp/0.1, cijeli 0,
   multiplikator 2dp/0.05, output/PV 1dp/0.5. Kvalitativne teme (IS-LM, AS-AD) = choice-based, vjerno gradivu. **Svaka cigla verificirana node
   brute-forceom** (neovisni preračun drugom formulom/identitetom + grade-correct kroz cijeli prostor params + diskriminacija + NaN-provjera).
-  **Ostaje B11–B12** (open economy, balance of payments). Cache `?v=20260677`. verify 0/0, Playwright 68/68.
+  Final lekcija → Exercises prazan (tagano na kolokvije). Cache `?v=20260679`. verify 0/0, Playwright 68/68. **B1–B10 LIVE; B11+B12 čekaju push.**
 - **Macroeconomics premješten na year 1, semestar 2** (catalog, korisnikov zahtjev) + **Learn sekcije obogaćene** (svih 13 tematskih, udžbenički stil).
 - **Macroeconomics 100% KOMPLETAN (K1 + K2 + finalni hibrid) — treći kvantitativni predmet (KaTeX):** novi subject `macroeconomics`
   (year 1, **sem 2**, `fa-chart-area`/amber). Iz 19 lecture PDF-ova (Blanchard-stil). **K1/K2 granica autoritativna iz službenih test-prep

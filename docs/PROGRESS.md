@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-22 — MACROECONOMICS Track B: B11–B12 → Track B 100% KOMPLETAN
+**Nastavak od 2026-06-18.** Dovršene zadnje dvije cigle second-midterm vježbi; **commitano lokalno, čeka push** (deploy samo uz potvrdu).
+- **B11 — openEconomyGoods** (`ddc4618`, chapter 12, second-midterm): 7 vježbi. Otvoreni multiplikator `1/(1−β(1−t)+m)`
+  (zatvoreni vs otvoreni — worked β=0.8/t=0.1/m=0.12 → 3.57 vs 2.5), import funkcija `IM=IM₀+mY`, net exports `NX=X−IM`,
+  demand for domestic goods `Z=(C+I+G)−IM+X`, fiskalna ekspanzija → NX pada, 2 randomizirana drilla (mult; NX). β/t/m DECIMALE.
+  Verifier 36 provjera 0 (+neovisni: geometrijski red za multiplikator, `Z=(C+I+G)+NX`, `ΔNX=m·ΔY`). Cache `20260678`.
+- **B12 — balanceOfPayments** (`bfabcb1`, chapter 13, second-midterm, ZADNJA): 7 vježbi. BoP računi + sumira na 0, travel
+  balance `income−expenditure`, current account iz 4 komponente, turizam pokriva goods deficit (HR), financiranje CA deficita
+  (`financial=−CA`, BoP=0), `K=f(r)` opadajuća (concepts), 2 randomizirana drilla. Iznosi tol 0. Verifier 36 provjera 0. Cache `20260679`.
+- **✅✅ MACROECONOMICS TRACK B 100% (B1–B12, ~81 vježbi):** first-midterm B1–B6 (41) + second-midterm B7–B12 (~40). Engine NEDIRNUT,
+  sve u `data/macroeconomics/exercises.js`. Final lekcija → Exercises prazan (tagano na kolokvije, dosljedno sem-2).
+- **Provjere:** svaka cigla node brute-force (grade-correct + diskriminacija + NaN) 0 problema · `verify` 0/0 · Playwright **68/68** (subjects=14, 0 overflowa).
+- **Stanje:** B11 + B12 commitano lokalno, **2 ispred origin — ČEKA push**. B1–B10 već LIVE (`58cc37c`).
+- **Sljedeće:** push B11+B12 (uz potvrdu) · **Math (ZADNJA u roadmapu)**. [[macroeconomics-exercises-plan]] [[content-roadmap-sequencing]]
+
+---
+
 ## 2026-06-18 — MACROECONOMICS: sem→2, Track B vježbe B1–B10, code review → ✅ DEPLOY
 **Nastavak od 2026-06-17.** Macro premješten + 10 ciglom-po-cigla vježbi; **deployano uz izričitu potvrdu korisnika** (B11–B12 ostaju za poslije).
 - **Macro → year 1, semestar 2** (`21afdf1`, korisnikov zahtjev; bilo sem 1). catalog.js `?v` 20260667. verify 0/0, browse 8/8.
