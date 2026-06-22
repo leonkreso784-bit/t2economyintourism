@@ -41,26 +41,32 @@ const PALETTE = [
   ['fa-layer-group', '#f43f5e'], ['fa-seedling', '#22c55e'], ['fa-bullseye', '#eab308'],
 ];
 
-const SCHEMA_SPEC = `Return a SINGLE JSON object with EXACTLY these keys (no others):
-{
-  "flashcards": [ { "question": string, "answer": string, "explanation"?: string } ],
-  "quiz":       [ { "question": string, "options": [2..6 strings], "correct": integer (0-based index into options) } ],
-  "fillBlanks": [ { "sentence": string (MUST contain the literal blank "_______"), "answer": string, "hint"?: string } ],
-  "learn":      { "content": string (HTML) }
-}`;
-
-const FEWSHOT = JSON.stringify({
-  flashcards: [
-    { question: 'What is price elasticity of demand?', answer: 'The responsiveness of quantity demanded to a change in price.', explanation: 'Elastic if >1, inelastic if <1.' }
-  ],
-  quiz: [
-    { question: 'Demand is called "elastic" when the elasticity is:', options: ['Less than 1', 'Greater than 1', 'Exactly 0', 'Negative infinity'], correct: 1 }
-  ],
-  fillBlanks: [
-    { sentence: 'When demand is _______, a price rise lowers total revenue.', answer: 'elastic', hint: 'Elasticity greater than 1.' }
-  ],
-  learn: { content: '<h3>Price Elasticity</h3><p>Elasticity measures how strongly quantity responds to price...</p><ul><li><strong>Elastic:</strong> elasticity &gt; 1.</li></ul>' }
-});
+// Structured-output alat: model PUNI ovu shemu, a Anthropic API jamči valjan objekt
+// (content[].input je već parsiran) → nestaje cijela klasa "unescaped quote → nevaljan JSON"
+// bugova, presudno za sadržaj prepun navodnika (Chicago citati, Boolean "" operatori).
+const CONTENT_TOOL = {
+  name: 'emit_study_content',
+  description: 'Return study content (flashcards, quiz, fillBlanks, learn) for one topic.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      flashcards: {
+        type: 'array',
+        items: { type: 'object', properties: { question: { type: 'string' }, answer: { type: 'string' }, explanation: { type: 'string' } }, required: ['question', 'answer'] }
+      },
+      quiz: {
+        type: 'array',
+        items: { type: 'object', properties: { question: { type: 'string' }, options: { type: 'array', items: { type: 'string' } }, correct: { type: 'integer', description: '0-based index of the correct option' } }, required: ['question', 'options', 'correct'] }
+      },
+      fillBlanks: {
+        type: 'array',
+        items: { type: 'object', properties: { sentence: { type: 'string', description: 'MUST contain the literal blank "_______"' }, answer: { type: 'string' }, hint: { type: 'string' } }, required: ['sentence', 'answer'] }
+      },
+      learn: { type: 'object', properties: { content: { type: 'string', description: 'REQUIRED. A substantial 350–600 word textbook-style HTML article (multiple <h3> sections, <p>, <ul>/<li>, <strong>). Never empty or short.' } }, required: ['content'] }
+    },
+    required: ['flashcards', 'quiz', 'fillBlanks', 'learn']
+  }
+};
 
 function buildPrompt(topic, math) {
   const mathRules = math
@@ -71,20 +77,16 @@ function buildPrompt(topic, math) {
     `Topic title: "${topic.title}"`,
     `This content belongs to the "${topic.lesson}" lesson.`,
     '',
-    SCHEMA_SPEC,
-    '',
-    'Requirements:',
+    'Call the emit_study_content tool with content for this topic. Requirements:',
     '- Base EVERY fact ONLY on the SOURCE TEXT below. Do NOT invent facts not supported by it.',
     '- Produce 10–14 flashcards, 8–12 quiz questions, 6–10 fillBlanks.',
-    '- learn.content is rich textbook-style HTML (<h3>,<p>,<ul>,<li>,<strong>,<em>): definition, intuition, key points, and common pitfalls.',
+    '- learn.content is the MOST IMPORTANT field: a substantial 350–600 word textbook-style HTML article '
+      + '(several <h3> sections with <p>, <ul>/<li>, <strong>): definition, intuition, key points, common pitfalls. '
+      + 'NEVER leave learn.content empty or one line — it must read like a textbook chapter.',
     '- quiz: "correct" is the 0-based INDEX of the correct option; distractors must be plausible.',
     '- EVERY fillBlank "sentence" MUST contain the literal blank "_______".',
     '- Language: English.',
     '- ' + mathRules,
-    '- Output STRICT JSON only — no markdown fences, no commentary.',
-    '',
-    'Example of the exact JSON shape (content is illustrative):',
-    FEWSHOT,
     '',
     'SOURCE TEXT:',
     '"""',
@@ -101,26 +103,27 @@ async function callModel(prompt, model, apiKey) {
       model,
       max_tokens: 16000,        // bogata kategorija (14fc+12quiz+10fill+learn) ne smije se odsjeći
       temperature: 0.3,         // nisko = vjernije izvoru, manje halucinacija
+      tools: [CONTENT_TOOL],
+      tool_choice: { type: 'tool', name: 'emit_study_content' },  // PRISILI strukturirani izlaz
       system: 'You are a meticulous study-content author for a flashcards/quiz/fill/learn platform '
-        + '(FMTU Opatija, Hospitality Management). You output STRICT JSON only, following the schema exactly, '
-        + 'grounded strictly in the provided source text.',
+        + '(FMTU Opatija, Hospitality Management), grounded strictly in the provided source text.',
       messages: [{ role: 'user', content: prompt }]
     })
   });
   if (!res.ok) throw new Error('API ' + res.status + ': ' + (await res.text()).slice(0, 300));
   const data = await res.json();
-  // Odsiječen odgovor = nepotpun JSON; pretvori u jasnu grešku (umjesto tihog parse-faila)
+  // Odsiječen odgovor = nepotpun tool-input; jasna greška umjesto tihog faila
   if (data.stop_reason === 'max_tokens') throw new Error('odgovor odsiječen na max_tokens — tema prevelika, povećaj limit ili podijeli temu');
-  const text = (data.content || []).map((b) => b.text || '').join('');
-  return { text, usage: data.usage || {} };
+  const block = (data.content || []).find((b) => b.type === 'tool_use');
+  if (!block || !block.input) throw new Error('nema tool_use bloka u odgovoru');
+  return { obj: block.input, usage: data.usage || {}, raw: JSON.stringify(data) };
 }
 
-function parseJson(raw) {
-  let s = raw.trim();
-  s = s.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, ''); // skini fence ako ga ima
-  const a = s.indexOf('{'), b = s.lastIndexOf('}');
-  if (a > 0 || b < s.length - 1) s = s.slice(a, b + 1);
-  return JSON.parse(s);
+// tool_use ponekad vrati ugniježđeno polje (npr. learn) kao JSON-string umjesto objekta
+// → parsiraj ga natrag. Ako nije string, vrati kako jest (ili fallback ako je prazno).
+function coerce(v, fallback) {
+  if (typeof v === 'string') { try { return JSON.parse(v); } catch (_) { return fallback; } }
+  return v == null ? fallback : v;
 }
 
 // Laka strukturna provjera (kanonski validator je validate-content.js u brick 4)
@@ -172,22 +175,41 @@ async function main() {
   for (let i = 0; i < work.length; i++) {
     const topic = work[i];
     process.stdout.write(`[${i + 1}/${work.length}] ${topic.id} (${topic.lesson}) … `);
-    let cat;
-    for (let attempt = 1; attempt <= 2; attempt++) {
+    // tool_use nekad vrati learn kao string ili prazno (nedeterministički, češće kad je zadnji
+    // u shemi nakon velikih nizova) → coerce + retry dok learn.content ne bude pun.
+    const [icon, color] = PALETTE[i % PALETTE.length];
+    let cat = null, lastRaw = '';
+    for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        const prompt = buildPrompt(topic, math) + (attempt === 2 ? '\n\nIMPORTANT: your previous output was not valid JSON. Return ONLY the JSON object.' : '');
-        const { text, usage } = await callModel(prompt, model, apiKey);
+        const prompt = buildPrompt(topic, math) + (attempt > 1 ? '\n\nIMPORTANT: learn.content MUST be a full 350–600 word HTML article — do not leave it empty.' : '');
+        const { obj, usage, raw } = await callModel(prompt, model, apiKey);
         totalIn += usage.input_tokens || 0; totalOut += usage.output_tokens || 0;
-        cat = parseJson(text);
+        lastRaw = raw;
+        let learn = coerce(obj.learn, { content: '' });
+        if (typeof learn === 'string') learn = { content: learn };        // learn stigao kao goli HTML-string
+        if (!learn || typeof learn !== 'object') learn = { content: '' };
+        const cand = {
+          name: topic.title, icon, color,
+          flashcards: coerce(obj.flashcards, []),
+          quiz: coerce(obj.quiz, []),
+          fillBlanks: coerce(obj.fillBlanks, []),
+          learn
+        };
+        if (!cand.learn.content || cand.learn.content.length < 200) throw new Error('learn.content prazno/prekratko');
+        if (!cand.flashcards.length) throw new Error('nema flashcards');
+        cat = cand;
         break;
       } catch (e) {
-        if (attempt === 2) { console.log('✗ ' + e.message); cat = null; }
+        if (attempt === 3) {
+          console.log('✗ ' + e.message);
+          // spremi sirovi odgovor za dijagnozu (tmp/ je gitignored)
+          try { fs.writeFileSync(path.join(ROOT, 'tmp', subjectId, 'failed-' + topic.id + '.txt'), lastRaw); } catch (_) { /* ignore */ }
+        }
       }
     }
     if (!cat) { totalProblems++; continue; }
 
-    const [icon, color] = PALETTE[i % PALETTE.length];
-    const full = { name: topic.title, icon, color, flashcards: cat.flashcards || [], quiz: cat.quiz || [], fillBlanks: cat.fillBlanks || [], learn: cat.learn || { content: '' } };
+    const full = cat;
     const problems = sanity(topic.id, full);
     draft.lessons[topic.lesson] = draft.lessons[topic.lesson] || {};
     draft.lessons[topic.lesson][topic.id] = full;
@@ -199,7 +221,9 @@ async function main() {
   const cost = (totalIn / 1e6) * 3 + (totalOut / 1e6) * 15; // Sonnet ~$3/$15 po M tokena (gruba procjena)
   console.log(`\nTokeni: in=${totalIn} out=${totalOut} (~$${cost.toFixed(3)}). Problema: ${totalProblems}.`);
   console.log('✅ Draft: ' + path.relative(ROOT, draftFile));
-  if (totalProblems) process.exit(1);
+  // Eksplicitan izlaz: preduhitri undici/libuv socket-teardown assertion na Windowsu
+  // ("UV_HANDLE_CLOSING") koja inače baci lažni nonzero exit nakon urednog završetka.
+  process.exit(totalProblems ? 1 : 0);
 }
 
 main().catch((e) => { console.error('ERR: ' + e.message); process.exit(1); });

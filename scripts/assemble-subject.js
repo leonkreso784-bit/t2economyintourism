@@ -119,7 +119,9 @@ function main() {
   };
 
   console.log('\n================ CATALOG UNOS (zalijepi u data/catalog.js → subjects[]) ================');
-  console.log(JSON.stringify(entry, null, 2).replace(/"([a-zA-Z0-9_-]+)":/g, '$1:') + ',');
+  // Skini navodnike SAMO s valjanih JS identifikatora; hyphen-ključevi (npr. "first-midterm")
+  // MORAJU ostati citirani (inače je crtica oduzimanje → syntax error).
+  console.log(JSON.stringify(entry, null, 2).replace(/"([a-zA-Z_$][a-zA-Z0-9_$]*)":/g, '$1:') + ',');
   console.log('\n================ SLJEDEĆI KORACI (ručno, uz provjeru) ================');
   console.log('  1. Zalijepi gornji unos u data/catalog.js (subjects[]). Final.js MORA biti zadnji u scripts.');
   console.log('  2. Bumpaj CONTENT_VERSION u js/content-loader.js (+ ?v= u index.html ako mijenjaš i js/css).');
