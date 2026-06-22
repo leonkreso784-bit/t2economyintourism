@@ -1808,6 +1808,203 @@ const macroeconomicsExercises = {
         };
       },
       solution: ['Press “New numbers” for fresh figures. PV = z ÷ (1 + r)ⁿ.']
+    },
+
+    // ============================================================================
+    // B11 — THE OPEN ECONOMY: GOODS MARKET (second-midterm), chapter 12
+    //   Import function IM = IM0 + m·Y; net exports NX = X − IM;
+    //   demand for domestic goods Z = C + I + G − IM + X; equilibrium Y = (C+I+G) + NX.
+    //   Open-economy multiplier = 1 / (1 − β(1−t) + m) — imports add +m to the
+    //   denominator, so they SHRINK the multiplier. β, t, m are decimals here.
+    //   Marshall-Lerner: a real depreciation raises NX only if elasticities sum > 1.
+    //   Fiscal expansion raises Y → raises imports → NX falls.
+    //   Multiplier 2 dp tol 0.05; amounts (IM, NX, Z, ΔY) tol 0; randomized generate() reads p.pair.* (B2 lesson).
+    // ============================================================================
+
+    // --- Concepts: imports, multiplier, NX, real exchange rate, Marshall-Lerner ---
+    {
+      id: 'b11-concepts',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'choice',
+      title: 'The Open Economy (Goods) — Concepts',
+      prompt: 'Decide whether each statement is true or false, then answer the multiple-choice items.',
+      difficulty: 1,
+      items: [
+        { q: 'Imports rise with domestic output: IM = IM0 + m·Y.', kind: 'tf', answer: true },
+        { q: 'Imports add a new leak to the spending loop, so they make the multiplier smaller.', kind: 'tf', answer: true },
+        { q: 'Net exports equal exports minus imports, NX = X − IM.', kind: 'tf', answer: true },
+        { q: 'A real appreciation (domestic goods relatively more expensive) raises net exports.', kind: 'tf', answer: false },
+        { q: 'An increase in government spending raises output and therefore tends to lower net exports.', kind: 'tf', answer: true },
+        { q: 'The marginal propensity to import m is the extra import per unit of extra:', kind: 'mc', options: ['Taxes', 'Output', 'Exports', 'Government spending'], answer: 1 },
+        { q: 'In the open-economy multiplier 1/(1 − β(1−t) + m), a higher m makes the multiplier:', kind: 'mc', options: ['Larger', 'Smaller', 'Unchanged', 'Negative'], answer: 1 },
+        { q: 'Demand for domestic goods equals C + I + G:', kind: 'mc', options: ['Plus imports, minus exports', 'Minus imports, plus exports', 'Minus taxes', 'Plus the markup'], answer: 1 },
+        { q: 'Assuming the Marshall-Lerner condition holds, net exports rise after a real:', kind: 'mc', options: ['Appreciation', 'Depreciation', 'Tax cut', 'Rise in the markup'], answer: 1 }
+      ],
+      solution: [
+        'Imports are a leak (like saving and taxes): part of every extra euro of income is spent on foreign goods and stops circulating at home, so the multiplier 1/(1 − β(1−t) + m) is smaller than the closed-economy one.',
+        'A real depreciation makes domestic goods cheaper abroad → exports rise, imports fall → NX rises, provided the Marshall-Lerner condition (sum of price elasticities > 1) holds.'
+      ]
+    },
+
+    // --- Open-economy multiplier vs closed (numeric, fixed) -------------------
+    {
+      id: 'b11-multiplier-fixed',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'Imports Shrink the Multiplier',
+      prompt: 'Let β = 0.8, t = 0.1 and m = 0.12. Compute the multiplier first IGNORING imports (m = 0), '
+        + 'then WITH imports. This shows how importing reduces the multiplier.',
+      difficulty: 2,
+      fields: [
+        { key: 'closed', label: 'Closed-economy multiplier (m = 0)', answer: 1 / (1 - 0.8 * (1 - 0.1)), tol: 0.05, unit: '', hint: '1 ÷ (1 − 0.8·0.9)' },
+        { key: 'open', label: 'Open-economy multiplier', answer: 1 / (1 - 0.8 * (1 - 0.1) + 0.12), tol: 0.05, unit: '', hint: '1 ÷ (1 − 0.8·0.9 + 0.12)' }
+      ],
+      solution: [
+        'Closed: 1 ÷ (1 − 0.8·0.9) = 1 ÷ 0.28 ≈ 3.57.',
+        'Open: 1 ÷ (1 − 0.8·0.9 + 0.12) = 1 ÷ 0.40 = 2.5.',
+        'The multiplier falls from 3.57 to 2.5 — part of every extra euro now buys foreign goods, so it leaks out of the domestic economy.'
+      ]
+    },
+
+    // --- Import function (numeric, fixed) -------------------------------------
+    {
+      id: 'b11-imports-fixed',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'The Import Function',
+      prompt: 'Autonomous imports are IM0 = 100, the marginal propensity to import is m = 0.1 and output is Y = 2000. '
+        + 'Compute total imports IM.',
+      difficulty: 1,
+      fields: [
+        { key: 'im', label: 'Imports IM', answer: 100 + 0.1 * 2000, tol: 0, unit: '', hint: 'IM = IM0 + m·Y = 100 + 0.1·2000' }
+      ],
+      solution: [
+        'IM = IM0 + m·Y = 100 + 0.1·2000 = 100 + 200 = 300.',
+        'Imports rise with income: richer residents buy more from abroad.'
+      ]
+    },
+
+    // --- Net exports and demand for domestic goods (numeric, fixed) -----------
+    {
+      id: 'b11-netexports-fixed',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'Net Exports and Demand for Domestic Goods',
+      prompt: 'Domestic demand C + I + G = 1900, exports X = 400 and imports IM = 300. '
+        + 'Compute net exports NX and the demand for domestic goods Z.',
+      difficulty: 2,
+      fields: [
+        { key: 'nx', label: 'Net exports NX', answer: 400 - 300, tol: 0, unit: '', hint: 'NX = X − IM = 400 − 300' },
+        { key: 'z', label: 'Demand for domestic goods Z', answer: 1900 - 300 + 400, tol: 0, unit: '', hint: 'Z = (C+I+G) − IM + X = 1900 − 300 + 400' }
+      ],
+      solution: [
+        'NX = X − IM = 400 − 300 = 100 (a trade surplus).',
+        'Z = (C + I + G) − IM + X = 1900 − 300 + 400 = 2000: subtract the imports hidden inside C+I+G, add exports.',
+        'Note Z = (C+I+G) + NX = 1900 + 100 = 2000 — the two routes agree.'
+      ]
+    },
+
+    // --- Fiscal expansion: output and net exports (numeric, fixed) ------------
+    {
+      id: 'b11-fiscal-nx-fixed',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'Fiscal Expansion Worsens the Trade Balance',
+      prompt: 'The open-economy multiplier is 2.5 and the marginal propensity to import is m = 0.12. '
+        + 'Government spending rises by ΔG = 100 (exports are unchanged). '
+        + 'Compute the rise in output ΔY, the rise in imports ΔIM, and the fall in net exports.',
+      difficulty: 3,
+      fields: [
+        { key: 'dy', label: 'Rise in output ΔY', answer: 2.5 * 100, tol: 0.5, unit: '', hint: 'ΔY = multiplier · ΔG = 2.5·100' },
+        { key: 'dim', label: 'Rise in imports ΔIM', answer: 0.12 * (2.5 * 100), tol: 0.5, unit: '', hint: 'ΔIM = m·ΔY = 0.12·250' },
+        { key: 'dnx', label: 'Fall in net exports', answer: 0.12 * (2.5 * 100), tol: 0.5, unit: '', hint: 'ΔX = 0, so NX falls by ΔIM' }
+      ],
+      solution: [
+        'ΔY = multiplier · ΔG = 2.5 · 100 = 250.',
+        'ΔIM = m · ΔY = 0.12 · 250 = 30.',
+        'Exports do not change, so NX = X − IM falls by 30: fiscal expansion partly leaks abroad as higher imports.'
+      ]
+    },
+
+    // --- RANDOMIZED: open-economy multiplier ----------------------------------
+    {
+      id: 'b11-multiplier-random',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'Open-Economy Multiplier — Drill',
+      prompt: 'Compute the open-economy multiplier from β, the tax rate t and the marginal propensity to import m.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { b: 0.8, t: 0.1, m: 0.12 },
+          { b: 0.75, t: 0.2, m: 0.1 },
+          { b: 0.9, t: 0, m: 0.15 },
+          { b: 0.6, t: 0, m: 0.1 },
+          { b: 0.8, t: 0, m: 0.2 }
+        ] }
+      },
+      generate(p) {
+        const b = p.pair.b, t = p.pair.t, m = p.pair.m;
+        const denom = 1 - b * (1 - t) + m;
+        const mult = 1 / denom;
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'With β = ' + b + ', t = ' + t + ' and m = ' + m + ', compute the open-economy multiplier '
+            + '1 ÷ (1 − β(1−t) + m).',
+          fields: [
+            { key: 'mult', label: 'Multiplier', answer: mult, tol: 0.05, unit: '', hint: '1 ÷ (1 − ' + b + '·' + (1 - t) + ' + ' + m + ')' }
+          ],
+          solution: [
+            'Denominator = 1 − ' + b + '·' + (1 - t) + ' + ' + m + ' = ' + r2(denom) + '.',
+            'Multiplier = 1 ÷ ' + r2(denom) + ' = ' + r2(mult) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh values. Multiplier = 1 ÷ (1 − β(1−t) + m); a larger m means a smaller multiplier.']
+    },
+
+    // --- RANDOMIZED: net exports from the import function ----------------------
+    {
+      id: 'b11-netexports-random',
+      lesson: 'second-midterm',
+      chapter: 12,
+      type: 'numeric',
+      title: 'Net Exports — Drill',
+      prompt: 'Compute imports from the import function, then net exports NX = X − IM.',
+      difficulty: 2,
+      params: {
+        pair: { choices: [
+          { X: 400, IM0: 50, m: 0.1, Y: 2000 },
+          { X: 500, IM0: 100, m: 0.2, Y: 1500 },
+          { X: 300, IM0: 0, m: 0.15, Y: 1000 },
+          { X: 600, IM0: 200, m: 0.1, Y: 3000 },
+          { X: 450, IM0: 50, m: 0.2, Y: 1000 }
+        ] }
+      },
+      generate(p) {
+        const X = p.pair.X, IM0 = p.pair.IM0, m = p.pair.m, Y = p.pair.Y;
+        const im = IM0 + m * Y;
+        const nx = X - im;
+        return {
+          prompt: 'Exports X = ' + X + '. Imports are IM = ' + IM0 + ' + ' + m + '·Y with output Y = ' + Y + '. '
+            + 'Compute imports IM and net exports NX.',
+          fields: [
+            { key: 'im', label: 'Imports IM', answer: im, tol: 0, unit: '', hint: 'IM = ' + IM0 + ' + ' + m + '·' + Y },
+            { key: 'nx', label: 'Net exports NX', answer: nx, tol: 0, unit: '', hint: 'NX = X − IM = ' + X + ' − IM' }
+          ],
+          solution: [
+            'IM = ' + IM0 + ' + ' + m + '·' + Y + ' = ' + im + '.',
+            'NX = X − IM = ' + X + ' − ' + im + ' = ' + nx + (nx >= 0 ? ' (surplus).' : ' (deficit).')
+          ]
+        };
+      },
+      solution: ['Press “New numbers” for fresh figures. NX = X − (IM0 + m·Y).']
     }
   ]
 };
