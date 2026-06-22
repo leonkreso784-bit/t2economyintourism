@@ -99,7 +99,8 @@ async function callModel(prompt, model, apiKey) {
     headers: { 'x-api-key': apiKey, 'anthropic-version': '2023-06-01', 'content-type': 'application/json' },
     body: JSON.stringify({
       model,
-      max_tokens: 8000,
+      max_tokens: 16000,        // bogata kategorija (14fc+12quiz+10fill+learn) ne smije se odsjeći
+      temperature: 0.3,         // nisko = vjernije izvoru, manje halucinacija
       system: 'You are a meticulous study-content author for a flashcards/quiz/fill/learn platform '
         + '(FMTU Opatija, Hospitality Management). You output STRICT JSON only, following the schema exactly, '
         + 'grounded strictly in the provided source text.',
@@ -108,6 +109,8 @@ async function callModel(prompt, model, apiKey) {
   });
   if (!res.ok) throw new Error('API ' + res.status + ': ' + (await res.text()).slice(0, 300));
   const data = await res.json();
+  // Odsiječen odgovor = nepotpun JSON; pretvori u jasnu grešku (umjesto tihog parse-faila)
+  if (data.stop_reason === 'max_tokens') throw new Error('odgovor odsiječen na max_tokens — tema prevelika, povećaj limit ili podijeli temu');
   const text = (data.content || []).map((b) => b.text || '').join('');
   return { text, usage: data.usage || {} };
 }
