@@ -68,10 +68,35 @@ Zatim: popuni sadržaj → zalijepi catalog unos → `npm run verify` → testov
    blok. Nakon koraka A4 ovo više neće trebati — učitavat će se automatski.
 4. **Test** (vidi [TESTING.md](TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).
 
-## C) Iz PPT/PDF profesora → skripta (Faza 1, automatizirano)
-Dok ne izgradimo AI pipeline, ručni put: pročitaj materijal → po temama napiši
-flashcards/quiz/fill/learn prema schemi. Kasnije Claude generira draft, ti samo
-pregledaš i ispraviš.
+## C) Iz PPT/PDF profesora → predmet (GENERATOR, automatizirano) ✅
+Puni plan i detalji: **[CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)**. Generator-jezgra (bricks 1–4) je gotova;
+bulk drafting ide na **jeftin model (Sonnet) preko tvog API ključa** (`.env` → `ANTHROPIC_API_KEY`), a točnost
+nose deterministički zaštitari + tvoj/Opus činjenični spot-check. Tok:
+
+```bash
+# 0. Posloži materijale: _materials/.../<subject>/{midterm-1,midterm-2}/NN_*.pdf  (mapa = kolokvij)
+# 1. Materijali → topics.json (PDF/TXT, jedan fajl = jedna tema)
+node scripts/build-topics.js <subjectId> "<materialsDir>"
+# 2. Draft po temi (Sonnet); --math za kvantitativne, --dry za besplatni pregled prompta
+node scripts/generate-subject.js <subjectId> [--math]
+# 3. draft.json → data/<subjectId>/{midterm-1,2,final}.js  + ISPIS catalog unosa
+node scripts/assemble-subject.js <subjectId> --name "Naziv" --short XYZ --icon fa-... --color "#..." --year N --sem N --desc "..."
+# 4. GATE (ručno, uz provjeru):
+#    a) zalijepi ispisani catalog unos u data/catalog.js (final.js MORA biti zadnji u scripts)
+#    b) bumpaj CONTENT_VERSION u js/content-loader.js
+npm run validate:content <subjectId>   # sadržajni zaštitar (shema + KaTeX currency-safe)
+npm run verify                          # catalog integritet
+npm run test:responsive                 # Playwright render
+#    c) Opus/ti: činjenični spot-check protiv predavanja (POUKA: stari/tanak sadržaj rebuild)
+```
+
+> Generator NE dira `catalog.js` ni `CONTENT_VERSION` sam (najosjetljivije = svjesno, uz verify).
+> `tmp/` (topics.json + draft.json) je gitignored (zaštićeni izvorni tekst). examPractice za finalni
+> se ne generira automatski — doda se ručno po želji. Limit: validator jamči da je quiz `correct` u
+> rasponu, NE i da je stvarno točan → to hvata spot-check.
+
+### Ručni put (alternativa, za male dorade)
+Pročitaj materijal → po temama napiši flashcards/quiz/fill/learn prema schemi izravno u `data/<subject>/*.js`.
 
 ## Konvencije
 - `id`/`slug`: kebab-case, jedinstven (`tourism-economics`, ne "Tourism Economics").

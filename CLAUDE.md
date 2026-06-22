@@ -50,6 +50,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - `npm run serve:test` — lokalni server na http://localhost:5050 (za pregled).
 - `npm run scaffold -- ...` — kostur novog predmeta.
 - `node scripts/pdf-text.js "<pdf>"` — tekst iz PDF-a.
+- `npm run validate:content [subjectId]` — sadržajni validator (shema + quiz indeks + KaTeX currency-safe).
+- **GENERATOR predmeta** (jeftin Sonnet preko `.env` ključa; detalji `docs/CONTENT_GENERATOR.md`):
+  `node scripts/build-topics.js <id> "<dir>"` → `node scripts/generate-subject.js <id> [--math]` →
+  `node scripts/assemble-subject.js <id> --name ... --short ... --icon ... --color ...` → paste catalog + bump + gate.
 
 ## Stanje (ažuriraj po potrebi)
 - **Live:** M0 Blok A gotov (A1 catalog, A2 config-iz-catalog, A3 sidebar-iz-catalog) + Learn responsive/overflow fix.
@@ -213,6 +217,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   grade-correct + diskriminacija kroz cijeli prostor params) + z/t-tablica cross-check; **bug ulovljen B2.6 (α/2 float-zanos 0.0499…→
   promašaj t-tablica ključa → eksplicitna mapa conf→area).** Final lekcija → Exercises prazan (tagano na kolokvije; dosljedno sem-2).
   Cache `20260664`. verify 0/0, test:unit 33/33 (+stat-parse+stat-lib), Playwright 68/68. **Dalje: Macroeconomics (~19); Math ZADNJA.** [[content-roadmap-sequencing]] [[statistics-exercises-plan]]
+- **✅ MACROECONOMICS Track B vježbe B1–B12 100% KOMPLETNO ✅ LIVE (B1–B10 deployano 2026-06-18 `58cc37c`; B11+B12 deployano 2026-06-22 `28fcb7e`):**
+  ~81 vježbi na NEDIRNUTOM enginu, first-midterm B1–B6 (41) + second-midterm B7–B12. **B11** open-economy goods (`1/(1−β(1−t)+m)`, NX) ·
+  **B12** balance of payments (travel balance, CA, `K=f(r)`). Svaka node brute-force verificirana (0 problema), cache `20260679`. [[macroeconomics-exercises-plan]]
+- **▶ GENERATOR PREDMETA (jezgra bricks 1–4 GOTOVA, 2026-06-22, NIJE pushano — dev-tooling/docs):** odluka korisnika — dosta ručnog dodavanja →
+  generator uz minimalan usage, PA Blok B. `scripts/`: `validate-content.js` (`npm run validate:content`) + `build-topics.js` (PDF/TXT→topics.json) +
+  `generate-subject.js` (**Sonnet preko `.env ANTHROPIC_API_KEY`**, korisnikov ključ; max_tokens 16000/temp 0.3) + `assemble-subject.js` (draft→
+  `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan, ISPISUje catalog unos, NE dira catalog.js). Tok + detalji `docs/CONTENT_GENERATOR.md`.
+  Gate = validate:content→verify→Playwright→Opus spot-check. **Dalje: pravi pilot-predmet (kad korisnik donese materijale).** [[content-generator-pipeline]]
 - **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
   `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
   pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
@@ -240,4 +252,5 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 `BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` · `CONTENT_GUIDE` · `CONTENT_INTAKE` · `TESTING` ·
 `CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG` ·
 **`EXERCISES_ENGINE`** (reusable sustav vježbi + cigla-po-cigla plan) · **`ACCOUNTING_PLAN`** (analiza izvora + katalog) ·
-**`STATISTICS_PLAN`** (teorija-learn + statistički exercises na istom engineu, cigla-po-cigla; stat-lib u `data/`; mathportal kalkulatori).
+**`STATISTICS_PLAN`** (teorija-learn + statistički exercises na istom engineu, cigla-po-cigla; stat-lib u `data/`; mathportal kalkulatori) ·
+**`CONTENT_GENERATOR`** (pipeline za dodavanje predmeta uz minimalan usage: build-topics→generate-subject(Sonnet)→assemble-subject→gate).

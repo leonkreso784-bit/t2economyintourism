@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **GENERATOR PREDMETA (jezgra, bricks 1–4)** — pipeline za dodavanje predmeta uz minimalan Opus-usage (plan `docs/CONTENT_GENERATOR.md`):
+  `scripts/validate-content.js` (`npm run validate:content` — schema + quiz indeks + KaTeX currency-safe; 14 predmeta 0/0) ·
+  `scripts/build-topics.js` (PDF/TXT materijali → `tmp/<id>/topics.json`, jedan fajl=jedna tema, kolokvij iz podmape) ·
+  `scripts/generate-subject.js` (**Anthropic Sonnet preko `.env` ključa**, strogi schema-prompt + few-shot → `draft.json`; max_tokens 16000,
+  temp 0.3, truncation-detekcija) · `scripts/assemble-subject.js` (`draft.json` → `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan;
+  ISPISuje catalog unos, ne dira `catalog.js`). `.env.example` + `tmp/` gitignored. Gate: validate:content→verify→Playwright→Opus spot-check.
+  Dev-tooling — ne učitava se u browseru (bez cache bumpa). **Odluka: generator-prvo → pa Blok B (sadržaj→Supabase+/api).**
 - **Macroeconomics — interaktivne EXERCISES (Track B, B1–B12 ✅ 100% KOMPLETNO):** na postojećem reusable enginu (`js/exercises-core.js`+`js/exercises.js`,
   NEDIRNUT — 0 novih datoteka u `js/`). Sve u `data/macroeconomics/exercises.js`; makro NE treba biblioteku (sva matematika inline u
   `generate()`). **~81 vježbi:** first-midterm KOMPLETAN (B1 fundamentals/unemployment · B2 GDP · B3 national accounts · B4 goods market &

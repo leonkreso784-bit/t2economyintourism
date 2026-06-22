@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
+**Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**
+(backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md). Cigla-po-cigla:
+- **Brick 1 `validate-content.js`** (`0c3dc8e`, `npm run validate:content`) — vm window-shim učita data (stari+novi format), validira shemu
+  (name/icon/color, flashcard q+a, quiz options 2–6 + valjan `correct`, fillBlank `_______`, learn.content) + **KaTeX currency-safe** (uravnoteženi
+  `\(`/`\[`/`$$`, lookbehind da `\\[2pt]` ne broji). Svih 14 živih predmeta → **0/0** (4000+ stavki); ulovio i vlastiti regex-bug.
+- **Brick 2 `build-topics.js`** (`a06b07e`) — materijali (PDF preko pdf-parse / TXT / MD), jedan fajl=jedna tema, kolokvij iz imena podmape;
+  izlaz `tmp/<id>/topics.json`. `tmp/` dodan u .gitignore (zaštićeni tekst).
+- **Brick 3 `generate-subject.js`** (`cac9135` + fix `2043747`) — po temi zove **Anthropic API (Sonnet, korisnikov `.env` ključ)**, strogi
+  schema-prompt + few-shot; dodaje name/icon/color; `tmp/<id>/draft.json`. Ugrađeni .env loader, native fetch, `--dry/--math/--topic/--limit`.
+  Fix: max_tokens 8000→16000 + temperature 0.3 + detekcija `stop_reason=max_tokens`. Test: 14fc/10quiz/10fill, ~$0.033/tema.
+- **Brick 4 `assemble-subject.js`** (`3d89e89`) — `draft.json` → `data/<id>/{midterm-1,2,final}.js`; **tijela preko JSON.stringify → escaping
+  bajt-točan (KaTeX `\(`/`\[`, navodnici, `\\` DOKAZANO round-trip)**; vm self-check; **ISPISUje** catalog unos + checklist (NE dira catalog.js).
+- **Pregled prije compacta:** sustav zdravo dizajniran; popravljen 1 stvarni rizik (truncation, gore). Odgođeno (nije bug): orkestrator
+  `npm run generate`, examPractice za finalni, graf-slike, quiz self-grade. Limit: validator jamči quiz `correct` u rasponu, ne i stvarnu točnost → spot-check.
+- **macro B11+B12 deployano** (`58cc37c..28fcb7e`, uz potvrdu) — Track B 100% LIVE.
+- **Stanje:** generator-jezgra GOTOVA, **commiti dev-tooling/docs NISU pushani** (bez produkcijskog efekta). **Sljedeće:** pravi pilot-predmet
+  (kad korisnik donese materijale) → cijeli pipeline + Opus spot-check; pa Blok B. [[content-generator-pipeline]] [[content-roadmap-sequencing]]
+
+---
+
 ## 2026-06-22 — MACROECONOMICS Track B: B11–B12 → Track B 100% KOMPLETAN
 **Nastavak od 2026-06-18.** Dovršene zadnje dvije cigle second-midterm vježbi; **commitano lokalno, čeka push** (deploy samo uz potvrdu).
 - **B11 — openEconomyGoods** (`ddc4618`, chapter 12, second-midterm): 7 vježbi. Otvoreni multiplikator `1/(1−β(1−t)+m)`
