@@ -41,6 +41,25 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
 
+## ▶ Staza B2 — SADRŽAJ iz baze (read-path, implementirano 2026-06-23, flag OFF do aktivacije)
+**Cilj:** `loadSubjectContent()` čita sadržaj predmeta iz Supabasea umjesto iz `data/*.js`,
+**direktno preko anon keya** (sadržaj je JAVAN — bez `/api` funkcija, bez service-keya na frontu),
+s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigurnosna mreža).
+
+- **Shema:** `supabase/schema.sql` → tablica `public.subject_content` (1 red = 1 window var:
+  `subject_id, var_name, payload jsonb`), **public SELECT RLS** (`using (true)`). Pisanje samo service_role.
+- **Migracija:** `node scripts/migrate-content.js [subjectId] [--dry]` — vm window-shim učita
+  `data/<subject>/*.js` (final je već Object.assign-an u istom sandboxu) → upsert preko Supabase REST
+  (`Prefer: resolution=merge-duplicates`, `on_conflict=subject_id,var_name`). Treba `SUPABASE_URL` +
+  `SUPABASE_SERVICE_KEY` u `.env` (gitignored). Trenutno: 15 predmeta → 49 redova (`--dry` provjereno).
+- **Frontend:** `js/content-loader.js` → `CONTENT_FROM_SUPABASE` flag + `_loadSubjectFromSupabase()`
+  (`SokratAuth.getClient().from('subject_content').select(...).eq('subject_id', …)` → `window[var]=payload`).
+  **Flag OFF** = 100% staro ponašanje (datoteke). Flag ON + tablica puna = sadržaj iz baze; greška/prazno → datoteke.
+- **AKTIVACIJA (koraci):** (1) pokreni `supabase/schema.sql` u dashboardu; (2) Settings → API → kopiraj
+  **service_role** key u `.env` (`SUPABASE_SERVICE_KEY` + `SUPABASE_URL`); (3) `node scripts/migrate-content.js`;
+  (4) flipni `CONTENT_FROM_SUPABASE = true`, bump cache, test (online iz baze + offline fallback), commit.
+- **Re-sync:** nakon dodavanja/izmjene predmeta → ponovno `node scripts/migrate-content.js <id>` (datoteke su izvor).
+
 ## Arhitektura
 ```
 Frontend (statički, vanilla JS, fetch)

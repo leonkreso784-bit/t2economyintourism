@@ -56,3 +56,41 @@ create policy "progress_update_own" on public.progress
 drop policy if exists "progress_delete_own" on public.progress;
 create policy "progress_delete_own" on public.progress
     for delete using (auth.uid() = user_id);
+
+
+-- =====================================================
+-- SADRŽAJ PREDMETA (Blok B, read-path) — JAVAN, čita se direktno preko anon keya.
+-- =====================================================
+-- Model: jedan red = jedan "content script" objekt jednog predmeta (window var).
+-- Npr. academic-writing → 4 reda: academicWritingM1 / …M2 / …Final / …Exercises.
+-- payload = TOČNO ono što data/<subject>/*.js izlaže na window (RAZRIJEŠENO — final je
+-- već Object.assign-an u migraciji, pa frontend samo radi window[var_name] = payload).
+--
+-- Datoteke ostaju IZVOR ISTINE (staza A); ova tablica je ZRCALO koje puni
+-- scripts/migrate-content.js. loadSubjectContent() proba bazu pa padne na datoteke.
+--
+-- Pokreni JEDNOM u Supabase SQL editoru (idempotentno).
+
+create table if not exists public.subject_content (
+    subject_id text        not null,   -- catalog subject id (npr. 'academic-writing')
+    var_name   text        not null,   -- window var (npr. 'academicWritingM1')
+    payload    jsonb       not null,   -- razriješeni objekt kategorija (flashcards/quiz/fill/learn) ili exercises
+    updated_at timestamptz not null default now(),
+    primary key (subject_id, var_name)
+);
+
+create index if not exists subject_content_subject_idx
+    on public.subject_content (subject_id);
+
+drop trigger if exists subject_content_set_updated_at on public.subject_content;
+create trigger subject_content_set_updated_at
+    before update on public.subject_content
+    for each row execute function public.set_updated_at();
+
+-- RLS: SADRŽAJ JE JAVAN → svatko (anon i prijavljeni) smije SELECT.
+-- Pisanje NE preko anon keya — samo service_role (migracijska skripta) / dashboard.
+alter table public.subject_content enable row level security;
+
+drop policy if exists "subject_content_public_read" on public.subject_content;
+create policy "subject_content_public_read" on public.subject_content
+    for select using (true);
