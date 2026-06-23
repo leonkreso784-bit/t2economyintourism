@@ -5,6 +5,15 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Academic Writing — NOVI predmet (1. god, sem 1), prvi izgrađen kroz GENERATOR** (`c34d88a`+`73bca5e`): 13 PDF predavanja (prof. Bogdan) → 12 tema,
+  **24 kat / 336 fc / 286 quiz / 240 fill** (K1 tjedni 1–6 / K2 8–14 / finalni hibrid; Chicago Manual of Style citiranje = težište). + **15 citation-vježbi
+  (86 items)** na NEDIRNUTOM enginu (`data/academic-writing/exercises.js`, korisnikov zahtjev). Cache `20260681`. Gate: validate/verify/test:unit/Playwright 68/68.
+### Changed / Fixed
+- **Generator očvrsnut nakon prvog pilota** (`48f38da`): `generate-subject.js` prešao na **Anthropic `tool_use` structured output** (API jamči valjan objekt →
+  nestaje cijela klasa „unescaped quote → nevaljan JSON" padova na sadržaju prepunom navodnika); `coerce()` za `learn` vraćen kao string; **retry do 3×** kad
+  `learn.content` dođe prazan; eksplicitan `process.exit` (Windows libuv/undici teardown); raw-dump padova u `tmp/`. `assemble-subject.js`: hyphen-ključevi
+  (`first-midterm`) ostaju citirani u ispisanom catalog-unosu (regex skida navodnike samo s valjanih JS identifikatora).
+### Added (ranije)
 - **GENERATOR PREDMETA (jezgra, bricks 1–4)** — pipeline za dodavanje predmeta uz minimalan Opus-usage (plan `docs/CONTENT_GENERATOR.md`):
   `scripts/validate-content.js` (`npm run validate:content` — schema + quiz indeks + KaTeX currency-safe; 14 predmeta 0/0) ·
   `scripts/build-topics.js` (PDF/TXT materijali → `tmp/<id>/topics.json`, jedan fajl=jedna tema, kolokvij iz podmape) ·

@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-23 — PRVI GENERATOR-PILOT: Academic Writing (study + citation exercises) + generator očvrsnut
+**Prvi predmet izgrađen end-to-end kroz generator** (1. god, sem 1; prof. Bogdan, *Essentials of Academic Writing*). 13 PDF predavanja → 12 tema.
+- **Pipeline:** stage PDF-ova u `tmp/` podmape (midterm-1/2) s čistim imenima → `build-topics` → `generate-subject` (Sonnet) → `assemble-subject` →
+  catalog + bump (`20260681`). Granica **K1=tjedni 1–6 / K2=8–14** (kolokvij tjedan 7, zato nema tjedna 7). Study: **24 kat / 336 fc / 286 quiz / 240 fill**
+  (K1: fundamentals/lit-review/research-methods/thesis-structure/databases; K2: types-of-publications, **Chicago** books/journals/other, research-qualities,
+  ethics & Latin; finalni hibrid). Commit `c34d88a` (sadržaj).
+- **FAZA 2 — citation EXERCISES** (`73bca5e`): `data/academic-writing/exercises.js` (`academicWritingExercises`), **15 vježbi / 86 items** na
+  NEDIRNUTOM enginu (korisnikov zahtjev — Chicago „jako puno na testu"). Tipovi `choice`(mc/tf)+`classify`: dva Chicago sustava, autorska pravila,
+  prepoznaj t/R/n/B (classify), odaberi točan format, časopisi, ostali izvori, latinske kratice (match), etika/plagijat, primary/sec/tertiary.
+  Node-verificirano: sve vježbe grade na pun rezultat s točnim odgovorima.
+- **⚠️ PILOT OTKRIO+POPRAVIO 5 generator-bugova** (`48f38da`): (1) navodnici (Chicago citati, Boolean `""`) → **nevaljan JSON** (¼ tema padala) →
+  prešao na **Anthropic `tool_use` structured output** (API jamči objekt); (2) `learn` dolazi kao JSON-string → `coerce()`; (3) `tool_use` nekad
+  isprazni `learn` → **retry do 3×**; (4) Windows libuv/undici teardown assertion → eksplicitan `process.exit`; (5) `assemble-subject` skidao
+  navodnike s hyphen-ključeva u catalog-ispisu → regex sad samo valjani JS identifikatori. Raw-dump padova u `tmp/failed-*.txt`.
+- **Gate:** validate:content 0/0 · verify 0/0 · test:unit 33/33 · **Playwright 68/68 (subjects=15)** · iPhone-SE-375 0 overflow · **moj Chicago
+  činjenični spot-check (flashcards + quiz `correct`) protiv slajdova — točan**.
+- **💰 Trošak ≈ $2.27** (korisnikov ključ) — gotovo sve na DEBUG re-runovima (5 bugova). Skripta sad robusna → budući predmet ~$1–1.5, bez debuga.
+- **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **4 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
+
 ## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
 **Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**
 (backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md). Cigla-po-cigla:

@@ -224,7 +224,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   generator uz minimalan usage, PA Blok B. `scripts/`: `validate-content.js` (`npm run validate:content`) + `build-topics.js` (PDF/TXT→topics.json) +
   `generate-subject.js` (**Sonnet preko `.env ANTHROPIC_API_KEY`**, korisnikov ključ; max_tokens 16000/temp 0.3) + `assemble-subject.js` (draft→
   `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan, ISPISUje catalog unos, NE dira catalog.js). Tok + detalji `docs/CONTENT_GENERATOR.md`.
-  Gate = validate:content→verify→Playwright→Opus spot-check. **Dalje: pravi pilot-predmet (kad korisnik donese materijale).** [[content-generator-pipeline]]
+  Gate = validate:content→verify→Playwright→Opus spot-check. [[content-generator-pipeline]]
+- **✅ PRVI GENERATOR-PILOT: ACADEMIC WRITING (1. god, sem 1) — KOMPLETAN lokalno (2026-06-23, `48f38da`+`c34d88a`+`73bca5e`, NIJE pushano):**
+  13 PDF predavanja (prof. Bogdan, *Essentials of Academic Writing*) → 12 tema kroz cijeli pipeline. **Study:** K1 (tjedni 1–6:
+  fundamentals/lit-review/research-methods/thesis-structure/databases) + K2 (8–14: types-of-publications, **Chicago Manual of Style** books/
+  journals/other, research-qualities, ethics & Latin; kolokvij tjedan 7) + finalni hibrid → **24 kat / 336 fc / 286 quiz / 240 fill**.
+  **FAZA 2 — citation EXERCISES:** `data/academic-writing/exercises.js` (`academicWritingExercises`), **15 vježbi / 86 items** na NEDIRNUTOM
+  enginu (korisnik tražio: Chicago „jako puno na testu"); tipovi `choice`(mc/tf)+`classify` (t/R/n/B, latinske kratice, primary/sec/tertiary).
+  Cache `20260681`. Gate: validate 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=15)**, iPhone-SE 0 overflow, Chicago spot-check točan.
+  **⚠️ PILOT OTKRIO+POPRAVIO 5 generator-bugova** (`48f38da`): navodnici→nevaljan JSON → **`tool_use` structured output** (API jamči objekt);
+  `learn` kao string → `coerce`; `learn` prazan → **retry do 3×**; Windows libuv teardown → clean `process.exit`; hyphen-ključevi u catalog-ispisu citirani.
+  **💰 trošak ≈ $2.27** (skoro sve debug-re-runovi; budući predmet ~$1–1.5). [[content-generator-pipeline]] [[generator-api-cost]]
 - **🐛 FIX potvrda emaila (2026-06-14, dashboard-only):** klik na Supabase „Confirm email address" otvarao `…supabase.co` s
   `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
   pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
