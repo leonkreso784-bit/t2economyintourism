@@ -22,7 +22,12 @@ testirano, što slijedi.
 - **Gate:** validate:content 0/0 · verify 0/0 · test:unit 33/33 · **Playwright 68/68 (subjects=15)** · iPhone-SE-375 0 overflow · **moj Chicago
   činjenični spot-check (flashcards + quiz `correct`) protiv slajdova — točan**.
 - **💰 Trošak ≈ $2.27** (korisnikov ključ) — gotovo sve na DEBUG re-runovima (5 bugova). Skripta sad robusna → budući predmet ~$1–1.5, bez debuga.
-- **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **4 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
+- **FAZA 3 — novi reusable tip vježbe `cite`** (`ada5b99`, cache `20260682`): korisnik tražio vježbu gdje se **upiše cijeli citat** pa sustav
+  prepozna je li točno napisan. Dodano EKSTENZIJOM enginea (ne hack): `normalizeCite()`+`gradeCite()` u `exercises-core.js` + `cite` widget +
+  CSS + 9 unit-testova (core 104/104). **Pametno-tolerantno** (korisnikov izbor): case/razmaci/navodnici/en-em-crtica/završna točka forgiven, ali
+  zarezi/točke/dvotočke/redoslijed bitni; točan odgovor se UVIJEK pokaže. 2 cite-vježbe (7 items: author-date reference za knjige/časopise/novine/
+  disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/EXERCISES_ENGINE.md` §2.
+- **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **6 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
 
 ## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
 **Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**

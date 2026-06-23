@@ -232,6 +232,9 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **FAZA 2 — citation EXERCISES:** `data/academic-writing/exercises.js` (`academicWritingExercises`), **15 vježbi / 86 items** na NEDIRNUTOM
   enginu (korisnik tražio: Chicago „jako puno na testu"); tipovi `choice`(mc/tf)+`classify` (t/R/n/B, latinske kratice, primary/sec/tertiary).
   Cache `20260681`. Gate: validate 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=15)**, iPhone-SE 0 overflow, Chicago spot-check točan.
+  **FAZA 3 — novi reusable tip `cite` (`ada5b99`, cache `20260682`):** „napiši citat" slobodnim tekstom → `normalizeCite()`+`gradeCite()` (engine
+  EKSTENZIJA, ne hack: novi grader+widget+CSS, 0 promjena postojećih tipova; core 104/104). Pametno-tolerantno (case/razmaci/navodnici/crtica/
+  završna točka forgiven, interpunkcija+redoslijed bitni); pokaže točan odgovor. 2 cite-vježbe (7 items, autorski iz slajdova). Sad **7 tipova** vježbi.
   **⚠️ PILOT OTKRIO+POPRAVIO 5 generator-bugova** (`48f38da`): navodnici→nevaljan JSON → **`tool_use` structured output** (API jamči objekt);
   `learn` kao string → `coerce`; `learn` prazan → **retry do 3×**; Windows libuv teardown → clean `process.exit`; hyphen-ključevi u catalog-ispisu citirani.
   **💰 trošak ≈ $2.27** (skoro sve debug-re-runovi; budući predmet ~$1–1.5). [[content-generator-pipeline]] [[generator-api-cost]]
