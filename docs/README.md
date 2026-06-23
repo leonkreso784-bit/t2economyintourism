@@ -18,7 +18,8 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [CONTENT_INTAKE.md](CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
 | [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data/*.js) uz minimalan usage (ADR-010) |
 | [EXERCISES_ENGINE.md](EXERCISES_ENGINE.md) | Reusable sustav interaktivnih vježbi (7 tipova) + cigla-po-cigla plan |
-| [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](STATISTICS_PLAN.md) | Plan/analiza izvora za vježbe pojedinih predmeta (povijesno) |
+| [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](STATISTICS_PLAN.md) | Plan/analiza izvora za vježbe pojedinih predmeta (povijesno, ✅ done) |
+| [MATH_PLAN.md](MATH_PLAN.md) | Plan za Matematiku (zadnji 1.-god predmet; KaTeX + worked problems) — ⬜ TODO |
 | [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, test:unit, Playwright) |
 | [CHANGELOG.md](CHANGELOG.md) | Verzije (semver) i što se mijenjalo |
 | [PROGRESS.md](PROGRESS.md) | Dnevnik rada — što je napravljeno u svakoj sesiji |

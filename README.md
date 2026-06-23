@@ -67,6 +67,7 @@ Brzi kontekst je u [CLAUDE.md](CLAUDE.md) (root, auto-učitava se svaku sesiju).
 | [ROADMAP](docs/ROADMAP.md) | Milestones + status (done/next) |
 | [CONTENT_SCHEMA](docs/CONTENT_SCHEMA.md) · [CONTENT_GUIDE](docs/CONTENT_GUIDE.md) · [CONTENT_INTAKE](docs/CONTENT_INTAKE.md) | Oblik sadržaja, kako dodati predmet, kako slagati materijale |
 | [CONTENT_GENERATOR](docs/CONTENT_GENERATOR.md) · [EXERCISES_ENGINE](docs/EXERCISES_ENGINE.md) | Generator predmeta (PDF→Sonnet) · reusable sustav vježbi |
+| [MATH_PLAN](docs/MATH_PLAN.md) | Plan za Matematiku (zadnji 1.-god predmet, KaTeX) |
 | [TESTING](docs/TESTING.md) | QA + automatske provjere (verify, validate:content, test:unit, Playwright) |
 | [CHANGELOG](docs/CHANGELOG.md) · [PROGRESS](docs/PROGRESS.md) | Verzije i dnevnik rada |
 | [DECISIONS](docs/DECISIONS.md) · [BUGS](docs/BUGS.md) · [BACKLOG](docs/BACKLOG.md) | Odluke, greške, ideje |

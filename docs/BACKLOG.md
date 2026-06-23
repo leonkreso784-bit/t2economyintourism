@@ -52,6 +52,13 @@ javio da je premalo i staro). Zato je te2 **rebuildan IZ PROFESORSKIH PREDAVANJA
 činjenična greška u starom sadržaju). **Za Entrepreneurship/E-Business isto: raditi iz materijala, ne preslagivati stari
 tanki blok.** Stoga **OBA trebaju izvorne PDF-ove/silabus od korisnika** (folderi su trenutno prazni) prije početka.
 
+## 🧭 Strateški smjerovi (korisnik, 2026-06-24) — veće mogućnosti, timing TBD
+- 🔥 **Priprema za MATURU** — novi proizvodni smjer: srednjoškolci, priprema za maturu (širenje izvan fakulteta). Dolazi nakon admin CRUD + AI tutor.
+- 🔥 **Novi program „Menadžment u ugostiteljstvu" (HRV)** — vrlo vjerojatno **prijevod cijelog Hospitality Managementa na hrvatski**. Catalog već podržava više programa (ADR-002/003) → novi `program` + prevedeni `data/*`. **Aktivira potrebu za i18n (HR/EN).**
+- ➖ **3. godina HM** — doći će, timing neodlučen.
+- ➖ **Studentski UGC za 3./4. godinu** — studenti uploadaju sadržaj i grade više godine (HM i/ili Menadžment u ugostiteljstvu); jezik (HR/EN) neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderacija/autorska prava ([VISION.md](VISION.md) §4 gating-odluke).
+- **Prioritet nakon sadržaja (korisnik):** (1) Admin CRUD → (2) AI tutor → (3) Matura prep. (Detalji [ROADMAP.md](ROADMAP.md) §DALJE.)
+
 ## Monetizacija (Faza 4 — tek na skali)
 - 🔥 Freemium pretplata (~2–3 €/mj): neograničeni kvizovi, exam mode, bez reklama, analitika.
 - 🔥 AI tutor kao premium ("objasni mi / ispitaj me") — koristi isti Claude pipeline.

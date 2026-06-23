@@ -29,6 +29,19 @@ testirano, što slijedi.
   disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/EXERCISES_ENGINE.md` §2.
 - **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **6 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
 
+## 2026-06-24 — Doc audit (svi .md izglancani) + budući planovi zapisani + compact-pravilo
+- **Audit svih 21 projektnih `.md`** (korisnik: „sve mora biti savršeno za daljnji rad"). Ispravljeno 13 datoteka u 2 vala:
+  README/docs-README/ROADMAP/DECISIONS(+ADR-010/011)/TESTING (1. val) + ARCHITECTURE/PRD/VISION/CONTENT_INTAKE/BACKLOG/
+  ACCOUNTING_PLAN/STATISTICS_PLAN (2. val). Glavne greške: zastario status 1. god, `$...$`→`\( \)` math delimiteri (2×),
+  read-path opisan kao `/api` umjesto direktni supabase-js, planovi pisali „prijedlog" a gotovi, „nemamo automatske testove".
+- **Budući planovi zapisani** (korisnik 2026-06-24): **A)** sadržaj 1. god po redu: **Traffic in Tourism** (sljedeći, treba materijale)
+  → **Math** (zadnja, novi **`docs/MATH_PLAN.md`**); ⛔ **Intro to Hospitality BLOKIRAN** (nema PDF-ova). **B)** nakon sadržaja:
+  **Admin CRUD → AI tutor → priprema za MATURU.** **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod
+  HM, aktivira i18n) · **3. godina** · **studentski UGC za 3./4. god** (HR/EN neodlučen). Zapisano u ROADMAP §DALJE + BACKLOG §Strateški + VISION.
+- **NOVO PRAVILO (CLAUDE.md §KRITIČNA #6 + [[doc-audit-before-compact]]):** prije SVAKOG compacta Claude prolazi APSOLUTNO SVE `.md` i provjerava da točno pišu.
+- **Novi doc:** `docs/MATH_PLAN.md` (materijali 100 JPG+PDF, KaTeX gotov, worked-problems, K1/K2 iz silabusa, gate). Dodan u oba indeksa.
+- Sve = docovi/memorija (nema koda) → bez cache-bumpa/testova. **Priprema za compact.**
+
 ## 2026-06-23 (2) — BLOK B: read-path SADRŽAJ IZ SUPABASEA (aktivirano)
 **Sadržaj se sad čita iz baze** (direktno anon keyem, javan; bez `/api`/service-keya na frontu), s **fallbackom na datoteke**.
 - **B-1 schema** (`supabase/schema.sql`): `public.subject_content` (1 red=1 window var: `subject_id,var_name,payload jsonb`) + public-read RLS (`using(true)`).

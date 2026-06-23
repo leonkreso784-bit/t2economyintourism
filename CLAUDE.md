@@ -43,6 +43,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 3. **Uvijek ažuriraj `docs/`** nakon izmjene (PROGRESS/CHANGELOG/ROADMAP + tematske).
 4. **Provjeri prije commita:** `npm run verify` (catalog) + `npm run test:responsive` (Playwright).
 5. Radi polako, korak po korak, s provjerama; pazi na bugove.
+6. **PRIJE SVAKOG COMPACTA (korisnikovo pravilo, 2026-06-24):** kad korisnik kaže da je potreban compact,
+   Claude MORA proći **APSOLUTNO SVE `.md` datoteke** (root + `docs/` + memorija) i provjeriti da svaka točno
+   i dobro piše (status, brojevi, ADR-ovi, linkovi) — ispraviti zastarjelo PRIJE compacta. Audit-obrazac: vidi
+   sesiju 2026-06-23/24 (provjeri svaku, popravi netočno, commit). [[doc-audit-before-compact]]
 
 ## Komande
 - `npm run verify` — integritet catalog-a (pokreni nakon dodavanja predmeta/sadržaja).
@@ -256,15 +260,20 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **⚠️ POUKA: provjeriti stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2/Entrepreneurship-djelomično), split+obogaćivanje ako je vjeran (E-Business).**
   **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
 - **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
-- **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (migracija JEDNOM). Kvantitativni
-  (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009), Math zadnja. Materijali 1. god (provjereno na disku 2026-06-14): **Statistics 26 · Macroeconomics 19 · Math 9** datoteka — IMAJU (uz Micro/Mgmt/SIT/BI gotove); **English 2** (tanko); **Academic writing / Introduction to hospitality / Traffic in tourism = 0 (PRAZNO).**
+- **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (read-path ✅ aktivan; admin CRUD kasnije). Kvantitativni
+  (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009, gotov), Math zadnja.
+- **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** sadržaj 1. god po redu:
+  **Traffic in Tourism** (SLJEDEĆI, treba materijale) → **Math** (ZADNJA, plan `docs/MATH_PLAN.md`); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova).
+  **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.**
+  **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod HM, aktivira i18n) · **3. godina HM** · **studentski UGC za 3./4. god** (jezik HR/EN neodlučen).
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
 - ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).
-- ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (LaTeX `$...$`) + „worked problems" na
-  postojećim modovima + grafovi-kao-slike. KaTeX = cigla PRIJE prvog takvog predmeta; **Math zadnja**. (plan)
+- ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (currency-safe delimiteri **`\( \)`/`\[ \]`/`$$ $$`**, NE jedan `$`) +
+  „worked problems" na postojećim modovima + grafovi-kao-slike. ✅ implementirano; **Math zadnja**.
+- ADR-010: **generator predmeta** (PDF→Sonnet→`data/*.js`, tool_use) uz minimalan usage. ADR-011: **Blok B read-path = sadržaj iz Supabasea direktno (anon key+RLS), NE `/api`** + file-fallback.
 - Logo se NE mijenja. Vizualni stil: **„čisto i bogato" (clean & rich, Brilliant/Quizlet-feel), dark** — NE preminimalistički.
 
 ## Dokumentacija (`docs/`)
@@ -273,4 +282,5 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 `CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG` ·
 **`EXERCISES_ENGINE`** (reusable sustav vježbi + cigla-po-cigla plan) · **`ACCOUNTING_PLAN`** (analiza izvora + katalog) ·
 **`STATISTICS_PLAN`** (teorija-learn + statistički exercises na istom engineu, cigla-po-cigla; stat-lib u `data/`; mathportal kalkulatori) ·
-**`CONTENT_GENERATOR`** (pipeline za dodavanje predmeta uz minimalan usage: build-topics→generate-subject(Sonnet)→assemble-subject→gate).
+**`CONTENT_GENERATOR`** (pipeline za dodavanje predmeta uz minimalan usage: build-topics→generate-subject(Sonnet)→assemble-subject→gate) ·
+**`MATH_PLAN`** (plan za Matematiku — zadnji 1.-god predmet, KaTeX + worked problems; ⬜ TODO).

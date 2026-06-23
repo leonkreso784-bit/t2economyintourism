@@ -10,6 +10,22 @@ Traffic in Tourism, Math (zadnja). **Generator predmeta** (ADR-010, `docs/CONTEN
 read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s file-fallbackom — AKTIVNO. **Sve
 LIVE na produkciji (push 2026-06-23, `c9704d3`).** Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 
+## 🧭 DALJE — planovi (korisnik, 2026-06-24)
+**A) Dovršiti sadržaj 1. godine (po redu):**
+1. **Traffic in Tourism** — SLJEDEĆI (treba materijale od korisnika).
+2. **Math** — ZADNJI 1.-god predmet; ozbiljan fokus, vlastiti plan [MATH_PLAN.md](MATH_PLAN.md) (materijali postoje: 100 JPG + PDF; KaTeX gotov).
+- ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
+
+**B) Nakon sadržaja — prioriteti (ovim redom):**
+1. **Admin CRUD** (B9/B10) — uređivanje sadržaja kroz sučelje bez deploya; baza postaje glavni izvor (normalizirani model iz [ARCHITECTURE.md](ARCHITECTURE.md)).
+2. **AI tutor** (Faza 1; „donesi svoj ključ" prvo — [VISION.md](VISION.md)).
+3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
+
+**C) Veće strateške mogućnosti (nesigurni timing):**
+- **Novi program „Menadžment u ugostiteljstvu" (HRV)** — vrlo vjerojatno: **prijevod cijelog Hospitality Managementa na hrvatski**. Catalog već podržava više programa pod istim fakultetom (ADR-002/003) → novi `program` + prevedeni `data/*`. (i18n HR/EN postaje relevantan.)
+- **3. godina** Hospitality Managementa — doći će, timing TBD.
+- **Studentski UGC za više godine:** studenti sami uploadaju sadržaj i grade **3. i 4. godinu** (za HM i/ili Menadžment u ugostiteljstvu). Jezik (HR/EN) još neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderaciju/autorska prava ([VISION.md](VISION.md) §4).
+
 ## 📍 STANJE (povijesno, 2026-06-10)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,

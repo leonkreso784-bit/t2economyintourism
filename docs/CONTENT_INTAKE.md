@@ -37,14 +37,14 @@ Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 | Statistics | 26 datoteka | ✅ GOTOVO (study + 56 vježbi) |
 | Macroeconomics | 19 PDF | ✅ GOTOVO (study + ~81 vježba) |
 | Academic writing | 13 PDF | ✅ GOTOVO (prvi kroz **generator** + cite-vježbe) |
-| Math | 100 JPG + 8 PDF + docx | ⬜ TODO — **zadnja** (najveća gustoća formula); KaTeX + grafovi-kao-slike |
-| Introduction to hospitality | 0 | ⬜ PRAZNO (čeka materijale) |
-| Traffic in tourism | 0 | ⬜ PRAZNO (čeka materijale) |
+| Traffic in tourism | 0 | ▶ **SLJEDEĆI** — treba materijale od korisnika |
+| Math | 100 JPG + 8 PDF + docx | ⬜ TODO — **ZADNJA** (najveća gustoća formula); plan [MATH_PLAN.md](MATH_PLAN.md); KaTeX + grafovi-kao-slike |
+| Introduction to hospitality | 0 | ⛔ **BLOKIRAN** — korisnik NEMA PDF-ove (2026-06-24); preskočiti dok ih ne nabavi |
 | English | 2 PDF | tanko (niski prioritet) |
 
-**Stanje:** 1. god = **7 gotovih**. Preostalo: **Math** (materijali postoje, zadnja) + **Intro to Hospitality** i
-**Traffic in Tourism** (prazni — čekaju da doneseš materijale). Novi predmeti se sad rade kroz **generator**
-([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
+**Stanje (2026-06-24):** 1. god = **7 gotovih**. Redoslijed dalje: **Traffic in Tourism** (sljedeći, treba materijale) →
+**Math** (zadnja, materijali postoje). **Intro to Hospitality = blokiran** (nema PDF-ova). Novi predmeti se rade kroz
+**generator** ([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
 
 ## Marketing (2. god) — intake & plan (2026-06-05) ← SLJEDEĆE
 Folder: `C:\Users\leonk\OneDrive\Documentos\2. godina Hospitaliy Managament\Marketing`
