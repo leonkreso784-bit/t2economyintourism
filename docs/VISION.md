@@ -17,7 +17,7 @@ kvizovima i (opcijski) plaćaju AI tutora.
 | # | Funkcija | Faza | Status |
 |---|----------|------|--------|
 | F1 | **AI tutor po predmetu** — pita/objašnjava; pristup plaćanjem (~5 € / 100–200 „jedinica") | 1/4 | ⬜ ideja |
-| F2 | **Računi/profili** — prijava, vlastiti profil | 1 | ⬜ ideja |
+| F2 | **Računi/profili** — prijava, vlastiti profil | 1 | ✅ LIVE (email+lozinka + cloud-sync + Profile) |
 | F3 | **UGC:** upload PDF/Word → AI izradi gradivo na stranici | 1 | ⬜ ideja |
 | F4 | **Dijeljenje** — objavi svoj „rad", drugi rješavaju njegove kvizove | 2 | ⬜ ideja |
 | F5 | **Natjecanje/društveno** — ljestvice, tko je koliko uspješan, statistika | 3 | ⬜ ideja |
@@ -27,18 +27,17 @@ Sve je u skladu s postojećim **Fazama 1–4** iz [PRD.md](PRD.md) i idejama u [
 
 ## 3. Ovisnosti — što o čemu ovisi (kritični put)
 ```
-[ Frontend data-driven (✅ gotovo) ]
-            │  lazy-loading = "šav" (loadSubjectContent → kasnije /api)   ← RADIMO SAD
+[ Frontend data-driven (✅ gotovo) + lazy-loading šav (✅) ]
             ▼
-[ TEMELJ: Supabase + Auth + /api ]   ← ništa korisničko ne radi bez ovoga
-   ├── F2 Računi/profili            (Supabase Auth)
+[ TEMELJ: Supabase + Auth (✅ LIVE) + read-path sadržaja (✅ ADR-011) ]
+   ├── F2 Računi/profili            (Supabase Auth) ✅ LIVE
    ├── F1/F6 AI tutor               (najprije F6 "tvoj ključ" = bez troška/PDV-a za nas)
    ├── F3 UGC upload → AI gradivo   (Storage + ingest pipeline + ljudski pregled)
    ├── F4 Dijeljenje                (privatno→javno, biblioteka, moderacija)
    └── F5 Natjecanje/ljestvice      (scores u DB, anti-cheat na serveru)
 ```
-**Zaključak:** prvi „pravi" korak prema svemu = **Backend + Auth (Blok B)**. Današnji
-lazy-loading je upravo taj šav (vidi B8 u [BACKEND.md](BACKEND.md)).
+**Zaključak:** temelj (Backend + Auth) je ✅ **postavljen** (auth+sync LIVE; read-path sadržaja iz baze, ADR-011).
+Sljedeći „pravi" koraci prema viziji: **F6 „tvoj ključ" AI tutor** + **F3 UGC** (traže admin/ingest + Storage).
 
 ## 4. Gating-odluke (OVO je teški dio, ne funkcije)
 Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
@@ -76,9 +75,9 @@ Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
 - Pravilo iz ADR-a: **naplaćuj funkcionalnost, ne sadržaj** (autorska prava).
 
 ## 6. Predloženi redoslijed (visoka razina — NE radimo sve sad)
-1. **Lazy-loading sadržaja** (A4) — šav prema backendu. ← *trenutni zadatak*
-2. **Blok B: Supabase + Auth + `/api`** — temelj (vidi [BACKEND.md](BACKEND.md)).
-3. **F6 AI tutor „tvoj ključ"** — najjeftiniji MVP AI vrijednosti.
+1. ~~Lazy-loading sadržaja (A4)~~ ✅ · ~~Blok B: Supabase + Auth + read-path~~ ✅ (auth+sync LIVE, sadržaj iz baze ADR-011)
+2. **(sad)** dovršiti sadržaj 1. god (Math zadnja) + **admin CRUD** (B9/B10) → baza kao jedini izvor.
+3. **F6 AI tutor „tvoj ključ"** — najjeftiniji MVP AI vrijednosti. ← *sljedeći „pravi" korak prema viziji*
 4. **F2 profili** → **F3 UGC upload→AI** (privatno) → **F4 dijeljenje** → **F5 ljestvice**.
 5. **F1 plaćeni AI tutor + plaćanje** — tek kad je trošak izmjeren i odluka o MoR/PDV donesena.
 

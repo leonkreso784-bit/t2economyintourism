@@ -20,8 +20,9 @@ SUPABASE                                  ADMIN UI (/admin, zaštićen)
    • Edge Functions (kasnije: ingest+Claude)
 ```
 
-**Backend hosting:** Vercel serverless `/api` funkcije + Supabase (Postgres/Auth/Storage) — vidi
-[BACKEND.md](BACKEND.md) (ADR-008). Frontend zove `/api` običnim `fetch`-om; baza/admin dolaze u Bloku B.
+**Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](BACKEND.md) (ADR-008).
+**Stanje (2026-06-23):** Auth + cloud-sync napretka LIVE; **sadržaj se čita iz baze direktno preko
+supabase-js (anon key + RLS), NE preko `/api`** (ADR-011) — `/api` Vercel funkcije ostaju za admin/AI kasnije.
 
 Postojeća schema kategorije ostaje **identična** — UI logika se ne dira.
 
@@ -41,7 +42,9 @@ institutions (sveučilište)      ← spremno za buduće širenje
 **Trenutni raspored (Hospitality Management):**
 - 2. god, sem 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
 - 2. god, sem 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
-- 1. god, sem 1: **Business Informatics ✅ (KOMPLETAN)** — ostalih 10 predmeta 1. god ⬜ (čeka materijale)
+- **2. god = 8/8 ✅ KOMPLETNO**
+- 1. god (7 ✅): Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics,
+  Macroeconomics, **Academic Writing** (prvi kroz generator) · ⬜ preostalo: Intro to Hospitality, Traffic in Tourism, Math (zadnja)
 
 ## Model baze (ciljano, Supabase/Postgres)
 
@@ -60,16 +63,22 @@ content_items  (id, category_id→, type['flashcard'|'quiz'|'fill'|'learn'],
 `payload JSONB` čuva **postojeći oblik** (npr. flashcard `{question,answer,explanation}`),
 pa migracija ne mijenja UI.
 
+> **Napomena (2026-06-23):** gore je CILJANI normalizirani model (za admin CRUD/UGC kasnije). Trenutni
+> **read-path** (ADR-011) koristi jednostavniju tablicu **`public.subject_content`** (1 red = 1 window var,
+> cijeli objekt kategorija kao `jsonb`) — dovoljno za čitanje, migracijski isto sigurno. Puni normalizirani
+> model uvodimo s admin CRUD-om (B10). Stvarna shema: `supabase/schema.sql`.
+
 ## Content pipeline (Faza 1+, PPT/PDF → gradivo)
 Upload → ekstrakcija teksta/slika → chunking → Claude generira po postojećoj schemi
 → draft → ljudski pregled/uredi → publish. Kontrola troška: kvote, kasnije "donesi
 svoj API ključ".
 
 ## Math rendering (kvantitativni predmeti — KaTeX)
-Frontend sposobnost (plan, ADR-009): **KaTeX** (CDN, bez build-a) za prikaz LaTeX formula
-(`$...$`/`$$...$$`) u Learn/Flashcards/Quiz/Fill. Helper `renderMath(container)` poziva se nakon
-što sekcija ubaci HTML. Math/Micro/Macro/Statistika koriste „worked problems" konvenciju + grafove
-kao slike. Schema struktura se NE mijenja (LaTeX je običan string u payloadu → migracijski sigurno).
+✅ implementirano (ADR-009): **KaTeX** (CDN, bez build-a) za prikaz LaTeX formula u Learn/Flashcards/Quiz/Fill.
+Helper `renderMath(container)` (`js/math.js`) poziva se nakon što sekcija ubaci HTML. **⚠️ Delimiteri su
+currency-safe: inline `\( \)`, blok `\[ \]` / `$$ $$` — JEDAN `$` se NE koristi** (postojeći `$NN` valutni iznosi
+bi se inače parsirali kao matematika). Micro/Macro/Statistika koriste „worked problems" + grafove kao slike.
+Schema struktura se NE mijenja (LaTeX je običan string u payloadu → migracijski sigurno).
 
 ---
 
@@ -88,10 +97,10 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   postaje `fetch('/api/subject/...')` bez izmjene ostatka app-a. Test `lazy-load.spec.js`.
 - **A5 — UI hijerarhije** ✅ — **puni drill-down nav** (`#browse-page`, M0.5, ADR-007).
 
-### Blok B — Backend: Vercel Functions + Supabase (ADR-008, [BACKEND.md](BACKEND.md))
-- **B6** — Supabase projekt + schema. **B7** — migracija catalog + svi `data/*` → baza (JEDNOM).
-- **B8** — `/api/catalog` + `/api/subject` (Vercel Functions); frontend `loadSubjectContent` → `/api`.
-- **B9** — admin login (Supabase Auth). **B10** — admin CRUD.
+### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](BACKEND.md))
+- **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
+- **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
+- **B9 ⬜** — admin login (Supabase Auth). **B10 ⬜** — admin CRUD → tada baza postaje jedini izvor + normalizirani model gore.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

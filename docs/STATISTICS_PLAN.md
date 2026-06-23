@@ -1,5 +1,9 @@
 # STATISTICS_PLAN.md — teorija + vježbe (cigla-po-cigla plan)
 
+> ## ✅ STATUS: GOTOVO I LIVE (2026-06-16) — POVIJESNI plan / arhiva
+> Oba traka su gotova i deployana: **Track A** (10 Learn sekcija obogaćene teorijom) + **Track B** (56 interaktivnih
+> vježbi T1–T9 na postojećem enginu; statistika 100% u `data/`: `exercises.js` + `stat-lib.js`). Ovo je zapis plana/procesa.
+
 > **Što je ovo:** trajni radni dokument za dvije nadogradnje predmeta **Statistics**:
 > **(A)** obogaćivanje **Learn** sekcija pravom teorijom (sad su preformulne) i
 > **(B)** dodavanje **Exercises** (interaktivne, auto-ocjenjive vježbe) — na POSTOJEĆI

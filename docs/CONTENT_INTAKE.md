@@ -15,8 +15,8 @@
 
 ## ⚠️ Kvantitativni predmeti (Math / Micro / Macro / Statistika) — poseban tretman
 Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](DECISIONS.md) ADR-009):
-- **Formule → KaTeX/LaTeX.** Pišu se kao `$...$` u poljima (vidi [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md)).
-  **KaTeX rendering dodajemo kao zasebnu ciglu PRIJE prvog takvog predmeta.**
+- **Formule → KaTeX/LaTeX.** ✅ KaTeX implementiran (ADR-009). Delimiteri **currency-safe: `\( \)` inline,
+  `\[ \]` / `$$ $$` blok — NE jedan `$`** (valutni `$NN` bi se pokvario). Vidi [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) §Matematika.
 - **Slike (JPG slajdovi):** čitam ih (Read alat čita JPG/PNG) i **transkribiram formule u LaTeX**.
   Math materijal su tipkani PPT slajdovi (provjereno čitljivi) → izvedivo, ali **ti OBAVEZNO pregledaš matematiku**.
 - **Grafovi** (tangente, ponuda/potražnja, distribucije): zasad croppani slajd kao slika u `learn.image`.
@@ -25,26 +25,26 @@ Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](DEC
 - **Redoslijed:** čista **Matematika ZADNJA** (najveća gustoća formula); pilot na predmetu s najviše konceptualnog + materijalima.
 - **Rizik:** točnost → male serije, `verify` + tvoj pregled nakon svake cigle.
 
-## Inventar 1. godine (stanje materijala, 2026-06-05)
+## Inventar 1. godine (ažurirano 2026-06-24)
 Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 
-| Predmet | Materijali | Bilješka |
+| Predmet | Materijali | Status |
 |---|---|---|
-| Business Informatics | 12 PDF | ✅ GOTOVO (pilot — tekstualni pipeline dokazan) |
-| Macroeconomics | 19 PDF | dobar tekstualni izvor (kvantitativni elementi) |
-| Management | 11 PDF | tekstualni |
-| Special interest in tourism | 13 PDF + txt | tekstualni |
-| Math | 100 JPG + 8 PDF + docx | PPT slajdovi (čitljivi): realni brojevi, funkcije, derivacije, integrali, Gauss-Jordan, ekon. primjene → KaTeX + grafovi-kao-slike |
-| Microeconomics | 3 PDF | **tanko** — vjerojatno treba još |
-| English | 2 PDF | malo |
-| Academic writing | 0 | **PRAZNO** |
-| Introduction to hospitality | 0 | **PRAZNO** |
-| Statistics | 0 | **PRAZNO** — nema za pilot |
-| Traffic in tourism | 0 | **PRAZNO** |
+| Business Informatics | 12 PDF | ✅ GOTOVO (pilot — tekstualni pipeline) |
+| Special interest in tourism | 13 PDF + txt | ✅ GOTOVO (LIVE) |
+| Management | 11 PDF | ✅ GOTOVO (LIVE) |
+| Microeconomics | 172-str deck | ✅ GOTOVO (prvi kvantitativni, KaTeX) |
+| Statistics | 26 datoteka | ✅ GOTOVO (study + 56 vježbi) |
+| Macroeconomics | 19 PDF | ✅ GOTOVO (study + ~81 vježba) |
+| Academic writing | 13 PDF | ✅ GOTOVO (prvi kroz **generator** + cite-vježbe) |
+| Math | 100 JPG + 8 PDF + docx | ⬜ TODO — **zadnja** (najveća gustoća formula); KaTeX + grafovi-kao-slike |
+| Introduction to hospitality | 0 | ⬜ PRAZNO (čeka materijale) |
+| Traffic in tourism | 0 | ⬜ PRAZNO (čeka materijale) |
+| English | 2 PDF | tanko (niski prioritet) |
 
-**Posljedica za plan:** Statistika nema materijala (ne može biti pilot); Micro tanak. Kvantitativni pilot
-realno = **Math** (bogato) ili **Macro** (19 PDF). 4 prazna predmeta čekaju da doneseš materijale.
-Najbrži dobici (tekstualni, bez KaTeX-a): **Management, Macroeconomics, Special interest in tourism**.
+**Stanje:** 1. god = **7 gotovih**. Preostalo: **Math** (materijali postoje, zadnja) + **Intro to Hospitality** i
+**Traffic in Tourism** (prazni — čekaju da doneseš materijale). Novi predmeti se sad rade kroz **generator**
+([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
 
 ## Marketing (2. god) — intake & plan (2026-06-05) ← SLJEDEĆE
 Folder: `C:\Users\leonk\OneDrive\Documentos\2. godina Hospitaliy Managament\Marketing`
