@@ -2,7 +2,15 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 STANJE (2026-06-10)
+## 📍 AŽURNO (2026-06-23)
+**2. god HM = 8/8 ✅ LIVE.** **1. god (7 gotovih):** Business Informatics, SIT, Management, Microeconomics,
+Statistics, Macroeconomics, **Academic Writing** (zadnji — prvi kroz **generator**). Preostalo: Intro to Hospitality,
+Traffic in Tourism, Math (zadnja). **Generator predmeta** (ADR-010, `docs/CONTENT_GENERATOR.md`) gotov i robustan
+(Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova (novi `cite` = „napiši citat"). **Blok B
+read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s file-fallbackom — AKTIVNO. **Sve
+LIVE na produkciji (push 2026-06-23, `c9704d3`).** Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
+
+## 📍 STANJE (povijesno, 2026-06-10)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
 catalog-a) · Learn responsive/overflow fix live · sadržajni alati (template, scaffold, `verify`,
 `pdf-text`, Playwright suite) · **Business Informatics (1. god, sem 1) KOMPLETAN** (K1+K2+Final, 11
@@ -53,12 +61,12 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
 > Bez `/api` funkcija (frontend → Supabase direktno, publishable key + RLS). Sadržaj i dalje u fajlovima —
 > stavke B6–B10 dolje su **staza A (migracija sadržaja)** i rade se JEDNOM kasnije. Detalji: `BACKEND.md` §Staza B.
 
-- 🟨 B6 — Supabase projekt + schema (✅ projekt + `progress` tablica; ⬜ content tablice — kasnije, staza A)
-- ⬜ B7 — migracijska skripta: catalog + `data/*` → baza (JEDNOM, kad je sadržaj unutra)
-- ⬜ B8 — `/api/catalog` + `/api/subject` (Vercel Functions); frontend `loadSubjectContent` → `/api`
+- ✅ B6 — Supabase projekt + schema (`progress` + **`subject_content` tablica** s public-read RLS)
+- ✅ B7 — migracijska skripta `scripts/migrate-content.js` (`data/*` → baza; 49 redova / 15 predmeta migrirano)
+- ✅ B8 — read-path: frontend `loadSubjectContent` čita iz baze **direktno (anon key + RLS, ne `/api`)** s file-fallbackom (ADR-011). Flag `CONTENT_FROM_SUPABASE`.
 - ⬜ B9 — admin login (Supabase Auth, samo ja)
-- ⬜ B10 — admin CRUD (hijerarhija + sadržaj)
-- Napomena: sadržaj se NE migrira sad — datoteke ostaju izvor do Bloka B.
+- ⬜ B10 — admin CRUD (hijerarhija + sadržaj) → tada baza postaje JEDINI izvor
+- Napomena: datoteke OSTAJU izvor istine, baza = zrcalo (re-sync skriptom). Puna migracija (baza=jedini izvor) tek s admin CRUD-om, kad je 1. god gotova.
 
 **Definicija gotovog (M0):** svih 8 predmeta dolazi iz baze, app radi identično,
 prvo učitavanje brže, mogu dodati novi predmet kroz admin bez diranja koda.

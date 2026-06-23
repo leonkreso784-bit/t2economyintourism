@@ -4,6 +4,35 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-011 — Blok B read-path: sadržaj iz baze DIREKTNO preko anon keya (ne `/api`)
+**Datum:** 2026-06-23 · **Status:** ✅ implementirano (aktivno lokalno)
+**Kontekst:** Blok B (sadržaj→Supabase). Originalni plan (ADR-008/BACKEND.md) predviđao je `/api`
+Vercel funkcije. Ali sadržaj je **javan** (svi čitaju isti katalog) → ne treba per-user logiku ni
+skrivanje iza servera.
+**Odluka:** Sadržaj se čita **direktno preko supabase-js (anon/publishable key) + public-read RLS**
+(`using(true)`), isto kao što napredak već radi — **bez `/api` funkcija, bez service-keya na frontu**.
+Tablica `public.subject_content` (1 red = 1 window var, `jsonb`). `js/content-loader.js` proba bazu pa
+**padne na datoteke** (offline-first; datoteke = izvor istine, baza = zrcalo koje puni
+`scripts/migrate-content.js` sa service-keyem). `/api` funkcije ostaju za KASNIJE (admin CRUD, AI tutor).
+**Posljedice:** Najmanji setup, ništa se ne kvari ako baza padne/uspava se (fallback). Free tier uspava
+projekt ~7 dana → restore besplatan; uspavan = sadržaj iz datoteka, login/sync stanu. Puna migracija
+(„baza = jedini izvor" + admin CRUD) tek kad je 1. godina gotova. Detalji: [BACKEND.md](BACKEND.md) §Staza B2.
+
+## ADR-010 — Generator predmeta (manje Opus-usagea) + tool_use structured output
+**Datum:** 2026-06-22/23 · **Status:** ✅ implementirano (pilot: Academic Writing)
+**Kontekst:** Ručno autorstvo predmeta troši puno (skupog) Opus-vremena. Korisnik želi dodavati predmete
+uz minimalan moj usage, PA tek onda puni Blok B.
+**Odluka:** Pipeline `scripts/`: `build-topics.js` (materijali→topics.json) → `generate-subject.js`
+(**Anthropic Sonnet preko korisnikovog `.env` ključa** — bulk drafting OFF Opus) → `assemble-subject.js`
+(draft→`data/<id>/*.js`) → gate (`validate-content.js` + verify + Playwright + moj činjenični spot-check).
+**Točnost nose deterministički zaštitari**, ne model. Output = isti `data/*.js` format → migracijski siguran.
+**Ključno (pilot-nalaz):** drafting koristi **Anthropic `tool_use` (forced tool_choice)** → API jamči valjan
+objekt → nestaje cijela klasa „unescaped quote → nevaljan JSON" padova (sadržaj prepun navodnika). +`coerce`
+(learn kao string) +retry (learn prazan). **Inherentni limit:** validator provjerava da je quiz `correct` u
+rasponu, NE je li stvarno točan → hvata samo Opus/ljudski spot-check (zato gate postoji).
+**Posljedice:** Novi predmet ~$1–1.5 (Sonnet, korisnikov račun) umjesto sati Opus-rada. Pouka: generirani
+sadržaj VERIFICIRATI protiv predavanja. Detalji: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md).
+
 ## ADR-009 — Kvantitativni predmeti (Math/Micro/Macro/Statistika): KaTeX + "worked problems"
 **Datum:** 2026-06-05 · **Status:** ✅ **implementirano** (KaTeX cigla, 2026-06-14)
 **Implementacija (2026-06-14):** `js/math.js` (`renderMath(container)` = KaTeX auto-render, tihi no-op ako

@@ -14,9 +14,11 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 - **Flashcards** — kartice s okretanjem
 - **Quiz** — pitanja s višestrukim izborom i trenutnom povratnom informacijom
 - **Fill-in-the-blank** — vježbe nadopunjavanja
-- **Progress** — praćenje napretka (lokalno spremanje)
+- **Exercises** — interaktivne vježbe s auto-ocjenjivanjem (7 tipova: choice/numeric/ratio/statement/classify/journal/**cite** „napiši citat"); Accounting, Statistics, Macroeconomics, Academic Writing
+- **Progress** — praćenje napretka (lokalno + cloud sync uz prijavu)
 - **Blind Map** — interaktivna karta (samo Tourism Geography)
-- PWA, dark tema, mobile-first
+- **KaTeX** — formule za kvantitativne predmete (Micro/Macro/Statistics)
+- PWA, dark tema, mobile-first, prijava (email+lozinka) + sinkronizacija napretka
 
 ## 🎯 Predmeti — FMTU Opatija, Hospitality Management
 **2. godina (8):**
@@ -24,12 +26,15 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 - Semestar 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
 
 **1. godina (u izradi):**
-- Semestar 1: **Business Informatics ✅** (Midterm 1 + Midterm 2 + Final) — ostalih 10 predmeta slijedi
+- ✅ Gotovo: **Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing** (svi K1+K2+Final)
+- ⬜ Slijedi: Intro to Hospitality, Traffic in Tourism, Math (zadnja), …
+- *Academic Writing = prvi predmet izgrađen kroz **generator** (PDF→Sonnet→data/*.js); vidi [CONTENT_GENERATOR.md](docs/CONTENT_GENERATOR.md).*
 
 ## 🛠️ Tehnologije
-HTML5 · CSS3 · Vanilla JS (ES6+) · Font Awesome · Google Fonts · PWA.
-Backend (u izradi): **Vercel Functions (`/api`) + Supabase** (Postgres + Auth + Storage).
-Dev/test: Node + Playwright (responsive/smoke testovi), `pdf-parse` (čitanje materijala).
+HTML5 · CSS3 · Vanilla JS (ES6+) · Font Awesome · Google Fonts · KaTeX · PWA.
+Backend: **Supabase** (Postgres + Auth + Storage) — auth + cloud-sync napretka **LIVE**;
+sadržaj se čita iz baze direktno (anon key + RLS) s file-fallbackom (ADR-011); `/api` Vercel funkcije za kasnije (admin/AI).
+Dev/test: Node + Playwright (responsive/smoke), unit testovi (`test:unit`), sadržajni validator (`validate:content`), `pdf-parse`.
 
 ## 📁 Struktura projekta
 ```
@@ -38,9 +43,13 @@ index.html              # Glavni HTML (sekcije svih modova)
 styles.css / css/       # Stilovi
 js/                     # App moduli (config, navigation, quiz, flashcards, ...)
 data/catalog.js         # ★ Jedinstveni izvor istine za predmete (hijerarhija)
-data/<predmet>/, data-*.js  # Sadržaj predmeta po schemi
-scripts/                # verify-catalog, scaffold-subject, pdf-text, static-server
-tests/                  # Playwright (responsive, smoke, sidebar)
+data/<predmet>/, data-*.js  # Sadržaj predmeta po schemi (+ exercises.js po predmetu)
+js/exercises*.js        # Reusable engine za interaktivne vježbe (NIKAD se ne mijenja za sadržaj)
+scripts/                # verify-catalog, scaffold, pdf-text, static-server,
+                        #   validate-content, build-topics, generate-subject, assemble-subject (generator),
+                        #   migrate-content (data/* → Supabase)
+supabase/schema.sql     # progress + subject_content tablice (RLS)
+tests/                  # Playwright (responsive/smoke/…) + tests/unit (graders)
 docs/                   # ★ Projektna dokumentacija (vidi niže)
 manifest.json, vercel.json
 ```
@@ -57,7 +66,8 @@ Brzi kontekst je u [CLAUDE.md](CLAUDE.md) (root, auto-učitava se svaku sesiju).
 | [BACKEND](docs/BACKEND.md) | Vercel Functions + Supabase, API, migracija |
 | [ROADMAP](docs/ROADMAP.md) | Milestones + status (done/next) |
 | [CONTENT_SCHEMA](docs/CONTENT_SCHEMA.md) · [CONTENT_GUIDE](docs/CONTENT_GUIDE.md) · [CONTENT_INTAKE](docs/CONTENT_INTAKE.md) | Oblik sadržaja, kako dodati predmet, kako slagati materijale |
-| [TESTING](docs/TESTING.md) | QA + automatske provjere |
+| [CONTENT_GENERATOR](docs/CONTENT_GENERATOR.md) · [EXERCISES_ENGINE](docs/EXERCISES_ENGINE.md) | Generator predmeta (PDF→Sonnet) · reusable sustav vježbi |
+| [TESTING](docs/TESTING.md) | QA + automatske provjere (verify, validate:content, test:unit, Playwright) |
 | [CHANGELOG](docs/CHANGELOG.md) · [PROGRESS](docs/PROGRESS.md) | Verzije i dnevnik rada |
 | [DECISIONS](docs/DECISIONS.md) · [BUGS](docs/BUGS.md) · [BACKLOG](docs/BACKLOG.md) | Odluke, greške, ideje |
 

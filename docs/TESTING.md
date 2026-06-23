@@ -1,15 +1,18 @@
-# Testing — ručna QA checklista
+# Testing — QA checklista
 
-> Nemamo automatske testove (zasad), pa je ovo naša zaštita od regresija.
+> Imamo automatske testove (Playwright + unit + validatori) — uz njih ova ručna lista.
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
 
 ## Automatske provjere (uvijek prvo)
 - [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz). *(alias: `verify:catalog`)*
+- [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
+- [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`).
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
-  - `smoke.spec.js` — SVE sekcije × svih 9 predmeta: renderiranje, protok podataka
+  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno 15): renderiranje, protok podataka
     kroz catalog, 0 JS grešaka, 0 overflowa.
+  - `katex.spec.js` — KaTeX render (learn/flashcards/quiz/fill) + currency-safety (`$NN` se ne parsira kao matematika).
   - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
   - `landing.spec.js` — landing nav, subjects showcase (= broj predmeta iz catalog-a),
     navigacija CTA-ova, overflow guard.
@@ -41,11 +44,12 @@ Za **svaki** pogođeni predmet:
 - [ ] **Flashcards:** okreću se, Know/Don't Know broji, navigacija radi.
 - [ ] **Quiz:** start radi, opcije se prikažu, točno/netočno se boji, rezultat na kraju.
 - [ ] **Fill:** praznina prikazana, provjera odgovora radi, hint radi.
+- [ ] **Exercises** (ako `features.exercises`): tab se prikaže, vježbe grupirane po poglavlju, Check ocijeni; za `cite` upišeš citat → točno/netočno + prikaže se točan odgovor.
 - [ ] **Progress:** brojevi i trake se ažuriraju nakon aktivnosti.
 - [ ] (Geografija) **Blind Map** se prikaže i prima klikove.
 
 ## Regresija nakon refaktora (A2–A5)
-- [ ] Svih 9 predmeta radi **identično** kao prije refaktora.
+- [ ] Svi predmeti rade **identično** kao prije refaktora.
 - [ ] Napredak spremljen prije refaktora i dalje se učita (storageKey nepromijenjen).
 - [ ] Nema novih grešaka u konzoli.
 
