@@ -10,7 +10,7 @@
 // ⚠ CACHE: data/* su pod immutable cacheom (vercel.json). Pri izmjeni BILO KOJEG
 // data/* sadržaja bumpaj CONTENT_VERSION — inače preglednik servira stari cache.
 
-const CONTENT_VERSION = '20260683';
+const CONTENT_VERSION = '20260684';
 
 // subjectId -> true (sadržaj učitan) ; subjectId -> Promise (učitavanje u tijeku)
 const _contentLoaded = {};
@@ -20,7 +20,7 @@ const _contentLoading = {};
 // Dok je false → 100% staro ponašanje (samo datoteke). Flipne se na true TEK kad je
 // `supabase/schema.sql` pokrenut u dashboardu I `node scripts/migrate-content.js` napunio
 // tablicu `subject_content`. Datoteke ostaju izvor istine + fallback (ako baza padne/prazna).
-const CONTENT_FROM_SUPABASE = false;
+const CONTENT_FROM_SUPABASE = true;
 
 // Pričekaj da supabase-js klijent bude spreman (CDN se učita async nakon DOMContentLoaded).
 function _supabaseClientWhenReady(timeoutMs) {
