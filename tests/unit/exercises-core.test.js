@@ -8,7 +8,8 @@ const assert = require('assert');
 const path = require('path');
 const {
     parseAmount, formatAmount, numEq, numEqMoney, gradeSet, toCents, seededRandom, pickParams,
-    gradeChoice, gradeNumeric, gradeStatement, statementCells, gradeClassify, gradeJournal
+    gradeChoice, gradeNumeric, gradeStatement, statementCells, gradeClassify, gradeJournal,
+    normalizeCite, gradeCite
 } = require(path.join(__dirname, '..', '..', 'js', 'exercises-core.js'));
 
 let passed = 0;
@@ -485,6 +486,29 @@ test('gradeJournal: wrong account flagged', () => {
         [{ account: 'Cash', side: 'D', amount: '15000' }, { account: 'Note Payable', side: 'C', amount: '15000' }]
     ]);
     assert.ok(!r.correct && r.perField[0].ok === false);
+});
+
+// ---------------------------------------------------------------- normalizeCite / gradeCite
+const CITE = { items: [{ answer: 'Smith, John. 2010. The Wealth of Nations. New York: Random House.' }] };
+test('normalizeCite: lowercases + trims + drops trailing period', () =>
+    assert.strictEqual(normalizeCite('  The Title.  '), 'the title'));
+test('normalizeCite: curly quotes → straight', () =>
+    assert.strictEqual(normalizeCite('“Title”'), '"title"'));
+test('normalizeCite: en/em dash → hyphen', () =>
+    assert.strictEqual(normalizeCite('205–221'), '205-221'));
+test('normalizeCite: collapses internal whitespace', () =>
+    assert.strictEqual(normalizeCite('a,   b'), 'a, b'));
+test('gradeCite: exact match correct', () =>
+    assert.ok(gradeCite(CITE, ['Smith, John. 2010. The Wealth of Nations. New York: Random House.']).correct));
+test('gradeCite: case + no trailing period still correct', () =>
+    assert.ok(gradeCite(CITE, ['smith, john. 2010. the wealth of nations. new york: random house']).correct));
+test('gradeCite: missing commas/colon is incorrect', () =>
+    assert.ok(!gradeCite(CITE, ['Smith John 2010 The Wealth of Nations New York Random House']).correct));
+test('gradeCite: empty answer is incorrect', () =>
+    assert.ok(!gradeCite(CITE, ['']).correct));
+test('gradeCite: accept[] alternate is correct', () => {
+    const ex = { items: [{ answer: '(Smith 2010, 12)', accept: ['(Smith 2010, 12).'] }] };
+    assert.ok(gradeCite(ex, ['(Smith 2010, 12).']).correct);
 });
 
 // ---------------------------------------------------------------- rezultat

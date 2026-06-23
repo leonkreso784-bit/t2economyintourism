@@ -318,6 +318,50 @@
                     }
                 });
             }
+        },
+
+        // --- cite: WRITE the citation (free text) → smart-tolerant string check ---
+        // ex.items: [{ given, answer, accept?, hint? }]. Student types the citation;
+        // grader (gradeCite) normalises cosmetics (case/space/quotes/dash/trailing dot)
+        // but punctuation & order must match. Expected answer is always revealed on submit.
+        cite: {
+            grader: 'gradeCite',
+            render(ex, opts) {
+                const mode = (opts && opts.mode) || 'practice';
+                const showHints = mode !== 'exam';
+                const items = Array.isArray(ex.items) ? ex.items : [];
+                return '<div class="ex-cite">' + items.map((item, i) => {
+                    return '<div class="ex-cite-item" data-item="' + i + '">'
+                        + '<div class="ex-cite-given"><span class="ex-cite-tag">Source details</span>' + esc(item.given) + '</div>'
+                        + '<textarea class="ex-input ex-cite-input" data-item="' + i + '" rows="2"'
+                        + ' autocomplete="off" autocapitalize="off" spellcheck="false"'
+                        + ' placeholder="Write the citation here…"></textarea>'
+                        + (showHints && item.hint ? '<div class="ex-hint">' + esc(item.hint) + '</div>' : '')
+                        + '<div class="ex-cite-expected" hidden></div>'
+                        + '</div>';
+                }).join('') + '</div>';
+            },
+            collect(ex, root) {
+                const items = Array.isArray(ex.items) ? ex.items : [];
+                return items.map((item, i) => {
+                    const el = root.querySelector('.ex-cite-input[data-item="' + i + '"]');
+                    return el ? el.value : '';
+                });
+            },
+            mark(ex, root, result) {
+                (result.perField || []).forEach((pf, i) => {
+                    const item = root.querySelector('.ex-cite-item[data-item="' + i + '"]');
+                    if (!item) return;
+                    const input = item.querySelector('.ex-cite-input');
+                    if (input) { input.classList.remove('is-correct', 'is-incorrect'); input.classList.add(pf.ok ? 'is-correct' : 'is-incorrect'); }
+                    const exp = item.querySelector('.ex-cite-expected');
+                    if (exp) {
+                        exp.hidden = false;
+                        exp.innerHTML = (pf.ok ? '<span class="ex-cite-ok">✓ Correct</span> ' : '<span class="ex-cite-no">✗ Model answer:</span> ')
+                            + '<span class="ex-cite-ans">' + esc(pf.expected) + '</span>';
+                    }
+                });
+            }
         }
     };
 

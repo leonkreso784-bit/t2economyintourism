@@ -82,6 +82,7 @@ slobodan tekst (→ jezik je stvar podataka). Brojevi su čisti `Number` (vidi �
 | **`statement`** | `sections:[{key,label,lines:[{label,answer}]}], totals:[{key,label,answer,derived?}]` | `numEqMoney` po liniji i totalu |
 | **`classify`** | `classes:[…], effects:[…], rows:[{text, entries:[{account,cls,effect}]}]` | `gradeSet` po retku (redoslijed-neovisno), svako polje točno |
 | **`journal`** | `chartOfAccounts:[{name,normal:'D'\|'C',section}], beginningBalances?, transactions:[{text, entries:[{account,side,amount}]}], expectedEndingBalances?` | po transakciji: `gradeSet` stavki + Σdebit=Σcredit; opc. ending saldi preko `acc-kernel` |
+| **`cite`** | `items:[{given, answer, accept?, hint?}]` — **napiši citat slobodnim tekstom** (npr. Chicago) | `gradeCite`: `normalizeCite(upis) === normalizeCite(answer)` ili neki `accept[]`. **Pametno-tolerantno:** ignorira velika/mala slova, višak razmaka, kose↔ravne navodnike, en/em crticu↔minus, završnu točku — ALI zarezi/točke/dvotočke/redoslijed MORAJU se poklapati. Točan odgovor se UVIJEK pokaže na predaju. (dodan 2026-06-23 za Academic Writing; reusable) |
 
 **Randomizacija (parametrizirane vježbe):** ako vježba ima `generate`/`solve`, engine pri otvaranju pozove
 `p = pickParams(params, seed)`, prikaže `generate(p)` (tekst/brojevi), a točan odgovor je `solve(p)`. Gumb

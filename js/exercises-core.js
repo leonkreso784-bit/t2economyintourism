@@ -341,6 +341,46 @@
     }
     function round2c(x) { return Number.isFinite(x) ? toCents(x) / 100 : 0; }
 
+    // --- normalizeCite(s) ----------------------------------------------------
+    // "Pametno-tolerantna" normalizacija upisanog citata (npr. Chicago):
+    //   • mala slova (case-insensitive)            • kose navodnike “ ” ‘ ’ → ravne " '
+    //   • en/em crticu – — → minus -               • razmake (i tabove/nove redove) → jedan razmak
+    //   • makni POČETNE/ZAVRŠNE razmake i ZAVRŠNU točku/točke
+    // ZADRŽAVA unutarnju interpunkciju (zarezi, dvotočke, unutarnje točke, redoslijed) —
+    // ona je bit ispravnog formata i MORA se poklapati. Čista funkcija (node-testabilna).
+    function normalizeCite(s) {
+        if (s == null) return '';
+        let t = String(s);
+        if (t.normalize) t = t.normalize('NFC');
+        t = t
+            .replace(/[“”„‟″]/g, '"')   // “ ” „ ‟ ″ → "
+            .replace(/[‘’‚‛′]/g, "'")   // ‘ ’ ‚ ‛ ′ → '
+            .replace(/[‐-―−]/g, '-')              // ‐ ‑ ‒ – — ― − → -
+            .replace(/\s+/g, ' ')
+            .trim()
+            .toLowerCase()
+            .replace(/[.\s]+$/, '');                             // završna točka/razmaci nebitni
+        return t;
+    }
+
+    // --- gradeCite(ex, answers) ---------------------------------------------
+    // ex.items: [{ given, answer, accept?:[…alt točni oblici…], hint? }]
+    // answers:  [ <upisani string po stavci, isti redoslijed> ]
+    // Točno = normalizeCite(upis) === normalizeCite(answer) ILI jednako nekom accept[].
+    function gradeCite(ex, answers) {
+        const items = (ex && Array.isArray(ex.items)) ? ex.items : [];
+        answers = Array.isArray(answers) ? answers : [];
+        const perField = items.map((item, i) => {
+            const got = answers[i] == null ? '' : String(answers[i]);
+            const gotN = normalizeCite(got);
+            const accepted = [item.answer].concat(Array.isArray(item.accept) ? item.accept : []);
+            const ok = gotN.length > 0 && accepted.some((a) => normalizeCite(a) === gotN);
+            return { index: i, ok: !!ok, expected: item.answer, got: got };
+        });
+        const score = perField.filter((f) => f.ok).length;
+        return { score: score, max: items.length, perField: perField, correct: items.length > 0 && score === items.length };
+    }
+
     const ExercisesCore = {
         parseAmount,
         formatAmount,
@@ -357,6 +397,8 @@
         gradeStatement,
         gradeClassify,
         gradeJournal,
+        normalizeCite,
+        gradeCite,
         sumBySide
     };
 

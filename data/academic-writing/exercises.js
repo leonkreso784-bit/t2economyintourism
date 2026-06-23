@@ -329,6 +329,77 @@ const academicWritingExercises = {
       ]
     },
 
+    // --- WRITE the citation: books (free text, smart-tolerant grading) ---
+    {
+      id: 'k2-write-books',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'cite',
+      title: 'Write the Citation — Books (author-date)',
+      prompt: 'Write the Chicago AUTHOR-DATE reference-list entry (R) for each book. Order: Surname, First. Year. Title. Place: Publisher. (Don’t worry about italics — type the title normally. Capitalisation/spacing/quotes are forgiven, but commas, periods and colons must be right.)',
+      difficulty: 3,
+      items: [
+        {
+          given: 'Author: William H. Rehnquist · Book: The Supreme Court: A History · Place: New York · Publisher: Knopf · Year: 2001',
+          answer: 'Rehnquist, William H. 2001. The Supreme Court: A History. New York: Knopf.',
+          hint: 'Single author. Year comes right after the name; place and publisher are separated by a colon.'
+        },
+        {
+          given: 'Authors: Marvin P. Dawkins and Graham C. Kinloch · Book: African American Golfers During the Jim Crow Era · Place: Westport, CT · Publisher: Praeger · Year: 2000',
+          answer: 'Dawkins, Marvin P., and Graham C. Kinloch. 2000. African American Golfers During the Jim Crow Era. Westport, CT: Praeger.',
+          hint: 'Two authors: only the FIRST is inverted (Surname, First); the second stays First Last, joined with “and”.'
+        },
+        {
+          given: 'Same book (Dawkins & Kinloch, 2000) — write the IN-TEXT citation for a quote on page 97.',
+          answer: '(Dawkins and Kinloch 2000, 97)',
+          accept: ['(Dawkins and Kinloch 2000, 97).'],
+          hint: 'In-text = (Surnames Year, page). No comma after the surnames; no “p.”.'
+        }
+      ],
+      solution: [
+        'R = Surname, First. Year. Title. Place: Publisher.  (e.g. Rehnquist, William H. 2001. The Supreme Court: A History. New York: Knopf.)',
+        'Only the first author is inverted; in-text is (Surname Year, page).'
+      ]
+    },
+
+    // --- WRITE the citation: journals & other sources (free text) ---
+    {
+      id: 'k2-write-journals',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'cite',
+      title: 'Write the Citation — Journals & Other Sources (author-date)',
+      prompt: 'Write the Chicago AUTHOR-DATE entry (R) for each source. Capitalisation, spacing, straight/curly quotes and hyphen vs dash are forgiven — but commas, periods, colons and order must be correct.',
+      difficulty: 3,
+      items: [
+        {
+          given: 'Author: Daniel A. Dombrowski · Article: Objective Morality and Perfect Being Theology: Three Views · Journal: American Journal of Theology and Philosophy · Volume: 29 · Issue: 2 · Year: 2008 · Pages: 205–221',
+          answer: 'Dombrowski, Daniel A. 2008. Objective Morality and Perfect Being Theology: Three Views. American Journal of Theology and Philosophy 29 (2): 205-221.',
+          hint: 'Journal R: … Journal Name Volume (Issue): pages.  The volume has no punctuation before it; the issue is in parentheses, then a colon and the page range.'
+        },
+        {
+          given: 'Same article (Dombrowski 2008) — write the IN-TEXT citation for page 210.',
+          answer: '(Dombrowski 2008, 210)',
+          accept: ['(Dombrowski 2008, 210).'],
+          hint: 'In-text = (Surname Year, page).'
+        },
+        {
+          given: 'Author: Charles Mandel · Article: Ocean expedition reveals bizarre creatures of the deep · Newspaper: Calgary Herald · Date: August 1 · Year: 2007',
+          answer: 'Mandel, Charles. 2007. Ocean expedition reveals bizarre creatures of the deep, Calgary Herald, August 1.',
+          hint: 'Newspaper: after the year and article title, a comma leads into the paper name and date. Omit page numbers.'
+        },
+        {
+          given: 'PhD dissertation · Author: Richard E. Remedios · Title: Defining my Process: My Journey Through the MFA Acting Program at the University of South Carolina · University: University of South Carolina, Columbia · Year: 2007',
+          answer: 'Remedios, Richard E. 2007. Defining my Process: My Journey Through the MFA Acting Program at the University of South Carolina. PhD diss., University of South Carolina, Columbia.',
+          hint: 'An unpublished dissertation uses the abbreviation “PhD diss.,” before the university and city.'
+        }
+      ],
+      solution: [
+        'Journal R: Surname, First. Year. Article Title. Journal Name Volume (Issue): pages.',
+        'Newspaper R omits page numbers; a dissertation uses “PhD diss., University, City.”.'
+      ]
+    },
+
     // --- Ethics & Latin abbreviations (week 14) ---
     {
       id: 'k2-latin-abbrev',

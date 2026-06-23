@@ -465,6 +465,43 @@
     display: block;
 }
 
+/* ---- cite: write-the-citation (free text) ---- */
+.ex-cite-item { margin-bottom: 1.1rem; }
+.ex-cite-given {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--card-accent, var(--primary));
+    border-radius: calc(var(--radius) - 4px);
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+.ex-cite-tag {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+}
+.ex-cite-input {
+    width: 100%;
+    resize: vertical;
+    min-height: 2.6rem;
+    font-family: inherit;
+    line-height: 1.5;
+}
+.ex-cite-expected {
+    margin-top: 0.4rem;
+    font-size: 0.86rem;
+    line-height: 1.5;
+}
+.ex-cite-ok { color: var(--success); font-weight: 600; }
+.ex-cite-no { color: var(--danger); font-weight: 600; }
+.ex-cite-ans { color: var(--text-primary); }
+
 /* ---- Mobile ---- */
 @media (max-width: 640px) {
     .ex-container { padding: 0.75rem; }
