@@ -8,6 +8,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 - **Academic Writing — NOVI predmet (1. god, sem 1), prvi izgrađen kroz GENERATOR** (`c34d88a`+`73bca5e`): 13 PDF predavanja (prof. Bogdan) → 12 tema,
   **24 kat / 336 fc / 286 quiz / 240 fill** (K1 tjedni 1–6 / K2 8–14 / finalni hibrid; Chicago Manual of Style citiranje = težište). + **15 citation-vježbi
   (86 items)** na NEDIRNUTOM enginu (`data/academic-writing/exercises.js`, korisnikov zahtjev). Cache `20260681`. Gate: validate/verify/test:unit/Playwright 68/68.
+- **Blok B — read-path: sadržaj iz Supabasea** (`077d375` + aktivacija): tablica `public.subject_content` (public-read RLS) + `scripts/migrate-content.js`
+  (vm-shim → REST upsert; 49 redova/15 predmeta) + `js/content-loader.js` (`CONTENT_FROM_SUPABASE` flag + `_loadSubjectFromSupabase()`). Sadržaj se čita iz
+  baze **direktno anon keyem** (javan, bez `/api`), s **fallbackom na datoteke**; datoteke ostaju izvor istine (baza=zrcalo). AKTIVNO lokalno (Playwright 68/68 iz baze).
 ### Changed / Fixed
 - **Generator očvrsnut nakon prvog pilota** (`48f38da`): `generate-subject.js` prešao na **Anthropic `tool_use` structured output** (API jamči valjan objekt →
   nestaje cijela klasa „unescaped quote → nevaljan JSON" padova na sadržaju prepunom navodnika); `coerce()` za `learn` vraćen kao string; **retry do 3×** kad

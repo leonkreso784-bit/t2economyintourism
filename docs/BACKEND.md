@@ -41,7 +41,11 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
 
-## ▶ Staza B2 — SADRŽAJ iz baze (read-path, implementirano 2026-06-23, flag OFF do aktivacije)
+## ✅ Staza B2 — SADRŽAJ iz baze (read-path, AKTIVNO od 2026-06-23, lokalno/NEDEPLOYANO)
+> **AKTIVIRANO:** schema pokrenuta u dashboardu + 49 redova migrirano + `CONTENT_FROM_SUPABASE = true`.
+> Anon-key read provjeren (49/49), Playwright 68/68 (sadržaj iz baze). Datoteke = i dalje izvor istine + fallback.
+> ⚠️ Free tier: projekt se uspava nakon ~7 dana neaktivnosti → restore je BESPLATAN; dok je uspavan sadržaj radi iz datoteka (fallback), login/sync ne. Re-sync nakon izmjene predmeta: `node scripts/migrate-content.js <id>`.
+
 **Cilj:** `loadSubjectContent()` čita sadržaj predmeta iz Supabasea umjesto iz `data/*.js`,
 **direktno preko anon keya** (sadržaj je JAVAN — bez `/api` funkcija, bez service-keya na frontu),
 s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigurnosna mreža).

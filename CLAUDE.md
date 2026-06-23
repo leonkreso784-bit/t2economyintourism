@@ -235,6 +235,13 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **FAZA 3 — novi reusable tip `cite` (`ada5b99`, cache `20260682`):** „napiši citat" slobodnim tekstom → `normalizeCite()`+`gradeCite()` (engine
   EKSTENZIJA, ne hack: novi grader+widget+CSS, 0 promjena postojećih tipova; core 104/104). Pametno-tolerantno (case/razmaci/navodnici/crtica/
   završna točka forgiven, interpunkcija+redoslijed bitni); pokaže točan odgovor. 2 cite-vježbe (7 items, autorski iz slajdova). Sad **7 tipova** vježbi.
+- **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, AKTIVNO lokalno (2026-06-23, `077d375` + aktivacija, NEDEPLOYANO):** sadržaj se čita iz
+  baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
+  `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
+  (vm-shim → REST upsert; **49 redova, 15 predmeta**). `js/content-loader.js`: flag `CONTENT_FROM_SUPABASE=true` + `_loadSubjectFromSupabase()`.
+  **Datoteke ostaju IZVOR ISTINE** — baza je zrcalo (re-sync skriptom nakon izmjene predmeta). Cache `20260684`. Gate: anon REST 49/49 +
+  Playwright 68/68 (sadržaj iz baze). **⚠️ free tier uspava projekt ~7 dana neaktivnosti → restore BESPLATAN; uspavan = sadržaj iz datoteka (fallback),
+  login/sync ne rade dok ne restoreaš.** `service_role` key SAMO u `.env` (gitignored). [[backend-track-b-start]]
   **⚠️ PILOT OTKRIO+POPRAVIO 5 generator-bugova** (`48f38da`): navodnici→nevaljan JSON → **`tool_use` structured output** (API jamči objekt);
   `learn` kao string → `coerce`; `learn` prazan → **retry do 3×**; Windows libuv teardown → clean `process.exit`; hyphen-ključevi u catalog-ispisu citirani.
   **💰 trošak ≈ $2.27** (skoro sve debug-re-runovi; budući predmet ~$1–1.5). [[content-generator-pipeline]] [[generator-api-cost]]

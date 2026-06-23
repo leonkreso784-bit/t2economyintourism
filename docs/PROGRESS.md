@@ -29,6 +29,15 @@ testirano, što slijedi.
   disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/EXERCISES_ENGINE.md` §2.
 - **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **6 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
 
+## 2026-06-23 (2) — BLOK B: read-path SADRŽAJ IZ SUPABASEA (aktivirano)
+**Sadržaj se sad čita iz baze** (direktno anon keyem, javan; bez `/api`/service-keya na frontu), s **fallbackom na datoteke**.
+- **B-1 schema** (`supabase/schema.sql`): `public.subject_content` (1 red=1 window var: `subject_id,var_name,payload jsonb`) + public-read RLS (`using(true)`).
+- **B-2 migracija** (`scripts/migrate-content.js`): vm window-shim → `data/<subj>/*.js` (final već Object.assign-an u sandboxu) → REST upsert (`merge-duplicates`,`on_conflict`). `.env`: `SUPABASE_URL`+`SUPABASE_SERVICE_KEY`.
+- **B-3 frontend** (`js/content-loader.js`): `CONTENT_FROM_SUPABASE` flag + `_loadSubjectFromSupabase()` (anon select → `window[var]=payload`); fallback na datoteke ako prazno/greška.
+- **Aktivacija (korisnik odradio dashboard):** pokrenuo schema → dao `service_role` key (u `.env`, gitignored) → migrirao **49 redova / 15 predmeta** → flipnuo flag `true`.
+- **Gate:** anon REST 49/49 redova čitljivo, **Playwright 68/68** (sadržaj iz baze; +network vrijeme = potvrda DB-puta). **Datoteke ostaju izvor istine** (baza=zrcalo, re-sync skriptom).
+- **⚠️ free tier:** projekt se uspava ~7 dana neaktivnosti → „Restore" BESPLATAN (NE treba $25); uspavan = sadržaj iz datoteka (fallback), login/sync ne rade dok ne restoreaš. Cache `20260684`. Commiti `077d375` + aktivacija. **20 commita ispred origin (NEDEPLOYANO).**
+
 ## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
 **Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**
 (backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md). Cigla-po-cigla:
