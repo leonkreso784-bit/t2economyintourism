@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Traffic in Tourism — NOVI predmet (1. god, sem 2)** — ručno iz 8 PDF predavanja (prof. Nataša Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori
+  (Sustainable & Smart Mobility Strategy, Key figures on European transport 2024, CO2/road-safety izvještaji). K1/K2 granica **autoritativna iz silabusa (DINP):
+  1. kolokvij = tjedan 7 → K1 = tjedni 1–6, K2 = tjedni 7–15.** **K1** (`trafficM1`, 6 kat: theoreticalBasis/interdependence/mobilityPatterns/road-connector/
+  road-product/rail-connector) · **K2** (`trafficM2`, 7 kat: rail-product+funicular/air/water/value&quality/safety/ecology/future) · **finalni** hibrid + examPractice.
+  **27 kat / 189 fc / 186 quiz / 188 fill.** Kvalitativan predmet (bez KaTeX/vježbi). Catalog: subject `traffic` (`fa-route`/amber `#f59e0b`). Cache `20260685`.
+  Gate: validate 0/0, verify 0/0, **Playwright 68/68** (subjects=16). *(INTRO.pdf = administrativan → tjedni 1–2 + value&quality autorski iz silabusa; EU izvještaji = izvor činjenica, ne zasebne teme.)*
 - **Academic Writing — NOVI predmet (1. god, sem 1), prvi izgrađen kroz GENERATOR** (`c34d88a`+`73bca5e`): 13 PDF predavanja (prof. Bogdan) → 12 tema,
   **24 kat / 336 fc / 286 quiz / 240 fill** (K1 tjedni 1–6 / K2 8–14 / finalni hibrid; Chicago Manual of Style citiranje = težište). + **15 citation-vježbi
   (86 items)** na NEDIRNUTOM enginu (`data/academic-writing/exercises.js`, korisnikov zahtjev). Cache `20260681`. Gate: validate/verify/test:unit/Playwright 68/68.

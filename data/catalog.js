@@ -310,6 +310,30 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'traffic',
+      programId: 'hospitality-management',
+      year: 1, semester: 2,
+      name: 'Traffic in Tourism',
+      shortName: 'TRAFFIC',
+      icon: 'fa-route',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'Transport in tourism (Mrnjavac; Prof. Kovačić): the theoretical basis of traffic & its interdependence with tourism, mobility & travel patterns, and every transport mode both as a connector and as a tourism product — road, rail (+ funicular/cable car), air and water — plus the value & quality of services, safety, ecological aspects and the future of transport (EU Sustainable & Smart Mobility Strategy).',
+      storageKey: 'traffic-progress',
+      features: { blindMap: false },
+      // K1 (weeks 1–6) + K2 (weeks 7–15, 1st mid-term in week 7) + final (hybrid). Boundary AUTHORITATIVE from the syllabus (DINP).
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Theoretical basis of traffic, interdependence of traffic & tourism, mobility & travel patterns, road transport (connector + tourism product) and rail transport as a connector (weeks 1–6)' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'Rail as a tourism product (+ funicular/cable car), air & water transport, the value & quality of services, safety, ecological aspects and the future of transport (weeks 7–15)' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // data/traffic/final.js MUST load last (Object.assign of trafficM1 + trafficM2 window objects + examPractice)
+        scripts: ['data/traffic/midterm-1.js', 'data/traffic/midterm-2.js', 'data/traffic/final.js'],
+        resolve: { 'first-midterm': 'trafficM1', 'second-midterm': 'trafficM2', 'final': 'trafficFinal' }
+      }
+    },
+    {
       id: 'microeconomics',
       programId: 'hospitality-management',
       year: 1, semester: 1,

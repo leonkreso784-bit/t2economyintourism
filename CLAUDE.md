@@ -239,6 +239,15 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **FAZA 3 — novi reusable tip `cite` (`ada5b99`, cache `20260682`):** „napiši citat" slobodnim tekstom → `normalizeCite()`+`gradeCite()` (engine
   EKSTENZIJA, ne hack: novi grader+widget+CSS, 0 promjena postojećih tipova; core 104/104). Pametno-tolerantno (case/razmaci/navodnici/crtica/
   završna točka forgiven, interpunkcija+redoslijed bitni); pokaže točan odgovor. 2 cite-vježbe (7 items, autorski iz slajdova). Sad **7 tipova** vježbi.
+- **✅ TRAFFIC IN TOURISM — NOVI predmet (1. god, sem 2) — ručno iz predavanja ✅ lokalno (2026-06-24, NEDEPLOYANO):** 13 PDF-ova (prof. Nataša
+  Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori. **Ručno (NE generator)** — činjenično specifičan, ima rupe/izvještaje. Plan `docs/TRAFFIC_PLAN.md`.
+  K1/K2 granica **autoritativna iz silabusa (DINP): 1. kolokvij = tjedan 7 → K1 = tjedni 1–6, K2 = tjedni 7–15.** `data/traffic/` `trafficM1` (6 kat:
+  theoreticalBasis/interdependence/mobilityPatterns/road-connector/road-product/rail-connector) + `trafficM2` (7 kat: rail-product+funicular/air/water/
+  value&quality/safety/ecology/future) + `trafficFinal` (hibrid + examPractice). **27 kat / 189 fc / 186 quiz / 188 fill.** **Master-obrazac:** svaki mod =
+  CONNECTOR + TOURISM PRODUCT. **8 nastavnih deckova** (INTRO.pdf = administrativan → tjedni 1–2 + value&quality autorski iz silabusa); **4 EU izvještaja**
+  (CO2/road-safety/climate/figures) = izvor činjenica za safety+ecology, NE zasebne teme. Kvalitativan → bez KaTeX/Exercises (korisnik). Catalog `traffic`
+  (`fa-route`/amber `#f59e0b`). Cache `20260685` (+ catalog.js/content-loader.js `?v=`). `.gitignore` + `tmp-traffic/`. Gate: validate 0/0, verify 0/0,
+  **Playwright 68/68 (subjects=16)**. **Dalje: push (uz potvrdu) + `migrate-content.js traffic` (Blok B zrcalo) → pa Math.** [[content-roadmap-sequencing]]
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, AKTIVNO lokalno (2026-06-23, `077d375` + aktivacija, NEDEPLOYANO):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
@@ -263,7 +272,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (read-path ✅ aktivan; admin CRUD kasnije). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009, gotov), Math zadnja.
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** sadržaj 1. god po redu:
-  **Traffic in Tourism** (SLJEDEĆI, treba materijale) → **Math** (ZADNJA, plan `docs/MATH_PLAN.md`); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova).
+  ~~Traffic in Tourism~~ **✅ GOTOVO lokalno (2026-06-24)** → **Math** (SLJEDEĆA/ZADNJA, plan `docs/MATH_PLAN.md`); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova).
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.**
   **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod HM, aktivira i18n) · **3. godina HM** · **studentski UGC za 3./4. god** (jezik HR/EN neodlučen).
 

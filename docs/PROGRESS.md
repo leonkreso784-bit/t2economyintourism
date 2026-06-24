@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-24 — NOVI predmet: Traffic in Tourism (1. god, sem 2) — ručno iz predavanja
+**Sljedeći predmet 1. godine po roadmapu** ([[content-roadmap-sequencing]]). Korisnik dostavio 13 PDF-ova
+(`…/1. godina Hospitality Managament/Traffic in tourism`). Ručno (NE generator) jer je činjenično specifičan i ima rupe/izvještaje.
+- **Analiza + plan:** `docs/TRAFFIC_PLAN.md`. Silabus (DINP, prof. Nataša Kovačić, 6 ECTS) = autoritet: **1. kolokvij = tjedan 7 → K1 = tjedni 1–6,
+  K2 = tjedni 7–15.** Klasifikacija materijala: **8 nastavnih deckova** (INTRO admin + TJ3/TJ4&5/Rail/Air/Maritime/SAFETY/Sustainable) + **4 EU izvještaja**
+  (CO2/road-safety/climate/figures) korišteni SAMO kao izvor činjenica (safety+ecology), NE kao teme. **Rupe** (tjedni 1–2 theoretical basis + interdependence;
+  tjedan 10 value&quality) autorski iz silabusa + standardne transportne teorije (INTRO.pdf je samo administrativan).
+- **Build:** `data/traffic/` `midterm-1.js` (`trafficM1`, **6 kat**) + `midterm-2.js` (`trafficM2`, **7 kat**) + `final.js` (`trafficFinal` =
+  `Object.assign({}, M1, M2, {examPractice})`, ZADNJI). **Master-obrazac predmeta:** svaki mod = CONNECTOR (market↔destinacija) + TOURISM PRODUCT.
+  Finalni **27 kat / 189 fc / 186 quiz / 188 fill**. Learn = bogat udžbenički stil ([[learn-sections-must-be-rich]]). Kvalitativan → bez KaTeX/Exercises (korisnik).
+- **Catalog:** subject `traffic` (year 1, sem 2, `fa-route`/amber `#f59e0b`), 3 lekcije + 3 scripta + resolve. Cache `CONTENT_VERSION 20260684→20260685`
+  (+ catalog.js i content-loader.js `?v=` u index.html). `.gitignore` + `tmp-traffic/`.
+- **Gate:** `validate:content traffic` 0/0 · `verify` 0/0 · **Playwright 68/68** (`traffic ✓ ok`, subjects=16, problems=0). **Lokalno — čeka deploy/Supabase re-sync.**
+- **Dalje:** push (uz potvrdu) + `node scripts/migrate-content.js traffic` (Blok B zrcalo) → pa **Math** (zadnji 1.god predmet, `docs/MATH_PLAN.md`).
+
+---
+
 ## 2026-06-23 — PRVI GENERATOR-PILOT: Academic Writing (study + citation exercises) + generator očvrsnut
 **Prvi predmet izgrađen end-to-end kroz generator** (1. god, sem 1; prof. Bogdan, *Essentials of Academic Writing*). 13 PDF predavanja → 12 tema.
 - **Pipeline:** stage PDF-ova u `tmp/` podmape (midterm-1/2) s čistim imenima → `build-topics` → `generate-subject` (Sonnet) → `assemble-subject` →
