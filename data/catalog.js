@@ -334,6 +334,34 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'math',
+      programId: 'hospitality-management',
+      year: 1, semester: 1,
+      name: 'Mathematics',
+      shortName: 'MATH',
+      icon: 'fa-square-root-variable',
+      color: '#8b5cf6',
+      iconGradient: ['#8b5cf6', '#a78bfa'],
+      description: 'Mathematics for economists (Mihalinčić & Mrša Haber): the field of real numbers, equations on ℝ, functions (incl. exponential, logarithmic & trigonometric), differentiation and the analysis of increase/decrease & extrema — with worked economic applications (cost, revenue, profit, marginal & average cost). A quantitative subject (KaTeX formulas + interactive exercises).',
+      storageKey: 'math-progress',
+      features: { blindMap: false, exercises: true },
+      // K1 = topics 1–5 (real numbers → extrema), boundary AUTHORITATIVE from the syllabus.
+      // K2 (integrals, elasticity, financial mathematics, Gauss-Jordan) + final are coming soon
+      // (no resolve mapping yet) — built next.
+      lessons: [
+        { id: 'first-midterm', name: 'First Midterm', description: 'Field of real numbers, basic equations on ℝ, functions, differentiation, and increase/decrease & extrema (topics 1–5)' },
+        { id: 'second-midterm', name: 'Second Midterm', description: 'The indefinite integral & elasticity of demand, financial mathematics (rents & loans) and the Gauss-Jordan method (topics 6–11)' },
+        { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
+      ],
+      content: {
+        // math-lib.js (window.MathLib) must load BEFORE exercises.js (its generate() uses it).
+        // K2/final not built yet → only first-midterm is mapped (others show "coming soon").
+        scripts: ['data/math/midterm-1.js', 'data/math/math-lib.js', 'data/math/exercises.js'],
+        resolve: { 'first-midterm': 'mathM1' },
+        exercises: 'mathExercises'   // window var with interactive exercises (features.exercises)
+      }
+    },
+    {
       id: 'microeconomics',
       programId: 'hospitality-management',
       year: 1, semester: 1,
