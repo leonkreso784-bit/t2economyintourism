@@ -3,16 +3,16 @@
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
 ## 📍 AŽURNO (2026-06-24)
-**2. god HM = 8/8 ✅ LIVE.** **1. god (8 gotovih):** Business Informatics, SIT, Management, Microeconomics,
-Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (zadnji — ručno iz predavanja, ✅ lokalno 2026-06-24,
-čeka deploy). Preostalo: **Math** (zadnja); Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
+**2. god HM = 8/8 ✅ LIVE.** **1. god (8 gotovih, svi LIVE):** Business Informatics, SIT, Management, Microeconomics,
+Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (zadnji — ručno iz predavanja, ✅ LIVE 2026-06-25 `62a4119`).
+Preostalo: **Math** (zadnja); Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
 `docs/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
 (novi `cite` = „napiši citat"). **Blok B read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s
 file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 
 ## 🧭 DALJE — planovi (korisnik, 2026-06-24)
 **A) Dovršiti sadržaj 1. godine (po redu):**
-1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO lokalno (2026-06-24, plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md)); čeka push + Supabase re-sync.
+1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md)).
 2. **Math** — ZADNJI 1.-god predmet; ozbiljan fokus, vlastiti plan [MATH_PLAN.md](MATH_PLAN.md) (materijali postoje: 100 JPG + PDF; KaTeX gotov).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
@@ -95,7 +95,7 @@ uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadrža
   `isLessonComingSoon`); ⬜ validator sadržaja (K3); ✅ **lazy-load seam (K4)** = `js/content-loader.js`;
   ✅ **KaTeX math rendering (K5)** = `renderMath()` (`js/math.js`) + LaTeX konvencija (currency-safe `\( \)`/`\[ \]`/
   `$$ $$`) za kvantitativne predmete (ADR-009). KaTeX CDN `0.16.9` + `css/math.css`; pozvan u sva 4 renderera;
-  test `tests/katex.spec.js`. **Implementirano 2026-06-14 (lokalno, čeka deploy s prvim kvant. predmetom).**
+  test `tests/katex.spec.js`. **✅ LIVE (deployano 2026-06-14 `236e303` s Microeconomicsom).**
 - ✅ Pilot sadržaja: **Business Informatics** (Ch1–11, K1+K2+Final) — dokaz da content pipeline radi
 - ⬜ Catalog: dodati ostalih 10 predmeta 1. godine + semestar mapping (čeka materijale)
 - ✅ Hijerarhijska navigacija: Start → Fakulteti → Smjerovi → Godine → Predmeti (po semestru) +

@@ -20,7 +20,7 @@
 
 ## 0. Polazno stanje (što već postoji)
 
-- **Statistics study gradivo ✅ gotovo + commitano lokalno** (`216e087`+`20a270f`, NEDEPLOYANO): 3 lekcije
+- **Statistics study gradivo ✅ gotovo + ✅ LIVE** (`216e087`+`20a270f`, deployano 2026-06-16 `d97ee0b`): 3 lekcije
   `first-midterm` (T1–T6, 6 kat) / `second-midterm` (T7–T9, 3 kat) / `final` (hibrid, 10 kat). Subject `statistics`
   (year 1, **sem 1**), KaTeX. Datoteke `data/statistics/{midterm-1,midterm-2,final}.js`.
 - **Exercises engine ✅ postoji i dokazan** (Accounting, 41 vježba LIVE): `js/exercises-core.js` (graderi + parse/numEq/
@@ -196,8 +196,8 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
 ---
 
 ## 6. Stanje / recovery nakon compacta
-- **▶ STANJE 2026-06-15:** napisan plan (S0). Statistics **study gradivo** gotovo+commitano lokalno (`216e087`+`20a270f`),
-  **NEDEPLOYANO**. Sljedeće = korisnikov pregled plana → po odobrenju kreće **A1** (ili redoslijed koji korisnik odredi).
+- **▶ STANJE 2026-06-16: ✅✅ SVE GOTOVO i LIVE** (deployano `d97ee0b`). Statistics study gradivo + **Track A** (10 Learn sekcija obogaćene)
+  + **Track B** (56 vježbi T1–T9 na nedirnutom enginu). Plan ispod = povijesni zapis kako je rađeno (cigla-po-cigla).
 - **Engine = nedodirljiv** (`js/exercises-core.js` + `js/exercises.js` + `css/exercises.css`, **0 novih datoteka u `js/`**);
   statistika je 100% u `data/`: `data/statistics/exercises.js` (content pack) + `data/statistics/stat-lib.js` (minimalna matematika,
   lazy preko `content.scripts`). Tipovi: numeric/choice/ratio. Randomizacija: `params`+`generate`+`solve`.

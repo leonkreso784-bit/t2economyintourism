@@ -17,8 +17,9 @@ testirano, što slijedi.
   Finalni **27 kat / 189 fc / 186 quiz / 188 fill**. Learn = bogat udžbenički stil ([[learn-sections-must-be-rich]]). Kvalitativan → bez KaTeX/Exercises (korisnik).
 - **Catalog:** subject `traffic` (year 1, sem 2, `fa-route`/amber `#f59e0b`), 3 lekcije + 3 scripta + resolve. Cache `CONTENT_VERSION 20260684→20260685`
   (+ catalog.js i content-loader.js `?v=` u index.html). `.gitignore` + `tmp-traffic/`.
-- **Gate:** `validate:content traffic` 0/0 · `verify` 0/0 · **Playwright 68/68** (`traffic ✓ ok`, subjects=16, problems=0). **Lokalno — čeka deploy/Supabase re-sync.**
-- **Dalje:** push (uz potvrdu) + `node scripts/migrate-content.js traffic` (Blok B zrcalo) → pa **Math** (zadnji 1.god predmet, `docs/MATH_PLAN.md`).
+- **Gate:** `validate:content traffic` 0/0 · `verify` 0/0 · **Playwright 68/68** (`traffic ✓ ok`, subjects=16, problems=0).
+- **✅ DEPLOYANO 2026-06-25 (`62a4119`, uz izričitu potvrdu korisnika); Supabase re-sync `migrate-content.js traffic` 3/3.** `origin/main` sinkroniziran.
+- **Dalje:** **Math** (zadnji 1.god predmet, `docs/MATH_PLAN.md`; KaTeX spreman, materijali 100 JPG+PDF).
 
 ---
 

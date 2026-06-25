@@ -224,12 +224,12 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **✅ MACROECONOMICS Track B vježbe B1–B12 100% KOMPLETNO ✅ LIVE (B1–B10 deployano 2026-06-18 `58cc37c`; B11+B12 deployano 2026-06-22 `28fcb7e`):**
   ~81 vježbi na NEDIRNUTOM enginu, first-midterm B1–B6 (41) + second-midterm B7–B12. **B11** open-economy goods (`1/(1−β(1−t)+m)`, NX) ·
   **B12** balance of payments (travel balance, CA, `K=f(r)`). Svaka node brute-force verificirana (0 problema), cache `20260679`. [[macroeconomics-exercises-plan]]
-- **▶ GENERATOR PREDMETA (jezgra bricks 1–4 GOTOVA, 2026-06-22, NIJE pushano — dev-tooling/docs):** odluka korisnika — dosta ručnog dodavanja →
+- **▶ GENERATOR PREDMETA (jezgra bricks 1–4 GOTOVA, 2026-06-22, ✅ LIVE — pushano s AW pilotom do `569e608`):** odluka korisnika — dosta ručnog dodavanja →
   generator uz minimalan usage, PA Blok B. `scripts/`: `validate-content.js` (`npm run validate:content`) + `build-topics.js` (PDF/TXT→topics.json) +
   `generate-subject.js` (**Sonnet preko `.env ANTHROPIC_API_KEY`**, korisnikov ključ; max_tokens 16000/temp 0.3) + `assemble-subject.js` (draft→
   `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan, ISPISUje catalog unos, NE dira catalog.js). Tok + detalji `docs/CONTENT_GENERATOR.md`.
   Gate = validate:content→verify→Playwright→Opus spot-check. [[content-generator-pipeline]]
-- **✅ PRVI GENERATOR-PILOT: ACADEMIC WRITING (1. god, sem 1) — KOMPLETAN lokalno (2026-06-23, `48f38da`+`c34d88a`+`73bca5e`, NIJE pushano):**
+- **✅ PRVI GENERATOR-PILOT: ACADEMIC WRITING (1. god, sem 1) — KOMPLETAN ✅ LIVE (2026-06-23, `48f38da`+`c34d88a`+`73bca5e`, pushano do `569e608`):**
   13 PDF predavanja (prof. Bogdan, *Essentials of Academic Writing*) → 12 tema kroz cijeli pipeline. **Study:** K1 (tjedni 1–6:
   fundamentals/lit-review/research-methods/thesis-structure/databases) + K2 (8–14: types-of-publications, **Chicago Manual of Style** books/
   journals/other, research-qualities, ethics & Latin; kolokvij tjedan 7) + finalni hibrid → **24 kat / 336 fc / 286 quiz / 240 fill**.
@@ -239,7 +239,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **FAZA 3 — novi reusable tip `cite` (`ada5b99`, cache `20260682`):** „napiši citat" slobodnim tekstom → `normalizeCite()`+`gradeCite()` (engine
   EKSTENZIJA, ne hack: novi grader+widget+CSS, 0 promjena postojećih tipova; core 104/104). Pametno-tolerantno (case/razmaci/navodnici/crtica/
   završna točka forgiven, interpunkcija+redoslijed bitni); pokaže točan odgovor. 2 cite-vježbe (7 items, autorski iz slajdova). Sad **7 tipova** vježbi.
-- **✅ TRAFFIC IN TOURISM — NOVI predmet (1. god, sem 2) — ručno iz predavanja ✅ lokalno (2026-06-24, NEDEPLOYANO):** 13 PDF-ova (prof. Nataša
+- **✅ TRAFFIC IN TOURISM — NOVI predmet (1. god, sem 2) — ručno iz predavanja ✅ LIVE (deployano 2026-06-25, `62a4119`; Supabase re-sync 3/3):** 13 PDF-ova (prof. Nataša
   Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori. **Ručno (NE generator)** — činjenično specifičan, ima rupe/izvještaje. Plan `docs/TRAFFIC_PLAN.md`.
   K1/K2 granica **autoritativna iz silabusa (DINP): 1. kolokvij = tjedan 7 → K1 = tjedni 1–6, K2 = tjedni 7–15.** `data/traffic/` `trafficM1` (6 kat:
   theoreticalBasis/interdependence/mobilityPatterns/road-connector/road-product/rail-connector) + `trafficM2` (7 kat: rail-product+funicular/air/water/
@@ -247,8 +247,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   CONNECTOR + TOURISM PRODUCT. **8 nastavnih deckova** (INTRO.pdf = administrativan → tjedni 1–2 + value&quality autorski iz silabusa); **4 EU izvještaja**
   (CO2/road-safety/climate/figures) = izvor činjenica za safety+ecology, NE zasebne teme. Kvalitativan → bez KaTeX/Exercises (korisnik). Catalog `traffic`
   (`fa-route`/amber `#f59e0b`). Cache `20260685` (+ catalog.js/content-loader.js `?v=`). `.gitignore` + `tmp-traffic/`. Gate: validate 0/0, verify 0/0,
-  **Playwright 68/68 (subjects=16)**. **Dalje: push (uz potvrdu) + `migrate-content.js traffic` (Blok B zrcalo) → pa Math.** [[content-roadmap-sequencing]]
-- **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, AKTIVNO lokalno (2026-06-23, `077d375` + aktivacija, NEDEPLOYANO):** sadržaj se čita iz
+  **Playwright 68/68 (subjects=16)**. **✅ DEPLOYANO + Supabase re-sync (3/3). Dalje: Math (zadnji 1.god predmet).** [[content-roadmap-sequencing]]
+- **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
   (vm-shim → REST upsert; **49 redova, 15 predmeta**). `js/content-loader.js`: flag `CONTENT_FROM_SUPABASE=true` + `_loadSubjectFromSupabase()`.

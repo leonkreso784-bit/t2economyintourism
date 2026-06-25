@@ -2,8 +2,8 @@
 
 > Plan izrade predmeta **Traffic in Tourism** (FMTU Opatija, Hospitality Management, 1. godina).
 > Ručno iz predavanja (kvalitativan predmet, NE generator, NE KaTeX).
-> **Status: ✅ GOTOVO lokalno (2026-06-24)** — `data/traffic/` M1+M2+finalni izgrađeni; finalni **27 kat / 189 fc / 186 quiz / 188 fill**;
-> catalog `traffic` (year 1, sem 2, `fa-route`/`#f59e0b`); cache `20260685`; gate zelen (validate 0/0, verify 0/0, Playwright 68/68). Čeka deploy + Supabase re-sync.
+> **Status: ✅ GOTOVO i LIVE (deployano 2026-06-25, `62a4119`; Supabase re-sync 3/3)** — `data/traffic/` M1+M2+finalni; finalni **27 kat / 189 fc / 186 quiz / 188 fill**;
+> catalog `traffic` (year 1, sem 2, `fa-route`/`#f59e0b`); cache `20260685`; gate zelen (validate 0/0, verify 0/0, Playwright 68/68).
 
 ## Izvor istine
 - **Silabus = `Obrazac DINP_ENGL_MUH 2024-2025.pdf`** (prof. Nataša Kovačić, 6 ECTS, 60h = 30L+30S).
