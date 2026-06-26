@@ -248,15 +248,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (CO2/road-safety/climate/figures) = izvor činjenica za safety+ecology, NE zasebne teme. Kvalitativan → bez KaTeX/Exercises (korisnik). Catalog `traffic`
   (`fa-route`/amber `#f59e0b`). Cache `20260685` (+ catalog.js/content-loader.js `?v=`). `.gitignore` + `tmp-traffic/`. Gate: validate 0/0, verify 0/0,
   **Playwright 68/68 (subjects=16)**. **✅ DEPLOYANO + Supabase re-sync (3/3). Dalje: Math (zadnji 1.god predmet).** [[content-roadmap-sequencing]]
-- **🟡 MATHEMATICS — NOVI predmet (1. god, sem 1) — KaTeX — K1+K2+Final COMMITANI LOKALNO (NEdeployano, 2026-06-26, `b481be5`+`c49422a`):** zadnji 1.god predmet.
+- **🟡 MATHEMATICS — NOVI predmet (1. god, sem 1) — KaTeX — K1+K2+Final COMMITANI LOKALNO (NEdeployano, 2026-06-26/27, `b481be5`+`c49422a`+`4eeccf1`):** zadnji 1.god predmet.
   Materijali `…/1. godina Hospitality Managament/Math` (deckovi 1–6,8,9,11 + 4 prezentacije-lekcije). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa).
   `data/math/` `mathM1` (5 kat: realNumbers/basicEquations/functions/differentiation/extrema) + `mathM2` (4 kat: integralElasticity/annuities/loans/gaussJordan) +
   `mathFinal` (hibrid+examPractice). **Final 10 kat / 79 fc / 79 quiz / 64 fill.** **`exercises.js` 39 vježbi (26 K1+13 K2) + `math-lib.js`** (28 randomiziranih
   brute-force, 72.173 checka 0 problema; financijske formule točne do centa vs slajdovi). Catalog `math` (`fa-square-root-variable`/violet `#8b5cf6`), sve 3 lekcije
-  + `features.exercises:true`. Cache `20260688`. **⚙️ ENGINE PROMJENA: js/exercises.js dobio 4 čuvana `renderMath()` poziva → exercises sad renderiraju KaTeX**
-  (currency-safe, no-op za tekstualne; Statistics/Accounting verificirano netaknuti; aditivno 0 promjena tipova). Gate: validate 0/0, verify 0/0, test:unit 33/33,
-  Playwright 68/68 (subjects=17). **⚠️ PENDING (nakon compacta): (a) K1 learn obogaćivanje (5 sekcija tanke → udžbenička dubina kao K2); (b) Gauss vs Gauss-Jordan
-  nijansa; (c) korisnikov pregled formula; (d) push/deploy.** Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
+  + `features.exercises:true`. Cache `20260689`. **⚙️ ENGINE PROMJENA: js/exercises.js dobio 4 čuvana `renderMath()` poziva → exercises sad renderiraju KaTeX**
+  (currency-safe, no-op za tekstualne; Statistics/Accounting verificirano netaknuti; aditivno 0 promjena tipova).
+  **✅ POST-COMPACT (2026-06-27, `4eeccf1`): (a) K1 learn obogaćen — svih 5 sekcija prepisano na K2 dubinu (realNumbers 4798/basicEquations 3907/functions 4197/
+  differentiation 3520/extrema 3184 zn; intuicija+radni primjeri+interpretacija+zamke); (b) Gauss vs Gauss-Jordan nijansa dodana u `gaussJordan` (+2 fc/+3 quiz/+3 fill +
+  learn-podsekcija: Gauss=gornji trokut+supstitucija unatrag vs Gauss-Jordan=puna jedinična; pravilo „samo redovi, nikad stupci"; naziv kat. → „Gauss & Gauss-Jordan Method").**
+  Gate (oba puta): KaTeX runtime balans OK (m1 562/562+47/47, m2 202/202+36/36, final 814/814+91/91), validate 0/0, verify 0/0, test:unit 33/33,
+  Playwright 68/68 (subjects=17). **⚠️ PENDING: (c) korisnikov pregled formula; (d) push/deploy.** Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`

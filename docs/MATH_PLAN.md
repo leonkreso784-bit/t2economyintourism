@@ -1,15 +1,16 @@
 # MATH_PLAN.md — Matematika (1. god) — plan razvoja
 
-> **Status (2026-06-26):** 🟡 **K1 + K2 + Final IZGRAĐENI i COMMITANI lokalno (NEdeployano)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX).
+> **Status (2026-06-27):** 🟡 **K1 + K2 + Final IZGRAĐENI i COMMITANI lokalno (NEdeployano)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX) + `4eeccf1` (K1 learn obogaćen + Gauss nijansa).
 > **Math = year 1, SEMESTAR 1** (kao Micro/Statistics; korisnik nije osporio). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa, potvrdio korisnik).
-> **PENDING (nakon compacta 2026-06-26):** (a) **K1 learn obogaćivanje** (5 sekcija pretanke, 1654–2790 zn → udžbenička dubina kao K2, [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** (Leonova prezentacija uči Gauss/gornje-trokutastu + „samo retci, ne stupci"); (c) korisnikov pregled svih formula; (d) finalni gate + push.
+> **✅ RIJEŠENO (2026-06-27, `4eeccf1`):** (a) **K1 learn obogaćen** — svih 5 sekcija na K2 dubinu (realNumbers 4798 / basicEquations 3907 / functions 4197 / differentiation 3520 / extrema 3184 zn; [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** dodana u `gaussJordan` (Gauss = gornji trokut + supstitucija unatrag vs Gauss-Jordan = puna jedinična; „samo retci, ne stupci"; +2 fc/+3 quiz/+3 fill + learn-podsekcija; naziv → „Gauss & Gauss-Jordan Method").
+> **⚠️ PENDING:** (c) korisnikov pregled svih formula; (d) finalni gate ✅ (validate/verify 0/0, test:unit 33/33, Playwright 68/68, KaTeX balans OK) → **push** (uz izričitu potvrdu).
 
 ## 0. STVARNO STANJE (što je izgrađeno)
-- **`data/math/midterm-1.js` (`mathM1`):** 5 kat (realNumbers, basicEquations, functions, differentiation, extrema) / 48 fc / 44 quiz / 34 fill. KaTeX, learn ⚠️ JOŠ TANAK (treba obogatiti).
-- **`data/math/midterm-2.js` (`mathM2`):** 4 kat (integralElasticity, annuities, loans, gaussJordan) / 25 fc / 28 quiz / 24 fill. **Learn OBOGAĆEN** (3000–4787 zn, riješeni primjeri + intuicija + zamke).
+- **`data/math/midterm-1.js` (`mathM1`):** 5 kat (realNumbers, basicEquations, functions, differentiation, extrema) / 48 fc / 44 quiz / 34 fill. KaTeX, **Learn OBOGAĆEN** (3184–4798 zn, riješeni primjeri + intuicija + zamke; 2026-06-27).
+- **`data/math/midterm-2.js` (`mathM2`):** 4 kat (integralElasticity, annuities, loans, **„Gauss & Gauss-Jordan Method"**) / **27 fc / 31 quiz / 27 fill** (Gauss nijansa dodana 2026-06-27). **Learn OBOGAĆEN** (3000–4787 zn, riješeni primjeri + intuicija + zamke).
 - **`data/math/final.js` (`mathFinal`):** hibrid `Object.assign({}, mathM1, mathM2, {examPractice})` (ZADNJI) → 10 kat / 79 fc / 79 quiz / 64 fill.
 - **`data/math/exercises.js` (`mathExercises`) + `data/math/math-lib.js` (`MathLib`):** **39 vježbi** (26 K1 + 13 K2) na enginu. **28 randomiziranih brute-force verificirano** (72.173 field-checka, 0 problema); financijske formule točne do centa protiv slajdova. math-lib = mali helper (gcd/quadratic/polyEval/polyDeriv), učitan PRIJE exercises.
-- **Catalog:** subject `math` (year 1, sem 1, `fa-square-root-variable`/violet `#8b5cf6`), sve 3 lekcije mapirane, `features.exercises:true`. Cache `20260688`.
+- **Catalog:** subject `math` (year 1, sem 1, `fa-square-root-variable`/violet `#8b5cf6`), sve 3 lekcije mapirane, `features.exercises:true`. Cache `20260689`.
 - **⚙️ ENGINE PROMJENA (js/exercises.js):** dodani 4 čuvana `renderMath()` poziva nakon mounta → **exercises sad renderiraju KaTeX** (prije: sirovi `\(...\)`). Currency-safe + no-op za tekstualne predmete; Statistics/Accounting verificirano netaknuti. Aditivno, 0 promjena tipova vježbi. [[accounting-exercises-engine]]
 - **Pokrivenost lekcija (korisnik javio da su prezentacije PRAVE lekcije, ne seminari):** svih 9 deckova (1–6,8,9,11) + 4 prezentacije-lekcije (Application of derivations, Composite derivations, Integrals Belyaeva, Gauss-Jordan elimination) sadržajno pokriveno. Teme 7,10 ne postoje u folderu.
 

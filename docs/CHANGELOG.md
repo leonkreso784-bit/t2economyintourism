@@ -9,8 +9,10 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   deckova 1–6,8,9,11. **K1 = teme 1–5** (`mathM1`, 5 kat: realNumbers/basicEquations/functions/differentiation/extrema) · **K2 = teme 6–11**
   (`mathM2`, 4 kat: integralElasticity/annuities/loans/gaussJordan) · **finalni** hibrid + examPractice (**10 kat / 79 fc / 79 quiz / 64 fill**).
   **39 interaktivnih vježbi** (26 K1 + 13 K2) + `math-lib.js` — 28 randomiziranih brute-force verificirano (72.173 checka, 0 problema); financijske
-  formule točne do centa vs slajdovi. Catalog `math` (`fa-square-root-variable`/violet `#8b5cf6`), `features.exercises:true`. Cache `20260688`.
-  ⚠️ PENDING: K1 learn obogaćivanje + Gauss-vs-Gauss-Jordan nijansa + pregled formula + push.
+  formule točne do centa vs slajdovi. Catalog `math` (`fa-square-root-variable`/violet `#8b5cf6`), `features.exercises:true`. Cache `20260689`.
+  **✅ DOPUNA (`4eeccf1`, 2026-06-27):** K1 learn obogaćen — svih 5 sekcija na K2 dubinu (realNumbers 4798 / basicEquations 3907 / functions 4197 /
+  differentiation 3520 / extrema 3184 zn) · Gauss-vs-Gauss-Jordan nijansa u `gaussJordan` (+2 fc/+3 quiz/+3 fill + learn-podsekcija; pravilo „samo redovi";
+  naziv kat. → „Gauss & Gauss-Jordan Method"). Gate: KaTeX balans OK, validate/verify 0/0, test:unit 33/33, Playwright 68/68. ⚠️ PENDING: pregled formula + push.
 ### Changed
 - **Exercises engine renderira KaTeX (js/exercises.js, 2026-06-26)** — dodani 4 čuvana `renderMath()` poziva nakon mounta (list, otvaranje vježbe,
   mode-switch/new-numbers, feedback) → kvantitativne vježbe prikazuju formule kao LaTeX umjesto sirovog `\(...\)`. **Currency-safe** (jedan `$` netaknut)

@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-27 — Mathematics: K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa (lokalno, NEdeployano)
+Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesije.
+- **K1 learn obogaćivanje** (`mathM1`, midterm-1.js): svih **5 sekcija** prepisano sa šturih (1654–2790 zn) na
+  **udžbeničku dubinu kao K2** — intuicija + riješeni primjeri + interpretacija + zamke. Nove duljine:
+  realNumbers **4798**, basicEquations **3907**, functions **4197**, differentiation **3520**, extrema **3184** zn.
+  ([[learn-sections-must-be-rich]], korisnik tražio bogat learn 3. put.)
+- **Gauss vs Gauss-Jordan nijansa** (`mathM2`, gaussJordan kat.): dodano iz Leonove vlastite predavane prezentacije —
+  **+2 flashcard** (Gauss = gornji trokut + supstitucija unatrag vs Gauss-Jordan = puna jedinična/RREF; pravilo
+  **„operiraj samo redovima, nikad stupcima"**), **+3 quiz**, **+3 fill**, nova **learn-podsekcija** s usporednim matricama.
+  Naziv kategorije „Gauss-Jordan Method" → **„Gauss & Gauss-Jordan Method"**.
+- **Cache:** CONTENT_VERSION `20260688` → **`20260689`** (+ content-loader.js `?v=`; samo `data/*` mijenjano).
+- **Gate (sve zeleno):** KaTeX runtime balans OK (m1 562/562 inline + 47/47 display, m2 202/202 + 36/36,
+  final 814/814 + 91/91), validate:content math 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=17, 0 overflow)**.
+- **Commit** `4eeccf1` (lokalno). **PENDING:** korisnikov pregled formula → push/deploy (uz izričitu potvrdu).
+
+---
+
 ## 2026-06-26 — NOVI predmet: Mathematics (1. god, sem 1) — KaTeX — K1+K2+Final (lokalno, NEdeployano)
 **Zadnji 1.god predmet.** Materijali `…/1. godina Hospitality Managament/Math` (deckovi 1–6,8,9,11 + 4 prezentacije-lekcije
 koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa).
