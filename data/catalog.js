@@ -345,19 +345,17 @@ const SOKRAT_CATALOG = {
       description: 'Mathematics for economists (Mihalinčić & Mrša Haber): the field of real numbers, equations on ℝ, functions (incl. exponential, logarithmic & trigonometric), differentiation and the analysis of increase/decrease & extrema — with worked economic applications (cost, revenue, profit, marginal & average cost). A quantitative subject (KaTeX formulas + interactive exercises).',
       storageKey: 'math-progress',
       features: { blindMap: false, exercises: true },
-      // K1 = topics 1–5 (real numbers → extrema), boundary AUTHORITATIVE from the syllabus.
-      // K2 (integrals, elasticity, financial mathematics, Gauss-Jordan) + final are coming soon
-      // (no resolve mapping yet) — built next.
+      // K1 = topics 1–5 (real numbers → extrema), K2 = topics 6–11. Boundary AUTHORITATIVE from the syllabus.
       lessons: [
         { id: 'first-midterm', name: 'First Midterm', description: 'Field of real numbers, basic equations on ℝ, functions, differentiation, and increase/decrease & extrema (topics 1–5)' },
         { id: 'second-midterm', name: 'Second Midterm', description: 'The indefinite integral & elasticity of demand, financial mathematics (rents & loans) and the Gauss-Jordan method (topics 6–11)' },
         { id: 'final', name: 'Final Exam', description: 'All topics (both midterms) plus a cross-topic exam practice set' }
       ],
       content: {
+        // final.js MUST load LAST (Object.assign of mathM1 + mathM2 window objects + examPractice).
         // math-lib.js (window.MathLib) must load BEFORE exercises.js (its generate() uses it).
-        // K2/final not built yet → only first-midterm is mapped (others show "coming soon").
-        scripts: ['data/math/midterm-1.js', 'data/math/math-lib.js', 'data/math/exercises.js'],
-        resolve: { 'first-midterm': 'mathM1' },
+        scripts: ['data/math/midterm-1.js', 'data/math/midterm-2.js', 'data/math/final.js', 'data/math/math-lib.js', 'data/math/exercises.js'],
+        resolve: { 'first-midterm': 'mathM1', 'second-midterm': 'mathM2', 'final': 'mathFinal' },
         exercises: 'mathExercises'   // window var with interactive exercises (features.exercises)
       }
     },

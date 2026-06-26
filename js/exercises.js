@@ -87,6 +87,7 @@
         });
         html += '</div>';
         host.innerHTML = html;
+        if (window.renderMath) window.renderMath(host); // KaTeX for quantitative subjects (no-op otherwise)
     }
 
     // ========================================================================
@@ -603,6 +604,7 @@
         currentSeed = newSeed();
         openEx = resolveExercise(raw, currentSeed);
         host.innerHTML = widgetShell(openEx);
+        if (window.renderMath) window.renderMath(host); // KaTeX (no-op for non-math subjects)
     }
 
     // Promjena moda unutar otvorene vježbe → ponovno iscrtaj shell (isti brojevi, čisti unos).
@@ -610,7 +612,7 @@
         if (!openEx || mode === currentMode) return;
         currentMode = mode;
         const host = document.getElementById('exercisesContent');
-        if (host) host.innerHTML = widgetShell(openEx);
+        if (host) { host.innerHTML = widgetShell(openEx); if (window.renderMath) window.renderMath(host); }
     }
 
     // "New numbers": novi seed → ponovno generiraj randomiziranu vježbu.
@@ -619,7 +621,7 @@
         currentSeed = newSeed();
         openEx = resolveExercise(openRaw, currentSeed);
         const host = document.getElementById('exercisesContent');
-        if (host) host.innerHTML = widgetShell(openEx);
+        if (host) { host.innerHTML = widgetShell(openEx); if (window.renderMath) window.renderMath(host); }
     }
 
     // Odaberi opciju unutar grupe (samo jedna aktivna po stavci).
@@ -647,6 +649,7 @@
             msg = 'Score: ' + result.score + ' / ' + result.max + ' (' + pct + '%). Review the highlighted answers.';
         }
         fb.innerHTML = '<div class="ex-feedback ' + cls + '"><i class="fas ' + icon + '"></i> ' + esc(msg) + '</div>';
+        if (window.renderMath) window.renderMath(fb); // KaTeX in feedback (no-op otherwise)
     }
 
     function saveProgress(id, result) {

@@ -796,6 +796,392 @@ const mathExercises = {
         'Minimise: (5Q² − 90Q + 540)′ = 10Q − 90 = 0 → Q = 9 (and the second derivative 10 > 0 confirms a minimum).',
         'Minimum average cost = 5·9² − 90·9 + 540 = 405 − 810 + 540 = 135.'
       ]
+    },
+
+    // ========================================================================
+    // CHAPTER 6 — INDEFINITE INTEGRAL & ELASTICITY OF DEMAND  (second-midterm)
+    // ========================================================================
+    {
+      id: 'int-power-random',
+      lesson: 'second-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Indefinite Integral — Power Rule',
+      prompt: 'Integrate the power term using ∫xⁿ dx = 1/(n+1)·xⁿ⁺¹ + C.',
+      difficulty: 1,
+      params: {
+        k: { choices: [1, 2, 3, 4] },
+        n: { choices: [2, 3, 4, 5] }
+      },
+      generate(p) {
+        const a = p.k * (p.n + 1);        // coefficient chosen so the new coefficient k is an integer
+        const newExp = p.n + 1;
+        return {
+          prompt: 'Compute \\(\\int ' + a + 'x^{' + p.n + '}\\,dx\\). Give the coefficient of the new term and its '
+            + 'exponent (ignore + C).',
+          fields: [
+            { key: 'coef', label: 'Coefficient', answer: p.k, tol: 0.01, unit: '', hint: 'a ÷ (n+1) = ' + a + ' ÷ ' + newExp },
+            { key: 'exp', label: 'New exponent', answer: newExp, tol: 0.01, unit: '', hint: 'n + 1' }
+          ],
+          solution: [
+            '∫ ' + a + 'x^' + p.n + ' dx = ' + a + '·(1 ÷ ' + newExp + ')·x^' + newExp + ' + C = ' + p.k + 'x^' + newExp + ' + C.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. ∫a·xⁿ dx = a/(n+1)·xⁿ⁺¹ + C (raise the power by 1, divide by the new power).']
+    },
+    {
+      id: 'int-totalcost-random',
+      lesson: 'second-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Total Cost from Marginal Cost',
+      prompt: 'Recover the total cost by integrating marginal cost; the fixed cost is the constant of integration.',
+      difficulty: 2,
+      params: {
+        a: { choices: [1, 2, 3] },
+        b: { min: 10, max: 60, step: 5 },
+        fixed: { choices: [100, 200, 300, 400] },
+        Q0: { min: 1, max: 10, step: 1 }
+      },
+      generate(p) {
+        // M(Q) = 2a Q + b → T(Q) = a Q² + b Q + fixed ; evaluate at Q0
+        const T = p.a * p.Q0 * p.Q0 + p.b * p.Q0 + p.fixed;
+        return {
+          prompt: 'Marginal cost is \\(M(Q)=' + (2 * p.a) + 'Q + ' + p.b + '\\) and the fixed cost is ' + p.fixed
+            + '. Find the total cost function \\(T(Q)=\\int M(Q)\\,dQ\\) and evaluate \\(T(' + p.Q0 + ')\\).',
+          fields: [
+            { key: 'T', label: 'T(' + p.Q0 + ')', answer: T, tol: 0.01, unit: '', hint: 'T(Q) = ' + p.a + 'Q² + ' + p.b + 'Q + ' + p.fixed }
+          ],
+          solution: [
+            'T(Q) = ∫(' + (2 * p.a) + 'Q + ' + p.b + ') dQ = ' + p.a + 'Q² + ' + p.b + 'Q + C, with C = fixed cost = ' + p.fixed + '.',
+            'T(' + p.Q0 + ') = ' + p.a + '·' + p.Q0 + '² + ' + p.b + '·' + p.Q0 + ' + ' + p.fixed + ' = ' + T + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Integrate M(Q); the constant of integration is the fixed cost.']
+    },
+    {
+      id: 'elasticity-random',
+      lesson: 'second-midterm',
+      chapter: 6,
+      type: 'numeric',
+      title: 'Elasticity of Linear Demand',
+      prompt: 'Compute the elasticity coefficient of a linear demand at a given price. Round to 3 dp.',
+      difficulty: 3,
+      params: {
+        m: { choices: [10, 20, 25, 50] },   // |slope| of demand
+        c: { choices: [800, 1000, 1200 ] },  // intercept
+        p0: { min: 2, max: 12, step: 2 }
+      },
+      generate(p) {
+        // q = -m p + c ; dq/dp = -m ; E = (p/q)(dq/dp) = -m p / q
+        const q0 = -p.m * p.p0 + p.c;        // stays positive for these ranges
+        const E = (-p.m * p.p0) / q0;
+        const r3 = (x) => Math.round(x * 1000) / 1000;
+        return {
+          prompt: 'The demand function is \\(q=-' + p.m + 'p+' + p.c + '\\). Compute the elasticity coefficient '
+            + '\\(E_{q,p}=\\frac{p}{q}\\frac{dq}{dp}\\) at the price p = ' + p.p0 + '. Round to 3 dp.',
+          fields: [
+            { key: 'E', label: 'Elasticity E at p = ' + p.p0, answer: E, tol: 0.01, unit: '', hint: 'dq/dp = −' + p.m + '; q = ' + q0 + '; E = −' + p.m + '·' + p.p0 + ' ÷ ' + q0 }
+          ],
+          solution: [
+            'dq/dp = −' + p.m + '.  q(' + p.p0 + ') = −' + p.m + '·' + p.p0 + ' + ' + p.c + ' = ' + q0 + '.',
+            'E = (p ÷ q)·(dq/dp) = (' + p.p0 + ' ÷ ' + q0 + ')·(−' + p.m + ') = ' + r3(E) + '.',
+            (Math.abs(E) > 1 ? 'Since |E| > 1, demand is ELASTIC here.' : 'Since |E| < 1, demand is INELASTIC here.') + ' The − sign means demand falls as price rises.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. For q = −mp + c: E = (p/q)·(−m). |E| > 1 elastic, < 1 inelastic.']
+    },
+    {
+      id: 'int-elasticity-concepts',
+      lesson: 'second-midterm',
+      chapter: 6,
+      type: 'choice',
+      title: 'Integrals & Elasticity — Concepts',
+      prompt: 'Answer the concept questions on integration and elasticity.',
+      difficulty: 1,
+      items: [
+        { q: 'Integration is the inverse operation of differentiation.', kind: 'tf', answer: true },
+        { q: 'The constant of integration in T(Q) = ∫M(Q)dQ is the fixed cost.', kind: 'tf', answer: true },
+        { q: 'If |E| < 1 the demand is elastic.', kind: 'tf', answer: false },
+        { q: 'A negative elasticity means demand falls when price rises.', kind: 'tf', answer: true },
+        { q: '\\(\\int x^4\\,dx = \\) ?', kind: 'mc', options: ['\\(4x^3+C\\)', '\\(\\frac15 x^5+C\\)', '\\(x^5+C\\)', '\\(\\frac14 x^4+C\\)'], answer: 1 },
+        { q: 'Demand with |E| = 1 has:', kind: 'mc', options: ['Perfect inelasticity', 'Unit elasticity', 'Elastic demand', 'No elasticity'], answer: 1 }
+      ],
+      solution: [
+        '|E| > 1 elastic, |E| < 1 inelastic, |E| = 1 unit elasticity, E = 0 perfectly inelastic.',
+        '∫x⁴ dx = 1/5·x⁵ + C (raise power to 5, divide by 5).'
+      ]
+    },
+
+    // ========================================================================
+    // CHAPTER 8 — ANNUITIES (RENTS)  (second-midterm)
+    // ========================================================================
+    {
+      id: 'annuity-future-post-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Future Value — Postnumerando Annuity',
+      prompt: 'Compute the future (final) value of a postnumerando annuity. Round to 2 dp.',
+      difficulty: 2,
+      params: {
+        R: { choices: [1000, 2000, 5000, 10000] },
+        p: { choices: [4, 5, 6, 8, 10] },
+        n: { min: 4, max: 12, step: 1 }
+      },
+      generate(p) {
+        const r = 1 + p.p / 100;
+        const S = p.R * (Math.pow(r, p.n) - 1) / (r - 1);
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'A person invests ' + p.R + ' at the END of each year for ' + p.n + ' years at ' + p.p
+            + '% annual (compound, decursive) interest. What is the future value? Round to 2 dp.',
+          fields: [
+            { key: 'S', label: 'Future value Sₙ′', answer: r2(S), tol: 2, unit: '', hint: "S = R·(rⁿ − 1)/(r − 1), r = 1 + " + p.p + "/100 = " + r }
+          ],
+          solution: [
+            'r = 1 + ' + p.p + '/100 = ' + r + ';  rⁿ = ' + r + '^' + p.n + ' = ' + r2(Math.pow(r, p.n)) + '.',
+            "Sₙ′ = " + p.R + '·(' + r2(Math.pow(r, p.n)) + ' − 1) ÷ (' + r + ' − 1) = ' + r2(S) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Postnumerando future value: Sₙ′ = R·(rⁿ − 1)/(r − 1), r = 1 + p/100.']
+    },
+    {
+      id: 'annuity-future-pre-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Future Value — Prenumerando Annuity',
+      prompt: 'Compute the future (final) value of a prenumerando annuity. Round to 2 dp.',
+      difficulty: 2,
+      params: {
+        R: { choices: [1000, 2000, 5000] },
+        p: { choices: [4, 5, 6, 8, 10] },
+        n: { min: 4, max: 12, step: 1 }
+      },
+      generate(p) {
+        const r = 1 + p.p / 100;
+        const S = p.R * r * (Math.pow(r, p.n) - 1) / (r - 1);
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'A person invests ' + p.R + ' at the BEGINNING of each year for ' + p.n + ' years at ' + p.p
+            + '% annual (compound, decursive) interest. What is the future value? Round to 2 dp.',
+          fields: [
+            { key: 'S', label: 'Future value Sₙ', answer: r2(S), tol: 2, unit: '', hint: "S = R·r·(rⁿ − 1)/(r − 1), r = " + r }
+          ],
+          solution: [
+            'r = ' + r + ';  prenumerando earns one extra period of interest (×r).',
+            "Sₙ = " + p.R + '·' + r + '·(' + r2(Math.pow(r, p.n)) + ' − 1) ÷ (' + r + ' − 1) = ' + r2(S) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Prenumerando future value: Sₙ = R·r·(rⁿ − 1)/(r − 1) = r × the postnumerando value.']
+    },
+    {
+      id: 'annuity-present-post-random',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'numeric',
+      title: 'Present Value — Postnumerando Annuity',
+      prompt: 'Compute how much to invest today for a postnumerando annuity. Round to 2 dp.',
+      difficulty: 3,
+      params: {
+        R: { choices: [10000, 20000, 30000] },
+        p: { choices: [4, 5, 6, 8] },
+        n: { min: 4, max: 10, step: 1 }
+      },
+      generate(p) {
+        const r = 1 + p.p / 100;
+        const A = (p.R / Math.pow(r, p.n)) * (Math.pow(r, p.n) - 1) / (r - 1);
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'What amount should be invested today to ensure ' + p.n + ' payments of ' + p.R
+            + ' at the END of each year at ' + p.p + '% annual (compound, decursive) interest? Round to 2 dp.',
+          fields: [
+            { key: 'A', label: 'Present value Aₙ', answer: r2(A), tol: 2, unit: '', hint: "A = R/rⁿ·(rⁿ − 1)/(r − 1), r = " + r }
+          ],
+          solution: [
+            'r = ' + r + ';  rⁿ = ' + r2(Math.pow(r, p.n)) + '.',
+            "Aₙ = (" + p.R + ' ÷ ' + r2(Math.pow(r, p.n)) + ')·(' + r2(Math.pow(r, p.n)) + ' − 1) ÷ (' + r + ' − 1) = ' + r2(A) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Postnumerando present value: Aₙ = R/rⁿ·(rⁿ − 1)/(r − 1).']
+    },
+    {
+      id: 'annuity-concepts',
+      lesson: 'second-midterm',
+      chapter: 8,
+      type: 'choice',
+      title: 'Annuities — Concepts',
+      prompt: 'Answer the concept questions on annuities (rents).',
+      difficulty: 1,
+      items: [
+        { q: 'The interest factor is r = 1 + i.', kind: 'tf', answer: true },
+        { q: 'Prenumerando payments are made at the beginning of each period.', kind: 'tf', answer: true },
+        { q: 'The present value is larger than the future value of the same annuity.', kind: 'tf', answer: false },
+        { q: 'A prenumerando future value equals the postnumerando one times r.', kind: 'tf', answer: true },
+        { q: 'An annual rate p = 6% gives r =', kind: 'mc', options: ['0.06', '1.06', '6', '1.6'], answer: 1 },
+        { q: 'The future value of a postnumerando annuity is:', kind: 'mc', options: ['R·rⁿ', 'R·(rⁿ−1)/(r−1)', 'R/rⁿ', 'R·(r−1)'], answer: 1 }
+      ],
+      solution: [
+        'Future value (end worth) > present value (today\'s worth), because money grows with interest.',
+        'r = 1 + p/100; postnumerando future value Sₙ′ = R·(rⁿ − 1)/(r − 1).'
+      ]
+    },
+
+    // ========================================================================
+    // CHAPTER 9 — CASH LOANS  (second-midterm)
+    // ========================================================================
+    {
+      id: 'loan-annuity-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Loan with Equal Annuities',
+      prompt: 'Compute the nominally equal annuity for a loan. Round to 2 dp.',
+      difficulty: 3,
+      params: {
+        C: { choices: [80000, 100000, 130000, 150000] },
+        p: { choices: [4, 5, 6, 8, 10] },
+        n: { min: 4, max: 10, step: 1 }
+      },
+      generate(p) {
+        const r = 1 + p.p / 100;
+        const rn = Math.pow(r, p.n);
+        const a = p.C * rn * (r - 1) / (rn - 1);
+        const r2 = (x) => Math.round(x * 100) / 100;
+        return {
+          prompt: 'A loan of ' + p.C + ' is granted for ' + p.n + ' years at ' + p.p + '% annual (compound, '
+            + 'decursive) interest, repaid with equal annuities at the END of each year. Find the annuity a. Round to 2 dp.',
+          fields: [
+            { key: 'a', label: 'Annuity a', answer: r2(a), tol: 2, unit: '', hint: "a = C·rⁿ(r − 1)/(rⁿ − 1), r = " + r }
+          ],
+          solution: [
+            'r = ' + r + ';  rⁿ = ' + r2(rn) + '.',
+            'a = ' + p.C + '·' + r2(rn) + '·(' + r + ' − 1) ÷ (' + r2(rn) + ' − 1) = ' + r2(a) + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Equal loan annuity: a = C·rⁿ(r − 1)/(rⁿ − 1) (present value of the repayments).']
+    },
+    {
+      id: 'loan-equalquota-random',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'numeric',
+      title: 'Loan with Equal Repayment Quotas',
+      prompt: 'For the equal-repayment-quotas model, find the quota and the first annuity.',
+      difficulty: 2,
+      params: {
+        quota: { choices: [10000, 15000, 20000, 25000] },
+        n: { choices: [4, 5, 6 ] },
+        p: { choices: [4, 5, 6, 8, 10] }
+      },
+      generate(p) {
+        const C = p.quota * p.n;          // C = R·n  (so R = C/n is exact)
+        const I1 = C * p.p / 100;         // interest on full debt in year 1
+        const a1 = p.quota + I1;          // first annuity = R + I₁
+        return {
+          prompt: 'A loan of ' + C + ' is repaid over ' + p.n + ' years with NOMINALLY EQUAL repayment quotas at '
+            + p.p + '% annual interest. Find the repayment quota R and the FIRST annuity a₁.',
+          fields: [
+            { key: 'R', label: 'Repayment quota R', answer: p.quota, tol: 0.01, unit: '', hint: 'R = C ÷ n = ' + C + ' ÷ ' + p.n },
+            { key: 'a1', label: 'First annuity a₁', answer: a1, tol: 0.01, unit: '', hint: 'a₁ = R + I₁, I₁ = C·p/100 = ' + C + '·' + p.p + '/100' }
+          ],
+          solution: [
+            'R = C ÷ n = ' + C + ' ÷ ' + p.n + ' = ' + p.quota + '.',
+            'I₁ = C·p/100 = ' + C + '·' + p.p + '/100 = ' + I1 + '.',
+            'a₁ = R + I₁ = ' + p.quota + ' + ' + I1 + ' = ' + a1 + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Equal quotas: R = C/n; first annuity a₁ = R + I₁ with I₁ = C·p/100.']
+    },
+    {
+      id: 'loan-concepts',
+      lesson: 'second-midterm',
+      chapter: 9,
+      type: 'choice',
+      title: 'Loans — Concepts',
+      prompt: 'Answer the concept questions on loan repayment.',
+      difficulty: 1,
+      items: [
+        { q: 'Each loan annuity splits into a repayment quota and interest (Aₖ = Rₖ + Iₖ).', kind: 'tf', answer: true },
+        { q: 'The sum of all repayment quotas equals the loan amount C₀.', kind: 'tf', answer: true },
+        { q: 'In the equal-annuities model, the interest part rises over time.', kind: 'tf', answer: false },
+        { q: 'In the equal-repayment-quotas model the quota is R = C/n.', kind: 'tf', answer: true },
+        { q: 'Interest in period k is computed as:', kind: 'mc', options: ['C₀·p/100', 'Cₖ₋₁·p/100', 'a·r', 'C/n'], answer: 1 },
+        { q: 'Total interest paid equals:', kind: 'mc', options: ['ΣAₖ + C₀', 'ΣAₖ − C₀', 'C₀', 'C₀/n'], answer: 1 }
+      ],
+      solution: [
+        'In the equal-annuities model the interest part FALLS over time (the debt shrinks) and the quota rises.',
+        'Interest Iₖ = Cₖ₋₁·p/100; total interest = ΣAₖ − C₀.'
+      ]
+    },
+
+    // ========================================================================
+    // CHAPTER 11 — GAUSS-JORDAN METHOD  (second-midterm)
+    // ========================================================================
+    {
+      id: 'gj-solve2x2-random',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'numeric',
+      title: 'Solve a 2×2 System (Gauss-Jordan)',
+      prompt: 'Solve the linear system (unique solution).',
+      difficulty: 2,
+      params: {
+        x: { min: -4, max: 5, step: 1 },
+        y: { min: -4, max: 5, step: 1 },
+        a1: { choices: [2, 3, 4] },   // eq1:  a1·x + y = c1   (b1 = 1)
+        b2: { choices: [2, 3, 4] }    // eq2:  x + b2·y = c2   (a2 = 1)
+      },
+      generate(p) {
+        // eq1: a1 x + 1 y = c1 ; eq2: 1 x + b2 y = c2.
+        // Determinant = a1·b2 − 1·1 = a1·b2 − 1 ≥ 2·2 − 1 = 3 ≠ 0 → always a unique solution.
+        const c1 = p.a1 * p.x + p.y;
+        const c2 = p.x + p.b2 * p.y;
+        const det = p.a1 * p.b2 - 1;
+        return {
+          prompt: 'Solve the system using the Gauss-Jordan method:\\[\\begin{aligned}' + p.a1 + 'x + y &= ' + c1
+            + '\\\\ x + ' + p.b2 + 'y &= ' + c2 + '\\end{aligned}\\]',
+          fields: [
+            { key: 'x', label: 'x', answer: p.x, tol: 0.01, unit: '', hint: 'Reduce [A | b] to the identity' },
+            { key: 'y', label: 'y', answer: p.y, tol: 0.01, unit: '', hint: 'Back-substitute / read from the reduced matrix' }
+          ],
+          solution: [
+            'Determinant = ' + p.a1 + '·' + p.b2 + ' − 1·1 = ' + det + ' ≠ 0 → unique solution.',
+            'Reducing the augmented matrix to the identity gives x = ' + p.x + ', y = ' + p.y + '.'
+          ]
+        };
+      },
+      solution: ['Press “New numbers”. Write [A | b], reduce the left block to the identity; the last column is (x, y).']
+    },
+    {
+      id: 'gj-concepts',
+      lesson: 'second-midterm',
+      chapter: 11,
+      type: 'choice',
+      title: 'Gauss-Jordan — Concepts',
+      prompt: 'Answer the concept questions on the Gauss-Jordan method.',
+      difficulty: 1,
+      items: [
+        { q: 'Swapping two rows is an elementary row operation.', kind: 'tf', answer: true },
+        { q: 'Multiplying a row by 0 is an allowed elementary row operation.', kind: 'tf', answer: false },
+        { q: 'The goal is to reduce the left block to the identity matrix.', kind: 'tf', answer: true },
+        { q: 'A row [0 0 0 | 0] indicates no solution.', kind: 'tf', answer: false },
+        { q: 'A row [0 0 0 | k] with k ≠ 0 indicates:', kind: 'mc', options: ['A unique solution', 'Infinitely many solutions', 'No solution', 'A pivot'], answer: 2 },
+        { q: 'If the left block becomes the identity matrix, the system has:', kind: 'mc', options: ['No solution', 'A unique solution', 'Infinitely many solutions', 'Two solutions'], answer: 1 }
+      ],
+      solution: [
+        'Multiplying a row by 0 destroys information and is NOT allowed. A zero row [0 0 0 | 0] → infinitely many solutions.',
+        '[0 0 0 | k], k ≠ 0 is the contradiction 0 = k → no solution; identity → unique solution.'
+      ]
     }
 
   ]
