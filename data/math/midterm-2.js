@@ -393,7 +393,7 @@ const mathM2 = {
   // CATEGORY 4: GAUSS-JORDAN METHOD
   // ========================================================================
   gaussJordan: {
-    name: "Gauss-Jordan Method",
+    name: "Gauss & Gauss-Jordan Method",
     icon: "fa-table-cells",
     color: "#8b5cf6",
 
@@ -402,6 +402,16 @@ const mathM2 = {
         question: "What is the goal of the Gauss-Jordan method?",
         answer: "To solve a linear system by writing it as an AUGMENTED matrix \\([A\\mid b]\\) and using elementary row operations to reduce the left side to the IDENTITY (unit) matrix:\n\\[\\left[\\begin{array}{ccc|c}a_{11}&a_{12}&a_{13}&b_1\\\\a_{21}&a_{22}&a_{23}&b_2\\\\a_{31}&a_{32}&a_{33}&b_3\\end{array}\\right]\\sim\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right].\\]\nThe last column then gives the solution.",
         explanation: "Gauss-Jordan reduces fully to reduced row echelon form (identity on the left when a unique solution exists)."
+      },
+      {
+        question: "What is the difference between the GAUSS method and the GAUSS-JORDAN method?",
+        answer: "Both use the same elementary row operations on the augmented matrix \\([A\\mid b]\\); they differ in HOW FAR they reduce:\n• GAUSS (elimination): reduce only to an UPPER-TRIANGULAR form (row echelon — zeros below the diagonal), then finish with BACK-SUBSTITUTION (solve the last variable, substitute upward).\n\\[\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]\\]\n• GAUSS-JORDAN: keep going until the left block is the FULL IDENTITY (zeros above AND below the diagonal) — no back-substitution needed; the solution is read straight off the last column.",
+        explanation: "Gauss = upper triangle + back-substitution; Gauss-Jordan = full identity (reduced row echelon), answer read directly. Same operations, Gauss-Jordan just does more of them."
+      },
+      {
+        question: "Which part of the augmented matrix may elementary operations act on — rows or columns?",
+        answer: "ROWS ONLY. Each row is one equation, so swapping, scaling or combining ROWS keeps the system equivalent. You must NEVER apply these operations to COLUMNS — a column mixes the coefficients of different unknowns across all equations, which changes the system and destroys the solution.",
+        explanation: "Row operations = legal moves on equations. Column operations are not allowed when solving a system this way."
       },
       {
         question: "What are the three ELEMENTARY ROW OPERATIONS?",
@@ -442,6 +452,21 @@ const mathM2 = {
         correct: 3
       },
       {
+        question: "The GAUSS method reduces the matrix to an upper-triangular form and then finishes with:",
+        options: ["Back-substitution", "Reducing to the identity matrix", "Column operations", "The quadratic formula"],
+        correct: 0
+      },
+      {
+        question: "What distinguishes Gauss-Jordan from the plain Gauss method?",
+        options: ["It uses different row operations", "It reduces all the way to the identity matrix (no back-substitution)", "It works on columns instead of rows", "It only finds the first variable"],
+        correct: 1
+      },
+      {
+        question: "Elementary operations when solving a linear system may be applied to:",
+        options: ["Columns only", "Rows only", "Both rows and columns freely", "The diagonal only"],
+        correct: 1
+      },
+      {
         question: "A pivot element is used to:",
         options: ["Delete a column", "Eliminate the other entries in its column", "Swap the matrix", "Add a new equation"],
         correct: 1
@@ -467,6 +492,9 @@ const mathM2 = {
       { sentence: "A linear system is written for Gauss-Jordan as an _______ matrix [A | b].", answer: "augmented", hint: "Coefficients plus the right-hand side" },
       { sentence: "The goal is to reduce the left block to the _______ matrix.", answer: "identity", hint: "1s on the diagonal, 0s elsewhere" },
       { sentence: "The leading 1 used to clear a column is called the _______.", answer: "pivot", hint: "Pivot element" },
+      { sentence: "The Gauss method stops at an upper-triangular matrix and then uses back-_______.", answer: "substitution", hint: "Solve last variable, work upward" },
+      { sentence: "Gauss-Jordan reduces all the way to the _______ matrix, so no back-substitution is needed.", answer: "identity", hint: "Full reduced row echelon form" },
+      { sentence: "Elementary operations may be applied to _______, never to columns.", answer: "rows", hint: "Each row is one equation" },
       { sentence: "Multiplying a row by a _______ number is an elementary row operation.", answer: "non-zero", hint: "Zero would destroy information" },
       { sentence: "A zero row [0 0 0 | 0] signals _______ many solutions (a free variable).", answer: "infinitely", hint: "Set the free variable = t" },
       { sentence: "A row [0 0 0 | k] with k ≠ 0 means the system has _______ solution.", answer: "no", hint: "Contradiction 0 = k" }
@@ -487,6 +515,16 @@ const mathM2 = {
         '<li>Add a <strong>multiple of one row to another</strong> row.</li>' +
         '</ul>' +
         '<p>The strategy is to work <strong>pivot by pivot</strong>: in each diagonal position get a leading 1 (the <strong>pivot</strong>, by swapping or scaling), then use that pivot to clear every other entry in its column to 0. Do this column by column and the left block becomes the identity.</p>' +
+        '<p><strong>One absolute rule:</strong> these operations act on <span class="highlight">rows, never on columns</span>. Each row <em>is</em> one equation, so reordering, scaling or combining rows leaves the system equivalent. A column, by contrast, holds the coefficient of a single unknown across <em>all</em> the equations — touching a column would scramble different equations together and change the problem. Operate on rows only.</p>' +
+
+        '<h4>Gauss vs. Gauss-Jordan — how far do you reduce?</h4>' +
+        '<p>Two related methods use exactly these row operations; they differ only in <em>where they stop</em>:</p>' +
+        '<ul>' +
+        '<li><strong>Gauss (elimination)</strong> reduces only to an <strong>upper-triangular</strong> shape — leading 1s on the diagonal and zeros <em>below</em> it (row echelon form). You then finish by <strong>back-substitution</strong>: the bottom row gives the last unknown directly, and you substitute it upward to recover the rest.</li>' +
+        '<li><strong>Gauss-Jordan</strong> keeps going past the triangle, clearing the entries <em>above</em> the diagonal too, until the left block is the <strong>full identity</strong> (reduced row echelon form). No back-substitution is needed — every unknown is read straight off the last column.</li>' +
+        '</ul>' +
+        '<div class="formula-box">\\[\\underbrace{\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]}_{\\text{Gauss: triangle + back-substitution}}\\qquad\\underbrace{\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right]}_{\\text{Gauss-Jordan: identity, read directly}}\\]</div>' +
+        '<p>Same legal moves, same answer — Gauss-Jordan simply does the extra work up front so the reading is trivial at the end.</p>' +
 
         '<div class="tip-box">' +
         '<h4>Reading the result — three possible outcomes</h4>' +

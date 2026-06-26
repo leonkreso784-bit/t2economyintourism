@@ -132,27 +132,29 @@ const mathM1 = {
     learn: {
       content:
         '<h3>The field of real numbers ℝ</h3>' +
-        '<p>Mathematics on the real line is built up step by step. We start from the numbers we count with and, each time an operation cannot be carried out, we <strong>extend</strong> the number set so it can. Each extension supplies a missing <span class="highlight">inverse</span>.</p>' +
+        '<p>All of the mathematics in this course lives on the <strong>real line</strong>. Before we can solve equations or differentiate, we have to be clear about <em>which</em> numbers we may use and <em>what rules</em> they obey. The real numbers are built up <strong>step by step</strong>: we begin with the numbers we count with and, every time some operation has no answer, we <span class="highlight">extend</span> the set just enough to give it one. Each extension supplies exactly one missing <em>inverse</em> — that single idea organises the whole picture.</p>' +
 
         '<h4>The five number sets</h4>' +
         '<ul>' +
-        '<li><strong>Natural numbers</strong> \\(\\mathbb{N}=\\{1,2,3,\\dots\\}\\) — the numbers we count with.</li>' +
-        '<li><strong>Integers</strong> \\(\\mathbb{Z}=\\{\\dots,-2,-1,0,1,2,\\dots\\}\\) — add 0 and the negatives so that subtraction always works.</li>' +
-        '<li><strong>Rational numbers</strong> \\(\\mathbb{Q}=\\left\\{\\frac{m}{n}: m,n\\in\\mathbb{Z},\\ n\\neq 0\\right\\}\\) — so that division always works.</li>' +
-        '<li><strong>Irrational numbers</strong> \\(\\mathbb{I}\\) — infinite non-periodic decimals such as \\(\\sqrt2,\\ \\pi\\).</li>' +
-        '<li><strong>Real numbers</strong> \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\).</li>' +
+        '<li><strong>Natural numbers</strong> \\(\\mathbb{N}=\\{1,2,3,\\dots\\}\\) — the counting numbers.</li>' +
+        '<li><strong>Integers</strong> \\(\\mathbb{Z}=\\{\\dots,-2,-1,0,1,2,\\dots\\}\\) — we add \\(0\\) and the negatives so that <em>subtraction</em> always has an answer.</li>' +
+        '<li><strong>Rational numbers</strong> \\(\\mathbb{Q}=\\left\\{\\frac{m}{n}: m,n\\in\\mathbb{Z},\\ n\\neq 0\\right\\}\\) — fractions, so that <em>division</em> always has an answer.</li>' +
+        '<li><strong>Irrational numbers</strong> \\(\\mathbb{I}\\) — infinite, non-repeating decimals such as \\(\\sqrt2,\\ \\sqrt{13},\\ \\pi\\).</li>' +
+        '<li><strong>Real numbers</strong> \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\) — every point on the number line.</li>' +
         '</ul>' +
-        '<div class="formula-box">\\[\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R}\\]</div>' +
+        '<div class="formula-box">\\[\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R},\\qquad \\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}.\\]</div>' +
 
         '<div class="tip-box">' +
-        '<h4>Why each extension?</h4>' +
-        '<p>In \\(\\mathbb{N}\\) you cannot compute \\(3-5\\) → introduce \\(\\mathbb{Z}\\) (additive inverse \\(-a\\)). In \\(\\mathbb{Z}\\) you cannot compute \\(2:4\\) as a whole number → introduce \\(\\mathbb{Q}\\) (multiplicative inverse \\(\\tfrac1a\\)). The equation \\(x^2=2\\) has no rational solution → introduce \\(\\mathbb{I}\\).</p>' +
+        '<h4>Why each extension is forced</h4>' +
+        '<p>In \\(\\mathbb{N}\\) the calculation \\(3-5\\) has no answer → introduce \\(\\mathbb{Z}\\) (the additive inverse \\(-a\\)). In \\(\\mathbb{Z}\\) the calculation \\(2:4\\) is not a whole number → introduce \\(\\mathbb{Q}\\) (the multiplicative inverse \\(\\tfrac1a\\)). And \\(x^2=2\\) has no fractional answer → introduce \\(\\mathbb{I}\\). Every new set is the answer to a question the previous one could not solve — that is the single thread running through this unit.</p>' +
         '</div>' +
 
         '<h4>Rational vs. irrational — the decimal test</h4>' +
-        '<p>A number is <strong>rational</strong> exactly when its decimal expansion is finite (\\(\\frac34=0.75\\)) or eventually periodic (\\(\\frac{15}{7}=2.\\dot14285\\dot7\\)). A number is <strong>irrational</strong> when the expansion is infinite and never repeats (\\(\\sqrt2=1.41421356\\dots\\)).</p>' +
+        '<p>How do you tell a rational number from an irrational one? Read its decimal expansion. A number is <strong>rational</strong> exactly when that expansion is <em>finite</em> or <em>eventually periodic</em>:</p>' +
+        '<div class="formula-box">\\[\\tfrac34=0.75\\ (\\text{finite}),\\qquad \\tfrac{15}{7}=2.\\dot14285\\dot7\\ (\\text{a repeating block}).\\]</div>' +
+        '<p>A number is <strong>irrational</strong> when the expansion runs on forever <em>without ever</em> repeating, e.g. \\(\\sqrt2=1.41421356\\dots\\). The two families never overlap (\\(\\mathbb{Q}\\cap\\mathbb{I}=\\varnothing\\)); together they leave no gaps on the line — that is the content of \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\). A handy consequence: if a calculator shows a decimal that settles into a repeating pattern, the number is rational; \\(\\sqrt{a}\\) is irrational unless \\(a\\) is a perfect square.</p>' +
 
-        '<h4>Properties of the operations</h4>' +
+        '<h4>The properties of \\(+\\) and \\(\\cdot\\)</h4>' +
         '<p>For all \\(a,b,c\\in\\mathbb{R}\\), addition and multiplication satisfy:</p>' +
         '<ul>' +
         '<li><strong>Closedness</strong> — the result stays in the set;</li>' +
@@ -162,10 +164,19 @@ const mathM1 = {
         '<li><strong>Inverse element</strong> \\(a+(-a)=0\\), \\(a\\cdot a^{-1}=1\\ (a\\neq 0)\\);</li>' +
         '<li><strong>Distributivity</strong> \\((a+b)c=ac+bc\\).</li>' +
         '</ul>' +
-        '<p>\\(\\mathbb{N}\\) lacks an additive neutral and inverse; \\(\\mathbb{Z}\\) lacks a multiplicative inverse; \\(\\mathbb{Q}\\) and \\(\\mathbb{R}\\) have them all.</p>' +
+        '<p>The smaller sets fail some of these, and the failure is exactly the inverse that is missing: \\(\\mathbb{N}\\) has no additive neutral or inverse (subtracting can throw you out of \\(\\mathbb{N}\\)); \\(\\mathbb{Z}\\) has no multiplicative inverse (dividing can throw you out of \\(\\mathbb{Z}\\), e.g. \\(2:4=\\tfrac12\\notin\\mathbb{Z}\\)). \\(\\mathbb{Q}\\) and \\(\\mathbb{R}\\) have <em>all</em> of them, which is why we can do ordinary algebra in them without ever leaving the set.</p>' +
 
         '<h4>ℝ is a field</h4>' +
-        '<p>A set with two operations satisfying the <strong>nine</strong> properties above is called a <span class="highlight">field</span>. Because \\(\\mathbb{R}\\) satisfies all of them, \\((\\mathbb{R},+,\\cdot)\\) is the <strong>field of real numbers</strong>. This algebraic structure is what makes solving equations on ℝ reliable — the subject of the next unit.</p>'
+        '<p>A set with two operations obeying the <strong>nine</strong> properties above is called a <span class="highlight">field</span>. Because \\(\\mathbb{R}\\) obeys every one, \\((\\mathbb{R},+,\\cdot)\\) is the <strong>field of real numbers</strong>. This is not abstract decoration: the field axioms are precisely the rules that let us add, cancel, factor and rearrange equations without ever producing a false step — the business of the next unit.</p>' +
+
+        '<div class="tip-box">' +
+        '<h4>Common pitfalls</h4>' +
+        '<ul>' +
+        '<li><strong>\\(0\\) has no reciprocal</strong> — that is why <em>division by zero is undefined</em>. Every other real number does have one.</li>' +
+        '<li>\\(\\mathbb{Q}\\) and \\(\\mathbb{I}\\) are <em>disjoint</em>: an irrational number is never a fraction, no matter how you write it.</li>' +
+        '<li>\\(\\sqrt2\\) is irrational, but \\(\\sqrt4=2\\) is a natural number — taking a root does not automatically give an irrational.</li>' +
+        '</ul>' +
+        '</div>'
     }
   },
 
@@ -280,31 +291,34 @@ const mathM1 = {
     learn: {
       content:
         '<h3>Basic equations on ℝ</h3>' +
-        '<p>An <strong>equation</strong> in one unknown is a statement that two expressions are equal for some value(s) of the unknown. To <em>solve</em> it is to find every number that, put in place of the unknown, makes the equality true. The <span class="highlight">degree</span> (highest power) tells us how many solutions to expect.</p>' +
+        '<p>An <strong>equation</strong> in one unknown is a statement that two expressions are equal — true only for certain value(s) of the unknown. To <em>solve</em> it is to find every number that, put in place of the unknown, makes the equality literally true. The first thing to read off is the <span class="highlight">degree</span>, the highest power of the unknown: a polynomial equation of degree \\(n\\) has exactly \\(n\\) solutions (counting repeats and complex ones). So \\(x^4+5x^3-3x^2=x+5\\) is degree 4 and has four solutions. In this unit we master the two everyday cases — degree 1 and degree 2 — and the tricks that reduce other equations to them.</p>' +
 
         '<h4>1. Linear equations</h4>' +
-        '<p>Form \\(ax+b=0,\\ a\\neq 0\\). Exactly one solution:</p>' +
-        '<div class="formula-box">\\[x=-\\frac{b}{a}\\]</div>' +
+        '<p>Form \\(ax+b=0,\\ a\\neq 0\\). Being first degree, it has exactly <strong>one</strong> solution, found by moving \\(b\\) across and dividing by \\(a\\):</p>' +
+        '<div class="formula-box">\\[x=-\\frac{b}{a}.\\]</div>' +
+        '<p><strong>Worked example.</strong> \\(3x-12=0\\Rightarrow x=\\tfrac{12}{3}=4\\). The condition \\(a\\neq0\\) matters: if \\(a=0\\) the equation is no longer linear (it is either always true or impossible).</p>' +
 
         '<h4>2. Quadratic equations</h4>' +
-        '<p>Complete form \\(ax^2+bx+c=0,\\ a\\neq 0\\). The two solutions come from the quadratic formula:</p>' +
-        '<div class="formula-box">\\[x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\\]</div>' +
-        '<p>The <strong>discriminant</strong> \\(D=b^2-4ac\\) decides their nature: \\(D>0\\) two real, \\(D=0\\) one repeated, \\(D<0\\) none real. The two <strong>incomplete</strong> forms are quicker:</p>' +
+        '<p>Complete form \\(ax^2+bx+c=0,\\ a\\neq 0\\), with leading coefficient \\(a\\), linear coefficient \\(b\\) and free term \\(c\\). The two solutions come from the quadratic formula:</p>' +
+        '<div class="formula-box">\\[x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}.\\]</div>' +
+        '<p>The expression under the root, the <strong>discriminant</strong> \\(D=b^2-4ac\\), decides the <em>nature</em> of the solutions <strong>before</strong> you finish the calculation: \\(D>0\\) gives two distinct real solutions, \\(D=0\\) one repeated real solution, and \\(D<0\\) no real solution at all (the roots are complex). <strong>Worked example.</strong> \\(x^2-5x+6=0\\) has \\(D=25-24=1>0\\), so \\(x_{1,2}=\\frac{5\\pm1}{2}\\), giving \\(x_1=3,\\ x_2=2\\). By contrast \\(x^2+8x+25=0\\) has \\(D=64-100=-36<0\\) — no real solution.</p>' +
+        '<p>When a coefficient is missing, the two <strong>incomplete</strong> forms are far quicker than the formula:</p>' +
         '<ul>' +
-        '<li>\\(ax^2+c=0\\Rightarrow x_{1,2}=\\pm\\sqrt{-\\tfrac{c}{a}}\\)</li>' +
-        '<li>\\(ax^2+bx=0\\Rightarrow x(ax+b)=0\\Rightarrow x_1=0,\\ x_2=-\\tfrac{b}{a}\\)</li>' +
+        '<li>\\(ax^2+c=0\\) (no linear term) \\(\\Rightarrow x_{1,2}=\\pm\\sqrt{-\\tfrac{c}{a}}\\);</li>' +
+        '<li>\\(ax^2+bx=0\\) (no constant) \\(\\Rightarrow x(ax+b)=0\\Rightarrow x_1=0,\\ x_2=-\\tfrac{b}{a}\\) — note \\(x=0\\) is <em>always</em> one root here.</li>' +
         '</ul>' +
 
         '<h4>3. Equations that reduce to a quadratic</h4>' +
+        '<p>Many harder-looking equations become quadratics after one clever move:</p>' +
         '<ul>' +
-        '<li><strong>Biquadratic</strong> \\(ax^4+bx^2+c=0\\): substitute \\(t=x^2\\), solve \\(at^2+bt+c=0\\), then solve \\(x^2=t_1\\) and \\(x^2=t_2\\) (up to four solutions).</li>' +
-        '<li><strong>Irrational</strong> (unknown under a root): isolate the root and square; <strong>always check</strong> the solutions in the original — squaring can create false ones.</li>' +
-        '<li><strong>Linear–quadratic systems</strong>: express one unknown from the linear equation and substitute into the quadratic.</li>' +
+        '<li><strong>Biquadratic</strong> \\(ax^4+bx^2+c=0\\): substitute \\(t=x^2\\), solve \\(at^2+bt+c=0\\) for \\(t\\), then undo the substitution by solving \\(x^2=t_1\\) and \\(x^2=t_2\\) — up to four solutions. E.g. \\(36x^4-25x^2+4=0\\Rightarrow x=\\pm\\tfrac23,\\ \\pm\\tfrac12\\).</li>' +
+        '<li><strong>Irrational</strong> (unknown under a root): isolate the root and square both sides to remove it, then solve. Squaring is a one-way step, so it can introduce <em>false</em> roots — <strong>always substitute every answer back into the original equation</strong> and keep only those that check.</li>' +
+        '<li><strong>Linear–quadratic systems</strong>: from the linear equation express one unknown, substitute into the quadratic, solve, then back-substitute. Each solution is an ordered pair \\((x,y)\\), and there are usually two.</li>' +
         '</ul>' +
 
         '<div class="tip-box">' +
-        '<h4>Modeling ("second-degree problems")</h4>' +
-        '<p>Many real problems reduce to a quadratic. Work in steps: read carefully → name the variables → write the relation → solve → <strong>interpret and check</strong> the result. A discount of 65% leaving 192.5 monetary units, ages whose product is 28, flow through pipes of different diameter — all become equations.</p>' +
+        '<h4>Modeling — turning a word problem into an equation</h4>' +
+        '<p>Many real and professional problems ("second-degree problems") reduce to a quadratic. Work in fixed steps: read carefully → name the known and unknown quantities → write the relation between them → solve the model → <strong>interpret and check</strong> the answer against the problem. A 65% discount leaving 192.5 monetary units, two ages whose product is 28, water flowing through pipes of different diameter — each becomes an equation of degree 1 or 2. The final check is part of the method, not an afterthought: a negative length or a fractional number of people is a signal you must reject that root.</p>' +
         '</div>'
     }
   },
@@ -446,29 +460,30 @@ const mathM1 = {
     learn: {
       content:
         '<h3>Functions</h3>' +
-        '<p>A <strong>function</strong> \\(f\\) from a set \\(A\\) to a set \\(B\\) is a rule assigning to each \\(x\\in A\\) a <span class="highlight">unique</span> \\(y=f(x)\\in B\\). The <strong>domain</strong> \\(D_f\\) is the set of allowed inputs, the <strong>codomain</strong> the set of possible outputs, and the <strong>image</strong> \\(\\operatorname{Im}f\\) the outputs actually reached. Its <strong>graph</strong> is the set of points \\((x,f(x))\\) in the plane.</p>' +
+        '<p>A <strong>function</strong> is the central object of the whole course: a rule that turns each input into one output. Formally, a function \\(f\\) from a set \\(A\\) to a set \\(B\\) assigns to <em>each</em> \\(x\\in A\\) a <span class="highlight">unique</span> \\(y=f(x)\\in B\\). That word "unique" is the whole definition — one input may never lead to two different outputs. We name three sets: the <strong>domain</strong> \\(D_f\\) (the allowed inputs), the <strong>codomain</strong> \\(B\\) (where outputs may live), and the <strong>image</strong> \\(\\operatorname{Im}f\\) (the outputs actually reached). Drawing every pair \\((x,f(x))\\) in the plane gives the <strong>graph</strong>, the visual fingerprint of the function.</p>' +
 
-        '<h4>Natural domain</h4>' +
-        '<p>When no domain is given we use the largest set on which the formula makes sense:</p>' +
+        '<h4>Natural domain — where is the formula allowed?</h4>' +
+        '<p>When a problem gives a formula but no domain, we take the <em>largest</em> set on which the formula makes sense. Three restrictions cover almost every case:</p>' +
         '<ul>' +
-        '<li>denominators must be non-zero — \\(\\frac1x\\Rightarrow D_f=\\mathbb{R}\\setminus\\{0\\}\\);</li>' +
-        '<li>an even root needs a non-negative argument — \\(\\sqrt{g}\\Rightarrow g\\ge 0\\);</li>' +
-        '<li>a logarithm needs a positive argument — \\(\\ln g\\Rightarrow g>0\\).</li>' +
+        '<li>a denominator must be non-zero — \\(\\frac1x\\Rightarrow D_f=\\mathbb{R}\\setminus\\{0\\}\\);</li>' +
+        '<li>an even root needs a non-negative argument — \\(\\sqrt{g(x)}\\Rightarrow g(x)\\ge 0\\);</li>' +
+        '<li>a logarithm needs a strictly positive argument — \\(\\ln g(x)\\Rightarrow g(x)>0\\).</li>' +
         '</ul>' +
+        '<p><strong>Worked example.</strong> For \\(f(x)=\\frac{1}{\\sqrt{x-2}}\\) the root needs \\(x-2\\ge0\\) <em>and</em> the denominator needs \\(x-2\\neq0\\), so \\(D_f=\\langle2,+\\infty\\rangle\\). Finding the domain is always the first step when analysing a function.</p>' +
 
         '<h4>Polynomials and their graphs</h4>' +
-        '<p>A polynomial \\(P_n(x)=a_nx^n+\\dots+a_0\\) has degree = highest power. Degree 0 is the <strong>constant</strong> \\(f(x)=c\\) (horizontal line); degree 1 the <strong>linear</strong> \\(f(x)=ax+b\\) (a line, slope \\(a\\), intercept \\(b\\)); degree 2 the <strong>quadratic</strong> (a parabola). The <strong>slope</strong> is the difference quotient</p>' +
-        '<div class="formula-box">\\[a=\\frac{\\Delta y}{\\Delta x}=\\frac{f(x_2)-f(x_1)}{x_2-x_1}\\]</div>' +
-        '<p>— the seed of the derivative. Dividing two polynomials gives a <strong>rational function</strong> (e.g. \\(\\frac1x\\)), defined off the zeros of the denominator, with vertical/horizontal <em>asymptotes</em>.</p>' +
+        '<p>A polynomial \\(P_n(x)=a_nx^n+\\dots+a_0\\) has degree equal to its highest power, and a value with \\(P_n(x)=0\\) is a <strong>zero</strong> (where the graph crosses the \\(x\\)-axis). The low degrees are the workhorses: degree 0 is the <strong>constant</strong> \\(f(x)=c\\) (a horizontal line); degree 1 the <strong>linear</strong> \\(f(x)=ax+b\\) (a straight line with slope \\(a\\) and \\(y\\)-intercept \\(b\\)); degree 2 the <strong>quadratic</strong> (a parabola, opening up if \\(a>0\\), down if \\(a<0\\)). For a line the slope is the <strong>difference quotient</strong></p>' +
+        '<div class="formula-box">\\[a=\\frac{\\Delta y}{\\Delta x}=\\frac{f(x_2)-f(x_1)}{x_2-x_1}.\\]</div>' +
+        '<p>This is the rate of change — how much \\(y\\) moves per unit of \\(x\\) — and it is the <em>seed of the derivative</em> in the next unit. Dividing two polynomials gives a <strong>rational function</strong> such as \\(\\frac1x\\), defined off the zeros of the denominator; near such a zero the graph shoots off along a vertical <em>asymptote</em>, a line the curve approaches but never touches.</p>' +
 
         '<h4>Exponential, logarithm, trigonometric</h4>' +
-        '<p>The exponential \\(f(x)=e^x\\) (\\(e\\approx 2.72\\)) is positive and strictly increasing, with \\(e^a e^b=e^{a+b}\\). Its inverse is the natural logarithm \\(\\ln x\\) (\\(x>0\\)) with</p>' +
+        '<p>Beyond polynomials sit three families used constantly in economics. The <strong>exponential</strong> \\(f(x)=e^x\\) (base \\(e\\approx 2.72\\)) is always positive and strictly increasing, and obeys \\(e^a e^b=e^{a+b}\\); it models growth and compound interest. Its inverse is the <strong>natural logarithm</strong> \\(\\ln x\\) (defined only for \\(x>0\\)), which undoes exponentials and turns products into sums:</p>' +
         '<div class="formula-box">\\[\\ln(ab)=\\ln a+\\ln b,\\quad \\ln\\tfrac{a}{b}=\\ln a-\\ln b,\\quad \\ln a^n=n\\ln a.\\]</div>' +
-        '<p>The periodic \\(\\sin\\theta\\) and \\(\\cos\\theta\\) (from the unit circle) model <strong>seasonal</strong> phenomena — e.g. tourism time series.</p>' +
+        '<p>Finally the <strong>periodic</strong> \\(\\sin\\theta\\) and \\(\\cos\\theta\\) (read off the unit circle, where \\(\\sin\\theta=y\\) and \\(\\cos\\theta=x\\)) repeat forever and are the natural language for <em>seasonal</em> phenomena — exactly the shape of a tourism demand time series across the year.</p>' +
 
         '<div class="tip-box">' +
-        '<h4>Economic functions</h4>' +
-        '<p>Total cost \\(T(Q)\\) (fixed cost \\(=T(0)\\)); revenue \\(P(Q)=pQ\\); profit \\(D(Q)=P(Q)-T(Q)\\). <strong>Break-even</strong> points solve \\(P(Q)=T(Q)\\) (\\(D(Q)=0\\)); between them profit is positive. Average cost \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\).</p>' +
+        '<h4>Economic functions — why we care</h4>' +
+        '<p>The functions above are not abstract: a firm\'s behaviour is described by them. <strong>Total cost</strong> \\(T(Q)\\) is a polynomial in the quantity \\(Q\\), with the <strong>fixed cost</strong> equal to \\(T(0)\\) (the free term). <strong>Revenue</strong> is \\(P(Q)=pQ\\) (price × quantity) and <strong>profit</strong> is \\(D(Q)=P(Q)-T(Q)\\). The <strong>break-even</strong> points solve \\(P(Q)=T(Q)\\), i.e. \\(D(Q)=0\\); between them the firm is profitable, outside them it loses money. The <strong>average cost</strong> \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\) is a rational function, undefined at \\(Q=0\\). In the last unit we will <em>optimise</em> exactly these functions with the derivative.</p>' +
         '</div>'
     }
   },
@@ -590,29 +605,32 @@ const mathM1 = {
     learn: {
       content:
         '<h3>Differentiation</h3>' +
-        '<p>The <strong>derivative</strong> generalises the constant rate of change (slope \\(a\\)) of a linear function to curves. Because ℝ is <em>continuous</em>, we can look at the function on an arbitrarily small interval around a point \\(x_0\\) and ask whether the difference quotient tends to a number:</p>' +
-        '<div class="formula-box">\\[f\'(x_0)=\\lim_{x\\to x_0}\\frac{f(x)-f(x_0)}{x-x_0}\\]</div>' +
-        '<p>That number is the derivative at \\(x_0\\). <strong>Geometrically</strong> it is the slope of the <span class="highlight">tangent</span> line — the best linear approximation of the function near \\(x_0\\). Deriving a function \\(f\\) produces a new function \\(f\'\\).</p>' +
+        '<p>For a straight line the rate of change is a single number — the slope \\(a\\). But most functions bend, so their rate of change is different at every point. The <strong>derivative</strong> is the tool that captures this <em>local</em> rate of change. The idea: zoom in on a point \\(x_0\\), look at the difference quotient \\(\\frac{f(x)-f(x_0)}{x-x_0}\\) (the average slope between two nearby points), and let the second point slide towards \\(x_0\\). Because ℝ is <em>continuous</em> the gap can shrink without ever becoming zero, and the quotient settles on a number:</p>' +
+        '<div class="formula-box">\\[f\'(x_0)=\\lim_{x\\to x_0}\\frac{f(x)-f(x_0)}{x-x_0}.\\]</div>' +
+        '<p>That number is the derivative at \\(x_0\\). <strong>Geometrically</strong> it is the slope of the <span class="highlight">tangent</span> line — the best straight-line approximation of the curve right at \\(x_0\\). Doing this at every point turns the function \\(f\\) into a brand-new function \\(f\'\\), its derivative.</p>' +
 
         '<h4>Table of derivatives</h4>' +
-        '<p>The basic building blocks:</p>' +
+        '<p>You never compute that limit by hand in practice — you memorise a short table of building blocks and combine them with rules. The blocks:</p>' +
         '<div class="formula-box">\\[(c)\'=0,\\quad (x)\'=1,\\quad (x^n)\'=n x^{n-1},\\]\\[\\left(\\tfrac1x\\right)\'=-\\tfrac{1}{x^2},\\quad (\\sqrt x)\'=\\tfrac{1}{2\\sqrt x},\\]\\[(e^x)\'=e^x,\\quad (\\ln x)\'=\\tfrac1x,\\quad (\\sin x)\'=\\cos x,\\quad (\\cos x)\'=-\\sin x.\\]</div>' +
+        '<p>The <strong>power rule</strong> \\((x^n)\'=nx^{n-1}\\) is the one you use most — bring the power down in front and drop it by one. Note the two minus signs that students forget: \\((\\cos x)\'=-\\sin x\\) and \\(\\left(\\tfrac1x\\right)\'=-\\tfrac1{x^2}\\). And \\(e^x\\) is the rare function that is its <em>own</em> derivative.</p>' +
 
         '<h4>Rules of differentiation</h4>' +
+        '<p>To differentiate anything built from the blocks, four rules suffice:</p>' +
         '<ul>' +
-        '<li><strong>Linearity</strong>: \\((u\\pm v)\'=u\'\\pm v\'\\), \\((Cu)\'=Cu\'\\) — differentiate term by term.</li>' +
-        '<li><strong>Product</strong>: \\((uv)\'=u\'v+uv\'\\).</li>' +
-        '<li><strong>Quotient</strong>: \\(\\left(\\frac{u}{v}\\right)\'=\\dfrac{u\'v-uv\'}{v^2}\\).</li>' +
+        '<li><strong>Linearity</strong>: \\((u\\pm v)\'=u\'\\pm v\'\\), \\((Cu)\'=Cu\'\\) — so a polynomial is differentiated <em>term by term</em>, pulling constants out front.</li>' +
+        '<li><strong>Product</strong>: \\((uv)\'=u\'v+uv\'\\) — note you cannot just multiply the two derivatives.</li>' +
+        '<li><strong>Quotient</strong>: \\(\\left(\\frac{u}{v}\\right)\'=\\dfrac{u\'v-uv\'}{v^2}\\) — the numerator order \\(u\'v-uv\'\\) matters; swapping it flips the sign.</li>' +
         '<li><strong>Chain</strong> (composite): \\([f(g(x))]\'=f\'(g(x))\\cdot g\'(x)\\).</li>' +
         '</ul>' +
+        '<p><strong>Worked example.</strong> Differentiate \\(f(x)=4x^5-3x^4+2x-7\\) term by term: \\(f\'(x)=20x^4-12x^3+2\\). The constant \\(-7\\) vanishes, as every constant does.</p>' +
 
         '<div class="tip-box">' +
         '<h4>Chain rule in practice</h4>' +
-        '<p>Differentiate the <em>outer</em> function (keeping the inner intact), then multiply by the derivative of the <em>inner</em>: \\((\\ln(3x^2+5))\'=\\frac{1}{3x^2+5}\\cdot 6x\\). The chain rule is what lets us differentiate exponential, logarithmic and trigonometric expressions used in economics.</p>' +
+        '<p>A composite is a "function inside a function". Differentiate the <em>outer</em> function (leaving the inner one untouched), then <strong>multiply</strong> by the derivative of the inner: \\((\\ln(3x^2+5))\'=\\frac{1}{3x^2+5}\\cdot 6x=\\frac{6x}{3x^2+5}\\). Forgetting the second factor \\(g\'(x)\\) is the single most common differentiation mistake. The chain rule is what lets us differentiate the exponential, logarithmic and trigonometric expressions that appear throughout economics.</p>' +
         '</div>' +
 
         '<h4>Higher-order derivatives</h4>' +
-        '<p>Differentiating again gives the second derivative \\(f\'\'=\\left(f\'\\right)\'\\), and so on: \\(f^{(n)}=\\left[f^{(n-1)}\\right]\'\\). The second derivative will be the key tool for classifying extrema in the next unit.</p>'
+        '<p>Nothing stops you differentiating the result again. The derivative of \\(f\'\\) is the <strong>second derivative</strong> \\(f\'\'=\\left(f\'\\right)\'\\), and in general \\(f^{(n)}=\\left[f^{(n-1)}\\right]\'\\). For the example above, \\(f\'\'(x)=80x^3-36x^2\\). The first derivative tells us whether a function rises or falls; the second tells us how it <em>curves</em> — and together, in the next unit, they pin down maxima and minima.</p>'
     }
   },
 
@@ -728,23 +746,25 @@ const mathM1 = {
     learn: {
       content:
         '<h3>Increase, decrease &amp; extrema</h3>' +
-        '<p>The derivative turns the qualitative idea of "rising" and "falling" into a computation. Since \\(f\'(x_0)\\) is the slope of the tangent, its <span class="highlight">sign</span> tells us the direction of the function:</p>' +
+        '<p>This unit is where the derivative pays off: it turns the vague idea of a curve "rising", "falling" or "turning around" into something you can <em>compute</em>. The key link is the geometric meaning from the last unit — \\(f\'(x_0)\\) is the slope of the tangent — so the <span class="highlight">sign</span> of the derivative reads off the direction of travel:</p>' +
         '<div class="formula-box">\\[f\'(x)>0\\Rightarrow f\\text{ increases},\\qquad f\'(x)<0\\Rightarrow f\\text{ decreases}.\\]</div>' +
+        '<p>A positive slope means the tangent points uphill, so the function is rising; a negative slope points downhill. The interesting places are where it switches from one to the other.</p>' +
 
-        '<h4>Stationary points and the tests</h4>' +
-        '<p>A <strong>stationary point</strong> solves \\(f\'(x_0)=0\\) (horizontal tangent). There the function may have a minimum, a maximum, or an inflection point. Two tests classify it:</p>' +
+        '<h4>Stationary points and the two tests</h4>' +
+        '<p>A <strong>stationary point</strong> is any \\(x_0\\) with \\(f\'(x_0)=0\\): the tangent is horizontal there. It is only a <em>candidate</em> — the function may have a minimum, a maximum, or merely flatten out at an inflection point. Two tests decide which:</p>' +
         '<ul>' +
-        '<li><strong>First-derivative test</strong>: sign change \\(-\\to+\\) is a minimum; \\(+\\to-\\) is a maximum; no change is an inflection point.</li>' +
-        '<li><strong>Second-derivative test</strong>: \\(f\'\'(x_0)>0\\Rightarrow\\) minimum; \\(f\'\'(x_0)<0\\Rightarrow\\) maximum; \\(f\'\'(x_0)=0\\Rightarrow\\) (typically) inflection.</li>' +
+        '<li><strong>First-derivative test</strong> — look at how \\(f\'\\) changes sign across \\(x_0\\): a switch \\(-\\to+\\) (falling then rising) is a <em>minimum</em>; \\(+\\to-\\) (rising then falling) is a <em>maximum</em>; <em>no</em> sign change is an inflection point.</li>' +
+        '<li><strong>Second-derivative test</strong> — evaluate \\(f\'\'(x_0)\\): the value \\(f\'\'(x_0)>0\\) means the curve opens upward (a cup → <em>minimum</em>), \\(f\'\'(x_0)<0\\) means it opens downward (a cap → <em>maximum</em>), and \\(f\'\'(x_0)=0\\) is inconclusive (typically an inflection).</li>' +
         '</ul>' +
+        '<p><strong>Worked example.</strong> For \\(f(x)=x^2-6x+5\\): \\(f\'(x)=2x-6=0\\Rightarrow x_0=3\\). Since \\(f\'\'(x)=2>0\\), the point \\(x_0=3\\) is a minimum, with value \\(f(3)=-4\\). A single sign decided the whole question.</p>' +
 
         '<div class="tip-box">' +
-        '<h4>Function-flow table (exam procedure)</h4>' +
-        '<p>(1) domain → (2) compute \\(f\'\\) → (3) stationary points \\(f\'(x)=0\\) → (4) split the domain into intervals → (5) test the sign of \\(f\'\\) in each → (6) read off increase/decrease and extrema.</p>' +
+        '<h4>Function-flow table (the exam procedure)</h4>' +
+        '<p>The reliable recipe for "analyse the function" is a six-step table: (1) find the <strong>domain</strong> → (2) compute \\(f\'\\) → (3) solve \\(f\'(x)=0\\) for the <strong>stationary points</strong> → (4) split the domain into intervals at those points → (5) test the <strong>sign</strong> of \\(f\'\\) in each interval (pick any convenient test point) → (6) read off where the function increases/decreases and which stationary points are maxima or minima. Doing the steps in order means you never miss a turning point.</p>' +
         '</div>' +
 
         '<h4>Optimisation in economics</h4>' +
-        '<p>Derivatives find the best operating point of a firm. <strong>Marginal cost</strong> is \\(M(Q)=T\'(Q)\\). To maximise <strong>profit</strong> \\(D(Q)=P(Q)-T(Q)\\) solve \\(D\'(Q)=0\\) and check \\(D\'\'<0\\); to minimise <strong>average cost</strong> \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\) solve \\(\\overline{T}\'(Q)=0\\) and check \\(\\overline{T}\'\'>0\\). These are the quantitative pay-off of the whole unit: the calculus of optimal decisions.</p>'
+        '<p>The same machinery finds a firm\'s best operating point — the quantitative pay-off of the whole midterm. <strong>Marginal cost</strong> is the derivative of total cost, \\(M(Q)=T\'(Q)\\) — roughly the cost of one more unit. To <strong>maximise profit</strong> \\(D(Q)=P(Q)-T(Q)\\), solve \\(D\'(Q)=0\\) for the stationary quantity and confirm \\(D\'\'<0\\); to <strong>minimise average cost</strong> \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\), solve \\(\\overline{T}\'(Q)=0\\) and confirm \\(\\overline{T}\'\'>0\\). <strong>Worked example.</strong> With \\(T(Q)=5Q^3-90Q^2+540Q\\), the average cost \\(\\overline{T}(Q)=5Q^2-90Q+540\\) has \\(\\overline{T}\'(Q)=10Q-90=0\\Rightarrow Q=9\\), giving a minimum average cost of \\(135\\). The derivative has turned a business question into one short calculation.</p>'
     }
   }
 
