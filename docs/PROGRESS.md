@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-26 — NOVI predmet: Mathematics (1. god, sem 1) — KaTeX — K1+K2+Final (lokalno, NEdeployano)
+**Zadnji 1.god predmet.** Materijali `…/1. godina Hospitality Managament/Math` (deckovi 1–6,8,9,11 + 4 prezentacije-lekcije
+koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa).
+- **Study:** `mathM1` (5 kat: realNumbers/basicEquations/functions/differentiation/extrema; 48fc/44quiz/34fill) + `mathM2`
+  (4 kat: integralElasticity/annuities/loans/gaussJordan; 25fc/28quiz/24fill) + `mathFinal` (hibrid+examPractice; **10 kat/79fc/79quiz/64fill**).
+- **Exercises:** `exercises.js` **39 vježbi** (26 K1 + 13 K2) + `math-lib.js` (gcd/quadratic/polyEval/polyDeriv). 28 randomiziranih
+  **brute-force verificirano (72.173 field-checka, 0 problema)**; financijske formule (anuiteti/zajmovi) **točne do centa** vs slajdovi.
+- **⚙️ ENGINE PROMJENA (js/exercises.js):** 4 čuvana `renderMath()` poziva nakon mounta → **exercises sad renderiraju KaTeX** (prije
+  sirovi `\(...\)`). Currency-safe + no-op za tekstualne; **Statistics/Accounting verificirano netaknuti**. Aditivno, 0 promjena tipova vježbi.
+- **K2 learn OBOGAĆEN** na udžbeničku dubinu (intuicija + riješeni primjeri + zamke; 3000–4787 zn) nakon zamjerke korisnika
+  ([[learn-sections-must-be-rich]], 3. put). Catalog `math` (year1/sem1, `fa-square-root-variable`/violet). Cache `20260688`.
+- **Commitano lokalno:** `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX). Gate: validate 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=17)**.
+- **Bug ulovljen ranije u sesiji:** smoke-test testira SAMO prvu resolve-lekciju po predmetu → K2/final render NIJE bio pokriven; dodan ciljani render-test (prošao).
+- **⚠️ PENDING (nakon compacta):** (a) **K1 learn obogaćivanje** (5 sekcija tanke 1654–2790zn → kao K2); (b) **Gauss vs Gauss-Jordan nijansa**
+  (Gauss/gornje-trokutasta + „samo retci, ne stupci"); (c) korisnikov pregled formula; (d) push/deploy. Plan `docs/MATH_PLAN.md`.
+
 ## 2026-06-24 — NOVI predmet: Traffic in Tourism (1. god, sem 2) — ručno iz predavanja
 **Sljedeći predmet 1. godine po roadmapu** ([[content-roadmap-sequencing]]). Korisnik dostavio 13 PDF-ova
 (`…/1. godina Hospitality Managament/Traffic in tourism`). Ručno (NE generator) jer je činjenično specifičan i ima rupe/izvještaje.

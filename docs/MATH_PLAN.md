@@ -1,7 +1,20 @@
 # MATH_PLAN.md — Matematika (1. god) — plan razvoja
 
-> **Status:** ⬜ TODO — **ZADNJI predmet 1. godine** (najveća gustoća formula). Kreće **nakon Traffic in Tourism**.
-> Ovo je radni plan; puni cigla-po-cigla raspored se dovršava kad krenemo (kao [STATISTICS_PLAN.md](STATISTICS_PLAN.md)).
+> **Status (2026-06-26):** 🟡 **K1 + K2 + Final IZGRAĐENI i COMMITANI lokalno (NEdeployano)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX).
+> **Math = year 1, SEMESTAR 1** (kao Micro/Statistics; korisnik nije osporio). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa, potvrdio korisnik).
+> **PENDING (nakon compacta 2026-06-26):** (a) **K1 learn obogaćivanje** (5 sekcija pretanke, 1654–2790 zn → udžbenička dubina kao K2, [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** (Leonova prezentacija uči Gauss/gornje-trokutastu + „samo retci, ne stupci"); (c) korisnikov pregled svih formula; (d) finalni gate + push.
+
+## 0. STVARNO STANJE (što je izgrađeno)
+- **`data/math/midterm-1.js` (`mathM1`):** 5 kat (realNumbers, basicEquations, functions, differentiation, extrema) / 48 fc / 44 quiz / 34 fill. KaTeX, learn ⚠️ JOŠ TANAK (treba obogatiti).
+- **`data/math/midterm-2.js` (`mathM2`):** 4 kat (integralElasticity, annuities, loans, gaussJordan) / 25 fc / 28 quiz / 24 fill. **Learn OBOGAĆEN** (3000–4787 zn, riješeni primjeri + intuicija + zamke).
+- **`data/math/final.js` (`mathFinal`):** hibrid `Object.assign({}, mathM1, mathM2, {examPractice})` (ZADNJI) → 10 kat / 79 fc / 79 quiz / 64 fill.
+- **`data/math/exercises.js` (`mathExercises`) + `data/math/math-lib.js` (`MathLib`):** **39 vježbi** (26 K1 + 13 K2) na enginu. **28 randomiziranih brute-force verificirano** (72.173 field-checka, 0 problema); financijske formule točne do centa protiv slajdova. math-lib = mali helper (gcd/quadratic/polyEval/polyDeriv), učitan PRIJE exercises.
+- **Catalog:** subject `math` (year 1, sem 1, `fa-square-root-variable`/violet `#8b5cf6`), sve 3 lekcije mapirane, `features.exercises:true`. Cache `20260688`.
+- **⚙️ ENGINE PROMJENA (js/exercises.js):** dodani 4 čuvana `renderMath()` poziva nakon mounta → **exercises sad renderiraju KaTeX** (prije: sirovi `\(...\)`). Currency-safe + no-op za tekstualne predmete; Statistics/Accounting verificirano netaknuti. Aditivno, 0 promjena tipova vježbi. [[accounting-exercises-engine]]
+- **Pokrivenost lekcija (korisnik javio da su prezentacije PRAVE lekcije, ne seminari):** svih 9 deckova (1–6,8,9,11) + 4 prezentacije-lekcije (Application of derivations, Composite derivations, Integrals Belyaeva, Gauss-Jordan elimination) sadržajno pokriveno. Teme 7,10 ne postoje u folderu.
+
+---
+## (izvorni plan — referenca)
 > Odluka korisnika (2026-06-24): „posvetit ćemo se ozbiljno matematici, napraviti cijeli math md."
 
 ## 1. Materijali (postoje na disku)

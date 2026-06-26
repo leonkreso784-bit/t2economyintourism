@@ -30,6 +30,14 @@ Sustav mora omogućiti da se **kasnije lako dodaju nove vježbe** za:
 3. **Dodavanje novog packa = 3 koraka, 0 koda:** (a) nova `data/<subject>/exercises.js`, (b) catalog unos
    (`features.exercises:true` + `content.exercises:'<var>'` + script), (c) bump `?v=`/`CONTENT_VERSION`.
 
+> **⚙️ Sankcionirana ENGINE ekstenzija — KaTeX render (2026-06-26):** `js/exercises.js` zove `window.renderMath(host)`
+> nakon SVAKOG mounta (lista, otvaranje vježbe, mode-switch / new-numbers, feedback) → kvantitativni packovi (Math, kasnije
+> Micro/Stat/Macro) mogu pisati formule kao LaTeX `\( … \)` / `\[ … \]` i one se renderiraju (prije: sirovi `\(...\)` tekst).
+> **Zašto NIJE kršenje svetog pravila:** to je PREZENTACIJSKA sposobnost za SVE packove (kao `renderMath` u 4 glavna renderera),
+> **currency-safe** (jedan `$` netaknut → Accountingov `$25` siguran) i **no-op** ako pack nema LaTeX. **0 promjena tipova/ocjenjivanja**;
+> tekstualni packovi (Statistics/Accounting unicode) verificirano nepromijenjeni. Analogno sankcioniranom `cite` tipu — ekstenzija, ne hack.
+> Math exercises koriste `\(...\)` (jedini pack koji to radi; ostali koriste unicode — oba rade).
+
 ---
 
 ## 1. Arhitektura (datoteke i tok)

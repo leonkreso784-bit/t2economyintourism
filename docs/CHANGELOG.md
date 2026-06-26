@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **Mathematics — NOVI predmet (1. god, sem 1), KaTeX — K1+K2+Final (lokalno, NEdeployano `b481be5`+`c49422a`, 2026-06-26)** — zadnji 1.god predmet iz
+  deckova 1–6,8,9,11. **K1 = teme 1–5** (`mathM1`, 5 kat: realNumbers/basicEquations/functions/differentiation/extrema) · **K2 = teme 6–11**
+  (`mathM2`, 4 kat: integralElasticity/annuities/loans/gaussJordan) · **finalni** hibrid + examPractice (**10 kat / 79 fc / 79 quiz / 64 fill**).
+  **39 interaktivnih vježbi** (26 K1 + 13 K2) + `math-lib.js` — 28 randomiziranih brute-force verificirano (72.173 checka, 0 problema); financijske
+  formule točne do centa vs slajdovi. Catalog `math` (`fa-square-root-variable`/violet `#8b5cf6`), `features.exercises:true`. Cache `20260688`.
+  ⚠️ PENDING: K1 learn obogaćivanje + Gauss-vs-Gauss-Jordan nijansa + pregled formula + push.
+### Changed
+- **Exercises engine renderira KaTeX (js/exercises.js, 2026-06-26)** — dodani 4 čuvana `renderMath()` poziva nakon mounta (list, otvaranje vježbe,
+  mode-switch/new-numbers, feedback) → kvantitativne vježbe prikazuju formule kao LaTeX umjesto sirovog `\(...\)`. **Currency-safe** (jedan `$` netaknut)
+  i **no-op za tekstualne predmete** (verificirano: Statistics/Accounting vježbe nepromijenjene). Aditivna prezentacijska ekstenzija — 0 promjena tipova vježbi.
+### Added (nastavak)
 - **Traffic in Tourism — NOVI predmet (1. god, sem 2)** — ručno iz 8 PDF predavanja (prof. Nataša Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori
   (Sustainable & Smart Mobility Strategy, Key figures on European transport 2024, CO2/road-safety izvještaji). K1/K2 granica **autoritativna iz silabusa (DINP):
   1. kolokvij = tjedan 7 → K1 = tjedni 1–6, K2 = tjedni 7–15.** **K1** (`trafficM1`, 6 kat: theoreticalBasis/interdependence/mobilityPatterns/road-connector/

@@ -2,10 +2,12 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 AŽURNO (2026-06-24)
-**2. god HM = 8/8 ✅ LIVE.** **1. god (8 gotovih, svi LIVE):** Business Informatics, SIT, Management, Microeconomics,
-Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (zadnji — ručno iz predavanja, ✅ LIVE 2026-06-25 `62a4119`).
-Preostalo: **Math** (zadnja); Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
+## 📍 AŽURNO (2026-06-26)
+**2. god HM = 8/8 ✅ LIVE.** **1. god (8 LIVE):** Business Informatics, SIT, Management, Microeconomics,
+Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (✅ LIVE 2026-06-25 `62a4119`).
+**🟡 Math = 9. (zadnji) 1.god predmet — K1+K2+Final IZGRAĐENI/COMMITANI lokalno (NEdeployano, `b481be5`+`c49422a`, 2026-06-26);**
+year1/sem1, KaTeX, 39 vježbi (engine sad renderira KaTeX). **PENDING:** K1 learn obogaćivanje + Gauss-vs-Gauss-Jordan + pregled formula + push.
+Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
 `docs/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
 (novi `cite` = „napiši citat"). **Blok B read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s
 file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
@@ -13,7 +15,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 ## 🧭 DALJE — planovi (korisnik, 2026-06-24)
 **A) Dovršiti sadržaj 1. godine (po redu):**
 1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md)).
-2. **Math** — ZADNJI 1.-god predmet; ozbiljan fokus, vlastiti plan [MATH_PLAN.md](MATH_PLAN.md) (materijali postoje: 100 JPG + PDF; KaTeX gotov).
+2. **Math** — ZADNJI 1.-god predmet. 🟡 **K1+K2+Final IZGRAĐENI/COMMITANI lokalno (2026-06-26, `b481be5`+`c49422a`).** PENDING: K1 learn obogaćivanje + Gauss-vs-Gauss-Jordan nijansa + pregled formula + push. Plan [MATH_PLAN.md](MATH_PLAN.md).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
 **B) Nakon sadržaja — prioriteti (ovim redom):**
