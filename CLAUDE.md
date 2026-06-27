@@ -270,7 +270,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
-  (vm-shim → REST upsert; **49 redova, 15 predmeta**). `js/content-loader.js`: flag `CONTENT_FROM_SUPABASE=true` + `_loadSubjectFromSupabase()`.
+  (vm-shim → REST upsert; inicijalno 49/15, **sad 51 redova / 17 predmeta / 0 redova vježbi** nakon BUG-012 fixa). `js/content-loader.js`: flag `CONTENT_FROM_SUPABASE=true` + `_loadSubjectFromSupabase()`.
   **Datoteke ostaju IZVOR ISTINE** — baza je zrcalo (re-sync skriptom nakon izmjene predmeta). Cache `20260684`. Gate: anon REST 49/49 +
   Playwright 68/68 (sadržaj iz baze). **⚠️ free tier uspava projekt ~7 dana neaktivnosti → restore BESPLATAN; uspavan = sadržaj iz datoteka (fallback),
   login/sync ne rade dok ne restoreaš.** `service_role` key SAMO u `.env` (gitignored). [[backend-track-b-start]]
@@ -292,8 +292,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009, gotov), Math zadnja.
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
-  **B)** nakon sadržaja (SAD AKTUALNO): **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** Opcionalno usput: Supabase re-sync Math (read-path).
-  **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod HM, aktivira i18n) · **3. godina HM** · **studentski UGC za 3./4. god** (jezik HR/EN neodlučen).
+  **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
+  **C) strateški — SAD AKTUALNO (korisnik 2026-06-27):** **HRV program „Menadžment u Hotelijerstvu"** (prijevod SVIH predmeta 1.+2. god na hrvatski,
+  aktivira i18n) + **flashcard bug** (kod dugog teksta okrenuta kartica prekrije strelicu „dalje" — `position:absolute` strane ne rastežu
+  `.flashcard-inner`; popravak = grid-stack, vidi razgovor 2026-06-27) · zatim **3. godina HM** · **studentski UGC za 3./4. god**.
+  **Plan/arhitektura HRV smjera:** paralelni program u catalogu (klon, NE i18n u sadržaju) + `translate-subject.js` (Sonnet); flashcard bug PRVO. Vidi razgovor 2026-06-27.
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).

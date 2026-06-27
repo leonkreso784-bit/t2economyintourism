@@ -15,7 +15,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 ## 🧭 DALJE — planovi (korisnik, 2026-06-24)
 **A) Dovršiti sadržaj 1. godine (po redu):**
 1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md)).
-2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](MATH_PLAN.md). Opcionalno: Supabase re-sync Math (read-path).
+2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
 **B) Nakon sadržaja — prioriteti (ovim redom):**
@@ -23,10 +23,19 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 2. **AI tutor** (Faza 1; „donesi svoj ključ" prvo — [VISION.md](VISION.md)).
 3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
 
-**C) Veće strateške mogućnosti (nesigurni timing):**
-- **Novi program „Menadžment u ugostiteljstvu" (HRV)** — vrlo vjerojatno: **prijevod cijelog Hospitality Managementa na hrvatski**. Catalog već podržava više programa pod istim fakultetom (ADR-002/003) → novi `program` + prevedeni `data/*`. (i18n HR/EN postaje relevantan.)
-- **3. godina** Hospitality Managementa — doći će, timing TBD.
-- **Studentski UGC za više godine:** studenti sami uploadaju sadržaj i grade **3. i 4. godinu** (za HM i/ili Menadžment u ugostiteljstvu). Jezik (HR/EN) još neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderaciju/autorska prava ([VISION.md](VISION.md) §4).
+**C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug:**
+- **0) Flashcard bug PRVO** (neovisno, korist svima): kod dugog teksta okrenuta kartica prekrije strelicu „dalje" →
+  ne da se kliknuti. Uzrok: `.flashcard-front/.back` su `position:absolute` pa ne rastežu `.flashcard-inner`
+  (ostaje `min-height:280px`), a duga stražnja strana naraste preko `.flashcard-controls`. Popravak = **grid-stack**
+  (obje strane u istu grid-ćeliju, `position:relative`) → wrapper naraste do više strane, strelice nikad prekrivene. CSS-only.
+- **1) Novi HRV program „Menadžment u Hotelijerstvu"** = **prijevod SVIH predmeta 1.+2. god na hrvatski.** Arhitektura
+  (odlučeno): **paralelni program u catalogu (klon, Opcija A), NE i18n u sadržaju** — novi `program` + `data/<subj>-hr/*.js`,
+  isti engine (0 promjena), vlastiti `storageKey`. Prevođenje preko **`translate-subject.js`** (Sonnet, tool_use, čuva
+  quiz-indeks/KaTeX/`_______`/HTML); vježbe (kod) = posebno (samo string-polja). Faze: bug → infra+pilot (npr. Business
+  Informatics) → UI i18n (~50 stringova) → tekstualni predmeti → kvantitativni → vježbe → Supabase. Detalji: razgovor 2026-06-27.
+- **2) 3. godina** Hospitality Managementa — doći će, timing TBD.
+- **3) Studentski UGC za više godine:** studenti uploadaju/grade **3. i 4. godinu**. Za randomizirane UGC-vježbe =
+  **deklarativni `params`+formula + sigurni sandbox-evaluator** (NE `eval`), ne klijentski kod (vidi BUG-012 pouku). Veže se na Fazu 1–2 + moderaciju ([VISION.md](VISION.md) §4).
 
 ## 📍 STANJE (povijesno, 2026-06-10)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz

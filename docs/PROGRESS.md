@@ -42,7 +42,7 @@ Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesi
 - **Gate (sve zeleno):** KaTeX runtime balans OK (m1 562/562 inline + 47/47 display, m2 202/202 + 36/36,
   final 814/814 + 91/91), validate:content math 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=17, 0 overflow)**.
 - **Commit** `4eeccf1` (kod) + `31be03f` (docovi). **Korisnik pregledao formule („sve izgleda odlično") → ✅ PUSH/DEPLOY** `89fd669..31be03f` na `origin/main` (Vercel auto-deploy). **Cijeli Math (b481be5→31be03f, 5 commita) sad LIVE → 1. GODINA HM 9/9 KOMPLETNA** (uz Intro to Hospitality blokiran).
-- **⚠️ Preostalo (opcionalno):** Supabase re-sync Math (read-path iz baze) NIJE napravljen — Math se servira preko **file-fallbacka** (radi normalno; baza je samo zrcalo).
+- **⚠️ Preostalo (opcionalno):** Supabase re-sync Math (read-path iz baze) NIJE napravljen — Math se servira preko **file-fallbacka**. *(→ NAPRAVLJENO ISTI DAN, vidi gornji unos „BUG-012": Math gradivo migrirano u bazu `801d9a6`.)*
 
 ---
 

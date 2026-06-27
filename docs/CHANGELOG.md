@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Fixed
+- **BUG-012 — randomizirane vježbe se lome kad sadržaj dolazi iz Supabasea ✅ RIJEŠEN + LIVE (2026-06-27, `7176194..801d9a6`).**
+  Vježbe (`data/<subj>/exercises.js`) imaju `generate(p)` funkcije koje `JSON.stringify` izbriše pri migraciji, a loader je u
+  DB-modu preskakao SVE `content.scripts` → randomizirane vježbe razbijene iz baze (Statistics 23 / Macro 25 / Accounting 8).
+  Fix (Opcija A): catalog **`content.codeScripts`** (vježbe+lib = KOD, uvijek iz datoteke) + `js/content-loader.js`
+  (`filesToLoad = fromDb ? codeScripts : scripts`) + `scripts/migrate-content.js` više ne šalje vježbe + `scripts/verify-catalog.js`
+  čuvar (predmet s vježbama MORA imati codeScripts). Baza očišćena (4 reda vježbi) + Math gradivo migrirano → **51 redova / 17 predmeta /
+  0 redova vježbi**. Cache `20260690`. **Pravilo: read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); vježbe iz datoteke.**
+  Vidi `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`.
 ### Added
 - **Mathematics — NOVI predmet (1. god, sem 1), KaTeX — K1+K2+Final ✅ LIVE (deployano 2026-06-27 `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`+`31be03f`)** — zadnji 1.god predmet iz
   deckova 1–6,8,9,11. **K1 = teme 1–5** (`mathM1`, 5 kat: realNumbers/basicEquations/functions/differentiation/extrema) · **K2 = teme 6–11**

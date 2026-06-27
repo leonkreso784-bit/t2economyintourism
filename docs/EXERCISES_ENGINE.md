@@ -262,7 +262,9 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 1. Kreiraj `data/<subject>/exercises.js` → `window.<subject>Exercises = { meta:{lang:'hr', currency:'€', version:1}, exercises:[...] }`
    (svi tekstovi/računi/hintovi na željenom jeziku; tipovi vježbi isti).
 2. `data/catalog.js`: kod tog predmeta dodaj `features:{exercises:true}`, `content.exercises:'<subject>Exercises'`,
-   i `'data/<subject>/exercises.js'` u `content.scripts`.
+   `'data/<subject>/exercises.js'` (+ eventualni `*-lib.js`) u `content.scripts`, **I OBAVEZNO `content.codeScripts`**
+   = `['data/<subject>/(lib.js,) exercises.js']`. ⚠️ **Bez `codeScripts` `npm run verify` PUKNE** (BUG-012 čuvar) — vježbe su KOD
+   (`generate()`), učitavaju se uvijek iz datoteke (nikad iz baze; `JSON.stringify` briše funkcije).
 3. Bump `?v=`/`CONTENT_VERSION`. `npm run verify` + Playwright. **Gotovo — nula izmjena enginea.**
 4. (Ako jezik nije `en`) provjeri da `I18N['hr']` postoji u `js/exercises.js` (samo UI chrome stringovi).
 

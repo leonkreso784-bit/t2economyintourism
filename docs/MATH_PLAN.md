@@ -3,7 +3,7 @@
 > **Status (2026-06-27):** ✅ **K1 + K2 + Final KOMPLETNI i ✅ LIVE (deployano `89fd669..31be03f`)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX) + `4eeccf1` (K1 learn obogaćen + Gauss nijansa) + `31be03f` (docovi).
 > **Math = year 1, SEMESTAR 1** (kao Micro/Statistics). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa, potvrdio korisnik). **→ time je 1. GODINA HM 9/9 KOMPLETNA (uz Intro to Hospitality blokiran — nema PDF-ova).**
 > **✅ SVE RIJEŠENO (2026-06-27):** (a) **K1 learn obogaćen** — svih 5 sekcija na K2 dubinu (realNumbers 4798 / basicEquations 3907 / functions 4197 / differentiation 3520 / extrema 3184 zn; [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** dodana u `gaussJordan` (Gauss = gornji trokut + supstitucija unatrag vs Gauss-Jordan = puna jedinična; „samo retci, ne stupci"; +2 fc/+3 quiz/+3 fill + learn-podsekcija; naziv → „Gauss & Gauss-Jordan Method"); (c) korisnik pregledao formule („sve izgleda odlično"); (d) gate zelen (validate/verify 0/0, test:unit 33/33, Playwright 68/68, KaTeX balans OK) → **pushano/deployano**.
-> **⚠️ Preostalo (opcionalno):** Supabase re-sync Math (read-path iz baze) — dok se ne migrira, Math se servira preko **file-fallbacka** (radi normalno).
+> **✅ Supabase re-sync Math NAPRAVLJEN (2026-06-27, `801d9a6`):** Math gradivo (`mathM1/M2/Final`) je u bazi (čita se iz baze kao ostali predmeti); **vježbe se učitaju iz datoteke** (BUG-012 fix — vježbe = KOD, nikad u bazu).
 
 ## 0. STVARNO STANJE (što je izgrađeno)
 - **`data/math/midterm-1.js` (`mathM1`):** 5 kat (realNumbers, basicEquations, functions, differentiation, extrema) / 48 fc / 44 quiz / 34 fill. KaTeX, **Learn OBOGAĆEN** (3184–4798 zn, riješeni primjeri + intuicija + zamke; 2026-06-27).

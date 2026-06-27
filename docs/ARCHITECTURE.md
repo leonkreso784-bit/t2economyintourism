@@ -66,7 +66,9 @@ pa migracija ne mijenja UI.
 > **Napomena (2026-06-23):** gore je CILJANI normalizirani model (za admin CRUD/UGC kasnije). Trenutni
 > **read-path** (ADR-011) koristi jednostavniju tablicu **`public.subject_content`** (1 red = 1 window var,
 > cijeli objekt kategorija kao `jsonb`) — dovoljno za čitanje, migracijski isto sigurno. Puni normalizirani
-> model uvodimo s admin CRUD-om (B10). Stvarna shema: `supabase/schema.sql`.
+> model uvodimo s admin CRUD-om (B10). Stvarna shema: `supabase/schema.sql`. **⚠️ U `subject_content` idu SAMO
+> čisto-podatkovni varovi (M1/M2/Final = flashcards/quiz/fill/learn). VJEŽBE (`*Exercises`) NISU u bazi** — sadrže
+> `generate()` funkcije koje JSON briše → uvijek se učitaju iz datoteke (`content.codeScripts`). Vidi BUG-012. Stanje: 51 redova / 17 predmeta.
 
 ## Content pipeline (Faza 1+, PPT/PDF → gradivo)
 Upload → ekstrakcija teksta/slika → chunking → Claude generira po postojećoj schemi

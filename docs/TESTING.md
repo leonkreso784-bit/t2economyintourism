@@ -4,7 +4,7 @@
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
 
 ## Automatske provjere (uvijek prvo)
-- [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz). *(alias: `verify:catalog`)*
+- [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz, **+ BUG-012 čuvar: predmet s vježbama MORA imati `content.codeScripts`**). *(alias: `verify:catalog`)*
 - [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
 - [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`).
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):

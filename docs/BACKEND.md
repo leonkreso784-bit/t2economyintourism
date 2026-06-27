@@ -42,8 +42,11 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
 
 ## ✅ Staza B2 — SADRŽAJ iz baze (read-path, ✅ LIVE od 2026-06-23, pushano do `569e608`)
-> **AKTIVIRANO + DEPLOYANO:** schema pokrenuta u dashboardu + 49 redova migrirano (+3 za `traffic` 2026-06-25 → 52/16) + `CONTENT_FROM_SUPABASE = true`.
-> Anon-key read provjeren (49/49), Playwright 68/68 (sadržaj iz baze). Datoteke = i dalje izvor istine + fallback.
+> **AKTIVIRANO + DEPLOYANO:** schema pokrenuta u dashboardu + sadržaj migriran + `CONTENT_FROM_SUPABASE = true`.
+> **Stanje baze (2026-06-27, nakon BUG-012 fixa): 51 redova / 17 predmeta / 0 redova vježbi.** (Inicijalno 49/15 → +traffic → +math gradivo → −4 reda vježbi.)
+> Anon-key read provjeren, Playwright 68/68 (sadržaj iz baze). Datoteke = i dalje izvor istine + fallback.
+> **⚠️ BUG-012 PRAVILO: VJEŽBE NIKAD U BAZU** (sadrže `generate()` funkcije koje JSON briše) — read-path nosi SAMO M1/M2/Final;
+> vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`).
 > ⚠️ Free tier: projekt se uspava nakon ~7 dana neaktivnosti → restore je BESPLATAN; dok je uspavan sadržaj radi iz datoteka (fallback), login/sync ne. Re-sync nakon izmjene predmeta: `node scripts/migrate-content.js <id>`.
 
 **Cilj:** `loadSubjectContent()` čita sadržaj predmeta iz Supabasea umjesto iz `data/*.js`,
@@ -55,7 +58,7 @@ s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigu
 - **Migracija:** `node scripts/migrate-content.js [subjectId] [--dry]` — vm window-shim učita
   `data/<subject>/*.js` (final je već Object.assign-an u istom sandboxu) → upsert preko Supabase REST
   (`Prefer: resolution=merge-duplicates`, `on_conflict=subject_id,var_name`). Treba `SUPABASE_URL` +
-  `SUPABASE_SERVICE_KEY` u `.env` (gitignored). Trenutno: 15 predmeta → 49 redova (`--dry` provjereno).
+  `SUPABASE_SERVICE_KEY` u `.env` (gitignored). **Migrira SAMO M1/M2/Final — NE vježbe** (BUG-012). Stanje: **51 redova / 17 predmeta**.
 - **Frontend:** `js/content-loader.js` → `CONTENT_FROM_SUPABASE` flag + `_loadSubjectFromSupabase()`
   (`SokratAuth.getClient().from('subject_content').select(...).eq('subject_id', …)` → `window[var]=payload`).
   **Flag OFF** = 100% staro ponašanje (datoteke). Flag ON + tablica puna = sadržaj iz baze; greška/prazno → datoteke.
