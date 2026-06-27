@@ -12,7 +12,37 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-*(trenutno nema aktivnih bugova)*
+### BUG-012 — Randomizirane vježbe se LOME kad sadržaj dolazi iz Supabasea (live)
+- Status: 🔴 otvoren · Težina: **visok** (živi regres na produkciji) · Datum nalaza: 2026-06-27
+- Opis: Predmeti s **interaktivnim vježbama** imaju **randomizirane** vježbe definirane funkcijom `generate(p)` na objektu vježbe.
+  Pogođeni (broj randomiziranih): **Statistics 23, Macroeconomics 25, Accounting 8** (svi U BAZI → živo pokvareno),
+  **Math 29** (još NE u bazi — zato se ne migrira). **Academic Writing = 0 randomiziranih (sve statične) → siguran, radi iz baze.**
+  `generate(p)` živi na objektu vježbe
+  (`data/<subj>/exercises.js`). Te vježbe se **ne mogu ispravno servirati iz baze** — kad dođu iz Supabasea,
+  ostaju bez generiranih polja/odgovora → vježba je razbijena (prazno / bez točnog rješenja).
+- Reprodukcija: otvoriti predmet s vježbama dok je `CONTENT_FROM_SUPABASE=true` (default za SVE posjetitelje) →
+  Exercises tab → randomizirana vježba (npr. Statistics, 23 od 56 su randomizirane) → nema brojeva/inputa.
+- Uzrok (dvostruki):
+  1. **`JSON.stringify` briše funkcije.** `scripts/migrate-content.js` sprema `content.exercises` paket kao JSON
+     (`JSON.stringify(payload)`); `generate(p)` metode nestanu. Dokaz iz žive baze: `statisticsExercises` ima
+     56 vježbi, **23 s `params` (randomizirane), 0 s `generate`** — funkcije izbrisane pri uploadu.
+  2. **Loader preskače skripte u DB-modu.** `js/content-loader.js` (linije ~86-92): kad `fromDb===true`, vrati
+     odmah i **ne učita `content.scripts`** — pa ni `stat-lib.js`/`math-lib.js` (`window.StatLib`/`MathLib`) koje
+     `generate()` koristi. Engine `js/exercises.js:527-534`: bez `generate` → `resolveExercise` vrati sirov objekt
+     (bez dinamičkih polja) → razbijeno.
+- Posljedica: tih ~23 (Statistics) + macro + accounting randomiziranih vježbi je **trenutno pokvareno na živoj
+  stranici** za sve (anon klijent čita iz baze). Statične vježbe (choice/classify/cite/tf) RADE — one nemaju funkcije.
+- Zašto nije ranije uhvaćeno: Playwright DB-test ne otvara randomiziranu vježbu u DB-modu (provjerava
+  flashcards/quiz/fill/learn render, ne `generate()` put).
+- Rješenje: **vježbe su KOD, ne podaci** → ne smiju u bazu kao JSON. Plan rješenja (3 opcije) =
+  `docs/EXERCISES_DB_FIX_PLAN.md`. Math se NE migrira dok ovo nije riješeno (inače isti regres).
+- Lekcija (preliminarno): payload koji sadrži **funkcije** nije JSON-migracijski; read-path iz baze smije nositi
+  samo čisto-podatkovne window-varove (M1/M2/Final = flashcards/quiz/fill/learn). Svaki novi „content iz baze"
+  test MORA pokriti i exercises `generate()` put, ne samo 4 osnovna moda.
+
+---
+
+*Riješeni bugovi 001–011 dolje.*
 
 ---
 
