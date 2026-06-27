@@ -24,7 +24,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug:**
-- **0) Flashcard bug PRVO** (neovisno, korist svima): kod dugog teksta okrenuta kartica prekrije strelicu „dalje" →
+- **0) Flashcard bug PRVO** (**BUG-013**, [BUGS.md](BUGS.md); neovisno, korist svima): kod dugog teksta okrenuta kartica prekrije strelicu „dalje" →
   ne da se kliknuti. Uzrok: `.flashcard-front/.back` su `position:absolute` pa ne rastežu `.flashcard-inner`
   (ostaje `min-height:280px`), a duga stražnja strana naraste preko `.flashcard-controls`. Popravak = **grid-stack**
   (obje strane u istu grid-ćeliju, `position:relative`) → wrapper naraste do više strane, strelice nikad prekrivene. CSS-only.

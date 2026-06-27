@@ -8,11 +8,26 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Težina:** kritičan / visok / srednji / nizak
 - Opis · Koraci za reprodukciju · Uzrok · Rješenje · **Lekcija**
 
+> **Opseg:** ovdje idu **bugovi proizvoda/sajta** (ono što korisnik vidi/doživi). *Tooling/proces* problemi
+> (npr. generator-skripta, Windows libuv smetnja pri gašenju, lažni KaTeX-checker pozitiv) bilježe se u
+> `PROGRESS.md` + `CLAUDE.md`/memoriji jer ne utječu na korisnika. Bugovi su numerirani uzlazno (BUG-001…),
+> a u popisu su aktivni gore pa riješeni (najnoviji riješeni na vrhu).
+
 ---
 
 ## Aktivni
 
-*(trenutno nema aktivnih bugova)*
+### BUG-013 — Flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje"
+- Status: 🔴 otvoren (planiran fix: grid-stack) · Težina: srednji (UX, svi predmeti, kartice s dugim odgovorom) · Prijavio korisnik: 2026-06-27
+- Opis: kad je odgovor dug, **okrenuta (flipped) kartica naraste preko kontrola** ispod nje → strelica „dalje"/„next" je fizički prekrivena i ne da se kliknuti. Korisnik traži da kartica nikad ne prekrije strelice.
+- Reprodukcija: bilo koji predmet → Flashcards → kartica s dugim odgovorom → okreni → strelica „dalje" nedohvatljiva.
+- Uzrok: `.flashcard-front`/`.flashcard-back` su `position:absolute` → **ne rastežu roditelja** `.flashcard-inner` (ostaje `min-height:280px`). Duga stražnja strana (`height:auto` + `overflow-y:auto`) naraste **prema dolje preko `.flashcard-controls`** (sljedeći element u toku, [index.html:544](../index.html#L544)). Klasičan problem 3D flip-kartica (apsolutne strane za stacking lome auto-visinu).
+- Plan rješenja (CSS-only): **grid-stack** — obje strane u istu grid-ćeliju (`.flashcard-inner{display:grid}`, strane `grid-area:1/1; position:relative`) → grid uzme visinu **viša strana** → wrapper naraste → strelice nikad prekrivene; 3D-flip (`backface-visibility` + `rotateY`) ostaje. Rezerva: JS postavi `.flashcard-inner` visinu = `max(front,back).scrollHeight`. Cache bump + `test:responsive`.
+- Lekcija (kad se riješi): flip-kartice s `position:absolute` stranama NE rastežu roditelja → `height:auto` „kolabira"; grid-stack (obje strane u istoj ćeliji) drži auto-visinu i sprječava preklapanje s elementima ispod.
+
+---
+
+*(gore = aktivni; riješeni dolje)*
 
 ---
 
