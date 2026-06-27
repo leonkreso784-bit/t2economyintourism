@@ -42,8 +42,7 @@ Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 | Introduction to hospitality | 0 | ⛔ **BLOKIRAN** — korisnik NEMA PDF-ove (2026-06-24); preskočiti dok ih ne nabavi |
 | English | 2 PDF | tanko (niski prioritet) |
 
-**Stanje (2026-06-24):** 1. god = **7 gotovih**. Redoslijed dalje: **Traffic in Tourism** (sljedeći, treba materijale) →
-**Math** (zadnja, materijali postoje). **Intro to Hospitality = blokiran** (nema PDF-ova). Novi predmeti se rade kroz
+**Stanje (2026-06-27):** **1. god = 9/9 KOMPLETNO i LIVE** (Traffic ✅ 2026-06-25, **Math** ✅ 2026-06-27 — zadnji). **Intro to Hospitality = blokiran** (nema PDF-ova). Novi predmeti se rade kroz
 **generator** ([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
 
 ## Marketing (2. god) — intake & plan (2026-06-05) ← SLJEDEĆE

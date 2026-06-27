@@ -25,9 +25,9 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 - Semestar 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
 - Semestar 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
 
-**1. godina (u izradi):**
-- ✅ Gotovo: **Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing, Traffic in Tourism** (svi K1+K2+Final)
-- ⬜ Slijedi: Math (zadnja); Intro to Hospitality (blokiran — nema PDF-ova)
+**1. godina (✅ 9/9 KOMPLETNO):**
+- ✅ Gotovo: **Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing, Traffic in Tourism, Mathematics** (svi K1+K2+Final, svi LIVE)
+- ⛔ Intro to Hospitality (blokiran — nema PDF-ova)
 - *Academic Writing = prvi predmet izgrađen kroz **generator** (PDF→Sonnet→data/*.js); vidi [CONTENT_GENERATOR.md](docs/CONTENT_GENERATOR.md).*
 
 ## 🛠️ Tehnologije

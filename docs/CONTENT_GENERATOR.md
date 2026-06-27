@@ -62,7 +62,7 @@ Playwright) — `catalog.js` NE dira sam (najosjetljivije = svjesno, uz verify).
 materijali → build-topics → topics.json → generate-subject (Sonnet) → draft.json → assemble-subject → data/<subj>/*.js
           → [paste catalog unos] → bump CONTENT_VERSION → validate:content → verify → Playwright → Opus spot-check
 ```
-**Sljedeće:** pravi pilot-predmet kad korisnik donese materijale (npr. prazni 1.-god predmeti, ili Math zadnja).
+**Sljedeće:** generator je dostupan za buduće programe (HRV „Menadžment u ugostiteljstvu", 3. god HM). Sadržaj 1.+2. god HM je gotov (Math je rađen RUČNO, ne kroz generator). Academic Writing ostaje jedini generator-pilot do sad.
 
 ## Pravila (kao i dosad)
 - Cigla po cigla: jedna → test → commit lokalno → STANI za pregled → „nastavi".

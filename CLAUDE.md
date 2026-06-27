@@ -247,8 +247,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   CONNECTOR + TOURISM PRODUCT. **8 nastavnih deckova** (INTRO.pdf = administrativan → tjedni 1–2 + value&quality autorski iz silabusa); **4 EU izvještaja**
   (CO2/road-safety/climate/figures) = izvor činjenica za safety+ecology, NE zasebne teme. Kvalitativan → bez KaTeX/Exercises (korisnik). Catalog `traffic`
   (`fa-route`/amber `#f59e0b`). Cache `20260685` (+ catalog.js/content-loader.js `?v=`). `.gitignore` + `tmp-traffic/`. Gate: validate 0/0, verify 0/0,
-  **Playwright 68/68 (subjects=16)**. **✅ DEPLOYANO + Supabase re-sync (3/3). Dalje: Math (zadnji 1.god predmet).** [[content-roadmap-sequencing]]
-- **🟡 MATHEMATICS — NOVI predmet (1. god, sem 1) — KaTeX — K1+K2+Final COMMITANI LOKALNO (NEdeployano, 2026-06-26/27, `b481be5`+`c49422a`+`4eeccf1`):** zadnji 1.god predmet.
+  **Playwright 68/68 (subjects=16)**. **✅ DEPLOYANO + Supabase re-sync (3/3).** [[content-roadmap-sequencing]]
+- **✅ MATHEMATICS — NOVI predmet (1. god, sem 1) — KaTeX — K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`):** zadnji 1.god predmet → **1. GODINA 9/9 (uz Intro blokiran).**
   Materijali `…/1. godina Hospitality Managament/Math` (deckovi 1–6,8,9,11 + 4 prezentacije-lekcije). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa).
   `data/math/` `mathM1` (5 kat: realNumbers/basicEquations/functions/differentiation/extrema) + `mathM2` (4 kat: integralElasticity/annuities/loans/gaussJordan) +
   `mathFinal` (hibrid+examPractice). **Final 10 kat / 79 fc / 79 quiz / 64 fill.** **`exercises.js` 39 vježbi (26 K1+13 K2) + `math-lib.js`** (28 randomiziranih
@@ -259,7 +259,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   differentiation 3520/extrema 3184 zn; intuicija+radni primjeri+interpretacija+zamke); (b) Gauss vs Gauss-Jordan nijansa dodana u `gaussJordan` (+2 fc/+3 quiz/+3 fill +
   learn-podsekcija: Gauss=gornji trokut+supstitucija unatrag vs Gauss-Jordan=puna jedinična; pravilo „samo redovi, nikad stupci"; naziv kat. → „Gauss & Gauss-Jordan Method").**
   Gate (oba puta): KaTeX runtime balans OK (m1 562/562+47/47, m2 202/202+36/36, final 814/814+91/91), validate 0/0, verify 0/0, test:unit 33/33,
-  Playwright 68/68 (subjects=17). **⚠️ PENDING: (c) korisnikov pregled formula; (d) push/deploy.** Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
+  Playwright 68/68 (subjects=17). **Korisnik pregledao formule („sve izgleda odlično") → ✅ DEPLOYANO 2026-06-27.** ⚠️ Supabase re-sync Math (read-path) NIJE napravljen — radi preko file-fallbacka dok se ne migrira. Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
@@ -274,18 +274,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `{"error":"requested path is invalid"}`. NIJE kod (`js/auth.js` šalje `emailRedirectTo` ispravno) — Supabase **Redirect URLs**
   pokrivali samo localhost. Popravak: Auth → URL Configuration → Site URL `https://www.sokratstudy.com` + Redirect URLs sa `/**`:
   `https://www.sokratstudy.com/**`, `https://sokratstudy.com/**`, `http://localhost:5050/**`. Doc `docs/BACKEND.md` (`06c96a8`). [[backend-track-b-start]]
-- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **sem-1 = 4/4 → CIJELA 2. GODINA HM = 8/8 KOMPLETNO.** **1. godina: Business
-  Informatics ✅ + SIT ✅ + Management ✅ (3 gotova).** Management je bio **ZADNJI čisto tekstualni** → dalje **KaTeX cigla (ADR-009)**
-  otključava kvantitativnu trojku: Macro/**Statistics — 26 datoteka**/**Micro — 172-str deck**; Math zadnja.
-  **⚠️ Prije masovnog unosa 1. god: razmotriti odgođeni generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**
+- **Sadržaj-staza ([[content-roadmap-sequencing]]):** **2. GODINA HM = 8/8 KOMPLETNO.** **✅ 1. GODINA HM = 9/9 KOMPLETNO i LIVE** (Business
+  Informatics, SIT, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing, Traffic in Tourism, **Math** — zadnji, deployan 2026-06-27).
+  **⛔ Intro to Hospitality = BLOKIRAN** (nema PDF-ova). Math je bio ZADNJI 1.god predmet → sadržajna staza 1.+2. god **GOTOVA**.
+  **⚠️ Prije masovnog unosa novog programa: razmotriti generator-script za uštedu usagea (korisnik: „kombinacije uštede kasnije").**
   **⚠️ POUKA: provjeriti stari sadržaj PROTIV predavanja — rebuild ako je tanak (te2/Entrepreneurship-djelomično), split+obogaćivanje ako je vjeran (E-Business).**
   **⚠️ Korisnik ZASIĆEN računovodstvom — NE vraćati se na Accounting osim izričito.**
 - **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (read-path ✅ aktivan; admin CRUD kasnije). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009, gotov), Math zadnja.
-- **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** sadržaj 1. god po redu:
-  ~~Traffic in Tourism~~ **✅ GOTOVO lokalno (2026-06-24)** → **Math** (SLJEDEĆA/ZADNJA, plan `docs/MATH_PLAN.md`); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova).
-  **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.**
+- **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** ✅ **sadržaj 1. god GOTOV**
+  (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
+  **B)** nakon sadržaja (SAD AKTUALNO): **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** Opcionalno usput: Supabase re-sync Math (read-path).
   **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod HM, aktivira i18n) · **3. godina HM** · **studentski UGC za 3./4. god** (jezik HR/EN neodlučen).
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)

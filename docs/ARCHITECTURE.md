@@ -43,8 +43,8 @@ institutions (sveučilište)      ← spremno za buduće širenje
 - 2. god, sem 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
 - 2. god, sem 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
 - **2. god = 8/8 ✅ KOMPLETNO**
-- 1. god (7 ✅): Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics,
-  Macroeconomics, **Academic Writing** (prvi kroz generator) · ⬜ preostalo: Intro to Hospitality, Traffic in Tourism, Math (zadnja)
+- **1. god = 9/9 ✅ KOMPLETNO:** Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics,
+  Macroeconomics, **Academic Writing** (prvi kroz generator), Traffic in Tourism, **Mathematics** (zadnji, LIVE 2026-06-27) · ⛔ Intro to Hospitality blokiran (nema PDF-ova)
 
 ## Model baze (ciljano, Supabase/Postgres)
 

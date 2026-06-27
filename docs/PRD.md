@@ -17,11 +17,11 @@ generiraju i dijele skripte te se natječu.
 
 ## 3. Trenutno stanje (2026-06-24)
 - Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com). Data-driven katalog + drill-down nav + landing rebuild.
-- Sadržaj: **2. god = 8/8 ✅** + **1. god 7 gotovih** (BI, SIT, Management, Microeconomics, Statistics, Macroeconomics, **Academic Writing**). Preostalo: Math, Intro to Hospitality, Traffic in Tourism.
+- Sadržaj: **2. god = 8/8 ✅** + **1. god = 9/9 ✅** (BI, SIT, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing, Traffic in Tourism, **Mathematics** — zadnji, LIVE 2026-06-27). ⛔ Intro to Hospitality blokiran (nema PDF-ova).
 - Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (interaktivne, auto-ocjenjive, 7 tipova uklj. „napiši citat"), Progress (+ Blind Map za geografiju). **KaTeX** za kvantitativne.
 - **Auth + cloud-sync** napretka LIVE (email+lozinka). **Blok B read-path:** sadržaj se čita iz Supabasea (anon key + RLS) s file-fallbackom (ADR-011).
 - **Generator predmeta** (ADR-010): PDF→Sonnet→`data/*.js`, jeftino dodavanje. Alati: `verify`, `validate:content`, `test:unit`, `test:responsive` (Playwright), `scaffold`, `pdf-text`, `build/generate/assemble-subject`, `migrate-content`.
-- **Sljedeće:** preostali 1.-god predmeti (Math zadnja) · admin CRUD (B9/B10) · pa Faza 1 (UGC/AI).
+- **Sljedeće:** sadržaj 1.+2. god GOTOV → admin CRUD (B9/B10) · AI tutor · MATURA prep · pa Faza 1 (UGC/AI).
 
 ## 4. Opseg po fazama
 - **Faza 0 (u tijeku):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +

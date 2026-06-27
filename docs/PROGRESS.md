@@ -5,8 +5,8 @@ testirano, što slijedi.
 
 ---
 
-## 2026-06-27 — Mathematics: K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa (lokalno, NEdeployano)
-Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesije.
+## 2026-06-27 — Mathematics: K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa → ✅ DEPLOYANO (cijeli Math LIVE)
+Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesije, pa **prvi deploy cijelog Matha**.
 - **K1 learn obogaćivanje** (`mathM1`, midterm-1.js): svih **5 sekcija** prepisano sa šturih (1654–2790 zn) na
   **udžbeničku dubinu kao K2** — intuicija + riješeni primjeri + interpretacija + zamke. Nove duljine:
   realNumbers **4798**, basicEquations **3907**, functions **4197**, differentiation **3520**, extrema **3184** zn.
@@ -18,7 +18,8 @@ Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesi
 - **Cache:** CONTENT_VERSION `20260688` → **`20260689`** (+ content-loader.js `?v=`; samo `data/*` mijenjano).
 - **Gate (sve zeleno):** KaTeX runtime balans OK (m1 562/562 inline + 47/47 display, m2 202/202 + 36/36,
   final 814/814 + 91/91), validate:content math 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=17, 0 overflow)**.
-- **Commit** `4eeccf1` (lokalno). **PENDING:** korisnikov pregled formula → push/deploy (uz izričitu potvrdu).
+- **Commit** `4eeccf1` (kod) + `31be03f` (docovi). **Korisnik pregledao formule („sve izgleda odlično") → ✅ PUSH/DEPLOY** `89fd669..31be03f` na `origin/main` (Vercel auto-deploy). **Cijeli Math (b481be5→31be03f, 5 commita) sad LIVE → 1. GODINA HM 9/9 KOMPLETNA** (uz Intro to Hospitality blokiran).
+- **⚠️ Preostalo (opcionalno):** Supabase re-sync Math (read-path iz baze) NIJE napravljen — Math se servira preko **file-fallbacka** (radi normalno; baza je samo zrcalo).
 
 ---
 

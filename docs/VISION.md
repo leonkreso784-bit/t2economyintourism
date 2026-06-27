@@ -76,7 +76,7 @@ Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
 
 ## 6. Predloženi redoslijed (visoka razina — NE radimo sve sad)
 1. ~~Lazy-loading sadržaja (A4)~~ ✅ · ~~Blok B: Supabase + Auth + read-path~~ ✅ (auth+sync LIVE, sadržaj iz baze ADR-011)
-2. **(sad)** dovršiti sadržaj 1. god (Math zadnja) + **admin CRUD** (B9/B10) → baza kao jedini izvor.
+2. ~~dovršiti sadržaj 1. god (Math zadnja)~~ ✅ **GOTOVO (1. god 9/9 LIVE, Math zadnji 2026-06-27)** → **(sad)** **admin CRUD** (B9/B10) → baza kao jedini izvor.
 3. **F6 AI tutor „tvoj ključ"** — najjeftiniji MVP AI vrijednosti. ← *sljedeći „pravi" korak prema viziji*
 4. **F2 profili** → **F3 UGC upload→AI** (privatno) → **F4 dijeljenje** → **F5 ljestvice**.
 5. **F1 plaćeni AI tutor + plaćanje** — tek kad je trošak izmjeren i odluka o MoR/PDV donesena.

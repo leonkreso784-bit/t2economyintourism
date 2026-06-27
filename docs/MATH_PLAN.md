@@ -1,9 +1,9 @@
 # MATH_PLAN.md — Matematika (1. god) — plan razvoja
 
-> **Status (2026-06-27):** 🟡 **K1 + K2 + Final IZGRAĐENI i COMMITANI lokalno (NEdeployano)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX) + `4eeccf1` (K1 learn obogaćen + Gauss nijansa).
-> **Math = year 1, SEMESTAR 1** (kao Micro/Statistics; korisnik nije osporio). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa, potvrdio korisnik).
-> **✅ RIJEŠENO (2026-06-27, `4eeccf1`):** (a) **K1 learn obogaćen** — svih 5 sekcija na K2 dubinu (realNumbers 4798 / basicEquations 3907 / functions 4197 / differentiation 3520 / extrema 3184 zn; [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** dodana u `gaussJordan` (Gauss = gornji trokut + supstitucija unatrag vs Gauss-Jordan = puna jedinična; „samo retci, ne stupci"; +2 fc/+3 quiz/+3 fill + learn-podsekcija; naziv → „Gauss & Gauss-Jordan Method").
-> **⚠️ PENDING:** (c) korisnikov pregled svih formula; (d) finalni gate ✅ (validate/verify 0/0, test:unit 33/33, Playwright 68/68, KaTeX balans OK) → **push** (uz izričitu potvrdu).
+> **Status (2026-06-27):** ✅ **K1 + K2 + Final KOMPLETNI i ✅ LIVE (deployano `89fd669..31be03f`)** — `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX) + `4eeccf1` (K1 learn obogaćen + Gauss nijansa) + `31be03f` (docovi).
+> **Math = year 1, SEMESTAR 1** (kao Micro/Statistics). **K1 = teme 1–5, K2 = teme 6–11** (granica iz silabusa, potvrdio korisnik). **→ time je 1. GODINA HM 9/9 KOMPLETNA (uz Intro to Hospitality blokiran — nema PDF-ova).**
+> **✅ SVE RIJEŠENO (2026-06-27):** (a) **K1 learn obogaćen** — svih 5 sekcija na K2 dubinu (realNumbers 4798 / basicEquations 3907 / functions 4197 / differentiation 3520 / extrema 3184 zn; [[learn-sections-must-be-rich]]); (b) **Gauss vs Gauss-Jordan nijansa** dodana u `gaussJordan` (Gauss = gornji trokut + supstitucija unatrag vs Gauss-Jordan = puna jedinična; „samo retci, ne stupci"; +2 fc/+3 quiz/+3 fill + learn-podsekcija; naziv → „Gauss & Gauss-Jordan Method"); (c) korisnik pregledao formule („sve izgleda odlično"); (d) gate zelen (validate/verify 0/0, test:unit 33/33, Playwright 68/68, KaTeX balans OK) → **pushano/deployano**.
+> **⚠️ Preostalo (opcionalno):** Supabase re-sync Math (read-path iz baze) — dok se ne migrira, Math se servira preko **file-fallbacka** (radi normalno).
 
 ## 0. STVARNO STANJE (što je izgrađeno)
 - **`data/math/midterm-1.js` (`mathM1`):** 5 kat (realNumbers, basicEquations, functions, differentiation, extrema) / 48 fc / 44 quiz / 34 fill. KaTeX, **Learn OBOGAĆEN** (3184–4798 zn, riješeni primjeri + intuicija + zamke; 2026-06-27).
@@ -43,4 +43,4 @@ Funkcije i grafovi · limesi/neprekidnost · **derivacije** (pravila, primjene: 
 Math se može probati i kroz **generator** ([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) s `--math` zastavicom (KaTeX upute u promptu), ALI: slike (JPG) generator NE čita (samo PDF/TXT tekst) → ili PDF-verzije, ili ručno. Točnost formula = kritična → bez obzira na put, **ljudski pregled obavezan**. Realno: vjerojatno **hibrid** (generator za teoriju iz PDF-a + ručna transkripcija formula sa slajdova).
 
 ---
-**▶ Redoslijed do Matha:** Traffic in Tourism (sljedeći) → **Math (zadnji 1. god)**. Intro to Hospitality = nema materijala (blokiran). Vidi [content-roadmap-sequencing] + [ROADMAP.md](ROADMAP.md).
+**▶ Redoslijed (završen):** Traffic in Tourism ✅ → **Math ✅ LIVE 2026-06-27 (zadnji 1. god)** → **1. GODINA HM 9/9 KOMPLETNA**. Intro to Hospitality = nema materijala (blokiran). Vidi [content-roadmap-sequencing] + [ROADMAP.md](ROADMAP.md).
