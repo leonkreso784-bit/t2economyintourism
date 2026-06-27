@@ -25,7 +25,10 @@ Nastavak iste sesije. Dvije stvari: (1) počišćeno lokalno smeće, (2) logo pr
   - **Obrisani** mrtvi `logo.png` + `logo-small.png` + svi pomoćni helperi/preview (`_*.js`, `_logo-*.png`); `potrace` bio `--no-save` privremeno.
   - **Cache:** `?v=20260693` (svg + favikoni; CSS ostao `20260692`).
   - **Gate:** `verify` 0/0, **Playwright 68/68**, vizualni pregled žive nav-trake (logo gladak, glava ispunjava krug).
-  - **Status:** ✅ **DEPLOYANO + LIVE 2026-06-28** (`19f07db`); produkcija vraća `logo.svg?v=20260693` HTTP 200.
+  - **Status:** ✅ **DEPLOYANO + LIVE 2026-06-28** (`19f07db`); produkcija vraća `logo.svg?v=20260693` HTTP 200. Doc-status→LIVE (`94ad12d`+`fc878f1`).
+  - **PWA napomena (`247e5ef`):** korisnik javio da instalirana app još pokazuje stari logo → **zapečena PWA ikona** (server ima novu — sve žive ikone
+    provjerene HTTP 200 + nove veličine). Bumpane `manifest.json` ikone (`?v=20260693`) da preglednik prepozna promjenu; konačni fix za već
+    instaliranu app = **deinstaliraj + reinstaliraj**. NIJE bug ni problem deploya (cache na klijentu).
 
 ---
 

@@ -293,10 +293,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
-  **C) strateški — SAD AKTUALNO (korisnik 2026-06-27):** **HRV program „Menadžment u Hotelijerstvu"** (prijevod SVIH predmeta 1.+2. god na hrvatski,
-  aktivira i18n) + **flashcard bug** (kod dugog teksta okrenuta kartica prekrije strelicu „dalje" — `position:absolute` strane ne rastežu
-  `.flashcard-inner`; popravak = grid-stack, vidi razgovor 2026-06-27) · zatim **3. godina HM** · **studentski UGC za 3./4. god**.
-  **Plan/arhitektura HRV smjera:** paralelni program u catalogu (klon, NE i18n u sadržaju) + `translate-subject.js` (Sonnet); flashcard bug PRVO. Vidi razgovor 2026-06-27.
+  **C) strateški:** ✅ **LOGO redizajniran + LIVE (2026-06-28, `19f07db`)** — glatki vektorski Sokrat, glava ispunjava krug (vidi §Ključne odluke).
+  **▶▶ SLJEDEĆE (korisnik 2026-06-28): HRV program „Menadžment u Hotelijerstvu"** = **prijevod SVIH predmeta 1.+2. god na hrvatski.**
+  **Arhitektura (odlučeno):** paralelni program u catalogu (**klon, Opcija A — NE i18n u sadržaju**) + novi `data/<subj>-hr/*.js` (isti engine, vlastiti
+  `storageKey`) + `translate-subject.js` (Sonnet, tool_use; čuva quiz-indeks/KaTeX/`_______`/HTML; vježbe = posebno, samo string-polja) + UI i18n (~50 stringova).
+  **Faze:** infra+pilot (npr. Business Informatics) → UI i18n → tekstualni predmeti → kvantitativni → vježbe → Supabase. Detalji: `docs/ROADMAP.md` §C + razgovor 2026-06-27.
+  · **Otvoreno usput: flashcard bug BUG-013** (dug tekst prekrije strelicu „dalje"; `position:absolute` strane ne rastežu `.flashcard-inner`; popravak = grid-stack)
+  · zatim **3. godina HM** · **studentski UGC za 3./4. god**.
+  **(Napomena: PWA instalirana app drži staru ikonu dok se ne reinstalira — server ima novu; nije bug.)**
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).

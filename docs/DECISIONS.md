@@ -87,7 +87,7 @@ postojećem no-build statičkom setupu (Vercel sam servira `/api`).
 **Odluka:** Puni drill-down korak po korak: Start → Fakulteti → Smjerovi → Godine →
 Predmeti (po semestru), čak i kad razina ima samo jednu opciju. Breadcrumbs na svakom
 ekranu. (Razmatran "pametni skip" jednolične razine — odbijen jer korisnik želi
-eksplicitnu strukturu.) Logo se zadržava.
+eksplicitnu strukturu.) ~~Logo se zadržava.~~ **PROMJENA (2026-06-28): logo redizajniran** — `logo.png` (raster) → `assets/logo.svg` (vektorizirani glatki Sokrat, glava ispunjava krug, indigo gradijent); ✅ LIVE `19f07db`. Vidi `CLAUDE.md` §Ključne odluke + `docs/PROGRESS.md`.
 **Vizualni stil (revidirano 2026-06-02):** **„čisto i bogato" (clean & rich, Brilliant/
 Quizlet-feel), dark** — NE preminimalistički; treba izgledati kao „prava stranica"
 (bogate kartice s gradijent-ikonama, breadcrumb, napredak). Mijenja raniji opis
