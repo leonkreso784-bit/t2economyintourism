@@ -306,11 +306,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   „worked problems" na postojećim modovima + grafovi-kao-slike. ✅ implementirano; **Math zadnja**.
 - ADR-010: **generator predmeta** (PDF→Sonnet→`data/*.js`, tool_use) uz minimalan usage. ADR-011: **Blok B read-path = sadržaj iz Supabasea direktno (anon key+RLS), NE `/api`** + file-fallback.
 - ~~Logo se NE mijenja.~~ **✅ LOGO REDIZAJNIRAN (2026-06-27): `logo.png` (raster + crop-hak) → `assets/logo.svg`** — postojeći
-  Sokrat **vektoriziran** (ImageMagick threshold → potrace) u čisti SVG: indigo brend-gradijent `#6366f1→#818cf8`, savršen okrugli
-  prsten, bijelo lice s indigo detaljima. Varijanta A („indigo medaljon"), korisnik odabrao. Maknut crop-hak (`.logo-image` 150%→100%,
-  bez `object-fit:cover`); favikoni regenerirani iz SVG-a (16/32/ico/apple-180/192/512, density 420; PWA/iOS na `#0f172a`); SVG favicon
-  dodan. Stari `logo.png`/`logo-small.png` obrisani (mrtvi, u git povijesti). Cache `?v=20260692` (svg+favikoni+styles+landing.css).
-  Gate: verify 0/0, Playwright **68/68**, vizualni pregled nav 44px OK. Vizualni stil ostaje: **„čisto i bogato", dark.**
+  Sokrat **vektoriziran s zaglađivanjem**: ImageMagick (4× upscale → threshold → maska koja makne originalni medaljon-prsten/ramena,
+  ostaje samo glava) → **potrace** (visoka rez + `alphaMax 1.3`/`optTolerance 1.6` = glatke krivulje, NE „olovka") → **auto-fit**
+  (izračun bbox-a glave + scale/translate da **cijela glava ispuni krug**, ništa odrezano). Finalni izgled: indigo brend-gradijent
+  `#6366f1→#818cf8`, **glava ispunjava cijeli krug** (bez prstena koji viri), bijelo lice s indigo detaljima. Maknut crop-hak
+  (`.logo-image` 150%→100%, bez `object-fit:cover`); favikoni regenerirani iz SVG-a (16/32/ico/apple-180/192/512; PWA/iOS na `#0f172a`);
+  SVG favicon dodan. Stari `logo.png`/`logo-small.png` obrisani (mrtvi, u git povijesti). Cache `?v=20260693` (svg+favikoni; CSS ostao
+  `20260692`). Gate: verify 0/0, Playwright **68/68**, vizualni pregled nav 44px OK. **Iteracija (korisnik): odbačeni ručno-crtani SVG-ovi
+  (izgledali „kao pingvin"/skicirano) — kvaliteta dolazi iz vektorizacije ORIGINALA, ne ručnog crtanja.** Vizualni stil: **„čisto i bogato", dark.**
 
 ## Dokumentacija (`docs/`)
 `README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·

@@ -10,17 +10,21 @@ Nastavak iste sesije. Dvije stvari: (1) počišćeno lokalno smeće, (2) logo pr
 - **Repo čišćenje (~144 MB lokalno, ništa u gitu):** obrisani `test-results/`, svi `tmp-*/`, `tmp/`, `.venv/` + mrtve
   datoteke (`extract_pdfs.py`, `fan_all_text.txt`, `LEARN-PROBLEM-ANALIZA.txt`, `desktop.ini`); food-PDF izvori premješteni
   u `_materials/food-and-nutrition-source-pdfs/` (konvencija). `.gitignore` konsolidiran (`tmp-*/` glob). Commit `978d119` (pushан).
-- **LOGO: `logo.png` (raster + crop-hak) → `assets/logo.svg` (vektor).** Postupak: ImageMagick threshold (izvuci line-art iz
-  postojećeg PNG-a) → **potrace** (vektorizacija) → ručno sklapanje SVG-a s indigo gradijentom. **Verifikacija renderiranjem**
-  (Playwright screenshot na 16/40/44/120px, tamna+svijetla podloga) — iterirano v1→v4. Korisnik odabrao **varijantu A („indigo
-  medaljon")**: čista indigo kružnica (`#6366f1→#818cf8`) + bijelo lice s indigo detaljima + čist okrugli prsten preko ruba.
-  - **Ožičeno:** 5× `index.html` + 4 legal stranice (`logo.png` → `assets/logo.svg?v=20260692`).
-  - **CSS:** maknut crop-hak `.logo-image` (`width:150%`/`object-fit:cover` → `100%`/`contain`) — SVG je već savršen krug.
-  - **Favikoni regenerirani iz SVG-a** (ImageMagick density 420): `favicon-16/32`, `favicon.ico` (16/32/48), `apple-touch-icon`
-    (180), `icon-192/512`; PWA/iOS na podlozi `#0f172a` (bez crnih kuteva). Dodan **SVG favicon** (`type=image/svg+xml`).
-  - **Obrisani** mrtvi `logo.png` + `logo-small.png` (0 referenci, u git povijesti ostaju).
-  - **Cache:** `?v=20260692` (svg + favikoni + `styles.css` + `css/landing.css` @import).
-  - **Gate:** `verify` 0/0, **Playwright 68/68** (subjects=17, 0 overflow), vizualni pregled nav-trake (logo oštar, prsten čist).
+- **LOGO: `logo.png` (raster + crop-hak) → `assets/logo.svg` (vektor).** **Iteracija s renderiranjem** (svaki kandidat → Playwright
+  screenshot na 16/40/44/120/200px, tamna+svijetla, pa vizualna ocjena):
+  - Prvi pokušaj = trasiran original niske rez → **korisnik: „izgleda kao olovkom skicirano".**
+  - Ručno crtani moderni SVG-ovi (cand1–5) → **korisnik: „odvratno / izgleda kao pingvin".** **Pouka: ručno crtanje SVG-a naslijepo = amaterski; kvaliteta dolazi iz ORIGINALA.**
+  - **Finalni pristup (odobreno „savršeno"):** ImageMagick **4× upscale → threshold → maska** (makne originalni medaljon-prsten + ramena,
+    ostaje samo glava) → **potrace** s zaglađivanjem (`alphaMax 1.3`, `optTolerance 1.6`, hi-res = glatke krivulje) → **auto-fit** (kod
+    izračuna bbox glave pa `scale`+`translate` da **cijela glava ispuni krug**, ništa odrezano).
+  - Finalni izgled: indigo `#6366f1→#818cf8`, **glava ispunjava cijeli krug** (bez prstena koji viri), bijelo lice s indigo detaljima.
+  - **Ožičeno:** 5× `index.html` + 4 legal stranice (`assets/logo.svg?v=20260693`).
+  - **CSS:** maknut crop-hak `.logo-image` (`width:150%`/`object-fit:cover` → `100%`/`contain`).
+  - **Favikoni regenerirani iz finalnog SVG-a:** `favicon-16/32`, `favicon.ico` (16/32/48), `apple-touch-icon` (180), `icon-192/512`;
+    PWA/iOS na `#0f172a`. Dodan **SVG favicon** (`type=image/svg+xml`).
+  - **Obrisani** mrtvi `logo.png` + `logo-small.png` + svi pomoćni helperi/preview (`_*.js`, `_logo-*.png`); `potrace` bio `--no-save` privremeno.
+  - **Cache:** `?v=20260693` (svg + favikoni; CSS ostao `20260692`).
+  - **Gate:** `verify` 0/0, **Playwright 68/68**, vizualni pregled žive nav-trake (logo gladak, glava ispunjava krug).
   - **Status:** commitano lokalno, **čeka korisnikov pregled + deploy**.
 
 ---
