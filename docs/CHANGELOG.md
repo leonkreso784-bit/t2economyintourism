@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Fixed
+- **BUG-014 — Fill-in: prazan odgovor + „Provjeri" ispada „Correct!" ✅ RIJEŠEN + LIVE (2026-06-27, `7c70e07`).**
+  `correct.includes(input)` je za `input===''` uvijek `true` (svaki string sadrži prazan). Fix (`js/fill-blanks.js`):
+  `input.length>0 && normFill(input)===normFill(correct)` — prazno nikad točno, substring-uvjet uklonjen, case+razmak↔crtica
+  tolerancija zadržana. Node-test 9/9. Cache `fill-blanks.js?v=20260691`.
+- *(otvoreno)* **BUG-013 — flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje"** (`position:absolute` strane ne
+  rastežu `.flashcard-inner`). Plan: grid-stack. Vidi `docs/BUGS.md`.
 - **BUG-012 — randomizirane vježbe se lome kad sadržaj dolazi iz Supabasea ✅ RIJEŠEN + LIVE (2026-06-27, `7176194..801d9a6`).**
   Vježbe (`data/<subj>/exercises.js`) imaju `generate(p)` funkcije koje `JSON.stringify` izbriše pri migraciji, a loader je u
   DB-modu preskakao SVE `content.scripts` → randomizirane vježbe razbijene iz baze (Statistics 23 / Macro 25 / Accounting 8).

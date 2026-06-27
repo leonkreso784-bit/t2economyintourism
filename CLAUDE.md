@@ -305,7 +305,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (currency-safe delimiteri **`\( \)`/`\[ \]`/`$$ $$`**, NE jedan `$`) +
   „worked problems" na postojećim modovima + grafovi-kao-slike. ✅ implementirano; **Math zadnja**.
 - ADR-010: **generator predmeta** (PDF→Sonnet→`data/*.js`, tool_use) uz minimalan usage. ADR-011: **Blok B read-path = sadržaj iz Supabasea direktno (anon key+RLS), NE `/api`** + file-fallback.
-- Logo se NE mijenja. Vizualni stil: **„čisto i bogato" (clean & rich, Brilliant/Quizlet-feel), dark** — NE preminimalistički.
+- ~~Logo se NE mijenja.~~ **⚠️ PROMJENA (korisnik 2026-06-27): logo SE poboljšava** — trenutni `logo.png` je raster Sokrat
+  sa zapečenim plavim sjajem, prikazan hakom (`object-fit:cover` 150% da sakrije kvadrat); plan = **inline SVG** (oštro/themeable),
+  zadržati Sokrat-ideju, ikonična glava. Čeka 6 odluka korisnika (vidi razgovor 2026-06-27 + `docs/PROGRESS.md`). Vizualni stil
+  ostaje: **„čisto i bogato" (Brilliant/Quizlet-feel), dark** — NE preminimalistički.
 
 ## Dokumentacija (`docs/`)
 `README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·

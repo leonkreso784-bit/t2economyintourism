@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-27 — BUG-014 (fill prazno = točno) popravljen + LIVE · BUG-013 (flashcard) zaveden · monetizacija/logo plan
+Nastavak iste sesije nakon BUG-012; bug-lov + strateško planiranje.
+- **BUG-014 (visok) — Fill-in: prazan odgovor + „Provjeri" ispada „Correct!".** Uzrok: `correct.includes(input)` —
+  `"x".includes("")` je u JS-u uvijek `true`. Fix (`js/fill-blanks.js`): `isCorrect = input.length>0 && normFill(input)===normFill(correct)`
+  (prazno nikad točno; substring-uvjet uklonjen; case + razmak↔crtica tolerancija zadržana). Node-test **9/9**.
+  Cache `fill-blanks.js?v=20260691`. **✅ DEPLOYANO + live potvrđen** (`7c70e07`+`dba49ad`).
+- **BUG-013 (srednji) — Flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje".** ZAVEDEN kao **aktivan**
+  (prije bio samo u ROADMAP/CLAUDE, ne u BUGS.md — korisnik primijetio da fali). Uzrok: `.flashcard-front/.back` su
+  `position:absolute` → ne rastežu `.flashcard-inner` → duga stražnja strana naraste preko `.flashcard-controls`.
+  Plan: **grid-stack** (obje strane u istu grid-ćeliju). **Još NIJE popravljen** — sljedeći na redu.
+- **BUGS.md dotjeran:** dodana napomena o opsegu (BUGS.md = bugovi proizvoda; tooling/proces → PROGRESS/CLAUDE/memorija).
+- **Strateško planiranje (zapisano u `docs/MONETIZATION.md`, NOVO):** Stripe setup + NKD djelatnosti (62.01+63.12 glavne,
+  85.59/58.29/63.11 korisne) + firma tate (Waterfront — provjeriti registar/knjigovođu) + PDV/MoR + **tržište matura**
+  (~30–40k/god) + scenariji prihoda (oprezni ~4.5k → lider ~180k €/god) + 9 ideja za profit (engine prošlih matura,
+  AI tutor, sezonska propusnica, B2B škole, gamifikacija/viral, UGC). Redoslijed: **F6 „tvoj ključ" → propusnica → jedinice → B2B**.
+- **Logo (NOVO, korisnik traži poboljšanje — gazi staro pravilo „logo se NE mijenja"):** trenutni `logo.png` = raster Sokrat
+  u krugu sa zapečenim plavim sjajem; prikazan trikom `object-fit:cover` 150% (hak). Preporuka: **inline SVG** (oštro/themeable/bez
+  haka), zadržati Sokrat-ideju, ikonična glava. Čeka 6 odluka korisnika (vidi razgovor). **Još NIJE rađeno.**
+
+---
+
 ## 2026-06-27 — BUG-012: randomizirane vježbe se lome iz baze → POPRAVLJENO + Math gradivo u bazu (✅ LIVE)
 Analiza „sljedećih koraka" otkrila ozbiljan **živi bug** pri provjeri Supabasea prije planiranog Math re-synca.
 - **Nalaz (dokazan na živoj bazi):** vježbe (`data/<subj>/exercises.js`) imaju randomizirane zadatke s `generate(p)`

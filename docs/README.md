@@ -22,6 +22,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md) | Plan/analiza za Traffic in Tourism (1. god, sem 2) — ✅ done 2026-06-24 |
 | [MATH_PLAN.md](MATH_PLAN.md) | Plan za Matematiku (zadnji 1.-god predmet; KaTeX + worked problems) — ✅ LIVE 2026-06-27 |
 | [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md) | BUG-012 — randomizirane vježbe iz baze; Opcija A izvedena — ✅ LIVE 2026-06-27 |
+| [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (Stripe+NKD djelatnosti, matura tržište, modeli, ideje) — planiranje 2026-06-27 |
 | [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, test:unit, Playwright) |
 | [CHANGELOG.md](CHANGELOG.md) | Verzije (semver) i što se mijenjalo |
 | [PROGRESS.md](PROGRESS.md) | Dnevnik rada — što je napravljeno u svakoj sesiji |
