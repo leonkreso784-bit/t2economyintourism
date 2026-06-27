@@ -77,14 +77,22 @@ function showFillQuestion() {
     document.getElementById('btnHint').classList.remove('hidden');
 }
 
+// Crtica ↔ razmak su ekvivalentni; višestruki razmaci kolabiraju (npr. "long-term" == "long term").
+function normFill(s) { return String(s).trim().toLowerCase().replace(/[-\s]+/g, ' ').trim(); }
+
 function checkFillAnswer() {
     const input = document.getElementById('fillInput').value.trim().toLowerCase();
     const correct = fillQuestions[currentFillIndex].answer.toLowerCase();
-    
+
     const feedback = document.getElementById('fillFeedback');
     feedback.classList.remove('hidden', 'correct', 'wrong');
-    
-    if (input === correct || input === correct.replace('-', ' ') || correct.includes(input)) {
+
+    // BUG-014: prazan unos NIKAD nije točan. (Stari `correct.includes(input)` je za input="" uvijek
+    // bio true — svaki string sadrži prazan string — pa je prazno + Provjeri ispadalo „Correct!".
+    // Taj substring-uvjet je i inače prelabav (jedno slovo prolazi) → zamijenjen pravim podudaranjem.)
+    const isCorrect = input.length > 0 && normFill(input) === normFill(correct);
+
+    if (isCorrect) {
         feedback.classList.add('correct');
         document.getElementById('feedbackText').innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
         fillCorrect++;

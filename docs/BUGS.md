@@ -33,6 +33,14 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-014 — Fill-in: PRAZAN odgovor + „Provjeri" ispada „Correct!"
+- Status: ✅ riješen (kod + node-test 9/9) · ⏳ čeka deploy · Težina: **visok** (lažni napredak, svi predmeti) · Prijavio korisnik: 2026-06-27
+- Opis: U Fill-in-the-blank kvizu, ako se NIŠTA ne upiše i stisne „Provjeri", prikaže se **„Correct!"** (i broji se kao točno) iako je polje prazno.
+- Reprodukcija: bilo koji predmet → Fill in → ostavi polje prazno → „Provjeri" → „Correct!".
+- Uzrok: [fill-blanks.js:87](../js/fill-blanks.js#L87) uvjet `correct.includes(input)`. Kad je `input === ''`, `string.includes('')` je u JS-u **uvijek `true`** → prazno prolazi. (Isti uvjet je i inače prelabav: jedno slovo `"data".includes("a")` → true.)
+- Rješenje: `isCorrect = input.length > 0 && normFill(input) === normFill(correct)` — **prazan unos nikad nije točan**; uklonjen substring-uvjet; zadržana tolerancija velika/mala slova + razmak↔crtica (`normFill` kolabira `[-\s]+`). Node-test (9 slučajeva: prazno/razmaci/točno/velika slova/jedno slovo/crtica↔razmak/kriva/djelomično) → 9/9. Cache `fill-blanks.js?v=20260691`.
+- Lekcija: `str.includes(x)` je **uvijek true za `x===''`** — nikad ne koristi `includes` za provjeru točnosti bez praznog-guarda; za fill/grade radije **eksplicitno podudaranje** (normaliziraj pa `===`), ne substring.
+
 ### BUG-012 — Randomizirane vježbe se LOME kad sadržaj dolazi iz Supabasea (live)
 - Status: ✅ riješen · Težina: visok (živi regres na produkciji) · Nalaz+fix: 2026-06-27
 - Opis: Predmeti s interaktivnim vježbama imaju **randomizirane** vježbe definirane funkcijom `generate(p)` na objektu
