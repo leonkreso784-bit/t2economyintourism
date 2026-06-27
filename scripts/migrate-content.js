@@ -54,7 +54,9 @@ function rowsForSubject(s) {
     const v = SokratCatalog.resolveDataVar(s.id, lesson.id);
     if (v) varNames.add(v);
   }
-  if (s.content && s.content.exercises) varNames.add(s.content.exercises);
+  // ⚠ BUG-012: NE migriramo vježbe (s.content.exercises). One su KOD — sadrže generate()
+  // funkcije koje JSON.stringify izbriše → u bazi bi ostala mrtva ljuska. Vježbe se uvijek
+  // učitaju iz datoteke preko content.codeScripts (vidi js/content-loader.js + docs/EXERCISES_DB_FIX_PLAN.md).
 
   const rows = [];
   for (const varName of varNames) {
