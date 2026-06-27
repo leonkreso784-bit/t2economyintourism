@@ -38,21 +38,10 @@ build/
 
 # Source materials (professor PPT/PDF/JPG) — copyright, never commit
 _materials/
-tmp/
-tmp-acc/
-tmp-ebiz/
-tmp-ent/
-tmp-sit/
-tmp-mgmt/
-tmp-micro/
-tmp-stats/
-tmp-macro/
 
-# Python / dev artifacts
+# Scratch / staging dirs (generator + PDF→img + ad-hoc) — all temporary
+tmp/
+tmp-*/
+
+# Python / dev artifacts (legacy PDF-extraction path; replaced by scripts/pdf-text.js)
 .venv/
-extract_pdfs.py
-fan_all_text.txt
-LEARN-PROBLEM-ANALIZA.txt
-new subject food and nutrition 1st midterm/
-tmp-aw/
-tmp-traffic/
