@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-27 — BUG-012: randomizirane vježbe se lome iz baze → POPRAVLJENO + Math gradivo u bazu (✅ LIVE)
+Analiza „sljedećih koraka" otkrila ozbiljan **živi bug** pri provjeri Supabasea prije planiranog Math re-synca.
+- **Nalaz (dokazan na živoj bazi):** vježbe (`data/<subj>/exercises.js`) imaju randomizirane zadatke s `generate(p)`
+  funkcijom. `JSON.stringify` (migracija) **briše funkcije** + loader je u DB-modu preskakao SVE `content.scripts`
+  (pa i `stat-lib`/`math-lib`) → randomizirane vježbe **razbijene iz baze** za sve posjetitelje. Pogođeno: **Statistics 23,
+  Macroeconomics 25, Accounting 8** randomiziranih (Academic Writing 0 → bio ok). Math (29) namjerno još nije bio u bazi.
+- **Rješenje (Opcija A, cigla-po-cigla, 6 cigli):** (1) catalog **`content.codeScripts`** na 5 predmeta s vježbama
+  (vježbe+lib = KOD, uvijek iz datoteke); (2) **`content-loader.js`** u DB-modu učita codeScripts iz fajla
+  (`filesToLoad = fromDb ? codeScripts : scripts`) — datoteka pregazi lossy DB red; (4) **`verify-catalog.js` čuvar**
+  (predmet s vježbama MORA imati codeScripts; dokazano da `verify` pukne bez njega); (Z1) **`migrate-content.js`** više
+  ne šalje vježbe.
+- **Baza (preko Supabase integracije, uz odobrenje):** (Z2) obrisana **4 reda vježbi** (`...Exercises`); (Cigla 5)
+  migrirano **Math gradivo** (`mathM1/M2/Final`, bez vježbi). **Završno: 51 red / 17 predmeta / 0 redova vježbi.**
+- **Cache:** `20260689` → **`20260690`** (catalog.js + content-loader.js `?v=`).
+- **Gate:** verify 0/0 (+novi čuvar), validate 0/0, test:unit 33/33, **Playwright 68/68**. Deploy potvrđen na živom
+  sajtu (index/catalog/content-loader `?v=20260690`, catalog ima 5 codeScripts).
+- **Commiti** `e6588aa` (dok) + `b7a6b7f` (loader+catalog) + `0a5b1f7` (migrate) + `801d9a6` (verify-čuvar). **PUSH/DEPLOY**
+  `7176194..801d9a6`. **Math sad čita gradivo iz baze kao ostalih 16; vježbe iz datoteke.**
+- **Pravilo (novo):** read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); **vježbe (kod) UVIJEK iz datoteke.**
+  Detalji: `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`.
+
+---
+
 ## 2026-06-27 — Mathematics: K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa → ✅ DEPLOYANO (cijeli Math LIVE)
 Nastavak nakon compacta — dva preostala sadržajna PENDING-a iz prethodne sesije, pa **prvi deploy cijelog Matha**.
 - **K1 learn obogaćivanje** (`mathM1`, midterm-1.js): svih **5 sekcija** prepisano sa šturih (1654–2790 zn) na

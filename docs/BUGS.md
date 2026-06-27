@@ -12,41 +12,32 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-### BUG-012 — Randomizirane vježbe se LOME kad sadržaj dolazi iz Supabasea (live)
-- Status: 🔴 otvoren · Težina: **visok** (živi regres na produkciji) · Datum nalaza: 2026-06-27
-- Opis: Predmeti s **interaktivnim vježbama** imaju **randomizirane** vježbe definirane funkcijom `generate(p)` na objektu vježbe.
-  Pogođeni (broj randomiziranih): **Statistics 23, Macroeconomics 25, Accounting 8** (svi U BAZI → živo pokvareno),
-  **Math 29** (još NE u bazi — zato se ne migrira). **Academic Writing = 0 randomiziranih (sve statične) → siguran, radi iz baze.**
-  `generate(p)` živi na objektu vježbe
-  (`data/<subj>/exercises.js`). Te vježbe se **ne mogu ispravno servirati iz baze** — kad dođu iz Supabasea,
-  ostaju bez generiranih polja/odgovora → vježba je razbijena (prazno / bez točnog rješenja).
-- Reprodukcija: otvoriti predmet s vježbama dok je `CONTENT_FROM_SUPABASE=true` (default za SVE posjetitelje) →
-  Exercises tab → randomizirana vježba (npr. Statistics, 23 od 56 su randomizirane) → nema brojeva/inputa.
-- Uzrok (dvostruki):
-  1. **`JSON.stringify` briše funkcije.** `scripts/migrate-content.js` sprema `content.exercises` paket kao JSON
-     (`JSON.stringify(payload)`); `generate(p)` metode nestanu. Dokaz iz žive baze: `statisticsExercises` ima
-     56 vježbi, **23 s `params` (randomizirane), 0 s `generate`** — funkcije izbrisane pri uploadu.
-  2. **Loader preskače skripte u DB-modu.** `js/content-loader.js` (linije ~86-92): kad `fromDb===true`, vrati
-     odmah i **ne učita `content.scripts`** — pa ni `stat-lib.js`/`math-lib.js` (`window.StatLib`/`MathLib`) koje
-     `generate()` koristi. Engine `js/exercises.js:527-534`: bez `generate` → `resolveExercise` vrati sirov objekt
-     (bez dinamičkih polja) → razbijeno.
-- Posljedica: tih ~23 (Statistics) + macro + accounting randomiziranih vježbi je **trenutno pokvareno na živoj
-  stranici** za sve (anon klijent čita iz baze). Statične vježbe (choice/classify/cite/tf) RADE — one nemaju funkcije.
-- Zašto nije ranije uhvaćeno: Playwright DB-test ne otvara randomiziranu vježbu u DB-modu (provjerava
-  flashcards/quiz/fill/learn render, ne `generate()` put).
-- Rješenje: **vježbe su KOD, ne podaci** → ne smiju u bazu kao JSON. Plan rješenja (3 opcije) =
-  `docs/EXERCISES_DB_FIX_PLAN.md`. Math se NE migrira dok ovo nije riješeno (inače isti regres).
-- Lekcija (preliminarno): payload koji sadrži **funkcije** nije JSON-migracijski; read-path iz baze smije nositi
-  samo čisto-podatkovne window-varove (M1/M2/Final = flashcards/quiz/fill/learn). Svaki novi „content iz baze"
-  test MORA pokriti i exercises `generate()` put, ne samo 4 osnovna moda.
-
----
-
-*Riješeni bugovi 001–011 dolje.*
+*(trenutno nema aktivnih bugova)*
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-012 — Randomizirane vježbe se LOME kad sadržaj dolazi iz Supabasea (live)
+- Status: ✅ riješen · Težina: visok (živi regres na produkciji) · Nalaz+fix: 2026-06-27
+- Opis: Predmeti s interaktivnim vježbama imaju **randomizirane** vježbe definirane funkcijom `generate(p)` na objektu
+  vježbe. Pogođeni (broj randomiziranih): **Statistics 23, Macroeconomics 25, Accounting 8** (svi bili u bazi → živo
+  pokvareno). **Academic Writing = 0 randomiziranih → bio siguran. Math 29** (još nije bio u bazi). Iz baze su te vježbe
+  dolazile bez generiranih polja/odgovora → razbijene (prazno).
+- Reprodukcija (prije fixa): predmet s vježbama dok je `CONTENT_FROM_SUPABASE=true` (default) → Exercises → randomizirana → nema brojeva/inputa.
+- Uzrok (dvostruki): (1) **`JSON.stringify` briše funkcije** — `migrate-content.js` je slao `content.exercises` kao JSON,
+  pa su `generate()` metode nestale (dokaz iz baze: `statisticsExercises` 56 vježbi, 23 s `params`, **0 s `generate`**).
+  (2) **Loader je u DB-modu preskakao SVE `content.scripts`** (`js/content-loader.js`), pa se nisu učitali ni `stat-lib`/
+  `math-lib`; engine `js/exercises.js` bez `generate` vrati sirov objekt → razbijeno.
+- Rješenje (Opcija A, [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md), cigla-po-cigla, sve LIVE 2026-06-27 `801d9a6`):
+  1. **catalog `content.codeScripts`** na 5 predmeta s vježbama (lib+exercises.js) — vježbe = KOD, uvijek iz datoteke.
+  2. **`content-loader.js`** u DB-modu: study iz baze, ali `codeScripts` (vježbe+lib) i dalje iz datoteke (`filesToLoad = fromDb ? codeScripts : scripts`). Datoteka pregazi eventualni lossy DB red.
+  3. **`migrate-content.js`** više ne šalje `content.exercises` u bazu.
+  4. **`verify-catalog.js` čuvar**: predmet s vježbama MORA imati codeScripts koji pokriva exercises var — inače `npm run verify` pukne (dokazano).
+  5. **Očišćena baza**: obrisana 4 reda vježbi (`delete ... where var_name like '%Exercises'`). 6. **Math gradivo migrirano** (`mathM1/M2/Final`, bez vježbi) → 51 red / 17 predmeta / 0 redova vježbi. Cache `20260690`.
+- Lekcija: payload s **funkcijama** NIJE JSON-migracijski — read-path iz baze smije nositi samo čisto-podatkovne window-varove
+  (M1/M2/Final). Vježbe (kod) uvijek iz datoteke. Pri novom „content iz baze" uvijek provjeri i `generate()` put, ne samo 4 osnovna moda.
+  Loader je bio „sve-ili-ništa" po predmetu → čišćenje baze mora doći **tek nakon** što je loader-fix LIVE (inače nestanu i statične vježbe).
 
 ### BUG-011 — Exercises: Practice i Exam mod su funkcionalno isti
 - Status: ✅ riješen · Težina: srednji · Datum: 2026-06-11 (nalaz i fix isti dan)

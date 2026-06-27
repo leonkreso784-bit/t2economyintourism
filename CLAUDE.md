@@ -259,7 +259,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   differentiation 3520/extrema 3184 zn; intuicija+radni primjeri+interpretacija+zamke); (b) Gauss vs Gauss-Jordan nijansa dodana u `gaussJordan` (+2 fc/+3 quiz/+3 fill +
   learn-podsekcija: Gauss=gornji trokut+supstitucija unatrag vs Gauss-Jordan=puna jedinična; pravilo „samo redovi, nikad stupci"; naziv kat. → „Gauss & Gauss-Jordan Method").**
   Gate (oba puta): KaTeX runtime balans OK (m1 562/562+47/47, m2 202/202+36/36, final 814/814+91/91), validate 0/0, verify 0/0, test:unit 33/33,
-  Playwright 68/68 (subjects=17). **Korisnik pregledao formule („sve izgleda odlično") → ✅ DEPLOYANO 2026-06-27.** ⚠️ Supabase re-sync Math (read-path) NIJE napravljen — radi preko file-fallbacka dok se ne migrira. Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
+  Playwright 68/68 (subjects=17). **Korisnik pregledao formule („sve izgleda odlično") → ✅ DEPLOYANO 2026-06-27.** ✅ Supabase re-sync Math (read-path) **NAPRAVLJEN 2026-06-27** (3 reda `mathM1/M2/Final`; vježbe iz datoteke). Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
+- **✅ BUG-012 (randomizirane vježbe se lome iz baze) RIJEŠEN ✅ LIVE 2026-06-27 (`7176194..801d9a6`):** vježbe sadrže `generate()`
+  funkcije koje `JSON.stringify` izbriše → iz baze su bile razbijene (Statistics 23 / Macro 25 / Accounting 8 randomiziranih). Fix (Opcija A,
+  cigla-po-cigla): catalog **`content.codeScripts`** (vježbe+lib = KOD, uvijek iz datoteke) + `content-loader.js` u DB-modu učita codeScripts
+  iz fajla (`filesToLoad = fromDb ? codeScripts : scripts`) + `migrate-content.js` više ne šalje vježbe + `verify-catalog.js` čuvar
+  (predmet s vježbama MORA imati codeScripts) + baza očišćena (4 reda vježbi) + Math gradivo migrirano. **Baza: 51 red / 17 predmeta /
+  0 redova vježbi.** Cache `20260690`. **PRAVILO: read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); vježbe (kod) UVIJEK iz
+  datoteke.** Detalji `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`. [[backend-track-b-start]]
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
