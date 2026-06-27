@@ -34,7 +34,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ## Riješeni / Lekcije
 
 ### BUG-014 — Fill-in: PRAZAN odgovor + „Provjeri" ispada „Correct!"
-- Status: ✅ riješen (kod + node-test 9/9) · ⏳ čeka deploy · Težina: **visok** (lažni napredak, svi predmeti) · Prijavio korisnik: 2026-06-27
+- Status: ✅ riješen + ✅ LIVE 2026-06-27 (`7c70e07`; node-test 9/9; live potvrđen) · Težina: **visok** (lažni napredak, svi predmeti) · Prijavio korisnik: 2026-06-27
 - Opis: U Fill-in-the-blank kvizu, ako se NIŠTA ne upiše i stisne „Provjeri", prikaže se **„Correct!"** (i broji se kao točno) iako je polje prazno.
 - Reprodukcija: bilo koji predmet → Fill in → ostavi polje prazno → „Provjeri" → „Correct!".
 - Uzrok: [fill-blanks.js:87](../js/fill-blanks.js#L87) uvjet `correct.includes(input)`. Kad je `input === ''`, `string.includes('')` je u JS-u **uvijek `true`** → prazno prolazi. (Isti uvjet je i inače prelabav: jedno slovo `"data".includes("a")` → true.)
