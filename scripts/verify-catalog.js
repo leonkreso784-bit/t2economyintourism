@@ -68,6 +68,35 @@ for (const s of SOKRAT_CATALOG.subjects) {
       ok(`lekcija "${lesson.id}" → prazno (coming soon), kako se očekuje`);
     }
   }
+
+  // 6) BUG-012 čuvar: predmet s interaktivnim vježbama MORA imati content.codeScripts koji
+  //    pokriva exercises (i lib). Vježbe su KOD (generate() funkcije) → uvijek se učitaju iz
+  //    DATOTEKE, nikad iz baze (JSON briše funkcije). Bez codeScripts vježbe pucaju u DB-modu.
+  const hasExercises = !!(s.content && s.content.exercises) || !!(s.features && s.features.exercises);
+  const codeScripts = (s.content && s.content.codeScripts) || [];
+  if (hasExercises) {
+    if (!codeScripts.length) {
+      fail('ima vježbe ali nema content.codeScripts → vježbe bi pukle iz baze (BUG-012)');
+    } else {
+      for (const rel of codeScripts) {
+        if (readFile(rel) === null) fail(`codeScripts datoteka ne postoji: ${rel}`);
+        if (!scripts.includes(rel)) warn(`codeScripts "${rel}" nije u content.scripts → offline/fallback put ga neće učitati`);
+      }
+      const exVar = s.content && s.content.exercises;
+      if (exVar) {
+        const inCode = codeScripts.some((rel) => {
+          const src = readFile(rel) || '';
+          return new RegExp(`\\b(const|let|var)\\s+${exVar}\\b`).test(src) || src.includes(`window.${exVar}`);
+        });
+        if (!inCode) fail(`exercises var "${exVar}" nije definiran ni u jednoj codeScripts datoteci`);
+        else ok(`vježbe: codeScripts pokriva "${exVar}" → učita se iz datoteke (ne iz baze)`);
+      } else {
+        ok('vježbe (features.exercises): codeScripts prisutan');
+      }
+    }
+  } else if (codeScripts.length) {
+    warn('nema vježbe ali ima codeScripts — neočekivano (provjeri)');
+  }
   console.log('');
 }
 
