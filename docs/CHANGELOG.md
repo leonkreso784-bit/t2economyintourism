@@ -5,7 +5,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Changed
-- **LOGO redizajn — `logo.png` (raster) → `assets/logo.svg` (vektor) ✅ (commitano lokalno, čeka deploy).**
+- **LOGO redizajn — `logo.png` (raster) → `assets/logo.svg` (vektor) ✅ LIVE 2026-06-28 (`19f07db`).**
   Postojeći Sokrat **vektoriziran s zaglađivanjem**: ImageMagick (4× upscale → threshold → maska koja makne originalni medaljon-prsten i
   ramena, ostaje samo glava) → **potrace** (`alphaMax 1.3`/`optTolerance 1.6` = glatke krivulje) → **auto-fit** (bbox glave + scale/translate
   da **cijela glava ispuni krug**, ništa odrezano). Indigo brend-gradijent `#6366f1→#818cf8`, bijelo lice s indigo detaljima, glava ispunjava

@@ -24,7 +24,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug + logo + monetizacija:**
-- **Logo ✅ GOTOVO (2026-06-27, commitano lokalno, čeka deploy):** `logo.png` (raster + crop-hak) **vektoriziran → `assets/logo.svg`**
+- **Logo ✅ LIVE (deployano 2026-06-28, `19f07db`):** `logo.png` (raster + crop-hak) **vektoriziran → `assets/logo.svg`**
   (indigo medaljon `#6366f1→#818cf8`, bijelo lice, čist prsten). Crop-hak maknut, favikoni regenerirani, stari logo obrisan, cache `20260692`.
   Gate: verify 0/0, Playwright 68/68. Detalji: `docs/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
 - **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
