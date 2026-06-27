@@ -305,10 +305,12 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (currency-safe delimiteri **`\( \)`/`\[ \]`/`$$ $$`**, NE jedan `$`) +
   „worked problems" na postojećim modovima + grafovi-kao-slike. ✅ implementirano; **Math zadnja**.
 - ADR-010: **generator predmeta** (PDF→Sonnet→`data/*.js`, tool_use) uz minimalan usage. ADR-011: **Blok B read-path = sadržaj iz Supabasea direktno (anon key+RLS), NE `/api`** + file-fallback.
-- ~~Logo se NE mijenja.~~ **⚠️ PROMJENA (korisnik 2026-06-27): logo SE poboljšava** — trenutni `logo.png` je raster Sokrat
-  sa zapečenim plavim sjajem, prikazan hakom (`object-fit:cover` 150% da sakrije kvadrat); plan = **inline SVG** (oštro/themeable),
-  zadržati Sokrat-ideju, ikonična glava. Čeka 6 odluka korisnika (vidi razgovor 2026-06-27 + `docs/PROGRESS.md`). Vizualni stil
-  ostaje: **„čisto i bogato" (Brilliant/Quizlet-feel), dark** — NE preminimalistički.
+- ~~Logo se NE mijenja.~~ **✅ LOGO REDIZAJNIRAN (2026-06-27): `logo.png` (raster + crop-hak) → `assets/logo.svg`** — postojeći
+  Sokrat **vektoriziran** (ImageMagick threshold → potrace) u čisti SVG: indigo brend-gradijent `#6366f1→#818cf8`, savršen okrugli
+  prsten, bijelo lice s indigo detaljima. Varijanta A („indigo medaljon"), korisnik odabrao. Maknut crop-hak (`.logo-image` 150%→100%,
+  bez `object-fit:cover`); favikoni regenerirani iz SVG-a (16/32/ico/apple-180/192/512, density 420; PWA/iOS na `#0f172a`); SVG favicon
+  dodan. Stari `logo.png`/`logo-small.png` obrisani (mrtvi, u git povijesti). Cache `?v=20260692` (svg+favikoni+styles+landing.css).
+  Gate: verify 0/0, Playwright **68/68**, vizualni pregled nav 44px OK. Vizualni stil ostaje: **„čisto i bogato", dark.**
 
 ## Dokumentacija (`docs/`)
 `README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·

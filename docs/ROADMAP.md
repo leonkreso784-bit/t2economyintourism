@@ -24,8 +24,9 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug + logo + monetizacija:**
-- **Logo (NOVO):** korisnik traži poboljšanje (gazi staro pravilo „logo se NE mijenja"). Trenutni `logo.png` = raster Sokrat
-  sa zapečenim sjajem, prikazan hakom (`object-fit:cover` 150%). Plan: **inline SVG** (oštro/themeable), zadržati Sokrat, ikonična glava. Čeka 6 odluka korisnika.
+- **Logo ✅ GOTOVO (2026-06-27, commitano lokalno, čeka deploy):** `logo.png` (raster + crop-hak) **vektoriziran → `assets/logo.svg`**
+  (indigo medaljon `#6366f1→#818cf8`, bijelo lice, čist prsten). Crop-hak maknut, favikoni regenerirani, stari logo obrisan, cache `20260692`.
+  Gate: verify 0/0, Playwright 68/68. Detalji: `docs/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
 - **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
 - **0) Flashcard bug PRVO** (**BUG-013**, [BUGS.md](BUGS.md); neovisno, korist svima): kod dugog teksta okrenuta kartica prekrije strelicu „dalje" →
   ne da se kliknuti. Uzrok: `.flashcard-front/.back` su `position:absolute` pa ne rastežu `.flashcard-inner`

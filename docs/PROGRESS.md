@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-27 — LOGO redizajn (raster → vektor SVG) + repo čišćenje
+Nastavak iste sesije. Dvije stvari: (1) počišćeno lokalno smeće, (2) logo prebačen na SVG.
+- **Repo čišćenje (~144 MB lokalno, ništa u gitu):** obrisani `test-results/`, svi `tmp-*/`, `tmp/`, `.venv/` + mrtve
+  datoteke (`extract_pdfs.py`, `fan_all_text.txt`, `LEARN-PROBLEM-ANALIZA.txt`, `desktop.ini`); food-PDF izvori premješteni
+  u `_materials/food-and-nutrition-source-pdfs/` (konvencija). `.gitignore` konsolidiran (`tmp-*/` glob). Commit `978d119` (pushан).
+- **LOGO: `logo.png` (raster + crop-hak) → `assets/logo.svg` (vektor).** Postupak: ImageMagick threshold (izvuci line-art iz
+  postojećeg PNG-a) → **potrace** (vektorizacija) → ručno sklapanje SVG-a s indigo gradijentom. **Verifikacija renderiranjem**
+  (Playwright screenshot na 16/40/44/120px, tamna+svijetla podloga) — iterirano v1→v4. Korisnik odabrao **varijantu A („indigo
+  medaljon")**: čista indigo kružnica (`#6366f1→#818cf8`) + bijelo lice s indigo detaljima + čist okrugli prsten preko ruba.
+  - **Ožičeno:** 5× `index.html` + 4 legal stranice (`logo.png` → `assets/logo.svg?v=20260692`).
+  - **CSS:** maknut crop-hak `.logo-image` (`width:150%`/`object-fit:cover` → `100%`/`contain`) — SVG je već savršen krug.
+  - **Favikoni regenerirani iz SVG-a** (ImageMagick density 420): `favicon-16/32`, `favicon.ico` (16/32/48), `apple-touch-icon`
+    (180), `icon-192/512`; PWA/iOS na podlozi `#0f172a` (bez crnih kuteva). Dodan **SVG favicon** (`type=image/svg+xml`).
+  - **Obrisani** mrtvi `logo.png` + `logo-small.png` (0 referenci, u git povijesti ostaju).
+  - **Cache:** `?v=20260692` (svg + favikoni + `styles.css` + `css/landing.css` @import).
+  - **Gate:** `verify` 0/0, **Playwright 68/68** (subjects=17, 0 overflow), vizualni pregled nav-trake (logo oštar, prsten čist).
+  - **Status:** commitano lokalno, **čeka korisnikov pregled + deploy**.
+
+---
+
 ## 2026-06-27 — BUG-014 (fill prazno = točno) popravljen + LIVE · BUG-013 (flashcard) zaveden · monetizacija/logo plan
 Nastavak iste sesije nakon BUG-012; bug-lov + strateško planiranje.
 - **BUG-014 (visok) — Fill-in: prazan odgovor + „Provjeri" ispada „Correct!".** Uzrok: `correct.includes(input)` —

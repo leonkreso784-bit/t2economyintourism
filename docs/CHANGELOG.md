@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Changed
+- **LOGO redizajn — `logo.png` (raster) → `assets/logo.svg` (vektor) ✅ (commitano lokalno, čeka deploy).**
+  Postojeći Sokrat **vektoriziran** (ImageMagick threshold → potrace) u čisti SVG s indigo brend-gradijentom `#6366f1→#818cf8`,
+  savršenim okruglim prstenom i bijelim licem s indigo detaljima (varijanta „indigo medaljon"; korisnik: stil=line-art / boja=indigo /
+  okvir=krug). **Maknut crop-hak** `.logo-image` (`150%`/`object-fit:cover` → `100%`/`contain`) jer SVG je već savršen krug. Logo ožičen
+  na 5 mjesta u `index.html` + 4 legal stranice. **Favikoni regenerirani iz SVG-a** (16/32/`.ico`/apple-180/192/512; PWA/iOS na `#0f172a`
+  da nema crnih kuteva) + dodan **SVG favicon**. Stari `logo.png`/`logo-small.png` obrisani (mrtvi). Cache `?v=20260692`
+  (svg + favikoni + `styles.css` + `css/landing.css`). Gate: verify 0/0, Playwright **68/68**, vizualni nav-pregled OK.
 ### Fixed
 - **BUG-014 — Fill-in: prazan odgovor + „Provjeri" ispada „Correct!" ✅ RIJEŠEN + LIVE (2026-06-27, `7c70e07`).**
   `correct.includes(input)` je za `input===''` uvijek `true` (svaki string sadrži prazan). Fix (`js/fill-blanks.js`):
