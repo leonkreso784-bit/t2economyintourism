@@ -115,6 +115,7 @@ const SOKRAT_CATALOG = {
           'second-midterm': 'accountingM2',
           'final': 'accountingFinal'
         },
+        codeScripts: ['data/accounting/exercises.js'], // CODE (generate() funkcije) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'accountingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
@@ -356,6 +357,7 @@ const SOKRAT_CATALOG = {
         // math-lib.js (window.MathLib) must load BEFORE exercises.js (its generate() uses it).
         scripts: ['data/math/midterm-1.js', 'data/math/midterm-2.js', 'data/math/final.js', 'data/math/math-lib.js', 'data/math/exercises.js'],
         resolve: { 'first-midterm': 'mathM1', 'second-midterm': 'mathM2', 'final': 'mathFinal' },
+        codeScripts: ['data/math/math-lib.js', 'data/math/exercises.js'], // CODE (generate() funkcije + lib) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'mathExercises'   // window var with interactive exercises (features.exercises)
       }
     },
@@ -407,6 +409,7 @@ const SOKRAT_CATALOG = {
         // stat-lib.js (window.StatLib) must load BEFORE exercises.js (its solve() may use it).
         scripts: ['data/statistics/midterm-1.js', 'data/statistics/midterm-2.js', 'data/statistics/final.js', 'data/statistics/stat-lib.js', 'data/statistics/exercises.js'],
         resolve: { 'first-midterm': 'statisticsM1', 'second-midterm': 'statisticsM2', 'final': 'statisticsFinal' },
+        codeScripts: ['data/statistics/stat-lib.js', 'data/statistics/exercises.js'], // CODE (generate() funkcije + lib) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'statisticsExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
@@ -434,6 +437,7 @@ const SOKRAT_CATALOG = {
         // exercises.js is independent (window.academicWritingExercises) — loads after final.js.
         scripts: ['data/academic-writing/midterm-1.js', 'data/academic-writing/midterm-2.js', 'data/academic-writing/final.js', 'data/academic-writing/exercises.js'],
         resolve: { 'first-midterm': 'academicWritingM1', 'second-midterm': 'academicWritingM2', 'final': 'academicWritingFinal' },
+        codeScripts: ['data/academic-writing/exercises.js'], // CODE-paket vježbi → uvijek iz datoteke, nikad iz baze (BUG-012; ovdje 0 randomiziranih, ali pravilo je jedinstveno)
         exercises: 'academicWritingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     },
@@ -461,6 +465,7 @@ const SOKRAT_CATALOG = {
         // exercises.js is independent (window.macroeconomicsExercises) — loads after final.js (features.exercises).
         scripts: ['data/macroeconomics/midterm-1.js', 'data/macroeconomics/midterm-2.js', 'data/macroeconomics/final.js', 'data/macroeconomics/exercises.js'],
         resolve: { 'first-midterm': 'macroeconomicsM1', 'second-midterm': 'macroeconomicsM2', 'final': 'macroeconomicsFinal' },
+        codeScripts: ['data/macroeconomics/exercises.js'], // CODE (generate() funkcije) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'macroeconomicsExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
     }

@@ -10,7 +10,7 @@
 // ⚠ CACHE: data/* su pod immutable cacheom (vercel.json). Pri izmjeni BILO KOJEG
 // data/* sadržaja bumpaj CONTENT_VERSION — inače preglednik servira stari cache.
 
-const CONTENT_VERSION = '20260689';
+const CONTENT_VERSION = '20260690';
 
 // subjectId -> true (sadržaj učitan) ; subjectId -> Promise (učitavanje u tijeku)
 const _contentLoaded = {};
@@ -81,14 +81,21 @@ function loadSubjectContent(subjectId) {
     const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(subjectId) : null;
     const scripts = (subject && subject.content && Array.isArray(subject.content.scripts))
         ? subject.content.scripts : [];
+    // codeScripts = datoteke koje sadrže KOD (vježbe + lib s generate() funkcijama). Funkcije ne
+    // prežive JSON → NE smiju u bazu (BUG-012). Učitavaju se iz datoteke UVIJEK, čak i u DB-modu.
+    const codeScripts = (subject && subject.content && Array.isArray(subject.content.codeScripts))
+        ? subject.content.codeScripts : [];
 
     // Prvo proba baza (Blok B); ako vrati false (flag off / prazno / greška) → datoteke.
     const p = _loadSubjectFromSupabase(subjectId).then((fromDb) => {
-        if (fromDb) return; // sadržaj postavljen na window iz baze
-        // FALLBACK: datoteke (stari put). Sekvencijalno — redoslijed je bitan
-        // (npr. final poslije m1+m2; exercises poslije final).
+        // DB-mod: study sadržaj (M1/M2/Final) je na windowu iz baze; još učitaj SAMO kod-datoteke
+        // (vježbe+lib) iz fajla — one pregaze eventualni lossy DB red. Za predmete bez vježbi
+        // codeScripts je prazan → ovo je no-op (identično starom ponašanju).
+        // FALLBACK (fromDb=false): učitaj SVE datoteke (stari put). Redoslijed bitan
+        // (final poslije m1+m2; lib prije exercises).
+        const filesToLoad = fromDb ? codeScripts : scripts;
         let chain = Promise.resolve();
-        scripts.forEach((src) => { chain = chain.then(() => loadScriptOnce(src)); });
+        filesToLoad.forEach((src) => { chain = chain.then(() => loadScriptOnce(src)); });
         return chain;
     }).then(() => {
         _contentLoaded[subjectId] = true;
