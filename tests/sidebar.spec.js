@@ -10,8 +10,10 @@ test('sidebar renders all catalog subjects and navigates on click', async ({ pag
     () => window.SOKRAT_CATALOG && document.querySelectorAll('#subjectsList .subject-item').length > 0
   );
 
-  // 1) Renderirani redoslijed i id-evi odgovaraju catalogu
-  const expected = await page.evaluate(() => window.SOKRAT_CATALOG.subjects.map((s) => s.id));
+  // 1) Renderirani redoslijed i id-evi odgovaraju catalogu (SAMO primarni program —
+  //    drugi programi, npr. HRV, dostupni su kroz Browse; sidebar/landing pokazuju primarni)
+  const expected = await page.evaluate(() =>
+    window.SOKRAT_CATALOG.subjects.filter((s) => s.programId === 'hospitality-management').map((s) => s.id));
   const rendered = await page.$$eval('#subjectsList .subject-item', (els) =>
     els.map((e) => e.getAttribute('data-subject'))
   );

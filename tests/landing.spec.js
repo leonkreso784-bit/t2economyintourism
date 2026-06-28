@@ -10,7 +10,9 @@ test('landing has nav, dynamic counts, and a data-driven subject showcase', asyn
     () => window.SOKRAT_CATALOG && document.querySelectorAll('#landingSubjects .landing-subject-card').length > 0
   );
 
-  const catCount = await page.evaluate(() => window.SOKRAT_CATALOG.subjects.length);
+  // Landing meta + showcase pokazuju SAMO primarni program (drugi programi, npr. HRV, idu kroz Browse).
+  const catCount = await page.evaluate(() =>
+    window.SOKRAT_CATALOG.subjects.filter((s) => s.programId === 'hospitality-management').length);
 
   // Nav present
   await expect(page.locator('.landing-nav')).toBeVisible();

@@ -18,7 +18,10 @@ const SOKRAT_CATALOG = {
       id: 'fmtu',
       name: 'FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija',
       programs: [
-        { id: 'hospitality-management', name: 'Hospitality Management' }
+        { id: 'hospitality-management', name: 'Hospitality Management' },
+        // HRVATSKI paralelni program (klon, Opcija A — vidi docs/HRV_PLAN.md). Isti predmeti,
+        // hrvatski sadržaj (data/<subj>-hr/*.js), vlastiti storageKey. Dostupan kroz Browse.
+        { id: 'hospitality-management-hr', name: 'Menadžment u Hotelijerstvu' }
       ]
     }
   ],
@@ -467,6 +470,40 @@ const SOKRAT_CATALOG = {
         resolve: { 'first-midterm': 'macroeconomicsM1', 'second-midterm': 'macroeconomicsM2', 'final': 'macroeconomicsFinal' },
         codeScripts: ['data/macroeconomics/exercises.js'], // CODE (generate() funkcije) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'macroeconomicsExercises'   // window var s interaktivnim vježbama (features.exercises)
+      }
+    },
+
+    // ===== HRVATSKI program „Menadžment u Hotelijerstvu" (prijevodi; docs/HRV_PLAN.md) =====
+    // Klon EN predmeta: isti icon/color/year/semester, hrvatski sadržaj + vlastiti storageKey.
+    // Window varovi = <camelId>Hr{M1,M2,Final}; data u data/<id>-hr/. PILOT: Business Informatics.
+    {
+      id: 'business-informatics-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 1,
+      name: 'Poslovna informatika',
+      shortName: 'PI',
+      icon: 'fa-laptop-code',
+      color: '#2563eb',
+      iconGradient: ['#2563eb', '#60a5fa'],
+      description: 'Sustavski pristup, podaci i informacije, hardver, softver, mreže, WWW, e-poslovanje, sigurnost',
+      storageKey: 'business-informatics-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'midterm-1', name: '1. kolokvij', description: 'Poglavlja 1–6: sustavski pristup, podaci, hardver, softver, mreže, WWW' },
+        { id: 'midterm-2', name: '2. kolokvij', description: 'Poglavlja 7–11: e-poslovanje, IT trendovi, podrška menadžmentu, ekspertni sustavi, sigurnost' },
+        { id: 'final', name: 'Završni ispit', description: 'Sva poglavlja 1–11 (oba kolokvija zajedno)' }
+      ],
+      content: {
+        scripts: [
+          'data/business-informatics-hr/midterm-1.js',
+          'data/business-informatics-hr/midterm-2.js',
+          'data/business-informatics-hr/final.js'
+        ],
+        resolve: {
+          'midterm-1': 'businessInformaticsHrM1',
+          'midterm-2': 'businessInformaticsHrM2',
+          'final': 'businessInformaticsHrFinal'
+        }
       }
     }
   ]

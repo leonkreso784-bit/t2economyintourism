@@ -73,11 +73,16 @@ landing, browse, profil). Pristup: jednostavan `js/i18n.js` rječnik (`{ en, hr 
 helper `t(key)`; jezik se bira iz aktivnog programa (HR program → hrvatski UI). Engine sadržaja ostaje neovisan o jeziku.
 
 ## Faze (cigla po cigla)
-1. **✅ Cigla 1 — ovaj plan** (konvencije + schema bijeli-popis).
-2. **Cigla 2 — `translate-subject.js`** (alat + samoprovjere; test na 1 kategoriji = jeftin dry-run).
-3. **Cigla 3 — PILOT: Business Informatics** → `data/business-informatics-hr/` (najmanji, dokazani pilot-predmet; 0 vježbi → najjednostavniji).
-4. **Cigla 4 — catalog**: dodati HR program + HR subject (BI); verify + Playwright; ručni vizualni pregled HR sadržaja.
-5. **Cigla 5 — UI i18n** (~50 stringova) — da HR program ima i hrvatsko sučelje.
+1. **✅ Cigla 1 — plan** (konvencije + schema bijeli-popis). Commit `9e203de`.
+2. **✅ Cigla 2 — `translate-subject.js`** (slot-pristup; **salvage-parser** jer tool_use ČESTO vrati `translations`
+   kao ručno-serijaliziran JSON-string s lošim escapeom → regex usidren na `{"i":N,"t":"…"}` granicu). Commit `46acff9`.
+3. **✅ Cigla 3 — PILOT: Business Informatics** → `data/business-informatics-hr/` (M1+M2+final, **11 kat / 86 fc / 55 quiz /
+   44 fill — strukturno identično EN-u**; 0 vježbi). Trošak ~$0.66. Commit `46acff9`.
+4. **✅ Cigla 4 — catalog + UI-izolacija**: HR program + HR subject u catalog; **landing/sidebar/stats filtrirani na
+   `PRIMARY_PROGRAM` (EN)** → HR ide kroz Browse, EN nepromijenjen. verify 0/0, Playwright 68/68 (subjects=18). Cache `20260695`.
+   ⚠ Poznata privremena rupa (riješiti u Cigli 5): sidebar tijekom učenja HR predmeta i dalje pokazuje EN predmete
+   (sidebar se gradi jednom na init); s 1 HR predmetom nevidljivo.
+5. **▶ Cigla 5 — UI i18n** (~50 stringova) — da HR program ima i hrvatsko sučelje + sidebar svjestan aktivnog programa.
 6. **Cigle 6+ — ostali tekstualni predmeti** (batch, isti alat).
 7. **Kvantitativni predmeti** (KaTeX — alat čuva formule; provjeriti currency-safe + balans).
 8. **Vježbe** (samo string-polja; engine nedirnut).

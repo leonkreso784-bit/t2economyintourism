@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-28 — HRV program: pokrenut + PILOT (Business Informatics) LIVE-ready
+Nakon BUG-013: krenuo HRVATSKI program „Menadžment u Hotelijerstvu" (prijevod svih predmeta), cigla po cigla.
+- **Cigla 1 — plan** `docs/HRV_PLAN.md` (klon-program Opcija A; konvencije imenovanja; bijeli-popis prevedi/čuvaj). `9e203de`.
+- **Cigla 2 — `scripts/translate-subject.js`** (Sonnet, `.env` ključ). **Slot-pristup**: izvuče SAMO string-polja iz
+  bijelog popisa, model vrati prijevode, JS **rekonstruira strukturu** → ključevi/`correct`/icon/`_______`/HTML/KaTeX
+  očuvani po konstrukciji. **Bug ulovljen+riješen:** tool_use često vrati `translations` kao ručno-serijaliziran
+  JSON-string s lošim escapeom navodnika (parse pukne) → **salvage-parser** (regex usidren na `{"i":N,"t":"…"}` granicu
+  `"}`+lookahead `,{`/`]`, toleriran navodnik u prozi). Batch 12 slotova / 2500 zn, retry za nedostajuće.
+- **Cigla 3 — PILOT Business Informatics** → `data/business-informatics-hr/{midterm-1,midterm-2,final}.js`.
+  **11 kat / 86 fc / 55 quiz / 44 fill — strukturno identično EN-u** (isti ključevi, isti `correct`, sva `_______`). Trošak ~$0.66. `46acff9`.
+- **Cigla 4 — catalog + UI-izolacija:** HR program `hospitality-management-hr` („Menadžment u Hotelijerstvu") + subject
+  `business-informatics-hr` („Poslovna informatika", year1/sem1, isti icon/color). **`renderSubjectsSidebar`/landing
+  showcase/landing-stats filtrirani na `PRIMARY_PROGRAM='hospitality-management'`** → EN landing/sidebar bajt-identičan,
+  HR dostupan kroz **Browse** (drill-down je program-svjestan). Cache `20260695` (catalog/content-loader/navigation + CONTENT_VERSION).
+  Testovi `sidebar.spec`/`landing.spec` usklađeni (očekuju primarni program). **Gate: verify 0/0, Playwright 68/68 (subjects=18, `business-informatics-hr ✓ ok`).**
+- **Dalje:** Cigla 5 = UI i18n (~50 stringova) + sidebar svjestan aktivnog programa; pa ostali predmeti.
+- Napomena: HR sadržaj se čita iz datoteka (Supabase fallback; HR još nije u bazi — re-sync kasnije).
+
 ## 2026-06-28 — BUG-013 (flashcard) riješen — grid-stack + min-height
 Prva cigla nove faze (prije HRV programa): popravak flashcard buga koji koristi svim predmetima.
 - **Bug:** kod dugog odgovora okrenuta kartica naraste preko `.flashcard-controls` → strelica „dalje" prekrivena, neklikabilna.

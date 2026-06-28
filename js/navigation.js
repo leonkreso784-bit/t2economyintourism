@@ -110,6 +110,17 @@ function closeSidebar() {
     document.body.style.overflow = '';
 }
 
+// Primarni (zadani) program za landing/sidebar showcase. Drugi programi (npr. HRV
+// "hospitality-management-hr") dostupni su kroz Browse drill-down (program-svjestan),
+// pa landing/sidebar pokazuju SAMO primarni → EN iskustvo ostaje nepromijenjeno, bez
+// miješanja jezika. (UI i18n po aktivnom programu = kasniji korak; vidi docs/HRV_PLAN.md.)
+const PRIMARY_PROGRAM = 'hospitality-management';
+function primarySubjects() {
+    return (typeof SOKRAT_CATALOG !== 'undefined' && Array.isArray(SOKRAT_CATALOG.subjects))
+        ? SOKRAT_CATALOG.subjects.filter((s) => s.programId === PRIMARY_PROGRAM)
+        : [];
+}
+
 // ========== SIDEBAR SUBJECT LIST (rendered from catalog) ==========
 function renderSubjectsSidebar() {
     const list = document.getElementById('subjectsList');
@@ -123,7 +134,7 @@ function renderSubjectsSidebar() {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
 
-    list.innerHTML = SOKRAT_CATALOG.subjects.map((s) => {
+    list.innerHTML = primarySubjects().map((s) => {
         const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
             ? s.iconGradient
             : [s.color, s.color];
@@ -388,7 +399,7 @@ function initBrowse() {
 // Drži landing brojeve usklađene s catalog-om: dodavanjem predmeta broj raste sam.
 function renderLandingMeta() {
     if (typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
-    const count = SOKRAT_CATALOG.subjects.length;
+    const count = primarySubjects().length;
     document.querySelectorAll('[data-meta="subjectCount"]').forEach((el) => {
         el.textContent = count;
     });
@@ -398,7 +409,7 @@ function renderLandingMeta() {
 function renderLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
     if (!wrap || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
-    wrap.innerHTML = SOKRAT_CATALOG.subjects.map((s) => {
+    wrap.innerHTML = primarySubjects().map((s) => {
         const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
             ? s.iconGradient : [s.color, s.color];
         const lessonCount = (s.lessons || []).length;
