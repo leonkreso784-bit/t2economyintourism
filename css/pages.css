@@ -45,6 +45,7 @@
 
 .lessons-title {
     flex: 1;
+    min-width: 0; /* dopusti stezanje ispod sadržaja (inače dug HR naslov + 🌐 toggle strši na uskom mobitelu) */
 }
 
 .breadcrumb {

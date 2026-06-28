@@ -21,6 +21,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   Stari `logo.png`/`logo-small.png` obrisani. Cache `?v=20260693` (svg + favikoni; CSS ostao `20260692`). Iteracija: odbačeni ručno-crtani
   SVG-ovi (izgledali skicirano/„kao pingvin") — kvaliteta iz vektorizacije originala. Gate: verify 0/0, Playwright **68/68**, vizualni nav-pregled OK.
 ### Fixed
+- **BUG-015 — Landing nav prepuni na mobitelu nakon dodavanja 🌐 toggle-a (CTA „Start studyin" rezan) ✅ RIJEŠEN (2026-06-28, lokalno).**
+  🌐 prekidač dodao ~75px u tijesan fiksni nav; `.cta-button{width:100%}` (≤767px, za hero) + `flex-shrink:1` je rezao CTA-tekst
+  umjesto da gura višak. Fix CSS-only: `.nav-cta{flex-shrink:0; white-space:nowrap; width:auto}` + brand-wordmark `display:none`
+  ≤1060px (brand=ikona, oslobađa ~125px da anchor-linkovi ostanu) + anchor-linkovi skriveni ≤860px (bilo ≤720) + `nowrap`
+  + `.lessons-title{min-width:0}`. Playwright sweep 320→1440px × {EN,HR} = 0 overflowa/0 rezanja; gate verify 0/0, test:responsive 76/76.
+  Cache `?v=20260697` (`styles.css`+`landing.css`+`pages.css`). Datoteke: `css/landing.css`, `css/pages.css`.
 - **BUG-014 — Fill-in: prazan odgovor + „Provjeri" ispada „Correct!" ✅ RIJEŠEN + LIVE (2026-06-27, `7c70e07`).**
   `correct.includes(input)` je za `input===''` uvijek `true` (svaki string sadrži prazan). Fix (`js/fill-blanks.js`):
   `input.length>0 && normFill(input)===normFill(correct)` — prazno nikad točno, substring-uvjet uklonjen, case+razmak↔crtica

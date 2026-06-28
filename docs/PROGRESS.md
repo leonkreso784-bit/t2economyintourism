@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-28 — BUG-015: landing nav responsivnost na mobitelu (🌐 toggle prepunio nav)
+Korisnik prijavio (screenshot): nakon dodavanja 🌐 jezik-toggle-a, na mobitelu se primarni CTA „Start studying"/„Počni učiti" **reže**
+(„Start studyin"/„Poč uči"), a na tablet/HR širini se anchor-labeli lome u 2 reda.
+- **Dijagnoza (Playwright, mjereno):** na 390px logo-wordmark 169px + toggle 63px + auth 35px + gaps/padding ≈ 68px → CTA dobio samo **55px**
+  (treba ~120). CTA se kao flex-item s `flex-shrink:1` **stezao i rezao tekst** umjesto da prijavi overflow; uzrok širine = `.cta-button{width:100%}`
+  iz `responsive/02-mobile-core` (namijenjen hero gumbima). Toggle (~75px) je tipnuo i tablet band (~720–1050px) preko ruba.
+- **Fix (CSS-only, `css/landing.css` + `css/pages.css`):** (a) `.cta-button.nav-cta{flex-shrink:0; white-space:nowrap; width:auto}`
+  (+ logo/toggle/auth `flex-shrink:0`); (b) brand-wordmark `.logo-text{display:none}` ≤1060px (brand=Sokrat ikona → anchor-linkovi ostaju
+  vidljivi kroz tablet raspon umjesto da nestanu); (c) anchor-linkovi skriveni ≤860px (bilo ≤720) + `white-space:nowrap` + uži razmaci ≤900;
+  (d) `.lessons-title{min-width:0}` (kao `.study-title`, za dug HR naslov na 320px).
+- **Provjera:** širinski sweep 320→1440px × {EN,HR} = **0 overflowa, 0 rezanja CTA-a**; header-test browse/lessons/study 0 overflowa na 320/360/390;
+  vizualni screenshot 390px (oba jezika čist jedan red). Gate: verify 0/0, **test:responsive 76/76**. Cache `?v=20260697` (styles+landing+pages).
+- Status: ✅ riješen lokalno, **čeka deploy-potvrdu**. Dokumentirano: BUG-015 u `docs/BUGS.md` + CHANGELOG.
+
 ## 2026-06-28 — HRV: globalni 🌐 toggle + landing/browse prijevod + DEPLOY (cigle 5c)
 Nastavak istog dana. Cilj (korisnik): „cijela platforma na hrv, ali translate ne dira predmete" → globalni toggle.
 - **5c-i — GLOBALNI HR/EN toggle** (`js/i18n.js`): jezik iz `localStorage 'sokrat-ui-lang'` (default en), `setUiLang` pamti,

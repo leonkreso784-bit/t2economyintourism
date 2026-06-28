@@ -567,6 +567,7 @@
     cursor: pointer;
     transition: color 0.2s ease;
     padding: 0;
+    white-space: nowrap; /* spriječi 2-redni wrap dužih (HR) labela u uskom navu */
 }
 
 .landing-nav-links a:hover,
@@ -579,7 +580,15 @@
     font-size: 0.9rem;
     min-height: 0;
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+    flex-shrink: 0;        /* primarni CTA se NIKAD ne steže ispod teksta (inače „Start studyin") */
+    white-space: nowrap;
+    width: auto;           /* nadjača .cta-button{width:100%} iz mobile-core (to je za hero, ne nav) */
 }
+
+/* Logo/brand i toggle ne smiju gubiti širinu kad je nav pretrpan → višak ide drugdje. */
+.landing-nav .landing-logo,
+.landing-nav .lang-toggle,
+.landing-nav .nav-auth-btn { flex-shrink: 0; }
 
 /* Offset hero below the fixed nav; anchor targets clear it too.
    Vezano uz --nav-h (jedinstveni izvor) + safe-area + jastuk, umjesto magičnog broja. */
@@ -955,18 +964,36 @@
 }
 
 /* ----- Responsive ----- */
-@media (max-width: 720px) {
+/* Dok je nav tijesan (nav-linkovi + 🌐 toggle + auth + CTA), brand = samo Sokrat ikona (oslobađa ~125px
+   koje je zauzeo wordmark) → anchor-linkovi ostaju vidljivi umjesto da nestanu kroz cijeli tablet raspon.
+   Wordmark se vraća tek kad ima mjesta (≥1061px). */
+@media (max-width: 1060px) {
+    .landing-nav .logo-text { display: none; }
+}
+
+/* Tablet band: suzi razmake da duži HR labeli + toggle + CTA stanu u jedan red bez wrapa/stezanja. */
+@media (max-width: 900px) {
+    .landing-nav { gap: 0.85rem; }
+    .landing-nav-links { gap: 1.1rem; }
+}
+
+/* Ispod ~860px anchor-linkovi + toggle + auth + CTA više ne stanu u jedan red → sakrij linkove
+   (sekundarni marketing-anchori; isti obrazac kao prije, samo viši prag jer 🌐 toggle troši širinu). */
+@media (max-width: 860px) {
     .landing-nav-links { display: none; }
+}
+
+@media (max-width: 720px) {
     .landing-section { padding: 3rem 1.25rem; }
     .footer-cols { grid-template-columns: 1fr; gap: 1.5rem; }
     .footer-bottom { justify-content: center; text-align: center; }
 }
 
-/* Uske mobilne širine: logo (nowrap) + CTA moraju stati u JEDAN red bez overflowa,
-   da visina fiksne trake ostane ≤ --nav-h (inače bedž sklizne pod traku). */
+/* Uske mobilne širine: brand (ikona+wordmark) + 🌐 toggle + auth + CTA moraju stati u JEDAN red
+   bez stezanja CTA-a (inače „Start studyin"). S dodanim toggle-om wordmark se gubi → ostaje Sokrat ikona. */
 @media (max-width: 480px) {
-    .landing-nav { padding-left: 1rem; padding-right: 1rem; gap: 0.75rem; }
-    .landing-nav .logo-text { font-size: 1.15rem !important; } /* !important: nadjača .logo-text iz responsive.css */
+    .landing-nav { padding-left: 0.9rem; padding-right: 0.9rem; gap: 0.5rem; }
+    /* .logo-text već skriven od ≤1060px (brand = Sokrat medaljon) */
+    .lang-toggle { padding: 0.4rem 0.6rem; gap: 0.3rem; }
     .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
-    .landing-logo { flex-shrink: 0; }
 }
