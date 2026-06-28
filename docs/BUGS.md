@@ -17,21 +17,20 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-### BUG-013 — Flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje"
-- Status: 🔴 otvoren (planiran fix: grid-stack) · Težina: srednji (UX, svi predmeti, kartice s dugim odgovorom) · Prijavio korisnik: 2026-06-27
-- Opis: kad je odgovor dug, **okrenuta (flipped) kartica naraste preko kontrola** ispod nje → strelica „dalje"/„next" je fizički prekrivena i ne da se kliknuti. Korisnik traži da kartica nikad ne prekrije strelice.
-- Reprodukcija: bilo koji predmet → Flashcards → kartica s dugim odgovorom → okreni → strelica „dalje" nedohvatljiva.
-- Uzrok: `.flashcard-front`/`.flashcard-back` su `position:absolute` → **ne rastežu roditelja** `.flashcard-inner` (ostaje `min-height:280px`). Duga stražnja strana (`height:auto` + `overflow-y:auto`) naraste **prema dolje preko `.flashcard-controls`** (sljedeći element u toku, [index.html:544](../index.html#L544)). Klasičan problem 3D flip-kartica (apsolutne strane za stacking lome auto-visinu).
-- Plan rješenja (CSS-only): **grid-stack** — obje strane u istu grid-ćeliju (`.flashcard-inner{display:grid}`, strane `grid-area:1/1; position:relative`) → grid uzme visinu **viša strana** → wrapper naraste → strelice nikad prekrivene; 3D-flip (`backface-visibility` + `rotateY`) ostaje. Rezerva: JS postavi `.flashcard-inner` visinu = `max(front,back).scrollHeight`. Cache bump + `test:responsive`.
-- Lekcija (kad se riješi): flip-kartice s `position:absolute` stranama NE rastežu roditelja → `height:auto` „kolabira"; grid-stack (obje strane u istoj ćeliji) drži auto-visinu i sprječava preklapanje s elementima ispod.
-
----
-
-*(gore = aktivni; riješeni dolje)*
+*(trenutno nema aktivnih bugova)*
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-013 — Flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje"
+- Status: ✅ riješen (lokalno; gate zelen, čeka deploy) · Težina: srednji (UX, svi predmeti, kartice s dugim odgovorom) · Prijavio korisnik: 2026-06-27 · Fix: 2026-06-28
+- Opis: kad je odgovor dug, **okrenuta (flipped) kartica naraste preko kontrola** ispod nje → strelica „dalje"/„next" je fizički prekrivena i ne da se kliknuti.
+- Reprodukcija (prije fixa): bilo koji predmet → Flashcards → kartica s dugim odgovorom → okreni → strelica „dalje" nedohvatljiva.
+- Uzrok (dvostruki): (1) `.flashcard-front`/`.flashcard-back` su bile `position:absolute` → **ne rastežu roditelja** `.flashcard-inner`. (2) **Fiksni `height`** na `.flashcard` po breakpointu (350/340/320/300/280 px u `responsive/01` i `02`) → kartica se nije mogla proširiti, pa duga stražnja strana prelije **preko `.flashcard-controls`** (sljedeći element u toku).
+- Rješenje (CSS-only, cache `?v=20260694`): **grid-stack** — `.flashcard-inner{display:grid}` + obje strane `grid-area:1/1; position:relative` (umjesto `absolute`) → grid uzme visinu **viša strana** → wrapper naraste → strelice nikad prekrivene; 3D-flip (`backface-visibility`+`rotateY`) ostaje. Plus **svi fiksni `height` na `.flashcard` → `min-height`** (`responsive/01` ×4, `02` ×1) da kartica može narasti. Datoteke: `css/flashcards-section.css`, `css/responsive/01-up-and-phone-breakpoints.css`, `css/responsive/02-mobile-core.css`.
+- Provjera: ciljani Playwright (iPhone SE/13/Pro Max, ubačen dug odgovor) — `.flashcard-controls.top` uvijek **ispod** `.flashcard-inner.bottom`, 0 preklapanja; puni gate verify 0/0 + `test:responsive` **68/68**.
+- Lekcija: flip-kartice s `position:absolute` stranama NE rastežu roditelja → `height:auto` „kolabira"; **grid-stack** (obje strane u istoj ćeliji) drži auto-visinu. Ali to nije dovoljno ako bilo koji breakpoint nameće **fiksni `height`** — uvijek koristi `min-height` na kontejneru koji mora rasti sa sadržajem.
 
 ### BUG-014 — Fill-in: PRAZAN odgovor + „Provjeri" ispada „Correct!"
 - Status: ✅ riješen + ✅ LIVE 2026-06-27 (`7c70e07`; node-test 9/9; live potvrđen) · Težina: **visok** (lažni napredak, svi predmeti) · Prijavio korisnik: 2026-06-27

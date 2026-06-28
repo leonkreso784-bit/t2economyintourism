@@ -50,6 +50,9 @@
     transition: transform 0.6s;
     transform-style: preserve-3d;
     position: relative;
+    /* grid-stack: obje strane u istu ćeliju → wrapper naraste do VIŠE strane
+       (sprječava da duga okrenuta kartica prekrije kontrole — BUG-013) */
+    display: grid;
 }
 
 .flashcard.flipped .flashcard-inner {
@@ -58,7 +61,9 @@
 
 .flashcard-front,
 .flashcard-back {
-    position: absolute;
+    /* grid-stack umjesto position:absolute → strane RASTEŽU roditelja (BUG-013) */
+    position: relative;
+    grid-area: 1 / 1;
     width: 100%;
     min-height: 280px;
     height: auto;

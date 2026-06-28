@@ -28,10 +28,9 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
   (indigo medaljon `#6366f1→#818cf8`, bijelo lice, čist prsten). Crop-hak maknut, favikoni regenerirani, glava ispunjava cijeli krug (auto-fit), stari logo obrisan, cache `20260693`.
   Gate: verify 0/0, Playwright 68/68. Detalji: `docs/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
 - **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
-- **0) Flashcard bug PRVO** (**BUG-013**, [BUGS.md](BUGS.md); neovisno, korist svima): kod dugog teksta okrenuta kartica prekrije strelicu „dalje" →
-  ne da se kliknuti. Uzrok: `.flashcard-front/.back` su `position:absolute` pa ne rastežu `.flashcard-inner`
-  (ostaje `min-height:280px`), a duga stražnja strana naraste preko `.flashcard-controls`. Popravak = **grid-stack**
-  (obje strane u istu grid-ćeliju, `position:relative`) → wrapper naraste do više strane, strelice nikad prekrivene. CSS-only.
+- **0) Flashcard bug** (**BUG-013**, [BUGS.md](BUGS.md)) — ✅ **RIJEŠEN (2026-06-28, lokalno, gate zelen, čeka deploy):**
+  grid-stack (`.flashcard-inner{display:grid}` + strane `grid-area:1/1; position:relative`) + svi fiksni `height` na `.flashcard` → `min-height`
+  (`responsive/01`×4, `02`×1). Kartica naraste do više strane → strelice nikad prekrivene. CSS-only, cache `20260694`, Playwright 68/68.
 - **1) Novi HRV program „Menadžment u Hotelijerstvu"** = **prijevod SVIH predmeta 1.+2. god na hrvatski.** Arhitektura
   (odlučeno): **paralelni program u catalogu (klon, Opcija A), NE i18n u sadržaju** — novi `program` + `data/<subj>-hr/*.js`,
   isti engine (0 promjena), vlastiti `storageKey`. Prevođenje preko **`translate-subject.js`** (Sonnet, tool_use, čuva

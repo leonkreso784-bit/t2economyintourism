@@ -92,7 +92,7 @@
     }
     
     .flashcard {
-        height: 350px;
+        min-height: 350px;
     }
     
     .flashcard-front p {
@@ -222,7 +222,7 @@
     }
     
     .flashcard {
-        height: 280px;
+        min-height: 280px;
     }
     
     .flashcard-front p {
@@ -291,7 +291,7 @@
 /* ===== iPhone 14/15/16 (390px) ===== */
 @media (min-width: 390px) and (max-width: 427px) {
     .flashcard {
-        height: 320px;
+        min-height: 320px;
     }
     
     .hero h1 {
@@ -319,7 +319,7 @@
     }
     
     .flashcard {
-        height: 340px;
+        min-height: 340px;
     }
     
     .hero-visual {

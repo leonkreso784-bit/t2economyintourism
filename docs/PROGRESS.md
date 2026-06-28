@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-28 — BUG-013 (flashcard) riješen — grid-stack + min-height
+Prva cigla nove faze (prije HRV programa): popravak flashcard buga koji koristi svim predmetima.
+- **Bug:** kod dugog odgovora okrenuta kartica naraste preko `.flashcard-controls` → strelica „dalje" prekrivena, neklikabilna.
+- **Dvostruki uzrok:** (1) lica (`.flashcard-front/.back`) bila `position:absolute` → ne rastežu `.flashcard-inner`;
+  (2) **fiksni `height`** na `.flashcard` po breakpointu (350/340/320/300/280 px u `responsive/01`+`02`) → kartica se ne može proširiti.
+- **Fix (CSS-only):** grid-stack — `.flashcard-inner{display:grid}` + lica `grid-area:1/1; position:relative`; svi fiksni `height` → `min-height`.
+  Datoteke: `css/flashcards-section.css`, `css/responsive/01-…css`, `css/responsive/02-mobile-core.css`. Cache `?v=20260694`.
+- **Provjera:** ciljani Playwright (iPhone SE/13/Pro Max, ubačen dug odgovor) → kontrole uvijek ispod dna kartice, 0 preklapanja;
+  puni gate **verify 0/0 + test:responsive 68/68**. Detalji: `docs/BUGS.md` §BUG-013.
+- **Dalje:** HRV program „Menadžment u Hotelijerstvu" (infra + pilot).
+
+---
+
 ## 2026-06-27 — LOGO redizajn (raster → vektor SVG) + repo čišćenje
 Nastavak iste sesije. Dvije stvari: (1) počišćeno lokalno smeće, (2) logo prebačen na SVG.
 - **Repo čišćenje (~144 MB lokalno, ništa u gitu):** obrisani `test-results/`, svi `tmp-*/`, `tmp/`, `.venv/` + mrtve
