@@ -21,6 +21,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](STATISTICS_PLAN.md) | Plan/analiza izvora za vježbe pojedinih predmeta (povijesno, ✅ done) |
 | [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md) | Plan/analiza za Traffic in Tourism (1. god, sem 2) — ✅ done 2026-06-24 |
 | [MATH_PLAN.md](MATH_PLAN.md) | Plan za Matematiku (zadnji 1.-god predmet; KaTeX + worked problems) — ✅ LIVE 2026-06-27 |
+| [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (prijevod platforme; klon-program + globalni UI toggle, ADR-012) — ▶ cigle 1–5c ✅ LIVE 2026-06-28 |
 | [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md) | BUG-012 — randomizirane vježbe iz baze; Opcija A izvedena — ✅ LIVE 2026-06-27 |
 | [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (Stripe+NKD djelatnosti, matura tržište, modeli, ideje) — planiranje 2026-06-27 |
 | [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, test:unit, Playwright) |

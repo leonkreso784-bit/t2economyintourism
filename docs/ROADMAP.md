@@ -2,9 +2,12 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 AŽURNO (2026-06-26)
-**2. god HM = 8/8 ✅ LIVE.** **1. god (8 LIVE):** Business Informatics, SIT, Management, Microeconomics,
-Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (✅ LIVE 2026-06-25 `62a4119`).
+## 📍 AŽURNO (2026-06-28)
+**SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
+(prijevod na hrvatski) — **cigle 1–5c ✅ LIVE** (pilot Business Informatics HR + globalni 🌐 toggle za cijeli glavni tok; vidi §C + [HRV_PLAN.md](HRV_PLAN.md)).
+**✅ BUG-013 (flashcard) riješen + LIVE. ✅ Logo redizajn LIVE.** Sljedeće: long-tail i18n (profil/pravne) → prijevod ostalih predmeta.
+**1. god (9 LIVE):** Business Informatics, SIT, Management, Microeconomics,
+Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (`62a4119`).
 **✅ Math = 9. (zadnji) 1.god predmet — K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`+`31be03f`);**
 year1/sem1, KaTeX, 39 vježbi (engine sad renderira KaTeX); K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa. **→ 1. GODINA HM 9/9 KOMPLETNA (uz Intro blokiran).**
 Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
@@ -28,14 +31,15 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
   (indigo medaljon `#6366f1→#818cf8`, bijelo lice, čist prsten). Crop-hak maknut, favikoni regenerirani, glava ispunjava cijeli krug (auto-fit), stari logo obrisan, cache `20260693`.
   Gate: verify 0/0, Playwright 68/68. Detalji: `docs/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
 - **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
-- **0) Flashcard bug** (**BUG-013**, [BUGS.md](BUGS.md)) — ✅ **RIJEŠEN (2026-06-28, lokalno, gate zelen, čeka deploy):**
+- **0) Flashcard bug** (**BUG-013**, [BUGS.md](BUGS.md)) — ✅ **RIJEŠEN + LIVE (deployano 2026-06-28, `213b067`):**
   grid-stack (`.flashcard-inner{display:grid}` + strane `grid-area:1/1; position:relative`) + svi fiksni `height` na `.flashcard` → `min-height`
-  (`responsive/01`×4, `02`×1). Kartica naraste do više strane → strelice nikad prekrivene. CSS-only, cache `20260694`, Playwright 68/68.
-- **1) Novi HRV program „Menadžment u Hotelijerstvu"** = **prijevod SVIH predmeta 1.+2. god na hrvatski.** Arhitektura
-  (odlučeno): **paralelni program u catalogu (klon, Opcija A), NE i18n u sadržaju** — novi `program` + `data/<subj>-hr/*.js`,
-  isti engine (0 promjena), vlastiti `storageKey`. Prevođenje preko **`translate-subject.js`** (Sonnet, tool_use, čuva
-  quiz-indeks/KaTeX/`_______`/HTML); vježbe (kod) = posebno (samo string-polja). Faze: bug → infra+pilot (npr. Business
-  Informatics) → UI i18n (~50 stringova) → tekstualni predmeti → kvantitativni → vježbe → Supabase. Detalji: razgovor 2026-06-27.
+  (`responsive/01`×4, `02`×1). Kartica naraste do više strane → strelice nikad prekrivene. CSS-only, cache `20260694`.
+- **1) HRV program „Menadžment u Hotelijerstvu" — CIGLE 1–5c ✅ LIVE (deployano 2026-06-28, `320d413..4b795c8`):** prijevod predmeta na hrvatski.
+  Arhitektura (ADR-012): **klon programa (Opcija A), NE i18n u sadržaju** — `hospitality-management-hr` + `data/<subj>-hr/*.js` (isti engine 0 promjena,
+  vlastiti `storageKey`). Prijevod preko **`scripts/translate-subject.js`** (Sonnet tool_use, slot-pristup + salvage-parser; čuva quiz-indeks/KaTeX/
+  `_______`/HTML). **Napravljeno:** ✅ pilot **Business Informatics HR** (11 kat/86fc, ~$0.66) · ✅ catalog (EN nepromijenjen, HR kroz Browse) ·
+  ✅ **UI i18n + globalni 🌐 HR/EN toggle** (`js/i18n.js`, ~160 ključeva; cijeli study UI + landing + browse; EN bajt-identičan). Detaljan plan: [HRV_PLAN.md](HRV_PLAN.md).
+  **⬜ Preostaje:** long-tail chrome (profil/pravne stranice/lessons-header/blind-map) **PA prijevod ostalih predmeta** (batch alatom) → kvantitativni → vježbe → Supabase re-sync.
 - **2) 3. godina** Hospitality Managementa — doći će, timing TBD.
 - **3) Studentski UGC za više godine:** studenti uploadaju/grade **3. i 4. godinu**. Za randomizirane UGC-vježbe =
   **deklarativni `params`+formula + sigurni sandbox-evaluator** (NE `eval`), ne klijentski kod (vidi BUG-012 pouku). Veže se na Fazu 1–2 + moderaciju ([VISION.md](VISION.md) §4).

@@ -1,8 +1,9 @@
 # HRV_PLAN — Program „Menadžment u Hotelijerstvu" (hrvatski prijevod)
 
 > Plan za paralelni HRVATSKI program = prijevod SVIH predmeta 1.+2. god HM na hrvatski.
-> Cigla po cigla. Status: ▶ Cigla 1 (plan) — u tijeku (2026-06-28).
-> Vezano: `CLAUDE.md` §DALJE C, `ROADMAP.md` §C, [[content-roadmap-sequencing]].
+> Cigla po cigla. **Status (2026-06-28): cigle 1–5c ✅ LIVE** (`320d413..4b795c8`) — pilot Business Informatics HR +
+> globalni 🌐 HR/EN toggle (study UI + landing + browse). ⬜ Preostaje: long-tail chrome → prijevod ostalih predmeta.
+> Vezano: ADR-012 (`docs/DECISIONS.md`), `CLAUDE.md` §DALJE, `ROADMAP.md` §C, [[hrv-program]].
 
 ## Cilj
 Student bira **jezik programa** na razini smjera: postojeći engleski „Hospitality Management"

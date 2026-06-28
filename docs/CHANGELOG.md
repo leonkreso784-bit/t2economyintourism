@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Added
+- **HRV program „Menadžment u Hotelijerstvu" — cigle 1–5c ✅ LIVE 2026-06-28 (`320d413..4b795c8`).** Paralelni hrvatski program
+  (klon, ADR-012): `hospitality-management-hr` + **pilot `business-informatics-hr`** („Poslovna informatika", 11 kat/86fc, strukturno
+  identično EN-u). Alat **`scripts/translate-subject.js`** (Sonnet tool_use; slot-pristup + salvage-parser; čuva quiz-indeks/`_______`/
+  KaTeX/HTML). **UI i18n** (`js/i18n.js`, ~160 ključeva) + **globalni 🌐 HR/EN toggle** (`localStorage`, master nad programom) preveo cijeli
+  glavni tok: study UI + landing + browse (hrvatska gramatika: ordinali/množina). EN dict = originali → **EN bajt-identičan**. Cache do `20260696`.
+  Test `tests/i18n.spec.js`. Detalji: `docs/HRV_PLAN.md`.
 ### Changed
 - **LOGO redizajn — `logo.png` (raster) → `assets/logo.svg` (vektor) ✅ LIVE 2026-06-28 (`19f07db`).**
   Postojeći Sokrat **vektoriziran s zaglađivanjem**: ImageMagick (4× upscale → threshold → maska koja makne originalni medaljon-prsten i
@@ -18,8 +25,9 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `correct.includes(input)` je za `input===''` uvijek `true` (svaki string sadrži prazan). Fix (`js/fill-blanks.js`):
   `input.length>0 && normFill(input)===normFill(correct)` — prazno nikad točno, substring-uvjet uklonjen, case+razmak↔crtica
   tolerancija zadržana. Node-test 9/9. Cache `fill-blanks.js?v=20260691`.
-- *(otvoreno)* **BUG-013 — flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje"** (`position:absolute` strane ne
-  rastežu `.flashcard-inner`). Plan: grid-stack. Vidi `docs/BUGS.md`.
+- **BUG-013 — flashcard: dug tekst na okrenutoj kartici prekrije strelicu „dalje" ✅ RIJEŠEN + LIVE (2026-06-28, `213b067`).**
+  `position:absolute` strane nisu rastezale `.flashcard-inner` + fiksni `height` po breakpointu. Fix CSS-only: grid-stack
+  (`.flashcard-inner{display:grid}`, strane `grid-area:1/1; position:relative`) + svi fiksni `height` na `.flashcard`→`min-height`. Cache `20260694`.
 - **BUG-012 — randomizirane vježbe se lome kad sadržaj dolazi iz Supabasea ✅ RIJEŠEN + LIVE (2026-06-27, `7176194..801d9a6`).**
   Vježbe (`data/<subj>/exercises.js`) imaju `generate(p)` funkcije koje `JSON.stringify` izbriše pri migraciji, a loader je u
   DB-modu preskakao SVE `content.scripts` → randomizirane vježbe razbijene iz baze (Statistics 23 / Macro 25 / Accounting 8).

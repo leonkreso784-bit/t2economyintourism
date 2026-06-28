@@ -294,11 +294,18 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
   **C) strateški:** ✅ **LOGO redizajniran + LIVE (2026-06-28, `19f07db`)** — glatki vektorski Sokrat, glava ispunjava krug (vidi §Ključne odluke).
-  **▶▶ SLJEDEĆE (korisnik 2026-06-28): HRV program „Menadžment u Hotelijerstvu"** = **prijevod SVIH predmeta 1.+2. god na hrvatski.**
-  **Arhitektura (odlučeno):** paralelni program u catalogu (**klon, Opcija A — NE i18n u sadržaju**) + novi `data/<subj>-hr/*.js` (isti engine, vlastiti
-  `storageKey`) + `translate-subject.js` (Sonnet, tool_use; čuva quiz-indeks/KaTeX/`_______`/HTML; vježbe = posebno, samo string-polja) + UI i18n (~50 stringova).
-  **Faze:** infra+pilot (npr. Business Informatics) → UI i18n → tekstualni predmeti → kvantitativni → vježbe → Supabase. Detalji: `docs/ROADMAP.md` §C + razgovor 2026-06-27.
-  · **Otvoreno usput: flashcard bug BUG-013** (dug tekst prekrije strelicu „dalje"; `position:absolute` strane ne rastežu `.flashcard-inner`; popravak = grid-stack)
+  **▶▶ HRV program „Menadžment u Hotelijerstvu" — CIGLE 1–5c ✅ LIVE (deployano 2026-06-28, `320d413..4b795c8`):** prijevod predmeta
+  1.+2. god na hrvatski. **Arhitektura (Opcija A — klon programa, NE i18n u sadržaju):** paralelni program `hospitality-management-hr`
+  + `data/<subj>-hr/*.js` (isti engine 0 promjena, vlastiti `storageKey`) + **`scripts/translate-subject.js`** (Sonnet tool_use; slot-pristup
+  = prevede SAMO string-polja iz bijelog popisa, JS rekonstruira strukturu → quiz.correct/`_______`/KaTeX/HTML očuvani po konstrukciji;
+  **salvage-parser** jer tool_use često vrati `translations` kao pokvaren JSON-string). **Stanje:** ✅ PILOT **Business Informatics HR**
+  (`business-informatics-hr` = „Poslovna informatika", 11 kat/86fc, strukturno identično EN-u, ~$0.66) + ✅ **catalog** (HR program, landing/
+  sidebar filtrirani na `PRIMARY_PROGRAM`→EN nepromijenjen, HR kroz Browse) + ✅ **UI i18n** (`js/i18n.js`: `{en,hr}` rječnik ~160 ključeva +
+  `t()`/`applyTranslations` nad `[data-i18n]`). **✅ GLOBALNI 🌐 HR/EN toggle** (`localStorage 'sokrat-ui-lang'`, master nad programom; HR program
+  „predloži" hrvatski prvi put) preveo **cijeli glavni tok**: study UI + landing + browse drill-down (hrvatski ordinali/množina). **EN dict =
+  originalni tekst → EN bajt-identičan.** Cache do `20260696`. Testovi `tests/i18n.spec.js`. Plan/detalji: **`docs/HRV_PLAN.md`**. [[hrv-program]]
+  **⬜ Preostaje (long-tail):** profil + pravne stranice (privacy/terms/faq/contact = zasebni HTML) + lessons-header + blind-map → **PA prijevod ostalih predmeta** (Cigla 6, batch alatom).
+  · **✅ BUG-013 (flashcard) RIJEŠEN + LIVE** (grid-stack + fiksni `height`→`min-height`; `213b067`).
   · zatim **3. godina HM** · **studentski UGC za 3./4. god**.
   **(Napomena: PWA instalirana app drži staru ikonu dok se ne reinstalira — server ima novu; nije bug.)**
 
@@ -309,6 +316,9 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (currency-safe delimiteri **`\( \)`/`\[ \]`/`$$ $$`**, NE jedan `$`) +
   „worked problems" na postojećim modovima + grafovi-kao-slike. ✅ implementirano; **Math zadnja**.
 - ADR-010: **generator predmeta** (PDF→Sonnet→`data/*.js`, tool_use) uz minimalan usage. ADR-011: **Blok B read-path = sadržaj iz Supabasea direktno (anon key+RLS), NE `/api`** + file-fallback.
+- ADR-012: **HRV program = KLON (Opcija A), NE i18n u sadržaju.** Sadržaj ostaje jednojezičan po datoteci (paralelni `data/<subj>-hr/*.js`, vlastiti
+  `storageKey`); engine 0 promjena. **Sučelje = ZASEBNA os:** globalni `localStorage` toggle (HR/EN) je gospodar i ne dira sadržaj; opening HR programa
+  samo „predloži" hrvatski prvi put. EN dict-vrijednosti = originalni tekst → EN bajt-identičan. Baza: HR = novi redovi u POSTOJEĆIM tablicama (NE nove tablice). [[hrv-program]]
 - ~~Logo se NE mijenja.~~ **✅ LOGO REDIZAJNIRAN (2026-06-27): `logo.png` (raster + crop-hak) → `assets/logo.svg`** — postojeći
   Sokrat **vektoriziran s zaglađivanjem**: ImageMagick (4× upscale → threshold → maska koja makne originalni medaljon-prsten/ramena,
   ostaje samo glava) → **potrace** (visoka rez + `alphaMax 1.3`/`optTolerance 1.6` = glatke krivulje, NE „olovka") → **auto-fit**

@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-28 — HRV: globalni 🌐 toggle + landing/browse prijevod + DEPLOY (cigle 5c)
+Nastavak istog dana. Cilj (korisnik): „cijela platforma na hrv, ali translate ne dira predmete" → globalni toggle.
+- **5c-i — GLOBALNI HR/EN toggle** (`js/i18n.js`): jezik iz `localStorage 'sokrat-ui-lang'` (default en), `setUiLang` pamti,
+  `toggleUiLang()`, `applyTranslations` na prvo bojanje. 🌐 gumb u landing nav + browse/lessons/study headerima (`css/pages.css .lang-toggle`).
+  **Program više NE forsira jezik** — opening HR programa samo „predloži" hrvatski ako korisnik nije birao (`suggestLangForSubject`); toggle je gospodar.
+  `tests/i18n.spec.js` prepisan (suggest + toggle-master + persist). Commit `afa77ac`.
+- **5c-ii — landing chrome** (~55 ključeva): nav/hero/stats/sekcije/how/mode-kartice/CTA/footer. Brojevi (subjectCount) očuvani
+  **pre/post podjelom** oko `<span data-meta>`. Auth nav-gumb: `auth.js` koristi `t('auth.signIn')` + izlaže `refreshAuthNav()` koji
+  `applyTranslations` zove na promjenu jezika (čuva ime kad je prijavljen). Commit `bd059b3`.
+- **5c-iii — browse drill-down** (~25 ključeva): naslovi/introi/breadcrumb + sve kartice kroz `t()`/`getUiLang()`. **Hrvatska gramatika:**
+  ordinali („1. godina"), „Predmeti 1. godine", „Semestar 1", množina jedinica („9 predmeta", „3 lekcije"). `applyTranslations` sad
+  **re-renderira catalog-liste** (sidebar/landing showcase/aktivni browse) na toggle. Commit `4b795c8`.
+- **EN ZAŠTITA:** sve EN dict-vrijednosti = ORIGINALNI tekst → applyTranslations('en') vrati bajt-identičan EN (provjereno EN→HR→EN).
+- Cache do `20260696`. Gate (svaka cigla): verify 0/0, **Playwright 76/76**.
+- **✅ DEPLOY (uz izričito odobrenje korisnika): `git push 320d413..4b795c8`** — 9 commitova (BUG-013 + cijeli HRV 1–5c) LIVE na
+  sokratstudy.com. Provjereno: `i18n.js?v=20260696`→200, catalog ima `business-informatics-hr`, HR data fajl→200.
+- **Dalje:** long-tail i18n (profil + pravne stranice privacy/terms/faq/contact + lessons-header + blind-map) → **prijevod ostalih predmeta** (Cigla 6).
+
 ## 2026-06-28 — HRV program: pokrenut + PILOT (Business Informatics) LIVE-ready
 Nakon BUG-013: krenuo HRVATSKI program „Menadžment u Hotelijerstvu" (prijevod svih predmeta), cigla po cigla.
 - **Cigla 1 — plan** `docs/HRV_PLAN.md` (klon-program Opcija A; konvencije imenovanja; bijeli-popis prevedi/čuvaj). `9e203de`.

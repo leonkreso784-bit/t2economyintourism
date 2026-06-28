@@ -4,6 +4,27 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-012 — HRV program: KLON programa + globalni UI toggle (sadržaj ≠ sučelje)
+**Datum:** 2026-06-28 · **Status:** ✅ implementirano + LIVE (cigle 1–5c, `320d413..4b795c8`)
+**Kontekst:** Treba hrvatska verzija platforme („Menadžment u Hotelijerstvu"). Dvije razdvojene potrebe:
+(1) hrvatski **SADRŽAJ** predmeta, (2) hrvatsko **SUČELJE**. Korisnik izričito: „translate ne dira predmete".
+**Odluka:** **Dvije neovisne osi.**
+- **Sadržaj = KLON programa (Opcija A), NE i18n u sadržaju.** Paralelni `program` `hospitality-management-hr` +
+  `data/<subj>-hr/*.js` (isti engine, 0 promjena; vlastiti `storageKey` → napredak odvojen). Prijevod alatom
+  `scripts/translate-subject.js` (Sonnet tool_use; **slot-pristup** = model prevodi samo string-polja iz bijelog popisa,
+  JS rekonstruira strukturu → `quiz.correct`/`_______`/KaTeX/HTML očuvani po konstrukciji; **salvage-parser** za
+  tool_use koji vrati `translations` kao pokvaren JSON-string). Vježbe = posebno (samo string-polja). Odbačeno:
+  i18n ključevi u sadržaju (`{en,hr}` po flashcardu) — zagadilo bi schemu i engine.
+- **Sučelje = GLOBALNI toggle (master), neovisan o programu.** `js/i18n.js` rječnik `{en,hr}` + `t()` +
+  `applyTranslations()` nad `[data-i18n]`; izbor u `localStorage 'sokrat-ui-lang'`. 🌐 gumb u nav-u. Opening HR
+  programa samo „predloži" hrvatski prvi put (ako korisnik nije birao). **EN dict-vrijednosti = ORIGINALNI tekst →
+  EN bajt-identičan.** Landing/sidebar pokazuju `PRIMARY_PROGRAM` (EN); HR program dostupan kroz Browse drill-down.
+**Posljedice:** Hrvatski student dobije potpuno hrvatsko sučelje i sadržaj; engine se nikad ne dira. Baza: HR =
+**novi redovi u POSTOJEĆIM tablicama** (`subject_content`/`progress` su ključani po id-u → 0 novih tablica/koda).
+Long-tail chrome (profil/pravne stranice/blind-map) ostaje za dovršiti. Detalji: [HRV_PLAN.md](HRV_PLAN.md). [[hrv-program]]
+
+---
+
 ## ADR-011 — Blok B read-path: sadržaj iz baze DIREKTNO preko anon keya (ne `/api`)
 **Datum:** 2026-06-23 · **Status:** ✅ implementirano (aktivno lokalno)
 **Kontekst:** Blok B (sadržaj→Supabase). Originalni plan (ADR-008/BACKEND.md) predviđao je `/api`
