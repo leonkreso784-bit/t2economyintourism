@@ -441,58 +441,58 @@
             <!-- Lazy-load overlay (shown while a subject's content is fetched) -->
             <div class="study-loading" id="studyLoading" hidden>
                 <div class="study-loading-spinner"></div>
-                <p>Loading subject…</p>
+                <p data-i18n="loading.subject">Loading subject…</p>
             </div>
             <!-- HOME SECTION -->
             <section id="home" class="section active">
             <div class="hero">
-                <h1 id="homeTitle">🎓 Welcome to Sokrat Study</h1>
-                <p class="subtitle" id="homeSubtitle">Your interactive study guide</p>
+                <h1 id="homeTitle" data-i18n="home.welcome">🎓 Welcome to Sokrat Study</h1>
+                <p class="subtitle" id="homeSubtitle" data-i18n="home.subtitle">Your interactive study guide</p>
                 
                 <div class="stats-overview">
                     <div class="stat-card">
                         <i class="fas fa-brain"></i>
                         <span class="stat-number" id="totalQuestions">50+</span>
-                        <p>Questions</p>
+                        <p data-i18n="home.stat.questions">Questions</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-layer-group"></i>
                         <span class="stat-number" id="totalCategories">6</span>
-                        <p>Categories</p>
+                        <p data-i18n="home.stat.categories">Categories</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-trophy"></i>
                         <span class="stat-number" id="bestScore">0%</span>
-                        <p>Best Score</p>
+                        <p data-i18n="home.stat.bestScore">Best Score</p>
                     </div>
                     <div class="stat-card">
                         <i class="fas fa-fire"></i>
                         <span class="stat-number" id="streak">0</span>
-                        <p>Day Streak</p>
+                        <p data-i18n="home.stat.streak">Day Streak</p>
                     </div>
                 </div>
 
                 <div class="category-selector">
-                    <h2>📚 Choose a category to study</h2>
+                    <h2 data-i18n="home.chooseCategory">📚 Choose a category to study</h2>
                     <div class="categories">
                         <!-- Categories loaded dynamically by JavaScript -->
                     </div>
                 </div>
 
                 <div class="quick-start">
-                    <h2>🚀 Quick Start</h2>
+                    <h2 data-i18n="home.quickStart">🚀 Quick Start</h2>
                     <div class="quick-actions">
                         <button class="action-btn primary" onclick="startQuickQuiz()">
                             <i class="fas fa-bolt"></i>
-                            Quick Quiz (10 questions)
+                            <span data-i18n="home.quickQuiz">Quick Quiz (10 questions)</span>
                         </button>
                         <button class="action-btn secondary" onclick="startFlashcards()">
                             <i class="fas fa-clone"></i>
-                            All Flashcards
+                            <span data-i18n="home.allFlashcards">All Flashcards</span>
                         </button>
                         <button class="action-btn tertiary" onclick="startLearning()">
                             <i class="fas fa-book-reader"></i>
-                            Start Learning
+                            <span data-i18n="home.startLearning">Start Learning</span>
                         </button>
                     </div>
                 </div>
@@ -502,7 +502,7 @@
         <!-- LEARN SECTION -->
         <section id="learn" class="section">
             <div class="learn-container">
-                <h1><i class="fas fa-book-open"></i> Learn - Complete Material</h1>
+                <h1><i class="fas fa-book-open"></i> <span data-i18n="learn.title">Learn - Complete Material</span></h1>
                 
                 <div class="learn-filter">
                     <!-- Filter buttons loaded dynamically by JavaScript -->
@@ -517,7 +517,7 @@
         <!-- FLASHCARDS SECTION -->
         <section id="flashcards" class="section">
             <div class="flashcard-container">
-                <h1><i class="fas fa-clone"></i> Flashcards</h1>
+                <h1><i class="fas fa-clone"></i> <span data-i18n="fc.title">Flashcards</span></h1>
                 
                 <div class="flashcard-progress">
                     <span id="cardProgress">1 / 50</span>
@@ -532,7 +532,7 @@
                             <div class="flashcard-front">
                                 <div class="card-category" id="cardCategory">Category</div>
                                 <p id="cardQuestion">Question will appear here</p>
-                                <span class="flip-hint"><i class="fas fa-sync-alt"></i> Click for answer</span>
+                                <span class="flip-hint"><i class="fas fa-sync-alt"></i> <span data-i18n="fc.clickForAnswer">Click for answer</span></span>
                             </div>
                             <div class="flashcard-back">
                                 <p id="cardAnswer">Answer will appear here</p>
@@ -544,7 +544,7 @@
 
                 <div class="flashcard-controls">
                     <button class="control-btn wrong" id="btnWrong">
-                        <i class="fas fa-times"></i> Don't Know
+                        <i class="fas fa-times"></i> <span data-i18n="fc.dontKnow">Don't Know</span>
                     </button>
                     <button class="control-btn prev" id="btnPrev">
                         <i class="fas fa-arrow-left"></i>
@@ -553,18 +553,18 @@
                         <i class="fas fa-arrow-right"></i>
                     </button>
                     <button class="control-btn correct" id="btnCorrect">
-                        <i class="fas fa-check"></i> Know
+                        <i class="fas fa-check"></i> <span data-i18n="fc.know">Know</span>
                     </button>
                 </div>
 
                 <div class="flashcard-stats">
                     <div class="stat correct">
                         <i class="fas fa-check-circle"></i>
-                        <span id="knownCount">0</span> Know
+                        <span id="knownCount">0</span> <span data-i18n="fc.know">Know</span>
                     </div>
                     <div class="stat wrong">
                         <i class="fas fa-times-circle"></i>
-                        <span id="unknownCount">0</span> Don't Know
+                        <span id="unknownCount">0</span> <span data-i18n="fc.dontKnow">Don't Know</span>
                     </div>
                 </div>
             </div>
@@ -574,37 +574,37 @@
         <section id="quiz" class="section">
             <div class="quiz-container">
                 <div class="quiz-setup" id="quizSetup">
-                    <h1><i class="fas fa-question-circle"></i> Quiz Mode</h1>
-                    <p>Test your knowledge!</p>
-                    
+                    <h1><i class="fas fa-question-circle"></i> <span data-i18n="quiz.title">Quiz Mode</span></h1>
+                    <p data-i18n="quiz.subtitle">Test your knowledge!</p>
+
                     <div class="quiz-options">
                         <div class="option-group">
-                            <label>Number of questions:</label>
+                            <label data-i18n="quiz.numQuestions">Number of questions:</label>
                             <select id="questionCount">
-                                <option value="5">5 questions</option>
-                                <option value="10" selected>10 questions</option>
-                                <option value="20">20 questions</option>
-                                <option value="all">All questions</option>
+                                <option value="5" data-i18n="quiz.opt.5">5 questions</option>
+                                <option value="10" selected data-i18n="quiz.opt.10">10 questions</option>
+                                <option value="20" data-i18n="quiz.opt.20">20 questions</option>
+                                <option value="all" data-i18n="quiz.opt.all">All questions</option>
                             </select>
                         </div>
                         <div class="option-group">
-                            <label>Category:</label>
+                            <label data-i18n="quiz.categoryLabel">Category:</label>
                             <select id="quizCategory">
                                 <!-- Categories loaded dynamically by JavaScript -->
                             </select>
                         </div>
                         <div class="option-group">
-                            <label>Difficulty:</label>
+                            <label data-i18n="quiz.difficulty">Difficulty:</label>
                             <select id="quizDifficulty">
-                                <option value="easy">Easy</option>
-                                <option value="medium" selected>Medium</option>
-                                <option value="hard">Hard</option>
+                                <option value="easy" data-i18n="quiz.easy">Easy</option>
+                                <option value="medium" selected data-i18n="quiz.medium">Medium</option>
+                                <option value="hard" data-i18n="quiz.hard">Hard</option>
                             </select>
                         </div>
                     </div>
-                    
+
                     <button class="start-quiz-btn" onclick="startQuiz()">
-                        <i class="fas fa-play"></i> Start Quiz
+                        <i class="fas fa-play"></i> <span data-i18n="quiz.start">Start Quiz</span>
                     </button>
                 </div>
 
@@ -633,13 +633,13 @@
 
                     <div class="quiz-nav-buttons">
                         <button class="quiz-nav-btn" id="quizPrevBtn" onclick="quizPrev()" style="display:none">
-                            <i class="fas fa-arrow-left"></i> Previous
+                            <i class="fas fa-arrow-left"></i> <span data-i18n="common.previous">Previous</span>
                         </button>
                         <button class="quiz-nav-btn quiz-restart-btn" onclick="showQuizSetup()">
-                            <i class="fas fa-redo"></i> Restart
+                            <i class="fas fa-redo"></i> <span data-i18n="common.restart">Restart</span>
                         </button>
                         <button class="quiz-nav-btn" id="quizNextBtn" onclick="quizNext()" style="display:none">
-                            Next <i class="fas fa-arrow-right"></i>
+                            <span data-i18n="common.next">Next</span> <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                 </div>
@@ -657,31 +657,31 @@
                             <div class="result-stat">
                                 <i class="fas fa-check-circle"></i>
                                 <span id="finalCorrect">8</span>
-                                <small>Correct</small>
+                                <small data-i18n="common.correct">Correct</small>
                             </div>
                             <div class="result-stat">
                                 <i class="fas fa-times-circle"></i>
                                 <span id="finalWrong">2</span>
-                                <small>Wrong</small>
+                                <small data-i18n="common.wrong">Wrong</small>
                             </div>
                             <div class="result-stat">
                                 <i class="fas fa-clock"></i>
                                 <span id="totalTime">2:30</span>
-                                <small>Time</small>
+                                <small data-i18n="quiz.time">Time</small>
                             </div>
                         </div>
 
                         <div class="wrong-answers-review" id="wrongAnswersReview">
-                            <h3><i class="fas fa-exclamation-triangle"></i> Review Wrong Answers</h3>
+                            <h3><i class="fas fa-exclamation-triangle"></i> <span data-i18n="quiz.reviewWrong">Review Wrong Answers</span></h3>
                             <div id="wrongAnswersList"></div>
                         </div>
 
                         <div class="results-actions">
                             <button class="action-btn primary" onclick="retryQuiz()">
-                                <i class="fas fa-redo"></i> Try Again
+                                <i class="fas fa-redo"></i> <span data-i18n="quiz.tryAgain">Try Again</span>
                             </button>
                             <button class="action-btn secondary" onclick="showQuizSetup()">
-                                <i class="fas fa-cog"></i> New Quiz
+                                <i class="fas fa-cog"></i> <span data-i18n="quiz.newQuiz">New Quiz</span>
                             </button>
                         </div>
                     </div>
@@ -692,7 +692,7 @@
         <!-- FILL IN THE BLANK SECTION -->
         <section id="fill" class="section">
             <div class="fill-container">
-                <h1><i class="fas fa-pen"></i> Fill in the Blank</h1>
+                <h1><i class="fas fa-pen"></i> <span data-i18n="fill.title">Fill in the Blank</span></h1>
                 
                 <div class="fill-progress">
                     <span id="fillProgress">1 / 20</span>
@@ -707,14 +707,14 @@
                         <!-- Sentence with blank -->
                     </p>
                     <div class="fill-input-wrapper">
-                        <input type="text" id="fillInput" placeholder="Type your answer..." autocomplete="off">
+                        <input type="text" id="fillInput" placeholder="Type your answer..." data-i18n-placeholder="fill.placeholder" autocomplete="off">
                         <button class="check-btn" id="checkFill">
-                            <i class="fas fa-check"></i> Check
+                            <i class="fas fa-check"></i> <span data-i18n="common.check">Check</span>
                         </button>
                     </div>
                     <div class="fill-feedback hidden" id="fillFeedback">
                         <p id="feedbackText"></p>
-                        <p class="correct-answer">Correct answer: <strong id="correctFillAnswer"></strong></p>
+                        <p class="correct-answer"><span data-i18n="fill.correctAnswerLabel">Correct answer:</span> <strong id="correctFillAnswer"></strong></p>
                     </div>
                     <div class="fill-hint hidden" id="fillHint">
                         <i class="fas fa-lightbulb"></i> <span id="hintText"></span>
@@ -723,24 +723,24 @@
 
                 <div class="fill-controls">
                     <button class="control-btn hint" id="btnHint">
-                        <i class="fas fa-lightbulb"></i> Hint
+                        <i class="fas fa-lightbulb"></i> <span data-i18n="common.hint">Hint</span>
                     </button>
                     <button class="control-btn skip" id="btnSkip">
-                        Skip <i class="fas fa-forward"></i>
+                        <span data-i18n="common.skip">Skip</span> <i class="fas fa-forward"></i>
                     </button>
                     <button class="control-btn next hidden" id="btnNextFill">
-                        Next <i class="fas fa-arrow-right"></i>
+                        <span data-i18n="common.next">Next</span> <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
 
                 <div class="fill-stats">
                     <div class="stat correct">
                         <i class="fas fa-check-circle"></i>
-                        <span id="fillCorrect">0</span> Correct
+                        <span id="fillCorrect">0</span> <span data-i18n="common.correct">Correct</span>
                     </div>
                     <div class="stat wrong">
                         <i class="fas fa-times-circle"></i>
-                        <span id="fillWrong">0</span> Wrong
+                        <span id="fillWrong">0</span> <span data-i18n="common.wrong">Wrong</span>
                     </div>
                 </div>
             </div>
@@ -749,11 +749,11 @@
         <!-- PROGRESS SECTION -->
         <section id="progress" class="section">
             <div class="progress-container">
-                <h1><i class="fas fa-chart-line"></i> Your Progress</h1>
+                <h1><i class="fas fa-chart-line"></i> <span data-i18n="prog.title">Your Progress</span></h1>
                 
                 <div class="progress-overview">
                     <div class="progress-card main">
-                        <h2>Overall Progress</h2>
+                        <h2 data-i18n="prog.overall">Overall Progress</h2>
                         <div class="big-progress-circle">
                             <svg viewBox="0 0 36 36">
                                 <path class="circle-bg"
@@ -773,23 +773,23 @@
                     </div>
 
                     <div class="progress-card">
-                        <h3><i class="fas fa-clone"></i> Flashcards</h3>
-                        <p><span id="flashcardsLearned">0</span> / <span id="flashcardsTotal">50</span> learned</p>
+                        <h3><i class="fas fa-clone"></i> <span data-i18n="fc.title">Flashcards</span></h3>
+                        <p><span id="flashcardsLearned">0</span> / <span id="flashcardsTotal">50</span> <span data-i18n="prog.learned">learned</span></p>
                         <div class="mini-progress">
                             <div class="mini-fill" id="flashcardsProgress"></div>
                         </div>
                     </div>
 
                     <div class="progress-card">
-                        <h3><i class="fas fa-question-circle"></i> Quiz</h3>
-                        <p>Average score: <span id="avgQuizScore">0%</span></p>
-                        <p>Total quizzes: <span id="totalQuizzes">0</span></p>
+                        <h3><i class="fas fa-question-circle"></i> <span data-i18n="nav.quiz">Quiz</span></h3>
+                        <p><span data-i18n="prog.avgScore">Average score:</span> <span id="avgQuizScore">0%</span></p>
+                        <p><span data-i18n="prog.totalQuizzes">Total quizzes:</span> <span id="totalQuizzes">0</span></p>
                     </div>
 
                     <div class="progress-card">
-                        <h3><i class="fas fa-pen"></i> Fill in the Blank</h3>
-                        <p>Accuracy: <span id="fillAccuracy">0%</span></p>
-                        <p>Solved: <span id="fillSolved">0</span></p>
+                        <h3><i class="fas fa-pen"></i> <span data-i18n="fill.title">Fill in the Blank</span></h3>
+                        <p><span data-i18n="prog.accuracy">Accuracy:</span> <span id="fillAccuracy">0%</span></p>
+                        <p><span data-i18n="prog.solved">Solved:</span> <span id="fillSolved">0</span></p>
                     </div>
 
                     <!-- Blind Map Progress (Geography Only) -->
@@ -802,29 +802,29 @@
 
                     <!-- Exercises Progress (subjects with features.exercises) -->
                     <div class="progress-card" id="exercisesProgressSection" style="display: none;">
-                        <h3><i class="fas fa-calculator"></i> Exercises</h3>
-                        <p>Completed: <span id="exercisesDone">0</span> / <span id="exercisesTotal">0</span></p>
-                        <p>Attempts: <span id="exercisesAttempts">0</span></p>
-                        <p>Avg best score: <span id="exercisesAvg">0%</span></p>
+                        <h3><i class="fas fa-calculator"></i> <span data-i18n="nav.exercises">Exercises</span></h3>
+                        <p><span data-i18n="prog.completed">Completed:</span> <span id="exercisesDone">0</span> / <span id="exercisesTotal">0</span></p>
+                        <p><span data-i18n="prog.attempts">Attempts:</span> <span id="exercisesAttempts">0</span></p>
+                        <p><span data-i18n="prog.avgBest">Avg best score:</span> <span id="exercisesAvg">0%</span></p>
                     </div>
                 </div>
 
                 <div class="category-progress">
-                    <h2>Progress by Category</h2>
+                    <h2 data-i18n="prog.byCategory">Progress by Category</h2>
                     <div class="category-bars" id="categoryBars">
                         <!-- Generated by JS -->
                     </div>
                 </div>
 
                 <div class="study-history">
-                    <h2>Study History</h2>
+                    <h2 data-i18n="prog.history">Study History</h2>
                     <div class="history-list" id="historyList">
                         <!-- Generated by JS -->
                     </div>
                 </div>
 
                 <button class="reset-btn" onclick="resetProgress()">
-                    <i class="fas fa-trash-alt"></i> Reset Progress
+                    <i class="fas fa-trash-alt"></i> <span data-i18n="prog.reset">Reset Progress</span>
                 </button>
             </div>
         </section>
@@ -905,13 +905,13 @@
         <section id="exercises" class="section">
             <div class="ex-container">
                 <div class="ex-header">
-                    <h1><i class="fas fa-calculator"></i> Exercises</h1>
-                    <p>Interactive, auto-graded practice problems.</p>
+                    <h1><i class="fas fa-calculator"></i> <span data-i18n="nav.exercises">Exercises</span></h1>
+                    <p data-i18n="ex.subtitle">Interactive, auto-graded practice problems.</p>
                 </div>
                 <div id="exercisesContent">
                     <div class="ex-empty">
                         <i class="fas fa-pen-ruler"></i>
-                        <p>No exercises yet for this lesson.</p>
+                        <p data-i18n="ex.empty">No exercises yet for this lesson.</p>
                     </div>
                 </div>
             </div>
@@ -1067,11 +1067,11 @@
     <script src="js/analytics.js?v=20260602"></script>
     <script src="js/navigation.js?v=20260695"></script>
     <script src="js/math.js?v=20260649"></script>
-    <script src="js/flashcards.js?v=20260649"></script>
-    <script src="js/quiz.js?v=20260649"></script>
-    <script src="js/fill-blanks.js?v=20260691"></script>
+    <script src="js/flashcards.js?v=20260695"></script>
+    <script src="js/quiz.js?v=20260695"></script>
+    <script src="js/fill-blanks.js?v=20260695"></script>
     <script src="js/learn.js?v=20260649"></script>
-    <script src="js/progress.js?v=20260623"></script>
+    <script src="js/progress.js?v=20260695"></script>
     <script src="js/blind-map.js?v=20260602"></script>
     <script src="js/exercises-core.js?v=20260682"></script>
     <script src="js/acc-kernel.js?v=20260624"></script>

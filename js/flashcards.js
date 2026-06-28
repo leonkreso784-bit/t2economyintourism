@@ -47,9 +47,10 @@ function flipCard() {
 
 function updateFlashcard() {
     if (!flashcards || flashcards.length === 0) {
-        document.getElementById('cardCategory').textContent = 'No Cards';
-        document.getElementById('cardQuestion').textContent = 'No flashcards available for this lesson.';
-        document.getElementById('cardAnswer').textContent = 'Try selecting a different lesson or category.';
+        const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
+        document.getElementById('cardCategory').textContent = tr('fc.noCards', 'No Cards');
+        document.getElementById('cardQuestion').textContent = tr('fc.noCardsAvailable', 'No flashcards available for this lesson.');
+        document.getElementById('cardAnswer').textContent = tr('fc.trySelecting', 'Try selecting a different lesson or category.');
         document.getElementById('cardExplanation').textContent = '';
         return;
     }

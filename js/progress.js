@@ -212,7 +212,8 @@ function updateHomeStats() {
     
     const subtitle = document.getElementById('homeSubtitle');
     if (subtitle && currentSubject) {
-        subtitle.textContent = `Your interactive guide to ${subjectDataMap[currentSubject].name}`;
+        const guide = (typeof t === 'function') ? t('home.guideTo') : 'Your interactive guide to';
+        subtitle.textContent = `${guide} ${subjectDataMap[currentSubject].name}`;
     }
     
     const bestScore = progress.quizScores.length > 0 ? Math.max(...progress.quizScores) : 0;

@@ -82,7 +82,12 @@ helper `t(key)`; jezik se bira iz aktivnog programa (HR program → hrvatski UI)
    `PRIMARY_PROGRAM` (EN)** → HR ide kroz Browse, EN nepromijenjen. verify 0/0, Playwright 68/68 (subjects=18). Cache `20260695`.
    ⚠ Poznata privremena rupa (riješiti u Cigli 5): sidebar tijekom učenja HR predmeta i dalje pokazuje EN predmete
    (sidebar se gradi jednom na init); s 1 HR predmetom nevidljivo.
-5. **▶ Cigla 5 — UI i18n** (~50 stringova) — da HR program ima i hrvatsko sučelje + sidebar svjestan aktivnog programa.
+5. **✅ Cigla 5 — UI i18n** (`js/i18n.js`: `{en,hr}` rječnik + `t()` + `applyTranslations()` nad `[data-i18n]`/
+   `[data-i18n-placeholder]`; jezik po aktivnom programu). **Cijeli study UI** preveden (nav tabovi, home, learn,
+   flashcards, quiz+rezultati, fill+feedback, progress, exercises) — ~90 ključeva. Dinamičke poruke kroz `t()`
+   (quiz „Pitanje X/Y" + rezultat, fill „Točno!/Netočno!", home podnaslov). **EN dict-vrijednosti = ORIGINALNI tekst
+   → EN bajt-identičan.** Test `tests/i18n.spec.js`. Gate: verify 0/0, Playwright 72/72. Cache `20260695`.
+   ⚠ Preostaje: blind-map sekcija (geografija-only → s geography-hr) + landing/browse/profile chrome (program-selektor, ostaju EN zasad).
 6. **Cigle 6+ — ostali tekstualni predmeti** (batch, isti alat).
 7. **Kvantitativni predmeti** (KaTeX — alat čuva formule; provjeriti currency-safe + balans).
 8. **Vježbe** (samo string-polja; engine nedirnut).

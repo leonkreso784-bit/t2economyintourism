@@ -76,8 +76,8 @@ function showQuestion() {
     const q = quizQuestions[currentQuestionIndex];
     const answered = quizAnswers[currentQuestionIndex];
     
-    document.getElementById('quizProgress').textContent = 
-        `Question ${currentQuestionIndex + 1}/${quizQuestions.length}`;
+    document.getElementById('quizProgress').textContent =
+        `${(typeof t === 'function' ? t('quiz.question') : 'Question')} ${currentQuestionIndex + 1}/${quizQuestions.length}`;
     
     const percent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
     document.getElementById('quizProgressBar').style.width = `${percent}%`;
@@ -225,15 +225,16 @@ function endQuiz() {
     document.getElementById('finalWrong').textContent = wrongAnswers;
     document.getElementById('totalTime').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     
+    const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
     let icon, title, message;
     if (score >= 90) {
-        icon = '🏆'; title = 'Excellent!'; message = 'Perfect knowledge!';
+        icon = '🏆'; title = tr('quiz.res.perfect.t', 'Excellent!'); message = tr('quiz.res.perfect.m', 'Perfect knowledge!');
     } else if (score >= 70) {
-        icon = '🎉'; title = 'Great!'; message = 'Very good!';
+        icon = '🎉'; title = tr('quiz.res.great.t', 'Great!'); message = tr('quiz.res.great.m', 'Very good!');
     } else if (score >= 50) {
-        icon = '👍'; title = 'Good!'; message = 'Keep practicing!';
+        icon = '👍'; title = tr('quiz.res.good.t', 'Good!'); message = tr('quiz.res.good.m', 'Keep practicing!');
     } else {
-        icon = '📚'; title = 'Need more study'; message = 'Review the material and try again!';
+        icon = '📚'; title = tr('quiz.res.ok.t', 'Need more study'); message = tr('quiz.res.ok.m', 'Review the material and try again!');
     }
     
     document.getElementById('resultsIcon').textContent = icon;

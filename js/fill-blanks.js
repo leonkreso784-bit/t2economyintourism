@@ -52,7 +52,7 @@ function showFillQuestion() {
     }
     
     if (currentFillIndex >= fillQuestions.length) {
-        showToast('You completed all Fill-in-the-blank questions!');
+        showToast(typeof t === 'function' ? t('fill.completed') : 'You completed all Fill-in-the-blank questions!');
         currentFillIndex = 0;
         shuffleArray(fillQuestions);
     }
@@ -92,15 +92,16 @@ function checkFillAnswer() {
     // Taj substring-uvjet je i inače prelabav (jedno slovo prolazi) → zamijenjen pravim podudaranjem.)
     const isCorrect = input.length > 0 && normFill(input) === normFill(correct);
 
+    const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
     if (isCorrect) {
         feedback.classList.add('correct');
-        document.getElementById('feedbackText').innerHTML = '<i class="fas fa-check-circle"></i> Correct!';
+        document.getElementById('feedbackText').innerHTML = '<i class="fas fa-check-circle"></i> ' + tr('fill.correct', 'Correct!');
         fillCorrect++;
         progress.fillSolved++;
         trackFillExercise();
     } else {
         feedback.classList.add('wrong');
-        document.getElementById('feedbackText').innerHTML = '<i class="fas fa-times-circle"></i> Wrong!';
+        document.getElementById('feedbackText').innerHTML = '<i class="fas fa-times-circle"></i> ' + tr('fill.wrong', 'Wrong!');
         fillWrong++;
     }
     

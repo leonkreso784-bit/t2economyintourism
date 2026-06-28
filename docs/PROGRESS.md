@@ -20,7 +20,14 @@ Nakon BUG-013: krenuo HRVATSKI program „Menadžment u Hotelijerstvu" (prijevod
   showcase/landing-stats filtrirani na `PRIMARY_PROGRAM='hospitality-management'`** → EN landing/sidebar bajt-identičan,
   HR dostupan kroz **Browse** (drill-down je program-svjestan). Cache `20260695` (catalog/content-loader/navigation + CONTENT_VERSION).
   Testovi `sidebar.spec`/`landing.spec` usklađeni (očekuju primarni program). **Gate: verify 0/0, Playwright 68/68 (subjects=18, `business-informatics-hr ✓ ok`).**
-- **Dalje:** Cigla 5 = UI i18n (~50 stringova) + sidebar svjestan aktivnog programa; pa ostali predmeti.
+- **Cigla 5 — UI i18n (cijeli study UI) ✅:** `js/i18n.js` (`{en,hr}` rječnik ~90 ključeva + `t()` +
+  `applyTranslations()` nad `[data-i18n]`/`[data-i18n-placeholder]`). Jezik se bira po AKTIVNOM PROGRAMU
+  (HR program → hrvatsko sučelje; EN i landing/browse ostaju engleski). Prevedeno: nav tabovi (study + mobilni),
+  home (statistike/gumbi/podnaslov), learn/flashcards/quiz (uklj. postavke, opcije, rezultat-poruke)/fill (feedback
+  „Točno!/Netočno!", placeholder, completion-toast)/progress/exercises. Dinamičke poruke kroz `t()` u
+  quiz.js/fill-blanks.js/progress.js/flashcards.js. **KLJUČNO: EN dict-vrijednosti = ORIGINALNI tekst →
+  EN bajt-identičan** (applyTranslations('en') vrati originale). Test `tests/i18n.spec.js`. Gate: **verify 0/0,
+  Playwright 72/72**. Cache `20260695`. ⚠ Ostaje: blind-map (s geography-hr), landing/browse/profile chrome.
 - Napomena: HR sadržaj se čita iz datoteka (Supabase fallback; HR još nije u bazi — re-sync kasnije).
 
 ## 2026-06-28 — BUG-013 (flashcard) riješen — grid-stack + min-height
