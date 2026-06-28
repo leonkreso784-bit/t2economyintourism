@@ -120,6 +120,66 @@
     'ex.subtitle': { en: 'Interactive, auto-graded practice problems.', hr: 'Interaktivni zadaci s automatskim ocjenjivanjem.' },
     'ex.empty': { en: 'No exercises yet for this lesson.', hr: 'Za ovu lekciju još nema vježbi.' },
 
+    // ===== Landing (chrome — marketing copy; EN = originalni tekst) =====
+    'lnav.subjects': { en: 'Subjects', hr: 'Predmeti' },
+    'lnav.how': { en: 'How it works', hr: 'Kako funkcionira' },
+    'lnav.modes': { en: 'Study modes', hr: 'Načini učenja' },
+    'lnav.about': { en: 'About', hr: 'O nama' },
+    'cta.start.lower': { en: 'Start studying', hr: 'Počni učiti' },
+    'cta.start.title': { en: 'Start Studying', hr: 'Počni učiti' },
+    'auth.signIn': { en: 'Sign in', hr: 'Prijava' },
+    'hero.badge.pre': { en: 'Free exam toolkit — ', hr: 'Besplatni alat za ispite — ' },
+    'hero.badge.post': { en: ' subjects ready', hr: ' predmeta spremno' },
+    'hero.title.l1': { en: 'Study Smart.', hr: 'Uči pametno.' },
+    'hero.title.l2': { en: 'Score Higher.', hr: 'Postigni više.' },
+    'hero.subtitle.pre': { en: 'Flashcards, quizzes, and in-depth lessons across ', hr: 'Kartice, kvizovi i detaljne lekcije za ' },
+    'hero.subtitle.post': { en: ' university subjects from Year 1 & Year 2. Built for students who want results, not just notes.', hr: ' sveučilišnih predmeta 1. i 2. godine. Napravljeno za studente koji žele rezultate, a ne samo bilješke.' },
+    'hero.browse': { en: 'Browse subjects', hr: 'Pregledaj predmete' },
+    'hero.trust.free': { en: '100% free', hr: '100% besplatno' },
+    'hero.trust.noSignup': { en: 'No sign-up', hr: 'Bez registracije' },
+    'hero.trust.offline': { en: 'Works offline', hr: 'Radi izvanmrežno' },
+    'stats.subjects': { en: 'Subjects', hr: 'Predmeta' },
+    'stats.questions': { en: 'Questions', hr: 'Pitanja' },
+    'stats.modes': { en: 'Study Modes', hr: 'Načina učenja' },
+    'stats.free': { en: 'Free', hr: 'Besplatno' },
+    'sec.catalog.eyebrow': { en: 'Catalog', hr: 'Katalog' },
+    'sec.catalog.title': { en: 'Everything you need to study', hr: 'Sve što ti treba za učenje' },
+    'sec.catalog.sub': { en: 'Year 1 & Year 2 of Hospitality Management at FMTU Opatija — pick a subject and start in seconds.', hr: 'Prva i druga godina smjera Hospitality Management na FMTU Opatija — odaberi predmet i počni u nekoliko sekundi.' },
+    'sec.how.eyebrow': { en: 'Simple', hr: 'Jednostavno' },
+    'sec.how.title': { en: 'How it works', hr: 'Kako funkcionira' },
+    'sec.how.sub': { en: 'Three steps from lecture notes to exam-ready.', hr: 'Tri koraka od bilježaka do spremnosti za ispit.' },
+    'how.1.t': { en: 'Pick your subject', hr: 'Odaberi predmet' },
+    'how.1.p': { en: 'Browse by faculty, program and year, then open the lesson you need.', hr: 'Pregledavaj po fakultetu, smjeru i godini, pa otvori lekciju koju trebaš.' },
+    'how.2.t': { en: 'Learn & practice', hr: 'Uči i vježbaj' },
+    'how.2.p': { en: 'Read the material, then drill it with flashcards, quizzes and fill-in-the-blanks.', hr: 'Pročitaj gradivo, pa ga uvježbaj karticama, kvizovima i dopunjavanjem praznina.' },
+    'how.3.t': { en: 'Track your progress', hr: 'Prati svoj napredak' },
+    'how.3.p': { en: "See your best scores and streaks, and focus on what you haven't mastered yet.", hr: 'Vidi najbolje rezultate i nizove te se usredotoči na ono što još nisi svladao.' },
+    'sec.modes.eyebrow': { en: '5 modes', hr: '5 načina' },
+    'sec.modes.title': { en: 'Five ways to master the material', hr: 'Pet načina da svladaš gradivo' },
+    'sec.modes.sub': { en: 'Every subject comes with all five — switch any time.', hr: 'Svaki predmet dolazi sa svih pet — prebacuj se kad god želiš.' },
+    'mode.learn.p': { en: 'Complete, organised study material by topic.', hr: 'Potpuno, organizirano gradivo po temama.' },
+    'mode.fc.p': { en: 'Flip cards to test recall and mark what you know.', hr: 'Okreći kartice da provjeriš pamćenje i označiš što znaš.' },
+    'mode.quiz.p': { en: 'Multiple-choice with instant feedback and scoring.', hr: 'Pitanja s višestrukim izborom uz trenutnu povratnu informaciju i bodovanje.' },
+    'mode.fill.t': { en: 'Fill-in-the-blank', hr: 'Dopuni prazninu' },
+    'mode.fill.p': { en: 'Type the missing term to lock in key definitions.', hr: 'Upiši pojam koji nedostaje da učvrstiš ključne definicije.' },
+    'mode.prog.p': { en: 'Scores, streaks and per-topic mastery in one place.', hr: 'Rezultati, nizovi i svladanost po temama na jednom mjestu.' },
+    'cta.title': { en: 'Ready to ace your exams?', hr: 'Spreman/na za odličan ispit?' },
+    'cta.sub': { en: "Jump into any subject — it's free and works right on your phone.", hr: 'Uskoči u bilo koji predmet — besplatno je i radi izravno na tvom mobitelu.' },
+    'footer.tagline': { en: 'Interactive exam prep for FMTU Opatija — built by students, for students.', hr: 'Interaktivna priprema za ispite za FMTU Opatija — od studenata, za studente.' },
+    'footer.explore': { en: 'Explore', hr: 'Istraži' },
+    'footer.about': { en: 'About', hr: 'O nama' },
+    'footer.aboutUs': { en: 'About us', hr: 'O nama' },
+    'footer.contact': { en: 'Contact', hr: 'Kontakt' },
+    'footer.faq': { en: 'FAQ', hr: 'Česta pitanja' },
+    'footer.legal': { en: 'Legal', hr: 'Pravno' },
+    'footer.privacy': { en: 'Privacy Policy', hr: 'Pravila privatnosti' },
+    'footer.terms': { en: 'Terms of Use', hr: 'Uvjeti korištenja' },
+    'footer.cookies': { en: 'Cookie settings', hr: 'Postavke kolačića' },
+    'footer.rights': { en: '© 2026 Sokrat Study · Leon Kreso. All rights reserved.', hr: '© 2026 Sokrat Study · Leon Kreso. Sva prava pridržana.' },
+    'footer.made.pre': { en: 'Made with ', hr: 'Stvoreno s ' },
+    'footer.made.post': { en: ' for students', hr: ' za studente' },
+    'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
+
     // Razno
     'loading.subject': { en: 'Loading subject…', hr: 'Učitavanje predmeta…' }
   };
@@ -151,6 +211,8 @@
       if (key) el.setAttribute('placeholder', t(key));
     });
     document.querySelectorAll('.lang-toggle-label').forEach((el) => { el.textContent = uiLang.toUpperCase(); });
+    // auth nav-gumb ima dinamičan tekst (ime / „Sign in") → prepusti njemu da se osvježi
+    if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).

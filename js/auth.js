@@ -104,7 +104,7 @@ const SokratAuth = (function () {
     function updateNavButton() {
         const short = currentUser
             ? (getDisplayName() || (currentUser.email || 'Account').split('@')[0]).split(/\s+/)[0]
-            : 'Sign in';
+            : (typeof t === 'function' ? t('auth.signIn') : 'Sign in');
         document.querySelectorAll('.auth-entry-label').forEach(function (label) {
             label.textContent = short;
         });
@@ -113,6 +113,8 @@ const SokratAuth = (function () {
             btn.setAttribute('aria-label', currentUser ? 'My profile' : 'Sign in');
         });
     }
+    // i18n: na promjenu jezika sučelja ponovno iscrtaj nav-gumb (prevede „Sign in", čuva ime kad je prijavljen)
+    window.refreshAuthNav = updateNavButton;
 
     function injectModal() {
         if (document.getElementById('authModal')) return;
