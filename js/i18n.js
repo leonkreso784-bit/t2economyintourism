@@ -124,8 +124,14 @@
     'loading.subject': { en: 'Loading subject…', hr: 'Učitavanje predmeta…' }
   };
 
-  let uiLang = 'en';
   const HR_PROGRAM = 'hospitality-management-hr';
+  const LS_KEY = 'sokrat-ui-lang';   // GLOBALNI izbor jezika sučelja (master); sadržaj se NE dira
+
+  function readStored() {
+    try { const v = localStorage.getItem(LS_KEY); return (v === 'hr' || v === 'en') ? v : null; } catch (_) { return null; }
+  }
+  // Početni jezik = spremljeni izbor korisnika, inače 'en'.
+  let uiLang = readStored() || 'en';
 
   function t(key) {
     const e = DICT[key];
@@ -133,7 +139,7 @@
     return e[uiLang] != null ? e[uiLang] : (e.en != null ? e.en : key);
   }
 
-  // Postavi tekst svih [data-i18n] elemenata unutar root-a (default: cijeli dokument).
+  // Postavi tekst svih [data-i18n] / [data-i18n-placeholder] + osvježi labelu toggle-a.
   function applyTranslations(root) {
     const scope = root || document;
     scope.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -144,30 +150,46 @@
       const key = el.getAttribute('data-i18n-placeholder');
       if (key) el.setAttribute('placeholder', t(key));
     });
+    document.querySelectorAll('.lang-toggle-label').forEach((el) => { el.textContent = uiLang.toUpperCase(); });
   }
 
-  function setUiLang(lang) {
+  // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).
+  function setUiLang(lang, persist) {
     const next = lang === 'hr' ? 'hr' : 'en';
-    if (next === uiLang) return;
+    const changed = next !== uiLang;
     uiLang = next;
     document.documentElement.setAttribute('lang', uiLang);
+    if (persist !== false) { try { localStorage.setItem(LS_KEY, uiLang); } catch (_) { /* ignore */ } }
+    // uvijek primijeni (i kad nema promjene) — npr. inicijalno bojanje toggle-labela
     applyTranslations();
+    return changed;
   }
 
-  // Jezik prema aktivnom programu predmeta (HR program → 'hr').
-  function setUiLangForSubject(subjectId) {
-    let lang = 'en';
+  // Globalni toggle: HR ↔ EN (korisnikov eksplicitni izbor → pamti se).
+  function toggleUiLang() { setUiLang(uiLang === 'hr' ? 'en' : 'hr', true); }
+
+  // Blagi prijedlog: ako korisnik NIJE eksplicitno birao jezik, a otvara HR program →
+  // predloži hrvatsko sučelje (i zapamti). Ako je već birao, toggle je gospodar → ništa.
+  function suggestLangForSubject(subjectId) {
+    if (readStored()) return;                 // korisnik je već odlučio → ne diraj
     if (subjectId && typeof SokratCatalog !== 'undefined') {
       const s = SokratCatalog.getSubject(subjectId);
-      if (s && s.programId === HR_PROGRAM) lang = 'hr';
+      if (s && s.programId === HR_PROGRAM) setUiLang('hr', true);
     }
-    setUiLang(lang);
   }
+
+  // Primijeni spremljeni jezik na prvo bojanje (da persistirani HR odmah uhvati sve [data-i18n]).
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { applyTranslations(); });
+  } else { applyTranslations(); }
 
   // Globalno
   window.t = t;
   window.applyTranslations = applyTranslations;
   window.setUiLang = setUiLang;
-  window.setUiLangForSubject = setUiLangForSubject;
+  window.toggleUiLang = toggleUiLang;
+  window.suggestLangForSubject = suggestLangForSubject;
+  // natrag-kompatibilnost: stari poziv setUiLangForSubject sad samo „predloži"
+  window.setUiLangForSubject = suggestLangForSubject;
   window.getUiLang = function () { return uiLang; };
 })();

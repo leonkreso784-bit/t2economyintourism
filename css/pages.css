@@ -586,3 +586,31 @@ body:has(.landing-page.active) .footer,
 body:has(.browse-page.active) .footer {
     display: none;
 }
+
+/* ===== Language toggle (globalni HR/EN prekidač sučelja; vidi js/i18n.js) ===== */
+.lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.4rem 0.7rem;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: var(--touch-target);
+    white-space: nowrap;
+}
+.lang-toggle:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+.lang-toggle i { font-size: 0.85rem; }
+/* U headerima (browse/lessons/study) gumb stoji uz auth ikonu */
+.header-lang-toggle { padding: 0.35rem 0.6rem; }

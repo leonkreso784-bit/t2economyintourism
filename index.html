@@ -47,7 +47,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260694">
+    <link rel="stylesheet" href="styles.css?v=20260695">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -98,6 +98,10 @@
                 <a href="#modes">Study modes</a>
                 <button type="button" class="nav-link-btn" onclick="showAboutUs()">About</button>
             </nav>
+            <button type="button" class="lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-label">EN</span>
+            </button>
             <button type="button" class="nav-auth-btn auth-entry" id="authNavBtn" hidden>
                 <i class="fas fa-user"></i>
                 <span class="auth-entry-label" id="authNavLabel">Sign in</span>
@@ -344,6 +348,10 @@
                 <span class="breadcrumb" id="browseBreadcrumb">Sokrat Study</span>
                 <h1 id="browseHeading">Choose your faculty</h1>
             </div>
+            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-label">EN</span>
+            </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
             </button>
@@ -369,6 +377,10 @@
                 <span class="breadcrumb">Sokrat Study</span>
                 <h1 id="currentSubjectTitle">Subject Name</h1>
             </div>
+            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-label">EN</span>
+            </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
             </button>
@@ -395,6 +407,10 @@
                 <span class="breadcrumb" id="studyBreadcrumb">Subject > Lesson</span>
                 <h1 id="currentLessonTitle">Lesson Name</h1>
             </div>
+            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+                <i class="fas fa-globe"></i>
+                <span class="lang-toggle-label">EN</span>
+            </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
             </button>
