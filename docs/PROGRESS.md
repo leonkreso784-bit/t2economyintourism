@@ -17,7 +17,7 @@ Korisnik prijavio (screenshot): nakon dodavanja 🌐 jezik-toggle-a, na mobitelu
   (d) `.lessons-title{min-width:0}` (kao `.study-title`, za dug HR naslov na 320px).
 - **Provjera:** širinski sweep 320→1440px × {EN,HR} = **0 overflowa, 0 rezanja CTA-a**; header-test browse/lessons/study 0 overflowa na 320/360/390;
   vizualni screenshot 390px (oba jezika čist jedan red). Gate: verify 0/0, **test:responsive 76/76**. Cache `?v=20260697` (styles+landing+pages).
-- Status: ✅ riješen lokalno, **čeka deploy-potvrdu**. Dokumentirano: BUG-015 u `docs/BUGS.md` + CHANGELOG.
+- Status: ✅ riješen + **✅ LIVE 2026-06-28 (`ac68ab0`, push `4b795c8..ac68ab0`)**. Dokumentirano: BUG-015 u `docs/BUGS.md` + CHANGELOG.
 
 ## 2026-06-28 — HRV: globalni 🌐 toggle + landing/browse prijevod + DEPLOY (cigle 5c)
 Nastavak istog dana. Cilj (korisnik): „cijela platforma na hrv, ali translate ne dira predmete" → globalni toggle.

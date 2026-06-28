@@ -24,7 +24,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ## Riješeni / Lekcije
 
 ### BUG-015 — Landing nav se prepuni na mobitelu nakon dodavanja 🌐 jezik-toggle-a (CTA „Start studyin" rezan)
-- Status: ✅ riješen 2026-06-28 (lokalno; čeka deploy) · Težina: srednji (vidljiv UX, svaki mobilni posjet landinga) · Prijavio korisnik: 2026-06-28 (screenshot)
+- Status: ✅ riješen + ✅ LIVE 2026-06-28 (`ac68ab0`) · Težina: srednji (vidljiv UX, svaki mobilni posjet landinga) · Prijavio korisnik: 2026-06-28 (screenshot)
 - Opis: nakon dodavanja globalnog 🌐 HR/EN prekidača u nav, na mobitelu se primarni CTA **„Start studying" / „Počni učiti" reže** („Start studyin" / „Poč uči"); na tablet/HR širini se duži anchor-labeli (npr. „Kako funkcionira") lome u **2 reda** → nav viši.
 - Reprodukcija (prije fixa): otvori www.sokratstudy.com na mobitelu (~390px) → nav-CTA tekst odrezan; ~768–900px → nav-linkovi u 2 reda + CTA rezan.
 - Uzrok (višestruki): 🌐 toggle dodao ~75px (gumb+gap) u već tijesan fiksni nav. (1) `.cta-button` ima `width:100%` na ≤767px (za hero gumbe) → u navu se CTA, kao flex-item s `flex-shrink:1`, **stezao i rezao tekst** umjesto da gura višak van. (2) brand-wordmark „Sokrat Study" (~169px) + 4 anchor-linka + toggle + auth + CTA jednostavno **ne stanu** u jedan red u rasponu ~720–1050px. (3) `.lessons-title` nije imao `min-width:0` → dug HR naslov + toggle strši na 320px.

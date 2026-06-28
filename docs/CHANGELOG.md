@@ -21,7 +21,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   Stari `logo.png`/`logo-small.png` obrisani. Cache `?v=20260693` (svg + favikoni; CSS ostao `20260692`). Iteracija: odbačeni ručno-crtani
   SVG-ovi (izgledali skicirano/„kao pingvin") — kvaliteta iz vektorizacije originala. Gate: verify 0/0, Playwright **68/68**, vizualni nav-pregled OK.
 ### Fixed
-- **BUG-015 — Landing nav prepuni na mobitelu nakon dodavanja 🌐 toggle-a (CTA „Start studyin" rezan) ✅ RIJEŠEN (2026-06-28, lokalno).**
+- **BUG-015 — Landing nav prepuni na mobitelu nakon dodavanja 🌐 toggle-a (CTA „Start studyin" rezan) ✅ RIJEŠEN + LIVE (2026-06-28, `ac68ab0`).**
   🌐 prekidač dodao ~75px u tijesan fiksni nav; `.cta-button{width:100%}` (≤767px, za hero) + `flex-shrink:1` je rezao CTA-tekst
   umjesto da gura višak. Fix CSS-only: `.nav-cta{flex-shrink:0; white-space:nowrap; width:auto}` + brand-wordmark `display:none`
   ≤1060px (brand=ikona, oslobađa ~125px da anchor-linkovi ostanu) + anchor-linkovi skriveni ≤860px (bilo ≤720) + `nowrap`
