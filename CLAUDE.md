@@ -326,4 +326,5 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 **`EXERCISES_ENGINE`** (reusable sustav vježbi + cigla-po-cigla plan) · **`ACCOUNTING_PLAN`** (analiza izvora + katalog) ·
 **`STATISTICS_PLAN`** (teorija-learn + statistički exercises na istom engineu, cigla-po-cigla; stat-lib u `data/`; mathportal kalkulatori) ·
 **`CONTENT_GENERATOR`** (pipeline za dodavanje predmeta uz minimalan usage: build-topics→generate-subject(Sonnet)→assemble-subject→gate) ·
-**`MATH_PLAN`** (plan za Matematiku — zadnji 1.-god predmet, KaTeX + worked problems; ⬜ TODO).
+**`MATH_PLAN`** (plan za Matematiku — zadnji 1.-god predmet, KaTeX + worked problems; ⬜ TODO) ·
+**`HRV_PLAN`** (HRVATSKI program „Menadžment u Hotelijerstvu" = prijevod svih predmeta; klon-program Opcija A + `translate-subject.js`; konvencije imenovanja + bijeli-popis polja; cigla po cigla).

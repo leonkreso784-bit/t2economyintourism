@@ -1,0 +1,92 @@
+# HRV_PLAN — Program „Menadžment u Hotelijerstvu" (hrvatski prijevod)
+
+> Plan za paralelni HRVATSKI program = prijevod SVIH predmeta 1.+2. god HM na hrvatski.
+> Cigla po cigla. Status: ▶ Cigla 1 (plan) — u tijeku (2026-06-28).
+> Vezano: `CLAUDE.md` §DALJE C, `ROADMAP.md` §C, [[content-roadmap-sequencing]].
+
+## Cilj
+Student bira **jezik programa** na razini smjera: postojeći engleski „Hospitality Management"
+ostaje netaknut; **uz njega** dolazi hrvatski „Menadžment u Hotelijerstvu" s istim predmetima,
+istim engineom, ali hrvatskim sadržajem i hrvatskim UI-jem.
+
+## Ključna arhitektonska odluka (ODLUČENO)
+**Opcija A — KLON programa, NE i18n unutar sadržaja.** Razlozi:
+- Sadržaj ostaje „glup" (jedan jezik po datoteci) → engine se NE mijenja (0 promjena rendera).
+- Napredak odvojen po jeziku (vlastiti `storageKey`) → student može učiti i EN i HR neovisno.
+- Migracijski sigurno (datoteke su izvor istine; Supabase re-sync kasnije kao i za EN).
+- Lakša kontrola kvalitete prijevoda (diff EN↔HR po datoteci).
+
+Odbačeno: i18n ključevi u sadržaju (svaki flashcard `{en, hr}`) — zagadilo bi schemu,
+zakompliciralo engine i validatore, i otežalo buduće jezike.
+
+## Konvencije imenovanja (OBAVEZNO)
+| Stvar | EN (postojeće) | HR (novo) |
+|---|---|---|
+| Program (catalog) | `hospitality-management` | `hospitality-management-hr` |
+| Program naziv | „Hospitality Management" | „Menadžment u Hotelijerstvu" |
+| Subject `id` | `business-informatics` | `business-informatics-hr` |
+| `storageKey` | `business-informatics-progress` | `business-informatics-hr-progress` |
+| Mapa podataka | `data/business-informatics/` | `data/business-informatics-hr/` |
+| Window var | `businessInformaticsM1` | `businessInformaticsHrM1` |
+| Vježbe var | `…Exercises` | `…HrExercises` |
+
+- **Subject `id` = EN id + `-hr`** (sufiks). `programId` = `hospitality-management-hr`.
+- **`icon`, `color`, `iconGradient`, `features`, `year`, `semester` = IDENTIČNI** EN-u (samo jezik se mijenja).
+- Lekcije: isti `id`-evi (`first-midterm`/`second-midterm`/`final` ili `midterm-1/2`), **`name`+`description` prevedeni**.
+- `content.scripts`/`resolve`/`codeScripts`/`exercises` = isti raspored, ali HR putanje + HR var-imena.
+
+## Što se PREVODI vs ČUVA (po schemi `docs/CONTENT_SCHEMA.md`)
+**PREVODI (string-polja):**
+- kategorija `name`
+- `flashcards[]`: `question`, `answer`, `explanation`
+- `quiz[]`: `question`, `options[]`, `explanation` (ako postoji)
+- `fillBlanks[]`: `sentence`, `answer`, `hint`
+- `learn.content` (HTML — prevodi se TEKST, ne tagovi)
+- catalog: program `name`, subject je već novi, lesson `name`/`description`, subject `description`
+
+**ČUVA (NIKAD ne dira prevoditelj):**
+- ključevi kategorija (`systemApproach`, …) — to su programski ključevi, ne tekst
+- `icon`, `color`
+- **`quiz.correct`** (indeks točnog odgovora — redoslijed opcija MORA ostati isti!)
+- **`_______`** token u fill (TOČNO 7 podvlaka — inače BUG-009)
+- **HTML tagovi/entiteti** u `learn.content` (`<h3>`, `<ul>`, `&amp;`, …)
+- **KaTeX delimiteri i formule** `\( \)` / `\[ \]` / `$$ $$` (matematika je jezično-neutralna; currency-safe pravilo ostaje)
+- struktura objekta (broj flashcardova/quizova/fillova = isti)
+
+## Alat: `scripts/translate-subject.js` (Cigla 2)
+- **Sonnet preko `.env ANTHROPIC_API_KEY`** (korisnikov ključ; isti obrazac kao generator — `docs/CONTENT_GENERATOR.md`).
+- **`tool_use` structured output** (kao generator) — model vraća JSON objekt s prevedenim string-poljima; sve ne-string ostaje.
+- Ulaz: učita EN data-datoteku (vm-shim → uzme window var), **prevede SAMO bijele-popis string-polja**, sve ostalo kopira 1:1.
+- Izlaz: `data/<subj>-hr/<file>.js` s preimenovanim const/var (`…Hr…`) i `Object.assign` u final.js (HR varovi).
+- **Vježbe (kod) = POSEBNO:** prevode se samo string-polja vježbe (`prompt`, `title`, `choices` tekst, `explain`), a `generate()`/`params`/`answer`/`type`/`chapter` se NE diraju. (Math/Statistics/Accounting/Macro/AW imaju vježbe.)
+- **Provjere u alatu (post-prijevod, prije zapisa):**
+  - isti broj kategorija/flashcardova/quizova/fillova kao izvor,
+  - svaki `quiz.correct` nepromijenjen + `options.length` isti,
+  - svaki fill ima točno `_______` (7 podvlaka),
+  - KaTeX balans `\(\)`/`\[\]`/`$$` jednak izvoru,
+  - HTML tag-balans u learn jednak izvoru.
+- **Cijena:** kao generator (~$1–1.5/predmet; prijevod je „lakši" zadatak, ali isti volumen tokena). Provjeriti kredite prije masovnog pokretanja. [[generator-api-cost]]
+
+## UI i18n (Cigla — nakon pilota)
+~50 stringova u sučelju (gumbi, nazivi sekcija „Flashcards/Quiz/Fill/Learn/Vježbe", „Provjeri", „Dalje",
+landing, browse, profil). Pristup: jednostavan `js/i18n.js` rječnik (`{ en, hr }`) + `data-i18n` atributi ili
+helper `t(key)`; jezik se bira iz aktivnog programa (HR program → hrvatski UI). Engine sadržaja ostaje neovisan o jeziku.
+
+## Faze (cigla po cigla)
+1. **✅ Cigla 1 — ovaj plan** (konvencije + schema bijeli-popis).
+2. **Cigla 2 — `translate-subject.js`** (alat + samoprovjere; test na 1 kategoriji = jeftin dry-run).
+3. **Cigla 3 — PILOT: Business Informatics** → `data/business-informatics-hr/` (najmanji, dokazani pilot-predmet; 0 vježbi → najjednostavniji).
+4. **Cigla 4 — catalog**: dodati HR program + HR subject (BI); verify + Playwright; ručni vizualni pregled HR sadržaja.
+5. **Cigla 5 — UI i18n** (~50 stringova) — da HR program ima i hrvatsko sučelje.
+6. **Cigle 6+ — ostali tekstualni predmeti** (batch, isti alat).
+7. **Kvantitativni predmeti** (KaTeX — alat čuva formule; provjeriti currency-safe + balans).
+8. **Vježbe** (samo string-polja; engine nedirnut).
+9. **Supabase re-sync** HR predmeta (read-path; vježbe iz datoteke — BUG-012 pravilo).
+
+## Rizici / oprez
+- **Engine se NE dira** (sveto, kao i dosad). HR je čisto podatkovni + catalog + tanak UI-i18n sloj.
+- **Landing showcase + sidebar** trenutno iteriraju po SVIM predmetima → s dva programa pokazali bi EN+HR pomiješano.
+  Riješiti u Cigli 4/5: filtrirati po aktivnom programu (browse drill-down to već radi preko `programsOf`/`subjectsOf`).
+- **quiz.correct** je najopasnije mjesto — prijevod NE smije presložiti opcije. Alat to verificira (indeks + duljina).
+- **Cache bump** + `CONTENT_VERSION` pri svakom HR data-unosu (kao i za EN).
+- Trošak API-ja: ne pokretati masovno bez provjere kredita; `--topic`/`--subject` granularnost da se izbjegne re-run.
