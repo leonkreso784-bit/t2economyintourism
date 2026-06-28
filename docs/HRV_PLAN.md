@@ -87,7 +87,12 @@ helper `t(key)`; jezik se bira iz aktivnog programa (HR program → hrvatski UI)
    flashcards, quiz+rezultati, fill+feedback, progress, exercises) — ~90 ključeva. Dinamičke poruke kroz `t()`
    (quiz „Pitanje X/Y" + rezultat, fill „Točno!/Netočno!", home podnaslov). **EN dict-vrijednosti = ORIGINALNI tekst
    → EN bajt-identičan.** Test `tests/i18n.spec.js`. Gate: verify 0/0, Playwright 72/72. Cache `20260695`.
-   ⚠ Preostaje: blind-map sekcija (geografija-only → s geography-hr) + landing/browse/profile chrome (program-selektor, ostaju EN zasad).
+   **5c — GLOBALNI toggle + šira pokrivenost:** ✅ globalni HR/EN prekidač (🌐 u nav-u, `localStorage 'sokrat-ui-lang'`,
+   master nad programom; HR program samo „predloži" hrvatski prvi put). ✅ **landing chrome** (hero/sekcije/footer, brojevi
+   očuvani pre/post podjelom). ✅ **browse drill-down** (naslovi/introi + kartice kroz `t()`/`getUiLang()`; hrvatski ordinali/
+   množina „1. godina"/„Predmeti 1. godine"/„Semestar 1"/„3 lekcije"; `applyTranslations` re-renderira catalog-liste na toggle).
+   ⚠ Preostaje (long-tail, niži promet): **profil** stranica + **pravne stranice** (privacy/terms/faq/contact = zasebni HTML) +
+   lessons-header breadcrumb + blind-map (geografija-only → s geography-hr).
 6. **Cigle 6+ — ostali tekstualni predmeti** (batch, isti alat).
 7. **Kvantitativni predmeti** (KaTeX — alat čuva formule; provjeriti currency-safe + balans).
 8. **Vježbe** (samo string-polja; engine nedirnut).

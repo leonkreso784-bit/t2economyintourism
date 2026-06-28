@@ -124,6 +124,12 @@ function primarySubjects() {
         : [];
 }
 
+// i18n kratice za dinamički renderirane stringove (browse/landing kartice)
+function _t(key, fallback) { return (typeof t === 'function') ? t(key) : (fallback != null ? fallback : key); }
+function _hr() { return typeof getUiLang === 'function' && getUiLang() === 'hr'; }
+// jezično ispravna jedinica (1 vs množina)
+function _unit(n, base) { return n + ' ' + _t('unit.' + base + (n === 1 ? '.1' : '.n')); }
+
 // ========== SIDEBAR SUBJECT LIST (rendered from catalog) ==========
 function renderSubjectsSidebar() {
     const list = document.getElementById('subjectsList');
@@ -225,7 +231,7 @@ function browseEmpty(msg) {
 
 function renderFacultyCards() {
     const fs = SokratCatalog.faculties();
-    if (!fs.length) return browseEmpty('No faculties yet.');
+    if (!fs.length) return browseEmpty(_t('browse.empty.faculties', 'No faculties yet.'));
     return `<div class="browse-grid">` + fs.map(f => {
         const n = SokratCatalog.programsOf(f.id).length;
         return `
@@ -244,7 +250,7 @@ function renderFacultyCards() {
 
 function renderProgramCards(facultyId) {
     const ps = SokratCatalog.programsOf(facultyId);
-    if (!ps.length) return browseEmpty('No programs yet.');
+    if (!ps.length) return browseEmpty(_t('browse.empty.programs', 'No programs yet.'));
     return `<div class="browse-grid">` + ps.map(p => {
         const years = SokratCatalog.yearsOf(p.id).length;
         const subs = SokratCatalog.subjectsOf(p.id).length;
@@ -257,8 +263,8 @@ function renderProgramCards(facultyId) {
                     </div>
                 </div>
                 <div class="browse-card-meta">
-                    <span><i class="fas fa-calendar-days"></i> ${years} ${years === 1 ? 'year' : 'years'}</span>
-                    <span><i class="fas fa-book"></i> ${subs} ${subs === 1 ? 'subject' : 'subjects'}</span>
+                    <span><i class="fas fa-calendar-days"></i> ${_unit(years, 'year')}</span>
+                    <span><i class="fas fa-book"></i> ${_unit(subs, 'subject')}</span>
                 </div>
                 <i class="fas fa-chevron-right browse-card-arrow"></i>
             </button>`;
@@ -267,20 +273,21 @@ function renderProgramCards(facultyId) {
 
 function renderYearCards(programId) {
     const years = SokratCatalog.yearsOf(programId);
-    if (!years.length) return browseEmpty('No years yet.');
+    if (!years.length) return browseEmpty(_t('browse.empty.years', 'No years yet.'));
     const ordinal = ['', '1st', '2nd', '3rd', '4th', '5th', '6th'];
     return `<div class="browse-grid">` + years.map(y => {
         const subs = SokratCatalog.subjectsOf(programId, y).length;
+        const yearTitle = _hr() ? `${y}. godina` : `${ordinal[y] || (y + '.')} Year`;
         return `
             <button type="button" class="browse-card" data-browse="year" data-id="${y}">
                 <div class="browse-card-top">
                     <div class="browse-card-icon is-year">${y}</div>
                     <div class="browse-card-headings">
-                        <div class="browse-card-title">${ordinal[y] || (y + '.')} Year</div>
-                        <div class="browse-card-sub">Study year ${y}</div>
+                        <div class="browse-card-title">${yearTitle}</div>
+                        <div class="browse-card-sub">${_t('browse.studyYear', 'Study year')} ${y}</div>
                     </div>
                 </div>
-                <div class="browse-card-meta"><span><i class="fas fa-book"></i> ${subs} ${subs === 1 ? 'subject' : 'subjects'}</span></div>
+                <div class="browse-card-meta"><span><i class="fas fa-book"></i> ${_unit(subs, 'subject')}</span></div>
                 <i class="fas fa-chevron-right browse-card-arrow"></i>
             </button>`;
     }).join('') + `</div>`;
@@ -304,7 +311,7 @@ function subjectBrowseCard(s) {
                     </div>
                     <div class="browse-card-headings">
                         <div class="browse-card-title">${browseEsc(s.name)}</div>
-                        <div class="browse-card-sub">${lessonCount} ${lessonCount === 1 ? 'lesson' : 'lessons'}</div>
+                        <div class="browse-card-sub">${_unit(lessonCount, 'lesson')}</div>
                     </div>
                 </div>
                 <div class="browse-card-desc">${browseEsc(s.description)}</div>
@@ -315,12 +322,12 @@ function subjectBrowseCard(s) {
 
 function renderSubjectCards(programId, year) {
     const semesters = SokratCatalog.semestersOf(programId, year);
-    if (!semesters.length) return browseEmpty('No subjects yet.');
+    if (!semesters.length) return browseEmpty(_t('browse.empty.subjects', 'No subjects yet.'));
     return semesters.map(sem => {
         const subs = SokratCatalog.subjectsOf(programId, year).filter(s => s.semester === sem);
         return `
             <section class="browse-section">
-                <h2 class="browse-section-title">Semester ${sem}</h2>
+                <h2 class="browse-section-title">${_t('browse.semester', 'Semester')} ${sem}</h2>
                 <div class="browse-grid">${subs.map(subjectBrowseCard).join('')}</div>
             </section>`;
     }).join('');
@@ -334,31 +341,32 @@ function renderBrowse() {
     const intro = document.getElementById('browseIntro');
     if (!grid) return;
 
-    let html = '', title = '', trail = 'Browse', introText = '';
+    let html = '', title = '', trail = _t('browse.trail.browse', 'Browse'), introText = '';
+    const yearLabel = (y) => _hr() ? `${y}. godina` : `Year ${y}`;
 
     if (browseState.level === 'programs') {
         const f = SokratCatalog.faculties().find(x => x.id === browseState.facultyId);
-        title = 'Choose your program';
-        trail = f ? f.name : 'Faculty';
-        introText = 'Select your study program.';
+        title = _t('browse.h.program', 'Choose your program');
+        trail = f ? f.name : _t('browse.trail.faculty', 'Faculty');
+        introText = _t('browse.i.program', 'Select your study program.');
         html = renderProgramCards(browseState.facultyId);
     } else if (browseState.level === 'years') {
         const p = SokratCatalog.getProgram(browseState.programId);
-        title = 'Choose your year';
-        trail = p ? p.name : 'Program';
-        introText = 'Pick the study year you want to review.';
+        title = _t('browse.h.year', 'Choose your year');
+        trail = p ? p.name : _t('browse.trail.program', 'Program');
+        introText = _t('browse.i.year', 'Pick the study year you want to review.');
         html = renderYearCards(browseState.programId);
     } else if (browseState.level === 'subjects') {
         const p = SokratCatalog.getProgram(browseState.programId);
-        title = `Year ${browseState.year} subjects`;
-        trail = p ? `${p.name} · Year ${browseState.year}` : `Year ${browseState.year}`;
+        title = _hr() ? `Predmeti ${browseState.year}. godine` : `Year ${browseState.year} subjects`;
+        trail = p ? `${p.name} · ${yearLabel(browseState.year)}` : yearLabel(browseState.year);
         introText = '';
         html = renderSubjectCards(browseState.programId, browseState.year);
     } else {
         // 'faculties' (default / entry)
-        title = 'Choose your faculty';
-        trail = 'Browse';
-        introText = 'Select your faculty to find your subjects.';
+        title = _t('browse.h.faculty', 'Choose your faculty');
+        trail = _t('browse.trail.browse', 'Browse');
+        introText = _t('browse.i.faculty', 'Select your faculty to find your subjects.');
         html = renderFacultyCards();
     }
 
@@ -423,7 +431,7 @@ function renderLandingSubjects() {
                 </div>
                 <div class="landing-subject-info">
                     <h3>${browseEsc(s.name)}</h3>
-                    <p>Year ${browseEsc(s.year)} &middot; ${lessonCount} ${lessonCount === 1 ? 'lesson' : 'lessons'}</p>
+                    <p>${_hr() ? `${browseEsc(s.year)}. godina` : `Year ${browseEsc(s.year)}`} &middot; ${_unit(lessonCount, 'lesson')}</p>
                 </div>
                 <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
             </button>`;

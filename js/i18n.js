@@ -180,6 +180,29 @@
     'footer.made.post': { en: ' for students', hr: ' za studente' },
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
 
+    // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
+    'browse.trail.browse': { en: 'Browse', hr: 'Pregled' },
+    'browse.trail.faculty': { en: 'Faculty', hr: 'Fakultet' },
+    'browse.trail.program': { en: 'Program', hr: 'Smjer' },
+    'browse.h.faculty': { en: 'Choose your faculty', hr: 'Odaberi svoj fakultet' },
+    'browse.h.program': { en: 'Choose your program', hr: 'Odaberi svoj smjer' },
+    'browse.h.year': { en: 'Choose your year', hr: 'Odaberi godinu' },
+    'browse.i.faculty': { en: 'Select your faculty to find your subjects.', hr: 'Odaberi fakultet da pronađeš svoje predmete.' },
+    'browse.i.program': { en: 'Select your study program.', hr: 'Odaberi svoj studijski smjer.' },
+    'browse.i.year': { en: 'Pick the study year you want to review.', hr: 'Odaberi studijsku godinu koju želiš ponoviti.' },
+    'browse.empty.faculties': { en: 'No faculties yet.', hr: 'Još nema fakulteta.' },
+    'browse.empty.programs': { en: 'No programs yet.', hr: 'Još nema smjerova.' },
+    'browse.empty.years': { en: 'No years yet.', hr: 'Još nema godina.' },
+    'browse.empty.subjects': { en: 'No subjects yet.', hr: 'Još nema predmeta.' },
+    'browse.studyYear': { en: 'Study year', hr: 'Studijska godina' },
+    'browse.semester': { en: 'Semester', hr: 'Semestar' },
+    'unit.year.1': { en: 'year', hr: 'godina' },
+    'unit.year.n': { en: 'years', hr: 'godine' },
+    'unit.subject.1': { en: 'subject', hr: 'predmet' },
+    'unit.subject.n': { en: 'subjects', hr: 'predmeta' },
+    'unit.lesson.1': { en: 'lesson', hr: 'lekcija' },
+    'unit.lesson.n': { en: 'lessons', hr: 'lekcije' },
+
     // Razno
     'loading.subject': { en: 'Loading subject…', hr: 'Učitavanje predmeta…' }
   };
@@ -213,6 +236,11 @@
     document.querySelectorAll('.lang-toggle-label').forEach((el) => { el.textContent = uiLang.toUpperCase(); });
     // auth nav-gumb ima dinamičan tekst (ime / „Sign in") → prepusti njemu da se osvježi
     if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
+    // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
+    if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
+    if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
+    const bp = document.getElementById('browse-page');
+    if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).
