@@ -61,10 +61,12 @@ function navigateTo(page, data = {}) {
 
     switch (page) {
         case 'landing':
+            if (typeof setUiLang === 'function') setUiLang('en');   // landing = primarni (EN) program
             document.getElementById('landing-page').classList.add('active');
             closeSidebar();
             break;
         case 'browse':
+            if (typeof setUiLang === 'function') setUiLang('en');   // browse = biranje programa/jezika
             renderBrowse();
             document.getElementById('browse-page').classList.add('active');
             closeSidebar();
@@ -72,6 +74,7 @@ function navigateTo(page, data = {}) {
         case 'lessons':
             if (data.subject) {
                 currentSubject = data.subject;
+                if (typeof setUiLangForSubject === 'function') setUiLangForSubject(data.subject);
                 renderLessonsPage(data.subject);
             }
             document.getElementById('lessons-page').classList.add('active');
@@ -81,6 +84,7 @@ function navigateTo(page, data = {}) {
             if (data.subject && data.lesson) {
                 currentSubject = data.subject;
                 currentLesson = data.lesson;
+                if (typeof setUiLangForSubject === 'function') setUiLangForSubject(data.subject);  // HR program → hrvatsko sučelje
                 initStudyPage(data.subject, data.lesson, data.section);
             }
             document.getElementById('study-page').classList.add('active');
