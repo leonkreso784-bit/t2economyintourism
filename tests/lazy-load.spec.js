@@ -9,11 +9,12 @@ test('subject content loads on demand, not at startup', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(() => window.SOKRAT_CATALOG && window.loadSubjectContent && window.navigateTo);
 
-  // 1) At startup, the only data script is the catalog — no subject content scripts.
+  // 1) At startup, no SUBJECT CONTENT scripts load. Allowed eager data scripts (catalog +
+  //    landing-stats meta) are not subject content — exclude them.
   const dataScriptsAtStart = await page.evaluate(() =>
     Array.from(document.scripts)
       .map((s) => s.getAttribute('src') || '')
-      .filter((src) => /data[-/]/.test(src) && !/catalog/.test(src))
+      .filter((src) => /data[-/]/.test(src) && !/catalog|landing-stats/.test(src))
   );
   expect(dataScriptsAtStart).toEqual([]);
 

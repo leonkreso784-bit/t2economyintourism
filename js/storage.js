@@ -2,22 +2,26 @@
 
 function loadProgress() {
     if (!currentSubject) return;
-    
+
+    // Kanonska shema napretka — svako polje uvijek postoji (otpornost na stari/pokvaren localStorage).
+    const defaultProgress = {
+        flashcardsLearned: [],
+        quizScores: [],
+        fillSolved: 0,
+        lastStudy: null,
+        streak: 0,
+        categoryProgress: {}
+    };
+
     const storageKey = subjectDataMap[currentSubject].storageKey;
     const saved = localStorage.getItem(storageKey);
+    let parsed = null;
     if (saved) {
-        progress = JSON.parse(saved);
-    } else {
-        progress = {
-            flashcardsLearned: [],
-            quizScores: [],
-            fillSolved: 0,
-            lastStudy: null,
-            streak: 0,
-            categoryProgress: {}
-        };
+        try { parsed = JSON.parse(saved); } catch (e) { parsed = null; }  // pokvaren JSON → default
     }
-    
+    // Schema-merge: defaulti + spremljeno → polje koje fali u starom zapisu dobije default.
+    progress = Object.assign({}, defaultProgress, (parsed && typeof parsed === 'object') ? parsed : {});
+
     // Check streak
     if (progress.lastStudy) {
         const lastDate = new Date(progress.lastStudy).toDateString();

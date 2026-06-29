@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 F1 brick 1C ✅: Hardening v1 (5 stavki, sve provjereno ×)
+**Treća cigla F1.** Male, vidljive, 0-rizik; rađene jedna po jedna s višestrukom provjerom (korisnikov naglasak).
+- **1C.1** `vercel.json` — maknut zastarjeli `X-XSS-Protection`; dodani `Referrer-Policy` + `Permissions-Policy` (camera/mic/geo off).
+- **1C.2** `js/storage.js` `loadProgress()` — `Object.assign({}, defaultProgress, parsed)` + **try/catch na JSON.parse** (pokvaren/stari localStorage → defaulti, ne pad). *(Funkcija je u storage.js, NE analytics.js kako je plan pretpostavio — provjereno grepom.)*
+- **1C.3** mrtav `lessonCategoryMap` entry → `{}` (`js/config.js`). Stari ID-evi `second-exam-prep`/`final-exam-prep` **potvrđeno** postoje samo u config.js (grep data/+js/). Varijabla ostaje (navigation.js:545 → else grana).
+- **1C.4** „400+" (samo **1×** u heroju, ne ×3) → **dinamičan**. Nova skripta `scripts/compute-stats.js` (`npm run stats`) broji fc+quiz+fill po FINAL lekciji 17 primarnih predmeta → `data/landing-stats.js` (`window.SOKRAT_STATS`); `renderLandingMeta` puni `[data-meta="questionCount"]`. **Stvarno 5721 → prikaz „5,700+"** (floored). Landing.spec dobio assertion; lazy-load.spec ažuriran (dopušta `landing-stats` kao ne-subject eager).
+- **1C.5** „Works offline" → pošteno **„No install needed"/„Bez instalacije"** (hero badge + i18n dict en+hr usklađeni + 2 meta-opisa → „works on any device"). Vraća se na „offline" kad F3 Service Worker bude istina.
+- **Provjereno (×):** validate 0/0 · verify 0/0 · typecheck exit 0 · unit 33/33 · **Playwright 76/76** (puni, 2×). Cache bump `?v=20260698`.
+- **Git-higijena usput:** sav F1 rad prebačen s lokalnog `main` na granu `foundation/f1`; lokalni `main` vraćen na `origin/main` (= produkcija, netaknuta). **DALJE F1:** 1D TVRDI gateovi (Lighthouse/axe/visual), 1E RLS-test.
+
 ## 2026-06-29 — 🧱 F1 brick 1B ✅: type-safety bez build-a (tsc --checkJs, pilot i18n.js)
 **Druga cigla F1 (FOUNDATION_PLAN 1B).** Type-check kao SAMO CI checker — nula runtime/build (browser i dalje čisti JS).
 - **Novo:** `tsconfig.json` (`checkJs`/`allowJs`/`noEmit`/**`strict`**/skipLibCheck; `include` SCOPED na pilot — raste

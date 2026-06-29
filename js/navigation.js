@@ -414,6 +414,14 @@ function renderLandingMeta() {
     document.querySelectorAll('[data-meta="subjectCount"]').forEach((el) => {
         el.textContent = count;
     });
+    // Ukupan broj pitanja (autogeneriran u data/landing-stats.js → window.SOKRAT_STATS). Fallback: ostavi HTML tekst.
+    const stats = (typeof window !== 'undefined') ? window.SOKRAT_STATS : null;
+    if (stats && typeof stats.questionCount === 'number' && stats.questionCount > 0) {
+        const label = stats.questionCount.toLocaleString('en-US') + '+';
+        document.querySelectorAll('[data-meta="questionCount"]').forEach((el) => {
+            el.textContent = label;
+        });
+    }
 }
 
 // ========== LANDING SUBJECTS SHOWCASE (rendered from catalog) ==========

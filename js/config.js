@@ -37,12 +37,11 @@ const subjectDataMap = (function buildSubjectDataMap() {
 })();
 
 // Defines which categories belong to each lesson
-const lessonCategoryMap = {
-    'entrepreneurship': {
-        'second-exam-prep': ['planning', 'failure', 'economy', 'social', 'trends'],
-        'final-exam-prep': null  // null means ALL categories
-    }
-};
+// Opcionalni filter kategorija po lekciji: lessonCategoryMap[subjectId][lessonId] = [dozvoljeni ključevi] | null(=sve).
+// Koristi ga navigation.js (loadStudyPage). Trenutno prazno — raniji 'entrepreneurship' unos koristio je STARE
+// ID-eve lekcija (second-exam-prep/final-exam-prep) koji više ne postoje (predmet je na first/second-midterm/final).
+// Mehanizam ostaje dostupan za buduće predmete; nedostajeći subjekt → puni sadržaj lekcije (else grana).
+const lessonCategoryMap = {};
 
 // ========== GLOBAL STATE ==========
 let currentPage = 'landing';

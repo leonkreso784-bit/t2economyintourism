@@ -16,6 +16,9 @@ declare global {
     | undefined;
 
   interface Window {
+    // Autogeneriran landing stat (data/landing-stats.js → npm run stats)
+    SOKRAT_STATS?: { questionCount: number; questionCountExact: number; subjectsCounted: number };
+
     // i18n (js/i18n.js)
     t?: (key: string) => string;
     applyTranslations?: (root?: Document | Element) => void;

@@ -91,12 +91,13 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [1B.2] ✅ JSDoc tipovi — pilot `js/i18n.js` + `types/globals.d.ts` (ambient `SokratCatalog`/`window.*`). Samo komentari → 0 runtime.
   - [1B.3] ✅ `npm run typecheck` (= `tsc --noEmit -p tsconfig.json`) + korak u CI (1A) poslije `test:unit`. `tsc` je samo checker.
   - **Done-kriterij:** ✅ `typecheck` zelen na pilotu (exit 0); obrazac dokazan (novi modul → `include` + globali + JSDoc). Širi se kasnije.
-- **1C — Hardening v1 (sonnet.md, provjereno):** sve male, vidljive, 0-rizik. *Svaka je zasebna cigla + cache bump gdje treba.*
-  - [1C.1] `vercel.json`: **makni** `X-XSS-Protection` (deprecated), **dodaj** `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
-  - [1C.2] `js/analytics.js` `loadProgress()`: `progress = { ...defaultProgress, ...JSON.parse(saved) }` (otpornost na pokvaren/stari localStorage).
-  - [1C.3] Obriši mrtvi `lessonCategoryMap` entry (`js/config.js`) — entrepreneurship stari ID-evi (vidi BACKLOG/sonnet #4; PAZI: objekt JE referenciran u `navigation.js:545`, briše se samo mrtav entry).
-  - [1C.4] „400+" u heroju (`index.html` ×3) → **dinamički `questionCount`** iz kataloga (kao `subjectCount`).
-  - [1C.5] **„Works offline" copy** — privremeno na pošteno (npr. „Bez instalacije" / „Radi na mobitelu") DOK Service Worker (F3) ne učini offline istinitim. (Odluka: oslabi sad, SW kasnije.)
+- **1C — Hardening v1 (sonnet.md, provjereno):** ✅ **GOTOVO 2026-06-29.** sve male, vidljive, 0-rizik.
+  - [1C.1] ✅ `vercel.json`: maknut `X-XSS-Protection`; dodani `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
+  - [1C.2] ✅ `js/storage.js` `loadProgress()` (NE analytics.js — tu je funkcija): `Object.assign({}, defaultProgress, parsed)` + try/catch na `JSON.parse` (pokvaren JSON → default).
+  - [1C.3] ✅ Mrtav `lessonCategoryMap` ENTRY uklonjen (`js/config.js` → `{}`); ID-evi `second-exam-prep`/`final-exam-prep` potvrđeno postoje samo u config.js. Varijabla + mehanizam ostaju (navigation.js:545 radi → else grana = pun sadržaj).
+  - [1C.4] ✅ „400+" (samo 1×, ne ×3) → **dinamički `questionCount`**. Novo: `scripts/compute-stats.js` (`npm run stats`) broji fc+quiz+fill po FINAL lekciji svakog primarnog predmeta → generira `data/landing-stats.js` (`window.SOKRAT_STATS`, eager); `renderLandingMeta()` puni `[data-meta="questionCount"]` (`toLocaleString+'+'`). **Stvarno = 5721 (floored 5700)**. ⚠️ Regeneriraj `npm run stats` nakon izmjene sadržaja.
+  - [1C.5] ✅ „Works offline" → pošteno „No install needed" / „Bez instalacije" (hero badge + i18n dict + 2 meta-opisa „works on any device"). Vrati na „offline" kad F3 SW slegne.
+  - **Gate (sve provjereno ×):** validate 0/0 · verify 0/0 · typecheck 0 · unit 33/33 · **Playwright 76/76** (lazy-load test ažuriran da dopusti `landing-stats`; landing.spec dobio questionCount assertion). Cache bump `?v=20260698` (i18n/config/storage/navigation + landing-stats).
 - **1D — TVRDI kvalitetni gateovi (nadogradnja #1 — ovo je razlika „zdravo→brutalno"):** CI ne smije samo provjeravati da kod *radi*, nego da je BRZ, PRISTUPAČAN i da NE REGRESIRA vizualno.
   - [1D.1] **Lighthouse CI** (`.lighthouserc.json`, `@lhci/cli`) na landing+browse+study (lokalni `serve:test`): **tvrdi budžeti** (`assert` `error`) — Performance ≥ 0.95, Accessibility ≥ 0.95, LCP ≤ 2.0s, total JS ≤ ~200 KB. Prekršaj = **build crveno** (ne upozorenje). Trošak 0 € (open-source u Actions).
   - [1D.2] **axe-core a11y gate** u Playwrightu (`@axe-core/playwright`): 0 ozbiljnih (serious/critical) violationa na ključnim ekranima × {EN,HR}. Sad nemaš NIŠTA automatsko za a11y.
