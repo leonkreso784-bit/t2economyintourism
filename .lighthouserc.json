@@ -1,0 +1,24 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "node scripts/static-server.js",
+      "url": ["http://localhost:5050/"],
+      "numberOfRuns": 3,
+      "settings": {
+        "chromeFlags": "--no-sandbox --headless=new"
+      }
+    },
+    "assert": {
+      "//": "KONZERVATIVNI tvrdi floorovi za prvu kalibraciju. Stegnuti prema 0.95 kad vidimo stvarne CI-brojeve (lhci uploada javni report URL u log job-a).",
+      "assertions": {
+        "categories:accessibility": ["error", { "minScore": 0.9 }],
+        "categories:best-practices": ["error", { "minScore": 0.9 }],
+        "categories:seo": ["error", { "minScore": 0.9 }],
+        "categories:performance": ["error", { "minScore": 0.6 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

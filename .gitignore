@@ -2,6 +2,9 @@
 node_modules/
 # package-lock.json se VERZIONIRA (reproducibilan `npm ci` u CI-u, FOUNDATION_PLAN F1).
 
+# Lighthouse CI radni izlaz (rezultati se ne commitaju; budžeti su u .lighthouserc.json)
+.lighthouseci/
+
 # IDE
 .vscode/
 .idea/
