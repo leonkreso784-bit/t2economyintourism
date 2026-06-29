@@ -81,7 +81,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 **Cilj:** napravi tlo čvrstim i sigurnim PRIJE nego diramo jezgru. Sve cigle su niskorizične i neovisne o source-of-truth.
 **Ovisnosti:** nema (može odmah nakon F0).
 
-- **1A — CI/CD (GitHub Actions + Vercel preview):** *najvažnija cigla faze.* ✅ **workflow GOTOV + lokalno verificiran 2026-06-29** (push grane preostaje za GitHub-validaciju).
+- **1A — CI/CD (GitHub Actions + Vercel preview):** *najvažnija cigla faze.* ✅ **GOTOVO + GITHUB-ZELEN 2026-06-29** (grana `foundation/f1`, run #28342101467, svi koraci success, ~5 min).
   - [1A.1] `.github/workflows/ci.yml` — na svaki push/PR pokreni `npm ci` → `validate:content` → `verify` → `test:unit` → `playwright`.
   - [1A.2] Playwright u CI-u (headless, instalacija browsera u workflowu); artefakti (screenshotovi) na fail.
   - [1A.3] Potvrdi da Vercel radi **preview-deploy po grani** (već uključeno) → dokumentiraj „grana → preview URL → provjera → prod" tok u TESTING.md.

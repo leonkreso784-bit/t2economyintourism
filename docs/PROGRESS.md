@@ -26,9 +26,10 @@ testirano, što slijedi.
 - **Lokalno verificiran TOČAN CI slijed** (da push ne bude crven): validate 0/0 · verify 0/0 · **test:unit 33/33** ·
   **Playwright 76/76 (subjects=18, 3.9 min)**. Zeleno.
 - **Dokumentirano:** TESTING.md §CI/CD (tok „grana → preview → prod"; TVRDI gate = ne mergea se u `main` ako je crveno) = brick 1A.3.
-- **Status:** workflow commitan **lokalno** (ne aktivira se dok nije na GitHubu). **DALJE:** push na granu da CI prvi put
-  prođe na GitHubu (+ Vercel preview), pa nastavak F1 (1B type-check, 1C hardening, 1D TVRDI gateovi, 1E RLS-test).
-  **Bez produkcijskog deploya** — push grane ≠ produkcija; zajednički prod-deploy i18n chromea tek kad F1 stoji (korisnikov redoslijed).
+- **✅ GITHUB-VALIDIRAN:** grana `foundation/f1` pushana → **CI prošao ZELEN** (run #28342101467, **svi koraci success, ~5 min**:
+  npm ci → validate → verify → unit → typecheck → Playwright). Usput popravljeno: **`.gitignore` je ignorirao `package-lock.json`**
+  → `npm ci` bi pao bez lockfilea → **lockfile sad verzioniran** (commit `6854a0d`). **Produkcija (`main`) NIJE dirana** (push grane = Vercel preview, ne prod).
+- **DALJE F1:** 1C hardening, 1D TVRDI gateovi (Lighthouse/axe/visual), 1E RLS-test; zajednički prod-deploy (uklj. i18n chrome + cache-bump) tek kad F1 stoji, uz potvrdu.
 
 ---
 
