@@ -5,6 +5,14 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 F1 brick 1D ✅: TVRDI kvalitetni gateovi (GitHub-zelen, run #28386199455)
+**Četvrta cigla F1 — „razlika zdravo→brutalno".** Tri pod-cigle, svaka mjerena prije postavljanja praga (da gate ne bude nerealan).
+- **1D.2 axe a11y** (`tests/a11y.spec.js`, `@axe-core/playwright`) — gate 0 serious/critical na landing/browse/study/profil. **Izmjerio baseline PRVO** → našao 1 stvarni serious (`scrollable-region-focusable` na `.sidebar-content`) → **popravio** (`tabindex=0`+`role=region`+`aria-label`; sidebar sad scrollabilan tipkovnicom). 1 viewport (izbjegava 4× šum).
+- **1D.3 layout-guard** (`tests/layout-guard.spec.js`) — DETERMINISTIČKA geometrija (ne pikseli) → platform-neovisno, zeleno u CI bez baseline-slika. Sweep **13 širina × {EN,HR}**: CTA nikad odrezan + 0 overflowa = **BUG-015 klasa zaštićena**. **Pixel `toHaveScreenshot` ODGOĐEN** (baseline ovisi o platformi Win≠Linux; nema Dockera/CI-tokena za Linux-baseline — zapisano u BACKLOG).
+- **1D.1 Lighthouse** (`.lighthouserc.json`, `@lhci/cli`) — **zaseban CI job `lighthouse`** (Linux; Windows lokalno ruši chrome-launcher `EPERM` na OneDriveu, dokazano). Tvrdi budžeti zasad KONZERVATIVNO (a11y/bp/seo ≥0.9, perf ≥0.6, 3 mjerenja/median). **⏳ KALIBRACIJA:** stegnuti prema 0.95 kad pročitamo stvarne CI-brojeve — lhci uploada **javni LH report URL** u job-log (korisnik ga otvori → javi brojeve).
+- **✅ GitHub-zelen:** run #28386199455, **oba joba success** (build = +axe +layout-guard; lighthouse = budžeti prošli). Produkcija netaknuta.
+- **DALJE F1:** 1E (RLS + migracije na Supabase branchu) — traži Supabase branching pristup (provjeriti free-tier / odluka korisnika).
+
 ## 2026-06-29 — 🧱 F1 brick 1C ✅: Hardening v1 (5 stavki, sve provjereno ×)
 **Treća cigla F1.** Male, vidljive, 0-rizik; rađene jedna po jedna s višestrukom provjerom (korisnikov naglasak).
 - **1C.1** `vercel.json` — maknut zastarjeli `X-XSS-Protection`; dodani `Referrer-Policy` + `Permissions-Policy` (camera/mic/geo off).
