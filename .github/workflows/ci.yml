@@ -1,0 +1,64 @@
+name: CI
+
+# Reliability rails (FOUNDATION_PLAN F1, brick 1A.1/1A.2).
+# Svaki push i PR mora proći: validate:content -> verify -> test:unit -> Playwright.
+# Crveno = ne ide u main. Ovo je TVRDI gate (FOUNDATION_PLAN §7), ne upozorenje.
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: ['**']
+
+# Otkaži zastarjele runove iste grane (štedi minute, brži feedback).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint + verify + tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install deps (clean)
+        run: npm ci
+
+      # --- Brza, jeftina logika prvo (fail fast prije browsera) ---
+      - name: Validate content (schema + quiz index + KaTeX currency-safe)
+        run: npm run validate:content
+
+      - name: Verify catalog (struktura + datoteke + window varijable)
+        run: npm run verify
+
+      - name: Unit tests (exercises-core / acc-kernel / stat-parse / stat-lib)
+        run: npm run test:unit
+
+      # --- Playwright (responsive overflow + smoke + sidebar) ---
+      - name: Install Playwright browser (chromium)
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright tests
+        run: npx playwright test
+
+      # Artefakti samo na padu: screenshotovi (screenshot: 'only-on-failure') + report.
+      - name: Upload Playwright artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore

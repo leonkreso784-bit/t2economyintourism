@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 F1 brick 1A.1/1A.2 ✅: CI/CD workflow (GitHub Actions)
+**Prva cigla temelja (FOUNDATION_PLAN F1).** Korisnik: „moze idemo" → kreće F1, CI/CD prvo.
+- **Novo:** `.github/workflows/ci.yml` — na svaki push/PR (sve grane): `npm ci` → `validate:content` → `verify` →
+  `test:unit` → `npx playwright test` (chromium, `--with-deps`). Node 22, npm-cache, `concurrency` (otkazuje zastarjele
+  runove), `timeout-minutes: 20`. Artefakti (test-results/playwright-report) uploadani **samo na pad** (`if: failure()`).
+- **Preduvjeti provjereni:** `package-lock.json` postoji (za `npm ci`)✓; Playwright sam diže server (`webServer` u configu)✓;
+  projekti = chromium (iPhone viewporti, bez `browserName`) → dovoljan `install chromium`✓.
+- **Lokalno verificiran TOČAN CI slijed** (da push ne bude crven): validate 0/0 · verify 0/0 · **test:unit 33/33** ·
+  **Playwright 76/76 (subjects=18, 3.9 min)**. Zeleno.
+- **Dokumentirano:** TESTING.md §CI/CD (tok „grana → preview → prod"; TVRDI gate = ne mergea se u `main` ako je crveno) = brick 1A.3.
+- **Status:** workflow commitan **lokalno** (ne aktivira se dok nije na GitHubu). **DALJE:** push na granu da CI prvi put
+  prođe na GitHubu (+ Vercel preview), pa nastavak F1 (1B type-check, 1C hardening, 1D TVRDI gateovi, 1E RLS-test).
+  **Bez produkcijskog deploya** — push grane ≠ produkcija; zajednički prod-deploy i18n chromea tek kad F1 stoji (korisnikov redoslijed).
+
+---
+
 ## 2026-06-29 — 🧱 PLAN PODIGNUT NA „BRUTALAN" (5 nadogradnji) + odluka redoslijeda F1
 **Korisnik:** „ne zanima me je li plan zdrav nego je li jeben i brutalan." Procijenio sam postojeći FOUNDATION_PLAN kao
 **7/10 (solidno-senior, ali higijena, ne WOW)** i predložio **5 nadogradnji** koje ga dižu na 9–10. Korisnik prihvatio;

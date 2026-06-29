@@ -29,6 +29,16 @@
     bez overflowa) + landing footer linkovi na njih.
   - (Prvi put: `npm install` + `npx playwright install chromium`.)
 
+## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)
+> Iste provjere gore vrte se **automatski na svaki push/PR** preko GitHub Actions (`.github/workflows/ci.yml`).
+- **Lanac (fail-fast):** `npm ci` → `validate:content` → `verify` → `test:unit` → `npx playwright test` (chromium).
+- **TVRDI gate:** crveno = **ne mergea se u `main`**. Artefakti (screenshotovi/report) se uploadaju samo na pad.
+- **Tok rada „grana → preview → prod":**
+  1. Radi na grani (ne direktno na `main`). Push grane → **CI se pokrene** + **Vercel napravi preview-deploy** (zaseban URL, NIJE produkcija).
+  2. Provjeri: CI zelen + vizualni pregled na preview URL-u.
+  3. Tek kad je zeleno i pregledano → merge u `main` (= produkcijski deploy) **uz izričitu potvrdu korisnika**.
+- **Lokalno prije pusha** (da CI ne bude crven): pokreni isti lanac ručno (`validate:content` → `verify` → `test:unit` → `npx playwright test`).
+
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
 - [ ] Landing → "Start Studying" otvara **drill-down browse** (Fakultet→Smjer→Godina→Predmet).
