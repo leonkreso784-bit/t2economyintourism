@@ -1,6 +1,6 @@
 # Dependencies
 node_modules/
-package-lock.json
+# package-lock.json se VERZIONIRA (reproducibilan `npm ci` u CI-u, FOUNDATION_PLAN F1).
 
 # IDE
 .vscode/
