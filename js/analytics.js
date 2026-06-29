@@ -187,7 +187,7 @@ window.addEventListener('beforeunload', () => {
 });
 
 window.resetProgress = function() {
-    if (confirm('Are you sure you want to reset all progress?')) {
+    if (confirm(window.t ? t('msg.confirmResetProgress') : 'Are you sure you want to reset all progress?')) {
         progress = {
             flashcardsLearned: [],
             quizScores: [],
@@ -198,12 +198,12 @@ window.resetProgress = function() {
         };
         saveProgress();
         renderProgressPage();
-        showToast('Progress reset!');
+        showToast(window.t ? t('msg.progressReset') : 'Progress reset!');
     }
 };
 
 window.resetAnalytics = function() {
-    if (confirm('Are you sure you want to reset all analytics?')) {
+    if (confirm(window.t ? t('msg.confirmResetAnalytics') : 'Are you sure you want to reset all analytics?')) {
         analytics = {
             totalStudyTime: 0,
             sessionsCount: 0,
@@ -223,7 +223,7 @@ window.resetAnalytics = function() {
         };
         saveAnalytics();
         renderProgressPage();
-        showToast('Analytics reset!');
+        showToast(window.t ? t('msg.analyticsReset') : 'Analytics reset!');
     }
 };
 

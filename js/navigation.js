@@ -481,7 +481,7 @@ function renderLessonsPage(subjectId) {
             card.style.cursor = 'not-allowed';
             card.querySelector('.lesson-arrow').className = 'fas fa-clock lesson-arrow';
             card.addEventListener('click', () => {
-                showToast('Second Midterm is coming soon.');
+                showToast(window.t ? t('toast.comingSoon') : 'Second Midterm is coming soon.');
             });
         } else {
             card.addEventListener('click', () => {
@@ -534,7 +534,7 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
         } catch (e) {
             showStudyLoading(false);
             console.error(e);
-            if (typeof showToast === 'function') showToast('Could not load this subject. Please try again.');
+            if (typeof showToast === 'function') showToast(window.t ? t('toast.loadError') : 'Could not load this subject. Please try again.');
             return;
         }
         showStudyLoading(false);
@@ -556,8 +556,9 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
         currentData = fullData;
     }
 
-    document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > Lessons`;
-    document.getElementById('currentLessonTitle').textContent = subject.lessons.find(l => l.id === lessonId)?.name || 'Lesson';
+    const lessonsWord = window.t ? t('breadcrumb.lessons') : 'Lessons';
+    document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > ${lessonsWord}`;
+    document.getElementById('currentLessonTitle').textContent = subject.lessons.find(l => l.id === lessonId)?.name || (window.t ? t('lesson.fallback') : 'Lesson');
 
     loadProgress();
     loadAnalytics();

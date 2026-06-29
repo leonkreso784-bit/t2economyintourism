@@ -203,6 +203,88 @@
     'unit.lesson.1': { en: 'lesson', hr: 'lekcija' },
     'unit.lesson.n': { en: 'lessons', hr: 'lekcije' },
 
+    // ===== Poruke (toast/confirm/status — dinamički iz JS-a) =====
+    // Progress / analytics (analytics.js)
+    'msg.confirmResetProgress': { en: 'Are you sure you want to reset all progress?', hr: 'Jesi li siguran/na da želiš poništiti sav napredak?' },
+    'msg.progressReset': { en: 'Progress reset!', hr: 'Napredak poništen!' },
+    'msg.confirmResetAnalytics': { en: 'Are you sure you want to reset all analytics?', hr: 'Jesi li siguran/na da želiš poništiti svu statistiku?' },
+    'msg.analyticsReset': { en: 'Analytics reset!', hr: 'Statistika poništena!' },
+    // Auth (auth.js)
+    'msg.signedInSync': { en: 'Signed in — your progress now syncs to the cloud.', hr: 'Prijavljen/a — napredak se sad sinkronizira u oblak.' },
+    'msg.passwordUpdatedSignedIn': { en: 'Password updated — you are signed in.', hr: 'Lozinka promijenjena — prijavljen/a si.' },
+    'msg.signedOut': { en: 'Signed out. Progress stays on this device.', hr: 'Odjavljen/a. Napredak ostaje na ovom uređaju.' },
+    // Profile (profile.js)
+    'msg.syncedJustNow': { en: 'Synced just now — everything is backed up.', hr: 'Sinkronizirano upravo — sve je sigurno pohranjeno.' },
+    'msg.progressSynced': { en: 'Progress synced to cloud', hr: 'Napredak sinkroniziran u oblak' },
+    'msg.passwordsNoMatch': { en: 'Passwords do not match.', hr: 'Lozinke se ne podudaraju.' },
+    'msg.saving': { en: 'Saving…', hr: 'Spremanje…' },
+    'msg.passwordUpdated': { en: 'Password updated.', hr: 'Lozinka promijenjena.' },
+    'msg.deleteCloudFail': { en: 'Could not delete cloud data: ', hr: 'Brisanje podataka u oblaku nije uspjelo: ' },
+    'msg.cloudDataDeleted': { en: 'Cloud data deleted.', hr: 'Podaci u oblaku obrisani.' },
+    'msg.confirmDeleteCloud': { en: 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.', hr: 'Obrisati SAV napredak pohranjen u oblaku? Napredak na ovom uređaju ostaje, ali bit ćeš odjavljen/a.' },
+
+    // ===== Auth modal (građen u auth.js) =====
+    'auth.m.title': { en: 'Sync your progress', hr: 'Sinkroniziraj svoj napredak' },
+    'auth.m.text': { en: 'Back up your study progress and continue on any device with a free account.', hr: 'Sigurno pohrani napredak i nastavi na bilo kojem uređaju uz besplatan račun.' },
+    'auth.tab.signUp': { en: 'Create account', hr: 'Otvori račun' },
+    'auth.ph.password': { en: 'Password', hr: 'Lozinka' },
+    'auth.forgot': { en: 'Forgot password?', hr: 'Zaboravljena lozinka?' },
+    'auth.ph.name': { en: 'Your name', hr: 'Tvoje ime' },
+    'auth.ph.passwordMin': { en: 'Password (min. 8 characters)', hr: 'Lozinka (min. 8 znakova)' },
+    'auth.forgot.text': { en: 'Enter your email and we will send you a link to reset your password.', hr: 'Upiši svoj e-mail i poslat ćemo ti link za promjenu lozinke.' },
+    'auth.btn.sendReset': { en: 'Send reset link', hr: 'Pošalji link za promjenu' },
+    'auth.backToSignIn': { en: '← Back to sign in', hr: '← Natrag na prijavu' },
+    'auth.terms.pre': { en: 'By signing in or creating an account you agree to our ', hr: 'Prijavom ili otvaranjem računa prihvaćaš naše ' },
+    'auth.terms.mid': { en: ' and ', hr: ' i ' },
+    'auth.recovery.title': { en: 'Set a new password', hr: 'Postavi novu lozinku' },
+    'auth.recovery.textPre': { en: 'Choose a new password for ', hr: 'Odaberi novu lozinku za ' },
+    'auth.signedIn.title': { en: 'Signed in', hr: 'Prijavljen/a' },
+    'auth.signedInAs': { en: 'Signed in as ', hr: 'Prijavljen/a kao ' },
+    'auth.syncAuto': { en: 'Your progress syncs automatically.', hr: 'Tvoj napredak se automatski sinkronizira.' },
+    'sync.lastSyncedPre': { en: 'Your progress syncs automatically. Last synced ', hr: 'Tvoj napredak se automatski sinkronizira. Zadnja sinkronizacija ' },
+    // Auth status poruke
+    'auth.st.signingIn': { en: 'Signing in…', hr: 'Prijava…' },
+    'auth.st.wrongCreds': { en: 'Wrong email or password.', hr: 'Pogrešan e-mail ili lozinka.' },
+    'auth.st.confirmFirst': { en: 'Please confirm your email first — check your inbox for the confirmation link.', hr: 'Prvo potvrdi svoj e-mail — provjeri inbox za link za potvrdu.' },
+    'auth.st.creating': { en: 'Creating account…', hr: 'Otvaranje računa…' },
+    'auth.st.exists': { en: 'An account with this email already exists — switch to Sign in.', hr: 'Račun s ovim e-mailom već postoji — prebaci na Prijavu.' },
+    'auth.st.created': { en: 'Account created! Check your inbox and click the confirmation link, then sign in.', hr: 'Račun otvoren! Provjeri inbox i klikni link za potvrdu, zatim se prijavi.' },
+    'auth.st.sending': { en: 'Sending…', hr: 'Slanje…' },
+    'auth.st.resetSent': { en: 'If an account exists for that email, a reset link is on its way — check your inbox.', hr: 'Ako račun za taj e-mail postoji, link za promjenu stiže — provjeri inbox.' },
+
+    // ===== Profil (#profile-page; renderProfilePage u profile.js) =====
+    'profile.title': { en: 'My Profile', hr: 'Moj profil' },
+    'profile.notSignedIn': { en: 'You are not signed in', hr: 'Nisi prijavljen/a' },
+    'profile.signInToBackup': { en: 'Sign in to back up your progress and study on any device.', hr: 'Prijavi se da sigurno pohraniš napredak i učiš na bilo kojem uređaju.' },
+    'profile.memberSince': { en: 'Member since ', hr: 'Član od ' },
+    'profile.changePassword': { en: 'Change password', hr: 'Promijeni lozinku' },
+    'profile.signOut': { en: 'Sign out', hr: 'Odjava' },
+    'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },
+    'profile.repeatNewPass': { en: 'Repeat new password', hr: 'Ponovi novu lozinku' },
+    'profile.saveNewPass': { en: 'Save new password', hr: 'Spremi novu lozinku' },
+    'profile.cloudSync': { en: 'Cloud sync', hr: 'Sinkronizacija u oblak' },
+    'profile.syncAuto': { en: 'Your progress is backed up automatically while you study.', hr: 'Tvoj napredak se automatski sigurno pohranjuje dok učiš.' },
+    'profile.syncNow': { en: 'Sync now', hr: 'Sinkroniziraj sada' },
+    'profile.progressOverview': { en: 'Progress overview', hr: 'Pregled napretka' },
+    'profile.privacyData': { en: 'Privacy & data', hr: 'Privatnost i podaci' },
+    'profile.deleteDesc1': { en: 'Delete all study progress stored in the cloud. Progress saved on this device stays. To delete your entire account, email ', hr: 'Obriši sav napredak pohranjen u oblaku. Napredak spremljen na ovom uređaju ostaje. Za brisanje cijelog računa pošalji e-mail na ' },
+    'profile.deleteDesc2': { en: '. See our ', hr: '. Pogledaj naša ' },
+    'profile.deleteCloud': { en: 'Delete cloud data', hr: 'Obriši podatke iz oblaka' },
+    'profile.noActivity': { en: 'No study activity yet — open a subject and start learning!', hr: 'Još nema aktivnosti — otvori predmet i počni učiti!' },
+    'profile.cardsLearned': { en: 'cards learned', hr: 'naučenih kartica' },
+    'profile.quizzesTaken': { en: 'quizzes taken', hr: 'odrađenih kvizova' },
+    'profile.fillSolved': { en: 'fill-ins solved', hr: 'riješenih dopuna' },
+    'profile.tip.cards': { en: 'Flashcards learned', hr: 'Naučene kartice' },
+    'profile.tip.quizzes': { en: 'Quizzes taken', hr: 'Odrađeni kvizovi' },
+    'profile.tip.fill': { en: 'Fill-in exercises solved', hr: 'Riješene dopune' },
+    'profile.avg': { en: 'avg', hr: 'prosj.' },
+
+    // Lessons / Study chrome (dinamički iz navigation.js)
+    'breadcrumb.lessons': { en: 'Lessons', hr: 'Lekcije' },
+    'lesson.fallback': { en: 'Lesson', hr: 'Lekcija' },
+    'toast.comingSoon': { en: 'Second Midterm is coming soon.', hr: 'Drugi kolokvij uskoro.' },
+    'toast.loadError': { en: 'Could not load this subject. Please try again.', hr: 'Učitavanje predmeta nije uspjelo. Pokušaj ponovno.' },
+
     // Razno
     'loading.subject': { en: 'Loading subject…', hr: 'Učitavanje predmeta…' }
   };
@@ -241,6 +323,9 @@
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
+    // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.
+    const pp = document.getElementById('profile-page');
+    if (pp && pp.classList.contains('active') && typeof window.renderProfilePage === 'function') window.renderProfilePage();
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).

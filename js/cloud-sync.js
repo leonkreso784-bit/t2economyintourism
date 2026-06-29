@@ -174,7 +174,8 @@ const CloudSync = (function () {
         const t = new Date();
         const hh = String(t.getHours()).padStart(2, '0');
         const mm = String(t.getMinutes()).padStart(2, '0');
-        SokratAuth.setSyncInfo('Your progress syncs automatically. Last synced ' + hh + ':' + mm + '.');
+        const pre = window.t ? window.t('sync.lastSyncedPre') : 'Your progress syncs automatically. Last synced ';
+        SokratAuth.setSyncInfo(pre + hh + ':' + mm + '.');
     }
 
     // ---------- Lifecycle ----------

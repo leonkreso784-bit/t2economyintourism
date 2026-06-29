@@ -81,7 +81,7 @@ const SokratAuth = (function () {
             });
             if (event === 'SIGNED_IN' && !wasSignedIn && !recoveryMode) {
                 closeModal();
-                if (typeof showToast === 'function') showToast('Signed in — your progress now syncs to the cloud.');
+                if (typeof showToast === 'function') showToast(window.t ? t('msg.signedInSync') : 'Signed in — your progress now syncs to the cloud.');
             }
             if (event === 'PASSWORD_RECOVERY') openModal();
             // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
@@ -116,6 +116,9 @@ const SokratAuth = (function () {
     // i18n: na promjenu jezika sučelja ponovno iscrtaj nav-gumb (prevede „Sign in", čuva ime kad je prijavljen)
     window.refreshAuthNav = updateNavButton;
 
+    // i18n helper: t() ako postoji, inače fallback (engleski original).
+    function at(key, fb) { return (window.t) ? t(key) : fb; }
+
     function injectModal() {
         if (document.getElementById('authModal')) return;
         const wrap = document.createElement('div');
@@ -128,62 +131,62 @@ const SokratAuth = (function () {
             '  <button type="button" class="auth-modal__close" data-auth-close aria-label="Close">&times;</button>' +
 
             '  <div id="authSignedOut">' +
-            '    <h3 id="authModalTitle" class="auth-modal__title"><i class="fas fa-cloud"></i> Sync your progress</h3>' +
-            '    <p class="auth-modal__text">Back up your study progress and continue on any device with a free account.</p>' +
+            '    <h3 id="authModalTitle" class="auth-modal__title"><i class="fas fa-cloud"></i> ' + at('auth.m.title', 'Sync your progress') + '</h3>' +
+            '    <p class="auth-modal__text">' + at('auth.m.text', 'Back up your study progress and continue on any device with a free account.') + '</p>' +
             '    <div class="auth-modal__tabs" role="tablist">' +
-            '      <button type="button" class="auth-modal__tab is-active" id="authTabSignIn" role="tab" aria-selected="true">Sign in</button>' +
-            '      <button type="button" class="auth-modal__tab" id="authTabSignUp" role="tab" aria-selected="false">Create account</button>' +
+            '      <button type="button" class="auth-modal__tab is-active" id="authTabSignIn" role="tab" aria-selected="true">' + at('auth.signIn', 'Sign in') + '</button>' +
+            '      <button type="button" class="auth-modal__tab" id="authTabSignUp" role="tab" aria-selected="false">' + at('auth.tab.signUp', 'Create account') + '</button>' +
             '    </div>' +
             '    <form id="authSignInForm" class="auth-modal__form">' +
             '      <input type="email" id="authSignInEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
             '      <div class="auth-pass-wrap">' +
-            '        <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="Password" required autocomplete="current-password">' +
+            '        <input type="password" id="authSignInPassword" class="auth-modal__input" placeholder="' + at('auth.ph.password', 'Password') + '" required autocomplete="current-password">' +
             '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
-            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>Sign in</span></button>' +
-            '      <button type="button" class="auth-modal__link" id="authForgotLink">Forgot password?</button>' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-right-to-bracket"></i><span>' + at('auth.signIn', 'Sign in') + '</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authForgotLink">' + at('auth.forgot', 'Forgot password?') + '</button>' +
             '    </form>' +
             '    <form id="authSignUpForm" class="auth-modal__form" hidden>' +
-            '      <input type="text" id="authSignUpName" class="auth-modal__input" placeholder="Your name" required maxlength="60" autocomplete="name">' +
+            '      <input type="text" id="authSignUpName" class="auth-modal__input" placeholder="' + at('auth.ph.name', 'Your name') + '" required maxlength="60" autocomplete="name">' +
             '      <input type="email" id="authSignUpEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
             '      <div class="auth-pass-wrap">' +
-            '        <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="Password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '        <input type="password" id="authSignUpPassword" class="auth-modal__input" placeholder="' + at('auth.ph.passwordMin', 'Password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
             '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
-            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>Create account</span></button>' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-user-plus"></i><span>' + at('auth.tab.signUp', 'Create account') + '</span></button>' +
             '    </form>' +
             '    <form id="authForgotForm" class="auth-modal__form" hidden>' +
-            '      <p class="auth-modal__text auth-modal__text--tight">Enter your email and we will send you a link to reset your password.</p>' +
+            '      <p class="auth-modal__text auth-modal__text--tight">' + at('auth.forgot.text', 'Enter your email and we will send you a link to reset your password.') + '</p>' +
             '      <input type="email" id="authForgotEmail" class="auth-modal__input" placeholder="you@email.com" required autocomplete="email">' +
-            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-envelope"></i><span>Send reset link</span></button>' +
-            '      <button type="button" class="auth-modal__link" id="authBackToSignIn">&larr; Back to sign in</button>' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-envelope"></i><span>' + at('auth.btn.sendReset', 'Send reset link') + '</span></button>' +
+            '      <button type="button" class="auth-modal__link" id="authBackToSignIn">' + at('auth.backToSignIn', '← Back to sign in') + '</button>' +
             '    </form>' +
             '    <p class="auth-modal__status" id="authStatus" hidden></p>' +
-            '    <p class="auth-modal__terms">By signing in or creating an account you agree to our <a href="terms.html">Terms of Use</a> and <a href="privacy.html">Privacy Policy</a>.</p>' +
+            '    <p class="auth-modal__terms">' + at('auth.terms.pre', 'By signing in or creating an account you agree to our ') + '<a href="terms.html">' + at('footer.terms', 'Terms of Use') + '</a>' + at('auth.terms.mid', ' and ') + '<a href="privacy.html">' + at('footer.privacy', 'Privacy Policy') + '</a>.</p>' +
             '  </div>' +
 
             '  <div id="authRecovery" hidden>' +
-            '    <h3 class="auth-modal__title"><i class="fas fa-key"></i> Set a new password</h3>' +
-            '    <p class="auth-modal__text">Choose a new password for <strong id="authRecoveryEmail"></strong>.</p>' +
+            '    <h3 class="auth-modal__title"><i class="fas fa-key"></i> ' + at('auth.recovery.title', 'Set a new password') + '</h3>' +
+            '    <p class="auth-modal__text">' + at('auth.recovery.textPre', 'Choose a new password for ') + '<strong id="authRecoveryEmail"></strong>.</p>' +
             '    <form id="authRecoveryForm" class="auth-modal__form">' +
             '      <div class="auth-pass-wrap">' +
-            '        <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="New password (min. 8 characters)" required minlength="8" autocomplete="new-password">' +
+            '        <input type="password" id="authRecoveryPassword" class="auth-modal__input" placeholder="' + at('profile.newPassPlaceholder', 'New password (min. 8 characters)') + '" required minlength="8" autocomplete="new-password">' +
             '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
             '      <div class="auth-pass-wrap">' +
-            '        <input type="password" id="authRecoveryPassword2" class="auth-modal__input" placeholder="Repeat new password" required minlength="8" autocomplete="new-password">' +
+            '        <input type="password" id="authRecoveryPassword2" class="auth-modal__input" placeholder="' + at('profile.repeatNewPass', 'Repeat new password') + '" required minlength="8" autocomplete="new-password">' +
             '        <button type="button" class="auth-pass-toggle" aria-label="Show password"><i class="fas fa-eye"></i></button>' +
             '      </div>' +
-            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>Save new password</span></button>' +
+            '      <button type="submit" class="cta-button primary auth-modal__submit"><i class="fas fa-check"></i><span>' + at('profile.saveNewPass', 'Save new password') + '</span></button>' +
             '    </form>' +
             '    <p class="auth-modal__status" id="authRecoveryStatus" hidden></p>' +
             '  </div>' +
 
             '  <div id="authSignedIn" hidden>' +
-            '    <h3 class="auth-modal__title"><i class="fas fa-user-check"></i> Signed in</h3>' +
-            '    <p class="auth-modal__text">Signed in as <strong id="authUserEmail"></strong></p>' +
-            '    <p class="auth-modal__text auth-modal__sync" id="authSyncInfo">Your progress syncs automatically.</p>' +
-            '    <button type="button" id="authSignOutBtn" class="cta-button secondary"><i class="fas fa-sign-out-alt"></i><span>Sign out</span></button>' +
+            '    <h3 class="auth-modal__title"><i class="fas fa-user-check"></i> ' + at('auth.signedIn.title', 'Signed in') + '</h3>' +
+            '    <p class="auth-modal__text">' + at('auth.signedInAs', 'Signed in as ') + '<strong id="authUserEmail"></strong></p>' +
+            '    <p class="auth-modal__text auth-modal__sync" id="authSyncInfo">' + at('auth.syncAuto', 'Your progress syncs automatically.') + '</p>' +
+            '    <button type="button" id="authSignOutBtn" class="cta-button secondary"><i class="fas fa-sign-out-alt"></i><span>' + at('profile.signOut', 'Sign out') + '</span></button>' +
             '  </div>' +
             '</div>';
         document.body.appendChild(wrap);
@@ -279,13 +282,13 @@ const SokratAuth = (function () {
         const email = (document.getElementById('authSignInEmail').value || '').trim();
         const password = document.getElementById('authSignInPassword').value;
         if (!email || !password) return;
-        setStatus('Signing in…');
+        setStatus(at('auth.st.signingIn', 'Signing in…'));
         const { error } = await client.auth.signInWithPassword({ email: email, password: password });
         if (error) {
             const msg = /invalid login credentials/i.test(error.message)
-                ? 'Wrong email or password.'
+                ? at('auth.st.wrongCreds', 'Wrong email or password.')
                 : /email not confirmed/i.test(error.message)
-                    ? 'Please confirm your email first — check your inbox for the confirmation link.'
+                    ? at('auth.st.confirmFirst', 'Please confirm your email first — check your inbox for the confirmation link.')
                     : error.message;
             setStatus(msg, true);
         }
@@ -299,7 +302,7 @@ const SokratAuth = (function () {
         const email = (document.getElementById('authSignUpEmail').value || '').trim();
         const password = document.getElementById('authSignUpPassword').value;
         if (!name || !email || !password) return;
-        setStatus('Creating account…');
+        setStatus(at('auth.st.creating', 'Creating account…'));
         const { data, error } = await client.auth.signUp({
             email: email,
             password: password,
@@ -315,11 +318,11 @@ const SokratAuth = (function () {
         // Uz uključenu potvrdu emaila Supabase za već registriran email vrati
         // „lažnog" usera bez identities (anti-enumeration) — prepoznaj i uputi na login.
         if (data && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) {
-            setStatus('An account with this email already exists — switch to Sign in.', true);
+            setStatus(at('auth.st.exists', 'An account with this email already exists — switch to Sign in.'), true);
             return;
         }
         if (data && data.session) return; // potvrda isključena → odmah prijavljen (onAuthStateChange)
-        setStatus('Account created! Check your inbox and click the confirmation link, then sign in.');
+        setStatus(at('auth.st.created', 'Account created! Check your inbox and click the confirmation link, then sign in.'));
     }
 
     async function handleForgot(e) {
@@ -327,14 +330,14 @@ const SokratAuth = (function () {
         if (!client) return;
         const email = (document.getElementById('authForgotEmail').value || '').trim();
         if (!email) return;
-        setStatus('Sending…');
+        setStatus(at('auth.st.sending', 'Sending…'));
         const { error } = await client.auth.resetPasswordForEmail(email, {
             redirectTo: window.location.origin + window.location.pathname
         });
         if (error) {
             setStatus(error.message, true);
         } else {
-            setStatus('If an account exists for that email, a reset link is on its way — check your inbox.');
+            setStatus(at('auth.st.resetSent', 'If an account exists for that email, a reset link is on its way — check your inbox.'));
         }
     }
 
@@ -345,10 +348,10 @@ const SokratAuth = (function () {
         const repeat = document.getElementById('authRecoveryPassword2').value;
         if (!password) return;
         if (password !== repeat) {
-            setRecoveryStatus('Passwords do not match.', true);
+            setRecoveryStatus(at('msg.passwordsNoMatch', 'Passwords do not match.'), true);
             return;
         }
-        setRecoveryStatus('Saving…');
+        setRecoveryStatus(at('msg.saving', 'Saving…'));
         const { error } = await client.auth.updateUser({ password: password });
         if (error) {
             setRecoveryStatus(error.message, true);
@@ -359,14 +362,14 @@ const SokratAuth = (function () {
         document.getElementById('authRecoveryPassword').value = '';
         document.getElementById('authRecoveryPassword2').value = '';
         renderModalState();
-        if (typeof showToast === 'function') showToast('Password updated — you are signed in.');
+        if (typeof showToast === 'function') showToast(window.t ? t('msg.passwordUpdatedSignedIn') : 'Password updated — you are signed in.');
     }
 
     async function signOut() {
         if (!client) return;
         await client.auth.signOut();
         closeModal();
-        if (typeof showToast === 'function') showToast('Signed out. Progress stays on this device.');
+        if (typeof showToast === 'function') showToast(window.t ? t('msg.signedOut') : 'Signed out. Progress stays on this device.');
     }
 
     // ---------- Javno API (koriste cloud-sync.js i profile.js) ----------
