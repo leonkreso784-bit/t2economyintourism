@@ -21,6 +21,15 @@ stringovima, nema error-monitoringa. Sve to skalira loše kako dolaze CRUD/UGC/t
 `tsconfig.json`/`.github/workflows/ci.yml`/`typescript` devDep su jedini novi alati — svi su dev/CI, ne runtime.
 Odbačeno: frontend framework, runtime build-step, CMS (vidi ADR-013). [[foundation-pivot]]
 
+**Dodatak (2026-06-29) — razina podignuta na „brutalnu" (korisnik: „ne zdrav nego jeben i brutalan"):** 4 standarda gore
+dobivaju **TVRDE gateove + 5 konkretizacija** (detalji [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) §7):
+1. **Perf/a11y/visual = TVRDI gateovi** (Lighthouse budžeti Performance≥0.95/LCP≤2s + axe-core 0 serious + Playwright `toHaveScreenshot` baseline) — **blokada, ne upozorenje**; prošlost ne može truniti (BUG-015 nemoguć).
+2. **Monitoring = Sentry s release-trackingom** (git SHA), consent-aware — ne maglovit „mini-logger".
+3. **RLS + migracije testirane na ephemeral Supabase branchu** u CI (RLS = dokazana, ne nadana).
+4. **CRUD source-of-truth flip dobiva versioning + audit-log + dry-run diff** (undo/povijest/kočnica).
+5. **SRS dobiva dizajn-dok PRIJE koda + FSRS** (2024+ algoritam), ne nabacani SM-2.
+Trošak alata = **0 €** (sve free na ovoj skali). Svjesno NE: product-analytics (Posthog), framework, runtime build, microservices.
+
 ---
 
 ## ADR-013 — Content arhitektura: podatak ≠ ponašanje + ContentRepository šav (source-of-truth)

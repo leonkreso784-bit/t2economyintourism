@@ -5,6 +5,24 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 PLAN PODIGNUT NA „BRUTALAN" (5 nadogradnji) + odluka redoslijeda F1
+**Korisnik:** „ne zanima me je li plan zdrav nego je li jeben i brutalan." Procijenio sam postojeći FOUNDATION_PLAN kao
+**7/10 (solidno-senior, ali higijena, ne WOW)** i predložio **5 nadogradnji** koje ga dižu na 9–10. Korisnik prihvatio;
+prvo provjerio kod protiv plana (vercel.json stvarno ima `X-XSS-Protection`✓, nema `.github`/`tsconfig`/lighthouse✓, 2
+ne-pushana commita 25c2474+4cb9c5c✓, Supabase branching dostupan✓) → realnost se poklapa → zapisao plan.
+- **5 nadogradnji (sve u POSTOJEĆE faze, redoslijed NEpromijenjen):** (1) **perf/a11y/visual TVRDI CI gateovi** =
+  Lighthouse budžeti (Perf≥0.95/LCP≤2s) + axe-core (0 serious) + Playwright `toHaveScreenshot` [F1 brick **1D**, pojačano F3];
+  (2) **Sentry + release-tracking** (git SHA), consent-aware [F2 **2E**]; (3) **RLS + migracije na ephemeral Supabase branchu**
+  u CI [F1 brick **1E**]; (4) **CRUD versioning + audit-log + dry-run diff** [F4 **4E**]; (5) **SRS dizajn-dok PRIJE koda + FSRS**
+  (`docs/SRS_PLAN.md`) [F5 **5.0**]. **TVRDI gate = blokada, ne upozorenje** (crveno = ne u `main`). Trošak alata = 0 €.
+- **Zapisano:** FOUNDATION_PLAN (intro „Razina" + brickovi 1D/1E/2E/4E/5.0 + nova **§7 Razina kvalitete** tablica + §3 gate-ovi
+  pojačani) · DECISIONS ADR-014 dodatak · ROADMAP §ZAOKRET · BACKLOG „Brutalan bar" · memorija `foundation-pivot` + MEMORY.md.
+- **Pojašnjeno korisniku:** „Lighthouse tvrdi budžeti" = budžeti **performansi** (brzina/kvaliteta), NE novca; Lighthouse je besplatan.
+- **Redoslijed odlučen (korisnik):** F1 **CI/CD prvo**, PA **zajednički deploy** ne-deployanog i18n chromea (2 lokalna commita) uz cache-bump.
+- **Status:** plan finaliziran i „brutalan". `verify` čist. **DALJE: F1 brick 1A.1 — `.github/workflows/ci.yml`.** Bez koda/deploya ove sesije.
+
+---
+
 ## 2026-06-29 — 🧱 STRATEŠKI ZAOKRET: PLATFORMA-FIRST (odluka + zapis) + i18n chrome (ne-deployan)
 **Glavni ishod sesije = ODLUKA + ZAPIS, ne kod.** Kroz dužu stratešku raspravu korisnik odlučio: **pauzirati dodavanje
 sadržaja** (HRV long-tail, prijevodi, 3. god) i izgraditi **profesionalan, reliable, reusable temelj** prije rasta.

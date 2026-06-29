@@ -10,7 +10,12 @@ Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATI
 Web Components, monitoring) u [DECISIONS.md](DECISIONS.md). **Redoslijed faza:** F0 zapis → F1 reliability rails (CI/CD + tsc +
 hardening v1) → F2 reusable jezgra (JSON format → ContentRepository → AppState → Web Components → monitoring) → F3 performanse
 (Service Worker + bundling) → F4 custom Admin CRUD (source-of-truth flip) → F5 SRS → F6 pred-UGC sigurnost. **Sadržajne stavke
-ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.** [[foundation-pivot]]
+ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.**
+**RAZINA = „brutalna" ne „zdrava" (korisnik 2026-06-29):** +5 nadogradnji (sve u postojeće faze, redoslijed isti; FOUNDATION_PLAN §7):
+(1) **perf/a11y/visual TVRDI CI gateovi** (Lighthouse budžeti + axe + screenshot) [F1 1D], (2) **Sentry+release-tracking** [F2 2E],
+(3) **RLS+migracije na Supabase branchu** [F1 1E], (4) **CRUD versioning+audit+dry-run** [F4 4E], (5) **SRS dizajn-dok PRIJE koda+FSRS** [F5 5.0].
+TVRDI gate = blokada, ne upozorenje; trošak alata 0 €. **DALJE (poslije compacta): F1 — korisnik bira CI/CD prvo PA zajednički deploy
+ne-deployanog i18n chromea (2 lokalna commita) uz cache-bump.** [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"

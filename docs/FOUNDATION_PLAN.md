@@ -6,6 +6,13 @@
 > pripremljena za sve što planiramo (Admin CRUD, UGC, AI tutor, monetizacija).
 > **Vezano:** ADR-013 (content arhitektura), ADR-014 (engineering standardi) u [DECISIONS.md](DECISIONS.md);
 > `sonnet.md` (hardening checklist); [[foundation-pivot]].
+>
+> **Razina (korisnik 2026-06-29): ne „zdrav" nego „jeben i brutalan".** Cilj nije „radi i neće pasti" (higijena) nego
+> stvarno elitan, WOW, profesionalan temelj. Zato svaka faza nosi **TVRDE gateove** (ne upozorenja — blokade): vidi
+> §7. Pet stvari koje plan dižu iz solidnog (7/10) u brutalan (9–10): **(1) perf/a11y/visual-regression TVRDI gateovi
+> u CI** · **(2) error-monitoring = Sentry s release-trackingom** · **(3) RLS + migracije testirane na pravom Supabase
+> branchu** · **(4) CRUD versioning + audit-log + dry-run diff** · **(5) SRS dizajn-dok PRIJE koda (FSRS, ne samo SM-2).**
+> Sve stane u postojeće faze — redoslijed se NE mijenja, samo se diže ljestvica.
 
 ---
 
@@ -90,7 +97,17 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [1C.3] Obriši mrtvi `lessonCategoryMap` entry (`js/config.js`) — entrepreneurship stari ID-evi (vidi BACKLOG/sonnet #4; PAZI: objekt JE referenciran u `navigation.js:545`, briše se samo mrtav entry).
   - [1C.4] „400+" u heroju (`index.html` ×3) → **dinamički `questionCount`** iz kataloga (kao `subjectCount`).
   - [1C.5] **„Works offline" copy** — privremeno na pošteno (npr. „Bez instalacije" / „Radi na mobitelu") DOK Service Worker (F3) ne učini offline istinitim. (Odluka: oslabi sad, SW kasnije.)
-**Gate faze:** CI zelen, `typecheck` zelen na pilotu, verify 0/0, Playwright pun, vizualni pregled landinga.
+- **1D — TVRDI kvalitetni gateovi (nadogradnja #1 — ovo je razlika „zdravo→brutalno"):** CI ne smije samo provjeravati da kod *radi*, nego da je BRZ, PRISTUPAČAN i da NE REGRESIRA vizualno.
+  - [1D.1] **Lighthouse CI** (`.lighthouserc.json`, `@lhci/cli`) na landing+browse+study (lokalni `serve:test`): **tvrdi budžeti** (`assert` `error`) — Performance ≥ 0.95, Accessibility ≥ 0.95, LCP ≤ 2.0s, total JS ≤ ~200 KB. Prekršaj = **build crveno** (ne upozorenje). Trošak 0 € (open-source u Actions).
+  - [1D.2] **axe-core a11y gate** u Playwrightu (`@axe-core/playwright`): 0 ozbiljnih (serious/critical) violationa na ključnim ekranima × {EN,HR}. Sad nemaš NIŠTA automatsko za a11y.
+  - [1D.3] **Visual regression** (Playwright `toHaveScreenshot`): baseline na landing/browse/study/profil × {mobile 390, desktop 1280} × {EN,HR}. **BUG-015 se ne bi dogodio da je ovo postojalo.** Baseline commitan; promjena pixela = svjesna odluka (update snapshot u istom commitu).
+  - **Done-kriterij:** sva tri gatea zelena u CI; namjerno ubačena spora skripta / kontrast-greška / pomak layouta = CI crveno.
+- **1E — RLS + migracije testirane na PRAVOM Supabase branchu (nadogradnja #3):** RLS bez automatskog testa = sigurnosna bomba pred UGC/CRUD.
+  - [1E.1] CI digne **ephemeral Supabase branch** (Supabase branching postoji), primijeni `supabase/schema.sql`.
+  - [1E.2] **RLS test-suite** (node, anon+service putevi): anon SMIJE čitati `subject_content`, NE smije čitati tuđi `progress`; service-role nikad na frontu. Crveno ako RLS popusti.
+  - [1E.3] Migracije se testiraju na branchu PRIJE merge-a (nema „schema na produkciji pa vidiš").
+  - **Done-kriterij:** RLS regresija (npr. slučajno `using (true)` na progress) obori CI.
+**Gate faze:** CI zelen (uklj. **Lighthouse/axe/visual TVRDE gateove + RLS-test**), `typecheck` zelen na pilotu, verify 0/0, Playwright pun, vizualni pregled landinga.
 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
@@ -114,7 +131,12 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
   - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
   - [2D.3] Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
-- **2E — Error monitoring:** Sentry (free) ILI mini-logger (`window.onerror`/`unhandledrejection` → Supabase tablica). Pro app zna kad pukne kod korisnika.
+- **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2 — „maglovita stavka" postaje konkretna):** trenutno: korisnik dobije bug → ti ne znaš dok ne javi (sljepoća). Brutalno =
+  - [2E.1] **Sentry** (free tier) preko CDN/`defer` (no-build OK): `window.onerror` + `unhandledrejection` + ručni `captureException` u catch-blokovima.
+  - [2E.2] **Release-tracking vezan na git SHA** (`?v=` token / build-id) → znaš na KOJOJ verziji je bug. Source-context (čak i bez source-mapa, JS je čitljiv).
+  - [2E.3] **Alerting** (mail prag) + **GDPR/consent-aware** (učitaj TEK iza pristanka, kao gtag u `js/consent.js`; bez PII u eventu).
+  - **Done-kriterij:** namjerni `throw` u stagingu stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina.
+  - *(Fallback ako Sentry tier zasmeta: mini-logger `window.onerror`→Supabase tablica iza istog `captureException` sučelja — zamjenjivo.)*
 **Gate faze:** CI/typecheck zeleni, sav sadržaj kroz Repo, 0 regresija (Playwright pun + ručni smoke svih modova × par predmeta).
 
 ### ▸ FAZA 3 — Performanse (na čistom šavu)
@@ -124,25 +146,34 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 - [3B] **CSS bundling** — 23 `@import` u jedan konkateniran fajl (build-korak `cat`/`cleancss`); ostaje no-framework.
 - [3C] **Auto version-bump** skripta (`scripts/bump-version.js`) — generira `?v=` iz git-hasha/timestampa, zamijeni sve tokene odjednom (gasi BUG-004 rizik zaboravljanja).
 - [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
-- [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO.
-**Gate:** Lighthouse/perf provjera, offline test (DevTools offline), CI zelen.
+- [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
+**Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*
 
 ### ▸ FAZA 4 — Authoring: custom Admin CRUD (veliki kamen)
 **Cilj:** uređivanje sadržaja kroz sučelje, bez deploya. **Custom (korisnikova odluka), NE CMS.**
 **Ovisnosti:** F2 (S1 Repo + S2 format + S4 primitivi su preduvjet — bez njih CRUD je krpa).
 - [4A] **Source-of-truth flip:** baza postaje autoritativna u runtimeu; `.js`/`.json` datoteke = **generirani export** (commitan zbog gita/offline-a). Migriraj svih 17 (+HR) predmeta.
-- [4B] **RLS/admin** (S6): tko smije uređivati; admin role.
+- [4B] **RLS/admin** (S6): tko smije uređivati; admin role. (RLS-test iz 1E pokriva regresije.)
 - [4C] **CRUD UI** (iz S4 Web Components): popis → uredi predmet/lekciju/kategoriju/karticu/quiz/fill/learn. Validacija kroz JSON Schema (2A.1).
 - [4D] **Export-generator** baza → datoteke (za git-povijest + offline fallback).
+- **4E — Safety-net (nadogradnja #4 — flip je najopasnija cigla, MORA imati undo):** bez ovoga prvi krivi edit = trajan gubitak sadržaja.
+  - [4E.1] **Content versioning/history:** svaka izmjena = NOVA verzija (`content_versions` tablica), ne overwrite → vraćanje na bilo koju prošlu verziju 1 klikom.
+  - [4E.2] **Audit-log:** tko/kad/što (user_id, timestamp, diff). Obavezno prije UGC-a.
+  - [4E.3] **Dry-run export-diff:** PRIJE flipa svakog predmeta pokaže točan diff baza↔datoteka; flip tek kad je diff očekivan (sigurnosna kočnica protiv tihog gubitka).
+  - [4E.4] **Rollback-staza:** export-generator (4D) + git znači da je svaki flip reverzibilan na zadnji dobar export.
 - **Izuzetak:** vježbe ostaju JS moduli (BUG-012) → CRUD ih ne uređuje (ili poseban „code editor" put kasnije).
-**Gate:** uredi-spremi-vidi radi end-to-end; export reproducira datoteke bajt-stabilno; RLS testiran (ne-admin ne može pisati).
+**Gate:** uredi-spremi-vidi radi end-to-end; export reproducira datoteke bajt-stabilno; RLS testiran (ne-admin ne može pisati); **versioning vraća prošlu verziju; dry-run diff prikazan prije svakog flipa.**
 
 ### ▸ FAZA 5 — Produkt WOW: Spaced Repetition (SRS)
-**Cilj:** pravi pamet-algoritam učenja (SM-2/Anki-stil) — kartice se vraćaju u optimalnim intervalima.
+**Cilj:** pravi pamet-algoritam učenja — kartice se vraćaju u optimalnim intervalima. Ovo je razlika između „još
+jedna flashcard app" i „brutalno". **Zato (nadogradnja #5) ide DIZAJN-DOK PRIJE koda.**
 **Ovisnosti:** S2 (per-card podaci) + S3 (AppState) + cloud-sync (scheduling se sinkronizira).
-- [5A] Schema: per-card `{ ease, interval, dueDate, reps }` (lokalno + cloud-sync, kao postojeći napredak).
-- [5B] Algoritam (SM-2) kao **reusable modul** (node-testiran, kao exercises lib).
-- [5C] UI: „Review due today" tok preko SVIH predmeta; ocjena (again/hard/good/easy) → reschedule.
+- [5.0] **`docs/SRS_PLAN.md` PRIJE ijedne linije koda:** odabir algoritma (**FSRS — 2024+ state-of-the-art, mjerljivo
+  bolji od SM-2; razmotriti ga primarno**, SM-2 kao fallback) · per-card schema · multi-device sync-konflikti
+  (isti card ocijenjen na 2 uređaja) · cold-start (novi korisnik) · kako se nosi s 17 predmeta × stotine kartica.
+- [5A] Schema: per-card `{ stability, difficulty, dueDate, reps, lapses, lastReview }` (FSRS-stil; lokalno + cloud-sync, kao postojeći napredak).
+- [5B] Algoritam kao **reusable modul** (node-testiran brute-force, kao exercises/stat-lib): determinističan, čista funkcija `schedule(card, grade, now) → card'`.
+- [5C] UI (iz S4 Web Components): „Review due today" tok preko SVIH predmeta; ocjena (again/hard/good/easy) → reschedule.
 - **Reusable preko svih predmeta**; najveći pojedinačni upgrade na razini proizvoda.
 *(AI tutor = zaseban produkt-trk, neovisan o source-of-truth; može paralelno nakon jezgre.)*
 
@@ -184,7 +215,29 @@ AI tutor: neovisan o svemu gore (ne ovisi o source-of-truth) — bilo kada nakon
 - **CSP/DOMPurify** — tek uz UGC (F6), ne prije (sadržaj je autorski/trustiran).
 - **Pune migracije svih starih root `data-*.js`** — kroz F2/F4, ne ad-hoc.
 
-## 7. Reference
+## 7. Razina kvalitete — TVRDI gateovi („brutalan bar", ne „zdrav")
+> Korisnik (2026-06-29): „ne zanima me je li plan zdrav nego je li jeben i brutalan." Razlika je **5 nadogradnji** koje
+> dižu plan iz solidnog (higijena, 7/10) u elitan (9–10). Sve stanu u postojeće faze; redoslijed se NE mijenja.
+
+| # | Nadogradnja | Gdje | Zašto je to „brutalno" a ne samo „zdravo" |
+|---|-------------|------|--------------------------------------------|
+| 1 | **Perf/a11y/visual TVRDI gateovi u CI** (Lighthouse budžeti + axe + screenshot) | F1 (1D), pojačano F3 | Prošlost NE MOŽE truniti — stranica ne može postati spora/nepristupačna/vizualno slomljena bez crvenog builda. BUG-015 nemoguć. |
+| 2 | **Sentry + release-tracking** | F2 (2E) | Kraj sljepoće — znaš kad i na kojoj verziji kod pukne KOD korisnika, prije nego javi. |
+| 3 | **RLS + migracije na pravom Supabase branchu** | F1 (1E) | Sigurnost se DOKAZUJE testom, ne nadom; pred-uvjet za CRUD/UGC bez curenja podataka. |
+| 4 | **CRUD versioning + audit-log + dry-run diff** | F4 (4E) | Najopasnija cigla (source-of-truth flip) dobiva undo/povijest/kočnicu → krivi edit nije katastrofa. |
+| 5 | **SRS dizajn-dok prije koda + FSRS** | F5 (5.0) | Najveći produkt-WOW dobiva ozbiljan dizajn i 2024+ algoritam, ne nabacani SM-2. |
+
+**Princip TVRDOG gatea:** gate je **blokada, ne upozorenje.** Ako prekršiš budžet/a11y/visual/RLS → CI je crven i ne ide u
+`main`. Meki prag (samo ispiše broj) = za godinu dana stranica trune a nitko ne zna kad se to dogodilo. Tvrdi = brutalan.
+
+**Trošak svega gore = 0 € softvera** (Lighthouse CI, axe-core, Playwright, GitHub Actions, Sentry free, Supabase branching — sve besplatno na ovoj skali).
+
+**Svjesno NE radimo (over-engineering za ovu skalu):** frontend framework · runtime build · microservices/Redis/queues ·
+zaseban product-analytics (Posthog) dok retencija ne postane pitanje · pune source-mape ako JS ostane čitljiv.
+
+---
+
+## 8. Reference
 - **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) — [DECISIONS.md](DECISIONS.md)
 - `sonnet.md` — vanjski hardening-checklist (tretiraj kao prijedloge za PROVJERU, ne istinu; #7 je bio netočan)
 - [BUGS.md](BUGS.md) BUG-012 (vježbe nikad u bazu), BUG-004 (cache bump)

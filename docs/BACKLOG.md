@@ -15,6 +15,14 @@ Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Fa
 - 💤 **CSS bundling** (23 `@import` → 1) + **auto version-bump** skripta — Faza 3.
 - 💤 **PWA maskable ikona** — odvojena ikona sa safe-zone paddingom (sonnet #15).
 
+### „Brutalan bar" — 5 nadogradnji (2026-06-29, korisnik: „ne zdrav nego jeben i brutalan"; FOUNDATION_PLAN §7)
+Iznad „zdravog" temelja — ono što ga čini elitnim. Sve u postojeće faze, trošak alata 0 €:
+- 🔥 **TVRDI CI gateovi (#1)** — Lighthouse budžeti (Perf≥0.95/A11y≥0.95/LCP≤2s/JS≤~200KB) + axe-core (0 serious) + Playwright `toHaveScreenshot` baseline. **Blokada, ne upozorenje.** [F1 1D, pojačano F3]. BUG-015 bi ovo ulovilo.
+- 🔥 **Sentry + release-tracking (#2)** — git-SHA release, consent-aware; kraj „sljepoće" na produkcijske greške. [F2 2E].
+- 🔥 **RLS + migracije na ephemeral Supabase branchu (#3)** — sigurnost dokazana testom, ne nadom; pred-uvjet CRUD/UGC. [F1 1E].
+- 💤 **CRUD versioning + audit-log + dry-run diff (#4)** — undo/povijest/kočnica za source-of-truth flip. [F4 4E].
+- 💤 **SRS dizajn-dok PRIJE koda + FSRS (#5)** — `docs/SRS_PLAN.md`; 2024+ algoritam, ne nabacani SM-2. [F5 5.0].
+
 ## ➖ Code-review nalazi (2026-06-18) — čišćenje, ništa kritično
 Pregled cijelog koda (korisnik tražio): stanje vrlo dobro, bez bugova. Sitni dug za počistiti kad zgodno:
 - ➖ **Mrtav `lessonCategoryMap`** (`js/config.js`): referencira `entrepreneurship` lekcije `second-exam-prep`/`final-exam-prep`
