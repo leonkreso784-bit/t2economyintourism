@@ -9,6 +9,10 @@ node_modules/
 .vscode/
 .idea/
 *.swp
+
+# Obsidian (vault config je strojno-specifičan; osobni vault folder nije dio projekta)
+.obsidian/
+Sokrat study/
 *.swo
 
 # OS
