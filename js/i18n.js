@@ -13,6 +13,7 @@
   'use strict';
 
   // ---- Rječnik (en je izvor; hr je prijevod). Ključevi su točkasti za grupiranje. ----
+  /** @type {Record<string, { en: string, hr: string }>} */
   const DICT = {
     // Study navigacija (tabovi) + home kartice
     'nav.home': { en: 'Home', hr: 'Početna' },
@@ -296,8 +297,10 @@
     try { const v = localStorage.getItem(LS_KEY); return (v === 'hr' || v === 'en') ? v : null; } catch (_) { return null; }
   }
   // Početni jezik = spremljeni izbor korisnika, inače 'en'.
+  /** @type {'en' | 'hr'} */
   let uiLang = readStored() || 'en';
 
+  /** @param {string} key @returns {string} */
   function t(key) {
     const e = DICT[key];
     if (!e) return key;                       // nepoznat ključ → vrati ključ (vidljivo u dev-u)
@@ -305,6 +308,7 @@
   }
 
   // Postavi tekst svih [data-i18n] / [data-i18n-placeholder] + osvježi labelu toggle-a.
+  /** @param {Document | Element} [root] */
   function applyTranslations(root) {
     const scope = root || document;
     scope.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -329,6 +333,7 @@
   }
 
   // Postavi jezik sučelja. persist=true → zapamti kao globalni izbor (default).
+  /** @param {string} lang @param {boolean} [persist] @returns {boolean} */
   function setUiLang(lang, persist) {
     const next = lang === 'hr' ? 'hr' : 'en';
     const changed = next !== uiLang;
@@ -345,6 +350,7 @@
 
   // Blagi prijedlog: ako korisnik NIJE eksplicitno birao jezik, a otvara HR program →
   // predloži hrvatsko sučelje (i zapamti). Ako je već birao, toggle je gospodar → ništa.
+  /** @param {string} [subjectId] */
   function suggestLangForSubject(subjectId) {
     if (readStored()) return;                 // korisnik je već odlučio → ne diraj
     if (subjectId && typeof SokratCatalog !== 'undefined') {

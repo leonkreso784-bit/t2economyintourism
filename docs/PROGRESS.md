@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 F1 brick 1B ✅: type-safety bez build-a (tsc --checkJs, pilot i18n.js)
+**Druga cigla F1 (FOUNDATION_PLAN 1B).** Type-check kao SAMO CI checker — nula runtime/build (browser i dalje čisti JS).
+- **Novo:** `tsconfig.json` (`checkJs`/`allowJs`/`noEmit`/**`strict`**/skipLibCheck; `include` SCOPED na pilot — raste
+  modul-po-modul) · `types/globals.d.ts` (ambient: `SokratCatalog` + `window.*` i18n/render globali) · `typescript`
+  devDep (v6.0.3, u `package-lock` za `npm ci`) · `npm run typecheck` skripta.
+- **Pilot tipiziran:** `js/i18n.js` — JSDoc `@type`/`@param` na `DICT`/`t`/`applyTranslations`/`setUiLang`/`suggestLangForSubject`
+  + `uiLang:'en'|'hr'`. **Samo komentari/anotacije → 0 runtime promjene** (i18n 8/8 Playwright nepromijenjen).
+- **Ožičeno u CI:** `ci.yml` korak „Type-check" poslije `test:unit`, prije Playwrighta.
+- **Provjereno lokalno:** validate OK · verify OK · unit 33/33 · **typecheck exit 0** · i18n spec 8/8. Cijeli CI lanac zelen.
+- **Obrazac dokazan** (ADR-014 t.2): novi modul → dodaj u `include` + globale u `globals.d.ts` + JSDoc. **DALJE F1:** 1C hardening, pa push grane za CI na GitHubu.
+
 ## 2026-06-29 — 🧱 F1 brick 1A.1/1A.2 ✅: CI/CD workflow (GitHub Actions)
 **Prva cigla temelja (FOUNDATION_PLAN F1).** Korisnik: „moze idemo" → kreće F1, CI/CD prvo.
 - **Novo:** `.github/workflows/ci.yml` — na svaki push/PR (sve grane): `npm ci` → `validate:content` → `verify` →

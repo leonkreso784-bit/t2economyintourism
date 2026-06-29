@@ -81,16 +81,16 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 **Cilj:** napravi tlo čvrstim i sigurnim PRIJE nego diramo jezgru. Sve cigle su niskorizične i neovisne o source-of-truth.
 **Ovisnosti:** nema (može odmah nakon F0).
 
-- **1A — CI/CD (GitHub Actions + Vercel preview):** *najvažnija cigla faze.*
+- **1A — CI/CD (GitHub Actions + Vercel preview):** *najvažnija cigla faze.* ✅ **workflow GOTOV + lokalno verificiran 2026-06-29** (push grane preostaje za GitHub-validaciju).
   - [1A.1] `.github/workflows/ci.yml` — na svaki push/PR pokreni `npm ci` → `validate:content` → `verify` → `test:unit` → `playwright`.
   - [1A.2] Playwright u CI-u (headless, instalacija browsera u workflowu); artefakti (screenshotovi) na fail.
   - [1A.3] Potvrdi da Vercel radi **preview-deploy po grani** (već uključeno) → dokumentiraj „grana → preview URL → provjera → prod" tok u TESTING.md.
   - **Done-kriterij:** push na granu = zelen/crven CI; nijedan merge u `main` ako je crveno.
-- **1B — Type-safety bez build-a (JSDoc + `tsc --checkJs`):**
-  - [1B.1] `tsconfig.json` (`checkJs:true`, `noEmit:true`, `allowJs:true`, `strict` postupno); `typescript` kao devDep.
-  - [1B.2] `// @ts-check` + JSDoc tipovi u **1 modulu kao pilot** (npr. `js/i18n.js` ili `js/content-loader.js`).
-  - [1B.3] `npm run typecheck` (= `tsc --noEmit`) + dodaj u CI (1A). **Nula runtime/build promjene** — `tsc` je samo checker.
-  - **Done-kriterij:** `typecheck` zelen na pilotu; širi se modul-po-modul u kasnijim fazama (ne sve odjednom).
+- **1B — Type-safety bez build-a (JSDoc + `tsc --checkJs`):** ✅ **GOTOVO 2026-06-29.**
+  - [1B.1] ✅ `tsconfig.json` (`checkJs`/`noEmit`/`allowJs`/**`strict`**; `include` SCOPED, raste modul-po-modul); `typescript` devDep v6.
+  - [1B.2] ✅ JSDoc tipovi — pilot `js/i18n.js` + `types/globals.d.ts` (ambient `SokratCatalog`/`window.*`). Samo komentari → 0 runtime.
+  - [1B.3] ✅ `npm run typecheck` (= `tsc --noEmit -p tsconfig.json`) + korak u CI (1A) poslije `test:unit`. `tsc` je samo checker.
+  - **Done-kriterij:** ✅ `typecheck` zelen na pilotu (exit 0); obrazac dokazan (novi modul → `include` + globali + JSDoc). Širi se kasnije.
 - **1C — Hardening v1 (sonnet.md, provjereno):** sve male, vidljive, 0-rizik. *Svaka je zasebna cigla + cache bump gdje treba.*
   - [1C.1] `vercel.json`: **makni** `X-XSS-Protection` (deprecated), **dodaj** `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
   - [1C.2] `js/analytics.js` `loadProgress()`: `progress = { ...defaultProgress, ...JSON.parse(saved) }` (otpornost na pokvaren/stari localStorage).

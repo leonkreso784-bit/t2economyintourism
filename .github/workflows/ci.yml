@@ -44,6 +44,10 @@ jobs:
       - name: Unit tests (exercises-core / acc-kernel / stat-parse / stat-lib)
         run: npm run test:unit
 
+      # Type-check bez build-a (tsc --checkJs, samo CI checker; scope raste modul-po-modul).
+      - name: Type-check (tsc --checkJs, pilot scope)
+        run: npm run typecheck
+
       # --- Playwright (responsive overflow + smoke + sidebar) ---
       - name: Install Playwright browser (chromium)
         run: npx playwright install --with-deps chromium
