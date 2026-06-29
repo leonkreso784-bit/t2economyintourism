@@ -13,6 +13,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Tehnička arhitektura, model podataka, razrada po koracima |
 | [BACKEND.md](BACKEND.md) | Backend plan: Vercel Functions + Supabase, API, migracija |
 | [ROADMAP.md](ROADMAP.md) | Milestones + status (done/next) |
+| [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **▶ AKTIVNO: platforma-first temelj** — misije/faze/reusable podsistemi, brick-liste, KAKO (ADR-013/014) |
 | [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn) |
 | [CONTENT_GUIDE.md](CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
 | [CONTENT_INTAKE.md](CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |

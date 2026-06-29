@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-29 — 🧱 STRATEŠKI ZAOKRET: PLATFORMA-FIRST (odluka + zapis) + i18n chrome (ne-deployan)
+**Glavni ishod sesije = ODLUKA + ZAPIS, ne kod.** Kroz dužu stratešku raspravu korisnik odlučio: **pauzirati dodavanje
+sadržaja** (HRV long-tail, prijevodi, 3. god) i izgraditi **profesionalan, reliable, reusable temelj** prije rasta.
+- **Razrada (vidi `docs/FOUNDATION_PLAN.md`):** reusable podsistemi S1–S6 (ContentRepository, čisti JSON format⟂vježbe=JS moduli,
+  AppState, Web Components, i18n, Auth/RLS) + faze F0→F6. Ključni uvid: **najveći reusable komad nije CRUD nego format sadržaja
+  (podatak≠ponašanje) + ContentRepository šav** — CRUD onda sjedi na vrhu i može kasno. „Puno bolje opcije" dodane: **CI/CD gate
+  (GitHub Actions + Vercel preview), type-check bez build-a (JSDoc+tsc), Web Components (light-DOM), error monitoring, SRS (spaced
+  repetition) kao produkt-WOW.** CRUD=custom (NE CMS, korisnikova odluka); vanilla/no-build ostaje.
+- **Zapisano:** `docs/FOUNDATION_PLAN.md` (nov, detaljan) · **ADR-013** (content arhitektura) + **ADR-014** (eng. standardi) u DECISIONS ·
+  ROADMAP §STRATEŠKI ZAOKRET + §B preuređen · README index · BACKLOG (hardening v1 + offline-feature + sonnet.md provjereno) ·
+  CLAUDE.md §DALJE/§Ključne odluke/docs · memorija `foundation-pivot` + MEMORY.md.
+- **`sonnet.md` review (raspravljen):** kompetentan ali NE u potpunosti verificiran — **#7 `display=swap` NETOČAN (već postoji `index.html:51`)**,
+  #4 `lessonCategoryMap` „nije korišten" netočno (jest, `navigation.js:545`; mrtav je samo entry). Pouka: grep/read za SVAKI claim. „🔴 ozbiljno"
+  precijenjeno (CSP/DOMPurify realni TEK uz UGC). Realno do-now: headeri, „400+", offline copy, mrtav kod → „hardening v1" u BACKLOG/F1.
+- **i18n chrome (long-tail, NAPRAVLJEN, NE-DEPLOYAN):** prije zaokreta prevođen UI chrome (study/lessons breadcrumb+toastovi, progress/analytics
+  reset+toastovi, **profil** cijeli, **auth modal** + statusi, cloud-sync „last synced"). `js/i18n.js` (+~70 ključeva: msg.*/profile.*/auth.*),
+  `navigation.js`/`analytics.js`/`auth.js`/`profile.js`/`cloud-sync.js` + `index.html` profile h1. **Blind-map NAMJERNO vraćen** (korisnik: karta je dio
+  predmeta geografije → prevodi se s `geography-hr`, ne globalnim toggleom). Sintaksa svih JS provjerena (`node --check`). **Commitano LOKALNO (F0.4);
+  treba cache-bump + deploy uz Fazu 1.**
+- Status: ODLUKA fiksirana, sve zapisano, spreman za compact. **DALJE (poslije compacta): Faza 1 — CI/CD + type-check + hardening v1.**
+
 ## 2026-06-28 — BUG-015: landing nav responsivnost na mobitelu (🌐 toggle prepunio nav)
 Korisnik prijavio (screenshot): nakon dodavanja 🌐 jezik-toggle-a, na mobitelu se primarni CTA „Start studying"/„Počni učiti" **reže**
 („Start studyin"/„Poč uči"), a na tablet/HR širini se anchor-labeli lome u 2 reda.

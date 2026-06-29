@@ -2,7 +2,17 @@
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
-## 📍 AŽURNO (2026-06-28)
+## 🧱 STRATEŠKI ZAOKRET (2026-06-29) — PLATFORMA-FIRST
+**Korisnik odlučio:** staviti DODAVANJE SADRŽAJA na pauzu (na koliko god treba) i izgraditi **profesionalan, reliable,
+reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena", pripremljena za CRUD/UGC/AI-tutor/monetizaciju.
+Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)** +
+**ADR-013** (content arhitektura: podatak≠ponašanje + ContentRepository šav) + **ADR-014** (CI/CD-gated, type-check bez build-a,
+Web Components, monitoring) u [DECISIONS.md](DECISIONS.md). **Redoslijed faza:** F0 zapis → F1 reliability rails (CI/CD + tsc +
+hardening v1) → F2 reusable jezgra (JSON format → ContentRepository → AppState → Web Components → monitoring) → F3 performanse
+(Service Worker + bundling) → F4 custom Admin CRUD (source-of-truth flip) → F5 SRS → F6 pred-UGC sigurnost. **Sadržajne stavke
+ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.** [[foundation-pivot]]
+
+## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
 (prijevod na hrvatski) — **cigle 1–5c ✅ LIVE** (pilot Business Informatics HR + globalni 🌐 toggle za cijeli glavni tok; vidi §C + [HRV_PLAN.md](HRV_PLAN.md)).
 **✅ BUG-013 (flashcard) riješen + LIVE. ✅ Logo redizajn LIVE.** Sljedeće: long-tail i18n (profil/pravne) → prijevod ostalih predmeta.
@@ -21,10 +31,11 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
-**B) Nakon sadržaja — prioriteti (ovim redom):**
-1. **Admin CRUD** (B9/B10) — uređivanje sadržaja kroz sučelje bez deploya; baza postaje glavni izvor (normalizirani model iz [ARCHITECTURE.md](ARCHITECTURE.md)).
-2. **AI tutor** (Faza 1; „donesi svoj ključ" prvo — [VISION.md](VISION.md)).
-3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci, priprema za maturu (širenje izvan fakulteta).
+**B) Nakon sadržaja — prioriteti** *(2026-06-29: PREUREĐENO platforma-first zaokretom → vidi [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)):*
+1. **Admin CRUD** — sad **Faza 4** u FOUNDATION_PLAN-u (custom, NA čistom content-sloju S1/S2; source-of-truth flip; ADR-013). Ne radi se dok F1–F2 ne stoje.
+2. **AI tutor** — zaseban produkt-trk, neovisan o source-of-truth; bilo kad nakon jezgre (F2). „Donesi svoj ključ" prvo ([VISION.md](VISION.md)).
+3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci (širenje izvan fakulteta).
+4. **(NOVO) Spaced Repetition (SRS)** — Faza 5; pravi pamet-algoritam učenja, najveći produkt-WOW, reusable preko svih predmeta.
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug + logo + monetizacija:**
 - **Logo ✅ LIVE (deployano 2026-06-28, `19f07db`):** `logo.png` (raster + crop-hak) **vektoriziran → `assets/logo.svg`**

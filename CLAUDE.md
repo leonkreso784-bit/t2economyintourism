@@ -290,7 +290,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **✅ te2 DEPLOYAN (2026-06-12, `35d8a70..ca06158`):** restruktura + rebuild + Learn — LIVE na sokratstudy.com (cache `20260639`).
 - **Šira odluka (2026-06-05):** sadržaj-prvo (1.+2. god) PA **Blok B** (read-path ✅ aktivan; admin CRUD kasnije). Kvantitativni
   (Math/Micro/Macro/Stat) preko **KaTeX** (ADR-009, gotov), Math zadnja.
-- **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]):** **A)** ✅ **sadržaj 1. god GOTOV**
+- **🧱 STRATEŠKI ZAOKRET — PLATFORMA-FIRST (korisnik 2026-06-29; GLAVNI AKTIVNI SMJER; detalji `docs/FOUNDATION_PLAN.md`):**
+  Sadržaj (HRV long-tail, prijevodi, 3. god) **PAUZIRAN** dok se ne izgradi profesionalan, reliable, reusable temelj.
+  Princip: **malo→veliko, jedno po jedno, svaka cigla testabilna/reverzibilna/reusable** (uzor = exercises engine).
+  **Faze (redom):** F0 zapis ✅ → **F1 reliability rails** (CI/CD GitHub Actions + Vercel preview · type-check JSDoc+`tsc` bez build-a ·
+  hardening v1 iz `sonnet.md`) → **F2 reusable jezgra** (S2 čisti JSON format ⟂ vježbe=JS moduli → S1 ContentRepository šav →
+  S3 AppState → S4 UI-primitivi=Web Components → error monitoring) → **F3 performanse** (Service Worker=pravi offline + CSS bundling +
+  auto version-bump) → **F4 custom Admin CRUD** (source-of-truth flip: baza autoritativna, datoteke=export; dual-read, predmet-po-predmet) →
+  **F5 SRS** (spaced repetition) → **F6 pred-UGC sigurnost** (CSP/DOMPurify/RLS/sandbox). **ADR-013** (content arhitektura) + **ADR-014**
+  (engineering standardi). Vježbe NIKAD u bazu (BUG-012). CRUD=custom, NE CMS. ⚠️ Ne-deployani i18n chrome (profil/auth/progress/study)
+  čeka commit+deploy uz F1 (treba cache-bump). [[foundation-pivot]]
+- **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
   **C) strateški:** ✅ **LOGO redizajniran + LIVE (2026-06-28, `19f07db`)** — glatki vektorski Sokrat, glava ispunjava krug (vidi §Ključne odluke).
@@ -310,6 +320,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **(Napomena: PWA instalirana app drži staru ikonu dok se ne reinstalira — server ima novu; nije bug.)**
 
 ## Ključne odluke (detalji: `docs/DECISIONS.md`)
+- **ADR-013 (2026-06-29): content arhitektura = podatak≠ponašanje.** Study sadržaj → čisti **JSON**; vježbe/generatori → zasebni **JS moduli**.
+  **`ContentRepository` šav** (FileRepo/SupabaseRepo iza istog sučelja). Cilj: **baza autoritativna, datoteke=generirani export**; flip u Fazi 4
+  (Admin CRUD, **custom NE CMS**), predmet-po-predmet uz dual-read. Vidi `docs/FOUNDATION_PLAN.md`. [[foundation-pivot]]
+- **ADR-014 (2026-06-29): engineering standardi temelja.** CI/CD gate (GitHub Actions + Vercel preview) · **type-check bez build-a** (JSDoc+`tsc --checkJs`,
+  samo CI checker, modul-po-modul) · **Web Components** (light-DOM) za reusable UI umjesto ad-hoc `innerHTML` · error monitoring. Vanilla/no-build etos ostaje.
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
 - ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).
@@ -330,6 +345,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (izgledali „kao pingvin"/skicirano) — kvaliteta dolazi iz vektorizacije ORIGINALA, ne ručnog crtanja.** Vizualni stil: **„čisto i bogato", dark.**
 
 ## Dokumentacija (`docs/`)
+**`FOUNDATION_PLAN`** (▶ AKTIVNO: platforma-first temelj — misije/faze/reusable podsistemi S1–S6, brick-liste, KAKO; ADR-013/014) ·
 `README` (index) · `PRD` · `VISION` (dugoročna full-stack vizija + gating-odluke) · `ARCHITECTURE` ·
 `BACKEND` · `ROADMAP` · `CONTENT_SCHEMA` · `CONTENT_GUIDE` · `CONTENT_INTAKE` · `TESTING` ·
 `CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG` ·

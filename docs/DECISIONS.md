@@ -4,6 +4,45 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-014 — Engineering standardi temelja: CI/CD-gated, type-check bez build-a, Web Components, monitoring
+**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (Faze 1–2)
+**Kontekst:** „Platforma-first" odluka (vidi ADR-013) traži da projekt postane **profesionalniji, reliable, WOW** —
+ne samo „radi". Trenutno: testovi se pokreću RUČNO, nema CI-a, nema type-provjere, UI se gradi ad-hoc `innerHTML`
+stringovima, nema error-monitoringa. Sve to skalira loše kako dolaze CRUD/UGC/tutor.
+**Odluka:** Četiri presjećna standarda, uvode se rano (Faza 1–2), **bez napuštanja „vanilla/no-build" etosa:**
+1. **CI/CD gate (GitHub Actions + Vercel preview deploys):** svaki push pokreće `validate:content`+`verify`+`test:unit`+
+   Playwright; crveno = ne ide u `main`. Vercel preview po grani = pravi staging prije produkcije.
+2. **Type-safety bez build-a:** JSDoc tipovi + `// @ts-check` + `tsc --checkJs --noEmit` **samo kao CI checker**
+   (nula runtime/build promjene; browser i dalje vrti čisti JS). Uvodi se **modul-po-modul**, ne globalni strict odmah.
+3. **Reusable UI = Web Components** (custom elements, **light-DOM** bez Shadow DOM) umjesto ad-hoc `innerHTML` —
+   native, framework-free, riješi i `innerHTML`/XSS brigu kontroliranim renderom. Uvodi se inkrementalno (toast → modal → …).
+4. **Error monitoring** (Sentry free ILI mini-logger → Supabase) — app zna kad pukne kod korisnika.
+**Posljedice:** Temelj prestaje biti samo „CRUD-ready" i postaje **CI-gated, tipiziran, komponentno-reusable, monitoran.**
+`tsconfig.json`/`.github/workflows/ci.yml`/`typescript` devDep su jedini novi alati — svi su dev/CI, ne runtime.
+Odbačeno: frontend framework, runtime build-step, CMS (vidi ADR-013). [[foundation-pivot]]
+
+---
+
+## ADR-013 — Content arhitektura: podatak ≠ ponašanje + ContentRepository šav (source-of-truth)
+**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (Faza 2, flip u Faza 4)
+**Kontekst:** Sadržaj je trenutno **`.js` kod** (`window.X = {...}`, ponekad s funkcijama). To ne skalira: ne validira se
+kao podatak, ne ide čisto u bazu/CMS, i izvor je BUG-012 (vježbe s `generate()`). Admin CRUD bi ovo obrnuo
+(baza = istina), ali to je velika odluka koju treba donijeti SVJESNO, ne usput. Korisnik bira **platforma-first**.
+**Odluka:**
+- **Razdvoji podatak od ponašanja:** study sadržaj → **čisti JSON** (portabilan, validabilan); vježbe/generatori →
+  **zasebni JS moduli** (kod, ostaju datoteke). To je najveći reusable potez i preduvjet svega.
+- **Uvedi `ContentRepository` šav** (S1): jedno sučelje `getSubject/getLesson/listSubjects…` neovisno o izvoru;
+  implementacije `FileRepo`(JSON) + `SupabaseRepo` iza istog sučelja, fallback ostaje. Prebacivanje izvora = config.
+- **Ciljani model:** **baza = autoritativna u runtimeu, datoteke = generirani export** (commitane zbog gita/offline-a,
+  više se NE uređuju ručno). Flip se izvodi u Fazi 4 (Admin CRUD), **jedan predmet odjednom uz dual-read** (loader
+  čita i staro `.js` i novo `.json`) → nikad „big bang".
+- **Admin CRUD = CUSTOM** (korisnik: „radio bih CRUD normalno"), NE CMS — ali tek nakon što su S1/S2 čisti, pa je build malen.
+**Posljedice:** Svaki budući sadržaj (HR ×16, 3. god, UGC) rađa se u CRUD-spremnom formatu → nema velike kasnije
+migracije. Vježbe ostaju izuzetak (BUG-012) — CRUD ih ne uređuje. Datoteke + git-povijest + offline fallback ostaju.
+Odbačeno: i18n-u-sadržaju (ADR-012), CMS (Decap/Directus/Sanity — premda S1/S2 ostavljaju tu opciju otvorenom). [[foundation-pivot]]
+
+---
+
 ## ADR-012 — HRV program: KLON programa + globalni UI toggle (sadržaj ≠ sučelje)
 **Datum:** 2026-06-28 · **Status:** ✅ implementirano + LIVE (cigle 1–5c, `320d413..4b795c8`)
 **Kontekst:** Treba hrvatska verzija platforme („Menadžment u Hotelijerstvu"). Dvije razdvojene potrebe:
