@@ -22,7 +22,10 @@ Gate: verify 0/0, typecheck 0, **puni responsive smoke 89 pass / 0 fail (subject
 ne baca). Sentry **Loader Script** (URL iz DSN ključa) → nema fiksne verzije → nema 404. Consent-gated: `consent.js applyConsent` → `enable()/disable()`
 (isti gate kao GA, `sendDefaultPii:false`). Cache `?v=20260699` (monitoring.js + consent.js na svih 5 stranica). Test `tests/monitoring.spec.js` 8/8
 (API + no-op bez DSN + consent-gate + nikad ne baca + „Accept" ožiči). Regresija: legal+landing 32/32, verify 0/0.
-**⏳ KORISNIK: kreiraj free Sentry projekt → zalijepi DSN u `js/monitoring.js` → zajedno potvrdimo da test `throw` stigne na dashboard.**
+**✅ LOADER UPISAN (korisnik dostavio):** `https://js-de.sentry-cdn.com/59736986…min.js` (EU/DE regija; ključ javan kao GA ID). Kod prešao s DSN-parsiranja
+na direktni Loader URL (`isConfigured()`/`SENTRY_LOADER_URL`; `sentryOnLoad`→`init({release,sendDefaultPii:false})`). Test prepisan s `page.route` stubom (offline,
+12/12: gate, init(release), proslijeđena greška). **⏳ PRIJE/UZ DEPLOY F2:** (1) GDPR disclosure u `privacy.html`+banner (Sentry/EU); (2) živa provjera nakon deploya
+(`myUndefinedFunction()` u konzoli → stigne na dashboard s releaseom); (3) mail-alert prag.
 **DALJE: 2A S2 JSON** (predmet-po-predmet, dual-read) — najveći dio Faze 2.
 
 ## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)

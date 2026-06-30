@@ -153,9 +153,11 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [2E.2] ✅ Release-tracking: `APP_RELEASE = 'sokrat-study@<token>'` konstanta (kasnije iz auto-version-bump skripte, 3C).
   - [2E.3] ✅ **GDPR/consent-aware:** `consent.js applyConsent(granted)` → `SokratMonitor.enable()/disable()` (ISTI gate kao GA; `sendDefaultPii:false`).
     Učita se na svih 5 stranica gate, no-op na pravnima (guard `if(window.SokratMonitor)`). **Alerting** = Sentry dashboard mail-prag (postavlja korisnik uz DSN).
-  - **⏳ PREOSTAJE (treba korisnikov Sentry račun):** (1) korisnik kreira free Sentry projekt → zalijepi **DSN** u `js/monitoring.js` (`SENTRY_DSN`);
-    (2) zajedno potvrdimo da namjerni `throw` stigne na dashboard s točnim releaseom (Done-kriterij); (3) postavi mail-alert prag. Cache `?v=20260699` (5 stranica + monitoring.js).
-  - **Done-kriterij:** namjerni `throw` u stagingu stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina. **(čeka DSN)**
+  - ✅ **LOADER UPISAN (2026-06-30):** `SENTRY_LOADER_URL = 'https://js-de.sentry-cdn.com/59736986…min.js'` (EU/DE regija — GDPR plus; ključ u URL-u JAVAN, kao GA ID).
+    Test `tests/monitoring.spec.js` (loader STUBBAN preko `page.route` → offline): 12/12 — pristanak gate, init(release), proslijeđena greška, nikad ne baca.
+  - **⏳ PREOSTAJE prije/uz deploy F2:** (1) **GDPR disclosure** — `privacy.html` + cookie-banner tekst spomenuti error-monitoring (Sentry, EU); (2) nakon deploya **živa provjera**:
+    u konzoli na produkciji `myUndefinedFunction()` → potvrdi da greška stigne na Sentry dashboard s releaseom `sokrat-study@…` (Done-kriterij); (3) postavi mail-alert prag na dashboardu.
+  - **Done-kriterij:** namjerni `throw` na produkciji stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina. **(čeka deploy + živu provjeru)**
   - *(Fallback ako Sentry tier zasmeta: mini-logger `window.onerror`→Supabase tablica iza istog `captureException` sučelja — zamjenjivo.)*
 **Gate faze:** CI/typecheck zeleni, sav sadržaj kroz Repo, 0 regresija (Playwright pun + ručni smoke svih modova × par predmeta).
 

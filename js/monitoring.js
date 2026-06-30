@@ -4,10 +4,10 @@
  * Tehnika: Sentry (besplatan tier), učitan SAMO nakon pristanka na kolačiće (kao GA u consent.js),
  *          NULA PII-a, i SIGURAN NO-OP dok DSN nije upisan (handleri postoje, ništa se ne šalje/učita).
  *
- * ⚙️ SETUP (jedini korak): zalijepi svoj Sentry DSN niže (izgleda kao
- *    "https://<key>@<org>.ingest.sentry.io/<projectId>"). Do tada je sve no-op.
- *    Koristi se Sentry "Loader Script" (URL se gradi iz ključa u DSN-u) → NEMA fiksne verzije
- *    SDK-a → nema rizika od 404; loader sam dovuče najnoviji SDK i pušta queue.
+ * ⚙️ SETUP (jedini korak): zalijepi svoj Sentry "Loader Script" URL niže (izgleda kao
+ *    "https://js-de.sentry-cdn.com/<key>.min.js"). Do tada je sve no-op. Loader sam dovuče
+ *    SDK i pušta queue → NEMA fiksne verzije → nema rizika od 404. Ključ u URL-u je JAVAN
+ *    (ide u HTML, kao GA ID); DSN je „zapečen" u projektu na Sentryjevoj strani.
  *
  * Veza s consent.js: applyConsent(true) → SokratMonitor.enable(); applyConsent(false) → disable().
  * Globalni hvatači (error / unhandledrejection) instaliraju se ODMAH, ali prosljeđuju TEK kad
@@ -16,8 +16,8 @@
 (function () {
     'use strict';
 
-    // 👉 ZALIJEPI DSN OVDJE (prazno = monitoring isključen, sve no-op):
-    var SENTRY_DSN = '';
+    // 👉 SENTRY LOADER URL (prazno = monitoring isključen, sve no-op):
+    var SENTRY_LOADER_URL = 'https://js-de.sentry-cdn.com/59736986f036683cf28bd8ca05d57840.min.js';
 
     // Release oznaka — bumpaj pri deployu da znaš NA KOJOJ verziji je greška.
     // (Bez build-koraka: ručna konstanta; kasnije može iz auto-version-bump skripte, F3 3C.)
@@ -28,11 +28,9 @@
     var loading = false;
     var buffer = [];         // greške uhvaćene prije nego je SDK spreman (flush na ready, cap 20)
 
-    function _publicKey() {
-        var m = String(SENTRY_DSN).match(/^https:\/\/([0-9a-f]+)@/i);
-        return m ? m[1] : null;
+    function isConfigured() {
+        return /^https:\/\/js[\w-]*\.sentry-cdn\.com\/[0-9a-f]+\.min\.js$/i.test(SENTRY_LOADER_URL);
     }
-    function hasDsn() { return !!_publicKey() && /@[^/]+\/\d+/.test(SENTRY_DSN); }
 
     function _flush() {
         buffer.forEach(function (it) { _send(it.err, it.ctx); });
@@ -40,27 +38,25 @@
     }
 
     function _loadSentry() {
-        if (loading || sentryReady || !hasDsn()) return;
+        if (loading || sentryReady || !isConfigured()) return;
         loading = true;
+        // Konfiguracija PRIJE loadera: loader pozove sentryOnLoad kad je SDK spreman; ondje
+        // pozovemo init s našim releaseom (DSN je već zapečen u loaderu → ne treba ga ovdje).
+        window.sentryOnLoad = function () {
+            try {
+                if (window.Sentry && window.Sentry.init) {
+                    window.Sentry.init({ release: APP_RELEASE, sendDefaultPii: false });
+                }
+            } catch (e) { /* ignore */ }
+        };
         var s = document.createElement('script');
-        s.src = 'https://js.sentry-cdn.com/' + _publicKey() + '.min.js'; // Loader Script (bez verzije)
+        s.src = SENTRY_LOADER_URL; // Loader Script (bez verzije; EU/DE regija)
         s.crossOrigin = 'anonymous';
         s.async = true;
         s.onload = function () {
             if (!window.Sentry) { loading = false; return; }
-            try {
-                // Loader auto-inicijalizira s DSN-om; dodaj release + privacy opcije.
-                window.Sentry.onLoad(function () {
-                    try {
-                        window.Sentry.init({
-                            release: APP_RELEASE,
-                            sendDefaultPii: false
-                        });
-                    } catch (e) { /* ignore */ }
-                });
-                sentryReady = true;
-                _flush();
-            } catch (e) { loading = false; }
+            sentryReady = true;
+            _flush();
         };
         s.onerror = function () { loading = false; /* CDN padne → ostani no-op */ };
         document.head.appendChild(s);
@@ -75,8 +71,8 @@
     }
 
     function captureException(err, ctx) {
-        if (!enabled) return;                         // bez pristanka → odbaci
-        if (!hasDsn()) return;                         // bez DSN-a → no-op
+        if (!enabled) return;                          // bez pristanka → odbaci
+        if (!isConfigured()) return;                   // bez loader URL-a → no-op
         if (sentryReady) { _send(err, ctx); return; }
         if (buffer.length < 20) buffer.push({ err: err, ctx: ctx });
         _loadSentry();
@@ -94,13 +90,13 @@
 
     function enable() {
         enabled = true;
-        if (hasDsn()) _loadSentry();
-        else console.info('[monitor] Pristanak dan, ali Sentry DSN nije konfiguriran — monitoring je no-op.');
+        if (isConfigured()) _loadSentry();
+        else console.info('[monitor] Pristanak dan, ali Sentry loader nije konfiguriran — monitoring je no-op.');
     }
     function disable() { enabled = false; }
 
     function status() {
-        return { hasDsn: hasDsn(), enabled: enabled, sentryReady: sentryReady, release: APP_RELEASE, buffered: buffer.length };
+        return { configured: isConfigured(), enabled: enabled, sentryReady: sentryReady, release: APP_RELEASE, buffered: buffer.length };
     }
 
     window.SokratMonitor = {

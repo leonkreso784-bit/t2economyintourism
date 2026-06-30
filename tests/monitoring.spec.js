@@ -1,58 +1,84 @@
-// SokratMonitor (Faza 2, cigla 2E): error monitoring, consent-gated, SAFE NO-OP bez DSN-a.
-// Dokazuje: postoji API · prije pristanka odbacuje · pristanak ga uključi · bez DSN-a ništa
-// se ne učita/šalje · NIKAD ne baca · consent.js "Accept" ga ožiči.
+// SokratMonitor (Faza 2, cigla 2E): error monitoring, consent-gated.
+// Loader (sentry-cdn) je STUBBAN preko page.route → testovi su offline-deterministički
+// (NE pogađaju pravi Sentry). Dokazuje: API · consent gate (ne učita prije pristanka) ·
+// nakon pristanka loader se ubaci + init(release) + greška se proslijedi · NIKAD ne baca.
 const { test, expect } = require('@playwright/test');
 
-test('SokratMonitor: API + no-DSN no-op + consent gate + never throws', async ({ page }) => {
+// Fake "loader" koji oponaša Sentry stub: definira Sentry.init/captureException i pozove sentryOnLoad.
+const FAKE_SENTRY = `
+  window.Sentry = window.Sentry || {};
+  window.Sentry.init = function (opts) { window.__sentryInit = opts || {}; };
+  window.Sentry.captureException = function (e) { (window.__sentryEvents = window.__sentryEvents || []).push(String(e && e.message || e)); };
+  if (typeof window.sentryOnLoad === 'function') window.sentryOnLoad();
+`;
+
+async function stubSentry(page) {
+  await page.route('https://js-de.sentry-cdn.com/**', (route) =>
+    route.fulfill({ status: 200, contentType: 'application/javascript', body: FAKE_SENTRY }));
+  await page.addInitScript(() => { try { localStorage.removeItem('sokrat-cookie-consent'); } catch (e) {} });
+}
+
+test('SokratMonitor: configured + consent gate (no load before consent) + never throws', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
-
-  await page.addInitScript(() => { try { localStorage.removeItem('sokrat-cookie-consent'); } catch (e) {} });
+  await stubSentry(page);
   await page.goto('/');
   await page.waitForFunction(() => window.SokratMonitor);
 
-  // API prisutan + bez DSN-a (nije konfiguriran)
   const s0 = await page.evaluate(() => ({
     api: ['captureException', 'enable', 'disable', 'status'].every((m) => typeof window.SokratMonitor[m] === 'function'),
     st: window.SokratMonitor.status(),
   }));
   expect(s0.api).toBe(true);
-  expect(s0.st.hasDsn).toBe(false);
+  expect(s0.st.configured).toBe(true);            // loader URL je upisan
   expect(s0.st.release).toContain('sokrat-study@');
 
-  // captureException PRIJE pristanka → odbaci, ne baca, ništa ne buffera
+  // PRIJE pristanka: captureException ne smije učitati Sentry ni išta poslati
   const r1 = await page.evaluate(() => {
-    window.SokratMonitor.captureException(new Error('test-precon'));
-    return window.SokratMonitor.status();
+    window.SokratMonitor.captureException(new Error('pre-consent'));
+    return {
+      st: window.SokratMonitor.status(),
+      scripts: Array.from(document.scripts).filter((s) => /sentry/i.test(s.src)).length,
+      events: window.__sentryEvents || null,
+    };
   });
-  expect(r1.enabled).toBe(false);
-  expect(r1.buffered).toBe(0);
+  expect(r1.st.enabled).toBe(false);
+  expect(r1.scripts).toBe(0);                     // loader NIJE ubačen
+  expect(r1.events).toBeNull();                   // ništa poslano
+  expect(errors).toEqual([]);
+});
 
-  // pristanak → enable(); bez DSN-a i dalje no-op (ništa se ne učita/buffera)
-  const r2 = await page.evaluate(() => {
+test('SokratMonitor: after consent → loader injected + init(release) + error forwarded', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
+  await stubSentry(page);
+  await page.goto('/');
+  await page.waitForFunction(() => window.SokratMonitor);
+
+  await page.evaluate(() => {
     window.SokratMonitor.enable();
-    window.SokratMonitor.captureException(new Error('test-postcon'));
-    return window.SokratMonitor.status();
+    window.SokratMonitor.captureException(new Error('boom-after-consent'));
   });
-  expect(r2.enabled).toBe(true);
-  expect(r2.hasDsn).toBe(false);
-  expect(r2.sentryReady).toBe(false);
-  expect(r2.buffered).toBe(0);
+  await page.waitForFunction(() => window.SokratMonitor.status().sentryReady, { timeout: 8000 });
 
-  // nijedna Sentry skripta nije ubačena (jer nema DSN-a)
-  const sentryScripts = await page.evaluate(() =>
-    Array.from(document.scripts).filter((s) => /sentry/i.test(s.src)).length);
-  expect(sentryScripts).toBe(0);
-
+  const res = await page.evaluate(() => ({
+    release: (window.__sentryInit || {}).release,
+    pii: (window.__sentryInit || {}).sendDefaultPii,
+    events: window.__sentryEvents || [],
+  }));
+  expect(res.release).toBe('sokrat-study@20260699'); // release proslijeđen u init
+  expect(res.pii).toBe(false);                        // privacy: bez PII
+  expect(res.events).toContain('boom-after-consent'); // bufferirana greška flushana
   expect(errors).toEqual([]);
 });
 
 test('consent "Accept" wires SokratMonitor.enable (end-to-end)', async ({ page }) => {
-  await page.addInitScript(() => { try { localStorage.removeItem('sokrat-cookie-consent'); } catch (e) {} });
+  await stubSentry(page);
   await page.goto('/');
   await page.waitForSelector('#cookieAccept', { timeout: 8000 });
   await page.click('#cookieAccept');
+  await page.waitForFunction(() => window.SokratMonitor.status().enabled === true);
   const st = await page.evaluate(() => window.SokratMonitor.status());
-  expect(st.enabled).toBe(true);  // applyConsent(true) → SokratMonitor.enable()
-  expect(st.hasDsn).toBe(false);  // i dalje no-op dok nema DSN-a
+  expect(st.enabled).toBe(true);                  // applyConsent(true) → enable()
+  expect(st.configured).toBe(true);
 });
