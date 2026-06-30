@@ -134,7 +134,10 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     (objedini `loadSubjectContent`+`getSubjectData` u jedan async poziv) + `isLoaded(id)`. **NULA promjene ponašanja** (DB↔datoteka fallback već u
     loaderu). Test `tests/content-repo.spec.js` dokazuje EKVIVALENCIJU (`loadLesson === getSubjectData`, identična referenca; 8/8 × 4 profila). Cache `?v=20260699`.
   - [2B.2] Implementacije: `FileRepo` (JSON datoteke) + `SupabaseRepo` (već postoji read-path) iza istog sučelja; flag bira izvor; fallback ostaje. *(većinom već zadovoljeno UNUTAR `loadSubjectContent` — formalizirati kad 2A donese `.json`.)*
-  - [2B.3] `content-loader.js` postaje tanak adapter na Repo. **Svi pozivi sadržaja idu kroz Repo.** *(navigation.js → `SokratContent.loadLesson`.)*
+  - [2B.3] ✅ **GOTOVO (2026-06-30, grana `foundation/f2`):** `navigation.js:initStudyPage` više ne radi ručni `loadSubjectContent`+`getSubjectData`
+    nego **`await SokratContent.loadLesson(subjectId, lessonId)`** (jedan poziv). Fallback na stari dvokorak ako Repo nije prisutan → 0 regresije.
+    `navigation.js?v=20260699`. Gate: verify 0/0, typecheck 0, content-repo 8/8, lazy-load 4/4, **puni responsive smoke 89 pass / 0 fail (subjects=18, problems=0)**.
+    *(Preostaje za pun „svi pozivi kroz Repo": ostali potrošači `getSubjectData`/`loadSubjectContent` — migrirati postupno kad zatreba.)*
   - **Done-kriterij:** prebacivanje datoteka↔baza = config; CRUD i SW kasnije koriste isti Repo.
 - **2C — AppState (S3):** *oprezno, inkrementalno — NE sve globale odjednom.*
   - [2C.1] Uvedi `AppState = { current:{}, study:{}, quiz:{}, ... }` namespace.

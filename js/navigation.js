@@ -533,22 +533,25 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
         return;
     }
 
-    // Lazy-load: dohvati sadržaj predmeta TEK sad (ako već nije učitan). Catalog zna
-    // koje datoteke (subject.content.scripts). Šav prema backendu (kasnije fetch /api).
-    if (typeof loadSubjectContent === 'function') {
-        showStudyLoading(true);
-        try {
-            await loadSubjectContent(subjectId);
-        } catch (e) {
-            showStudyLoading(false);
-            console.error(e);
-            if (typeof showToast === 'function') showToast(window.t ? t('toast.loadError') : 'Could not load this subject. Please try again.');
-            return;
+    // Lazy-load kroz ContentRepository (S1, Faza 2): jedan poziv `loadLesson` objedini
+    // učitavanje (catalog zna koje datoteke) + resolve u podatkovni objekt. Repo je šav
+    // prema backendu/CRUD-u. FALLBACK na stari dvokorak ako Repo nije prisutan (skripta padne).
+    let fullData = {};
+    showStudyLoading(true);
+    try {
+        if (typeof SokratContent !== 'undefined' && SokratContent.loadLesson) {
+            fullData = await SokratContent.loadLesson(subjectId, lessonId);
+        } else {
+            if (typeof loadSubjectContent === 'function') await loadSubjectContent(subjectId);
+            fullData = getSubjectData(subjectId, lessonId);
         }
+    } catch (e) {
         showStudyLoading(false);
+        console.error(e);
+        if (typeof showToast === 'function') showToast(window.t ? t('toast.loadError') : 'Could not load this subject. Please try again.');
+        return;
     }
-
-    let fullData = getSubjectData(subjectId, lessonId);
+    showStudyLoading(false);
 
     const subjectLessonMap = lessonCategoryMap[subjectId];
     if (subjectLessonMap && subjectLessonMap[lessonId]) {

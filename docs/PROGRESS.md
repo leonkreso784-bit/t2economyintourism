@@ -13,7 +13,11 @@ Live potvrđeno: `landing-stats.js`=5700, tokeni `?v=20260698`, CI zelen, RLS OK
 (`SokratCatalog` metapodaci + `loadSubjectContent` async + `getSubjectData` resolve) u jedno sučelje:
 `listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded`. **NULA promjene ponašanja** (DB↔datoteka fallback ostaje u loaderu).
 Test `tests/content-repo.spec.js` dokazuje EKVIVALENCIJU (`loadLesson` vrati IDENTIČNU referencu kao stari put; 8/8 × 4 profila).
-Gate: verify 0/0, content-repo 8/8, lazy-load 4/4 (učitavanje skripti netaknuto). Cache `?v=20260699`. **DALJE: 2B.2/2B.3** (navigation.js → Repo) PA Sentry (2E) PA S2 JSON.
+Gate: verify 0/0, content-repo 8/8, lazy-load 4/4 (učitavanje skripti netaknuto). Cache `?v=20260699`.
+**Cigla 2B.3 ✅ (prvi DODIR postojećeg koda):** `navigation.js:initStudyPage` → `await SokratContent.loadLesson(subjectId,lessonId)` umjesto
+ručnog `loadSubjectContent`+`getSubjectData` (fallback na stari dvokorak ako Repo nije prisutan → 0 regresije). `navigation.js?v=20260699`.
+Gate: verify 0/0, typecheck 0, **puni responsive smoke 89 pass / 0 fail (subjects=18, problems=0, errors=0)** + content-repo 8/8 + lazy-load 4/4.
+**DALJE (kad se korisnik vrati): 2E Sentry** (consent-gated, vidljivost grešaka prije S2 migracije) PA **2A S2 JSON** (predmet-po-predmet, dual-read).
 
 ## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)
 **Peta/zadnja cigla F1.** Provjerio cijenu branchinga PRVO: **Supabase branching traži Pro plan $25/mj** (org je `free`;
