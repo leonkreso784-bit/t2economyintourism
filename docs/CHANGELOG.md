@@ -5,7 +5,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧱 FAZA 1 — reliability rails ✅ GOTOVA + GITHUB-ZELENA (2026-06-30; grana `foundation/f1`, NIJE još na produkciji).**
+- **🧱 FAZA 1 — reliability rails ✅ GOTOVA + GITHUB-ZELENA + ✅ DEPLOYANA NA PRODUKCIJU (2026-06-30; ff-merge `c874627..69ce466`, uz izričito odobrenje; live potvrđeno: landing-stats=5700, tokeni `?v=20260698`).**
   Platforma-first temelj (FOUNDATION_PLAN). **CI/CD** (`.github/workflows/ci.yml`, GitHub Actions, 2 joba): `build` =
   npm ci→`validate:content`→`verify`→`test:unit`→`typecheck`→`test:rls`→Playwright; `lighthouse` = budžeti. TVRDI gate (crveno=ne u `main`).
   **Type-check bez build-a** (`tsconfig.json` strict, `include` scoped; `types/globals.d.ts`; pilot `js/i18n.js`; `npm run typecheck`; `typescript` devDep).
