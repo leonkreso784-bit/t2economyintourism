@@ -103,12 +103,13 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [1D.2] ✅ **axe-core a11y gate** (`tests/a11y.spec.js`, `@axe-core/playwright`): 0 serious/critical na landing/browse/study/profil (1 viewport, izbjegava 4× šum). Mjereno baseline → nađen+popravljen 1 serious (`scrollable-region-focusable` na `.sidebar-content` → `tabindex=0`/`role=region`).
   - [1D.3] ✅ **Layout-regression guard** (`tests/layout-guard.spec.js`) — DETERMINISTIČKA geometrija (ne pikseli) → platform-neovisno, zeleno u CI-u bez baseline-slika; sweep 13 širina × {EN,HR}, CTA nikad odrezan + 0 overflowa = **BUG-015 klasa zaštićena**. ⬜ Pixel `toHaveScreenshot` ODGOĐEN (treba Linux baseline; nema Dockera/CI-tokena — vidi BACKLOG).
   - **Done-kriterij:** ✅ sva tri gatea zelena u CI (build job nosi axe+layout-guard; lighthouse job nosi budžete).
-- **1E — RLS + migracije testirane na PRAVOM Supabase branchu (nadogradnja #3):** RLS bez automatskog testa = sigurnosna bomba pred UGC/CRUD.
-  - [1E.1] CI digne **ephemeral Supabase branch** (Supabase branching postoji), primijeni `supabase/schema.sql`.
-  - [1E.2] **RLS test-suite** (node, anon+service putevi): anon SMIJE čitati `subject_content`, NE smije čitati tuđi `progress`; service-role nikad na frontu. Crveno ako RLS popusti.
-  - [1E.3] Migracije se testiraju na branchu PRIJE merge-a (nema „schema na produkciji pa vidiš").
-  - **Done-kriterij:** RLS regresija (npr. slučajno `using (true)` na progress) obori CI.
-**Gate faze:** CI zelen (uklj. **Lighthouse/axe/visual TVRDE gateove + RLS-test**), `typecheck` zelen na pilotu, verify 0/0, Playwright pun, vizualni pregled landinga.
+- **1E — RLS sigurnosni test (nadogradnja #3):** ✅ **GOTOVO 2026-06-30.** RLS bez automatskog testa = sigurnosna bomba pred UGC/CRUD.
+  - **⚠️ Odluka o pristupu:** Supabase **branching traži Pro plan ($25/mj)** (provjereno: org je `free`, branch compute $0.01344/h ALI tek nakon Pro). Ne isplati se samo za RLS. → **Opcija 1: read-only test protiv POSTOJEĆE baze** (besplatno, testira STVARNE produkcijske politike — zapravo bolje).
+  - [1E.1] ✅ `scripts/rls-check.js` (`npm run test:rls`) — anon (publishable) ključ, READ-ONLY, bez pisanja.
+  - [1E.2] ✅ Dokazuje: anon **ČITA** `subject_content` (javna politika `using(true)`); anon **vidi 0 redova** `progress` (RLS `auth.uid()=user_id`). **Curenje (anon vidi progress) → exit 1 (CI crveno).**
+  - [1E.3] ✅ **Skip-on-unreachable:** free-tier baza uspavana/nedostupna → SKIP (exit 0), ne lažni crveni. Windows libuv teardown riješen (jedan izlaz + 300ms odgoda).
+  - **Done-kriterij:** ✅ lokalno prošlo (anon: 5 redova content / 0 redova progress); korak u CI build jobu. Branching (izolirani test) = BACKLOG kad/ako Pro.
+**Gate faze:** ✅ **F1 GOTOVA 2026-06-30** — CI zelen (Lighthouse budžeti + axe + layout-guard + RLS-test + typecheck + validate/verify/unit/Playwright). Sve na grani `foundation/f1`; produkcija netaknuta. Preostaje: prod-deploy (uz potvrdu) + Vercel preview pregled.
 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.

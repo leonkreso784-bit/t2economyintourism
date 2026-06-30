@@ -48,6 +48,11 @@ jobs:
       - name: Type-check (tsc --checkJs, pilot scope)
         run: npm run typecheck
 
+      # RLS sigurnosni gate (read-only, anon): anon čita javni sadržaj, NE vidi tuđi progress.
+      # Tvrdi gate na curenje; preskoči (zeleno) ako je free-tier baza uspavana/nedostupna.
+      - name: RLS security check (read-only)
+        run: npm run test:rls
+
       # --- Playwright (responsive overflow + smoke + sidebar) ---
       - name: Install Playwright browser (chromium)
         run: npx playwright install --with-deps chromium

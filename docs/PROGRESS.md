@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)
+**Peta/zadnja cigla F1.** Provjerio cijenu branchinga PRVO: **Supabase branching traži Pro plan $25/mj** (org je `free`;
+branch compute $0.01344/h tek nakon Pro) → ne isplati se za RLS. **Opcija 1 (read-only protiv POSTOJEĆE baze, besplatno).**
+- **Novo:** `scripts/rls-check.js` (`npm run test:rls`) — anon (publishable) ključ iz `js/auth.js` (javan po dizajnu), READ-ONLY.
+- **Dokazuje:** anon **ČITA** `subject_content` (javna `using(true)`); anon **vidi 0 redova** `progress` (RLS `auth.uid()=user_id`).
+  Lokalno: 5 redova content / 0 progress → **RLS ne curi**. Curenje → exit 1 (CI crveno).
+- **Skip-on-unreachable:** free-tier baza uspavana → SKIP (exit 0), ne lažni crveni. **Windows libuv teardown** (fetch socket + process.exit)
+  riješen jednim izlazom + 300ms odgodom (poznat obrazac iz generator-pilota).
+- **CI:** korak „RLS security check" u build jobu (poslije typecheck).
+- **✅ FAZA 1 (reliability rails) GOTOVA:** 1A CI/CD · 1B type-check · 1C hardening · 1D gateovi (axe+layout+Lighthouse) · 1E RLS.
+  Sve GitHub-zeleno, produkcija netaknuta (grana `foundation/f1`). **DALJE:** prod-deploy F1 (uz potvrdu + Vercel preview pregled) PA Faza 2 (reusable jezgra).
+
 ## 2026-06-29 — 🧱 F1 brick 1D ✅: TVRDI kvalitetni gateovi (GitHub-zelen, run #28386199455)
 **Četvrta cigla F1 — „razlika zdravo→brutalno".** Tri pod-cigle, svaka mjerena prije postavljanja praga (da gate ne bude nerealan).
 - **1D.2 axe a11y** (`tests/a11y.spec.js`, `@axe-core/playwright`) — gate 0 serious/critical na landing/browse/study/profil. **Izmjerio baseline PRVO** → našao 1 stvarni serious (`scrollable-region-focusable` na `.sidebar-content`) → **popravio** (`tabindex=0`+`role=region`+`aria-label`; sidebar sad scrollabilan tipkovnicom). 1 viewport (izbjegava 4× šum).

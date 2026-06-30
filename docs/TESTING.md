@@ -8,6 +8,7 @@
 - [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
 - [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`).
 - [ ] `npm run typecheck` → `tsc --checkJs` (bez build-a; scope u `tsconfig.json` raste modul-po-modul). 0 grešaka.
+- [ ] `npm run test:rls` → RLS sigurnosni test (read-only, anon): anon čita `subject_content`, NE vidi `progress`. Pad = curenje; SKIP ako je baza uspavana.
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
