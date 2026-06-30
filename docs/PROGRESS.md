@@ -17,7 +17,13 @@ Gate: verify 0/0, content-repo 8/8, lazy-load 4/4 (učitavanje skripti netaknuto
 **Cigla 2B.3 ✅ (prvi DODIR postojećeg koda):** `navigation.js:initStudyPage` → `await SokratContent.loadLesson(subjectId,lessonId)` umjesto
 ručnog `loadSubjectContent`+`getSubjectData` (fallback na stari dvokorak ako Repo nije prisutan → 0 regresije). `navigation.js?v=20260699`.
 Gate: verify 0/0, typecheck 0, **puni responsive smoke 89 pass / 0 fail (subjects=18, problems=0, errors=0)** + content-repo 8/8 + lazy-load 4/4.
-**DALJE (kad se korisnik vrati): 2E Sentry** (consent-gated, vidljivost grešaka prije S2 migracije) PA **2A S2 JSON** (predmet-po-predmet, dual-read).
+**Cigla 2E ✅ INFRA GOTOVA (čeka DSN):** `js/monitoring.js` → `window.SokratMonitor` (`captureException/enable/disable/status`). Globalni
+`error`+`unhandledrejection` hvatači instalirani odmah, prosljeđuju TEK na pristanak. **SIGURAN NO-OP bez DSN-a** (ništa se ne učita/šalje, NIKAD
+ne baca). Sentry **Loader Script** (URL iz DSN ključa) → nema fiksne verzije → nema 404. Consent-gated: `consent.js applyConsent` → `enable()/disable()`
+(isti gate kao GA, `sendDefaultPii:false`). Cache `?v=20260699` (monitoring.js + consent.js na svih 5 stranica). Test `tests/monitoring.spec.js` 8/8
+(API + no-op bez DSN + consent-gate + nikad ne baca + „Accept" ožiči). Regresija: legal+landing 32/32, verify 0/0.
+**⏳ KORISNIK: kreiraj free Sentry projekt → zalijepi DSN u `js/monitoring.js` → zajedno potvrdimo da test `throw` stigne na dashboard.**
+**DALJE: 2A S2 JSON** (predmet-po-predmet, dual-read) — najveći dio Faze 2.
 
 ## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)
 **Peta/zadnja cigla F1.** Provjerio cijenu branchinga PRVO: **Supabase branching traži Pro plan $25/mj** (org je `free`;

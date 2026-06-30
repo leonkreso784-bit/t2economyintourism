@@ -146,11 +146,16 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
   - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
   - [2D.3] Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
-- **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2 — „maglovita stavka" postaje konkretna):** trenutno: korisnik dobije bug → ti ne znaš dok ne javi (sljepoća). Brutalno =
-  - [2E.1] **Sentry** (free tier) preko CDN/`defer` (no-build OK): `window.onerror` + `unhandledrejection` + ručni `captureException` u catch-blokovima.
-  - [2E.2] **Release-tracking vezan na git SHA** (`?v=` token / build-id) → znaš na KOJOJ verziji je bug. Source-context (čak i bez source-mapa, JS je čitljiv).
-  - [2E.3] **Alerting** (mail prag) + **GDPR/consent-aware** (učitaj TEK iza pristanka, kao gtag u `js/consent.js`; bez PII u eventu).
-  - **Done-kriterij:** namjerni `throw` u stagingu stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina.
+- **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ▶ **INFRASTRUKTURA GOTOVA (2026-06-30, grana `foundation/f2`), ČEKA SAMO DSN.**
+  - [2E.1] ✅ `js/monitoring.js` → `window.SokratMonitor` (`captureException`/`enable`/`disable`/`status`). Globalni `error`+`unhandledrejection`
+    hvatači instalirani odmah; prosljeđuju TEK kad `enabled` (pristanak). **SIGURAN NO-OP bez DSN-a** (ništa se ne učita/šalje, NIKAD ne baca).
+    Sentry **Loader Script** (URL iz ključa u DSN-u) → **nema fiksne verzije SDK-a → nema 404 rizika** (poučeno KaTeX-om). `defer`, no-build.
+  - [2E.2] ✅ Release-tracking: `APP_RELEASE = 'sokrat-study@<token>'` konstanta (kasnije iz auto-version-bump skripte, 3C).
+  - [2E.3] ✅ **GDPR/consent-aware:** `consent.js applyConsent(granted)` → `SokratMonitor.enable()/disable()` (ISTI gate kao GA; `sendDefaultPii:false`).
+    Učita se na svih 5 stranica gate, no-op na pravnima (guard `if(window.SokratMonitor)`). **Alerting** = Sentry dashboard mail-prag (postavlja korisnik uz DSN).
+  - **⏳ PREOSTAJE (treba korisnikov Sentry račun):** (1) korisnik kreira free Sentry projekt → zalijepi **DSN** u `js/monitoring.js` (`SENTRY_DSN`);
+    (2) zajedno potvrdimo da namjerni `throw` stigne na dashboard s točnim releaseom (Done-kriterij); (3) postavi mail-alert prag. Cache `?v=20260699` (5 stranica + monitoring.js).
+  - **Done-kriterij:** namjerni `throw` u stagingu stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina. **(čeka DSN)**
   - *(Fallback ako Sentry tier zasmeta: mini-logger `window.onerror`→Supabase tablica iza istog `captureException` sučelja — zamjenjivo.)*
 **Gate faze:** CI/typecheck zeleni, sav sadržaj kroz Repo, 0 regresija (Playwright pun + ručni smoke svih modova × par predmeta).
 

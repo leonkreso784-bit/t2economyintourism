@@ -47,6 +47,12 @@
             analytics_storage: granted ? 'granted' : 'denied'
         });
         if (granted) loadGoogleAnalytics();
+        // Faza 2 (2E): praćenje grešaka (Sentry) slijedi ISTI gate pristanka. No-op ako modul
+        // nije učitan (npr. pravne stranice) ili DSN nije konfiguriran.
+        if (window.SokratMonitor) {
+            if (granted) window.SokratMonitor.enable();
+            else window.SokratMonitor.disable();
+        }
     }
 
     function saveChoice(value) {
