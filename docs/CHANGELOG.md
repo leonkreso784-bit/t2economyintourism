@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧱 FAZA 1 — reliability rails ✅ GOTOVA + GITHUB-ZELENA (2026-06-30; grana `foundation/f1`, NIJE još na produkciji).**
+  Platforma-first temelj (FOUNDATION_PLAN). **CI/CD** (`.github/workflows/ci.yml`, GitHub Actions, 2 joba): `build` =
+  npm ci→`validate:content`→`verify`→`test:unit`→`typecheck`→`test:rls`→Playwright; `lighthouse` = budžeti. TVRDI gate (crveno=ne u `main`).
+  **Type-check bez build-a** (`tsconfig.json` strict, `include` scoped; `types/globals.d.ts`; pilot `js/i18n.js`; `npm run typecheck`; `typescript` devDep).
+  **TVRDI gateovi:** `tests/a11y.spec.js` (axe-core, 0 serious — popravljen `.sidebar-content` `tabindex`), `tests/layout-guard.spec.js`
+  (deterministička geometrija, 13 širina × {EN,HR} = BUG-015 zaštita), **Lighthouse** (`.lighthouserc.json`, kalibriran: a11y/bp/seo ≥0.95 + CLS≤0.1 + TBT≤400ms, perf ≥0.5 floor).
+  **RLS sigurnosni test** (`scripts/rls-check.js`, read-only: anon čita `subject_content`, ne vidi `progress`). **`package-lock.json` sad verzioniran** (`npm ci`).
+### Changed
+- **Hardening v1 (F1 1C):** `vercel.json` (maknut `X-XSS-Protection`; +`Referrer-Policy`/`Permissions-Policy`); `loadProgress` schema-merge+try/catch
+  (`js/storage.js`, otpornost na pokvaren/stari localStorage); mrtav `lessonCategoryMap`→`{}`; hero „400+" → **dinamičan `questionCount`**
+  (`scripts/compute-stats.js`→`data/landing-stats.js`, stvarno 5721 → „5,700+"); „Works offline" → pošteno „No install needed"/„Bez instalacije"
+  (+ meta-opisi „works on any device"). Cache `?v=20260698` (svi izmijenjeni js, uklj. naknadno bumpane chrome-fajlove auth/profile/analytics/cloud-sync).
 - **HRV program „Menadžment u Hotelijerstvu" — cigle 1–5c ✅ LIVE 2026-06-28 (`320d413..4b795c8`).** Paralelni hrvatski program
   (klon, ADR-012): `hospitality-management-hr` + **pilot `business-informatics-hr`** („Poslovna informatika", 11 kat/86fc, strukturno
   identično EN-u). Alat **`scripts/translate-subject.js`** (Sonnet tool_use; slot-pristup + salvage-parser; čuva quiz-indeks/`_______`/
