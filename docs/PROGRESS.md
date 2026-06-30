@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-06-30 — ✅ F1 DEPLOYAN NA PRODUKCIJU + ▶ FAZA 2 započeta (cigla 2B.1 ContentRepository)
+**F1 → produkcija:** ff-merge `c874627..69ce466` (grana→main, uz izričito odobrenje); i18n chrome `25c2474` otišao zajedno.
+Live potvrđeno: `landing-stats.js`=5700, tokeni `?v=20260698`, CI zelen, RLS OK. Doc-status `164dc11`.
+**Faza 2 — revizija redoslijeda (dogovoreno):** S1 (Repo) PRIJE S2 (JSON) + Sentry ranije (F3 ovisi o S1, ne o S2; S1 = 0-rizik šav prije diranja podataka).
+**Cigla 2B.1 ✅ (grana `foundation/f2`):** `js/content-repo.js` → `window.SokratContent` — tanki omotač oko 3 postojeća puta dohvata
+(`SokratCatalog` metapodaci + `loadSubjectContent` async + `getSubjectData` resolve) u jedno sučelje:
+`listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded`. **NULA promjene ponašanja** (DB↔datoteka fallback ostaje u loaderu).
+Test `tests/content-repo.spec.js` dokazuje EKVIVALENCIJU (`loadLesson` vrati IDENTIČNU referencu kao stari put; 8/8 × 4 profila).
+Gate: verify 0/0, content-repo 8/8, lazy-load 4/4 (učitavanje skripti netaknuto). Cache `?v=20260699`. **DALJE: 2B.2/2B.3** (navigation.js → Repo) PA Sentry (2E) PA S2 JSON.
+
 ## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)
 **Peta/zadnja cigla F1.** Provjerio cijenu branchinga PRVO: **Supabase branching traži Pro plan $25/mj** (org je `free`;
 branch compute $0.01344/h tek nakon Pro) → ne isplati se za RLS. **Opcija 1 (read-only protiv POSTOJEĆE baze, besplatno).**

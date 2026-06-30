@@ -115,16 +115,26 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
 
+> **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
+> i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —
+> SW kešira kroz Repo; (2) **S1 thin-wrapper = 0 rizika za podatke** (omota postojeće funkcije) → daje šav PRIJE diranja podataka;
+> (3) S2 migracija je onda sigurnija (dual-read na jednom mjestu, iza Repo sučelja); (4) Sentry ranije = **vidljivost grešaka DOK** se migrira 17 predmeta.
+> **Bonus nalaz:** „podatak≠kod" (BUG-012) je VEĆ strukturno riješen u `content-loader.js:84-98` (`scripts` vs `codeScripts`), a `migrate-content.js`
+> već vadi JSON → 2A je manje rizična nego što se činilo. **Izvedbeni redoslijed:** 2B.1 → 2B.2 → 2B.3 → 2E → 2A.1–2A.4 → 2C → 2D.
+
 - **2A — Čisti podatkovni format (S2):** *najvažnija, radi se JEDAN PREDMET ODJEDNOM.*
   - [2A.1] Definiraj kanonski **JSON shape** study-sadržaja (iz CONTENT_SCHEMA.md) + **JSON Schema** datoteku.
   - [2A.2] Skripta `data.js → data.json` (mašinerija postoji: `migrate-content.js` već vadi podatke za bazu).
   - [2A.3] **Dual-read tranzicija:** loader čita NOVI `.json` ako postoji, inače stari `.js` (ništa se ne lomi tijekom migracije).
   - [2A.4] Migriraj predmete jedan-po-jedan (gate po svakom). Vježbe OSTAJU JS moduli (S2 pravilo).
   - **Done-kriterij:** svi study-podaci portabilni kao JSON; `.js` postaje generirani export (ne uređuje se ručno).
-- **2B — ContentRepository (S1):**
-  - [2B.1] Definiraj sučelje: `getSubject(id)`, `getLesson(id,lessonId)`, `listSubjects()`… neovisno o izvoru.
-  - [2B.2] Implementacije: `FileRepo` (JSON datoteke) + `SupabaseRepo` (već postoji read-path) iza istog sučelja; flag bira izvor; fallback ostaje.
-  - [2B.3] `content-loader.js` postaje tanak adapter na Repo. **Svi pozivi sadržaja idu kroz Repo.**
+- **2B — ContentRepository (S1):**  *(▶ AKTIVNO — radi se PRVO, vidi reviziju gore)*
+  - [2B.1] ✅ **GOTOVO (2026-06-30, grana `foundation/f2`):** `js/content-repo.js` → `window.SokratContent` (tanki omotač oko postojećih
+    funkcija): `listSubjects()`/`getSubject(id)`/`isLessonComingSoon(id,lessonId)` (sinkrono iz catalog-a) + **`loadLesson(subjectId,lessonId)`**
+    (objedini `loadSubjectContent`+`getSubjectData` u jedan async poziv) + `isLoaded(id)`. **NULA promjene ponašanja** (DB↔datoteka fallback već u
+    loaderu). Test `tests/content-repo.spec.js` dokazuje EKVIVALENCIJU (`loadLesson === getSubjectData`, identična referenca; 8/8 × 4 profila). Cache `?v=20260699`.
+  - [2B.2] Implementacije: `FileRepo` (JSON datoteke) + `SupabaseRepo` (već postoji read-path) iza istog sučelja; flag bira izvor; fallback ostaje. *(većinom već zadovoljeno UNUTAR `loadSubjectContent` — formalizirati kad 2A donese `.json`.)*
+  - [2B.3] `content-loader.js` postaje tanak adapter na Repo. **Svi pozivi sadržaja idu kroz Repo.** *(navigation.js → `SokratContent.loadLesson`.)*
   - **Done-kriterij:** prebacivanje datoteka↔baza = config; CRUD i SW kasnije koriste isti Repo.
 - **2C — AppState (S3):** *oprezno, inkrementalno — NE sve globale odjednom.*
   - [2C.1] Uvedi `AppState = { current:{}, study:{}, quiz:{}, ... }` namespace.
