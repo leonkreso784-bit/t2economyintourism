@@ -298,8 +298,17 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   S3 AppState → S4 UI-primitivi=Web Components → error monitoring) → **F3 performanse** (Service Worker=pravi offline + CSS bundling +
   auto version-bump) → **F4 custom Admin CRUD** (source-of-truth flip: baza autoritativna, datoteke=export; dual-read, predmet-po-predmet) →
   **F5 SRS** (spaced repetition) → **F6 pred-UGC sigurnost** (CSP/DOMPurify/RLS/sandbox). **ADR-013** (content arhitektura) + **ADR-014**
-  (engineering standardi). Vježbe NIKAD u bazu (BUG-012). CRUD=custom, NE CMS. ⚠️ Ne-deployani i18n chrome (profil/auth/progress/study)
-  čeka commit+deploy uz F1 (treba cache-bump). [[foundation-pivot]]
+  (engineering standardi). Vježbe NIKAD u bazu (BUG-012). CRUD=custom, NE CMS. **Plan PODIGNUT na „brutalan" (5 nadogradnji, FOUNDATION_PLAN §7):**
+  perf/a11y/visual TVRDI CI gateovi · Sentry+release-tracking · RLS-test · CRUD versioning/audit/dry-run · SRS dizajn-dok+FSRS. [[foundation-pivot]]
+- **✅ FAZA 1 (reliability rails) GOTOVA + GITHUB-ZELENA (2026-06-30, grana `foundation/f1`, NIJE na produkciji):** **1A** CI/CD
+  (`.github/workflows/ci.yml`: npm ci→validate→verify→test:unit→typecheck→**RLS**→Playwright; + zaseban `lighthouse` job) · **1B** type-check
+  bez build-a (`tsconfig.json` strict scoped + `types/globals.d.ts` + pilot `js/i18n.js`; `npm run typecheck`) · **1C** hardening (vercel.json headeri;
+  `loadProgress` schema-merge u storage.js; mrtav `lessonCategoryMap`→`{}`; „400+"→dinamičan `scripts/compute-stats.js`→`data/landing-stats.js`=5700+;
+  „Works offline"→„No install needed") · **1D** TVRDI gateovi (`tests/a11y.spec.js` axe 0-serious — popravljen sidebar `tabindex`; `tests/layout-guard.spec.js`
+  deterministički sweep 13šir×{EN,HR}=BUG-015 zaštita; **Lighthouse** kalibriran na CI-brojeve a11y98/bp100/seo100/perf66 → tvrdi a11y/bp/seo≥0.95+CLS≤0.1+TBT≤400ms,
+  perf≥0.5 floor dok F3 ne digne; pixel-screenshot ODGOĐEN—treba Linux baseline) · **1E** `scripts/rls-check.js` read-only RLS (anon čita content, 0 progress; skip-ako-uspavana;
+  branching traži Pro $25/mj→odbačeno). **package-lock.json sad VERZIONIRAN** (bio gitignored→`npm ci` pao). **DALJE:** prod-deploy F1 (uz potvrdu + cache-bump i18n chromea + Vercel preview) PA **F2**.
+  ⚠️ Ne-deployani i18n chrome (profil/auth/progress/study, commit `25c2474`) ide na produkciju ZAJEDNO s F1 deployem. [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
