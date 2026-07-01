@@ -1,0 +1,1932 @@
+{
+  "describingDataGraphical": {
+    "name": "Describing Data — Graphical",
+    "icon": "fa-chart-pie",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "Distinguish a population from a sample, and a parameter from a statistic.",
+        "answer": "A population is the collection of ALL items of interest (size \\(N\\)); a sample is an observed subset (size \\(n\\)).\nA parameter is a numerical characteristic of a POPULATION; a statistic is a numerical characteristic of a SAMPLE.",
+        "explanation": "We use a sample statistic to estimate an unknown population parameter."
+      },
+      {
+        "question": "Descriptive vs. inferential statistics — what is the difference?",
+        "answer": "Descriptive statistics collect, summarize and present data (tables, graphs, averages) to turn data into information.\nInferential statistics use a sample to make estimates, forecasts and decisions about the population (estimation + hypothesis testing)."
+      },
+      {
+        "question": "What is simple random sampling?",
+        "answer": "A sampling procedure in which each member of the population is chosen strictly by chance, every member is equally likely to be selected, and every possible sample of \\(n\\) objects is equally likely."
+      },
+      {
+        "question": "Classify data: categorical vs. numerical, discrete vs. continuous.",
+        "answer": "Categorical (qualitative) data fall into categories (eye color, marital status).\nNumerical (quantitative) data are numbers — DISCRETE (counted, e.g. number of children) or CONTINUOUS (measured, e.g. weight, time)."
+      },
+      {
+        "question": "What are the four levels of measurement?",
+        "answer": "Qualitative:\n• Nominal — categories with no order (eye color)\n• Ordinal — ordered categories/rankings (satisfaction 1–5)\nQuantitative:\n• Interval — differences meaningful, NO true zero (temperature °C)\n• Ratio — differences meaningful AND a true zero (weight, income)"
+      },
+      {
+        "question": "Which graphs are used for CATEGORICAL data?",
+        "answer": "Frequency distribution table, bar chart, pie chart, and the Pareto diagram (bars in descending order of frequency with a cumulative line — separates the “vital few” from the “trivial many”)."
+      },
+      {
+        "question": "Which graphs are used for NUMERICAL data?",
+        "answer": "Line chart (time series), frequency distribution, histogram, ogive (cumulative line graph), and the stem-and-leaf display. Scatter diagrams show the relationship between two numerical variables."
+      },
+      {
+        "question": "How do you choose the class width for a frequency distribution?",
+        "answer": "First pick the number of classes \\(k\\) (a quick guide ties \\(k\\) to sample size). Then compute the width and round UP:\n\\( w = \\dfrac{\\text{Largest} - \\text{Smallest}}{k} \\)\nClasses must be equal width, inclusive and non-overlapping."
+      },
+      {
+        "question": "What does an ogive show?",
+        "answer": "An ogive (cumulative line graph) connects points giving the CUMULATIVE percentage (or frequency) of observations below the upper limit of each class — it reads off “what fraction is below value x”."
+      },
+      {
+        "question": "What is a Pareto diagram used for?",
+        "answer": "A bar chart of categorical data with bars in DESCENDING order of frequency plus a cumulative polygon. It highlights the few categories that account for most of the total (the “vital few vs. trivial many”)."
+      },
+      {
+        "question": "What is a cross (contingency) table?",
+        "answer": "A table listing the number of observations for every combination of two categorical/ordinal variables. With \\(r\\) row-categories and \\(c\\) column-categories it is an \\(r\\times c\\) cross table."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A numerical characteristic of a population is a:",
+        "options": [
+          "Statistic",
+          "Parameter",
+          "Sample",
+          "Variable"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Estimating a population mean from a sample mean is an example of:",
+        "options": [
+          "Descriptive statistics",
+          "Inferential statistics",
+          "A census",
+          "A parameter"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The number of children in a family is which type of data?",
+        "options": [
+          "Categorical nominal",
+          "Numerical discrete",
+          "Numerical continuous",
+          "Categorical ordinal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A satisfaction rating from 1 (low) to 5 (high) is measured on which scale?",
+        "options": [
+          "Nominal",
+          "Ordinal",
+          "Interval",
+          "Ratio"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which graph is appropriate ONLY for categorical data?",
+        "options": [
+          "Histogram",
+          "Pie chart",
+          "Stem-and-leaf display",
+          "Ogive"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A bar chart with categories in descending order plus a cumulative line is a:",
+        "options": [
+          "Histogram",
+          "Pareto diagram",
+          "Ogive",
+          "Scatter plot"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The cumulative line graph for numerical data is called a(n):",
+        "options": [
+          "Ogive",
+          "Pie chart",
+          "Pareto diagram",
+          "Box plot"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Class width for a frequency distribution is approximately:",
+        "options": [
+          "\\((\\text{Max}-\\text{Min})/k\\)",
+          "\\(k/n\\)",
+          "\\(\\text{Max}+\\text{Min}\\)",
+          "\\(n/2\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A scatter diagram is used to display:",
+        "options": [
+          "One categorical variable",
+          "The relationship between two numerical variables",
+          "Cumulative frequency",
+          "Time only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A measurement scale with a true zero point is:",
+        "options": [
+          "Nominal",
+          "Ordinal",
+          "Interval",
+          "Ratio"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A specific numerical characteristic of a population is a _______.",
+        "answer": "parameter"
+      },
+      {
+        "sentence": "A characteristic of a sample is a _______.",
+        "answer": "statistic"
+      },
+      {
+        "sentence": "Data that fall into unordered categories are nominal _______ data.",
+        "answer": "categorical"
+      },
+      {
+        "sentence": "Counted numerical data (e.g. number of cars) are _______.",
+        "answer": "discrete"
+      },
+      {
+        "sentence": "Measured numerical data (e.g. weight) are _______.",
+        "answer": "continuous"
+      },
+      {
+        "sentence": "A bar chart with categories in descending order is a _______ diagram.",
+        "answer": "Pareto"
+      },
+      {
+        "sentence": "A graph of a numerical frequency distribution is a _______.",
+        "answer": "histogram"
+      },
+      {
+        "sentence": "Class width equals the range divided by the number of _______.",
+        "answer": "classes"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Describing Data — Graphical</h3><p>Statistics is the science of turning <strong>data</strong> (raw numbers and labels) into <strong>information</strong> — knowledge we can actually act on. A long list of 500 customer ages tells you almost nothing at a glance; a single histogram of those ages reveals the shape, the center and the outliers instantly. That translation is the whole job of descriptive statistics, and it always begins with the right picture.</p><h4>The vocabulary: population, sample, parameter, statistic</h4><p>Everything in the course rests on one distinction. A <strong>population</strong> is the entire collection of items we care about (size \\(N\\)) — every guest a hotel will ever host, every unit a factory will ever make. We rarely measure it all (too costly, too slow, sometimes impossible), so we observe a <strong>sample</strong>: a manageable subset of size \\(n\\).</p><ul><li>A number that describes the <strong>population</strong> is a <strong>parameter</strong> (e.g. the true mean \\(\\mu\\)). It is usually unknown and fixed.</li><li>A number computed from the <strong>sample</strong> is a <strong>statistic</strong> (e.g. the sample mean \\(\\bar{x}\\)). It varies from sample to sample, and we use it to <em>estimate</em> the parameter.</li></ul><p>This is why <strong>descriptive</strong> statistics (summarising the data we have) and <strong>inferential</strong> statistics (drawing conclusions about the population we don’t fully see) are two halves of the same coin. To make the inference trustworthy the sample must be <strong>representative</strong> — <strong>simple random sampling</strong>, in which every member is equally likely to be picked and every possible sample is equally likely, is the gold standard because it removes selection bias.</p><h4>Why the data type decides everything</h4><p>Before you can summarise data you must know what <em>kind</em> it is, because the type dictates which graphs, averages and tests are even meaningful. The four <strong>levels of measurement</strong> form a ladder of increasing information:</p><ul><li><strong>Nominal</strong> (categorical, unordered) — labels only: eye colour, payment method. You can count them, nothing more.</li><li><strong>Ordinal</strong> (categorical, ordered) — ranked but gaps not equal: satisfaction 1–5, hotel star rating. Order is meaningful; differences are not.</li><li><strong>Interval</strong> (numerical, no true zero) — equal gaps but zero is arbitrary: temperature in °C. “0°” is not “no temperature”, so ratios (“twice as hot”) are meaningless.</li><li><strong>Ratio</strong> (numerical, true zero) — equal gaps and a real zero: weight, income, time. Here every operation, including ratios, is valid.</li></ul><p>Numerical data are also <strong>discrete</strong> (counted, whole values — number of guests) or <strong>continuous</strong> (measured on a scale — a 4.7 kg bag). Mislabel the type and every later choice goes wrong: you cannot average eye colour, and a pie chart of continuous weights is nonsense.</p><h4>Choosing the right graph</h4><p>Match the picture to the data type:</p><ul><li><strong>Categorical</strong> → frequency table, <strong>bar chart</strong> (compare category sizes), <strong>pie chart</strong> (shares of a whole), <strong>Pareto diagram</strong> (rank causes).</li><li><strong>Numerical</strong> → <strong>histogram</strong> (shape of one variable), <strong>ogive</strong> (cumulative “how much is below x”), <strong>stem-and-leaf</strong> (shape that keeps the actual digits), <strong>line chart</strong> (a variable over time).</li><li><strong>Two numerical variables</strong> → <strong>scatter diagram</strong>, the first look at whether they move together.</li></ul><h4>Building a frequency distribution, step by step</h4><p>A frequency distribution groups numerical data into equal-width <strong>classes</strong> and counts how many fall in each. The art is choosing the number of classes \\(k\\): too few hides the shape, too many leaves a jagged, empty table. Pick \\(k\\) from the sample size, then size the classes so they are equal-width, inclusive and <strong>non-overlapping</strong> (every value belongs to exactly one class):</p><div class=\"formula-box\">\\[ w = \\frac{\\text{Largest} - \\text{Smallest}}{k} \\quad\\text{(always round UP)} \\]</div><div class=\"example-box\"><h4>Worked example — building a frequency distribution</h4><p>Data range from 12 to 65 with \\(n = 28\\) observations. The quick guide suggests \\(k = 6\\) classes, so the width is</p><div class=\"formula-box\">\\[ w = \\frac{\\text{Max}-\\text{Min}}{k} = \\frac{65-12}{6} = 8.83 \\;\\rightarrow\\; 10 \\]</div><p>Rounding up to a clean 10 gives classes 10–20, 20–30, … 60–70. A <strong>histogram</strong> plots their frequencies as touching bars (the bars touch because the scale is continuous); an <strong>ogive</strong> plots the running cumulative percentage, so you can read off “what fraction of values is below 40?” directly.</p></div><div class=\"tip-box\"><h4>The Pareto idea (the 80/20 rule)</h4><p>A Pareto diagram is a bar chart of categories sorted from <strong>most to least frequent</strong>, with a cumulative line on top. It makes the <strong>“vital few”</strong> jump out: typically a handful of categories (defect types, complaint sources) account for the large majority of the total. Managers fix those first — that is the practical payoff of graphing categorical data well.</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• Using a <strong>histogram</strong> for categories or a <strong>pie chart</strong> for continuous measurements — the graph must fit the data type.</p><p>• <strong>Overlapping classes</strong> (e.g. 10–20 and 20–30 both claiming 20) make counts ambiguous — keep classes mutually exclusive.</p><p>• A <strong>truncated vertical axis</strong> (not starting at 0) exaggerates small differences — a classic way graphs mislead.</p></div><p class=\"highlight\">First ask “what type of data is this?” Everything — the right graph, the right average, the right test — follows from that single answer.</p>",
+      "image": null
+    }
+  },
+  "describingDataNumerical": {
+    "name": "Describing Data — Numerical",
+    "icon": "fa-calculator",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Define the three measures of central tendency.",
+        "answer": "• Mean — the arithmetic average: \\( \\bar{x} = \\dfrac{\\sum x_i}{n} \\)\n• Median — the middle value of ordered data (50% above, 50% below)\n• Mode — the most frequently occurring value (may be none or several)"
+      },
+      {
+        "question": "When is the median preferred over the mean?",
+        "answer": "When the data contain outliers or are skewed. The mean is pulled toward extreme values, while the median is resistant to them, so it better describes a skewed distribution."
+      },
+      {
+        "question": "How do you locate the median and the quartiles by position?",
+        "answer": "In ascending order:\n• Median is at position \\( \\dfrac{n+1}{2} \\)\n• \\(Q_1\\) at \\( 0.25(n+1) \\), \\(Q_3\\) at \\( 0.75(n+1) \\)\nThe 2nd quartile equals the median."
+      },
+      {
+        "question": "Define range and interquartile range.",
+        "answer": "Range = largest − smallest (simple but very sensitive to outliers).\nInterquartile range \\( IQR = Q_3 - Q_1 \\) — the spread of the middle 50% of the data, which ignores extreme values."
+      },
+      {
+        "question": "Write the sample variance and sample standard deviation.",
+        "answer": "\\( s^2 = \\dfrac{\\sum (x_i-\\bar{x})^2}{n-1}, \\qquad s = \\sqrt{s^2} \\)\n(We divide by \\(n-1\\) for a sample; by \\(N\\) for a population variance \\(\\sigma^2\\).)"
+      },
+      {
+        "question": "What is the coefficient of variation, and why use it?",
+        "answer": "A relative measure of dispersion, in percent:\n\\( CV = \\dfrac{s}{\\bar{x}}\\times 100\\% \\)\nBecause it is unit-free, it lets you compare the variability of data sets measured in different units or with very different means."
+      },
+      {
+        "question": "State the empirical rule (for bell-shaped data).",
+        "answer": "For an approximately normal distribution, the intervals around the mean contain:\n• \\( \\mu \\pm 1\\sigma \\): about 68%\n• \\( \\mu \\pm 2\\sigma \\): about 95%\n• \\( \\mu \\pm 3\\sigma \\): about 99.7%"
+      },
+      {
+        "question": "State Chebyshev’s theorem.",
+        "answer": "For ANY distribution and \\(k>1\\), at least \\( \\left(1-\\dfrac{1}{k^2}\\right) \\) of the values lie within \\(k\\) standard deviations of the mean. E.g. at least 75% within \\(\\pm 2\\sigma\\), at least 89% within \\(\\pm 3\\sigma\\).",
+        "explanation": "Chebyshev works for any shape; the empirical rule needs a bell shape."
+      },
+      {
+        "question": "What is the weighted mean and when is it used?",
+        "answer": "A mean where each value carries a weight \\(w_i\\):\n\\( \\bar{x} = \\dfrac{\\sum w_i x_i}{\\sum w_i} \\)\nUsed when observations are grouped or have unequal importance (e.g. grouped data with class midpoints)."
+      },
+      {
+        "question": "How do you read skewness from the mean and median?",
+        "answer": "If mean ≈ median → roughly symmetric. If mean < median → skewed LEFT (negatively). If mean > median → skewed RIGHT (positively). Outliers pull the mean toward the long tail."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The middle value of an ordered data set is the:",
+        "options": [
+          "Mean",
+          "Median",
+          "Mode",
+          "Range"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Sample variance divides the sum of squared deviations by:",
+        "options": [
+          "\\(n\\)",
+          "\\(n-1\\)",
+          "\\(N\\)",
+          "\\(n+1\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The interquartile range equals:",
+        "options": [
+          "\\(Q_3 - Q_1\\)",
+          "\\(\\text{Max}-\\text{Min}\\)",
+          "\\(Q_2 - Q_1\\)",
+          "\\(s^2\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The coefficient of variation is:",
+        "options": [
+          "\\(s^2/\\bar{x}\\)",
+          "\\((s/\\bar{x})\\times 100\\%\\)",
+          "\\(\\bar{x}/s\\)",
+          "\\(Q_3-Q_1\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For bell-shaped data, about 95% of values lie within:",
+        "options": [
+          "\\(\\mu\\pm 1\\sigma\\)",
+          "\\(\\mu\\pm 2\\sigma\\)",
+          "\\(\\mu\\pm 3\\sigma\\)",
+          "\\(\\mu\\pm 0.5\\sigma\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Chebyshev’s theorem guarantees at least what fraction within \\(\\pm 2\\sigma\\)?",
+        "options": [
+          "50%",
+          "68%",
+          "75%",
+          "95%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which measure is LEAST affected by outliers?",
+        "options": [
+          "Mean",
+          "Median",
+          "Range",
+          "Standard deviation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "If the mean is greater than the median, the distribution is skewed:",
+        "options": [
+          "Left (negatively)",
+          "Right (positively)",
+          "Not at all",
+          "Bimodally"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The most frequently occurring value is the:",
+        "options": [
+          "Median",
+          "Mode",
+          "Mean",
+          "Midrange"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A unit-free measure that compares variability across data sets is the:",
+        "options": [
+          "Range",
+          "Variance",
+          "Coefficient of variation",
+          "IQR"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The arithmetic average of the data is the _______.",
+        "answer": "mean"
+      },
+      {
+        "sentence": "The value with 50% of observations above and below it is the _______.",
+        "answer": "median"
+      },
+      {
+        "sentence": "Sample variance divides the sum of squared deviations by n minus _______.",
+        "answer": "1"
+      },
+      {
+        "sentence": "The square root of the variance is the standard _______.",
+        "answer": "deviation"
+      },
+      {
+        "sentence": "IQR equals Q3 minus _______.",
+        "answer": "Q1"
+      },
+      {
+        "sentence": "For bell-shaped data, about 68% of values lie within one _______ of the mean.",
+        "answer": "standard deviation",
+        "hint": "\\(\\mu \\pm 1\\sigma\\)."
+      },
+      {
+        "sentence": "Chebyshev’s theorem applies to data of _______ shape.",
+        "answer": "any"
+      },
+      {
+        "sentence": "The coefficient of variation is always expressed as a _______.",
+        "answer": "percentage"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Describing Data — Numerical</h3><p>A graph shows the shape of data; numerical measures pin it down with two numbers we can compute, compare and feed into later inference. Every numerical summary answers one of two questions: <strong>where is the center</strong> of the data, and <strong>how spread out</strong> is it around that center? Center without spread is only half the story — two hotels can have the same average occupancy while one is steady and the other swings wildly.</p><h4>Measures of center (central tendency)</h4><p>Three measures locate the “typical” value, and they answer subtly different questions:</p><ul><li><strong>Mean</strong> \\( \\bar{x} \\) — the arithmetic average. It uses <em>every</em> value, which makes it efficient but also <strong>sensitive to outliers</strong>: one billionaire lifts the “average income” of a room.</li><li><strong>Median</strong> — the middle value of the ordered data (50% lie above, 50% below). It ignores how extreme the extremes are, so it is <strong>resistant</strong> and is the honest “typical” for incomes, house prices, anything skewed.</li><li><strong>Mode</strong> — the most frequent value. The only center that works for <strong>categorical</strong> data (“the most common room type”), and a data set can have one, several, or no mode.</li></ul><div class=\"formula-box\">\\[ \\bar{x} = \\frac{\\sum x_i}{n} \\qquad \\text{median at position } \\frac{n+1}{2} \\qquad Q_1 \\text{ at } 0.25(n{+}1),\\; Q_3 \\text{ at } 0.75(n{+}1) \\]</div><p>The <strong>quartiles</strong> generalise the median: they cut the ordered data into four quarters, and \\(Q_2\\) is the median itself. When values have unequal importance (or come grouped with class midpoints) we use the <strong>weighted mean</strong> \\( \\bar{x}=\\frac{\\sum w_i x_i}{\\sum w_i} \\).</p><h4>Measures of spread (variation)</h4><p>Spread tells us how reliable the center is. From crudest to most useful:</p><ul><li><strong>Range</strong> = Max − Min: trivial to compute but driven entirely by the two most extreme values.</li><li><strong>Interquartile range</strong> \\( IQR = Q_3 - Q_1 \\): the span of the middle 50%, so it <strong>ignores outliers</strong> — the spread analogue of the median.</li><li><strong>Variance &amp; standard deviation</strong>: the workhorses. They measure the average squared distance from the mean. We square the deviations so positives and negatives don’t cancel; the standard deviation then takes the square root to return to the original units (kg, euros, minutes), which is why \\(s\\) — not \\(s^2\\) — is what we interpret.</li></ul><div class=\"formula-box\">\\[ s^2 = \\frac{\\sum (x_i-\\bar{x})^2}{n-1}, \\qquad s = \\sqrt{s^2}, \\qquad CV = \\frac{s}{\\bar{x}}\\times 100\\%, \\qquad IQR = Q_3 - Q_1 \\]</div><p><strong>Why divide by \\(n-1\\)?</strong> For a <em>sample</em> we lose one degree of freedom by using \\(\\bar{x}\\) (itself estimated from the data) in place of the true \\(\\mu\\); dividing by \\(n-1\\) instead of \\(n\\) corrects the resulting under-estimate so \\(s^2\\) is unbiased. A whole <em>population</em> uses \\(N\\) and gives \\(\\sigma^2\\).</p><p>The <strong>coefficient of variation</strong> is spread <em>relative</em> to the mean, and being unit-free it is the only fair way to compare variability across different scales — e.g. is a stock with \\(s=\\,\\)2 € more volatile than one with \\(s=\\,\\)5 €? Only the CV, which divides by each price level, can say.</p><div class=\"example-box\"><h4>Worked example — variance &amp; standard deviation</h4><p>Sample: 5, 9, 10, 2, 7, 9, 14. The mean is \\( \\bar{x} = \\dfrac{56}{7} = 8 \\). Squaring each deviation from 8 and adding gives \\(\\sum(x_i-\\bar{x})^2 = 88\\), so</p><div class=\"formula-box\">\\[ s^2 = \\frac{88}{7-1} = 14.67, \\qquad s = \\sqrt{14.67} = 3.83 \\]</div><p>Interpretation: a typical value sits about 3.83 units from the mean of 8.</p></div><div class=\"tip-box\"><h4>How much data is “near” the mean? Empirical rule vs. Chebyshev</h4><p>For a <strong>bell-shaped</strong> distribution the <strong>empirical rule</strong> is precise: about <strong>68% / 95% / 99.7%</strong> of values fall within \\(\\mu\\pm 1\\sigma\\) / \\(2\\sigma\\) / \\(3\\sigma\\). When the shape is unknown, <strong>Chebyshev’s theorem</strong> still guarantees a minimum for <em>any</em> distribution: at least \\(\\left(1-\\frac{1}{k^2}\\right)\\) of the data lie within \\(k\\) SDs — so ≥75% within \\(2\\sigma\\) and ≥89% within \\(3\\sigma\\). Chebyshev is weaker but universal; the empirical rule is sharper but needs the bell shape.</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• Reporting the <strong>mean</strong> for clearly skewed data (incomes, prices) — the median is the honest center there.</p><p>• Comparing standard deviations across <strong>different units or very different means</strong> — use the CV instead.</p><p>• Forgetting the <strong>\\(n-1\\)</strong> on a sample, or interpreting the <strong>variance</strong> directly — its units are squared; interpret \\(s\\).</p></div><p class=\"highlight\">Read the skew straight from center: mean &gt; median → right-skewed (long high tail); mean &lt; median → left-skewed; mean ≈ median → roughly symmetric.</p>",
+      "image": null
+    }
+  },
+  "probability": {
+    "name": "Probability Methods",
+    "icon": "fa-dice",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Define random experiment, sample space and event.",
+        "answer": "A random experiment is a process with two or more possible outcomes, unknown in advance. The sample space \\(S\\) is the set of ALL possible outcomes. An event is any subset of the sample space."
+      },
+      {
+        "question": "Define the intersection, union and complement of events.",
+        "answer": "• Intersection \\(A\\cap B\\): outcomes in BOTH A and B.\n• Union \\(A\\cup B\\): outcomes in A OR B (or both).\n• Complement \\(\\bar{A}\\): all outcomes NOT in A, with \\( P(\\bar{A}) = 1 - P(A) \\)."
+      },
+      {
+        "question": "What are mutually exclusive and collectively exhaustive events?",
+        "answer": "Mutually exclusive: they cannot occur together, \\( A\\cap B = \\varnothing \\) so \\( P(A\\cap B)=0 \\).\nCollectively exhaustive: together they cover the whole sample space, \\( E_1\\cup E_2\\cup\\dots\\cup E_k = S \\)."
+      },
+      {
+        "question": "What are the three approaches to assessing probability?",
+        "answer": "1. Classical — equally likely outcomes: \\( P(A)=\\dfrac{N_A}{N} \\).\n2. Relative frequency — long-run proportion of times A occurs.\n3. Subjective — a personal degree of belief."
+      },
+      {
+        "question": "Write the number of combinations of n things taken k at a time.",
+        "answer": "\\( \\binom{n}{k} = \\dfrac{n!}{k!\\,(n-k)!} \\)\nwith \\(0! = 1\\). It counts the unordered ways to choose \\(k\\) items from \\(n\\)."
+      },
+      {
+        "question": "State the addition rule.",
+        "answer": "\\( P(A\\cup B) = P(A) + P(B) - P(A\\cap B) \\)\nIf A and B are mutually exclusive, \\( P(A\\cap B)=0 \\), so \\( P(A\\cup B)=P(A)+P(B) \\)."
+      },
+      {
+        "question": "Define conditional probability.",
+        "answer": "The probability of A given that B has occurred:\n\\( P(A\\mid B) = \\dfrac{P(A\\cap B)}{P(B)} \\), provided \\( P(B) > 0 \\)."
+      },
+      {
+        "question": "State the multiplication rule.",
+        "answer": "\\( P(A\\cap B) = P(A\\mid B)\\,P(B) = P(B\\mid A)\\,P(A) \\).\nIt rearranges the conditional-probability definition to get the joint probability."
+      },
+      {
+        "question": "When are two events statistically independent?",
+        "answer": "When the occurrence of one does not change the probability of the other:\n\\( P(A\\cap B) = P(A)\\,P(B) \\) — equivalently \\( P(A\\mid B) = P(A) \\)."
+      },
+      {
+        "question": "What is a marginal probability?",
+        "answer": "The probability of a single event regardless of the others, found by summing its joint probabilities over a set of mutually exclusive, collectively exhaustive events:\n\\( P(A) = P(A\\cap B_1) + P(A\\cap B_2) + \\dots + P(A\\cap B_k) \\)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The set of all possible outcomes of a random experiment is the:",
+        "options": [
+          "Event",
+          "Sample space",
+          "Complement",
+          "Union"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Outcomes belonging to BOTH A and B form the:",
+        "options": [
+          "Union",
+          "Intersection",
+          "Complement",
+          "Sample space"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "If A and B are mutually exclusive, then \\(P(A\\cap B)\\) equals:",
+        "options": [
+          "1",
+          "0",
+          "\\(P(A)P(B)\\)",
+          "\\(P(A)+P(B)\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The probability of the union of two events is \\(P(A)+P(B)\\) minus:",
+        "options": [
+          "\\(P(A\\mid B)\\)",
+          "\\(P(A\\cap B)\\)",
+          "\\(P(\\bar A)\\)",
+          "1"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Conditional probability \\(P(A\\mid B)\\) equals:",
+        "options": [
+          "\\(P(A\\cap B)/P(B)\\)",
+          "\\(P(A)P(B)\\)",
+          "\\(P(A)+P(B)\\)",
+          "\\(P(B)/P(A)\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Two events are independent if:",
+        "options": [
+          "\\(P(A\\cap B)=0\\)",
+          "\\(P(A\\cap B)=P(A)P(B)\\)",
+          "\\(P(A\\cup B)=1\\)",
+          "\\(P(A)=P(B)\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The number of unordered ways to choose k from n is:",
+        "options": [
+          "\\(n^k\\)",
+          "\\(\\dfrac{n!}{k!(n-k)!}\\)",
+          "\\(\\dfrac{n!}{(n-k)!}\\)",
+          "\\(nk\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Events that together cover the entire sample space are:",
+        "options": [
+          "Mutually exclusive",
+          "Collectively exhaustive",
+          "Independent",
+          "Complementary only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The complement rule says \\(P(\\bar A)\\) equals:",
+        "options": [
+          "\\(1-P(A)\\)",
+          "\\(P(A)\\)",
+          "\\(1+P(A)\\)",
+          "\\(P(A)^2\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Assuming all outcomes equally likely is the _______ approach to probability.",
+        "options": [
+          "Subjective",
+          "Relative frequency",
+          "Classical",
+          "Bayesian"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The collection of all possible outcomes is the sample _______.",
+        "answer": "space"
+      },
+      {
+        "sentence": "Events that cannot occur together are mutually _______.",
+        "answer": "exclusive"
+      },
+      {
+        "sentence": "The probability of A or B is P(A)+P(B) minus P(A and B) — the _______ rule.",
+        "answer": "addition"
+      },
+      {
+        "sentence": "The probability of A given B is the _______ probability of A.",
+        "answer": "conditional"
+      },
+      {
+        "sentence": "If P(A and B) = P(A)·P(B), the events are _______.",
+        "answer": "independent"
+      },
+      {
+        "sentence": "P(complement of A) equals 1 minus _______.",
+        "answer": "P(A)"
+      },
+      {
+        "sentence": "Choosing k items from n without order uses the formula for _______.",
+        "answer": "combinations"
+      },
+      {
+        "sentence": "A probability is always between 0 and _______.",
+        "answer": "1"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Probability Methods</h3><p>Descriptive statistics looked backward at data we already have. Probability looks <strong>forward</strong>: it is the language of uncertainty, and it is the bridge to all of inference. Every confidence interval and hypothesis test in K2 is ultimately a probability statement, so the rules here are the grammar for everything that follows.</p><h4>The building blocks</h4><p>A <strong>random experiment</strong> is any process whose outcome is uncertain in advance (rolling a die, surveying a customer). The <strong>sample space</strong> \\(S\\) is the set of <em>all</em> possible outcomes, and an <strong>event</strong> is any subset of \\(S\\) we care about (“an even number”, “a satisfied customer”). Two axioms anchor everything:</p><div class=\"formula-box\">\\[ 0 \\le P(A) \\le 1, \\qquad P(S) = 1 \\]</div><p>A probability is never negative and never above 1, and <em>something</em> in the sample space must happen. Where do the numbers come from? Three approaches: <strong>classical</strong> (equally likely outcomes, \\(P(A)=N_A/N\\) — fair dice, cards); <strong>relative frequency</strong> (the long-run proportion observed over many repetitions); and <strong>subjective</strong> (a reasoned degree of belief when there is no experiment to repeat).</p><h4>Combining events</h4><p>Real questions ask about <em>combinations</em> of events — “A or B”, “not A”, “A and B”. The <strong>complement</strong> trick is often the easiest route (the chance of “at least one” is 1 minus the chance of “none”), and the <strong>addition rule</strong> finds the probability that at least one of two events occurs:</p><div class=\"formula-box\">\\[ P(\\bar A) = 1 - P(A), \\qquad P(A\\cup B) = P(A) + P(B) - P(A\\cap B) \\]</div><p>We subtract \\(P(A\\cap B)\\) because outcomes in both A and B were counted twice — once in \\(P(A)\\), once in \\(P(B)\\). If the events are <strong>mutually exclusive</strong> they cannot occur together (\\(A\\cap B=\\varnothing\\), so \\(P(A\\cap B)=0\\)) and the rule simplifies to \\(P(A)+P(B)\\). Events are <strong>collectively exhaustive</strong> when together they cover the whole sample space.</p><h4>Conditioning and independence</h4><p><strong>Conditional probability</strong> updates a probability once we learn that another event has happened — it shrinks the sample space down to B and asks how much of A survives inside it:</p><div class=\"formula-box\">\\[ P(A\\mid B) = \\frac{P(A\\cap B)}{P(B)} \\;\\Rightarrow\\; P(A\\cap B) = P(A\\mid B)\\,P(B) \\quad\\text{(multiplication rule)} \\]</div><p>Rearranged, this is the <strong>multiplication rule</strong> for the joint probability of A <em>and</em> B. Two events are <strong>statistically independent</strong> when learning one tells you nothing about the other — formally \\(P(A\\mid B)=P(A)\\), equivalently:</p><div class=\"formula-box\">\\[ P(A\\cap B) = P(A)\\,P(B) \\]</div><p>A <strong>marginal probability</strong> of A is recovered by summing its joint probabilities across a set of mutually exclusive, exhaustive events: \\(P(A)=\\sum_i P(A\\cap B_i)\\) — exactly the row/column totals of a cross table.</p><div class=\"example-box\"><h4>Worked example — addition rule</h4><p>30% of customers ask for help (A), 20% make a purchase (B), and 15% do both (\\(A\\cap B\\)). The chance a customer does at least one is</p><div class=\"formula-box\">\\[ P(A\\cup B) = 0.30 + 0.20 - 0.15 = 0.35 \\]</div><p>Check independence: \\(P(A)P(B)=0.30\\times0.20=0.06 \\ne 0.15\\), so help-seeking and buying are <strong>not</strong> independent — asking for help is associated with a higher chance of purchase.</p></div><div class=\"tip-box\"><h4>Counting with combinations</h4><p>For equally-likely outcomes, \\(P(A)=N_A/N\\) — so the work becomes <em>counting</em> the cases. When order does not matter (which 3 of 10 staff are chosen), the count is the number of <strong>combinations</strong>:</p><div class=\"formula-box\">\\[ \\binom{n}{k}=\\frac{n!}{k!\\,(n-k)!}, \\qquad 0! = 1 \\]</div></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Mutually exclusive ≠ independent</h4><p>These get confused constantly. <strong>Mutually exclusive</strong> events <em>cannot</em> both happen, so they are actually highly <strong>dependent</strong> (knowing A happened means B definitely did <em>not</em>). <strong>Independent</strong> events <em>can</em> both happen; one simply carries no information about the other. They are opposite ideas, not the same one.</p></div><p class=\"highlight\">“And” vs. “or”: use the multiplication rule for the joint chance of A <em>and</em> B; use the addition rule (and don’t double-count the overlap) for A <em>or</em> B.</p>",
+      "image": null
+    }
+  },
+  "discreteRandomVariables": {
+    "name": "Discrete Random Variables",
+    "icon": "fa-chart-column",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is a discrete random variable?",
+        "answer": "A variable representing a numerical outcome of a random experiment that can take only a COUNTABLE number of values — e.g. the number of defective items, claims, or arrivals."
+      },
+      {
+        "question": "What two properties must a discrete probability distribution satisfy?",
+        "answer": "\\( P(x) \\ge 0 \\) for every value \\(x\\), and the probabilities sum to one: \\( \\sum_x P(x) = 1 \\)."
+      },
+      {
+        "question": "Define the expected value of a discrete random variable.",
+        "answer": "The probability-weighted average (its mean):\n\\( \\mu = E(X) = \\sum_x x\\,P(x) \\)."
+      },
+      {
+        "question": "Write the variance and standard deviation of a discrete random variable.",
+        "answer": "\\( \\sigma^2 = E[(X-\\mu)^2] = \\sum_x (x-\\mu)^2 P(x), \\qquad \\sigma = \\sqrt{\\sigma^2} \\)."
+      },
+      {
+        "question": "What conditions define a binomial experiment?",
+        "answer": "A fixed number \\(n\\) of trials; each trial has two outcomes (success/failure); the success probability \\(P\\) is constant; and the trials are independent."
+      },
+      {
+        "question": "Write the binomial probability formula.",
+        "answer": "\\( P(x) = \\dfrac{n!}{x!\\,(n-x)!}\\,P^{x}(1-P)^{n-x} \\)\nfor \\(x = 0,1,\\dots,n\\) successes."
+      },
+      {
+        "question": "Give the mean and variance of the binomial distribution.",
+        "answer": "\\( \\mu = nP, \\qquad \\sigma^2 = nP(1-P), \\qquad \\sigma = \\sqrt{nP(1-P)} \\)."
+      },
+      {
+        "question": "When is the Poisson distribution used, and what is its formula?",
+        "answer": "For the number of times an event occurs in a fixed interval (arrivals, breakdowns, defects), with average rate \\(\\lambda\\):\n\\( P(x) = \\dfrac{e^{-\\lambda}\\lambda^{x}}{x!} \\)."
+      },
+      {
+        "question": "What is special about the mean and variance of the Poisson distribution?",
+        "answer": "They are EQUAL: \\( \\mu = \\sigma^2 = \\lambda \\) (so \\( \\sigma = \\sqrt{\\lambda} \\))."
+      },
+      {
+        "question": "What does the cumulative probability function \\(F(x_0)\\) give?",
+        "answer": "The probability that X is at most \\(x_0\\): \\( F(x_0) = P(X \\le x_0) = \\sum_{x \\le x_0} P(x) \\). It is handy for “at least / at most / more than” questions."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A variable taking only countable values is a _______ random variable.",
+        "options": [
+          "Continuous",
+          "Discrete",
+          "Normal",
+          "Standardized"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For any discrete distribution, the probabilities must sum to:",
+        "options": [
+          "0",
+          "0.5",
+          "1",
+          "n"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The expected value of X equals:",
+        "options": [
+          "\\(\\sum x P(x)\\)",
+          "\\(\\sum P(x)\\)",
+          "\\(nP(1-P)\\)",
+          "\\(\\sqrt{\\lambda}\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The mean of a binomial distribution is:",
+        "options": [
+          "\\(nP(1-P)\\)",
+          "\\(nP\\)",
+          "\\(\\lambda\\)",
+          "\\(P/n\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The variance of a binomial distribution is:",
+        "options": [
+          "\\(nP\\)",
+          "\\(nP(1-P)\\)",
+          "\\(\\lambda\\)",
+          "\\(\\sqrt{nP}\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The number of arrivals per hour is best modeled by the:",
+        "options": [
+          "Binomial distribution",
+          "Poisson distribution",
+          "Normal distribution",
+          "Uniform distribution"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For the Poisson distribution, the mean and variance are:",
+        "options": [
+          "Both equal to \\(\\lambda\\)",
+          "Equal to \\(nP\\)",
+          "Always 0 and 1",
+          "Unrelated"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The binomial requires that trials be:",
+        "options": [
+          "Dependent",
+          "Independent with constant P",
+          "Continuous",
+          "Infinite"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "\\(F(x_0)=P(X\\le x_0)\\) is called the _______ probability function.",
+        "options": [
+          "Marginal",
+          "Cumulative",
+          "Conditional",
+          "Joint"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the Poisson formula, e is approximately:",
+        "options": [
+          "3.14",
+          "2.72",
+          "1.61",
+          "0.50"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A random variable with a countable set of values is _______.",
+        "answer": "discrete"
+      },
+      {
+        "sentence": "The probabilities of a discrete distribution must sum to _______.",
+        "answer": "1"
+      },
+      {
+        "sentence": "The expected value E(X) is the probability-weighted _______.",
+        "answer": "average"
+      },
+      {
+        "sentence": "The mean of a binomial distribution is n times _______.",
+        "answer": "P",
+        "hint": "\\(\\mu = nP\\)."
+      },
+      {
+        "sentence": "The binomial variance is nP(1 minus _______).",
+        "answer": "P"
+      },
+      {
+        "sentence": "Counts of events in a fixed interval follow the _______ distribution.",
+        "answer": "Poisson"
+      },
+      {
+        "sentence": "For the Poisson distribution, the mean equals the _______.",
+        "answer": "variance"
+      },
+      {
+        "sentence": "The cumulative function F(x0) gives P(X ≤ _______).",
+        "answer": "x0"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Discrete Random Variables</h3><p>A <strong>random variable</strong> attaches a number to each outcome of a random experiment — it turns “heads/tails” or “satisfied/unsatisfied” into something we can average and add. A <strong>discrete</strong> random variable takes a <em>countable</em> set of values (0, 1, 2, …): the number of defective items in a batch, claims filed in a day, guests who no-show. The point of this topic is that many business situations follow one of two famous patterns — the <strong>binomial</strong> and the <strong>Poisson</strong> — so once you recognise the pattern you get all the probabilities from a formula instead of collecting data.</p><h4>The probability distribution and its summaries</h4><p>A discrete <strong>probability distribution</strong> lists every value \\(x\\) with its probability \\(P(x)\\). Two rules make it valid: each \\(P(x)\\ge 0\\), and they sum to one (\\(\\sum_x P(x)=1\\)) — the variable must take <em>some</em> value. We summarise it just like a data set, but weighting by probability instead of counting:</p><div class=\"formula-box\">\\[ \\mu = E(X) = \\sum_x x\\,P(x), \\qquad \\sigma^2 = E[(X-\\mu)^2] = \\sum_x (x-\\mu)^2 P(x) \\]</div><p>The <strong>expected value</strong> \\(E(X)\\) is the long-run average if the experiment were repeated endlessly — it need not be an attainable value (a family can’t have 1.93 days off, yet that is the expectation). The <strong>cumulative function</strong> \\(F(x_0)=P(X\\le x_0)\\) adds up probabilities from the bottom and is the key to “at most / at least / more than” questions.</p><h4>Binomial distribution — counting successes</h4><p>Use it when four conditions hold: a <strong>fixed number</strong> \\(n\\) of trials; each trial is a <strong>success/failure</strong> (Bernoulli); the success probability \\(P\\) is <strong>constant</strong>; and the trials are <strong>independent</strong>. Then \\(X=\\) number of successes follows:</p><div class=\"formula-box\">\\[ P(x) = \\frac{n!}{x!\\,(n-x)!}\\,P^{x}(1-P)^{n-x}, \\qquad \\mu = nP, \\qquad \\sigma^2 = nP(1-P) \\]</div><p>The combination \\(\\binom{n}{x}\\) counts the orderings (which of the \\(n\\) trials succeeded), while \\(P^{x}(1-P)^{n-x}\\) is the probability of any one such ordering. The mean \\(nP\\) is pure intuition: flip 10 coins and you expect \\(10\\times0.5=5\\) heads.</p><h4>Poisson distribution — counting occurrences over an interval</h4><p>Use it for the number of times an event happens in a fixed window of time, space or area, when events occur independently at an average rate \\(\\lambda\\): arrivals per minute, breakdowns per week, flaws per metre. There is no fixed \\(n\\) — only a rate.</p><div class=\"formula-box\">\\[ P(x) = \\frac{e^{-\\lambda}\\lambda^{x}}{x!}, \\qquad \\mu = \\sigma^2 = \\lambda \\]</div><p>Its signature property is that the <strong>mean equals the variance</strong> (both \\(\\lambda\\)) — a quick reality check on whether Poisson is the right model.</p><div class=\"example-box\"><h4>Worked example — expected value &amp; variance</h4><p>Days off per employee: \\(P(0,1,2,3,4,5) = (0.05, 0.30, 0.45, 0.10, 0.07, 0.03)\\).</p><div class=\"formula-box\">\\[ \\mu = \\sum x\\,P(x) = 1.93, \\qquad \\sigma^2 = \\sum (x-\\mu)^2 P(x) = 1.14, \\qquad \\sigma = 1.07 \\]</div><p>So a typical employee takes about 1.93 days off, give or take roughly 1.07 days.</p></div><div class=\"tip-box\"><h4>Which model? Binomial vs. Poisson</h4><p>Ask: is there a fixed number of yes/no trials? Then <strong>binomial</strong> (defective or not among 6 inspected items, \\(n=6\\)). Or are you counting occurrences over a continuous span with only a rate? Then <strong>Poisson</strong> (calls per hour, \\(\\lambda=4\\)). When \\(n\\) is large and \\(P\\) tiny, the binomial is well approximated by a Poisson with \\(\\lambda=nP\\).</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• The binomial variance is \\(nP(1-P)\\), <strong>not</strong> \\(nP\\) — don’t reuse the mean.</p><p>• Forgetting the <strong>combination</strong> factor \\(\\binom{n}{x}\\): you need all the orderings, not just one.</p><p>• Using the binomial when trials are <strong>dependent</strong> or \\(P\\) drifts (e.g. sampling without replacement from a small lot) — the constant-\\(P\\), independence conditions fail.</p></div><p class=\"highlight\">“At least / more than” is easiest through the complement: \\( P(X>a)=1-P(X\\le a) \\) using the cumulative function.</p>",
+      "image": null
+    }
+  },
+  "continuousRandomVariables": {
+    "name": "Continuous Random Variables",
+    "icon": "fa-chart-area",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What is a continuous random variable?",
+        "answer": "A variable that can take ANY value within an interval (weight, time, temperature). Because there are infinitely many possible values, the probability of any single exact value is zero."
+      },
+      {
+        "question": "What are the properties of a probability density function f(x)?",
+        "answer": "\\( f(x) \\ge 0 \\) for all \\(x\\); the total area under \\(f(x)\\) equals 1; and the probability that X lies between two values is the AREA under the curve between them."
+      },
+      {
+        "question": "How is probability found for a continuous variable?",
+        "answer": "As an area under the density curve: \\( P(a < X < b) = F(b) - F(a) \\), where \\(F\\) is the cumulative distribution function. Single-point probabilities are zero."
+      },
+      {
+        "question": "What are the key features of the normal distribution?",
+        "answer": "It is bell-shaped and symmetric; its mean, median and mode are equal; its location is set by \\(\\mu\\) and its spread by \\(\\sigma\\); and it has an infinite theoretical range."
+      },
+      {
+        "question": "How do you standardize a normal variable?",
+        "answer": "Convert X into a Z-score by subtracting the mean and dividing by the standard deviation:\n\\( Z = \\dfrac{X-\\mu}{\\sigma} \\)."
+      },
+      {
+        "question": "What is the standard normal distribution?",
+        "answer": "The normal distribution with mean 0 and variance 1, written \\( Z \\sim N(0,1) \\). Any normal variable can be transformed to it to use the Z-table."
+      },
+      {
+        "question": "How do you find \\(P(X > c)\\) using the Z-table?",
+        "answer": "Standardize: \\( Z = \\dfrac{c-\\mu}{\\sigma} \\). The table gives \\(P(Z<z)\\), so use the complement: \\( P(X>c) = 1 - P(Z < z) \\)."
+      },
+      {
+        "question": "Why is the normal distribution so widely used?",
+        "answer": "It approximates many real-world variables; sample means become approximately normal for large \\(n\\) (Central Limit Theorem); its probabilities are easy to compute; and it underlies much of statistical inference."
+      },
+      {
+        "question": "How do you compute \\(P(a < X < b)\\) for a normal variable?",
+        "answer": "Standardize both ends and subtract cumulative probabilities:\n\\( P(a<X<b) = P\\!\\left(Z < \\dfrac{b-\\mu}{\\sigma}\\right) - P\\!\\left(Z < \\dfrac{a-\\mu}{\\sigma}\\right) \\)."
+      },
+      {
+        "question": "What is a standardized random variable’s mean and variance?",
+        "answer": "After the transformation \\( Z = (X-\\mu)/\\sigma \\), the new variable has mean 0 and variance 1 — regardless of the original units."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "For a continuous random variable, the probability of any single exact value is:",
+        "options": [
+          "1",
+          "0.5",
+          "0",
+          "Undefined"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Probability for a continuous variable corresponds to:",
+        "options": [
+          "A bar height",
+          "An area under the density curve",
+          "A single point",
+          "A frequency count"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The total area under any probability density function equals:",
+        "options": [
+          "0",
+          "0.5",
+          "1",
+          "n"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In a normal distribution, the mean, median and mode are:",
+        "options": [
+          "All different",
+          "Equal",
+          "Always zero",
+          "Skewed"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The standardized normal variable Z equals:",
+        "options": [
+          "\\((X-\\mu)/\\sigma\\)",
+          "\\(X\\mu\\)",
+          "\\(\\sigma/\\mu\\)",
+          "\\(X-\\sigma\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The standard normal distribution has mean and variance:",
+        "options": [
+          "0 and 1",
+          "1 and 0",
+          "\\(\\mu\\) and \\(\\sigma\\)",
+          "0 and 0"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "If the Z-table gives \\(P(Z<z)\\), then \\(P(Z>z)\\) equals:",
+        "options": [
+          "\\(P(Z<z)\\)",
+          "\\(1-P(Z<z)\\)",
+          "\\(2P(Z<z)\\)",
+          "\\(z\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The normal distribution is:",
+        "options": [
+          "Skewed right",
+          "Bell-shaped and symmetric",
+          "Discrete",
+          "Bounded at 0 and 1"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Standardizing converts X (units) into Z (units of):",
+        "options": [
+          "Dollars",
+          "Standard deviations from the mean",
+          "Counts",
+          "Percentages"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For \\(X \\sim N(80,100)\\), the standard deviation is:",
+        "options": [
+          "100",
+          "10",
+          "80",
+          "1"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A variable that can take any value in an interval is _______.",
+        "answer": "continuous"
+      },
+      {
+        "sentence": "For a continuous variable, probability equals the _______ under the density curve.",
+        "answer": "area"
+      },
+      {
+        "sentence": "The total area under a density function equals _______.",
+        "answer": "1"
+      },
+      {
+        "sentence": "The normal distribution is bell-shaped and _______.",
+        "answer": "symmetric"
+      },
+      {
+        "sentence": "The Z-score equals (X minus mu) divided by _______.",
+        "answer": "sigma",
+        "hint": "\\(Z=(X-\\mu)/\\sigma\\)."
+      },
+      {
+        "sentence": "The standard normal distribution has mean _______.",
+        "answer": "0"
+      },
+      {
+        "sentence": "The standard normal distribution has variance _______.",
+        "answer": "1"
+      },
+      {
+        "sentence": "Converting X to a Z-score is called _______.",
+        "answer": "standardizing"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Continuous Random Variables</h3><p>A <strong>continuous</strong> random variable can take <em>any</em> value in an interval — a guest’s weight could be 70 kg, 70.4 kg, 70.41 kg, and so on without limit. Because there are infinitely many possible values, the probability of any single exact value is <strong>zero</strong>, and we can only sensibly ask about <em>ranges</em>. This forces a different tool from the discrete world: instead of a list of probabilities we use a smooth curve.</p><h4>From a list to a density curve</h4><p>A continuous variable is described by a <strong>probability density function</strong> \\(f(x)\\). Two properties define it: \\(f(x)\\ge 0\\) everywhere, and the <strong>total area under the curve is 1</strong>. Probability is <strong>area</strong>: the chance of landing between \\(a\\) and \\(b\\) is the area under \\(f(x)\\) over that span, which the cumulative function \\(F\\) computes:</p><div class=\"formula-box\">\\[ P(a < X < b) = F(b) - F(a) = \\text{area under } f(x) \\text{ from } a \\text{ to } b \\]</div><p>Because single points have zero probability, \\(P(X<a)\\) and \\(P(X\\le a)\\) are identical here — a sharp break from discrete variables, where the endpoint matters.</p><h4>The normal distribution — the centrepiece</h4><p>The <strong>normal</strong> (Gaussian) distribution is the most important continuous model in all of statistics. It is <strong>bell-shaped and symmetric</strong>, so its mean, median and mode coincide; \\(\\mu\\) sets its <em>location</em> (where the peak sits) and \\(\\sigma\\) its <em>spread</em> (how wide the bell is). It matters so much for three reasons: many natural and business quantities are approximately normal; the <strong>Central Limit Theorem</strong> (next topic) makes sample means normal even when the data are not; and it underpins nearly every confidence interval and test in K2.</p><h4>Standardising: the Z-score</h4><p>There is a different normal curve for every \\((\\mu,\\sigma)\\), so we can’t table them all. The trick is to convert any normal variable to one universal yardstick — the <strong>standard normal</strong> \\(N(0,1)\\), with mean 0 and variance 1 — using the <strong>Z-score</strong>:</p><div class=\"formula-box\">\\[ Z = \\frac{X-\\mu}{\\sigma} \\sim N(0,1) \\]</div><p>A Z-score answers “<strong>how many standard deviations is this value from the mean?</strong>” \\(Z=2\\) means two SDs above average. That single idea is what lets us compare a test score to a height, or read every normal probability off one standard table.</p><div class=\"example-box\"><h4>Worked example — a normal probability</h4><p>\\( X \\sim N(\\mu=80,\\ \\sigma^2=100) \\), so \\( \\sigma = \\sqrt{100} = 10 \\). Find \\(P(X>60)\\):</p><div class=\"formula-box\">\\[ Z = \\frac{60-80}{10} = -2 \\;\\Rightarrow\\; P(X>60) = P(Z>-2) = 1 - P(Z<-2) \\approx 0.977 \\]</div><p>So about 97.7% of the distribution lies above 60 — consistent with the empirical rule, since 60 is two SDs below the mean.</p></div><div class=\"tip-box\"><h4>Reading the Z-table</h4><p>Standard tables give the <strong>left-tail</strong> \\(P(Z<z)\\). For a right tail use \\(1-P(Z<z)\\); for a middle band subtract two cumulative values, \\(P(a<X<b)=P(Z<z_b)-P(Z<z_a)\\). By symmetry \\(P(Z<-z)=1-P(Z<z)\\), so the negative half of the table is just a mirror of the positive half.</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• Mixing up <strong>variance and standard deviation</strong>: if \\(N(80,100)\\) gives the variance, you must use \\(\\sigma=10\\) in the Z-score, not 100.</p><p>• Forgetting the table is <strong>left-tail</strong> — a “greater than” question needs the complement.</p><p>• Treating the normal as bounded: it has an <strong>infinite</strong> theoretical range, even though almost all mass sits within \\(\\pm3\\sigma\\).</p></div><p class=\"highlight\">Standardising is the universal move: turn \\(X\\) into \\(Z=(X-\\mu)/\\sigma\\), then every normal probability becomes one lookup on the same table.</p>",
+      "image": null
+    }
+  },
+  "samplingDistributions": {
+    "name": "Sampling Distributions",
+    "icon": "fa-vials",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "What is a sampling distribution?",
+        "answer": "The distribution of all possible values of a statistic (e.g. the sample mean) for a given sample size taken from a population. Different samples give different statistic values, and the sampling distribution describes that variability."
+      },
+      {
+        "question": "Write the standard error of the mean and explain it.",
+        "answer": "\\( \\sigma_{\\bar{x}} = \\dfrac{\\sigma}{\\sqrt{n}} \\)\nIt measures how much the sample mean varies from sample to sample. It DECREASES as the sample size \\(n\\) grows — larger samples give more precise means."
+      },
+      {
+        "question": "If the population is normal, what is the sampling distribution of \\(\\bar{x}\\)?",
+        "answer": "Also normal, with the same mean and a smaller spread:\n\\( \\mu_{\\bar{x}} = \\mu, \\qquad \\sigma_{\\bar{x}} = \\dfrac{\\sigma}{\\sqrt{n}} \\)."
+      },
+      {
+        "question": "State the Central Limit Theorem.",
+        "answer": "For a large enough sample size, the sampling distribution of the sample mean is approximately NORMAL even if the population is NOT normal — with mean \\(\\mu\\) and standard error \\(\\sigma/\\sqrt{n}\\)."
+      },
+      {
+        "question": "How large is “large enough” for the CLT?",
+        "answer": "For most distributions \\( n > 25 \\) (often stated as \\(n \\ge 30\\)) gives a nearly normal sampling distribution. If the population is already normal, \\(\\bar{x}\\) is normal for any \\(n\\)."
+      },
+      {
+        "question": "Write the Z-value for the sampling distribution of the mean.",
+        "answer": "\\( Z = \\dfrac{\\bar{x}-\\mu}{\\sigma/\\sqrt{n}} \\)\n— standardize the sample mean using the standard error in the denominator."
+      },
+      {
+        "question": "When do you apply the finite population correction?",
+        "answer": "When sampling WITHOUT replacement and the sample is large relative to the population (\\(n\\) more than about 5% of \\(N\\)). Then multiply the standard error by \\( \\sqrt{\\dfrac{N-n}{N-1}} \\)."
+      },
+      {
+        "question": "Define the sample proportion and its sampling distribution.",
+        "answer": "\\( \\hat{p} = \\dfrac{x}{n} \\) estimates the population proportion \\(P\\). For large \\(n\\) (when \\(nP(1-P)>5\\)) it is approximately normal with\n\\( E(\\hat{p}) = P, \\qquad \\sigma_{\\hat{p}} = \\sqrt{\\dfrac{P(1-P)}{n}} \\)."
+      },
+      {
+        "question": "Write the Z-value for a sample proportion.",
+        "answer": "\\( Z = \\dfrac{\\hat{p}-P}{\\sqrt{P(1-P)/n}} \\)\n— standardize the sample proportion using its standard error."
+      },
+      {
+        "question": "Why does a larger sample give a more reliable estimate?",
+        "answer": "Because the standard error \\( \\sigma/\\sqrt{n} \\) shrinks as \\(n\\) increases, the sampling distribution becomes narrower, so sample statistics cluster more tightly around the true parameter."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The distribution of all possible values of a statistic is a:",
+        "options": [
+          "Population distribution",
+          "Sampling distribution",
+          "Frequency distribution",
+          "Density function"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The standard error of the mean equals:",
+        "options": [
+          "\\(\\sigma\\)",
+          "\\(\\sigma/\\sqrt{n}\\)",
+          "\\(\\sigma^2/n\\)",
+          "\\(\\sqrt{n}\\,\\sigma\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "As the sample size increases, the standard error of the mean:",
+        "options": [
+          "Increases",
+          "Decreases",
+          "Stays the same",
+          "Becomes 1"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Central Limit Theorem says the sampling distribution of the mean is approximately:",
+        "options": [
+          "Uniform",
+          "Normal",
+          "Binomial",
+          "Skewed"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Z-value for a sample mean uses which denominator?",
+        "options": [
+          "\\(\\sigma\\)",
+          "\\(\\sigma/\\sqrt{n}\\)",
+          "\\(n\\)",
+          "\\(s^2\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The mean of the sampling distribution of \\(\\bar{x}\\) equals:",
+        "options": [
+          "\\(\\mu/n\\)",
+          "\\(\\mu\\)",
+          "0",
+          "\\(\\sigma\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The standard error of a sample proportion is:",
+        "options": [
+          "\\(\\sqrt{P(1-P)/n}\\)",
+          "\\(P(1-P)\\)",
+          "\\(\\sigma/\\sqrt{n}\\)",
+          "\\(P/n\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A common rule of thumb for the CLT to apply is:",
+        "options": [
+          "\\(n>5\\)",
+          "\\(n>25\\) (often \\(n\\ge 30\\))",
+          "\\(n>500\\)",
+          "\\(n=1\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The finite population correction is used when sampling:",
+        "options": [
+          "With replacement",
+          "Without replacement and n > ~5% of N",
+          "From a normal population only",
+          "When n = 1"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The expected value of the sample proportion \\(\\hat p\\) is:",
+        "options": [
+          "\\(P\\)",
+          "\\(0\\)",
+          "\\(n\\)",
+          "\\(1-P\\)"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The distribution of a statistic over all possible samples is a _______ distribution.",
+        "answer": "sampling"
+      },
+      {
+        "sentence": "The standard error of the mean is sigma divided by the square root of _______.",
+        "answer": "n",
+        "hint": "\\(\\sigma_{\\bar x}=\\sigma/\\sqrt{n}\\)."
+      },
+      {
+        "sentence": "As n increases, the standard error _______.",
+        "answer": "decreases"
+      },
+      {
+        "sentence": "The Central Limit Theorem makes the sample mean approximately _______.",
+        "answer": "normal"
+      },
+      {
+        "sentence": "The mean of the sampling distribution of x-bar equals the population _______.",
+        "answer": "mean"
+      },
+      {
+        "sentence": "The sample proportion p-hat equals x divided by _______.",
+        "answer": "n"
+      },
+      {
+        "sentence": "The CLT applies even when the population is not _______.",
+        "answer": "normal"
+      },
+      {
+        "sentence": "A larger sample gives a more _______ estimate of the parameter.",
+        "answer": "precise"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Sampling Distributions</h3><p>This topic is the hinge between description and inference — the single most important idea in the course. The puzzle it solves: we take <em>one</em> sample and compute one \\(\\bar{x}\\), but a different sample would have given a different \\(\\bar{x}\\). So how far might our \\(\\bar{x}\\) be from the true \\(\\mu\\)? To answer that we imagine the statistic itself as a random variable with its own distribution.</p><h4>What a sampling distribution is</h4><p>Imagine drawing <em>every</em> possible sample of size \\(n\\), computing the mean of each, and collecting those means. Their distribution is the <strong>sampling distribution of the mean</strong>. It is centred on the true parameter, and its spread — called the <strong>standard error</strong> — measures the typical sample-to-sample variability of \\(\\bar{x}\\):</p><div class=\"formula-box\">\\[ \\mu_{\\bar{x}} = \\mu, \\qquad \\sigma_{\\bar{x}} = \\frac{\\sigma}{\\sqrt{n}} \\]</div><p>Two things to read here. First, \\(\\mu_{\\bar{x}}=\\mu\\): the sample mean is <strong>unbiased</strong> — on average it hits the target. Second, the \\(\\sqrt{n}\\) in the denominator means the standard error <strong>shrinks as \\(n\\) grows</strong>, but only with the square root, so quartering the error needs four times the data. That is the precise cost of precision.</p><h4>The Central Limit Theorem (CLT)</h4><p>The result that makes inference possible: for a <strong>large enough</strong> sample, the sampling distribution of \\(\\bar{x}\\) is approximately <strong>normal</strong> — <em>regardless of the population’s shape</em>. Skewed incomes, lumpy sales, anything: average enough of them and the averages go normal. A common rule of thumb is \\(n>25\\) (often stated \\(n\\ge 30\\)); if the population is already normal, \\(\\bar{x}\\) is normal for <em>any</em> \\(n\\). Once we know \\(\\bar{x}\\) is normal we can standardise it:</p><div class=\"formula-box\">\\[ Z = \\frac{\\bar{x}-\\mu}{\\sigma/\\sqrt{n}} \\]</div><p>Note the denominator is the standard <em>error</em> \\(\\sigma/\\sqrt{n}\\), not \\(\\sigma\\) — we are standardising a sample mean, not a single observation.</p><div class=\"example-box\"><h4>Worked example — probability for a sample mean</h4><p>Annual raises are \\(N(\\mu=12.2\\%,\\ \\sigma=3.6\\%)\\). For a sample of \\(n=9\\), find \\(P(\\bar{x}>14.4\\%)\\):</p><div class=\"formula-box\">\\[ Z = \\frac{14.4-12.2}{3.6/\\sqrt{9}} = \\frac{2.2}{1.2} = 1.83 \\;\\Rightarrow\\; P(\\bar{x}>14.4) = 1 - P(Z<1.83) \\approx 0.0336 \\]</div><p>Only about a 3.4% chance the sample average exceeds 14.4% — the \\(\\sqrt{n}\\) makes the mean far less variable than a single raise would be.</p></div><div class=\"tip-box\"><h4>Sample proportions work the same way</h4><p>The sample proportion \\( \\hat{p}=x/n \\) (the fraction of “successes”) is also approximately normal when \\(nP(1-P)>5\\), with \\( E(\\hat{p})=P \\) and standard error \\( \\sigma_{\\hat{p}}=\\sqrt{\\frac{P(1-P)}{n}} \\), standardised by \\( Z=\\frac{\\hat{p}-P}{\\sigma_{\\hat{p}}} \\). When sampling <strong>without replacement</strong> and \\(n\\) exceeds about 5% of \\(N\\), multiply the standard error by the finite-population correction \\(\\sqrt{\\frac{N-n}{N-1}}\\).</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• Using \\(\\sigma\\) instead of the <strong>standard error</strong> \\(\\sigma/\\sqrt{n}\\) when standardising a sample mean — the most common error in K2.</p><p>• Thinking the CLT changes the <strong>population</strong>: it describes the distribution of the <em>mean</em>, not the raw data.</p><p>• Confusing standard deviation (spread of individuals) with standard <strong>error</strong> (spread of the sample statistic).</p></div><p class=\"highlight\">The standard error \\( \\sigma/\\sqrt{n} \\) is the engine of inference: it is why bigger samples give tighter, more trustworthy estimates — and it is exactly what confidence intervals and hypothesis tests in K2 are built on.</p>",
+      "image": null
+    }
+  },
+  "confidenceIntervals": {
+    "name": "Confidence Interval Estimation",
+    "icon": "fa-ruler-horizontal",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "Distinguish an estimator from an estimate, and a point estimate from an interval estimate.",
+        "answer": "An estimator is a random variable (a rule) based on sample data; a specific computed value of it is an estimate.\nA point estimate is a single number (e.g. \\(\\bar{x}\\)); an interval estimate (confidence interval) gives a RANGE that reflects sampling variability."
+      },
+      {
+        "question": "What is the general structure of every confidence interval?",
+        "answer": "\\[ \\text{Point estimate} \\pm (\\text{Reliability factor})\\times(\\text{Standard error}) \\]\nThe reliability factor (a \\(z\\) or \\(t\\) value) depends on the chosen confidence level."
+      },
+      {
+        "question": "How is a 95% confidence level interpreted?",
+        "answer": "In repeated sampling, about 95% of all the intervals constructed this way would contain the true parameter. A single specific interval either does or does not contain it — there is no probability attached to one realized interval. You can never be 100% confident."
+      },
+      {
+        "question": "Write the confidence interval for μ when σ is KNOWN.",
+        "answer": "\\[ \\bar{x} \\pm z_{\\alpha/2}\\,\\frac{\\sigma}{\\sqrt{n}} \\]\nValid when the population is normal (or \\(n\\) is large). The margin of error is \\( ME = z_{\\alpha/2}\\dfrac{\\sigma}{\\sqrt{n}} \\)."
+      },
+      {
+        "question": "Give the z reliability factors for 90%, 95% and 99% confidence.",
+        "answer": "• 90% → \\( z_{\\alpha/2} = 1.645 \\)\n• 95% → \\( z_{\\alpha/2} = 1.96 \\)\n• 99% → \\( z_{\\alpha/2} = 2.58 \\)"
+      },
+      {
+        "question": "Write the confidence interval for μ when σ is UNKNOWN.",
+        "answer": "\\[ \\bar{x} \\pm t_{n-1,\\,\\alpha/2}\\,\\frac{s}{\\sqrt{n}} \\]\nWe replace \\(\\sigma\\) with the sample SD \\(s\\) and use the Student’s \\(t\\) distribution."
+      },
+      {
+        "question": "What is the Student’s t distribution and its degrees of freedom?",
+        "answer": "A family of bell-shaped distributions, slightly wider than the normal, used when \\(\\sigma\\) is unknown. It has \\( df = n-1 \\) degrees of freedom; as \\(n\\) grows, \\(t\\) approaches the standard normal."
+      },
+      {
+        "question": "Why use the t distribution instead of z when σ is unknown?",
+        "answer": "Replacing \\(\\sigma\\) with the sample \\(s\\) adds extra uncertainty (because \\(s\\) varies from sample to sample). The \\(t\\) distribution has heavier tails to account for it, giving a correctly wider interval."
+      },
+      {
+        "question": "Write the confidence interval for a population proportion.",
+        "answer": "\\[ \\hat{p} \\pm z_{\\alpha/2}\\,\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}} \\]\nwhere \\( \\hat{p}=x/n \\). It uses the normal approximation, valid for large \\(n\\)."
+      },
+      {
+        "question": "What is the margin of error, and how does it relate to interval width?",
+        "answer": "The margin of error is the half-width: \\( ME = (\\text{reliability factor})\\times(\\text{standard error}) \\). The full interval width is \\( w = 2\\,ME \\)."
+      },
+      {
+        "question": "What happens to the width of a confidence interval as n increases or confidence rises?",
+        "answer": "Larger \\(n\\) → smaller standard error → NARROWER interval (more precise). Higher confidence level → larger reliability factor → WIDER interval. There is a trade-off between precision and confidence."
+      },
+      {
+        "question": "What three things widen a confidence interval?",
+        "answer": "1. A higher confidence level (bigger \\(z\\) or \\(t\\)).\n2. A larger standard deviation / variability.\n3. A smaller sample size \\(n\\)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A single-number estimate of a parameter is a:",
+        "options": [
+          "Interval estimate",
+          "Point estimate",
+          "Confidence level",
+          "Reliability factor"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Every confidence interval equals the point estimate plus or minus:",
+        "options": [
+          "The variance",
+          "(Reliability factor)(Standard error)",
+          "The sample size",
+          "The mean"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For a 95% confidence interval (σ known), the z value is:",
+        "options": [
+          "1.645",
+          "1.96",
+          "2.33",
+          "2.58"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When σ is unknown, the confidence interval for μ uses the:",
+        "options": [
+          "z distribution",
+          "Student’s t distribution",
+          "Binomial distribution",
+          "Poisson distribution"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The degrees of freedom for a one-sample t interval are:",
+        "options": [
+          "\\(n\\)",
+          "\\(n-1\\)",
+          "\\(n-2\\)",
+          "\\(2n\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The margin of error is the _______ of the confidence interval.",
+        "options": [
+          "Full width",
+          "Half-width",
+          "Center",
+          "Standard deviation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "As the sample size increases, a confidence interval becomes:",
+        "options": [
+          "Wider",
+          "Narrower",
+          "Unchanged",
+          "Skewed"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Raising the confidence level from 90% to 99% makes the interval:",
+        "options": [
+          "Narrower",
+          "Wider",
+          "Unchanged",
+          "Negative"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The confidence interval for a proportion uses the standard error:",
+        "options": [
+          "\\(\\sqrt{\\hat{p}(1-\\hat{p})/n}\\)",
+          "\\(\\sigma/\\sqrt{n}\\)",
+          "\\(s/\\sqrt{n}\\)",
+          "\\(\\hat{p}/n\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The width of a confidence interval equals:",
+        "options": [
+          "\\(ME\\)",
+          "\\(2\\,ME\\)",
+          "\\(ME/2\\)",
+          "\\(ME^2\\)"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A single number estimating a parameter is a _______ estimate.",
+        "answer": "point"
+      },
+      {
+        "sentence": "A confidence interval = point estimate ± reliability factor × standard _______.",
+        "answer": "error"
+      },
+      {
+        "sentence": "For 95% confidence with σ known, the z value is _______.",
+        "answer": "1.96"
+      },
+      {
+        "sentence": "When the population σ is unknown, we use the Student’s _______ distribution.",
+        "answer": "t"
+      },
+      {
+        "sentence": "The t distribution has n minus _______ degrees of freedom.",
+        "answer": "1"
+      },
+      {
+        "sentence": "The half-width of a confidence interval is the margin of _______.",
+        "answer": "error"
+      },
+      {
+        "sentence": "Increasing the sample size makes the interval _______.",
+        "answer": "narrower"
+      },
+      {
+        "sentence": "A higher confidence level makes the interval _______.",
+        "answer": "wider"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Confidence Interval Estimation</h3><p>K1 ended with the sampling distribution — the realisation that one sample’s \\(\\bar{x}\\) is just one draw from a distribution centred on \\(\\mu\\). Confidence intervals turn that insight into a practical tool: instead of reporting a single guess, we report a <strong>range</strong> that honestly admits sampling uncertainty. This is <strong>estimation</strong>, the first half of inference.</p><h4>Point vs. interval estimate</h4><p>A <strong>point estimate</strong> like \\(\\bar{x}\\) is a single best guess for \\(\\mu\\) — simple, but it is almost certainly a little off, and it says nothing about <em>how</em> off it might be. A <strong>confidence interval</strong> surrounds the point estimate with a margin, and every interval ever built has the same three-part shape:</p><div class=\"formula-box\">\\[ \\text{Point estimate} \\pm \\underbrace{(\\text{reliability factor})}_{z \\text{ or } t}\\times\\underbrace{(\\text{standard error})}_{\\text{sampling variability}} \\]</div><p>The <strong>reliability factor</strong> (a \\(z\\) or \\(t\\) value) is set by how confident you want to be; the <strong>standard error</strong> is the sampling variability from K1. Together they form the <strong>margin of error</strong> — the half-width of the interval.</p><h4>Interval for the mean: z when σ known, t when unknown</h4><div class=\"formula-box\">\\[ \\sigma \\text{ known:}\\quad \\bar{x} \\pm z_{\\alpha/2}\\frac{\\sigma}{\\sqrt{n}}, \\qquad \\sigma \\text{ unknown:}\\quad \\bar{x} \\pm t_{n-1,\\alpha/2}\\frac{s}{\\sqrt{n}} \\]</div><p>In practice we almost never know the population \\(\\sigma\\), so we estimate it with the sample \\(s\\) — and that substitution adds extra uncertainty, because \\(s\\) itself wobbles from sample to sample. The <strong>Student’s t</strong> distribution (\\(df=n-1\\)) absorbs that with slightly <strong>heavier tails</strong>, giving a correctly wider interval; as \\(n\\) grows, \\(t\\) converges to \\(z\\). Common z factors: 90% → 1.645, 95% → 1.96, 99% → 2.58.</p><div class=\"example-box\"><h4>Worked example — 95% interval for μ (σ known)</h4><p>\\( \\bar{x}=75 \\) minutes, \\( \\sigma=20 \\), \\( n=64 \\). The standard error is \\( 20/\\sqrt{64}=2.5 \\):</p><div class=\"formula-box\">\\[ ME = 1.96\\times 2.5 = 4.9 \\;\\Rightarrow\\; 75 \\pm 4.9 = (70.1,\\ 79.9) \\]</div><p>With 95% confidence, the true mean shopping time lies between 70.1 and 79.9 minutes.</p></div><h4>Precision vs. confidence — the central trade-off</h4><p>The interval <strong>width</strong> is \\( w = 2\\,ME \\), and three forces widen it: a <strong>higher confidence level</strong> (bigger \\(z\\)/\\(t\\)), <strong>more variability</strong> (bigger \\(\\sigma\\)/\\(s\\)), and a <strong>smaller sample</strong> (\\(\\sqrt{n}\\) in the denominator). You cannot have it all: demanding 99% confidence buys certainty at the cost of a vaguer (wider) interval. The only way to be both more confident <em>and</em> more precise is to collect more data.</p><div class=\"tip-box\"><h4>Interval for a proportion</h4><p>For a population proportion, the point estimate is \\( \\hat{p}=x/n \\) and the standard error uses \\(\\hat{p}\\) itself:</p><div class=\"formula-box\">\\[ \\hat{p} \\pm z_{\\alpha/2}\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}} \\]</div><p>It relies on the normal approximation, so it needs a reasonably large \\(n\\).</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> What 95% confidence does and doesn’t mean</h4><p>It means that <strong>over many repeated samples, about 95% of the intervals</strong> built this way would capture the true parameter. It does <strong>not</strong> mean a single realised interval has a 95% probability of containing \\(\\mu\\) — that interval either does or doesn’t; the randomness was in the sampling, not in the fixed parameter. And you can never be 100% confident without measuring the whole population.</p></div><p class=\"highlight\">Confidence interval = best guess ± (how sure you want to be) × (how noisy the data are). Narrow it by collecting more data, not by lowering your confidence.</p>",
+      "image": null
+    }
+  },
+  "hypothesisTesting": {
+    "name": "Hypothesis Testing (Single Population)",
+    "icon": "fa-scale-balanced",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "What is a statistical hypothesis, and what are H0 and H1?",
+        "answer": "A hypothesis is a claim about a population parameter. The NULL hypothesis \\(H_0\\) is the status quo (always contains \\(=,\\ \\le,\\ \\ge\\)); the ALTERNATIVE \\(H_1\\) is its opposite (\\(\\ne,\\ <,\\ >\\)) and is what the researcher tries to support."
+      },
+      {
+        "question": "How do we treat the null hypothesis (the logic of testing)?",
+        "answer": "We assume \\(H_0\\) is true and look for evidence against it — “innocent until proven guilty”. We either REJECT \\(H_0\\) (strong evidence for \\(H_1\\)) or FAIL TO REJECT it (insufficient evidence); we never “prove” \\(H_0\\)."
+      },
+      {
+        "question": "Define the level of significance α.",
+        "answer": "The probability of rejecting a true null hypothesis — the size of the rejection region. It is chosen in advance (typically 0.01, 0.05 or 0.10) and supplies the critical value(s)."
+      },
+      {
+        "question": "Define Type I and Type II errors.",
+        "answer": "• Type I error: rejecting a TRUE \\(H_0\\); its probability is \\(\\alpha\\) (considered serious).\n• Type II error: failing to reject a FALSE \\(H_0\\); its probability is \\(\\beta\\).\nThe power of a test is \\(1-\\beta\\)."
+      },
+      {
+        "question": "Write the test statistic for a mean when σ is known.",
+        "answer": "\\[ z = \\frac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}} \\]\nReject \\(H_0\\) if \\(z\\) falls in the rejection region defined by the critical value(s)."
+      },
+      {
+        "question": "Write the test statistic for a mean when σ is unknown.",
+        "answer": "\\[ t = \\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}} \\quad (df=n-1) \\]\nUse the Student’s t distribution with the sample standard deviation \\(s\\)."
+      },
+      {
+        "question": "How do one-tailed and two-tailed tests differ?",
+        "answer": "A two-tailed test (\\(H_1:\\mu\\ne\\mu_0\\)) splits \\(\\alpha\\) into both tails. A one-tailed test puts all of \\(\\alpha\\) in one tail: right tail for \\(H_1:\\mu>\\mu_0\\), left tail for \\(H_1:\\mu<\\mu_0\\)."
+      },
+      {
+        "question": "What is the p-value, and the decision rule based on it?",
+        "answer": "The p-value is the probability of a test statistic at least as extreme as the observed one, ASSUMING \\(H_0\\) is true (the smallest \\(\\alpha\\) at which \\(H_0\\) is rejected). Rule: if \\( p < \\alpha \\) reject \\(H_0\\); if \\( p \\ge \\alpha \\) do not reject."
+      },
+      {
+        "question": "Write the test statistic for a population proportion.",
+        "answer": "\\[ z = \\frac{\\hat{p}-P_0}{\\sqrt{P_0(1-P_0)/n}} \\]\nwhere \\( \\hat{p}=x/n \\). Valid for large samples (normal approximation)."
+      },
+      {
+        "question": "What are the two equivalent decision rules in hypothesis testing?",
+        "answer": "1. Critical-value rule: reject \\(H_0\\) if the test statistic falls beyond the critical value.\n2. p-value rule: reject \\(H_0\\) if \\( p < \\alpha \\).\nBoth always lead to the same conclusion."
+      },
+      {
+        "question": "Which error does decreasing α reduce, and at what cost?",
+        "answer": "A smaller \\(\\alpha\\) reduces the chance of a Type I error (rejecting a true \\(H_0\\)), but — holding \\(n\\) fixed — it raises \\(\\beta\\), the chance of a Type II error, lowering the power \\(1-\\beta\\)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The null hypothesis H0 always contains:",
+        "options": [
+          "Only \\(\\ne\\)",
+          "An equality (\\(=,\\le,\\ge\\))",
+          "Only \\(<\\)",
+          "No parameter"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Rejecting a TRUE null hypothesis is a:",
+        "options": [
+          "Type II error",
+          "Type I error",
+          "Correct decision",
+          "p-value"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The probability of a Type I error equals:",
+        "options": [
+          "\\(\\beta\\)",
+          "\\(\\alpha\\)",
+          "\\(1-\\beta\\)",
+          "the p-value"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Failing to reject a FALSE null hypothesis is a:",
+        "options": [
+          "Type I error",
+          "Type II error",
+          "Correct decision",
+          "Critical value"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The power of a test equals:",
+        "options": [
+          "\\(\\alpha\\)",
+          "\\(\\beta\\)",
+          "\\(1-\\beta\\)",
+          "\\(1-\\alpha\\)"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When σ is unknown, the test statistic for a mean follows the:",
+        "options": [
+          "z distribution",
+          "t distribution",
+          "binomial distribution",
+          "F distribution"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Using the p-value, we reject H0 when:",
+        "options": [
+          "\\(p \\ge \\alpha\\)",
+          "\\(p < \\alpha\\)",
+          "\\(p = 1\\)",
+          "\\(p > 0.5\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A test of \\(H_1:\\mu \\ne \\mu_0\\) is:",
+        "options": [
+          "Right-tailed",
+          "Left-tailed",
+          "Two-tailed",
+          "Not a valid test"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The test statistic \\(z=(\\bar{x}-\\mu_0)/(\\sigma/\\sqrt{n})\\) is used when σ is:",
+        "options": [
+          "Unknown",
+          "Known",
+          "Zero",
+          "Negative"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The significance level α is chosen:",
+        "options": [
+          "After seeing the data",
+          "In advance by the researcher",
+          "Always 0.5",
+          "By the sample size"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The status-quo claim being tested is the _______ hypothesis.",
+        "answer": "null"
+      },
+      {
+        "sentence": "The probability of a Type I error is denoted by _______.",
+        "answer": "alpha",
+        "hint": "The Greek letter \\(\\alpha\\)."
+      },
+      {
+        "sentence": "Rejecting a true null hypothesis is a Type _______ error.",
+        "answer": "I"
+      },
+      {
+        "sentence": "Failing to reject a false null hypothesis is a Type _______ error.",
+        "answer": "II"
+      },
+      {
+        "sentence": "The power of a test equals 1 minus _______.",
+        "answer": "beta",
+        "hint": "The Greek letter \\(\\beta\\)."
+      },
+      {
+        "sentence": "When σ is unknown, the test of a mean uses the _______ distribution.",
+        "answer": "t"
+      },
+      {
+        "sentence": "Using the p-value, reject H0 when p is less than _______.",
+        "answer": "alpha"
+      },
+      {
+        "sentence": "A test with H1 using “≠” is a _______-tailed test.",
+        "answer": "two"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Hypothesis Testing (Single Population)</h3><p>Confidence intervals <em>estimate</em> a parameter; hypothesis tests <strong>decide</strong> between two competing claims about it. This is the second half of inference, and the engine is identical — the same standard error from K1 — but now the question is yes/no: is there enough evidence to overturn the status quo?</p><h4>The two hypotheses</h4><p>Every test pits two statements against each other:</p><ul><li>The <strong>null hypothesis</strong> \\(H_0\\) is the status quo / “no effect” claim. It always contains an equality (\\(=,\\le,\\ge\\)) and is the statement we put on trial.</li><li>The <strong>alternative</strong> \\(H_1\\) is its opposite (\\(\\ne,<,>\\)) — usually what the researcher actually hopes to show.</li></ul><p>The logic is a courtroom: <strong>“innocent until proven guilty.”</strong> We <em>assume</em> \\(H_0\\) is true and ask whether the data are too unlikely under that assumption to believe. So we only ever <strong>reject \\(H_0\\)</strong> (strong evidence for \\(H_1\\)) or <strong>fail to reject</strong> it (insufficient evidence) — we never “accept” or “prove” \\(H_0\\), just as a verdict of “not guilty” is not “proven innocent.”</p><h4>Two ways to be wrong</h4><ul><li><strong>Type I error</strong> — rejecting a <em>true</em> \\(H_0\\) (a false alarm). Its probability is the <strong>significance level \\(\\alpha\\)</strong>, chosen in advance (typically 0.01, 0.05, 0.10).</li><li><strong>Type II error</strong> — failing to reject a <em>false</em> \\(H_0\\) (a missed detection). Its probability is \\(\\beta\\); the test’s <strong>power</strong> is \\(1-\\beta\\).</li></ul><p>The two trade off: shrinking \\(\\alpha\\) (fewer false alarms) raises \\(\\beta\\) (more misses) for a fixed \\(n\\). The only way to lower both at once is a larger sample.</p><h4>Test statistic — how many standard errors from H₀?</h4><p>The test statistic measures how far the observed \\(\\bar{x}\\) sits from the hypothesised \\(\\mu_0\\), in standard-error units (exactly a Z-score built around the null):</p><div class=\"formula-box\">\\[ \\sigma \\text{ known:}\\quad z=\\frac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}}, \\qquad \\sigma \\text{ unknown:}\\quad t=\\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}}\\ (df=n-1) \\]</div><p>The <strong>tail</strong> follows the question: “different” → two-tailed (split \\(\\alpha\\) both sides); “greater/increased” → right tail; “less/decreased” → left tail.</p><div class=\"example-box\"><h4>Worked example — right-tailed z test</h4><p>\\(H_0:\\mu\\le 25\\) vs. \\(H_1:\\mu>25\\); \\(\\bar{x}=26.4\\), \\(\\sigma=6\\), \\(n=40\\), \\(\\alpha=0.01\\).</p><div class=\"formula-box\">\\[ z=\\frac{26.4-25}{6/\\sqrt{40}}=\\frac{1.4}{0.949}=1.48 \\]</div><p>The critical value is \\(z_{0.01}=2.33\\). Since \\(1.48<2.33\\) (and \\(p=0.069>0.01\\)), we <strong>fail to reject</strong> \\(H_0\\): not enough evidence that \\(\\mu>25\\).</p></div><div class=\"tip-box\"><h4>Two equivalent decision rules</h4><p><strong>Critical-value rule:</strong> reject \\(H_0\\) if the test statistic falls beyond the critical value. <strong>p-value rule:</strong> reject if \\( p<\\alpha \\), where the <strong>p-value</strong> is the probability of a result at least as extreme as observed <em>assuming \\(H_0\\) is true</em>. They always agree. For a proportion the statistic is \\( z=\\dfrac{\\hat{p}-P_0}{\\sqrt{P_0(1-P_0)/n}} \\) (note the standard error uses the <em>hypothesised</em> \\(P_0\\)).</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• “Fail to reject \\(H_0\\)” is <strong>not</strong> “\\(H_0\\) is true” — only that evidence was insufficient.</p><p>• A small <strong>p-value</strong> is evidence against \\(H_0\\); it is <strong>not</strong> the probability that \\(H_0\\) is true.</p><p>• Decide the <strong>tail and \\(\\alpha\\) before</strong> seeing the data — choosing them afterwards to get significance invalidates the test.</p></div><p class=\"highlight\">A hypothesis test asks one question: are the data too surprising to keep believing \\(H_0\\)? If \\(p<\\alpha\\) (or the statistic beats the critical value), yes — reject.</p>",
+      "image": null
+    }
+  },
+  "regression": {
+    "name": "Regression Analysis",
+    "icon": "fa-chart-line",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What is the purpose of regression analysis?",
+        "answer": "To model the relationship between variables — to PREDICT a dependent variable \\(Y\\) from one or more independent variables \\(X\\), and to EXPLAIN how changes in \\(X\\) affect \\(Y\\)."
+      },
+      {
+        "question": "Write the population and estimated simple linear regression models.",
+        "answer": "Population: \\( Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i \\) (with random error \\(\\varepsilon\\)).\nEstimated: \\( \\hat{y}_i = b_0 + b_1 x_i \\), where \\(b_0,b_1\\) estimate \\(\\beta_0,\\beta_1\\)."
+      },
+      {
+        "question": "Which variable is dependent and which is independent?",
+        "answer": "The DEPENDENT variable \\(Y\\) is the one we explain/predict (endogenous). The INDEPENDENT variable \\(X\\) is the explanatory one (exogenous). Changes in \\(Y\\) are assumed to be caused by changes in \\(X\\)."
+      },
+      {
+        "question": "What does the method of least squares do?",
+        "answer": "It chooses \\(b_0\\) and \\(b_1\\) to MINIMIZE the sum of squared residuals (errors):\n\\[ \\min \\sum (y_i-\\hat{y}_i)^2 = \\min \\;SSE \\]"
+      },
+      {
+        "question": "Write the least-squares slope and intercept.",
+        "answer": "\\[ b_1 = \\frac{\\sum (x_i-\\bar{x})(y_i-\\bar{y})}{\\sum (x_i-\\bar{x})^2}, \\qquad b_0 = \\bar{y} - b_1\\bar{x} \\]\nThe line always passes through the point \\((\\bar{x},\\bar{y})\\)."
+      },
+      {
+        "question": "How do you interpret the slope b1 and intercept b0?",
+        "answer": "\\(b_1\\): the estimated change in the average value of \\(Y\\) for a one-unit increase in \\(X\\).\n\\(b_0\\): the estimated average value of \\(Y\\) when \\(X=0\\) (meaningful only if \\(X=0\\) is within the data range)."
+      },
+      {
+        "question": "Decompose total variation: write SST, SSR and SSE.",
+        "answer": "\\[ SST = SSR + SSE \\]\n\\( SST=\\sum(y_i-\\bar{y})^2 \\) (total), \\( SSR=\\sum(\\hat{y}_i-\\bar{y})^2 \\) (explained), \\( SSE=\\sum(y_i-\\hat{y}_i)^2 \\) (unexplained / error)."
+      },
+      {
+        "question": "Define the coefficient of determination R².",
+        "answer": "\\[ R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}, \\qquad 0 \\le R^2 \\le 1 \\]\nIt is the proportion of the variation in \\(Y\\) explained by \\(X\\) (and equals \\(r^2\\) in simple regression)."
+      },
+      {
+        "question": "How do you estimate the model error variance?",
+        "answer": "\\[ s_e^2 = \\frac{SSE}{n-2} \\]\nWe divide by \\(n-2\\) because two parameters (\\(b_0\\) and \\(b_1\\)) were estimated. \\(s_e\\) is the standard error of the estimate."
+      },
+      {
+        "question": "How do you test whether a linear relationship exists (slope test)?",
+        "answer": "Test \\(H_0:\\beta_1=0\\) (no linear relationship) vs. \\(H_1:\\beta_1\\ne 0\\) using\n\\[ t=\\frac{b_1-\\beta_1}{s_{b_1}} \\quad (df=n-2) \\]\nReject \\(H_0\\) if \\(|t|\\) exceeds the critical value — then the relationship is significant."
+      },
+      {
+        "question": "What is the relationship between the t and F statistics in simple regression?",
+        "answer": "For simple (one-predictor) regression the F statistic equals the square of the slope t statistic: \\( F = t^2 \\). Both test the same hypothesis \\( \\beta_1=0 \\) and give the same conclusion."
+      },
+      {
+        "question": "What are the key assumptions of the linear regression model?",
+        "answer": "Linearity (Y is linear in X plus error); errors independent of X; errors have mean 0 and constant variance \\(\\sigma^2\\) (homoscedasticity); and errors are uncorrelated with each other."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In regression, the variable we predict is the:",
+        "options": [
+          "Independent variable",
+          "Dependent variable",
+          "Residual",
+          "Slope"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The least-squares method minimizes:",
+        "options": [
+          "\\(SSR\\)",
+          "\\(\\sum (y_i-\\hat{y}_i)^2\\) (SSE)",
+          "\\(R^2\\)",
+          "the slope"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The slope b1 measures the change in average Y for a one-unit change in:",
+        "options": [
+          "Y",
+          "X",
+          "the residual",
+          "SST"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The regression line always passes through:",
+        "options": [
+          "The origin",
+          "\\((\\bar{x},\\bar{y})\\)",
+          "\\((0,1)\\)",
+          "the largest point"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Total variation decomposes as:",
+        "options": [
+          "\\(SST=SSR-SSE\\)",
+          "\\(SST=SSR+SSE\\)",
+          "\\(SSE=SSR+SST\\)",
+          "\\(SSR=SST\\times SSE\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The coefficient of determination R² equals:",
+        "options": [
+          "\\(SSE/SST\\)",
+          "\\(SSR/SST\\)",
+          "\\(SST/SSR\\)",
+          "\\(1+SSE/SST\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "R² of 0.77 means that 77% of the variation in Y is:",
+        "options": [
+          "Unexplained",
+          "Explained by X",
+          "Due to error",
+          "Random"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The model error variance is estimated by dividing SSE by:",
+        "options": [
+          "\\(n\\)",
+          "\\(n-1\\)",
+          "\\(n-2\\)",
+          "\\(n+2\\)"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The slope t test has null hypothesis:",
+        "options": [
+          "\\(\\beta_1=0\\)",
+          "\\(\\beta_1>0\\)",
+          "\\(b_1=1\\)",
+          "\\(R^2=0.5\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "In simple regression, the F statistic equals:",
+        "options": [
+          "\\(t\\)",
+          "\\(t^2\\)",
+          "\\(\\sqrt{t}\\)",
+          "\\(R^2\\)"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The variable we try to explain is the _______ variable.",
+        "answer": "dependent"
+      },
+      {
+        "sentence": "Least squares minimizes the sum of squared _______.",
+        "answer": "residuals"
+      },
+      {
+        "sentence": "The slope b1 is the change in average Y per one-unit change in _______.",
+        "answer": "X"
+      },
+      {
+        "sentence": "The regression line passes through the point (x-bar, _______).",
+        "answer": "y-bar"
+      },
+      {
+        "sentence": "Total sum of squares equals SSR plus _______.",
+        "answer": "SSE"
+      },
+      {
+        "sentence": "The coefficient of determination equals SSR divided by _______.",
+        "answer": "SST"
+      },
+      {
+        "sentence": "The model error variance divides SSE by n minus _______.",
+        "answer": "2"
+      },
+      {
+        "sentence": "The slope test has null hypothesis beta-1 equals _______.",
+        "answer": "0"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Regression Analysis</h3><p>Everything so far described <em>one</em> variable. Regression studies how <strong>two</strong> variables move together — and, crucially, lets us <strong>predict</strong> one from the other. Does advertising spend drive sales? How does room price affect occupancy? Regression fits a line that both summarises the relationship and produces forecasts.</p><h4>The model: dependent vs. independent</h4><p>The <strong>dependent</strong> variable \\(Y\\) is what we explain or predict; the <strong>independent</strong> variable \\(X\\) is the explanatory driver. The true population relationship includes a random error \\(\\varepsilon\\) (no real data sit exactly on a line); from a sample we estimate the line that strips the error away:</p><div class=\"formula-box\">\\[ Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i \\quad\\xrightarrow{\\text{estimate}}\\quad \\hat{y}_i = b_0 + b_1 x_i \\]</div><h4>Least squares — fitting the best line</h4><p>Of all possible lines, <strong>least squares</strong> picks the one that minimises the sum of squared <strong>residuals</strong> (vertical gaps between actual \\(y_i\\) and fitted \\(\\hat{y}_i\\)). We square the residuals so positives and negatives don’t cancel and large misses are penalised more. The solution:</p><div class=\"formula-box\">\\[ b_1 = \\frac{\\sum (x_i-\\bar{x})(y_i-\\bar{y})}{\\sum (x_i-\\bar{x})^2}, \\qquad b_0 = \\bar{y}-b_1\\bar{x} \\]</div><p><strong>Interpretation is everything:</strong> \\(b_1\\) (the slope) is the estimated change in <em>average</em> \\(Y\\) for a one-unit rise in \\(X\\) — the headline number. \\(b_0\\) (the intercept) is the average \\(Y\\) when \\(X=0\\), meaningful only if \\(X=0\\) is realistic. The fitted line always passes through \\((\\bar{x},\\bar{y})\\).</p><h4>Goodness of fit: how good is the line?</h4><p>Total variation in \\(Y\\) splits into the part the line <strong>explains</strong> and the part it leaves as <strong>error</strong>:</p><div class=\"formula-box\">\\[ \\underbrace{SST}_{\\text{total}} = \\underbrace{SSR}_{\\text{explained}} + \\underbrace{SSE}_{\\text{unexplained}}, \\qquad R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}, \\qquad s_e^2 = \\frac{SSE}{n-2} \\]</div><p>The <strong>coefficient of determination</strong> \\(R^2\\) (between 0 and 1) is the share of \\(Y\\)’s variation explained by \\(X\\) — the single most quoted fit measure. We divide \\(SSE\\) by \\(n-2\\) for the error variance because <em>two</em> parameters (\\(b_0,b_1\\)) were estimated.</p><div class=\"example-box\"><h4>Worked example — slope, intercept and R²</h4><p>From \\(n=10\\): \\(\\bar{x}=40,\\ \\bar{y}=12\\), \\(\\sum(x-\\bar{x})(y-\\bar{y})=-720\\), \\(\\sum(x-\\bar{x})^2=1800\\), \\(SST=500\\).</p><div class=\"formula-box\">\\[ b_1=\\frac{-720}{1800}=-0.4, \\qquad b_0=12-(-0.4)(40)=28 \\]</div><div class=\"formula-box\">\\[ SSR=b_1^2\\sum(x-\\bar{x})^2=(0.4)^2(1800)=288, \\qquad R^2=\\frac{288}{500}=0.576 \\]</div><p>So \\( \\hat{y}=28-0.4x \\): each one-unit rise in \\(X\\) lowers predicted \\(Y\\) by 0.4, and 57.6% of the variation in \\(Y\\) is explained by \\(X\\).</p></div><div class=\"tip-box\"><h4>Is the relationship significant?</h4><p>A slope estimated from a sample could be non-zero by chance. Test \\(H_0:\\beta_1=0\\) (no linear relationship) with \\( t=\\dfrac{b_1-\\beta_1}{s_{b_1}} \\) (\\(df=n-2\\)); reject if \\(|t|\\) beats the critical value. In simple regression the equivalent F test satisfies \\( F=t^2 \\) — both reach the same verdict.</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Common pitfalls</h4><p>• <strong>Correlation is not causation:</strong> a high \\(R^2\\) shows a strong linear fit, never that \\(X\\) <em>causes</em> \\(Y\\).</p><p>• <strong>Don’t extrapolate</strong> far outside the observed \\(X\\) range — the linear pattern may not hold there, and \\(b_0\\) is often meaningless.</p><p>• \\(R^2\\) measures <em>linear</em> fit only; a curved relationship can have low \\(R^2\\) yet be strong.</p></div><p class=\"highlight\">Slope \\(b_1\\) = how much \\(Y\\) moves per unit of \\(X\\); \\(R^2\\) = how much of \\(Y\\) the line explains. Both describe the fit — neither proves causation.</p>",
+      "image": null
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Tutorials)",
+    "icon": "fa-graduation-cap",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What is the overall arc of an introductory statistics course?",
+        "answer": "Describe data (graphs + summary numbers) → quantify uncertainty (probability + distributions) → infer about a population from a sample (estimation + hypothesis testing) → model relationships between variables (regression). Each step builds on the previous one."
+      },
+      {
+        "question": "Descriptive vs. inferential statistics — restate the divide.",
+        "answer": "Descriptive: summarize the data in hand (mean, SD, histograms). Inferential: use a sample to draw conclusions about the population (confidence intervals, hypothesis tests, regression) — always with a stated level of uncertainty."
+      },
+      {
+        "question": "What single quantity links sampling distributions, confidence intervals and hypothesis tests?",
+        "answer": "The STANDARD ERROR. For a mean it is \\( \\sigma_{\\bar{x}}=\\dfrac{\\sigma}{\\sqrt{n}} \\): it sets the spread of the sampling distribution, the width of a confidence interval, and the denominator of a test statistic."
+      },
+      {
+        "question": "Summarize the key formulas for center and spread.",
+        "answer": "\\[ \\bar{x}=\\frac{\\sum x_i}{n}, \\quad s^2=\\frac{\\sum (x_i-\\bar{x})^2}{n-1}, \\quad CV=\\frac{s}{\\bar{x}}\\times 100\\% \\]"
+      },
+      {
+        "question": "When do you use the binomial, the Poisson, and the normal distribution?",
+        "answer": "• Binomial: a fixed number \\(n\\) of independent success/failure trials.\n• Poisson: counts of events in a continuous interval at rate \\(\\lambda\\).\n• Normal: a continuous, bell-shaped variable — and the distribution of sample means by the CLT."
+      },
+      {
+        "question": "State the Central Limit Theorem and why it matters.",
+        "answer": "For a large enough \\(n\\), the sample mean is approximately normal regardless of the population shape, with mean \\(\\mu\\) and standard error \\(\\sigma/\\sqrt{n}\\). It justifies using the normal/t machinery for inference about means."
+      },
+      {
+        "question": "How do you choose between z and t for a mean?",
+        "answer": "If the population standard deviation \\(\\sigma\\) is KNOWN, use \\(z\\). If \\(\\sigma\\) is UNKNOWN (the usual case), use the sample \\(s\\) and the Student’s \\(t\\) distribution with \\(df=n-1\\)."
+      },
+      {
+        "question": "Write the confidence interval and the test statistic for a mean (σ unknown).",
+        "answer": "\\[ \\text{CI:}\\quad \\bar{x}\\pm t_{n-1,\\alpha/2}\\frac{s}{\\sqrt{n}}, \\qquad \\text{test:}\\quad t=\\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}} \\]\nThe two are mirror images — a value rejected by the test lies outside the corresponding interval."
+      },
+      {
+        "question": "Contrast Type I and Type II errors and the role of α.",
+        "answer": "Type I: reject a true \\(H_0\\) (probability \\(\\alpha\\), set in advance). Type II: fail to reject a false \\(H_0\\) (probability \\(\\beta\\); power \\(=1-\\beta\\)). Lowering \\(\\alpha\\) reduces Type I errors but, for fixed \\(n\\), raises \\(\\beta\\)."
+      },
+      {
+        "question": "Summarize simple linear regression: equation, fit, and inference.",
+        "answer": "\\[ \\hat{y}=b_0+b_1x, \\quad b_1=\\frac{\\sum(x-\\bar{x})(y-\\bar{y})}{\\sum(x-\\bar{x})^2}, \\quad R^2=\\frac{SSR}{SST} \\]\nTest \\(H_0:\\beta_1=0\\) with \\( t=\\dfrac{b_1}{s_{b_1}} \\) (\\(df=n-2\\)) to check for a significant linear relationship."
+      },
+      {
+        "question": "How are confidence intervals and two-tailed tests two sides of one coin?",
+        "answer": "A value \\(\\mu_0\\) lies INSIDE the \\((1-\\alpha)\\) confidence interval exactly when a two-tailed test at level \\(\\alpha\\) does NOT reject \\(H_0:\\mu=\\mu_0\\). Both rest on the same point estimate ± reliability factor × standard error."
+      },
+      {
+        "question": "What does R² tell you, and what does it NOT tell you?",
+        "answer": "\\(R^2=SSR/SST\\) is the proportion of variation in \\(Y\\) explained by \\(X\\) (0 to 1). It measures the strength of the linear fit but does NOT prove causation, nor that the model is correct outside the observed range."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Using a sample to draw conclusions about a population is:",
+        "options": [
+          "Descriptive statistics",
+          "Inferential statistics",
+          "A census",
+          "A frequency table"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The standard error of the mean is:",
+        "options": [
+          "\\(\\sigma\\)",
+          "\\(\\sigma/\\sqrt{n}\\)",
+          "\\(s^2\\)",
+          "\\(n\\sigma\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Counts of arrivals per minute are modeled with the:",
+        "options": [
+          "Binomial",
+          "Poisson",
+          "Normal",
+          "Uniform"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Central Limit Theorem makes the sample mean approximately:",
+        "options": [
+          "Skewed",
+          "Normal",
+          "Binomial",
+          "Uniform"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When σ is unknown, inference about a mean uses the:",
+        "options": [
+          "z distribution",
+          "t distribution",
+          "F distribution",
+          "Poisson distribution"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Rejecting a true null hypothesis is a:",
+        "options": [
+          "Type II error",
+          "Type I error",
+          "Correct decision",
+          "p-value"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A 95% confidence interval and a two-tailed test at α = 0.05 are:",
+        "options": [
+          "Unrelated",
+          "Equivalent decisions",
+          "Both one-tailed",
+          "Always different"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In regression, R² equals:",
+        "options": [
+          "\\(SSE/SST\\)",
+          "\\(SSR/SST\\)",
+          "\\(SST/SSE\\)",
+          "\\(n-2\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The least-squares regression line always passes through:",
+        "options": [
+          "The origin",
+          "\\((\\bar{x},\\bar{y})\\)",
+          "The maximum point",
+          "\\((1,1)\\)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a measure of relative dispersion comparable across units?",
+        "options": [
+          "Range",
+          "Coefficient of variation",
+          "IQR",
+          "Mode"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The slope test in regression has null hypothesis:",
+        "options": [
+          "\\(\\beta_1=0\\)",
+          "\\(R^2=1\\)",
+          "\\(b_0=0\\)",
+          "\\(\\mu=0\\)"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Increasing the sample size makes a confidence interval:",
+        "options": [
+          "Wider",
+          "Narrower",
+          "Unchanged",
+          "Skewed"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Drawing conclusions about a population from a sample is _______ statistics.",
+        "answer": "inferential"
+      },
+      {
+        "sentence": "The standard error of the mean is sigma over the square root of _______.",
+        "answer": "n"
+      },
+      {
+        "sentence": "The Central Limit Theorem makes the sample mean approximately _______.",
+        "answer": "normal"
+      },
+      {
+        "sentence": "When the population σ is unknown, inference about a mean uses the _______ distribution.",
+        "answer": "t"
+      },
+      {
+        "sentence": "Rejecting a true null hypothesis is a Type _______ error.",
+        "answer": "I"
+      },
+      {
+        "sentence": "The coefficient of determination R² equals SSR divided by _______.",
+        "answer": "SST"
+      },
+      {
+        "sentence": "The regression slope test has null hypothesis beta-1 equals _______.",
+        "answer": "0"
+      },
+      {
+        "sentence": "A larger sample makes a confidence interval _______.",
+        "answer": "narrower"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Final Exam Roadmap — all nine tutorials</h3><p>Statistics tells one connected story: <strong>describe</strong> data, <strong>quantify</strong> uncertainty, <strong>infer</strong> about a population, and <strong>model</strong> relationships. Drill the per-tutorial categories in this lesson, then use this set to link them.</p><div class=\"formula-box\">\\[ \\begin{aligned}\\text{Center \\& spread:}\\quad & \\bar{x}=\\frac{\\sum x_i}{n},\\quad s^2=\\frac{\\sum (x_i-\\bar{x})^2}{n-1}\\\\[2pt]\\text{Standardize:}\\quad & Z=\\frac{X-\\mu}{\\sigma}\\\\[2pt]\\text{Standard error:}\\quad & \\sigma_{\\bar{x}}=\\frac{\\sigma}{\\sqrt{n}}\\\\[2pt]\\text{CI for a mean:}\\quad & \\bar{x}\\pm t_{n-1,\\alpha/2}\\frac{s}{\\sqrt{n}}\\\\[2pt]\\text{Test for a mean:}\\quad & t=\\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}}\\\\[2pt]\\text{Regression:}\\quad & \\hat{y}=b_0+b_1x,\\quad R^2=\\frac{SSR}{SST}\\end{aligned} \\]</div><h4>First midterm (T1–T6)</h4><ul><li><strong>Describing data:</strong> data types &amp; graphs; mean/median/mode, variance, SD, CV, IQR; empirical rule &amp; Chebyshev.</li><li><strong>Probability:</strong> sample space, unions/intersections, \\(P(A\\cup B)=P(A)+P(B)-P(A\\cap B)\\), conditional probability, independence.</li><li><strong>Random variables:</strong> \\(E(X)=\\sum xP(x)\\); binomial (\\(\\mu=nP\\)), Poisson (\\(\\mu=\\sigma^2=\\lambda\\)); the normal distribution and Z-scores.</li><li><strong>Sampling distributions:</strong> standard error \\(\\sigma/\\sqrt{n}\\) and the Central Limit Theorem.</li></ul><h4>Second midterm (T7–T9)</h4><ul><li><strong>Confidence intervals:</strong> point estimate ± reliability × standard error; z (σ known) or t (σ unknown, \\(df=n-1\\)); proportions.</li><li><strong>Hypothesis testing:</strong> \\(H_0\\) vs \\(H_1\\); Type I (\\(\\alpha\\)) and Type II (\\(\\beta\\)) errors; z/t test statistics; p-value rule \\(p<\\alpha\\).</li><li><strong>Regression:</strong> least-squares \\(b_0,b_1\\); \\(SST=SSR+SSE\\); \\(R^2\\); slope test \\(t=b_1/s_{b_1}\\) (\\(df=n-2\\)).</li></ul><div class=\"tip-box\"><h4>Exam strategy</h4><p>Closed questions reward exact <strong>formulas and definitions</strong> (standard error, the empirical rule, \\(R^2=SSR/SST\\), Type I vs II). Open/numeric questions reward a clear <strong>method</strong>: write the formula, plug in, compute, then interpret in context (“with 95% confidence …”, “reject \\(H_0\\) because …”). Watch one/two-tailed wording and z-vs-t choice.</p></div><div class=\"warning-box\"><h4><i class=\"fas fa-exclamation-triangle\"></i> Cross-topic traps that cost marks</h4><p>• <strong>Standard error vs. standard deviation:</strong> use \\(\\sigma/\\sqrt{n}\\) for a sample mean, plain \\(\\sigma\\) for a single observation.</p><p>• <strong>z vs. t:</strong> \\(\\sigma\\) known → z; \\(\\sigma\\) unknown (use \\(s\\)) → t with \\(df=n-1\\) (or \\(n-2\\) in regression).</p><p>• <strong>Variance vs. SD</strong> in \\(N(\\mu,\\sigma^2)\\): take the square root before standardising.</p><p>• <strong>One- vs. two-tailed:</strong> decide from the wording and split \\(\\alpha\\) only for “≠”; never read significance off causation.</p></div><p class=\"highlight\">The whole second half is one idea applied twice — point estimate ± reliability × standard error — once to build intervals and once (rearranged) to test hypotheses; regression then extends inference to the slope between two variables.</p>",
+      "image": null
+    }
+  }
+}

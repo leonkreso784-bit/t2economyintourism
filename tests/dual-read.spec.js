@@ -56,6 +56,32 @@ test('dual-read: JSON payload === .js payload (bajt-identično u pregledniku)', 
   expect(jsVer).toBe(jsonVer);                  // JSON-učitano === .js-učitano, bajt-u-bajt
 });
 
+test('dual-read: exercise predmet (statistics) — study iz JSON, vježbe+lib iz .js', async ({ page }) => {
+  await blockSupabase(page);
+  const reqs = [];
+  page.on('request', (r) => reqs.push(r.url()));
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.goto('/');
+  await page.waitForFunction(() => window.SokratContent);
+
+  const res = await page.evaluate(() => window.SokratContent.loadLesson('statistics', 'first-midterm').then((d) => ({
+    studyKeys: Object.keys(d).length,
+    hasExercises: typeof window.statisticsExercises === 'object' && !!window.statisticsExercises,
+    hasLib: typeof window.StatLib === 'object' && !!window.StatLib,
+  })));
+
+  expect(res.studyKeys).toBeGreaterThan(0);     // study razriješen (iz JSON-a)
+  expect(res.hasExercises).toBe(true);          // vježbe učitane (iz .js codeScripts)
+  expect(res.hasLib).toBe(true);                // stat-lib učitan (iz .js codeScripts)
+  // study iz JSON, kod iz .js — BUG-012 očuvan
+  expect(reqs.some((u) => u.includes('data/json/statistics/statisticsM1.json'))).toBe(true);
+  expect(reqs.some((u) => u.includes('data/statistics/exercises.js'))).toBe(true);
+  expect(reqs.some((u) => u.includes('data/statistics/midterm-1.js'))).toBe(false); // study NIJE iz .js
+  expect(errors).toEqual([]);
+});
+
 test('dual-read: JSON blokiran → fallback na .js (0 regresije)', async ({ page }) => {
   await blockSupabase(page);
   await page.route('**/data/json/sit/**', (route) => route.abort());
