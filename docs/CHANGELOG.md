@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 (reusable jezgra) — 2B + 2E ✅ DEPLOYANO NA PRODUKCIJU (2026-07-01; ff-merge `164dc11..57f449a`, uz izričito odobrenje; CI zelen; live potvrđeno).**
+  Revidirani redoslijed (dogovoreno, utemeljeno u kodu): **S1 Repo prije S2 JSON + Sentry ranije.**
+  **ContentRepository (S1):** novi `js/content-repo.js` → `window.SokratContent` (`listSubjects`/`getSubject`/`isLessonComingSoon`/`loadLesson`/`isLoaded`) —
+  tanki šav koji objedinjuje 3 razbacana puta dohvata (catalog metapodaci + `loadSubjectContent` + `getSubjectData`); **nula promjene ponašanja**
+  (DB↔datoteka fallback ostaje u loaderu). `navigation.js:initStudyPage` → `await SokratContent.loadLesson(...)` (fallback na stari dvokorak).
+  Test `tests/content-repo.spec.js` (ekvivalencija — identična referenca).
+  **Sentry error-monitoring (2E):** novi `js/monitoring.js` → `window.SokratMonitor` (`captureException`/`enable`/`disable`/`status`); globalni
+  `error`+`unhandledrejection` hvatači; **consent-gated** (`consent.js applyConsent`→`enable/disable`, isti gate kao GA); **Sentry Loader Script**
+  `js-de.sentry-cdn.com` (EU/DE regija; ključ javan kao GA ID; bez fiksne verzije→bez 404); `sendDefaultPii:false`; release `sokrat-study@20260699`;
+  dashboard sveden na **samo hvatanje grešaka** (Tracing/Session-Replay/Logs isključeni). Živa provjera: obje test-greške stigle na dashboard (Users:0).
+  Test `tests/monitoring.spec.js` (loader stubban preko `page.route`, offline). Cache `?v=20260699`. Playwright 101 pass / 0 fail (subjects=18).
 - **🧱 FAZA 1 — reliability rails ✅ GOTOVA + GITHUB-ZELENA + ✅ DEPLOYANA NA PRODUKCIJU (2026-06-30; ff-merge `c874627..69ce466`, uz izričito odobrenje; live potvrđeno: landing-stats=5700, tokeni `?v=20260698`).**
   Platforma-first temelj (FOUNDATION_PLAN). **CI/CD** (`.github/workflows/ci.yml`, GitHub Actions, 2 joba): `build` =
   npm ci→`validate:content`→`verify`→`test:unit`→`typecheck`→`test:rls`→Playwright; `lighthouse` = budžeti. TVRDI gate (crveno=ne u `main`).

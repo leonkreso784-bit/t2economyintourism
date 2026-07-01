@@ -6,6 +6,7 @@
 ## 🧱 Hardening v1 + perf (2026-06-29) — sad u [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) Faza 1/3
 Nalazi iz `sonnet.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).
 Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):
+> **✅ STATUS: F1 1C stavke ISPORUČENE + LIVE (2026-06-30):** sigurnosni headeri, „Works offline"→„No install needed", `loadProgress` schema-merge (u `storage.js`, ne analytics), „400+"→dinamičan (`compute-stats.js`), mrtav `lessonCategoryMap`→`{}`. Preostaju 💤 (CSP/DOMPurify/CSS-bundling/PWA-ikona/SW = Faza 3/6).
 - 🔥 **Sigurnosni headeri** (`vercel.json`): makni deprecated `X-XSS-Protection`; dodaj `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
 - 🔥 **„Works offline" copy** — sad neistina (nema Service Workera). Kratkoročno oslabi copy („Bez instalacije"/„Radi na mobitelu"); dugoročno **dodaj SW** (Faza 3) pa „Works offline" postane ISTINA (prava feature za study-app na lošoj vezi).
 - ➖ **`loadProgress` schema-merge** (`js/analytics.js`): `{ ...defaultProgress, ...JSON.parse(saved) }` — otpornost na pokvaren/stari localStorage.
@@ -21,7 +22,7 @@ Iznad „zdravog" temelja — ono što ga čini elitnim. Sve u postojeće faze, 
   - ✅ **axe a11y gate** (`tests/a11y.spec.js`) — GOTOVO 1D.2 (popravljen 1 serious: sidebar tabindex).
   - ✅ **layout-regression guard** (`tests/layout-guard.spec.js`, deterministička geometrija, 13 širina × 2 jezika) — GOTOVO 1D.3, hvata BUG-015 klasu, platform-neovisno.
   - ⬜ **Pixel `toHaveScreenshot`** — ODGOĐEN: baseline ovisi o platformi (Win lokalno ≠ Linux CI), nema Dockera/CI-token pristupa za Linux-baseline ovu sesiju. Plan kad bude moguće: (a) Playwright Docker image lokalno, ILI (b) `workflow_dispatch` job `--update-snapshots` koji commita `-linux` baseline (GITHUB_TOKEN write). Determinističke provjere (a11y+layout-guard+postojeći overflow sweep) dotad pokrivaju regresije.
-- 🔥 **Sentry + release-tracking (#2)** — git-SHA release, consent-aware; kraj „sljepoće" na produkcijske greške. [F2 2E].
+- ✅ **Sentry + release-tracking (#2)** — GOTOVO + LIVE (2026-07-01, F2 2E): `js/monitoring.js`→`window.SokratMonitor`, consent-gated, Loader EU/DE, samo hvatanje grešaka (Tracing/Replay/Logs off), `sendDefaultPii:false`, release `sokrat-study@…`; uživo verificiran. ⬜ opc.: mail-alert prag na dashboardu.
 - ✅ **RLS test (#3)** — GOTOVO 1E: `scripts/rls-check.js` read-only protiv POSTOJEĆE baze (besplatno). ⬜ **Ephemeral Supabase branch** (izolirani test + migracije na branchu) ODGOĐEN: **traži Pro plan $25/mj** (provjereno; org je free, branch compute $0.01344/h tek nakon Pro) → kad/ako Pro.
 - 💤 **CRUD versioning + audit-log + dry-run diff (#4)** — undo/povijest/kočnica za source-of-truth flip. [F4 4E].
 - 💤 **SRS dizajn-dok PRIJE koda + FSRS (#5)** — `docs/SRS_PLAN.md`; 2024+ algoritam, ne nabacani SM-2. [F5 5.0].

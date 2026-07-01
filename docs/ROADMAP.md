@@ -14,8 +14,10 @@ ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.**
 **RAZINA = „brutalna" ne „zdrava" (korisnik 2026-06-29):** +5 nadogradnji (sve u postojeće faze, redoslijed isti; FOUNDATION_PLAN §7):
 (1) **perf/a11y/visual TVRDI CI gateovi** (Lighthouse budžeti + axe + screenshot) [F1 1D], (2) **Sentry+release-tracking** [F2 2E],
 (3) **RLS+migracije na Supabase branchu** [F1 1E], (4) **CRUD versioning+audit+dry-run** [F4 4E], (5) **SRS dizajn-dok PRIJE koda+FSRS** [F5 5.0].
-TVRDI gate = blokada, ne upozorenje; trošak alata 0 €. **DALJE (poslije compacta): F1 — korisnik bira CI/CD prvo PA zajednički deploy
-ne-deployanog i18n chromea (2 lokalna commita) uz cache-bump.** [[foundation-pivot]]
+TVRDI gate = blokada, ne upozorenje; trošak alata 0 €.
+**STATUS:** ✅ **F1 GOTOVA + DEPLOYANA** (2026-06-30, `69ce466`; CI/CD + tsc + hardening + TVRDI gateovi + RLS-test; i18n chrome otišao zajedno).
+✅ **F2 2B+2E GOTOVI + DEPLOYANI** (2026-07-01, `57f449a`; ContentRepository `SokratContent` šav + Sentry error-monitoring consent-gated/EU/error-only, uživo verificiran).
+**▶ DALJE: F2 2A** (S2 čisti JSON format, predmet-po-predmet, dual-read) → 2C AppState → 2D Web Components → F3 performanse. [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"

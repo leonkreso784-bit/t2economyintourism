@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
+**Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.
+Live potvrđeno: `js/content-repo.js` + `js/monitoring.js` + tokeni `?v=20260699` serviraju se; `privacy.html` Sentry-tekst live; homepage 200; Supabase budan (RLS OK).
+**Sentry ožičen do kraja (2E dovršen):** korisnik dostavio **Loader Script** `https://js-de.sentry-cdn.com/59736986…min.js` (EU/DE regija). Kod prešao s DSN-parsiranja na
+direktni `SENTRY_LOADER_URL`/`isConfigured()`; `sentryOnLoad`→`Sentry.init({release:'sokrat-study@20260699', sendDefaultPii:false})`. **Dashboard sveden na SAMO error-monitoring**
+(korisnik isključio Enable Tracing + Session Replay + Logs and Metrics). **ŽIVA PROVJERA ✅:** `SokratMonitor.captureException(...)` + `setTimeout(()=>x())` → obje greške na Sentry
+dashboardu (JAVASCRIPT-1/-2), release točan, **Users:0** (`sendDefaultPii:false` radi), stack pokazao `sentryWrapped` (SDK aktivan). **GDPR ✅:** `privacy.html` §5 odlomak o Sentryju
+(samo tehnički error-report, bez PII/replay/perf, EU/DE, čl. 6(1)(a)) + cookie-banner „analytics &amp; error-monitoring". Testovi `content-repo.spec.js` + `monitoring.spec.js`
+(loader stubban preko `page.route`, offline-deterministički). **⬜ DALJE: 2A (S2 čisti JSON format)** — predmet-po-predmet, dual-read; najveći/najosjetljiviji dio Faze 2. Opcionalno: mail-alert prag na Sentry dashboardu.
+
 ## 2026-06-30 — ✅ F1 DEPLOYAN NA PRODUKCIJU + ▶ FAZA 2 započeta (cigla 2B.1 ContentRepository)
 **F1 → produkcija:** ff-merge `c874627..69ce466` (grana→main, uz izričito odobrenje); i18n chrome `25c2474` otišao zajedno.
 Live potvrđeno: `landing-stats.js`=5700, tokeni `?v=20260698`, CI zelen, RLS OK. Doc-status `164dc11`.
@@ -17,16 +27,14 @@ Gate: verify 0/0, content-repo 8/8, lazy-load 4/4 (učitavanje skripti netaknuto
 **Cigla 2B.3 ✅ (prvi DODIR postojećeg koda):** `navigation.js:initStudyPage` → `await SokratContent.loadLesson(subjectId,lessonId)` umjesto
 ručnog `loadSubjectContent`+`getSubjectData` (fallback na stari dvokorak ako Repo nije prisutan → 0 regresije). `navigation.js?v=20260699`.
 Gate: verify 0/0, typecheck 0, **puni responsive smoke 89 pass / 0 fail (subjects=18, problems=0, errors=0)** + content-repo 8/8 + lazy-load 4/4.
-**Cigla 2E ✅ INFRA GOTOVA (čeka DSN):** `js/monitoring.js` → `window.SokratMonitor` (`captureException/enable/disable/status`). Globalni
+**Cigla 2E ✅ INFRA GOTOVA (DSN naknadno dostavljen + deployano — vidi unos 2026-07-01):** `js/monitoring.js` → `window.SokratMonitor` (`captureException/enable/disable/status`). Globalni
 `error`+`unhandledrejection` hvatači instalirani odmah, prosljeđuju TEK na pristanak. **SIGURAN NO-OP bez DSN-a** (ništa se ne učita/šalje, NIKAD
 ne baca). Sentry **Loader Script** (URL iz DSN ključa) → nema fiksne verzije → nema 404. Consent-gated: `consent.js applyConsent` → `enable()/disable()`
 (isti gate kao GA, `sendDefaultPii:false`). Cache `?v=20260699` (monitoring.js + consent.js na svih 5 stranica). Test `tests/monitoring.spec.js` 8/8
 (API + no-op bez DSN + consent-gate + nikad ne baca + „Accept" ožiči). Regresija: legal+landing 32/32, verify 0/0.
 **✅ LOADER UPISAN (korisnik dostavio):** `https://js-de.sentry-cdn.com/59736986…min.js` (EU/DE regija; ključ javan kao GA ID). Kod prešao s DSN-parsiranja
 na direktni Loader URL (`isConfigured()`/`SENTRY_LOADER_URL`; `sentryOnLoad`→`init({release,sendDefaultPii:false})`). Test prepisan s `page.route` stubom (offline,
-12/12: gate, init(release), proslijeđena greška). **⏳ PRIJE/UZ DEPLOY F2:** (1) GDPR disclosure u `privacy.html`+banner (Sentry/EU); (2) živa provjera nakon deploya
-(`myUndefinedFunction()` u konzoli → stigne na dashboard s releaseom); (3) mail-alert prag.
-**DALJE: 2A S2 JSON** (predmet-po-predmet, dual-read) — najveći dio Faze 2.
+12/12: gate, init(release), proslijeđena greška). **→ SVE DOVRŠENO 2026-07-01 (deploy + živa provjera + GDPR); vidi gornji unos.**
 
 ## 2026-06-30 — 🧱 F1 brick 1E ✅ → **FAZA 1 GOTOVA**: RLS sigurnosni test (read-only)
 **Peta/zadnja cigla F1.** Provjerio cijenu branchinga PRVO: **Supabase branching traži Pro plan $25/mj** (org je `free`;

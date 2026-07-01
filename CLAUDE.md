@@ -307,7 +307,16 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   „Works offline"→„No install needed") · **1D** TVRDI gateovi (`tests/a11y.spec.js` axe 0-serious — popravljen sidebar `tabindex`; `tests/layout-guard.spec.js`
   deterministički sweep 13šir×{EN,HR}=BUG-015 zaštita; **Lighthouse** kalibriran na CI-brojeve a11y98/bp100/seo100/perf66 → tvrdi a11y/bp/seo≥0.95+CLS≤0.1+TBT≤400ms,
   perf≥0.5 floor dok F3 ne digne; pixel-screenshot ODGOĐEN—treba Linux baseline) · **1E** `scripts/rls-check.js` read-only RLS (anon čita content, 0 progress; skip-ako-uspavana;
-  branching traži Pro $25/mj→odbačeno). **package-lock.json sad VERZIONIRAN** (bio gitignored→`npm ci` pao). **✅ DEPLOYANO 2026-06-30** (i18n chrome `25c2474` otišao zajedno; main=origin/main=`69ce466`). **DALJE:** **F2** (reusable jezgra). [[foundation-pivot]]
+  branching traži Pro $25/mj→odbačeno). **package-lock.json sad VERZIONIRAN** (bio gitignored→`npm ci` pao). **✅ DEPLOYANO 2026-06-30** (i18n chrome `25c2474` otišao zajedno; main=origin/main=`69ce466`). [[foundation-pivot]]
+- **▶ FAZA 2 (reusable jezgra) — 2B+2E ✅ DEPLOYANO NA PRODUKCIJU (2026-07-01, `164dc11..57f449a` ff-merge grana `foundation/f2`→main uz odobrenje; CI zelen; live potvrđeno):**
+  **Revidirani redoslijed (dogovoreno, utemeljeno u kodu):** S1 Repo PRIJE S2 JSON + Sentry ranije (F3 ovisi o S1 ne o S2; S1=0-rizik šav prije diranja podataka; Sentry=vidljivost prije rizične migracije).
+  **✅ 2B.1 ContentRepository (S1):** `js/content-repo.js` → `window.SokratContent` (`listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded`) — tanki omotač oko 3 razbacana puta
+  (catalog metapodaci + `loadSubjectContent` + `getSubjectData`), NULA promjene ponašanja (DB↔datoteka fallback ostaje u loaderu). **✅ 2B.3:** `navigation.js:initStudyPage` → `await SokratContent.loadLesson(...)`
+  (fallback na stari dvokorak). Test `tests/content-repo.spec.js` (ekvivalencija: `loadLesson` vraća IDENTIČNU referencu). **✅ 2E Sentry monitoring:** `js/monitoring.js` → `window.SokratMonitor`
+  (`captureException/enable/disable/status`); globalni `error`+`unhandledrejection` hvatači; **consent-gated** (`consent.js applyConsent`→`enable/disable`, isti gate kao GA); **Loader Script** `js-de.sentry-cdn.com`
+  (EU/DE regija, ključ javan kao GA ID; nema fiksne verzije→nema 404); `sendDefaultPii:false`; release `sokrat-study@20260699`. **Dashboard: samo error-monitoring** (Tracing/Session-Replay/Logs ISKLJUČENI).
+  **✅ ŽIVA PROVJERA:** obje test-greške stigle na Sentry dashboard (Users:0 = PII off radi). **✅ GDPR:** `privacy.html` §5 + cookie-banner spominju Sentry. Test `tests/monitoring.spec.js` (loader stubban preko `page.route`).
+  Cache `?v=20260699`. Gate (dvaput): validate/verify/typecheck/unit/RLS 0/0, **Playwright 101 pass/0 fail (subjects=18)**, CI zelen. **⬜ DALJE: 2A** (S2 čisti JSON format, predmet-po-predmet, dual-read — najveći dio Faze 2) → 2C AppState → 2D Web Components. [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

@@ -114,6 +114,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
+**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ GOTOVI I DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **DALJE: 2A (S2 JSON), pa 2C (AppState), pa 2D (Web Components).**
 
 > **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
 > i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —

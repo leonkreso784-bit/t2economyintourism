@@ -12,7 +12,7 @@
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
-  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno 15): renderiranje, protok podataka
+  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno **18** = 17 EN + HR pilot): renderiranje, protok podataka
     kroz catalog, 0 JS grešaka, 0 overflowa.
   - `katex.spec.js` — KaTeX render (learn/flashcards/quiz/fill) + currency-safety (`$NN` se ne parsira kao matematika).
   - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
@@ -29,11 +29,15 @@
     klikove na donje kontrole modala na niskom landscape ekranu (kao posjetitelj koji se vraća).
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
     bez overflowa) + landing footer linkovi na njih.
+  - `a11y.spec.js` — **TVRDI gate (F1 1D):** axe-core, **0 serious/critical** na landing/browse/study/profile (samo iPhone-SE profil, bez 4× šuma).
+  - `layout-guard.spec.js` — **TVRDI gate (F1 1D):** deterministička geometrija, 13 širina × {EN,HR}, CTA `.nav-cta` nikad odrezan (**BUG-015 zaštita**).
+  - `content-repo.spec.js` — **ContentRepository (F2 2B.1):** `SokratContent` metapodaci = catalog + `loadLesson` vraća IDENTIČNU referencu kao stari put (dokaz nula-promjene).
+  - `monitoring.spec.js` — **SokratMonitor / Sentry (F2 2E):** API, consent-gate (ne učita prije pristanka), nakon pristanka loader ubačen + `init(release)` + greška proslijeđena, nikad ne baca. Sentry loader **stubban preko `page.route`** (offline-deterministički).
   - (Prvi put: `npm install` + `npx playwright install chromium`.)
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)
 > Iste provjere gore vrte se **automatski na svaki push/PR** preko GitHub Actions (`.github/workflows/ci.yml`).
-- **Lanac (fail-fast):** `npm ci` → `validate:content` → `verify` → `test:unit` → `npx playwright test` (chromium).
+- **Lanac (fail-fast):** `npm ci` → `validate:content` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zaseban `lighthouse` job (budžeti).
 - **TVRDI gate:** crveno = **ne mergea se u `main`**. Artefakti (screenshotovi/report) se uploadaju samo na pad.
 - **Tok rada „grana → preview → prod":**
   1. Radi na grani (ne direktno na `main`). Push grane → **CI se pokrene** + **Vercel napravi preview-deploy** (zaseban URL, NIJE produkcija).

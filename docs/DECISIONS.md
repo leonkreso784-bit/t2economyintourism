@@ -30,6 +30,11 @@ dobivaju **TVRDE gateove + 5 konkretizacija** (detalji [FOUNDATION_PLAN.md](FOUN
 5. **SRS dobiva dizajn-dok PRIJE koda + FSRS** (2024+ algoritam), ne nabacani SM-2.
 Trošak alata = **0 €** (sve free na ovoj skali). Svjesno NE: product-analytics (Posthog), framework, runtime build, microservices.
 
+**▶ IMPLEMENTIRANO (2026-06-30 / 2026-07-01, sve LIVE):** **F1** = CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi 1D
+(axe 0-serious, layout-guard, Lighthouse budžeti) + RLS-test. **F2 2E** = Sentry error-monitoring (`js/monitoring.js`→`window.SokratMonitor`): consent-gated
+(isti gate kao GA), **Loader Script EU/DE** (`js-de.sentry-cdn.com`), **samo hvatanje grešaka** (Tracing/Replay/Logs isključeni), `sendDefaultPii:false`, release
+`sokrat-study@20260699`; uživo verificiran. **Točka #4 (nadogradnja) = ISPUNJENA** (Sentry + release-tracking, ne mini-logger). **⬜ Preostaje:** Web Components (S4, F2 2D) + pixel `toHaveScreenshot` (F3, treba Linux baseline).
+
 ---
 
 ## ADR-013 — Content arhitektura: podatak ≠ ponašanje + ContentRepository šav (source-of-truth)
@@ -49,6 +54,10 @@ kao podatak, ne ide čisto u bazu/CMS, i izvor je BUG-012 (vježbe s `generate()
 **Posljedice:** Svaki budući sadržaj (HR ×16, 3. god, UGC) rađa se u CRUD-spremnom formatu → nema velike kasnije
 migracije. Vježbe ostaju izuzetak (BUG-012) — CRUD ih ne uređuje. Datoteke + git-povijest + offline fallback ostaju.
 Odbačeno: i18n-u-sadržaju (ADR-012), CMS (Decap/Directus/Sanity — premda S1/S2 ostavljaju tu opciju otvorenom). [[foundation-pivot]]
+
+**▶ IMPLEMENTIRANO (2026-07-01, LIVE — dio šava):** **S1 `ContentRepository` = `window.SokratContent`** (`js/content-repo.js`): `listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded` —
+tanki omotač koji objedinjuje 3 razbacana puta dohvata (catalog + `loadSubjectContent` + `getSubjectData`); `navigation.js` sada ide kroz njega. **NULA promjene ponašanja** (DB↔datoteka
+fallback već u loaderu). „Podatak≠kod" već strukturno čuvan u loaderu (`scripts` vs `codeScripts`, BUG-012). **⬜ Preostaje:** S2 čisti JSON format (F2 2A, dual-read) + formalni `FileRepo`/`SupabaseRepo` + flip u Fazi 4.
 
 ---
 

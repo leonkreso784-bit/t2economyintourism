@@ -104,6 +104,17 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 - **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
 - **B9 ⬜** — admin login (Supabase Auth). **B10 ⬜** — admin CRUD → tada baza postaje jedini izvor + normalizirani model gore.
 
+### Blok F — Platforma-first temelj (FOUNDATION_PLAN, ADR-013/014)
+- **F1 ✅ LIVE** — reliability rails: CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi (axe/layout-guard/Lighthouse) + RLS-test.
+- **F2 2B ✅ LIVE — `ContentRepository` (S1) šav:** `js/content-repo.js` → `window.SokratContent`
+  (`listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded`) objedinjuje 3 dosad razbacana puta dohvata
+  (catalog metapodaci + `loadSubjectContent` async + `getSubjectData` resolve). `navigation.js:initStudyPage` sada zove
+  `SokratContent.loadLesson(...)` (fallback na stari dvokorak). **NULA promjene ponašanja** (DB↔datoteka fallback ostaje u loaderu).
+  Ovo je formalizirani „šav prema backendu" iz A4 — budući SW (F3), CRUD (F4) i tutor idu kroz Repo. Test `content-repo.spec.js`.
+- **F2 2E ✅ LIVE — error monitoring:** `js/monitoring.js` → `window.SokratMonitor` (Sentry, consent-gated preko `consent.js`,
+  Loader EU/DE, samo hvatanje grešaka, `sendDefaultPii:false`, release `sokrat-study@…`). Test `monitoring.spec.js`.
+- **F2 2A/2C/2D ⬜** — S2 čisti JSON format (dual-read) → AppState namespace → Web Components. **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
+
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.
 
