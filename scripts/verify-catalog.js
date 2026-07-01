@@ -97,6 +97,22 @@ for (const s of SOKRAT_CATALOG.subjects) {
   } else if (codeScripts.length) {
     warn('nema vježbe ali ima codeScripts — neočekivano (provjeri)');
   }
+
+  // 7) F2 2A.3 čuvar (dual-read): predmet s content.dataFormat === 'json' MORA imati generirane
+  //    JSON datoteke za SVAKI razriješeni lekcijski var (data/json/<id>/<var>.json). Bez njih bi
+  //    loader pao na .js fallback (radi), ali flag bez datoteka = greška u namjeri → hard-fail.
+  if (s.content && s.content.dataFormat === 'json') {
+    const jsonVars = new Set();
+    for (const lesson of (s.lessons || [])) {
+      const v = SokratCatalog.resolveDataVar(s.id, lesson.id);
+      if (v) jsonVars.add(v);
+    }
+    for (const v of jsonVars) {
+      const rel = `data/json/${s.id}/${v}.json`;
+      if (readFile(rel) === null) fail(`dataFormat 'json' ali nedostaje ${rel} (pokreni: npm run export:json ${s.id})`);
+      else ok(`JSON dual-read: ${rel} prisutan`);
+    }
+  }
   console.log('');
 }
 

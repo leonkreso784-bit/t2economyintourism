@@ -50,6 +50,29 @@ function _loadSubjectFromSupabase(subjectId) {
     }).catch(() => false); // bilo kakva greška → fallback na datoteke
 }
 
+// ── F2 2A.3 (dual-read): učitaj study sadržaj iz LOKALNIH data/json/<id>/<var>.json. ──
+// Alternativa .js study-skriptama za predmete s content.dataFormat === 'json'. Postavi window[var].
+// RESOLVE tek kad su SVE JSON datoteke uspješno učitane; REJECT ako ijedna padne → pozivatelj pada
+// na .js (fallback, 0 regresije). Vježbe (codeScripts) se NE diraju ovdje — uvijek iz .js (BUG-012).
+function _loadSubjectFromJson(subject) {
+    const resolve = (subject && subject.content && subject.content.resolve) || {};
+    const vars = Array.from(new Set(Object.values(resolve))); // jedinstvena imena window-varova
+    if (!vars.length) return Promise.reject(new Error('nema resolve varova'));
+    return Promise.all(vars.map((v) => {
+        const url = 'data/json/' + subject.id + '/' + v + '.json?v=' + CONTENT_VERSION;
+        return fetch(url).then((res) => {
+            if (!res.ok) throw new Error('JSON ' + res.status + ' @ ' + url);
+            return res.json();
+        }).then((payload) => {
+            // Obrambeno: prazan/neispravan payload NE smije proći kao valjan → izazovi fallback.
+            if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+                throw new Error('JSON payload nije objekt @ ' + url);
+            }
+            window[v] = payload;
+        });
+    }));
+}
+
 // Je li skripta s ovom putanjom već u dokumentu (statički <script> tag ILI ranije injektirana)?
 // Dedup po PUTANJI (bez ?v=) — zato je loader bezopasan i dok statički tagovi još postoje.
 function _scriptAlreadyPresent(src) {
@@ -85,18 +108,34 @@ function loadSubjectContent(subjectId) {
     // prežive JSON → NE smiju u bazu (BUG-012). Učitavaju se iz datoteke UVIJEK, čak i u DB-modu.
     const codeScripts = (subject && subject.content && Array.isArray(subject.content.codeScripts))
         ? subject.content.codeScripts : [];
+    // F2 2A.3: predmet s content.dataFormat === 'json' čita study sadržaj iz data/json/*.json
+    // (dual-read). Odsutan flag = staro ponašanje (study iz .js). Vježbe uvijek iz .js (codeScripts).
+    const dataFormat = (subject && subject.content && subject.content.dataFormat) || 'js';
 
-    // Prvo proba baza (Blok B); ako vrati false (flag off / prazno / greška) → datoteke.
-    const p = _loadSubjectFromSupabase(subjectId).then((fromDb) => {
-        // DB-mod: study sadržaj (M1/M2/Final) je na windowu iz baze; još učitaj SAMO kod-datoteke
-        // (vježbe+lib) iz fajla — one pregaze eventualni lossy DB red. Za predmete bez vježbi
-        // codeScripts je prazan → ovo je no-op (identično starom ponašanju).
-        // FALLBACK (fromDb=false): učitaj SVE datoteke (stari put). Redoslijed bitan
-        // (final poslije m1+m2; lib prije exercises).
-        const filesToLoad = fromDb ? codeScripts : scripts;
+    // Učitaj listu .js datoteka redom (redoslijed bitan: final poslije m1+m2; lib prije exercises).
+    const loadFiles = (list) => {
         let chain = Promise.resolve();
-        filesToLoad.forEach((src) => { chain = chain.then(() => loadScriptOnce(src)); });
+        list.forEach((src) => { chain = chain.then(() => loadScriptOnce(src)); });
         return chain;
+    };
+
+    // Prvo proba baza (Blok B); ako vrati false (flag off / prazno / greška) → JSON ili .js.
+    const p = _loadSubjectFromSupabase(subjectId).then((fromDb) => {
+        // DB-mod: study (M1/M2/Final) je na windowu iz baze; još učitaj SAMO kod-datoteke (vježbe+lib).
+        // Za predmete bez vježbi codeScripts je prazan → no-op (identično starom ponašanju).
+        if (fromDb) return loadFiles(codeScripts);
+        // JSON-mod (2A.3): study iz data/json/*.json + vježbe iz .js. Ako JSON padne (404/offline/
+        // neispravan) → FALLBACK na PUNE .js (scripts). Round-trip dokazan ekvivalentan (2A.2).
+        if (dataFormat === 'json') {
+            return _loadSubjectFromJson(subject)
+                .then(() => loadFiles(codeScripts))
+                .catch((err) => {
+                    if (typeof console !== 'undefined') console.warn('[content] JSON read failed → fallback .js:', err && err.message);
+                    return loadFiles(scripts);
+                });
+        }
+        // Stari put: SVE iz .js (study + kod).
+        return loadFiles(scripts);
     }).then(() => {
         _contentLoaded[subjectId] = true;
         delete _contentLoading[subjectId];

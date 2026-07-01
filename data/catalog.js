@@ -287,7 +287,10 @@ const SOKRAT_CATALOG = {
       content: {
         // data/sit/final.js MUST load last (Object.assign of sitM1 + sitM2 window objects + examPractice)
         scripts: ['data/sit/midterm-1.js', 'data/sit/midterm-2.js', 'data/sit/final.js'],
-        resolve: { 'first-midterm': 'sitM1', 'second-midterm': 'sitM2', 'final': 'sitFinal' }
+        resolve: { 'first-midterm': 'sitM1', 'second-midterm': 'sitM2', 'final': 'sitFinal' },
+        // F2 2A.3: prvi migrirani predmet — study se čita iz data/json/sit/*.json (dual-read),
+        // s fallbackom na gornje `scripts` ako JSON padne. `scripts` OSTAJU izvor istine + mreža.
+        dataFormat: 'json'
       }
     },
     {
