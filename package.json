@@ -15,6 +15,7 @@
     "verify": "node scripts/verify-catalog.js",
     "verify:catalog": "node scripts/verify-catalog.js",
     "validate:content": "node scripts/validate-content.js",
+    "validate:schema": "node scripts/validate-json-schema.js",
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
@@ -38,6 +39,7 @@
     "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
+    "ajv": "^8.20.0",
     "axe-core": "^4.12.1",
     "pdf-parse": "^2.4.5",
     "typescript": "^6.0.3"

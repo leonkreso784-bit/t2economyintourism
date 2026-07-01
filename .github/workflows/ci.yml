@@ -38,6 +38,12 @@ jobs:
       - name: Validate content (schema + quiz index + KaTeX currency-safe)
         run: npm run validate:content
 
+      # Strukturni JSON Schema gate (F2 2A.1): svaki payload sadržaja poštuje
+      # schema/subject-content.schema.json (oblik + tipovi + nepoznata polja). Nadopunjuje
+      # validate:content (semantika). Postat će gate i nad generiranim .json datotekama (2A.2).
+      - name: Validate JSON Schema (structural content contract)
+        run: npm run validate:schema
+
       - name: Verify catalog (struktura + datoteke + window varijable)
         run: npm run verify
 
