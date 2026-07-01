@@ -24,7 +24,12 @@ testirano, što slijedi.
 - `data/catalog.js`: `sit` dobio `content.dataFormat:'json'` (`scripts` OSTAJU izvor+mreža). `verify` čuvar #7 (flag bez JSON datoteka = hard-fail). Cache `?v=20260700` (catalog+loader; CONTENT_VERSION nedirnut — podaci isti).
 - **Provjere (razina brige visoka, duple provjere zadržane):** `tests/dual-read.spec.js` **12/12** — (a) sit iz `data/json` a NE iz study `.js`; (b) **SHADOW ekvivalencija** JSON-učitan `window.sitM1` === `.js`-učitan bajt-u-bajt u pregledniku; (c) JSON blokiran → `.js` fallback renderira. Supabase blokiran u testu (determinizam). **Puni Playwright 113 pass / 0 fail (subjects=18, problems=0)** + verify/validate/schema/export-check/typecheck svi 0.
 - Napomena: prioritet DB→JSON→.js (DB autoritativna, Blok B); sa budnom bazom sit i dalje iz DB-a (nepromijenjeno) — JSON = dokazani mrežni sloj + portabilni format za F4 CRUD.
-**⬜ DALJE: preview grane + vizualna provjera (korisnik) → 2A.4** (migracija preostalih predmeta jedan-po-jedan: `export:json <id>` + flag + gate).
+**Cigla 2A.4a ✅ (`134b7cb`) — migracija kvantitativnih exercise-predmeta (statistics + macroeconomics + math):**
+- Odabrani jer dijele JEDINI još netestirani mehanizam-put: study iz JSON + vježbe/lib iz `.js` (codeScripts). 9 JSON datoteka generirano (round-trip + ajv + export-check čist). `data/catalog.js`: 3× `dataFormat:'json'`. Cache `?v=20260701` (catalog).
+- **NOVI dual-read exercise-test** (statistics): study iz `data/json/statistics/*.json`, `window.statisticsExercises` + `window.StatLib` iz `.js`, study `.js` NIJE fetchan → **BUG-012 očuvan u JSON-modu**.
+- Gate: dual-read **16/16** (uklj. exercise put), **puni Playwright 117 pass / 0 fail (subjects=18, problems=0)**, verify 0/0 (guard = 12 JSON prisutno), validate:schema 54/54, export --check 54/54, typecheck 0.
+- **Svi mehanizam-putovi sad dokazani** (plain=sit, exercise=statistics, root-file `data-*.js`=isti runtime put). Accounting izostavljen (korisnikova napomena; format-only kasnije).
+**Migrirano 4/18 (2026-07-02). ⬜ DALJE: odluka deploy (4 dokazana predmeta) vs 2A.4b (preostalih 13 plain + accounting) — pa vizualna provjera korisnika + prod uz potvrdu.**
 
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.
