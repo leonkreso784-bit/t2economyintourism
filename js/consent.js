@@ -76,8 +76,8 @@
         banner.innerHTML =
             '<div class="cookie-banner__inner">' +
                 '<p class="cookie-banner__text">' +
-                    'We use <strong>analytics cookies</strong> to understand how visitors use Sokrat Study ' +
-                    'and improve it. They are optional. See our ' +
+                    'We use optional <strong>analytics &amp; error-monitoring cookies</strong> to understand ' +
+                    'how visitors use Sokrat Study and to fix problems. They load only if you Accept. See our ' +
                     '<a href="/privacy.html">Privacy Policy</a>.' +
                 '</p>' +
                 '<div class="cookie-banner__actions">' +

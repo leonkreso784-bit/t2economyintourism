@@ -155,9 +155,10 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     Učita se na svih 5 stranica gate, no-op na pravnima (guard `if(window.SokratMonitor)`). **Alerting** = Sentry dashboard mail-prag (postavlja korisnik uz DSN).
   - ✅ **LOADER UPISAN (2026-06-30):** `SENTRY_LOADER_URL = 'https://js-de.sentry-cdn.com/59736986…min.js'` (EU/DE regija — GDPR plus; ključ u URL-u JAVAN, kao GA ID).
     Test `tests/monitoring.spec.js` (loader STUBBAN preko `page.route` → offline): 12/12 — pristanak gate, init(release), proslijeđena greška, nikad ne baca.
-  - **⏳ PREOSTAJE prije/uz deploy F2:** (1) **GDPR disclosure** — `privacy.html` + cookie-banner tekst spomenuti error-monitoring (Sentry, EU); (2) nakon deploya **živa provjera**:
-    u konzoli na produkciji `myUndefinedFunction()` → potvrdi da greška stigne na Sentry dashboard s releaseom `sokrat-study@…` (Done-kriterij); (3) postavi mail-alert prag na dashboardu.
-  - **Done-kriterij:** namjerni `throw` na produkciji stigne u Sentry s točnim releaseom; produkcijska greška = alert, ne tišina. **(čeka deploy + živu provjeru)**
+  - ✅ **ŽIVA PROVJERA GOTOVA (2026-07-01, lokalno protiv grane):** obje test-greške stigle na Sentry dashboard (`Error: Sokrat test…` JAVASCRIPT-1 + `ReferenceError: myUndefinedFunction…` JAVASCRIPT-2 Unhandled), release `sokrat-study@20260699`. Stack pokazao `sentryWrapped` = SDK aktivan. **Done-kriterij ISPUNJEN.**
+  - ✅ **Dashboard očišćen (korisnik):** isključeni **Enable Tracing** + **Enable Session Replay** + **Enable Logs and Metrics** → čisto ERROR-monitoring (bez snimanja sesije/perf).
+  - ✅ **GDPR disclosure GOTOVA:** `privacy.html` §5 dobio odlomak o Sentryju (samo tehnički error-report, bez PII/replay/perf, EU/DE, čl. 6(1)(a) pristanak; „Last updated" 1 July 2026) + cookie-banner tekst proširen na „analytics &amp; error-monitoring".
+  - **⏳ PREOSTAJE:** (1) deploy F2 na produkciju (uz potvrdu); (2) opc. mail-alert prag na dashboardu. **2E funkcionalno DOVRŠEN.**
   - *(Fallback ako Sentry tier zasmeta: mini-logger `window.onerror`→Supabase tablica iza istog `captureException` sučelja — zamjenjivo.)*
 **Gate faze:** CI/typecheck zeleni, sav sadržaj kroz Repo, 0 regresija (Playwright pun + ručni smoke svih modova × par predmeta).
 
