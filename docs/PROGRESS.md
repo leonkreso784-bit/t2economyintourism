@@ -29,7 +29,13 @@ testirano, što slijedi.
 - **NOVI dual-read exercise-test** (statistics): study iz `data/json/statistics/*.json`, `window.statisticsExercises` + `window.StatLib` iz `.js`, study `.js` NIJE fetchan → **BUG-012 očuvan u JSON-modu**.
 - Gate: dual-read **16/16** (uklj. exercise put), **puni Playwright 117 pass / 0 fail (subjects=18, problems=0)**, verify 0/0 (guard = 12 JSON prisutno), validate:schema 54/54, export --check 54/54, typecheck 0.
 - **Svi mehanizam-putovi sad dokazani** (plain=sit, exercise=statistics, root-file `data-*.js`=isti runtime put). Accounting izostavljen (korisnikova napomena; format-only kasnije).
-**Migrirano 4/18 (2026-07-02). ⬜ DALJE: odluka deploy (4 dokazana predmeta) vs 2A.4b (preostalih 13 plain + accounting) — pa vizualna provjera korisnika + prod uz potvrdu.**
+**Migrirano 4/18 (2026-07-02). Odluka korisnika: „dovrši pa deploy".**
+**Cigla 2A.4b ✅ (`04e09f0`) — preostalih 13 predmeta migrirano → 2A GOTOVO (17/18):**
+- te2, entrepreneurship, ebusiness, econ-hospitality, marketing, geography, food-nutrition, business-informatics, management, traffic, microeconomics, academic-writing, business-informatics-hr → `dataFormat:'json'`.
+- Svi plain study (isti dokazani put kao sit) osim academic-writing (citation vježbe = exercise put, dokazan preko statistics). **Accounting SVJESNO izostavljen** (korisnikova napomena; format-only kasnije uz OK).
+- 39 JSON datoteka generirano (ukupno **51** = 17 predmeta × 3). Catalog: 13× flag (10 skriptom za jednolinijski resolve + 3 ručno za multi-line/codeScripts; `git diff` vizualno potvrđen). Cache `?v=20260702`.
+- Gate: verify 0/0 (guard = svih 51 JSON prisutno), validate:schema 54/54, export --check 54/54, **puni Playwright 117 pass / 0 fail (subjects=18, problems=0)**.
+**⬜ DALJE: 2A GOTOVO na grani. Čeka VIZUALNU PROVJERU (korisnik) + POTVRDU za produkcijski deploy cijele F2 2A. Pa 2C (AppState) → 2D (Web Components) → F3.**
 
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.

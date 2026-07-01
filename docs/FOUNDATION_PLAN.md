@@ -114,7 +114,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
-**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **▶ 2A (S2 JSON) U TIJEKU (grana `foundation/f2a`, NIJE deployano): 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot `sit`) · 2A.3 ✅ (dual-read + `sit`, dual-read 12/12) · 2A.4a ✅ (statistics+macro+math, exercise-put dokazan, puni 117/0). Migrirano 4/18; svi mehanizam-putovi dokazani. DALJE 2A.4b (13 plain + accounting).** Pa 2C (AppState), 2D (Web Components). ⚠️ Grana čeka odluku deploy vs nastavak + potvrdu za prod.
+**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **▶ 2A (S2 JSON) ✅ GOTOVO na grani `foundation/f2a` (NIJE deployano): 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot `sit`) · 2A.3 ✅ (dual-read + `sit`) · 2A.4 ✅ (svih 17/18 migrirano; accounting svjesno odgođen). Puni Playwright 117/0, 51 JSON datoteka.** ⚠️ **Grana čeka VIZUALNU PROVJERU + POTVRDU za produkcijski deploy** (korisnik izabrao „dovrši pa deploy"). Pa 2C (AppState), 2D (Web Components).
 
 > **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
 > i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —
@@ -138,9 +138,10 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     padne (404/offline/neispravan) → 0 regresije. Vježbe uvijek iz `.js` (BUG-012). `verify` čuvar #7 (flag bez JSON datoteka = hard-fail). **Provjere:** `dual-read.spec.js`
     12/12 [(a) sit iz JSON-a a NE iz `.js`; (b) **SHADOW ekvivalencija** — JSON-učitan `window.sitM1` === `.js`-učitan, bajt-u-bajt; (c) JSON blokiran → `.js` fallback] +
     puni Playwright **113 pass/0 fail (subjects=18, problems=0)**. Cache `?v=20260700` (catalog+loader). *(Napomena: sa budnom bazom sit i dalje dolazi iz DB-a; JSON = dokazani mrežni sloj + portabilni format za F4.)*
-  - [2A.4] ▶ **U TIJEKU.** Migriraj predmete (`export:json <id>` + `dataFormat:'json'` flag + gate). **2A.4a ✅ (2026-07-02, `134b7cb`):** statistics + macroeconomics + math
-    (kvantitativni s vježbama — dijele JEDINI još netestirani put: study iz JSON + vježbe/lib iz `.js`). NOVI `dual-read` exercise-test (statistics) dokazuje BUG-012 očuvan u JSON-modu.
-    **Svi mehanizam-putovi sad dokazani** (plain=sit, exercise=statistics, root-file `data-*.js`=isti runtime put). **⬜ Preostaje 2A.4b:** 13 plain study predmeta (isti dokazani put) + **accounting** (izostavljen po korisnikovoj napomeni — format-only kasnije uz OK). Vježbe OSTAJU JS moduli (S2 pravilo).
+  - [2A.4] ✅ **GOTOVO (osim accountinga).** Migriraj predmete (`export:json <id>` + `dataFormat:'json'` flag + gate). **2A.4a ✅ (`134b7cb`):** statistics + macroeconomics + math
+    (kvantitativni s vježbama — dijele exercise put: study iz JSON + vježbe/lib iz `.js`; NOVI `dual-read` exercise-test dokazuje BUG-012 očuvan). **2A.4b ✅ (`04e09f0`):** preostalih 13 predmeta
+    (te2, entrepreneurship, ebusiness, econ-hospitality, marketing, geography, food-nutrition, business-informatics, management, traffic, microeconomics, academic-writing, business-informatics-hr).
+    **Migrirano 17/18** (svih osim **accountinga** — svjesno odgođen po korisnikovoj napomeni; format-only kasnije uz OK). Vježbe OSTAJU JS moduli (S2 pravilo). Gate: verify 0/0 (guard = 51 JSON), validate:schema 54/54, export --check 54/54, Playwright 117/0.
   - **Done-kriterij:** svi study-podaci portabilni kao JSON; `.js` postaje generirani export (ne uređuje se ručno).
 - **2B — ContentRepository (S1):**  *(▶ AKTIVNO — radi se PRVO, vidi reviziju gore)*
   - [2B.1] ✅ **GOTOVO (2026-06-30, grana `foundation/f2`):** `js/content-repo.js` → `window.SokratContent` (tanki omotač oko postojećih
