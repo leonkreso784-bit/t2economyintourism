@@ -1,0 +1,2457 @@
+{
+  "unit1HospitalityBasics": {
+    "name": "Unit 1: Basics of Hospitality",
+    "icon": "fa-concierge-bell",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What is the difference between service and hospitality?",
+        "answer": "Service is transactional, standardized, reactive and step-following; hospitality is personal, emotional, proactive and anticipates needs. Service is an expectation; hospitality is what makes a brand unforgettable.",
+        "explanation": "From the 'Service & Hospitality' slide — the core distinction of Unit 1."
+      },
+      {
+        "question": "Why is hospitality regarded as a skill?",
+        "answer": "Because it relies on a distinct set of soft skills, attitudes and approaches centred on the customer. Its foundation is customer service, and this customer focus can be transferred to other business fields and to life in general.",
+        "explanation": "Hospitality skills are valuable across sectors and can be developed through targeted training."
+      },
+      {
+        "question": "What is the Customer View of hospitality?",
+        "answer": "Hospitality delights with enjoyment, relaxation and a chance to build trust. Earning that trust makes customers more willing to pay and satisfy their expectations; it lives in the customer–business relationship.",
+        "explanation": "One of the two 'Ways to View Hospitality' from the slides."
+      },
+      {
+        "question": "What is the Management View of hospitality?",
+        "answer": "Hospitality brings responsibility: the business must deliver service that brings guests back and 'treat' each guest without a snare or snag in the hospitality experience.",
+        "explanation": "The second view — hospitality quality must be deliberately managed, not left to chance."
+      },
+      {
+        "question": "What is 'local export' in hospitality?",
+        "answer": "By selling its services to foreign tourists, the hospitality industry carries out a specific form of export of goods and services without shipping them abroad — the so-called 'local export', important for the whole economy.",
+        "explanation": "From the 'Type of activity' slide."
+      },
+      {
+        "question": "Why is hospitality a 'mixed producing and service activity'?",
+        "answer": "Because it combines production and service jobs in one process: production is mainly made to order and the goods produced are sold immediately to the customer.",
+        "explanation": "Nature of jobs in hospitality."
+      },
+      {
+        "question": "What is a 'service' in the hospitality context?",
+        "answer": "An activity or benefit of an invisible (intangible) nature offered by one party to another, where the result is not a new product but a modification of existing products or a completely new service.",
+        "explanation": "Basic characteristic of hospitality services."
+      },
+      {
+        "question": "How are hospitality services divided, with examples?",
+        "answer": "Basic (accommodation, food, beverage services), Supplementary (reception/departure, messages, post, safekeeping guests' belongings) and Additional (maintenance, laundry, garage/car repair, cleaning, sales, sport/entertainment/animation).",
+        "explanation": "BASIC – SUPPLEMENTARY – ADDITIONAL services slide."
+      },
+      {
+        "question": "What are the four specialities (special features) of hospitality services?",
+        "answer": "Intangibility (cannot be tried before consumption), Heterogeneity (every service is special/unique), Simultaneous production and consumption (cannot be stored — exist only at the time of production), and Indivisibility (provider and user must both be present).",
+        "explanation": "The 'Specialities of hospitality services' slide — frequent exam item."
+      },
+      {
+        "question": "What does 'the complexity of hospitality services' mean?",
+        "answer": "Hospitality combines many job families: jobs of a production, organisational, service, commercial, leisure and health-related character — all coordinated within one operation.",
+        "explanation": "The complexity slide lists these job characters."
+      },
+      {
+        "question": "How do guest stay length and seasonality affect a hotel?",
+        "answer": "The longer a guest stays, the better the occupancy rate. Operations depend on tourist flow, visits and overnight stays; seasonality of demand leads to low occupancy and weaker business results.",
+        "explanation": "'Guest stay and seasonal nature of the business' slide."
+      },
+      {
+        "question": "How are hospitality and tourism linked?",
+        "answer": "Hospitality is the material basis of the tourism industry, its infrastructural prerequisite and its receptive basis. While travelling, tourists satisfy existential needs (accommodation, food, drink) through hospitality.",
+        "explanation": "'The link between hospitality and tourism' slide."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Hospitality (vs. service) is best described as:",
+        "options": [
+          "Only standardized procedures",
+          "A personal and proactive approach that anticipates needs",
+          "Only technical efficiency",
+          "Only food production"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Service is reactive, while hospitality is:",
+        "options": [
+          "Passive",
+          "Proactive",
+          "Random",
+          "Automated"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling hospitality services to foreign tourists is a specific form of:",
+        "options": [
+          "Import",
+          "Neutral exchange",
+          "Local export",
+          "Barter"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which trait means a service cannot be tested before consumption?",
+        "options": [
+          "Heterogeneity",
+          "Intangibility",
+          "Indivisibility",
+          "Simultaneity"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the four specialities of hospitality services?",
+        "options": [
+          "Intangibility",
+          "Heterogeneity",
+          "Durability (storability)",
+          "Indivisibility"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Accommodation, food and beverage services belong to which group?",
+        "options": [
+          "Basic services",
+          "Supplementary services",
+          "Additional services",
+          "Neutral services"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "By the nature of its jobs, hospitality is characterised as a:",
+        "options": [
+          "Pure service activity",
+          "Pure production activity",
+          "Mixed producing and service activity",
+          "Purely financial activity"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In relation to tourism, hospitality is its:",
+        "options": [
+          "Optional add-on",
+          "Material basis and receptive prerequisite",
+          "Marketing channel only",
+          "Legal framework"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Service is transactional; hospitality is _______.",
+        "answer": "personal",
+        "hint": "Human-centred word..."
+      },
+      {
+        "sentence": "Hospitality is _______ in anticipating needs, not reactive.",
+        "answer": "proactive",
+        "hint": "Starts with 'pro'..."
+      },
+      {
+        "sentence": "Selling services to foreign tourists is a form of local _______.",
+        "answer": "export",
+        "hint": "Opposite of import..."
+      },
+      {
+        "sentence": "A service that cannot be tried out before consumption shows _______.",
+        "answer": "intangibility",
+        "hint": "Invisible nature..."
+      },
+      {
+        "sentence": "Accommodation, food and beverage are classed as _______ services.",
+        "answer": "basic",
+        "hint": "Core / primary group..."
+      },
+      {
+        "sentence": "Seasonality of demand leads to low hotel _______ and weaker results.",
+        "answer": "occupancy",
+        "hint": "How full the hotel is..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 1 — Basics of the Hospitality Industry",
+      "content": "\n                <h3>1) Service vs Hospitality</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Service:</strong> transactional · standardized · reactive · following steps · an expectation</p>\n                    <p><strong>Hospitality:</strong> personal · emotional · proactive · anticipates needs · makes a brand unforgettable</p>\n                </div>\n\n                <h3>2) Hospitality as a Skill</h3>\n                <ul>\n                    <li>A set of soft skills, attitudes and approaches centred on the customer</li>\n                    <li>Its foundation is customer service — a powerful, trainable skill</li>\n                    <li>Transferable to other industries, business fields and life in general</li>\n                    <li>Requires leadership focused on people's wellbeing + targeted training</li>\n                </ul>\n\n                <h3>3) Two Ways to View Hospitality</h3>\n                <h4>Customer view</h4>\n                <ul>\n                    <li>Enjoyment, relaxation, and an opportunity to build trust</li>\n                    <li>Trust → greater willingness to pay and satisfied expectations</li>\n                </ul>\n                <h4>Management view</h4>\n                <ul>\n                    <li>Responsibility to deliver service that brings guests back</li>\n                    <li>No \"snare or snag\" allowed in the hospitality experience</li>\n                </ul>\n\n                <h3>4) Economic Specifics of the Activity</h3>\n                <div class=\"example-box\">\n                    <p><strong>Local export:</strong> selling services to foreign tourists is a specific export of goods and services, important to the whole economy — without shipping anything abroad.</p>\n                </div>\n                <ul>\n                    <li>Mixed <strong>producing + service</strong> activity</li>\n                    <li>Production is mainly made to order and sold immediately to the customer</li>\n                </ul>\n\n                <h3>5) Hospitality Services: Structure</h3>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Basic</strong></td><td>Accommodation, food and beverage services</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Supplementary</strong></td><td>Reception/departure of guests, announcing messages, receiving/sending post, safekeeping of belongings</td></tr>\n                    <tr><td><strong>Additional</strong></td><td>Facility maintenance, laundry/ironing, garage & car repair, cleaning, sales of goods, sport/entertainment/animation</td></tr>\n                </table>\n                <p><strong>Complexity:</strong> jobs of production, organisational, service, commercial, leisure and health-related character all coexist.</p>\n\n                <h3>6) Four Specialities of Hospitality Services</h3>\n                <ul>\n                    <li><strong>Intangibility</strong> — cannot be tried before consumption; success rests on staff performance</li>\n                    <li><strong>Heterogeneity</strong> — every service is unique to provider behaviour and customer need</li>\n                    <li><strong>Simultaneous production & consumption</strong> — cannot be produced/stored in advance</li>\n                    <li><strong>Indivisibility</strong> — provider and user must both be present at the place of use</li>\n                </ul>\n\n                <h3>7) Guest Stay, Seasonality & the Tourism Link</h3>\n                <ul>\n                    <li>Longer guest stay → better occupancy rate</li>\n                    <li>Seasonality of demand → low occupancy and weaker business results</li>\n                    <li>Hospitality = material basis, infrastructural prerequisite and receptive basis of tourism</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 1 Exam Focus</h4>\n                    <p>Be ready to explain <strong>service vs hospitality</strong>, the <strong>4 specialities</strong>, <strong>local export</strong>, the <strong>basic/supplementary/additional</strong> split, and the <strong>hospitality–tourism link</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "unit2BusinessEconomics": {
+    "name": "Unit 2: Business Economics",
+    "icon": "fa-chart-line",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is the fundamental aim of economics as a science?",
+        "answer": "To investigate how to rationally use limited resources in order to satisfy largely unlimited needs in the best possible way; it studies how society produces and distributes goods and services.",
+        "explanation": "Scarcity and allocation are the central economic problem."
+      },
+      {
+        "question": "How does economics split into macro and microeconomics?",
+        "answer": "Macroeconomics (Greek makro = large) studies the economy as a whole — growth, inflation, unemployment. Microeconomics (mikro = small) studies consumers, households and companies, with demand, supply and prices.",
+        "explanation": "From the 'Department of Economics' slide."
+      },
+      {
+        "question": "How is business economics defined as a science?",
+        "answer": "One of the most important microeconomic sciences; it analyses management at company level (the basic unit of the economy), the factors influencing company success, and the rules whose application improves business.",
+        "explanation": "Aim: better ways to achieve company goals — improve production and sale of goods/services."
+      },
+      {
+        "question": "What is the task of business economics as a teaching subject?",
+        "answer": "To teach future business experts and entrepreneurs how the business management system works — passing on established, indisputable scientific findings to people who work (or will work) in companies.",
+        "explanation": "Education translates validated science into managerial capability."
+      },
+      {
+        "question": "How is business economics a theoretical AND practical discipline?",
+        "answer": "Theory and practice interact: practice supplies existing economic problems and verifies assumptions/knowledge; this expands existing knowledge and yields new insights that feed back into theory.",
+        "explanation": "Theory ↔ practice feedback loop slide."
+      },
+      {
+        "question": "What is the difference between general and special business economics?",
+        "answer": "General economics deals with problems common to all companies regardless of type; special (specialised) economics deals with problems of particular activity, ownership form, or business function.",
+        "explanation": "Division of the business economy."
+      },
+      {
+        "question": "Give examples of 'special economics of companies'.",
+        "answer": "By activity: industrial, trading, transport, hotel, banking. By ownership: public vs private companies. By business function: production, procurement, sales, transport economics.",
+        "explanation": "Hospitality economics is a special business economics by activity."
+      },
+      {
+        "question": "What were the early roots of business economics (Concepts up to 1675)?",
+        "answer": "Ancient traces: Code of Hammurabi (interest), Old Testament (condemns usury), Solon (debt/mortgage reform), Plato (first theory of money in the Republic), Aristotle (utility & market value). Pegolotti & Meder wrote early bookkeeping techniques (14th c.).",
+        "explanation": "Historical development — period before systematic economics."
+      },
+      {
+        "question": "Which works/authors mark systematic economics (1675–1890)?",
+        "answer": "Jacques Savary — 'The Perfect Merchant' (1675, first systematic work); Richard Cantillon (risk & uncertainty of the entrepreneur); the Physiocrats (wealth lies in production); Adam Smith — 'The Wealth of Nations' (1776, competition & the 'invisible hand'); Karl Marx (goods, capital, profit, surplus value).",
+        "explanation": "Origin and development of systematic economics."
+      },
+      {
+        "question": "What factors made business economics an independent discipline (~1900)?",
+        "answer": "(1) Marshall's synthesis of macro- and microeconomics; (2) foundation of the first colleges; (3) publication of the first journal in the field; (4) emergence of the scientific organisation of work.",
+        "explanation": "Four enabling factors from the slides."
+      },
+      {
+        "question": "Who is Alfred Marshall and why is he important here?",
+        "answer": "Cambridge professor (1842–1924), leading neoclassicist, author of 'Principles of Economics'. He replaced 'political economy' with 'economics' as pure & applied science, applied microeconomic analysis, and completed cost theory using marginal costs.",
+        "explanation": "Key figure in the independence of the discipline."
+      },
+      {
+        "question": "Name milestones: first business schools, first journal, scientific organisation of work.",
+        "answer": "First higher trade school in Leipzig and the Exportakademie in Vienna (1898); first journal founded 1906 by Eugen Schmalenbach; scientific organisation of work credited mainly to Taylor, Ford and Fayol.",
+        "explanation": "Institutional milestones (~1898–1906)."
+      },
+      {
+        "question": "What happened with socialist business economics?",
+        "answer": "With the first state socialist companies in Soviet Russia (1918) the subject was extended to socialist companies (different ownership/management). They had no financial independence (income to the state budget), so material interest and efficiency lagged behind capitalist competitors. Lenin evaluated Taylor's system (1918).",
+        "explanation": "Emergence and retreat of socialist business economics."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Business economics is primarily classified as a:",
+        "options": [
+          "Macroeconomic science",
+          "Microeconomic science",
+          "Branch of finance only",
+          "Branch of accounting only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Macroeconomics studies topics such as:",
+        "options": [
+          "Individual consumer choice only",
+          "Economic growth, inflation, unemployment",
+          "Menu engineering only",
+          "Room-cleaning standards"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "General business economics studies:",
+        "options": [
+          "Only banks",
+          "Only hotels",
+          "Problems common to all companies",
+          "Only public enterprises"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "'The Wealth of Nations' (1776), dealing with competition and the 'invisible hand', was written by:",
+        "options": [
+          "Richard Cantillon",
+          "Adam Smith",
+          "Alfred Marshall",
+          "Karl Marx"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The first systematic economic work, 'The Perfect Merchant' (1675), was written by:",
+        "options": [
+          "Eugen Schmalenbach",
+          "Jacques Savary",
+          "Aristotle",
+          "Henri Fayol"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The first journal in business economics (1906) was founded by:",
+        "options": [
+          "Alfred Marshall",
+          "Frederick Taylor",
+          "Eugen Schmalenbach",
+          "Adam Smith"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The scientific organisation of work is credited mainly to:",
+        "options": [
+          "Plato, Aristotle, Solon",
+          "Taylor, Ford, Fayol",
+          "Smith, Marx, Cantillon",
+          "Keynes, Pigou, Robinson"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Hospitality economics is an example of:",
+        "options": [
+          "General business economics",
+          "Macroeconomics",
+          "Special business economics (by activity)",
+          "Public finance"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Business economics is one of the most important _______ sciences.",
+        "answer": "microeconomic",
+        "hint": "Company / small-level scope..."
+      },
+      {
+        "sentence": "Macroeconomics deals with the economy as a _______.",
+        "answer": "whole",
+        "hint": "Total system..."
+      },
+      {
+        "sentence": "Adam Smith's 1776 work was 'The Wealth of _______'.",
+        "answer": "Nations",
+        "hint": "Countries / states..."
+      },
+      {
+        "sentence": "Alfred _______ synthesised macro- and microeconomics and refined cost theory.",
+        "answer": "Marshall",
+        "hint": "Cambridge neoclassicist..."
+      },
+      {
+        "sentence": "The first business-economics journal (1906) was founded by Eugen _______.",
+        "answer": "Schmalenbach",
+        "hint": "German economist..."
+      },
+      {
+        "sentence": "_______ economics deals with problems common to all companies.",
+        "answer": "General",
+        "hint": "Opposite of 'special'..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 2 — Business Economics as a Scientific & Teaching Discipline",
+      "content": "\n                <h3>1) Economics & the Place of Business Economics</h3>\n                <p>Economics studies the rational use of <strong>limited resources</strong> to satisfy largely <strong>unlimited needs</strong>.</p>\n                <ul>\n                    <li><strong>Macroeconomics</strong> — economy as a whole (growth, inflation, unemployment)</li>\n                    <li><strong>Microeconomics</strong> — consumers, households, companies; demand, supply, prices</li>\n                    <li><strong>Business economics</strong> — applied microeconomics at <em>company level</em></li>\n                </ul>\n\n                <h3>2) Science vs Teaching Subject</h3>\n                <div class=\"formula-box\">\n                    <p><strong>As science:</strong> analyses factors of company success; defines rules to improve business</p>\n                    <p><strong>As teaching subject:</strong> teaches future experts/entrepreneurs how the business system works</p>\n                </div>\n\n                <h3>3) Theory ↔ Practice</h3>\n                <ul>\n                    <li>Practice supplies <strong>existing economic problems</strong></li>\n                    <li>It verifies assumptions and knowledge</li>\n                    <li>This expands knowledge and yields <strong>new insights</strong> that feed theory</li>\n                </ul>\n\n                <h3>4) General vs Special Business Economics</h3>\n                <ul>\n                    <li><strong>General:</strong> problems common to all companies</li>\n                    <li><strong>Special — by activity:</strong> industrial, trading, transport, <em>hotel</em>, banking</li>\n                    <li><strong>Special — by ownership:</strong> public vs private companies</li>\n                    <li><strong>Special — by function:</strong> production, procurement, sales, transport</li>\n                </ul>\n\n                <h3>5) Historical Development</h3>\n                <h4>Concepts up to 1675</h4>\n                <ul>\n                    <li>Code of Hammurabi (interest); Old Testament condemns usury</li>\n                    <li>Solon (debt reform); Plato (first theory of money); Aristotle (utility & market value)</li>\n                    <li>Pegolotti & Meder — early bookkeeping techniques (14th c.)</li>\n                </ul>\n                <h4>Systematic economics 1675–1890</h4>\n                <ul>\n                    <li><strong>Jacques Savary</strong> — 'The Perfect Merchant' (1675)</li>\n                    <li><strong>Richard Cantillon</strong> — risk & uncertainty of the entrepreneur</li>\n                    <li><strong>Physiocrats</strong> — true wealth lies in production, not trade</li>\n                    <li><strong>Adam Smith</strong> — 'The Wealth of Nations' (1776): competition & the 'invisible hand'</li>\n                    <li><strong>Karl Marx</strong> — goods, capital, profit, rent, surplus value</li>\n                </ul>\n                <h4>Independence (~1900) and after</h4>\n                <ul>\n                    <li>Enabled by: Marshall's synthesis, first colleges, first journal, scientific organisation of work</li>\n                    <li><strong>Alfred Marshall</strong> (1842–1924) — 'Principles of Economics'; marginal costs</li>\n                    <li>First schools: Leipzig & Vienna Exportakademie (1898); first journal: Schmalenbach (1906)</li>\n                    <li>Scientific organisation of work: <strong>Taylor, Ford, Fayol</strong></li>\n                    <li>Socialist business economics: Soviet Russia (1918) — no financial independence → lower efficiency</li>\n                </ul>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Common Mistake</h4>\n                    <p>Don't mix macro and micro scope. In this course most questions are at the <strong>firm level</strong> (micro/business economics).</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 2 Exam Focus</h4>\n                    <p>Know the hierarchy <strong>economics → macro/micro → business economics → hospitality economics</strong>, the <strong>general/special</strong> split, and the key historical names (<strong>Savary, Smith, Marshall, Schmalenbach, Taylor/Ford/Fayol</strong>).</p>\n                </div>\n            "
+    }
+  },
+  "unit3HospitalityBusinesses": {
+    "name": "Unit 3: Hospitality Businesses",
+    "icon": "fa-hotel",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "How is a modern hospitality business conceptually defined?",
+        "answer": "An independent, complex economic, legal, technical and social system that produces hospitality products and services for the hospitality market — using work equipment, objects and human potential — in order to generate profit and achieve set goals.",
+        "explanation": "Core conceptual definition from Unit 3."
+      },
+      {
+        "question": "Which four systems describe the hospitality business as a complex system?",
+        "answer": "Technological (transforms inputs into outputs), Economic (an economic unit providing services), Legal (acquires rights and obligations) and Sociological (a community of people who work in it).",
+        "explanation": "The business functions, develops and disappears depending on goal achievement."
+      },
+      {
+        "question": "What are the three essential components of a business?",
+        "answer": "Objective component (buildings, machines, materials, products, money), Subjective component (people, knowledge, creative ideas) and Organizational component (the way resources and work are combined into one unit).",
+        "explanation": "A business is a 'living organism' carrying out economic activity."
+      },
+      {
+        "question": "Who is an entrepreneur, and what statuses can they hold?",
+        "answer": "A person with business acumen and management skills, willing to take risk based on innovation and continuous development, who sees opportunities others miss. Status: an owner/co-owner of capital, or a professional manager working for salary who still drives development.",
+        "explanation": "Entrepreneur traits: motivation, mental ability, communication, decision-making, ability to realise ideas."
+      },
+      {
+        "question": "What is entrepreneurship and its five main activities?",
+        "answer": "The activity of entrepreneurs aimed at creating, organising and renewing businesses to create a new market. Five activities: relations with raw materials & capital, organization, innovation, relations with employees, relations with the state & society.",
+        "explanation": "A key driver of business development."
+      },
+      {
+        "question": "What is the difference between entrepreneurship and management?",
+        "answer": "Entrepreneurship initiates changes/innovation in production and business and exploits opportunities for profit; management is the ongoing coordination of the production process and the utilisation of existing resources.",
+        "explanation": "Both are needed but have different missions."
+      },
+      {
+        "question": "By which criteria are hospitality businesses classified?",
+        "answer": "By business subject (accommodation+F&B / only F&B / preparing food for consumption elsewhere), size, ownership (private/public/mixed) and legal form.",
+        "explanation": "Four classification criteria."
+      },
+      {
+        "question": "What legal forms of hospitality business exist?",
+        "answer": "Companies of individuals — public company (unlimited joint liability) and limited partnership (general partners unlimited, limited partners up to invested capital); and Corporations — limited liability company (d.o.o.) and public limited company / joint-stock company (d.d., funded by issuing shares).",
+        "explanation": "Liability differs by legal form."
+      },
+      {
+        "question": "What is the synergy effect of merging hospitality businesses?",
+        "answer": "Combined businesses achieve more together than the sum of their separate effects — symbolically '2 + 2 = 5'. They use their potential more rationally and create better conditions for development.",
+        "explanation": "From the 'synergy effect' slide (Greek synergia = cooperation)."
+      },
+      {
+        "question": "What are the main motives for merging hospitality businesses?",
+        "answer": "Reduce competition / increase market share; increase capacity (lower costs); rationalization (fewer employees, managers, office space); diversification of production (reduce risk); and sharing business & financial risks.",
+        "explanation": "Five merger motives."
+      },
+      {
+        "question": "Distinguish cooperation, consortium and cartel.",
+        "answer": "Cooperation is a milder merger where businesses keep full independence and work together. A consortium is occasional association for a joint large investment using joint capital. A cartel is consensual association of competitors to restrict/exclude market competition — the business loses economic independence but keeps legal autonomy.",
+        "explanation": "Cooperation forms vs cartels (slides 25–28)."
+      },
+      {
+        "question": "What is concentration, and what are conglomerate/holding/trust?",
+        "answer": "Concentration is a stronger merger where businesses lose economic and legal independence. Conglomerate: several legally independent businesses under one management (horizontal/vertical/diagonal). Holding: a company controlling others via majority shares (parent–subsidiaries). Trust: one large company formed by merger, losing economic & legal independence.",
+        "explanation": "Typical concentration forms."
+      },
+      {
+        "question": "What are the three basic business principles?",
+        "answer": "(1) The business principle (good business practice, legal compliance, realistic prices, no unfair competition/monopoly abuse, on-time quality fulfilment, reputation); (2) the principle of economic efficiency; (3) the principle of maintaining the continuity of the business.",
+        "explanation": "Rules applied to achieve economic goals rationally."
+      },
+      {
+        "question": "Which principles make up economic efficiency?",
+        "answer": "Productivity (of labour), Economy (economical use), and Profitability — pursued by most companies. Rationality means efficiency + economy: investing only necessary, justified resources.",
+        "explanation": "The three economic-efficiency principles."
+      },
+      {
+        "question": "What is business policy and how is it divided?",
+        "answer": "The entirety of decisions defining the business's objectives (economic = development & success; social = meeting people's needs) and the solutions to achieve them. Divided by period (long/medium/short-term) and by content (general / specific corporate policy).",
+        "explanation": "Cycle: set goals → plan → organize → monitor → redefine goals."
+      },
+      {
+        "question": "How are plans classified (time and content)?",
+        "answer": "By time: long-term (>5 years, strategic), medium-term (1–5 years), short-term (1 year, plus operational quarterly/monthly/daily). By content: quantitative (natural) plans and value (financial) plans. Policy↔planning: strategic, tactical, operational planning.",
+        "explanation": "Plans are management instruments."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A hospitality business is best viewed as:",
+        "options": [
+          "Only a legal entity",
+          "Only a technical facility",
+          "A complex economic–legal–technical–social system",
+          "Only kitchens and rooms"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The objective component of a business includes:",
+        "options": [
+          "Knowledge and creative ideas",
+          "Buildings, machines, materials, money",
+          "The way work is combined",
+          "Customer relationships"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Entrepreneurship (vs management) primarily emphasises:",
+        "options": [
+          "Routine coordination",
+          "Innovation and exploiting opportunities",
+          "Only reporting",
+          "Only compliance"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The synergy effect of a merger is symbolically expressed as:",
+        "options": [
+          "2 + 2 = 4",
+          "2 + 2 = 5",
+          "2 + 2 = 3",
+          "2 × 2 = 2"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A cartel is an association in which the business:",
+        "options": [
+          "Keeps both economic and legal independence",
+          "Loses economic independence but keeps legal autonomy",
+          "Loses both economic and legal independence",
+          "Becomes a sole proprietorship"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A company that controls others by holding the majority of their shares is a:",
+        "options": [
+          "Cartel",
+          "Consortium",
+          "Holding company",
+          "Trust"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is NOT one of the three economic-efficiency principles?",
+        "options": [
+          "Productivity",
+          "Economy",
+          "Profitability",
+          "Liquidity"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Long-term plans typically cover a period of:",
+        "options": [
+          "Less than 1 year",
+          "1–5 years",
+          "More than 5 years (strategic)",
+          "Exactly 3 months"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In a limited liability company (d.o.o.), shareholders are liable:",
+        "options": [
+          "With all personal assets",
+          "Up to the amount of invested capital",
+          "Jointly and without limit",
+          "Only the manager is liable"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "By content, plans are divided into:",
+        "options": [
+          "Long- and short-term plans",
+          "Quantitative (natural) and value (financial) plans",
+          "General and specific plans",
+          "Strategic and tactical plans"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A hospitality business is an independent, complex economic, legal, technical and social _______.",
+        "answer": "system",
+        "hint": "Interconnected structure..."
+      },
+      {
+        "sentence": "Entrepreneurship initiates change and innovation, while management coordinates the ongoing _______ process.",
+        "answer": "production",
+        "hint": "Making goods/services..."
+      },
+      {
+        "sentence": "The synergy effect is symbolically written as 2 + 2 = _______.",
+        "answer": "5",
+        "hint": "More than the sum..."
+      },
+      {
+        "sentence": "A _______ is association of competitors to restrict or exclude market competition.",
+        "answer": "cartel",
+        "hint": "Price/market agreement..."
+      },
+      {
+        "sentence": "Economic efficiency rests on productivity, economy and _______.",
+        "answer": "profitability",
+        "hint": "Return / rentability..."
+      },
+      {
+        "sentence": "By content, plans are quantitative (natural) and _______ (financial).",
+        "answer": "value",
+        "hint": "Expressed in money..."
+      },
+      {
+        "sentence": "A holding company controls others by holding the majority of their _______.",
+        "answer": "shares",
+        "hint": "Ownership stakes..."
+      },
+      {
+        "sentence": "The principle of maintaining _______ requires the firm to survive and keep developing.",
+        "answer": "continuity",
+        "hint": "Ongoing survival..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 3 — The Hospitality Business as a System",
+      "content": "\n                <h3>1) Conceptual Definition</h3>\n                <p>A modern hospitality business is an <strong>independent, complex economic, legal, technical and social system</strong> that produces hospitality products and services for the market — using equipment, objects and human potential — to generate profit and achieve set goals.</p>\n\n                <h3>2) Four Sub-systems</h3>\n                <ul>\n                    <li><strong>Technological</strong> — transforms inputs into outputs</li>\n                    <li><strong>Economic</strong> — an economic unit providing services</li>\n                    <li><strong>Legal</strong> — acquires rights, assumes obligations</li>\n                    <li><strong>Sociological</strong> — a community of working people</li>\n                </ul>\n\n                <h3>3) Essential Components</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Objective:</strong> buildings, machines, materials, products, money</p>\n                    <p><strong>Subjective:</strong> people, knowledge, creative ideas</p>\n                    <p><strong>Organizational:</strong> the way resources + work are combined into one unit</p>\n                </div>\n\n                <h3>4) Entrepreneur, Entrepreneurship & Management</h3>\n                <ul>\n                    <li><strong>Entrepreneur:</strong> business acumen, risk-taking, innovation; status = owner/co-owner OR professional manager</li>\n                    <li><strong>Entrepreneurship:</strong> creating/organising/renewing businesses; 5 activities — raw materials & capital, organization, innovation, employees, state & society</li>\n                    <li><strong>Entrepreneurship vs management:</strong> initiating change & opportunity vs ongoing coordination of existing resources</li>\n                </ul>\n\n                <h3>5) Classification of Hospitality Businesses</h3>\n                <ul>\n                    <li><strong>Business subject:</strong> accommodation + F&B / only F&B / preparing food for consumption elsewhere</li>\n                    <li><strong>Size:</strong> EU Commission criteria; optimal size = maximum profit at a given utilization</li>\n                    <li><strong>Ownership:</strong> private / public (social + state) / mixed</li>\n                    <li><strong>Legal form:</strong> companies of individuals (public company, limited partnership) and corporations (d.o.o., d.d.)</li>\n                </ul>\n\n                <h3>6) Association & Concentration of Businesses</h3>\n                <p><strong>Synergy effect:</strong> combined businesses achieve more than the sum of their parts — \"2 + 2 = 5\".</p>\n                <p><strong>Merger motives:</strong> reduce competition / market share; capacity (lower cost); rationalization; diversification; risk sharing.</p>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Cooperation</strong></td><td>Mild — full independence retained (consortium, cartels)</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Consortium</strong></td><td>Occasional association for a joint large investment</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Cartel</strong></td><td>Restricts competition; loses economic independence, keeps legal autonomy</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Conglomerate</strong></td><td>Several firms under one management (horizontal / vertical / diagonal)</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Holding</strong></td><td>Controls others via majority shares (parent + subsidiaries)</td></tr>\n                    <tr><td><strong>Trust</strong></td><td>One large company from a merger; loses economic & legal independence</td></tr>\n                </table>\n\n                <h3>7) Business Principles</h3>\n                <ul>\n                    <li><strong>Business principle</strong> — good practice, legal compliance, realistic prices, on-time quality, no unfair competition/monopoly abuse, reputation</li>\n                    <li><strong>Economic efficiency</strong> — productivity + economy + profitability (rationality)</li>\n                    <li><strong>Continuity</strong> — survival + permanent development (reproduction principle)</li>\n                </ul>\n\n                <h3>8) Business Policy & Planning</h3>\n                <ul>\n                    <li><strong>Objectives:</strong> economic (development & success) + social (meeting needs)</li>\n                    <li><strong>Cycle:</strong> set goals → plan → organize → monitor → redefine goals</li>\n                    <li><strong>By period:</strong> long (>5 yrs, strategic) / medium (1–5 yrs, tactical) / short (1 yr, operational)</li>\n                    <li><strong>By content:</strong> quantitative (natural) and value (financial) plans</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 3 Exam Focus</h4>\n                    <p>This is the biggest unit. Master: the <strong>4 sub-systems</strong>, <strong>3 components</strong>, <strong>entrepreneurship vs management</strong>, <strong>legal forms</strong>, the <strong>association forms</strong> (synergy \"2+2=5\", cartel, holding, trust) and the <strong>three business principles</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "unit4AssetsInHospitality": {
+    "name": "Unit 4: Assets of Reproduction",
+    "icon": "fa-warehouse",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "In what forms can the assets of a hospitality company appear?",
+        "answer": "As money (or securities), as property (things), and as rights.",
+        "explanation": "Concept and distribution of assets (by appearance)."
+      },
+      {
+        "question": "How are assets divided by involvement in the business process?",
+        "answer": "Into fixed assets ('fixed' / long-term assets) and short-term assets ('current' / working assets).",
+        "explanation": "The central planning/control division."
+      },
+      {
+        "question": "What is the key difference between fixed and short-term assets?",
+        "answer": "Fixed assets are used in unchanged form for more than one year and gradually transfer their value; short-term assets are used once within less than a year and transfer their value in full to new products/services.",
+        "explanation": "Behaviour determines accounting treatment."
+      },
+      {
+        "question": "What does the 'good management' principle require for assets?",
+        "answer": "Rational, expedient use (income > costs); adequate storage and preservation of every asset; current and investment maintenance; and insuring assets against risks (breakage, damage, fire, flood, theft).",
+        "explanation": "Type-of-use-of-assets slide."
+      },
+      {
+        "question": "How are fixed assets allocated (by appearance)?",
+        "answer": "Intangible assets, tangible assets, financial assets and (long-term) receivables.",
+        "explanation": "Four categories of fixed assets."
+      },
+      {
+        "question": "Give examples of intangible and tangible fixed assets.",
+        "answer": "Intangible: start-up capital/investments, expenditure on tourism-market research, concessions, trademarks, goodwill. Tangible: land, buildings (accommodation, F&B, auxiliary, sport/wellness), equipment & installations, tools, furniture, transport.",
+        "explanation": "Land + buildings are core tangible assets."
+      },
+      {
+        "question": "In what forms do short-term (current) assets arise?",
+        "answer": "Inventories; receivables due within one year; financial assets redeemable within one year; and money in the bank and cash register.",
+        "explanation": "Inventories of food & beverages are a large share in hospitality."
+      },
+      {
+        "question": "What is the turnover ratio and where is it lowest?",
+        "answer": "An indicator of how efficiently a company uses its assets — how often a type of asset 'turns over' in a period. The higher the rate, the faster funds turn over. It is lowest in hospitality businesses in tourist destinations (long wait to collect receivables).",
+        "explanation": "A short production cycle is desirable."
+      },
+      {
+        "question": "What is liquidity and what must the liquidity ratio be?",
+        "answer": "The ability to always have enough cash to meet obligations. It is measured by the liquidity ratio comparing assets and current liabilities, which must be greater than 1.",
+        "explanation": "Liquidity ratio > 1."
+      },
+      {
+        "question": "What is solvency, and what happens with insolvency?",
+        "answer": "Solvency is the ability to settle due obligations in full and on the due date (cash, account balances, foreign currency, redeemable securities). Insolvency → suppliers stop deliveries, default interest & legal enforcement, blocked accounts and rising costs.",
+        "explanation": "A hospitality company is expected to be solvent every day."
+      },
+      {
+        "question": "What is amortization (depreciation)?",
+        "answer": "The value expression of the consumption of fixed assets — the total technical and economic wear-and-tear of fixed-asset elements in a business process, transferred into the price of services. Caused by physical wear and economic obsolescence.",
+        "explanation": "Links long-term asset use with period costs."
+      },
+      {
+        "question": "Which assets are excluded from amortization, and what is revaluation?",
+        "answer": "Land (indefinite useful life), works of art/archive material, financial assets, start-up & research costs (expensed), and assets under preparation are not depreciated. Revaluation adjusts book value to market prices so amortization stays realistic.",
+        "explanation": "Calculation-of-amortization rules."
+      },
+      {
+        "question": "What amortization periods does Croatian law set for asset groups?",
+        "answer": "20 years — buildings/vessels >1,000 GRT; 10 years — other unspecified assets; 5 years — basic herd, passenger cars; 4 years — intangibles, equipment, vehicles & machinery (except passenger cars); 2 years — computers, IT equipment & programs, cell phones, network equipment.",
+        "explanation": "From the Croatian Depreciation Act."
+      },
+      {
+        "question": "What are the two amortization systems and the time-system methods?",
+        "answer": "Time amortization system and functional amortization system. Time methods: straight-line (linear), progressive, and degressive. The linear annual rate a% = 100 / t (t = useful life).",
+        "explanation": "Functional method depends on output, not time."
+      },
+      {
+        "question": "Compare straight-line, progressive and degressive methods.",
+        "answer": "Straight-line: equal amounts each year (a% = 100/t; A = N·a%/100 = N/t). Progressive: lower amounts at first, rising later. Degressive (declining balance): higher amounts in early years, then lower (rate on the remaining undepreciated value).",
+        "explanation": "N = acquisition value, A = annual amortization amount."
+      },
+      {
+        "question": "What two types of maintenance are applied to fixed assets?",
+        "answer": "Current (routine) maintenance — daily (minor breakdowns, prevention, cleaning) and periodic (inspection/replacement of worn parts); and Investment maintenance — roof, façade, painting, installations (electrical, sanitary, gas, heating), boiler rooms, elevators.",
+        "explanation": "Good maintenance extends service life."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Assets used in unchanged form for more than one year are:",
+        "options": [
+          "Current assets",
+          "Fixed assets",
+          "Liabilities",
+          "Receivables only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Short-term (current) assets transfer their value:",
+        "options": [
+          "Gradually over many years",
+          "Only when the firm closes",
+          "In full within one cycle (under a year)",
+          "Never"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The liquidity ratio must be:",
+        "options": [
+          "Less than 1",
+          "Exactly 0",
+          "Greater than 1",
+          "Equal to the turnover ratio"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which asset is excluded from amortization?",
+        "options": [
+          "Hotel building",
+          "Kitchen equipment",
+          "Land",
+          "Company vehicle"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Under Croatian law, computers and IT equipment are amortized over:",
+        "options": [
+          "20 years",
+          "10 years",
+          "5 years",
+          "2 years"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "The straight-line annual amortization rate is calculated as:",
+        "options": [
+          "a% = t / 100",
+          "a% = 100 / t",
+          "a% = N × t",
+          "a% = N / 100"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The turnover ratio is LOWEST in hospitality businesses that:",
+        "options": [
+          "Operate year-round in cities",
+          "Are located on roads (transit)",
+          "Are in tourist destinations (slow receivable collection)",
+          "Sell only for cash"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Solvency is the ability to:",
+        "options": [
+          "Avoid all costs",
+          "Settle due obligations in full and on the due date",
+          "Maximise market share",
+          "Depreciate land"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is an example of an intangible fixed asset?",
+        "options": [
+          "Hotel building",
+          "Goodwill / trademark",
+          "Cash register balance",
+          "Food inventory"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Buildings (and vessels >1,000 GRT) are amortized under Croatian law over:",
+        "options": [
+          "2 years",
+          "4 years",
+          "10 years",
+          "20 years"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Assets used in unchanged form for more than one year are _______ assets.",
+        "answer": "fixed",
+        "hint": "Long-term class..."
+      },
+      {
+        "sentence": "Short-term (current) assets transfer their value in _______.",
+        "answer": "full",
+        "hint": "Not gradually..."
+      },
+      {
+        "sentence": "The liquidity ratio must be greater than _______.",
+        "answer": "1",
+        "hint": "Single digit..."
+      },
+      {
+        "sentence": "_______ is excluded from amortization because it has an indefinite useful life.",
+        "answer": "Land",
+        "hint": "Ground / plot..."
+      },
+      {
+        "sentence": "The straight-line annual amortization rate is a% = 100 / _______.",
+        "answer": "t",
+        "hint": "Useful life in years..."
+      },
+      {
+        "sentence": "Computers and IT equipment are amortized over _______ years under Croatian law.",
+        "answer": "2",
+        "hint": "Single digit..."
+      },
+      {
+        "sentence": "Adjusting book value to market prices for realistic amortization is called _______.",
+        "answer": "revaluation",
+        "hint": "Re-stating value..."
+      },
+      {
+        "sentence": "The two maintenance types are current (routine) and _______ maintenance.",
+        "answer": "investment",
+        "hint": "Bigger renewal works..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 4 — The Assets of Reproduction",
+      "content": "\n                <h3>1) Concept & Distribution of Assets</h3>\n                <p>By appearance, assets may be <strong>money/securities</strong>, <strong>property</strong>, or <strong>rights</strong>. By involvement in the business process:</p>\n                <div class=\"formula-box\">\n                    <p><strong>Fixed assets:</strong> used &gt; 1 year in unchanged form; value transferred gradually</p>\n                    <p><strong>Short-term (current) assets:</strong> used once &lt; 1 year; value transferred in full</p>\n                </div>\n\n                <h3>2) 'Good Management' of Assets</h3>\n                <ul>\n                    <li>Rational, expedient use (income &gt; costs)</li>\n                    <li>Adequate storage and preservation of every asset</li>\n                    <li>Current and investment maintenance</li>\n                    <li>Insurance against risks (breakage, damage, fire, flood, theft)</li>\n                </ul>\n\n                <h3>3) Fixed Assets</h3>\n                <ul>\n                    <li><strong>Intangible:</strong> start-up capital, market research, concessions, trademarks, goodwill</li>\n                    <li><strong>Tangible:</strong> land, buildings (accommodation, F&B, auxiliary, sport/wellness), equipment & installations, tools, furniture, transport</li>\n                    <li><strong>Financial assets</strong> and <strong>long-term receivables</strong> (&gt; 1 year)</li>\n                </ul>\n\n                <h3>4) Short-term Assets & Indicators</h3>\n                <ul>\n                    <li>Forms: inventories, receivables (≤1 yr), financial assets (≤1 yr), cash/bank</li>\n                    <li><strong>Turnover ratio:</strong> how often assets turn over — lowest in destination hotels (slow receivables)</li>\n                    <li><strong>Liquidity:</strong> always enough cash; liquidity ratio &gt; 1</li>\n                    <li><strong>Solvency:</strong> settle due obligations on the due date — expected <em>every day</em></li>\n                </ul>\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Insolvency consequences</h4>\n                    <p>Suppliers stop deliveries; default interest & legal enforcement; blocked accounts and confiscation; rising costs.</p>\n                </div>\n\n                <h3>5) Amortization (Depreciation)</h3>\n                <p>The value expression of fixed-asset consumption — total technical + economic wear transferred into service prices. Caused by <strong>physical wear</strong> and <strong>economic obsolescence</strong>.</p>\n                <ul>\n                    <li><strong>Excluded:</strong> land, works of art/archives, financial assets, start-up/research costs, assets under preparation</li>\n                    <li><strong>Revaluation:</strong> adjust book value to market prices for realistic amortization</li>\n                </ul>\n                <h4>Croatian amortization periods</h4>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td>Buildings, vessels &gt;1,000 GRT</td><td>20 years</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td>Other (unspecified) assets</td><td>10 years</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td>Basic herd, passenger cars</td><td>5 years</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td>Intangibles, equipment, vehicles & machinery (not passenger cars)</td><td>4 years</td></tr>\n                    <tr><td>Computers, IT equipment & programs, cell phones, network equipment</td><td>2 years</td></tr>\n                </table>\n\n                <h3>6) Amortization Methods</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Linear rate:</strong> a% = 100 / t &nbsp;(t = useful life in years)</p>\n                    <p><strong>Annual amount:</strong> A = N · a% / 100 = N / t &nbsp;(N = acquisition value)</p>\n                </div>\n                <ul>\n                    <li><strong>Time system:</strong> straight-line (equal), progressive (rising), degressive (declining balance — higher early)</li>\n                    <li><strong>Functional system:</strong> based on output/operating hours, ignoring time</li>\n                </ul>\n\n                <h3>7) Maintenance</h3>\n                <ul>\n                    <li><strong>Current (routine):</strong> daily (minor faults, prevention, cleaning) + periodic (inspect/replace worn parts)</li>\n                    <li><strong>Investment:</strong> roof, façade, painting, electrical/sanitary/gas/heating installations, boiler rooms, elevators</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 4 Exam Focus</h4>\n                    <p>Separate <strong>fixed vs current</strong> assets, know <strong>liquidity (&gt;1) vs solvency</strong>, the <strong>Croatian amortization periods</strong> (20/10/5/4/2), and the <strong>linear rate a% = 100/t</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "unit5CostTheory": {
+    "name": "Unit 5: Theory of Costs",
+    "icon": "fa-calculator",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "What does cost theory examine?",
+        "answer": "The origin, characteristics and behaviour of costs in business processes — the nature and types of costs, their allocation to cost units, their dependence on capacity utilization, and the relationship between costs, prices, revenue and business results.",
+        "explanation": "Knowing costs is essential for managing profitability."
+      },
+      {
+        "question": "How are costs defined?",
+        "answer": "Value-expressed consumption of the elements of the work process (and taxes/duties), caused by the realization of the business performance — i.e. resources sacrificed to achieve effects in line with the firm's purpose.",
+        "explanation": "Costs are tied to purposeful business activity."
+      },
+      {
+        "question": "What is the difference between cost and expenditure?",
+        "answer": "Cost = the (physical) use/consumption of material values, labour and services in producing effects (often in physical units). Expenditure = any outflow of money from the business, regardless of nature or purpose.",
+        "explanation": "Cost vs expenditure is a frequent exam item."
+      },
+      {
+        "question": "How can cost and expenditure relate in time?",
+        "answer": "Cost may precede expenditure (electricity used, paid later); they may coincide (paying for a service when performed); or cost may follow expenditure (materials bought first, consumed later).",
+        "explanation": "Economic vs cash timing are not always synchronized."
+      },
+      {
+        "question": "When are cost and expenditure NOT economically linked?",
+        "answer": "Expenditure without cost: buying land for tennis courts (no depreciation on land). Cost without expenditure: a cleaning machine received as a gift (no purchase outflow), but its depreciation is a cost.",
+        "explanation": "Classic two examples from the slides."
+      },
+      {
+        "question": "What are the 'natural types' of costs?",
+        "answer": "Costs of resources for work (materials), cost of the subject of work, labour costs (gross wages), service costs, and taxes & duties (independent of the business result). A clearer split is: material costs, service costs, amortization, gross wages, taxes & contributions.",
+        "explanation": "Natural cost types follow the production process."
+      },
+      {
+        "question": "What are cost centers (places) and cost bearers (units)?",
+        "answer": "Cost centers are spatially/functionally rounded parts of the company where costs are incurred (reception, F&B, housekeeping, maintenance). Cost bearers (cost units/objects) are the effects causing costs — products or services — split into internal and external cost units.",
+        "explanation": "Recording by center enables profitability analysis."
+      },
+      {
+        "question": "What is the difference between direct and indirect costs?",
+        "answer": "Direct costs are allocated directly to a cost center/unit on the basis of standards (e.g. food & beverages). Indirect costs (operational overheads, general administration & distribution) cannot be assigned directly and are transferred via a key or calculation sheet.",
+        "explanation": "Indirect = common to all cost bearers."
+      },
+      {
+        "question": "What are active and passive cost centers?",
+        "answer": "Active cost centers cover their costs with their own income; passive cost centers have expenses greater than revenue (or no revenue), e.g. the promotion department — yet each contributes to the business.",
+        "explanation": "Benefit may appear immediately (active) or later (passive)."
+      },
+      {
+        "question": "Distinguish variable and fixed costs (and the fixed-cost share).",
+        "answer": "Variable costs rise/fall in total with utilization but stay constant per unit (all direct costs are variable). Fixed costs ('period costs' / 'costs of installed capacity') stay unchanged regardless of volume. In hotels, fixed costs are 60–80% of total operating costs; much lower in restaurants.",
+        "explanation": "Fixed-cost share is a frequent exam number."
+      },
+      {
+        "question": "What are the three cost zones by capacity utilization?",
+        "answer": "Degression zone (costs grow slower than utilization → falling average cost), proportionality zone (lowest average costs — the optimal zone), and progressivity zone (rising average costs at high utilization).",
+        "explanation": "Finding the proportionality zone is key for rational business."
+      },
+      {
+        "question": "What is the difference between relatively fixed and absolutely fixed costs?",
+        "answer": "Relatively fixed (mixed) costs contain both variable and fixed components — seasonal wages, ongoing maintenance, energy/water/fuel, advertising. Absolutely fixed costs stay constant — permanent staff salaries, amortization, loan interest, insurance, calculated investment maintenance.",
+        "explanation": "Mixed costs can be progressive or degressive."
+      },
+      {
+        "question": "What is the cost reactivity coefficient (h) and its values?",
+        "answer": "h = T% / Q% (cost-increase intensity ÷ utilization-increase intensity). h = 0 → only fixed costs; h = 1 → proportional; h > 1 → progressive costs; h < 1 → degressive costs.",
+        "explanation": "Measures sensitivity of costs to capacity utilization."
+      },
+      {
+        "question": "What does the cost plan include, and the material-cost model %?",
+        "answer": "The total cost plan covers the material cost plan, personnel cost plan and the plan of other direct costs. A material-cost calculation model: 35% for food, 22% for beverages, 50% for other services.",
+        "explanation": "Cost planning is part of overall corporate planning (built on sales planning)."
+      },
+      {
+        "question": "What is the break-even point (cost recovery point)?",
+        "answer": "The level of effects (quantity of products/services) where revenue equals costs — no profit, no loss. Below it the company makes a loss; above it, a profit.",
+        "explanation": "Closely linked to costs–revenue–utilization analysis."
+      },
+      {
+        "question": "What is functional value analysis of hospitality services?",
+        "answer": "Breaking a service's functions into components and examining the function–cost relationship to identify and eliminate unnecessary costs while keeping quality — finding the optimum between number of functions and price.",
+        "explanation": "Aim: maximum rationalization of the service process."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Cost theory primarily studies:",
+        "options": [
+          "Only taxes",
+          "Only wages",
+          "The origin, characteristics and behaviour of costs",
+          "Only asset valuation"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Expenditure is best described as:",
+        "options": [
+          "Any outflow of money from the business",
+          "Only profitable spending",
+          "Only payroll",
+          "Only variable cost"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Buying land (no depreciation) is an example of:",
+        "options": [
+          "Cost without expenditure",
+          "Expenditure without cost",
+          "Cost and expenditure coinciding",
+          "Neither cost nor expenditure"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "All direct costs have the character of:",
+        "options": [
+          "Fixed costs",
+          "Variable costs",
+          "Period costs",
+          "Sunk costs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In hotels, fixed costs are approximately what share of total operating costs?",
+        "options": [
+          "10–20%",
+          "30–40%",
+          "60–80%",
+          "Over 95%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The cost zone with the LOWEST average costs is the:",
+        "options": [
+          "Degression zone",
+          "Proportionality zone",
+          "Progressivity zone",
+          "Recovery zone"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The reactivity coefficient is calculated as:",
+        "options": [
+          "h = Q% / T%",
+          "h = T% / Q%",
+          "h = T% × Q%",
+          "h = 100 / Q%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A reactivity coefficient h = 1 means costs are:",
+        "options": [
+          "Only fixed",
+          "Proportional",
+          "Progressive",
+          "Degressive"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "At the break-even point, the company has:",
+        "options": [
+          "Maximum profit",
+          "Maximum loss",
+          "Neither profit nor loss",
+          "Only fixed costs"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the material-cost calculation model, the share for food is:",
+        "options": [
+          "22%",
+          "35%",
+          "50%",
+          "60%"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Costs are the value-expressed _______ of the elements of the work process.",
+        "answer": "consumption",
+        "hint": "Using up of resources..."
+      },
+      {
+        "sentence": "Expenditure is any outflow of _______ from the business system.",
+        "answer": "money",
+        "hint": "Cash leaving the firm..."
+      },
+      {
+        "sentence": "Buying land creates an expenditure but no _______ (no depreciation).",
+        "answer": "cost",
+        "hint": "The other key term..."
+      },
+      {
+        "sentence": "In hotels, fixed costs are about 60–_______% of total operating costs.",
+        "answer": "80",
+        "hint": "Upper bound, two digits..."
+      },
+      {
+        "sentence": "The cost zone with the lowest average costs is the _______ zone.",
+        "answer": "proportionality",
+        "hint": "Between degression and progressivity..."
+      },
+      {
+        "sentence": "The reactivity coefficient is h = T% / _______.",
+        "answer": "Q%",
+        "hint": "Utilization-increase intensity..."
+      },
+      {
+        "sentence": "At the _______ point, revenue equals costs (no profit, no loss).",
+        "answer": "break-even",
+        "hint": "Cost-recovery point..."
+      },
+      {
+        "sentence": "In the material-cost model, beverages are calculated at _______%.",
+        "answer": "22",
+        "hint": "Between food 35% and other 50%..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 5 — Theory of Costs in Hospitality",
+      "content": "\n                <h3>1) Why Cost Theory Matters</h3>\n                <p>It examines the <strong>origin, characteristics and behaviour</strong> of costs — types, allocation to cost units, dependence on capacity utilization, and the link to prices, revenue and results.</p>\n\n                <h3>2) Cost vs Expenditure</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Cost:</strong> value-expressed consumption of work elements/labour/services to create effects</p>\n                    <p><strong>Expenditure:</strong> any outflow of money from the business, regardless of purpose</p>\n                </div>\n                <h4>Timing relationships</h4>\n                <ul>\n                    <li>Cost <em>before</em> expenditure (electricity used, paid later)</li>\n                    <li>Cost <em>with</em> expenditure (paying for a service when performed)</li>\n                    <li>Cost <em>after</em> expenditure (materials bought first, consumed later)</li>\n                </ul>\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Not always linked</h4>\n                    <p><strong>Expenditure without cost:</strong> buying land (no depreciation). <strong>Cost without expenditure:</strong> a machine received as a gift (no outflow, but depreciation is a cost).</p>\n                </div>\n\n                <h3>3) Classifying Costs</h3>\n                <ul>\n                    <li><strong>Natural types:</strong> material costs, service costs, amortization, gross wages, taxes & contributions</li>\n                    <li><strong>Cost centers (places):</strong> reception, F&B, housekeeping, maintenance — by spatial or functional principle</li>\n                    <li><strong>Cost bearers (units):</strong> internal vs external cost units (the effects causing costs)</li>\n                    <li><strong>Direct vs indirect:</strong> direct allocated straight to units; indirect (overheads, admin) via a key</li>\n                    <li><strong>Active vs passive centers:</strong> cover their own costs vs not (e.g. promotion department)</li>\n                </ul>\n\n                <h3>4) Cost Behaviour by Capacity Utilization</h3>\n                <ul>\n                    <li><strong>Variable costs:</strong> change in total with utilization, constant per unit (all direct costs are variable)</li>\n                    <li><strong>Fixed costs:</strong> unchanged regardless of volume ('period costs' / 'installed-capacity costs') — <strong>60–80% of hotel operating costs</strong></li>\n                    <li><strong>Relatively fixed (mixed):</strong> seasonal wages, energy, advertising; <strong>absolutely fixed:</strong> permanent salaries, amortization, interest, insurance</li>\n                </ul>\n                <h4>Three cost zones</h4>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Degression</strong></td><td>Costs grow slower than utilization → falling average cost</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Proportionality</strong></td><td>Lowest average costs — the optimal zone</td></tr>\n                    <tr><td><strong>Progressivity</strong></td><td>Rising average costs at high utilization</td></tr>\n                </table>\n\n                <h3>5) Reactivity Coefficient</h3>\n                <div class=\"formula-box\">\n                    <p><strong>h = T% / Q%</strong> &nbsp;(cost-increase intensity ÷ utilization-increase intensity)</p>\n                    <p>h = 0 → only fixed · h = 1 → proportional · h &gt; 1 → progressive · h &lt; 1 → degressive</p>\n                </div>\n\n                <h3>6) Cost Planning, Analysis & Break-even</h3>\n                <ul>\n                    <li><strong>Cost plan:</strong> material + personnel + other direct costs (built on sales planning)</li>\n                    <li><strong>Material-cost model:</strong> 35% food · 22% beverages · 50% other services</li>\n                    <li><strong>Analysis</strong> by cost type, function, center and bearer; then ways to reduce costs</li>\n                    <li><strong>Break-even point:</strong> revenue = costs (no profit/loss); below → loss, above → profit</li>\n                    <li><strong>Functional value analysis:</strong> eliminate unnecessary costs while keeping quality</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 5 Exam Focus</h4>\n                    <p>Nail <strong>cost vs expenditure</strong> (with the land/gift examples), <strong>fixed vs variable</strong> (60–80% in hotels), the <strong>three cost zones</strong>, the <strong>reactivity coefficient h = T%/Q%</strong>, and the <strong>break-even point</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "unit6BusinessResult": {
+    "name": "Unit 6: Business Result",
+    "icon": "fa-file-invoice-dollar",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "How is the business result of a hospitality company expressed?",
+        "answer": "Physically — as the product or service delivered (overnight stays, meals); and in value — as the difference between total revenue and total expenditure in the accounting period (usually the fiscal year). A positive result is profit, a negative one is loss.",
+        "explanation": "Determined by the Profit & Loss statement at year-end."
+      },
+      {
+        "question": "What are the basic financial reports?",
+        "answer": "Balance sheet, Profit and Loss statement (P&L), Report on retained earnings, and Cash flow statement. Together they show the 'health' of the company.",
+        "explanation": "All reports are interlinked."
+      },
+      {
+        "question": "What is the difference between a static and a dynamic report?",
+        "answer": "A static report shows the situation at a specific point in time (the balance sheet); a dynamic report shows changes/performance over a period (the profit and loss statement).",
+        "explanation": "Balance sheet = snapshot; P&L = period flow."
+      },
+      {
+        "question": "Which accounting standards are used in Croatia?",
+        "answer": "IFRS (International Financial Reporting Standards) for large/public companies, and Croatian Accounting Standards (published 2008) for small and medium enterprises (to simplify reporting and reduce costs).",
+        "explanation": "International standards harmonised reporting (EU decision 2002, IFRS from 2003)."
+      },
+      {
+        "question": "What is USALI?",
+        "answer": "The Uniform System of Accounts for the Lodging Industry — a globally recognised hotel-industry reporting standard for internal reporting, benchmarking and decision-making. Created in 1926 by the Hotel Association of New York (now in its 12th edition).",
+        "explanation": "Increasingly used in Croatia too."
+      },
+      {
+        "question": "What is a balance sheet and its key equation?",
+        "answer": "A static report showing assets and their sources (capital + liabilities) on a specific date. Key principle: Assets = Liabilities + Equity (the value of assets always equals the value of liabilities).",
+        "explanation": "Basis for analysing the financial position."
+      },
+      {
+        "question": "What is the difference between a budgetary and an invoicing balance sheet?",
+        "answer": "Budgetary (planned/earlier) records the values the company plans to dispose of on the balance-sheet date; invoicing (actual/retrospective) records the values it actually has on that date.",
+        "explanation": "By date of preparation."
+      },
+      {
+        "question": "How are sources of assets divided?",
+        "answer": "By ownership: own funds (capital) and borrowed funds (liabilities). By maturity: short-term sources (current liabilities), long-term sources (long-term liabilities), and permanent sources (capital/equity).",
+        "explanation": "Equity = total assets − all liabilities."
+      },
+      {
+        "question": "What does the Profit and Loss statement show, and its elements?",
+        "answer": "It expresses the degree of business success over a period. Elements: Income, Expenditure, Profit (or loss) before tax, Income tax, and Profit after tax (or loss) — the operating result.",
+        "explanation": "Balance sheet = state at a point; P&L = success over a period."
+      },
+      {
+        "question": "What types of revenue and expenditure appear in the P&L?",
+        "answer": "Revenue: operating (core activity), financial (interest, dividends), and other (grants, sale of fixed assets, write-offs). Expenditure: operating, financial (interest on external funds), and other. Only expenditures incurred to create effects count as costs.",
+        "explanation": "Income raises capital; expenditure reduces it."
+      },
+      {
+        "question": "How is the business (financial) result calculated?",
+        "answer": "Income − Expenditure = financial result. If Income > Expenditure → Profit (successful); if Expenditure > Income → Loss (unsuccessful).",
+        "explanation": "Always expressed in value, via the P&L at period end."
+      },
+      {
+        "question": "Which principles govern business accounting?",
+        "answer": "Continuity (comparability — no unjustified change of method), realisation (revenue linked to turnover, not collection), causality (link income & expenditure by accounting period), and prudence (recognise not only realised but also incurred losses).",
+        "explanation": "Ensure reliable, comparable statements."
+      },
+      {
+        "question": "How can the business result be improved?",
+        "answer": "By raising income with unchanged expenditure; by cutting expenditure with unchanged income; by a greater rise in income than in expenditure; or by a greater cut in expenditure than the fall in income.",
+        "explanation": "Four basic improvement paths."
+      },
+      {
+        "question": "What are the five basic concepts of company value?",
+        "answer": "Accounting value, reproduction (replacement) value, liquidation value, market value, and economic value.",
+        "explanation": "Each defined differently by the valuation approach."
+      },
+      {
+        "question": "Compare accounting, liquidation and reproduction value (with formulas).",
+        "answer": "Accounting value Vk = Ik − Ok (assets − liabilities, balance-sheet based). Liquidation value Vl = Il − Ol (value in a forced sale − liabilities) = the minimum value. Reproduction (replacement) value Vr = Ir − Or (cost to rebuild the same company − liabilities).",
+        "explanation": "Static, asset-based methods."
+      },
+      {
+        "question": "What is the difference between static and dynamic valuation methods?",
+        "answer": "Static methods estimate value from the assets on a given day (balance-sheet data). Dynamic methods estimate value from future business success/profit (P&L data) — e.g. Price/Earnings (P/E) method, dividend method, and cash-flow analysis method.",
+        "explanation": "Static = present assets; dynamic = future earnings."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The business result in value terms is:",
+        "options": [
+          "Total revenue only",
+          "Total assets minus liabilities",
+          "Total revenue minus total expenditure",
+          "Equity plus liabilities"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which report is STATIC (a snapshot at a point in time)?",
+        "options": [
+          "Profit and loss statement",
+          "Balance sheet",
+          "Cash flow statement",
+          "Report on retained earnings"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The fundamental balance-sheet equation is:",
+        "options": [
+          "Assets = Revenue − Costs",
+          "Assets = Liabilities + Equity",
+          "Profit = Income + Expenditure",
+          "Equity = Assets + Liabilities"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "USALI was created in 1926 by the:",
+        "options": [
+          "EU Commission",
+          "Hotel Association of New York",
+          "IFRS Foundation",
+          "Croatian Chamber of Economy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Croatia, large/public companies report under:",
+        "options": [
+          "Croatian Accounting Standards only",
+          "USALI only",
+          "IFRS",
+          "No standard"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Equity is mathematically equal to:",
+        "options": [
+          "Total assets",
+          "Total assets minus all liabilities",
+          "Total liabilities",
+          "Revenue minus expenditure"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The accounting principle requiring revenue to be linked to turnover (not collection) is the:",
+        "options": [
+          "Prudence principle",
+          "Continuity principle",
+          "Realisation principle",
+          "Causality principle"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The liquidation value of a company represents the:",
+        "options": [
+          "Maximum market value",
+          "Minimum value realisable in a forced sale",
+          "Cost to rebuild the company",
+          "Present value of future dividends"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dynamic valuation methods (P/E, dividend, cash flow) are based on:",
+        "options": [
+          "Balance-sheet assets on a given day",
+          "Future business success / profit",
+          "Liquidation proceeds",
+          "Reproduction cost"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the five concepts of company value?",
+        "options": [
+          "Accounting value",
+          "Liquidation value",
+          "Reproduction value",
+          "Seasonal value"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Income − Expenditure = the business (financial) _______.",
+        "answer": "result",
+        "hint": "Profit or loss..."
+      },
+      {
+        "sentence": "The balance sheet is a _______ report (a snapshot at a point in time).",
+        "answer": "static",
+        "hint": "Opposite of dynamic..."
+      },
+      {
+        "sentence": "Assets = Liabilities + _______.",
+        "answer": "Equity",
+        "hint": "Owners' capital..."
+      },
+      {
+        "sentence": "_______ is the global hotel reporting standard created in 1926 in New York.",
+        "answer": "USALI",
+        "hint": "Uniform System of Accounts for the Lodging Industry..."
+      },
+      {
+        "sentence": "If expenditure exceeds income, the company makes a _______.",
+        "answer": "loss",
+        "hint": "Negative result..."
+      },
+      {
+        "sentence": "The accounting value of a company is Vk = Ik − _______.",
+        "answer": "Ok",
+        "hint": "Accounting value of liabilities..."
+      },
+      {
+        "sentence": "Static valuation uses balance-sheet data; _______ valuation uses future profit.",
+        "answer": "dynamic",
+        "hint": "P/E, dividend, cash-flow methods..."
+      },
+      {
+        "sentence": "Large and public companies in Croatia report under _______ standards.",
+        "answer": "IFRS",
+        "hint": "International Financial Reporting Standards..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 6 — The Business Result of the Hospitality Company",
+      "content": "\n                <h3>1) The Business Result</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Physical:</strong> the product/service delivered (overnight stays, meals)</p>\n                    <p><strong>Value:</strong> Income − Expenditure → Profit (&gt;0) or Loss (&lt;0)</p>\n                </div>\n\n                <h3>2) Financial Reports</h3>\n                <ul>\n                    <li><strong>Balance sheet</strong> — static (position at a point in time)</li>\n                    <li><strong>Profit and Loss (P&L)</strong> — dynamic (performance over a period)</li>\n                    <li><strong>Report on retained earnings</strong> and <strong>Cash flow statement</strong></li>\n                </ul>\n                <p><strong>Standards:</strong> IFRS (large/public) · Croatian Accounting Standards 2008 (SMEs) · <strong>USALI</strong> (hotel benchmarking, created 1926, Hotel Association of New York).</p>\n\n                <h3>3) Balance Sheet</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Assets = Liabilities + Equity</strong> &nbsp;(Equity = Assets − Liabilities)</p>\n                </div>\n                <ul>\n                    <li>By date: budgetary (planned) vs invoicing (actual)</li>\n                    <li>Sources of assets — by ownership (own / borrowed); by maturity (short / long / permanent)</li>\n                    <li>Off-balance-sheet assets/liabilities = others' assets temporarily used</li>\n                </ul>\n\n                <h3>4) Profit & Loss Statement</h3>\n                <p>Elements: Income → Expenditure → Profit/Loss before tax → Income tax → <strong>Profit after tax (operating result)</strong>.</p>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Revenue</strong></td><td>Operating (core) · Financial (interest, dividends) · Other (grants, asset sales)</td></tr>\n                    <tr><td><strong>Expenditure</strong></td><td>Operating · Financial (interest) · Other (unplanned, losses)</td></tr>\n                </table>\n                <p><strong>Accounting principles:</strong> continuity (comparability), realisation, causality, prudence.</p>\n\n                <h3>5) Improving the Result</h3>\n                <ul>\n                    <li>↑ income (unchanged expenditure) or ↓ expenditure (unchanged income)</li>\n                    <li>income rising faster than expenditure, or expenditure falling faster than income</li>\n                    <li>Profit → reinvested, distributed to owners, or used to repay debt</li>\n                </ul>\n\n                <h3>6) Company Valuation</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Accounting:</strong> Vk = Ik − Ok &nbsp;|&nbsp; <strong>Liquidation:</strong> Vl = Il − Ol &nbsp;|&nbsp; <strong>Reproduction:</strong> Vr = Ir − Or</p>\n                </div>\n                <ul>\n                    <li><strong>Static methods</strong> (assets on a given day): accounting, liquidation value</li>\n                    <li><strong>Dynamic methods</strong> (future profit): P/E method, dividend method, cash-flow analysis</li>\n                    <li>Non-financial factors: concessions, licenses, goodwill, brand, expected tourism growth</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 6 Exam Focus</h4>\n                    <p>Know <strong>Assets = Liabilities + Equity</strong>, static vs dynamic reports/methods, the five value concepts (Vk/Vl/Vr formulas), and <strong>USALI</strong> (1926, NY).</p>\n                </div>\n            "
+    }
+  },
+  "unit7SuccessIndicators": {
+    "name": "Unit 7: Success & KPIs",
+    "icon": "fa-gauge-high",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "How is the business success of a hospitality company understood?",
+        "answer": "As a complex result of the interaction of internal and external factors. It is defined relative to the company's economic objectives (it is not just technical/architectural quality).",
+        "explanation": "Success = quality of the 'economy' relative to economic goals."
+      },
+      {
+        "question": "What are the three economic benchmarks of business success?",
+        "answer": "Labour productivity, Economy (frugality), and Profitability.",
+        "explanation": "The classic trio of economic-efficiency measures."
+      },
+      {
+        "question": "What three types of indicator comparison exist?",
+        "answer": "Planned comparison (realised vs planned), comparison over time (vs a baseline/previous period), and spatial comparison (one location vs another).",
+        "explanation": "Used to reliably assess activity."
+      },
+      {
+        "question": "What is labour productivity and how is it measured in hotels?",
+        "answer": "The effort to achieve the greatest output/turnover with the least human labour. Measured by e.g. realised nights per employee or beds (rooms) per employee. The optimum is about 3.5–5 beds per employee.",
+        "explanation": "Higher productivity → lower cost price, higher competitiveness."
+      },
+      {
+        "question": "What is economy (frugality) and its coefficient values?",
+        "answer": "The degree of economy in achieving effects = ratio of effects achieved to elements consumed (value: total realisation ÷ total costs). E > 1 = economical; E = 1 = at the limit; E < 1 = uneconomical.",
+        "explanation": "Raised by cutting input/prices or raising output/sales prices."
+      },
+      {
+        "question": "What is profitability?",
+        "answer": "An economic measure of success showing the return on invested capital in a period — the ratio between the business result (profit) and the invested capital.",
+        "explanation": "Profit relative to capital."
+      },
+      {
+        "question": "How do productivity, economy and profitability interrelate?",
+        "answer": "They can move together or in opposite directions. E.g. replacing labour with expensive machines can raise productivity but lower economy; higher labour productivity usually raises profitability (less labour per unit).",
+        "explanation": "Not always aligned."
+      },
+      {
+        "question": "Which factors determine a hospitality company's success?",
+        "answer": "Natural, human, organisational, social and technical factors. Profitability is additionally affected by the turnover rate, utilisation of fixed assets, credit/tax policy, and the level of financial/extraordinary income and expenditure.",
+        "explanation": "Internal + external factors interact."
+      },
+      {
+        "question": "What is ADR and how is it calculated?",
+        "answer": "Average Daily Rate — the daily average revenue per sold room. ADR = Room Revenue / Sold Rooms. (e.g. €10,000 / 50 = €200.)",
+        "explanation": "A core hotel KPI."
+      },
+      {
+        "question": "What is ARR (Average Room Rate)?",
+        "answer": "The longer-term average rate per occupied room. ARR = Total Room Revenue / Total Occupied Rooms.",
+        "explanation": "Similar to ADR but over a longer term."
+      },
+      {
+        "question": "What is RevPAR and how is it calculated?",
+        "answer": "Revenue Per Available Room — measures revenue-generation efficiency. RevPAR = Room Revenue / Available Rooms. (e.g. €10,000 / 100 = €100.) It reflects both rate and occupancy.",
+        "explanation": "Uses available (not just sold) rooms."
+      },
+      {
+        "question": "What is TRevPAR?",
+        "answer": "Total Revenue Per Available Room — broader than RevPAR. TRevPAR = Total Revenue / Available Rooms (includes F&B, wellness, etc.).",
+        "explanation": "Captures all revenue, not only rooms."
+      },
+      {
+        "question": "What is GOP and GOPPAR?",
+        "answer": "GOP (Gross Operating Profit) = Gross Operating Revenue − Gross Operating Expenses. GOPPAR (GOP per Available Room) = GOP / Available Rooms — combines profitability with room inventory.",
+        "explanation": "Profitability KPIs."
+      },
+      {
+        "question": "What are NOP and EBITDA?",
+        "answer": "NOP (Net Operating Profit) = Total Revenue − Operating Costs. EBITDA = Earnings Before Interest, Taxes, Depreciation and Amortization = Revenue − Expenses (excluding interest, taxes, depreciation).",
+        "explanation": "'What gets measured, gets managed.'"
+      },
+      {
+        "question": "On which system are hospitality KPIs based?",
+        "answer": "On the Uniform System of Accounts for the Lodging Industry (USALI) — enabling benchmarking against competitors and real-time performance tracking.",
+        "explanation": "KPIs = quantifiable financial/operational metrics."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The three economic benchmarks of business success are:",
+        "options": [
+          "Liquidity, solvency, turnover",
+          "Labour productivity, economy, profitability",
+          "ADR, RevPAR, GOP",
+          "Income, expenditure, profit"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A company is economical when its economy coefficient is:",
+        "options": [
+          "E < 1",
+          "E = 0",
+          "E > 1",
+          "E = 0.5"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "ADR (Average Daily Rate) is calculated as:",
+        "options": [
+          "Room Revenue / Available Rooms",
+          "Room Revenue / Sold Rooms",
+          "Total Revenue / Available Rooms",
+          "GOP / Available Rooms"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "RevPAR is calculated as:",
+        "options": [
+          "Room Revenue / Sold Rooms",
+          "Total Revenue / Sold Rooms",
+          "Room Revenue / Available Rooms",
+          "GOP / Sold Rooms"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "TRevPAR differs from RevPAR because it uses:",
+        "options": [
+          "Only room revenue",
+          "Total revenue (all departments)",
+          "Only sold rooms",
+          "Gross operating profit"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "GOP (Gross Operating Profit) equals:",
+        "options": [
+          "Revenue / Available Rooms",
+          "Gross Operating Revenue − Gross Operating Expenses",
+          "Revenue − Interest − Taxes",
+          "Total Revenue / Sold Rooms"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The optimal number of beds per employee in hotels is about:",
+        "options": [
+          "1–2",
+          "3.5–5",
+          "8–10",
+          "15–20"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Profitability measures:",
+        "options": [
+          "Output per worker",
+          "Effects ÷ elements consumed",
+          "Return on invested capital",
+          "Rooms sold per day"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "EBITDA excludes:",
+        "options": [
+          "Revenue",
+          "Operating wages",
+          "Interest, taxes, depreciation & amortization",
+          "Food costs"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "GOPPAR is calculated as:",
+        "options": [
+          "GOP / Available Rooms",
+          "GOP / Sold Rooms",
+          "Revenue / GOP",
+          "Total Revenue / Available Rooms"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The three economic benchmarks are labour productivity, economy and _______.",
+        "answer": "profitability",
+        "hint": "Return on capital..."
+      },
+      {
+        "sentence": "A company is economical when the economy coefficient E is greater than _______.",
+        "answer": "1",
+        "hint": "Single digit..."
+      },
+      {
+        "sentence": "ADR = Room Revenue / _______ Rooms.",
+        "answer": "Sold",
+        "hint": "Rooms actually occupied..."
+      },
+      {
+        "sentence": "RevPAR = Room Revenue / _______ Rooms.",
+        "answer": "Available",
+        "hint": "All rooms, sold or not..."
+      },
+      {
+        "sentence": "GOP = Gross Operating Revenue − Gross Operating _______.",
+        "answer": "Expenses",
+        "hint": "Costs of operating..."
+      },
+      {
+        "sentence": "_______ Revenue Per Available Room (TRevPAR) includes all departments.",
+        "answer": "Total",
+        "hint": "Broader than RevPAR..."
+      },
+      {
+        "sentence": "The optimum is roughly 3.5 to _______ beds per employee.",
+        "answer": "5",
+        "hint": "Single digit..."
+      },
+      {
+        "sentence": "EBITDA = earnings before interest, taxes, depreciation and _______.",
+        "answer": "amortization",
+        "hint": "Writing off intangibles..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 7 — Success & Economic Indicators (KPIs)",
+      "content": "\n                <h3>1) Business Success</h3>\n                <p>A complex result of <strong>internal and external factors</strong>, judged against the company's <strong>economic objectives</strong> (continuity, profitability, serving stakeholders, expansion).</p>\n\n                <h3>2) The Three Economic Benchmarks</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Labour productivity</strong> — max output with min labour (nights or beds per employee; optimum 3.5–5 beds/employee)</p>\n                    <p><strong>Economy</strong> = effects ÷ elements consumed → E&gt;1 economical · E=1 limit · E&lt;1 uneconomical</p>\n                    <p><strong>Profitability</strong> = business result (profit) ÷ invested capital</p>\n                </div>\n                <p>Comparison types: <strong>planned</strong>, <strong>over time</strong>, <strong>spatial</strong>. They can move together or diverge (e.g. machines raise productivity but may lower economy).</p>\n\n                <h3>3) Hotel KPIs (based on USALI)</h3>\n                <p><em>\"What gets measured, gets managed.\"</em></p>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>ARR</strong></td><td>Total Room Revenue / Total Occupied Rooms</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>ADR</strong></td><td>Room Revenue / Sold Rooms</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>RevPAR</strong></td><td>Room Revenue / Available Rooms</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>TRevPAR</strong></td><td>Total Revenue / Available Rooms</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>GOP</strong></td><td>Gross Operating Revenue − Gross Operating Expenses</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>GOPPAR</strong></td><td>GOP / Available Rooms</td></tr>\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>NOP</strong></td><td>Total Revenue − Operating Costs</td></tr>\n                    <tr><td><strong>EBITDA</strong></td><td>Revenue − Expenses (excl. interest, taxes, depreciation)</td></tr>\n                </table>\n\n                <h3>4) Success Factors</h3>\n                <p>Natural · human · organisational · social · technical. Profitability is also driven by turnover rate, fixed-asset utilisation, credit/tax policy, and financial/extraordinary income & expenditure.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 7 Exam Focus</h4>\n                    <p>Memorise the <strong>KPI formulas</strong> — especially the difference between <strong>ADR</strong> (÷ sold rooms) and <strong>RevPAR</strong> (÷ available rooms), and <strong>RevPAR vs TRevPAR</strong>. Know <strong>E&gt;1/=1/&lt;1</strong> and the 3.5–5 beds/employee optimum.</p>\n                </div>\n            "
+    }
+  },
+  "unit8PricePolicy": {
+    "name": "Unit 8: Price Policy",
+    "icon": "fa-tag",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Why is price important in hospitality?",
+        "answer": "Price completes the hospitality product (without it the product is undefined), reflects its value, and is a constitutive element of the tourism market that directly affects demand.",
+        "explanation": "Price is a key positioning tool."
+      },
+      {
+        "question": "What are the basic objectives of pricing policy?",
+        "answer": "Ensuring uniformity of pricing within units, influencing customer behaviour, and controlling behaviour / harmonising prices with legal regulations.",
+        "explanation": "Pricing policy = the process of pricing decisions."
+      },
+      {
+        "question": "How are hospitality prices grouped?",
+        "answer": "Accommodation prices (board, half board, overnight stays, day rentals, mobile homes, household accommodation) and prices for other services (F&B, wellness, events). Accommodation prices position the hotel on the foreign market.",
+        "explanation": "Two basic groups."
+      },
+      {
+        "question": "How does pricing differ between hotel types?",
+        "answer": "Business-centre (urban) hotels operate year-round with fairly consistent occupancy and prices; tourist-destination hotels operate seasonally — in the 2–3 month high season prices are raised to the competitive maximum to cover fixed costs and earn a reasonable profit.",
+        "explanation": "Seasonality drives price differentiation."
+      },
+      {
+        "question": "What criteria are used for price differentiation?",
+        "answer": "Intensity of tourist demand (season), time of purchase, category of tourist (individuals/families/groups), number of bookings (group/long-stay discounts), position in the sales channel (agency commission), and utilisation/geographical criteria (domestic vs foreign guests).",
+        "explanation": "Many criteria beyond just season."
+      },
+      {
+        "question": "What are the three groups of pricing methods?",
+        "answer": "Cost-oriented ('cost-plus' — costs + desired profit, ignores supply/demand), market-oriented (demand-oriented and lowest-price methods), and competition-oriented (responding to rivals to grow sales/market share).",
+        "explanation": "Three method families."
+      },
+      {
+        "question": "How do costs and demand set price limits?",
+        "answer": "Costs determine the lower limit (below which the business makes a loss), while the actual selling price is determined by tourist demand. Demand has the dominant influence on the price of the hospitality product.",
+        "explanation": "Cost = floor; demand = actual price."
+      },
+      {
+        "question": "What internal and external factors influence selling prices?",
+        "answer": "External: market development, product life cycle, product differentiation, consumer buying behaviour, price elasticity, competition. Internal: costs and working conditions (which affect, but don't dominate, price formation).",
+        "explanation": "External factors dominate."
+      },
+      {
+        "question": "Which product life-cycle phases matter most for pricing?",
+        "answer": "The introduction phase (price reflects invested resources), the decline phase (price-reduction policy to hold market position), and the revitalisation phase (modernising and enriching the offer).",
+        "explanation": "Phase shapes pricing strategy."
+      },
+      {
+        "question": "What is price elasticity of demand?",
+        "answer": "The sensitivity of demand to price changes — in practice, falling traffic when prices rise, or rising traffic when prices fall.",
+        "explanation": "Key for stimulating pricing policy."
+      },
+      {
+        "question": "What is calculation (costing) and its purpose?",
+        "answer": "From Latin 'calculus' (counting stone) — the method used to calculate prices: to include and distribute costs and check whether the price covers the elements used. It supports standard/prime-cost calculation, analysis, planning and comparison.",
+        "explanation": "Costing underpins pricing."
+      },
+      {
+        "question": "What are the elements of the classic sales-price calculation?",
+        "answer": "Direct material costs + amortisation + gross wages + other direct costs + general production costs + general administrative costs = I. Cost price; + profit/loss = II. sales price without tax; + sales tax = III. sales price.",
+        "explanation": "Selling price = cost price + margin + VAT."
+      },
+      {
+        "question": "What is the difference between prior and post calculation?",
+        "answer": "Prior (planned) calculation is done before the period, based on consumption/labour standards, to set prices in advance. Post (accounting) calculation is done at period end to determine actual costs and check the prior calculation (identify deviations).",
+        "explanation": "Planned vs actual."
+      },
+      {
+        "question": "What is the margin (marža) and what must it cover?",
+        "answer": "The margin must cover all indirect business costs and accumulation (planned profit) — i.e. indirect material costs, services, advertising, depreciation, gross personnel costs, etc. It can be raised/lowered without changing the selling price.",
+        "explanation": "Margin varies by product type and place."
+      },
+      {
+        "question": "What is the division method vs the additional (markup) method?",
+        "answer": "The division method is used under complete homogeneity of assortment (limited use in hospitality). The additional method is used for a heterogeneous assortment — especially food and beverage — to calculate prices.",
+        "explanation": "Cost-price calculation methods."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Costs in pricing primarily determine the:",
+        "options": [
+          "Actual selling price",
+          "Lower price limit (below which there is a loss)",
+          "Upper price limit",
+          "Agency commission"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A 'cost-plus' approach is a:",
+        "options": [
+          "Market-oriented method",
+          "Competition-oriented method",
+          "Cost-oriented method",
+          "Demand-oriented method"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The dominant influence on the price of a hospitality product is:",
+        "options": [
+          "Cost",
+          "Tourist demand",
+          "Staff wages",
+          "Depreciation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The selling price is built as:",
+        "options": [
+          "Cost price + margin + VAT",
+          "Cost price − margin",
+          "Margin + depreciation only",
+          "Revenue − expenditure"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The additional (markup) method is mainly used for:",
+        "options": [
+          "A fully homogeneous assortment",
+          "A heterogeneous assortment (e.g. F&B)",
+          "Only accommodation",
+          "Only wellness services"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prior (planned) calculation is carried out:",
+        "options": [
+          "At the end of the period",
+          "Before the period, based on standards",
+          "Only for foreign markets",
+          "Only after a loss"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is an EXTERNAL factor of price formation?",
+        "options": [
+          "Working conditions",
+          "Internal costs",
+          "Price elasticity / competition",
+          "Staff relationships"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In a tourist-destination hotel, high-season prices are raised to:",
+        "options": [
+          "The legal minimum",
+          "The competitive maximum (to cover fixed costs + profit)",
+          "Match the low season",
+          "Zero margin"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The margin must cover indirect costs and:",
+        "options": [
+          "Only VAT",
+          "Accumulation (planned profit)",
+          "Direct material only",
+          "Agency commission only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Price elasticity of demand measures:",
+        "options": [
+          "Cost per room",
+          "Sensitivity of demand to price changes",
+          "Fixed-cost share",
+          "Number of sold rooms"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Costs set the _______ limit, below which the business makes a loss.",
+        "answer": "lower",
+        "hint": "Floor of the price..."
+      },
+      {
+        "sentence": "The dominant influence on the hospitality price is tourist _______.",
+        "answer": "demand",
+        "hint": "How much the market wants..."
+      },
+      {
+        "sentence": "Selling price = cost price + margin + _______.",
+        "answer": "VAT",
+        "hint": "Sales tax..."
+      },
+      {
+        "sentence": "'Cost-plus' is a _______-oriented pricing method.",
+        "answer": "cost",
+        "hint": "Based on expenses..."
+      },
+      {
+        "sentence": "The _______ method is used for a heterogeneous assortment (e.g. F&B).",
+        "answer": "additional",
+        "hint": "Markup-based..."
+      },
+      {
+        "sentence": "_______ (planned) calculation is done before the period using standards.",
+        "answer": "Prior",
+        "hint": "Opposite of post/accounting..."
+      },
+      {
+        "sentence": "Price _______ of demand is the sensitivity of demand to price changes.",
+        "answer": "elasticity",
+        "hint": "Responsiveness..."
+      },
+      {
+        "sentence": "The margin must cover indirect costs and _______ (planned profit).",
+        "answer": "accumulation",
+        "hint": "The profit component..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 8 — Price Policy in Hospitality",
+      "content": "\n                <h3>1) Why Price Matters</h3>\n                <p>Price <strong>completes the product</strong>, reflects its value, and is a constitutive element of the tourism market that directly affects demand.</p>\n                <p><strong>Objectives:</strong> uniformity within units · influencing customer behaviour · legal compliance.</p>\n\n                <h3>2) Types of Prices & Differentiation</h3>\n                <ul>\n                    <li><strong>Accommodation prices</strong> (board, half-board, overnight, day rentals) vs <strong>other services</strong> (F&B, wellness)</li>\n                    <li>Business-centre hotels: year-round, consistent · Destination hotels: seasonal (high-season → competitive maximum)</li>\n                    <li><strong>Differentiation criteria:</strong> demand intensity, time of purchase, tourist category, number of bookings (discounts), channel position (agency commission), geography</li>\n                </ul>\n\n                <h3>3) Pricing Methods</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Cost-oriented</strong> ('cost-plus') · <strong>Market-oriented</strong> (demand / lowest-price) · <strong>Competition-oriented</strong></p>\n                </div>\n                <p><strong>Costs = lower limit</strong> (loss below it); <strong>demand = actual price</strong> (dominant).</p>\n                <ul>\n                    <li><strong>External factors:</strong> market development, life cycle, differentiation, consumer behaviour, elasticity, competition</li>\n                    <li><strong>Internal factors:</strong> costs, working conditions (secondary)</li>\n                    <li>Life-cycle phases: introduction · decline · revitalisation</li>\n                </ul>\n\n                <h3>4) Calculation (Costing)</h3>\n                <p>From Latin <em>calculus</em>. Classic sales-price calculation:</p>\n                <div class=\"formula-box\">\n                    <p>direct materials + amortisation + gross wages + other direct + general production + general admin = <strong>I. Cost price</strong></p>\n                    <p>+ profit/loss = <strong>II. sales price (no tax)</strong> &nbsp;+ sales tax = <strong>III. sales price</strong></p>\n                </div>\n                <ul>\n                    <li><strong>By time:</strong> prior (planned) vs post (accounting)</li>\n                    <li><strong>Methods:</strong> division (homogeneous) vs additional/markup (heterogeneous — F&B)</li>\n                    <li><strong>Margin</strong> covers indirect costs + accumulation (profit); varies by product/place</li>\n                    <li><strong>Production calculation:</strong> only variable + relatively fixed costs in the product</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 8 Exam Focus</h4>\n                    <p>Remember <strong>costs = floor, demand = actual price</strong>, the three pricing-method families, the <strong>cost price → sales price + VAT</strong> chain, and what the <strong>margin</strong> covers.</p>\n                </div>\n            "
+    }
+  },
+  "unit9SalesPrinciples": {
+    "name": "Unit 9: Principles of Sales",
+    "icon": "fa-handshake",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "Why is sales central to a hospitality company?",
+        "answer": "Realised turnover is one of the most important indicators of business success. Sales generate revenue (from F&B and accommodation) and directly influence costs and profit — the most important means of achieving business objectives.",
+        "explanation": "Sales connect product with demand."
+      },
+      {
+        "question": "What does the marketing concept require?",
+        "answer": "Determining the needs and desires of target markets and satisfying them more successfully and effectively than the competition. Marketing connects products with demand profitably and systematically.",
+        "explanation": "Customer-need orientation (Kotler; UK CIM)."
+      },
+      {
+        "question": "What is the marketing mix (4P + 3P)?",
+        "answer": "The 4Ps: Product, Price, Place (placement), Promotion. Booms & Bitner (1981) added 3 for services: People, Process, Physical evidence (= the 7P services mix).",
+        "explanation": "Extended mix for services."
+      },
+      {
+        "question": "What is interactive marketing?",
+        "answer": "Ensuring quality through two-way communication between the parties; using an information network and connected devices for interaction between organisations and consumers (Varadarajan & Yadav, 2009).",
+        "explanation": "Changes pricing, selling, communication."
+      },
+      {
+        "question": "What is 'placement' in hospitality sales?",
+        "answer": "All efforts and measures undertaken to ensure the hospitality product reaches the tourism market and finds a customer. The product becomes a true commodity only when its utility value is confirmed on the market.",
+        "explanation": "Sales = a basic marketing function."
+      },
+      {
+        "question": "What makes selling hospitality services special?",
+        "answer": "The product cannot be presented to the market before the actual purchase, and sales (especially of accommodation) often occur many months in advance — separating sales from consumption and raising the importance of intermediaries.",
+        "explanation": "Drives the role of agencies/tour operators."
+      },
+      {
+        "question": "What is the goal of sales and the sales policy?",
+        "answer": "To sell as many products/services as possible at the most favourable financial result. Sales policy controls sales activities to achieve business policy — formulating sales objectives, principles, and the means to reach targets. It links 'production' with market demand.",
+        "explanation": "Sales policy = bridge to demand."
+      },
+      {
+        "question": "Which factors determine sales policy?",
+        "answer": "Marketing philosophy, market research, and sales pricing policy (closed offers to achieve goals: survival, maximising current profit, market-share leadership, product-quality leadership), plus promotion, sales channels and product policy.",
+        "explanation": "Pricing-policy goals are a frequent exam list."
+      },
+      {
+        "question": "What are the two basic sales channels?",
+        "answer": "Direct distribution (tourist buys directly from the producer, e.g. at hotel reception) and indirect distribution (via an intermediary — travel agency, tour operator).",
+        "explanation": "Direct vs indirect."
+      },
+      {
+        "question": "What does direct sale include?",
+        "answer": "Sales in the hotel's own sales department / reception, via the own network of outlets, by mail/order, and via video technology and the company's own reservation system (and own website).",
+        "explanation": "No intermediary → lower distribution costs."
+      },
+      {
+        "question": "What is a reservation (booking) and its required elements?",
+        "answer": "Securing a service in advance (room, meal, etc.). Made in writing, it includes: guest name, dates (arrival/first service, departure/last service), type of service & number of persons, and price & terms of payment.",
+        "explanation": "Can depend on a deposit; 'last minute' sells unsold capacity."
+      },
+      {
+        "question": "What does indirect sale include, and what are tour operators known for?",
+        "answer": "Sale via tour operators, travel agencies, or transport organisations. Tour operators use the 'law of large numbers', renting large capacities in advance — securing occupancy for providers.",
+        "explanation": "Intermediaries cover the vast market."
+      },
+      {
+        "question": "What commissions do agencies receive, and how much capacity is given to them?",
+        "answer": "Domestic agencies receive about 3% of revenue; foreign agencies about 11%. A hospitality company usually makes about 50% of its capacity available to agencies and sells the rest directly.",
+        "explanation": "Agencies bring occupancy certainty and longer stays."
+      },
+      {
+        "question": "Which contracts underpin indirect sales?",
+        "answer": "Allotment contract (hotelier reserves capacity for a tour operator for a period/season/year), capacity-rental contract (hotel rents part of capacity with staff/inventory for an agreed fee), and a contract based on a reservation (confirmed booking).",
+        "explanation": "Three contract types."
+      },
+      {
+        "question": "How has the Internet changed hospitality sales?",
+        "answer": "It enabled rapid information dissemination, direct booking platforms (e.g. Booking.com) and lower distribution costs, giving global market access and changing classic business methods (communication, transactions, distribution).",
+        "explanation": "A global megatrend."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The classic marketing mix (4Ps) consists of:",
+        "options": [
+          "People, Process, Physical evidence, Price",
+          "Product, Price, Place, Promotion",
+          "Product, People, Profit, Promotion",
+          "Price, Place, Process, People"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Booms & Bitner (1981) added which 3 elements for services?",
+        "options": [
+          "Profit, Process, People",
+          "People, Process, Physical evidence",
+          "Place, Promotion, Price",
+          "People, Profit, Placement"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling directly at hotel reception is an example of:",
+        "options": [
+          "Indirect distribution",
+          "Direct distribution",
+          "Allotment",
+          "Tour operating"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tour operators are known for using the:",
+        "options": [
+          "Law of diminishing returns",
+          "Law of large numbers (renting capacity in advance)",
+          "Cost-plus method",
+          "Break-even rule"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Foreign travel agencies typically receive a commission of about:",
+        "options": [
+          "3%",
+          "5%",
+          "11%",
+          "25%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A hospitality company usually makes about what share of capacity available to agencies?",
+        "options": [
+          "10%",
+          "30%",
+          "50%",
+          "90%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A contract where the hotelier reserves capacity for a tour operator for a season is a(n):",
+        "options": [
+          "Allotment contract",
+          "Employment contract",
+          "Insurance contract",
+          "Lease of land"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A special challenge of selling hospitality services is that:",
+        "options": [
+          "Prices never change",
+          "The product cannot be presented before purchase",
+          "There are no intermediaries",
+          "Demand is always constant"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a sales-pricing-policy goal?",
+        "options": [
+          "Reducing room count",
+          "Market-share leadership",
+          "Avoiding all promotion",
+          "Eliminating reservations"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A required element of a written reservation is:",
+        "options": [
+          "The competitor's price",
+          "Guest name, dates, service type, price & payment terms",
+          "The hotel's tax return",
+          "The agency's profit margin"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The 4Ps of the marketing mix are product, price, place and _______.",
+        "answer": "promotion",
+        "hint": "Communicating the offer..."
+      },
+      {
+        "sentence": "Booms & Bitner added people, process and physical _______.",
+        "answer": "evidence",
+        "hint": "The service environment..."
+      },
+      {
+        "sentence": "Selling without an intermediary is _______ distribution.",
+        "answer": "direct",
+        "hint": "Straight to the tourist..."
+      },
+      {
+        "sentence": "Tour operators apply the law of large _______ to rent capacity in advance.",
+        "answer": "numbers",
+        "hint": "Quantities..."
+      },
+      {
+        "sentence": "Foreign agencies receive a commission of about _______%.",
+        "answer": "11",
+        "hint": "Two digits (domestic is 3%)..."
+      },
+      {
+        "sentence": "A hotel usually makes about _______% of its capacity available to agencies.",
+        "answer": "50",
+        "hint": "Half..."
+      },
+      {
+        "sentence": "An _______ contract reserves capacity for a tour operator for a period/season.",
+        "answer": "allotment",
+        "hint": "Capacity set aside..."
+      },
+      {
+        "sentence": "Online platforms such as _______ lowered distribution costs and widened reach.",
+        "answer": "Booking.com",
+        "hint": "Major OTA..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 9 — Principles of Sales in Hospitality",
+      "content": "\n                <h3>1) Importance of Sales</h3>\n                <p>Realised turnover is a key success indicator; sales generate revenue and shape costs and profit. Sales connect the product with demand.</p>\n\n                <h3>2) Marketing & the Mix</h3>\n                <div class=\"formula-box\">\n                    <p><strong>4P:</strong> Product · Price · Place · Promotion</p>\n                    <p><strong>+3P (Booms & Bitner, 1981):</strong> People · Process · Physical evidence</p>\n                </div>\n                <p><strong>Interactive marketing</strong> (Varadarajan & Yadav, 2009) = quality via two-way communication over information networks.</p>\n\n                <h3>3) Selling Hospitality Services</h3>\n                <ul>\n                    <li><strong>Placement</strong> = all measures to get the product to market and find a customer</li>\n                    <li>Special difficulty: the product can't be shown before purchase; sales often months in advance</li>\n                    <li>→ raises the importance of <strong>intermediaries</strong></li>\n                </ul>\n\n                <h3>4) Sales Policy & Pricing Goals</h3>\n                <p>Sales policy links 'production' with demand. Sales-pricing-policy goals: <strong>survival, maximising current profit, market-share leadership, product-quality leadership</strong>.</p>\n\n                <h3>5) Sales Channels</h3>\n                <table style=\"width:100%; border-collapse:collapse; margin:1rem 0;\">\n                    <tr style=\"border-bottom:1px solid var(--border-color);\"><td><strong>Direct</strong></td><td>Own reception/department, own network, mail/order, own reservation system & website</td></tr>\n                    <tr><td><strong>Indirect</strong></td><td>Tour operators, travel agencies, transport organisations</td></tr>\n                </table>\n                <ul>\n                    <li><strong>Reservation:</strong> written — guest name, dates, service type & persons, price & payment terms</li>\n                    <li>Tour operators use the <strong>'law of large numbers'</strong>; \"last minute\" sells unsold capacity</li>\n                    <li><strong>Commissions:</strong> domestic agencies ~3%, foreign ~11%; ~50% of capacity given to agencies</li>\n                    <li><strong>Contracts:</strong> allotment · capacity rental · reservation-based</li>\n                    <li><strong>Internet</strong> (Booking.com): global reach, lower distribution costs</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 9 Exam Focus</h4>\n                    <p>Know the <strong>4P + 3P</strong>, <strong>direct vs indirect</strong> channels, the three <strong>contracts</strong> (allotment/rental/reservation), and the numbers: <strong>3% / 11% commission, ~50% capacity</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "unit10InvestmentProfitability": {
+    "name": "Unit 10: Investment Profitability",
+    "icon": "fa-money-bill-trend-up",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What do investments include in hospitality?",
+        "answer": "Investments in both material assets (buildings, equipment) and non-material assets (education, science, human capital). They aim to enhance service quality, capacity and competitiveness.",
+        "explanation": "Broad scope of investment."
+      },
+      {
+        "question": "What are the three components of an investment?",
+        "answer": "The success component (contribute to future success), the liquidity component (strengthen liquidity/solvency), and the risk component (planned values, tasks and returns under risk).",
+        "explanation": "Every investment balances these."
+      },
+      {
+        "question": "What are the motives for investing?",
+        "answer": "Modernising equipment/service, expanding capacity, innovation and scientific development, and increasing short- and long-term assets. Motives split into social needs and the company's own investment needs.",
+        "explanation": "Needs drive investment objectives."
+      },
+      {
+        "question": "What are gross, net and new investments?",
+        "answer": "Gross = total investments from all sources. Net = gross minus depreciation. New = net investments increased by investments financed from the free part of depreciation/amortisation.",
+        "explanation": "By source of financing."
+      },
+      {
+        "question": "What are the investment types by effect on the process?",
+        "answer": "Replacement investments (replace worn equipment), rationalisation/modernisation investments (raise efficiency, cut costs, improve quality), and expansion investments (new facilities/services to grow output).",
+        "explanation": "By purpose in the process."
+      },
+      {
+        "question": "How is investment structured?",
+        "answer": "Investments in fixed assets (raise production/service capacity) and investments in working capital (enable normal-capacity operation), plus intangible investments (staff training, studies, research).",
+        "explanation": "Fixed vs working capital."
+      },
+      {
+        "question": "What is the technical structure of fixed-asset investment?",
+        "answer": "Land and infrastructure; building facilities (accommodation + F&B); equipment (transport, HVAC, laundry, kitchen machines); and other investments (studies, projects, staff training).",
+        "explanation": "Where the capital goes physically."
+      },
+      {
+        "question": "What are the development-policy principles for investment?",
+        "answer": "Liquidity (convert assets to cash to meet obligations), Security (achieve objectives under risk without jeopardising survival), and Profitability (highest possible profit relative to capital invested).",
+        "explanation": "Guide the investment process."
+      },
+      {
+        "question": "What phases does an investment decision pass through?",
+        "answer": "Emergence of the idea/need; determining possible/acceptable solutions; choosing judgement methods to evaluate acceptability; and the final investment decision (based on investment documentation).",
+        "explanation": "A multi-phase business decision."
+      },
+      {
+        "question": "What are the three phases of planning the investment process?",
+        "answer": "Preparation phase, evaluation phase, and implementation phase. Studies: pre-investment study, investment study, and performance study.",
+        "explanation": "Phased project planning."
+      },
+      {
+        "question": "Which analyses are done when preparing an investment project?",
+        "answer": "Market analysis, procurement-market analysis, technical-technological analysis, location analysis, and economic-financial analysis.",
+        "explanation": "Location is critical ('location, location, location' — Hilton)."
+      },
+      {
+        "question": "When is an investment project solvent?",
+        "answer": "When its net cash flow is equal to or greater than zero; it is insolvent if the net cash flow is negative. Insolvency can be resolved by reducing planned investment and/or increasing financing.",
+        "explanation": "Solvency of the project."
+      },
+      {
+        "question": "Which methods evaluate the profitability of an investment project?",
+        "answer": "The rate-of-return method, the annuity method, the present-value (NPV) method, and the return-on-invested-capital (payback) method. The annuity method is the most commonly used in hospitality.",
+        "explanation": "Annuity = amount used to repay a loan over time."
+      },
+      {
+        "question": "What methods plan the realisation of an investment project?",
+        "answer": "Linear programming (developed by American mathematician George Dantzig) and network planning (visualising activities and their interdependencies in a network diagram).",
+        "explanation": "Implementation = construction prep, construction, service prep."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Net investment is calculated as:",
+        "options": [
+          "Gross investment + depreciation",
+          "Gross investment − depreciation",
+          "Working capital + fixed assets",
+          "Revenue − costs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "An investment aimed at replacing worn-out equipment is a(n):",
+        "options": [
+          "Expansion investment",
+          "Rationalisation investment",
+          "Replacement investment",
+          "New investment"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The three development-policy principles for investment are:",
+        "options": [
+          "Liquidity, security, profitability",
+          "Product, price, promotion",
+          "ADR, RevPAR, GOP",
+          "Gross, net, new"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The method most commonly used to assess investment profitability in hospitality is the:",
+        "options": [
+          "Rate-of-return method",
+          "Annuity method",
+          "Present-value method",
+          "Payback method"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "An investment project is solvent when its net cash flow is:",
+        "options": [
+          "Negative",
+          "Equal to or greater than zero",
+          "Always zero",
+          "Less than the investment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Investments in working capital primarily enable the company to:",
+        "options": [
+          "Increase production capacity",
+          "Operate at normal capacity",
+          "Replace the building",
+          "Pay dividends"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The famous 'location, location, location' answer is attributed to the founder of:",
+        "options": [
+          "Booking.com",
+          "Hilton hotels",
+          "Marriott",
+          "USALI"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Linear programming as a realisation-planning method was developed by:",
+        "options": [
+          "Philip Kotler",
+          "George Dantzig",
+          "Eugen Schmalenbach",
+          "Alfred Marshall"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT a phase of planning the investment process?",
+        "options": [
+          "Preparation",
+          "Evaluation",
+          "Implementation",
+          "Liquidation"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "New investments are net investments increased by funds from:",
+        "options": [
+          "Loans only",
+          "The free part of depreciation/amortisation",
+          "Share issues only",
+          "Government grants only"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Net investment = gross investment − _______.",
+        "answer": "depreciation",
+        "hint": "Amortisation deducted..."
+      },
+      {
+        "sentence": "Investments aimed at replacing worn equipment are _______ investments.",
+        "answer": "replacement",
+        "hint": "Swap old for new..."
+      },
+      {
+        "sentence": "The development principles are liquidity, security and _______.",
+        "answer": "profitability",
+        "hint": "Return on capital..."
+      },
+      {
+        "sentence": "The _______ method is the most common for assessing investment profitability in hospitality.",
+        "answer": "annuity",
+        "hint": "Loan-repayment amount over time..."
+      },
+      {
+        "sentence": "A project is solvent if its net cash flow is equal to or greater than _______.",
+        "answer": "zero",
+        "hint": "The break point..."
+      },
+      {
+        "sentence": "Investments in _______ capital enable operation at normal capacity.",
+        "answer": "working",
+        "hint": "Day-to-day funds..."
+      },
+      {
+        "sentence": "Location analysis is vital — recall the Hilton founder: 'location, location, _______'.",
+        "answer": "location",
+        "hint": "Same word three times..."
+      },
+      {
+        "sentence": "Linear programming was developed by George _______.",
+        "answer": "Dantzig",
+        "hint": "American mathematician..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 10 — Profitability of Investments in Hospitality",
+      "content": "\n                <h3>1) Scope & Motives</h3>\n                <p>Investments cover <strong>material</strong> (buildings, equipment) and <strong>non-material</strong> assets (education, science, human capital), aiming to enhance quality, capacity and competitiveness.</p>\n                <p><strong>Components:</strong> success · liquidity · risk. <strong>Motives:</strong> modernisation, capacity expansion, innovation, asset growth (social needs + company needs).</p>\n\n                <h3>2) Types of Investment</h3>\n                <ul>\n                    <li><strong>By source:</strong> gross · net (gross − depreciation) · new (net + free depreciation)</li>\n                    <li><strong>By effect:</strong> replacement · rationalisation (modernisation) · expansion</li>\n                    <li><strong>By structure:</strong> fixed assets (capacity) · working capital (operation) · intangible (training, studies)</li>\n                </ul>\n\n                <h3>3) Development Principles</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Liquidity</strong> · <strong>Security</strong> · <strong>Profitability</strong></p>\n                </div>\n\n                <h3>4) Investment Decision & Project</h3>\n                <ul>\n                    <li><strong>Decision phases:</strong> idea/need → alternatives → evaluation methods → final decision (on documentation)</li>\n                    <li><strong>Planning phases:</strong> preparation → evaluation → implementation</li>\n                    <li><strong>Studies:</strong> pre-investment · investment · performance</li>\n                    <li><strong>Analyses:</strong> market, procurement, technical-technological, location (\"location, location, location\" — Hilton), economic-financial</li>\n                </ul>\n\n                <h3>5) Evaluating Profitability</h3>\n                <ul>\n                    <li>Methods: rate-of-return · <strong>annuity (most common in hospitality)</strong> · present value (NPV) · return on invested capital (payback)</li>\n                    <li><strong>Solvency:</strong> project is solvent if net cash flow ≥ 0 (insolvent if negative)</li>\n                    <li><strong>Realisation planning:</strong> linear programming (George Dantzig) · network planning</li>\n                    <li><strong>Implementation:</strong> construction preparation → construction → preparation of services</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Unit 10 Exam Focus</h4>\n                    <p>Know <strong>gross/net/new</strong> and <strong>replacement/rationalisation/expansion</strong> investments, the three <strong>development principles</strong>, the <strong>evaluation methods</strong> (annuity = most common), and project <strong>solvency (NCF ≥ 0)</strong>.</p>\n                </div>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Units)",
+    "icon": "fa-graduation-cap",
+    "color": "#0d9488",
+    "flashcards": [
+      {
+        "question": "How do fixed costs, the break-even point and the business result connect (Units 5–6)?",
+        "answer": "Fixed costs (60–80% of hotel operating costs) must be covered before profit appears. The break-even point is the output where revenue = costs; below it the business result is a loss, above it a profit. So a high fixed-cost share raises the break-even quantity needed for a positive result.",
+        "explanation": "Cost behaviour (U5) drives the business result (U6)."
+      },
+      {
+        "question": "How do assets, amortization and company valuation connect (Units 4 & 6)?",
+        "answer": "Fixed assets transfer value gradually via amortization (a%=100/t); land is excluded. The accounting value of the company Vk = Ik − Ok uses the (corrected) book values of those assets minus liabilities — so depreciation policy directly shapes the company's accounting value.",
+        "explanation": "Assets (U4) feed the balance-sheet-based valuation (U6)."
+      },
+      {
+        "question": "How do ADR, RevPAR and pricing/occupancy connect (Units 7 & 8)?",
+        "answer": "ADR = Room Revenue / Sold Rooms reflects the price level; RevPAR = Room Revenue / Available Rooms blends rate AND occupancy. A pricing decision (U8) that raises ADR but cuts occupancy may leave RevPAR unchanged — so revenue management balances price and fill.",
+        "explanation": "KPIs (U7) measure the effect of price policy (U8)."
+      },
+      {
+        "question": "How does the sales channel affect price differentiation (Units 8 & 9)?",
+        "answer": "Indirect channels carry an agency commission (domestic ~3%, foreign ~11%), so the position in the sales channel is a price-differentiation criterion: direct sales avoid the commission (lower distribution cost), while agencies bring occupancy certainty for ~50% of capacity.",
+        "explanation": "Channels (U9) are a differentiation criterion in pricing (U8)."
+      },
+      {
+        "question": "What is the difference between cost, expenditure and expense across the course (Units 5 & 6)?",
+        "answer": "Cost = value of resources consumed to create an effect. Expenditure = any outflow of money. In the P&L only expenditures incurred to create effects count as expenses/costs. Cost and expenditure can differ in timing (e.g. buy land → expenditure, no cost; gift machine → cost via depreciation, no expenditure).",
+        "explanation": "Cost theory (U5) underpins P&L expenditure (U6)."
+      },
+      {
+        "question": "How do the three business principles reappear as success benchmarks (Units 3 & 7)?",
+        "answer": "Unit 3's economic-efficiency principles — productivity, economy, profitability — are exactly the three benchmarks (U7) used to measure business success: labour productivity (output/labour), economy E (effects/elements; E>1 economical), and profitability (profit/capital).",
+        "explanation": "Principles (U3) become measurable benchmarks (U7)."
+      },
+      {
+        "question": "Where do liquidity and solvency appear across the course (Units 4, 6 & 10)?",
+        "answer": "Liquidity (ratio > 1) and solvency (settle dues on time) describe short-term financial health of assets (U4), are read from the balance sheet (U6), and reappear as investment-project solvency — a project is solvent if net cash flow ≥ 0 (U10).",
+        "explanation": "A recurring financial-health thread."
+      },
+      {
+        "question": "Why do the specialities of hospitality services shape sales (Units 1 & 9)?",
+        "answer": "Because services are intangible, perishable (simultaneous production & consumption) and inseparable, the product can't be shown before purchase and is often sold months in advance — which separates sales from consumption and makes intermediaries (tour operators, agencies) essential.",
+        "explanation": "Service nature (U1) → sales organisation (U9)."
+      },
+      {
+        "question": "How does seasonality flow through pricing and costs (Units 1, 5 & 8)?",
+        "answer": "Seasonality (U1) causes low off-season occupancy. Since fixed costs are 60–80% (U5) and accrue regardless of volume, destination hotels raise high-season prices to the competitive maximum (U8) to cover fixed costs and earn profit in a 2–3 month window.",
+        "explanation": "Seasonality ties demand, cost behaviour and pricing together."
+      },
+      {
+        "question": "How do entrepreneurship, business policy and investment decisions connect (Units 3 & 10)?",
+        "answer": "Entrepreneurship initiates change/innovation (U3); business policy sets objectives and plans (strategic/tactical/operational); investment decisions (U10) execute that policy through projects evaluated for liquidity, security and profitability.",
+        "explanation": "Strategy (U3) → capital allocation (U10)."
+      },
+      {
+        "question": "Trace the price build-up and its link to economy (Units 7 & 8).",
+        "answer": "Cost price (direct materials + amortisation + wages + overheads) + margin (covers indirect costs + accumulation) + VAT = sales price (U8). A higher margin or lower input cost improves economy E = realisation/total costs (U7).",
+        "explanation": "Calculation (U8) drives the economy benchmark (U7)."
+      },
+      {
+        "question": "Compare static and dynamic valuation, and where each data source comes from (Unit 6).",
+        "answer": "Static methods (accounting Vk=Ik−Ok, liquidation Vl=Il−Ol, reproduction Vr=Ir−Or) use balance-sheet assets on a given day. Dynamic methods (P/E, dividend, cash-flow / NPV) use future profit from the P&L. Investment appraisal (U10) uses the same dynamic logic (NPV, annuity, ROI).",
+        "explanation": "Valuation (U6) and investment appraisal (U10) share dynamic methods."
+      },
+      {
+        "question": "Which numeric facts recur most on this course (quick-recall set)?",
+        "answer": "Fixed costs 60–80% of hotel costs; material-cost model 35% food / 22% beverages / 50% other; amortization periods 20/10/5/4/2 years; ~3.5–5 beds per employee; agency commission 3% domestic / 11% foreign; ~50% capacity to agencies; liquidity ratio > 1.",
+        "explanation": "High-yield numbers across Units 4–9."
+      },
+      {
+        "question": "How is the result improved and the profit then used (Unit 6)?",
+        "answer": "Improve the result by raising income, cutting expenditure, or moving them in favourable proportions. Profit is first used to settle obligations to the state (profit tax), then reinvested, distributed to owners, or used to repay debt.",
+        "explanation": "From determining to distributing the result."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "If a hotel's fixed costs are 60–80% of total costs, the break-even point will be:",
+        "options": [
+          "Very low and easy to reach",
+          "Relatively high (more output needed before profit)",
+          "Irrelevant to the result",
+          "Always zero"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A price change that raises ADR but lowers occupancy may leave which KPI roughly unchanged?",
+        "options": [
+          "GOP",
+          "RevPAR",
+          "EBITDA",
+          "Liquidity ratio"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The accounting value of a company (Vk = Ik − Ok) is most directly affected by:",
+        "options": [
+          "Agency commission",
+          "Asset book values and amortization",
+          "RevPAR",
+          "Price elasticity"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Buying land is an example of (cost theory):",
+        "options": [
+          "Cost without expenditure",
+          "Expenditure without cost",
+          "Both at once",
+          "Neither"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The three economic-efficiency principles = the three success benchmarks, namely:",
+        "options": [
+          "Liquidity, solvency, turnover",
+          "Productivity, economy, profitability",
+          "ADR, RevPAR, GOP",
+          "Gross, net, new"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "An investment project is solvent when its net cash flow is:",
+        "options": [
+          "Negative",
+          "≥ 0",
+          "Below the investment",
+          "Equal to depreciation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Foreign agency commission and the share of capacity usually given to agencies are about:",
+        "options": [
+          "3% and 10%",
+          "11% and 50%",
+          "25% and 90%",
+          "5% and 20%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling hospitality services months in advance through intermediaries is driven by the services' :",
+        "options": [
+          "Tangibility and storability",
+          "Intangibility, perishability and inseparability",
+          "Low fixed costs",
+          "High liquidity"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The sales-price chain is:",
+        "options": [
+          "VAT + margin − cost price",
+          "Cost price + margin + VAT",
+          "Revenue − expenditure",
+          "GOP − operating costs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dynamic methods (used for both company valuation and investment appraisal) are based on:",
+        "options": [
+          "Balance-sheet assets on a given day",
+          "Future profit / cash flows",
+          "Liquidation proceeds",
+          "Reproduction cost"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Because hotel fixed costs are high (60–80%), more output is needed to reach the _______ point.",
+        "answer": "break-even",
+        "hint": "Where revenue = costs..."
+      },
+      {
+        "sentence": "RevPAR blends rate and occupancy: Room Revenue / _______ Rooms.",
+        "answer": "Available",
+        "hint": "All rooms, not just sold..."
+      },
+      {
+        "sentence": "Accounting value of a company is Vk = Ik − _______.",
+        "answer": "Ok",
+        "hint": "Liabilities (book value)..."
+      },
+      {
+        "sentence": "The three success benchmarks are productivity, economy and _______.",
+        "answer": "profitability",
+        "hint": "Profit ÷ capital..."
+      },
+      {
+        "sentence": "An investment project is solvent if its net cash flow is greater than or equal to _______.",
+        "answer": "zero",
+        "hint": "The break point..."
+      },
+      {
+        "sentence": "The sales price = cost price + margin + _______.",
+        "answer": "VAT",
+        "hint": "Tax on the sale..."
+      },
+      {
+        "sentence": "Foreign travel agencies receive a commission of about _______%.",
+        "answer": "11",
+        "hint": "Domestic is 3%..."
+      },
+      {
+        "sentence": "Static valuation uses balance-sheet assets; _______ valuation uses future profit.",
+        "answer": "dynamic",
+        "hint": "P/E, dividend, cash-flow / NPV..."
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Roadmap — Economics of Hospitality (Units 1–10)",
+      "content": "\n            <h3>How to Use This Lesson</h3>\n            <p>The final (written exam, ~30% of the grade) covers <strong>all 10 units</strong>. This set adds <strong>cross-topic</strong> questions; the 10 unit categories above hold the full detail. Drill the units first, then test the connections here.</p>\n\n            <h3>1st-Midterm Block (Units 1–5)</h3>\n            <ul>\n                <li><strong>U1 Basics:</strong> service vs hospitality, 4 specialities, local export, basic/supplementary/additional services, seasonality</li>\n                <li><strong>U2 Business economics:</strong> macro vs micro, general/special, history (Savary 1675, Smith 1776, Marshall, Schmalenbach 1906, Taylor/Ford/Fayol)</li>\n                <li><strong>U3 Hospitality business:</strong> 4 sub-systems, 3 components, entrepreneurship vs management, associations (synergy 2+2=5, cartel, holding, trust), business principles, policy & planning</li>\n                <li><strong>U4 Assets:</strong> fixed vs current, liquidity (&gt;1)/solvency, Croatian amortization periods (20/10/5/4/2), methods (a%=100/t)</li>\n                <li><strong>U5 Costs:</strong> cost vs expenditure, fixed/variable (60–80% in hotels), cost zones, reactivity h=T%/Q%, break-even</li>\n            </ul>\n\n            <h3>2nd-Midterm Block (Units 6–10)</h3>\n            <ul>\n                <li><strong>U6 Business result:</strong> Assets = Liabilities + Equity, P&L, USALI, valuation (Vk/Vl/Vr; static vs dynamic)</li>\n                <li><strong>U7 Success & KPIs:</strong> productivity/economy(E>1)/profitability; ADR, RevPAR, TRevPAR, GOP, GOPPAR, NOP, EBITDA</li>\n                <li><strong>U8 Price policy:</strong> cost/market/competition methods, cost price → sales price + VAT, margin, differentiation criteria</li>\n                <li><strong>U9 Sales:</strong> 4P+3P, direct vs indirect, contracts (allotment/rental/reservation), 3%/11% commission, ~50% to agencies</li>\n                <li><strong>U10 Investments:</strong> gross/net/new, replacement/rationalisation/expansion, NPV/annuity/ROI, solvency (NCF ≥ 0)</li>\n            </ul>\n\n            <h3>High-Yield Connections (what finals love)</h3>\n            <div class=\"formula-box\">\n                <p>Cost behaviour (U5) → break-even & business result (U6) → KPIs (U7)</p>\n                <p>Assets + amortization (U4) → company valuation (U6) → investment appraisal (U10)</p>\n                <p>Price calculation (U8) ↔ economy benchmark (U7) ↔ sales channels & commission (U9)</p>\n            </div>\n\n            <h3>Numbers to Memorise</h3>\n            <ul>\n                <li>Fixed costs <strong>60–80%</strong> of hotel costs · material model <strong>35/22/50%</strong></li>\n                <li>Amortization periods <strong>20/10/5/4/2</strong> years · liquidity ratio <strong>&gt; 1</strong></li>\n                <li><strong>3.5–5</strong> beds/employee · commission <strong>3%</strong> domestic / <strong>11%</strong> foreign · <strong>~50%</strong> capacity to agencies</li>\n            </ul>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Final Exam Strategy</h4>\n                <p>Definitions + formulas win points fast. Then practise <strong>linking</strong> units (cost→result→KPI; assets→valuation→investment). Use this Exam Practice set as a mixed final rehearsal.</p>\n            </div>\n        "
+    }
+  }
+}

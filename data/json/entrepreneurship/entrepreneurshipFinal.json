@@ -1,0 +1,2847 @@
+{
+  "history": {
+    "name": "History & Theory",
+    "icon": "fa-history",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "When and where did the term 'entrepreneur' originate?",
+        "answer": "1755 - From French word 'entreprendre' meaning 'ability to take charge, to undertake'\n\nIntroduced by Richard Cantillon who described entrepreneurs as economic agents who transform demand into supply.",
+        "explanation": "Cantillon is considered the father of entrepreneurship theory."
+      },
+      {
+        "question": "What is the PRE-Industrial Revolution view of an entrepreneur?",
+        "answer": "An entrepreneur is described as a RISK-TAKER who bears uncertainty.\n\nThey make decisions in uncertain economic contexts and profit is their reward for taking risks.",
+        "explanation": "Focus on risk and uncertainty."
+      },
+      {
+        "question": "What is the POST-Industrial Revolution view of an entrepreneur?",
+        "answer": "The fundamental role of the entrepreneur is to INNOVATE.\n\nShift from just risk-taking to creating new products, processes, and markets.",
+        "explanation": "Innovation becomes the defining characteristic."
+      },
+      {
+        "question": "What is MANAGERIAL CAPITALISM view of entrepreneur (Schumpeter)?",
+        "answer": "Entrepreneur realizes new 'PRODUCTIVE COMBINATIONS':\n\n1. New quality of good\n2. New method of production\n3. New market\n4. New source of supply of raw materials\n5. New organization of any industry",
+        "explanation": "Schumpeter's 5 productive combinations."
+      },
+      {
+        "question": "What is the NEOCLASSICAL ECONOMICS view?",
+        "answer": "Entrepreneur is an individual who is BOTH:\n• A risk-taker\n• An administrator\n\nCombines entrepreneurial innovation with managerial efficiency.",
+        "explanation": "Combines risk-taking with administrative skills."
+      },
+      {
+        "question": "What is the CONTEMPORARY view of entrepreneurship?",
+        "answer": "Emphasizes:\n• OPPORTUNITY recognition\n• ACTION and execution\n• FIRM CREATION\n\nVs Classic view: exploitation and personal gain",
+        "explanation": "Modern view focuses on opportunity and action."
+      },
+      {
+        "question": "What is the difference between Entrepreneurship and Management?",
+        "answer": "ENTREPRENEURSHIP:\n• Dynamic process\n• Takes own risk\n• Introduces new ideas/technologies\n• Realizes new ventures\n\nMANAGEMENT:\n• Responsible for maximizing individual contributions\n• Applies to all organizations\n• Optimizes existing operations",
+        "explanation": "Entrepreneurship creates, management optimizes."
+      },
+      {
+        "question": "What is ENTREPRENEURIAL MANAGEMENT?",
+        "answer": "The UNIFICATION of entrepreneurial and managerial functions within a business organization.\n\nBased on:\n• Constant innovation\n• Focused achievement of business goals\n• Growth and development of the company",
+        "explanation": "Combines both entrepreneurial and managerial approaches."
+      },
+      {
+        "question": "How did ADAM SMITH view the entrepreneur?",
+        "answer": "Entrepreneurs are ECONOMIC AGENTS who TRANSFORM DEMAND INTO SUPPLY.\n\nPROFIT is the reward of the 'undertaker of the work who hazards his stock in this adventure'.\n\nNote: Smith made only LIMITED reference to entrepreneurs.",
+        "explanation": "Smith (1723–1790): demand→supply transformation, profit as reward for risk."
+      },
+      {
+        "question": "How did JEAN-BAPTISTE SAY view the entrepreneur?",
+        "answer": "'A combination of MORAL QUALITIES not often found together': judgement, perseverance, knowledge of the world and of business.\n\n• Estimates the product's importance, probable demand and means of production\n• Employs workers, buys materials, finds consumers\n• Must possess 'the art of SUPERINTENDENCE and ADMINISTRATION'\n\nEntrepreneurial activity relies on MANAGEMENT activity and on accumulating a WIDE VARIETY OF RESOURCES.",
+        "explanation": "Say (1767–1832): personal characteristics + management + resources."
+      },
+      {
+        "question": "How did LUDWIG VON MISES view the entrepreneur?",
+        "answer": "'In eliminating the entrepreneur one eliminates the DRIVING FORCE of the whole market system.'\n\n• The real entrepreneur is a SPECULATOR — eager to use his opinion about the future structure of the market for profitable operations\n• Entrepreneurship 'can be neither taught nor learned' → BORN, NOT MADE",
+        "explanation": "Mises (1881–1972): speculator; born not made."
+      },
+      {
+        "question": "How did ISRAEL KIRZNER view the entrepreneur?",
+        "answer": "Entrepreneurs notice profit opportunities because of entrepreneurial ALERTNESS to profit.\n\nThe process of entrepreneurial DISCOVERY is CONTINUAL and driven by DYNAMIC COMPETITION.\n\nKey ideas: awareness and alertness to opportunities, innovation, sustained creative discoveries.",
+        "explanation": "Kirzner (1930–): alertness and continual discovery."
+      },
+      {
+        "question": "Where do all the economic theories of the entrepreneur AGREE?",
+        "answer": "Theories are SPECIFIC TO THE CONTEXT in which they were created, but at one point they all agree:\n\nThe entrepreneur is a 'SPECIAL INDIVIDUAL' — a hero, an agent of economic change, a warrior.\n\nBUT: does this hold true in ALL world contexts? (e.g. former socialist economies)",
+        "explanation": "Common thread: the entrepreneur as a special individual."
+      },
+      {
+        "question": "How was entrepreneurship viewed in FORMER SOCIALIST ECONOMIES?",
+        "answer": "• Tolerance of entrepreneurs was MINIMAL during communism; entrepreneurship RESTRICTED or PROHIBITED in some countries (Bulgaria, Czechoslovakia, Estonia, Latvia, Lithuania…)\n• Seen as a capitalist phenomenon — material gains through the EXPLOITATION of others\n• Entrepreneurs portrayed as incapable of securing a public-company or government job; perceived as privileged criminals, tycoons connected with corruption\n• The split with the communist tradition (1990s) changed the perception",
+        "explanation": "Context matters: the 'hero' image did not hold everywhere."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The term 'entrepreneur' evolved from which French word?",
+        "options": [
+          "Entreprise",
+          "Entreprendre",
+          "Entrepot",
+          "Entrer"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Who introduced the concept of entrepreneur in 1755?",
+        "options": [
+          "Adam Smith",
+          "Richard Cantillon",
+          "Joseph Schumpeter",
+          "Karl Marx"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Post-Industrial Revolution, the fundamental role of entrepreneur is to:",
+        "options": [
+          "Take risks",
+          "Innovate",
+          "Manage employees",
+          "Pay taxes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many 'productive combinations' did Schumpeter identify?",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "7"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Neoclassical economics views entrepreneur as both:",
+        "options": [
+          "Worker and manager",
+          "Risk-taker and administrator",
+          "Buyer and seller",
+          "Producer and consumer"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Contemporary view of entrepreneurship emphasizes:",
+        "options": [
+          "Exploitation and personal gain",
+          "Opportunity, action, and firm creation",
+          "Government support",
+          "Minimum investment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Entrepreneurial Management combines:",
+        "options": [
+          "Sales and marketing",
+          "Entrepreneurial and managerial functions",
+          "HR and accounting",
+          "Production and distribution"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of Schumpeter's productive combinations?",
+        "options": [
+          "New quality of good",
+          "New method of production",
+          "New advertising strategy",
+          "New market"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to Mises, the real entrepreneur is:",
+        "options": [
+          "A bureaucrat",
+          "A speculator who anticipates the future market",
+          "A passive investor",
+          "A government planner"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Kirzner explains that entrepreneurs notice profit opportunities thanks to:",
+        "options": [
+          "Government reports",
+          "Entrepreneurial alertness",
+          "Random luck",
+          "Inherited wealth"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The term entrepreneur comes from French word _______ meaning 'to undertake'.",
+        "answer": "entreprendre",
+        "hint": "French word..."
+      },
+      {
+        "sentence": "Richard Cantillon introduced the entrepreneur concept in _______.",
+        "answer": "1755",
+        "hint": "18th century year..."
+      },
+      {
+        "sentence": "Post-Industrial Revolution, entrepreneurs' role is to _______.",
+        "answer": "innovate",
+        "hint": "Create something new..."
+      },
+      {
+        "sentence": "Schumpeter said entrepreneurs realize new productive _______.",
+        "answer": "combinations",
+        "hint": "Mixing things..."
+      },
+      {
+        "sentence": "_______ Management unifies entrepreneurial and managerial functions.",
+        "answer": "Entrepreneurial",
+        "hint": "Type of management..."
+      },
+      {
+        "sentence": "According to Mises, entrepreneurs are born, not _______.",
+        "answer": "made",
+        "hint": "Cannot be taught..."
+      },
+      {
+        "sentence": "Kirzner: entrepreneurs notice opportunities through entrepreneurial _______.",
+        "answer": "alertness",
+        "hint": "Being aware..."
+      }
+    ],
+    "learn": {
+      "title": "History and Theory of Entrepreneurship",
+      "content": "\n                <h3>Origins of Entrepreneurship</h3>\n                <div class=\"formula-box\">\n                    <strong>1755 - Richard Cantillon</strong><br>\n                    French: \"entreprendre\" = to undertake<br>\n                    Entrepreneurs transform demand into supply<br>\n                    Profit = reward for risk-taking\n                </div>\n                \n                <h4>Evolution of Entrepreneurship Theory</h4>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-history\"></i> Historical Views</h4>\n                    <ul>\n                        <li><strong>Pre-Industrial:</strong> Risk-taker, bears uncertainty</li>\n                        <li><strong>Post-Industrial:</strong> Innovator, creates new things</li>\n                        <li><strong>Managerial Capitalism:</strong> Creates productive combinations</li>\n                        <li><strong>Neoclassical:</strong> Risk-taker + Administrator</li>\n                    </ul>\n                </div>\n                \n                <h4>Schumpeter's 5 Productive Combinations</h4>\n                <ul>\n                    <li>New quality of good</li>\n                    <li>New method of production</li>\n                    <li>New market</li>\n                    <li>New source of supply of raw materials</li>\n                    <li>New organization of any industry</li>\n                </ul>\n                \n                <h4>Contemporary vs Classic View</h4>\n                <div class=\"example-box\">\n                    <h4>Contemporary (Modern)</h4>\n                    <p>Opportunity → Action → Firm Creation</p>\n                    <h4>Classic (Traditional)</h4>\n                    <p>Exploitation → Personal Gain</p>\n                </div>\n                \n                <h4>Entrepreneurship vs Management</h4>\n                <div class=\"formula-box\">\n                    <strong>ENTREPRENEURSHIP</strong> = Dynamic, Risk, Innovation, New ventures<br>\n                    <strong>MANAGEMENT</strong> = Optimization, Efficiency, Existing operations<br>\n                    <strong>ENTREPRENEURIAL MANAGEMENT</strong> = Both combined!\n                </div>\n            "
+    }
+  },
+  "psychology": {
+    "name": "Entrepreneur Psychology",
+    "icon": "fa-brain",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What are the 4 key elements of psychological profiling of entrepreneurs?",
+        "answer": "1. NEED FOR ACHIEVEMENT - drive to excel\n2. LOCUS OF CONTROL - belief in controlling outcomes\n3. RISK-TAKING - willingness to take calculated risks\n4. INNOVATION & CREATIVITY - generating new ideas",
+        "explanation": "Four psychological characteristics that define entrepreneurs."
+      },
+      {
+        "question": "What are the main CHARACTER TRAITS of entrepreneurs?",
+        "answer": "• Need for independence\n• Need for achievement\n• Internal locus of control\n• Ability to live with risk and uncertainty\n• Opportunistic\n• Innovative, visionary\n• Self-confident\n• Proactive and decisive with high energy",
+        "explanation": "Personality traits common in successful entrepreneurs."
+      },
+      {
+        "question": "What is INTERNAL vs EXTERNAL Locus of Control?",
+        "answer": "INTERNAL Locus of Control:\n• Believe THEY control their destiny\n• Take responsibility for outcomes\n• More entrepreneurial\n\nEXTERNAL Locus of Control:\n• Believe external forces control outcomes\n• Blame circumstances\n• Less entrepreneurial",
+        "explanation": "Internal locus is linked to entrepreneurial success."
+      },
+      {
+        "question": "What is INTRAPRENEURSHIP?",
+        "answer": "Entrepreneurship WITHIN an existing organization.\n\n• Employees acting as entrepreneurs inside a company\n• Share many characteristics with entrepreneurs\n• May ultimately become MD/CEO of the company\n• Drive innovation from within",
+        "explanation": "Internal entrepreneurs within corporations."
+      },
+      {
+        "question": "What is TEAM ENTREPRENEURSHIP?",
+        "answer": "Creative teams working together on entrepreneurial ventures.\n\n• More realistic for contemporary business\n• Combines diverse skills and perspectives\n• Shares risk and responsibility\n• Better suited for complex ventures",
+        "explanation": "Modern collaborative approach to entrepreneurship."
+      },
+      {
+        "question": "What are the 3 TYPOLOGIES of Entrepreneurship?",
+        "answer": "1. ENTREPRENEURSHIP - Contemporary (opportunity-focused) vs Classic (exploitation-focused)\n\n2. INTRAPRENEURSHIP - Entrepreneurship within existing organizations\n\n3. TEAM ENTREPRENEURSHIP - Creative teams, collaborative approach",
+        "explanation": "Three main types of entrepreneurship."
+      },
+      {
+        "question": "What is the 'Need for Achievement' (nAch)?",
+        "answer": "A psychological drive to:\n• Excel and succeed\n• Set and accomplish challenging goals\n• Take personal responsibility\n• Seek feedback on performance\n• Prefer moderate risk\n\nStrongly linked to entrepreneurial success.",
+        "explanation": "McClelland's theory of achievement motivation."
+      },
+      {
+        "question": "Is entrepreneurship a LINEAR PROCESS (Idea → Business Plan → Execution)?",
+        "answer": "The simplified LINEAR model: 1. IDEA → 2. BUSINESS PLAN → 3. EXECUTION.\n\nBUT the course argues this view is INADEQUATE: entrepreneurship is NOT predictable — it is COMPLEX, CHAOTIC and lacking in any notion of linearity; iterations are stages of LEARNING.",
+        "explanation": "Know the linear model AND its critique (Week 3)."
+      },
+      {
+        "question": "What are the 3 groups of START-UP INFLUENCES (besides character traits)?",
+        "answer": "1. ANTECEDENT INFLUENCES — family, ethnicity, gender, education, previous employment, religion, social group, national culture\n\n2. INCUBATOR ORGANISATION — geographical location, nature of skills and knowledge acquired, contact with peers/fellow founders, experience with setting up a business\n\n3. SITUATIONAL FACTORS — (un)employment, immigration, economic opportunity, availability of venture capital, availability/collaboration with stakeholders",
+        "explanation": "The start-up influences framework — what shapes the decision to start."
+      },
+      {
+        "question": "What are the PROBLEMS with the psychological (trait) approach?",
+        "answer": "• Are we looking at OWNER-MANAGERS or entrepreneurs?\n• Are the traits UNIQUE to entrepreneurs?\n• Traits are NOT STABLE over time — they change\n• Judgements of traits are SUBJECTIVE\n• The role of EDUCATION, learning and training is ignored\n• Gender, age, social class and education are often overlooked",
+        "explanation": "The trait approach (McClelland) has serious limitations."
+      },
+      {
+        "question": "What are the SOCIAL INFLUENCES on entrepreneurial behaviour?",
+        "answer": "• Availability of appropriate ROLE MODELS\n• Career experience over the life-cycle\n• Deprived social upbringing; family background and position\n• Inheritance of entrepreneurial tradition\n• Educational level attained\n• Negative/positive peer influences\n• SOCIAL MARGINALITY (e.g. ethnic minorities developing 'ethnically protected' niches)\n• Discomfort with large bureaucratic organisations\n\nThe family is crucial as a supplier of resources — finance and labour.",
+        "explanation": "Entrepreneurs are also FORMED through social exposure, not just born."
+      },
+      {
+        "question": "What are LIFESTYLE BUSINESSES?",
+        "answer": "Small (tourism) firms run for consciously selected LIFESTYLE MOTIVES — they represent 'forms of CONSUMPTION as much as production' (Shaw & Williams, 1987).\n\nNon-economic motives: being your own boss, doing interesting/enjoyable work, living in a specific area, supporting leisure interests, enjoying a good lifestyle.\n\n'Profitability will be only ONE of these goals' (Morrison et al., 2001) — success is measured by 'a continuing ability to PERPETUATE THE CHOSEN LIFESTYLE' (Dewhurst & Horobin, 1998).",
+        "explanation": "Most small tourism firms can be described as lifestyle enterprises."
+      },
+      {
+        "question": "What are the TWO VIEWS on lifestyle entrepreneurs' impact?",
+        "answer": "CRITICAL view (Dewhurst & Horobin; Shaw & Williams): long-term survival problems can 'jeopardise seriously' the economic health and social fabric of tourism-reliant communities; may not respond to policy initiatives for development or competitiveness.\n\nPOSITIVE view (Ateljevic & Doorne, 2000, New Zealand 7-year study): rejecting growth does NOT mean financial suicide — lifestyle entrepreneurs engage 'niche' market consumers with shared values, and are INSTRUMENTAL in creating innovative products and stimulating niche market development.",
+        "explanation": "Threat to communities vs source of niche innovation."
+      },
+      {
+        "question": "What are the common MYTHS about entrepreneurs?",
+        "answer": "Entrepreneurs are NOT necessarily:\n• The smartest and most educated individuals\n• Individuals (often TEAMS!)\n• Born not made\n• Risk lovers\n• Charismatic\n• Undisciplined\n\nResearch approaches: central agents of economic development? born not made? formed through social influences? or a COMBINATION of economic, genetic and social influences?",
+        "explanation": "Six myths listed in the lecture + four research approaches."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which is NOT part of psychological profiling of entrepreneurs?",
+        "options": [
+          "Need for Achievement",
+          "Locus of Control",
+          "Need for Popularity",
+          "Risk-taking"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "INTERNAL locus of control means:",
+        "options": [
+          "External forces control your destiny",
+          "You believe you control your destiny",
+          "Government controls business",
+          "Luck determines success"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Intrapreneurship is:",
+        "options": [
+          "Starting a new company",
+          "Entrepreneurship within an existing organization",
+          "International business",
+          "Internet business"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Team Entrepreneurship is considered:",
+        "options": [
+          "Outdated",
+          "More realistic for contemporary business",
+          "Only for sports",
+          "Less effective than solo"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which character trait is NOT typical for entrepreneurs?",
+        "options": [
+          "Need for independence",
+          "Risk aversion",
+          "Self-confidence",
+          "Proactive nature"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The linear entrepreneurship process is:",
+        "options": [
+          "Market → Product → Sales",
+          "Idea → Business Plan → Execution",
+          "Funding → Hiring → Selling",
+          "Research → Development → Patent"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Intrapreneurs may ultimately become:",
+        "options": [
+          "Unemployed",
+          "MD or CEO of the company",
+          "Government officials",
+          "Academics"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Need for Achievement (nAch) includes preference for:",
+        "options": [
+          "High-risk gambling",
+          "Moderate risk with feedback",
+          "No risk at all",
+          "Random outcomes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the three groups of start-up influences?",
+        "options": [
+          "Antecedent influences",
+          "Incubator organisation",
+          "Situational factors",
+          "Astrological factors"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "A problem with the trait approach is that traits are:",
+        "options": [
+          "Too easy to measure",
+          "Not stable over time and judged subjectively",
+          "Identical in all people",
+          "Only genetic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Lifestyle entrepreneurs measure success primarily by:",
+        "options": [
+          "Maximum profit",
+          "The ability to perpetuate their chosen lifestyle",
+          "Number of employees",
+          "Stock market valuation"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ Locus of Control means believing you control your destiny.",
+        "answer": "Internal",
+        "hint": "Inside yourself..."
+      },
+      {
+        "sentence": "_______ is entrepreneurship within an existing organization.",
+        "answer": "Intrapreneurship",
+        "hint": "Intra- means within..."
+      },
+      {
+        "sentence": "Team _______ is more realistic for contemporary business.",
+        "answer": "Entrepreneurship",
+        "hint": "Working together on ventures..."
+      },
+      {
+        "sentence": "The linear process is: Idea → Business Plan → _______.",
+        "answer": "Execution",
+        "hint": "Implementing the plan..."
+      },
+      {
+        "sentence": "Need for _______ is a drive to excel and succeed.",
+        "answer": "Achievement",
+        "hint": "Accomplishment..."
+      },
+      {
+        "sentence": "_______ businesses are run for consciously selected lifestyle motives.",
+        "answer": "Lifestyle",
+        "hint": "Way of living..."
+      },
+      {
+        "sentence": "Family, ethnicity and education are _______ influences on start-up.",
+        "answer": "antecedent",
+        "hint": "Coming before..."
+      }
+    ],
+    "learn": {
+      "title": "Psychology of Entrepreneurs",
+      "content": "\n                <h3>Psychological Profile of Entrepreneurs</h3>\n                \n                <div class=\"formula-box\">\n                    <strong>4 Key Psychological Elements:</strong><br>\n                    1. Need for Achievement (nAch)<br>\n                    2. Locus of Control<br>\n                    3. Risk-Taking<br>\n                    4. Innovation & Creativity\n                </div>\n                \n                <h4>Character Traits of Entrepreneurs</h4>\n                <ul>\n                    <li>Need for independence</li>\n                    <li>Need for achievement</li>\n                    <li>Internal locus of control</li>\n                    <li>Ability to live with risk and uncertainty</li>\n                    <li>Opportunistic mindset</li>\n                    <li>Innovative and visionary</li>\n                    <li>Self-confident</li>\n                    <li>Proactive and decisive with high energy</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-brain\"></i> Locus of Control</h4>\n                    <p><strong>INTERNAL:</strong> \"I control my destiny\" → More entrepreneurial<br>\n                    <strong>EXTERNAL:</strong> \"Fate controls outcomes\" → Less entrepreneurial</p>\n                </div>\n                \n                <h4>Three Typologies of Entrepreneurship</h4>\n                <div class=\"example-box\">\n                    <h4>1. Entrepreneurship</h4>\n                    <p>Contemporary: Opportunity + Action + Firm Creation<br>\n                    Classic: Exploitation + Personal Gain</p>\n                    \n                    <h4>2. Intrapreneurship</h4>\n                    <p>Entrepreneurship WITHIN existing organizations</p>\n                    \n                    <h4>3. Team Entrepreneurship</h4>\n                    <p>Creative teams, more realistic for modern business</p>\n                </div>\n                \n                <h4>Linear Entrepreneurship Process</h4>\n                <div class=\"formula-box\">\n                    <strong>IDEA</strong> → <strong>BUSINESS PLAN</strong> → <strong>EXECUTION</strong>\n                </div>\n            "
+    }
+  },
+  "creativity": {
+    "name": "Creativity & Business Idea",
+    "icon": "fa-magic",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Is entrepreneurship a LINEAR, predictable process?",
+        "answer": "NO. Entrepreneurship is not predictable and cannot adequately be taught as a process.\n\nIt is COMPLEX, CHAOTIC and lacking in any notion of linearity.\n\nThe practice requires CREATIVE THINKING leading to heightened experimentation — numerous iterations represent STAGES OF LEARNING, not starts/stops or successes/failures.",
+        "explanation": "Key correction: the simple Idea → Plan → Execution model does not match reality."
+      },
+      {
+        "question": "What did Adam Osborne say about mistakes?",
+        "answer": "\"The most valuable thing you can make is a MISTAKE — you can't learn anything from being perfect.\"\n\n(Adam Osborne, 1939–2003, computer designer)",
+        "explanation": "Mistakes are framed as the core learning mechanism in entrepreneurship."
+      },
+      {
+        "question": "What did Muhammad Yunus say about who is an entrepreneur?",
+        "answer": "\"ALL HUMAN BEINGS are entrepreneurs. When we were in the caves we were all self-employed... As civilization came we suppressed it. We became labor... We forgot that we are entrepreneurs.\"\n\nYunus: social entrepreneur, Nobel Peace Prize winner 2006 (Grameen Bank).",
+        "explanation": "Counterpoint to the myth of the rare 'special' entrepreneur."
+      },
+      {
+        "question": "How do the MEDIA distort the reality of entrepreneurship?",
+        "answer": "The media exaggerate the meteoric rise of so-called 'OVERNIGHT GLOBAL SENSATIONS' (e.g. Elon Musk – Tesla, Travis Kalanick – Uber).\n\nThese stories perpetuate the myth of the 'TECH ENTREPRENEURIAL GENIUS'.",
+        "explanation": "Media image vs the realities of being an entrepreneur."
+      },
+      {
+        "question": "What is the difference between a GROWTH and a FIXED mindset?",
+        "answer": "MINDSET = the established set of attitudes held by someone.\n\nGROWTH mindset: abilities can be developed through dedication, effort and hard work.\n\nFIXED mindset: talents and abilities are perceived as set traits.",
+        "explanation": "Idea generation starts with mindset — growth mindset supports opportunity creation."
+      },
+      {
+        "question": "What is an OPPORTUNITY?",
+        "answer": "An apparent way of generating value through UNIQUE, NOVEL, or DESIRABLE products, services or even processes that have NOT been previously exploited.\n\nFor an opportunity to be viable, the idea must have the capacity to GENERATE VALUE.\n\nFirst step: IDEA GENERATION — the more ideas, the greater the likelihood of finding a strong opportunity.",
+        "explanation": "Opportunities start with thousands of ideas."
+      },
+      {
+        "question": "What are the 3 FORMS OF VALUE an opportunity can create?",
+        "answer": "1. ECONOMIC value — capacity to generate profit (most common)\n2. SOCIAL value — helps address a social need\n3. ENVIRONMENTAL value — protects or preserves the environment\n\nAll forms assume a market with enough buyers. A LARGE market is NOT required — the key is to SCALE the business and its costs to the size of the market (balance supply with demand).",
+        "explanation": "Less common but equally important: social and environmental value."
+      },
+      {
+        "question": "What is the 'Four I's' framework for evaluating ideas?",
+        "answer": "Rate an idea on four dimensions — it may be an:\n\n1. INNOVATION\n2. INVENTION\n3. IMPROVEMENT\n4. IRRELEVANT\n\nPart of opportunity recognition is evaluating ideas and identifying those with the highest likelihood of success.",
+        "explanation": "Idea Classification Matrix."
+      },
+      {
+        "question": "What are the TWO PATHWAYS to opportunity identification?",
+        "answer": "1. FINDING approach: opportunities EXIST and are waiting to be found — result of the changing landscape (technology, consumer preferences, regulations, demographics). Decision context: RISKY.\n\n2. BUILDING approach: opportunities do NOT exist independent of entrepreneurs — they are a product of the mind, CREATED not found (using what you know, whom you know, who you are). Decision context: UNCERTAIN.",
+        "explanation": "Finding = discovery; building = creation."
+      },
+      {
+        "question": "What are the TWO main factors in BUILDING opportunities?",
+        "answer": "1. PRIOR KNOWLEDGE — pre-existing information gained from a combination of life and work experience (e.g. knowledge of an industry or market).\n\n2. PATTERN RECOGNITION — identifying links between apparently unrelated things or events; 'CONNECTING THE DOTS' to identify and build on opportunities (e.g. compact wheeled luggage).",
+        "explanation": "How entrepreneurs create opportunities from the mind."
+      },
+      {
+        "question": "Describe the journey FROM IDEA TO OPPORTUNITY RECOGNITION.",
+        "answer": "1. IDEA GENERATION — production of ideas for something NEW\n2. CREATIVITY — ideas that are new AND potentially USEFUL\n3. OPPORTUNITY RECOGNITION — ideas that are new, useful AND have the potential to generate ECONOMIC VALUE\n\nThen: creating/exploring the opportunity (market research) → planning to realise it → acting on it.",
+        "explanation": "Each step adds a filter: new → useful → valuable."
+      },
+      {
+        "question": "Why do the vast majority of start-ups fail, and what is the single necessary and sufficient condition for a business?",
+        "answer": "Most start-ups fail because of a NON-EXISTENT MARKET for their products/services.\n\nThe single necessary and sufficient condition for a business: A PAYING CUSTOMER.",
+        "explanation": "Two key quiz answers straight from the lecture."
+      },
+      {
+        "question": "What is the DESIGN THINKING framework for validating a business idea?",
+        "answer": "Great innovations sit at the INTERSECTION of:\n\n1. FEASIBILITY — can it be done?\n2. VIABILITY — can we make money doing it?\n3. DESIRABILITY — do people need it?",
+        "explanation": "Used to validate the business idea."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "According to the lecture, entrepreneurship as a process is:",
+        "options": [
+          "Predictable and linear",
+          "Complex, chaotic and non-linear",
+          "Always taught as three steps",
+          "Identical for every venture"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A GROWTH mindset assumes that abilities:",
+        "options": [
+          "Are fixed at birth",
+          "Can be developed through dedication and effort",
+          "Depend only on luck",
+          "Cannot change after childhood"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The most COMMON form of value an opportunity creates is:",
+        "options": [
+          "Social value",
+          "Environmental value",
+          "Economic value",
+          "Cultural value"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the FINDING approach, the decision context is:",
+        "options": [
+          "Risky",
+          "Uncertain",
+          "Safe",
+          "Irrelevant"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Pattern recognition means:",
+        "options": [
+          "Copying competitor products",
+          "Connecting the dots between apparently unrelated things",
+          "Registering patents",
+          "Following industry templates"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Why do the vast majority of start-ups fail?",
+        "options": [
+          "Too many employees",
+          "Non-existent market for their products/services",
+          "Too much funding",
+          "Government regulation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The single necessary and sufficient condition for a business is:",
+        "options": [
+          "A business plan",
+          "A paying customer",
+          "An office",
+          "Venture capital"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Design thinking places great innovations at the intersection of:",
+        "options": [
+          "Feasibility, viability, desirability",
+          "Price, product, promotion",
+          "Team, resources, market",
+          "Risk, return, reward"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Opportunities start with thousands of _______.",
+        "answer": "ideas",
+        "hint": "Generated first..."
+      },
+      {
+        "sentence": "A _______ mindset believes abilities can be developed through effort.",
+        "answer": "growth",
+        "hint": "Opposite of fixed..."
+      },
+      {
+        "sentence": "In the building approach, opportunities are created, not _______.",
+        "answer": "found",
+        "hint": "Finding approach does this..."
+      },
+      {
+        "sentence": "Most start-ups fail because of a non-existent _______.",
+        "answer": "market",
+        "hint": "No one to sell to..."
+      },
+      {
+        "sentence": "Design thinking: feasibility, viability and _______.",
+        "answer": "desirability",
+        "hint": "Do people need it..."
+      }
+    ],
+    "learn": {
+      "title": "Creativity and the Business Idea",
+      "content": "\n                <h3>Entrepreneurship as Practice</h3>\n                <div class=\"formula-box\">\n                    Entrepreneurship is NOT linear or predictable.<br>\n                    It is <strong>complex and chaotic</strong> — iterations are <strong>stages of learning</strong>.<br>\n                    \"The most valuable thing you can make is a mistake.\" (Adam Osborne)\n                </div>\n\n                <h4>Media vs Reality</h4>\n                <p>The media exaggerate \"overnight global sensations\" (Musk, Kalanick) and perpetuate the\n                myth of the \"tech entrepreneurial genius\". Yunus: \"All human beings are entrepreneurs.\"</p>\n\n                <h4>Mindset</h4>\n                <div class=\"tip-box\">\n                    <p><strong>GROWTH:</strong> abilities develop through dedication, effort, hard work<br>\n                    <strong>FIXED:</strong> talents and abilities are set traits</p>\n                </div>\n\n                <h4>Opportunity & Value</h4>\n                <p><span class=\"highlight\">Opportunity</span> = an apparent way of generating value through unique,\n                novel or desirable products/services not previously exploited.</p>\n                <ul>\n                    <li><strong>Economic value</strong> — capacity to generate profit (most common)</li>\n                    <li><strong>Social value</strong> — addresses a social need</li>\n                    <li><strong>Environmental value</strong> — protects/preserves the environment</li>\n                </ul>\n                <p>Key: <strong>scale the business to the size of the market</strong> — a large market is not required.</p>\n\n                <h4>Evaluating Ideas — the Four I's</h4>\n                <div class=\"example-box\">\n                    <p>Innovation · Invention · Improvement · Irrelevant</p>\n                </div>\n\n                <h4>Two Pathways to Opportunity Identification</h4>\n                <div class=\"formula-box\">\n                    <strong>FINDING:</strong> opportunities exist, waiting to be found (changing technology,\n                    preferences, regulations, demographics) → decision is <strong>RISKY</strong><br><br>\n                    <strong>BUILDING:</strong> opportunities are a product of the mind, created not found →\n                    decision is <strong>UNCERTAIN</strong><br>\n                    Two factors: <strong>prior knowledge</strong> + <strong>pattern recognition</strong> (\"connect the dots\")\n                </div>\n\n                <h4>From Idea to Opportunity Recognition</h4>\n                <div class=\"tip-box\">\n                    <p>IDEA GENERATION (new) → CREATIVITY (new + useful) →\n                    OPPORTUNITY RECOGNITION (new + useful + economic value)</p>\n                </div>\n\n                <h4>Validating the Idea</h4>\n                <ul>\n                    <li>Most start-ups fail: <strong>non-existent market</strong></li>\n                    <li>Necessary and sufficient condition: <strong>a paying customer</strong></li>\n                    <li>Design thinking: <strong>feasibility</strong> (can it be done?) + <strong>viability</strong>\n                    (can we make money?) + <strong>desirability</strong> (do people need it?)</li>\n                </ul>\n            "
+    }
+  },
+  "innovation": {
+    "name": "Innovation",
+    "icon": "fa-lightbulb",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is INNOVATION and how does it differ from INVENTION?",
+        "answer": "INNOVATION: Latin 'innovare' = to make something new\n\nDifference:\n• INVENTION = creating something new\n• INNOVATION = making something new USEFUL and BENEFICIAL\n\nIt's possible to invent something no one uses - that's not innovation!",
+        "explanation": "Innovation requires practical application and benefit."
+      },
+      {
+        "question": "What are Peter Drucker's 7 SOURCES OF OPPORTUNITY?",
+        "answer": "1. THE UNEXPECTED - surprises, failures, successes\n2. THE INCONGRUOUS - gaps between reality and perception\n3. PROCESS NEED - weak links in processes\n4. INDUSTRY & MARKET STRUCTURES - changes\n5. DEMOGRAPHICS - population changes\n6. CHANGES IN PERCEPTION - mood shifts\n7. NEW KNOWLEDGE - scientific discoveries",
+        "explanation": "Drucker's framework for finding innovation opportunities."
+      },
+      {
+        "question": "What are the 6 TYPES OF INNOVATION?",
+        "answer": "1. PRODUCT Innovation - new goods/services\n2. PROCESS Innovation - new production methods\n3. BUSINESS MODEL Innovation - new ways of creating value\n4. ORGANIZATIONAL Innovation - new structures\n5. MARKETING Innovation - new marketing methods\n6. OPEN Innovation - external collaboration",
+        "explanation": "Six categories of innovation."
+      },
+      {
+        "question": "What is DISCONTINUOUS (Radical) Innovation?",
+        "answer": "Also called RADICAL or REVOLUTIONARY innovation.\n\n• Game-changing, disruptive\n• Creates entirely new markets\n• Makes existing products obsolete\n• High risk, high reward\n\nExamples: Smartphones, Internet, Electric vehicles",
+        "explanation": "Major shifts that transform industries."
+      },
+      {
+        "question": "What are the BARRIERS TO INNOVATION?",
+        "answer": "• FINANCIAL CONSTRAINTS - lack of funding\n• ORGANIZATIONAL CULTURE - resistance to change\n• REGULATION & COMPLIANCE - legal barriers\n• MARKET ACCEPTANCE - customers unwilling to adopt\n• FEAR OF FAILURE - risk aversion\n• LACK OF SKILLS OR EXPERTISE - knowledge gaps",
+        "explanation": "Obstacles that prevent innovation."
+      },
+      {
+        "question": "How is INNOVATION defined (Kanter, 1983)?",
+        "answer": "'The GENERATION, ACCEPTANCE and IMPLEMENTATION of new ideas, processes, products or services… which involves creative use as well as original invention.'\n\nAlso: turning ideas into new opportunities for VALUE CREATION and putting them into WIDELY USED practice — taking new ideas effectively and profitably through to SATISFIED CUSTOMERS.",
+        "explanation": "Acceptance and implementation are central — the capacity to change and adapt."
+      },
+      {
+        "question": "What is innovation NOT? (6 misconceptions)",
+        "answer": "1. NOT the same as invention (Segway: technically innovative but solved no real problem)\n2. NOT just new products — also organizational forms, strategies, processes (Coca-Cola 'Share a Coke'; Toyota lean production)\n3. Does NOT require wholly original ideas — 'a good new idea is often two old ideas meeting for the first time' (iPhone combined existing touchscreens, mobile internet, apps)\n4. NOT always one-off inspiration — often years of patient work (Edison: 'I've just found 10,000 ways that won't work')\n5. NOT the same as creativity — innovation is determined only AFTER the event, when its value becomes manifest (Post-it Notes)\n6. NOT just technology (BlackBerry had cutting-edge tech but failed; Apple won on user experience)",
+        "explanation": "Six 'innovation is not' statements with lecture examples."
+      },
+      {
+        "question": "What are the 4 KEY TASKS of the INNOVATION JOURNEY?",
+        "answer": "(Rodriguez-Sanchez et al., 2019)\n\n1. IDEA GENERATION — formulating new concepts/solutions (Tesla: a car without fossil fuels)\n2. COALITION BUILDING — attracting stakeholders, investors, team; gathering human and financial resources (Bezos and Amazon's early investors)\n3. IDEA REALIZATION — turning the idea into a tangible product: prototypes, pilot testing, trial-and-error learning, capital mobilisation (Dyson: thousands of prototypes)\n4. TRANSFER or DIFFUSION — spreading the innovation to the market: scaling, marketing, expansion",
+        "explanation": "Idea generation → coalition building → idea realization → transfer/diffusion."
+      },
+      {
+        "question": "What scenarios can follow the innovation journey?",
+        "answer": "INNOVATION-related:\n• REJECTION — no desire for the innovation\n• POSTPONEMENT — status quo, innovation's value not understood\n• Diffusion is favoured by: relative advantage, trialability, compatibility, observability of results, low complexity\n\nVENTURE-related:\n• Use failure to RE-START the innovation process\n• Strong KPIs – growth – EXIT BY ACQUISITION\n• Exit from entrepreneurship: financial under-performance (voluntary exit vs bankruptcy), starting a new business, harvesting the investment",
+        "explanation": "Both the innovation and the venture can take several paths."
+      },
+      {
+        "question": "What is the single biggest start-up success factor (TED talk in the lecture)?",
+        "answer": "Five candidate factors: IDEA, TEAM (execution), BUSINESS MODEL, FUNDING, TIMING.\n\nBill Gross's analysis ('The single biggest reason why start-ups succeed'): TIMING is the No. 1 factor.",
+        "explanation": "Timing beats idea, team, business model and funding."
+      },
+      {
+        "question": "How do CREATIVITY, INNOVATION and ENTREPRENEURSHIP relate? (wrap-up)",
+        "answer": "CREATIVITY: coming up with a new idea — does NOT have to address a need.\n\nINNOVATION: creativity is usually the first step, but innovation MUST address a need and bring VALUE — understand the problem, recognize the opportunity, know what 'pain' you are solving, put yourself in the consumer's shoes.\n\nENTREPRENEURSHIP: ACTING on innovation — delivering it to address the need; includes both commercial and non-profit entities.",
+        "explanation": "Creativity → Innovation → Entrepreneurship."
+      },
+      {
+        "question": "What is INCREMENTAL vs RADICAL Innovation?",
+        "answer": "INCREMENTAL:\n• Gradual improvements\n• Small-scale changes\n• Lower risk\n• Continuous improvement\n\nRADICAL:\n• Disruptive, game-changing\n• Creates new markets\n• Higher risk\n• Revolutionary change",
+        "explanation": "Two extremes of innovation intensity."
+      },
+      {
+        "question": "What is OPEN INNOVATION?",
+        "answer": "Innovation through EXTERNAL collaboration:\n\n• Partnerships with other companies\n• Crowdsourcing ideas\n• University collaborations\n• Licensing external technologies\n• Open-source development\n\nOpposite of closed, internal R&D.",
+        "explanation": "Collaborative approach to innovation."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The Latin word 'innovare' means:",
+        "options": [
+          "To copy",
+          "To make something new",
+          "To destroy",
+          "To improve"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many sources of opportunity did Peter Drucker identify?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "9"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is NOT one of Drucker's sources of opportunity?",
+        "options": [
+          "The Unexpected",
+          "Demographics",
+          "Government Grants",
+          "New Knowledge"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Discontinuous innovation is also called:",
+        "options": [
+          "Incremental innovation",
+          "Radical or revolutionary innovation",
+          "Process innovation",
+          "Marketing innovation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a barrier to innovation?",
+        "options": [
+          "Abundant funding",
+          "Supportive culture",
+          "Fear of failure",
+          "Skilled workforce"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to Kanter (1983), what is central to the definition of innovation?",
+        "options": [
+          "Patent registration",
+          "Acceptance and implementation of new ideas",
+          "Government funding",
+          "Marketing budgets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The innovation journey consists of idea generation, coalition building, idea realization and:",
+        "options": [
+          "Liquidation",
+          "Transfer or diffusion",
+          "Taxation",
+          "Regulation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Bill Gross's TED analysis referenced in the lecture, the single biggest start-up success factor is:",
+        "options": [
+          "Funding",
+          "Idea",
+          "Timing",
+          "Business model"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Open Innovation involves:",
+        "options": [
+          "Only internal R&D",
+          "External collaboration and partnerships",
+          "Keeping secrets",
+          "Solo development"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which innovation type involves new production methods?",
+        "options": [
+          "Product Innovation",
+          "Process Innovation",
+          "Marketing Innovation",
+          "Organizational Innovation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Innovation differs from invention because innovation:",
+        "options": [
+          "Is always patented",
+          "Must be useful and beneficial",
+          "Is more expensive",
+          "Happens first"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Peter Drucker identified _______ sources of opportunity.",
+        "answer": "seven",
+        "hint": "Number 7..."
+      },
+      {
+        "sentence": "_______ innovation is gradual and small-scale.",
+        "answer": "Incremental",
+        "hint": "Step by step..."
+      },
+      {
+        "sentence": "_______ innovation is disruptive and game-changing.",
+        "answer": "Radical",
+        "hint": "Revolutionary..."
+      },
+      {
+        "sentence": "The innovation journey ends with transfer or _______ to the market.",
+        "answer": "diffusion",
+        "hint": "Spreading widely..."
+      },
+      {
+        "sentence": "_______ Innovation involves external collaboration.",
+        "answer": "Open",
+        "hint": "Not closed..."
+      },
+      {
+        "sentence": "According to Bill Gross, the single biggest start-up success factor is _______.",
+        "answer": "timing",
+        "hint": "Not the idea, not funding..."
+      }
+    ],
+    "learn": {
+      "title": "Innovation and Franchising",
+      "content": "\n                <h3>Understanding Innovation</h3>\n                \n                <div class=\"formula-box\">\n                    <strong>INNOVATION ≠ INVENTION</strong><br>\n                    Innovation = Making something new that is USEFUL<br>\n                    Invention = Creating something new (may never be used)\n                </div>\n                \n                <h4>Peter Drucker's 7 Sources of Opportunity</h4>\n                <ol>\n                    <li><strong>The Unexpected</strong> - surprises, failures, successes</li>\n                    <li><strong>The Incongruous</strong> - gaps between reality and perception</li>\n                    <li><strong>Process Need</strong> - weak links in processes</li>\n                    <li><strong>Industry & Market Structures</strong> - changes</li>\n                    <li><strong>Demographics</strong> - population changes</li>\n                    <li><strong>Changes in Perception</strong> - mood shifts</li>\n                    <li><strong>New Knowledge</strong> - scientific discoveries</li>\n                </ol>\n                \n                <h4>6 Types of Innovation</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Product</strong> - new goods/services</li>\n                        <li><strong>Process</strong> - new production methods</li>\n                        <li><strong>Business Model</strong> - new value creation</li>\n                        <li><strong>Organizational</strong> - new structures</li>\n                        <li><strong>Marketing</strong> - new marketing methods</li>\n                        <li><strong>Open</strong> - external collaboration</li>\n                    </ul>\n                </div>\n                \n                <h4>Innovation Intensity</h4>\n                <div class=\"example-box\">\n                    <p><strong>INCREMENTAL:</strong> Gradual, small-scale, low risk<br>\n                    <strong>RADICAL (Discontinuous):</strong> Disruptive, game-changing, high risk</p>\n                </div>\n                \n                <h4>Barriers to Innovation</h4>\n                <ul>\n                    <li>Financial Constraints</li>\n                    <li>Organizational Culture</li>\n                    <li>Regulation & Compliance</li>\n                    <li>Market Acceptance</li>\n                    <li>Fear of Failure</li>\n                    <li>Lack of Skills</li>\n                </ul>\n                \n                <hr>\n                \n                <h3>The Innovation Journey & Wrap-up</h3>\n                \n                <div class=\"formula-box\">\n                    <strong>THE INNOVATION JOURNEY</strong> (Rodriguez-Sanchez et al., 2019):<br>\n                    1. Idea generation → 2. Coalition building → 3. Idea realization → 4. Transfer/diffusion<br>\n                    Scenarios: rejection · postponement · re-start from failure · growth & exit by acquisition\n                </div>\n                \n                <h4>What Innovation is NOT</h4>\n                <div class=\"warning-box\">\n                    <p>Not invention (Segway) · not only products ('Share a Coke', Toyota lean) · not wholly\n                    original ideas (iPhone = old ideas combined) · not one-off inspiration (Edison) · not the\n                    same as creativity (Post-it) · not just technology (BlackBerry)</p>\n                    \n                    <p><strong>Success factors (Bill Gross TED):</strong> idea, team (execution), business model,\n                    funding, <strong>TIMING</strong> — timing is the single biggest factor.</p>\n                    <p><strong>Wrap-up:</strong> CREATIVITY (new idea, no need required) → INNOVATION (must address\n                    a need, bring value) → ENTREPRENEURSHIP (acting on innovation to deliver it).</p>\n                </div>\n            "
+    }
+  },
+  "financing": {
+    "name": "Financing the Business",
+    "icon": "fa-coins",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "Do entrepreneurs need vast amounts of money to start a business?",
+        "answer": "NO — a common myth.\n\n• 98% of startup businesses begin WITHOUT any formal investment\n• 14% of the 500 fastest-growing companies began with LESS THAN $1,000\n• Bank loans are notoriously difficult for new businesses\n• Angel investments are not as common as people believe\n\nEntrepreneurs have difficulty proving the value of a business that hasn't started yet.",
+        "explanation": "Key numbers: 98% and 14%."
+      },
+      {
+        "question": "What is BOOTSTRAPPING?",
+        "answer": "The process of building or starting a business with very little funding or capital — or virtually nothing at all.\n\nFinding CREATIVE ways to access every available resource while MINIMIZING the cash you spend.\n\nName from 'pull yourself up by your bootstraps' = lift yourself by your own efforts.",
+        "explanation": "How 98% of startups actually begin."
+      },
+      {
+        "question": "Why do entrepreneurs bootstrap, and what are the 4 self-funding methods?",
+        "answer": "REASONS: complement/reduce/eliminate traditional financing; no access due to lack of business history and credit; or VOLUNTARILY — to maintain CONTROL and AUTONOMY over decisions.\n\n4 METHODS:\n1. Cash from savings\n2. Careful use of credit cards\n3. Fund the startup from your existing job's salary\n4. Take equity out of your home",
+        "explanation": "All methods require a personal-risk cutoff point."
+      },
+      {
+        "question": "What are AFFORDABLE LOSS and SWEAT EQUITY?",
+        "answer": "AFFORDABLE LOSS: how much are you willing to LOSE to take the next step in bringing your venture to life? (set a cutoff point for risking personal finances)\n\nSWEAT EQUITY: the increase in value or ownership interest created by someone as a result of HARD WORK.",
+        "explanation": "Two core bootstrapping concepts."
+      },
+      {
+        "question": "Name some BOOTSTRAPPING STRATEGIES.",
+        "answer": "• Work from home / coworking spaces\n• Never buy new what you can borrow, lease or get free\n• Take as little salary as possible\n• Use your network of friends and family\n• Learn basic legal/accountancy matters yourself\n• Reimburse advisers with equity and goodwill\n• Frugal travel; employees paid in equity\n• Attend every networking event\n• Discounts to early customers (cash flow + loyalty)\n• Negotiate supplier payment terms; outsource\n• Don't give up your day job too early",
+        "explanation": "Minimize cash burn while accessing every resource."
+      },
+      {
+        "question": "What is the difference between CROWDFUNDING and CROWDSOURCING?",
+        "answer": "CROWDFUNDING = a resource for MONEY (raising small amounts of capital from a large number of people, typically via the Internet).\n\nCROWDSOURCING = a resource for TALENT AND LABOR (using the Internet to attract and manage inexpensive or free labor from enthusiastic customers and like-minded people).\n\nCrowdsourcing is a form of bootstrapping.",
+        "explanation": "Money vs talent/labor."
+      },
+      {
+        "question": "What are the key KICKSTARTER rules?",
+        "answer": "• Launched 2009 — largest platform for CREATIVE projects\n• ALL-OR-NOTHING: if the goal isn't fully funded by the deadline, you get NOTHING\n• Campaigns last 1–60 days; most successful last 30 days or less (most contributions in the first and last week)\n• NO monetary rewards or equity allowed — rewards in kind only\n• No charity, loans, or general business expenses\n• Earns % of funds from successful projects + payment processing fees",
+        "explanation": "All-or-nothing is the most exam-relevant rule."
+      },
+      {
+        "question": "What does the COOLEST COOLER case teach us?",
+        "answer": "Ryan Grepper sought $50,000 on Kickstarter → received over $13 MILLION from 60,000+ backers.\n\nDespite the money: delayed production, sold on Amazon BEFORE delivering to backers → supporters lost faith.\n\nLESSON: a huge raise does not guarantee success — 'growing pains' can destroy backer trust.",
+        "explanation": "Most infamous Kickstarter campaign."
+      },
+      {
+        "question": "What is EQUITY CROWDFUNDING?",
+        "answer": "Crowdfunding that gives backers the opportunity to become SHAREHOLDERS in a company.\n\n• Legalized in the US by the JOBS ACT (2012, signed by Obama)\n• Crowdcube (UK) attracted almost $200 million by 2014; offers an independent professional fund manager as reassurance\n• Others: SeedInvest, StartEngine, Republic, WeFunder, EquityNet",
+        "explanation": "Backers get shares, unlike Kickstarter rewards."
+      },
+      {
+        "question": "What are the FOUR TYPES of crowdfunding?",
+        "answer": "1. PATRONAGE model — donors expect nothing in return\n2. LENDING model — funds are loaned and repaid\n3. REWARD-BASED crowdfunding — backers receive non-monetary rewards (Kickstarter, Indiegogo)\n4. INVESTOR model — backers receive equity/shares\n\nAlternatives to Kickstarter: Indiegogo (largest global reach, almost anything goes), RocketHub (science), Peerbackers, Quirky (inventors), Tilt, Crowdrise (nonprofits).",
+        "explanation": "Why people donate, lend or invest."
+      },
+      {
+        "question": "Family loans — advantages and disadvantages?",
+        "answer": "ADVANTAGES:\n• Security unlikely to be required\n• Profit stays in the family\n• Very low or 0 interest\n\nDISADVANTAGES:\n• Missed repayments strain family relationships\n• Business failure affects the entire family\n• Family members may interfere in the business",
+        "explanation": "Cheap but emotionally risky financing."
+      },
+      {
+        "question": "Compare a BANK OVERDRAFT and a BANK LOAN.",
+        "answer": "OVERDRAFT = limit on borrowing on a current account (withdraw funds you don't have):\n• Flexible, available on demand; good for SHORT-TERM needs\n• BUT repayable ON DEMAND, usually secured, HIGHER interest than loans\n• UK: 42% of small-firm debt is overdraft (vs 17% in Germany)\n\nBANK LOAN:\n• Fixed term (NOT repayable on demand), repayments known in advance, LOWER interest\n• BUT secured against assets, can be refused, needs good cash flow",
+        "explanation": "Overdraft = flexible but on-demand; loan = stable but demanding."
+      },
+      {
+        "question": "What financing comes from BUSINESS SUPPLIERS and ASSET-BASED LENDERS?",
+        "answer": "1. TRADE CREDIT (accounts payable): supplier finances your inventory; short-duration (~30 days)\n\n2. LEASES: equipment leased from supplier — frees up cash, keeps credit lines open, hedge against obsolescence\n\n3. FACTORING: obtaining cash by SELLING ACCOUNTS RECEIVABLE to another firm at a discount; factor can refuse questionable accounts and charges fees",
+        "explanation": "Three supplier/asset-based financing tools."
+      },
+      {
+        "question": "What are the STAGES of equity financing?",
+        "answer": "EQUITY FINANCING = sale of shares in exchange for cash.\n\nEarly stages:\n1. SEED-STAGE — small amounts to PROVE A CONCEPT\n2. STARTUP financing — fund product R&D and implement the idea\n3. EARLY-STAGE — larger funds for companies with a team and tested product but little/no revenue\n\nLater: SECOND-STAGE/later-stage (growth) → MEZZANINE/third stage (expansion, IPO preparation) → BRIDGE financing (covers IPO expenses).",
+        "explanation": "Seed → startup → early → second → mezzanine → bridge."
+      },
+      {
+        "question": "Who are BUSINESS ANGELS?",
+        "answer": "Wealthy PRIVATE individuals investing in high-risk ventures:\n\n• Typically £10,000 – £250,000\n• Usually FORMER ENTREPRENEURS\n• Preferences: sectors, stage, LOCAL investments\n• Carry out INFORMAL due diligence\n• Exit with returns on personal investment",
+        "explanation": "Smaller, personal, informal investors."
+      },
+      {
+        "question": "Who are VENTURE CAPITALISTS (VCs)?",
+        "answer": "Individuals who form FUNDS (limited partnerships) raising capital from large INSTITUTIONAL investors:\n\n• Invest over £2 MILLION in businesses with substantial growth potential\n• Expect significant return over ~3 YEARS\n• REJECT ~95% of ~5,000 applications per year\n• Conduct FORMAL due diligence\n• Usually don't want to take control — BUT 32% of founders were replaced at initial commercialisation (UK)\n• Exit with returns to the fund's partners",
+        "explanation": "Key numbers: £2M+, 3 years, 95% rejection, 32% founders replaced."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "What percentage of startup businesses begin without any formal investment?",
+        "options": [
+          "50%",
+          "75%",
+          "98%",
+          "25%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Bootstrapping means:",
+        "options": [
+          "Raising maximum venture capital",
+          "Starting a business with very little or no capital",
+          "Buying an existing business",
+          "Getting a government grant"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Crowdsourcing is a resource for:",
+        "options": [
+          "Money",
+          "Talent and labor",
+          "Real estate",
+          "Patents"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "On Kickstarter, if your project does NOT reach its funding goal:",
+        "options": [
+          "You keep what was pledged",
+          "You receive half",
+          "You receive nothing",
+          "The deadline is extended"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Kickstarter does NOT allow rewards in the form of:",
+        "options": [
+          "Free products",
+          "Backstage meetings",
+          "Monetary rewards or equity",
+          "Discounted items"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Equity crowdfunding was legalized in the US by:",
+        "options": [
+          "The JOBS Act (2012)",
+          "The Patriot Act",
+          "The Dodd-Frank Act",
+          "The SBA Act"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Seed-stage financing is used to:",
+        "options": [
+          "Cover IPO expenses",
+          "Prove a concept with small amounts of capital",
+          "Buy out competitors",
+          "Pay dividends"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Venture capitalists reject approximately what share of applications?",
+        "options": [
+          "25%",
+          "50%",
+          "75%",
+          "95%"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Factoring means:",
+        "options": [
+          "Leasing equipment",
+          "Selling accounts receivable at a discount",
+          "Supplier-provided inventory financing",
+          "Issuing new shares"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A key disadvantage of a bank overdraft is that it is:",
+        "options": [
+          "Fixed for ten years",
+          "Repayable on demand with higher interest",
+          "Only for large firms",
+          "Interest-free"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "98% of startup businesses begin without any formal _______.",
+        "answer": "investment",
+        "hint": "Outside money..."
+      },
+      {
+        "sentence": "_______ equity is the increase in value created through hard work.",
+        "answer": "Sweat",
+        "hint": "From effort, not money..."
+      },
+      {
+        "sentence": "Crowdfunding is a resource for money; crowdsourcing for talent and _______.",
+        "answer": "labor",
+        "hint": "Workforce..."
+      },
+      {
+        "sentence": "On Kickstarter a project must be fully _______ by the deadline or you get nothing.",
+        "answer": "funded",
+        "hint": "All-or-nothing..."
+      },
+      {
+        "sentence": "Business _______ are wealthy individuals who invest £10,000–£250,000.",
+        "answer": "angels",
+        "hint": "Heavenly investors..."
+      },
+      {
+        "sentence": "_______-stage financing provides small amounts of capital to prove a concept.",
+        "answer": "Seed",
+        "hint": "Where plants start..."
+      }
+    ],
+    "learn": {
+      "title": "Financing the Business",
+      "content": "\n                <h3>The Myth of Big Capital</h3>\n                <div class=\"formula-box\">\n                    <strong>98%</strong> of startups begin WITHOUT formal investment<br>\n                    <strong>14%</strong> of the 500 fastest-growing companies began with &lt; $1,000\n                </div>\n\n                <h4>Bootstrapping</h4>\n                <p><span class=\"highlight\">Bootstrapping</span> = starting a business with very little capital or\n                virtually nothing — creative use of every available resource while minimizing cash spent.</p>\n                <ul>\n                    <li>4 self-funding methods: savings · credit cards · salary from day job · home equity</li>\n                    <li><strong>Affordable loss:</strong> how much are you willing to lose for the next step?</li>\n                    <li><strong>Sweat equity:</strong> value created by hard work</li>\n                </ul>\n\n                <h4>Crowdfunding vs Crowdsourcing</h4>\n                <div class=\"tip-box\">\n                    <p><strong>CROWDFUNDING</strong> = money<br>\n                    <strong>CROWDSOURCING</strong> = talent and labor (a form of bootstrapping)</p>\n                </div>\n\n                <h4>Kickstarter Rules</h4>\n                <ul>\n                    <li><strong>All-or-nothing:</strong> goal not reached → nothing received</li>\n                    <li>Campaigns 1–60 days; the most successful last ≤ 30 days</li>\n                    <li>No monetary rewards or equity — rewards in kind only</li>\n                    <li>Case: <strong>Coolest Cooler</strong> — $50k goal → $13M raised, yet still failed its backers</li>\n                </ul>\n\n                <h4>Four Types of Crowdfunding</h4>\n                <div class=\"example-box\">\n                    <p>1. Patronage · 2. Lending · 3. Reward-based · 4. Investor (equity)</p>\n                    <p>Equity crowdfunding legalized by the <strong>JOBS Act (2012)</strong>; e.g. Crowdcube (UK).</p>\n                </div>\n\n                <h4>Debt Financing</h4>\n                <div class=\"formula-box\">\n                    <strong>OVERDRAFT:</strong> flexible, short-term, but repayable on demand + higher interest<br>\n                    <strong>BANK LOAN:</strong> fixed term, known repayments, lower interest, needs security<br>\n                    <strong>TRADE CREDIT:</strong> ~30-day supplier financing ·\n                    <strong>LEASES:</strong> free up cash ·\n                    <strong>FACTORING:</strong> sell receivables at a discount\n                </div>\n\n                <h4>Equity Financing Stages</h4>\n                <p>Seed (prove concept) → Startup (R&D) → Early-stage (team + product, little revenue) →\n                Second-stage → Mezzanine (IPO prep) → Bridge.</p>\n\n                <h4>Angels vs VCs</h4>\n                <div class=\"warning-box\">\n                    <p><strong>ANGELS:</strong> £10k–£250k · former entrepreneurs · informal due diligence · local</p>\n                    <p><strong>VCs:</strong> £2M+ · institutional funds · ~3-year returns · reject 95% ·\n                    formal due diligence · 32% of founders replaced at commercialisation</p>\n                </div>\n            "
+    }
+  },
+  "franchising": {
+    "name": "Franchising",
+    "icon": "fa-store",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "What is FRANCHISING?",
+        "answer": "Selling the RIGHT to conduct a business.\n\nA form of cooperation in which one company (the FRANCHISOR, e.g. a hotel chain) grants another (the FRANCHISEE, e.g. an independent hotel) the right to commercialise certain products/services in exchange for a FEE.\n\nBFA (2001): franchisor grants a LICENCE to use commercial methods he developed; franchisee contributes capital, effort and motivation and agrees to be CONTROLLED by the franchisor; franchisor contributes training, operating procedures and managerial expertise.",
+        "explanation": "Two parties: franchisor sells the right, franchisee buys it."
+      },
+      {
+        "question": "From entrepreneurship theory, is a franchisee an entrepreneur?",
+        "answer": "NO.\n\nFrom the entrepreneurship theory perspective, a franchisee is NOT an entrepreneur but an INTRAPRENEUR.\n\n(They operate within the franchisor's developed system and agree to be controlled by it — they are not independent.)",
+        "explanation": "Frequent exam point — franchisee = intrapreneur."
+      },
+      {
+        "question": "What are the 2 FRANCHISE FORMATS?",
+        "answer": "1. PRODUCT FORMAT franchise: exclusive right to sell a given product in a specified TERRITORY — franchisees used as distribution channels (e.g. automobile dealers). Lucrative but hard to obtain (existing franchisors already have all the franchisees they need).\n\n2. BUSINESS FORMAT franchise: a COMPLETE SYSTEM of doing business, including TRADE NAME and TRADE SECRETS (e.g. McDonald's).",
+        "explanation": "Product distribution vs complete business system."
+      },
+      {
+        "question": "What is the difference between DIRECT and MASTER franchising?",
+        "answer": "DIRECT franchising: the franchise company deals DIRECTLY with individual franchisees.\n\nMASTER franchisee: a company or individual who holds the rights to SUB-FRANCHISE within a certain GEOGRAPHICAL TERRITORY — they hold the franchise and distribution rights for that area.",
+        "explanation": "How the franchisor interacts with franchisees."
+      },
+      {
+        "question": "What does RESOURCE SCARCITY THEORY say about why firms franchise?",
+        "answer": "Franchising is a response to a SHORTAGE of resources required for expansion: CAPITAL, LABOUR, MANAGERIAL TALENT.\n\n• Overcomes resource constraints in early growth stages\n• Enables RAPID EARLY GROWTH → scale economies + brand-name capital\n• Raising capital per se (though argued there must be other reasons too)",
+        "explanation": "First of two theories explaining franchising."
+      },
+      {
+        "question": "What does AGENCY THEORY say about franchising?",
+        "answer": "The AGENCY PROBLEM: goals of managers (AGENTS) diverge from the firm's (PRINCIPAL) — employees have no incentive to maximise effort, so the firm must MONITOR them (costly).\n\nThe FRANCHISE AGREEMENT is more efficient: interests of franchisor and franchisee are ALIGNED through contract design.\n\nWhy lower costs? The franchisee has a significant PERSONAL INVESTMENT → will strive to maximise returns themselves → minimal monitoring needed.",
+        "explanation": "Personal investment replaces costly monitoring."
+      },
+      {
+        "question": "Advantages and disadvantages for the FRANCHISOR?",
+        "answer": "ADVANTAGES:\n• A fixed amount of money earned\n• Expansion WITH SPEED using franchisees' investment capital\n• Market penetration with ease using franchisees' capital, time and energy\n\nDISADVANTAGES:\n• Must select franchisees very carefully\n• Difficulty maintaining CONTROL OF STANDARDS\n• Transparency of results submitted by franchisees may be questionable",
+        "explanation": "Fast growth on someone else's capital — at the cost of control."
+      },
+      {
+        "question": "Advantages and disadvantages for the FRANCHISEE?",
+        "answer": "ADVANTAGES:\n• IMMEDIATE entry into business\n• Assistance with layouts, shop-fitting, planning\n• Internationally recognised BRAND identity\n• National advertising\n• Economies of scale (centralised purchasing)\n\nDISADVANTAGES:\n• HIGH FEES + royalties (% of sales monthly) + marketing-fund contributions\n• Must maintain all franchisor standards (strict rules, no wiggle room)\n• Considerable initial investment\n• NOT an independent entrepreneur (sale requires franchisor approval; competition from other franchisees)",
+        "explanation": "Proven system in exchange for independence and fees."
+      },
+      {
+        "question": "Franchisee vs independent entrepreneur — what do the numbers say?",
+        "answer": "FRANCHISEE:\n• 5× MORE LIKELY to succeed than a comparable independent business\n• Failure rate ~10% (substantially less than SMEs)\n• Financial leverage: lenders consider franchises LESS RISKY\n• Easy expansion (Domino's franchisees run 5 stores on average)\n\nINDEPENDENT ENTREPRENEUR:\n• High failure rate (~52%); high uncertainty and business risk\n• Hard to get start-up money; most SMEs stay in 'survival' stage\n• BUT: independent, high autonomy",
+        "explanation": "Security of a proven system vs autonomy."
+      },
+      {
+        "question": "How big is the franchising industry (2022 data)?",
+        "answer": "USA:\n• ~775,000 franchise establishments\n• ~8.2 million direct jobs\n• $787.7 billion economic output\n• Almost 3% of GDP\n• Global market: ~$100.8bn (2021) → $176bn by 2027 (CAGR 9.73%)\n\nUK:\n• 48,000 units; 710,000 employed (+70% in 10 years)\n• £15 billion contribution (+46% in 10 years)\n• 97% of franchisees run in PROFITABILITY\n• Ownership changes only 4.6%",
+        "explanation": "CAGR = compound annual growth rate (mean annual growth over >1 year)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "From the entrepreneurship theory perspective, a franchisee is:",
+        "options": [
+          "An entrepreneur",
+          "An intrapreneur",
+          "An investor",
+          "A manager only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The BUSINESS FORMAT franchise provides:",
+        "options": [
+          "Only the right to sell a product",
+          "A complete system including trade name and trade secrets",
+          "Only national advertising",
+          "Only real-estate resources"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A MASTER franchisee:",
+        "options": [
+          "Owns the franchisor company",
+          "Holds the rights to sub-franchise within a geographical territory",
+          "Works directly for McDonald's headquarters",
+          "Is always a single restaurant operator"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Resource scarcity theory explains franchising as a response to a shortage of:",
+        "options": [
+          "Customers",
+          "Capital, labour and managerial talent",
+          "Products",
+          "Competitors"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to agency theory, franchising reduces costs because the franchisee:",
+        "options": [
+          "Receives a fixed salary",
+          "Has a significant personal investment and maximises returns themselves",
+          "Is monitored daily by the franchisor",
+          "Cannot make any decisions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A franchisee is how much more likely to succeed than a comparable independent business?",
+        "options": [
+          "2 times",
+          "5 times",
+          "10 times",
+          "Equally likely"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Franchising contributes approximately what share of US GDP?",
+        "options": [
+          "1%",
+          "3%",
+          "10%",
+          "15%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A key disadvantage for the FRANCHISOR is:",
+        "options": [
+          "Slow expansion",
+          "Difficulty maintaining control of standards",
+          "No income from fees",
+          "Paying royalties to franchisees"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The _______ grants the franchisee a licence to use its commercial methods.",
+        "answer": "franchisor",
+        "hint": "The original business..."
+      },
+      {
+        "sentence": "From entrepreneurship theory, a franchisee is an _______, not an entrepreneur.",
+        "answer": "intrapreneur",
+        "hint": "Works within a system..."
+      },
+      {
+        "sentence": "A _______ franchisee has the right to sub-franchise within a territory.",
+        "answer": "master",
+        "hint": "Holds regional rights..."
+      },
+      {
+        "sentence": "Franchise failure rate is about 10%, while independent start-ups fail at about _______%.",
+        "answer": "52",
+        "hint": "More than half..."
+      },
+      {
+        "sentence": "97% of UK franchisees are running in _______.",
+        "answer": "profitability",
+        "hint": "Making money..."
+      }
+    ],
+    "learn": {
+      "title": "Franchising",
+      "content": "\n                <h3>What is Franchising?</h3>\n                <div class=\"formula-box\">\n                    <strong>FRANCHISING</strong> = selling the right to conduct a business<br>\n                    <strong>FRANCHISOR</strong> (e.g. hotel chain) grants → <strong>FRANCHISEE</strong>\n                    (e.g. independent hotel) the right to commercialise products/services for a <strong>fee</strong>\n                </div>\n                <div class=\"warning-box\">\n                    <p>⚠️ From entrepreneurship theory: a franchisee is <strong>NOT an entrepreneur but an\n                    INTRAPRENEUR</strong> — they operate inside the franchisor's system.</p>\n                </div>\n\n                <h4>Two Franchise Formats</h4>\n                <ul>\n                    <li><strong>Product format:</strong> exclusive right to sell a product in a territory (car dealers)</li>\n                    <li><strong>Business format:</strong> complete system + trade name + trade secrets (McDonald's)</li>\n                </ul>\n\n                <h4>Direct vs Master Franchising</h4>\n                <p><strong>Direct:</strong> franchisor → individual franchisees.\n                <strong>Master franchisee:</strong> holds rights to sub-franchise within a geographic territory.</p>\n\n                <h4>Why Do Firms Franchise? (2 theories)</h4>\n                <div class=\"tip-box\">\n                    <p><strong>1. Resource scarcity theory:</strong> shortage of capital, labour and managerial\n                    talent → franchising enables rapid early growth, scale economies, brand-name capital.</p>\n                    <p><strong>2. Agency theory:</strong> franchise contract aligns franchisor–franchisee interests;\n                    franchisee's personal investment removes costly monitoring of managers.</p>\n                </div>\n\n                <h4>Advantages & Disadvantages</h4>\n                <div class=\"example-box\">\n                    <h4>Franchisor</h4>\n                    <p>+ fixed income, fast expansion with franchisees' capital, easy market penetration<br>\n                    − careful selection needed, control of standards, questionable transparency of results</p>\n                    <h4>Franchisee</h4>\n                    <p>+ immediate entry, brand, national advertising, economies of scale, support<br>\n                    − high fees + royalties, strict rules, big initial investment, not independent</p>\n                </div>\n\n                <h4>Franchisee vs Entrepreneur — the Numbers</h4>\n                <div class=\"formula-box\">\n                    Franchisee: <strong>5× more likely to succeed</strong>, failure ~<strong>10%</strong><br>\n                    Independent start-up: failure ~<strong>52%</strong>, high autonomy\n                </div>\n\n                <h4>Industry Size (2022)</h4>\n                <ul>\n                    <li><strong>USA:</strong> 775,000 establishments · 8.2M jobs · $787.7B output · ~3% of GDP</li>\n                    <li><strong>UK:</strong> 48,000 units · 710,000 employed · £15B · 97% profitable · 4.6% ownership changes</li>\n                </ul>\n            "
+    }
+  },
+  "planning": {
+    "name": "Planning & Tools",
+    "icon": "fa-clipboard-list",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "What is the difference between PLANNING and a PLAN?",
+        "answer": "PLANNING is a verb (implies action) - the process of envisioning the future.\nA PLAN is a written description of the future you envision for your business.",
+        "explanation": "Planning is the action, a plan is the document."
+      },
+      {
+        "question": "What is the TRIM framework?",
+        "answer": "TRIM = Team, Resources, Idea, Market\n\nA planning tool that identifies:\n• Types of people needed for the team\n• Resources available and needed\n• Details of the idea\n• Potential market for the product/service",
+        "explanation": "TRIM helps structure early-stage planning."
+      },
+      {
+        "question": "What is the 'Back of a Napkin' technique?",
+        "answer": "A quick, informal planning method where entrepreneurs jot down spontaneous ideas on whatever is at hand (like a napkin in a cafe).\n\nNot formal enough for investors, but effective for gaining clarity on the business idea.",
+        "explanation": "Simple, spontaneous idea capture technique."
+      },
+      {
+        "question": "What is the Business Model Canvas (BMC)?",
+        "answer": "A visual plan that depicts the entire business on ONE PAGE with 9 blocks:\n1. Key Partners\n2. Key Activities\n3. Value Proposition\n4. Customer Relationships\n5. Customer Segments\n6. Key Resources\n7. Channels\n8. Cost Structure\n9. Revenue Streams",
+        "explanation": "BMC helps identify gaps and integrate business components."
+      },
+      {
+        "question": "What is a Business Brief?",
+        "answer": "A 2-3 page document outlining:\n• Company overview\n• Value proposition\n• Customer profile\n• Milestones\n\nGives stakeholders an at-a-glance understanding of who you are and the business potential.",
+        "explanation": "More detailed than BMC but shorter than a full business plan."
+      },
+      {
+        "question": "What is a Feasibility Study?",
+        "answer": "An essential planning tool that tests whether an initial idea is worth pursuing.\n\nFocuses on:\n• Market size\n• Suppliers & distributors\n• Skills of the entrepreneur\n\nDetermines if the idea is workable and profitable.",
+        "explanation": "Requires action, testing, information gathering, and analysis."
+      },
+      {
+        "question": "What is a Pitch Deck?",
+        "answer": "A brief presentation highlighting essential elements from feasibility study and business plan.\n\nUsed for:\n• Collegiate competitions\n• Accelerator/incubator applications\n• Angel and VC funding\n\nGoal: Get interest and secure the next meeting!",
+        "explanation": "The purpose is to describe and generate interest."
+      },
+      {
+        "question": "What are the 4 parts of a Business Plan?",
+        "answer": "1. BUSINESS CONCEPT - industry, structure, products, success strategy\n2. MARKET SECTION - customers, competitors\n3. IMPLEMENTATION - design, development, operations, management\n4. FINANCIAL SECTION - income, cash flow, balance sheets, projections",
+        "explanation": "A formal document outlining goals and how to reach them."
+      },
+      {
+        "question": "What are the practical RULES for a Feasibility Study?",
+        "answer": "• A written document of NO MORE THAN 10 PAGES\n• Requires ACTION, TESTING, information gathering and analysis (to reduce uncertainty)\n• If you haven't talked to at least 50 POTENTIAL CUSTOMERS, you are not ready to decide whether the idea is viable\n• Main aim: establish whether the idea is a 'GO' or a 'NO GO'\n• It is for YOUR EYES ONLY — be as honest as possible with the conclusions",
+        "explanation": "≤ 10 pages; ≥ 50 customers; go / no-go."
+      },
+      {
+        "question": "How long should a PITCH DECK and a BUSINESS PLAN be?",
+        "answer": "PITCH DECK: no strict rules — Guy KAWASAKI advises keeping slides to a minimum of 10; Timothy YOUNG raised over $10 million using only 5 slides presented on an iPad.\n\nBUSINESS PLAN: traditionally 20–40 PAGES + appendices and financial statements; includes mission, strategy, tactics, goals, financials + a FIVE-YEAR forecast of income, profits and cash flow.\n\nNote: the pitch deck has REPLACED the business plan in most venues — but traditional investors and bankers still require a business plan.",
+        "explanation": "Kawasaki 10 slides; Young 5 slides → $10M; plan = 20–40 pages."
+      },
+      {
+        "question": "In what ORDER do the entrepreneurial planning activities come?",
+        "answer": "1. IDEA GENERATION\n2. BUSINESS MODEL CANVAS\n3. FEASIBILITY STUDY\n4. PITCH DECK\n5. BUSINESS PLAN (comes LAST)\n\nBy gathering, testing and analyzing real data you prove that the product works, a real market exists, and your financials are not based on guesswork.",
+        "explanation": "The business plan comes after all the other planning tools."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "TRIM framework stands for:",
+        "options": [
+          "Time, Revenue, Investment, Market",
+          "Team, Resources, Idea, Market",
+          "Technology, Research, Innovation, Management",
+          "Target, Results, Income, Money"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many blocks does the Business Model Canvas have?",
+        "options": [
+          "5",
+          "7",
+          "9",
+          "12"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A Feasibility Study determines:",
+        "options": [
+          "Only the market size",
+          "If the idea is workable and profitable",
+          "Employee salaries",
+          "Company logo design"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What is the main goal of a Pitch Deck?",
+        "options": [
+          "To replace the business plan",
+          "To get interest and secure the next meeting",
+          "To hire employees",
+          "To calculate taxes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A Business Brief is typically:",
+        "options": [
+          "50+ pages",
+          "2-3 pages",
+          "1 sentence",
+          "100 slides"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT a block in the Business Model Canvas?",
+        "options": [
+          "Key Partners",
+          "Value Proposition",
+          "Employee Happiness",
+          "Revenue Streams"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A feasibility study should be a written document of no more than:",
+        "options": [
+          "2 pages",
+          "10 pages",
+          "40 pages",
+          "100 pages"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Before deciding whether an idea is viable, you should talk to at least:",
+        "options": [
+          "5 friends",
+          "50 potential customers",
+          "500 investors",
+          "Your family only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which comes LAST in the order of entrepreneurial planning activities?",
+        "options": [
+          "Idea generation",
+          "Feasibility study",
+          "Pitch deck",
+          "Business plan"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "TRIM stands for Team, Resources, Idea, and _______.",
+        "answer": "Market",
+        "hint": "Where you sell..."
+      },
+      {
+        "sentence": "The Business Model Canvas has _______ blocks.",
+        "answer": "nine",
+        "hint": "9..."
+      },
+      {
+        "sentence": "A _______ Study tests if an idea is workable and profitable.",
+        "answer": "Feasibility",
+        "hint": "Is it feasible?"
+      },
+      {
+        "sentence": "Planning is a verb, a _______ is a written document.",
+        "answer": "plan",
+        "hint": "The noun form..."
+      },
+      {
+        "sentence": "A traditional business plan usually consists of 20 to _______ pages.",
+        "answer": "40",
+        "hint": "Plus appendices..."
+      },
+      {
+        "sentence": "Guy Kawasaki advises keeping pitch deck slides to a minimum of _______.",
+        "answer": "10",
+        "hint": "A round number..."
+      }
+    ],
+    "learn": {
+      "title": "Planning Tools for Entrepreneurs",
+      "image": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400",
+      "content": "\n                <h4>Types of Plans (Simple to Complex):</h4>\n                <ul>\n                    <li><strong>Back of Napkin</strong> - Quick, informal ideas</li>\n                    <li><strong>Sketches on Page</strong> - How product works</li>\n                    <li><strong>Business Model Canvas</strong> - 9 blocks, one page</li>\n                    <li><strong>Business Brief</strong> - 2-3 pages for stakeholders</li>\n                    <li><strong>Feasibility Study</strong> - Test if idea is viable</li>\n                    <li><strong>Pitch Deck</strong> - Presentation for investors</li>\n                    <li><strong>Business Plan</strong> - Full formal document</li>\n                </ul>\n                \n                <div class=\"formula-box\">\n                    <strong>TRIM Framework</strong><br>\n                    Team + Resources + Idea + Market\n                </div>\n                \n                <h4>Business Model Canvas - 9 Blocks:</h4>\n                <ul>\n                    <li>Key Partners</li>\n                    <li>Key Activities</li>\n                    <li>Value Proposition</li>\n                    <li>Customer Relationships</li>\n                    <li>Customer Segments</li>\n                    <li>Key Resources</li>\n                    <li>Channels</li>\n                    <li>Cost Structure</li>\n                    <li>Revenue Streams</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Remember!</h4>\n                    <p>Planning = Action (verb)<br>\n                    Plan = Document (noun)</p>\n                </div>\n            "
+    }
+  },
+  "failure": {
+    "name": "Failure & Learning",
+    "icon": "fa-exclamation-triangle",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "What are the 2 main categories of reasons why firms fail?",
+        "answer": "1. EXOGENOUS FACTORS - external forces, 'survival of the fittest', hostile jolts\n\n2. INTERNAL FACTORS - leadership, management, poor decision-making, strategic errors",
+        "explanation": "Failure can come from outside or inside the company."
+      },
+      {
+        "question": "What are the consequences of business failure?",
+        "answer": "• Loss of jobs\n• Emotional and psychological burden\n• Feelings of grief, loss of self-esteem\n• Stigmatization (personal and societal)\n• BUT: Knowledge spillovers - lessons learned",
+        "explanation": "Society is shifting to accept that failure arises from risk rather than sin."
+      },
+      {
+        "question": "What is INACTION as a warning sign?",
+        "answer": "Entrepreneurs fail to take corrective actions because of:\n• Negation of reality\n• Being absorbed by need for achievement\n• Being 'blinded' by love for the innovation\n• Losing sight of reality",
+        "explanation": "Inaction is often caused by denial."
+      },
+      {
+        "question": "What are examples of FAULTY or INSUFFICIENT ACTION?",
+        "answer": "• Approaching private investors too late\n• Last-minute incorporation of missing skills\n• Downsizing, flexible structures\n• Desperate corrective actions:\n  - Last minute personal investments\n  - Last-minute search for partners\n  - Selling the innovation to others",
+        "explanation": "Poor decisions made in desperation."
+      },
+      {
+        "question": "How does FEAR OF FAILURE affect entrepreneurs?",
+        "answer": "Fear of failure:\n• Disables entrepreneurial learning\n• Impedes investment\n• Blocks opportunity recognition\n• Hinders risk assessment\n\nFailure is linked to grief, anger, guilt, self-blame, distress, and anxiety.",
+        "explanation": "Crucial to success is overcoming or managing fear of failure."
+      },
+      {
+        "question": "What is the positive view of failure?",
+        "answer": "Knowledge spillovers - 'What if nothing is a failure but rather a lesson pointing to a better idea?'\n\nSociety has gradually shifted to accept that failure might arise from risk rather than sin ('fresh start' policies).",
+        "explanation": "Failure can be a learning opportunity."
+      },
+      {
+        "question": "What are the START-UP FAILURE STATISTICS?",
+        "answer": "• Overall start-up failure rate over the long run: ~90%\n• 1 IN 5 start-ups fails within the FIRST YEAR\n• CRITICAL PERIOD: years 2–5, when 70% of start-ups fail\n\nUS Bureau of Labor Statistics (2024–25):\n• 20.4% fail in the first year\n• 49.4% by the fifth year\n• 65.3% by the tenth year",
+        "explanation": "Key numbers: ~90% long run; 1 in 5 first year; 70% in years 2–5."
+      },
+      {
+        "question": "What are the COUNTRY-SPECIFIC long-term failure rates?",
+        "answer": "• UK: ~70%\n• France: ~80%\n• Germany: ~75%\n• Switzerland: ~65%\n\nInnovations fail too: 1/3 of government-supported innovative firms in Spain (2005–2011) failed (ENISA, 2015).",
+        "explanation": "Long-term failure rates differ by country."
+      },
+      {
+        "question": "Is failure an EVENT or a PROCESS?",
+        "answer": "Failure is a PROCESS — a SEQUENTIAL process of organisational decline ('stages of decline leading to failure', Amankwah-Amoah, 2016).\n\nThe innovation's fate depends on the entrepreneur's capacity to MANAGE RISKS and on the SELECTION PROCESS in both product and financial markets.",
+        "explanation": "Learning objective: recognise that failure is a process itself."
+      },
+      {
+        "question": "How does CULTURE shape fear of failure?",
+        "answer": "Cultural explanations (quantitative analysis):\n• AFRICA, LATIN AMERICA & the CARIBBEAN: HIGHER tolerance of fear of failure\n• ASIA, EUROPE and OCEANIA: less so\n\nFear of failure can also be produced from PARENT–CHILD RELATIONS: punishment for failure without praise; absent father and irritable mother (Cacciotti et al., 2016).",
+        "explanation": "Fear of failure has cultural and family origins."
+      },
+      {
+        "question": "What did EDISON say about his 1,000 attempts at the light bulb?",
+        "answer": "'I didn't fail 1,000 times. The light bulb was an invention with 1,000 STEPS.'\n\nFailure as a LEARNING OPPORTUNITY: fail with pride — failure shows leadership, risk-taking and innovation.\n\nTool: the FAILURE RESUME — list your biggest fails and what you learned from each.",
+        "explanation": "Reframing failure as steps of learning."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Exogenous factors in business failure refer to:",
+        "options": [
+          "Internal management issues",
+          "External forces and hostile jolts",
+          "Employee mistakes",
+          "Accounting errors"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "INACTION as a warning sign is caused by:",
+        "options": [
+          "Too much planning",
+          "Negation of reality and being blinded by love for the innovation",
+          "Too many employees",
+          "High profits"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a consequence of business failure?",
+        "options": [
+          "Increased self-esteem",
+          "Knowledge spillovers (lessons learned)",
+          "Automatic success next time",
+          "Government rewards"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Fear of failure does NOT:",
+        "options": [
+          "Disable entrepreneurial learning",
+          "Impede investment",
+          "Encourage risk-taking",
+          "Block opportunity recognition"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Society's view of failure has shifted to:",
+        "options": [
+          "Failure is always a sin",
+          "Failure might arise from risk rather than sin",
+          "Failure should be punished",
+          "Failure is impossible"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What share of start-ups fails within the first year of operation?",
+        "options": [
+          "1 in 2",
+          "1 in 5",
+          "1 in 10",
+          "1 in 100"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The critical period when 70% of start-ups fail is:",
+        "options": [
+          "The first 6 months",
+          "Years 2–5",
+          "Years 10–15",
+          "After year 20"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which regions show HIGHER tolerance of fear of failure?",
+        "options": [
+          "Asia and Europe",
+          "Africa, Latin America & the Caribbean",
+          "Oceania only",
+          "North America only"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ factors are external forces that cause business failure.",
+        "answer": "Exogenous",
+        "hint": "External..."
+      },
+      {
+        "sentence": "Entrepreneurs often fail due to _______ - not taking corrective actions.",
+        "answer": "inaction",
+        "hint": "Not acting..."
+      },
+      {
+        "sentence": "Fear of failure disables entrepreneurial _______.",
+        "answer": "learning",
+        "hint": "Gaining knowledge..."
+      },
+      {
+        "sentence": "About 70% of start-ups fail during years 2 to _______.",
+        "answer": "5",
+        "hint": "Critical period..."
+      },
+      {
+        "sentence": "Edison: 'The light bulb was an invention with 1,000 _______.'",
+        "answer": "steps",
+        "hint": "Not failures..."
+      }
+    ],
+    "learn": {
+      "title": "Understanding Business Failure",
+      "image": "https://images.unsplash.com/photo-1494059980473-813e73ee784b?w=400",
+      "content": "\n                <h4>Why Do Firms Fail?</h4>\n                <ul>\n                    <li><strong>Exogenous</strong> - External factors, hostile jolts</li>\n                    <li><strong>Internal</strong> - Leadership, poor decisions, strategic errors</li>\n                </ul>\n                \n                <h4>Consequences of Failure:</h4>\n                <ul>\n                    <li>Loss of jobs</li>\n                    <li>Emotional burden (grief, loss of self-esteem)</li>\n                    <li>Stigmatization</li>\n                    <li>BUT: Knowledge spillovers!</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Warning Signs</h4>\n                    <p><strong>Inaction</strong> - denial, being blinded by love for the idea<br>\n                    <strong>Faulty Action</strong> - desperate last-minute decisions</p>\n                </div>\n                \n                <h4>Fear of Failure:</h4>\n                <p>Disables learning, impedes investment, blocks opportunity recognition.</p>\n                \n                <div class=\"formula-box\">\n                    <strong>New Perspective:</strong><br>\n                    \"What if nothing is a failure but rather a lesson pointing to a better idea?\"\n                </div>\n            "
+    }
+  },
+  "economy": {
+    "name": "Entrepreneurship & Economy",
+    "icon": "fa-chart-line",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What are the MACROECONOMIC effects of entrepreneurship?",
+        "answer": "• Capital Formation\n• Employment growth\n• Technological progress\n• Knowledge-based development",
+        "explanation": "Effects on the overall economy."
+      },
+      {
+        "question": "What are the MICROECONOMIC effects of entrepreneurship?",
+        "answer": "• Establishment of new economic entities\n• Creation of new jobs\n• Production of new goods and services\n• Creation of niche markets",
+        "explanation": "Effects on individual businesses and markets."
+      },
+      {
+        "question": "According to R. Cantillon, what is an entrepreneur?",
+        "answer": "An entrepreneur is a RISK-TAKER who bears uncertainty and makes decisions in an uncertain economic context.",
+        "explanation": "Cantillon's definition emphasizes risk and uncertainty."
+      },
+      {
+        "question": "According to J.A. Schumpeter, what is an entrepreneur?",
+        "answer": "An entrepreneur is the economic individual who realizes new 'PRODUCTIVE COMBINATIONS'.\n\nTypical opportunities:\n1. New good or new quality\n2. New production method\n3. New market\n4. New source of supply\n5. New organization of industry",
+        "explanation": "Schumpeter emphasizes innovation and creative destruction."
+      },
+      {
+        "question": "What is Marshall's classification of entrepreneurs?",
+        "answer": "ACTIVE entrepreneurs - those who find NEW ways\nPASSIVE entrepreneurs - those who follow EXISTING roads\n\nEntrepreneur functions:\n• Collect economic information\n• Make economic calculations\n• Assign goods to production\n• Supervise execution",
+        "explanation": "Marshall saw entrepreneurs as risk-takers and administrators."
+      },
+      {
+        "question": "What is the difference between Entrepreneurship and Management?",
+        "answer": "ENTREPRENEURSHIP - dynamic process, taking own risk, introducing new ideas and projects\n\nMANAGEMENT - responsible for actions that maximize individual contributions to group tasks, applies to all organizations",
+        "explanation": "Entrepreneurship is about innovation, management is about optimization."
+      },
+      {
+        "question": "What is Entrepreneurial Management?",
+        "answer": "The unification of entrepreneurial and managerial functions within a business organization.\n\nBased on:\n• Constant innovation\n• Focused achievement of business goals\n• Growth and development of the company",
+        "explanation": "Combines both entrepreneurial and managerial approaches."
+      },
+      {
+        "question": "What are the two types of innovation?",
+        "answer": "1. INCREMENTAL - gradual, small-scale improvements\n\n2. RADICAL - disruptive, game-changing innovations",
+        "explanation": "Innovation can be evolutionary or revolutionary."
+      },
+      {
+        "question": "According to J.B. SAY (Post-Industrial Revolution), what is the entrepreneur's role?",
+        "answer": "The fundamental role of the entrepreneur is to INNOVATE.\n\nThe entrepreneur is a MIDDLEMAN between the SCIENTIST who produces knowledge and the WORKER who uses it to develop new industrial activities.\n\nRole: COMBINING the factors of production into an organization.",
+        "explanation": "Say = the post-industrial innovator and middleman."
+      },
+      {
+        "question": "How did CARL MENGER (Neoclassical) view entrepreneurial activity?",
+        "answer": "• Individuals are HETEROGENEOUS — they decide RELATIVELY, not by absolute maximization\n• UNCERTAINTY plays an important role\n• Entrepreneurial activity = a SPECIAL KIND OF LABOUR SERVICE, valuable while economizing\n\n4 functions of entrepreneurial activity:\n1. Collect information on economic situations\n2. Make economic calculations for efficient production\n3. Assign goods to a particular production process\n4. Supervise execution of the production plan economically",
+        "explanation": "Menger: heterogeneous individuals, uncertainty, special labour service."
+      },
+      {
+        "question": "Compare the ENTREPRENEUR vs the MANAGER (orientation table).",
+        "answer": "ENTREPRENEUR: uses OPPORTUNITIES; creates new visions; creates/combines/adapts resources; sees uncertainty and change as an OPPORTUNITY; uses INTUITION; FUTURE-oriented (long-term); open to change; RISK TAKER; focused on innovation and commercialization; goal- and action-oriented; seeks challenges; problem-solving oriented.\n\nMANAGER: exploits former successes; uses only INTERNAL resources; sees uncertainty and change as a THREAT; uses DATA and estimates (realistic); oriented to the PRESENT and the past; avoids change; RISK AVERSE; focused on rules and efficiency; prefers formal information; seeks comfort and avoids conflict.",
+        "explanation": "Opposite orientations toward change, risk and time."
+      },
+      {
+        "question": "Why does entrepreneurship matter for the economy? (3 definitions)",
+        "answer": "• Develops the economy by RAISING PRODUCTIVITY, creating NEW EMPLOYMENT and creating/revitalizing markets through new and improved products (Esfandiar et al., 2019; Guerrero et al., 2008)\n• BRIDGES BUSINESSES TO SOCIETY — creating economic benefits and satisfying wants and needs (Cole, 1946)\n• 'CREATOR OF VALUES FROM NOTHING' (Timmons & Spinelli, 2008)",
+        "explanation": "Three views of entrepreneurship's economic role."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Capital formation is a:",
+        "options": [
+          "Microeconomic effect",
+          "Macroeconomic effect",
+          "Social effect",
+          "Environmental effect"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to Cantillon, an entrepreneur is primarily a:",
+        "options": [
+          "Manager",
+          "Risk-taker who bears uncertainty",
+          "Government official",
+          "Investor"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Schumpeter's entrepreneur realizes new:",
+        "options": [
+          "Taxes",
+          "Productive combinations",
+          "Regulations",
+          "Bureaucracy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Marshall's PASSIVE entrepreneurs:",
+        "options": [
+          "Find new ways",
+          "Follow existing roads",
+          "Never work",
+          "Only invest money"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "RADICAL innovation is:",
+        "options": [
+          "Gradual and small-scale",
+          "Disruptive and game-changing",
+          "Never successful",
+          "Only in technology"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Entrepreneurial Management combines:",
+        "options": [
+          "Art and music",
+          "Entrepreneurial and managerial functions",
+          "Sales and marketing only",
+          "HR and accounting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to Say, the entrepreneur is a middleman between:",
+        "options": [
+          "The buyer and the seller",
+          "The scientist and the worker",
+          "The bank and the firm",
+          "The state and the market"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For Menger, entrepreneurial activity is:",
+        "options": [
+          "A special kind of labour service",
+          "Pure luck",
+          "Only capital investment",
+          "A government function"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Unlike the manager, the entrepreneur sees uncertainty and change as:",
+        "options": [
+          "A threat",
+          "An opportunity",
+          "Irrelevant",
+          "A reason to quit"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "According to Cantillon, an entrepreneur is a _______-taker.",
+        "answer": "risk",
+        "hint": "Taking chances..."
+      },
+      {
+        "sentence": "Schumpeter says entrepreneurs realize new productive _______.",
+        "answer": "combinations",
+        "hint": "Mixing things together..."
+      },
+      {
+        "sentence": "_______ innovation is gradual and small-scale.",
+        "answer": "Incremental",
+        "hint": "Step by step..."
+      },
+      {
+        "sentence": "_______ innovation is disruptive and game-changing.",
+        "answer": "Radical",
+        "hint": "Revolutionary..."
+      },
+      {
+        "sentence": "Timmons & Spinelli call the entrepreneur a creator of values from _______.",
+        "answer": "nothing",
+        "hint": "Ex nihilo..."
+      }
+    ],
+    "learn": {
+      "title": "Entrepreneurship and the Economy",
+      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400",
+      "content": "\n                <h4>Economic Effects of Entrepreneurship:</h4>\n                \n                <p><strong>MACRO:</strong> Capital formation, Employment growth, Tech progress, Knowledge development</p>\n                <p><strong>MICRO:</strong> New entities, New jobs, New goods/services, Niche markets</p>\n                \n                <h4>Key Theorists:</h4>\n                <ul>\n                    <li><strong>Cantillon</strong> - Entrepreneur = Risk-taker in uncertainty</li>\n                    <li><strong>Schumpeter</strong> - Entrepreneur = Creator of new productive combinations</li>\n                    <li><strong>Marshall</strong> - Active (new ways) vs Passive (existing roads)</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Schumpeter's 5 Opportunities</h4>\n                    <p>1. New good/quality<br>\n                    2. New production method<br>\n                    3. New market<br>\n                    4. New source of supply<br>\n                    5. New organization of industry</p>\n                </div>\n                \n                <div class=\"formula-box\">\n                    <strong>Types of Innovation:</strong><br>\n                    INCREMENTAL = gradual, small-scale<br>\n                    RADICAL = disruptive, game-changing\n                </div>\n            "
+    }
+  },
+  "tourism": {
+    "name": "Tourism Entrepreneurship",
+    "icon": "fa-hotel",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What are the characteristics of TOURISM ENTREPRENEURSHIP?",
+        "answer": "• LONG-TERM investment required\n• HIGH INVESTMENT VALUE\n• Seasonal demand fluctuations\n• Location-dependent\n• Service-intensive\n• Experience-based product",
+        "explanation": "Tourism businesses have unique characteristics."
+      },
+      {
+        "question": "What are the 4 types of Knowledge & Skills for entrepreneurs?",
+        "answer": "1. CONCEPTUAL - ability to understand and manage organization for goals\n\n2. DESIGN - ability to shape solutions to business problems\n\n3. PEOPLE SKILLS - techniques of organizational behavior\n\n4. TECHNICAL - ability to use methods for specific managerial tasks",
+        "explanation": "Four knowledge areas for successful management."
+      },
+      {
+        "question": "What are PERFORMANCE INDICATORS in tourism?",
+        "answer": "• PRODUCTIVITY - output per input\n• ECONOMY - cost efficiency\n• EFFECTIVENESS - goal achievement\n\nMeasure how well the business performs.",
+        "explanation": "KPIs for tourism businesses."
+      },
+      {
+        "question": "What are FUNDING INDICATORS?",
+        "answer": "• LIQUIDITY RATIOS - ability to settle short-term obligations\n\n• LEVERAGE RATIOS - extent to which company is financed from other sources\n\nMeasure financial health and stability.",
+        "explanation": "Financial metrics for business assessment."
+      },
+      {
+        "question": "What are the issues facing FEMALE ENTREPRENEURS in Tourism?",
+        "answer": "• FEMINIZATION of the industry\n• STEREOTYPING - technology vs housekeeping roles\n• Predominance in PART-TIME and shorter-term contracts\n• LOW REPRESENTATION in high qualification positions\n• Glass ceiling in management",
+        "explanation": "Gender-specific challenges in tourism sector."
+      },
+      {
+        "question": "What are the MACRO and MICRO perspectives of tourism entrepreneurship?",
+        "answer": "MACROECONOMIC view: the main goal is to attract and develop jobs that can COMPETE, GROW and CREATE JOBS on the market.\n\nMICRO view (economic entities): first ensure LONG-TERM SURVIVAL on the market — competitiveness depends on INNOVATION (lower costs + higher quality) and on creating new products (improving services, individual approach to the client, care for the environment).",
+        "explanation": "Two levels of goals in tourism entrepreneurship."
+      },
+      {
+        "question": "What are the PRIVATE vs PUBLIC sector perspectives in tourism investment?",
+        "answer": "PRIVATE sector: investing in capacities and facilities that ensure PROFITABILITY and MINIMIZE investment risks.\n\nPUBLIC sector: addresses INFRASTRUCTURE and investments that are often NOT PROFITABLE.\n\n(Entrepreneurial projects in tourism = LONG-TERM investment with HIGH investment value.)",
+        "explanation": "Who invests in what — both are needed."
+      },
+      {
+        "question": "What are the KEY DETERMINANTS and SERVICE CHARACTERISTICS of T&H?",
+        "answer": "Key determinants: TERTIARY (service) activity; SEASONAL business organizations; the type (nature), function and technology of the services provided.\n\nT&H services are characterised by: IMMATERIALITY, PERISHABILITY, SIMULTANEITY (production = consumption), PARTICIPATION of the guest, TRANSIENT, PLACE-specific, TIME-specific, sold as PACKAGES, BASIC vs ADDITIONAL services.",
+        "explanation": "Nine service characteristics + three key determinants."
+      },
+      {
+        "question": "Pros and cons of entrepreneurship in Tourism & Hospitality?",
+        "answer": "PROS:\n• Independence\n• Market adaptability\n• Possibility of financial success\n• Job security\n• Family employment\n\nCONS:\n• Surge in accountability\n• Possibility of failure\n• Susceptibility to market fluctuations\n• Dependence on competition\n• Financial weakness\n• Lack of knowledge and expertise\n• Undeveloped legal regulations",
+        "explanation": "Why (not) to start a tourism business."
+      },
+      {
+        "question": "How did ICT change the structure of tourism & hospitality?",
+        "answer": "• FLEXIBILITY (365×7×24)\n• DISINTERMEDIATION — direct access of clients to the supplier\n• RE-INTERMEDIATION — new ONLINE intermediaries\n• Real-time convenience; YIELD/REVENUE management\n• Transparency (rate comparison); instant accurate information\n• Personalisation & value-added services\n• Decreased organisational & distribution costs; productivity improvements\n• Diminished barriers of spatial distance\n• BUT: the threat of NEW ENTRANTS has increased\n\nInnovation as opportunity: AI/ML, robots, chatbots, VR/AR, metaverse, blockchain, drones, P2P accommodation, big data, recommender systems, smart cities, contactless service…",
+        "explanation": "ICT reshaped the whole industry structure."
+      },
+      {
+        "question": "How do the MANAGER and the ENTREPRENEUR differ in T&H?",
+        "answer": "MANAGER: strives to ensure the most RATIONAL USE of limited resources in order to achieve the best possible business result.\n\nENTREPRENEUR: strives for something NEW; prone to constant changes; focused on GROWTH and development UNDER RISK; maximum GUEST SATISFACTION.",
+        "explanation": "T&H-specific version of the entrepreneur–manager contrast."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Tourism entrepreneurship requires:",
+        "options": [
+          "Low investment and short-term commitment",
+          "Long-term investment and high investment value",
+          "No investment",
+          "Government funding only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "CONCEPTUAL knowledge refers to ability to:",
+        "options": [
+          "Use technical tools",
+          "Understand and manage organization for goals",
+          "Work with computers",
+          "Speak multiple languages"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Liquidity ratios measure:",
+        "options": [
+          "Long-term debt",
+          "Ability to settle short-term obligations",
+          "Employee satisfaction",
+          "Market share"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Female entrepreneurs in tourism often face:",
+        "options": [
+          "Higher pay",
+          "Stereotyping and part-time contracts",
+          "More funding",
+          "Better positions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "T&H services are characterised by:",
+        "options": [
+          "Materiality and durability",
+          "Immateriality, perishability and simultaneity",
+          "Unlimited storage",
+          "Place independence"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Disintermediation in tourism means:",
+        "options": [
+          "Adding more middlemen",
+          "Direct access of clients to the supplier",
+          "Banning online sales",
+          "Government intervention"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The public sector in tourism typically addresses:",
+        "options": [
+          "Only profitable hotels",
+          "Infrastructure and investments that are often not profitable",
+          "Private restaurants",
+          "Influencer marketing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "DESIGN knowledge refers to ability to:",
+        "options": [
+          "Create artwork",
+          "Shape solutions to business problems",
+          "Build websites",
+          "Design products"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Tourism entrepreneurship requires _______-term investment.",
+        "answer": "long",
+        "hint": "Not short..."
+      },
+      {
+        "sentence": "_______ ratios measure ability to settle short-term obligations.",
+        "answer": "Liquidity",
+        "hint": "How liquid/available is cash..."
+      },
+      {
+        "sentence": "T&H services are produced and consumed at the same time — this is called _______.",
+        "answer": "simultaneity",
+        "hint": "Same moment..."
+      },
+      {
+        "sentence": "_______ means direct access of clients to the supplier.",
+        "answer": "disintermediation",
+        "hint": "Removing middlemen..."
+      },
+      {
+        "sentence": "_______ knowledge includes techniques of organizational behavior.",
+        "answer": "People",
+        "hint": "Working with humans..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism Entrepreneurship",
+      "content": "\n                <h3>Tourism Business Characteristics</h3>\n                \n                <div class=\"formula-box\">\n                    <strong>Tourism Entrepreneurship Features:</strong><br>\n                    • Long-term investment required<br>\n                    • High investment value<br>\n                    • Seasonal demand fluctuations<br>\n                    • Location-dependent<br>\n                    • Service-intensive\n                </div>\n                \n                <h4>4 Types of Knowledge & Skills</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>CONCEPTUAL</strong> - Understand & manage organization</li>\n                        <li><strong>DESIGN</strong> - Shape solutions to problems</li>\n                        <li><strong>PEOPLE</strong> - Organizational behavior techniques</li>\n                        <li><strong>TECHNICAL</strong> - Specific managerial methods</li>\n                    </ul>\n                </div>\n                \n                <h4>Performance Indicators</h4>\n                <ul>\n                    <li><strong>Productivity</strong> - Output per input</li>\n                    <li><strong>Economy</strong> - Cost efficiency</li>\n                    <li><strong>Effectiveness</strong> - Goal achievement</li>\n                </ul>\n                \n                <h4>Funding Indicators</h4>\n                <ul>\n                    <li><strong>Liquidity Ratios</strong> - Short-term obligation ability</li>\n                    <li><strong>Leverage Ratios</strong> - External financing extent</li>\n                </ul>\n                \n                <hr>\n                \n                <h3>Female Entrepreneurs in Tourism</h3>\n                <div class=\"warning-box\">\n                    <h4>Challenges:</h4>\n                    <ul>\n                        <li>Feminization of industry</li>\n                        <li>Stereotyping (tech vs housekeeping)</li>\n                        <li>Part-time/short-term contracts</li>\n                        <li>Low representation in senior roles</li>\n                    </ul>\n                </div>\n                \n                <hr>\n                \n                <h3>Tourism & Hospitality Specifics</h3>\n                <div class=\"example-box\">\n                    <h4>Service Characteristics (9)</h4>\n                    <p>Immateriality · Perishability · Simultaneity · Participation · Transient ·\n                    Place-specific · Time-specific · Packages · Basic vs Additional services</p>\n                    \n                    <h4>ICT Changed the Industry</h4>\n                    <p>Disintermediation · Re-intermediation (online) · Yield/Revenue management ·\n                    Transparency · Personalisation · Lower costs · More new entrants</p>\n                    <h4>Sectors</h4>\n                    <p><strong>Private:</strong> profitable capacities, minimize risk ·\n                    <strong>Public:</strong> infrastructure, often non-profitable</p>\n                </div>\n            "
+    }
+  },
+  "social": {
+    "name": "Social Entrepreneurship",
+    "icon": "fa-hands-helping",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What is Social Entrepreneurship?",
+        "answer": "The organization of a business around specific SOCIAL and/or ENVIRONMENTAL causes.\n\nNot-for-profit initiatives seeking alternative funding to create social value and catalyze social transformation.",
+        "explanation": "Business with a social mission."
+      },
+      {
+        "question": "What is the SOCIAL element in social entrepreneurship?",
+        "answer": "• Altruism\n• Ethical motives, moral responsibility\n• Combining resources to address social problems\n• Altering existing social structures\n• Catalyzing social transformation\n• Value creation focused on SOCIAL value",
+        "explanation": "The 'why' - creating positive social impact."
+      },
+      {
+        "question": "What is the ENTREPRENEURIAL element in social entrepreneurship?",
+        "answer": "• For profit vs Not for profit debate\n• Nature of social needs addressed\n• Amount of resources needed\n• Scope of raising capital\n• Ability to capture economic value\n• Priority given to social wealth creation",
+        "explanation": "The 'how' - business skills for social good."
+      },
+      {
+        "question": "What is a COMMUNITY Social Entrepreneur?",
+        "answer": "• Addresses LOCAL, ISOLATED social problems\n• Serves social needs within a SMALL geographical area\n• Focus on immediate community impact",
+        "explanation": "Local focus, small scale."
+      },
+      {
+        "question": "What is a NON-PROFIT Social Entrepreneur?",
+        "answer": "• Prioritizes social well-being over traditional business needs\n• Uses their power for SOCIAL GOOD\n• Usually business-savvy entrepreneurs wanting to create change\n• Results take longer but can be LARGER SCALE",
+        "explanation": "Business skills applied for social benefit."
+      },
+      {
+        "question": "What is a TRANSFORMATIONAL Social Entrepreneur?",
+        "answer": "• Meets social needs that governments and businesses AREN'T meeting\n• What non-profits evolve to with sufficient time and growth\n• LARGER organizations with rules and regulations\n• Usually recruit and foster talent in-house",
+        "explanation": "Filling gaps left by government and business."
+      },
+      {
+        "question": "What is a GLOBAL Social Entrepreneur?",
+        "answer": "• Seeks to completely CHANGE SOCIAL SYSTEMS\n• Addresses major social needs GLOBALLY\n• Often where big companies end up when they realize social responsibility\n• Tied to a particular cause\n• Works with other social entrepreneurs",
+        "explanation": "Worldwide systemic change."
+      },
+      {
+        "question": "What are THOMPSON'S TWO GROUPS of social entrepreneurs?",
+        "answer": "Thompson (2002) divides social entrepreneurs into:\n\n1. SEASONED, successful business entrepreneurs and executives who wish to 'PUT SOMETHING BACK' into society\n\n2. People MUCH LESS EXPERIENCED in business (or less aware of what they are taking on) — on a 'voyage of self-discovery', often starting with limited self-confidence, DRIVEN BY A CAUSE",
+        "explanation": "Experienced give-back entrepreneurs vs cause-driven novices."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Social entrepreneurship focuses on:",
+        "options": [
+          "Maximum profit only",
+          "Social and/or environmental causes",
+          "Stock prices",
+          "Real estate"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A COMMUNITY social entrepreneur serves:",
+        "options": [
+          "Global markets",
+          "A small geographical area",
+          "Only wealthy clients",
+          "Government agencies"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "TRANSFORMATIONAL social entrepreneurs:",
+        "options": [
+          "Only work locally",
+          "Meet needs governments and businesses aren't meeting",
+          "Focus on profit only",
+          "Never grow"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "GLOBAL social entrepreneurs seek to:",
+        "options": [
+          "Stay small",
+          "Change social systems globally",
+          "Avoid partnerships",
+          "Focus on one neighborhood"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The SOCIAL element includes:",
+        "options": [
+          "Profit maximization",
+          "Altruism and ethical motives",
+          "Stock trading",
+          "Tax avoidance"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Thompson (2002) divides social entrepreneurs into seasoned business people and:",
+        "options": [
+          "Government officials",
+          "Cause-driven people less experienced in business",
+          "Only large corporations",
+          "Profit-focused investors"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Social entrepreneurship creates _______ value, not just economic value.",
+        "answer": "social",
+        "hint": "Helping society..."
+      },
+      {
+        "sentence": "_______ social entrepreneurs serve small geographical areas.",
+        "answer": "Community",
+        "hint": "Local neighborhood..."
+      },
+      {
+        "sentence": "_______ social entrepreneurs seek to change systems globally.",
+        "answer": "Global",
+        "hint": "Worldwide..."
+      }
+    ],
+    "learn": {
+      "title": "Social Entrepreneurship",
+      "image": "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400",
+      "content": "\n                <p><span class=\"highlight\">Social Entrepreneurship</span> = Business organized around social/environmental causes</p>\n                \n                <h4>Two Key Elements:</h4>\n                <ul>\n                    <li><strong>SOCIAL</strong> - Altruism, ethics, social transformation</li>\n                    <li><strong>ENTREPRENEURIAL</strong> - Business skills, capital, sustainability</li>\n                </ul>\n                \n                <h4>4 Types of Social Entrepreneurs:</h4>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-users\"></i> Types (Small → Large)</h4>\n                    <p>1. <strong>COMMUNITY</strong> - Local, small area<br>\n                    2. <strong>NON-PROFIT</strong> - Business-savvy, social good<br>\n                    3. <strong>TRANSFORMATIONAL</strong> - Fill gaps, larger orgs<br>\n                    4. <strong>GLOBAL</strong> - Change systems worldwide</p>\n                </div>\n                \n                <div class=\"formula-box\">\n                    <strong>Value Focus:</strong><br>\n                    Social Value > Economic Value<br>\n                    (Economic value ensures financial viability)\n                </div>\n            "
+    }
+  },
+  "value": {
+    "name": "Measuring Value",
+    "icon": "fa-chart-bar",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What are the 7 dimensions for MEASURING VALUE in social entrepreneurship?",
+        "answer": "1. SOCIAL IMPACT\n2. SUSTAINABILITY\n3. INNOVATION\n4. SCALABILITY\n5. COMMUNITY INVOLVEMENT\n6. PARTNERSHIPS & NETWORKS\n7. AWARENESS & ADVOCACY",
+        "explanation": "Seven key metrics for social enterprise success."
+      },
+      {
+        "question": "How is SOCIAL IMPACT measured?",
+        "answer": "• DEPTH AND BREADTH of Impact - how many people, how significant\n• LONG-TERM CHANGE - lasting effects\n• EMPOWERMENT - enabling others to help themselves",
+        "explanation": "Measuring the actual social change created."
+      },
+      {
+        "question": "How is SUSTAINABILITY measured?",
+        "answer": "• FINANCIAL VIABILITY - can the organization survive financially\n• OPERATIONAL STABILITY - consistent operations over time\n\nLong-term ability to continue the mission.",
+        "explanation": "Financial and operational longevity."
+      },
+      {
+        "question": "How is INNOVATION measured?",
+        "answer": "• NOVEL APPROACHES - new ways of solving problems\n• TECHNOLOGY INTEGRATION - using tech effectively\n\nCreativity and new solutions to social problems.",
+        "explanation": "Newness and creativity in approach."
+      },
+      {
+        "question": "How is SCALABILITY measured?",
+        "answer": "• REPLICABILITY - can the model be copied elsewhere\n• GROWTH POTENTIAL - ability to expand reach\n\nPossibility to increase impact over time.",
+        "explanation": "Potential for growth and replication."
+      },
+      {
+        "question": "How is COMMUNITY INVOLVEMENT measured?",
+        "answer": "• ENGAGEMENT AND PARTICIPATION - active community involvement\n• BUILDING TRUST AND RELATIONSHIPS - strong community ties\n\nLocal stakeholder engagement and ownership.",
+        "explanation": "How connected to the community served."
+      },
+      {
+        "question": "How are PARTNERSHIPS & NETWORKS measured?",
+        "answer": "• COLLABORATION with other organizations\n• NETWORKING - building connections\n\nStrength of external relationships and alliances.",
+        "explanation": "External collaboration effectiveness."
+      },
+      {
+        "question": "How is AWARENESS & ADVOCACY measured?",
+        "answer": "• PUBLIC ENGAGEMENT - raising awareness\n• POLICY INFLUENCE - affecting government policy\n\nAbility to spread message and influence change.",
+        "explanation": "Public impact and policy influence."
+      },
+      {
+        "question": "What are the CHALLENGES in measuring the value of social enterprises?",
+        "answer": "• QUANTIFYING social impact\n• BALANCING social and financial metrics\n• STANDARDIZATION of metrics\n• Data collection & analysis\n• Subjectivity & bias\n• Stakeholder engagement & reporting\n• Changes in social norms & environments",
+        "explanation": "Seven challenges — measuring social value is hard."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "How many dimensions are used to measure value in social entrepreneurship?",
+        "options": [
+          "5",
+          "6",
+          "7",
+          "8"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Social Impact is measured by:",
+        "options": [
+          "Revenue only",
+          "Depth, breadth, long-term change, empowerment",
+          "Number of employees",
+          "Office size"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Sustainability includes:",
+        "options": [
+          "Only environmental factors",
+          "Financial viability and operational stability",
+          "Marketing success",
+          "Brand recognition"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Scalability refers to:",
+        "options": [
+          "Office building size",
+          "Replicability and growth potential",
+          "Employee weight",
+          "Financial reporting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Community Involvement includes:",
+        "options": [
+          "Government control",
+          "Engagement, participation, trust building",
+          "Competitor analysis",
+          "Tax reporting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Awareness & Advocacy measures:",
+        "options": [
+          "Advertising spend",
+          "Public engagement and policy influence",
+          "Employee awareness",
+          "Stock price"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Innovation in social enterprises is measured by:",
+        "options": [
+          "Patent count only",
+          "Novel approaches and technology integration",
+          "R&D spending",
+          "Product variety"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT a value measurement dimension?",
+        "options": [
+          "Social Impact",
+          "Sustainability",
+          "Profit Margin",
+          "Scalability"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is a CHALLENGE in measuring social-enterprise value?",
+        "options": [
+          "Too many standardized metrics",
+          "Quantifying social impact and subjectivity/bias",
+          "Excess of objective data",
+          "Lack of social missions"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "There are _______ dimensions for measuring social enterprise value.",
+        "answer": "seven",
+        "hint": "Number 7..."
+      },
+      {
+        "sentence": "_______ measures depth, breadth, and long-term change.",
+        "answer": "Social Impact",
+        "hint": "Effect on society..."
+      },
+      {
+        "sentence": "_______ refers to replicability and growth potential.",
+        "answer": "Scalability",
+        "hint": "Can it grow/scale..."
+      },
+      {
+        "sentence": "Policy influence is part of Awareness & _______.",
+        "answer": "Advocacy",
+        "hint": "Speaking up for a cause..."
+      }
+    ],
+    "learn": {
+      "title": "Measuring Value in Social Entrepreneurship",
+      "content": "\n                <h3>7 Dimensions of Value Measurement</h3>\n                \n                <div class=\"formula-box\">\n                    <strong>The 7 Dimensions:</strong><br>\n                    1. Social Impact<br>\n                    2. Sustainability<br>\n                    3. Innovation<br>\n                    4. Scalability<br>\n                    5. Community Involvement<br>\n                    6. Partnerships & Networks<br>\n                    7. Awareness & Advocacy\n                </div>\n                \n                <h4>1. Social Impact</h4>\n                <ul>\n                    <li>Depth and Breadth of Impact</li>\n                    <li>Long-Term Change</li>\n                    <li>Empowerment</li>\n                </ul>\n                \n                <h4>2. Sustainability</h4>\n                <ul>\n                    <li>Financial Viability</li>\n                    <li>Operational Stability</li>\n                </ul>\n                \n                <h4>3. Innovation</h4>\n                <ul>\n                    <li>Novel Approaches</li>\n                    <li>Technology Integration</li>\n                </ul>\n                \n                <h4>4. Scalability</h4>\n                <ul>\n                    <li>Replicability</li>\n                    <li>Growth Potential</li>\n                </ul>\n                \n                <h4>5. Community Involvement</h4>\n                <ul>\n                    <li>Engagement and Participation</li>\n                    <li>Building Trust and Relationships</li>\n                </ul>\n                \n                <h4>6. Partnerships & Networks</h4>\n                <ul>\n                    <li>Collaboration with Organizations</li>\n                    <li>Networking</li>\n                </ul>\n                \n                <h4>7. Awareness & Advocacy</h4>\n                <ul>\n                    <li>Public Engagement</li>\n                    <li>Policy Influence</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Remember!</h4>\n                    <p>Social Value > Economic Value in social entrepreneurship, but economic value ensures financial viability!</p>\n                </div>\n            "
+    }
+  },
+  "trends": {
+    "name": "Trends & Gender Gap",
+    "icon": "fa-globe",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is the gender gap in entrepreneurship?",
+        "answer": "• Men outnumber women 3 to 1 in business ownership (World Bank)\n• Only 2.3% of venture capital goes to women entrepreneurs\n• Only 2% of women-owned startups generate $1 million\n• Men are 3.5x more likely to achieve $1 million",
+        "explanation": "Significant disparity exists in entrepreneurship."
+      },
+      {
+        "question": "What challenges do female entrepreneurs face?",
+        "answer": "• Lack of access to financing\n• Legal inequalities\n• Funding challenges compared to men\n• Higher unemployment rates (post-pandemic)\n• Venture capital bias",
+        "explanation": "Multiple barriers to female entrepreneurship."
+      },
+      {
+        "question": "What is an Entrepreneurial Ecosystem?",
+        "answer": "A framework that includes:\n• Policy\n• Regional clusters\n• Innovation systems\n• Context\n• Institutional frameworks\n\nAll working together to promote and support entrepreneurship.",
+        "explanation": "The environment that enables entrepreneurship."
+      },
+      {
+        "question": "What are the NEW TRENDS in Economy?",
+        "answer": "• Creative Economy\n• FinTech - Open banking\n• NFTs (Non-Fungible Tokens)",
+        "explanation": "Economic trends shaping entrepreneurship."
+      },
+      {
+        "question": "What are the NEW TRENDS in Society?",
+        "answer": "• Ageing society\n• Diversity and inclusion in workplaces\n• Well-being focus",
+        "explanation": "Social trends affecting business."
+      },
+      {
+        "question": "What are the NEW TRENDS in Environment?",
+        "answer": "• Net zero (carbon neutrality)\n• ESG (Environmental, Social, Governance)\n• Green Finance\n• Green Technology",
+        "explanation": "Environmental considerations in business."
+      },
+      {
+        "question": "What are the NEW TRENDS in Technology?",
+        "answer": "• Metaverse\n• Big data\n• SaaS / PaaS / DaaS\n• Content creators",
+        "explanation": "Tech trends shaping entrepreneurship."
+      },
+      {
+        "question": "Can an Influencer be an Entrepreneur?",
+        "answer": "YES! Characteristics:\n• Lower start-up costs than traditional businesses\n• Branding = their personality\n• Profit from ads, sponsored posts, own products\n• Use social media as their platform",
+        "explanation": "New form of entrepreneurship."
+      },
+      {
+        "question": "What are PUSH factors in entrepreneurial migration?",
+        "answer": "• War\n• Poverty\n• Famine\n• Entrepreneurial traits\n• Previous entrepreneurial skills\n• Available financial and social capital",
+        "explanation": "Factors that push people to migrate and start businesses."
+      },
+      {
+        "question": "What are PULL factors in entrepreneurial migration?",
+        "answer": "• Safety\n• Pro-entrepreneurship policy\n• Economic opportunity\n• Language accessibility",
+        "explanation": "Factors that attract entrepreneurs to new locations."
+      },
+      {
+        "question": "What are the NEWEST female-entrepreneurship statistics (lecture update)?",
+        "answer": "• Female business owners = 39.2% of all U.S. firms (2024)\n• Women open an average of 849 NEW BUSINESSES PER DAY (American Express)\n• 2023: 18% of 120 unicorn startups had female founders/co-founders\n• 2024: women-founded startups = record 24.3% of venture-backed exits (US)\n• WEF 2025: ~68.8% of the global gender gap is closed — but economic participation and leadership gaps close SLOWEST",
+        "explanation": "Progress is real but uneven — VC funding is still only ~2.3%."
+      },
+      {
+        "question": "What did KANTER (1977) find about gender and leadership?",
+        "answer": "Studied men and women in a large corporation.\n\nDifferences in behavior resulted NOT from gender but from ORGANIZATIONAL FACTORS.\n\nCore argument: men and women, given the SAME degree of POWER and OPPORTUNITY, behave in SIMILAR ways.\n\n(Tina Kiefer's 'draw a leader' exercise: most groups describe the leader as 'he' — leader prototypes in our heads make it harder for women to get noticed; McClean et al., 2018.)",
+        "explanation": "Organizational factors, not gender, explain behavior differences."
+      },
+      {
+        "question": "What does DIVERSITY & INCLUSION mean in entrepreneurship (beyond gender)?",
+        "answer": "DIMENSIONS: race/ethnicity, age, people with disabilities (visible/invisible), sexuality, diversity of thought.\n\nBENEFITS: wide range of perspectives and experiences, more creativity and innovation, better morale, higher job satisfaction, lower turnover, higher productivity.\n\nCHALLENGES: lack of representation, lack of data and understanding, DIGITAL DIVIDE.\n\nExample: Black U.S. leisure travelers spent $109.4bn on domestic + $129.6bn on international travel; diverse travel bloggers/influencers become entrepreneurs themselves.",
+        "explanation": "D&I as a contemporary entrepreneurship issue."
+      },
+      {
+        "question": "How are MIGRATION and entrepreneurship linked?",
+        "answer": "Migrants are MORE LIKELY than natives to engage in entrepreneurship and aim for growth.\n\n45% of US FORTUNE 500 companies were founded by MIGRANTS OR THEIR CHILDREN — creating $1.1 trillion in GDP.\n\nCross-cultural experience increases the ability to recognize ARBITRAGE opportunities and creative combinations (Vandor & Franke, 2016). Tourism itself creates 'search spaces' for imagining alternative mobilities.",
+        "explanation": "Key stat: 45% of Fortune 500."
+      },
+      {
+        "question": "What FORMS of migrant entrepreneurship exist?",
+        "answer": "1. REFUGEE entrepreneurship — forcibly displaced (conflict, disaster, persecution); often low-skilled, easy-access enterprises (groceries, snack bars, taxi, flower shops); independent refugee experience can foster entrepreneurial intentions\n\n2. ETHNIC / 'ENCLAVE' entrepreneurship — spatial clustering of migrants (real-estate discrimination + desire for kin proximity) → segregated markets and business opportunities; linked to chain migration (e.g. Indian diaspora in the UK)\n\n3. TRANSNATIONAL migrant entrepreneurship — actors enacting networks, ideas and practices across MULTIPLE social fields (e.g. Sapa, 'Prague's Little Hanoi'); shaped by cultural repertoires, legal & regulatory regimes, power relations, social networks",
+        "explanation": "Refugee / enclave / transnational forms."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "According to World Bank, men outnumber women in business ownership:",
+        "options": [
+          "2 to 1",
+          "3 to 1",
+          "5 to 1",
+          "Equal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What percentage of VC goes to women entrepreneurs?",
+        "options": [
+          "About 2.3%",
+          "About 25%",
+          "About 50%",
+          "About 75%"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "ESG stands for:",
+        "options": [
+          "Economic, Social, Growth",
+          "Environmental, Social, Governance",
+          "Entrepreneurial, Strategic, Global",
+          "Equity, Sales, Gross"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a PUSH factor for entrepreneurial migration?",
+        "options": [
+          "Pro-entrepreneurship policy",
+          "Economic opportunity",
+          "War and poverty",
+          "Safety"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is a PULL factor for entrepreneurial migration?",
+        "options": [
+          "Famine",
+          "War",
+          "Safety and economic opportunity",
+          "Poverty"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "An influencer's branding is based on:",
+        "options": [
+          "Company logo",
+          "Their personality",
+          "Office location",
+          "Employee count"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What share of US Fortune 500 companies was founded by migrants or their children?",
+        "options": [
+          "5%",
+          "20%",
+          "45%",
+          "80%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Kanter (1977) argued that behavior differences between men and women result from:",
+        "options": [
+          "Genetics",
+          "Organizational factors (power and opportunity)",
+          "Education only",
+          "Random chance"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Enclave' entrepreneurship refers to:",
+        "options": [
+          "Online-only businesses",
+          "Spatial clustering of migrants forming segregated markets",
+          "Government-owned firms",
+          "Rural farming"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Men outnumber women _______ to 1 in business ownership.",
+        "answer": "3",
+        "hint": "Three..."
+      },
+      {
+        "sentence": "ESG stands for Environmental, Social, and _______.",
+        "answer": "Governance",
+        "hint": "How company is governed..."
+      },
+      {
+        "sentence": "War and poverty are _______ factors in entrepreneurial migration.",
+        "answer": "push",
+        "hint": "Forces people away..."
+      },
+      {
+        "sentence": "Safety and economic opportunity are _______ factors.",
+        "answer": "pull",
+        "hint": "Attracts people..."
+      },
+      {
+        "sentence": "45% of US Fortune 500 companies were founded by _______ or their children.",
+        "answer": "migrants",
+        "hint": "Came from abroad..."
+      },
+      {
+        "sentence": "Women open an average of _______ new businesses per day.",
+        "answer": "849",
+        "hint": "American Express stat..."
+      }
+    ],
+    "learn": {
+      "title": "Trends and Gender Gap in Entrepreneurship",
+      "image": "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400",
+      "content": "\n                <h4>Gender Gap in Entrepreneurship:</h4>\n                <ul>\n                    <li>Men outnumber women <strong>3 to 1</strong> in ownership</li>\n                    <li>Only <strong>2.3%</strong> of VC goes to women</li>\n                    <li>Only <strong>2%</strong> of women startups reach $1M</li>\n                </ul>\n                \n                <h4>New Trends by Category:</h4>\n                <div class=\"tip-box\">\n                    <p><strong>Economy:</strong> Creative Economy, FinTech, NFTs<br>\n                    <strong>Society:</strong> Ageing, Diversity, Well-being<br>\n                    <strong>Environment:</strong> Net zero, ESG<br>\n                    <strong>Technology:</strong> Metaverse, Big Data, SaaS, Content creators</p>\n                </div>\n                \n                <h4>Entrepreneurial Migration:</h4>\n                <div class=\"formula-box\">\n                    <strong>PUSH:</strong> War, Poverty, Famine<br>\n                    <strong>PULL:</strong> Safety, Policy, Opportunity\n                </div>\n                \n                <h4>Influencer = Entrepreneur?</h4>\n                <p>Yes! Lower costs, personality branding, profit from ads/sponsors/products.</p>\n            "
+    }
+  },
+  "developing": {
+    "name": "Developing Countries & Social Innovation",
+    "icon": "fa-seedling",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "How big is SOCIAL INNOVATION globally?",
+        "answer": "• 7% of the global GDP\n• 10 million enterprises globally\n• 2 trillion (USD) in annual revenue\n• 200 million jobs",
+        "explanation": "Four headline numbers from the lecture."
+      },
+      {
+        "question": "What does social innovation AIM to do?",
+        "answer": "• Do something good in/for society\n• Change social practices and/or structures\n• Contribute to urban and community development\n• Reorganize work processes\n• Instil technological innovations with cultural meaning and relevance\n• Make changes in the area of social work\n• Innovate by means of digital connectivity",
+        "explanation": "Seven aims of social innovation."
+      },
+      {
+        "question": "What are the THREE PREVALENT NOTIONS of social innovation?",
+        "answer": "1. GOVERNANCE mechanism — changing governance processes to improve PARTICIPATION; 'social experimentation' that revitalizes policy; must have measurable outcomes\n\n2. MARKET-BASED mechanism — 'creative recombination of existing assets into new business models' to address pressing social problems; ECONOMIC value is a MEANS to the END of creating SOCIAL value; individual entrepreneur as social change agent\n\n3. COLLABORATIVE mechanism — innovation benefits from NETWORKS, co-operation and CO-PRODUCTION; communities create local solutions using local experience, knowledge and values; innovation as a knowledge problem, not a political one",
+        "explanation": "Governance / market-based / collaborative."
+      },
+      {
+        "question": "How does social innovation connect to TOURISM entrepreneurship?",
+        "answer": "Contributing to an inclusive, resilient, just and sustainable tourism sector through:\n\n• Local community involvement\n• Green and blue economies\n• Ecological and sustainable capital creation\n• Tourism tech for good\n• Tourism education\n• Women empowerment",
+        "explanation": "Six areas where social innovation meets tourism."
+      },
+      {
+        "question": "What is the SOCIAL-SPATIAL IMPACT of Airbnb?",
+        "answer": "• Owners rent out entire apartments PERMANENTLY via short-term rental platforms\n• INVESTORS replace local property owners; long-term tenants replaced by TOURISTS\n• Residents sell and move out (buy-to-let pressure + daily disruptions)\n• Residential areas convert into TOURIST DISTRICTS (central Berlin streets; Ibiza housing shortage blocks teachers/doctors)\n• 78% of Airbnb landlords are FOREIGN INVESTORS and professional developers\n• Only 1% of Airbnb supply is residents sharing their homes (Alfama, Lisbon)",
+        "explanation": "The 'sharing economy' model can harm local communities — hence regulations."
+      },
+      {
+        "question": "What are the ECONOMIC characteristics of developing countries?",
+        "answer": "• LOW per capita real income\n• HIGH population growth rate/size\n• Higher rates of UNDER-EMPLOYMENT\n• Dependence on the PRIMARY sector and exports of primary commodities\n• Increase in poverty\n• Lack of industries → increase in foreign investment\n• BUT faster GDP growth (e.g. 7.8% in South Asia in 2021)",
+        "explanation": "The economic context for entrepreneurship."
+      },
+      {
+        "question": "What characterises ENTREPRENEURSHIP in developing countries?",
+        "answer": "• Limited access to resources and capabilities\n• Widespread lack of properly functioning institutions\n• Least favorable infrastructure and entrepreneurship-education levels\n• WEAK/less efficient formal institutions (capital, labor, product markets, regulation)\n• OVERRELIANCE on INFORMAL institutions\n• Culturally based beliefs affect entrepreneurial activity\n• LESS intensive competition\n• GROWING demand for new products and services",
+        "explanation": "Weak formal institutions → informal institutions take over."
+      },
+      {
+        "question": "What is the 'MIXED PICTURE' of entrepreneurship in developing countries?",
+        "answer": "POSITIVE: wealth creation, making a difference, HIGH entrepreneurial activity, influence of social/cultural norms, confidence in the ability to start a business.\n\nBUT: 2% OR LESS of adults are ESTABLISHED Business Owners.",
+        "explanation": "Lots of starting, little surviving."
+      },
+      {
+        "question": "Case: NGO-owned restaurant in Phnom Penh — what went wrong?",
+        "answer": "NGOs become social enterprises (community-based tourism) to diversify income as donor funding declines.\n\nGoal: train local youth and reintegrate them into the workforce.\n\nRESULT (over one year): the NGO became so focused on GENERATING REVENUE that NOT A SINGLE TRAINEE was reintegrated; introduced fees excluded non-paying beneficiaries (Dahles et al., 2020).",
+        "explanation": "MISSION DRIFT — revenue goals displaced the social mission."
+      },
+      {
+        "question": "Case: Grootbos Lodge (South Africa) — what is the lesson?",
+        "answer": "Owner set up a NON-PROFIT FOUNDATION financed equally by lodge tourism income and third-party donations.\n\nTwofold vision: training project for unemployed women (sustainable livelihoods) + local organic food supplied to the hospitality business.\n\nLESSON: the enterprise REMAINED DEPENDENT on external funding AND external know-how/training capacity.",
+        "explanation": "Dependency risk in social enterprises."
+      },
+      {
+        "question": "Case: Eco-pads in India — what are the 4 strategic responses to institutional complexity?",
+        "answer": "A sanitary napkin enterprise in southern India succeeded despite social taboos. Cherrier et al. (2018) identify 4 strategies that foster social innovation:\n\n1. APPROPRIATION\n2. INTEGRATION\n3. DIFFERENTIATION\n4. WORKING-THROUGH\n\nThese enable reaching a broader range of stakeholders, internalizing contextual influences, and creating social, economic and environmental value.",
+        "explanation": "Strategies for navigating institutional complexity."
+      },
+      {
+        "question": "Case: 'Mageires' the social restaurant — what are its key features?",
+        "answer": "Thessaloniki, Greece: healthy, good-quality GREEK food at reasonable prices, sustainably, during the economic crisis. Free delivery to people with mobility problems.\n\n• 60% OF PROFITS REINVESTED for community benefits → operates under a 'DOUBLE BOTTOM LINE' of economic AND social goals\n\nSigala (2019): 3 MARKET CAPABILITIES for generating social value:\n1. NETWORK STRUCTURE (institutions, suppliers, nutritionist, Facebook community)\n2. MARKET PRACTICES (exchange, normalized, representational)\n3. MARKET PICTURES (workshops, eat-and-learn, dialogues)",
+        "explanation": "60% reinvested + 3 market capabilities."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Social innovation accounts for approximately what share of global GDP?",
+        "options": [
+          "2%",
+          "7%",
+          "15%",
+          "25%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the three prevalent notions of social innovation?",
+        "options": [
+          "Governance mechanism",
+          "Market-based mechanism",
+          "Profit-maximization mechanism",
+          "Collaborative mechanism"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the market-based notion, economic value is:",
+        "options": [
+          "The ultimate goal",
+          "A means to the end of creating social value",
+          "Irrelevant",
+          "Always negative"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Alfama, Lisbon, what share of Airbnb supply comes from residents sharing their homes?",
+        "options": [
+          "1%",
+          "22%",
+          "50%",
+          "78%"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "In developing countries, formal institutions are typically:",
+        "options": [
+          "Strong and efficient",
+          "Weak or less efficient, with overreliance on informal institutions",
+          "Non-existent everywhere",
+          "Identical to developed countries"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What share of adults in developing countries are Established Business Owners?",
+        "options": [
+          "2% or less",
+          "10%",
+          "25%",
+          "Over 50%"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The Phnom Penh NGO restaurant case illustrates:",
+        "options": [
+          "Perfect social enterprise",
+          "Mission drift — revenue focus displaced the social mission",
+          "Government takeover",
+          "Successful reintegration of all trainees"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Mageires restaurant reinvests what share of its profits for community benefits?",
+        "options": [
+          "10%",
+          "25%",
+          "60%",
+          "100%"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Social innovation contributes about _______% of global GDP.",
+        "answer": "7",
+        "hint": "Single digit..."
+      },
+      {
+        "sentence": "Economic value is a means to an end of creating _______ value.",
+        "answer": "social",
+        "hint": "Market-based notion..."
+      },
+      {
+        "sentence": "78% of Airbnb landlords are foreign _______ and professional developers.",
+        "answer": "investors",
+        "hint": "Not residents..."
+      },
+      {
+        "sentence": "Developing countries show overreliance on _______ institutions.",
+        "answer": "informal",
+        "hint": "Not formal..."
+      },
+      {
+        "sentence": "Mageires operates under a double bottom _______ of economic and social goals.",
+        "answer": "line",
+        "hint": "Accounting term..."
+      }
+    ],
+    "learn": {
+      "title": "Entrepreneurship in Developing Countries & Social Innovation",
+      "content": "\n                <h3>Social Innovation — the Scale</h3>\n                <div class=\"formula-box\">\n                    <strong>7%</strong> of global GDP · <strong>10 million</strong> enterprises ·\n                    <strong>$2 trillion</strong> annual revenue · <strong>200 million</strong> jobs\n                </div>\n\n                <h4>Three Prevalent Notions</h4>\n                <div class=\"tip-box\">\n                    <p><strong>1. GOVERNANCE:</strong> social experimentation revitalizing policy; participation;\n                    measurable outcomes</p>\n                    <p><strong>2. MARKET-BASED:</strong> creative recombination of existing assets into new business\n                    models; economic value = means to the end of social value</p>\n                    <p><strong>3. COLLABORATIVE:</strong> networks, co-operation, co-production; local knowledge\n                    and values</p>\n                </div>\n\n                <h4>Airbnb's Social-Spatial Impact</h4>\n                <ul>\n                    <li>Investors replace local owners; tourists replace long-term tenants</li>\n                    <li>Residential areas → tourist districts (Berlin, Ibiza)</li>\n                    <li><strong>78%</strong> of landlords = foreign investors; only <strong>1%</strong> residents\n                    sharing homes (Alfama, Lisbon) → growing regulations</li>\n                </ul>\n\n                <h4>Developing Countries — Context</h4>\n                <div class=\"example-box\">\n                    <p><strong>Economy:</strong> low per-capita income, high population growth, under-employment,\n                    primary-sector dependence, poverty — but fast GDP growth (7.8% South Asia 2021)</p>\n                    <p><strong>Entrepreneurship:</strong> limited resources, weak formal institutions → overreliance\n                    on informal institutions, less competition, growing demand</p>\n                    <p><strong>Mixed picture:</strong> high entrepreneurial activity BUT ≤ 2% of adults are\n                    Established Business Owners</p>\n                </div>\n\n                <h4>Case Studies</h4>\n                <div class=\"warning-box\">\n                    <p><strong>Phnom Penh NGO restaurant:</strong> mission drift — revenue focus, zero trainees\n                    reintegrated (Dahles et al., 2020)</p>\n                    <p><strong>Grootbos Lodge (South Africa):</strong> training women + organic food, but dependent\n                    on external funding and know-how</p>\n                    <p><strong>Eco-pads (India):</strong> 4 strategies vs institutional complexity — appropriation,\n                    integration, differentiation, working-through (Cherrier et al., 2018)</p>\n                    <p><strong>Mageires (Thessaloniki):</strong> 60% profits reinvested, double bottom line;\n                    3 market capabilities — network structure, market practices, market pictures (Sigala, 2019)</p>\n                </div>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Weeks)",
+    "icon": "fa-graduation-cap",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Which weeks make up the two midterm 'halves' that the final combines?",
+        "answer": "1st midterm (Weeks 2–7): concepts & theories of entrepreneurship, the entrepreneur (traits & influences), creativity & business idea, innovation, financing the business, franchising, planning.\n\n2nd midterm (Weeks 9–13): failure & entrepreneurial learning, entrepreneurship & the economy, tourism entrepreneurship, social entrepreneurship, measuring value, contemporary issues (gender/diversity/migration), developing countries & social innovation.",
+        "explanation": "Week 8 = 1st midterm; the final covers everything."
+      },
+      {
+        "question": "EXAM REVIEW: Match the theorist to the idea — Cantillon, Smith, Say, Mises, Kirzner, Schumpeter, Marshall, Menger.",
+        "answer": "CANTILLON (1755): risk-taker bearing uncertainty\nSMITH: transforms demand into supply; profit = reward\nSAY: innovator-middleman between scientist and worker; superintendence\nMISES: speculator; born not made\nKIRZNER: alertness; continual discovery\nSCHUMPETER: new 'productive combinations' (5); engine of change\nMARSHALL: risk-taker AND administrator; active vs passive entrepreneurs\nMENGER: heterogeneous individuals; special kind of labour service",
+        "explanation": "The theorist line-up appears in both halves of the course."
+      },
+      {
+        "question": "EXAM REVIEW: Critical numbers across the course.",
+        "answer": "• 1755 — Cantillon coins 'entrepreneur'\n• 5 — Schumpeter's productive combinations\n• 7 — Drucker's sources of opportunity; 7 value-measurement dimensions\n• 9 — Business Model Canvas blocks\n• 4 — types of social entrepreneurs; 4 crowdfunding types; 4 knowledge/skill types\n• 98% — startups starting without formal investment\n• 95% — VC applications rejected; £2M+ VC investments vs £10k–250k angels\n• 5× — franchisee more likely to succeed (10% vs 52% failure)\n• ~90% — long-run startup failure; 70% fail in years 2–5\n• 3:1 — men vs women in business ownership; 2.3% of VC to women\n• 45% — Fortune 500 founded by migrants or their children\n• 7% — social innovation's share of global GDP",
+        "explanation": "Numbers are the fastest exam points."
+      },
+      {
+        "question": "Connect CREATIVITY → INNOVATION → ENTREPRENEURSHIP → ECONOMY in one chain.",
+        "answer": "CREATIVITY produces new ideas (no need required) → ideas that are useful AND valuable become OPPORTUNITIES (finding vs building) → INNOVATION takes them effectively and profitably to satisfied customers (Kanter) → the ENTREPRENEUR acts on the innovation, financing it (bootstrapping → crowdfunding → angels/VC) and planning it (BMC → feasibility → pitch deck → business plan) → at MACRO level this raises capital formation, employment, technological progress; at MICRO level it creates new entities, jobs, goods and niche markets.",
+        "explanation": "The whole course as one storyline."
+      },
+      {
+        "question": "How do FAILURE and LEARNING connect to fear of failure across cultures?",
+        "answer": "~90% of startups fail long-run (70% in years 2–5). Failure is a PROCESS (stages of decline), caused by exogenous and internal factors, with warning signs of INACTION and faulty action.\n\nFear of failure DISABLES learning, investment and opportunity recognition — but tolerance differs (Africa & Latin America higher; Asia/Europe lower) and society shifts to 'risk rather than sin'.\n\nPositive view: knowledge spillovers; Edison's '1,000 steps'; the failure resume.",
+        "explanation": "Failure (W9) is the hinge between the two halves."
+      },
+      {
+        "question": "Cross-topic: how does SOCIAL entrepreneurship scale from a community café to changing systems?",
+        "answer": "TYPES (small → large): COMMUNITY (local problem) → NON-PROFIT (business-savvy, social good) → TRANSFORMATIONAL (fills gaps governments/businesses miss) → GLOBAL (changes social systems).\n\nMeasure the value on 7 DIMENSIONS (impact, sustainability, innovation, scalability, community involvement, partnerships, awareness/advocacy) — while avoiding mission drift (Phnom Penh NGO) and dependency (Grootbos).",
+        "explanation": "Combines W11 types, W11 measurement and W13 case lessons."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The term 'entrepreneur' was introduced in 1755 by:",
+        "options": [
+          "Adam Smith",
+          "Richard Cantillon",
+          "Joseph Schumpeter",
+          "Peter Drucker"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which pairing is WRONG?",
+        "options": [
+          "Mises — speculator, born not made",
+          "Kirzner — entrepreneurial alertness",
+          "Marshall — risk-taker and administrator",
+          "Say — entrepreneurship can be taught to everyone"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "The single necessary and sufficient condition for a business is:",
+        "options": [
+          "A business plan",
+          "A paying customer",
+          "Venture capital",
+          "A patent"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which financing source typically invests £10,000–£250,000 with informal due diligence?",
+        "options": [
+          "Venture capitalists",
+          "Business angels",
+          "Banks",
+          "Crowdfunding platforms"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "From entrepreneurship theory, a franchisee is:",
+        "options": [
+          "An entrepreneur",
+          "An intrapreneur",
+          "A manager",
+          "An investor"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the order of planning activities, which comes LAST?",
+        "options": [
+          "Business Model Canvas",
+          "Feasibility study",
+          "Pitch deck",
+          "Business plan"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "70% of start-ups fail during:",
+        "options": [
+          "The first 6 months",
+          "Years 2–5",
+          "Years 8–10",
+          "After year 15"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a MACROECONOMIC effect of entrepreneurship?",
+        "options": [
+          "Creation of niche markets",
+          "Capital formation",
+          "New economic entities",
+          "Production of new goods"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The 4 types of social entrepreneurs, from smallest to largest scope:",
+        "options": [
+          "Global → Transformational → Non-profit → Community",
+          "Community → Non-profit → Transformational → Global",
+          "Non-profit → Community → Global → Transformational",
+          "Community → Global → Non-profit → Transformational"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Social innovation accounts for about what share of global GDP?",
+        "options": [
+          "2%",
+          "7%",
+          "12%",
+          "20%"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Cantillon introduced the term 'entrepreneur' in _______.",
+        "answer": "1755",
+        "hint": "18th century..."
+      },
+      {
+        "sentence": "According to Bill Gross, the single biggest start-up success factor is _______.",
+        "answer": "timing",
+        "hint": "Not the idea..."
+      },
+      {
+        "sentence": "98% of startups begin without any formal _______.",
+        "answer": "investment",
+        "hint": "Outside money..."
+      },
+      {
+        "sentence": "A franchisee is 5 times more likely to _______ than an independent business.",
+        "answer": "succeed",
+        "hint": "Opposite of fail..."
+      },
+      {
+        "sentence": "45% of US Fortune 500 companies were founded by _______ or their children.",
+        "answer": "migrants",
+        "hint": "Moved across borders..."
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Practice — How to Use",
+      "content": "\n            <h3>What is this category?</h3>\n            <p>A cross-topic practice set combining all course weeks — exactly how the final mixes them.\n            Use it AFTER reviewing the two midterm halves.</p>\n\n            <h4>The course in one map</h4>\n            <div class=\"formula-box\">\n                FOUNDATIONS (W2): origins & theorists → typologies → traits & social influences<br>\n                CREATING (W3–W4): idea → creativity → opportunity → innovation (Drucker's 7, journey)<br>\n                BUILDING (W5–W7): bootstrapping/crowdfunding/angels/VC → franchising → planning tools<br>\n                CONTEXT (W9–W13): failure & learning → economy & tourism → social entrepreneurship &\n                value → gender/diversity/migration trends → developing countries & social innovation\n            </div>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Cross-topic favourites</h4>\n                <ul>\n                    <li>Theorist line-up: Cantillon → Smith → Say → Mises → Kirzner → Schumpeter → Marshall → Menger</li>\n                    <li>Finding vs building opportunities; growth vs fixed mindset</li>\n                    <li>Kickstarter all-or-nothing; angels vs VCs (numbers!)</li>\n                    <li>Franchisee = intrapreneur; resource scarcity vs agency theory</li>\n                    <li>Planning order: idea → BMC → feasibility → pitch deck → business plan</li>\n                    <li>Failure stats (90% / 70% / 1-in-5) + fear-of-failure consequences</li>\n                    <li>4 social-entrepreneur types + 7 value dimensions + case lessons (mission drift!)</li>\n                </ul>\n            </div>\n        "
+    }
+  }
+}

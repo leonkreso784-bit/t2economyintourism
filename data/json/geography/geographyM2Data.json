@@ -1,0 +1,987 @@
+{
+  "globalIntro": {
+    "name": "Global Tourism & World Regions",
+    "icon": "fa-globe",
+    "color": "#38bdf8",
+    "flashcards": [
+      {
+        "question": "What does the second part of the course (Tourism Geography of the World) cover?",
+        "answer": "The tourism geography of the world's continents and regions: Europe, Asia, Africa, Australia & Oceania, and the Americas.",
+        "explanation": "It applies the regional approach from the 1st midterm to the whole world."
+      },
+      {
+        "question": "Which organization publishes global and regional tourism performance data?",
+        "answer": "UNWTO — the UN World Tourism Organization.",
+        "explanation": "Its data are used to compare tourism flows across world regions."
+      },
+      {
+        "question": "What is \"regional tourism geography\"?",
+        "answer": "The study of tourism by world regions — the natural and human factors, attractions, and tourist flows that characterize each continent or region.",
+        "explanation": "It builds directly on the regionalization concept learned in the 1st midterm."
+      },
+      {
+        "question": "Which is the largest and which is the smallest inhabited continent by area?",
+        "answer": "Asia is the largest (44.5 million km²); Australia is the smallest (7.7 million km²).",
+        "explanation": "Africa is second largest (30 million km²); Europe is about 10.4 million km²."
+      },
+      {
+        "question": "Why study tourism geography at a global scale?",
+        "answer": "To understand the spatial patterns of tourism demand and supply, compare destinations, and recognize each region's competitive attractions.",
+        "explanation": "This supports destination planning and decision-making."
+      },
+      {
+        "question": "On what basis is the world divided for this part of the course?",
+        "answer": "By continents — each with distinctive physical and cultural tourism resources.",
+        "explanation": "Europe, Asia, Africa, Australia & Oceania, and the Americas."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The second midterm (\"Tourism Geography of the World\") is organized mainly by:",
+        "options": [
+          "Climate zones",
+          "Continents / world regions",
+          "Alphabetical order",
+          "Religions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which body publishes global and regional tourism performance data?",
+        "options": [
+          "WHO",
+          "UNWTO",
+          "OECD",
+          "IMF"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The largest continent by area is:",
+        "options": [
+          "Africa",
+          "Europe",
+          "Asia",
+          "The Americas"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The smallest continent by area is:",
+        "options": [
+          "Europe",
+          "Australia & Oceania",
+          "Africa",
+          "Asia"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Regional tourism geography builds directly on which 1st-midterm concept?",
+        "options": [
+          "Karst",
+          "Regionalization",
+          "Blind map",
+          "Salinity"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The world part of the course studies tourism by continents and world _______.",
+        "answer": "regions",
+        "hint": "Parts of the Earth's surface..."
+      },
+      {
+        "sentence": "Global and regional tourism performance data are published by the _______.",
+        "answer": "UNWTO",
+        "hint": "UN World Tourism Organization..."
+      },
+      {
+        "sentence": "The largest continent by area is _______.",
+        "answer": "Asia",
+        "hint": "44.5 million km²..."
+      },
+      {
+        "sentence": "The smallest continent by area is _______.",
+        "answer": "Australia",
+        "hint": "Only about 7.7 million km²..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism Geography of the World — Overview",
+      "content": "\n                <h3>From Croatia to the World</h3>\n                <p>The 1st midterm applied geography to <strong>Croatia</strong>; the 2nd midterm applies the same <strong>regional approach</strong> to the whole world, continent by continent: <strong>Europe, Asia, Africa, Australia &amp; Oceania, and the Americas</strong>.</p>\n\n                <h3>Measuring Global Tourism</h3>\n                <p>The <strong>UNWTO</strong> (UN World Tourism Organization) publishes <em>global and regional tourism performance</em> data — arrivals, receipts, and seasonality — used to compare destinations worldwide.</p>\n\n                <h3>Continents at a Glance (area)</h3>\n                <table style=\"width:100%; border-collapse: collapse; margin: 1rem 0;\">\n                    <tr style=\"border-bottom: 1px solid var(--border-color);\"><td>Asia</td><td>44.5 million km² (largest)</td></tr>\n                    <tr style=\"border-bottom: 1px solid var(--border-color);\"><td>Africa</td><td>30 million km²</td></tr>\n                    <tr style=\"border-bottom: 1px solid var(--border-color);\"><td>Europe</td><td>~10.4 million km²</td></tr>\n                    <tr><td>Australia</td><td>7.7 million km² (smallest)</td></tr>\n                </table>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Exam Tip</h4>\n                    <p>For each continent, link a <strong>physical fact</strong> (size, climate, relief) with its <strong>signature destinations</strong> — that pairing is exactly how the questions are framed.</p>\n                </div>\n            "
+    }
+  },
+  "europe": {
+    "name": "Europe",
+    "icon": "fa-earth-europe",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What is Europe's area and its role in world history?",
+        "answer": "About 10,368,047 km²; the centre of the \"old world\", the origin of colonization and modern global civilization, with a rich cultural/historical heritage and high well-being.",
+        "explanation": "Heritage + prosperity make Europe a leading tourism region."
+      },
+      {
+        "question": "Why is Europe so favourable for coastal tourism?",
+        "answer": "It is the most indented continent — a coastline about 37,900 km long, with ~60% of the surface relatively close to the coast, and islands and peninsulas occupying about a third of the surface.",
+        "explanation": "Indentation creates abundant coast, bays, and islands."
+      },
+      {
+        "question": "What are Europe's three main language groups?",
+        "answer": "Romanic, Germanic, and Slavic.",
+        "explanation": "A useful cultural-regional division of the continent."
+      },
+      {
+        "question": "How does the Gulf Stream shape Europe's climate?",
+        "answer": "Almost all of Europe lies in the northern temperate zone; the Gulf Stream warms the Atlantic coasts — raising the average annual temperature by ~4 °C on the French coast and ~8–10 °C on the Norwegian coast — keeping them ice-free.",
+        "explanation": "This makes north-western Europe milder than its latitude suggests."
+      },
+      {
+        "question": "What are Europe's key population facts (2023)?",
+        "answer": "About 740 million inhabitants; the total change is only about 1‰ per year; it is a high-immigration area (population replacement, 1.1 million in 2023).",
+        "explanation": "Near-stagnant natural growth, sustained by immigration."
+      },
+      {
+        "question": "Name signature destinations of Spain.",
+        "answer": "Madrid (Prado), Barcelona, Seville, Bilbao, Granada (Alhambra / Sierra Nevada), Costa del Sol, Tenerife, Ibiza; plus the corrida (bullfighting).",
+        "explanation": "Sun-and-sea, city, and cultural tourism combined."
+      },
+      {
+        "question": "Name signature destinations of Italy.",
+        "answer": "Rome, Venice, Naples, Pisa, Tuscany, Cinque Terre, Rimini, Sicily, and the Dolomites (Madonna di Campiglio).",
+        "explanation": "Heritage cities, coast, and Alpine resorts."
+      },
+      {
+        "question": "Name signature destinations of Greece.",
+        "answer": "Athens (Acropolis), Santorini, Mykonos, Rhodes, Corfu, Crete (Knossos), Delphi, Meteora, and the Corinth Canal.",
+        "explanation": "Antiquity plus Aegean and Ionian island tourism."
+      },
+      {
+        "question": "Name signature destinations of France.",
+        "answer": "Paris (Notre-Dame), the Côte d'Azur (Cannes), Chamonix in the Alps, Biarritz, Vichy (mineral spas), and rural tourism.",
+        "explanation": "City, coast, mountains, and spa/rural tourism."
+      },
+      {
+        "question": "Name key destinations of Central Europe.",
+        "answer": "Vienna & Salzburg (Austria), Prague (Czechia), Budapest (Hungary), Neuschwanstein / Oktoberfest / Berlin (Germany), and the Wieliczka salt mine (Poland).",
+        "explanation": "City-break and event tourism in the heart of Europe."
+      },
+      {
+        "question": "Name key destinations of Western and Northern Europe.",
+        "answer": "West: London, Dover, Stonehenge, Northern Ireland (UK), Amsterdam (NL), Brussels (BE). North: Stockholm, Copenhagen, Lapland (Finland), Iceland's Blue Lagoon, Norway's fjords and Lofoten.",
+        "explanation": "Heritage and nature-based tourism in the north-west."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Europe is described as the most _______ continent:",
+        "options": [
+          "arid",
+          "indented",
+          "mountainous",
+          "populous"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Gulf Stream warms which coasts of Europe?",
+        "options": [
+          "Mediterranean",
+          "Atlantic",
+          "Black Sea",
+          "Baltic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Europe's three main language groups are:",
+        "options": [
+          "Romanic, Germanic, Slavic",
+          "Latin, Greek, Celtic",
+          "Nordic, Baltic, Slavic",
+          "Romance, Turkic, Uralic"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The Alhambra is a key attraction in:",
+        "options": [
+          "Italy",
+          "Greece",
+          "Spain",
+          "France"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The Acropolis and Meteora are in:",
+        "options": [
+          "Spain",
+          "Italy",
+          "Greece",
+          "Portugal"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Neuschwanstein castle and Oktoberfest are in:",
+        "options": [
+          "Austria",
+          "Germany",
+          "Switzerland",
+          "Poland"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Wieliczka salt mine is a famous attraction in:",
+        "options": [
+          "Czechia",
+          "Hungary",
+          "Poland",
+          "Slovakia"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Europe's population in 2023 was about:",
+        "options": [
+          "340 million",
+          "510 million",
+          "740 million",
+          "1.1 billion"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Europe is the most _______ continent, with a coastline about 37,900 km long.",
+        "answer": "indented",
+        "hint": "Lots of bays, peninsulas, islands..."
+      },
+      {
+        "sentence": "The _______ Stream keeps Europe's Atlantic coasts ice-free in winter.",
+        "answer": "Gulf",
+        "hint": "Warm ocean current..."
+      },
+      {
+        "sentence": "Europe's three language groups are Romanic, Germanic and _______.",
+        "answer": "Slavic",
+        "hint": "Eastern / south-eastern Europe..."
+      },
+      {
+        "sentence": "The Alhambra and the Prado are attractions in _______.",
+        "answer": "Spain",
+        "hint": "Iberian Peninsula..."
+      },
+      {
+        "sentence": "The Acropolis is the iconic landmark of Athens in _______.",
+        "answer": "Greece",
+        "hint": "Cradle of antiquity..."
+      },
+      {
+        "sentence": "In 2023 Europe had about _______ million inhabitants.",
+        "answer": "740",
+        "hint": "Between 700 and 800..."
+      }
+    ],
+    "learn": {
+      "title": "Europe — Physical Base & Signature Destinations",
+      "content": "\n                <h3>Physical & Human Profile</h3>\n                <ul>\n                    <li><strong>Area:</strong> ~10,368,047 km² — centre of the \"old world\", origin of colonization and modern civilization.</li>\n                    <li><strong>Coast:</strong> the most indented continent (~37,900 km of coastline); ~60% of the surface near the coast; islands & peninsulas ≈ 1/3 of the surface.</li>\n                    <li><strong>Climate:</strong> mostly northern temperate zone; the Gulf Stream warms Atlantic coasts (+4 °C French coast, +8–10 °C Norwegian coast).</li>\n                    <li><strong>People:</strong> ~740 million (2023); change ~1‰/year; a high-immigration area (1.1 million in 2023). Language groups: Romanic, Germanic, Slavic.</li>\n                </ul>\n\n                <h3>Signature Destinations by Region</h3>\n                <ul>\n                    <li><strong>Spain:</strong> Madrid (Prado), Barcelona, Seville, Granada (Alhambra), Costa del Sol, Tenerife, Ibiza.</li>\n                    <li><strong>Italy:</strong> Rome, Venice, Naples, Pisa, Tuscany, Cinque Terre, Sicily, the Dolomites.</li>\n                    <li><strong>Greece:</strong> Athens (Acropolis), Santorini, Mykonos, Rhodes, Corfu, Crete (Knossos), Delphi, Meteora.</li>\n                    <li><strong>France:</strong> Paris (Notre-Dame), Côte d'Azur (Cannes), Chamonix/Alps, Biarritz, Vichy spas.</li>\n                    <li><strong>Central:</strong> Vienna, Salzburg, Prague, Budapest, Neuschwanstein, Berlin, Wieliczka (PL).</li>\n                    <li><strong>West:</strong> London, Stonehenge, Dover, Amsterdam, Brussels.</li>\n                    <li><strong>North:</strong> Stockholm, Copenhagen, Lapland, Iceland's Blue Lagoon, Norway's fjords & Lofoten.</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Exam Tip</h4>\n                    <p>Match each landmark to its country (Alhambra → Spain, Acropolis → Greece, Neuschwanstein → Germany). That country-attraction pairing is the most common question type.</p>\n                </div>\n            "
+    }
+  },
+  "asia": {
+    "name": "Asia",
+    "icon": "fa-earth-asia",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is Asia's size and share of the Earth?",
+        "answer": "The largest continent — 44.5 million km², covering 8.7% of the Earth's surface (29.8% of the land); 49 countries.",
+        "explanation": "Sheer scale gives Asia enormous tourism diversity."
+      },
+      {
+        "question": "What are Asia's key population facts?",
+        "answer": "About 4.8 billion inhabitants (~60% of humanity), with significant natural increase (~5.5‰). The two most populous countries are India (~1.440 billion) and China (~1.425 billion).",
+        "explanation": "Also a vast and fast-growing domestic tourism market."
+      },
+      {
+        "question": "Name the regions of Asia.",
+        "answer": "Southwest Asia (Middle East), South Asia, Southeast Asia, East Asia (Far East), Central Asia, and North Asia (Siberia).",
+        "explanation": "Each region has distinctive climate, culture, and attractions."
+      },
+      {
+        "question": "What was the Silk Road, and what is its tourism relevance today?",
+        "answer": "A network of caravan routes connecting the Mediterranean and East Asia for trade, used from the 2nd century BC to the 18th century AD; today it is being revitalized for tourism (e.g. Uzbekistan, China).",
+        "explanation": "History-to-present links are a recurring tourism theme in Inner Asia."
+      },
+      {
+        "question": "Describe Asia's climate and vegetation range.",
+        "answer": "From tundra/permafrost and taiga in the north to deserts (Takla Makan), rice terraces, and tropical rainforests.",
+        "explanation": "The widest climatic range of any continent."
+      },
+      {
+        "question": "Name notable Asian relief and water features used in tourism.",
+        "answer": "Mt. Everest (the world's highest peak), Lake Baikal, the Yellow River and Pearl River, and the Indonesian archipelago.",
+        "explanation": "Natural superlatives draw adventure and scenic tourism."
+      },
+      {
+        "question": "Name signature destinations of the Middle East (Southwest Asia).",
+        "answer": "Turkey (Cappadocia, the Aegean coast), Jordan (Petra), Israel (Jerusalem), Iran (Persian culture), and the UAE (Dubai).",
+        "explanation": "Heritage, religion, and modern luxury tourism."
+      },
+      {
+        "question": "What are India's iconic attractions?",
+        "answer": "The Taj Mahal (Agra) and Varanasi on the Ganges.",
+        "explanation": "South Asia's flagship cultural and spiritual sites."
+      },
+      {
+        "question": "Name signature destinations of East Asia.",
+        "answer": "China — the Great Wall, Beijing's Forbidden City, Shanghai, Tibet/Lhasa (Potala), Hong Kong; Japan — Mt. Fuji, Tokyo, Kyoto; South Korea — Seoul.",
+        "explanation": "Megacities plus deep historical heritage."
+      },
+      {
+        "question": "Name signature destinations of Southeast Asia.",
+        "answer": "Cambodia (Angkor Wat), Thailand (Bangkok, White Temple), Indonesia (Borobudur, Bali), Vietnam (Ha Long Bay), Malaysia (Kuala Lumpur), the Philippines (Chocolate Hills), and Singapore.",
+        "explanation": "Temples, beaches, and tropical nature."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Asia is the world's _______ continent by area:",
+        "options": [
+          "smallest",
+          "second-largest",
+          "largest",
+          "third-largest"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "About what share of humanity lives in Asia?",
+        "options": [
+          "20%",
+          "40%",
+          "60%",
+          "80%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The two most populous countries in the world, both in Asia, are:",
+        "options": [
+          "China & Japan",
+          "India & China",
+          "India & Indonesia",
+          "China & Pakistan"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Silk Road historically connected the Mediterranean with:",
+        "options": [
+          "East Asia",
+          "Africa",
+          "Northern Europe",
+          "the Americas"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Petra is a famous attraction in:",
+        "options": [
+          "Israel",
+          "Jordan",
+          "Iran",
+          "Turkey"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Angkor Wat is located in:",
+        "options": [
+          "Thailand",
+          "Vietnam",
+          "Cambodia",
+          "Laos"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The Taj Mahal is in:",
+        "options": [
+          "Pakistan",
+          "India",
+          "Bangladesh",
+          "Nepal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Borobudur and Bali are attractions of:",
+        "options": [
+          "Malaysia",
+          "Indonesia",
+          "the Philippines",
+          "Thailand"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Asia is the _______ continent by area, with 49 countries.",
+        "answer": "largest",
+        "hint": "44.5 million km²..."
+      },
+      {
+        "sentence": "Asia is home to about _______ percent of humanity.",
+        "answer": "60",
+        "hint": "Well over half..."
+      },
+      {
+        "sentence": "The historic _______ Road linked the Mediterranean and East Asia.",
+        "answer": "Silk",
+        "hint": "Caravan trade routes..."
+      },
+      {
+        "sentence": "The Taj Mahal is the iconic monument of _______.",
+        "answer": "India",
+        "hint": "South Asia..."
+      },
+      {
+        "sentence": "Angkor Wat is the great temple complex of _______.",
+        "answer": "Cambodia",
+        "hint": "Southeast Asia..."
+      },
+      {
+        "sentence": "Mt. _______, the world's highest peak, rises in Asia.",
+        "answer": "Everest",
+        "hint": "On the Nepal–China border..."
+      }
+    ],
+    "learn": {
+      "title": "Asia — The Largest and Most Populous Continent",
+      "content": "\n                <h3>Physical & Human Profile</h3>\n                <ul>\n                    <li><strong>Area:</strong> 44.5 million km² — 8.7% of the Earth's surface, 29.8% of land; 49 countries.</li>\n                    <li><strong>People:</strong> ~4.8 billion (≈60% of humanity), natural increase ~5.5‰. Most populous: India (~1.440 bn) and China (~1.425 bn).</li>\n                    <li><strong>Regions:</strong> Southwest (Middle East), South, Southeast, East (Far East), Central, North (Siberia).</li>\n                    <li><strong>Nature:</strong> tundra/taiga → deserts (Takla Makan) → rice terraces → tropical rainforests; Mt. Everest, Lake Baikal, Yellow & Pearl rivers.</li>\n                </ul>\n\n                <h3>History Meets Tourism — the Silk Road</h3>\n                <p>Caravan routes linking the <strong>Mediterranean and East Asia</strong> (2nd c. BC – 18th c. AD), now revitalized for tourism across Inner Asia (Uzbekistan, China).</p>\n\n                <h3>Signature Destinations</h3>\n                <ul>\n                    <li><strong>Middle East:</strong> Cappadocia (Turkey), Petra (Jordan), Jerusalem (Israel), Dubai (UAE).</li>\n                    <li><strong>South Asia:</strong> Taj Mahal, Varanasi (India).</li>\n                    <li><strong>East Asia:</strong> Great Wall, Forbidden City, Shanghai, Lhasa/Potala, Hong Kong (China); Fuji, Tokyo, Kyoto (Japan); Seoul (Korea).</li>\n                    <li><strong>Southeast Asia:</strong> Angkor Wat (Cambodia), Bangkok (Thailand), Borobudur & Bali (Indonesia), Ha Long Bay (Vietnam), Kuala Lumpur (Malaysia), Singapore.</li>\n                </ul>\n            "
+    }
+  },
+  "africa": {
+    "name": "Africa",
+    "icon": "fa-earth-africa",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "What is Africa's size and number of countries?",
+        "answer": "The second-largest continent — 30 million km²; 54 countries; two-thirds of its surface lies in the northern hemisphere.",
+        "explanation": "Huge scale with strong north–south contrasts."
+      },
+      {
+        "question": "How is Africa connected to Europe and Asia?",
+        "answer": "It is separated from Europe by the 14-km-wide Strait of Gibraltar and connected to Asia by the narrow Isthmus of Suez.",
+        "explanation": "These chokepoints shaped trade and tourism routes."
+      },
+      {
+        "question": "What are Africa's key population characteristics?",
+        "answer": "About 1.5 billion inhabitants with significant natural increase — a continent of a young population and targeted migration toward the EU.",
+        "explanation": "Youthful demographics contrast with ageing Europe."
+      },
+      {
+        "question": "Name the regions of Africa.",
+        "answer": "North Africa, West Tropical Africa, Tropical Low Africa, Tropical High Africa, and South Africa.",
+        "explanation": "Climate and relief define these belts."
+      },
+      {
+        "question": "Summarize Africa's historical highlights relevant to tourism.",
+        "answer": "The \"Cradle of Humankind\"; Ancient Egyptian culture (the \"gift of the Nile\", ~3150 BC–30 BC: pharaohs, pyramids, temples, writing, science). Europeans reached the interior only from the 19th century (the Sahara was a barrier); independence came after WWII.",
+        "explanation": "Deep heritage plus a colonial-to-independence narrative."
+      },
+      {
+        "question": "What are Africa's major resources today?",
+        "answer": "Oil, gold, diamonds, copper, aluminum; coffee, tea, cotton, fish; industry and tourism.",
+        "explanation": "Resource wealth alongside a growing tourism sector."
+      },
+      {
+        "question": "What are the key facts about the Suez Canal?",
+        "answer": "Built 1859–1869, 163 km long, expanded in 2014/2015 — a vital global shipping route.",
+        "explanation": "Connects the Mediterranean and the Red Sea."
+      },
+      {
+        "question": "What is Africa's UNESCO/heritage footprint (slide examples)?",
+        "answer": "About 45 UNESCO locations — e.g. Giza (Egypt), Lalibela (Ethiopia), Djenné (Mali), and Victoria Falls (Zimbabwe).",
+        "explanation": "Cultural and natural World Heritage across the continent."
+      },
+      {
+        "question": "Name signature destinations of North Africa.",
+        "answer": "Morocco (Marrakesh Medina, riad houses, Casablanca, desert oases), Egypt (Sharm El Sheikh/Red Sea, Abu Simbel, Nile cruises), Tunisia (El Jem amphitheatre, Djerba resort).",
+        "explanation": "Heritage, desert, and Red Sea/Mediterranean coast."
+      },
+      {
+        "question": "Name signature destinations of Central and Southern Africa.",
+        "answer": "Tanzania (Zanzibar, Kilimanjaro safari), Kenya (Maasai Mara safari), Madagascar (baobabs), Victoria Falls (Zambia/Zimbabwe), Botswana (Okavango Delta), Namibia (Namib Desert), South Africa (Kruger NP, Johannesburg).",
+        "explanation": "Safari, wildlife, and dramatic landscapes."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Africa is the world's _______ largest continent:",
+        "options": [
+          "first",
+          "second",
+          "third",
+          "fourth"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Africa is separated from Europe by the Strait of:",
+        "options": [
+          "Bosphorus",
+          "Gibraltar",
+          "Messina",
+          "Dover"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Africa is connected to Asia by the Isthmus of:",
+        "options": [
+          "Panama",
+          "Suez",
+          "Corinth",
+          "Kra"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Ancient Egypt is often called the \"gift of the\":",
+        "options": [
+          "Sahara",
+          "Nile",
+          "Red Sea",
+          "Congo"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Suez Canal is approximately how long?",
+        "options": [
+          "63 km",
+          "163 km",
+          "263 km",
+          "363 km"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A classic safari destination in Kenya is:",
+        "options": [
+          "Okavango Delta",
+          "Maasai Mara",
+          "Zanzibar",
+          "Namib Desert"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Mount Kilimanjaro is located in:",
+        "options": [
+          "Kenya",
+          "Tanzania",
+          "Uganda",
+          "Ethiopia"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Kruger National Park is in:",
+        "options": [
+          "Namibia",
+          "Botswana",
+          "South Africa",
+          "Zimbabwe"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Africa is the _______-largest continent, with about 30 million km².",
+        "answer": "second",
+        "hint": "After Asia..."
+      },
+      {
+        "sentence": "Africa is separated from Europe by the 14-km-wide Strait of _______.",
+        "answer": "Gibraltar",
+        "hint": "Between Spain and Morocco..."
+      },
+      {
+        "sentence": "Ancient Egypt was called the gift of the _______.",
+        "answer": "Nile",
+        "hint": "The great river..."
+      },
+      {
+        "sentence": "The _______ Canal (163 km) links the Mediterranean and the Red Sea.",
+        "answer": "Suez",
+        "hint": "Opened 1869..."
+      },
+      {
+        "sentence": "Maasai Mara in _______ is a classic safari destination.",
+        "answer": "Kenya",
+        "hint": "East Africa..."
+      },
+      {
+        "sentence": "Victoria _______ lie on the Zambia/Zimbabwe border.",
+        "answer": "Falls",
+        "hint": "Massive waterfalls..."
+      }
+    ],
+    "learn": {
+      "title": "Africa — Heritage, Wildlife & Contrasts",
+      "content": "\n                <h3>Physical & Human Profile</h3>\n                <ul>\n                    <li><strong>Area:</strong> 30 million km² (2nd largest); 54 countries; 2/3 in the northern hemisphere.</li>\n                    <li><strong>Connections:</strong> Strait of Gibraltar (14 km) to Europe; Isthmus of Suez to Asia.</li>\n                    <li><strong>People:</strong> ~1.5 billion, young population, significant natural increase, targeted migration toward the EU.</li>\n                    <li><strong>Regions:</strong> North · West Tropical · Tropical Low · Tropical High · South Africa.</li>\n                </ul>\n\n                <h3>History & Resources</h3>\n                <p>Cradle of Humankind; Ancient Egypt (the \"gift of the Nile\", ~3150 BC–30 BC). Resources: oil, gold, diamonds, copper; coffee, tea, cotton, fish; tourism. The <strong>Suez Canal</strong> (1859–1869, 163 km, expanded 2014/15) is a vital shipping route. ~45 UNESCO sites (Giza, Lalibela, Djenné, Victoria Falls).</p>\n\n                <h3>Signature Destinations</h3>\n                <ul>\n                    <li><strong>North:</strong> Marrakesh & Casablanca (Morocco), Sharm El Sheikh & Abu Simbel & Nile cruises (Egypt), El Jem & Djerba (Tunisia).</li>\n                    <li><strong>Central/East:</strong> Zanzibar & Kilimanjaro (Tanzania), Maasai Mara (Kenya), baobabs (Madagascar), Victoria Falls (Zambia/Zimbabwe).</li>\n                    <li><strong>South:</strong> Okavango Delta (Botswana), Namib Desert (Namibia), Kruger NP & Johannesburg (South Africa).</li>\n                </ul>\n            "
+    }
+  },
+  "australiaOceania": {
+    "name": "Australia & Oceania",
+    "icon": "fa-earth-oceania",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is Australia's size and position?",
+        "answer": "The smallest continent; in the southern hemisphere between the Indian and Pacific oceans; about 7.7 million km² (roughly three-quarters of Europe's surface).",
+        "explanation": "Isolation shaped its unique nature and tourism."
+      },
+      {
+        "question": "What is Oceania?",
+        "answer": "The collective name for the island groups of the central and south-western Pacific (~840,000 km²): Polynesia, Micronesia, Melanesia, plus New Zealand; the largest islands are New Guinea and New Zealand.",
+        "explanation": "Island tourism on a vast oceanic scale."
+      },
+      {
+        "question": "What are Australia's three natural regions?",
+        "answer": "The Western Plateau, the Central Valley (Lowlands), and the Great Dividing Range.",
+        "explanation": "The Great Dividing Range runs along the east."
+      },
+      {
+        "question": "What was Gondwana, and why does it matter for Australia?",
+        "answer": "An ancient southern protocontinent (Precambrian/Paleozoic) that included South America, Africa, India, Australia, and Antarctica; it began breaking up in the Permian (~270 million years ago) as the Indian Ocean formed.",
+        "explanation": "This long isolation explains Australia's many endemic species."
+      },
+      {
+        "question": "Why is Australia so sparsely populated, and how large is its population?",
+        "answer": "Because of vast deserts, distance from Europe (an emigration area), a selective immigration policy, and the continent's relatively late discovery; in 2025 about 27 million inhabitants, growing via natural increase and immigration.",
+        "explanation": "Population clusters on the coasts (e.g. Sydney)."
+      },
+      {
+        "question": "Name key centres of New Zealand.",
+        "answer": "Auckland, Wellington (the capital), and Christchurch.",
+        "explanation": "Nature-based and adventure tourism hub."
+      },
+      {
+        "question": "Give an example destination for each Oceania sub-region.",
+        "answer": "Micronesia → Palau; Polynesia → Bora Bora; Melanesia → Fiji.",
+        "explanation": "Reef, lagoon, and island-culture tourism."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Australia is the world's _______ continent:",
+        "options": [
+          "largest",
+          "second-smallest",
+          "smallest",
+          "third-largest"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Australia lies between which two oceans?",
+        "options": [
+          "Atlantic & Pacific",
+          "Indian & Pacific",
+          "Indian & Atlantic",
+          "Pacific & Arctic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The eastern highland belt of Australia is the:",
+        "options": [
+          "Western Plateau",
+          "Great Dividing Range",
+          "Central Valley",
+          "Great Barrier"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The ancient southern protocontinent that included Australia was:",
+        "options": [
+          "Pangaea",
+          "Laurasia",
+          "Gondwana",
+          "Rodinia"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Australia is sparsely populated mainly because of:",
+        "options": [
+          "Cold climate",
+          "Large desert areas",
+          "Frequent war",
+          "Lack of coastline"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Bora Bora belongs to which Oceania sub-region?",
+        "options": [
+          "Micronesia",
+          "Melanesia",
+          "Polynesia",
+          "Australasia"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Fiji belongs to which Oceania sub-region?",
+        "options": [
+          "Polynesia",
+          "Melanesia",
+          "Micronesia",
+          "Australasia"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Australia is the _______ continent by area.",
+        "answer": "smallest",
+        "hint": "Only ~7.7 million km²..."
+      },
+      {
+        "sentence": "The eastern highlands of Australia form the Great _______ Range.",
+        "answer": "Dividing",
+        "hint": "Separates coast from interior..."
+      },
+      {
+        "sentence": "Australia and its neighbours once formed part of the protocontinent _______.",
+        "answer": "Gondwana",
+        "hint": "Southern supercontinent..."
+      },
+      {
+        "sentence": "_______ is the capital of New Zealand.",
+        "answer": "Wellington",
+        "hint": "Not Auckland..."
+      },
+      {
+        "sentence": "Bora Bora is part of _______ in Oceania.",
+        "answer": "Polynesia",
+        "hint": "'Many islands'..."
+      }
+    ],
+    "learn": {
+      "title": "Australia & Oceania — Isolation and Islands",
+      "content": "\n                <h3>Australia</h3>\n                <ul>\n                    <li><strong>Size/position:</strong> smallest continent, southern hemisphere, between the Indian and Pacific oceans; ~7.7 million km² (≈3/4 of Europe).</li>\n                    <li><strong>Natural regions:</strong> Western Plateau · Central Valley (Lowlands) · Great Dividing Range (east).</li>\n                    <li><strong>Origin:</strong> part of <strong>Gondwana</strong> (broke up in the Permian, ~270 Ma) → long isolation → many endemic species.</li>\n                    <li><strong>People:</strong> ~27 million (2025), sparse (deserts, distance, selective immigration, late discovery); coastal cities (Sydney), Alice Springs in the interior.</li>\n                </ul>\n\n                <h3>Oceania</h3>\n                <p>Pacific island groups (~840,000 km²): <strong>Polynesia</strong> (e.g. Bora Bora), <strong>Micronesia</strong> (e.g. Palau), <strong>Melanesia</strong> (e.g. Fiji), plus <strong>New Zealand</strong> (Auckland, Wellington, Christchurch). Largest islands: New Guinea and New Zealand.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Exam Tip</h4>\n                    <p>Remember the three Oceania sub-regions by an example each: <strong>Poly</strong>nesia–Bora Bora, <strong>Micro</strong>nesia–Palau, <strong>Mela</strong>nesia–Fiji.</p>\n                </div>\n            "
+    }
+  },
+  "americas": {
+    "name": "The Americas",
+    "icon": "fa-earth-americas",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Give the basic facts about the USA.",
+        "answer": "Population ~335 million; nominal GDP ~$28.0 trillion; GDP per capita ~$80,000.",
+        "explanation": "A high-income market and a top global tourism destination."
+      },
+      {
+        "question": "Summarize the scale of US tourism.",
+        "answer": "~70 million international arrivals/year and ~$200 billion in international receipts; domestic tourism ~2.4 billion trips/year with ~$1.3 trillion in expenditure.",
+        "explanation": "Domestic tourism vastly outweighs inbound tourism."
+      },
+      {
+        "question": "Name the tourism regions of the USA.",
+        "answer": "New England, Mid-Atlantic, Florida, Midwest, Mountain West, Pacific, Alaska, and Hawaii.",
+        "explanation": "Each region offers a different tourism product."
+      },
+      {
+        "question": "What are the main US tourism types?",
+        "answer": "Urban, entertainment (theme/amusement parks), casino, event, cultural, and eco-tourism.",
+        "explanation": "From Las Vegas casinos to national-park eco-tourism."
+      },
+      {
+        "question": "Describe the US natural-heritage figures.",
+        "answer": "61 national parks (211,000 km²); Yellowstone (1872) is the world's oldest national park; 23 UNESCO World Heritage sites.",
+        "explanation": "The US pioneered the national-park idea."
+      },
+      {
+        "question": "Give the basic facts about Mexico.",
+        "answer": "Capital Ciudad de México; area 1,972,550 km²; population ~119.5 million (~55/km²); a society of great contrasts in development and living standards.",
+        "explanation": "Bridges North America and Latin America."
+      },
+      {
+        "question": "Which pre-Columbian cultures are central to Mexico's heritage?",
+        "answer": "The Maya (~2000 BC–1500 AD) and the Aztecs (15th–16th century).",
+        "explanation": "Their sites are flagship cultural attractions."
+      },
+      {
+        "question": "Outline Mexico's protected areas and top attractions.",
+        "answer": "182 protected areas (~254,000 km², ~13% of the land), including 67 national parks. Attractions: Chichén Itzá / El Castillo (Yucatán), Teotihuacán, the Monarch Butterfly Biosphere Reserve, Cancún, Acapulco; culture: mariachi, tacos/burritos, tequila.",
+        "explanation": "Heritage, beaches, and gastronomy."
+      },
+      {
+        "question": "Give the basic facts about Brazil.",
+        "answer": "Capital Brasília; area 8,514,877 km² (47% of South America's mainland); population ~210 million (2019, ~24.6/km²); large differences in development.",
+        "explanation": "The giant of South America."
+      },
+      {
+        "question": "Why is Brasília notable?",
+        "answer": "It is a planned city (designed 1960) on the central plateau (~1000 m); it was inscribed on the UNESCO World Heritage List in 1987 as a landmark of modern urbanism.",
+        "explanation": "A deliberately built capital, ~900 km from Rio."
+      },
+      {
+        "question": "What makes Rio de Janeiro a top world tourism centre?",
+        "answer": "Brazil's second-largest city and a port on Guanabara Bay (metro ~13.5 million); ~3 million tourists/year; beaches Copacabana and Ipanema, Christ the Redeemer on Corcovado (704 m), the Maracanã stadium, and the street carnival (held yearly since the 1830s).",
+        "explanation": "Beach, icon, sport, and festival tourism."
+      },
+      {
+        "question": "Name other notable South American attractions from the slides.",
+        "answer": "Foz do Iguaçu (the Iguaçu Falls, Brazil/Argentina), Salvador, and coffee tours.",
+        "explanation": "Waterfalls, Afro-Brazilian heritage, and agritourism."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The USA's GDP per capita is about:",
+        "options": [
+          "$40,000",
+          "$60,000",
+          "$80,000",
+          "$100,000"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The world's oldest national park (1872) is:",
+        "options": [
+          "Yosemite",
+          "Yellowstone",
+          "Grand Canyon",
+          "Kruger"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many national parks does the USA have (per the slides)?",
+        "options": [
+          "41",
+          "51",
+          "61",
+          "71"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Hawaii and Alaska are listed as US:",
+        "options": [
+          "Capitals",
+          "Tourism regions",
+          "Territories",
+          "Islands only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Chichén Itzá and Teotihuacán are attractions in:",
+        "options": [
+          "Brazil",
+          "Mexico",
+          "Peru",
+          "the USA"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Maya and Aztecs are pre-Columbian cultures of:",
+        "options": [
+          "Brazil",
+          "Mexico",
+          "Argentina",
+          "Chile"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Brazil's capital, a planned city from 1960, is:",
+        "options": [
+          "Rio de Janeiro",
+          "São Paulo",
+          "Brasília",
+          "Salvador"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Christ the Redeemer stands on Mount Corcovado in:",
+        "options": [
+          "São Paulo",
+          "Brasília",
+          "Rio de Janeiro",
+          "Salvador"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The Iguaçu Falls lie on the border of Brazil and:",
+        "options": [
+          "Bolivia",
+          "Argentina",
+          "Paraguay",
+          "Peru"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Yellowstone (1872) is the world's oldest national _______.",
+        "answer": "park",
+        "hint": "Protected natural area..."
+      },
+      {
+        "sentence": "The USA receives about _______ million international tourist arrivals per year.",
+        "answer": "70",
+        "hint": "Between 60 and 80..."
+      },
+      {
+        "sentence": "The Maya and the _______ are the great pre-Columbian cultures of Mexico.",
+        "answer": "Aztecs",
+        "hint": "15th–16th century empire..."
+      },
+      {
+        "sentence": "Christ the Redeemer overlooks Rio de Janeiro from Mount _______.",
+        "answer": "Corcovado",
+        "hint": "704 m high..."
+      },
+      {
+        "sentence": "The famous Rio beaches are Copacabana and _______.",
+        "answer": "Ipanema",
+        "hint": "Bossa nova song..."
+      },
+      {
+        "sentence": "The Iguaçu Falls lie between Brazil and _______.",
+        "answer": "Argentina",
+        "hint": "Southern neighbour..."
+      }
+    ],
+    "learn": {
+      "title": "The Americas — USA, Mexico & Brazil",
+      "content": "\n                <h3>USA</h3>\n                <ul>\n                    <li><strong>Profile:</strong> ~335 million people; GDP ~$28.0 trillion; GDP/cap ~$80,000.</li>\n                    <li><strong>Tourism:</strong> ~70 million international arrivals & ~$200 bn receipts; domestic ~2.4 billion trips & ~$1.3 trillion spend.</li>\n                    <li><strong>Regions:</strong> New England, Mid-Atlantic, Florida, Midwest, Mountain West, Pacific, Alaska, Hawaii.</li>\n                    <li><strong>Types:</strong> urban, entertainment (theme parks), casino, event, cultural, eco-tourism.</li>\n                    <li><strong>Nature:</strong> 61 national parks (211,000 km²); Yellowstone (1872) = world's oldest NP; 23 UNESCO sites.</li>\n                </ul>\n\n                <h3>Mexico</h3>\n                <p>Capital Ciudad de México; 1,972,550 km²; ~119.5 million people. Heritage of the <strong>Maya</strong> and <strong>Aztecs</strong>; 182 protected areas (~13% of land). Attractions: Chichén Itzá, Teotihuacán, Monarch Butterfly Reserve, Cancún, Acapulco; culture: mariachi, tacos, tequila.</p>\n\n                <h3>Brazil (South America)</h3>\n                <ul>\n                    <li><strong>Profile:</strong> capital Brasília; 8,514,877 km² (47% of the mainland); ~210 million people.</li>\n                    <li><strong>Brasília:</strong> a planned city (1960), UNESCO-listed 1987 as a landmark of modern urbanism.</li>\n                    <li><strong>Rio de Janeiro:</strong> port on Guanabara Bay (metro ~13.5 m); beaches Copacabana & Ipanema, Christ the Redeemer (Corcovado, 704 m), Maracanã, the street carnival (since the 1830s).</li>\n                    <li><strong>Also:</strong> Foz do Iguaçu (Brazil/Argentina), Salvador, coffee tours.</li>\n                </ul>\n            "
+    }
+  }
+}

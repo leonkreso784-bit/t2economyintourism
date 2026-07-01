@@ -1,0 +1,1702 @@
+{
+  "marketingConcept": {
+    "name": "Marketing Concept",
+    "icon": "fa-bullseye",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What is the core definition of marketing in a modern business concept?",
+        "answer": "Marketing is creating and exchanging value by understanding customer needs and delivering offerings that satisfy those needs profitably.",
+        "explanation": "Modern marketing starts from value, not only selling."
+      },
+      {
+        "question": "How did business concepts evolve historically?",
+        "answer": "From production concept to selling concept, then marketing concept, and finally relationship/holistic marketing.",
+        "explanation": "Each stage reflects increasing customer orientation."
+      },
+      {
+        "question": "What is the production concept?",
+        "answer": "Focus on production efficiency and low costs: make products and expect people to buy them.",
+        "explanation": "Works when demand exceeds supply."
+      },
+      {
+        "question": "What is the selling concept?",
+        "answer": "Focus on aggressive promotion and sales volume: sell what the company already has.",
+        "explanation": "Product-push approach, not customer-pull."
+      },
+      {
+        "question": "What is the marketing concept?",
+        "answer": "Find out what customers need first, then design and deliver the right offering better than competitors.",
+        "explanation": "Customer needs drive strategy and operations."
+      },
+      {
+        "question": "What is holistic marketing?",
+        "answer": "An integrated perspective connecting relationship marketing, internal marketing, integrated marketing, and performance marketing.",
+        "explanation": "Everything in business affects marketing outcomes."
+      },
+      {
+        "question": "What is relationship marketing in practical terms?",
+        "answer": "Building long-term cooperation with consumers, suppliers, distributors, and other market actors to create durable value.",
+        "explanation": "It goes beyond one-time transactions."
+      },
+      {
+        "question": "Why did modern firms move from mass production logic to marketing logic?",
+        "answer": "Because markets became competitive, customers became more informed, and value differentiation became more important than simple output volume.",
+        "explanation": "Competition shifted the source of advantage."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The marketing concept starts with:",
+        "options": [
+          "Production capacity",
+          "Customer needs",
+          "Advertising budget",
+          "Sales quotas"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The selling concept primarily emphasizes:",
+        "options": [
+          "Relationship building",
+          "Aggressive sales and promotion",
+          "Sustainability first",
+          "Customer co-creation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Holistic marketing includes all EXCEPT:",
+        "options": [
+          "Integrated marketing",
+          "Internal marketing",
+          "Relationship marketing",
+          "Single-function marketing"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "The production concept is strongest when:",
+        "options": [
+          "Demand is weak and fragmented",
+          "Demand exceeds supply",
+          "Consumers compare many alternatives",
+          "Brand loyalty is high"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Modern marketing is about creating and exchanging _______.",
+        "answer": "value",
+        "hint": "Utility for customers..."
+      },
+      {
+        "sentence": "The marketing concept begins with understanding customer _______.",
+        "answer": "needs",
+        "hint": "Needs and wants..."
+      },
+      {
+        "sentence": "The selling concept focuses on maximizing sales _______.",
+        "answer": "volume",
+        "hint": "Quantity sold..."
+      },
+      {
+        "sentence": "Holistic marketing implies an _______ perspective across functions.",
+        "answer": "integrated",
+        "hint": "Not fragmented..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 1 - Marketing as a Modern Business Concept",
+      "content": "\n                <h3>1) Why Marketing Became a Core Business Logic</h3>\n                <p>In modern competition, firms no longer win only with production capacity. They win by understanding who the customer is, what problem they solve, and why the offering is superior to alternatives.</p>\n\n                <h3>2) Evolution of Business Concepts</h3>\n                <ul>\n                    <li><strong>Production concept:</strong> make efficiently and lower costs</li>\n                    <li><strong>Selling concept:</strong> push existing products via promotion</li>\n                    <li><strong>Marketing concept:</strong> start from customer needs and wants</li>\n                    <li><strong>Relationship/Holistic:</strong> manage networks and integrated value creation</li>\n                </ul>\n\n                <div class=\"formula-box\">\n                    <p><strong>Marketing concept:</strong> Understand needs -> design value -> deliver better than competition</p>\n                </div>\n\n                <h3>3) Strategic Meaning of Marketing Concept</h3>\n                <ul>\n                    <li>Customer value is defined before product design</li>\n                    <li>Competitive advantage comes from better fit, not only lower price</li>\n                    <li>Profit is achieved by satisfying target customers efficiently</li>\n                </ul>\n\n                <h3>4) Marketing Mix as Execution System</h3>\n                <p>Strategy is implemented through the marketing mix: <strong>product, price, distribution, promotion</strong>.</p>\n                <ul>\n                    <li>Product defines utility and differentiation</li>\n                    <li>Price defines value-for-money perception</li>\n                    <li>Distribution defines accessibility and convenience</li>\n                    <li>Promotion defines communication and persuasion</li>\n                </ul>\n\n                <h3>5) Relationship and Holistic Marketing</h3>\n                <div class=\"example-box\">\n                    <p><strong>Relationship marketing:</strong> include suppliers, distributors, and consumers as partners in value delivery.</p>\n                    <p><strong>Holistic marketing:</strong> all business functions influence market outcomes.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Prepare clear differences between production, selling, marketing, and holistic concepts, plus one practical example for each.</p>\n                </div>\n            "
+    }
+  },
+  "marketingEnvironment": {
+    "name": "Marketing Environment",
+    "icon": "fa-globe-europe",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What is the difference between macro and micro marketing environment?",
+        "answer": "Macro factors are indirect and less controllable (PESTLE), while micro factors are direct actors close to the company (consumers, competitors, suppliers, distributors).",
+        "explanation": "Managers monitor macro and manage micro relationships."
+      },
+      {
+        "question": "What does PESTLE stand for?",
+        "answer": "Political, Economic, Social, Technological, Legal, Environmental factors.",
+        "explanation": "Framework for analyzing indirect environmental influences."
+      },
+      {
+        "question": "How do economic forces affect marketing decisions?",
+        "answer": "Business cycle, inflation, unemployment, and income levels affect purchasing power, demand, and pricing strategy.",
+        "explanation": "Demand is strongly linked to economic context."
+      },
+      {
+        "question": "Why are social and cultural forces important?",
+        "answer": "Values, lifestyles, social roles, and attitudes influence what people buy, where they buy, and how they evaluate brands.",
+        "explanation": "Consumer meaning shapes market behavior."
+      },
+      {
+        "question": "What is marketing intelligence?",
+        "answer": "Continuous collection and analysis of market data from external and internal sources to support better decisions.",
+        "explanation": "Key sources include social media, search trends, internal records, and industry signals."
+      },
+      {
+        "question": "Why must firms react to macroenvironmental factors even if they cannot control them?",
+        "answer": "Because macro forces shape demand, costs, regulation, and customer behavior. Ignoring them creates strategic risk.",
+        "explanation": "Adaptation is mandatory when control is impossible."
+      },
+      {
+        "question": "What is the role of legal and environmental factors in marketing decisions?",
+        "answer": "They set boundaries for acceptable market behavior, compliance obligations, and sustainability expectations that affect product, communication, and operations.",
+        "explanation": "Legality and sustainability are strategic constraints and opportunities."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which is a macroenvironment factor?",
+        "options": [
+          "Suppliers",
+          "Distributors",
+          "Technological change",
+          "Competitors"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "PESTLE includes all EXCEPT:",
+        "options": [
+          "Political",
+          "Psychological",
+          "Economic",
+          "Environmental"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Consumers and competitors belong to:",
+        "options": [
+          "Microenvironment",
+          "Macroeconomics",
+          "Internal accounting",
+          "Financial reporting"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Which statement is true?",
+        "options": [
+          "Macro factors are directly controllable",
+          "Micro factors are always uncontrollable",
+          "Macro factors require monitoring and strategic response",
+          "PESTLE is a pricing model"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "PESTLE analysis is used for _______ environmental factors.",
+        "answer": "macro",
+        "hint": "Indirect level..."
+      },
+      {
+        "sentence": "Consumers, suppliers and distributors are part of the _______ environment.",
+        "answer": "micro",
+        "hint": "Direct actors..."
+      },
+      {
+        "sentence": "Marketing _______ helps managers make data-informed decisions.",
+        "answer": "intelligence",
+        "hint": "Insight system..."
+      },
+      {
+        "sentence": "Political, economic, social, technological, legal and environmental factors are summarized as _______.",
+        "answer": "PESTLE",
+        "hint": "Six-letter framework..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 2 - The Marketing Environment",
+      "content": "\n                <h3>1) Marketing Environment as Decision Context</h3>\n                <p>Every marketing decision is made inside an environment the firm partly controls (micro) and partly cannot control (macro).</p>\n\n                <h3>2) Macro vs Micro Influences</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Macro (indirect):</strong> PESTLE</p>\n                    <p><strong>Micro (direct):</strong> consumers, competitors, suppliers, distributors</p>\n                </div>\n\n                <h4>Why environment analysis matters</h4>\n                <ul>\n                    <li>Detect opportunities and threats early</li>\n                    <li>Adjust marketing mix to external constraints</li>\n                    <li>Reduce strategic surprises</li>\n                </ul>\n\n                <h3>3) PESTLE in Practice</h3>\n                <ul>\n                    <li><strong>Political:</strong> policy support, trade measures, institutional stability</li>\n                    <li><strong>Economic:</strong> inflation, income, unemployment, cycles</li>\n                    <li><strong>Social:</strong> values, lifestyle, demographic shifts</li>\n                    <li><strong>Technological:</strong> digital channels, automation, data tools</li>\n                    <li><strong>Legal:</strong> compliance, consumer rights, market rules</li>\n                    <li><strong>Environmental:</strong> sustainability pressure and regulation</li>\n                </ul>\n\n                <h3>4) Economic and Social Pressures</h3>\n                <ul>\n                    <li>Inflation and lower income reduce demand sensitivity</li>\n                    <li>Lifestyle and value shifts change category preferences</li>\n                    <li>Technology changes channel expectations and speed</li>\n                </ul>\n\n                <h3>5) Marketing Intelligence and Information System</h3>\n                <div class=\"example-box\">\n                    <p>Good marketing intelligence combines internal records with external data from search, social media, platforms, and industry signals.</p>\n                </div>\n            "
+    }
+  },
+  "marketAndValueExchange": {
+    "name": "Market and Value Exchange",
+    "icon": "fa-exchange-alt",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "What is a market in economic terms?",
+        "answer": "A market is an economic space where goods, services, and other transactions are exchanged between participants.",
+        "explanation": "Markets can be local, national, international, and digital."
+      },
+      {
+        "question": "What is value exchange?",
+        "answer": "A process where buyers and sellers exchange something of value, typically utility/satisfaction for money/time/commitment.",
+        "explanation": "Exchange is the core mechanism of marketing."
+      },
+      {
+        "question": "What are key conditions for exchange?",
+        "answer": "At least two parties, value for each party, communication and delivery ability, freedom to accept/reject, and perceived benefit.",
+        "explanation": "Without these conditions, exchange fails."
+      },
+      {
+        "question": "What are market discrepancies?",
+        "answer": "Differences between producers and buyers in space, time, information, value perception, ownership, quantity, and assortment.",
+        "explanation": "Marketing functions reduce these discrepancies."
+      },
+      {
+        "question": "Why are marketing functions necessary?",
+        "answer": "They bridge producer-consumer gaps and create utility for market participants.",
+        "explanation": "Utility is created through matching supply and demand conditions."
+      },
+      {
+        "question": "What is discrepancy of value in exchange?",
+        "answer": "Producers value offers through costs and target prices, while consumers value offers through perceived benefits and purchasing power.",
+        "explanation": "Value is not identical for both sides."
+      },
+      {
+        "question": "What is discrepancy of ownership?",
+        "answer": "Producers own products before sale, while consumers seek ownership after purchase. Exchange legally transfers this ownership.",
+        "explanation": "Ownership transfer is central to market transaction structure."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which is NOT a standard exchange condition?",
+        "options": [
+          "Two parties",
+          "Ability to communicate",
+          "Mandatory purchase",
+          "Perceived desirability"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Market discrepancy in information exists when:",
+        "options": [
+          "Prices are low",
+          "Buyers and sellers lack relevant knowledge about each other",
+          "Demand is stable",
+          "Products are digital"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Temporal discrepancy refers to mismatch in:",
+        "options": [
+          "Location",
+          "Time of production and consumption",
+          "Ownership rights",
+          "Product color"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Quantity discrepancy appears because:",
+        "options": [
+          "Consumers always buy in bulk",
+          "Producers and consumers need identical quantities",
+          "Production scale and consumer purchase units differ",
+          "Only price differs"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Exchange means getting something of _______ for something else of value.",
+        "answer": "value",
+        "hint": "Utility word..."
+      },
+      {
+        "sentence": "Spatial discrepancy is a mismatch in market _______.",
+        "answer": "location",
+        "hint": "Where buyers/sellers are..."
+      },
+      {
+        "sentence": "Marketing functions reduce market _______.",
+        "answer": "discrepancies",
+        "hint": "Gaps/mismatches..."
+      },
+      {
+        "sentence": "Temporal discrepancy is a mismatch in _______.",
+        "answer": "time",
+        "hint": "When supply and demand happen..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 3 - The Market and Market-Oriented Business",
+      "content": "\n                <h3>1) Market as an Exchange Space</h3>\n                <p>A market is the space where value exchange occurs through offers, demand, and transactions.</p>\n\n                <h3>2) Value Exchange Logic</h3>\n                <p>Markets work when both sides perceive value and can complete exchange under acceptable conditions.</p>\n\n                <h4>Conditions for Exchange</h4>\n                <ul>\n                    <li>Two or more parties</li>\n                    <li>Each side has something of value</li>\n                    <li>Communication and delivery are possible</li>\n                    <li>Acceptance/rejection is free</li>\n                    <li>Exchange is desirable for both parties</li>\n                </ul>\n\n                <h3>3) Why Discrepancies Exist</h3>\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Core Issue</h4>\n                    <p>Producer logic and buyer logic often differ. Marketing exists to reconcile these differences.</p>\n                </div>\n\n                <h4>Main Discrepancy Types</h4>\n                <ul>\n                    <li>Spatial</li>\n                    <li>Temporal</li>\n                    <li>Information</li>\n                    <li>Value perception</li>\n                    <li>Ownership</li>\n                    <li>Quantity and assortment</li>\n                </ul>\n\n                <h3>4) Utility Creation for Market Participants</h3>\n                <ul>\n                    <li><strong>Form utility:</strong> transforming input into useful offer</li>\n                    <li><strong>Place utility:</strong> making offer available where needed</li>\n                    <li><strong>Time utility:</strong> making offer available when needed</li>\n                    <li><strong>Possession utility:</strong> enabling ownership/use transfer</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Be ready to explain each discrepancy with a practical hospitality or retail example.</p>\n                </div>\n            "
+    }
+  },
+  "segmentationTargetingPositioning": {
+    "name": "Segmentation and Positioning",
+    "icon": "fa-layer-group",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "What is market segmentation?",
+        "answer": "Strategic division of a heterogeneous market into homogeneous groups with similar needs and wants.",
+        "explanation": "Segmentation allows tailored value propositions."
+      },
+      {
+        "question": "What are key segmentation advantages?",
+        "answer": "Better understanding of needs, more precise targeting, and more efficient use of marketing resources.",
+        "explanation": "Higher effectiveness and reduced waste."
+      },
+      {
+        "question": "What are the three major market selection approaches?",
+        "answer": "Undifferentiated (mass), differentiated, and concentrated marketing.",
+        "explanation": "Approach depends on resources and strategy."
+      },
+      {
+        "question": "What are common segmentation variables?",
+        "answer": "Geographic, demographic, psychographic, and behavioral variables.",
+        "explanation": "Combining variables gives more useful segments."
+      },
+      {
+        "question": "What is positioning?",
+        "answer": "Designing the offer and brand image so the target segment perceives a clear, distinct value in its mind.",
+        "explanation": "Positioning defines competitive place in customer perception."
+      },
+      {
+        "question": "What is segment evaluation about?",
+        "answer": "Assessing segment size, growth, accessibility, profitability, strategic fit, and competitive intensity before choosing targets.",
+        "explanation": "Not every segment is attractive or feasible."
+      },
+      {
+        "question": "Why can concentrated marketing be powerful?",
+        "answer": "Because focused resources can create stronger relevance and differentiation in a chosen niche.",
+        "explanation": "Focus often beats spread resources in constrained firms."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Segmentation is primarily used to:",
+        "options": [
+          "Ignore customer differences",
+          "Treat all customers identically",
+          "Identify groups with similar needs",
+          "Eliminate competition"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Concentrated marketing focuses on:",
+        "options": [
+          "Entire market equally",
+          "One selected segment",
+          "Only price discounts",
+          "Only online channels"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "STP stands for:",
+        "options": [
+          "Sales, Trade, Promotion",
+          "Segmentation, Targeting, Positioning",
+          "Strategy, Tactics, Planning",
+          "Supply, Transport, Pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which segmentation variable refers to loyalty and usage patterns?",
+        "options": [
+          "Demographic",
+          "Geographic",
+          "Behavioral",
+          "Legal"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Market segmentation identifies market _______ and segment homogeneity.",
+        "answer": "heterogeneity",
+        "hint": "Differences across market..."
+      },
+      {
+        "sentence": "After segmentation, firms choose a _______ market.",
+        "answer": "target",
+        "hint": "Selected segment..."
+      },
+      {
+        "sentence": "Positioning shapes consumer _______ of the brand.",
+        "answer": "perception",
+        "hint": "How people see it..."
+      },
+      {
+        "sentence": "STP means segmentation, targeting and _______.",
+        "answer": "positioning",
+        "hint": "Third step..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 5 - Market Segmentation",
+      "content": "\n                <h3>1) STP as Core Strategic Sequence</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Segmentation</strong> -> <strong>Targeting</strong> -> <strong>Positioning</strong></p>\n                </div>\n\n                <h4>Why segment?</h4>\n                <ul>\n                    <li>Markets are heterogeneous</li>\n                    <li>Needs differ by customer groups</li>\n                    <li>One offer cannot optimally satisfy everyone</li>\n                </ul>\n\n                <h3>2) Selection Approaches</h3>\n                <ul>\n                    <li><strong>Undifferentiated:</strong> one mix for broad market</li>\n                    <li><strong>Differentiated:</strong> tailored mixes for multiple segments</li>\n                    <li><strong>Concentrated:</strong> focus on one key segment</li>\n                </ul>\n\n                <h3>3) Segmentation Variables</h3>\n                <ul>\n                    <li><strong>Geographic:</strong> location, region, urban/rural patterns</li>\n                    <li><strong>Demographic:</strong> age, income, education, family status</li>\n                    <li><strong>Psychographic:</strong> lifestyle, values, personality</li>\n                    <li><strong>Behavioral:</strong> usage, loyalty, benefits sought</li>\n                </ul>\n\n                <h3>4) Segment Evaluation and Target Selection</h3>\n                <div class=\"example-box\">\n                    <p>Attractive segments are measurable, reachable, profitable, and aligned with firm capabilities.</p>\n                </div>\n\n                <h3>5) Positioning Discipline</h3>\n                <p>Positioning defines what the brand should mean in the target segment's mind and how it differs from competitors.</p>\n                <ul>\n                    <li>Value proposition must be clear and relevant</li>\n                    <li>Messaging must be consistent across channels</li>\n                    <li>Operations must deliver the promised position</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Know segmentation variables and be able to justify which strategy fits a given case.</p>\n                </div>\n            "
+    }
+  },
+  "consumerBehaviourAndResearch": {
+    "name": "Consumer Behaviour and Research",
+    "icon": "fa-user-check",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "Who are B2C consumers and B2B consumers?",
+        "answer": "B2C consumers are individuals/households buying for personal use. B2B consumers buy for resale, production input, or operational use.",
+        "explanation": "Buying logic differs by market type."
+      },
+      {
+        "question": "What external factors influence B2C behaviour?",
+        "answer": "Economic conditions, culture, social groups, family roles/status, and market information.",
+        "explanation": "Context shapes purchase decisions."
+      },
+      {
+        "question": "What internal factors influence B2C behaviour?",
+        "answer": "Learning, personality, perception, attitudes, motivation, and beliefs.",
+        "explanation": "Internal psychology drives interpretation and choice."
+      },
+      {
+        "question": "What are the five steps of B2C buying decision process?",
+        "answer": "Problem recognition, information search, evaluation of alternatives, purchase decision, post-purchase evaluation.",
+        "explanation": "Standard consumer decision model."
+      },
+      {
+        "question": "What is the objective of market research?",
+        "answer": "To gather relevant data about target customers and markets so firms can make better marketing decisions.",
+        "explanation": "Research reduces uncertainty and improves strategy quality."
+      },
+      {
+        "question": "What is the difference between market research and marketing research?",
+        "answer": "Market research focuses mainly on customers/target market, while marketing research has broader scope including product, price, distribution, promotion, branding, and performance.",
+        "explanation": "Marketing research is wider in scope."
+      },
+      {
+        "question": "What are core stages of market research process?",
+        "answer": "Problem definition, research approach, research design, fieldwork, data preparation/analysis, and reporting.",
+        "explanation": "A structured process prevents weak conclusions."
+      },
+      {
+        "question": "What are common B2B buying center roles?",
+        "answer": "Initiator, influencer, buyer, decider, gatekeeper, and user.",
+        "explanation": "B2B decisions are usually multi-person and role-based."
+      },
+      {
+        "question": "What is the practical difference between qualitative and quantitative research?",
+        "answer": "Qualitative explores meanings, motives, and depth; quantitative measures patterns, frequencies, and statistical relationships.",
+        "explanation": "Methods answer different question types."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The first stage in consumer buying process is:",
+        "options": [
+          "Purchase",
+          "Problem recognition",
+          "Post-purchase evaluation",
+          "Alternative evaluation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "B2B buying center may include:",
+        "options": [
+          "Only final user",
+          "Initiator, influencer, buyer, decider, gatekeeper, users",
+          "Only procurement manager",
+          "Only supplier"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Market research process usually starts with:",
+        "options": [
+          "Advertising campaign",
+          "Problem definition",
+          "Fieldwork",
+          "Data visualization"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Qualitative and quantitative methods are examples of:",
+        "options": [
+          "Pricing models",
+          "Research approaches",
+          "Distribution channels",
+          "Consumer segments"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which sequence is correct in B2C buying process?",
+        "options": [
+          "Purchase -> need recognition -> evaluation",
+          "Need recognition -> search -> evaluation -> purchase -> post-purchase",
+          "Evaluation -> search -> purchase -> need",
+          "Search -> post-purchase -> purchase"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "B2C buyers are final _______ consumers.",
+        "answer": "end",
+        "hint": "Opposite of business market..."
+      },
+      {
+        "sentence": "In B2B, a _______ controls the flow of information in buying center.",
+        "answer": "gatekeeper",
+        "hint": "Access controller role..."
+      },
+      {
+        "sentence": "Market research can use qualitative, quantitative, or _______ methods.",
+        "answer": "mixed",
+        "hint": "Combination approach..."
+      },
+      {
+        "sentence": "In B2B buying center, the _______ makes the final purchase decision.",
+        "answer": "decider",
+        "hint": "Final authority role..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 6 + Market Research - Consumer Decisions and Evidence",
+      "content": "\n                <h3>1) B2C vs B2B Consumer Logic</h3>\n                <ul>\n                    <li><strong>B2C:</strong> personal/household benefit and emotional factors</li>\n                    <li><strong>B2B:</strong> organizational criteria, process discipline, multiple decision roles</li>\n                </ul>\n\n                <h3>2) B2C Behavioural Factors</h3>\n                <ul>\n                    <li><strong>External:</strong> economy, culture, social groups, family, offers</li>\n                    <li><strong>Internal:</strong> motivation, learning, attitudes, perception, personality</li>\n                </ul>\n\n                <h4>B2C buying process</h4>\n                <ol>\n                    <li>Problem recognition</li>\n                    <li>Information search</li>\n                    <li>Alternative evaluation</li>\n                    <li>Purchase decision</li>\n                    <li>Post-purchase reaction</li>\n                </ol>\n\n                <h3>3) B2B Buying Process and Roles</h3>\n                <ul>\n                    <li>Need/problem recognition</li>\n                    <li>Specification and supplier search</li>\n                    <li>Evaluation of alternatives</li>\n                    <li>Selection and purchase</li>\n                    <li>Post-purchase evaluation</li>\n                </ul>\n                <p>Typical roles: initiator, influencer, buyer, decider, gatekeeper, user.</p>\n\n                <h3>4) Market Research Essentials</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Goal:</strong> better decisions through relevant market evidence</p>\n                </div>\n                <ul>\n                    <li>Clarify objective and problem</li>\n                    <li>Choose method and data sources</li>\n                    <li>Collect, analyze, and report actionable findings</li>\n                </ul>\n\n                <h4>Methodological approaches</h4>\n                <ul>\n                    <li><strong>Qualitative:</strong> interviews, focus groups, deep understanding</li>\n                    <li><strong>Quantitative:</strong> surveys, measurement, statistics</li>\n                    <li><strong>Mixed methods:</strong> combine depth and measurement</li>\n                </ul>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Common Mistake</h4>\n                    <p>Jumping to data collection before clearly defining the business problem leads to weak conclusions.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Be able to compare B2C and B2B buying behavior and explain full market research process stages.</p>\n                </div>\n            "
+    }
+  },
+  "product": {
+    "name": "The Product",
+    "icon": "fa-box-open",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "What is a product in marketing (total product concept)?",
+        "answer": "An object of exchange on the market that resolves a problem and provides utility (value) for the consumer. The total product concept is the totality of tangible and intangible attributes a consumer gains by buying it.",
+        "explanation": "Product is the primary marketing-mix element on which the other elements are built."
+      },
+      {
+        "question": "What are the two dimensions of product value?",
+        "answer": "The primary dimension (the core utility that satisfies the need or want) and the auxiliary dimension (design, quality, brand, packaging, repair, warranty, delivery).",
+        "explanation": "Auxiliary attributes differentiate competing products."
+      },
+      {
+        "question": "How are B2C (consumer) products classified?",
+        "answer": "Convenience products (staple, impulse, emergency), shopping products (bought occasionally, need more information), and specialty products (special characteristics/brands; no substitutes accepted).",
+        "explanation": "Classification reflects buying effort and frequency."
+      },
+      {
+        "question": "How are B2B (business) products classified?",
+        "answer": "Raw materials, manufacturing materials and parts, capital goods, accessory equipment, consumable supplies, and services.",
+        "explanation": "Based on their role in production and their value."
+      },
+      {
+        "question": "What four characteristics describe a product programme (mix)?",
+        "answer": "Width (number of product lines), depth (products within each line), length (total products across all lines), and consistency (how closely related the lines are).",
+        "explanation": "Describes the breadth of a company's offering."
+      },
+      {
+        "question": "What are the elements of a product, and how do brand name, brand mark and trademark differ?",
+        "answer": "Elements: attributes, brand, packaging, label, support. Brand name = the pronounceable part; brand mark = a symbol that cannot be expressed in words; trademark = a brand (or part) that is registered and legally protected.",
+        "explanation": "Brands can be manufacturer, private, or generic."
+      },
+      {
+        "question": "What are the steps of the new product development process?",
+        "answer": "Idea generation, idea screening, product concept development, business analysis, product development, test marketing, and commercialization.",
+        "explanation": "Many ideas terminate at the product-development stage."
+      },
+      {
+        "question": "What are the four product life-cycle phases and the diffusion adopter groups?",
+        "answer": "Phases: introduction, growth, maturity, decline. Adopters: innovators (2.5%), early adopters (13.5%), early majority (34%), late majority (34%), laggards (16%).",
+        "explanation": "Marketing responses (product, price, promotion, distribution) change in each phase."
+      },
+      {
+        "question": "What is a service and how does it differ from a physical product?",
+        "answer": "A service is a mainly intangible activity or benefit that does not result in ownership; it is produced and consumed simultaneously, cannot be stored, and the customer participates in delivery. Quality is judged by comparing perception with expectation. Services add 3 Ps: people, physical evidence, processes.",
+        "explanation": "Service quality: satisfaction = perception - expectation."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The primary marketing-mix element upon which the others are built is:",
+        "options": [
+          "Price",
+          "Promotion",
+          "Product",
+          "Distribution"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Staple, impulse and emergency goods are subtypes of:",
+        "options": [
+          "Specialty products",
+          "Convenience products",
+          "Capital goods",
+          "Shopping products"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The new product development process begins with:",
+        "options": [
+          "Business analysis",
+          "Idea generation",
+          "Test marketing",
+          "Commercialization"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which sequence of product life-cycle phases is correct?",
+        "options": [
+          "Growth -> Introduction -> Maturity -> Decline",
+          "Introduction -> Growth -> Maturity -> Decline",
+          "Introduction -> Maturity -> Growth -> Decline",
+          "Maturity -> Growth -> Introduction -> Decline"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the diffusion process, the first 2.5% of adopters are called:",
+        "options": [
+          "Early adopters",
+          "Laggards",
+          "Innovators",
+          "Early majority"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The product is the primary element of the marketing _______ upon which other elements are built.",
+        "answer": "mix",
+        "hint": "The 4 Ps..."
+      },
+      {
+        "sentence": "Convenience products include staple, impulse and _______ products.",
+        "answer": "emergency",
+        "hint": "Bought for an urgent need..."
+      },
+      {
+        "sentence": "The depth of a product programme is the number of products within each product _______.",
+        "answer": "line",
+        "hint": "A group of related products..."
+      },
+      {
+        "sentence": "In the product life cycle, the phase that comes after growth is _______.",
+        "answer": "maturity",
+        "hint": "Sales peak, many competitors..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 7 - The Product",
+      "content": "\n                <h3>1) Concept and Nature of a Product</h3>\n                <p>A product is an <strong>object of exchange</strong> used to resolve a problem and meet a specific need or want. The <strong>total product concept</strong> is the totality of tangible and intangible attributes the consumer gains by buying it (a physical product, a service, or an idea).</p>\n                <div class=\"formula-box\">\n                    <p><strong>Product value = primary dimension</strong> (core utility) <strong>+ auxiliary dimension</strong> (design, quality, brand, packaging, repair, warranty, delivery)</p>\n                </div>\n\n                <h3>2) Product Classification</h3>\n                <ul>\n                    <li><strong>B2C:</strong> convenience (staple, impulse, emergency), shopping, and specialty products.</li>\n                    <li><strong>B2B:</strong> raw materials, manufacturing materials &amp; parts, capital goods, accessory equipment, consumable supplies, and services.</li>\n                </ul>\n\n                <h3>3) Product Programme</h3>\n                <ul>\n                    <li><strong>Width:</strong> number of product lines</li>\n                    <li><strong>Depth:</strong> number of products within each line</li>\n                    <li><strong>Length:</strong> total number of products across all lines</li>\n                    <li><strong>Consistency:</strong> how related the lines are (end use, channels, price ranges)</li>\n                </ul>\n\n                <h3>4) Product Elements</h3>\n                <ul>\n                    <li><strong>Attributes:</strong> physical (size, weight, durability, quality, design) and non-physical (warranty, image, delivery, instructions)</li>\n                    <li><strong>Brand:</strong> name, phrase, symbol or design that makes a product distinctive. <em>Brand name</em> = pronounceable part; <em>brand mark</em> = symbol that cannot be spoken; <em>trademark</em> = registered and legally protected.</li>\n                    <li><strong>Packaging:</strong> protects the product, communicates messages, supports promotion</li>\n                    <li><strong>Label:</strong> informs consumers; regulations require vital information</li>\n                    <li><strong>Support:</strong> pre-sales and post-sales services</li>\n                </ul>\n                <div class=\"example-box\">\n                    <p><strong>Brand categories:</strong> manufacturer brand (owned by the producer), private brand (owned by wholesalers/retailers), generic brand (brandless, basic packaging, lower price).</p>\n                </div>\n\n                <h3>5) New Product Development Process</h3>\n                <ul>\n                    <li>Idea generation -> idea screening -> product concept development -> business analysis -> product development -> test marketing -> commercialization</li>\n                </ul>\n                <p>Many projects <strong>often terminate at the product-development stage</strong>; commercialization is the most difficult phase to finance.</p>\n\n                <h3>6) Diffusion of Innovations</h3>\n                <ul>\n                    <li>Innovators 2.5% - younger, better educated, financially better off</li>\n                    <li>Early adopters 13.5% - careerists, educated, middle class</li>\n                    <li>Early majority 34% &middot; Late majority 34% &middot; Laggards 16% - conservative, older, traditional</li>\n                </ul>\n\n                <h3>7) Product Life Cycle and Marketing Responses</h3>\n                <table>\n                    <tr><th>Phase</th><th>Focus of marketing responses</th></tr>\n                    <tr><td><strong>Introduction</strong></td><td>Make the product distinctive, encourage trials, recover development costs, build distribution</td></tr>\n                    <tr><td><strong>Growth</strong></td><td>Differentiate, ensure repeat buys, expand channels, build brand loyalty</td></tr>\n                    <tr><td><strong>Maturity</strong></td><td>Defend market share, modify products, flexible pricing, remind the market</td></tr>\n                    <tr><td><strong>Decline</strong></td><td>Cut marketing costs, eliminate unprofitable products, keep loyal consumers, rationalize channels</td></tr>\n                </table>\n\n                <h3>8) Services</h3>\n                <p>A service is a mainly <strong>intangible</strong> activity or benefit that does not result in ownership. Key differences from physical products:</p>\n                <ul>\n                    <li>Produced and consumed simultaneously; <strong>cannot be stored</strong></li>\n                    <li>The customer <strong>participates</strong> in delivery (a partner in creating the service)</li>\n                    <li>Goal is uniqueness, not uniformity; quality = perception vs expectation</li>\n                </ul>\n                <div class=\"formula-box\">\n                    <p><strong>Satisfaction = perception - expectation.</strong> Perception &ge; expectation -> satisfaction, recommendation, loyalty.</p>\n                </div>\n                <p>Services add <strong>3 extra Ps</strong>: <strong>people</strong>, <strong>physical evidence</strong>, and <strong>processes</strong>.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Know the total product concept, B2C/B2B classification, product programme dimensions, the 7-step NPD process, the 4 life-cycle phases with responses, and the specific characteristics of services.</p>\n                </div>\n            "
+    }
+  },
+  "price": {
+    "name": "The Price",
+    "icon": "fa-tag",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is price and why is it special in the marketing mix?",
+        "answer": "Price is the monetary expression that consumers pay for a product. It is the only marketing-mix element that generates revenue (the others create costs).",
+        "explanation": "It directly determines profit."
+      },
+      {
+        "question": "What are the objectives of pricing?",
+        "answer": "The primary objective is to make a profit; others include winning new markets and developing new products. Marketers may set low (penetration), moderate (competitive), or high prices.",
+        "explanation": "High prices fit offerings that clearly differ from competitors and are valued by consumers."
+      },
+      {
+        "question": "What internal factors influence price?",
+        "answer": "Business objectives, available resources and costs, and the other marketing-mix elements (e.g., a luxury product with exclusive distribution implies a higher price).",
+        "explanation": "Internal factors are controllable by the firm."
+      },
+      {
+        "question": "What is the difference between fixed and variable costs?",
+        "answer": "Fixed costs remain the same regardless of the volume of production; variable costs are tied to volume and increase proportionally with output.",
+        "explanation": "Cost structure sets the price floor."
+      },
+      {
+        "question": "What external factors influence price?",
+        "answer": "Consumers (demand and its elasticity), distribution (channel mark-ups), competition (market structure), and government policies (taxes, regulation, price control, trade agreements).",
+        "explanation": "External factors are monitored, not controlled."
+      },
+      {
+        "question": "How do distribution mark-ups build the retail price?",
+        "answer": "Cost price + manufacturer mark-up (10-15%) + wholesaler mark-up (20-40%) + retailer mark-up (40-100%) = retail price.",
+        "explanation": "Each channel member adds a margin."
+      },
+      {
+        "question": "Who sets the price in different market structures?",
+        "answer": "Perfectly competitive market - the market; oligopoly - agreements between firms; monopoly - the monopolist; limited competitive market - product differentiation.",
+        "explanation": "Pricing freedom rises with differentiation and market power."
+      },
+      {
+        "question": "What are the main price strategies?",
+        "answer": "For existing products: keep or modify prices. Consumer-oriented strategies: penetration pricing (low), price skimming (high), psychological pricing (seemingly lower), and value-based pricing (as expected).",
+        "explanation": "Strategy depends on segment price-sensitivity."
+      },
+      {
+        "question": "What are the three groups of pricing methods?",
+        "answer": "Cost-based (average cost, mark-up, break-even point), demand-based (differential prices per segment), and competitor-based (price relative to rivals).",
+        "explanation": "The break-even point method sets a price that yields a target profit."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The only marketing-mix element that generates revenue is:",
+        "options": [
+          "Product",
+          "Promotion",
+          "Price",
+          "Distribution"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Fixed costs are costs that:",
+        "options": [
+          "Increase proportionally with output",
+          "Remain the same regardless of production volume",
+          "Occur only in services",
+          "Are set by the government"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Setting a low initial price to quickly win price-sensitive buyers is:",
+        "options": [
+          "Price skimming",
+          "Penetration pricing",
+          "Psychological pricing",
+          "Value-based pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Average cost, mark-up and break-even point are all examples of:",
+        "options": [
+          "Demand-based methods",
+          "Competitor-based methods",
+          "Cost-based methods",
+          "Price strategies"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In a monopoly market, the price is set by:",
+        "options": [
+          "The market",
+          "Agreements between firms",
+          "The monopolist",
+          "Product differentiation"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Price is the only marketing-mix element that generates _______.",
+        "answer": "revenue",
+        "hint": "Income from sales..."
+      },
+      {
+        "sentence": "_______ costs remain the same regardless of the volume of production.",
+        "answer": "fixed",
+        "hint": "Opposite of variable..."
+      },
+      {
+        "sentence": "Price _______ sets a high initial price to skim profit from price-insensitive buyers.",
+        "answer": "skimming",
+        "hint": "Cream off the top..."
+      },
+      {
+        "sentence": "The break-_______ point method sets a price that enables a certain profit to be made.",
+        "answer": "even",
+        "hint": "Total revenue = total costs..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 8 - The Price",
+      "content": "\n                <h3>1) Price Attributes and Objectives</h3>\n                <p>Price is the <strong>monetary expression</strong> consumers pay for a product. It is the <strong>only marketing-mix element that generates revenue</strong> - all the others create costs.</p>\n                <div class=\"formula-box\">\n                    <p><strong>Primary objective: make a profit.</strong> Also: win new markets, develop new products. Marketers set <em>low</em> (penetration), <em>moderate</em> (competitive), or <em>high</em> prices.</p>\n                </div>\n\n                <h3>2) Internal Factors</h3>\n                <ul>\n                    <li><strong>Business objectives</strong> (e.g., social responsibility -> recycled packaging -> higher price)</li>\n                    <li><strong>Available resources and costs</strong> - fixed costs (independent of volume) vs variable costs (proportional to volume)</li>\n                    <li><strong>Other marketing-mix elements</strong> (e.g., a luxury product -> exclusive distribution -> higher price)</li>\n                </ul>\n\n                <h3>3) External Factors</h3>\n                <ul>\n                    <li><strong>Consumers:</strong> demand and its elasticity (elastic vs inelastic demand; curve shifts)</li>\n                    <li><strong>Distribution:</strong> mark-ups along the channel</li>\n                    <li><strong>Competition:</strong> market structure</li>\n                    <li><strong>Government policies:</strong> anti-monopoly laws, price control, taxes, trade agreements</li>\n                </ul>\n                <div class=\"example-box\">\n                    <p><strong>Channel mark-ups:</strong> cost price + manufacturer 10-15% + wholesaler 20-40% + retailer 40-100% = retail price.</p>\n                </div>\n                <table>\n                    <tr><th>Market structure</th><th>Who sets the price?</th></tr>\n                    <tr><td>Perfectly competitive (large, non-differentiated)</td><td>The market</td></tr>\n                    <tr><td>Oligopoly (few, differentiated/substitutes)</td><td>Agreements</td></tr>\n                    <tr><td>Monopoly (one, no substitutes)</td><td>The monopolist</td></tr>\n                    <tr><td>Limited competitive (large, differentiated)</td><td>Product differentiation</td></tr>\n                </table>\n\n                <h3>4) Price Strategies</h3>\n                <ul>\n                    <li><strong>Existing products:</strong> keep existing levels or modify (reduce / increase)</li>\n                    <li><strong>Penetration pricing:</strong> price below product value to win price-sensitive buyers quickly</li>\n                    <li><strong>Price skimming:</strong> high price to skim profit from the price-insensitive segment</li>\n                    <li><strong>Psychological pricing:</strong> price seemingly lower than it is (emotional decision)</li>\n                    <li><strong>Value-based pricing:</strong> the highest price acceptable to the broad public</li>\n                </ul>\n\n                <h3>5) Pricing Methods</h3>\n                <ul>\n                    <li><strong>Cost-based:</strong>\n                        <ul>\n                            <li><em>Average cost method</em> - price from forecast average total cost per unit</li>\n                            <li><em>Mark-up method</em> - add a percentage of cost or selling price to average total costs</li>\n                            <li><em>Break-even point method</em> - set a price that enables a certain profit (total revenue = total costs)</li>\n                        </ul>\n                    </li>\n                    <li><strong>Demand-based:</strong> differential prices for individual markets/segments</li>\n                    <li><strong>Competitor-based:</strong> price relative to rivals (useful when products do not differ much); good for growing sales and market share</li>\n                </ul>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Common Mistake</h4>\n                    <p>Confusing strategies (penetration vs skimming) with methods (cost / demand / competitor-based). Strategy = the pricing intent; method = how the number is calculated.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Explain price attributes and objectives, internal vs external factors, the four price strategies, and the three groups of pricing methods (especially the three cost-based methods).</p>\n                </div>\n            "
+    }
+  },
+  "distribution": {
+    "name": "Distribution",
+    "icon": "fa-truck",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "What is distribution in marketing?",
+        "answer": "All the activities essential for delivering products from manufacturers to consumers. It includes two elements: marketing (distribution) channels and physical distribution.",
+        "explanation": "Distribution bridges producer and consumer."
+      },
+      {
+        "question": "What is the difference between direct and indirect marketing channels?",
+        "answer": "Direct channels reach consumers without intermediaries (door-to-door, mail order, the manufacturer's own stores). Indirect channels use intermediaries (wholesalers, retailers, agents, brokers).",
+        "explanation": "Channel decisions also cover the number of channels and the intensity of distribution."
+      },
+      {
+        "question": "What is distribution channel length?",
+        "answer": "The number of levels (intermediaries) a channel covers. Shorter channels suit fewer, concentrated consumers; longer channels suit many consumers dispersed over a wide area.",
+        "explanation": "Length = number of channel levels."
+      },
+      {
+        "question": "What are the three basic functions of distribution channels?",
+        "answer": "Transactional (buying, selling, risk bearing through stocking), logistical (assembling, storing, transporting, contacting consumers), and facilitating/supporting (market information, promotion, financing).",
+        "explanation": "Together they deliver products to consumers."
+      },
+      {
+        "question": "What are the three intensities of distribution?",
+        "answer": "Intensive (as many sales points as possible - e.g. newspapers, soft drinks), selective (a limited number of carefully chosen points - e.g. furniture, appliances), and exclusive (exclusive rights for one distributor - e.g. cars, watches).",
+        "explanation": "Intensity = number of intermediaries on each channel level."
+      },
+      {
+        "question": "What is a wholesaler and what functions does it perform?",
+        "answer": "A wholesaler sells products to business entities that resell or use them. Functions: unify offers from several manufacturers, store and group products, transport them, plus financing, information and promotion.",
+        "explanation": "Provides a time advantage and a place advantage."
+      },
+      {
+        "question": "How are intermediaries grouped by whether they take ownership of products?",
+        "answer": "Intermediaries that take possession (wholesalers, retailers) and those that do not (agents connect buyers and sellers; brokers are in direct contact with sellers and engaged occasionally). Agents and brokers charge a commission.",
+        "explanation": "Agents/brokers don't own the goods."
+      },
+      {
+        "question": "What are the main functions of retailers?",
+        "answer": "Procuring products from wholesalers/manufacturers, informing consumers, informing manufacturers about consumer needs, effecting payment, ensuring storage and price marking, and carrying out final transactions with consumers.",
+        "explanation": "Aim: consumer satisfaction and loyalty."
+      },
+      {
+        "question": "What is physical distribution and its functions?",
+        "answer": "Activities that reduce delivery costs and raise consumer satisfaction. Functions: transport, warehousing, and inventory management. Process: define goals, order processing/inventory, organize transport, then control results.",
+        "explanation": "Transport is usually the largest cost share."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Distribution activities include two elements:",
+        "options": [
+          "Advertising and selling",
+          "Marketing channels and physical distribution",
+          "Wholesaling and retailing",
+          "Agents and brokers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling soft drinks and newspapers through as many outlets as possible is:",
+        "options": [
+          "Exclusive distribution",
+          "Selective distribution",
+          "Intensive distribution",
+          "Direct distribution"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Intermediaries that do NOT take possession of products are:",
+        "options": [
+          "Wholesalers and retailers",
+          "Agents and brokers",
+          "Manufacturers and consumers",
+          "Distributors"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Transport, warehousing and inventory management are functions of:",
+        "options": [
+          "Promotion",
+          "Physical distribution",
+          "Wholesaling",
+          "Personal selling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A longer distribution channel is suitable when consumers are:",
+        "options": [
+          "Few and concentrated",
+          "Many and dispersed over a wide area",
+          "All business buyers",
+          "Located next to the producer"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Distribution channels perform transactional, logistical and _______ functions.",
+        "answer": "facilitating",
+        "hint": "Supporting; market information, promotion..."
+      },
+      {
+        "sentence": "_______ distribution gives exclusive rights to sell to a single distributor.",
+        "answer": "exclusive",
+        "hint": "e.g. cars, watches..."
+      },
+      {
+        "sentence": "A _______ sells products to businesses that resell or use them.",
+        "answer": "wholesaler",
+        "hint": "Between manufacturer and retailer..."
+      },
+      {
+        "sentence": "The number of levels covered by a channel is the channel _______.",
+        "answer": "length",
+        "hint": "Short vs long..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 9 - Distribution",
+      "content": "\n                <h3>1) What Distribution Is</h3>\n                <p>Distribution brings together all the activities essential for products to be delivered from manufacturers to consumers. It has two elements:</p>\n                <ul>\n                    <li><strong>Marketing (distribution) channels</strong></li>\n                    <li><strong>Physical distribution</strong></li>\n                </ul>\n                <p>Channels can be <strong>direct</strong> (no intermediaries: door-to-door, mail order, own stores) or <strong>indirect</strong> (with intermediaries). Key decisions: direct vs indirect, one or more channels, and the <em>intensity</em> of distribution.</p>\n\n                <h3>2) Channel Length and Functions</h3>\n                <p><strong>Channel length</strong> = the number of levels a channel covers. Shorter channels suit fewer, concentrated consumers; longer channels suit many, dispersed consumers.</p>\n                <div class=\"formula-box\">\n                    <p>Channels perform three functions: <strong>transactional</strong> (buy, sell, bear risk) + <strong>logistical</strong> (assemble, store, transport, contact) + <strong>facilitating</strong> (information, promotion, financing).</p>\n                </div>\n\n                <h3>3) Intensity of Distribution</h3>\n                <table>\n                    <tr><th>Intensity</th><th>Meaning</th><th>Examples</th></tr>\n                    <tr><td><strong>Intensive</strong></td><td>As many sales points as possible</td><td>Newspapers, soft drinks, water</td></tr>\n                    <tr><td><strong>Selective</strong></td><td>Limited, carefully selected points</td><td>Furniture, appliances</td></tr>\n                    <tr><td><strong>Exclusive</strong></td><td>Exclusive rights to one distributor</td><td>Cars, watches</td></tr>\n                </table>\n                <p>When choosing a channel, consider its <strong>efficiency</strong> (least resources), <strong>effectiveness</strong> (satisfy the target market), and <strong>adaptability</strong> (adjust to new conditions).</p>\n\n                <h3>4) Wholesalers and Retailers</h3>\n                <ul>\n                    <li><strong>Wholesalers</strong> sell to businesses that resell/use products; they unify, store, group, and transport products (time and place advantage). They may be independent (take ownership: full-service or limited-service) or dependent (agents and brokers, who earn a commission).</li>\n                    <li><strong>Retailers</strong> sell to end consumers; functions: procure products, inform consumers, inform manufacturers about consumer needs, effect payment, store and price-mark, and carry out final transactions. Types: food retailers, retailers of personal/household goods, and non-store retailers.</li>\n                </ul>\n\n                <h3>5) Physical Distribution and Trends</h3>\n                <p>Physical distribution reduces delivery costs and raises consumer satisfaction. Functions: <strong>transport</strong>, <strong>warehousing</strong>, <strong>inventory management</strong>. Process: define goals -> order processing/inventory -> organize transport -> control and evaluate results.</p>\n                <div class=\"example-box\">\n                    <p><strong>Trends:</strong> partnerships among chain members, sophisticated technology (databases, demand analysis), portals, and digital marketplaces.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Know direct vs indirect channels, the three channel functions, the three intensities (with examples), wholesaler vs retailer roles, and physical distribution.</p>\n                </div>\n            "
+    }
+  },
+  "promotion": {
+    "name": "Promotion (IMC)",
+    "icon": "fa-bullhorn",
+    "color": "#f43f5e",
+    "flashcards": [
+      {
+        "question": "What are the elements of the communication process?",
+        "answer": "Sender, encoding, message, media, decoding, receiver, and feedback - plus interference (noise). Market communication is a two-way process.",
+        "explanation": "Feedback is what makes it two-way."
+      },
+      {
+        "question": "What is Integrated Marketing Communication (IMC)?",
+        "answer": "Treating all promotional activities as a single entity that sends a unified, consistent message across all media to maximize communication impact (a synergistic effect).",
+        "explanation": "Non-integrated communication leaves consumers confused."
+      },
+      {
+        "question": "What are the objectives of promotional activities?",
+        "answer": "Provide information, differentiate the product, increase demand (primary = whole category, or secondary = specific brand), stabilize sales (smooth seasonality), and emphasize the product's value.",
+        "explanation": "Primary vs secondary demand is a common exam point."
+      },
+      {
+        "question": "What is the difference between push and pull strategy?",
+        "answer": "Push promotes the product to the next channel member (personal selling, sales promotion). Pull promotes directly to consumers (advertising, sales promotion, PR, publicity). A combination of both is most common.",
+        "explanation": "Push goes with product flow; pull pulls demand back through the channel."
+      },
+      {
+        "question": "What are the elements of the promotional mix?",
+        "answer": "Advertising, personal selling, sales promotion, public relations, and publicity.",
+        "explanation": "They differ in payment, personalization, and how much the firm controls them."
+      },
+      {
+        "question": "What is advertising and what are its three functions?",
+        "answer": "A paid, non-personal presentation of information to many consumers via mass media. Functions: to inform (introduce a product), to persuade (maturity stage), and to remind (brand advertising).",
+        "explanation": "Two categories: product advertising and business (organization) advertising."
+      },
+      {
+        "question": "What is personal selling?",
+        "answer": "Direct communication between a salesperson and a potential consumer to identify needs and convey product benefits. It includes order taking, order getting (the creative part), and providing support; most used for B2B products.",
+        "explanation": "Flexible - allows negotiation during contact."
+      },
+      {
+        "question": "What is sales promotion and who are its targets?",
+        "answer": "Short-term techniques that encourage a positive response. Targets: end consumers (coupons, gifts, samples, cash refunds), the trade/shops (in-store displays, rewards), and other B2B operators (trade fairs).",
+        "explanation": "A short-term stimulus to buy."
+      },
+      {
+        "question": "What is the difference between public relations and publicity?",
+        "answer": "PR is communication a business directly manages to build a positive image (press conferences, events, donations, creating news). Publicity is unpaid media communication the business only indirectly influences.",
+        "explanation": "PR is managed; publicity is not."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Treating all promotional activities as one unified, consistent message is:",
+        "options": [
+          "Push strategy",
+          "Integrated Marketing Communication",
+          "Publicity",
+          "Personal selling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Promoting a product directly to consumers to pull demand back through the channel is:",
+        "options": [
+          "Push strategy",
+          "Pull strategy",
+          "Sales promotion",
+          "Encoding"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A paid, non-personal presentation through the mass media is:",
+        "options": [
+          "Personal selling",
+          "Publicity",
+          "Advertising",
+          "Public relations"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Coupons, free samples and cash refunds are tools of:",
+        "options": [
+          "Advertising",
+          "Sales promotion",
+          "Public relations",
+          "Personal selling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Unpaid media communication a business cannot manage is:",
+        "options": [
+          "Advertising",
+          "Public relations",
+          "Publicity",
+          "Personal selling"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Market communication is a _______-way process (it includes feedback).",
+        "answer": "two",
+        "hint": "Sender and receiver both act..."
+      },
+      {
+        "sentence": "A _______ strategy promotes the product to the next member of the distribution channel.",
+        "answer": "push",
+        "hint": "Opposite of pull..."
+      },
+      {
+        "sentence": "The three advertising functions are to inform, to persuade and to _______.",
+        "answer": "remind",
+        "hint": "Brand advertising..."
+      },
+      {
+        "sentence": "Public relations is managed by the business; _______ is not.",
+        "answer": "publicity",
+        "hint": "Unpaid media coverage..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 10 - Promotion (Integrated Marketing Communication)",
+      "content": "\n                <h3>1) The Communication Process</h3>\n                <p>Success in the market is not possible without communication - the transfer of messages between sellers and consumers. It is a <strong>two-way</strong> process.</p>\n                <div class=\"formula-box\">\n                    <p><strong>Sender -> encoding -> message -> media -> decoding -> receiver -> feedback</strong> (with possible <em>interference / noise</em>).</p>\n                </div>\n\n                <h3>2) Integrated Marketing Communication (IMC)</h3>\n                <p>IMC treats all promotional activities as a single entity that sends a <strong>unified, consistent message</strong> regardless of media, to maximize impact (synergy). A successful message captures attention, is understood, and prompts a response.</p>\n\n                <h3>3) Objectives and Strategies</h3>\n                <ul>\n                    <li><strong>Objectives:</strong> inform, differentiate the product, increase demand (primary = category / secondary = brand), stabilize sales, emphasize value.</li>\n                    <li><strong>Push strategy:</strong> promote to the next channel member (personal selling, sales promotion).</li>\n                    <li><strong>Pull strategy:</strong> promote directly to consumers (advertising, sales promotion, PR, publicity).</li>\n                    <li><strong>Combination</strong> of both is most common.</li>\n                </ul>\n\n                <h3>4) The Promotional Mix</h3>\n                <table>\n                    <tr><th>Element</th><th>What it is</th></tr>\n                    <tr><td><strong>Advertising</strong></td><td>Paid, non-personal mass-media communication; functions: inform, persuade, remind</td></tr>\n                    <tr><td><strong>Personal selling</strong></td><td>Direct salesperson-consumer communication (order taking, order getting, support); mostly B2B</td></tr>\n                    <tr><td><strong>Sales promotion</strong></td><td>Short-term techniques to stimulate buying (coupons, gifts, samples, trade fairs)</td></tr>\n                    <tr><td><strong>Public relations</strong></td><td>Managed communication to build a positive image</td></tr>\n                    <tr><td><strong>Publicity</strong></td><td>Unpaid media communication the firm cannot manage</td></tr>\n                </table>\n\n                <h3>5) PR vs Publicity</h3>\n                <div class=\"example-box\">\n                    <p><strong>PR</strong> is directly managed by the business (press conferences, events, donations, creating news). <strong>Publicity</strong> is in the media's domain - the business has only indirect influence.</p>\n                </div>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Common Mistake</h4>\n                    <p>Don't confuse PR (managed by the firm) with publicity (unpaid, not managed). Both are unpaid, but only PR is controlled.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Know the communication-process elements, IMC, push vs pull, the five promotional-mix elements, and the PR vs publicity distinction.</p>\n                </div>\n            "
+    }
+  },
+  "newTrendsPromotion": {
+    "name": "New Trends in Promotion",
+    "icon": "fa-wifi",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "What technological foundation drives new promotional trends?",
+        "answer": "The Internet, Internet applications, and mobile communication. The Internet provides two key services: the World Wide Web and e-mail.",
+        "explanation": "Technology directly reshapes advertising and PR."
+      },
+      {
+        "question": "What is the difference between Internet, Intranet and Extranet?",
+        "answer": "Internet = a global network of interconnected computer networks. Intranet = a private network used only within an organization (same standards as the Internet). Extranet = an Intranet extended to authorized outside parties (consumers, suppliers, distributors).",
+        "explanation": "Scope widens: internal -> partners -> global."
+      },
+      {
+        "question": "What is SEO and why does it matter?",
+        "answer": "Search Engine Optimization - procedures to improve a website's position in search results (Google, Bing, Yahoo) so it attracts more visitors and potential customers.",
+        "explanation": "Higher ranking means more traffic."
+      },
+      {
+        "question": "What are the most common Web-based promotion tools?",
+        "answer": "Banner ads (popular, often with audio/video, need frequent innovation), sponsorship banners (a link to the sponsor's site), and online coupons (a form of sales promotion).",
+        "explanation": "A Web page is part of the Internet."
+      },
+      {
+        "question": "How is e-mail used in promotion?",
+        "answer": "As a one-to-one, interactive tool for advertising and PR; it builds closer relationships via discussion/mailing lists. Messages should be original, accurate, interesting and short. Consumers can be reluctant (privacy).",
+        "explanation": "Risk: being perceived as spam."
+      },
+      {
+        "question": "What is a blog and how is it used in marketing?",
+        "answer": "Interactive posts (text and sometimes images, video, audio) by a physical or legal person for a target audience; used in advertising and PR, in direct contact with real and potential consumers.",
+        "explanation": "Often relates the company's product to current events."
+      },
+      {
+        "question": "What is a newsletter?",
+        "answer": "An electronic publication on a specific topic (information, advice, opinions) distributed regularly to subscribers (usually free). Consumers are the most important subscribers; also used internally with employees.",
+        "explanation": "Receiving it requires a subscription."
+      },
+      {
+        "question": "What is a webinar?",
+        "answer": "An online seminar carried out over the Internet; it removes the need for a direct presentation, can be live or downloaded, lowers costs, and enables two-way communication with active audience participation.",
+        "explanation": "Interactive: questions and discussion."
+      },
+      {
+        "question": "How are social networks and mobile devices used in promotion?",
+        "answer": "Social networks (Facebook, Instagram, YouTube, LinkedIn, TikTok, Pinterest...) exchange multimedia and reach people with similar interests; the right choice depends on the company and audience. Mobile marketing targets a specific public, time, location and frequency, with measurable reach.",
+        "explanation": "Right network choice = company type + intended audience."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A private network used only within an organization is the:",
+        "options": [
+          "Internet",
+          "Intranet",
+          "Extranet",
+          "Web page"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Improving a website's ranking in search results is:",
+        "options": [
+          "SEO",
+          "Banner advertising",
+          "A webinar",
+          "A newsletter"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "An online seminar enabling two-way, real-time communication is a:",
+        "options": [
+          "Blog",
+          "Newsletter",
+          "Webinar",
+          "Banner ad"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "An electronic publication sent regularly to subscribers is a:",
+        "options": [
+          "Webinar",
+          "Newsletter",
+          "Banner ad",
+          "Extranet"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Internet provides two key services:",
+        "options": [
+          "Intranet and Extranet",
+          "World Wide Web and e-mail",
+          "SEO and banners",
+          "Blog and newsletter"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "An _______ is an Intranet extended to authorized outside parties such as suppliers.",
+        "answer": "extranet",
+        "hint": "Beyond the internal network..."
+      },
+      {
+        "sentence": "_______ improves a website's position in search engine results.",
+        "answer": "SEO",
+        "hint": "Search Engine Optimization..."
+      },
+      {
+        "sentence": "A _______ is an online seminar carried out over the Internet.",
+        "answer": "webinar",
+        "hint": "Web + seminar..."
+      },
+      {
+        "sentence": "The Internet's two key services are the World Wide Web and _______.",
+        "answer": "e-mail",
+        "hint": "Electronic messages..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 11 - New Trends in Promotional Activities",
+      "content": "\n                <h3>1) New Technological Solutions</h3>\n                <p>Technology - mainly the <strong>Internet, Internet applications and mobile communication</strong> - directly influences new trends in advertising and PR. The Internet (a global network of networks) provides two key services: the <strong>World Wide Web</strong> and <strong>e-mail</strong>.</p>\n                <div class=\"example-box\">\n                    <p><strong>Internet</strong> = global, public. <strong>Intranet</strong> = private, internal only. <strong>Extranet</strong> = Intranet extended to authorized partners (consumers, suppliers, distributors).</p>\n                </div>\n\n                <h3>2) Web Page and SEO</h3>\n                <p>A Web page is part of the Internet; designers place key information where readers look first. <strong>SEO (Search Engine Optimization)</strong> improves a site's position in search results (Google, Bing, Yahoo) to attract more visitors and potential customers.</p>\n                <p>Common Web promotion tools:</p>\n                <ul>\n                    <li><strong>Banner ads</strong> - the most popular form; text + audio/video; need frequent innovation</li>\n                    <li><strong>Sponsorship banners</strong> - a link to the sponsor's website</li>\n                    <li><strong>Online coupons</strong> - a sales-promotion tool</li>\n                </ul>\n\n                <h3>3) E-mail, Blog, Newsletter, Webinar</h3>\n                <ul>\n                    <li><strong>E-mail:</strong> one-to-one, interactive; for advertising and PR; messages must be original, accurate, interesting, short; consumers may resist (privacy).</li>\n                    <li><strong>Blog:</strong> interactive posts (text, image, video, audio) by a person or company; direct contact with consumers.</li>\n                    <li><strong>Newsletter:</strong> regular electronic publication for subscribers (usually free).</li>\n                    <li><strong>Webinar:</strong> online seminar; live or downloadable; lower cost; two-way participation.</li>\n                </ul>\n\n                <h3>4) Social Networks and Mobile Devices</h3>\n                <p><strong>Social networks</strong> (Facebook, Instagram, YouTube, LinkedIn, TikTok, Pinterest...) exchange multimedia and reach people with similar interests; the right choice depends on the company and audience. <strong>Mobile marketing</strong> is increasingly important on B2B and B2C markets, targeting a specific public, time, location and frequency, with measurable reach.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Distinguish Internet/Intranet/Extranet, define SEO, and be able to describe Web tools (banners, sponsorship banners, online coupons), e-mail, blog, newsletter, webinar, social networks and mobile devices.</p>\n                </div>\n            "
+    }
+  },
+  "marketingPlanning": {
+    "name": "Marketing Planning",
+    "icon": "fa-clipboard-list",
+    "color": "#16a34a",
+    "flashcards": [
+      {
+        "question": "What does managing marketing activities involve?",
+        "answer": "Planning, organizing and controlling marketing activities so the organization adjusts to environmental changes, anticipates them, and acts proactively rather than reactively.",
+        "explanation": "Marketing effort = a basis for proactive action."
+      },
+      {
+        "question": "What is marketing planning and its purpose?",
+        "answer": "The process of identifying opportunities and threats and defining the actions needed to achieve marketing objectives. Its purpose is to identify and create competitive advantages.",
+        "explanation": "Levels: strategic (long, broad) vs tactical (short, narrow)."
+      },
+      {
+        "question": "What is the difference between a strategic and an operational marketing plan?",
+        "answer": "Strategic: general, long-term goals, more important, adapts to the environment, unique risky problems, needs external information, evaluated long-term, sets mission/goals/strategy. Operational: everyday short-term goals, recurring problems, internal information, evaluated immediately, sets marketing tactics (product, price, promotion, channels, services).",
+        "explanation": "Strategic = direction; operational = tactics."
+      },
+      {
+        "question": "What are the steps of the marketing planning process?",
+        "answer": "Develop a mission statement, conduct a situation analysis, identify objectives, and formulate strategies.",
+        "explanation": "Mission -> situation -> objectives -> strategies."
+      },
+      {
+        "question": "What is a mission statement and what must it be?",
+        "answer": "A statement giving a business a clear purpose and focus, making it unique and consumer-oriented. It must be unique, consumer-oriented, based on competencies, and realistic.",
+        "explanation": "Research links a clear mission to higher average ROI."
+      },
+      {
+        "question": "What is SWOT analysis?",
+        "answer": "A situation analysis of internal factors (Strengths, Weaknesses) and external factors (Opportunities, Threats). It helps plan to overcome weaknesses, diagnose threats early, and spot opportunities.",
+        "explanation": "Internal: S/W. External: O/T."
+      },
+      {
+        "question": "What is the difference between quantitative and qualitative marketing objectives?",
+        "answer": "Quantitative are measurable numbers (increase sales, profit, market share, satisfaction; cut costs). Qualitative are non-numeric (innovate the offering, new channels, training, brand image, loyalty). Objectives must be measurable, realistic, consistent and hierarchical.",
+        "explanation": "Every objective answers: what, in what period, how much."
+      },
+      {
+        "question": "What is the Ansoff (market/product) matrix?",
+        "answer": "A tool to choose a strategy: market penetration (existing market + existing product), market development (new market + existing product), product development (existing market + new product), and diversification (new market + new product = highest risk).",
+        "explanation": "Diversification carries the most risk."
+      },
+      {
+        "question": "What target-market approaches are chosen in the tactical stage?",
+        "answer": "Undifferentiated, concentrated, and differentiated marketing approaches, combined with marketing-mix (4P) decisions.",
+        "explanation": "Tactics cover target-market and marketing-mix strategies."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The purpose of marketing planning is to:",
+        "options": [
+          "Cut all marketing costs",
+          "Identify and create competitive advantages",
+          "Replace the sales force",
+          "Avoid market research"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "SWOT internal factors are:",
+        "options": [
+          "Opportunities and Threats",
+          "Strengths and Weaknesses",
+          "Sales and Profit",
+          "Mission and Vision"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Entering a NEW market with a NEW product (highest risk) is:",
+        "options": [
+          "Market penetration",
+          "Market development",
+          "Product development",
+          "Diversification"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Increasing market share by 6% is an example of a:",
+        "options": [
+          "Qualitative objective",
+          "Quantitative objective",
+          "Mission statement",
+          "Tactic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The first step of the marketing planning process is to:",
+        "options": [
+          "Formulate strategies",
+          "Develop a mission statement",
+          "Take corrective action",
+          "Organize by product"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ analysis examines internal strengths/weaknesses and external opportunities/threats.",
+        "answer": "SWOT",
+        "hint": "S-W-O-T..."
+      },
+      {
+        "sentence": "In the Ansoff matrix, a new market plus a new product is _______.",
+        "answer": "diversification",
+        "hint": "Highest-risk strategy..."
+      },
+      {
+        "sentence": "A _______ statement gives a business a unique, consumer-oriented purpose.",
+        "answer": "mission",
+        "hint": "Start of the planning process..."
+      },
+      {
+        "sentence": "Objectives must be measurable, realistic, consistent and _______.",
+        "answer": "hierarchical",
+        "hint": "Ordered by level..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 12 - Planning Marketing Activities",
+      "content": "\n                <h3>1) Managing Marketing Activities</h3>\n                <p>Managing marketing means <strong>planning, organizing and controlling</strong> so the organization adjusts to and anticipates changes in the environment - acting proactively rather than reactively. It should unite strengths, focus on opportunities, and avoid threats.</p>\n\n                <h3>2) Marketing Planning</h3>\n                <p>Planning is the process of identifying opportunities and threats and defining actions to achieve objectives; its purpose is to <strong>identify and create competitive advantages</strong>.</p>\n                <table>\n                    <tr><th></th><th>Strategic plan</th><th>Operational plan</th></tr>\n                    <tr><td>Goals</td><td>General, long-term</td><td>Everyday, short-term</td></tr>\n                    <tr><td>Time</td><td>Long-term oriented</td><td>Short-term oriented</td></tr>\n                    <tr><td>Information</td><td>Mostly external</td><td>Mostly internal</td></tr>\n                    <tr><td>Specifies</td><td>Mission, goals, strategy</td><td>Tactics: product, price, promotion, channels</td></tr>\n                </table>\n\n                <h3>3) The Planning Process</h3>\n                <ul>\n                    <li><strong>Develop a mission statement</strong> - what is the company's position?</li>\n                    <li><strong>Situation analysis</strong> - where is the company now?</li>\n                    <li><strong>Identify objectives</strong> - what needs to be done?</li>\n                    <li><strong>Formulate strategies</strong> - which consumer needs to satisfy?</li>\n                </ul>\n\n                <h3>4) Mission, SWOT and Objectives</h3>\n                <p>A <strong>mission</strong> must be unique, consumer-oriented, competency-based and realistic. <strong>SWOT</strong> analyses internal Strengths/Weaknesses and external Opportunities/Threats.</p>\n                <div class=\"example-box\">\n                    <p><strong>Objectives</strong> are quantitative (e.g. +6% market share, +4.5% profit) or qualitative (e.g. new channels, stronger brand image). They must be measurable, realistic, consistent and hierarchical.</p>\n                </div>\n\n                <h3>5) Formulating Strategies - the Ansoff Matrix</h3>\n                <table>\n                    <tr><th></th><th>Existing product</th><th>New product</th></tr>\n                    <tr><td><strong>Existing market</strong></td><td>Market penetration</td><td>Product development</td></tr>\n                    <tr><td><strong>New market</strong></td><td>Market development</td><td>Diversification (highest risk)</td></tr>\n                </table>\n                <p>In the tactical stage, choose a target-market approach (undifferentiated, concentrated, differentiated) plus marketing-mix strategies.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Know strategic vs operational plans, the four planning steps, mission requirements, SWOT, quantitative vs qualitative objectives, and the four Ansoff strategies.</p>\n                </div>\n            "
+    }
+  },
+  "organizingControlling": {
+    "name": "Organizing & Controlling",
+    "icon": "fa-sitemap",
+    "color": "#eab308",
+    "flashcards": [
+      {
+        "question": "What is organizing marketing activities?",
+        "answer": "Delegating and grouping tasks into specific organizational units and allocating the resources to carry them out, so the business can respond quickly and effectively to threats and opportunities.",
+        "explanation": "Structure depends on the number of markets and products."
+      },
+      {
+        "question": "What are the four ways to organize marketing activities?",
+        "answer": "By functions, by markets/consumers, by products, and matrix organization.",
+        "explanation": "The choice depends on how many markets and products the firm has."
+      },
+      {
+        "question": "When is organizing by FUNCTION appropriate?",
+        "answer": "When the organization is present in a small number of markets with a small number of products. Activities (research, new product development, distribution, promotion, pricing, services) are assigned to marketing-function employees.",
+        "explanation": "Few markets, few products."
+      },
+      {
+        "question": "When is organizing by MARKETS/CONSUMERS appropriate?",
+        "answer": "When present in many markets with few products and specialization by market is required (consumer attributes differ between markets).",
+        "explanation": "Many markets, few products."
+      },
+      {
+        "question": "When is organizing by PRODUCTS appropriate, and who leads?",
+        "answer": "When present in a small number of markets with many products, especially with innovation/new products. A product manager handles a product or product group from the development stage to the selling stage.",
+        "explanation": "Few markets, many products."
+      },
+      {
+        "question": "When is a MATRIX organization used?",
+        "answer": "When present in several markets with many products. It builds teams of functional specialists plus product specialists; it can involve many experts and respond more rapidly to market changes.",
+        "explanation": "Many markets, many products."
+      },
+      {
+        "question": "What is marketing control?",
+        "answer": "A process used to monitor the realization of planned objectives and to identify any deviations before they become destructive.",
+        "explanation": "Compares planned vs actual performance."
+      },
+      {
+        "question": "What are the four types of marketing control?",
+        "answer": "Annual control (annual plan, by management), profitability control (which operations profit or lose), efficiency control (efficiency of marketing investments and costs), and strategic control (best use of market, product and channel opportunities).",
+        "explanation": "Four lenses on performance."
+      },
+      {
+        "question": "What are the steps of the marketing control process?",
+        "answer": "Establish performance standards, compare planned vs actual performance, and take corrective action (modify objectives, standards, the marketing mix, strategies, or the organization).",
+        "explanation": "Common parameters: sales, profit, marketing costs, positioning, loyalty."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Building teams of functional and product specialists for many markets and many products is:",
+        "options": [
+          "Organizing by function",
+          "Organizing by products",
+          "Matrix organization",
+          "Organizing by markets"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Organizing by FUNCTION suits a company with:",
+        "options": [
+          "Many markets and many products",
+          "A small number of markets and products",
+          "New markets only",
+          "No products"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Identifying which operations generate profit or loss is:",
+        "options": [
+          "Annual control",
+          "Profitability control",
+          "Efficiency control",
+          "Strategic control"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The marketing control process begins by:",
+        "options": [
+          "Taking corrective action",
+          "Establishing performance standards",
+          "Comparing competitors",
+          "Cutting prices"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A product manager leading a product from development to selling reflects organizing by:",
+        "options": [
+          "Function",
+          "Markets",
+          "Products",
+          "Geography"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Organizing marketing activities means delegating and grouping tasks and allocating _______.",
+        "answer": "resources",
+        "hint": "What is needed to carry the tasks out..."
+      },
+      {
+        "sentence": "_______ organization combines functional and product specialists for many markets and products.",
+        "answer": "matrix",
+        "hint": "A grid of two dimensions..."
+      },
+      {
+        "sentence": "Marketing control identifies _______ before they become destructive.",
+        "answer": "deviations",
+        "hint": "Gaps between planned and actual..."
+      },
+      {
+        "sentence": "The four types of control are annual, profitability, efficiency and _______ control.",
+        "answer": "strategic",
+        "hint": "Best use of market/product opportunities..."
+      }
+    ],
+    "learn": {
+      "title": "Unit 13 - Organizing and Controlling Marketing Activities",
+      "content": "\n                <h3>1) Organizing Marketing Activities</h3>\n                <p>Organizing means <strong>delegating and grouping tasks</strong> into organizational units and <strong>allocating resources</strong>, so the business can respond quickly to threats and opportunities. The structure depends on how many markets and products the firm has.</p>\n                <table>\n                    <tr><th>Form</th><th>Best when...</th></tr>\n                    <tr><td><strong>By function</strong></td><td>Few markets, few products</td></tr>\n                    <tr><td><strong>By markets/consumers</strong></td><td>Many markets, few products</td></tr>\n                    <tr><td><strong>By products</strong></td><td>Few markets, many products (product manager leads)</td></tr>\n                    <tr><td><strong>Matrix</strong></td><td>Many markets, many products (functional + product specialists)</td></tr>\n                </table>\n\n                <h3>2) Marketing Control</h3>\n                <p>Marketing control monitors the realization of planned objectives and identifies <strong>deviations before they become destructive</strong>. There are four types:</p>\n                <ul>\n                    <li><strong>Annual control</strong> - of the annual plan, by management</li>\n                    <li><strong>Profitability control</strong> - which operations profit or lose</li>\n                    <li><strong>Efficiency control</strong> - efficiency of marketing investments and the impact of costs</li>\n                    <li><strong>Strategic control</strong> - best use of market, product and channel opportunities</li>\n                </ul>\n\n                <h3>3) The Marketing Control Process</h3>\n                <div class=\"formula-box\">\n                    <p><strong>Establish performance standards -> compare planned vs actual -> take corrective action.</strong></p>\n                </div>\n                <ul>\n                    <li><strong>Common parameters:</strong> sales, profit, marketing costs, product positioning, consumer loyalty.</li>\n                    <li><strong>Comparison with competitors:</strong> sales/cost analysis, profit, market share, new product and channel development.</li>\n                    <li><strong>Corrections</strong> modify objectives, performance standards, the marketing mix, strategies, or the organization of marketing activities.</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Midterm Focus</h4>\n                    <p>Match each organizing form to its market/product situation, list the four control types, and reproduce the three-step control process.</p>\n                </div>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Topics)",
+    "icon": "fa-graduation-cap",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What are the elements of the marketing mix (4Ps), and which extra Ps apply to services?",
+        "answer": "The 4Ps: Product, Price, Distribution (Place), and Promotion. Services add three more Ps: People, Physical evidence, and Processes.",
+        "explanation": "Product is the element on which the others are built."
+      },
+      {
+        "question": "Summarize the evolution of business concepts.",
+        "answer": "Production concept -> selling concept -> marketing concept -> relationship/holistic marketing, shifting from output focus to customer and value focus.",
+        "explanation": "The marketing concept starts from customer needs."
+      },
+      {
+        "question": "What is the STP sequence and why does it matter?",
+        "answer": "Segmentation -> Targeting -> Positioning: divide a heterogeneous market into homogeneous segments, select target segment(s), and design a distinct position in the consumer's mind.",
+        "explanation": "STP precedes marketing-mix decisions."
+      },
+      {
+        "question": "How do the macro and micro marketing environments differ?",
+        "answer": "Macro = indirect, less controllable factors (PESTLE: political, economic, social, technological, legal, environmental). Micro = direct actors close to the firm (consumers, competitors, suppliers, distributors).",
+        "explanation": "Monitor the macro; manage the micro."
+      },
+      {
+        "question": "What are market discrepancies, and how does marketing address them?",
+        "answer": "Gaps between producers and consumers in space, time, information, value perception, ownership, and quantity/assortment. Marketing functions reduce them and create form, place, time and possession utility.",
+        "explanation": "Exchange reconciles producer and buyer logic."
+      },
+      {
+        "question": "Connect the product life cycle to pricing and promotion.",
+        "answer": "Introduction (inform, low or high price), growth (differentiate, build loyalty), maturity (defend share, flexible price, remind), decline (cut costs, keep loyal buyers). Pricing and promotion shift in each phase.",
+        "explanation": "Marketing responses change across the PLC."
+      },
+      {
+        "question": "Distinguish the four pricing strategies from the three method groups.",
+        "answer": "Strategies: penetration (low), skimming (high), psychological, value-based. Method groups: cost-based (average cost, mark-up, break-even), demand-based, and competitor-based.",
+        "explanation": "Strategy = intent; method = how the number is calculated."
+      },
+      {
+        "question": "How do push and pull strategies link promotion and distribution?",
+        "answer": "Push promotes to the next channel member (personal selling, sales promotion) along the product flow. Pull promotes directly to consumers (advertising, PR, publicity) to draw demand back through the channel. A combination is most common.",
+        "explanation": "They coordinate the promotional mix with the channel."
+      },
+      {
+        "question": "Compare the promotional-mix elements by payment and control.",
+        "answer": "Advertising (paid, mass media), personal selling (paid, direct), sales promotion (paid, short-term), public relations (managed, unpaid), publicity (unpaid, not managed by the firm).",
+        "explanation": "PR is managed; publicity is not."
+      },
+      {
+        "question": "What are the three distribution intensities, and how do they match products?",
+        "answer": "Intensive (as many outlets as possible - convenience goods), selective (limited points - shopping goods), exclusive (a single distributor - specialty goods). They tie to channel decisions: direct vs indirect, length, number of channels.",
+        "explanation": "Intensity matches product type and target coverage."
+      },
+      {
+        "question": "How do planning, organizing and controlling form the marketing management cycle?",
+        "answer": "Plan (mission, SWOT, objectives, Ansoff strategy) -> organize (by function/market/product/matrix, allocate resources) -> control (annual, profitability, efficiency, strategic; set standards, compare, correct).",
+        "explanation": "Control feeds corrections back into planning."
+      },
+      {
+        "question": "Why are new digital trends important for promotion?",
+        "answer": "Internet/Intranet/Extranet, Web pages with SEO, e-mail, blogs, newsletters, webinars, social networks and mobile devices make advertising and PR widely accessible, interactive, measurable and lower-cost.",
+        "explanation": "Technology reshapes integrated marketing communication."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The marketing mix consists of:",
+        "options": [
+          "Segmentation, targeting, positioning",
+          "Product, price, distribution, promotion",
+          "Strengths, weaknesses, opportunities, threats",
+          "Plan, organize, control"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is the correct strategic order?",
+        "options": [
+          "Positioning -> targeting -> segmentation",
+          "Segmentation -> targeting -> positioning",
+          "Targeting -> positioning -> segmentation",
+          "Segmentation -> positioning -> targeting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "PESTLE factors belong to the:",
+        "options": [
+          "Micro environment",
+          "Macro environment",
+          "Marketing mix",
+          "Promotional mix"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Defend market share with flexible pricing' fits which life-cycle phase?",
+        "options": [
+          "Introduction",
+          "Growth",
+          "Maturity",
+          "Decline"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The break-even point is a _____ pricing method:",
+        "options": [
+          "Demand-based",
+          "Competitor-based",
+          "Cost-based",
+          "Psychological"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Promoting directly to consumers to draw demand through the channel is:",
+        "options": [
+          "Push",
+          "Pull",
+          "Skimming",
+          "Penetration"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling specialty goods through a single distributor is _____ distribution:",
+        "options": [
+          "Intensive",
+          "Selective",
+          "Exclusive",
+          "Direct"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Entering a new market with a new product (Ansoff matrix) is:",
+        "options": [
+          "Market penetration",
+          "Market development",
+          "Product development",
+          "Diversification"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "A matrix marketing organization suits a firm with:",
+        "options": [
+          "One market, one product",
+          "Many markets, many products",
+          "No products",
+          "Only online sales"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Publicity differs from public relations because publicity is:",
+        "options": [
+          "Paid and managed",
+          "Unpaid and not managed by the firm",
+          "Used only in B2B",
+          "A pricing method"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The marketing mix is product, price, distribution and _______.",
+        "answer": "promotion",
+        "hint": "The fourth P..."
+      },
+      {
+        "sentence": "Services add three extra Ps: people, physical evidence and _______.",
+        "answer": "processes",
+        "hint": "How the service is delivered..."
+      },
+      {
+        "sentence": "_______ analysis examines internal strengths/weaknesses and external opportunities/threats.",
+        "answer": "SWOT",
+        "hint": "S-W-O-T..."
+      },
+      {
+        "sentence": "Penetration pricing uses a _______ initial price to win price-sensitive buyers.",
+        "answer": "low",
+        "hint": "Opposite of skimming..."
+      },
+      {
+        "sentence": "A _______ strategy promotes the product to the next member of the distribution channel.",
+        "answer": "push",
+        "hint": "Along the product flow..."
+      },
+      {
+        "sentence": "Intensive, selective and _______ are the three intensities of distribution.",
+        "answer": "exclusive",
+        "hint": "A single distributor..."
+      },
+      {
+        "sentence": "The marketing management cycle is plan, organize and _______.",
+        "answer": "control",
+        "hint": "Monitor and correct..."
+      },
+      {
+        "sentence": "Macro environmental factors are summarized by the acronym _______.",
+        "answer": "PESTLE",
+        "hint": "Political, Economic, Social, Technological, Legal, Environmental..."
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Roadmap - Topics 1 to 13",
+      "content": "\n            <h3>How the Course Fits Together</h3>\n            <p>The final exam covers all thirteen topics. Use this roadmap to connect them rather than memorize them in isolation - examiners reward links between concepts.</p>\n\n            <h3>1) Foundations (T1-T6)</h3>\n            <ul>\n                <li><strong>T1 Marketing concept:</strong> production -> selling -> marketing -> holistic; start from customer needs.</li>\n                <li><strong>T2 Environment:</strong> micro (controllable actors) vs macro (PESTLE).</li>\n                <li><strong>T3 Market &amp; value exchange:</strong> conditions for exchange; discrepancies (space, time, information, value, ownership, quantity); utility creation.</li>\n                <li><strong>T5 Segmentation &amp; positioning:</strong> STP; segmentation variables (geographic, demographic, psychographic, behavioral); undifferentiated/differentiated/concentrated.</li>\n                <li><strong>T6 Consumer behaviour &amp; research:</strong> B2C vs B2B; 5-step buying process; market research stages.</li>\n            </ul>\n\n            <h3>2) The Marketing Mix (T7-T10)</h3>\n            <div class=\"formula-box\">\n                <p><strong>4Ps:</strong> Product + Price + Distribution (Place) + Promotion. <strong>Services add 3 Ps:</strong> People, Physical evidence, Processes.</p>\n            </div>\n            <ul>\n                <li><strong>T7 Product:</strong> total product concept, classification, product programme, brand, NPD process, life cycle, services.</li>\n                <li><strong>T8 Price:</strong> internal/external factors, strategies (penetration, skimming, psychological, value-based), methods (cost/demand/competitor-based).</li>\n                <li><strong>T9 Distribution:</strong> channels (direct/indirect), three functions, three intensities, wholesalers/retailers, physical distribution.</li>\n                <li><strong>T10 Promotion (IMC):</strong> communication process, push vs pull, promotional mix (advertising, personal selling, sales promotion, PR, publicity).</li>\n            </ul>\n\n            <h3>3) Digital and Management (T11-T13)</h3>\n            <ul>\n                <li><strong>T11 New trends in promotion:</strong> Internet/Intranet/Extranet, SEO, Web tools, e-mail, blog, newsletter, webinar, social networks, mobile.</li>\n                <li><strong>T12 Planning:</strong> mission -> situation analysis (SWOT) -> objectives -> strategy (Ansoff matrix).</li>\n                <li><strong>T13 Organizing &amp; controlling:</strong> organize by function/market/product/matrix; four control types (annual, profitability, efficiency, strategic); control process.</li>\n            </ul>\n\n            <h3>Key Cross-Topic Links</h3>\n            <table>\n                <tr><th>Link</th><th>Why it matters</th></tr>\n                <tr><td>PLC -> price + promotion</td><td>Strategy changes by phase (introduction to decline)</td></tr>\n                <tr><td>Push/pull -> promotion + distribution</td><td>The promotional mix is coordinated with the channel</td></tr>\n                <tr><td>STP -> whole marketing mix</td><td>Target and position before setting the 4Ps</td></tr>\n                <tr><td>Plan -> organize -> control</td><td>The management cycle; control feeds back to planning</td></tr>\n            </table>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Final Exam Strategy</h4>\n                <p>This \"Exam Practice\" set mixes all topics. Work the individual topic categories first, then use this category to test whether you can connect them. Be ready to give one practical hospitality example per concept.</p>\n            </div>\n        "
+    }
+  }
+}

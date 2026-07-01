@@ -1,0 +1,1727 @@
+{
+  "foundations": {
+    "name": "Management & Its History",
+    "icon": "fa-sitemap",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What is MANAGEMENT, and what are the four management FUNCTIONS?",
+        "answer": "Management = working with human, financial, physical and informational resources to achieve organizational objectives by performing the four functions.\n\nThe FOUR FUNCTIONS are:\n1. PLANNING — setting objectives and deciding in advance how to meet them\n2. ORGANIZING — delegating and coordinating tasks and allocating resources\n3. LEADING — influencing employees to work toward objectives\n4. CONTROLLING — monitoring progress and taking corrective action",
+        "explanation": "The word derives from Latin 'manus' (hand) + 'agere' (to act). The functions are distinct yet interrelated — performed simultaneously, not as linear steps."
+      },
+      {
+        "question": "What is the difference between EFFICIENT and EFFECTIVE?",
+        "answer": "• EFFICIENT = doing things RIGHT, so as to maximize the utilization of resources (do it with least waste).\n• EFFECTIVE = doing the RIGHT thing in order to attain an objective.\n\nHigh performance = selecting the right resources (effective) AND using them well (efficient).",
+        "explanation": "A manager achieves objectives through efficient AND effective use of resources."
+      },
+      {
+        "question": "What are the FOUR organizational RESOURCES managers manage?",
+        "answer": "1. HUMAN resources — people ('human capital'), the most valuable asset\n2. FINANCIAL resources — money/budget needed to operate\n3. PHYSICAL resources — products, equipment, materials, supplies\n4. INFORMATIONAL resources — information/knowledge to set objectives and make decisions",
+        "explanation": "Performance depends on how well managers acquire and use these four resources."
+      },
+      {
+        "question": "What are the THREE management SKILLS?",
+        "answer": "1. TECHNICAL skills ('hard skills') — ability to use methods/techniques to perform a task; more important for non-managers.\n2. INTERPERSONAL skills ('people/soft skills') — ability to understand, communicate and work well with others; increasingly the most important.\n3. DECISION-MAKING skills — ability to conceptualize situations and select alternatives to solve problems / seize opportunities.",
+        "explanation": "Technical skills matter more at lower levels; decision-making skills matter more at the top (e.g. Reed Hastings at Netflix)."
+      },
+      {
+        "question": "What are Mintzberg's 10 MANAGEMENT ROLES, grouped into 3 categories?",
+        "answer": "A ROLE = a set of expectations of how one will behave. Henry Mintzberg grouped 10 roles into 3 categories:\n\n1. INTERPERSONAL — figurehead, leader, liaison\n2. INFORMATIONAL — monitor, disseminator, spokesperson\n3. DECISIONAL — entrepreneur, disturbance-handler, resource-allocator, negotiator",
+        "explanation": "Managers use interpersonal, informational and conceptual/decision-making skills as they play these roles."
+      },
+      {
+        "question": "What are the THREE LEVELS of management (plus team leader & operatives)?",
+        "answer": "1. TOP managers (CEO, president, VP) — manage the whole organization; set purpose, objectives, strategy.\n2. MIDDLE managers (sales/branch manager, dept head) — implement top strategy via short-term operating plans.\n3. FIRST-LINE managers (supervisor, crew leader) — implement operational plans; supervise OPERATIVE employees (not other managers).\n\n+ TEAM LEADER (non-permanent, team-based) and NONMANAGEMENT OPERATIVE employees (do the actual work).",
+        "explanation": "Types by level: general managers, functional managers, project managers."
+      },
+      {
+        "question": "CLASSICAL theory: who were Taylor, Fayol, Weber and Follett?",
+        "answer": "Classical theorists focus on the JOB and management functions to find the best way to manage.\n\n• Frederick TAYLOR — 'Father of Scientific Management' (job efficiency, time studies, wage incentives).\n• Henri FAYOL — 'Father of Modern Management'; 5 functions + 14 principles (administrative theory).\n• Max WEBER — developed the BUREAUCRACY concept (rules/procedures for fair treatment).\n• Mary Parker FOLLETT — stressed PEOPLE; known for integrative conflict resolution.",
+        "explanation": "Scientific management = job efficiency; administrative theory = rules & organizational structure."
+      },
+      {
+        "question": "BEHAVIORAL theory: who were Mayo, Maslow and McGregor?",
+        "answer": "Behavioral theorists focus on PEOPLE (human skills over technical) to find the best way to manage.\n\n• Elton MAYO — pioneered the HUMAN RELATIONS movement; how a manager treats people affects performance.\n• Abraham MASLOW — hierarchy of needs theory (motivation).\n• Douglas McGREGOR — Theory X (people dislike work, need control) vs Theory Y (people like to work, need little supervision).",
+        "explanation": "Behaviorists believed happy employees are productive — later research questioned this."
+      },
+      {
+        "question": "What is the INTEGRATIVE perspective (systems, sociotechnical, contingency)?",
+        "answer": "It integrates classical, behavioral and management-science theories. Three components:\n\n1. SYSTEMS theory — view the organization as a WHOLE; an open system transforming inputs into outputs, interacting with the environment.\n2. SOCIOTECHNICAL theory — integrate PEOPLE and TECHNOLOGY.\n3. CONTINGENCY theory — there is no one best way; the best approach DEPENDS on the situation (stable→mechanistic, innovative→organic).",
+        "explanation": "Management science theorists use math (operations research, operations management, MIS) to aid decisions."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which list correctly states the four management functions?",
+        "options": [
+          "Planning, staffing, marketing, selling",
+          "Planning, organizing, leading, controlling",
+          "Hiring, budgeting, producing, reporting",
+          "Strategy, structure, systems, staff"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Doing the RIGHT thing to attain an objective' defines being:",
+        "options": [
+          "Efficient",
+          "Effective",
+          "Economical",
+          "Ethical"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which skill is generally MORE important for top managers than for operatives?",
+        "options": [
+          "Technical skills",
+          "Decision-making (conceptual) skills",
+          "Manual skills",
+          "Typing skills"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Mintzberg's figurehead, leader and liaison roles belong to which category?",
+        "options": [
+          "Decisional",
+          "Informational",
+          "Interpersonal",
+          "Technical"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A first-line manager (supervisor) primarily supervises:",
+        "options": [
+          "Other managers",
+          "Operative employees",
+          "The board of directors",
+          "Middle managers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Frederick Taylor is known as the father of:",
+        "options": [
+          "Administrative theory",
+          "Scientific management",
+          "Bureaucracy",
+          "Contingency theory"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Theory X / Theory Y was developed by:",
+        "options": [
+          "Henri Fayol",
+          "Max Weber",
+          "Douglas McGregor",
+          "Elton Mayo"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which approach holds that the best way to manage DEPENDS on the situation?",
+        "options": [
+          "Scientific management",
+          "Bureaucracy",
+          "Contingency theory",
+          "Administrative theory"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The four management functions are planning, organizing, leading and _______.",
+        "answer": "controlling",
+        "hint": "Monitoring and corrective action..."
+      },
+      {
+        "sentence": "Doing things right to maximize resource use is being _______.",
+        "answer": "efficient",
+        "hint": "Least waste..."
+      },
+      {
+        "sentence": "Mintzberg grouped 10 management roles into interpersonal, informational and _______ roles.",
+        "answer": "decisional",
+        "hint": "Entrepreneur, negotiator..."
+      },
+      {
+        "sentence": "Henri Fayol is sometimes called the father of _______ management.",
+        "answer": "modern",
+        "hint": "5 functions + 14 principles..."
+      },
+      {
+        "sentence": "_______ theory views the organization as a whole that transforms inputs into outputs.",
+        "answer": "Systems",
+        "hint": "Open system interacting with the environment..."
+      }
+    ],
+    "learn": {
+      "title": "Management & Its History",
+      "content": "\n                <h3>What is management?</h3>\n                <p>Working with <strong>human, financial, physical and informational</strong> resources to achieve\n                organizational objectives by performing four functions.</p>\n                <div class=\"formula-box\">\n                    EFFICIENT = doing things RIGHT (least waste) &nbsp;·&nbsp; EFFECTIVE = doing the RIGHT thing<br>\n                    PLANNING → ORGANIZING → LEADING → CONTROLLING (distinct yet interrelated)\n                </div>\n\n                <h4>Skills, roles & levels</h4>\n                <ul>\n                    <li><strong>Skills:</strong> technical (hard) · interpersonal (soft) · decision-making (conceptual)</li>\n                    <li><strong>Mintzberg's 10 roles</strong> → interpersonal · informational · decisional</li>\n                    <li><strong>Levels:</strong> top · middle · first-line (+ team leader, operatives)</li>\n                </ul>\n\n                <h4>Schools of management thought</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Classical</strong> (the job): Taylor (scientific mgmt), Fayol (administrative), Weber (bureaucracy), Follett (people)</li>\n                        <li><strong>Behavioral</strong> (people): Mayo (human relations), Maslow (needs), McGregor (Theory X/Y)</li>\n                        <li><strong>Management science</strong> (math): operations research, MIS</li>\n                        <li><strong>Integrative</strong>: systems · sociotechnical · contingency (\"it depends\")</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "decisionMaking": {
+    "name": "Problem Solving & Decision Making",
+    "icon": "fa-code-branch",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What is the difference between PROBLEM SOLVING and DECISION MAKING?",
+        "answer": "• A PROBLEM exists whenever objectives are not being met — a gap between what IS happening and what you WANT to happen.\n• PROBLEM SOLVING = the process of taking corrective action to meet objectives.\n• DECISION MAKING = the process of selecting a course of action that will solve a problem.",
+        "explanation": "Decision making is one of the three critical management skills."
+      },
+      {
+        "question": "What are the THREE decision-making STYLES?",
+        "answer": "1. REFLEXIVE — likes quick decisions ('shooting from the hip'), little information; decisive but can be wasteful.\n2. REFLECTIVE — takes plenty of time, gathers much information; thorough but may procrastinate and lose opportunities.\n3. CONSISTENT — neither rushes nor wastes time; knows when enough info is gathered → best record of good decisions.",
+        "explanation": "Reflexive too fast, reflective too slow, consistent = balanced."
+      },
+      {
+        "question": "What are the 6 STEPS of the decision-making model?",
+        "answer": "1. Classify and define the problem (or opportunity)\n2. Set objectives and criteria\n3. Generate creative & innovative alternatives\n4. Analyze alternatives and select the most feasible\n5. Plan and implement the decision\n6. Control (monitor outcomes; take corrective action)",
+        "explanation": "Half of managers' decisions fail to solve the problems they target — following the model improves odds."
+      },
+      {
+        "question": "PROGRAMMED vs NONPROGRAMMED decisions?",
+        "answer": "• PROGRAMMED — recurring/routine situations; use decision rules, policies, procedures (e.g. reordering inventory). No need to follow all model steps.\n• NONPROGRAMMED — significant, nonrecurring, nonroutine; expensive or major consequences (e.g. new product, new facility). Use the full decision-making model.",
+        "explanation": "Upper-level managers make more nonprogrammed decisions."
+      },
+      {
+        "question": "What are the three DECISION-MAKING CONDITIONS?",
+        "answer": "1. CERTAINTY — you know the outcome of each alternative in advance.\n2. RISK — you don't know exact outcomes but can assign PROBABILITIES.\n3. UNCERTAINTY — lack of information makes outcomes unpredictable; you cannot determine probabilities.",
+        "explanation": "High risk/uncertainty + significant decisions → use group decision making."
+      },
+      {
+        "question": "MAXIMIZER vs SATISFICER?",
+        "answer": "• MAXIMIZER — makes RATIONAL decisions; takes time, weighs a wide range of options to pick the BEST.\n• SATISFICER (satisfy + suffice) — makes BOUNDED-rational decisions; fast over thorough; picks the first option meeting MINIMUM criteria.\n\nUse maximizing for complex/nonprogrammed/high-risk decisions; satisficing for programmed/certain/low-importance ones.",
+        "explanation": "'Must' criteria are essential; 'want' criteria are desirable and weighted by importance."
+      },
+      {
+        "question": "What is the difference between CREATIVITY and INNOVATION?",
+        "answer": "• CREATIVITY = a way of thinking that generates NEW ideas ('thinking outside the box'). It is the DRIVER of innovation.\n• INNOVATION = the IMPLEMENTATION of a new idea.\n\nTwo types: PRODUCT innovation (new goods/services) and PROCESS innovation (new ways of doing things). Creativity is useless if not implemented.",
+        "explanation": "The 3 stages of the creative process: (1) preparation, (2) incubation & illumination, (3) evaluation."
+      },
+      {
+        "question": "Name the 5 GROUP creativity techniques.",
+        "answer": "1. BRAINSTORMING — suggesting many alternatives without evaluation (no criticism).\n2. SYNECTICS — generating NOVEL alternatives via role-playing and fantasizing.\n3. NOMINAL GROUPING — generate + evaluate via a structured voting method (6 steps).\n4. CONSENSUS MAPPING — developing group AGREEMENT (Japanese 'ringi'); no vote forced.\n5. DELPHI TECHNIQUE — series of confidential questionnaires to refine a solution (forecasting).",
+        "explanation": "Brainstorming/nominal/consensus = work groups; synectics/Delphi = upper-level managers."
+      },
+      {
+        "question": "Name the main QUANTITATIVE decision techniques.",
+        "answer": "• BREAK-EVEN analysis — sales volume at which there's no profit/loss.\n• CAPITAL BUDGETING — analyze asset investments (payback, average rate of return, discounted cash flow).\n• LINEAR PROGRAMMING — optimum allocation of scarce resources.\n• QUEUING theory — balances the cost of waiting vs service capacity.\n• PROBABILITY theory — assign probabilities, compute expected value (payoff matrix).\n• BIG DATA — analysis of large quantified facts to maximize decisions.",
+        "explanation": "Quantitative = management science; uses math in the objective analysis of alternatives."
+      },
+      {
+        "question": "What is OPPORTUNITY COST, and what is COST-BENEFIT analysis?",
+        "answer": "• OPPORTUNITY COST = the next best alternative FOREGONE (e.g. €20 on a textbook means giving up the restaurant meal).\n• COST-BENEFIT analysis = a MIXED technique comparing the cost vs benefit of each alternative using subjective judgment + some quantitative math (a mix of evidence-based management and judgment).",
+        "explanation": "Pros-and-cons analysis lists advantages (benefits) vs disadvantages (costs)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A problem exists whenever:",
+        "options": [
+          "Sales are high",
+          "Objectives are not being met (a gap between actual and desired)",
+          "Employees are happy",
+          "A new manager is hired"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The decision style that 'shoots from the hip' with little information is:",
+        "options": [
+          "Reflective",
+          "Consistent",
+          "Reflexive",
+          "Rational"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Reordering inventory when stock hits a set level is an example of a:",
+        "options": [
+          "Nonprogrammed decision",
+          "Programmed decision",
+          "Strategic decision",
+          "Crisis decision"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Under which condition can you assign PROBABILITIES to outcomes?",
+        "options": [
+          "Certainty",
+          "Risk",
+          "Uncertainty",
+          "Chaos"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A 'satisficer' tends to:",
+        "options": [
+          "Weigh all options to find the best",
+          "Pick the first option meeting minimum criteria",
+          "Refuse to decide",
+          "Always use math models"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Innovation is best defined as:",
+        "options": [
+          "Generating new ideas",
+          "The implementation of a new idea",
+          "Brainstorming",
+          "Thinking outside the box"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which technique uses confidential questionnaires over several rounds?",
+        "options": [
+          "Brainstorming",
+          "Synectics",
+          "Delphi technique",
+          "Nominal grouping"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The next best alternative foregone is called:",
+        "options": [
+          "Sunk cost",
+          "Fixed cost",
+          "Opportunity cost",
+          "Marginal cost"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Decision making is selecting a course of action that will solve a _______.",
+        "answer": "problem",
+        "hint": "Gap between actual and desired..."
+      },
+      {
+        "sentence": "The decision-making model has _______ steps.",
+        "answer": "6",
+        "hint": "Classify → set criteria → generate → analyze → implement → control"
+      },
+      {
+        "sentence": "Significant, nonrecurring decisions are called _______ decisions.",
+        "answer": "nonprogrammed",
+        "hint": "Opposite of routine..."
+      },
+      {
+        "sentence": "Creativity generates new ideas; _______ is the implementation of a new idea.",
+        "answer": "innovation",
+        "hint": "Putting the idea into practice..."
+      },
+      {
+        "sentence": "_______ analysis finds the sales volume at which there is no profit or loss.",
+        "answer": "Break-even",
+        "hint": "The point of zero profit..."
+      }
+    ],
+    "learn": {
+      "title": "Problem Solving & Decision Making",
+      "content": "\n                <h3>Core relationships</h3>\n                <p>A <strong>problem</strong> = a gap between what is and what you want. <strong>Problem solving</strong>\n                takes corrective action; <strong>decision making</strong> selects the action.</p>\n\n                <div class=\"formula-box\">\n                    6-STEP MODEL: classify/define → set objectives & criteria → generate alternatives →\n                    analyze & select → plan/implement → control\n                </div>\n\n                <h4>Classifying the decision</h4>\n                <ul>\n                    <li><strong>Structure:</strong> programmed (routine, use rules) vs nonprogrammed (significant, use the model)</li>\n                    <li><strong>Conditions:</strong> certainty · risk (probabilities) · uncertainty</li>\n                    <li><strong>Type of maker:</strong> maximizer (rational, best) vs satisficer (bounded, \"good enough\")</li>\n                </ul>\n\n                <h4>Generating & analyzing alternatives</h4>\n                <div class=\"tip-box\">\n                    <p><strong>Creativity</strong> drives <strong>innovation</strong> (product & process).\n                    Group techniques: brainstorming · synectics · nominal grouping · consensus mapping · Delphi.\n                    Quantitative tools: break-even · capital budgeting · linear programming · queuing · probability · big data.\n                    Mixed: cost-benefit (+ opportunity cost, pros & cons, intuition).</p>\n                </div>\n            "
+    }
+  },
+  "strategicPlanning": {
+    "name": "Strategic & Operational Planning",
+    "icon": "fa-chess",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "STRATEGIC vs OPERATIONAL planning?",
+        "answer": "• STRATEGIC planning = developing a MISSION and LONG-RANGE objectives (usually 5 years, reviewed yearly) and how to accomplish them. Done by top/middle managers.\n• OPERATIONAL planning = setting SHORT-RANGE objectives (one year or less) and how to meet them. Done by lower-level/functional managers.\n\nDifference is mainly TIME FRAME and MANAGEMENT LEVEL.",
+        "explanation": "A strategy is a plan for pursuing a mission and achieving objectives."
+      },
+      {
+        "question": "What are the 3 PLANNING LEVELS (corporate, business, functional)?",
+        "answer": "• CORPORATE strategy — plan for managing MULTIPLE lines of business (strategic).\n• BUSINESS strategy — plan for managing ONE line of business (strategic).\n• FUNCTIONAL strategy — operational plan for managing ONE AREA of a business (marketing, operations, finance, HR).\n\nCorporate + business = strategic planning; functional = operational planning.",
+        "explanation": "For a single-line firm, corporate and business strategies are the same."
+      },
+      {
+        "question": "What are the 5 STEPS of the strategic planning PROCESS?",
+        "answer": "1. Develop the MISSION (the foundation; based on a vision).\n2. Analyze the ENVIRONMENT (situation analysis / SWOT).\n3. Set OBJECTIVES.\n4. Develop STRATEGIES (corporate, business, functional).\n5. Implement and CONTROL strategies.\n\nNot strictly linear — you may return to prior steps (an ongoing process).",
+        "explanation": "Mission is the foundation of the other four steps."
+      },
+      {
+        "question": "What is a SWOT analysis and Porter's FIVE FORCES?",
+        "answer": "• SWOT — internal STRENGTHS & WEAKNESSES (management, culture, resources, systems) + external OPPORTUNITIES & THREATS (customers, competitors, suppliers).\n• Porter's FIVE FORCES — for industry/competitive analysis: rivalry among competitors, threat of new entrants, threat of substitutes, bargaining power of buyers, bargaining power of suppliers.",
+        "explanation": "Part of step 2 (analyzing the environment / situation analysis)."
+      },
+      {
+        "question": "COMPETITIVE ADVANTAGE, core competency and benchmarking?",
+        "answer": "• COMPETITIVE ADVANTAGE — specifies how a firm offers UNIQUE customer value ('what makes us different from and better than competitors?').\n• CORE COMPETENCY — what a firm does WELL.\n• BENCHMARKING — comparing your products/processes with those of OTHER companies (legally/ethically) to copy or improve them.",
+        "explanation": "Most benchmarking is within an industry, but non-competitors can inspire ideas too."
+      },
+      {
+        "question": "What are the GRAND strategies?",
+        "answer": "An overall corporate strategy:\n1. GROWTH — aggressively increase size/sales.\n2. STABILITY — hold present size or grow slowly (balance growth & profits).\n3. TURNAROUND & RETRENCHMENT — turnaround reverses a declining business; retrenchment is divestiture/liquidation of assets (a SPINOFF sets up a unit as a separate company).\n4. COMBINATION — a mix across different lines of business.",
+        "explanation": "SMART objectives = specific, measurable, attainable, realistic, timely."
+      },
+      {
+        "question": "What are the three GROWTH strategies?",
+        "answer": "1. CONCENTRATION — grow aggressively in the EXISTING line of business.\n2. INTEGRATION — enter a related line: FORWARD (closer to the final customer, e.g. Apple Stores) or BACKWARD (farther from customer, e.g. Delta buying a refinery).\n3. DIVERSIFICATION — go into RELATED (concentric) or UNRELATED (conglomerate) lines.\n\n+ MERGERS & ACQUISITIONS (M&A): merger = two firms form one; acquisition = one buys another.",
+        "explanation": "Business portfolio analysis uses the BCG matrix to allocate resources among SBUs."
+      },
+      {
+        "question": "What is the BCG GROWTH-SHARE MATRIX (4 cells)?",
+        "answer": "Boston Consulting Group matrix for each business/product line:\n• CASH COWS — generate more than they need; fund the others.\n• STARS — question marks that succeeded (high growth, high share).\n• QUESTION MARKS — entries into new businesses.\n• DOGS — doing poorly; usually sold or liquidated.",
+        "explanation": "Used in corporate portfolio management (CPM) to allocate resources among strategic business units (SBUs)."
+      },
+      {
+        "question": "What are the ADAPTIVE and Porter's COMPETITIVE business-level strategies?",
+        "answer": "ADAPTIVE (adapt to environmental change):\n• PROSPECTING — aggressively offer new products/markets (≈ growth).\n• DEFENDING — stay with present products/markets (≈ stability).\n• ANALYZING — midrange between the two (≈ combination).\n\nPorter's COMPETITIVE strategies:\n• DIFFERENTIATION — stress distinctiveness (charge higher prices).\n• COST LEADERSHIP — stress lower prices via tight cost control.\n• FOCUS — target a specific niche/segment.",
+        "explanation": "Porter warns against mixing differentiation + cost leadership (you get 'stuck in the middle')."
+      },
+      {
+        "question": "STANDING vs SINGLE-USE vs CONTINGENCY plans?",
+        "answer": "• STANDING plans — used repeatedly for routine issues: POLICIES (general guides), PROCEDURES/SOPs (sequence of actions), RULES (exactly what to do/not do).\n• SINGLE-USE plans — for nonrepetitive situations: PROGRAMS and BUDGETS.\n• CONTINGENCY plans — alternative 'backup' plans implemented if uncontrollable events occur.",
+        "explanation": "Most strategic plans are single-use; operational plans are more often standing plans."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Strategic plans are commonly developed for about:",
+        "options": [
+          "One week",
+          "One month",
+          "Five years",
+          "Twenty years"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A plan for managing ONE area such as marketing or finance is a:",
+        "options": [
+          "Corporate strategy",
+          "Business strategy",
+          "Functional strategy",
+          "Grand strategy"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is the FIRST step of the strategic planning process?",
+        "options": [
+          "Set objectives",
+          "Develop the mission",
+          "Analyze the environment",
+          "Control strategies"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In SWOT, opportunities and threats are part of the ____ environment.",
+        "options": [
+          "Internal",
+          "External",
+          "Personal",
+          "Financial"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Apple opening Apple Stores (moving closer to the final customer) is:",
+        "options": [
+          "Backward integration",
+          "Forward integration",
+          "Unrelated diversification",
+          "Concentration"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the BCG matrix, a business that is doing poorly and is usually sold is a:",
+        "options": [
+          "Star",
+          "Cash cow",
+          "Question mark",
+          "Dog"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Walmart's strategy of stressing lower prices via tight cost control is:",
+        "options": [
+          "Differentiation",
+          "Cost leadership",
+          "Focus",
+          "Prospecting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A 'no smoking in the work area' statement is an example of a:",
+        "options": [
+          "Policy",
+          "Procedure",
+          "Rule",
+          "Program"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Operational plans have short-term objectives met in _______ year or less.",
+        "answer": "one",
+        "hint": "A number..."
+      },
+      {
+        "sentence": "The first step of the strategic planning process is developing the _______.",
+        "answer": "mission",
+        "hint": "The foundation of the process..."
+      },
+      {
+        "sentence": "SWOT stands for strengths, weaknesses, opportunities and _______.",
+        "answer": "threats",
+        "hint": "External negatives..."
+      },
+      {
+        "sentence": "In the BCG matrix, a high-growth high-share business is called a _______.",
+        "answer": "star",
+        "hint": "A question mark that succeeded..."
+      },
+      {
+        "sentence": "Policies, procedures and rules are types of _______ plans.",
+        "answer": "standing",
+        "hint": "Used over and over..."
+      }
+    ],
+    "learn": {
+      "title": "Strategic & Operational Planning",
+      "content": "\n                <h3>Two types, three levels</h3>\n                <div class=\"formula-box\">\n                    STRATEGIC (long-range, mission, top/middle) &nbsp;vs&nbsp; OPERATIONAL (≤1 year, functional)<br>\n                    LEVELS: corporate (many businesses) · business (one) · functional (one area)\n                </div>\n\n                <h4>The 5-step strategic planning process</h4>\n                <ol>\n                    <li>Develop the <strong>mission</strong> (foundation)</li>\n                    <li>Analyze the <strong>environment</strong> — SWOT + Porter's five forces</li>\n                    <li>Set <strong>objectives</strong> (SMART)</li>\n                    <li>Develop <strong>strategies</strong> (corporate / business / functional)</li>\n                    <li>Implement & <strong>control</strong></li>\n                </ol>\n\n                <h4>Strategy menu</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Grand:</strong> growth · stability · turnaround & retrenchment · combination</li>\n                        <li><strong>Growth:</strong> concentration · integration (forward/backward) · diversification (related/unrelated) · M&A</li>\n                        <li><strong>BCG:</strong> cash cows · stars · question marks · dogs</li>\n                        <li><strong>Adaptive:</strong> prospecting · defending · analyzing</li>\n                        <li><strong>Porter competitive:</strong> differentiation · cost leadership · focus</li>\n                        <li><strong>Plans:</strong> standing (policy/procedure/rule) · single-use (program/budget) · contingency</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "organizing": {
+    "name": "Organizing & Delegating Work",
+    "icon": "fa-diagram-project",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What is ORGANIZING, and MECHANISTIC vs ORGANIC organizations?",
+        "answer": "ORGANIZING (the 2nd management function) = the process of delegating and coordinating tasks and resources to achieve objectives.\n\n• MECHANISTIC — bureaucratic: tight controls, rules/procedures, specialized jobs, top-down decisions. Works in STABLE environments.\n• ORGANIC — flexible: minimal rules, broadly defined jobs, decisions at lower levels. Works in DYNAMIC environments.\n\nThey lie on a CONTINUUM.",
+        "explanation": "Larger firms tend to be more mechanistic; mass production → mechanistic; custom → organic."
+      },
+      {
+        "question": "Name the key PRINCIPLES of organization.",
+        "answer": "• UNITY OF COMMAND — each employee reports to ONLY ONE boss.\n• UNITY OF DIRECTION — all activities directed toward the same objectives.\n• CHAIN OF COMMAND (scalar principle) — clear line of authority top to bottom.\n• SPAN OF MANAGEMENT (span of control) — number of employees reporting to a manager (tall = narrow spans; flat = wide spans).\n• DIVISION OF LABOR — specialized jobs.\n• COORDINATION — differentiation (split into departments) + integration (coordinate them).",
+        "explanation": "Mechanistic orgs enforce these principles more closely; flatter orgs cut management layers."
+      },
+      {
+        "question": "RESPONSIBILITY, AUTHORITY, ACCOUNTABILITY and DELEGATION?",
+        "answer": "• RESPONSIBILITY — obligation to achieve objectives by performing activities.\n• AUTHORITY — the right to make decisions, issue orders, use resources.\n• ACCOUNTABILITY — evaluation of how well one meets responsibilities.\n• DELEGATION — assigning responsibility AND authority to accomplish objectives.\n\nResponsibility & authority flow DOWN the chain of command; accountability flows UP. Delegation only occurs when you give a NEW task.",
+        "explanation": "You can be a manager without power, and have power without being a manager."
+      },
+      {
+        "question": "AUTHORITY vs POWER; LINE vs STAFF; the 4 LEVELS of authority?",
+        "answer": "• Authority = formal right from the organization; POWER = the ability to INFLUENCE others (broader).\n• LINE authority — make decisions & issue orders down the chain (operations, marketing). STAFF authority — advise & assist (HR, PR, IT).\n• 4 LEVELS of authority: (1) inform, (2) recommend, (3) report, (4) full authority.",
+        "explanation": "Formal authority = sanctioned; informal authority = unsanctioned (relationships)."
+      },
+      {
+        "question": "CENTRALIZED vs DECENTRALIZED authority?",
+        "answer": "• CENTRALIZED — important decisions made by TOP managers. Advantages: control, reduced duplication. (Mechanistic.)\n• DECENTRALIZED — important decisions made by MIDDLE and FIRST-LINE managers. Advantages: efficiency, flexibility. (Organic.)\n\nMICROMANAGEMENT = a manager closely controls employees' work and avoids delegating — the opposite of empowerment.",
+        "explanation": "No single answer is best — it depends on the situation."
+      },
+      {
+        "question": "What is DEPARTMENTALIZATION? Name the traditional types.",
+        "answer": "Departmentalization = grouping related activities into units. Traditional types:\n• FUNCTIONAL — by internal activity (production, sales, finance); used by small firms.\n• PRODUCT (service) — by goods/services.\n• CUSTOMER — by type of customer.\n• TERRITORY (geographic) — by area (most MNCs).\n• DIVISIONAL — semi-autonomous SBUs (M-form); CONGLOMERATE = unrelated profit centers.\n• MATRIX — combines functional + product/divisional (employee has TWO bosses).",
+        "explanation": "Matrix's strength is flexibility; its weakness is violating unity of command (two bosses)."
+      },
+      {
+        "question": "Name the 5 CONTEMPORARY organizational designs.",
+        "answer": "1. TEAM organization — based on teams (multiteam systems).\n2. NETWORK organization — boundaryless interrelationships among firms (a hub + outside specialists).\n3. MODULAR organization — design/market in-house, OUTSOURCE manufacturing (Nike, Dell).\n4. VIRTUAL organization — evolving network of contingent workers/firms uniting temporarily (no central hub).\n5. PLATFORM organization — connects buyers & sellers via the shared economy (Uber, Airbnb).",
+        "explanation": "REENGINEERING = fundamental rethinking and radical redesign of business processes."
+      },
+      {
+        "question": "What is JOB DESIGN — simplification vs expansion?",
+        "answer": "JOB DESIGN = identifying the tasks each employee is responsible for.\n• JOB SIMPLIFICATION — eliminate, combine, or change the sequence of tasks (more specialized; based on division of labor / Taylor). Work smarter, not harder.\n• JOB EXPANSION — make jobs LESS specialized via:\n  – ROTATION (perform different jobs in sequence; cross-training)\n  – ENLARGEMENT (add tasks for variety)\n  – ENRICHMENT (build MOTIVATORS into the job itself).",
+        "explanation": "Job enrichment uses flexible arrangements: telecommuting, flextime, compressed workweek, job sharing."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "An organic organization works best in environments that are:",
+        "options": [
+          "Stable",
+          "Dynamic",
+          "Bureaucratic",
+          "Centralized"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The principle that each employee reports to only one boss is:",
+        "options": [
+          "Unity of direction",
+          "Span of management",
+          "Unity of command",
+          "Division of labor"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Responsibility and authority flow ____ the chain of command.",
+        "options": [
+          "Up",
+          "Down",
+          "Sideways",
+          "Nowhere"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "HR, public relations and IT departments usually hold ____ authority.",
+        "options": [
+          "Line",
+          "Staff",
+          "Full",
+          "Informal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Decisions made by top managers only describe ____ authority.",
+        "options": [
+          "Decentralized",
+          "Centralized",
+          "Delegated",
+          "Informal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The structure where an employee has TWO bosses (functional + project) is:",
+        "options": [
+          "Functional",
+          "Divisional",
+          "Matrix",
+          "Territory"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Uber connecting riders and drivers exemplifies a ____ organization.",
+        "options": [
+          "Modular",
+          "Virtual",
+          "Platform",
+          "Team"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Building motivators into the job itself is job:",
+        "options": [
+          "Rotation",
+          "Enlargement",
+          "Enrichment",
+          "Simplification"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Bureaucratic organizations with tight controls and rules are called _______.",
+        "answer": "mechanistic",
+        "hint": "Opposite of organic..."
+      },
+      {
+        "sentence": "The number of employees reporting to a manager is the span of _______.",
+        "answer": "management",
+        "hint": "Also called span of control..."
+      },
+      {
+        "sentence": "Delegation assigns both responsibility and _______ to accomplish objectives.",
+        "answer": "authority",
+        "hint": "The right to decide and use resources..."
+      },
+      {
+        "sentence": "Grouping departments by area or region is _______ departmentalization.",
+        "answer": "territory",
+        "hint": "Also called geographic..."
+      },
+      {
+        "sentence": "Adding tasks to a job for variety is job _______.",
+        "answer": "enlargement",
+        "hint": "Broaden, not deepen..."
+      }
+    ],
+    "learn": {
+      "title": "Organizing & Delegating Work",
+      "content": "\n                <h3>Two ends of a continuum</h3>\n                <div class=\"formula-box\">\n                    MECHANISTIC (rules, tight control, specialized, top-down) ← → ORGANIC (flexible, broad jobs, lower-level decisions)<br>\n                    Stable environment → mechanistic &nbsp;·&nbsp; Dynamic environment → organic\n                </div>\n\n                <h4>Principles & authority</h4>\n                <ul>\n                    <li>Unity of command/direction · chain of command · span of management · division of labor · coordination</li>\n                    <li>Responsibility & authority flow <strong>down</strong>; accountability flows <strong>up</strong>; delegation needs a NEW task</li>\n                    <li>Authority vs power · line vs staff · centralized vs decentralized · 4 levels (inform/recommend/report/full)</li>\n                </ul>\n\n                <h4>Structure & jobs</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Departmentalization:</strong> functional · product · customer · territory · divisional · matrix</li>\n                        <li><strong>Contemporary designs:</strong> team · network · modular · virtual · platform (+ reengineering)</li>\n                        <li><strong>Job design:</strong> simplification vs expansion (rotation · enlargement · enrichment)</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "teamwork": {
+    "name": "Managing Teamwork",
+    "icon": "fa-people-group",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is the difference between a GROUP and a TEAM?",
+        "answer": "• GROUP — two or more members, a CLEAR leader, performing INDEPENDENT jobs with INDIVIDUAL accountability, evaluation and rewards.\n• TEAM — a small number of members, SHARED leadership, performing INTERDEPENDENT jobs with INDIVIDUAL AND GROUP accountability, evaluation and rewards.\n\n'All teams are groups, but not all groups are teams.'",
+        "explanation": "Continuum: management-directed (group) → semiautonomous → self-managed (team)."
+      },
+      {
+        "question": "What four factors make up the GROUP PERFORMANCE MODEL?",
+        "answer": "Group performance = f(organizational context, group structure, group process, group development).\n\nGroups/teams are the 'backbone' of organizations because of the SYSTEMS EFFECT — each group affects others and the total organization.",
+        "explanation": "Engaged teams grow profits about three times faster than disengaged ones."
+      },
+      {
+        "question": "What are the dimensions of GROUP STRUCTURE?",
+        "answer": "Group type, SIZE, COMPOSITION, leadership, and objectives.\n\nGroup TYPES: formal vs informal; functional (vertical) vs cross-functional (horizontal); command vs task (task force/ad hoc committee vs standing committee); plus GLOBAL VIRTUAL teams.",
+        "explanation": "Composition = the mix of members' skills and abilities; include diverse members."
+      },
+      {
+        "question": "What is the ideal GROUP SIZE (and the 'two-pizza rule')?",
+        "answer": "There is NO single ideal size, but generally 5–9 members give the best relationships and performance (short-term memory holds 7 ± 2 items).\n\n• Too SMALL → limits ideas/creativity.\n• Too LARGE → slow, less innovative, FREE-RIDING (social loafing).\n• Amazon's TWO-PIZZA RULE: if two pizzas can't feed the team, it's too big (≤ ~8).",
+        "explanation": "Smaller groups < 5 risk groupthink; over 9, communication breaks down."
+      },
+      {
+        "question": "What is GROUP PROCESS, and what are its dimensions?",
+        "answer": "Group process (group dynamics) = the patterns of INTERACTIONS that emerge as members do their jobs (how they get along, not how they do the work).\n\nDimensions: ROLES, NORMS, COHESIVENESS, STATUS, decision making, and conflict resolution.",
+        "explanation": "The 3 group roles: task roles, maintenance roles, and self-interest roles."
+      },
+      {
+        "question": "NORMS, COHESIVENESS and STATUS in a group?",
+        "answer": "• NORMS — unwritten, shared expectations of appropriate behavior that develop as members interact (not set by management, unlike rules).\n• COHESIVENESS — the extent to which members stick together; higher when goals are shared, the group is small/homogeneous, participation is equal, and it competes against external teams.\n• STATUS — the perceived ranking of a member relative to others (based on performance, title, seniority, expertise, etc.).",
+        "explanation": "Groups listen more to high-status members and overlook their norm-breaking."
+      },
+      {
+        "question": "What are TUCKMAN'S 5 stages of group development?",
+        "answer": "Bruce Tuckman's stages:\n1. FORMING (orientation) — low development; concerns about structure/leadership.\n2. STORMING (dissatisfaction) — moderate development; frustration, conflict.\n3. NORMING (resolution) — high development; members resolve differences.\n4. PERFORMING (production) — outstanding development; works as a self-directed team.\n5. TERMINATION (adjourning) — task groups disband.",
+        "explanation": "Two key variables: competence (rises over time) and commitment (starts high, drops, then rises)."
+      },
+      {
+        "question": "Which MANAGEMENT STYLE matches each development stage?",
+        "answer": "• FORMING → AUTOCRATIC (high task, low support — tell them what to do).\n• STORMING → CONSULTATIVE (high task, high support).\n• NORMING → PARTICIPATIVE (low task, high support — share decisions).\n• PERFORMING → EMPOWERMENT (low task, low support — let them decide; self-directed team).\n• TERMINATION → no style needed.",
+        "explanation": "Change your leadership behavior as the group develops through the stages."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Shared leadership and interdependent jobs characterize a:",
+        "options": [
+          "Group",
+          "Team",
+          "Crowd",
+          "Department"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT a factor in the group performance model?",
+        "options": [
+          "Group structure",
+          "Group process",
+          "Group development",
+          "Group salary"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "A temporary group formed for a specific purpose is a:",
+        "options": [
+          "Standing committee",
+          "Task force (ad hoc committee)",
+          "Command group",
+          "Functional group"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Amazon's 'two-pizza rule' is about keeping the team:",
+        "options": [
+          "Well fed",
+          "Small enough to be productive",
+          "Working overtime",
+          "Geographically spread"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Unwritten, shared expectations of behavior in a group are called:",
+        "options": [
+          "Rules",
+          "Norms",
+          "Policies",
+          "Procedures"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Members relying on others to carry their workload is called:",
+        "options": [
+          "Cohesiveness",
+          "Free-riding (social loafing)",
+          "Groupthink",
+          "Status"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Tuckman's stages, the 'dissatisfaction' stage is:",
+        "options": [
+          "Forming",
+          "Storming",
+          "Norming",
+          "Performing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The appropriate management style during the PERFORMING stage is:",
+        "options": [
+          "Autocratic",
+          "Consultative",
+          "Participative",
+          "Empowerment"
+        ],
+        "correct": 3
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "All teams are groups, but not all groups are _______.",
+        "answer": "teams",
+        "hint": "The interdependent, shared-leadership kind..."
+      },
+      {
+        "sentence": "The best group size is generally five to _______ members.",
+        "answer": "nine",
+        "hint": "7 plus or minus two..."
+      },
+      {
+        "sentence": "Unwritten shared expectations of behavior are group _______.",
+        "answer": "norms",
+        "hint": "Not formal rules..."
+      },
+      {
+        "sentence": "Tuckman's five stages are forming, storming, norming, performing and _______.",
+        "answer": "termination",
+        "hint": "Also called adjourning..."
+      },
+      {
+        "sentence": "During the forming stage the appropriate management style is _______.",
+        "answer": "autocratic",
+        "hint": "Tell them what to do..."
+      }
+    ],
+    "learn": {
+      "title": "Managing Teamwork",
+      "content": "\n                <h3>Group vs team</h3>\n                <div class=\"formula-box\">\n                    GROUP: clear leader · independent jobs · individual accountability<br>\n                    TEAM: shared leadership · interdependent jobs · individual + group accountability\n                </div>\n\n                <h4>Group performance model</h4>\n                <p>performance = f(organizational <strong>context</strong> · <strong>structure</strong> ·\n                <strong>process</strong> · <strong>development</strong>). The <em>systems effect</em> links every\n                group to the whole organization.</p>\n\n                <ul>\n                    <li><strong>Structure:</strong> type · size (5–9 / two-pizza rule) · composition · leadership · objectives</li>\n                    <li><strong>Process:</strong> roles · norms · cohesiveness · status · decisions · conflict</li>\n                </ul>\n\n                <h4>Tuckman's stages → management style</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Forming → <strong>autocratic</strong></li>\n                        <li>Storming → <strong>consultative</strong></li>\n                        <li>Norming → <strong>participative</strong></li>\n                        <li>Performing → <strong>empowerment</strong> (self-directed team)</li>\n                        <li>Termination → no style needed</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "humanResources": {
+    "name": "Human Resource Management",
+    "icon": "fa-users-gear",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What are the FOUR parts of the HRM (staffing) PROCESS?",
+        "answer": "Human Resources Management = managing people for competitive advantage. Four parts:\n1. PLANNING for human resources (strategic HR planning).\n2. ATTRACTING employees (recruiting + selecting).\n3. DEVELOPING employees (orientation, training, appraisal).\n4. RETAINING employees (compensation, retention, separation).",
+        "explanation": "Also called the staffing process. HR is a STAFF department (advises/assists)."
+      },
+      {
+        "question": "What is JOB ANALYSIS (description vs specifications)?",
+        "answer": "JOB ANALYSIS = determining what a position entails and the qualifications needed.\n• JOB DESCRIPTION — identifies the TASKS and responsibilities of a position (often a Realistic Job Preview).\n• JOB SPECIFICATIONS — identify the QUALIFICATIONS needed by the person to fill it.\n\nDone BEFORE searching for a new employee.",
+        "explanation": "Making the job sound better than it is just creates turnover problems."
+      },
+      {
+        "question": "What is RECRUITING, and the main internal/external sources?",
+        "answer": "RECRUITING = attracting QUALIFIED candidates to apply (not just lots of applications).\n• INTERNAL — promotions / lateral transfers ('internal mobility').\n• EXTERNAL — employee REFERRALS (often the favorite; based on networking), walk-ins, outside organizations (schools/colleges/fairs), AGENCIES (temporary, public, private; executive 'headhunters'), advertising/internet/social media.",
+        "explanation": "More people get jobs through networking than all other methods combined."
+      },
+      {
+        "question": "What are the 6 parts of the SELECTION PROCESS?",
+        "answer": "1. APPLICATION form / résumé (used to screen)\n2. SCREENING interviews (HR narrows the field)\n3. TESTING\n4. BACKGROUND & reference checks\n5. INTERVIEWING (usually the MOST heavily weighted step)\n6. HIRING\n\nNot all parts are used for every job, and there's no fixed sequence.",
+        "explanation": "Selection = choosing the most qualified applicant while ensuring equal opportunity."
+      },
+      {
+        "question": "In employment TESTING, what are VALIDITY and RELIABILITY?",
+        "answer": "• VALIDITY — people who score HIGH on the test do WELL on the job (and low scorers do poorly). The test actually predicts job success.\n• RELIABILITY — taking the same test on different days yields approximately the SAME score.\n\nLarge firms use ASSESSMENT CENTERS (tests + interviews + simulations).",
+        "explanation": "Tests include achievement, aptitude, personality, interest and physical exams."
+      },
+      {
+        "question": "ORIENTATION/onboarding and TRAINING vs DEVELOPMENT?",
+        "answer": "• ORIENTATION (now called ONBOARDING) — introducing new employees to the organization and their jobs; includes newcomer SOCIALIZATION (acquiring knowledge, skills, behaviors).\n• TRAINING — teaching the skills necessary to perform the CURRENT job.\n• DEVELOPMENT — ongoing education to improve skills for PRESENT and FUTURE jobs.",
+        "explanation": "Socialization is ranked more important than the formal orientation program."
+      },
+      {
+        "question": "What is PERFORMANCE APPRAISAL and 360-degree feedback?",
+        "answer": "PERFORMANCE APPRAISAL = the ongoing process of EVALUATING employee performance.\n\n• Mechanistic orgs → manager evaluates subordinates.\n• Organic self-managed teams → PEERS also evaluate each other (e.g. Zappos).\n• 360-DEGREE feedback → evaluation expanded to everyone the employee contacts: peers, other departments, customers, suppliers.",
+        "explanation": "Used both for current performance and potential promotions."
+      },
+      {
+        "question": "What is COMPENSATION — the 3 pay methods and benefits?",
+        "answer": "COMPENSATION = total of pay + benefits (affects attracting AND retaining). PAY LEVEL = the choice to be a high-/medium-/low-paying firm.\n\nThree PAY METHODS:\n1. WAGES — paid hourly.\n2. SALARY — based on time (week/month/year), regardless of hours.\n3. INCENTIVES — pay for performance: piece rate, commissions, merit raises, bonuses, profit sharing, stock options.\n\nBENEFITS = nonwage compensation (legally required: workers' comp, unemployment, Medicare, Social Security).",
+        "explanation": "The trend is pay for performance. Job evaluation determines each job's worth internally."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The HRM process is also known as the ____ process.",
+        "options": [
+          "Marketing",
+          "Staffing",
+          "Budgeting",
+          "Control"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A document identifying the TASKS of a position is the job:",
+        "options": [
+          "Specification",
+          "Description",
+          "Analysis",
+          "Evaluation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which recruiting method is based on networking and is often the favorite?",
+        "options": [
+          "Walk-ins",
+          "Employee referrals",
+          "Headhunters",
+          "Newspaper ads"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which step is usually the MOST heavily weighted in selection?",
+        "options": [
+          "Application form",
+          "Reference checks",
+          "Interviewing",
+          "Testing"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A test where high scorers do well on the job has high:",
+        "options": [
+          "Reliability",
+          "Validity",
+          "Difficulty",
+          "Bias"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Teaching the skills needed for the CURRENT job is:",
+        "options": [
+          "Development",
+          "Training",
+          "Onboarding",
+          "Appraisal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Evaluation that includes peers, customers and suppliers is called:",
+        "options": [
+          "Self-appraisal",
+          "360-degree feedback",
+          "Management by objectives",
+          "Job evaluation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Commissions and merit raises are examples of:",
+        "options": [
+          "Wages",
+          "Salary",
+          "Incentives",
+          "Benefits"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The four parts of HRM are planning, attracting, developing and _______.",
+        "answer": "retaining",
+        "hint": "Keeping good employees..."
+      },
+      {
+        "sentence": "Job _______ identify the qualifications needed to fill a position.",
+        "answer": "specifications",
+        "hint": "Not the description of tasks..."
+      },
+      {
+        "sentence": "A test gives the same score on different days when it has high _______.",
+        "answer": "reliability",
+        "hint": "Consistency over time..."
+      },
+      {
+        "sentence": "Ongoing education for present and future jobs is called _______.",
+        "answer": "development",
+        "hint": "Broader than training..."
+      },
+      {
+        "sentence": "Pay based on time, regardless of hours worked, is a _______.",
+        "answer": "salary",
+        "hint": "Not hourly wages..."
+      }
+    ],
+    "learn": {
+      "title": "Human Resource Management",
+      "content": "\n                <h3>The HRM (staffing) process</h3>\n                <div class=\"formula-box\">\n                    PLAN → ATTRACT (recruit + select) → DEVELOP (orient, train, appraise) → RETAIN (compensate)\n                </div>\n\n                <h4>Attracting</h4>\n                <ul>\n                    <li><strong>Job analysis</strong> → job description (tasks) + job specifications (qualifications)</li>\n                    <li><strong>Recruiting</strong> (qualified candidates): internal mobility · referrals · agencies · ads/social</li>\n                    <li><strong>Selection (6 steps):</strong> application → screening → testing (validity & reliability) → background → interview → hire</li>\n                </ul>\n\n                <h4>Developing & retaining</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Onboarding</strong> + socialization; <strong>training</strong> (current job) vs <strong>development</strong> (future)</li>\n                        <li><strong>Performance appraisal</strong> (incl. 360-degree feedback)</li>\n                        <li><strong>Compensation</strong> = pay + benefits; methods: wages · salary · incentives</li>\n                        <li>Labor unions & labor relations (collective bargaining)</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "organizationalBehavior": {
+    "name": "Organizational Behavior",
+    "icon": "fa-brain",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "What is ORGANIZATIONAL BEHAVIOR (OB) and its GOAL?",
+        "answer": "BEHAVIOR = simply the things people do and say (our actions).\nOB = the study of ACTIONS that affect performance in the workplace.\n\nThe goal of OB theorists is to UNDERSTAND, EXPLAIN, PREDICT and INFLUENCE behavior to improve performance.",
+        "explanation": "OB is about 'reading people'; interpersonal skills are key to success."
+      },
+      {
+        "question": "What are the FOUNDATIONS of individual behavior?",
+        "answer": "Our thoughts, self-confidence, self-esteem, personality, perception, and attitudes.\n\nThese foundations are NOT observable — you can only observe actions and try to explain/predict behavior from your understanding of the foundations.",
+        "explanation": "It's about reading people; OB skills help build and maintain good relationships."
+      },
+      {
+        "question": "SELF-ESTEEM vs SELF-CONFIDENCE vs SELF-DOUBT?",
+        "answer": "• SELF-ESTEEM — your overall view of yourself (like/dislike yourself). Not innate; shaped by experience and thoughts.\n• SELF-CONFIDENCE — believing you can do a SPECIFIC task (also called self-efficacy/self-concept); an 'I can do this' attitude.\n• SELF-DOUBT — negative thoughts that hold us back; leads to fear of rejection/failure/risk.",
+        "explanation": "Improve them through positive SELF-TALK and visualizing success."
+      },
+      {
+        "question": "How do THOUGHTS, optimism and gratitude affect behavior?",
+        "answer": "Thoughts cause our feelings, behavior and performance ('what you think is what you get').\n• OPTIMISM — believing things will go well; less stress, happier, higher performance than pessimists.\n• GRATITUDE — grateful people are happier, healthier, less stressed.\n• SELF-TALK — comments/reminders/advice you give yourself ('no stinking thinking').",
+        "explanation": "As Henry Ford said: whether you think you'll succeed or fail, you're right."
+      },
+      {
+        "question": "What is PERSONALITY, and the LOCUS OF CONTROL trait?",
+        "answer": "PERSONALITY = a combination of behavioral, mental and emotional traits that define an individual; a primary influence on how we behave.\n\nLOCUS OF CONTROL lies on a continuum:\n• EXTERNALIZERS — believe they have no control over their fate.\n• INTERNALIZERS — believe they control their fate; their behavior directly affects performance → higher self-esteem, self-confidence, and performance.",
+        "explanation": "Internalizers have been shown to have higher levels of performance."
+      },
+      {
+        "question": "RISK PROPENSITY, entrepreneurial types and MACHIAVELLIANISM?",
+        "answer": "• RISK PROPENSITY — continuum from risk taking to risk avoiding; entrepreneurs are risk takers.\n• ENTREPRENEURIAL TYPES — hustlers, innovators, machines, prodigies, visionaries.\n• MACHIAVELLIANISM — a trait based on the belief that the ends justify the means and power should be used to reach desired ends. Also called NARCISSIST — manipulate others for selfish gain; lack empathy.",
+        "explanation": "Risk-avoiding managers often go out of business by not keeping up with change."
+      },
+      {
+        "question": "What are the BIG FIVE personality dimensions (OCEAN)?",
+        "answer": "The Five-Factor Model — abbreviated OCEAN:\n• OPENNESS — willing to try new things (good for creative jobs).\n• CONSCIENTIOUSNESS — responsible, dependable, hardworking (overall best predictor of job success).\n• EXTRAVERSION — social, talkative, assertive (good for sales/leadership); middle = 'ambivert'.\n• AGREEABLENESS — cooperative, easy to work with (good for teamwork).\n• NEUROTICISM / EMOTIONALISM — continuum of emotional stability vs instability.",
+        "explanation": "Emotional intelligence (EI) describes people with good interpersonal skills."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The goal of OB is to understand, explain, predict and ____ behavior.",
+        "options": [
+          "Ignore",
+          "Influence",
+          "Punish",
+          "Record"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Believing you can do a specific task is:",
+        "options": [
+          "Self-esteem",
+          "Self-confidence (self-efficacy)",
+          "Self-doubt",
+          "Self-talk"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Someone who believes they control their own fate is an:",
+        "options": [
+          "Externalizer",
+          "Internalizer",
+          "Optimist",
+          "Extrovert"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The belief that 'the ends justify the means' describes:",
+        "options": [
+          "Optimism",
+          "Conscientiousness",
+          "Machiavellianism",
+          "Agreeableness"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The Big Five are abbreviated as:",
+        "options": [
+          "SMART",
+          "OCEAN",
+          "SWOT",
+          "ERG"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which Big Five dimension is the overall best predictor of job success?",
+        "options": [
+          "Openness",
+          "Conscientiousness",
+          "Neuroticism",
+          "Agreeableness"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A person in the middle of the extrovert–introvert continuum is an:",
+        "options": [
+          "Ambivert",
+          "Externalizer",
+          "Optimist",
+          "Internalizer"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "OB is the study of actions that affect _______ in the workplace.",
+        "answer": "performance",
+        "hint": "Results at work..."
+      },
+      {
+        "sentence": "Believing you can do a specific task is self-_______ (or self-efficacy).",
+        "answer": "confidence",
+        "hint": "'I can do this'..."
+      },
+      {
+        "sentence": "People who believe they control their fate are _______.",
+        "answer": "internalizers",
+        "hint": "Opposite of externalizers..."
+      },
+      {
+        "sentence": "The Big Five model is abbreviated _______.",
+        "answer": "OCEAN",
+        "hint": "Openness, conscientiousness, extraversion, agreeableness, neuroticism"
+      },
+      {
+        "sentence": "_______ is responsible, dependable and the best overall predictor of job success.",
+        "answer": "Conscientiousness",
+        "hint": "The 'C' in OCEAN..."
+      }
+    ],
+    "learn": {
+      "title": "Organizational Behavior",
+      "content": "\n                <h3>What is OB?</h3>\n                <p>The study of <strong>actions that affect performance</strong> at work. Goal:\n                <strong>understand → explain → predict → influence</strong> behavior.</p>\n\n                <h4>Foundations of behavior</h4>\n                <ul>\n                    <li>Self-esteem (overall view) · self-confidence/self-efficacy (a task) · self-doubt</li>\n                    <li>Thoughts · optimism · gratitude · positive self-talk + visualization</li>\n                </ul>\n\n                <h4>Personality</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Locus of control:</strong> internalizers (control fate, higher performance) vs externalizers</li>\n                        <li><strong>Risk propensity</strong> · entrepreneurial types · Machiavellianism (narcissism)</li>\n                        <li><strong>Big Five (OCEAN):</strong> Openness · Conscientiousness · Extraversion · Agreeableness · Neuroticism</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "motivation": {
+    "name": "Motivating for High Performance",
+    "icon": "fa-bolt",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "What is MOTIVATION, and the PERFORMANCE FORMULA?",
+        "answer": "MOTIVATION = the willingness to achieve organizational objectives or to go above and beyond (organizational citizenship behavior, OCB; 'employee engagement').\n\nPERFORMANCE FORMULA: performance = ability × motivation × resources.\n\nFor maximum performance, ALL THREE factors must be high (it's multiplicative — a zero in any factor kills performance).",
+        "explanation": "Effort has three parts: initiation, direction, and persistence."
+      },
+      {
+        "question": "What is the MOTIVATION PROCESS?",
+        "answer": "Employees go from NEED → MOTIVE → BEHAVIOR → CONSEQUENCE → SATISFACTION or DISSATISFACTION.\n\nExample: thirsty (need) → desire a drink (motive) → get a drink (behavior) → quench thirst (consequence/satisfaction). Satisfaction is short-lived, so it's a FEEDBACK LOOP.",
+        "explanation": "You can't observe motives, only behavior — infer motive via the attribution process."
+      },
+      {
+        "question": "Compare the three CLASSES of motivation theories.",
+        "answer": "1. CONTENT theories — identify and understand employees' NEEDS (what motivates).\n2. PROCESS theories — explain HOW and WHY employees choose behaviors to satisfy needs.\n3. REINFORCEMENT theory — uses CONSEQUENCES of behavior; no need to identify needs.",
+        "explanation": "There is no single universally accepted theory of how to motivate people."
+      },
+      {
+        "question": "What are the four CONTENT motivation theories?",
+        "answer": "1. MASLOW's HIERARCHY OF NEEDS — 5 levels: physiological → safety → social → esteem → self-actualization.\n2. ALDERFER's ERG — simplifies to 3: Existence, Relatedness, Growth (more than one can be active).\n3. HERZBERG's TWO-FACTOR — MAINTENANCE factors (extrinsic; prevent dissatisfaction) vs MOTIVATORS (intrinsic; create satisfaction).\n4. McCLELLAND's ACQUIRED NEEDS — achievement, power, affiliation (learned; one is dominant).",
+        "explanation": "Managers tend to have high need for Power, then Achievement, and low Affiliation."
+      },
+      {
+        "question": "Explain HERZBERG'S two-factor theory.",
+        "answer": "Employees are motivated by MOTIVATORS, not maintenance factors.\n• MAINTENANCE (hygiene) factors — extrinsic (pay, conditions, security). Continuum: 'not dissatisfied ↔ dissatisfied'. Fixing them removes dissatisfaction but doesn't motivate.\n• MOTIVATORS — intrinsic, from the work itself (achievement, recognition, growth). Continuum: 'satisfied ↔ not satisfied'.",
+        "explanation": "Example: a pay raise stops dissatisfaction, but soon the cycle repeats — pay is a maintenance factor."
+      },
+      {
+        "question": "What are the three PROCESS motivation theories?",
+        "answer": "1. EQUITY theory (J. S. Adams) — motivated when perceived INPUTS = OUTPUTS compared to relevant others; perceived unfairness changes behavior.\n2. GOAL-SETTING theory — achievable but DIFFICULT, specific goals motivate ('stretch goals').\n3. EXPECTANCY theory (Vroom) — motivation = expectancy × instrumentality × valence.",
+        "explanation": "Expectancy = can I do it?; instrumentality = will performance lead to the reward?; valence = do I value the reward?"
+      },
+      {
+        "question": "What is REINFORCEMENT theory and its 4 types?",
+        "answer": "Consequences of behavior motivate employees to behave in predetermined ways. Four types:\n1. POSITIVE — offer an attractive consequence (reward) → encourages behavior.\n2. AVOIDANCE (negative reinforcement) — behavior prevents a negative consequence.\n3. PUNISHMENT — apply a negative consequence to DECREASE undesirable behavior.\n4. EXTINCTION — WITHHOLD reinforcement to reduce/eliminate a behavior.",
+        "explanation": "Positive (reward) & avoidance encourage desired behavior; positive reinforcement generally works better than punishment."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The performance formula is performance = ability × motivation × ____.",
+        "options": [
+          "Reward",
+          "Resources",
+          "Risk",
+          "Rules"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The motivation process is need → motive → behavior → consequence → ____.",
+        "options": [
+          "Promotion",
+          "Satisfaction/dissatisfaction",
+          "Termination",
+          "Recruitment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Maslow's highest-level need is:",
+        "options": [
+          "Safety",
+          "Esteem",
+          "Social",
+          "Self-actualization"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "In Herzberg's theory, pay and working conditions are:",
+        "options": [
+          "Motivators",
+          "Maintenance (hygiene) factors",
+          "Acquired needs",
+          "Reinforcers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Vroom's expectancy theory: motivation = expectancy × instrumentality × ____.",
+        "options": [
+          "Valence",
+          "Variance",
+          "Velocity",
+          "Validity"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Equity theory says employees are motivated when perceived inputs equal:",
+        "options": [
+          "Efforts",
+          "Outputs",
+          "Goals",
+          "Needs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Withholding reinforcement to reduce a behavior is:",
+        "options": [
+          "Punishment",
+          "Avoidance",
+          "Extinction",
+          "Positive reinforcement"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Performance = ability × motivation × _______.",
+        "answer": "resources",
+        "hint": "The third factor..."
+      },
+      {
+        "sentence": "Maslow's five levels run from physiological up to self-_______.",
+        "answer": "actualization",
+        "hint": "Develop your full potential..."
+      },
+      {
+        "sentence": "Herzberg said true motivation comes from _______, not maintenance factors.",
+        "answer": "motivators",
+        "hint": "Intrinsic, from the work itself..."
+      },
+      {
+        "sentence": "McClelland's three acquired needs are achievement, power and _______.",
+        "answer": "affiliation",
+        "hint": "Wanting close relationships..."
+      },
+      {
+        "sentence": "Applying a negative consequence to decrease behavior is _______.",
+        "answer": "punishment",
+        "hint": "Not extinction..."
+      }
+    ],
+    "learn": {
+      "title": "Motivating for High Performance",
+      "content": "\n                <h3>The basics</h3>\n                <div class=\"formula-box\">\n                    performance = ability × motivation × resources &nbsp;(all three must be high)<br>\n                    process: NEED → MOTIVE → BEHAVIOR → CONSEQUENCE → (dis)SATISFACTION\n                </div>\n\n                <h4>Three classes of theory</h4>\n                <ul>\n                    <li><strong>Content</strong> (needs): Maslow hierarchy · Alderfer ERG · Herzberg two-factor · McClelland acquired needs</li>\n                    <li><strong>Process</strong> (how/why): equity · goal-setting (stretch goals) · expectancy (E × I × V)</li>\n                    <li><strong>Reinforcement</strong> (consequences): positive · avoidance · punishment · extinction</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <p><strong>Herzberg:</strong> maintenance factors only stop dissatisfaction; motivators (the work\n                    itself) create real motivation. <strong>Expectancy:</strong> can I do it? × will it pay off? × do I value it?</p>\n                </div>\n            "
+    }
+  },
+  "leadership": {
+    "name": "Leading With Influence",
+    "icon": "fa-compass-drafting",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "What is LEADERSHIP, and why does TRUST matter?",
+        "answer": "LEADERSHIP = the process of INFLUENCING employees to work toward achieving objectives.\n\nGood relationships are based on TRUST. A survey found 74% of ENGAGED employees trust their manager, while only 14% don't trust their boss. People won't go 'above and beyond' for a boss they don't trust — and managers must also be able to trust employees.",
+        "explanation": "Trustworthiness is based on (at least) four dimensions."
+      },
+      {
+        "question": "How do LEADERS differ from MANAGERS?",
+        "answer": "Management gives POSITION power and is broader in scope; leadership is the ability to INFLUENCE others.\n\n• A manager can hold the position WITHOUT being a true leader (no trust/influence).\n• There are good leaders who are NOT managers (informal/peer leaders).\n\nSo leadership doesn't require a title — you can be an informal leader (e.g. Steve Jobs = great leader but not a great manager; Tim Cook = both).",
+        "explanation": "Leadership is critical to management success."
+      },
+      {
+        "question": "What are the FOUR classifications of leadership THEORIES?",
+        "answer": "All have the same goal (what makes an effective leader), but different focus:\n1. TRAIT theory — leaders' characteristics/traits.\n2. BEHAVIORAL theory — leaders' styles/behavior.\n3. SITUATIONAL (contingency) theory — matching style to the situation.\n4. CONTEMPORARY/integrative — visionary, charismatic, transformational, etc.",
+        "explanation": "Trait theory began with the assumption that leaders are born, not made."
+      },
+      {
+        "question": "What are the BEHAVIORAL leadership styles (Lewin's three)?",
+        "answer": "Kurt Lewin (University of Iowa) identified three basic styles:\n• AUTOCRATIC (≈ Theory X) — leader makes decisions, tells employees what to do.\n• DEMOCRATIC (≈ Theory Y) — leader includes employees in decisions.\n• LAISSEZ-FAIRE — a 'leave-employees-alone' hands-off approach.",
+        "explanation": "Two-dimensional styles combine STRUCTURING (task) and CONSIDERATION (relationships)."
+      },
+      {
+        "question": "What is the LEADERSHIP GRID and its 5 styles?",
+        "answer": "Measures concern for PRODUCTION and concern for PEOPLE on a 1–9 scale. Five styles:\n• (1,1) IMPOVERISHED — low concern for both.\n• (9,1) AUTHORITY-COMPLIANCE — high production, low people.\n• (1,9) COUNTRY CLUB — high people, low production.\n• (5,5) MIDDLE-OF-THE-ROAD — balanced medium concern.\n• (9,9) TEAM — high concern for both (the ideal).",
+        "explanation": "The ideal style incorporates high concern for both production and people."
+      },
+      {
+        "question": "What is SITUATIONAL (contingency) leadership?",
+        "answer": "Attempts to determine the appropriate leadership style for a PARTICULAR situation — how leaders behave is CONTINGENT on the situation. No single style fits all situations.\n\nThe LEADERSHIP CONTINUUM MODEL (Tannenbaum & Schmidt) chooses among 7 styles from AUTOCRATIC (boss-centered) to PARTICIPATIVE (employee-centered), considering: the leader's preferred style, the followers' preferred style, and the situation.",
+        "explanation": "Also called contingency theory because behavior is contingent on the situation."
+      },
+      {
+        "question": "Name the CONTEMPORARY leadership styles.",
+        "answer": "• VISIONARY — creates an image of the organization's FUTURE (e.g. Musk → Mars).\n• CHARISMATIC — inspires loyalty, enthusiasm via confident personal traits.\n• TRANSFORMATIONAL — brings continuous learning, innovation and CHANGE; gets followers to transcend self-interest (e.g. Bezos).\n• TRANSACTIONAL — based on social EXCHANGE ('do this work and I'll reward you'); promotes stability.\n• AUTHENTIC — open, honest, trusting relationships; leads by example.",
+        "explanation": "Transformational leaders are especially needed in growth firms in dynamic environments."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Leadership is the process of ____ employees toward objectives.",
+        "options": [
+          "Paying",
+          "Influencing",
+          "Hiring",
+          "Evaluating"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is TRUE about leaders and managers?",
+        "options": [
+          "All managers are leaders",
+          "A manager can hold the position without being a true leader",
+          "Leaders must have a title",
+          "Leadership equals position power"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Lewin's hands-off 'leave-employees-alone' style is:",
+        "options": [
+          "Autocratic",
+          "Democratic",
+          "Laissez-faire",
+          "Charismatic"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "On the Leadership Grid, (9,9) is the ____ style.",
+        "options": [
+          "Impoverished",
+          "Country club",
+          "Team",
+          "Middle-of-the-road"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Situational leadership theory is also called:",
+        "options": [
+          "Trait theory",
+          "Contingency theory",
+          "Behavioral theory",
+          "Charismatic theory"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A leader based on social exchange ('do this and I'll reward you') is:",
+        "options": [
+          "Transformational",
+          "Transactional",
+          "Visionary",
+          "Authentic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A leader who brings continuous learning, innovation and change is:",
+        "options": [
+          "Transactional",
+          "Transformational",
+          "Autocratic",
+          "Impoverished"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Leadership is the process of _______ employees to achieve objectives.",
+        "answer": "influencing",
+        "hint": "Getting them to act..."
+      },
+      {
+        "sentence": "Good leadership relationships are based on _______.",
+        "answer": "trust",
+        "hint": "74% of engaged employees have it in their manager..."
+      },
+      {
+        "sentence": "Lewin's three styles are autocratic, democratic and _______.",
+        "answer": "laissez-faire",
+        "hint": "Hands-off..."
+      },
+      {
+        "sentence": "On the Leadership Grid the ideal (9,9) is the _______ style.",
+        "answer": "team",
+        "hint": "High concern for both people and production..."
+      },
+      {
+        "sentence": "A _______ leader creates an image of the organization's future.",
+        "answer": "visionary",
+        "hint": "Musk and Mars..."
+      }
+    ],
+    "learn": {
+      "title": "Leading With Influence",
+      "content": "\n                <h3>Leadership = influence</h3>\n                <p>The process of <strong>influencing</strong> employees toward objectives. Built on\n                <strong>trust</strong>. A manager can hold the position without being a true leader; leaders\n                can exist without a title.</p>\n\n                <h4>Four theory classifications</h4>\n                <ol>\n                    <li><strong>Trait</strong> — born vs made</li>\n                    <li><strong>Behavioral</strong> — Lewin (autocratic/democratic/laissez-faire); two-dimensional (structuring × consideration); Leadership Grid (1,1 / 9,1 / 1,9 / 5,5 / <strong>9,9 team</strong>)</li>\n                    <li><strong>Situational/contingency</strong> — Tannenbaum & Schmidt continuum (7 styles, boss → employee centered)</li>\n                    <li><strong>Contemporary</strong> — visionary · charismatic · transformational · transactional · authentic</li>\n                </ol>\n\n                <div class=\"tip-box\">\n                    <p><strong>Transformational</strong> (change, transcend self-interest) vs <strong>transactional</strong>\n                    (exchange, stability). <strong>Visionary</strong> shapes the future; <strong>authentic</strong> leads by example.</p>\n                </div>\n            "
+    }
+  },
+  "controlSystems": {
+    "name": "Control Systems, Finances & People",
+    "icon": "fa-gauge-high",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is CONTROLLING, and the types of ORGANIZATIONAL SYSTEMS control?",
+        "answer": "CONTROLLING = monitoring progress and taking corrective action to ensure objectives are achieved ('you can't manage what you don't measure').\n\nControls in the systems process:\n• PRELIMINARY (feedforward) — anticipate & PREVENT problems (inputs).\n• CONCURRENT — ensure standards are met DURING transformation.\n• REWORK — fix a faulty OUTPUT.\n• DAMAGE control — minimize negative impact on customers (e.g. warranties).\n• FEEDBACK — use customer input for continuous improvement.",
+        "explanation": "Preliminary control = planning & organizing; it's better to prevent than to fix."
+      },
+      {
+        "question": "What are the 4 STEPS of the CONTROL SYSTEMS PROCESS?",
+        "answer": "1. SET objectives and standards.\n2. MEASURE performance.\n3. COMPARE performance to standards (a performance/variance report).\n4. CORRECT or REINFORCE (fix it if off; reinforce if on track).\n\nFollowed at both organizational and functional-area levels.",
+        "explanation": "When variances are significant, they must be explained."
+      },
+      {
+        "question": "What 5 AREAS must complete STANDARDS cover?",
+        "answer": "Standards measure performance in:\n1. QUANTITY (how many?)\n2. QUALITY (how well?)\n3. TIME (when / how fast?)\n4. COST (how much should it cost?)\n5. BEHAVIOR (what to do / not do; ethics)\n\nIncomplete standards make employees 'game' the system (e.g. quantity-only → ignore quality).",
+        "explanation": "Critical success factors (CSFs) = the few most important areas to control."
+      },
+      {
+        "question": "What are the 3 frequencies and 10 METHODS of control?",
+        "answer": "• CONSTANT (continuous): self-control, clan control, standing plans.\n• PERIODIC (regular/fixed): regular meetings & reports, budgets, audits.\n• OCCASIONAL (sporadic): observation, the exception principle, special reports, project controls.",
+        "explanation": "Clan control relies on culture/norms and peer pressure; the exception principle leaves control to employees unless a problem occurs."
+      },
+      {
+        "question": "What is the MASTER BUDGETING process (3 steps)?",
+        "answer": "A BUDGET = a planned quantitative allocation of resources (not just money). Steps:\n1. OPERATING budgets — REVENUE budget (forecast income) + EXPENSE budget (forecast spending).\n2. CAPITAL EXPENDITURES budget — all planned major ASSET investments (land, buildings, equipment).\n3. FINANCIAL budgets — budgeted (pro forma) income statement, balance sheet, cash flow.",
+        "explanation": "Budgeting needs PLANNING skills, not math/accounting skills; a feedback loop allows revisions."
+      },
+      {
+        "question": "What are the THREE primary FINANCIAL STATEMENTS?",
+        "answer": "1. INCOME STATEMENT — presents revenue, expenses and the PROFIT or LOSS for a period.\n2. BALANCE SHEET — presents ASSETS = LIABILITIES + owners'/stockholders' EQUITY (it must balance at a point in time).\n3. CASH FLOW STATEMENT — cash receipts and payments (operating + financial activities).\n\nPROFIT MARGIN = net profit ÷ revenue. Pro forma = projected; actual statements report the past.",
+        "explanation": "You can have high revenues yet low/no profit — watch the profit margin."
+      },
+      {
+        "question": "BONDS vs STOCK for raising money?",
+        "answer": "Both raise capital but differ as DEBT vs EQUITY:\n• BONDS (debt) — the firm must REPAY bondholders + interest; no ownership given away; lower risk, lower return.\n• STOCK (equity) — the firm NEVER repays; stockholders become PART OWNERS; the firm only gets money at the initial public offering (IPO). Give away too much and you can lose control.",
+        "explanation": "Selling bonds/stock doesn't affect the income statement, but it does affect the balance sheet & cash flow."
+      },
+      {
+        "question": "What are COACHING, COUNSELING and DISCIPLINE?",
+        "answer": "• COACHING — giving MOTIVATIONAL feedback to maintain/improve performance.\n• MANAGEMENT COUNSELING — giving feedback so employees realize a problem affects their job, then referring them to the employee assistance program (NOT psychotherapy).\n• DISCIPLINE — corrective action to get employees to meet standards/standing plans; objective is to CHANGE behavior (deviance = negative voluntary behavior).",
+        "explanation": "Coaching/counseling come first; discipline follows if an employee won't change or breaks a rule."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Control designed to anticipate and PREVENT problems (inputs) is:",
+        "options": [
+          "Concurrent control",
+          "Preliminary (feedforward) control",
+          "Rework control",
+          "Damage control"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is the correct order of the control systems process?",
+        "options": [
+          "Measure → correct → set standards → compare",
+          "Set standards → measure → compare → correct/reinforce",
+          "Compare → set standards → correct → measure",
+          "Correct → measure → compare → set standards"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the five areas of complete standards?",
+        "options": [
+          "Quantity",
+          "Quality",
+          "Location",
+          "Cost"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Budgets and audits are examples of ____ controls.",
+        "options": [
+          "Constant",
+          "Periodic",
+          "Occasional",
+          "Preliminary"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The statement showing assets = liabilities + owners' equity is the:",
+        "options": [
+          "Income statement",
+          "Balance sheet",
+          "Cash flow statement",
+          "Budget"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "If a company sells STOCK, it:",
+        "options": [
+          "Must repay the buyers with interest",
+          "Gives away ownership and never repays",
+          "Increases its liabilities only",
+          "Affects the income statement"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Giving motivational feedback to improve performance is:",
+        "options": [
+          "Discipline",
+          "Coaching",
+          "Auditing",
+          "Reworking"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Controlling is monitoring progress and taking _______ action.",
+        "answer": "corrective",
+        "hint": "To get back on track..."
+      },
+      {
+        "sentence": "Preliminary control is also called _______ control.",
+        "answer": "feedforward",
+        "hint": "Anticipate and prevent..."
+      },
+      {
+        "sentence": "Complete standards cover quantity, quality, time, cost and _______.",
+        "answer": "behavior",
+        "hint": "What to do and not do; ethics..."
+      },
+      {
+        "sentence": "The balance sheet shows assets = liabilities + owners' _______.",
+        "answer": "equity",
+        "hint": "The owners' share of assets..."
+      },
+      {
+        "sentence": "Selling _______ is debt that must be repaid with interest; stock is equity.",
+        "answer": "bonds",
+        "hint": "Lower risk, lower return..."
+      }
+    ],
+    "learn": {
+      "title": "Managing Control Systems, Finances & People",
+      "content": "\n                <h3>Controlling = monitor + correct</h3>\n                <div class=\"formula-box\">\n                    SYSTEMS CONTROLS: preliminary (inputs) → concurrent (process) → rework (outputs) → damage → feedback<br>\n                    PROCESS: set standards → measure → compare → correct/reinforce\n                </div>\n\n                <h4>Standards & frequency</h4>\n                <ul>\n                    <li><strong>5 standard areas:</strong> quantity · quality · time · cost · behavior (+ critical success factors)</li>\n                    <li><strong>Constant:</strong> self · clan · standing plans · <strong>Periodic:</strong> meetings · budgets · audits · <strong>Occasional:</strong> observation · exception principle · special reports · project</li>\n                </ul>\n\n                <h4>Finances & people</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Master budget:</strong> operating (revenue + expense) → capital expenditures → financial (pro forma)</li>\n                        <li><strong>Statements:</strong> income statement · balance sheet (A = L + E) · cash flow; profit margin = net profit ÷ revenue</li>\n                        <li><strong>Raising money:</strong> bonds (debt, repay + interest) vs stock (equity, ownership, IPO)</li>\n                        <li><strong>People:</strong> coaching → counseling → discipline (change behavior); handling complaints</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Topics)",
+    "icon": "fa-graduation-cap",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Which topics make up the two midterm 'halves' that the final combines?",
+        "answer": "1st midterm (TU2–TU7): Management & its history · Problem solving & decision making · Strategic & operational planning · Organizing & delegating · Managing teamwork · Human resource management.\n\n2nd midterm (TU8–TU11): Organizational behavior · Motivating for high performance · Leading with influence · Managing control systems, finances & people.",
+        "explanation": "K1 = environment + planning + organizing; K2 = leading + controlling."
+      },
+      {
+        "question": "EXAM REVIEW: name the FOUR management functions and link each to its main chapter.",
+        "answer": "1. PLANNING — decision making + strategic/operational planning.\n2. ORGANIZING — organizing & delegating work (+ HRM staffing, teamwork).\n3. LEADING — organizational behavior, motivation, leadership.\n4. CONTROLLING — control systems, finances & people.\n\nThey are distinct yet interrelated, performed simultaneously — NOT linear steps.",
+        "explanation": "The whole course is structured around the four functions."
+      },
+      {
+        "question": "Cross-topic: the word 'CONTINGENCY' appears in several chapters — where?",
+        "answer": "• HISTORY — contingency theory: the best management approach depends on the situation (stable→mechanistic, innovative→organic).\n• PLANNING — contingency plans: backup plans for uncontrollable events.\n• LEADERSHIP — situational leadership is also called contingency theory (style depends on the situation).",
+        "explanation": "'It depends on the situation' is a recurring management idea."
+      },
+      {
+        "question": "EXAM REVIEW: contrast MECHANISTIC vs ORGANIC across the course.",
+        "answer": "• STRUCTURE — mechanistic = bureaucratic, centralized, specialized; organic = flexible, decentralized, broad jobs.\n• ENVIRONMENT — mechanistic fits stable; organic fits dynamic.\n• TEAMS — mechanistic firms use management-directed groups; organic firms use self-directed teams.\n• APPRAISAL — mechanistic = manager evaluates; organic = peers (360-degree).",
+        "explanation": "The mechanistic–organic continuum ties together organizing, teamwork and HRM."
+      },
+      {
+        "question": "Cross-topic: which decision-making STEPS and control STEPS overlap?",
+        "answer": "Both end in PLANNING, IMPLEMENTING and CONTROLLING.\n• Decision-making model step 5–6 = plan/implement + control.\n• Control systems process = set standards → measure → compare → correct.\n\nObjectives are the common starting point: 'objectives are the ends; plans are the means.'",
+        "explanation": "Planning and controlling are two sides of the same coin (you can't control without objectives)."
+      },
+      {
+        "question": "EXAM REVIEW: match the theorist to the idea — Taylor, Maslow, Herzberg, Vroom, Mintzberg, Tuckman.",
+        "answer": "• TAYLOR — scientific management (job efficiency).\n• MASLOW — hierarchy of needs (5 levels).\n• HERZBERG — two-factor theory (maintenance vs motivators).\n• VROOM — expectancy theory (E × I × V).\n• MINTZBERG — 10 management roles (3 categories).\n• TUCKMAN — 5 stages of group development.",
+        "explanation": "Knowing the name behind each model is a common exam question."
+      },
+      {
+        "question": "Cross-topic: how does MOTIVATION connect content, process and reinforcement theories?",
+        "answer": "• CONTENT (Maslow, ERG, Herzberg, McClelland) = WHAT needs motivate.\n• PROCESS (equity, goal-setting, expectancy) = HOW/WHY we choose behaviors.\n• REINFORCEMENT (positive, avoidance, punishment, extinction) = consequences shape behavior.\n\nAll feed the performance formula: performance = ability × motivation × resources.",
+        "explanation": "Three complementary lenses on the single question 'how do I motivate people?'"
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The four management functions are:",
+        "options": [
+          "Plan, hire, sell, report",
+          "Plan, organize, lead, control",
+          "Analyze, decide, act, review",
+          "Mission, vision, values, goals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'The best approach depends on the situation' is the core idea of:",
+        "options": [
+          "Scientific management",
+          "Contingency theory",
+          "Bureaucracy",
+          "Equity theory"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which pairing is correct?",
+        "options": [
+          "Maslow – two-factor theory",
+          "Herzberg – hierarchy of needs",
+          "Vroom – expectancy theory",
+          "Tuckman – acquired needs"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A self-directed team appears at which Tuckman stage?",
+        "options": [
+          "Forming",
+          "Storming",
+          "Norming",
+          "Performing"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "On the Leadership Grid, the ideal style is:",
+        "options": [
+          "(1,1)",
+          "(9,1)",
+          "(1,9)",
+          "(9,9)"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Which is an EQUITY/EQUITY-financing instrument the firm never repays?",
+        "options": [
+          "Bonds",
+          "Stock",
+          "Loans",
+          "Budgets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling products closer to the final customer (e.g. Apple Stores) is:",
+        "options": [
+          "Backward integration",
+          "Forward integration",
+          "Diversification",
+          "Concentration"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which control anticipates and PREVENTS problems at the input stage?",
+        "options": [
+          "Concurrent",
+          "Rework",
+          "Preliminary (feedforward)",
+          "Damage"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The four management functions are planning, organizing, leading and _______.",
+        "answer": "controlling",
+        "hint": "Monitor and correct..."
+      },
+      {
+        "sentence": "Performance = ability × _______ × resources.",
+        "answer": "motivation",
+        "hint": "Willingness to achieve objectives..."
+      },
+      {
+        "sentence": "The best management approach depends on the situation — this is _______ theory.",
+        "answer": "contingency",
+        "hint": "'It depends'..."
+      },
+      {
+        "sentence": "Vroom's expectancy formula is expectancy × instrumentality × _______.",
+        "answer": "valence",
+        "hint": "The value of the reward..."
+      },
+      {
+        "sentence": "On the balance sheet, assets = liabilities + owners' _______.",
+        "answer": "equity",
+        "hint": "The owners' share..."
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Practice — How to Use",
+      "content": "\n            <h3>What is this category?</h3>\n            <p>A cross-topic practice set combining all course topics — exactly how the final mixes them.\n            Use it AFTER reviewing the two midterm halves.</p>\n\n            <h4>The course in one map</h4>\n            <div class=\"formula-box\">\n                K1 (TU2–TU7): history · decision making · strategic planning · organizing · teamwork · HRM<br>\n                K2 (TU8–TU11): organizational behavior · motivation · leadership · control systems\n            </div>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Cross-topic favourites</h4>\n                <ul>\n                    <li>The four functions: planning · organizing · leading · controlling</li>\n                    <li>Theorist → idea: Taylor, Fayol, Maslow, Herzberg, McClelland, Vroom, Mintzberg, Tuckman</li>\n                    <li>Mechanistic vs organic (structure · environment · teams · appraisal)</li>\n                    <li>\"Contingency\" across history, planning and leadership</li>\n                    <li>Motivation: content (needs) · process (how/why) · reinforcement (consequences)</li>\n                    <li>Finances: master budget · the three financial statements · bonds vs stock</li>\n                </ul>\n            </div>\n        "
+    }
+  }
+}

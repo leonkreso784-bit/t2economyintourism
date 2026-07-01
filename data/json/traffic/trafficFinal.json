@@ -1,0 +1,2157 @@
+{
+  "theoreticalBasis": {
+    "name": "Theoretical Basis of Traffic",
+    "icon": "fa-diagram-project",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is TRAFFIC (transport) and what is a TRAFFIC (transport) SYSTEM?",
+        "answer": "• TRAFFIC / TRANSPORT = the purposeful movement of people, goods and information (messages) from one place to another, overcoming spatial distance.\n• TRAFFIC SYSTEM = the organised whole of all elements that make transport possible: the transport infrastructure, the means of transport (vehicles), and the people and rules that operate them — across all transport branches (road, rail, water, air).",
+        "explanation": "Transport exists to bridge the gap between where a need arises and where it can be satisfied — in tourism, between the emitting (demand) market and the receptive destination."
+      },
+      {
+        "question": "What is a TRAFFIC (transport) MODE / BRANCH? List the basic ones.",
+        "answer": "A transport mode (branch/sector) is a distinct technical-technological system of transport defined by the medium it uses and its means of transport.\n\nThe basic modes:\n• ROAD (land)\n• RAIL (land)\n• WATER — maritime + inland waterway (river-lake-canal)\n• AIR\n(+ special: pipeline, cable/funicular, etc.)",
+        "explanation": "Each mode has its own infrastructure, vehicles and cost structure, giving it specific advantages and limitations for tourism."
+      },
+      {
+        "question": "What is a TRAFFIC (transport) SERVICE, and why is it intangible?",
+        "answer": "A transport service is the act of moving passengers (or goods) — the 'product' the transport sector sells.\n\nLike all services it is:\n• INTANGIBLE — cannot be touched/stored,\n• produced and consumed SIMULTANEOUSLY (you 'consume' the trip as it happens),\n• cannot be stocked — an empty seat on a departed vehicle is lost forever (perishability).",
+        "explanation": "Because capacity cannot be stored, achieving high capacity occupancy on every departure is the central economic problem of every carrier."
+      },
+      {
+        "question": "Distinguish traffic (transport) DEMAND from traffic (transport) SUPPLY (offer).",
+        "answer": "• TRANSPORT DEMAND = the need for movement — the quantity of transport services users want, where, when and at what price. It is largely a DERIVED demand (people travel to satisfy another need: work, holiday, business).\n• TRANSPORT SUPPLY (offer) = the capacity carriers put on the market: routes, frequencies, vehicle capacity, quality and price.",
+        "explanation": "Tourist transport demand is highly SEASONAL and directional, which makes balancing it with a relatively fixed supply difficult and expensive."
+      },
+      {
+        "question": "What is meant by the TRAFFIC EFFECT(S) of transport?",
+        "answer": "Traffic effects = the wider consequences transport produces beyond moving a person from A to B:\n• ECONOMIC — connects markets, enables trade and tourism, creates jobs and GDP;\n• SPATIAL — opens up and develops regions, shapes destinations;\n• SOCIAL — mobility, access, quality of life;\n• NEGATIVE (external) effects — emissions, noise, congestion, accidents, land use.",
+        "explanation": "In tourism the positive effect (accessibility of destinations) is decisive — but the negative external effects (pollution, congestion) are exactly what transport policy now tries to reduce."
+      },
+      {
+        "question": "What is TRAFFIC (transport) POLICY?",
+        "answer": "Transport policy = the set of goals, measures and instruments by which the state (or the EU) steers the development and operation of the transport system — e.g. building infrastructure, regulating safety, taxes and subsidies, environmental standards, modal-shift incentives.\n\nIt is a component of overall economic/development policy; the transport (development) STRATEGY is its long-term plan.",
+        "explanation": "EU transport policy today pushes a modal shift from road/air toward rail and sustainable modes (Green Deal) — see K2 'Future of transport'."
+      },
+      {
+        "question": "Why is transport INFRASTRUCTURE economically special (common features of all branches)?",
+        "answer": "Transport infrastructure (roads, rails, ports, airports) typically requires:\n• very LARGE investment,\n• a LONG construction period,\n• a LONG service life,\n• accurate capacity sizing with reserve for peaks,\n• as a rule it is built/financed by the STATE (public good), and a one-off user fee rarely covers real costs.",
+        "explanation": "These features explain why infrastructure decisions are strategic, state-led and slow to change — and why capacity bottlenecks persist."
+      },
+      {
+        "question": "What does INELASTICITY of a transport branch mean?",
+        "answer": "Inelasticity = the transport process is tied (functionally bound) to a fixed infrastructure and a line/public organisation, so it cannot freely adapt to an individual user's wishes.\n\nRail, air and water are relatively INELASTIC (bound to lines, ports, airports, schedules); ROAD transport is the most ELASTIC (door-to-door, individual, flexible).",
+        "explanation": "Inelastic modes usually need another (road) mode to complete the 'door-to-door' chain — a key reason transport in tourism is typically MULTIMODAL."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Transport demand in tourism is best described as:",
+        "options": [
+          "An autonomous demand, wanted for its own sake",
+          "A DERIVED demand — people travel to satisfy another (tourism) need",
+          "A demand that is perfectly stable across the year",
+          "Independent of price and season"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which property makes an empty seat on a departed vehicle a permanent loss?",
+        "options": [
+          "Tangibility",
+          "Storability",
+          "Perishability of the transport service (it cannot be stocked)",
+          "Elasticity"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which transport mode is the MOST elastic (flexible, door-to-door, individual)?",
+        "options": [
+          "Rail",
+          "Air",
+          "Road",
+          "Maritime"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A common economic feature of ALL transport infrastructure is that it:",
+        "options": [
+          "Is cheap and quick to build",
+          "Requires large investment, long construction and is usually state-financed",
+          "Is always fully covered by one-off user fees",
+          "Has a very short service life"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Traffic policy' (transport policy) is:",
+        "options": [
+          "A timetable of departures",
+          "The set of goals, measures and instruments by which the state steers the transport system",
+          "A type of insurance for vehicles",
+          "The price of a single ticket"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which list correctly gives the basic transport MODES?",
+        "options": [
+          "Road, rail, water, air",
+          "Cars, buses, trains, ships",
+          "Demand, supply, price, effect",
+          "Local, national, international, global"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Inelasticity of a transport branch mainly results from:",
+        "options": [
+          "Being tied to fixed infrastructure and a line/public organisation",
+          "Having too many vehicles",
+          "Low fuel prices",
+          "The absence of any timetable"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Transport in tourism is usually _______, meaning it relies on more than one transport branch to complete the door-to-door chain.",
+        "answer": "multimodal",
+        "hint": "multi-…"
+      },
+      {
+        "sentence": "Tourist transport demand is a _______ demand, because people travel in order to satisfy another need.",
+        "answer": "derived",
+        "hint": "not autonomous"
+      },
+      {
+        "sentence": "A transport service cannot be stored; this property is called _______.",
+        "answer": "perishability",
+        "hint": "an empty seat is lost"
+      },
+      {
+        "sentence": "The organised whole of infrastructure, vehicles and rules that make transport possible is the transport _______.",
+        "answer": "system",
+        "hint": "the whole"
+      },
+      {
+        "sentence": "Of all branches, _______ transport is the most elastic and the only true door-to-door mode.",
+        "answer": "road",
+        "hint": "cars/buses"
+      },
+      {
+        "sentence": "Transport _______ is the long-term plan through which the state guides the development of the transport system.",
+        "answer": "strategy",
+        "hint": "part of transport policy"
+      },
+      {
+        "sentence": "Emissions, noise, congestion and accidents are the negative (external) _______ of transport.",
+        "answer": "effects",
+        "hint": "consequences"
+      }
+    ],
+    "learn": {
+      "title": "Theoretical Basis of Traffic",
+      "content": "\n                <h3>What transport is — and why it matters for tourism</h3>\n                <p><strong>Transport (traffic)</strong> is the purposeful movement of people, goods and information across\n                space. In tourism it performs the decisive job of connecting the <strong>emitting (demand) market</strong>\n                with the <strong>receptive destination</strong>: without accessible, affordable transport there is no\n                tourism at the destination.</p>\n\n                <div class=\"formula-box\">\n                    Transport SYSTEM = infrastructure + means of transport (vehicles) + people &amp; rules<br>\n                    Basic MODES: ROAD · RAIL · WATER (maritime + inland) · AIR\n                </div>\n\n                <h4>Key theoretical notions</h4>\n                <ul>\n                    <li><strong>Transport service</strong> — intangible, produced &amp; consumed simultaneously,\n                    <strong>perishable</strong> (an empty seat on a departed vehicle is lost forever).</li>\n                    <li><strong>Transport demand</strong> — a <strong>derived</strong>, highly <strong>seasonal</strong>\n                    and directional need for movement.</li>\n                    <li><strong>Transport supply (offer)</strong> — routes, frequencies, capacity, quality and price the\n                    carriers put on the market.</li>\n                    <li><strong>Traffic effects</strong> — economic, spatial and social benefits, but also negative\n                    external effects (emissions, noise, congestion, accidents).</li>\n                    <li><strong>Transport policy</strong> — how the state/EU steers the system (infrastructure, safety,\n                    taxes/subsidies, environmental standards, modal shift).</li>\n                </ul>\n\n                <h4>Elastic vs inelastic modes</h4>\n                <div class=\"tip-box\">\n                    <p><strong>Road</strong> transport is the most <strong>elastic</strong> (individual, flexible,\n                    door-to-door). <strong>Rail, air and water</strong> are relatively <strong>inelastic</strong> — tied to\n                    lines, ports and airports and to public/line organisation — so they usually need road transport to\n                    finish the \"door-to-door\" journey. This is why tourist transport is typically <strong>multimodal</strong>.</p>\n                </div>\n\n                <h4>Why infrastructure is special</h4>\n                <p>All transport infrastructure shares the same economics: <strong>large investment, long construction,\n                long service life, careful capacity sizing</strong>, and as a rule it is built and financed by the\n                <strong>state</strong>, because a single user fee rarely covers its true cost. That is why infrastructure\n                is a strategic, slow-moving, policy-driven matter.</p>\n            "
+    }
+  },
+  "trafficTourismInterdependence": {
+    "name": "Interdependence of Traffic & Tourism",
+    "icon": "fa-arrows-left-right",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "In what TWO basic roles does transport appear in tourism?",
+        "answer": "1. As a CONNECTOR between the demand (emitting) market and the destination — it makes the destination accessible (the precondition for tourism).\n2. As a PART OF THE TOURISM PRODUCT itself — when the trip/ride is the attraction (cruises, panoramic trains, scenic bus tours, nautical tourism).",
+        "explanation": "These two roles structure the whole course: weeks 4–9 always treat each mode 'between markets' (connector) AND 'as a tourism product'."
+      },
+      {
+        "question": "Why is the relationship between transport and tourism called INTERDEPENDENCE (two-way)?",
+        "answer": "Because each drives the other:\n• Transport ENABLES tourism — new/cheaper transport (railways, low-cost air) opens new destinations and grows tourist flows.\n• Tourism STIMULATES transport — strong tourist demand justifies new routes, capacity, airports, marinas and investment.",
+        "explanation": "Historically, every leap in transport (rail in the 19th c., mass air/charter in the 20th c., low-cost carriers today) triggered a leap in tourism."
+      },
+      {
+        "question": "How does transport ACCESSIBILITY shape a destination's tourism?",
+        "answer": "Accessibility (how easily, quickly and cheaply a destination can be reached) is a core component of a destination's competitiveness:\n• good accessibility → larger catchment of potential tourists, longer/again visits;\n• poor accessibility → the destination stays outside the main tourist flows, regardless of its attractions.",
+        "explanation": "Low-cost carriers choosing a small regional airport can literally 'put a destination on the map' (see Air transport, K2)."
+      },
+      {
+        "question": "What is the role of transport COST in the price of the tourism product?",
+        "answer": "The cost of the transport service is built into the final price the tourist pays for the tourism product. Transport is often a LARGE share of total trip cost, so:\n• changes in transport price (fuel, fares, tolls) directly move tourism demand;\n• cheaper transport (low-cost air) expands the market of people who can afford to travel.",
+        "explanation": "This is exactly learning outcome 3 of the syllabus — recognising the transport cost inside the tourism-product price (developed in week 10, K2)."
+      },
+      {
+        "question": "Why is tourist transport demand a PROBLEM for carriers (seasonality & direction)?",
+        "answer": "Tourist demand is:\n• strongly SEASONAL (peaks in summer/holidays, troughs off-season), and\n• DIRECTIONAL (full toward the destination at the start of a holiday, empty back — and vice-versa).\nCapacity must be sized for the peak, leaving expensive vehicles and infrastructure under-used the rest of the time.",
+        "explanation": "Carriers fight this with charter contracts, dynamic pricing and combining tourist with non-tourist flows."
+      },
+      {
+        "question": "Why is it hard to measure exactly how many tourists use a given line?",
+        "answer": "Because tourist flows MIX with non-tourist flows (commuters, business, residents) on the same roads, trains, ships and flights. The same vehicle carries tourists and non-tourists together, so 'tourist transport' cannot be cleanly separated in the statistics.",
+        "explanation": "Stated explicitly for rail in the lectures — it applies to all public/line transport."
+      },
+      {
+        "question": "Give the historical chain: which transport innovations triggered tourism growth?",
+        "answer": "• 19th c. RAILWAYS → first mass leisure travel, seaside/spa resorts.\n• 20th c. the CAR/road network → individual mass tourism, motels, road trips.\n• Post-1950s mass AIR + CHARTER flights → intercontinental & package mass tourism.\n• Today LOW-COST carriers → city breaks, new regional destinations; and CRUISES as an 'industry'.",
+        "explanation": "Each step shows interdependence: a transport breakthrough unlocked a new tourism form."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The two basic roles of transport in tourism are:",
+        "options": [
+          "Connector between market & destination, and part of the tourism product itself",
+          "Only carrying luggage and only carrying food",
+          "Building hotels and selling tickets",
+          "Marketing and accounting"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "'Interdependence' of transport and tourism means that:",
+        "options": [
+          "Only transport affects tourism",
+          "Only tourism affects transport",
+          "Each one drives the other (two-way relationship)",
+          "They are completely unrelated"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A destination with excellent attractions but very POOR accessibility will most likely:",
+        "options": [
+          "Automatically attract mass tourism",
+          "Remain outside the main tourist flows",
+          "Have the cheapest transport",
+          "Need no transport policy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tourist transport demand is difficult for carriers mainly because it is:",
+        "options": [
+          "Constant and evenly spread all year",
+          "Strongly seasonal and directional",
+          "Completely independent of price",
+          "Always declining"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The cost of the transport service, within the tourism product, is:",
+        "options": [
+          "Never paid by the tourist",
+          "Built into the final price the tourist pays",
+          "Always zero for package holidays",
+          "Unrelated to demand"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "It is hard to count tourists on a public line because:",
+        "options": [
+          "Tourists never use public transport",
+          "Tourist flows mix with non-tourist flows on the same vehicles",
+          "Tickets are never sold",
+          "There are no statistics at all"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which innovation is correctly paired with the tourism it unlocked?",
+        "options": [
+          "Railways → intercontinental package tourism",
+          "Low-cost carriers → 19th-century spa resorts",
+          "Mass air/charter flights → intercontinental & package mass tourism",
+          "Cruise ships → the first commuter railways"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Transport connects the _______ market with the receptive destination.",
+        "answer": "emitting",
+        "hint": "demand-generating / sending"
+      },
+      {
+        "sentence": "When the ride itself is the attraction (a cruise, a scenic train), transport is part of the tourism _______.",
+        "answer": "product",
+        "hint": "the thing sold"
+      },
+      {
+        "sentence": "The two-way relationship in which transport and tourism each drive the other is called _______.",
+        "answer": "interdependence",
+        "hint": "inter-…"
+      },
+      {
+        "sentence": "How easily a destination can be reached is its transport _______, a key part of competitiveness.",
+        "answer": "accessibility",
+        "hint": "reachability"
+      },
+      {
+        "sentence": "Tourist transport demand is hard to serve because it is highly _______, peaking in summer/holidays.",
+        "answer": "seasonal",
+        "hint": "varies by season"
+      },
+      {
+        "sentence": "The cost of the transport service is built into the final _______ of the tourism product.",
+        "answer": "price",
+        "hint": "what the tourist pays"
+      },
+      {
+        "sentence": "Low-_______ carriers expanded tourism by bringing air travel to people who previously could not afford it.",
+        "answer": "cost",
+        "hint": "budget airlines"
+      }
+    ],
+    "learn": {
+      "title": "Interdependence of Traffic & Tourism",
+      "content": "\n                <h3>A two-way relationship</h3>\n                <p>Transport and tourism are <strong>interdependent</strong>: transport <em>enables</em> tourism (it makes\n                destinations accessible and is sometimes the attraction itself), while tourism <em>stimulates</em> transport\n                (strong tourist demand justifies new routes, capacity and infrastructure).</p>\n\n                <div class=\"formula-box\">\n                    Transport in tourism plays TWO roles:<br>\n                    (1) CONNECTOR — emitting market → destination (accessibility)<br>\n                    (2) PART OF THE TOURISM PRODUCT — the journey is the attraction\n                </div>\n\n                <h4>Accessibility &amp; price</h4>\n                <ul>\n                    <li><strong>Accessibility</strong> — how easily, quickly and cheaply a destination is reached — is a\n                    core part of its <strong>competitiveness</strong>. Poor accessibility keeps even attractive places\n                    outside the main flows.</li>\n                    <li>The <strong>cost of the transport service</strong> is built into the <strong>price</strong> of the\n                    tourism product; cheaper transport (low-cost air) enlarges the market of people who can travel.</li>\n                </ul>\n\n                <h4>Why tourist demand is hard to serve</h4>\n                <div class=\"tip-box\">\n                    <p>Tourist transport demand is strongly <strong>seasonal</strong> and <strong>directional</strong>, and\n                    it <strong>mixes</strong> with non-tourist flows on the same vehicles — so capacity must be sized for the\n                    peak and it is hard to measure tourism's exact share. Carriers respond with charter contracts, dynamic\n                    pricing and by combining tourist with everyday flows.</p>\n                </div>\n\n                <h4>The historical chain</h4>\n                <p>Every transport breakthrough unlocked a new tourism form: <strong>railways</strong> (19th c.) → first mass\n                leisure travel; the <strong>car</strong> → individual mass tourism; <strong>mass air &amp; charter</strong>\n                → package/intercontinental tourism; <strong>low-cost carriers &amp; cruises</strong> → today's city breaks,\n                new regional destinations and cruising \"industry\".</p>\n            "
+    }
+  },
+  "mobilityTravelPatterns": {
+    "name": "Mobility & Travel Patterns",
+    "icon": "fa-route",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What is the dominant PRIMARY form of daily mobility in the EU, and how dominant is it?",
+        "answer": "The PASSENGER CAR is the dominant primary (1st-choice) form of daily mobility in the EU, followed by walking, public city transport, and (much less) bicycle/scooter.\n\nThe car dominates daily mobility in 22 of 28 surveyed countries — highest in Cyprus (~89%), Slovenia (~71%), Iceland (~68%); lowest in Romania, Hungary, Bulgaria (~35–36%). Car share is higher in RURAL areas.",
+        "explanation": "Source: EU Eurobarometer-type mobility survey used in the lecture. The car's dominance is the central fact of EU daily mobility — and the main target of sustainability policy."
+      },
+      {
+        "question": "What fuels dominate daily-mobility cars, and how small are the sustainable alternatives?",
+        "answer": "Daily mobility relies overwhelmingly on conventionally (fossil) fuelled, privately owned cars:\n• ~89% of cars are PRIVATELY owned (car-sharing ≤4%, carpooling ≤2%);\n• alternative fuels are tiny: gas ~5%, fully electric ~1%, hybrids ~3%.",
+        "explanation": "This gap between fossil dominance and tiny alternative-fuel shares is exactly what the EU Green Deal & Sustainable Mobility Strategy target (see K2)."
+      },
+      {
+        "question": "What are the MAIN REASONS people choose their primary mode of daily mobility?",
+        "answer": "Top reasons: COMFORT and SPEED (reduction of travel time), then LACK OF ALTERNATIVE, reliability and satisfaction.\n\nThe biggest CHALLENGES of daily mobility are the COST of transport and traffic CONGESTION (congestion is worse in big cities than rural areas).",
+        "explanation": "Lack of alternative is the primary reason mainly in Romania, Bulgaria and Cyprus, and is stronger in rural areas."
+      },
+      {
+        "question": "For LONG-DISTANCE travel (>300 km), which modes do EU citizens use most, and who travels more?",
+        "answer": "Most used for long-distance: PASSENGER CAR, then AIRPLANE, then TRAIN. (>60% of Europeans made a >300 km trip in the prior year; ~40% made none.)\n\nMore likely to make such trips: men, under-55s, more educated, employed, those without payment problems, big-city residents, and daily car users.",
+        "explanation": "In Croatia trains are used very little (~1%); the Croatian order of priority is car, bus, plane."
+      },
+      {
+        "question": "Are EU citizens willing to switch to MORE SUSTAINABLE transport — and under what conditions?",
+        "answer": "Yes — in most movements, the majority would switch IF the more sustainable alternative is:\n• NOT more expensive than now (price is the #1 prerequisite in 23 countries),\n• AVAILABLE/accessible, and\n• not slower.\nIn 24 of 28 states at least half of citizens are ready for such change.",
+        "explanation": "Willingness varies by country (highest in Luxembourg/Netherlands, lowest in Poland/Bulgaria) and is higher among the young, educated, students and city-dwellers."
+      },
+      {
+        "question": "Why is mobility behaviour (travel patterns) studied at all in this course?",
+        "answer": "Because transport DEMAND in tourism is built on everyday mobility patterns: knowing WHO travels, HOW, WHY and WHAT WOULD MAKE THEM SWITCH lets destinations and carriers plan capacity, design offers and steer demand toward sustainable modes.\n\n(The course research assignment has students survey citizens' real mobility patterns.)",
+        "explanation": "The lecture's data come from a large EU mobility survey; the student research task replicates it on a small scale."
+      },
+      {
+        "question": "What single innovation do EU citizens consider most useful for the FUTURE of personal mobility?",
+        "answer": "A SINGLE TICKET valid for all forms of mobility/transport in cities (integrated ticketing) — ranked the most useful, ahead of a digital driving licence valid across Europe, and real-time direct payment of tolls/parking/transport costs.",
+        "explanation": "This anticipates the EU 'Mobility as a Service' (MaaS) and integrated-ticketing goals in the Sustainable & Smart Mobility Strategy (K2)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The dominant primary form of daily mobility in the EU is:",
+        "options": [
+          "The bicycle",
+          "Walking",
+          "The passenger car",
+          "Public city transport"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Roughly what share of daily-mobility cars run on conventional (fossil) fuels?",
+        "options": [
+          "About half",
+          "The overwhelming majority (alternatives only a few %)",
+          "None",
+          "Exactly one third"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The MAIN reasons for choosing one's primary daily mode are:",
+        "options": [
+          "Comfort and speed (time saving)",
+          "Colour and brand of the vehicle",
+          "Weather only",
+          "The number of passengers only"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "The biggest CHALLENGES of daily mobility reported by EU citizens are:",
+        "options": [
+          "Cost of transport and traffic congestion",
+          "Too many bicycles",
+          "Lack of airports",
+          "Excessive public transport"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "For long-distance (>300 km) trips, the most used mode is the:",
+        "options": [
+          "Train",
+          "Passenger car",
+          "Ship",
+          "Bicycle"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The #1 prerequisite for citizens to switch to a more sustainable mode is that it is:",
+        "options": [
+          "Slower but prettier",
+          "Not more expensive than the current mode",
+          "Only available at night",
+          "Operated by the state only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which future innovation do EU citizens rate most useful for personal mobility?",
+        "options": [
+          "A single ticket for all urban transport modes",
+          "Banning all cars immediately",
+          "Removing all public transport",
+          "Free parking only"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The _______ car is the dominant primary form of daily mobility in the EU.",
+        "answer": "passenger",
+        "hint": "private four-wheeler"
+      },
+      {
+        "sentence": "Car use as a share of daily mobility is generally higher in _______ areas than in big cities.",
+        "answer": "rural",
+        "hint": "countryside"
+      },
+      {
+        "sentence": "The two top reasons for choosing a daily mode are comfort and _______ (time saving).",
+        "answer": "speed",
+        "hint": "how fast"
+      },
+      {
+        "sentence": "The biggest challenges of daily mobility are the cost of transport and traffic _______.",
+        "answer": "congestion",
+        "hint": "traffic jams"
+      },
+      {
+        "sentence": "For trips longer than 300 km, after the car the next most-used mode is the _______.",
+        "answer": "airplane",
+        "hint": "by air"
+      },
+      {
+        "sentence": "The #1 condition for switching to a sustainable mode is that it must not be more _______ than the current one.",
+        "answer": "expensive",
+        "hint": "about price"
+      },
+      {
+        "sentence": "Citizens rate a single _______ valid for all urban transport modes as the most useful future innovation.",
+        "answer": "ticket",
+        "hint": "integrated fare"
+      }
+    ],
+    "learn": {
+      "title": "Mobility & Travel Patterns",
+      "content": "\n                <h3>How Europeans actually move</h3>\n                <p>Transport demand in tourism grows out of everyday <strong>mobility patterns</strong>. A large EU survey\n                (used in this lecture) shows what people choose, why, and what would make them switch.</p>\n\n                <div class=\"formula-box\">\n                    Daily mobility (1st choice): CAR ≫ walking &gt; public transport &gt; bike/scooter<br>\n                    Car dominates in 22/28 countries · highest Cyprus ~89% · higher in RURAL areas\n                </div>\n\n                <h4>What drives the choice</h4>\n                <ul>\n                    <li><strong>Reasons to choose a mode:</strong> comfort &amp; speed (time), then lack of alternative,\n                    reliability, satisfaction.</li>\n                    <li><strong>Biggest challenges:</strong> cost of transport &amp; congestion (congestion worse in big\n                    cities).</li>\n                    <li><strong>Fuel reality:</strong> ~89% of cars privately owned, overwhelmingly fossil-fuelled;\n                    alternatives tiny (electric ~1%, hybrid ~3%, gas ~5%; car-sharing ≤4%).</li>\n                </ul>\n\n                <h4>Long-distance &amp; tourist travel (&gt;300 km)</h4>\n                <p>Over 60% of Europeans took a &gt;300 km trip in the previous year; the order is <strong>car → airplane →\n                train</strong>. Such trips are more common among men, under-55s, the more educated, the employed, big-city\n                residents and daily car users. In <strong>Croatia</strong> trains are barely used (~1%); the order is car,\n                bus, plane.</p>\n\n                <h4>Readiness to go sustainable</h4>\n                <div class=\"tip-box\">\n                    <p>In 24 of 28 states at least half of citizens are ready to switch to greener transport — <strong>if</strong>\n                    the alternative is not more expensive (the #1 condition in 23 countries), is available, and is not slower.\n                    The most-wanted future innovation is a <strong>single ticket</strong> for all urban modes (integrated\n                    ticketing → \"Mobility as a Service\").</p>\n                </div>\n            "
+    }
+  },
+  "roadTransportConnecting": {
+    "name": "Road Transport ↔ Destination",
+    "icon": "fa-car",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "What are the BENEFITS and LIMITATIONS of road transport for tourism?",
+        "answer": "BENEFITS: relatively comfortable, cheap and fast; often NO transfer needed (true door-to-door); tourist experiences possible during the trip; greatest flexibility.\n\nLIMITATIONS: lower safety than rail/air, congestion, environmental impact (emissions, noise), parking/space demands, dependence on road quality.",
+        "explanation": "Road transport is the most elastic mode — its door-to-door flexibility is its decisive advantage in tourism."
+      },
+      {
+        "question": "What THREE roles do road vehicles play in tourism, and what are the organisational forms of road traffic?",
+        "answer": "ROLES: (1) enablers connecting emitting & receptive areas; (2) an integral part of the tourist product (the travel itself); (3) supplying/servicing the destination.\n\nORGANISATIONAL FORMS (by character): OWN transport · LINE (public) transport · SPECIAL-PURPOSE transport.",
+        "explanation": "The same three-fold scheme (connector / product / supply) reappears for every mode."
+      },
+      {
+        "question": "Why is the CAR the central road vehicle in tourism, and which car features matter for travel?",
+        "answer": "The car is the most numerous road vehicle in tourism — it gives individual, flexible, door-to-door travel between sending and receiving markets.\n\nKey features for travel: efficiency, fuel consumption, SAFETY (active + passive), comfort, speed and emissions.",
+        "explanation": "Active safety prevents accidents; passive safety reduces their consequences (detailed in K2 Safety)."
+      },
+      {
+        "question": "Describe TOURIST BUSES and their organisational forms.",
+        "answer": "Tourist buses = comfort, rich equipment, MASS transport. Two basic types: high-floor and double-decker.\n\nORGANISATION: line transport (intercity), OCCASIONAL transport (agency-organised tourist trips) and SPECIAL transport (closed groups).\n\nFeatures: large glass surfaces, aerodynamic shape, economical low-emission engines, reinforced cabin (active+passive safety), air-con, AV, toilet (double-deckers: tables, even beds).",
+        "explanation": "City/suburban bus service used by tourists at the destination is a DIFFERENT service from the tourist-bus service."
+      },
+      {
+        "question": "What is the difference between CARAVANS and MOTORHOMES (campervans)?",
+        "answer": "• CARAVAN — has NO own drive; it is equipped for multi-day stay and is functionally ATTACHED to (towed by) a car.\n• MOTORHOME (campervan) — has its own drive part + cabin + living space; a self-propelled vehicle for longer journeys with stops, overnight stays, food preparation and tourist facilities.",
+        "explanation": "Both serve camping/touring tourism, letting tourists carry their accommodation with them."
+      },
+      {
+        "question": "Compare MOTORCYCLES and BICYCLES as road vehicles in tourism.",
+        "answer": "• MOTORCYCLE — motor drive on fossil fuel; uses existing infrastructure; smaller parking area than a car.\n• BICYCLE — powered by own (human) power; an ecological alternative; needs customised infrastructure; favourable effect on user health and on city quality of life; saves space.",
+        "explanation": "The bicycle is the prime 'active mobility' mode the EU wants to expand (safe bike lanes)."
+      },
+      {
+        "question": "List the main elements of ROAD TRANSPORT INFRASTRUCTURE.",
+        "answer": "1. Roads & streets;\n2. Bridges, tunnels, underpasses, overpasses;\n3. Terminals for passenger & cargo traffic;\n4. Spaces for resting road vehicles — garages & parking lots;\n5. Accompanying service facilities along highways;\n6. Devices for signalling, monitoring & traffic management (traffic lights, signs, control systems).",
+        "explanation": "Passenger terminals and highway service facilities are exactly the points where tourists are present, so they are also tourism-service locations."
+      },
+      {
+        "question": "What are the characteristic features of ROAD infrastructure (and how is it financed)?",
+        "answer": "Big investment, long service life, multi-year construction; method varies by facility type; accurate capacity sizing with reserve; accessibility to all on equal terms; it influences demand on other branches' infrastructure.\n\nFINANCING: as a rule a one-time fee (toll) does NOT cover the real cost → largely state-financed.",
+        "explanation": "These are the general infrastructure features (Category 1) applied to roads specifically."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The decisive advantage of road transport in tourism is:",
+        "options": [
+          "Its very high speed over oceans",
+          "Door-to-door flexibility, often with no transfer needed",
+          "Zero emissions",
+          "Being the safest of all modes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The organisational forms of road traffic 'by character' are:",
+        "options": [
+          "Own, line (public) and special-purpose transport",
+          "Air, rail and sea",
+          "Cheap, medium and luxury",
+          "Local, national and global"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A CARAVAN differs from a motorhome because it:",
+        "options": [
+          "Has its own engine",
+          "Has NO own drive and is towed by a car",
+          "Can fly",
+          "Is only used in cities"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is powered by the user's own (human) power and needs customised infrastructure?",
+        "options": [
+          "Motorcycle",
+          "Tourist bus",
+          "Bicycle",
+          "Caravan"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Occasional bus transport in tourism refers to:",
+        "options": [
+          "Scheduled intercity lines only",
+          "Agency-organised tourist trips",
+          "City buses used by residents",
+          "Empty buses in depots"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT an element of road transport infrastructure?",
+        "options": [
+          "Bridges and tunnels",
+          "Parking lots and garages",
+          "Airport runways",
+          "Traffic signalling and control systems"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Road infrastructure is largely state-financed because:",
+        "options": [
+          "Tolls always over-cover the cost",
+          "A one-time user fee usually does NOT cover the real cost",
+          "It is cheap to build",
+          "It has a very short life"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Road transport is the only true _______-to-door mode, often needing no transfer.",
+        "answer": "door",
+        "hint": "door-to-door"
+      },
+      {
+        "sentence": "Road traffic appears in three organisational forms: own, line (public) and _______-purpose transport.",
+        "answer": "special",
+        "hint": "for closed groups etc."
+      },
+      {
+        "sentence": "A _______ has no own drive and is functionally attached to a car.",
+        "answer": "caravan",
+        "hint": "towed trailer-home"
+      },
+      {
+        "sentence": "A motorhome (campervan) has its own drive part, a cabin and a _______ space.",
+        "answer": "living",
+        "hint": "where you sleep/cook"
+      },
+      {
+        "sentence": "Agency-organised tourist trips by bus are the _______ form of bus transport.",
+        "answer": "occasional",
+        "hint": "not scheduled line"
+      },
+      {
+        "sentence": "The _______ is the most numerous road vehicle in tourism.",
+        "answer": "car",
+        "hint": "individual vehicle"
+      },
+      {
+        "sentence": "A one-time road fee usually does not cover the real cost, so road infrastructure is largely _______-financed.",
+        "answer": "state",
+        "hint": "public"
+      }
+    ],
+    "learn": {
+      "title": "Road Transport between the Demand Market & the Destination",
+      "content": "\n                <h3>The most flexible mode</h3>\n                <p>Road transport connects the emitting market with the destination with unmatched flexibility — it is\n                relatively cheap, comfortable and fast, and is the only true <strong>door-to-door</strong> mode (often with\n                no transfer). Its limitations are lower safety, congestion and environmental impact.</p>\n\n                <div class=\"formula-box\">\n                    Road vehicles in tourism: (1) connect emitting ↔ receptive areas · (2) are part of the trip itself ·\n                    (3) supply the destination<br>\n                    Organisation by character: OWN · LINE (public) · SPECIAL-PURPOSE\n                </div>\n\n                <h4>The vehicles</h4>\n                <ul>\n                    <li><strong>Car</strong> — the most numerous; individual door-to-door travel. Key features: efficiency,\n                    fuel consumption, <strong>safety</strong> (active + passive), comfort, speed, emissions.</li>\n                    <li><strong>Tourist buses</strong> — comfort, rich equipment, mass transport; high-floor &amp;\n                    double-decker; organised as line, <strong>occasional</strong> (agency tours) and special (closed groups).</li>\n                    <li><strong>Caravans</strong> (no own drive, towed) vs <strong>motorhomes</strong> (self-propelled,\n                    living space) — camping/touring tourism.</li>\n                    <li><strong>Motorcycle</strong> (fossil-fuel, existing infrastructure) vs <strong>bicycle</strong>\n                    (human power, ecological, needs custom infrastructure, health benefits).</li>\n                </ul>\n\n                <h4>Infrastructure</h4>\n                <div class=\"tip-box\">\n                    <p>Roads &amp; streets · bridges/tunnels/over- &amp; underpasses · passenger &amp; cargo terminals ·\n                    parking &amp; garages · highway service facilities · signalling, monitoring &amp; control. Like all\n                    transport infrastructure it needs <strong>big investment, long construction</strong> and is largely\n                    <strong>state-financed</strong> (a single toll rarely covers the real cost). Terminals and service\n                    facilities double as tourism-service points.</p>\n                </div>\n            "
+    }
+  },
+  "roadTransportProduct": {
+    "name": "Road Transport as a Tourism Product",
+    "icon": "fa-bus",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "List the tourism PRODUCTS based on road traffic.",
+        "answer": "1. Bus excursions (one-day tours);\n2. Multi-day bus trips;\n3. Panoramic & other transport by buses/special vehicles in the destination;\n4. Local tourist lines;\n5. Rental of road vehicles in the destination;\n6. Cycling tourism.",
+        "explanation": "Here the road service is the BACKBONE of a tourism product, not just a way to reach the destination."
+      },
+      {
+        "question": "What characterises BUS EXCURSIONS and MULTI-DAY bus trips?",
+        "answer": "• BUS EXCURSIONS — offer spread worldwide; the bus overcomes distance; relatively LOW price; short duration; flexibility in choosing motives; can target the open market or closed groups.\n• MULTI-DAY BUS TRIPS — rich, diverse tourist content even during transport; value for money; tourist buses built for longer stays on board; organised by travel agencies; tourist content + transport function combined.",
+        "explanation": "Both turn the bus ride itself into the holiday experience."
+      },
+      {
+        "question": "What is PANORAMIC bus transport in the destination, and what else are destination buses used for?",
+        "answer": "PANORAMIC transport = round-trip sightseeing of natural & cultural sights at the destination; buses with high mobility, manoeuvrability, safety and large glass surfaces; multilingual info during the drive.\n\nDestination buses are also used for TRANSFERS (airport↔hotel, port↔city) and SHUTTLE services (e.g. cruise passengers from port to city, hotel guests to centre) — often part of COMBINED (multimodal) trips.",
+        "explanation": "Combined trips use at least two branches: bus + boat, bus + plane, bus + train."
+      },
+      {
+        "question": "What are LOCAL TOURIST LINES and who organises them?",
+        "answer": "Regular transport within tourist destinations using modest-comfort, low-speed, high-capacity buses.\n\nOrganisers: local government, travel agencies, transport companies, hotels.\nPurpose: an economical, efficient solution that AVOIDS car use and relieves road infrastructure.\nTypes: SKI BUS (winter destinations), BEACH BUS (coastal destinations).",
+        "explanation": "Local lines are a sustainability tool at destination level — fewer private cars, less congestion."
+      },
+      {
+        "question": "How is RENTAL of road vehicles ('rent-a-car') in the destination organised and charged?",
+        "answer": "Rental of cars, mopeds/scooters, ATVs (quads) and bicycles via rent-a-car or travel agencies under a RENTAL AGREEMENT.\n\nPayment is either:\n• according to DISTANCE travelled, or\n• according to DURATION of the lease.\n\nIt gives tourists the benefits of car flexibility at the destination without bringing their own car.",
+        "explanation": "Rent-a-car restores door-to-door flexibility to tourists who arrived by an inelastic mode (plane, train, ship)."
+      },
+      {
+        "question": "Define CYCLING TOURISM and sketch the cycling tourist's profile.",
+        "answer": "CYCLING TOURISM = leisure travel (day trips or trips with overnight stay, outside the residence) where cycling is the primary/significant part. Forms: one-day, holiday, and active cycling tourism.\n\nPROFILE (ADFC 2020): avg age ~53; earns above-average (~79%); ~50% university degree; mostly without children; 40–60 km/day; ~9-day holiday; 'point-to-point' with accommodation changes; ~29% use e-bikes; focused on quality & experience.",
+        "explanation": "The bicycle is ecological, space-saving and health-positive — a flagship of EU 'active mobility'."
+      },
+      {
+        "question": "What does the EU coach (bus) satisfaction survey reveal about WHY people travel by coach?",
+        "answer": "Most coach trips are domestic (~35% travel to other places in their own country; only ~18% abroad) and infrequent.\n\nMain PURPOSES: visiting family/friends (~34%), holiday (~27%), other leisure (~24%).\nMain REASONS: LOW PRICES (~33%) and NOT HAVING A CAR (~27%); then reliability, comfort/cleanliness.\nOverall ~64% rate national coach services as 'good'.",
+        "explanation": "Low price and 'no car' dominate — coach is the budget/captive-market mode, very relevant for student & budget tourism."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which is a tourism PRODUCT based on road traffic?",
+        "options": [
+          "A high-speed train line",
+          "A multi-day bus trip",
+          "An international cruise",
+          "A charter flight"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Panoramic transport in the destination is essentially:",
+        "options": [
+          "Round-trip sightseeing of natural & cultural sights",
+          "Long-haul intercontinental transport",
+          "Freight delivery",
+          "Commuting to work"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A 'ski bus' or 'beach bus' is an example of:",
+        "options": [
+          "A charter flight",
+          "A local tourist line",
+          "A caravan",
+          "A cruise excursion"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Rent-a-car services are charged according to:",
+        "options": [
+          "Passenger weight",
+          "Distance travelled OR duration of the lease",
+          "Number of fuel stations passed",
+          "The colour of the car"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Local tourist lines mainly help a destination by:",
+        "options": [
+          "Increasing private car use",
+          "Avoiding car use and relieving road infrastructure",
+          "Replacing all air transport",
+          "Removing all buses"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the EU coach survey, the TWO main reasons for travelling by coach are:",
+        "options": [
+          "Luxury and speed",
+          "Low prices and not having a car",
+          "Free food and free WiFi",
+          "Status and comfort"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The typical cycling tourist (ADFC profile) is best described as:",
+        "options": [
+          "Young, low-income, with small children",
+          "Older (~53), above-average income, often university-educated, quality-focused",
+          "A daily commuter who never holidays",
+          "Exclusively a professional athlete"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A one-day organised road tour is a bus _______.",
+        "answer": "excursion",
+        "hint": "short trip"
+      },
+      {
+        "sentence": "Sightseeing round-trips of a destination's sights by bus are _______ transport.",
+        "answer": "panoramic",
+        "hint": "scenic viewing"
+      },
+      {
+        "sentence": "Transport from airport to hotel or port to city, often combined with other modes, is a _______.",
+        "answer": "transfer",
+        "hint": "connecting leg"
+      },
+      {
+        "sentence": "A ski bus or beach bus is a type of local tourist _______.",
+        "answer": "line",
+        "hint": "regular route"
+      },
+      {
+        "sentence": "Rent-a-car payment can be based on distance travelled or on the _______ of the lease.",
+        "answer": "duration",
+        "hint": "how long"
+      },
+      {
+        "sentence": "Leisure travel where cycling is the primary part is called cycling _______.",
+        "answer": "tourism",
+        "hint": "the activity-based form"
+      },
+      {
+        "sentence": "In the EU survey, low prices and not having a _______ are the top reasons to travel by coach.",
+        "answer": "car",
+        "hint": "own vehicle"
+      }
+    ],
+    "learn": {
+      "title": "Road Transport in the Form of a Tourism Product",
+      "content": "\n                <h3>When the road service IS the product</h3>\n                <p>Beyond simply reaching the destination, road transport becomes the <strong>backbone of tourism\n                products</strong> in which the ride itself delivers the experience.</p>\n\n                <div class=\"formula-box\">\n                    Road-based tourism products: bus excursions · multi-day bus trips · panoramic/destination transport ·\n                    local tourist lines · vehicle rental (rent-a-car) · cycling tourism\n                </div>\n\n                <h4>Bus-based products</h4>\n                <ul>\n                    <li><strong>Excursions</strong> (one-day) &amp; <strong>multi-day trips</strong> — low-priced, flexible,\n                    rich on-board tourist content; organised by agencies.</li>\n                    <li><strong>Panoramic</strong> sightseeing + <strong>transfers</strong> (airport↔hotel, port↔city) and\n                    <strong>shuttles</strong> — often part of <strong>combined (multimodal)</strong> trips (bus+boat,\n                    bus+plane, bus+train).</li>\n                    <li><strong>Local tourist lines</strong> (ski bus, beach bus) — economical destination transport that\n                    <strong>avoids car use</strong> and relieves infrastructure (a sustainability tool).</li>\n                </ul>\n\n                <h4>Rental &amp; cycling tourism</h4>\n                <div class=\"tip-box\">\n                    <p><strong>Rent-a-car</strong> (cars, scooters, quads, bikes) restores door-to-door flexibility to\n                    tourists who arrived by plane/train/ship; charged by distance or duration.\n                    <strong>Cycling tourism</strong> — ecological, health-positive; the typical cyclist is ~53, above-average\n                    income, university-educated, doing 40–60 km/day on quality-focused trips (~29% on e-bikes).</p>\n                    <p>EU coach survey: most coach trips are domestic and chosen for <strong>low price</strong> and\n                    <strong>not having a car</strong>; ~64% rate services 'good'.</p>\n                </div>\n            "
+    }
+  },
+  "railTransportConnecting": {
+    "name": "Rail Transport ↔ Destination",
+    "icon": "fa-train",
+    "color": "#0891b2",
+    "flashcards": [
+      {
+        "question": "What are the CHARACTERISTICS (advantages & disadvantages) of rail traffic?",
+        "answer": "ADVANTAGES: very large one-time passenger capacity (more than road/air); low exploitation costs; very favourable SAFETY and ENVIRONMENTAL indicators (electric drive, little land use).\n\nDISADVANTAGES: INELASTICITY (line & public organisation; infrastructure-bound); impossibility of door-to-door transport; low commercial speed.",
+        "explanation": "Rail's green & safe profile is exactly why EU policy stimulates a modal shift TO rail (Green Deal, K2)."
+      },
+      {
+        "question": "Why does the EU strongly promote rail over road, environmentally?",
+        "answer": "Because of its DRIVE TYPE (electric on main lines) and the much smaller LAND/space it needs versus roads, rail has a far less aggressive effect on nature. EU transport policy therefore stimulates rail so it can compete with road and slow road's excessive growth.",
+        "explanation": "Rail is central to the EU's Green Deal goal of a climate-neutral Europe by 2050."
+      },
+      {
+        "question": "How are passenger CARRIAGES classified by COMFORT and by PURPOSE?",
+        "answer": "By COMFORT — into classes (level of comfort proportional to distance).\n\nBy PURPOSE:\n• LOCAL — up to ~50 km, less comfort, large capacity, modest equipment, lower speed (like city/suburban buses);\n• MAINLINE — greater comfort, speed, equipment; longer distances;\n• INTERNATIONAL — greatest comfort, speed, equipment + many additional services (sleeping/dining cars).",
+        "explanation": "On a train the LOCOMOTIVE (drive) is separate from the wagons — they can be freely combined, allowing intensive use of locomotives."
+      },
+      {
+        "question": "How is rail transport divided by the CHARACTERISTICS of the transport service?",
+        "answer": "• URBAN rail — suburban & city transport;\n• INTERCITY rail — international, domestic, regional, and high-speed-train transport;\n• INTERMODAL — combined transport: rail + tram, rail + road vehicles, etc.",
+        "explanation": "Intermodal/combined transport is how inelastic rail solves the 'door-to-door' last mile."
+      },
+      {
+        "question": "What is special about RAILWAY infrastructure compared with road infrastructure?",
+        "answer": "Unlike roads (built in stages/sections), a RAILWAY CANNOT be built in sections — train movement depends entirely on signalling & safety devices, so the line must be built as a WHOLE. Investor is usually the STATE; the plan derives from the national transport strategy and must fit international corridors.\n\nRoad needs only locational compliance at borders; rail needs TECHNICAL, TECHNOLOGICAL and ORGANISATIONAL compliance.",
+        "explanation": "This 'all-or-nothing' nature makes rail investment huge, slow and strongly state-led."
+      },
+      {
+        "question": "What are HIGH-SPEED TRAINS (HST), and how energy-efficient is HSR?",
+        "answer": "HST combine speed (>300 km/h) and efficiency; they reshaped transport by offering a greener alternative to aviation on shorter routes, cutting travel time and promoting economic growth.\n\nPer UIC data, high-speed rail is more than 4× as energy-efficient as driving and nearly 9× more efficient than flying.\nMaglev (magnetic levitation) pushes speeds even higher (Shanghai Maglev ~460 km/h).",
+        "explanation": "France pioneered European HSR (Paris–Lyon, 1981, TGV); Germany ICE (1991); Eurostar via the Channel Tunnel (1994)."
+      },
+      {
+        "question": "What is the function of a railway PASSENGER TERMINAL, and its zones?",
+        "answer": "A passenger terminal receives & dispatches passengers (and their luggage/post/small cargo), and handles train operations.\n\nZones of a classic terminal: (1) passenger & baggage reception area; (2) station building; (3) train acceptance zone. Goal: integrate the transport process so distances, waiting and luggage transfer between branches are minimal.",
+        "explanation": "Like road service points, station space is used by tourists → a place to present/promote the destination's offer."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "A KEY advantage of rail traffic is:",
+        "options": [
+          "True door-to-door delivery",
+          "Very favourable safety AND environmental indicators",
+          "The highest commercial speed of all modes",
+          "Total independence from infrastructure"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Rail is described as INELASTIC mainly because:",
+        "options": [
+          "It is too fast",
+          "It is bound to fixed lines and a public/line organisation, and cannot do door-to-door",
+          "It uses no infrastructure",
+          "It carries very few passengers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "By PURPOSE, which carriage type serves trips up to ~50 km with modest equipment?",
+        "options": [
+          "International",
+          "Mainline",
+          "Local",
+          "High-speed"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Unlike a road, a railway line must be built:",
+        "options": [
+          "In small independent sections",
+          "As a whole, because train movement depends on signalling & safety devices",
+          "Only by private firms",
+          "Without any plan"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to UIC data, high-speed rail compared with flying is roughly:",
+        "options": [
+          "Equally energy-efficient",
+          "Half as efficient",
+          "Nearly 9× more energy-efficient",
+          "Twice as polluting"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The EU promotes a modal shift TO rail mainly because rail:",
+        "options": [
+          "Is the cheapest luxury option",
+          "Has a far smaller environmental footprint (electric drive, little land use)",
+          "Needs no investment",
+          "Is fully door-to-door"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which European country pioneered high-speed rail (Paris–Lyon, 1981)?",
+        "options": [
+          "Germany",
+          "Italy",
+          "France",
+          "Spain"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Rail's biggest advantages are large capacity, low costs and favourable safety and _______ indicators.",
+        "answer": "environmental",
+        "hint": "eco / nature"
+      },
+      {
+        "sentence": "Because it is bound to fixed lines and cannot do door-to-door, rail is relatively _______.",
+        "answer": "inelastic",
+        "hint": "not flexible"
+      },
+      {
+        "sentence": "On a train the locomotive (drive) is separate from the _______, which can be freely combined.",
+        "answer": "wagons",
+        "hint": "carriages/cars"
+      },
+      {
+        "sentence": "Carriages for trips up to ~50 km, with modest equipment, are _______ carriages.",
+        "answer": "local",
+        "hint": "short distance"
+      },
+      {
+        "sentence": "Combined transport such as rail + road vehicles is called _______ transport.",
+        "answer": "intermodal",
+        "hint": "across modes"
+      },
+      {
+        "sentence": "Unlike a road, a railway must be built as a _______, because of signalling and safety dependence.",
+        "answer": "whole",
+        "hint": "not in sections"
+      },
+      {
+        "sentence": "High-speed rail is nearly nine times more energy-efficient than _______.",
+        "answer": "flying",
+        "hint": "air travel"
+      }
+    ],
+    "learn": {
+      "title": "Rail Transport between the Demand Market & the Destination",
+      "content": "\n                <h3>The green, high-capacity mode</h3>\n                <p>Rail offers very large capacity, low operating costs and excellent <strong>safety</strong> and\n                <strong>environmental</strong> indicators (electric drive, little land use). Its price is\n                <strong>inelasticity</strong> — it is bound to fixed lines and public/line organisation, cannot do\n                door-to-door, and has low commercial speed.</p>\n\n                <div class=\"formula-box\">\n                    Rail = large capacity + low cost + safe + GREEN &nbsp;BUT&nbsp; inelastic + no door-to-door + slow<br>\n                    HSR is &gt;4× more energy-efficient than driving and ~9× more than flying (UIC)\n                </div>\n\n                <h4>Carriages &amp; service types</h4>\n                <ul>\n                    <li><strong>By comfort:</strong> classes (comfort rises with distance). <strong>By purpose:</strong>\n                    local (≤50 km) · mainline · international (most comfort + sleeping/dining cars).</li>\n                    <li><strong>By service:</strong> urban (city/suburban) · intercity (incl. high-speed) ·\n                    <strong>intermodal</strong> (rail + tram/road — solving the last-mile door-to-door problem).</li>\n                    <li>Locomotive is <strong>separate</strong> from wagons → free combination &amp; intensive locomotive\n                    use.</li>\n                </ul>\n\n                <h4>Infrastructure, HST &amp; terminals</h4>\n                <div class=\"tip-box\">\n                    <p>A railway must be built <strong>as a whole</strong> (signalling/safety dependence), is hugely\n                    expensive and <strong>state-led</strong>, and must fit international corridors (technical + technological\n                    + organisational compliance). <strong>High-speed trains</strong> (&gt;300 km/h; Maglev faster still)\n                    rival aviation on short routes; France pioneered European HSR (TGV, 1981). <strong>Passenger\n                    terminals</strong> (reception · station building · train zone) are also tourism-service points.</p>\n                </div>\n            "
+    }
+  },
+  "railTransportProduct": {
+    "name": "Rail Transport as a Tourism Product",
+    "icon": "fa-train-subway",
+    "color": "#0891b2",
+    "flashcards": [
+      {
+        "question": "In which ways is the railway applied IN TOURISM (rail as a tourism product)?",
+        "answer": "• connecting traffic hubs/terminals (airports, seaports) with the final destination;\n• high-speed & metro transport within populated areas;\n• city-to-city transport by high-speed or conventional trains (domestic/international);\n• local trains at peak demand to the city-centre station;\n• use of outdated/less-loaded railways for tourist purposes;\n• OCCASIONAL transport (excursion, party, Christmas trains);\n• MULTI-DAY railway journeys (historical/luxury trains).",
+        "explanation": "Even when attractive, rail rarely works alone — it usually needs road transport for the door-to-door part."
+      },
+      {
+        "question": "What are TOURIST TRAINS (occasional/line system)?",
+        "answer": "Trains to which special carriages are added — catering, overnight (sleeping) and PASSENGER-CAR transport. Tourist trains connect places over long distances with strong, constant SEASONAL tourist flows.\n\nCar-carrying wagons let tourists keep their own car at the destination — which also reduces the volume of road traffic.",
+        "explanation": "A neat sustainability bonus: putting cars on trains for the long haul cuts road congestion and emissions."
+      },
+      {
+        "question": "What is RAILWAY TOURISM (multi-day train journeys)? Give the two styles.",
+        "answer": "Railway tourism = the train trip itself is the holiday — the transport service DOMINATES the product.\n\nTwo styles:\n• HISTORICAL / luxury (the Venice Simplon-Orient-Express) — luxury, comfort, fine dining;\n• MODERN, landscape-focused (the Rocky Mountaineer) — panoramic coaches, regional cuisine, storytelling, daytime-only with luxury-hotel overnights.\nJourneys can cross thousands of km and last 10+ days; have a LINE character.",
+        "explanation": "Here transport is the backbone of the tourist offer — the opposite of rail as a mere connector."
+      },
+      {
+        "question": "What is PANORAMIC rail transport in a limited destination area?",
+        "answer": "Short, closed rail systems in protected nature, amusement parks, caves and destinations, combining high ecological standards with tourism.\n\nDifferences from public rail: closed systems of shorter length; non-standard train dimensions; lower speed; capacity & appearance adapted to tourist demand.",
+        "explanation": "Designed for sightseeing inside a destination, not for transport between markets."
+      },
+      {
+        "question": "What are railway EXCURSIONS (occasional transport)?",
+        "answer": "Attractive occasional trips, in several forms depending on offer content, train type and infrastructure (modern or old/historic):\n• tours of natural attractions;\n• tours of cultural & historical heritage;\n• tours of various events.\nThey may use modern infrastructure OR valorise old, low-speed railways. High-speed trains also suit one-day excursions (city-centre stations).",
+        "explanation": "Excursions reuse otherwise obsolete lines for tourism value."
+      },
+      {
+        "question": "What are MOUNTAIN RAILWAYS, and how do they relate to FUNICULARS/cable cars?",
+        "answer": "A MOUNTAIN RAILWAY operates in mountainous terrain — following valleys/tunnels or climbing to a summit; often NARROW-GAUGE for tight curves and lower cost. On steep gradients they use steep-grade technology or operate as FUNICULAR railways.\n\n• FUNICULAR — a cable-hauled railway on rails where two cars counterbalance each other up/down a slope.\n• CABLE CAR / aerial cableway — cabins suspended from a cable (no rails) to reach summits/viewpoints.",
+        "explanation": "Funicular & cable-car transport is explicitly a week-7 topic; both are classic destination attractions in mountain/scenic tourism."
+      },
+      {
+        "question": "What does the EU survey say about SATISFACTION with passenger rail services?",
+        "answer": "Most respondents are OCCASIONAL rail travellers (~67%); ~13% frequent, ~20% never. Top trip purpose: other leisure (~35%) and holidays (~23%).\n\nSatisfaction is HIGH for buying tickets (~75%) and timetable information (~74%); lower for WiFi (~41%) and complaint handling (~38%). Most common reason for NOT travelling by train: difficulty getting to the station (~16%). Central/northern/western Europeans are most satisfied.",
+        "explanation": "Many rail trips are INTERMODAL — ~44% reach the station by car/motorbike/taxi."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Car-carrying wagons on tourist trains are valuable because they:",
+        "options": [
+          "Make the train fly",
+          "Let tourists keep their own car at the destination AND reduce road traffic",
+          "Replace the locomotive",
+          "Eliminate the need for tickets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In 'railway tourism' (multi-day luxury/scenic trains), the transport service is:",
+        "options": [
+          "A minor detail",
+          "The dominant backbone of the tourism product",
+          "Completely free",
+          "Only for freight"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Venice Simplon-Orient-Express represents which style of railway tourism?",
+        "options": [
+          "Modern landscape-focused",
+          "Historical/luxury",
+          "Commuter metro",
+          "Freight"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A funicular is best described as:",
+        "options": [
+          "An aircraft for mountains",
+          "A cable-hauled rail vehicle with two counterbalanced cars on a slope",
+          "A type of cruise ship",
+          "A low-cost airline"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Panoramic rail transport in a destination differs from public rail by being:",
+        "options": [
+          "Faster and longer",
+          "Closed, shorter, slower, with non-standard trains adapted to tourist demand",
+          "Always international",
+          "Exclusively for freight"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Railway excursions often add tourism value by:",
+        "options": [
+          "Demolishing old lines",
+          "Valorising old/obsolete low-speed railways for sightseeing",
+          "Banning historic trains",
+          "Carrying only commuters"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the EU rail survey, the most common reason for NOT travelling by train is:",
+        "options": [
+          "Trains are too fast",
+          "Difficulty getting to the station",
+          "Tickets are too cheap",
+          "Too much WiFi"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Trains with catering, sleeping and car-carrying wagons serving seasonal flows are _______ trains.",
+        "answer": "tourist",
+        "hint": "for holidaymakers"
+      },
+      {
+        "sentence": "When the train journey itself is the holiday, we speak of railway _______.",
+        "answer": "tourism",
+        "hint": "ride = the product"
+      },
+      {
+        "sentence": "A cable-hauled rail vehicle with two counterbalanced cars on a slope is a _______.",
+        "answer": "funicular",
+        "hint": "found on steep hills"
+      },
+      {
+        "sentence": "A _______ car uses cabins suspended from a cable (no rails) to reach viewpoints.",
+        "answer": "cable",
+        "hint": "aerial ropeway"
+      },
+      {
+        "sentence": "Mountain railways often use _______-gauge tracks to allow tight curves and lower cost.",
+        "answer": "narrow",
+        "hint": "opposite of wide"
+      },
+      {
+        "sentence": "Excursion, party and Christmas trains are forms of _______ rail transport.",
+        "answer": "occasional",
+        "hint": "not scheduled line"
+      },
+      {
+        "sentence": "About two-thirds of EU respondents are _______ rail travellers (less than once a week).",
+        "answer": "occasional",
+        "hint": "infrequent"
+      }
+    ],
+    "learn": {
+      "title": "Rail Transport in the Form of a Tourism Product",
+      "content": "\n                <h3>From connector to attraction</h3>\n                <p>When the rail service stops being a mere connector and becomes the experience, rail turns into a\n                <strong>tourism product</strong>. It still rarely works alone — road transport usually completes the\n                door-to-door chain.</p>\n\n                <div class=\"formula-box\">\n                    Rail in tourism: hub→destination links · tourist trains (car-carrying) · railway tourism (multi-day) ·\n                    panoramic (in-destination) · excursions · mountain railways · funicular &amp; cable car\n                </div>\n\n                <h4>The products</h4>\n                <ul>\n                    <li><strong>Tourist trains</strong> — add catering, sleeping &amp; <strong>car-carrying</strong> wagons;\n                    serve seasonal flows and cut road traffic.</li>\n                    <li><strong>Railway tourism</strong> (multi-day) — the ride is the holiday; <em>historical/luxury</em>\n                    (Orient-Express) vs <em>modern/scenic</em> (Rocky Mountaineer).</li>\n                    <li><strong>Panoramic</strong> in-destination rail (parks, caves) &amp; <strong>excursions</strong>\n                    (often reusing old lines).</li>\n                    <li><strong>Mountain railways</strong> (narrow-gauge, steep-grade) → <strong>funiculars</strong>\n                    (counterbalanced cars on rails) &amp; <strong>cable cars</strong> (cabins on a cable) — classic scenic\n                    attractions.</li>\n                </ul>\n\n                <h4>What rail passengers think</h4>\n                <div class=\"tip-box\">\n                    <p>~67% are occasional travellers; satisfaction is high for ticket-buying (~75%) &amp; information\n                    (~74%), low for WiFi (~41%) &amp; complaints (~38%); the top reason for NOT using trains is\n                    <strong>difficulty getting to the station</strong> (~16%) — which is why ~44% reach stations by car/taxi\n                    (intermodality).</p>\n                </div>\n            "
+    }
+  },
+  "airTransport": {
+    "name": "Air Transport",
+    "icon": "fa-plane",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "What are the ADVANTAGES of air transport?",
+        "answer": "• DOMINANT position in serving intercontinental passenger & tourist flows;\n• needs NO infrastructure along the route — only the start/end points (AIRPORTS); routes are 'imagined' corridors;\n• great SPEED (usually up to ~900 km/h), surpassing all other modes;\n• covers very LONG distances, making even remote parts of the world accessible (a driver of globalisation).",
+        "explanation": "Air's unique selling point: speed over long/intercontinental distances no other mode can match."
+      },
+      {
+        "question": "What are the DISADVANTAGES of air transport?",
+        "answer": "• INELASTICITY — dependence on start/end points; needs ANOTHER mode (usually road) to/from the airport;\n• airports occupy large areas FAR from the city → transfer time can exceed the flight;\n• HIGH fuel consumption (defying gravity);\n• HIGH aircraft purchase price & operating costs;\n• relatively MODEST capacity (~500 passengers on average).",
+        "explanation": "The airport-transfer problem means a short/medium flight can take less time than getting to/from the airport."
+      },
+      {
+        "question": "Is air traffic only AIRPLANE traffic?",
+        "answer": "No. Most air traffic is by airplanes, but other carriers exist:\n• BALLOONS — far more economical than airplanes but much less safe (now used for freight, telecom, advertising, tourism);\n• ZEPPELINS (rigid airships) — historically used for transoceanic transport (e.g. the Hindenburg, abandoned after the 1937 disaster); still exist in modern forms.",
+        "explanation": "Identifying air traffic only with airplanes does not fully reflect reality, though airplanes dominate."
+      },
+      {
+        "question": "Describe air transport INFRASTRUCTURE (the airport).",
+        "answer": "Infrastructure is needed only at start/end points — AIRPORTS, which are complex multimodal hubs including: runways; manoeuvring areas; aircraft resting areas; flight-safety objects/devices; aircraft-service devices; passenger & cargo reception facilities; surfaces for other modes; access roads.\n\nBy purpose: local, national, international airports. Very expensive → built by state/local authorities/airlines.",
+        "explanation": "Airports are located near big cities (the source of demand) but far enough out that the transfer is a real issue."
+      },
+      {
+        "question": "Within COMMERCIAL air traffic, contrast LINE (scheduled) carriers — traditional vs LOW-COST.",
+        "answer": "Line carriers publish a flight schedule and must maintain routes/frequencies. Two camps:\n• LARGE TRADITIONAL airlines — long-term dominance, government support, complex systems, agencies, big airports;\n• LOW-COST carriers (LCC) — cut prices by: no free food/drinks, max passenger numbers, opening new markets/connecting smaller cities, several flights/day, fast turnarounds, SECONDARY airports, direct online ticket sales, fluctuating (dynamic) prices.\nLCC ≠ charter! LCC carry ~30% of ~9 bn annual air passengers.",
+        "explanation": "By choosing small airports, LCC bring tourists to areas outside main streams and create NEW destinations."
+      },
+      {
+        "question": "What is CHARTER air transport, and what are its TYPES?",
+        "answer": "Charter = based on higher aircraft occupancy (80–90%) on high-demand routes, at LOWER service quality & price; needs a CONTRACT between airline (transport function) and travel agency (sales function).\n\nTYPES: (1) WHOLE charter (entire aircraft); (2) PART/split charter (capacity split among agencies); (3) AD HOC (one transport); (4) SERIES (several consecutive); (5) TIME charter (exclusive use for the whole season — most rational/economical).",
+        "explanation": "Charter emerged in the 1950s with the surge of tourist flows; it is the classic 'package-holiday' flight."
+      },
+      {
+        "question": "Beyond scheduled & charter: private aircraft, special-needs flights and SPACE TOURISM.",
+        "answer": "• PRIVATE aircraft — symbolic market share; greater mobility/flexibility; company or individual owned.\n• SPECIAL-NEEDS small-aircraft flights in a destination — panoramic (sightseeing), photography/filming/nature, sports/recreation (skydiving; + paragliding/hang-gliding without aircraft).\n• SPACE TOURISM (since 2000): orbital, suborbital, lunar; first space tourist Dennis Tito (2001, ISS, ~$20 m); spaceflight's carbon footprint is ~100× a long-haul flight; demand exceeds supply despite high prices.",
+        "explanation": "Companies: Blue Origin (Bezos), Virgin Galactic (Branson) — suborbital tourist flights since July 2021."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The UNIQUE advantage of air transport is:",
+        "options": [
+          "Door-to-door delivery",
+          "Great speed over long/intercontinental distances",
+          "Zero fuel consumption",
+          "The largest passenger capacity of all modes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Air transport needs infrastructure built:",
+        "options": [
+          "Along the entire route",
+          "Only at the start/end points (airports); routes are imagined corridors",
+          "Nowhere at all",
+          "Only at sea"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Low-cost carriers are NOT the same as charter because LCC:",
+        "options": [
+          "Do not use aircraft",
+          "Operate in the SCHEDULED system with a published flight schedule",
+          "Only fly empty",
+          "Never sell tickets online"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which charter type means exclusive use of the aircraft for the whole season (most economical)?",
+        "options": [
+          "Ad hoc charter",
+          "Whole charter",
+          "Time charter",
+          "Split charter"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The airport-transfer problem means that:",
+        "options": [
+          "Airports are always in the city centre",
+          "Getting to/from the airport can take longer than the flight itself",
+          "No other mode is ever needed",
+          "Transfers are free"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Low-cost carriers help create NEW tourist destinations mainly by:",
+        "options": [
+          "Using only the largest hub airports",
+          "Choosing secondary/smaller airports and connecting smaller cities",
+          "Banning tourists",
+          "Flying only intercontinental routes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Who is regarded as the first space tourist (2001, ISS)?",
+        "options": [
+          "Jeff Bezos",
+          "Richard Branson",
+          "Dennis Tito",
+          "Yuri Gagarin"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Air transport needs infrastructure only at its start and end points, the _______.",
+        "answer": "airports",
+        "hint": "where planes land"
+      },
+      {
+        "sentence": "Because it depends on fixed start/end points and needs road transfer, air transport is _______.",
+        "answer": "inelastic",
+        "hint": "not flexible"
+      },
+      {
+        "sentence": "Low-cost carriers often fly from cheaper _______ airports.",
+        "answer": "secondary",
+        "hint": "not the main hub"
+      },
+      {
+        "sentence": "Charter transport is based on a high aircraft _______ of 80–90%.",
+        "answer": "occupancy",
+        "hint": "seats filled"
+      },
+      {
+        "sentence": "A _______ charter reserves the aircraft exclusively for the entire season and is the most economical.",
+        "answer": "time",
+        "hint": "by duration/season"
+      },
+      {
+        "sentence": "Besides airplanes, historic rigid airships called _______ once carried transoceanic passengers.",
+        "answer": "zeppelins",
+        "hint": "named after a German constructor"
+      },
+      {
+        "sentence": "Suborbital, orbital and lunar trips belong to _______ tourism.",
+        "answer": "space",
+        "hint": "beyond the atmosphere"
+      }
+    ],
+    "learn": {
+      "title": "Air Transport (Connecting & Tourism Product)",
+      "content": "\n                <h3>Speed over distance</h3>\n                <p>Air transport dominates <strong>intercontinental</strong> passenger and tourist flows. Its unbeatable\n                edge is <strong>speed</strong> (~900 km/h) over long distances, with infrastructure needed only at the\n                <strong>airports</strong> (routes are imagined corridors).</p>\n\n                <div class=\"formula-box\">\n                    + speed · long distance · no route infrastructure &nbsp;|&nbsp;\n                    − inelastic · airport-transfer problem · high fuel &amp; cost · modest capacity (~500 pax)\n                </div>\n\n                <h4>Commercial air traffic</h4>\n                <ul>\n                    <li><strong>Line (scheduled):</strong> large traditional airlines vs <strong>low-cost carriers</strong>\n                    (LCC) — LCC cut cost via no frills, secondary airports, fast turnarounds, online sales, dynamic pricing;\n                    LCC ≠ charter; LCC carry ~30% of ~9 bn annual air passengers and <strong>create new destinations</strong>.</li>\n                    <li><strong>Charter:</strong> high occupancy (80–90%), lower quality/price, by contract (airline = transport,\n                    agency = sales). Types: whole · part/split · ad hoc · series · <strong>time</strong> (whole season, most\n                    economical).</li>\n                    <li><strong>Private aircraft</strong>, <strong>special-needs small-aircraft</strong> flights (panoramic,\n                    sports/skydiving) and <strong>space tourism</strong> (orbital/suborbital/lunar; first tourist Dennis Tito,\n                    2001; ~100× the carbon footprint of a long-haul flight).</li>\n                </ul>\n\n                <h4>Air ≠ airplane only</h4>\n                <div class=\"tip-box\">\n                    <p>Airplanes dominate, but balloons (economical, less safe) and historic <strong>zeppelins</strong>\n                    (transoceanic airships) are also air carriers. Airports are complex, expensive multimodal hubs near big\n                    cities — but far enough out that the transfer can take longer than a short flight.</p>\n                </div>\n            "
+    }
+  },
+  "waterTransport": {
+    "name": "Water Transport (Maritime & Inland)",
+    "icon": "fa-ship",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "What is the role of MARITIME passenger transport today, and the SHIP's characteristics?",
+        "answer": "Once the most important branch, maritime now has a MODEST share of passenger flows (its cargo role remains irreplaceable). Passenger maritime is limited to line service over shorter distances, round trips/excursions and personal-needs transport.\n\nSHIP characteristics: large capacity; LOW speed; low transport costs; route flexibility (no route infrastructure); the second-safest means of transport (after rail).",
+        "explanation": "Like air, ships need no built route — only ports — but they are slow, so passenger use is mostly tourism/local lines."
+      },
+      {
+        "question": "Compare HIGH-SPEED SHIPS and FERRIES.",
+        "answer": "• HIGH-SPEED SHIPS (catamarans, hydrofoils) — light materials, gas-turbine/jet propulsion, high speeds; smaller one-time capacity → sail several times a day; economical only on high-constant-demand lines.\n• FERRIES — carry passengers AND vehicles; need very SHORT port stays (organised like airports) for many turnovers = large 'dynamic' capacity; biggest ones resemble cruise ships (cabins, entertainment).",
+        "explanation": "Ferries trade comfort for throughput; high-speed ships trade capacity for speed."
+      },
+      {
+        "question": "Describe maritime transport INFRASTRUCTURE (ports, terminals, marinas).",
+        "answer": "Ports → specialised passenger TERMINALS (reception of ships & passengers, comfort, links to other modes). Types: terminals for regular line traffic; for round trips in territorial sea; for INTERNATIONAL cruises (near airport, police/customs, rich facilities). The key element is the WHARF (pier).\n\nAlso: MARINAS, sports ports & harbours (the basis of nautical tourism), and signalling/safety devices & waterways.",
+        "explanation": "International cruise terminals double as part of the tourist product — designed so waiting feels like part of the cruise."
+      },
+      {
+        "question": "How is maritime transport ORGANISED, and what defines LINE passenger traffic?",
+        "answer": "Organisation: (A) LINE traffic; (B) SPECIAL-NEEDS traffic (round trips & excursions — exclusively tourism); (C) PERSONAL-needs traffic.\n\nLINE traffic runs by a sailing schedule (seasonal), maintained by a group of similar ships, operated by a liner shipping company — on high-demand lines (private/state) AND low-demand 'lines of special state interest' (state-subsidised, e.g. to sustain island life & tourism).",
+        "explanation": "State subsidies on unprofitable island lines keep both island life and island tourism possible."
+      },
+      {
+        "question": "Contrast INTERNATIONAL CRUISES with cruises in territorial waters.",
+        "answer": "• INTERNATIONAL cruises — huge CRUISE SHIPS (thousands of pax; largest ~7,600 on 'Icon of the Seas'), 20 decks, many facilities; profit via ECONOMIES OF SCALE; ~1/3 of passenger numbers are 'white staff'; tourist product = transport + on-board offer + ports visited.\n• TERRITORIAL-water cruises — smaller ships (≤~150 pax), simpler organisation, smaller ports/destinations, offer built on local gastronomy, sea & nature.",
+        "explanation": "Cruise revenue is forecast in the tens of billions of USD; the most popular regions are the Caribbean and the Mediterranean."
+      },
+      {
+        "question": "What is NAUTICAL TOURISM, and how is its transport function realised?",
+        "answer": "Nautical tourism = sailing & staying in special vessels (boats/yachts, rented or owned) for recreation, sport and leisure — a tourism form based on the transport component of maritime transport. Needs accessible, indented, warm, moderate-climate coasts.\n\nTransport function via: (a) PORT-NAUTICAL activity in MARINAS (infrastructure), and (b) RENTING/CHARTERING a vessel (daily, weekly, local, international charter).",
+        "explanation": "Marinas (commercial/club/sports) are the backbone; charter (with or without skipper) is the rental side."
+      },
+      {
+        "question": "What characterises INLAND WATERWAY (river-lake-canal) transport in tourism?",
+        "answer": "INLAND WATER = river + canal + lake traffic. Features: route inelasticity, low speed, high dependence on WEATHER & water level, unequal river characteristics, costly waterway maintenance.\n\nRole in tourism is SMALL but with niches: river CRUISES (smaller ships, ~up to 400 pax, continuous bank views — chosen by those who fear rough seas) and EXCURSIONS/panoramic trips. Famous rivers: Nile, Rhine, Danube, Yangtze, Mississippi.",
+        "explanation": "River cruising suits travellers who want calm water and constant scenery rather than open-sea sailing."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In passenger flows today, maritime transport has:",
+        "options": [
+          "The dominant global share",
+          "A modest share, limited to lines, round trips/excursions and personal needs",
+          "No role whatsoever",
+          "Only intercontinental scheduled flights"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A ferry differs from a high-speed ship mainly because it:",
+        "options": [
+          "Is the fastest ship",
+          "Carries passengers AND vehicles, with very short port stays for many turnovers",
+          "Cannot enter ports",
+          "Has the smallest capacity"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "International cruise ships base their profitability on:",
+        "options": [
+          "Economies of scale",
+          "Government salaries",
+          "Selling the ship each year",
+          "Avoiding all ports"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "'Lines of special state interest' (subsidised maritime lines) exist mainly to:",
+        "options": [
+          "Maximise private profit",
+          "Sustain island life and enable tourism where transport would otherwise be unprofitable",
+          "Carry only freight",
+          "Replace airports"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The backbone infrastructure of nautical tourism is the:",
+        "options": [
+          "Airport",
+          "Marina",
+          "Railway terminal",
+          "Highway"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Compared with maritime cruises, river cruises typically have:",
+        "options": [
+          "Far larger ships and rough water",
+          "Smaller ships, calm water and continuous bank views",
+          "No passengers",
+          "Higher speeds than jets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The ship is described as the ____-safest means of transport.",
+        "options": [
+          "least",
+          "second",
+          "third",
+          "most dangerous"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A ship that carries both passengers and vehicles, with very short port stays, is a _______.",
+        "answer": "ferry",
+        "hint": "ro-ro vessel"
+      },
+      {
+        "sentence": "International cruise ships earn profit mainly through economies of _______.",
+        "answer": "scale",
+        "hint": "size-based cost savings"
+      },
+      {
+        "sentence": "The key construction element of a passenger sea terminal is the _______ (pier).",
+        "answer": "wharf",
+        "hint": "where the ship docks"
+      },
+      {
+        "sentence": "The backbone of nautical-tourism infrastructure is the _______.",
+        "answer": "marina",
+        "hint": "berths for yachts"
+      },
+      {
+        "sentence": "Renting a vessel with or without a skipper is a form of _______.",
+        "answer": "charter",
+        "hint": "vessel hire"
+      },
+      {
+        "sentence": "Unprofitable but socially vital island routes are lines of special _______ interest.",
+        "answer": "state",
+        "hint": "subsidised by government"
+      },
+      {
+        "sentence": "River, canal and lake traffic together form _______ waterway transport.",
+        "answer": "inland",
+        "hint": "not the sea"
+      }
+    ],
+    "learn": {
+      "title": "Water Transport — Maritime & Inland Waterway",
+      "content": "\n                <h3>Slow, spacious, scenic</h3>\n                <p>Water transport needs no built route (only ports), offers huge capacity and low cost, but is\n                <strong>slow</strong>. The ship is the <strong>second-safest</strong> mode (after rail). In passenger flows\n                its role is modest and largely <strong>touristic</strong>.</p>\n\n                <div class=\"formula-box\">\n                    Maritime organisation: (A) LINE · (B) SPECIAL-NEEDS (round trips &amp; excursions = tourism) · (C) PERSONAL<br>\n                    Vessels: high-speed ships (speed) · ferries (passengers + vehicles, throughput) · cruise ships (scale)\n                </div>\n\n                <h4>Cruises &amp; nautical tourism</h4>\n                <ul>\n                    <li><strong>International cruises</strong> — giant ships (largest ~7,600 pax, 'Icon of the Seas'), profit\n                    via <strong>economies of scale</strong>; product = transport + on-board offer + ports (Caribbean &amp;\n                    Mediterranean lead).</li>\n                    <li><strong>Territorial-water cruises</strong> — smaller ships, local gastronomy &amp; nature.</li>\n                    <li><strong>Nautical tourism</strong> — sailing/staying in boats &amp; yachts; realised through\n                    <strong>marinas</strong> (commercial/club/sports) + vessel <strong>charter</strong> (daily/weekly/local/\n                    international).</li>\n                </ul>\n\n                <h4>Infrastructure &amp; inland waterways</h4>\n                <div class=\"tip-box\">\n                    <p>Ports become specialised <strong>terminals</strong> (the <strong>wharf/pier</strong> is the key\n                    element); international cruise terminals are part of the product. <strong>State-subsidised</strong> 'lines\n                    of special interest' sustain island life &amp; tourism. <strong>Inland waterway</strong> (river-lake-canal)\n                    transport plays a small but niche role — river <strong>cruises</strong> (calm water, constant scenery) on\n                    the Nile, Rhine, Danube, Yangtze, Mississippi.</p>\n                </div>\n            "
+    }
+  },
+  "valueQualityServices": {
+    "name": "Value & Quality of Transport Services",
+    "icon": "fa-gem",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "What determines the VALUE of a transport service to a tourist?",
+        "answer": "Value = the benefit the tourist gets (being moved, in comfort, safely, on time, with experience) WEIGHED against what they pay (price + time + effort).\n\nBecause transport demand is DERIVED, its value is judged by how well it serves the wider tourism purpose — reaching and enjoying the destination — not by the trip in isolation.",
+        "explanation": "This is syllabus learning-outcome 3: place the transport service's value & cost inside the tourism-product price."
+      },
+      {
+        "question": "Which QUALITY dimensions define a good passenger transport service?",
+        "answer": "Typical quality dimensions (confirmed by the EU rail & coach surveys):\n• SAFETY & feeling of safety;\n• PUNCTUALITY & reliability;\n• PRICE/fare (value for money);\n• COMFORT & cleanliness;\n• FREQUENCY & availability;\n• INFORMATION (timetables, real-time, delays);\n• ease of buying tickets & integrated/through-ticketing;\n• ACCESSIBILITY (incl. reduced-mobility assistance) & complaint handling.",
+        "explanation": "Surveys show satisfaction is usually high for ticketing/info and lower for WiFi, complaint-handling and disabled assistance."
+      },
+      {
+        "question": "How is the PRICE of a transport service built, and how does it sit in the tourism-product price?",
+        "answer": "Carriers face large FIXED costs (vehicles, infrastructure, crew) and cannot store capacity, so price aims to maximise CAPACITY OCCUPANCY. Hence:\n• DYNAMIC pricing (earlier/online = cheaper; price tracks supply/demand);\n• the transport cost is then EMBEDDED in the final tourism-product price the tourist pays.\nTransport is often a large share of total trip cost, so its price strongly moves tourism demand.",
+        "explanation": "Low-cost carriers and charter are essentially strategies to push occupancy up and unit price down."
+      },
+      {
+        "question": "Why is achieving high CAPACITY OCCUPANCY the central economic problem of carriers?",
+        "answer": "Because the transport service is PERISHABLE (an empty seat is lost forever) and costs are mostly FIXED. A carrier can barely change its fixed/variable costs in the short run, so profitability depends almost entirely on FILLING the capacity on each departure.\n\nTools: marketing & sales function, dynamic pricing, charter contracts, combining tourist with non-tourist flows.",
+        "explanation": "This is why an 'efficiently organised sales function' is described as essential for airlines and all carriers."
+      },
+      {
+        "question": "How does QUALITY differ between, say, a charter flight and a scheduled flight, or a ferry and a cruise?",
+        "answer": "Quality is deliberately TRADED against price & purpose:\n• CHARTER — lower quality (less comfort, worse times/airports) for a lower price & high occupancy;\n• SCHEDULED/traditional — higher quality, reliability and frequency at a higher price;\n• FERRY — throughput over comfort; CRUISE — comfort/experience as the product itself.",
+        "explanation": "There is no single 'best' quality — the right level depends on the market segment and the role transport plays in the product."
+      },
+      {
+        "question": "What is the role of INFORMATION & passenger rights in transport-service quality?",
+        "answer": "Good, timely INFORMATION (timetables, connections, real-time delay info) and clear PASSENGER RIGHTS (compensation for delays, assistance for reduced mobility, easy complaints) are core quality components. The EU treats integrated information & ticketing and a journey's carbon-footprint info as emerging passenger rights.",
+        "explanation": "Information quality directly shapes perceived value — surveys rank it among the best-rated aspects, while complaint-handling lags."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The VALUE of a transport service to a tourist is judged mainly by:",
+        "options": [
+          "The trip in complete isolation",
+          "How well it serves the wider tourism purpose, weighed against price/time/effort",
+          "The colour of the vehicle",
+          "The number of staff only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The central economic problem of every carrier is to:",
+        "options": [
+          "Lower the speed",
+          "Maximise capacity occupancy on each departure (the service is perishable)",
+          "Build more airports",
+          "Avoid selling tickets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dynamic pricing (earlier/online cheaper) exists chiefly to:",
+        "options": [
+          "Confuse passengers",
+          "Fill capacity by tracking the supply–demand relationship",
+          "Punish online buyers",
+          "Replace timetables"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A charter flight typically offers, versus a scheduled flight:",
+        "options": [
+          "Higher quality at higher price",
+          "Lower quality (comfort/times/airports) at a lower price and high occupancy",
+          "Identical quality and price",
+          "No seats at all"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a QUALITY dimension of passenger transport confirmed by EU surveys?",
+        "options": [
+          "Punctuality & reliability",
+          "The carrier's logo size",
+          "The CEO's salary",
+          "The age of the depot"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Within the tourism-product price, the transport cost is:",
+        "options": [
+          "Always ignored",
+          "Embedded, and often a large share that strongly moves demand",
+          "Paid only by the carrier",
+          "Fixed by the hotel"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Because the transport service is perishable, the carrier's central goal is to maximise capacity _______.",
+        "answer": "occupancy",
+        "hint": "seats filled"
+      },
+      {
+        "sentence": "Charging less for earlier/online tickets and adjusting to demand is called _______ pricing.",
+        "answer": "dynamic",
+        "hint": "fluctuating"
+      },
+      {
+        "sentence": "The transport cost is embedded in the final _______ of the tourism product.",
+        "answer": "price",
+        "hint": "what the tourist pays"
+      },
+      {
+        "sentence": "Punctuality, comfort, safety, frequency and information are _______ dimensions of a transport service.",
+        "answer": "quality",
+        "hint": "how good it is"
+      },
+      {
+        "sentence": "Charter trades lower quality for a lower price and high _______.",
+        "answer": "occupancy",
+        "hint": "80–90% full"
+      },
+      {
+        "sentence": "An efficiently organised _______ function is essential for filling carrier capacity.",
+        "answer": "sales",
+        "hint": "selling tickets/marketing"
+      },
+      {
+        "sentence": "Compensation for delays and assistance for reduced mobility are part of passenger _______.",
+        "answer": "rights",
+        "hint": "legal entitlements"
+      }
+    ],
+    "learn": {
+      "title": "The Value & Quality of Transportation Services",
+      "content": "\n                <h3>What the tourist really pays for</h3>\n                <p>The <strong>value</strong> of a transport service is the benefit (being moved comfortably, safely, on time,\n                with experience) weighed against price, time and effort — and judged by how well it serves the wider\n                <strong>tourism purpose</strong> (derived demand). This is syllabus learning-outcome 3.</p>\n\n                <div class=\"formula-box\">\n                    Carrier economics: mostly FIXED costs + PERISHABLE service ⇒ goal = maximise CAPACITY OCCUPANCY<br>\n                    Transport cost ⇒ embedded in the tourism-product PRICE ⇒ strongly moves demand\n                </div>\n\n                <h4>Quality dimensions (from EU surveys)</h4>\n                <ul>\n                    <li>Safety &amp; feeling of safety · punctuality &amp; reliability · price/value · comfort &amp;\n                    cleanliness · frequency &amp; availability · information (real-time/delays) · easy &amp; integrated\n                    ticketing · accessibility &amp; complaint handling.</li>\n                    <li>Surveys rank ticketing &amp; information highest; WiFi, complaint-handling and disabled assistance\n                    lag.</li>\n                </ul>\n\n                <h4>Price, occupancy &amp; quality trade-offs</h4>\n                <div class=\"tip-box\">\n                    <p>Because a seat is perishable and costs are fixed, carriers live or die by <strong>occupancy</strong> —\n                    hence <strong>dynamic pricing</strong>, charter and low-cost models, and an essential <strong>sales\n                    function</strong>. Quality is deliberately <strong>traded</strong> against price &amp; purpose: charter =\n                    lower quality/price/high occupancy; scheduled = higher quality/price; ferry = throughput; cruise = the\n                    experience itself. Good information &amp; <strong>passenger rights</strong> are core quality components.</p>\n                </div>\n            "
+    }
+  },
+  "safetyInTraffic": {
+    "name": "Safety in Traffic",
+    "icon": "fa-shield-halved",
+    "color": "#dc2626",
+    "flashcards": [
+      {
+        "question": "How is traffic SAFETY manifested and what does it include?",
+        "answer": "Safety is manifested through: the number of traffic accidents, the number of dead & injured persons, and material damage.\n\nIt includes: the means of transport (freight & passenger), the persons who operate vehicles, and ALL road users. Increasing safety is a CONTINUOUS process and an important determinant of transport-service quality.",
+        "explanation": "Material damage value is not systematically tracked but is estimated at ~1–3% of GDP."
+      },
+      {
+        "question": "Distinguish ACTIVE and PASSIVE vehicle safety, with examples.",
+        "answer": "• ACTIVE safety = features that PREVENT accidents (mitigate the chance): brakes, steering, tyres, lights/signals, vision aids, seat construction, climate control, in-vehicle control/navigation.\n• PASSIVE safety = features that REDUCE the damage once an accident happens: body & door construction, SEAT BELTS, headrests, windshields/mirrors, position of engine/tank/battery, bumpers, AIRBAGS.",
+        "explanation": "Mnemonic: ACTIVE = avoid the crash; PASSIVE = protect in the crash."
+      },
+      {
+        "question": "What is the 'Safe System' / Vision Zero approach to road safety?",
+        "answer": "Vision Zero's 'Safe Systems Approach' is a PARADIGM SHIFT: ultimate responsibility for road safety moves FROM the individual road user TO those who design and run the transport system. Effort goes into designing roads & vehicles so that crashes do NOT lead to serious consequences — focusing on roads, vehicles and stakeholders, not just individual behaviour.",
+        "explanation": "Strategic frameworks: Valletta Declaration; EU Road Safety Policy Framework 2021–2030; EU target: halve road deaths and serious accidents."
+      },
+      {
+        "question": "How do INFRASTRUCTURE and the HUMAN factor affect road safety?",
+        "answer": "INFRASTRUCTURE: most fatal/serious accidents occur on unclassified roads; fewest on highways & local roads. Infrastructure alone is a factor in ~1% of serious accidents, but combined with a person in as much as ~35%.\n\nHUMAN (driver): behaviour shaped by character/attitude, health condition, and education/culture. The driver is the most common culprit; pedestrians, cyclists and motorcyclists are most at risk.",
+        "explanation": "Almost 1 in 4 serious speed-related accidents is caused by drivers aged 25 or younger."
+      },
+      {
+        "question": "Compare the SAFETY LEVEL across transport sectors.",
+        "answer": "Safety is LOWEST in ROAD transport (and air), precisely where the largest passenger traffic occurs. Rail and maritime are comparatively safe.\n\nIndicative EU data:\n• ROAD: deaths fell ~67→51 per million inhabitants (2010–2019), ~42 in 2020 (COVID), ~46 in 2022;\n• RAIL: 805 deaths in EU in 2022 (~1.8 per million);\n• AIR: ~122 killed in 2023 (EU/EU-registered);\n• MARITIME: very low (24–101 deaths/yr 2012–2022).",
+        "explanation": "Road dominates fatalities because it carries the most traffic and is the least 'systemically' controlled."
+      },
+      {
+        "question": "What are the key SAFETY features by sector (rail, air, maritime)?",
+        "answer": "• RAIL — very safe (signalling & line control); fewer but sometimes severe accidents.\n• AIR — safety from subsystem elements (communication/navigation, flight control, airports, aircraft) + security against unforeseen events (terrorism: passenger/baggage control, biometrics, explosive-detection dogs).\n• MARITIME — passenger shipping adopted the ISM Code (safety procedures); risks: ferry construction (no transverse partitions), high-speed-ship behaviour in rough seas, high automation eroding manual skills.",
+        "explanation": "Each mode's safety system reflects its specific technology and risks."
+      },
+      {
+        "question": "Why is traffic safety especially important FROM A TOURISM viewpoint?",
+        "answer": "Because of the HIGH share of road traffic in tourist flows, tourists are exposed to accident risk — and fatalities/injuries in tourism-heavy countries PEAK during the tourist season.\n\nResponses: information systems for road users (traffic/weather/route info to avoid jams & risky situations) and vehicle-monitoring systems (sensors warning the driver of unexpected behaviour).",
+        "explanation": "Seasonality of travel patterns is clearly visible in the seasonal distribution of road fatalities."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Seat belts and airbags are examples of:",
+        "options": [
+          "Active safety (prevent the crash)",
+          "Passive safety (reduce the damage)",
+          "Infrastructure",
+          "Signalling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Brakes, steering and tyres are examples of:",
+        "options": [
+          "Passive safety",
+          "Active safety (mitigate the chance of accidents)",
+          "Cargo equipment",
+          "Terminals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The 'Safe System' / Vision Zero approach shifts responsibility:",
+        "options": [
+          "Entirely onto the individual driver",
+          "From the individual user toward those who design and run the transport system",
+          "Onto pedestrians only",
+          "Away from safety altogether"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Across transport sectors, safety is LOWEST in:",
+        "options": [
+          "Rail",
+          "Maritime",
+          "Road (and air), which carry the most passengers",
+          "Inland waterway"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Combined with a person, infrastructure is a factor in roughly what share of serious accidents?",
+        "options": [
+          "About 1%",
+          "About 35%",
+          "About 90%",
+          "0%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "From a tourism viewpoint, road fatalities and injuries in tourism-heavy countries:",
+        "options": [
+          "Are lowest during the season",
+          "Peak during the tourist season",
+          "Never change",
+          "Occur only in winter"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Passenger shipping companies' core safety framework is the:",
+        "options": [
+          "ISM Code",
+          "TGV standard",
+          "Maglev rule",
+          "Eurovignette"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Features that PREVENT accidents (brakes, steering, tyres) are _______ safety.",
+        "answer": "active",
+        "hint": "avoid the crash"
+      },
+      {
+        "sentence": "Features that REDUCE damage (seat belts, airbags) are _______ safety.",
+        "answer": "passive",
+        "hint": "protect in the crash"
+      },
+      {
+        "sentence": "Vision Zero's Safe System shifts responsibility from the individual user to those who design the transport _______.",
+        "answer": "system",
+        "hint": "the whole"
+      },
+      {
+        "sentence": "Across sectors, safety is lowest in _______ transport, which carries the most passengers.",
+        "answer": "road",
+        "hint": "cars/buses"
+      },
+      {
+        "sentence": "The most common culprit in road accidents is the _______ (human factor).",
+        "answer": "driver",
+        "hint": "the person at the wheel"
+      },
+      {
+        "sentence": "In tourism-heavy countries, road fatalities _______ during the tourist season.",
+        "answer": "peak",
+        "hint": "reach a maximum"
+      },
+      {
+        "sentence": "Passenger shipping safety is governed by the _______ Code.",
+        "answer": "ISM",
+        "hint": "International Safety Management"
+      }
+    ],
+    "learn": {
+      "title": "Safety in Traffic",
+      "content": "\n                <h3>A determinant of transport quality</h3>\n                <p>Traffic safety shows up in the number of <strong>accidents, casualties and material damage</strong>\n                (~1–3% of GDP) and covers vehicles, operators and all road users. Improving it is a continuous process and a\n                core part of transport-service quality.</p>\n\n                <div class=\"formula-box\">\n                    ACTIVE safety = prevent the crash (brakes, steering, tyres, lights)<br>\n                    PASSIVE safety = reduce the damage (seat belts, airbags, body/door, headrests)\n                </div>\n\n                <h4>The three influences + Vision Zero</h4>\n                <ul>\n                    <li><strong>Vehicle</strong> (active + passive), <strong>infrastructure</strong> (worst on unclassified\n                    roads; a factor with a person in ~35% of serious crashes) and the <strong>human/driver</strong> (most\n                    common culprit; young drivers over-represented in speed crashes).</li>\n                    <li><strong>Vision Zero / Safe System</strong> — shift responsibility from the individual to system\n                    designers; frameworks: Valletta Declaration, EU Road Safety Policy 2021–2030; EU target: halve road\n                    deaths.</li>\n                </ul>\n\n                <h4>Safety by sector &amp; in tourism</h4>\n                <div class=\"tip-box\">\n                    <p>Safety is <strong>lowest in road</strong> (and air) — the busiest modes; rail &amp; maritime are\n                    comparatively safe (rail ~1.8 deaths/million in 2022; road ~46/million in 2022). Air relies on subsystem\n                    safety + security (biometrics, screening); maritime on the <strong>ISM Code</strong>. From a tourism\n                    view, the heavy road share exposes tourists to risk, and fatalities <strong>peak in the tourist\n                    season</strong> — countered by traffic-information and vehicle-monitoring systems.</p>\n                </div>\n            "
+    }
+  },
+  "ecologicalAspects": {
+    "name": "Ecological Aspects of Transport",
+    "icon": "fa-leaf",
+    "color": "#16a34a",
+    "flashcards": [
+      {
+        "question": "How big is transport's environmental footprint in the EU?",
+        "answer": "Transport is responsible for about a QUARTER (~25%) of the EU's total CO2/greenhouse-gas emissions. Of transport emissions, ~71.7% come from ROAD transport (2019).\n\nTransport is the ONLY major sector where greenhouse-gas emissions have INCREASED over the past three decades.",
+        "explanation": "That 'only sector still rising' fact is why transport is the hardest, highest-priority part of EU climate policy."
+      },
+      {
+        "question": "Within road transport, who are the biggest CO2 polluters?",
+        "answer": "PASSENGER CARS are the major polluter — accounting for ~61% of total CO2 emissions from EU road transport. Road transport overall accounts for about a FIFTH of all EU emissions.\n\nIn 2019, most cars used diesel (~67%); electric cars were ~17.8% of newly registered passenger cars (rising fast since 2017).",
+        "explanation": "Because cars dominate both mobility AND emissions, decarbonising cars is the single biggest lever."
+      },
+      {
+        "question": "What negative external (environmental) effects does transport cause?",
+        "answer": "• greenhouse-gas (CO2) emissions & air pollution;\n• NOISE pollution;\n• WATER pollution (e.g. tyre microplastics entering waters & the food chain);\n• biodiversity/habitat loss & land use;\n• congestion (with its own emissions & time costs).\nThese 'external costs' are borne by society, not (fully) by the transport user.",
+        "explanation": "Internalising these costs — making users pay — is a central EU instrument ('polluter pays')."
+      },
+      {
+        "question": "How do transport MODES compare environmentally?",
+        "answer": "RAIL is the greenest motorised mode (electric drive, little land use, high efficiency — high-speed rail is ~9× more efficient than flying). WATER is efficient per tonne but slow. ROAD (esp. cars) and AIR are the most carbon-intensive per passenger.\n\nEU policy therefore pushes a MODAL SHIFT from road & air toward rail, public transport, cycling and walking.",
+        "explanation": "Active modes (walking, cycling) and electrified rail are the backbone of 'green mobility'."
+      },
+      {
+        "question": "Are ELECTRIC cars really cleaner?",
+        "answer": "Two ways to cut car CO2: make vehicles more efficient OR change the fuel. Production & disposal of an EV is LESS environmentally friendly than a combustion car, and EV emissions depend on how the electricity is produced.\n\nHOWEVER, using the average European energy mix, EVs are ALREADY cleaner than petrol cars — and will get cleaner as renewable electricity grows.",
+        "explanation": "Whole-life-cycle thinking matters: count production, use AND disposal, not just tailpipe emissions."
+      },
+      {
+        "question": "What EU measures target transport emissions?",
+        "answer": "• CO2 standards for new cars/vans → ZERO CO2 for new cars by 2035 (interim −55% by 2030); effective ban on new petrol/diesel car sales from 2035;\n• Emissions Trading System (ETS) extended to road transport & buildings, plus maritime; aviation ETS revised;\n• higher share of renewable transport fuels;\n• removal of tax advantages for fossil fuels;\n• including shipping (~8% of EU emissions) & aviation in carbon pricing.",
+        "explanation": "These tie directly into the Green Deal goal of −90% transport emissions by 2050 (next topic)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Transport is responsible for roughly what share of the EU's total greenhouse-gas emissions?",
+        "options": [
+          "About 5%",
+          "About a quarter (~25%)",
+          "About half",
+          "About 90%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Within EU road transport, the biggest CO2 source is:",
+        "options": [
+          "Buses",
+          "Passenger cars (~61%)",
+          "Motorcycles",
+          "Bicycles"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Transport is special in EU climate data because it is the only major sector where emissions have:",
+        "options": [
+          "Fallen to zero",
+          "Increased over the past three decades",
+          "Stayed exactly flat",
+          "Never been measured"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Environmentally, the greenest motorised mode is generally:",
+        "options": [
+          "Air",
+          "Road (cars)",
+          "Rail (electric, efficient)",
+          "None of them"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Using the average European energy mix, electric cars are:",
+        "options": [
+          "Always dirtier than petrol cars",
+          "Already cleaner than petrol cars (and improving as renewables grow)",
+          "Identical to petrol cars",
+          "Powered only by coal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "From 2035, the EU CO2 standards require new cars to be:",
+        "options": [
+          "−10% cleaner",
+          "Zero-CO2 (effective ban on new petrol/diesel sales)",
+          "Diesel only",
+          "Unregulated"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Transport causes about a _______ of the EU's total greenhouse-gas emissions.",
+        "answer": "quarter",
+        "hint": "~25%"
+      },
+      {
+        "sentence": "Within EU road transport, passenger _______ account for about 61% of CO2 emissions.",
+        "answer": "cars",
+        "hint": "private vehicles"
+      },
+      {
+        "sentence": "Transport is the only major sector where emissions have _______ over the past three decades.",
+        "answer": "increased",
+        "hint": "gone up"
+      },
+      {
+        "sentence": "The greenest motorised mode, with electric drive and little land use, is _______.",
+        "answer": "rail",
+        "hint": "trains"
+      },
+      {
+        "sentence": "Making transport users bear their environmental costs is the _______-pays principle.",
+        "answer": "polluter",
+        "hint": "who causes pollution"
+      },
+      {
+        "sentence": "From 2035 the EU requires new cars to be _______-CO2.",
+        "answer": "zero",
+        "hint": "none"
+      },
+      {
+        "sentence": "Tyre wear creates _______ that pollute waters and can enter the food chain.",
+        "answer": "microplastics",
+        "hint": "tiny plastic particles"
+      }
+    ],
+    "learn": {
+      "title": "Ecological Aspects of Transport",
+      "content": "\n                <h3>Transport's environmental problem</h3>\n                <p>Transport causes about <strong>a quarter of EU greenhouse-gas emissions</strong>, ~71.7% of them from\n                <strong>road</strong>. Crucially, it is the <strong>only major sector where emissions have risen</strong>\n                over three decades — making it the hardest part of EU climate policy.</p>\n\n                <div class=\"formula-box\">\n                    Transport ≈ 25% of EU GHG · road ≈ 71.7% of transport emissions · cars ≈ 61% of road CO2<br>\n                    Greenest motorised mode = RAIL · dirtiest per passenger = car &amp; air\n                </div>\n\n                <h4>External effects &amp; the modal hierarchy</h4>\n                <ul>\n                    <li><strong>External effects:</strong> CO2 &amp; air pollution, noise, water pollution (tyre\n                    microplastics), habitat loss, congestion — borne by society ('external costs').</li>\n                    <li><strong>Modal comparison:</strong> rail (electric, efficient) is greenest; push a <strong>modal\n                    shift</strong> from road/air to rail, public transport, cycling &amp; walking.</li>\n                    <li><strong>Electric cars:</strong> dirtier to make/dispose, but with the EU energy mix already cleaner\n                    than petrol — and improving as renewables grow (think whole life-cycle).</li>\n                </ul>\n\n                <h4>What the EU is doing</h4>\n                <div class=\"tip-box\">\n                    <p>Zero-CO2 new cars by <strong>2035</strong> (−55% by 2030; effective petrol/diesel ban); Emissions\n                    Trading extended to <strong>road, maritime</strong> &amp; revised for aviation; more renewable fuels;\n                    end of fossil-fuel tax breaks; <strong>'polluter pays' / 'user pays'</strong> internalisation. All feed\n                    the Green Deal target of <strong>−90% transport emissions by 2050</strong> (see 'Future of transport').</p>\n                </div>\n            "
+    }
+  },
+  "futureOfTransport": {
+    "name": "The Future of Transport",
+    "icon": "fa-rocket",
+    "color": "#7c3aed",
+    "flashcards": [
+      {
+        "question": "What is the EU 'Sustainable and Smart Mobility Strategy' (2020) and its headline goal?",
+        "answer": "It is the EU Commission's roadmap (COM(2020) 789) to put European transport 'on track for the future' — sustainable, smart and resilient. It identifies 10 FLAGSHIP areas.\n\nHeadline goal (Green Deal): a 90% REDUCTION in transport emissions by 2050, on the way to a climate-neutral EU by 2050.",
+        "explanation": "Context: transport = ~5% of EU GDP, ~10 million jobs, but ~25% of EU emissions."
+      },
+      {
+        "question": "What are the THREE pillars of the future strategy?",
+        "answer": "1. Make ALL transport modes more SUSTAINABLE — low/zero-emission vehicles + renewable/low-carbon fuels;\n2. Make sustainable ALTERNATIVES widely available in a seamless MULTIMODAL system — shift passengers to rail & public/active transport, freight to rail, inland waterways & short-sea shipping;\n3. Put in place the right INCENTIVES — carbon pricing, taxation and infrastructure charging ('polluter pays' / 'user pays').",
+        "explanation": "Pillar 1 = cleaner vehicles; Pillar 2 = modal shift & multimodality; Pillar 3 = get the prices right."
+      },
+      {
+        "question": "Name key MILESTONES of the strategy (2030 / 2035 / 2050).",
+        "answer": "By 2030: ≥30 million zero-emission cars on the roads; 100 climate-neutral cities; HIGH-SPEED RAIL traffic DOUBLED; scheduled collective travel <500 km carbon-neutral; large-scale automated mobility; zero-emission vessels market-ready.\nBy 2035: zero-emission large AIRCRAFT market-ready.\nBy 2050: nearly all cars/vans/buses & new heavy vehicles zero-emission; rail freight DOUBLED; high-speed rail TRIPLED; TEN-T fully operational.",
+        "explanation": "Notice the central role of rail (double by 2030, triple by 2050) — the modal-shift backbone."
+      },
+      {
+        "question": "What does 'SMART' mobility mean (digital/automated future)?",
+        "answer": "Smart mobility = seamless, safe, efficient connectivity driven by digitalisation & automation:\n• connected & automated mobility (CCAM, autonomous vehicles);\n• integrated multimodal information, booking & ticketing (Mobility as a Service);\n• AI, 5G, a Common European Mobility Data Space;\n• traffic-management systems (ERTMS for rail, Single European Sky for air);\n• drones (unmanned aircraft) for commercial use.",
+        "explanation": "'Smart' complements 'sustainable': digital tools make the green, multimodal system actually work."
+      },
+      {
+        "question": "What is MULTIMODALITY and 'Mobility as a Service' (MaaS) in the future system?",
+        "answer": "MULTIMODALITY combines the strengths of different modes (speed, cost, reliability) into one efficient journey. MaaS integrates many transport services into one on-demand, digitally accessible service — ideally one SINGLE integrated ticket for a door-to-door, multimodal trip.\n\nGoal: by 2030, seamless multimodal passenger transport via integrated electronic ticketing; paperless freight.",
+        "explanation": "This is exactly the 'single ticket for all modes' that citizens rated most useful (K1, Mobility patterns)."
+      },
+      {
+        "question": "Give a real example showing how better transport SHIFTS demand toward sustainable modes.",
+        "answer": "After the Barcelona–Madrid HIGH-SPEED RAIL line opened, the air/rail modal split on that route changed from ~85% plane / 15% train (2008) to ~38% air / 62% rail (2016).\n\nAlso: external (environmental) costs of EU transport are ~€388 billion per year — which 'polluter pays' pricing aims to internalise.",
+        "explanation": "When a fast, affordable green alternative exists, travellers switch — proof that infrastructure + pricing can drive the transition."
+      },
+      {
+        "question": "What does 'RESILIENT' mobility mean, and why did COVID-19 highlight it?",
+        "answer": "Resilient mobility = a transport system that keeps functioning through crises (pandemics, energy shocks, supply disruptions). COVID-19 caused steep falls in travel/tourism and severe difficulties for transport SMEs, showing how vital a well-functioning single market and connectivity are.\n\nThe strategy aims to help transport — and tourism — 'build back better': greener, smarter, more resilient.",
+        "explanation": "Resilience joins 'sustainable' and 'smart' as the third quality of future EU mobility."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The headline goal of the EU Sustainable & Smart Mobility Strategy is:",
+        "options": [
+          "A 10% rise in emissions",
+          "A 90% reduction in transport emissions by 2050",
+          "Banning all transport",
+          "Doubling road traffic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is one of the THREE pillars of the strategy?",
+        "options": [
+          "Make all modes more sustainable (clean vehicles & fuels)",
+          "Increase fossil-fuel subsidies",
+          "Remove all railways",
+          "Ban multimodality"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "A 2030 milestone of the strategy is:",
+        "options": [
+          "High-speed rail traffic doubled",
+          "All trains removed",
+          "Cars made compulsory",
+          "Airports closed"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "'Mobility as a Service' (MaaS) is best described as:",
+        "options": [
+          "Owning more private cars",
+          "Integrating many transport services into one on-demand, digitally accessible offer (ideally a single ticket)",
+          "A type of cruise ship",
+          "A fossil-fuel subsidy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "After the Barcelona–Madrid high-speed line opened, the air/rail split shifted toward:",
+        "options": [
+          "More flying (85% plane)",
+          "More rail (62% rail by 2016)",
+          "No change",
+          "Only buses"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Resilient' mobility means a transport system that:",
+        "options": [
+          "Collapses in any crisis",
+          "Keeps functioning through crises (pandemics, shocks)",
+          "Only works in summer",
+          "Has no digital tools"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Smart mobility relies on tools such as:",
+        "options": [
+          "ERTMS (rail), Single European Sky (air), AI, 5G and drones",
+          "Only paper timetables",
+          "Banning data sharing",
+          "Removing automation"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The EU strategy targets a _______ % reduction in transport emissions by 2050.",
+        "answer": "90",
+        "hint": "nine-zero"
+      },
+      {
+        "sentence": "The three pillars are: cleaner modes, sustainable alternatives in a _______ system, and the right incentives.",
+        "answer": "multimodal",
+        "hint": "many modes combined"
+      },
+      {
+        "sentence": "By 2030 high-speed rail traffic should _______, and triple by 2050.",
+        "answer": "double",
+        "hint": "×2"
+      },
+      {
+        "sentence": "Integrating transport services into one on-demand digital offer is Mobility as a _______.",
+        "answer": "service",
+        "hint": "MaaS"
+      },
+      {
+        "sentence": "Making users pay their environmental costs is the _______-pays principle.",
+        "answer": "polluter",
+        "hint": "who pollutes"
+      },
+      {
+        "sentence": "A transport system that keeps working through crises is called _______.",
+        "answer": "resilient",
+        "hint": "shock-resistant"
+      },
+      {
+        "sentence": "Unmanned aircraft promoted for future commercial use are _______.",
+        "answer": "drones",
+        "hint": "fly without a pilot aboard"
+      }
+    ],
+    "learn": {
+      "title": "The Future of Transport",
+      "content": "\n                <h3>Sustainable · Smart · Resilient</h3>\n                <p>The EU <strong>Sustainable and Smart Mobility Strategy</strong> (2020, COM(2020) 789) is the roadmap for\n                European transport, organised around <strong>10 flagships</strong>. Headline goal: a <strong>90% cut in\n                transport emissions by 2050</strong> (transport = ~5% of GDP, ~10 m jobs, but ~25% of emissions).</p>\n\n                <div class=\"formula-box\">\n                    THREE PILLARS: (1) cleaner modes &amp; fuels · (2) sustainable alternatives in a MULTIMODAL system ·\n                    (3) right INCENTIVES (carbon pricing, 'polluter pays')\n                </div>\n\n                <h4>Milestones</h4>\n                <ul>\n                    <li><strong>2030:</strong> ≥30 m zero-emission cars · 100 climate-neutral cities · HSR doubled ·\n                    collective travel &lt;500 km carbon-neutral · large-scale automated mobility.</li>\n                    <li><strong>2035:</strong> zero-emission large aircraft market-ready.</li>\n                    <li><strong>2050:</strong> nearly all road vehicles zero-emission · rail freight doubled · HSR tripled ·\n                    TEN-T complete.</li>\n                </ul>\n\n                <h4>Smart &amp; resilient</h4>\n                <div class=\"tip-box\">\n                    <p><strong>Smart:</strong> connected/automated mobility (CCAM), <strong>Mobility as a Service</strong>\n                    (one integrated ticket), AI, 5G, a Common Mobility Data Space, ERTMS (rail) &amp; Single European Sky\n                    (air), drones. <strong>Resilient:</strong> a system that survives crises — COVID-19 showed how vital\n                    connectivity is for transport <em>and</em> tourism. Proof it works: after Barcelona–Madrid HSR opened,\n                    the air/rail split moved from 85/15 (2008) to <strong>38/62 in favour of rail</strong> (2016); EU\n                    transport's external costs (~€388 bn/yr) are what pricing aims to internalise.</p>\n                </div>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Topics)",
+    "icon": "fa-graduation-cap",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Which topics make up the two midterm 'halves' that the final combines?",
+        "answer": "1st midterm (weeks 1–6): Theoretical basis of traffic · Interdependence of traffic & tourism · Mobility & travel patterns · Road transport ↔ destination · Road transport as a tourism product · Rail transport ↔ destination.\n\n2nd midterm (weeks 7–15): Rail as a tourism product (+ funicular/cable car) · Air transport · Water transport · Value & quality of services · Safety in traffic · Ecological aspects · The future of transport.",
+        "explanation": "K1 = theory + road + rail-connector; K2 = the remaining modes + services, safety, ecology & future."
+      },
+      {
+        "question": "CROSS-TOPIC: for EVERY mode the lectures use the same two-role scheme — what is it?",
+        "answer": "Each transport mode is treated (1) BETWEEN the demand market and the destination (its role as a CONNECTOR — accessibility), and (2) IN THE FORM OF A TOURISM PRODUCT (when the journey itself is the attraction).\n\nRoad: connector vs bus tours/cycling. Rail: connector vs railway tourism. Air: connector vs charter/space. Water: connector vs cruises/nautical.",
+        "explanation": "Spotting this pattern is the single best way to organise the whole course in your head."
+      },
+      {
+        "question": "EXAM REVIEW: rank the modes on SPEED, COST, SAFETY, ECOLOGY and ELASTICITY.",
+        "answer": "• SPEED: air ≫ (HS) rail > road > water.\n• COST per passenger: water/rail low · road medium · air high.\n• SAFETY: rail safest, then maritime; ROAD & AIR least safe (most traffic).\n• ECOLOGY: rail greenest (electric); car & air most carbon-intensive.\n• ELASTICITY: road most elastic (door-to-door); rail/air/water inelastic (line/infrastructure-bound).",
+        "explanation": "No mode wins on everything — which is exactly why tourist transport is multimodal."
+      },
+      {
+        "question": "CROSS-TOPIC: where does 'INELASTICITY' appear, and why does it force MULTIMODALITY?",
+        "answer": "Rail, air and water are INELASTIC — bound to lines, airports, ports and schedules, and cannot do door-to-door. So they need ROAD transport (transfers, shuttles, rent-a-car, car-carrying trains) to complete the journey → tourist transport is typically MULTIMODAL (combined trips: bus+plane, bus+boat, bus+train).",
+        "explanation": "Road's elasticity is the glue that connects all the inelastic modes to the door."
+      },
+      {
+        "question": "EXAM REVIEW: how do SAFETY (active/passive) and ECOLOGY tie into transport-service QUALITY & policy?",
+        "answer": "• Safety: ACTIVE (prevent crash) + PASSIVE (reduce damage); safety is a QUALITY dimension and is lowest in road/air.\n• Ecology: transport ≈ 25% of EU emissions (road ≈ 71.7%, cars ≈ 61% of road CO2); the only sector still rising.\n• Both are steered by TRANSPORT POLICY — 'polluter pays' pricing, modal shift to rail, the Green Deal's −90% by 2050.",
+        "explanation": "Quality, safety, ecology and policy are the 'why it matters' layer over the modes."
+      },
+      {
+        "question": "CROSS-TOPIC: trace the SUSTAINABILITY thread from daily mobility to the EU future strategy.",
+        "answer": "Daily mobility = car-dominated & fossil-fuelled (patterns), but citizens will switch IF a green alternative is affordable, available & not slower → EU pushes a MODAL SHIFT to rail/public/active transport, integrated ticketing (MaaS), zero-emission vehicles & carbon pricing → goal: −90% transport emissions by 2050 (Sustainable & Smart Mobility Strategy).",
+        "explanation": "The course builds from how people move now to how the EU wants them to move in future."
+      },
+      {
+        "question": "EXAM REVIEW: match each tourism product to its mode — cruise, charter, railway tourism, rent-a-car, nautical tourism, funicular.",
+        "answer": "• CRUISE & NAUTICAL TOURISM → WATER (maritime).\n• CHARTER (and space tourism) → AIR.\n• RAILWAY TOURISM & FUNICULAR/cable car → RAIL.\n• RENT-A-CAR, bus excursions & cycling tourism → ROAD.\n\nIn each, the transport service is the BACKBONE of the tourism product.",
+        "explanation": "These are the classic 'transport as a tourism product' examples per mode."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which scheme does the course apply to EVERY transport mode?",
+        "options": [
+          "Cheap vs expensive only",
+          "Connector (market↔destination) AND part of the tourism product",
+          "Summer vs winter only",
+          "Public vs private only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The fastest mode over long/intercontinental distances is:",
+        "options": [
+          "Rail",
+          "Air",
+          "Road",
+          "Water"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The greenest motorised mode (and EU's modal-shift target) is:",
+        "options": [
+          "Air",
+          "Road (cars)",
+          "Rail",
+          "None"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Tourist transport is typically multimodal because inelastic modes need ____ to finish the journey:",
+        "options": [
+          "air",
+          "road (door-to-door)",
+          "rail",
+          "sea"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Seat belts and airbags are ____ safety; brakes and steering are ____ safety:",
+        "options": [
+          "active / passive",
+          "passive / active",
+          "both active",
+          "both passive"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Transport is responsible for roughly what share of EU greenhouse-gas emissions?",
+        "options": [
+          "~5%",
+          "~25%",
+          "~50%",
+          "~90%"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A 'time charter' in air transport means:",
+        "options": [
+          "One single flight",
+          "Exclusive use of the aircraft for the whole season (most economical)",
+          "Splitting capacity among agencies",
+          "A scheduled low-cost flight"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The EU Sustainable & Smart Mobility Strategy targets transport emissions to fall by:",
+        "options": [
+          "10% by 2050",
+          "90% by 2050",
+          "25% by 2030 only",
+          "It sets no target"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Each mode is studied as a connector AND as part of the tourism _______.",
+        "answer": "product",
+        "hint": "when the trip is the attraction"
+      },
+      {
+        "sentence": "Inelastic modes (rail/air/water) rely on _______ transport for the door-to-door part.",
+        "answer": "road",
+        "hint": "the elastic mode"
+      },
+      {
+        "sentence": "Combining at least two transport branches in one trip is a _______ (combined) journey.",
+        "answer": "multimodal",
+        "hint": "many modes"
+      },
+      {
+        "sentence": "The greenest motorised mode, favoured by EU modal-shift policy, is _______.",
+        "answer": "rail",
+        "hint": "electric trains"
+      },
+      {
+        "sentence": "Transport causes about a _______ of EU greenhouse-gas emissions.",
+        "answer": "quarter",
+        "hint": "~25%"
+      },
+      {
+        "sentence": "The EU strategy aims to cut transport emissions by _______ % by 2050.",
+        "answer": "90",
+        "hint": "nine-zero"
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Practice — How to Use",
+      "content": "\n            <h3>What is this category?</h3>\n            <p>A cross-topic practice set combining all course topics — exactly how the final mixes them. Use it AFTER\n            reviewing the two midterm halves.</p>\n\n            <h4>The course in one map</h4>\n            <div class=\"formula-box\">\n                K1 (weeks 1–6): theory · interdependence · mobility patterns · road (connector + product) · rail (connector)<br>\n                K2 (weeks 7–15): rail product (+funicular) · air · water · value &amp; quality · safety · ecology · future\n            </div>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Cross-topic favourites</h4>\n                <ul>\n                    <li>Every mode = CONNECTOR + TOURISM PRODUCT (the master pattern)</li>\n                    <li>Mode ranking: speed · cost · safety · ecology · elasticity</li>\n                    <li>Inelasticity → multimodality (road glues the inelastic modes to the door)</li>\n                    <li>Safety: active (prevent) vs passive (protect); lowest in road &amp; air</li>\n                    <li>Ecology: transport ≈25% of EU emissions; rail greenest; 'polluter pays'</li>\n                    <li>Future: 3 pillars · MaaS &amp; integrated ticketing · −90% by 2050</li>\n                </ul>\n            </div>\n        "
+    }
+  }
+}

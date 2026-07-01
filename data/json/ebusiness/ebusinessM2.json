@@ -1,0 +1,1387 @@
+{
+  "visualDesign": {
+    "name": "Visual Design & Identity",
+    "icon": "fa-paint-brush",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "What is Visual Design vs Graphic Design?",
+        "answer": "VISUAL DESIGN:\n• Problem solvers\n• Build and maintain brand's design strategy\n• Ensure consistent brand voice across platforms\n\nGRAPHIC DESIGN:\n• Focus on conveying specific messages\n• Work on individual projects\n• Print and digital visuals\n\nKey difference: Visual = brand consistency, Graphic = individual messages",
+        "explanation": "Two related but different disciplines."
+      },
+      {
+        "question": "What is Visual Identity?",
+        "answer": "Visual identity is everything that visually represents a brand:\n\n• Logo\n• Color palette\n• Typography\n• Images\n• Symbols, shapes, patterns\n\nPurpose: Make company recognizable and create emotional impressions.",
+        "explanation": "The visual face of a brand."
+      },
+      {
+        "question": "What are the Elements of Visual Identity?",
+        "answer": "Elements include:\n\n• Brand logo\n• Brand color palette (usually max 3 colors)\n• Brand fonts and typography\n• Brand images and photography style\n• Shapes, patterns, textures\n• Brand book (style guide)",
+        "explanation": "Components of visual branding."
+      },
+      {
+        "question": "What is the difference between Brand, Identity, and Logo?",
+        "answer": "BRAND:\n• How people PERCEIVE the company\n• Emotional connection\n\nIDENTITY:\n• Visual GUIDELINES supporting the brand\n• Design system\n\nLOGO:\n• Visual MARK identifying the company\n• Most recognizable element\n\nLogo ⊂ Identity ⊂ Brand",
+        "explanation": "Hierarchy of branding elements."
+      },
+      {
+        "question": "What are the color roles in a brand palette?",
+        "answer": "Usually no more than 3 main colors:\n\n• PRIMARY color - Main brand color\n• SECONDARY color - Background support\n• ACCENT color - Emphasis and highlights\n\nColor affects perception and behavior.",
+        "explanation": "Strategic use of color in branding."
+      },
+      {
+        "question": "What is a Brand Book (Book of Standards)?",
+        "answer": "A Brand Book defines rules for visual presentation:\n\n• Logo usage and variants\n• Color palettes\n• Typography rules\n• Icons, illustrations, patterns\n• Applications across media\n\nEnsures consistency across all brand touchpoints.",
+        "explanation": "The rulebook for brand visuals."
+      },
+      {
+        "question": "Why do Infographics work?",
+        "answer": "Infographics work because:\n\n• Humans learn visually\n• Images improve memory and recall\n• Brain processes visual and verbal info together\n\nCombines: Text + Images + Data visualization",
+        "explanation": "Visual learning is more effective."
+      },
+      {
+        "question": "What is the VARK learning model?",
+        "answer": "VARK identifies learning preferences:\n\n• V = Visual - Learning through images and diagrams\n• A = Auditory - Learning through listening\n• R = Reading/Writing - Learning through text\n• K = Kinesthetic - Learning by doing",
+        "explanation": "Different people learn differently."
+      },
+      {
+        "question": "What are examples of hidden meanings in logos?",
+        "answer": "Famous logo hidden meanings:\n\n• Amazon - Arrow from A to Z + smile\n• FedEx - Hidden arrow symbolizing speed\n• BMW - Colors from Bavarian flag\n• Toblerone - Hidden bear in the mountain",
+        "explanation": "Clever design creates memorable logos."
+      },
+      {
+        "question": "What is the difference between a logomark and a combination logo?",
+        "answer": "LOGOMARK (logo symbol):\n• A symbol alone, without text\n\nCOMBINATION LOGO:\n• Logo symbol PLUS logotype (text)\n\nTYPOGRAPHIC LOGO:\n• No symbol at all — consists only of letters (existing fonts or unique hand-drawn letters)\n\nA logo usually also has sub-variants (black, inverse, horizontal/vertical composition) — all considered ONE logo.",
+        "explanation": "Logo terminology from Unit 8."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Visual Design focuses on:",
+        "options": [
+          "Individual project messages",
+          "Brand consistency across platforms",
+          "Only print materials",
+          "Audio design"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Visual Identity includes all EXCEPT:",
+        "options": [
+          "Logo",
+          "Color palette",
+          "Company profits",
+          "Typography"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The hierarchy is: Logo is part of Identity, Identity is part of:",
+        "options": [
+          "Website",
+          "Brand",
+          "Marketing",
+          "Sales"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A Brand Book defines:",
+        "options": [
+          "Financial rules",
+          "Visual presentation rules",
+          "Employee salaries",
+          "Product prices"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In VARK, 'K' stands for:",
+        "options": [
+          "Knowledge",
+          "Kinesthetic",
+          "Keyboard",
+          "Key"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Amazon's logo features:",
+        "options": [
+          "A hidden bear",
+          "An arrow from A to Z and a smile",
+          "The Bavarian flag",
+          "A hidden speed symbol"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Brand palette usually has maximum:",
+        "options": [
+          "10 colors",
+          "3 colors",
+          "1 color",
+          "Unlimited colors"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Infographics combine:",
+        "options": [
+          "Only text",
+          "Text, images, and data visualization",
+          "Only numbers",
+          "Only colors"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Visual _______ is everything that visually represents a brand.",
+        "answer": "identity",
+        "hint": "Who the brand is..."
+      },
+      {
+        "sentence": "A Brand _______ defines rules for visual presentation.",
+        "answer": "Book",
+        "hint": "Document with guidelines..."
+      },
+      {
+        "sentence": "Logo ⊂ Identity ⊂ _______.",
+        "answer": "Brand",
+        "hint": "The biggest concept..."
+      },
+      {
+        "sentence": "VARK stands for Visual, Auditory, Reading/Writing, and _______.",
+        "answer": "Kinesthetic",
+        "hint": "Learning by doing..."
+      },
+      {
+        "sentence": "FedEx logo has a hidden _______ symbolizing speed.",
+        "answer": "arrow",
+        "hint": "Points in a direction..."
+      }
+    ],
+    "learn": {
+      "title": "Visual Design & Identity",
+      "content": "\n                <h3>Visual Design vs Graphic Design</h3>\n                <div class=\"formula-box\">\n                    <strong>Visual Design:</strong> Brand consistency across platforms<br>\n                    <strong>Graphic Design:</strong> Individual project messages\n                </div>\n                \n                <h4>Visual Identity Elements</h4>\n                <ul>\n                    <li>Logo</li>\n                    <li>Color palette (max 3 colors)</li>\n                    <li>Typography</li>\n                    <li>Images and photography style</li>\n                    <li>Patterns and shapes</li>\n                    <li>Brand Book (style guide)</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-sitemap\"></i> Brand Hierarchy</h4>\n                    <p>Logo ⊂ Identity ⊂ Brand</p>\n                    <p>Logo is part of Identity, Identity is part of Brand</p>\n                </div>\n                \n                <h4>VARK Learning Model</h4>\n                <div class=\"example-box\">\n                    <p>👁️ <strong>V</strong>isual - Images, diagrams</p>\n                    <p>👂 <strong>A</strong>uditory - Listening</p>\n                    <p>📖 <strong>R</strong>eading/Writing - Text</p>\n                    <p>✋ <strong>K</strong>inesthetic - Doing</p>\n                </div>\n            "
+    }
+  },
+  "digitalMarketing": {
+    "name": "Digital Marketing",
+    "icon": "fa-bullhorn",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "What is Digital Marketing?",
+        "answer": "Digital marketing refers to all marketing activities that use:\n\n• Digital channels\n• Digital devices\n• Online platforms\n\nIt combines: Advertising + Sales + Data Analytics\n\nGoal: Attract customers, influence buying decisions, increase market share.",
+        "explanation": "Marketing in the digital age."
+      },
+      {
+        "question": "What are the core benefits of Digital Marketing?",
+        "answer": "Key benefits:\n\n1. WIDE REACH - Global audiences, no geographical barriers\n2. COST EFFICIENCY - Social media and blogs are inexpensive\n3. MEASURABLE RESULTS - Analytics track everything\n4. PERSONALIZATION - Segment audiences, personalize messages\n5. ENGAGEMENT - Interact before, during, and after purchase\n6. EASY CONVERSIONS - Few clicks from ad to purchase",
+        "explanation": "Why digital marketing matters."
+      },
+      {
+        "question": "What is SEO (Search Engine Optimization)?",
+        "answer": "SEO improves website visibility in ORGANIC (unpaid) search results.\n\nKey SEO areas:\n• ON-PAGE SEO - Content and keywords\n• OFF-PAGE SEO - Backlinks and authority\n• TECHNICAL SEO - Speed, structure, performance",
+        "explanation": "Getting found on search engines."
+      },
+      {
+        "question": "What is SEM (Search Engine Marketing)?",
+        "answer": "SEM uses PAID ads in search engine results.\n\n• Advertisers pay per click (PPC)\n• Ads appear for specific keywords\n• Immediate visibility\n\nSEO + PPC = SEM",
+        "explanation": "Paid search advertising."
+      },
+      {
+        "question": "What is Content Marketing?",
+        "answer": "Content Marketing includes:\n\n• Blogs\n• Ebooks\n• Newsletters\n• Infographics\n• Podcasts\n• Videos\n\nGoal: Provide valuable content to attract and retain customers.",
+        "explanation": "Marketing through valuable content."
+      },
+      {
+        "question": "What is Affiliate Marketing?",
+        "answer": "Affiliate Marketing:\n\n• Uses third parties to promote products\n• Pays commission only AFTER a sale\n• Performance-based model\n\nExample: Bloggers earning commission for product recommendations.",
+        "explanation": "Commission-based promotion."
+      },
+      {
+        "question": "What is Marketing Automation?",
+        "answer": "Marketing Automation uses:\n\n• AI and machine learning\n• Automated workflows\n\nIt helps with:\n• Campaign management\n• Performance measurement\n• ROI calculation\n• Personalized messaging at scale",
+        "explanation": "Technology-driven marketing efficiency."
+      },
+      {
+        "question": "What makes video marketing effective?",
+        "answer": "Video Marketing:\n\n• Communicates more in less time\n• Increases engagement\n• Highly shareable\n\nPlatforms:\n• YouTube (also a search engine!)\n• TikTok\n• Instagram\n\nVideo is the most consumed content format.",
+        "explanation": "The power of video content."
+      },
+      {
+        "question": "What is Influencer Marketing?",
+        "answer": "Influencer Marketing:\n\n• Uses trusted content creators\n• Leverages established audiences\n• Authentic and relatable\n\nInfluencers have built trust with their followers, making recommendations more effective.\n\nDifference vs affiliate: the influencer is paid a FLAT FEE regardless of sales; an affiliate earns only per sale.",
+        "explanation": "Marketing through trusted voices."
+      },
+      {
+        "question": "What are ALL 11 types of digital marketing from the lecture?",
+        "answer": "1. Content marketing (blogs, ebooks, podcasts…)\n2. SEO\n3. SEM (paid search: Google Ads, Bing Ads)\n4. Social media marketing\n5. PPC (pay per click)\n6. Affiliate marketing\n7. Marketing automation (AI/ML)\n8. Email marketing\n9. Mobile/SMS marketing\n10. Video marketing\n11. Influencer marketing",
+        "explanation": "The full list — exam questions often ask you to name several."
+      },
+      {
+        "question": "What are Email marketing and Mobile (SMS) marketing?",
+        "answer": "EMAIL MARKETING — direct marketing via strategic emails:\n• Newsletters, welcome emails, holiday promotions, post-purchase follow-ups\n• Still the quickest, most direct way to reach customers\n\nMOBILE/SMS MARKETING — tailored to mobile devices and wearables:\n• Timely one-on-one SMS messages (phones are with us 24/7)\n• Companies report ~102% ROI on SMS marketing",
+        "explanation": "Two direct one-on-one channels."
+      },
+      {
+        "question": "What do famous digital campaigns (Nike, Heineken, Airbnb) teach us?",
+        "answer": "NIKE — #JustDoIt (since 1987): a forceful, commanding slogan can define a brand globally (viral marketing).\n\nHEINEKEN — \"Cheers to All\": reverse gender expectations, keep it lighthearted, create global (image-based) content, upload natively to each platform.\n\nAIRBNB — \"Made Possible by Hosts\": video-first, mute-friendly, real people via UGC (user-generated content), sentimental storytelling.",
+        "explanation": "Campaign case studies from Unit 9."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "SEO focuses on:",
+        "options": [
+          "Paid advertisements",
+          "Organic (unpaid) search visibility",
+          "Social media only",
+          "Email marketing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "SEM includes:",
+        "options": [
+          "Only SEO",
+          "SEO and PPC",
+          "Only social media",
+          "Only email"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Affiliate marketing pays commission:",
+        "options": [
+          "Before any action",
+          "Only after a sale",
+          "Never",
+          "Monthly regardless of sales"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT a content marketing format?",
+        "options": [
+          "Blogs",
+          "Podcasts",
+          "Bank statements",
+          "Infographics"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "YouTube is also considered a:",
+        "options": [
+          "Bank",
+          "Search engine",
+          "Hotel platform",
+          "Government site"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Digital marketing benefit includes:",
+        "options": [
+          "Limited reach",
+          "Measurable results",
+          "High cost only",
+          "No personalization"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "On-page SEO involves:",
+        "options": [
+          "Backlinks from other sites",
+          "Content and keywords on your site",
+          "Social media followers",
+          "Email lists"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Marketing automation uses:",
+        "options": [
+          "Only manual work",
+          "AI and automated workflows",
+          "No technology",
+          "Only print media"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Companies report approximately what ROI on SMS marketing?",
+        "options": [
+          "10%",
+          "50%",
+          "102%",
+          "500%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Unlike affiliates, influencers are typically paid:",
+        "options": [
+          "Only per sale",
+          "A flat fee regardless of sales",
+          "Nothing",
+          "In products only"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "SEO improves visibility in _______ (unpaid) search results.",
+        "answer": "organic",
+        "hint": "Natural, not paid..."
+      },
+      {
+        "sentence": "SEM combines SEO and _______ advertising.",
+        "answer": "PPC",
+        "hint": "Pay-Per-Click..."
+      },
+      {
+        "sentence": "_______ marketing pays commission only after a sale.",
+        "answer": "Affiliate",
+        "hint": "Third-party promotion..."
+      },
+      {
+        "sentence": "YouTube is also considered a search _______.",
+        "answer": "engine",
+        "hint": "Like Google..."
+      },
+      {
+        "sentence": "_______ marketing uses trusted content creators with established audiences.",
+        "answer": "Influencer",
+        "hint": "People with followers..."
+      }
+    ],
+    "learn": {
+      "title": "Digital Marketing",
+      "content": "\n                <h3>Core Benefits of Digital Marketing</h3>\n                <ul>\n                    <li>🌍 <strong>Wide Reach:</strong> Global audiences</li>\n                    <li>💰 <strong>Cost Efficiency:</strong> Lower costs than traditional</li>\n                    <li>📊 <strong>Measurable:</strong> Track everything with analytics</li>\n                    <li>👤 <strong>Personalization:</strong> Target specific audiences</li>\n                    <li>🔄 <strong>Engagement:</strong> Interact at every stage</li>\n                </ul>\n                \n                <h4>SEO vs SEM</h4>\n                <div class=\"formula-box\">\n                    <strong>SEO</strong> = Organic search optimization (FREE clicks)<br>\n                    <strong>SEM</strong> = SEO + PPC (PAID clicks)<br>\n                    <strong>PPC</strong> = Pay Per Click advertising\n                </div>\n                \n                <h4>Types of Digital Marketing</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Content Marketing (blogs, videos)</li>\n                        <li>Social Media Marketing</li>\n                        <li>Email Marketing</li>\n                        <li>Affiliate Marketing (commission-based)</li>\n                        <li>Influencer Marketing</li>\n                        <li>Video Marketing (YouTube, TikTok)</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "socialMedia": {
+    "name": "Social Media",
+    "icon": "fa-share-alt",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "What is Social Media?",
+        "answer": "Social media refers to digital technologies that enable users to:\n\n• Create content\n• Share information\n• Interact and communicate with others\n\nPlatforms: Facebook, Instagram, TikTok, YouTube, X (Twitter), LinkedIn",
+        "explanation": "Digital communication and content sharing."
+      },
+      {
+        "question": "What are the key social media statistics?",
+        "answer": "Global insights:\n\n• Over 5.41 billion active users worldwide\n• Average daily usage: ~143 minutes\n• ~98% of users access via mobile devices",
+        "explanation": "The scale of social media."
+      },
+      {
+        "question": "Why is Social Media important for business?",
+        "answer": "Business benefits:\n\n• Raise brand awareness\n• Discover and research customers\n• Communicate directly with audiences\n• Support sales and conversions\n• Build community and loyalty",
+        "explanation": "Social media for business success."
+      },
+      {
+        "question": "What are the characteristics of Facebook?",
+        "answer": "Facebook:\n\n• Over 3 billion monthly active users\n• Strong advertising ecosystem\n• Dominant in brand discovery and communities\n\nEffective for:\n• Broad audiences\n• Advertising campaigns\n• Brand pages and groups",
+        "explanation": "The dominant social platform."
+      },
+      {
+        "question": "What are the characteristics of TikTok?",
+        "answer": "TikTok:\n\n• Extremely high engagement\n• Short-form video content\n• Strong influence on younger generations\n• Highest average time spent per user\n• Over 90% of users interact after watching\n\nPowerful for:\n• Viral marketing\n• Storytelling through video\n• Trend-driven campaigns",
+        "explanation": "The rising star of social media."
+      },
+      {
+        "question": "What are the characteristics of YouTube?",
+        "answer": "YouTube:\n\n• A social media platform AND second-largest search engine\n• Billions of active users\n• Strong purchase influence\n\nIdeal for:\n• Long-form content\n• Tutorials and reviews\n• Brand storytelling",
+        "explanation": "The video giant."
+      },
+      {
+        "question": "What are the characteristics of LinkedIn?",
+        "answer": "LinkedIn:\n\n• Leading professional platform\n• Strong B2B focus\n• High-quality content distribution\n• Effective lead generation\n\nBest for:\n• Employer branding\n• Professional visibility\n• B2B marketing",
+        "explanation": "Professional networking platform."
+      },
+      {
+        "question": "Which platforms do different generations prefer?",
+        "answer": "Generational preferences:\n\n• Gen Z: TikTok, Instagram, Snapchat\n• Millennials: Instagram, Facebook, YouTube\n• Gen X: Facebook, YouTube\n• Baby Boomers: Facebook, messaging apps",
+        "explanation": "Demographics drive platform choice."
+      },
+      {
+        "question": "What makes social media content go viral?",
+        "answer": "Viral content characteristics:\n\n• Emotional impact\n• Simplicity\n• Relatability\n• Strong visual elements\n\nContent that triggers emotions spreads faster.",
+        "explanation": "The science of viral content."
+      },
+      {
+        "question": "What are social media future trends?",
+        "answer": "Key future directions:\n\n• Short-form video dominance\n• Growth of social commerce\n• AI-driven personalization\n• Immersive AR and VR experiences\n• Stronger focus on authenticity and privacy",
+        "explanation": "Where social media is heading."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "How many active social media users are there globally?",
+        "options": [
+          "1 billion",
+          "3 billion",
+          "Over 5 billion",
+          "500 million"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "TikTok is known for:",
+        "options": [
+          "Long-form articles",
+          "Short-form video content",
+          "Professional networking",
+          "Only photos"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "YouTube is also considered:",
+        "options": [
+          "A bank",
+          "The second-largest search engine",
+          "Only entertainment",
+          "A government platform"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "LinkedIn is best for:",
+        "options": [
+          "Viral videos",
+          "B2B marketing and professional networking",
+          "Teen content",
+          "Anonymous posting"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Gen Z prefers which platforms?",
+        "options": [
+          "Facebook and LinkedIn",
+          "TikTok, Instagram, and Snapchat",
+          "Only email",
+          "Only YouTube"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Viral content typically has:",
+        "options": [
+          "No emotional impact",
+          "Emotional impact and relatability",
+          "Very long text",
+          "No visuals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What percentage of users access social media via mobile?",
+        "options": [
+          "50%",
+          "70%",
+          "About 98%",
+          "25%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Facebook has over how many monthly active users?",
+        "options": [
+          "500 million",
+          "1 billion",
+          "3 billion",
+          "100 million"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "There are over _______ billion active social media users worldwide.",
+        "answer": "5",
+        "hint": "More than 4..."
+      },
+      {
+        "sentence": "_______ is known for short-form video content and high engagement.",
+        "answer": "TikTok",
+        "hint": "Popular with Gen Z..."
+      },
+      {
+        "sentence": "YouTube is also the _______-largest search engine.",
+        "answer": "second",
+        "hint": "After Google..."
+      },
+      {
+        "sentence": "_______ is the leading professional networking platform.",
+        "answer": "LinkedIn",
+        "hint": "For B2B and careers..."
+      },
+      {
+        "sentence": "Viral content typically has emotional impact and _______.",
+        "answer": "relatability",
+        "hint": "People can connect with it..."
+      }
+    ],
+    "learn": {
+      "title": "Social Media",
+      "content": "\n                <h3>Social Media Statistics</h3>\n                <div class=\"formula-box\">\n                    📱 5.41+ billion active users<br>\n                    ⏰ ~143 minutes daily usage<br>\n                    📲 98% access via mobile\n                </div>\n                \n                <h4>Major Platforms</h4>\n                <ul>\n                    <li>📘 <strong>Facebook:</strong> 3B users, advertising, communities</li>\n                    <li>🎵 <strong>TikTok:</strong> Short video, viral, Gen Z</li>\n                    <li>📺 <strong>YouTube:</strong> Video giant, 2nd search engine</li>\n                    <li>📸 <strong>Instagram:</strong> Visual, stories, reels</li>\n                    <li>💼 <strong>LinkedIn:</strong> Professional, B2B</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-users\"></i> Generational Preferences</h4>\n                    <p><strong>Gen Z:</strong> TikTok, Instagram, Snapchat</p>\n                    <p><strong>Millennials:</strong> Instagram, Facebook, YouTube</p>\n                    <p><strong>Gen X:</strong> Facebook, YouTube</p>\n                    <p><strong>Boomers:</strong> Facebook, messaging apps</p>\n                </div>\n                \n                <h4>Future Trends</h4>\n                <p>Short-form video, social commerce, AI personalization, AR/VR</p>\n            "
+    }
+  },
+  "googleAnalytics": {
+    "name": "Google Analytics",
+    "icon": "fa-chart-bar",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is Google Analytics?",
+        "answer": "Google Analytics (GA) is a web analytics tool providing insights into:\n\n• Website performance\n• User behavior\n• Traffic sources\n• Conversions and goals\n\nSupports: Digital marketing, SEO, PPC, content optimization, e-commerce",
+        "explanation": "The standard for web analytics."
+      },
+      {
+        "question": "How does Google Analytics work?",
+        "answer": "GA works by:\n\n1. Adding a JavaScript tracking code to website pages\n2. Collecting user interaction data when pages load\n3. Sending data to Google servers\n4. Displaying results in reports and dashboards",
+        "explanation": "The technical process."
+      },
+      {
+        "question": "What Real-Time data does GA provide?",
+        "answer": "Real-Time data shows:\n\n• Active users on the website right now\n• Pages being viewed at the moment\n• Device type (desktop or mobile)\n• User locations\n\nUseful for monitoring live campaigns.",
+        "explanation": "See what's happening now."
+      },
+      {
+        "question": "What Audience Insights does GA provide?",
+        "answer": "Audience insights include:\n\n• Number of visitors and sessions\n• New vs returning users\n• Session duration\n• Pages per session\n• Demographics and interests",
+        "explanation": "Understanding your visitors."
+      },
+      {
+        "question": "What is Goal and Conversion Tracking in GA?",
+        "answer": "Goals represent desired user actions:\n\n• Purchases\n• Form submissions\n• Newsletter sign-ups\n• Downloads\n• Account creation\n\nConversions measure how many users complete these goals.",
+        "explanation": "Measuring success."
+      },
+      {
+        "question": "What are the 5 key benefits of Google Analytics?",
+        "answer": "1. ACCESS TO REAL-TIME DATA — live users, pageviews, top pages and locations\n2. INSIGHTS INTO YOUR AUDIENCE — visitors, sessions, new vs returning, interests\n3. ENHANCED AD MANAGEMENT — track Google Ads clicks, cost per click, campaign costs in one place\n4. UNDERSTANDING USER BEHAVIOR — most popular content, bounce rate, what drives conversions\n5. BETTER TRACKING OF GOALS & CONVERSIONS — what is completed, where, and its value",
+        "explanation": "The lecture's '5 incredible benefits' list."
+      },
+      {
+        "question": "What is Google Trends?",
+        "answer": "Google Trends is a FREE tool that analyzes the popularity of search terms.\n\nIt:\n• Measures RELATIVE popularity, not absolute volume\n• Compares search interest across time and regions\n• Normalizes data for fair comparison",
+        "explanation": "Understanding search popularity."
+      },
+      {
+        "question": "What are practical uses of Google Trends?",
+        "answer": "Practical uses:\n\n• Identify trending topics\n• Detect seasonal demand patterns\n• Support local SEO strategies\n• Analyze competitors\n• Optimize keyword strategies\n• Understand market interest",
+        "explanation": "Applications of Google Trends."
+      },
+      {
+        "question": "Google Analytics vs Google Trends - What's the difference?",
+        "answer": "GOOGLE ANALYTICS:\n• Focuses on YOUR website\n• Behavior and conversions\n• Performance metrics\n\nGOOGLE TRENDS:\n• Focuses on OVERALL market interest\n• External search behavior\n• Popularity comparisons",
+        "explanation": "Internal vs external data."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Google Analytics tracks:",
+        "options": [
+          "Only sales",
+          "Website performance and user behavior",
+          "Only social media",
+          "Only email"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "GA works by adding what to website pages?",
+        "options": [
+          "Images",
+          "JavaScript tracking code",
+          "Videos",
+          "Audio files"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Google Trends measures:",
+        "options": [
+          "Absolute search volume",
+          "Relative popularity of search terms",
+          "Website sales",
+          "Social media followers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "GA Real-Time data shows:",
+        "options": [
+          "Last year's data",
+          "Active users and pages viewed right now",
+          "Only email opens",
+          "Future predictions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Goals in GA represent:",
+        "options": [
+          "Random actions",
+          "Desired user actions like purchases or sign-ups",
+          "Only page views",
+          "Employee targets"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Google Trends is useful for:",
+        "options": [
+          "Only paid advertising",
+          "Identifying trending topics and seasonal patterns",
+          "Managing employees",
+          "Building websites"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Google Analytics focuses on:",
+        "options": [
+          "Overall market interest",
+          "Your own website's performance",
+          "Competitor websites",
+          "Government data"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "GA Audience Insights include:",
+        "options": [
+          "Only one metric",
+          "New vs returning users, session duration, demographics",
+          "Only sales",
+          "Only advertising costs"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Google Analytics uses _______ tracking code on websites.",
+        "answer": "JavaScript",
+        "hint": "A programming language..."
+      },
+      {
+        "sentence": "Google Trends measures _______ popularity, not absolute volume.",
+        "answer": "relative",
+        "hint": "Compared to other terms..."
+      },
+      {
+        "sentence": "_______ in GA represent desired user actions like purchases.",
+        "answer": "Goals",
+        "hint": "Targets to achieve..."
+      },
+      {
+        "sentence": "GA shows _______ data about active users on the website right now.",
+        "answer": "Real-Time",
+        "hint": "Happening now..."
+      },
+      {
+        "sentence": "Google Analytics focuses on your website, while Google Trends focuses on _______ interest.",
+        "answer": "market",
+        "hint": "Overall demand..."
+      }
+    ],
+    "learn": {
+      "title": "Google Analytics & Trends",
+      "content": "\n                <h3>Google Analytics</h3>\n                <div class=\"formula-box\">\n                    Tracking Code → Collects Data → Reports & Dashboards\n                </div>\n                \n                <h4>Key GA Features</h4>\n                <ul>\n                    <li>📊 <strong>Real-Time:</strong> Active users now</li>\n                    <li>👥 <strong>Audience:</strong> Who visits your site</li>\n                    <li>📈 <strong>Behavior:</strong> What they do on site</li>\n                    <li>🎯 <strong>Conversions:</strong> Goal completions</li>\n                </ul>\n                \n                <h4>Google Trends</h4>\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-chart-line\"></i> Uses</h4>\n                    <ul>\n                        <li>Identify trending topics</li>\n                        <li>Detect seasonal patterns</li>\n                        <li>Compare keyword popularity</li>\n                        <li>Analyze competitors</li>\n                    </ul>\n                </div>\n                \n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-exclamation-triangle\"></i> Key Difference</h4>\n                    <p><strong>GA:</strong> YOUR website performance</p>\n                    <p><strong>Trends:</strong> MARKET search interest</p>\n                </div>\n            "
+    }
+  },
+  "seoSem": {
+    "name": "SEO, SEM & SERP",
+    "icon": "fa-search",
+    "color": "#84cc16",
+    "flashcards": [
+      {
+        "question": "What is SERP?",
+        "answer": "SERP = Search Engine Results Page\n\nThe page displayed after a user enters a query into a search engine.\n\nContains:\n• Organic results (SEO)\n• Paid ads (PPC)\n• Featured snippets\n• Local results",
+        "explanation": "What you see after searching."
+      },
+      {
+        "question": "What is SEO?",
+        "answer": "SEO = Search Engine Optimization\n\nFocuses on optimizing a website to:\n• Rank higher in ORGANIC search results\n• Attract UNPAID traffic\n\nFOUR main subcategories:\n• On-page SEO\n• Off-page SEO\n• Technical SEO\n• User Interaction Signals\n\nGoogle uses 200+ ranking signals in its algorithm.",
+        "explanation": "Getting free search traffic — note: FOUR subcategories, not three."
+      },
+      {
+        "question": "What are User Interaction Signals in SEO?",
+        "answer": "The 4th SEO subcategory — how users interact with your site tells Google whether your page matches the search:\n\n• High BOUNCE RATE → page may not answer the query → rankings can drop\n• CTR (click-through rate) → better titles/descriptions raise it\n• DWELL TIME → how long a visitor stays; longer = more relevant content",
+        "explanation": "Same signals reappear as ranking factor #10 (on-page experience)."
+      },
+      {
+        "question": "What is SEM?",
+        "answer": "SEM = Search Engine Marketing\n\nA broader concept that includes:\n• SEO (organic)\n• PPC (paid advertising)\n\nSEO + PPC = SEM\n\nAims to maximize visibility on search engines.",
+        "explanation": "All search marketing activities."
+      },
+      {
+        "question": "What is Quality Score in Google Ads?",
+        "answer": "Quality Score measures how relevant and useful an ad is.\n\nBased on:\n• Expected click-through rate\n• Ad relevance to search query\n• Landing page experience\n\nHigher Quality Score = Lower costs, better positions.",
+        "explanation": "Google Ads ranking factor."
+      },
+      {
+        "question": "SEO vs SEM - Speed difference?",
+        "answer": "SPEED:\n\nSEO:\n• Slow to show results\n• On average it takes ~2 YEARS to rank on the first page of Google (many top pages are 3+ years old)\n• Long-tail keywords + best practices can bring first results within a few months\n\nSEM (PPC):\n• Immediate visibility — run an ad in the morning, get traffic in the afternoon\n• But positive ROI can still take months of testing and tweaking",
+        "explanation": "Time to results."
+      },
+      {
+        "question": "Is SEO really 'free traffic'?",
+        "answer": "NO — you don't pay per click, but SEO is NOT free:\n\n• Quality, unique content costs many hours of labour\n• Building domain authority requires consistent top content + promotion\n• SEO tools (ahrefs, semrush…) can cost ~$350/month\n• You pay website designers and developers\n• It requires a broad knowledge base built over years",
+        "explanation": "The 'SEO costs' reality check from the lecture."
+      },
+      {
+        "question": "What is High-Quality Content in SEO?",
+        "answer": "Content quality is the STRONGEST ranking factor.\n\nQuality content is:\n• Unique\n• Fresh\n• Useful\n• Written for USERS, not search engines\n\nGoogle rewards valuable content.",
+        "explanation": "Content is king."
+      },
+      {
+        "question": "What are Backlinks in SEO?",
+        "answer": "Backlinks are links from other websites to your site.\n\nThey act as:\n• Votes of confidence\n• Authority signals\n\nMore quality backlinks = Higher rankings.\n\nPart of OFF-PAGE SEO.",
+        "explanation": "Links as endorsements."
+      },
+      {
+        "question": "What is Mobile-First Indexing?",
+        "answer": "Google uses MOBILE-FIRST indexing.\n\nThis means:\n• Mobile version is used for ranking\n• Responsive design is essential\n• Desktop-only sites may rank lower\n\nMost users browse on mobile!",
+        "explanation": "Mobile is priority."
+      },
+      {
+        "question": "What are Core Web Vitals?",
+        "answer": "Core Web Vitals measure:\n\n• Loading speed (LCP)\n• Interactivity (FID)\n• Visual stability (CLS)\n\nPart of Google's ranking factors.\nFast websites rank better!",
+        "explanation": "User experience metrics."
+      },
+      {
+        "question": "What are the 10 most important Google ranking factors?",
+        "answer": "Top ranking factors:\n\n1. High-quality content\n2. Backlinks\n3. Search intent & relevance\n4. Website loading speed\n5. Mobile friendliness\n6. Domain authority\n7. Keyword optimization\n8. Website structure\n9. Website security (HTTPS)\n10. User experience signals (CTR, bounce rate)",
+        "explanation": "What Google values most."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "SERP stands for:",
+        "options": [
+          "Search Engine Ranking Protocol",
+          "Search Engine Results Page",
+          "Social Engine Results Page",
+          "Simple Engine Response"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "SEO focuses on:",
+        "options": [
+          "Paid advertising",
+          "Organic (unpaid) search results",
+          "Social media only",
+          "Email marketing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "SEM includes:",
+        "options": [
+          "Only SEO",
+          "SEO and PPC",
+          "Only social media",
+          "Only content marketing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Quality Score affects:",
+        "options": [
+          "Social media followers",
+          "Google Ads costs and positions",
+          "Email delivery",
+          "Website design"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "SEO results typically take:",
+        "options": [
+          "Minutes",
+          "Months or years",
+          "Seconds",
+          "Never work"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Backlinks are:",
+        "options": [
+          "Links on your site to yourself",
+          "Links from other websites to your site",
+          "Social media posts",
+          "Email links"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Mobile-first indexing means:",
+        "options": [
+          "Desktop is priority",
+          "Mobile version is used for ranking",
+          "No mobile support",
+          "Only apps work"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The strongest ranking factor is:",
+        "options": [
+          "Website age",
+          "High-quality content",
+          "Social followers",
+          "Domain name length"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "SERP stands for Search Engine Results _______.",
+        "answer": "Page",
+        "hint": "What you see..."
+      },
+      {
+        "sentence": "SEO focuses on _______ (unpaid) search results.",
+        "answer": "organic",
+        "hint": "Natural, not paid..."
+      },
+      {
+        "sentence": "SEM = SEO + _______.",
+        "answer": "PPC",
+        "hint": "Pay-Per-Click..."
+      },
+      {
+        "sentence": "_______ are links from other websites to your site.",
+        "answer": "Backlinks",
+        "hint": "External links..."
+      },
+      {
+        "sentence": "Google uses _______-first indexing for rankings.",
+        "answer": "mobile",
+        "hint": "Smartphones..."
+      }
+    ],
+    "learn": {
+      "title": "SEO, SEM & SERP",
+      "content": "\n                <h3>Key Definitions</h3>\n                <div class=\"formula-box\">\n                    <strong>SERP</strong> = Search Engine Results Page<br>\n                    <strong>SEO</strong> = Search Engine Optimization (organic)<br>\n                    <strong>SEM</strong> = SEO + PPC (all search marketing)\n                </div>\n                \n                <h4>SEO Types</h4>\n                <ul>\n                    <li><strong>On-Page:</strong> Content, keywords, meta tags</li>\n                    <li><strong>Off-Page:</strong> Backlinks, authority</li>\n                    <li><strong>Technical:</strong> Speed, structure, mobile</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-trophy\"></i> Top Ranking Factors</h4>\n                    <ol>\n                        <li>High-quality content</li>\n                        <li>Backlinks (authority)</li>\n                        <li>Search intent match</li>\n                        <li>Loading speed</li>\n                        <li>Mobile-friendliness</li>\n                    </ol>\n                </div>\n                \n                <h4>SEO vs PPC Speed</h4>\n                <div class=\"warning-box\">\n                    <p>⏳ <strong>SEO:</strong> Months to years for results</p>\n                    <p>⚡ <strong>PPC:</strong> Immediate traffic</p>\n                </div>\n            "
+    }
+  },
+  "hotelPMS": {
+    "name": "Hotel PMS",
+    "icon": "fa-hotel",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "What is a Property Management System (PMS)?",
+        "answer": "A PMS is a software platform that automates a hotel's daily operations.\n\nIt supports:\n• Daily hotel operations\n• Administrative and financial tasks\n• Guest experience management\n\nThe digital backbone of hotel operations.",
+        "explanation": "Core hotel technology."
+      },
+      {
+        "question": "What factors influence PMS adoption?",
+        "answer": "Factors affecting PMS adoption:\n\n• HOTEL SIZE: <20 rooms often without PMS; 100+ rooms nearly 100% adoption\n• OWNERSHIP: Chains/franchises usually have PMS; independents less likely\n• STAR RATING: 3+ stars higher adoption; 4-5 stars require PMS\n• OCCUPANCY: High occupancy increases need for PMS",
+        "explanation": "Why some hotels have PMS."
+      },
+      {
+        "question": "What are the main PMS functionalities?",
+        "answer": "Main PMS functionalities:\n\n• Reservation systems\n• Front-desk operations\n• Housekeeping\n• Customer data management (CRM)\n• Revenue management\n• Reports and analytics\n• Point of Sale (POS)\n• Back-office management",
+        "explanation": "What PMS can do."
+      },
+      {
+        "question": "What are the mandatory PMS modules?",
+        "answer": "Every PMS MUST include:\n\n1. RESERVATION SYSTEM:\n• Stores inventory and availability\n• Synchronizes dates and room status\n• Integrates with booking engine and channels\n\n2. FRONT-DESK OPERATIONS:\n• Manages reservation status\n• Check-in and check-out\n• Payment processing\n• Room status control",
+        "explanation": "Essential modules."
+      },
+      {
+        "question": "What does the Revenue Management module do?",
+        "answer": "Revenue Management uses:\n\n• Historical booking data\n• Forecasting algorithms\n\nTo support:\n• Dynamic pricing\n• Occupancy optimization\n• Revenue maximization\n\nKey KPIs: Occupancy rate, ADR, RevPAR",
+        "explanation": "Maximizing hotel revenue."
+      },
+      {
+        "question": "What is ADR and RevPAR?",
+        "answer": "ADR = Average Daily Rate\n• Average revenue per occupied room\n• Formula: Room Revenue / Rooms Sold\n\nRevPAR = Revenue Per Available Room\n• Revenue per ALL rooms (occupied + empty)\n• Formula: Room Revenue / Total Rooms Available\n\nOr: ADR × Occupancy Rate",
+        "explanation": "Key hotel performance metrics."
+      },
+      {
+        "question": "What does the POS module manage?",
+        "answer": "POS (Point of Sale) manages transactions beyond accommodation:\n\n• Restaurants and cafés\n• Spa and gym services\n• In-room services\n• Minibar, TV, and Wi-Fi charges\n\nAll charges link to guest folio.",
+        "explanation": "Non-room revenue tracking."
+      },
+      {
+        "question": "What does the Customer Data Management module do?",
+        "answer": "Stores ALL guest data to build relationships during and after the stay:\n\n• Integrates with front desk + reservation system (derives guest info from them)\n• Should integrate with the hotel's existing CRM, if there is one\n• Supports marketing: measures guest experience through the stay and after\n• Powers PERSONALIZATION via membership and LOYALTY programs (especially important for chains and resorts)",
+        "explanation": "The CRM side of the PMS."
+      },
+      {
+        "question": "What is the future of PMS?",
+        "answer": "Modern PMS developments:\n\n• Integration with hotel mobile applications\n• Remote check-in and digital ID upload\n• Mobile communication between guests and staff\n• Cloud-based systems\n• AI-powered features",
+        "explanation": "Where PMS is heading."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "PMS stands for:",
+        "options": [
+          "Personal Management Software",
+          "Property Management System",
+          "Payment Management System",
+          "Professional Marketing Service"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Hotels with 100+ rooms have PMS adoption rate of:",
+        "options": [
+          "20%",
+          "50%",
+          "Nearly 100%",
+          "0%"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Mandatory PMS modules include:",
+        "options": [
+          "Only housekeeping",
+          "Reservation system and front-desk operations",
+          "Only POS",
+          "Only analytics"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "RevPAR stands for:",
+        "options": [
+          "Revenue Per All Rooms",
+          "Revenue Per Available Room",
+          "Rate Per Average Room",
+          "Revenue Performance Analysis Report"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Revenue management uses:",
+        "options": [
+          "Random pricing",
+          "Historical data and forecasting",
+          "Only fixed rates",
+          "No technology"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "POS module manages:",
+        "options": [
+          "Only room bookings",
+          "Restaurant, spa, and other non-room charges",
+          "Only staff schedules",
+          "Only marketing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "ADR measures:",
+        "options": [
+          "Total hotel revenue",
+          "Average revenue per occupied room",
+          "Number of employees",
+          "Social media followers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Future PMS features include:",
+        "options": [
+          "Only paper-based systems",
+          "Mobile check-in and AI features",
+          "Removing technology",
+          "Only phone bookings"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "PMS stands for Property _______ System.",
+        "answer": "Management",
+        "hint": "Operating and controlling..."
+      },
+      {
+        "sentence": "_______ = Revenue Per Available Room.",
+        "answer": "RevPAR",
+        "hint": "Key hotel metric..."
+      },
+      {
+        "sentence": "Hotels with 100+ rooms have nearly _______% PMS adoption.",
+        "answer": "100",
+        "hint": "Almost all..."
+      },
+      {
+        "sentence": "Revenue management uses historical data and _______ algorithms.",
+        "answer": "forecasting",
+        "hint": "Predicting the future..."
+      },
+      {
+        "sentence": "ADR stands for Average _______ Rate.",
+        "answer": "Daily",
+        "hint": "Per day..."
+      }
+    ],
+    "learn": {
+      "title": "Hotel Property Management System",
+      "content": "\n                <h3>What is PMS?</h3>\n                <div class=\"formula-box\">\n                    PMS = Software that automates hotel daily operations<br>\n                    The digital backbone of hotels\n                </div>\n                \n                <h4>Mandatory Modules</h4>\n                <ul>\n                    <li><strong>Reservation System:</strong> Inventory, availability, bookings</li>\n                    <li><strong>Front-Desk:</strong> Check-in/out, payments, room status</li>\n                </ul>\n                \n                <h4>Other Key Modules</h4>\n                <ul>\n                    <li>Housekeeping</li>\n                    <li>CRM (guest data)</li>\n                    <li>Revenue Management</li>\n                    <li>Reports & Analytics</li>\n                    <li>POS (restaurants, spa)</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-chart-pie\"></i> Key Metrics</h4>\n                    <p><strong>ADR</strong> = Room Revenue / Rooms Sold</p>\n                    <p><strong>RevPAR</strong> = Room Revenue / Total Available Rooms</p>\n                    <p><strong>RevPAR</strong> = ADR × Occupancy Rate</p>\n                </div>\n            "
+    }
+  },
+  "ebusinessSecurity": {
+    "name": "E-Business Security",
+    "icon": "fa-shield-alt",
+    "color": "#dc2626",
+    "flashcards": [
+      {
+        "question": "Why is security critical in E-Business?",
+        "answer": "E-business depends on TRUST.\n\nSecurity is essential for:\n• Protecting customer information\n• Ensuring safe online transactions\n• Maintaining brand reputation\n• Complying with legal and industry standards",
+        "explanation": "Trust is the foundation."
+      },
+      {
+        "question": "What are the 4 fundamental principles of E-Commerce Security?",
+        "answer": "Four principles:\n\n1. PRIVACY - Data accessed only by authorized parties\n2. INTEGRITY - Data remains unchanged during storage/transmission\n3. AUTHENTICATION - Both parties are verified as real\n4. NON-REPUDIATION - Neither party can deny completed transaction",
+        "explanation": "The pillars of secure transactions."
+      },
+      {
+        "question": "What is Privacy in E-Commerce Security?",
+        "answer": "Privacy ensures customer data is accessed only by authorized parties.\n\nProtection methods:\n• Antivirus software\n• Firewalls\n• Encryption\n• Data protection systems",
+        "explanation": "Keeping data confidential."
+      },
+      {
+        "question": "What is Non-Repudiation?",
+        "answer": "Non-repudiation means neither the buyer nor seller can DENY a completed transaction.\n\nAchieved through:\n• Digital signatures\n• Transaction logs\n• Certificates\n\nProvides legal proof of transaction.",
+        "explanation": "No denying what happened."
+      },
+      {
+        "question": "What are common E-Commerce cybersecurity risks?",
+        "answer": "Common risks:\n\n• Data breaches\n• Hacking and malware\n• Phishing attacks\n• SQL injection\n• DDoS attacks\n• Credit card fraud",
+        "explanation": "Threats to online business."
+      },
+      {
+        "question": "What makes a strong password?",
+        "answer": "Strong passwords:\n\n• Include numbers and special characters\n• Combine uppercase and lowercase letters\n• Are unique for each platform\n• Are long (12+ characters recommended)\n• Avoid personal information",
+        "explanation": "First line of defense."
+      },
+      {
+        "question": "What are SSL Certificates and HTTPS?",
+        "answer": "SSL Certificates:\n• Encrypt data between user and server\n• Convert HTTP into HTTPS\n• Show padlock icon in browser\n\nHTTPS = Secure communication\nGoogle confirmed HTTPS as a ranking signal.",
+        "explanation": "Secure website communication."
+      },
+      {
+        "question": "What is PCI-DSS?",
+        "answer": "PCI-DSS = Payment Card Industry Data Security Standard\n\nSecurity standard for businesses handling credit card data.\n\nRequires:\n• Firewalls\n• Strong passwords\n• Secure data storage\n• Antivirus protection\n• Encryption",
+        "explanation": "Credit card security standard."
+      },
+      {
+        "question": "What should a secure hosting provider offer?",
+        "answer": "A secure hosting provider offers:\n\n• Threat monitoring\n• Regular security upgrades\n• Fast issue resolution\n• Built-in security features\n• DDoS protection\n• Regular backups",
+        "explanation": "Choosing secure infrastructure."
+      },
+      {
+        "question": "What are the 10 e-commerce security tips to protect a business?",
+        "answer": "1. Suggest STRONG PASSWORDS (unique per login)\n2. Implement MULTILAYER security\n3. Use a FIREWALL (blocks DDoS, SQL injection)\n4. Use a PAYMENT PROVIDER — never store customer financial data on company servers\n5. Install an SSL certificate (HTTPS) — 64% of users leave a site on a 'Not secure' warning\n6. UPDATE software and hardware (patches fix vulnerabilities)\n7. Follow PCI-DSS requirements\n8. BACK UP data routinely\n9. Establish best practices — educate employees and customers\n10. Choose the right HOSTING provider",
+        "explanation": "The complete 10-tip checklist from Unit 14."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The 4 security principles are Privacy, Integrity, Authentication, and:",
+        "options": [
+          "Popularity",
+          "Non-repudiation",
+          "Profitability",
+          "Performance"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Non-repudiation means:",
+        "options": [
+          "Anyone can access data",
+          "Neither party can deny a transaction",
+          "Data is encrypted",
+          "Passwords are strong"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "HTTPS is created by:",
+        "options": [
+          "Strong passwords",
+          "SSL certificates",
+          "Social media",
+          "Email"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "PCI-DSS is a standard for:",
+        "options": [
+          "Social media security",
+          "Payment card data security",
+          "Email marketing",
+          "Website design"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Strong passwords should:",
+        "options": [
+          "Be the same for all sites",
+          "Include numbers, special characters, and be unique",
+          "Be short and simple",
+          "Use only lowercase letters"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Common cyber risks include all EXCEPT:",
+        "options": [
+          "Phishing attacks",
+          "DDoS attacks",
+          "Good customer service",
+          "SQL injection"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Integrity in security means:",
+        "options": [
+          "Data is kept private",
+          "Data remains unchanged during transmission",
+          "Users are verified",
+          "Transactions cannot be denied"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Firewalls protect against:",
+        "options": [
+          "Good weather",
+          "DDoS and SQL injection attacks",
+          "Happy customers",
+          "Positive reviews"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The 4 security principles are Privacy, Integrity, Authentication, and _______-repudiation.",
+        "answer": "Non",
+        "hint": "Cannot deny..."
+      },
+      {
+        "sentence": "_______ certificates encrypt data and convert HTTP to HTTPS.",
+        "answer": "SSL",
+        "hint": "Secure Sockets Layer..."
+      },
+      {
+        "sentence": "PCI-DSS is a security standard for handling _______ card data.",
+        "answer": "credit",
+        "hint": "Payment method..."
+      },
+      {
+        "sentence": "_______ means data remains unchanged during storage and transmission.",
+        "answer": "Integrity",
+        "hint": "Completeness and accuracy..."
+      },
+      {
+        "sentence": "Strong passwords should be _______ for each platform.",
+        "answer": "unique",
+        "hint": "Different everywhere..."
+      }
+    ],
+    "learn": {
+      "title": "E-Business Security",
+      "content": "\n                <h3>4 Security Principles</h3>\n                <div class=\"formula-box\">\n                    1. <strong>Privacy</strong> - Only authorized access<br>\n                    2. <strong>Integrity</strong> - Data unchanged<br>\n                    3. <strong>Authentication</strong> - Verify identity<br>\n                    4. <strong>Non-repudiation</strong> - Cannot deny transaction\n                </div>\n                \n                <h4>Common Threats</h4>\n                <ul>\n                    <li>🔓 Data breaches</li>\n                    <li>🎣 Phishing attacks</li>\n                    <li>💉 SQL injection</li>\n                    <li>🌊 DDoS attacks</li>\n                    <li>💳 Credit card fraud</li>\n                </ul>\n                \n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lock\"></i> Protection Methods</h4>\n                    <ul>\n                        <li>SSL/HTTPS encryption</li>\n                        <li>Strong, unique passwords</li>\n                        <li>Firewalls</li>\n                        <li>PCI-DSS compliance</li>\n                        <li>Regular backups</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "challengesTrends": {
+    "name": "Challenges & Trends",
+    "icon": "fa-rocket",
+    "color": "#0891b2",
+    "flashcards": [
+      {
+        "question": "What are the main technology challenges in hospitality e-business?",
+        "answer": "Key challenges:\n\n• High technology implementation costs\n• Integration of legacy systems\n• Incompatibility with modern solutions\n• Limited scalability\n• Higher security vulnerabilities",
+        "explanation": "Barriers to digital transformation."
+      },
+      {
+        "question": "What are customer expectations in the digital era?",
+        "answer": "Customers expect:\n\n• Personalized experiences\n• Fast and seamless digital interactions\n• Immediate responses\n• 24/7 availability\n• Consistent experience across channels",
+        "explanation": "The demanding digital customer."
+      },
+      {
+        "question": "How does AI enhance marketing in hospitality?",
+        "answer": "AI-Enhanced Marketing:\n\n• Micro-segmentation of customers\n• AI-generated marketing content\n• Real-time campaign optimization\n• Predictive analytics\n• Personalized recommendations",
+        "explanation": "AI making marketing smarter."
+      },
+      {
+        "question": "What is Hyper-Personalization?",
+        "answer": "Hyper-personalization uses AI to tailor experiences:\n\n• AI-powered guest profiling\n• Personalized booking flows\n• Customized in-stay services\n• Recommendations based on behavior\n\nGoes beyond basic personalization.",
+        "explanation": "Next-level customization."
+      },
+      {
+        "question": "Why is mobile optimization critical?",
+        "answer": "Hospitality e-business is increasingly mobile-driven:\n\n• Growth of mobile bookings\n• Increase in last-minute reservations\n• Guests use phones for everything\n• Mobile-first indexing by Google\n\nMobile is not optional!",
+        "explanation": "Mobile is essential."
+      },
+      {
+        "question": "What are the risks of overloading guests with technology?",
+        "answer": "Excessive technology can harm guest experience:\n\n• Self-service kiosks everywhere\n• Multiple mandatory mobile apps\n• Complex smart-room controls\n• Technology fatigue\n\nBalance is needed!",
+        "explanation": "Too much of a good thing."
+      },
+      {
+        "question": "What is the 'Loss of Human Touch' concern?",
+        "answer": "Over-automation creates emotional risks:\n\n• Reduced emotional hospitality\n• Lower guest satisfaction\n• Changing job roles\n• Loss of personal connection\n\nHospitality is about PEOPLE.",
+        "explanation": "Keeping the human element."
+      },
+      {
+        "question": "What opportunities emerge from AI challenges?",
+        "answer": "Challenges create opportunities:\n\n• Building trust through transparency\n• Re-humanizing hospitality using technology wisely\n• Creating new digital job roles\n• Modernizing outdated systems\n• Promoting fair and inclusive AI use",
+        "explanation": "Finding the silver lining."
+      },
+      {
+        "question": "What are the key e-business trends for hospitality?",
+        "answer": "Key trends:\n\n• Automated customer service (chatbots, virtual concierges)\n• 24/7 multilingual support\n• Mobile optimization\n• Hyper-personalization\n• AI-driven operations\n• Balance of tech and human touch",
+        "explanation": "Where the industry is heading."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Legacy system integration is a challenge because of:",
+        "options": [
+          "Too many customers",
+          "Incompatibility with modern solutions",
+          "Too much profit",
+          "Easy updates"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Hyper-personalization uses:",
+        "options": [
+          "No technology",
+          "AI to tailor individual experiences",
+          "Only email",
+          "Random selection"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Mobile optimization is critical because:",
+        "options": [
+          "Nobody uses mobile",
+          "Mobile bookings are growing rapidly",
+          "Desktops are more popular",
+          "Phones don't work"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Loss of human touch' refers to:",
+        "options": [
+          "Physical illness",
+          "Over-automation reducing personal connection",
+          "More staff",
+          "Better technology"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Digital era customers expect:",
+        "options": [
+          "Slow responses",
+          "Personalized experiences and immediate responses",
+          "No technology",
+          "Only phone calls"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Too much technology in hotels can cause:",
+        "options": [
+          "Higher satisfaction",
+          "Technology fatigue and confusion",
+          "More bookings",
+          "Lower costs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "AI-enhanced marketing includes:",
+        "options": [
+          "Only print ads",
+          "Micro-segmentation and real-time optimization",
+          "No data use",
+          "Only TV commercials"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Opportunities from AI challenges include:",
+        "options": [
+          "Ignoring problems",
+          "Re-humanizing hospitality and new job roles",
+          "Removing all technology",
+          "Closing businesses"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______-personalization uses AI to tailor individual guest experiences.",
+        "answer": "Hyper",
+        "hint": "Beyond normal..."
+      },
+      {
+        "sentence": "Over-automation can lead to loss of _______ touch in hospitality.",
+        "answer": "human",
+        "hint": "Personal connection..."
+      },
+      {
+        "sentence": "_______ systems are older technologies that may be incompatible with modern solutions.",
+        "answer": "Legacy",
+        "hint": "Inherited from the past..."
+      },
+      {
+        "sentence": "Digital era customers expect _______ and seamless interactions.",
+        "answer": "fast",
+        "hint": "Quick response..."
+      },
+      {
+        "sentence": "AI creates opportunities for new digital job _______.",
+        "answer": "roles",
+        "hint": "Positions or jobs..."
+      }
+    ],
+    "learn": {
+      "title": "E-Business Challenges & Trends",
+      "content": "\n                <h3>Key Challenges</h3>\n                <ul>\n                    <li>💰 High technology costs</li>\n                    <li>🔧 Legacy system integration</li>\n                    <li>📱 Mobile optimization needs</li>\n                    <li>🤖 Balancing automation vs human touch</li>\n                    <li>🔒 Data security and privacy</li>\n                </ul>\n                \n                <h4>Customer Expectations</h4>\n                <div class=\"formula-box\">\n                    Personalization + Speed + 24/7 Availability + Seamless Experience\n                </div>\n                \n                <h4>Key Trends</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>🤖 AI-enhanced marketing</li>\n                        <li>💬 Chatbots and virtual concierges</li>\n                        <li>👤 Hyper-personalization</li>\n                        <li>📱 Mobile-first approach</li>\n                        <li>🌍 24/7 multilingual support</li>\n                    </ul>\n                </div>\n                \n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-balance-scale\"></i> Balance Required</h4>\n                    <p>Technology should ENHANCE, not replace, the human element in hospitality.</p>\n                </div>\n            "
+    }
+  }
+}

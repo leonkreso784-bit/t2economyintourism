@@ -1,0 +1,2112 @@
+{
+  "fundamentals": {
+    "name": "Fundamentals & Tourism Market",
+    "icon": "fa-globe-americas",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What is the origin of the word 'tour'?",
+        "answer": "From the Latin word 'tornus', meaning 'a tool for making a circle'.",
+        "explanation": "The etymology reflects the circular nature of travel — leaving home and returning."
+      },
+      {
+        "question": "What makes up the PRIMARY tourism industry (basic concepts of tourism)?",
+        "answer": "Travel trade, transport, accommodation, catering, facilities, and tourist attractions.",
+        "explanation": "These are the core components that directly deliver the tourism experience."
+      },
+      {
+        "question": "What are the 5 A's of tourism?",
+        "answer": "Attractions, Access, Accommodation, Amenities, Activities.",
+        "explanation": "The five essential requirements for successful tourism; developing a suitable combination of them is at the heart of tourism planning."
+      },
+      {
+        "question": "Who are the key players (stakeholders) in the tourism industry?",
+        "answer": "Local residents, local companies, media, employees, government, competitors, tourists, business associations, activists, and tourism developers.",
+        "explanation": "Tourism affects and involves a wide network of stakeholders, not just tourists and firms."
+      },
+      {
+        "question": "How are visitors classified?",
+        "answer": "Visitors = Tourists + Day-trippers.\nTourists travel for more than 24 h and stay overnight (≥1 night). Day-trippers stay less than 24 h and do NOT stay overnight.",
+        "explanation": "The overnight stay is the dividing line between a tourist and a day-tripper (excursionist)."
+      },
+      {
+        "question": "How are tourist holidays sub-divided by length?",
+        "answer": "Short holidays = 1–3 nights. Long holidays = more than 3 nights.",
+        "explanation": "A further distinction within the 'tourist' (overnight) category."
+      },
+      {
+        "question": "What are the two TYPES of tourism?",
+        "answer": "1. International tourism — Inbound + Outbound.\n2. Domestic tourism — travel within one's own country.",
+        "explanation": "Type depends on whether a national border is crossed."
+      },
+      {
+        "question": "Distinguish Inbound and Outbound tourism.",
+        "answer": "Inbound: tourists of OUTSIDE origin entering a particular country (incoming).\nOutbound: tourists travelling FROM their country of origin to another country (going outside).",
+        "explanation": "The same trip is inbound for the destination country and outbound for the origin country."
+      },
+      {
+        "question": "What is Domestic tourism and why is it easier?",
+        "answer": "Tourism activity of people within their own country. It is easier because it needs no formal travel documents, health checks or foreign-currency exchange, and usually involves no language barriers.",
+        "explanation": "Fewer formalities and frictions than crossing an international border."
+      },
+      {
+        "question": "What are the 4 types of impacts of tourism development?",
+        "answer": "Economic, Environmental, Social, and Cultural impacts.",
+        "explanation": "Impacts vary in type, location, and significance — the course studies all four."
+      },
+      {
+        "question": "Why are tourists important to a destination?",
+        "answer": "Tourism boosts the revenue of the economy, creates thousands of jobs, develops a country's infrastructure, and plants cultural exchange between foreigners and citizens.",
+        "explanation": "Tourism is a major foreign-exchange and employment generator and one of the world's fastest-growing industries."
+      },
+      {
+        "question": "What is tourism economics?",
+        "answer": "An applied branch (discipline) of economics that studies the economic effects of tourism activity: expenditure decisions, investment decisions, the structure & organization of markets (price, quantity, competition), tourism policy & planning, and issues related to international tourism.",
+        "explanation": "It applies general economic analysis to the specific functioning of the tourism market."
+      },
+      {
+        "question": "What does UN Tourism (UNWTO) say about tourism's growth?",
+        "answer": "Over recent decades tourism has experienced continued growth and diversification to become one of the LARGEST and FASTEST-growing economic sectors in the world.",
+        "explanation": "International arrivals grew from ~528 mn (1995) to ~1,035 mn (2012), with ~1.8 bn forecast for 2030."
+      },
+      {
+        "question": "What does the tourism market INCLUDE?",
+        "answer": "Tourism demand, intermediaries, and tourism supply.",
+        "explanation": "Supply and demand meet (through intermediaries) in the receptive tourism destination."
+      },
+      {
+        "question": "What are the key FEATURES of the tourism market?",
+        "answer": "Intangible product, no transfer of ownership, closely interrelated production (and consumption), an assembled product, no movement of the product, unstable demand, and wider coverage.",
+        "explanation": "These features distinguish the tourism 'product' from ordinary tangible goods."
+      },
+      {
+        "question": "Why is the tourism product called 'intangible' with 'no transfer of ownership'?",
+        "answer": "Tourism relates to service, pleasure and leisure that cannot be visualised in advance; buying/selling means buying a SERVICE, so no ownership of goods is transferred (unlike a tangible product).",
+        "explanation": "You buy an experience, not a physical item you can store or own."
+      },
+      {
+        "question": "What basic characteristic distinguishes tourists in the market?",
+        "answer": "In a receptive destination, tourists SPEND money instead of earning it, and they must be personally present — consumption of the tourism product is impossible without the tourist's presence.",
+        "explanation": "Production and consumption happen at the same place and time, with the tourist as an integral part."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The word 'tour' derives from the Latin 'tornus', meaning:",
+        "options": [
+          "A long journey",
+          "A tool for making a circle",
+          "To rest",
+          "A market"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the 5 A's of tourism?",
+        "options": [
+          "Attractions",
+          "Access",
+          "Advertising",
+          "Amenities"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A visitor who stays less than 24 hours and does not stay overnight is a:",
+        "options": [
+          "Tourist",
+          "Day-tripper",
+          "Inbound tourist",
+          "Long-holiday tourist"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tourists entering a country from outside represent:",
+        "options": [
+          "Outbound tourism",
+          "Domestic tourism",
+          "Inbound tourism",
+          "Excursionism"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is one of the four impacts of tourism development?",
+        "options": [
+          "Technological",
+          "Cultural",
+          "Financial",
+          "Logistical"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tourism economics is best described as:",
+        "options": [
+          "A method of accounting for hotels",
+          "An applied branch of economics studying the economic effects of tourism",
+          "The marketing of destinations",
+          "A type of geography"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The tourism market includes demand, supply and:",
+        "options": [
+          "Governments",
+          "Intermediaries",
+          "Competitors",
+          "Banks"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'No transfer of ownership' in the tourism market means:",
+        "options": [
+          "Tourists rent everything",
+          "Buying tourism means buying a service, not owning goods",
+          "Hotels are state-owned",
+          "Products are free"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Short holidays are defined as:",
+        "options": [
+          "Less than 24 hours",
+          "1–3 nights",
+          "4–7 nights",
+          "More than 3 nights"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Visitors = Tourists + _______.",
+        "answer": "Day-trippers",
+        "hint": "Those who do not stay overnight..."
+      },
+      {
+        "sentence": "The 5 A's are: Attractions, Access, Accommodation, Amenities and _______.",
+        "answer": "Activities",
+        "hint": "Things tourists do..."
+      },
+      {
+        "sentence": "International tourism is split into inbound and _______ tourism.",
+        "answer": "outbound",
+        "hint": "Travelling out of the country of origin..."
+      },
+      {
+        "sentence": "Tourists travel for more than _______ hours and stay overnight.",
+        "answer": "24",
+        "hint": "A full day..."
+      },
+      {
+        "sentence": "The tourism product is _______ — it relates to service and cannot be visualised in advance.",
+        "answer": "intangible",
+        "hint": "Opposite of tangible / physical..."
+      },
+      {
+        "sentence": "The tourism market includes demand, intermediaries and tourism _______.",
+        "answer": "supply",
+        "hint": "The provision side..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism Fundamentals & the Tourism Market",
+      "content": "\n                <h3>🌍 What is Tourism?</h3>\n                <p>The word <strong>'tour'</strong> derives from the Latin <span class=\"highlight\">tornus</span> — 'a tool for making a circle' — reflecting the circular nature of travel: you leave home and return. The <strong>primary tourism industry</strong> is composed of travel trade, transport, accommodation, catering, facilities and tourist attractions.</p>\n                <p><strong>3 key dimensions</strong> define what counts as tourism: <strong>Movement</strong>, <strong>Length of stay</strong>, and <strong>Motivation</strong>.</p>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-star\"></i> The 5 A's of Tourism</h4>\n                    <p><strong>Attractions • Access • Accommodation • Amenities • Activities</strong></p>\n                    <p>These are the essential requirements for successful tourism; developing a suitable combination of them is at the heart of tourism planning.</p>\n                </div>\n\n                <h3>👥 Visitors, Tourists & Day-trippers</h3>\n                <p><strong>Visitors = Tourists + Day-trippers.</strong></p>\n                <table><tr><th>Type</th><th>Stay</th><th>Detail</th></tr>\n                <tr><td><strong>Tourist</strong></td><td>&gt; 24 h (overnight)</td><td>Short holiday = 1–3 nights · Long holiday = &gt; 3 nights</td></tr>\n                <tr><td><strong>Day-tripper</strong></td><td>&lt; 24 h (no overnight)</td><td>Also called an excursionist</td></tr></table>\n\n                <h3>🛫 Types of Tourism</h3>\n                <table><tr><th>Type</th><th>Description</th></tr>\n                <tr><td><strong>International – Inbound</strong></td><td>Tourists of outside origin ENTERING a country</td></tr>\n                <tr><td><strong>International – Outbound</strong></td><td>Tourists LEAVING their country of origin for another</td></tr>\n                <tr><td><strong>Domestic</strong></td><td>Travel within one's own country — no travel documents, health checks, currency exchange or language barriers</td></tr></table>\n                <p>The same trip is <em>inbound</em> for the destination and <em>outbound</em> for the origin country.</p>\n\n                <h3>📊 Why Tourists Matter</h3>\n                <p>Tourism <strong>boosts economic revenue, creates thousands of jobs, develops infrastructure, and fosters cultural exchange</strong>. According to UN Tourism (UNWTO) it is one of the largest and fastest-growing economic sectors — international arrivals grew from ~528 million (1995) to ~1,035 million (2012), with <strong>~1.8 billion forecast for 2030</strong>. (Croatia: ~19.5 m arrivals in 2023, ~20.2 m in 2024.) Tourism development brings <strong>4 types of impact</strong>: economic, environmental, social and cultural.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> What is Tourism Economics?</h4>\n                    <p>An <strong>applied branch of economics</strong> studying the economic effects of tourism activity: expenditure decisions, investment decisions, the structure & organization of markets (price, quantity, competition), tourism policy & planning, and international tourism.</p>\n                </div>\n\n                <h3>🤝 The Tourism Market</h3>\n                <p>It includes <strong>tourism demand + intermediaries + tourism supply</strong>, which meet in the receptive destination. Its distinctive <strong>features</strong>:</p>\n                <ul>\n                    <li><strong>Intangible product</strong> — service/pleasure/leisure that can't be visualised in advance</li>\n                    <li><strong>No transfer of ownership</strong> — you buy a service, not goods</li>\n                    <li><strong>Closely interrelated production & consumption</strong> — happen together, with the tourist present</li>\n                    <li><strong>Assembled product · no movement of the product · unstable demand · wider coverage</strong></li>\n                </ul>\n                <p>A basic characteristic: in a receptive destination, tourists <strong>spend money instead of earning it</strong>, and the product cannot be 'produced' without their personal presence.</p>\n            "
+    }
+  },
+  "demand": {
+    "name": "Tourism Demand",
+    "icon": "fa-chart-line",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "What is tourism demand?",
+        "answer": "The WILLINGNESS and ABILITY of consumers to buy different amounts of a tourism product at different prices during any period of time.",
+        "explanation": "Both willingness (desire) and ability (purchasing power) are required — not just one."
+      },
+      {
+        "question": "What are the 2 types of tourism demand?",
+        "answer": "1. Demand for TRAVEL to a destination (e.g. visitor arrivals, overnights, expenditure).\n2. Demand for a PARTICULAR tourism-related product or service (e.g. hotel rooms, restaurant meals).",
+        "explanation": "Demand can be measured at the destination level or at the individual product level."
+      },
+      {
+        "question": "What determines demand for travel to a destination?",
+        "answer": "Price factors (transport, accommodation, excursions, food & beverage, entertainment) and non-price factors (socio-economic, demographic and qualitative factors).",
+        "explanation": "Both the cost of the trip and the traveller's characteristics matter."
+      },
+      {
+        "question": "What are the most important variables affecting demand for any good/service?",
+        "answer": "Price, consumer income, the number of consumers in the market, the price of related products, consumer tastes, the level of marketing/promotion expenditure, and other variables.",
+        "explanation": "Standard demand determinants applied to tourism."
+      },
+      {
+        "question": "List key factors influencing tourism demand specifically.",
+        "answer": "Size of the market (population), income, tastes, advertising & promotion, seasonality, product availability, prices of substitute & complementary products, and the amount of leisure time available.",
+        "explanation": "Seasonality and leisure time are especially important in tourism."
+      },
+      {
+        "question": "What is the Law of Demand?",
+        "answer": "Price and tourism demand have an INVERSE relationship: as the price of a tourism product falls, the quantity demanded rises (and vice versa).",
+        "explanation": "The downward-sloping demand curve."
+      },
+      {
+        "question": "How do non-price factors affect demand?",
+        "answer": "Changes in non-price factors shift demand at ANY given price: if non-price factors work in favour of the product, more is demanded at each price (and vice versa).",
+        "explanation": "Price changes move along the curve; non-price factors shift the whole curve."
+      },
+      {
+        "question": "What is the Bandwagon effect?",
+        "answer": "People demand a product or service BECAUSE others are purchasing it (because it is 'fashionable').",
+        "explanation": "Following the crowd increases demand."
+      },
+      {
+        "question": "What is the Snob effect?",
+        "answer": "Some consumers seek to be different and exclusive by demanding LESS of a product as MORE people consume it.",
+        "explanation": "The opposite of the bandwagon effect — exclusivity drives demand down as popularity rises."
+      },
+      {
+        "question": "What is the Veblen effect?",
+        "answer": "Some individuals seek to impress others by demanding MORE of certain 'high-status' products as their PRICE RISES (prestige).",
+        "explanation": "Higher price signals more prestige, so demand increases — contradicting the Law of Demand for luxury goods."
+      },
+      {
+        "question": "What are the FOUR forms of tourism demand elasticity?",
+        "answer": "1. Price elasticity\n2. Income elasticity\n3. Cross-price elasticity\n4. Marketing (advertising) elasticity",
+        "explanation": "Note there are FOUR forms — marketing elasticity is the one often forgotten."
+      },
+      {
+        "question": "Define price elasticity and income elasticity of demand (with formulas).",
+        "answer": "Price elasticity = how demand changes due to a change in the product's OWN price = %ΔQuantity demanded / %ΔPrice.\nIncome elasticity = how demand changes due to a change in consumer INCOME = %ΔQuantity demanded / %ΔIncome.",
+        "explanation": "Each elasticity divides the % change in quantity demanded by the % change in the driver."
+      },
+      {
+        "question": "Define cross-price elasticity and marketing elasticity of demand (with formulas).",
+        "answer": "Cross-price elasticity = how demand changes due to a change in the price of SUBSTITUTE/COMPLEMENTARY goods = %ΔQd of product A / %ΔPrice of product B.\nMarketing (advertising) elasticity = responsiveness of sales to changes in marketing expenditure = %ΔQd / %ΔMarketing expenditure.",
+        "explanation": "Cross-price links two products; marketing elasticity links sales to promotion spend."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Tourism demand requires consumers to have:",
+        "options": [
+          "Only the willingness to buy",
+          "Only the ability to pay",
+          "Both willingness AND ability",
+          "A travel agent"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The Law of Demand describes a relationship between price and demand that is:",
+        "options": [
+          "Direct",
+          "Inverse",
+          "Unrelated",
+          "Always proportional"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many forms of tourism demand elasticity are there?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Price Elasticity of Demand =",
+        "options": [
+          "%ΔPrice / %ΔQuantity",
+          "%ΔQuantity demanded / %ΔPrice",
+          "%ΔIncome / %ΔPrice",
+          "%ΔQuantity / %ΔIncome"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Snob effect means demand:",
+        "options": [
+          "Rises as others buy",
+          "Falls as more people consume the product",
+          "Rises as price rises",
+          "Is unaffected by others"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Veblen effect applies to:",
+        "options": [
+          "Necessities",
+          "Inferior goods",
+          "High-status / prestige goods",
+          "Free goods"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which is a NON-price factor influencing tourism demand?",
+        "options": [
+          "Accommodation price",
+          "Transport cost",
+          "Seasonality",
+          "Excursion price"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Demand for 'visitor arrivals, overnights and expenditure' is demand for:",
+        "options": [
+          "A particular product",
+          "Travel to a destination",
+          "Hotel rooms only",
+          "Restaurant meals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Cross-price elasticity measures demand changes caused by:",
+        "options": [
+          "The product's own price",
+          "Consumer income",
+          "The price of substitute/complementary goods",
+          "Marketing spend"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Tourism demand is the willingness and _______ of consumers to buy a product at different prices.",
+        "answer": "ability",
+        "hint": "Purchasing power..."
+      },
+      {
+        "sentence": "Price and tourism demand have an _______ relationship (Law of Demand).",
+        "answer": "inverse",
+        "hint": "Opposite directions..."
+      },
+      {
+        "sentence": "The _______ effect: people demand more of a status good as its price rises.",
+        "answer": "Veblen",
+        "hint": "Named after economist Thorstein..."
+      },
+      {
+        "sentence": "The four elasticities are price, income, cross-price and _______ elasticity.",
+        "answer": "marketing",
+        "hint": "Also called advertising elasticity..."
+      },
+      {
+        "sentence": "Price Elasticity of Demand = % change in quantity demanded / % change in _______.",
+        "answer": "price",
+        "hint": "The product's own..."
+      },
+      {
+        "sentence": "The _______ effect: people buy a product because others are buying it (fashionable).",
+        "answer": "Bandwagon",
+        "hint": "Jump on the..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism Demand",
+      "content": "\n                <h3>📖 Definition</h3>\n                <p><strong>Tourism demand</strong> = the <span class=\"highlight\">willingness AND ability</span> of consumers to buy different amounts of a tourism product at different prices during any period of time. Both desire <em>and</em> purchasing power are required — wanting a trip you can't afford is not demand.</p>\n\n                <h3>🎯 Two Types of Demand</h3>\n                <ul>\n                    <li><strong>Demand for travel to a destination</strong> — measured by visitor arrivals, overnights, expenditure</li>\n                    <li><strong>Demand for a particular product/service</strong> — e.g. hotel rooms, restaurant meals</li>\n                </ul>\n\n                <h3>🧭 What Drives Demand?</h3>\n                <p>The most important variables affecting demand for any good are <strong>price, consumer income, the number of consumers, the price of related products, consumer tastes, and marketing/promotion spend</strong>. In tourism specifically, also: <strong>market size (population), seasonality, product availability, prices of substitutes/complements, and leisure time</strong>. Determinants split into <strong>price factors</strong> (transport, accommodation, excursions, F&B, entertainment) and <strong>non-price factors</strong> (socio-economic, demographic, qualitative).</p>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-balance-scale\"></i> Law of Demand</h4>\n                    <p>Price ↓ → Quantity demanded ↑ &nbsp;(an <strong>inverse</strong> relationship)</p>\n                    <p>A price change MOVES along the curve; a change in a <strong>non-price factor SHIFTS</strong> the whole curve (more/less demanded at every price).</p>\n                </div>\n\n                <h3>🌀 Special Demand Effects</h3>\n                <table><tr><th>Effect</th><th>Behaviour</th></tr>\n                <tr><td><strong>Bandwagon</strong></td><td>Demand MORE because others are buying it (it's fashionable)</td></tr>\n                <tr><td><strong>Snob</strong></td><td>Demand LESS as more people consume it (seek exclusivity)</td></tr>\n                <tr><td><strong>Veblen</strong></td><td>Demand MORE of a 'high-status' good as its PRICE RISES (prestige)</td></tr></table>\n                <p>Snob and Veblen effects contradict the simple Law of Demand for status/luxury products.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-calculator\"></i> The FOUR Forms of Elasticity</h4>\n                    <p>Each = <strong>% change in quantity demanded ÷ % change in the driver</strong>:</p>\n                    <ul>\n                    <li><strong>Price elasticity</strong> — driver is the product's OWN price</li>\n                    <li><strong>Income elasticity</strong> — driver is consumer income</li>\n                    <li><strong>Cross-price elasticity</strong> — %ΔQd of A ÷ %ΔPrice of B (substitutes/complements)</li>\n                    <li><strong>Marketing (advertising) elasticity</strong> — driver is marketing expenditure</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "forecasting": {
+    "name": "Forecasting Tourism Demand",
+    "icon": "fa-magnifying-glass-chart",
+    "color": "#06b6d4",
+    "flashcards": [
+      {
+        "question": "Why is forecasting tourism demand important?",
+        "answer": "In a changing global environment, reliable short-term and long-term forecasts of tourism activity are essential for both government policy development and business planning.",
+        "explanation": "Forecasts guide decisions for the public sector, businesses, and planners."
+      },
+      {
+        "question": "What are the 3 time horizons in tourism forecasting?",
+        "answer": "Short run, intermediate run, and long range.",
+        "explanation": "Different decisions require different forecasting horizons."
+      },
+      {
+        "question": "Give some of the 7 reasons forecasting is especially important in tourism.",
+        "answer": "The tourist product is perishable; tourism behaviour is complex; people are inseparable from the production–consumption process; customer satisfaction depends on complementary products/services; demand is extremely sensitive to natural and human-made disasters; forecasting aids long-term planning; it is fundamental to modern business.",
+        "explanation": "Perishability and disaster-sensitivity make accurate forecasting vital in tourism."
+      },
+      {
+        "question": "What are the 3 broad methods of forecasting?",
+        "answer": "1. Qualitative forecasting — based on judgment, experience, practical knowledge and intuition.\n2. Quantitative forecasting — uses mathematical techniques to predict variables.\n3. Artificial Intelligence — AI-based systems built to bridge the gap between qualitative and quantitative approaches.",
+        "explanation": "AI acts as a bridge between human judgment and pure mathematical models."
+      },
+      {
+        "question": "When are QUALITATIVE (judgmental) forecasting methods used?",
+        "answer": "When there are insufficient historical data; the available time series is not reliable/valid; the macro environment is changing rapidly; there are major disturbances (wars, terrorism, strikes, natural disasters, COVID-19); or long-term forecasts are desired.",
+        "explanation": "Judgment fills in when data are missing or the environment is unstable."
+      },
+      {
+        "question": "What are the 3 types of quantitative forecasting models?",
+        "answer": "1. Time-series models — assume a variable's past course is the key to predicting its future.\n2. Causal (econometric) models — identify causal relationships between the demand variable and its influencing factors.\n3. Mixed models — include both time-series and structural (causal) elements.",
+        "explanation": "Time-series looks at the past trend; causal models explain the 'why'."
+      },
+      {
+        "question": "What is the most common method of estimating demand?",
+        "answer": "Regression analysis.",
+        "explanation": "It estimates how independent variables affect the tourism demand variable."
+      },
+      {
+        "question": "What are the 4 steps in using regression analysis?",
+        "answer": "1. Specify the model to be estimated (identify the most important variables affecting demand).\n2. Collect the data for the variables in the model.\n3. Determine the form of the model (most common is the linear model).\n4. Evaluate the regression results.",
+        "explanation": "A structured procedure for modelling tourism demand."
+      },
+      {
+        "question": "In demand regression, what are typical DEPENDENT and INDEPENDENT variables?",
+        "answer": "Dependent (explained): tourist arrivals, tourist expenditures, length of stay.\nIndependent (explanatory): income, relative prices, transport cost, marketing/promotion expenses, qualitative factors.",
+        "explanation": "The dependent variable is the demand being predicted; independents are its drivers."
+      },
+      {
+        "question": "Who uses demand forecasts and why?",
+        "answer": "Tourism marketers (set marketing goals, explore potential markets, simulate the impact of future events); business managers (determine operational requirements — staffing, supplies, capacity — and study investment feasibility); planners & public agencies (predict economic, social/cultural and environmental effects of visitors).",
+        "explanation": "Poor forecasting leads to over/under-budgeting, wasted resources, and degradation."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "How many time horizons are used in tourism forecasting?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is one of the three broad forecasting methods?",
+        "options": [
+          "Accounting",
+          "Qualitative",
+          "Marketing",
+          "Sampling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "AI-based forecasting systems are built to:",
+        "options": [
+          "Replace all managers",
+          "Bridge the gap between qualitative and quantitative approaches",
+          "Only collect data",
+          "Set prices"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Qualitative forecasting is appropriate when:",
+        "options": [
+          "There are plenty of reliable historical data",
+          "There are insufficient or unreliable data and major disturbances",
+          "The market never changes",
+          "Only short-term forecasts are needed"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Time-series models assume that:",
+        "options": [
+          "Income drives demand",
+          "A variable's past course is the key to its future",
+          "Prices are fixed",
+          "Marketing has no effect"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The most common method of estimating demand is:",
+        "options": [
+          "Brainstorming",
+          "Regression analysis",
+          "The Delphi panel",
+          "Random sampling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a typical DEPENDENT variable in a tourism demand model?",
+        "options": [
+          "Income",
+          "Transport cost",
+          "Tourist arrivals",
+          "Relative prices"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Causal (econometric) models try to:",
+        "options": [
+          "Extend the past trend only",
+          "Identify causal relationships between demand and its influencing factors",
+          "Avoid using any data",
+          "Forecast without variables"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The three broad forecasting methods are qualitative, quantitative and _______.",
+        "answer": "Artificial Intelligence",
+        "hint": "AI..."
+      },
+      {
+        "sentence": "_______ analysis is the most common method of estimating demand.",
+        "answer": "Regression",
+        "hint": "Fits a line to data..."
+      },
+      {
+        "sentence": "_______-series models assume a variable's past course predicts its future.",
+        "answer": "Time",
+        "hint": "Past observations over... "
+      },
+      {
+        "sentence": "Qualitative forecasting relies on experience, knowledge and _______.",
+        "answer": "intuition",
+        "hint": "Gut judgment..."
+      },
+      {
+        "sentence": "Tourist arrivals, expenditures and length of stay are typical _______ variables.",
+        "answer": "dependent",
+        "hint": "The thing being explained/predicted..."
+      }
+    ],
+    "learn": {
+      "title": "Forecasting Tourism Demand",
+      "content": "\n                <h3>🔮 Why Forecast?</h3>\n                <p>In a changing global environment, reliable short- and long-term forecasts of tourism activity are essential for both <strong>government policy development</strong> and <strong>business planning</strong>. Forecasts use <strong>3 time horizons</strong>: short run, intermediate run, and long range.</p>\n                <p><strong>7 reasons forecasting is special in tourism:</strong> the product is <span class=\"highlight\">perishable</span>; behaviour is complex; people are inseparable from production–consumption; satisfaction depends on complementary products; demand is extremely sensitive to natural & human-made disasters; it aids long-term planning; and it is fundamental to modern business.</p>\n\n                <h3>🧰 Three Broad Methods</h3>\n                <table><tr><th>Method</th><th>Basis</th><th>When used</th></tr>\n                <tr><td><strong>Qualitative</strong> (judgmental)</td><td>Experience, knowledge, intuition</td><td>Scarce/unreliable data, rapidly changing macro environment, major disturbances (wars, terrorism, disasters, COVID-19), long-term forecasts</td></tr>\n                <tr><td><strong>Quantitative</strong></td><td>Mathematical techniques</td><td>Good historical data available</td></tr>\n                <tr><td><strong>Artificial Intelligence</strong></td><td>AI systems</td><td>Built to BRIDGE qualitative & quantitative approaches</td></tr></table>\n\n                <h3>📐 Quantitative Models</h3>\n                <ul>\n                    <li><strong>Time-series:</strong> assume a variable's past course is the key to its future</li>\n                    <li><strong>Causal (econometric):</strong> identify causal relationships between demand and its influencing factors</li>\n                    <li><strong>Mixed:</strong> combine time-series and structural (causal) elements</li>\n                </ul>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-square-root-variable\"></i> Regression Analysis (most common method)</h4>\n                    <p><strong>4 steps:</strong> (1) specify the model — identify the key variables → (2) collect the data → (3) determine the form (usually linear) → (4) evaluate the results.</p>\n                    <p><strong>Dependent variables:</strong> tourist arrivals, expenditures, length of stay.<br>\n                    <strong>Independent variables:</strong> income, relative prices, transport cost, marketing/promotion expenses, qualitative factors.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-bullseye\"></i> Who uses forecasts?</h4>\n                    <p><strong>Marketers</strong> (set goals, explore markets, simulate future events) · <strong>Business managers</strong> (staffing, supplies, capacity, investment feasibility) · <strong>Planners & public agencies</strong> (predict economic, social and environmental effects). Poor forecasting → over/under-budgeting, wasted resources, degradation.</p>\n                </div>\n            "
+    }
+  },
+  "supply": {
+    "name": "Supply, Production & Costs",
+    "icon": "fa-industry",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What are the 3 basic forms of inputs (factors of production) into tourism supply?",
+        "answer": "Natural resources, human resources, and human-made resources.",
+        "explanation": "Production and supply of tourism products are based on these inputs."
+      },
+      {
+        "question": "What is the difference between the short run and the long run in production?",
+        "answer": "Short run: the timeframe in which AT LEAST ONE factor of production is FIXED.\nLong run: ALL factors of production can be varied.",
+        "explanation": "The defining feature of the short run is the existence of a fixed factor."
+      },
+      {
+        "question": "What is the difference between variable and fixed inputs?",
+        "answer": "Variable inputs can be changed at short notice. Fixed inputs cannot be easily adjusted.",
+        "explanation": "Inputs into tourism supply are either fixed or variable."
+      },
+      {
+        "question": "On what do production costs in tourism depend?",
+        "answer": "On the quantity, price and productivity of the factors used in the provision of the product.",
+        "explanation": "More/expensive/less-productive factors raise costs."
+      },
+      {
+        "question": "What is the difference between explicit and implicit costs?",
+        "answer": "Explicit costs are direct payments made by the firm to OUTSIDE suppliers of inputs.\nImplicit costs are the OPPORTUNITY costs the firm faces in using its OWN resources in one task rather than another — no direct payment, and sometimes hard to quantify.",
+        "explanation": "Explicit = money paid out; implicit = value of foregone alternatives."
+      },
+      {
+        "question": "Give the main cost formulas (TC, AC, AFC, AVC, MC).",
+        "answer": "TC = FC + VC (total cost).\nAC = TC / Q (average / unit cost).\nAFC = FC / Q (average fixed cost).\nAVC = VC / Q (average variable cost).\nMC = dTC / dQ (marginal cost — extra cost of one more unit).",
+        "explanation": "Average costs divide a total by output; marginal cost is the cost of the next unit."
+      },
+      {
+        "question": "What are Total, Average and Marginal PRODUCT?",
+        "answer": "Total product (TP) = output generated from the factors employed.\nAverage product (AP) = TP / Q (output per unit of the variable factor, e.g. per worker).\nMarginal product (MP) = the change in total product when ONE additional unit of the variable factor is employed (e.g. extra meals from one extra chef).",
+        "explanation": "In intangible service industries like tourism, 'output' can be hard to measure."
+      },
+      {
+        "question": "What is economy of scale?",
+        "answer": "When a given percentage increase in ALL inputs results in a LARGER percentage increase in the firm's output — reducing unit costs (long-run average costs, LRAC).",
+        "explanation": "Tourism examples: aircraft manufacture, mega cruise ships, public transport."
+      },
+      {
+        "question": "What is diseconomy of scale?",
+        "answer": "When a given percentage increase in all inputs leads to a SMALLER percentage increase in output (decreasing returns to scale). It can also be caused externally — e.g. tourism growth in a region raising factor costs (land, labour, capital).",
+        "explanation": "Getting too big (or external cost pressures) reduces efficiency."
+      },
+      {
+        "question": "What is a supply chain?",
+        "answer": "The network of organisations, people, activities, information and resources involved in moving a product or service from a supplier to a customer — transforming natural resources, raw materials and components into a finished product delivered to the ultimate consumer.",
+        "explanation": "Everything involved in getting the tourism product to the consumer."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which is NOT one of the three basic inputs into tourism supply?",
+        "options": [
+          "Natural resources",
+          "Human resources",
+          "Financial resources",
+          "Human-made resources"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the SHORT run:",
+        "options": [
+          "All factors are variable",
+          "At least one factor is fixed",
+          "No production occurs",
+          "Only labour is used"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Implicit costs are:",
+        "options": [
+          "Direct payments to outside suppliers",
+          "Opportunity costs of using the firm's own resources",
+          "Always zero",
+          "The same as fixed costs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Average variable cost (AVC) is calculated as:",
+        "options": [
+          "FC / Q",
+          "VC / Q",
+          "TC / Q",
+          "dTC / dQ"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Marginal cost (MC) is:",
+        "options": [
+          "Total cost divided by output",
+          "The extra cost of producing one more unit (dTC/dQ)",
+          "Fixed cost per unit",
+          "Variable cost only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Marginal product measures:",
+        "options": [
+          "Total output",
+          "Output per worker",
+          "The change in total product from one extra unit of the variable factor",
+          "Cost per unit"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Economy of scale means a % increase in all inputs gives a:",
+        "options": [
+          "Smaller % increase in output",
+          "Larger % increase in output",
+          "Equal % increase in output",
+          "Fall in output"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Total Cost is defined as:",
+        "options": [
+          "FC − VC",
+          "FC + VC",
+          "FC × VC",
+          "VC / FC"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The three inputs into tourism supply are natural, human and _______ resources.",
+        "answer": "human-made",
+        "hint": "Built / man-made..."
+      },
+      {
+        "sentence": "In the short run at least one factor of production is _______.",
+        "answer": "fixed",
+        "hint": "Cannot be easily adjusted..."
+      },
+      {
+        "sentence": "TC = FC + _______.",
+        "answer": "VC",
+        "hint": "Variable cost..."
+      },
+      {
+        "sentence": "_______ costs are the opportunity costs of using the firm's own resources.",
+        "answer": "Implicit",
+        "hint": "Opposite of explicit..."
+      },
+      {
+        "sentence": "Economy of scale reduces the firm's long-run _______ costs (LRAC).",
+        "answer": "average",
+        "hint": "Cost per unit..."
+      },
+      {
+        "sentence": "Marginal cost MC = dTC / _______.",
+        "answer": "dQ",
+        "hint": "Change in output (quantity)..."
+      }
+    ],
+    "learn": {
+      "title": "Supply, Production & Costs",
+      "content": "\n                <h3>🏭 Production & Inputs</h3>\n                <p>The production and supply of tourism products are based on inputs (factors of production) in three forms: <strong>natural, human, and human-made resources</strong>.</p>\n                <table><tr><th>Concept</th><th>Meaning</th></tr>\n                <tr><td><strong>Short run</strong></td><td>At least ONE factor of production is fixed</td></tr>\n                <tr><td><strong>Long run</strong></td><td>ALL factors can be varied</td></tr>\n                <tr><td><strong>Variable input</strong></td><td>Can be changed at short notice</td></tr>\n                <tr><td><strong>Fixed input</strong></td><td>Cannot be easily adjusted</td></tr></table>\n\n                <h3>💸 Explicit vs Implicit Costs</h3>\n                <p>Production costs depend on the <strong>quantity, price and productivity</strong> of the factors used.</p>\n                <ul>\n                    <li><strong>Explicit costs:</strong> direct payments to outside suppliers (wages, rent, materials)</li>\n                    <li><strong>Implicit costs:</strong> the OPPORTUNITY cost of using the firm's OWN resources — no direct payment, sometimes hard to quantify</li>\n                </ul>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-calculator\"></i> Cost Formulas</h4>\n                    <p><strong>TC = FC + VC</strong> (Total = Fixed + Variable)<br>\n                    AC = TC / Q &nbsp;(average / unit cost)<br>\n                    AFC = FC / Q &nbsp;|&nbsp; AVC = VC / Q<br>\n                    <strong>MC = dTC / dQ</strong> &nbsp;(extra cost of one more unit)</p>\n                </div>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-boxes-stacked\"></i> Product Measures</h4>\n                    <p><strong>TP</strong> = total output from the factors employed<br>\n                    <strong>AP = TP / Q</strong> = output per unit of the variable factor (e.g. per worker)<br>\n                    <strong>MP</strong> = change in TP from ONE extra unit of the variable factor (e.g. extra meals from one extra chef)</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-arrows-up-down\"></i> Scale Effects & Supply Chain</h4>\n                    <p><strong>Economy of scale:</strong> a % rise in all inputs → a LARGER % rise in output → lower long-run average cost (LRAC). Tourism examples: aircraft manufacture, mega cruise ships, public transport.<br>\n                    <strong>Diseconomy of scale:</strong> output rises by a SMALLER %; can also be caused externally (a tourism boom bidding up land/labour/capital costs).<br>\n                    <strong>Supply chain:</strong> the network of organisations, people, activities and resources moving a product from supplier to customer.</p>\n                </div>\n            "
+    }
+  },
+  "marketStructure": {
+    "name": "Market Structure",
+    "icon": "fa-building",
+    "color": "#f97316",
+    "flashcards": [
+      {
+        "question": "What is market structure and what does it affect?",
+        "answer": "Market structure refers to the NATURE of the market within which a tourism firm operates. It affects the firm's CONDUCT (decision-making processes) and the firm's PERFORMANCE (potential to make profit, gain market share and achieve efficiency).",
+        "explanation": "This is the basis of the Structure–Conduct–Performance (SCP) framework."
+      },
+      {
+        "question": "List the major determinants of market structure.",
+        "answer": "Number of sellers; number of buyers; nature of goods/services offered; entry & exit barriers; information about market conditions (prices, technology); economy of scale; and the level of product/service differentiation between firms.",
+        "explanation": "These factors together decide which structure prevails."
+      },
+      {
+        "question": "What are the 4 types of market structure?",
+        "answer": "1. Perfect competition\n2. Monopolistic competition\n3. Oligopoly\n4. Monopoly",
+        "explanation": "Ordered from most competitive to least competitive."
+      },
+      {
+        "question": "Describe PERFECT COMPETITION (and a tourism example).",
+        "answer": "Very large number of buyers and sellers; perfect information; individual firms' outputs too small to affect price; identical products sold at the market-set price; no barriers to entry/exit. Tourism example: street stalls.",
+        "explanation": "No single firm has market power — it is a price-taker."
+      },
+      {
+        "question": "Describe MONOPOLISTIC COMPETITION (and tourism examples).",
+        "answer": "Very large number of buyers and sellers; small market power; products are similar but slightly DIFFERENTIATED; no barriers to entry/exit. Tourism examples: restaurants, hotels, B&Bs, travel agencies.",
+        "explanation": "Differentiation gives each firm a little (limited) price control."
+      },
+      {
+        "question": "Describe OLIGOPOLY (and tourism examples).",
+        "answer": "A SMALL number of firms dominate supply; consumers have imperfect information; firms are mutually interdependent (set output/price with reference to each other); strong barriers to entry/exit. Tourism examples: tour operators, airlines.",
+        "explanation": "Few large firms watch each other closely when setting price and output."
+      },
+      {
+        "question": "Describe MONOPOLY (and a tourism example).",
+        "answer": "Only ONE seller; consumers have imperfect information; the firm determines market output and price; no direct substitute for the product; very strong barriers to entry/exit. Tourism example: nationalized railways.",
+        "explanation": "A single firm with strong price control and no close substitutes."
+      },
+      {
+        "question": "Which factors determine which structure prevails in a tourism market?",
+        "answer": "The number of sellers, the extent of product differentiation, diversification, and barriers to entry.",
+        "explanation": "More sellers + low differentiation + low barriers → more competition."
+      },
+      {
+        "question": "What are the 3 broad competitive strategies firms pursue?",
+        "answer": "1. Cost leadership\n2. Product differentiation\n3. Focus",
+        "explanation": "Firms pursue one or a combination of these."
+      },
+      {
+        "question": "Explain the COST LEADERSHIP strategy.",
+        "answer": "An integrated set of actions to produce/deliver goods or services at the LOWEST cost — via cheaper inputs, producing a core product, and achieving economies of scale (high volume, volume-purchasing discounts). Good when the market is price-sensitive; low cost can be a barrier to entry. Example: low-cost airlines.",
+        "explanation": "Compete by being the cheapest producer."
+      },
+      {
+        "question": "Explain the PRODUCT DIFFERENTIATION and FOCUS strategies.",
+        "answer": "Differentiation: better product performance or perception → creates market power, reduces price elasticity, builds repeat business and brand.\nFocus: concentrate on a particular geographical area, customer segment, or single product/line — e.g. 6/7★ hotels focusing on high-income guests with prestige pricing.",
+        "explanation": "Differentiation competes on uniqueness; focus competes by serving a niche well."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Market structure affects a firm's conduct and its:",
+        "options": [
+          "Location",
+          "Performance",
+          "Logo",
+          "Staff uniforms"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which market structure has only ONE seller and no close substitute?",
+        "options": [
+          "Perfect competition",
+          "Monopolistic competition",
+          "Oligopoly",
+          "Monopoly"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Restaurants, hotels and B&Bs are typical examples of:",
+        "options": [
+          "Perfect competition",
+          "Monopolistic competition",
+          "Oligopoly",
+          "Monopoly"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "An oligopoly is characterized by:",
+        "options": [
+          "Many small firms with identical products",
+          "A few dominant, mutually interdependent firms with strong barriers",
+          "One seller",
+          "No barriers to entry"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In perfect competition, the individual firm is a:",
+        "options": [
+          "Price-maker",
+          "Price-taker (price set by the market)",
+          "Monopolist",
+          "Cartel leader"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Low-cost airlines are a classic example of which strategy?",
+        "options": [
+          "Product differentiation",
+          "Focus",
+          "Cost leadership",
+          "Diversification"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A 6/7★ hotel targeting high-income guests with prestige pricing uses a:",
+        "options": [
+          "Cost leadership strategy",
+          "Focus strategy",
+          "Perfect-competition strategy",
+          "Mass-market strategy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a determinant of market structure?",
+        "options": [
+          "Weather",
+          "Number of sellers and barriers to entry",
+          "Hotel star rating only",
+          "Tourist nationality"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Market structure affects a firm's conduct and its _______.",
+        "answer": "performance",
+        "hint": "Profit, market share, efficiency..."
+      },
+      {
+        "sentence": "The 4 market structures are perfect competition, monopolistic competition, oligopoly and _______.",
+        "answer": "monopoly",
+        "hint": "One seller..."
+      },
+      {
+        "sentence": "In a(n) _______ a small number of firms dominate and are mutually interdependent.",
+        "answer": "oligopoly",
+        "hint": "Few sellers (oligo = few)..."
+      },
+      {
+        "sentence": "The three competitive strategies are cost leadership, product differentiation and _______.",
+        "answer": "focus",
+        "hint": "Concentrate on a niche/segment..."
+      },
+      {
+        "sentence": "_______ competition firms sell identical products at the market-set price.",
+        "answer": "Perfect",
+        "hint": "The most competitive structure..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism & Market Structure",
+      "content": "\n                <h3>🏢 What is Market Structure?</h3>\n                <p>Market structure is the <strong>nature of the market</strong> within which a tourism firm operates. It shapes the firm's <strong>conduct</strong> (decision-making) and its <strong>performance</strong> (profit potential, market share, efficiency) — the <span class=\"highlight\">Structure–Conduct–Performance (SCP)</span> framework.</p>\n                <p><strong>Major determinants:</strong> number of sellers · number of buyers · nature of goods/services · entry & exit barriers · information about market conditions · economies of scale · degree of product differentiation. Which structure prevails depends mainly on the number of sellers, product differentiation, diversification, and barriers to entry.</p>\n\n                <h3>📊 The 4 Market Structures (most → least competitive)</h3>\n                <table>\n                    <tr><th>Structure</th><th>Firms / price</th><th>Products / barriers</th><th>Tourism example</th></tr>\n                    <tr><td><strong>Perfect competition</strong></td><td>Many; price-TAKER (market sets price)</td><td>Identical products, perfect info, NO barriers</td><td>Street stalls</td></tr>\n                    <tr><td><strong>Monopolistic competition</strong></td><td>Many; limited price control</td><td>Similar but differentiated; no barriers</td><td>Restaurants, hotels, B&Bs, travel agencies</td></tr>\n                    <tr><td><strong>Oligopoly</strong></td><td>Few; strong but interdependent control</td><td>Identical/differentiated; strong barriers</td><td>Tour operators, airlines</td></tr>\n                    <tr><td><strong>Monopoly</strong></td><td>One; strong price control</td><td>Unique product, no substitute; very strong barriers</td><td>Nationalized railways</td></tr>\n                </table>\n\n                <h3>♟️ 3 Competitive Strategies</h3>\n                <p>Competitive firms pursue one or a combination of three broad strategies:</p>\n                <ul>\n                    <li><strong>Cost leadership</strong> — deliver at the LOWEST cost (cheaper inputs, a core product, economies of scale, volume discounts). Good when the market is price-sensitive; low cost can be a barrier to entry. <em>e.g. low-cost airlines.</em></li>\n                    <li><strong>Product differentiation</strong> — better product performance or perception → creates market power, REDUCES price elasticity, builds repeat business and brand.</li>\n                    <li><strong>Focus</strong> — concentrate on a particular geographical area, customer segment, or single product. <em>e.g. 6/7★ hotels targeting high-income guests with prestige pricing.</em></li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Remember</h4>\n                    <p>Structure shapes conduct and performance. More sellers + low differentiation + low barriers = more competition; fewer sellers + high barriers = more market power.</p>\n                </div>\n            "
+    }
+  },
+  "pricing": {
+    "name": "Strategic Pricing",
+    "icon": "fa-tags",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "How important is price as a decision variable for a tourism firm?",
+        "answer": "Price is not the ONLY decision variable, but it is perhaps the MOST CRITICAL — and it is the MOST ADJUSTABLE. Unlike product, distribution and promotion (which take time to change), price can be altered QUICKLY.",
+        "explanation": "Pricing decisions, good or bad, have serious consequences for the firm."
+      },
+      {
+        "question": "Where does price sit in the marketing mix, and what does it signal?",
+        "answer": "Price is one of the 4 P's of the marketing mix (Product, Place, Price, Promotion) and should complement the others. Price triggers buyer PERCEPTION of the product's quality and its positioning within market segments — attracting or deterring buyers.",
+        "explanation": "Price is both a revenue lever and a quality/positioning signal."
+      },
+      {
+        "question": "Why do tourism firms differentiate their product (relative to pricing)?",
+        "answer": "To REDUCE the demand elasticity of their product, so they can RAISE its price and total revenue.",
+        "explanation": "Less elastic (less price-sensitive) demand gives the firm more pricing power."
+      },
+      {
+        "question": "List key determinants of tourism prices.",
+        "answer": "The firm's objective; ownership characteristics; market structure; method of distribution; the firm's market position; degree of competition; cost structure; the seasonal nature of demand; capacity constraints; product quality & brand strength; ease of switching to a substitute; the perishable nature of the product; and government involvement.",
+        "explanation": "Prices are governed by the interplay of many internal and external factors."
+      },
+      {
+        "question": "How does elasticity of demand affect a pricing decision?",
+        "answer": "Setting HIGHER prices may bring FEWER buyers and smaller revenue if demand is ELASTIC. Setting LOWER prices may bring more buyers but small revenue potential if demand is INELASTIC.",
+        "explanation": "The effect of a price change on total revenue depends on elasticity."
+      },
+      {
+        "question": "What are the 3 types of tourism pricing strategies?",
+        "answer": "1. COST-BASED — price based on the costs of production (+ a fair return), not external factors.\n2. MARKET-BASED (customer-oriented) — price based on current market conditions / what customers are willing to pay.\n3. COMPETITION-BASED — price based on competitors' strategies, costs, prices and offerings.",
+        "explanation": "Three broad approaches; firms may combine them."
+      },
+      {
+        "question": "Name the COST-BASED pricing sub-strategies.",
+        "answer": "a) Cost-plus pricing (add a mark-up to average cost).\nb) Pricing for profit maximization (price where Marginal Revenue = Marginal Cost).\nc) Marginal cost pricing (price = just above the extra cost of one more unit, ignoring fixed costs).\nd) Peak-load pricing (higher prices when demand peaks, to regulate demand to supply).",
+        "explanation": "All anchor the price to the firm's costs."
+      },
+      {
+        "question": "What is price discrimination and what 4 conditions must hold?",
+        "answer": "Charging DIFFERENT prices to different buyers for the same/similar product, based on willingness to pay (value-based pricing). Conditions: (1) the seller has some price-setting power; (2) can identify groups willing to pay different prices; (3) elasticity of demand differs across groups; (4) can prevent resale between groups.",
+        "explanation": "A market-based strategy that captures different consumers' willingness to pay."
+      },
+      {
+        "question": "Distinguish price skimming and penetration pricing.",
+        "answer": "Price SKIMMING: sell at a HIGH price first to those willing to pay (a firm first into a new market enjoys a temporary monopoly), then lower it for price-sensitive buyers.\nPENETRATION pricing: set a LOW initial entry price (often below market) to attract new, low-loyalty customers and win market share.",
+        "explanation": "Skimming starts high and comes down; penetration starts low to grab share."
+      },
+      {
+        "question": "What are loss-leader, promotional and bundling pricing?",
+        "answer": "Loss-leader: a product sold at a very low price (even at a loss) to stimulate interest in the business/product line. Promotional pricing: supports promotion (special offers, psychological pricing ending in '9', high-low, premium). Bundling: combine two or more products into one 'package' at a single, lower price than buying separately.",
+        "explanation": "Market-based tactics that use price to drive volume or perception."
+      },
+      {
+        "question": "Name the COMPETITION-BASED pricing sub-strategies.",
+        "answer": "a) Price leadership — one (usually dominant, lowest-cost) firm sets a price closely followed by competitors.\nb) Predatory pricing — deliberately setting prices so low that competitors cannot compete and are driven from the market.\nc) Transfer pricing — pricing of inputs and outputs between divisions of the SAME firm.",
+        "explanation": "These anchor price to rivals' behaviour or to internal divisions."
+      },
+      {
+        "question": "What are NON-PROFIT goals in pricing?",
+        "answer": "Firms can pursue goals that are NOT profit-driven: some managers focus on GROWTH and pursue sales at the expense of profit; some businesses are driven by LIFESTYLE choice.",
+        "explanation": "Not every firm sets price purely to maximise profit."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Compared with product, distribution and promotion, price is:",
+        "options": [
+          "The slowest to change",
+          "The most adjustable (can be altered quickly)",
+          "Never changed",
+          "Irrelevant"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Price is one of the 4 P's of the marketing mix; the others are:",
+        "options": [
+          "Product, Place, Promotion",
+          "People, Process, Physical evidence",
+          "Profit, Position, Power",
+          "Product, Profit, Place"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Profit-maximizing price corresponds to the output where:",
+        "options": [
+          "AC = AR",
+          "Marginal Revenue = Marginal Cost",
+          "Price = 0",
+          "TC = TR"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Charging higher prices during peak demand to regulate it is:",
+        "options": [
+          "Penetration pricing",
+          "Peak-load pricing",
+          "Loss-leader pricing",
+          "Transfer pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Selling at a high price first (as a temporary monopolist) then lowering it is:",
+        "options": [
+          "Penetration pricing",
+          "Price skimming",
+          "Predatory pricing",
+          "Bundling"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Charging different buyers different prices based on willingness to pay is:",
+        "options": [
+          "Cost-plus pricing",
+          "Price discrimination",
+          "Transfer pricing",
+          "Loss-leader pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Setting prices so low that rivals are driven from the market is:",
+        "options": [
+          "Price leadership",
+          "Predatory pricing",
+          "Penetration pricing",
+          "Promotional pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Firms differentiate their product mainly to:",
+        "options": [
+          "Increase demand elasticity",
+          "Reduce demand elasticity and raise price/revenue",
+          "Lower their costs",
+          "Avoid competition law"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Price is the most _______ of the firm's decision variables — it can be changed quickly.",
+        "answer": "adjustable",
+        "hint": "Easy/quick to alter..."
+      },
+      {
+        "sentence": "The three pricing strategies are cost-based, market-based and _______-based.",
+        "answer": "competition",
+        "hint": "Based on rivals..."
+      },
+      {
+        "sentence": "_______ pricing sets a low initial price to attract new customers and win market share.",
+        "answer": "Penetration",
+        "hint": "Break into the market..."
+      },
+      {
+        "sentence": "Cost-plus pricing adds a _______ (usually a percentage) to average cost.",
+        "answer": "mark-up",
+        "hint": "A margin on top of cost..."
+      },
+      {
+        "sentence": "_______ pricing combines two or more products into one package at a single price.",
+        "answer": "Bundling",
+        "hint": "Sell them together..."
+      },
+      {
+        "sentence": "Firms differentiate to REDUCE the demand _______ of their product.",
+        "answer": "elasticity",
+        "hint": "Price sensitivity..."
+      }
+    ],
+    "learn": {
+      "title": "Strategic Pricing in Tourism",
+      "content": "\n                <h3>💲 Why Price Matters</h3>\n                <p>Price is not the only decision variable, but it is <span class=\"highlight\">perhaps the most critical</span> — and the <strong>most adjustable</strong>. Unlike product, distribution and promotion (which take time to change), price can be altered QUICKLY. It is one of the <strong>4 P's</strong> (Product, Place, Price, Promotion) and triggers buyer perception of quality and positioning. Firms differentiate their product to <strong>reduce its demand elasticity</strong> and thereby raise price and total revenue.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-balance-scale\"></i> Elasticity & Revenue</h4>\n                    <p>Higher price + ELASTIC demand → fewer buyers, smaller revenue.<br>\n                    Lower price + INELASTIC demand → more buyers but small revenue.</p>\n                    <p>Determinants of price include the firm's objective, ownership, market structure, distribution, position, competition, cost structure, seasonality, capacity constraints, brand strength, ease of substitution, perishability and government involvement.</p>\n                </div>\n\n                <h3>🏷️ The 3 Pricing Strategies & Their Tactics</h3>\n                <table>\n                    <tr><th>Strategy</th><th>Anchored to…</th><th>Key tactics</th></tr>\n                    <tr><td><strong>Cost-based</strong></td><td>The firm's costs</td><td>Cost-plus (mark-up on avg cost) · Profit max (MR=MC) · Marginal-cost pricing · Peak-load pricing</td></tr>\n                    <tr><td><strong>Market-based</strong> (customer-oriented)</td><td>Willingness to pay</td><td>Price discrimination · Two-part tariff · Skimming · Penetration · Loss-leader · Promotional · Bundling</td></tr>\n                    <tr><td><strong>Competition-based</strong></td><td>Rivals' prices</td><td>Price leadership · Predatory pricing · Transfer pricing</td></tr>\n                </table>\n\n                <h4>Key tactics explained</h4>\n                <ul>\n                    <li><strong>Skimming:</strong> sell HIGH first (temporary monopoly), then lower for price-sensitive buyers</li>\n                    <li><strong>Penetration:</strong> set a LOW initial price to win share from low-loyalty customers</li>\n                    <li><strong>Peak-load:</strong> charge more when demand peaks, to keep it within capacity</li>\n                    <li><strong>Loss-leader:</strong> sell very cheap (even at a loss) to stimulate overall interest</li>\n                    <li><strong>Predatory:</strong> price so low that rivals are driven out · <strong>Transfer:</strong> pricing between divisions of the same firm</li>\n                </ul>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-tags\"></i> Price Discrimination — 4 conditions</h4>\n                    <p>(1) the seller has some price-setting power · (2) can identify groups with different willingness to pay · (3) elasticity differs across groups · (4) can prevent resale between groups.</p>\n                </div>\n\n                <p><strong>Non-profit goals:</strong> some firms chase growth/sales over profit, or are driven by lifestyle choices rather than profit maximization.</p>\n            "
+    }
+  },
+  "expenditure": {
+    "name": "Economic Impacts & Multiplier",
+    "icon": "fa-money-bill-trend-up",
+    "color": "#059669",
+    "flashcards": [
+      {
+        "question": "Where does the economic contribution of tourism start, and what is the basic measure?",
+        "answer": "It starts with TOURIST EXPENDITURE. The basic measure is expenditure injected by type of visitor, by visitor night, and by length of stay.",
+        "explanation": "Expenditure data alone is not enough — we then need the economic IMPACTS of that expenditure."
+      },
+      {
+        "question": "What are the 7 major impacts of increased tourist expenditure?",
+        "answer": "1. Increased local production & output\n2. Creates new business & employment\n3. Generates foreign-exchange earnings (international, NOT domestic tourism)\n4. Creates new investment opportunities\n5. Increased government revenue (via taxes)\n6. Assists regional development\n7. Reduces poverty in some locations",
+        "explanation": "FX earnings come only from INTERNATIONAL tourism (an export industry)."
+      },
+      {
+        "question": "Why is tourist expenditure described as an injection of 'new money'?",
+        "answer": "Expenditure by visitors to a destination is 'new money' entering it, boosting output and employment in local primary, secondary and tertiary industries. The size of the output increase depends on the strength of business links between tourism and other sectors.",
+        "explanation": "Stronger links to local suppliers = bigger local impact (fewer leakages)."
+      },
+      {
+        "question": "On what does the value of foreign-exchange (FX) earnings from inbound tourism depend?",
+        "answer": "On the number of visitors, the average expenditure per day, the average length of stay, and the exchange rate.",
+        "explanation": "International tourism is an export industry that can help stabilise total export earnings."
+      },
+      {
+        "question": "How does tourism contribute to government revenue (direct vs indirect taxes)?",
+        "answer": "Direct taxes (paid directly to government): airport departure taxes, noise taxes, visa fees. Indirect taxes (levied on goods/services): sales taxes, fuel taxes, tariffs, accommodation taxes. Companies also pay profit tax and employees pay income tax.",
+        "explanation": "But governments also SPEND heavily supporting tourism (infrastructure, marketing, ministries)."
+      },
+      {
+        "question": "Define direct, indirect and induced expenditure effects.",
+        "answer": "DIRECT: suppliers who sell goods/services directly to tourists (accommodation, F&B, tours, attractions, entertainment, shopping).\nINDIRECT ('upstream'): firms receiving tourist money buy inputs from other firms, who buy from others, along the supply chain.\nINDUCED ('downstream'): recipients (owners, workers, families) spend their increased incomes on consumption.",
+        "explanation": "Tourist expenditure (the starting point) generates direct + secondary (indirect + induced) effects."
+      },
+      {
+        "question": "What is the multiplier and the total multiplier effect?",
+        "answer": "Multiplier = Total Impact / Direct Expenditure. The total multiplier effect = the SUM of direct + indirect + induced effects, reflected as overall increases in output, sales, value added, GDP, household income, and employment.",
+        "explanation": "It shows how the initial spending 'multiplies' through the economy."
+      },
+      {
+        "question": "What are the 5 most common types of multipliers?",
+        "answer": "1. Sales (transactions) multiplier\n2. Output multiplier\n3. Income multiplier\n4. Value-added multiplier\n5. Employment multiplier",
+        "explanation": "Each relates total economic activity generated to an extra unit of final demand."
+      },
+      {
+        "question": "How large is the tourism multiplier in reality?",
+        "answer": "Not as large as the industry thinks — more sophisticated modelling shows it is unlikely to EXCEED 2. When indirect effects = direct effects, the multiplier value is 2. So €100 million of new tourism expenditure is likely to add LESS than €200 million to household income or GDP.",
+        "explanation": "A key 'reality check' from Dwyer's lectures against over-stated multiplier claims."
+      },
+      {
+        "question": "What are leakages, and name some types of FX leakage.",
+        "answer": "Leakages are expenditure flowing to agents OUTSIDE the economy, which REDUCE the multiplier. Types of FX leakage: imported goods consumed by visitors (e.g. duty free); imported capital goods (planes, ski lifts, rental cars); imports from increased local consumption (demonstration effect); factor payments abroad (wages, holiday-home rents, foreign tour operators); destination-promotion spent externally.",
+        "explanation": "The more a destination imports, the smaller the local multiplier."
+      },
+      {
+        "question": "Which models are used for economic impact analysis (EIA)?",
+        "answer": "Input-Output (I-O) models — trace direct/indirect/induced effects through a matrix of inter-industry relationships (but assume fixed production relationships, no supply constraints). Computable General Equilibrium (CGE) models — simulate economy-wide impacts including price and wage adjustments and resource constraints (but need extensive data).",
+        "explanation": "CGE answers 'if we change X, how does the WHOLE economy adjust?'"
+      },
+      {
+        "question": "What factor constraints and conditions limit tourism's economic impact?",
+        "answer": "Factor supply constraints (land, labour, capital), real exchange-rate appreciation (which reduces other exports and the multiplier), government fiscal stance, import content/leakages, the strength of business linkages, and the size of the shock.",
+        "explanation": "Tourism booms can bid up land/labour prices and crowd out other industries (deindustrialisation)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Foreign-exchange earnings are generated by:",
+        "options": [
+          "Domestic tourism",
+          "International (inbound) tourism",
+          "Government spending",
+          "Local consumption"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Induced effects arise when:",
+        "options": [
+          "Tourists pay hotels directly",
+          "Firms buy inputs from suppliers",
+          "Workers and owners spend their increased incomes downstream",
+          "Government collects taxes"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The multiplier is calculated as:",
+        "options": [
+          "Direct / Total Impact",
+          "Total Impact / Direct Expenditure",
+          "Indirect + Induced",
+          "GDP / Arrivals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When indirect effects equal direct effects, the multiplier value is:",
+        "options": [
+          "1",
+          "2",
+          "5",
+          "10"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "€100 million of new tourism expenditure is likely to add to GDP:",
+        "options": [
+          "Exactly €100 m",
+          "Less than €200 m",
+          "More than €500 m",
+          "Exactly €1 billion"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a leakage that reduces the multiplier?",
+        "options": [
+          "Local wages spent locally",
+          "Imported goods consumed by visitors (duty free)",
+          "A locally produced meal",
+          "Domestic investment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "An airport departure tax is an example of a:",
+        "options": [
+          "Indirect tax",
+          "Direct tax",
+          "Leakage",
+          "Subsidy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which model captures economy-wide price and wage adjustments?",
+        "options": [
+          "Input-Output (I-O)",
+          "Computable General Equilibrium (CGE)",
+          "Time-series",
+          "Regression only"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Total Effect = Direct + Indirect + _______ effects.",
+        "answer": "Induced",
+        "hint": "Recipients spending their incomes downstream..."
+      },
+      {
+        "sentence": "Multiplier = Total Impact / _______ Expenditure.",
+        "answer": "Direct",
+        "hint": "The initial spending..."
+      },
+      {
+        "sentence": "More sophisticated modelling shows the tourism multiplier is unlikely to exceed _______.",
+        "answer": "2",
+        "hint": "When indirect = direct..."
+      },
+      {
+        "sentence": "_______ are flows of expenditure to agents outside the economy that reduce the multiplier.",
+        "answer": "Leakages",
+        "hint": "Money 'leaking' out..."
+      },
+      {
+        "sentence": "Foreign-exchange earnings come from _______ tourism, not domestic tourism.",
+        "answer": "international",
+        "hint": "Across borders (an export industry)..."
+      },
+      {
+        "sentence": "The five multiplier types are sales, output, income, value-added and _______.",
+        "answer": "employment",
+        "hint": "Jobs..."
+      }
+    ],
+    "learn": {
+      "title": "Economic Impacts & the Multiplier",
+      "content": "\n                <h3>💰 From Expenditure to Impact</h3>\n                <p>The economic contribution of tourism starts with <strong>tourist expenditure</strong> (the basic measure: expenditure by type of visitor, by visitor night, by length of stay). This is an injection of <strong>'new money'</strong> that boosts output and employment in local primary, secondary and tertiary industries — and it generates <strong>direct + secondary (indirect + induced)</strong> effects.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-list-ol\"></i> 7 Major Impacts of Tourist Expenditure</h4>\n                    <p>↑ local production/output · new business & jobs · <strong>foreign-exchange earnings (INTERNATIONAL tourism only)</strong> · new investment · government revenue (taxes) · regional development · ↓ poverty</p>\n                    <p>FX earnings depend on visitor numbers, average expenditure/day, length of stay and the exchange rate. Government gets DIRECT taxes (airport departure, visa) and INDIRECT taxes (sales, fuel, accommodation).</p>\n                </div>\n\n                <h3>🔗 The Three Effects (the multiplier chain)</h3>\n                <table><tr><th>Effect</th><th>What happens</th><th>Example</th></tr>\n                <tr><td><strong>Direct</strong></td><td>Tourists pay suppliers directly</td><td>Accommodation, F&B, tours, attractions, shopping</td></tr>\n                <tr><td><strong>Indirect</strong> (upstream)</td><td>Those firms buy inputs from other firms, along the supply chain</td><td>Hotel buys linen, food, pool chemicals from suppliers</td></tr>\n                <tr><td><strong>Induced</strong> (downstream)</td><td>Recipients spend their increased incomes</td><td>Workers/owners spend wages at shops, theatres, holidays</td></tr></table>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-calculator\"></i> The Multiplier</h4>\n                    <p><strong>Multiplier = Total Impact / Direct Expenditure</strong></p>\n                    <p>Total Effect = Direct + Indirect + Induced → increases in output, sales, value added, GDP, household income and employment.</p>\n                    <p><strong>5 types:</strong> sales (transactions) · output · income · value-added · employment.</p>\n                </div>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-triangle-exclamation\"></i> Reality Check (Dwyer)</h4>\n                    <p>The multiplier is <strong>unlikely to exceed 2</strong> — when indirect effects = direct effects, the multiplier value is 2, so €100 m of new expenditure adds <strong>&lt; €200 m</strong> to GDP. It is shrunk by <strong>leakages</strong> (imported goods, capital goods, factor payments abroad, external promotion), <strong>factor constraints</strong> (land, labour, capital), and real <strong>exchange-rate appreciation</strong>. Models used: Input-Output (I-O) and Computable General Equilibrium (CGE).</p>\n                </div>\n            "
+    }
+  },
+  "tsa": {
+    "name": "Economic Contribution & TSA",
+    "icon": "fa-chart-bar",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What is tourism expenditure?",
+        "answer": "The total consumption expenditure made by a visitor, or on behalf of a visitor, for goods and services during their trip and stay at the destination — including payments made in advance or after the trip for services received during it.",
+        "explanation": "No economic tourism impact occurs unless visitors actually spend money on tourism products/services."
+      },
+      {
+        "question": "Into which three groups can visitor expenditure be divided by timing?",
+        "answer": "1. Expenses in PREPARATION for the trip.\n2. Expenses DURING the trip (when travelling and at the places visited).\n3. Expenses AFTER the trip (travel-related expenses in the country of origin on return).",
+        "explanation": "Expenditure spans before, during and after the journey."
+      },
+      {
+        "question": "What are the main categories of visitor expenditure?",
+        "answer": "Package travel (holidays/tours), accommodation, food & drinks, transport, recreation/culture/sporting activities, shopping, and other.",
+        "explanation": "The standard breakdown of what tourists spend on."
+      },
+      {
+        "question": "What are the four indicator categories used to express expenditure levels?",
+        "answer": "1. Total expenditure for the whole trip\n2. Expenditure per day\n3. Total expenditure per person\n4. Expenditure per person per day",
+        "explanation": "Different ways of normalising expenditure for comparison (Brida & Scuderi, 2013)."
+      },
+      {
+        "question": "What internal and external factors influence tourism expenditure?",
+        "answer": "Internal: income, property status, size & phase of the family life cycle, educational level, motivation, cultural characteristics/preferences/habits. External: the destination's price positioning on the market, level of tourism-offering development, marketing activities of intermediaries/destinations, quality, and travel safety.",
+        "explanation": "Internal = the traveller; external = the destination/market."
+      },
+      {
+        "question": "What is the economic CONTRIBUTION of tourism?",
+        "answer": "Tourism's economic significance — the contribution that tourist expenditure makes to key economic variables such as gross domestic (regional) product, household income, value added, foreign-exchange earnings, and employment.",
+        "explanation": "It captures how much tourism matters to the economy."
+      },
+      {
+        "question": "What are the limitations of using tourist EXPENDITURE data alone?",
+        "answer": "It doesn't show WHAT goods/services are purchased (so it doesn't identify which sectors get the revenue); it is NOT an indicator of profitability (no info on costs of serving each segment); and it doesn't show how the expenditure affects other industries or the wider economy.",
+        "explanation": "Expenditure tells you the size of spending, not its distribution, profit or knock-on effects."
+      },
+      {
+        "question": "Why is it difficult to measure the economic significance of tourism?",
+        "answer": "Because 'tourism' does NOT exist as a distinct sector in any system of economic statistics or national accounts. Focusing on national accounts alone seriously underestimates total tourist expenditure and tourism's significance.",
+        "explanation": "Tourism cuts across many sectors, so it needs a special accounting framework."
+      },
+      {
+        "question": "What is the TSA (Tourism Satellite Account)?",
+        "answer": "The standard framework for organising statistical data on tourism, endorsed by the UN Statistical Commission. It is an EXTENSION of the core national accounts that allows estimates of the size and role of tourism activities that are not separately identified in the conventional framework.",
+        "explanation": "A 'satellite' account that orbits and extends the national accounts."
+      },
+      {
+        "question": "What is the difference between tourism CHARACTERISTIC and CONNECTED products?",
+        "answer": "Characteristic products would cease to exist in meaningful quantity in the ABSENCE of visitors (e.g. accommodation, air transport). Connected products are linked to tourism but less significant for the visitor/producer (e.g. automotive fuel retailing).",
+        "explanation": "In the TSA, the 'tourism industry' is identified from the consumer (demand) side."
+      },
+      {
+        "question": "Name the key measures captured by a TSA.",
+        "answer": "Tourism expenditure; tourism consumption; tourism output; Tourism Gross Value Added (TGVA = output of tourism products less inputs used); Tourism GDP (TGDP); tourism employment; tourism exports (bought by international visitors); tourism imports (outbound consumption by residents abroad).",
+        "explanation": "TGVA subtracts intermediate inputs; TGDP is the market value after deducting goods used up in production."
+      },
+      {
+        "question": "On what does the impact of tourism on a country's economy depend?",
+        "answer": "On (1) the content and quality of the direct tourist services (the tourist product), and (2) the extent to which the country's economy can offer products and services that directly or indirectly feed into the tourism consumption sector.",
+        "explanation": "A locally integrated economy keeps more of the benefit (fewer leakages)."
+      },
+      {
+        "question": "What is the Global Code of Ethics for Tourism?",
+        "answer": "A comprehensive set of principles (10 articles) guiding key players towards responsible and sustainable tourism — maximising benefits while minimising negative impacts on the environment, cultural heritage and societies. Adopted by the UNWTO General Assembly in 1999, acknowledged by the UN in 2021; not legally binding (voluntary).",
+        "explanation": "It covers the economic, social, cultural and environmental components of tourism."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Tourism expenditure includes payments made:",
+        "options": [
+          "Only during the trip",
+          "Only in advance",
+          "In advance, during AND after the trip",
+          "Only on accommodation"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Measuring tourism's economic significance is hard because tourism:",
+        "options": [
+          "Is too small",
+          "Does not exist as a distinct sector in national accounts",
+          "Pays no taxes",
+          "Has no expenditure"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The TSA framework is endorsed by:",
+        "options": [
+          "The World Bank",
+          "The UN Statistical Commission",
+          "The IMF",
+          "The WTO trade body"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Accommodation and air transport are examples of tourism _______ products.",
+        "options": [
+          "connected",
+          "characteristic",
+          "imported",
+          "intangible"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "TGVA (Tourism Gross Value Added) is:",
+        "options": [
+          "Total tourist arrivals",
+          "Output of tourism products less the value of inputs used",
+          "Total taxes paid",
+          "Number of tourism jobs"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is a LIMITATION of tourist expenditure data?",
+        "options": [
+          "It shows exact profitability",
+          "It does not indicate which sectors receive the revenue",
+          "It measures all wider-economy effects",
+          "It identifies every product purchased"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Outbound tourism consumption' by residents abroad is recorded as tourism:",
+        "options": [
+          "Exports",
+          "Imports",
+          "Output",
+          "Value added"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Global Code of Ethics for Tourism is:",
+        "options": [
+          "Legally binding worldwide",
+          "Voluntary, with 10 articles",
+          "A pricing rule",
+          "A tax treaty"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "TSA = Tourism _______ Account, an extension of the national accounts.",
+        "answer": "Satellite",
+        "hint": "It orbits the main accounts..."
+      },
+      {
+        "sentence": "Products that would cease to exist without visitors are tourism _______ products.",
+        "answer": "characteristic",
+        "hint": "e.g. accommodation, air transport..."
+      },
+      {
+        "sentence": "Economic contribution is the contribution tourist expenditure makes to key economic _______.",
+        "answer": "variables",
+        "hint": "GDP, income, employment..."
+      },
+      {
+        "sentence": "Visitor expenditure can be split by timing into before, during and _______ the trip.",
+        "answer": "after",
+        "hint": "Once the trip is over..."
+      },
+      {
+        "sentence": "Tourism is hard to measure because it is not a distinct _______ in national accounts.",
+        "answer": "sector",
+        "hint": "Like agriculture or industry..."
+      },
+      {
+        "sentence": "The Global Code of Ethics for Tourism has _______ articles and is voluntary.",
+        "answer": "10",
+        "hint": "Ten..."
+      }
+    ],
+    "learn": {
+      "title": "Economic Contribution & Tourism Satellite Account",
+      "content": "\n                <h3>🧾 Tourism Expenditure</h3>\n                <p>The total consumption expenditure made by (or on behalf of) a visitor for goods & services during the trip and stay — including advance and after-trip payments. No economic impact occurs unless visitors actually spend.</p>\n                <ul>\n                    <li><strong>By timing:</strong> before the trip · during the trip · after the trip</li>\n                    <li><strong>By category:</strong> package travel, accommodation, food & drinks, transport, recreation/culture/sport, shopping, other</li>\n                    <li><strong>Indicators:</strong> total per trip · per day · total per person · per person per day</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-sliders\"></i> Factors Influencing Expenditure</h4>\n                    <p><strong>Internal:</strong> income, property status, family life-cycle phase, education, motivation, culture.<br>\n                    <strong>External:</strong> destination price positioning, offering development, marketing, quality, travel safety.</p>\n                </div>\n\n                <h3>📈 Economic Contribution</h3>\n                <p>Tourism's economic significance = the contribution of tourist expenditure to key variables: <strong>GDP, household income, value added, foreign-exchange earnings, employment</strong>. But expenditure data alone has limits — it doesn't show <em>which</em> sectors receive the revenue, profitability, or wider effects on other industries.</p>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-chart-bar\"></i> The Tourism Satellite Account (TSA)</h4>\n                    <p>Because tourism is NOT a distinct sector in the national accounts, the <strong>TSA</strong> (endorsed by the UN Statistical Commission) extends them to measure it from the demand side.</p>\n                    <p><strong>Characteristic</strong> products would cease without visitors (accommodation, air transport); <strong>connected</strong> products are linked but minor (fuel retailing).</p>\n                </div>\n\n                <h4>Key TSA measures</h4>\n                <table><tr><th>Measure</th><th>Meaning</th></tr>\n                <tr><td>Expenditure / Consumption</td><td>What visitors pay / total consumption during the trip</td></tr>\n                <tr><td>Output</td><td>Goods & services produced for use outside the establishment</td></tr>\n                <tr><td><strong>TGVA</strong></td><td>Tourism Gross Value Added = output of tourism products − inputs used</td></tr>\n                <tr><td><strong>TGDP</strong></td><td>Tourism GDP = market value of domestically produced goods consumed by visitors</td></tr>\n                <tr><td>Employment / Exports / Imports</td><td>Jobs · sales to international visitors · outbound consumption by residents abroad</td></tr></table>\n                <p>Impact on the economy depends on the quality of direct tourist services and how well the local economy can feed the tourism sector. The <strong>Global Code of Ethics for Tourism</strong> (adopted 1999; 10 articles; voluntary) guides responsible & sustainable tourism.</p>\n            "
+    }
+  },
+  "environment": {
+    "name": "Environment & Market Failure",
+    "icon": "fa-leaf",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Through which resources does tourism interact with the environment?",
+        "answer": "Natural resources, human resources, and built resources. Remember: NOT all resources are attractions, but ALL attractions are resources.",
+        "explanation": "Tourism both depends on and affects these three resource types."
+      },
+      {
+        "question": "What are the main negative environmental impacts of tourism?",
+        "answer": "Resource depletion, loss of biodiversity, habitat destruction, pollution and waste, increased greenhouse-gas emissions, and the exploitation of coastal wetlands, rainforests and landscapes.",
+        "explanation": "Though tourism can raise awareness, its overall environmental effect tends to be negative."
+      },
+      {
+        "question": "What is market failure (in an environmental context)?",
+        "answer": "When there are NO markets for some valuable resources/products, OR markets do NOT function properly, the resulting resource allocation will not be optimal.",
+        "explanation": "The market fails to price environmental resources correctly."
+      },
+      {
+        "question": "What are the 3 major sources of market failure relevant to tourism's environmental impacts?",
+        "answer": "1. Lack of property rights to environmental resources\n2. Public goods\n3. Externalities",
+        "explanation": "These three explain why markets under-protect the environment."
+      },
+      {
+        "question": "Why does a lack of property rights cause environmental damage?",
+        "answer": "With well-defined property rights, resources are used efficiently and sustainably. When it is unclear who has the right to use a resource, it is unclear whose rights can be restricted if something goes wrong — so environmentally destructive behaviour occurs because no one takes responsibility for the costs.",
+        "explanation": "Clear ownership creates an incentive to protect the resource."
+      },
+      {
+        "question": "How are the 4 types of goods classified by excludability and rivalry?",
+        "answer": "Excludable + Rivalrous = PRIVATE goods. Non-excludable + Rivalrous = COMMON goods. Excludable + Non-rivalrous = CLUB goods. Non-excludable + Non-rivalrous = PUBLIC goods.",
+        "explanation": "Excludable = you can prevent access (e.g. by payment); rivalrous = one person's use prevents another's."
+      },
+      {
+        "question": "Give examples of club goods and common goods.",
+        "answer": "Club goods (high excludability, low rivalry): cable television, cinemas, Wi-Fi. Common goods (non-excludable but rival): lakes, oceans, forests, fresh air, clean water.",
+        "explanation": "Common goods are especially prone to over-use in tourism."
+      },
+      {
+        "question": "What are externalities?",
+        "answer": "Costs or benefits received by a THIRD PARTY who is not a direct participant in an economic transaction. Positive: more restaurants, events, better traffic infrastructure. Negative: noise, crowded roads and city centres.",
+        "explanation": "Externalities are 'spillover' effects the market doesn't price."
+      },
+      {
+        "question": "What is the 'tragedy of the commons'?",
+        "answer": "In a shared-resource system (e.g. a wilderness area), individual users acting in their own self-interest behave contrary to the common good by depleting or spoiling the resource through their collective action. Many tourism resources are common-pool / open-access resources.",
+        "explanation": "A core problem for sustainable tourism development."
+      },
+      {
+        "question": "What is Tourism Carrying Capacity (UNWTO definition)?",
+        "answer": "The maximum number of people that may visit a tourist destination at the same time WITHOUT causing destruction of the physical, economic and socio-cultural environment, and without an unacceptable decrease in the quality of visitors' satisfaction. It can be FIXED or FLUID.",
+        "explanation": "Beyond carrying capacity, the destination and the visitor experience both degrade."
+      },
+      {
+        "question": "What are economic instruments and the strategies for pollution control?",
+        "answer": "Economic instruments are CONTROLS imposed on environmentally damaging activity to avoid or lessen the damage. Pollution-control strategies: voluntary agreements (to reduce GHGs), merger, subsidies (for cleaner technology), tax on output and on pollution, and others (education, information, codes of conduct).",
+        "explanation": "They use economic incentives/penalties to change behaviour."
+      },
+      {
+        "question": "What is the definition of sustainable tourism development (UNWTO 1995) and Agenda 21?",
+        "answer": "Sustainable tourism development 'meets the needs of present tourists and host regions while protecting and enhancing opportunity for the future' — managing all resources so economic, social and aesthetic needs are met while maintaining cultural integrity, ecological processes, biodiversity and life-support systems. Agenda 21 = the UN action plan for the future (especially environmental protection) adopted in Rio de Janeiro, 1992.",
+        "explanation": "The 20th century asked 'sustainable development?' — the 21st-century question is HOW to implement it."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Tourism interacts with the environment through natural, human and ___ resources:",
+        "options": [
+          "financial",
+          "built",
+          "digital",
+          "imported"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is NOT one of the 3 sources of market failure?",
+        "options": [
+          "Lack of property rights",
+          "Public goods",
+          "Externalities",
+          "High prices"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "A good that is non-excludable but rivalrous (e.g. ocean fish stocks) is a:",
+        "options": [
+          "Private good",
+          "Club good",
+          "Common good",
+          "Public good"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Wi-Fi and cable TV (excludable, low rivalry) are examples of:",
+        "options": [
+          "Public goods",
+          "Common goods",
+          "Club goods",
+          "Private goods"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A cost imposed on a third party not in the transaction (e.g. noise) is a(n):",
+        "options": [
+          "Subsidy",
+          "Externality",
+          "Tax",
+          "Tariff"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Carrying capacity is the maximum number of visitors at the same time without:",
+        "options": [
+          "Making any profit",
+          "Causing destruction or an unacceptable drop in satisfaction",
+          "Building hotels",
+          "Charging fees"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which is an economic instrument / pollution-control strategy?",
+        "options": [
+          "Advertising",
+          "Tax on pollution",
+          "More flights",
+          "Lower wages"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Agenda 21 (the UN action plan for the environment) was adopted in:",
+        "options": [
+          "Kyoto 1997",
+          "Rio de Janeiro 1992",
+          "Paris 2015",
+          "Stockholm 1972"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Not all resources are attractions, but all attractions are _______.",
+        "answer": "resources",
+        "hint": "The thing tourism draws on..."
+      },
+      {
+        "sentence": "The 3 sources of market failure are externalities, public goods and lack of _______ rights.",
+        "answer": "property",
+        "hint": "Who owns the resource..."
+      },
+      {
+        "sentence": "A good that is non-excludable and non-rivalrous is a _______ good.",
+        "answer": "public",
+        "hint": "Everyone can use it; no one can be excluded..."
+      },
+      {
+        "sentence": "The tragedy of the _______ describes over-use of a shared resource by self-interested users.",
+        "answer": "commons",
+        "hint": "Common-pool resources..."
+      },
+      {
+        "sentence": "Tourism Carrying _______ is the maximum visitors at one time without destruction.",
+        "answer": "Capacity",
+        "hint": "How much it can hold..."
+      },
+      {
+        "sentence": "Economic instruments include voluntary agreements, subsidies and a _______ on pollution.",
+        "answer": "tax",
+        "hint": "A charge on damaging activity..."
+      }
+    ],
+    "learn": {
+      "title": "Tourism & the Environment",
+      "content": "\n                <h3>🌿 Tourism and Resources</h3>\n                <p>The environment attracts tourism flows, and conserving valued features helps maintain visitation and tourism's economic contribution. Tourism interacts with <strong>natural, human and built</strong> resources — remember: <em>not all resources are attractions, but all attractions are resources.</em> Yet its overall environmental effect tends to be negative: resource depletion, biodiversity loss, habitat destruction, pollution & waste, and rising greenhouse-gas emissions.</p>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-circle-exclamation\"></i> Market Failure</h4>\n                    <p>When there are no markets for valuable resources, OR markets don't function properly, resource allocation isn't optimal. <strong>3 sources relevant to tourism:</strong> lack of property rights · public goods · externalities. With clear property rights, resources are used efficiently; when it's unclear who has the right, destructive behaviour occurs because no one bears the cost.</p>\n                </div>\n\n                <h3>📦 The 4 Types of Goods</h3>\n                <p>Classified by <strong>excludability</strong> (can you prevent access, e.g. by payment?) and <strong>rivalry</strong> (does one person's use prevent another's?):</p>\n                <table>\n                    <tr><th></th><th>Rivalrous</th><th>Non-rivalrous</th></tr>\n                    <tr><td><strong>Excludable</strong></td><td>Private goods</td><td>Club goods (Wi-Fi, cinemas, cable TV)</td></tr>\n                    <tr><td><strong>Non-excludable</strong></td><td>Common goods (oceans, forests, fresh air)</td><td>Public goods</td></tr>\n                </table>\n                <p><strong>Externalities</strong> = costs/benefits to a third party not in the transaction (negative: noise, crowded roads; positive: more restaurants, better infrastructure). The <strong>tragedy of the commons</strong>: self-interested users deplete a shared (common-pool) resource — a core problem because many tourism resources are open-access. Valuing these impacts is hard: some costs/benefits show in market prices, others need <em>proxy prices</em>.</p>\n\n                <div class=\"formula-box\">\n                    <h4><i class=\"fas fa-users\"></i> Carrying Capacity (UNWTO)</h4>\n                    <p>The maximum number of people that may visit a destination at the same time WITHOUT destroying the physical, economic and socio-cultural environment, and without an unacceptable decrease in visitor satisfaction. It can be <strong>fixed</strong> or <strong>fluid</strong>.</p>\n                </div>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-lightbulb\"></i> Economic Instruments & Policy</h4>\n                    <p>Controls on damaging activity: <strong>voluntary agreements, merger, subsidies for clean technology, taxes on output & pollution, education/codes of conduct</strong>. Sustainable development was set out in <strong>Agenda 21</strong> (UN, Rio de Janeiro, 1992); the 21st-century question is HOW to implement it.</p>\n                </div>\n            "
+    }
+  },
+  "sustainability": {
+    "name": "Sustainable Tourism Development",
+    "icon": "fa-seedling",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is 'tourism growth mania' and why is it criticised?",
+        "answer": "The implicit assumption that the market requires ever-increasing economic growth, where 'more' (more GDP, income, jobs) is wrongly equated with 'better' and with social progress. It is criticised because GDP does not measure quality of life, well-being or happiness, and tourism's drive for expansion destroys the very environments that attract visitors.",
+        "explanation": "Growth ≠ progress — a central theme of Dwyer's critique."
+      },
+      {
+        "question": "What are the potential BENEFITS of tourism growth (3 dimensions)?",
+        "answer": "Economic: stimulates local production & employment, raises tax revenues, catalyses development (esp. small local enterprise), develops remote areas.\nSocio-cultural: fosters civic pride & pride in traditions, improves cross-cultural understanding, creates local jobs (avoiding relocation), adds recreation facilities, employs poorer people/women/youth.\nEnvironmental: fosters conservation and community revitalisation/beautification.",
+        "explanation": "Benefits span the same three pillars as the costs."
+      },
+      {
+        "question": "What are the COSTS of tourism growth (3 dimensions)?",
+        "answer": "Economic: higher prices/cost of living/property taxes, demands on public services, deindustrialisation (crowding out), dependency on one industry, low-quality seasonal employment, leakages.\nSocio-cultural: hectic lifestyle, immigrant-workforce problems, tourist–resident conflict, loss of identity, commodification & loss of authenticity, congestion ('overtourism').\nEnvironmental: water-quality damage, coastal erosion, habitat destruction, biodiversity loss, landscape degradation, rising carbon footprint.",
+        "explanation": "'Overtourism' is now seen as a challenge facing all destinations."
+      },
+      {
+        "question": "What is sustainable tourism, and what are the 3 pillars of sustainability?",
+        "answer": "Tourism that takes full account of its current and future economic, social and environmental impacts, addressing the needs of all stakeholders. The 3 pillars: ENVIRONMENTAL, SOCIO-CULTURAL, and ECONOMIC sustainability (plus holistic, stakeholder-based planning).",
+        "explanation": "Sustainable development meets present needs without compromising future generations."
+      },
+      {
+        "question": "What does sustainable tourism imply (its requirements)?",
+        "answer": "Viable, long-term economic operations; respect for host communities; benefits distributed fairly among all stakeholders; and making optimal use of environmental resources. Sustainability is dynamic — preserving/enhancing a destination's stock of capital to transmit well-being over time.",
+        "explanation": "The four classic requirements of sustainable tourism."
+      },
+      {
+        "question": "What are the UN Sustainable Development Goals (SDGs)?",
+        "answer": "The UN 2030 Agenda with 17 Goals and an initial set of 230 indicators, promoting economic, socio-cultural and environmental sustainability through a global partnership of destinations and stakeholders.",
+        "explanation": "The headline international sustainability framework."
+      },
+      {
+        "question": "What is the 'growth management' approach to sustainability?",
+        "answer": "The standard approach assuming that tourism's problems can be solved by better, more efficient management of tourism development, supported by improvements in technology. UNWTO: 'growth is not the problem — it's how we manage it.' It is exemplified by green growth and inclusive growth, aiming for economic, socio-cultural and environmental sustainability.",
+        "explanation": "The mainstream 'business-as-usual' solution to tourism's problems."
+      },
+      {
+        "question": "What is the Easterlin Paradox (a countercriticism of growth)?",
+        "answer": "Increasing GDP is unlikely to improve social well-being once a comfortable standard of living has been reached — higher income doesn't always raise life satisfaction (diminishing returns, adaptation, social comparison). This undercuts the argument for continued tourism growth in developed destinations.",
+        "explanation": "One of four countercriticisms of the growth-management approach."
+      },
+      {
+        "question": "What is decoupling, and what is the 'myth of decoupling'?",
+        "answer": "Decoupling = separating economic growth from environmental degradation. Relative decoupling: impact grows more slowly than output (GDP +5%, emissions +2%). Absolute decoupling: output grows while impact FALLS (GDP +5%, emissions −3%). The 'myth' is that there is NO evidence absolute decoupling is occurring anywhere — so tourism GDP cannot grow indefinitely without adverse environmental impacts.",
+        "explanation": "Absolute decoupling is what sustainability needs — but it isn't happening."
+      },
+      {
+        "question": "What are rebound effects in tourism?",
+        "answer": "Efficiency gains can be counter-productive because lower prices raise demand and emissions. Types: Direct (fuel-efficient aircraft → cheaper tickets → more flying); Indirect (savings spent on other consumption); Economy-wide (freed resources boost other sectors); Time-savings (faster travel enables extra/longer trips).",
+        "explanation": "Rebound effects reduce the effectiveness of green-growth strategies."
+      },
+      {
+        "question": "What is the 'heterodox' alternative view, and what is regenerative tourism vs sustainable tourism?",
+        "answer": "Heterodox approaches reject 'business-as-usual' growth management; they include regenerative tourism, tourism degrowth, and putting human well-being first. Sustainable tourism seeks to LESSEN the harm done by tourism; REGENERATIVE tourism goes further — a commitment to a NET POSITIVE benefit to the environment and communities (restoration & regeneration), further along the continuum.",
+        "explanation": "Regenerative = leave the destination better than you found it."
+      },
+      {
+        "question": "What is tourism degrowth?",
+        "answer": "If producing more while polluting less is unachievable, the industry should produce LESS to pollute less — a planned, gradual, equitable 'downsizing/rightsizing' of production and consumption. Three goals: reduce environmental impact (less consumption/investment/work-time); redistribute income & wealth (intra- and inter-generationally); promote a transition to a convivial, caring, sharing, participatory society.",
+        "explanation": "Requires a transformative shift in values away from 'business as usual'."
+      },
+      {
+        "question": "What is meant by 'sustainable well-being' rather than 'sustainable development'?",
+        "answer": "Human well-being is now widely regarded as the primary public-policy objective. Destination managers and researchers should treat sustainable development not as an 'end in itself' but as a STEPPING STONE towards the enhanced well-being of residents — i.e. focus on sustainable well-being.",
+        "explanation": "Dwyer's 'Beyond GDP' / well-being perspective on tourism."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "'Tourism growth mania' wrongly equates more GDP with:",
+        "options": [
+          "More pollution",
+          "Social progress / 'better'",
+          "Fewer tourists",
+          "Lower prices"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The 3 pillars of sustainability are environmental, socio-cultural and:",
+        "options": [
+          "Political",
+          "Economic",
+          "Technological",
+          "Legal"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "'Overtourism' is primarily an example of a:",
+        "options": [
+          "Benefit of tourism",
+          "Cost of tourism growth",
+          "Pricing strategy",
+          "Forecasting method"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The growth-management approach assumes problems are solved by:",
+        "options": [
+          "Stopping all tourism",
+          "Better management + technology",
+          "Raising all prices",
+          "Ignoring the environment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The Easterlin Paradox states that beyond a comfortable level, higher GDP:",
+        "options": [
+          "Always raises well-being",
+          "Is unlikely to improve social well-being",
+          "Reduces tourism",
+          "Eliminates emissions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "ABSOLUTE decoupling means economic output grows while environmental impact:",
+        "options": [
+          "Grows faster",
+          "Grows more slowly",
+          "Falls in absolute terms",
+          "Stays the same"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Regenerative tourism (vs sustainable tourism) aims for:",
+        "options": [
+          "Only lessening harm",
+          "A net POSITIVE benefit — restoration & regeneration",
+          "Maximum arrivals",
+          "Lower prices"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tourism degrowth proposes that the industry should:",
+        "options": [
+          "Produce more to pollute less",
+          "Produce less in order to pollute less",
+          "Grow without limit",
+          "Ignore well-being"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The three pillars of sustainability are environmental, economic and _______.",
+        "answer": "socio-cultural",
+        "hint": "People, communities, culture..."
+      },
+      {
+        "sentence": "Sustainable tourism seeks to lessen harm; _______ tourism aims for a net positive benefit.",
+        "answer": "regenerative",
+        "hint": "Restore and renew..."
+      },
+      {
+        "sentence": "The UN 2030 Agenda has _______ Sustainable Development Goals.",
+        "answer": "17",
+        "hint": "Seventeen..."
+      },
+      {
+        "sentence": "The _______ Paradox: beyond a comfortable level, higher GDP doesn't raise well-being.",
+        "answer": "Easterlin",
+        "hint": "Named after economist Richard..."
+      },
+      {
+        "sentence": "_______ decoupling (output up, impact down in absolute terms) has no real-world evidence.",
+        "answer": "Absolute",
+        "hint": "Opposite of 'relative'..."
+      },
+      {
+        "sentence": "Tourism _______ involves a planned, equitable downsizing of production and consumption.",
+        "answer": "degrowth",
+        "hint": "Opposite of growth..."
+      }
+    ],
+    "learn": {
+      "title": "Sustainable Tourism Development",
+      "content": "\n                <h3>📈 Growth Mania vs Sustainability</h3>\n                <p>Much tourism planning assumes the market requires ever-increasing growth, equating <strong>'more' (GDP, income, jobs) with 'better'</strong> and with social progress. But GDP doesn't measure quality of life or happiness, and tourism's drive for expansion can destroy the very environments that attract visitors.</p>\n\n                <div class=\"tip-box\">\n                    <h4><i class=\"fas fa-scale-balanced\"></i> Benefits vs Costs (same 3 dimensions)</h4>\n                    <p><strong>Benefits:</strong> Economic (jobs, income, tax revenue, remote-area development) · Socio-cultural (civic & cultural pride, understanding) · Environmental (conservation, revitalisation).<br>\n                    <strong>Costs:</strong> Economic (↑ prices/cost of living, deindustrialisation, dependency, leakages) · Socio-cultural (hectic lifestyle, loss of authenticity, overtourism) · Environmental (water/coastal damage, biodiversity loss, carbon footprint).</p>\n                </div>\n\n                <h3>♻️ Sustainable Tourism</h3>\n                <p>Tourism that takes full account of its current AND future economic, social and environmental impacts, addressing the needs of all stakeholders. <strong>3 pillars:</strong> environmental · socio-cultural · economic (+ holistic, stakeholder-based planning). It requires viable long-term operations, respect for host communities, fairly distributed benefits, and optimal use of environmental resources. Global framework: the UN <strong>17 Sustainable Development Goals</strong> (230 indicators; 2030 Agenda).</p>\n                <p>The mainstream <strong>growth-management approach</strong> assumes problems can be solved by better management + technology (\"growth is not the problem — it's how we manage it\"), via green & inclusive growth.</p>\n\n                <div class=\"warning-box\">\n                    <h4><i class=\"fas fa-triangle-exclamation\"></i> Why Growth Management May Fail (4 countercriticisms)</h4>\n                    <p>1) Business as usual isn't working (SDGs not being met). 2) Growth may not raise resident well-being — the <strong>Easterlin Paradox</strong>. 3) <strong>Absolute decoupling</strong> (output up while impact falls) isn't happening anywhere — the 'decoupling myth' (vs relative decoupling, where impact just grows more slowly). 4) <strong>Rebound effects</strong> (direct, indirect, economy-wide, time-savings) undo efficiency gains.</p>\n                </div>\n\n                <h3>🌱 Heterodox Alternatives</h3>\n                <ul>\n                    <li><strong>Regenerative tourism:</strong> a commitment to a NET POSITIVE benefit (restoration & regeneration) — further along the continuum than just 'lessening harm'. Sustainable = do less harm; regenerative = do more good.</li>\n                    <li><strong>Tourism degrowth:</strong> produce LESS to pollute less — a planned, gradual, equitable 'rightsizing'; reduce impact, redistribute wealth, build a convivial society.</li>\n                    <li><strong>Sustainable well-being:</strong> treat sustainable development not as an end in itself but as a stepping stone to enhanced resident well-being.</li>\n                </ul>\n            "
+    }
+  },
+  "examPractice": {
+    "name": "Exam Practice (All Units)",
+    "icon": "fa-graduation-cap",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What is the structure and weight of the Tourism Economics final exam?",
+        "answer": "The final exam is worth 30% of the grade (minimum 15 points / 50% to pass it). It is written form with 10 questions: 5 close-ended + 5 open-ended, covering all units 1–12. The prerequisite to sit it is at least 35% from coursework (the two midterm tests + activities).",
+        "explanation": "Each midterm test is worth 24% (Σ48%); the final adds 30%."
+      },
+      {
+        "question": "Which units make up the two midterm 'halves' that the final combines?",
+        "answer": "1st midterm (Units 1–6): tourism fundamentals & market, demand & elasticity, forecasting demand, supply & costs, and market structure.\n2nd midterm (Units 7–12): strategic pricing, economic impacts & expenditure, economic contribution & TSA, environment & market failure, and sustainable tourism development.",
+        "explanation": "Per the 2025/26 'Important dates' slide, Strategic Pricing (unit 7) belongs to the 2nd midterm."
+      },
+      {
+        "question": "Where does ELASTICITY appear across the course, and how many forms of demand elasticity are there?",
+        "answer": "There are FOUR forms of demand elasticity: price, income, cross-price, and marketing (advertising) — each = %ΔQuantity demanded / %Δdriver. Elasticity links demand (unit 2), supply (response to price), and pricing (elastic demand + higher price → fewer buyers; inelastic + lower price → small revenue). Firms differentiate to REDUCE elasticity and raise price/revenue.",
+        "explanation": "The 'marketing/advertising' elasticity is the fourth form often forgotten."
+      },
+      {
+        "question": "Explain the expenditure chain and the realistic size of the tourism multiplier.",
+        "answer": "Tourist expenditure → Direct (paid to suppliers) + Indirect (upstream supply chain) + Induced (recipients spend incomes) = Total Effect. Multiplier = Total Impact / Direct Expenditure. In reality it is unlikely to EXCEED 2 (when indirect = direct, multiplier = 2), so €100 m of new expenditure adds < €200 m to GDP. Leakages and factor constraints shrink it.",
+        "explanation": "A key reality check from Dwyer's lectures against inflated multiplier claims."
+      },
+      {
+        "question": "Distinguish economic CONTRIBUTION from economic IMPACT, and explain why the TSA is needed.",
+        "answer": "Contribution = tourism's ongoing economic significance (its effect on GDP, household income, value added, FX, employment). Impact = the CHANGE in contribution from a specific event/policy. The TSA (Tourism Satellite Account, endorsed by the UN Statistical Commission) is needed because tourism is NOT a distinct sector in the national accounts — the TSA extends them to measure it.",
+        "explanation": "Contribution is a 'state'; impact is a 'change'; the TSA measures the contribution."
+      },
+      {
+        "question": "Why does tourism cause MARKET FAILURE, and what are the four types of goods?",
+        "answer": "Three sources of market failure: lack of property rights, public goods, and externalities. Goods are classified by excludability × rivalry: Private (excl + rival), Common (non-excl + rival, e.g. oceans/forests), Club (excl + non-rival, e.g. Wi-Fi), Public (non-excl + non-rival). Common-pool resources lead to the 'tragedy of the commons'.",
+        "explanation": "Because the environment is under-priced, it gets over-used — justifying carrying-capacity limits and eco-taxes."
+      },
+      {
+        "question": "Compare the 4 market structures and give a tourism example of each.",
+        "answer": "Perfect competition (many firms, identical products, price-taker → street stalls); Monopolistic competition (many, differentiated → restaurants, hotels, B&Bs, travel agencies); Oligopoly (a few interdependent firms, strong barriers → tour operators, airlines); Monopoly (one seller, no substitute → nationalized railways).",
+        "explanation": "Structure shapes the firm's conduct and performance (the SCP framework)."
+      },
+      {
+        "question": "Summarise the three pricing strategies and a key tactic of each.",
+        "answer": "Cost-based (e.g. cost-plus, profit max where MR=MC, peak-load); Market-based / customer-oriented (e.g. price discrimination, skimming, penetration, bundling); Competition-based (e.g. price leadership, predatory pricing, transfer pricing). Price is the MOST adjustable variable and signals quality.",
+        "explanation": "Cost anchors to costs, market to willingness-to-pay, competition to rivals."
+      },
+      {
+        "question": "What is the difference between SUSTAINABLE and REGENERATIVE tourism, and what is 'decoupling'?",
+        "answer": "Sustainable tourism seeks to LESSEN the harm done by tourism; regenerative tourism aims for a NET POSITIVE benefit (restoration & regeneration). Decoupling = separating growth from environmental harm; absolute decoupling (output up while impact falls) has no real-world evidence — the 'decoupling myth'.",
+        "explanation": "Sustainable = do less harm; regenerative = do more good. Sustainable Development = Economic + Social + Environmental."
+      },
+      {
+        "question": "Give the core cost and product formulas for a tourism firm.",
+        "answer": "TC = FC + VC; AC = TC/Q; AFC = FC/Q; AVC = VC/Q; MC = dTC/dQ. Product: TP (total), AP = TP/Q (per worker), MP = change in TP from one extra unit of the variable factor. Explicit costs = payments to outsiders; implicit costs = opportunity cost of own resources.",
+        "explanation": "Economies of scale lower long-run average cost (LRAC) as all inputs rise."
+      },
+      {
+        "question": "What are the 5 types of multipliers and the 7 major impacts of tourist expenditure?",
+        "answer": "5 multipliers: sales, output, income, value-added, employment. 7 impacts: increased local production/output, new business & employment, foreign-exchange earnings (international only), new investment, government revenue, regional development, and poverty reduction.",
+        "explanation": "FX earnings arise only from INTERNATIONAL tourism (an export industry)."
+      },
+      {
+        "question": "What are the 5 A's of tourism and the 3 dimensions that define tourism?",
+        "answer": "5 A's: Attractions, Access, Accommodation, Amenities, Activities. 3 dimensions of tourism: Movement, Length of stay, Motivation. Visitors = Tourists (>24 h, overnight) + Day-trippers (<24 h).",
+        "explanation": "Unit 1 fundamentals frame the whole course before its economics."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "The Tourism Economics final exam consists of:",
+        "options": [
+          "12 questions (6 closed + 6 open)",
+          "10 questions (5 closed + 5 open)",
+          "20 multiple-choice questions",
+          "1 essay only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which unit belongs to the 2nd midterm (units 7–12)?",
+        "options": [
+          "Market structure",
+          "Forecasting demand",
+          "Strategic pricing",
+          "Tourism demand"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "How many forms of tourism demand elasticity are there?",
+        "options": [
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "The tourism multiplier is realistically unlikely to exceed:",
+        "options": [
+          "1",
+          "2",
+          "5",
+          "10"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The TSA is needed because tourism:",
+        "options": [
+          "Pays no tax",
+          "Is not a distinct sector in the national accounts",
+          "Is too small",
+          "Has no demand"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Oceans and forests (non-excludable but rival) are examples of:",
+        "options": [
+          "Private goods",
+          "Club goods",
+          "Common goods",
+          "Public goods"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Airlines and tour operators are typical examples of:",
+        "options": [
+          "Perfect competition",
+          "Monopolistic competition",
+          "Oligopoly",
+          "Monopoly"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Setting a low initial price to win market share is:",
+        "options": [
+          "Skimming",
+          "Penetration pricing",
+          "Predatory pricing",
+          "Peak-load pricing"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Regenerative tourism (vs sustainable) aims for:",
+        "options": [
+          "Only lessening harm",
+          "A net positive benefit / restoration",
+          "Maximum arrivals",
+          "Lower taxes"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Foreign-exchange earnings come from:",
+        "options": [
+          "Domestic tourism",
+          "International tourism",
+          "Government grants",
+          "Local spending"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Total Cost is:",
+        "options": [
+          "FC − VC",
+          "FC + VC",
+          "FC × VC",
+          "VC / Q"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Absolute decoupling means output grows while environmental impact:",
+        "options": [
+          "Grows faster",
+          "Grows more slowly",
+          "Falls in absolute terms",
+          "Is unchanged"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The final exam is worth _______% of the grade (minimum 15 points to pass it).",
+        "answer": "30",
+        "hint": "Thirty..."
+      },
+      {
+        "sentence": "Total Effect = Direct + Indirect + _______ expenditure.",
+        "answer": "Induced",
+        "hint": "Recipients spending incomes downstream..."
+      },
+      {
+        "sentence": "Multiplier = Total Impact / _______ Expenditure.",
+        "answer": "Direct",
+        "hint": "The initial tourist spending..."
+      },
+      {
+        "sentence": "Tourism is measured with the TSA = Tourism _______ Account.",
+        "answer": "Satellite",
+        "hint": "It orbits the national accounts..."
+      },
+      {
+        "sentence": "The four demand elasticities are price, income, cross-price and _______.",
+        "answer": "marketing",
+        "hint": "Also called advertising elasticity..."
+      },
+      {
+        "sentence": "_______ tourism aims to leave a destination BETTER than it was found (net positive).",
+        "answer": "Regenerative",
+        "hint": "Beyond sustainable..."
+      },
+      {
+        "sentence": "Price is the most _______ of the firm's decision variables.",
+        "answer": "adjustable",
+        "hint": "Quick to change..."
+      },
+      {
+        "sentence": "Sustainable Development = Economic + Social + _______.",
+        "answer": "Environmental",
+        "hint": "Nature, resources..."
+      }
+    ],
+    "learn": {
+      "title": "Final Exam Roadmap (Units 1–12)",
+      "content": "\n            <h3>📋 What the Final Covers</h3>\n            <p>The final exam is <strong>worth 30%</strong> (minimum <strong>15 points / 50%</strong> to pass it), written form: <strong>10 questions</strong> — 5 close-ended + 5 open-ended — across <strong>all units 1–12</strong>. Prerequisite: at least <strong>35%</strong> from coursework.</p>\n            <p>Use this category to drill <strong>across units</strong>; the per-unit topic categories remain available in this same lesson for deep revision.</p>\n\n            <h3>📈 First Midterm Half — Units 1–6</h3>\n            <table><tr><th>Unit</th><th>Must-know anchor</th></tr>\n            <tr><td>1. Fundamentals & Market</td><td>'tour' = Latin tornus; 5 A's; visitors = tourists + day-trippers; intangible product</td></tr>\n            <tr><td>2. Demand</td><td>Law of Demand (inverse); FOUR elasticities; Bandwagon / Snob / Veblen</td></tr>\n            <tr><td>3. Forecasting</td><td>Qualitative / Quantitative / AI; time-series vs causal; regression analysis</td></tr>\n            <tr><td>4–5. Supply & Costs</td><td>3 inputs; TC = FC + VC; explicit vs implicit; economies of scale</td></tr>\n            <tr><td>6. Market Structure</td><td>Perfect → monopolistic → oligopoly → monopoly; cost leadership / differentiation / focus</td></tr></table>\n\n            <h3>💶 Second Midterm Half — Units 7–12</h3>\n            <table><tr><th>Unit</th><th>Must-know anchor</th></tr>\n            <tr><td>7. Strategic Pricing</td><td>Price is most adjustable; cost/market/competition-based; skimming vs penetration; price discrimination</td></tr>\n            <tr><td>8. Economic Impacts</td><td>Direct + Indirect + Induced; Multiplier = Total/Direct; 5 multiplier types; multiplier ≤ 2; leakages</td></tr>\n            <tr><td>9–10. Contribution & TSA</td><td>Contribution vs impact; tourism not a distinct sector → TSA; characteristic vs connected products</td></tr>\n            <tr><td>11. Environment</td><td>Market failure (property rights, public goods, externalities); 4 goods; carrying capacity</td></tr>\n            <tr><td>12. Sustainability</td><td>3 pillars; growth management vs degrowth; Easterlin Paradox; decoupling myth; regenerative tourism</td></tr></table>\n\n            <h3>🔗 Cross-Unit Threads</h3>\n            <ul>\n            <li><strong>Elasticity everywhere:</strong> demand (4 elasticities), supply (response to price), pricing (revenue effects).</li>\n            <li><strong>The expenditure chain:</strong> Direct → Indirect → Induced builds the multiplier (realistically ≤ 2).</li>\n            <li><strong>Measurement:</strong> contribution (ongoing) vs impact (change), both captured by the TSA.</li>\n            <li><strong>Market failure → policy:</strong> public goods + externalities justify carrying-capacity limits, eco-taxes, and sustainable/regenerative tourism.</li>\n            </ul>\n\n            <h3>💡 Exam Strategy</h3>\n            <p>Close-ended questions reward <strong>exact definitions and formulas</strong> (TC = FC + VC, Multiplier = Total Impact / Direct, the 4 elasticities). Open-ended questions reward a <strong>concept + an example</strong> (e.g. \"externality → a resort's wastewater harms a public beach\"; \"oligopoly → a few airlines dominate a route\"). Learn one strong anchor per unit, then practise linking units.</p>\n        "
+    }
+  }
+}

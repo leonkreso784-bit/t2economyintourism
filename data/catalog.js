@@ -53,7 +53,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data/te2/final.js MUST load last (Object.assign of te2M1 + te2M2 window objects + examPractice)
         scripts: ['data/te2/midterm-1.js', 'data/te2/midterm-2.js', 'data/te2/final.js'],
-        resolve: { 'first-midterm': 'te2M1', 'second-midterm': 'te2M2', 'final': 'te2Final' }
+        resolve: { 'first-midterm': 'te2M1', 'second-midterm': 'te2M2', 'final': 'te2Final' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/te2/*.json)
       }
     },
     {
@@ -76,7 +77,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data/entrepreneurship/final.js MUST load last (Object.assign of entrepreneurshipM1 + entrepreneurshipM2 window objects + examPractice)
         scripts: ['data/entrepreneurship/midterm-1.js', 'data/entrepreneurship/midterm-2.js', 'data/entrepreneurship/final.js'],
-        resolve: { 'first-midterm': 'entrepreneurshipM1', 'second-midterm': 'entrepreneurshipM2', 'final': 'entrepreneurshipFinal' }
+        resolve: { 'first-midterm': 'entrepreneurshipM1', 'second-midterm': 'entrepreneurshipM2', 'final': 'entrepreneurshipFinal' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/entrepreneurship/*.json)
       }
     },
     {
@@ -142,7 +144,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data/ebusiness/final.js MUST load last (Object.assign of ebusinessM1 + ebusinessM2 window objects + examPractice)
         scripts: ['data/ebusiness/midterm-1.js', 'data/ebusiness/midterm-2.js', 'data/ebusiness/final.js'],
-        resolve: { 'first-midterm': 'ebusinessM1', 'second-midterm': 'ebusinessM2', 'final': 'ebusinessFinal' }
+        resolve: { 'first-midterm': 'ebusinessM1', 'second-midterm': 'ebusinessM2', 'final': 'ebusinessFinal' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/ebusiness/*.json)
       }
     },
     {
@@ -165,7 +168,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data-econ-hospitality-final.js MUST load last (Object.assign of the two midterm window objects)
         scripts: ['data-econ-hospitality.js', 'data-econ-hospitality-m2.js', 'data-econ-hospitality-final.js'],
-        resolve: { 'first-midterm': 'economicsHospitalityData', 'second-midterm': 'economicsHospitalityM2Data', 'final': 'economicsHospitalityFinalData' }
+        resolve: { 'first-midterm': 'economicsHospitalityData', 'second-midterm': 'economicsHospitalityM2Data', 'final': 'economicsHospitalityFinalData' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/econ-hospitality/*.json)
       }
     },
     {
@@ -188,7 +192,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data-marketing-final.js MUST load last (Object.assign of marketingData + marketingM2Data)
         scripts: ['data-marketing.js', 'data-marketing-m2.js', 'data-marketing-final.js'],
-        resolve: { 'first-midterm': 'marketingData', 'second-midterm': 'marketingM2Data', 'final': 'marketingFinalData' }
+        resolve: { 'first-midterm': 'marketingData', 'second-midterm': 'marketingM2Data', 'final': 'marketingFinalData' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/marketing/*.json)
       }
     },
     {
@@ -211,7 +216,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data-geography-final.js MUST load last (Object.assign of the two midterm window objects)
         scripts: ['data-geography.js', 'data-geography-m2.js', 'data-geography-final.js'],
-        resolve: { 'first-midterm': 'geographyData', 'second-midterm': 'geographyM2Data', 'final': 'geographyFinalData' }
+        resolve: { 'first-midterm': 'geographyData', 'second-midterm': 'geographyM2Data', 'final': 'geographyFinalData' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/geography/*.json)
       }
     },
     {
@@ -234,7 +240,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data-food-nutrition-final.js MUST load last (Object.assign of the two midterm window objects)
         scripts: ['data-food-nutrition.js', 'data-food-nutrition-m2.js', 'data-food-nutrition-final.js'],
-        resolve: { 'first-midterm': 'foodNutritionData', 'second-midterm': 'foodNutritionM2Data', 'final': 'foodNutritionFinalData' }
+        resolve: { 'first-midterm': 'foodNutritionData', 'second-midterm': 'foodNutritionM2Data', 'final': 'foodNutritionFinalData' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/food-nutrition/*.json)
       }
     },
     {
@@ -264,7 +271,8 @@ const SOKRAT_CATALOG = {
           'midterm-1': 'businessInformaticsM1',
           'midterm-2': 'businessInformaticsM2',
           'final': 'businessInformaticsFinal'
-        }
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/business-informatics/*.json)
       }
     },
     {
@@ -313,7 +321,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data/management/final.js MUST load last (Object.assign of managementM1 + managementM2 window objects + examPractice)
         scripts: ['data/management/midterm-1.js', 'data/management/midterm-2.js', 'data/management/final.js'],
-        resolve: { 'first-midterm': 'managementM1', 'second-midterm': 'managementM2', 'final': 'managementFinal' }
+        resolve: { 'first-midterm': 'managementM1', 'second-midterm': 'managementM2', 'final': 'managementFinal' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/management/*.json)
       }
     },
     {
@@ -337,7 +346,8 @@ const SOKRAT_CATALOG = {
       content: {
         // data/traffic/final.js MUST load last (Object.assign of trafficM1 + trafficM2 window objects + examPractice)
         scripts: ['data/traffic/midterm-1.js', 'data/traffic/midterm-2.js', 'data/traffic/final.js'],
-        resolve: { 'first-midterm': 'trafficM1', 'second-midterm': 'trafficM2', 'final': 'trafficFinal' }
+        resolve: { 'first-midterm': 'trafficM1', 'second-midterm': 'trafficM2', 'final': 'trafficFinal' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/traffic/*.json)
       }
     },
     {
@@ -389,7 +399,8 @@ const SOKRAT_CATALOG = {
       content: {
         // final.js MUST load LAST (Object.assign of microeconomicsM1 + microeconomicsM2 + examPractice).
         scripts: ['data/microeconomics/midterm-1.js', 'data/microeconomics/midterm-2.js', 'data/microeconomics/final.js'],
-        resolve: { 'first-midterm': 'microeconomicsM1', 'second-midterm': 'microeconomicsM2', 'final': 'microeconomicsFinal' }
+        resolve: { 'first-midterm': 'microeconomicsM1', 'second-midterm': 'microeconomicsM2', 'final': 'microeconomicsFinal' },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/microeconomics/*.json)
       }
     },
     {
@@ -445,6 +456,7 @@ const SOKRAT_CATALOG = {
         // exercises.js is independent (window.academicWritingExercises) — loads after final.js.
         scripts: ['data/academic-writing/midterm-1.js', 'data/academic-writing/midterm-2.js', 'data/academic-writing/final.js', 'data/academic-writing/exercises.js'],
         resolve: { 'first-midterm': 'academicWritingM1', 'second-midterm': 'academicWritingM2', 'final': 'academicWritingFinal' },
+        dataFormat: 'json', // F2 2A.4b (dual-read; study iz data/json/academic-writing/*.json; vježbe uvijek iz .js)
         codeScripts: ['data/academic-writing/exercises.js'], // CODE-paket vježbi → uvijek iz datoteke, nikad iz baze (BUG-012; ovdje 0 randomiziranih, ali pravilo je jedinstveno)
         exercises: 'academicWritingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }
@@ -509,7 +521,8 @@ const SOKRAT_CATALOG = {
           'midterm-1': 'businessInformaticsHrM1',
           'midterm-2': 'businessInformaticsHrM2',
           'final': 'businessInformaticsHrFinal'
-        }
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/business-informatics-hr/*.json)
       }
     }
   ]

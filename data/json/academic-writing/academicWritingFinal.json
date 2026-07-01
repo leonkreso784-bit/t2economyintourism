@@ -1,0 +1,2946 @@
+{
+  "fundamentalsOfResearch": {
+    "name": "Fundamentals Of Research",
+    "icon": "fa-book-open",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "Who was Claudius Galen and what was he known for?",
+        "answer": "Claudius Galen was a Greek physician, expert anatomist, and philosopher who was one of the ancient world's most influential doctors. He believed in direct observation of patients and saw good health as the balanced working of all the body's organs.",
+        "explanation": "Galen is highlighted as an early example of using observation as a primary means to understand medicine."
+      },
+      {
+        "question": "What is the difference between implicit and explicit knowledge?",
+        "answer": "Implicit knowledge refers to practical skills (e.g., riding a bike, swimming), while explicit knowledge refers to theoretical understanding of a subject (e.g., a manual explaining how to operate a machine).",
+        "explanation": "Both types fall under the broader definition of knowledge as theoretical and practical understanding."
+      },
+      {
+        "question": "What is a priori knowledge?",
+        "answer": "A priori knowledge is knowledge that is known independent of experience, typically derived through deductive reasoning. Most mathematical equations are examples of a priori knowledge."
+      },
+      {
+        "question": "What is a posteriori knowledge?",
+        "answer": "A posteriori knowledge is knowledge that can only be known through experience, gathered via inductive reasoning based on empirical evidence."
+      },
+      {
+        "question": "What is the Method of Tenacity?",
+        "answer": "The method of tenacity involves believing and accepting certain things as true because they have always been believed or because superstition supports them. Religious beliefs, omens, and astrology are common examples.",
+        "explanation": "Described by Kerliger (1986) as one of four methods of acquiring knowledge."
+      },
+      {
+        "question": "What is the Method of Intuition?",
+        "answer": "The method of intuition involves relying on hunches and instinct when answering questions, especially when a person has no information or cannot make rational considerations. Information is accepted as true because it 'feels right.'"
+      },
+      {
+        "question": "What is the Method of Authority?",
+        "answer": "The method of authority involves relying on information or answers from an expert in a subject area. A key limitation is that expert opinion can be subjective, and expertise in one area is often incorrectly generalized to other topics.",
+        "explanation": "The method of authority is also called the method of faith when people have unquestioning trust in the authority figure."
+      },
+      {
+        "question": "What are the three important principles of the scientific method?",
+        "answer": "Science is empirical (answers are obtained after systematic empirical research), science is public (methods and results are available for evaluation and replication by other scientists), and science is objective (observations are structured to avoid researcher bias)."
+      },
+      {
+        "question": "What does the word 'science' derive from and what does it mean?",
+        "answer": "The word 'science' derives from the Latin term 'scientia,' meaning knowledge."
+      },
+      {
+        "question": "What is bias in the context of scientific research?",
+        "answer": "Bias occurs when the research results in a study are influenced by the researcher's expectations or personal beliefs."
+      },
+      {
+        "question": "What is the empirical method of acquiring knowledge?",
+        "answer": "The empirical method, or empiricism, uses observation or direct sensory experience to obtain knowledge about the world."
+      },
+      {
+        "question": "What is the rational method of acquiring knowledge?",
+        "answer": "The rational method, or rationalism, seeks answers through logical reasoning using premise statements that are presumed to be true, combined to yield a conclusion that must conform to the rules of logic."
+      },
+      {
+        "question": "Under which scientific area and field does 'trade and tourism' fall according to the Croatian Ordinance on Scientific Areas?",
+        "answer": "Trade and tourism (branch 5.01.07) falls under the Area of Social Sciences, field of Economy."
+      },
+      {
+        "question": "What is research in academic fields?",
+        "answer": "In academic fields, research denotes activities such as defining, redefining, and solving problems; observing facts and their interpretation; formulating and testing hypotheses; revising existing theories and laws; and practically applying already generated information."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which scientist is referred to as the 'father of observational astronomy' in the source text?",
+        "options": [
+          "Claudius Galen",
+          "Isaac Newton",
+          "Galileo Galilei",
+          "Nicolaus Copernicus"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to Kerliger (1986), which method of acquiring knowledge involves accepting information as true because it has always been believed or because superstition supports it?",
+        "options": [
+          "Method of intuition",
+          "Method of tenacity",
+          "Method of authority",
+          "Empirical method"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A student believes their exam performance improves when they wear a lucky hat. Which method of knowing are they using?",
+        "options": [
+          "Method of empiricism",
+          "Method of authority",
+          "Rational method",
+          "Method of tenacity"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Which of the following is a key limitation of the method of authority?",
+        "options": [
+          "It relies too heavily on direct observation",
+          "Expert opinion can be subjective rather than true",
+          "It requires too much empirical data",
+          "It cannot be used in social sciences"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the three principles of scientific method states that research results should be available for evaluation and replication by other scientists?",
+        "options": [
+          "Science is empirical",
+          "Science is objective",
+          "Science is public",
+          "Science is rational"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Under the Croatian Ordinance on Scientific Areas, which area does 'Economy' belong to?",
+        "options": [
+          "Area of Natural Sciences",
+          "Area of Humanities",
+          "Area of Biotechnical Sciences",
+          "Area of Social Sciences"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "When does information become knowledge, according to the source text?",
+        "options": [
+          "When it is published in a scientific journal",
+          "When it is convinced and understood",
+          "When it is gathered through empirical observation",
+          "When it is verified by an authority"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which accidental discovery resulted from Chinese attempts to find an elixir for eternal life?",
+        "options": [
+          "Penicillin",
+          "Corn Flakes",
+          "Gunpowder",
+          "The telescope"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Tim knows he is taller than his friend Jack, who just became tall enough to ride a roller coaster. Tim concludes he can also ride it. Which method of knowing is Tim using?",
+        "options": [
+          "Method of empiricism",
+          "Method of authority",
+          "Rational method",
+          "Method of tenacity"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following best describes why objective measurements are more challenging in social sciences than in natural sciences?",
+        "options": [
+          "Social sciences do not use the scientific method",
+          "Natural sciences have more funding for research",
+          "The nature of social science disciplines makes objective measurement comparatively difficult",
+          "Social scientists prefer qualitative over quantitative data"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What distinguishes scientific empiricism from the simple empirical method?",
+        "options": [
+          "Scientific empiricism does not rely on observation",
+          "In scientific empiricism, observations are systematic and adequate procedures and techniques are used",
+          "Scientific empiricism relies solely on deductive reasoning",
+          "The empirical method is more reliable than scientific empiricism"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Galileo Galilei improved the telescope so he could see with a magnification _______ or 9 times.",
+        "answer": "8",
+        "hint": "A single-digit number just below 9."
+      },
+      {
+        "sentence": "Knowledge is only considered as such when it is convinced and _______.",
+        "answer": "understood",
+        "hint": "The process of grasping meaning."
+      },
+      {
+        "sentence": "A priori knowledge is known _______ of experience, while a posteriori knowledge is known only by experience.",
+        "answer": "independent",
+        "hint": "Not relying on something."
+      },
+      {
+        "sentence": "The method of _______ involves relying on hunches and instinct when answering questions.",
+        "answer": "intuition",
+        "hint": "A gut feeling or inner sense."
+      },
+      {
+        "sentence": "The method of authority is also called the method of _______ when people have unquestioning trust in the authority figure.",
+        "answer": "faith",
+        "hint": "Unquestioning belief or trust."
+      },
+      {
+        "sentence": "Science is described as a '_______ search for knowledge' because observations are structured to avoid researcher bias.",
+        "answer": "dispassionate",
+        "hint": "Without personal emotion or bias."
+      },
+      {
+        "sentence": "The word 'science' comes from the Latin term _______, meaning knowledge.",
+        "answer": "scientia",
+        "hint": "A Latin word."
+      },
+      {
+        "sentence": "_______ occurs when research results are influenced by the researcher's expectations or personal beliefs.",
+        "answer": "Bias",
+        "hint": "A skewing of results due to personal influence."
+      },
+      {
+        "sentence": "Trade and tourism is branch number _______ within the field of Economy in the Area of Social Sciences.",
+        "answer": "5.01.07",
+        "hint": "It follows 5.01.06 general economics."
+      },
+      {
+        "sentence": "The scientific method is based on observation, measurement, _______, and evaluation.",
+        "answer": "verification",
+        "hint": "Confirming the accuracy of findings."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Fundamentals of Research: The Search for Knowledge</h3><p>From the earliest days of human civilization, curiosity has driven people to seek truth and understanding. Ancient scholars like <strong>Claudius Galen</strong> used direct observation of patients to advance medicine, while <strong>Galileo Galilei</strong> (1564–1642) improved the telescope and made groundbreaking astronomical discoveries. Many important discoveries also happened <em>accidentally</em> — gunpowder, penicillin, and Corn Flakes are classic examples.</p><h3>What is Knowledge?</h3><p>According to C. George Tomas (2021), knowledge refers to both <strong>theoretical and practical understanding</strong> of a subject, including facts, descriptions, information, and skills acquired through experience or study. Knowledge becomes knowledge only when it is <em>convinced and understood</em>.</p><ul><li><strong>Implicit knowledge:</strong> Practical skills such as riding a bike or swimming.</li><li><strong>Explicit knowledge:</strong> Theoretical understanding, such as a manual explaining how to operate a machine.</li><li><strong>A priori knowledge:</strong> Known independent of experience (e.g., mathematical equations), derived through deductive reasoning.</li><li><strong>A posteriori knowledge:</strong> Known only through experience, gathered via inductive reasoning and empirical evidence.</li></ul><h3>Methods of Acquiring Knowledge</h3><p>Kerliger (1986) described four non-scientific methods, alongside the scientific method:</p><ul><li><strong>Method of Tenacity:</strong> Accepting things as true because they have always been believed or because superstition supports them (e.g., religious beliefs, omens, astrology). These beliefs are deeply ingrained and very difficult to change.</li><li><strong>Method of Intuition:</strong> Relying on hunches and instinct. Information is accepted as true because it 'feels right.' Often used in ethical or moral decisions.</li><li><strong>Method of Authority:</strong> Relying on an expert's opinion. Also called the <em>method of faith</em> when trust is unquestioning. Key limitations: expert opinion can be subjective, and expertise in one area is often incorrectly generalized to others. Example: Linus Pauling's claim about vitamin C and the common cold was widely accepted on authority despite lack of scientific support.</li><li><strong>Rationalism (Rational Method):</strong> Using logical reasoning with premise statements to reach conclusions. Logic is described as 'a way of establishing truth in the absence of evidence.' Conclusions must conform to the rules of logic.</li><li><strong>Empiricism (Empirical Method):</strong> Using direct observation or sensory experience to obtain knowledge.</li><li><strong>Scientific Method:</strong> The most reliable method. Combines observation, measurement, verification, and evaluation. It is systematic and designed to avoid the pitfalls of any single method used alone.</li></ul><h3>Three Principles of the Scientific Method</h3><ul><li><strong>Empirical:</strong> Answers are obtained after systematic empirical research using adequate procedures and techniques.</li><li><strong>Public:</strong> Methods and results are available for evaluation and replication by other scientists, often published in scientific journals or presented at conferences.</li><li><strong>Objective:</strong> Observations are structured to prevent researcher bias — science is called 'a dispassionate search for knowledge.' <em>Bias</em> occurs when results are influenced by the researcher's expectations or personal beliefs.</li></ul><h3>Science and Its Classification</h3><p>The word <strong>science</strong> derives from the Latin <em>scientia</em>, meaning knowledge. Scientific knowledge is not static — it is constantly revised and expanded through observation and experimentation. In Croatia, the classification of science is determined by the <strong>Ordinance on Scientific and Artistic Areas, Fields and Branches (Official Gazette No. 118/09)</strong>, which defines nine scientific and artistic areas including Natural Sciences, Social Sciences, Humanities, and others. Tourism-related research falls under the <strong>Area of Social Sciences → Economy → branch 5.01.07 Trade and Tourism</strong>.</p><h3>What is Research?</h3><p>In academic fields, research involves defining, redefining, and solving problems; observing and interpreting facts; formulating and testing hypotheses; revising existing theories; and applying generated information practically. <strong>Logic, reason, and evidence</strong> are essential parts of modern research. Objective measurements are far easier in natural sciences than in social sciences due to the nature of the disciplines.</p><h3>Common Pitfalls</h3><ul><li>Relying solely on authority without corroborating evidence — not all 'experts' are genuine experts.</li><li>Confusing a priori and a posteriori knowledge: not all knowledge can be derived by reasoning alone.</li><li>Allowing personal bias to influence research outcomes — this undermines the objectivity that science requires.</li><li>Assuming that accidental discoveries are not valid — many important findings arose from trial and error or accident, but they were later verified through systematic study.</li></ul>"
+    }
+  },
+  "literatureReview": {
+    "name": "Literature Review",
+    "icon": "fa-lightbulb",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "What is a literature review?",
+        "answer": "A critical and evaluative description of publications on a chosen topic.",
+        "explanation": "It provides the background and justification for the research undertaken, shows existing knowledge, and identifies gaps related to the research work."
+      },
+      {
+        "question": "What is the primary purpose of a literature review?",
+        "answer": "To demonstrate that the author has extensively surveyed the literature of a particular subject and critically evaluated its quality by classifying and summarizing findings in comparison with previous research works.",
+        "explanation": "A good review must have a clear focus and be presented in a logical and well-organized style."
+      },
+      {
+        "question": "What is an annotated bibliography?",
+        "answer": "A bibliography giving the summary of different sources, where each annotation is a short explanatory note about the contents of a source along with an evaluation.",
+        "explanation": "Unlike a literature review, an annotated bibliography is organized around the sources themselves, not around ideas."
+      },
+      {
+        "question": "How does a literature review differ from an annotated bibliography?",
+        "answer": "A literature review provides a narrative organized around ideas using references, whereas an annotated bibliography is organized around the sources themselves and provides summaries and evaluations of individual sources."
+      },
+      {
+        "question": "Name three objectives of conducting a literature survey according to Hartley (2008), Randolph (2009), and Kumar (2011).",
+        "answer": "Examples include: to understand the current level of knowledge on the chosen subject; to identify seminal works; to identify shortcomings in the existing knowledge base; to see whether the work has already been investigated; to identify opposing views; to identify methodologies used."
+      },
+      {
+        "question": "What is the IMRAD format?",
+        "answer": "A structure used for research papers: Introduction, Methods, Results, and Discussion. A reliable research paper source should be presented in this format."
+      },
+      {
+        "question": "What is peer reviewing?",
+        "answer": "A rigorous process of quality evaluation that a paper must go through before being accepted for publication in a journal.",
+        "explanation": "Journals that publish results of original research and use peer reviewing are often called primary journals."
+      },
+      {
+        "question": "What are primary journals?",
+        "answer": "Journals that publish the results of original research and require papers to go through a rigorous peer review process before acceptance."
+      },
+      {
+        "question": "What four key planning steps should be taken before conducting a literature search?",
+        "answer": "(1) Determine the scope of review, (2) decide the period to be covered, (3) settle on the range (regional, national, or international), and (4) identify key concepts and keywords."
+      },
+      {
+        "question": "Why should extra vigilance be maintained on electronic sources?",
+        "answer": "Because not all electronic sources are trustworthy; researchers should rely only on websites sponsored by universities and reputable organizations."
+      },
+      {
+        "question": "What bibliographic details should be recorded for a printed book source?",
+        "answer": "Name of author(s)/editor(s)/organization, title of book or chapter, edition and reprint, name of publisher, place of publication, year of publication, and total pages."
+      },
+      {
+        "question": "What additional details must be noted for electronic publications?",
+        "answer": "Name of author(s)/editor(s)/organization, title of the article, title of the site (homepage), date of creation, date last modified or updated, date of access, and DOI or full URL address."
+      },
+      {
+        "question": "Why are books sometimes considered less useful than journals for a literature review?",
+        "answer": "Because books do not include recent developments due to the long preparation time involved in their making, whereas journals publish more current research findings."
+      },
+      {
+        "question": "What does it mean to 'identify opposing views' in a literature review?",
+        "answer": "It means recognizing and acknowledging perspectives or findings in the existing literature that contradict or challenge the researcher's own position or the dominant view in the field."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which of the following best describes a literature review?",
+        "options": [
+          "A list of sources with short summaries and evaluations",
+          "A critical and evaluative description of publications on a chosen topic",
+          "A bibliography organized around individual sources",
+          "A collection of abstracts from primary journals"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what is the primary purpose of a literature review?",
+        "options": [
+          "To list all publications ever written on a topic",
+          "To demonstrate extensive surveying and critical evaluation of literature on a subject",
+          "To provide an annotated bibliography of key sources",
+          "To summarize only the most recent journal articles"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How is a literature review organized, in contrast to an annotated bibliography?",
+        "options": [
+          "Around the sources themselves",
+          "Alphabetically by author name",
+          "Around ideas rather than the sources themselves",
+          "By publication date"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is NOT listed as an objective of conducting a literature survey (Hartley 2008; Randolph 2009; Kumar 2011)?",
+        "options": [
+          "To identify seminal works in the proposed subject area",
+          "To identify opposing views",
+          "To collect raw data for statistical analysis",
+          "To identify methodologies and research techniques that have been used"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What is peer reviewing?",
+        "options": [
+          "A process where students evaluate each other's essays",
+          "A rigorous process of quality evaluation a paper must pass before journal publication",
+          "A method of citing sources in a literature review",
+          "A technique for searching online databases"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When planning a literature search, what should a researcher do FIRST?",
+        "options": [
+          "Use online databases efficiently",
+          "Identify key concepts and keywords",
+          "Determine the scope of the review by defining the research question",
+          "Keep detailed bibliographic records"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Why are books sometimes less useful than journals for a literature review?",
+        "options": [
+          "Books are not peer reviewed and contain biased information",
+          "Books do not include recent developments due to long preparation time",
+          "Books are not available in library catalogues",
+          "Books cannot be cited in academic research"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which format should a reliable research paper follow, according to the source text?",
+        "options": [
+          "APA format",
+          "IMRAD format",
+          "Chicago format",
+          "Harvard format"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What type of electronic sources should researchers rely on, according to the source text?",
+        "options": [
+          "Any website with recent publication dates",
+          "Websites sponsored by universities and reputable organizations",
+          "Websites with the highest number of visitors",
+          "Social media platforms with academic discussions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following details is required when recording bibliographic information for an electronic publication?",
+        "options": [
+          "Name of the printer",
+          "Digital Object Identifier (DOI) or full URL address",
+          "Number of pages of the website",
+          "Name of the city where the server is located"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what should a good literature review have?",
+        "options": [
+          "A minimum of 50 references",
+          "A clear focus and a logical, well-organized style",
+          "At least one annotated bibliography section",
+          "A separate chapter on methodology"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is listed as a reason to avoid certain sources when assessing reliability?",
+        "options": [
+          "Sources published more than 10 years ago",
+          "Sources from lobbyists and advocacy groups",
+          "Sources written by multiple authors",
+          "Sources published in foreign languages"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "A literature review is a critical and _______ description of publications on a chosen topic.",
+        "answer": "evaluative",
+        "hint": "It involves judging the quality and relevance of sources."
+      },
+      {
+        "sentence": "A literature review is organized around _______ and not the sources themselves, in contrast to an annotated bibliography.",
+        "answer": "ideas",
+        "hint": "Think about what structures the narrative of a literature review."
+      },
+      {
+        "sentence": "An _______ is a short explanatory note about the contents of a source, giving the reader a summary along with an evaluation.",
+        "answer": "annotation",
+        "hint": "This term is part of the name 'annotated bibliography'."
+      },
+      {
+        "sentence": "Before a paper is accepted for publication in a journal, it should go through a rigorous process of quality evaluation called _______.",
+        "answer": "peer reviewing",
+        "hint": "Other experts in the field evaluate the paper."
+      },
+      {
+        "sentence": "Journals that publish the results of original research are often called _______ journals.",
+        "answer": "primary",
+        "hint": "They are the first to publish new research findings."
+      },
+      {
+        "sentence": "If the source is a research paper, it should be presented in the _______ format.",
+        "answer": "IMRAD",
+        "hint": "This acronym stands for Introduction, Methods, Results, and Discussion."
+      },
+      {
+        "sentence": "Researchers should maintain extra vigilance on electronic sources and rely only on websites sponsored by universities and _______ organizations.",
+        "answer": "reputed",
+        "hint": "The opposite of disreputable or unknown."
+      },
+      {
+        "sentence": "Using a list of _______ or key phrases, you will be able to search the literature easily and effectively.",
+        "answer": "keywords",
+        "hint": "These are the most important terms related to your research topic."
+      },
+      {
+        "sentence": "A literature review provides a _______ using the references in the annotated bibliography.",
+        "answer": "narrative",
+        "hint": "It tells a story or argument connecting the sources."
+      },
+      {
+        "sentence": "For electronic publications, researchers must note the Digital Object Identifier (DOI) or the full address of the _______.",
+        "answer": "URL",
+        "hint": "This is the web address of the online source."
+      }
+    ],
+    "learn": {
+      "content": "<h3>The Literature Review</h3><p>A <strong>literature review</strong> is a critical and evaluative description of publications on a chosen topic. It is an essential component of research proposals, theses, and research papers. Its core function is to provide the <strong>background and justification</strong> for the research undertaken, to show what knowledge already exists, and to highlight the <strong>gaps in knowledge</strong> related to the research work.</p><h3>Literature Review vs. Annotated Bibliography</h3><p>Students often confuse a literature review with an annotated bibliography. These are <em>not</em> the same thing:</p><ul><li><strong>Annotated Bibliography:</strong> A bibliography that gives a summary and evaluation of each individual source. Each entry (annotation) is a short explanatory note about the contents of a source.</li><li><strong>Literature Review:</strong> Provides a <em>narrative</em> using the references gathered, organized around <strong>ideas</strong> rather than around the sources themselves.</li></ul><p><em>Common pitfall:</em> Writing a literature review as a list of summaries (one source after another) is a mistake — it should weave sources together into a coherent argument or discussion organized by themes or ideas.</p><h3>Importance of the Literature Review</h3><p>The primary purpose of a literature review is to demonstrate that the author has <strong>extensively surveyed</strong> the literature and <strong>critically evaluated</strong> its quality. A good review must have a clear focus and be presented in a logical and well-organized style. Key objectives include:</p><ul><li>To understand the current level of knowledge on the chosen subject</li><li>To identify <strong>seminal works</strong> in the proposed subject area</li><li>To identify <strong>shortcomings</strong> in the existing knowledge base</li><li>To see whether the work has already been investigated</li><li>To identify <strong>opposing views</strong></li><li>To carry on from where others have already reached</li><li>To identify other scientists working in the same field</li><li>To identify the <strong>methodologies and research techniques</strong> that have been used</li><li>To relate new findings to previous findings in the discussion section</li></ul><h3>Planning a Literature Search</h3><p>Before beginning a search, careful planning is essential:</p><ul><li><strong>Determine the Scope:</strong> Define your research question and assess what you already know about the area.</li><li><strong>Decide the Period:</strong> Determine whether you need everything ever written on the topic, or only publications from the last 5 or 30 years.</li><li><strong>Settle on the Range:</strong> Decide if the information needed is of regional, national, or international importance.</li><li><strong>Identify Key Concepts and Keywords:</strong> A list of keywords or key phrases enables effective and efficient searching.</li></ul><h3>Locating Relevant Literature</h3><p>Effective location of literature involves:</p><ul><li>Selecting appropriate tools such as library catalogues, abstracts, and search engines</li><li>Tracing relevant publications using keywords, synonyms, and alternative terms</li><li>Taking careful notes from each source</li><li>Keeping <strong>detailed bibliographic records</strong> including author names, title, volume, issue, publisher, place and year of publication, and page numbers. For electronic sources, also record the date of access, date last modified, and the <strong>DOI or full URL</strong>.</li></ul><h3>Reliability of a Source</h3><p>Not all sources can be taken for granted. Researchers must assess the <strong>trustworthiness</strong> of each source by considering:</p><ul><li>Who the authors and publishers are</li><li>The <strong>impact factor</strong> or rating of the publication</li><li>The purpose of the publication and for whom it was written</li><li>Whether the subject matter has been presented clearly and objectively</li><li>The theoretical perspective of the author</li><li>Whether the source follows the <strong>IMRAD format</strong> (Introduction, Methods, Results, and Discussion) if it is a research paper</li><li>Avoiding <strong>biased sources</strong> from lobbyists and advocacy groups</li><li>Relying only on electronic sources from <strong>universities and reputable organizations</strong></li></ul><h3>Writing the Review</h3><p>Journals that publish original research are called <strong>primary journals</strong>. Before publication, papers must pass <strong>peer reviewing</strong> — a rigorous quality evaluation process. Books are more accessible but may lack recent developments due to long preparation times, making journals often more valuable for current research. A well-written literature review integrates sources into a coherent narrative, critically evaluates findings, and clearly demonstrates the researcher's command of the field.</p>"
+    }
+  },
+  "structureOfAThesis": {
+    "name": "Structure Of A Thesis",
+    "icon": "fa-compass",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "What is the difference between a 'thesis' and a 'dissertation' in the US system?",
+        "answer": "In the US, a dissertation is submitted for a PhD degree, while a thesis is submitted for a Master's degree.",
+        "explanation": "This is the opposite of the British convention."
+      },
+      {
+        "question": "How do British-based academic systems use the terms 'thesis' and 'dissertation'?",
+        "answer": "In British-based systems, 'dissertation' refers to work at the end of an undergraduate or master's level degree, while 'thesis' refers to work produced at the end of a PhD.",
+        "explanation": "This is the reverse of the US convention."
+      },
+      {
+        "question": "What are the three main parts of a thesis?",
+        "answer": "Preliminary Pages, Subject Proper, and References/Appendixes."
+      },
+      {
+        "question": "What is the IMRAD structure?",
+        "answer": "IMRAD stands for Introduction, Review of literature, Materials and methods, Results, and Discussion — the structure of the main body of a thesis."
+      },
+      {
+        "question": "What is the purpose of the 'Introduction' chapter in a thesis?",
+        "answer": "It introduces the reader to the state of knowledge before the research, defines the gap in knowledge, states what the student planned to do, and provides justification and rationale for the research."
+      },
+      {
+        "question": "Which section of a thesis is considered the most important part?",
+        "answer": "The 'Results' section is considered the most important part of a thesis, as it presents the student's findings with supporting data."
+      },
+      {
+        "question": "Which section of a thesis is considered the most difficult to write?",
+        "answer": "The 'Discussion' section is considered the most difficult section to write in any research report including a thesis."
+      },
+      {
+        "question": "What is an acronym?",
+        "answer": "An acronym is an abbreviation created by joining the first letters of each successive word of a long compound term, pronounced as a single word (e.g., AIDS, ICRISAT)."
+      },
+      {
+        "question": "What is an initialism?",
+        "answer": "An initialism is produced by joining the initial letters of all words in a long multiword term, but the letters are pronounced separately (e.g., ICAR pronounced I-C-A-R)."
+      },
+      {
+        "question": "When should an abbreviation be written in full?",
+        "answer": "An abbreviation shall be written in full at least the first time it is used in the document, followed immediately by the abbreviated form in parentheses."
+      },
+      {
+        "question": "What does 'etc.' stand for and what language does it come from?",
+        "answer": "'Etc.' stands for 'et cetera', a Latin phrase meaning 'and so forth' or 'and other things'."
+      },
+      {
+        "question": "Why is writing 'and etc.' incorrect?",
+        "answer": "Because 'and' is already implied in 'et cetera' (which means 'and so forth'), making 'and' redundant."
+      },
+      {
+        "question": "In British English, when is a period omitted after an abbreviation?",
+        "answer": "When the last letter of the abbreviation and the last letter of the original word are the same (e.g., 'Dr' for Doctor, 'Mr' for Mister)."
+      },
+      {
+        "question": "How are academic degrees written with respect to periods?",
+        "answer": "Periods are not used between letters of academic degrees, whether composed of upper case letters alone or combined with upper and lower case letters (e.g., BA, BSc, MPhil, PhD)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In the US academic system, what is the research report submitted for a PhD degree called?",
+        "options": [
+          "Thesis",
+          "Dissertation",
+          "Monograph",
+          "Research paper"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How many main parts does a thesis have?",
+        "options": [
+          "Two",
+          "Three",
+          "Four",
+          "Five"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is NOT listed as part of the Preliminary Pages of a thesis?",
+        "options": [
+          "Acknowledgements",
+          "Table of contents",
+          "Discussion",
+          "Signature page"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to the source, figures and illustrations should be numbered using:",
+        "options": [
+          "Roman numerals",
+          "Arabic numerals",
+          "Alphabetical letters",
+          "Decimal numbers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "The 'Discussion' section of a thesis should answer which question?",
+        "options": [
+          "What did the student find?",
+          "What do the results mean and how do they relate to what is already known?",
+          "What methodology was used?",
+          "What is the scope of the work?"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is an example of an acronym (pronounced as a single word)?",
+        "options": [
+          "ICAR",
+          "FBI",
+          "radar",
+          "WHO"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "How should 'etc.' be punctuated when used in a sentence?",
+        "options": [
+          "Preceded by a comma and followed by a period",
+          "Followed by a period only",
+          "Preceded by 'and' and followed by a period",
+          "No punctuation required"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "In British English, which abbreviation correctly omits the period?",
+        "options": [
+          "ed. (edition)",
+          "No. (number)",
+          "Dr (Doctor)",
+          "Vol. (volume)"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which Latin abbreviation means 'for example'?",
+        "options": [
+          "i.e.",
+          "viz.",
+          "e.g.",
+          "ibid."
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to the source, what is the recommended modern alternative to using 'etc.' in formal writing?",
+        "options": [
+          "Use 'and so on' instead",
+          "Use 'including', 'such as', or 'like' before the list",
+          "Use 'et al.' instead",
+          "Simply leave the list open-ended"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Where is the Acknowledgements section placed in a thesis?",
+        "options": [
+          "After the table of contents",
+          "At the very end of the thesis",
+          "Just before the table of contents",
+          "After the signature page"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which statement about initialisms is correct?",
+        "options": [
+          "They are pronounced as a single word",
+          "Their letters are pronounced separately",
+          "They are always written in lower case",
+          "They never have a plural form"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "In the US system, the research report submitted for a Master's degree is called a _______.",
+        "answer": "thesis",
+        "hint": "Not a dissertation."
+      },
+      {
+        "sentence": "The main body of a thesis follows the _______ structure, which stands for Introduction, Review of literature, Materials and methods, Results, and Discussion.",
+        "answer": "IMRAD",
+        "hint": "An acronym for the chapter sequence."
+      },
+      {
+        "sentence": "Figures and illustrations in a thesis should be numbered in _______ numerals.",
+        "answer": "Arabic",
+        "hint": "1, 2, 3 — not Roman numerals."
+      },
+      {
+        "sentence": "An abbreviation created by joining the first letters of successive words and pronounced as a single word is called an _______.",
+        "answer": "acronym",
+        "hint": "Examples include AIDS and ICRISAT."
+      },
+      {
+        "sentence": "An abbreviation whose letters are pronounced separately, such as ICAR, is called an _______.",
+        "answer": "initialism",
+        "hint": "Each letter is said individually."
+      },
+      {
+        "sentence": "An abbreviation should be written in full the _______ time it is used in the document, followed by the abbreviated form in parentheses.",
+        "answer": "first",
+        "hint": "Introduce before shortening."
+      },
+      {
+        "sentence": "The Latin phrase 'et cetera', abbreviated as etc., means 'and so _______.",
+        "answer": "forth",
+        "hint": "It implies continuation of a list."
+      },
+      {
+        "sentence": "Writing 'and etc.' is incorrect because the word 'and' is _______ since it is already implied in 'et cetera'.",
+        "answer": "redundant",
+        "hint": "It means the same thing twice."
+      },
+      {
+        "sentence": "In British English, periods are omitted after honorific contractions such as _______ (Doctor) because the last letter of the abbreviation matches the last letter of the original word.",
+        "answer": "Dr",
+        "hint": "A common title for a medical doctor or academic."
+      },
+      {
+        "sentence": "The _______ section is considered the most important part of a thesis, as it presents the student's findings with supporting data.",
+        "answer": "Results",
+        "hint": "It answers the question: What did the student find?"
+      }
+    ],
+    "learn": {
+      "content": "<h3>Structure of a Thesis</h3><p>A thesis (or dissertation) is a formal academic research document. Understanding its structure is essential for any student undertaking seminar, bachelor, or master-level research at FMTU Opatija and similar institutions.</p><h3>Thesis vs. Dissertation: Terminology</h3><p>The terms <strong>thesis</strong> and <strong>dissertation</strong> are used differently depending on the academic tradition:</p><ul><li><strong>US system:</strong> A <em>dissertation</em> is submitted for a PhD; a <em>thesis</em> is submitted for a Master's degree.</li><li><strong>British-based system:</strong> A <em>dissertation</em> refers to work at the end of an undergraduate or master's degree; a <em>thesis</em> refers to work produced at the end of a PhD.</li></ul><h3>The Three Main Parts of a Thesis</h3><p>Every thesis is divided into three main parts:</p><ul><li><strong>Preliminary Pages</strong></li><li><strong>Subject Proper</strong></li><li><strong>References and Appendixes</strong></li></ul><h3>Preliminary Pages</h3><p>The preliminary pages set the administrative and contextual foundation of the thesis. They include:</p><ul><li><strong>Title Page(s):</strong> Usually two are provided. The first (cover page) includes the thesis title, author's name, and department/college name. The second adds the degree name, faculty, department, institute, and mentor's name and title.</li><li><strong>Signature Page:</strong> Contains signatures of all Advisory Committee members as an official endorsement.</li><li><strong>Declaration by the Student</strong> and <strong>Certificate from the Guide (Major Advisor)</strong>.</li><li><strong>Acknowledgements:</strong> Placed just before the Table of Contents. Students acknowledge help from supervisors, colleagues, and friends. The modern style uses first person: <em>'I wish to acknowledge…'</em> rather than the old-fashioned third person.</li><li><strong>Table of Contents:</strong> All major divisions must be listed.</li><li><strong>List of Tables:</strong> All tables listed with the same captions as in the text.</li><li><strong>List of Figures:</strong> All illustrations (maps, diagrams, photographs, etc.) numbered in <strong>Arabic numerals</strong> and referred to as 'Figure' in the text.</li></ul><h3>The Subject Proper (IMRAD)</h3><p>The main body follows the <strong>IMRAD</strong> structure across six chapters:</p><ul><li><strong>Introduction:</strong> Introduces the state of knowledge, defines the gap, states the research plan, hypothesis, importance, scope, and methodology.</li><li><strong>Review of Literature:</strong> Must be up to date; assumes the candidate has read all original references.</li><li><strong>Materials and Methods:</strong> Described exhaustively in a thesis (unlike a research paper where it is concise).</li><li><strong>Results:</strong> The <em>most important</em> part — presents findings with supporting data. Answers: <em>What did the student find?</em></li><li><strong>Discussion:</strong> The <em>most difficult</em> section to write. Answers: <em>What do the results mean and how do they relate to what is already known?</em></li><li><strong>Summary and Conclusion:</strong> Sums up all the key messages of the thesis.</li></ul><h3>Abbreviations, Acronyms, and Initialisms</h3><p>Proper use of abbreviations is critical in academic writing:</p><ul><li><strong>Abbreviation:</strong> A shortened form of a word or group of words, normally written with a period (e.g., <em>abstr.</em> for abstract). If composed of only capital letters, written without periods (e.g., IARI).</li><li><strong>Acronym:</strong> Formed by joining the first letters of successive words and <em>pronounced as a single word</em> (e.g., AIDS, ICRISAT). Some acronyms like <em>radar</em> and <em>laser</em> are now written in lower case as they are accepted as common nouns.</li><li><strong>Initialism:</strong> Formed by joining initial letters but <em>pronounced as separate letters</em> (e.g., ICAR = I-C-A-R, FBI).</li></ul><p><strong>Key rules for abbreviations:</strong></p><ul><li>Write the full form the <strong>first time</strong> it appears, followed by the abbreviation in parentheses.</li><li>Repeat the full form if the abbreviation reappears after a lengthy gap.</li><li>List and explain abbreviations at the beginning of the document.</li></ul><h3>The Abbreviation 'etc.'</h3><p><em>Etc.</em> stands for the Latin <em>et cetera</em>, meaning 'and so forth'. Key rules:</p><ul><li>Always followed by a <strong>period</strong>.</li><li>Always preceded by a <strong>comma</strong> in both American and British English.</li><li>Never write <strong>'and etc.'</strong> — 'and' is redundant.</li><li>The implied extension must be clear to the reader.</li><li>Modern formal writing prefers <strong>'including'</strong>, <strong>'such as'</strong>, or <strong>'like'</strong> instead of 'etc.'</li></ul><h3>Capital Letters and Periods in Abbreviations</h3><ul><li>Acronyms: written in <strong>capital letters without periods</strong> (e.g., WHO, IRRI), except those accepted as common nouns (radar, laser — lower case, no periods).</li><li>Initialisms: may be upper or lower case. No periods when all uppercase (WHO); periods used when lower case (a.m.).</li><li>Academic degrees: <strong>no periods</strong> between letters (BA, BSc, MPhil, PhD).</li><li>SI unit symbols: <strong>no periods</strong> after symbols (g, s, m).</li><li>In British English, if the last letter of the abbreviation equals the last letter of the original word, the period is <strong>omitted</strong> (Dr, Mr, Mrs, Ms). In the USA, periods are used (Dr., Mr., Mrs., Ms.).</li></ul><h3>Common Pitfalls</h3><ul><li>Do <strong>not</strong> use an abbreviation without first defining it in full.</li><li>Do <strong>not</strong> write 'and etc.' — it is redundant.</li><li>Do <strong>not</strong> use Latin abbreviations like <em>loc. cit.</em>, <em>op. cit.</em>, or <em>ibid.</em> in technical writing as they can cause ambiguity; prefer English equivalents.</li><li>Do <strong>not</strong> overuse abbreviations — they can obstruct reading if the reader must constantly search back through the document.</li><li>Ensure the implied meaning of 'etc.' is always clear from context.</li></ul>"
+    }
+  },
+  "methodsOfScientificResearch": {
+    "name": "Methods Of Scientific Research",
+    "icon": "fa-book-open",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "What are the five means of scientific research?",
+        "answer": "Material, Informational, Mathematical, Logical, and Linguistic means.",
+        "explanation": "All five means share a common property: they are constructed, created, designed, and substantiated for certain goals of research."
+      },
+      {
+        "question": "What is Analysis as a scientific method?",
+        "answer": "Decomposing a studied object into several parts, identifying specific attributes and qualities of a phenomenon, process, or relations among phenomena and processes.",
+        "explanation": "Analysis is an integral component of any scientific research, often forming its first phase when an investigator passes from the whole description to identifying structure, properties, and attributes."
+      },
+      {
+        "question": "What is Synthesis as a scientific method?",
+        "answer": "Uniting different elements or sides of an object into a whole system — not just summing up elements, but combining them in a certain sense.",
+        "explanation": "Synthesis is opposite to analysis, yet both are inseparably linked."
+      },
+      {
+        "question": "What is the method of Comparison?",
+        "answer": "Procedures and operations of comparing properties, characteristics, relationships, connections, structures, functions, and behaviors of at least two phenomena to determine basic differences or similarities.",
+        "explanation": "Comparison helps set the basic hypothesis that a new phenomenon has or does not have similar properties to a known phenomenon."
+      },
+      {
+        "question": "What is Abstracting?",
+        "answer": "A basic mental operation enabling mental separation of sides, properties, or states of an object; its major function is separating the common properties of a set of objects and fixing them.",
+        "explanation": "Example: Helping your little brother clean his room can be abstracted as 'being responsible'."
+      },
+      {
+        "question": "What is Concretizing?",
+        "answer": "The opposite process to abstracting; it means identifying whole, interconnected, versatile, and complex entities.",
+        "explanation": "Example: The big idea 'being helpful' is concretized by the specific act of helping a friend carry a heavy bag."
+      },
+      {
+        "question": "What is Generalization?",
+        "answer": "A basic mental operation consisting in identification and fixation of relatively stable invariant properties of objects and their relations, forming the content of a notion about a group or class of objects.",
+        "explanation": "Example: Observing a few cats sleeping in the sun and concluding 'Cats like to sleep in sunlight.'"
+      },
+      {
+        "question": "What is Formalization?",
+        "answer": "Reflecting the result of thinking in the form of exact notions or assertions; in mathematics and formal logic, it means reflecting conceptual knowledge in the form of signs or a formalized language.",
+        "explanation": "Formalization is opposite to intuitive thinking. Example: '80% of tourists who travel between June and August book beach destinations, based on the past five years of travel data.'"
+      },
+      {
+        "question": "What is Induction?",
+        "answer": "An inference from particular objects or phenomena to a common conclusion.",
+        "explanation": "Example: Observing several birds that can fly and inferring 'Most birds I've seen can fly.'"
+      },
+      {
+        "question": "What is Deduction?",
+        "answer": "An inference from the common to the particular, from general judgements to particular conclusions.",
+        "explanation": "Deduction moves in the opposite direction from induction."
+      },
+      {
+        "question": "What is Idealization?",
+        "answer": "Mental construction of beliefs about objects (nonexistent or unrealizable ones) whose preimages still exist in the real world; used in science to determine an ideal case for making predictions.",
+        "explanation": "Example: A travel agency models tourism flow assuming all tourists behave rationally, ignoring emotions and spontaneous decisions."
+      },
+      {
+        "question": "What is the difference between Analogy and Modeling?",
+        "answer": "Analogy involves comparing two different things to highlight similarities and explain a concept; Modeling is creating a simplified representation of a real-world system to understand, analyze, or predict its behavior.",
+        "explanation": "In a special case of modeling called simulation, the behavior of a prototype and a model are described by identical mathematical formulas."
+      },
+      {
+        "question": "What is a Gedanken (Thought) Experiment?",
+        "answer": "A mental exercise where a person imagines a situation or concept to explore its possible outcomes, implications, or principles, without actually performing a physical experiment.",
+        "explanation": "Gedanken is a focused, structured form of imagination used to logically test or explore theoretical ideas, unlike free-form imagination."
+      },
+      {
+        "question": "What is Epistemology?",
+        "answer": "The theory of knowledge, especially with regard to its methods, validity, and scope, and the distinction between justified belief and opinion.",
+        "explanation": "Most publications on epistemology and methodology suggest a double division (classification) of scientific methods, in particular theoretical methods."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which of the following is NOT listed as one of the five means of scientific research?",
+        "options": [
+          "Material means",
+          "Informational means",
+          "Experimental means",
+          "Logical means"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What is the primary role of material means of research?",
+        "options": [
+          "Processing statistical data",
+          "Empirical verification of hypotheses",
+          "Constructing formal language systems",
+          "Identifying logical contradictions"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what is the main difference between Synthesis and simply summing up elements?",
+        "options": [
+          "Synthesis only applies to empirical methods",
+          "Synthesis combines elements in a certain sense, not just sums them up",
+          "Synthesis is the first phase of any scientific research",
+          "Synthesis is identical to analysis but applied in reverse"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the double division of scientific methods, which two broad categories are identified?",
+        "options": [
+          "Quantitative and qualitative",
+          "Theoretical and empirical",
+          "Inductive and deductive",
+          "Logical and linguistic"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which method involves inferring from particular observations to a common conclusion?",
+        "options": [
+          "Deduction",
+          "Formalization",
+          "Induction",
+          "Idealization"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What does Formalization involve, according to the source text?",
+        "options": [
+          "Decomposing an object into its parts",
+          "Reflecting the result of thinking in the form of exact notions or assertions",
+          "Comparing two phenomena to find differences",
+          "Creating improbable and paradoxical images"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following best describes Idealization as a scientific method?",
+        "options": [
+          "Comparing two real-world objects to find similarities",
+          "Mental construction of beliefs about objects whose preimages exist in the real world, used to determine an ideal case",
+          "Decomposing a studied object into several parts",
+          "Uniting different elements into a whole system"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How does a Gedanken experiment differ from general Imagination?",
+        "options": [
+          "Gedanken is free-form and used for creativity; Imagination is structured",
+          "Gedanken is a focused mental exercise to logically test theoretical ideas; Imagination is free-form and general",
+          "Gedanken always requires physical equipment; Imagination does not",
+          "There is no difference; they are the same concept"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What is the key function of Logical means in constructing judgements and proofs?",
+        "options": [
+          "Simplifying statistical data processing",
+          "Separating controlled arguments from intuitively accepted ones, and false arguments from true ones",
+          "Reflecting conceptual knowledge in the form of signs",
+          "Enabling mental separation of properties of an object"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what is the relationship between Analysis and Synthesis?",
+        "options": [
+          "They are completely independent methods",
+          "Analysis always precedes Synthesis in every research",
+          "They are opposite yet inseparably linked",
+          "Synthesis is a subcategory of Analysis"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which example from the source text illustrates Concretizing?",
+        "options": [
+          "Observing cats sleeping in the sun and concluding 'Cats like sunlight'",
+          "Helping a friend carry a heavy bag as a specific example of 'being helpful'",
+          "Assuming all tourists behave rationally to model tourism flow",
+          "Comparing a luxury hotel stay to adventure tourism"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What distinguishes Generalization from Induction?",
+        "options": [
+          "Induction is the process of drawing a conclusion from specific observations; Generalization is the broad statement or rule created based on that inductive process",
+          "Generalization uses specific observations; Induction creates broad rules",
+          "They are identical processes with different names",
+          "Induction applies only to natural sciences; Generalization applies to social sciences"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Analysis is decomposing a studied object into several parts and is often the _______ phase of scientific research.",
+        "answer": "first",
+        "hint": "Think about the order in which analysis appears in a research process."
+      },
+      {
+        "sentence": "Synthesis is _______ to analysis, yet both are inseparably linked.",
+        "answer": "opposite",
+        "hint": "Consider the directional relationship between these two methods."
+      },
+      {
+        "sentence": "Induction is an inference from _______ objects or phenomena to a common conclusion.",
+        "answer": "particular",
+        "hint": "Induction moves from the specific to the general."
+      },
+      {
+        "sentence": "Deduction is an inference from the _______ to the particular, from general judgements to particular conclusions.",
+        "answer": "common",
+        "hint": "Deduction moves in the opposite direction from induction."
+      },
+      {
+        "sentence": "Formalization is opposite to _______ thinking.",
+        "answer": "intuitive",
+        "hint": "Think about the type of thinking that relies on gut feeling rather than exact notions."
+      },
+      {
+        "sentence": "Epistemology is the theory of _______, especially with regard to its methods, validity, and scope.",
+        "answer": "knowledge",
+        "hint": "The word comes from the Greek root for 'knowledge'."
+      },
+      {
+        "sentence": "Idealization is used in science to determine an ideal case, and if the model is accurate it has high _______ power.",
+        "answer": "predictability",
+        "hint": "The model is applied to make forecasts based on the ideal case."
+      },
+      {
+        "sentence": "Logical means help a researcher separate _______ arguments from true ones in the process of constructing judgements and proofs.",
+        "answer": "false",
+        "hint": "One of the three separations listed for logical means involves truth value."
+      },
+      {
+        "sentence": "Modeling is creating a _______ representation of a real-world system to understand, analyze, or predict its behavior.",
+        "answer": "simplified",
+        "hint": "Models do not capture every detail of reality."
+      },
+      {
+        "sentence": "The five means of scientific research share a common property: they are constructed, created, designed, and _______ for certain goals of research.",
+        "answer": "substantiated",
+        "hint": "This word means supported or justified with evidence or reasoning."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Introduction: Means and Methods in Scientific Research</h3><p>In the logical structure of any scientific activity, <strong>means</strong> and <strong>methods</strong> are essential components. They are important subjects of study for <strong>methodology</strong> — the theory of the organization of an activity. Over the course of science's development, both means and methods have been gradually designed and perfected to serve the goals of researchers across all disciplines.</p><h3>The Five Means of Scientific Research</h3><p>All means of scientific research share a common property: they are <strong>constructed, created, designed, and substantiated</strong> for specific research goals. The five recognized means are:</p><ul><li><strong>Material means</strong> — Devices and instruments for scientific investigations, closely connected with empirical methods such as observation, measurement, and experiment. They are directed towards objects being studied and play a principal role in the empirical verification of hypotheses.</li><li><strong>Informational means</strong> — Large-scale implementation of computer technology that simplifies research procedures, reduces data processing time, and enables statistical data processing across all sciences.</li><li><strong>Mathematical means</strong> — Tools that simplify, facilitate, and accelerate the cognition process, assist in identifying relationships among abstracted objects, and cause essential changes in the theoretical framework of descriptive sciences by systematizing empirical data and formulating quantitative laws.</li><li><strong>Logical means</strong> — Help researchers separate controlled arguments from intuitively accepted ones, false arguments from true ones, and confusions from contradictions when constructing judgements and proofs.</li><li><strong>Linguistic means</strong> — Definitions and linguistic rules (in both natural and artificial languages) that form the base of cognitive activity when stating hypotheses, constructing judgements, and making conclusions.</li></ul><h3>Theoretical Methods: Operations</h3><p>Scientific methods are broadly divided into <strong>theoretical</strong> and <strong>empirical</strong> categories — a double division suggested by most publications on <strong>epistemology</strong> (the theory of knowledge regarding its methods, validity, and scope). Key theoretical methods classified as operations include:</p><ul><li><strong>Analysis</strong> — Decomposing a studied object into parts to identify its structure, properties, and attributes; often the first phase of research.</li><li><strong>Synthesis</strong> — Uniting elements into a whole system; not merely summing them up, but combining them meaningfully. Synthesis is opposite to, yet inseparably linked with, analysis.</li><li><strong>Comparison</strong> — Comparing properties, characteristics, and behaviors of at least two phenomena to determine basic differences or similarities.</li><li><strong>Abstracting &amp; Concretizing</strong> — Abstracting separates common properties of a set of objects; concretizing is the opposite process, identifying whole, interconnected, complex entities.</li><li><strong>Generalization</strong> — Identifying and fixing relatively stable, invariant properties of objects to form the content of a notion about a group or class.</li><li><strong>Formalization</strong> — Reflecting the result of thinking in the form of exact notions or assertions; opposite to intuitive thinking.</li><li><strong>Induction</strong> — Inference from particular observations to a common conclusion.</li><li><strong>Deduction</strong> — Inference from the general to the particular.</li><li><strong>Idealization</strong> — Mental construction of beliefs about ideal (nonexistent or unrealizable) objects whose preimages exist in the real world, used to determine ideal cases and make predictions.</li><li><strong>Analogy &amp; Modeling</strong> — Analogy compares two different things to highlight similarities; modeling creates a simplified representation of a real-world system to understand or predict behavior.</li><li><strong>Gedanken Experiment (Thought Experiment)</strong> — A structured mental exercise to explore outcomes or principles of a concept without physical experimentation; more focused than general imagination.</li><li><strong>Imagination</strong> — A mental process for creating new beliefs and images, including fantasy and dreams; free-form and general, used for creativity and exploration.</li></ul><h3>Common Pitfalls</h3><p>A frequent confusion arises between <strong>induction</strong> and <strong>generalization</strong>: induction is the <em>process</em> of drawing a conclusion from specific observations, while generalization is the <em>broad statement or rule</em> produced by that process. Another pitfall is treating <strong>synthesis</strong> as mere summation — it requires meaningful combination, not just addition of parts. Finally, <strong>idealization</strong> is not about ignoring reality permanently; the idealized model is a tool for prediction, and its accuracy determines its predictability power.</p>"
+    }
+  },
+  "bibliographicDatabasesAndSearch": {
+    "name": "Bibliographic Databases And Search",
+    "icon": "fa-book-open",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "What is a bibliographic database?",
+        "answer": "An organized collection of scientific and professional articles, book chapters, conference proceedings, and similar academic resources.",
+        "explanation": "Databases serve as structured repositories that allow researchers to search and access academic literature efficiently."
+      },
+      {
+        "question": "What are the three types of databases mentioned in the source?",
+        "answer": "Bibliographic, citation, and hybrid databases.",
+        "explanation": "Different databases may focus on references/metadata (bibliographic), track how works cite each other (citation), or combine both functions (hybrid)."
+      },
+      {
+        "question": "What are the three main reasons to use academic databases?",
+        "answer": "Reliable information (peer-reviewed sources), efficiency (quickly find relevant articles), and comprehensive coverage (vast collections of academic resources).",
+        "explanation": "These three benefits make databases the preferred tool for academic research over general internet searches."
+      },
+      {
+        "question": "When was Web of Science founded, and what is notable about it?",
+        "answer": "Web of Science has been available since 1997 and is the largest scientific database in the world, covering over 33,000 journals with multiple indexes.",
+        "explanation": "It is a multidisciplinary bibliographic and citation database that also provides metrics, quartiles, and citation data."
+      },
+      {
+        "question": "When was Scopus founded, and how does it compare to Web of Science?",
+        "answer": "Scopus was founded in 2004 and is the second largest database, covering over 20,000 journals with a stronger focus on European journals.",
+        "explanation": "While smaller than Web of Science, Scopus is particularly valued for its broader coverage of European academic publications."
+      },
+      {
+        "question": "What does the Boolean operator AND do in a database search?",
+        "answer": "AND narrows the search by requiring both terms to appear in the results (e.g., tourism AND Europe).",
+        "explanation": "Using AND reduces the number of results by making the search more specific."
+      },
+      {
+        "question": "What does the Boolean operator OR do in a database search?",
+        "answer": "OR widens the search by including results that contain either term, making it useful for synonyms (e.g., rural tourism OR agricultural tourism).",
+        "explanation": "OR is especially helpful when a concept can be expressed with multiple equivalent terms."
+      },
+      {
+        "question": "What does the Boolean operator NOT do in a database search?",
+        "answer": "NOT excludes results containing a specific term (e.g., corona NOT virus).",
+        "explanation": "NOT helps eliminate irrelevant results that share a keyword with the desired topic."
+      },
+      {
+        "question": "What is the function of the asterisk (*) wildcard in database searches?",
+        "answer": "The asterisk (*) replaces multiple characters to capture singular, plural, and related word forms (e.g., *manag* retrieves management, manager/s, manage, comanage, overmanage).",
+        "explanation": "Wildcards broaden a search by accounting for different word endings or prefixes."
+      },
+      {
+        "question": "What is the function of the question mark (?) wildcard in database searches?",
+        "answer": "The question mark (?) replaces exactly one letter, useful for spelling variations (e.g., wom?n retrieves woman and women; colo?r retrieves color and colour).",
+        "explanation": "This wildcard is particularly helpful for handling British vs. American English spelling differences."
+      },
+      {
+        "question": "What is the purpose of quotation marks (\"\") in a database search?",
+        "answer": "Quotation marks search for an exact phrase or term (e.g., \"sustainable development\", \"health tourism\", \"artificial intelligence\").",
+        "explanation": "Using quotation marks prevents the database from splitting the phrase into individual keywords."
+      },
+      {
+        "question": "What is the purpose of brackets () in a database search?",
+        "answer": "Brackets group keywords together to control the logic of a search (e.g., (city tourism OR urban tourism) AND \"european funds\").",
+        "explanation": "Brackets work similarly to parentheses in mathematics, ensuring the correct order of operations in complex searches."
+      },
+      {
+        "question": "How can students access databases from home at FMTU?",
+        "answer": "By using a Proxy connection combined with an AAI@edu.hr account for access.",
+        "explanation": "Remote access tools allow students to use institutional database subscriptions from outside the university network."
+      },
+      {
+        "question": "Name at least four other useful databases or search engines mentioned in the source besides Web of Science and Scopus.",
+        "answer": "Any four of: DOAJ, DOAR, DOAB, Institute of Hospitality, UNWTO E-Library, Google Scholar, JSTOR, Summon, EconLit, Science Direct, Taylor & Francis, Emerald Insight.",
+        "explanation": "These resources complement the two major databases and are particularly relevant for hospitality and economics research."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which of the following best describes a bibliographic database?",
+        "options": [
+          "A social media platform for researchers",
+          "An organized collection of scientific and professional articles, book chapters, and conference proceedings",
+          "A government archive of legal documents",
+          "A personal reference management tool"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which database is described as the largest scientific database in the world?",
+        "options": [
+          "Scopus",
+          "Google Scholar",
+          "Web of Science",
+          "JSTOR"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In what year was Scopus launched?",
+        "options": [
+          "1997",
+          "2001",
+          "2004",
+          "2010"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which Boolean operator would you use to search for synonyms and widen your results?",
+        "options": [
+          "AND",
+          "NOT",
+          "OR",
+          "WITH"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What does the search string *manag* retrieve?",
+        "options": [
+          "Only the word 'management'",
+          "Words like management, manager/s, manage, comanage, and overmanage",
+          "Only plural forms of the word 'manage'",
+          "Only words starting with 'manag'"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which search technique would you use to find the exact phrase 'health tourism'?",
+        "options": [
+          "Brackets: (health tourism)",
+          "Asterisk wildcard: health*tourism",
+          "Quotation marks: \"health tourism\"",
+          "Boolean NOT: health NOT tourism"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "How many journals does Scopus cover, according to the source?",
+        "options": [
+          "Over 10,000",
+          "Over 20,000",
+          "Over 33,000",
+          "Over 50,000"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is listed as a reason to use academic databases?",
+        "options": [
+          "To access entertainment content",
+          "To find peer-reviewed articles and credible sources",
+          "To publish your own research for free",
+          "To avoid citation requirements"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does the search query (city tourism OR urban tourism) AND \"european funds\" demonstrate?",
+        "options": [
+          "Use of wildcards only",
+          "Use of quotation marks only",
+          "Combined use of brackets, OR, AND, and quotation marks",
+          "Use of the NOT operator"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is NOT listed as one of the three types of databases in the source?",
+        "options": [
+          "Bibliographic",
+          "Citation",
+          "Hybrid",
+          "Institutional"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "How can FMTU students access databases from home?",
+        "options": [
+          "By purchasing individual article licenses",
+          "By using a Proxy connection with an AAI@edu.hr account",
+          "By contacting the author directly",
+          "By using only open-access databases"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is a sign that a source may be UNRELIABLE, according to the source text?",
+        "options": [
+          "It is indexed in multiple databases",
+          "It contains a comprehensive bibliography",
+          "It makes extreme statements and lacks consistency",
+          "It is published by a university press"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Bibliographic databases are organized collections of scientific and professional articles, book chapters, and _______ proceedings.",
+        "answer": "conference",
+        "hint": "Think of academic events where researchers present their work."
+      },
+      {
+        "sentence": "Web of Science has been available since _______ and is the largest scientific database in the world.",
+        "answer": "1997",
+        "hint": "It was launched in the late 1990s."
+      },
+      {
+        "sentence": "Scopus is the _______ largest database and covers over 20,000 journals, with a stronger focus on European publications.",
+        "answer": "second",
+        "hint": "It ranks just below Web of Science."
+      },
+      {
+        "sentence": "The Boolean operator _______ narrows a search by requiring both terms to appear in the results.",
+        "answer": "AND",
+        "hint": "It is used to combine two required concepts."
+      },
+      {
+        "sentence": "The Boolean operator _______ widens a search and is especially useful for finding synonyms.",
+        "answer": "OR",
+        "hint": "It retrieves results containing either of the terms."
+      },
+      {
+        "sentence": "The wildcard symbol _______ replaces exactly one letter, for example wom?n retrieves both woman and women.",
+        "answer": "?",
+        "hint": "It is a punctuation mark used as a question."
+      },
+      {
+        "sentence": "Using _______ marks around a phrase like \"sustainable development\" ensures the database searches for that exact phrase.",
+        "answer": "quotation",
+        "hint": "These marks appear at the beginning and end of a phrase."
+      },
+      {
+        "sentence": "Students can access databases from home using a _______ connection combined with an AAI@edu.hr account.",
+        "answer": "Proxy",
+        "hint": "It is a type of server that acts as an intermediary for remote access."
+      },
+      {
+        "sentence": "When evaluating source quality, researchers should fact-check and _______ with other databases or reviews.",
+        "answer": "cross-check",
+        "hint": "It means verifying information against multiple sources."
+      },
+      {
+        "sentence": "The asterisk (*) wildcard is used to capture singular and plural forms; for example, *manag* can retrieve management, manager, and even _______.",
+        "answer": "comanage",
+        "hint": "Think of a word that means to manage jointly, starting with a prefix."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Bibliographic Databases</h3>\n<p>A <strong>bibliographic database</strong> is an organized collection of scientific and professional articles, book chapters, conference proceedings and similar materials. Databases differ in their evaluation criteria — passing a database's quality evaluation can be difficult, which is part of what makes indexed sources trustworthy.</p>\n<ul>\n  <li><strong>Three types:</strong> bibliographic, citation, and hybrid.</li>\n  <li><strong>Access:</strong> full-text, open access, or closed.</li>\n  <li><strong>Scope:</strong> multidisciplinary or specific-field.</li>\n</ul>\n<h3>Why use databases?</h3>\n<ul>\n  <li><strong>Reliable information:</strong> access to peer-reviewed articles and credible sources.</li>\n  <li><strong>Efficiency:</strong> quickly find relevant articles on a specific topic.</li>\n  <li><strong>Comprehensive coverage:</strong> access to vast collections of academic resources.</li>\n</ul>\n<h3>Judging source quality</h3>\n<p>Always fact-check and cross-check a source against other databases or reviews. Three checks help:</p>\n<ul>\n  <li><strong>Relevancy:</strong> author, publisher, publication, topic, year.</li>\n  <li><strong>Reliability:</strong> is it indexed in databases, is it consistent, does it make extreme statements?</li>\n  <li><strong>Citations &amp; predatory red flags:</strong> what does the bibliography cite — blogs and predatory journals are warning signs.</li>\n</ul>\n<h3>The two largest databases</h3>\n<ul>\n  <li><strong>Web of Science</strong> (since 1997): the largest scientific database in the world, over 33,000 journals, multiple indexes, both bibliographic and citation, multidisciplinary, with metrics, quartiles and citation counts.</li>\n  <li><strong>Scopus</strong> (since 2004): the second-largest database, over 20,000 journals, with more European journals.</li>\n</ul>\n<p>Other useful resources include DOAJ, Google Scholar, JSTOR (books and journals), EconLit, ScienceDirect, Emerald Insight, Taylor &amp; Francis, and the UNWTO E-Library.</p>\n<h3>Search strategy: keywords</h3>\n<p>Start by defining your topic, then brainstorm keywords and be creative with <strong>synonyms</strong> (for example: <em>financial development</em>, <em>financial growth/progress</em>, <em>economic development</em>). Good keywords make the literature search far easier and more effective.</p>\n<h3>Search techniques</h3>\n<ul>\n  <li><strong>Boolean operators:</strong> <strong>AND</strong> narrows a search (tourism AND Europe); <strong>OR</strong> widens it and captures synonyms (rural tourism OR agricultural tourism); <strong>NOT</strong> excludes a term (corona NOT virus).</li>\n  <li><strong>Wildcards:</strong> the asterisk <strong>*</strong> truncates and catches singular &amp; plural and word variants (*manag* → management, manager, manage); the question mark <strong>?</strong> replaces a single letter (wom?n → woman/women; colo?r → color/colour).</li>\n  <li><strong>Quotation marks \"\" </strong> search for an exact phrase (for example, \"sustainable development\" or \"health tourism\").</li>\n  <li><strong>Brackets ()</strong> group keywords: (city tourism OR urban tourism) AND \"european funds\".</li>\n</ul>\n<h3>Accessing databases from home</h3>\n<p>Many databases are licensed by the library. Off-campus access is possible through a <strong>proxy</strong> combined with an institutional <strong>AAI@EduHr</strong> login.</p>"
+    }
+  },
+  "typesOfPublications": {
+    "name": "Types Of Publications",
+    "icon": "fa-gears",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "What are the two broad categories of publications based on durability of information?",
+        "answer": "Ephemeral and Enduring publications.",
+        "explanation": "Ephemeral publications are relevant for a brief period only, while enduring publications have lasting informational value."
+      },
+      {
+        "question": "What is the Dewey Decimal Classification (DDC)?",
+        "answer": "A library classification system developed by Melvil Dewey in 1876, using numerical sequences to organize publications into 10 main classes, each divided into 10 divisions and 10 sections.",
+        "explanation": "It has undergone 23 major revisions and is the most popular classification system worldwide except in the USA and Canada."
+      },
+      {
+        "question": "What classification system is used in the USA and Canada instead of DDC?",
+        "answer": "The Library of Congress Classification (LCC), developed by the Library of Congress."
+      },
+      {
+        "question": "What are primary sources?",
+        "answer": "Reports of original works; publicly accessible documents where the results of original scientific investigations first appear, containing original, uninterrupted, and unevaluated information."
+      },
+      {
+        "question": "What is a thesis in the context of publication types?",
+        "answer": "A certificate showing that an individual has been trained for independent research; it is primarily a primary source but also functions as a secondary source due to its comprehensive literature review."
+      },
+      {
+        "question": "What distinguishes a technical report from a technical bulletin?",
+        "answer": "Technical reports are comprehensive documents detailing research findings, methodology, and analysis, while technical bulletins are shorter, focused documents disseminating specific technical information or updates."
+      },
+      {
+        "question": "What are working papers?",
+        "answer": "Preliminary research documents (reports of works in progress) that present findings, theories, or methodologies before formal publication in peer-reviewed outlets."
+      },
+      {
+        "question": "What are secondary sources?",
+        "answer": "Publications in which information from primary sources is synthesized, such as textbooks, handbooks, monographs, treatises, and review articles."
+      },
+      {
+        "question": "What is the difference between a monograph and a treatise?",
+        "answer": "A monograph is a book with comprehensive information on a specific subject or narrow aspect, while a treatise is a multivolume monograph providing a broader and more exhaustive examination of a subject as a whole."
+      },
+      {
+        "question": "What are tertiary sources?",
+        "answer": "Publications consisting of information synthesized from both primary and secondary sources; they tend to be factual and come last in the publication cycle. Examples include manuals, almanacs, dictionaries, and encyclopaedias."
+      },
+      {
+        "question": "What is grey literature?",
+        "answer": "Non-conventional, non-traditional, or non-book literature not available through traditional book or trade channels. Common examples include theses, working papers, research reports, bulletins, and pamphlets."
+      },
+      {
+        "question": "What is an Online Public Access Catalogue (OPAC)?",
+        "answer": "An online bibliography of a library collection available to the public, replacing earlier physical catalogue systems."
+      },
+      {
+        "question": "What is the purpose of abstracting and indexing services?",
+        "answer": "They provide access to primary research literature such as journals, monographs, technical reports, and conference papers, organized by subject, classification, author, and region or country."
+      },
+      {
+        "question": "What is a patent in the context of publication types?",
+        "answer": "A legal protection for the invention of a new process or method. Example: US Patent 174,465 for Thomas Edison's Electric Lamp (1879)."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which library classification system is most popular worldwide (except in the USA and Canada)?",
+        "options": [
+          "Library of Congress Classification (LCC)",
+          "Universal Decimal Classification (UDC)",
+          "Dewey Decimal Classification (DDC)",
+          "International Standards Classification (ISC)"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Publications that are relevant for a brief period only and constantly updated are called:",
+        "options": [
+          "Enduring publications",
+          "Primary publications",
+          "Ephemeral publications",
+          "Tertiary publications"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is an example of an ephemeral publication?",
+        "options": [
+          "Textbook",
+          "Monograph",
+          "Weather report",
+          "Encyclopaedia"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "A thesis is considered primarily which type of source?",
+        "options": [
+          "Secondary",
+          "Tertiary",
+          "Primary",
+          "Grey literature only"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is a secondary source of publication?",
+        "options": [
+          "Patent",
+          "Technical report",
+          "Proceedings",
+          "Textbook"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "What does a yearbook contain?",
+        "options": [
+          "Abstracts of journal articles",
+          "Annual volume of current information in descriptive and statistical form",
+          "A record of conference proceedings",
+          "Instruction on how to operate equipment"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following best describes grey literature?",
+        "options": [
+          "Literature published exclusively in scientific journals",
+          "Non-conventional literature not available through traditional book or trade channels",
+          "Literature written only in foreign languages",
+          "Literature found only in digital libraries"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What is the main purpose of an indexing journal?",
+        "options": [
+          "To provide full-text articles on a subject",
+          "To identify source material using an index with author, title, and publication details",
+          "To publish original research findings",
+          "To provide abstracts of scientific articles"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is classified as a tertiary source?",
+        "options": [
+          "Primary journal",
+          "Working paper",
+          "Almanac",
+          "Technical bulletin"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What is the DDC class number for 'Social Sciences'?",
+        "options": [
+          "200",
+          "400",
+          "300",
+          "500"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Working papers are best described as:",
+        "options": [
+          "Formally peer-reviewed and published research articles",
+          "Preliminary research documents presenting findings before formal publication",
+          "Official government publications",
+          "Multivolume monographs on a subject"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which tool helps researchers keep up with currently published literature?",
+        "options": [
+          "Card catalogue",
+          "Shelf catalogue",
+          "Current awareness services such as Current Contents",
+          "Bibliography of bibliographies"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The Dewey Decimal Classification was developed by Melvil Dewey in _______.",
+        "answer": "1876",
+        "hint": "The year the DDC was first created."
+      },
+      {
+        "sentence": "Publications relevant for a brief period only are called _______ publications.",
+        "answer": "ephemeral",
+        "hint": "The opposite of enduring."
+      },
+      {
+        "sentence": "Primary sources contain original, uninterrupted, and _______ information based on actual studies.",
+        "answer": "unevaluated",
+        "hint": "Not yet assessed or judged by others."
+      },
+      {
+        "sentence": "A _______ is a legal protection for the invention of a new process or method.",
+        "answer": "patent",
+        "hint": "Think of Thomas Edison's Electric Lamp registration."
+      },
+      {
+        "sentence": "In secondary publications, information from _______ sources is synthesized.",
+        "answer": "primary",
+        "hint": "The original research documents."
+      },
+      {
+        "sentence": "A treatise is a _______ monograph on a subject.",
+        "answer": "multivolume",
+        "hint": "It consists of more than one volume."
+      },
+      {
+        "sentence": "Grey literature is not available through traditional _______ or trade channels.",
+        "answer": "book",
+        "hint": "Conventional publishing route."
+      },
+      {
+        "sentence": "An _______ is a publication containing certain data arranged based on days, weeks, and months of a given year.",
+        "answer": "almanac",
+        "hint": "A type of tertiary source organized by time periods."
+      },
+      {
+        "sentence": "The Online Public Access Catalogue, known as _______, is an online bibliography of a library collection available to the public.",
+        "answer": "OPAC",
+        "hint": "An acronym for the digital library catalogue system."
+      },
+      {
+        "sentence": "Technical reports are meant for _______ circulation only and are therefore printed in limited copies.",
+        "answer": "limited",
+        "hint": "Not widely distributed to the general public."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Types of Publications</h3><p>Understanding the types of publications is essential for academic research and information literacy. Publications can be classified in several ways: by <strong>durability of information</strong>, by <strong>scientific level</strong>, and by <strong>conventional vs. non-conventional</strong> status.</p><h3>1. Classification by Durability: Ephemeral vs. Enduring</h3><p>If we consider the durability of information, all publications fall into two broad categories:</p><ul><li><strong>Ephemeral Publications:</strong> These are relevant for a brief period only. Because the information is constantly updated, the durability of such information is lost. Examples include local and national newspapers, newsletters, press releases, market reports, weather reports, disease intelligence reports, house magazines, and many online publications.</li><li><strong>Enduring Publications:</strong> These retain their informational value over time. They are further divided into <em>non-scientific</em> and <em>scientific</em> categories.</li></ul><h3>2. Enduring Non-Scientific Publications</h3><p>These include statutory and official publications, popular articles in magazines, books, reviews, reports and surveys, advisory publications, diaries, interviews, letters, original documents, photographs, and works of literature.</p><h3>3. Enduring Scientific Publications</h3><p>Scientific enduring publications are divided into three levels:</p><ul><li><strong>Primary Sources</strong></li><li><strong>Secondary Sources</strong></li><li><strong>Tertiary Sources</strong></li></ul><h3>Primary Sources</h3><p>Primary sources are reports of original works — publicly accessible documents where the results of original scientific investigations first appear. They contain original, uninterrupted, and unevaluated information based on actual studies.</p><ul><li><strong>Thesis/Dissertation:</strong> A certificate of independent research training. It is primarily a primary source but also functions as a secondary source due to its comprehensive literature review.</li><li><strong>Primary Journals:</strong> The principal means of communicating original research findings. Published frequently, they provide more recent information than textbooks or reviews.</li><li><strong>Technical Bulletin:</strong> A document containing complete details of an experiment or specialized technical knowledge.</li><li><strong>Technical Report:</strong> A comprehensive document presenting detailed information, analysis, findings, and recommendations from a specific research project. Printed in limited copies for limited circulation.</li><li><strong>Patent:</strong> A legal protection for the invention of a new process or method (e.g., Thomas Edison's Electric Lamp, 1879).</li><li><strong>Specification Standards:</strong> Managed by bodies such as the International Standards Organization (ISO).</li><li><strong>Working Papers:</strong> Preliminary research documents presenting findings before formal peer-reviewed publication.</li><li><strong>Proceedings:</strong> A record of original papers presented at a symposium, seminar, or conference.</li></ul><h3>Secondary Sources</h3><p>In secondary publications, information from primary sources is synthesized and made more accessible.</p><ul><li><strong>Textbook:</strong> An instruction book for a branch of study combining work from many individuals, simplifying technical material for the general reader or student.</li><li><strong>Handbook:</strong> A reference book providing ready reference on principles, methods, and techniques of a topic.</li><li><strong>Monograph:</strong> A book containing comprehensive information on a specific subject or commodity.</li><li><strong>Treatise:</strong> A multivolume monograph providing a broader and more exhaustive examination of a subject.</li><li><strong>Yearbook:</strong> An annual volume of current information in descriptive and statistical form.</li><li><strong>Review:</strong> Written by experts who survey and critically analyse the literature of a subject over a specific period.</li><li><strong>Abstracting Journals:</strong> Periodicals specializing in providing abstracts of articles within a specific field.</li><li><strong>Indexing Journals:</strong> Identify source material by index, including author, title, journal, publisher, and date.</li><li><strong>Popular Articles, Gazette, Translations, Bulletins, Research Newsletters, Pamphlets/Leaflets</strong> are also secondary publication types.</li></ul><h3>Tertiary Sources</h3><p>Tertiary sources consist of information synthesized from both primary and secondary sources. They tend to be factual and come last in the publication cycle.</p><ul><li><strong>Manual:</strong> An instruction book describing how to conduct an experiment or operate equipment.</li><li><strong>Almanac:</strong> A publication containing data arranged by days, weeks, and months of a given year.</li><li><strong>Guides to Literature:</strong> Assist users in navigating literature of a specific subject.</li><li><strong>Bibliography of Bibliographies:</strong> Leads to other bibliographies and ultimately to primary sources.</li><li><strong>Dictionary, Glossary, Thesaurus, Encyclopaedia, Directory, Lexicon, Gazetteer, Fact Book</strong> are all tertiary sources.</li></ul><h3>Grey Literature</h3><p>Grey literature refers to non-conventional, non-traditional, or non-book literature that is <strong>not available through traditional book or trade channels</strong>. The term is often associated with scientific research (analogous to 'grey matter' as the thinking part of the brain). Common examples include:</p><ul><li>Theses and dissertations</li><li>Working papers</li><li>Research reports and annual reports</li><li>Translations</li><li>Pamphlets and bulletins</li><li>Research newsletters</li></ul><h3>Tools for Identifying Literature</h3><p>Researchers use several tools to locate publications:</p><ul><li><strong>Library Catalogues</strong> (Card, Printed, Shelf, Visible Index, Computer, and OPAC)</li><li><strong>Abstracting and Indexing Services</strong></li><li><strong>Current Awareness Services</strong> (e.g., Current Contents)</li><li><strong>Reference Resources</strong> (dictionaries, encyclopaedias, handbooks, manuals)</li><li><strong>Online Databases and Search Engines</strong></li></ul><h3>Library Classification Systems</h3><p>Libraries arrange publications under specific subjects using classification schemes:</p><ul><li><strong>Dewey Decimal Classification (DDC):</strong> Most popular worldwide; developed by Melvil Dewey in 1876; uses 10 main classes (000–900), each divided into 10 divisions and 10 sections.</li><li><strong>Library of Congress Classification (LCC):</strong> Used in the USA and Canada.</li><li><strong>Universal Decimal Classification (UDC):</strong> Based on DDC; popular in some countries.</li></ul><h3>Common Pitfalls</h3><ul><li>Do not confuse <em>ephemeral</em> with <em>non-scientific</em> — ephemeral refers to durability, not scientific status.</li><li>A thesis is <strong>primarily</strong> a primary source, but also serves as a secondary source due to its literature review section.</li><li>Technical reports differ from technical bulletins: reports are comprehensive and for limited circulation, while bulletins are shorter and more focused.</li><li>Monographs and treatises are both secondary sources, but treatises are multivolume and broader in scope.</li><li>Grey literature is not necessarily low quality — it includes important theses, working papers, and research reports.</li></ul>"
+    }
+  },
+  "chicagoStyleBooksAuthors": {
+    "name": "Chicago Style Books Authors",
+    "icon": "fa-flask",
+    "color": "#ec4899",
+    "flashcards": [
+      {
+        "question": "What are the two basic systems of bibliography presentation in Chicago style?",
+        "answer": "The Author-Date method and the Notes and Bibliography (Bibliographic) method.",
+        "explanation": "The Author-Date method uses parentheses in the text and a reference list; the Notes and Bibliography method uses numbered footnotes or endnotes and a bibliography."
+      },
+      {
+        "question": "How does the Notes and Bibliography method cite sources?",
+        "answer": "It uses numbered footnotes or endnotes to cite sources, usually with a corresponding bibliography at the end of the paper."
+      },
+      {
+        "question": "How does the Author-Date method cite sources?",
+        "answer": "It uses parentheses in the text to indicate sources, with a corresponding reference list."
+      },
+      {
+        "question": "In what year was the first edition of the Chicago Manual of Style published?",
+        "answer": "1906."
+      },
+      {
+        "question": "Which edition of the Chicago Manual of Style is referenced in the source text?",
+        "answer": "The fifteenth edition (2003)."
+      },
+      {
+        "question": "In the list of references and bibliography, how is the first author's name written compared to subsequent authors?",
+        "answer": "The first author is written with the surname first, then the first name; subsequent authors are written with the first name first, then the surname."
+      },
+      {
+        "question": "How many authors are listed in the reference list when a work has more than 10 authors?",
+        "answer": "The first 7 authors are listed, followed by et al."
+      },
+      {
+        "question": "In a text citation (t) or short note (n), how are works with more than 3 authors cited?",
+        "answer": "Only the surname of the first author is given, followed by 'et al.' in the text citation, or 'and others' in the short note."
+      },
+      {
+        "question": "What word is used in place of the author when the author of a work is unknown?",
+        "answer": "Anon. (anonymous)."
+      },
+      {
+        "question": "If a work begins with a title instead of an author's name, what becomes the first element of the bibliographic description?",
+        "answer": "The title of the work."
+      },
+      {
+        "question": "When the same author has multiple works listed consecutively in the bibliography, what is used instead of rewriting the author's name?",
+        "answer": "Three connected em-dashes (———) followed by a period."
+      },
+      {
+        "question": "If an institution or organization is both the author and the publisher of a book, where is its name entered in the citation?",
+        "answer": "Both in the place of the author and in the place of the publisher."
+      },
+      {
+        "question": "How is the title and subtitle of a book formatted in Chicago style bibliographic descriptions?",
+        "answer": "In italics, with the first word of the subtitle capitalized, and the title separated from the subtitle by a colon."
+      },
+      {
+        "question": "What is the principle that should be followed when applying citation styles within a single paper?",
+        "answer": "The principle of consistency — it is not advisable to combine principles of different styles in the same paper."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which citation method uses parentheses in the text to indicate sources?",
+        "options": [
+          "Notes and Bibliography method",
+          "Author-Date method",
+          "Bibliographic method",
+          "Vancouver method"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In what year was the first edition of the Chicago Manual of Style published?",
+        "options": [
+          "1886",
+          "1906",
+          "1916",
+          "1926"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In the Chicago Author-Date system, how are works with more than 3 authors cited in the text (t)?",
+        "options": [
+          "All authors are listed",
+          "Only the first two authors are listed",
+          "Only the first author's surname followed by et al.",
+          "Only the first author's full name"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When a work has 11 or more authors, how many authors are listed in the reference list according to Chicago style?",
+        "options": [
+          "All authors",
+          "The first 3, followed by et al.",
+          "The first 7, followed by et al.",
+          "The first 10, followed by et al."
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What abbreviation is used in place of an unknown author in Chicago style?",
+        "options": [
+          "N.A.",
+          "Unknown",
+          "Anon.",
+          "N/A"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the list of references and bibliography, individual bibliographic units are sorted:",
+        "options": [
+          "By year of publication",
+          "Alphabetically by author's last name",
+          "By title of the work",
+          "By publisher's name"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When the same author appears consecutively in a bibliography, what replaces the repeated author name?",
+        "options": [
+          "The word 'Ibid.'",
+          "Three connected em-dashes (———) and a period",
+          "The author's initials only",
+          "The word 'Same'"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "If an institution is both the author and publisher of a book, where is the institution's name entered?",
+        "options": [
+          "Only in the place of the author",
+          "Only in the place of the publisher",
+          "Both in the place of the author and the publisher",
+          "Neither; it is omitted"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "How is the title of a book written in Chicago style bibliographic descriptions?",
+        "options": [
+          "In bold",
+          "In quotation marks",
+          "In italics",
+          "In capital letters"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the Notes and Bibliography method, what does a short citation in the notes (n) for a work with more than 3 authors include?",
+        "options": [
+          "All authors' surnames",
+          "The first author's surname followed by 'and others'",
+          "The first author's full name followed by et al.",
+          "Only the title of the work"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following styles is described as being based on Chicago style?",
+        "options": [
+          "APA style",
+          "Vancouver style",
+          "Turabian style",
+          "MLA style"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When an author consistently uses initials of their name, what rule applies to those initials?",
+        "options": [
+          "Initials are written without any punctuation",
+          "A dot comes after each initial, and two initials are separated by a space",
+          "Initials are placed in square brackets",
+          "Initials are omitted and the full name is written"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "The Notes and Bibliography method uses numbered _______ or endnotes to cite sources.",
+        "answer": "footnotes",
+        "hint": "Located at the bottom of the page."
+      },
+      {
+        "sentence": "The Author-Date method uses _______ in the text to indicate sources.",
+        "answer": "parentheses",
+        "hint": "Round brackets used inline."
+      },
+      {
+        "sentence": "The first edition of the Chicago Manual of Style was published in year _______.",
+        "answer": "1906",
+        "hint": "Early twentieth century."
+      },
+      {
+        "sentence": "When a work has more than 3 authors, only the surname of the first author is stated in the text citation, followed by _______.",
+        "answer": "et al.",
+        "hint": "Latin abbreviation meaning 'and others'."
+      },
+      {
+        "sentence": "In the reference list, when a work has more than 10 authors, the first _______ authors are listed, followed by et al.",
+        "answer": "7",
+        "hint": "A number between 5 and 10."
+      },
+      {
+        "sentence": "If the author of a work is unknown, the word _______ is entered in place of the author.",
+        "answer": "Anon.",
+        "hint": "Short for anonymous."
+      },
+      {
+        "sentence": "Individual bibliographic units in the reference list and bibliography are sorted alphabetically by the author's _______ name.",
+        "answer": "last",
+        "hint": "Surname."
+      },
+      {
+        "sentence": "When the same author has multiple consecutive works in the bibliography, three connected _______ and a period are used instead of rewriting the name.",
+        "answer": "em-dashes",
+        "hint": "The symbol ———."
+      },
+      {
+        "sentence": "The title of a book in Chicago style bibliographic descriptions is written in _______.",
+        "answer": "italics",
+        "hint": "Slanted text formatting."
+      },
+      {
+        "sentence": "The principle of _______ should be adhered to when applying citation styles within a single paper.",
+        "answer": "consistency",
+        "hint": "Do not mix different styles."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Chicago Style: Citing Books by Authors</h3><p>The <strong>Chicago Manual of Style (CMS)</strong> is one of the most influential citation and style guides in academic writing. Its first edition appeared in <strong>1906</strong>, and the source text references the <strong>fifteenth edition (2003)</strong>. CMS has significantly shaped the global standardization of scientific and professional paper writing.</p><h3>Two Citation Systems</h3><p>Chicago style offers two distinct citation systems:</p><ul><li><strong>Author-Date System:</strong> Sources are cited using parentheses in the text (e.g., Smith 2005, 45) and a full reference list at the end of the paper.</li><li><strong>Notes and Bibliography System:</strong> Sources are cited using numbered footnotes or endnotes, with a corresponding bibliography. This system is preferred in the humanities.</li></ul><p>The author-date system is widely used in the natural and social sciences. It is <em>not advisable</em> to combine principles of different styles in the same paper — the <strong>principle of consistency</strong> must be followed.</p><h3>Formatting the Reference List and Bibliography</h3><p>Individual bibliographic units in the reference list and bibliography are written:</p><ul><li>Without an ordinal number</li><li>Without spacing before or after</li><li>In a smaller font than the main text</li><li>One below the other</li><li>Sorted <strong>alphabetically by the author's last name</strong></li><li>A new line of the same bibliographic unit is indented by three letters</li></ul><h3>Author Name Rules</h3><p>The way an author's name is presented depends on the citation context:</p><ul><li><strong>In the reference list and bibliography (R and B):</strong> The bibliographic unit begins with the surname, then the full first name, separated by a comma. For works with two or more authors, only the <em>first</em> author is written surname-first; all subsequent authors are written first name first. Authors are separated by commas, and the last author is connected to the previous one with the conjunction <em>and</em>.</li><li><strong>In text citations and short notes (t and n):</strong> Only the author's surname is used.</li></ul><h3>Number of Authors</h3><ul><li><strong>1 author:</strong> Full name listed normally.</li><li><strong>2 authors:</strong> Both listed (e.g., Dawkins, Marvin P., and Graham C. Kinloch).</li><li><strong>3 authors:</strong> All three listed (e.g., Anderson, Marcia K., Suzan J. Hall, and Malissa Martin).</li><li><strong>4–10 authors:</strong> All authors listed in R and B; in text citation (t) only the first author's surname + <em>et al.</em>; in short note (n) only the first author's surname + <em>and others</em>.</li><li><strong>11 or more authors:</strong> In the reference list, the first <strong>7 authors</strong> are listed followed by <em>et al.</em>; in notes and bibliography — <em>and collaborators / and others</em>.</li></ul><h3>Special Cases for Author Names</h3><ul><li><strong>Initials:</strong> If an author consistently uses initials, the full name is not written. A dot follows each initial, and two initials are separated by a space (e.g., Smith, J. C.). If the full name can be determined with certainty, it may be added in square brackets (e.g., Smith, J[ohn] C.).</li><li><strong>Unknown author:</strong> The word <strong>Anon.</strong> (anonymous) is entered in place of the author. In the full bibliography, <em>Anonymous</em> is written out.</li><li><strong>Work beginning with a title:</strong> If no author is identified, the title of the work becomes the first element of the bibliographic description.</li><li><strong>Same author, multiple works:</strong> If the same author appears consecutively in the bibliography, three connected em-dashes (———) followed by a period replace the repeated name.</li><li><strong>Institutional author:</strong> If an institution, corporation, or association is both the author and the publisher, its name is entered in <em>both</em> the author position and the publisher position.</li></ul><h3>Title and Subtitle Formatting</h3><p>The title and subtitle of a book are written in <strong>italics</strong>, in the same size as the rest of the description text. The first word of the subtitle is capitalized. The title is separated from the subtitle by a <strong>colon</strong>. When a title or subtitle ends with a question mark or exclamation mark, no additional punctuation is added (except quotation marks if needed). In short notes, the title may be abbreviated.</p><h3>Common Pitfalls</h3><ul><li>Do <strong>not</strong> mix citation styles within the same paper.</li><li>Do <strong>not</strong> write all authors surname-first — only the first author gets surname-first treatment in R and B.</li><li>Do <strong>not</strong> forget to use <em>et al.</em> (text) vs. <em>and others</em> (notes) correctly for works with more than 3 authors.</li><li>Do <strong>not</strong> add extra punctuation after a title ending in a question mark or exclamation mark.</li><li>Remember: for 11+ authors, only the first <strong>7</strong> are listed in the reference list, not all of them.</li></ul>"
+    }
+  },
+  "chicagoStyleBooksDetails": {
+    "name": "Chicago Style Books Details",
+    "icon": "fa-globe",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "How is a translation of a foreign-language book title added in Chicago Style?",
+        "answer": "In square brackets after the title and subtitle, without italics or quotation marks.",
+        "explanation": "This applies when quoting a book in a foreign language; the translation is placed in square brackets immediately after the original title."
+      },
+      {
+        "question": "How are two authors listed in a Chicago Style in-text citation?",
+        "answer": "Both surnames are connected with 'and', e.g., (Dawkins and Kinloch 2000, 97).",
+        "explanation": "For two authors, both surnames appear in the in-text citation joined by 'and'."
+      },
+      {
+        "question": "How are four to ten authors cited in a Chicago Style in-text citation?",
+        "answer": "Only the first author's surname is given followed by 'et al.', e.g., (Davidson et al. 1988).",
+        "explanation": "'Et al.' replaces all authors after the first when there are four to ten authors."
+      },
+      {
+        "question": "How is a book quoted within another author's book cited in-text in Chicago Style?",
+        "answer": "Both sources are cited, e.g., (Smith 1965, 11 quoted in Skousen 2001, 15).",
+        "explanation": "The original source is cited first with its page, followed by 'quoted in' and the secondary source with its page."
+      },
+      {
+        "question": "How is a revised edition abbreviated in Chicago Style?",
+        "answer": "As 'rev. ed.' without indicating a number.",
+        "explanation": "A revised edition does not carry a number; only amended editions use ordinal numbers like '2nd ed.'"
+      },
+      {
+        "question": "What abbreviations are used for volume in Chicago Style bibliographic descriptions?",
+        "answer": "'Vol.' for a single volume and 'Vols.' for the complete edition.",
+        "explanation": "When a single volume from a multivolume work also contains multiple books, 'bk.' or 'bks.' may be used."
+      },
+      {
+        "question": "When a page number immediately follows a volume number in a citation, how are they separated?",
+        "answer": "They are separated by a colon, with no letter abbreviation needed for volume or page.",
+        "explanation": "For example, 11:272–285 means volume 11, pages 272–285."
+      },
+      {
+        "question": "When three or more places of publication appear in a book, which one is stated in Chicago Style?",
+        "answer": "The one that is graphically highlighted; if none is highlighted, the one listed first is entered.",
+        "explanation": "Omitted place names may be replaced by 'etc.' (et cetera)."
+      },
+      {
+        "question": "How is the publisher's name separated from the place of publication in Chicago Style?",
+        "answer": "By a colon.",
+        "explanation": "If there are multiple publishers, each place-name and publisher pair is separated from the next by a semicolon."
+      },
+      {
+        "question": "In English Chicago Style, what happens to 'The' at the beginning of a publisher's name?",
+        "answer": "It is commonly omitted.",
+        "explanation": "This is a standard Chicago Style convention for English-language publisher names."
+      },
+      {
+        "question": "How are two books by the same author published in the same year distinguished in Chicago Style?",
+        "answer": "A lowercase letter 'a' is added after the year for the first book and 'b' for the second, e.g., 2010a and 2010b.",
+        "explanation": "This prevents ambiguity when the same author published multiple works in one year."
+      },
+      {
+        "question": "How are multiple works by the same author ordered in a bibliography?",
+        "answer": "In chronological order of their publication.",
+        "explanation": "This applies when a bibliography contains several different works by the same author."
+      },
+      {
+        "question": "How is a table referenced in a Chicago Style in-text citation?",
+        "answer": "After the page number, e.g., (Smith 2010, 38, table 2.5).",
+        "explanation": "Tables are listed after the ordinal number of the page in the citation."
+      },
+      {
+        "question": "What locator is used instead of a page number for an unnumbered work on electronic media?",
+        "answer": "The word 'under' followed by the name of the chapter or section in quotation marks, e.g., (Smith 2010, under \"The Science\").",
+        "explanation": "This descriptive locator replaces the page number when no page numbers are available on electronic media."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In Chicago Style, how is a foreign-language book title translation presented?",
+        "options": [
+          "In parentheses, in italics",
+          "In square brackets, without italics or quotation marks",
+          "In quotation marks after the title",
+          "In a footnote only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which in-text citation format is correct for a book with four to ten authors in Chicago Style?",
+        "options": [
+          "(Davidson, Sweeney, Jones, and Stampfl 1988)",
+          "(Davidson et al. 1988)",
+          "(Davidson and others 1988)",
+          "(Davidson 1988 et al.)"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How is a revised edition abbreviated in Chicago Style?",
+        "options": [
+          "2nd ed.",
+          "rev.",
+          "rev. ed.",
+          "R. ed."
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When a page number immediately follows a volume number in a Chicago Style citation, how are they separated?",
+        "options": [
+          "By a comma",
+          "By a semicolon",
+          "By a colon",
+          "By a dash"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "If three or more publication places appear in a book and none is graphically highlighted, which is stated in Chicago Style?",
+        "options": [
+          "The last one listed",
+          "The most well-known city",
+          "The one listed first",
+          "All of them separated by semicolons"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "How are two books by the same author published in the same year distinguished in Chicago Style?",
+        "options": [
+          "By adding Roman numerals after the year",
+          "By adding lowercase letters a and b after the year",
+          "By adding the book title in the in-text citation",
+          "By listing the month of publication"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Chicago Style, how is the publisher's name separated from the place of publication?",
+        "options": [
+          "By a comma",
+          "By a semicolon",
+          "By a colon",
+          "By a dash"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What is the correct way to cite an unnumbered work on electronic media in Chicago Style?",
+        "options": [
+          "Use the URL instead of a page number",
+          "Use 'under' followed by the chapter or section name in quotation marks",
+          "Use 'n.p.' for no page",
+          "Use the paragraph number"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How are multiple works by the same author listed in a Chicago Style bibliography?",
+        "options": [
+          "Alphabetically by title",
+          "In reverse chronological order",
+          "In chronological order of publication",
+          "By number of pages"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In Chicago Style, where are tables referenced in an in-text citation?",
+        "options": [
+          "Before the page number",
+          "After the page number",
+          "In a separate footnote only",
+          "In the bibliography only"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In Chicago Style, how is 'The' at the beginning of an English publisher's name treated?",
+        "options": [
+          "It is always kept",
+          "It is commonly omitted",
+          "It is replaced by an ampersand",
+          "It is placed at the end of the name"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "For a book with three authors in Chicago Style in-text citation, which format is correct?",
+        "options": [
+          "(Kenneth et al. 2000)",
+          "(Kenneth and Berry 2000)",
+          "(Kenneth, Berry, and Goldman 2000)",
+          "(Kenneth; Berry; Goldman 2000)"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "When quoting a book in a foreign language, the translation is added after the title in _______, without italics or quotation marks.",
+        "answer": "square brackets",
+        "hint": "A type of punctuation bracket."
+      },
+      {
+        "sentence": "For a book with four to ten authors, the in-text citation uses the first author's surname followed by _______.",
+        "answer": "et al.",
+        "hint": "A Latin abbreviation meaning 'and others'."
+      },
+      {
+        "sentence": "A revised edition in Chicago Style is abbreviated as _______, without indicating a number.",
+        "answer": "rev. ed.",
+        "hint": "Two abbreviated words."
+      },
+      {
+        "sentence": "When a page number immediately follows a volume number, they are separated by a _______.",
+        "answer": "colon",
+        "hint": "A punctuation mark used to introduce or separate."
+      },
+      {
+        "sentence": "If two books by the same author were published in the same year, a lowercase letter _______ is added after the year for the first book.",
+        "answer": "a",
+        "hint": "The first letter of the alphabet."
+      },
+      {
+        "sentence": "Multiple works by the same author in a bibliography are listed in _______ order of their publication.",
+        "answer": "chronological",
+        "hint": "Ordered by time."
+      },
+      {
+        "sentence": "In English Chicago Style, if a publisher's name is preceded by 'The', it is common to _______ that element.",
+        "answer": "omit",
+        "hint": "To leave out or exclude."
+      },
+      {
+        "sentence": "For an unnumbered work on electronic media, the word _______ is used followed by the chapter or section name in quotation marks.",
+        "answer": "under",
+        "hint": "A preposition indicating location below or within."
+      },
+      {
+        "sentence": "Tables in a Chicago Style in-text citation are listed _______ the ordinal number of the page.",
+        "answer": "after",
+        "hint": "Following in position."
+      },
+      {
+        "sentence": "The name of the publisher is separated from the place of the publisher by a _______.",
+        "answer": "colon",
+        "hint": "A punctuation mark used to separate two related elements."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Chicago Style: Books – Detailed Bibliographic Description</h3><p>The Chicago Manual of Style provides precise rules for citing books in academic writing. This section covers the key elements of bibliographic description for cited books, including how to handle multiple authors, editors, translators, editions, volumes, publishers, and page numbers.</p><h3>Title and Subtitle of the Book</h3><p>When citing a book written in a foreign language, a translation of the title may be added immediately after the original title and subtitle. This translation is placed <strong>in square brackets</strong> and written <strong>without italics or quotation marks</strong>. If both the translated and original editions need to be cited, they may be listed in either order depending on the reader's interest.</p><h3>Number of Authors</h3><ul><li><strong>Two authors:</strong> Both surnames are listed in the in-text citation joined by 'and', e.g., (Dawkins and Kinloch 2000, 97).</li><li><strong>Three authors:</strong> All three surnames appear in the in-text citation separated by commas and 'and', e.g., (Kenneth, Berry, and Goldman 2000).</li><li><strong>Four to ten authors:</strong> Only the first author's surname is given, followed by <em>et al.</em>, e.g., (Davidson et al. 1988). In notes, 'and others' may be used instead.</li></ul><h3>Special Book Types</h3><ul><li><strong>Book quoted in another book:</strong> Both sources are cited with 'quoted in' between them, e.g., (Smith 1965, 11 quoted in Skousen 2001, 15).</li><li><strong>Book in a foreign language:</strong> The translation of the title is placed in square brackets after the original title.</li><li><strong>Book with editor:</strong> The editor is listed in place of or next to the author, followed by 'ed.' or 'eds.'</li><li><strong>Book with author, editor, and translator:</strong> The translator and editor are noted with 'Trans. and ed.' in the reference list entry.</li><li><strong>Author's contribution in an edited volume:</strong> The chapter title is in quotation marks, followed by 'In' and the book title, the editor(s), and the page range of the contribution.</li></ul><h3>Edition Number</h3><p>The edition number is indicated only when it is larger than one, as shown on the title page. A <strong>second amended edition</strong> is indicated as <em>2nd ed.</em> A <strong>revised edition</strong> is abbreviated as <em>rev. ed.</em> without any ordinal number.</p><h3>Book Volume</h3><p>Volume is indicated when the work is multivolume. <strong>Vol.</strong> is used for a single volume; <strong>Vols.</strong> for the complete edition. A single volume may also contain multiple books, abbreviated as <em>bk.</em> or <em>bks.</em> When a page number immediately follows a volume number, they are separated by a <strong>colon</strong> with no letter abbreviation needed, e.g., 11:272–285. A comma does not precede the volume number except for syntactic reasons.</p><h3>Publisher's Location and Name</h3><ul><li>When three or more publication places appear, the <strong>graphically highlighted</strong> one is stated; if none is highlighted, the <strong>first listed</strong> is used. Omitted places may be replaced by <em>etc.</em></li><li>The publisher's name is separated from the place of publication by a <strong>colon</strong>. Multiple publishers are separated by a <strong>semicolon</strong>.</li><li>In English, if the publisher's name begins with 'The', it is commonly <strong>omitted</strong>.</li></ul><h3>Publishing Year</h3><p>Works by the same author are listed in <strong>chronological order</strong> in the bibliography. If two books by the same author were published in the same year, a <strong>lowercase letter</strong> is appended to the year: <em>a</em> for the first, <em>b</em> for the second (e.g., 2010a, 2010b).</p><h3>Page Numbers</h3><ul><li>The total number of pages is <strong>not</strong> indicated in a citation (except for cataloging or reviews).</li><li>For contributions in edited volumes, the <strong>page range</strong> of the contribution is part of the bibliographic description.</li><li>For works on electronic media <strong>without page numbers</strong>, the word <em>under</em> followed by the chapter or section name in quotation marks is used as a locator.</li><li>Chapter numbers are cited as <em>chap. 2</em> when chapter numbers are provided.</li><li><strong>Tables</strong> are cited after the page number, e.g., (Smith 2010, 38, table 2.5).</li></ul><h3>Common Pitfalls</h3><ul><li>Do not use a number with <em>rev. ed.</em> — it is never '1st rev. ed.' or '2nd rev. ed.'</li><li>Do not place a comma before the volume number unless syntactically required.</li><li>Do not include 'The' at the beginning of an English publisher's name.</li><li>Do not confuse <em>et al.</em> (used in in-text citations for 4–10 authors) with 'and others' (used in notes).</li><li>When citing a book within a book, always include both sources with 'quoted in' between them.</li></ul>"
+    }
+  },
+  "chicagoStyleJournals": {
+    "name": "Chicago Style Journals",
+    "icon": "fa-scale-balanced",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "What are the basic elements of bibliographic description for a cited journal?",
+        "answer": "Surname and name of the author, title and subtitle of the article, name of the journal, volume number, issue number, date, page number, and DOI tag or URL.",
+        "explanation": "These eight elements form the core of any Chicago-style journal citation."
+      },
+      {
+        "question": "How is the journal name formatted in a bibliographic description?",
+        "answer": "The journal name is written in italics, in the same type and size as the rest of the text.",
+        "explanation": "Unlike book titles, journal names are italicized but not placed in quotation marks."
+      },
+      {
+        "question": "How is the title and subtitle of an article presented in notes and bibliography versus the reference list?",
+        "answer": "In notes and bibliography, the title and subtitle are given in quotation marks; in the reference list, they are not specified in quotation marks.",
+        "explanation": "This is a key formatting difference between the two Chicago citation systems."
+      },
+      {
+        "question": "What symbol is used to replace a repeated author's name in a reference list or bibliography?",
+        "answer": "Three connected em-dashes (———) are used instead of rewriting the author's last and first name."
+      },
+      {
+        "question": "How are authors separated in references and bibliography when there are multiple authors?",
+        "answer": "Authors are separated by commas, and the last author is connected to the previous one with the conjunction 'and' (or the equivalent in the original language)."
+      },
+      {
+        "question": "For works with more than 10 authors, how are authors listed in the reference list?",
+        "answer": "The first 7 authors are listed, followed by 'et al.'"
+      },
+      {
+        "question": "For works with more than 3 authors, how is the citation written in the text (t)?",
+        "answer": "Only the surname of the first author is written, followed by 'et al.'"
+      },
+      {
+        "question": "What does 'forthcoming' or 'in preparation' indicate in a book citation?",
+        "answer": "It indicates that a contract has been concluded between the author and the publisher but the publication date is not yet known."
+      },
+      {
+        "question": "What term is used when a book is already ready for printing or is in print?",
+        "answer": "The term 'in press' is used."
+      },
+      {
+        "question": "What is 'n.d.' used for in the author-date citation system?",
+        "answer": "'n.d.' (no date) is used when the release date is not yet known, as an alternative to 'forthcoming' in the author-date system."
+      },
+      {
+        "question": "When citing a book reprint, what are the three ways to indicate publication years in the author-date system?",
+        "answer": "(1) Only the year of the first edition, (2) first and last year in square brackets [1931] 1975 or with a slash 1931/1975, or (3) only the last year of publication with the original year noted as '(Orig. pub. 1931.)'."
+      },
+      {
+        "question": "When is the issue number of a journal NOT stated?",
+        "answer": "When pages in a volume are numbered continuously, or when the month or name of the season precedes the year."
+      },
+      {
+        "question": "How is the volume number positioned relative to the journal name?",
+        "answer": "The volume number follows immediately after the name of the journal, with no punctuation mark in front of it."
+      },
+      {
+        "question": "How are two months indicated in a journal date when a journal spans two months?",
+        "answer": "The two months are connected by an en-dash (–), e.g., May–June."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In Chicago style, where are the title and subtitle of a journal article placed in quotation marks?",
+        "options": [
+          "In the reference list (R) only",
+          "In notes and bibliography (Bn, n, B) only",
+          "In both the reference list and notes",
+          "Neither; they are always italicized"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "When citing a journal article with four to ten authors in the text (t), what is the correct format?",
+        "options": [
+          "List all authors' surnames",
+          "List only the first author's surname followed by 'et al.'",
+          "List the first three authors followed by 'et al.'",
+          "List only the first author's full name"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What letter mark precedes the issue number of a journal in a bibliographic description?",
+        "options": [
+          "vol.",
+          "iss.",
+          "no.",
+          "ed."
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the author-date system, if a book has been contracted for publication but the date is unknown, which term(s) may be used?",
+        "options": [
+          "in press",
+          "n.d. or forthcoming/in preparation",
+          "unpublished manuscript",
+          "reprint"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "How is the journal name written in a Chicago-style bibliographic description?",
+        "options": [
+          "In bold",
+          "In quotation marks",
+          "In italics",
+          "In capital letters"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When citing an e-book without a DOI tag, what must be provided instead?",
+        "options": [
+          "The name of the author's institution",
+          "The URL and the date of access in parentheses",
+          "The ISBN number",
+          "The publisher's email address"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "In a book reprint citation using the author-date system, which format uses square brackets?",
+        "options": [
+          "Clark 1931, 121",
+          "Clark 1931/1975, 121",
+          "Clark [1931] 1975, 121",
+          "Clark 1975, 121"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When the year serves as a label for the volume of a journal, how is it treated in the bibliographic description?",
+        "options": [
+          "It is placed in parentheses after the volume number",
+          "It is omitted entirely",
+          "It is separated from the journal title by a comma and does not come in parentheses",
+          "It is placed in square brackets"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In the notes and bibliography system (Bn), how does a citation for a single-author article begin?",
+        "options": [
+          "With the author's surname only",
+          "With the author's full name (first name then surname)",
+          "With the title of the article",
+          "With the journal name"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "If a DOI or URL must be split across lines, where should the break NOT occur?",
+        "options": [
+          "After a double slash (//)",
+          "Before a tilde (~)",
+          "Before a question mark (?)",
+          "By adding a hyphen at the end of the line"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "For a journal article, the issue number is placed in parentheses (without the 'no.' designation) when:",
+        "options": [
+          "The volume number precedes it and the page number follows",
+          "The journal has more than 10 issues per year",
+          "The article has more than three authors",
+          "The journal is published online only"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "When citing a journal article in the bibliography (B) with month and year, how is the date formatted?",
+        "options": [
+          "The month and year are placed after the volume number in parentheses, e.g., (May 2008)",
+          "The month is written before the volume number",
+          "The month is written in all capitals",
+          "The month is separated from the year by a semicolon"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "In Chicago style, the title and subtitle of a journal article are given in _______ in notes and bibliography.",
+        "answer": "quotation marks",
+        "hint": "A punctuation element used to enclose titles of shorter works."
+      },
+      {
+        "sentence": "When an e-book does not have a DOI tag, the _______ is indicated instead, followed by the date of access in parentheses.",
+        "answer": "URL",
+        "hint": "A web address beginning with http://."
+      },
+      {
+        "sentence": "For works with more than 10 authors, in the reference list the first _______ authors are listed, followed by et al.",
+        "answer": "7",
+        "hint": "A single-digit number less than 10."
+      },
+      {
+        "sentence": "Three connected em-dashes (———) are used in a bibliography to replace a _______ that has already been stated in the previous entry.",
+        "answer": "repeated author's name",
+        "hint": "Used to avoid rewriting the same person's last and first name."
+      },
+      {
+        "sentence": "When a book is already ready for printing, the term _______ is used in the bibliographic description.",
+        "answer": "in press",
+        "hint": "Two words indicating the book is at the printer."
+      },
+      {
+        "sentence": "In the author-date system, when the publication date of a forthcoming book is unknown, the abbreviation _______ may be used instead of the year.",
+        "answer": "n.d.",
+        "hint": "Stands for 'no date'."
+      },
+      {
+        "sentence": "The volume number of a journal follows immediately after the name of the journal, with _______ punctuation mark in front of it.",
+        "answer": "no",
+        "hint": "Absence of any punctuation."
+      },
+      {
+        "sentence": "When two months are given for a journal issue, they are connected by an _______.",
+        "answer": "en-dash",
+        "hint": "A typographic dash shorter than an em-dash, used between ranges."
+      },
+      {
+        "sentence": "In a book reprint citation, the format Clark [1931] 1975 uses _______ to enclose the year of the first edition.",
+        "answer": "square brackets",
+        "hint": "These are [ ] symbols."
+      },
+      {
+        "sentence": "In the reference list, if another work by the same author is cited, it is sufficient to put _______ instead of rewriting the name.",
+        "answer": "three connected em-dashes",
+        "hint": "The symbol ——— repeated three times connected."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Chicago Style: Citing Journals and Additional Book Elements</h3><p>This section covers the Chicago Manual of Style rules for citing journal articles, e-books, and special book situations (forthcoming, in press, reprints). These rules apply to both the <strong>author-date system</strong> and the <strong>notes and bibliography system</strong>.</p><h3>1. E-Books: DOI and URL</h3><p>An e-book is an electronic version of a printed book. The same basic bibliographic elements used for printed books apply to e-books. Key rules include:</p><ul><li>If the e-book is in an online database (e.g., Safari Books Online), the <strong>name of the digital library</strong> must be noted.</li><li>The last element of the bibliographic description is the <strong>DOI tag</strong> [doi:].</li><li>If there is no DOI, the <strong>URL</strong> [http://] is provided, followed by the <strong>date of access</strong> in parentheses (day, month, year).</li><li>When splitting a DOI or URL across lines, <strong>never add a hyphen</strong>. Break <em>after</em> a double slash (//) or single slash (/), and <em>before</em> symbols such as tilde (~), equals (=), period (.), comma (,), hyphen (-), underscore (_), quotation mark (&quot;), question mark (?), hashtag (#), or percentage mark (%).</li></ul><h3>2. Special Book Situations</h3><ul><li><strong>Forthcoming / In preparation:</strong> Used when a contract exists between author and publisher but the publication date is unknown. In the author-date system, <em>n.d.</em> (no date) may be used as an alternative.</li><li><strong>In press:</strong> Used when the book is already ready for printing or is currently being printed.</li><li><strong>Unpublished manuscript:</strong> If no contract exists between author and publisher, the work is considered an unpublished manuscript.</li><li><strong>Reprint editions:</strong> Can be cited using (a) the year of the first edition only, (b) first and last year in square brackets [1931] 1975 or with a slash 1931/1975, or (c) the last year only with the original year noted as (Orig. pub. 1931.).</li></ul><h3>3. Basic Elements of a Cited Journal</h3><p>The eight basic elements are: <strong>surname and name of the author</strong>, <strong>title and subtitle of the article</strong>, <strong>name of the journal</strong>, <strong>volume number</strong>, <strong>issue number</strong>, <strong>date</strong>, <strong>page number</strong>, and <strong>DOI tag or URL</strong>.</p><h3>4. Author Name Formatting</h3><ul><li>In <strong>references and bibliography (R and B)</strong>: surname first, then full name, separated by a comma.</li><li>In <strong>text citations and short notes (t and n)</strong>: surname only.</li><li>In <strong>full notes (Bn)</strong>: full name first, then surname.</li><li>For <strong>two or more authors</strong>: first author is surname-first; subsequent authors are first name then surname; authors separated by commas; last author connected with <em>and</em>.</li><li>For <strong>up to 10 authors</strong>: all authors are stated.</li><li>For <strong>over 10 authors</strong>: in the reference list, the first 7 are listed followed by <em>et al.</em>; in notes and bibliography, use <em>and others</em>.</li><li>For <strong>more than 3 authors</strong> in text citations: only the first author's surname + <em>et al.</em></li><li>If the same author is cited again in a bibliography, use <strong>three connected em-dashes (———)</strong> instead of repeating the name.</li></ul><h3>5. Article Title and Subtitle</h3><ul><li>Written in the same type and size as the rest of the bibliographic description text.</li><li>Placed in <strong>quotation marks</strong> in notes and bibliography; <strong>not</strong> in quotation marks in the reference list.</li><li>Title and subtitle are separated by a <strong>colon</strong>; subtitle from sub-subtitle by a <strong>semicolon</strong>.</li><li>In short notes, the title may be shortened.</li></ul><h3>6. Journal Name, Volume, and Issue</h3><ul><li>The journal name is written in <strong>italics</strong>.</li><li>If no shorter name has been agreed upon at the scientific group level, the journal name is written in <strong>full</strong>.</li><li>The <strong>volume number</strong> follows immediately after the journal name with <strong>no punctuation</strong> in front of it. The abbreviated designation (e.g., vol.) is not used.</li><li>The <strong>issue number</strong> is preceded by the letter mark <em>no.</em> The issue number is <strong>not stated</strong> when pages in a volume are numbered continuously or when the month or season precedes the year.</li><li>If the volume number precedes the issue number and a page number follows, the issue number may be placed in parentheses without the <em>no.</em> designation, followed by a colon and the page number.</li></ul><h3>7. Date</h3><ul><li>In the <strong>reference list</strong>, the year of publication follows immediately after the author's name.</li><li>In <strong>notes and bibliography</strong>, the date follows the volume/issue indication in parentheses.</li><li>The year may be preceded by an exact date, month, or season. Month/season names are written in parentheses in lower case (or capitalized in English) separated by a comma from the year.</li><li>Two months are connected by an <strong>en-dash</strong> (–), e.g., May–June.</li><li>When the year serves as a volume label, it is separated from the journal title by a <strong>comma</strong> and does <strong>not</strong> appear in parentheses.</li></ul><h3>Common Pitfalls</h3><ul><li><em>Do not</em> add a hyphen when splitting a DOI or URL across lines.</li><li><em>Do not</em> use quotation marks for article titles in the reference list (R).</li><li><em>Do not</em> write the abbreviated volume designation (vol.) in journal citations.</li><li><em>Do not</em> state the issue number when pages are continuously numbered across a volume.</li><li><em>Do not</em> confuse <strong>in press</strong> (ready for printing) with <strong>forthcoming</strong> (contract signed, date unknown).</li></ul>"
+    }
+  },
+  "researchCharacteristicsAndQualities": {
+    "name": "Research Characteristics And Qualities",
+    "icon": "fa-seedling",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "What does 'scientific attitude' mean as a quality of a researcher?",
+        "answer": "It is the attitude of a person to promote the use of scientific approaches and rationales to react to any object."
+      },
+      {
+        "question": "What is 'research aptitude'?",
+        "answer": "Researchers should be inquisitive and curious about things and events around them."
+      },
+      {
+        "question": "How is 'persistence' defined as a researcher quality?",
+        "answer": "Persistence means traits such as perseverance, patience, tenacity, thoroughness, and determination to achieve something."
+      },
+      {
+        "question": "Why is self-motivation important for a researcher?",
+        "answer": "Self-motivated scientists produce more results than others do; it is an important quality of a researcher."
+      },
+      {
+        "question": "What does 'courage to ask questions' mean for a researcher?",
+        "answer": "Researchers should ask questions about things which they cannot agree with or do not understand."
+      },
+      {
+        "question": "What does 'skepticism and receptivity' require of a researcher?",
+        "answer": "Do not simply accept data and interpretations; evaluate them with an open mind."
+      },
+      {
+        "question": "How is 'objectivity' defined in the context of research?",
+        "answer": "The conclusion drawn by a researcher should be objective and based on findings revealed through actual data."
+      },
+      {
+        "question": "What does 'industriousness' imply about research?",
+        "answer": "Research is not an easy job; those who are lazy and longing for comfort and luxury will not become successful researchers."
+      },
+      {
+        "question": "What does 'open-mindedness' require of a researcher?",
+        "answer": "A researcher should be impartial and guided by facts, reasons, and logic."
+      },
+      {
+        "question": "What role does 'imagination' play in research?",
+        "answer": "Imagination is essential for insight and for problem solving."
+      },
+      {
+        "question": "What is the significance of 'search for perfection' in research?",
+        "answer": "The researcher will repeat experiments carefully and systematically if required and will not manipulate results under any circumstances."
+      },
+      {
+        "question": "Why is 'team spirit' listed as a researcher quality?",
+        "answer": "Certain problems cannot be solved by an individual scientist."
+      },
+      {
+        "question": "Name four characteristics of good research mentioned in the source text.",
+        "answer": "Research is based on the work of others; it is a blend of logic and imagination; it tries to identify and avoid bias; it is systematic; it must be generalisable to other settings; it generates new questions; it is an apolitical activity; and it is repeatable."
+      },
+      {
+        "question": "List four motives for doing research according to the source text.",
+        "answer": "Excitement of discovery, pursuit of prestige, in-depth knowledge on a subject, service to society, need for publication, obtaining a higher degree, better management, a tool in defence, and research in everyday life."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which of the following is listed as a characteristic of good research?",
+        "options": [
+          "Research is based solely on the researcher's own ideas",
+          "Research is a blend of logic and imagination",
+          "Research avoids generating new questions",
+          "Research is a political activity"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does 'research aptitude' mean?",
+        "options": [
+          "The ability to manipulate data",
+          "Being inquisitive and curious about things and events",
+          "Accepting all data without question",
+          "Preferring comfort over hard work"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what should a researcher do regarding skepticism and receptivity?",
+        "options": [
+          "Accept all data and interpretations immediately",
+          "Reject all data that contradicts prior beliefs",
+          "Evaluate data and interpretations with an open mind",
+          "Avoid reading others' interpretations"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which quality encourages a researcher to tackle challenges and foster optimism?",
+        "options": [
+          "Industriousness",
+          "Open-mindedness",
+          "Self-confidence",
+          "Persistence"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What does 'search for perfection' mean for a researcher?",
+        "options": [
+          "Manipulating results to achieve perfect outcomes",
+          "Repeating experiments carefully and systematically without manipulating results",
+          "Stopping experiments once a result is obtained",
+          "Delegating experiments to team members"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is NOT listed as a benefit of conducting research?",
+        "options": [
+          "Economic growth",
+          "New inventions and discoveries",
+          "Increasing efficiency and reducing costs",
+          "Reducing the number of researchers"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "What does 'objectivity' require of a researcher's conclusions?",
+        "options": [
+          "They should be based on the researcher's personal opinions",
+          "They should be based on findings revealed through actual data",
+          "They should align with the most popular theory",
+          "They should be approved by a committee"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Why is team spirit considered a quality of a researcher?",
+        "options": [
+          "Because individual scientists always produce better results",
+          "Because certain problems cannot be solved by an individual scientist",
+          "Because teams reduce the need for imagination",
+          "Because team spirit replaces the need for self-motivation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is listed as a motive for doing research?",
+        "options": [
+          "Avoiding publication",
+          "Obtaining a higher degree",
+          "Reducing curiosity",
+          "Discouraging discovery"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does 'open-mindedness' require of a researcher?",
+        "options": [
+          "Being guided by personal bias",
+          "Being impartial and guided by facts, reasons, and logic",
+          "Accepting only data that confirms existing beliefs",
+          "Avoiding collaboration with others"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, what is true about above-average intelligence for scientists?",
+        "options": [
+          "Scientists need to be super intelligent",
+          "Scientists need not be super intelligent",
+          "Intelligence is the most important quality",
+          "Intelligence replaces the need for knowledge"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which characteristic states that research should be applicable beyond its original context?",
+        "options": [
+          "Research is systematic",
+          "Research generates new questions",
+          "Research must be generalisable to other settings",
+          "Research is an apolitical activity"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Research is a blend of _______ and imagination.",
+        "answer": "logic",
+        "hint": "One of the two foundations of good research alongside imagination."
+      },
+      {
+        "sentence": "_______ means traits such as perseverance, patience, tenacity, thoroughness, and determination to achieve something.",
+        "answer": "Persistence",
+        "hint": "A quality that keeps researchers going despite difficulties."
+      },
+      {
+        "sentence": "The conclusion drawn by a researcher should be _______ and based on findings revealed through actual data.",
+        "answer": "objective",
+        "hint": "The opposite of subjective or biased."
+      },
+      {
+        "sentence": "Self-confidence encourages motivation to tackle challenges and foster _______.",
+        "answer": "optimism",
+        "hint": "A positive outlook on outcomes."
+      },
+      {
+        "sentence": "Researchers should be _______ in their approaches, as honesty and truthfulness are key qualities.",
+        "answer": "honest",
+        "hint": "Related to integrity and truthfulness."
+      },
+      {
+        "sentence": "A researcher should be impartial and guided by facts, reasons, and _______.",
+        "answer": "logic",
+        "hint": "Rational thinking that guides open-minded researchers."
+      },
+      {
+        "sentence": "_______ is essential for insight and for problem solving in research.",
+        "answer": "Imagination",
+        "hint": "A creative quality listed among researcher qualities."
+      },
+      {
+        "sentence": "Research tries to identify and avoid _______.",
+        "answer": "bias",
+        "hint": "A systematic error or prejudice in research."
+      },
+      {
+        "sentence": "Certain problems cannot be solved by an individual scientist, which is why _______ is an important researcher quality.",
+        "answer": "team spirit",
+        "hint": "Working collaboratively with others."
+      },
+      {
+        "sentence": "Self-motivated scientists produce more _______ than others do.",
+        "answer": "results",
+        "hint": "The output or findings of scientific work."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Research Characteristics and Qualities</h3><p>This topic covers two essential dimensions of academic research: the <strong>characteristics of good research</strong> and the <strong>qualities a researcher must possess</strong>. Understanding both helps students appreciate what makes research credible, rigorous, and impactful.</p><h3>Motives for Doing Research</h3><p>Researchers are driven by a variety of motives, including:</p><ul><li><strong>Excitement of discovery</strong> and pursuit of prestige</li><li><strong>In-depth knowledge</strong> on a subject and service to society</li><li><strong>Need for publication</strong> and obtaining a higher degree</li><li><strong>Better management</strong>, use as a tool in defence, and research in everyday life</li></ul><h3>Benefits of Conducting Research</h3><p>Research provides significant benefits to society and individuals, such as:</p><ul><li>Expanding frontiers of science and enabling new inventions and discoveries</li><li>Solving problems affecting society and increasing efficiency while reducing costs</li><li>Making life easier, contributing to luxury and comfort, infotainment, and economic growth</li></ul><h3>Characteristics of Good Research</h3><p>Good research is not arbitrary — it follows specific principles:</p><ul><li><strong>Based on the work of others:</strong> Research builds on existing knowledge.</li><li><strong>Blend of logic and imagination:</strong> Both rational thinking and creative insight are required.</li><li><strong>Identifies and avoids bias:</strong> Systematic efforts are made to minimise distortion.</li><li><strong>Repeatability:</strong> Results can be reproduced under the same conditions.</li><li><strong>Generalisable:</strong> Findings must apply beyond the immediate study setting.</li><li><strong>Systematic:</strong> Research follows a structured, organised process.</li><li><strong>Generates new questions:</strong> Good research opens doors to further inquiry.</li><li><strong>Apolitical:</strong> Research should be free from political influence.</li></ul><h3>Qualities of a Researcher</h3><p>A successful researcher must cultivate a wide range of personal and professional qualities:</p><ul><li><strong>Scientific attitude:</strong> Promoting scientific approaches and rationales in reacting to any object or event.</li><li><strong>Research aptitude:</strong> Being inquisitive and curious about things and events around them.</li><li><strong>Persistence:</strong> Perseverance, patience, tenacity, thoroughness, and determination.</li><li><strong>Self-motivation:</strong> Self-motivated scientists produce more results than others.</li><li><strong>Courage to ask questions:</strong> Questioning things they cannot agree with or do not understand.</li><li><strong>Skepticism and receptivity:</strong> Not simply accepting data; evaluating it with an open mind.</li><li><strong>Objectivity:</strong> Conclusions must be based on actual data, not personal opinion.</li><li><strong>Industriousness:</strong> Research is hard work; laziness leads to failure.</li><li><strong>Honesty and truthfulness:</strong> Integrity in all research approaches.</li><li><strong>Open-mindedness:</strong> Being impartial and guided by facts, reasons, and logic.</li><li><strong>Above-average intelligence:</strong> Scientists need not be super intelligent, but competence matters.</li><li><strong>Knowledge:</strong> Proficiency in the subject area is essential.</li><li><strong>Imagination:</strong> Essential for insight and problem solving.</li><li><strong>Self-confidence:</strong> Encourages motivation to tackle challenges and foster optimism.</li><li><strong>Search for perfection:</strong> Repeating experiments carefully without manipulating results.</li><li><strong>Team spirit:</strong> Some problems require collaboration beyond individual capacity.</li></ul><h3>Common Pitfalls</h3><p>Students often confuse <em>objectivity</em> with simply agreeing with popular opinion — objectivity means grounding conclusions in actual data. Similarly, <em>open-mindedness</em> does not mean accepting everything uncritically; it means evaluating evidence impartially. Avoid assuming that intelligence alone makes a good researcher — qualities like persistence, honesty, and team spirit are equally vital.</p>"
+    }
+  },
+  "ethicsAndLatinAbbreviations": {
+    "name": "Ethics And Latin Abbreviations",
+    "icon": "fa-bullseye",
+    "color": "#eab308",
+    "flashcards": [
+      {
+        "question": "What are ethics?",
+        "answer": "Norms that distinguish between acceptable and unacceptable behaviour in society.",
+        "explanation": "Research ethics specifically deal with the application of basic ethical principles to scientific research."
+      },
+      {
+        "question": "What does 'etc.' stand for and what does it mean?",
+        "answer": "'Etc.' stands for 'et cetera', meaning 'and so forth' or 'and other things'.",
+        "explanation": "It is used to avoid continuing a series of descriptions."
+      },
+      {
+        "question": "What punctuation must always follow 'etc.'?",
+        "answer": "A period (full stop) must always follow 'etc.'."
+      },
+      {
+        "question": "What punctuation must always precede 'etc.'?",
+        "answer": "A comma must always precede 'etc.', both in American and British English."
+      },
+      {
+        "question": "Why is writing 'and etc.' incorrect?",
+        "answer": "Because 'and' is redundant — the 'et' in 'et cetera' already means 'and'."
+      },
+      {
+        "question": "What does 'i.e.' stand for and what does it mean?",
+        "answer": "'i.e.' stands for 'id est', meaning 'that is'."
+      },
+      {
+        "question": "What does 'e.g.' stand for and what does it mean?",
+        "answer": "'e.g.' stands for 'exempli gratia', meaning 'for example'."
+      },
+      {
+        "question": "What does 'viz.' mean?",
+        "answer": "'Viz.' means 'namely'."
+      },
+      {
+        "question": "What does 'ibid.' mean and when is it used?",
+        "answer": "'Ibid.' means 'in the same work' and is used to refer back to the same source cited on the same page or the next page."
+      },
+      {
+        "question": "What does 'loc. cit.' mean?",
+        "answer": "'Loc. cit.' means 'in the place cited', referring to the same page of a previously cited source."
+      },
+      {
+        "question": "What does 'op. cit.' mean?",
+        "answer": "'Op. cit.' means 'in the work cited', referring back to a previously cited work."
+      },
+      {
+        "question": "What does 'Cf.' mean in academic writing?",
+        "answer": "'Cf.' is used to direct the reader to compare or consult another source that holds a different view."
+      },
+      {
+        "question": "Should widely used abbreviations like 'viz.' and 'etc.' be italicized?",
+        "answer": "No, widely used words or abbreviations from other languages such as 'viz.' and 'etc.' need not be italicized."
+      },
+      {
+        "question": "What alternatives to 'etc.' are recommended in formal writing?",
+        "answer": "Using 'including', 'such as', or 'like' immediately before the list, which can convey the same meaning."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Which of the following best defines 'ethics' according to the source text?",
+        "options": [
+          "Rules imposed by governments on researchers",
+          "Norms that distinguish between acceptable and unacceptable behaviour in society",
+          "A set of legal requirements for publishing papers",
+          "Guidelines for formatting academic papers"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does the Latin abbreviation 'e.g.' stand for?",
+        "options": [
+          "et cetera",
+          "id est",
+          "exempli gratia",
+          "et gratis"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What does 'ibid.' refer to in academic footnotes?",
+        "options": [
+          "In the work cited, on a different page",
+          "In the place cited, same page only",
+          "In the same work, on the same or next page",
+          "In another work by the same author"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which punctuation rule applies to 'etc.' in a sentence?",
+        "options": [
+          "It must be preceded by a semicolon and followed by a period",
+          "It must be preceded by a comma and followed by a period",
+          "It must be preceded by a colon and followed by a period",
+          "It requires no special punctuation"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Why is the phrase 'and etc.' considered incorrect?",
+        "options": [
+          "Because 'etc.' should only appear at the beginning of a sentence",
+          "Because 'and' is redundant since 'et' in 'et cetera' already means 'and'",
+          "Because 'etc.' cannot follow conjunctions in English",
+          "Because it is not a recognised Latin phrase"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is NOT listed as an ethics-related issue in research?",
+        "options": [
+          "Duplication of papers",
+          "Conflict of interest",
+          "Manipulation of research",
+          "Incorrect font formatting"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "What does 'loc. cit.' mean?",
+        "options": [
+          "In the same work",
+          "In the work cited",
+          "In the place cited",
+          "In another location"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which abbreviations are described as prone to misuse, making their English equivalents recommended in technical writing?",
+        "options": [
+          "etc., ibid., op. cit.",
+          "i.e., e.g., viz.",
+          "loc. cit., op. cit., ibid.",
+          "cf., viz., etc."
+        ],
+        "correct": 1
+      },
+      {
+        "question": "According to the source text, foreign words are usually written in:",
+        "options": [
+          "Bold",
+          "Underline",
+          "Italics",
+          "Capital letters"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "What does the present trend recommend instead of using 'etc.'?",
+        "options": [
+          "Using 'and so on' at the end of every list",
+          "Using 'including', 'such as', or 'like' before the list",
+          "Omitting the list entirely",
+          "Using 'et al.' instead"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does 'op. cit.' mean in footnote references?",
+        "options": [
+          "In the place cited",
+          "In the same work",
+          "In the work cited",
+          "On the same page"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is an ethical issue specifically related to journals mentioned in the source text?",
+        "options": [
+          "Incorrect citation format",
+          "Conflict of interest when certain individuals are included",
+          "Using too many Latin abbreviations",
+          "Submitting papers without abstracts"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Ethics are norms that distinguish between acceptable and _______ behaviour in society.",
+        "answer": "unacceptable",
+        "hint": "The opposite of acceptable."
+      },
+      {
+        "sentence": "The abbreviation 'etc.' stands for 'et cetera', meaning 'and so forth' or 'and _______ things'.",
+        "answer": "other",
+        "hint": "Et cetera translates literally as 'and other things'."
+      },
+      {
+        "sentence": "In both American and British English, 'etc.' must always be preceded by a _______.",
+        "answer": "comma",
+        "hint": "A punctuation mark used to separate items in a list."
+      },
+      {
+        "sentence": "Writing 'and etc.' is incorrect because the word 'and' is _______.",
+        "answer": "redundant",
+        "hint": "Unnecessary because 'et' already means 'and'."
+      },
+      {
+        "sentence": "The Latin abbreviation 'i.e.' stands for 'id est', which means 'that _______'.",
+        "answer": "is",
+        "hint": "A two-letter word used to introduce a clarification."
+      },
+      {
+        "sentence": "Foreign words in academic writing are usually written in _______.",
+        "answer": "italics",
+        "hint": "A slanted font style."
+      },
+      {
+        "sentence": "The abbreviation _______ means 'in the same work' and refers to a source cited on the same or next page.",
+        "answer": "ibid.",
+        "hint": "Commonly used in footnotes to avoid repeating a full citation."
+      },
+      {
+        "sentence": "Instead of using 'etc.', the recommended alternatives in formal writing include 'including', 'such as', or '_______'.",
+        "answer": "like",
+        "hint": "A word used to introduce examples or comparisons."
+      },
+      {
+        "sentence": "'Op. cit.' is a Latin abbreviation meaning 'in the _______ cited'.",
+        "answer": "work",
+        "hint": "It refers back to a previously cited publication."
+      },
+      {
+        "sentence": "The abbreviation 'viz.' means _______.",
+        "answer": "namely",
+        "hint": "Used to specify or list items more precisely."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Ethics and Latin Abbreviations in Academic Research</h3><p>This topic covers two interconnected areas essential for academic integrity: <strong>research ethics</strong> and the correct use of <strong>Latin abbreviations</strong> in scholarly writing.</p><h3>1. Research Ethics</h3><p><strong>Ethics</strong> are norms that distinguish between acceptable and unacceptable behaviour in society. <strong>Research ethics</strong> deal with the application of basic ethical principles to scientific research. Scientists must conduct themselves according to the ethical norms of science in all of their scientific pursuits.</p><p>Key ethical issues in research include:</p><ul><li><strong>Authorship:</strong> Fraudulent authorships must be avoided.</li><li><strong>Duplication of Papers:</strong> Publishing the same work more than once without disclosure is unethical.</li><li><strong>Refereeing:</strong> Anonymity and confidentiality must be maintained.</li><li><strong>Conflict of Interest:</strong> Can occur in journals when certain individuals are involved in reviewing work they have a stake in.</li><li><strong>Manipulation of Research:</strong> Falsifying or manipulating data or results is a serious breach of ethics.</li></ul><h3>2. Latin Abbreviations in Writing</h3><p>Many abbreviations of phrases from other languages, especially Latin, are commonly used in academic writing. However, their misuse can cause ambiguity, and English equivalents are increasingly preferred in formal and technical writing.</p><h3>The Abbreviation <em>etc.</em></h3><p><em>Et cetera</em> (abbreviated as <strong>etc.</strong>) means <em>'and so forth'</em> or <em>'and other things'</em>. It is used to avoid continuing a series of descriptions. Important rules:</p><ul><li><strong>Always</strong> follow 'etc.' with a period (full stop).</li><li><strong>Always</strong> precede 'etc.' with a comma (in both American and British English).</li><li>Never write <strong>'and etc.'</strong> — the 'and' is redundant because 'et' already means 'and'.</li><li>The implied extension of ideas must be <strong>clear</strong> to the reader; if not, rewrite the sentence.</li><li>The current trend recommends replacing 'etc.' with <strong>'including'</strong>, <strong>'such as'</strong>, or <strong>'like'</strong> before the list.</li></ul><h3>Other Common Latin Abbreviations</h3><ul><li><strong>i.e.</strong> — <em>id est</em> = 'that is' (used to clarify or restate)</li><li><strong>e.g.</strong> — <em>exempli gratia</em> = 'for example' (used to give examples)</li><li><strong>viz.</strong> — 'namely' (used to specify)</li><li><strong>ibid.</strong> — 'in the same work' (footnote reference to the same source on the same or next page)</li><li><strong>loc. cit.</strong> — 'in the place cited' (refers to the same page of a previously cited source)</li><li><strong>op. cit.</strong> — 'in the work cited' (refers back to a previously cited work, possibly a different page)</li><li><strong>Cf.</strong> — used to direct the reader to compare another source with a differing view</li></ul><h3>Formatting Rules for Foreign Words and Abbreviations</h3><p>Foreign words are usually written in <strong>italics</strong>. However, widely used words or abbreviations from other languages — such as <em>viz.</em> and <em>etc.</em> — <strong>need not be italicized</strong>.</p><h3>Common Pitfalls</h3><ul><li>Writing <strong>'and etc.'</strong> — always incorrect due to redundancy.</li><li>Using <strong>'etc.'</strong> when the implied continuation is not obvious to the reader.</li><li>Confusing <strong>ibid.</strong> (same work) with <strong>loc. cit.</strong> (same place/page) and <strong>op. cit.</strong> (same work, possibly different page).</li><li>Confusing <strong>i.e.</strong> (that is — clarification) with <strong>e.g.</strong> (for example — illustration).</li><li>Using Latin abbreviations in technical writing where they may contribute to <strong>ambiguity</strong>; English equivalents are preferred.</li></ul>"
+    }
+  },
+  "chicagoStyleOtherSources": {
+    "name": "Chicago Style Other Sources",
+    "icon": "fa-book-open",
+    "color": "#3b82f6",
+    "flashcards": [
+      {
+        "question": "In Chicago style, what does the in-text citation include for a journal article — the full page range or only the specific page cited?",
+        "answer": "Only the specific page number cited; the full page range of the article appears in the reference list/bibliography.",
+        "explanation": "The citation does not indicate the abbreviated page tag nor the range of pages covered by the journal article, but only the page number."
+      },
+      {
+        "question": "What term is used in Chicago style when a journal article has been accepted for publication but not yet published?",
+        "answer": "Forthcoming",
+        "explanation": "If the journal's editorial board has accepted the article for publication but it has not yet been published, the word 'forthcoming' is indicated at the place of year and/or page — in brackets."
+      },
+      {
+        "question": "What is a 'special issue' of a journal, and who may edit it?",
+        "answer": "A special issue is usually dedicated to a specific research topic or person; at the suggestion of the Editorial Board it can be edited by a guest editor.",
+        "explanation": "Special issues are typically focused on one theme or person and may carry a guest editor credit in the bibliographic description."
+      },
+      {
+        "question": "What Latin abbreviation is used in Chicago notes when citing an encyclopedia or dictionary entry, and what does it mean?",
+        "answer": "s.v. (singular) or s.vv. (plural), from Latin 'sub verbo' meaning 'under the word/title'.",
+        "explanation": "These abbreviations precede individual terms arranged alphabetically in an encyclopedia or dictionary."
+      },
+      {
+        "question": "In Chicago style, are encyclopedias and dictionaries listed in the bibliography?",
+        "answer": "No. Recognized printed and online encyclopedias and dictionaries are cited only as abbreviated citations in the notes and are not written in the bibliography.",
+        "explanation": "This is a key distinction: encyclopedias/dictionaries appear only in footnotes/endnotes, not in the bibliography."
+      },
+      {
+        "question": "What bibliographic elements are required for a master's thesis or doctoral dissertation in Chicago style?",
+        "answer": "Surname and name of the author, title and subtitle, abbreviated indication of the type (e.g., PhD diss. or MA thesis), name of the academic institution, and year.",
+        "explanation": "These five elements form the complete bibliographic description for unpublished academic works."
+      },
+      {
+        "question": "What type of source is a poster in Chicago style, and where is it typically presented?",
+        "answer": "A poster is an unpublished edition, typically presented at scientific conferences.",
+        "explanation": "Posters presented at scientific conferences belong to the category of unpublished editions alongside master's theses and doctoral dissertations."
+      },
+      {
+        "question": "What bibliographic elements do reports share with in Chicago style?",
+        "answer": "Reports use the same bibliographic elements as cited books.",
+        "explanation": "The source text states: 'The bibliographic elements of the report description are the same as for the cited book.'"
+      },
+      {
+        "question": "When citing an abstract in Chicago style, what must be noted in the bibliography?",
+        "answer": "It must be noted that the source is an abstract; abstracts otherwise use the bibliographic elements of a cited article.",
+        "explanation": "Abstracts in the bibliography have bibliographic elements of the cited article, but it should be noted that this is an abstract."
+      },
+      {
+        "question": "What additional element must be included when citing online PowerPoint slides in Chicago style?",
+        "answer": "The URL (web address) must be added; it should also be noted that the source consists of PowerPoint slides.",
+        "explanation": "For online PowerPoint slides, the URL is added and the bibliography entry must indicate that it is PowerPoint slides."
+      },
+      {
+        "question": "For daily newspapers, why is it best to omit page numbers in Chicago bibliographic descriptions?",
+        "answer": "Because daily newspapers can have several editions, and articles may be moved from page to page or completely removed in subsequent issues.",
+        "explanation": "The date of publication is the most important bibliographic element for newspapers; page numbers are unreliable across editions."
+      },
+      {
+        "question": "What are the four main categories that belong to 'other literature' in Chicago style?",
+        "answer": "Unpublished editions, special bibliography material, public documents, and similar.",
+        "explanation": "These categories are listed explicitly in the source text under 'Elements of bibliographic description – citing other literature.'"
+      },
+      {
+        "question": "Name at least five types of sources classified as 'special bibliographic material' in Chicago style.",
+        "answer": "Works of classics, encyclopedias, dictionaries, manuals, brochures, catalogs, reports, abstracts, and PowerPoint slides.",
+        "explanation": "The source text lists all of these as belonging to special bibliographic material."
+      },
+      {
+        "question": "What are 'bulletins' and 'statistical yearbooks' classified as in Chicago style?",
+        "answer": "They are classified as public documents. Bulletins are periodicals with official data and notices; statistical yearbooks are published once a year.",
+        "explanation": "Public documents also include law regulations, corporate reports, and similar official publications."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "In a Chicago in-text citation for a journal article, what page information is given?",
+        "options": [
+          "The full page range of the article",
+          "Only the specific page number cited",
+          "No page information at all",
+          "The abbreviated page tag and the range"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Where does the full page range of a journal article appear in Chicago style?",
+        "options": [
+          "In the in-text citation only",
+          "In the footnote only",
+          "In the reference list, notes, and bibliography as part of the bibliographic description",
+          "It is never included"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When a journal article has been accepted but not yet published, what word replaces the year in a Chicago citation?",
+        "options": [
+          "Pending",
+          "In press",
+          "Forthcoming",
+          "Accepted"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following is TRUE about encyclopedias and dictionaries in Chicago style?",
+        "options": [
+          "They are cited in full in both notes and bibliography",
+          "They are cited only as abbreviated citations in notes and are NOT listed in the bibliography",
+          "They are listed in the bibliography but never in notes",
+          "They follow the same rules as journal articles"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "What does the Latin abbreviation 's.v.' stand for in Chicago citations of encyclopedias and dictionaries?",
+        "options": [
+          "Sub voce — under the voice",
+          "Sub verbo — under the word/title",
+          "Sine veritate — without truth",
+          "Sicut verbum — as the word"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is classified as an 'unpublished edition' in Chicago style?",
+        "options": [
+          "A catalog",
+          "A bulletin",
+          "A doctoral dissertation",
+          "A corporate report"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "According to Chicago style, why should page numbers generally be omitted when citing daily newspaper articles?",
+        "options": [
+          "Because newspapers do not have page numbers",
+          "Because the date of publication is not important",
+          "Because daily newspapers can have several editions and articles may move or be removed",
+          "Because only online newspapers are acceptable sources"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "In Chicago style, the bibliographic elements for a report are the same as those for which type of source?",
+        "options": [
+          "A journal article",
+          "A cited book",
+          "A newspaper",
+          "A poster"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Which of the following is an example of a 'public document' in Chicago style?",
+        "options": [
+          "A doctoral dissertation",
+          "A PowerPoint slide",
+          "A statistical yearbook",
+          "A classic literary work"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "When citing an online journal article with a DOI number instead of a page number, what type of locator is used in Chicago style?",
+        "options": [
+          "A numerical locator",
+          "A descriptive locator (e.g., under 'The Model')",
+          "A volume-only locator",
+          "No locator is needed"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "A special issue of a journal edited by someone outside the regular editorial board is credited to whom?",
+        "options": [
+          "The journal's chief editor",
+          "The publisher",
+          "A guest editor",
+          "The university press"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Which of the following correctly describes 'brochures' in Chicago style?",
+        "options": [
+          "Large reference books with practical professional instructions",
+          "Commemorative editions with illustrated data for a specific purpose",
+          "Smaller editions published on minor current issues or information",
+          "Periodicals with official data and notices"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "In Chicago style, the in-text citation for a journal article includes only the specific _______ cited, not the full page range of the article.",
+        "answer": "page number",
+        "hint": "Think about what single piece of location information appears in parentheses."
+      },
+      {
+        "sentence": "When a journal article has been accepted for publication but not yet published, the word _______ is placed at the position of the year and/or page in the citation.",
+        "answer": "forthcoming",
+        "hint": "This word signals that publication is expected in the future."
+      },
+      {
+        "sentence": "Recognized printed and online encyclopedias and dictionaries are cited only as abbreviated citations in the _______ and are not written in the bibliography.",
+        "answer": "notes",
+        "hint": "Think of the section that contains footnotes or endnotes."
+      },
+      {
+        "sentence": "The Latin abbreviation _______ (or s.vv. in the plural) is used before individual terms in an encyclopedia or dictionary citation, meaning 'under the word/title'.",
+        "answer": "s.v.",
+        "hint": "It stands for 'sub verbo' in Latin."
+      },
+      {
+        "sentence": "Doctoral dissertations, master's theses, and posters presented at scientific conferences are all classified as _______ editions in Chicago style.",
+        "answer": "unpublished",
+        "hint": "These works have not been formally published by a publisher."
+      },
+      {
+        "sentence": "For daily newspaper articles, it is best to omit _______ as an element of bibliographic description because articles may move between editions.",
+        "answer": "page numbers",
+        "hint": "This element is unreliable across multiple daily editions."
+      },
+      {
+        "sentence": "In Chicago style, the bibliographic elements of a _______ description are the same as those used for a cited book.",
+        "answer": "report",
+        "hint": "This type of document presents research or organizational findings."
+      },
+      {
+        "sentence": "When citing an abstract in Chicago style, the bibliography entry uses the bibliographic elements of a cited article but must also note that the source is an _______.",
+        "answer": "abstract",
+        "hint": "This is a brief summary of a longer work."
+      },
+      {
+        "sentence": "For online PowerPoint slides, the _______ must be added to the bibliographic description, and the entry must indicate that the source consists of PowerPoint slides.",
+        "answer": "URL",
+        "hint": "This is the web address where the slides can be accessed."
+      },
+      {
+        "sentence": "A special issue of a journal is usually dedicated to a specific research topic or person and may be edited by a _______ editor.",
+        "answer": "guest",
+        "hint": "This editor is invited from outside the regular editorial board."
+      }
+    ],
+    "learn": {
+      "content": "<h3>Introduction: What Are 'Other Sources' in Chicago Style?</h3><p>The Chicago Manual of Style covers not only books and standard journal articles but also a wide range of <strong>other sources</strong> that researchers frequently encounter. These fall into three broad categories: <strong>unpublished editions</strong>, <strong>special bibliographic material</strong>, and <strong>public documents</strong>. Understanding how to handle each category correctly is essential for producing accurate and consistent reference lists and bibliographies.</p><h3>Journals: Page Numbers, Forthcoming Articles, and Special Issues</h3><p>A key rule for journal citations is that the <strong>in-text citation includes only the specific page number</strong> being cited, not the full page range of the article. The full range (e.g., 205–221) belongs in the reference list or bibliography as part of the bibliographic description of the journal. When a journal article has been <strong>accepted for publication but not yet published</strong>, the word <strong>forthcoming</strong> replaces the year (and page, if unknown) in all citation forms. A <strong>special issue</strong> of a journal — typically dedicated to a specific research topic or person — may be edited by a <strong>guest editor</strong>, who is credited in the bibliographic description. Journals may also publish <strong>supplements separate from the volume</strong>, which are cited with a supplement number.</p><h3>Magazines and Newspapers</h3><p>Magazines may be published weekly or monthly. The date of publication (e.g., March 30) is included in the citation. For <strong>online magazines</strong>, the URL and access date are added. <strong>Newspapers</strong> are published on a daily or weekly basis, and the <strong>date of publication is a very important bibliographic element</strong>. Because daily newspapers can have several editions — meaning an article may be moved or removed — it is best practice to <strong>omit page numbers</strong> from newspaper citations. For online newspapers, the URL and, if necessary, the access date are added.</p><h3>Unpublished Editions</h3><p>Unpublished editions most often include <strong>master's theses</strong>, <strong>doctoral dissertations</strong>, and <strong>posters</strong> presented at scientific conferences. The bibliographic description for a thesis or dissertation must include: the author's surname and name, the title and subtitle, an abbreviated indication of the type (e.g., <em>PhD diss.</em>), the name of the academic institution where it was defended, and the year. Posters are cited with the event name, dates, and location.</p><h3>Special Bibliographic Material</h3><p>This category is broad and includes: <strong>works of classics</strong> (e.g., Homer, Ovid, Sophocles), <strong>encyclopedias</strong>, <strong>dictionaries</strong>, <strong>manuals</strong>, <strong>brochures</strong>, <strong>catalogs</strong>, <strong>reports</strong>, <strong>abstracts</strong>, and <strong>PowerPoint slides</strong>. Several important rules apply:</p><ul><li><strong>Encyclopedias and dictionaries</strong> — whether printed or online — are cited only as <em>abbreviated citations in the notes</em> and are <strong>never listed in the bibliography</strong>. Entries are preceded by the Latin abbreviation <strong>s.v.</strong> (sub verbo, 'under the word') or <strong>s.vv.</strong> in the plural.</li><li><strong>Classics</strong> with a translator include the translator's name in the citation (e.g., <em>trans. Walter Shewring</em>).</li><li><strong>Reports</strong> use the same bibliographic elements as cited books.</li><li><strong>Abstracts</strong> use the bibliographic elements of a cited article, but the entry must explicitly note that it is an abstract.</li><li><strong>PowerPoint slides</strong> must be identified as such in the bibliography, and the URL is added for online slides.</li></ul><h3>Public Documents</h3><p>Public documents include <strong>bulletins</strong> (periodicals with official data and notices), <strong>statistical yearbooks</strong> (published annually), <strong>law regulations</strong> (government regulations), and <strong>corporate reports</strong>. These are cited similarly to books, with the issuing organization serving as the author. For online public documents, the URL and access date are included.</p><h3>Common Pitfalls</h3><ul><li>Do not include the full page range of a journal article in the in-text citation — only the specific page cited.</li><li>Do not list encyclopedias or dictionaries in the bibliography; they belong only in notes with the s.v. abbreviation.</li><li>Do not omit the word <em>forthcoming</em> for accepted-but-unpublished articles — leaving it out implies the article has already been published.</li><li>Do not include page numbers for newspaper articles, as these are unreliable across editions.</li><li>Always note when a source is an abstract or consists of PowerPoint slides — failing to do so misrepresents the nature of the source.</li></ul>"
+    }
+  }
+}
