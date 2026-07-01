@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-01 (nastavak) — ▶ FAZA 2 · 2A (S2 čisti JSON format) započeta: cigla 2A.1 (JSON Schema ugovor)
+**Grana `foundation/f2a`** (odvojena od `main`; produkcija netaknuta). Post-compact review najprije potvrdio zeleno stanje
+(validate/verify/typecheck/unit 0, `main==origin/main==0c21aa6`) + ulovio 1 zastarjeli doc-red (FOUNDATION_PLAN §2E „čeka DSN" ↔ STATUS „deployano") → popravljen (`5d92da3`).
+**Cigla 2A.1 ✅ (`1fc6c19`):** kanonski STRUKTURNI ugovor za payload sadržaja.
+- **Izviđanje PRIJE pisanja** (recon svih 18 predmeta, 443 instance kategorija) — otkrilo nedokumentirana ali stvarna polja:
+  `quiz.image`/`quiz.imageAlt` (Geografija „koji grad je na slici", 8×), `learn.title` (281×), `learn.image=null` → uključena u schemu; `additionalProperties:false` sad siguran.
+- `schema/subject-content.schema.json` (JSON Schema draft-07) — vjeran `validate-content.js` + `CONTENT_SCHEMA.md`. STRUKTURA (oblik/tipovi/nepoznata polja); SEMANTIKU (correct-u-rasponu, KaTeX, `_______`) i dalje radi `validate:content`.
+- `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) — validira payload SVAKE razriješene lekcije preko vm window-shima (izvor-neovisno). **Dokazano: 54/54 dokumenta (18×3), 0 neispravnih.**
+- CI: novi korak `validate:schema` odmah nakon `validate:content`. **Bez runtime izmjena → bez cache bumpa** (schema/scripts = dev/CI, `index.html` ih ne učitava).
+**Gate:** validate:schema 54/54, validate:content 0/0, verify 0/0, typecheck 0. **⬜ DALJE: 2A.2** (exporter `data.js → data.json`, round-trip deep-equal + validate:schema nad generiranim `.json`) → 2A.3 dual-read (rizična) → 2A.4 migracija predmet-po-predmet.
+
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.
 Live potvrđeno: `js/content-repo.js` + `js/monitoring.js` + tokeni `?v=20260699` serviraju se; `privacy.html` Sentry-tekst live; homepage 200; Supabase budan (RLS OK).

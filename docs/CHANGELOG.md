@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2A.1 (S2 čisti JSON format — JSON Schema ugovor) — grana `foundation/f2a` (2026-07-01, `1fc6c19`; NIJE na produkciji).**
+  `schema/subject-content.schema.json` (JSON Schema draft-07) = kanonski STRUKTURNI ugovor za payload sadržaja (window-var = kategorije lekcije/final).
+  `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) validira payload svake razriješene lekcije preko vm window-shima (izvor-neovisno)
+  → **54/54 dokumenta (18 predmeta × 3 lekcije) poštuju schemu.** Izviđanje prije pisanja uključilo stvarna nedokumentirana polja (`quiz.image`/`imageAlt`, `learn.title`, `learn.image=null`).
+  Nadopunjuje `validate:content` (semantika); novi CI korak. Bez runtime izmjena → bez cache bumpa. Temelj za 2A.2 exporter + F4 CRUD validaciju.
 - **🧩 FAZA 2 (reusable jezgra) — 2B + 2E ✅ DEPLOYANO NA PRODUKCIJU (2026-07-01; ff-merge `164dc11..57f449a`, uz izričito odobrenje; CI zelen; live potvrđeno).**
   Revidirani redoslijed (dogovoreno, utemeljeno u kodu): **S1 Repo prije S2 JSON + Sentry ranije.**
   **ContentRepository (S1):** novi `js/content-repo.js` → `window.SokratContent` (`listSubjects`/`getSubject`/`isLessonComingSoon`/`loadLesson`/`isLoaded`) —

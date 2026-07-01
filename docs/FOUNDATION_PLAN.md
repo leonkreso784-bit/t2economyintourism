@@ -114,7 +114,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
-**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ GOTOVI I DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **DALJE: 2A (S2 JSON), pa 2C (AppState), pa 2D (Web Components).**
+**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **▶ 2A (S2 JSON) U TIJEKU (grana `foundation/f2a`): 2A.1 ✅ (JSON Schema ugovor + validator, 54/54); DALJE 2A.2 exporter → 2A.3 dual-read → 2A.4 migracija.** Pa 2C (AppState), 2D (Web Components).
 
 > **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
 > i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —
@@ -123,11 +123,15 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 > **Bonus nalaz:** „podatak≠kod" (BUG-012) je VEĆ strukturno riješen u `content-loader.js:84-98` (`scripts` vs `codeScripts`), a `migrate-content.js`
 > već vadi JSON → 2A je manje rizična nego što se činilo. **Izvedbeni redoslijed:** 2B.1 → 2B.2 → 2B.3 → 2E → 2A.1–2A.4 → 2C → 2D.
 
-- **2A — Čisti podatkovni format (S2):** *najvažnija, radi se JEDAN PREDMET ODJEDNOM.*
-  - [2A.1] Definiraj kanonski **JSON shape** study-sadržaja (iz CONTENT_SCHEMA.md) + **JSON Schema** datoteku.
-  - [2A.2] Skripta `data.js → data.json` (mašinerija postoji: `migrate-content.js` već vadi podatke za bazu).
-  - [2A.3] **Dual-read tranzicija:** loader čita NOVI `.json` ako postoji, inače stari `.js` (ništa se ne lomi tijekom migracije).
-  - [2A.4] Migriraj predmete jedan-po-jedan (gate po svakom). Vježbe OSTAJU JS moduli (S2 pravilo).
+- **2A — Čisti podatkovni format (S2):** *najvažnija, radi se JEDAN PREDMET ODJEDNOM.* *(▶ AKTIVNO — grana `foundation/f2a`)*
+  - [2A.1] ✅ **GOTOVO (2026-07-01, `1fc6c19`):** kanonski **JSON shape** + **JSON Schema** (`schema/subject-content.schema.json`, draft-07)
+    + enforcing validator `scripts/validate-json-schema.js` (`npm run validate:schema`, ajv dev-dep) + CI korak. **Izviđanje svih 18 predmeta
+    PRIJE pisanja** otkrilo nedokumentirana ali stvarna polja (`quiz.image`/`imageAlt` = Geography „koji grad je na slici", `learn.title`,
+    `learn.image=null`) → uključena, `additionalProperties:false` sad siguran. **Dokazano: 54/54 dokumenta (18×3) poštuju schemu.** Strukturni
+    ugovor nadopunjuje `validate:content` (semantika). Bez runtime izmjena (schema/scripts = dev/CI) → bez cache bumpa.
+  - [2A.2] ⬜ Skripta `data.js → data.json` (mašinerija postoji: `migrate-content.js` + isti vm window-shim; gate = round-trip deep-equal + `validate:schema` nad generiranim `.json`).
+  - [2A.3] ⬜ **Dual-read tranzicija:** loader čita NOVI `.json` ako predmet to traži (catalog flag), inače stari `.js` (ništa se ne lomi tijekom migracije). *(RIZIČNA cigla — vlastiti gate + preview prije prod.)*
+  - [2A.4] ⬜ Migriraj predmete jedan-po-jedan (gate po svakom). Vježbe OSTAJU JS moduli (S2 pravilo).
   - **Done-kriterij:** svi study-podaci portabilni kao JSON; `.js` postaje generirani export (ne uređuje se ručno).
 - **2B — ContentRepository (S1):**  *(▶ AKTIVNO — radi se PRVO, vidi reviziju gore)*
   - [2B.1] ✅ **GOTOVO (2026-06-30, grana `foundation/f2`):** `js/content-repo.js` → `window.SokratContent` (tanki omotač oko postojećih
