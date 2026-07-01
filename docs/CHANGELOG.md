@@ -10,6 +10,10 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) validira payload svake razriješene lekcije preko vm window-shima (izvor-neovisno)
   → **54/54 dokumenta (18 predmeta × 3 lekcije) poštuju schemu.** Izviđanje prije pisanja uključilo stvarna nedokumentirana polja (`quiz.image`/`imageAlt`, `learn.title`, `learn.image=null`).
   Nadopunjuje `validate:content` (semantika); novi CI korak. Bez runtime izmjena → bez cache bumpa. Temelj za 2A.2 exporter + F4 CRUD validaciju.
+- **🧩 FAZA 2 · 2A.3 (dual-read JSON + `sit` pilot flip) — grana `foundation/f2a` (2026-07-01, `1f46c4c`; NIJE na produkciji).**
+  Loader (`js/content-loader.js`) može čitati study sadržaj iz `data/json/<id>/<var>.json` po catalog-flagu `content.dataFormat:'json'` — grananje **DB → JSON → `.js`**;
+  JSON-mod fallback na pune `.js` ako fetch padne (0 regresije); vježbe uvijek iz `.js` (BUG-012). `sit` = prvi migrirani predmet. `verify` čuvar #7 (flag bez datoteka = fail).
+  **Provjere:** `tests/dual-read.spec.js` 12/12 (JSON put · **shadow-ekvivalencija bajt-u-bajt** · fallback) + puni Playwright 113/0 (subjects=18). Cache `?v=20260700` (catalog+loader).
 - **🧩 FAZA 2 · 2A.2 (JSON exporter + pilot) — grana `foundation/f2a` (2026-07-01, `55feb5f`; NIJE na produkciji).**
   `scripts/export-content-json.js` (`npm run export:json [id] [--check]`) → `data/json/<id>/<var>.json` (uniforman put, zrcali DB model 1 red=1 var).
   **Round-trip SVIH 54 payloada bez gubitka**; pilot `sit` (3 datoteke) nezavisno ajv-validiran + SHA1 bajt-identičan (deterministički). `.gitattributes` `data/json/**/*.json eol=lf`;

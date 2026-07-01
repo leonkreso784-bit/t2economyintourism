@@ -19,7 +19,12 @@ testirano, što slijedi.
 - **Round-trip SVIH 54 payloada bez gubitka** (kritična sigurnost: nijedan study-payload nema funkciju/undefined koje bi JSON izbrisao).
 - Pilot `sit` generiran (3 datoteke): nezavisna ajv-validacija FILE-ova prolazi schemu; **SHA1 bajt-identičan na re-run** (deterministički); `--check` on-disk sync OK.
 - `.gitattributes` `data/json/**/*.json eol=lf` (stabilan Windows/Linux) + `--check` usporedba EOL-neutralna. **CI gate `export:json --check`** (drift-zaštita). Vježbe se NE exportaju (BUG-012). 0 runtime rizika, bez cache bumpa.
-**⬜ DALJE: 2A.3 dual-read** (RIZIČNA — prvi runtime dodir: loader čita `.json` po catalog-flagu, fallback na `.js`; vlastiti Playwright gate + preview prije prod) → 2A.4 migracija predmet-po-predmet.
+**Cigla 2A.3 ✅ (`1f46c4c`) — PRVI runtime dodir (dual-read loader + `sit` flip):**
+- `js/content-loader.js`: `_loadSubjectFromJson(subject)` (fetch `data/json/*.json` po resolve varovima → `window[var]`, obrambeno odbija ne-objekt). Grananje **DB → JSON (ako `dataFormat:'json'`) → `.js`**; JSON-mod fallback na PUNE `.js` ako fetch padne (0 regresije). Vježbe uvijek iz `.js` (BUG-012).
+- `data/catalog.js`: `sit` dobio `content.dataFormat:'json'` (`scripts` OSTAJU izvor+mreža). `verify` čuvar #7 (flag bez JSON datoteka = hard-fail). Cache `?v=20260700` (catalog+loader; CONTENT_VERSION nedirnut — podaci isti).
+- **Provjere (razina brige visoka, duple provjere zadržane):** `tests/dual-read.spec.js` **12/12** — (a) sit iz `data/json` a NE iz study `.js`; (b) **SHADOW ekvivalencija** JSON-učitan `window.sitM1` === `.js`-učitan bajt-u-bajt u pregledniku; (c) JSON blokiran → `.js` fallback renderira. Supabase blokiran u testu (determinizam). **Puni Playwright 113 pass / 0 fail (subjects=18, problems=0)** + verify/validate/schema/export-check/typecheck svi 0.
+- Napomena: prioritet DB→JSON→.js (DB autoritativna, Blok B); sa budnom bazom sit i dalje iz DB-a (nepromijenjeno) — JSON = dokazani mrežni sloj + portabilni format za F4 CRUD.
+**⬜ DALJE: preview grane + vizualna provjera (korisnik) → 2A.4** (migracija preostalih predmeta jedan-po-jedan: `export:json <id>` + flag + gate).
 
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.
