@@ -14,7 +14,12 @@ testirano, što slijedi.
 - `schema/subject-content.schema.json` (JSON Schema draft-07) — vjeran `validate-content.js` + `CONTENT_SCHEMA.md`. STRUKTURA (oblik/tipovi/nepoznata polja); SEMANTIKU (correct-u-rasponu, KaTeX, `_______`) i dalje radi `validate:content`.
 - `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) — validira payload SVAKE razriješene lekcije preko vm window-shima (izvor-neovisno). **Dokazano: 54/54 dokumenta (18×3), 0 neispravnih.**
 - CI: novi korak `validate:schema` odmah nakon `validate:content`. **Bez runtime izmjena → bez cache bumpa** (schema/scripts = dev/CI, `index.html` ih ne učitava).
-**Gate:** validate:schema 54/54, validate:content 0/0, verify 0/0, typecheck 0. **⬜ DALJE: 2A.2** (exporter `data.js → data.json`, round-trip deep-equal + validate:schema nad generiranim `.json`) → 2A.3 dual-read (rizična) → 2A.4 migracija predmet-po-predmet.
+**Gate:** validate:schema 54/54, validate:content 0/0, verify 0/0, typecheck 0.
+**Cigla 2A.2 ✅ (`55feb5f`):** exporter `scripts/export-content-json.js` (`npm run export:json [id] [--check]`) → `data/json/<id>/<var>.json` (uniforman put, zrcali DB model 1 red=1 var; odvaja format od legacy layouta).
+- **Round-trip SVIH 54 payloada bez gubitka** (kritična sigurnost: nijedan study-payload nema funkciju/undefined koje bi JSON izbrisao).
+- Pilot `sit` generiran (3 datoteke): nezavisna ajv-validacija FILE-ova prolazi schemu; **SHA1 bajt-identičan na re-run** (deterministički); `--check` on-disk sync OK.
+- `.gitattributes` `data/json/**/*.json eol=lf` (stabilan Windows/Linux) + `--check` usporedba EOL-neutralna. **CI gate `export:json --check`** (drift-zaštita). Vježbe se NE exportaju (BUG-012). 0 runtime rizika, bez cache bumpa.
+**⬜ DALJE: 2A.3 dual-read** (RIZIČNA — prvi runtime dodir: loader čita `.json` po catalog-flagu, fallback na `.js`; vlastiti Playwright gate + preview prije prod) → 2A.4 migracija predmet-po-predmet.
 
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.

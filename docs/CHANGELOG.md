@@ -10,6 +10,10 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) validira payload svake razriješene lekcije preko vm window-shima (izvor-neovisno)
   → **54/54 dokumenta (18 predmeta × 3 lekcije) poštuju schemu.** Izviđanje prije pisanja uključilo stvarna nedokumentirana polja (`quiz.image`/`imageAlt`, `learn.title`, `learn.image=null`).
   Nadopunjuje `validate:content` (semantika); novi CI korak. Bez runtime izmjena → bez cache bumpa. Temelj za 2A.2 exporter + F4 CRUD validaciju.
+- **🧩 FAZA 2 · 2A.2 (JSON exporter + pilot) — grana `foundation/f2a` (2026-07-01, `55feb5f`; NIJE na produkciji).**
+  `scripts/export-content-json.js` (`npm run export:json [id] [--check]`) → `data/json/<id>/<var>.json` (uniforman put, zrcali DB model 1 red=1 var).
+  **Round-trip SVIH 54 payloada bez gubitka**; pilot `sit` (3 datoteke) nezavisno ajv-validiran + SHA1 bajt-identičan (deterministički). `.gitattributes` `data/json/**/*.json eol=lf`;
+  novi CI drift-gate `export:json --check`. Vježbe se ne exportaju (BUG-012). Ništa još ne čita `.json` (to je 2A.3) → 0 runtime rizika, bez cache bumpa.
 - **🧩 FAZA 2 (reusable jezgra) — 2B + 2E ✅ DEPLOYANO NA PRODUKCIJU (2026-07-01; ff-merge `164dc11..57f449a`, uz izričito odobrenje; CI zelen; live potvrđeno).**
   Revidirani redoslijed (dogovoreno, utemeljeno u kodu): **S1 Repo prije S2 JSON + Sentry ranije.**
   **ContentRepository (S1):** novi `js/content-repo.js` → `window.SokratContent` (`listSubjects`/`getSubject`/`isLessonComingSoon`/`loadLesson`/`isLoaded`) —
