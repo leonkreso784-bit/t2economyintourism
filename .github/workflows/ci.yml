@@ -44,6 +44,11 @@ jobs:
       - name: Validate JSON Schema (structural content contract)
         run: npm run validate:schema
 
+      # Generirani JSON export (F2 2A.2) mora ostati u sinku s izvornim data/*.js.
+      # --check ne piše; pad = netko je editirao .js bez re-exporta (ili obrnuto). Round-trip + on-disk sync.
+      - name: Content JSON export in sync (round-trip + no drift)
+        run: npm run export:json -- --check
+
       - name: Verify catalog (struktura + datoteke + window varijable)
         run: npm run verify
 

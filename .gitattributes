@@ -1,0 +1,4 @@
+# Generirani JSON export sadržaja (F2 2A) — UVIJEK LF, neovisno o platformi / core.autocrlf.
+# Exporter (scripts/export-content-json.js) piše LF; ovim je i radna kopija LF, pa je
+# `npm run export:json --check` deterministički stabilan na Windows/Linux (CI).
+data/json/**/*.json text eol=lf

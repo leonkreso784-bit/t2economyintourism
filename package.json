@@ -16,6 +16,7 @@
     "verify:catalog": "node scripts/verify-catalog.js",
     "validate:content": "node scripts/validate-content.js",
     "validate:schema": "node scripts/validate-json-schema.js",
+    "export:json": "node scripts/export-content-json.js",
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
