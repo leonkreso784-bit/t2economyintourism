@@ -147,7 +147,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
   - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
   - [2D.3] Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
-- **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ▶ **INFRASTRUKTURA GOTOVA (2026-06-30, grana `foundation/f2`), ČEKA SAMO DSN.**
+- **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ✅ **GOTOVO + DEPLOYANO NA PRODUKCIJU (2026-07-01, `164dc11..57f449a`).**
   - [2E.1] ✅ `js/monitoring.js` → `window.SokratMonitor` (`captureException`/`enable`/`disable`/`status`). Globalni `error`+`unhandledrejection`
     hvatači instalirani odmah; prosljeđuju TEK kad `enabled` (pristanak). **SIGURAN NO-OP bez DSN-a** (ništa se ne učita/šalje, NIKAD ne baca).
     Sentry **Loader Script** (URL iz ključa u DSN-u) → **nema fiksne verzije SDK-a → nema 404 rizika** (poučeno KaTeX-om). `defer`, no-build.
@@ -159,7 +159,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - ✅ **ŽIVA PROVJERA GOTOVA (2026-07-01, lokalno protiv grane):** obje test-greške stigle na Sentry dashboard (`Error: Sokrat test…` JAVASCRIPT-1 + `ReferenceError: myUndefinedFunction…` JAVASCRIPT-2 Unhandled), release `sokrat-study@20260699`. Stack pokazao `sentryWrapped` = SDK aktivan. **Done-kriterij ISPUNJEN.**
   - ✅ **Dashboard očišćen (korisnik):** isključeni **Enable Tracing** + **Enable Session Replay** + **Enable Logs and Metrics** → čisto ERROR-monitoring (bez snimanja sesije/perf).
   - ✅ **GDPR disclosure GOTOVA:** `privacy.html` §5 dobio odlomak o Sentryju (samo tehnički error-report, bez PII/replay/perf, EU/DE, čl. 6(1)(a) pristanak; „Last updated" 1 July 2026) + cookie-banner tekst proširen na „analytics &amp; error-monitoring".
-  - **⏳ PREOSTAJE:** (1) deploy F2 na produkciju (uz potvrdu); (2) opc. mail-alert prag na dashboardu. **2E funkcionalno DOVRŠEN.**
+  - ✅ **DEPLOYANO na produkciju 2026-07-01** (F2 2B+2E, ff-merge `foundation/f2`→main). **PREOSTAJE samo opc.:** mail-alert prag na Sentry dashboardu (korisnikov korak).
   - *(Fallback ako Sentry tier zasmeta: mini-logger `window.onerror`→Supabase tablica iza istog `captureException` sučelja — zamjenjivo.)*
 **Gate faze:** CI/typecheck zeleni, sav sadržaj kroz Repo, 0 regresija (Playwright pun + ručni smoke svih modova × par predmeta).
 
