@@ -9,10 +9,10 @@
 // Status grupa (ažuriraj pri svakoj migraciji):
 //   nav     ⬜ config.js: currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory
 //   cards   ✅ MIGRIRANO 2026-07-02 (2C.2b) — bilo config.js: flashcards/currentCardIndex/knownCards/unknownCards
-//   quiz    ⬜ config.js: quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/
-//              quizStartTime/wrongAnswersList/currentShuffledOptions/currentShuffledCorrectIndex/quizAnswers
+//   quiz    ✅ MIGRIRANO 2026-07-02 (2C.2c) — bilo config.js: quizQuestions/currentQuestionIndex/correctAnswers/
+//              wrongAnswers/quizStartTime/wrongAnswersList/currentShuffledOptions/currentShuffledCorrectIndex/quizAnswers
 //   fill    ✅ MIGRIRANO 2026-07-02 (2C.2a) — bilo config.js: fillQuestions/currentFillIndex/fillCorrect/fillWrong
-//   session ⬜ config.js: sessionStartTime
+//   session ✅ MIGRIRANO 2026-07-02 (2C.2e) — bilo config.js: sessionStartTime
 //
 // `progress` i `analytics` NAMJERNO nisu ovdje — imaju vlastiti persist-lifecycle
 // (storage.js / cloud-sync.js serijaliziraju ih u localStorage/Supabase); eventualna
@@ -46,7 +46,7 @@
  * @property {Array<Object<string, any>>} wrongList  Krivo odgovorena pitanja (za review).
  * @property {Array<string>} shuffledOptions         Opcije trenutnog pitanja nakon shufflea.
  * @property {number} shuffledCorrectIndex           Indeks točnog odgovora u shuffled opcijama.
- * @property {Array<Object<string, any>>} answers    Po pitanju: { selected, shuffledOptions, shuffledCorrectIndex, isCorrect }.
+ * @property {Array<Object<string, any>>} answers    Po pitanju: { selected, isCorrect } (sparse — indeks = pitanje).
  */
 
 /**

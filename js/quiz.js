@@ -1,21 +1,22 @@
 // ===== SOKRAT STUDY — QUIZ =====
 
 function startQuiz() {
+    const quiz = AppState.quiz;
     const count = document.getElementById('questionCount').value;
     const category = document.getElementById('quizCategory').value;
-    
-    quizQuestions = getQuizQuestions(category, count);
-    shuffleArray(quizQuestions);
-    
-    currentQuestionIndex = 0;
-    correctAnswers = 0;
-    wrongAnswers = 0;
-    wrongAnswersList = [];
-    quizAnswers = [];
-    quizStartTime = Date.now();
-    
+
+    quiz.questions = getQuizQuestions(category, count);
+    shuffleArray(quiz.questions);
+
+    quiz.index = 0;
+    quiz.correct = 0;
+    quiz.wrong = 0;
+    quiz.wrongList = [];
+    quiz.answers = [];
+    quiz.startTime = Date.now();
+
     // Pre-shuffle options for every question so they stay stable when revisiting
-    quizQuestions.forEach(q => {
+    quiz.questions.forEach(q => {
         const opts = q.options.map((option, index) => ({
             text: option,
             originalIndex: index
@@ -68,18 +69,19 @@ function getQuizQuestions(category, count) {
 }
 
 function showQuestion() {
-    if (currentQuestionIndex >= quizQuestions.length) {
+    const quiz = AppState.quiz;
+    if (quiz.index >= quiz.questions.length) {
         endQuiz();
         return;
     }
-    
-    const q = quizQuestions[currentQuestionIndex];
-    const answered = quizAnswers[currentQuestionIndex];
-    
+
+    const q = quiz.questions[quiz.index];
+    const answered = quiz.answers[quiz.index];
+
     document.getElementById('quizProgress').textContent =
-        `${(typeof t === 'function' ? t('quiz.question') : 'Question')} ${currentQuestionIndex + 1}/${quizQuestions.length}`;
-    
-    const percent = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+        `${(typeof t === 'function' ? t('quiz.question') : 'Question')} ${quiz.index + 1}/${quiz.questions.length}`;
+
+    const percent = ((quiz.index + 1) / quiz.questions.length) * 100;
     document.getElementById('quizProgressBar').style.width = `${percent}%`;
     
     document.getElementById('questionCategory').textContent = q.categoryName;
@@ -103,8 +105,8 @@ function showQuestion() {
     
     // Use pre-shuffled options
     const optionsWithIndex = q._shuffledOptions;
-    currentShuffledOptions = optionsWithIndex;
-    currentShuffledCorrectIndex = q._shuffledCorrectIndex;
+    quiz.shuffledOptions = optionsWithIndex;
+    quiz.shuffledCorrectIndex = q._shuffledCorrectIndex;
     
     const letters = ['A', 'B', 'C', 'D'];
     optionsWithIndex.forEach((option, index) => {
@@ -127,9 +129,9 @@ function showQuestion() {
         container.appendChild(btn);
     });
     
-    document.getElementById('correctCount').textContent = correctAnswers;
-    document.getElementById('wrongCount').textContent = wrongAnswers;
-    
+    document.getElementById('correctCount').textContent = quiz.correct;
+    document.getElementById('wrongCount').textContent = quiz.wrong;
+
     // Update nav buttons
     updateQuizNavButtons();
 
@@ -138,16 +140,17 @@ function showQuestion() {
 }
 
 function updateQuizNavButtons() {
+    const quiz = AppState.quiz;
     const prevBtn = document.getElementById('quizPrevBtn');
     const nextBtn = document.getElementById('quizNextBtn');
     if (!prevBtn || !nextBtn) return;
-    
+
     // Show prev if not on first question
-    prevBtn.style.display = currentQuestionIndex > 0 ? '' : 'none';
-    
+    prevBtn.style.display = quiz.index > 0 ? '' : 'none';
+
     // Show next only if current question is answered and there are more questions
-    const answered = quizAnswers[currentQuestionIndex];
-    if (answered && currentQuestionIndex < quizQuestions.length - 1) {
+    const answered = quiz.answers[quiz.index];
+    if (answered && quiz.index < quiz.questions.length - 1) {
         nextBtn.style.display = '';
     } else {
         nextBtn.style.display = 'none';
@@ -155,74 +158,78 @@ function updateQuizNavButtons() {
 }
 
 function quizPrev() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
+    const quiz = AppState.quiz;
+    if (quiz.index > 0) {
+        quiz.index--;
         showQuestion();
     }
 }
 
 function quizNext() {
-    if (currentQuestionIndex < quizQuestions.length - 1) {
-        currentQuestionIndex++;
+    const quiz = AppState.quiz;
+    if (quiz.index < quiz.questions.length - 1) {
+        quiz.index++;
         showQuestion();
     }
 }
 
 function selectAnswer(selected) {
+    const quiz = AppState.quiz;
     // Prevent double-answering
-    if (quizAnswers[currentQuestionIndex]) return;
-    
+    if (quiz.answers[quiz.index]) return;
+
     const buttons = document.querySelectorAll('.answer-btn');
     buttons.forEach(btn => btn.classList.add('disabled'));
-    
-    const isCorrect = selected === currentShuffledCorrectIndex;
-    
+
+    const isCorrect = selected === quiz.shuffledCorrectIndex;
+
     if (isCorrect) {
         buttons[selected].classList.add('correct');
-        correctAnswers++;
+        quiz.correct++;
     } else {
         buttons[selected].classList.add('wrong');
-        buttons[currentShuffledCorrectIndex].classList.add('correct');
-        wrongAnswers++;
-        
-        wrongAnswersList.push({
-            question: quizQuestions[currentQuestionIndex].question,
-            yourAnswer: currentShuffledOptions[selected].text,
-            correctAnswer: currentShuffledOptions[currentShuffledCorrectIndex].text
+        buttons[quiz.shuffledCorrectIndex].classList.add('correct');
+        quiz.wrong++;
+
+        quiz.wrongList.push({
+            question: quiz.questions[quiz.index].question,
+            yourAnswer: quiz.shuffledOptions[selected].text,
+            correctAnswer: quiz.shuffledOptions[quiz.shuffledCorrectIndex].text
         });
     }
-    
+
     // Store answer
-    quizAnswers[currentQuestionIndex] = {
+    quiz.answers[quiz.index] = {
         selected: selected,
         isCorrect: isCorrect
     };
-    
-    trackQuizAnswer(isCorrect, quizQuestions[currentQuestionIndex].category || 'general');
-    
-    document.getElementById('correctCount').textContent = correctAnswers;
-    document.getElementById('wrongCount').textContent = wrongAnswers;
-    
+
+    trackQuizAnswer(isCorrect, quiz.questions[quiz.index].category || 'general');
+
+    document.getElementById('correctCount').textContent = quiz.correct;
+    document.getElementById('wrongCount').textContent = quiz.wrong;
+
     // Auto-advance after delay
     setTimeout(() => {
-        currentQuestionIndex++;
+        quiz.index++;
         showQuestion();
     }, 1500);
 }
 
 function endQuiz() {
-    const totalTime = Math.floor((Date.now() - quizStartTime) / 1000);
+    const quiz = AppState.quiz;
+    const totalTime = Math.floor((Date.now() - quiz.startTime) / 1000);
     const minutes = Math.floor(totalTime / 60);
     const seconds = totalTime % 60;
-    
-    const score = Math.round((correctAnswers / quizQuestions.length) * 100);
+
+    const score = Math.round((quiz.correct / quiz.questions.length) * 100);
     
     document.getElementById('quizGame').classList.add('hidden');
     document.getElementById('quizResults').classList.remove('hidden');
     
     document.getElementById('finalScore').textContent = `${score}%`;
-    document.getElementById('finalCorrect').textContent = correctAnswers;
-    document.getElementById('finalWrong').textContent = wrongAnswers;
+    document.getElementById('finalCorrect').textContent = quiz.correct;
+    document.getElementById('finalWrong').textContent = quiz.wrong;
     document.getElementById('totalTime').textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
     
     const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
@@ -241,12 +248,13 @@ function endQuiz() {
     document.getElementById('resultsTitle').textContent = title;
     document.getElementById('resultsMessage').textContent = message;
     
+    // 'wrongAnswersList' OVDJE je DOM id (index.html), ne stara varijabla.
     const wrongList = document.getElementById('wrongAnswersList');
     wrongList.innerHTML = '';
-    
-    if (wrongAnswersList.length > 0) {
+
+    if (quiz.wrongList.length > 0) {
         document.getElementById('wrongAnswersReview').style.display = 'block';
-        wrongAnswersList.forEach(item => {
+        quiz.wrongList.forEach(item => {
             const div = document.createElement('div');
             div.className = 'wrong-answer-item';
             div.innerHTML = `
@@ -266,21 +274,22 @@ function endQuiz() {
     progress.quizScores.push(score);
     progress.lastStudy = new Date().toISOString();
     saveProgress();
-    
-    trackQuizComplete(correctAnswers, quizQuestions.length);
+
+    trackQuizComplete(quiz.correct, quiz.questions.length);
 }
 
 function retryQuiz() {
-    currentQuestionIndex = 0;
-    correctAnswers = 0;
-    wrongAnswers = 0;
-    wrongAnswersList = [];
-    quizAnswers = [];
-    shuffleArray(quizQuestions);
-    quizStartTime = Date.now();
-    
+    const quiz = AppState.quiz;
+    quiz.index = 0;
+    quiz.correct = 0;
+    quiz.wrong = 0;
+    quiz.wrongList = [];
+    quiz.answers = [];
+    shuffleArray(quiz.questions);
+    quiz.startTime = Date.now();
+
     // Re-shuffle options for each question
-    quizQuestions.forEach(q => {
+    quiz.questions.forEach(q => {
         const opts = q.options.map((option, index) => ({
             text: option,
             originalIndex: index

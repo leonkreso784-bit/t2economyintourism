@@ -53,16 +53,7 @@ let currentCategory = 'all';
 
 // Flashcard state → MIGRIRANO u AppState.cards (js/app-state.js, F2 2C.2b)
 
-// Quiz state
-let quizQuestions = [];
-let currentQuestionIndex = 0;
-let correctAnswers = 0;
-let wrongAnswers = 0;
-let quizStartTime = null;
-let wrongAnswersList = [];
-let currentShuffledOptions = [];
-let currentShuffledCorrectIndex = 0;
-let quizAnswers = []; // stores { selected, shuffledOptions, shuffledCorrectIndex, isCorrect } per question
+// Quiz state → MIGRIRANO u AppState.quiz (js/app-state.js, F2 2C.2c)
 
 // Fill state → MIGRIRANO u AppState.fill (js/app-state.js, F2 2C.2a)
 
@@ -95,4 +86,4 @@ let analytics = {
     firstUseDate: null
 };
 
-let sessionStartTime = null;
+// Session state → MIGRIRANO u AppState.session (js/app-state.js, F2 2C.2e)

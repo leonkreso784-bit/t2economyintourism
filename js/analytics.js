@@ -39,7 +39,7 @@ function saveAnalytics() {
 }
 
 function startSession() {
-    sessionStartTime = Date.now();
+    AppState.session.startTime = Date.now();
     analytics.sessionsCount++;
     analytics.lastSessionDate = new Date().toISOString();
     
@@ -58,17 +58,18 @@ function startSession() {
 }
 
 function updateStudyTime() {
-    if (!sessionStartTime) return;
-    
-    const sessionTime = Math.floor((Date.now() - sessionStartTime) / 1000);
+    const session = AppState.session;
+    if (!session.startTime) return;
+
+    const sessionTime = Math.floor((Date.now() - session.startTime) / 1000);
     const today = new Date().toISOString().split('T')[0];
-    
+
     if (analytics.dailyActivity[today]) {
         analytics.dailyActivity[today].studyTime += sessionTime;
     }
     analytics.totalStudyTime += sessionTime;
-    
-    sessionStartTime = Date.now();
+
+    session.startTime = Date.now();
     saveAnalytics();
 }
 
