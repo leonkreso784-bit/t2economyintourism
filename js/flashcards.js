@@ -3,11 +3,12 @@
 let flashcardListenersInitialized = false;
 
 function initFlashcards() {
-    flashcards = getAllFlashcards();
-    shuffleArray(flashcards);
-    currentCardIndex = 0;
-    knownCards = [];
-    unknownCards = [];
+    const cards = AppState.cards;
+    cards.deck = getAllFlashcards();
+    shuffleArray(cards.deck);
+    cards.index = 0;
+    cards.known = [];
+    cards.unknown = [];
     
     updateFlashcard();
     updateFlashcardProgress();
@@ -46,7 +47,8 @@ function flipCard() {
 }
 
 function updateFlashcard() {
-    if (!flashcards || flashcards.length === 0) {
+    const cards = AppState.cards;
+    if (!cards.deck || cards.deck.length === 0) {
         const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
         document.getElementById('cardCategory').textContent = tr('fc.noCards', 'No Cards');
         document.getElementById('cardQuestion').textContent = tr('fc.noCardsAvailable', 'No flashcards available for this lesson.');
@@ -55,7 +57,7 @@ function updateFlashcard() {
         return;
     }
     
-    const card = flashcards[currentCardIndex];
+    const card = cards.deck[cards.index];
     document.getElementById('cardCategory').textContent = card.categoryName;
     document.getElementById('cardQuestion').textContent = card.question;
     document.getElementById('cardAnswer').textContent = card.answer;
@@ -68,45 +70,49 @@ function updateFlashcard() {
 }
 
 function updateFlashcardProgress() {
-    if (!flashcards || flashcards.length === 0) {
+    const cards = AppState.cards;
+    if (!cards.deck || cards.deck.length === 0) {
         document.getElementById('cardProgress').textContent = '0 / 0';
         document.getElementById('cardProgressBar').style.width = '0%';
         return;
     }
-    
-    const prog = `${currentCardIndex + 1} / ${flashcards.length}`;
+
+    const prog = `${cards.index + 1} / ${cards.deck.length}`;
     document.getElementById('cardProgress').textContent = prog;
-    
-    const percent = ((currentCardIndex + 1) / flashcards.length) * 100;
+
+    const percent = ((cards.index + 1) / cards.deck.length) * 100;
     document.getElementById('cardProgressBar').style.width = `${percent}%`;
 }
 
 function updateFlashcardStats() {
-    document.getElementById('knownCount').textContent = knownCards.length;
-    document.getElementById('unknownCount').textContent = unknownCards.length;
+    document.getElementById('knownCount').textContent = AppState.cards.known.length;
+    document.getElementById('unknownCount').textContent = AppState.cards.unknown.length;
 }
 
 function prevCard() {
-    if (currentCardIndex > 0) {
-        currentCardIndex--;
+    const cards = AppState.cards;
+    if (cards.index > 0) {
+        cards.index--;
         updateFlashcard();
         updateFlashcardProgress();
     }
 }
 
 function nextCard() {
-    if (currentCardIndex < flashcards.length - 1) {
-        currentCardIndex++;
+    const cards = AppState.cards;
+    if (cards.index < cards.deck.length - 1) {
+        cards.index++;
         updateFlashcard();
         updateFlashcardProgress();
     }
 }
 
 function markKnown() {
-    if (!knownCards.includes(currentCardIndex)) {
-        knownCards.push(currentCardIndex);
-        const idx = unknownCards.indexOf(currentCardIndex);
-        if (idx > -1) unknownCards.splice(idx, 1);
+    const cards = AppState.cards;
+    if (!cards.known.includes(cards.index)) {
+        cards.known.push(cards.index);
+        const idx = cards.unknown.indexOf(cards.index);
+        if (idx > -1) cards.unknown.splice(idx, 1);
     }
     updateFlashcardStats();
     saveFlashcardProgress();
@@ -115,16 +121,17 @@ function markKnown() {
 }
 
 function markUnknown() {
-    if (!unknownCards.includes(currentCardIndex)) {
-        unknownCards.push(currentCardIndex);
-        const idx = knownCards.indexOf(currentCardIndex);
-        if (idx > -1) knownCards.splice(idx, 1);
+    const cards = AppState.cards;
+    if (!cards.unknown.includes(cards.index)) {
+        cards.unknown.push(cards.index);
+        const idx = cards.known.indexOf(cards.index);
+        if (idx > -1) cards.known.splice(idx, 1);
     }
     updateFlashcardStats();
     nextCard();
 }
 
 function saveFlashcardProgress() {
-    progress.flashcardsLearned = [...new Set([...progress.flashcardsLearned, ...knownCards])];
+    progress.flashcardsLearned = [...new Set([...progress.flashcardsLearned, ...AppState.cards.known])];
     saveProgress();
 }

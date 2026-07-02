@@ -51,11 +51,7 @@ let currentData = null;
 let currentSection = 'home';
 let currentCategory = 'all';
 
-// Flashcard state
-let flashcards = [];
-let currentCardIndex = 0;
-let knownCards = [];
-let unknownCards = [];
+// Flashcard state → MIGRIRANO u AppState.cards (js/app-state.js, F2 2C.2b)
 
 // Quiz state
 let quizQuestions = [];

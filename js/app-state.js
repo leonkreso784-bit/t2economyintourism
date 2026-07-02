@@ -8,7 +8,7 @@
 //
 // Status grupa (ažuriraj pri svakoj migraciji):
 //   nav     ⬜ config.js: currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory
-//   cards   ⬜ config.js: flashcards/currentCardIndex/knownCards/unknownCards
+//   cards   ✅ MIGRIRANO 2026-07-02 (2C.2b) — bilo config.js: flashcards/currentCardIndex/knownCards/unknownCards
 //   quiz    ⬜ config.js: quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/
 //              quizStartTime/wrongAnswersList/currentShuffledOptions/currentShuffledCorrectIndex/quizAnswers
 //   fill    ✅ MIGRIRANO 2026-07-02 (2C.2a) — bilo config.js: fillQuestions/currentFillIndex/fillCorrect/fillWrong
