@@ -55,6 +55,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - `npm run scaffold -- ...` — kostur novog predmeta.
 - `node scripts/pdf-text.js "<pdf>"` — tekst iz PDF-a.
 - `npm run validate:content [subjectId]` — sadržajni validator (shema + quiz indeks + KaTeX currency-safe).
+- `npm run validate:schema [subjectId]` — STRUKTURNI JSON Schema gate (`schema/subject-content.schema.json`, ajv).
+- `npm run export:json [subjectId] [--check]` — export study sadržaja u `data/json/<id>/<var>.json` (F2 2A).
+  **⚠️ PRAVILO: nakon izmjene `data/*.js` migriranog predmeta (17/18, svi osim accountinga) OBAVEZNO
+  `npm run export:json <id>` — inače CI pada na drift-gateu (`--check`).** Vježbe se NE exportaju (BUG-012).
 - **GENERATOR predmeta** (jeftin Sonnet preko `.env` ključa; detalji `docs/CONTENT_GENERATOR.md`):
   `node scripts/build-topics.js <id> "<dir>"` → `node scripts/generate-subject.js <id> [--math]` →
   `node scripts/assemble-subject.js <id> --name ... --short ... --icon ... --color ...` → paste catalog + bump + gate.

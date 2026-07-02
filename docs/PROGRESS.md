@@ -57,7 +57,7 @@ direktni `SENTRY_LOADER_URL`/`isConfigured()`; `sentryOnLoad`→`Sentry.init({re
 (korisnik isključio Enable Tracing + Session Replay + Logs and Metrics). **ŽIVA PROVJERA ✅:** `SokratMonitor.captureException(...)` + `setTimeout(()=>x())` → obje greške na Sentry
 dashboardu (JAVASCRIPT-1/-2), release točan, **Users:0** (`sendDefaultPii:false` radi), stack pokazao `sentryWrapped` (SDK aktivan). **GDPR ✅:** `privacy.html` §5 odlomak o Sentryju
 (samo tehnički error-report, bez PII/replay/perf, EU/DE, čl. 6(1)(a)) + cookie-banner „analytics &amp; error-monitoring". Testovi `content-repo.spec.js` + `monitoring.spec.js`
-(loader stubban preko `page.route`, offline-deterministički). **⬜ DALJE: 2A (S2 čisti JSON format)** — predmet-po-predmet, dual-read; najveći/najosjetljiviji dio Faze 2. Opcionalno: mail-alert prag na Sentry dashboardu.
+(loader stubban preko `page.route`, offline-deterministički). ~~⬜ DALJE: 2A~~ *(→ ✅ 2A napravljena i deployana 2026-07-02, vidi unos gore)*. Opcionalno: mail-alert prag na Sentry dashboardu.
 
 ## 2026-06-30 — ✅ F1 DEPLOYAN NA PRODUKCIJU + ▶ FAZA 2 započeta (cigla 2B.1 ContentRepository)
 **F1 → produkcija:** ff-merge `c874627..69ce466` (grana→main, uz izričito odobrenje); i18n chrome `25c2474` otišao zajedno.

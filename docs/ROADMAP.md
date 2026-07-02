@@ -17,7 +17,9 @@ ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.**
 TVRDI gate = blokada, ne upozorenje; trošak alata 0 €.
 **STATUS:** ✅ **F1 GOTOVA + DEPLOYANA** (2026-06-30, `69ce466`; CI/CD + tsc + hardening + TVRDI gateovi + RLS-test; i18n chrome otišao zajedno).
 ✅ **F2 2B+2E GOTOVI + DEPLOYANI** (2026-07-01, `57f449a`; ContentRepository `SokratContent` šav + Sentry error-monitoring consent-gated/EU/error-only, uživo verificiran).
-**▶ DALJE: F2 2A** (S2 čisti JSON format, predmet-po-predmet, dual-read) → 2C AppState → 2D Web Components → F3 performanse. [[foundation-pivot]]
+✅ **F2 2A GOTOVA + DEPLOYANA** (2026-07-02, `661dbc8`; S2 čisti JSON format: **17/18 predmeta na JSON dual-read** [svi osim accountinga — odgođen],
+JSON Schema ugovor + exporter + drift-gate + dual-read loader DB→JSON→`.js`; dual-read 16/16, puni Playwright 117/0, nezavisni audit 0 razlika, live verificirano).
+**▶ DALJE: F2 2C AppState → 2D Web Components → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"

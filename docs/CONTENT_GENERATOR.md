@@ -26,6 +26,10 @@ Generator i Blok B gledaju u isti šav → ništa se ne radi dvaput.
 
 > **Generator-jezgra (bricks 1–4) KOMPLETNA.** Tok: `build-topics` → `generate-subject` → `assemble-subject` → (paste catalog + bump + gate). Sljedeće = pravi pilot-predmet kad korisnik donese materijale.
 
+> **🆕 JSON dual-read (F2 2A):** generator i dalje piše `.js` — novi predmet radi ODMAH bez flaga (`.js` put).
+> Opcionalno nakon gatea: `npm run export:json <id>` + `dataFormat:'json'` u catalog unos (kao ostalih 17).
+> Ako predmet dobije flag → svaka kasnija izmjena `.js` traži re-export (CI drift-gate).
+
 ## Brick 1 — `validate-content.js` ✅ (gotovo)
 `npm run validate:content [subjectId]`. Učita data preko **vm window-shima** (radi za stare root
 `data-*.js` SAMO-`window` i nove `data/<subj>/*.js` `window`+`module.exports`). Validira svaku kategoriju:

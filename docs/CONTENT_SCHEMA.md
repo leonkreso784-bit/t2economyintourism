@@ -51,11 +51,14 @@ spremljeni napredak korisnika.
 {
   question: "The marketing concept starts with:",          // obavezno
   options: ["Production", "Customer needs", "Ads", "Quotas"], // obavezno — 2–6 opcija
-  correct: 1                                                // obavezno — INDEX točne (0-based)
+  correct: 1,                                               // obavezno — INDEX točne (0-based)
+  image: "assets/geography/city-dubrovnik.jpg",             // opcionalno — slika uz pitanje
+  imageAlt: "Aerial of walled old city on Adriatic coast"   // opcionalno — alt tekst slike
 }
 ```
 Pravila: `correct` mora biti valjan indeks u `options`. Opcije se u aplikaciji
 nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE miješanja.
+`image`/`imageAlt` koristi npr. Tourism Geography („koji grad je na slici").
 
 ## FillBlank
 ```js
@@ -69,12 +72,26 @@ nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE 
 ## Learn
 ```js
 {
+  title: "Nautical Tourism",                        // opcionalno — naslov sekcije
   content: "<h3>Naslov</h3><p>HTML sadržaj...</p>", // obavezno — HTML string
-  image: "assets/geography/map-counties.jpg"        // opcionalno — putanja do slike
+  image: "assets/geography/map-counties.jpg"        // opcionalno — putanja do slike (može i null = nema slike)
 }
 ```
 `content` je HTML (dozvoljeni `<h3> <p> <ul> <li> <strong> <em> <table>` itd.). Slike
 unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po kategoriji.
+
+## Strojno-čitljiv ugovor + JSON format pohrane (F2 2A, ✅ LIVE 2026-07-02)
+- **`schema/subject-content.schema.json`** (JSON Schema draft-07) = strojno-čitljiva verzija OVE sheme
+  (struktura/tipovi/nepoznata polja, `additionalProperties:false`). Mijenjaš li shemu → ažuriraj OBA dokumenta.
+  Provjera: **`npm run validate:schema [subjectId]`** (ajv; u CI-u). Semantiku (correct-u-rasponu, KaTeX
+  balans, `_______`) i dalje provjerava `npm run validate:content` — dvije razine se nadopunjuju.
+- **JSON dual-read:** predmeti s `content.dataFormat:'json'` u catalogu (trenutno **17/18**, svi osim
+  accountinga) čitaju study sadržaj iz **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var),
+  s fallbackom na `.js`. **`.js` datoteke OSTAJU izvor istine** — `.json` je generirani export.
+- ⚠️ **PRAVILO RE-EXPORTA:** nakon SVAKE izmjene `data/*.js` migriranog predmeta pokreni
+  **`npm run export:json <subjectId>`** — inače CI pada na drift-gateu (`export:json -- --check`).
+- **Vježbe (`exercises.js`/lib) se NIKAD ne exportaju** — kod s `generate()` funkcijama (BUG-012),
+  uvijek se učitaju iz `.js` (`content.codeScripts`).
 
 ## Matematika / formule — LaTeX + KaTeX (kvantitativni predmeti)
 > Status: **✅ implementirano** (ADR-009, KaTeX cigla, 2026-06-14). `renderMath()` (`js/math.js`) renderira

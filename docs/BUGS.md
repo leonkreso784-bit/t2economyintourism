@@ -69,6 +69,9 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - Lekcija: payload s **funkcijama** NIJE JSON-migracijski — read-path iz baze smije nositi samo čisto-podatkovne window-varove
   (M1/M2/Final). Vježbe (kod) uvijek iz datoteke. Pri novom „content iz baze" uvijek provjeri i `generate()` put, ne samo 4 osnovna moda.
   Loader je bio „sve-ili-ništa" po predmetu → čišćenje baze mora doći **tek nakon** što je loader-fix LIVE (inače nestanu i statične vježbe).
+- **Nadopuna (F2 2A, 2026-07-02):** pravilo VRIJEDI i za novi **JSON dual-read** — exporter (`export-content-json.js`)
+  exporta SAMO razriješene lekcijske varove (nikad `content.exercises`), a loader u JSON-modu učita `codeScripts` iz `.js`
+  (isti obrazac kao DB-mod). Dokazano testom `dual-read.spec.js` (statistics: study iz JSON-a, `statisticsExercises`+`StatLib` iz `.js`).
 
 ### BUG-011 — Exercises: Practice i Exam mod su funkcionalno isti
 - Status: ✅ riješen · Težina: srednji · Datum: 2026-06-11 (nalaz i fix isti dan)

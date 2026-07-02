@@ -99,6 +99,10 @@ helper `t(key)`; jezik se bira iz aktivnog programa (HR program → hrvatski UI)
 8. **Vježbe** (samo string-polja; engine nedirnut).
 9. **Supabase re-sync** HR predmeta (read-path; vježbe iz datoteke — BUG-012 pravilo).
 
+> **🆕 JSON dual-read (F2 2A, 2026-07-02):** `business-informatics-hr` ima `dataFormat:'json'` (kao ostalih 16
+> migriranih) → nakon SVAKE (re)translacije koja mijenja `data/<subj>-hr/*.js` obavezno `npm run export:json
+> <subj>-hr` (CI drift-gate). Novi HR predmeti iz Cigle 6: alat piše `.js` → rade odmah; flag+export opcionalno.
+
 ## Rizici / oprez
 - **Engine se NE dira** (sveto, kao i dosad). HR je čisto podatkovni + catalog + tanak UI-i18n sloj.
 - **Landing showcase + sidebar** trenutno iteriraju po SVIM predmetima → s dva programa pokazali bi EN+HR pomiješano.

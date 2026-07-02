@@ -27,6 +27,13 @@ Iznad „zdravog" temelja — ono što ga čini elitnim. Sve u postojeće faze, 
 - 💤 **CRUD versioning + audit-log + dry-run diff (#4)** — undo/povijest/kočnica za source-of-truth flip. [F4 4E].
 - 💤 **SRS dizajn-dok PRIJE koda + FSRS (#5)** — `docs/SRS_PLAN.md`; 2024+ algoritam, ne nabacani SM-2. [F5 5.0].
 
+## ➖ Accounting → JSON format migracija (F2 2A ostatak; 2026-07-02)
+Jedini predmet koji NIJE na JSON dual-readu (17/18 migrirano, LIVE). **Svjesno odgođen** — korisnik zasićen
+računovodstvom (pravilo: ne dirati Accounting osim izričito). Postupak kad dođe red (čisto mehanički, ~5 min):
+`npm run export:json accounting` → u `data/catalog.js` accountingu dodaj `dataFormat: 'json'` (iza `resolve`,
+PRIJE `codeScripts`) → bump `catalog.js?v=` u index.html → gate (verify/validate:schema/export-check/Playwright).
+Vježbe (41, `data/accounting/exercises.js`) ostaju `.js` — codeScripts već postavljen (BUG-012).
+
 ## ➖ Code-review nalazi (2026-06-18) — čišćenje, ništa kritično
 Pregled cijelog koda (korisnik tražio): stanje vrlo dobro, bez bugova. Sitni dug za počistiti kad zgodno:
 - ➖ **Mrtav `lessonCategoryMap`** (`js/config.js`): referencira `entrepreneurship` lekcije `second-exam-prep`/`final-exam-prep`

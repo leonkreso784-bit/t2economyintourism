@@ -7,6 +7,7 @@
 - [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz, **+ BUG-012 čuvar: predmet s vježbama MORA imati `content.codeScripts`**). *(alias: `verify:catalog`)*
 - [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
 - [ ] `npm run validate:schema [subjectId]` → 0 grešaka (STRUKTURNI JSON Schema ugovor `schema/subject-content.schema.json` nad payloadom svake lekcije; ajv, dev-dep). Nadopunjuje `validate:content` (semantiku). *(F2 2A.1)*
+- [ ] `npm run export:json -- --check` → 0 problema (generirani `data/json/**` u sinku s izvornim `.js` + round-trip bez gubitka). **⚠️ Nakon izmjene `data/*.js` migriranog predmeta obavezan re-export `npm run export:json <id>`** — inače ovaj gate (i CI) pada. *(F2 2A.2)*
 - [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`).
 - [ ] `npm run typecheck` → `tsc --checkJs` (bez build-a; scope u `tsconfig.json` raste modul-po-modul). 0 grešaka.
 - [ ] `npm run test:rls` → RLS sigurnosni test (read-only, anon): anon čita `subject_content`, NE vidi `progress`. Pad = curenje; SKIP ako je baza uspavana.
@@ -39,7 +40,7 @@
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)
 > Iste provjere gore vrte se **automatski na svaki push/PR** preko GitHub Actions (`.github/workflows/ci.yml`).
-- **Lanac (fail-fast):** `npm ci` → `validate:content` → `validate:schema` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zaseban `lighthouse` job (budžeti).
+- **Lanac (fail-fast):** `npm ci` → `validate:content` → `validate:schema` → `export:json --check` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zaseban `lighthouse` job (budžeti).
 - **TVRDI gate:** crveno = **ne mergea se u `main`**. Artefakti (screenshotovi/report) se uploadaju samo na pad.
 - **Tok rada „grana → preview → prod":**
   1. Radi na grani (ne direktno na `main`). Push grane → **CI se pokrene** + **Vercel napravi preview-deploy** (zaseban URL, NIJE produkcija).

@@ -33,8 +33,8 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 ## 🛠️ Tehnologije
 HTML5 · CSS3 · Vanilla JS (ES6+) · Font Awesome · Google Fonts · KaTeX · PWA.
 Backend: **Supabase** (Postgres + Auth + Storage) — auth + cloud-sync napretka **LIVE**;
-sadržaj se čita iz baze direktno (anon key + RLS) s file-fallbackom (ADR-011); `/api` Vercel funkcije za kasnije (admin/AI).
-Dev/test: Node + Playwright (responsive/smoke), unit testovi (`test:unit`), sadržajni validator (`validate:content`), `pdf-parse`.
+sadržaj se čita **baza → `data/json/*.json` (17/18 predmeta, F2 2A) → `.js` fallback** (anon key + RLS, ADR-011/013); `/api` Vercel funkcije za kasnije (admin/AI).
+Dev/test: Node + Playwright (responsive/smoke), unit testovi (`test:unit`), validatori (`validate:content` + `validate:schema` ajv), JSON exporter (`export:json`), `pdf-parse`.
 
 ## 📁 Struktura projekta
 ```
@@ -43,11 +43,14 @@ index.html              # Glavni HTML (sekcije svih modova)
 styles.css / css/       # Stilovi
 js/                     # App moduli (config, navigation, quiz, flashcards, ...)
 data/catalog.js         # ★ Jedinstveni izvor istine za predmete (hijerarhija)
-data/<predmet>/, data-*.js  # Sadržaj predmeta po schemi (+ exercises.js po predmetu)
+data/<predmet>/, data-*.js  # Sadržaj predmeta po schemi (+ exercises.js po predmetu) — IZVOR ISTINE
+data/json/<predmet>/    # Generirani JSON export study sadržaja (F2 2A; npm run export:json)
+schema/                 # subject-content.schema.json — strojni ugovor oblika sadržaja (draft-07)
 js/exercises*.js        # Reusable engine za interaktivne vježbe (NIKAD se ne mijenja za sadržaj)
 scripts/                # verify-catalog, scaffold, pdf-text, static-server,
-                        #   validate-content, build-topics, generate-subject, assemble-subject (generator),
-                        #   migrate-content (data/* → Supabase)
+                        #   validate-content, validate-json-schema, export-content-json,
+                        #   build-topics, generate-subject, assemble-subject (generator),
+                        #   migrate-content (data/* → Supabase), rls-check, compute-stats
 supabase/schema.sql     # progress + subject_content tablice (RLS)
 tests/                  # Playwright (responsive/smoke/…) + tests/unit (graders)
 docs/                   # ★ Projektna dokumentacija (vidi niže)

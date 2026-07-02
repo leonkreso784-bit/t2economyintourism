@@ -57,7 +57,12 @@ Odbačeno: i18n-u-sadržaju (ADR-012), CMS (Decap/Directus/Sanity — premda S1/
 
 **▶ IMPLEMENTIRANO (2026-07-01, LIVE — dio šava):** **S1 `ContentRepository` = `window.SokratContent`** (`js/content-repo.js`): `listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded` —
 tanki omotač koji objedinjuje 3 razbacana puta dohvata (catalog + `loadSubjectContent` + `getSubjectData`); `navigation.js` sada ide kroz njega. **NULA promjene ponašanja** (DB↔datoteka
-fallback već u loaderu). „Podatak≠kod" već strukturno čuvan u loaderu (`scripts` vs `codeScripts`, BUG-012). **⬜ Preostaje:** S2 čisti JSON format (F2 2A, dual-read) + formalni `FileRepo`/`SupabaseRepo` + flip u Fazi 4.
+fallback već u loaderu). „Podatak≠kod" već strukturno čuvan u loaderu (`scripts` vs `codeScripts`, BUG-012).
+
+**▶ IMPLEMENTIRANO (2026-07-02, LIVE — S2 čisti JSON format, F2 2A):** study sadržaj **portabilan kao čisti JSON** — `data/json/<id>/<var>.json` (51 datoteka, 17/18 predmeta;
+accounting odgođen). Strojni ugovor `schema/subject-content.schema.json` (draft-07) + `npm run validate:schema` (ajv, CI). Exporter `npm run export:json [id] [--check]`
+(round-trip bez gubitka, deterministički; CI drift-gate). **Dual-read u loaderu: baza → JSON (catalog `content.dataFormat:'json'`) → `.js` fallback** — `.js` OSTAJE izvor istine
+do flipa u Fazi 4. Vježbe NIKAD u JSON (BUG-012). **⬜ Preostaje:** formalni `FileRepo`/`SupabaseRepo` (2B.2, kad zatreba) + source-of-truth flip u Fazi 4.
 
 ---
 

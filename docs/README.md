@@ -25,7 +25,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (prijevod platforme; klon-program + globalni UI toggle, ADR-012) — ▶ cigle 1–5c ✅ LIVE 2026-06-28 |
 | [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md) | BUG-012 — randomizirane vježbe iz baze; Opcija A izvedena — ✅ LIVE 2026-06-27 |
 | [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (Stripe+NKD djelatnosti, matura tržište, modeli, ideje) — planiranje 2026-06-27 |
-| [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, test:unit, Playwright) |
+| [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, validate:schema, export:json --check, test:unit, Playwright, CI) |
 | [CHANGELOG.md](CHANGELOG.md) | Verzije (semver) i što se mijenjalo |
 | [PROGRESS.md](PROGRESS.md) | Dnevnik rada — što je napravljeno u svakoj sesiji |
 | [BUGS.md](BUGS.md) | Bugovi + lekcije naučene ("učimo iz grešaka") |

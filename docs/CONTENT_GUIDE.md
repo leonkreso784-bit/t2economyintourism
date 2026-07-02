@@ -4,6 +4,13 @@
 > Trenutni način rada (Faza 0, prije backenda): predmeti se dodaju kroz `data/catalog.js`
 > + `data-*.js` datoteku. Kad dođe admin (korak B10), isto će se raditi kroz su čelje.
 
+> **⚠️ JSON dual-read (F2 2A, LIVE od 2026-07-02):** 17/18 predmeta (svi osim accountinga) ima
+> `content.dataFormat:'json'` u catalogu → study se čita iz `data/json/<id>/<var>.json`. **Nakon SVAKE
+> izmjene `data/*.js` takvog predmeta pokreni `npm run export:json <subjectId>`** (regenerira JSON) —
+> inače CI pada na drift-gateu. Ako je predmet i u Supabase bazi, dodatno `node scripts/migrate-content.js <id>`.
+> Vježbe (`exercises.js`) se ne exportaju (BUG-012). NOVI predmet radi i bez flaga (`.js` put) — flag +
+> export dodaj kad želiš (opcionalno, 2 min).
+
 ## A) Dodati novu LEKCIJU postojećem predmetu (npr. "second-midterm")
 
 1. **Sadržaj:** dodaj kategorije u postojeću ili novu globalnu varijablu predmeta
