@@ -28,7 +28,11 @@ fiksna visina (`responsive/03` `height:200px`) + cap (`04` `max-height:200px`), 
 fix CSS-only (`height:auto`, cap maknut); sweep anti-patterna kroz SVE css datoteke čist. Cache `styles.css?v=20260703`.
 Pouka: funkcionalni klik-testovi love klasu bugova koju render-smoke ne vidi. U testovima cookie-consent `'denied'` unaprijed.
 Gate (2C.2b + BUG-016 zajedno): typecheck 0, unit 41/41, **puni Playwright 125/0** (117 + 8 novih app-state; subjects=18, problems=0).
-**⬜ DALJE: 2C.2c quiz → 2C.2e session → 2C.2d nav (najveća, zadnja).**
+**Cigle 2C.2c + 2C.2e ✅ (`1997014`) — quiz + session grupe (gate: puni Playwright 129/0):** quiz 9 varova → `AppState.quiz.*` (dirano SAMO quiz.js; analytics.js pogoci =
+propertyji `analytics` objekta — provjereno čitanjem; `'wrongAnswersList'` je i DOM id → nediran). Session: `sessionStartTime` →
+`AppState.session.startTime` (analytics.js). Funkcionalni quiz-test (točan→kriv→review krivih→rezultati 80%→retry) — spec 12/12.
+Usput: zastarjeli opis `quizAnswers` u typedefu ispravljen (sprema `{selected, isCorrect}`). Cache `?v=20260703`.
+**⬜ DALJE: 2C.2d nav (`current*`, 14 datoteka — najveća, zadnja) → 2C done-kriterij: config.js bez mutable globala.**
 
 ## 2026-07-02 — ✅ F2 2A (čisti JSON format) DEPLOYANO NA PRODUKCIJU
 **Deploy:** ff-merge `0c21aa6..661dbc8` (grana `foundation/f2a`→main, uz potvrdu korisnika nakon pregleda preview-a).

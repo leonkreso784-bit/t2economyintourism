@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2C.2c + 2C.2e (quiz + session grupe → `AppState.quiz`/`AppState.session`) — `1997014`; grana `foundation/f2c` (lokalno).**
+  Quiz: 9 varova (`quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/quizStartTime/wrongAnswersList/currentShuffledOptions/
+  currentShuffledCorrectIndex/quizAnswers`) → `AppState.quiz.*`; dirano SAMO quiz.js — analytics.js pogoci su **propertyji** `analytics` objekta,
+  `'wrongAnswersList'` je i DOM id (nediran). Session: `sessionStartTime` → `AppState.session.startTime` (analytics.js, 4 ref.).
+  Funkcionalni quiz-test (točan→kriv→review→rezultati 80%→retry) — app-state spec 12/12. Usput ispravljen zastarjeli opis `quizAnswers`
+  (sprema `{selected, isCorrect}`, ne 4 polja). Cache `?v=20260703` (quiz/analytics/config/app-state).
 - **🧩 FAZA 2 · 2C.2b (cards grupa → `AppState.cards`) — `9612977`; grana `foundation/f2c` (lokalno).**
   `flashcards/currentCardIndex/knownCards/unknownCards` → `AppState.cards.deck/index/known/unknown`; dirano SAMO `flashcards.js`
   (ostale `flashcards` pojave = propertyji/stringovi/i18n — provjereno čitanjem). Funkcionalni flashcards-test (klik ✓/✗/prev kao korisnik,

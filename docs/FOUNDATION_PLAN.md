@@ -175,9 +175,11 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
       **Test ULOVIO stvarni pre-postojeći bug → BUG-016** (`68bf7e1`): landscape mobitel — `.flashcard` fiksna/capana visina (relikti
       prije BUG-013 u `responsive/03`+`04`) → lice stršalo preko Known/Unknown gumba (tap=flip). Fix CSS-only + sweep anti-patterna čist.
       Cache `styles.css?v=20260703`.
-    - [2C.2c] ⬜ **quiz** grupa (9 varova; quiz.js + progress.js/i18n.js provjeriti).
+    - [2C.2c] ✅ **GOTOVO (2026-07-02, `1997014`):** **quiz** grupa (9 varova → `AppState.quiz.questions/index/correct/wrong/startTime/wrongList/
+      shuffledOptions/shuffledCorrectIndex/answers`). Dirano SAMO quiz.js (analytics.js pogoci = propertyji `analytics` objekta, NE globali;
+      `'wrongAnswersList'` je i DOM id — nediran). Funkcionalni quiz-test (točan→kriv→review krivih→rezultati 80%→retry) 12/12.
     - [2C.2d] ⬜ **nav** grupa (`current*`, 97 ref. — najveća, ZADNJA; navigation/learn/quiz/flashcards/fill/progress/blind-map).
-    - [2C.2e] ⬜ **session** (`sessionStartTime`; analytics.js).
+    - [2C.2e] ✅ **GOTOVO (2026-07-02, `1997014`):** **session** grupa (`sessionStartTime` → `AppState.session.startTime`; samo analytics.js, 4 ref.).
   - **Done-kriterij:** config.js bez mutable `let` globala; runtime stanje = `window.AppState` (inspektabilno, temelj za CRUD/tutor/debug).
 - **2D — UI-primitivi = Web Components (S4):** *inkrementalno, light-DOM (bez Shadow DOM — čuva globalni CSS/teme).*
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
