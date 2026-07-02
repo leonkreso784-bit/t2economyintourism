@@ -20,7 +20,15 @@ Gate: typecheck 0, unit 41/41, verify 0/0, smoke 16/16.
 Grep 0 golih referenci. **NOVI funkcionalni `tests/app-state.spec.js`** — fill tijek stvarno OCJENJUJE (točan→kriv→skip→Progress 33%),
 smoke samo renderira; stanje sad inspektabilno kroz `window.AppState` (top-level `let` nije bio na window) — 4/4.
 Cache `?v=20260703` (config/fill-blanks/progress). Gate: typecheck 0, unit 41/41, **puni Playwright 117/0** (subjects=18, problems=0).
-**⬜ DALJE: 2C.2b cards → 2C.2c quiz → 2C.2d nav (najveća, zadnja) → 2C.2e session.**
+**Cigla 2C.2b ✅ (`9612977`) — cards grupa → `AppState.cards`:** dirano SAMO `flashcards.js` (ostale `flashcards` pojave = propertyji/
+stringovi/i18n — čitanjem provjereno). Funkcionalni flashcards-test (klik ✓/✗/prev KAO KORISNIK, swap unknown→known,
+`progress.flashcardsLearned`) 8/8. **Test ULOVIO stvarni pre-postojeći BUG-016 (`68bf7e1`):** landscape mobitel — `.flashcard`
+fiksna visina (`responsive/03` `height:200px`) + cap (`04` `max-height:200px`), relikti od prije BUG-013 grid-stacka → lice stršalo
+~130px preko Known/Unknown gumba (tap=flip umjesto klika). Dijagnoza geometrijskim probeom (rect lanca wrapper/card/inner/front);
+fix CSS-only (`height:auto`, cap maknut); sweep anti-patterna kroz SVE css datoteke čist. Cache `styles.css?v=20260703`.
+Pouka: funkcionalni klik-testovi love klasu bugova koju render-smoke ne vidi. U testovima cookie-consent `'denied'` unaprijed.
+Gate (2C.2b + BUG-016 zajedno): typecheck 0, unit 41/41, **puni Playwright 125/0** (117 + 8 novih app-state; subjects=18, problems=0).
+**⬜ DALJE: 2C.2c quiz → 2C.2e session → 2C.2d nav (najveća, zadnja).**
 
 ## 2026-07-02 — ✅ F2 2A (čisti JSON format) DEPLOYANO NA PRODUKCIJU
 **Deploy:** ff-merge `0c21aa6..661dbc8` (grana `foundation/f2a`→main, uz potvrdu korisnika nakon pregleda preview-a).

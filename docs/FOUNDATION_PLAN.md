@@ -169,7 +169,12 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
       (ista imena kao stare varijable — dokaz zašto ne regex). Grep-dokaz: 0 preostalih golih referenci. NOVI funkcionalni test `tests/app-state.spec.js`
       (fill tijek: točan→kriv→skip→progress 33%; stanje inspektabilno kroz `window.AppState` — prije nemoguće, top-level `let` nije na window) 4/4.
       Cache `?v=20260703` (config/fill-blanks/progress).
-    - [2C.2b] ⬜ **cards** grupa (`flashcards/currentCardIndex/knownCards/unknownCards` → `AppState.cards.deck/index/known/unknown`; samo flashcards.js).
+    - [2C.2b] ✅ **GOTOVO (2026-07-02, `9612977`):** **cards** grupa (`flashcards/currentCardIndex/knownCards/unknownCards` →
+      `AppState.cards.deck/index/known/unknown`; dirano SAMO flashcards.js — ostale `flashcards` pojave su propertyji/stringovi/i18n).
+      Funkcionalni flashcards-test (klik ✓/✗/prev kao korisnik + swap unknown→known + `progress.flashcardsLearned`) 8/8.
+      **Test ULOVIO stvarni pre-postojeći bug → BUG-016** (`68bf7e1`): landscape mobitel — `.flashcard` fiksna/capana visina (relikti
+      prije BUG-013 u `responsive/03`+`04`) → lice stršalo preko Known/Unknown gumba (tap=flip). Fix CSS-only + sweep anti-patterna čist.
+      Cache `styles.css?v=20260703`.
     - [2C.2c] ⬜ **quiz** grupa (9 varova; quiz.js + progress.js/i18n.js provjeriti).
     - [2C.2d] ⬜ **nav** grupa (`current*`, 97 ref. — najveća, ZADNJA; navigation/learn/quiz/flashcards/fill/progress/blind-map).
     - [2C.2e] ⬜ **session** (`sessionStartTime`; analytics.js).

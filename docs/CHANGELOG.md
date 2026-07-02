@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2C.2b (cards grupa → `AppState.cards`) — `9612977`; grana `foundation/f2c` (lokalno).**
+  `flashcards/currentCardIndex/knownCards/unknownCards` → `AppState.cards.deck/index/known/unknown`; dirano SAMO `flashcards.js`
+  (ostale `flashcards` pojave = propertyji/stringovi/i18n — provjereno čitanjem). Funkcionalni flashcards-test (klik ✓/✗/prev kao korisnik,
+  swap unknown→known, `progress.flashcardsLearned`) 8/8 uklj. landscape. Testovi postavljaju cookie-consent `'denied'` unaprijed (banner presretao klikove).
+  Gate (zajedno s BUG-016): typecheck 0, unit 41/41, **puni Playwright 125/0** (117 + 8 novih app-state).
+### Fixed
+- **🐛 BUG-016 (landscape flashcard lice prekriva Known/Unknown gumbe) — `68bf7e1`; grana `foundation/f2c` (lokalno).**
+  Na landscape mobitelu lice kartice (raste sa sadržajem, BUG-013 grid-stack) stršalo ~130px ispod kartice jer su `responsive/03`
+  (`height:200px` fiksna) i `responsive/04` (`max-height:200px`) ostali kao relikti od prije BUG-013 → tap na ✓/✗ flipao karticu.
+  **Našao ga NOVI funkcionalni test** (2C.2b) — render-smoke to ne vidi. Fix CSS-only (`height:auto`, cap maknut) + sweep anti-patterna
+  kroz sve css datoteke čist. Cache `styles.css?v=20260703` + importi `03`/`04`. Detalji `docs/BUGS.md` §BUG-016.
 - **🧩 FAZA 2 · 2C.1 (S3 AppState — namespace skeleton) — `0a43fc9`; grana `foundation/f2c` (lokalno).**
   `js/app-state.js` → `window.AppState` s grupama **nav/cards/quiz/fill/session** (početne vrijednosti identične config.js `let`-ovima;
   grupa NEAKTIVNA dok se ne migrira → nema dvostrukog izvora istine). JSDoc typedefi + tsconfig include (typecheck raste modul-po-modul, ADR-014) +
