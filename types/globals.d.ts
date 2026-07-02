@@ -19,6 +19,9 @@ declare global {
     // Autogeneriran landing stat (data/landing-stats.js → npm run stats)
     SOKRAT_STATS?: { questionCount: number; questionCountExact: number; subjectsCounted: number };
 
+    // Runtime stanje aplikacije (js/app-state.js, F2 2C) — AppStateRoot dolazi iz JSDoc typedefa te datoteke
+    AppState?: AppStateRoot;
+
     // i18n (js/i18n.js)
     t?: (key: string) => string;
     applyTranslations?: (root?: Document | Element) => void;
