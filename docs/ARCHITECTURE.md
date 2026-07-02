@@ -121,7 +121,10 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   obavezan re-export** (CI drift-gate `export:json -- --check`). Strojni ugovor: `schema/subject-content.schema.json`
   (draft-07) + `npm run validate:schema`. Vježbe NIKAD u JSON (BUG-012, `codeScripts` uvijek iz `.js`). Accounting
   odgođen. Test `tests/dual-read.spec.js` (JSON put · shadow bajt-ekvivalencija · exercise put · fallback).
-- **F2 2C/2D ⬜** — AppState namespace → Web Components. **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
+- **F2 2C ✅ (2026-07-02, lokalno na `foundation/f2c` — čeka deploy) — S3 AppState:** SVI mutable globali iz `config.js` (5 grupa:
+  nav/cards/quiz/fill/session) → **`window.AppState`** (`js/app-state.js`, učitava se prije config.js); config.js bez ijednog mutable
+  `let` (`progress`/`analytics` namjerno ne — persist-lifecycle). Funkcionalni testovi `tests/app-state.spec.js` (klik kao korisnik).
+- **F2 2D ⬜** — Web Components (toast → modal). **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

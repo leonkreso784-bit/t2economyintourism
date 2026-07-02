@@ -19,7 +19,11 @@ TVRDI gate = blokada, ne upozorenje; trošak alata 0 €.
 ✅ **F2 2B+2E GOTOVI + DEPLOYANI** (2026-07-01, `57f449a`; ContentRepository `SokratContent` šav + Sentry error-monitoring consent-gated/EU/error-only, uživo verificiran).
 ✅ **F2 2A GOTOVA + DEPLOYANA** (2026-07-02, `661dbc8`; S2 čisti JSON format: **17/18 predmeta na JSON dual-read** [svi osim accountinga — odgođen],
 JSON Schema ugovor + exporter + drift-gate + dual-read loader DB→JSON→`.js`; dual-read 16/16, puni Playwright 117/0, nezavisni audit 0 razlika, live verificirano).
-**▶ DALJE: F2 2C AppState → 2D Web Components → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
+✅ **F2 2C GOTOVA — lokalno na grani `foundation/f2c` (2026-07-02, `0a43fc9..2d75dd1`; ČEKA push/preview/deploy):** **AppState (S3)** — SVI mutable
+globali iz config.js (5 grupa: fill/cards/quiz/session/nav) → `window.AppState`, grupa-po-grupa s funkcionalnim testovima (fill/quiz/flashcards/nav
+tijekovi klikaju KAO KORISNIK); config.js bez ijednog mutable `let`; 3 `typeof` guarda prepisana. **Usput test ULOVIO + POPRAVLJEN BUG-016**
+(landscape flashcard gutao tapove na ✓/✗ — relikt fiksne visine u `responsive/03`/`04`). Gate: puni Playwright **133/0** (subjects=18). Cache `?v=20260703`.
+**▶ DALJE: F2 2D Web Components (toast → modal) → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
