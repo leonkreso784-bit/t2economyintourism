@@ -117,7 +117,7 @@ const CloudSync = (function () {
 
         // Ako je predmet trenutno otvoren, osvježi in-memory stanje iz localStorage.
         try {
-            if (typeof currentSubject !== 'undefined' && currentSubject && typeof loadProgress === 'function') {
+            if (typeof AppState !== 'undefined' && AppState.nav.subject && typeof loadProgress === 'function') {
                 loadProgress();
                 if (typeof loadAnalytics === 'function') loadAnalytics();
                 if (typeof updateHomeStats === 'function') updateHomeStats();

@@ -26,15 +26,16 @@ function initFlashcards() {
 }
 
 function getAllFlashcards() {
-    if (!currentData) return [];
+    const content = AppState.nav.data;
+    if (!content) return [];
     let all = [];
-    Object.keys(currentData).forEach(category => {
-        if (currentData[category] && currentData[category].flashcards && Array.isArray(currentData[category].flashcards)) {
-            currentData[category].flashcards.forEach(card => {
+    Object.keys(content).forEach(category => {
+        if (content[category] && content[category].flashcards && Array.isArray(content[category].flashcards)) {
+            content[category].flashcards.forEach(card => {
                 all.push({
                     ...card,
                     category: category,
-                    categoryName: currentData[category].name
+                    categoryName: content[category].name
                 });
             });
         }

@@ -7,7 +7,7 @@
 // `let`-ovi se BRIŠU iz config.js i sva mjesta prelaze na `AppState.<grupa>.<polje>`.
 //
 // Status grupa (ažuriraj pri svakoj migraciji):
-//   nav     ⬜ config.js: currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory
+//   nav     ✅ MIGRIRANO 2026-07-02 (2C.2d) — bilo config.js: currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory
 //   cards   ✅ MIGRIRANO 2026-07-02 (2C.2b) — bilo config.js: flashcards/currentCardIndex/knownCards/unknownCards
 //   quiz    ✅ MIGRIRANO 2026-07-02 (2C.2c) — bilo config.js: quizQuestions/currentQuestionIndex/correctAnswers/
 //              wrongAnswers/quizStartTime/wrongAnswersList/currentShuffledOptions/currentShuffledCorrectIndex/quizAnswers

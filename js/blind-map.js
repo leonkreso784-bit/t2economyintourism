@@ -93,7 +93,7 @@ let blindMapDifficulty = 'cities';
 let blindMapQuestions = [];
 
 function initBlindMap() {
-    if (currentSubject !== 'geography') return;
+    if (AppState.nav.subject !== 'geography') return;
     document.getElementById('blindMapNavBtn')?.style.removeProperty('display');
     document.getElementById('blindMapMobileBtn')?.style.removeProperty('display');
     

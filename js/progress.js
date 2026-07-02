@@ -3,12 +3,13 @@
 // ========== CATEGORY BUTTONS ==========
 function updateCategoryButtons() {
     const container = document.querySelector('.categories');
-    if (!container || !currentData) return;
-    
+    const content = AppState.nav.data;
+    if (!container || !content) return;
+
     container.innerHTML = '';
-    
-    Object.keys(currentData).forEach(category => {
-        const data = currentData[category];
+
+    Object.keys(content).forEach(category => {
+        const data = content[category];
         const btn = document.createElement('button');
         btn.className = 'category-btn';
         btn.dataset.category = category;
@@ -18,7 +19,7 @@ function updateCategoryButtons() {
             <small>${data.flashcards ? data.flashcards.length : 0} terms</small>
         `;
         btn.addEventListener('click', () => {
-            currentCategory = category;
+            AppState.nav.category = category;
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             showToast(`Category: ${data.name}`);
@@ -30,12 +31,13 @@ function updateCategoryButtons() {
 // ========== LEARN FILTERS ==========
 function updateLearnFilters() {
     const container = document.querySelector('.learn-filter');
-    if (!container || !currentData) return;
-    
+    const content = AppState.nav.data;
+    if (!container || !content) return;
+
     container.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>';
-    
-    Object.keys(currentData).forEach(category => {
-        const data = currentData[category];
+
+    Object.keys(content).forEach(category => {
+        const data = content[category];
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
         btn.dataset.filter = category;
@@ -92,12 +94,13 @@ function updateLearnFilterScrollHints() {
 // ========== QUIZ CATEGORIES ==========
 function updateQuizCategories() {
     const select = document.getElementById('quizCategory');
-    if (!select || !currentData) return;
-    
+    const content = AppState.nav.data;
+    if (!select || !content) return;
+
     select.innerHTML = '<option value="all">All Categories</option>';
-    
-    Object.keys(currentData).forEach(category => {
-        const data = currentData[category];
+
+    Object.keys(content).forEach(category => {
+        const data = content[category];
         const option = document.createElement('option');
         option.value = category;
         option.textContent = data.name;
@@ -107,7 +110,8 @@ function updateQuizCategories() {
 
 // ========== PROGRESS PAGE ==========
 function renderProgressPage() {
-    if (!currentData) return;
+    const nav = AppState.nav;
+    if (!nav.data) return;
     
     const totalFlashcards = getAllFlashcards().length;
     const learned = progress.flashcardsLearned.length;
@@ -132,7 +136,7 @@ function renderProgressPage() {
     document.getElementById('fillSolved').textContent = progress.fillSolved;
     
     // Geography-specific: Blind Map progress
-    if (currentSubject === 'geography') {
+    if (nav.subject === 'geography') {
         const bmSection = document.getElementById('blindMapProgressSection');
         if (bmSection) {
             bmSection.style.display = 'block';
@@ -152,14 +156,14 @@ function renderProgressPage() {
     // localStorage key the Exercises tab writes (<subject>-exercises-progress).
     const exSection = document.getElementById('exercisesProgressSection');
     if (exSection) {
-        const exSubject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(currentSubject) : null;
+        const exSubject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(nav.subject) : null;
         const exVar = exSubject && exSubject.content && exSubject.content.exercises;
         const exData = (exVar && typeof window !== 'undefined') ? window[exVar] : null;
         const all = (exData && Array.isArray(exData.exercises)) ? exData.exercises : [];
-        const list = all.filter((e) => !e.lesson || e.lesson === currentLesson);
+        const list = all.filter((e) => !e.lesson || e.lesson === nav.lesson);
         if (list.length) {
             let store = {};
-            try { store = JSON.parse(localStorage.getItem(currentSubject + '-exercises-progress') || '{}'); } catch (e) { store = {}; }
+            try { store = JSON.parse(localStorage.getItem(nav.subject + '-exercises-progress') || '{}'); } catch (e) { store = {}; }
             let done = 0, attempts = 0, bestSum = 0;
             list.forEach((e) => {
                 const p = store[e.id];
@@ -176,11 +180,11 @@ function renderProgressPage() {
     }
 
     const barsContainer = document.getElementById('categoryBars');
-    if (!barsContainer || !currentData) return;
+    if (!barsContainer || !nav.data) return;
     barsContainer.innerHTML = '';
-    
-    Object.keys(currentData).forEach(category => {
-        const data = currentData[category];
+
+    Object.keys(nav.data).forEach(category => {
+        const data = nav.data[category];
         const catProgress = progress.categoryProgress[category] || 0;
         
         const bar = document.createElement('div');
@@ -203,17 +207,18 @@ function renderProgressPage() {
 
 // ========== HOME STATS ==========
 function updateHomeStats() {
-    if (!currentData) return;
-    
-    const totalQ = getAllFlashcards().length + Object.keys(currentData).reduce((acc, cat) => acc + currentData[cat].quiz.length, 0);
+    const nav = AppState.nav;
+    if (!nav.data) return;
+
+    const totalQ = getAllFlashcards().length + Object.keys(nav.data).reduce((acc, cat) => acc + nav.data[cat].quiz.length, 0);
     document.getElementById('totalQuestions').textContent = `${totalQ}+`;
-    
-    document.getElementById('totalCategories').textContent = Object.keys(currentData).length;
-    
+
+    document.getElementById('totalCategories').textContent = Object.keys(nav.data).length;
+
     const subtitle = document.getElementById('homeSubtitle');
-    if (subtitle && currentSubject) {
+    if (subtitle && nav.subject) {
         const guide = (typeof t === 'function') ? t('home.guideTo') : 'Your interactive guide to';
-        subtitle.textContent = `${guide} ${subjectDataMap[currentSubject].name}`;
+        subtitle.textContent = `${guide} ${subjectDataMap[nav.subject].name}`;
     }
     
     const bestScore = progress.quizScores.length > 0 ? Math.max(...progress.quizScores) : 0;

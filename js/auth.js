@@ -85,7 +85,7 @@ const SokratAuth = (function () {
             }
             if (event === 'PASSWORD_RECOVERY') openModal();
             // Ako je Profile otvoren, osvježi ga (ili makni ako se korisnik odjavio).
-            if (typeof currentPage !== 'undefined' && currentPage === 'profile') {
+            if (typeof AppState !== 'undefined' && AppState.nav.page === 'profile') {
                 if (currentUser && typeof renderProfilePage === 'function') renderProfilePage();
                 if (!currentUser && typeof navigateTo === 'function') navigateTo('landing');
             }

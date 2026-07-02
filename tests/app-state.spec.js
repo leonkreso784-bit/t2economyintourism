@@ -60,6 +60,38 @@ test('fill tijek kroz AppState.fill: točan → kriv → skip → progress stati
   expect(errors).toEqual([]);
 });
 
+test('nav grupa kroz AppState.nav: navigateTo/switchSection ažuriraju stanje + last-position', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.addInitScript(() => localStorage.setItem('sokrat-cookie-consent', 'denied'));
+  await page.goto('/');
+  await page.waitForFunction(() => window.SOKRAT_CATALOG && window.navigateTo && window.switchSection);
+  await page.evaluate(() => window.navigateTo('study', { subject: 'sit', lesson: 'first-midterm' }));
+  await page.waitForFunction(() => window.isSubjectContentLoaded && window.isSubjectContentLoaded('sit'), null, { timeout: 15000 });
+
+  const nav = await page.evaluate(() => ({
+    page: window.AppState.nav.page,
+    subject: window.AppState.nav.subject,
+    lesson: window.AppState.nav.lesson,
+    category: window.AppState.nav.category,
+    dataCats: Object.keys(window.AppState.nav.data || {}).length,
+  }));
+  expect(nav).toMatchObject({ page: 'study', subject: 'sit', lesson: 'first-midterm', category: 'all' });
+  expect(nav.dataCats).toBeGreaterThan(0); // sadržaj lekcije živi u AppState.nav.data
+
+  // switchSection ažurira section + sprema last-position IZ AppState-a
+  await page.evaluate(() => window.switchSection('learn'));
+  const after = await page.evaluate(() => ({
+    section: window.AppState.nav.section,
+    saved: JSON.parse(localStorage.getItem('sokrat-last-position') || '{}'),
+  }));
+  expect(after.section).toBe('learn');
+  expect(after.saved).toMatchObject({ page: 'study', subject: 'sit', lesson: 'first-midterm', section: 'learn' });
+
+  expect(errors).toEqual([]);
+});
+
 test('quiz tijek kroz AppState.quiz: točan → kriv → review krivih → rezultati → retry', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (e) => errors.push(e.message));

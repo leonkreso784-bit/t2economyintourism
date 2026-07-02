@@ -67,7 +67,7 @@ function setupEventListeners() {
     
     const backToLessons = document.getElementById('backToLessons');
     if (backToLessons) {
-        backToLessons.addEventListener('click', () => navigateTo('lessons', { subject: currentSubject }));
+        backToLessons.addEventListener('click', () => navigateTo('lessons', { subject: AppState.nav.subject }));
     }
     
     const backFromAbout = document.getElementById('backFromAbout');

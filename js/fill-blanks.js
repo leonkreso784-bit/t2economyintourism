@@ -28,15 +28,16 @@ function initFill() {
 }
 
 function getAllFillQuestions() {
-    if (!currentData) return [];
+    const content = AppState.nav.data;
+    if (!content) return [];
     let all = [];
-    Object.keys(currentData).forEach(category => {
-        if (currentData[category].fillBlanks) {
-            currentData[category].fillBlanks.forEach(q => {
+    Object.keys(content).forEach(category => {
+        if (content[category].fillBlanks) {
+            content[category].fillBlanks.forEach(q => {
                 all.push({
                     ...q,
                     category: category,
-                    categoryName: currentData[category].name
+                    categoryName: content[category].name
                 });
             });
         }

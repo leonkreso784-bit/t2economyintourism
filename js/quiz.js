@@ -34,28 +34,29 @@ function startQuiz() {
 }
 
 function getQuizQuestions(category, count) {
-    if (!currentData) return [];
+    const content = AppState.nav.data;
+    if (!content) return [];
     let questions = [];
-    
+
     if (category === 'all') {
-        Object.keys(currentData).forEach(cat => {
-            if (currentData[cat] && currentData[cat].quiz && Array.isArray(currentData[cat].quiz)) {
-                currentData[cat].quiz.forEach(q => {
+        Object.keys(content).forEach(cat => {
+            if (content[cat] && content[cat].quiz && Array.isArray(content[cat].quiz)) {
+                content[cat].quiz.forEach(q => {
                     questions.push({
                         ...q,
                         category: cat,
-                        categoryName: currentData[cat].name
+                        categoryName: content[cat].name
                     });
                 });
             }
         });
     } else {
-        if (currentData[category] && currentData[category].quiz && Array.isArray(currentData[category].quiz)) {
-            currentData[category].quiz.forEach(q => {
+        if (content[category] && content[category].quiz && Array.isArray(content[category].quiz)) {
+            content[category].quiz.forEach(q => {
                 questions.push({
                     ...q,
                     category: category,
-                    categoryName: currentData[category].name
+                    categoryName: content[category].name
                 });
             });
         }

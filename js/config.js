@@ -44,12 +44,7 @@ const subjectDataMap = (function buildSubjectDataMap() {
 const lessonCategoryMap = {};
 
 // ========== GLOBAL STATE ==========
-let currentPage = 'landing';
-let currentSubject = null;
-let currentLesson = null;
-let currentData = null;
-let currentSection = 'home';
-let currentCategory = 'all';
+// Nav state → MIGRIRANO u AppState.nav (js/app-state.js, F2 2C.2d)
 
 // Flashcard state → MIGRIRANO u AppState.cards (js/app-state.js, F2 2C.2b)
 

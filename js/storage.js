@@ -1,7 +1,7 @@
 // ===== SOKRAT STUDY — PROGRESS STORAGE =====
 
 function loadProgress() {
-    if (!currentSubject) return;
+    if (!AppState.nav.subject) return;
 
     // Kanonska shema napretka — svako polje uvijek postoji (otpornost na stari/pokvaren localStorage).
     const defaultProgress = {
@@ -13,7 +13,7 @@ function loadProgress() {
         categoryProgress: {}
     };
 
-    const storageKey = subjectDataMap[currentSubject].storageKey;
+    const storageKey = subjectDataMap[AppState.nav.subject].storageKey;
     const saved = localStorage.getItem(storageKey);
     let parsed = null;
     if (saved) {
@@ -37,10 +37,10 @@ function loadProgress() {
 }
 
 function saveProgress() {
-    if (!currentSubject) return;
-    
+    if (!AppState.nav.subject) return;
+
     progress.lastStudy = new Date().toISOString();
-    const storageKey = subjectDataMap[currentSubject].storageKey;
+    const storageKey = subjectDataMap[AppState.nav.subject].storageKey;
     localStorage.setItem(storageKey, JSON.stringify(progress));
     updateHomeStats();
 }

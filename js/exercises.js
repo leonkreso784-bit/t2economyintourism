@@ -18,9 +18,10 @@
     }
 
     // Content pack za trenutni predmet: { meta, exercises:[…] } ili null.
+    // (F2 2C.2d: `typeof currentSubject` guard → AppState; typeof-oblik zadržan da modul preživi i standalone.)
     function getExerciseData() {
-        if (typeof SokratCatalog === 'undefined' || typeof currentSubject === 'undefined' || !currentSubject) return null;
-        const subject = SokratCatalog.getSubject(currentSubject);
+        if (typeof SokratCatalog === 'undefined' || typeof AppState === 'undefined' || !AppState.nav.subject) return null;
+        const subject = SokratCatalog.getSubject(AppState.nav.subject);
         const varName = subject && subject.content && subject.content.exercises;
         if (!varName || typeof window === 'undefined') return null;
         const data = window[varName];
@@ -30,13 +31,13 @@
     // Vježbe vezane na trenutnu lekciju (bez `lesson` polja = prikaži uvijek).
     function exercisesForLesson(data) {
         if (!data) return [];
-        return data.exercises.filter((ex) => !ex.lesson || ex.lesson === currentLesson);
+        return data.exercises.filter((ex) => !ex.lesson || ex.lesson === AppState.nav.lesson);
     }
 
     // Napredak po vježbi: { <id>: { done, best, attempts, lastTs } } (B1.8 ga proširuje).
     function readProgress() {
         try {
-            const raw = localStorage.getItem(currentSubject + '-exercises-progress');
+            const raw = localStorage.getItem(AppState.nav.subject + '-exercises-progress');
             return raw ? JSON.parse(raw) : {};
         } catch (e) { return {}; }
     }
@@ -654,7 +655,7 @@
 
     function saveProgress(id, result) {
         try {
-            const key = currentSubject + '-exercises-progress';
+            const key = AppState.nav.subject + '-exercises-progress';
             const prog = readProgress();
             const prev = prog[id] || { attempts: 0, best: 0, done: false };
             const ratio = result.max ? result.score / result.max : 0;

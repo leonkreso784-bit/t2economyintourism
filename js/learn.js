@@ -6,22 +6,23 @@ function renderLearnContent() {
         console.error('Learn content container not found');
         return;
     }
-    if (!currentData) {
+    const content = AppState.nav.data;
+    if (!content) {
         console.error('No current data for learn content');
         container.innerHTML = '<div class="learn-card"><div class="learn-card-content"><p>No content available. Please select a lesson.</p></div></div>';
         return;
     }
-    
+
     container.innerHTML = '';
-    
-    const categories = Object.keys(currentData);
+
+    const categories = Object.keys(content);
     if (categories.length === 0) {
         container.innerHTML = '<div class="learn-card"><div class="learn-card-content"><p>No categories found in this lesson.</p></div></div>';
         return;
     }
-    
+
     categories.forEach(category => {
-        const data = currentData[category];
+        const data = content[category];
         if (!data) return;
         
         const icon = data.icon || 'fa-book';

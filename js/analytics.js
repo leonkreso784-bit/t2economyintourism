@@ -1,9 +1,9 @@
 // ===== SOKRAT STUDY — ANALYTICS SYSTEM =====
 
 function loadAnalytics() {
-    if (!currentSubject) return;
-    
-    const analyticsKey = subjectDataMap[currentSubject].storageKey + '-analytics';
+    if (!AppState.nav.subject) return;
+
+    const analyticsKey = subjectDataMap[AppState.nav.subject].storageKey + '-analytics';
     const saved = localStorage.getItem(analyticsKey);
     
     if (saved) {
@@ -32,9 +32,9 @@ function loadAnalytics() {
 }
 
 function saveAnalytics() {
-    if (!currentSubject) return;
-    
-    const analyticsKey = subjectDataMap[currentSubject].storageKey + '-analytics';
+    if (!AppState.nav.subject) return;
+
+    const analyticsKey = subjectDataMap[AppState.nav.subject].storageKey + '-analytics';
     localStorage.setItem(analyticsKey, JSON.stringify(analytics));
 }
 

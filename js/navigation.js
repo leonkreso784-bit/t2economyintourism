@@ -2,12 +2,13 @@
 
 // ========== POSITION PERSISTENCE ==========
 function saveCurrentPosition(page, data) {
+    const nav = AppState.nav;
     const position = {
         page: page,
-        subject: data.subject || currentSubject,
-        lesson: data.lesson || currentLesson,
-        section: currentSection,
-        category: currentCategory,
+        subject: data.subject || nav.subject,
+        lesson: data.lesson || nav.lesson,
+        section: nav.section,
+        category: nav.category,
         timestamp: Date.now()
     };
     localStorage.setItem('sokrat-last-position', JSON.stringify(position));
@@ -22,7 +23,7 @@ function restoreLastPosition() {
 
             if (hoursSinceSave < 24 && position.page && position.page !== 'landing') {
                 if (position.page === 'study' && position.subject && position.lesson) {
-                    currentCategory = position.category || 'all';
+                    AppState.nav.category = position.category || 'all';
                     // Pass the saved section into init; it switches there AFTER lazy content
                     // loads (no setTimeout race with async loading).
                     navigateTo('study', {
@@ -49,10 +50,10 @@ let profileReturnPage = null; // kamo vodi "back" s Profile stranice
 function navigateTo(page, data = {}) {
     // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
     // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
-    if (page === 'profile' && currentPage !== 'profile') {
-        profileReturnPage = { page: currentPage, data: { subject: currentSubject, lesson: currentLesson } };
+    if (page === 'profile' && AppState.nav.page !== 'profile') {
+        profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
     }
-    currentPage = page;
+    AppState.nav.page = page;
     if (page !== 'profile') saveCurrentPosition(page, data);
 
     document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page').forEach(p => {
@@ -72,7 +73,7 @@ function navigateTo(page, data = {}) {
             break;
         case 'lessons':
             if (data.subject) {
-                currentSubject = data.subject;
+                AppState.nav.subject = data.subject;
                 if (typeof suggestLangForSubject === 'function') suggestLangForSubject(data.subject);
                 renderLessonsPage(data.subject);
             }
@@ -81,8 +82,8 @@ function navigateTo(page, data = {}) {
             break;
         case 'study':
             if (data.subject && data.lesson) {
-                currentSubject = data.subject;
-                currentLesson = data.lesson;
+                AppState.nav.subject = data.subject;
+                AppState.nav.lesson = data.lesson;
                 if (typeof suggestLangForSubject === 'function') suggestLangForSubject(data.subject);  // prvi put HR program → predloži hrvatski
                 initStudyPage(data.subject, data.lesson, data.section);
             }
@@ -562,9 +563,9 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
                 filteredData[key] = fullData[key];
             }
         }
-        currentData = filteredData;
+        AppState.nav.data = filteredData;
     } else {
-        currentData = fullData;
+        AppState.nav.data = fullData;
     }
 
     const lessonsWord = window.t ? t('breadcrumb.lessons') : 'Lessons';
@@ -624,7 +625,7 @@ function syncMobileNav(section) {
 }
 
 function switchSection(section) {
-    if (!currentSubject) {
+    if (!AppState.nav.subject) {
         showSubjectSelector();
         return;
     }
@@ -636,7 +637,7 @@ function switchSection(section) {
         targetSection.classList.add('active');
     }
 
-    currentSection = section;
+    AppState.nav.section = section;
 
     document.querySelectorAll('.study-nav-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.section === section);
@@ -645,7 +646,7 @@ function switchSection(section) {
         btn.classList.toggle('active', btn.dataset.section === section);
     });
 
-    saveCurrentPosition(currentPage, { subject: currentSubject, lesson: currentLesson });
+    saveCurrentPosition(AppState.nav.page, { subject: AppState.nav.subject, lesson: AppState.nav.lesson });
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (section === 'flashcards') {
