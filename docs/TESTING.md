@@ -8,7 +8,7 @@
 - [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
 - [ ] `npm run validate:schema [subjectId]` → 0 grešaka (STRUKTURNI JSON Schema ugovor `schema/subject-content.schema.json` nad payloadom svake lekcije; ajv, dev-dep). Nadopunjuje `validate:content` (semantiku). *(F2 2A.1)*
 - [ ] `npm run export:json -- --check` → 0 problema (generirani `data/json/**` u sinku s izvornim `.js` + round-trip bez gubitka). **⚠️ Nakon izmjene `data/*.js` migriranog predmeta obavezan re-export `npm run export:json <id>`** — inače ovaj gate (i CI) pada. *(F2 2A.2)*
-- [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`).
+- [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`) + **`app-state`** (oblik `window.AppState` namespacea; isti-realm load jer vm cross-realm ruši `deepStrictEqual`). *(F2 2C)*
 - [ ] `npm run typecheck` → `tsc --checkJs` (bez build-a; scope u `tsconfig.json` raste modul-po-modul). 0 grešaka.
 - [ ] `npm run test:rls` → RLS sigurnosni test (read-only, anon): anon čita `subject_content`, NE vidi `progress`. Pad = curenje; SKIP ako je baza uspavana.
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
@@ -21,6 +21,9 @@
   - `landing.spec.js` — landing nav, subjects showcase (= broj predmeta iz catalog-a),
     navigacija CTA-ova, overflow guard.
   - `lazy-load.spec.js` — sadržaj predmeta se NE učita na startu, nego tek na otvaranje (A4).
+  - `app-state.spec.js` — **funkcionalni tijekovi kroz `AppState`** (F2 2C): fill (točan/kriv/skip/Progress %),
+    quiz (točan/kriv/review/rezultat/retry), flashcards (known/unknown/swap), nav (navigateTo/switchSection/last-position).
+    Klikaju KAO KORISNIK (ne samo render) — love klasu bugova koju smoke ne vidi (dokaz: BUG-016); consent `'denied'` unaprijed.
   - `sidebar.spec.js` — legacy sidebar render iz catalog-a.
   - `auth.spec.js` — Sign-in gumb + email+lozinka modal: tabovi Sign in / Create account
     (polja, minlength=8), gumb-oko (type password↔text), Forgot password tok (forma + back),

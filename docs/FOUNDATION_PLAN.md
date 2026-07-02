@@ -178,9 +178,16 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     - [2C.2c] ✅ **GOTOVO (2026-07-02, `1997014`):** **quiz** grupa (9 varova → `AppState.quiz.questions/index/correct/wrong/startTime/wrongList/
       shuffledOptions/shuffledCorrectIndex/answers`). Dirano SAMO quiz.js (analytics.js pogoci = propertyji `analytics` objekta, NE globali;
       `'wrongAnswersList'` je i DOM id — nediran). Funkcionalni quiz-test (točan→kriv→review krivih→rezultati 80%→retry) 12/12.
-    - [2C.2d] ⬜ **nav** grupa (`current*`, 97 ref. — najveća, ZADNJA; navigation/learn/quiz/flashcards/fill/progress/blind-map).
+    - [2C.2d] ✅ **GOTOVO (2026-07-02, `2d75dd1`; puni Playwright 133/0):** **nav** grupa (`currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory`
+      → `AppState.nav.page/subject/lesson/data/section/category`; **13 datoteka**: navigation/progress/quiz/flashcards/fill-blanks/learn/
+      exercises/analytics/storage/auth/cloud-sync/blind-map/init). **⚠️ Ključna zamka riješena:** 3 `typeof currentX !== 'undefined'` guarda
+      (exercises/auth/cloud-sync) bi nakon brisanja `let`-ova TIHO promijenila ponašanje → prepisani na `typeof AppState` (typeof-oblik zadržan).
+      DOM id-jevi `currentSubjectTitle`/`currentLessonTitle` nedirnuti. Novi funkcionalni nav-test (navigateTo/switchSection/last-position iz AppState-a);
+      spec 16/16. Cache: svih 13 datoteka + config `?v=20260703`.
     - [2C.2e] ✅ **GOTOVO (2026-07-02, `1997014`):** **session** grupa (`sessionStartTime` → `AppState.session.startTime`; samo analytics.js, 4 ref.).
-  - **Done-kriterij:** config.js bez mutable `let` globala; runtime stanje = `window.AppState` (inspektabilno, temelj za CRUD/tutor/debug).
+  - **Done-kriterij:** ✅ **ISPUNJEN (2026-07-02, `2d75dd1`)** — config.js bez mutable `let` globala (svih 5 grupa migrirano; ostaju samo
+    `const subjectDataMap`/`lessonCategoryMap` + `progress`/`analytics` s vlastitim persist-lifecycleom); runtime stanje =
+    `window.AppState` (inspektabilno iz konzole/testova — prije nemoguće jer top-level `let` nije na window; temelj za CRUD/tutor/debug).
 - **2D — UI-primitivi = Web Components (S4):** *inkrementalno, light-DOM (bez Shadow DOM — čuva globalni CSS/teme).*
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
   - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.

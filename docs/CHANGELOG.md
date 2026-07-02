@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2C.2d (nav grupa → `AppState.nav`) → 2C KOMPLETNA — `2d75dd1`; grana `foundation/f2c` (lokalno). Gate: puni Playwright 133/0.**
+  `currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory` → `AppState.nav.*` kroz **13 datoteka**
+  (navigation/progress/quiz/flashcards/fill-blanks/learn/exercises/analytics/storage/auth/cloud-sync/blind-map/init; exercises.js =
+  mehanička izmjena, ne „za sadržaj"). **3 `typeof currentX` guarda** (exercises/auth/cloud-sync) prepisana na `typeof AppState` —
+  identificirano U IZVIĐANJU (nakon brisanja `let`-ova bi tiho vratili 'undefined' = kod misli da predmeta nema). Novi funkcionalni
+  nav-test; spec 16/16. **→ 2C DONE-KRITERIJ ISPUNJEN: config.js bez ijednog mutable globala; SVE runtime stanje u `window.AppState`.**
+  Cache `?v=20260703` (svih 13 + config/app-state).
 - **🧩 FAZA 2 · 2C.2c + 2C.2e (quiz + session grupe → `AppState.quiz`/`AppState.session`) — `1997014`; grana `foundation/f2c` (lokalno).**
   Quiz: 9 varova (`quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/quizStartTime/wrongAnswersList/currentShuffledOptions/
   currentShuffledCorrectIndex/quizAnswers`) → `AppState.quiz.*`; dirano SAMO quiz.js — analytics.js pogoci su **propertyji** `analytics` objekta,

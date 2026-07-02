@@ -33,7 +33,8 @@ Trošak alata = **0 €** (sve free na ovoj skali). Svjesno NE: product-analytic
 **▶ IMPLEMENTIRANO (2026-06-30 / 2026-07-01, sve LIVE):** **F1** = CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi 1D
 (axe 0-serious, layout-guard, Lighthouse budžeti) + RLS-test. **F2 2E** = Sentry error-monitoring (`js/monitoring.js`→`window.SokratMonitor`): consent-gated
 (isti gate kao GA), **Loader Script EU/DE** (`js-de.sentry-cdn.com`), **samo hvatanje grešaka** (Tracing/Replay/Logs isključeni), `sendDefaultPii:false`, release
-`sokrat-study@20260699`; uživo verificiran. **Točka #4 (nadogradnja) = ISPUNJENA** (Sentry + release-tracking, ne mini-logger). **⬜ Preostaje:** Web Components (S4, F2 2D) + pixel `toHaveScreenshot` (F3, treba Linux baseline).
+`sokrat-study@20260699`; uživo verificiran. **Točka #4 (nadogradnja) = ISPUNJENA** (Sentry + release-tracking, ne mini-logger). **F2 2C (2026-07-02, grana `foundation/f2c`)** = **AppState (S3)**: SVI mutable globali iz config.js
+(nav/cards/quiz/fill/session — 5 grupa) → `window.AppState` namespace, grupa-po-grupa s funkcionalnim testovima; config.js bez ijednog mutable `let`; `js/app-state.js` u typecheck scopeu. **⬜ Preostaje:** Web Components (S4, F2 2D) + pixel `toHaveScreenshot` (F3, treba Linux baseline).
 
 ---
 

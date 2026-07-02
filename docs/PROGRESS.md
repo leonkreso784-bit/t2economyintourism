@@ -32,7 +32,14 @@ Gate (2C.2b + BUG-016 zajedno): typecheck 0, unit 41/41, **puni Playwright 125/0
 propertyji `analytics` objekta — provjereno čitanjem; `'wrongAnswersList'` je i DOM id → nediran). Session: `sessionStartTime` →
 `AppState.session.startTime` (analytics.js). Funkcionalni quiz-test (točan→kriv→review krivih→rezultati 80%→retry) — spec 12/12.
 Usput: zastarjeli opis `quizAnswers` u typedefu ispravljen (sprema `{selected, isCorrect}`). Cache `?v=20260703`.
-**⬜ DALJE: 2C.2d nav (`current*`, 14 datoteka — najveća, zadnja) → 2C done-kriterij: config.js bez mutable globala.**
+**Cigla 2C.2d ✅ (`2d75dd1`) — nav grupa → `AppState.nav` → 🏁 2C KOMPLETNA (gate: puni Playwright 133/0):** 6 varova (`current*`) kroz **13 datoteka** (navigation 16 ref. /
+progress 23 / quiz 8 / flashcards 5 / fill-blanks 5 / exercises 5 / analytics 4 / storage 4 / learn 3 / auth 1 / cloud-sync 1 /
+blind-map 1 / init 1; exercises.js = mehanička izmjena, NE „za sadržaj"). **Zamka riješena unaprijed:** 3 `typeof currentX !== 'undefined'`
+guarda (exercises/auth/cloud-sync) → `typeof AppState` (nakon brisanja `let`-ova typeof bi tiho vratio 'undefined' = kod misli da predmeta
+nema). DOM id-jevi `currentSubjectTitle`/`currentLessonTitle` nedirnuti. Novi funkcionalni nav-test (navigateTo/switchSection/last-position);
+spec 16/16 (4 tijeka × 4 profila). Cache: 13 datoteka + config na `?v=20260703`.
+**🏁 2C DONE-KRITERIJ ISPUNJEN: `config.js` bez ijednog mutable `let` globala (5/5 grupa migrirano); cijelo runtime stanje =
+`window.AppState`, inspektabilno iz konzole/testova (temelj za CRUD/AI-tutor/debug). ⬜ DALJE: 2D Web Components → F3 performanse.**
 
 ## 2026-07-02 — ✅ F2 2A (čisti JSON format) DEPLOYANO NA PRODUKCIJU
 **Deploy:** ff-merge `0c21aa6..661dbc8` (grana `foundation/f2a`→main, uz potvrdu korisnika nakon pregleda preview-a).
