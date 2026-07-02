@@ -5,22 +5,22 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧩 FAZA 2 · 2A.1 (S2 čisti JSON format — JSON Schema ugovor) — grana `foundation/f2a` (2026-07-01, `1fc6c19`; NIJE na produkciji).**
+- **🧩 FAZA 2 · 2A.1 (S2 čisti JSON format — JSON Schema ugovor) — `1fc6c19`; ✅ DEPLOYANO 2026-07-02 (`0c21aa6..661dbc8`).**
   `schema/subject-content.schema.json` (JSON Schema draft-07) = kanonski STRUKTURNI ugovor za payload sadržaja (window-var = kategorije lekcije/final).
   `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) validira payload svake razriješene lekcije preko vm window-shima (izvor-neovisno)
   → **54/54 dokumenta (18 predmeta × 3 lekcije) poštuju schemu.** Izviđanje prije pisanja uključilo stvarna nedokumentirana polja (`quiz.image`/`imageAlt`, `learn.title`, `learn.image=null`).
   Nadopunjuje `validate:content` (semantika); novi CI korak. Bez runtime izmjena → bez cache bumpa. Temelj za 2A.2 exporter + F4 CRUD validaciju.
-- **🧩 FAZA 2 · 2A.4b (preostalih 13 predmeta na JSON → 2A GOTOVO 17/18) — grana `foundation/f2a` (2026-07-02, `04e09f0`; NIJE na produkciji).**
+- **🧩 FAZA 2 · 2A.4b (preostalih 13 predmeta na JSON → 2A GOTOVO 17/18) — `04e09f0`; ✅ DEPLOYANO 2026-07-02.**
   te2, entrepreneurship, ebusiness, econ-hospitality, marketing, geography, food-nutrition, business-informatics, management, traffic, microeconomics, academic-writing, business-informatics-hr → `dataFormat:'json'`.
   **Migrirano 17/18** (accounting svjesno odgođen). 51 JSON datoteka ukupno. Gate: verify 0/0, validate:schema 54/54, export --check 54/54, Playwright 117/0. Cache `?v=20260702`.
-- **🧩 FAZA 2 · 2A.4a (migracija kvantitativnih exercise-predmeta na JSON) — grana `foundation/f2a` (2026-07-02, `134b7cb`; NIJE na produkciji).**
+- **🧩 FAZA 2 · 2A.4a (migracija kvantitativnih exercise-predmeta na JSON) — `134b7cb`; ✅ DEPLOYANO 2026-07-02.**
   `statistics` + `macroeconomics` + `math` dobili `content.dataFormat:'json'` (9 JSON datoteka). Odabrani jer dijele jedini još netestirani put: study iz JSON + vježbe/lib iz `.js`.
   NOVI `dual-read` exercise-test (statistics: `window.statisticsExercises`+`StatLib` iz `.js`, study `.js` NIJE fetchan) → **BUG-012 očuvan u JSON-modu**. Gate: dual-read 16/16 + puni Playwright 117/0. Cache `?v=20260701` (catalog). **Migrirano 4/18; svi mehanizam-putovi dokazani.**
-- **🧩 FAZA 2 · 2A.3 (dual-read JSON + `sit` pilot flip) — grana `foundation/f2a` (2026-07-01, `1f46c4c`; NIJE na produkciji).**
+- **🧩 FAZA 2 · 2A.3 (dual-read JSON + `sit` pilot flip) — `1f46c4c`; ✅ DEPLOYANO 2026-07-02.**
   Loader (`js/content-loader.js`) može čitati study sadržaj iz `data/json/<id>/<var>.json` po catalog-flagu `content.dataFormat:'json'` — grananje **DB → JSON → `.js`**;
   JSON-mod fallback na pune `.js` ako fetch padne (0 regresije); vježbe uvijek iz `.js` (BUG-012). `sit` = prvi migrirani predmet. `verify` čuvar #7 (flag bez datoteka = fail).
   **Provjere:** `tests/dual-read.spec.js` 12/12 (JSON put · **shadow-ekvivalencija bajt-u-bajt** · fallback) + puni Playwright 113/0 (subjects=18). Cache `?v=20260700` (catalog+loader).
-- **🧩 FAZA 2 · 2A.2 (JSON exporter + pilot) — grana `foundation/f2a` (2026-07-01, `55feb5f`; NIJE na produkciji).**
+- **🧩 FAZA 2 · 2A.2 (JSON exporter + pilot) — `55feb5f`; ✅ DEPLOYANO 2026-07-02.**
   `scripts/export-content-json.js` (`npm run export:json [id] [--check]`) → `data/json/<id>/<var>.json` (uniforman put, zrcali DB model 1 red=1 var).
   **Round-trip SVIH 54 payloada bez gubitka**; pilot `sit` (3 datoteke) nezavisno ajv-validiran + SHA1 bajt-identičan (deterministički). `.gitattributes` `data/json/**/*.json eol=lf`;
   novi CI drift-gate `export:json --check`. Vježbe se ne exportaju (BUG-012). Ništa još ne čita `.json` (to je 2A.3) → 0 runtime rizika, bez cache bumpa.

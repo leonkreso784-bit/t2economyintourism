@@ -114,7 +114,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
-**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **▶ 2A (S2 JSON) ✅ GOTOVO na grani `foundation/f2a` (NIJE deployano): 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot `sit`) · 2A.3 ✅ (dual-read + `sit`) · 2A.4 ✅ (svih 17/18 migrirano; accounting svjesno odgođen). Puni Playwright 117/0, 51 JSON datoteka.** ⚠️ **Grana čeka VIZUALNU PROVJERU + POTVRDU za produkcijski deploy** (korisnik izabrao „dovrši pa deploy"). Pa 2C (AppState), 2D (Web Components).
+**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **✅ 2A (S2 JSON) DEPLOYANO NA PRODUKCIJU (2026-07-02, ff-merge `0c21aa6..661dbc8` uz potvrdu korisnika; live verificirano: tokeni `20260702`/`20260700`, 17 flagova, JSON servira `application/json`, loader dual-read):** 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot) · 2A.3 ✅ (dual-read) · 2A.4 ✅ (17/18 migrirano; accounting svjesno odgođen). Gate: CI zelen (GitHub) + Vercel preview provjeren do bajta (SHA1) + puni Playwright 117/0. **DALJE: 2C (AppState) → 2D (Web Components) → F3.**
 
 > **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
 > i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —

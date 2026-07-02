@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-02 — ✅ F2 2A (čisti JSON format) DEPLOYANO NA PRODUKCIJU
+**Deploy:** ff-merge `0c21aa6..661dbc8` (grana `foundation/f2a`→main, uz potvrdu korisnika nakon pregleda preview-a).
+**Pre-deploy lanac (sve zeleno):** CI na GitHubu `success` na `661dbc8` · Vercel preview dubinski provjeren uz share-bypass
+(17 flagova, JSON `application/json`, loader dual-read, **SHA1 serviranih JSON-a = lokalne datoteke**) · puni Playwright 117/0 ·
+**nezavisni audit** (svaki JSON bajt-identičan `.js` izvoru: 414 kat / 4148 fc / 3479 quiz / 2641 fill, 0 razlika) ·
+korisnik vizualno pregledao localhost i preview.
+**Live verificirano (sokratstudy.com):** tokeni `catalog?v=20260702` + `content-loader?v=20260700`, catalog 17× `dataFormat:'json'`,
+`data/json/sit/sitM1.json` → HTTP 200 `application/json`, loader `_loadSubjectFromJson` prisutan. Vercel `.json` NIJE immutable-cachean
+(samo `.js`/`.css` u vercel.json) → ETag revalidacija, uvijek svjež.
+**Usput (bezopasno):** korisnik slučajno pomaknuo pa vratio `node_modules/tmp` (dep od `@lhci/cli`) — verzija = lock, sve radi, git netaknut (reflog čist).
+**⬜ DALJE: 2C (AppState) → 2D (Web Components) → F3 performanse.** Accounting format-migracija = kasnije uz izričit OK.
+
 ## 2026-07-01 (nastavak) — ▶ FAZA 2 · 2A (S2 čisti JSON format) započeta: cigla 2A.1 (JSON Schema ugovor)
 **Grana `foundation/f2a`** (odvojena od `main`; produkcija netaknuta). Post-compact review najprije potvrdio zeleno stanje
 (validate/verify/typecheck/unit 0, `main==origin/main==0c21aa6`) + ulovio 1 zastarjeli doc-red (FOUNDATION_PLAN §2E „čeka DSN" ↔ STATUS „deployano") → popravljen (`5d92da3`).
@@ -35,7 +47,7 @@ testirano, što slijedi.
 - Svi plain study (isti dokazani put kao sit) osim academic-writing (citation vježbe = exercise put, dokazan preko statistics). **Accounting SVJESNO izostavljen** (korisnikova napomena; format-only kasnije uz OK).
 - 39 JSON datoteka generirano (ukupno **51** = 17 predmeta × 3). Catalog: 13× flag (10 skriptom za jednolinijski resolve + 3 ručno za multi-line/codeScripts; `git diff` vizualno potvrđen). Cache `?v=20260702`.
 - Gate: verify 0/0 (guard = svih 51 JSON prisutno), validate:schema 54/54, export --check 54/54, **puni Playwright 117 pass / 0 fail (subjects=18, problems=0)**.
-**⬜ DALJE: 2A GOTOVO na grani. Čeka VIZUALNU PROVJERU (korisnik) + POTVRDU za produkcijski deploy cijele F2 2A. Pa 2C (AppState) → 2D (Web Components) → F3.**
+**→ DEPLOYANO 2026-07-02 (vidi unos gore).**
 
 ## 2026-07-01 — ✅ FAZA 2 (2B+2E) DEPLOYANA NA PRODUKCIJU + Sentry uživo verificiran
 **Deploy:** ff-merge `164dc11..57f449a` (grana `foundation/f2`→main, uz izričito odobrenje); CI zelen (build+lighthouse); lokalni puni Playwright **101 pass / 0 fail (subjects=18)**.
