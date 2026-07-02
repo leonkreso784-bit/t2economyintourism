@@ -68,11 +68,7 @@ let currentShuffledOptions = [];
 let currentShuffledCorrectIndex = 0;
 let quizAnswers = []; // stores { selected, shuffledOptions, shuffledCorrectIndex, isCorrect } per question
 
-// Fill state
-let fillQuestions = [];
-let currentFillIndex = 0;
-let fillCorrect = 0;
-let fillWrong = 0;
+// Fill state → MIGRIRANO u AppState.fill (js/app-state.js, F2 2C.2a)
 
 // Progress state
 let progress = {

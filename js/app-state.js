@@ -11,7 +11,7 @@
 //   cards   ⬜ config.js: flashcards/currentCardIndex/knownCards/unknownCards
 //   quiz    ⬜ config.js: quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/
 //              quizStartTime/wrongAnswersList/currentShuffledOptions/currentShuffledCorrectIndex/quizAnswers
-//   fill    ⬜ config.js: fillQuestions/currentFillIndex/fillCorrect/fillWrong
+//   fill    ✅ MIGRIRANO 2026-07-02 (2C.2a) — bilo config.js: fillQuestions/currentFillIndex/fillCorrect/fillWrong
 //   session ⬜ config.js: sessionStartTime
 //
 // `progress` i `analytics` NAMJERNO nisu ovdje — imaju vlastiti persist-lifecycle

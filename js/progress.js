@@ -126,8 +126,8 @@ function renderProgressPage() {
     document.getElementById('avgQuizScore').textContent = `${avgScore}%`;
     document.getElementById('totalQuizzes').textContent = progress.quizScores.length;
     
-    const totalFills = fillCorrect + fillWrong;
-    const fillAcc = totalFills > 0 ? Math.round((fillCorrect / totalFills) * 100) : 0;
+    const totalFills = AppState.fill.correct + AppState.fill.wrong;
+    const fillAcc = totalFills > 0 ? Math.round((AppState.fill.correct / totalFills) * 100) : 0;
     document.getElementById('fillAccuracy').textContent = `${fillAcc}%`;
     document.getElementById('fillSolved').textContent = progress.fillSolved;
     

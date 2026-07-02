@@ -3,11 +3,12 @@
 let fillListenersInitialized = false;
 
 function initFill() {
-    fillQuestions = getAllFillQuestions();
-    shuffleArray(fillQuestions);
-    currentFillIndex = 0;
-    fillCorrect = 0;
-    fillWrong = 0;
+    const fill = AppState.fill;
+    fill.questions = getAllFillQuestions();
+    shuffleArray(fill.questions);
+    fill.index = 0;
+    fill.correct = 0;
+    fill.wrong = 0;
     
     showFillQuestion();
     updateFillProgress();
@@ -44,20 +45,21 @@ function getAllFillQuestions() {
 }
 
 function showFillQuestion() {
-    if (!fillQuestions || fillQuestions.length === 0) {
+    const fill = AppState.fill;
+    if (!fill.questions || fill.questions.length === 0) {
         document.getElementById('fillSentence').innerHTML = '<p style="color: var(--text-muted);">No fill-in-the-blank questions available for this lesson.</p>';
         document.getElementById('fillInput').disabled = true;
         document.getElementById('checkFill').disabled = true;
         return;
     }
-    
-    if (currentFillIndex >= fillQuestions.length) {
+
+    if (fill.index >= fill.questions.length) {
         showToast(typeof t === 'function' ? t('fill.completed') : 'You completed all Fill-in-the-blank questions!');
-        currentFillIndex = 0;
-        shuffleArray(fillQuestions);
+        fill.index = 0;
+        shuffleArray(fill.questions);
     }
-    
-    const q = fillQuestions[currentFillIndex];
+
+    const q = fill.questions[fill.index];
     
     document.getElementById('fillCategory').textContent = q.categoryName;
     
@@ -81,8 +83,9 @@ function showFillQuestion() {
 function normFill(s) { return String(s).trim().toLowerCase().replace(/[-\s]+/g, ' ').trim(); }
 
 function checkFillAnswer() {
+    const fill = AppState.fill;
     const input = document.getElementById('fillInput').value.trim().toLowerCase();
-    const correct = fillQuestions[currentFillIndex].answer.toLowerCase();
+    const correct = fill.questions[fill.index].answer.toLowerCase();
 
     const feedback = document.getElementById('fillFeedback');
     feedback.classList.remove('hidden', 'correct', 'wrong');
@@ -96,16 +99,16 @@ function checkFillAnswer() {
     if (isCorrect) {
         feedback.classList.add('correct');
         document.getElementById('feedbackText').innerHTML = '<i class="fas fa-check-circle"></i> ' + tr('fill.correct', 'Correct!');
-        fillCorrect++;
+        fill.correct++;
         progress.fillSolved++;
         trackFillExercise();
     } else {
         feedback.classList.add('wrong');
         document.getElementById('feedbackText').innerHTML = '<i class="fas fa-times-circle"></i> ' + tr('fill.wrong', 'Wrong!');
-        fillWrong++;
+        fill.wrong++;
     }
-    
-    document.getElementById('correctFillAnswer').textContent = fillQuestions[currentFillIndex].answer;
+
+    document.getElementById('correctFillAnswer').textContent = fill.questions[fill.index].answer;
 
     // ADR-009: render LaTeX in the revealed correct answer (if it is a formula).
     if (typeof renderMath === 'function') renderMath(document.getElementById('fillFeedback'));
@@ -121,32 +124,35 @@ function checkFillAnswer() {
 }
 
 function showHint() {
-    const hint = fillQuestions[currentFillIndex].hint;
+    const fill = AppState.fill;
+    const hint = fill.questions[fill.index].hint;
     document.getElementById('hintText').textContent = hint;
     document.getElementById('fillHint').classList.remove('hidden');
 }
 
 function skipFill() {
-    fillWrong++;
+    AppState.fill.wrong++;
     updateFillStats();
     nextFill();
 }
 
 function nextFill() {
-    currentFillIndex++;
+    AppState.fill.index++;
     showFillQuestion();
     updateFillProgress();
 }
 
 function updateFillProgress() {
-    const prog = `${currentFillIndex + 1} / ${fillQuestions.length}`;
+    const fill = AppState.fill;
+    const prog = `${fill.index + 1} / ${fill.questions.length}`;
     document.getElementById('fillProgress').textContent = prog;
-    
-    const percent = ((currentFillIndex + 1) / fillQuestions.length) * 100;
+
+    const percent = ((fill.index + 1) / fill.questions.length) * 100;
     document.getElementById('fillProgressBar').style.width = `${percent}%`;
 }
 
 function updateFillStats() {
-    document.getElementById('fillCorrect').textContent = fillCorrect;
-    document.getElementById('fillWrong').textContent = fillWrong;
+    // 'fillCorrect'/'fillWrong' OVDJE su DOM id-jevi (index.html), ne stare varijable.
+    document.getElementById('fillCorrect').textContent = AppState.fill.correct;
+    document.getElementById('fillWrong').textContent = AppState.fill.wrong;
 }
