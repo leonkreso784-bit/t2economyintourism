@@ -154,9 +154,26 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     `navigation.js?v=20260699`. Gate: verify 0/0, typecheck 0, content-repo 8/8, lazy-load 4/4, **puni responsive smoke 89 pass / 0 fail (subjects=18, problems=0)**.
     *(Preostaje za pun „svi pozivi kroz Repo": ostali potrošači `getSubjectData`/`loadSubjectContent` — migrirati postupno kad zatreba.)*
   - **Done-kriterij:** prebacivanje datoteka↔baza = config; CRUD i SW kasnije koriste isti Repo.
-- **2C — AppState (S3):** *oprezno, inkrementalno — NE sve globale odjednom.*
-  - [2C.1] Uvedi `AppState = { current:{}, study:{}, quiz:{}, ... }` namespace.
-  - [2C.2] Migriraj **jednu skupinu globala odjednom** (npr. `current*`), s testovima, pa sljedeću. Može se djelomično odgoditi do kad CRUD/tutor zatraži.
+- **2C — AppState (S3):** *oprezno, inkrementalno — NE sve globale odjednom.* *(▶ AKTIVNO — grana `foundation/f2c`)*
+  - **Izviđanje (2026-07-02):** praktički SVI mutable globali žive u `js/config.js` (L47–106), već grupirani: nav `current*` (97 ref.) ·
+    quiz (92) · fill (38) · flashcards/cards (30) · session. ⚠️ Imena `progress`/`analytics`/`flashcards` postoje i kao DOM id-jevi/
+    stringovi/propertyji → migracija ČITANJEM svakog mjesta, NE slijepim regexom. `progress`+`analytics` NISU u AppState (vlastiti
+    persist-lifecycle kroz storage.js/cloud-sync.js — zasebna analiza ako ikad).
+  - [2C.1] ✅ **GOTOVO (2026-07-02, `0a43fc9`):** `js/app-state.js` → `window.AppState` s grupama **nav/cards/quiz/fill/session**
+    (početne vrijednosti = config.js `let`-ovi; grupa NEAKTIVNA dok se ne migrira → nema dvostrukog izvora istine). JSDoc typedefi +
+    tsconfig include + `Window.AppState` u globals.d.ts. Učitava se PRIJE config.js (`?v=20260703`). Test `tests/unit/app-state.test.js`
+    (8 testova; isti-realm load — vm cross-realm ruši `deepStrictEqual`). Gate: typecheck 0, unit 41/41, verify 0/0, smoke 16/16.
+  - [2C.2] Migracija **jedne skupine globala odjednom**, s testovima:
+    - [2C.2a] ✅ **GOTOVO (2026-07-02, `a08dc3b`):** **fill** grupa (`fillQuestions/currentFillIndex/fillCorrect/fillWrong` → `AppState.fill.questions/index/correct/wrong`).
+      Dirano SAMO `fill-blanks.js` (24 ref.) + `progress.js` (2) + brisanje `let`-ova iz config.js. DOM id-jevi `'fillCorrect'`/`'fillWrong'` NEDIRNUTI
+      (ista imena kao stare varijable — dokaz zašto ne regex). Grep-dokaz: 0 preostalih golih referenci. NOVI funkcionalni test `tests/app-state.spec.js`
+      (fill tijek: točan→kriv→skip→progress 33%; stanje inspektabilno kroz `window.AppState` — prije nemoguće, top-level `let` nije na window) 4/4.
+      Cache `?v=20260703` (config/fill-blanks/progress).
+    - [2C.2b] ⬜ **cards** grupa (`flashcards/currentCardIndex/knownCards/unknownCards` → `AppState.cards.deck/index/known/unknown`; samo flashcards.js).
+    - [2C.2c] ⬜ **quiz** grupa (9 varova; quiz.js + progress.js/i18n.js provjeriti).
+    - [2C.2d] ⬜ **nav** grupa (`current*`, 97 ref. — najveća, ZADNJA; navigation/learn/quiz/flashcards/fill/progress/blind-map).
+    - [2C.2e] ⬜ **session** (`sessionStartTime`; analytics.js).
+  - **Done-kriterij:** config.js bez mutable `let` globala; runtime stanje = `window.AppState` (inspektabilno, temelj za CRUD/tutor/debug).
 - **2D — UI-primitivi = Web Components (S4):** *inkrementalno, light-DOM (bez Shadow DOM — čuva globalni CSS/teme).*
   - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
   - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.

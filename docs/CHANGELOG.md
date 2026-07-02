@@ -5,6 +5,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2C.1 (S3 AppState — namespace skeleton) — `0a43fc9`; grana `foundation/f2c` (lokalno).**
+  `js/app-state.js` → `window.AppState` s grupama **nav/cards/quiz/fill/session** (početne vrijednosti identične config.js `let`-ovima;
+  grupa NEAKTIVNA dok se ne migrira → nema dvostrukog izvora istine). JSDoc typedefi + tsconfig include (typecheck raste modul-po-modul, ADR-014) +
+  `Window.AppState` u `types/globals.d.ts`. Učitava se PRIJE config.js (`?v=20260703`). NOVI `tests/unit/app-state.test.js` (8 testova čuva oblik
+  namespacea; isti-realm load jer vm cross-realm ruši `deepStrictEqual`) u `test:unit` lancu. Gate: typecheck 0, unit 41/41, verify 0/0, smoke 16/16.
+- **🧩 FAZA 2 · 2C.2a (fill grupa → `AppState.fill`) — `a08dc3b`; grana `foundation/f2c` (lokalno).**
+  `fillQuestions/currentFillIndex/fillCorrect/fillWrong` → `AppState.fill.questions/index/correct/wrong`; `let`-ovi obrisani iz config.js.
+  Dirano SAMO `fill-blanks.js` (24 ref.) + `progress.js` (2). **DOM id-jevi `'fillCorrect'`/`'fillWrong'` NEDIRNUTI** (ista imena kao stare varijable —
+  migracija čitanjem svakog mjesta, NE regexom). Grep-dokaz 0 golih referenci. NOVI funkcionalni `tests/app-state.spec.js` (fill tijek: točan→kriv→skip→
+  Progress 33%; smoke samo renderira, ovaj OCJENJUJE; stanje sad inspektabilno kroz `window.AppState`) 4/4. Cache `?v=20260703`.
+  Gate: typecheck 0, unit 41/41, **puni Playwright 117/0** (subjects=18, problems=0, errors=0).
 - **🧩 FAZA 2 · 2A.1 (S2 čisti JSON format — JSON Schema ugovor) — `1fc6c19`; ✅ DEPLOYANO 2026-07-02 (`0c21aa6..661dbc8`).**
   `schema/subject-content.schema.json` (JSON Schema draft-07) = kanonski STRUKTURNI ugovor za payload sadržaja (window-var = kategorije lekcije/final).
   `scripts/validate-json-schema.js` (`npm run validate:schema`, `ajv@8` dev-dep) validira payload svake razriješene lekcije preko vm window-shima (izvor-neovisno)

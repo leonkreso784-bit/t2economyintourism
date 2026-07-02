@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-02 (nastavak) — ▶ FAZA 2 · 2C (S3 AppState) započeta: 2C.1 skeleton + 2C.2a fill grupa
+**Grana `foundation/f2c`** (od `main@73f3809`; produkcija netaknuta). Post-compact review najprije potvrdio zeleno stanje
+(verify/schema/export-check/unit svi 0 problema; CI `success` na `73f3809`+`2b59a06`; live tokeni + JSON 200 potvrđeni).
+**Izviđanje 2C:** svi mutable globali u `config.js` L47–106, već grupirani — nav `current*` 97 ref. / quiz 92 / fill 38 / cards 30.
+⚠️ `progress`/`analytics`/`flashcards` postoje i kao DOM id-jevi/stringovi/propertyji → migracija čitanjem svakog mjesta, NE regexom.
+`progress`+`analytics` NE idu u AppState (vlastiti persist-lifecycle, storage/cloud-sync).
+**Cigla 2C.1 ✅ (`0a43fc9`):** `js/app-state.js` → `window.AppState` (grupe nav/cards/quiz/fill/session; početne vrijednosti = config.js;
+grupa neaktivna dok se ne migrira → nema dvostrukog izvora istine). JSDoc + tsconfig include + globals.d.ts. Prije config.js, `?v=20260703`.
+`tests/unit/app-state.test.js` 8 testova (pouka: isti-realm load — vm cross-realm Object.prototype ruši `deepStrictEqual`).
+Gate: typecheck 0, unit 41/41, verify 0/0, smoke 16/16.
+**Cigla 2C.2a ✅ (`a08dc3b`) — fill grupa → `AppState.fill`:** dirano SAMO `fill-blanks.js` (24 ref.) + `progress.js` (2) + brisanje
+`let`-ova iz config.js. **DOM id-jevi `'fillCorrect'`/`'fillWrong'` NEDIRNUTI** (kolizija imena s varijablama — dokaz zašto ne regex).
+Grep 0 golih referenci. **NOVI funkcionalni `tests/app-state.spec.js`** — fill tijek stvarno OCJENJUJE (točan→kriv→skip→Progress 33%),
+smoke samo renderira; stanje sad inspektabilno kroz `window.AppState` (top-level `let` nije bio na window) — 4/4.
+Cache `?v=20260703` (config/fill-blanks/progress). Gate: typecheck 0, unit 41/41, **puni Playwright 117/0** (subjects=18, problems=0).
+**⬜ DALJE: 2C.2b cards → 2C.2c quiz → 2C.2d nav (najveća, zadnja) → 2C.2e session.**
+
 ## 2026-07-02 — ✅ F2 2A (čisti JSON format) DEPLOYANO NA PRODUKCIJU
 **Deploy:** ff-merge `0c21aa6..661dbc8` (grana `foundation/f2a`→main, uz potvrdu korisnika nakon pregleda preview-a).
 **Pre-deploy lanac (sve zeleno):** CI na GitHubu `success` na `661dbc8` · Vercel preview dubinski provjeren uz share-bypass
