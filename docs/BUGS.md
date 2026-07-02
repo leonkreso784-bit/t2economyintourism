@@ -23,6 +23,15 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-016 — Landscape mobitel: flashcard lice strši preko Known/Unknown gumba (tap flipa karticu umjesto klika)
+- Status: ✅ riješen 2026-07-02 (lokalno, grana `foundation/f2c`) · Težina: srednji (UX, flashcards na landscape mobitelu, svi predmeti) · Našao: **novi funkcionalni Playwright test** (F2 2C.2b) — klik na `#btnCorrect` presretan
+- Opis: na landscape mobitelu (npr. iPhone 15 Pro landscape, 852×393) lice kartice (`.flashcard-front`, raste sa sadržajem) **strši ~130px ispod kartice** i prekriva kontrole → tap na Known/Unknown pogodi karticu (flip) umjesto gumba.
+- Reprodukcija (prije fixa): mobitel u landscape → bilo koji predmet → Flashcards → kartica s dužim pitanjem → tap na ✓/✗ gumb → kartica se okrene, gumb ne reagira.
+- Uzrok (dvostruki, oba relikti od prije BUG-013 grid-stacka; tada su lica bila `absolute` pa fiksne visine nisu smetale): (1) `responsive/03-modes-a11y-print.css` `@media (max-height:500px) and (orientation:landscape)` → **`.flashcard{height:200px}` FIKSNA**; (2) `responsive/04-mobile-extra.css` `@media (max-width:900px) and (orientation:landscape)` → **`.flashcard{max-height:200px}` CAP**. Grid-stack (BUG-013) ispravno raste `.flashcard-inner` (npr. 327px), ali fiksna/capana kartica ostane 220px → lice vidljivo strši preko elemenata ispod (overflow:visible).
+- Rješenje (CSS-only): (1) `03`: `height:200px` → `height:auto`; (2) `04`: `max-height:200px` maknut (min-height 150 ostaje). Cache `styles.css?v=20260703` + `03`/`04` importi `?v=20260703`. Dijagnoza geometrijskim probeom (getBoundingClientRect lanca wrapper/card/inner/front + computed styles) — nakon fixa sva 4 sloja identična (339px), gumb ispod kartice.
+- Provjera: `tests/app-state.spec.js` flashcards tijek (klik ✓/✗/prev kao korisnik) **8/8 uklj. landscape** + geometrijski probe (wrapper==front) + puni Playwright gate.
+- Lekcija: **fiksni `height`/`max-height` na kontejneru čija djeca rastu sa sadržajem = tempirana bomba** — BUG-013 je popravio `01`/`02`, ali ISTI anti-pattern je ostao u `03`/`04` (landscape media blokovi) jer tadašnji testovi nisu KLIKALI kao korisnik. Funkcionalni testovi (stvarni klik, ne `evaluate`) love klasu bugova koje render-smoke ne vidi; sweep za isti anti-pattern napravi po SVIM responsive datotekama, ne samo gdje je simptom viđen.
+
 ### BUG-015 — Landing nav se prepuni na mobitelu nakon dodavanja 🌐 jezik-toggle-a (CTA „Start studyin" rezan)
 - Status: ✅ riješen + ✅ LIVE 2026-06-28 (`ac68ab0`) · Težina: srednji (vidljiv UX, svaki mobilni posjet landinga) · Prijavio korisnik: 2026-06-28 (screenshot)
 - Opis: nakon dodavanja globalnog 🌐 HR/EN prekidača u nav, na mobitelu se primarni CTA **„Start studying" / „Počni učiti" reže** („Start studyin" / „Poč uči"); na tablet/HR širini se duži anchor-labeli (npr. „Kako funkcionira") lome u **2 reda** → nav viši.

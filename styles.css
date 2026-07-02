@@ -53,8 +53,8 @@
    Ne presložuj dijelove; konkatenacija 01→06 = bivši responsive.css (1:1). */
 @import url('css/responsive/01-up-and-phone-breakpoints.css?v=20260694');
 @import url('css/responsive/02-mobile-core.css?v=20260694');
-@import url('css/responsive/03-modes-a11y-print.css?v=20260607');
-@import url('css/responsive/04-mobile-extra.css?v=20260607');
+@import url('css/responsive/03-modes-a11y-print.css?v=20260703');
+@import url('css/responsive/04-mobile-extra.css?v=20260703');
 @import url('css/responsive/05-device-sizes.css?v=20260607');
 @import url('css/responsive/06-component-improvements.css?v=20260607');
 

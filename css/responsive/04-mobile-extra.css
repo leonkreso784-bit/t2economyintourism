@@ -550,8 +550,9 @@
     }
     
     .flashcard {
+        /* BUG-016: max-height cap ovdje NE smije postojati — lica rastu sa sadržajem
+           (BUG-013 grid-stack) pa bi prekoračila karticu i prekrila Known/Unknown gumbe. */
         min-height: 150px;
-        max-height: 200px;
     }
 }
 

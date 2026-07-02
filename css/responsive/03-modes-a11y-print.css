@@ -14,7 +14,9 @@
     }
     
     .flashcard {
-        height: 200px;
+        /* BUG-016: bila fiksna height:200px (relikt prije BUG-013 grid-stacka) — lica sad
+           rastu sa sadržajem pa su stršala iz kartice i prekrivala Known/Unknown gumbe. */
+        height: auto;
     }
     
     .hero {
