@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2A DOVRŠENA na 18/18 (accounting → JSON dual-read) — grana `foundation/f2a-accounting`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+  Accounting bio jedini predmet izvan JSON supstrata (17/18, svjesno odgođen). Migriran **format-only (0 diranja sadržaja)** da F4 (Admin CRUD,
+  source-of-truth flip) kreće s uniformne baze — bez specijalnog slučaja. `export:json accounting` → 3 JSON (`accountingM1` 6kat / `accountingM2`
+  8kat / `accountingFinal` 15kat; round-trip bez gubitka) + `dataFormat:'json'` u catalog (`data/catalog.js`) + catalog.js cache token
+  **`20260702→20260704`**. Vježbe (`accountingExercises`, `generate()` funkcije) i dalje UVIJEK iz `.js` codeScripts (**BUG-012 očuvan**). Novi trajni
+  test u `tests/dual-read.spec.js` (accounting: study iz `data/json/accounting/accountingM1.json`, vježbe iz `data/accounting/exercises.js`, 0 page-error).
+  **Gate (sve zeleno):** verify 0/0 · validate:schema 54/54 · validate:content 0/0 · export:json --check 0 nesklada · test:unit 69/0 · typecheck 0 ·
+  **dual-read.spec 5/5** (uklj. novi accounting). Odluka + otpis kozmetičkog duga (#2/#4): **ADR-015**.
 - **🧩 FAZA 2 · 2C.2d (nav grupa → `AppState.nav`) → 2C KOMPLETNA — `2d75dd1`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`). Gate: puni Playwright 133/0.**
   `currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory` → `AppState.nav.*` kroz **13 datoteka**
   (navigation/progress/quiz/flashcards/fill-blanks/learn/exercises/analytics/storage/auth/cloud-sync/blind-map/init; exercises.js =

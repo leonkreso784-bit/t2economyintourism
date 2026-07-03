@@ -322,7 +322,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **✅ ŽIVA PROVJERA:** obje test-greške stigle na Sentry dashboard (Users:0 = PII off radi). **✅ GDPR:** `privacy.html` §5 + cookie-banner spominju Sentry. Test `tests/monitoring.spec.js` (loader stubban preko `page.route`).
   Cache `?v=20260699`. Gate (dvaput): validate/verify/typecheck/unit/RLS 0/0, **Playwright 101 pass/0 fail (subjects=18)**, CI zelen. [[foundation-pivot]]
 - **✅ FAZA 2 — 2A (S2 čisti JSON format) DEPLOYANO NA PRODUKCIJU (2026-07-02, ff-merge `0c21aa6..661dbc8` grana `foundation/f2a`→main uz potvrdu korisnika; CI zelen; live verificirano):**
-  **17/18 predmeta na JSON dual-read** (svi osim **accountinga** — svjesno odgođen, korisnik zasićen; format-only kasnije uz izričit OK). Cigle: **2A.1** JSON Schema ugovor
+  **17/18 predmeta na JSON dual-read** (tada svi osim **accountinga** — svjesno odgođen; **DOVRŠEN 2026-07-03 → 18/18**, grana `foundation/f2a-accounting`, vidi ADR-015 + zapis niže). Cigle: **2A.1** JSON Schema ugovor
   (`schema/subject-content.schema.json` draft-07 + `scripts/validate-json-schema.js` = `npm run validate:schema`, ajv dev-dep; izviđanje uhvatilo stvarna nedokumentirana polja `quiz.image`/`imageAlt`/`learn.title`/`learn.image=null`; 54/54) ·
   **2A.2** exporter (`scripts/export-content-json.js` = `npm run export:json [id] [--check]` → `data/json/<id>/<var>.json`, **51 datoteka**; round-trip 54/54 bez gubitka; `.gitattributes` `data/json/**/*.json eol=lf`; **CI drift-gate `export:json -- --check`**) ·
   **2A.3** dual-read loader (`_loadSubjectFromJson` u `content-loader.js`; grananje **DB → JSON (`content.dataFormat:'json'`) → `.js` fallback**; vježbe UVIJEK iz `.js` codeScripts = BUG-012; `verify` čuvar #7: flag ⇒ JSON datoteke postoje) ·
@@ -340,6 +340,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (3) novi **funkcionalni testovi** `tests/app-state.spec.js` — fill/quiz/flashcards/nav tijekovi klikaju KAO KORISNIK; consent `'denied'` unaprijed u testu (banner presreće klikove).
   **🐛 BUG-016 nađen tim testom + POPRAVLJEN (`68bf7e1`):** landscape mobitel — `.flashcard` fiksna visina/cap (`responsive/03`+`04`, relikti prije BUG-013) → lice stršalo preko ✓/✗ gumba (tap=flip).
   Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **⬜ DALJE: 2D Web Components (toast→modal) → F3 performanse (SW).** [[foundation-pivot]]
+- **✅ FAZA 2 — 2A DOVRŠENA na 18/18 (accounting → JSON) — grana `foundation/f2a-accounting`, lokalni commit (⏳ NIJE deployano — čeka odobrenje):** accounting bio jedini
+  predmet izvan JSON dual-reada (17/18); sad migriran (**format-only, 0 diranja sadržaja**) da F4 flip kreće s uniformne baze. `export:json accounting`
+  (3 JSON: M1 6kat/M2 8kat/Final 15kat, round-trip 0) + `dataFormat:'json'` u catalog + catalog.js token **`20260702→20260704`** + novi `dual-read.spec`
+  accounting test (study iz `data/json/accounting/*.json`, vježbe iz `.js` = BUG-012 očuvan). Gate: verify 0/0, validate:schema 54/54, validate:content 0/0,
+  export:json --check 0 nesklada, test:unit 69/0, typecheck 0, **dual-read.spec 5/5** (uklj. novi accounting). Odluka + otpis #2/#4: **ADR-015**. [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
@@ -365,6 +370,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (Admin CRUD, **custom NE CMS**), predmet-po-predmet uz dual-read. Vidi `docs/FOUNDATION_PLAN.md`. [[foundation-pivot]]
 - **ADR-014 (2026-06-29): engineering standardi temelja.** CI/CD gate (GitHub Actions + Vercel preview) · **type-check bez build-a** (JSDoc+`tsc --checkJs`,
   samo CI checker, modul-po-modul) · **Web Components** (light-DOM) za reusable UI umjesto ad-hoc `innerHTML` · error monitoring. Vanilla/no-build etos ostaje.
+- **ADR-015 (2026-07-03): tech-debt triage „briše li ga F4?".** Accounting→JSON = **NAPRAVITI** (dovršeno 18/18, F4 flip s uniformne baze) ·
+  root `data-*.js` lokacije + Supabase free-tier sleep = **svjesno NE popravljati** (F4 ih ispari / poslovna odluka, ne inženjerska) · ručni cache-tokeni = **čekaju F3** (auto version-bump). [[foundation-pivot]]
 - ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
 - ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).

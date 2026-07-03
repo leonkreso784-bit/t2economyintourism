@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-03 (nastavak 2) — ✅ F2 2A DOVRŠENA: accounting → JSON (18/18) + ADR-015 (tech-debt triage)
+**Kontekst:** Nakon cjelovitog pregleda projekta korisnik pitao „u kojem smjeru s tech-dugom". Dogovoreno (ADR-015):
+triage po pitanju **„briše li ga F4?"** → accounting→JSON = **napraviti** (akumulira se); root `data-*.js` lokacije +
+Supabase free-tier sleep = **svjesno NE popravljati** (F4 ih ispari / poslovna odluka); ručni cache-tokeni = **čekaju F3** (auto version-bump).
+
+**Napravljeno (grana `foundation/f2a-accounting`):** accounting bio jedini predmet izvan JSON dual-reada (17/18).
+Migriran **format-only, 0 diranja sadržaja** (ne aktivira „zasićenost računovodstvom"):
+- `node scripts/export-content-json.js accounting` → 3 JSON (`accountingM1` 6kat / `accountingM2` 8kat / `accountingFinal` 15kat),
+  round-trip bez gubitka. Exporter je već ranije (u `--check` nad svima) prošao accounting round-trip → 0 rizika bilo unaprijed poznato.
+- `data/catalog.js`: `dataFormat:'json'` dodan u accounting `content` (poredak = kao statistics: resolve → dataFormat → codeScripts).
+- `index.html`: catalog.js cache token `20260702→20260704` (`.js` je immutable-cachean → nužno; `.json` nije → uvijek svjež).
+- `tests/dual-read.spec.js`: novi trajni accounting test (najsloženiji za sastaviti — 11 skripti, category-moduli + assembleri).
+
+**Testirano (sve zeleno):** verify 0/0 · validate:schema 54/54 · validate:content(accounting) 0/0 · export:json --check 0 nesklada (54 var) ·
+test:unit **69/0** (28+33+8) · typecheck 0 · **dual-read.spec 5/5** (accounting: study iz `data/json/accounting/accountingM1.json`, vježbe iz
+`data/accounting/exercises.js` = BUG-012 očuvan, 0 page-error). Vježbe se NE exportaju (codeScripts, `generate()` funkcije).
+
+**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka izričito odobrenje). JSON supstrat sad **18/18 uniforman** → F4 flip bez specijalnih slučajeva.
+**Slijedi:** F2 **2D (Web Components: toast → modal)**.
+
+---
+
 ## 2026-07-03 (nastavak) — ✅ F2 2C (AppState) + BUG-016 DEPLOYANO NA PRODUKCIJU
 **Deploy:** ff-merge `73f3809..f54048a` (grana `foundation/f2c`→main, uz izričito korisnikovo „deployaj"). 12 commita / 33 datoteke (+856/−286).
 **Pre-deploy lanac (sve zeleno):** CI `success` na `f54048a` i `40abfd6` (grana) · **Vercel preview verificiran uz share-bypass:**

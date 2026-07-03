@@ -120,6 +120,7 @@ const SOKRAT_CATALOG = {
           'second-midterm': 'accountingM2',
           'final': 'accountingFinal'
         },
+        dataFormat: 'json', // F2 2A.4 (dovršetak → 18/18): study iz data/json/accounting/*.json (dual-read); vježbe UVIJEK iz .js (codeScripts, BUG-012)
         codeScripts: ['data/accounting/exercises.js'], // CODE (generate() funkcije) → uvijek iz datoteke, nikad iz baze (BUG-012)
         exercises: 'accountingExercises'   // window var s interaktivnim vježbama (features.exercises)
       }

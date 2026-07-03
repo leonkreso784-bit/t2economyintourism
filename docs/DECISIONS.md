@@ -4,6 +4,31 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-015 — Tech-debt triage: „briše li ga F4?" (accounting→JSON DA; root-lokacije & Supabase-sleep NE)
+**Datum:** 2026-07-03 · **Status:** ✅ ODLUČENO + accounting-dio IZVRŠEN (grana `foundation/f2a-accounting`)
+**Kontekst:** Pregled cijelog projekta (2026-07-03) iznio je 4 „iskrene" stavke tech-duga. Pitanje: koje popraviti,
+kojim redom. Ključni princip presude: **F4 (Admin CRUD → baza autoritativna, datoteke = generirani export) je
+gravitacijski centar temelja** — svaku stavku mjeri prema tome hoće li je F4 ionako učiniti bespredmetnom.
+**Odluka (triage):**
+1. **Accounting → JSON dual-read = NAPRAVITI (akumulira se).** Bio je jedini predmet izvan JSON supstrata (17/18).
+   F4 je „dual-read, predmet-po-predmet" → 1 nemigriran predmet = specijalni slučaj kroz cijelu migraciju.
+   Dovršetak na **18/18** znači F4 kreće s uniformne baze. Mehanički, reverzibilno, format-only (0 diranja sadržaja →
+   ne aktivira „zasićenost računovodstvom"). **✅ IZVRŠENO:** `export:json accounting` (3 JSON, round-trip 0) +
+   `dataFormat:'json'` u catalog + catalog.js token `20260702→20260704` + novi `dual-read.spec` accounting test.
+2. **Root `data-*.js` lokacije (12 datoteka: marketing/geography/econ-hospitality/food-nutrition) = NE popravljati.**
+   Čisto kozmetika (krši „mapa po predmetu", ADR-006), ali funkcionalno svejedno (JSON mirror + dual-read rade).
+   **F4 čini datoteke generiranim exportom → exporter ih piše gdje god, nered se riješi sam.** Premještanje sad =
+   bacanje posla + diranje 4 radna predmeta za 0 dobiti. Svjesno otpisano do F4.
+3. **Ručni per-file cache-tokeni = NE prčkati ručno; čeka F3.** Prava klasa rizika (BUG-004), ali rješenje je
+   **auto version-bump** koji F3 već planira — ubija cijelu klasu trajno. Ad-hoc ručni rad = pola posla. Odgođeno na F3.
+4. **Supabase free-tier uspavljivanje (~7 dana) = PRIHVATITI (nije inženjerski zadatak).** Fallback na datoteke je
+   točno ponašanje; padnu samo login/sync do restore-a. Alternativa (Pro $25/mj) već odbačena. Revidirati tek uz monetizaciju.
+**Posljedice:** JSON supstrat je sad **18/18 uniforman** (spreman za F4 flip bez specijalnih slučajeva). Stavke #2/#4
+prestaju biti „trebamo li?" teret — eksplicitno su otpisane s razlogom. Sljedeći korak (nepromijenjen): **F2 2D (Web Components).**
+[[foundation-pivot]]
+
+---
+
 ## ADR-014 — Engineering standardi temelja: CI/CD-gated, type-check bez build-a, Web Components, monitoring
 **Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (Faze 1–2)
 **Kontekst:** „Platforma-first" odluka (vidi ADR-013) traži da projekt postane **profesionalniji, reliable, WOW** —

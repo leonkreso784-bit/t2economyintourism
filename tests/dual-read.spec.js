@@ -82,6 +82,33 @@ test('dual-read: exercise predmet (statistics) — study iz JSON, vježbe+lib iz
   expect(errors).toEqual([]);
 });
 
+test('dual-read: exercise predmet (accounting, F2 2A dovršetak 18/18) — study iz JSON, vježbe iz .js', async ({ page }) => {
+  // Accounting je zadnji predmet migriran na JSON (18/18) i najsloženiji za sastaviti
+  // (11 skripti: category-moduli definiraju *Data globale, pa ih midterm/final.js assembliraju).
+  // Study MORA doći iz JSON-a, a vježbe (accountingExercises, generate() funkcije) iz .js (BUG-012).
+  await blockSupabase(page);
+  const reqs = [];
+  page.on('request', (r) => reqs.push(r.url()));
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.goto('/');
+  await page.waitForFunction(() => window.SokratContent);
+
+  const res = await page.evaluate(() => window.SokratContent.loadLesson('accounting', 'first-midterm').then((d) => ({
+    studyKeys: Object.keys(d).length,
+    hasExercises: typeof window.accountingExercises === 'object' && !!window.accountingExercises,
+  })));
+
+  expect(res.studyKeys).toBeGreaterThan(0);     // study razriješen (iz JSON-a)
+  expect(res.hasExercises).toBe(true);          // vježbe učitane (iz .js codeScripts)
+  // study iz JSON, kod iz .js — BUG-012 očuvan
+  expect(reqs.some((u) => u.includes('data/json/accounting/accountingM1.json'))).toBe(true);
+  expect(reqs.some((u) => u.includes('data/accounting/exercises.js'))).toBe(true);
+  expect(reqs.some((u) => u.includes('data/accounting/midterm-1.js'))).toBe(false); // study NIJE iz .js
+  expect(errors).toEqual([]);
+});
+
 test('dual-read: JSON blokiran → fallback na .js (0 regresije)', async ({ page }) => {
   await blockSupabase(page);
   await page.route('**/data/json/sit/**', (route) => route.abort());
