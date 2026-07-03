@@ -329,7 +329,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **2A.4** migracija (pilot `sit` → statistics+macro+math = exercise put → 13 ostalih). **Provjere:** `tests/dual-read.spec.js` 16/16 (JSON put · SHADOW bajt-ekvivalencija JSON≡`.js` u pregledniku · exercise put · fallback) ·
   puni Playwright **117/0** · nezavisni audit JSON≡`.js` (414 kat / 4148 fc / 3479 quiz / 2641 fill, 0 razlika) · Vercel preview SHA1-provjeren (share-bypass) · **live:** tokeni `catalog?v=20260702`+`content-loader?v=20260700`, 17 flagova, JSON `application/json`.
   Napomene: `.json` NIJE immutable-cachean (vercel.json pokriva samo `.js`/`.css` → ETag, uvijek svjež); `CONTENT_VERSION` nedirnut (`20260695`); `.js` datoteke OSTAJU izvor istine + fallback (flip izvora = F4). [[foundation-pivot]]
-- **✅ FAZA 2 — 2C (S3 AppState) KOMPLETNA — lokalno, grana `foundation/f2c` (2026-07-02, `0a43fc9..bd2cb45`; ⚠️ ČEKA push→CI→preview→deploy uz odobrenje):**
+- **✅ FAZA 2 — 2C (S3 AppState) KOMPLETNA + ✅ DEPLOYANO NA PRODUKCIJU (2026-07-03, ff-merge `73f3809..f54048a` main; CI zelen; preview SHA1/EOL-verificiran; live verificirano: 16× token `20260703`, `window.AppState` servira, BUG-016 CSS fix live, JSON 200):**
   SVI mutable globali iz `config.js` → **`window.AppState`** (`js/app-state.js`, učitava se PRIJE config.js), grupa-po-grupa s punim gateom nakon svake:
   **2C.1** skeleton (`0a43fc9`; JSDoc typedefi + tsconfig scope + `tests/unit/app-state.test.js`) → **2C.2a fill** (`a08dc3b`, 117/0) → **2C.2b cards** (`9612977`, 125/0) →
   **2C.2c+2C.2e quiz+session** (`1997014`, 129/0) → **2C.2d nav** (`2d75dd1`, 13 datoteka, **133/0**) = **5/5 grupa; config.js bez ijednog mutable `let`**
@@ -339,7 +339,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (2) `typeof currentX !== 'undefined'` guardovi (exercises/auth/cloud-sync) → `typeof AppState` (inače nakon brisanja `let`-ova TIHO 'undefined');
   (3) novi **funkcionalni testovi** `tests/app-state.spec.js` — fill/quiz/flashcards/nav tijekovi klikaju KAO KORISNIK; consent `'denied'` unaprijed u testu (banner presreće klikove).
   **🐛 BUG-016 nađen tim testom + POPRAVLJEN (`68bf7e1`):** landscape mobitel — `.flashcard` fiksna visina/cap (`responsive/03`+`04`, relikti prije BUG-013) → lice stršalo preko ✓/✗ gumba (tap=flip).
-  Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **⬜ DALJE: push f2c (CI+preview) → deploy uz odobrenje → 2D Web Components (toast→modal) → F3.** [[foundation-pivot]]
+  Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **⬜ DALJE: 2D Web Components (toast→modal) → F3 performanse (SW).** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

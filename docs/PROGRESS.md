@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-03 (nastavak) — ✅ F2 2C (AppState) + BUG-016 DEPLOYANO NA PRODUKCIJU
+**Deploy:** ff-merge `73f3809..f54048a` (grana `foundation/f2c`→main, uz izričito korisnikovo „deployaj"). 12 commita / 33 datoteke (+856/−286).
+**Pre-deploy lanac (sve zeleno):** CI `success` na `f54048a` i `40abfd6` (grana) · **Vercel preview verificiran uz share-bypass:**
+4 ključne JS datoteke EOL-normalizirano IDENTIČNE lokalnima (SHA1 razlika = samo CRLF radne kopije vs LF), remote config.js
+`let`-ovi = točno `progress,analytics` + 5 MIGRIRANO markera, jedina index.html razlika = injektirani Vercel Live toolbar (preview-only).
+**Live verificirano (sokratstudy.com):** **16× token `?v=20260703`** (točan broj: 15 js + styles.css) · `js/app-state.js` servira
+`window.AppState` · config.js bez migriranih globala · **BUG-016 CSS fix live** (`height:auto` u responsive/03) ·
+`fill-blanks.js` koristi `AppState.fill` · JSON read-path netaknut (sitM1.json 200). CI na mainu: isti tree kao grana-zeleni `f54048a`.
+**→ Produkcija sada ima: cijeli AppState (S3) + BUG-016 fix + funkcionalne testove u suiti (133 testova).**
+**⬜ DALJE: 2D Web Components (toast→modal) → F3 performanse (SW).**
+
 ## 2026-07-03 — 🚚 PROJEKT PRESELJEN S ONEDRIVEA → `C:\Projects\t2economyintourism-main` (OneDrive se gasi)
 **Povod (korisnik: „ide mi na kurac"):** OneDrive 2026-07-02 USRED RADA obrisao s diska `assets/logo.svg` + 6 geo slika
 (ulovljeno u `git status`, vraćeno iz gita prije štete) — potvrda poznatog rizika git+OneDrive.

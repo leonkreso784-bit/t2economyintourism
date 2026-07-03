@@ -5,36 +5,36 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧩 FAZA 2 · 2C.2d (nav grupa → `AppState.nav`) → 2C KOMPLETNA — `2d75dd1`; grana `foundation/f2c` (lokalno). Gate: puni Playwright 133/0.**
+- **🧩 FAZA 2 · 2C.2d (nav grupa → `AppState.nav`) → 2C KOMPLETNA — `2d75dd1`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`). Gate: puni Playwright 133/0.**
   `currentPage/currentSubject/currentLesson/currentData/currentSection/currentCategory` → `AppState.nav.*` kroz **13 datoteka**
   (navigation/progress/quiz/flashcards/fill-blanks/learn/exercises/analytics/storage/auth/cloud-sync/blind-map/init; exercises.js =
   mehanička izmjena, ne „za sadržaj"). **3 `typeof currentX` guarda** (exercises/auth/cloud-sync) prepisana na `typeof AppState` —
   identificirano U IZVIĐANJU (nakon brisanja `let`-ova bi tiho vratili 'undefined' = kod misli da predmeta nema). Novi funkcionalni
   nav-test; spec 16/16. **→ 2C DONE-KRITERIJ ISPUNJEN: config.js bez ijednog mutable globala; SVE runtime stanje u `window.AppState`.**
   Cache `?v=20260703` (svih 13 + config/app-state).
-- **🧩 FAZA 2 · 2C.2c + 2C.2e (quiz + session grupe → `AppState.quiz`/`AppState.session`) — `1997014`; grana `foundation/f2c` (lokalno).**
+- **🧩 FAZA 2 · 2C.2c + 2C.2e (quiz + session grupe → `AppState.quiz`/`AppState.session`) — `1997014`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`).**
   Quiz: 9 varova (`quizQuestions/currentQuestionIndex/correctAnswers/wrongAnswers/quizStartTime/wrongAnswersList/currentShuffledOptions/
   currentShuffledCorrectIndex/quizAnswers`) → `AppState.quiz.*`; dirano SAMO quiz.js — analytics.js pogoci su **propertyji** `analytics` objekta,
   `'wrongAnswersList'` je i DOM id (nediran). Session: `sessionStartTime` → `AppState.session.startTime` (analytics.js, 4 ref.).
   Funkcionalni quiz-test (točan→kriv→review→rezultati 80%→retry) — app-state spec 12/12. Usput ispravljen zastarjeli opis `quizAnswers`
   (sprema `{selected, isCorrect}`, ne 4 polja). Cache `?v=20260703` (quiz/analytics/config/app-state).
-- **🧩 FAZA 2 · 2C.2b (cards grupa → `AppState.cards`) — `9612977`; grana `foundation/f2c` (lokalno).**
+- **🧩 FAZA 2 · 2C.2b (cards grupa → `AppState.cards`) — `9612977`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`).**
   `flashcards/currentCardIndex/knownCards/unknownCards` → `AppState.cards.deck/index/known/unknown`; dirano SAMO `flashcards.js`
   (ostale `flashcards` pojave = propertyji/stringovi/i18n — provjereno čitanjem). Funkcionalni flashcards-test (klik ✓/✗/prev kao korisnik,
   swap unknown→known, `progress.flashcardsLearned`) 8/8 uklj. landscape. Testovi postavljaju cookie-consent `'denied'` unaprijed (banner presretao klikove).
   Gate (zajedno s BUG-016): typecheck 0, unit 41/41, **puni Playwright 125/0** (117 + 8 novih app-state).
 ### Fixed
-- **🐛 BUG-016 (landscape flashcard lice prekriva Known/Unknown gumbe) — `68bf7e1`; grana `foundation/f2c` (lokalno).**
+- **🐛 BUG-016 (landscape flashcard lice prekriva Known/Unknown gumbe) — `68bf7e1`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`).**
   Na landscape mobitelu lice kartice (raste sa sadržajem, BUG-013 grid-stack) stršalo ~130px ispod kartice jer su `responsive/03`
   (`height:200px` fiksna) i `responsive/04` (`max-height:200px`) ostali kao relikti od prije BUG-013 → tap na ✓/✗ flipao karticu.
   **Našao ga NOVI funkcionalni test** (2C.2b) — render-smoke to ne vidi. Fix CSS-only (`height:auto`, cap maknut) + sweep anti-patterna
   kroz sve css datoteke čist. Cache `styles.css?v=20260703` + importi `03`/`04`. Detalji `docs/BUGS.md` §BUG-016.
-- **🧩 FAZA 2 · 2C.1 (S3 AppState — namespace skeleton) — `0a43fc9`; grana `foundation/f2c` (lokalno).**
+- **🧩 FAZA 2 · 2C.1 (S3 AppState — namespace skeleton) — `0a43fc9`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`).**
   `js/app-state.js` → `window.AppState` s grupama **nav/cards/quiz/fill/session** (početne vrijednosti identične config.js `let`-ovima;
   grupa NEAKTIVNA dok se ne migrira → nema dvostrukog izvora istine). JSDoc typedefi + tsconfig include (typecheck raste modul-po-modul, ADR-014) +
   `Window.AppState` u `types/globals.d.ts`. Učitava se PRIJE config.js (`?v=20260703`). NOVI `tests/unit/app-state.test.js` (8 testova čuva oblik
   namespacea; isti-realm load jer vm cross-realm ruši `deepStrictEqual`) u `test:unit` lancu. Gate: typecheck 0, unit 41/41, verify 0/0, smoke 16/16.
-- **🧩 FAZA 2 · 2C.2a (fill grupa → `AppState.fill`) — `a08dc3b`; grana `foundation/f2c` (lokalno).**
+- **🧩 FAZA 2 · 2C.2a (fill grupa → `AppState.fill`) — `a08dc3b`; grana `foundation/f2c`; ✅ DEPLOYANO 2026-07-03 (ff-merge `73f3809..f54048a`).**
   `fillQuestions/currentFillIndex/fillCorrect/fillWrong` → `AppState.fill.questions/index/correct/wrong`; `let`-ovi obrisani iz config.js.
   Dirano SAMO `fill-blanks.js` (24 ref.) + `progress.js` (2). **DOM id-jevi `'fillCorrect'`/`'fillWrong'` NEDIRNUTI** (ista imena kao stare varijable —
   migracija čitanjem svakog mjesta, NE regexom). Grep-dokaz 0 golih referenci. NOVI funkcionalni `tests/app-state.spec.js` (fill tijek: točan→kriv→skip→
