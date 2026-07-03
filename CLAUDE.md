@@ -340,11 +340,16 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (3) novi **funkcionalni testovi** `tests/app-state.spec.js` — fill/quiz/flashcards/nav tijekovi klikaju KAO KORISNIK; consent `'denied'` unaprijed u testu (banner presreće klikove).
   **🐛 BUG-016 nađen tim testom + POPRAVLJEN (`68bf7e1`):** landscape mobitel — `.flashcard` fiksna visina/cap (`responsive/03`+`04`, relikti prije BUG-013) → lice stršalo preko ✓/✗ gumba (tap=flip).
   Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **⬜ DALJE: 2D Web Components (toast→modal) → F3 performanse (SW).** [[foundation-pivot]]
-- **✅ FAZA 2 — 2A DOVRŠENA na 18/18 (accounting → JSON) — grana `foundation/f2a-accounting`, lokalni commit (⏳ NIJE deployano — čeka odobrenje):** accounting bio jedini
+- **✅ FAZA 2 — 2A DOVRŠENA na 18/18 (accounting → JSON) — grana `foundation/f2a-accounting`, ✅ DEPLOYANO 2026-07-03 (`a8c7b84..d2b1e48`; uvjet „radi savršeno" ispunjen: Playwright 137/0 + live `accountingM1.json` servira 6 kat.):** accounting bio jedini
   predmet izvan JSON dual-reada (17/18); sad migriran (**format-only, 0 diranja sadržaja**) da F4 flip kreće s uniformne baze. `export:json accounting`
   (3 JSON: M1 6kat/M2 8kat/Final 15kat, round-trip 0) + `dataFormat:'json'` u catalog + catalog.js token **`20260702→20260704`** + novi `dual-read.spec`
   accounting test (study iz `data/json/accounting/*.json`, vježbe iz `.js` = BUG-012 očuvan). Gate: verify 0/0, validate:schema 54/54, validate:content 0/0,
   export:json --check 0 nesklada, test:unit 69/0, typecheck 0, **dual-read.spec 5/5** (uklj. novi accounting). Odluka + otpis #2/#4: **ADR-015**. [[foundation-pivot]]
+- **▶ FAZA 2 — 2D.1 (prvi Web Component `<sokrat-toast>`, S4) — grana `foundation/f2d`, lokalni commit (⏳ NIJE deployano):** prvi custom element
+  (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija→lifecycle→`.show()`). **Light-DOM zadržava klasu `.toast`** → svi CSS-ovi (base+responsive)
+  nepromijenjeni. `showToast()` (utils.js) → **delegat** na komponentu s **fallbackom** na stari DOM-put (0 regresije, ~13 pozivatelja nedirnuto). a11y `role=status`.
+  U typecheck scopeu (`Window.SokratToast`). Test `tests/components.spec.js`. Cache `20260705`. Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
+  **⬜ DALJE: 2D.2 `<sokrat-modal>` (auth/profil) → 2D.3 kartice/forme → F3 (SW + auto version-bump).** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

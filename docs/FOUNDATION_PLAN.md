@@ -189,9 +189,14 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     `const subjectDataMap`/`lessonCategoryMap` + `progress`/`analytics` s vlastitim persist-lifecycleom); runtime stanje =
     `window.AppState` (inspektabilno iz konzole/testova — prije nemoguće jer top-level `let` nije na window; temelj za CRUD/tutor/debug).
 - **2D — UI-primitivi = Web Components (S4):** *inkrementalno, light-DOM (bez Shadow DOM — čuva globalni CSS/teme).*
-  - [2D.1] Pilot: `<sokrat-toast>` (najjednostavniji) → dokaži obrazac (registracija, atributi, render).
-  - [2D.2] Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
-  - [2D.3] Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
+  - [2D.1] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** Pilot `<sokrat-toast>` (`js/components/sokrat-toast.js`)
+    — prvi custom element, dokazan obrazac (registracija → lifecycle → `.show()` metoda). **Light-DOM zadržava klasu `.toast`** → svi CSS-ovi (base +
+    responsive) vrijede nepromijenjeno. `showToast()` (js/utils.js) sada **delegira** na komponentu, uz **fallback** na stari DOM-put (0 regresije ako
+    element ne upgrade-a). Komponenta preselila show-logiku doslovno (isti reflow-restart + 2500 ms auto-hide) + a11y (`role=status`/`aria-live=polite`).
+    U typecheck scopeu (novo polje `Window.SokratToast`). Test `tests/components.spec.js` (registracija + show/hide). Cache token `20260705` (utils + nova komponenta).
+    Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
+  - [2D.2] ⬜ Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
+  - [2D.3] ⬜ Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
 - **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ✅ **GOTOVO + DEPLOYANO NA PRODUKCIJU (2026-07-01, `164dc11..57f449a`).**
   - [2E.1] ✅ `js/monitoring.js` → `window.SokratMonitor` (`captureException`/`enable`/`disable`/`status`). Globalni `error`+`unhandledrejection`
     hvatači instalirani odmah; prosljeđuju TEK kad `enabled` (pristanak). **SIGURAN NO-OP bez DSN-a** (ništa se ne učita/šalje, NIKAD ne baca).

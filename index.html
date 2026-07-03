@@ -1056,11 +1056,11 @@
         </figure>
     </div>
 
-    <!-- Toast Notification -->
-    <div class="toast" id="toast">
+    <!-- Toast Notification (F2 2D.1 — Web Component <sokrat-toast>; light-DOM zadržava .toast CSS; djeca ostaju za CSS/fallback prije upgrade-a) -->
+    <sokrat-toast class="toast" id="toast">
         <i class="fas fa-info-circle"></i>
         <span id="toastMessage">Message</span>
-    </div>
+    </sokrat-toast>
 
     <!-- Footer -->
     <footer class="footer">
@@ -1085,7 +1085,8 @@
     <script src="js/content-loader.js?v=20260700"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
     <script src="js/content-repo.js?v=20260699"></script>
-    <script src="js/utils.js?v=20260602"></script>
+    <script src="js/components/sokrat-toast.js?v=20260705"></script>
+    <script src="js/utils.js?v=20260705"></script>
     <script src="js/storage.js?v=20260703"></script>
     <script src="js/analytics.js?v=20260703"></script>
     <script src="js/navigation.js?v=20260703"></script>

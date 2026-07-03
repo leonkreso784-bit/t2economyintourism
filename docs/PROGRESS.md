@@ -22,8 +22,26 @@ Migriran **format-only, 0 diranja sadržaja** (ne aktivira „zasićenost račun
 test:unit **69/0** (28+33+8) · typecheck 0 · **dual-read.spec 5/5** (accounting: study iz `data/json/accounting/accountingM1.json`, vježbe iz
 `data/accounting/exercises.js` = BUG-012 očuvan, 0 page-error). Vježbe se NE exportaju (codeScripts, `generate()` funkcije).
 
-**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka izričito odobrenje). JSON supstrat sad **18/18 uniforman** → F4 flip bez specijalnih slučajeva.
+**Status:** ✅ **DEPLOYANO 2026-07-03** (ff-merge `a8c7b84..d2b1e48`; uvjetno odobrenje „deploy samo ako radi savršeno" → ispunjeno:
+puni Playwright 137/0 + live-verify: `accountingM1.json` servira 6 kat.). JSON supstrat sad **18/18 uniforman** → F4 flip bez specijalnih slučajeva.
 **Slijedi:** F2 **2D (Web Components: toast → modal)**.
+
+---
+
+## 2026-07-03 (nastavak 3) — ▶ F2 2D.1: prvi Web Component `<sokrat-toast>` (S4)
+**Kontekst:** Nakon accounting deploya, kreće **2D (UI-primitivi = Web Components)** po FOUNDATION_PLAN §2D. Pilot = najjednostavniji primitiv (toast).
+
+**Napravljeno (grana `foundation/f2d`):**
+- **NEW `js/components/sokrat-toast.js`** — prvi custom element (`class SokratToast extends HTMLElement`). **Light-DOM (bez Shadow DOM):** zadržava
+  klasu `.toast` → svi postojeći CSS-ovi (css/pages.css base + css/responsive/* pozicija) vrijede NEPROMIJENJENO. Show-logika preseljena iz
+  `showToast()` **doslovno** (isti reflow-restart + 2500 ms auto-hide). Idempotentno (preuzme statički markup, ne re-renderira). a11y: `role=status`+`aria-live=polite`.
+- **`js/utils.js`:** `showToast()` → **tanki delegat** na komponentu (`el.show(msg)`), s **fallbackom** na klasičan DOM-put ako element ne upgrade-a (0 regresije; svih ~13 pozivatelja nedirnuto).
+- **`index.html`:** `<div class="toast">` → `<sokrat-toast class="toast">` (djeca ostaju za CSS/fallback prije upgrade-a) + `<script>` za komponentu + tokeni `20260705`.
+- **Typecheck scope proširen:** `js/components/sokrat-toast.js` u `tsconfig.json` + `Window.SokratToast` u `types/globals.d.ts` (polja deklarirana u ctoru → type-clean bez class-field transpilacije).
+- **NEW `tests/components.spec.js`:** registracija custom-elementa + `#toast` instanca s `.show()` + delegacija (prikaz `.show`+tekst, pa auto-hide), 0 page-error.
+
+**Testirano (sve zeleno):** verify 0 · validate:content 0 · typecheck 0 · test:unit 69/0 · **Playwright 145/0** (137 + 8 novih = 2 component-testa × 4 profila).
+**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2 `<sokrat-modal>` (auth/profil).
 
 ---
 

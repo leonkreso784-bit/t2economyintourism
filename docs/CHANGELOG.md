@@ -5,7 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧩 FAZA 2 · 2A DOVRŠENA na 18/18 (accounting → JSON dual-read) — grana `foundation/f2a-accounting`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+- **🧩 FAZA 2 · 2D.1 — prvi Web Component `<sokrat-toast>` (S4, UI-primitiv) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+  Prvi custom element na platformi (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija → lifecycle → `.show()`) na najjednostavnijem
+  primitivu prije `<sokrat-modal>` (2D.2). **Light-DOM (bez Shadow DOM)** → element zadržava klasu `.toast`, pa svi postojeći CSS-ovi (base +
+  responsive) vrijede NEPROMIJENJENO. Show-logika preseljena iz `showToast()` doslovno (isti reflow-restart animacije + 2500 ms auto-hide);
+  `showToast()` (js/utils.js) sada **tanki delegat** na komponentu, s **fallbackom** na stari DOM-put ako custom element ne upgrade-a (0 regresije).
+  a11y: `role="status"` + `aria-live="polite"` (prije nijemi `<div>`). U typecheck scopeu (`Window.SokratToast`). Test `tests/components.spec.js`
+  (registracija + prikaz/tekst/auto-hide, 0 page-error). Cache token **`20260705`** (utils.js + nova komponenta). Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
+- **🧩 FAZA 2 · 2A DOVRŠENA na 18/18 (accounting → JSON dual-read) — grana `foundation/f2a-accounting`; ✅ DEPLOYANO 2026-07-03 (ff-merge `a8c7b84..d2b1e48`; live-verified: `accountingM1.json` servira 6 kat., puni Playwright 137/0).**
   Accounting bio jedini predmet izvan JSON supstrata (17/18, svjesno odgođen). Migriran **format-only (0 diranja sadržaja)** da F4 (Admin CRUD,
   source-of-truth flip) kreće s uniformne baze — bez specijalnog slučaja. `export:json accounting` → 3 JSON (`accountingM1` 6kat / `accountingM2`
   8kat / `accountingFinal` 15kat; round-trip bez gubitka) + `dataFormat:'json'` u catalog (`data/catalog.js`) + catalog.js cache token

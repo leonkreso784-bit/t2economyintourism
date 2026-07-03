@@ -22,6 +22,9 @@ declare global {
     // Runtime stanje aplikacije (js/app-state.js, F2 2C) — AppStateRoot dolazi iz JSDoc typedefa te datoteke
     AppState?: AppStateRoot;
 
+    // UI-primitiv: prvi Web Component (js/components/sokrat-toast.js, F2 2D.1)
+    SokratToast?: CustomElementConstructor;
+
     // i18n (js/i18n.js)
     t?: (key: string) => string;
     applyTranslations?: (root?: Document | Element) => void;
