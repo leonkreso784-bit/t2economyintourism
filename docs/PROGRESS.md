@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-03 (nastavak 5) — ▶ F2 2D.2b: learn image-viewer → `<sokrat-modal>` (prvi stvarni konzument)
+**Kontekst:** 2D.2a je dao samostalan modal-primitiv (bez korisnika). 2D.2b mu daje **prvog stvarnog konzumenta** na NISKORIZIČNOJ značajki
+(image-viewer — ako pukne, kozmetika, ne auth). Auth (2D.2c) ostaje zasebna, najrizičnija cigla.
+
+**Napravljeno (grana `foundation/f2d`):**
+- **index.html:** `<div class="image-modal hidden" id="imageModal">` (+ `#imageModalBackdrop` div) → `<sokrat-modal class="image-modal" id="imageModal">` (backdrop-div maknut — komponentin overlay je backdrop).
+- **js/learn.js:** `openLearnImageModal` → `modal.open()`; `closeLearnImageModal` → `modal.close()`; čišćenje slike na **`sokrat-modal:close` eventu** (pali za X/ESC/backdrop). Maknut ručni ESC + backdrop handler + `.hidden` toggling. Krajnji guard ako custom element ne upgrade-a.
+- **css/learn.css:** `.image-modal` overlay pravila → `sokrat-modal.image-modal` OVERRIDE (z-index 2000, safe-area padding, tamni backdrop `rgba(2,6,23,0.9)`+blur, `transition:none` = instant) + reset generičkog `> *` pop-in tretmana djece. Maknut `.image-modal.hidden` + `.image-modal-backdrop`.
+- **Kaskada:** learn.css se učitava POSLIJE sokrat-modal.css (styles.css) → override-i (jednaka specifičnost) pobjeđuju. Tokeni **`20260707`** (learn.js/learn.css/styles.css/index.html).
+
+**Testirano (sve zeleno):** typecheck/verify/validate/unit 0 · **Playwright 157/0** (153 + 4 nova image-viewer testa, svi profili) · smoke geography learn renderira bez greške ·
+**VIZUALNO potvrđeno screenshotom** (otvoren modal: tamni backdrop, centrirana slika, caption, close X gore-desno — bajt-isti kao prije). Test: `openLearnImageModal` otvara → ESC zatvara → slika očišćena.
+**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji — zasebno).
+
+---
+
 ## 2026-07-03 (nastavak 4) — ▶ F2 2D.2a: reusable modal-primitiv `<sokrat-modal>` (S4)
 **Kontekst:** Nastavak 2D (Web Components) nakon toasta (2D.1). Cilj: reusable overlay/dialog primitiv. 2D.2 podijeljen na pod-cigle
 (auth = najrizičniji → zadnji): **2D.2a** samostalni primitiv (sad) → **2D.2b** image-viewer → **2D.2c** auth modal.

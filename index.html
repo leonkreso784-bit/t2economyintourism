@@ -47,7 +47,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260706">
+    <link rel="stylesheet" href="styles.css?v=20260707">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -1044,17 +1044,17 @@
         </main>
     </section>
 
-    <!-- Learn Image Viewer Modal -->
-    <div class="image-modal hidden" id="imageModal" aria-hidden="true">
+    <!-- Learn Image Viewer Modal (F2 2D.2b — <sokrat-modal>: overlay/ESC/backdrop/scroll-lock/fokus iz komponente;
+         izgled (tamni backdrop, safe-area, close X) ostaje u .image-modal* CSS-u → nulta vizualna promjena) -->
+    <sokrat-modal class="image-modal" id="imageModal">
         <button class="image-modal-close" id="imageModalClose" aria-label="Close image viewer">
             <i class="fas fa-times"></i>
         </button>
-        <div class="image-modal-backdrop" id="imageModalBackdrop"></div>
         <figure class="image-modal-content">
             <img id="imageModalImg" src="" alt="Expanded learn image">
             <figcaption id="imageModalCaption"></figcaption>
         </figure>
-    </div>
+    </sokrat-modal>
 
     <!-- Toast Notification (F2 2D.1 — Web Component <sokrat-toast>; light-DOM zadržava .toast CSS; djeca ostaju za CSS/fallback prije upgrade-a) -->
     <sokrat-toast class="toast" id="toast">
@@ -1095,7 +1095,7 @@
     <script src="js/flashcards.js?v=20260703"></script>
     <script src="js/quiz.js?v=20260703"></script>
     <script src="js/fill-blanks.js?v=20260703"></script>
-    <script src="js/learn.js?v=20260703"></script>
+    <script src="js/learn.js?v=20260707"></script>
     <script src="js/progress.js?v=20260703"></script>
     <script src="js/blind-map.js?v=20260703"></script>
     <script src="js/exercises-core.js?v=20260682"></script>

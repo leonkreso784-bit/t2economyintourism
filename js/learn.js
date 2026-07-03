@@ -101,21 +101,24 @@ function enhanceLearnImages(container) {
     });
 }
 
+// F2 2D.2b: #imageModal je sada Web Component <sokrat-modal>. Komponenta sama vodi
+// ESC, klik-na-backdrop (klik na overlay), scroll-lock i fokus. Ovdje ostaje samo:
+// gumb X → close(), i čišćenje slike na zatvaranju (preko sokrat-modal:close eventa).
 function initLearnImageModal() {
     const modal = document.getElementById('imageModal');
     const closeBtn = document.getElementById('imageModalClose');
-    const backdrop = document.getElementById('imageModalBackdrop');
 
-    if (!modal || !closeBtn || !backdrop) return;
+    if (!modal || !closeBtn) return;
     if (modal.dataset.initialized === '1') return;
 
     closeBtn.addEventListener('click', closeLearnImageModal);
-    backdrop.addEventListener('click', closeLearnImageModal);
 
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
-            closeLearnImageModal();
-        }
+    // Bilo kakvo zatvaranje (X, ESC, backdrop) → očisti sliku/caption.
+    modal.addEventListener('sokrat-modal:close', () => {
+        const img = document.getElementById('imageModalImg');
+        const caption = document.getElementById('imageModalCaption');
+        if (img) img.src = '';
+        if (caption) caption.textContent = '';
     });
 
     modal.dataset.initialized = '1';
@@ -131,22 +134,28 @@ function openLearnImageModal(src, altText) {
     img.alt = altText || 'Expanded learn image';
     caption.textContent = altText || 'Learn image';
 
-    modal.classList.remove('hidden');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
+    if (typeof modal.open === 'function') {
+        modal.open();                                   // <sokrat-modal>
+    } else {                                            // krajnji fallback (nema custom elementa)
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+    }
 }
 
 function closeLearnImageModal() {
     const modal = document.getElementById('imageModal');
-    const img = document.getElementById('imageModalImg');
-    const caption = document.getElementById('imageModalCaption');
-    if (!modal || !img || !caption) return;
+    if (!modal) return;
 
-    modal.classList.add('hidden');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-    img.src = '';
-    caption.textContent = '';
+    if (typeof modal.close === 'function') {
+        modal.close();                                  // <sokrat-modal> (sokrat-modal:close čisti sliku)
+    } else {                                            // krajnji fallback
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        const img = document.getElementById('imageModalImg');
+        const caption = document.getElementById('imageModalCaption');
+        if (img) img.src = '';
+        if (caption) caption.textContent = '';
+    }
 }
 
 // Mobile cleanup — adds CSS classes, no inline style manipulation

@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2D.2b — learn image-viewer migriran na `<sokrat-modal>` (prvi stvarni konzument) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+  `#imageModal`: `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`. Komponenta preuzima ESC · klik-na-backdrop · `body.modal-open` scroll-lock · fokus;
+  `learn.js` sada delegira (`openLearnImageModal` → `modal.open()`; zatvaranje čisti sliku preko **`sokrat-modal:close` eventa**). Maknut zaseban `#imageModalBackdrop` div +
+  ručni ESC/backdrop handleri iz learn.js. **Izgled očuvan bajt-isti** (tamni backdrop 0.9, safe-area padding, close X, instant bez fade-a) kroz `sokrat-modal.image-modal`
+  override (learn.css se učitava POSLIJE sokrat-modal.css → pobjeđuje u remiju specifičnosti) — **potvrđeno screenshotom, nulta vizualna promjena**. Test u `tests/components.spec.js`
+  (open kroz learn API + ESC-close + slika očišćena). Cache token **`20260707`** (learn.js/learn.css/styles.css/index.html). Gate: typecheck/verify/validate/unit 0, **Playwright 157/0**.
 - **🧩 FAZA 2 · 2D.2a — reusable modal-primitiv `<sokrat-modal>` (S4) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
   Drugi UI-primitiv (nakon toasta). Samostalni **overlay/dialog** (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`, light-DOM):
   API `open()`/`close()`/`toggle()`/`isOpen()` + eventi `sokrat-modal:open`/`:close`. Ponašanje: ESC-zatvara · backdrop-klik-zatvara ·

@@ -144,3 +144,44 @@ test('sokrat-modal: ESC i backdrop-klik zatvaraju', async ({ page }) => {
 // cijela Playwright matrica su iPhone (touch) profili, gdje tap NE fokusira gumb (mobilna focus-semantika),
 // pa je programatski/tap fokus nepouzdan. Ponašanje je ispravno u pravom desktop pregledniku (ručno + scratch
 // verificirano) i deklarativno signalizirano `aria-modal="true"`. Determinističko stanje (gore) JE gate-ano.
+
+test('sokrat-modal: image-viewer (#imageModal, F2 2D.2b) — openLearnImageModal otvara, ESC zatvara + čisti sliku', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.goto('/');
+  // initLearnImageModal() se zove iz init.js na startu → close-event povezan bez navigacije.
+  await page.waitForFunction(() => !!customElements.get('sokrat-modal') && typeof window.openLearnImageModal === 'function');
+
+  // #imageModal je sada <sokrat-modal> (migriran s <div class="image-modal hidden">)
+  expect(await page.evaluate(() => document.getElementById('imageModal').tagName.toLowerCase())).toBe('sokrat-modal');
+
+  // Otvori kroz learn.js API (isti ulaz kao klik na zoomable sliku)
+  const PX = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  await page.evaluate((src) => window.openLearnImageModal(src, 'Test caption'), PX);
+
+  const modal = page.locator('#imageModal');
+  await expect(modal).toHaveClass(/is-open/);                 // komponenta otvorena
+  const opened = await page.evaluate(() => ({
+    imgSet: ((document.getElementById('imageModalImg') || {}).getAttribute('src') || '').length > 0,
+    caption: (document.getElementById('imageModalCaption') || {}).textContent,
+    scrollLock: document.body.classList.contains('modal-open'),
+  }));
+  expect(opened.imgSet).toBe(true);
+  expect(opened.caption).toBe('Test caption');
+  expect(opened.scrollLock).toBe(true);
+
+  // ESC (rješava <sokrat-modal>) zatvara + sokrat-modal:close event čisti sliku/caption
+  await page.keyboard.press('Escape');
+  await expect(modal).not.toHaveClass(/is-open/);
+  const closed = await page.evaluate(() => ({
+    imgSrc: (document.getElementById('imageModalImg') || {}).getAttribute('src'),
+    caption: (document.getElementById('imageModalCaption') || {}).textContent,
+    scrollLock: document.body.classList.contains('modal-open'),
+  }));
+  expect(closed.imgSrc).toBe('');                             // slika očišćena preko close-eventa
+  expect(closed.caption).toBe('');
+  expect(closed.scrollLock).toBe(false);
+
+  expect(errors).toEqual([]);
+});

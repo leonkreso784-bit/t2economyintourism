@@ -201,7 +201,11 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
       backdrop-klik-zatvara, `body.modal-open` scroll-lock, fokus-u-modal (rAF) + focus-restore + Tab-trap, a11y (`role=dialog`/`aria-modal`/`aria-hidden`).
       **Nijedan postojeći modal još ne migriran → 0 rizika.** U typecheck scopeu (`Window.SokratModal`). Test: stanje (is-open/aria/scroll-lock/ESC/backdrop)
       gate-ano; fokus-management dokumentiran (touch-profili ne fokusiraju tapom → verificiran ručno/scratch, ne gate-an). Cache `20260706`. Gate: **Playwright 153/0**.
-    - [2D.2b] ⬜ Migriraj **learn image-viewer** (`#imageModal`) na `<sokrat-modal>` — jednostavan, nekritičan prvi konzument.
+    - [2D.2b] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** learn image-viewer (`#imageModal`) migriran na `<sokrat-modal>` —
+      prvi STVARNI konzument primitiva. `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`; komponenta vodi ESC/backdrop-klik/scroll-lock/fokus;
+      izgled (tamni backdrop 0.9, safe-area, close X, instant bez fade-a) očuvan kroz `sokrat-modal.image-modal` override (learn.css poslije sokrat-modal.css → pobjeđuje).
+      `learn.js` delegira (`openLearnImageModal`→`modal.open()`, close preko `sokrat-modal:close` eventa čisti sliku); maknut `#imageModalBackdrop` div + ručni ESC handler.
+      **Nulta vizualna promjena — potvrđeno screenshotom.** Test u `components.spec.js` (open/ESC/clear). Cache `20260707`. Gate: **Playwright 157/0**.
     - [2D.2c] ⬜ Migriraj **auth modal** (`#authModal`, ad-hoc `innerHTML` overlay) → makne overlay-boilerplate + XSS-briga kontroliranim renderom.
   - [2D.3] ⬜ Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
 - **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ✅ **GOTOVO + DEPLOYANO NA PRODUKCIJU (2026-07-01, `164dc11..57f449a`).**

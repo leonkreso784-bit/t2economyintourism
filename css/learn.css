@@ -470,26 +470,30 @@ body.modal-open {
     overflow: hidden;
 }
 
-.image-modal {
-    position: fixed;
-    inset: 0;
+/* Image viewer je sada Web Component <sokrat-modal> (F2 2D.2b): komponenta vodi
+   open/close/ESC/backdrop-klik/scroll-lock/fokus. Generički .sokrat-modal već daje
+   position:fixed/inset:0/flex-center + prikaz preko .is-open. Ovdje samo OVERRIDE-amo
+   izgled da ostane TOČNO kao prije (tamni backdrop 0.9, safe-area padding, bez fade-a).
+   Jednaka specifičnost kao sokrat-modal.sokrat-modal, ali learn.css se učitava POSLIJE
+   sokrat-modal.css (styles.css redoslijed) → ovi override-i pobjeđuju. Backdrop je sada
+   sama komponenta (maknut zaseban #imageModalBackdrop div). */
+sokrat-modal.image-modal {
     z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: calc(14px + var(--safe-top)) max(14px, var(--safe-right)) calc(14px + var(--safe-bottom)) max(14px, var(--safe-left));
-}
-
-.image-modal.hidden {
-    display: none;
-}
-
-.image-modal-backdrop {
-    position: absolute;
-    inset: 0;
     background: rgba(2, 6, 23, 0.9);
-    backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    transition: none; /* ostaje instant (kao prije), bez generičkog fade-a */
+}
+
+/* Neutraliziraj generički "pop-in" tretman djece (sokrat-modal > *): image viewer je imao
+   vlastito ponašanje djece (figure + apsolutni close X) → drži izgled bajt-isti kao prije. */
+sokrat-modal.image-modal > * {
+    transform: none;
+    transition: none;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
 }
 
 .image-modal-content {
