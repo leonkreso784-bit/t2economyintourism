@@ -38,6 +38,9 @@
 /* Components (Header, Navigation, Main Content) */
 @import url('css/components.css?v=20260602');
 
+/* UI-primitivi (Web Components, F2 2D) */
+@import url('css/sokrat-modal.css?v=20260706');
+
 /* Study sections (split into modular files) */
 @import url('css/subject-selector.css?v=20260602');
 @import url('css/home-section.css?v=20260602');

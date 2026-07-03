@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-03 (nastavak 4) — ▶ F2 2D.2a: reusable modal-primitiv `<sokrat-modal>` (S4)
+**Kontekst:** Nastavak 2D (Web Components) nakon toasta (2D.1). Cilj: reusable overlay/dialog primitiv. 2D.2 podijeljen na pod-cigle
+(auth = najrizičniji → zadnji): **2D.2a** samostalni primitiv (sad) → **2D.2b** image-viewer → **2D.2c** auth modal.
+
+**Napravljeno (grana `foundation/f2d`):**
+- **NEW `js/components/sokrat-modal.js`** (`class SokratModal extends HTMLElement`) — light-DOM overlay. API `open()`/`close()`/`toggle()`/`isOpen()`
+  + eventi `sokrat-modal:open`/`:close`. Ponašanje: ESC-zatvara · backdrop-klik-zatvara (`e.target===this`) · `body.modal-open` scroll-lock (reuse
+  postojećeg iz learn.css) · fokus-u-modal (rAF) + focus-restore + **Tab-trap** · a11y (`role=dialog`/`aria-modal=true`/`aria-hidden` toggle).
+- **NEW `css/sokrat-modal.css`** — generički overlay (fixed/flex-center/backdrop-blur; skriven dok nema `.is-open`; reduced-motion). @import u styles.css.
+- **Wiring:** `<script>` u index.html + typecheck scope (`tsconfig.json` + `Window.SokratModal` u globals.d.ts) + tokeni **`20260706`** (komponenta+CSS+styles.css+index.html).
+- **NIJEDAN postojeći modal još ne migriran** → 0 rizika na auth/image-viewer.
+- **NEW testovi** (`tests/components.spec.js`): registracija + a11y + open/close stanje (is-open/aria-hidden/scroll-lock) + ESC + backdrop-klik.
+
+**⚠️ POUKA (fokus-testiranje):** programatski `.focus()` iz `page.evaluate(open())` NE hvata u Playwright headlessu (activeElement=`<body>`,
+iako `document.hasFocus()===true`) — a **cijela matrica su iPhone (touch) profili** gdje ni tap ne fokusira gumb (mobilna focus-semantika).
+Fokus-management je zato verificiran **ručno/scratch** (dokazano: `activeElement=mBtn1`, `focusableLen=2`), a **ne gate-an** (dokumentirano u testu +
+`aria-modal=true` deklarativni signal). Determinističko stanje JE gate-ano.
+
+**Testirano (sve zeleno):** typecheck 0 · verify 0 · validate:content 0 · test:unit 69/0 · **Playwright 153/0** (145 + 8 novih modal-testa).
+**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2b (image-viewer → `<sokrat-modal>`).
+
+---
+
 ## 2026-07-03 (nastavak 2) — ✅ F2 2A DOVRŠENA: accounting → JSON (18/18) + ADR-015 (tech-debt triage)
 **Kontekst:** Nakon cjelovitog pregleda projekta korisnik pitao „u kojem smjeru s tech-dugom". Dogovoreno (ADR-015):
 triage po pitanju **„briše li ga F4?"** → accounting→JSON = **napraviti** (akumulira se); root `data-*.js` lokacije +

@@ -18,6 +18,7 @@
     "types/globals.d.ts",
     "js/app-state.js",
     "js/i18n.js",
-    "js/components/sokrat-toast.js"
+    "js/components/sokrat-toast.js",
+    "js/components/sokrat-modal.js"
   ]
 }

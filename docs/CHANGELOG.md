@@ -5,6 +5,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2D.2a — reusable modal-primitiv `<sokrat-modal>` (S4) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+  Drugi UI-primitiv (nakon toasta). Samostalni **overlay/dialog** (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`, light-DOM):
+  API `open()`/`close()`/`toggle()`/`isOpen()` + eventi `sokrat-modal:open`/`:close`. Ponašanje: ESC-zatvara · backdrop-klik-zatvara ·
+  `body.modal-open` scroll-lock (reuse) · fokus-u-modal (rAF) + focus-restore + **Tab-trap** · a11y (`role=dialog`/`aria-modal=true`/`aria-hidden`).
+  **Nijedan postojeći modal još ne migriran → 0 rizika** (2D.2b = image-viewer, 2D.2c = auth slijede). U typecheck scopeu (`Window.SokratModal`).
+  Test `tests/components.spec.js`: stanje (is-open/aria/scroll-lock/ESC/backdrop) gate-ano; fokus-management verificiran ručno/scratch (touch-profili
+  ne fokusiraju tapom → ne gate-an, dokumentirano). Cache token **`20260706`** (nova komponenta+CSS, styles.css @import, index.html). Gate: typecheck/verify/validate/unit 0, **Playwright 153/0**.
 - **🧩 FAZA 2 · 2D.1 — prvi Web Component `<sokrat-toast>` (S4, UI-primitiv) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
   Prvi custom element na platformi (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija → lifecycle → `.show()`) na najjednostavnijem
   primitivu prije `<sokrat-modal>` (2D.2). **Light-DOM (bez Shadow DOM)** → element zadržava klasu `.toast`, pa svi postojeći CSS-ovi (base +

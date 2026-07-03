@@ -349,7 +349,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija→lifecycle→`.show()`). **Light-DOM zadržava klasu `.toast`** → svi CSS-ovi (base+responsive)
   nepromijenjeni. `showToast()` (utils.js) → **delegat** na komponentu s **fallbackom** na stari DOM-put (0 regresije, ~13 pozivatelja nedirnuto). a11y `role=status`.
   U typecheck scopeu (`Window.SokratToast`). Test `tests/components.spec.js`. Cache `20260705`. Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
-  **⬜ DALJE: 2D.2 `<sokrat-modal>` (auth/profil) → 2D.3 kartice/forme → F3 (SW + auto version-bump).** [[foundation-pivot]]
+- **▶ FAZA 2 — 2D.2a (reusable modal-primitiv `<sokrat-modal>`, S4) — grana `foundation/f2d`, lokalni commit (⏳ NIJE deployano):** samostalni overlay/dialog
+  (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`, light-DOM): `open/close/toggle/isOpen` + eventi; ESC/backdrop-zatvaranje, scroll-lock, fokus-u-modal+restore+Tab-trap,
+  a11y (`role=dialog`/`aria-modal`). **Nijedan postojeći modal još ne migriran → 0 rizika.** Cache `20260706`. Test: stanje gate-ano; **fokus ne gate-an** (touch-profili ne fokusiraju
+  tapom → ručno/scratch verificiran). Gate: typecheck/verify/validate/unit 0, **Playwright 153/0**.
+  **⬜ DALJE: 2D.2b (image-viewer → `<sokrat-modal>`) → 2D.2c (auth modal) → 2D.3 kartice/forme → F3 (SW + auto version-bump).** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

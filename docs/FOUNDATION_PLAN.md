@@ -195,7 +195,14 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     element ne upgrade-a). Komponenta preselila show-logiku doslovno (isti reflow-restart + 2500 ms auto-hide) + a11y (`role=status`/`aria-live=polite`).
     U typecheck scopeu (novo polje `Window.SokratToast`). Test `tests/components.spec.js` (registracija + show/hide). Cache token `20260705` (utils + nova komponenta).
     Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
-  - [2D.2] ⬜ Zatim `<sokrat-modal>` (auth/profil ga koriste) → makne ad-hoc `innerHTML` + riješi XSS-brigu kontroliranim renderom.
+  - [2D.2] ▶ `<sokrat-modal>` — reusable overlay/dialog primitiv. Dijeli se na pod-cigle (auth = najrizičniji → zadnji):
+    - [2D.2a] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** samostalni primitiv `js/components/sokrat-modal.js`
+      (`open()`/`close()`/`toggle()`/`isOpen()`; eventi `sokrat-modal:open`/`:close`) + `css/sokrat-modal.css` (light-DOM overlay). Ponašanje: ESC-zatvara,
+      backdrop-klik-zatvara, `body.modal-open` scroll-lock, fokus-u-modal (rAF) + focus-restore + Tab-trap, a11y (`role=dialog`/`aria-modal`/`aria-hidden`).
+      **Nijedan postojeći modal još ne migriran → 0 rizika.** U typecheck scopeu (`Window.SokratModal`). Test: stanje (is-open/aria/scroll-lock/ESC/backdrop)
+      gate-ano; fokus-management dokumentiran (touch-profili ne fokusiraju tapom → verificiran ručno/scratch, ne gate-an). Cache `20260706`. Gate: **Playwright 153/0**.
+    - [2D.2b] ⬜ Migriraj **learn image-viewer** (`#imageModal`) na `<sokrat-modal>` — jednostavan, nekritičan prvi konzument.
+    - [2D.2c] ⬜ Migriraj **auth modal** (`#authModal`, ad-hoc `innerHTML` overlay) → makne overlay-boilerplate + XSS-briga kontroliranim renderom.
   - [2D.3] ⬜ Postupno kartice/forme; CRUD forme (F4) grade se isključivo iz ovih primitiva.
 - **2E — Error monitoring = Sentry s release-trackingom (nadogradnja #2):** ✅ **GOTOVO + DEPLOYANO NA PRODUKCIJU (2026-07-01, `164dc11..57f449a`).**
   - [2E.1] ✅ `js/monitoring.js` → `window.SokratMonitor` (`captureException`/`enable`/`disable`/`status`). Globalni `error`+`unhandledrejection`

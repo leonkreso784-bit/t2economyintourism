@@ -1,0 +1,49 @@
+/* ===== <sokrat-modal> — reusable modal-primitiv (F2 2D.2, S4) =====
+   Generički OVERLAY (chrome ponašanja). Sadržaj/kartica dijaloga = djeca elementa
+   (konzument im daje svoje `.…__card` stilove). Skriven dok komponenta ne doda `.is-open`.
+   Zaključavanje scrolla koristi postojeći `body.modal-open` (css/learn.css). */
+
+sokrat-modal.sokrat-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;                 /* iznad toasta (2000) i sadržaja */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.62);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+
+    /* Zatvoreno stanje: nevidljivo i neinteraktivno (ne krade klikove). */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+sokrat-modal.sokrat-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Blagi "pop" ulazak kartice (prvo dijete = sadržaj dijaloga). Poštuje reduced-motion. */
+sokrat-modal.sokrat-modal > * {
+    transform: translateY(8px) scale(0.98);
+    transition: transform 0.25s ease;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+}
+
+sokrat-modal.sokrat-modal.is-open > * {
+    transform: translateY(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    sokrat-modal.sokrat-modal,
+    sokrat-modal.sokrat-modal > * {
+        transition: none;
+    }
+}
