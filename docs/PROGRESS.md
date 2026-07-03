@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-03 — 🚚 PROJEKT PRESELJEN S ONEDRIVEA → `C:\Projects\t2economyintourism-main` (OneDrive se gasi)
+**Povod (korisnik: „ide mi na kurac"):** OneDrive 2026-07-02 USRED RADA obrisao s diska `assets/logo.svg` + 6 geo slika
+(ulovljeno u `git status`, vraćeno iz gita prije štete) — potvrda poznatog rizika git+OneDrive.
+**Sigurnosni redoslijed:** (1) `foundation/f2c` pushana na GitHub (backup; **CI ZELEN na `40abfd6`**; main netaknut) →
+(2) robocopy kopija na `C:\Projects\t2economyintourism-main` (bez node_modules; SA `.git`+`.env`+`_materials`) →
+(3) kopija verificirana: git čist na `origin/foundation/f2c`, fsck OK, `npm ci`+verify 0/0+unit+typecheck zeleni →
+(4) hidracija svih cloud-only datoteka OneDrivea (2851 Documentos + 331 Slike ≈ 1 GB) prije gašenja →
+(5) Known Folder povratak (Documents/Desktop/Pictures preusmjereni su NA OneDrive) → (6) uninstall OneDrive.
+**⚠️ NOVA PUTANJA ZA SVE BUDUĆE SESIJE: `C:\Projects\t2economyintourism-main`** (stara OneDrive putanja = mrtva).
+Detalji: memorija `onedrive-migration`.
+
 ## 2026-07-02 (nastavak) — ▶ FAZA 2 · 2C (S3 AppState) započeta: 2C.1 skeleton + 2C.2a fill grupa
 **Grana `foundation/f2c`** (od `main@73f3809`; produkcija netaknuta). Post-compact review najprije potvrdio zeleno stanje
 (verify/schema/export-check/unit svi 0 problema; CI `success` na `73f3809`+`2b59a06`; live tokeni + JSON 200 potvrđeni).
