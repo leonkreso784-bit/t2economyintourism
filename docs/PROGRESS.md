@@ -25,7 +25,7 @@ branded confirm dijalog GRAĐEN NA `<sokrat-modal>` (prva „komponenta na kompo
 **PUNA Playwright matrica 165 pass / 0 fail** (subjects=18, 0 problema) · a11y čist s novim elementom. **VIZUALNO potvrđeno screenshotom** (desktop 420px centrirano / mobitel 335px; tamni backdrop, Cancel tihi + Confirm crveni danger — profesionalno, ogroman skok od native `confirm()`).
 **Pouka (scratch):** `page.evaluate(() => window.askConfirm(...))` visi (vraća promise koji čeka klik) → u scratch/testu NE vraćati promise (`() => { askConfirm(...); }`) ili kliknuti gumb.
 
-**Status F2:** 2A ✅ 2B ✅ 2C ✅ 2D (2D.1/2a/2b/2c ✅ LIVE) + **2D.3 ✅ (grana, gate zelen)** + 2E ✅ → **F2 (reusable jezgra) KOMPLETNA** nakon deploya. **Slijedi: F3** (Service Worker + CSS bundling + auto version-bump).
+**Status F2:** 2A ✅ 2B ✅ 2C ✅ 2D (2D.1/2a/2b/2c ✅ LIVE) + **2D.3 ✅ LIVE (ff-merge `7d88e5c..df67766`, live-verified 20260709)** + 2E ✅ → **F2 (reusable jezgra) KOMPLETNA i LIVE.** **Slijedi: F3** (Service Worker + CSS bundling + auto version-bump).
 
 ---
 
