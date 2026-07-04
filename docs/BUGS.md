@@ -166,6 +166,9 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   u `index.html`.
 - Lekcija: pri SVAKOJ izmjeni CSS-a bumpaj `?v=` token (komentar je u `styles.css`).
   Inače deploy izgleda kao da "nije prošao".
+- **Nadogradnja (F3 3C.1, 2026-07-04, ADR-017):** klasa strukturno zatvorena za *parcijalni* zaborav. `npm run bump` postavlja **sve** `?v=`
+  tokene + `CONTENT_VERSION` na isti timestamp odjednom (ručni per-file bump ukinut), a **`npm run bump:check` = TVRDI CI gate** koji pada ako
+  tokeni nisu identični. Ostatak („zaboravio pokrenuti bump uopće") zatvara 3C.2 (git-diff freshness / auto-bump na deploy-u).
 
 ### BUG-005 — Landing hero "Free exam toolkit" bedž pada pod fiksnu nav-traku (mobitel)
 - Status: ✅ riješen i VERIFICIRAN (Playwright) · Težina: srednji · Datum: 2026-06-03

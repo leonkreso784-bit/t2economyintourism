@@ -52,6 +52,12 @@ jobs:
       - name: Verify catalog (struktura + datoteke + window varijable)
         run: npm run verify
 
+      # Cache-busting tokeni (F3 3C): svi `?v=` + CONTENT_VERSION moraju biti IDENTIČNI (jedan
+      # broj za cijelu aplikaciju). Drift = netko je ručno bumpao podskup → nevidljiv deploy (BUG-004).
+      # Popravak: `npm run bump`. TVRDI gate — parcijalni bump = crveno.
+      - name: Cache tokens consistent (single version, BUG-004 guard)
+        run: npm run bump:check
+
       - name: Unit tests (exercises-core / acc-kernel / stat-parse / stat-lib)
         run: npm run test:unit
 

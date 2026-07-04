@@ -236,9 +236,16 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 3 — Performanse (na čistom šavu)
 **Cilj:** platforma stvarno brza i offline-sposobna.
 **Ovisnosti:** F2 (SW kešira kroz ContentRepository → mora postojati čist šav).
-- [3A] **Service Worker** (cache-first za `index.html`/`js`/`css`/`data`/JSON + mrežne odgovore Repo-a) → **„Works offline" postaje ISTINA** → vrati/ojačaj copy.
+**▶ STATUS (2026-07-04): F3 KREĆE.** Redoslijed cigli = **najsigurnija/najneovisnija prva, najrizičnija zadnja** (kao 2D): **3C → 3B → 3A → 3D → 3E**
+(NE doc-brojevni A→E). Razlog: 3C je 0-runtime-rizik dev-alat koji gasi baš klasu rizika (BUG-004) izdvojenu na health-checku, i čini 3A/3B sigurnijima (pouzdan bump); SW (3A) = najrizičnija (može zaglaviti stari keš) → zadnja velika.
+- [3C] **Auto version-bump** (`scripts/bump-version.js`) — ✅ **3C.1 GOTOVO (2026-07-04, grana `foundation/f3`; NIJE deployano):** JEDAN broj za cijelu app.
+  `npm run bump` = svi `?v=` (~92 mjesta: 5 HTML + styles.css @import + manifest.json) + `CONTENT_VERSION` → novi `YYYYMMDDHHMMSS` timestamp ODJEDNOM
+  (nemoguće zaboraviti podskup). `npm run bump:check` = **TVRDI CI gate**: svi tokeni identični, drift = crveno (BUG-004 čuvar). Normalizirano 92 → `20260704162056`.
+  **ADR-017** (uniformni token > content-hash; trade-off: deploy busta sve cacheve). Gate: verify/validate/schema/typecheck/export 0, bump:check 0, Playwright smoke 18/0.
+  **⬜ 3C.2 (odgođeno):** konzistencijski gate hvata *parcijalni* bump; „zaboravio pokrenuti bump" zatvara **git-diff freshness gate** (promijenjen asset ⇒ token napredovao)
+  ILI čišće **auto-bump na Vercel deploy-u** (nula discipline) — prirodno se veže uz 3B build-korak.
 - [3B] **CSS bundling** — 23 `@import` u jedan konkateniran fajl (build-korak `cat`/`cleancss`); ostaje no-framework. **META (Lighthouse baseline 2026-06-29): perf 66, LCP 6.6s, FCP 4.3s** — render-blocking CSS/fonts su glavni krivac → cilj F3 = perf ≥ 0.9, pa podići Lighthouse `performance` prag (1D.1).
-- [3C] **Auto version-bump** skripta (`scripts/bump-version.js`) — generira `?v=` iz git-hasha/timestampa, zamijeni sve tokene odjednom (gasi BUG-004 rizik zaboravljanja).
+- [3A] **Service Worker** (cache-first za `index.html`/`js`/`css`/`data`/JSON + mrežne odgovore Repo-a) → **„Works offline" postaje ISTINA** → vrati/ojačaj copy. **Najrizičnija → zadnja velika cigla F3.**
 - [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
 - [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
 **Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*

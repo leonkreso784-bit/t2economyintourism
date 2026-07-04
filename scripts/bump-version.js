@@ -1,0 +1,132 @@
+#!/usr/bin/env node
+'use strict';
+/**
+ * bump-version.js — F3 3C: JEDINSTVENI auto version-bump za cache-busting tokene.
+ *
+ * ZAŠTO (BUG-004): Vercel servira `css`/`js`/`data` s `immutable` cacheom (1 god). Ako se pri
+ * izmjeni fajla zaboravi bumpati `?v=` token, preglednik nastavi servirati STARU verziju →
+ * deploy je nevidljiv. Tokeni su dosad bili RUČNO održavani na ~90 mjesta (5 HTML + styles.css +
+ * manifest.json) + `CONTENT_VERSION` → trivijalno je zaboraviti podskup (klasičan BUG-004 pad).
+ *
+ * RJEŠENJE: JEDAN broj za cijelu aplikaciju. `npm run bump` postavi SVE tokene (uključujući
+ * CONTENT_VERSION) na isti novi timestamp ODJEDNOM → nemoguće je zaboraviti podskup.
+ * `--check` (CI gate) dokazuje da su svi tokeni identični → drift (ručni parcijalni bump) = crveno.
+ *
+ * RABLJENJE:
+ *   node scripts/bump-version.js                 # bump: svi tokeni → novi YYYYMMDDHHMMSS
+ *   node scripts/bump-version.js --set 20260710  # eksplicitna vrijednost (escape hatch)
+ *   node scripts/bump-version.js --check         # CI gate: svi tokeni identični? (ne piše)
+ *   node scripts/bump-version.js --dry           # pokaži što bi se promijenilo, ne piši
+ *
+ * Token je OPAKI cache-buster (nigdje se ne uspoređuje numerički u runtimeu) → format je slobodan;
+ * timestamp je monotono rastući + čitljiv ("koja je verzija live").
+ */
+const fs = require('fs');
+const path = require('path');
+
+const ROOT = path.resolve(__dirname, '..');
+const TOKEN_RE = /\?v=\d+/g;                                    // asset tokeni: styles.css?v=123
+const CV_FILE = 'js/content-loader.js';
+const CV_RE = /(const CONTENT_VERSION = ')(\d+)(')/;            // data cache-buster (jedan izvor)
+
+/** Datoteke koje NOSE tokene (JS koristi CONTENT_VERSION varijablu, ne hardkod → nije ovdje). */
+function targetFiles() {
+  const files = [];
+  for (const f of fs.readdirSync(ROOT)) {
+    if (f.endsWith('.html')) files.push(f);                     // sve root *.html
+  }
+  files.push('styles.css');                                    // @import tokeni
+  const cssDir = path.join(ROOT, 'css');
+  if (fs.existsSync(cssDir)) {
+    for (const f of fs.readdirSync(cssDir)) {                   // buduće ugniježđeno: css/*.css s pravim tokenom
+      if (!f.endsWith('.css')) continue;
+      const rel = path.posix.join('css', f);
+      if (/\?v=\d+/.test(fs.readFileSync(path.join(ROOT, rel), 'utf8'))) files.push(rel);
+    }
+  }
+  files.push('manifest.json');                                 // PWA ikone s ?v=
+  return [...new Set(files)].filter(f => fs.existsSync(path.join(ROOT, f)));
+}
+
+/** Skupi sve token-vrijednosti (asset tokeni + CONTENT_VERSION) → [{file, token, count}]. */
+function collect() {
+  const out = [];
+  for (const rel of targetFiles()) {
+    const txt = fs.readFileSync(path.join(ROOT, rel), 'utf8');
+    const m = txt.match(TOKEN_RE) || [];
+    const byVal = {};
+    for (const t of m) { const v = t.slice(3); byVal[v] = (byVal[v] || 0) + 1; }
+    for (const v of Object.keys(byVal)) out.push({ file: rel, token: v, count: byVal[v] });
+  }
+  const cvTxt = fs.readFileSync(path.join(ROOT, CV_FILE), 'utf8');
+  const cvm = cvTxt.match(CV_RE);
+  if (cvm) out.push({ file: CV_FILE, token: cvm[2], count: 1, isContentVersion: true });
+  return out;
+}
+
+/** YYYYMMDDHHMMSS (lokalno vrijeme) — monotono, uvijek > starih 8-znamenkastih tokena. */
+function nowStamp() {
+  const d = new Date();
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+
+function writeAll(version, { dry } = {}) {
+  let fileCount = 0, tokenCount = 0;
+  for (const rel of targetFiles()) {
+    const abs = path.join(ROOT, rel);
+    const txt = fs.readFileSync(abs, 'utf8');
+    const matches = txt.match(TOKEN_RE) || [];
+    if (!matches.length) continue;
+    const next = txt.replace(TOKEN_RE, `?v=${version}`);
+    tokenCount += matches.length; fileCount++;
+    if (next !== txt && !dry) fs.writeFileSync(abs, next);
+    console.log(`  ${dry ? '·' : '✓'} ${rel.padEnd(20)} ${matches.length} token(a) → ?v=${version}`);
+  }
+  // CONTENT_VERSION (data cache-buster) — isti broj
+  const cvAbs = path.join(ROOT, CV_FILE);
+  const cvTxt = fs.readFileSync(cvAbs, 'utf8');
+  if (CV_RE.test(cvTxt)) {
+    const next = cvTxt.replace(CV_RE, `$1${version}$3`);
+    if (next !== cvTxt && !dry) fs.writeFileSync(cvAbs, next);
+    console.log(`  ${dry ? '·' : '✓'} ${CV_FILE.padEnd(20)} CONTENT_VERSION → '${version}'`);
+    tokenCount++;
+  }
+  return { fileCount, tokenCount };
+}
+
+function main() {
+  const args = process.argv.slice(2);
+  const has = (f) => args.includes(f);
+
+  if (has('--check')) {
+    const vals = collect();
+    const uniq = [...new Set(vals.map((v) => v.token))];
+    if (uniq.length <= 1) {
+      console.log(`✅ Cache tokeni konzistentni: svih ${vals.reduce((a, v) => a + v.count, 0)} = ?v=${uniq[0] || '—'}`);
+      process.exit(0);
+    }
+    console.error(`❌ DRIFT: ${uniq.length} različitih token-vrijednosti (očekivano 1). Pokreni "npm run bump".`);
+    const byVal = {};
+    for (const v of vals) (byVal[v.token] = byVal[v.token] || []).push(`${v.file}×${v.count}`);
+    for (const val of Object.keys(byVal).sort()) console.error(`   ?v=${val}: ${byVal[val].join(', ')}`);
+    process.exit(1);
+  }
+
+  const dry = has('--dry');
+  const setIdx = args.indexOf('--set');
+  let version = setIdx !== -1 ? args[setIdx + 1] : nowStamp();
+  if (!/^\d+$/.test(version || '')) {
+    console.error('❌ Neispravna verzija (samo znamenke): ' + version);
+    process.exit(2);
+  }
+
+  const before = collect();
+  const prevMax = before.map((v) => v.token).sort().slice(-1)[0] || '—';
+  console.log(`${dry ? '[DRY] ' : ''}Bump cache tokena: prethodni max ?v=${prevMax} → nova ?v=${version}\n`);
+  const { fileCount, tokenCount } = writeAll(version, { dry });
+  console.log(`\n${dry ? '[DRY] bi se promijenilo' : '✅ Bumpano'}: ${tokenCount} token(a) u ${fileCount} datoteka + CONTENT_VERSION.`);
+  if (!dry) console.log('   ⚠️ Ovo je cache-bump → tretiraj kao promjenu (commit + deploy).');
+}
+
+main();

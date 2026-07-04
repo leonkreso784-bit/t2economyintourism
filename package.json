@@ -12,6 +12,8 @@
     "test:rls": "node scripts/rls-check.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "stats": "node scripts/compute-stats.js",
+    "bump": "node scripts/bump-version.js",
+    "bump:check": "node scripts/bump-version.js --check",
     "verify": "node scripts/verify-catalog.js",
     "verify:catalog": "node scripts/verify-catalog.js",
     "validate:content": "node scripts/validate-content.js",

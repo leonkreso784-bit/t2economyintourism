@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3C.1 — jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
+  Kraj ručnog bumpanja ~92 `?v=` tokena raspoređenih po 7 datoteka + `CONTENT_VERSION`. **`npm run bump`** = JEDAN broj za cijelu aplikaciju
+  (svi tokeni → novi `YYYYMMDDHHMMSS` timestamp odjednom → nemoguće zaboraviti podskup). **`npm run bump:check`** = TVRDI CI gate: svi tokeni
+  identični, drift (parcijalni ručni bump) = crveno (**BUG-004 čuvar**). Modovi `--set`/`--dry`. Normalizirano 92 tokena → `20260704162056`.
+  Odluka: **ADR-017** (uniformni token > per-file content-hash; format 8-zn→14-zn timestamp; trade-off: deploy busta sve cacheve = nezaboravljiva invalidacija).
+  Gate: verify/validate/schema/typecheck/export-drift 0, `bump:check` 0, Playwright smoke 18/0. **Ostaje (3C.2, odgođeno):** git-diff freshness gate ILI auto-bump na Vercel deploy-u (nula discipline; uz 3B build-korak).
 - **🧩 FAZA 2 · 2D.3 — `<sokrat-confirm>` branded confirm-dijalog (S4, prva kompozicija komponenti) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-04 (ff-merge `7d88e5c..df67766`; live-verified: `sokrat-confirm.js?v=20260709` servira `customElements.define('sokrat-confirm')`, `analytics.js` sadrži `askConfirm`; tokeni 20260709). → time F2 (reusable jezgra) KOMPLETNA.**
   Treći UI-primitiv, GRAĐEN NA `<sokrat-modal>` (dokaz kompozicije). `js/components/sokrat-confirm.js` + `css/sokrat-confirm.css`; API `el.ask(opts)→Promise<boolean>` + globalni
   **`window.askConfirm(opts)`** (singleton `#confirmDialog`, fallback na native `confirm()`; uvijek Promise). Confirm→true, Cancel/ESC/backdrop→false, `danger:true`→crveni gumb. Modal nasljeđuje

@@ -4,6 +4,31 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-017 — Cache-busting: jedan uniformni auto-bumpani token za cijelu aplikaciju (ne per-file content-hash)
+**Datum:** 2026-07-04 · **Status:** ✅ ODLUČENO + 3C.1 IMPLEMENTIRANO (grana `foundation/f3`; F3 3C)
+**Kontekst:** Vercel servira `js`/`css`/`data` s `immutable` cacheom (1 god) → svaka izmjena traži novi `?v=` token, inače je deploy nevidljiv
+(BUG-004). Tokeni su bili **ručno** održavani na ~92 mjesta (5 HTML + `styles.css` @import + `manifest.json`) + `CONTENT_VERSION` (data), s
+**23 različite vrijednosti** u opticaju → zaboraviti podskup je bilo trivijalno. F3 3C traži automatizaciju. Pitanje: **jedan uniformni token
+(svi isti, bumpani zajedno) ILI per-file content-hash (svaki fajl svoj hash → busta se samo promijenjeni)?**
+**Odluka:** **Jedan uniformni token za cijelu aplikaciju**, generiran/zamijenjen skriptom `scripts/bump-version.js` (`npm run bump`), +
+**konzistencijski CI gate** (`npm run bump:check`: svi tokeni moraju biti identični; drift = crveno). Token = `YYYYMMDDHHMMSS` timestamp
+(monoton, čitljiv „kad je deployano"). Format prelazi s dotadašnjih 8-znamenkastih (`20260709`) na 14-znamenkasti timestamp — **sigurno jer se token
+nigdje ne uspoređuje numerički u runtimeu** (opaki cache-buster, samo string).
+**Obrazloženje (zašto uniformni, ne content-hash):**
+1. **Jednostavnost = pouzdanost.** Uniformni bump je find-replace regexom → nema mapiranja „koji fajl referencira koji asset", nema rubnih slučajeva
+   ugniježđenih `@import`-a. Manje koda = manje bugova u alatu koji čuva od bugova.
+2. **Nezaboravljiva invalidacija.** „Svi isti" je invarijanta koju CI trivijalno provjerava; content-hash nema takvu jednostavnu globalnu provjeru.
+3. **Trade-off prihvatljiv na ovoj skali.** Mana uniformnog: svaki deploy busta SVE cacheve (i nepromijenjene fajlove) → povremeni re-download ~par
+   stotina KB. Za statični site s ~30 JS + 1 (budući) CSS bundle = zanemarivo; **Service Worker (3A) ionako lokalno kešira** pa je mrežni trošak još manji.
+   Content-hash bi uštedio taj re-download, ali po cijenu bitno složenijeg alata — ne isplati se dok smo mali.
+**Posljedice:** Cache-bump je sada `npm run bump` (jedan potez), a `bump:check` u CI-u čini **parcijalni** zaborav nemogućim (BUG-004 klasa zatvorena za
+taj slučaj). **Ostaje rupa:** „zaboravio pokrenuti bump UOPĆE" (svi tokeni ostanu stari-uniformni → check prolazi) — zatvara se u **3C.2**: git-diff
+freshness gate (promijenjen cache-bustani asset ⇒ token mora napredovati vs baza) ILI, čišće, **auto-bump na Vercel deploy-u** (nula discipline), što
+se prirodno veže uz 3B build-korak. `CONTENT_VERSION` (data cache-buster) namjerno **uključen** u isti broj → „jedan broj za cijelu aplikaciju".
+Ručni per-file tokeni (ADR-015 #3, „čeka F3") = ovime riješeni. [[foundation-pivot]]
+
+---
+
 ## ADR-016 — Privilegirane operacije (`service_role`) → Supabase Edge Functions, NIKAD Vercel
 **Datum:** 2026-07-04 · **Status:** ✅ ODLUČENO (implementacija odgođena; prvi konzument = brisanje računa)
 **Kontekst:** App treba „Obriši račun" (GDPR pravo na zaborav — trenutno samo ručno mailom + „Delete cloud data" gumb

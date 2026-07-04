@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-04 (nastavak 3) — ▶ F3 KREĆE · 3C.1: jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate
+**Kontekst:** F2 (reusable jezgra) KOMPLETNA i LIVE → počinje **F3 (performanse)**. Health-check cijelog projekta na početku sesije
+(svi gateovi zeleni: verify/validate/schema/typecheck/unit/export-drift/RLS + puni Playwright 165/0) izdvojio je **ručne cache-tokene
+(BUG-004)** kao jedinu pravu klasu rizika. **Redoslijed F3 (najsigurnija/najneovisnija cigla prva):** 3C (auto version-bump) → 3B (CSS
+bundling) → 3A (Service Worker, najrizičnija) → 3D/3E. 3C ide PRVA jer gasi baš tu klasu rizika i čini 3A/3B sigurnijima (pouzdan bump).
+
+**Problem (BUG-004 tlo):** `?v=` tokeni bili su ručno održavani na **~92 mjesta** (index.html 42 + 4 pravne stranice ×5 + styles.css 26
+@import + manifest.json 3) + `CONTENT_VERSION` (data). Zatečeno stanje: **23 različite token-vrijednosti** u opticaju → trivijalno je
+zaboraviti podskup → Vercel `immutable` cache servira stari fajl → deploy nevidljiv.
+
+**Napravljeno (grana `foundation/f3`):**
+- **`scripts/bump-version.js`** (novo): JEDAN broj za cijelu aplikaciju. Modovi: **bump** (default → svi tokeni + CONTENT_VERSION na novi
+  `YYYYMMDDHHMMSS` timestamp odjednom) · **`--check`** (CI gate: svi tokeni IDENTIČNI? drift = exit 1 s ispisom po fajlu) · **`--set <v>`**
+  (escape hatch) · **`--dry`** (pregled). Cilj-datoteke: root `*.html` + `styles.css` + `css/*.css` (buduće ugniježđeno) + `manifest.json`;
+  `CONTENT_VERSION` posebno (regex). Token = opaki cache-buster (nigdje se ne uspoređuje numerički) → format slobodan; timestamp je monoton + čitljiv.
+- **`npm run bump` / `npm run bump:check`** (package.json) + **CI korak** „Cache tokens consistent" (ci.yml, uz jeftine fail-fast provjere, nakon `verify`).
+- **Normalizacija:** `npm run bump` postavio svih **92 tokena + CONTENT_VERSION → `20260704162056`** (uniformno). `--check` sada zelen.
+- **Odluka zapisana: ADR-017** („jedan broj za cijelu aplikaciju"; uniformni token nad per-file content-hashom; format 8-zn → 14-zn timestamp; svjesni trade-off: svaki deploy busta sve cacheve = trivijalna, nezaboravljiva invalidacija).
+
+**Testirano (sve zeleno):** `--check` PRIJE bumpa točno detektirao 23-vrijednosti drift (exit 1); manifest.json ostao valjan JSON, content-loader.js
+valjan JS (CONTENT_VERSION netaknut mehanizam) · verify 0/0 · validate:content 0/0 · validate:schema 54/54 · typecheck 0 · export:json --check 54/0 ·
+`bump:check` 0 (92 uniformna) · **Playwright smoke (iPhone-SE) 18 subjects / 0 problems / 0 errors** (app radi s novim tokenima).
+**Deploy:** NIJE — čeka korisnikovu potvrdu (grana `foundation/f3`, produkcija netaknuta).
+
+**Ostaje u 3C (evaluacija → 3C.2):** konzistencijski gate hvata *parcijalni* bump; „zaboravio pokrenuti bump uopće" zatvara se tek **git-diff freshness
+gateom** (promijenjen asset ⇒ token mora napredovati) ILI još čišće — **auto-bump na Vercel deploy-u** (nula discipline), što se prirodno slaže s 3B build-korakom. Odgođeno kao zasebna mala cigla.
+
+**Slijedi:** 3C.2 evaluacija → **3B CSS bundling** (23 `@import`→1, diže Lighthouse perf s 66) → 3A Service Worker.
+
+---
+
 ## 2026-07-04 (nastavak 2) — ▶ F2 2D.3: `<sokrat-confirm>` (branded confirm-dijalog, prva kompozicija komponenti)
 **Kontekst:** 2D.3 = zadnja cigla F2 (reusable jezgra). Korisnik odabrao (od 4 ponuđene opcije) **`<sokrat-confirm>`** —
 branded confirm dijalog GRAĐEN NA `<sokrat-modal>` (prva „komponenta na komponenti"). Zamjenjuje 3 ružna native `confirm()`

@@ -27,7 +27,9 @@ tijekovi klikaju KAO KORISNIK); config.js bez ijednog mutable `let`; 3 `typeof` 
 ✅ **F2 2D (Web Components) KOMPLETNA — DEPLOYANA 2026-07-04:** 2D.1/2D.2a/2D.2b (`d2b1e48..9b62428`): `<sokrat-toast>` + `<sokrat-modal>` primitiv + learn image-viewer migriran ·
 **2D.2c auth modal → `<sokrat-modal>`** (`ba1c6f9..4ed6e75`, zadnji ad-hoc overlay; live-verified `20260708`) · **2D.3 `<sokrat-confirm>`** branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` (prva kompozicija; `7d88e5c..df67766`, `window.askConfirm()` zamijenio 3 native `confirm()`; live-verified `20260709`). Testovi `tests/components.spec.js`, PUNA Playwright **165/0**.
 ✅ **→ time F2 (reusable jezgra) KOMPLETNA i LIVE** (2A JSON 18/18 + 2B ContentRepository + 2C AppState + 2D Web Components + 2E Sentry). Uz to **ADR-016** (`service_role` → Supabase Edge Functions, NIKAD Vercel) + **BACKLOG 🔥 „Obriši račun" (GDPR)** zapisani (`4ed6e75`).
-**▶ DALJE: F3 performanse** — Service Worker (pravi offline → „Works offline" postaje istina) + CSS bundling (23 `@import`→1, diže Lighthouse perf s 66) + auto version-bump (kraj ručnih `?v=` tokena, gasi klasu BUG-004). [[foundation-pivot]]
+**▶ F3 performanse KREĆE (redoslijed: najsigurnija cigla prva → 3C → 3B → 3A → 3D → 3E; SW zadnja):** ✅ **3C.1 auto version-bump GOTOVO** (2026-07-04, grana `foundation/f3`, NIJE deployano):
+`scripts/bump-version.js` = JEDAN broj za cijelu app (`npm run bump` postavi svih ~92 `?v=` + `CONTENT_VERSION` na novi timestamp odjednom; `npm run bump:check` = TVRDI CI gate protiv drifta = **BUG-004 čuvar**);
+normalizirano 92→`20260704162056`; **ADR-017**. ⬜ **3C.2** (git-diff freshness / auto-bump na deploy-u) → ⬜ **3B CSS bundling** (23 `@import`→1, diže Lighthouse perf s 66) → ⬜ **3A Service Worker** (pravi offline → „Works offline" postaje istina). [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"

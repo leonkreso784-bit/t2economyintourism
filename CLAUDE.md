@@ -36,9 +36,10 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   koristi **`node scripts/pdf-text.js "<pdf>"`** (ekstrakcija teksta). Vidi `docs/CONTENT_INTAKE.md`.
 
 ## ⚠️ KRITIČNA PRAVILA
-1. **Cache bump:** pri izmjeni BILO KOJEG `css/*.css` ili `js/*.js`/`data*.js`, bumpaj `?v=` token u
-   `index.html` (i `styles.css` @import za CSS). Vercel ima `immutable` cache 1 god → inače deploy
-   ostaje NEVIDLJIV (BUG-004).
+1. **Cache bump:** pri izmjeni BILO KOJEG `css/*.css`/`js/*.js`/`data*.js` pokreni **`npm run bump`**
+   (F3 3C.1) — postavi SVE `?v=` tokene + `CONTENT_VERSION` na isti novi timestamp ODJEDNOM (kraj ručnog
+   bumpanja po fajlu). `npm run bump:check` = CI gate (svi identični, drift = crveno). Vercel ima `immutable`
+   cache 1 god → bez bumpa deploy je NEVIDLJIV (BUG-004; ADR-017). *(Dok F3 nije mergean u main, alat je na grani `foundation/f3`.)*
 2. **Deploy samo uz izričitu potvrdu korisnika** (`git push` = produkcijski deploy). Commit lokalno je OK.
 3. **Uvijek ažuriraj `docs/`** nakon izmjene (PROGRESS/CHANGELOG/ROADMAP + tematske).
 4. **Provjeri prije commita:** `npm run verify` (catalog) + `npm run test:responsive` (Playwright).
@@ -50,6 +51,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 
 ## Komande
 - `npm run verify` — integritet catalog-a (pokreni nakon dodavanja predmeta/sadržaja).
+- **`npm run bump`** — F3 3C.1: postavi SVE `?v=` tokene + `CONTENT_VERSION` na isti novi timestamp (zamjena ručnog bumpanja). `npm run bump:check` = CI gate (drift=crveno).
 - `npm run test:responsive` — Playwright (iPhone profili): responsive overflow + smoke (sve sekcije × svi predmeti) + sidebar.
 - `npm run serve:test` — lokalni server na http://localhost:5050 (za pregled).
 - `npm run scaffold -- ...` — kostur novog predmeta.
@@ -367,7 +369,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (`js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`). API `el.ask(opts)→Promise<boolean>` + globalni **`window.askConfirm(opts)`** (singleton `#confirmDialog`, **fallback na native `confirm()`**, uvijek Promise).
   Confirm→true, Cancel/ESC/backdrop→false, `danger:true`→crveni gumb; modal nasljeđuje ESC/scroll-lock/fokus/Tab-trap. **Zamijenio 3 native `confirm()`** (analytics reset progress/analytics → `async`; profile delete-cloud).
   `i18n` `common.cancel`/`common.confirm` (en+hr). **Budući konzument: GDPR „Obriši račun" (ADR-016).** Vizualno OK (screenshot, 420px/335px). Cache `20260709`. Test u `components.spec.js`. Gate: verify/validate/typecheck/unit 0, **PUNA Playwright 165/0**. **→ nakon deploya F2 (reusable jezgra) KOMPLETNA.**
-  **⬜ DALJE: F3 (Service Worker + CSS bundling + auto version-bump = kraj ručnih `?v=` tokena).** [[foundation-pivot]]
+- **▶ FAZA 3 (performanse) KREĆE — 3C.1 auto version-bump GOTOVO (2026-07-04, grana `foundation/f3`; NIJE deployano):** redoslijed F3 = najsigurnija cigla prva → **3C → 3B → 3A → 3D → 3E** (SW zadnja, najrizičnija). **3C.1:** `scripts/bump-version.js` = JEDAN broj za cijelu app — `npm run bump` postavi svih ~92 `?v=` tokena (5 HTML + styles.css @import + manifest.json) + `CONTENT_VERSION` na novi `YYYYMMDDHHMMSS` odjednom; `npm run bump:check` = TVRDI CI gate (svi identični, drift=crveno = **BUG-004 čuvar**). Normalizirano 92 → `20260704162056`. **ADR-017** (uniformni token > per-file content-hash; svjesni trade-off: deploy busta sve cacheve). Gate: verify/validate/schema/typecheck/export 0, bump:check 0, Playwright smoke 18/0. **⬜ 3C.2 (odgođeno):** git-diff freshness gate ILI auto-bump na Vercel deploy-u (zatvara „zaboravio bump uopće"; veže se uz 3B build-korak). **⬜ DALJE: 3C.2 evaluacija → 3B CSS bundling → 3A Service Worker.** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)
@@ -393,6 +395,8 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (Admin CRUD, **custom NE CMS**), predmet-po-predmet uz dual-read. Vidi `docs/FOUNDATION_PLAN.md`. [[foundation-pivot]]
 - **ADR-014 (2026-06-29): engineering standardi temelja.** CI/CD gate (GitHub Actions + Vercel preview) · **type-check bez build-a** (JSDoc+`tsc --checkJs`,
   samo CI checker, modul-po-modul) · **Web Components** (light-DOM) za reusable UI umjesto ad-hoc `innerHTML` · error monitoring. Vanilla/no-build etos ostaje.
+- **ADR-017 (2026-07-04): cache-busting = JEDAN uniformni auto-bumpani token za cijelu app** (ne per-file content-hash). `npm run bump` (F3 3C.1) postavi sve `?v=`+`CONTENT_VERSION`
+  na isti `YYYYMMDDHHMMSS`; `bump:check` = TVRDI CI gate (drift=crveno). Uniformni jer je jednostavan=pouzdan i CI-provjerljiv; trade-off (deploy busta sve cacheve) zanemariv (SW ionako kešira). Zatvara ADR-015 #3.
 - **ADR-016 (2026-07-04): privilegirane operacije (`service_role`) → Supabase Edge Functions, NIKAD Vercel.** Pravilo: *sve što traži `service_role` → Edge Function;
   sve pod korisnikovim/anon JWT-om uz RLS → bilo gdje (uklj. Vercel `/api`)*. `service_role` ostaje ko-lociran s bazom (min. napadna površina za root-ključ). Prvi konzument =
   **self-service „Obriši račun" (GDPR)** — trenutno NEMA (samo „Delete cloud data" + mail-fallback); dizajn-skica u `docs/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije). [[foundation-pivot]]
