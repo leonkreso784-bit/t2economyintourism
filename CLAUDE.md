@@ -357,7 +357,13 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`; komponenta vodi ESC/backdrop/scroll-lock/fokus; `learn.js` delegira (`open()`, close čisti sliku preko
   `sokrat-modal:close` eventa); maknut `#imageModalBackdrop` div. Izgled očuvan kroz `sokrat-modal.image-modal` override — **nulta vizualna promjena (potvrđeno screenshotom)**. Cache `20260707`.
   Test u `components.spec.js`. Gate: typecheck/verify/validate/unit 0, **Playwright 157/0**.
-  **⬜ DALJE: 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji — zasebno) → 2D.3 kartice/forme → F3 (SW + auto version-bump).** [[foundation-pivot]]
+- **✅ FAZA 2 — 2D.2c (auth modal `#authModal` → `<sokrat-modal>`, najrizičnija cigla 2D, zadnji ad-hoc overlay) — grana `foundation/f2d2c`, ▶ čeka preview+prod:** `auth.js:injectModal()`
+  gradio ~90 redaka `innerHTML` overlaya (backdrop+close, **bez ESC**). Sada: `createElement('sokrat-modal')`; maknut `.auth-modal__backdrop` div + `wrap.hidden` (backdrop = komponentin overlay);
+  kartica bez **dupliranog** `role=dialog`/`aria-modal` (komponenta = jedini dialog), `aria-labelledby` na komponentu; `openModal`/`closeModal` → `m.open()`/`m.close()` (fallback). **Sav login/signup/
+  forgot/recovery tok netaknut.** `css/auth.css`: overlay pravila → `sokrat-modal.auth-modal` override (backdrop `rgba(2,6,23,0.72)`+blur6 kao prije) + `> *` `max-width:420px` (card cap). **Bonus iz
+  primitiva:** ESC-zatvaranje + scroll-lock + fokus/Tab-trap/focus-restore (auth prije ništa). **Nulta vizualna regresija — potvrđeno screenshotom** (desktop 420px centrirano / mobitel 335px). Cache
+  `20260708`. Novi test u `components.spec.js` + `auth.spec.js` zelen. Gate: verify/typecheck/unit 0, **Playwright `components`+`auth`+`a11y` 36/0** (12 a11y-skip po dizajnu).
+  **⬜ DALJE: 2D.3 kartice/forme → time F2 (reusable jezgra) gotova → F3 (SW + CSS bundling + auto version-bump).** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

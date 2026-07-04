@@ -5,6 +5,14 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2D.2c — auth modal (`#authModal`) migriran na `<sokrat-modal>` (najrizičnija cigla 2D, zadnji ad-hoc overlay) — grana `foundation/f2d2c`; ▶ na grani, čeka preview+prod.**
+  `auth.js:injectModal()` gradio ~90 redaka `innerHTML` overlaya (backdrop+close, bez ESC). Sada: `createElement('sokrat-modal')`, maknut zaseban `.auth-modal__backdrop` div
+  (backdrop = komponentin overlay) + `wrap.hidden`; kartica bez **dupliranog** `role=dialog`/`aria-modal` (komponenta je jedini dialog), `aria-labelledby` premješten na komponentu;
+  `openModal`/`closeModal` → `m.open()`/`m.close()` s fallbackom. **Login/signup/forgot/recovery logika netaknuta.** `css/auth.css`: overlay pravila → `sokrat-modal.auth-modal`
+  override (backdrop `rgba(2,6,23,0.72)`+blur(6px) kao prije) + `> *` `max-width:420px` (card cap). **Bonus iz primitiva:** ESC-zatvaranje + scroll-lock + fokus-u-modal + Tab-trap +
+  focus-restore (auth ih prije NIJE imao). **Izgled očuvan — potvrđeno screenshotom** (desktop 420px centrirano, mobitel 335px, backdrop/close-X/tabovi/eye-toggle). Novi test u
+  `tests/components.spec.js` (open/scroll-lock/ESC/close, skip-ako-CDN) + postojeći `auth.spec.js` zelen. Cache token **`20260708`** (auth.js/auth.css/styles.css/index.html).
+  Gate: verify/typecheck/unit 0, **Playwright `components`+`auth`+`a11y` 36/0** (12 a11y-skip po dizajnu).
 - **🧩 FAZA 2 · 2D.2b — learn image-viewer migriran na `<sokrat-modal>` (prvi stvarni konzument) — grana `foundation/f2d`; ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`).**
   `#imageModal`: `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`. Komponenta preuzima ESC · klik-na-backdrop · `body.modal-open` scroll-lock · fokus;
   `learn.js` sada delegira (`openLearnImageModal` → `modal.open()`; zatvaranje čisti sliku preko **`sokrat-modal:close` eventa**). Maknut zaseban `#imageModalBackdrop` div +

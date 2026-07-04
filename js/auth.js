@@ -121,13 +121,17 @@ const SokratAuth = (function () {
 
     function injectModal() {
         if (document.getElementById('authModal')) return;
-        const wrap = document.createElement('div');
+        // F2 2D.2c: modal je sada Web Component <sokrat-modal> (S4 primitiv) — komponenta vodi
+        // overlay/ESC/backdrop-klik/scroll-lock/fokus/Tab-trap. Ovdje ostaje samo sadržaj kartice.
+        // Komponenta je sam dialog (role=dialog + aria-modal iz connectedCallback) → kartica NEMA
+        // duplirani role=dialog (izbjegnut ugniježđeni dialog); aria-labelledby ide na komponentu.
+        // Zaseban `.auth-modal__backdrop` div je maknut — backdrop je sama komponenta.
+        const wrap = document.createElement('sokrat-modal');
         wrap.id = 'authModal';
         wrap.className = 'auth-modal';
-        wrap.hidden = true;
+        wrap.setAttribute('aria-labelledby', 'authModalTitle');
         wrap.innerHTML =
-            '<div class="auth-modal__backdrop" data-auth-close></div>' +
-            '<div class="auth-modal__card" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">' +
+            '<div class="auth-modal__card">' +
             '  <button type="button" class="auth-modal__close" data-auth-close aria-label="Close">&times;</button>' +
 
             '  <div id="authSignedOut">' +
@@ -233,12 +237,16 @@ const SokratAuth = (function () {
         if (!m) return;
         renderModalState();
         if (!currentUser) showPanel('signin');
-        m.hidden = false;
+        // <sokrat-modal>: open() vodi prikaz/scroll-lock/fokus. Fallback ako element nije upgrade-an.
+        if (typeof m.open === 'function') m.open();
+        else { m.setAttribute('aria-hidden', 'false'); m.classList.add('is-open'); }
     }
 
     function closeModal() {
         const m = document.getElementById('authModal');
-        if (m) m.hidden = true;
+        if (!m) return;
+        if (typeof m.close === 'function') m.close();
+        else { m.setAttribute('aria-hidden', 'true'); m.classList.remove('is-open'); }
     }
 
     function renderModalState() {

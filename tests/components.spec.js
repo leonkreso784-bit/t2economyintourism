@@ -185,3 +185,60 @@ test('sokrat-modal: image-viewer (#imageModal, F2 2D.2b) — openLearnImageModal
 
   expect(errors).toEqual([]);
 });
+
+// F2 2D.2c — auth modal (#authModal) migriran s ad-hoc innerHTML overlaya na <sokrat-modal>.
+// Dokazuje: element JE Web Component (ne <div>), otvaranje ide kroz komponentin open() (.is-open +
+// scroll-lock), a primitiv SADA donosi ESC-zatvaranje (prije ga auth modal NIJE imao). Postojeći tok
+// (tabovi/forme/X) i dalje radi. Skip ako je supabase-js CDN nedostupan (auth se tiho gasi → modal se
+// ne injecta; isti obrazac kao auth.spec.js).
+test('sokrat-modal: auth modal (#authModal, F2 2D.2c) je <sokrat-modal> — open/scroll-lock/ESC/close', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  // Vraćeni posjetitelj (consent već odabran) → fiksni cookie-banner ne presreće klikove.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+  });
+  await page.goto('/');
+
+  const btn = page.locator('#authNavBtn');
+  let cdnOk = true;
+  try {
+    await btn.waitFor({ state: 'visible', timeout: 15000 });
+  } catch (e) {
+    cdnOk = false;
+  }
+  test.skip(!cdnOk, 'supabase-js CDN unreachable — auth disabled by design');
+
+  // Migracija: #authModal je sada custom element, ne <div>
+  expect(await page.evaluate(() => document.getElementById('authModal').tagName.toLowerCase())).toBe('sokrat-modal');
+
+  const modal = page.locator('#authModal');
+
+  // Otvaranje pravim klikom (user-gesture) → komponentin open(): .is-open + scroll-lock (NOVO iz primitiva)
+  await btn.click();
+  await expect(modal).toBeVisible();
+  await expect(modal).toHaveClass(/is-open/);
+  const opened = await page.evaluate(() => ({
+    ariaHidden: document.getElementById('authModal').getAttribute('aria-hidden'),
+    scrollLock: document.body.classList.contains('modal-open'),
+    tabActive: document.getElementById('authTabSignIn').classList.contains('is-active'),
+  }));
+  expect(opened.ariaHidden).toBe('false');
+  expect(opened.scrollLock).toBe(true);       // scroll-lock koji auth ranije NIJE imao
+  expect(opened.tabActive).toBe(true);        // default panel = Sign in (renderModalState/showPanel netaknuti)
+
+  // ESC zatvara — NOVO ponašanje iz <sokrat-modal> (prije auth modal nije reagirao na ESC)
+  await page.keyboard.press('Escape');
+  await expect(modal).not.toHaveClass(/is-open/);
+  await expect(modal).toBeHidden();
+  expect(await page.evaluate(() => document.body.classList.contains('modal-open'))).toBe(false);
+
+  // Ponovno otvori → zatvaranje na X i dalje radi (data-auth-close delegacija → closeModal)
+  await btn.click();
+  await expect(modal).toHaveClass(/is-open/);
+  await page.click('.auth-modal__close');
+  await expect(modal).toBeHidden();
+
+  expect(errors).toEqual([]);
+});

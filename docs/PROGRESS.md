@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-04 (nastavak) — ▶ F2 2D.2c: auth modal (`#authModal`) → `<sokrat-modal>` (najrizičnija cigla 2D)
+**Kontekst:** zadnji ad-hoc overlay u appu. `auth.js:injectModal()` je ~90 redaka `innerHTML`-a gradio vlastiti overlay + backdrop + close +
+(bez ESC). Cilj: pojesti taj boilerplate `<sokrat-modal>` primitivom (2D.2a) bez ijedne promjene login/signup/forgot/recovery logike.
+
+**Napravljeno (grana `foundation/f2d2c`):**
+- **js/auth.js:** `document.createElement('div')` → `createElement('sokrat-modal')`; maknut `wrap.hidden` + zaseban `<div class="auth-modal__backdrop">`
+  (backdrop je sada komponentin overlay); kartica izgubila **duplirani** `role="dialog" aria-modal` (komponenta je jedini dialog → nema ugniježđenog),
+  `aria-labelledby="authModalTitle"` premješten na `<sokrat-modal>`. `openModal()`/`closeModal()` → `m.open()`/`m.close()` uz fallback (`.is-open`/`aria-hidden`) ako element ne upgrade-a.
+  `data-auth-close` delegacija (close X) ostaje. **Login/signup/forgot/recovery handleri i cijeli tok — netaknuti.**
+- **css/auth.css:** `.auth-modal` overlay pravila (+`[hidden]`, +`.auth-modal__backdrop`) → `sokrat-modal.auth-modal` OVERRIDE (backdrop `rgba(2,6,23,0.72)`+blur(6px) kao prije)
+  + `sokrat-modal.auth-modal > *` `max-width:420px` (vraća card cap koji generički `> *` postavi na 100%). auth.css se učitava POSLIJE sokrat-modal.css → override pobjeđuje (jednaka specifičnost).
+- **Bonus (iz primitiva):** auth modal SADA ima ESC-zatvaranje + `body.modal-open` scroll-lock + fokus-u-modal + Tab-trap + focus-restore (prije ništa od toga). Pop-in ulazak kartice (blagi fade, 0.25s).
+- **Tokeni `20260708`** (auth.js + auth.css @import u styles.css + styles.css link + auth.js `<script>` u index.html).
+
+**Testirano (sve zeleno):** verify/typecheck/unit 0 · **Playwright ciljano `components`+`auth`+`a11y` = 36 pass / 0 fail** (12 skip = a11y samo iPhone-SE profil, po dizajnu).
+Novi test u `components.spec.js` (`#authModal` je `<sokrat-modal>` · open→`.is-open`+scroll-lock · **ESC zatvara** · X zatvara; skip-ako-CDN-nedostupan kao auth.spec). Postojeći `auth.spec.js` (tabovi/forme/forgot/X/overflow) i dalje zelen.
+**VIZUALNO potvrđeno screenshotom** (scratch, oba ekrana × oba panela): desktop kartica **420px centrirana** (x=430=(1280−420)/2), mobitel **335px centrirana** (backdrop padding), tamni backdrop+blur, close X, tabovi/polja/eye-toggle/Terms — **nulta vizualna regresija**.
+
+**Status 2D:** 2D.1 ✅ + 2D.2a ✅ + 2D.2b ✅ (LIVE) + **2D.2c ✅ (grana, čeka preview+prod).** **Slijedi:** 2D.3 (kartice/forme) → time **F2 (reusable jezgra) gotova** → **F3** (Service Worker + CSS bundling + auto version-bump).
+
+---
+
 ## 2026-07-04 — ✅ F2 2D (2D.1+2D.2a+2D.2b) DEPLOYANO NA PRODUKCIJU + pre-compact audit
 **Deploy:** ff-merge `d2b1e48..9b62428` (grana `foundation/f2d`→main, 3 commita, uz korisnikovo odobrenje). Sadrži **cijeli 2D batch**:
 `<sokrat-toast>` (2D.1) + `<sokrat-modal>` primitiv (2D.2a) + learn image-viewer migriran (2D.2b). Grana obrisana; radno stablo čisto.

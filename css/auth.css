@@ -34,25 +34,21 @@
 
 /* ---------- Modal ---------- */
 
-.auth-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+/* Auth modal je sada Web Component <sokrat-modal> (F2 2D.2c): generički .sokrat-modal daje
+   overlay mehaniku (fixed / inset:0 / flex-center + prikaz preko .is-open + scroll-lock / ESC /
+   backdrop-klik / fokus). Ovdje samo OVERRIDE-amo backdrop-izgled da ostane kao prije (tamniji
+   slate 0.72 + jači blur) i vraćamo kartici max-width (generički `> *` postavlja 100%).
+   auth.css se učitava POSLIJE sokrat-modal.css (styles.css redoslijed) → ovi override-i
+   pobjeđuju pri jednakoj specifičnosti. Zaseban `.auth-modal__backdrop` div je maknut. */
+sokrat-modal.auth-modal {
+    background: rgba(2, 6, 23, 0.72);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
 }
 
-/* display:flex gore bi pregazio UA [hidden] { display:none } — vrati ga eksplicitno */
-.auth-modal[hidden] { display: none; }
-
-.auth-modal__backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(2, 6, 23, 0.72);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+/* Generički `sokrat-modal.sokrat-modal > *` postavi max-width:100% → vrati card cap na 420px. */
+sokrat-modal.auth-modal > * {
+    max-width: 420px;
 }
 
 .auth-modal__card {
