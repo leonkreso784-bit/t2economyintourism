@@ -5,7 +5,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧩 FAZA 2 · 2D.2c — auth modal (`#authModal`) migriran na `<sokrat-modal>` (najrizičnija cigla 2D, zadnji ad-hoc overlay) — grana `foundation/f2d2c`; ▶ na grani, čeka preview+prod.**
+- **🧩 FAZA 2 · 2D.2c — auth modal (`#authModal`) migriran na `<sokrat-modal>` (najrizičnija cigla 2D, zadnji ad-hoc overlay) — ✅ DEPLOYANO 2026-07-04 (ff-merge `ba1c6f9..4ed6e75`; live-verified: produkcija servira `js/auth.js?v=20260708` s `createElement('sokrat-modal')`; korisnik potvrdio login/logout na preview-u).**
   `auth.js:injectModal()` gradio ~90 redaka `innerHTML` overlaya (backdrop+close, bez ESC). Sada: `createElement('sokrat-modal')`, maknut zaseban `.auth-modal__backdrop` div
   (backdrop = komponentin overlay) + `wrap.hidden`; kartica bez **dupliranog** `role=dialog`/`aria-modal` (komponenta je jedini dialog), `aria-labelledby` premješten na komponentu;
   `openModal`/`closeModal` → `m.open()`/`m.close()` s fallbackom. **Login/signup/forgot/recovery logika netaknuta.** `css/auth.css`: overlay pravila → `sokrat-modal.auth-modal`

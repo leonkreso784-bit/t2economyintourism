@@ -23,7 +23,7 @@ testirano, što slijedi.
 Novi test u `components.spec.js` (`#authModal` je `<sokrat-modal>` · open→`.is-open`+scroll-lock · **ESC zatvara** · X zatvara; skip-ako-CDN-nedostupan kao auth.spec). Postojeći `auth.spec.js` (tabovi/forme/forgot/X/overflow) i dalje zelen.
 **VIZUALNO potvrđeno screenshotom** (scratch, oba ekrana × oba panela): desktop kartica **420px centrirana** (x=430=(1280−420)/2), mobitel **335px centrirana** (backdrop padding), tamni backdrop+blur, close X, tabovi/polja/eye-toggle/Terms — **nulta vizualna regresija**.
 
-**Status 2D:** 2D.1 ✅ + 2D.2a ✅ + 2D.2b ✅ (LIVE) + **2D.2c ✅ (grana, čeka preview+prod).** **Slijedi:** 2D.3 (kartice/forme) → time **F2 (reusable jezgra) gotova** → **F3** (Service Worker + CSS bundling + auto version-bump).
+**Status 2D:** 2D.1 ✅ + 2D.2a ✅ + 2D.2b ✅ + **2D.2c ✅ — SVE LIVE.** 2D.2c ✅ **DEPLOYANO NA PRODUKCIJU 2026-07-04** (ff-merge `ba1c6f9..4ed6e75`; grana obrisana; live-verified: produkcija servira `js/auth.js?v=20260708` s `createElement('sokrat-modal')`; korisnik potvrdio login/logout na preview-u). **Uz to:** ADR-016 (`service_role`→Supabase Edge, ne Vercel) + BACKLOG „Obriši račun" (GDPR) zapisani (commit `4ed6e75`). **Slijedi:** 2D.3 (kartice/forme) → time **F2 (reusable jezgra) gotova** → **F3** (Service Worker + CSS bundling + auto version-bump).
 
 ---
 

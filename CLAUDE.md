@@ -357,7 +357,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`; komponenta vodi ESC/backdrop/scroll-lock/fokus; `learn.js` delegira (`open()`, close čisti sliku preko
   `sokrat-modal:close` eventa); maknut `#imageModalBackdrop` div. Izgled očuvan kroz `sokrat-modal.image-modal` override — **nulta vizualna promjena (potvrđeno screenshotom)**. Cache `20260707`.
   Test u `components.spec.js`. Gate: typecheck/verify/validate/unit 0, **Playwright 157/0**.
-- **✅ FAZA 2 — 2D.2c (auth modal `#authModal` → `<sokrat-modal>`, najrizičnija cigla 2D, zadnji ad-hoc overlay) — grana `foundation/f2d2c`, ▶ čeka preview+prod:** `auth.js:injectModal()`
+- **✅ FAZA 2 — 2D.2c (auth modal `#authModal` → `<sokrat-modal>`, najrizičnija cigla 2D, zadnji ad-hoc overlay) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-04 (ff-merge `ba1c6f9..4ed6e75`; live-verified: `js/auth.js?v=20260708` na produkciji servira `createElement('sokrat-modal')`, tokeni styles.css/auth.js=20260708; korisnik potvrdio login/logout na preview-u):** `auth.js:injectModal()`
   gradio ~90 redaka `innerHTML` overlaya (backdrop+close, **bez ESC**). Sada: `createElement('sokrat-modal')`; maknut `.auth-modal__backdrop` div + `wrap.hidden` (backdrop = komponentin overlay);
   kartica bez **dupliranog** `role=dialog`/`aria-modal` (komponenta = jedini dialog), `aria-labelledby` na komponentu; `openModal`/`closeModal` → `m.open()`/`m.close()` (fallback). **Sav login/signup/
   forgot/recovery tok netaknut.** `css/auth.css`: overlay pravila → `sokrat-modal.auth-modal` override (backdrop `rgba(2,6,23,0.72)`+blur6 kao prije) + `> *` `max-width:420px` (card cap). **Bonus iz
