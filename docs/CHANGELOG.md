@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **🧩 FAZA 2 · 2D.3 — `<sokrat-confirm>` branded confirm-dijalog (S4, prva kompozicija komponenti) — grana `foundation/f2d3`; ▶ gate zelen, ide na preview+prod.**
+  Treći UI-primitiv, GRAĐEN NA `<sokrat-modal>` (dokaz kompozicije). `js/components/sokrat-confirm.js` + `css/sokrat-confirm.css`; API `el.ask(opts)→Promise<boolean>` + globalni
+  **`window.askConfirm(opts)`** (singleton `#confirmDialog`, fallback na native `confirm()`; uvijek Promise). Confirm→true, Cancel/ESC/backdrop→false, `danger:true`→crveni gumb. Modal nasljeđuje
+  ESC/scroll-lock/fokus/Tab-trap. **Zamjenjuje 3 native `confirm()`:** `analytics.js` reset progress/analytics (→ `async`) + `profile.js` delete cloud data (danger). `i18n`: `common.cancel`/`common.confirm` (en+hr).
+  Budući konzument: GDPR „Obriši račun" (ADR-016). **Izgled potvrđen screenshotom** (desktop 420px centrirano / mobitel 335px; Cancel tihi + Confirm crveni). Test u `components.spec.js`. Cache token **`20260709`**
+  (sokrat-confirm.js/css + i18n/analytics/profile/styles/index). Gate: verify/validate/typecheck/unit 0, **PUNA Playwright matrica 165/0** (subjects=18). **→ nakon deploya F2 (reusable jezgra) KOMPLETNA.**
 - **🧩 FAZA 2 · 2D.2c — auth modal (`#authModal`) migriran na `<sokrat-modal>` (najrizičnija cigla 2D, zadnji ad-hoc overlay) — ✅ DEPLOYANO 2026-07-04 (ff-merge `ba1c6f9..4ed6e75`; live-verified: produkcija servira `js/auth.js?v=20260708` s `createElement('sokrat-modal')`; korisnik potvrdio login/logout na preview-u).**
   `auth.js:injectModal()` gradio ~90 redaka `innerHTML` overlaya (backdrop+close, bez ESC). Sada: `createElement('sokrat-modal')`, maknut zaseban `.auth-modal__backdrop` div
   (backdrop = komponentin overlay) + `wrap.hidden`; kartica bez **dupliranog** `role=dialog`/`aria-modal` (komponenta je jedini dialog), `aria-labelledby` premješten na komponentu;

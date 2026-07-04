@@ -363,7 +363,11 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   forgot/recovery tok netaknut.** `css/auth.css`: overlay pravila → `sokrat-modal.auth-modal` override (backdrop `rgba(2,6,23,0.72)`+blur6 kao prije) + `> *` `max-width:420px` (card cap). **Bonus iz
   primitiva:** ESC-zatvaranje + scroll-lock + fokus/Tab-trap/focus-restore (auth prije ništa). **Nulta vizualna regresija — potvrđeno screenshotom** (desktop 420px centrirano / mobitel 335px). Cache
   `20260708`. Novi test u `components.spec.js` + `auth.spec.js` zelen. Gate: verify/typecheck/unit 0, **Playwright `components`+`auth`+`a11y` 36/0** (12 a11y-skip po dizajnu).
-  **⬜ DALJE: 2D.3 kartice/forme → time F2 (reusable jezgra) gotova → F3 (SW + CSS bundling + auto version-bump).** [[foundation-pivot]]
+- **✅ FAZA 2 — 2D.3 (`<sokrat-confirm>` branded confirm-dijalog, prva kompozicija komponenti) — grana `foundation/f2d3`, ▶ gate zelen, ide na prod:** treći UI-primitiv, **GRAĐEN NA `<sokrat-modal>`**
+  (`js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`). API `el.ask(opts)→Promise<boolean>` + globalni **`window.askConfirm(opts)`** (singleton `#confirmDialog`, **fallback na native `confirm()`**, uvijek Promise).
+  Confirm→true, Cancel/ESC/backdrop→false, `danger:true`→crveni gumb; modal nasljeđuje ESC/scroll-lock/fokus/Tab-trap. **Zamijenio 3 native `confirm()`** (analytics reset progress/analytics → `async`; profile delete-cloud).
+  `i18n` `common.cancel`/`common.confirm` (en+hr). **Budući konzument: GDPR „Obriši račun" (ADR-016).** Vizualno OK (screenshot, 420px/335px). Cache `20260709`. Test u `components.spec.js`. Gate: verify/validate/typecheck/unit 0, **PUNA Playwright 165/0**. **→ nakon deploya F2 (reusable jezgra) KOMPLETNA.**
+  **⬜ DALJE: F3 (Service Worker + CSS bundling + auto version-bump = kraj ručnih `?v=` tokena).** [[foundation-pivot]]
 - **🧭 DALJE (korisnik 2026-06-24; detalji `docs/ROADMAP.md` §DALJE + [[content-roadmap-sequencing]]; ⚠️ PAUZIRANO zbog platforma-first zaokreta gore):** **A)** ✅ **sadržaj 1. god GOTOV**
   (~~Traffic~~ ✅ → ~~**Math**~~ **✅ LIVE 2026-06-27, ZADNJI**); ⛔ **Intro to Hospitality = BLOKIRAN** (nema PDF-ova). → sadržajna staza 1.+2. god završena.
   **B)** nakon sadržaja: **(1) Admin CRUD (B9/B10) → (2) AI tutor → (3) priprema za MATURU.** (Supabase re-sync Math ✅ napravljen 2026-06-27.)

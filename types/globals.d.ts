@@ -25,6 +25,9 @@ declare global {
     // UI-primitivi: Web Components (js/components/*.js, F2 2D)
     SokratToast?: CustomElementConstructor;  // 2D.1 — <sokrat-toast>
     SokratModal?: CustomElementConstructor;  // 2D.2 — <sokrat-modal>
+    SokratConfirm?: CustomElementConstructor;  // 2D.3 — <sokrat-confirm>
+    // Globalni ulaz za <sokrat-confirm> (fallback na native confirm); uvijek Promise<boolean>.
+    askConfirm?: (opts?: { title?: string; message?: string; confirmText?: string; cancelText?: string; danger?: boolean }) => Promise<boolean>;
 
     // i18n (js/i18n.js)
     t?: (key: string) => string;

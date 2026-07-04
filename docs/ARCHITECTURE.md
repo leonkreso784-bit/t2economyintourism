@@ -126,8 +126,9 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   `let` (`progress`/`analytics` namjerno ne — persist-lifecycle). Funkcionalni testovi `tests/app-state.spec.js` (klik kao korisnik).
 - **F2 2D ▶ (2D.1/2D.2a/2D.2b ✅ LIVE `d2b1e48..9b62428`; 2D.2c ✅ LIVE `ba1c6f9..4ed6e75`, sve deployano 2026-07-04) — UI-primitivi = Web Components (light-DOM):** `<sokrat-toast>`
   (`js/components/sokrat-toast.js`, `showToast()` delegira) + `<sokrat-modal>` primitiv (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`:
-  open/close/ESC/backdrop/scroll-lock/fokus/Tab-trap) + learn image-viewer (`#imageModal`) migriran + **auth modal (`#authModal`) migriran** (2D.2c, `js/auth.js`+`css/auth.css` override; zadnji ad-hoc overlay pojeden). Testovi `tests/components.spec.js`.
-  **⬜ DALJE: 2D.3 kartice/forme → time F2 gotova.** **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
+  open/close/ESC/backdrop/scroll-lock/fokus/Tab-trap) + learn image-viewer (`#imageModal`) migriran + **auth modal (`#authModal`) migriran** (2D.2c, `js/auth.js`+`css/auth.css` override; zadnji ad-hoc overlay pojeden)
+  + **`<sokrat-confirm>`** (2D.3, `js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`: branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` = prva kompozicija; `window.askConfirm()`→Promise; zamijenio 3 native `confirm()`; budući GDPR delete). Testovi `tests/components.spec.js`.
+  **▶ 2D.3 na grani `foundation/f2d3` (gate zelen, ide na prod) → time F2 (reusable jezgra) KOMPLETNA.** **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

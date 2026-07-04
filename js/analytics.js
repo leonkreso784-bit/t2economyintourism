@@ -187,45 +187,51 @@ window.addEventListener('beforeunload', () => {
     updateStudyTime();
 });
 
-window.resetProgress = function() {
-    if (confirm(window.t ? t('msg.confirmResetProgress') : 'Are you sure you want to reset all progress?')) {
-        progress = {
-            flashcardsLearned: [],
-            quizScores: [],
-            fillSolved: 0,
-            lastStudy: null,
-            streak: 0,
-            categoryProgress: {}
-        };
-        saveProgress();
-        renderProgressPage();
-        showToast(window.t ? t('msg.progressReset') : 'Progress reset!');
-    }
+window.resetProgress = async function() {
+    const ok = await askConfirm({
+        message: window.t ? t('msg.confirmResetProgress') : 'Are you sure you want to reset all progress?',
+        danger: true
+    });
+    if (!ok) return;
+    progress = {
+        flashcardsLearned: [],
+        quizScores: [],
+        fillSolved: 0,
+        lastStudy: null,
+        streak: 0,
+        categoryProgress: {}
+    };
+    saveProgress();
+    renderProgressPage();
+    showToast(window.t ? t('msg.progressReset') : 'Progress reset!');
 };
 
-window.resetAnalytics = function() {
-    if (confirm(window.t ? t('msg.confirmResetAnalytics') : 'Are you sure you want to reset all analytics?')) {
-        analytics = {
-            totalStudyTime: 0,
-            sessionsCount: 0,
-            quizzesTaken: 0,
-            quizzesCompleted: 0,
-            totalQuestionsAnswered: 0,
-            correctAnswers: 0,
-            wrongAnswers: 0,
-            flashcardsReviewed: 0,
-            fillExercisesDone: 0,
-            categoryStats: {},
-            dailyActivity: {},
-            averageQuizScore: 0,
-            bestQuizScore: 0,
-            lastSessionDate: null,
-            firstUseDate: new Date().toISOString()
-        };
-        saveAnalytics();
-        renderProgressPage();
-        showToast(window.t ? t('msg.analyticsReset') : 'Analytics reset!');
-    }
+window.resetAnalytics = async function() {
+    const ok = await askConfirm({
+        message: window.t ? t('msg.confirmResetAnalytics') : 'Are you sure you want to reset all analytics?',
+        danger: true
+    });
+    if (!ok) return;
+    analytics = {
+        totalStudyTime: 0,
+        sessionsCount: 0,
+        quizzesTaken: 0,
+        quizzesCompleted: 0,
+        totalQuestionsAnswered: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        flashcardsReviewed: 0,
+        fillExercisesDone: 0,
+        categoryStats: {},
+        dailyActivity: {},
+        averageQuizScore: 0,
+        bestQuizScore: 0,
+        lastSessionDate: null,
+        firstUseDate: new Date().toISOString()
+    };
+    saveAnalytics();
+    renderProgressPage();
+    showToast(window.t ? t('msg.analyticsReset') : 'Analytics reset!');
 };
 
 window.getAnalytics = getAnalyticsSummary;

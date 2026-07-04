@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-04 (nastavak 2) — ▶ F2 2D.3: `<sokrat-confirm>` (branded confirm-dijalog, prva kompozicija komponenti)
+**Kontekst:** 2D.3 = zadnja cigla F2 (reusable jezgra). Korisnik odabrao (od 4 ponuđene opcije) **`<sokrat-confirm>`** —
+branded confirm dijalog GRAĐEN NA `<sokrat-modal>` (prva „komponenta na komponenti"). Zamjenjuje 3 ružna native `confirm()`
+(analytics reset progress/analytics + profile delete cloud) i ujedno je TOČNO primitiv koji treba budući GDPR „Obriši račun" (ADR-016).
+
+**Napravljeno (grana `foundation/f2d3`):**
+- **`js/components/sokrat-confirm.js`** (novo): `<sokrat-confirm>` custom element; u connectedCallback renderira `<sokrat-modal role="alertdialog">`
+  s karticom (naslov opc./poruka/Cancel+Confirm). API `el.ask(opts) → Promise<boolean>`; globalni **`window.askConfirm(opts)`** (singleton
+  `#confirmDialog`) s **FALLBACKOM na native `confirm()`** (uvijek Promise → pozivatelji `await`). Modal vodi ESC/backdrop/scroll-lock/fokus;
+  ESC/backdrop/Cancel → `false`, Confirm → `true`. `danger:true` → crveni Confirm.
+- **`css/sokrat-confirm.css`** (novo): kartica + akcije (Cancel tihi, Confirm indigo, `.is-danger` crveni) + `> *` `max-width:420px` cap (kao auth). @import poslije sokrat-modal.css.
+- **`js/i18n.js`:** `common.cancel`/`common.confirm` (en+hr) = default labele.
+- **3 poziva spojena:** `analytics.js` `resetProgress`/`resetAnalytics` → `async` + `await askConfirm({…, danger:true})`; `profile.js` `deleteCloudData` → `await askConfirm({…, danger:true})`. Poruke identične (i18n ključevi netaknuti).
+- **index.html:** `<sokrat-confirm id="confirmDialog">` + `<script>` (nakon sokrat-modal.js). tsconfig include + `Window.SokratConfirm`/`askConfirm` u globals.d.ts.
+- **Tokeni `20260709`:** sokrat-confirm.js/css (novi) + i18n.js + analytics.js + profile.js + styles.css + index.html.
+
+**Testirano (sve zeleno):** verify/validate/typecheck/unit 0 · novi test u `components.spec.js` (registracija + unutarnji `<sokrat-modal>` = kompozicija · confirm→true · cancel→false · ESC→false · danger-klasa) ·
+**PUNA Playwright matrica 165 pass / 0 fail** (subjects=18, 0 problema) · a11y čist s novim elementom. **VIZUALNO potvrđeno screenshotom** (desktop 420px centrirano / mobitel 335px; tamni backdrop, Cancel tihi + Confirm crveni danger — profesionalno, ogroman skok od native `confirm()`).
+**Pouka (scratch):** `page.evaluate(() => window.askConfirm(...))` visi (vraća promise koji čeka klik) → u scratch/testu NE vraćati promise (`() => { askConfirm(...); }`) ili kliknuti gumb.
+
+**Status F2:** 2A ✅ 2B ✅ 2C ✅ 2D (2D.1/2a/2b/2c ✅ LIVE) + **2D.3 ✅ (grana, gate zelen)** + 2E ✅ → **F2 (reusable jezgra) KOMPLETNA** nakon deploya. **Slijedi: F3** (Service Worker + CSS bundling + auto version-bump).
+
+---
+
 ## 2026-07-04 (nastavak) — ▶ F2 2D.2c: auth modal (`#authModal`) → `<sokrat-modal>` (najrizičnija cigla 2D)
 **Kontekst:** zadnji ad-hoc overlay u appu. `auth.js:injectModal()` je ~90 redaka `innerHTML`-a gradio vlastiti overlay + backdrop + close +
 (bez ESC). Cilj: pojesti taj boilerplate `<sokrat-modal>` primitivom (2D.2a) bez ijedne promjene login/signup/forgot/recovery logike.

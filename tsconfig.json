@@ -19,6 +19,7 @@
     "js/app-state.js",
     "js/i18n.js",
     "js/components/sokrat-toast.js",
-    "js/components/sokrat-modal.js"
+    "js/components/sokrat-modal.js",
+    "js/components/sokrat-confirm.js"
   ]
 }

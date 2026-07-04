@@ -47,7 +47,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     
-    <link rel="stylesheet" href="styles.css?v=20260708">
+    <link rel="stylesheet" href="styles.css?v=20260709">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -1062,6 +1062,9 @@
         <span id="toastMessage">Message</span>
     </sokrat-toast>
 
+    <!-- Confirm dialog (F2 2D.3 — Web Component <sokrat-confirm>, građen na <sokrat-modal>; window.askConfirm() zamjenjuje native confirm()) -->
+    <sokrat-confirm id="confirmDialog"></sokrat-confirm>
+
     <!-- Footer -->
     <footer class="footer">
         <p>© 2026 All Rights Reserved by Leon Kreso</p>
@@ -1078,7 +1081,7 @@
     <script src="data/landing-stats.js?v=20260698"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260698"></script>
+    <script src="js/i18n.js?v=20260709"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
     <script src="js/app-state.js?v=20260703"></script>
     <script src="js/config.js?v=20260703"></script>
@@ -1087,9 +1090,11 @@
     <script src="js/content-repo.js?v=20260699"></script>
     <script src="js/components/sokrat-toast.js?v=20260705"></script>
     <script src="js/components/sokrat-modal.js?v=20260706"></script>
+    <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
+    <script src="js/components/sokrat-confirm.js?v=20260709"></script>
     <script src="js/utils.js?v=20260705"></script>
     <script src="js/storage.js?v=20260703"></script>
-    <script src="js/analytics.js?v=20260703"></script>
+    <script src="js/analytics.js?v=20260709"></script>
     <script src="js/navigation.js?v=20260703"></script>
     <script src="js/math.js?v=20260649"></script>
     <script src="js/flashcards.js?v=20260703"></script>
@@ -1103,7 +1108,7 @@
     <script src="js/exercises.js?v=20260703"></script>
     <script src="js/auth.js?v=20260708"></script>
     <script src="js/cloud-sync.js?v=20260703"></script>
-    <script src="js/profile.js?v=20260698"></script>
+    <script src="js/profile.js?v=20260709"></script>
     <script src="js/init.js?v=20260703"></script>
 </body>
 </html>

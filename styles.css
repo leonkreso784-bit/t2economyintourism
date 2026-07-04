@@ -40,6 +40,7 @@
 
 /* UI-primitivi (Web Components, F2 2D) */
 @import url('css/sokrat-modal.css?v=20260706');
+@import url('css/sokrat-confirm.css?v=20260709');
 
 /* Study sections (split into modular files) */
 @import url('css/subject-selector.css?v=20260602');

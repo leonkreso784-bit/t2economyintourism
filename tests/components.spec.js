@@ -242,3 +242,59 @@ test('sokrat-modal: auth modal (#authModal, F2 2D.2c) je <sokrat-modal> — open
 
   expect(errors).toEqual([]);
 });
+
+// F2 2D.3 — <sokrat-confirm> (branded confirm-dialog GRAĐEN NA <sokrat-modal> = kompozicija).
+// Dokazuje: registriran + sadrži unutarnji <sokrat-modal>; window.askConfirm() otvara ga i vraća
+// Promise; klik Confirm→true, Cancel→false, ESC→false; danger-varijanta boja OK gumb.
+test('sokrat-confirm: askConfirm() dijalog (2D.3) — open + confirm→true / cancel→false / ESC→false', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+  });
+  await page.goto('/');
+  await page.waitForFunction(() => !!customElements.get('sokrat-confirm') && typeof window.askConfirm === 'function');
+
+  // Registracija + kompozicija: #confirmDialog je <sokrat-confirm> s unutarnjim <sokrat-modal>
+  const info = await page.evaluate(() => {
+    const el = /** @type {any} */ (document.getElementById('confirmDialog'));
+    return {
+      defined: !!customElements.get('sokrat-confirm'),
+      tag: el ? el.tagName.toLowerCase() : null,
+      hasInnerModal: !!(el && el.querySelector('sokrat-modal')),
+      hasAsk: !!(el && typeof el.ask === 'function'),
+    };
+  });
+  expect(info.defined).toBe(true);
+  expect(info.tag).toBe('sokrat-confirm');
+  expect(info.hasInnerModal).toBe(true);   // građen NA <sokrat-modal> (kompozicija)
+  expect(info.hasAsk).toBe(true);
+
+  const cModal = page.locator('#confirmDialog sokrat-modal');
+
+  // (1) Confirm → true; poruka i danger-klasa postavljeni
+  await page.evaluate(() => { window.__cr = null; /** @type {any} */(window).askConfirm({ message: 'Reset all?', danger: true }).then((v) => { window.__cr = v; }); });
+  await expect(cModal).toHaveClass(/is-open/);
+  expect(await page.evaluate(() => document.getElementById('sokratConfirmMsg').textContent)).toBe('Reset all?');
+  expect(await page.evaluate(() => document.querySelector('#confirmDialog .sokrat-confirm__ok').classList.contains('is-danger'))).toBe(true);
+  await page.click('#confirmDialog .sokrat-confirm__ok');
+  await expect(cModal).not.toHaveClass(/is-open/);
+  expect(await page.evaluate(() => window.__cr)).toBe(true);
+
+  // (2) Cancel → false
+  await page.evaluate(() => { window.__cr = null; /** @type {any} */(window).askConfirm({ message: 'Sure?' }).then((v) => { window.__cr = v; }); });
+  await expect(cModal).toHaveClass(/is-open/);
+  await page.click('#confirmDialog .sokrat-confirm__cancel');
+  await expect(cModal).not.toHaveClass(/is-open/);
+  expect(await page.evaluate(() => window.__cr)).toBe(false);
+
+  // (3) ESC → false (nasljeđeno iz <sokrat-modal>)
+  await page.evaluate(() => { window.__cr = null; /** @type {any} */(window).askConfirm({ message: 'Sure?' }).then((v) => { window.__cr = v; }); });
+  await expect(cModal).toHaveClass(/is-open/);
+  await page.keyboard.press('Escape');
+  await expect(cModal).not.toHaveClass(/is-open/);
+  expect(await page.evaluate(() => window.__cr)).toBe(false);
+
+  expect(errors).toEqual([]);
+});

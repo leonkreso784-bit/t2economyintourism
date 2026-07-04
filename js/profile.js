@@ -185,7 +185,11 @@ async function deleteCloudData() {
     const client = SokratAuth.getClient();
     if (!user || !client) return;
 
-    if (!confirm(window.t ? t('msg.confirmDeleteCloud') : 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.')) return;
+    const ok = await askConfirm({
+        message: window.t ? t('msg.confirmDeleteCloud') : 'Delete ALL study progress stored in the cloud? Progress on this device is kept, but you will be signed out.',
+        danger: true
+    });
+    if (!ok) return;
 
     const { error } = await client.from('progress').delete().neq('key', '');
     if (error) {

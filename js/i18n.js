@@ -62,6 +62,8 @@
     'common.hint': { en: 'Hint', hr: 'Pomoć' },
     'common.correct': { en: 'Correct', hr: 'Točno' },
     'common.wrong': { en: 'Wrong', hr: 'Netočno' },
+    'common.cancel': { en: 'Cancel', hr: 'Odustani' },
+    'common.confirm': { en: 'Confirm', hr: 'Potvrdi' },
 
     // Quiz
     'quiz.title': { en: 'Quiz Mode', hr: 'Način kviza' },
