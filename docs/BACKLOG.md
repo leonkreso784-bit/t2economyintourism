@@ -3,6 +3,23 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥 Brisanje računa — self-service „Obriši račun" (GDPR pravo na zaborav) — 2026-07-04
+**Nalaz (korisnik, 2026-07-04):** app NEMA self-service brisanje računa. Postoji samo (a) „Delete cloud data" gumb
+(`js/profile.js:deleteCloudData` — briše `progress` retke preko anon+RLS, odjavi) i (b) tekst „za brisanje računa
+pošalji mail". To je nedovoljno za live proizvod s EU korisnicima (GA/Sentry aktivni). **Ne radi se sad** (korisnikova
+odluka), ali je prava planirana stavka.
+**Odlučeni put:** **Supabase Edge Function** (ADR-016 — `service_role` NIKAD u Vercel; pravilo: privilegirano → Edge Function).
+**Dizajn-skica (kad uđemo u to):**
+1. **Edge Function `delete-account`** (Deno, na Supabaseu). `service_role` iz Supabase secrets (`supabase secrets set`), nikad u gitu/frontendu.
+2. **Verifikacija identiteta u funkciji:** iz `Authorization: Bearer <JWT>` (šalje `supabase.functions.invoke`) → klijent s tim JWT-om → `auth.getUser()` → **provjeren** `user.id`. **NIKAD ne vjeruj `user_id` iz body-ja** (eskalacija privilegija).
+3. **Kaskadno brisanje:** prvo `progress` (i buduće UGC tablice) za taj `user.id`, pa `auth.admin.deleteUser(user.id)`. Redoslijed: podaci → auth (orphan-safe). Razmotriti DB `ON DELETE CASCADE` na FK prema `auth.users`.
+4. **Frontend (`js/profile.js`):** „Delete account" (danger) gumb → dvostruka potvrda (upiši email ili „DELETE") → `functions.invoke('delete-account')` → uspjeh: lokalni `signOut` + očisti localStorage napredak + toast + redirect na landing.
+5. **GDPR tekst:** `privacy.html` — opisati self-service brisanje (što se briše, nepovratno). Odlučiti o mail-fallbacku.
+6. **Soft- vs hard-delete:** MVP = **hard-delete** (doslovno „pravo na zaborav"); soft-delete (grace period) tek ako zatreba.
+7. **Test:** RLS-test proširiti (ne-vlasnik ne briše tuđe); ručni E2E na test-računu. ⚠️ Ne u iPhone-touch Playwright matrici (pravi auth se preskače) → ručno + scratch.
+**⚠️ Provjeriti pri gradnji:** ima li Supabase do tada **nativni „delete self" RPC** (tada ni Edge Function ne treba `service_role`).
+**Gdje pripada:** uz **F4** (prvi backend-privilegij + `/api`/Edge šav) ili kao zaseban „compliance" zadatak koji možda vrijedi gurnuti ranije (live je s pravim korisnicima). [[foundation-pivot]]
+
 ## 🧱 Hardening v1 + perf (2026-06-29) — sad u [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) Faza 1/3
 Nalazi iz `sonnet.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).
 Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):

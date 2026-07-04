@@ -389,9 +389,12 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (Admin CRUD, **custom NE CMS**), predmet-po-predmet uz dual-read. Vidi `docs/FOUNDATION_PLAN.md`. [[foundation-pivot]]
 - **ADR-014 (2026-06-29): engineering standardi temelja.** CI/CD gate (GitHub Actions + Vercel preview) · **type-check bez build-a** (JSDoc+`tsc --checkJs`,
   samo CI checker, modul-po-modul) · **Web Components** (light-DOM) za reusable UI umjesto ad-hoc `innerHTML` · error monitoring. Vanilla/no-build etos ostaje.
+- **ADR-016 (2026-07-04): privilegirane operacije (`service_role`) → Supabase Edge Functions, NIKAD Vercel.** Pravilo: *sve što traži `service_role` → Edge Function;
+  sve pod korisnikovim/anon JWT-om uz RLS → bilo gdje (uklj. Vercel `/api`)*. `service_role` ostaje ko-lociran s bazom (min. napadna površina za root-ključ). Prvi konzument =
+  **self-service „Obriši račun" (GDPR)** — trenutno NEMA (samo „Delete cloud data" + mail-fallback); dizajn-skica u `docs/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije). [[foundation-pivot]]
 - **ADR-015 (2026-07-03): tech-debt triage „briše li ga F4?".** Accounting→JSON = **NAPRAVITI** (dovršeno 18/18, F4 flip s uniformne baze) ·
   root `data-*.js` lokacije + Supabase free-tier sleep = **svjesno NE popravljati** (F4 ih ispari / poslovna odluka, ne inženjerska) · ručni cache-tokeni = **čekaju F3** (auto version-bump). [[foundation-pivot]]
-- ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker).
+- ADR-001/008: backend = Vercel Functions + Supabase (Railway samo kasnije za AI worker); **⚠️ ADR-016 precizira: `service_role`-operacije idu na Supabase Edge, ne Vercel.**
 - ADR-006: autorstvo u datotekama sad (migracijski sigurno); migracija u bazu jednom u Bloku B.
 - ADR-007: navigacija = puni drill-down (eksplicitni Fakultet→Smjer→Godina→Predmet). **Implementirano** (`#browse-page`).
 - ADR-009: kvantitativni predmeti (Math/Micro/Macro/Statistika) = **KaTeX** (currency-safe delimiteri **`\( \)`/`\[ \]`/`$$ $$`**, NE jedan `$`) +

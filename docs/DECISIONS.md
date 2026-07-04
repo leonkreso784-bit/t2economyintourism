@@ -4,6 +4,26 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-016 — Privilegirane operacije (`service_role`) → Supabase Edge Functions, NIKAD Vercel
+**Datum:** 2026-07-04 · **Status:** ✅ ODLUČENO (implementacija odgođena; prvi konzument = brisanje računa)
+**Kontekst:** App treba „Obriši račun" (GDPR pravo na zaborav — trenutno samo ručno mailom + „Delete cloud data" gumb
+koji briše samo `progress` retke). Brisanje `auth.users` retka zahtijeva **`service_role`** ključ (`auth.admin.deleteUser()`) —
+ključ koji **zaobilazi SVE RLS = root nad bazom**. Danas taj ključ postoji SAMO u lokalnom `.env` (migracijske skripte);
+nijedan deployani sustav ga nema → Vercel je „inertan" (statičke datoteke, proboj ne curi ništa što šteti bazi). Pitanje
+(sigurnost = najvažnija): gdje smije živjeti taj ključ? Razmatrano: **(A) Supabase Edge Function** (Deno, ključ u Supabase
+secrets) vs **(B) Vercel `/api`** (ključ u Vercel env). ADR-001/008 su generički rekli „Vercel Functions + Supabase" — ovo precizira.
+**Odluka:** **(A) Supabase Edge Function** za sve što traži `service_role`. Trajno pravilo:
+> **Sve što traži `service_role` → Supabase Edge Function. Sve što može ići pod korisnikovim/anon JWT-om uz RLS → bilo gdje (uklj. Vercel `/api`).**
+
+**Obrazloženje (sigurnosno):**
+1. **Ko-lokacija tajne s resursom** — `service_role` ostaje unutar Supabasea (isti dvorac kao baza koju može uništiti); ne pretvaramo inertni Vercel u nositelja DB-root moći.
+2. **Manje sustava koji mogu iscuriti ključ** — jedan (Supabase) umjesto dva (Supabase + Vercel env/build-logovi/npm supply-chain).
+3. **Nativna provjera identiteta** — JWT-verify i admin-akcija u istom runtimeu; nema ručne JWT-validacije na Vercelu (izbjegnut klasičan „obriši tuđi račun" bug ako se vjeruje `user_id` iz body-ja umjesto iz tokena).
+4. **Blast-radius** bilo kojeg Vercel incidenta ostaje „statičke datoteke" (kao danas).
+**Cijena / posljedice:** +1 deploy-toolchain (Supabase CLI + Deno) za malu, rijetko-mijenjanu funkciju — prihvatljivo za maksimalno-opasnu, niskofrekventnu operaciju. F4 (Admin CRUD) i dalje smije koristiti Vercel `/api` za operacije pod RLS-om; `service_role` **nikad ne ulazi u Vercel.** ⚠️ Pri gradnji provjeriti postoji li do tada **nativni Supabase „delete self" RPC** (tada ni Edge Function ne treba `service_role`); odluka „gdje živi privilegirani ključ" vrijedi bez obzira. Detaljan dizajn: [BACKLOG.md](BACKLOG.md) §Brisanje računa. [[foundation-pivot]]
+
+---
+
 ## ADR-015 — Tech-debt triage: „briše li ga F4?" (accounting→JSON DA; root-lokacije & Supabase-sleep NE)
 **Datum:** 2026-07-03 · **Status:** ✅ ODLUČENO + accounting-dio IZVRŠEN (grana `foundation/f2a-accounting`)
 **Kontekst:** Pregled cijelog projekta (2026-07-03) iznio je 4 „iskrene" stavke tech-duga. Pitanje: koje popraviti,
