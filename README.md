@@ -33,7 +33,7 @@ Management) i razvija se u skalabilnu platformu za cijelo sveučilište.
 ## 🛠️ Tehnologije
 HTML5 · CSS3 · Vanilla JS (ES6+) · Font Awesome · Google Fonts · KaTeX · PWA.
 Backend: **Supabase** (Postgres + Auth + Storage) — auth + cloud-sync napretka **LIVE**;
-sadržaj se čita **baza → `data/json/*.json` (17/18 predmeta, F2 2A) → `.js` fallback** (anon key + RLS, ADR-011/013); `/api` Vercel funkcije za kasnije (admin/AI).
+sadržaj se čita **baza → `data/json/*.json` (18/18 predmeta, F2 2A) → `.js` fallback** (anon key + RLS, ADR-011/013); `/api` Vercel funkcije za kasnije (admin/AI).
 Dev/test: Node + Playwright (responsive/smoke), unit testovi (`test:unit`), validatori (`validate:content` + `validate:schema` ajv), JSON exporter (`export:json`), `pdf-parse`.
 
 ## 📁 Struktura projekta

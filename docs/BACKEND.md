@@ -37,6 +37,9 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   (briše sve `progress` retke korisnika pa odjava — da diff-push ne re-uploada lokalno) + mailto
   za potpuno brisanje računa. Ulazi u auth: `.auth-entry` gumbi (landing nav + headeri
   browse/lessons/study) — odjavljen→modal, prijavljen→Profile.
+  > **⚠️ Self-service „Obriši račun" (GDPR pravo na zaborav) — PLANIRANO, još NEMA** (trenutno samo „Delete cloud data" + mail-fallback).
+  > Odlučeno (ADR-016): brisanje `auth.users` traži `service_role` → ide u **Supabase Edge Function** (`service_role` NIKAD u Vercel), NE frontend.
+  > Dizajn-skica: `docs/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije).
 - **Pravne/info stranice (Google Ads spremnost):** statične `privacy.html` / `terms.html` /
   `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
@@ -68,7 +71,7 @@ s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigu
 - **Re-sync:** nakon dodavanja/izmjene predmeta → ponovno `node scripts/migrate-content.js <id>` (datoteke su izvor).
 
 **🆕 JSON tier (F2 2A, ✅ LIVE 2026-07-02):** read-path je sada TROSLOJNI — **baza → `data/json/<id>/<var>.json`
-(predmeti s catalog `content.dataFormat:'json'`, 17/18) → `.js` fallback**. Loader: `_loadSubjectFromJson()` u
+(predmeti s catalog `content.dataFormat:'json'`, 18/18) → `.js` fallback**. Loader: `_loadSubjectFromJson()` u
 `content-loader.js`. Kad je baza budna, sadržaj i dalje dolazi iz baze (JSON tier se ne okida); kad je uspavana/nedostupna,
 JSON preuzima prije `.js`. `.json` su generirani export (`npm run export:json`) — **nakon izmjene `.js` migriranog
 predmeta obavezan i re-export I `migrate-content.js` re-sync** (dva zrcala istog izvora). Vježbe i dalje SAMO `.js` (BUG-012).

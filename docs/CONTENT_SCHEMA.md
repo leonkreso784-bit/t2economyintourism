@@ -85,8 +85,8 @@ unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po 
   (struktura/tipovi/nepoznata polja, `additionalProperties:false`). Mijenjaš li shemu → ažuriraj OBA dokumenta.
   Provjera: **`npm run validate:schema [subjectId]`** (ajv; u CI-u). Semantiku (correct-u-rasponu, KaTeX
   balans, `_______`) i dalje provjerava `npm run validate:content` — dvije razine se nadopunjuju.
-- **JSON dual-read:** predmeti s `content.dataFormat:'json'` u catalogu (trenutno **17/18**, svi osim
-  accountinga) čitaju study sadržaj iz **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var),
+- **JSON dual-read:** predmeti s `content.dataFormat:'json'` u catalogu (**18/18**, accounting dovršen 2026-07-03)
+  čitaju study sadržaj iz **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var),
   s fallbackom na `.js`. **`.js` datoteke OSTAJU izvor istine** — `.json` je generirani export.
 - ⚠️ **PRAVILO RE-EXPORTA:** nakon SVAKE izmjene `data/*.js` migriranog predmeta pokreni
   **`npm run export:json <subjectId>`** — inače CI pada na drift-gateu (`export:json -- --check`).

@@ -23,7 +23,7 @@ SUPABASE                                  ADMIN UI (/admin, zaštićen)
 **Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](BACKEND.md) (ADR-008).
 **Stanje (2026-07-02):** Auth + cloud-sync napretka LIVE; **sadržaj se čita iz baze direktno preko
 supabase-js (anon key + RLS), NE preko `/api`** (ADR-011) — `/api` Vercel funkcije ostaju za admin/AI kasnije.
-**Read-path redoslijed (od F2 2A): baza → `data/json/*.json` (predmeti s `dataFormat:'json'`, 17/18) → `.js` fallback.**
+**Read-path redoslijed (od F2 2A): baza → `data/json/*.json` (predmeti s `dataFormat:'json'`, 18/18) → `.js` fallback.**
 
 Postojeća schema kategorije ostaje **identična** — UI logika se ne dira.
 
@@ -116,7 +116,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   Loader EU/DE, samo hvatanje grešaka, `sendDefaultPii:false`, release `sokrat-study@…`). Test `monitoring.spec.js`.
 - **F2 2A ✅ LIVE (2026-07-02) — S2 čisti JSON format (dual-read):** study sadržaj = čisti JSON u
   **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var; 51 datoteka). Loader grananje:
-  **baza → JSON (catalog `content.dataFormat:'json'`, 17/18 predmeta) → `.js` fallback**. `.js` OSTAJE izvor
+  **baza → JSON (catalog `content.dataFormat:'json'`, 18/18 predmeta) → `.js` fallback**. `.js` OSTAJE izvor
   istine — `.json` je generirani export (`npm run export:json <id>`); **nakon izmjene `.js` migriranog predmeta
   obavezan re-export** (CI drift-gate `export:json -- --check`). Strojni ugovor: `schema/subject-content.schema.json`
   (draft-07) + `npm run validate:schema`. Vježbe NIKAD u JSON (BUG-012, `codeScripts` uvijek iz `.js`). Accounting

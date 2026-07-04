@@ -24,8 +24,10 @@ globali iz config.js (5 grupa: fill/cards/quiz/session/nav) → `window.AppState
 tijekovi klikaju KAO KORISNIK); config.js bez ijednog mutable `let`; 3 `typeof` guarda prepisana. **Usput test ULOVIO + POPRAVLJEN BUG-016**
 (landscape flashcard gutao tapove na ✓/✗ — relikt fiksne visine u `responsive/03`/`04`). Gate: puni Playwright **133/0** (subjects=18). Cache `?v=20260703`.
 ✅ **ACCOUNTING → JSON (F2 2A DOVRŠENA 18/18) DEPLOYANO 2026-07-03** (`d2b1e48`, ADR-015; jedini predmet izvan JSON supstrata sad migriran, format-only → F4 flip s uniformne baze).
-✅ **F2 2D (Web Components) — 2D.1/2D.2a/2D.2b DEPLOYANI 2026-07-04** (`d2b1e48..9b62428`, grana `foundation/f2d`): `<sokrat-toast>` (`showToast()` delegira) + `<sokrat-modal>` primitiv (open/close/ESC/backdrop/scroll-lock/fokus) + learn image-viewer migriran; `tests/components.spec.js`, Playwright 157/0.
-**▶ DALJE: F2 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji) → 2D.3 kartice/forme → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
+✅ **F2 2D (Web Components) KOMPLETNA — DEPLOYANA 2026-07-04:** 2D.1/2D.2a/2D.2b (`d2b1e48..9b62428`): `<sokrat-toast>` + `<sokrat-modal>` primitiv + learn image-viewer migriran ·
+**2D.2c auth modal → `<sokrat-modal>`** (`ba1c6f9..4ed6e75`, zadnji ad-hoc overlay; live-verified `20260708`) · **2D.3 `<sokrat-confirm>`** branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` (prva kompozicija; `7d88e5c..df67766`, `window.askConfirm()` zamijenio 3 native `confirm()`; live-verified `20260709`). Testovi `tests/components.spec.js`, PUNA Playwright **165/0**.
+✅ **→ time F2 (reusable jezgra) KOMPLETNA i LIVE** (2A JSON 18/18 + 2B ContentRepository + 2C AppState + 2D Web Components + 2E Sentry). Uz to **ADR-016** (`service_role` → Supabase Edge Functions, NIKAD Vercel) + **BACKLOG 🔥 „Obriši račun" (GDPR)** zapisani (`4ed6e75`).
+**▶ DALJE: F3 performanse** — Service Worker (pravi offline → „Works offline" postaje istina) + CSS bundling (23 `@import`→1, diže Lighthouse perf s 66) + auto version-bump (kraj ručnih `?v=` tokena, gasi klasu BUG-004). [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
