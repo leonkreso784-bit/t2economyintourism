@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-04 — ✅ F2 2D (2D.1+2D.2a+2D.2b) DEPLOYANO NA PRODUKCIJU + pre-compact audit
+**Deploy:** ff-merge `d2b1e48..9b62428` (grana `foundation/f2d`→main, 3 commita, uz korisnikovo odobrenje). Sadrži **cijeli 2D batch**:
+`<sokrat-toast>` (2D.1) + `<sokrat-modal>` primitiv (2D.2a) + learn image-viewer migriran (2D.2b). Grana obrisana; radno stablo čisto.
+**Pre-deploy:** čist ff (main=origin/main=merge-base=`d2b1e48`) · fast gate zelen · puni Playwright **157/0** (već na ovom stablu) · vizualni screenshot image-viewera OK.
+**Live verificirano (sokratstudy.com):** produkcija servira novu `js/components/sokrat-modal.js` (definira `SokratModal` + `customElements.define('sokrat-modal',…)` + `sokrat-modal:close`) — datoteka prije deploya NIJE postojala → deploy je LIVE. Tokeni `20260705`/`20260706`/`20260707`.
+
+**Pre-compact audit (korisnikovo pravilo #6 — sve `.md`):** prošao root + `docs/`. Ispravljeno zastarjelo: **deploy-status** 3 aktuelne cigle (2D.1/2D.2a/2D.2b) `NIJE deployano`→`DEPLOYANO 2026-07-04` (CLAUDE/CHANGELOG/FOUNDATION_PLAN/PROGRESS) · **accounting 18/18** dopisan (ROADMAP/FOUNDATION_PLAN) · **FOUNDATION_PLAN top-status** dopunjen (2C/accounting/2D umjesto „staje na 2A") · **ARCHITECTURE** F2 2D `⬜`→`▶ LIVE` · **TESTING** dodan `components.spec.js` (+ dual-read accounting) · **ROADMAP DALJE** → 2D.2c. Memorija: trenutni projekt-put nema memory-mapu (stare memorije pod prijašnjim putovima nakon seljenja projekta — sadržajno referencirane u CLAUDE `[[…]]`, nisu dirane). **Stanje spremno za compact.**
+**Slijedi (poslije compacta):** F2 **2D.2c** (auth modal `#authModal` ad-hoc innerHTML → `<sokrat-modal>`, najrizičniji — zasebna cigla) → 2D.3 kartice/forme → F3.
+
+---
+
 ## 2026-07-03 (nastavak 5) — ▶ F2 2D.2b: learn image-viewer → `<sokrat-modal>` (prvi stvarni konzument)
 **Kontekst:** 2D.2a je dao samostalan modal-primitiv (bez korisnika). 2D.2b mu daje **prvog stvarnog konzumenta** na NISKORIZIČNOJ značajki
 (image-viewer — ako pukne, kozmetika, ne auth). Auth (2D.2c) ostaje zasebna, najrizičnija cigla.
@@ -17,7 +28,7 @@ testirano, što slijedi.
 
 **Testirano (sve zeleno):** typecheck/verify/validate/unit 0 · **Playwright 157/0** (153 + 4 nova image-viewer testa, svi profili) · smoke geography learn renderira bez greške ·
 **VIZUALNO potvrđeno screenshotom** (otvoren modal: tamni backdrop, centrirana slika, caption, close X gore-desno — bajt-isti kao prije). Test: `openLearnImageModal` otvara → ESC zatvara → slika očišćena.
-**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji — zasebno).
+**Status:** ✅ **DEPLOYANO 2026-07-04** (`d2b1e48..9b62428`, ff-merge `foundation/f2d`→main). **Slijedi:** 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji — zasebno).
 
 ---
 
@@ -40,7 +51,7 @@ Fokus-management je zato verificiran **ručno/scratch** (dokazano: `activeElemen
 `aria-modal=true` deklarativni signal). Determinističko stanje JE gate-ano.
 
 **Testirano (sve zeleno):** typecheck 0 · verify 0 · validate:content 0 · test:unit 69/0 · **Playwright 153/0** (145 + 8 novih modal-testa).
-**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2b (image-viewer → `<sokrat-modal>`).
+**Status:** ✅ **DEPLOYANO 2026-07-04** (`d2b1e48..9b62428`, ff-merge `foundation/f2d`→main). **Slijedi:** 2D.2b (image-viewer → `<sokrat-modal>`).
 
 ---
 
@@ -80,7 +91,7 @@ puni Playwright 137/0 + live-verify: `accountingM1.json` servira 6 kat.). JSON s
 - **NEW `tests/components.spec.js`:** registracija custom-elementa + `#toast` instanca s `.show()` + delegacija (prikaz `.show`+tekst, pa auto-hide), 0 page-error.
 
 **Testirano (sve zeleno):** verify 0 · validate:content 0 · typecheck 0 · test:unit 69/0 · **Playwright 145/0** (137 + 8 novih = 2 component-testa × 4 profila).
-**Status:** lokalni commit na grani — **⏳ NIJE deployano** (čeka odobrenje). **Slijedi:** 2D.2 `<sokrat-modal>` (auth/profil).
+**Status:** ✅ **DEPLOYANO 2026-07-04** (`d2b1e48..9b62428`, ff-merge `foundation/f2d`→main). **Slijedi:** 2D.2 `<sokrat-modal>` (auth/profil).
 
 ---
 

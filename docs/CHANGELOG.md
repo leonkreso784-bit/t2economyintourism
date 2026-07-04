@@ -5,20 +5,20 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **🧩 FAZA 2 · 2D.2b — learn image-viewer migriran na `<sokrat-modal>` (prvi stvarni konzument) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+- **🧩 FAZA 2 · 2D.2b — learn image-viewer migriran na `<sokrat-modal>` (prvi stvarni konzument) — grana `foundation/f2d`; ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`).**
   `#imageModal`: `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`. Komponenta preuzima ESC · klik-na-backdrop · `body.modal-open` scroll-lock · fokus;
   `learn.js` sada delegira (`openLearnImageModal` → `modal.open()`; zatvaranje čisti sliku preko **`sokrat-modal:close` eventa**). Maknut zaseban `#imageModalBackdrop` div +
   ručni ESC/backdrop handleri iz learn.js. **Izgled očuvan bajt-isti** (tamni backdrop 0.9, safe-area padding, close X, instant bez fade-a) kroz `sokrat-modal.image-modal`
   override (learn.css se učitava POSLIJE sokrat-modal.css → pobjeđuje u remiju specifičnosti) — **potvrđeno screenshotom, nulta vizualna promjena**. Test u `tests/components.spec.js`
   (open kroz learn API + ESC-close + slika očišćena). Cache token **`20260707`** (learn.js/learn.css/styles.css/index.html). Gate: typecheck/verify/validate/unit 0, **Playwright 157/0**.
-- **🧩 FAZA 2 · 2D.2a — reusable modal-primitiv `<sokrat-modal>` (S4) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+- **🧩 FAZA 2 · 2D.2a — reusable modal-primitiv `<sokrat-modal>` (S4) — grana `foundation/f2d`; ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`).**
   Drugi UI-primitiv (nakon toasta). Samostalni **overlay/dialog** (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`, light-DOM):
   API `open()`/`close()`/`toggle()`/`isOpen()` + eventi `sokrat-modal:open`/`:close`. Ponašanje: ESC-zatvara · backdrop-klik-zatvara ·
   `body.modal-open` scroll-lock (reuse) · fokus-u-modal (rAF) + focus-restore + **Tab-trap** · a11y (`role=dialog`/`aria-modal=true`/`aria-hidden`).
   **Nijedan postojeći modal još ne migriran → 0 rizika** (2D.2b = image-viewer, 2D.2c = auth slijede). U typecheck scopeu (`Window.SokratModal`).
   Test `tests/components.spec.js`: stanje (is-open/aria/scroll-lock/ESC/backdrop) gate-ano; fokus-management verificiran ručno/scratch (touch-profili
   ne fokusiraju tapom → ne gate-an, dokumentirano). Cache token **`20260706`** (nova komponenta+CSS, styles.css @import, index.html). Gate: typecheck/verify/validate/unit 0, **Playwright 153/0**.
-- **🧩 FAZA 2 · 2D.1 — prvi Web Component `<sokrat-toast>` (S4, UI-primitiv) — grana `foundation/f2d`; lokalni commit (⏳ NIJE deployano — čeka odobrenje).**
+- **🧩 FAZA 2 · 2D.1 — prvi Web Component `<sokrat-toast>` (S4, UI-primitiv) — grana `foundation/f2d`; ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`).**
   Prvi custom element na platformi (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija → lifecycle → `.show()`) na najjednostavnijem
   primitivu prije `<sokrat-modal>` (2D.2). **Light-DOM (bez Shadow DOM)** → element zadržava klasu `.toast`, pa svi postojeći CSS-ovi (base +
   responsive) vrijede NEPROMIJENJENO. Show-logika preseljena iz `showToast()` doslovno (isti reflow-restart animacije + 2500 ms auto-hide);

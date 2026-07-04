@@ -114,7 +114,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 2 — Reusable jezgra (srce temelja)
 **Cilj:** izgraditi S1–S4 + error monitoring. Ovo otključava CRUD i čisti SW.
 **Ovisnosti:** F1 (CI mora štititi ove veće refaktore).
-**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **✅ 2A (S2 JSON) DEPLOYANO NA PRODUKCIJU (2026-07-02, ff-merge `0c21aa6..661dbc8` uz potvrdu korisnika; live verificirano: tokeni `20260702`/`20260700`, 17 flagova, JSON servira `application/json`, loader dual-read):** 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot) · 2A.3 ✅ (dual-read) · 2A.4 ✅ (17/18 migrirano; accounting svjesno odgođen). Gate: CI zelen (GitHub) + Vercel preview provjeren do bajta (SHA1) + puni Playwright 117/0. **✅ 2C (S3 AppState) KOMPLETNA + DEPLOYANA NA PRODUKCIJU (2026-07-03, ff-merge `73f3809..f54048a`; CI zelen; preview EOL-verificiran; live: 16× `20260703`, AppState servira, BUG-016 fix live):** svih 5 grupa globala → `window.AppState`, config.js bez ijednog mutable `let`; usput BUG-016 nađen funkcionalnim testom + popravljen (`68bf7e1`). Gate: puni Playwright **133/0**. **DALJE: push f2c → deploy → 2D (Web Components) → F3.**
+**▶ STATUS (2026-07-01): 2B (S1 Repo) + 2E (Sentry) ✅ DEPLOYANI NA PRODUKCIJU** (`164dc11..57f449a`, grana `foundation/f2`→main, CI zelen, live+Sentry verificirano). **✅ 2A (S2 JSON) DEPLOYANO NA PRODUKCIJU (2026-07-02, ff-merge `0c21aa6..661dbc8` uz potvrdu korisnika; live verificirano: tokeni `20260702`/`20260700`, 17 flagova, JSON servira `application/json`, loader dual-read):** 2A.1 ✅ (JSON Schema, 54/54) · 2A.2 ✅ (exporter + pilot) · 2A.3 ✅ (dual-read) · 2A.4 ✅ (17/18 migrirano; accounting svjesno odgođen → **DOVRŠEN 18/18 2026-07-03 `d2b1e48`, ADR-015**). Gate: CI zelen (GitHub) + Vercel preview provjeren do bajta (SHA1) + puni Playwright 117/0. **✅ 2C (S3 AppState) KOMPLETNA + DEPLOYANA NA PRODUKCIJU (2026-07-03, ff-merge `73f3809..f54048a`; CI zelen; preview EOL-verificiran; live: 16× `20260703`, AppState servira, BUG-016 fix live):** svih 5 grupa globala → `window.AppState`, config.js bez ijednog mutable `let`; usput BUG-016 nađen funkcionalnim testom + popravljen (`68bf7e1`). Gate: puni Playwright **133/0**. **✅ 2D (Web Components) — 2D.1/2D.2a/2D.2b DEPLOYANI 2026-07-04 (`d2b1e48..9b62428`, grana `foundation/f2d`): `<sokrat-toast>` + `<sokrat-modal>` primitiv + learn image-viewer migriran; Playwright 157/0. DALJE: 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji) → 2D.3 kartice/forme → F3.**
 
 > **🔁 REVIZIJA REDOSLIJEDA (2026-06-30, dogovoreno s korisnikom — utemeljeno u kodu):** izvodi **2B (S1 Repo) PRIJE 2A (S2 JSON)**,
 > i **2E (Sentry) odmah nakon S1 wrappera** (prije rizične migracije). Razlozi: (1) **F3 (sljedeća faza) ovisi o S1, ne o S2-complete** —
@@ -189,19 +189,19 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
     `const subjectDataMap`/`lessonCategoryMap` + `progress`/`analytics` s vlastitim persist-lifecycleom); runtime stanje =
     `window.AppState` (inspektabilno iz konzole/testova — prije nemoguće jer top-level `let` nije na window; temelj za CRUD/tutor/debug).
 - **2D — UI-primitivi = Web Components (S4):** *inkrementalno, light-DOM (bez Shadow DOM — čuva globalni CSS/teme).*
-  - [2D.1] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** Pilot `<sokrat-toast>` (`js/components/sokrat-toast.js`)
+  - [2D.1] ✅ **GOTOVO + DEPLOYANO (2026-07-04, grana `foundation/f2d`→main `d2b1e48..9b62428`):** Pilot `<sokrat-toast>` (`js/components/sokrat-toast.js`)
     — prvi custom element, dokazan obrazac (registracija → lifecycle → `.show()` metoda). **Light-DOM zadržava klasu `.toast`** → svi CSS-ovi (base +
     responsive) vrijede nepromijenjeno. `showToast()` (js/utils.js) sada **delegira** na komponentu, uz **fallback** na stari DOM-put (0 regresije ako
     element ne upgrade-a). Komponenta preselila show-logiku doslovno (isti reflow-restart + 2500 ms auto-hide) + a11y (`role=status`/`aria-live=polite`).
     U typecheck scopeu (novo polje `Window.SokratToast`). Test `tests/components.spec.js` (registracija + show/hide). Cache token `20260705` (utils + nova komponenta).
     Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
   - [2D.2] ▶ `<sokrat-modal>` — reusable overlay/dialog primitiv. Dijeli se na pod-cigle (auth = najrizičniji → zadnji):
-    - [2D.2a] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** samostalni primitiv `js/components/sokrat-modal.js`
+    - [2D.2a] ✅ **GOTOVO + DEPLOYANO (2026-07-04, grana `foundation/f2d`→main `d2b1e48..9b62428`):** samostalni primitiv `js/components/sokrat-modal.js`
       (`open()`/`close()`/`toggle()`/`isOpen()`; eventi `sokrat-modal:open`/`:close`) + `css/sokrat-modal.css` (light-DOM overlay). Ponašanje: ESC-zatvara,
       backdrop-klik-zatvara, `body.modal-open` scroll-lock, fokus-u-modal (rAF) + focus-restore + Tab-trap, a11y (`role=dialog`/`aria-modal`/`aria-hidden`).
       **Nijedan postojeći modal još ne migriran → 0 rizika.** U typecheck scopeu (`Window.SokratModal`). Test: stanje (is-open/aria/scroll-lock/ESC/backdrop)
       gate-ano; fokus-management dokumentiran (touch-profili ne fokusiraju tapom → verificiran ručno/scratch, ne gate-an). Cache `20260706`. Gate: **Playwright 153/0**.
-    - [2D.2b] ✅ **GOTOVO (2026-07-03, grana `foundation/f2d`; lokalni commit, ⏳ NIJE deployano):** learn image-viewer (`#imageModal`) migriran na `<sokrat-modal>` —
+    - [2D.2b] ✅ **GOTOVO + DEPLOYANO (2026-07-04, grana `foundation/f2d`→main `d2b1e48..9b62428`):** learn image-viewer (`#imageModal`) migriran na `<sokrat-modal>` —
       prvi STVARNI konzument primitiva. `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`; komponenta vodi ESC/backdrop-klik/scroll-lock/fokus;
       izgled (tamni backdrop 0.9, safe-area, close X, instant bez fade-a) očuvan kroz `sokrat-modal.image-modal` override (learn.css poslije sokrat-modal.css → pobjeđuje).
       `learn.js` delegira (`openLearnImageModal`→`modal.open()`, close preko `sokrat-modal:close` eventa čisti sliku); maknut `#imageModalBackdrop` div + ručni ESC handler.

@@ -339,21 +339,21 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   (2) `typeof currentX !== 'undefined'` guardovi (exercises/auth/cloud-sync) → `typeof AppState` (inače nakon brisanja `let`-ova TIHO 'undefined');
   (3) novi **funkcionalni testovi** `tests/app-state.spec.js` — fill/quiz/flashcards/nav tijekovi klikaju KAO KORISNIK; consent `'denied'` unaprijed u testu (banner presreće klikove).
   **🐛 BUG-016 nađen tim testom + POPRAVLJEN (`68bf7e1`):** landscape mobitel — `.flashcard` fiksna visina/cap (`responsive/03`+`04`, relikti prije BUG-013) → lice stršalo preko ✓/✗ gumba (tap=flip).
-  Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **⬜ DALJE: 2D Web Components (toast→modal) → F3 performanse (SW).** [[foundation-pivot]]
+  Cache **`?v=20260703`** (18 js datoteka + styles.css + responsive/03/04). **(2D djelomično LIVE — vidi bullete niže; DALJE 2D.2c → F3.)** [[foundation-pivot]]
 - **✅ FAZA 2 — 2A DOVRŠENA na 18/18 (accounting → JSON) — grana `foundation/f2a-accounting`, ✅ DEPLOYANO 2026-07-03 (`a8c7b84..d2b1e48`; uvjet „radi savršeno" ispunjen: Playwright 137/0 + live `accountingM1.json` servira 6 kat.):** accounting bio jedini
   predmet izvan JSON dual-reada (17/18); sad migriran (**format-only, 0 diranja sadržaja**) da F4 flip kreće s uniformne baze. `export:json accounting`
   (3 JSON: M1 6kat/M2 8kat/Final 15kat, round-trip 0) + `dataFormat:'json'` u catalog + catalog.js token **`20260702→20260704`** + novi `dual-read.spec`
   accounting test (study iz `data/json/accounting/*.json`, vježbe iz `.js` = BUG-012 očuvan). Gate: verify 0/0, validate:schema 54/54, validate:content 0/0,
   export:json --check 0 nesklada, test:unit 69/0, typecheck 0, **dual-read.spec 5/5** (uklj. novi accounting). Odluka + otpis #2/#4: **ADR-015**. [[foundation-pivot]]
-- **▶ FAZA 2 — 2D.1 (prvi Web Component `<sokrat-toast>`, S4) — grana `foundation/f2d`, lokalni commit (⏳ NIJE deployano):** prvi custom element
+- **✅ FAZA 2 — 2D.1 (prvi Web Component `<sokrat-toast>`, S4) — grana `foundation/f2d`, ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`):** prvi custom element
   (`js/components/sokrat-toast.js`), dokazuje obrazac (registracija→lifecycle→`.show()`). **Light-DOM zadržava klasu `.toast`** → svi CSS-ovi (base+responsive)
   nepromijenjeni. `showToast()` (utils.js) → **delegat** na komponentu s **fallbackom** na stari DOM-put (0 regresije, ~13 pozivatelja nedirnuto). a11y `role=status`.
   U typecheck scopeu (`Window.SokratToast`). Test `tests/components.spec.js`. Cache `20260705`. Gate: verify/typecheck/unit/validate 0, **Playwright 145/0**.
-- **▶ FAZA 2 — 2D.2a (reusable modal-primitiv `<sokrat-modal>`, S4) — grana `foundation/f2d`, lokalni commit (⏳ NIJE deployano):** samostalni overlay/dialog
+- **✅ FAZA 2 — 2D.2a (reusable modal-primitiv `<sokrat-modal>`, S4) — grana `foundation/f2d`, ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`):** samostalni overlay/dialog
   (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`, light-DOM): `open/close/toggle/isOpen` + eventi; ESC/backdrop-zatvaranje, scroll-lock, fokus-u-modal+restore+Tab-trap,
   a11y (`role=dialog`/`aria-modal`). **Nijedan postojeći modal još ne migriran → 0 rizika.** Cache `20260706`. Test: stanje gate-ano; **fokus ne gate-an** (touch-profili ne fokusiraju
   tapom → ručno/scratch verificiran). Gate: typecheck/verify/validate/unit 0, **Playwright 153/0**.
-- **▶ FAZA 2 — 2D.2b (learn image-viewer → `<sokrat-modal>`, prvi stvarni konzument) — grana `foundation/f2d`, lokalni commit (⏳ NIJE deployano):** `#imageModal`
+- **✅ FAZA 2 — 2D.2b (learn image-viewer → `<sokrat-modal>`, prvi stvarni konzument) — grana `foundation/f2d`, ✅ DEPLOYANO 2026-07-04 (`d2b1e48..9b62428`):** `#imageModal`
   `<div class="image-modal hidden">` → `<sokrat-modal class="image-modal">`; komponenta vodi ESC/backdrop/scroll-lock/fokus; `learn.js` delegira (`open()`, close čisti sliku preko
   `sokrat-modal:close` eventa); maknut `#imageModalBackdrop` div. Izgled očuvan kroz `sokrat-modal.image-modal` override — **nulta vizualna promjena (potvrđeno screenshotom)**. Cache `20260707`.
   Test u `components.spec.js`. Gate: typecheck/verify/validate/unit 0, **Playwright 157/0**.

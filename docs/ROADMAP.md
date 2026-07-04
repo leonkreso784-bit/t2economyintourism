@@ -23,7 +23,9 @@ JSON Schema ugovor + exporter + drift-gate + dual-read loader DB→JSON→`.js`;
 globali iz config.js (5 grupa: fill/cards/quiz/session/nav) → `window.AppState`, grupa-po-grupa s funkcionalnim testovima (fill/quiz/flashcards/nav
 tijekovi klikaju KAO KORISNIK); config.js bez ijednog mutable `let`; 3 `typeof` guarda prepisana. **Usput test ULOVIO + POPRAVLJEN BUG-016**
 (landscape flashcard gutao tapove na ✓/✗ — relikt fiksne visine u `responsive/03`/`04`). Gate: puni Playwright **133/0** (subjects=18). Cache `?v=20260703`.
-**▶ DALJE: F2 2D Web Components (toast → modal) → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
+✅ **ACCOUNTING → JSON (F2 2A DOVRŠENA 18/18) DEPLOYANO 2026-07-03** (`d2b1e48`, ADR-015; jedini predmet izvan JSON supstrata sad migriran, format-only → F4 flip s uniformne baze).
+✅ **F2 2D (Web Components) — 2D.1/2D.2a/2D.2b DEPLOYANI 2026-07-04** (`d2b1e48..9b62428`, grana `foundation/f2d`): `<sokrat-toast>` (`showToast()` delegira) + `<sokrat-modal>` primitiv (open/close/ESC/backdrop/scroll-lock/fokus) + learn image-viewer migriran; `tests/components.spec.js`, Playwright 157/0.
+**▶ DALJE: F2 2D.2c (auth modal → `<sokrat-modal>`, najrizičniji) → 2D.3 kartice/forme → F3 performanse (SW na čistom šavu).** [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
