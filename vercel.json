@@ -42,7 +42,6 @@
       ]
     },
     {
-      "//": "Service Worker (F3 3A): NIKAD immutable — mora se re-fetchati da se update propagira. Zadnji u nizu → nadjača generički .js immutable.",
       "source": "/sw.js",
       "headers": [
         {
