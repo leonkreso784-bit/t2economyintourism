@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-06 (OPUS) — 🚀 F3 (performanse) KOMPLETNA: 3D+3E DEPLOYANI NA PRODUKCIJU + F3 zatvorena
+**Kontekst:** nakon compacta, korisnik: „pregledaj i analiziraj sve" → puni health-check (svi gate-ovi zeleni: verify 0/0, validate:schema 54/54, validate:content 0/0, export:json --check 0 drift, typecheck 0, test:unit zeleno, bump:check 94 tokena, build:css --check u sinku, **Playwright 185/0**). Zatim: „deploy pa stani da isplaniramo F4".
+
+**Deploy F3-ostatka (3D+3E), striktno cigla-po-cigla uz potvrde:**
+1. Lokalni Playwright potvrđen **185 pass / 15 skip / 0 fail** (12.2 min, exit 0) — kod bajt-identičan 3E.2 gate-u (b19a641 = docs-only na 5a276e7).
+2. Push grane `foundation/f3d` → **GitHub Actions CI zelen** (oba job-a: „Lint + verify + tests" **success** + „Lighthouse budgets" **success**, ~13 min; Playwright je dugi dio).
+3. **Vercel preview** deployan (`studymaster-pbh7920u0…vercel.app`, iza SSO zaštite) → korisnik vizualno provjerio landing/learn-boxove/blind-map/KaTeX/fill → „odlično je sve".
+4. ff-merge `e39eb1d..b19a641` → `main` (čisti fast-forward, bez divergencije) → **push = produkcijski deploy uz izričito odobrenje.**
+5. **Live-verified na www.sokratstudy.com:** token `20260706003609` (Vercel deploy `success`); `blind-map.webp` HTTP 200 **40 KB** `image/webp`; `--danger-text:#f87171` u live bundle-u; `media="print"` async (KaTeX+Fonts); `/sw.js` `Cache-Control: public, max-age=0, must-revalidate`.
+
+**Rezultat:** **F3 (performanse) 100% KOMPLETNA i LIVE** — sve cigle (3C.1 + 3B + 3A + 3D.1 + 3D.2 + 3E.1 + 3E.2) na produkciji.
+**Docs audit (rule #3):** CLAUDE.md, FOUNDATION_PLAN (top-status + F3 sekcija + 3D/3E markeri), ROADMAP, CHANGELOG, PROGRESS — svi „NIJE deployano/čeka" markeri → „DEPLOYANO 2026-07-06".
+**Slijedi:** F4 (Admin CRUD) — planiranje + opcije.
+
+---
+
 ## 2026-07-05 (nastavak 6, OPUS) — ▶ F3 3E.1: a11y hardening (0 serious/critical) + zatvorena rupa u gate-u
 **Kontekst:** 3E = a11y prolaz. Prvo dubinski axe audit (SVI impact-levovi, sve sekcije + legal stranice) da dobijem točnu listu.
 

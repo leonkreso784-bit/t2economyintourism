@@ -4,21 +4,23 @@ Format: [Keep a Changelog](https://keepachangelog.com/) · Verzioniranje: [SemVe
 Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
+### Deployed
+- **🚀 2026-07-06 — F3 (performanse) KOMPLETNA + DEPLOYANA NA PRODUKCIJU.** 3D+3E ff-merge `e39eb1d..b19a641` (grana `foundation/f3d`→main, uz izričito odobrenje). CI zelen (oba job-a: Lint+verify+tests **i** Lighthouse), Vercel preview vizualno potvrđen, produkcija live-verified: token `20260706003609`, `blind-map.webp` HTTP 200 40KB `image/webp`, `--danger-text:#f87171` u live bundle-u, `media="print"` async (KaTeX+Fonts) u index, `/sw.js` `max-age=0`. Time su **sve F3 cigle LIVE** (jezgra 3C.1+3B+3A od 2026-07-05 + 3D.1/3D.2/3E.1/3E.2). Sljedeće: **F4 Admin CRUD.**
 ### Added
-- **⚡ FAZA 3 · 3E.2 — moderate landmarks (sve 4 stranice 100% axe-clean) — grana `foundation/f3d` (NIJE deployano).**
+- **⚡ FAZA 3 · 3E.2 — moderate landmarks (sve 4 stranice 100% axe-clean) — grana `foundation/f3d` (✅ DEPLOYANO 2026-07-06).**
   `region`: landing `.hero-stats`→`role=region`, `.landing-cta`→`aria-labelledby`; landing-nav/landing-footer + study/browse/profile zaglavlja (ugniježđena u `<section>` → izgubila implicitni banner/contentinfo) → **eksplicitni `role="banner"`/`role="contentinfo"`** (jedna stranica vidljiva odjednom → bez duplikata). `heading-order`: footer `h4`→`h3` (preskakao h2→h4; CSS zadržao veličinu/težinu). i18n `a11y.heroStats`. **Atribut-only osim footer tag+CSS → 0 layout-rizika.** Rezultat: **axe 0 violationa BILO kojeg levela** na landing/browse/study/profile. Gate: **PUNA Playwright 185/0**.
-- **⚡ FAZA 3 · 3E.1 — a11y hardening (0 serious/critical axe) + proširen gate — grana `foundation/f3d` (NIJE deployano).**
+- **⚡ FAZA 3 · 3E.1 — a11y hardening (0 serious/critical axe) + proširen gate — grana `foundation/f3d` (✅ DEPLOYANO 2026-07-06).**
   Dubinski axe audit otkrio da je postojeći gate (1D.2) skenirao samo landing/browse/learn/profile → **flashcards/quiz/fill/progress bili IZVAN gate-a** pa su kroz njih prošli **critical** violationi na produkciji.
   **Popravljeno:** (a) **button-name** flashcard prev/next (samo ikona) → `aria-label` preko novog i18n **`data-i18n-aria`** (`fc.prev`/`fc.next` en/hr), ikone `aria-hidden`; (b) **select-name** quiz 3 selecta → `<label for>`;
   (c) **color-contrast** (raširen): token **`--danger-text` #f87171** za outline/ghost crveni tekst (`.control-btn.wrong`/`.reset-btn`/`.stat.wrong`); `.fill-category` bijelo→tamni tekst na amberu; `.check-btn`/learn-filter-active/tablica `th` `--primary`(4.22:1)→`--primary-dark`(5.8:1); learn **h3/example-box** `--primary`(3.7:1)→`--primary-light`(5.3:1); learn tip/warning **box-naslovi** → svijetli tekst + obojana ikona;
   (d) **scrollable-region-focusable** learn tablice → `enhanceLearnTables()` (`tabindex=0`+aria-label, bez `role=`). **Gate PROŠIREN:** `a11y.spec.js` „study page" skenira SVE sekcije. Cache `20260705215529`. Gate: **PUNA Playwright 185/0**, a11y 4/4.
   ⬜ 3E.2 (moderate, ne blokira): `region` landmarks + `heading-order` (footer).
-- **⚡ FAZA 3 · 3D.2 — render-blocking eliminacija na landingu (async KaTeX + Google Fonts CSS) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
+- **⚡ FAZA 3 · 3D.2 — render-blocking eliminacija na landingu (async KaTeX + Google Fonts CSS) — grana `foundation/f3d` (✅ DEPLOYANO 2026-07-06).**
   Landing perf bottleneck = 3 render-blocking eksterna CSS-a u `<head>`. **KaTeX CSS** (neiskorišten na landingu; komentar je LAŽNO tvrdio „ne blokira" — samo JS je bio `defer`, CSS `<link>` je blokirao)
   + **Google Fonts** (`display=swap`) sad **ASINKRONO** (`media="print"` → `onload='this.media=all'`) + **`<noscript>` fallback**. **Font Awesome OSTAJE render-blocking** (async bi bljesnuo ikone kroz app; zaseban zahvat).
   + `preconnect` na `cdnjs`. **HTML-only → nema bumpa** (index.html nije immutable). Vizualno provjereno (screenshot landing = fontovi+ikone OK, 0 regresije); `katex.spec` 4/4 (math i dalje renderira s async CSS-om).
   **CSP-napomena (F6):** inline `onload` → tada treba nonce/JS-flip. Gate: **PUNA Playwright 185/0**, bump:check 0.
-- **⚡ FAZA 3 · 3D.1 — blind-map slika PNG → WebP (−98%, 40×) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
+- **⚡ FAZA 3 · 3D.1 — blind-map slika PNG → WebP (−98%, 40×) — grana `foundation/f3d` (✅ DEPLOYANO 2026-07-06).**
   `blind-map.png` (**1.52 MB**, 1536×1024) → **`blind-map.webp` q85 = 39 KB** (jedina velika slika u appu; crta se na canvas pa je format transparentan). Vizualno identično (neonska kontura oštra,
   obalna razvedenost/otoci očuvani). **`js/blind-map.js`:** probaj WebP → na grešci PNG fallback (postojeći `onerror` prošireni; **PNG ostaje u repou** za ~1.5% preglednika bez WebP-a) + dodan `?v=` token
   (`window.CONTENT_VERSION`; prije IZOSTAVLJEN → nekonzistentno s cacheom). `scripts/static-server.js` dobio `.webp` MIME. Novi **`tests/blind-map.spec.js`** (WebP se stvarno dekodira — smoke.spec filtrira
