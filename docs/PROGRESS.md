@@ -5,7 +5,7 @@ testirano, što slijedi.
 
 ---
 
-## 2026-07-05 (nastavak 5, OPUS) — ▶ F3 3D.1: blind-map slika PNG → WebP (−98%, 40× manja)
+## 2026-07-05 (nastavak 5, OPUS) — ▶ F3 3D.1 (blind-map → WebP −98%) + 3D.2 (async CDN CSS na landingu)
 **Kontekst:** Opus natrag (Fable odradio 3A.3+deploy). Nastavak F3 = **3D optimizacija slika**, prirodan sljedeći korak (nakon bundling+SW slike su zadnja velika poluga za LCP/perf). Grana `foundation/f3d`.
 
 **Izviđanje (mjeri, ne nagađaj):** git-trackane slike → **`blind-map.png` = 1.52 MB** (1536×1024) daleko najveća; ostalo: geo-JPG-ovi 29–204 KB (već razumni), PWA `icon-512` 205 KB, favikoni sitni.
@@ -22,7 +22,16 @@ q90=58KB, 256-color PNG=436KB. **Vizualna provjera q85 (okom, Read slike): ident
 
 **Nalaz:** `loading="lazy"` je VEĆ na svim learn slikama (`learn.js:44`); samo **1 inline** geo-slika (`data-geography.js:112`) nema lazy → 3D.3 praktički gotov. Geo-JPG-ovi već razumni. **blind-map ≈ 95% ukupne težine slika → 3D.1 = glavni dobitak faze 3D.**
 **Testirano:** blind-map.spec 4/4 · **PUNA Playwright 185/0** (181+4) · verify 0/0 · typecheck 0 · unit 41/0 · bump:check 0 · build:css --check 0. Cache `20260705161843`.
-**Deploy:** NIJE (grana `foundation/f3d`). **Slijedi (opcionalno, diminishing returns):** 1 inline geo-slika lazy + geo-JPG→WebP + PWA icon-512 → PA 3E (a11y) → 3C.2 → deploy F3-ostatak. **STOP + check-in po pravilu tempa.**
+**Deploy:** NIJE (grana `foundation/f3d`).
+
+**▶ 3D.2 (isti dan) — render-blocking eliminacija na landingu (pravi perf-bottleneck):** izviđanje `<head>` otkrilo da blind-map (3D.1) NE dira landing Lighthouse perf (učita se samo u Geography),
+a stvarni bottleneck su **3 render-blocking eksterna CSS-a**: Google Fonts, Font Awesome, **KaTeX**. Ključno: KaTeX se na landingu UOPĆE ne koristi, a komentar u `<head>` je LAŽNO tvrdio „ne blokira prvi paint" —
+to je vrijedilo samo za `defer` JS; **CSS `<link>` je blokirao render na svakoj stranici**. **Napravljeno:** KaTeX CSS + Google Fonts → **ASINKRONO** (`media="print"` → `onload` `media='all'`) + **`<noscript>` fallback**;
+**Font Awesome OSTAVLJEN render-blocking** (async bi bljesnuo ikone kroz cijelu app — svjesno konzervativno, zaseban zahvat); + `preconnect` na `cdnjs`. **HTML-only promjena → nema bumpa** (index.html nije immutable;
+SW navigacija = network-first pa se novi head odmah pokupi). **Provjere:** `katex.spec` 4/4 (math renderira i s async CSS-om) · **screenshot landinga (desktop) = savršeno** (Space Grotesk/Inter fontovi, sve FA ikone,
+gradijent, layout netaknut) · **PUNA Playwright 185/0** · bump:check 0. **CSP-napomena za F6:** inline `onload` će trebati nonce/JS-flip kad CSP slegne.
+
+**Slijedi:** 3E (a11y) → 3C.2 (auto-bump na deploy) → deploy F3-ostatak (uz potvrdu). Opcionalni sitni ostatak 3D (1 inline geo-slika lazy, geo-JPG→WebP, PWA icon-512) = diminishing returns. **STOP + check-in po pravilu tempa.**
 
 ---
 

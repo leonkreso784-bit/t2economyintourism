@@ -5,6 +5,11 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3D.2 — render-blocking eliminacija na landingu (async KaTeX + Google Fonts CSS) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
+  Landing perf bottleneck = 3 render-blocking eksterna CSS-a u `<head>`. **KaTeX CSS** (neiskorišten na landingu; komentar je LAŽNO tvrdio „ne blokira" — samo JS je bio `defer`, CSS `<link>` je blokirao)
+  + **Google Fonts** (`display=swap`) sad **ASINKRONO** (`media="print"` → `onload='this.media=all'`) + **`<noscript>` fallback**. **Font Awesome OSTAJE render-blocking** (async bi bljesnuo ikone kroz app; zaseban zahvat).
+  + `preconnect` na `cdnjs`. **HTML-only → nema bumpa** (index.html nije immutable). Vizualno provjereno (screenshot landing = fontovi+ikone OK, 0 regresije); `katex.spec` 4/4 (math i dalje renderira s async CSS-om).
+  **CSP-napomena (F6):** inline `onload` → tada treba nonce/JS-flip. Gate: **PUNA Playwright 185/0**, bump:check 0.
 - **⚡ FAZA 3 · 3D.1 — blind-map slika PNG → WebP (−98%, 40×) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
   `blind-map.png` (**1.52 MB**, 1536×1024) → **`blind-map.webp` q85 = 39 KB** (jedina velika slika u appu; crta se na canvas pa je format transparentan). Vizualno identično (neonska kontura oštra,
   obalna razvedenost/otoci očuvani). **`js/blind-map.js`:** probaj WebP → na grešci PNG fallback (postojeći `onerror` prošireni; **PNG ostaje u repou** za ~1.5% preglednika bez WebP-a) + dodan `?v=` token

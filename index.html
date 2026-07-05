@@ -46,15 +46,26 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+
     <link rel="stylesheet" href="styles.bundle.css?v=20260705161843">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- F3 3D.2: Google Fonts učitan ASINKRONO (media=print → onload media=all) → ne blokira prvi
+         paint. `display=swap` ionako renderira tekst u fallback fontu pa swapne. <noscript> fallback
+         drži ga render-blocking bez JS-a. (CSP-napomena za F6: inline onload → treba nonce/JS-flip.) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <!-- Font Awesome OSTAJE render-blocking (async bi bljesnuo ikone kroz cijelu app; zaseban oprezan zahvat). -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- KaTeX (ADR-009): formula rendering for quantitative subjects. Loaded with `defer`
-         so it never blocks first paint; js/math.js wraps it in a silent fallback if the
-         CDN is unavailable. Author convention: \( \) inline, \[ \] / $$ $$ display. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    <!-- KaTeX (ADR-009): formula rendering za kvantitativne predmete. CSS učitan ASINKRONO (F3 3D.2:
+         prije je bio render-blocking unatoč komentaru — samo JS je bio `defer`). KaTeX se NE koristi na
+         landingu; math se renderira tek nakon `defer` JS-a, pa async CSS nema FOUC. js/math.js = tihi
+         fallback ako CDN padne. Autorska konvencija: \( \) inline, \[ \] / $$ $$ display. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+    </noscript>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 
