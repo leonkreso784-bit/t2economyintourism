@@ -58,6 +58,11 @@ jobs:
       - name: Cache tokens consistent (single version, BUG-004 guard)
         run: npm run bump:check
 
+      # CSS bundle (F3 3B) mora biti u sinku s izvornim css/*.css (styles.css @import red).
+      # Drift = netko editirao css bez `npm run build:css`. Round-trip determinističan (LF-normaliziran).
+      - name: CSS bundle in sync (no drift)
+        run: npm run build:css -- --check
+
       - name: Unit tests (exercises-core / acc-kernel / stat-parse / stat-lib)
         run: npm run test:unit
 

@@ -5,6 +5,32 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 — ▶ F3 3B: CSS bundling (26 `@import` → 1 `styles.bundle.css`) + drift-gate
+**Kontekst:** Druga F3 cigla. `styles.css` je uvozio **26 CSS modula** preko `@import` → to je render-blocking i
+**sekvencijalan** waterfall (preglednik dohvati+isparsira `styles.css` PA TEK OTKRIJE @importe → pa ih dohvaća) =
+glavni krivac Lighthouse **perf 66 / LCP 6.6s / FCP 4.3s** (baseline 1D). Bundle = 1 request, isti sadržaj i redoslijed.
+
+**Izviđanje PRIJE koda (konkatenacija sigurna?):** 0 relativnih `url()` (jedini `url()` = self-contained `data:` SVG u
+quiz-section) · 0 ugniježđenih `@import` (2 „pogotka" = komentari) · 0 `@charset`. Redoslijed kaskade = @import sekvenca. → sigurno.
+
+**Napravljeno (grana `foundation/f3`):**
+- **`scripts/build-css.js`** (novo): parsira @import redoslijed iz `styles.css` → konkatenira `css/*.css` u **`styles.bundle.css`**
+  (LF-normaliziran, s marker-komentarima po modulu). Modovi: build (default) + **`--check`** (CI drift-gate: bundle u sinku s izvorima?).
+  Izvor istine OSTAJE `styles.css` (manifest reda) + `css/*.css`; bundle je GENERIRANO+commitano (kao data/json export).
+- **`index.html`:** `styles.css?v=` → **`styles.bundle.css?v=`** (jedina referenca; pravne stranice ne koriste glavni bundle).
+- **`styles.css`:** header prepisan — sada je IZVOR-MANIFEST (ne servira se); @import red netaknut (0 rizika za kaskadu).
+- **`npm run build:css`** (package.json) + **CI korak** „CSS bundle in sync" (ci.yml, uz drift-gateove). `.gitattributes`: `styles.bundle.css eol=lf` (stabilan `--check` Win/Linux).
+- Bundle = **26 modula / 194 KB / 8843 redaka**; markeri potvrđuju točan redoslijed (variables→…→responsive 01–06→learn→auth→profile→math).
+
+**Testirano (sve zeleno):** `build:css --check` u sinku · `bump` (92 tokena → `20260705015319`, uniformno) · bump:check 0 · verify 0/0 ·
+validate:content 0/0 · typecheck 0 · export-drift 54/0 · **Playwright smoke + layout-guard (iPhone-SE) 18 subjects / 0 problema / 0 errors / CTA nikad rezan** ·
+**puni Playwright suite ⏳ (u tijeku, dovršit ću broj).** Perf-dobitak (eliminiran @import waterfall) mjeri **CI Lighthouse** na push/deploy (Windows lokalno ne može — chrome-launcher EPERM).
+**Deploy:** NIJE — čeka potvrdu (grana `foundation/f3`).
+
+**Slijedi:** dovršetak 3B gatea (screenshot + puni Playwright) → **3A Service Worker** (najrizičnija cigla F3; „Works offline" postaje istina). *(3C.2 auto-bump-na-deployu razmotriti uz SW/deploy pipeline.)*
+
+---
+
 ## 2026-07-04 (nastavak 3) — ▶ F3 KREĆE · 3C.1: jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate
 **Kontekst:** F2 (reusable jezgra) KOMPLETNA i LIVE → počinje **F3 (performanse)**. Health-check cijelog projekta na početku sesije
 (svi gateovi zeleni: verify/validate/schema/typecheck/unit/export-drift/RLS + puni Playwright 165/0) izdvojio je **ručne cache-tokene

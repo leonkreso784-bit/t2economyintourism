@@ -14,6 +14,7 @@
     "stats": "node scripts/compute-stats.js",
     "bump": "node scripts/bump-version.js",
     "bump:check": "node scripts/bump-version.js --check",
+    "build:css": "node scripts/build-css.js",
     "verify": "node scripts/verify-catalog.js",
     "verify:catalog": "node scripts/verify-catalog.js",
     "validate:content": "node scripts/validate-content.js",

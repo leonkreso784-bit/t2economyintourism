@@ -10,6 +10,7 @@
 - [ ] `npm run export:json -- --check` → 0 problema (generirani `data/json/**` u sinku s izvornim `.js` + round-trip bez gubitka). **⚠️ Nakon izmjene `data/*.js` migriranog predmeta obavezan re-export `npm run export:json <id>`** — inače ovaj gate (i CI) pada. *(F2 2A.2)*
 - [ ] `npm run test:unit` → graderi engine-a vježbi (`exercises-core` uklj. `cite`/`gradeCite`, `acc-kernel`, `stat-parse`, `stat-lib`) + **`app-state`** (oblik `window.AppState` namespacea; isti-realm load jer vm cross-realm ruši `deepStrictEqual`). *(F2 2C)*
 - [ ] `npm run bump:check` → 0 (svi `?v=` tokeni + `CONTENT_VERSION` IDENTIČNI = jedan broj za cijelu app; drift = netko ručno bumpao podskup → BUG-004). Popravak: **`npm run bump`**. *(F3 3C.1, ADR-017)*
+- [ ] `npm run build:css -- --check` → 0 (`styles.bundle.css` u sinku s `css/*.css` + @import redom u `styles.css`; drift = editiran css bez `npm run build:css`). *(F3 3B)*
 - [ ] `npm run typecheck` → `tsc --checkJs` (bez build-a; scope u `tsconfig.json` raste modul-po-modul). 0 grešaka.
 - [ ] `npm run test:rls` → RLS sigurnosni test (read-only, anon): anon čita `subject_content`, NE vidi `progress`. Pad = curenje; SKIP ako je baza uspavana.
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):

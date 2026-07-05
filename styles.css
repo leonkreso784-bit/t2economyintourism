@@ -1,12 +1,15 @@
 /* =====================================================
-   SOKRAT STUDY - MAIN STYLESHEET
+   SOKRAT STUDY - CSS IZVOR-MANIFEST (source of truth za REDOSLIJED)
    =====================================================
 
-   This file imports all CSS modules for better organization.
-
-   ⚠ CACHE: vercel.json sets `immutable` 1-year cache on all .css. When you change
-   ANY css/*.css file, BUMP the `?v=` token below (and styles.css?v= in index.html),
-   otherwise browsers keep serving the old cached file. Use today's date (YYYYMMDD).
+   ⚠ OVA DATOTEKA SE VIŠE NE SERVIRA. Od F3 3B (CSS bundling) index.html učitava
+   `styles.bundle.css` (jedan konkateniran fajl, kraj @import waterfalla → brži FCP/LCP).
+   Ova datoteka je sada ČISTI MANIFEST: definira REDOSLIJED @import-a (= redoslijed kaskade),
+   iz kojeg `scripts/build-css.js` gradi bundle. Uredi css/*.css + red ovdje, pa:
+     npm run build:css     → regeneriraj styles.bundle.css
+     npm run bump          → cache-token (styles.bundle.css?v= u index.html)
+   `?v=` tokeni na @import-ima ispod su LEGACY (ova datoteka se ne servira) — bump ih ignorira; ne diraj red.
+   CI drift-gate: `npm run build:css -- --check` (bundle mora biti u sinku s izvorima).
 
    Structure:
    1. variables.css      - CSS Variables, Reset, Base styles
@@ -21,55 +24,55 @@
    ===================================================== */
 
 /* Core variables and base styles */
-@import url('css/variables.css?v=20260704162056');
+@import url('css/variables.css?v=20260705015319');
 
 /* Landing page styles */
-@import url('css/landing.css?v=20260704162056');
+@import url('css/landing.css?v=20260705015319');
 
 /* Subjects sidebar */
-@import url('css/sidebar.css?v=20260704162056');
+@import url('css/sidebar.css?v=20260705015319');
 
 /* Browse page (drill-down: Faculty → Program → Year → Subject) */
-@import url('css/browse.css?v=20260704162056');
+@import url('css/browse.css?v=20260705015319');
 
 /* Pages (Lessons, Study, About) */
-@import url('css/pages.css?v=20260704162056');
+@import url('css/pages.css?v=20260705015319');
 
 /* Components (Header, Navigation, Main Content) */
-@import url('css/components.css?v=20260704162056');
+@import url('css/components.css?v=20260705015319');
 
 /* UI-primitivi (Web Components, F2 2D) */
-@import url('css/sokrat-modal.css?v=20260704162056');
-@import url('css/sokrat-confirm.css?v=20260704162056');
+@import url('css/sokrat-modal.css?v=20260705015319');
+@import url('css/sokrat-confirm.css?v=20260705015319');
 
 /* Study sections (split into modular files) */
-@import url('css/subject-selector.css?v=20260704162056');
-@import url('css/home-section.css?v=20260704162056');
-@import url('css/flashcards-section.css?v=20260704162056');
-@import url('css/quiz-section.css?v=20260704162056');
-@import url('css/fill-blanks-section.css?v=20260704162056');
-@import url('css/progress-section.css?v=20260704162056');
-@import url('css/blind-map.css?v=20260704162056');
-@import url('css/exercises.css?v=20260704162056');
+@import url('css/subject-selector.css?v=20260705015319');
+@import url('css/home-section.css?v=20260705015319');
+@import url('css/flashcards-section.css?v=20260705015319');
+@import url('css/quiz-section.css?v=20260705015319');
+@import url('css/fill-blanks-section.css?v=20260705015319');
+@import url('css/progress-section.css?v=20260705015319');
+@import url('css/blind-map.css?v=20260705015319');
+@import url('css/exercises.css?v=20260705015319');
 
 /* Responsive styles (all media queries) — razbijeno na uređene dijelove (css/responsive/).
    ⚠ REDOSLIJED JE BITAN: učitava se ZADNJI (prije learn.css) i gazi module po redoslijedu.
    Ne presložuj dijelove; konkatenacija 01→06 = bivši responsive.css (1:1). */
-@import url('css/responsive/01-up-and-phone-breakpoints.css?v=20260704162056');
-@import url('css/responsive/02-mobile-core.css?v=20260704162056');
-@import url('css/responsive/03-modes-a11y-print.css?v=20260704162056');
-@import url('css/responsive/04-mobile-extra.css?v=20260704162056');
-@import url('css/responsive/05-device-sizes.css?v=20260704162056');
-@import url('css/responsive/06-component-improvements.css?v=20260704162056');
+@import url('css/responsive/01-up-and-phone-breakpoints.css?v=20260705015319');
+@import url('css/responsive/02-mobile-core.css?v=20260705015319');
+@import url('css/responsive/03-modes-a11y-print.css?v=20260705015319');
+@import url('css/responsive/04-mobile-extra.css?v=20260705015319');
+@import url('css/responsive/05-device-sizes.css?v=20260705015319');
+@import url('css/responsive/06-component-improvements.css?v=20260705015319');
 
 /* Learn section - LAST to override responsive.css conflicts */
-@import url('css/learn.css?v=20260704162056');
+@import url('css/learn.css?v=20260705015319');
 
 /* Auth (Sign-in gumb + email+lozinka modal) — samostalan modul, ne gazi ništa */
-@import url('css/auth.css?v=20260704162056');
+@import url('css/auth.css?v=20260705015319');
 
 /* Profile stranica + header auth gumbi — samostalan modul */
-@import url('css/profile.css?v=20260704162056');
+@import url('css/profile.css?v=20260705015319');
 
 /* KaTeX math (ADR-009) — dark theme + mobile overflow; samostalan modul, ne gazi ništa */
-@import url('css/math.css?v=20260704162056');
+@import url('css/math.css?v=20260705015319');

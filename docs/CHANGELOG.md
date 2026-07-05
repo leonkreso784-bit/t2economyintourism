@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3B — CSS bundling (26 `@import` → 1 `styles.bundle.css`) — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
+  Kraj render-blocking `@import` waterfalla (26 modula = sekvencijalni dohvat → glavni krivac Lighthouse perf 66 / LCP 6.6s). **`scripts/build-css.js`**
+  konkatenira `css/*.css` u redoslijedu `styles.css` @importa → `styles.bundle.css` (194 KB, LF-normaliziran). `styles.css` = IZVOR-MANIFEST reda
+  (ne servira se); `index.html` → `styles.bundle.css`. **`npm run build:css`** + CI drift-gate **`build:css -- --check`** (bundle u sinku s izvorima; kao data/json).
+  Konkatenacija dokazano sigurna (0 relativnih `url()` / 0 ugniježđenih @import / 0 @charset; redoslijed = kaskada). `.gitattributes` `styles.bundle.css eol=lf`.
+  Gate: build:css/bump/verify/validate/typecheck/export 0, Playwright smoke+layout-guard 18/0 (puni suite u tijeku). Perf mjeri CI Lighthouse na push/deploy.
 - **⚡ FAZA 3 · 3C.1 — jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
   Kraj ručnog bumpanja ~92 `?v=` tokena raspoređenih po 7 datoteka + `CONTENT_VERSION`. **`npm run bump`** = JEDAN broj za cijelu aplikaciju
   (svi tokeni → novi `YYYYMMDDHHMMSS` timestamp odjednom → nemoguće zaboraviti podskup). **`npm run bump:check`** = TVRDI CI gate: svi tokeni

@@ -2,3 +2,7 @@
 # Exporter (scripts/export-content-json.js) piše LF; ovim je i radna kopija LF, pa je
 # `npm run export:json --check` deterministički stabilan na Windows/Linux (CI).
 data/json/**/*.json text eol=lf
+
+# Generirani CSS bundle (F3 3B) — UVIJEK LF (build-css.js normalizira \r\n→\n) da je
+# `npm run build:css -- --check` drift-gate deterministički stabilan na Windows/Linux (CI).
+styles.bundle.css text eol=lf

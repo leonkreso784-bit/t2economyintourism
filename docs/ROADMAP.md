@@ -29,7 +29,7 @@ tijekovi klikaju KAO KORISNIK); config.js bez ijednog mutable `let`; 3 `typeof` 
 ✅ **→ time F2 (reusable jezgra) KOMPLETNA i LIVE** (2A JSON 18/18 + 2B ContentRepository + 2C AppState + 2D Web Components + 2E Sentry). Uz to **ADR-016** (`service_role` → Supabase Edge Functions, NIKAD Vercel) + **BACKLOG 🔥 „Obriši račun" (GDPR)** zapisani (`4ed6e75`).
 **▶ F3 performanse KREĆE (redoslijed: najsigurnija cigla prva → 3C → 3B → 3A → 3D → 3E; SW zadnja):** ✅ **3C.1 auto version-bump GOTOVO** (2026-07-04, grana `foundation/f3`, NIJE deployano):
 `scripts/bump-version.js` = JEDAN broj za cijelu app (`npm run bump` postavi svih ~92 `?v=` + `CONTENT_VERSION` na novi timestamp odjednom; `npm run bump:check` = TVRDI CI gate protiv drifta = **BUG-004 čuvar**);
-normalizirano 92→`20260704162056`; **ADR-017**. ⬜ **3C.2** (git-diff freshness / auto-bump na deploy-u) → ⬜ **3B CSS bundling** (23 `@import`→1, diže Lighthouse perf s 66) → ⬜ **3A Service Worker** (pravi offline → „Works offline" postaje istina). [[foundation-pivot]]
+normalizirano 92→`20260704162056`; **ADR-017**. ✅ **3B CSS bundling GOTOVO** (2026-07-05, grana `foundation/f3`, NIJE deployano): 26 `@import`→1 `styles.bundle.css` (`scripts/build-css.js` + CI drift-gate `build:css --check`; `styles.css`=izvor-manifest, index.html→bundle; eliminiran render-blocking waterfall, perf mjeri CI Lighthouse). ⬜ **3A Service Worker** (pravi offline → „Works offline" postaje istina; najrizičnija cigla) → ⬜ **3C.2** (auto-bump na Vercel deploy-u) → 3D/3E. [[foundation-pivot]]
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
