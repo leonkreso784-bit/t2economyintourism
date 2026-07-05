@@ -50,7 +50,10 @@ js/exercises*.js        # Reusable engine za interaktivne vježbe (NIKAD se ne m
 scripts/                # verify-catalog, scaffold, pdf-text, static-server,
                         #   validate-content, validate-json-schema, export-content-json,
                         #   build-topics, generate-subject, assemble-subject (generator),
-                        #   migrate-content (data/* → Supabase), rls-check, compute-stats
+                        #   migrate-content (data/* → Supabase), rls-check, compute-stats,
+                        #   bump-version (F3 3C: svi ?v= tokeni odjednom), build-css (F3 3B: CSS bundle)
+sw.js, js/sw-register.js # Service Worker (F3 3A) — offline app-shell (grana foundation/f3)
+styles.bundle.css       # Generirani CSS bundle (F3 3B; npm run build:css) — styles.css = izvor-manifest
 supabase/schema.sql     # progress + subject_content tablice (RLS)
 tests/                  # Playwright (responsive/smoke/…) + tests/unit (graders)
 docs/                   # ★ Projektna dokumentacija (vidi niže)

@@ -25,12 +25,12 @@ Nalazi iz `sonnet.md` (vanjski review; **provjereni protiv koda** — #7 display
 Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):
 > **✅ STATUS: F1 1C stavke ISPORUČENE + LIVE (2026-06-30):** sigurnosni headeri, „Works offline"→„No install needed", `loadProgress` schema-merge (u `storage.js`, ne analytics), „400+"→dinamičan (`compute-stats.js`), mrtav `lessonCategoryMap`→`{}`. Preostaju 💤 (CSP/DOMPurify/CSS-bundling/PWA-ikona/SW = Faza 3/6).
 - 🔥 **Sigurnosni headeri** (`vercel.json`): makni deprecated `X-XSS-Protection`; dodaj `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
-- 🔥 **„Works offline" copy** — sad neistina (nema Service Workera). Kratkoročno oslabi copy („Bez instalacije"/„Radi na mobitelu"); dugoročno **dodaj SW** (Faza 3) pa „Works offline" postane ISTINA (prava feature za study-app na lošoj vezi).
+- ✅ **„Works offline" copy** — RIJEŠENO (F3 3A, 2026-07-05, grana `foundation/f3`): dodan Service Worker (`sw.js` offline app-shell) → copy vraćen na „Works offline"/„Radi offline". (Deploy uz potvrdu; 3A.3 update-flow → Fable.)
 - ➖ **`loadProgress` schema-merge** (`js/analytics.js`): `{ ...defaultProgress, ...JSON.parse(saved) }` — otpornost na pokvaren/stari localStorage.
 - ➖ **„400+" dinamički** (`index.html` ×3): izračun `questionCount` iz kataloga (kao `subjectCount`).
 - ➖ **Mrtav `lessonCategoryMap` entry** (`js/config.js`) — vidi nalaz 2026-06-18 niže (PAZI: objekt JE referenciran u `navigation.js:545`).
 - 💤 **CSP** + **DOMPurify** — tek uz UGC (Faza 6), ne prije (sadržaj autorski/trustiran).
-- 💤 **CSS bundling** (23 `@import` → 1) + **auto version-bump** skripta — Faza 3.
+- ✅ **CSS bundling** (26 `@import` → 1 `styles.bundle.css`, `build-css.js`) + **auto version-bump** (`bump-version.js`) — ISPORUČENO (F3 3B/3C.1, 2026-07-05, grana `foundation/f3`). ⬜ Ostaje 3C.2 (auto-bump na Vercel deploy-u).
 - 💤 **PWA maskable ikona** — odvojena ikona sa safe-zone paddingom (sonnet #15).
 
 ### „Brutalan bar" — 5 nadogradnji (2026-06-29, korisnik: „ne zdrav nego jeben i brutalan"; FOUNDATION_PLAN §7)

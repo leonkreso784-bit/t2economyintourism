@@ -90,7 +90,7 @@ node scripts/generate-subject.js <subjectId> [--math]
 node scripts/assemble-subject.js <subjectId> --name "Naziv" --short XYZ --icon fa-... --color "#..." --year N --sem N --desc "..."
 # 4. GATE (ručno, uz provjeru):
 #    a) zalijepi ispisani catalog unos u data/catalog.js (final.js MORA biti zadnji u scripts)
-#    b) bumpaj CONTENT_VERSION u js/content-loader.js
+#    b) npm run bump   (F3 3C.1 — bumpa SVE ?v= tokene + CONTENT_VERSION + SW_VERSION odjednom; kraj ručnog bumpanja)
 npm run validate:content <subjectId>   # sadržajni zaštitar (shema + KaTeX currency-safe)
 npm run verify                          # catalog integritet
 npm run test:responsive                 # Playwright render

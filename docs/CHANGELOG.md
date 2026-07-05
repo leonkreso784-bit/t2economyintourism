@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3A.1/3A.2 — Service Worker (offline app-shell) — grana `foundation/f3` (NIJE deployano; najosjetljivije, čeka potvrdu; 3A.3+deploy → Fable).**
+  „Works offline" postaje ISTINA. **`sw.js`** (konzervativan: same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate;
+  Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch) + **`js/sw-register.js`** (`updateViaCache:'none'`, fail-safe). `vercel.json` `/sw.js` no-cache;
+  `SW_VERSION` bumpan `npm run bump` (generaliziran `VERSION_CONSTS`). Copy vraćen: **„Works offline"** (hero + i18n en/hr + 2 meta). Test `tests/sw.spec.js` (registracija/kontrola + **offline load**).
+  **Regresija (SW vs test-routing) nađena+popravljena:** globalno `serviceWorkers:'block'` u Playwright configu (app-testovi deterministički), SW izoliran u `sw.spec` (`allow`). Cache `20260705025350`.
+  Gate: bump/build:css/verify/typecheck/export 0, **PUNA Playwright 173/0** (4 profila). Perf mjeri CI Lighthouse.
 - **⚡ FAZA 3 · 3B — CSS bundling (26 `@import` → 1 `styles.bundle.css`) — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
   Kraj render-blocking `@import` waterfalla (26 modula = sekvencijalni dohvat → glavni krivac Lighthouse perf 66 / LCP 6.6s). **`scripts/build-css.js`**
   konkatenira `css/*.css` u redoslijedu `styles.css` @importa → `styles.bundle.css` (194 KB, LF-normaliziran). `styles.css` = IZVOR-MANIFEST reda

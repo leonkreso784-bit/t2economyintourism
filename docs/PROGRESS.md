@@ -5,6 +5,38 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 (nastavak 2) — ▶ F3 3A.1/3A.2: Service Worker (offline app-shell) + strateške odluke
+**Kontekst:** Treća F3 cigla (najrizičnija — SW ostaje u pregledniku korisnika, može „zaglaviti" na stari keš).
+Radi se na grani `foundation/f3`; SW je scope-an na origin → **produkcija netaknuta do merge-a** (izgradnja+test sigurna).
+
+**Napravljeno (3A.1 registracija/kontrola + 3A.2 offline):**
+- **`sw.js`** (novo): konzervativan SW. **Same-origin GET only** se presreće; Supabase/CDN/non-GET → čista mreža (login/sync nikad iz keša).
+  **Navigacija = network-first** (novi deploy uvijek svjež) → fallback na keširani shell (offline). **Statički asseti = stale-while-revalidate.**
+  **NE `skipWaiting`** (bez mismatcha usred sesije); `activate` čisti stare cache-verzije. **Kill-switch** (`postMessage('sw:unregister')`).
+  `const SW_VERSION` bumpa `npm run bump` (jedan broj za app) → svaki deploy = nova sw.js = novi cache = purge starog.
+- **`js/sw-register.js`** (novo): registrira `/sw.js` s **`updateViaCache:'none'`** (preglednik zaobiđe HTTP cache za sw.js → zaobilazi vercel.json immutable);
+  fail-safe (nikad ne ruši app); globalni konzolni kill-switch `window.__swKill()`.
+- **`vercel.json`:** `/sw.js` → `Cache-Control: no-cache` (zadnji u nizu → nadjača generički `.js` immutable; SW se MORA re-fetchati da update propagira).
+- **`scripts/bump-version.js`:** generaliziran na listu `VERSION_CONSTS` → sad bumpa i **`SW_VERSION`** uz `CONTENT_VERSION`.
+- **`index.html`:** `<script src="js/sw-register.js" defer>` (na kraju). **`data-i18n="hero.trust.offline"` → „Works offline" / „Radi offline"** (1C.5: vraćeno kad SW slegne) + 2 meta-opisa („works on any device" → „works offline") + i18n en/hr.
+- **`tests/sw.spec.js`** (novo): (1) SW se registrira+aktivira, kontrolira nakon reloada; (2) **app-shell se učita OFFLINE iz keša** (`context.setOffline`).
+
+**🐛 Regresija nađena + popravljena (SW vs test-routing):** SW je presretao same-origin fetcheve → **4 dual-read testa pala** (koriste `page.route`+`page.on('request')` da provjere app-ov DB→JSON→.js fallback). Popravak: **globalno `serviceWorkers:'block'`** u `playwright.config.js` (app-testovi deterministički, bez SW-sloja), a **SW izoliran u `sw.spec.js`** (`test.use({serviceWorkers:'allow'})`). Standardni obrazac; SW je transparentan enhancement pa app-testovi ne trebaju SW.
+
+**Testirano (sve zeleno):** SW-test popravljen (`ready` može resolvati u stanju 'activating' → prihvati 'activating'|'activated' + `waitForFunction` za controller) · dual-read 5/5 + sw 2/2 (jedan profil) · bump/bump:check/build:css/verify/typecheck/export 0 · **PUNA Playwright 173/0** (165 + sw 2×4 profila). Perf mjeri CI Lighthouse na push.
+**Deploy:** NIJE — SW je najosjetljiviji, ide na produkciju SAMO uz izričitu potvrdu. **3A.3 (SW update-flow) NAMJERNO ostavljen za Fable.**
+
+**🧭 STRATEŠKE ODLUKE (korisnik, ova sesija — bit će u ROADMAP/DECISIONS/CLAUDE):**
+1. **Tempo:** kraće dionice, stani i javi se nakon 1–2 cigle (ne dugi autonomni maratoni) → memorija [[pace-short-stretches-check-in]], pojačava pravilo #5.
+2. **Service Worker → radi se na FABLE modelu** (drugi model = jeftin sigurnosni sloj na najrizičnijoj cigli). Nakon compacta korisnik prebaci na Fable; Fable dobije testiranu 3A bazu + radi 3A.3/deploy.
+3. **Platforma-first SKROZ do UGC-a, PA tek onda nazad na sadržaj.** F4 CRUD → F5 SRS → F6 sigurnost → UGC → **onda** sadržaj. **UGC se NE gura u CRUD prerano** (student-upload NIKAD prije F6: DOMPurify+moderacija+CSP; student uploada PODATKE ne KOD).
+4. **Supabase Pro (€25/mj) prije prvih korisnika** (backup + bez sleep-a) → gasi rizik B.
+5. **Točnost sadržaja = dvo-ključni verifier** (Sonnet piše → **Opus SAMO provjerava+označava krive** → korisnik presudi; troškovno-minimalno, structured output, protiv izvornog `topics.json`). Retroaktivno na 18 postojećih predmeta. Gradi se u **fazi sadržaja**, ne sad. Odgovor na brigu „jesu li postojeći predmeti točni" = spot-checkani, NE iscrpno → verifier daje povjerenje.
+
+**Slijedi:** dovrši .md audit + commit 3A → compact → **Fable** preuzme (3A.3 + deploy F3 + 3C.2/3D/3E).
+
+---
+
 ## 2026-07-05 — ▶ F3 3B: CSS bundling (26 `@import` → 1 `styles.bundle.css`) + drift-gate
 **Kontekst:** Druga F3 cigla. `styles.css` je uvozio **26 CSS modula** preko `@import` → to je render-blocking i
 **sekvencijalan** waterfall (preglednik dohvati+isparsira `styles.css` PA TEK OTKRIJE @importe → pa ih dohvaća) =

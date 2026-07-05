@@ -40,6 +40,16 @@
           "value": "public, max-age=31536000, immutable"
         }
       ]
+    },
+    {
+      "//": "Service Worker (F3 3A): NIKAD immutable — mora se re-fetchati da se update propagira. Zadnji u nizu → nadjača generički .js immutable.",
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
     }
   ]
 }

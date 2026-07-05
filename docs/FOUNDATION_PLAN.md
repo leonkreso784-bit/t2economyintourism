@@ -14,6 +14,15 @@
 > branchu** · **(4) CRUD versioning + audit-log + dry-run diff** · **(5) SRS dizajn-dok PRIJE koda (FSRS, ne samo SM-2).**
 > Sve stane u postojeće faze — redoslijed se NE mijenja, samo se diže ljestvica.
 
+> **▶ STRATEŠKO AŽURIRANJE (2026-07-05, korisnik):**
+> 1. **Platforma-first SKROZ do UGC-a, PA tek onda nazad na sadržaj.** Puni redoslijed **F3 → F4 (CRUD) → F5 (SRS) → F6 (sigurnost) → UGC → tek onda sadržaj.**
+>    Sadržaj kroz datoteke i dalje radi (dual-read), ali svjesno se NE vraćamo dodavanju dok temelj+UGC ne stoje.
+> 2. **UGC se NE gura u Admin CRUD prerano.** F4 CRUD se DIZAJNIRA UGC-spreman (multi-user/RLS/vlasništvo/draft→publish), ali **student-upload NE ide živ prije F6**
+>    (DOMPurify sanitizacija + moderacijski red + CSP). Student uploada **PODATKE** (kartice/kviz/fill/learn, saniziran HTML), **NIKAD KOD** (vježbe = deklarativni sandbox, BUG-012). Jedan authoring sustav, vrata se otvaraju kasnije. → nova **ADR-018**.
+> 3. **Service Worker (3A.3+) se radi na FABLE modelu** (drugi model = jeftin sigurnosni sloj na najrizičnijoj cigli). → **ADR-019**.
+> 4. **Točnost sadržaja = dvo-ključni verifier** (Sonnet piše → Opus SAMO provjerava+označava krive → korisnik presudi; protiv izvornog `topics.json`, troškovno-minimalno; retroaktivno na 18 predmeta). Gradi se u **fazi sadržaja**. → **ADR-020**, plan u `CONTENT_GENERATOR.md`.
+> 5. **Supabase Pro (€25/mj) prije prvih korisnika** (backup + bez sleep-a; gasi rizik B). **Tempo:** kraće dionice, stani nakon 1–2 cigle ([[pace-short-stretches-check-in]]).
+
 ---
 
 ## 0. Zašto (kontekst odluke)
@@ -245,7 +254,10 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   **⬜ 3C.2 (odgođeno):** konzistencijski gate hvata *parcijalni* bump; „zaboravio pokrenuti bump" zatvara **git-diff freshness gate** (promijenjen asset ⇒ token napredovao)
   ILI čišće **auto-bump na Vercel deploy-u** (nula discipline) — prirodno se veže uz 3B build-korak.
 - [3B] **CSS bundling** — ✅ **GOTOVO (2026-07-05, grana `foundation/f3`; NIJE deployano):** 26 `@import` → 1 **`styles.bundle.css`** (`scripts/build-css.js` konkatenira `css/*.css` u @import redoslijedu; `styles.css`=izvor-manifest, ne servira se; `index.html`→bundle). `npm run build:css` + CI drift-gate **`build:css -- --check`** (bundle u sinku, kao data/json). Konkatenacija dokazano sigurna (0 relativnih `url()`/0 ugniježđenih @import/0 @charset). Ostaje no-framework, no-runtime-build (bundle je commitan artefakt). **META (Lighthouse baseline 2026-06-29): perf 66, LCP 6.6s, FCP 4.3s** — render-blocking `@import` waterfall je glavni krivac → ovo ga eliminira; **perf mjeri CI Lighthouse na push/deploy** (cilj perf ≥ 0.9, pa podići `performance` prag 1D.1). *(Minifikacija = moguć follow-up; konkatenacija sama ubija waterfall.)*
-- [3A] **Service Worker** (cache-first za `index.html`/`js`/`css`/`data`/JSON + mrežne odgovore Repo-a) → **„Works offline" postaje ISTINA** → vrati/ojačaj copy. **Najrizičnija → zadnja velika cigla F3.**
+- [3A] **Service Worker** — ✅ **3A.1/3A.2 GOTOVO (2026-07-05, grana `foundation/f3`; NIJE deployano; 3A.3+deploy → FABLE):** „Works offline" postaje ISTINA.
+  `sw.js` konzervativan (same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate; Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch)
+  + `js/sw-register.js` (`updateViaCache:'none'`, fail-safe) + `vercel.json` `/sw.js` no-cache + `SW_VERSION` u `npm run bump`. Copy „Works offline" vraćen (hero+i18n+meta). Test `tests/sw.spec.js` (registracija/kontrola + **offline load**).
+  **Regresija (SW presretao fetcheve → 4 dual-read pala) popravljena:** globalno `serviceWorkers:'block'` u Playwright configu, SW izoliran u `sw.spec` (`allow`). Gate: **Playwright 173/0**. **⬜ 3A.3 (SW update-flow „nova verzija dostupna" + finiš) = Fable**, uz deploy F3 (uz potvrdu). *(Najrizičnija cigla → zato Fable = drugi model, sigurnosni sloj.)*
 - [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
 - [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
 **Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*

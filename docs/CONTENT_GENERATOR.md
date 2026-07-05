@@ -24,11 +24,17 @@ Generator i Blok B gledaju u isti šav → ništa se ne radi dvaput.
 | 5 | JSON → `data/<subj>/{midterm-1,2,final}.js` + (ispis) catalog unos | `assemble-subject.js` | skripta | ✅ **brick 4 (`3d89e89`)** |
 | 6 | Završni gate | `npm run validate:content` + `verify` + Playwright + Opus spot-check | postoji + Opus | po predmetu |
 
-> **Generator-jezgra (bricks 1–4) KOMPLETNA.** Tok: `build-topics` → `generate-subject` → `assemble-subject` → (paste catalog + bump + gate). Sljedeće = pravi pilot-predmet kad korisnik donese materijale.
+> **Generator-jezgra (bricks 1–4) KOMPLETNA.** Tok: `build-topics` → `generate-subject` → `assemble-subject` → (paste catalog + **`npm run bump`** + gate). Sljedeće = pravi pilot-predmet kad korisnik donese materijale.
 
 > **🆕 JSON dual-read (F2 2A):** generator i dalje piše `.js` — novi predmet radi ODMAH bez flaga (`.js` put).
 > Opcionalno nakon gatea: `npm run export:json <id>` + `dataFormat:'json'` u catalog unos (kao ostalih 17).
 > Ako predmet dobije flag → svaka kasnija izmjena `.js` traži re-export (CI drift-gate).
+
+> **🆕 TOČNOST — dvo-ključni verifier (ADR-020, gradi se u FAZI SADRŽAJA, ne sad):** deterministički validator provjerava da je quiz
+> `correct` u RASPONU, NE je li STVARNO točan → kriv ključ uči studente krivo. Rješenje: `verify-subject.js` (planirano) poslije `generate-subject`:
+> **Opus SAMO čita** izvor (`topics.json`) + generirano pitanje/označen odgovor → vraća **samo SUMNJIVE stavke** (`[{stavka, zašto}]`, structured output,
+> mali `max_tokens` → minimalna potrošnja; NE prepisuje). Ograničeno na quiz `correct` + fill (+ flagrantne flashcard greške). Korisnik presudi.
+> **Retroaktivno na svih 18 postojećih predmeta** (spot-checkani, ne iscrpno → verifier daje povjerenje). Model: `Sonnet piše → Opus označava → čovjek presudi`.
 
 ## Brick 1 — `validate-content.js` ✅ (gotovo)
 `npm run validate:content [subjectId]`. Učita data preko **vm window-shima** (radi za stare root

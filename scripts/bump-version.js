@@ -26,8 +26,11 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const TOKEN_RE = /\?v=\d+/g;                                    // asset tokeni: styles.css?v=123
-const CV_FILE = 'js/content-loader.js';
-const CV_RE = /(const CONTENT_VERSION = ')(\d+)(')/;            // data cache-buster (jedan izvor)
+// Verzijske KONSTANTE u JS-u (nisu `?v=` tokeni, ali dijele isti broj — jedan za cijelu app):
+const VERSION_CONSTS = [
+  { file: 'js/content-loader.js', name: 'CONTENT_VERSION', re: /(const CONTENT_VERSION = ')(\d+)(')/ }, // data cache-buster
+  { file: 'sw.js',               name: 'SW_VERSION',      re: /(const SW_VERSION = ')(\d+)(')/ },       // Service Worker cache (F3 3A)
+];
 
 /** Datoteke koje NOSE tokene (JS koristi CONTENT_VERSION varijablu, ne hardkod → nije ovdje). */
 function targetFiles() {
@@ -58,9 +61,12 @@ function collect() {
     for (const t of m) { const v = t.slice(3); byVal[v] = (byVal[v] || 0) + 1; }
     for (const v of Object.keys(byVal)) out.push({ file: rel, token: v, count: byVal[v] });
   }
-  const cvTxt = fs.readFileSync(path.join(ROOT, CV_FILE), 'utf8');
-  const cvm = cvTxt.match(CV_RE);
-  if (cvm) out.push({ file: CV_FILE, token: cvm[2], count: 1, isContentVersion: true });
+  for (const vc of VERSION_CONSTS) {
+    const abs = path.join(ROOT, vc.file);
+    if (!fs.existsSync(abs)) continue;
+    const m = fs.readFileSync(abs, 'utf8').match(vc.re);
+    if (m) out.push({ file: vc.file, token: m[2], count: 1, versionConst: vc.name });
+  }
   return out;
 }
 
@@ -83,13 +89,15 @@ function writeAll(version, { dry } = {}) {
     if (next !== txt && !dry) fs.writeFileSync(abs, next);
     console.log(`  ${dry ? '·' : '✓'} ${rel.padEnd(20)} ${matches.length} token(a) → ?v=${version}`);
   }
-  // CONTENT_VERSION (data cache-buster) — isti broj
-  const cvAbs = path.join(ROOT, CV_FILE);
-  const cvTxt = fs.readFileSync(cvAbs, 'utf8');
-  if (CV_RE.test(cvTxt)) {
-    const next = cvTxt.replace(CV_RE, `$1${version}$3`);
-    if (next !== cvTxt && !dry) fs.writeFileSync(cvAbs, next);
-    console.log(`  ${dry ? '·' : '✓'} ${CV_FILE.padEnd(20)} CONTENT_VERSION → '${version}'`);
+  // Verzijske konstante (CONTENT_VERSION, SW_VERSION) — isti broj
+  for (const vc of VERSION_CONSTS) {
+    const abs = path.join(ROOT, vc.file);
+    if (!fs.existsSync(abs)) continue;
+    const txt = fs.readFileSync(abs, 'utf8');
+    if (!vc.re.test(txt)) continue;
+    const next = txt.replace(vc.re, `$1${version}$3`);
+    if (next !== txt && !dry) fs.writeFileSync(abs, next);
+    console.log(`  ${dry ? '·' : '✓'} ${vc.file.padEnd(20)} ${vc.name} → '${version}'`);
     tokenCount++;
   }
   return { fileCount, tokenCount };
@@ -125,7 +133,7 @@ function main() {
   const prevMax = before.map((v) => v.token).sort().slice(-1)[0] || '—';
   console.log(`${dry ? '[DRY] ' : ''}Bump cache tokena: prethodni max ?v=${prevMax} → nova ?v=${version}\n`);
   const { fileCount, tokenCount } = writeAll(version, { dry });
-  console.log(`\n${dry ? '[DRY] bi se promijenilo' : '✅ Bumpano'}: ${tokenCount} token(a) u ${fileCount} datoteka + CONTENT_VERSION.`);
+  console.log(`\n${dry ? '[DRY] bi se promijenilo' : '✅ Bumpano'}: ${tokenCount} token(a)/verzija u ${fileCount} datoteka + verzijske konstante (CONTENT_VERSION/SW_VERSION).`);
   if (!dry) console.log('   ⚠️ Ovo je cache-bump → tretiraj kao promjenu (commit + deploy).');
 }
 

@@ -140,7 +140,7 @@
     'hero.browse': { en: 'Browse subjects', hr: 'Pregledaj predmete' },
     'hero.trust.free': { en: '100% free', hr: '100% besplatno' },
     'hero.trust.noSignup': { en: 'No sign-up', hr: 'Bez registracije' },
-    'hero.trust.offline': { en: 'No install needed', hr: 'Bez instalacije' },
+    'hero.trust.offline': { en: 'Works offline', hr: 'Radi offline' },
     'stats.subjects': { en: 'Subjects', hr: 'Predmeta' },
     'stats.questions': { en: 'Questions', hr: 'Pitanja' },
     'stats.modes': { en: 'Study Modes', hr: 'Načina učenja' },

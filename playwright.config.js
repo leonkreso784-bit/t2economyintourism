@@ -30,6 +30,10 @@ module.exports = defineConfig({
   use: {
     baseURL: `http://localhost:${PORT}`,
     screenshot: 'only-on-failure',
+    // Service Worker (F3 3A) se registrira iz index.html. App-testovi ga BLOKIRAJU da bi
+    // logika (npr. dual-read DB→JSON→.js fallback preko page.route) bila deterministička —
+    // SW presreće same-origin fetcheve. SW se testira izolirano u sw.spec.js (test.use allow).
+    serviceWorkers: 'block',
   },
   webServer: {
     command: 'node scripts/static-server.js',

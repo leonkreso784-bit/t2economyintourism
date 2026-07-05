@@ -128,7 +128,13 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   (`js/components/sokrat-toast.js`, `showToast()` delegira) + `<sokrat-modal>` primitiv (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`:
   open/close/ESC/backdrop/scroll-lock/fokus/Tab-trap) + learn image-viewer (`#imageModal`) migriran + **auth modal (`#authModal`) migriran** (2D.2c, `js/auth.js`+`css/auth.css` override; zadnji ad-hoc overlay pojeden)
   + **`<sokrat-confirm>`** (2D.3, `js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`: branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` = prva kompozicija; `window.askConfirm()`→Promise; zamijenio 3 native `confirm()`; budući GDPR delete). Testovi `tests/components.spec.js`.
-  **✅ 2D.3 LIVE `7d88e5c..df67766` (2026-07-04) → time F2 (reusable jezgra) KOMPLETNA (2A/2B/2C/2D/2E svi LIVE).** **F3⬜** SW/bundling. **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore).
+  **✅ 2D.3 LIVE `7d88e5c..df67766` (2026-07-04) → time F2 (reusable jezgra) KOMPLETNA (2A/2B/2C/2D/2E svi LIVE).**
+- **F3 ▶ (performanse) — grana `foundation/f3`, NIJE deployano (2026-07-05):** redoslijed = najsigurnija cigla prva (3C→3B→3A→3D→3E; SW zadnja).
+  **✅ 3C.1** auto version-bump (`scripts/bump-version.js` = JEDAN broj za app: svi `?v=`+`CONTENT_VERSION`+`SW_VERSION`; `npm run bump`/`bump:check` CI gate; ADR-017). **✅ 3B** CSS bundling
+  (`scripts/build-css.js`: 26 `@import`→1 `styles.bundle.css`; `styles.css`=izvor-manifest, `index.html`→bundle; CI drift-gate; eliminiran render-blocking waterfall). **✅ 3A.1/3A.2** Service Worker
+  (`sw.js` + `js/sw-register.js`: navigacija network-first + offline app-shell fallback; asseti SWR; Supabase/CDN network-only; kill-switch; `vercel.json` `/sw.js` no-cache; „Works offline" istina).
+  Testovi `tests/sw.spec.js` (offline load); app-testovi `serviceWorkers:'block'`. **Playwright 173/0.** **⬜ 3A.3 (SW update-flow) + deploy → Fable (ADR-019); ⬜ 3C.2/3D/3E.**
+- **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore) — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

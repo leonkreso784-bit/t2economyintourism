@@ -4,6 +4,47 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-018 — Platforma-first SKROZ do UGC-a prije sadržaja; UGC dizajniran u CRUD ali otključan tek nakon F6
+**Datum:** 2026-07-05 · **Status:** ✅ ODLUČENO (korisnik)
+**Kontekst:** Razmatrali smo dvije stvari: (a) kada se vratiti dodavanju sadržaja, (b) treba li admin CRUD (F4) odmah omogućiti
+studentima da uploadaju svoj sadržaj (UGC). Korisnik je htio da studenti dodaju sadržaj (skaliranje preko jednog autora = cijela vizija),
+ali je osjetio da to „razbija plan". Razbija — jer bi „student-upload odmah" preskočio **F6 (pred-UGC sigurnost)** koja postoji baš da UGC bude siguran.
+**Odluka:**
+1. **Puni redoslijed: F3 → F4 (CRUD) → F5 (SRS) → F6 (sigurnost) → UGC → tek onda nazad na SADRŽAJ.** Sadržaj kroz datoteke i dalje radi
+   (dual-read), ali svjesno se NE vraćamo dodavanju dok temelj + UGC ne stoje. *(Mijenja raniju ideju „sadržaj se može nastaviti već nakon F3/verifiera" — korisnik bira potpuni temelj prvo.)*
+2. **F4 CRUD se DIZAJNIRA UGC-spreman od početka** (multi-user, RLS, vlasništvo retka, `draft→published` stanja, uloge) — jer je jeftinije nego
+   naknadno retrofitati. **ALI student-upload NE ide živ prije F6.** Isti authoring sustav služi i autoru (admin) i studentima; „student gate" se upali kad su spremni:
+   **DOMPurify** (saniziraj SAV korisnički HTML — learn se ubacuje `innerHTML`, inače XSS na prave studente) + **moderacijski red** (draft → pregled → objava) + **CSP**.
+3. **Tvrda linija: student uploada PODATKE (kartice/kviz/fill/learn, saniziran HTML), NIKAD KOD.** Vježbe (JS `generate()`, BUG-012) = ostaju autorske / deklarativni sandbox (F6 6D). Student nikad ne ubacuje izvršni kod.
+**Posljedice:** Jedan reusable authoring podsistem umjesto dva; UGC nije naknadna krpa nego otključavanje. Sigurnosni sloj (F6) je nepovrediv preduvjet živog UGC-a.
+Precizira ADR-013 (F4 flip) + F6 plan. [[foundation-pivot]]
+
+---
+
+## ADR-019 — Maksimalno-rizične cigle (Service Worker) autoriraju se na FABLE modelu
+**Datum:** 2026-07-05 · **Status:** ✅ ODLUČENO (korisnik) · prvi slučaj: SW 3A.3 + deploy
+**Kontekst:** Service Worker je najrizičnija cigla (ostaje u pregledniku korisnika, može servirati stari keš „zauvijek", teško se izbacuje).
+Korisnik želi da se SW radi na **Fable** modelu — ne zato što je Opus loš, nego jer **drugi model = jeftin sigurnosni sloj** (svjež pogled hvata
+što prvi ne). 3A.1/3A.2 su već napisani + testirani (Opus, Playwright 173/0) → Fable dobiva **testiranu bazu za kritički pregled**, ne prazan papir.
+**Odluka:** Za **maksimalno-opasne, teško-reverzibilne cigle** (SW; kasnije npr. source-of-truth flip u F4) koristi se **drugi model (Fable)** kao neovisna provjera/izrada.
+Prebacivanje modela radi korisnik (model-selector); asistent se ne prebacuje sam. Handoff = čist commitani + testirani checkpoint.
+**Posljedice:** +malo režije (prebacivanje, ponovni kontekst) za osjetljive cigle — prihvatljivo za rizik koji nose. Nije pravilo za svaku ciglu, samo za one gdje je cijena greške velika i trajna.
+
+---
+
+## ADR-020 — Točnost sadržaja: dvo-ključni „verify" pipeline (Sonnet piše → Opus provjerava/označava → čovjek presudi)
+**Datum:** 2026-07-05 · **Status:** ✅ ODLUČENO (gradi se u fazi sadržaja, ne sad)
+**Kontekst:** Najveći tihi rizik proizvoda: quiz `correct` indeks / fill odgovor može biti **činjenično kriv** (dio sadržaja generiran Sonnetom). Deterministički
+validator provjerava da je indeks u RASPONU, NE je li STVARNO točan. Kriv ključ uči studente krivo → reputacijski rizik. Postojećih 18 predmeta su spot-checkani, NE iscrpno.
+**Odluka:** Pipeline `Sonnet (piše) → Opus (SAMO provjerava + označava krive) → čovjek (finalna riječ)`:
+- **Opus verifier NE prepisuje** — čita `izvorni tekst teme` (iz `topics.json`) + `generirano pitanje/označen odgovor` → vraća **samo sumnjive stavke** (`[{stavka, zašto}]`),
+  structured output, mali `max_tokens` → **potrošnja minimalna** (presuđuje, ne piše).
+- **Ograničen na najskuplji rizik:** quiz `correct` + fill odgovori (+ flagrantne flashcard greške). Ne troši Opus na ono što deterministički gate već hvata.
+- **MORA imati izvorni materijal** (ne nagađa iz zraka). Reusable cigla `scripts/verify-subject.js` u generatoru; **retroaktivno na svih 18 predmeta** (jednokratno → triaža flagova).
+**Posljedice:** Novi (i stari) sadržaj dobiva neovisnu semantičku provjeru uz minimalan trošak; ljudski pregled ostaje finalni, ali fokusiran. Detaljan plan: `CONTENT_GENERATOR.md`. Nadopunjuje ADR-010 (generator).
+
+---
+
 ## ADR-017 — Cache-busting: jedan uniformni auto-bumpani token za cijelu aplikaciju (ne per-file content-hash)
 **Datum:** 2026-07-04 · **Status:** ✅ ODLUČENO + 3C.1 IMPLEMENTIRANO (grana `foundation/f3`; F3 3C)
 **Kontekst:** Vercel servira `js`/`css`/`data` s `immutable` cacheom (1 god) → svaka izmjena traži novi `?v=` token, inače je deploy nevidljiv
