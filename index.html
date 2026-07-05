@@ -13,11 +13,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260705215529">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260705215529">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260705215529">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260705215529">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260705215529">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260706003609">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260706003609">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260706003609">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260706003609">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260706003609">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260705215529">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260706003609">
 
     <!-- F3 3D.2: Google Fonts učitan ASINKRONO (media=print → onload media=all) → ne blokira prvi
          paint. `display=swap` ionako renderira tekst u fallback fontu pa swapne. <noscript> fallback
@@ -72,7 +72,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260705215529">
+    <link rel="stylesheet" href="css/consent.css?v=20260706003609">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -83,8 +83,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260705215529" defer></script>
-    <script src="js/consent.js?v=20260705215529" defer></script>
+    <script src="js/monitoring.js?v=20260706003609" defer></script>
+    <script src="js/consent.js?v=20260706003609" defer></script>
 </head>
 <body>
     
@@ -100,9 +100,9 @@
         </div>
 
         <!-- Top Navigation (fixed) -->
-        <header class="landing-nav" id="top">
+        <header class="landing-nav" id="top" role="banner"><!-- a11y (F3 3E.2): banner landmark (logo/lang/auth izvan <nav> bili orphani) -->
             <a class="landing-logo" href="#top" aria-label="Sokrat Study home">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260705215529" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260706003609" alt="Sokrat Study Logo" class="logo-image"></div>
                 <span class="logo-text">Sokrat Study</span>
             </a>
             <nav class="landing-nav-links" aria-label="Primary">
@@ -181,7 +181,7 @@
         </main>
 
         <!-- Stats Bar -->
-        <div class="hero-stats">
+        <div class="hero-stats" role="region" aria-label="Key statistics" data-i18n-aria="a11y.heroStats">
             <div class="stat-item">
                 <span class="stat-num" data-meta="subjectCount">8</span>
                 <span class="stat-label" data-i18n="stats.subjects">Subjects</span>
@@ -281,9 +281,9 @@
         </section>
 
         <!-- Final CTA -->
-        <section class="landing-cta">
+        <section class="landing-cta" aria-labelledby="cta-heading">
             <div class="landing-cta-inner">
-                <h2 data-i18n="cta.title">Ready to ace your exams?</h2>
+                <h2 id="cta-heading" data-i18n="cta.title">Ready to ace your exams?</h2>
                 <p data-i18n="cta.sub">Jump into any subject &mdash; it's free and works right on your phone.</p>
                 <button type="button" class="cta-button primary start-trigger">
                     <i class="fas fa-bolt"></i>
@@ -294,30 +294,30 @@
         </section>
 
         <!-- Landing Footer -->
-        <footer class="landing-footer">
+        <footer class="landing-footer" role="contentinfo"><!-- a11y (F3 3E.2): ugniježđen u <section> gubi implicitni contentinfo → eksplicitno -->
             <div class="footer-cols">
                 <div class="footer-brand">
                     <div class="landing-logo">
-                        <div class="logo-wrapper"><img src="assets/logo.svg?v=20260705215529" alt="Sokrat Study Logo" class="logo-image"></div>
+                        <div class="logo-wrapper"><img src="assets/logo.svg?v=20260706003609" alt="Sokrat Study Logo" class="logo-image"></div>
                         <span class="logo-text">Sokrat Study</span>
                     </div>
                     <p data-i18n="footer.tagline">Interactive exam prep for FMTU Opatija &mdash; built by students, for students.</p>
                 </div>
                 <nav class="footer-col" aria-label="Explore">
-                    <h4 data-i18n="footer.explore">Explore</h4>
+                    <h3 data-i18n="footer.explore">Explore</h3>
                     <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
                     <a href="#how" data-i18n="lnav.how">How it works</a>
                     <a href="#modes" data-i18n="lnav.modes">Study modes</a>
                     <button type="button" class="footer-link-btn start-trigger" data-i18n="cta.start.lower">Start studying</button>
                 </nav>
                 <nav class="footer-col" aria-label="About">
-                    <h4 data-i18n="footer.about">About</h4>
+                    <h3 data-i18n="footer.about">About</h3>
                     <button type="button" class="footer-link-btn" onclick="showAboutUs()" data-i18n="footer.aboutUs">About us</button>
                     <a href="contact.html" data-i18n="footer.contact">Contact</a>
                     <a href="faq.html" data-i18n="footer.faq">FAQ</a>
                 </nav>
                 <nav class="footer-col" aria-label="Legal">
-                    <h4 data-i18n="footer.legal">Legal</h4>
+                    <h3 data-i18n="footer.legal">Legal</h3>
                     <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
                     <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
                     <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;" data-i18n="footer.cookies">Cookie settings</a>
@@ -335,7 +335,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260705215529" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260706003609" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -352,7 +352,7 @@
 
     <!-- ==================== BROWSE PAGE (drill-down: Faculty → Program → Year → Subject) ==================== -->
     <section id="browse-page" class="browse-page">
-        <header class="browse-header">
+        <header class="browse-header" role="banner"><!-- a11y (F3 3E.2): banner landmark -->
             <button class="back-btn" id="backFromBrowse" aria-label="Go back">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </button>
@@ -368,7 +368,7 @@
                 <i class="fas fa-user"></i>
             </button>
             <div class="browse-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260705215529" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260706003609" alt="Sokrat Study" class="logo-image"></div>
             </div>
         </header>
         <main class="browse-content">
@@ -411,7 +411,7 @@
     <!-- ==================== STUDY PAGE (Activities) ==================== -->
     <section id="study-page" class="study-page">
         <!-- Study Header -->
-        <header class="study-header">
+        <header class="study-header" role="banner"><!-- a11y (F3 3E.2): banner landmark; jedna stranica vidljiva odjednom pa nema duplikata -->
             <button class="back-btn" id="backToLessons" aria-label="Go back to lessons">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </button>
@@ -994,7 +994,7 @@
         </header>
         <main class="about-content">
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260705215529" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260706003609" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline">Created by students, for students</p>
             </div>
 
@@ -1043,7 +1043,7 @@
 
     <!-- ==================== PROFILE PAGE (signed-in account) ==================== -->
     <section id="profile-page" class="profile-page">
-        <header class="profile-header">
+        <header class="profile-header" role="banner"><!-- a11y (F3 3E.2): banner landmark -->
             <button class="back-btn" id="backFromProfile" aria-label="Go back">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </button>
@@ -1087,41 +1087,41 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260705215529"></script>
+    <script src="data/catalog.js?v=20260706003609"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260705215529"></script>
+    <script src="data/landing-stats.js?v=20260706003609"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260705215529"></script>
+    <script src="js/i18n.js?v=20260706003609"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260705215529"></script>
-    <script src="js/config.js?v=20260705215529"></script>
-    <script src="js/content-loader.js?v=20260705215529"></script>
+    <script src="js/app-state.js?v=20260706003609"></script>
+    <script src="js/config.js?v=20260706003609"></script>
+    <script src="js/content-loader.js?v=20260706003609"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260705215529"></script>
-    <script src="js/components/sokrat-toast.js?v=20260705215529"></script>
-    <script src="js/components/sokrat-modal.js?v=20260705215529"></script>
+    <script src="js/content-repo.js?v=20260706003609"></script>
+    <script src="js/components/sokrat-toast.js?v=20260706003609"></script>
+    <script src="js/components/sokrat-modal.js?v=20260706003609"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260705215529"></script>
-    <script src="js/utils.js?v=20260705215529"></script>
-    <script src="js/storage.js?v=20260705215529"></script>
-    <script src="js/analytics.js?v=20260705215529"></script>
-    <script src="js/navigation.js?v=20260705215529"></script>
-    <script src="js/math.js?v=20260705215529"></script>
-    <script src="js/flashcards.js?v=20260705215529"></script>
-    <script src="js/quiz.js?v=20260705215529"></script>
-    <script src="js/fill-blanks.js?v=20260705215529"></script>
-    <script src="js/learn.js?v=20260705215529"></script>
-    <script src="js/progress.js?v=20260705215529"></script>
-    <script src="js/blind-map.js?v=20260705215529"></script>
-    <script src="js/exercises-core.js?v=20260705215529"></script>
-    <script src="js/acc-kernel.js?v=20260705215529"></script>
-    <script src="js/exercises.js?v=20260705215529"></script>
-    <script src="js/auth.js?v=20260705215529"></script>
-    <script src="js/cloud-sync.js?v=20260705215529"></script>
-    <script src="js/profile.js?v=20260705215529"></script>
-    <script src="js/init.js?v=20260705215529"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260706003609"></script>
+    <script src="js/utils.js?v=20260706003609"></script>
+    <script src="js/storage.js?v=20260706003609"></script>
+    <script src="js/analytics.js?v=20260706003609"></script>
+    <script src="js/navigation.js?v=20260706003609"></script>
+    <script src="js/math.js?v=20260706003609"></script>
+    <script src="js/flashcards.js?v=20260706003609"></script>
+    <script src="js/quiz.js?v=20260706003609"></script>
+    <script src="js/fill-blanks.js?v=20260706003609"></script>
+    <script src="js/learn.js?v=20260706003609"></script>
+    <script src="js/progress.js?v=20260706003609"></script>
+    <script src="js/blind-map.js?v=20260706003609"></script>
+    <script src="js/exercises-core.js?v=20260706003609"></script>
+    <script src="js/acc-kernel.js?v=20260706003609"></script>
+    <script src="js/exercises.js?v=20260706003609"></script>
+    <script src="js/auth.js?v=20260706003609"></script>
+    <script src="js/cloud-sync.js?v=20260706003609"></script>
+    <script src="js/profile.js?v=20260706003609"></script>
+    <script src="js/init.js?v=20260706003609"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260705215529" defer></script>
+    <script src="js/sw-register.js?v=20260706003609" defer></script>
 </body>
 </html>

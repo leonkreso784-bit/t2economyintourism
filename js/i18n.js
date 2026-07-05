@@ -70,6 +70,8 @@
     'sw.updateReady': { en: 'New version is ready — tap to update', hr: 'Nova verzija je spremna — dodirni za nadogradnju' },
     // a11y (F3 3E) — aria-label za skrolabilne learn tablice
     'a11y.scrollTable': { en: 'Table — scroll horizontally to see more', hr: 'Tablica — skrolaj vodoravno za više' },
+    // a11y (F3 3E.2) — landmark labela za statistike na landingu
+    'a11y.heroStats': { en: 'Key statistics', hr: 'Ključne statistike' },
 
     // Quiz
     'quiz.title': { en: 'Quiz Mode', hr: 'Način kviza' },

@@ -5,6 +5,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3E.2 — moderate landmarks (sve 4 stranice 100% axe-clean) — grana `foundation/f3d` (NIJE deployano).**
+  `region`: landing `.hero-stats`→`role=region`, `.landing-cta`→`aria-labelledby`; landing-nav/landing-footer + study/browse/profile zaglavlja (ugniježđena u `<section>` → izgubila implicitni banner/contentinfo) → **eksplicitni `role="banner"`/`role="contentinfo"`** (jedna stranica vidljiva odjednom → bez duplikata). `heading-order`: footer `h4`→`h3` (preskakao h2→h4; CSS zadržao veličinu/težinu). i18n `a11y.heroStats`. **Atribut-only osim footer tag+CSS → 0 layout-rizika.** Rezultat: **axe 0 violationa BILO kojeg levela** na landing/browse/study/profile. Gate: **PUNA Playwright 185/0**.
 - **⚡ FAZA 3 · 3E.1 — a11y hardening (0 serious/critical axe) + proširen gate — grana `foundation/f3d` (NIJE deployano).**
   Dubinski axe audit otkrio da je postojeći gate (1D.2) skenirao samo landing/browse/learn/profile → **flashcards/quiz/fill/progress bili IZVAN gate-a** pa su kroz njih prošli **critical** violationi na produkciji.
   **Popravljeno:** (a) **button-name** flashcard prev/next (samo ikona) → `aria-label` preko novog i18n **`data-i18n-aria`** (`fc.prev`/`fc.next` en/hr), ikone `aria-hidden`; (b) **select-name** quiz 3 selecta → `<label for>`;

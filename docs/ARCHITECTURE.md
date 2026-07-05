@@ -129,11 +129,12 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   open/close/ESC/backdrop/scroll-lock/fokus/Tab-trap) + learn image-viewer (`#imageModal`) migriran + **auth modal (`#authModal`) migriran** (2D.2c, `js/auth.js`+`css/auth.css` override; zadnji ad-hoc overlay pojeden)
   + **`<sokrat-confirm>`** (2D.3, `js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`: branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` = prva kompozicija; `window.askConfirm()`→Promise; zamijenio 3 native `confirm()`; budući GDPR delete). Testovi `tests/components.spec.js`.
   **✅ 2D.3 LIVE `7d88e5c..df67766` (2026-07-04) → time F2 (reusable jezgra) KOMPLETNA (2A/2B/2C/2D/2E svi LIVE).**
-- **F3 ▶ (performanse) — grana `foundation/f3`, NIJE deployano (2026-07-05):** redoslijed = najsigurnija cigla prva (3C→3B→3A→3D→3E; SW zadnja).
+- **F3 (performanse) — (3C.1+3B+3A) ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05; 3D+3E na grani `foundation/f3d`:** redoslijed = najsigurnija cigla prva (3C→3B→3A→3D→3E; SW zadnja).
   **✅ 3C.1** auto version-bump (`scripts/bump-version.js` = JEDAN broj za app: svi `?v=`+`CONTENT_VERSION`+`SW_VERSION`; `npm run bump`/`bump:check` CI gate; ADR-017). **✅ 3B** CSS bundling
-  (`scripts/build-css.js`: 26 `@import`→1 `styles.bundle.css`; `styles.css`=izvor-manifest, `index.html`→bundle; CI drift-gate; eliminiran render-blocking waterfall). **✅ 3A.1/3A.2** Service Worker
+  (`scripts/build-css.js`: 26 `@import`→1 `styles.bundle.css`; `styles.css`=izvor-manifest, `index.html`→bundle; CI drift-gate; eliminiran render-blocking waterfall). **✅ 3A** Service Worker
   (`sw.js` + `js/sw-register.js`: navigacija network-first + offline app-shell fallback; asseti SWR; Supabase/CDN network-only; kill-switch; `vercel.json` `/sw.js` no-cache; „Works offline" istina).
-  Testovi `tests/sw.spec.js` (offline load); app-testovi `serviceWorkers:'block'`. **Playwright 173/0.** **⬜ 3A.3 (SW update-flow) + deploy → Fable (ADR-019); ⬜ 3C.2/3D/3E.**
+  **3A.3 (FABLE): Fable-pregled popravio 3 nalaza u sw.js** (navigate-keš samo `res.ok`; `cache.put`→`event.waitUntil`; verzioniran precache) **+ update-flow** (`<sokrat-toast>`→`skipWaiting`→jedan reload). Testovi `tests/sw.spec.js` (offline load + update-flow e2e); app-testovi `serviceWorkers:'block'`.
+  **✅ DEPLOYANO** (main `c115a5d..868dc9f`; vercel.json `"//"` komentar-incident popravljen `868dc9f`). **▶ na grani f3d:** ✅ **3D.1** blind-map→WebP (−98%); ✅ **3D.2** async KaTeX/Fonts (landing perf); ✅ **3E.1** a11y hardening (0 serious/critical; gate proširen na sve study sekcije — otkrio critical na prod; `--danger-text` token; kontrast learn/tablice/box; skrolabilne tablice fokusabilne). **⬜ 3E.2** (region/heading landmarks) → **3C.2** → deploy.
 - **F4⬜** custom Admin CRUD (source-of-truth flip; = B9/B10 gore) — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)

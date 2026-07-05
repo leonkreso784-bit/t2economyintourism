@@ -23,6 +23,12 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-017 — a11y gate skenirao samo 4 ekrana → CRITICAL axe violationi prošli na produkciju
+- Status: ✅ riješen 2026-07-05 (grana `foundation/f3d`, F3 3E.1; NIJE još deployano) · Težina: srednji (a11y, screen-reader korisnici; flashcards/quiz) · Našao: **dubinski axe audit** (svi impact-levovi, sve sekcije) pri 3E.
+- **Simptom:** postojeći `tests/a11y.spec.js` (TVRDI gate iz 1D.2) skenirao je samo **landing/browse/learn/profile**. Interaktivne sekcije **flashcards/quiz/fill/progress bile su IZVAN gate-a** → kroz njih su na produkciju prošli **critical** violationi: `button-name` (flashcard `#btnPrev`/`#btnNext` = samo ikona, bez pristupačnog imena → čitač ekrana ne može imenovati) + `select-name` (quiz 3 selecta bez povezane labele). Uz to je gate skenirao learn **presrano** (`state:'attached'` prije punog renderiranja) → propuštao raširen `color-contrast` na learn sadržaju (h3/tablice/box-naslovi, svi predmeti; npr. `--primary` tekst 3.7:1).
+- **Popravak:** `data-i18n-aria` (aria-label za ikone-gumbe) + `<label for>` (quiz) + `--danger-text` token + `--primary`→`--primary-dark`/`--primary-light` (kontrast) + `enhanceLearnTables()` (skrolabilne tablice fokusabilne). **Gate PROŠIREN:** „study page" test skenira SVE sekcije (petlja learn/flashcards/quiz/fill/progress).
+- **Lekcija:** **TVRDI gate vrijedi samo koliko pokriva.** Coverage-rupa u a11y (ili bilo kojem) gate-u = tiho propuštanje na produkciju. Pri dodavanju gate-a pokrij SVE relevantne ekrane/stanja, i pazi na **timing skena** (skeniraj nakon punog renderiranja, ne `state:'attached'`). [[foundation-pivot]]
+
 ### BUG-016 — Landscape mobitel: flashcard lice strši preko Known/Unknown gumba (tap flipa karticu umjesto klika)
 - Status: ✅ riješen 2026-07-02 (lokalno, grana `foundation/f2c`) · Težina: srednji (UX, flashcards na landscape mobitelu, svi predmeti) · Našao: **novi funkcionalni Playwright test** (F2 2C.2b) — klik na `#btnCorrect` presretan
 - Opis: na landscape mobitelu (npr. iPhone 15 Pro landscape, 852×393) lice kartice (`.flashcard-front`, raste sa sadržajem) **strši ~130px ispod kartice** i prekriva kontrole → tap na Known/Unknown pogodi karticu (flip) umjesto gumba.

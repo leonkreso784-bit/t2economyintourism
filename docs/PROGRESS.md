@@ -22,7 +22,11 @@ Uz to je gate skenirao learn **presrano** (`state:'attached'` prije punog render
 
 **Testirano:** axe 4/4 (0 serious/critical na svim ekranima) · **PUNA Playwright 185/0** · verify/typecheck/unit/build:css --check/bump:check 0 · vizualni screenshot (izbornik kategorija + landing čisti). Cache `20260705215529`.
 **Vizualna napomena:** box-naslovi (tip/warning) promijenili stil s „obojan tekst" na „svijetli tekst + obojana ikona" — funkcionalno bolje i čitljivije, ali korisnik nek pregleda na preview-u.
-**Deploy:** NIJE. **Slijedi:** 3E.2 (moderate: `region` landmarks + `heading-order` — ne blokiraju gate) → 3C.2 → deploy F3-ostatak. **STOP + check-in po pravilu tempa.**
+**Deploy:** NIJE.
+
+**▶ 3E.2 (isti dan, moderate landmarks — SVE 4 STRANICE 100% AXE-CLEAN):** korisnik tražio da se 3E završi prije compacta. Popravljeni svi preostali moderate nalazi (0 violationa bilo kojeg levela):
+`region` — landing `.hero-stats`→`role=region` (+ i18n `a11y.heroStats`), `.landing-cta`→`aria-labelledby`; **landing-nav / landing-footer / study / browse / profile zaglavlja** su bila ugniježđena u `<section>` pa su izgubila implicitni banner/contentinfo landmark → dodan **eksplicitni `role="banner"`/`role="contentinfo"`** (jedna stranica vidljiva odjednom → axe ne vidi duplikate). `heading-order` — footer `h4`→`h3` (preskakao h2→h4; `.footer-col h4`→`h3` u CSS-u, ista veličina 0.78rem + font-weight 600). **Sve atribut-only osim footer tag+CSS → 0 layout-rizika.** Ključna spoznaja: **nested `<header>`/`<footer>` u `<section>` NISU landmarki** — treba eksplicitni role. Gate: axe 4/4 potpuno clean, **PUNA Playwright 185/0**.
+**Deploy:** NIJE (grana `foundation/f3d` = 4 commita: 3D.1/3D.2/3E.1/3E.2). **Slijedi:** deploy F3-ostatak (uz potvrdu) → opcionalno 3C.2. **→ pred-compact .md audit (pravilo #6) → compact.**
 
 ---
 

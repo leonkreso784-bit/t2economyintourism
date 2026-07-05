@@ -923,12 +923,13 @@
     gap: 0.6rem;
 }
 
-.footer-col h4 {
+.footer-col h3 {   /* a11y (F3 3E.2): bio h4 (preskakao heading-razinu h2→h4); h3 = ista veličina, valjan redoslijed */
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-secondary);
     margin-bottom: 0.25rem;
+    font-weight: 600;
 }
 
 .footer-col a,
