@@ -5,7 +5,8 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
-- **⚡ FAZA 3 · 3A.3 — SW update-flow + Fable-pregled (3 fixa u sw.js) — grana `foundation/f3` (NIJE deployano; deploy F3 čeka izričitu potvrdu). RAĐENO NA FABLE (ADR-019).**
+- **⚡ FAZA 3 · 3A.3 — SW update-flow + Fable-pregled (3 fixa u sw.js) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (main `c115a5d..868dc9f` uz izričitu potvrdu; CI zelen `9581b81`; live-verified: token `20260705140655`, `/sw.js` `max-age=0,must-revalidate` + novi kod, bundle immutable, update-flow servira). Time su 3C.1+3B+3A LIVE. RAĐENO NA FABLE (ADR-019).**
+  **🐛 Deploy-incident:** `"//"` komentar-ključ u `vercel.json` headers → Vercel schema ERROR prije builda (preview+prvi prod-pokušaj pali; produkcija fail-safe na starom deployu; Actions CI to ne hvata). Fix `868dc9f`. + merge korisnikova novog README-a (`90ac791`, njegova verzija u cijelosti).
   **Fable-pregled 3A.1/3A.2 (dvo-modelni sigurnosni sloj) našao+popravio 3 nalaza u `sw.js`:** (1) navigate-handler keširao SVAKI odgovor uklj. 404/500 → mogao pregaziti
   dobar offline shell → sad kešira samo `res.ok`; (2) `cache.put` bio fire-and-forget (preglednik smije ugasiti SW usred upisa) → sad pod `event.waitUntil` (SWR-put dobio i
   vanjski `waitUntil(network)` koji drži event živim); (3) precache `/styles.bundle.css` BEZ `?v=` = mrtav cache-ključ (HTML traži verzionirani URL, match ne ignorira query)
@@ -17,19 +18,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   bez opts ponašanje bajt-identično (13 postojećih pozivatelja netaknuto); `showToast()` delegat prosljeđuje opts; `.toast--action{cursor:pointer}` u `css/pages.css`.
   Testovi: `components.spec.js` toast-akcija + `tests/sw.spec.js` **update-flow e2e** (re-registracija istog SW-a pod drugim URL-om = PRAVI waiting-worker; guard bez
   spontanog reloada → toast → dodir → reload → nova kontrola). Cache `20260705140655`. Gate: **PUNA Playwright 181/0** (173+8; 15 skipova po dizajnu), typecheck/unit/bump:check/build:css-check 0.
-- **⚡ FAZA 3 · 3A.1/3A.2 — Service Worker (offline app-shell) — grana `foundation/f3` (NIJE deployano; najosjetljivije, čeka potvrdu; 3A.3+deploy → Fable).**
+- **⚡ FAZA 3 · 3A.1/3A.2 — Service Worker (offline app-shell) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (s 3A.3, vidi unos gore).**
   „Works offline" postaje ISTINA. **`sw.js`** (konzervativan: same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate;
   Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch) + **`js/sw-register.js`** (`updateViaCache:'none'`, fail-safe). `vercel.json` `/sw.js` no-cache;
   `SW_VERSION` bumpan `npm run bump` (generaliziran `VERSION_CONSTS`). Copy vraćen: **„Works offline"** (hero + i18n en/hr + 2 meta). Test `tests/sw.spec.js` (registracija/kontrola + **offline load**).
   **Regresija (SW vs test-routing) nađena+popravljena:** globalno `serviceWorkers:'block'` u Playwright configu (app-testovi deterministički), SW izoliran u `sw.spec` (`allow`). Cache `20260705025350`.
   Gate: bump/build:css/verify/typecheck/export 0, **PUNA Playwright 173/0** (4 profila). Perf mjeri CI Lighthouse.
-- **⚡ FAZA 3 · 3B — CSS bundling (26 `@import` → 1 `styles.bundle.css`) — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
+- **⚡ FAZA 3 · 3B — CSS bundling (26 `@import` → 1 `styles.bundle.css`) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (s 3A.3, vidi unos gore; live: bundle immutable).**
   Kraj render-blocking `@import` waterfalla (26 modula = sekvencijalni dohvat → glavni krivac Lighthouse perf 66 / LCP 6.6s). **`scripts/build-css.js`**
   konkatenira `css/*.css` u redoslijedu `styles.css` @importa → `styles.bundle.css` (194 KB, LF-normaliziran). `styles.css` = IZVOR-MANIFEST reda
   (ne servira se); `index.html` → `styles.bundle.css`. **`npm run build:css`** + CI drift-gate **`build:css -- --check`** (bundle u sinku s izvorima; kao data/json).
   Konkatenacija dokazano sigurna (0 relativnih `url()` / 0 ugniježđenih @import / 0 @charset; redoslijed = kaskada). `.gitattributes` `styles.bundle.css eol=lf`.
   Gate: build:css/bump/verify/validate/typecheck/export 0, Playwright smoke+layout-guard 18/0 (puni suite u tijeku). Perf mjeri CI Lighthouse na push/deploy.
-- **⚡ FAZA 3 · 3C.1 — jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate — grana `foundation/f3` (NIJE deployano; čeka potvrdu).**
+- **⚡ FAZA 3 · 3C.1 — jedinstveni auto version-bump (`scripts/bump-version.js`) + CI konzistencijski gate — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (s 3A.3, vidi unos gore; live: svi tokeni `20260705140655`).**
   Kraj ručnog bumpanja ~92 `?v=` tokena raspoređenih po 7 datoteka + `CONTENT_VERSION`. **`npm run bump`** = JEDAN broj za cijelu aplikaciju
   (svi tokeni → novi `YYYYMMDDHHMMSS` timestamp odjednom → nemoguće zaboraviti podskup). **`npm run bump:check`** = TVRDI CI gate: svi tokeni
   identični, drift (parcijalni ručni bump) = crveno (**BUG-004 čuvar**). Modovi `--set`/`--dry`. Normalizirano 92 tokena → `20260704162056`.

@@ -264,7 +264,12 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   i18n `sw.updateReady` en/hr) → dodir šalje `sw:skipWaiting` → `controllerchange` → JEDAN reload (guard: reload SAMO uz korisnikov pristanak — prvi install/claim NIKAD ne reloada;
   bez dodira ništa se ne mijenja, novi SW preuzme idućim otvaranjem). `<sokrat-toast>` aditivno proširen: `show(msg, {duration, onClick})` (13 starih pozivatelja netaknuto).
   Testovi: `components.spec` toast-akcija + `sw.spec` **update-flow e2e** (re-registracija istog SW-a pod drugim URL-om = pravi waiting-worker; toast→dodir→reload→nova kontrola).
-  Gate: **PUNA Playwright 181/0** (173 stara + 8 novih; 15 skipova po dizajnu), typecheck/unit/bump:check/build:css --check 0. Cache `20260705140655`. **⬜ deploy F3 na produkciju = uz izričitu potvrdu.**
+  Gate: **PUNA Playwright 181/0** (173 stara + 8 novih; 15 skipova po dizajnu), typecheck/unit/bump:check/build:css --check 0. Cache `20260705140655`.
+  **✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (main `c115a5d..868dc9f`, uz izričitu potvrdu; CI zelen na `9581b81`).** Live-verified: token `20260705140655`; `/sw.js` = `max-age=0, must-revalidate`
+  (override NADJAČAVA generički `.js` immutable) + servira `SW_VERSION`/`res.ok`/`sw:skipWaiting`/verzionirani precache; bundle immutable; sw-register update-flow + i18n ključ live.
+  **🐛 Deploy-incident:** `"//"` komentar-ključ u `vercel.json` headers-unosu → Vercel schema ERROR **prije builda** (preview `9581b81` i prvi prod-pokušaj `c48fa4e` pali; produkcija ostala
+  na starom deployu = fail-safe). GitHub Actions CI to NE hvata (ne validira vercel.json). Fix `868dc9f`. Pouka: provjeri i **Vercel check** na commitu, ne samo Actions; vercel.json bez komentar-ključeva.
+  (Usput mergean korisnikov novi osobni README `90ac791` — README njegova verzija u cijelosti.)
 - [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
 - [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
 **Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*

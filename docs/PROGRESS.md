@@ -5,6 +5,31 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 (nastavak 4, FABLE) — 🚀 F3 (3C.1+3B+3A) DEPLOYANO NA PRODUKCIJU + vercel.json incident
+**Deploy (uz izričitu potvrdu korisnika „deploy na produkciju"):** main `c115a5d..868dc9f`. CI zelen na `9581b81`
+(build 11.5 min + Lighthouse budgets 64 s, oba success). Push grane → CI → ff-merge → push main.
+
+**🐛 INCIDENT #1 — divergirani main:** push odbijen — korisnik je u međuvremenu sam pushao **novi osobni README**
+(`90ac791`, 414 redaka, engleski, osobna priča) preko GitHuba. Riješeno merge-commitom `c48fa4e`
+(konflikt README.md razriješen **u korist korisnikove verzije u cijelosti**).
+
+**🐛 INCIDENT #2 — vercel.json schema ERROR:** i preview (`9581b81`) i prvi prod-deploy (`c48fa4e`) pali s
+`headers[3] should NOT have additional property '//'` — komentar-ključ `"//"` u `/sw.js` headers-unosu (iz 3A.1)
+ruši Vercel schema validaciju **prije builda** (deployment bez ijednog build-loga; produkcija fail-safe ostala na
+starom deployu). **GitHub Actions CI to NE hvata** (ne validira vercel.json) — zato je CI bio zelen a deploy mrtav.
+Fix `868dc9f` (ključ maknut; obrazloženje živi u docs). **POUKE:** (a) nakon pusha gledaj i **Vercel check** na
+commitu (ne samo Actions); (b) vercel.json = čisti JSON bez komentar-ključeva; (c) Vercel projekt se zove
+**`studymaster`** (ne sokrat.dev/toursimeconomics — ti su drugi repoi).
+
+**✅ LIVE-VERIFIKACIJA (sve prošlo):** novi deploy READY za ~15 s; token `20260705140655` na index.html;
+`/sw.js` → `Cache-Control: public, max-age=0, must-revalidate` (**override radi**, nije immutable) + servira
+`SW_VERSION='20260705140655'` + `res.ok` fix + `sw:skipWaiting` + verzionirani precache; `styles.bundle.css?v=` →
+200 + immutable; `sw-register.js` servira update-flow (`updatefound`/`userAcceptedUpdate`/`sw.updateReady`);
+i18n ključ live. **→ F3 jezgra (3C.1 auto-bump + 3B bundling + 3A Service Worker) JE NA PRODUKCIJI.**
+**Slijedi:** 3C.2 (auto-bump na deploy) → 3D (slike) → 3E (a11y) → F4.
+
+---
+
 ## 2026-07-05 (nastavak 3, FABLE) — ✅ F3 3A.3: Fable-pregled SW-a (3 fixa) + update-flow „nova verzija"
 **Kontekst:** prvi rad po **ADR-019** — korisnik prebacio na Fable nakon compacta; Fable = drugi ključ na najrizičnijoj cigli.
 **Fable-pregled 3A.1/3A.2 (svježe oči) našao 3 STVARNA nalaza u `sw.js` — svi popravljeni:**
