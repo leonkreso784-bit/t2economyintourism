@@ -25,7 +25,7 @@ Nalazi iz `sonnet.md` (vanjski review; **provjereni protiv koda** — #7 display
 Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):
 > **✅ STATUS: F1 1C stavke ISPORUČENE + LIVE (2026-06-30):** sigurnosni headeri, „Works offline"→„No install needed", `loadProgress` schema-merge (u `storage.js`, ne analytics), „400+"→dinamičan (`compute-stats.js`), mrtav `lessonCategoryMap`→`{}`. Preostaju 💤 (CSP/DOMPurify/CSS-bundling/PWA-ikona/SW = Faza 3/6).
 - 🔥 **Sigurnosni headeri** (`vercel.json`): makni deprecated `X-XSS-Protection`; dodaj `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
-- ✅ **„Works offline" copy** — RIJEŠENO (F3 3A, 2026-07-05, grana `foundation/f3`): dodan Service Worker (`sw.js` offline app-shell) → copy vraćen na „Works offline"/„Radi offline". (Deploy uz potvrdu; 3A.3 update-flow → Fable.)
+- ✅ **„Works offline" copy** — RIJEŠENO + ✅ **DEPLOYANO NA PRODUKCIJU 2026-07-05** (F3 3A, main `868dc9f`): Service Worker (`sw.js` offline app-shell) + 3A.3 update-flow (Fable, ADR-019) → copy „Works offline"/„Radi offline" LIVE.
 - ➖ **`loadProgress` schema-merge** (`js/analytics.js`): `{ ...defaultProgress, ...JSON.parse(saved) }` — otpornost na pokvaren/stari localStorage.
 - ➖ **„400+" dinamički** (`index.html` ×3): izračun `questionCount` iz kataloga (kao `subjectCount`).
 - ➖ **Mrtav `lessonCategoryMap` entry** (`js/config.js`) — vidi nalaz 2026-06-18 niže (PAZI: objekt JE referenciran u `navigation.js:545`).

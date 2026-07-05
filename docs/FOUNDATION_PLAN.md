@@ -1,6 +1,6 @@
 # FOUNDATION_PLAN — Platforma-first temelj (Sokrat Study)
 
-> **Status:** ▶ ODLUČENO 2026-06-29, izvršavanje TEK KREĆE (0 koda napisano osim ne-deployanog i18n chromea).
+> **Status (ažurirano 2026-07-06):** ▶ U TIJEKU. **F1 (reliability rails) ✅ DEPLOYANO · F2 (reusable jezgra) ✅ KOMPLETNA + DEPLOYANO · F3 (performanse): jezgra 3C.1+3B+3A ✅ DEPLOYANA (2026-07-05), 3D+3E ✅ GOTOVI na grani `foundation/f3d` (čekaju deploy).** Slijedi F4 (Admin CRUD) → F5 (SRS) → F6 (sigurnost) → UGC. Detalji po fazama niže.
 > **Odluka korisnika (2026-06-29):** staviti DODAVANJE SADRŽAJA na pauzu na koliko god treba i izgraditi
 > **profesionalan, reliable, reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena",
 > pripremljena za sve što planiramo (Admin CRUD, UGC, AI tutor, monetizacija).
@@ -245,16 +245,16 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 ### ▸ FAZA 3 — Performanse (na čistom šavu)
 **Cilj:** platforma stvarno brza i offline-sposobna.
 **Ovisnosti:** F2 (SW kešira kroz ContentRepository → mora postojati čist šav).
-**▶ STATUS (2026-07-04): F3 KREĆE.** Redoslijed cigli = **najsigurnija/najneovisnija prva, najrizičnija zadnja** (kao 2D): **3C → 3B → 3A → 3D → 3E**
+**▶ STATUS (ažurirano 2026-07-06): F3 JEZGRA (3C.1+3B+3A) ✅ DEPLOYANA NA PRODUKCIJU 2026-07-05 (main `868dc9f`); 3D.1+3D.2+3E.1+3E.2 GOTOVI na grani `foundation/f3d` (NIJE deployani, čekaju push+deploy uz potvrdu).** Redoslijed cigli = **najsigurnija/najneovisnija prva, najrizičnija zadnja** (kao 2D): **3C → 3B → 3A → 3D → 3E**
 (NE doc-brojevni A→E). Razlog: 3C je 0-runtime-rizik dev-alat koji gasi baš klasu rizika (BUG-004) izdvojenu na health-checku, i čini 3A/3B sigurnijima (pouzdan bump); SW (3A) = najrizičnija (može zaglaviti stari keš) → zadnja velika.
-- [3C] **Auto version-bump** (`scripts/bump-version.js`) — ✅ **3C.1 GOTOVO (2026-07-04, grana `foundation/f3`; NIJE deployano):** JEDAN broj za cijelu app.
+- [3C] **Auto version-bump** (`scripts/bump-version.js`) — ✅ **3C.1 GOTOVO + ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (s jezgrom F3, main `868dc9f`):** JEDAN broj za cijelu app.
   `npm run bump` = svi `?v=` (~92 mjesta: 5 HTML + styles.css @import + manifest.json) + `CONTENT_VERSION` → novi `YYYYMMDDHHMMSS` timestamp ODJEDNOM
   (nemoguće zaboraviti podskup). `npm run bump:check` = **TVRDI CI gate**: svi tokeni identični, drift = crveno (BUG-004 čuvar). Normalizirano 92 → `20260704162056`.
   **ADR-017** (uniformni token > content-hash; trade-off: deploy busta sve cacheve). Gate: verify/validate/schema/typecheck/export 0, bump:check 0, Playwright smoke 18/0.
   **⬜ 3C.2 (odgođeno):** konzistencijski gate hvata *parcijalni* bump; „zaboravio pokrenuti bump" zatvara **git-diff freshness gate** (promijenjen asset ⇒ token napredovao)
   ILI čišće **auto-bump na Vercel deploy-u** (nula discipline) — prirodno se veže uz 3B build-korak.
-- [3B] **CSS bundling** — ✅ **GOTOVO (2026-07-05, grana `foundation/f3`; NIJE deployano):** 26 `@import` → 1 **`styles.bundle.css`** (`scripts/build-css.js` konkatenira `css/*.css` u @import redoslijedu; `styles.css`=izvor-manifest, ne servira se; `index.html`→bundle). `npm run build:css` + CI drift-gate **`build:css -- --check`** (bundle u sinku, kao data/json). Konkatenacija dokazano sigurna (0 relativnih `url()`/0 ugniježđenih @import/0 @charset). Ostaje no-framework, no-runtime-build (bundle je commitan artefakt). **META (Lighthouse baseline 2026-06-29): perf 66, LCP 6.6s, FCP 4.3s** — render-blocking `@import` waterfall je glavni krivac → ovo ga eliminira; **perf mjeri CI Lighthouse na push/deploy** (cilj perf ≥ 0.9, pa podići `performance` prag 1D.1). *(Minifikacija = moguć follow-up; konkatenacija sama ubija waterfall.)*
-- [3A] **Service Worker** — ✅ **3A.1/3A.2 GOTOVO (2026-07-05, grana `foundation/f3`; NIJE deployano; 3A.3+deploy → FABLE):** „Works offline" postaje ISTINA.
+- [3B] **CSS bundling** — ✅ **GOTOVO + ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (s jezgrom F3, main `868dc9f`):** 26 `@import` → 1 **`styles.bundle.css`** (`scripts/build-css.js` konkatenira `css/*.css` u @import redoslijedu; `styles.css`=izvor-manifest, ne servira se; `index.html`→bundle). `npm run build:css` + CI drift-gate **`build:css -- --check`** (bundle u sinku, kao data/json). Konkatenacija dokazano sigurna (0 relativnih `url()`/0 ugniježđenih @import/0 @charset). Ostaje no-framework, no-runtime-build (bundle je commitan artefakt). **META (Lighthouse baseline 2026-06-29): perf 66, LCP 6.6s, FCP 4.3s** — render-blocking `@import` waterfall je glavni krivac → ovo ga eliminira; **perf mjeri CI Lighthouse na push/deploy** (cilj perf ≥ 0.9, pa podići `performance` prag 1D.1). *(Minifikacija = moguć follow-up; konkatenacija sama ubija waterfall.)*
+- [3A] **Service Worker** — ✅ **3A.1/3A.2/3A.3 GOTOVO + ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (main `868dc9f`; 3A.3+deploy odrađeni na FABLE, ADR-019):** „Works offline" postaje ISTINA.
   `sw.js` konzervativan (same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate; Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch)
   + `js/sw-register.js` (`updateViaCache:'none'`, fail-safe) + `vercel.json` `/sw.js` no-cache + `SW_VERSION` u `npm run bump`. Copy „Works offline" vraćen (hero+i18n+meta). Test `tests/sw.spec.js` (registracija/kontrola + **offline load**).
   **Regresija (SW presretao fetcheve → 4 dual-read pala) popravljena:** globalno `serviceWorkers:'block'` u Playwright configu, SW izoliran u `sw.spec` (`allow`).
