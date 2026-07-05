@@ -38,7 +38,8 @@
     klikove na donje kontrole modala na niskom landscape ekranu (kao posjetitelj koji se vraća).
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
     bez overflowa) + landing footer linkovi na njih.
-  - `a11y.spec.js` — **TVRDI gate (F1 1D):** axe-core, **0 serious/critical** na landing/browse/study/profile (samo iPhone-SE profil, bez 4× šuma).
+  - `a11y.spec.js` — **TVRDI gate (F1 1D + F3 3E):** axe-core, **0 serious/critical** na landing/browse/profile + **study SVE sekcije** (learn/flashcards/quiz/fill/progress). *(3E: „study page" prošireno s petljom po sekcijama — prije samo learn, presrano skenirano → flashcards/quiz/fill/progress bili izvan gate-a i kroz njih su prošli critical button-name/select-name na produkciji. Sad zatvoreno.)* Samo iPhone-SE profil (bez 4× šuma).
+  - `blind-map.spec.js` — F3 3D.1 blind-map WebP karta se stvarno dekodira (naturalWidth>0, dim 1536×1024, `?v=` token, PNG-fallback se ne okida).
   - `layout-guard.spec.js` — **TVRDI gate (F1 1D):** deterministička geometrija, 13 širina × {EN,HR}, CTA `.nav-cta` nikad odrezan (**BUG-015 zaštita**).
   - `content-repo.spec.js` — **ContentRepository (F2 2B.1):** `SokratContent` metapodaci = catalog + `loadLesson` vraća IDENTIČNU referencu kao stari put (dokaz nula-promjene).
   - `monitoring.spec.js` — **SokratMonitor / Sentry (F2 2E):** API, consent-gate (ne učita prije pristanka), nakon pristanka loader ubačen + `init(release)` + greška proslijeđena, nikad ne baca. Sentry loader **stubban preko `page.route`** (offline-deterministički).

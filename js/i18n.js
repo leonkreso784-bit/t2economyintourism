@@ -51,6 +51,8 @@
     'fc.trySelecting': { en: 'Try selecting a different lesson or category.', hr: 'Pokušaj odabrati drugu lekciju ili kategoriju.' },
     'fc.dontKnow': { en: "Don't Know", hr: 'Ne znam' },
     'fc.know': { en: 'Know', hr: 'Znam' },
+    'fc.prev': { en: 'Previous card', hr: 'Prethodna kartica' },   // a11y aria-label (F3 3E)
+    'fc.next': { en: 'Next card', hr: 'Sljedeća kartica' },        // a11y aria-label (F3 3E)
 
     // Zajednički gumbi
     'common.previous': { en: 'Previous', hr: 'Prethodno' },
@@ -66,6 +68,8 @@
     'common.confirm': { en: 'Confirm', hr: 'Potvrdi' },
     // Service Worker update-flow (F3 3A.3) — toast s klik-akcijom
     'sw.updateReady': { en: 'New version is ready — tap to update', hr: 'Nova verzija je spremna — dodirni za nadogradnju' },
+    // a11y (F3 3E) — aria-label za skrolabilne learn tablice
+    'a11y.scrollTable': { en: 'Table — scroll horizontally to see more', hr: 'Tablica — skrolaj vodoravno za više' },
 
     // Quiz
     'quiz.title': { en: 'Quiz Mode', hr: 'Način kviza' },
@@ -322,6 +326,11 @@
     scope.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
       const key = el.getAttribute('data-i18n-placeholder');
       if (key) el.setAttribute('placeholder', t(key));
+    });
+    // a11y (F3 3E): lokaliziraj aria-label za ikone-gumbe bez vidljivog teksta (npr. flashcard prev/next).
+    scope.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+      const key = el.getAttribute('data-i18n-aria');
+      if (key) el.setAttribute('aria-label', t(key));
     });
     document.querySelectorAll('.lang-toggle-label').forEach((el) => { el.textContent = uiLang.toUpperCase(); });
     // auth nav-gumb ima dinamičan tekst (ime / „Sign in") → prepusti njemu da se osvježi

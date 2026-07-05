@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3E.1 — a11y hardening (0 serious/critical axe) + proširen gate — grana `foundation/f3d` (NIJE deployano).**
+  Dubinski axe audit otkrio da je postojeći gate (1D.2) skenirao samo landing/browse/learn/profile → **flashcards/quiz/fill/progress bili IZVAN gate-a** pa su kroz njih prošli **critical** violationi na produkciji.
+  **Popravljeno:** (a) **button-name** flashcard prev/next (samo ikona) → `aria-label` preko novog i18n **`data-i18n-aria`** (`fc.prev`/`fc.next` en/hr), ikone `aria-hidden`; (b) **select-name** quiz 3 selecta → `<label for>`;
+  (c) **color-contrast** (raširen): token **`--danger-text` #f87171** za outline/ghost crveni tekst (`.control-btn.wrong`/`.reset-btn`/`.stat.wrong`); `.fill-category` bijelo→tamni tekst na amberu; `.check-btn`/learn-filter-active/tablica `th` `--primary`(4.22:1)→`--primary-dark`(5.8:1); learn **h3/example-box** `--primary`(3.7:1)→`--primary-light`(5.3:1); learn tip/warning **box-naslovi** → svijetli tekst + obojana ikona;
+  (d) **scrollable-region-focusable** learn tablice → `enhanceLearnTables()` (`tabindex=0`+aria-label, bez `role=`). **Gate PROŠIREN:** `a11y.spec.js` „study page" skenira SVE sekcije. Cache `20260705215529`. Gate: **PUNA Playwright 185/0**, a11y 4/4.
+  ⬜ 3E.2 (moderate, ne blokira): `region` landmarks + `heading-order` (footer).
 - **⚡ FAZA 3 · 3D.2 — render-blocking eliminacija na landingu (async KaTeX + Google Fonts CSS) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
   Landing perf bottleneck = 3 render-blocking eksterna CSS-a u `<head>`. **KaTeX CSS** (neiskorišten na landingu; komentar je LAŽNO tvrdio „ne blokira" — samo JS je bio `defer`, CSS `<link>` je blokirao)
   + **Google Fonts** (`display=swap`) sad **ASINKRONO** (`media="print"` → `onload='this.media=all'`) + **`<noscript>` fallback**. **Font Awesome OSTAJE render-blocking** (async bi bljesnuo ikone kroz app; zaseban zahvat).

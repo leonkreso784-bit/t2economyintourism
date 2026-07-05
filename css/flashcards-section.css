@@ -162,7 +162,7 @@
 
 .control-btn.wrong {
     background: rgba(239, 68, 68, 0.1);
-    color: var(--danger);
+    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 na tamnoj podlozi */
     border: 2px solid var(--danger);
 }
 
@@ -202,4 +202,4 @@
 }
 
 .flashcard-stats .stat.correct { color: var(--success); }
-.flashcard-stats .stat.wrong { color: var(--danger); }
+.flashcard-stats .stat.wrong { color: var(--danger-text); }   /* a11y (F3 3E): kontrast ≥4.5:1 */

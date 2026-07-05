@@ -70,9 +70,25 @@ function renderLearnContent() {
     
     enhanceLearnImages(container);
     cleanupLearnContentForMobile();
+    enhanceLearnTables(container);
 
     // ADR-009: render any LaTeX formulas in the learn HTML (no-op without KaTeX/formulas).
     if (typeof renderMath === 'function') renderMath(container);
+}
+
+// a11y (F3 3E): learn tablice su CSS scroll-kontejneri (overflow-x:auto na uskim ekranima) → moraju
+// biti dohvatljive tipkovnicom (axe „scrollable-region-focusable"; bez toga keyboard-only korisnik ne
+// može skrolati preljev). Mjerenje preljeva pri renderu je nepouzdano (sekcija zna biti skrivena =
+// scrollWidth 0), pa označavamo BEZUVJETNO: `tabindex=0` (fokus/strelice) + aria-label. axe okida
+// pravilo tek kad tablica STVARNO preljeva, ali fokusabilnost je tad već na mjestu. Bez role= (da ne
+// pregazi implicitnu table-semantiku čitača ekrana). Idempotentno.
+function enhanceLearnTables(container) {
+    if (!container) return;
+    const label = (typeof window.t === 'function') ? window.t('a11y.scrollTable') : 'Table — scroll horizontally to see more';
+    container.querySelectorAll('.learn-card-content table').forEach((tbl) => {
+        tbl.setAttribute('tabindex', '0');
+        if (!tbl.hasAttribute('aria-label')) tbl.setAttribute('aria-label', label);
+    });
 }
 
 function enhanceLearnImages(container) {

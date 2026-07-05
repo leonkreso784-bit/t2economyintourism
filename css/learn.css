@@ -121,7 +121,7 @@
 #learn .filter-btn:hover,
 #learn .filter-btn.active {
     border-color: var(--primary);
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
@@ -223,7 +223,7 @@
 /* Headings */
 #learn .learn-card-content h3 {
     font-size: 1.1rem;
-    color: var(--primary);
+    color: var(--primary-light);   /* a11y (F3 3E): --primary tekst na tamnoj kartici je 3.7:1; --primary-light = 5.3:1 (border ostaje --primary, dekorativan) */
     margin: 18px 0 10px 0;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--primary);
@@ -373,9 +373,14 @@
     gap: 6px;
 }
 
-#learn .tip-box h4 { color: var(--secondary); }
-#learn .warning-box h4 { color: var(--danger); }
-#learn .example-box h4 { color: var(--primary); }
+/* a11y (F3 3E): box-naslovi = SVIJETLI tekst (zajamčen kontrast na tintanoj podlozi nad karticom),
+   a boja-signal ostaje kroz OBOJANU IKONU + lijevi rub. Obojan tekst je padao <4.5:1 na tinti nad --bg-tertiary. */
+#learn .tip-box h4,
+#learn .warning-box h4,
+#learn .example-box h4 { color: var(--text-primary); }
+#learn .tip-box h4 i { color: var(--secondary); }
+#learn .warning-box h4 i { color: var(--danger-text); }
+#learn .example-box h4 i { color: var(--primary-light); }
 
 #learn .tip-box p,
 #learn .warning-box p,
@@ -432,7 +437,7 @@
 }
 
 #learn .learn-card-content th {
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     font-weight: 600;
 }
@@ -845,7 +850,7 @@ sokrat-modal.image-modal > * {
 }
 
 [data-theme="dark"] #learn .learn-card-content th {
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): kontrast bijelog teksta ≥4.5:1 */
 }
 
 [data-theme="dark"] #learn .learn-card-content tr:nth-child(even) {

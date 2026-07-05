@@ -22,7 +22,7 @@
 .fill-category {
     display: inline-block;
     background: var(--accent);
-    color: white;
+    color: var(--bg-primary);   /* a11y (F3 3E): tamni tekst na amber pillu — bijelo je bilo 2.1:1 */
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -72,7 +72,7 @@
 .check-btn {
     width: 100%;
     padding: 1rem 1.5rem;
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     border: none;
     border-radius: var(--radius);
@@ -87,7 +87,7 @@
     min-height: var(--touch-target);
 }
 
-.check-btn:hover { background: var(--primary-dark); }
+.check-btn:hover { background: #4338ca; }   /* tamnije od baze (--primary-dark) da hover ostane vidljiv */
 
 .fill-feedback {
     margin-top: 1rem;

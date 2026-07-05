@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 (nastavak 6, OPUS) — ▶ F3 3E.1: a11y hardening (0 serious/critical) + zatvorena rupa u gate-u
+**Kontekst:** 3E = a11y prolaz. Prvo dubinski axe audit (SVI impact-levovi, sve sekcije + legal stranice) da dobijem točnu listu.
+
+**⚠️ KLJUČNI NALAZ (rupa u gate-u):** postojeći a11y gate (1D.2) skenirao je samo landing/browse/**learn**/profile → **flashcards/quiz/fill/progress su bili IZVAN gate-a**.
+Zato su kroz njih **na produkciju prošli critical violationi**: `button-name` (flashcard prev/next = samo ikona, bez imena) + `select-name` (quiz 3 selecta bez povezane labele).
+Uz to je gate skenirao learn **presrano** (`state:'attached'` prije punog renderiranja) → propuštao je raširen **color-contrast** na learn sadržaju (h3/tablice/box-naslovi, svi predmeti).
+
+**Popravljeno (0 serious/critical ostalo, potvrđeno axe-om):**
+- **button-name:** flashcard `#btnPrev`/`#btnNext` → `aria-label`. Novi i18n mehanizam **`data-i18n-aria`** (proširen `applyTranslations`) + ključevi `fc.prev`/`fc.next` (en/hr); ikone dobile `aria-hidden`.
+- **select-name:** quiz `#questionCount`/`#quizCategory`/`#quizDifficulty` → dodani `<label for=…>` (povezana vidljiva labela).
+- **color-contrast (raširen, svi predmeti):** novi token **`--danger-text: #f87171`** (svjetliji crveni za outline/ghost TEKST na tamnom; `--danger` ostaje za fill/border). Primijenjen: `.control-btn.wrong`, `.reset-btn`, `.flashcard-stats .stat.wrong`.
+  `.fill-category` bijelo→**tamni tekst** na amber pillu (bilo 2.1:1). `.check-btn` + learn **filter-active** + tablica **`th`**: bijelo na `--primary` (4.22:1) → `--primary-dark` (5.8:1). Learn **h3** + **example-box h4**: `--primary` tekst (3.7:1) → `--primary-light` (5.3:1). Learn **tip/warning box-naslovi**: obojan tekst → **svijetli tekst + OBOJANA IKONA** (boja-signal ostaje kroz ikonu + lijevi rub; bulletproof kontrast na tintanoj podlozi nad `--bg-tertiary`).
+- **scrollable-region-focusable:** learn tablice (horizontalni preljev na mobitelu) → nova `enhanceLearnTables()` u learn.js: `tabindex=0` + aria-label (`a11y.scrollTable` en/hr), **bez `role=`** (čuva implicitnu table-semantiku). Bezuvjetno označavanje (mjerenje preljeva pri renderu nepouzdano — sekcija zna biti skrivena).
+- **GATE PROŠIREN:** `tests/a11y.spec.js` „study page" test sada u petlji skenira **learn/flashcards/quiz/fill/progress** (prije samo learn, presrano) → rupa zatvorena, regresija nemoguća.
+
+**Testirano:** axe 4/4 (0 serious/critical na svim ekranima) · **PUNA Playwright 185/0** · verify/typecheck/unit/build:css --check/bump:check 0 · vizualni screenshot (izbornik kategorija + landing čisti). Cache `20260705215529`.
+**Vizualna napomena:** box-naslovi (tip/warning) promijenili stil s „obojan tekst" na „svijetli tekst + obojana ikona" — funkcionalno bolje i čitljivije, ali korisnik nek pregleda na preview-u.
+**Deploy:** NIJE. **Slijedi:** 3E.2 (moderate: `region` landmarks + `heading-order` — ne blokiraju gate) → 3C.2 → deploy F3-ostatak. **STOP + check-in po pravilu tempa.**
+
+---
+
 ## 2026-07-05 (nastavak 5, OPUS) — ▶ F3 3D.1 (blind-map → WebP −98%) + 3D.2 (async CDN CSS na landingu)
 **Kontekst:** Opus natrag (Fable odradio 3A.3+deploy). Nastavak F3 = **3D optimizacija slika**, prirodan sljedeći korak (nakon bundling+SW slike su zadnja velika poluga za LCP/perf). Grana `foundation/f3d`.
 

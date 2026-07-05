@@ -11,6 +11,7 @@
     --secondary: #10b981;
     --accent: #f59e0b;
     --danger: #ef4444;
+    --danger-text: #f87171;   /* a11y (F3 3E): svjetliji crveni za TEKST na tamnoj podlozi (outline/ghost gumbi) — #ef4444 tekst pada kontrast <4.5:1; fill/border ostaje --danger */
     --success: #22c55e;
     
     --bg-primary: #0f172a;

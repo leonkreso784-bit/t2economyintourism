@@ -38,16 +38,25 @@ test.describe('a11y — no serious/critical axe violations', () => {
     expect(gated).toEqual([]);
   });
 
-  test('study page', async ({ page }, testInfo) => {
+  // Study page: skeniraj SVE interaktivne sekcije, ne samo learn. (3E: audit je otkrio da su
+  // flashcards/quiz/fill/progress bili IZVAN gate-a → kroz njih su prošli critical button-name/
+  // select-name + serious color-contrast. Ovdje ih zaključavamo da ne regresiraju.)
+  test('study page — sve sekcije (learn/flashcards/quiz/fill/progress)', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
     await page.goto('/');
-    await page.waitForFunction(() => window.navigateTo);
+    await page.waitForFunction(() => window.navigateTo && window.switchSection);
     await page.evaluate(() => window.navigateTo('study', { subject: 'marketing', lesson: 'first-midterm' }));
     await page.waitForSelector('#learn .learn-card', { state: 'attached', timeout: 15000 });
-    const results = await new AxeBuilder({ page }).analyze();
-    const gated = gateViolations(results);
-    if (gated.length) console.log('STUDY violations:', JSON.stringify(gated, null, 2));
-    expect(gated).toEqual([]);
+
+    const all = [];
+    for (const sec of ['learn', 'flashcards', 'quiz', 'fill', 'progress']) {
+      await page.evaluate((s) => window.switchSection(s), sec);
+      await page.waitForTimeout(250);
+      const gated = gateViolations(await new AxeBuilder({ page }).analyze());
+      if (gated.length) console.log(`STUDY/${sec} violations:`, JSON.stringify(gated, null, 2));
+      gated.forEach((g) => all.push({ sec, ...g }));
+    }
+    expect(all).toEqual([]);
   });
 
   test('profile (signed out)', async ({ page }, testInfo) => {

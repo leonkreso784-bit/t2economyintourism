@@ -18,6 +18,7 @@
     --secondary: #10b981;
     --accent: #f59e0b;
     --danger: #ef4444;
+    --danger-text: #f87171;   /* a11y (F3 3E): svjetliji crveni za TEKST na tamnoj podlozi (outline/ghost gumbi) — #ef4444 tekst pada kontrast <4.5:1; fill/border ostaje --danger */
     --success: #22c55e;
     
     --bg-primary: #0f172a;
@@ -3516,7 +3517,7 @@ div.subject-card {
 
 .control-btn.wrong {
     background: rgba(239, 68, 68, 0.1);
-    color: var(--danger);
+    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 na tamnoj podlozi */
     border: 2px solid var(--danger);
 }
 
@@ -3556,7 +3557,7 @@ div.subject-card {
 }
 
 .flashcard-stats .stat.correct { color: var(--success); }
-.flashcard-stats .stat.wrong { color: var(--danger); }
+.flashcard-stats .stat.wrong { color: var(--danger-text); }   /* a11y (F3 3E): kontrast ≥4.5:1 */
 
 /* ==================== css/quiz-section.css ==================== */
 /* =====================================================
@@ -3889,7 +3890,7 @@ div.subject-card {
 .fill-category {
     display: inline-block;
     background: var(--accent);
-    color: white;
+    color: var(--bg-primary);   /* a11y (F3 3E): tamni tekst na amber pillu — bijelo je bilo 2.1:1 */
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -3939,7 +3940,7 @@ div.subject-card {
 .check-btn {
     width: 100%;
     padding: 1rem 1.5rem;
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     border: none;
     border-radius: var(--radius);
@@ -3954,7 +3955,7 @@ div.subject-card {
     min-height: var(--touch-target);
 }
 
-.check-btn:hover { background: var(--primary-dark); }
+.check-btn:hover { background: #4338ca; }   /* tamnije od baze (--primary-dark) da hover ostane vidljiv */
 
 .fill-feedback {
     margin-top: 1rem;
@@ -4161,7 +4162,7 @@ div.subject-card {
     padding: 0.875rem 1.5rem;
     background: transparent;
     border: 2px solid var(--danger);
-    color: var(--danger);
+    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 */
     border-radius: var(--radius);
     font-family: inherit;
     font-weight: 600;
@@ -7598,7 +7599,7 @@ div.subject-card {
 #learn .filter-btn:hover,
 #learn .filter-btn.active {
     border-color: var(--primary);
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
@@ -7700,7 +7701,7 @@ div.subject-card {
 /* Headings */
 #learn .learn-card-content h3 {
     font-size: 1.1rem;
-    color: var(--primary);
+    color: var(--primary-light);   /* a11y (F3 3E): --primary tekst na tamnoj kartici je 3.7:1; --primary-light = 5.3:1 (border ostaje --primary, dekorativan) */
     margin: 18px 0 10px 0;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--primary);
@@ -7850,9 +7851,14 @@ div.subject-card {
     gap: 6px;
 }
 
-#learn .tip-box h4 { color: var(--secondary); }
-#learn .warning-box h4 { color: var(--danger); }
-#learn .example-box h4 { color: var(--primary); }
+/* a11y (F3 3E): box-naslovi = SVIJETLI tekst (zajamčen kontrast na tintanoj podlozi nad karticom),
+   a boja-signal ostaje kroz OBOJANU IKONU + lijevi rub. Obojan tekst je padao <4.5:1 na tinti nad --bg-tertiary. */
+#learn .tip-box h4,
+#learn .warning-box h4,
+#learn .example-box h4 { color: var(--text-primary); }
+#learn .tip-box h4 i { color: var(--secondary); }
+#learn .warning-box h4 i { color: var(--danger-text); }
+#learn .example-box h4 i { color: var(--primary-light); }
 
 #learn .tip-box p,
 #learn .warning-box p,
@@ -7909,7 +7915,7 @@ div.subject-card {
 }
 
 #learn .learn-card-content th {
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
     color: white;
     font-weight: 600;
 }
@@ -8322,7 +8328,7 @@ sokrat-modal.image-modal > * {
 }
 
 [data-theme="dark"] #learn .learn-card-content th {
-    background: var(--primary);
+    background: var(--primary-dark);   /* a11y (F3 3E): kontrast bijelog teksta ≥4.5:1 */
 }
 
 [data-theme="dark"] #learn .learn-card-content tr:nth-child(even) {
