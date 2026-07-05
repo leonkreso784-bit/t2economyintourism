@@ -64,6 +64,8 @@
     'common.wrong': { en: 'Wrong', hr: 'Netočno' },
     'common.cancel': { en: 'Cancel', hr: 'Odustani' },
     'common.confirm': { en: 'Confirm', hr: 'Potvrdi' },
+    // Service Worker update-flow (F3 3A.3) — toast s klik-akcijom
+    'sw.updateReady': { en: 'New version is ready — tap to update', hr: 'Nova verzija je spremna — dodirni za nadogradnju' },
 
     // Quiz
     'quiz.title': { en: 'Quiz Mode', hr: 'Način kviza' },

@@ -14,12 +14,14 @@ let toastTimeout = null;
 // showToast() je sada TANKI delegat — svih ~13 pozivatelja ostaje nepromijenjeno.
 // FALLBACK ispod čuva staro ponašanje ako custom element nije upgrade-an (stari preglednik /
 // skripta nije stigla) → 0 regresije. Logika fallbacka = doslovno prijašnji showToast().
-function showToast(message) {
+// F3 3A.3: opcionalni `opts` ({duration, onClick}) prolazi u komponentu; fallback-put ga ignorira
+// (bez custom elementa nema akcije — toast tada samo pokaže poruku, ništa se ne ruši).
+function showToast(message, opts) {
     const toast = document.getElementById('toast');
 
     // Sretan put: element je upgrade-an u <sokrat-toast> → delegiraj (komponenta posjeduje logiku).
     if (toast && typeof (/** @type {any} */ (toast).show) === 'function') {
-        (/** @type {any} */ (toast)).show(message);
+        (/** @type {any} */ (toast)).show(message, opts);
         return;
     }
 

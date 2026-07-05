@@ -5,6 +5,18 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3A.3 — SW update-flow + Fable-pregled (3 fixa u sw.js) — grana `foundation/f3` (NIJE deployano; deploy F3 čeka izričitu potvrdu). RAĐENO NA FABLE (ADR-019).**
+  **Fable-pregled 3A.1/3A.2 (dvo-modelni sigurnosni sloj) našao+popravio 3 nalaza u `sw.js`:** (1) navigate-handler keširao SVAKI odgovor uklj. 404/500 → mogao pregaziti
+  dobar offline shell → sad kešira samo `res.ok`; (2) `cache.put` bio fire-and-forget (preglednik smije ugasiti SW usred upisa) → sad pod `event.waitUntil` (SWR-put dobio i
+  vanjski `waitUntil(network)` koji drži event živim); (3) precache `/styles.bundle.css` BEZ `?v=` = mrtav cache-ključ (HTML traži verzionirani URL, match ne ignorira query)
+  → sad `'/styles.bundle.css?v=' + SW_VERSION` (ADR-017 jamči poklapanje tokena; prvi posjet sad daje STILIZIRAN offline shell).
+  **Update-flow „nova verzija":** `sw-register.js` prati `reg.waiting` + `updatefound→installed` (uz postojećeg kontrolora = update, ne prva instalacija) → **`<sokrat-toast>`
+  s klik-akcijom** („Nova verzija je spremna — dodirni za nadogradnju"; i18n `sw.updateReady` en/hr; 12 s) → dodir šalje `sw:skipWaiting` → `controllerchange` → **JEDAN reload**
+  (guard-flagovi: reload SAMO uz korisnikov pristanak — prvi install/`clients.claim` NIKAD ne reloada; bez dodira ništa se ne mijenja, novi SW preuzme idućim otvaranjem).
+  **`<sokrat-toast>` aditivno proširen:** `show(msg, {duration, onClick})` — toast s akcijom je dodirljiv/fokusabilan (`tabindex`, Enter/Space), akcija jednokratna;
+  bez opts ponašanje bajt-identično (13 postojećih pozivatelja netaknuto); `showToast()` delegat prosljeđuje opts; `.toast--action{cursor:pointer}` u `css/pages.css`.
+  Testovi: `components.spec.js` toast-akcija + `tests/sw.spec.js` **update-flow e2e** (re-registracija istog SW-a pod drugim URL-om = PRAVI waiting-worker; guard bez
+  spontanog reloada → toast → dodir → reload → nova kontrola). Cache `20260705140655`. Gate: **PUNA Playwright 181/0** (173+8; 15 skipova po dizajnu), typecheck/unit/bump:check/build:css-check 0.
 - **⚡ FAZA 3 · 3A.1/3A.2 — Service Worker (offline app-shell) — grana `foundation/f3` (NIJE deployano; najosjetljivije, čeka potvrdu; 3A.3+deploy → Fable).**
   „Works offline" postaje ISTINA. **`sw.js`** (konzervativan: same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate;
   Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch) + **`js/sw-register.js`** (`updateViaCache:'none'`, fail-safe). `vercel.json` `/sw.js` no-cache;

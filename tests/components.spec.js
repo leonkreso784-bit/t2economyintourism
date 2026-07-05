@@ -50,6 +50,47 @@ test('sokrat-toast: showToast() prikaže poruku (.show + tekst) pa auto-sakrije'
   expect(errors).toEqual([]);
 });
 
+// F3 3A.3 — aditivno proširenje: showToast(msg, {duration, onClick}) = dodirljiv toast s akcijom
+// (konzument: SW update-flow „nova verzija — dodirni za nadogradnju"). Dokazuje: akcija se
+// aktivira klikom (jednokratno, odmah sakrije toast), stanje se očisti, a običan poziv bez
+// opts NE dobiva akciju (natrag-kompatibilnost za ~13 postojećih pozivatelja).
+test('sokrat-toast: klik-akcija (F3 3A.3) — onClick se izvrši, toast se sakrije, stanje očišćeno', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+
+  // Consent unaprijed — fiksni cookie-banner ne smije presresti klik na toast.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+  });
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.showToast === 'function' && !!customElements.get('sokrat-toast'));
+
+  // Toast s akcijom: klasa toast--action + tabindex (dodirljiv/fokusabilan)
+  await page.evaluate(() => {
+    window.__toastClicked = false;
+    window.showToast('Tap me', { duration: 10000, onClick: () => { window.__toastClicked = true; } });
+  });
+  const toast = page.locator('#toast');
+  await expect(toast).toHaveClass(/show/);
+  await expect(toast).toHaveClass(/toast--action/);
+  expect(await page.evaluate(() => document.getElementById('toast').getAttribute('tabindex'))).toBe('0');
+
+  // Klik → akcija izvršena JEDNOM + toast odmah sakriven + akcijsko stanje očišćeno
+  await toast.click();
+  expect(await page.evaluate(() => window.__toastClicked)).toBe(true);
+  await expect(toast).not.toHaveClass(/show/);
+  await expect(toast).not.toHaveClass(/toast--action/);
+  expect(await page.evaluate(() => document.getElementById('toast').getAttribute('tabindex'))).toBe(null);
+
+  // Natrag-kompatibilnost: običan showToast (bez opts) NEMA akciju ni tabindex
+  await page.evaluate(() => window.showToast('Plain'));
+  await expect(toast).toHaveClass(/show/);
+  await expect(toast).not.toHaveClass(/toast--action/);
+  expect(await page.evaluate(() => document.getElementById('toast').getAttribute('tabindex'))).toBe(null);
+
+  expect(errors).toEqual([]);
+});
+
 // ⚠ FOKUS-TESTIRANJE: programatski `.focus()` pozvan iz `page.evaluate(open())` NE hvata u
 // Playwright headlessu (activeElement ostaje <body>, iako `document.hasFocus()===true`) — artefakt
 // evaluate-granice, NE bug (dokazano: isti kod hvata fokus kad open ide kroz pravi user-gesture klik).

@@ -5,6 +5,29 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 (nastavak 3, FABLE) — ✅ F3 3A.3: Fable-pregled SW-a (3 fixa) + update-flow „nova verzija"
+**Kontekst:** prvi rad po **ADR-019** — korisnik prebacio na Fable nakon compacta; Fable = drugi ključ na najrizičnijoj cigli.
+**Fable-pregled 3A.1/3A.2 (svježe oči) našao 3 STVARNA nalaza u `sw.js` — svi popravljeni:**
+1. **Navigate keširao i greške:** `c.put` na svaki odgovor uklj. 404/500 → jedan Vercelov 500 bi pregazio dobar offline shell → sad samo `res.ok`.
+2. **`cache.put` fire-and-forget:** preglednik smije ugasiti SW prije završetka upisa (test je to maskirao s `waitForTimeout(1500)`) → sad pod `event.waitUntil`
+   (+ vanjski `waitUntil(network)` u SWR-putu drži event živim → unutarnji waitUntil legalan i kad je odgovor već otišao iz keša).
+3. **Mrtav precache ključ:** `/styles.bundle.css` bez `?v=` se NIKAD ne pogodi (HTML traži verzionirani URL; match ne ignorira query) → sad
+   `'/styles.bundle.css?v=' + SW_VERSION` — ADR-017 (uniformni token) jamči poklapanje. Dobitak: offline nakon SAMO prvog posjeta = stiliziran shell.
+   (`/manifest.json` je u HTML-u bez tokena → ispravno neverzioniran; provjereno prije izmjene.)
+
+**3A.3 update-flow:** `sw-register.js` → `reg.waiting` na loadu + `updatefound→statechange('installed')` uz postojećeg kontrolora (= update, ne prvi install) →
+**`<sokrat-toast>` s klik-akcijom** („Nova verzija je spremna — dodirni za nadogradnju", i18n `sw.updateReady` en/hr, 12 s) → dodir → `sw:skipWaiting` (hook već postojao) →
+`controllerchange` → **JEDAN reload** (guard: `userAcceptedUpdate` + `reloaded` flagovi — prvi install/`clients.claim` NIKAD ne reloada; bez dodira novi SW čeka iduće otvaranje).
+**`<sokrat-toast>` proširen ADITIVNO:** `show(msg, {duration, onClick})` (dodirljiv + `tabindex`/Enter/Space, jednokratna akcija, čišćenje stanja; bez opts = staro ponašanje,
+13 pozivatelja netaknuto). `showToast(msg, opts)` pass-through; `.toast--action` u `css/pages.css`.
+
+**Testirano:** novi `components.spec` toast-akcija test + novi `sw.spec` **update-flow e2e** (re-registracija istog sw.js pod drugim URL-om = pravi waiting-worker na istom scopeu;
+provjeren i guard „nema spontanog reloada prije dodira") — 44/44 ciljano → **PUNA Playwright 181/0** (173 stara + 8 novih; 15 skipova po dizajnu) · typecheck/unit/verify/bump:check/build:css-check 0.
+Cache `20260705140655` (bump → build:css redoslijed, oba check-a zelena).
+**Deploy:** NIJE. **Slijedi:** push grane → CI (uklj. Lighthouse s bundlingom+SW) → deploy F3 uz izričitu potvrdu → 3C.2/3D/3E.
+
+---
+
 ## 2026-07-05 (nastavak 2) — ▶ F3 3A.1/3A.2: Service Worker (offline app-shell) + strateške odluke
 **Kontekst:** Treća F3 cigla (najrizičnija — SW ostaje u pregledniku korisnika, može „zaglaviti" na stari keš).
 Radi se na grani `foundation/f3`; SW je scope-an na origin → **produkcija netaknuta do merge-a** (izgradnja+test sigurna).

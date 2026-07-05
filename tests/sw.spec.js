@@ -37,3 +37,39 @@ test('app-shell se učita OFFLINE iz keša (SW cache-first fallback)', async ({ 
   await expect(page.locator('.hero-title')).toBeVisible();
   await context.setOffline(false);
 });
+
+// F3 3A.3 — update-flow: novi SW čeka → toast „nova verzija" → dodir → skipWaiting → JEDAN reload.
+// Pravi update simuliramo registracijom ISTOG sw.js pod drugim URL-om (isti scope → browser ga
+// tretira kao novu verziju: installing → installed → waiting, jer stari još kontrolira stranicu).
+// To okida updatefound na ISTOJ registraciji koju sw-register.js prati → cijeli lanac je stvaran.
+test('SW update-flow: toast „nova verzija" → dodir → novi SW preuzme + reload (F3 3A.3)', async ({ page }) => {
+  // Consent unaprijed — fiksni cookie-banner ne smije presresti dodir na toast.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
+  });
+  await page.goto('/index.html');
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  // clients.claim() postavi kontrolora bez reloada — uvjet da update-prompt uopće smije nastati
+  await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 10000 });
+
+  // „Deploy": ista skripta pod novim URL-om = nova verzija SW-a za isti scope
+  await page.evaluate(() => navigator.serviceWorker.register('/sw.js?u=2', { updateViaCache: 'none' }));
+
+  // sw-register.js (updatefound → installed uz postojećeg kontrolora) pokaže dodirljiv toast
+  const toast = page.locator('#toast');
+  await expect(toast).toHaveClass(/show/, { timeout: 15000 });
+  await expect(toast).toHaveClass(/toast--action/);
+
+  // VAŽNO (guard): prije dodira NEMA spontanog reloada — novi SW strpljivo čeka
+  expect(await page.evaluate(() => !!navigator.serviceWorker.controller)).toBe(true);
+
+  // Dodir → sw:skipWaiting → controllerchange → točno jedan reload
+  await Promise.all([
+    page.waitForNavigation({ timeout: 20000 }),
+    toast.click(),
+  ]);
+
+  // Nakon reloada: stranica pod kontrolom SW-a, app-shell normalno radi
+  await page.waitForFunction(() => !!navigator.serviceWorker.controller, null, { timeout: 10000 });
+  await expect(page.locator('#landing-page')).toBeVisible();
+});

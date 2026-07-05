@@ -27,6 +27,11 @@
             this._msg = null;
             /** @type {ReturnType<typeof setTimeout>|null} */
             this._timer = null;
+            // F3 3A.3 (aditivno): opcionalna klik-akcija (npr. „nova verzija — dodirni za nadogradnju").
+            /** @type {((ev: Event) => void)|null} */
+            this._onAction = null;
+            /** @type {((ev: KeyboardEvent) => void)|null} */
+            this._onKey = null;
         }
 
         connectedCallback() {
@@ -49,21 +54,63 @@
 
         /**
          * Prikaži toast s porukom (auto-sakrivanje nakon AUTO_HIDE_MS).
+         * F3 3A.3 (aditivno, natrag-kompatibilno): `opts.duration` = vlastito trajanje (ms);
+         * `opts.onClick` = cijeli toast postane dodirljiv (jednokratna akcija — klik sakrije toast).
+         * Bez opts = ponašanje identično prijašnjem (svi postojeći pozivatelji nepromijenjeni).
          * @param {string} message
+         * @param {{ duration?: number, onClick?: (ev: Event) => void }} [opts]
          */
-        show(message) {
+        show(message, opts) {
+            const o = opts || {};
             if (this._msg) this._msg.textContent = String(message);
 
             if (this._timer) clearTimeout(this._timer);
+            this._clearAction();
+            if (typeof o.onClick === 'function') this._setAction(o.onClick);
 
             this.classList.remove('show');
             void this.offsetWidth; // force reflow → restart CSS tranzicije i kad se toast već prikazuje
             this.classList.add('show');
 
+            const ms = (typeof o.duration === 'number' && o.duration > 0) ? o.duration : AUTO_HIDE_MS;
             this._timer = setTimeout(() => {
                 this.classList.remove('show');
+                this._clearAction();
                 this._timer = null;
-            }, AUTO_HIDE_MS);
+            }, ms);
+        }
+
+        /**
+         * Aktiviraj klik-akciju: toast je dodirljiv (klik/Enter/Space), akcija je jednokratna
+         * i odmah sakrije toast. `role` ostaje `status` (poruka se i dalje najavi čitaču;
+         * tekst poruke sam poziva na dodir), ali `tabindex` omogući fokus tipkovnicom.
+         * @param {(ev: Event) => void} fn
+         */
+        _setAction(fn) {
+            this._onAction = (ev) => {
+                this.classList.remove('show');
+                if (this._timer) { clearTimeout(this._timer); this._timer = null; }
+                this._clearAction();
+                fn(ev);
+            };
+            this._onKey = (ev) => {
+                if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    if (this._onAction) this._onAction(ev);
+                }
+            };
+            this.addEventListener('click', this._onAction);
+            this.addEventListener('keydown', this._onKey);
+            this.classList.add('toast--action');
+            this.setAttribute('tabindex', '0');
+        }
+
+        /** Makni klik-akciju + vrati toast u pasivno (ne-dodirljivo) stanje. Idempotentno. */
+        _clearAction() {
+            if (this._onAction) { this.removeEventListener('click', this._onAction); this._onAction = null; }
+            if (this._onKey) { this.removeEventListener('keydown', this._onKey); this._onKey = null; }
+            this.classList.remove('toast--action');
+            this.removeAttribute('tabindex');
         }
     }
 

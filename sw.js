@@ -16,12 +16,16 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260705025350'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260705140655'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // Minimalni precache: navigacijski shell. Ostalo se kešira runtime-om po verzioniranom URL-u
 // (robusnije od hardkodirane liste — ne mora se održavati u koraku s tokenima).
-const PRECACHE = ['/', '/index.html', '/styles.bundle.css', '/manifest.json'];
+// CSS bundle MORA nositi `?v=` ključ: HTML ga traži kao `styles.bundle.css?v=TOKEN`, a cache-match
+// NE ignorira query → bez tokena bi precache unos bio mrtav (nikad pogođen). ADR-017 jamči da je
+// SW_VERSION identičan tokenu u HTML-u (`npm run bump` postavlja oba; `bump:check` = CI gate).
+// manifest.json se u HTML-u referencira BEZ tokena → ostaje neverzioniran.
+const PRECACHE = ['/', '/index.html', '/styles.bundle.css?v=' + SW_VERSION, '/manifest.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -68,8 +72,11 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+          // Keširaj SAMO uspješan odgovor — 404/500 ne smije pregaziti dobar offline shell.
+          if (res && res.ok) {
+            // waitUntil: preglednik ne smije ugasiti SW prije nego upis u keš završi.
+            event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
+          }
           return res;
         })
         .catch(() => caches.match(req).then((m) => m || caches.match('/index.html')))
@@ -83,12 +90,14 @@ self.addEventListener('fetch', (event) => {
       const network = fetch(req)
         .then((res) => {
           if (res && res.status === 200 && res.type === 'basic') {
-            const copy = res.clone();
-            caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
+            // waitUntil legalan: vanjski waitUntil(networkDone) niže drži event živim do ovog trena.
+            event.waitUntil(caches.open(CACHE).then((c) => c.put(req, res.clone())).catch(() => {}));
           }
           return res;
         })
         .catch(() => cached);
+      // Drži SW živim dok revalidacija (i upis u keš) ne završi — i kad je odgovor već otišao iz keša.
+      event.waitUntil(network.then(() => {}, () => {}));
       return cached || network;
     })
   );

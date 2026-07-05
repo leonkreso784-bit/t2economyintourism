@@ -565,6 +565,11 @@
     flex-shrink: 0;
 }
 
+/* F3 3A.3: toast s klik-akcijom (npr. „nova verzija — dodirni za nadogradnju") */
+.toast--action {
+    cursor: pointer;
+}
+
 /* ===== GLOBAL FOOTER =====
    Bazni stil je nedostajao → copyright se prikazivao kao goli blok lijevo-dolje, gazeći
    sadržaj (BUG-008). Sada: uredan, centriran, suptilan footer u normalnom toku na dnu.

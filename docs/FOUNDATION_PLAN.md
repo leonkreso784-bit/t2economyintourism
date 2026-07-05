@@ -257,7 +257,14 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 - [3A] **Service Worker** — ✅ **3A.1/3A.2 GOTOVO (2026-07-05, grana `foundation/f3`; NIJE deployano; 3A.3+deploy → FABLE):** „Works offline" postaje ISTINA.
   `sw.js` konzervativan (same-origin GET only; **navigacija network-first** + fallback na keširani shell; asseti stale-while-revalidate; Supabase/CDN/non-GET → mreža; NE `skipWaiting`; activate-purge; kill-switch)
   + `js/sw-register.js` (`updateViaCache:'none'`, fail-safe) + `vercel.json` `/sw.js` no-cache + `SW_VERSION` u `npm run bump`. Copy „Works offline" vraćen (hero+i18n+meta). Test `tests/sw.spec.js` (registracija/kontrola + **offline load**).
-  **Regresija (SW presretao fetcheve → 4 dual-read pala) popravljena:** globalno `serviceWorkers:'block'` u Playwright configu, SW izoliran u `sw.spec` (`allow`). Gate: **Playwright 173/0**. **⬜ 3A.3 (SW update-flow „nova verzija dostupna" + finiš) = Fable**, uz deploy F3 (uz potvrdu). *(Najrizičnija cigla → zato Fable = drugi model, sigurnosni sloj.)*
+  **Regresija (SW presretao fetcheve → 4 dual-read pala) popravljena:** globalno `serviceWorkers:'block'` u Playwright configu, SW izoliran u `sw.spec` (`allow`).
+  ✅ **3A.3 GOTOVO (2026-07-05, FABLE po ADR-019):** Fable-pregled 3A.1/3A.2 našao+popravio **3 nalaza u `sw.js`** (navigate keširao i 404/500 → sad samo `res.ok`;
+  `cache.put` bio fire-and-forget → sad pod `event.waitUntil`; precache `/styles.bundle.css` bez `?v=` bio mrtav ključ → sad `?v=SW_VERSION`, ADR-017 jamči poklapanje s HTML-om)
+  + **update-flow „nova verzija":** `sw-register.js` prati `updatefound`/`reg.waiting` → **`<sokrat-toast>` s klik-akcijom** („Nova verzija je spremna — dodirni za nadogradnju",
+  i18n `sw.updateReady` en/hr) → dodir šalje `sw:skipWaiting` → `controllerchange` → JEDAN reload (guard: reload SAMO uz korisnikov pristanak — prvi install/claim NIKAD ne reloada;
+  bez dodira ništa se ne mijenja, novi SW preuzme idućim otvaranjem). `<sokrat-toast>` aditivno proširen: `show(msg, {duration, onClick})` (13 starih pozivatelja netaknuto).
+  Testovi: `components.spec` toast-akcija + `sw.spec` **update-flow e2e** (re-registracija istog SW-a pod drugim URL-om = pravi waiting-worker; toast→dodir→reload→nova kontrola).
+  Gate: **PUNA Playwright 181/0** (173 stara + 8 novih; 15 skipova po dizajnu), typecheck/unit/bump:check/build:css --check 0. Cache `20260705140655`. **⬜ deploy F3 na produkciju = uz izričitu potvrdu.**
 - [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
 - [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
 **Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*
