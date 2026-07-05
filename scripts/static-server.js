@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5050;
 const MIME = {
   '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css',
   '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.ico': 'image/x-icon',
+  '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.ico': 'image/x-icon', '.webp': 'image/webp',
   '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json',
   '.woff': 'font/woff', '.woff2': 'font/woff2'
 };

@@ -176,11 +176,22 @@ function drawBlindMapCanvas() {
     if (!window._blindMapImg) {
         const img = new Image();
         img.crossOrigin = 'anonymous';
+        // F3 3D: WebP je ≈40× manji od PNG-a za ovu kartu (1.52 MB → 39 KB, vizualno identično).
+        // Probaj WebP prvo; na grešci (stari preglednik bez WebP-a / decode fail) padni na PNG.
+        // ?v= token = window.CONTENT_VERSION (runtime, već bumpan) → usklađeno sa SW/cacheom.
+        const ver = (typeof window !== 'undefined' && window.CONTENT_VERSION) ? ('?v=' + window.CONTENT_VERSION) : '';
+        let triedPngFallback = false;
         img.onload = function() {
             window._blindMapImg = img;
             drawBlindMapCanvas();
         };
         img.onerror = function() {
+            if (!triedPngFallback) {
+                triedPngFallback = true;     // WebP nije uspio → PNG fallback
+                img.src = 'blind-map.png' + ver;
+                return;
+            }
+            // I PNG pao → poruka o grešci (isto kao prije).
             ctx.fillStyle = '#0f0d2e';
             ctx.fillRect(0, 0, W, H);
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
@@ -188,7 +199,7 @@ function drawBlindMapCanvas() {
             ctx.textAlign = 'center';
             ctx.fillText('Map could not be loaded', W/2, H/2);
         };
-        img.src = 'blind-map.png';
+        img.src = 'blind-map.webp' + ver;
         ctx.fillStyle = '#0f0d2e';
         ctx.fillRect(0, 0, W, H);
         ctx.fillStyle = 'rgba(255,255,255,0.3)';

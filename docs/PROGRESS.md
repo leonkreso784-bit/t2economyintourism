@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-05 (nastavak 5, OPUS) — ▶ F3 3D.1: blind-map slika PNG → WebP (−98%, 40× manja)
+**Kontekst:** Opus natrag (Fable odradio 3A.3+deploy). Nastavak F3 = **3D optimizacija slika**, prirodan sljedeći korak (nakon bundling+SW slike su zadnja velika poluga za LCP/perf). Grana `foundation/f3d`.
+
+**Izviđanje (mjeri, ne nagađaj):** git-trackane slike → **`blind-map.png` = 1.52 MB** (1536×1024) daleko najveća; ostalo: geo-JPG-ovi 29–204 KB (već razumni), PWA `icon-512` 205 KB, favikoni sitni.
+blind-map se crta na canvas (1000×700) preko `new Image()` → **format transparentan za canvas**, ima već `onerror` fallback. ImageMagick ima WebP (libwebp 1.6.0). Kandidati izmjereni: WebP q80=30KB, **q85=39KB**,
+q90=58KB, 256-color PNG=436KB. **Vizualna provjera q85 (okom, Read slike): identično originalu** — neonska kontura oštra, obala/otoci očuvani, gradijent gladak → q85 je sweet spot.
+
+**Napravljeno (3D.1):**
+- **`blind-map.webp`** (q85, 39 KB) dodan; **`blind-map.png` OSTAJE** kao fallback (~1.5% preglednika bez WebP-a; već trackan → 0 novog bloata).
+- **`js/blind-map.js`:** `img.src='blind-map.webp'+ver` → `onerror` proširen: prvo probaj PNG (`triedPngFallback` flag), tek onda „Map could not be loaded". **Dodan `?v=` token** (`window.CONTENT_VERSION`, runtime;
+  prije `img.src='blind-map.png'` BEZ tokena = nekonzistentno s cacheom/SW-om). Koordinate blind-mapa NEDIRNUTE (ovise o dimenzijama 1536×1024, koje su očuvane).
+- **`scripts/static-server.js`:** `.webp` → `image/webp` MIME (dev-server ispravnost; Vercel prod već servira webp točno).
+- **`tests/blind-map.spec.js`** (novo): navigira na Geography blind-map, čeka STVARNI decode (`_blindMapImg.complete && naturalWidth>0`), tvrdi `currentSrc` sadrži `.webp` + dim 1536×1024 + `?v=` +
+  da PNG-fallback NIJE zatražen. (smoke.spec dotiče sekciju ali filtrira resource-greške → ne bi uhvatio pokvarenu sliku; ovo je pravi regresijski čuvar.)
+
+**Nalaz:** `loading="lazy"` je VEĆ na svim learn slikama (`learn.js:44`); samo **1 inline** geo-slika (`data-geography.js:112`) nema lazy → 3D.3 praktički gotov. Geo-JPG-ovi već razumni. **blind-map ≈ 95% ukupne težine slika → 3D.1 = glavni dobitak faze 3D.**
+**Testirano:** blind-map.spec 4/4 · **PUNA Playwright 185/0** (181+4) · verify 0/0 · typecheck 0 · unit 41/0 · bump:check 0 · build:css --check 0. Cache `20260705161843`.
+**Deploy:** NIJE (grana `foundation/f3d`). **Slijedi (opcionalno, diminishing returns):** 1 inline geo-slika lazy + geo-JPG→WebP + PWA icon-512 → PA 3E (a11y) → 3C.2 → deploy F3-ostatak. **STOP + check-in po pravilu tempa.**
+
+---
+
 ## 2026-07-05 (nastavak 4, FABLE) — 🚀 F3 (3C.1+3B+3A) DEPLOYANO NA PRODUKCIJU + vercel.json incident
 **Deploy (uz izričitu potvrdu korisnika „deploy na produkciju"):** main `c115a5d..868dc9f`. CI zelen na `9581b81`
 (build 11.5 min + Lighthouse budgets 64 s, oba success). Push grane → CI → ff-merge → push main.

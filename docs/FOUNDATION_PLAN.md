@@ -270,7 +270,12 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   **🐛 Deploy-incident:** `"//"` komentar-ključ u `vercel.json` headers-unosu → Vercel schema ERROR **prije builda** (preview `9581b81` i prvi prod-pokušaj `c48fa4e` pali; produkcija ostala
   na starom deployu = fail-safe). GitHub Actions CI to NE hvata (ne validira vercel.json). Fix `868dc9f`. Pouka: provjeri i **Vercel check** na commitu, ne samo Actions; vercel.json bez komentar-ključeva.
   (Usput mergean korisnikov novi osobni README `90ac791` — README njegova verzija u cijelosti.)
-- [3D] **Optimizacija slika** (blind-map png, learn slike) + lazy-loading slika.
+- [3D] **Optimizacija slika** + lazy-loading. ✅ **3D.1 GOTOVO (2026-07-05, grana `foundation/f3d`; NIJE deployano):** `blind-map.png` (1.52 MB, 1536×1024) → **`blind-map.webp` q85 = 39 KB (−98%, 40×)**,
+  vizualno identično (neonska kontura oštra, obalna razvedenost očuvana — provjereno okom). `js/blind-map.js`: probaj WebP → na grešci PNG fallback (postojeći `onerror` prošireni; PNG ostaje u repou za ~1.5%
+  preglednika bez WebP-a) + dodan `?v=` token (`window.CONTENT_VERSION`, prije IZOSTAVLJEN). `static-server.js` dobio `.webp` MIME. Novi `tests/blind-map.spec.js` (WebP se stvarno dekodira, dim. 1536×1024,
+  token prisutan, PNG-fallback se NE okida). Gate: **PUNA Playwright 185/0** (181+4), verify/typecheck/unit/bump:check/build:css --check 0. Cache `20260705161843`.
+  **Nalaz izviđanja:** `loading="lazy"` je VEĆ na svim learn slikama (`learn.js`); geografski JPG-ovi (29–204 KB) već razumni; blind-map je bio ~95% ukupne težine slika → **3D.1 = glavni dobitak**.
+  **⬜ Opcionalni ostatak (diminishing returns):** 1 inline geografska slika bez `lazy` (data-geography.js:112 → re-export JSON); geografski JPG→WebP; PWA `icon-512` (205 KB). **⬜ deploy uz F3 nastavak.**
 - [3E] **a11y prolaz** (tipkovnica/ARIA/kontrast) — pro + SEO; **zadovolji axe-gate (1D.2) na svim ekranima.**
 **Gate:** **Lighthouse TVRDI budžeti (1D.1) prolaze nakon SW/bundling** (perf još veći), offline test (DevTools offline), CI zelen. *(F3 cilj = podići perf/LCP iznad budžeta postavljenih u 1D, ne ih obarati.)*
 

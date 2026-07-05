@@ -5,6 +5,12 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 ### Added
+- **⚡ FAZA 3 · 3D.1 — blind-map slika PNG → WebP (−98%, 40×) — grana `foundation/f3d` (NIJE deployano; čeka F3 nastavak).**
+  `blind-map.png` (**1.52 MB**, 1536×1024) → **`blind-map.webp` q85 = 39 KB** (jedina velika slika u appu; crta se na canvas pa je format transparentan). Vizualno identično (neonska kontura oštra,
+  obalna razvedenost/otoci očuvani). **`js/blind-map.js`:** probaj WebP → na grešci PNG fallback (postojeći `onerror` prošireni; **PNG ostaje u repou** za ~1.5% preglednika bez WebP-a) + dodan `?v=` token
+  (`window.CONTENT_VERSION`; prije IZOSTAVLJEN → nekonzistentno s cacheom). `scripts/static-server.js` dobio `.webp` MIME. Novi **`tests/blind-map.spec.js`** (WebP se stvarno dekodira — smoke.spec filtrira
+  resource-greške pa ne bi uhvatio pokvarenu sliku; dimenzije 1536×1024, token prisutan, PNG-fallback se NE okida). Nalaz izviđanja: `loading="lazy"` VEĆ na svim learn slikama, geo-JPG-ovi već razumni →
+  blind-map ~95% težine slika. Cache `20260705161843`. Gate: **PUNA Playwright 185/0** (181+4), verify/typecheck/unit/bump:check/build:css --check 0.
 - **⚡ FAZA 3 · 3A.3 — SW update-flow + Fable-pregled (3 fixa u sw.js) — ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05 (main `c115a5d..868dc9f` uz izričitu potvrdu; CI zelen `9581b81`; live-verified: token `20260705140655`, `/sw.js` `max-age=0,must-revalidate` + novi kod, bundle immutable, update-flow servira). Time su 3C.1+3B+3A LIVE. RAĐENO NA FABLE (ADR-019).**
   **🐛 Deploy-incident:** `"//"` komentar-ključ u `vercel.json` headers → Vercel schema ERROR prije builda (preview+prvi prod-pokušaj pali; produkcija fail-safe na starom deployu; Actions CI to ne hvata). Fix `868dc9f`. + merge korisnikova novog README-a (`90ac791`, njegova verzija u cijelosti).
   **Fable-pregled 3A.1/3A.2 (dvo-modelni sigurnosni sloj) našao+popravio 3 nalaza u `sw.js`:** (1) navigate-handler keširao SVAKI odgovor uklj. 404/500 → mogao pregaziti
