@@ -129,7 +129,8 @@ body {
 .lessons-page,
 .study-page,
 .about-page,
-.profile-page {
+.profile-page,
+.admin-page {
     display: none;
 }
 
@@ -138,7 +139,8 @@ body {
 .lessons-page.active,
 .study-page.active,
 .about-page.active,
-.profile-page.active {
+.profile-page.active,
+.admin-page.active {
     display: flex;
     flex-direction: column;
 }

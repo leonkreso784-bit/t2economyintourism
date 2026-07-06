@@ -14,7 +14,8 @@ const SokratAdmin = (function () {
   let isAdminCache = false;
 
   async function computeIsAdmin() {
-    const auth = window.SokratAuth;
+    // SokratAuth je top-level `const` (globalni leksički binding), NIJE window property → referenciraj golo (kao profile/cloud-sync).
+    const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
     if (!auth || typeof auth.getClient !== 'function') return false;
     const client = auth.getClient();
     const user = (typeof auth.getUser === 'function') ? auth.getUser() : null;
@@ -46,7 +47,7 @@ const SokratAdmin = (function () {
 
   function init() {
     // Osvježi na svaku promjenu auth-stanja (login/logout/početna sesija iz spremljenog tokena).
-    if (window.SokratAuth && typeof SokratAuth.onChange === 'function') {
+    if (typeof SokratAuth !== 'undefined' && typeof SokratAuth.onChange === 'function') {
       SokratAuth.onChange(function () { refresh(); });
     }
     refresh(); // početno (ako je sesija već prisutna)

@@ -47,6 +47,22 @@ test('.admin-only ostaje SKRIVEN za ne-admina (sigurnosni default)', async ({ pa
   expect(res.bodyHasAdminClass).toBe(false);    // body nije označen kao admin
 });
 
+test('#admin-page je SKRIVEN dok nije aktivan (regresija: ne curi na dno stranice)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('#landing-page.active');
+  const res = await page.evaluate(() => {
+    const ap = document.getElementById('admin-page');
+    return {
+      exists: !!ap,
+      active: ap ? ap.classList.contains('active') : null,
+      display: ap ? getComputedStyle(ap).display : null,
+    };
+  });
+  expect(res.exists).toBe(true);
+  expect(res.active).toBe(false);       // na landingu admin-page NIJE aktivan
+  expect(res.display).toBe('none');     // → mora biti skriven (inače „Admin" curi na dno)
+});
+
 test('F4.3b — admin viewer: navigateTo(admin) renderira picker predmeta → lekcija', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent);
