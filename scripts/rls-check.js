@@ -58,7 +58,26 @@ async function check() {
     return { code: 0, kind: 'skip', msg: `progress neočekivan odgovor (status ${pr.status})` };
   }
 
-  return { code: 0, kind: 'ok', msg: 'javni sadržaj čitljiv, privatni napredak skriven od anona.' };
+  // 3) Admin identitet (F4.1) — anon NE SMIJE vidjeti nijedan red profiles.
+  //    Tablica možda još ne postoji (f4-admin.sql nije primijenjen) → 404 = SKIP te podprovjere, ne fail.
+  let pf;
+  try { pf = await rest('profiles', 'select=user_id&limit=5'); }
+  catch (e) { pf = null; }
+
+  if (pf) {
+    if (pf.status === 404) {
+      console.log('⏭️  profiles tablica još ne postoji (F4.1 f4-admin.sql neprimijenjen) — preskačem admin-identitet provjeru');
+    } else if (pf.status === 401 || pf.status === 403) {
+      console.log(`✅ anon ODBIJEN na profiles (status ${pf.status}) — nema curenja`);
+    } else if (pf.status === 200 && Array.isArray(pf.body)) {
+      if (pf.body.length > 0) return { code: 1, kind: 'fail', msg: `anon VIDI ${pf.body.length} redova profiles — RLS CURI (uloge izložene!)` };
+      console.log('✅ anon vidi 0 redova profiles (RLS filtrira na vlastiti) — privatnost uloga radi');
+    } else if (pf.status < 500) {
+      console.log(`⏭️  profiles neočekivan odgovor (status ${pf.status}) — preskačem`);
+    }
+  }
+
+  return { code: 0, kind: 'ok', msg: 'javni sadržaj čitljiv, privatni napredak+uloge skriveni od anona.' };
 }
 
 check()

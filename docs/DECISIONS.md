@@ -45,6 +45,23 @@ validator provjerava da je indeks u RASPONU, NE je li STVARNO točan. Kriv klju�
 
 ---
 
+## ADR-021 — F4 Admin CRUD: direktni RLS-write, `profiles.role` admin, grubi blob, stupnjeviti flip
+**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik)
+**Kontekst:** F4 = uređivanje sadržaja kroz sučelje bez deploya (custom, ne CMS; ADR-013). Temelj već daje: `subject_content` (public-read, **bez write-policya**),
+auth (email+lozinka), ContentRepository šav (S1), JSON Schema (2A.1), Web Components (S4). Nedostaje: write-path, admin identitet, CRUD UI, export-generator, safety-net.
+Razmatrane opcije za svaku os (write-path / identitet / granularnost / prva cigla) — korisnik izabrao preporučeni put.
+**Odluka:**
+1. **Write-path = direktno preglednik → Supabase pod admin-JWT + admin-only RLS na `subject_content`.** Nula server-koda; po **ADR-016** admin-write pod JWT+RLS **ne treba `service_role`** → smije direktno. (Edge Function / Vercel `/api` odbačeni kao nepotrebna složenost.)
+2. **Admin identitet = `profiles(user_id, role)` tablica**; RLS provjerava `role='admin'` preko SQL `is_admin()`. `role` se mijenja **SAMO preko dashboarda/`service_role`** (klijent se ne može sam promaknuti — nema client update-policya na `role`). UGC-spremno (ADR-018), RLS-testabilno (1E obrazac). (Odbačeno: hardkodiran UID = nije UGC-spremno; `app_metadata` claim = neizravnije.)
+3. **Model podataka = grubi blob** (postojeći `subject_content`: 1 red = 1 window-var = cijeli kolokvij). Edit = read-modify-write `jsonb`. **Read-path netaknut**; verzija = snapshot blob-a (trivijalno). Normalizacija (tablice po kartici) odgođena dok UGC ne zatreba.
+4. **Safety-net od PRVE cigle:** `content_versions` (append-only snapshot na svaki write = **undo + audit „tko/kad"**, 4E.1+4E.2 odmah) + **dry-run diff** prije flipa (4E.3).
+5. **Source-of-truth flip = stupnjeviti**, predmet-po-predmet, **tek nakon čistog dry-run diffa**; dual-read već nosi fallback → reverzibilno. NE „big bang".
+6. **Prva cigla = jedna kartica end-to-end** (najtanji vertikalni rez: uredi→spremi→RLS→verzija→live).
+**Izuzetak:** vježbe ostaju JS moduli (**BUG-012**) — CRUD ih ne dira.
+**Posljedice:** Najjeftiniji/najsigurniji put; nula nove infrastrukture osim 2 tablice; UGC-spreman; poštuje ADR-013/016/018. Detaljan brick-slijed: `docs/CRUD_PLAN.md`. [[foundation-pivot]]
+
+---
+
 ## ADR-017 — Cache-busting: jedan uniformni auto-bumpani token za cijelu aplikaciju (ne per-file content-hash)
 **Datum:** 2026-07-04 · **Status:** ✅ ODLUČENO + 3C.1 IMPLEMENTIRANO (grana `foundation/f3`; F3 3C)
 **Kontekst:** Vercel servira `js`/`css`/`data` s `immutable` cacheom (1 god) → svaka izmjena traži novi `?v=` token, inače je deploy nevidljiv
