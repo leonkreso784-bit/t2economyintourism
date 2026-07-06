@@ -5,6 +5,26 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-06 (OPUS, nastavak) — ▶ FAZA 4 (Admin CRUD) START: F4.1/F4.2/F4.3a/F4.3b + arhitektura predmeta
+**Kontekst:** nakon deploya F3, planiran F4 (Admin CRUD) — odluke fiksirane u **ADR-021** (direktni preglednik→Supabase RLS-write · `profiles.role` admin · grubi blob · stupnjeviti flip · safety-net od prve cigle) + plan `docs/CRUD_PLAN.md`. Sve na grani `foundation/f4`, **lokalno/preview — ništa na produkciju.**
+
+**Odrađeno (cigla po cigla, gate nakon svake):**
+- **F4.1 admin identitet (`5ee749e`):** `supabase/f4-admin.sql` (profiles + auto-provision trigger + `is_admin()` + select-own RLS; role immutable iz klijenta). Primijenjeno na bazu preko MCP-a + **Leon seedan admin** (3 ostala user). `rls-check` proširen (anon 0 profiles), zelen.
+- **F4.2 write-path + verzioniranje (`5242e52`):** `supabase/f4-content-write.sql` (admin-only insert/update/delete RLS na `subject_content` + `content_versions` append-only + BEFORE UPDATE/DELETE snapshot trigger SECURITY DEFINER = undo+audit). **Live-dokazano rollback-transakcijama (produkcija netaknuta, 51 red):** admin piše + verzija/audit; običan korisnik I anon → 0 redova.
+- **Arhitektura predmeta (`1a8647b`): ADR-022 + `docs/CATALOG_ARCHITECTURE.md`** — za HR-ekspanziju (3 smjera FMTU dijele vezne predmete): placement (hijerarhija)≠identitet sadržaja; kanonski id `<fakultet>-<predmet>-<jezik>` ubija koliziju; dijeli-unutar-fakulteta kad je silabus identičan, inače dupliciraj; napredak prati sadržaj; verify-gate čuva invarijante. Implementacija NAKON F4.
+- **F4.3a/b admin UI (`fc655a8`+`28984fe`):** `js/admin.js` (detekcija + `.admin-only` reveal + admin kartica u profilu + `#admin-page` viewer: predmet→lekcija→read-only kartice kroz `SokratContent`).
+
+**🐛 3 buga NAĐENA ŽIVOM ADMIN-PRIJAVOM (login-skripta, Leon) + POPRAVLJENA (`45489f7`+`0bc5e41`):**
+1. `admin.js` koristio `window.SokratAuth` — ali `SokratAuth` je top-level `const` (leksički global, **NIJE window prop**) → `undefined` → admin se NIKAD ne detektira + onChange se ne registrira. Fix: golo `SokratAuth` (kao profile/cloud-sync).
+2. `.admin-page` bez `display:none` default → naslov „Admin" curio na DNO svake stranice („samo admin dole"). Fix: `css/variables.css` hide+active grupe.
+3. Native `<select>` popup bijeli (browser-default, ignorira dark temu) → `color-scheme:dark` + tamni `option`.
+**⚠️ POUKA (ključna za CRUD): Playwright NIJE uhvatio bug #1** — test je provjeravao samo `isAdmin===false` (prolazilo i dok je puknuto). **Prava admin-prijava (login-skripta / preview) je NUŽNA za verifikaciju CRUD-a.** [[live-login-verifies-crud]]
+
+**Verifikacija (živa prijava):** `isAdmin=true`, admin kartica se puno renderira, viewer učita 61 karticu (TE→First Midterm), profil ne curi. Gate: verify/typecheck/bump:check/build:css --check 0, **Playwright 197/0** (+ regresijski `#admin-page` skriven).
+**Stanje:** grana `foundation/f4` (9 commita) pushana = **preview** (`studymaster-git-foundation-f4…vercel.app`), produkcija (`main`) netaknuta. **Slijedi F4.3c** (pravo uređivanje: klik→forma→spremi u `subject_content`→verzija→live re-render).
+
+---
+
 ## 2026-07-06 (OPUS) — 🚀 F3 (performanse) KOMPLETNA: 3D+3E DEPLOYANI NA PRODUKCIJU + F3 zatvorena
 **Kontekst:** nakon compacta, korisnik: „pregledaj i analiziraj sve" → puni health-check (svi gate-ovi zeleni: verify 0/0, validate:schema 54/54, validate:content 0/0, export:json --check 0 drift, typecheck 0, test:unit zeleno, bump:check 94 tokena, build:css --check u sinku, **Playwright 185/0**). Zatim: „deploy pa stani da isplaniramo F4".
 
