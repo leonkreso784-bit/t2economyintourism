@@ -4,6 +4,22 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-022 — Identitet predmeta preko programa i fakulteta: placement ≠ sadržaj, prefiks fakulteta, dijeli-unutar-fakulteta
+**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik) · **Implementacija: NAKON F4** (HR-ekspanzija = sadržajna faza)
+**Kontekst:** Rast ide preko **HR 1. godine za 3 smjera** (Menadžment u Hotelijerstvu / u Turizmu / održivog razvoja), koji **dijele „vezne" predmete**
+(isti kolegij u više smjerova). Kasnije i drugi fakulteti. Korisnik strahuje da baza „pukne" kad se isti predmet pojavi na više mjesta
+(„matematika na drugom fakultetu"). Ovo je i odgovor na #5 (grubi-blob/model podataka): pitanje je zapravo **identitet sadržaja vs mjesto prikaza.**
+**Odluka:**
+1. **Dvije odvojene osi:** **placement** (hijerarhija fakultet→smjer→godina→semestar = GDJE se predmet prikazuje u Browse-u) ≠ **identitet sadržaja** (kartice/kviz/fill/learn = ŠTO predmet nosi). Hijerarhija se NIKAD ne krši — svaki predmet ima eksplicitne koordinate; ali jedan sadržaj može biti postavljen na VIŠE koordinata.
+2. **Kanonski id s prefiksom fakulteta:** `<fakultet>-<predmet>-<jezik>` (npr. `fmtu-matematika-hr`). Različit fakultet → različit id → **fizički nemoguća kolizija.**
+3. **Dijeljenje SAMO unutar istog fakulteta, među smjerovima, i SAMO kad je silabus identičan** (jedan sadržaj, više placement-koordinata → uređuješ jednom). Kad se sadržaj razlikuje → **dupliciraj** (`fmtu-matematika-mor` zasebno). **Preko fakulteta = UVIJEK dupliciraj.**
+4. **Napredak prati identitet sadržaja:** dijeljeni predmet = jedan `storageKey` (naučiš jednom = vrijedi u svim smjerovima); duplicirani = vlastiti `storageKey`.
+5. **`verify-catalog.js` gate čuva invarijante** (jedinstveni id-jevi; predmet u više programa smije SAMO ako mu se sadržaj+storageKey identično razrješavaju) → „da se sijebe" je crveno PRIJE deploya. Ovo je sigurnosna mreža, ne oprez.
+6. **Čist maping na bazu (F4+):** jedan red sadržaja po kanonskom id-u + tablica placementa (predmet → fakultet/smjer/godina/semestar, više redaka za dijeljene). Prezentacijski naziv („Matematika") ostaje ljudski, id je interni.
+**Posljedice:** Zajednička 1.-god jezgra se održava jednom umjesto ×3; nula kolizija preko fakulteta; UGC-/multi-fakultet-spremno. Detaljan model + primjeri + verify-pravila: `docs/CATALOG_ARCHITECTURE.md`. Nadopunjuje ADR-002 (hijerarhija), ADR-003 (catalog izvor istine), ADR-012 (HR klon), ADR-021 (F4). [[hrv-program]] [[content-roadmap-sequencing]]
+
+---
+
 ## ADR-018 — Platforma-first SKROZ do UGC-a prije sadržaja; UGC dizajniran u CRUD ali otključan tek nakon F6
 **Datum:** 2026-07-05 · **Status:** ✅ ODLUČENO (korisnik)
 **Kontekst:** Razmatrali smo dvije stvari: (a) kada se vratiti dodavanju sadržaja, (b) treba li admin CRUD (F4) odmah omogućiti
