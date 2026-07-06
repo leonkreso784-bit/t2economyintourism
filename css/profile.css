@@ -273,8 +273,50 @@
 }
 .admin-card-list { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
 .admin-card {
+    display: flex; align-items: flex-start; gap: 0.6rem;
     border: 1px solid var(--border-color, #334155); border-radius: 10px;
     padding: 0.7rem 0.85rem; background: var(--bg-secondary);
 }
+.admin-card-body { flex: 1 1 auto; min-width: 0; }
 .admin-card-q { font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; white-space: pre-wrap; }
 .admin-card-a { font-size: 0.9rem; color: var(--text-secondary); white-space: pre-wrap; }
+
+/* ===== F4.3c-1 Uredi karticu ===== */
+.admin-edit-btn {
+    flex: 0 0 auto; width: 34px; height: 34px; border-radius: 8px;
+    border: 1px solid var(--border-color, #334155); background: var(--bg-tertiary);
+    color: var(--text-secondary); cursor: pointer; font-size: 0.85rem;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.admin-edit-btn:hover { background: var(--primary-dark, #4338ca); color: #fff; border-color: var(--primary, #6366f1); }
+
+/* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
+.admin-edit .admin-edit__card {
+    position: relative; width: min(92vw, 460px);
+    background: var(--bg-secondary); border: 1px solid var(--border-color, #334155);
+    border-radius: 14px; padding: 1.4rem 1.3rem 1.2rem;
+    box-shadow: 0 18px 50px rgba(2, 6, 23, 0.55);
+}
+.admin-edit__close {
+    position: absolute; top: 0.6rem; right: 0.7rem; width: 32px; height: 32px;
+    border: none; background: transparent; color: var(--text-secondary);
+    font-size: 1.5rem; line-height: 1; cursor: pointer; border-radius: 8px;
+}
+.admin-edit__close:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+.admin-edit__title { margin: 0 0 1rem; font-size: 1.1rem; color: var(--text-primary); }
+.admin-edit__title i { color: var(--primary-light, #818cf8); margin-right: 0.4rem; }
+.admin-edit__field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
+.admin-edit__field span { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
+.admin-edit__input {
+    width: 100%; box-sizing: border-box; resize: vertical;
+    padding: 0.6rem 0.7rem; border-radius: 9px;
+    border: 1px solid var(--border-color, #334155);
+    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    font-family: inherit; font-size: 0.95rem; line-height: 1.4;
+}
+.admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
+.admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
+.admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
+.admin-edit__status.is-error { color: var(--danger-text, #f87171); }
+.admin-edit__actions { display: flex; justify-content: flex-end; gap: 0.6rem; }

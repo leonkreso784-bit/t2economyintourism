@@ -91,3 +91,37 @@ test('F4.3b — admin viewer: navigateTo(admin) renderira picker predmeta → le
   expect(res.lessonEnabled).toBe(true);
   expect(res.lessonOptions).toBeGreaterThan(1); // placeholder + lekcije
 });
+
+test('F4.3c-1 — edit-gumbi (.admin-edit-btn) NISU vidljivi ne-adminu; viewer i dalje renderira kartice', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent && !!window.SokratAdmin);
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); }); // slegni (ne-admin) status
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  // Odaberi prvi predmet, pa prvu NEonemogućenu lekciju → učitaj kartice.
+  await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const opt = sel.querySelector('option[value]:not([value=""])');
+    sel.value = opt.value; sel.dispatchEvent(new Event('change'));
+  });
+  await page.waitForFunction(() => {
+    const l = document.getElementById('adminLessonSel');
+    return l && !l.disabled && !!l.querySelector('option[value]:not([value=""]):not([disabled])');
+  });
+  await page.evaluate(() => {
+    const l = document.getElementById('adminLessonSel');
+    const opt = l.querySelector('option[value]:not([value=""]):not([disabled])');
+    l.value = opt.value; l.dispatchEvent(new Event('change'));
+  });
+  await page.waitForSelector('#adminCards .admin-card', { timeout: 15000 });
+
+  const res = await page.evaluate(() => ({
+    cards: document.querySelectorAll('#adminCards .admin-card').length,
+    editBtns: document.querySelectorAll('#adminCards .admin-edit-btn').length,
+    editModal: !!document.getElementById('adminEditModal'),
+  }));
+  expect(res.cards).toBeGreaterThan(0);   // viewer renderira sadržaj (javno čitanje / JSON fallback)
+  expect(res.editBtns).toBe(0);           // ne-admin NE vidi edit-gumbe (RLS je prava zaštita, ovo je UX)
+  expect(res.editModal).toBe(false);      // modal se ne kreira dok se ne klikne "edit"
+});

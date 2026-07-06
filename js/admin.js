@@ -138,6 +138,7 @@ async function _onAdminLessonChange() {
   const lessonId = document.getElementById('adminLessonSel').value;
   const holder = document.getElementById('adminCards');
   if (!holder) return;
+  _adminCtx = { subjectId: '', lessonId: '', varName: '', data: null }; // reset (F4.3c-1)
   if (!subjectId || !lessonId) { holder.innerHTML = ''; return; }
 
   holder.innerHTML = '<p class="profile-meta">' + _adminT('admin.loading', 'Loading…') + '</p>';
@@ -148,11 +149,15 @@ async function _onAdminLessonChange() {
     holder.innerHTML = '<p class="profile-meta">' + _adminT('admin.loadFail', 'Could not load content.') + '</p>';
     return;
   }
+  // F4.3c-1: zapamti KOJI window-var ovoj lekciji pripada (resolve[lessonId]) — write ide u TAJ red.
+  _adminCtx = { subjectId: subjectId, lessonId: lessonId, varName: _adminResolveVar(subjectId, lessonId) || '', data: data };
   _renderAdminCards(holder, data);
 }
 
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
+  // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
+  const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin());
   let html = '';
   let total = 0;
 
@@ -164,12 +169,18 @@ function _renderAdminCards(holder, data) {
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
       _adminEscape(cat.name || catId) + ' <span class="admin-count">' + cat.flashcards.length + '</span></h3>' +
       '  <ol class="admin-card-list">';
-    cat.flashcards.forEach(function (fc) {
+    cat.flashcards.forEach(function (fc, i) {
       total++;
       html +=
         '<li class="admin-card">' +
-        '  <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
-        '  <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
+        '  <div class="admin-card-body">' +
+        '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
+        '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
+        '  </div>' +
+        (canEdit
+          ? '  <button type="button" class="admin-edit-btn" data-admin-edit data-cat="' + _adminEscape(catId) +
+            '" data-idx="' + i + '" aria-label="' + _adminT('admin.edit', 'Edit') + '"><i class="fas fa-pen"></i></button>'
+          : '') +
         '</li>';
     });
     html += '  </ol></div>';
@@ -181,3 +192,173 @@ function _renderAdminCards(holder, data) {
 }
 
 window.renderAdminPage = renderAdminPage;
+
+// ===== F4.3c-1 — Uredi JEDNU karticu: write JEDNOG reda + auto-verzija + live re-render =====
+//
+// Najtanji dokaz cijelog write-pipelinea. Piše SAMO red koji ovoj lekciji pripada
+// (catalog.resolve[lessonId], npr. te2M1). ⚠ Final (…Final) je Object.assign KOPIJA M1+M2 →
+// u ovoj cigli NAMJERNO ostaje nesinkroniziran; propagacija u sestrinske redove je F4.3c-2.
+// Sve reverzibilno: RLS is_admin() dopušta write, a trigger snapshota STARI payload u
+// content_versions PRIJE prepisa (F4.2) → undo + audit. Prava zaštita je RLS, ne UI.
+
+/** Kontekst trenutno otvorene lekcije u vieweru (write ide u _adminCtx.varName). */
+let _adminCtx = { subjectId: '', lessonId: '', varName: '', data: null };
+/** Kartica koja se uređuje: { catId, idx }. */
+let _editTarget = null;
+
+/** lessonId → window-var (koji red u subject_content). */
+function _adminResolveVar(subjectId, lessonId) {
+  return (typeof SokratCatalog !== 'undefined' && typeof SokratCatalog.resolveDataVar === 'function')
+    ? SokratCatalog.resolveDataVar(subjectId, lessonId) : null;
+}
+
+/** Kreiraj (jednom) edit-modal singleton na <sokrat-modal> primitivu. */
+function _ensureEditModal() {
+  let m = document.getElementById('adminEditModal');
+  if (m) return m;
+  m = document.createElement('sokrat-modal');
+  m.id = 'adminEditModal';
+  m.className = 'admin-edit';
+  m.setAttribute('aria-labelledby', 'adminEditTitle');
+  m.innerHTML =
+    '<div class="admin-edit__card">' +
+    '  <button type="button" class="admin-edit__close" data-admin-edit-close aria-label="Close">&times;</button>' +
+    '  <h3 id="adminEditTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editCard', 'Edit flashcard') + '</h3>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.question', 'Question') + '</span>' +
+    '    <textarea id="adminEditQ" class="admin-edit__input" rows="3"></textarea></label>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
+    '    <textarea id="adminEditA" class="admin-edit__input" rows="4"></textarea></label>' +
+    '  <p class="admin-edit__note" id="adminEditNote"></p>' +
+    '  <p class="admin-edit__status" id="adminEditStatus" hidden></p>' +
+    '  <div class="admin-edit__actions">' +
+    '    <button type="button" class="cta-button secondary" data-admin-edit-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminEditSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
+    '  </div>' +
+    '</div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function (e) {
+    if (e.target.closest('[data-admin-edit-close]')) _closeEditor();
+  });
+  const saveBtn = document.getElementById('adminEditSave');
+  if (saveBtn) saveBtn.addEventListener('click', _saveCard);
+  return m;
+}
+
+function _editStatus(msg, isErr) {
+  const el = document.getElementById('adminEditStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.hidden = !msg;
+  el.classList.toggle('is-error', !!isErr);
+}
+
+function _closeEditor() {
+  const m = document.getElementById('adminEditModal');
+  if (m && typeof m.close === 'function') m.close();
+}
+
+/** Otvori editor za karticu (catId, idx) iz trenutnog konteksta. */
+function _openCardEditor(catId, idx) {
+  const data = _adminCtx.data;
+  const cat = data && data[catId];
+  const fc = (cat && Array.isArray(cat.flashcards)) ? cat.flashcards[idx] : null;
+  if (!fc) return;
+  _editTarget = { catId: catId, idx: idx };
+  _ensureEditModal();
+  document.getElementById('adminEditQ').value = fc.question || '';
+  document.getElementById('adminEditA').value = fc.answer || '';
+  const note = document.getElementById('adminEditNote');
+  if (note) {
+    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
+      _adminT('admin.finalNote', 'saves this lesson only (final not synced in this step).');
+  }
+  _editStatus('', false);
+  const m = document.getElementById('adminEditModal');
+  if (m && typeof m.open === 'function') m.open();
+}
+
+/** Zakrpaj in-memory objekt(e) da se promjena vidi bez reloada (isti ref koji study/viewer čitaju). */
+function _patchInMemory(varName, catId, idx, q, a) {
+  const patch = function (obj) {
+    if (obj && obj[catId] && Array.isArray(obj[catId].flashcards) && obj[catId].flashcards[idx]) {
+      obj[catId].flashcards[idx].question = q;
+      obj[catId].flashcards[idx].answer = a;
+    }
+  };
+  if (typeof window !== 'undefined') patch(window[varName]); // study čita window[var]
+  patch(_adminCtx.data);                                     // viewer re-render izvor (isti ref za midterm)
+}
+
+/** Spremi uređenu karticu: read-modify-write JEDNOG reda pod admin JWT-om (RLS). */
+async function _saveCard() {
+  const qEl = document.getElementById('adminEditQ');
+  const aEl = document.getElementById('adminEditA');
+  const saveBtn = document.getElementById('adminEditSave');
+  if (!qEl || !aEl || !_editTarget) return;
+
+  const q = qEl.value.trim();
+  const a = aEl.value.trim();
+  if (!q || !a) { _editStatus(_adminT('admin.emptyErr', 'Question and answer must not be empty.'), true); return; }
+
+  const subjectId = _adminCtx.subjectId;
+  const varName = _adminCtx.varName;
+  const catId = _editTarget.catId;
+  const idx = _editTarget.idx;
+  if (!subjectId || !varName) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  if (saveBtn) saveBtn.disabled = true;
+  _editStatus(_adminT('admin.saving', 'Saving…'), false);
+  try {
+    // 1) SVJEŽI autoritativni payload iz baze (read-modify-write; ne pišemo preko stale/JSON-fallbacka).
+    const sel = await client.from('subject_content').select('payload')
+      .eq('subject_id', subjectId).eq('var_name', varName).single();
+    if (sel.error || !sel.data || !sel.data.payload) {
+      _editStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    const payload = sel.data.payload;
+    const target = (payload[catId] && Array.isArray(payload[catId].flashcards)) ? payload[catId].flashcards[idx] : null;
+    if (!target) {
+      _editStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    target.question = q;
+    target.answer = a;
+
+    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
+    const upd = await client.from('subject_content').update({ payload: payload })
+      .eq('subject_id', subjectId).eq('var_name', varName);
+    if (upd.error) {
+      _editStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+
+    // 3) In-memory patch → live promjena bez reloada. Final NAMJERNO nedirnut (F4.3c-2).
+    _patchInMemory(varName, catId, idx, q, a);
+
+    if (saveBtn) saveBtn.disabled = false;
+    _closeEditor();
+    if (typeof showToast === 'function') showToast(_adminT('admin.saveOk', 'Flashcard saved.'));
+    const holder = document.getElementById('adminCards');
+    if (holder) _renderAdminCards(holder, _adminCtx.data);
+  } catch (e) {
+    _editStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+    if (saveBtn) saveBtn.disabled = false;
+  }
+}
+
+// Delegat: klik na edit-gumb kartice → otvori editor.
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest('[data-admin-edit]');
+  if (!btn) return;
+  const catId = btn.getAttribute('data-cat');
+  const idx = parseInt(btn.getAttribute('data-idx'), 10);
+  if (catId && !isNaN(idx)) _openCardEditor(catId, idx);
+});
