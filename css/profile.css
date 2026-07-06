@@ -262,6 +262,9 @@
 .admin-pickers { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
 .admin-field { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 220px; }
 .admin-field span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+/* Native <select> popup poštuje dark temu (inače bijeli browser-default popup) */
+.admin-field select { color-scheme: dark; }
+.admin-field select option { background: var(--bg-secondary); color: var(--text-primary); }
 .admin-cat { margin-top: 1rem; }
 .admin-count {
     display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem;
