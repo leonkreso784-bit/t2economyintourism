@@ -24,7 +24,8 @@ Autor (kasnije i studenti — UGC nakon F6) uređuje predmete/lekcije/kategorije
 
 ## 3. Brick-slijed
 
-### ▸ F4.1 — Admin identitet (schema + RLS, BEZ UI-ja)  ◀ PRVA
+### ▸ F4.1 — Admin identitet (schema + RLS, BEZ UI-ja)  ✅ GOTOVO + VERIFICIRANO (2026-07-06)
+*Primijenjeno na bazu (`f4-admin.sql`), Leon seedan `role='admin'` (3 ostala `user`), `rls-check` zelen (anon vidi 0 `profiles`). Commit `5ee749e`.*
 **Ugovor:** baza zna „tko je admin"; klijent to može PROČITATI, ali NE promijeniti.
 - `supabase/f4-admin.sql` (idempotentno, additivno na `schema.sql`):
   - `profiles(user_id uuid pk → auth.users on delete cascade, role text not null default 'user', created_at)`.
@@ -36,7 +37,8 @@ Autor (kasnije i studenti — UGC nakon F6) uređuje predmete/lekcije/kategorije
 - **Gate:** RLS-test zelen (nakon primjene SQL-a), frontend NETAKNUT.
 - **Handoff:** korisnik primijeni `f4-admin.sql` u Supabase dashboardu + seed → onda verify.
 
-### ▸ F4.2 — Write-path + verzioniranje (schema + RLS, BEZ UI-ja)
+### ▸ F4.2 — Write-path + verzioniranje (schema + RLS, BEZ UI-ja)  ✅ GOTOVO + VERIFICIRANO (2026-07-06)
+*Primijenjeno (`f4-content-write.sql`, migracija `f4_content_write_and_versioning`). Live-dokazano (rollback-transakcije, produkcija netaknuta = 51 red): admin UPDATE prolazi + `content_versions` snapshot (op=UPDATE, edited_by=admin, payload snapshotiran); običan korisnik I anon → 0 redova. `rls-check` proširen (anon vidi 0 `content_versions`), zelen.*
 - Admin-write RLS na `subject_content`: `for insert/update using (is_admin()) with check (is_admin())`.
 - `content_versions(id, subject_id, var_name, payload jsonb, edited_by, edited_at)` — **append-only snapshot na svaki write** (undo + audit). RLS: admin read (`is_admin()`), insert dozvoljen adminu.
 - Snapshot mehanizam: trigger na `subject_content` UPDATE (spremi STARI red u `content_versions` prije prepisa) — atomično, ne ovisi o klijentu.

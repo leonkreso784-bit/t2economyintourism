@@ -77,7 +77,26 @@ async function check() {
     }
   }
 
-  return { code: 0, kind: 'ok', msg: 'javni sadržaj čitljiv, privatni napredak+uloge skriveni od anona.' };
+  // 4) Verzije sadržaja (F4.2) — anon NE SMIJE vidjeti content_versions (admin-only read).
+  //    Tablica možda još ne postoji (f4-content-write.sql neprimijenjen) → 404 = SKIP, ne fail.
+  let cv;
+  try { cv = await rest('content_versions', 'select=id&limit=5'); }
+  catch (e) { cv = null; }
+
+  if (cv) {
+    if (cv.status === 404) {
+      console.log('⏭️  content_versions tablica još ne postoji (F4.2 neprimijenjen) — preskačem provjeru povijesti');
+    } else if (cv.status === 401 || cv.status === 403) {
+      console.log(`✅ anon ODBIJEN na content_versions (status ${cv.status}) — povijest skrivena`);
+    } else if (cv.status === 200 && Array.isArray(cv.body)) {
+      if (cv.body.length > 0) return { code: 1, kind: 'fail', msg: `anon VIDI ${cv.body.length} redova content_versions — RLS CURI (povijest izmjena izložena!)` };
+      console.log('✅ anon vidi 0 redova content_versions (admin-only read) — povijest skrivena');
+    } else if (cv.status < 500) {
+      console.log(`⏭️  content_versions neočekivan odgovor (status ${cv.status}) — preskačem`);
+    }
+  }
+
+  return { code: 0, kind: 'ok', msg: 'javni sadržaj čitljiv; napredak, uloge i povijest izmjena skriveni od anona.' };
 }
 
 check()
