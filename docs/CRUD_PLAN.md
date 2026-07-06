@@ -45,7 +45,10 @@ Autor (kasnije i studenti — UGC nakon F6) uređuje predmete/lekcije/kategorije
 - **Test:** dokaz da admin piše + verzija se zapiše; ne-admin (anon/običan user) odbijen (401/403).
 - **Gate:** write-path + versioning dokazani; read-path i dalje netaknut.
 
-### ▸ F4.3 — PRVA UI CIGLA: uredi jednu karticu end-to-end
+### ▸ F4.3 — PRVA UI CIGLA: uredi jednu karticu end-to-end  *(podijeljeno na a/b/c zbog rizika)*
+- **✅ F4.3a GOTOVO (2026-07-06, `fc655a8`):** `js/admin.js` → `SokratAdmin.isAdmin()` (Supabase RPC `is_admin()` pod JWT-om, kеširano, osvježava se na auth-promjenu) + `.admin-only` reveal-plumbing (inline display; RLS je prava zaštita, ovo je UX) + skrivena **admin kartica u profilu** (`data-admin-open-editor` → placeholder toast) + i18n `admin.*` (en/hr). Test `tests/admin.spec.js` (modul postoji; `.admin-only` skriven za ne-admina). Gate: verify/typecheck/bump:check 0, Playwright 52/0. Cache `20260706035324`.
+- **⬜ F4.3b (sljedeće):** admin otvara predmet → lista flashcards (read-only iz `SokratContent`) → odabir kartice.
+- **⬜ F4.3c:** edit front/back u `<sokrat-modal>` formi → JSON Schema validacija → spremi (read-modify-write blob, RLS write) → verzija (auto trigger) → toast → live re-read.
 - Skriveni admin ulaz (gate na `is_admin()`; nevidljiv ne-adminu).
 - Tok: `SokratContent.loadLesson` → renderiraj flashcards → odaberi 1 → uredi front/back u `<sokrat-modal>` formi → **validacija kroz JSON Schema** → spremi (read-modify-write grubog blob-a pod RLS) → verzija → `<sokrat-toast>` → live re-read dokaže promjenu.
 - **Test:** Playwright e2e (admin uredi karticu, vidi promjenu; ne-admin ne može ući). Novi `tests/admin.spec.js`.
