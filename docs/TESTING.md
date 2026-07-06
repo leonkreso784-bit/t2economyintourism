@@ -38,6 +38,9 @@
     klikove na donje kontrole modala na niskom landscape ekranu (kao posjetitelj koji se vraća).
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
     bez overflowa) + landing footer linkovi na njih.
+  - `admin.spec.js` (F4): `SokratAdmin` postoji + bez sesije `isAdmin()=false`; `.admin-only` skriven za ne-admina;
+    **`#admin-page` skriven na landingu (regresija BUG-018 „Admin curi na dno")**; F4.3b viewer — `navigateTo('admin')` renderira picker predmeta→lekcija.
+    **⚠️ Pozitivan admin-put (admin VIDI/piše) Playwright NE može testirati (nema Supabase login) → provjerava se PRAVOM prijavom** (login-skripta/preview). [[live-login-verifies-crud]]
   - `a11y.spec.js` — **TVRDI gate (F1 1D + F3 3E):** axe-core, **0 serious/critical** na landing/browse/profile + **study SVE sekcije** (learn/flashcards/quiz/fill/progress). *(3E: „study page" prošireno s petljom po sekcijama — prije samo learn, presrano skenirano → flashcards/quiz/fill/progress bili izvan gate-a i kroz njih su prošli critical button-name/select-name na produkciji. Sad zatvoreno.)* Samo iPhone-SE profil (bez 4× šuma).
   - `blind-map.spec.js` — F3 3D.1 blind-map WebP karta se stvarno dekodira (naturalWidth>0, dim 1536×1024, `?v=` token, PNG-fallback se ne okida).
   - `layout-guard.spec.js` — **TVRDI gate (F1 1D):** deterministička geometrija, 13 širina × {EN,HR}, CTA `.nav-cta` nikad odrezan (**BUG-015 zaštita**).

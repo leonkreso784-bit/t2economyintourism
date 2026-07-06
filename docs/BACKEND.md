@@ -77,6 +77,14 @@ s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigu
 JSON preuzima prije `.js`. `.json` su generirani export (`npm run export:json`) — **nakon izmjene `.js` migriranog
 predmeta obavezan i re-export I `migrate-content.js` re-sync** (dva zrcala istog izvora). Vježbe i dalje SAMO `.js` (BUG-012).
 
+**🆕 F4 Admin CRUD — write-path + identitet (▶ U TIJEKU, grana `foundation/f4` = PREVIEW; ADR-021/ADR-022):**
+uređivanje sadržaja kroz sučelje, **direktno preglednik→Supabase pod admin-JWT-om + RLS** (bez server-koda; ADR-016 — admin-write ne treba `service_role`). Nove tablice (SQL u `supabase/f4-admin.sql` + `supabase/f4-content-write.sql`, primijenjeno preko MCP-a):
+- **`public.profiles`** (`user_id → auth.users`, `role text default 'user'`, `created_at`) — tko je admin. `handle_new_user` trigger auto-provisionira red na svaki novi `auth.users`; **select-own RLS** (korisnik čita svoj profil; NEMA client write → `role` immutable, mijenja se samo dashboard/service_role). Helper **`public.is_admin()`** (SECURITY DEFINER) = reusable u RLS policyjima. Leon seedan `role='admin'`.
+- **`subject_content` write RLS:** admin-only `insert/update/delete` (`using (is_admin())`); public SELECT ostaje. → samo admin piše sadržaj, izravno iz preglednika.
+- **`public.content_versions`** (`id, subject_id, var_name, payload jsonb, op, edited_by, edited_at`) — **append-only povijest**. BEFORE UPDATE/DELETE trigger na `subject_content` (SECURITY DEFINER) snapshota STARI red = **undo + audit „tko/kad"** od prve izmjene (4E). Admin-only read RLS.
+- **Frontend:** `js/admin.js` (`SokratAdmin.isAdmin()` = `client.rpc('is_admin')`) + `#admin-page` viewer. Write (F4.3c) = read-modify-write `payload` blob pod admin-JWT-om. **⚠️ `SokratAuth`/`SokratCatalog` su top-level `const` (leksički globali, NE `window` props) → referenciraj golo** ([[live-login-verifies-crud]]).
+- **Datoteke ostaju izvor istine dok F4.6 ne flipne autoritet** (predmet-po-predmet, nakon dry-run diffa). `rls-check.js` čuva 4 invarijante (anon ne vidi progress/profiles/content_versions).
+
 ## Arhitektura
 ```
 Frontend (statički, vanilla JS, fetch)
