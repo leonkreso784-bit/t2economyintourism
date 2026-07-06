@@ -26,6 +26,12 @@
     'nav.map': { en: 'Map', hr: 'Karta' },
     'nav.exercises': { en: 'Exercises', hr: 'Vježbe' },
 
+    // Admin (F4 CRUD) — vidljivo samo adminu
+    'admin.title': { en: 'Admin', hr: 'Admin' },
+    'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
+    'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
+    'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
+
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },
     'home.subtitle': { en: 'Your interactive study guide', hr: 'Tvoj interaktivni vodič za učenje' },

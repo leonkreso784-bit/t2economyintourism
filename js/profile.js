@@ -60,6 +60,15 @@ function renderProfilePage() {
         '    </form>' +
         '  </div>' +
 
+        // Admin (F4) — renderira se skriveno; SokratAdmin.refresh() ga otkrije samo adminu.
+        '  <div class="profile-card profile-card--wide admin-only" style="display:none">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-user-shield"></i> ' + pt('admin.title', 'Admin') + '</h3>' +
+        '    <p class="profile-meta">' + pt('admin.desc', 'Edit study content directly. Every change is versioned and can be undone.') + '</p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="cta-button secondary" data-admin-open-editor><i class="fas fa-pen-to-square"></i><span>' + pt('admin.editContent', 'Edit content') + '</span></button>' +
+        '    </div>' +
+        '  </div>' +
+
         '  <div class="profile-card">' +
         '    <h3 class="profile-card-title"><i class="fas fa-cloud"></i> ' + pt('profile.cloudSync', 'Cloud sync') + '</h3>' +
         '    <p class="profile-meta" id="profileSyncStatus">' + pt('profile.syncAuto', 'Your progress is backed up automatically while you study.') + '</p>' +
@@ -86,6 +95,8 @@ function renderProfilePage() {
         '</div>';
 
     renderProfileStats();
+    // Otkrij admin karticu samo adminu (RLS je prava zaštita; ovo je UX). Async re-check.
+    if (window.SokratAdmin) SokratAdmin.refresh();
 
     document.getElementById('profileSignOutBtn').addEventListener('click', function () {
         SokratAuth.signOut();
