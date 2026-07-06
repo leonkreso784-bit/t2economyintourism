@@ -54,9 +54,10 @@ function navigateTo(page, data = {}) {
         profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
     }
     AppState.nav.page = page;
-    if (page !== 'profile') saveCurrentPosition(page, data);
+    // Profile i Admin se NE spremaju kao "last position" (ovise o auth sesiji / admin statusu koji na reloadu još nisu spremni).
+    if (page !== 'profile' && page !== 'admin') saveCurrentPosition(page, data);
 
-    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page').forEach(p => {
+    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page, .admin-page').forEach(p => {
         p.classList.remove('active');
     });
 
@@ -95,6 +96,12 @@ function navigateTo(page, data = {}) {
         case 'profile':
             if (typeof renderProfilePage === 'function') renderProfilePage();
             document.getElementById('profile-page').classList.add('active');
+            break;
+        case 'admin':
+            // F4.3b: read-only content viewer. Ulaz je admin-only (skriveni gumb); write (F4.3c) je RLS-zaštićen.
+            if (typeof renderAdminPage === 'function') renderAdminPage();
+            document.getElementById('admin-page').classList.add('active');
+            closeSidebar();
             break;
     }
 

@@ -46,3 +46,32 @@ test('.admin-only ostaje SKRIVEN za ne-admina (sigurnosni default)', async ({ pa
   expect(res.computedDisplay).toBe('none');
   expect(res.bodyHasAdminClass).toBe(false);    // body nije označen kao admin
 });
+
+test('F4.3b — admin viewer: navigateTo(admin) renderira picker predmeta → lekcija', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent);
+
+  // Sadržaj je javan → viewer se renderira i bez admin-sesije (ulaz je admin-only, write je RLS-zaštićen).
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  const subjectCount = await page.evaluate(() => document.querySelectorAll('#adminSubjectSel option').length);
+  expect(subjectCount).toBeGreaterThan(1); // placeholder + stvarni predmeti iz catalog-a
+
+  // Odabir predmeta → lekcije se popune i select se otključa.
+  const res = await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const opt = sel.querySelector('option[value]:not([value=""])');
+    sel.value = opt.value;
+    sel.dispatchEvent(new Event('change'));
+    const lessonSel = document.getElementById('adminLessonSel');
+    return {
+      subjectPicked: sel.value !== '',
+      lessonEnabled: !lessonSel.disabled,
+      lessonOptions: lessonSel.querySelectorAll('option').length,
+    };
+  });
+  expect(res.subjectPicked).toBe(true);
+  expect(res.lessonEnabled).toBe(true);
+  expect(res.lessonOptions).toBeGreaterThan(1); // placeholder + lekcije
+});

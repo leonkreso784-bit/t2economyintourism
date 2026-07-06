@@ -257,3 +257,21 @@
     .profile-content { padding: 1rem; }
     .profile-stat-vals { gap: 0.7rem; }
 }
+
+/* ===== F4 Admin editor (read-only viewer, F4.3b) ===== */
+.admin-pickers { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.75rem; }
+.admin-field { display: flex; flex-direction: column; gap: 0.35rem; flex: 1 1 220px; }
+.admin-field span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 600; }
+.admin-cat { margin-top: 1rem; }
+.admin-count {
+    display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem;
+    font-size: 0.75rem; border-radius: 999px;
+    background: var(--bg-tertiary); color: var(--text-secondary);
+}
+.admin-card-list { list-style: none; margin: 0.75rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+.admin-card {
+    border: 1px solid var(--border-color, #334155); border-radius: 10px;
+    padding: 0.7rem 0.85rem; background: var(--bg-secondary);
+}
+.admin-card-q { font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; white-space: pre-wrap; }
+.admin-card-a { font-size: 0.9rem; color: var(--text-secondary); white-space: pre-wrap; }

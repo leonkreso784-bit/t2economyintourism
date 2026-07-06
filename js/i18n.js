@@ -31,6 +31,14 @@
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
+    'admin.viewerNote': { en: 'Read-only content viewer. Editing arrives in the next step.', hr: 'Pregled sadržaja (samo čitanje). Uređivanje stiže u sljedećem koraku.' },
+    'admin.subject': { en: 'Subject', hr: 'Predmet' },
+    'admin.lesson': { en: 'Lesson', hr: 'Lekcija' },
+    'admin.selectSubject': { en: '— select subject —', hr: '— odaberi predmet —' },
+    'admin.selectLesson': { en: '— select lesson —', hr: '— odaberi lekciju —' },
+    'admin.loading': { en: 'Loading…', hr: 'Učitavanje…' },
+    'admin.loadFail': { en: 'Could not load content.', hr: 'Nije moguće učitati sadržaj.' },
+    'admin.noCards': { en: 'No flashcards in this lesson.', hr: 'Nema kartica u ovoj lekciji.' },
 
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },
