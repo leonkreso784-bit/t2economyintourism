@@ -14,6 +14,8 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [BACKEND.md](BACKEND.md) | Backend plan: Vercel Functions + Supabase, API, migracija |
 | [ROADMAP.md](ROADMAP.md) | Milestones + status (done/next) |
 | [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **▶ AKTIVNO: platforma-first temelj** — misije/faze/reusable podsistemi, brick-liste, KAKO (ADR-013/014) |
+| [CRUD_PLAN.md](CRUD_PLAN.md) | **▶ AKTIVNO: F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1/4.2/4.3a-b/4.3c ✅ + Playwright login |
+| [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj, prefiks fakulteta, dijeli-unutar-fakulteta; ADR-022) — za HR-ekspanziju nakon F4 |
 | [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn) |
 | [CONTENT_GUIDE.md](CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
 | [CONTENT_INTAKE.md](CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |

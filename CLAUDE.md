@@ -54,6 +54,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **`npm run bump`** — F3 3C.1: postavi SVE `?v=` tokene + `CONTENT_VERSION` na isti novi timestamp (zamjena ručnog bumpanja). `npm run bump:check` = CI gate (drift=crveno).
 - **`npm run build:css`** — F3 3B: regeneriraj `styles.bundle.css` iz `css/*.css` (nakon SVAKE izmjene bilo kojeg css modula). `npm run build:css -- --check` = CI drift-gate.
 - `npm run test:responsive` — Playwright (iPhone profili): responsive overflow + smoke (sve sekcije × svi predmeti) + sidebar.
+- **`npm run test:authed`** — F4: pozitivan admin-put (storageState login). Traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env` (inače se ne pokreće; default suite netaknut). CI: zaseban `authed` job (gate-an na repo-secret).
 - `npm run serve:test` — lokalni server na http://localhost:5050 (za pregled).
 - `npm run scaffold -- ...` — kostur novog predmeta.
 - `node scripts/pdf-text.js "<pdf>"` — tekst iz PDF-a.
