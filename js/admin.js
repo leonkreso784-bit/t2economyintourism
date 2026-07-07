@@ -277,16 +277,56 @@ function _openCardEditor(catId, idx) {
   if (m && typeof m.open === 'function') m.open();
 }
 
+/** Zakrpaj jedan objekt (payload/window-var) na (catId, idx) ako kartica postoji. */
+function _patchObj(obj, catId, idx, q, a) {
+  if (obj && obj[catId] && Array.isArray(obj[catId].flashcards) && obj[catId].flashcards[idx]) {
+    obj[catId].flashcards[idx].question = q;
+    obj[catId].flashcards[idx].answer = a;
+    return true;
+  }
+  return false;
+}
+
+/** Zakrpaj window-var (ako je učitan u memoriji) — study/viewer to čitaju. */
+function _patchWindowVar(varName, catId, idx, q, a) {
+  if (typeof window !== 'undefined') _patchObj(window[varName], catId, idx, q, a);
+}
+
 /** Zakrpaj in-memory objekt(e) da se promjena vidi bez reloada (isti ref koji study/viewer čitaju). */
 function _patchInMemory(varName, catId, idx, q, a) {
-  const patch = function (obj) {
-    if (obj && obj[catId] && Array.isArray(obj[catId].flashcards) && obj[catId].flashcards[idx]) {
-      obj[catId].flashcards[idx].question = q;
-      obj[catId].flashcards[idx].answer = a;
+  _patchWindowVar(varName, catId, idx, q, a); // study čita window[var]
+  _patchObj(_adminCtx.data, catId, idx, q, a); // viewer re-render izvor (isti ref za midterm)
+}
+
+/**
+ * F4.3c-2: propagiraj istu izmjenu u SESTRINSKE redove predmeta koji dijele ovu kategoriju.
+ * Zašto: `final` je `Object.assign(M1, M2, …)` KOPIJA → u bazi zaseban red (npr. `te2Final`) koji
+ * duplicira midterm kartice. Bez ovoga bi edit midterma i finalni razišli. Kategorije su unikatne
+ * po predmetu (nema kolizije M1/M2), a final je čista kopija → (catId, idx) je isti card svugdje.
+ * Best-effort: primarni red je već spremljen; svaki sibling-write ide pod istim RLS + snapshotom.
+ * @returns {Promise<{patched:string[], failed:string[]}>}
+ */
+async function _propagateToSiblings(client, subjectId, primaryVar, catId, idx, q, a) {
+  const patched = [];
+  const failed = [];
+  try {
+    const sel = await client.from('subject_content').select('var_name,payload')
+      .eq('subject_id', subjectId).neq('var_name', primaryVar);
+    if (sel.error || !Array.isArray(sel.data)) return { patched: patched, failed: failed };
+    for (const row of sel.data) {
+      const p = row.payload;
+      const arr = (p && p[catId] && Array.isArray(p[catId].flashcards)) ? p[catId].flashcards : null;
+      if (!arr || !arr[idx]) continue; // ta kategorija/indeks ne postoji ovdje → preskoči (npr. examPractice-only)
+      arr[idx].question = q;
+      arr[idx].answer = a;
+      const upd = await client.from('subject_content').update({ payload: p })
+        .eq('subject_id', subjectId).eq('var_name', row.var_name);
+      if (upd.error) failed.push(row.var_name); else patched.push(row.var_name);
     }
-  };
-  if (typeof window !== 'undefined') patch(window[varName]); // study čita window[var]
-  patch(_adminCtx.data);                                     // viewer re-render izvor (isti ref za midterm)
+  } catch (e) {
+    // best-effort; primarni je već spremljen — sib-neuspjeh ne ruši glavni write.
+  }
+  return { patched: patched, failed: failed };
 }
 
 /** Spremi uređenu karticu: read-modify-write JEDNOG reda pod admin JWT-om (RLS). */
@@ -340,12 +380,19 @@ async function _saveCard() {
       return;
     }
 
-    // 3) In-memory patch → live promjena bez reloada. Final NAMJERNO nedirnut (F4.3c-2).
+    // 3) F4.3c-2: propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
+    const prop = await _propagateToSiblings(client, subjectId, varName, catId, idx, q, a);
+
+    // 4) In-memory patch → live promjena bez reloada (primarni + svi zakrpani sestrinski varovi).
     _patchInMemory(varName, catId, idx, q, a);
+    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, idx, q, a); });
 
     if (saveBtn) saveBtn.disabled = false;
     _closeEditor();
-    if (typeof showToast === 'function') showToast(_adminT('admin.saveOk', 'Flashcard saved.'));
+    if (typeof showToast === 'function') {
+      const okMsg = _adminT('admin.saveOk', 'Flashcard saved.');
+      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
+    }
     const holder = document.getElementById('adminCards');
     if (holder) _renderAdminCards(holder, _adminCtx.data);
   } catch (e) {

@@ -49,7 +49,8 @@
     'admin.saveErr': { en: 'Could not save.', hr: 'Spremanje nije uspjelo.' },
     'admin.emptyErr': { en: 'Question and answer must not be empty.', hr: 'Pitanje i odgovor ne smiju biti prazni.' },
     'admin.notInDb': { en: 'This subject is not in the database yet.', hr: 'Ovaj predmet još nije u bazi.' },
-    'admin.finalNote': { en: 'saves this lesson only (final not synced in this step).', hr: 'sprema samo ovu lekciju (finalni još nije sinkroniziran).' },
+    'admin.finalNote': { en: 'syncs across this lesson and the final exam.', hr: 'sinkronizira se kroz ovu lekciju i finalni ispit.' },
+    'admin.propWarn': { en: '(final sync incomplete)', hr: '(finalni nije potpuno sinkroniziran)' },
 
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },
