@@ -94,6 +94,49 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+  # Authenticated (admin) suite — POZITIVAN admin-put (F4). Zaseban job: traži pravu Supabase
+  # admin-sesiju (storageState), pa treba tajne. Pokreće se SAMO ako je secret TEST_ADMIN_EMAIL
+  # postavljen (Settings → Secrets → Actions); inače se čisto preskoči (exit 0) → forkovi/PR-ovi
+  # bez tajni ostaju zeleni. ⚠ Može pasti ako je free-tier Supabase uspavan (login ne prođe) —
+  # zato je ODVOJEN od glavnog `build` gate-a (ne blokira merge osim ako ga korisnik učini required).
+  # Bonus: redoviti run drži bazu budnom. Vidi docs/TESTING.md §Authenticated.
+  authed:
+    name: Authed admin suite (positive path)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - name: Install deps (clean)
+        run: npm ci
+      - name: Install Playwright browser (chromium)
+        run: npx playwright install --with-deps chromium
+      - name: Run authenticated suite (skips if no creds)
+        env:
+          TEST_ADMIN_EMAIL: ${{ secrets.TEST_ADMIN_EMAIL }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+        run: |
+          if [ -z "$TEST_ADMIN_EMAIL" ]; then
+            echo "TEST_ADMIN_EMAIL secret nije postavljen → preskačem authenticated suite."
+            exit 0
+          fi
+          npm run test:authed
+      - name: Upload Playwright artifacts on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: authed-artifacts
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore
+
   # Lighthouse TVRDI budžeti (FOUNDATION_PLAN F1 brick 1D.1, §7 nadogradnja #1). Zaseban job:
   # vrti se na Linuxu (lokalni Windows ima EPERM s chrome-launcherom). Budžeti su KONZERVATIVNI
   # tvrdi floorovi (hvataju katastrofalne regresije) — kalibriraju se naviše kad vidimo CI-brojeve

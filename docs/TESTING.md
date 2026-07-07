@@ -65,7 +65,8 @@
 
 ## CI/CD — automatski gate (od 2026-06-29, FOUNDATION_PLAN F1)
 > Iste provjere gore vrte se **automatski na svaki push/PR** preko GitHub Actions (`.github/workflows/ci.yml`).
-- **Lanac (fail-fast):** `npm ci` → `validate:content` → `validate:schema` → `export:json --check` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zaseban `lighthouse` job (budžeti).
+- **Lanac (fail-fast):** `npm ci` → `validate:content` → `validate:schema` → `export:json --check` → `verify` → `test:unit` → `typecheck` → `test:rls` → `npx playwright test` (chromium); zasebni `lighthouse` (budžeti) + `authed` job.
+- **`authed` job (F4):** pokreće `npm run test:authed` (pozitivan admin-put) **samo ako je secret `TEST_ADMIN_EMAIL`/`TEST_ADMIN_PASSWORD` postavljen** (Settings → Secrets → Actions); inače se čisto preskoči. Odvojen od glavnog gate-a (može pasti ako je free-tier Supabase uspavan → ne blokira merge osim ako ga učiniš required). **Za aktivaciju: dodaj ta dva repo-secreta.**
 - **TVRDI gate:** crveno = **ne mergea se u `main`**. Artefakti (screenshotovi/report) se uploadaju samo na pad.
 - **Tok rada „grana → preview → prod":**
   1. Radi na grani (ne direktno na `main`). Push grane → **CI se pokrene** + **Vercel napravi preview-deploy** (zaseban URL, NIJE produkcija).
