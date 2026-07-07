@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-08 (OPUS) — F4.3c KOMPLETNA (edit kartice end-to-end) + Playwright LOGIN + CI authed job
+**Kontekst:** nastavak F4 (Admin CRUD) na grani `foundation/f4` (preview, `main` netaknut). Sve cigle živo verificirane.
+
+**Odrađeno:**
+- **F4.3c-1 (`7d1368a`) — prvi pravi WRITE iz preglednika:** kartica u vieweru → „uredi" (admin-only `.admin-edit-btn`) → `<sokrat-modal>` forma (question/answer) → lagana validacija → **write JEDNOG reda** (`catalog.resolve[lessonId]`, read-modify-write blob `subject_content` pod admin JWT-om, RLS `is_admin()`) → auto-verzija (F4.2 trigger snapshota stari payload) → toast → in-memory re-render (bez reloada). `js/admin.js` `_saveCard`; i18n `admin.edit*`/`save*`; CSS `.admin-edit*`.
+- **Playwright LOGIN (`d57c5fd`) — zatvara [[live-login-verifies-crud]] rupu:** storageState obrazac. `playwright.config.js` (dotenv + uvjetni `auth-setup`/`authenticated` projekti kad je `TEST_ADMIN_EMAIL/PASSWORD` set → default suite netaknut) · `tests/auth.setup.js` (signInWithPassword + is_admin → storageState `tests/.auth/admin.json`, gitignored) · `tests/admin-detect.authed.spec.js` (isAdmin=true + admin vidi edit-gumbe). `npm run test:authed` **3/3 živo**.
+- **CI authed job (`34b3612`):** `.github/workflows/ci.yml` zaseban `authed` job (gate-an na secret; preskoči ako ga nema → forkovi zeleni). ⏳ Leon doda repo-secrete `TEST_ADMIN_EMAIL/PASSWORD`.
+- **F4.3c-2 (`f208eef`) — propagacija midterm↔final:** `_propagateToSiblings` — edit zakrpa i sestrinske redove koji dijele kategoriju → `final` (`Object.assign(M1,M2)` kopija) ostaje u sinku. Best-effort (`admin.propWarn` na djelomičan neuspjeh). **→ F4.3c KOMPLETNA.**
+
+**Živa verifikacija (authed Playwright + Supabase MCP, ne samo Playwright):** edit `te2M1 demand/0` → marker PERSISTIRAO u bazu I u `te2Final` (propagacija) → revert vratio oba na original (**produkcija netaknuta, 51 red, oba u sinku**). `content_versions` dobio snapshote (op=UPDATE, edited_by=leonkreso784 = undo+audit). Gate: verify/typecheck/unit/schema/bump:check 0, Playwright admin+components 13/13, test:authed 3/3. Cache `20260708012428`.
+
+**Napomene:** ⚠️ **6 test-audit-redova (te2) u `content_versions`** iz živih proba — bezopasni; brisanje traži izričit OK (auto-mode klasifikator štiti append-only audit na produkciji). ⚠️ Write-testovi svjesno NEautomatizirani (dijeljena prod baza + append-only audit; nema izoliranog test-DB-a na free tieru) → pokriven READ/detekcijski put.
+
+**Stanje:** grana `foundation/f4` pushana = **preview**, produkcija (`main`) netaknuta. **Slijedi F4.4** (proširi CRUD na quiz/fill/learn/kategorije, svaki tip = svoja cigla) → F4.5 export/dry-run → F4.6 flip.
+
+---
+
 ## 2026-07-06 (OPUS, nastavak) — ▶ FAZA 4 (Admin CRUD) START: F4.1/F4.2/F4.3a/F4.3b + arhitektura predmeta
 **Kontekst:** nakon deploya F3, planiran F4 (Admin CRUD) — odluke fiksirane u **ADR-021** (direktni preglednik→Supabase RLS-write · `profiles.role` admin · grubi blob · stupnjeviti flip · safety-net od prve cigle) + plan `docs/CRUD_PLAN.md`. Sve na grani `foundation/f4`, **lokalno/preview — ništa na produkciju.**
 
