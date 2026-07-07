@@ -1,4 +1,7 @@
 const { defineConfig } = require('@playwright/test');
+// .env (gitignored) donosi TEST_ADMIN_* za authenticated suite. Opcionalno — ako dotenv
+// nije instaliran ili .env ne postoji, config i dalje radi (env dolazi iz shella/CI-a).
+try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
 
 const PORT = 5050;
 
@@ -12,6 +15,38 @@ const iphone = (width, height) => ({
     'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 ' +
     '(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1',
 });
+
+// Authenticated (admin) suite runs ONLY when a dedicated test-admin credential is provided
+// (locally via .env, in CI via secrets). Without it, the default suite is unchanged and
+// deterministic (no network/auth). Vidi docs/TESTING.md + [[live-login-verifies-crud]].
+const AUTHED = !!(process.env.TEST_ADMIN_EMAIL && process.env.TEST_ADMIN_PASSWORD);
+
+// App-testovi (iPhone profili) NE SMIJU pokupiti:
+//   • unit/** (Node testovi s top-level process.exit → prekinuli bi browser run),
+//   • auth.setup.js / *.authed.spec.js (traže admin-sesiju; njih vozi `authenticated` projekt).
+// NB: per-project testIgnore GAZI globalni → 'unit/**' MORA biti i ovdje.
+const APP_TEST_IGNORE = ['unit/**', /auth\.setup\.js$/, /\.authed\.spec\.js$/];
+
+const iphoneProjects = [
+  { name: 'iPhone-SE-375',          testIgnore: APP_TEST_IGNORE, use: iphone(375, 667) },
+  { name: 'iPhone-15Pro-393',       testIgnore: APP_TEST_IGNORE, use: iphone(393, 852) },
+  { name: 'iPhone-15ProMax-430',    testIgnore: APP_TEST_IGNORE, use: iphone(430, 932) },
+  { name: 'iPhone-15Pro-landscape', testIgnore: APP_TEST_IGNORE, use: iphone(852, 393) },
+];
+
+// Setup se prijavi jednom i spremi storageState; `authenticated` ga reusea za *.authed.spec.js.
+const authedProjects = AUTHED ? [
+  { name: 'auth-setup', testMatch: /auth\.setup\.js$/ },
+  {
+    name: 'authenticated',
+    testMatch: /\.authed\.spec\.js$/,
+    dependencies: ['auth-setup'],
+    use: {
+      viewport: { width: 1280, height: 800 },
+      storageState: 'tests/.auth/admin.json',
+    },
+  },
+] : [];
 
 module.exports = defineConfig({
   testDir: './tests',
@@ -41,10 +76,5 @@ module.exports = defineConfig({
     reuseExistingServer: true,
     timeout: 30000,
   },
-  projects: [
-    { name: 'iPhone-SE-375',        use: iphone(375, 667) },
-    { name: 'iPhone-15Pro-393',     use: iphone(393, 852) },
-    { name: 'iPhone-15ProMax-430',  use: iphone(430, 932) },
-    { name: 'iPhone-15Pro-landscape', use: iphone(852, 393) },
-  ],
+  projects: [...iphoneProjects, ...authedProjects],
 });

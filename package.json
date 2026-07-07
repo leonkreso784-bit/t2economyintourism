@@ -8,6 +8,7 @@
     "dev": "npx serve . -l 3000",
     "serve:test": "node scripts/static-server.js",
     "test:responsive": "playwright test",
+    "test:authed": "playwright test --project=authenticated",
     "test:unit": "node tests/unit/exercises-core.test.js && node tests/unit/acc-kernel.test.js && node tests/unit/stat-parse.test.js && node tests/unit/stat-lib.test.js && node tests/unit/app-state.test.js",
     "test:rls": "node scripts/rls-check.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
@@ -45,6 +46,7 @@
     "@playwright/test": "^1.60.0",
     "ajv": "^8.20.0",
     "axe-core": "^4.12.1",
+    "dotenv": "^17.4.2",
     "pdf-parse": "^2.4.5",
     "typescript": "^6.0.3"
   }

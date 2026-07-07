@@ -34,6 +34,8 @@ build/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+# Spremljena admin-sesija za authenticated suite (storageState) — NIKAD se ne commita
+/tests/.auth/
 
 # Environment
 .env
