@@ -5,7 +5,7 @@
 // the Lecture-7 prep covers the labour market (natural rate), and the Lecture-11
 // prep is entirely the OPEN ECONOMY (exchange rates, net exports, balance of payments).
 //
-// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/CONTENT_SCHEMA.md):
+// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/content/CONTENT_SCHEMA.md):
 //   inline  \( ... \)   (in a JS string: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   A single `$` is NEVER used (currency). LaTeX backslash in a string = "\\".

@@ -5,7 +5,7 @@
 //   - sa subjectId:  validira samo taj predmet (npr. `node scripts/validate-content.js statistics`)
 //
 // Deterministička provjera SADRŽAJA (ne katalog-strukture — to radi verify-catalog.js):
-// svaka kategorija mora poštovati docs/CONTENT_SCHEMA.md (name/icon/color + valjani
+// svaka kategorija mora poštovati docs/content/CONTENT_SCHEMA.md (name/icon/color + valjani
 // flashcards/quiz/fillBlanks/learn), quiz `correct` mora biti valjan indeks, fillBlank
 // mora imati prazninu, KaTeX delimiteri moraju biti uravnoteženi (currency-safe).
 //

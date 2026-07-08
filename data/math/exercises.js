@@ -2,8 +2,8 @@
 //
 // CONTENT PACK (NOT the engine): all domain data for the interactive, auto-graded math
 // exercises. The generic engine (js/exercises-core.js, js/exercises.js, css/exercises.css)
-// contains NOTHING from here — see docs/EXERCISES_ENGINE.md §2 (types) + §3 (conventions)
-// and docs/MATH_PLAN.md.
+// contains NOTHING from here — see docs/content/EXERCISES_ENGINE.md §2 (types) + §3 (conventions)
+// and docs/subjects/MATH_PLAN.md.
 //
 // Types used: numeric / choice (NOT journal/classify/statement). Randomization via
 // params + generate(p). Shared math (quadratic solver, gcd, poly eval/deriv) lives in

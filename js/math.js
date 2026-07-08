@@ -15,7 +15,7 @@
 // this globally is a no-op for every textual subject and only activates where an
 // author actually writes LaTeX.
 //
-// Author convention + escaping rules: docs/CONTENT_SCHEMA.md (§ Matematika / formule).
+// Author convention + escaping rules: docs/content/CONTENT_SCHEMA.md (§ Matematika / formule).
 //
 // CDN (KaTeX + auto-render) is loaded in index.html <head> with `defer`. If it fails
 // to load (offline / CDN down), renderMath is a silent no-op — formulas degrade to

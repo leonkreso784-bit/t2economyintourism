@@ -5,7 +5,7 @@
 > **profesionalan, reliable, reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena",
 > pripremljena za sve što planiramo (Admin CRUD, UGC, AI tutor, monetizacija).
 > **Vezano:** ADR-013 (content arhitektura), ADR-014 (engineering standardi) u [DECISIONS.md](DECISIONS.md);
-> `sonnet.md` (hardening checklist); [[foundation-pivot]].
+> `archive/SONNET_REVIEW_2026-06.md` (hardening checklist); [[foundation-pivot]].
 >
 > **Razina (korisnik 2026-06-29): ne „zdrav" nego „jeben i brutalan".** Cilj nije „radi i neće pasti" (higijena) nego
 > stvarno elitan, WOW, profesionalan temelj. Zato svaka faza nosi **TVRDE gateove** (ne upozorenja — blokade): vidi
@@ -20,7 +20,7 @@
 > 2. **UGC se NE gura u Admin CRUD prerano.** F4 CRUD se DIZAJNIRA UGC-spreman (multi-user/RLS/vlasništvo/draft→publish), ali **student-upload NE ide živ prije F6**
 >    (DOMPurify sanitizacija + moderacijski red + CSP). Student uploada **PODATKE** (kartice/kviz/fill/learn, saniziran HTML), **NIKAD KOD** (vježbe = deklarativni sandbox, BUG-012). Jedan authoring sustav, vrata se otvaraju kasnije. → nova **ADR-018**.
 > 3. **Service Worker (3A.3+) se radi na FABLE modelu** (drugi model = jeftin sigurnosni sloj na najrizičnijoj cigli). → **ADR-019**.
-> 4. **Točnost sadržaja = dvo-ključni verifier** (Sonnet piše → Opus SAMO provjerava+označava krive → korisnik presudi; protiv izvornog `topics.json`, troškovno-minimalno; retroaktivno na 18 predmeta). Gradi se u **fazi sadržaja**. → **ADR-020**, plan u `CONTENT_GENERATOR.md`.
+> 4. **Točnost sadržaja = dvo-ključni verifier** (Sonnet piše → Opus SAMO provjerava+označava krive → korisnik presudi; protiv izvornog `topics.json`, troškovno-minimalno; retroaktivno na 18 predmeta). Gradi se u **fazi sadržaja**. → **ADR-020**, plan u `content/CONTENT_GENERATOR.md`.
 > 5. **Supabase Pro (€25/mj) prije prvih korisnika** (backup + bez sleep-a; gasi rizik B). **Tempo:** kraće dionice, stani nakon 1–2 cigle ([[pace-short-stretches-check-in]]).
 
 ---
@@ -83,7 +83,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 - [0.2] **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) u DECISIONS.md.
 - [0.3] Pokazivači: ROADMAP §AŽURNO + CLAUDE.md §Stanje/§Ključne odluke + MEMORY.md + memory `foundation-pivot`.
 - [0.4] **Commit ne-deployanog i18n chromea LOKALNO** (Odluka 3a — čuva se, deploya se s Fazom 1; treba cache-bump pri deployu).
-- [0.5] BACKLOG: „hardening v1" + offline-feature + sonnet.md parkirane stavke.
+- [0.5] BACKLOG: „hardening v1" + offline-feature + archive/SONNET_REVIEW_2026-06.md parkirane stavke.
 **Gate:** sve `.md` točne, `verify` 0/0. **Bez deploya.**
 
 ### ▸ FAZA 1 — Reliability rails (jeftino, sigurno, neovisno)
@@ -100,7 +100,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
   - [1B.2] ✅ JSDoc tipovi — pilot `js/i18n.js` + `types/globals.d.ts` (ambient `SokratCatalog`/`window.*`). Samo komentari → 0 runtime.
   - [1B.3] ✅ `npm run typecheck` (= `tsc --noEmit -p tsconfig.json`) + korak u CI (1A) poslije `test:unit`. `tsc` je samo checker.
   - **Done-kriterij:** ✅ `typecheck` zelen na pilotu (exit 0); obrazac dokazan (novi modul → `include` + globali + JSDoc). Širi se kasnije.
-- **1C — Hardening v1 (sonnet.md, provjereno):** ✅ **GOTOVO 2026-06-29.** sve male, vidljive, 0-rizik.
+- **1C — Hardening v1 (archive/SONNET_REVIEW_2026-06.md, provjereno):** ✅ **GOTOVO 2026-06-29.** sve male, vidljive, 0-rizik.
   - [1C.1] ✅ `vercel.json`: maknut `X-XSS-Protection`; dodani `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
   - [1C.2] ✅ `js/storage.js` `loadProgress()` (NE analytics.js — tu je funkcija): `Object.assign({}, defaultProgress, parsed)` + try/catch na `JSON.parse` (pokvaren JSON → default).
   - [1C.3] ✅ Mrtav `lessonCategoryMap` ENTRY uklonjen (`js/config.js` → `{}`); ID-evi `second-exam-prep`/`final-exam-prep` potvrđeno postoje samo u config.js. Varijabla + mehanizam ostaju (navigation.js:545 radi → else grana = pun sadržaj).
@@ -380,8 +380,8 @@ zaseban product-analytics (Posthog) dok retencija ne postane pitanje · pune sou
 
 ## 8. Reference
 - **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) — [DECISIONS.md](DECISIONS.md)
-- `sonnet.md` — vanjski hardening-checklist (tretiraj kao prijedloge za PROVJERU, ne istinu; #7 je bio netočan)
+- `archive/SONNET_REVIEW_2026-06.md` — vanjski hardening-checklist (tretiraj kao prijedloge za PROVJERU, ne istinu; #7 je bio netočan)
 - [BUGS.md](BUGS.md) BUG-012 (vježbe nikad u bazu), BUG-004 (cache bump)
-- [EXERCISES_ENGINE.md](EXERCISES_ENGINE.md) — uzor reusable podsistema
+- [EXERCISES_ENGINE.md](content/EXERCISES_ENGINE.md) — uzor reusable podsistema
 - [ARCHITECTURE.md](ARCHITECTURE.md) · [BACKEND.md](BACKEND.md) · [VISION.md](VISION.md) · [ROADMAP.md](ROADMAP.md)
 - [[foundation-pivot]] (memorija)

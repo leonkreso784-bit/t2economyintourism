@@ -2,8 +2,8 @@
 //
 // CONTENT PACK (NE engine): svi domenski podaci za interaktivne, auto-ocjenjive vježbe
 // statistike. Generički engine (js/exercises-core.js, js/exercises.js, css/exercises.css)
-// ne sadrži NIŠTA odavde — vidi docs/EXERCISES_ENGINE.md §2 (schema/tipovi) + §3 (konvencije)
-// i docs/STATISTICS_PLAN.md (cigla-po-cigla plan, TRACK B).
+// ne sadrži NIŠTA odavde — vidi docs/content/EXERCISES_ENGINE.md §2 (schema/tipovi) + §3 (konvencije)
+// i docs/subjects/STATISTICS_PLAN.md (cigla-po-cigla plan, TRACK B).
 //
 // Tipovi koje koristi statistika: numeric / choice / ratio (NE journal/classify/statement).
 // Matematika za rješenja (normalCdf, z/t tablice) doći će u data/statistics/stat-lib.js

@@ -14,7 +14,7 @@
    prezentacije u jedan fajl bez reda.
 
 ## ⚠️ Kvantitativni predmeti (Math / Micro / Macro / Statistika) — poseban tretman
-Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](DECISIONS.md) ADR-009):
+Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](../DECISIONS.md) ADR-009):
 - **Formule → KaTeX/LaTeX.** ✅ KaTeX implementiran (ADR-009). Delimiteri **currency-safe: `\( \)` inline,
   `\[ \]` / `$$ $$` blok — NE jedan `$`** (valutni `$NN` bi se pokvario). Vidi [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) §Matematika.
 - **Slike (JPG slajdovi):** čitam ih (Read alat čita JPG/PNG) i **transkribiram formule u LaTeX**.
@@ -38,7 +38,7 @@ Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 | Macroeconomics | 19 PDF | ✅ GOTOVO (study + ~81 vježba) |
 | Academic writing | 13 PDF | ✅ GOTOVO (prvi kroz **generator** + cite-vježbe) |
 | Traffic in tourism | 0 | ▶ **SLJEDEĆI** — treba materijale od korisnika |
-| Math | 100 JPG + 8 PDF + docx | ⬜ TODO — **ZADNJA** (najveća gustoća formula); plan [MATH_PLAN.md](MATH_PLAN.md); KaTeX + grafovi-kao-slike |
+| Math | 100 JPG + 8 PDF + docx | ⬜ TODO — **ZADNJA** (najveća gustoća formula); plan [MATH_PLAN.md](../subjects/MATH_PLAN.md); KaTeX + grafovi-kao-slike |
 | Introduction to hospitality | 0 | ⛔ **BLOKIRAN** — korisnik NEMA PDF-ove (2026-06-24); preskočiti dok ih ne nabavi |
 | English | 2 PDF | tanko (niski prioritet) |
 

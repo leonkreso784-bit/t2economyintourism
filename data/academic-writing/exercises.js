@@ -1,7 +1,7 @@
 // ===== ACADEMIC WRITING — EXERCISES (content pack) =====
 //
 // CONTENT PACK (NE engine): domenski podaci za interaktivne vježbe. Engine
-// (js/exercises*.js, css/exercises.css) je NEDIRNUT. Schema/tipovi: docs/EXERCISES_ENGINE.md §2.
+// (js/exercises*.js, css/exercises.css) je NEDIRNUT. Schema/tipovi: docs/content/EXERCISES_ENGINE.md §2.
 //
 // Fokus = CITIRANJE (Chicago Manual of Style) — korisnikov izričit zahtjev („jako puno na testu").
 // Uz to par foundational setova (metode spoznaje, znanstvene metode, struktura rada, baze/pretraga).

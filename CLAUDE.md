@@ -26,14 +26,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - Konvencija semestra: `year` = studijska godina; `semester` ∈ {1,2} unutar godine.
 
 ## Sadržaj (autorstvo)
-- Schema (obavezno poštovati): `docs/CONTENT_SCHEMA.md` — kategorija ima
+- Schema (obavezno poštovati): `docs/content/CONTENT_SCHEMA.md` — kategorija ima
   `name, icon, color, flashcards[], quiz[](correct=index), fillBlanks[](_______), learn{content,image}`.
 - **Novi predmet = mapa po predmetu, datoteka po lekciji:** `data/<subject>/{midterm-1,midterm-2,final}.js`
   (svaka izlaže `window.<var>`). Template: `data/_template/lesson.template.js`.
 - Brzo: `npm run scaffold -- <id> "<Naziv>" <god> <sem>` (kreira datoteke + ispiše catalog unos).
 - Stari predmeti (root `data-*.js`) rade preko catalog-a; NE preslagivati ih — migriraju u bazu u Bloku B.
 - Profesorski materijali: `_materials/` (gitignored). PDF se NE čita preko Read (pdftoppm nema) →
-  koristi **`node scripts/pdf-text.js "<pdf>"`** (ekstrakcija teksta). Vidi `docs/CONTENT_INTAKE.md`.
+  koristi **`node scripts/pdf-text.js "<pdf>"`** (ekstrakcija teksta). Vidi `docs/content/CONTENT_INTAKE.md`.
 
 ## ⚠️ KRITIČNA PRAVILA
 1. **Cache bump:** pri izmjeni BILO KOJEG `css/*.css`/`js/*.js`/`data*.js` pokreni **`npm run bump`**
@@ -63,7 +63,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - `npm run export:json [subjectId] [--check]` — export study sadržaja u `data/json/<id>/<var>.json` (F2 2A).
   **⚠️ PRAVILO: nakon izmjene `data/*.js` migriranog predmeta (17/18, svi osim accountinga) OBAVEZNO
   `npm run export:json <id>` — inače CI pada na drift-gateu (`--check`).** Vježbe se NE exportaju (BUG-012).
-- **GENERATOR predmeta** (jeftin Sonnet preko `.env` ključa; detalji `docs/CONTENT_GENERATOR.md`):
+- **GENERATOR predmeta** (jeftin Sonnet preko `.env` ključa; detalji `docs/content/CONTENT_GENERATOR.md`):
   `node scripts/build-topics.js <id> "<dir>"` → `node scripts/generate-subject.js <id> [--math]` →
   `node scripts/assemble-subject.js <id> --name ... --short ... --icon ... --color ...` → paste catalog + bump + gate.
 
@@ -123,7 +123,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   **(b) Reusable EXERCISES SUSTAV** (jedini na platformi): engine = `js/exercises-core.js` + `js/acc-kernel.js` +
   `js/exercises.js` + `css/exercises.css` (6 tipova choice/numeric/ratio/statement/classify/journal; 3 moda; randomizacija) —
   **NIKAD se ne mijenja za sadržaj** (sveto pravilo, dokazano kroz B3.1–B3.11); content pack `data/accounting/exercises.js`
-  = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/EXERCISES_ENGINE.md` §6/§8.
+  = **41 vježba** (K1 Ch1–6: 16; K2 Ch9–16 + inventory + journal/RE: 25). Plan/recovery: `docs/content/EXERCISES_ENGINE.md` §6/§8.
   Cache `20260638`. **Poznato (opcionalno, NE blokira):** Final lekcija → „Exercises" tab prazan (sve vježbe tagane na
   kolokvije; dosljedno sem-2 predmetima); USAR/USALI klasifikacija (Ch9-1/10-1) odgođena (nema službenog answer-keya).
 - **✅ TOURISM ECONOMICS (`te2`) restrukturiran + REBUILD iz predavanja ✅ LIVE (2026-06-12, 2. sem-1 predmet):**
@@ -196,7 +196,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   blok `\[ \]`/`$$ $$`; jedan `$` se NE koristi** — postojećih **123 valutnih `$NN`** bi inače KaTeX pokvario; `\(`/`\[`/`$$` se ne
   pojavljuju u tekstu (grep) → render globalan ali za tekst no-op. Cache `?v=20260648` (math.js + 4 renderera + styles.css + math.css);
   **`CONTENT_VERSION` ostaje `20260647`** (data nedirana). Verify 0/0, `tests/katex.spec.js` 4/4 (render + currency-safety). Konvencija:
-  `docs/CONTENT_SCHEMA.md` §Matematika. **Dalje: Microeconomics (1. god) = prvi kvantitativni, K1/K2/finalni, RUČNO.** [[content-roadmap-sequencing]]
+  `docs/content/CONTENT_SCHEMA.md` §Matematika. **Dalje: Microeconomics (1. god) = prvi kvantitativni, K1/K2/finalni, RUČNO.** [[content-roadmap-sequencing]]
 - **✅ MICROECONOMICS 100% KOMPLETAN (K1 + K2 + finalni hibrid) — prvi kvantitativni predmet, KaTeX, ✅ LIVE (deployano 2026-06-14, `236e303`):** intake
   `Microeconomics_2024_25.pdf` (172-str Pindyck&Rubinfeld) + **DINP silabus** → **K1/K2 granica AUTORITATIVNA iz službenog
   rasporeda: K1 = Ch 1–7, K2 = Ch 8,9,10,12,13,14,18** (TU→poglavlje mapiranje provjereno iz decka: TU7=Ch8 … TU13=Ch18).
@@ -219,7 +219,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   luk + KaTeX `aligned` master-popis. Catalog: subject `statistics` (year 1, **sem 1 — POTVRĐENO (korisnik)**;
   `fa-chart-simple`/rose `#f43f5e`), sve 3 lekcije mapirane. KaTeX currency-safe (`\\(\\)` 540/540 + `\\[\\]` 45/45). Cache `20260650`.
   verify 0/0, node 0, **Playwright 68/68** (subjects=13).
-- **✅ STATISTICS NADOGRADNJA (Track A + B) ✅ LIVE (deployano 2026-06-16 `d97ee0b`):** plan `docs/STATISTICS_PLAN.md`, cigla-po-cigla.
+- **✅ STATISTICS NADOGRADNJA (Track A + B) ✅ LIVE (deployano 2026-06-16 `d97ee0b`):** plan `docs/subjects/STATISTICS_PLAN.md`, cigla-po-cigla.
   **Track A:** svih 10 Learn sekcija obogaćeno pravom teorijom (def/intuicija/interpretacija/zamke + warning-boxovi). **Track B:** **56
   interaktivnih vježbi** na POSTOJEĆEM reusable enginu (NEDIRNUT) — 35 first-midterm (T1–T6) + 21 second-midterm (T7–T9). Statistika 100%
   u `data/`: `data/statistics/exercises.js` (`window.statisticsExercises`) + `data/statistics/stat-lib.js` (`window.StatLib`: normalCdf/
@@ -235,7 +235,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
 - **▶ GENERATOR PREDMETA (jezgra bricks 1–4 GOTOVA, 2026-06-22, ✅ LIVE — pushano s AW pilotom do `569e608`):** odluka korisnika — dosta ručnog dodavanja →
   generator uz minimalan usage, PA Blok B. `scripts/`: `validate-content.js` (`npm run validate:content`) + `build-topics.js` (PDF/TXT→topics.json) +
   `generate-subject.js` (**Sonnet preko `.env ANTHROPIC_API_KEY`**, korisnikov ključ; max_tokens 16000/temp 0.3) + `assemble-subject.js` (draft→
-  `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan, ISPISUje catalog unos, NE dira catalog.js). Tok + detalji `docs/CONTENT_GENERATOR.md`.
+  `data/<id>/*.js` preko JSON.stringify=escaping bajt-točan, ISPISUje catalog unos, NE dira catalog.js). Tok + detalji `docs/content/CONTENT_GENERATOR.md`.
   Gate = validate:content→verify→Playwright→Opus spot-check. [[content-generator-pipeline]]
 - **✅ PRVI GENERATOR-PILOT: ACADEMIC WRITING (1. god, sem 1) — KOMPLETAN ✅ LIVE (2026-06-23, `48f38da`+`c34d88a`+`73bca5e`, pushano do `569e608`):**
   13 PDF predavanja (prof. Bogdan, *Essentials of Academic Writing*) → 12 tema kroz cijeli pipeline. **Study:** K1 (tjedni 1–6:
@@ -248,7 +248,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   EKSTENZIJA, ne hack: novi grader+widget+CSS, 0 promjena postojećih tipova; core 104/104). Pametno-tolerantno (case/razmaci/navodnici/crtica/
   završna točka forgiven, interpunkcija+redoslijed bitni); pokaže točan odgovor. 2 cite-vježbe (7 items, autorski iz slajdova). Sad **7 tipova** vježbi.
 - **✅ TRAFFIC IN TOURISM — NOVI predmet (1. god, sem 2) — ručno iz predavanja ✅ LIVE (deployano 2026-06-25, `62a4119`; Supabase re-sync 3/3):** 13 PDF-ova (prof. Nataša
-  Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori. **Ručno (NE generator)** — činjenično specifičan, ima rupe/izvještaje. Plan `docs/TRAFFIC_PLAN.md`.
+  Kovačić; udžbenik Mrnjavac, *Promet u turizmu*) + EU izvori. **Ručno (NE generator)** — činjenično specifičan, ima rupe/izvještaje. Plan `docs/subjects/TRAFFIC_PLAN.md`.
   K1/K2 granica **autoritativna iz silabusa (DINP): 1. kolokvij = tjedan 7 → K1 = tjedni 1–6, K2 = tjedni 7–15.** `data/traffic/` `trafficM1` (6 kat:
   theoreticalBasis/interdependence/mobilityPatterns/road-connector/road-product/rail-connector) + `trafficM2` (7 kat: rail-product+funicular/air/water/
   value&quality/safety/ecology/future) + `trafficFinal` (hibrid + examPractice). **27 kat / 189 fc / 186 quiz / 188 fill.** **Master-obrazac:** svaki mod =
@@ -267,14 +267,14 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   differentiation 3520/extrema 3184 zn; intuicija+radni primjeri+interpretacija+zamke); (b) Gauss vs Gauss-Jordan nijansa dodana u `gaussJordan` (+2 fc/+3 quiz/+3 fill +
   learn-podsekcija: Gauss=gornji trokut+supstitucija unatrag vs Gauss-Jordan=puna jedinična; pravilo „samo redovi, nikad stupci"; naziv kat. → „Gauss & Gauss-Jordan Method").**
   Gate (oba puta): KaTeX runtime balans OK (m1 562/562+47/47, m2 202/202+36/36, final 814/814+91/91), validate 0/0, verify 0/0, test:unit 33/33,
-  Playwright 68/68 (subjects=17). **Korisnik pregledao formule („sve izgleda odlično") → ✅ DEPLOYANO 2026-06-27.** ✅ Supabase re-sync Math (read-path) **NAPRAVLJEN 2026-06-27** (3 reda `mathM1/M2/Final`; vježbe iz datoteke). Plan `docs/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
+  Playwright 68/68 (subjects=17). **Korisnik pregledao formule („sve izgleda odlično") → ✅ DEPLOYANO 2026-06-27.** ✅ Supabase re-sync Math (read-path) **NAPRAVLJEN 2026-06-27** (3 reda `mathM1/M2/Final`; vježbe iz datoteke). Plan `docs/subjects/MATH_PLAN.md`. [[content-roadmap-sequencing]] [[learn-sections-must-be-rich]]
 - **✅ BUG-012 (randomizirane vježbe se lome iz baze) RIJEŠEN ✅ LIVE 2026-06-27 (`7176194..801d9a6`):** vježbe sadrže `generate()`
   funkcije koje `JSON.stringify` izbriše → iz baze su bile razbijene (Statistics 23 / Macro 25 / Accounting 8 randomiziranih). Fix (Opcija A,
   cigla-po-cigla): catalog **`content.codeScripts`** (vježbe+lib = KOD, uvijek iz datoteke) + `content-loader.js` u DB-modu učita codeScripts
   iz fajla (`filesToLoad = fromDb ? codeScripts : scripts`) + `migrate-content.js` više ne šalje vježbe + `verify-catalog.js` čuvar
   (predmet s vježbama MORA imati codeScripts) + baza očišćena (4 reda vježbi) + Math gradivo migrirano. **Baza: 51 red / 17 predmeta /
   0 redova vježbi.** Cache `20260690`. **PRAVILO: read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); vježbe (kod) UVIJEK iz
-  datoteke.** Detalji `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`. [[backend-track-b-start]]
+  datoteke.** Detalji `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`. [[backend-track-b-start]]
 - **✅ BLOK B — read-path SADRŽAJ IZ SUPABASEA, ✅ LIVE (2026-06-23, `077d375`+`8a087ad`, pushano do `569e608`):** sadržaj se čita iz
   baze **direktno anon keyem** (javan; bez `/api`/service-keya na frontu), **fallback na datoteke** (offline-first). Tablica
   `public.subject_content` (1 red=1 window var, `jsonb`) + public-read RLS (`supabase/schema.sql`). Migracija `node scripts/migrate-content.js`
@@ -302,7 +302,7 @@ Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na
   Sadržaj (HRV long-tail, prijevodi, 3. god) **PAUZIRAN** dok se ne izgradi profesionalan, reliable, reusable temelj.
   Princip: **malo→veliko, jedno po jedno, svaka cigla testabilna/reverzibilna/reusable** (uzor = exercises engine).
   **Faze (redom):** F0 zapis ✅ → **F1 reliability rails** (CI/CD GitHub Actions + Vercel preview · type-check JSDoc+`tsc` bez build-a ·
-  hardening v1 iz `sonnet.md`) → **F2 reusable jezgra** (S2 čisti JSON format ⟂ vježbe=JS moduli → S1 ContentRepository šav →
+  hardening v1 iz `docs/archive/SONNET_REVIEW_2026-06.md`) → **F2 reusable jezgra** (S2 čisti JSON format ⟂ vježbe=JS moduli → S1 ContentRepository šav →
   S3 AppState → S4 UI-primitivi=Web Components → error monitoring) → **F3 performanse** (Service Worker=pravi offline + CSS bundling +
   auto version-bump) → **F4 custom Admin CRUD** (source-of-truth flip: baza autoritativna, datoteke=export; dual-read, predmet-po-predmet) →
   **F5 SRS** (spaced repetition) → **F6 pred-UGC sigurnost** (CSP/DOMPurify/RLS/sandbox). **ADR-013** (content arhitektura) + **ADR-014**

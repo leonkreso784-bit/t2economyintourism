@@ -4,35 +4,58 @@ Centralno mjesto za vođenje projekta. Profesionalan, progresivan rad: planiramo
 bilježimo napredak, verzioniramo, učimo iz grešaka.
 
 > **Brzi kontekst:** [`../CLAUDE.md`](../CLAUDE.md) (root) se auto-učitava svaku sesiju i sažima
-> najbitnije (stack, arhitektura, kritična pravila, stanje). Ovdje su puni detalji.
+> najbitnije (stack, arhitektura, kritična pravila, TRENUTNO stanje). Ovdje su puni detalji.
+> **Brza povijest:** [HISTORY.md](HISTORY.md) (vremenska crta milestone-a, 1 red po milestone-u).
 
+## ▶ Aktivni planovi
+| Dokument | Svrha |
+|----------|-------|
+| [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **Platforma-first temelj** — misije/faze F0–F6, reusable podsistemi, brick-liste (ADR-013/014) |
+| [CRUD_PLAN.md](CRUD_PLAN.md) | **F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1–4.4 (quiz/fill/learn) ✅ živo verificirano |
+| [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj; ADR-022) — za HR-ekspanziju nakon F4 |
+| [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅; ostatak pauziran |
+
+## Temelji i referenca
 | Dokument | Svrha |
 |----------|-------|
 | [PRD.md](PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
 | [VISION.md](VISION.md) | Dugoročna full-stack vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Tehnička arhitektura, model podataka, razrada po koracima |
-| [BACKEND.md](BACKEND.md) | Backend plan: Vercel Functions + Supabase, API, migracija |
+| [BACKEND.md](BACKEND.md) | Backend: Supabase (auth/sync/content read-path), staza B, migracije |
 | [ROADMAP.md](ROADMAP.md) | Milestones + status (done/next) |
-| [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **▶ AKTIVNO: platforma-first temelj** — misije/faze/reusable podsistemi, brick-liste, KAKO (ADR-013/014) |
-| [CRUD_PLAN.md](CRUD_PLAN.md) | **▶ AKTIVNO: F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1/4.2/4.3a-b/4.3c ✅ + Playwright login |
-| [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj, prefiks fakulteta, dijeli-unutar-fakulteta; ADR-022) — za HR-ekspanziju nakon F4 |
-| [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn) |
-| [CONTENT_GUIDE.md](CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
-| [CONTENT_INTAKE.md](CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
-| [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data/*.js) uz minimalan usage (ADR-010) |
-| [EXERCISES_ENGINE.md](EXERCISES_ENGINE.md) | Reusable sustav interaktivnih vježbi (7 tipova) + cigla-po-cigla plan |
-| [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](STATISTICS_PLAN.md) | Plan/analiza izvora za vježbe pojedinih predmeta (povijesno, ✅ done) |
-| [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md) | Plan/analiza za Traffic in Tourism (1. god, sem 2) — ✅ done 2026-06-24 |
-| [MATH_PLAN.md](MATH_PLAN.md) | Plan za Matematiku (zadnji 1.-god predmet; KaTeX + worked problems) — ✅ LIVE 2026-06-27 |
-| [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (prijevod platforme; klon-program + globalni UI toggle, ADR-012) — ▶ cigle 1–5c ✅ LIVE 2026-06-28 |
-| [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md) | BUG-012 — randomizirane vježbe iz baze; Opcija A izvedena — ✅ LIVE 2026-06-27 |
-| [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (Stripe+NKD djelatnosti, matura tržište, modeli, ideje) — planiranje 2026-06-27 |
-| [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validate:content, validate:schema, export:json --check, test:unit, Playwright, CI) |
-| [CHANGELOG.md](CHANGELOG.md) | Verzije (semver) i što se mijenjalo |
-| [PROGRESS.md](PROGRESS.md) | Dnevnik rada — što je napravljeno u svakoj sesiji |
-| [BUGS.md](BUGS.md) | Bugovi + lekcije naučene ("učimo iz grešaka") |
-| [DECISIONS.md](DECISIONS.md) | Arhitektonske odluke (ADR) i zašto su donesene |
-| [BACKLOG.md](BACKLOG.md) | Parkiralište ideja (monetizacija, UGC, funkcionalnosti) |
+| [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validatori, test:unit, Playwright, test:authed, CI) |
+| [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (planiranje) |
+
+## Sadržaj (autorstvo) — `content/`
+| Dokument | Svrha |
+|----------|-------|
+| [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn + KaTeX konvencija) |
+| [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
+| [content/CONTENT_INTAKE.md](content/CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
+| [content/CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data) uz minimalan usage (ADR-010) |
+| [content/EXERCISES_ENGINE.md](content/EXERCISES_ENGINE.md) | Reusable sustav interaktivnih vježbi (7 tipova) — engine se NE dira za sadržaj |
+
+## Predmeti — `subjects/`
+| Dokument | Svrha |
+|----------|-------|
+| [subjects/README.md](subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe/napomene) |
+| [subjects/ACCOUNTING_PLAN.md](subjects/ACCOUNTING_PLAN.md) · [subjects/STATISTICS_PLAN.md](subjects/STATISTICS_PLAN.md) · [subjects/TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md) · [subjects/MATH_PLAN.md](subjects/MATH_PLAN.md) | Detaljni planovi pojedinih predmeta (✅ done) |
+
+## Živi zapisnici
+| Dokument | Svrha |
+|----------|-------|
+| [HISTORY.md](HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
+| [CHANGELOG.md](CHANGELOG.md) | Verzije i što se mijenjalo |
+| [PROGRESS.md](PROGRESS.md) | Dnevnik rada po sesijama |
+| [DECISIONS.md](DECISIONS.md) | Arhitektonske odluke (ADR-001…022) i zašto |
+| [BUGS.md](BUGS.md) | Bugovi + lekcije naučene |
+| [BACKLOG.md](BACKLOG.md) | Parkiralište ideja |
+
+## Arhiva — `archive/`
+| Dokument | Svrha |
+|----------|-------|
+| [archive/EXERCISES_DB_FIX_PLAN.md](archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ izvedeno 2026-06-27) |
+| [archive/SONNET_REVIEW_2026-06.md](archive/SONNET_REVIEW_2026-06.md) | Vanjski review (Sonnet 4.6) — input za F1 hardening (potrošeno; prijedlozi, ne istina) |
 
 ## Kako radimo (pravila)
 1. **Mali koraci** — svaki korak je testabilan zasebno.

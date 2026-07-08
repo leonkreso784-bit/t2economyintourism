@@ -9,7 +9,7 @@
 // Koraci:
 //   1) Kopiraj ovaj fajl u data/<subject-id>/<lesson>.js
 //   2) Preimenuj varijablu (npr. microEconomicsM1) i izloži je na window (dolje).
-//   3) Popuni kategorije po docs/CONTENT_SCHEMA.md.
+//   3) Popuni kategorije po docs/content/CONTENT_SCHEMA.md.
 //   4) Dodaj predmet u data/catalog.js (content.scripts + content.resolve).
 //   5) `npm run verify` (provjeri catalog + sadržaj), pa testovi.
 //

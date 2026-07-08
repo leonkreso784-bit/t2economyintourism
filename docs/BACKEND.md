@@ -49,7 +49,7 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
 > **Stanje baze (2026-06-27, nakon BUG-012 fixa): 51 redova / 17 predmeta / 0 redova vježbi.** (Inicijalno 49/15 → +traffic → +math gradivo → −4 reda vježbi.)
 > Anon-key read provjeren, Playwright 68/68 (sadržaj iz baze). Datoteke = i dalje izvor istine + fallback.
 > **⚠️ BUG-012 PRAVILO: VJEŽBE NIKAD U BAZU** (sadrže `generate()` funkcije koje JSON briše) — read-path nosi SAMO M1/M2/Final;
-> vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`).
+> vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`).
 > ⚠️ Free tier: projekt se uspava nakon ~7 dana neaktivnosti → restore je BESPLATAN; dok je uspavan sadržaj radi iz datoteka (fallback), login/sync ne. Re-sync nakon izmjene predmeta: `node scripts/migrate-content.js <id>`.
 > **✅ ODLUKA (2026-07-05): Supabase Pro (€25/mj) PRIJE prvih korisnika** (backup + bez uspavljivanja) — gasi rizik gubitka napretka i login/sync padova. Do tada free tier + fallback ostaje.
 

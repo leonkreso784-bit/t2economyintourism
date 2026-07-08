@@ -4,7 +4,7 @@
 > vježbe) i njegovog prvog korisnika — **Accounting**. Pisano da **preživi compaction**: §6 je
 > checklist s kvačicama — nakon compacta otvori OVAJ fajl i nastavi od prve nezacrtane cigle.
 >
-> **Vezano:** [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) (analiza izvora + katalog vježbi) · [ARCHITECTURE.md](ARCHITECTURE.md) ·
+> **Vezano:** [ACCOUNTING_PLAN.md](../subjects/ACCOUNTING_PLAN.md) (analiza izvora + katalog vježbi) · [ARCHITECTURE.md](../ARCHITECTURE.md) ·
 > [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md). Datum: 2026-06-10.
 
 ---
@@ -277,4 +277,4 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 - **Obrazac za novi tip:** grader `gradeX(ex, answers)` u jezgri (+ node test) → `WIDGETS.x = {render, collect, mark, grader|grade}` u exercises.js → demo u data → temp Playwright → obriši.
 - **Obrazac za novu VJEŽBU:** dodaj u `data/accounting/exercises.js` s `lesson:` = `'first-midterm'` (K1) / `'second-midterm'` (K2) / `'final'` (examPractice-stil) + `chapter:N` (sortira listu) → bump `CONTENT_VERSION` → verify + Playwright. NULA izmjena enginea. (Nakon FAZE 4 lekcije su podijeljene; vježbe se filtriraju po `currentLesson`.)
 - Izvori: `tmp-acc/img/` (133 JPG, gitignored) + docx (`…/Accounting/`). Renderer: `tmp-acc/pdf2img.mjs`.
-- Analiza/katalog: [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**
+- Analiza/katalog: [ACCOUNTING_PLAN.md](../subjects/ACCOUNTING_PLAN.md). Odluke zaključane: **engine = kernel + generic + parametrizirano + 3 moda; redoslijed = vertikalni rez po poglavlju, K1 prvo.**

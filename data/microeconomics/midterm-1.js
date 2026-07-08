@@ -2,7 +2,7 @@
 // Pindyck & Rubinfeld, Microeconomics, 9th ed. — Chapters 1–7 (lectures L1–L6).
 // K1/K2 granica iz službenog DINP rasporeda predavanja (L7 = 1. kolokvij).
 //
-// ⚠ PRVI KVANTITATIVNI PREDMET — koristi KaTeX (ADR-009). Konvencija (docs/CONTENT_SCHEMA.md):
+// ⚠ PRVI KVANTITATIVNI PREDMET — koristi KaTeX (ADR-009). Konvencija (docs/content/CONTENT_SCHEMA.md):
 //   inline  \( ... \)   (u JS stringu: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   Jedan `$` se NE koristi (valuta). LaTeX backslash u stringu = "\\".

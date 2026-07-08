@@ -3,7 +3,7 @@
 > ## ✅ STATUS: GOTOVO I LIVE (2026-06-12) — POVIJESNI plan / arhiva
 > Accounting je 100% kompletan (3 lekcije + **41 interaktivna vježba**) i deployan. Ovaj dokument je zapis
 > KAKO je nastao (analiza 43 izvorne datoteke + katalog tipova vježbi). ⚠️ Korisnik je ZASIĆEN računovodstvom —
-> ne vraćati se osim izričito. Reusable engine vježbi: [EXERCISES_ENGINE.md](EXERCISES_ENGINE.md). Niže = izvorni plan.
+> ne vraćati se osim izričito. Reusable engine vježbi: [EXERCISES_ENGINE.md](../content/EXERCISES_ENGINE.md). Niže = izvorni plan.
 
 > **Svrha:** kompletna priprema za (1) novi **Exercises** odjeljak (pravo računovodstvo, interaktivno
 > + auto-ocjenjivanje) i (2) restrukturu predmeta na **K1 / K2 / finalni** standard (kao sem-2 predmeti).

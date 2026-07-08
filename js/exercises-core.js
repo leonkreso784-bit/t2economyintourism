@@ -7,7 +7,7 @@
 // Izvozi se i na `window.ExercisesCore` (browser, koristi ga js/exercises.js) i preko
 // `module.exports` (node testovi: tests/unit/exercises-core.test.js).
 //
-// Konvencije (vidi docs/EXERCISES_ENGINE.md §3): u DATA su iznosi čisti Number; korisnički
+// Konvencije (vidi docs/content/EXERCISES_ENGINE.md §3): u DATA su iznosi čisti Number; korisnički
 // unos se normalizira preko parseAmount; novac se uspoređuje na razini centi; nikad == na float.
 
 (function (root) {

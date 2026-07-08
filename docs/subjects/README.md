@@ -1,0 +1,53 @@
+# Predmeti — stanje sadržaja (autoritativna tablica)
+
+> **Ovo je trajni dom za "koji predmet ima što".** Izvor: CLAUDE.md povijest (pred-reorg 2026-07-08) + docs/PROGRESS.
+> Brojevi = **finalna lekcija** (hibrid K1+K2+examPractice). Ažuriraj OVDJE kad se predmet mijenja.
+
+## Invarijante (vrijede za sve predmete)
+- Svaki predmet = **3 lekcije**: `first-midterm` / `second-midterm` / `final` (final = `Object.assign(M1, M2, {examPractice})`, učitava se **ZADNJI**).
+- **JSON dual-read 18/18**: study sadržaj se čita DB → `data/json/<id>/*.json` → `.js` fallback. Datoteke = izvor istine do F4.6 flipa.
+- **Vježbe = JS moduli** (`data/<id>/exercises.js` + lib), NIKAD u bazu/JSON (BUG-012); učitavaju se preko `content.codeScripts`.
+- Baza `subject_content`: **51 red / 17 predmeta** (17×3; **accounting nije u bazi** — study ide s JSON/datoteka).
+- Kvantitativni predmeti = **KaTeX** (ADR-009; currency-safe delimiteri `\( \)` / `\[ \]` / `$$ $$`, NIKAD jedan `$`).
+
+## 2. godina HM — 8/8 KOMPLETNO i LIVE
+
+| Predmet | ID | Sem | Final: kat/fc/quiz/fill | Vježbe | Napomene |
+|---|---|---|---|---|---|
+| Tourism Economics 2 | `te2` | 1 | 11 / 135 / 94 / 66 | — | REBUILD iz 10 PDF predavanja (stari je bio tanak); LIVE 2026-06-12 `ca06158` |
+| Entrepreneurship & Innovation | `entrepreneurship` | 1 | 15 / 175 / 134 / 80 | — | split + 4 nove kat (~95 fc); LIVE 2026-06-13 `8a37404` |
+| Accounting | `accounting` | 1 | 15 kat | **41** (6 tipova) | prvi s Exercises sustavom; plan [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md); LIVE 2026-06-12 `a6b6fb0` |
+| E-Business | `ebusiness` | 1 | 15 / 152 / 124 / 75 | — | stari bio VJERAN predavanjima → split + obogaćen (+23 fc); LIVE 2026-06-13 `51e4e7b` |
+| Economics in Hospitality | `econ-hospitality` | 2 | 11 / 162 / 106 / 84 | — | K1 rebuild iz izvora (30→73 fc) + K2 hotelski KPI; LIVE 2026-06-09 `24f2b6f` |
+| Marketing | `marketing` | 2 | 13 / 113 / 66 / 56 | — | K1 (T1–T8) + K2 (T9–T13) + hibrid; LIVE 2026-06-06 `822d788` |
+| Tourism Geography | `geography` | 2 | 13 / 128 / 127 / 84 | — | + **slijepa karta** (blind-map, WebP); K1 obogaćen, K2 kontinenti; LIVE 2026-06-10 `a8e7371` |
+| Food & Nutrition | `food-nutrition` | 2 | 15 / 174 / 182 / 122 | — | Beer premješten K1→K2 po silabusu (ključ isti → napredak očuvan); LIVE 2026-06-10 `05cb0af` |
+
+## 1. godina HM — 9/9 KOMPLETNO i LIVE (⛔ Intro to Hospitality BLOKIRAN — nema PDF-ova)
+
+| Predmet | ID | Sem | Final: kat/fc/quiz/fill | Vježbe | Napomene |
+|---|---|---|---|---|---|
+| Business Informatics | `business-informatics` | 1 | 11 kat / ~86 fc | — | prvi 1.god predmet (pilot mapa-po-predmetu) |
+| Microeconomics | `microeconomics` | 1 | 15 / 164 / 148 / 118 | — | **prvi kvantitativni (KaTeX)**; K1=Ch1–7, K2=Ch8–18 iz silabusa; LIVE 2026-06-14 `236e303` |
+| Statistics | `statistics` | 1 | 10 / 108 / 102 / 80 | **56** + `stat-lib` | KaTeX; Learn obogaćen (Track A); plan [STATISTICS_PLAN.md](STATISTICS_PLAN.md); LIVE 2026-06-16 `d97ee0b` |
+| Macroeconomics | `macroeconomics` | 1 | — (study) | **~81** (B1–B12) | KaTeX; open-economy + BoP vježbe; LIVE `58cc37c` + `28fcb7e` |
+| Academic Writing | `academic-writing` | 1 | 24 / 336 / 286 / 240 | **17** (uklj. 2 `cite`) | **prvi GENERATOR-pilot** (~$2.27); Chicago style težište; LIVE 2026-06-23 |
+| Mathematics | `math` | 1 | 10 / 79 / 79 / 64 | **39** + `math-lib` | KaTeX; ZADNJI 1.god predmet; K1 learn obogaćen + Gauss/Gauss-Jordan; plan [MATH_PLAN.md](MATH_PLAN.md); LIVE 2026-06-27 |
+| Special Interest Tourism | `sit` | 2 | 13 / 94 / 83 / 65 | — | ⚠ nautical kat. iz općeg znanja (slikovni slajd); Event+Outdoor nepokriveni; LIVE 2026-06-14 `e0e9ca7` |
+| Management | `management` | 2 | 11 / 89 / 84 / 55 | — | Lussier 9e; teme 2/3/6/13/15 bez decka → neobrađene; LIVE 2026-06-14 `06c96a8` |
+| Traffic in Tourism | `traffic` | 2 | 27 / 189 / 186 / 188 | — | ručno (NE generator); CONNECTOR+PRODUCT obrazac; plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md); LIVE 2026-06-25 `62a4119` |
+
+## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012)
+
+| Predmet | ID | Status |
+|---|---|---|
+| Poslovna informatika | `business-informatics-hr` | ✅ pilot LIVE 2026-06-28 (11 kat/86 fc, strukturno identično EN; ~$0.66) |
+| ostali predmeti | — | ⬜ long-tail (Cigla 6, batch `scripts/translate-subject.js`); **PAUZIRANO** do kraja F4+ (platforma-first) |
+
+## Detaljni planovi (u ovoj mapi)
+- [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) — analiza izvora + katalog vježbi (✅ done)
+- [STATISTICS_PLAN.md](STATISTICS_PLAN.md) — Learn Track A + vježbe Track B (✅ done)
+- [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md) — plan + master-obrazac (✅ done)
+- [MATH_PLAN.md](MATH_PLAN.md) — KaTeX + worked problems (✅ done)
+
+> Alati za autorstvo: [../content/](../content/) (SCHEMA · GUIDE · INTAKE · GENERATOR · EXERCISES_ENGINE).

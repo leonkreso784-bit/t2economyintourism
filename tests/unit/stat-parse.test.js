@@ -2,7 +2,7 @@
 // ===== Node de-risk testovi: parseAmount/numEq za STATISTIČKE formate brojeva =====
 // Pokreni: `npm run test:unit` (ili: node tests/unit/stat-parse.test.js)
 //
-// Zašto (docs/STATISTICS_PLAN.md, cigla B0.5): engineov parseAmount građen je za NOVAC.
+// Zašto (docs/subjects/STATISTICS_PLAN.md, cigla B0.5): engineov parseAmount građen je za NOVAC.
 // Statistika unosi NEGATIVNE (z = −2.64, slope = −0.4) i SITNE DECIMALE (p = 0.0336),
 // uključujući vrijednosti s VODEĆOM NULOM i točno 3 decimale (R² = 0.576, p = 0.025/0.001).
 // Ovaj test dokazuje da ih engine parsira ISPRAVNO PRIJE nego se autorira ijedna vježba.

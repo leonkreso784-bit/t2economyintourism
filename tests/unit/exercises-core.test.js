@@ -2,7 +2,7 @@
 // ===== Node unit testovi za js/exercises-core.js =====
 // Pokreni: `npm run test:unit`  (ili: node tests/unit/exercises-core.test.js)
 // Bez frameworka — mali runner + node `assert`. Izlaz != 0 ako ijedan test padne.
-// Ovo je najjeftinija zaštita "bez bugova" za jezgru ocjenjivanja (vidi docs/EXERCISES_ENGINE.md §3).
+// Ovo je najjeftinija zaštita "bez bugova" za jezgru ocjenjivanja (vidi docs/content/EXERCISES_ENGINE.md §3).
 
 const assert = require('assert');
 const path = require('path');

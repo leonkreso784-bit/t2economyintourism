@@ -45,14 +45,14 @@ Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (`62a4119`)
 **✅ Math = 9. (zadnji) 1.god predmet — K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`+`31be03f`);**
 year1/sem1, KaTeX, 39 vježbi (engine sad renderira KaTeX); K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa. **→ 1. GODINA HM 9/9 KOMPLETNA (uz Intro blokiran).**
 Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
-`docs/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
+`docs/content/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
 (novi `cite` = „napiši citat"). **Blok B read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s
 file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
 
 ## 🧭 DALJE — planovi (korisnik, 2026-06-24)
 **A) Dovršiti sadržaj 1. godine (po redu):**
-1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md)).
-2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
+1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md)).
+2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](subjects/MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
 **B) Nakon sadržaja — prioriteti** *(2026-06-29: PREUREĐENO platforma-first zaokretom → vidi [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)):*
@@ -92,7 +92,7 @@ datotekama je migracijski sigurno (ADR-006), migracija ide JEDNOM na punom katal
 Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
 **Kvantitativni predmeti (Math/Micro/Macro/Statistika):** poseban tretman — **KaTeX** rendering formula +
 „worked problems" konvencija + grafovi-kao-slike (**ADR-009**). KaTeX = zasebna cigla PRIJE prvog takvog
-predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](CONTENT_INTAKE.md).
+predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md).
 **Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1+K2+Finalni, 13 kat.) · **Economics in Hospitality
 KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) · **Tourism Geography KOMPLETAN**
 (S30 1. kolokvij popravljen iz izvora: + `introToGeography`, croatiaFeatures, parks/UNESCO, karta netaknuta;
@@ -159,7 +159,7 @@ uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadrža
   How it works, 5 modova, završni CTA, strukturiran footer + **SEO meta**. Test `landing.spec.js`.
   Preostaje: redizajn study/lessons unutarnjih ekrana (kasnije po potrebi).
 - ⬜ **Tier 2 (povjerenje / priprema za Google Ads):** Privacy Policy + Contact + FAQ stranica/sekcija
-- ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](CONTENT_INTAKE.md)
+- ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md)
 - **DoD:** uđeš → fakultet → smjer → godina → predmeti po semestru; izgled uglađen; sve responzivno
   (Playwright zeleno); dodavanje predmeta = catalog + scaffold. **(Navigacija + redizajn browse/landing: ispunjeno ✅)**
 

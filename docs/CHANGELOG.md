@@ -225,7 +225,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   (`filesToLoad = fromDb ? codeScripts : scripts`) + `scripts/migrate-content.js` više ne šalje vježbe + `scripts/verify-catalog.js`
   čuvar (predmet s vježbama MORA imati codeScripts). Baza očišćena (4 reda vježbi) + Math gradivo migrirano → **51 redova / 17 predmeta /
   0 redova vježbi**. Cache `20260690`. **Pravilo: read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); vježbe iz datoteke.**
-  Vidi `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`.
+  Vidi `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`.
 ### Added
 - **Mathematics — NOVI predmet (1. god, sem 1), KaTeX — K1+K2+Final ✅ LIVE (deployano 2026-06-27 `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`+`31be03f`)** — zadnji 1.god predmet iz
   deckova 1–6,8,9,11. **K1 = teme 1–5** (`mathM1`, 5 kat: realNumbers/basicEquations/functions/differentiation/extrema) · **K2 = teme 6–11**
@@ -258,7 +258,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   `learn.content` dođe prazan; eksplicitan `process.exit` (Windows libuv/undici teardown); raw-dump padova u `tmp/`. `assemble-subject.js`: hyphen-ključevi
   (`first-midterm`) ostaju citirani u ispisanom catalog-unosu (regex skida navodnike samo s valjanih JS identifikatora).
 ### Added (ranije)
-- **GENERATOR PREDMETA (jezgra, bricks 1–4)** — pipeline za dodavanje predmeta uz minimalan Opus-usage (plan `docs/CONTENT_GENERATOR.md`):
+- **GENERATOR PREDMETA (jezgra, bricks 1–4)** — pipeline za dodavanje predmeta uz minimalan Opus-usage (plan `docs/content/CONTENT_GENERATOR.md`):
   `scripts/validate-content.js` (`npm run validate:content` — schema + quiz indeks + KaTeX currency-safe; 14 predmeta 0/0) ·
   `scripts/build-topics.js` (PDF/TXT materijali → `tmp/<id>/topics.json`, jedan fajl=jedna tema, kolokvij iz podmape) ·
   `scripts/generate-subject.js` (**Anthropic Sonnet preko `.env` ključa**, strogi schema-prompt + few-shot → `draft.json`; max_tokens 16000,
@@ -340,7 +340,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   KaTeX CDN (`0.16.9`, cdnjs, `defer`) u `<head>` + `css/math.css` (dark + mobilni overflow). `renderMath` se zove
   na kraju sva četiri renderera (learn/flashcards/quiz/fill). **Delimiteri currency-safe: inline `\( \)`, blok
   `\[ \]` / `$$ $$`; jedan `$` se NE koristi** (postojećih 123 valutnih `$NN` ostaje doslovno — inače bi KaTeX
-  pokvario live sadržaj). Konvencija autorstva: `docs/CONTENT_SCHEMA.md`. Cache `?v=20260648` (math.js + learn/
+  pokvario live sadržaj). Konvencija autorstva: `docs/content/CONTENT_SCHEMA.md`. Cache `?v=20260648` (math.js + learn/
   flashcards/quiz/fill + styles.css). Test `tests/katex.spec.js` 4/4 (render + currency-safety), verify 0/0.
 - **Management — novi predmet 1. godine** (2026-06-14, 3. predmet 1. god, zadnji čisto tekstualni): iz 11 PDF predavanja
   (Lussier *Management Fundamentals* 9e; INTRO + TU2–TU11). K1 (`data/management/midterm-1.js`, `managementM1`, 6 kat:
@@ -514,7 +514,7 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   gradeClassify` + `statementCells`. **Testovi:** node **86/86** (`npm run test:unit`), Playwright **36/36** (0 regresija; smoke
   9 predmeta 0 errora). Cache `?v=20260623`. **Sve i dalje iza `features.exercises` → ostali predmeti netaknuti.**
 - **Exercises engine — FAZA 0 (scaffold, bez sadržaja):** temelj generičkog, reusable sustava interaktivnih
-  auto-ocjenjivih vježbi (plan: `docs/EXERCISES_ENGINE.md`). **Engine (subject-agnostic):** `js/exercises-core.js`
+  auto-ocjenjivih vježbi (plan: `docs/content/EXERCISES_ENGINE.md`). **Engine (subject-agnostic):** `js/exercises-core.js`
   — čiste funkcije bez DOM-a (`parseAmount` s EU/US + zagrade-negativ, `formatAmount`, `numEq`, `numEqMoney` na razini
   centi, `gradeSet` multiset/redoslijed-neovisno, `seededRandom` mulberry32, `pickParams`); `js/exercises.js`
   — `initExercises()` (lista kartica iz content packa, filtrirana po lekciji, prazno stanje, shell na klik);

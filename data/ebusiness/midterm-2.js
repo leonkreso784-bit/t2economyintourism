@@ -1,7 +1,7 @@
 // ===== E-BUSINESS — Second Midterm (K2) =====
 // Rebuilt 2026-06-13 from the 14 lecture PDFs (course "E-Business in Hospitality").
 // K2 = Units 8-15: visual design & identity, digital marketing, social media, Google Analytics & Trends, SEO/SEM/SERP, hotel PMS, e-business security, challenges & trends.
-// Schema: docs/CONTENT_SCHEMA.md (flashcards / quiz(correct=index) / fillBlanks / learn).
+// Schema: docs/content/CONTENT_SCHEMA.md (flashcards / quiz(correct=index) / fillBlanks / learn).
 
 const ebusinessM2 = {
 

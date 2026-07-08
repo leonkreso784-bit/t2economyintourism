@@ -1,7 +1,7 @@
 // ===== E-BUSINESS — First Midterm (K1) =====
 // Rebuilt 2026-06-13 from the 14 lecture PDFs (course "E-Business in Hospitality").
 // K1 = Units 1-7: e-commerce context, tourism distribution chain, internet/www as business platform, relationships & cash flows (merchant/agent), computer graphics, platform economy.
-// Schema: docs/CONTENT_SCHEMA.md (flashcards / quiz(correct=index) / fillBlanks / learn).
+// Schema: docs/content/CONTENT_SCHEMA.md (flashcards / quiz(correct=index) / fillBlanks / learn).
 
 const ebusinessM1 = {
 

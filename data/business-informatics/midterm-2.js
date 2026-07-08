@@ -1,6 +1,6 @@
 // ===== Business Informatics — Midterm 2 (Chapters 7–11) =====
 // Izvor: profesorske prezentacije (Tomislav Car, FMTU Opatija, 2024/25).
-// Oblik po docs/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
+// Oblik po docs/content/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
 
 const businessInformaticsM2 = {
   // ---- Chapter 7: E-Business (U7) ----

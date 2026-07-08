@@ -83,7 +83,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   pa su `generate()` metode nestale (dokaz iz baze: `statisticsExercises` 56 vježbi, 23 s `params`, **0 s `generate`**).
   (2) **Loader je u DB-modu preskakao SVE `content.scripts`** (`js/content-loader.js`), pa se nisu učitali ni `stat-lib`/
   `math-lib`; engine `js/exercises.js` bez `generate` vrati sirov objekt → razbijeno.
-- Rješenje (Opcija A, [EXERCISES_DB_FIX_PLAN.md](EXERCISES_DB_FIX_PLAN.md), cigla-po-cigla, sve LIVE 2026-06-27 `801d9a6`):
+- Rješenje (Opcija A, [EXERCISES_DB_FIX_PLAN.md](archive/EXERCISES_DB_FIX_PLAN.md), cigla-po-cigla, sve LIVE 2026-06-27 `801d9a6`):
   1. **catalog `content.codeScripts`** na 5 predmeta s vježbama (lib+exercises.js) — vježbe = KOD, uvijek iz datoteke.
   2. **`content-loader.js`** u DB-modu: study iz baze, ali `codeScripts` (vježbe+lib) i dalje iz datoteke (`filesToLoad = fromDb ? codeScripts : scripts`). Datoteka pregazi eventualni lossy DB red.
   3. **`migrate-content.js`** više ne šalje `content.exercises` u bazu.

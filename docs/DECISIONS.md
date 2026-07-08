@@ -57,7 +57,7 @@ validator provjerava da je indeks u RASPONU, NE je li STVARNO točan. Kriv klju�
   structured output, mali `max_tokens` → **potrošnja minimalna** (presuđuje, ne piše).
 - **Ograničen na najskuplji rizik:** quiz `correct` + fill odgovori (+ flagrantne flashcard greške). Ne troši Opus na ono što deterministički gate već hvata.
 - **MORA imati izvorni materijal** (ne nagađa iz zraka). Reusable cigla `scripts/verify-subject.js` u generatoru; **retroaktivno na svih 18 predmeta** (jednokratno → triaža flagova).
-**Posljedice:** Novi (i stari) sadržaj dobiva neovisnu semantičku provjeru uz minimalan trošak; ljudski pregled ostaje finalni, ali fokusiran. Detaljan plan: `CONTENT_GENERATOR.md`. Nadopunjuje ADR-010 (generator).
+**Posljedice:** Novi (i stari) sadržaj dobiva neovisnu semantičku provjeru uz minimalan trošak; ljudski pregled ostaje finalni, ali fokusiran. Detaljan plan: `content/CONTENT_GENERATOR.md`. Nadopunjuje ADR-010 (generator).
 
 ---
 
@@ -263,7 +263,7 @@ objekt → nestaje cijela klasa „unescaped quote → nevaljan JSON" padova (sa
 (learn kao string) +retry (learn prazan). **Inherentni limit:** validator provjerava da je quiz `correct` u
 rasponu, NE je li stvarno točan → hvata samo Opus/ljudski spot-check (zato gate postoji).
 **Posljedice:** Novi predmet ~$1–1.5 (Sonnet, korisnikov račun) umjesto sati Opus-rada. Pouka: generirani
-sadržaj VERIFICIRATI protiv predavanja. Detalji: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md).
+sadržaj VERIFICIRATI protiv predavanja. Detalji: [CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md).
 
 ## ADR-009 — Kvantitativni predmeti (Math/Micro/Macro/Statistika): KaTeX + "worked problems"
 **Datum:** 2026-06-05 · **Status:** ✅ **implementirano** (KaTeX cigla, 2026-06-14)
@@ -274,7 +274,7 @@ sva četiri renderera (`learn.js`/`flashcards.js`/`quiz.js`/`fill-blanks.js`). T
 valutnih `$NN` (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
 **pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.** Te se
 sekvence ne pojavljuju u običnom tekstu (provjereno grep-om) → render je globalan ali za tekstualne predmete
-**no-op** (nije potreban opt-in flag). Konvencija autorstva: [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) § Matematika.
+**no-op** (nije potreban opt-in flag). Konvencija autorstva: [CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) § Matematika.
 **Kontekst:** Math, Microeconomics, Macroeconomics i Statistika su **formula- i zadatak-orijentirani**;
 postojeća schema (Learn/Flashcards/Quiz/Fill) rađena je za konceptualno, tekstualno gradivo. Tri problema:
 (1) prikaz **formula** (HTML tekst ne prikazuje razlomke/eksponente/sume/integrale), (2) bit je
@@ -294,7 +294,7 @@ distribucije). Math materijal je u JPG slajdovima (PPT export).
 fill) → cache bump + test. Točnost formula iz slika = glavni rizik → male serije + **obavezan ljudski pregled**.
 **Redoslijed:** prvo lagani tekstualni predmeti; KaTeX cigla PRIJE prvog kvantitativnog; pilot na predmetu
 s materijalima (Statistika je PRAZNA, Micro tanak → realno Math ili Macro); **čista Matematika ZADNJA**.
-Detalji: [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) (LaTeX konvencija) + [CONTENT_INTAKE.md](CONTENT_INTAKE.md) (image→LaTeX, inventar).
+Detalji: [CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) (LaTeX konvencija) + [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md) (image→LaTeX, inventar).
 
 ## ADR-008 — Backend hosting: Vercel Functions + Supabase
 **Datum:** 2026-06-03 · **Status:** prihvaćeno

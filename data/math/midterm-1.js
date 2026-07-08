@@ -7,7 +7,7 @@
 //   3. Functions                       4. Differentiation
 //   5. Increase, Decrease & Extrema
 //
-// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/CONTENT_SCHEMA.md §Math):
+// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/content/CONTENT_SCHEMA.md §Math):
 //   inline  \( ... \)   (in a JS string: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   A single `$` is NEVER used (currency-safe). A LaTeX backslash in a string = "\\".

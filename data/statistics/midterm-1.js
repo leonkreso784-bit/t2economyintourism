@@ -4,7 +4,7 @@
 //   K1: describing data (graphical) · describing data (numerical) · probability ·
 //       discrete random variables · continuous random variables · sampling distributions
 //
-// ⚠ KVANTITATIVNI PREDMET — KaTeX (ADR-009). Konvencija (docs/CONTENT_SCHEMA.md):
+// ⚠ KVANTITATIVNI PREDMET — KaTeX (ADR-009). Konvencija (docs/content/CONTENT_SCHEMA.md):
 //   inline  \( ... \)   (u JS stringu: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   Jedan `$` se NE koristi (valuta). LaTeX backslash u stringu = "\\".

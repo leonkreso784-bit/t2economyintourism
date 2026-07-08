@@ -36,7 +36,7 @@ zakompliciralo engine i validatore, i otežalo buduće jezike.
 - Lekcije: isti `id`-evi (`first-midterm`/`second-midterm`/`final` ili `midterm-1/2`), **`name`+`description` prevedeni**.
 - `content.scripts`/`resolve`/`codeScripts`/`exercises` = isti raspored, ali HR putanje + HR var-imena.
 
-## Što se PREVODI vs ČUVA (po schemi `docs/CONTENT_SCHEMA.md`)
+## Što se PREVODI vs ČUVA (po schemi `docs/content/CONTENT_SCHEMA.md`)
 **PREVODI (string-polja):**
 - kategorija `name`
 - `flashcards[]`: `question`, `answer`, `explanation`
@@ -55,7 +55,7 @@ zakompliciralo engine i validatore, i otežalo buduće jezike.
 - struktura objekta (broj flashcardova/quizova/fillova = isti)
 
 ## Alat: `scripts/translate-subject.js` (Cigla 2)
-- **Sonnet preko `.env ANTHROPIC_API_KEY`** (korisnikov ključ; isti obrazac kao generator — `docs/CONTENT_GENERATOR.md`).
+- **Sonnet preko `.env ANTHROPIC_API_KEY`** (korisnikov ključ; isti obrazac kao generator — `docs/content/CONTENT_GENERATOR.md`).
 - **`tool_use` structured output** (kao generator) — model vraća JSON objekt s prevedenim string-poljima; sve ne-string ostaje.
 - Ulaz: učita EN data-datoteku (vm-shim → uzme window var), **prevede SAMO bijele-popis string-polja**, sve ostalo kopira 1:1.
 - Izlaz: `data/<subj>-hr/<file>.js` s preimenovanim const/var (`…Hr…`) i `Object.assign` u final.js (HR varovi).

@@ -73,7 +73,7 @@ Zatim: popuni sadržaj → zalijepi catalog unos → `npm run verify` → testov
    > treba ručno dodavati HTML u `index.html` — dovoljan je ovaj unos.
 3. **(Privremeno, do koraka A4 lazy-load)** uključi datoteku u `index.html` `<script>`
    blok. Nakon koraka A4 ovo više neće trebati — učitavat će se automatski.
-4. **Test** (vidi [TESTING.md](TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).
+4. **Test** (vidi [TESTING.md](../TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).
 
 ## C) Iz PPT/PDF profesora → predmet (GENERATOR, automatizirano) ✅
 Puni plan i detalji: **[CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)**. Generator-jezgra (bricks 1–4) je gotova;

@@ -21,8 +21,8 @@ odluka), ali je prava planirana stavka.
 **Gdje pripada:** uz **F4** (prvi backend-privilegij + `/api`/Edge šav) ili kao zaseban „compliance" zadatak koji možda vrijedi gurnuti ranije (live je s pravim korisnicima). [[foundation-pivot]]
 
 ## 🧱 Hardening v1 + perf (2026-06-29) — sad u [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) Faza 1/3
-Nalazi iz `sonnet.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).
-Tretiraj `sonnet.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):
+Nalazi iz `archive/SONNET_REVIEW_2026-06.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).
+Tretiraj `archive/SONNET_REVIEW_2026-06.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):
 > **✅ STATUS: F1 1C stavke ISPORUČENE + LIVE (2026-06-30):** sigurnosni headeri, „Works offline"→„No install needed", `loadProgress` schema-merge (u `storage.js`, ne analytics), „400+"→dinamičan (`compute-stats.js`), mrtav `lessonCategoryMap`→`{}`. Preostaju 💤 (CSP/DOMPurify/CSS-bundling/PWA-ikona/SW = Faza 3/6).
 - 🔥 **Sigurnosni headeri** (`vercel.json`): makni deprecated `X-XSS-Protection`; dodaj `Referrer-Policy: strict-origin-when-cross-origin` + `Permissions-Policy: camera=(), microphone=(), geolocation=()`.
 - ✅ **„Works offline" copy** — RIJEŠENO + ✅ **DEPLOYANO NA PRODUKCIJU 2026-07-05** (F3 3A, main `868dc9f`): Service Worker (`sw.js` offline app-shell) + 3A.3 update-flow (Fable, ADR-019) → copy „Works offline"/„Radi offline" LIVE.
@@ -75,7 +75,7 @@ email+lozinka (signUp/signInWithPassword), email potvrda obavezna, magic-link UK
 
 ## ✅ ZAVRŠENO — Sadržaj 2. god (sem 1): restruktura na K1 / K2 / finalni → CIJELA 2. GODINA 8/8
 **Status (2026-06-13):** semestar 2 = **4/4 KOMPLETNO**, semestar 1 = **4/4 KOMPLETNO** → **2. godina HM = 8/8 predmeta.**
-**Accounting ✅** (3 lekcije + reusable Exercises sustav, 41 vježba; `docs/EXERCISES_ENGINE.md`), **Tourism Economics `te2` ✅**
+**Accounting ✅** (3 lekcije + reusable Exercises sustav, 41 vježba; `docs/content/EXERCISES_ENGINE.md`), **Tourism Economics `te2` ✅**
 (restrukturiran + rebuild iz PDF-ova, LIVE), **E-Business ✅** (split + obogaćivanje iz 14 PDF-ova; finalni 15 kat/152 fc; **LIVE `51e4e7b`**),
 **Entrepreneurship ✅** (2026-06-13: split + 4 nove kategorije + obogaćivanje iz 11 PDF predavanja; finalni **15 kat / 175 fc / 134 quiz /
 80 fill** — najveći predmet; **LIVE `8a37404`**). **▶ Dalje = 1. GODINA** (vidi [[content-roadmap-sequencing]]).

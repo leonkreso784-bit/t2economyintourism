@@ -633,9 +633,9 @@ sadržaja** (HRV long-tail, prijevodi, 3. god) i izgraditi **profesionalan, reli
   (GitHub Actions + Vercel preview), type-check bez build-a (JSDoc+tsc), Web Components (light-DOM), error monitoring, SRS (spaced
   repetition) kao produkt-WOW.** CRUD=custom (NE CMS, korisnikova odluka); vanilla/no-build ostaje.
 - **Zapisano:** `docs/FOUNDATION_PLAN.md` (nov, detaljan) · **ADR-013** (content arhitektura) + **ADR-014** (eng. standardi) u DECISIONS ·
-  ROADMAP §STRATEŠKI ZAOKRET + §B preuređen · README index · BACKLOG (hardening v1 + offline-feature + sonnet.md provjereno) ·
+  ROADMAP §STRATEŠKI ZAOKRET + §B preuređen · README index · BACKLOG (hardening v1 + offline-feature + archive/SONNET_REVIEW_2026-06.md provjereno) ·
   CLAUDE.md §DALJE/§Ključne odluke/docs · memorija `foundation-pivot` + MEMORY.md.
-- **`sonnet.md` review (raspravljen):** kompetentan ali NE u potpunosti verificiran — **#7 `display=swap` NETOČAN (već postoji `index.html:51`)**,
+- **`archive/SONNET_REVIEW_2026-06.md` review (raspravljen):** kompetentan ali NE u potpunosti verificiran — **#7 `display=swap` NETOČAN (već postoji `index.html:51`)**,
   #4 `lessonCategoryMap` „nije korišten" netočno (jest, `navigation.js:545`; mrtav je samo entry). Pouka: grep/read za SVAKI claim. „🔴 ozbiljno"
   precijenjeno (CSP/DOMPurify realni TEK uz UGC). Realno do-now: headeri, „400+", offline copy, mrtav kod → „hardening v1" u BACKLOG/F1.
 - **i18n chrome (long-tail, NAPRAVLJEN, NE-DEPLOYAN):** prije zaokreta prevođen UI chrome (study/lessons breadcrumb+toastovi, progress/analytics
@@ -782,7 +782,7 @@ Analiza „sljedećih koraka" otkrila ozbiljan **živi bug** pri provjeri Supaba
 - **Commiti** `e6588aa` (dok) + `b7a6b7f` (loader+catalog) + `0a5b1f7` (migrate) + `801d9a6` (verify-čuvar). **PUSH/DEPLOY**
   `7176194..801d9a6`. **Math sad čita gradivo iz baze kao ostalih 16; vježbe iz datoteke.**
 - **Pravilo (novo):** read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); **vježbe (kod) UVIJEK iz datoteke.**
-  Detalji: `docs/BUGS.md` §BUG-012 + `docs/EXERCISES_DB_FIX_PLAN.md`.
+  Detalji: `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`.
 
 ---
 
@@ -818,12 +818,12 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 - **Commitano lokalno:** `b481be5` (K1) + `c49422a` (K2+Final+exercises-KaTeX). Gate: validate 0/0, verify 0/0, test:unit 33/33, **Playwright 68/68 (subjects=17)**.
 - **Bug ulovljen ranije u sesiji:** smoke-test testira SAMO prvu resolve-lekciju po predmetu → K2/final render NIJE bio pokriven; dodan ciljani render-test (prošao).
 - **⚠️ PENDING (nakon compacta):** (a) **K1 learn obogaćivanje** (5 sekcija tanke 1654–2790zn → kao K2); (b) **Gauss vs Gauss-Jordan nijansa**
-  (Gauss/gornje-trokutasta + „samo retci, ne stupci"); (c) korisnikov pregled formula; (d) push/deploy. Plan `docs/MATH_PLAN.md`.
+  (Gauss/gornje-trokutasta + „samo retci, ne stupci"); (c) korisnikov pregled formula; (d) push/deploy. Plan `docs/subjects/MATH_PLAN.md`.
 
 ## 2026-06-24 — NOVI predmet: Traffic in Tourism (1. god, sem 2) — ručno iz predavanja
 **Sljedeći predmet 1. godine po roadmapu** ([[content-roadmap-sequencing]]). Korisnik dostavio 13 PDF-ova
 (`…/1. godina Hospitality Managament/Traffic in tourism`). Ručno (NE generator) jer je činjenično specifičan i ima rupe/izvještaje.
-- **Analiza + plan:** `docs/TRAFFIC_PLAN.md`. Silabus (DINP, prof. Nataša Kovačić, 6 ECTS) = autoritet: **1. kolokvij = tjedan 7 → K1 = tjedni 1–6,
+- **Analiza + plan:** `docs/subjects/TRAFFIC_PLAN.md`. Silabus (DINP, prof. Nataša Kovačić, 6 ECTS) = autoritet: **1. kolokvij = tjedan 7 → K1 = tjedni 1–6,
   K2 = tjedni 7–15.** Klasifikacija materijala: **8 nastavnih deckova** (INTRO admin + TJ3/TJ4&5/Rail/Air/Maritime/SAFETY/Sustainable) + **4 EU izvještaja**
   (CO2/road-safety/climate/figures) korišteni SAMO kao izvor činjenica (safety+ecology), NE kao teme. **Rupe** (tjedni 1–2 theoretical basis + interdependence;
   tjedan 10 value&quality) autorski iz silabusa + standardne transportne teorije (INTRO.pdf je samo administrativan).
@@ -834,7 +834,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
   (+ catalog.js i content-loader.js `?v=` u index.html). `.gitignore` + `tmp-traffic/`.
 - **Gate:** `validate:content traffic` 0/0 · `verify` 0/0 · **Playwright 68/68** (`traffic ✓ ok`, subjects=16, problems=0).
 - **✅ DEPLOYANO 2026-06-25 (`62a4119`, uz izričitu potvrdu korisnika); Supabase re-sync `migrate-content.js traffic` 3/3.** `origin/main` sinkroniziran.
-- **Dalje:** **Math** (zadnji 1.god predmet, `docs/MATH_PLAN.md`; KaTeX spreman, materijali 100 JPG+PDF).
+- **Dalje:** **Math** (zadnji 1.god predmet, `docs/subjects/MATH_PLAN.md`; KaTeX spreman, materijali 100 JPG+PDF).
 
 ---
 
@@ -859,7 +859,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
   prepozna je li točno napisan. Dodano EKSTENZIJOM enginea (ne hack): `normalizeCite()`+`gradeCite()` u `exercises-core.js` + `cite` widget +
   CSS + 9 unit-testova (core 104/104). **Pametno-tolerantno** (korisnikov izbor): case/razmaci/navodnici/en-em-crtica/završna točka forgiven, ali
   zarezi/točke/dvotočke/redoslijed bitni; točan odgovor se UVIJEK pokaže. 2 cite-vježbe (7 items: author-date reference za knjige/časopise/novine/
-  disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/EXERCISES_ENGINE.md` §2.
+  disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/content/EXERCISES_ENGINE.md` §2.
 - **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **6 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
 
 ## 2026-06-24 — Doc audit (svi .md izglancani) + budući planovi zapisani + compact-pravilo
@@ -868,11 +868,11 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
   ACCOUNTING_PLAN/STATISTICS_PLAN (2. val). Glavne greške: zastario status 1. god, `$...$`→`\( \)` math delimiteri (2×),
   read-path opisan kao `/api` umjesto direktni supabase-js, planovi pisali „prijedlog" a gotovi, „nemamo automatske testove".
 - **Budući planovi zapisani** (korisnik 2026-06-24): **A)** sadržaj 1. god po redu: **Traffic in Tourism** (sljedeći, treba materijale)
-  → **Math** (zadnja, novi **`docs/MATH_PLAN.md`**); ⛔ **Intro to Hospitality BLOKIRAN** (nema PDF-ova). **B)** nakon sadržaja:
+  → **Math** (zadnja, novi **`docs/subjects/MATH_PLAN.md`**); ⛔ **Intro to Hospitality BLOKIRAN** (nema PDF-ova). **B)** nakon sadržaja:
   **Admin CRUD → AI tutor → priprema za MATURU.** **C)** strateški (TBD): **HRV program „Menadžment u ugostiteljstvu"** (prijevod
   HM, aktivira i18n) · **3. godina** · **studentski UGC za 3./4. god** (HR/EN neodlučen). Zapisano u ROADMAP §DALJE + BACKLOG §Strateški + VISION.
 - **NOVO PRAVILO (CLAUDE.md §KRITIČNA #6 + [[doc-audit-before-compact]]):** prije SVAKOG compacta Claude prolazi APSOLUTNO SVE `.md` i provjerava da točno pišu.
-- **Novi doc:** `docs/MATH_PLAN.md` (materijali 100 JPG+PDF, KaTeX gotov, worked-problems, K1/K2 iz silabusa, gate). Dodan u oba indeksa.
+- **Novi doc:** `docs/subjects/MATH_PLAN.md` (materijali 100 JPG+PDF, KaTeX gotov, worked-problems, K1/K2 iz silabusa, gate). Dodan u oba indeksa.
 - Sve = docovi/memorija (nema koda) → bez cache-bumpa/testova. **Priprema za compact.**
 
 ## 2026-06-23 (2) — BLOK B: read-path SADRŽAJ IZ SUPABASEA (aktivirano)
@@ -886,7 +886,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 
 ## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
 **Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**
-(backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](CONTENT_GENERATOR.md). Cigla-po-cigla:
+(backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md). Cigla-po-cigla:
 - **Brick 1 `validate-content.js`** (`0c3dc8e`, `npm run validate:content`) — vm window-shim učita data (stari+novi format), validira shemu
   (name/icon/color, flashcard q+a, quiz options 2–6 + valjan `correct`, fillBlank `_______`, learn.content) + **KaTeX currency-safe** (uravnoteženi
   `\(`/`\[`/`$$`, lookbehind da `\\[2pt]` ne broji). Svih 14 živih predmeta → **0/0** (4000+ stavki); ulovio i vlastiti regex-bug.
@@ -979,7 +979,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 ---
 
 ## 2026-06-16 — ✅ STATISTICS nadogradnja: Learn teorija (Track A) + interaktivne EXERCISES (Track B, T1–T9) — DEPLOYANO
-**Cigla-po-cigla po `docs/STATISTICS_PLAN.md`.** Korisnik (2026-06-15): Learn je bio preformulni („samo formule nabacane"), Statistika
+**Cigla-po-cigla po `docs/subjects/STATISTICS_PLAN.md`.** Korisnik (2026-06-15): Learn je bio preformulni („samo formule nabacane"), Statistika
 ima velik teorijski dio → **(A)** obogatiti teoriju + **(B)** dodati interaktivne vježbe kao Accounting. Odluka: dovršiti cijeli Track B
 pa **jedan čist deploy** (Exercises tab na K2 ne smije biti prazan). Korisnik morao otići → „kada zavrsis sa svime deployaj".
 - **Arhitektura (zaključana):** generički engine **NEDIRNUT** (`js/exercises-core.js`+`js/exercises.js`+`css/exercises.css`), **0 novih
@@ -1114,7 +1114,7 @@ LaTeX rendering — payload ostaje string → **migracijski sigurno** (struktura
   **123 valutna `$NN`** (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
   **vizualno pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.**
   Grep-om potvrđeno da se `\(`/`\[`/`$$` NIGDJE ne pojavljuju u postojećem tekstu → render je globalan ali za
-  tekstualne predmete **no-op** (nije potreban opt-in flag). Konvencija autorstva u `docs/CONTENT_SCHEMA.md`.
+  tekstualne predmete **no-op** (nije potreban opt-in flag). Konvencija autorstva u `docs/content/CONTENT_SCHEMA.md`.
 - **Cache:** novi `js/math.js?v=20260648` + bump `learn/flashcards/quiz/fill .js?v=20260648`; `styles.css?v=20260648`
   + novi `@import css/math.css?v=20260648`. (Data nije dirana → `CONTENT_VERSION` ostaje `20260647`.)
 - **Provjere:** verify **0/0** (11 predmeta) · **Playwright `tests/katex.spec.js` 4/4** (dokaz na sva 4 iPhone profila:
@@ -1529,7 +1529,7 @@ Nastavak K2 (brick-by-brick). **5 novih vježbi** u `data/accounting/exercises.j
 Definicije ratija usklađene sa study-kategorijom `financialAnalysis`. **Engine NEPROMIJENJEN.** Content pack sad **34 vježbe**.
 **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 16/16, ratios 3/3, vertical 4/4, horizontal 4/4) + randomizacija
 deterministična/≤2-decimale kroz 500 seedova; Playwright **36/36**. Cache `?v=20260636`. **Commit lokalno (NEDEPLOYANO).**
-**Slijedi:** B3.10 (K2 journal: revenue/expense/RE + ending BS) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+**Slijedi:** B3.10 (K2 journal: revenue/expense/RE + ending BS) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -1547,7 +1547,7 @@ Nastavak K2 (brick-by-brick). **4 nove `ratio` vježbe** u `data/accounting/exer
 **Engine NEPROMIJENJEN.** Content pack sad **29 vježbi**. **USAR/USALI klasifikacija (Assignment 9-1/10-1) ODGOĐENA** — dvosmislene stavke
 (franchise fees/menus/telecom) bez službenog answer-keya za Ch9/10 (solutions = samo Ch2–5) → rizik krivog auto-ocjenjivanja; dodat će se ako se nađe key.
 **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (restaurant 4/4, hotel 3/3) + randomizacija deterministična/čista i givens prisutni kroz 400
-seedova; Playwright **36/36**. Cache `?v=20260635`. **Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.9 (K2 Ch12 Analyzing FS) — `docs/EXERCISES_ENGINE.md` §6/§8.
+seedova; Playwright **36/36**. Cache `?v=20260635`. **Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.9 (K2 Ch12 Analyzing FS) — `docs/content/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -1564,7 +1564,7 @@ Nastavak K2 (brick-by-brick, bez deploya). **4 nove vježbe** u `data/accounting
 **Engine NEPROMIJENJEN.** Average držan samo u fixnoj vježbi (randomizirani prosjek = decimalni drift). Content pack sad **25 vježbi**
 (16 K1 + 5 K2 Ch11 + 4 K2 Inventory). **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 11/11, methods 9/9, sve metode
 COGS+end=4.800) + randomizacija deterministična/cjelobrojna i cross-check kroz 300–400 seedova; Playwright **36/36**. Cache `?v=20260634`.
-**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.8 (K2 Restaurant/Hotel ratios, Ch9/10) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.8 (K2 Restaurant/Hotel ratios, Ch9/10) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -1581,7 +1581,7 @@ Popunjen prazan „Exercises" tab na **Midtermu 2** — prva K2 cigla. **5 novih
 **Engine NEPROMIJENJEN** (potvrđeno — samo sadržaj + bump cache). MACRS ostaje konceptualno (bez izmišljanja IRS postotnih tablica).
 Content pack sad **21 vježba** (16 K1 Ch1–6 + 5 K2 Ch11). **Testirano:** verify 0/0; node 95/95 + 13/13; node grade-check svih 5
 (SL 12/12, DDB 9/9, concepts 12/12) + randomizacija deterministična i cjelobrojna kroz 200 seedova; Playwright **36/36**. Cache `?v=20260633`.
-**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.7 (K2 Inventory FIFO/LIFO/Average COGS) — vidi `docs/EXERCISES_ENGINE.md` §6/§8.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.7 (K2 Inventory FIFO/LIFO/Average COGS) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -1643,7 +1643,7 @@ među njima 2 K2 demoa (CH9 RevPAR, CH11 amortizacija) koji vire u K1. Uzrok: `r
 `accounting-fundamentals` (nema K1/K2 splita — FAZA 4).
 **Nalaz 2 (BUG-011) — Practice ≈ Exam:** jedina razlika je skrivanje hintova na numeric/ratio; ostalo identično, „Check" feedback isti u oba moda.
 
-**Plan (čeka odluku korisnika):** detaljno u `docs/EXERCISES_ENGINE.md` §6 „Review-nalazi" (RV-1, RV-2) + `docs/BUGS.md` (BUG-010/011).
+**Plan (čeka odluku korisnika):** detaljno u `docs/content/EXERCISES_ENGINE.md` §6 „Review-nalazi" (RV-1, RV-2) + `docs/BUGS.md` (BUG-010/011).
 Sažeto: RV-1 = sortiraj listu po poglavlju + naslovi + (preporuka) makni demoe → čisti K1; RV-2 = Exam = samo rezultat bez po-stavci
 označavanja (Practice zadrži punu povratnu info). Oboje dira engine (`renderList`; `checkOpen`/`mark` po modu) → male generičke dopune.
 
@@ -1780,7 +1780,7 @@ specovi po cigli (choice/numeric/ratio/statement/classify/modes/random/progress 
 ---
 
 ## 2026-06-10 — Accounting Exercises engine: FAZA 0 (scaffold) GOTOVA (lokalno, nedeployano)
-**Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
+**Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/content/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
 Cilj Faze 0: kompletan engine temelj iza feature-flaga, **nula vidljivih promjena** dok predmet nema flag.
 
 **Napravljeno (B0.1–B0.9):**
@@ -2460,7 +2460,7 @@ Fakultet → Smjer → Godina → Predmet (sve iz catalog-a, spremno za širenje
 - Procjena: 1. god. do ~33 lekcije; sa 2. god. = ~19 predmeta za smjer.
 
 **Odluke/plan:**
-- Dodan `docs/CONTENT_INTAKE.md` (kako slagati materijale: PDF>JPG, po predmetu/kolokviju,
+- Dodan `docs/content/CONTENT_INTAKE.md` (kako slagati materijale: PDF>JPG, po predmetu/kolokviju,
   Math caveat) + `_materials/` u .gitignore.
 - Novi milestone **M0.5** u ROADMAP: hijerarhijska navigacija (Fakultet→Smjer→Godina→
   Predmet) + minimalistički frontend redesign (logo se zadržava), PRIJE masovnog unosa.

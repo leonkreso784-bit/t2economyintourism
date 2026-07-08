@@ -13,8 +13,8 @@
 > **JEDNU ciglu** → provjerim sve (verify + node + Playwright) → **STANEM** → korisnik
 > pregleda → tek na „nastavi" idem na sljedeću. Polako, pažljivo, pametno.
 >
-> **Vezano:** [EXERCISES_ENGINE.md](EXERCISES_ENGINE.md) (engine spec — SVETO PRAVILO: engine se ne dira za sadržaj) ·
-> [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) · [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) (presedan). Datum: 2026-06-15.
+> **Vezano:** [EXERCISES_ENGINE.md](../content/EXERCISES_ENGINE.md) (engine spec — SVETO PRAVILO: engine se ne dira za sadržaj) ·
+> [CONTENT_SCHEMA.md](../content/CONTENT_SCHEMA.md) · [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) (presedan). Datum: 2026-06-15.
 
 ---
 
@@ -107,7 +107,7 @@ Ako ne — to je **generička infrastrukturna** dopuna parsiranja (unatrag-kompa
 > bump `?v=`/`CONTENT_VERSION` → commit lokalno → **STANI, čekaj korisnikov pregled.** Deploy SAMO uz izričitu potvrdu.
 
 ### CIGLA 0 — ovaj plan
-- [ ] **S0** Napisati ovaj `docs/STATISTICS_PLAN.md` + dodati u docs-index (README/CLAUDE.md). *Done-kriterij:* plan postoji, korisnik ga pregledao i odobrio redoslijed. **(← TRENUTNA CIGLA — staje ovdje.)**
+- [ ] **S0** Napisati ovaj `docs/subjects/STATISTICS_PLAN.md` + dodati u docs-index (README/CLAUDE.md). *Done-kriterij:* plan postoji, korisnik ga pregledao i odobrio redoslijed. **(← TRENUTNA CIGLA — staje ovdje.)**
 
 ### TRACK A — Learn teorija (3 cigle; bez koda, samo `data/statistics/*` learn sadržaj)
 - [ ] **A1** Obogati `learn` za **K1 #1–3**: describingDataGraphical, describingDataNumerical, probability. Prava teorija

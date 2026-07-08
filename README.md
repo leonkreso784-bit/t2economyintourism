@@ -143,13 +143,13 @@ This is currently my passion project and hobby, but I'm committed to turning it 
 │   ├── BACKEND.md             # Supabase & API specs
 │   ├── ROADMAP.md             # Milestones & progress
 │   ├── FOUNDATION_PLAN.md     # Platform hardening roadmap (Phases F1–F6)
-│   ├── CONTENT_SCHEMA.md      # Content authorship spec
-│   ├── EXERCISES_ENGINE.md    # Exercise system internals
+│   ├── content/               # Authoring toolkit (schema, guide, generator, exercises engine)
+│   ├── subjects/              # Per-subject status table + detailed plans
 │   ├── DECISIONS.md           # ADRs (Architecture Decision Records)
 │   ├── BUGS.md                # Known issues & resolutions
 │   ├── PROGRESS.md            # Detailed development log
 │   ├── CHANGELOG.md           # Version history
-│   └── *.md                   # Subject-specific plans
+│   └── archive/               # Completed/consumed plans
 │
 ├── tests/                     # Test suite
 │   ├── *.spec.js              # Playwright tests (responsive, smoke, a11y)
@@ -353,7 +353,7 @@ I'm currently the sole maintainer, but I'm open to collaboration!
 **To contribute:**
 1. Fork the repo
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Follow the guidelines in `docs/CONTENT_SCHEMA.md` (for new content) or `docs/ARCHITECTURE.md` (for code)
+3. Follow the guidelines in `docs/content/CONTENT_SCHEMA.md` (for new content) or `docs/ARCHITECTURE.md` (for code)
 4. Run tests: `npm run verify && npm run test:responsive`
 5. Submit a pull request with a clear description
 
@@ -366,9 +366,9 @@ I'm currently the sole maintainer, but I'm open to collaboration!
 This project is heavily documented. Start with:
 
 - **For Users:** Visit [sokratstudy.com](https://www.sokratstudy.com), check the FAQ, or read the Help sections in-app
-- **For Contributors:** Read `docs/ARCHITECTURE.md` (system design) + `docs/CONTENT_SCHEMA.md` (how to add content)
+- **For Contributors:** Read `docs/ARCHITECTURE.md` (system design) + `docs/content/CONTENT_SCHEMA.md` (how to add content)
 - **For Developers:** `docs/FOUNDATION_PLAN.md` (technical roadmap) + `docs/DECISIONS.md` (why we made certain choices)
-- **For Content Creators:** `docs/CONTENT_INTAKE.md` (how to prepare materials) + `docs/CONTENT_GENERATOR.md` (auto-generation pipeline)
+- **For Content Creators:** `docs/content/CONTENT_INTAKE.md` (how to prepare materials) + `docs/content/CONTENT_GENERATOR.md` (auto-generation pipeline)
 
 ---
 

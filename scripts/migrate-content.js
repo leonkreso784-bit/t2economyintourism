@@ -56,7 +56,7 @@ function rowsForSubject(s) {
   }
   // ⚠ BUG-012: NE migriramo vježbe (s.content.exercises). One su KOD — sadrže generate()
   // funkcije koje JSON.stringify izbriše → u bazi bi ostala mrtva ljuska. Vježbe se uvijek
-  // učitaju iz datoteke preko content.codeScripts (vidi js/content-loader.js + docs/EXERCISES_DB_FIX_PLAN.md).
+  // učitaju iz datoteke preko content.codeScripts (vidi js/content-loader.js + docs/archive/EXERCISES_DB_FIX_PLAN.md).
 
   const rows = [];
   for (const varName of varNames) {

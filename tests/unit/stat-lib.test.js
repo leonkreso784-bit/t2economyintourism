@@ -3,7 +3,7 @@
 // Pokreni: `npm run test:unit` (ili: node tests/unit/stat-lib.test.js)
 // Bez frameworka — mali runner + node assert. Cross-check: standardna z/t tablica,
 // mathportal kalkulatori, midterm answer-keyevi (P(>1.83)=0.0336, P(>−2)=0.977).
-// Vidi docs/STATISTICS_PLAN.md §2 (B1). stat-lib je CONTENT-layer (data/), NE engine.
+// Vidi docs/subjects/STATISTICS_PLAN.md §2 (B1). stat-lib je CONTENT-layer (data/), NE engine.
 
 const assert = require('assert');
 const path = require('path');

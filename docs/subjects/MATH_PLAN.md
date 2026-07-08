@@ -40,7 +40,7 @@ Funkcije i grafovi · limesi/neprekidnost · **derivacije** (pravila, primjene: 
 `npm run validate:content math` (shema + **KaTeX currency-safe balance**) → `npm run verify` → `npm run test:responsive` (overflow na mobilnom — `.katex-display{overflow-x:auto}`) → (+`test:unit` ako ima vježbi) → **korisnikov činjenični pregled formula**. Cache bump `CONTENT_VERSION` + `?v=`.
 
 ## 6. Generator?
-Math se može probati i kroz **generator** ([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) s `--math` zastavicom (KaTeX upute u promptu), ALI: slike (JPG) generator NE čita (samo PDF/TXT tekst) → ili PDF-verzije, ili ručno. Točnost formula = kritična → bez obzira na put, **ljudski pregled obavezan**. Realno: vjerojatno **hibrid** (generator za teoriju iz PDF-a + ručna transkripcija formula sa slajdova).
+Math se može probati i kroz **generator** ([CONTENT_GENERATOR.md](../content/CONTENT_GENERATOR.md)) s `--math` zastavicom (KaTeX upute u promptu), ALI: slike (JPG) generator NE čita (samo PDF/TXT tekst) → ili PDF-verzije, ili ručno. Točnost formula = kritična → bez obzira na put, **ljudski pregled obavezan**. Realno: vjerojatno **hibrid** (generator za teoriju iz PDF-a + ručna transkripcija formula sa slajdova).
 
 ---
-**▶ Redoslijed (završen):** Traffic in Tourism ✅ → **Math ✅ LIVE 2026-06-27 (zadnji 1. god)** → **1. GODINA HM 9/9 KOMPLETNA**. Intro to Hospitality = nema materijala (blokiran). Vidi [content-roadmap-sequencing] + [ROADMAP.md](ROADMAP.md).
+**▶ Redoslijed (završen):** Traffic in Tourism ✅ → **Math ✅ LIVE 2026-06-27 (zadnji 1. god)** → **1. GODINA HM 9/9 KOMPLETNA**. Intro to Hospitality = nema materijala (blokiran). Vidi [content-roadmap-sequencing] + [ROADMAP.md](../ROADMAP.md).
