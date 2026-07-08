@@ -61,12 +61,11 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
   pravne stranice, GA4 + Sentry (consent), SW offline, i18n HR/EN, JSON dual-read 18/18, CI (Actions + Lighthouse). **F0–F3 KOMPLETNE + LIVE** (F1 rails · F2 reusable jezgra · F3 performanse). [[foundation-pivot]]
 - **AKTIVNO — grana `foundation/f4` (Vercel preview, NIJE produkcija):** F4 Admin CRUD (`docs/CRUD_PLAN.md`, ADR-021).
   ✅ gotovo + živo verificirano: F4.1 identitet · F4.2 write-RLS+versioning · F4.3 viewer + edit kartice (+propagacija na final) · **F4.4 quiz/fill/learn editori** · Playwright LOGIN (`test:authed`).
-- **🧭 NOVI SMJER (korisnik 2026-07-08, dogovoren u razgovoru — SLJEDEĆI KORAK = zapisati `docs/UGC.md`):** CRUD prelazi na **draft→objavi** model + bogato autorsko sučelje (= UGC-sjeme).
-  Dogovorena arhitektura: **dokument u sredini** (stabilni ID-jevi po stavci + `schemaVersion` + stil-TOKENI + learn-BLOKOVI umjesto sirovog HTML-a + YouTube-blok) ·
-  **jedan write-put** (draft-sloj + ops + **publish-RPC**, atomično, propagacija server-side, `base_version` concurrency) · **jedan renderer** = sigurnosna granica ·
-  `final` = kompozicija umjesto kopije · editor = **biblioteka** (vendorana, iza adaptera, SAMO autorska strana, spike prije obveze) · rizici ↓: **staging Supabase projekt** (2. free) + dual-mode/per-subject flip + datoteke=mreža do flipa.
-  Redoslijed: **UGC.md → staging baza → schema v2 (ID-jevi) → draft-sloj+RPC → povijest/restore UI → strukturne operacije → learn-blokovi → editor.** Kategorije-cigla F4.4 time zamijenjena (radi se unutar draft-moda).
-- **Docs-reorg (2026-07-08, `08ab604`):** Faza 1 ✅ (content/ subjects/ archive/ + HISTORY + tablica predmeta); **Faza 2 = OVA dijeta CLAUDE.md** (462→~150 redaka, verify-then-cut).
+- **🧭 NOVI SMJER (korisnik 2026-07-08/09) — ✅ ZAPISAN u `docs/UGC.md` (north-star dizajn-dok; U0 gotov):** CRUD prelazi na **draft→objavi** + bogato autorsko sučelje (= UGC-sjeme).
+  Arhitektura (puni detalji UGC.md): **dokument u sredini** (stabilni ID-jevi + `schemaVersion` + stil-TOKENI + learn-BLOKOVI + YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC**, atomično, `base_version`) ·
+  **jedan renderer** = sigurnosna granica · `final` = kompozicija umjesto kopije · editor = **biblioteka pod 4 uvjeta** (vendorana/adapter/samo-autorska-strana/spike) · rizici ↓: **staging Supabase** + dual-mode + datoteke=mreža.
+  **Brick-slijed U0–U9 (status u UGC.md §12): SLJEDEĆE = U1 staging Supabase → U2 schema v2 (ID-jevi) → U3 draft-sloj → U4 publish-RPC → …** Kategorije-cigla F4.4 = U6 (u draft-modu).
+- **Docs-reorg ✅ KOMPLETAN (2026-07-08/09, `08ab604`+`0d17689`):** content/ subjects/ archive/ + HISTORY + tablica predmeta + ova dijeta CLAUDE.md (463→94, verify-then-cut, korisnik odobrio).
 - **Napomene:** ⚠️ **22 test-audit-reda (te2) u `content_versions`** iz živih proba — bezopasni; brisanje SAMO uz izričit OK (append-only audit) · CI `authed` job čeka repo-secrete (korisnik javio „riješeno") ·
   Supabase free-tier **spava ~7 dana neaktivnosti** (restore besplatan; app fallbacka na datoteke, login/sync ne rade dok se ne restorea) · **accounting NIJE u bazi** (study iz JSON-a; 51 red = 17×3) ·
   PWA instalirana app drži staru ikonu do reinstalacije (nije bug).

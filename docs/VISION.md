@@ -5,6 +5,10 @@
 > NE pokušava sve isprojektirati do kraja — kad se neka odluka donese, seli se u
 > [DECISIONS.md](DECISIONS.md) kao ADR, a konkretni koraci u [ROADMAP.md](ROADMAP.md).
 >
+> **▶ AUTORSTVO / UGC / AI-tutor / MCP — razrađena arhitektura i plan: [UGC.md](UGC.md)** (2026-07-09;
+> draft→objavi, blokovi+ID-jevi+stil-tokeni, publish-RPC, editor, sigurnosna invarijanta, marketplace/AI skice).
+> Funkcije F1/F3/F4/F6 iz tablice niže tamo dobivaju konkretan oblik (H1→H2→H3 horizonti).
+>
 > Povezano: [PRD.md](PRD.md) (faze), [BACKEND.md](BACKEND.md) (Supabase+Vercel),
 > [BACKLOG.md](BACKLOG.md) (ideje), [ARCHITECTURE.md](ARCHITECTURE.md) (model podataka).
 

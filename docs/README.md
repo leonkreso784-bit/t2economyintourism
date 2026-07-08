@@ -11,7 +11,8 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | Dokument | Svrha |
 |----------|-------|
 | [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **Platforma-first temelj** — misije/faze F0–F6, reusable podsistemi, brick-liste (ADR-013/014) |
-| [CRUD_PLAN.md](CRUD_PLAN.md) | **F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1–4.4 (quiz/fill/learn) ✅ živo verificirano |
+| [UGC.md](UGC.md) | **▶ North-star: autorstvo → draft→objavi → UGC → AI** — model sadržaja (ID+blokovi+tokeni), publish-RPC, editor, sigurnost; brick-slijed U0–U9 |
+| [CRUD_PLAN.md](CRUD_PLAN.md) | **F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1–4.4 (quiz/fill/learn) ✅ živo verificirano; nastavak KROZ UGC.md U-slijed |
 | [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj; ADR-022) — za HR-ekspanziju nakon F4 |
 | [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅; ostatak pauziran |
 

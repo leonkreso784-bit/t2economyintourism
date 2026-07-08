@@ -5,6 +5,19 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-09 (FABLE) — DOC-REORG (2 faze) + UGC.md north-star dizajn-dok
+**Kontekst:** korisnik prije UGC.md tražio pospremanje docs-a („savršeno održivo i snalažljivo, ništa se ne smije izgubiti"). Sve na grani `foundation/f4`.
+
+**Faza 1 — reorganizacija (`08ab604`):** `git mv` (povijest očuvana): `docs/content/` (SCHEMA/GUIDE/INTAKE/GENERATOR/EXERCISES_ENGINE) · `docs/subjects/` (4 plana + **NOVA autoritativna tablica svih predmeta** `subjects/README.md`) · `docs/archive/` (EXERCISES_DB_FIX_PLAN + `sonnet.md`→`SONNET_REVIEW_2026-06.md`) + **NOVI `docs/HISTORY.md`** (vremenska crta milestone-a) + prepisan `docs/README.md` indeks (grupiran) + root README tree. **Link-sweep ~85 referenci u 45 datoteka** (docs+CLAUDE+README+schema.json+komentari u data/js/scripts/tests); `git grep` starih putanja = 0. Gate: verify 0/0 · validate:content 0/0 · validate:schema 54/54 · unit 8/8 · export:json --check 0 (komentari ne diraju evaluaciju) · bump:check/build:css --check OK · typecheck 0.
+
+**Faza 2 — CLAUDE.md dijeta (`0d17689`, korisnik pregledao + odobrio):** **463 → 94 retka** (verify-then-cut: svaka činjenica verificirana da živi drugdje PRIJE reza — subjects-tablica/HISTORY/PROGRESS/CHANGELOG/planovi; pouke za sadržajni rad dodane u `subjects/README.md` §Pouke prije rezanja). Novi CLAUDE.md = identitet+stack (ispravljeno zastarjelo: backend=Supabase direkt, ne „planirani /api") · arhitektura s GOTCHA-ma · **8 kritičnih pravila** (6 starih + #7 Vercel-check/vercel.json + #8 živa admin-prijava za RLS cigle) · komande · **„Stanje — TRENUTNO"** · ADR jedan-red + docs-mapa. Trajna ušteda konteksta svake sesije; post-compact orijentacija s točne slike.
+
+**UGC.md (U0) — north-star dizajn-dok:** `docs/UGC.md` = cijela dogovorena arhitektura smjera „autorstvo→draft→objavi→UGC→AI": **dokument u sredini** (stabilni ID-jevi+`schemaVersion`+stil-TOKENI+learn-BLOKOVI+YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC** s `base_version`) · **jedan renderer = sigurnosna invarijanta** · `final`=kompozicija · editor=biblioteka pod 4 uvjeta (vendorana/adapter/samo-autorska-strana/spike) · rizici↓ (staging Supabase, dual-mode, datoteke=mreža, fuzz) · marketplace/AI-tutor/MCP skice · **brick-slijed U0–U9**. Naznaka u VISION.md; docs/README indeks + CRUD_PLAN križna referenca (F4.4-kategorije → U6; F4.5/4.6 → U9+).
+
+**Stanje:** grana `foundation/f4` lokalno (commiti ispred origina; push = preview uz OK). **Slijedi: U1 staging Supabase → U2 schema v2 (ID-jevi).**
+
+---
+
 ## 2026-07-08 (OPUS, nastavak) — F4.4-quiz: proširen CRUD na QUIZ (kod + statika + automatika)
 **Kontekst:** nakon F4.3c (edit kartice) → F4.4 proširuje CRUD na ostale tipove; prva cigla = **quiz**. Grana `foundation/f4` (preview, `main` netaknut).
 
