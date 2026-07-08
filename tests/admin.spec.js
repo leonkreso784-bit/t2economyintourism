@@ -160,3 +160,36 @@ test('F4.4 — quiz preview se renderira u vieweru (opcije + točan označen); q
   expect(res.correctMarks).toBeGreaterThan(0);  // točan odgovor je označen
   expect(res.quizEditBtns).toBe(0);             // ne-admin NE vidi quiz edit-gumbe
 });
+
+test('F4.4 — fill preview se renderira (rečenica s prazninom); fill edit-gumbi skriveni ne-adminu', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent && !!window.SokratAdmin);
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  // te2 First Midterm ima fillBlanks (fundamentals) → deterministički izbor.
+  await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const te2 = sel.querySelector('option[value="te2"]');
+    sel.value = te2 ? 'te2' : sel.querySelector('option[value]:not([value=""])').value;
+    sel.dispatchEvent(new Event('change'));
+  });
+  await page.waitForFunction(() => {
+    const l = document.getElementById('adminLessonSel');
+    return l && !l.disabled && !!l.querySelector('option[value]:not([value=""]):not([disabled])');
+  });
+  await page.evaluate(() => {
+    const l = document.getElementById('adminLessonSel');
+    l.value = l.querySelector('option[value]:not([value=""]):not([disabled])').value;
+    l.dispatchEvent(new Event('change'));
+  });
+  await page.waitForSelector('#adminCards .admin-card', { timeout: 15000 });
+
+  const res = await page.evaluate(() => ({
+    hasBlank: Array.from(document.querySelectorAll('#adminCards .admin-card-q')).some(function (el) { return el.textContent.indexOf('_______') !== -1; }),
+    fillEditBtns: document.querySelectorAll('#adminCards [data-admin-edit][data-type="fill"]').length,
+  }));
+  expect(res.hasBlank).toBe(true);      // fill rečenica (s prazninom) je prikazana
+  expect(res.fillEditBtns).toBe(0);     // ne-admin NE vidi fill edit-gumbe
+});

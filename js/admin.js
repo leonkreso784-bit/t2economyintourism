@@ -174,7 +174,8 @@ function _renderAdminCards(holder, data) {
     if (!cat || typeof cat !== 'object') return;
     const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
     const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
-    if (fcs.length === 0 && quiz.length === 0) return;
+    const fills = Array.isArray(cat.fillBlanks) ? cat.fillBlanks : [];
+    if (fcs.length === 0 && quiz.length === 0 && fills.length === 0) return;
 
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
@@ -220,6 +221,24 @@ function _renderAdminCards(holder, data) {
           '    ' + optsHtml +
           '  </div>' +
           _adminEditBtn(canEdit, 'quiz', catId, i) +
+          '</li>';
+      });
+      html += '</ol>';
+    }
+
+    // — Fill in the blank (F4.4) —
+    if (fills.length) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.fill', 'Fill blanks') +
+        ' <span class="admin-count">' + fills.length + '</span></h4><ol class="admin-card-list">';
+      fills.forEach(function (fb, i) {
+        total++;
+        html +=
+          '<li class="admin-card">' +
+          '  <div class="admin-card-body">' +
+          '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
+          '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
+          '  </div>' +
+          _adminEditBtn(canEdit, 'fill', catId, i) +
           '</li>';
       });
       html += '</ol>';
@@ -661,6 +680,157 @@ async function _saveQuiz() {
   }
 }
 
+// ===== F4.4 — Uredi FILL-IN-THE-BLANK: rečenica (s _______) + odgovor =====
+//
+// Najjednostavniji tip (sentence + answer). Isti pipeline (RMW → verzija → propagacija → live).
+// Validacija: rečenica neprazna I sadrži prazninu `_______` (7 podvlaka, JSON Schema pattern);
+// odgovor neprazan. `hint` (ako postoji) ostaje netaknut (mijenja se samo sentence/answer).
+
+const _FILL_BLANK = '_______'; // 7 podvlaka — mora se poklapati sa schemom (fillBlank.sentence.pattern)
+
+/** Fill koji se uređuje: { catId, idx }. */
+let _fillTarget = null;
+
+function _ensureFillModal() {
+  let m = document.getElementById('adminFillModal');
+  if (m) return m;
+  m = document.createElement('sokrat-modal');
+  m.id = 'adminFillModal';
+  m.className = 'admin-edit';
+  m.setAttribute('aria-labelledby', 'adminFillTitle');
+  m.innerHTML =
+    '<div class="admin-edit__card">' +
+    '  <button type="button" class="admin-edit__close" data-admin-fill-close aria-label="Close">&times;</button>' +
+    '  <h3 id="adminFillTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editFill', 'Edit fill-in-the-blank') + '</h3>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.sentence', 'Sentence (use _______ for the blank)') + '</span>' +
+    '    <textarea id="adminFillS" class="admin-edit__input" rows="3"></textarea></label>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
+    '    <textarea id="adminFillA" class="admin-edit__input" rows="2"></textarea></label>' +
+    '  <p class="admin-edit__note" id="adminFillNote"></p>' +
+    '  <p class="admin-edit__status" id="adminFillStatus" hidden></p>' +
+    '  <div class="admin-edit__actions">' +
+    '    <button type="button" class="cta-button secondary" data-admin-fill-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminFillSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
+    '  </div>' +
+    '</div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function (e) {
+    if (e.target.closest('[data-admin-fill-close]')) _closeFillEditor();
+  });
+  const saveBtn = document.getElementById('adminFillSave');
+  if (saveBtn) saveBtn.addEventListener('click', _saveFill);
+  return m;
+}
+
+function _fillStatus(msg, isErr) {
+  const el = document.getElementById('adminFillStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.hidden = !msg;
+  el.classList.toggle('is-error', !!isErr);
+}
+
+function _closeFillEditor() {
+  const m = document.getElementById('adminFillModal');
+  if (m && typeof m.close === 'function') m.close();
+}
+
+/** Otvori fill-editor za (catId, idx) iz trenutnog konteksta. */
+function _openFillEditor(catId, idx) {
+  const data = _adminCtx.data;
+  const cat = data && data[catId];
+  const fb = (cat && Array.isArray(cat.fillBlanks)) ? cat.fillBlanks[idx] : null;
+  if (!fb) return;
+  _fillTarget = { catId: catId, idx: idx };
+  _ensureFillModal();
+  document.getElementById('adminFillS').value = fb.sentence || '';
+  document.getElementById('adminFillA').value = fb.answer || '';
+  const note = document.getElementById('adminFillNote');
+  if (note) {
+    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
+      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+  }
+  _fillStatus('', false);
+  const m = document.getElementById('adminFillModal');
+  if (m && typeof m.open === 'function') m.open();
+}
+
+/** Spremi uređeni fill: validacija → RMW jednog reda → verzija → propagacija → live re-render. */
+async function _saveFill() {
+  const sEl = document.getElementById('adminFillS');
+  const aEl = document.getElementById('adminFillA');
+  const saveBtn = document.getElementById('adminFillSave');
+  if (!sEl || !aEl || !_fillTarget) return;
+
+  const sentence = sEl.value.trim();
+  const answer = aEl.value.trim();
+
+  // Validacija (odražava JSON Schemu: rečenica neprazna + sadrži prazninu; odgovor neprazan).
+  if (!sentence || !answer) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
+  if (sentence.indexOf(_FILL_BLANK) === -1) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence must contain the blank (_______).'), true); return; }
+
+  const subjectId = _adminCtx.subjectId;
+  const varName = _adminCtx.varName;
+  const catId = _fillTarget.catId;
+  const idx = _fillTarget.idx;
+  if (!subjectId || !varName) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  if (saveBtn) saveBtn.disabled = true;
+  _fillStatus(_adminT('admin.saving', 'Saving…'), false);
+  try {
+    // 1) Svjež autoritativni payload iz baze (read-modify-write).
+    const sel = await client.from('subject_content').select('payload')
+      .eq('subject_id', subjectId).eq('var_name', varName).single();
+    if (sel.error || !sel.data || !sel.data.payload) {
+      _fillStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    const payload = sel.data.payload;
+    const target = (payload[catId] && Array.isArray(payload[catId].fillBlanks)) ? payload[catId].fillBlanks[idx] : null;
+    if (!target) {
+      _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    // Mijenjamo samo sentence/answer → hint (ako postoji) ostaje netaknut.
+    const applyItem = function (t) { t.sentence = sentence; t.answer = answer; };
+    applyItem(target);
+
+    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
+    const upd = await client.from('subject_content').update({ payload: payload })
+      .eq('subject_id', subjectId).eq('var_name', varName);
+    if (upd.error) {
+      _fillStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+
+    // 3) Propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
+    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'fillBlanks', idx, applyItem);
+
+    // 4) In-memory patch → live promjena bez reloada.
+    _patchInMemory(varName, catId, 'fillBlanks', idx, applyItem);
+    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'fillBlanks', idx, applyItem); });
+
+    if (saveBtn) saveBtn.disabled = false;
+    _closeFillEditor();
+    if (typeof showToast === 'function') {
+      const okMsg = _adminT('admin.fillSaveOk', 'Sentence saved.');
+      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
+    }
+    const holder = document.getElementById('adminCards');
+    if (holder) _renderAdminCards(holder, _adminCtx.data);
+  } catch (e) {
+    _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+    if (saveBtn) saveBtn.disabled = false;
+  }
+}
+
 // Delegat: klik na edit-gumb stavke → otvori editor (grana po tipu).
 document.addEventListener('click', function (e) {
   const btn = e.target.closest('[data-admin-edit]');
@@ -670,5 +840,6 @@ document.addEventListener('click', function (e) {
   const idx = parseInt(btn.getAttribute('data-idx'), 10);
   if (!catId || isNaN(idx)) return;
   if (type === 'quiz') _openQuizEditor(catId, idx);
+  else if (type === 'fill') _openFillEditor(catId, idx);
   else _openCardEditor(catId, idx);
 });

@@ -96,3 +96,45 @@ test('F4.4 — admin: quiz edit-gumb otvara quiz-editor s redovima opcija (bez s
   // Zatvori bez spremanja (write nije automatiziran — dijeljena prod baza).
   await page.evaluate(() => { const m = document.getElementById('adminQuizModal'); if (m) m.close(); });
 });
+
+test('F4.4 — admin: fill edit-gumb otvara fill-editor s rečenicom (blank) + odgovorom (bez spremanja)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(
+    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
+  );
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  // te2 First Midterm ima fillBlanks (fundamentals).
+  await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const te2 = sel.querySelector('option[value="te2"]');
+    sel.value = te2 ? 'te2' : sel.querySelector('option[value]:not([value=""])').value;
+    sel.dispatchEvent(new Event('change'));
+  });
+  await page.waitForFunction(() => {
+    const l = document.getElementById('adminLessonSel');
+    return l && !l.disabled && !!l.querySelector('option[value]:not([value=""]):not([disabled])');
+  });
+  await page.evaluate(() => {
+    const l = document.getElementById('adminLessonSel');
+    l.value = l.querySelector('option[value]:not([value=""]):not([disabled])').value;
+    l.dispatchEvent(new Event('change'));
+  });
+  await page.waitForSelector('#adminCards [data-admin-edit][data-type="fill"]', { timeout: 20000 });
+
+  await page.locator('#adminCards [data-admin-edit][data-type="fill"]').first().click();
+  await page.waitForSelector('#adminFillModal #adminFillS');
+
+  const res = await page.evaluate(() => ({
+    modalOpen: (function () { const m = document.getElementById('adminFillModal'); return !!(m && typeof m.isOpen === 'function' && m.isOpen()); })(),
+    sentenceHasBlank: (document.getElementById('adminFillS').value || '').indexOf('_______') !== -1,
+    answerFilled: (document.getElementById('adminFillA').value || '').length > 0,
+  }));
+  expect(res.modalOpen).toBe(true);
+  expect(res.sentenceHasBlank).toBe(true);  // rečenica prefilana + sadrži prazninu
+  expect(res.answerFilled).toBe(true);      // odgovor prefilan
+
+  await page.evaluate(() => { const m = document.getElementById('adminFillModal'); if (m) m.close(); });
+});

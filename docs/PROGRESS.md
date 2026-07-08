@@ -17,7 +17,14 @@ testirano, što slijedi.
 
 **✅ ŽIVA VERIFIKACIJA (authed Playwright kroz PRAVI `_saveQuiz` + neovisan Supabase MCP):** privremeni authed spec uredio `te2M1 fundamentals/quiz[0]` — promijenio **pitanje I `correct` (1→2)** → oba **persistirala u te2M1 I te2Final** (propagacija radi za pitanje i točan odgovor) → **revert** vratio oba **bit-točno** na original. MCP cross-check: `content_versions` (te2) 6→**10** (+4 = 2 spremanja × M1+Final = undo+audit uhvatio svaki write), `subject_content` **51 red — produkcija netaknuta**. Privremeni spec obrisan (nije commitan). ⚠️ Tih +4 audit-reda (uk. **10 te2**) ostaje (append-only; auto-mode ne briše bez izričite upute).
 
-**Stanje:** F4.4-quiz **GOTOV + ŽIVO VERIFICIRAN** na `foundation/f4` (preview), produkcija (`main`) netaknuta. **Slijedi: fill → learn → kategorije.**
+**Stanje:** F4.4-quiz **GOTOV + ŽIVO VERIFICIRAN** na `foundation/f4` (preview), produkcija (`main`) netaknuta.
+
+### F4.4-fill (ista sesija, nastavak)
+- **Kod (`js/admin.js`):** najjednostavniji tip (`sentence`+`answer`) na istom generaliziranom pipelineu (`arrayKey='fillBlanks'`). Viewer crta fill po kategoriji (reuse `.admin-card-*` → **0 novog CSS-a**, bundle netaknut). **Fill-editor** `#adminFillModal` (`<sokrat-modal>`): rečenica + odgovor; validacija po JSON Schemi (**rečenica mora sadržavati `_______`** = 7 podvlaka; oba neprazna); `hint` netaknut. Delegat grana `data-type="fill"`. i18n `admin.fill*` (en/hr).
+- **Gate:** verify/typecheck/unit/validate:content/validate:schema/bump:check/build:css --check/export:json --check 0. **Playwright admin+components+a11y 64/0** (novi non-admin fill-preview test) · **`test:authed` 5/5** (novi: admin otvara fill-editor s rečenicom-blank + odgovorom). Cache `20260708024031`.
+- **✅ ŽIVA VERIFIKACIJA (authed Playwright kroz PRAVI `_saveFill` + MCP):** privremeni spec uredio `te2M1 fundamentals/fillBlanks[0]` (rečenica **i** odgovor, blank očuvan) → oba **persistirala u te2M1 I te2Final** → **revert** vratio oba **bit-točno**. MCP: `content_versions` (te2) 10→**14** (+4), `subject_content` **51 red — produkcija netaknuta**. Temp spec obrisan (nije commitan). ⚠️ Sad **14 te2 audit-redova** (6 c-1/c-2 + 4 quiz + 4 fill) — append-only, brisanje uz OK.
+
+**Stanje (kraj sesije-bloka):** quiz+fill **GOTOVI + ŽIVO VERIFICIRANI** na `foundation/f4` (preview), produkcija netaknuta. **Slijedi: learn → kategorije.**
 
 ---
 

@@ -31,7 +31,7 @@
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
-    'admin.viewerNote': { en: 'Edit flashcards and quiz inline. Every change is versioned and can be undone. (Fill/learn editing arrives next.)', hr: 'Uredi kartice i kviz izravno. Svaka izmjena se verzionira i može poništiti. (Dopuna/učenje uskoro.)' },
+    'admin.viewerNote': { en: 'Edit flashcards, quiz and fill-in-the-blank inline. Every change is versioned and can be undone. (Learn editing arrives next.)', hr: 'Uredi kartice, kviz i dopune izravno. Svaka izmjena se verzionira i može poništiti. (Učenje uskoro.)' },
     'admin.subject': { en: 'Subject', hr: 'Predmet' },
     'admin.lesson': { en: 'Lesson', hr: 'Lekcija' },
     'admin.selectSubject': { en: '— select subject —', hr: '— odaberi predmet —' },
@@ -64,6 +64,13 @@
     'admin.quizEmptyErr': { en: 'Question and all options must not be empty.', hr: 'Pitanje i svi odgovori ne smiju biti prazni.' },
     'admin.quizCountErr': { en: 'A question needs 2–6 options.', hr: 'Pitanje treba 2–6 odgovora.' },
     'admin.quizCorrectErr': { en: 'Pick which option is correct.', hr: 'Odaberi koji je odgovor točan.' },
+    // F4.4 — fill-in-the-blank editing
+    'admin.fill': { en: 'Fill blanks', hr: 'Dopune' },
+    'admin.editFill': { en: 'Edit fill-in-the-blank', hr: 'Uredi dopunjavanje' },
+    'admin.sentence': { en: 'Sentence (use _______ for the blank)', hr: 'Rečenica (koristi _______ za prazninu)' },
+    'admin.fillEmptyErr': { en: 'Sentence and answer must not be empty.', hr: 'Rečenica i odgovor ne smiju biti prazni.' },
+    'admin.fillBlankErr': { en: 'The sentence must contain the blank (_______).', hr: 'Rečenica mora sadržavati prazninu (_______).' },
+    'admin.fillSaveOk': { en: 'Sentence saved.', hr: 'Rečenica spremljena.' },
 
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },
