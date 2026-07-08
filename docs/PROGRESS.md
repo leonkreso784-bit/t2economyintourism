@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-08 (OPUS, nastavak) — F4.4-quiz: proširen CRUD na QUIZ (kod + statika + automatika)
+**Kontekst:** nakon F4.3c (edit kartice) → F4.4 proširuje CRUD na ostale tipove; prva cigla = **quiz**. Grana `foundation/f4` (preview, `main` netaknut).
+
+**Odrađeno (jedna cigla, gate zelen):**
+- **Generalizirani write-helperi** (`js/admin.js`): `_patchObj`/`_patchWindowVar`/`_patchInMemory`/`_propagateToSiblings` sada primaju `arrayKey` (`flashcards`|`quiz`|…) + `applyItem(item)` umjesto hardkodiranog `flashcards`+`{q,a}`. Flashcard pozivi ažurirani → ponašanje bit-identično (dokazani c-1/c-2 put netaknut), quiz se nakalemi bez duplikacije koda.
+- **Viewer**: crta i quiz stavke po kategoriji (`.admin-subhead` Flashcards/Quiz; quiz preview = lista opcija s označenim točnim `.is-correct`). Guard promijenjen tako da se **quiz-only kategorije sad prikazuju**. Edit-gumb nosi `data-type` → klik-delegat grana na quiz/flashcard editor.
+- **Quiz-editor** `#adminQuizModal` (na `<sokrat-modal>` primitivu): pitanje + **dinamičke opcije 2–6** (dodaj/obriši + radio „točan"). Validacija odražava JSON Schemu (question neprazan · 2–6 nepraznih opcija · valjan `correct` indeks). Write = isti pipeline (RMW jednog reda → F4.2 verzija → propagacija u sestrinske redove → live re-render); `image`/`imageAlt` netaknuti (mijenja se samo question/options/correct). i18n `admin.quiz*`/`admin.options`/… (en/hr); CSS `.admin-quiz-*` u `profile.css`.
+
+**Gate:** verify 0/0, typecheck 0, test:unit 8/8, validate:content 0/0, validate:schema 54/54, bump:check 95/95, build:css/export:json --check 0. **Playwright admin+components+a11y 60/0** (novi non-admin test: quiz preview se renderira + quiz edit-gumbi skriveni ne-adminu) · **`test:authed` 4/4** (novi: admin klik na quiz edit-gumb otvara editor s ≥2 reda opcija + jednim „točan" + prefilanim pitanjem). Cache `20260708021017`.
+
+**⏳ Ostaje za F4.4-quiz:** ŽIVI write-verify (authed edit-pa-revert quiz protiv prave baze + `content_versions` provjera — dodaje audit-redove → radi se uz izričit OK, kao c-1/c-2). Zatim iste cigle za **fill → learn → kategorije**.
+
+**Stanje:** commitano na `foundation/f4` (preview), produkcija (`main`) netaknuta.
+
+---
+
 ## 2026-07-08 (OPUS) — F4.3c KOMPLETNA (edit kartice end-to-end) + Playwright LOGIN + CI authed job
 **Kontekst:** nastavak F4 (Admin CRUD) na grani `foundation/f4` (preview, `main` netaknut). Sve cigle živo verificirane.
 

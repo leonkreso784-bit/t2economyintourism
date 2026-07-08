@@ -1,6 +1,6 @@
 # CRUD_PLAN — F4 Admin CRUD (Sokrat Study)
 
-> **Status (2026-07-08):** ▶ U TIJEKU. F4.1/4.2 (identitet+write-path+verzioniranje) ✅ · F4.3a/b (detekcija+viewer) ✅ · **F4.3c (prva UI cigla — edit kartice end-to-end) ✅ KOMPLETNA + ŽIVO VERIFICIRANA** (c-1 write+verzija+revert; c-2 propagacija midterm↔final) · **Playwright LOGIN (storageState) ✅ — pozitivan admin-put automatiziran** (`test:authed` 3/3 + CI `authed` job). Sve na grani `foundation/f4` (PREVIEW, NIJE produkcija). **Sljedeće: F4.4** (proširi tipove: quiz/fill/learn/kategorije). Plan-ugovor za **F4 (custom Admin CRUD)** — uređivanje sadržaja
+> **Status (2026-07-08):** ▶ U TIJEKU. F4.1/4.2 (identitet+write-path+verzioniranje) ✅ · F4.3a/b (detekcija+viewer) ✅ · **F4.3c (prva UI cigla — edit kartice end-to-end) ✅ KOMPLETNA + ŽIVO VERIFICIRANA** (c-1 write+verzija+revert; c-2 propagacija midterm↔final) · **Playwright LOGIN (storageState) ✅ — pozitivan admin-put automatiziran** (`test:authed` 4/4 + CI `authed` job). **F4.4-quiz ✅ (kod+statika+automatika; ŽIVI write ostaje uz OK).** Sve na grani `foundation/f4` (PREVIEW, NIJE produkcija). **Sljedeće u F4.4: fill → learn → kategorije.** Plan-ugovor za **F4 (custom Admin CRUD)** — uređivanje sadržaja
 > kroz sučelje bez deploya. Odluke fiksirane u **ADR-021**; sjeda na F2 jezgru (S1 Repo, S2 JSON, S3 AppState, S4 Web Components).
 > Filozofija: **cigla po cigla, svaka testabilna/reverzibilna** (FOUNDATION_PLAN §1). Vježbe se NIKAD ne diraju (BUG-012).
 
@@ -62,6 +62,13 @@ Autor (kasnije i studenti — UGC nakon F6) uređuje predmete/lekcije/kategorije
 
 ### ▸ F4.4 — Proširi tipove
 quiz / fill / learn / kategorije (dodaj-obriši-presloži), isti obrazac; svaki tip = svoja cigla + test.
+
+- **✅ F4.4-quiz GOTOVO (2026-07-08, cache `20260708021017`) — kod + statika + automatika zeleni; ŽIVI write ostaje kao zadnja provjera.** Isti write-pipeline kao flashcards (RMW jednog reda → F4.2 verzija → `_propagateToSiblings` u sestrinske redove → live re-render), proširen na quiz. Novo u `js/admin.js`:
+  - **Generalizirani helperi** (`_patchObj`/`_patchWindowVar`/`_patchInMemory`/`_propagateToSiblings`) sada primaju `arrayKey` (`flashcards`|`quiz`|…) + `applyItem(item)` umjesto hardkodiranog `flashcards`+`{q,a}` → flashcard ponašanje bit-identično (pozivi ažurirani), quiz se nakalemi bez duplikacije.
+  - **Viewer** crta i quiz stavke po kategoriji (`.admin-subhead` Flashcards/Quiz; quiz preview = opcije s označenim točnim `.is-correct`); quiz-only kategorije se sad prikazuju (prije guard tražio flashcards). Edit-gumb nosi `data-type` → delegat grana na quiz/flashcard editor.
+  - **Quiz-editor** (`#adminQuizModal` na `<sokrat-modal>`): pitanje + **dinamičke opcije 2–6** (dodaj/obriši, radio „točan"). Validacija odražava JSON Schemu (question neprazan · 2–6 nepraznih opcija · valjan `correct` indeks). `image`/`imageAlt` netaknuti (mijenja se samo question/options/correct). i18n `admin.quiz*`/`admin.options`/`admin.addOption`/… (en/hr); CSS `.admin-quiz-*` u `profile.css`.
+  - **Gate:** verify 0/0, typecheck 0, test:unit 8/8, validate:content 0/0, validate:schema 54/54, bump:check 95/95, build:css/export:json --check 0. **Playwright admin+components+a11y 60/0** (novi non-admin test: quiz preview se renderira + quiz edit-gumbi skriveni ne-adminu) · **`test:authed` 4/4** (novi: admin klik na quiz edit-gumb otvara editor s ≥2 reda opcija + jednim „točan" + prefilanim pitanjem).
+  - **⏳ Ostaje:** ŽIVI write-verify (authed edit-pa-revert `te2` quiz protiv prave baze + `content_versions` provjera; dodaje audit-redove → radi se uz izričit OK, kao c-1/c-2). Nakon toga: **fill** → **learn** → **kategorije**.
 
 ### ▸ F4.5 — Export-generator (4D)
 baza → `data/json/<id>/*.json` (reuse `export:json` shape) + **dry-run diff** (4E.3) baza↔datoteka. Git-povijest/offline fallback ostaju.

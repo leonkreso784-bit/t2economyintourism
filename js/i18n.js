@@ -31,7 +31,7 @@
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
-    'admin.viewerNote': { en: 'Edit flashcards inline. Every change is versioned and can be undone. (Quiz/fill/learn editing arrives next.)', hr: 'Uredi kartice izravno. Svaka izmjena se verzionira i može poništiti. (Kviz/dopuna/učenje uskoro.)' },
+    'admin.viewerNote': { en: 'Edit flashcards and quiz inline. Every change is versioned and can be undone. (Fill/learn editing arrives next.)', hr: 'Uredi kartice i kviz izravno. Svaka izmjena se verzionira i može poništiti. (Dopuna/učenje uskoro.)' },
     'admin.subject': { en: 'Subject', hr: 'Predmet' },
     'admin.lesson': { en: 'Lesson', hr: 'Lekcija' },
     'admin.selectSubject': { en: '— select subject —', hr: '— odaberi predmet —' },
@@ -51,6 +51,19 @@
     'admin.notInDb': { en: 'This subject is not in the database yet.', hr: 'Ovaj predmet još nije u bazi.' },
     'admin.finalNote': { en: 'syncs across this lesson and the final exam.', hr: 'sinkronizira se kroz ovu lekciju i finalni ispit.' },
     'admin.propWarn': { en: '(final sync incomplete)', hr: '(finalni nije potpuno sinkroniziran)' },
+    // F4.4 — quiz editing
+    'admin.flashcards': { en: 'Flashcards', hr: 'Kartice' },
+    'admin.quiz': { en: 'Quiz', hr: 'Kviz' },
+    'admin.noContent': { en: 'No flashcards or quiz in this lesson.', hr: 'Nema kartica ni kviza u ovoj lekciji.' },
+    'admin.editQuiz': { en: 'Edit quiz question', hr: 'Uredi kviz pitanje' },
+    'admin.options': { en: 'Options (pick the correct one)', hr: 'Odgovori (odaberi točan)' },
+    'admin.addOption': { en: 'Add option', hr: 'Dodaj odgovor' },
+    'admin.removeOption': { en: 'Remove option', hr: 'Ukloni odgovor' },
+    'admin.correct': { en: 'Correct', hr: 'Točan' },
+    'admin.quizSaveOk': { en: 'Quiz question saved.', hr: 'Kviz pitanje spremljeno.' },
+    'admin.quizEmptyErr': { en: 'Question and all options must not be empty.', hr: 'Pitanje i svi odgovori ne smiju biti prazni.' },
+    'admin.quizCountErr': { en: 'A question needs 2–6 options.', hr: 'Pitanje treba 2–6 odgovora.' },
+    'admin.quizCorrectErr': { en: 'Pick which option is correct.', hr: 'Odaberi koji je odgovor točan.' },
 
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },

@@ -154,6 +154,14 @@ async function _onAdminLessonChange() {
   _renderAdminCards(holder, data);
 }
 
+/** Edit-gumb (samo adminu) za stavku (type ∈ flashcard|quiz). */
+function _adminEditBtn(canEdit, type, catId, idx) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-edit-btn" data-admin-edit data-type="' + type +
+    '" data-cat="' + _adminEscape(catId) + '" data-idx="' + idx +
+    '" aria-label="' + _adminT('admin.edit', 'Edit') + '"><i class="fas fa-pen"></i></button>';
+}
+
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
@@ -163,32 +171,66 @@ function _renderAdminCards(holder, data) {
 
   cats.forEach(function (catId) {
     const cat = data[catId];
-    if (!cat || !Array.isArray(cat.flashcards) || cat.flashcards.length === 0) return;
+    if (!cat || typeof cat !== 'object') return;
+    const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
+    const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
+    if (fcs.length === 0 && quiz.length === 0) return;
+
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
-      _adminEscape(cat.name || catId) + ' <span class="admin-count">' + cat.flashcards.length + '</span></h3>' +
-      '  <ol class="admin-card-list">';
-    cat.flashcards.forEach(function (fc, i) {
-      total++;
-      html +=
-        '<li class="admin-card">' +
-        '  <div class="admin-card-body">' +
-        '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
-        '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
-        '  </div>' +
-        (canEdit
-          ? '  <button type="button" class="admin-edit-btn" data-admin-edit data-cat="' + _adminEscape(catId) +
-            '" data-idx="' + i + '" aria-label="' + _adminT('admin.edit', 'Edit') + '"><i class="fas fa-pen"></i></button>'
-          : '') +
-        '</li>';
-    });
-    html += '  </ol></div>';
+      _adminEscape(cat.name || catId) + '</h3>';
+
+    // — Flashcards —
+    if (fcs.length) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.flashcards', 'Flashcards') +
+        ' <span class="admin-count">' + fcs.length + '</span></h4><ol class="admin-card-list">';
+      fcs.forEach(function (fc, i) {
+        total++;
+        html +=
+          '<li class="admin-card">' +
+          '  <div class="admin-card-body">' +
+          '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
+          '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
+          '  </div>' +
+          _adminEditBtn(canEdit, 'flashcard', catId, i) +
+          '</li>';
+      });
+      html += '</ol>';
+    }
+
+    // — Quiz (F4.4) —
+    if (quiz.length) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.quiz', 'Quiz') +
+        ' <span class="admin-count">' + quiz.length + '</span></h4><ol class="admin-card-list">';
+      quiz.forEach(function (qz, i) {
+        total++;
+        const opts = Array.isArray(qz.options) ? qz.options : [];
+        let optsHtml = '<ul class="admin-quiz-opts">';
+        opts.forEach(function (opt, oi) {
+          const isCorrect = (oi === qz.correct);
+          optsHtml += '<li' + (isCorrect ? ' class="is-correct"' : '') + '>' +
+            (isCorrect ? '<i class="fas fa-check"></i> ' : '') + _adminEscape(opt) + '</li>';
+        });
+        optsHtml += '</ul>';
+        html +=
+          '<li class="admin-card">' +
+          '  <div class="admin-card-body">' +
+          '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
+          '    ' + optsHtml +
+          '  </div>' +
+          _adminEditBtn(canEdit, 'quiz', catId, i) +
+          '</li>';
+      });
+      html += '</ol>';
+    }
+
+    html += '</div>';
   });
 
   holder.innerHTML = total
     ? html
-    : '<p class="profile-meta">' + _adminT('admin.noCards', 'No flashcards in this lesson.') + '</p>';
+    : '<p class="profile-meta">' + _adminT('admin.noContent', 'No flashcards or quiz in this lesson.') + '</p>';
 }
 
 window.renderAdminPage = renderAdminPage;
@@ -277,36 +319,39 @@ function _openCardEditor(catId, idx) {
   if (m && typeof m.open === 'function') m.open();
 }
 
-/** Zakrpaj jedan objekt (payload/window-var) na (catId, idx) ako kartica postoji. */
-function _patchObj(obj, catId, idx, q, a) {
-  if (obj && obj[catId] && Array.isArray(obj[catId].flashcards) && obj[catId].flashcards[idx]) {
-    obj[catId].flashcards[idx].question = q;
-    obj[catId].flashcards[idx].answer = a;
+/**
+ * Zakrpaj jedan objekt (payload/window-var) na (catId, arrayKey, idx) ako stavka postoji.
+ * `applyItem(item)` mutira stavku na mjestu (isti obrazac za flashcards/quiz/fill/…).
+ */
+function _patchObj(obj, catId, arrayKey, idx, applyItem) {
+  if (obj && obj[catId] && Array.isArray(obj[catId][arrayKey]) && obj[catId][arrayKey][idx]) {
+    applyItem(obj[catId][arrayKey][idx]);
     return true;
   }
   return false;
 }
 
 /** Zakrpaj window-var (ako je učitan u memoriji) — study/viewer to čitaju. */
-function _patchWindowVar(varName, catId, idx, q, a) {
-  if (typeof window !== 'undefined') _patchObj(window[varName], catId, idx, q, a);
+function _patchWindowVar(varName, catId, arrayKey, idx, applyItem) {
+  if (typeof window !== 'undefined') _patchObj(window[varName], catId, arrayKey, idx, applyItem);
 }
 
 /** Zakrpaj in-memory objekt(e) da se promjena vidi bez reloada (isti ref koji study/viewer čitaju). */
-function _patchInMemory(varName, catId, idx, q, a) {
-  _patchWindowVar(varName, catId, idx, q, a); // study čita window[var]
-  _patchObj(_adminCtx.data, catId, idx, q, a); // viewer re-render izvor (isti ref za midterm)
+function _patchInMemory(varName, catId, arrayKey, idx, applyItem) {
+  _patchWindowVar(varName, catId, arrayKey, idx, applyItem); // study čita window[var]
+  _patchObj(_adminCtx.data, catId, arrayKey, idx, applyItem); // viewer re-render izvor (isti ref za midterm)
 }
 
 /**
  * F4.3c-2: propagiraj istu izmjenu u SESTRINSKE redove predmeta koji dijele ovu kategoriju.
  * Zašto: `final` je `Object.assign(M1, M2, …)` KOPIJA → u bazi zaseban red (npr. `te2Final`) koji
- * duplicira midterm kartice. Bez ovoga bi edit midterma i finalni razišli. Kategorije su unikatne
- * po predmetu (nema kolizije M1/M2), a final je čista kopija → (catId, idx) je isti card svugdje.
+ * duplicira midterm stavke. Bez ovoga bi edit midterma i finalni razišli. Kategorije su unikatne
+ * po predmetu (nema kolizije M1/M2), a final je čista kopija → (catId, arrayKey, idx) je ista stavka svugdje.
+ * Generičko po tipu: `arrayKey` ∈ {flashcards, quiz, fillBlanks, …}; `applyItem(item)` mutira na mjestu.
  * Best-effort: primarni red je već spremljen; svaki sibling-write ide pod istim RLS + snapshotom.
  * @returns {Promise<{patched:string[], failed:string[]}>}
  */
-async function _propagateToSiblings(client, subjectId, primaryVar, catId, idx, q, a) {
+async function _propagateToSiblings(client, subjectId, primaryVar, catId, arrayKey, idx, applyItem) {
   const patched = [];
   const failed = [];
   try {
@@ -315,10 +360,9 @@ async function _propagateToSiblings(client, subjectId, primaryVar, catId, idx, q
     if (sel.error || !Array.isArray(sel.data)) return { patched: patched, failed: failed };
     for (const row of sel.data) {
       const p = row.payload;
-      const arr = (p && p[catId] && Array.isArray(p[catId].flashcards)) ? p[catId].flashcards : null;
+      const arr = (p && p[catId] && Array.isArray(p[catId][arrayKey])) ? p[catId][arrayKey] : null;
       if (!arr || !arr[idx]) continue; // ta kategorija/indeks ne postoji ovdje → preskoči (npr. examPractice-only)
-      arr[idx].question = q;
-      arr[idx].answer = a;
+      applyItem(arr[idx]);
       const upd = await client.from('subject_content').update({ payload: p })
         .eq('subject_id', subjectId).eq('var_name', row.var_name);
       if (upd.error) failed.push(row.var_name); else patched.push(row.var_name);
@@ -368,8 +412,8 @@ async function _saveCard() {
       if (saveBtn) saveBtn.disabled = false;
       return;
     }
-    target.question = q;
-    target.answer = a;
+    const applyItem = function (fc) { fc.question = q; fc.answer = a; };
+    applyItem(target);
 
     // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
     const upd = await client.from('subject_content').update({ payload: payload })
@@ -381,11 +425,11 @@ async function _saveCard() {
     }
 
     // 3) F4.3c-2: propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
-    const prop = await _propagateToSiblings(client, subjectId, varName, catId, idx, q, a);
+    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'flashcards', idx, applyItem);
 
     // 4) In-memory patch → live promjena bez reloada (primarni + svi zakrpani sestrinski varovi).
-    _patchInMemory(varName, catId, idx, q, a);
-    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, idx, q, a); });
+    _patchInMemory(varName, catId, 'flashcards', idx, applyItem);
+    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'flashcards', idx, applyItem); });
 
     if (saveBtn) saveBtn.disabled = false;
     _closeEditor();
@@ -401,11 +445,230 @@ async function _saveCard() {
   }
 }
 
-// Delegat: klik na edit-gumb kartice → otvori editor.
+// ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
+//
+// Isti pipeline kao flashcards (RMW jednog reda → verzija → propagacija u sestrinske redove →
+// live re-render), ali s dinamičkim opcijama i validacijom `correct` indeksa. `image`/`imageAlt`
+// ostaju netaknuti (mijenjamo samo question/options/correct na postojećem objektu).
+
+/** Quiz koji se uređuje: { catId, idx }. */
+let _quizTarget = null;
+
+/** Kreiraj (jednom) quiz-editor singleton na <sokrat-modal> primitivu. */
+function _ensureQuizModal() {
+  let m = document.getElementById('adminQuizModal');
+  if (m) return m;
+  m = document.createElement('sokrat-modal');
+  m.id = 'adminQuizModal';
+  m.className = 'admin-edit';
+  m.setAttribute('aria-labelledby', 'adminQuizTitle');
+  m.innerHTML =
+    '<div class="admin-edit__card">' +
+    '  <button type="button" class="admin-edit__close" data-admin-quiz-close aria-label="Close">&times;</button>' +
+    '  <h3 id="adminQuizTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editQuiz', 'Edit quiz question') + '</h3>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.question', 'Question') + '</span>' +
+    '    <textarea id="adminQuizQ" class="admin-edit__input" rows="3"></textarea></label>' +
+    '  <div class="admin-edit__field">' +
+    '    <span>' + _adminT('admin.options', 'Options (pick the correct one)') + '</span>' +
+    '    <div id="adminQuizOpts" class="admin-quiz-editopts"></div>' +
+    '    <button type="button" class="admin-quiz-addopt" id="adminQuizAddOpt"><i class="fas fa-plus"></i> ' + _adminT('admin.addOption', 'Add option') + '</button>' +
+    '  </div>' +
+    '  <p class="admin-edit__note" id="adminQuizNote"></p>' +
+    '  <p class="admin-edit__status" id="adminQuizStatus" hidden></p>' +
+    '  <div class="admin-edit__actions">' +
+    '    <button type="button" class="cta-button secondary" data-admin-quiz-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminQuizSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
+    '  </div>' +
+    '</div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function (e) {
+    if (e.target.closest('[data-admin-quiz-close]')) { _closeQuizEditor(); return; }
+    if (e.target.closest('#adminQuizAddOpt')) { _quizAddOption(); return; }
+    const del = e.target.closest('[data-opt-del]');
+    if (del) { _quizDeleteOption(del); return; }
+  });
+  const saveBtn = document.getElementById('adminQuizSave');
+  if (saveBtn) saveBtn.addEventListener('click', _saveQuiz);
+  return m;
+}
+
+function _quizStatus(msg, isErr) {
+  const el = document.getElementById('adminQuizStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.hidden = !msg;
+  el.classList.toggle('is-error', !!isErr);
+}
+
+function _closeQuizEditor() {
+  const m = document.getElementById('adminQuizModal');
+  if (m && typeof m.close === 'function') m.close();
+}
+
+/** Pročitaj trenutne opcije + odabrani correct iz DOM-a (izvor istine dok je modal otvoren). */
+function _readQuizOptsFromDom() {
+  const rows = document.querySelectorAll('#adminQuizOpts .admin-quiz-optrow');
+  const options = [];
+  let correct = 0;
+  rows.forEach(function (row, i) {
+    const inp = row.querySelector('.admin-quiz-optinput');
+    options.push(inp ? inp.value : '');
+    const radio = row.querySelector('input[type=radio]');
+    if (radio && radio.checked) correct = i;
+  });
+  return { options: options, correct: correct };
+}
+
+/** (Pre)crtaj redove opcija iz danog niza (svaki = radio „točan" + tekst + brisanje). */
+function _renderQuizOptRows(options, correct) {
+  const host = document.getElementById('adminQuizOpts');
+  if (!host) return;
+  let html = '';
+  options.forEach(function (opt, i) {
+    html +=
+      '<div class="admin-quiz-optrow" data-opt-idx="' + i + '">' +
+      '  <input type="radio" name="adminQuizCorrect" value="' + i + '"' + (i === correct ? ' checked' : '') +
+      '    aria-label="' + _adminT('admin.correct', 'Correct') + '">' +
+      '  <input type="text" class="admin-quiz-optinput" value="' + _adminEscape(opt) + '">' +
+      '  <button type="button" class="admin-quiz-delopt" data-opt-del aria-label="' + _adminT('admin.removeOption', 'Remove option') + '"><i class="fas fa-times"></i></button>' +
+      '</div>';
+  });
+  host.innerHTML = html;
+}
+
+/** Dodaj praznu opciju (max 6). Čuva postojeće vrijednosti (čita iz DOM-a prije re-crtanja). */
+function _quizAddOption() {
+  const cur = _readQuizOptsFromDom();
+  if (cur.options.length >= 6) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
+  cur.options.push('');
+  _renderQuizOptRows(cur.options, cur.correct);
+  _quizStatus('', false);
+}
+
+/** Obriši jednu opciju (min 2); pomakni `correct` ako treba. */
+function _quizDeleteOption(delBtn) {
+  const row = delBtn.closest('.admin-quiz-optrow');
+  if (!row || !row.parentNode) return;
+  const cur = _readQuizOptsFromDom();
+  if (cur.options.length <= 2) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
+  const delIdx = Array.prototype.indexOf.call(row.parentNode.children, row);
+  cur.options.splice(delIdx, 1);
+  let correct = cur.correct;
+  if (delIdx === cur.correct) correct = 0;           // obrisan točan → prvi preostali
+  else if (delIdx < cur.correct) correct = cur.correct - 1; // pomak indeksa
+  _renderQuizOptRows(cur.options, correct);
+  _quizStatus('', false);
+}
+
+/** Otvori quiz-editor za (catId, idx) iz trenutnog konteksta. */
+function _openQuizEditor(catId, idx) {
+  const data = _adminCtx.data;
+  const cat = data && data[catId];
+  const qz = (cat && Array.isArray(cat.quiz)) ? cat.quiz[idx] : null;
+  if (!qz) return;
+  _quizTarget = { catId: catId, idx: idx };
+  _ensureQuizModal();
+  document.getElementById('adminQuizQ').value = qz.question || '';
+  const options = Array.isArray(qz.options) ? qz.options.slice() : [];
+  const correct = (typeof qz.correct === 'number' && qz.correct >= 0 && qz.correct < options.length) ? qz.correct : 0;
+  _renderQuizOptRows(options, correct);
+  const note = document.getElementById('adminQuizNote');
+  if (note) {
+    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
+      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+  }
+  _quizStatus('', false);
+  const m = document.getElementById('adminQuizModal');
+  if (m && typeof m.open === 'function') m.open();
+}
+
+/** Spremi uređeno quiz pitanje: validacija → RMW jednog reda → verzija → propagacija → live re-render. */
+async function _saveQuiz() {
+  const qEl = document.getElementById('adminQuizQ');
+  const saveBtn = document.getElementById('adminQuizSave');
+  if (!qEl || !_quizTarget) return;
+
+  const q = qEl.value.trim();
+  const cur = _readQuizOptsFromDom();
+  const options = cur.options.map(function (s) { return String(s).trim(); });
+  const correct = cur.correct;
+
+  // Validacija (odražava JSON Schemu: 2–6 nepraznih opcija, question neprazan, correct valjan indeks).
+  if (!q) { _quizStatus(_adminT('admin.quizEmptyErr', 'Question and all options must not be empty.'), true); return; }
+  if (options.length < 2 || options.length > 6) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
+  if (options.some(function (s) { return !s; })) { _quizStatus(_adminT('admin.quizEmptyErr', 'Question and all options must not be empty.'), true); return; }
+  if (correct < 0 || correct >= options.length) { _quizStatus(_adminT('admin.quizCorrectErr', 'Pick which option is correct.'), true); return; }
+
+  const subjectId = _adminCtx.subjectId;
+  const varName = _adminCtx.varName;
+  const catId = _quizTarget.catId;
+  const idx = _quizTarget.idx;
+  if (!subjectId || !varName) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  if (saveBtn) saveBtn.disabled = true;
+  _quizStatus(_adminT('admin.saving', 'Saving…'), false);
+  try {
+    // 1) Svjež autoritativni payload iz baze (read-modify-write; ne preko stale/JSON-fallbacka).
+    const sel = await client.from('subject_content').select('payload')
+      .eq('subject_id', subjectId).eq('var_name', varName).single();
+    if (sel.error || !sel.data || !sel.data.payload) {
+      _quizStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    const payload = sel.data.payload;
+    const target = (payload[catId] && Array.isArray(payload[catId].quiz)) ? payload[catId].quiz[idx] : null;
+    if (!target) {
+      _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    // Mijenjamo samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
+    const applyItem = function (t) { t.question = q; t.options = options.slice(); t.correct = correct; };
+    applyItem(target);
+
+    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
+    const upd = await client.from('subject_content').update({ payload: payload })
+      .eq('subject_id', subjectId).eq('var_name', varName);
+    if (upd.error) {
+      _quizStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+
+    // 3) Propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
+    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'quiz', idx, applyItem);
+
+    // 4) In-memory patch → live promjena bez reloada (primarni + zakrpani sestrinski varovi).
+    _patchInMemory(varName, catId, 'quiz', idx, applyItem);
+    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'quiz', idx, applyItem); });
+
+    if (saveBtn) saveBtn.disabled = false;
+    _closeQuizEditor();
+    if (typeof showToast === 'function') {
+      const okMsg = _adminT('admin.quizSaveOk', 'Quiz question saved.');
+      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
+    }
+    const holder = document.getElementById('adminCards');
+    if (holder) _renderAdminCards(holder, _adminCtx.data);
+  } catch (e) {
+    _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+    if (saveBtn) saveBtn.disabled = false;
+  }
+}
+
+// Delegat: klik na edit-gumb stavke → otvori editor (grana po tipu).
 document.addEventListener('click', function (e) {
   const btn = e.target.closest('[data-admin-edit]');
   if (!btn) return;
+  const type = btn.getAttribute('data-type') || 'flashcard';
   const catId = btn.getAttribute('data-cat');
   const idx = parseInt(btn.getAttribute('data-idx'), 10);
-  if (catId && !isNaN(idx)) _openCardEditor(catId, idx);
+  if (!catId || isNaN(idx)) return;
+  if (type === 'quiz') _openQuizEditor(catId, idx);
+  else _openCardEditor(catId, idx);
 });

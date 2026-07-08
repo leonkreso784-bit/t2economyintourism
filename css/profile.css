@@ -320,3 +320,42 @@
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
 .admin-edit__status.is-error { color: var(--danger-text, #f87171); }
 .admin-edit__actions { display: flex; justify-content: flex-end; gap: 0.6rem; }
+
+/* ===== F4.4 Quiz editing ===== */
+/* Podnaslov tipa unutar kategorije (Flashcards / Quiz) */
+.admin-subhead {
+    margin: 1rem 0 0; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--text-secondary);
+}
+/* Read-only pregled opcija u vieweru */
+.admin-quiz-opts { list-style: none; margin: 0.35rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+.admin-quiz-opts li { font-size: 0.88rem; color: var(--text-secondary); padding-left: 1.1rem; text-indent: -1.1rem; }
+.admin-quiz-opts li.is-correct { color: var(--text-primary); font-weight: 600; }
+.admin-quiz-opts li.is-correct i { color: #22c55e; margin-right: 0.15rem; }
+
+/* Editor: redovi opcija (radio „točan" + tekst + brisanje) */
+.admin-quiz-editopts { display: flex; flex-direction: column; gap: 0.45rem; }
+.admin-quiz-optrow { display: flex; align-items: center; gap: 0.5rem; }
+.admin-quiz-optrow input[type="radio"] { flex: 0 0 auto; width: 18px; height: 18px; accent-color: var(--primary, #6366f1); cursor: pointer; }
+.admin-quiz-optinput {
+    flex: 1 1 auto; min-width: 0; box-sizing: border-box;
+    padding: 0.5rem 0.6rem; border-radius: 8px;
+    border: 1px solid var(--border-color, #334155);
+    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    font-size: 0.9rem; font-family: inherit;
+}
+.admin-quiz-optinput:focus { outline: none; border-color: var(--primary, #6366f1); }
+.admin-quiz-delopt {
+    flex: 0 0 auto; width: 30px; height: 30px; border-radius: 7px;
+    border: 1px solid var(--border-color, #334155); background: var(--bg-tertiary);
+    color: var(--text-secondary); cursor: pointer; font-size: 0.8rem;
+    display: inline-flex; align-items: center; justify-content: center;
+}
+.admin-quiz-delopt:hover { background: var(--danger-text, #f87171); color: #fff; border-color: var(--danger-text, #f87171); }
+.admin-quiz-addopt {
+    align-self: flex-start; margin-top: 0.55rem; padding: 0.35rem 0.7rem;
+    border: 1px dashed var(--border-color, #334155); border-radius: 8px;
+    background: transparent; color: var(--text-secondary); cursor: pointer;
+    font-size: 0.82rem; font-family: inherit;
+}
+.admin-quiz-addopt:hover { border-color: var(--primary, #6366f1); color: var(--text-primary); }
