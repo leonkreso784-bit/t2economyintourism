@@ -138,3 +138,44 @@ test('F4.4 — admin: fill edit-gumb otvara fill-editor s rečenicom (blank) + o
 
   await page.evaluate(() => { const m = document.getElementById('adminFillModal'); if (m) m.close(); });
 });
+
+test('F4.4 — admin: learn edit-gumb otvara learn-editor s naslovom + HTML sadržajem (bez spremanja)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(
+    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
+  );
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const te2 = sel.querySelector('option[value="te2"]');
+    sel.value = te2 ? 'te2' : sel.querySelector('option[value]:not([value=""])').value;
+    sel.dispatchEvent(new Event('change'));
+  });
+  await page.waitForFunction(() => {
+    const l = document.getElementById('adminLessonSel');
+    return l && !l.disabled && !!l.querySelector('option[value]:not([value=""]):not([disabled])');
+  });
+  await page.evaluate(() => {
+    const l = document.getElementById('adminLessonSel');
+    l.value = l.querySelector('option[value]:not([value=""]):not([disabled])').value;
+    l.dispatchEvent(new Event('change'));
+  });
+  await page.waitForSelector('#adminCards [data-admin-edit][data-type="learn"]', { timeout: 20000 });
+
+  await page.locator('#adminCards [data-admin-edit][data-type="learn"]').first().click();
+  await page.waitForSelector('#adminLearnModal #adminLearnC');
+
+  const res = await page.evaluate(() => ({
+    modalOpen: (function () { const m = document.getElementById('adminLearnModal'); return !!(m && typeof m.isOpen === 'function' && m.isOpen()); })(),
+    contentFilled: (document.getElementById('adminLearnC').value || '').length > 0,
+    contentHasHtml: (document.getElementById('adminLearnC').value || '').indexOf('<') !== -1,
+  }));
+  expect(res.modalOpen).toBe(true);
+  expect(res.contentFilled).toBe(true);     // HTML sadržaj prefilan
+  expect(res.contentHasHtml).toBe(true);    // sirovi HTML (npr. <h3>/<p>)
+
+  await page.evaluate(() => { const m = document.getElementById('adminLearnModal'); if (m) m.close(); });
+});

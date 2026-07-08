@@ -86,6 +86,12 @@ function _adminEscape(s) {
   });
 }
 
+/** Kratki čitljiv izvadak iz HTML-a (skini tagove, sažmi razmake, odreži) — SAMO za preview. */
+function _adminExcerpt(html, n) {
+  const text = String(html || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.length > n ? text.slice(0, n) + '…' : text;
+}
+
 function renderAdminPage() {
   const root = document.getElementById('adminContent');
   if (!root) return;
@@ -175,7 +181,8 @@ function _renderAdminCards(holder, data) {
     const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
     const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
     const fills = Array.isArray(cat.fillBlanks) ? cat.fillBlanks : [];
-    if (fcs.length === 0 && quiz.length === 0 && fills.length === 0) return;
+    const hasLearn = !!(cat.learn && typeof cat.learn === 'object' && cat.learn.content);
+    if (fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
 
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
@@ -242,6 +249,20 @@ function _renderAdminCards(holder, data) {
           '</li>';
       });
       html += '</ol>';
+    }
+
+    // — Learn (F4.4) — jedan objekt po kategoriji (ne niz) —
+    if (hasLearn) {
+      total++;
+      const L = cat.learn;
+      html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + '</h4>' +
+        '<ol class="admin-card-list"><li class="admin-card admin-card--learn">' +
+        '  <div class="admin-card-body">' +
+        (L.title ? '    <div class="admin-card-q">' + _adminEscape(L.title) + '</div>' : '') +
+        '    <div class="admin-card-a">' + _adminEscape(_adminExcerpt(L.content, 220)) + '</div>' +
+        '  </div>' +
+        _adminEditBtn(canEdit, 'learn', catId, 0) +
+        '</li></ol>';
     }
 
     html += '</div>';
@@ -831,6 +852,193 @@ async function _saveFill() {
   }
 }
 
+// ===== F4.4 — Uredi LEARN: naslov + HTML sadržaj (jedan objekt po kategoriji) =====
+//
+// Learn je JEDAN objekt `cat.learn = {title?, content, image?}` (ne niz) → vlastiti object-put
+// (nema idx). Sadržaj je sirovi HTML (+ moguć KaTeX `\( \)`/`\[ \]`/`$$ $$`) — uređuje se kao
+// tekst u textarei, sprema se doslovno (bez render/sanitize, kao u izvornim datotekama).
+// Validacija: content neprazan (title/image opcionalni po schemi). `image` ostaje netaknut.
+
+/** Learn koji se uređuje: { catId }. */
+let _learnTarget = null;
+
+/** Zakrpaj `obj[catId].learn` (objekt) ako postoji; applyItem mutira na mjestu. */
+function _patchLearnObj(obj, catId, applyItem) {
+  if (obj && obj[catId] && obj[catId].learn && typeof obj[catId].learn === 'object') {
+    applyItem(obj[catId].learn);
+    return true;
+  }
+  return false;
+}
+
+/** In-memory patch learn objekta (window-var + viewer izvor). */
+function _patchLearnInMemory(varName, catId, applyItem) {
+  if (typeof window !== 'undefined') _patchLearnObj(window[varName], catId, applyItem);
+  _patchLearnObj(_adminCtx.data, catId, applyItem);
+}
+
+/** Propagacija learn izmjene u sestrinske redove (final = kopija → learn objekt mora ostati u sinku). */
+async function _propagateLearnToSiblings(client, subjectId, primaryVar, catId, applyItem) {
+  const patched = [];
+  const failed = [];
+  try {
+    const sel = await client.from('subject_content').select('var_name,payload')
+      .eq('subject_id', subjectId).neq('var_name', primaryVar);
+    if (sel.error || !Array.isArray(sel.data)) return { patched: patched, failed: failed };
+    for (const row of sel.data) {
+      const p = row.payload;
+      if (!(p && p[catId] && p[catId].learn && typeof p[catId].learn === 'object')) continue;
+      applyItem(p[catId].learn);
+      const upd = await client.from('subject_content').update({ payload: p })
+        .eq('subject_id', subjectId).eq('var_name', row.var_name);
+      if (upd.error) failed.push(row.var_name); else patched.push(row.var_name);
+    }
+  } catch (e) {
+    // best-effort; primarni je već spremljen.
+  }
+  return { patched: patched, failed: failed };
+}
+
+function _ensureLearnModal() {
+  let m = document.getElementById('adminLearnModal');
+  if (m) return m;
+  m = document.createElement('sokrat-modal');
+  m.id = 'adminLearnModal';
+  m.className = 'admin-edit admin-learn';
+  m.setAttribute('aria-labelledby', 'adminLearnTitle');
+  m.innerHTML =
+    '<div class="admin-edit__card">' +
+    '  <button type="button" class="admin-edit__close" data-admin-learn-close aria-label="Close">&times;</button>' +
+    '  <h3 id="adminLearnTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editLearn', 'Edit learn content') + '</h3>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.learnTitle', 'Title (optional)') + '</span>' +
+    '    <input type="text" id="adminLearnT" class="admin-edit__input"></label>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.learnContent', 'Content (HTML)') + '</span>' +
+    '    <textarea id="adminLearnC" class="admin-edit__input admin-learn__content" rows="14"></textarea></label>' +
+    '  <p class="admin-edit__note" id="adminLearnNote"></p>' +
+    '  <p class="admin-edit__status" id="adminLearnStatus" hidden></p>' +
+    '  <div class="admin-edit__actions">' +
+    '    <button type="button" class="cta-button secondary" data-admin-learn-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminLearnSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
+    '  </div>' +
+    '</div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function (e) {
+    if (e.target.closest('[data-admin-learn-close]')) _closeLearnEditor();
+  });
+  const saveBtn = document.getElementById('adminLearnSave');
+  if (saveBtn) saveBtn.addEventListener('click', _saveLearn);
+  return m;
+}
+
+function _learnStatus(msg, isErr) {
+  const el = document.getElementById('adminLearnStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.hidden = !msg;
+  el.classList.toggle('is-error', !!isErr);
+}
+
+function _closeLearnEditor() {
+  const m = document.getElementById('adminLearnModal');
+  if (m && typeof m.close === 'function') m.close();
+}
+
+/** Otvori learn-editor za kategoriju (learn = jedan objekt, bez idx). */
+function _openLearnEditor(catId) {
+  const data = _adminCtx.data;
+  const cat = data && data[catId];
+  const L = (cat && cat.learn && typeof cat.learn === 'object') ? cat.learn : null;
+  if (!L) return;
+  _learnTarget = { catId: catId };
+  _ensureLearnModal();
+  document.getElementById('adminLearnT').value = L.title || '';
+  document.getElementById('adminLearnC').value = L.content || '';
+  const note = document.getElementById('adminLearnNote');
+  if (note) {
+    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
+      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+  }
+  _learnStatus('', false);
+  const m = document.getElementById('adminLearnModal');
+  if (m && typeof m.open === 'function') m.open();
+}
+
+/** Spremi uređeni learn: validacija → RMW learn objekta → verzija → propagacija → live re-render. */
+async function _saveLearn() {
+  const tEl = document.getElementById('adminLearnT');
+  const cEl = document.getElementById('adminLearnC');
+  const saveBtn = document.getElementById('adminLearnSave');
+  if (!cEl || !_learnTarget) return;
+
+  const title = tEl ? tEl.value.trim() : '';
+  // Sadržaj NE trimamo — čuvamo formatiranje/uvlake HTML-a bit-točno (validiramo nepraznost preko .trim()).
+  const content = cEl.value;
+  if (!content.trim()) { _learnStatus(_adminT('admin.learnEmptyErr', 'Content must not be empty.'), true); return; }
+
+  const subjectId = _adminCtx.subjectId;
+  const varName = _adminCtx.varName;
+  const catId = _learnTarget.catId;
+  if (!subjectId || !varName) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  if (saveBtn) saveBtn.disabled = true;
+  _learnStatus(_adminT('admin.saving', 'Saving…'), false);
+  try {
+    // 1) Svjež autoritativni payload iz baze (read-modify-write).
+    const sel = await client.from('subject_content').select('payload')
+      .eq('subject_id', subjectId).eq('var_name', varName).single();
+    if (sel.error || !sel.data || !sel.data.payload) {
+      _learnStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    const payload = sel.data.payload;
+    const target = (payload[catId] && payload[catId].learn && typeof payload[catId].learn === 'object') ? payload[catId].learn : null;
+    if (!target) {
+      _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+    // Mijenjamo content (+ title: prazan → makni ključ). `image` ostaje netaknut.
+    const applyItem = function (t) {
+      t.content = content;
+      if (title) t.title = title; else delete t.title;
+    };
+    applyItem(target);
+
+    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
+    const upd = await client.from('subject_content').update({ payload: payload })
+      .eq('subject_id', subjectId).eq('var_name', varName);
+    if (upd.error) {
+      _learnStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
+      if (saveBtn) saveBtn.disabled = false;
+      return;
+    }
+
+    // 3) Propagiraj learn u sestrinske redove (final = kopija).
+    const prop = await _propagateLearnToSiblings(client, subjectId, varName, catId, applyItem);
+
+    // 4) In-memory patch → live promjena bez reloada.
+    _patchLearnInMemory(varName, catId, applyItem);
+    prop.patched.forEach(function (sv) { if (typeof window !== 'undefined') _patchLearnObj(window[sv], catId, applyItem); });
+
+    if (saveBtn) saveBtn.disabled = false;
+    _closeLearnEditor();
+    if (typeof showToast === 'function') {
+      const okMsg = _adminT('admin.learnSaveOk', 'Learn content saved.');
+      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
+    }
+    const holder = document.getElementById('adminCards');
+    if (holder) _renderAdminCards(holder, _adminCtx.data);
+  } catch (e) {
+    _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true);
+    if (saveBtn) saveBtn.disabled = false;
+  }
+}
+
 // Delegat: klik na edit-gumb stavke → otvori editor (grana po tipu).
 document.addEventListener('click', function (e) {
   const btn = e.target.closest('[data-admin-edit]');
@@ -841,5 +1049,6 @@ document.addEventListener('click', function (e) {
   if (!catId || isNaN(idx)) return;
   if (type === 'quiz') _openQuizEditor(catId, idx);
   else if (type === 'fill') _openFillEditor(catId, idx);
+  else if (type === 'learn') _openLearnEditor(catId);
   else _openCardEditor(catId, idx);
 });

@@ -31,7 +31,7 @@
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
-    'admin.viewerNote': { en: 'Edit flashcards, quiz and fill-in-the-blank inline. Every change is versioned and can be undone. (Learn editing arrives next.)', hr: 'Uredi kartice, kviz i dopune izravno. Svaka izmjena se verzionira i može poništiti. (Učenje uskoro.)' },
+    'admin.viewerNote': { en: 'Edit flashcards, quiz, fill-in-the-blank and learn content inline. Every change is versioned and can be undone.', hr: 'Uredi kartice, kviz, dopune i sadržaj učenja izravno. Svaka izmjena se verzionira i može poništiti.' },
     'admin.subject': { en: 'Subject', hr: 'Predmet' },
     'admin.lesson': { en: 'Lesson', hr: 'Lekcija' },
     'admin.selectSubject': { en: '— select subject —', hr: '— odaberi predmet —' },
@@ -71,6 +71,13 @@
     'admin.fillEmptyErr': { en: 'Sentence and answer must not be empty.', hr: 'Rečenica i odgovor ne smiju biti prazni.' },
     'admin.fillBlankErr': { en: 'The sentence must contain the blank (_______).', hr: 'Rečenica mora sadržavati prazninu (_______).' },
     'admin.fillSaveOk': { en: 'Sentence saved.', hr: 'Rečenica spremljena.' },
+    // F4.4 — learn editing
+    'admin.learn': { en: 'Learn', hr: 'Učenje' },
+    'admin.editLearn': { en: 'Edit learn content', hr: 'Uredi sadržaj učenja' },
+    'admin.learnTitle': { en: 'Title (optional)', hr: 'Naslov (nije obavezno)' },
+    'admin.learnContent': { en: 'Content (HTML)', hr: 'Sadržaj (HTML)' },
+    'admin.learnEmptyErr': { en: 'Content must not be empty.', hr: 'Sadržaj ne smije biti prazan.' },
+    'admin.learnSaveOk': { en: 'Learn content saved.', hr: 'Sadržaj učenja spremljen.' },
 
     // Home tab
     'home.welcome': { en: '🎓 Welcome to Sokrat Study', hr: '🎓 Dobrodošli u Sokrat Study' },

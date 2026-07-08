@@ -8956,6 +8956,14 @@ sokrat-modal.auth-modal > * {
 }
 .admin-quiz-addopt:hover { border-color: var(--primary, #6366f1); color: var(--text-primary); }
 
+/* ===== F4.4 Learn editing (širi modal + monospace HTML textarea) ===== */
+.admin-learn .admin-edit__card { width: min(94vw, 640px); }
+.admin-learn__content {
+    min-height: 280px; resize: vertical;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82rem; line-height: 1.5;
+}
+
 /* ==================== css/math.css ==================== */
 /* =====================================================
    SOKRAT STUDY — KaTeX MATH (ADR-009)

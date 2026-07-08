@@ -193,3 +193,36 @@ test('F4.4 — fill preview se renderira (rečenica s prazninom); fill edit-gumb
   expect(res.hasBlank).toBe(true);      // fill rečenica (s prazninom) je prikazana
   expect(res.fillEditBtns).toBe(0);     // ne-admin NE vidi fill edit-gumbe
 });
+
+test('F4.4 — learn preview se renderira (.admin-card--learn); learn edit-gumbi skriveni ne-adminu', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent && !!window.SokratAdmin);
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active #adminSubjectSel');
+
+  // te2 First Midterm — svaka kategorija ima learn.
+  await page.evaluate(() => {
+    const sel = document.getElementById('adminSubjectSel');
+    const te2 = sel.querySelector('option[value="te2"]');
+    sel.value = te2 ? 'te2' : sel.querySelector('option[value]:not([value=""])').value;
+    sel.dispatchEvent(new Event('change'));
+  });
+  await page.waitForFunction(() => {
+    const l = document.getElementById('adminLessonSel');
+    return l && !l.disabled && !!l.querySelector('option[value]:not([value=""]):not([disabled])');
+  });
+  await page.evaluate(() => {
+    const l = document.getElementById('adminLessonSel');
+    l.value = l.querySelector('option[value]:not([value=""]):not([disabled])').value;
+    l.dispatchEvent(new Event('change'));
+  });
+  await page.waitForSelector('#adminCards .admin-card--learn', { timeout: 15000 });
+
+  const res = await page.evaluate(() => ({
+    learnBlocks: document.querySelectorAll('#adminCards .admin-card--learn').length,
+    learnEditBtns: document.querySelectorAll('#adminCards [data-admin-edit][data-type="learn"]').length,
+  }));
+  expect(res.learnBlocks).toBeGreaterThan(0);   // learn preview se prikazuje
+  expect(res.learnEditBtns).toBe(0);            // ne-admin NE vidi learn edit-gumbe
+});
