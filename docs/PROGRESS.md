@@ -13,11 +13,11 @@ testirano, što slijedi.
 - **Viewer**: crta i quiz stavke po kategoriji (`.admin-subhead` Flashcards/Quiz; quiz preview = lista opcija s označenim točnim `.is-correct`). Guard promijenjen tako da se **quiz-only kategorije sad prikazuju**. Edit-gumb nosi `data-type` → klik-delegat grana na quiz/flashcard editor.
 - **Quiz-editor** `#adminQuizModal` (na `<sokrat-modal>` primitivu): pitanje + **dinamičke opcije 2–6** (dodaj/obriši + radio „točan"). Validacija odražava JSON Schemu (question neprazan · 2–6 nepraznih opcija · valjan `correct` indeks). Write = isti pipeline (RMW jednog reda → F4.2 verzija → propagacija u sestrinske redove → live re-render); `image`/`imageAlt` netaknuti (mijenja se samo question/options/correct). i18n `admin.quiz*`/`admin.options`/… (en/hr); CSS `.admin-quiz-*` u `profile.css`.
 
-**Gate:** verify 0/0, typecheck 0, test:unit 8/8, validate:content 0/0, validate:schema 54/54, bump:check 95/95, build:css/export:json --check 0. **Playwright admin+components+a11y 60/0** (novi non-admin test: quiz preview se renderira + quiz edit-gumbi skriveni ne-adminu) · **`test:authed` 4/4** (novi: admin klik na quiz edit-gumb otvara editor s ≥2 reda opcija + jednim „točan" + prefilanim pitanjem). Cache `20260708021017`.
+**Gate:** verify 0/0, typecheck 0, test:unit 8/8, validate:content 0/0, validate:schema 54/54, bump:check 95/95, build:css/export:json --check 0. **Playwright admin+components+a11y 60/0** (novi non-admin test: quiz preview se renderira + quiz edit-gumbi skriveni ne-adminu) · **`test:authed` 4/4** (novi: admin klik na quiz edit-gumb otvara editor s ≥2 reda opcija + jednim „točan" + prefilanim pitanjem). Cache `20260708021017`. Commit `9c2c979`.
 
-**⏳ Ostaje za F4.4-quiz:** ŽIVI write-verify (authed edit-pa-revert quiz protiv prave baze + `content_versions` provjera — dodaje audit-redove → radi se uz izričit OK, kao c-1/c-2). Zatim iste cigle za **fill → learn → kategorije**.
+**✅ ŽIVA VERIFIKACIJA (authed Playwright kroz PRAVI `_saveQuiz` + neovisan Supabase MCP):** privremeni authed spec uredio `te2M1 fundamentals/quiz[0]` — promijenio **pitanje I `correct` (1→2)** → oba **persistirala u te2M1 I te2Final** (propagacija radi za pitanje i točan odgovor) → **revert** vratio oba **bit-točno** na original. MCP cross-check: `content_versions` (te2) 6→**10** (+4 = 2 spremanja × M1+Final = undo+audit uhvatio svaki write), `subject_content` **51 red — produkcija netaknuta**. Privremeni spec obrisan (nije commitan). ⚠️ Tih +4 audit-reda (uk. **10 te2**) ostaje (append-only; auto-mode ne briše bez izričite upute).
 
-**Stanje:** commitano na `foundation/f4` (preview), produkcija (`main`) netaknuta.
+**Stanje:** F4.4-quiz **GOTOV + ŽIVO VERIFICIRAN** na `foundation/f4` (preview), produkcija (`main`) netaknuta. **Slijedi: fill → learn → kategorije.**
 
 ---
 
