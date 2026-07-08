@@ -50,4 +50,11 @@
 - [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md) — plan + master-obrazac (✅ done)
 - [MATH_PLAN.md](MATH_PLAN.md) — KaTeX + worked problems (✅ done)
 
+## Pouke za budući sadržajni rad (iz CLAUDE.md povijesti, 2026-06)
+- **Provjeri stari sadržaj PROTIV predavanja:** rebuild ako je tanak (te2; djelomično Entrepreneurship), split+obogaćivanje ako je vjeran (E-Business).
+- **Learn sekcije moraju biti BOGATE** (definicija+intuicija+radni primjeri+interpretacija+zamke), ne „formule nabacane" — uzor: Statistics Track A / Math K1 obogaćivanje. [[learn-sections-must-be-rich]]
+- **Korisnik ZASIĆEN računovodstvom** — na Accounting se NE vraćati osim izričito.
+- **Masovni unos novog programa** → generator ([../content/CONTENT_GENERATOR.md](../content/CONTENT_GENERATOR.md)) + razmotriti dodatne uštede usagea (korisnik: „kombinacije uštede kasnije").
+- **KaTeX predmeti:** currency-safe delimiteri (ADR-009; jedan `$` NIKAD); `final` se učitava **ZADNJI**; sadržajna točnost = dvo-ključni verifier (ADR-020) kad se vratimo sadržaju.
+
 > Alati za autorstvo: [../content/](../content/) (SCHEMA · GUIDE · INTAKE · GENERATOR · EXERCISES_ENGINE).
