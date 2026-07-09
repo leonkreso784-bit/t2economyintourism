@@ -14,6 +14,10 @@
 | **Saša Vudrag** | content-suradnik (HR program + FMTU širenje) | svojim Claudeom | grane + PR-ovi; **NIKAD push na `main`**; bez pristupa infri |
 | Claude (oba) | izvršitelj pod pravilima vlasnika sesije | — | Leonov Claude → CLAUDE.md; Sašin Claude → **§2 OVDJE (obavezno pročitati prije rada)** |
 
+> **Osobni kontekst po stroju:** za vlastite bilješke/postavke svatko koristi **`CLAUDE.local.md`** (gitignored,
+> Claude Code ga auto-učitava SAMO na tom stroju) — NE nove repo-datoteke (odluka: jedan CLAUDE.md + router, bez
+> per-osoba fajlova u repou = bez duplih istina/drifta; ADR-023 t.1). Claudeova memorija je ionako per-stroj.
+
 Kontekst o Saši: student programskog inženjerstva (Algebra), ima iskustva s gitom i Claudeom.
 Njegovo područje: **sadržaj** — prijevod/izgradnja HR programa „Menadžment u Hotelijerstvu" (pune 2 godine kao EN),
 zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opsegu (može doći kasnije, uz zasebnu odluku).

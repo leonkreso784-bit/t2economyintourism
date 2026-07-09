@@ -54,3 +54,6 @@ tmp-*/
 
 # Python / dev artifacts (legacy PDF-extraction path; replaced by scripts/pdf-text.js)
 .venv/
+
+# Osobne strojno-lokalne Claude bilješke (TEAM.md §1)
+CLAUDE.local.md
