@@ -16,6 +16,15 @@ testirano, što slijedi.
 
 **Stanje:** grana `foundation/f4` lokalno (commiti ispred origina; push = preview uz OK). **Slijedi: U1 staging Supabase → U2 schema v2 (ID-jevi).**
 
+### 👥 TIM: Saša Vudrag se pridružuje (ista sesija, nastavak — ADR-023 + TEAM.md)
+- **Kontekst:** Leon doveo prvog suradnika (Saša Vudrag, student prog. inž. na Algebri; dogovoreno 2026-07-08). Zadaci: **HR program do pune 2 godine** (prijevod + HR materijali: PDF/skripte/ispitna pitanja Word), zatim MUT/MOR smjerovi. Zahtjev: „mora biti savršeno da ne srušimo sustav".
+- **`docs/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za Sašu+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
+- **Role-router u CLAUDE.md:** `git config user.name` → Sašin Claude STANE i čita TEAM.md §2 (naš CLAUDE.md se učitava i njemu!).
+- **ADR-023** (DECISIONS.md): suradnički model + **ADR-022 PULL-FORWARD = U2.5** (odmah iza U1+U2, umjesto „nakon F4"; 3 tvrda uvjeta: uzastopno-ne-isprepleteno · aditivno/dual-mode · gate+staging). Obrazloženje: identitet prije write-puta; alternativa (MUT/MOR copy-paste) = veći rizik. ADR-022 status ažuriran.
+- **UGC.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; Saša ažurira samo nju). **docs/README:** +TEAM.md red.
+- **Procjena izvedivosti (dano korisniku):** HR MuH kompletan ~2–3 mj (S2 pilot ~tjedan · S3 batch 4–6 tj · S4/S5 +2–4 tj); trošak API ~$15–30; MUT/MOR spremni za ~4–6 tj platformskog rada (U1+U2+U2.5) — prije nego što Saši zatrebaju. **Otvoreni slotovi (TEAM.md §9):** pilot-predmet (prijedlog Management) · budget-cap iznos · Sašin GitHub username · review-ritam.
+- **Naše nove obveze:** docx→tekst skripta (Word intake) · ADR-022/U2.5 na vrijeme · review 24–48 h · šablona catalog-unosa (S2).
+
 ---
 
 ## 2026-07-08 (OPUS, nastavak) — F4.4-quiz: proširen CRUD na QUIZ (kod + statika + automatika)

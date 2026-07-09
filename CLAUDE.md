@@ -3,6 +3,12 @@
 > Ovaj fajl se učitava SVAKU sesiju. **Drži ga sažetim — samo TRENUTNO stanje, pravila i pointeri.**
 > Povijest milestone-a: `docs/HISTORY.md` · stanje predmeta: `docs/subjects/README.md` · dnevnik: `docs/PROGRESS.md`.
 
+## 🔀 TKO RADI? (role-router — provjeri PRIJE rada)
+Repo ima 2 suradnika. Provjeri `git config user.name`:
+- **"Leon Kreso"** (vlasnik) → nastavi po OVOM dokumentu (platforma + sve).
+- **Saša Vudrag** (ili bilo tko drugi) → **STANI i pročitaj `docs/TEAM.md` §2** — tvoj opseg je SAMO content
+  (`data/<subj>-hr/` + PR workflow); platformski kod, `main`, deploy i Supabase su IZVAN opsega. TEAM.md je tvoj izvor pravila.
+
 ## Što je projekt
 Interaktivna platforma za učenje (flashcards / quiz / fill / learn + interaktivne vježbe). Live: **www.sokratstudy.com**.
 Fakultet: **FMTU Opatija**, smjer **Hospitality Management**. Cilj: skalirati na cijeli fakultet (pa sveučilište),
@@ -69,8 +75,10 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 - **Napomene:** ⚠️ **22 test-audit-reda (te2) u `content_versions`** iz živih proba — bezopasni; brisanje SAMO uz izričit OK (append-only audit) · CI `authed` job čeka repo-secrete (korisnik javio „riješeno") ·
   Supabase free-tier **spava ~7 dana neaktivnosti** (restore besplatan; app fallbacka na datoteke, login/sync ne rade dok se ne restorea) · **accounting NIJE u bazi** (study iz JSON-a; 51 red = 17×3) ·
   PWA instalirana app drži staru ikonu do reinstalacije (nije bug).
-- **PAUZIRANO do kraja platforme (ADR-018):** HR prijevodi long-tail · 3. godina · novi sadržaj. Nakon F4: **F5 SRS → F6 sigurnost → UGC → sadržaj.**
-- **HR-ekspanzija (nakon F4):** HR 1. godina × 3 smjera FMTU (MUH/MUT/MOR), dijele vezne predmete — arhitektura: ADR-022 / `docs/CATALOG_ARCHITECTURE.md`. Kolokviji ~4. mj = runway. [[hrv-program]]
+- **👥 TIM (2026-07-08): pridružio se Saša Vudrag** (content-suradnik; student prog. inž.) — uloge/granice/workflow: **`docs/TEAM.md`** (+ role-router gore; ADR-023).
+  **Sadržajna staza ODMRZNUTA za njega** (ADR-018 pauza je bila kapacitetna): Saša paralelno radi **HR program do pune 2 godine** (prijevod alatom + HR materijali kao autoritet; S-cigle u TEAM.md §4), MI nastavljamo U-stazu. **ADR-022 POVUČEN NAPRIJED = U2.5** (odmah iza U2; preduvjet MUT/MOR smjerova ~S7; 3 uvjeta u ADR-023).
+- **PAUZIRANO za NAS do kraja platforme (ADR-018):** 3. godina · novi EN sadržaj. Nakon F4/U-staze: **F5 SRS → F6 sigurnost → UGC.** (HR sadržaj sad nosi Saša.)
+- **HR-ekspanzija:** HR 1. godina × 3 smjera FMTU (MUH/MUT/MOR), dijele vezne predmete — arhitektura: ADR-022 / `docs/CATALOG_ARCHITECTURE.md`; implementacija = **U2.5**. Kolokviji ~4. mj = runway. [[hrv-program]]
 
 ## Ključne odluke (jedan red po ADR-u; puni tekst `docs/DECISIONS.md`)
 - **ADR-013:** podatak≠ponašanje — study=JSON, vježbe=JS moduli; ContentRepository šav; cilj = baza autoritativna (flip u F4).

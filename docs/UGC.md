@@ -154,12 +154,15 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 
 ## 12. Brick-sekvenca (ŽIVA — ažuriraj status ovdje)
 > Nastavlja F4 (CRUD_PLAN); „F4.4-kategorije" i F4.5/4.6 se izvode KROZ ovaj slijed (strukturne operacije = unutar draft-moda).
+> **Paralelna S-staza (Saša, content — [TEAM.md](TEAM.md) §4):** neovisna o U-stazi (v1-format datoteke; U2-migracija ih obuhvaća).
+> Jedina ovisnost: **S7 (MUT/MOR) čeka U2.5.**
 
 | # | Cigla | Status |
 |---|---|---|
 | U0 | UGC.md (ovaj dok) + naznaka u VISION | ✅ 2026-07-09 |
 | U1 | **Staging Supabase** (2. projekt, SQL sync, rls-check/authed na staging) | ⬜ |
 | U2 | **Schema v2**: ID-jevi po stavci + `schemaVersion` + `style` tokeni (migracija + validatori v1/v2 + progress dual-key) | ⬜ |
+| U2.5 | **ADR-022 catalog identitet (PULL-FORWARD, ADR-023):** placement≠sadržaj, dijeljenje veznih predmeta unutar fakulteta — preduvjet MUT/MOR (S7). **3 tvrda uvjeta:** nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging | ⬜ |
 | U3 | **Draft-sloj + ops + edit-mode ljuska**; 4 postojeća editora → pišu opove u draft | ⬜ |
 | U4 | **Publish-RPC** (atomično: validacija+upis+verzija+final-sync+`base_version`); klijent objavljuje kroz RPC | ⬜ |
 | U5 | **Povijest verzija / Vrati UI** (čita `content_versions`; restore kroz RPC) + čišćenje test-audita (uz OK) | ⬜ |

@@ -37,12 +37,32 @@
 | Management | `management` | 2 | 11 / 89 / 84 / 55 | — | Lussier 9e; teme 2/3/6/13/15 bez decka → neobrađene; LIVE 2026-06-14 `06c96a8` |
 | Traffic in Tourism | `traffic` | 2 | 27 / 189 / 186 / 188 | — | ručno (NE generator); CONNECTOR+PRODUCT obrazac; plan [TRAFFIC_PLAN.md](TRAFFIC_PLAN.md); LIVE 2026-06-25 `62a4119` |
 
-## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012)
+## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012) — STATUSNA PLOČA (vodi: Saša, [TEAM.md](../TEAM.md))
 
-| Predmet | ID | Status |
-|---|---|---|
-| Poslovna informatika | `business-informatics-hr` | ✅ pilot LIVE 2026-06-28 (11 kat/86 fc, strukturno identično EN; ~$0.66) |
-| ostali predmeti | — | ⬜ long-tail (Cigla 6, batch `scripts/translate-subject.js`); **PAUZIRANO** do kraja F4+ (platforma-first) |
+> **Aktivno od 2026-07-09** (ADR-023): Saša prevodi/gradi HR program do pune 2 godine. Tok po predmetu = [TEAM.md](../TEAM.md) §5
+> (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Saša ažurira SAMO ovu tablicu.
+
+| Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
+|---|---|---|---|---|
+| Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
+| Management | `management-hr` | **S2 PILOT (prijedlog)** | ⬜ | čeka potvrdu pilota |
+| Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
+| Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
+| Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
+| Entrepreneurship & Innovation | `entrepreneurship-hr` | S3 | ⬜ | |
+| E-Business | `ebusiness-hr` | S3 | ⬜ | |
+| Economics in Hospitality | `econ-hospitality-hr` | S3 | ⬜ | |
+| Marketing | `marketing-hr` | S3 | ⬜ | |
+| Tourism Geography | `geography-hr` | S3 | ⬜ | + blind-map (geografija-only) |
+| Food & Nutrition | `food-nutrition-hr` | S3 | ⬜ | |
+| Academic Writing | `academic-writing-hr` | S3 (study) + S5 (vježbe) | ⬜ | Chicago primjeri = jezično osjetljivi |
+| Microeconomics | `microeconomics-hr` | S4 (KaTeX) | ⬜ | |
+| Macroeconomics | `macroeconomics-hr` | S4 (KaTeX) + S5 | ⬜ | |
+| Statistics | `statistics-hr` | S4 (KaTeX) + S5 | ⬜ | |
+| Mathematics | `math-hr` | S4 (KaTeX) + S5 | ⬜ | |
+| Accounting | `accounting-hr` | S3 (study) + S5 (vježbe) | ⬜ | |
+
+**S6 (examPractice iz ispitnih pitanja)**: usput, po dostupnosti Word materijala. **S7 (MUT/MOR)**: čeka U2.5 (ADR-022).
 
 ## Detaljni planovi (u ovoj mapi)
 - [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) — analiza izvora + katalog vježbi (✅ done)

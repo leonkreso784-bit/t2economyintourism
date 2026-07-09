@@ -10,6 +10,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 ## ▶ Aktivni planovi
 | Dokument | Svrha |
 |----------|-------|
+| [TEAM.md](TEAM.md) | **Tim: uloge, workflow, zaštita sustava** — Leon (platforma) + Saša (content, S-cigle); PR+CI, tvrde granice, least-privilege (ADR-023) |
 | [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **Platforma-first temelj** — misije/faze F0–F6, reusable podsistemi, brick-liste (ADR-013/014) |
 | [UGC.md](UGC.md) | **▶ North-star: autorstvo → draft→objavi → UGC → AI** — model sadržaja (ID+blokovi+tokeni), publish-RPC, editor, sigurnost; brick-slijed U0–U9 |
 | [CRUD_PLAN.md](CRUD_PLAN.md) | **F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1–4.4 (quiz/fill/learn) ✅ živo verificirano; nastavak KROZ UGC.md U-slijed |

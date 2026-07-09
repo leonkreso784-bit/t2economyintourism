@@ -4,8 +4,29 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-023 — Prvi suradnik (Saša Vudrag): content-staza kroz PR+CI, least-privilege, ADR-022 pull-forward
+**Datum:** 2026-07-09 · **Status:** ✅ ODLUČENO (korisnik 2026-07-08/09) · **Dokument:** `docs/TEAM.md`
+**Kontekst:** Saša Vudrag (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
+(prijevod + HR materijali), zatim MUT/MOR smjerovi. Prvi suradnik ikad → treba model koji ubrzava, a **ne može srušiti sustav**.
+**Odluka:**
+1. **Uloge:** Leon = vlasnik/platforma, JEDINI mergea u `main` (merge = deploy!); Saša = content na granama + PR;
+   oba rade sa svojim Claudeom (role-router u CLAUDE.md preko `git config user.name` → Sašin Claude čita TEAM.md §2).
+2. **Tvrde granice** (TEAM.md §2): Saša smije SAMO `data/<subj>-hr/` + export:json + catalog-unos + svoj redak statusne ploče +
+   bump ISKLJUČIVO kroz `npm run bump`; sve ostalo (js/css/engine, EN predmeti, docs, infra) = zabranjeno. Preporuka: GitHub
+   branch-protection na main (PR + CI obavezni) → kršenje tehnički nemoguće, ne samo zabranjeno.
+3. **Least-privilege pristupi:** vlastiti Anthropic ključ (Leon financira, budget-cap); BEZ Supabase/`service_role`/TEST_ADMIN/Vercel.
+4. **Kvaliteta:** „prijevod je BAZA, HR materijali su AUTORITET" (pouka te2) — obavezan korak u definition-of-done (TEAM.md §5);
+   dnevnik-pravila protiv drifta (Saša piše samo subjects-ploču + PR-opis; PROGRESS/CHANGELOG pri mergeu piše Leon/Claude).
+5. **ADR-022 se POVLAČI NAPRIJED = cigla U2.5** (odmah iza U1+U2 u UGC.md §12; umjesto „nakon F4"): preduvjet MUT/MOR (S7).
+   Tri tvrda uvjeta: nakon U1+U2 (migracije uzastopno, NIKAD isprepleteno) · aditivna/dual-mode izvedba · puni gate + staging.
+   Obrazloženje: identitet PRIJE write-puta je zdraviji redoslijed (draft/editor sjedaju na stabilan temelj); ne-povlačenje
+   ima veći rizik (Saša bi MUT/MOR gradio copy-pasteom = dupliciran sadržaj + rascjepkan napredak).
+**Posljedice:** sadržajna staza odmrznuta za Sašu (ADR-018 pauza bila kapacitetna — platforma-first za NAS ostaje);
+dvije paralelne pruge (U-staza platforma · S-staza content) s jednom ovisnošću (S7←U2.5). CI gateovi (F1) postaju
+automatska obrana od suradničkih grešaka. Nadopunjuje ADR-012 (HR klon), ADR-018 (platform-first), ADR-022 (identitet).
+
 ## ADR-022 — Identitet predmeta preko programa i fakulteta: placement ≠ sadržaj, prefiks fakulteta, dijeli-unutar-fakulteta
-**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik) · **Implementacija: NAKON F4** (HR-ekspanzija = sadržajna faza)
+**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik) · **Implementacija: povučena NAPRIJED = cigla U2.5** (UGC.md §12; bilo „nakon F4" — resekvencirano ADR-023 t.5, 2026-07-09)
 **Kontekst:** Rast ide preko **HR 1. godine za 3 smjera** (Menadžment u Hotelijerstvu / u Turizmu / održivog razvoja), koji **dijele „vezne" predmete**
 (isti kolegij u više smjerova). Kasnije i drugi fakulteti. Korisnik strahuje da baza „pukne" kad se isti predmet pojavi na više mjesta
 („matematika na drugom fakultetu"). Ovo je i odgovor na #5 (grubi-blob/model podataka): pitanje je zapravo **identitet sadržaja vs mjesto prikaza.**
