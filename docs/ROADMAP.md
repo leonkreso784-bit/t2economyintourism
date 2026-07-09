@@ -3,6 +3,7 @@
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
 ## 🧱 STRATEŠKI ZAOKRET (2026-06-29) — PLATFORMA-FIRST
+> **🆕 2026-07-09:** nastavak F4 ide kroz **[UGC.md](UGC.md)** (draft→objavi, U-staza; ADR-022 = U2.5) · **tim: +Saša** (content, paralelna S-staza — [TEAM.md](TEAM.md), ADR-023) → sadržajna pauza dolje sad vrijedi samo za Leona/Claudea.
 **Korisnik odlučio:** staviti DODAVANJE SADRŽAJA na pauzu (na koliko god treba) i izgraditi **profesionalan, reliable,
 reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena", pripremljena za CRUD/UGC/AI-tutor/monetizaciju.
 Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)** +

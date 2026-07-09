@@ -1,6 +1,6 @@
 # CATALOG_ARCHITECTURE — Identitet predmeta preko programa i fakulteta
 
-> **Status (2026-07-06):** ✅ ODLUČENO (ADR-022). **Implementacija: NAKON F4** (HR-ekspanzija = sadržajna faza).
+> **Status (2026-07-09):** ✅ ODLUČENO (ADR-022). **Implementacija: POVUČENA NAPRIJED = cigla U2.5** (odmah iza U1+U2 u [UGC.md](UGC.md) §12; resekvencirano ADR-023 t.5 — preduvjet MUT/MOR = Sašina S7 cigla, [TEAM.md](TEAM.md); 3 tvrda uvjeta: nakon U1+U2 · aditivno/dual-mode · gate+staging).
 > Ovaj doc je pun model + konvencije + primjeri + verify-pravila. Rješava kako **dijeliti „vezne" predmete**
 > među smjerovima bez dupliciranja i bez rizika da baza „pukne", uz očuvanu hijerarhiju.
 

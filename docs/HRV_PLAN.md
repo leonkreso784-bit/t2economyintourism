@@ -2,7 +2,8 @@
 
 > Plan za paralelni HRVATSKI program = prijevod SVIH predmeta 1.+2. god HM na hrvatski.
 > Cigla po cigla. **Status (2026-06-28): cigle 1–5c ✅ LIVE** (`320d413..4b795c8`) — pilot Business Informatics HR +
-> globalni 🌐 HR/EN toggle (study UI + landing + browse). ⬜ Preostaje: long-tail chrome → prijevod ostalih predmeta.
+> globalni 🌐 HR/EN toggle (study UI + landing + browse). ⬜ Preostaje: long-tail chrome (naš posao) → prijevod ostalih predmeta.
+> **👥 2026-07-09 (ADR-023): Cigle 6+ (prijevod svih predmeta) PREUZIMA SAŠA** — workflow/granice/definition-of-done: [TEAM.md](TEAM.md) §4–5; statusna ploča: [subjects/README.md](subjects/README.md) §HR. Ovaj doc = tehnička referenca (konvencije, bijeli-popis, alat).
 > Vezano: ADR-012 (`docs/DECISIONS.md`), `CLAUDE.md` §DALJE, `ROADMAP.md` §C, [[hrv-program]].
 
 ## Cilj

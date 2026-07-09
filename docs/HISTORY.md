@@ -5,6 +5,8 @@
 ## Platforma (Foundation, 2026-06-29 → )
 | Datum | Milestone | Ref |
 |---|---|---|
+| 2026-07-09 | **👥 TIM: +Saša Vudrag** (content-suradnik; TEAM.md, ADR-023) · **ADR-022 pull-forward = U2.5** | `b8e58a3` |
+| 2026-07-09 | **UGC.md north-star** (draft→objavi, blokovi+ID-jevi, publish-RPC, U0–U9) + **doc-reorg** (content/subjects/archive + HISTORY + CLAUDE.md dijeta 463→94) | `08ab604`+`0d17689`+`aefb1a4` |
 | 2026-07-08 | **F4.4 quiz+fill+learn CRUD** — edit svih tipova kroz admin, živo verificirano (preview, grana `foundation/f4`) | `9c2c979`+`c75b08f`+`c65606a` |
 | 2026-07-08 | **F4.3c edit kartice end-to-end + Playwright LOGIN** (storageState, `test:authed`) + CI authed job | `7d1368a`+`d57c5fd`+`f208eef` |
 | 2026-07-06 | **F4.1–4.3b**: admin identitet (`profiles`+`is_admin`) · write-RLS + `content_versions` audit · admin UI viewer (3 buga nađena ŽIVOM prijavom) | `5ee749e`..`0bc5e41` |
