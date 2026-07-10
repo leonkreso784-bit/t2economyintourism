@@ -90,8 +90,8 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 | Što | Saša dobiva? | Napomena |
 |---|---|---|
-| GitHub repo | ✅ collaborator (write na grane) | branch protection čuva main |
-| Anthropic API ključ | ✅ **VLASTITI** (Leon financira) | **budget-cap u Anthropic konzoli** (prijedlog $10–15/mj); njegov `.env` sadrži SAMO taj ključ |
+| GitHub repo | ✅ collaborator Write (`chemp12`, 2026-07-10) | `main` ruleset `protect-main` čuva produkciju |
+| Anthropic API ključ | ✅ **VLASTITI** (Saša sam kreira; Leon financira) | ključ se NE dijeli (sigurnije); cap/naplata = §9 (org-invite s spend-limitom ILI refundacija); njegov `.env` drži SAMO taj ključ |
 | Supabase (dashboard/ključevi) | ❌ | re-sync radi Leon/Claude |
 | `service_role` / TEST_ADMIN / Vercel | ❌ | nema potrebe = nema površine |
 | Materijali (skripte/PDF/Word) | ✅ preko Drive-a (izvan repo-a) | `_materials/` ostaje gitignored |
@@ -118,8 +118,8 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 | TEAM.md / planovi / ADR-ovi | **Leon/Claude** | po potrebi |
 | CLAUDE.md | **Leon/Claude** | po potrebi (Saša nikad) |
 
-## 9. Otvoreni slotovi (popuniti)
-- ⬜ **S2 pilot-predmet:** prijedlog **Management** — čeka Leonovu potvrdu
-- ⬜ **Budget-cap iznos** za Sašin ključ (prijedlog $10–15/mj)
-- ⬜ **Sašin GitHub username** (invite + protection)
-- ⬜ Review-ritam (prijedlog: Leon/Claude odgovara na PR unutar 24–48 h)
+## 9. Slotovi (stanje 2026-07-10)
+- ✅ **Sašin GitHub:** `chemp12` — dodan kao **collaborator (Write)**; `main` zaštićen rulesetom **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force pushes; Leon = bypass admin). Status-checkovi se dodaju nakon prvog CI-runa (prava imena iz padajuće liste, ne ručno).
+- ✅ **S2 pilot-predmet:** **Management (HR)** — potvrđeno (Sašin prvi end-to-end predmet).
+- ✅ **Review-ritam:** PR odgovor u **24–48 h**.
+- ⬜ **API ključ:** Saša kreira **VLASTITI** (sigurnije — ključ se NE dijeli). Leon financira; mehanizam = dogovor: **(A)** org-invite u Anthropic + workspace spend-limit (~$15/mj, tvrdi cap, naplata Leonu) **ILI (B)** Sašin zaseban račun + Leon refundira (~$15–30 ukupno). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.

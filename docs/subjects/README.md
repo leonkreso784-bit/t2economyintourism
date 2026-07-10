@@ -45,7 +45,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT (prijedlog)** | ⬜ | čeka potvrdu pilota |
+| Management | `management-hr` | **S2 PILOT** | ⬜ | pilot potvrđen (2026-07-10); Sašin prvi predmet |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
