@@ -19,7 +19,13 @@ const iphone = (width, height) => ({
 // Authenticated (admin) suite runs ONLY when a dedicated test-admin credential is provided
 // (locally via .env, in CI via secrets). Without it, the default suite is unchanged and
 // deterministic (no network/auth). Vidi docs/TESTING.md + [[live-login-verifies-crud]].
-const AUTHED = !!(process.env.TEST_ADMIN_EMAIL && process.env.TEST_ADMIN_PASSWORD);
+// Prod creds (TEST_ADMIN_*) ILI staging creds (STAGING_*, U1) → authed suite se aktivira.
+// Kad su STAGING_* postavljeni, auth.setup preusmjeri prijavu/testove na staging (prod audit čist).
+const AUTHED = !!(
+  (process.env.TEST_ADMIN_EMAIL && process.env.TEST_ADMIN_PASSWORD) ||
+  (process.env.STAGING_SUPABASE_URL && process.env.STAGING_SUPABASE_ANON &&
+   process.env.STAGING_TEST_ADMIN_EMAIL && process.env.STAGING_TEST_ADMIN_PASSWORD)
+);
 
 // App-testovi (iPhone profili) NE SMIJU pokupiti:
 //   • unit/** (Node testovi s top-level process.exit → prekinuli bi browser run),

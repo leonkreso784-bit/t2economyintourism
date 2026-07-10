@@ -11,8 +11,12 @@
 // Napomena: jedan izlaz s kratkom odgodom — `fetch` (undici) drži keep-alive socket pa `process.exit` usred
 // teardowna ruši libuv NA WINDOWSU (poznato; vidi generator-pilot). Odgoda pusti socket da mirno zatvori.
 
-const URL = 'https://naxjubnedhrbhsuasayu.supabase.co';
-const ANON = 'sb_publishable_KatBQDLB8GRohKEyb3eDSQ_ToXJuL7L';
+// Default = PRODUKCIJA (CI gate). SUPABASE_TARGET=staging + STAGING_* env → gađaj staging (U1).
+try { require('dotenv').config(); } catch (e) { /* dotenv optional */ }
+const _STAGING = process.env.SUPABASE_TARGET === 'staging'
+  && !!(process.env.STAGING_SUPABASE_URL && process.env.STAGING_SUPABASE_ANON);
+const URL = _STAGING ? process.env.STAGING_SUPABASE_URL : 'https://naxjubnedhrbhsuasayu.supabase.co';
+const ANON = _STAGING ? process.env.STAGING_SUPABASE_ANON : 'sb_publishable_KatBQDLB8GRohKEyb3eDSQ_ToXJuL7L';
 
 async function rest(table, qs) {
   const ctrl = new AbortController();

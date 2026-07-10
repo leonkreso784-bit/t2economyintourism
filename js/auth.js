@@ -19,6 +19,28 @@ const SOKRAT_AUTH_CONFIG = {
     cdnSrc: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'
 };
 
+// TEST-ONLY seam (U1): dopusti automatiziranim testovima (Playwright) da preusmjere Supabase
+// na STAGING projekt — BEZ diranja produkcijskog defaulta gore. Pravi korisnici NIKAD ne
+// postavljaju ovaj global/localStorage ključ → u produkciji je ovo tvrdi no-op (vraća null).
+// Izvori (redom): window.__SOKRAT_SUPABASE__ (addInitScript, za auth.setup) →
+// localStorage 'sokrat-supabase-override' (preživi Playwright storageState → *.authed.spec).
+function _readSupabaseOverride() {
+    try {
+        if (typeof window !== 'undefined' && window.__SOKRAT_SUPABASE__
+            && window.__SOKRAT_SUPABASE__.url && window.__SOKRAT_SUPABASE__.publishableKey) {
+            return window.__SOKRAT_SUPABASE__;
+        }
+        if (typeof localStorage !== 'undefined') {
+            const raw = localStorage.getItem('sokrat-supabase-override');
+            if (raw) {
+                const o = JSON.parse(raw);
+                if (o && o.url && o.publishableKey) return o;
+            }
+        }
+    } catch (e) { /* bilo kakva greška → nema overridea (prod default) */ }
+    return null;
+}
+
 const SokratAuth = (function () {
     let client = null;
     let currentUser = null;
@@ -43,10 +65,11 @@ const SokratAuth = (function () {
         if (!SOKRAT_AUTH_CONFIG.enabled) return;
         try {
             await loadSdk();
-            client = window.supabase.createClient(
-                SOKRAT_AUTH_CONFIG.url,
-                SOKRAT_AUTH_CONFIG.publishableKey
-            );
+            const _ovr = _readSupabaseOverride();
+            const _url = (_ovr && _ovr.url) || SOKRAT_AUTH_CONFIG.url;
+            const _key = (_ovr && _ovr.publishableKey) || SOKRAT_AUTH_CONFIG.publishableKey;
+            if (_ovr && typeof console !== 'undefined') console.warn('[auth] TEST override → Supabase = ' + _url);
+            client = window.supabase.createClient(_url, _key);
         } catch (e) {
             // Bez mreže / CDN blokiran → app nastavlja raditi bez computa.
             console.warn('[auth] disabled:', e.message);

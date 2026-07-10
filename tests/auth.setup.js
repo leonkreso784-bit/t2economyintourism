@@ -13,8 +13,22 @@ const AUTH_DIR = path.join(__dirname, '.auth');
 const AUTH_FILE = path.join(AUTH_DIR, 'admin.json');
 
 test('authenticate as admin', async ({ page }) => {
-  const email = process.env.TEST_ADMIN_EMAIL;
-  const password = process.env.TEST_ADMIN_PASSWORD;
+  // U1: ako su STAGING_* postavljeni → prijava/testovi idu na STAGING projekt (prod audit ostaje čist).
+  // Inače (nema staging env) → staro ponašanje: prod TEST_ADMIN_*.
+  const staging = !!(process.env.STAGING_SUPABASE_URL && process.env.STAGING_SUPABASE_ANON
+    && process.env.STAGING_TEST_ADMIN_EMAIL && process.env.STAGING_TEST_ADMIN_PASSWORD);
+  const email = staging ? process.env.STAGING_TEST_ADMIN_EMAIL : process.env.TEST_ADMIN_EMAIL;
+  const password = staging ? process.env.STAGING_TEST_ADMIN_PASSWORD : process.env.TEST_ADMIN_PASSWORD;
+
+  if (staging) {
+    // Preusmjeri app na staging PRIJE učitavanja skripti (window global za ovaj setup) I
+    // upiši u localStorage da override preživi u storageState → svi *.authed.spec ga naslijede.
+    const cfg = { url: process.env.STAGING_SUPABASE_URL, publishableKey: process.env.STAGING_SUPABASE_ANON };
+    await page.addInitScript((c) => {
+      try { window.__SOKRAT_SUPABASE__ = c; localStorage.setItem('sokrat-supabase-override', JSON.stringify(c)); } catch (e) {}
+    }, cfg);
+    console.log('[auth.setup] STAGING mode → ' + cfg.url);
+  }
 
   await page.goto('/');
 
