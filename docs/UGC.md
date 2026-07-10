@@ -160,7 +160,7 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 | # | Cigla | Status |
 |---|---|---|
 | U0 | UGC.md (ovaj dok) + naznaka u VISION | ✅ 2026-07-09 |
-| U1 | **Staging Supabase** (2. projekt, SQL sync, rls-check/authed na staging) | ⬜ |
+| U1 | **Staging Supabase** (2. projekt, SQL sync, rls-check/authed na staging) | ✅ 2026-07-10 (`40dc07b`): `sokrat-staging` + shema + test-admin; test-only override u `js/auth.js` (prod default no-op); test:authed 6/6 + write-verify + rls-check vs staging; PROD audit NETAKNUT |
 | U2 | **Schema v2**: ID-jevi po stavci + `schemaVersion` + `style` tokeni (migracija + validatori v1/v2 + progress dual-key) | ⬜ |
 | U2.5 | **ADR-022 catalog identitet (PULL-FORWARD, ADR-023):** placement≠sadržaj, dijeljenje veznih predmeta unutar fakulteta — preduvjet MUT/MOR (S7). **3 tvrda uvjeta:** nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging | ⬜ |
 | U3 | **Draft-sloj + ops + edit-mode ljuska**; 4 postojeća editora → pišu opove u draft | ⬜ |
