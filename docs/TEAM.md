@@ -91,7 +91,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 | Što | Saša dobiva? | Napomena |
 |---|---|---|
 | GitHub repo | ✅ collaborator Write (`chemp12`, 2026-07-10) | `main` ruleset `protect-main` čuva produkciju |
-| Anthropic API ključ | ✅ **VLASTITI** (Saša sam kreira; Leon financira) | ključ se NE dijeli (sigurnije); cap/naplata = §9 (org-invite s spend-limitom ILI refundacija); njegov `.env` drži SAMO taj ključ |
+| Anthropic API ključ | ✅ **VLASTITI** (Saša sam kreira; Leon refundira gotovinom) | ključ se NE dijeli (sigurnije); trošak ~$15–30 ukupno; njegov `.env` drži SAMO taj ključ |
 | Supabase (dashboard/ključevi) | ❌ | re-sync radi Leon/Claude |
 | `service_role` / TEST_ADMIN / Vercel | ❌ | nema potrebe = nema površine |
 | Materijali (skripte/PDF/Word) | ✅ preko Drive-a (izvan repo-a) | `_materials/` ostaje gitignored |
@@ -122,4 +122,4 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 - ✅ **Sašin GitHub:** `chemp12` — dodan kao **collaborator (Write)**; `main` zaštićen rulesetom **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force pushes; Leon = bypass admin). Status-checkovi se dodaju nakon prvog CI-runa (prava imena iz padajuće liste, ne ručno).
 - ✅ **S2 pilot-predmet:** **Management (HR)** — potvrđeno (Sašin prvi end-to-end predmet).
 - ✅ **Review-ritam:** PR odgovor u **24–48 h**.
-- ⬜ **API ključ:** Saša kreira **VLASTITI** (sigurnije — ključ se NE dijeli). Leon financira; mehanizam = dogovor: **(A)** org-invite u Anthropic + workspace spend-limit (~$15/mj, tvrdi cap, naplata Leonu) **ILI (B)** Sašin zaseban račun + Leon refundira (~$15–30 ukupno). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.
+- ✅ **API ključ:** Saša kreira **VLASTITI** na svom Anthropic računu (sigurnije — ne dijeli se). **Financiranje = B: Leon refundira gotovinom** (~$15–30 ukupno za HR batch; trošak sitan → bez tvrdog konzolnog capa, po dogovoru). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.
