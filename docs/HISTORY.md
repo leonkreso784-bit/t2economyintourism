@@ -5,6 +5,7 @@
 ## Platforma (Foundation, 2026-06-29 → )
 | Datum | Milestone | Ref |
 |---|---|---|
+| 2026-07-10 | **U1 staging Supabase** (`sokrat-staging` `czljmvigkgiajzjxtndq`) + **test-only Supabase-override** (`js/auth.js`, prod default no-op) → `test:authed` 6/6 + write-verify + rls-check na staging, **PROD audit čist** · **Sašin onboarding operativan** (`chemp12` collaborator + `main` ruleset `protect-main`; financiranje = keš) | `40dc07b`+`a7fd38a` |
 | 2026-07-09 | **👥 TIM: +Saša Vudrag** (content-suradnik; TEAM.md, ADR-023) · **ADR-022 pull-forward = U2.5** | `b8e58a3` |
 | 2026-07-09 | **UGC.md north-star** (draft→objavi, blokovi+ID-jevi, publish-RPC, U0–U9) + **doc-reorg** (content/subjects/archive + HISTORY + CLAUDE.md dijeta 463→94) | `08ab604`+`0d17689`+`aefb1a4` |
 | 2026-07-08 | **F4.4 quiz+fill+learn CRUD** — edit svih tipova kroz admin, živo verificirano (preview, grana `foundation/f4`) | `9c2c979`+`c75b08f`+`c65606a` |

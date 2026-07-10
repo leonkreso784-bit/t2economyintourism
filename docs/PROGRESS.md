@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-10 (OPUS) — U1 staging Supabase + test-only override · Sašin onboarding operativan
+**Kontekst:** nastavak nakon compacta; U1 = prva U-cigla (UGC.md §12). Sve na grani `foundation/f4` (preview).
+
+**U1 — STAGING Supabase (`40dc07b` kod + `3fde8fe` docs, ✅ dokazano):**
+- **Kreiran 2. free projekt `sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, eu-central, ista org, $0/mj) preko MCP-a; 3 repo SQL fajla (`schema`/`f4-admin`/`f4-content-write`) primijenjena → **4 tablice + RLS + trigeri = identično produkciji**. Advisori = isti benigni WARN-ovi kao prod (is_admin grant anon = namjerno).
+- **Staging test-admin** `test-admin@sokrat.local` kreiran **SQL-om** (Leon odabrao SQL-put; auth.users + identity + `role='admin'`); verificiran e2e (GoTrue sign-in + is_admin()→true + content_versions read 200). Creds u `.env` (gitignoran): `STAGING_SUPABASE_URL/ANON/TEST_ADMIN_EMAIL/PASSWORD`.
+- **Test-only Supabase-target override:** `js/auth.js` `_readSupabaseOverride()` (`window.__SOKRAT_SUPABASE__` → localStorage `sokrat-supabase-override`; **prod hardkod = default, no-op za prave korisnike**) · `tests/auth.setup.js` inject preko `addInitScript`+localStorage (preživi storageState) + staging creds · `playwright.config.js` AUTHED gate prima staging · `scripts/rls-check.js` `SUPABASE_TARGET=staging`.
+- **Dokazi:** `test:authed` **6/6 vs staging** (login na staging, isAdmin=true, editori iz file-fallbacka jer je staging `subject_content` prazan → dual-read pada na datoteke) · **write-verify** admin-JWT PATCH → staging `content_versions` +1 (snapshot `orig`) · **rls-check OK vs staging** (anon čita javni sadržaj, blokiran na progress/profiles/content_versions) · usput dokazano da je **audit append-only i adminu** (klijentski DELETE odbijen RLS-om) · **PROD `content_versions`=22 NETAKNUT** (51 subject_content, 4 profiles). Gate: verify 0/0 · bump:check 95 · typecheck 0 · `npm run bump`. Staging počišćen (sc=0/cv=0/profiles=1).
+- **Napomena:** staging dashboard „low success rate" = benigno (Supabaseovi health-probe-ovi dominiraju idle projekt; svi request-logovi 200). **TODO → BACKLOG:** Supabase Auth rate-limiting prijava.
+
+**Sašin onboarding — operativno GOTOVO (`a7fd38a`+`1b43836`):**
+- GitHub **`chemp12`** = collaborator (Write); `main` ruleset **`protect-main`** (Active: require PR + 1 approval, restrict deletions, block force-push; Leon = bypass admin; status-checkovi se dodaju nakon prvog CI-runa iz padajuće liste, NE ručno — spriječen self-lock).
+- Slotovi TEAM.md §9 zaključani: **pilot = Management (HR)** · ritam **24–48h** · **API ključ = Saša sam kreira (vlastiti, sigurnije); financiranje B = Leon refundira gotovinom** (~$15–30 ukupno). Objašnjen CI, branch-workflow (grana iz `main`, ne iz `foundation/f4`), preview≠produkcija. Starter-poruka za Sašu pripremljena.
+- Preostaje Saši: napraviti ključ + prihvatiti invite + **S1** (klon, `npm ci`, gateovi zeleni). Naša obveza prije njegovog S6: **docx→tekst skripta**.
+
+**Usput:** provjera ispita „Economics of Hospitality" (2. međuispit) protiv `econ-hospitality` sadržaja — **5/5 tema pokriveno**, točni odgovori potvrđeni iz gradiva (prior/post kalkulacija, marža, gross/net/new investicije, osnovni fin. izvještaji, vrste prihoda); 3/5 imaju direktan quiz+fill, 2/5 (marža-definicija, vrste-prihoda) samo flashcard/learn — opcija dodati 2 quiz+2 fill kasnije.
+
+**Stanje:** grana `foundation/f4`, sve commitano + pushano. **SLIJEDI: U2 schema v2 (stabilni ID-jevi po stavci)** — predložen spike na te2 (dodaj id-jeve → round-trip ekvivalencija + validatori v1/v2 + staging test → pa svih 18); ključna odluka = kako dodati id-jeve u `.js` izvor (reserialize vs surgical). Progress dual-key odgođen na U6.
+
+---
+
 ## 2026-07-09 (FABLE) — DOC-REORG (2 faze) + UGC.md north-star dizajn-dok
 **Kontekst:** korisnik prije UGC.md tražio pospremanje docs-a („savršeno održivo i snalažljivo, ništa se ne smije izgubiti"). Sve na grani `foundation/f4`.
 

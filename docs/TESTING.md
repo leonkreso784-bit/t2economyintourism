@@ -52,8 +52,8 @@
 - **`admin-detect.authed.spec.js`** (reusea storageState): (1) `SokratAdmin.isAdmin()=true` + `body.sokrat-is-admin`;
   (2) admin VIDI `.admin-edit-btn` na pravoj lekciji (te2).
 - **Setup:** dediciran **test-admin account (NE osobni)** → napravi kroz app + `profiles.role='admin'` → kopiraj creds u `.env`.
-  ⚠️ **WRITE-testovi** protiv dijeljene prod baze mijenjaju živi sadržaj / ostavljaju `content_versions` audit-redove (append-only,
-  admin ih ne može RLS-obrisati); nema izoliranog test-DB-a (free tier). Zato je automatiziran samo **READ/detekcijski** pozitivan put.
+- **🏗️ STAGING (U1, 2026-07-10):** postoji **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, 2. free projekt) = izolirani test-DB. Kad su `STAGING_SUPABASE_URL/ANON/TEST_ADMIN_EMAIL/PASSWORD` u `.env`, **`test:authed` + `rls-check` automatski gađaju staging** (`js/auth.js` `_readSupabaseOverride()` preusmjeri app; `SUPABASE_TARGET=staging` za rls-check) → **write-testovi (edit-pa-revert) sad rade na stagingu, prod audit ostaje čist.** Bez `STAGING_*` → staro ponašanje (prod TEST_ADMIN).
+  ⚠️ Protiv **PROD** baze WRITE-testovi i dalje mijenjaju živi sadržaj / ostavljaju `content_versions` audit-redove (append-only, admin ih ne može RLS-obrisati) → zato ih vozimo na stagingu; committani `admin-detect.authed.spec.js` je READ/detekcijski (siguran i na prod i na staging).
   - `a11y.spec.js` — **TVRDI gate (F1 1D + F3 3E):** axe-core, **0 serious/critical** na landing/browse/profile + **study SVE sekcije** (learn/flashcards/quiz/fill/progress). *(3E: „study page" prošireno s petljom po sekcijama — prije samo learn, presrano skenirano → flashcards/quiz/fill/progress bili izvan gate-a i kroz njih su prošli critical button-name/select-name na produkciji. Sad zatvoreno.)* Samo iPhone-SE profil (bez 4× šuma).
   - `blind-map.spec.js` — F3 3D.1 blind-map WebP karta se stvarno dekodira (naturalWidth>0, dim 1536×1024, `?v=` token, PNG-fallback se ne okida).
   - `layout-guard.spec.js` — **TVRDI gate (F1 1D):** deterministička geometrija, 13 širina × {EN,HR}, CTA `.nav-cta` nikad odrezan (**BUG-015 zaštita**).

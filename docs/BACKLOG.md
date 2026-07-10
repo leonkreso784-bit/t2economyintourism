@@ -20,6 +20,11 @@ odluka), ali je prava planirana stavka.
 **⚠️ Provjeriti pri gradnji:** ima li Supabase do tada **nativni „delete self" RPC** (tada ni Edge Function ne treba `service_role`).
 **Gdje pripada:** uz **F4** (prvi backend-privilegij + `/api`/Edge šav) ili kao zaseban „compliance" zadatak koji možda vrijedi gurnuti ranije (live je s pravim korisnicima). [[foundation-pivot]]
 
+## ➖ Supabase Auth — rate-limiting / brute-force zaštita prijava — 2026-07-10
+**Nalaz (korisnik, 2026-07-10):** spriječiti da netko udara login endpoint (npr. 10.000 pokušaja prijave).
+**Put (dashboard-only, bez koda):** Supabase Auth (GoTrue) ima ugrađene rate-limite → **Auth → Rate Limits** (po IP-u/satu za login/signup/reset/token-refresh) — provjeriti i pojačati po potrebi. Opcionalno **Bot/CAPTCHA zaštita** (hCaptcha/Turnstile) u Auth settings za signup/login. Primijeniti na **PROD i staging**.
+**Kad:** ne sad (nema napada, baza mala); planirano prije šireg rasta / uz **F6 sigurnost** (CSP/DOMPurify/UGC). Sitno, brzo — čim bude prometa vrijedno uključiti.
+
 ## 🧱 Hardening v1 + perf (2026-06-29) — sad u [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) Faza 1/3
 Nalazi iz `archive/SONNET_REVIEW_2026-06.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).
 Tretiraj `archive/SONNET_REVIEW_2026-06.md` kao prijedloge za provjeru, ne istinu. Konkretne stavke (Faza 1C / 3 u FOUNDATION_PLAN):

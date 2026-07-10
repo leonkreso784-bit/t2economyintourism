@@ -52,6 +52,7 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
 > vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`).
 > ⚠️ Free tier: projekt se uspava nakon ~7 dana neaktivnosti → restore je BESPLATAN; dok je uspavan sadržaj radi iz datoteka (fallback), login/sync ne. Re-sync nakon izmjene predmeta: `node scripts/migrate-content.js <id>`.
 > **✅ ODLUKA (2026-07-05): Supabase Pro (€25/mj) PRIJE prvih korisnika** (backup + bez uspavljivanja) — gasi rizik gubitka napretka i login/sync padova. Do tada free tier + fallback ostaje.
+> **🏗️ STAGING (U1, 2026-07-10):** 2. free projekt **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, ista org) = zrcalo sheme (3 repo SQL fajla) za write-testove → PROD (`naxjubnedhrbhsuasayu`) ostaje čist. Testovi ga gađaju preko `STAGING_*` u `.env` (vidi TESTING.md). Prod = izvor istine; staging je potrošan.
 
 **Cilj:** `loadSubjectContent()` čita sadržaj predmeta iz Supabasea umjesto iz `data/*.js`,
 **direktno preko anon keya** (sadržaj je JAVAN — bez `/api` funkcija, bez service-keya na frontu),
