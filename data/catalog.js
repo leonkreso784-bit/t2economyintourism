@@ -525,6 +525,37 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/business-informatics-hr/*.json)
       }
+    },
+    {
+      id: 'management-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 2,
+      name: 'Menadžment',
+      shortName: 'MEN',
+      icon: 'fa-user-tie',
+      color: '#6366f1',
+      iconGradient: ['#6366f1', '#818cf8'],
+      description: 'Osnove menadžmenta (Lussier): četiri funkcije — planiranje, organiziranje, vođenje i kontroliranje — te odlučivanje, strategija, timski rad, upravljanje ljudskim resursima, motivacija, vođenje i sustavi kontrole',
+      storageKey: 'management-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Menadžment i povijest, odlučivanje, strateško planiranje, organiziranje, timski rad i upravljanje ljudskim resursima' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Organizacijsko ponašanje, motivacija, vođenje te sustavi kontrole i financije' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        scripts: [
+          'data/management-hr/midterm-1.js',
+          'data/management-hr/midterm-2.js',
+          'data/management-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'managementHrM1',
+          'second-midterm': 'managementHrM2',
+          'final': 'managementHrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/management-hr/*.json)
+      }
     }
   ]
 };
