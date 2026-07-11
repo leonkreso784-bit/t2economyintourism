@@ -30,7 +30,7 @@ zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opseg
 - **`data/<subject>-hr/`** — nove HR mape predmeta (midterm-1/2, final, kasnije exercises po §5 fazi S5).
 - **`data/json/<subject>-hr/`** — SAMO kroz `npm run export:json <subject>-hr` (nikad ručno).
 - **`data/catalog.js`** — SAMO dodavanje novog `-hr` subject-unosa (šablonu ispiše alat / daje se u S2); ništa postojeće se ne mijenja niti briše.
-- **`docs/subjects/README.md`** — SAMO svoj redak u „HR statusna ploča" tablici.
+- **`docs/subjects/README.md`** — SAMO svoj redak u „HR statusna ploča" tablici. **⚠️ PRIVREMENO SUSPENDIRANO (2026-07-11, dok su docs samo na `foundation/f4` — §9):** datoteka NE postoji na `main` → redak u PR-u bi stvorio duplikat/merge-konflikt. **Umjesto toga: status za svoj redak napiši u PR-OPIS**, Leon/Claude ga upišu u ploču na f4. Vraća se na normalu kad f4 sleti na main.
 - **Cache-bump datoteke** (`index.html`, `*.html`, `manifest.json`, `js/content-loader.js`, `sw.js`) — **ISKLJUČIVO kroz `npm run bump`**, NIKAD ručno (reviewer provjerava da je diff = samo tokeni).
 - Pokretanje SVIH skripti/gateova (`translate-subject`, `validate:*`, `verify`, `export:json`, `bump`, `test:responsive`).
 
@@ -84,7 +84,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 5. ⬜ `npm run validate:content <id>-hr` = 0 · `npm run verify` = 0
 6. ⬜ `npm run export:json <id>-hr` (ako subject ima `dataFormat:'json'`) · `npm run bump`
 7. ⬜ `npm run test:responsive` zeleno lokalno
-8. ⬜ PR: opis = što/izvori/posebnosti; subjects-ploča ažurirana; **diff sadrži SAMO dopuštene putanje (§2)**
+8. ⬜ PR: opis = što/izvori/posebnosti **+ redak za subjects-ploču u OPISU** (privremeno, dok su docs samo na f4 — §2/§9); **diff sadrži SAMO dopuštene putanje (§2)**
 
 ## 6. Pristupi, ključevi, troškovi (least-privilege)
 
@@ -112,7 +112,7 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 
 | Zapis | Piše | Kada |
 |---|---|---|
-| subjects-ploča (HR status) | **Saša** (u PR-u) | svaki PR |
+| subjects-ploča (HR status) | **Saša** (privremeno: tekst retka u PR-opisu, upisuje Leon/Claude na f4 — §2/§9) | svaki PR |
 | PR-opis (radni log) | **Saša** | svaki PR |
 | PROGRESS/CHANGELOG | **Leon/Claude** | pri mergeu |
 | TEAM.md / planovi / ADR-ovi | **Leon/Claude** | po potrebi |

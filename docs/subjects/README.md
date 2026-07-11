@@ -45,7 +45,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT** | ⬜ | pilot potvrđen (2026-07-10); Sašin prvi predmet |
+| Management | `management-hr` | **S2 PILOT** | 🟡 spreman za PR | prijevod ✓ + catalog/JSON/bump ✓ + gateovi zeleni (185/0) ✓ + živa provjera ✓ (grana `content/management-hr`, `9d2f5c3`, 2026-07-11); **čeka:** 1.god materijali na Driveu za §5.2 terminologiju → onda PR |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
