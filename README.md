@@ -274,7 +274,7 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/migrate-content.js <subje
 
 ## 📊 **Performance & Quality Metrics**
 
-- **Lighthouse:** Performance 66+ (F3 will improve with Service Worker), Accessibility 98, Best Practices 100, SEO 100
+- **Lighthouse:** Performance boosted via Service Worker + CSS bundling (F3, shipped), Accessibility 98, Best Practices 100, SEO 100
 - **Bundle Size:** ~200KB JavaScript (no frameworks!)
 - **Time to Interactive:** <2.5s on 4G, mobile-optimized
 - **Test Coverage:** 100+ responsive tests, 30+ unit tests, accessibility audits every deploy
@@ -306,11 +306,12 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/migrate-content.js <subje
 - ✅ Error monitoring (Sentry)
 - ✅ Croatian UI translation
 - ✅ CI/CD pipeline (GitHub Actions, Playwright tests)
+- ✅ Service Worker (true offline PWA) + CSS bundling + auto cache-versioning (F3)
 
 ### **In Progress** 🔄
-- 🔄 **Phase F2 → F3:** Service Worker (true offline) + CSS bundling + auto version-bump
-- 🔄 Admin CRUD (custom, not CMS)
-- 🔄 Spaced repetition algorithms (SRS)
+- 🔄 **Admin CRUD** — custom content editor (not a CMS), evolving toward user-generated content
+- 🔄 **Stable content IDs + schema v2** — foundation for reordering, spaced repetition & authoring
+- 📅 Spaced repetition algorithms (SRS)
 
 ### **Planned** 📅
 - **Phase 1:** UGC MVP — Students upload PDF → AI generates interactive study material
@@ -411,4 +412,4 @@ If Sokrat Study helped you study better, **give it a star!** ⭐ Stars help othe
 ---
 
 ### **Last Updated**
-July 5, 2026 | Live on [www.sokratstudy.com](https://www.sokratstudy.com)
+July 11, 2026 | Live on [www.sokratstudy.com](https://www.sokratstudy.com)

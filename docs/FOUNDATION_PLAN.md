@@ -1,6 +1,6 @@
 # FOUNDATION_PLAN — Platforma-first temelj (Sokrat Study)
 
-> **Status (ažurirano 2026-07-09):** ▶ U TIJEKU. **F1 ✅ · F2 ✅ · F3 ✅ (sve DEPLOYANO na produkciju).** **F4 (Admin CRUD) ▶** — grana `foundation/f4` (preview): F4.1 identitet + F4.2 write/verzioniranje + F4.3 viewer+edit kartice (c-1/c-2) + **F4.4 quiz/fill/learn editori** + Playwright login — sve gotovo + **ŽIVO verificirano** (do 2026-07-08); ADR-021 + `CRUD_PLAN.md`.
+> **Status (ažurirano 2026-07-11):** ▶ U TIJEKU. **F1 ✅ · F2 ✅ · F3 ✅ (sve DEPLOYANO na produkciju).** **F4 (Admin CRUD) ▶** — grana `foundation/f4` (preview): F4.1 identitet + F4.2 write/verzioniranje + F4.3 viewer+edit kartice (c-1/c-2) + **F4.4 quiz/fill/learn editori** + Playwright login — sve gotovo + **ŽIVO verificirano** (do 2026-07-08); ADR-021 + `CRUD_PLAN.md`. **Nastavak F4 = U-staza (`UGC.md` §12): ✅ U1 staging Supabase (`40dc07b`) · ✅ U2a stabilni id-jevi na svih 18 (`b490172`, 2026-07-11) → ⬜ U2.5/U2b → U3 draft-sloj → … Tim: +Saša (content, S-staza — `TEAM.md`).**
 > **🧭 NASTAVAK F4 IDE KROZ [UGC.md](UGC.md) U-STAZU** (korisnik 2026-07-08/09): draft→objavi model + bogato autorsko sučelje; „F4.4-kategorije" = U6, F4.5/4.6 = U9+; **ADR-022 povučen naprijed = U2.5** (ADR-023). Zatim F5 (SRS) → F6 (sigurnost) → UGC.
 > **👥 TIM (2026-07-09, ADR-023):** Saša Vudrag = content-suradnik (HR program, paralelna S-staza — [TEAM.md](TEAM.md)); sadržajna pauza iz odluke dolje sad vrijedi za NAS, ne za njega.
 > **Odluka korisnika (2026-06-29):** staviti DODAVANJE SADRŽAJA na pauzu na koliko god treba i izgraditi

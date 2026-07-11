@@ -1,6 +1,6 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.3 · **Zadnja izmjena:** 2026-06-24
+**Status:** živi dokument · **Verzija PRD-a:** 0.4 · **Zadnja izmjena:** 2026-07-11
 
 ## 1. Vizija
 Sokrat Study je platforma za učenje koja studentima pretvara nastavne materijale
@@ -15,18 +15,17 @@ generiraju i dijele skripte te se natječu.
 - **(Faza 1+) Korisnik-autor:** uploada svoj materijal i radi privatne skripte.
 - **(Faza 4) Pretplatnik:** plaća premium funkcionalnosti.
 
-## 3. Trenutno stanje (2026-06-24)
-- Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com). Data-driven katalog + drill-down nav + landing rebuild.
-- Sadržaj: **2. god = 8/8 ✅** + **1. god = 9/9 ✅** (BI, SIT, Management, Microeconomics, Statistics, Macroeconomics, Academic Writing, Traffic in Tourism, **Mathematics** — zadnji, LIVE 2026-06-27). ⛔ Intro to Hospitality blokiran (nema PDF-ova).
-- Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (interaktivne, auto-ocjenjive, 7 tipova uklj. „napiši citat"), Progress (+ Blind Map za geografiju). **KaTeX** za kvantitativne.
-- **Auth + cloud-sync** napretka LIVE (email+lozinka). **Blok B read-path:** sadržaj se čita iz Supabasea (anon key + RLS) s file-fallbackom (ADR-011).
-- **Generator predmeta** (ADR-010): PDF→Sonnet→`data/*.js`, jeftino dodavanje. Alati: `verify`, `validate:content`, `test:unit`, `test:responsive` (Playwright), `scaffold`, `pdf-text`, `build/generate/assemble-subject`, `migrate-content`.
-- **Sljedeće:** sadržaj 1.+2. god GOTOV → admin CRUD (B9/B10) · AI tutor · MATURA prep · pa Faza 1 (UGC/AI).
+## 3. Trenutno stanje (2026-07-11)
+- Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com). Data-driven katalog + drill-down nav.
+- Sadržaj: **2. god HM = 8/8 ✅ + 1. god HM = 9/9 ✅ LIVE** (17 EN + HR pilot). ⛔ Intro to Hospitality blokiran (nema PDF-ova). **HR program u tijeku** (Saša, content-suradnik — `docs/TEAM.md`; pilot Management HR).
+- Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (7 tipova uklj. „napiši citat"), Progress (+ Blind Map). **KaTeX** za kvantitativne.
+- **Platforma-first pregradnja (`FOUNDATION_PLAN.md`): F0–F3 KOMPLETNE + LIVE** — F1 reliability rails (CI/CD, gateovi) · F2 reusable jezgra (JSON dual-read, ContentRepository, AppState, Web Components, Sentry) · F3 performanse (Service Worker/offline, CSS bundling, auto-bump). **Auth + cloud-sync** LIVE; read-path Supabase anon+RLS (ADR-011).
+- **AKTIVNO (grana `foundation/f4`, Vercel preview, NIJE produkcija):** F4 Admin CRUD (F4.1–F4.4 ✅ — identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) → prelazi u **UGC-stazu** (`UGC.md`, model draft→objavi): ✅ U1 staging Supabase · ✅ U2a stabilni id-jevi (`b490172`).
+- **Sljedeće (engineering):** U-staza (schema/draft/publish-RPC/editor) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `UGC.md` §12 + `HISTORY.md`.**
 
 ## 4. Opseg po fazama
-- **Faza 0 (u tijeku):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +
-  backend **Vercel Functions + Supabase** (Blok B) uz migraciju datoteka → baza JEDNOM.
-  Hijerarhija fakultet→smjer→godina→semestar→predmet. Bez novih korisničkih funkcija.
+- **Faza 0 (✅ GOTOVA + platforma-first pregradnja F0–F3 LIVE):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +
+  backend **Supabase** (read-path anon+RLS, ADR-011; migracija datoteka→baza kroz F4 flip). Hijerarhija fakultet→smjer→godina→semestar→predmet. **Nastavak = F4 CRUD → U-staza (`UGC.md`) → F5/F6 → UGC.**
 - **Faza 1:** UGC MVP — korisnik uploada PDF/PPT → AI radi privatnu skriptu. Kvote troška.
 - **Faza 2:** dijeljenje — javna biblioteka, pretraga, kopiranje tuđih skripti.
 - **Faza 3:** natjecanje + društveno — ljestvice, profili, statistika učenja, anti-cheat.
