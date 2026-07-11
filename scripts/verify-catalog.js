@@ -8,7 +8,24 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
-const { SOKRAT_CATALOG, SokratCatalog } = require(path.join(ROOT, 'data', 'catalog.js'));
+// CATALOG_PATH (env) = alternativni catalog za fixture-testove gate-a (default: pravi catalog).
+const CATALOG_PATH = process.env.CATALOG_PATH
+  ? path.resolve(ROOT, process.env.CATALOG_PATH)
+  : path.join(ROOT, 'data', 'catalog.js');
+const { SOKRAT_CATALOG } = require(CATALOG_PATH);
+
+// Lokalni helperi (ne ovise o exportanom SokratCatalog → gate radi i nad fixture-katalozima).
+const getProgram = (id) => {
+  for (const f of (SOKRAT_CATALOG.faculties || [])) {
+    const p = (f.programs || []).find((p) => p.id === id);
+    if (p) return { ...p, facultyId: f.id };
+  }
+  return null;
+};
+const resolveDataVar = (s, lessonId) => {
+  const r = (s.content && s.content.resolve) || {};
+  return r[lessonId] || r['*'] || null;
+};
 
 let errors = 0;
 let warnings = 0;
@@ -42,8 +59,47 @@ for (const s of SOKRAT_CATALOG.subjects) {
   const missing = REQUIRED_FIELDS.filter((f) => s[f] === undefined || s[f] === null);
   if (missing.length) fail(`nedostaju polja: ${missing.join(', ')}`); else ok('sva obavezna polja prisutna');
 
-  // 3) Program postoji
-  if (!SokratCatalog.getProgram(s.programId)) fail(`programId "${s.programId}" ne postoji u faculties`);
+  // 3) Smještaj u hijerarhiju — dual-mode (U2.5, ADR-022 / docs/CATALOG_ARCHITECTURE.md §6):
+  //    legacy (programId+year+semester) XOR placement[] — nikad oboje, nikad nijedno.
+  const hasLegacy = s.programId != null || s.year != null || s.semester != null;
+  const hasPlacement = Array.isArray(s.placement);
+  if (hasLegacy && hasPlacement) {
+    fail('ima I legacy smještaj (programId/year/semester) I placement[] — dozvoljen je točno jedan način (ADR-022)');
+  } else if (!hasLegacy && !hasPlacement) {
+    fail('nema ni programId/year/semester ni placement[] — predmet nije smješten u hijerarhiju');
+  } else if (hasLegacy) {
+    if (!getProgram(s.programId)) fail(`programId "${s.programId}" ne postoji u faculties`);
+    if (!Number.isFinite(s.year) || !Number.isFinite(s.semester)) fail('legacy smještaj traži numerički year i semester');
+  } else {
+    if (!s.placement.length) fail('placement[] je prazan');
+    const seenCoords = new Set();
+    const facultySet = new Set();
+    for (const pl of s.placement) {
+      const f = (SOKRAT_CATALOG.faculties || []).find((x) => x.id === pl.faculty);
+      if (!f) { fail(`placement faculty "${pl.faculty}" ne postoji`); continue; }
+      facultySet.add(pl.faculty);
+      if (!(f.programs || []).some((p) => p.id === pl.program)) {
+        fail(`placement program "${pl.program}" ne postoji u fakultetu "${pl.faculty}"`);
+      }
+      if (!Number.isFinite(pl.year) || !Number.isFinite(pl.semester)) {
+        fail(`placement (${pl.program}) traži numerički year i semester`);
+      }
+      const key = `${pl.program}|${pl.year}|${pl.semester}`;
+      if (seenCoords.has(key)) fail(`duplicirana placement koordinata: ${key}`); else seenCoords.add(key);
+    }
+    if (facultySet.size > 1) {
+      fail('placement preko VIŠE fakulteta — preko fakulteta se UVIJEK duplicira, ne dijeli (ADR-022 §3)');
+    }
+    for (const fid of facultySet) {
+      if (!s.id.startsWith(fid + '-')) {
+        fail(`placement-predmet mora nositi prefiks fakulteta u id-u: očekivano "${fid}-…", a id je "${s.id}" (ADR-022 §2)`);
+      }
+    }
+    if (!/-(hr|en)$/.test(s.id)) {
+      warn(`kanonski id je <fakultet>-<predmet>-<jezik> — "${s.id}" nema -hr/-en sufiks (ADR-022 §2)`);
+    }
+    if (seenCoords.size) ok(`placement: ${seenCoords.size} koordinata (dijeljeni sadržaj, jedan storageKey)`);
+  }
 
   // 4) Datoteke iz content.scripts postoje
   const scripts = (s.content && s.content.scripts) || [];
@@ -53,7 +109,7 @@ for (const s of SOKRAT_CATALOG.subjects) {
 
   // 5) resolveDataVar == staro ponašanje + var postoji i izvozi se na window
   for (const lesson of (s.lessons || [])) {
-    const got = SokratCatalog.resolveDataVar(s.id, lesson.id);
+    const got = resolveDataVar(s, lesson.id);
     if (got) {
       // varijabla mora biti deklarirana i izložena na window u nekoj od skripti
       const declared = scripts.some((rel) => {
@@ -104,7 +160,7 @@ for (const s of SOKRAT_CATALOG.subjects) {
   if (s.content && s.content.dataFormat === 'json') {
     const jsonVars = new Set();
     for (const lesson of (s.lessons || [])) {
-      const v = SokratCatalog.resolveDataVar(s.id, lesson.id);
+      const v = resolveDataVar(s, lesson.id);
       if (v) jsonVars.add(v);
     }
     for (const v of jsonVars) {
@@ -114,6 +170,21 @@ for (const s of SOKRAT_CATALOG.subjects) {
     }
   }
   console.log('');
+}
+
+// 8) Globalno: duplikat storageKey preko RAZLIČITIH predmeta = fail (ADR-022 §4/§6-2).
+//    "Lažno dijeljenje" kroz dva unosa s istim ključem miješa napredak dvaju sadržaja;
+//    pravo dijeljenje = JEDAN unos s placement[] (jedan storageKey po konstrukciji).
+{
+  const byKey = new Map();
+  for (const s of SOKRAT_CATALOG.subjects) {
+    if (!s.storageKey) continue;
+    if (!byKey.has(s.storageKey)) byKey.set(s.storageKey, []);
+    byKey.get(s.storageKey).push(s.id);
+  }
+  for (const [key, ids] of byKey) {
+    if (ids.length > 1) fail(`storageKey "${key}" dijele predmeti [${ids.join(', ')}] — dijeljenje ide kroz placement[], ne kroz dva unosa`);
+  }
 }
 
 console.log('================ REZULTAT ================');

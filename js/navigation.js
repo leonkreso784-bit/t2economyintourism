@@ -127,8 +127,9 @@ function closeSidebar() {
 // miješanja jezika. (UI i18n po aktivnom programu = kasniji korak; vidi docs/HRV_PLAN.md.)
 const PRIMARY_PROGRAM = 'hospitality-management';
 function primarySubjects() {
-    return (typeof SOKRAT_CATALOG !== 'undefined' && Array.isArray(SOKRAT_CATALOG.subjects))
-        ? SOKRAT_CATALOG.subjects.filter((s) => s.programId === PRIMARY_PROGRAM)
+    // placement-svjesno (U2.5): subjectsOf pokriva i legacy (programId) i placement[] predmete
+    return (typeof SokratCatalog !== 'undefined')
+        ? SokratCatalog.subjectsOf(PRIMARY_PROGRAM)
         : [];
 }
 

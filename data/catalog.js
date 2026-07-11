@@ -561,19 +561,53 @@ const SokratCatalog = {
     return f ? (f.programs || []) : [];
   },
 
+  // ---- Placement dual-mode (U2.5, ADR-022 / docs/CATALOG_ARCHITECTURE.md) ----
+  // Predmet smjesta se u hijerarhiju na JEDAN od dva načina:
+  //   legacy:    programId + year + semester (svi postojeći predmeti — netaknuti)
+  //   placement: placement: [{ faculty, program, year, semester }, ...] — dijeljeni
+  //              "vezni" predmet prikazan na više koordinata, sadržaj postoji JEDNOM.
+  // Placement-predmeti MORAJU nositi prefiks fakulteta u id-u (gate u verify-catalog.js).
+
+  // Normalizirane placement-koordinate predmeta (za legacy se deriviraju iz polja).
+  placementsOf(s) {
+    if (!s) return [];
+    if (Array.isArray(s.placement) && s.placement.length) return s.placement;
+    if (s.programId == null) return [];
+    const p = this.getProgram(s.programId);
+    return [{ faculty: p ? p.facultyId : null, program: s.programId, year: s.year, semester: s.semester }];
+  },
+
+  // Je li predmet postavljen u zadani smjer (bilo kojom koordinatom)?
+  isInProgram(s, programId) {
+    return this.placementsOf(s).some(pl => pl.program === programId);
+  },
+
   // Distinct studijske godine za zadani smjer (sortirano uzlazno).
   yearsOf(programId) {
     const ys = new Set();
     for (const s of SOKRAT_CATALOG.subjects) {
-      if (s.programId === programId && s.year != null) ys.add(s.year);
+      for (const pl of this.placementsOf(s)) {
+        if (pl.program === programId && pl.year != null) ys.add(pl.year);
+      }
     }
     return [...ys].sort((a, b) => a - b);
   },
 
   // Predmeti za (smjer[, godina]). Ako je `year` izostavljen, vraća sve predmete smjera.
+  // Legacy predmet se vraća KAKAV JEST (isto ponašanje kao prije U2.5); placement-predmet
+  // se vraća kao plitka kopija dekorirana koordinatama pogođenog placementa (year/semester
+  // za prikaz kartica) — content/storageKey/lessons ostaju reference na original.
   subjectsOf(programId, year) {
-    return SOKRAT_CATALOG.subjects.filter(s =>
-      s.programId === programId && (year == null || s.year === year));
+    const out = [];
+    for (const s of SOKRAT_CATALOG.subjects) {
+      const pl = this.placementsOf(s).find(pl =>
+        pl.program === programId && (year == null || pl.year === year));
+      if (!pl) continue;
+      out.push(Array.isArray(s.placement)
+        ? { ...s, programId: pl.program, year: pl.year, semester: pl.semester }
+        : s);
+    }
+    return out;
   },
 
   // Distinct semestri za (smjer, godina), sortirano.

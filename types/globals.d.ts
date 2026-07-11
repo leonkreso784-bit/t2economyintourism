@@ -11,6 +11,10 @@ declare global {
   const SokratCatalog:
     | {
         getSubject(id: string): { programId?: string; [k: string]: unknown } | undefined;
+        // Placement dual-mode (U2.5, ADR-022): legacy programId ILI placement[] koordinate
+        isInProgram(s: unknown, programId: string): boolean;
+        placementsOf(s: unknown): Array<{ faculty: string | null; program: string; year?: number; semester?: number }>;
+        subjectsOf(programId: string, year?: number): Array<{ [k: string]: unknown }>;
         [k: string]: unknown;
       }
     | undefined;

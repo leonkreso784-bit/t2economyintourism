@@ -11,7 +11,7 @@ const vm = require('vm');
 
 const ROOT = path.join(__dirname, '..');
 const PRIMARY_PROGRAM = 'hospitality-management';
-const { SOKRAT_CATALOG } = require(path.join(ROOT, 'data', 'catalog.js'));
+const { SOKRAT_CATALOG, SokratCatalog } = require(path.join(ROOT, 'data', 'catalog.js'));
 
 // Učitaj data-skripte kroz vm s window shimom (isti obrazac kao validate-content.js).
 function loadWindowVars(scripts) {
@@ -41,7 +41,7 @@ function countData(data) {
 
 let total = 0;
 let subjectsCounted = 0;
-const primary = (SOKRAT_CATALOG.subjects || []).filter((s) => s.programId === PRIMARY_PROGRAM);
+const primary = (SOKRAT_CATALOG.subjects || []).filter((s) => SokratCatalog.isInProgram(s, PRIMARY_PROGRAM));
 
 for (const s of primary) {
   const content = s.content || {};

@@ -423,7 +423,7 @@
     if (readStored()) return;                 // korisnik je već odlučio → ne diraj
     if (subjectId && typeof SokratCatalog !== 'undefined') {
       const s = SokratCatalog.getSubject(subjectId);
-      if (s && s.programId === HR_PROGRAM) setUiLang('hr', true);
+      if (s && SokratCatalog.isInProgram(s, HR_PROGRAM)) setUiLang('hr', true);
     }
   }
 
