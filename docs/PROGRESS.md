@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (Saša)
+**Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (UGC.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
+
+**Branch-vidljivost (Saša) — `c26dcfc`:** Saša klonirao repo, ne vidi `docs/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad Saša čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
+
+**U2a — stabilni id-jevi (`b490172`, ✅ dokazano):**
+- **`scripts/add-item-ids.js`** (nova migracija, esprima range-based, **AST-surgical** — čuva formatiranje/komentare): dodaje `id` (6-char random) svakoj kartici/quizu/fillu/kategoriji/learn. Idempotentna; **sigurnosni re-parse** odbija nevaljan JS; document-vs-single-category detekcija (final `examPractice`); inline-vs-newline insert; indent-safe.
+- **Opseg:** rollout na **svih 18** → 56 study-datoteka, **~4787 id-jeva**. **Isključeni:** 7 exercises/lib (`codeScripts`, BUG-012) + 5 praznih kompozicija (finali = čisti `Object.assign`, sadržaj iz M1/M2).
+- **Dokazi:** content-identical **strip-id === HEAD 56/56** (git „deletions" su inline-insert+CRLF artefakti, ne gubitak) · `validate:schema` 54/54 (schema dobila opcionalni `id`; `schemaVersion` dopušten za U2b) · `verify` 0 · **smoke test 223 prošlo / 0 palo** · json re-exportan (round-trip) · `npm run bump` (95 tokena).
+- **`schemaVersion` IZBAČEN iz U2a → U2b:** prvi pokušaj ga stavio top-level → **smoke test PAO** (4 profila: `Object.keys(content)` iteracije u ~9 runtime-mjesta tretiraju `schemaVersion:2` kao kategoriju → `2.quiz.length` pad). Odluka A (Leon): U2a = SAMO id-jevi (inertni); `schemaVersion` + runtime meta-filter (`getCategories()`) → U2b. Skripta ima opt-in `--schema-version`.
+- **Bug usput:** `git checkout -- data/` NE pokriva root `data-*.js` (ADR-015 stari predmeti u korijenu) → revertati oboje.
+
+**Stanje:** `b490172` commitan + pushan na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U2.5 (ADR-022) ili U2b.** Opcionalni sitni follow-up: `translate-subject.js` emit `id` za buduće `-hr` (⚠️ null-bajt u fajlu).
+
+---
+
 ## 2026-07-10 (OPUS) — U1 staging Supabase + test-only override · Sašin onboarding operativan
 **Kontekst:** nastavak nakon compacta; U1 = prva U-cigla (UGC.md §12). Sve na grani `foundation/f4` (preview).
 
