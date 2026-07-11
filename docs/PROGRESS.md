@@ -5,6 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-11 (FABLE, kasnije) — U2.5: placement dual-mode (ADR-022 identitet predmeta)
+**Kontekst:** nastavak nakon compacta; korisnik potvrdio prioritet = dovršetak admin CRUD-a (draft+editor staza, UGC.md §12 = nastavak F4); U2.5 prva jer je zacementirana „odmah iza U2" (ADR-023) i skida ovisnost sa Sašine S7. Sve na `foundation/f4` (preview).
+
+**U2.5 — placement dual-mode (`b969892`, ✅ dokazano):**
+- **`data/catalog.js`:** predmet se smjesta legacy poljima (`programId/year/semester`) ILI `placement: [{faculty, program, year, semester}, …]` — dijeljeni „vezni" predmet na više koordinata, sadržaj+`storageKey` JEDNOM (CATALOG_ARCHITECTURE §5). Novi helperi `placementsOf()` (legacy derivacija) + `isInProgram()`; `yearsOf/subjectsOf/semestersOf` preko placementa. **Legacy predmeti vraćaju ISTE reference** (ponašanje identično); placement-predmet = plitka kopija dekorirana koordinatama pogođenog placementa (prikaz year/semester), `content/storageKey` dijele referencu s originalom.
+- **Potrošači:** 3 direktna `.programId` filtera → helper (`navigation.js primarySubjects()`, `i18n.js` HR-prijedlog, `compute-stats.js`; stats nepromijenjen 5721/17 = dokaz ekvivalencije). Playwright fixturei u `landing/sidebar.spec` netaknuti (legacy polja ostaju).
+- **Verify-gate (§6 invarijante):** legacy XOR placement (nikad oboje/nijedno) · koordinate postoje (faculty + program u TOM fakultetu, numerički year/semester, bez dup koordinata, jedan fakultet — preko fakulteta se UVIJEK duplicira) · **prefiks fakulteta obavezan u id-u placement-predmeta** (legacy 18 grandfathered — bez preimenovanja, napredak sačuvan; warn ako nema `-hr/-en` sufiksa) · **duplikat `storageKey` preko dva unosa = fail** („lažno dijeljenje"). Gate je sada **catalog-agnostičan** (lokalni helperi + `CATALOG_PATH` env) → testabilan fixture-katalozima.
+- **Dokazi:** `tests/unit/catalog-placement.test.js` **11/11** (legacy ekvivalencija po referencama · sintetički dijeljeni predmet u 3 smjera in-memory · **gate dokazano PADA (exit 1) na svih 5 prekršaja** nad `tests/fixtures/catalog-placement-invalid.js`, valjan fixture prolazi) · `verify` 0/0 · typecheck 0 (dodani potpisi u `types/globals.d.ts`) · unit lanac 197/0 · **smoke 223/0** · `npm run bump` (95 tokena).
+- **Napomene:** staging nije bio potreban (čisto klijentski/catalog sloj — baza nedirnuta). Stvarni MUH/MUT/MOR programi i podjela veznih predmeta = S7 (silabusi presuđuju, §8).
+
+**Stanje:** `b969892` na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U3 draft-sloj** (DraftStore + ops + edit-mode ljuska, UGC.md §4.1) — ulaz u draft+editor stazu koju je korisnik potvrdio kao prioritet. Usput uočeno: Saša pushao `9d2f5c3` na `content/management-hr` (catalog-unos po šabloni + JSON export + bump — čisto, PR još nije otvoren).
+
+---
+
 ## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (Saša)
 **Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (UGC.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
 

@@ -5,6 +5,7 @@
 ## Platforma (Foundation, 2026-06-29 → )
 | Datum | Milestone | Ref |
 |---|---|---|
+| 2026-07-11 | **U2.5 — placement dual-mode** (ADR-022 identitet predmeta): `placement[]` koordinate za dijeljene vezne predmete + `placementsOf/isInProgram` + verify-gate s 4 invarijante (fixture-dokazano da pada); legacy 18 grandfathered; unit 11/11 + smoke 223/0 | `b969892` |
 | 2026-07-11 | **U2a — stabilni `id` po stavci na svih 18** (schema v2 temelj; `scripts/add-item-ids.js` AST-surgical) — 56 datoteka, ~4787 id-jeva; content-identical 56/56 + smoke 223/0; `schemaVersion` → U2b (treba runtime meta-filter) · **branch-vidljivost docs za Sašu** (`c26dcfc`) | `b490172` |
 | 2026-07-10 | **U1 staging Supabase** (`sokrat-staging` `czljmvigkgiajzjxtndq`) + **test-only Supabase-override** (`js/auth.js`, prod default no-op) → `test:authed` 6/6 + write-verify + rls-check na staging, **PROD audit čist** · **Sašin onboarding operativan** (`chemp12` collaborator + `main` ruleset `protect-main`; financiranje = keš) | `40dc07b`+`a7fd38a` |
 | 2026-07-09 | **👥 TIM: +Saša Vudrag** (content-suradnik; TEAM.md, ADR-023) · **ADR-022 pull-forward = U2.5** | `b8e58a3` |

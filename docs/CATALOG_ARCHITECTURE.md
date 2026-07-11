@@ -1,6 +1,6 @@
 # CATALOG_ARCHITECTURE — Identitet predmeta preko programa i fakulteta
 
-> **Status (2026-07-09):** ✅ ODLUČENO (ADR-022). **Implementacija: POVUČENA NAPRIJED = cigla U2.5** (odmah iza U1+U2 u [UGC.md](UGC.md) §12; resekvencirano ADR-023 t.5 — preduvjet MUT/MOR = Sašina S7 cigla, [TEAM.md](TEAM.md); 3 tvrda uvjeta: nakon U1+U2 · aditivno/dual-mode · gate+staging).
+> **Status (2026-07-11):** ✅ **IMPLEMENTIRANO — U2.5 (`b969892`).** Mehanizam iz §5 (placement dual-mode: legacy `programId/year/semester` XOR `placement[]`) živi u `data/catalog.js` (`placementsOf()/isInProgram()`); §6 invarijante = `scripts/verify-catalog.js` (+ fixture-dokazi `tests/fixtures/catalog-placement-*.js`, unit `tests/unit/catalog-placement.test.js` 11/11). Legacy 18 predmeta grandfathered (bez preimenovanja — napredak/storageKey netaknut; prefiks-pravilo §2 vrijedi za NOVE placement-predmete). Stvarni MUH/MUT/MOR programi + dijeljeni predmeti = S7 (Saša, silabusi presuđuju §8). Odluka: ADR-022; resekvencirano ADR-023 t.5.
 > Ovaj doc je pun model + konvencije + primjeri + verify-pravila. Rješava kako **dijeliti „vezne" predmete**
 > među smjerovima bez dupliciranja i bez rizika da baza „pukne", uz očuvanu hijerarhiju.
 
