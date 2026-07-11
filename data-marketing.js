@@ -3,47 +3,56 @@
 
 const marketingData = {
     marketingConcept: {
+        id: "13q55a",
         name: "Marketing Concept",
         icon: "fa-bullseye",
         color: "#ec4899",
 
         flashcards: [
             {
+                id: "6jq7nz",
                 question: "What is the core definition of marketing in a modern business concept?",
                 answer: "Marketing is creating and exchanging value by understanding customer needs and delivering offerings that satisfy those needs profitably.",
                 explanation: "Modern marketing starts from value, not only selling."
             },
             {
+                id: "9vzrcz",
                 question: "How did business concepts evolve historically?",
                 answer: "From production concept to selling concept, then marketing concept, and finally relationship/holistic marketing.",
                 explanation: "Each stage reflects increasing customer orientation."
             },
             {
+                id: "1rk6il",
                 question: "What is the production concept?",
                 answer: "Focus on production efficiency and low costs: make products and expect people to buy them.",
                 explanation: "Works when demand exceeds supply."
             },
             {
+                id: "j8itbl",
                 question: "What is the selling concept?",
                 answer: "Focus on aggressive promotion and sales volume: sell what the company already has.",
                 explanation: "Product-push approach, not customer-pull."
             },
             {
+                id: "79z3p1",
                 question: "What is the marketing concept?",
                 answer: "Find out what customers need first, then design and deliver the right offering better than competitors.",
                 explanation: "Customer needs drive strategy and operations."
             },
             {
+                id: "pxy6ey",
                 question: "What is holistic marketing?",
                 answer: "An integrated perspective connecting relationship marketing, internal marketing, integrated marketing, and performance marketing.",
                 explanation: "Everything in business affects marketing outcomes."
             },
             {
+                id: "g7514t",
                 question: "What is relationship marketing in practical terms?",
                 answer: "Building long-term cooperation with consumers, suppliers, distributors, and other market actors to create durable value.",
                 explanation: "It goes beyond one-time transactions."
             },
             {
+                id: "m12itf",
                 question: "Why did modern firms move from mass production logic to marketing logic?",
                 answer: "Because markets became competitive, customers became more informed, and value differentiation became more important than simple output volume.",
                 explanation: "Competition shifted the source of advantage."
@@ -52,21 +61,25 @@ const marketingData = {
 
         quiz: [
             {
+                id: "do7dbe",
                 question: "The marketing concept starts with:",
                 options: ["Production capacity", "Customer needs", "Advertising budget", "Sales quotas"],
                 correct: 1
             },
             {
+                id: "pwu6zi",
                 question: "The selling concept primarily emphasizes:",
                 options: ["Relationship building", "Aggressive sales and promotion", "Sustainability first", "Customer co-creation"],
                 correct: 1
             },
             {
+                id: "vc5arg",
                 question: "Holistic marketing includes all EXCEPT:",
                 options: ["Integrated marketing", "Internal marketing", "Relationship marketing", "Single-function marketing"],
                 correct: 3
             },
             {
+                id: "1kh6ic",
                 question: "The production concept is strongest when:",
                 options: ["Demand is weak and fragmented", "Demand exceeds supply", "Consumers compare many alternatives", "Brand loyalty is high"],
                 correct: 1
@@ -75,21 +88,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "elrd18",
                 sentence: "Modern marketing is about creating and exchanging _______.",
                 answer: "value",
                 hint: "Utility for customers..."
             },
             {
+                id: "emuxh6",
                 sentence: "The marketing concept begins with understanding customer _______.",
                 answer: "needs",
                 hint: "Needs and wants..."
             },
             {
+                id: "egeeni",
                 sentence: "The selling concept focuses on maximizing sales _______.",
                 answer: "volume",
                 hint: "Quantity sold..."
             },
             {
+                id: "hc9z1t",
                 sentence: "Holistic marketing implies an _______ perspective across functions.",
                 answer: "integrated",
                 hint: "Not fragmented..."
@@ -97,6 +114,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "4pfs2o",
             title: "Unit 1 - Marketing as a Modern Business Concept",
             content: `
                 <h3>1) Why Marketing Became a Core Business Logic</h3>
@@ -145,42 +163,50 @@ const marketingData = {
     },
 
     marketingEnvironment: {
+        id: "ra7tyg",
         name: "Marketing Environment",
         icon: "fa-globe-europe",
         color: "#0ea5e9",
 
         flashcards: [
             {
+                id: "09ii6o",
                 question: "What is the difference between macro and micro marketing environment?",
                 answer: "Macro factors are indirect and less controllable (PESTLE), while micro factors are direct actors close to the company (consumers, competitors, suppliers, distributors).",
                 explanation: "Managers monitor macro and manage micro relationships."
             },
             {
+                id: "so6zuv",
                 question: "What does PESTLE stand for?",
                 answer: "Political, Economic, Social, Technological, Legal, Environmental factors.",
                 explanation: "Framework for analyzing indirect environmental influences."
             },
             {
+                id: "zx7i30",
                 question: "How do economic forces affect marketing decisions?",
                 answer: "Business cycle, inflation, unemployment, and income levels affect purchasing power, demand, and pricing strategy.",
                 explanation: "Demand is strongly linked to economic context."
             },
             {
+                id: "yws3or",
                 question: "Why are social and cultural forces important?",
                 answer: "Values, lifestyles, social roles, and attitudes influence what people buy, where they buy, and how they evaluate brands.",
                 explanation: "Consumer meaning shapes market behavior."
             },
             {
+                id: "4lzgdi",
                 question: "What is marketing intelligence?",
                 answer: "Continuous collection and analysis of market data from external and internal sources to support better decisions.",
                 explanation: "Key sources include social media, search trends, internal records, and industry signals."
             },
             {
+                id: "lino3u",
                 question: "Why must firms react to macroenvironmental factors even if they cannot control them?",
                 answer: "Because macro forces shape demand, costs, regulation, and customer behavior. Ignoring them creates strategic risk.",
                 explanation: "Adaptation is mandatory when control is impossible."
             },
             {
+                id: "wjsh64",
                 question: "What is the role of legal and environmental factors in marketing decisions?",
                 answer: "They set boundaries for acceptable market behavior, compliance obligations, and sustainability expectations that affect product, communication, and operations.",
                 explanation: "Legality and sustainability are strategic constraints and opportunities."
@@ -189,21 +215,25 @@ const marketingData = {
 
         quiz: [
             {
+                id: "peej08",
                 question: "Which is a macroenvironment factor?",
                 options: ["Suppliers", "Distributors", "Technological change", "Competitors"],
                 correct: 2
             },
             {
+                id: "11j2id",
                 question: "PESTLE includes all EXCEPT:",
                 options: ["Political", "Psychological", "Economic", "Environmental"],
                 correct: 1
             },
             {
+                id: "ncwpcd",
                 question: "Consumers and competitors belong to:",
                 options: ["Microenvironment", "Macroeconomics", "Internal accounting", "Financial reporting"],
                 correct: 0
             },
             {
+                id: "xdjg4s",
                 question: "Which statement is true?",
                 options: ["Macro factors are directly controllable", "Micro factors are always uncontrollable", "Macro factors require monitoring and strategic response", "PESTLE is a pricing model"],
                 correct: 2
@@ -212,21 +242,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "7ktg4y",
                 sentence: "PESTLE analysis is used for _______ environmental factors.",
                 answer: "macro",
                 hint: "Indirect level..."
             },
             {
+                id: "h439b6",
                 sentence: "Consumers, suppliers and distributors are part of the _______ environment.",
                 answer: "micro",
                 hint: "Direct actors..."
             },
             {
+                id: "0fo48m",
                 sentence: "Marketing _______ helps managers make data-informed decisions.",
                 answer: "intelligence",
                 hint: "Insight system..."
             },
             {
+                id: "2dpuhk",
                 sentence: "Political, economic, social, technological, legal and environmental factors are summarized as _______.",
                 answer: "PESTLE",
                 hint: "Six-letter framework..."
@@ -234,6 +268,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "03824y",
             title: "Unit 2 - The Marketing Environment",
             content: `
                 <h3>1) Marketing Environment as Decision Context</h3>
@@ -278,42 +313,50 @@ const marketingData = {
     },
 
     marketAndValueExchange: {
+        id: "n6snme",
         name: "Market and Value Exchange",
         icon: "fa-exchange-alt",
         color: "#22c55e",
 
         flashcards: [
             {
+                id: "7cfhsn",
                 question: "What is a market in economic terms?",
                 answer: "A market is an economic space where goods, services, and other transactions are exchanged between participants.",
                 explanation: "Markets can be local, national, international, and digital."
             },
             {
+                id: "uayv90",
                 question: "What is value exchange?",
                 answer: "A process where buyers and sellers exchange something of value, typically utility/satisfaction for money/time/commitment.",
                 explanation: "Exchange is the core mechanism of marketing."
             },
             {
+                id: "74z1ql",
                 question: "What are key conditions for exchange?",
                 answer: "At least two parties, value for each party, communication and delivery ability, freedom to accept/reject, and perceived benefit.",
                 explanation: "Without these conditions, exchange fails."
             },
             {
+                id: "flc111",
                 question: "What are market discrepancies?",
                 answer: "Differences between producers and buyers in space, time, information, value perception, ownership, quantity, and assortment.",
                 explanation: "Marketing functions reduce these discrepancies."
             },
             {
+                id: "6ywkkd",
                 question: "Why are marketing functions necessary?",
                 answer: "They bridge producer-consumer gaps and create utility for market participants.",
                 explanation: "Utility is created through matching supply and demand conditions."
             },
             {
+                id: "rgdx3p",
                 question: "What is discrepancy of value in exchange?",
                 answer: "Producers value offers through costs and target prices, while consumers value offers through perceived benefits and purchasing power.",
                 explanation: "Value is not identical for both sides."
             },
             {
+                id: "f94t3r",
                 question: "What is discrepancy of ownership?",
                 answer: "Producers own products before sale, while consumers seek ownership after purchase. Exchange legally transfers this ownership.",
                 explanation: "Ownership transfer is central to market transaction structure."
@@ -322,21 +365,25 @@ const marketingData = {
 
         quiz: [
             {
+                id: "wdt22z",
                 question: "Which is NOT a standard exchange condition?",
                 options: ["Two parties", "Ability to communicate", "Mandatory purchase", "Perceived desirability"],
                 correct: 2
             },
             {
+                id: "8verkq",
                 question: "Market discrepancy in information exists when:",
                 options: ["Prices are low", "Buyers and sellers lack relevant knowledge about each other", "Demand is stable", "Products are digital"],
                 correct: 1
             },
             {
+                id: "lafq7y",
                 question: "Temporal discrepancy refers to mismatch in:",
                 options: ["Location", "Time of production and consumption", "Ownership rights", "Product color"],
                 correct: 1
             },
             {
+                id: "4yq8bj",
                 question: "Quantity discrepancy appears because:",
                 options: ["Consumers always buy in bulk", "Producers and consumers need identical quantities", "Production scale and consumer purchase units differ", "Only price differs"],
                 correct: 2
@@ -345,21 +392,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "i9hdoa",
                 sentence: "Exchange means getting something of _______ for something else of value.",
                 answer: "value",
                 hint: "Utility word..."
             },
             {
+                id: "hhxste",
                 sentence: "Spatial discrepancy is a mismatch in market _______.",
                 answer: "location",
                 hint: "Where buyers/sellers are..."
             },
             {
+                id: "xc4k7t",
                 sentence: "Marketing functions reduce market _______.",
                 answer: "discrepancies",
                 hint: "Gaps/mismatches..."
             },
             {
+                id: "tlw0ix",
                 sentence: "Temporal discrepancy is a mismatch in _______.",
                 answer: "time",
                 hint: "When supply and demand happen..."
@@ -367,6 +418,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "nsbeof",
             title: "Unit 3 - The Market and Market-Oriented Business",
             content: `
                 <h3>1) Market as an Exchange Space</h3>
@@ -417,42 +469,50 @@ const marketingData = {
     },
 
     segmentationTargetingPositioning: {
+        id: "s8mbxn",
         name: "Segmentation and Positioning",
         icon: "fa-layer-group",
         color: "#8b5cf6",
 
         flashcards: [
             {
+                id: "1p62hk",
                 question: "What is market segmentation?",
                 answer: "Strategic division of a heterogeneous market into homogeneous groups with similar needs and wants.",
                 explanation: "Segmentation allows tailored value propositions."
             },
             {
+                id: "8muaj0",
                 question: "What are key segmentation advantages?",
                 answer: "Better understanding of needs, more precise targeting, and more efficient use of marketing resources.",
                 explanation: "Higher effectiveness and reduced waste."
             },
             {
+                id: "5qda9r",
                 question: "What are the three major market selection approaches?",
                 answer: "Undifferentiated (mass), differentiated, and concentrated marketing.",
                 explanation: "Approach depends on resources and strategy."
             },
             {
+                id: "2ii44j",
                 question: "What are common segmentation variables?",
                 answer: "Geographic, demographic, psychographic, and behavioral variables.",
                 explanation: "Combining variables gives more useful segments."
             },
             {
+                id: "pxndcg",
                 question: "What is positioning?",
                 answer: "Designing the offer and brand image so the target segment perceives a clear, distinct value in its mind.",
                 explanation: "Positioning defines competitive place in customer perception."
             },
             {
+                id: "ou2gol",
                 question: "What is segment evaluation about?",
                 answer: "Assessing segment size, growth, accessibility, profitability, strategic fit, and competitive intensity before choosing targets.",
                 explanation: "Not every segment is attractive or feasible."
             },
             {
+                id: "bts3tw",
                 question: "Why can concentrated marketing be powerful?",
                 answer: "Because focused resources can create stronger relevance and differentiation in a chosen niche.",
                 explanation: "Focus often beats spread resources in constrained firms."
@@ -461,21 +521,25 @@ const marketingData = {
 
         quiz: [
             {
+                id: "4eqhxf",
                 question: "Segmentation is primarily used to:",
                 options: ["Ignore customer differences", "Treat all customers identically", "Identify groups with similar needs", "Eliminate competition"],
                 correct: 2
             },
             {
+                id: "n7qf8d",
                 question: "Concentrated marketing focuses on:",
                 options: ["Entire market equally", "One selected segment", "Only price discounts", "Only online channels"],
                 correct: 1
             },
             {
+                id: "2t8z8o",
                 question: "STP stands for:",
                 options: ["Sales, Trade, Promotion", "Segmentation, Targeting, Positioning", "Strategy, Tactics, Planning", "Supply, Transport, Pricing"],
                 correct: 1
             },
             {
+                id: "4vf9de",
                 question: "Which segmentation variable refers to loyalty and usage patterns?",
                 options: ["Demographic", "Geographic", "Behavioral", "Legal"],
                 correct: 2
@@ -484,21 +548,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "ghxlx3",
                 sentence: "Market segmentation identifies market _______ and segment homogeneity.",
                 answer: "heterogeneity",
                 hint: "Differences across market..."
             },
             {
+                id: "r028om",
                 sentence: "After segmentation, firms choose a _______ market.",
                 answer: "target",
                 hint: "Selected segment..."
             },
             {
+                id: "6nz3dh",
                 sentence: "Positioning shapes consumer _______ of the brand.",
                 answer: "perception",
                 hint: "How people see it..."
             },
             {
+                id: "l2cufx",
                 sentence: "STP means segmentation, targeting and _______.",
                 answer: "positioning",
                 hint: "Third step..."
@@ -506,6 +574,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "lujl2d",
             title: "Unit 5 - Market Segmentation",
             content: `
                 <h3>1) STP as Core Strategic Sequence</h3>
@@ -557,52 +626,62 @@ const marketingData = {
     },
 
     consumerBehaviourAndResearch: {
+        id: "hsfn92",
         name: "Consumer Behaviour and Research",
         icon: "fa-user-check",
         color: "#f97316",
 
         flashcards: [
             {
+                id: "k33nw4",
                 question: "Who are B2C consumers and B2B consumers?",
                 answer: "B2C consumers are individuals/households buying for personal use. B2B consumers buy for resale, production input, or operational use.",
                 explanation: "Buying logic differs by market type."
             },
             {
+                id: "x5mdtc",
                 question: "What external factors influence B2C behaviour?",
                 answer: "Economic conditions, culture, social groups, family roles/status, and market information.",
                 explanation: "Context shapes purchase decisions."
             },
             {
+                id: "p2xvv7",
                 question: "What internal factors influence B2C behaviour?",
                 answer: "Learning, personality, perception, attitudes, motivation, and beliefs.",
                 explanation: "Internal psychology drives interpretation and choice."
             },
             {
+                id: "d2hwt3",
                 question: "What are the five steps of B2C buying decision process?",
                 answer: "Problem recognition, information search, evaluation of alternatives, purchase decision, post-purchase evaluation.",
                 explanation: "Standard consumer decision model."
             },
             {
+                id: "hysgqx",
                 question: "What is the objective of market research?",
                 answer: "To gather relevant data about target customers and markets so firms can make better marketing decisions.",
                 explanation: "Research reduces uncertainty and improves strategy quality."
             },
             {
+                id: "xxfqtf",
                 question: "What is the difference between market research and marketing research?",
                 answer: "Market research focuses mainly on customers/target market, while marketing research has broader scope including product, price, distribution, promotion, branding, and performance.",
                 explanation: "Marketing research is wider in scope."
             },
             {
+                id: "qtveis",
                 question: "What are core stages of market research process?",
                 answer: "Problem definition, research approach, research design, fieldwork, data preparation/analysis, and reporting.",
                 explanation: "A structured process prevents weak conclusions."
             },
             {
+                id: "wlcr84",
                 question: "What are common B2B buying center roles?",
                 answer: "Initiator, influencer, buyer, decider, gatekeeper, and user.",
                 explanation: "B2B decisions are usually multi-person and role-based."
             },
             {
+                id: "8jpdyx",
                 question: "What is the practical difference between qualitative and quantitative research?",
                 answer: "Qualitative explores meanings, motives, and depth; quantitative measures patterns, frequencies, and statistical relationships.",
                 explanation: "Methods answer different question types."
@@ -611,26 +690,31 @@ const marketingData = {
 
         quiz: [
             {
+                id: "vsbh87",
                 question: "The first stage in consumer buying process is:",
                 options: ["Purchase", "Problem recognition", "Post-purchase evaluation", "Alternative evaluation"],
                 correct: 1
             },
             {
+                id: "6k962n",
                 question: "B2B buying center may include:",
                 options: ["Only final user", "Initiator, influencer, buyer, decider, gatekeeper, users", "Only procurement manager", "Only supplier"],
                 correct: 1
             },
             {
+                id: "l7ji0v",
                 question: "Market research process usually starts with:",
                 options: ["Advertising campaign", "Problem definition", "Fieldwork", "Data visualization"],
                 correct: 1
             },
             {
+                id: "jstqmx",
                 question: "Qualitative and quantitative methods are examples of:",
                 options: ["Pricing models", "Research approaches", "Distribution channels", "Consumer segments"],
                 correct: 1
             },
             {
+                id: "53qhq7",
                 question: "Which sequence is correct in B2C buying process?",
                 options: ["Purchase -> need recognition -> evaluation", "Need recognition -> search -> evaluation -> purchase -> post-purchase", "Evaluation -> search -> purchase -> need", "Search -> post-purchase -> purchase"],
                 correct: 1
@@ -639,21 +723,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "o278zc",
                 sentence: "B2C buyers are final _______ consumers.",
                 answer: "end",
                 hint: "Opposite of business market..."
             },
             {
+                id: "9kx3zs",
                 sentence: "In B2B, a _______ controls the flow of information in buying center.",
                 answer: "gatekeeper",
                 hint: "Access controller role..."
             },
             {
+                id: "3h0hjm",
                 sentence: "Market research can use qualitative, quantitative, or _______ methods.",
                 answer: "mixed",
                 hint: "Combination approach..."
             },
             {
+                id: "s1hzrd",
                 sentence: "In B2B buying center, the _______ makes the final purchase decision.",
                 answer: "decider",
                 hint: "Final authority role..."
@@ -661,6 +749,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "623hmm",
             title: "Unit 6 + Market Research - Consumer Decisions and Evidence",
             content: `
                 <h3>1) B2C vs B2B Consumer Logic</h3>
@@ -725,52 +814,62 @@ const marketingData = {
     },
 
     product: {
+        id: "ftyl2k",
         name: "The Product",
         icon: "fa-box-open",
         color: "#8b5cf6",
 
         flashcards: [
             {
+                id: "y4s3dr",
                 question: "What is a product in marketing (total product concept)?",
                 answer: "An object of exchange on the market that resolves a problem and provides utility (value) for the consumer. The total product concept is the totality of tangible and intangible attributes a consumer gains by buying it.",
                 explanation: "Product is the primary marketing-mix element on which the other elements are built."
             },
             {
+                id: "axlvdb",
                 question: "What are the two dimensions of product value?",
                 answer: "The primary dimension (the core utility that satisfies the need or want) and the auxiliary dimension (design, quality, brand, packaging, repair, warranty, delivery).",
                 explanation: "Auxiliary attributes differentiate competing products."
             },
             {
+                id: "mcrmhb",
                 question: "How are B2C (consumer) products classified?",
                 answer: "Convenience products (staple, impulse, emergency), shopping products (bought occasionally, need more information), and specialty products (special characteristics/brands; no substitutes accepted).",
                 explanation: "Classification reflects buying effort and frequency."
             },
             {
+                id: "51bviz",
                 question: "How are B2B (business) products classified?",
                 answer: "Raw materials, manufacturing materials and parts, capital goods, accessory equipment, consumable supplies, and services.",
                 explanation: "Based on their role in production and their value."
             },
             {
+                id: "ux3i6r",
                 question: "What four characteristics describe a product programme (mix)?",
                 answer: "Width (number of product lines), depth (products within each line), length (total products across all lines), and consistency (how closely related the lines are).",
                 explanation: "Describes the breadth of a company's offering."
             },
             {
+                id: "iylr6o",
                 question: "What are the elements of a product, and how do brand name, brand mark and trademark differ?",
                 answer: "Elements: attributes, brand, packaging, label, support. Brand name = the pronounceable part; brand mark = a symbol that cannot be expressed in words; trademark = a brand (or part) that is registered and legally protected.",
                 explanation: "Brands can be manufacturer, private, or generic."
             },
             {
+                id: "a3vlyo",
                 question: "What are the steps of the new product development process?",
                 answer: "Idea generation, idea screening, product concept development, business analysis, product development, test marketing, and commercialization.",
                 explanation: "Many ideas terminate at the product-development stage."
             },
             {
+                id: "ji1oso",
                 question: "What are the four product life-cycle phases and the diffusion adopter groups?",
                 answer: "Phases: introduction, growth, maturity, decline. Adopters: innovators (2.5%), early adopters (13.5%), early majority (34%), late majority (34%), laggards (16%).",
                 explanation: "Marketing responses (product, price, promotion, distribution) change in each phase."
             },
             {
+                id: "pxgyqj",
                 question: "What is a service and how does it differ from a physical product?",
                 answer: "A service is a mainly intangible activity or benefit that does not result in ownership; it is produced and consumed simultaneously, cannot be stored, and the customer participates in delivery. Quality is judged by comparing perception with expectation. Services add 3 Ps: people, physical evidence, processes.",
                 explanation: "Service quality: satisfaction = perception - expectation."
@@ -779,26 +878,31 @@ const marketingData = {
 
         quiz: [
             {
+                id: "0hgebo",
                 question: "The primary marketing-mix element upon which the others are built is:",
                 options: ["Price", "Promotion", "Product", "Distribution"],
                 correct: 2
             },
             {
+                id: "v3l6za",
                 question: "Staple, impulse and emergency goods are subtypes of:",
                 options: ["Specialty products", "Convenience products", "Capital goods", "Shopping products"],
                 correct: 1
             },
             {
+                id: "6lzn7g",
                 question: "The new product development process begins with:",
                 options: ["Business analysis", "Idea generation", "Test marketing", "Commercialization"],
                 correct: 1
             },
             {
+                id: "jl4rw5",
                 question: "Which sequence of product life-cycle phases is correct?",
                 options: ["Growth -> Introduction -> Maturity -> Decline", "Introduction -> Growth -> Maturity -> Decline", "Introduction -> Maturity -> Growth -> Decline", "Maturity -> Growth -> Introduction -> Decline"],
                 correct: 1
             },
             {
+                id: "naylqp",
                 question: "In the diffusion process, the first 2.5% of adopters are called:",
                 options: ["Early adopters", "Laggards", "Innovators", "Early majority"],
                 correct: 2
@@ -807,21 +911,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "y45i8v",
                 sentence: "The product is the primary element of the marketing _______ upon which other elements are built.",
                 answer: "mix",
                 hint: "The 4 Ps..."
             },
             {
+                id: "cb3m72",
                 sentence: "Convenience products include staple, impulse and _______ products.",
                 answer: "emergency",
                 hint: "Bought for an urgent need..."
             },
             {
+                id: "rmfsjq",
                 sentence: "The depth of a product programme is the number of products within each product _______.",
                 answer: "line",
                 hint: "A group of related products..."
             },
             {
+                id: "hg1jzx",
                 sentence: "In the product life cycle, the phase that comes after growth is _______.",
                 answer: "maturity",
                 hint: "Sales peak, many competitors..."
@@ -829,6 +937,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "vj2b6c",
             title: "Unit 7 - The Product",
             content: `
                 <h3>1) Concept and Nature of a Product</h3>
@@ -906,52 +1015,62 @@ const marketingData = {
     },
 
     price: {
+        id: "ppmffd",
         name: "The Price",
         icon: "fa-tag",
         color: "#f59e0b",
 
         flashcards: [
             {
+                id: "o69hu2",
                 question: "What is price and why is it special in the marketing mix?",
                 answer: "Price is the monetary expression that consumers pay for a product. It is the only marketing-mix element that generates revenue (the others create costs).",
                 explanation: "It directly determines profit."
             },
             {
+                id: "jbi8ur",
                 question: "What are the objectives of pricing?",
                 answer: "The primary objective is to make a profit; others include winning new markets and developing new products. Marketers may set low (penetration), moderate (competitive), or high prices.",
                 explanation: "High prices fit offerings that clearly differ from competitors and are valued by consumers."
             },
             {
+                id: "qmiuwb",
                 question: "What internal factors influence price?",
                 answer: "Business objectives, available resources and costs, and the other marketing-mix elements (e.g., a luxury product with exclusive distribution implies a higher price).",
                 explanation: "Internal factors are controllable by the firm."
             },
             {
+                id: "4ir0c5",
                 question: "What is the difference between fixed and variable costs?",
                 answer: "Fixed costs remain the same regardless of the volume of production; variable costs are tied to volume and increase proportionally with output.",
                 explanation: "Cost structure sets the price floor."
             },
             {
+                id: "jkqxvs",
                 question: "What external factors influence price?",
                 answer: "Consumers (demand and its elasticity), distribution (channel mark-ups), competition (market structure), and government policies (taxes, regulation, price control, trade agreements).",
                 explanation: "External factors are monitored, not controlled."
             },
             {
+                id: "avloi4",
                 question: "How do distribution mark-ups build the retail price?",
                 answer: "Cost price + manufacturer mark-up (10-15%) + wholesaler mark-up (20-40%) + retailer mark-up (40-100%) = retail price.",
                 explanation: "Each channel member adds a margin."
             },
             {
+                id: "z3sqx4",
                 question: "Who sets the price in different market structures?",
                 answer: "Perfectly competitive market - the market; oligopoly - agreements between firms; monopoly - the monopolist; limited competitive market - product differentiation.",
                 explanation: "Pricing freedom rises with differentiation and market power."
             },
             {
+                id: "49dteh",
                 question: "What are the main price strategies?",
                 answer: "For existing products: keep or modify prices. Consumer-oriented strategies: penetration pricing (low), price skimming (high), psychological pricing (seemingly lower), and value-based pricing (as expected).",
                 explanation: "Strategy depends on segment price-sensitivity."
             },
             {
+                id: "68ja9x",
                 question: "What are the three groups of pricing methods?",
                 answer: "Cost-based (average cost, mark-up, break-even point), demand-based (differential prices per segment), and competitor-based (price relative to rivals).",
                 explanation: "The break-even point method sets a price that yields a target profit."
@@ -960,26 +1079,31 @@ const marketingData = {
 
         quiz: [
             {
+                id: "i5y944",
                 question: "The only marketing-mix element that generates revenue is:",
                 options: ["Product", "Promotion", "Price", "Distribution"],
                 correct: 2
             },
             {
+                id: "salsgt",
                 question: "Fixed costs are costs that:",
                 options: ["Increase proportionally with output", "Remain the same regardless of production volume", "Occur only in services", "Are set by the government"],
                 correct: 1
             },
             {
+                id: "1f3mqk",
                 question: "Setting a low initial price to quickly win price-sensitive buyers is:",
                 options: ["Price skimming", "Penetration pricing", "Psychological pricing", "Value-based pricing"],
                 correct: 1
             },
             {
+                id: "adbrxo",
                 question: "Average cost, mark-up and break-even point are all examples of:",
                 options: ["Demand-based methods", "Competitor-based methods", "Cost-based methods", "Price strategies"],
                 correct: 2
             },
             {
+                id: "6hmbur",
                 question: "In a monopoly market, the price is set by:",
                 options: ["The market", "Agreements between firms", "The monopolist", "Product differentiation"],
                 correct: 2
@@ -988,21 +1112,25 @@ const marketingData = {
 
         fillBlanks: [
             {
+                id: "6hulce",
                 sentence: "Price is the only marketing-mix element that generates _______.",
                 answer: "revenue",
                 hint: "Income from sales..."
             },
             {
+                id: "xlealb",
                 sentence: "_______ costs remain the same regardless of the volume of production.",
                 answer: "fixed",
                 hint: "Opposite of variable..."
             },
             {
+                id: "jh0rx5",
                 sentence: "Price _______ sets a high initial price to skim profit from price-insensitive buyers.",
                 answer: "skimming",
                 hint: "Cream off the top..."
             },
             {
+                id: "0alj98",
                 sentence: "The break-_______ point method sets a price that enables a certain profit to be made.",
                 answer: "even",
                 hint: "Total revenue = total costs..."
@@ -1010,6 +1138,7 @@ const marketingData = {
         ],
 
         learn: {
+            id: "xwk4t1",
             title: "Unit 8 - The Price",
             content: `
                 <h3>1) Price Attributes and Objectives</h3>

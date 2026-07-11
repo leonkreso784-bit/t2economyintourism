@@ -2,112 +2,134 @@
 // Category 5 of Accounting Theory
 
 const hotelStatementsData = {
+    id: "4nbwng",
     name: "Hotel Income Statements",
     icon: "fa-hotel",
     color: "#ea580c",
     
     flashcards: [
         {
+            id: "adpjp2",
             question: "What are the components of labor cost in the hotel industry?",
             answer: "Labor cost includes:\n• Wages and salaries\n• Employee benefits\n• Payroll taxes\n• Service charge distributions\n• Employee meals and uniforms",
             explanation: "Total cost of employing workers."
         },
         {
+            id: "e791xz",
             question: "What is the external statement showing revenues and expenses given to shareholders?",
             answer: "The Income Statement (also called Profit and Loss Statement or P&L).",
             explanation: "External financial reporting."
         },
         {
+            id: "pqsauz",
             question: "What revenue sources might be in Other Operated Departments?",
             answer: "Revenue sources include:\n• Spa operations\n• Golf courses\n• Parking\n• Laundry/dry cleaning\n• Health clubs\n• Retail shops\n• Recreational facilities",
             explanation: "Ancillary hotel services."
         },
         {
+            id: "cs0dyi",
             question: "What revenue sources might be in Rentals and Other Income?",
             answer: "This includes:\n• Space rentals\n• Commission income\n• Vending machine income\n• Lease income\n• Miscellaneous non-operating revenues",
             explanation: "Non-room, non-F&B revenues."
         },
         {
+            id: "x0v26y",
             question: "What types of personnel might be in the A&G department?",
             answer: "Administrative and General (A&G) includes:\n• General management\n• Accounting staff\n• Human resources\n• Information systems\n• Clerical personnel",
             explanation: "Back-office support functions."
         },
         {
+            id: "mvhjmv",
             question: "What is a direct expense?",
             answer: "A direct expense is an expense that can be specifically identified with and charged to a particular department.",
             explanation: "Traceable to a specific department."
         },
         {
+            id: "52iyoj",
             question: "What types of personnel might be in Sales and Marketing?",
             answer: "Personnel include:\n• Sales managers\n• Marketing managers\n• Advertising staff\n• Public relations staff\n• Reservation sales personnel",
             explanation: "Revenue-generating support staff."
         },
         {
+            id: "3rxwno",
             question: "Which department gets charged for repairs to Rooms department furniture?",
             answer: "The Rooms department will be charged for repairs to its furniture.",
             explanation: "Direct expense principle."
         },
         {
+            id: "1yig2u",
             question: "What is the internal income statement given to managers called?",
             answer: "The Statement of Income and Expense (also called Departmental Income Statement).",
             explanation: "More detailed than external statement."
         },
         {
+            id: "2cpxsj",
             question: "What four expenses are excluded from the internal income statement?",
             answer: "Four excluded expenses:\n1. Depreciation\n2. Interest\n3. Income taxes\n4. Rent or lease expense (or replacement reserve)",
             explanation: "These are handled at corporate level."
         },
         {
+            id: "ggnfeh",
             question: "Which departments are Undistributed Operating Expenses?",
             answer: "Undistributed Operating Expenses include:\n• Administrative and General\n• Sales and Marketing\n• Property Operations and Maintenance\n• Utilities",
             explanation: "Expenses not directly tied to revenue departments."
         },
         {
+            id: "fm2cet",
             question: "What is Replacement Reserves on the internal statement?",
             answer: "Replacement Reserves represent funds set aside for future replacement of furniture, fixtures, and equipment (FF&E).",
             explanation: "Planning for future capital needs."
         },
         {
+            id: "0y27sn",
             question: "What ratio measures actual room sales against potential room sales?",
             answer: "The Occupancy Percentage.",
             explanation: "Key hotel performance metric."
         },
         {
+            id: "vilzfu",
             question: "What is gaming revenue in a casino operation?",
             answer: "Gaming revenue is the net amount retained by the casino, calculated as total wagers minus winnings paid to players.",
             explanation: "What the casino keeps."
         },
         {
+            id: "slsfvf",
             question: "When is Complimentary Allowances used in a casino?",
             answer: "It is used when complimentary goods or services (rooms, food, entertainment) are provided to players and must be recorded as a reduction of gaming revenue.",
             explanation: "Comps reduce reported gaming revenue."
         },
         {
+            id: "oi8bms",
             question: "What is USALI?",
             answer: "USALI = Uniform System of Accounts for the Lodging Industry\n\nA standardized accounting system for hotels that:\n• Provides consistent format for financial reporting\n• Allows benchmarking across properties\n• Separates operated departments from undistributed expenses\n• Industry standard since 1926",
             explanation: "The gold standard for hotel accounting."
         },
         {
+            id: "2nxmi6",
             question: "What is RevPAR and how is it calculated?",
             answer: "RevPAR = Revenue Per Available Room\n\nTwo calculation methods:\n1. RevPAR = Total Room Revenue ÷ Available Rooms\n2. RevPAR = ADR × Occupancy %\n\nMeasures how well a hotel fills rooms at an optimal rate.",
             explanation: "Key performance indicator for rooms department."
         },
         {
+            id: "g76fzp",
             question: "What is GOPPAR?",
             answer: "GOPPAR = Gross Operating Profit Per Available Room\n\nGOPPAR = GOP ÷ Available Rooms\n\nMeasures overall hotel profitability on a per-room basis. Better than RevPAR because it accounts for all revenues AND expenses.",
             explanation: "More comprehensive than RevPAR."
         },
         {
+            id: "yol9p0",
             question: "What is ADR (Average Daily Rate)?",
             answer: "ADR = Total Room Revenue ÷ Rooms Sold\n\nMeasures the average price guests pay per room. Used with occupancy to calculate RevPAR.\n\nHigher ADR = higher room rates",
             explanation: "Average price per occupied room."
         },
         {
+            id: "oyr19b",
             question: "What is the difference between Operated and Undistributed Departments?",
             answer: "OPERATED DEPARTMENTS:\n• Generate revenue directly\n• Rooms, F&B, Spa, Golf, etc.\n• Have their own P&L statement\n\nUNDISTRIBUTED DEPARTMENTS:\n• Support operations but don't generate direct revenue\n• A&G, Sales & Marketing, Maintenance, Utilities\n• Costs allocated across property",
             explanation: "Revenue-generating vs support functions."
         },
         {
+            id: "fgkdtj",
             question: "What is GOP (Gross Operating Profit)?",
             answer: "GOP = Total Revenue − Department Expenses − Undistributed Expenses\n\nGOP represents profit from operations BEFORE:\n• Management fees\n• Fixed charges (rent, insurance, property tax)\n• Interest and depreciation\n\nKey measure of operational performance.",
             explanation: "Profit from day-to-day operations."
@@ -116,76 +138,91 @@ const hotelStatementsData = {
     
     quiz: [
         {
+            id: "q18hxu",
             question: "Labor cost does NOT include:",
             options: ["Wages", "Benefits", "Food cost", "Payroll taxes"],
             correct: 2
         },
         {
+            id: "l4kpxm",
             question: "The external income statement is given to:",
             options: ["Employees only", "Shareholders", "Competitors", "Suppliers"],
             correct: 1
         },
         {
+            id: "gval9n",
             question: "A direct expense can be:",
             options: ["Allocated to all departments", "Specifically charged to a department", "Ignored", "Deferred"],
             correct: 1
         },
         {
+            id: "hqutkx",
             question: "Which is an Undistributed Operating Expense?",
             options: ["Room revenue", "Food sales", "Administrative and General", "Gaming revenue"],
             correct: 2
         },
         {
+            id: "trykze",
             question: "Replacement Reserves are for:",
             options: ["Employee salaries", "Food purchases", "Future FF&E replacement", "Tax payments"],
             correct: 2
         },
         {
+            id: "y7696f",
             question: "Occupancy Percentage measures:",
             options: ["Food sales vs cost", "Actual vs potential room sales", "Labor efficiency", "Marketing success"],
             correct: 1
         },
         {
+            id: "xmfnis",
             question: "Gaming revenue equals:",
             options: ["Total wagers", "Total wagers minus winnings paid", "Player deposits", "Casino expenses"],
             correct: 1
         },
         {
+            id: "988sfa",
             question: "Which is excluded from the internal income statement?",
             options: ["Labor cost", "Food cost", "Depreciation", "Room revenue"],
             correct: 2
         },
         {
+            id: "pm35uy",
             question: "A&G department includes:",
             options: ["Housekeeping", "Kitchen staff", "Accounting staff", "Servers"],
             correct: 2
         },
         {
+            id: "cfmba5",
             question: "Complimentary Allowances reduce:",
             options: ["Labor cost", "Gaming revenue", "Room rates", "Food prices"],
             correct: 1
         },
         {
+            id: "4hhnme",
             question: "USALI stands for:",
             options: ["United States Accounting Law Institute", "Uniform System of Accounts for the Lodging Industry", "Universal Standards for Auditing Lodging", "US Accounting for Lodging Income"],
             correct: 1
         },
         {
+            id: "qwrjbx",
             question: "RevPAR is calculated as:",
             options: ["Room Revenue × Occupancy", "ADR × Occupancy %", "Rooms Sold ÷ ADR", "Total Revenue ÷ Rooms Sold"],
             correct: 1
         },
         {
+            id: "y7s250",
             question: "GOP stands for:",
             options: ["General Operating Plan", "Gross Operating Profit", "Growth of Profit", "Guaranteed Operating Performance"],
             correct: 1
         },
         {
+            id: "kewluk",
             question: "Which is an Operated Department?",
             options: ["Utilities", "A&G", "Rooms", "Property Maintenance"],
             correct: 2
         },
         {
+            id: "y4lxcr",
             question: "ADR is calculated as:",
             options: ["Room Revenue ÷ Available Rooms", "Room Revenue ÷ Rooms Sold", "Rooms Sold × Rate", "Total Revenue ÷ Guests"],
             correct: 1
@@ -194,51 +231,61 @@ const hotelStatementsData = {
     
     fillBlanks: [
         {
+            id: "93ufw6",
             sentence: "_______ Percentage measures actual room sales against potential.",
             answer: "Occupancy",
             hint: "How full is the hotel..."
         },
         {
+            id: "16mtb4",
             sentence: "Gaming revenue = Total wagers minus _______ paid to players.",
             answer: "winnings",
             hint: "What players win..."
         },
         {
+            id: "ok5ewl",
             sentence: "A _______ expense can be specifically charged to a department.",
             answer: "direct",
             hint: "Traceable, not indirect..."
         },
         {
+            id: "egvp9j",
             sentence: "Replacement _______ are funds set aside for future FF&E.",
             answer: "Reserves",
             hint: "Money saved for later..."
         },
         {
+            id: "a56asd",
             sentence: "A&G stands for Administrative and _______.",
             answer: "General",
             hint: "Admin and..."
         },
         {
+            id: "um0gja",
             sentence: "USALI stands for Uniform System of Accounts for the _______ Industry.",
             answer: "Lodging",
             hint: "Hotels, resorts..."
         },
         {
+            id: "0ty3iw",
             sentence: "RevPAR = ADR × _______ %",
             answer: "Occupancy",
             hint: "How full..."
         },
         {
+            id: "rsvd8t",
             sentence: "GOP stands for Gross _______ Profit.",
             answer: "Operating",
             hint: "From operations..."
         },
         {
+            id: "yotepy",
             sentence: "ADR = Room Revenue ÷ Rooms _______.",
             answer: "Sold",
             hint: "Occupied rooms..."
         },
         {
+            id: "owvrkm",
             sentence: "_______ departments generate revenue directly (Rooms, F&B).",
             answer: "Operated",
             hint: "They operate and make money..."
@@ -246,6 +293,7 @@ const hotelStatementsData = {
     ],
     
     learn: {
+        id: "7c6oem",
         title: "Hotel Income Statements & Departments",
         content: `
             <h3>📚 Chapter Overview: Hotel Income Statements</h3>

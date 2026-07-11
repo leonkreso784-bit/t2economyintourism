@@ -5,52 +5,62 @@
 
 const marketingM2Data = {
     distribution: {
+        id: "vwsjm9",
         name: "Distribution",
         icon: "fa-truck",
         color: "#06b6d4",
 
         flashcards: [
             {
+                id: "l79ban",
                 question: "What is distribution in marketing?",
                 answer: "All the activities essential for delivering products from manufacturers to consumers. It includes two elements: marketing (distribution) channels and physical distribution.",
                 explanation: "Distribution bridges producer and consumer."
             },
             {
+                id: "zmh0q1",
                 question: "What is the difference between direct and indirect marketing channels?",
                 answer: "Direct channels reach consumers without intermediaries (door-to-door, mail order, the manufacturer's own stores). Indirect channels use intermediaries (wholesalers, retailers, agents, brokers).",
                 explanation: "Channel decisions also cover the number of channels and the intensity of distribution."
             },
             {
+                id: "zk8v00",
                 question: "What is distribution channel length?",
                 answer: "The number of levels (intermediaries) a channel covers. Shorter channels suit fewer, concentrated consumers; longer channels suit many consumers dispersed over a wide area.",
                 explanation: "Length = number of channel levels."
             },
             {
+                id: "tvfher",
                 question: "What are the three basic functions of distribution channels?",
                 answer: "Transactional (buying, selling, risk bearing through stocking), logistical (assembling, storing, transporting, contacting consumers), and facilitating/supporting (market information, promotion, financing).",
                 explanation: "Together they deliver products to consumers."
             },
             {
+                id: "ehp1jh",
                 question: "What are the three intensities of distribution?",
                 answer: "Intensive (as many sales points as possible - e.g. newspapers, soft drinks), selective (a limited number of carefully chosen points - e.g. furniture, appliances), and exclusive (exclusive rights for one distributor - e.g. cars, watches).",
                 explanation: "Intensity = number of intermediaries on each channel level."
             },
             {
+                id: "2raism",
                 question: "What is a wholesaler and what functions does it perform?",
                 answer: "A wholesaler sells products to business entities that resell or use them. Functions: unify offers from several manufacturers, store and group products, transport them, plus financing, information and promotion.",
                 explanation: "Provides a time advantage and a place advantage."
             },
             {
+                id: "69pjfw",
                 question: "How are intermediaries grouped by whether they take ownership of products?",
                 answer: "Intermediaries that take possession (wholesalers, retailers) and those that do not (agents connect buyers and sellers; brokers are in direct contact with sellers and engaged occasionally). Agents and brokers charge a commission.",
                 explanation: "Agents/brokers don't own the goods."
             },
             {
+                id: "hhhgg6",
                 question: "What are the main functions of retailers?",
                 answer: "Procuring products from wholesalers/manufacturers, informing consumers, informing manufacturers about consumer needs, effecting payment, ensuring storage and price marking, and carrying out final transactions with consumers.",
                 explanation: "Aim: consumer satisfaction and loyalty."
             },
             {
+                id: "w36m4y",
                 question: "What is physical distribution and its functions?",
                 answer: "Activities that reduce delivery costs and raise consumer satisfaction. Functions: transport, warehousing, and inventory management. Process: define goals, order processing/inventory, organize transport, then control results.",
                 explanation: "Transport is usually the largest cost share."
@@ -59,26 +69,31 @@ const marketingM2Data = {
 
         quiz: [
             {
+                id: "wvoy50",
                 question: "Distribution activities include two elements:",
                 options: ["Advertising and selling", "Marketing channels and physical distribution", "Wholesaling and retailing", "Agents and brokers"],
                 correct: 1
             },
             {
+                id: "ph6hcq",
                 question: "Selling soft drinks and newspapers through as many outlets as possible is:",
                 options: ["Exclusive distribution", "Selective distribution", "Intensive distribution", "Direct distribution"],
                 correct: 2
             },
             {
+                id: "glzbqq",
                 question: "Intermediaries that do NOT take possession of products are:",
                 options: ["Wholesalers and retailers", "Agents and brokers", "Manufacturers and consumers", "Distributors"],
                 correct: 1
             },
             {
+                id: "hwljm9",
                 question: "Transport, warehousing and inventory management are functions of:",
                 options: ["Promotion", "Physical distribution", "Wholesaling", "Personal selling"],
                 correct: 1
             },
             {
+                id: "1hy9sz",
                 question: "A longer distribution channel is suitable when consumers are:",
                 options: ["Few and concentrated", "Many and dispersed over a wide area", "All business buyers", "Located next to the producer"],
                 correct: 1
@@ -87,21 +102,25 @@ const marketingM2Data = {
 
         fillBlanks: [
             {
+                id: "vpl5ke",
                 sentence: "Distribution channels perform transactional, logistical and _______ functions.",
                 answer: "facilitating",
                 hint: "Supporting; market information, promotion..."
             },
             {
+                id: "lhgm42",
                 sentence: "_______ distribution gives exclusive rights to sell to a single distributor.",
                 answer: "exclusive",
                 hint: "e.g. cars, watches..."
             },
             {
+                id: "00ixhj",
                 sentence: "A _______ sells products to businesses that resell or use them.",
                 answer: "wholesaler",
                 hint: "Between manufacturer and retailer..."
             },
             {
+                id: "r3mepa",
                 sentence: "The number of levels covered by a channel is the channel _______.",
                 answer: "length",
                 hint: "Short vs long..."
@@ -109,6 +128,7 @@ const marketingM2Data = {
         ],
 
         learn: {
+            id: "emcopp",
             title: "Unit 9 - Distribution",
             content: `
                 <h3>1) What Distribution Is</h3>
@@ -155,52 +175,62 @@ const marketingM2Data = {
     },
 
     promotion: {
+        id: "ogbdhm",
         name: "Promotion (IMC)",
         icon: "fa-bullhorn",
         color: "#f43f5e",
 
         flashcards: [
             {
+                id: "jdbd6l",
                 question: "What are the elements of the communication process?",
                 answer: "Sender, encoding, message, media, decoding, receiver, and feedback - plus interference (noise). Market communication is a two-way process.",
                 explanation: "Feedback is what makes it two-way."
             },
             {
+                id: "dx15gx",
                 question: "What is Integrated Marketing Communication (IMC)?",
                 answer: "Treating all promotional activities as a single entity that sends a unified, consistent message across all media to maximize communication impact (a synergistic effect).",
                 explanation: "Non-integrated communication leaves consumers confused."
             },
             {
+                id: "nspdds",
                 question: "What are the objectives of promotional activities?",
                 answer: "Provide information, differentiate the product, increase demand (primary = whole category, or secondary = specific brand), stabilize sales (smooth seasonality), and emphasize the product's value.",
                 explanation: "Primary vs secondary demand is a common exam point."
             },
             {
+                id: "czd0xh",
                 question: "What is the difference between push and pull strategy?",
                 answer: "Push promotes the product to the next channel member (personal selling, sales promotion). Pull promotes directly to consumers (advertising, sales promotion, PR, publicity). A combination of both is most common.",
                 explanation: "Push goes with product flow; pull pulls demand back through the channel."
             },
             {
+                id: "41xeoe",
                 question: "What are the elements of the promotional mix?",
                 answer: "Advertising, personal selling, sales promotion, public relations, and publicity.",
                 explanation: "They differ in payment, personalization, and how much the firm controls them."
             },
             {
+                id: "ufmuge",
                 question: "What is advertising and what are its three functions?",
                 answer: "A paid, non-personal presentation of information to many consumers via mass media. Functions: to inform (introduce a product), to persuade (maturity stage), and to remind (brand advertising).",
                 explanation: "Two categories: product advertising and business (organization) advertising."
             },
             {
+                id: "ubmdu1",
                 question: "What is personal selling?",
                 answer: "Direct communication between a salesperson and a potential consumer to identify needs and convey product benefits. It includes order taking, order getting (the creative part), and providing support; most used for B2B products.",
                 explanation: "Flexible - allows negotiation during contact."
             },
             {
+                id: "qrgrlr",
                 question: "What is sales promotion and who are its targets?",
                 answer: "Short-term techniques that encourage a positive response. Targets: end consumers (coupons, gifts, samples, cash refunds), the trade/shops (in-store displays, rewards), and other B2B operators (trade fairs).",
                 explanation: "A short-term stimulus to buy."
             },
             {
+                id: "cgq1eo",
                 question: "What is the difference between public relations and publicity?",
                 answer: "PR is communication a business directly manages to build a positive image (press conferences, events, donations, creating news). Publicity is unpaid media communication the business only indirectly influences.",
                 explanation: "PR is managed; publicity is not."
@@ -209,26 +239,31 @@ const marketingM2Data = {
 
         quiz: [
             {
+                id: "6hz7yq",
                 question: "Treating all promotional activities as one unified, consistent message is:",
                 options: ["Push strategy", "Integrated Marketing Communication", "Publicity", "Personal selling"],
                 correct: 1
             },
             {
+                id: "vhzgly",
                 question: "Promoting a product directly to consumers to pull demand back through the channel is:",
                 options: ["Push strategy", "Pull strategy", "Sales promotion", "Encoding"],
                 correct: 1
             },
             {
+                id: "ku8xk0",
                 question: "A paid, non-personal presentation through the mass media is:",
                 options: ["Personal selling", "Publicity", "Advertising", "Public relations"],
                 correct: 2
             },
             {
+                id: "fbayhc",
                 question: "Coupons, free samples and cash refunds are tools of:",
                 options: ["Advertising", "Sales promotion", "Public relations", "Personal selling"],
                 correct: 1
             },
             {
+                id: "0pdhtn",
                 question: "Unpaid media communication a business cannot manage is:",
                 options: ["Advertising", "Public relations", "Publicity", "Personal selling"],
                 correct: 2
@@ -237,21 +272,25 @@ const marketingM2Data = {
 
         fillBlanks: [
             {
+                id: "hbkf0p",
                 sentence: "Market communication is a _______-way process (it includes feedback).",
                 answer: "two",
                 hint: "Sender and receiver both act..."
             },
             {
+                id: "ffufy4",
                 sentence: "A _______ strategy promotes the product to the next member of the distribution channel.",
                 answer: "push",
                 hint: "Opposite of pull..."
             },
             {
+                id: "9jqk3o",
                 sentence: "The three advertising functions are to inform, to persuade and to _______.",
                 answer: "remind",
                 hint: "Brand advertising..."
             },
             {
+                id: "hqwxos",
                 sentence: "Public relations is managed by the business; _______ is not.",
                 answer: "publicity",
                 hint: "Unpaid media coverage..."
@@ -259,6 +298,7 @@ const marketingM2Data = {
         ],
 
         learn: {
+            id: "vgp7oj",
             title: "Unit 10 - Promotion (Integrated Marketing Communication)",
             content: `
                 <h3>1) The Communication Process</h3>
@@ -307,52 +347,62 @@ const marketingM2Data = {
     },
 
     newTrendsPromotion: {
+        id: "eyea8h",
         name: "New Trends in Promotion",
         icon: "fa-wifi",
         color: "#a855f7",
 
         flashcards: [
             {
+                id: "dsf23p",
                 question: "What technological foundation drives new promotional trends?",
                 answer: "The Internet, Internet applications, and mobile communication. The Internet provides two key services: the World Wide Web and e-mail.",
                 explanation: "Technology directly reshapes advertising and PR."
             },
             {
+                id: "gi8xaw",
                 question: "What is the difference between Internet, Intranet and Extranet?",
                 answer: "Internet = a global network of interconnected computer networks. Intranet = a private network used only within an organization (same standards as the Internet). Extranet = an Intranet extended to authorized outside parties (consumers, suppliers, distributors).",
                 explanation: "Scope widens: internal -> partners -> global."
             },
             {
+                id: "pqtdwg",
                 question: "What is SEO and why does it matter?",
                 answer: "Search Engine Optimization - procedures to improve a website's position in search results (Google, Bing, Yahoo) so it attracts more visitors and potential customers.",
                 explanation: "Higher ranking means more traffic."
             },
             {
+                id: "jy07a3",
                 question: "What are the most common Web-based promotion tools?",
                 answer: "Banner ads (popular, often with audio/video, need frequent innovation), sponsorship banners (a link to the sponsor's site), and online coupons (a form of sales promotion).",
                 explanation: "A Web page is part of the Internet."
             },
             {
+                id: "s9ao5p",
                 question: "How is e-mail used in promotion?",
                 answer: "As a one-to-one, interactive tool for advertising and PR; it builds closer relationships via discussion/mailing lists. Messages should be original, accurate, interesting and short. Consumers can be reluctant (privacy).",
                 explanation: "Risk: being perceived as spam."
             },
             {
+                id: "ez6q68",
                 question: "What is a blog and how is it used in marketing?",
                 answer: "Interactive posts (text and sometimes images, video, audio) by a physical or legal person for a target audience; used in advertising and PR, in direct contact with real and potential consumers.",
                 explanation: "Often relates the company's product to current events."
             },
             {
+                id: "4mnu47",
                 question: "What is a newsletter?",
                 answer: "An electronic publication on a specific topic (information, advice, opinions) distributed regularly to subscribers (usually free). Consumers are the most important subscribers; also used internally with employees.",
                 explanation: "Receiving it requires a subscription."
             },
             {
+                id: "5xqjiz",
                 question: "What is a webinar?",
                 answer: "An online seminar carried out over the Internet; it removes the need for a direct presentation, can be live or downloaded, lowers costs, and enables two-way communication with active audience participation.",
                 explanation: "Interactive: questions and discussion."
             },
             {
+                id: "bjewo2",
                 question: "How are social networks and mobile devices used in promotion?",
                 answer: "Social networks (Facebook, Instagram, YouTube, LinkedIn, TikTok, Pinterest...) exchange multimedia and reach people with similar interests; the right choice depends on the company and audience. Mobile marketing targets a specific public, time, location and frequency, with measurable reach.",
                 explanation: "Right network choice = company type + intended audience."
@@ -361,26 +411,31 @@ const marketingM2Data = {
 
         quiz: [
             {
+                id: "5oqzbk",
                 question: "A private network used only within an organization is the:",
                 options: ["Internet", "Intranet", "Extranet", "Web page"],
                 correct: 1
             },
             {
+                id: "mqyv1d",
                 question: "Improving a website's ranking in search results is:",
                 options: ["SEO", "Banner advertising", "A webinar", "A newsletter"],
                 correct: 0
             },
             {
+                id: "819efr",
                 question: "An online seminar enabling two-way, real-time communication is a:",
                 options: ["Blog", "Newsletter", "Webinar", "Banner ad"],
                 correct: 2
             },
             {
+                id: "ll7l8d",
                 question: "An electronic publication sent regularly to subscribers is a:",
                 options: ["Webinar", "Newsletter", "Banner ad", "Extranet"],
                 correct: 1
             },
             {
+                id: "ea6ex4",
                 question: "The Internet provides two key services:",
                 options: ["Intranet and Extranet", "World Wide Web and e-mail", "SEO and banners", "Blog and newsletter"],
                 correct: 1
@@ -389,21 +444,25 @@ const marketingM2Data = {
 
         fillBlanks: [
             {
+                id: "8plx7j",
                 sentence: "An _______ is an Intranet extended to authorized outside parties such as suppliers.",
                 answer: "extranet",
                 hint: "Beyond the internal network..."
             },
             {
+                id: "k2lfmh",
                 sentence: "_______ improves a website's position in search engine results.",
                 answer: "SEO",
                 hint: "Search Engine Optimization..."
             },
             {
+                id: "v9aiyc",
                 sentence: "A _______ is an online seminar carried out over the Internet.",
                 answer: "webinar",
                 hint: "Web + seminar..."
             },
             {
+                id: "ybe3s1",
                 sentence: "The Internet's two key services are the World Wide Web and _______.",
                 answer: "e-mail",
                 hint: "Electronic messages..."
@@ -411,6 +470,7 @@ const marketingM2Data = {
         ],
 
         learn: {
+            id: "mqar4y",
             title: "Unit 11 - New Trends in Promotional Activities",
             content: `
                 <h3>1) New Technological Solutions</h3>
@@ -448,52 +508,62 @@ const marketingM2Data = {
     },
 
     marketingPlanning: {
+        id: "tfkxok",
         name: "Marketing Planning",
         icon: "fa-clipboard-list",
         color: "#16a34a",
 
         flashcards: [
             {
+                id: "absx39",
                 question: "What does managing marketing activities involve?",
                 answer: "Planning, organizing and controlling marketing activities so the organization adjusts to environmental changes, anticipates them, and acts proactively rather than reactively.",
                 explanation: "Marketing effort = a basis for proactive action."
             },
             {
+                id: "ljhn4d",
                 question: "What is marketing planning and its purpose?",
                 answer: "The process of identifying opportunities and threats and defining the actions needed to achieve marketing objectives. Its purpose is to identify and create competitive advantages.",
                 explanation: "Levels: strategic (long, broad) vs tactical (short, narrow)."
             },
             {
+                id: "h2ccbt",
                 question: "What is the difference between a strategic and an operational marketing plan?",
                 answer: "Strategic: general, long-term goals, more important, adapts to the environment, unique risky problems, needs external information, evaluated long-term, sets mission/goals/strategy. Operational: everyday short-term goals, recurring problems, internal information, evaluated immediately, sets marketing tactics (product, price, promotion, channels, services).",
                 explanation: "Strategic = direction; operational = tactics."
             },
             {
+                id: "exw32f",
                 question: "What are the steps of the marketing planning process?",
                 answer: "Develop a mission statement, conduct a situation analysis, identify objectives, and formulate strategies.",
                 explanation: "Mission -> situation -> objectives -> strategies."
             },
             {
+                id: "2sc9uj",
                 question: "What is a mission statement and what must it be?",
                 answer: "A statement giving a business a clear purpose and focus, making it unique and consumer-oriented. It must be unique, consumer-oriented, based on competencies, and realistic.",
                 explanation: "Research links a clear mission to higher average ROI."
             },
             {
+                id: "6hyx0w",
                 question: "What is SWOT analysis?",
                 answer: "A situation analysis of internal factors (Strengths, Weaknesses) and external factors (Opportunities, Threats). It helps plan to overcome weaknesses, diagnose threats early, and spot opportunities.",
                 explanation: "Internal: S/W. External: O/T."
             },
             {
+                id: "o6bhdt",
                 question: "What is the difference between quantitative and qualitative marketing objectives?",
                 answer: "Quantitative are measurable numbers (increase sales, profit, market share, satisfaction; cut costs). Qualitative are non-numeric (innovate the offering, new channels, training, brand image, loyalty). Objectives must be measurable, realistic, consistent and hierarchical.",
                 explanation: "Every objective answers: what, in what period, how much."
             },
             {
+                id: "org19v",
                 question: "What is the Ansoff (market/product) matrix?",
                 answer: "A tool to choose a strategy: market penetration (existing market + existing product), market development (new market + existing product), product development (existing market + new product), and diversification (new market + new product = highest risk).",
                 explanation: "Diversification carries the most risk."
             },
             {
+                id: "sh1frl",
                 question: "What target-market approaches are chosen in the tactical stage?",
                 answer: "Undifferentiated, concentrated, and differentiated marketing approaches, combined with marketing-mix (4P) decisions.",
                 explanation: "Tactics cover target-market and marketing-mix strategies."
@@ -502,26 +572,31 @@ const marketingM2Data = {
 
         quiz: [
             {
+                id: "j5c0av",
                 question: "The purpose of marketing planning is to:",
                 options: ["Cut all marketing costs", "Identify and create competitive advantages", "Replace the sales force", "Avoid market research"],
                 correct: 1
             },
             {
+                id: "vu13js",
                 question: "SWOT internal factors are:",
                 options: ["Opportunities and Threats", "Strengths and Weaknesses", "Sales and Profit", "Mission and Vision"],
                 correct: 1
             },
             {
+                id: "yc8j10",
                 question: "Entering a NEW market with a NEW product (highest risk) is:",
                 options: ["Market penetration", "Market development", "Product development", "Diversification"],
                 correct: 3
             },
             {
+                id: "2tod98",
                 question: "Increasing market share by 6% is an example of a:",
                 options: ["Qualitative objective", "Quantitative objective", "Mission statement", "Tactic"],
                 correct: 1
             },
             {
+                id: "mquol3",
                 question: "The first step of the marketing planning process is to:",
                 options: ["Formulate strategies", "Develop a mission statement", "Take corrective action", "Organize by product"],
                 correct: 1
@@ -530,21 +605,25 @@ const marketingM2Data = {
 
         fillBlanks: [
             {
+                id: "u5ynr7",
                 sentence: "_______ analysis examines internal strengths/weaknesses and external opportunities/threats.",
                 answer: "SWOT",
                 hint: "S-W-O-T..."
             },
             {
+                id: "iyfnwi",
                 sentence: "In the Ansoff matrix, a new market plus a new product is _______.",
                 answer: "diversification",
                 hint: "Highest-risk strategy..."
             },
             {
+                id: "st5ikv",
                 sentence: "A _______ statement gives a business a unique, consumer-oriented purpose.",
                 answer: "mission",
                 hint: "Start of the planning process..."
             },
             {
+                id: "c19uww",
                 sentence: "Objectives must be measurable, realistic, consistent and _______.",
                 answer: "hierarchical",
                 hint: "Ordered by level..."
@@ -552,6 +631,7 @@ const marketingM2Data = {
         ],
 
         learn: {
+            id: "nh8ods",
             title: "Unit 12 - Planning Marketing Activities",
             content: `
                 <h3>1) Managing Marketing Activities</h3>
@@ -598,52 +678,62 @@ const marketingM2Data = {
     },
 
     organizingControlling: {
+        id: "a4wtvs",
         name: "Organizing & Controlling",
         icon: "fa-sitemap",
         color: "#eab308",
 
         flashcards: [
             {
+                id: "0ulr7j",
                 question: "What is organizing marketing activities?",
                 answer: "Delegating and grouping tasks into specific organizational units and allocating the resources to carry them out, so the business can respond quickly and effectively to threats and opportunities.",
                 explanation: "Structure depends on the number of markets and products."
             },
             {
+                id: "3p8v8b",
                 question: "What are the four ways to organize marketing activities?",
                 answer: "By functions, by markets/consumers, by products, and matrix organization.",
                 explanation: "The choice depends on how many markets and products the firm has."
             },
             {
+                id: "xn82ev",
                 question: "When is organizing by FUNCTION appropriate?",
                 answer: "When the organization is present in a small number of markets with a small number of products. Activities (research, new product development, distribution, promotion, pricing, services) are assigned to marketing-function employees.",
                 explanation: "Few markets, few products."
             },
             {
+                id: "72pwj8",
                 question: "When is organizing by MARKETS/CONSUMERS appropriate?",
                 answer: "When present in many markets with few products and specialization by market is required (consumer attributes differ between markets).",
                 explanation: "Many markets, few products."
             },
             {
+                id: "q2zgx9",
                 question: "When is organizing by PRODUCTS appropriate, and who leads?",
                 answer: "When present in a small number of markets with many products, especially with innovation/new products. A product manager handles a product or product group from the development stage to the selling stage.",
                 explanation: "Few markets, many products."
             },
             {
+                id: "sei3mj",
                 question: "When is a MATRIX organization used?",
                 answer: "When present in several markets with many products. It builds teams of functional specialists plus product specialists; it can involve many experts and respond more rapidly to market changes.",
                 explanation: "Many markets, many products."
             },
             {
+                id: "9ijtqc",
                 question: "What is marketing control?",
                 answer: "A process used to monitor the realization of planned objectives and to identify any deviations before they become destructive.",
                 explanation: "Compares planned vs actual performance."
             },
             {
+                id: "xbpo7e",
                 question: "What are the four types of marketing control?",
                 answer: "Annual control (annual plan, by management), profitability control (which operations profit or lose), efficiency control (efficiency of marketing investments and costs), and strategic control (best use of market, product and channel opportunities).",
                 explanation: "Four lenses on performance."
             },
             {
+                id: "hichmq",
                 question: "What are the steps of the marketing control process?",
                 answer: "Establish performance standards, compare planned vs actual performance, and take corrective action (modify objectives, standards, the marketing mix, strategies, or the organization).",
                 explanation: "Common parameters: sales, profit, marketing costs, positioning, loyalty."
@@ -652,26 +742,31 @@ const marketingM2Data = {
 
         quiz: [
             {
+                id: "yz69hg",
                 question: "Building teams of functional and product specialists for many markets and many products is:",
                 options: ["Organizing by function", "Organizing by products", "Matrix organization", "Organizing by markets"],
                 correct: 2
             },
             {
+                id: "oaljku",
                 question: "Organizing by FUNCTION suits a company with:",
                 options: ["Many markets and many products", "A small number of markets and products", "New markets only", "No products"],
                 correct: 1
             },
             {
+                id: "buo9xm",
                 question: "Identifying which operations generate profit or loss is:",
                 options: ["Annual control", "Profitability control", "Efficiency control", "Strategic control"],
                 correct: 1
             },
             {
+                id: "n8d6yh",
                 question: "The marketing control process begins by:",
                 options: ["Taking corrective action", "Establishing performance standards", "Comparing competitors", "Cutting prices"],
                 correct: 1
             },
             {
+                id: "qopv99",
                 question: "A product manager leading a product from development to selling reflects organizing by:",
                 options: ["Function", "Markets", "Products", "Geography"],
                 correct: 2
@@ -680,21 +775,25 @@ const marketingM2Data = {
 
         fillBlanks: [
             {
+                id: "smcnu1",
                 sentence: "Organizing marketing activities means delegating and grouping tasks and allocating _______.",
                 answer: "resources",
                 hint: "What is needed to carry the tasks out..."
             },
             {
+                id: "675v5g",
                 sentence: "_______ organization combines functional and product specialists for many markets and products.",
                 answer: "matrix",
                 hint: "A grid of two dimensions..."
             },
             {
+                id: "7fy0sv",
                 sentence: "Marketing control identifies _______ before they become destructive.",
                 answer: "deviations",
                 hint: "Gaps between planned and actual..."
             },
             {
+                id: "ancd9d",
                 sentence: "The four types of control are annual, profitability, efficiency and _______ control.",
                 answer: "strategic",
                 hint: "Best use of market/product opportunities..."
@@ -702,6 +801,7 @@ const marketingM2Data = {
         ],
 
         learn: {
+            id: "ifwgnw",
             title: "Unit 13 - Organizing and Controlling Marketing Activities",
             content: `
                 <h3>1) Organizing Marketing Activities</h3>

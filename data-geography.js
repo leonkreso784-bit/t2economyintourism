@@ -8,32 +8,38 @@
 
 const geographyData = {
     examFramework: {
+        id: "m7weuf",
         name: "Exam Framework and Blind Map Rules",
         icon: "fa-clipboard-check",
         color: "#22c55e",
 
         flashcards: [
             {
+                id: "52eq2i",
                 question: "How is the first midterm structured?",
                 answer: "10 questions total: 5 closed-type + 5 open-type short answers.",
                 explanation: "The test focuses on Tourism Geography of Croatia and core geography basics."
             },
             {
+                id: "sz1z2k",
                 question: "How many points does the blind map carry?",
                 answer: "10 points total.",
                 explanation: "Each correctly located toponym on the map is worth 1 point."
             },
             {
+                id: "vwhmpz",
                 question: "Which categories are used on the blind map?",
                 answer: "2 county centres, 2 bigger islands, 1 national park, 1 nature park, 4 top tourist destinations.",
                 explanation: "These categories are explicitly listed in the 1st midterm instructions."
             },
             {
+                id: "0wa0r4",
                 question: "What is the total exam duration for 1st midterm + blind map?",
                 answer: "20 minutes total (15 + 5).",
                 explanation: "Timing discipline matters because map part is short and fast-paced."
             },
             {
+                id: "3clgnr",
                 question: "What should students not ignore while studying slides?",
                 answer: "Photos, graphics, and statistics.",
                 explanation: "Instructions explicitly mention image-based and visual recognition tasks."
@@ -42,26 +48,31 @@ const geographyData = {
 
         quiz: [
             {
+                id: "c8fdks",
                 question: "The blind map contains how many total toponyms to place?",
                 options: ["8", "10", "12", "15"],
                 correct: 1
             },
             {
+                id: "4xuugn",
                 question: "How many top tourist destinations are included in map tasks?",
                 options: ["2", "3", "4", "5"],
                 correct: 2
             },
             {
+                id: "mphsxr",
                 question: "The first midterm test consists of:",
                 options: ["Only multiple choice", "Only open questions", "5 closed + 5 open", "3 closed + 7 open"],
                 correct: 2
             },
             {
+                id: "on7xwl",
                 question: "A toponym written without locating it on the map is:",
                 options: ["Half correct", "Correct if spelling is right", "Not considered correct", "Accepted only for islands"],
                 correct: 2
             },
             {
+                id: "debg0z",
                 question: "Recommended external map source in the instructions is:",
                 options: ["Google Earth", "OpenStreetMap", "HAK map", "Eurostat map"],
                 correct: 2
@@ -70,21 +81,25 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "mvsjy3",
                 sentence: "The first midterm includes 5 closed and 5 _______ questions.",
                 answer: "open",
                 hint: "Short written form..."
             },
             {
+                id: "nfjhmc",
                 sentence: "Blind map has _______ total points.",
                 answer: "10",
                 hint: "One point per term..."
             },
             {
+                id: "9rm0pt",
                 sentence: "Map categories include 2 county centres, 2 islands, 1 NP, 1 PP, and 4 tourist _______.",
                 answer: "destinations",
                 hint: "Top 10 list source..."
             },
             {
+                id: "bhkqs8",
                 sentence: "First test and map are done in _______ minutes total.",
                 answer: "20",
                 hint: "15 + 5"
@@ -92,6 +107,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "94ohfy",
             title: "How to Prepare for the 1st Midterm (Exact Format)",
             image: "assets/geography/map-counties.jpg",
             content: `
@@ -123,57 +139,68 @@ const geographyData = {
     },
 
     introToGeography: {
+        id: "q8fbtt",
         name: "Introduction to Geography",
         icon: "fa-compass",
         color: "#06b6d4",
 
         flashcards: [
             {
+                id: "q1a6yy",
                 question: "What is the origin and meaning of the word \"geography\"?",
                 answer: "From Ancient Greek γεωγραφία (geōgraphía) = \"earth description\". Geography studies Earth's features and the relationships between people and their environments.",
                 explanation: "The object of study of geography is the space that surrounds us."
             },
             {
+                id: "p3kg1t",
                 question: "What approach does the course use to reach Tourism Geography?",
                 answer: "A deductive approach — it starts with a general overview of Geography and gradually narrows the focus until reaching Tourism Geography.",
                 explanation: "General geography → regional geography → tourism geography."
             },
             {
+                id: "tdj0k1",
                 question: "What is Regional Geography about?",
                 answer: "Combining knowledge from different disciplines to understand regions, and understanding the relationships and processes in real geographical space to make projections for future development.",
                 explanation: "This reflects the interdisciplinary nature of geography."
             },
             {
+                id: "hcyq9s",
                 question: "What are the three main fields of interest of Human Geography?",
                 answer: "Population, Economy, and Settlements.",
                 explanation: "Population (distribution, migrations, diversity, globalization); Economy (resources, economic activity, core–periphery, four economic sectors); Settlements (patterns, physical structures, cultural diversity, urbanization)."
             },
             {
+                id: "b5ql2d",
                 question: "What does Tourism Geography study?",
                 answer: "Tourism resources and attractions, specific tourism locations/areas/regions, and regional characteristics and differences.",
                 explanation: "It examines the spatial (geographical) factors influencing tourism — environment, society, and economy."
             },
             {
+                id: "vowg0e",
                 question: "Why is Tourism Geography considered interdisciplinary?",
                 answer: "Because, like other geography disciplines, it incorporates elements of both physical geography and human geography.",
                 explanation: "It combines natural and social factors that shape tourism and the space around us."
             },
             {
+                id: "sttb9w",
                 question: "How is a \"tourist destination\" defined?",
                 answer: "A geographical area whose total tourist product (brand) — the result of natural and/or social tourist factors and attractions — is recognizable on the tourist market.",
                 explanation: "Branding and market recognizability are what make an area a destination."
             },
             {
+                id: "ypos5z",
                 question: "By which three criteria are regions singled out in geography?",
                 answer: "(1) natural characteristics (physical geography); (2) human-made characteristics (human geography); (3) the interaction of human and natural environment.",
                 explanation: "This is the basis of regionalization."
             },
             {
+                id: "gqsdf2",
                 question: "Why are Geography and Tourism Geography important?",
                 answer: "For understanding spatial patterns and for decision-making and planning.",
                 explanation: "Recognizing patterns on the map supports better development decisions."
             },
             {
+                id: "614jwp",
                 question: "What are the \"four economic sectors\" referred to in human geography?",
                 answer: "Primary, secondary, tertiary, and quaternary.",
                 explanation: "The Economy field covers resources, economic activity/factors, core–periphery structure, and the four sectors."
@@ -182,46 +209,55 @@ const geographyData = {
 
         quiz: [
             {
+                id: "n1secp",
                 question: "The word \"geography\" originates from:",
                 options: ["Latin", "Ancient Greek", "Old Slavic", "Arabic"],
                 correct: 1
             },
             {
+                id: "n5yeka",
                 question: "The object of study of geography is:",
                 options: ["Only the climate", "The space that surrounds us", "Only the population", "Only the economy"],
                 correct: 1
             },
             {
+                id: "n5om98",
                 question: "Moving from general geography to tourism geography is a:",
                 options: ["Inductive approach", "Random approach", "Deductive approach", "Purely statistical approach"],
                 correct: 2
             },
             {
+                id: "tavc41",
                 question: "Which is NOT one of the three Human Geography fields of interest?",
                 options: ["Population", "Economy", "Settlements", "Climate"],
                 correct: 3
             },
             {
+                id: "jig7si",
                 question: "Tourism geography is best described as:",
                 options: ["Purely physical", "Purely economic", "Interdisciplinary (physical + human)", "Only cartographic"],
                 correct: 2
             },
             {
+                id: "vg1584",
                 question: "A tourist destination is recognizable on the market through its:",
                 options: ["Population size", "Total tourist product (brand)", "Altitude", "Climate only"],
                 correct: 1
             },
             {
+                id: "z8ov40",
                 question: "Regions are defined by natural characteristics, human-made characteristics, and:",
                 options: ["Only state borders", "The interaction of human and natural environment", "Only the climate", "Only language"],
                 correct: 1
             },
             {
+                id: "qwytrd",
                 question: "\"Core–periphery structure\" belongs to which human-geography field?",
                 options: ["Population", "Economy", "Settlements", "Climate"],
                 correct: 1
             },
             {
+                id: "sy6u60",
                 question: "Tourism geography examines spatial factors that shape tourism in terms of:",
                 options: ["Environment, society, and economy", "Only the weather", "Only transport", "Only history"],
                 correct: 0
@@ -230,36 +266,43 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "o3zo1s",
                 sentence: "The object of study of geography is the _______ that surrounds us.",
                 answer: "space",
                 hint: "The spatial dimension..."
             },
             {
+                id: "ixtae6",
                 sentence: "The course uses a _______ approach, going from general geography to tourism geography.",
                 answer: "deductive",
                 hint: "General → specific..."
             },
             {
+                id: "tdzxjf",
                 sentence: "The three fields of human geography are population, economy, and _______.",
                 answer: "settlements",
                 hint: "Where people live..."
             },
             {
+                id: "7sbitu",
                 sentence: "Tourism geography has an _______ nature, combining physical and human geography.",
                 answer: "interdisciplinary",
                 hint: "Across many disciplines..."
             },
             {
+                id: "zjq0cw",
                 sentence: "A tourist _______ is a geographical area whose total tourist product is recognizable on the market.",
                 answer: "destination",
                 hint: "Where tourists travel to..."
             },
             {
+                id: "uqwdcb",
                 sentence: "Regional geography combines knowledge in order to understand _______.",
                 answer: "regions",
                 hint: "Parts of the Earth's surface..."
             },
             {
+                id: "0p0x0b",
                 sentence: "Geography supports understanding spatial patterns and decision-making and _______.",
                 answer: "planning",
                 hint: "Looking ahead..."
@@ -267,6 +310,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "s4d24s",
             title: "Introduction to Geography & Tourism Geography",
             content: `
                 <h3>What Is Geography?</h3>
@@ -315,32 +359,38 @@ const geographyData = {
     },
 
     blindMapDrill: {
+        id: "b2gc5r",
         name: "Blind Map Drill (Croatia)",
         icon: "fa-map-marked-alt",
         color: "#38bdf8",
 
         flashcards: [
             {
+                id: "85liby",
                 question: "Give 2 valid county centres that often appear in map drills.",
                 answer: "Examples: Šibenik, Sisak, Rijeka, Zadar, Dubrovnik.",
                 explanation: "Instructions mention county-centre category explicitly."
             },
             {
+                id: "uwby53",
                 question: "Give 2 bigger islands from common exam sets.",
                 answer: "Examples: Rab, Lastovo, Hvar, Brač, Korčula.",
                 explanation: "Use larger inhabited islands with clear map position."
             },
             {
+                id: "cyq40f",
                 question: "How many national parks are in Croatia?",
                 answer: "8 national parks.",
                 explanation: "Important for category awareness and elimination in map tasks."
             },
             {
+                id: "vhmymv",
                 question: "How many nature parks are in Croatia?",
                 answer: "12 nature parks.",
                 explanation: "The instruction map visualizes these locations."
             },
             {
+                id: "br16ak",
                 question: "Top 10 destinations for map category include which examples?",
                 answer: "Dubrovnik, Rovinj, Poreč, Split, Umag, Zagreb, Medulin, Zadar, Funtana, Pula.",
                 explanation: "These are listed in the 2024 table from instructions."
@@ -349,66 +399,79 @@ const geographyData = {
 
         quiz: [
             {
+                id: "jxxzja",
                 question: "Which pair are BOTH bigger Croatian islands?",
                 options: ["Rab and Lastovo", "Sisak and Rab", "Krka and Brač", "Rijeka and Hvar"],
                 correct: 0
             },
             {
+                id: "9bmomg",
                 question: "Which is a national park (not a nature park)?",
                 options: ["Biokovo", "Učka", "Kornati", "Papuk"],
                 correct: 2
             },
             {
+                id: "r682vz",
                 question: "Which is a nature park (not a national park)?",
                 options: ["Plitvička jezera", "Krka", "Medvednica", "Mljet"],
                 correct: 2
             },
             {
+                id: "3wzaet",
                 question: "Which city is in the Top 10 destinations table?",
                 options: ["Karlovac", "Varaždin", "Rovinj", "Krapina"],
                 correct: 2
             },
             {
+                id: "198sgl",
                 question: "Blind map county-centre category requires:",
                 options: ["1 city", "2 cities", "3 cities", "4 cities"],
                 correct: 1
             },
             {
+                id: "nsz5xy",
                 question: "Which destination from this set is coastal and in Top 10 2024 list?",
                 options: ["Sisak", "Poreč", "Bjelovar", "Čakovec"],
                 correct: 1
             },
             {
+                id: "pca1ga",
                 question: "Which is the #1 destination by tourist nights in Croatia (2024)?",
                 options: ["Zagreb", "Split", "Dubrovnik", "Rovinj"],
                 correct: 2
             },
             {
+                id: "ug4f3p",
                 question: "Which Istrian town is in Croatia's Top 10 destinations 2024?",
                 options: ["Pazin", "Motovun", "Umag", "Labin"],
                 correct: 2
             },
             {
+                id: "dz7xgc",
                 question: "Medulin is located in which region?",
                 options: ["Dalmatia", "Kvarner", "Istria", "Slavonia"],
                 correct: 2
             },
             {
+                id: "el0rq2",
                 question: "Funtana is closest to which other Top 10 destination?",
                 options: ["Dubrovnik", "Poreč", "Split", "Zadar"],
                 correct: 1
             },
             {
+                id: "fdsy21",
                 question: "Which island is in the Kvarner gulf?",
                 options: ["Hvar", "Brač", "Krk", "Korčula"],
                 correct: 2
             },
             {
+                id: "g8slt3",
                 question: "Which nature park is located near Zagreb?",
                 options: ["Papuk", "Medvednica", "Kopački rit", "Biokovo"],
                 correct: 1
             },
             {
+                id: "osxp55",
                 question: "Papuk is both a nature park and a:",
                 options: ["National park", "UNESCO Geopark", "Strict reserve", "Marine reserve"],
                 correct: 1
@@ -417,26 +480,31 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "75p4ej",
                 sentence: "Croatia has _______ national parks.",
                 answer: "8",
                 hint: "Single-digit number..."
             },
             {
+                id: "nh7a2z",
                 sentence: "Croatia has _______ nature parks.",
                 answer: "12",
                 hint: "Two-digit number..."
             },
             {
+                id: "o22b39",
                 sentence: "On the blind map, there are 4 terms from top tourist _______.",
                 answer: "destinations",
                 hint: "Top 10 table..."
             },
             {
+                id: "tuz84y",
                 sentence: "Rab and Lastovo are examples of bigger _______.",
                 answer: "islands",
                 hint: "Adriatic category..."
             },
             {
+                id: "n1mlj0",
                 sentence: "Šibenik and Sisak are examples of county _______.",
                 answer: "centres",
                 hint: "Administrative city role..."
@@ -444,6 +512,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "xba4vu",
             title: "Blind Map Categories and Location Logic",
             image: "assets/geography/map-protected-areas.jpg",
             content: `
@@ -473,87 +542,104 @@ const geographyData = {
     },
 
     croatiaFeatures: {
+        id: "1msl5p",
         name: "Croatia Physical + Human Features",
         icon: "fa-mountain",
         color: "#a78bfa",
 
         flashcards: [
             {
+                id: "o0q3sw",
                 question: "What mountain system shapes Croatian relief, and how was it formed?",
                 answer: "The Dinarides — part of the Alpide belt — formed by tectonic plates colliding during the Alpine orogeny, which began in the Cretaceous period.",
                 explanation: "Relief examples from the slides: Žumberak, Velebit, Kornati, Baranja, Lonjsko polje."
             },
             {
+                id: "unj2ml",
                 question: "What are the three karst surface forms, with their slide examples?",
                 answer: "Covered karst (beech & fir forests of the Croatian Highlands, e.g. Plitvice), Semi-covered karst (maquis, e.g. Cres), and Bare karst (no vegetation, e.g. island Pag).",
                 explanation: "Karst (limestone) dominates the Croatian landscape; see also Velebit karst doline and Biokovo."
             },
             {
+                id: "0h6jmj",
                 question: "What are maquis (makija)?",
                 answer: "Degraded Mediterranean coastal forest whose typical representative is the holm oak; the example of semi-covered karst vegetation (e.g. Cres).",
                 explanation: "Maquis marks the transition between bare and forested karst."
             },
             {
+                id: "nq7gwp",
                 question: "What are the key characteristics of the Adriatic Sea in Croatian hydrography?",
                 answer: "Salinity ~38‰, warm currents, turquoise colour, excellent transparency, and low tide amplitudes.",
                 explanation: "These features directly underpin Croatia's bathing/sea-tourism image."
             },
             {
+                id: "cuzps9",
                 question: "Describe Croatia's inland waters from the slides.",
                 answer: "Clear karst rivers in the mountain area, travertine barriers, a small number of lakes, and larger Pannonian rivers with poor navigability — except the Danube.",
                 explanation: "Examples: Mrežnica, Drava–Mura, Plitvice lakes; Kopački rit on the Danube floodplain."
             },
             {
+                id: "xnibo8",
                 question: "What climate type does Croatia have?",
                 answer: "A temperate climate (type C): Mediterranean along the coast and continental inland.",
                 explanation: "Slides note Adriatic winds, sea temperature (winter/summer), insolation, and rainfall."
             },
             {
+                id: "4rthp3",
                 question: "What are the four biogeographic regions of Croatia?",
                 answer: "Alpine, Continental, Mediterranean, and Pannonian.",
                 explanation: "Shown together with protected areas (e.g. NP Risnjak in the Alpine bioregion)."
             },
             {
+                id: "x1c3nm",
                 question: "What was Croatia's GDP per capita in 2025 (Croatia ID card slide)?",
                 answer: "About 23,200 EUR — roughly 80% of the EU GDP per capita.",
                 explanation: "The tourism share of Croatia's GDP is about 20 to 25%."
             },
             {
+                id: "44cw3f",
                 question: "What were the ten Pan-European transport corridors, and when were they defined?",
                 answer: "Strategic transport routes in Central and Eastern Europe, defined at the Helsinki conference in 1997.",
                 explanation: "Context for Croatia's connectivity (cultural regions of Europe and Croatia)."
             },
             {
+                id: "ljier2",
                 question: "Name the key transport infrastructure shown for Croatia.",
                 answer: "Highways A1–A12, the Učka tunnel, Krk bridge, Pelješac bridge, and the Drava bridge; main airports Zagreb and Split; sea/inland traffic via coastal shipping, cruises, charter and private boats.",
                 explanation: "Lecture 3 covers road, air, and sea/inland water traffic."
             },
             {
+                id: "tx4icb",
                 question: "Which demographic processes affect Croatia (and its tourism)?",
                 answer: "Population aging, low birth rate, immigration, emigration, deruralization, urbanization/suburbanization, and population substitution.",
                 explanation: "Consequences on tourism: labour-market changes (shortage, selective economic immigration) and changing emission-market characteristics."
             },
             {
+                id: "tkurqt",
                 question: "What are the features of Croatia's population density?",
                 answer: "Uneven density, dominance of the capital (Zagreb), four-to-five regional centres, littoralization, deruralization, and depopulation.",
                 explanation: "Littoralization = population concentrating along the coast."
             },
             {
+                id: "orkr8t",
                 question: "How many residence & work permits were issued in 2025, and to which sectors?",
                 answer: "170,723 permits total: Construction 31%, Tourism & hospitality 31%, Industries 14%, Transport & communication 8%, Trade 5%, Other 11%.",
                 explanation: "Tourism and construction together absorb the majority of foreign labour."
             },
             {
+                id: "rq7piu",
                 question: "Which countries received the most Croatian work permits in 2025?",
                 answer: "Bosnia and Herzegovina (32,225), Nepal (31,708), Serbia (24,278), Philippines (17,629), and India (15,400).",
                 explanation: "Immigrants are mostly seasonal auxiliary workforce in tourism, with a rising trend toward permanent residence."
             },
             {
+                id: "du5ulc",
                 question: "How does the changing labour force affect tourist destinations?",
                 answer: "It changes the autochthonousness of destinations — language, culture, behaviour, gastronomy, and the perception of security.",
                 explanation: "A key social consequence of economic immigration."
             },
             {
+                id: "l89ivt",
                 question: "How are Croatia's tourism numbers characterized in the slides?",
                 answer: "A return to pre-pandemic growth, dominated by international tourism (traditional Central-European emitive markets) and a distinct summer (bathing) seasonality.",
                 explanation: "Foreign tourists clearly dominate over domestic ones."
@@ -562,71 +648,85 @@ const geographyData = {
 
         quiz: [
             {
+                id: "ru71t6",
                 question: "The Dinarides belong to which orogenic belt?",
                 options: ["Caledonian", "Alpide", "Hercynian", "Andean"],
                 correct: 1
             },
             {
+                id: "zwfl2r",
                 question: "The Alpine orogeny that formed the Dinarides began in the:",
                 options: ["Jurassic", "Cretaceous", "Neogene", "Triassic"],
                 correct: 1
             },
             {
+                id: "16b33c",
                 question: "Island Pag is the slides' example of:",
                 options: ["Covered karst", "Semi-covered karst", "Bare karst", "Travertine barriers"],
                 correct: 2
             },
             {
+                id: "n5b76z",
                 question: "Maquis (degraded coastal forest) is typically represented by the:",
                 options: ["Beech", "Holm oak", "Fir", "Olive tree"],
                 correct: 1
             },
             {
+                id: "zhm4ox",
                 question: "Adriatic salinity is approximately:",
                 options: ["18‰", "28‰", "38‰", "48‰"],
                 correct: 2
             },
             {
+                id: "u1bhke",
                 question: "Which inland river is the main navigable one in Croatia?",
                 options: ["Mrežnica", "Danube", "Cetina", "Krka"],
                 correct: 1
             },
             {
+                id: "v4sqmk",
                 question: "Croatia's four biogeographic regions are:",
                 options: ["Only Mediterranean", "Alpine, Continental, Mediterranean, Pannonian", "Mediterranean and Continental only", "Alpine and Pannonian only"],
                 correct: 1
             },
             {
+                id: "7idywy",
                 question: "Croatia's 2025 GDP per capita was about:",
                 options: ["12,000 EUR", "23,200 EUR", "35,000 EUR", "45,000 EUR"],
                 correct: 1
             },
             {
+                id: "f8bvm3",
                 question: "Tourism's share in Croatia's GDP is around:",
                 options: ["5-8%", "10-12%", "20-25%", "35-40%"],
                 correct: 2
             },
             {
+                id: "fjrbqa",
                 question: "The ten Pan-European transport corridors were defined in 1997 at a conference in:",
                 options: ["Berlin", "Helsinki", "Vienna", "Brussels"],
                 correct: 1
             },
             {
+                id: "byla1p",
                 question: "In 2025, construction and tourism & hospitality EACH accounted for what share of work permits?",
                 options: ["11%", "14%", "31%", "50%"],
                 correct: 2
             },
             {
+                id: "vjjkn2",
                 question: "Which country received the most Croatian work permits in 2025?",
                 options: ["Nepal", "Serbia", "Bosnia and Herzegovina", "India"],
                 correct: 2
             },
             {
+                id: "d5sp2c",
                 question: "\"Littoralization\" refers to population concentrating:",
                 options: ["In the mountains", "Along the coast", "In the capital only", "Evenly across the country"],
                 correct: 1
             },
             {
+                id: "eunnrq",
                 question: "Which is NOT listed among Croatia's demographic processes?",
                 options: ["Population aging", "Deruralization", "Glaciation", "Emigration"],
                 correct: 2
@@ -635,46 +735,55 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "hy2fkv",
                 sentence: "The dominant mountain system in Croatia is the _______, part of the Alpide belt.",
                 answer: "Dinarides",
                 hint: "Starts with D..."
             },
             {
+                id: "2tc0q7",
                 sentence: "Island Pag is the textbook example of _______ karst.",
                 answer: "bare",
                 hint: "No vegetation..."
             },
             {
+                id: "s7c8il",
                 sentence: "In Croatian hydrography, Adriatic salinity is around _______ per mille.",
                 answer: "38",
                 hint: "Two-digit number..."
             },
             {
+                id: "5xz4d4",
                 sentence: "In 2025, Croatia's GDP per capita was about 23,200 EUR, around _______ percent of the EU average.",
                 answer: "80",
                 hint: "Two-digit number..."
             },
             {
+                id: "fpxmup",
                 sentence: "Construction and tourism & hospitality each accounted for _______ percent of 2025 work permits.",
                 answer: "31",
                 hint: "Almost a third..."
             },
             {
+                id: "fj7ukj",
                 sentence: "The most 2025 work permits went to citizens of _______ and Herzegovina.",
                 answer: "Bosnia",
                 hint: "Croatia's eastern neighbour..."
             },
             {
+                id: "4dk8vk",
                 sentence: "Maquis is degraded coastal forest, with the holm _______ as its typical representative.",
                 answer: "oak",
                 hint: "A type of tree..."
             },
             {
+                id: "8slq16",
                 sentence: "Croatia's four biogeographic regions are Alpine, Continental, Mediterranean and _______.",
                 answer: "Pannonian",
                 hint: "Eastern lowland context..."
             },
             {
+                id: "k10nry",
                 sentence: "_______ is the term for population concentrating along the coast.",
                 answer: "Littoralization",
                 hint: "From 'littoral' (coast)..."
@@ -682,6 +791,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "evsr0e",
             title: "Core Features of Croatia for the Midterm",
             content: `
                 <h3>Physical / Natural Features (Lecture 2)</h3>
@@ -717,97 +827,116 @@ const geographyData = {
     },
 
     protectedAndTouristRegions: {
+        id: "okoy1e",
         name: "Tourist Regions, Parks, and UNESCO",
         icon: "fa-tree-city",
         color: "#f59e0b",
 
         flashcards: [
             {
+                id: "emnr5q",
                 question: "What are the three Croatian tourist macro-regions?",
                 answer: "Coastal, Mountainous, and Pannonian tourist region.",
                 explanation: "Regional structure appears in multiple lectures."
             },
             {
+                id: "063r7f",
                 question: "Which two strict reserves are listed in slides?",
                 answer: "Bijele i Samarske stijene; Hajdučki i Rožanski kukovi.",
                 explanation: "They appear in protected area overview."
             },
             {
+                id: "4wjlux",
                 question: "Name all 8 national parks of Croatia.",
                 answer: "Plitvička jezera, Krka, Kornati, Brijuni, Mljet, Paklenica, Risnjak, Sjeverni Velebit.",
                 explanation: "All 8 are shown in lecture 6."
             },
             {
+                id: "lgtxyd",
                 question: "Name at least 6 nature parks from lecture set.",
                 answer: "Kopački rit, Medvednica, Papuk, Žumberak, Lonjsko polje, Učka, Telašćica, Velebit, Vransko jezero, Dinara, Biokovo, Lastovsko otočje.",
                 explanation: "Croatia has 12 nature parks total."
             },
             {
+                id: "v1sfvq",
                 question: "Which UNESCO site in Croatia is also a national park?",
                 answer: "Plitvice Lakes.",
                 explanation: "It appears in both natural protection and UNESCO context."
             },
             {
+                id: "itcudr",
                 question: "What sub-regions make up the North Croatian Coast?",
                 answer: "Istria and Kvarner.",
                 explanation: "From lecture 4 on coastal tourist region."
             },
             {
+                id: "ysnuxi",
                 question: "What sub-regions make up Southern Croatian Coast (Dalmatia)?",
                 answer: "Northern Dalmatia (Zadar, Šibenik), Central Dalmatia (Trogir, Split, Makarska), South Dalmatia (Dubrovnik).",
                 explanation: "From lecture 4 detailed coastal breakdown."
             },
             {
+                id: "wtyrkd",
                 question: "What are the three types of Istria shown in lectures?",
                 answer: "Red Istria (western/southern coast, red-brown soils), Gray Istria (central, gray clay/flysch), White Istria (Učka/eastern, rocky).",
                 explanation: "Three-colour model from lecture 4."
             },
             {
+                id: "0em6la",
                 question: "Name key destinations in the Kvarner region from slides.",
                 answer: "Opatija, Rijeka/Trsat, Crikvenica, Rab, Cres/Lubenice, Lošinj, Punat.",
                 explanation: "From lecture 4, Kvarner tourist region page."
             },
             {
+                id: "e2g78j",
                 question: "Name key Pannonian region destinations from Central Croatia slides.",
                 answer: "Zagreb, Varaždin, Karlovac, Hrvatsko Zagorje, Trakošćan, Medvednica.",
                 explanation: "From lecture 5, Pannonian tourist region."
             },
             {
+                id: "zqgoem",
                 question: "Name key Pannonian destinations from Eastern Croatia (Slavonija).",
                 answer: "Osijek, Vukovar, Đakovo, Ilok, Vinkovci, Kopački rit, Papuk.",
                 explanation: "From lecture 5."
             },
             {
+                id: "hsmsy6",
                 question: "List all 10 UNESCO tangible heritage sites in Croatia.",
                 answer: "1) Diocletian's Palace (Split), 2) Euphrasius Basilica (Poreč), 3) Plitvice Lakes, 4) Trogir, 5) Old City Dubrovnik, 6) Cathedral Šibenik, 7) Stari Grad Plain (Hvar), 8) Medieval tombstones, 9) Venetian Defence (Zadar + St. Nicholas Šibenik), 10) Beech forests (Paklenica, Velebit).",
                 explanation: "From lecture 6, UNESCO heritage slide."
             },
             {
+                id: "2jgspx",
                 question: "How does Croatian law protect nature, and what are the most valuable categories?",
                 answer: "The Nature Protection Act defines 9 categories of spatial protection; the most valuable are 2 strict reserves, 8 national parks, and 12 nature parks.",
                 explanation: "National and nature parks together cover 5,930 km² — about 10.1% of Croatia's territory."
             },
             {
+                id: "bpd270",
                 question: "What were the national/nature-park visitor figures for 2017?",
                 answer: "About 4 million visitors in national and nature parks, of which about 3 million in Plitvice Lakes and Krka; foreign visitors made up 96% of national-park visitors.",
                 explanation: "Croatia had about 17 million tourists in 2017 (89% foreign, 11% domestic)."
             },
             {
+                id: "um2s1r",
                 question: "What are the components (types) of natural tourist attractions?",
                 answer: "Geological, geomorphological, climatological, hydrogeographic, biogeographic, and landscape features.",
                 explanation: "E.g. caves & canyons (geomorphological), endemics & parks (biogeographic), panoramas (landscape)."
             },
             {
+                id: "pth6fd",
                 question: "What does the Mountainous tourist region include?",
                 answer: "Gorski kotar, Risnjak, the Velebit range (northern & southern), Plitvice Lakes and Paklenica; activity spots Platak, Čelimbaša–Mrkopalj, Fužine, Golubinjak, and the Cerovac caves.",
                 explanation: "From lecture 5 — mountain/adventure and nature tourism."
             },
             {
+                id: "vnqsko",
                 question: "What characterizes the Pannonian region — Eastern Croatia (Slavonia)?",
                 answer: "Osijek, Vukovar (Vučedol, water tower), Ilok and Vinkovci on/near the Danube, Đakovo (Lipizzaner horses), Požega (wine), Papuk (UNESCO Geopark), and Kopački rit.",
                 explanation: "Etno-cultural heritage events, wine growing, and river/wetland nature."
             },
             {
+                id: "g7wj56",
                 question: "What characterizes the Pannonian region — Central Croatia?",
                 answer: "Zagreb (Advent), Varaždin, Karlovac, Hrvatsko Zagorje (Trakošćan, thermal spas, licitar), Medvednica (Snow Queen skiing), Topusko, and Lonjsko polje (Čigoč stork village).",
                 explanation: "City-break, spa/wellness, and continental nature tourism."
@@ -816,126 +945,151 @@ const geographyData = {
 
         quiz: [
             {
+                id: "bf1yz0",
                 question: "Which set correctly lists Croatian tourist macro-regions?",
                 options: ["Adriatic, Alpine, Danubian", "Coastal, Mountainous, Pannonian", "Istria, Slavonia, Dalmatia", "North, South, East"],
                 correct: 1
             },
             {
+                id: "cvnwfc",
                 question: "Which is NOT a national park?",
                 options: ["Krka", "Brijuni", "Medvednica", "Mljet"],
                 correct: 2
             },
             {
+                id: "izfalx",
                 question: "Which is a nature park?",
                 options: ["Kornati", "Paklenica", "Učka", "Risnjak"],
                 correct: 2
             },
             {
+                id: "z4370a",
                 question: "Plitvice Lakes are best categorized as:",
                 options: ["Only county centre", "National park and UNESCO site", "Nature park only", "Island destination"],
                 correct: 1
             },
             {
+                id: "5tkepk",
                 question: "Which area belongs to Coastal tourist region context?",
                 options: ["Zagorje thermal belt", "Gorski kotar", "Kvarner", "Baranja lowlands"],
                 correct: 2
             },
             {
+                id: "ewqpqi",
                 question: "Red Istria refers to:",
                 options: ["Central Istria with gray soil", "Eastern rocky peninsula", "Western/southern coast with red-brown soil", "Northern alpine area"],
                 correct: 2
             },
             {
+                id: "3fu9t0",
                 question: "Which nature park is described as UNESCO Geopark?",
                 options: ["Medvednica", "Biokovo", "Papuk", "Učka"],
                 correct: 2
             },
             {
+                id: "zw85rv",
                 question: "The Euphrasius Basilica UNESCO site is in:",
                 options: ["Split", "Zadar", "Poreč", "Dubrovnik"],
                 correct: 2
             },
             {
+                id: "mk0562",
                 question: "Which island has the UNESCO Stari Grad Plain?",
                 options: ["Brač", "Korčula", "Hvar", "Vis"],
                 correct: 2
             },
             {
+                id: "79nncs",
                 question: "Trogir is UNESCO-listed as:",
                 options: ["Nature park", "Romanesque town", "Ancient fortress", "Island reserve"],
                 correct: 1
             },
             {
+                id: "0eynf9",
                 question: "Kopački rit nature park is in which part of Croatia?",
                 options: ["Istria", "Dalmatia", "Eastern Slavonia (Baranja)", "Gorski kotar"],
                 correct: 2
             },
             {
+                id: "dduqqx",
                 question: "How many nature parks does Croatia have?",
                 options: ["8", "10", "12", "15"],
                 correct: 2
             },
             {
+                id: "z9kx7c",
                 question: "Opatija belongs to which tourist sub-region?",
                 options: ["Istria", "Kvarner", "Northern Dalmatia", "Zagorje"],
                 correct: 1
             },
             {
+                id: "3fuxis",
                 question: "St. Nicholas Fortress (UNESCO Venetian Defence) is near:",
                 options: ["Split", "Dubrovnik", "Šibenik", "Trogir"],
                 correct: 2
             },
             {
+                id: "mttvkl",
                 question: "Which destination is associated with the Makarska Riviera?",
                 options: ["Trogir", "Omiš", "Makarska", "Nin"],
                 correct: 2
             },
             {
+                id: "1o4m7l",
                 question: "Ston is known for:",
                 options: ["Snow tourism", "Salt pans and defensive walls", "UNESCO basilica", "Island hopping"],
                 correct: 1
             },
             {
+                id: "7l60qn",
                 question: "The Mountainous tourist region includes:",
                 options: ["Istria coast", "Gorski kotar and Velebit", "Baranja wetlands", "Zagreb area"],
                 correct: 1
             },
             {
+                id: "xy36ok",
                 question: "Lonjsko polje nature park is known for:",
                 options: ["Marine life", "Stork village Čigoč", "Skiing", "Wine production"],
                 correct: 1
             },
             {
+                id: "bdcqiz",
                 question: "The Nature Protection Act defines how many categories of spatial protection?",
                 options: ["3", "6", "9", "12"],
                 correct: 2
             },
             {
+                id: "gv5w2g",
                 question: "National and nature parks cover about what share of Croatia's territory?",
                 options: ["2%", "5%", "10.1%", "18%"],
                 correct: 2
             },
             {
+                id: "24vooq",
                 question: "In 2017, foreign visitors made up what share of national-park visitors?",
                 options: ["50%", "80%", "89%", "96%"],
                 correct: 3
             },
             {
+                id: "4mxvnc",
                 question: "Which is NOT a component of natural tourist attractions?",
                 options: ["Geomorphological", "Hydrogeographic", "Demographic", "Landscape"],
                 correct: 2
             },
             {
+                id: "c1565u",
                 question: "The Mountainous tourist region includes:",
                 options: ["Istria coast", "Gorski kotar and Velebit", "Baranja wetlands", "Zagreb's Advent"],
                 correct: 1
             },
             {
+                id: "d9w32b",
                 question: "Vučedol and the water tower are landmarks of which Slavonian city?",
                 options: ["Osijek", "Vukovar", "Ilok", "Đakovo"],
                 correct: 1
             },
             {
+                id: "1o42ei",
                 question: "Brač's famous Zlatni rat beach is located at:",
                 options: ["Bol", "Komiža", "Hvar", "Vis"],
                 correct: 0
@@ -944,71 +1098,85 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "aiym3l",
                 sentence: "Croatian tourist macro-regions are Coastal, Mountainous and _______.",
                 answer: "Pannonian",
                 hint: "Eastern lowland context..."
             },
             {
+                id: "m9egct",
                 sentence: "Plitvice Lakes are both a national park and a _______ site.",
                 answer: "UNESCO",
                 hint: "World heritage..."
             },
             {
+                id: "ok90kx",
                 sentence: "Učka is categorized as a nature _______.",
                 answer: "park",
                 hint: "PP category..."
             },
             {
+                id: "6y5aei",
                 sentence: "Krka is categorized as a national _______.",
                 answer: "park",
                 hint: "NP category..."
             },
             {
+                id: "lvgifs",
                 sentence: "The three types of Istria by soil are Red, Gray, and _______.",
                 answer: "White",
                 hint: "Učka/eastern area..."
             },
             {
+                id: "tv1ss1",
                 sentence: "The Euphrasius Basilica UNESCO site is located in _______.",
                 answer: "Poreč",
                 hint: "Istrian coastal town..."
             },
             {
+                id: "flzmj3",
                 sentence: "Stari Grad Plain UNESCO site is on the island of _______.",
                 answer: "Hvar",
                 hint: "Famous Dalmatian island..."
             },
             {
+                id: "pgle7d",
                 sentence: "Papuk is both a nature park and a UNESCO _______.",
                 answer: "Geopark",
                 hint: "Geological heritage..."
             },
             {
+                id: "64ejdj",
                 sentence: "Čigoč stork village is in _______ polje nature park.",
                 answer: "Lonjsko",
                 hint: "Pannonian wetland..."
             },
             {
+                id: "yhi45w",
                 sentence: "Croatia has _______ tangible UNESCO World Heritage sites.",
                 answer: "10",
                 hint: "Two-digit number..."
             },
             {
+                id: "i7u70a",
                 sentence: "The Nature Protection Act defines _______ categories of spatial protection.",
                 answer: "9",
                 hint: "Single-digit number..."
             },
             {
+                id: "k03spc",
                 sentence: "National and nature parks cover about _______ percent of Croatia's territory.",
                 answer: "10.1",
                 hint: "Just over a tenth..."
             },
             {
+                id: "ft2rrf",
                 sentence: "In 2017, foreign visitors made up _______ percent of national-park visitors.",
                 answer: "96",
                 hint: "Almost all of them..."
             },
             {
+                id: "bo9oum",
                 sentence: "Vučedol and the water tower are landmarks of the Slavonian city of _______.",
                 answer: "Vukovar",
                 hint: "On the Danube..."
@@ -1016,6 +1184,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "41nlg6",
             title: "Regional Tourism, Protected Areas, and UNESCO",
             content: `
                 <h3>Tourist Macro-Regions</h3>
@@ -1097,27 +1266,32 @@ const geographyData = {
     },
 
     cityImageRecognition: {
+        id: "7x4kvg",
         name: "Image Recognition: Which City?",
         icon: "fa-camera-retro",
         color: "#ec4899",
 
         flashcards: [
             {
+                id: "oyeyy2",
                 question: "What visual cue strongly identifies Dubrovnik?",
                 answer: "Walled Old Town on a rocky peninsula with distinct fortifications.",
                 explanation: "This is one of the most recognizable Croatian city panoramas."
             },
             {
+                id: "p2ocx1",
                 question: "What visual cue strongly identifies Split old core?",
                 answer: "Dense historic waterfront core linked with Diocletian heritage and ferry-port setting.",
                 explanation: "Split has a very distinctive urban-maritime skyline."
             },
             {
+                id: "gqal4j",
                 question: "What visual cue strongly identifies Makarska?",
                 answer: "Coastal town directly below steep Biokovo mountain backdrop.",
                 explanation: "Mountain-wall over coastline is a signature cue."
             },
             {
+                id: "z3kups",
                 question: "What visual cue strongly identifies Ston in this lecture set?",
                 answer: "Salt pans and defensive walls in a narrow isthmus landscape.",
                 explanation: "Ston is regularly linked with saltworks and oyster context."
@@ -1126,6 +1300,7 @@ const geographyData = {
 
         quiz: [
             {
+                id: "k9jrfy",
                 question: "Which city is shown in the image?",
                 image: "assets/geography/city-dubrovnik.jpg",
                 imageAlt: "Aerial of walled old city on Adriatic coast",
@@ -1133,6 +1308,7 @@ const geographyData = {
                 correct: 1
             },
             {
+                id: "mz83qr",
                 question: "Which city is shown in the image?",
                 image: "assets/geography/city-split.jpg",
                 imageAlt: "Harbor panorama of historic Adriatic city",
@@ -1140,6 +1316,7 @@ const geographyData = {
                 correct: 2
             },
             {
+                id: "dtjnjc",
                 question: "Which city is shown in the image?",
                 image: "assets/geography/city-makarska.jpg",
                 imageAlt: "Coastal city below massive mountain ridge",
@@ -1147,6 +1324,7 @@ const geographyData = {
                 correct: 0
             },
             {
+                id: "wstb58",
                 question: "Which place is shown in the image?",
                 image: "assets/geography/city-ston.jpg",
                 imageAlt: "Salt pans and fortified settlement landscape",
@@ -1154,11 +1332,13 @@ const geographyData = {
                 correct: 0
             },
             {
+                id: "7duxe2",
                 question: "The city most associated with monumental medieval walls in this set is:",
                 options: ["Dubrovnik", "Split", "Poreč", "Osijek"],
                 correct: 0
             },
             {
+                id: "6qdxqo",
                 question: "The city recognized by Biokovo mountain backdrop is:",
                 options: ["Makarska", "Rijeka", "Vukovar", "Čakovec"],
                 correct: 0
@@ -1167,21 +1347,25 @@ const geographyData = {
 
         fillBlanks: [
             {
+                id: "340lvg",
                 sentence: "The image with massive stone walls and old-town peninsula refers to _______.",
                 answer: "Dubrovnik",
                 hint: "South Dalmatia icon..."
             },
             {
+                id: "iv4ovh",
                 sentence: "The city panorama under Biokovo mountain is _______.",
                 answer: "Makarska",
                 hint: "Central Dalmatia coast..."
             },
             {
+                id: "9f69ma",
                 sentence: "The settlement linked with salt pans in this set is _______.",
                 answer: "Ston",
                 hint: "Pelješac area..."
             },
             {
+                id: "ov9c6m",
                 sentence: "Historic coastal panorama in this set with major ferry context is _______.",
                 answer: "Split",
                 hint: "Largest Dalmatian city..."
@@ -1189,6 +1373,7 @@ const geographyData = {
         ],
 
         learn: {
+            id: "wwtwpq",
             title: "How to Solve Image-Based City Questions",
             content: `
                 <h3>Pattern Recognition Method</h3>

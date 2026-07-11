@@ -2,87 +2,104 @@
 // Category 3 of Accounting Theory
 
 const secReportsData = {
+    id: "qq1jz8",
     name: "SEC & Annual Reports",
     icon: "fa-building-columns",
     color: "#dc2626",
     
     flashcards: [
         {
+            id: "j5cjv3",
             question: "What two types of annual reports does the SEC require?",
             answer: "1. Form 10-K: Detailed annual report filed with the SEC\n\n2. Annual Report to Shareholders: More summarized and reader-friendly report",
             explanation: "Two different reports for different audiences."
         },
         {
+            id: "ssdscp",
             question: "What kind of agency is the SEC and what is its primary mission?",
             answer: "The SEC is a federal government regulatory agency.\n\nPrimary mission:\n• Protect investors\n• Maintain fair and efficient markets\n• Ensure full and fair disclosure of financial information",
             explanation: "SEC = Securities and Exchange Commission."
         },
         {
+            id: "wa4f5s",
             question: "What is the significance of October 1929?",
             answer: "October 1929 marks the stock market crash, which led to the Great Depression and exposed serious weaknesses in financial reporting and market regulation.",
             explanation: "This crash led to creation of the SEC."
         },
         {
+            id: "2ovxex",
             question: "Why was the SEC created?",
             answer: "The SEC was created to:\n• Restore investor confidence\n• Prevent fraud and market manipulation\n• Regulate the securities markets\n\nFollowing the 1929 stock market crash.",
             explanation: "Response to the Great Depression."
         },
         {
+            id: "1b96ec",
             question: "What is the importance of the Sarbanes-Oxley Act of 2002 (SOX)?",
             answer: "SOX was enacted to:\n• Increase corporate accountability\n• Improve financial reporting accuracy\n• Strengthen internal controls\n\nIn response to corporate scandals like Enron and WorldCom.",
             explanation: "Major reform of corporate governance."
         },
         {
+            id: "2chnm1",
             question: "What do the key sections of Sarbanes-Oxley cover?",
             answer: "Section 302: Management certification of financial statements\nSection 401: Disclosure of off-balance-sheet items\nSection 404: Management assessment of internal controls\nSection 409: Real-time disclosure of material changes\nSection 802: Criminal penalties for altering/destroying records",
             explanation: "Know these section numbers and their purposes."
         },
         {
+            id: "jmiooq",
             question: "What is a 10-K report?",
             answer: "A 10-K is a comprehensive annual filing to the SEC including:\n• Audited financial statements\n• Management discussion and analysis\n• Risk factors\n• Detailed disclosures about operations and finances",
             explanation: "The most detailed annual report."
         },
         {
+            id: "ed89op",
             question: "What four types of audit opinions can a CPA firm give?",
             answer: "1. Unqualified opinion (clean opinion)\n2. Qualified opinion (with exceptions)\n3. Adverse opinion (statements not fairly presented)\n4. Disclaimer of opinion (unable to form opinion)",
             explanation: "Unqualified is the best; adverse is the worst."
         },
         {
+            id: "mynnrc",
             question: "What are consolidated financial statements?",
             answer: "Consolidated financial statements combine the financial results of a parent company and its subsidiaries into a single set of statements as if they were one economic entity.",
             explanation: "Parent + subsidiaries = one report."
         },
         {
+            id: "3i7oc9",
             question: "What are notes to financial statements and what do they include?",
             answer: "Notes provide additional information to understand financial statements.\n\nMinimum content:\n• Summary of significant accounting policies\n• Detailed explanations of major accounts\n• Information on contingencies and commitments",
             explanation: "Notes are essential for full disclosure."
         },
         {
+            id: "tfg6tj",
             question: "What is the standard content of an annual report to shareholders?",
             answer: "Standard content includes:\n• Letter from management\n• Financial statements\n• Notes to financial statements\n• Auditor's report\n• Management's Discussion and Analysis (MD&A)",
             explanation: "All key components of the annual report."
         },
         {
+            id: "gpe3ts",
             question: "What is the Securities Act of 1933?",
             answer: "The Securities Act of 1933 (the 'Truth in Securities' Act) requires:\n• Registration of new securities with SEC\n• Full disclosure via prospectus\n• Accurate information to investors before purchase\n\nFocus: PRIMARY market (new issues)",
             explanation: "Regulates new securities offerings."
         },
         {
+            id: "joblfa",
             question: "What is the Securities Exchange Act of 1934?",
             answer: "The Securities Exchange Act of 1934:\n• Created the SEC\n• Regulates secondary trading of securities\n• Requires ongoing periodic reporting (10-K, 10-Q)\n• Regulates stock exchanges and broker-dealers\n\nFocus: SECONDARY market (trading)",
             explanation: "Regulates ongoing trading and reporting."
         },
         {
+            id: "uuodvf",
             question: "What is PCAOB?",
             answer: "PCAOB = Public Company Accounting Oversight Board\n\nCreated by SOX 2002 to:\n• Oversee audits of public companies\n• Establish auditing standards\n• Inspect CPA firms\n• Enforce compliance\n\nReplaced self-regulation by accounting profession.",
             explanation: "Independent auditor oversight body."
         },
         {
+            id: "8qtk2i",
             question: "What is Materiality in auditing?",
             answer: "Materiality is the threshold above which an omission or misstatement would influence a user's decision.\n\nAuditors focus on material items because:\n• Not practical to examine everything\n• Small errors unlikely to affect decisions\n• Cost-benefit consideration",
             explanation: "Significant enough to matter to users."
         },
         {
+            id: "06wk9g",
             question: "What is the difference between 10-K and 10-Q?",
             answer: "10-K: Annual report\n• Audited financial statements\n• Filed within 60-90 days of fiscal year end\n• Comprehensive disclosure\n\n10-Q: Quarterly report\n• Unaudited financial statements\n• Filed within 40-45 days of quarter end\n• Less detailed than 10-K",
             explanation: "Annual vs quarterly SEC filings."
@@ -91,76 +108,91 @@ const secReportsData = {
     
     quiz: [
         {
+            id: "wgksz9",
             question: "The SEC is a:",
             options: ["Private company", "Federal regulatory agency", "State agency", "Non-profit organization"],
             correct: 1
         },
         {
+            id: "bbww1c",
             question: "October 1929 is significant because of the:",
             options: ["World War I", "Stock market crash", "SEC creation", "First audit"],
             correct: 1
         },
         {
+            id: "8x4uy9",
             question: "SOX Section 404 covers:",
             options: ["Criminal penalties", "Real-time disclosure", "Management assessment of internal controls", "Off-balance-sheet items"],
             correct: 2
         },
         {
+            id: "lo5wpp",
             question: "SOX Section 302 requires:",
             options: ["Internal control assessment", "Management certification of financial statements", "Criminal penalties", "Real-time disclosure"],
             correct: 1
         },
         {
+            id: "jscr2j",
             question: "SOX Section 802 deals with:",
             options: ["Financial statements", "Criminal penalties for altering records", "Disclosure requirements", "Certification"],
             correct: 1
         },
         {
+            id: "ebg45t",
             question: "The best audit opinion is:",
             options: ["Qualified", "Adverse", "Unqualified", "Disclaimer"],
             correct: 2
         },
         {
+            id: "i8x0au",
             question: "A 10-K report is filed with the:",
             options: ["IRS", "SEC", "State government", "Local bank"],
             correct: 1
         },
         {
+            id: "gmdmpj",
             question: "Consolidated financial statements combine:",
             options: ["All competitors", "Parent and subsidiaries", "All suppliers", "Government agencies"],
             correct: 1
         },
         {
+            id: "vy1i5d",
             question: "How many types of audit opinions are there?",
             options: ["2", "3", "4", "5"],
             correct: 2
         },
         {
+            id: "9bii7l",
             question: "The SEC's primary mission includes:",
             options: ["Increasing company profits", "Protecting investors", "Reducing taxes", "Creating jobs"],
             correct: 1
         },
         {
+            id: "8xug6u",
             question: "The Securities Act of 1933 regulates:",
             options: ["Secondary market trading", "New securities offerings (primary market)", "Tax collection", "Employee benefits"],
             correct: 1
         },
         {
+            id: "214ezs",
             question: "PCAOB was created by:",
             options: ["Securities Act of 1933", "Securities Act of 1934", "Sarbanes-Oxley Act of 2002", "GAAP"],
             correct: 2
         },
         {
+            id: "mwnm9l",
             question: "10-Q reports are filed:",
             options: ["Annually", "Quarterly", "Monthly", "Weekly"],
             correct: 1
         },
         {
+            id: "j27zrp",
             question: "Materiality refers to:",
             options: ["Physical materials", "Threshold affecting user decisions", "Company size", "Number of employees"],
             correct: 1
         },
         {
+            id: "0vmywd",
             question: "The Securities Exchange Act of 1934:",
             options: ["Only regulates new issues", "Created the SEC and regulates secondary trading", "Was repealed by SOX", "Only applies to banks"],
             correct: 1
@@ -169,46 +201,55 @@ const secReportsData = {
     
     fillBlanks: [
         {
+            id: "883yvk",
             sentence: "The stock market crash of October _______ led to the creation of the SEC.",
             answer: "1929",
             hint: "Year of the Great Depression start..."
         },
         {
+            id: "e2k189",
             sentence: "SOX Section _______ covers management certification of financial statements.",
             answer: "302",
             hint: "Three-oh-two..."
         },
         {
+            id: "3efhsy",
             sentence: "SOX Section _______ covers management assessment of internal controls.",
             answer: "404",
             hint: "Like the error code..."
         },
         {
+            id: "tzy5bu",
             sentence: "An _______ opinion is the best type of audit opinion.",
             answer: "unqualified",
             hint: "Clean, without exceptions..."
         },
         {
+            id: "af6mui",
             sentence: "The _______ report is a comprehensive annual filing to the SEC.",
             answer: "10-K",
             hint: "Ten-..."
         },
         {
+            id: "bgonsg",
             sentence: "The Securities Act of _______ regulates new securities offerings.",
             answer: "1933",
             hint: "Nineteen thirty-three..."
         },
         {
+            id: "ypnmwr",
             sentence: "_______ was created by SOX to oversee audits of public companies.",
             answer: "PCAOB",
             hint: "Public Company Accounting..."
         },
         {
+            id: "rkqx3h",
             sentence: "10-Q reports are filed _______ (how often).",
             answer: "quarterly",
             hint: "Every three months..."
         },
         {
+            id: "neox4m",
             sentence: "_______ is the threshold above which misstatements affect user decisions.",
             answer: "Materiality",
             hint: "Significance, importance..."
@@ -216,6 +257,7 @@ const secReportsData = {
     ],
     
     learn: {
+        id: "91f1n2",
         title: "SEC, Annual Reports & Audits",
         content: `
             <h3>📚 Chapter Overview: SEC, Annual Reports & Audits</h3>

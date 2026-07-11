@@ -5,47 +5,56 @@
 const businessInformaticsM2 = {
   // ---- Chapter 7: E-Business (U7) ----
   eBusiness: {
+    id: "cj3f0y",
     name: 'E-Business',
     icon: 'fa-cart-shopping',
     color: '#2563eb',
 
     flashcards: [
       {
+        id: "dkto60",
         question: 'What is e-business?',
         answer: 'The use of the Web, Internet, intranets or extranets to conduct business. It goes beyond simple online buying/selling to include wider business processes such as supply chain management, electronic order processing and customer relationship management (CRM).',
         explanation: 'E-business runs the whole business electronically, not just sales.'
       },
       {
+        id: "geblpo",
         question: 'How does e-business differ from e-commerce?',
         answer: 'E-commerce is the trading activity (buying and selling) carried out through electronic devices. E-business is broader — running the entire business through the internet (including SCM, CRM, ERP, order processing).',
         explanation: 'E-commerce ⊂ e-business.'
       },
       {
+        id: "rrqjxc",
         question: 'What are the main components/areas of e-business?',
         answer: 'Key areas: E-Procurement, Online Stores, Online Marketplace, Online Communities, Online Companies.\n(Plus BI, CRM, ERP, SCM, collaboration and electronic transactions.)',
         explanation: 'These cover sourcing, selling, connecting and cooperating online.'
       },
       {
+        id: "na241q",
         question: 'What is e-procurement?',
         answer: 'Also called "supplier exchange" — sourcing products or services electronically (B2B, B2G, B2C) to reduce a company’s costs and effort.',
         explanation: 'Buying side of e-business.'
       },
       {
+        id: "pf3uq0",
         question: 'What is the difference between an online store and an online marketplace?',
         answer: 'An online store (e-shop, web-store, m-commerce) sells its OWN products/services via a website or app. An online marketplace connects buyers and suppliers — the operator only presents other people’s inventory and provides the transaction facility.',
         explanation: 'Store = own goods; marketplace = others’ goods.'
       },
       {
+        id: "uaqxr9",
         question: 'What are online communities in e-business?',
         answer: 'Groups of people with the same interests or purposes who use the internet to communicate, helping individuals and organizations make transaction decisions.',
         explanation: 'Communities influence buying decisions.'
       },
       {
+        id: "adzcfi",
         question: 'Who are the three market participants in e-business?',
         answer: 'Business (B), Consumer/citizen (C) and Administration (A). Each can be a buyer or a provider, giving 9 possible relationship combinations.',
         explanation: 'B, C and A combine into models like B2C, B2B, etc.'
       },
       {
+        id: "hxofhk",
         question: 'Which relationships belong to e-commerce vs e-government?',
         answer: 'B2C and B2B belong to e-commerce. A2B (administration-to-business) and A2A (administration-to-administration) belong to e-government — both are part of e-business.',
         explanation: 'E-government is the public-administration side of e-business.'
@@ -53,21 +62,22 @@ const businessInformaticsM2 = {
     ],
 
     quiz: [
-      { question: 'E-business is best described as:', options: ['Only buying and selling online', 'Using the Web/Internet to conduct the whole business', 'A type of network', 'A web browser'], correct: 1 },
-      { question: 'Which goes BEYOND e-commerce to include SCM, CRM and order processing?', options: ['E-commerce', 'E-business', 'E-mail', 'E-procurement'], correct: 1 },
-      { question: 'Sourcing products/services electronically to cut costs is called:', options: ['Online store', 'E-procurement', 'Online community', 'B2C'], correct: 1 },
-      { question: 'The three market participants in e-business are:', options: ['Buyer, Seller, Bank', 'Business, Consumer, Administration', 'Client, Server, Router', 'B2B, B2C, C2C'], correct: 1 },
-      { question: 'B2C and B2B belong to ___, while A2B and A2A belong to e-government:', options: ['E-procurement', 'E-commerce', 'E-mail', 'E-learning'], correct: 1 }
+      { id: "1se953", question: 'E-business is best described as:', options: ['Only buying and selling online', 'Using the Web/Internet to conduct the whole business', 'A type of network', 'A web browser'], correct: 1 },
+      { id: "2dteiz", question: 'Which goes BEYOND e-commerce to include SCM, CRM and order processing?', options: ['E-commerce', 'E-business', 'E-mail', 'E-procurement'], correct: 1 },
+      { id: "f14aym", question: 'Sourcing products/services electronically to cut costs is called:', options: ['Online store', 'E-procurement', 'Online community', 'B2C'], correct: 1 },
+      { id: "08zjek", question: 'The three market participants in e-business are:', options: ['Buyer, Seller, Bank', 'Business, Consumer, Administration', 'Client, Server, Router', 'B2B, B2C, C2C'], correct: 1 },
+      { id: "lr62ry", question: 'B2C and B2B belong to ___, while A2B and A2A belong to e-government:', options: ['E-procurement', 'E-commerce', 'E-mail', 'E-learning'], correct: 1 }
     ],
 
     fillBlanks: [
-      { sentence: '_______ is the use of the Web and Internet to run the whole business, beyond simple buying and selling.', answer: 'e-business', hint: 'Broader than e-commerce.' },
-      { sentence: '_______ means sourcing products or services electronically to reduce costs.', answer: 'e-procurement', hint: 'Supplier exchange.' },
-      { sentence: 'An online _______ connects buyers and suppliers, presenting other people’s inventory.', answer: 'marketplace', hint: 'Not a single store.' },
-      { sentence: 'The three e-business participants are Business, Consumer and _______.', answer: 'administration', hint: 'The "A" in the models.' }
+      { id: "xp1bnx", sentence: '_______ is the use of the Web and Internet to run the whole business, beyond simple buying and selling.', answer: 'e-business', hint: 'Broader than e-commerce.' },
+      { id: "mzxk57", sentence: '_______ means sourcing products or services electronically to reduce costs.', answer: 'e-procurement', hint: 'Supplier exchange.' },
+      { id: "gbqqco", sentence: 'An online _______ connects buyers and suppliers, presenting other people’s inventory.', answer: 'marketplace', hint: 'Not a single store.' },
+      { id: "suzmnj", sentence: 'The three e-business participants are Business, Consumer and _______.', answer: 'administration', hint: 'The "A" in the models.' }
     ],
 
     learn: {
+      id: "o9g39t",
       content: `
         <h3>E-Business</h3>
         <p><strong>E-business</strong> is the use of the Web, Internet, intranets and extranets to
@@ -91,47 +101,56 @@ const businessInformaticsM2 = {
 
   // ---- Chapter 8: IT trends & innovations in modern business (U8) ----
   itTrends: {
+    id: "60yh7a",
     name: 'IT Trends & Innovations',
     icon: 'fa-robot',
     color: '#2563eb',
 
     flashcards: [
       {
+        id: "u1z1ok",
         question: 'What is digital transformation?',
         answer: 'A change in the way an organization operates — its systems, processes, workflow and culture. It brings data together across areas and uses automation and AI/ML to connect the customer journey.',
         explanation: '"Digital or die" — it affects every level of the organization.'
       },
       {
+        id: "4vx2jq",
         question: 'Name the key digital technologies driving modern business.',
         answer: '• Mobile technology (AR/VR)\n• Cloud computing\n• Social media\n• Big Data & real-time analytics\n• Sensors & IoT (Internet of Things)\n• Artificial Intelligence (AI)',
         explanation: 'These technologies enable digital transformation.'
       },
       {
+        id: "gmmnj1",
         question: 'What is the difference between ANI and AGI?',
         answer: 'ANI (narrow AI) is programmed for a single task and is what is available today (e.g. Siri, Google Translate). AGI (general AI) can perform as well as or better than humans across a wide range of cognitive tasks.',
         explanation: 'Today’s AI is narrow (ANI); AGI is still aspirational.'
       },
       {
+        id: "4ce835",
         question: 'How is recognition technology used in hotels?',
         answer: 'Retina and fingerprint scanning to unlock hotel rooms (no key card to lose). In future, facial biometrics could automatically authorise payments or check guests out, reducing queues.',
         explanation: 'Improves guest experience and security.'
       },
       {
+        id: "2zlvm0",
         question: 'How are robots used in tourism and travel?',
         answer: 'To perform intelligent tasks — from customer service to data processing. Example: the Amadeus 1A-TA robot (powered by deep learning) acts as a digital assistant, analysing preferences and recommending destinations.',
         explanation: 'Robots augment staff and personalise service.'
       },
       {
+        id: "e77k7q",
         question: 'What is mobile integration in hospitality?',
         answer: 'Using a hotel app for room bookings, restaurant/spa reservations and room service; beacon technology to send location-based promotions; and combining with IoT so guests control room appliances from their phone.',
         explanation: 'The phone becomes the guest’s control centre.'
       },
       {
+        id: "3tp22l",
         question: 'What is the Internet of Things (IoT)?',
         answer: 'A network of sensors and connected devices. In hotels it lets guests control room appliances and enables data collection, often combined with mobile apps.',
         explanation: 'Physical devices connected to the internet.'
       },
       {
+        id: "fzlv2k",
         question: 'Why is digital transformation important ("digital or die")?',
         answer: 'It lets companies operate more effectively, connect the customer journey across data, and stay competitive — affecting every level of the organization.',
         explanation: 'Falling behind digitally threatens the business.'
@@ -139,21 +158,22 @@ const businessInformaticsM2 = {
     ],
 
     quiz: [
-      { question: 'Digital transformation changes an organization’s:', options: ['Only its logo', 'Systems, processes, workflow and culture', 'Only its hardware', 'Nothing'], correct: 1 },
-      { question: 'Narrow AI designed for a single task (e.g. Siri) is called:', options: ['AGI', 'ANI', 'IoT', 'AR'], correct: 1 },
-      { question: 'Which AI can perform across a wide range of cognitive tasks like a human?', options: ['ANI', 'AGI', 'DNS', 'CRM'], correct: 1 },
-      { question: 'Retina and fingerprint scanning to unlock hotel rooms is an example of:', options: ['Robots', 'Recognition technology', 'Cloud computing', 'FTP'], correct: 1 },
-      { question: 'Letting guests control room appliances from their phone uses:', options: ['IoT', 'FTP', 'BIOS', 'LAN'], correct: 0 }
+      { id: "3m3zry", question: 'Digital transformation changes an organization’s:', options: ['Only its logo', 'Systems, processes, workflow and culture', 'Only its hardware', 'Nothing'], correct: 1 },
+      { id: "xsp4l8", question: 'Narrow AI designed for a single task (e.g. Siri) is called:', options: ['AGI', 'ANI', 'IoT', 'AR'], correct: 1 },
+      { id: "ov7sj8", question: 'Which AI can perform across a wide range of cognitive tasks like a human?', options: ['ANI', 'AGI', 'DNS', 'CRM'], correct: 1 },
+      { id: "tr3pbi", question: 'Retina and fingerprint scanning to unlock hotel rooms is an example of:', options: ['Robots', 'Recognition technology', 'Cloud computing', 'FTP'], correct: 1 },
+      { id: "tej7a1", question: 'Letting guests control room appliances from their phone uses:', options: ['IoT', 'FTP', 'BIOS', 'LAN'], correct: 0 }
     ],
 
     fillBlanks: [
-      { sentence: '_______ transformation changes an organization’s systems, processes, workflow and culture.', answer: 'digital', hint: '"___ or die".' },
-      { sentence: '_______ (narrow AI) is designed for a single task, like Siri or Google Translate.', answer: 'ANI', hint: 'Artificial Narrow Intelligence.' },
-      { sentence: '_______ technology uses retina or fingerprint scanning to unlock hotel rooms.', answer: 'recognition', hint: 'Biometrics.' },
-      { sentence: 'The Internet of _______ (IoT) lets guests control room appliances from their phone.', answer: 'things', hint: 'Connected devices.' }
+      { id: "sw52dr", sentence: '_______ transformation changes an organization’s systems, processes, workflow and culture.', answer: 'digital', hint: '"___ or die".' },
+      { id: "86cgte", sentence: '_______ (narrow AI) is designed for a single task, like Siri or Google Translate.', answer: 'ANI', hint: 'Artificial Narrow Intelligence.' },
+      { id: "uecyve", sentence: '_______ technology uses retina or fingerprint scanning to unlock hotel rooms.', answer: 'recognition', hint: 'Biometrics.' },
+      { id: "aupnb8", sentence: 'The Internet of _______ (IoT) lets guests control room appliances from their phone.', answer: 'things', hint: 'Connected devices.' }
     ],
 
     learn: {
+      id: "xgq4ne",
       content: `
         <h3>IT Trends &amp; Innovations in Modern Business</h3>
         <p><strong>Digital transformation</strong> changes how an organization operates — systems,
@@ -178,42 +198,50 @@ const businessInformaticsM2 = {
 
   // ---- Chapter 9: Management Support Systems (U9) ----
   managementSupport: {
+    id: "u1psgy",
     name: 'Management Support Systems',
     icon: 'fa-chart-line',
     color: '#2563eb',
 
     flashcards: [
       {
+        id: "wdkr5d",
         question: 'What are the three types of decisions in an organization?',
         answer: '• Structured — well-defined standard procedure, can be automated ("programmable tasks")\n• Semistructured — has a structured aspect that benefits from analytical models and IS technology\n• Unstructured — one-time, no standard procedure; relies on the decision maker’s intuition (IT offers less support)',
         explanation: 'Semistructured & unstructured involve multiple, often conflicting criteria.'
       },
       {
+        id: "hth2wj",
         question: 'What is a Management Support System (MSS)?',
         answer: 'Different types of information systems developed to support certain aspects and types of decisions — each designed with unique goals and objectives.',
         explanation: 'MSS = umbrella for decision-supporting systems.'
       },
       {
+        id: "svxc9f",
         question: 'What are the four phases of decision making?',
         answer: '1. Intelligence — scan the environment, collect & process data\n2. Design — define criteria and generate alternatives\n3. Choice — select the best feasible alternative\n4. Implementation — carry out the choice and assess performance',
         explanation: 'Intelligence → Design → Choice → Implementation.'
       },
       {
+        id: "uddoxn",
         question: 'What happens in the Intelligence phase?',
         answer: 'The decision maker examines the organization’s environment for conditions that need decisions; data is collected from various sources and processed to discover ways to approach the problem.',
         explanation: 'Finding the problem.'
       },
       {
+        id: "vkzjoa",
         question: 'What happens in the Design phase (and does IT support it)?',
         answer: 'Defines criteria, generates alternatives and the associations between criteria and alternatives. Information technology does NOT support this phase.',
         explanation: 'Creative phase — least IT support.'
       },
       {
+        id: "7y2htt",
         question: 'What is a Decision Support System (DSS)?',
         answer: 'A system that helps sort through possible solutions to choose the best one for the organization; it includes tools for calculating cost-benefit ratios and does follow-up assessment of how a solution performs.',
         explanation: 'Supports the Choice and Implementation phases.'
       },
       {
+        id: "ypk2wp",
         question: 'Give a hospitality example of the decision-making phases (Marriott).',
         answer: 'Intelligence: analyse guest feedback/market trends (reviews, surveys, social media). Design: develop initiatives (e.g. "Serve 360" sustainability, digital keys). Choice: evaluate costs/benefits/ROI (global vs per-hotel strategy). Implementation: roll out and assess.',
         explanation: 'Each phase maps to a real management action.'
@@ -221,21 +249,22 @@ const businessInformaticsM2 = {
     ],
 
     quiz: [
-      { question: 'A decision with a well-defined procedure that can be automated is:', options: ['Structured', 'Semistructured', 'Unstructured', 'Intuitive'], correct: 0 },
-      { question: 'A one-time decision with no standard procedure, relying on intuition, is:', options: ['Structured', 'Semistructured', 'Unstructured', 'Programmable'], correct: 2 },
-      { question: 'The four phases of decision making are Intelligence, Design, Choice and:', options: ['Implementation', 'Evaluation', 'Coding', 'Storage'], correct: 0 },
-      { question: 'Which system helps managers choose the best solution and calculate cost-benefit ratios?', options: ['DSS', 'NIC', 'BIOS', 'LAN'], correct: 0 },
-      { question: 'In which phase does the decision maker scan the environment and collect data?', options: ['Intelligence', 'Design', 'Choice', 'Implementation'], correct: 0 }
+      { id: "4h46u8", question: 'A decision with a well-defined procedure that can be automated is:', options: ['Structured', 'Semistructured', 'Unstructured', 'Intuitive'], correct: 0 },
+      { id: "r4zaqg", question: 'A one-time decision with no standard procedure, relying on intuition, is:', options: ['Structured', 'Semistructured', 'Unstructured', 'Programmable'], correct: 2 },
+      { id: "g7x9m7", question: 'The four phases of decision making are Intelligence, Design, Choice and:', options: ['Implementation', 'Evaluation', 'Coding', 'Storage'], correct: 0 },
+      { id: "3a19ha", question: 'Which system helps managers choose the best solution and calculate cost-benefit ratios?', options: ['DSS', 'NIC', 'BIOS', 'LAN'], correct: 0 },
+      { id: "ywrxf6", question: 'In which phase does the decision maker scan the environment and collect data?', options: ['Intelligence', 'Design', 'Choice', 'Implementation'], correct: 0 }
     ],
 
     fillBlanks: [
-      { sentence: 'A _______ decision has a well-defined procedure and can be automated.', answer: 'structured', hint: 'Programmable.' },
-      { sentence: 'A _______ decision is one-time with no standard procedure and relies on intuition.', answer: 'unstructured', hint: 'Opposite of structured.' },
-      { sentence: 'A Decision _______ System (DSS) helps choose the best solution using cost-benefit tools.', answer: 'support', hint: 'The middle word of DSS.' },
-      { sentence: 'The four decision phases are Intelligence, Design, _______ and Implementation.', answer: 'choice', hint: 'Selecting the best option.' }
+      { id: "y870nr", sentence: 'A _______ decision has a well-defined procedure and can be automated.', answer: 'structured', hint: 'Programmable.' },
+      { id: "xwmlx4", sentence: 'A _______ decision is one-time with no standard procedure and relies on intuition.', answer: 'unstructured', hint: 'Opposite of structured.' },
+      { id: "ae8pjf", sentence: 'A Decision _______ System (DSS) helps choose the best solution using cost-benefit tools.', answer: 'support', hint: 'The middle word of DSS.' },
+      { id: "olnh1k", sentence: 'The four decision phases are Intelligence, Design, _______ and Implementation.', answer: 'choice', hint: 'Selecting the best option.' }
     ],
 
     learn: {
+      id: "tf96no",
       content: `
         <h3>Management Support Systems</h3>
         <h4>Types of decisions</h4>
@@ -256,37 +285,44 @@ const businessInformaticsM2 = {
 
   // ---- Chapter 10: Knowledge-Based & Expert Systems (U10) ----
   expertSystems: {
+    id: "8ca2si",
     name: 'Knowledge-Based & Expert Systems',
     icon: 'fa-brain',
     color: '#2563eb',
 
     flashcards: [
       {
+        id: "2yh9pk",
         question: 'What is an expert system?',
         answer: 'A computer system that emulates (acts in all respects with) the decision-making capabilities of a human expert (Prof. Edward Feigenbaum, Stanford).',
         explanation: 'A branch of artificial intelligence.'
       },
       {
+        id: "o7fcz0",
         question: 'What are the two main components of an expert system?',
         answer: '• Knowledge base — facts obtained from books, magazines, knowledgeable persons, etc.\n• Inference engine — draws conclusions from the knowledge base',
         explanation: 'Knowledge base = what it knows; inference engine = how it reasons.'
       },
       {
+        id: "nxrx1l",
         question: 'What does the inference engine do?',
         answer: 'It draws conclusions from the knowledge base — applying the stored knowledge to reach decisions.',
         explanation: 'The reasoning part of the system.'
       },
       {
+        id: "2md3l0",
         question: 'What is the difference between problem domain and knowledge domain?',
         answer: 'An expert’s knowledge is specific to one problem domain (medicine, finance, engineering…). The knowledge about solving specific problems is the knowledge domain. The problem domain is always a superset of the knowledge domain.',
         explanation: 'Knowledge domain ⊂ problem domain.'
       },
       {
+        id: "x920vv",
         question: 'What are the advantages of expert systems?',
         answer: '• Increased availability\n• Reduced cost\n• Reduced danger\n• Performance\n• Multiple expertise\n• Increased reliability',
         explanation: 'They make expert knowledge widely and cheaply available.'
       },
       {
+        id: "29zqna",
         question: 'What technology may an expert system include?',
         answer: 'Special expert-system languages (e.g. CLIPS), programs, and hardware designed to facilitate their implementation.',
         explanation: 'CLIPS is a classic expert-system language.'
@@ -294,21 +330,22 @@ const businessInformaticsM2 = {
     ],
 
     quiz: [
-      { question: 'An expert system is a computer system that:', options: ['Stores files', 'Emulates the decision-making of a human expert', 'Connects networks', 'Sends email'], correct: 1 },
-      { question: 'The two main components of an expert system are the knowledge base and the:', options: ['CPU', 'Inference engine', 'Firewall', 'Browser'], correct: 1 },
-      { question: 'The part that draws conclusions from the knowledge base is the:', options: ['Knowledge base', 'Inference engine', 'Hard drive', 'NIC'], correct: 1 },
-      { question: 'An expert’s knowledge about solving specific problems is called the:', options: ['Problem domain', 'Knowledge domain', 'Data domain', 'Public domain'], correct: 1 },
-      { question: 'Which is an advantage of expert systems?', options: ['Increased danger', 'Reduced cost', 'Single expertise', 'Lower reliability'], correct: 1 }
+      { id: "4hbufi", question: 'An expert system is a computer system that:', options: ['Stores files', 'Emulates the decision-making of a human expert', 'Connects networks', 'Sends email'], correct: 1 },
+      { id: "12x1rl", question: 'The two main components of an expert system are the knowledge base and the:', options: ['CPU', 'Inference engine', 'Firewall', 'Browser'], correct: 1 },
+      { id: "gkcb0a", question: 'The part that draws conclusions from the knowledge base is the:', options: ['Knowledge base', 'Inference engine', 'Hard drive', 'NIC'], correct: 1 },
+      { id: "89o4vi", question: 'An expert’s knowledge about solving specific problems is called the:', options: ['Problem domain', 'Knowledge domain', 'Data domain', 'Public domain'], correct: 1 },
+      { id: "kclaza", question: 'Which is an advantage of expert systems?', options: ['Increased danger', 'Reduced cost', 'Single expertise', 'Lower reliability'], correct: 1 }
     ],
 
     fillBlanks: [
-      { sentence: 'An expert system emulates the decision-making capabilities of a human _______.', answer: 'expert', hint: 'The system "acts like" this person.' },
-      { sentence: 'The _______ engine draws conclusions from the knowledge base.', answer: 'inference', hint: 'The reasoning part.' },
-      { sentence: 'An expert system stores facts in its knowledge _______.', answer: 'base', hint: 'Knowledge ____.' },
-      { sentence: 'The problem domain is always a _______ of the knowledge domain.', answer: 'superset', hint: 'The bigger set.' }
+      { id: "n8zjl9", sentence: 'An expert system emulates the decision-making capabilities of a human _______.', answer: 'expert', hint: 'The system "acts like" this person.' },
+      { id: "c2mkij", sentence: 'The _______ engine draws conclusions from the knowledge base.', answer: 'inference', hint: 'The reasoning part.' },
+      { id: "3pnr0l", sentence: 'An expert system stores facts in its knowledge _______.', answer: 'base', hint: 'Knowledge ____.' },
+      { id: "t5wgoq", sentence: 'The problem domain is always a _______ of the knowledge domain.', answer: 'superset', hint: 'The bigger set.' }
     ],
 
     learn: {
+      id: "hampr4",
       content: `
         <h3>Knowledge-Based &amp; Expert Systems</h3>
         <p>An <strong>expert system</strong> is a computer system that emulates the decision-making
@@ -329,37 +366,44 @@ const businessInformaticsM2 = {
 
   // ---- Chapter 11: Information Systems Security (U11) ----
   security: {
+    id: "7d67oa",
     name: 'Information Systems Security',
     icon: 'fa-shield-halved',
     color: '#2563eb',
 
     flashcards: [
       {
+        id: "pgni92",
         question: 'What is information systems security?',
         answer: 'The protection of information systems against unauthorized access to or modification of information (in storage, processing or transit), and against denial of service to authorized users — including measures to detect, document and counter such threats. (NIST)',
         explanation: 'Protects confidentiality, integrity and availability.'
       },
       {
+        id: "kc6iu5",
         question: 'What is malware?',
         answer: 'Malicious software — any program or code created to harm a computer, network or server. It is the most common type of cyberattack and includes ransomware, trojans, spyware, viruses, worms, keyloggers, bots and cryptojacking.',
         explanation: 'Umbrella term for malicious code.'
       },
       {
+        id: "txo84w",
         question: 'What is ransomware?',
         answer: 'Malware that denies legitimate users access to their system and demands a payment (ransom) — often in untraceable cryptocurrency. It blocks the hard drive or encrypts files; victims may not regain access even after paying.',
         explanation: 'Exploits vulnerabilities to lock/encrypt data.'
       },
       {
+        id: "o4h461",
         question: 'What is a DoS / DDoS attack?',
         answer: 'A Denial-of-Service attack floods a network with false requests to disrupt business operations, so users cannot perform routine tasks (email, websites, accounts). It costs time, money and resources to restore operations.',
         explanation: 'Goal is disruption, not usually data theft.'
       },
       {
+        id: "yq7tvs",
         question: 'What is phishing?',
         answer: 'A cyberattack that uses email, SMS, phone, social media and social-engineering techniques to entice a victim into sharing sensitive information such as passwords or account numbers.',
         explanation: 'Relies on tricking the human, not the machine.'
       },
       {
+        id: "ev7g94",
         question: 'How can an organization protect against cyber attacks?',
         answer: '• Train staff\n• Keep software and systems up to date\n• Ensure endpoint protection\n• Install a firewall\n• Back up data\n• Control access to systems\n• Secure the Wi-Fi',
         explanation: 'Layered defence: people + technology + process.'
@@ -367,21 +411,22 @@ const businessInformaticsM2 = {
     ],
 
     quiz: [
-      { question: 'Information systems security protects against unauthorized access, modification and:', options: ['Marketing', 'Denial of service to authorized users', 'Data entry', 'Software updates'], correct: 1 },
-      { question: 'Malware that locks/encrypts files and demands payment is:', options: ['Phishing', 'Ransomware', 'DoS', 'Firewall'], correct: 1 },
-      { question: 'An attack that floods a network with false requests to disrupt operations is a:', options: ['Phishing', 'DoS / DDoS', 'Ransomware', 'Trojan'], correct: 1 },
-      { question: 'Tricking a victim via fake email/SMS into sharing passwords is:', options: ['Phishing', 'Malware', 'DoS', 'Encryption'], correct: 0 },
-      { question: 'Which is the most common type of cyberattack (umbrella term)?', options: ['Malware', 'Firewall', 'Backup', 'VPN'], correct: 0 }
+      { id: "1w1u64", question: 'Information systems security protects against unauthorized access, modification and:', options: ['Marketing', 'Denial of service to authorized users', 'Data entry', 'Software updates'], correct: 1 },
+      { id: "kid6d8", question: 'Malware that locks/encrypts files and demands payment is:', options: ['Phishing', 'Ransomware', 'DoS', 'Firewall'], correct: 1 },
+      { id: "vteikm", question: 'An attack that floods a network with false requests to disrupt operations is a:', options: ['Phishing', 'DoS / DDoS', 'Ransomware', 'Trojan'], correct: 1 },
+      { id: "y8c64h", question: 'Tricking a victim via fake email/SMS into sharing passwords is:', options: ['Phishing', 'Malware', 'DoS', 'Encryption'], correct: 0 },
+      { id: "mb8ie8", question: 'Which is the most common type of cyberattack (umbrella term)?', options: ['Malware', 'Firewall', 'Backup', 'VPN'], correct: 0 }
     ],
 
     fillBlanks: [
-      { sentence: '_______ is malware that blocks access or encrypts files and demands a ransom.', answer: 'ransomware', hint: 'Pay to regain access.' },
-      { sentence: 'A _______ attack floods a network with false requests to disrupt operations.', answer: 'DoS', hint: 'Denial of Service.' },
-      { sentence: '_______ uses fake emails or SMS and social engineering to steal passwords.', answer: 'phishing', hint: 'Tricks the human.' },
-      { sentence: '_______ is the umbrella term for any malicious software (viruses, worms, trojans…).', answer: 'malware', hint: 'Malicious software.' }
+      { id: "3d4hbd", sentence: '_______ is malware that blocks access or encrypts files and demands a ransom.', answer: 'ransomware', hint: 'Pay to regain access.' },
+      { id: "2xf8uk", sentence: 'A _______ attack floods a network with false requests to disrupt operations.', answer: 'DoS', hint: 'Denial of Service.' },
+      { id: "1ax9xm", sentence: '_______ uses fake emails or SMS and social engineering to steal passwords.', answer: 'phishing', hint: 'Tricks the human.' },
+      { id: "st7xhu", sentence: '_______ is the umbrella term for any malicious software (viruses, worms, trojans…).', answer: 'malware', hint: 'Malicious software.' }
     ],
 
     learn: {
+      id: "n0i0tt",
       content: `
         <h3>Information Systems Security</h3>
         <p><strong>Information systems security</strong> is protecting information systems against

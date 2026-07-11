@@ -1,95 +1,114 @@
 {
   "accountingCycle": {
+    "id": "31q4l7",
     "name": "Accounting Cycle",
     "icon": "fa-rotate",
     "color": "#0891b2",
     "flashcards": [
       {
+        "id": "22m0ta",
         "question": "What is an accounting cycle?",
         "answer": "The accounting cycle is the sequence of accounting procedures used to record, process, and report financial transactions during an accounting period, from initial transaction to preparation of financial statements and closing entries.",
         "explanation": "The complete process of accounting."
       },
       {
+        "id": "8iw0uv",
         "question": "What is cash basis accounting?",
         "answer": "Cash basis accounting records revenues and expenses when cash is received or paid, regardless of when the transaction actually occurred.",
         "explanation": "Simple method based on cash flow."
       },
       {
+        "id": "8mor9p",
         "question": "What is accrual basis accounting?",
         "answer": "Accrual basis accounting records revenues when earned and expenses when incurred, regardless of when cash is received or paid.",
         "explanation": "GAAP requires accrual basis for most businesses."
       },
       {
+        "id": "6z53eb",
         "question": "What is the posting procedure for special journals?",
         "answer": "In special journals, individual transactions are not posted separately. Instead, column totals are posted periodically to the general ledger, reducing the number of postings required.",
         "explanation": "Efficiency in recording transactions."
       },
       {
+        "id": "qvkpxc",
         "question": "What is a working trial balance?",
         "answer": "A working trial balance is an internal document that lists all account balances before adjustments.\n\nPurpose:\n• Verify debits equal credits\n• Provide basis for adjusting entries\n• Help prepare financial statements",
         "explanation": "First step before adjustments."
       },
       {
+        "id": "e6bbnm",
         "question": "What is the purpose of adjusting entries?",
         "answer": "Adjusting entries ensure that revenues and expenses are recognized in the correct accounting period under accrual accounting.",
         "explanation": "Match revenues with expenses."
       },
       {
+        "id": "je08au",
         "question": "What is the purpose of correcting entries?",
         "answer": "Correcting entries are used to fix errors made in previously recorded transactions.",
         "explanation": "Fix mistakes in the records."
       },
       {
+        "id": "ynvvcr",
         "question": "What are typical adjustment areas for hospitality businesses at month end?",
         "answer": "Typical adjustments include:\n• Accrued payroll\n• Inventory adjustments\n• Prepaid expenses\n• Depreciation\n• Unearned revenues\n• Accrued expenses",
         "explanation": "Common end-of-period adjustments."
       },
       {
+        "id": "sguwqf",
         "question": "Why adjust Cost of Food Sales after storeroom issues are recorded?",
         "answer": "Because storeroom issues represent actual usage, adjustments ensure that Cost of Food Sales reflects the true cost of food consumed, not just purchased.",
         "explanation": "Match actual consumption to the period."
       },
       {
+        "id": "i5p3bu",
         "question": "Why does a business have unpaid payroll on payday?",
         "answer": "Because employees earn wages up to the end of the pay period, but payment may occur later, creating accrued payroll expense that has not yet been paid.",
         "explanation": "Timing difference between earning and paying."
       },
       {
+        "id": "i5b77b",
         "question": "What does the computerized year-end process accomplish?",
         "answer": "The year-end process:\n• Automatically posts closing entries\n• Resets temporary accounts to zero\n• Transfers net income/loss to retained earnings",
         "explanation": "Prepares accounts for the new year."
       },
       {
+        "id": "qebk6z",
         "question": "What does the post-closing trial balance signify?",
         "answer": "Post-closing trial balance confirms:\n• Only permanent accounts remain open\n• Debits equal credits\n• The ledger is ready for the next accounting period",
         "explanation": "Final verification before new period."
       },
       {
+        "id": "mr9g8r",
         "question": "What are the 10 steps of the Accounting Cycle?",
         "answer": "1. Analyze transactions\n2. Journalize in general/special journals\n3. Post to ledger\n4. Prepare working trial balance\n5. Journalize adjusting entries\n6. Post adjusting entries\n7. Prepare adjusted trial balance\n8. Prepare financial statements\n9. Journalize & post closing entries\n10. Prepare post-closing trial balance",
         "explanation": "Complete cycle from transaction to closing."
       },
       {
+        "id": "28cewz",
         "question": "What are the four types of Adjusting Entries?",
         "answer": "1. Prepaid Expenses (Deferrals) - paid now, expense later\n2. Unearned Revenue (Deferrals) - received now, earn later\n3. Accrued Expenses - incurred but not yet paid\n4. Accrued Revenue - earned but not yet received\n\n+ Depreciation adjustments",
         "explanation": "Deferrals and accruals are key categories."
       },
       {
+        "id": "mt063b",
         "question": "What is the difference between Temporary and Permanent accounts?",
         "answer": "TEMPORARY (Nominal):\n• Revenue, Expenses, Dividends\n• Closed to zero at year end\n• Start fresh each period\n\nPERMANENT (Real):\n• Assets, Liabilities, Equity\n• NOT closed\n• Balances carry forward",
         "explanation": "Temporary accounts reset; permanent accounts continue."
       },
       {
+        "id": "c27y3s",
         "question": "What are the four types of Special Journals?",
         "answer": "1. Sales Journal - credit sales only\n2. Purchases Journal - credit purchases only\n3. Cash Receipts Journal - all cash coming in\n4. Cash Disbursements Journal - all cash going out\n\nGeneral Journal - for everything else",
         "explanation": "Special journals improve efficiency."
       },
       {
+        "id": "252sil",
         "question": "What is the Matching Principle?",
         "answer": "The Matching Principle requires that expenses be recognized in the same period as the revenues they helped generate.\n\nExample: If you sell products in January, the cost of those products should be expensed in January, not when purchased or paid.",
         "explanation": "Match expenses with related revenues."
       },
       {
+        "id": "mcg7b8",
         "question": "What is the Revenue Recognition Principle?",
         "answer": "Revenue should be recognized when:\n1. It is earned (goods delivered or services performed)\n2. It is realizable (payment is expected)\n\nNOT when cash is received (that's cash basis, not GAAP).",
         "explanation": "Recognize revenue when earned, not when paid."
@@ -97,6 +116,7 @@
     ],
     "quiz": [
       {
+        "id": "1wj9xn",
         "question": "Cash basis accounting records revenue when:",
         "options": [
           "Earned",
@@ -107,6 +127,7 @@
         "correct": 1
       },
       {
+        "id": "ac8ro0",
         "question": "Accrual basis accounting records revenue when:",
         "options": [
           "Cash is received",
@@ -117,6 +138,7 @@
         "correct": 1
       },
       {
+        "id": "bsf7ru",
         "question": "A working trial balance is prepared:",
         "options": [
           "After closing entries",
@@ -127,6 +149,7 @@
         "correct": 1
       },
       {
+        "id": "slhqp6",
         "question": "Adjusting entries ensure:",
         "options": [
           "Cash is correct",
@@ -137,6 +160,7 @@
         "correct": 1
       },
       {
+        "id": "3jk2oh",
         "question": "Correcting entries are used to:",
         "options": [
           "Adjust for timing",
@@ -147,6 +171,7 @@
         "correct": 1
       },
       {
+        "id": "7gbxbi",
         "question": "Which is a typical month-end adjustment?",
         "options": [
           "Cash deposits",
@@ -157,6 +182,7 @@
         "correct": 1
       },
       {
+        "id": "4v3gpm",
         "question": "The year-end process resets which accounts to zero?",
         "options": [
           "Permanent accounts",
@@ -167,6 +193,7 @@
         "correct": 1
       },
       {
+        "id": "5mno60",
         "question": "The post-closing trial balance includes:",
         "options": [
           "All accounts",
@@ -177,6 +204,7 @@
         "correct": 2
       },
       {
+        "id": "7uerrh",
         "question": "GAAP requires which accounting method?",
         "options": [
           "Cash basis",
@@ -187,6 +215,7 @@
         "correct": 1
       },
       {
+        "id": "4yv3mj",
         "question": "Special journals reduce posting by:",
         "options": [
           "Eliminating all posts",
@@ -197,6 +226,7 @@
         "correct": 1
       },
       {
+        "id": "wulxut",
         "question": "How many steps are in the accounting cycle?",
         "options": [
           "5",
@@ -207,6 +237,7 @@
         "correct": 2
       },
       {
+        "id": "po4wrf",
         "question": "Prepaid expenses are an example of:",
         "options": [
           "Accrued expense",
@@ -217,6 +248,7 @@
         "correct": 1
       },
       {
+        "id": "f0qz60",
         "question": "Which accounts are closed at year end?",
         "options": [
           "Assets",
@@ -227,6 +259,7 @@
         "correct": 2
       },
       {
+        "id": "goncs5",
         "question": "The Matching Principle requires:",
         "options": [
           "Cash payments match receipts",
@@ -237,6 +270,7 @@
         "correct": 1
       },
       {
+        "id": "wcbs78",
         "question": "Accrued expenses are:",
         "options": [
           "Paid in advance",
@@ -249,57 +283,68 @@
     ],
     "fillBlanks": [
       {
+        "id": "2dv8jm",
         "sentence": "_______ basis accounting records revenue when cash is received.",
         "answer": "Cash",
         "hint": "Money in hand..."
       },
       {
+        "id": "ssp7c2",
         "sentence": "_______ basis accounting records revenue when earned.",
         "answer": "Accrual",
         "hint": "When it happens, not when paid..."
       },
       {
+        "id": "a42cpt",
         "sentence": "_______ entries fix errors in previously recorded transactions.",
         "answer": "Correcting",
         "hint": "To fix mistakes..."
       },
       {
+        "id": "f12c18",
         "sentence": "The year-end process resets _______ accounts to zero.",
         "answer": "temporary",
         "hint": "Revenue and expense accounts..."
       },
       {
+        "id": "agjfcp",
         "sentence": "The post-closing trial balance shows only _______ accounts.",
         "answer": "permanent",
         "hint": "Assets, liabilities, equity..."
       },
       {
+        "id": "ds508w",
         "sentence": "The accounting cycle has _______ steps.",
         "answer": "ten",
         "hint": "10..."
       },
       {
+        "id": "n8fs6w",
         "sentence": "_______ expenses are paid in advance but expensed later.",
         "answer": "Prepaid",
         "hint": "Paid before used..."
       },
       {
+        "id": "xx410y",
         "sentence": "The _______ Principle requires expenses to match related revenues.",
         "answer": "Matching",
         "hint": "Pairing up..."
       },
       {
+        "id": "us8rns",
         "sentence": "_______ revenue is cash received before it is earned.",
         "answer": "Unearned",
         "hint": "Not yet earned..."
       },
       {
+        "id": "jrlhzi",
         "sentence": "Revenue, expenses, and dividends are _______ accounts.",
         "answer": "temporary",
         "hint": "Closed each period..."
       }
     ],
     "learn": {
+      "id": "lblup3",
       "title": "Accounting Cycle and Adjustments",
       "content": "\n            <h3>📚 Chapter Overview: The Accounting Cycle</h3>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2));\">\n                <h4 style=\"font-size: 1.2rem;\">🔄 The Accounting Cycle = 10 Steps</h4>\n                <p style=\"margin: 0;\">From transactions → to financial statements → to closing</p>\n            </div>\n            \n            <p>The accounting cycle is the complete sequence of procedures used to record, process, and report financial transactions during an accounting period.</p>\n            \n            <hr>\n            \n            <h4>📊 Two Accounting Methods</h4>\n            \n            <div class=\"formula-box\">\n                <strong>Cash Basis Accounting:</strong><br>\n                • Record revenue when CASH IS RECEIVED<br>\n                • Record expense when CASH IS PAID<br>\n                • Simple but not GAAP compliant<br>\n                • Used by small businesses, individuals<br><br>\n                \n                <strong>Accrual Basis Accounting:</strong><br>\n                • Record revenue when EARNED<br>\n                • Record expense when INCURRED<br>\n                • Required by GAAP<br>\n                • Used by most businesses\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Cash vs Accrual</h4>\n                <p>Hotel provides room service on Dec 31, guest pays on Jan 5:</p>\n                <p><strong>Cash Basis:</strong> Record revenue in January (when paid)</p>\n                <p><strong>Accrual Basis:</strong> Record revenue in December (when earned)</p>\n            </div>\n            \n            <hr>\n            \n            <h4>🔄 The 10 Steps of the Accounting Cycle</h4>\n            \n            <div class=\"formula-box\">\n                <strong>Step 1:</strong> Analyze business transactions<br><br>\n                <strong>Step 2:</strong> Journalize transactions in journals<br><br>\n                <strong>Step 3:</strong> Post to the general ledger<br><br>\n                <strong>Step 4:</strong> Prepare working trial balance<br><br>\n                <strong>Step 5:</strong> Journalize adjusting entries<br><br>\n                <strong>Step 6:</strong> Post adjusting entries to ledger<br><br>\n                <strong>Step 7:</strong> Prepare adjusted trial balance<br><br>\n                <strong>Step 8:</strong> Prepare financial statements<br><br>\n                <strong>Step 9:</strong> Journalize and post closing entries<br><br>\n                <strong>Step 10:</strong> Prepare post-closing trial balance\n            </div>\n            \n            <hr>\n            \n            <h4>📒 Types of Journals</h4>\n            \n            <h5>Special Journals (for efficiency):</h5>\n            <ul>\n                <li><strong>Sales Journal:</strong> Credit sales only</li>\n                <li><strong>Purchases Journal:</strong> Credit purchases only</li>\n                <li><strong>Cash Receipts Journal:</strong> All cash received</li>\n                <li><strong>Cash Disbursements Journal:</strong> All cash paid out</li>\n            </ul>\n            \n            <h5>General Journal:</h5>\n            <p>For all transactions that don't fit in special journals (adjusting entries, correcting entries, unusual transactions).</p>\n            \n            <p><strong>Advantage of Special Journals:</strong> Column totals are posted periodically instead of posting each transaction separately - saves time!</p>\n            \n            <hr>\n            \n            <h4>📝 Types of Entries</h4>\n            \n            <h5>1. Adjusting Entries</h5>\n            <p>Ensure revenues and expenses are recognized in the correct period (accrual basis).</p>\n            \n            <div class=\"formula-box\">\n                <strong>4 Types of Adjusting Entries:</strong><br><br>\n                \n                <strong>DEFERRALS (paid/received now, recognize later):</strong><br>\n                • Prepaid Expenses - paid now, expense later<br>\n                &nbsp;&nbsp;Example: Prepaid insurance, prepaid rent<br><br>\n                • Unearned Revenue - received now, earn later<br>\n                &nbsp;&nbsp;Example: Advance deposits, gift cards<br><br>\n                \n                <strong>ACCRUALS (recognize now, pay/receive later):</strong><br>\n                • Accrued Expenses - incurred but not yet paid<br>\n                &nbsp;&nbsp;Example: Wages payable, utilities payable<br><br>\n                • Accrued Revenue - earned but not yet received<br>\n                &nbsp;&nbsp;Example: Interest receivable\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Adjusting Entry Example: Prepaid Insurance</h4>\n                <p>Hotel paid $12,000 for 12 months insurance on Jan 1:</p>\n                <p>Monthly adjustment (expense $1,000):</p>\n                <p style=\"font-family: monospace;\">\n                Dr. Insurance Expense &nbsp;&nbsp;&nbsp; $1,000<br>\n                &nbsp;&nbsp;&nbsp;Cr. Prepaid Insurance &nbsp;&nbsp;&nbsp; $1,000\n                </p>\n            </div>\n            \n            <h5>2. Correcting Entries</h5>\n            <p>Fix errors in previously recorded transactions.</p>\n            \n            <h5>3. Closing Entries</h5>\n            <p>Reset temporary accounts to zero at year end.</p>\n            \n            <hr>\n            \n            <h4>📊 Temporary vs Permanent Accounts</h4>\n            \n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(8,145,178,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Temporary (Nominal)</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Permanent (Real)</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Revenue accounts</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Asset accounts</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Expense accounts</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Liability accounts</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Dividends</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Equity accounts</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>CLOSED</strong> at year end</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>NOT CLOSED</strong> - carry forward</td>\n                </tr>\n            </table>\n            \n            <hr>\n            \n            <h4>🔒 The Closing Process</h4>\n            \n            <div class=\"formula-box\">\n                <strong>Closing Entries (in order):</strong><br><br>\n                <strong>1.</strong> Close Revenue accounts to Income Summary<br>\n                Dr. Revenue &nbsp;&nbsp;&nbsp; Cr. Income Summary<br><br>\n                \n                <strong>2.</strong> Close Expense accounts to Income Summary<br>\n                Dr. Income Summary &nbsp;&nbsp;&nbsp; Cr. Expenses<br><br>\n                \n                <strong>3.</strong> Close Income Summary to Retained Earnings<br>\n                (Net income or loss transferred)<br><br>\n                \n                <strong>4.</strong> Close Dividends to Retained Earnings<br>\n                Dr. Retained Earnings &nbsp;&nbsp;&nbsp; Cr. Dividends\n            </div>\n            \n            <hr>\n            \n            <h4>⚖️ Key Accounting Principles</h4>\n            \n            <h5>Revenue Recognition Principle:</h5>\n            <p>Recognize revenue when earned AND realizable (not when cash received).</p>\n            \n            <h5>Matching Principle:</h5>\n            <p>Recognize expenses in the same period as the revenues they helped generate.</p>\n            \n            <hr>\n            \n            <h4>🏨 Hospitality-Specific Adjustments</h4>\n            <ul>\n                <li><strong>Accrued Payroll:</strong> Employees earn wages but payday is later</li>\n                <li><strong>Food Inventory:</strong> Adjust Cost of Food Sales for actual usage</li>\n                <li><strong>Depreciation:</strong> Allocate cost of FF&E over useful life</li>\n                <li><strong>Prepaid Expenses:</strong> Insurance, licenses, contracts</li>\n                <li><strong>Unearned Revenue:</strong> Advance deposits, gift cards</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>✅ Trial Balances</h4>\n            \n            <h5>Working Trial Balance:</h5>\n            <p>Lists all account balances BEFORE adjustments. Verifies debits = credits.</p>\n            \n            <h5>Adjusted Trial Balance:</h5>\n            <p>Lists all account balances AFTER adjusting entries.</p>\n            \n            <h5>Post-Closing Trial Balance:</h5>\n            <p>Lists only PERMANENT accounts after closing. Confirms ledger is ready for new period.</p>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>Cash basis = record when cash moves; Accrual = record when earned/incurred</li>\n                    <li>GAAP requires accrual basis accounting</li>\n                    <li>10 steps in the accounting cycle</li>\n                    <li>Deferrals = paid/received now, recognize later</li>\n                    <li>Accruals = recognize now, pay/receive later</li>\n                    <li>Temporary accounts (Revenue, Expenses, Dividends) are CLOSED</li>\n                    <li>Permanent accounts (Assets, Liabilities, Equity) carry forward</li>\n                </ul>\n            </div>\n        "
     }
@@ -535,111 +580,133 @@
     }
   },
   "hotelStatements": {
+    "id": "4nbwng",
     "name": "Hotel Income Statements",
     "icon": "fa-hotel",
     "color": "#ea580c",
     "flashcards": [
       {
+        "id": "adpjp2",
         "question": "What are the components of labor cost in the hotel industry?",
         "answer": "Labor cost includes:\n• Wages and salaries\n• Employee benefits\n• Payroll taxes\n• Service charge distributions\n• Employee meals and uniforms",
         "explanation": "Total cost of employing workers."
       },
       {
+        "id": "e791xz",
         "question": "What is the external statement showing revenues and expenses given to shareholders?",
         "answer": "The Income Statement (also called Profit and Loss Statement or P&L).",
         "explanation": "External financial reporting."
       },
       {
+        "id": "pqsauz",
         "question": "What revenue sources might be in Other Operated Departments?",
         "answer": "Revenue sources include:\n• Spa operations\n• Golf courses\n• Parking\n• Laundry/dry cleaning\n• Health clubs\n• Retail shops\n• Recreational facilities",
         "explanation": "Ancillary hotel services."
       },
       {
+        "id": "cs0dyi",
         "question": "What revenue sources might be in Rentals and Other Income?",
         "answer": "This includes:\n• Space rentals\n• Commission income\n• Vending machine income\n• Lease income\n• Miscellaneous non-operating revenues",
         "explanation": "Non-room, non-F&B revenues."
       },
       {
+        "id": "x0v26y",
         "question": "What types of personnel might be in the A&G department?",
         "answer": "Administrative and General (A&G) includes:\n• General management\n• Accounting staff\n• Human resources\n• Information systems\n• Clerical personnel",
         "explanation": "Back-office support functions."
       },
       {
+        "id": "mvhjmv",
         "question": "What is a direct expense?",
         "answer": "A direct expense is an expense that can be specifically identified with and charged to a particular department.",
         "explanation": "Traceable to a specific department."
       },
       {
+        "id": "52iyoj",
         "question": "What types of personnel might be in Sales and Marketing?",
         "answer": "Personnel include:\n• Sales managers\n• Marketing managers\n• Advertising staff\n• Public relations staff\n• Reservation sales personnel",
         "explanation": "Revenue-generating support staff."
       },
       {
+        "id": "3rxwno",
         "question": "Which department gets charged for repairs to Rooms department furniture?",
         "answer": "The Rooms department will be charged for repairs to its furniture.",
         "explanation": "Direct expense principle."
       },
       {
+        "id": "1yig2u",
         "question": "What is the internal income statement given to managers called?",
         "answer": "The Statement of Income and Expense (also called Departmental Income Statement).",
         "explanation": "More detailed than external statement."
       },
       {
+        "id": "2cpxsj",
         "question": "What four expenses are excluded from the internal income statement?",
         "answer": "Four excluded expenses:\n1. Depreciation\n2. Interest\n3. Income taxes\n4. Rent or lease expense (or replacement reserve)",
         "explanation": "These are handled at corporate level."
       },
       {
+        "id": "ggnfeh",
         "question": "Which departments are Undistributed Operating Expenses?",
         "answer": "Undistributed Operating Expenses include:\n• Administrative and General\n• Sales and Marketing\n• Property Operations and Maintenance\n• Utilities",
         "explanation": "Expenses not directly tied to revenue departments."
       },
       {
+        "id": "fm2cet",
         "question": "What is Replacement Reserves on the internal statement?",
         "answer": "Replacement Reserves represent funds set aside for future replacement of furniture, fixtures, and equipment (FF&E).",
         "explanation": "Planning for future capital needs."
       },
       {
+        "id": "0y27sn",
         "question": "What ratio measures actual room sales against potential room sales?",
         "answer": "The Occupancy Percentage.",
         "explanation": "Key hotel performance metric."
       },
       {
+        "id": "vilzfu",
         "question": "What is gaming revenue in a casino operation?",
         "answer": "Gaming revenue is the net amount retained by the casino, calculated as total wagers minus winnings paid to players.",
         "explanation": "What the casino keeps."
       },
       {
+        "id": "slsfvf",
         "question": "When is Complimentary Allowances used in a casino?",
         "answer": "It is used when complimentary goods or services (rooms, food, entertainment) are provided to players and must be recorded as a reduction of gaming revenue.",
         "explanation": "Comps reduce reported gaming revenue."
       },
       {
+        "id": "oi8bms",
         "question": "What is USALI?",
         "answer": "USALI = Uniform System of Accounts for the Lodging Industry\n\nA standardized accounting system for hotels that:\n• Provides consistent format for financial reporting\n• Allows benchmarking across properties\n• Separates operated departments from undistributed expenses\n• Industry standard since 1926",
         "explanation": "The gold standard for hotel accounting."
       },
       {
+        "id": "2nxmi6",
         "question": "What is RevPAR and how is it calculated?",
         "answer": "RevPAR = Revenue Per Available Room\n\nTwo calculation methods:\n1. RevPAR = Total Room Revenue ÷ Available Rooms\n2. RevPAR = ADR × Occupancy %\n\nMeasures how well a hotel fills rooms at an optimal rate.",
         "explanation": "Key performance indicator for rooms department."
       },
       {
+        "id": "g76fzp",
         "question": "What is GOPPAR?",
         "answer": "GOPPAR = Gross Operating Profit Per Available Room\n\nGOPPAR = GOP ÷ Available Rooms\n\nMeasures overall hotel profitability on a per-room basis. Better than RevPAR because it accounts for all revenues AND expenses.",
         "explanation": "More comprehensive than RevPAR."
       },
       {
+        "id": "yol9p0",
         "question": "What is ADR (Average Daily Rate)?",
         "answer": "ADR = Total Room Revenue ÷ Rooms Sold\n\nMeasures the average price guests pay per room. Used with occupancy to calculate RevPAR.\n\nHigher ADR = higher room rates",
         "explanation": "Average price per occupied room."
       },
       {
+        "id": "oyr19b",
         "question": "What is the difference between Operated and Undistributed Departments?",
         "answer": "OPERATED DEPARTMENTS:\n• Generate revenue directly\n• Rooms, F&B, Spa, Golf, etc.\n• Have their own P&L statement\n\nUNDISTRIBUTED DEPARTMENTS:\n• Support operations but don't generate direct revenue\n• A&G, Sales & Marketing, Maintenance, Utilities\n• Costs allocated across property",
         "explanation": "Revenue-generating vs support functions."
       },
       {
+        "id": "fgkdtj",
         "question": "What is GOP (Gross Operating Profit)?",
         "answer": "GOP = Total Revenue − Department Expenses − Undistributed Expenses\n\nGOP represents profit from operations BEFORE:\n• Management fees\n• Fixed charges (rent, insurance, property tax)\n• Interest and depreciation\n\nKey measure of operational performance.",
         "explanation": "Profit from day-to-day operations."
@@ -647,6 +714,7 @@
     ],
     "quiz": [
       {
+        "id": "q18hxu",
         "question": "Labor cost does NOT include:",
         "options": [
           "Wages",
@@ -657,6 +725,7 @@
         "correct": 2
       },
       {
+        "id": "l4kpxm",
         "question": "The external income statement is given to:",
         "options": [
           "Employees only",
@@ -667,6 +736,7 @@
         "correct": 1
       },
       {
+        "id": "gval9n",
         "question": "A direct expense can be:",
         "options": [
           "Allocated to all departments",
@@ -677,6 +747,7 @@
         "correct": 1
       },
       {
+        "id": "hqutkx",
         "question": "Which is an Undistributed Operating Expense?",
         "options": [
           "Room revenue",
@@ -687,6 +758,7 @@
         "correct": 2
       },
       {
+        "id": "trykze",
         "question": "Replacement Reserves are for:",
         "options": [
           "Employee salaries",
@@ -697,6 +769,7 @@
         "correct": 2
       },
       {
+        "id": "y7696f",
         "question": "Occupancy Percentage measures:",
         "options": [
           "Food sales vs cost",
@@ -707,6 +780,7 @@
         "correct": 1
       },
       {
+        "id": "xmfnis",
         "question": "Gaming revenue equals:",
         "options": [
           "Total wagers",
@@ -717,6 +791,7 @@
         "correct": 1
       },
       {
+        "id": "988sfa",
         "question": "Which is excluded from the internal income statement?",
         "options": [
           "Labor cost",
@@ -727,6 +802,7 @@
         "correct": 2
       },
       {
+        "id": "pm35uy",
         "question": "A&G department includes:",
         "options": [
           "Housekeeping",
@@ -737,6 +813,7 @@
         "correct": 2
       },
       {
+        "id": "cfmba5",
         "question": "Complimentary Allowances reduce:",
         "options": [
           "Labor cost",
@@ -747,6 +824,7 @@
         "correct": 1
       },
       {
+        "id": "4hhnme",
         "question": "USALI stands for:",
         "options": [
           "United States Accounting Law Institute",
@@ -757,6 +835,7 @@
         "correct": 1
       },
       {
+        "id": "qwrjbx",
         "question": "RevPAR is calculated as:",
         "options": [
           "Room Revenue × Occupancy",
@@ -767,6 +846,7 @@
         "correct": 1
       },
       {
+        "id": "y7s250",
         "question": "GOP stands for:",
         "options": [
           "General Operating Plan",
@@ -777,6 +857,7 @@
         "correct": 1
       },
       {
+        "id": "kewluk",
         "question": "Which is an Operated Department?",
         "options": [
           "Utilities",
@@ -787,6 +868,7 @@
         "correct": 2
       },
       {
+        "id": "y4lxcr",
         "question": "ADR is calculated as:",
         "options": [
           "Room Revenue ÷ Available Rooms",
@@ -799,57 +881,68 @@
     ],
     "fillBlanks": [
       {
+        "id": "93ufw6",
         "sentence": "_______ Percentage measures actual room sales against potential.",
         "answer": "Occupancy",
         "hint": "How full is the hotel..."
       },
       {
+        "id": "16mtb4",
         "sentence": "Gaming revenue = Total wagers minus _______ paid to players.",
         "answer": "winnings",
         "hint": "What players win..."
       },
       {
+        "id": "ok5ewl",
         "sentence": "A _______ expense can be specifically charged to a department.",
         "answer": "direct",
         "hint": "Traceable, not indirect..."
       },
       {
+        "id": "egvp9j",
         "sentence": "Replacement _______ are funds set aside for future FF&E.",
         "answer": "Reserves",
         "hint": "Money saved for later..."
       },
       {
+        "id": "a56asd",
         "sentence": "A&G stands for Administrative and _______.",
         "answer": "General",
         "hint": "Admin and..."
       },
       {
+        "id": "um0gja",
         "sentence": "USALI stands for Uniform System of Accounts for the _______ Industry.",
         "answer": "Lodging",
         "hint": "Hotels, resorts..."
       },
       {
+        "id": "0ty3iw",
         "sentence": "RevPAR = ADR × _______ %",
         "answer": "Occupancy",
         "hint": "How full..."
       },
       {
+        "id": "rsvd8t",
         "sentence": "GOP stands for Gross _______ Profit.",
         "answer": "Operating",
         "hint": "From operations..."
       },
       {
+        "id": "yotepy",
         "sentence": "ADR = Room Revenue ÷ Rooms _______.",
         "answer": "Sold",
         "hint": "Occupied rooms..."
       },
       {
+        "id": "owvrkm",
         "sentence": "_______ departments generate revenue directly (Rooms, F&B).",
         "answer": "Operated",
         "hint": "They operate and make money..."
       }
     ],
     "learn": {
+      "id": "7c6oem",
       "title": "Hotel Income Statements & Departments",
       "content": "\n            <h3>📚 Chapter Overview: Hotel Income Statements</h3>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(234, 88, 12, 0.1), rgba(234, 88, 12, 0.2)); border-left-color: #ea580c;\">\n                <h4 style=\"color: #ea580c; font-size: 1.2rem;\">🏨 USALI - Uniform System of Accounts for Lodging</h4>\n                <p style=\"margin: 0;\">Industry standard since 1926 • Currently 11th Edition</p>\n            </div>\n            \n            <p>This chapter covers the unique aspects of hotel financial reporting, including USALI, departmental accounting, and key performance indicators.</p>\n            \n            <hr>\n            \n            <h4>📋 USALI - Uniform System of Accounts for the Lodging Industry</h4>\n            <p>The industry-standard accounting framework for hotels since 1926. Currently in its 11th edition.</p>\n            \n            <h5>Benefits of USALI:</h5>\n            <ul>\n                <li>Standardized format for financial reporting</li>\n                <li>Enables benchmarking across properties</li>\n                <li>Facilitates comparison with competitors</li>\n                <li>Provides consistent departmental structure</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>🏨 Hotel Department Structure</h4>\n            \n            <div class=\"formula-box\">\n                <strong>OPERATED DEPARTMENTS</strong> (Generate Revenue):<br>\n                • Rooms<br>\n                • Food & Beverage<br>\n                • Other Operated Departments (Spa, Golf, Parking, etc.)<br>\n                • Rentals and Other Income<br><br>\n                \n                <strong>UNDISTRIBUTED OPERATING EXPENSES</strong> (Support Functions):<br>\n                • Administrative & General (A&G)<br>\n                • Sales & Marketing<br>\n                • Property Operations & Maintenance (POM)<br>\n                • Utilities\n            </div>\n            \n            <hr>\n            \n            <h4>📊 Two Types of Income Statements</h4>\n            \n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(234,88,12,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">External (Shareholders)</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Internal (Managers)</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Income Statement</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Statement of Income and Expense</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Summarized</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Detailed by department</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Includes all expenses</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Excludes: Depreciation, Interest, Taxes, Rent</td>\n                </tr>\n            </table>\n            \n            <h5>Four Expenses EXCLUDED from Internal Statement:</h5>\n            <ol>\n                <li>Depreciation</li>\n                <li>Interest expense</li>\n                <li>Income taxes</li>\n                <li>Rent/lease expense (or Replacement Reserves)</li>\n            </ol>\n            \n            <hr>\n            \n            <h4>📈 Key Performance Indicators (KPIs)</h4>\n            \n            <div class=\"example-box\" style=\"text-align: center;\">\n                <h4 style=\"margin-top: 0;\">📊 Hotel KPI Formula to Remember!</h4>\n                <p style=\"font-size: 1.3rem; margin: 10px 0;\"><strong>RevPAR = ADR × Occupancy %</strong></p>\n                <p style=\"margin: 0; color: #666;\">Revenue Per Available Room = Average Daily Rate × Occupancy</p>\n            </div>\n            \n            <div class=\"formula-box\">\n                <strong>ROOMS KPIs:</strong><br><br>\n                \n                <strong>Occupancy %</strong> = Rooms Sold ÷ Rooms Available<br>\n                <em>How full is the hotel?</em><br><br>\n                \n                <strong>ADR</strong> (Average Daily Rate) = Room Revenue ÷ Rooms Sold<br>\n                <em>Average price per occupied room</em><br><br>\n                \n                <strong>RevPAR</strong> = Room Revenue ÷ Available Rooms<br>\n                OR RevPAR = ADR × Occupancy %<br>\n                <em>Revenue per available room (combines rate and occupancy)</em>\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: KPI Calculations</h4>\n                <p>Hotel has 200 rooms, sold 150 rooms, room revenue $22,500:</p>\n                <p><strong>Occupancy:</strong> 150 ÷ 200 = <strong>75%</strong></p>\n                <p><strong>ADR:</strong> $22,500 ÷ 150 = <strong>$150</strong></p>\n                <p><strong>RevPAR:</strong> $22,500 ÷ 200 = <strong>$112.50</strong></p>\n                <p>Or: $150 × 75% = <strong>$112.50</strong> ✓</p>\n            </div>\n            \n            <div class=\"formula-box\">\n                <strong>PROFITABILITY KPIs:</strong><br><br>\n                \n                <strong>GOP</strong> (Gross Operating Profit) =<br>\n                Total Revenue − Department Expenses − Undistributed Expenses<br><br>\n                \n                <strong>GOPPAR</strong> = GOP ÷ Available Rooms<br>\n                <em>Overall profitability per room</em>\n            </div>\n            \n            <hr>\n            \n            <h4>👥 Labor Cost Components</h4>\n            <ul>\n                <li>Wages and salaries</li>\n                <li>Employee benefits (health insurance, retirement)</li>\n                <li>Payroll taxes (FICA, unemployment)</li>\n                <li>Service charge distributions</li>\n                <li>Employee meals and uniforms</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>🏢 Department Details</h4>\n            \n            <h5>Administrative & General (A&G):</h5>\n            <ul>\n                <li>General management</li>\n                <li>Accounting staff</li>\n                <li>Human resources</li>\n                <li>Information systems</li>\n                <li>Clerical personnel</li>\n            </ul>\n            \n            <h5>Sales & Marketing:</h5>\n            <ul>\n                <li>Sales managers</li>\n                <li>Marketing managers</li>\n                <li>Advertising staff</li>\n                <li>Public relations</li>\n                <li>Reservations sales</li>\n            </ul>\n            \n            <h5>Direct vs Indirect Expenses:</h5>\n            <p><strong>Direct:</strong> Can be traced to specific department (furniture repair → Rooms)</p>\n            <p><strong>Indirect:</strong> Shared across departments (utilities, insurance)</p>\n            \n            <hr>\n            \n            <h4>🎰 Gaming Operations (Casinos)</h4>\n            \n            <div class=\"formula-box\">\n                <strong>Gaming Revenue</strong> = Total Wagers − Winnings Paid to Players<br><br>\n                <strong>Complimentary Allowances:</strong><br>\n                Comps (free rooms, meals, entertainment) given to players<br>\n                Recorded as reduction of gaming revenue\n            </div>\n            \n            <hr>\n            \n            <h4>🔧 Other Key Terms</h4>\n            \n            <h5>Replacement Reserves:</h5>\n            <p>Funds set aside for future replacement of Furniture, Fixtures & Equipment (FF&E). Typically 3-5% of revenue.</p>\n            \n            <h5>Other Operated Departments:</h5>\n            <ul>\n                <li>Spa operations</li>\n                <li>Golf courses</li>\n                <li>Parking</li>\n                <li>Laundry/dry cleaning</li>\n                <li>Health clubs</li>\n                <li>Retail shops</li>\n            </ul>\n            \n            <h5>Rentals and Other Income:</h5>\n            <ul>\n                <li>Space rentals</li>\n                <li>Commission income</li>\n                <li>Vending machine income</li>\n                <li>Lease income</li>\n            </ul>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>USALI = Industry standard for hotel accounting</li>\n                    <li>RevPAR = ADR × Occupancy (memorize!)</li>\n                    <li>ADR = Room Revenue ÷ Rooms SOLD</li>\n                    <li>Occupancy = Rooms SOLD ÷ Rooms AVAILABLE</li>\n                    <li>GOP = Profit BEFORE depreciation, interest, taxes</li>\n                    <li>Internal statement excludes: Depreciation, Interest, Taxes, Rent</li>\n                    <li>Gaming Revenue = Wagers − Winnings Paid</li>\n                </ul>\n            </div>\n        "
     }
@@ -1095,101 +1188,121 @@
     }
   },
   "financialAnalysis": {
+    "id": "4zvuz7",
     "name": "Financial Analysis",
     "icon": "fa-chart-line",
     "color": "#7c3aed",
     "flashcards": [
       {
+        "id": "m1mz5n",
         "question": "When can accounts receivable be posted to the general ledger less frequently?",
         "answer": "When the customer account number is recorded on the source document, enabling posting to subsidiary ledgers at any time while updating the general ledger less frequently.",
         "explanation": "Efficiency in posting procedures."
       },
       {
+        "id": "i47kpl",
         "question": "What is the Hospitality Current Ratio?",
         "answer": "The Hospitality Current Ratio compares current assets to current liabilities, but excludes inventory and prepaid expenses from current assets.\n\nFormula: (Cash + Receivables + Marketable Securities) ÷ Current Liabilities",
         "explanation": "More conservative than standard current ratio."
       },
       {
+        "id": "ljhj0y",
         "question": "What would a person compare in horizontal analysis?",
         "answer": "In horizontal analysis, a person compares the same item across different time periods to identify trends and changes.",
         "explanation": "Year-over-year comparison."
       },
       {
+        "id": "2bci7d",
         "question": "What would a person compare in vertical analysis?",
         "answer": "In vertical analysis, a person compares each item to a base amount within the same period, typically as a percentage of total revenue or total assets.",
         "explanation": "Percentage of the whole."
       },
       {
+        "id": "x71k1t",
         "question": "What groups are typically interested in financial ratios?",
         "answer": "Groups interested include:\n• Owners/investors\n• Creditors/lenders\n• Management\n• Potential investors\n• Financial analysts",
         "explanation": "Various stakeholders use ratios."
       },
       {
+        "id": "grrd59",
         "question": "What does a solvency ratio indicate?",
         "answer": "Solvency ratios indicate a company's ability to meet its long-term debt obligations.",
         "explanation": "Long-term financial health."
       },
       {
+        "id": "3ufew4",
         "question": "What does a liquidity ratio indicate?",
         "answer": "Liquidity ratios indicate a company's ability to meet its short-term obligations.",
         "explanation": "Short-term financial health."
       },
       {
+        "id": "qh07c1",
         "question": "What does an activity ratio indicate?",
         "answer": "Activity ratios (turnover ratios) indicate how efficiently a company uses its assets to generate revenue.",
         "explanation": "Asset efficiency measurement."
       },
       {
+        "id": "xtto7v",
         "question": "What is the most common reference item in a common-size balance sheet?",
         "answer": "Total Assets is the most common reference item (base) in a common-size balance sheet.",
         "explanation": "Each item as % of total assets."
       },
       {
+        "id": "homjn2",
         "question": "What is the most common reference item in a common-size income statement?",
         "answer": "Total Revenue (or Net Sales) is the most common reference item (base) in a common-size income statement.",
         "explanation": "Each item as % of revenue."
       },
       {
+        "id": "58eyj6",
         "question": "What is the earnings per share formula for a corporation?",
         "answer": "EPS = (Net Income − Preferred Dividends) ÷ Weighted Average Common Shares Outstanding",
         "explanation": "Earnings available to common shareholders."
       },
       {
+        "id": "vkbeqr",
         "question": "Which service can only be performed by CPAs?",
         "answer": "Only CPAs can perform audits (opinion engagements).",
         "explanation": "CPAs have exclusive audit authority."
       },
       {
+        "id": "k0iuod",
         "question": "What are the three CPA services?",
         "answer": "The three levels of CPA financial services are:\n\n1. Compilation - lowest level, no assurance\n2. Review - limited assurance\n3. Audit - highest level, reasonable assurance",
         "explanation": "Different levels of assurance."
       },
       {
+        "id": "h3y2ai",
         "question": "What are the five types of Audit Opinions?",
         "answer": "1. Unqualified (Clean) - Best, no issues\n2. Qualified - Minor issues/limitations\n3. Adverse - Major GAAP violations\n4. Disclaimer - Insufficient evidence\n5. Unqualified with Explanatory - Clean with added paragraph",
         "explanation": "From best to most concerning."
       },
       {
+        "id": "d3lyki",
         "question": "What are the main categories of Financial Ratios?",
         "answer": "Five main categories:\n\n1. Liquidity Ratios - Short-term debt ability\n2. Solvency Ratios - Long-term debt ability\n3. Activity Ratios - Asset efficiency\n4. Profitability Ratios - Profit generation\n5. Operating Ratios - Operational efficiency",
         "explanation": "Different aspects of financial health."
       },
       {
+        "id": "2565tr",
         "question": "What are key Liquidity Ratios?",
         "answer": "KEY LIQUIDITY RATIOS:\n\n• Current Ratio = Current Assets ÷ Current Liabilities\n\n• Quick Ratio = (Cash + Receivables + Securities) ÷ Current Liabilities\n\n• Hospitality Current Ratio = Same as Quick Ratio (excludes inventory)",
         "explanation": "Ability to pay short-term debts."
       },
       {
+        "id": "am078v",
         "question": "What are key Solvency Ratios?",
         "answer": "KEY SOLVENCY RATIOS:\n\n• Debt-to-Equity = Total Liabilities ÷ Total Equity\n\n• Debt Ratio = Total Liabilities ÷ Total Assets\n\n• Times Interest Earned = EBIT ÷ Interest Expense",
         "explanation": "Ability to pay long-term debts."
       },
       {
+        "id": "fbb8kr",
         "question": "What are key Profitability Ratios?",
         "answer": "KEY PROFITABILITY RATIOS:\n\n• Profit Margin = Net Income ÷ Revenue\n\n• ROA = Net Income ÷ Total Assets\n\n• ROE = Net Income ÷ Shareholders' Equity\n\n• EPS = (Net Income − Preferred Div) ÷ Common Shares",
         "explanation": "How well the company generates profit."
       },
       {
+        "id": "s6w33l",
         "question": "What are key Activity Ratios?",
         "answer": "KEY ACTIVITY RATIOS:\n\n• Inventory Turnover = COGS ÷ Average Inventory\n\n• Receivables Turnover = Revenue ÷ Average Receivables\n\n• Asset Turnover = Revenue ÷ Total Assets",
         "explanation": "How efficiently assets are used."
@@ -1197,6 +1310,7 @@
     ],
     "quiz": [
       {
+        "id": "2gc0d5",
         "question": "Horizontal analysis compares:",
         "options": [
           "Items to a base",
@@ -1207,6 +1321,7 @@
         "correct": 1
       },
       {
+        "id": "c76r28",
         "question": "Vertical analysis compares each item to:",
         "options": [
           "Prior year",
@@ -1217,6 +1332,7 @@
         "correct": 2
       },
       {
+        "id": "2zjwyw",
         "question": "Solvency ratios measure ability to meet:",
         "options": [
           "Short-term obligations",
@@ -1227,6 +1343,7 @@
         "correct": 1
       },
       {
+        "id": "zrvmgc",
         "question": "Liquidity ratios measure ability to meet:",
         "options": [
           "Long-term obligations",
@@ -1237,6 +1354,7 @@
         "correct": 1
       },
       {
+        "id": "7ltunc",
         "question": "Activity ratios measure:",
         "options": [
           "Debt levels",
@@ -1247,6 +1365,7 @@
         "correct": 1
       },
       {
+        "id": "q5x2ef",
         "question": "Common-size balance sheets use what base?",
         "options": [
           "Total Revenue",
@@ -1257,6 +1376,7 @@
         "correct": 2
       },
       {
+        "id": "mwg6ki",
         "question": "Common-size income statements use what base?",
         "options": [
           "Total Assets",
@@ -1267,6 +1387,7 @@
         "correct": 1
       },
       {
+        "id": "l59sgc",
         "question": "EPS formula includes:",
         "options": [
           "Total revenue",
@@ -1277,6 +1398,7 @@
         "correct": 1
       },
       {
+        "id": "5po92y",
         "question": "Only CPAs can perform:",
         "options": [
           "Compilations",
@@ -1287,6 +1409,7 @@
         "correct": 2
       },
       {
+        "id": "ad7ep3",
         "question": "The Hospitality Current Ratio excludes:",
         "options": [
           "Cash",
@@ -1297,6 +1420,7 @@
         "correct": 2
       },
       {
+        "id": "xdnwkn",
         "question": "An unqualified audit opinion means:",
         "options": [
           "Major problems found",
@@ -1307,6 +1431,7 @@
         "correct": 1
       },
       {
+        "id": "a8q543",
         "question": "Which CPA service provides the HIGHEST level of assurance?",
         "options": [
           "Compilation",
@@ -1317,6 +1442,7 @@
         "correct": 2
       },
       {
+        "id": "jdmdxy",
         "question": "Current Ratio equals:",
         "options": [
           "Current Assets ÷ Total Assets",
@@ -1327,6 +1453,7 @@
         "correct": 1
       },
       {
+        "id": "zlsp56",
         "question": "ROE (Return on Equity) equals:",
         "options": [
           "Net Income ÷ Total Assets",
@@ -1337,6 +1464,7 @@
         "correct": 2
       },
       {
+        "id": "3o1vcu",
         "question": "An adverse audit opinion indicates:",
         "options": [
           "Minor issues",
@@ -1349,142 +1477,170 @@
     ],
     "fillBlanks": [
       {
+        "id": "qisfi1",
         "sentence": "_______ analysis compares the same item across time periods.",
         "answer": "Horizontal",
         "hint": "Across time (horizontal timeline)..."
       },
       {
+        "id": "r1x7qc",
         "sentence": "_______ analysis compares items to a base in the same period.",
         "answer": "Vertical",
         "hint": "Up and down within one period..."
       },
       {
+        "id": "1pffpx",
         "sentence": "_______ ratios measure ability to meet short-term obligations.",
         "answer": "Liquidity",
         "hint": "How easily converted to cash..."
       },
       {
+        "id": "mlvx88",
         "sentence": "_______ ratios measure ability to meet long-term obligations.",
         "answer": "Solvency",
         "hint": "Able to stay in business long-term..."
       },
       {
+        "id": "9a161c",
         "sentence": "Common-size balance sheets use Total _______ as the base.",
         "answer": "Assets",
         "hint": "Everything the company owns..."
       },
       {
+        "id": "pyq5g6",
         "sentence": "Only _______ can perform audits.",
         "answer": "CPAs",
         "hint": "Certified Public..."
       },
       {
+        "id": "j87wih",
         "sentence": "The highest CPA assurance service is the _______.",
         "answer": "audit",
         "hint": "Full examination..."
       },
       {
+        "id": "u0smxo",
         "sentence": "An _______ audit opinion indicates major GAAP violations.",
         "answer": "adverse",
         "hint": "The worst type of opinion..."
       },
       {
+        "id": "qt354i",
         "sentence": "ROE stands for Return on _______.",
         "answer": "Equity",
         "hint": "Owners' investment..."
       },
       {
+        "id": "flsc1z",
         "sentence": "Inventory _______ = COGS ÷ Average Inventory.",
         "answer": "Turnover",
         "hint": "How fast it moves..."
       }
     ],
     "learn": {
+      "id": "ba7f0r",
       "title": "Financial Analysis & Ratios",
       "content": "\n            <h3>📚 Chapter Overview: Financial Analysis</h3>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.2)); border-left-color: #7c3aed;\">\n                <h4 style=\"color: #7c3aed; font-size: 1.2rem;\">📊 Financial Analysis = Understanding the Numbers</h4>\n                <p style=\"margin: 0;\">Ratios • Trends • Comparisons • CPA Services</p>\n            </div>\n            \n            <p>This chapter covers financial statement analysis techniques, key ratios, and the services CPAs provide.</p>\n            \n            <hr>\n            \n            <h4>📈 Types of Financial Analysis</h4>\n            \n            <div class=\"formula-box\">\n                <strong>HORIZONTAL ANALYSIS:</strong><br>\n                • Compares same item across different TIME PERIODS<br>\n                • Identifies trends and changes<br>\n                • Example: Revenue 2023 vs Revenue 2024<br>\n                • Also called \"Trend Analysis\"<br><br>\n                \n                <strong>VERTICAL ANALYSIS:</strong><br>\n                • Compares each item to a BASE within SAME PERIOD<br>\n                • Shows percentage composition<br>\n                • Balance Sheet base = Total Assets<br>\n                • Income Statement base = Total Revenue<br>\n                • Also called \"Common-Size Analysis\"\n            </div>\n            \n            <hr>\n            \n            <h4>📊 Categories of Financial Ratios</h4>\n            \n            <h5>1. Liquidity Ratios (Short-term ability to pay)</h5>\n            <div class=\"formula-box\">\n                <strong>Current Ratio</strong> = Current Assets ÷ Current Liabilities<br>\n                <em>General short-term debt coverage</em><br><br>\n                \n                <strong>Quick Ratio</strong> = (Cash + Receivables + Securities) ÷ Current Liabilities<br>\n                <em>Excludes inventory (more conservative)</em><br><br>\n                \n                <strong>Hospitality Current Ratio</strong> = Same as Quick Ratio<br>\n                <em>Hotels use this because inventory isn't significant</em>\n            </div>\n            \n            <h5>2. Solvency Ratios (Long-term ability to pay)</h5>\n            <div class=\"formula-box\">\n                <strong>Debt-to-Equity Ratio</strong> = Total Liabilities ÷ Total Equity<br>\n                <em>How much debt vs owner investment</em><br><br>\n                \n                <strong>Debt Ratio</strong> = Total Liabilities ÷ Total Assets<br>\n                <em>What portion of assets is financed by debt</em><br><br>\n                \n                <strong>Times Interest Earned</strong> = EBIT ÷ Interest Expense<br>\n                <em>How easily can the company pay interest</em>\n            </div>\n            \n            <h5>3. Profitability Ratios</h5>\n            <div class=\"formula-box\">\n                <strong>Profit Margin</strong> = Net Income ÷ Revenue<br>\n                <em>Profit per dollar of sales</em><br><br>\n                \n                <strong>Return on Assets (ROA)</strong> = Net Income ÷ Total Assets<br>\n                <em>How well assets generate profit</em><br><br>\n                \n                <strong>Return on Equity (ROE)</strong> = Net Income ÷ Shareholders' Equity<br>\n                <em>Return to owners</em><br><br>\n                \n                <strong>Earnings Per Share (EPS)</strong> = (Net Income − Preferred Dividends) ÷ Weighted Avg Common Shares<br>\n                <em>Earnings per share of common stock</em>\n            </div>\n            \n            <h5>4. Activity Ratios (Asset Efficiency)</h5>\n            <div class=\"formula-box\">\n                <strong>Inventory Turnover</strong> = Cost of Goods Sold ÷ Average Inventory<br>\n                <em>How fast inventory sells</em><br><br>\n                \n                <strong>Receivables Turnover</strong> = Revenue ÷ Average Receivables<br>\n                <em>How fast customers pay</em><br><br>\n                \n                <strong>Asset Turnover</strong> = Revenue ÷ Total Assets<br>\n                <em>Revenue generated per dollar of assets</em>\n            </div>\n            \n            <hr>\n            \n            <h4>👔 CPA Services (Three Levels of Assurance)</h4>\n            \n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(124,58,237,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Service</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Assurance Level</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Description</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Compilation</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">None</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Just formats statements, no testing</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Review</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Limited</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Inquiries and analytical procedures</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Audit</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Reasonable</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Full examination, testing, opinion issued</td>\n                </tr>\n            </table>\n            \n            <div class=\"tip-box\" style=\"border-left-color: #dc2626;\">\n                <h4><i class=\"fas fa-exclamation-triangle\"></i> Important!</h4>\n                <p>Only CPAs can perform <strong>AUDITS</strong>! This is a licensed, exclusive service.</p>\n            </div>\n            \n            <hr>\n            \n            <h4>📋 Five Types of Audit Opinions</h4>\n            \n            <div class=\"formula-box\">\n                <strong>1. Unqualified (Clean)</strong> ✅<br>\n                • BEST opinion - no problems found<br>\n                • Statements fairly presented per GAAP<br><br>\n                \n                <strong>2. Unqualified with Explanatory Paragraph</strong><br>\n                • Clean opinion with added explanation<br>\n                • Going concern issues, consistency changes<br><br>\n                \n                <strong>3. Qualified</strong><br>\n                • Minor issues or scope limitations<br>\n                • \"Except for...\" language<br><br>\n                \n                <strong>4. Adverse</strong> ❌<br>\n                • WORST opinion - major GAAP violations<br>\n                • Statements NOT fairly presented<br><br>\n                \n                <strong>5. Disclaimer</strong><br>\n                • Auditor cannot express opinion<br>\n                • Insufficient evidence or severe scope limitations\n            </div>\n            \n            <hr>\n            \n            <h4>🏨 Hospitality-Specific Ratio</h4>\n            \n            <div class=\"example-box\">\n                <h4>📝 Hospitality Current Ratio</h4>\n                <p>Hotels use this modified current ratio because inventory is minimal:</p>\n                <p style=\"text-align: center; font-size: 1.1rem;\">\n                    <strong>(Cash + Receivables + Marketable Securities) ÷ Current Liabilities</strong>\n                </p>\n                <p>Same as Quick Ratio - excludes inventory and prepaid expenses.</p>\n            </div>\n            \n            <hr>\n            \n            <h4>👥 Who Uses Financial Ratios?</h4>\n            <ul>\n                <li><strong>Owners/Investors:</strong> Evaluate investment performance</li>\n                <li><strong>Creditors/Lenders:</strong> Assess ability to repay loans</li>\n                <li><strong>Management:</strong> Monitor operations, make decisions</li>\n                <li><strong>Potential Investors:</strong> Decide whether to invest</li>\n                <li><strong>Financial Analysts:</strong> Provide recommendations</li>\n            </ul>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>Horizontal = Across time; Vertical = Within same period</li>\n                    <li>Liquidity = Short-term; Solvency = Long-term</li>\n                    <li>Hospitality Current Ratio excludes inventory (same as Quick Ratio)</li>\n                    <li>Only CPAs can perform audits</li>\n                    <li>Unqualified = Clean opinion (best)</li>\n                    <li>Adverse = Major GAAP violations (worst)</li>\n                    <li>ROE = Net Income ÷ Equity (return to owners)</li>\n                </ul>\n            </div>\n        "
     }
   },
   "annualReports": {
+    "id": "qq1jz8",
     "name": "SEC & Annual Reports",
     "icon": "fa-building-columns",
     "color": "#dc2626",
     "flashcards": [
       {
+        "id": "j5cjv3",
         "question": "What two types of annual reports does the SEC require?",
         "answer": "1. Form 10-K: Detailed annual report filed with the SEC\n\n2. Annual Report to Shareholders: More summarized and reader-friendly report",
         "explanation": "Two different reports for different audiences."
       },
       {
+        "id": "ssdscp",
         "question": "What kind of agency is the SEC and what is its primary mission?",
         "answer": "The SEC is a federal government regulatory agency.\n\nPrimary mission:\n• Protect investors\n• Maintain fair and efficient markets\n• Ensure full and fair disclosure of financial information",
         "explanation": "SEC = Securities and Exchange Commission."
       },
       {
+        "id": "wa4f5s",
         "question": "What is the significance of October 1929?",
         "answer": "October 1929 marks the stock market crash, which led to the Great Depression and exposed serious weaknesses in financial reporting and market regulation.",
         "explanation": "This crash led to creation of the SEC."
       },
       {
+        "id": "2ovxex",
         "question": "Why was the SEC created?",
         "answer": "The SEC was created to:\n• Restore investor confidence\n• Prevent fraud and market manipulation\n• Regulate the securities markets\n\nFollowing the 1929 stock market crash.",
         "explanation": "Response to the Great Depression."
       },
       {
+        "id": "1b96ec",
         "question": "What is the importance of the Sarbanes-Oxley Act of 2002 (SOX)?",
         "answer": "SOX was enacted to:\n• Increase corporate accountability\n• Improve financial reporting accuracy\n• Strengthen internal controls\n\nIn response to corporate scandals like Enron and WorldCom.",
         "explanation": "Major reform of corporate governance."
       },
       {
+        "id": "2chnm1",
         "question": "What do the key sections of Sarbanes-Oxley cover?",
         "answer": "Section 302: Management certification of financial statements\nSection 401: Disclosure of off-balance-sheet items\nSection 404: Management assessment of internal controls\nSection 409: Real-time disclosure of material changes\nSection 802: Criminal penalties for altering/destroying records",
         "explanation": "Know these section numbers and their purposes."
       },
       {
+        "id": "jmiooq",
         "question": "What is a 10-K report?",
         "answer": "A 10-K is a comprehensive annual filing to the SEC including:\n• Audited financial statements\n• Management discussion and analysis\n• Risk factors\n• Detailed disclosures about operations and finances",
         "explanation": "The most detailed annual report."
       },
       {
+        "id": "ed89op",
         "question": "What four types of audit opinions can a CPA firm give?",
         "answer": "1. Unqualified opinion (clean opinion)\n2. Qualified opinion (with exceptions)\n3. Adverse opinion (statements not fairly presented)\n4. Disclaimer of opinion (unable to form opinion)",
         "explanation": "Unqualified is the best; adverse is the worst."
       },
       {
+        "id": "mynnrc",
         "question": "What are consolidated financial statements?",
         "answer": "Consolidated financial statements combine the financial results of a parent company and its subsidiaries into a single set of statements as if they were one economic entity.",
         "explanation": "Parent + subsidiaries = one report."
       },
       {
+        "id": "3i7oc9",
         "question": "What are notes to financial statements and what do they include?",
         "answer": "Notes provide additional information to understand financial statements.\n\nMinimum content:\n• Summary of significant accounting policies\n• Detailed explanations of major accounts\n• Information on contingencies and commitments",
         "explanation": "Notes are essential for full disclosure."
       },
       {
+        "id": "tfg6tj",
         "question": "What is the standard content of an annual report to shareholders?",
         "answer": "Standard content includes:\n• Letter from management\n• Financial statements\n• Notes to financial statements\n• Auditor's report\n• Management's Discussion and Analysis (MD&A)",
         "explanation": "All key components of the annual report."
       },
       {
+        "id": "gpe3ts",
         "question": "What is the Securities Act of 1933?",
         "answer": "The Securities Act of 1933 (the 'Truth in Securities' Act) requires:\n• Registration of new securities with SEC\n• Full disclosure via prospectus\n• Accurate information to investors before purchase\n\nFocus: PRIMARY market (new issues)",
         "explanation": "Regulates new securities offerings."
       },
       {
+        "id": "joblfa",
         "question": "What is the Securities Exchange Act of 1934?",
         "answer": "The Securities Exchange Act of 1934:\n• Created the SEC\n• Regulates secondary trading of securities\n• Requires ongoing periodic reporting (10-K, 10-Q)\n• Regulates stock exchanges and broker-dealers\n\nFocus: SECONDARY market (trading)",
         "explanation": "Regulates ongoing trading and reporting."
       },
       {
+        "id": "uuodvf",
         "question": "What is PCAOB?",
         "answer": "PCAOB = Public Company Accounting Oversight Board\n\nCreated by SOX 2002 to:\n• Oversee audits of public companies\n• Establish auditing standards\n• Inspect CPA firms\n• Enforce compliance\n\nReplaced self-regulation by accounting profession.",
         "explanation": "Independent auditor oversight body."
       },
       {
+        "id": "8qtk2i",
         "question": "What is Materiality in auditing?",
         "answer": "Materiality is the threshold above which an omission or misstatement would influence a user's decision.\n\nAuditors focus on material items because:\n• Not practical to examine everything\n• Small errors unlikely to affect decisions\n• Cost-benefit consideration",
         "explanation": "Significant enough to matter to users."
       },
       {
+        "id": "06wk9g",
         "question": "What is the difference between 10-K and 10-Q?",
         "answer": "10-K: Annual report\n• Audited financial statements\n• Filed within 60-90 days of fiscal year end\n• Comprehensive disclosure\n\n10-Q: Quarterly report\n• Unaudited financial statements\n• Filed within 40-45 days of quarter end\n• Less detailed than 10-K",
         "explanation": "Annual vs quarterly SEC filings."
@@ -1492,6 +1648,7 @@
     ],
     "quiz": [
       {
+        "id": "wgksz9",
         "question": "The SEC is a:",
         "options": [
           "Private company",
@@ -1502,6 +1659,7 @@
         "correct": 1
       },
       {
+        "id": "bbww1c",
         "question": "October 1929 is significant because of the:",
         "options": [
           "World War I",
@@ -1512,6 +1670,7 @@
         "correct": 1
       },
       {
+        "id": "8x4uy9",
         "question": "SOX Section 404 covers:",
         "options": [
           "Criminal penalties",
@@ -1522,6 +1681,7 @@
         "correct": 2
       },
       {
+        "id": "lo5wpp",
         "question": "SOX Section 302 requires:",
         "options": [
           "Internal control assessment",
@@ -1532,6 +1692,7 @@
         "correct": 1
       },
       {
+        "id": "jscr2j",
         "question": "SOX Section 802 deals with:",
         "options": [
           "Financial statements",
@@ -1542,6 +1703,7 @@
         "correct": 1
       },
       {
+        "id": "ebg45t",
         "question": "The best audit opinion is:",
         "options": [
           "Qualified",
@@ -1552,6 +1714,7 @@
         "correct": 2
       },
       {
+        "id": "i8x0au",
         "question": "A 10-K report is filed with the:",
         "options": [
           "IRS",
@@ -1562,6 +1725,7 @@
         "correct": 1
       },
       {
+        "id": "gmdmpj",
         "question": "Consolidated financial statements combine:",
         "options": [
           "All competitors",
@@ -1572,6 +1736,7 @@
         "correct": 1
       },
       {
+        "id": "vy1i5d",
         "question": "How many types of audit opinions are there?",
         "options": [
           "2",
@@ -1582,6 +1747,7 @@
         "correct": 2
       },
       {
+        "id": "9bii7l",
         "question": "The SEC's primary mission includes:",
         "options": [
           "Increasing company profits",
@@ -1592,6 +1758,7 @@
         "correct": 1
       },
       {
+        "id": "8xug6u",
         "question": "The Securities Act of 1933 regulates:",
         "options": [
           "Secondary market trading",
@@ -1602,6 +1769,7 @@
         "correct": 1
       },
       {
+        "id": "214ezs",
         "question": "PCAOB was created by:",
         "options": [
           "Securities Act of 1933",
@@ -1612,6 +1780,7 @@
         "correct": 2
       },
       {
+        "id": "mwnm9l",
         "question": "10-Q reports are filed:",
         "options": [
           "Annually",
@@ -1622,6 +1791,7 @@
         "correct": 1
       },
       {
+        "id": "j27zrp",
         "question": "Materiality refers to:",
         "options": [
           "Physical materials",
@@ -1632,6 +1802,7 @@
         "correct": 1
       },
       {
+        "id": "0vmywd",
         "question": "The Securities Exchange Act of 1934:",
         "options": [
           "Only regulates new issues",
@@ -1644,157 +1815,188 @@
     ],
     "fillBlanks": [
       {
+        "id": "883yvk",
         "sentence": "The stock market crash of October _______ led to the creation of the SEC.",
         "answer": "1929",
         "hint": "Year of the Great Depression start..."
       },
       {
+        "id": "e2k189",
         "sentence": "SOX Section _______ covers management certification of financial statements.",
         "answer": "302",
         "hint": "Three-oh-two..."
       },
       {
+        "id": "3efhsy",
         "sentence": "SOX Section _______ covers management assessment of internal controls.",
         "answer": "404",
         "hint": "Like the error code..."
       },
       {
+        "id": "tzy5bu",
         "sentence": "An _______ opinion is the best type of audit opinion.",
         "answer": "unqualified",
         "hint": "Clean, without exceptions..."
       },
       {
+        "id": "af6mui",
         "sentence": "The _______ report is a comprehensive annual filing to the SEC.",
         "answer": "10-K",
         "hint": "Ten-..."
       },
       {
+        "id": "bgonsg",
         "sentence": "The Securities Act of _______ regulates new securities offerings.",
         "answer": "1933",
         "hint": "Nineteen thirty-three..."
       },
       {
+        "id": "ypnmwr",
         "sentence": "_______ was created by SOX to oversee audits of public companies.",
         "answer": "PCAOB",
         "hint": "Public Company Accounting..."
       },
       {
+        "id": "rkqx3h",
         "sentence": "10-Q reports are filed _______ (how often).",
         "answer": "quarterly",
         "hint": "Every three months..."
       },
       {
+        "id": "neox4m",
         "sentence": "_______ is the threshold above which misstatements affect user decisions.",
         "answer": "Materiality",
         "hint": "Significance, importance..."
       }
     ],
     "learn": {
+      "id": "91f1n2",
       "title": "SEC, Annual Reports & Audits",
       "content": "\n            <h3>📚 Chapter Overview: SEC, Annual Reports & Audits</h3>\n            \n            <div class=\"warning-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.2)); border-left-color: #6366f1;\">\n                <h4 style=\"color: #6366f1; font-size: 1.3rem;\">🏛️ SEC - Securities and Exchange Commission</h4>\n                <p style=\"margin: 0;\">Federal regulatory agency protecting investors since 1934</p>\n            </div>\n            \n            <p>This chapter covers the regulatory framework for financial reporting, including the SEC, securities laws, Sarbanes-Oxley Act, and the audit process.</p>\n            \n            <hr>\n            \n            <h4>📜 Historical Background</h4>\n            \n            <div class=\"warning-box\">\n                <h4>⚠️ October 1929: The Stock Market Crash</h4>\n                <p>The crash led to the Great Depression and exposed serious weaknesses in financial reporting and market regulation. Investors lost confidence due to fraud and manipulation.</p>\n            </div>\n            \n            <h5>Timeline of Securities Regulation:</h5>\n            <ul>\n                <li><strong>1929:</strong> Stock market crash</li>\n                <li><strong>1933:</strong> Securities Act (regulates NEW securities)</li>\n                <li><strong>1934:</strong> Securities Exchange Act (creates SEC, regulates TRADING)</li>\n                <li><strong>2002:</strong> Sarbanes-Oxley Act (response to Enron/WorldCom scandals)</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>🏛️ The SEC (Securities and Exchange Commission)</h4>\n            <p>A <strong>federal government regulatory agency</strong> with three primary missions:</p>\n            <ol>\n                <li><strong>Protect investors</strong></li>\n                <li><strong>Maintain fair, orderly, and efficient markets</strong></li>\n                <li><strong>Facilitate capital formation</strong></li>\n            </ol>\n            \n            <hr>\n            \n            <h4>📋 Key Securities Laws</h4>\n            \n            <div class=\"formula-box\">\n                <strong>Securities Act of 1933</strong> (\"Truth in Securities\")<br>\n                • Regulates PRIMARY market (new securities offerings)<br>\n                • Requires registration of new securities<br>\n                • Requires prospectus with full disclosure<br>\n                • Focus: BEFORE securities are sold\n            </div>\n            \n            <div class=\"formula-box\">\n                <strong>Securities Exchange Act of 1934</strong><br>\n                • Created the SEC<br>\n                • Regulates SECONDARY market (trading)<br>\n                • Requires ongoing periodic reporting (10-K, 10-Q, 8-K)<br>\n                • Regulates stock exchanges and broker-dealers<br>\n                • Focus: AFTER securities are sold\n            </div>\n            \n            <hr>\n            \n            <h4>⚖️ Sarbanes-Oxley Act of 2002 (SOX)</h4>\n            \n            <div class=\"warning-box\" style=\"text-align: center;\">\n                <h4 style=\"font-size: 1.2rem;\">⚠️ SOX 2002 - Response to Corporate Scandals</h4>\n                <p style=\"margin: 0;\">Enron • WorldCom • Tyco → Increased corporate accountability</p>\n            </div>\n            \n            <p>Enacted in response to corporate scandals (Enron, WorldCom, Tyco) to increase corporate accountability and improve financial reporting.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Key SOX Sections - MEMORIZE THESE:</strong><br><br>\n                \n                <strong>Section 302:</strong> Management Certification<br>\n                CEO and CFO must personally certify financial statements are accurate<br><br>\n                \n                <strong>Section 401:</strong> Off-Balance-Sheet Disclosure<br>\n                Must disclose all material off-balance-sheet transactions<br><br>\n                \n                <strong>Section 404:</strong> Internal Control Assessment ⭐<br>\n                Management must assess and report on internal controls; auditors must attest<br><br>\n                \n                <strong>Section 409:</strong> Real-Time Disclosure<br>\n                Material changes must be disclosed rapidly<br><br>\n                \n                <strong>Section 802:</strong> Criminal Penalties<br>\n                Up to 20 years for altering/destroying records\n            </div>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Memory Tip!</h4>\n                <p><strong>302</strong> = Certification (CEO/CFO sign off)</p>\n                <p><strong>404</strong> = Controls (like 404 error - something's broken!)</p>\n                <p><strong>802</strong> = Criminal (8 = handcuffs shape!)</p>\n            </div>\n            \n            <h5>PCAOB (Public Company Accounting Oversight Board)</h5>\n            <p>Created by SOX to oversee audits of public companies:</p>\n            <ul>\n                <li>Establishes auditing standards</li>\n                <li>Inspects CPA firms</li>\n                <li>Enforces compliance</li>\n                <li>Replaced self-regulation by accounting profession</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>📊 Annual Reports</h4>\n            \n            <h5>Two Types Required by SEC:</h5>\n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(220,38,38,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Form 10-K</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Annual Report to Shareholders</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Filed with SEC</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Given to shareholders</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Detailed, technical</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Reader-friendly, summarized</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Audited financial statements</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Audited financial statements</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Extensive disclosures, risk factors</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Letter from CEO, highlights</td>\n                </tr>\n            </table>\n            \n            <h5>Standard Content of Annual Report:</h5>\n            <ul>\n                <li>Letter from management</li>\n                <li>Financial statements</li>\n                <li>Notes to financial statements</li>\n                <li>Auditor's report</li>\n                <li>Management's Discussion and Analysis (MD&A)</li>\n            </ul>\n            \n            <h5>Other SEC Filings:</h5>\n            <ul>\n                <li><strong>10-Q:</strong> Quarterly report (unaudited)</li>\n                <li><strong>8-K:</strong> Current report for material events</li>\n                <li><strong>Proxy Statement:</strong> For shareholder meetings</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>🔍 The Audit Process</h4>\n            \n            <h5>Four Types of Audit Opinions:</h5>\n            <div class=\"formula-box\">\n                <strong>1. Unqualified Opinion</strong> (Clean Opinion) ✅<br>\n                Best outcome - statements fairly presented in all material respects<br><br>\n                \n                <strong>2. Qualified Opinion</strong> ⚠️<br>\n                Good EXCEPT for specific issue(s) - \"except for\" language<br><br>\n                \n                <strong>3. Adverse Opinion</strong> ❌<br>\n                Statements are NOT fairly presented - material misstatements<br><br>\n                \n                <strong>4. Disclaimer of Opinion</strong> 🚫<br>\n                Auditor cannot form an opinion - scope limitation\n            </div>\n            \n            <h5>Audit vs Review vs Compilation:</h5>\n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(220,38,38,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Service</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Assurance Level</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Procedures</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Audit</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Highest</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Detailed testing, confirmations, inspection</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Review</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Limited</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Inquiry and analytical procedures</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Compilation</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">None</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Simply presents management's data</td>\n                </tr>\n            </table>\n            \n            <h5>Materiality</h5>\n            <p><strong>Materiality</strong> is the threshold above which an omission or misstatement would influence a user's decision. Auditors focus on material items because it's not practical to examine everything.</p>\n            \n            <h5>Consolidated Financial Statements</h5>\n            <p>Combine the financial results of a parent company and its subsidiaries into a single set of statements, as if they were one economic entity.</p>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>1929 crash → 1933 & 1934 Acts → SEC created</li>\n                    <li>SOX 2002: Response to Enron/WorldCom scandals</li>\n                    <li>Section 302 = CEO/CFO certification</li>\n                    <li>Section 404 = Internal controls (most tested!)</li>\n                    <li>Section 802 = Criminal penalties</li>\n                    <li>Unqualified = BEST audit opinion</li>\n                    <li>Audit > Review > Compilation (assurance level)</li>\n                </ul>\n            </div>\n        "
     }
   },
   "budgeting": {
+    "id": "cug1xw",
     "name": "Budgeting & Costs",
     "icon": "fa-calculator",
     "color": "#7c3aed",
     "flashcards": [
       {
+        "id": "n1euvy",
         "question": "What is a budget?",
         "answer": "A budget is a formal written financial plan that expresses management's expectations for revenues, expenses, and profits for a future period.",
         "explanation": "Budgets guide business operations and planning."
       },
       {
+        "id": "bog4by",
         "question": "What are the advantages of budgeting?",
         "answer": "Budgeting advantages:\n• Provides a plan for future operations\n• Improves coordination and communication\n• Helps control costs and expenses\n• Serves as a standard for performance evaluation\n• Encourages management discipline",
         "explanation": "Budgeting is essential for business success."
       },
       {
+        "id": "npgne8",
         "question": "Why can predicting sales be difficult?",
         "answer": "Sales prediction is difficult due to uncertain factors:\n• Economic conditions\n• Competition\n• Consumer behavior\n• Seasonality\n• Pricing changes\n• Unexpected events",
         "explanation": "Many external factors affect sales."
       },
       {
+        "id": "fyndl6",
         "question": "What is sales forecasting?",
         "answer": "Sales forecasting is the process of estimating future sales revenue for a given period. It forms the foundation for budgeting, staffing, purchasing, pricing, and profit planning.",
         "explanation": "Everything starts with sales forecasting."
       },
       {
+        "id": "oxxug5",
         "question": "What factors should be considered in forecasting sales for a new business?",
         "answer": "Factors include:\n• Market size and demand\n• Location\n• Target customers\n• Competition\n• Pricing strategy\n• Management experience\n• Economic conditions\n• Marketing plans",
         "explanation": "New businesses face more uncertainty."
       },
       {
+        "id": "q52swy",
         "question": "What is the formula for forecasting room sales?",
         "answer": "Room Sales = Number of Available Rooms × Occupancy Percentage × Average Room Rate (ADR)",
         "explanation": "Key formula for hotel revenue forecasting."
       },
       {
+        "id": "bf0q3r",
         "question": "What is the formula for forecasting food sales?",
         "answer": "Food Sales = Number of Seats × Turnover × Average Check",
         "explanation": "Key formula for restaurant revenue forecasting."
       },
       {
+        "id": "e64hks",
         "question": "What three kinds of expenses are closely related to sales?",
         "answer": "1. Food cost\n2. Labor cost\n3. Other variable operating expenses",
         "explanation": "These expenses change with sales volume."
       },
       {
+        "id": "pa4tah",
         "question": "What is the total cost equation?",
         "answer": "Total Cost = Fixed Costs + Variable Costs",
         "explanation": "Fundamental cost accounting equation."
       },
       {
+        "id": "ssghy1",
         "question": "What is a variable expense?",
         "answer": "A variable expense changes directly in proportion to sales volume. Examples: food cost, beverage cost, commissions.",
         "explanation": "More sales = more variable costs."
       },
       {
+        "id": "uilonz",
         "question": "What is a fixed expense?",
         "answer": "A fixed expense remains constant regardless of sales volume within a relevant range. Examples: rent, insurance, management salaries.",
         "explanation": "Fixed costs don't change with sales."
       },
       {
+        "id": "cjflju",
         "question": "What is a semi-variable expense?",
         "answer": "A semi-variable expense contains both fixed and variable components. Example: utilities (base charge + usage).",
         "explanation": "Part fixed, part variable."
       },
       {
+        "id": "1x30wt",
         "question": "What is the difference between breakeven and breakeven point?",
         "answer": "Breakeven is the condition where total revenues equal total costs (zero profit/loss).\n\nBreakeven point is the specific level of sales or volume at which breakeven occurs.",
         "explanation": "Condition vs. specific level."
       },
       {
+        "id": "eth8tv",
         "question": "What is the breakeven point formula?",
         "answer": "Breakeven Point (in sales) = Fixed Costs ÷ Contribution Margin Ratio\n\nOR\n\nBreakeven Point (in units) = Fixed Costs ÷ Contribution Margin per Unit",
         "explanation": "Two ways to calculate breakeven."
       },
       {
+        "id": "35uhye",
         "question": "What is Contribution Margin?",
         "answer": "Contribution Margin = Sales Revenue − Variable Costs\n\nIt's the amount that 'contributes' to covering fixed costs and generating profit.\n\nCM Ratio = Contribution Margin ÷ Sales Revenue",
         "explanation": "Key concept for CVP analysis."
       },
       {
+        "id": "4l1jxh",
         "question": "What is Margin of Safety?",
         "answer": "Margin of Safety = Actual Sales − Breakeven Sales\n\nIt measures how much sales can drop before the company reaches breakeven (starts losing money).\n\nMargin of Safety % = (Actual Sales − Breakeven) ÷ Actual Sales",
         "explanation": "Higher margin of safety = lower risk."
       },
       {
+        "id": "jx8owg",
         "question": "What is Operating Leverage?",
         "answer": "Operating Leverage measures how sensitive operating income is to changes in sales.\n\nDegree of Operating Leverage = Contribution Margin ÷ Operating Income\n\nHigh operating leverage = high fixed costs = greater risk but greater reward",
         "explanation": "High leverage amplifies both profits and losses."
       },
       {
+        "id": "819s4t",
         "question": "What is CVP Analysis?",
         "answer": "CVP (Cost-Volume-Profit) Analysis examines the relationship between:\n• Costs (fixed and variable)\n• Volume (sales quantity)\n• Profit\n\nUsed for pricing, product mix, and break-even decisions.",
         "explanation": "Essential management accounting tool."
       },
       {
+        "id": "i262gu",
         "question": "What is a Flexible Budget?",
         "answer": "A flexible budget adjusts for changes in activity level, showing expected costs at various volumes.\n\nUnlike a static budget, it recognizes that costs change with sales volume.\n\nUseful for performance evaluation - compare actual results to budgeted amounts at actual activity level.",
         "explanation": "More realistic than static budgets."
       },
       {
+        "id": "ta9veh",
         "question": "What is the High-Low Method?",
         "answer": "The High-Low Method separates fixed and variable costs using the highest and lowest activity levels:\n\nVariable Cost per Unit = (High Cost − Low Cost) ÷ (High Activity − Low Activity)\n\nFixed Costs = Total Cost − (Variable Cost × Activity Level)",
         "explanation": "Simple method to analyze mixed costs."
@@ -1802,6 +2004,7 @@
     ],
     "quiz": [
       {
+        "id": "z7r28m",
         "question": "A budget is:",
         "options": [
           "Past financial records",
@@ -1812,6 +2015,7 @@
         "correct": 1
       },
       {
+        "id": "2kn2a3",
         "question": "The formula for Room Sales is:",
         "options": [
           "Rooms × Rate",
@@ -1822,6 +2026,7 @@
         "correct": 1
       },
       {
+        "id": "9cohwa",
         "question": "The formula for Food Sales is:",
         "options": [
           "Food Cost × Markup",
@@ -1832,6 +2037,7 @@
         "correct": 1
       },
       {
+        "id": "6hnu38",
         "question": "Total Cost equals:",
         "options": [
           "Fixed Costs only",
@@ -1842,6 +2048,7 @@
         "correct": 2
       },
       {
+        "id": "35apru",
         "question": "A variable expense:",
         "options": [
           "Stays constant",
@@ -1852,6 +2059,7 @@
         "correct": 1
       },
       {
+        "id": "ue5kyt",
         "question": "A fixed expense:",
         "options": [
           "Changes with sales",
@@ -1862,6 +2070,7 @@
         "correct": 1
       },
       {
+        "id": "kkfz5h",
         "question": "Breakeven Point (in sales) equals:",
         "options": [
           "Revenue ÷ Costs",
@@ -1872,6 +2081,7 @@
         "correct": 1
       },
       {
+        "id": "a2q133",
         "question": "Which is NOT closely related to sales?",
         "options": [
           "Food cost",
@@ -1882,6 +2092,7 @@
         "correct": 2
       },
       {
+        "id": "wxxmk4",
         "question": "A semi-variable expense contains:",
         "options": [
           "Only fixed components",
@@ -1892,6 +2103,7 @@
         "correct": 2
       },
       {
+        "id": "g37qqz",
         "question": "Sales forecasting is difficult because of:",
         "options": [
           "Certain market conditions",
@@ -1902,6 +2114,7 @@
         "correct": 2
       },
       {
+        "id": "ywxoxz",
         "question": "Contribution Margin equals:",
         "options": [
           "Fixed Costs + Variable Costs",
@@ -1912,6 +2125,7 @@
         "correct": 1
       },
       {
+        "id": "yhh48w",
         "question": "Margin of Safety measures:",
         "options": [
           "Total profit",
@@ -1922,6 +2136,7 @@
         "correct": 1
       },
       {
+        "id": "8tud4k",
         "question": "High Operating Leverage means:",
         "options": [
           "Low risk, low reward",
@@ -1932,6 +2147,7 @@
         "correct": 1
       },
       {
+        "id": "39n6sy",
         "question": "CVP Analysis examines the relationship between:",
         "options": [
           "Only costs",
@@ -1942,6 +2158,7 @@
         "correct": 1
       },
       {
+        "id": "xmicyh",
         "question": "The High-Low Method is used to:",
         "options": [
           "Calculate revenue",
@@ -1954,172 +2171,206 @@
     ],
     "fillBlanks": [
       {
+        "id": "fz8wr5",
         "sentence": "Total Cost = Fixed Costs + _______ Costs",
         "answer": "Variable",
         "hint": "Costs that change..."
       },
       {
+        "id": "h7x94l",
         "sentence": "Room Sales = Available Rooms × Occupancy % × _______",
         "answer": "ADR",
         "hint": "Average Daily..."
       },
       {
+        "id": "wd1chv",
         "sentence": "Food Sales = Seats × Turnover × Average _______",
         "answer": "Check",
         "hint": "What customers pay..."
       },
       {
+        "id": "edjy8e",
         "sentence": "Breakeven Point = Fixed Costs ÷ Contribution Margin _______",
         "answer": "Ratio",
         "hint": "Percentage..."
       },
       {
+        "id": "k36fae",
         "sentence": "A _______ expense contains both fixed and variable components.",
         "answer": "semi-variable",
         "hint": "Part fixed, part..."
       },
       {
+        "id": "md74us",
         "sentence": "Contribution Margin = Sales Revenue − _______ Costs",
         "answer": "Variable",
         "hint": "Costs that change with volume..."
       },
       {
+        "id": "tkia0e",
         "sentence": "Margin of _______ measures how much sales can drop before breakeven.",
         "answer": "Safety",
         "hint": "Protection, security..."
       },
       {
+        "id": "eq5wen",
         "sentence": "_______ Leverage measures sensitivity of income to sales changes.",
         "answer": "Operating",
         "hint": "Related to operations..."
       },
       {
+        "id": "re6rnm",
         "sentence": "CVP stands for Cost-_______-Profit analysis.",
         "answer": "Volume",
         "hint": "Quantity, amount..."
       },
       {
+        "id": "2mlzlf",
         "sentence": "The High-_______ Method separates fixed and variable costs.",
         "answer": "Low",
         "hint": "Opposite of high..."
       }
     ],
     "learn": {
+      "id": "39bn9a",
       "title": "Budgeting, Forecasting & Cost Analysis",
       "content": "\n            <h3>📚 Chapter Overview: Budgeting & Cost Analysis</h3>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.2)); border-left-color: #7c3aed;\">\n                <h4 style=\"color: #7c3aed; font-size: 1.2rem;\">📊 CVP Analysis = Cost-Volume-Profit</h4>\n                <p style=\"margin: 0;\">Understanding the relationship between costs, sales volume, and profit</p>\n            </div>\n            \n            <p>This chapter covers budgeting fundamentals, sales forecasting, cost behavior, and Cost-Volume-Profit (CVP) analysis - essential tools for hospitality management.</p>\n            \n            <hr>\n            \n            <h4>📋 What is a Budget?</h4>\n            <p>A <strong>budget</strong> is a formal written financial plan that expresses management's expectations for revenues, expenses, and profits for a future period.</p>\n            \n            <h5>Advantages of Budgeting:</h5>\n            <ul>\n                <li>Provides a plan and direction for operations</li>\n                <li>Improves coordination between departments</li>\n                <li>Helps control costs and evaluate performance</li>\n                <li>Encourages efficient use of resources</li>\n                <li>Assists in decision-making</li>\n            </ul>\n            \n            <div class=\"warning-box\">\n                <h4>⚠️ Why Budgeting is Difficult:</h4>\n                <p>Sales prediction is affected by uncertain factors: economic conditions, competition, consumer behavior, seasonality, pricing changes, and unexpected events.</p>\n            </div>\n            \n            <hr>\n            \n            <h4>🔮 Sales Forecasting</h4>\n            <p><strong>Sales forecasting</strong> is the process of estimating future sales revenue. It forms the foundation for all other budgeting activities.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Key Forecasting Formulas:</strong><br><br>\n                \n                <strong>ROOM SALES:</strong><br>\n                Room Sales = Available Rooms × Occupancy % × ADR<br><br>\n                \n                <strong>FOOD SALES:</strong><br>\n                Food Sales = Seats × Turnover × Average Check\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Hotel Room Sales Forecast</h4>\n                <p>A hotel has 200 rooms, expects 75% occupancy, ADR of $150:</p>\n                <p>Daily Room Sales = 200 × 0.75 × $150 = <strong>$22,500</strong></p>\n                <p>Monthly (30 days) = $22,500 × 30 = <strong>$675,000</strong></p>\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Restaurant Sales Forecast</h4>\n                <p>Restaurant has 100 seats, 2.5 turns per meal, $35 average check:</p>\n                <p>Sales per Meal Period = 100 × 2.5 × $35 = <strong>$8,750</strong></p>\n            </div>\n            \n            <hr>\n            \n            <h4>💰 Cost Behavior</h4>\n            <p>Understanding how costs behave is essential for budgeting and decision-making.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Total Cost Equation:</strong><br>\n                Total Cost = Fixed Costs + Variable Costs<br><br>\n                \n                Or: TC = FC + (VC per unit × Volume)\n            </div>\n            \n            <h5>Types of Costs:</h5>\n            <table style=\"width:100%; border-collapse: collapse; margin: 15px 0;\">\n                <tr style=\"background: rgba(99,102,241,0.2);\">\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Type</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Behavior</th>\n                    <th style=\"padding: 10px; border: 1px solid #ccc;\">Examples</th>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Variable</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Changes proportionally with sales</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Food cost, beverage cost, commissions</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Fixed</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Stays constant regardless of sales</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Rent, insurance, management salaries</td>\n                </tr>\n                <tr>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\"><strong>Semi-variable</strong></td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Has both fixed and variable components</td>\n                    <td style=\"padding: 10px; border: 1px solid #ccc;\">Utilities, telephone, maintenance</td>\n                </tr>\n            </table>\n            \n            <h5>Three Expenses Closely Related to Sales:</h5>\n            <ol>\n                <li><strong>Food Cost</strong> - varies directly with food sales</li>\n                <li><strong>Labor Cost</strong> - varies with business volume</li>\n                <li><strong>Other Variable Operating Expenses</strong></li>\n            </ol>\n            \n            <hr>\n            \n            <h4>📊 CVP Analysis (Cost-Volume-Profit)</h4>\n            <p>CVP analysis examines the relationship between costs, sales volume, and profit. It's used for pricing decisions, product mix, and break-even analysis.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Key CVP Formulas:</strong><br><br>\n                \n                <strong>Contribution Margin (CM):</strong><br>\n                CM = Sales Revenue − Variable Costs<br><br>\n                \n                <strong>CM per Unit:</strong><br>\n                CM per Unit = Selling Price − Variable Cost per Unit<br><br>\n                \n                <strong>CM Ratio:</strong><br>\n                CM Ratio = CM ÷ Sales Revenue\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Contribution Margin</h4>\n                <p>Hotel room sells for $200, variable cost per room is $40:</p>\n                <p>CM per Unit = $200 − $40 = <strong>$160</strong></p>\n                <p>CM Ratio = $160 ÷ $200 = <strong>80%</strong></p>\n                <p>This means 80 cents of every dollar contributes to covering fixed costs and profit!</p>\n            </div>\n            \n            <hr>\n            \n            <h4>⚖️ Breakeven Analysis</h4>\n            \n            <div class=\"example-box\" style=\"text-align: center;\">\n                <h4 style=\"margin-top: 0;\">📈 Break-Even Point</h4>\n                <p style=\"font-size: 1.1rem; margin: 0;\"><strong>Total Revenue = Total Costs</strong></p>\n                <p style=\"margin: 5px 0 0 0; color: #666;\">No profit, no loss - the starting point for profitability!</p>\n            </div>\n            \n            <p><strong>Breakeven</strong> is the condition where Total Revenue = Total Costs (zero profit/loss).</p>\n            <p><strong>Breakeven Point</strong> is the specific sales level where breakeven occurs.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Breakeven Formulas:</strong><br><br>\n                \n                <strong>In Sales Dollars:</strong><br>\n                BE Point = Fixed Costs ÷ CM Ratio<br><br>\n                \n                <strong>In Units:</strong><br>\n                BE Point = Fixed Costs ÷ CM per Unit\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Breakeven Calculation</h4>\n                <p>Hotel has Fixed Costs of $500,000, CM Ratio of 80%:</p>\n                <p>Breakeven = $500,000 ÷ 0.80 = <strong>$625,000 in sales</strong></p>\n                <p>The hotel needs $625,000 in revenue just to cover all costs!</p>\n            </div>\n            \n            <hr>\n            \n            <h4>🛡️ Margin of Safety</h4>\n            <p>Measures how much sales can drop before reaching breakeven.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Margin of Safety:</strong><br>\n                MOS = Actual Sales − Breakeven Sales<br><br>\n                MOS % = (Actual Sales − Breakeven) ÷ Actual Sales\n            </div>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Margin of Safety</h4>\n                <p>Actual Sales = $800,000, Breakeven = $625,000:</p>\n                <p>MOS = $800,000 − $625,000 = <strong>$175,000</strong></p>\n                <p>MOS % = $175,000 ÷ $800,000 = <strong>21.9%</strong></p>\n                <p>Sales can drop 21.9% before the hotel starts losing money!</p>\n            </div>\n            \n            <hr>\n            \n            <h4>⚡ Operating Leverage</h4>\n            <p>Measures how sensitive operating income is to changes in sales.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Degree of Operating Leverage:</strong><br>\n                DOL = Contribution Margin ÷ Operating Income\n            </div>\n            \n            <p><strong>High Operating Leverage</strong> = High fixed costs = Greater risk BUT greater reward potential</p>\n            <p><strong>Low Operating Leverage</strong> = High variable costs = Lower risk BUT lower profit potential</p>\n            \n            <hr>\n            \n            <h4>📈 The High-Low Method</h4>\n            <p>A simple technique to separate mixed costs into fixed and variable components.</p>\n            \n            <div class=\"formula-box\">\n                <strong>High-Low Method Steps:</strong><br><br>\n                \n                <strong>Step 1:</strong> Variable Cost per Unit =<br>\n                (Highest Cost − Lowest Cost) ÷ (Highest Activity − Lowest Activity)<br><br>\n                \n                <strong>Step 2:</strong> Fixed Costs =<br>\n                Total Cost − (Variable Cost × Activity Level)\n            </div>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>Room Sales = Rooms × Occupancy × ADR</li>\n                    <li>Food Sales = Seats × Turnover × Avg Check</li>\n                    <li>Total Cost = Fixed + Variable</li>\n                    <li>Contribution Margin = Sales − Variable Costs</li>\n                    <li>Breakeven = Fixed Costs ÷ CM Ratio</li>\n                    <li>Margin of Safety = Actual − Breakeven</li>\n                    <li>Higher leverage = higher risk AND higher potential reward</li>\n                </ul>\n            </div>\n        "
     }
   },
   "cashControl": {
+    "id": "pd8d2s",
     "name": "Cash & Internal Control",
     "icon": "fa-shield-halved",
     "color": "#059669",
     "flashcards": [
       {
+        "id": "wqg415",
         "question": "What items are included in cash?",
         "answer": "Cash includes:\n• Currency and coins on hand\n• Bank deposits\n• Checks received from customers\n• Money orders\n• Other negotiable instruments\n• Undeposited cash receipts\n• Cash in house banks",
         "explanation": "Cash must be readily available for use."
       },
       {
+        "id": "cu581s",
         "question": "What is the definition of internal control?",
         "answer": "Internal control is a system of policies and procedures designed to:\n• Protect assets\n• Ensure accurate accounting records\n• Promote operational efficiency\n• Encourage adherence to management policies",
         "explanation": "Internal control is the foundation of reliable financial reporting."
       },
       {
+        "id": "oo3ibr",
         "question": "What are the four main objectives of internal control?",
         "answer": "1. Safeguarding assets\n2. Ensuring reliability and accuracy of accounting records\n3. Promoting operational efficiency\n4. Ensuring compliance with laws and company policies",
         "explanation": "These objectives protect the business from fraud and errors."
       },
       {
+        "id": "fb9u1z",
         "question": "What assets are intended to be safeguarded by internal control?",
         "answer": "Assets to be safeguarded include:\n• Cash\n• Inventory\n• Equipment\n• Furnishings\n• Supplies\n• Other property\n• Accounting records\n• Financial information",
         "explanation": "Both physical assets and information need protection."
       },
       {
+        "id": "7lb9cx",
         "question": "What is collusion?",
         "answer": "Collusion occurs when two or more employees work together to circumvent internal control procedures, usually to commit fraud or theft that would be difficult for one person to accomplish alone.",
         "explanation": "Collusion is a significant threat to internal controls."
       },
       {
+        "id": "iyi01k",
         "question": "What is the advantage of bonding employees?",
         "answer": "Bonding employees:\n• Provides financial protection against losses caused by employee dishonesty\n• Acts as a deterrent to theft or fraud\n• Allows recovery of losses by the company",
         "explanation": "Bonded employees know that losses can be recovered."
       },
       {
+        "id": "zw6d4z",
         "question": "What is an internal control procedure for house banks?",
         "answer": "Assign responsibility for each house bank to one specific employee and require that the bank be counted and reconciled at the beginning and end of each shift.",
         "explanation": "Single responsibility ensures accountability."
       },
       {
+        "id": "g8r4cq",
         "question": "What is the purpose of the cashier's daily report?",
         "answer": "The cashier's daily report:\n• Summarizes all cash transactions for the day\n• Reconciles cash received with recorded sales\n• Provides documentation for accounting and management review",
         "explanation": "Essential for cash control and accountability."
       },
       {
+        "id": "vms6h1",
         "question": "What is the purpose of a bank reconciliation?",
         "answer": "Bank reconciliation:\n• Explains differences between bank statement and company's cash records\n• Detects errors or irregularities\n• Ensures accuracy of the cash account",
         "explanation": "Reconciliation is a key control procedure."
       },
       {
+        "id": "joh851",
         "question": "What are canceled checks?",
         "answer": "Canceled checks are checks that have been paid by the bank and returned to the check writer as proof of payment.",
         "explanation": "They serve as evidence that payment was made."
       },
       {
+        "id": "tbjgxf",
         "question": "What is a deposit in transit?",
         "answer": "A deposit in transit is cash receipts that have been recorded by the company but not yet recorded by the bank.",
         "explanation": "Timing difference - company recorded first."
       },
       {
+        "id": "p7ks17",
         "question": "What are outstanding checks?",
         "answer": "Outstanding checks are checks that have been written and recorded by the company but not yet paid by the bank.",
         "explanation": "Timing difference - bank hasn't processed yet."
       },
       {
+        "id": "c1js7w",
         "question": "What is an NSF check?",
         "answer": "NSF (Non-Sufficient Funds) check is a check returned by the bank because the issuer does not have enough funds in their account to cover the check.",
         "explanation": "Also known as a 'bounced check'."
       },
       {
+        "id": "mig2e9",
         "question": "Why does the bank statement balance generally not equal the checkbook balance?",
         "answer": "Balances differ due to timing differences:\n• Outstanding checks\n• Deposits in transit\n• Bank service charges\n• NSF checks\n• Errors by bank or company",
         "explanation": "These items are recorded at different times."
       },
       {
+        "id": "d85gbn",
         "question": "What are the 5 components of COSO Internal Control Framework?",
         "answer": "1. Control Environment - tone at the top, ethics, integrity\n2. Risk Assessment - identifying and analyzing risks\n3. Control Activities - policies and procedures\n4. Information & Communication - relevant info flows\n5. Monitoring Activities - ongoing evaluations",
         "explanation": "COSO framework is the gold standard for internal control."
       },
       {
+        "id": "lzpe4j",
         "question": "What is Separation of Duties and why is it important?",
         "answer": "Separation of Duties means dividing responsibilities among different employees so no single person controls all aspects of a transaction.\n\nThree functions to separate:\n• Authorization\n• Custody of assets\n• Record keeping\n\nThis prevents fraud and errors.",
         "explanation": "One person should never handle a transaction from start to finish."
       },
       {
+        "id": "scbtg0",
         "question": "What is a Petty Cash Fund?",
         "answer": "A petty cash fund is a small amount of cash kept on hand to pay for minor expenses that are impractical to pay by check.\n\nControls include:\n• Fixed fund amount\n• One custodian responsible\n• Receipts required for all disbursements\n• Periodic surprise counts",
         "explanation": "Used for small, incidental expenses."
       },
       {
+        "id": "xjjqcm",
         "question": "What are prenumbered documents and why are they used?",
         "answer": "Prenumbered documents are forms (checks, invoices, receipts) printed with sequential numbers.\n\nPurpose:\n• Track all documents\n• Detect missing or duplicate transactions\n• Establish audit trail\n• Prevent unauthorized transactions",
         "explanation": "Essential for transaction tracking and accountability."
       },
       {
+        "id": "iddtlr",
         "question": "What is the purpose of surprise audits?",
         "answer": "Surprise audits are unannounced examinations of records or cash.\n\nBenefits:\n• Deter fraud (employees don't know when audit will occur)\n• Detect irregularities before they grow\n• Test effectiveness of controls\n• Keep employees vigilant",
         "explanation": "The element of surprise is key to effectiveness."
       },
       {
+        "id": "u6g3ek",
         "question": "What is the difference between authorization and approval?",
         "answer": "Authorization: General permission to perform transactions within set limits (e.g., manager can approve purchases up to $500)\n\nApproval: Specific permission for a particular transaction (e.g., signing a specific purchase order)\n\nBoth are control activities that ensure proper review.",
         "explanation": "Authorization sets limits; approval is for specific actions."
       },
       {
+        "id": "debbwx",
         "question": "What are the steps in a Bank Reconciliation?",
         "answer": "1. Start with bank statement ending balance\n2. Add: Deposits in transit\n3. Subtract: Outstanding checks\n4. = Adjusted bank balance\n\n5. Start with book balance\n6. Add: Bank collections, interest earned\n7. Subtract: Service charges, NSF checks\n8. = Adjusted book balance\n\nBoth adjusted balances should match!",
         "explanation": "Systematic process to reconcile two balances."
       },
       {
+        "id": "a66lbi",
         "question": "What is a Cash Over and Short account?",
         "answer": "Cash Over and Short is an account used to record differences between actual cash and the amount that should be in the cash register.\n\n• Debit (expense) if cash is SHORT\n• Credit (revenue) if cash is OVER\n\nLarge or frequent differences indicate control problems.",
         "explanation": "Tracks cashier accuracy and potential theft."
@@ -2127,6 +2378,7 @@
     ],
     "quiz": [
       {
+        "id": "kvz7yl",
         "question": "Which is NOT included in cash?",
         "options": [
           "Currency on hand",
@@ -2137,6 +2389,7 @@
         "correct": 2
       },
       {
+        "id": "cvlvk8",
         "question": "What is the main purpose of internal control?",
         "options": [
           "Increase profits",
@@ -2147,6 +2400,7 @@
         "correct": 1
       },
       {
+        "id": "wt02h0",
         "question": "Collusion involves:",
         "options": [
           "One employee stealing",
@@ -2157,6 +2411,7 @@
         "correct": 1
       },
       {
+        "id": "hygto3",
         "question": "Bonding employees provides protection against:",
         "options": [
           "Natural disasters",
@@ -2167,6 +2422,7 @@
         "correct": 1
       },
       {
+        "id": "81xhoq",
         "question": "A deposit in transit is:",
         "options": [
           "Recorded by bank but not company",
@@ -2177,6 +2433,7 @@
         "correct": 1
       },
       {
+        "id": "ojpr1v",
         "question": "Outstanding checks are:",
         "options": [
           "Paid by the bank",
@@ -2187,6 +2444,7 @@
         "correct": 1
       },
       {
+        "id": "mt7xoy",
         "question": "NSF stands for:",
         "options": [
           "National Security Fund",
@@ -2197,6 +2455,7 @@
         "correct": 1
       },
       {
+        "id": "nd9kv8",
         "question": "How many main objectives does internal control have?",
         "options": [
           "2",
@@ -2207,6 +2466,7 @@
         "correct": 2
       },
       {
+        "id": "f45m4k",
         "question": "The cashier's daily report is used to:",
         "options": [
           "Fire employees",
@@ -2217,6 +2477,7 @@
         "correct": 1
       },
       {
+        "id": "rctmf3",
         "question": "Bank reconciliation helps to:",
         "options": [
           "Increase sales",
@@ -2227,6 +2488,7 @@
         "correct": 1
       },
       {
+        "id": "vp0hv6",
         "question": "How many components does the COSO Internal Control Framework have?",
         "options": [
           "3",
@@ -2237,6 +2499,7 @@
         "correct": 2
       },
       {
+        "id": "odely1",
         "question": "Separation of Duties requires separating which three functions?",
         "options": [
           "Sales, Marketing, Finance",
@@ -2247,6 +2510,7 @@
         "correct": 1
       },
       {
+        "id": "fty50l",
         "question": "A petty cash fund is used for:",
         "options": [
           "Large purchases",
@@ -2257,6 +2521,7 @@
         "correct": 2
       },
       {
+        "id": "9vedrg",
         "question": "Prenumbered documents help to:",
         "options": [
           "Increase profits",
@@ -2267,6 +2532,7 @@
         "correct": 1
       },
       {
+        "id": "8xb9yt",
         "question": "The purpose of surprise audits is to:",
         "options": [
           "Scare employees",
@@ -2277,6 +2543,7 @@
         "correct": 1
       },
       {
+        "id": "bkegky",
         "question": "Which is NOT a component of COSO framework?",
         "options": [
           "Control Environment",
@@ -2287,6 +2554,7 @@
         "correct": 2
       },
       {
+        "id": "gmbz9o",
         "question": "Cash Over and Short account records:",
         "options": [
           "Bank loans",
@@ -2299,62 +2567,74 @@
     ],
     "fillBlanks": [
       {
+        "id": "p3jmbe",
         "sentence": "_______ occurs when two or more employees work together to circumvent internal controls.",
         "answer": "Collusion",
         "hint": "Working together for fraud..."
       },
       {
+        "id": "b8loq8",
         "sentence": "NSF stands for Non-_______ Funds.",
         "answer": "Sufficient",
         "hint": "Not enough..."
       },
       {
+        "id": "e0pbca",
         "sentence": "A _______ in transit is recorded by the company but not yet by the bank.",
         "answer": "deposit",
         "hint": "Money put into account..."
       },
       {
+        "id": "d04zde",
         "sentence": "_______ checks have been written but not yet paid by the bank.",
         "answer": "Outstanding",
         "hint": "Still out there..."
       },
       {
+        "id": "3j17tg",
         "sentence": "_______ employees provides financial protection against dishonesty.",
         "answer": "Bonding",
         "hint": "Insurance against theft..."
       },
       {
+        "id": "wdznsm",
         "sentence": "The COSO framework has _______ components of internal control.",
         "answer": "five",
         "hint": "5..."
       },
       {
+        "id": "uc8f3t",
         "sentence": "_______ of Duties separates authorization, custody, and record keeping.",
         "answer": "Separation",
         "hint": "Dividing responsibilities..."
       },
       {
+        "id": "8oelw7",
         "sentence": "A _______ cash fund is used for small incidental expenses.",
         "answer": "petty",
         "hint": "Small, minor..."
       },
       {
+        "id": "07q005",
         "sentence": "_______ documents are printed with sequential numbers to track transactions.",
         "answer": "Prenumbered",
         "hint": "Numbers printed in advance..."
       },
       {
+        "id": "ur25ni",
         "sentence": "_______ audits are unannounced examinations that deter fraud.",
         "answer": "Surprise",
         "hint": "Unexpected..."
       },
       {
+        "id": "r4lqd6",
         "sentence": "Cash Over and _______ account records differences in cash register.",
         "answer": "Short",
         "hint": "Over and..."
       }
     ],
     "learn": {
+      "id": "rduif4",
       "title": "Cash and Internal Control",
       "content": "\n            <h3>📚 Chapter Overview: Cash and Internal Control</h3>\n            <p>This chapter covers the fundamentals of cash management and the internal control systems that protect a hospitality business's most liquid asset.</p>\n            \n            <hr>\n            \n            <h4>💰 What is Cash?</h4>\n            <p>In accounting, <strong>cash</strong> refers to the most liquid assets that are readily available for use. Cash includes:</p>\n            <ul>\n                <li>Currency and coins on hand</li>\n                <li>Bank deposits (checking and savings accounts)</li>\n                <li>Checks received from customers</li>\n                <li>Money orders and traveler's checks</li>\n                <li>Other negotiable instruments</li>\n                <li>Undeposited cash receipts</li>\n                <li>Cash in house banks (front desk, restaurants, bars)</li>\n            </ul>\n            \n            <div class=\"warning-box\">\n                <h4>⚠️ NOT Cash:</h4>\n                <p>Accounts receivable, inventory, prepaid expenses, and investments are NOT considered cash because they cannot be immediately used for payments.</p>\n            </div>\n            \n            <hr>\n            \n            <h4>🛡️ Internal Control Definition</h4>\n            <p><strong>Internal control</strong> is a comprehensive system of policies, procedures, and practices designed by management to:</p>\n            \n            <div class=\"formula-box\">\n                <strong>4 Main Objectives of Internal Control:</strong><br><br>\n                <strong>1. Safeguard Assets</strong> - Protect cash, inventory, equipment from theft or misuse<br><br>\n                <strong>2. Ensure Accuracy</strong> - Maintain reliable and accurate accounting records<br><br>\n                <strong>3. Promote Efficiency</strong> - Encourage operational effectiveness<br><br>\n                <strong>4. Ensure Compliance</strong> - Adhere to laws, regulations, and company policies\n            </div>\n            \n            <hr>\n            \n            <h4>🏛️ COSO Internal Control Framework</h4>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.2)); border-left-color: var(--primary);\">\n                <h4 style=\"color: var(--primary); font-size: 1.3rem;\">🏗️ COSO = Committee of Sponsoring Organizations</h4>\n                <p style=\"margin: 0;\">The Gold Standard for Internal Control - 5 Interrelated Components</p>\n            </div>\n            \n            <p>The <strong>Committee of Sponsoring Organizations (COSO)</strong> framework is the gold standard for internal control. It has <strong>5 interrelated components</strong>:</p>\n            \n            <div class=\"formula-box\">\n                <strong>5 Components of COSO Framework:</strong><br><br>\n                <strong>1. Control Environment</strong><br>\n                The \"tone at the top\" - management's integrity, ethical values, and commitment to competence<br><br>\n                \n                <strong>2. Risk Assessment</strong><br>\n                Identifying and analyzing risks that may prevent achieving objectives<br><br>\n                \n                <strong>3. Control Activities</strong><br>\n                Policies and procedures that ensure management directives are carried out (approvals, authorizations, verifications, reconciliations)<br><br>\n                \n                <strong>4. Information & Communication</strong><br>\n                Relevant information must be identified, captured, and communicated in a timely manner<br><br>\n                \n                <strong>5. Monitoring Activities</strong><br>\n                Ongoing evaluations to assess whether controls are functioning effectively\n            </div>\n            \n            <hr>\n            \n            <h4>🔐 Key Control Principles</h4>\n            \n            <h5>Separation of Duties</h5>\n            <p>The most critical internal control principle. <strong>No single person</strong> should control all aspects of a transaction. Three functions must be separated:</p>\n            <ul>\n                <li><strong>Authorization</strong> - Approving transactions</li>\n                <li><strong>Custody</strong> - Physical control of assets</li>\n                <li><strong>Record Keeping</strong> - Recording transactions</li>\n            </ul>\n            \n            <div class=\"example-box\">\n                <h4>📝 Example: Hotel Front Desk</h4>\n                <p>• Night auditor (records) ≠ Cashier (custody) ≠ Manager (authorization)</p>\n                <p>• If one person does all three, they could steal cash and cover it up in records!</p>\n            </div>\n            \n            <h5>Prenumbered Documents</h5>\n            <p>All important documents (checks, invoices, receipts) should have sequential numbers to:</p>\n            <ul>\n                <li>Track all transactions</li>\n                <li>Detect missing or duplicate documents</li>\n                <li>Establish an audit trail</li>\n            </ul>\n            \n            <h5>Bonding Employees</h5>\n            <p>Fidelity bonds provide insurance against employee dishonesty. Benefits:</p>\n            <ul>\n                <li>Financial recovery if theft occurs</li>\n                <li>Deterrent effect - employees know losses can be recovered</li>\n                <li>Background checks during bonding process</li>\n            </ul>\n            \n            <h5>Surprise Audits</h5>\n            <p>Unannounced examinations of cash and records. The unpredictability is the key - employees never know when an audit might occur.</p>\n            \n            <hr>\n            \n            <h4>🏨 House Banks in Hospitality</h4>\n            <p>A <strong>house bank</strong> is a fixed amount of cash assigned to a cashier for making change. Controls include:</p>\n            <ul>\n                <li>One specific employee responsible for each bank</li>\n                <li>Count and reconcile at beginning and end of each shift</li>\n                <li>Bank amount should remain constant</li>\n                <li>Overages and shortages investigated</li>\n            </ul>\n            \n            <h5>Petty Cash Fund</h5>\n            <p>A small amount of cash kept for minor expenses. Controls:</p>\n            <ul>\n                <li>Fixed fund amount (e.g., $200)</li>\n                <li>One custodian responsible</li>\n                <li>Receipts required for ALL disbursements</li>\n                <li>Cash + Receipts must always equal fund total</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>🏦 Bank Reconciliation</h4>\n            \n            <div class=\"tip-box\" style=\"text-align: center; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2));\">\n                <h4>📊 Bank Statement ↔️ Company Records</h4>\n                <p style=\"margin: 0;\">Reconciliation ensures both balances match after adjustments</p>\n            </div>\n            \n            <p>A <strong>bank reconciliation</strong> explains differences between the bank statement balance and the company's book balance. It should be performed monthly by someone who does NOT handle cash.</p>\n            \n            <div class=\"formula-box\">\n                <strong>Bank Reconciliation Procedure:</strong><br><br>\n                <strong>BANK SIDE:</strong><br>\n                Bank Statement Balance<br>\n                + Deposits in Transit<br>\n                − Outstanding Checks<br>\n                ± Bank Errors<br>\n                = <strong>Adjusted Bank Balance</strong><br><br>\n                \n                <strong>BOOK SIDE:</strong><br>\n                Book Balance (per records)<br>\n                + Bank Collections, Interest Earned<br>\n                − Service Charges, NSF Checks<br>\n                ± Book Errors<br>\n                = <strong>Adjusted Book Balance</strong><br><br>\n                \n                <em>Both adjusted balances must be equal!</em>\n            </div>\n            \n            <h5>Key Terms:</h5>\n            <ul>\n                <li><strong>Deposit in Transit:</strong> Recorded by company but not yet by bank (ADD to bank)</li>\n                <li><strong>Outstanding Check:</strong> Written by company but not yet paid by bank (SUBTRACT from bank)</li>\n                <li><strong>NSF Check:</strong> \"Bounced\" check - insufficient funds (SUBTRACT from books)</li>\n                <li><strong>Canceled Check:</strong> Check that has been paid and returned as proof</li>\n            </ul>\n            \n            <hr>\n            \n            <h4>📊 Cash Over and Short</h4>\n            <p>When actual cash differs from expected amount:</p>\n            <ul>\n                <li><strong>Cash Short:</strong> Actual < Expected → Debit (expense)</li>\n                <li><strong>Cash Over:</strong> Actual > Expected → Credit (revenue)</li>\n            </ul>\n            <p>Large or frequent differences indicate control problems and should be investigated!</p>\n            \n            <hr>\n            \n            <h4>🚨 Collusion</h4>\n            <p><strong>Collusion</strong> occurs when two or more employees work together to circumvent internal controls. It's the biggest threat to any control system because:</p>\n            <ul>\n                <li>Separation of duties is defeated</li>\n                <li>Harder to detect than individual fraud</li>\n                <li>Usually involves larger amounts</li>\n            </ul>\n            \n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Key Takeaways</h4>\n                <ul>\n                    <li>Internal control protects assets and ensures accurate records</li>\n                    <li>COSO framework has 5 components - memorize them!</li>\n                    <li>Separation of duties = Authorization + Custody + Record keeping SEPARATED</li>\n                    <li>Bank reconciliation reconciles BANK balance with BOOK balance</li>\n                    <li>Deposits in transit: ADD to bank; Outstanding checks: SUBTRACT from bank</li>\n                    <li>Collusion defeats separation of duties</li>\n                </ul>\n            </div>\n        "
     }

@@ -10,92 +10,110 @@ const te2M1 = {
 
     // ========== UNIT 1: TOURISM FUNDAMENTALS & THE TOURISM MARKET ==========
     fundamentals: {
+        id: "0t7tx1",
         name: "Fundamentals & Tourism Market",
         icon: "fa-globe-americas",
         color: "#6366f1",
 
         flashcards: [
             {
+                id: "hui8kz",
                 question: "What is the origin of the word 'tour'?",
                 answer: "From the Latin word 'tornus', meaning 'a tool for making a circle'.",
                 explanation: "The etymology reflects the circular nature of travel — leaving home and returning."
             },
             {
+                id: "9xp183",
                 question: "What makes up the PRIMARY tourism industry (basic concepts of tourism)?",
                 answer: "Travel trade, transport, accommodation, catering, facilities, and tourist attractions.",
                 explanation: "These are the core components that directly deliver the tourism experience."
             },
             {
+                id: "jccs9o",
                 question: "What are the 5 A's of tourism?",
                 answer: "Attractions, Access, Accommodation, Amenities, Activities.",
                 explanation: "The five essential requirements for successful tourism; developing a suitable combination of them is at the heart of tourism planning."
             },
             {
+                id: "mms6e5",
                 question: "Who are the key players (stakeholders) in the tourism industry?",
                 answer: "Local residents, local companies, media, employees, government, competitors, tourists, business associations, activists, and tourism developers.",
                 explanation: "Tourism affects and involves a wide network of stakeholders, not just tourists and firms."
             },
             {
+                id: "gbk2va",
                 question: "How are visitors classified?",
                 answer: "Visitors = Tourists + Day-trippers.\nTourists travel for more than 24 h and stay overnight (≥1 night). Day-trippers stay less than 24 h and do NOT stay overnight.",
                 explanation: "The overnight stay is the dividing line between a tourist and a day-tripper (excursionist)."
             },
             {
+                id: "st1lyu",
                 question: "How are tourist holidays sub-divided by length?",
                 answer: "Short holidays = 1–3 nights. Long holidays = more than 3 nights.",
                 explanation: "A further distinction within the 'tourist' (overnight) category."
             },
             {
+                id: "o1vtfc",
                 question: "What are the two TYPES of tourism?",
                 answer: "1. International tourism — Inbound + Outbound.\n2. Domestic tourism — travel within one's own country.",
                 explanation: "Type depends on whether a national border is crossed."
             },
             {
+                id: "yrv5nz",
                 question: "Distinguish Inbound and Outbound tourism.",
                 answer: "Inbound: tourists of OUTSIDE origin entering a particular country (incoming).\nOutbound: tourists travelling FROM their country of origin to another country (going outside).",
                 explanation: "The same trip is inbound for the destination country and outbound for the origin country."
             },
             {
+                id: "92hnzz",
                 question: "What is Domestic tourism and why is it easier?",
                 answer: "Tourism activity of people within their own country. It is easier because it needs no formal travel documents, health checks or foreign-currency exchange, and usually involves no language barriers.",
                 explanation: "Fewer formalities and frictions than crossing an international border."
             },
             {
+                id: "zt4syx",
                 question: "What are the 4 types of impacts of tourism development?",
                 answer: "Economic, Environmental, Social, and Cultural impacts.",
                 explanation: "Impacts vary in type, location, and significance — the course studies all four."
             },
             {
+                id: "etkl0l",
                 question: "Why are tourists important to a destination?",
                 answer: "Tourism boosts the revenue of the economy, creates thousands of jobs, develops a country's infrastructure, and plants cultural exchange between foreigners and citizens.",
                 explanation: "Tourism is a major foreign-exchange and employment generator and one of the world's fastest-growing industries."
             },
             {
+                id: "jg0jt5",
                 question: "What is tourism economics?",
                 answer: "An applied branch (discipline) of economics that studies the economic effects of tourism activity: expenditure decisions, investment decisions, the structure & organization of markets (price, quantity, competition), tourism policy & planning, and issues related to international tourism.",
                 explanation: "It applies general economic analysis to the specific functioning of the tourism market."
             },
             {
+                id: "gx3zyr",
                 question: "What does UN Tourism (UNWTO) say about tourism's growth?",
                 answer: "Over recent decades tourism has experienced continued growth and diversification to become one of the LARGEST and FASTEST-growing economic sectors in the world.",
                 explanation: "International arrivals grew from ~528 mn (1995) to ~1,035 mn (2012), with ~1.8 bn forecast for 2030."
             },
             {
+                id: "u66oj6",
                 question: "What does the tourism market INCLUDE?",
                 answer: "Tourism demand, intermediaries, and tourism supply.",
                 explanation: "Supply and demand meet (through intermediaries) in the receptive tourism destination."
             },
             {
+                id: "rrjuls",
                 question: "What are the key FEATURES of the tourism market?",
                 answer: "Intangible product, no transfer of ownership, closely interrelated production (and consumption), an assembled product, no movement of the product, unstable demand, and wider coverage.",
                 explanation: "These features distinguish the tourism 'product' from ordinary tangible goods."
             },
             {
+                id: "7wx5sc",
                 question: "Why is the tourism product called 'intangible' with 'no transfer of ownership'?",
                 answer: "Tourism relates to service, pleasure and leisure that cannot be visualised in advance; buying/selling means buying a SERVICE, so no ownership of goods is transferred (unlike a tangible product).",
                 explanation: "You buy an experience, not a physical item you can store or own."
             },
             {
+                id: "41gvkg",
                 question: "What basic characteristic distinguishes tourists in the market?",
                 answer: "In a receptive destination, tourists SPEND money instead of earning it, and they must be personally present — consumption of the tourism product is impossible without the tourist's presence.",
                 explanation: "Production and consumption happen at the same place and time, with the tourist as an integral part."
@@ -104,31 +122,37 @@ const te2M1 = {
 
         quiz: [
             {
+                id: "s6l87v",
                 question: "The word 'tour' derives from the Latin 'tornus', meaning:",
                 options: ["A long journey", "A tool for making a circle", "To rest", "A market"],
                 correct: 1
             },
             {
+                id: "mchsak",
                 question: "Which is NOT one of the 5 A's of tourism?",
                 options: ["Attractions", "Access", "Advertising", "Amenities"],
                 correct: 2
             },
             {
+                id: "scv0e1",
                 question: "A visitor who stays less than 24 hours and does not stay overnight is a:",
                 options: ["Tourist", "Day-tripper", "Inbound tourist", "Long-holiday tourist"],
                 correct: 1
             },
             {
+                id: "3rxe7f",
                 question: "Tourists entering a country from outside represent:",
                 options: ["Outbound tourism", "Domestic tourism", "Inbound tourism", "Excursionism"],
                 correct: 2
             },
             {
+                id: "ug0azj",
                 question: "Which is one of the four impacts of tourism development?",
                 options: ["Technological", "Cultural", "Financial", "Logistical"],
                 correct: 1
             },
             {
+                id: "naco91",
                 question: "Tourism economics is best described as:",
                 options: [
                     "A method of accounting for hotels",
@@ -139,11 +163,13 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "mhui6b",
                 question: "The tourism market includes demand, supply and:",
                 options: ["Governments", "Intermediaries", "Competitors", "Banks"],
                 correct: 1
             },
             {
+                id: "swyop1",
                 question: "'No transfer of ownership' in the tourism market means:",
                 options: [
                     "Tourists rent everything",
@@ -154,6 +180,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "kmn126",
                 question: "Short holidays are defined as:",
                 options: ["Less than 24 hours", "1–3 nights", "4–7 nights", "More than 3 nights"],
                 correct: 1
@@ -162,31 +189,37 @@ const te2M1 = {
 
         fillBlanks: [
             {
+                id: "etdu90",
                 sentence: "Visitors = Tourists + _______.",
                 answer: "Day-trippers",
                 hint: "Those who do not stay overnight..."
             },
             {
+                id: "bjxnxx",
                 sentence: "The 5 A's are: Attractions, Access, Accommodation, Amenities and _______.",
                 answer: "Activities",
                 hint: "Things tourists do..."
             },
             {
+                id: "1fn4ca",
                 sentence: "International tourism is split into inbound and _______ tourism.",
                 answer: "outbound",
                 hint: "Travelling out of the country of origin..."
             },
             {
+                id: "u6o9mg",
                 sentence: "Tourists travel for more than _______ hours and stay overnight.",
                 answer: "24",
                 hint: "A full day..."
             },
             {
+                id: "lzmcfe",
                 sentence: "The tourism product is _______ — it relates to service and cannot be visualised in advance.",
                 answer: "intangible",
                 hint: "Opposite of tangible / physical..."
             },
             {
+                id: "ikcul2",
                 sentence: "The tourism market includes demand, intermediaries and tourism _______.",
                 answer: "supply",
                 hint: "The provision side..."
@@ -194,6 +227,7 @@ const te2M1 = {
         ],
 
         learn: {
+            id: "sysdbk",
             title: "Tourism Fundamentals & the Tourism Market",
             content: `
                 <h3>🌍 What is Tourism?</h3>
@@ -242,72 +276,86 @@ const te2M1 = {
 
     // ========== UNIT 2: TOURISM DEMAND ==========
     demand: {
+        id: "8j4l05",
         name: "Tourism Demand",
         icon: "fa-chart-line",
         color: "#10b981",
 
         flashcards: [
             {
+                id: "shdfoq",
                 question: "What is tourism demand?",
                 answer: "The WILLINGNESS and ABILITY of consumers to buy different amounts of a tourism product at different prices during any period of time.",
                 explanation: "Both willingness (desire) and ability (purchasing power) are required — not just one."
             },
             {
+                id: "1617ti",
                 question: "What are the 2 types of tourism demand?",
                 answer: "1. Demand for TRAVEL to a destination (e.g. visitor arrivals, overnights, expenditure).\n2. Demand for a PARTICULAR tourism-related product or service (e.g. hotel rooms, restaurant meals).",
                 explanation: "Demand can be measured at the destination level or at the individual product level."
             },
             {
+                id: "rcdzf5",
                 question: "What determines demand for travel to a destination?",
                 answer: "Price factors (transport, accommodation, excursions, food & beverage, entertainment) and non-price factors (socio-economic, demographic and qualitative factors).",
                 explanation: "Both the cost of the trip and the traveller's characteristics matter."
             },
             {
+                id: "4yqxxt",
                 question: "What are the most important variables affecting demand for any good/service?",
                 answer: "Price, consumer income, the number of consumers in the market, the price of related products, consumer tastes, the level of marketing/promotion expenditure, and other variables.",
                 explanation: "Standard demand determinants applied to tourism."
             },
             {
+                id: "jzk3m7",
                 question: "List key factors influencing tourism demand specifically.",
                 answer: "Size of the market (population), income, tastes, advertising & promotion, seasonality, product availability, prices of substitute & complementary products, and the amount of leisure time available.",
                 explanation: "Seasonality and leisure time are especially important in tourism."
             },
             {
+                id: "wtuo52",
                 question: "What is the Law of Demand?",
                 answer: "Price and tourism demand have an INVERSE relationship: as the price of a tourism product falls, the quantity demanded rises (and vice versa).",
                 explanation: "The downward-sloping demand curve."
             },
             {
+                id: "p9qx5f",
                 question: "How do non-price factors affect demand?",
                 answer: "Changes in non-price factors shift demand at ANY given price: if non-price factors work in favour of the product, more is demanded at each price (and vice versa).",
                 explanation: "Price changes move along the curve; non-price factors shift the whole curve."
             },
             {
+                id: "p1xeuw",
                 question: "What is the Bandwagon effect?",
                 answer: "People demand a product or service BECAUSE others are purchasing it (because it is 'fashionable').",
                 explanation: "Following the crowd increases demand."
             },
             {
+                id: "ynm3we",
                 question: "What is the Snob effect?",
                 answer: "Some consumers seek to be different and exclusive by demanding LESS of a product as MORE people consume it.",
                 explanation: "The opposite of the bandwagon effect — exclusivity drives demand down as popularity rises."
             },
             {
+                id: "ysa7be",
                 question: "What is the Veblen effect?",
                 answer: "Some individuals seek to impress others by demanding MORE of certain 'high-status' products as their PRICE RISES (prestige).",
                 explanation: "Higher price signals more prestige, so demand increases — contradicting the Law of Demand for luxury goods."
             },
             {
+                id: "r65tmf",
                 question: "What are the FOUR forms of tourism demand elasticity?",
                 answer: "1. Price elasticity\n2. Income elasticity\n3. Cross-price elasticity\n4. Marketing (advertising) elasticity",
                 explanation: "Note there are FOUR forms — marketing elasticity is the one often forgotten."
             },
             {
+                id: "a0xrzz",
                 question: "Define price elasticity and income elasticity of demand (with formulas).",
                 answer: "Price elasticity = how demand changes due to a change in the product's OWN price = %ΔQuantity demanded / %ΔPrice.\nIncome elasticity = how demand changes due to a change in consumer INCOME = %ΔQuantity demanded / %ΔIncome.",
                 explanation: "Each elasticity divides the % change in quantity demanded by the % change in the driver."
             },
             {
+                id: "rfv91u",
                 question: "Define cross-price elasticity and marketing elasticity of demand (with formulas).",
                 answer: "Cross-price elasticity = how demand changes due to a change in the price of SUBSTITUTE/COMPLEMENTARY goods = %ΔQd of product A / %ΔPrice of product B.\nMarketing (advertising) elasticity = responsiveness of sales to changes in marketing expenditure = %ΔQd / %ΔMarketing expenditure.",
                 explanation: "Cross-price links two products; marketing elasticity links sales to promotion spend."
@@ -316,46 +364,55 @@ const te2M1 = {
 
         quiz: [
             {
+                id: "ow17zt",
                 question: "Tourism demand requires consumers to have:",
                 options: ["Only the willingness to buy", "Only the ability to pay", "Both willingness AND ability", "A travel agent"],
                 correct: 2
             },
             {
+                id: "s49ekn",
                 question: "The Law of Demand describes a relationship between price and demand that is:",
                 options: ["Direct", "Inverse", "Unrelated", "Always proportional"],
                 correct: 1
             },
             {
+                id: "z871tx",
                 question: "How many forms of tourism demand elasticity are there?",
                 options: ["2", "3", "4", "5"],
                 correct: 2
             },
             {
+                id: "16lup6",
                 question: "Price Elasticity of Demand =",
                 options: ["%ΔPrice / %ΔQuantity", "%ΔQuantity demanded / %ΔPrice", "%ΔIncome / %ΔPrice", "%ΔQuantity / %ΔIncome"],
                 correct: 1
             },
             {
+                id: "nojyje",
                 question: "The Snob effect means demand:",
                 options: ["Rises as others buy", "Falls as more people consume the product", "Rises as price rises", "Is unaffected by others"],
                 correct: 1
             },
             {
+                id: "dxgulg",
                 question: "The Veblen effect applies to:",
                 options: ["Necessities", "Inferior goods", "High-status / prestige goods", "Free goods"],
                 correct: 2
             },
             {
+                id: "16rswr",
                 question: "Which is a NON-price factor influencing tourism demand?",
                 options: ["Accommodation price", "Transport cost", "Seasonality", "Excursion price"],
                 correct: 2
             },
             {
+                id: "v3btef",
                 question: "Demand for 'visitor arrivals, overnights and expenditure' is demand for:",
                 options: ["A particular product", "Travel to a destination", "Hotel rooms only", "Restaurant meals"],
                 correct: 1
             },
             {
+                id: "lxrq8t",
                 question: "Cross-price elasticity measures demand changes caused by:",
                 options: [
                     "The product's own price",
@@ -369,31 +426,37 @@ const te2M1 = {
 
         fillBlanks: [
             {
+                id: "op564u",
                 sentence: "Tourism demand is the willingness and _______ of consumers to buy a product at different prices.",
                 answer: "ability",
                 hint: "Purchasing power..."
             },
             {
+                id: "8iom14",
                 sentence: "Price and tourism demand have an _______ relationship (Law of Demand).",
                 answer: "inverse",
                 hint: "Opposite directions..."
             },
             {
+                id: "9d6km1",
                 sentence: "The _______ effect: people demand more of a status good as its price rises.",
                 answer: "Veblen",
                 hint: "Named after economist Thorstein..."
             },
             {
+                id: "0km1ya",
                 sentence: "The four elasticities are price, income, cross-price and _______ elasticity.",
                 answer: "marketing",
                 hint: "Also called advertising elasticity..."
             },
             {
+                id: "rgg21a",
                 sentence: "Price Elasticity of Demand = % change in quantity demanded / % change in _______.",
                 answer: "price",
                 hint: "The product's own..."
             },
             {
+                id: "byw3mt",
                 sentence: "The _______ effect: people buy a product because others are buying it (fashionable).",
                 answer: "Bandwagon",
                 hint: "Jump on the..."
@@ -401,6 +464,7 @@ const te2M1 = {
         ],
 
         learn: {
+            id: "7nqb92",
             title: "Tourism Demand",
             content: `
                 <h3>📖 Definition</h3>
@@ -444,57 +508,68 @@ const te2M1 = {
 
     // ========== UNIT 3: FORECASTING TOURISM DEMAND ==========
     forecasting: {
+        id: "pgaank",
         name: "Forecasting Tourism Demand",
         icon: "fa-magnifying-glass-chart",
         color: "#06b6d4",
 
         flashcards: [
             {
+                id: "jb3f43",
                 question: "Why is forecasting tourism demand important?",
                 answer: "In a changing global environment, reliable short-term and long-term forecasts of tourism activity are essential for both government policy development and business planning.",
                 explanation: "Forecasts guide decisions for the public sector, businesses, and planners."
             },
             {
+                id: "v8qgn7",
                 question: "What are the 3 time horizons in tourism forecasting?",
                 answer: "Short run, intermediate run, and long range.",
                 explanation: "Different decisions require different forecasting horizons."
             },
             {
+                id: "qzur3m",
                 question: "Give some of the 7 reasons forecasting is especially important in tourism.",
                 answer: "The tourist product is perishable; tourism behaviour is complex; people are inseparable from the production–consumption process; customer satisfaction depends on complementary products/services; demand is extremely sensitive to natural and human-made disasters; forecasting aids long-term planning; it is fundamental to modern business.",
                 explanation: "Perishability and disaster-sensitivity make accurate forecasting vital in tourism."
             },
             {
+                id: "kmed05",
                 question: "What are the 3 broad methods of forecasting?",
                 answer: "1. Qualitative forecasting — based on judgment, experience, practical knowledge and intuition.\n2. Quantitative forecasting — uses mathematical techniques to predict variables.\n3. Artificial Intelligence — AI-based systems built to bridge the gap between qualitative and quantitative approaches.",
                 explanation: "AI acts as a bridge between human judgment and pure mathematical models."
             },
             {
+                id: "z9syhd",
                 question: "When are QUALITATIVE (judgmental) forecasting methods used?",
                 answer: "When there are insufficient historical data; the available time series is not reliable/valid; the macro environment is changing rapidly; there are major disturbances (wars, terrorism, strikes, natural disasters, COVID-19); or long-term forecasts are desired.",
                 explanation: "Judgment fills in when data are missing or the environment is unstable."
             },
             {
+                id: "u0xqyk",
                 question: "What are the 3 types of quantitative forecasting models?",
                 answer: "1. Time-series models — assume a variable's past course is the key to predicting its future.\n2. Causal (econometric) models — identify causal relationships between the demand variable and its influencing factors.\n3. Mixed models — include both time-series and structural (causal) elements.",
                 explanation: "Time-series looks at the past trend; causal models explain the 'why'."
             },
             {
+                id: "jwttfk",
                 question: "What is the most common method of estimating demand?",
                 answer: "Regression analysis.",
                 explanation: "It estimates how independent variables affect the tourism demand variable."
             },
             {
+                id: "ba4bb7",
                 question: "What are the 4 steps in using regression analysis?",
                 answer: "1. Specify the model to be estimated (identify the most important variables affecting demand).\n2. Collect the data for the variables in the model.\n3. Determine the form of the model (most common is the linear model).\n4. Evaluate the regression results.",
                 explanation: "A structured procedure for modelling tourism demand."
             },
             {
+                id: "6buv9k",
                 question: "In demand regression, what are typical DEPENDENT and INDEPENDENT variables?",
                 answer: "Dependent (explained): tourist arrivals, tourist expenditures, length of stay.\nIndependent (explanatory): income, relative prices, transport cost, marketing/promotion expenses, qualitative factors.",
                 explanation: "The dependent variable is the demand being predicted; independents are its drivers."
             },
             {
+                id: "2qs1tk",
                 question: "Who uses demand forecasts and why?",
                 answer: "Tourism marketers (set marketing goals, explore potential markets, simulate the impact of future events); business managers (determine operational requirements — staffing, supplies, capacity — and study investment feasibility); planners & public agencies (predict economic, social/cultural and environmental effects of visitors).",
                 explanation: "Poor forecasting leads to over/under-budgeting, wasted resources, and degradation."
@@ -503,16 +578,19 @@ const te2M1 = {
 
         quiz: [
             {
+                id: "5un3n9",
                 question: "How many time horizons are used in tourism forecasting?",
                 options: ["2", "3", "4", "5"],
                 correct: 1
             },
             {
+                id: "zdzhix",
                 question: "Which is one of the three broad forecasting methods?",
                 options: ["Accounting", "Qualitative", "Marketing", "Sampling"],
                 correct: 1
             },
             {
+                id: "axcn1w",
                 question: "AI-based forecasting systems are built to:",
                 options: [
                     "Replace all managers",
@@ -523,6 +601,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "5arjzw",
                 question: "Qualitative forecasting is appropriate when:",
                 options: [
                     "There are plenty of reliable historical data",
@@ -533,6 +612,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "8xl1jb",
                 question: "Time-series models assume that:",
                 options: [
                     "Income drives demand",
@@ -543,16 +623,19 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "guz624",
                 question: "The most common method of estimating demand is:",
                 options: ["Brainstorming", "Regression analysis", "The Delphi panel", "Random sampling"],
                 correct: 1
             },
             {
+                id: "4qwxeg",
                 question: "Which is a typical DEPENDENT variable in a tourism demand model?",
                 options: ["Income", "Transport cost", "Tourist arrivals", "Relative prices"],
                 correct: 2
             },
             {
+                id: "pliffg",
                 question: "Causal (econometric) models try to:",
                 options: [
                     "Extend the past trend only",
@@ -566,26 +649,31 @@ const te2M1 = {
 
         fillBlanks: [
             {
+                id: "ak5dy1",
                 sentence: "The three broad forecasting methods are qualitative, quantitative and _______.",
                 answer: "Artificial Intelligence",
                 hint: "AI..."
             },
             {
+                id: "7hmq2e",
                 sentence: "_______ analysis is the most common method of estimating demand.",
                 answer: "Regression",
                 hint: "Fits a line to data..."
             },
             {
+                id: "gergah",
                 sentence: "_______-series models assume a variable's past course predicts its future.",
                 answer: "Time",
                 hint: "Past observations over... "
             },
             {
+                id: "1n3k64",
                 sentence: "Qualitative forecasting relies on experience, knowledge and _______.",
                 answer: "intuition",
                 hint: "Gut judgment..."
             },
             {
+                id: "a54rwu",
                 sentence: "Tourist arrivals, expenditures and length of stay are typical _______ variables.",
                 answer: "dependent",
                 hint: "The thing being explained/predicted..."
@@ -593,6 +681,7 @@ const te2M1 = {
         ],
 
         learn: {
+            id: "zvuipe",
             title: "Forecasting Tourism Demand",
             content: `
                 <h3>🔮 Why Forecast?</h3>
@@ -629,57 +718,68 @@ const te2M1 = {
 
     // ========== UNITS 4–5: TOURISM SUPPLY, PRODUCTION & COSTS ==========
     supply: {
+        id: "ynkwfb",
         name: "Supply, Production & Costs",
         icon: "fa-industry",
         color: "#f59e0b",
 
         flashcards: [
             {
+                id: "dshzft",
                 question: "What are the 3 basic forms of inputs (factors of production) into tourism supply?",
                 answer: "Natural resources, human resources, and human-made resources.",
                 explanation: "Production and supply of tourism products are based on these inputs."
             },
             {
+                id: "svse6s",
                 question: "What is the difference between the short run and the long run in production?",
                 answer: "Short run: the timeframe in which AT LEAST ONE factor of production is FIXED.\nLong run: ALL factors of production can be varied.",
                 explanation: "The defining feature of the short run is the existence of a fixed factor."
             },
             {
+                id: "ai548m",
                 question: "What is the difference between variable and fixed inputs?",
                 answer: "Variable inputs can be changed at short notice. Fixed inputs cannot be easily adjusted.",
                 explanation: "Inputs into tourism supply are either fixed or variable."
             },
             {
+                id: "bqp7tw",
                 question: "On what do production costs in tourism depend?",
                 answer: "On the quantity, price and productivity of the factors used in the provision of the product.",
                 explanation: "More/expensive/less-productive factors raise costs."
             },
             {
+                id: "kfn1l0",
                 question: "What is the difference between explicit and implicit costs?",
                 answer: "Explicit costs are direct payments made by the firm to OUTSIDE suppliers of inputs.\nImplicit costs are the OPPORTUNITY costs the firm faces in using its OWN resources in one task rather than another — no direct payment, and sometimes hard to quantify.",
                 explanation: "Explicit = money paid out; implicit = value of foregone alternatives."
             },
             {
+                id: "o71krp",
                 question: "Give the main cost formulas (TC, AC, AFC, AVC, MC).",
                 answer: "TC = FC + VC (total cost).\nAC = TC / Q (average / unit cost).\nAFC = FC / Q (average fixed cost).\nAVC = VC / Q (average variable cost).\nMC = dTC / dQ (marginal cost — extra cost of one more unit).",
                 explanation: "Average costs divide a total by output; marginal cost is the cost of the next unit."
             },
             {
+                id: "5yskm6",
                 question: "What are Total, Average and Marginal PRODUCT?",
                 answer: "Total product (TP) = output generated from the factors employed.\nAverage product (AP) = TP / Q (output per unit of the variable factor, e.g. per worker).\nMarginal product (MP) = the change in total product when ONE additional unit of the variable factor is employed (e.g. extra meals from one extra chef).",
                 explanation: "In intangible service industries like tourism, 'output' can be hard to measure."
             },
             {
+                id: "80j5lv",
                 question: "What is economy of scale?",
                 answer: "When a given percentage increase in ALL inputs results in a LARGER percentage increase in the firm's output — reducing unit costs (long-run average costs, LRAC).",
                 explanation: "Tourism examples: aircraft manufacture, mega cruise ships, public transport."
             },
             {
+                id: "yhm0kg",
                 question: "What is diseconomy of scale?",
                 answer: "When a given percentage increase in all inputs leads to a SMALLER percentage increase in output (decreasing returns to scale). It can also be caused externally — e.g. tourism growth in a region raising factor costs (land, labour, capital).",
                 explanation: "Getting too big (or external cost pressures) reduces efficiency."
             },
             {
+                id: "bz493h",
                 question: "What is a supply chain?",
                 answer: "The network of organisations, people, activities, information and resources involved in moving a product or service from a supplier to a customer — transforming natural resources, raw materials and components into a finished product delivered to the ultimate consumer.",
                 explanation: "Everything involved in getting the tourism product to the consumer."
@@ -688,11 +788,13 @@ const te2M1 = {
 
         quiz: [
             {
+                id: "qatgfy",
                 question: "Which is NOT one of the three basic inputs into tourism supply?",
                 options: ["Natural resources", "Human resources", "Financial resources", "Human-made resources"],
                 correct: 2
             },
             {
+                id: "xpnvqd",
                 question: "In the SHORT run:",
                 options: [
                     "All factors are variable",
@@ -703,6 +805,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "2nkywq",
                 question: "Implicit costs are:",
                 options: [
                     "Direct payments to outside suppliers",
@@ -713,11 +816,13 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "akgikj",
                 question: "Average variable cost (AVC) is calculated as:",
                 options: ["FC / Q", "VC / Q", "TC / Q", "dTC / dQ"],
                 correct: 1
             },
             {
+                id: "eq67v9",
                 question: "Marginal cost (MC) is:",
                 options: [
                     "Total cost divided by output",
@@ -728,6 +833,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "kh640j",
                 question: "Marginal product measures:",
                 options: [
                     "Total output",
@@ -738,6 +844,7 @@ const te2M1 = {
                 correct: 2
             },
             {
+                id: "uy8o54",
                 question: "Economy of scale means a % increase in all inputs gives a:",
                 options: [
                     "Smaller % increase in output",
@@ -748,6 +855,7 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "pjvt5o",
                 question: "Total Cost is defined as:",
                 options: ["FC − VC", "FC + VC", "FC × VC", "VC / FC"],
                 correct: 1
@@ -756,31 +864,37 @@ const te2M1 = {
 
         fillBlanks: [
             {
+                id: "dufuyp",
                 sentence: "The three inputs into tourism supply are natural, human and _______ resources.",
                 answer: "human-made",
                 hint: "Built / man-made..."
             },
             {
+                id: "uit1rq",
                 sentence: "In the short run at least one factor of production is _______.",
                 answer: "fixed",
                 hint: "Cannot be easily adjusted..."
             },
             {
+                id: "ynfp7y",
                 sentence: "TC = FC + _______.",
                 answer: "VC",
                 hint: "Variable cost..."
             },
             {
+                id: "hxndvu",
                 sentence: "_______ costs are the opportunity costs of using the firm's own resources.",
                 answer: "Implicit",
                 hint: "Opposite of explicit..."
             },
             {
+                id: "r3bil2",
                 sentence: "Economy of scale reduces the firm's long-run _______ costs (LRAC).",
                 answer: "average",
                 hint: "Cost per unit..."
             },
             {
+                id: "8naqrz",
                 sentence: "Marginal cost MC = dTC / _______.",
                 answer: "dQ",
                 hint: "Change in output (quantity)..."
@@ -788,6 +902,7 @@ const te2M1 = {
         ],
 
         learn: {
+            id: "jm0m0y",
             title: "Supply, Production & Costs",
             content: `
                 <h3>🏭 Production & Inputs</h3>
@@ -832,62 +947,74 @@ const te2M1 = {
 
     // ========== UNIT 6: TOURISM & MARKET STRUCTURE ==========
     marketStructure: {
+        id: "f5ejoe",
         name: "Market Structure",
         icon: "fa-building",
         color: "#f97316",
 
         flashcards: [
             {
+                id: "skxmi8",
                 question: "What is market structure and what does it affect?",
                 answer: "Market structure refers to the NATURE of the market within which a tourism firm operates. It affects the firm's CONDUCT (decision-making processes) and the firm's PERFORMANCE (potential to make profit, gain market share and achieve efficiency).",
                 explanation: "This is the basis of the Structure–Conduct–Performance (SCP) framework."
             },
             {
+                id: "oajjru",
                 question: "List the major determinants of market structure.",
                 answer: "Number of sellers; number of buyers; nature of goods/services offered; entry & exit barriers; information about market conditions (prices, technology); economy of scale; and the level of product/service differentiation between firms.",
                 explanation: "These factors together decide which structure prevails."
             },
             {
+                id: "6lzle2",
                 question: "What are the 4 types of market structure?",
                 answer: "1. Perfect competition\n2. Monopolistic competition\n3. Oligopoly\n4. Monopoly",
                 explanation: "Ordered from most competitive to least competitive."
             },
             {
+                id: "6tvrk3",
                 question: "Describe PERFECT COMPETITION (and a tourism example).",
                 answer: "Very large number of buyers and sellers; perfect information; individual firms' outputs too small to affect price; identical products sold at the market-set price; no barriers to entry/exit. Tourism example: street stalls.",
                 explanation: "No single firm has market power — it is a price-taker."
             },
             {
+                id: "0x2ebm",
                 question: "Describe MONOPOLISTIC COMPETITION (and tourism examples).",
                 answer: "Very large number of buyers and sellers; small market power; products are similar but slightly DIFFERENTIATED; no barriers to entry/exit. Tourism examples: restaurants, hotels, B&Bs, travel agencies.",
                 explanation: "Differentiation gives each firm a little (limited) price control."
             },
             {
+                id: "dr4lo6",
                 question: "Describe OLIGOPOLY (and tourism examples).",
                 answer: "A SMALL number of firms dominate supply; consumers have imperfect information; firms are mutually interdependent (set output/price with reference to each other); strong barriers to entry/exit. Tourism examples: tour operators, airlines.",
                 explanation: "Few large firms watch each other closely when setting price and output."
             },
             {
+                id: "00u56y",
                 question: "Describe MONOPOLY (and a tourism example).",
                 answer: "Only ONE seller; consumers have imperfect information; the firm determines market output and price; no direct substitute for the product; very strong barriers to entry/exit. Tourism example: nationalized railways.",
                 explanation: "A single firm with strong price control and no close substitutes."
             },
             {
+                id: "hqsmfl",
                 question: "Which factors determine which structure prevails in a tourism market?",
                 answer: "The number of sellers, the extent of product differentiation, diversification, and barriers to entry.",
                 explanation: "More sellers + low differentiation + low barriers → more competition."
             },
             {
+                id: "bmj6gc",
                 question: "What are the 3 broad competitive strategies firms pursue?",
                 answer: "1. Cost leadership\n2. Product differentiation\n3. Focus",
                 explanation: "Firms pursue one or a combination of these."
             },
             {
+                id: "z80xfb",
                 question: "Explain the COST LEADERSHIP strategy.",
                 answer: "An integrated set of actions to produce/deliver goods or services at the LOWEST cost — via cheaper inputs, producing a core product, and achieving economies of scale (high volume, volume-purchasing discounts). Good when the market is price-sensitive; low cost can be a barrier to entry. Example: low-cost airlines.",
                 explanation: "Compete by being the cheapest producer."
             },
             {
+                id: "k16kos",
                 question: "Explain the PRODUCT DIFFERENTIATION and FOCUS strategies.",
                 answer: "Differentiation: better product performance or perception → creates market power, reduces price elasticity, builds repeat business and brand.\nFocus: concentrate on a particular geographical area, customer segment, or single product/line — e.g. 6/7★ hotels focusing on high-income guests with prestige pricing.",
                 explanation: "Differentiation competes on uniqueness; focus competes by serving a niche well."
@@ -896,21 +1023,25 @@ const te2M1 = {
 
         quiz: [
             {
+                id: "d71ntd",
                 question: "Market structure affects a firm's conduct and its:",
                 options: ["Location", "Performance", "Logo", "Staff uniforms"],
                 correct: 1
             },
             {
+                id: "vq4nws",
                 question: "Which market structure has only ONE seller and no close substitute?",
                 options: ["Perfect competition", "Monopolistic competition", "Oligopoly", "Monopoly"],
                 correct: 3
             },
             {
+                id: "79snaf",
                 question: "Restaurants, hotels and B&Bs are typical examples of:",
                 options: ["Perfect competition", "Monopolistic competition", "Oligopoly", "Monopoly"],
                 correct: 1
             },
             {
+                id: "qq9o0g",
                 question: "An oligopoly is characterized by:",
                 options: [
                     "Many small firms with identical products",
@@ -921,21 +1052,25 @@ const te2M1 = {
                 correct: 1
             },
             {
+                id: "zkpuug",
                 question: "In perfect competition, the individual firm is a:",
                 options: ["Price-maker", "Price-taker (price set by the market)", "Monopolist", "Cartel leader"],
                 correct: 1
             },
             {
+                id: "nmze2n",
                 question: "Low-cost airlines are a classic example of which strategy?",
                 options: ["Product differentiation", "Focus", "Cost leadership", "Diversification"],
                 correct: 2
             },
             {
+                id: "7pvzzl",
                 question: "A 6/7★ hotel targeting high-income guests with prestige pricing uses a:",
                 options: ["Cost leadership strategy", "Focus strategy", "Perfect-competition strategy", "Mass-market strategy"],
                 correct: 1
             },
             {
+                id: "sqxf9r",
                 question: "Which is a determinant of market structure?",
                 options: ["Weather", "Number of sellers and barriers to entry", "Hotel star rating only", "Tourist nationality"],
                 correct: 1
@@ -944,26 +1079,31 @@ const te2M1 = {
 
         fillBlanks: [
             {
+                id: "s7njw0",
                 sentence: "Market structure affects a firm's conduct and its _______.",
                 answer: "performance",
                 hint: "Profit, market share, efficiency..."
             },
             {
+                id: "wz8a34",
                 sentence: "The 4 market structures are perfect competition, monopolistic competition, oligopoly and _______.",
                 answer: "monopoly",
                 hint: "One seller..."
             },
             {
+                id: "r94ttn",
                 sentence: "In a(n) _______ a small number of firms dominate and are mutually interdependent.",
                 answer: "oligopoly",
                 hint: "Few sellers (oligo = few)..."
             },
             {
+                id: "r33y64",
                 sentence: "The three competitive strategies are cost leadership, product differentiation and _______.",
                 answer: "focus",
                 hint: "Concentrate on a niche/segment..."
             },
             {
+                id: "frtstz",
                 sentence: "_______ competition firms sell identical products at the market-set price.",
                 answer: "Perfect",
                 hint: "The most competitive structure..."
@@ -971,6 +1111,7 @@ const te2M1 = {
         ],
 
         learn: {
+            id: "iw6i39",
             title: "Tourism & Market Structure",
             content: `
                 <h3>🏢 What is Market Structure?</h3>

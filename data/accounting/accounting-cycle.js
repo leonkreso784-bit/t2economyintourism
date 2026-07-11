@@ -2,97 +2,116 @@
 // Category 4 of Accounting Theory
 
 const accountingCycleData = {
+    id: "31q4l7",
     name: "Accounting Cycle",
     icon: "fa-rotate",
     color: "#0891b2",
     
     flashcards: [
         {
+            id: "22m0ta",
             question: "What is an accounting cycle?",
             answer: "The accounting cycle is the sequence of accounting procedures used to record, process, and report financial transactions during an accounting period, from initial transaction to preparation of financial statements and closing entries.",
             explanation: "The complete process of accounting."
         },
         {
+            id: "8iw0uv",
             question: "What is cash basis accounting?",
             answer: "Cash basis accounting records revenues and expenses when cash is received or paid, regardless of when the transaction actually occurred.",
             explanation: "Simple method based on cash flow."
         },
         {
+            id: "8mor9p",
             question: "What is accrual basis accounting?",
             answer: "Accrual basis accounting records revenues when earned and expenses when incurred, regardless of when cash is received or paid.",
             explanation: "GAAP requires accrual basis for most businesses."
         },
         {
+            id: "6z53eb",
             question: "What is the posting procedure for special journals?",
             answer: "In special journals, individual transactions are not posted separately. Instead, column totals are posted periodically to the general ledger, reducing the number of postings required.",
             explanation: "Efficiency in recording transactions."
         },
         {
+            id: "qvkpxc",
             question: "What is a working trial balance?",
             answer: "A working trial balance is an internal document that lists all account balances before adjustments.\n\nPurpose:\n• Verify debits equal credits\n• Provide basis for adjusting entries\n• Help prepare financial statements",
             explanation: "First step before adjustments."
         },
         {
+            id: "e6bbnm",
             question: "What is the purpose of adjusting entries?",
             answer: "Adjusting entries ensure that revenues and expenses are recognized in the correct accounting period under accrual accounting.",
             explanation: "Match revenues with expenses."
         },
         {
+            id: "je08au",
             question: "What is the purpose of correcting entries?",
             answer: "Correcting entries are used to fix errors made in previously recorded transactions.",
             explanation: "Fix mistakes in the records."
         },
         {
+            id: "ynvvcr",
             question: "What are typical adjustment areas for hospitality businesses at month end?",
             answer: "Typical adjustments include:\n• Accrued payroll\n• Inventory adjustments\n• Prepaid expenses\n• Depreciation\n• Unearned revenues\n• Accrued expenses",
             explanation: "Common end-of-period adjustments."
         },
         {
+            id: "sguwqf",
             question: "Why adjust Cost of Food Sales after storeroom issues are recorded?",
             answer: "Because storeroom issues represent actual usage, adjustments ensure that Cost of Food Sales reflects the true cost of food consumed, not just purchased.",
             explanation: "Match actual consumption to the period."
         },
         {
+            id: "i5p3bu",
             question: "Why does a business have unpaid payroll on payday?",
             answer: "Because employees earn wages up to the end of the pay period, but payment may occur later, creating accrued payroll expense that has not yet been paid.",
             explanation: "Timing difference between earning and paying."
         },
         {
+            id: "i5b77b",
             question: "What does the computerized year-end process accomplish?",
             answer: "The year-end process:\n• Automatically posts closing entries\n• Resets temporary accounts to zero\n• Transfers net income/loss to retained earnings",
             explanation: "Prepares accounts for the new year."
         },
         {
+            id: "qebk6z",
             question: "What does the post-closing trial balance signify?",
             answer: "Post-closing trial balance confirms:\n• Only permanent accounts remain open\n• Debits equal credits\n• The ledger is ready for the next accounting period",
             explanation: "Final verification before new period."
         },
         {
+            id: "mr9g8r",
             question: "What are the 10 steps of the Accounting Cycle?",
             answer: "1. Analyze transactions\n2. Journalize in general/special journals\n3. Post to ledger\n4. Prepare working trial balance\n5. Journalize adjusting entries\n6. Post adjusting entries\n7. Prepare adjusted trial balance\n8. Prepare financial statements\n9. Journalize & post closing entries\n10. Prepare post-closing trial balance",
             explanation: "Complete cycle from transaction to closing."
         },
         {
+            id: "28cewz",
             question: "What are the four types of Adjusting Entries?",
             answer: "1. Prepaid Expenses (Deferrals) - paid now, expense later\n2. Unearned Revenue (Deferrals) - received now, earn later\n3. Accrued Expenses - incurred but not yet paid\n4. Accrued Revenue - earned but not yet received\n\n+ Depreciation adjustments",
             explanation: "Deferrals and accruals are key categories."
         },
         {
+            id: "mt063b",
             question: "What is the difference between Temporary and Permanent accounts?",
             answer: "TEMPORARY (Nominal):\n• Revenue, Expenses, Dividends\n• Closed to zero at year end\n• Start fresh each period\n\nPERMANENT (Real):\n• Assets, Liabilities, Equity\n• NOT closed\n• Balances carry forward",
             explanation: "Temporary accounts reset; permanent accounts continue."
         },
         {
+            id: "c27y3s",
             question: "What are the four types of Special Journals?",
             answer: "1. Sales Journal - credit sales only\n2. Purchases Journal - credit purchases only\n3. Cash Receipts Journal - all cash coming in\n4. Cash Disbursements Journal - all cash going out\n\nGeneral Journal - for everything else",
             explanation: "Special journals improve efficiency."
         },
         {
+            id: "252sil",
             question: "What is the Matching Principle?",
             answer: "The Matching Principle requires that expenses be recognized in the same period as the revenues they helped generate.\n\nExample: If you sell products in January, the cost of those products should be expensed in January, not when purchased or paid.",
             explanation: "Match expenses with related revenues."
         },
         {
+            id: "mcg7b8",
             question: "What is the Revenue Recognition Principle?",
             answer: "Revenue should be recognized when:\n1. It is earned (goods delivered or services performed)\n2. It is realizable (payment is expected)\n\nNOT when cash is received (that's cash basis, not GAAP).",
             explanation: "Recognize revenue when earned, not when paid."
@@ -101,76 +120,91 @@ const accountingCycleData = {
     
     quiz: [
         {
+            id: "1wj9xn",
             question: "Cash basis accounting records revenue when:",
             options: ["Earned", "Cash is received", "Invoiced", "Ordered"],
             correct: 1
         },
         {
+            id: "ac8ro0",
             question: "Accrual basis accounting records revenue when:",
             options: ["Cash is received", "Earned", "Cash is paid", "Deposited"],
             correct: 1
         },
         {
+            id: "bsf7ru",
             question: "A working trial balance is prepared:",
             options: ["After closing entries", "Before adjustments", "After financial statements", "At year end only"],
             correct: 1
         },
         {
+            id: "slhqp6",
             question: "Adjusting entries ensure:",
             options: ["Cash is correct", "Revenues and expenses are in the correct period", "Bank reconciliation", "Tax compliance"],
             correct: 1
         },
         {
+            id: "3jk2oh",
             question: "Correcting entries are used to:",
             options: ["Adjust for timing", "Fix errors in recorded transactions", "Close accounts", "Post totals"],
             correct: 1
         },
         {
+            id: "7gbxbi",
             question: "Which is a typical month-end adjustment?",
             options: ["Cash deposits", "Accrued payroll", "Sales transactions", "Customer orders"],
             correct: 1
         },
         {
+            id: "4v3gpm",
             question: "The year-end process resets which accounts to zero?",
             options: ["Permanent accounts", "Temporary accounts", "All accounts", "Asset accounts"],
             correct: 1
         },
         {
+            id: "5mno60",
             question: "The post-closing trial balance includes:",
             options: ["All accounts", "Only temporary accounts", "Only permanent accounts", "Only revenue accounts"],
             correct: 2
         },
         {
+            id: "7uerrh",
             question: "GAAP requires which accounting method?",
             options: ["Cash basis", "Accrual basis", "Either method", "Tax basis"],
             correct: 1
         },
         {
+            id: "4yv3mj",
             question: "Special journals reduce posting by:",
             options: ["Eliminating all posts", "Posting column totals periodically", "Using only cash", "Avoiding journals"],
             correct: 1
         },
         {
+            id: "wulxut",
             question: "How many steps are in the accounting cycle?",
             options: ["5", "8", "10", "12"],
             correct: 2
         },
         {
+            id: "po4wrf",
             question: "Prepaid expenses are an example of:",
             options: ["Accrued expense", "Deferral", "Closing entry", "Correcting entry"],
             correct: 1
         },
         {
+            id: "f0qz60",
             question: "Which accounts are closed at year end?",
             options: ["Assets", "Liabilities", "Temporary (Revenue, Expenses)", "All accounts"],
             correct: 2
         },
         {
+            id: "goncs5",
             question: "The Matching Principle requires:",
             options: ["Cash payments match receipts", "Expenses match the revenues they generate", "Assets match liabilities", "Debits match credits"],
             correct: 1
         },
         {
+            id: "wcbs78",
             question: "Accrued expenses are:",
             options: ["Paid in advance", "Incurred but not yet paid", "Never recorded", "Cash only"],
             correct: 1
@@ -179,51 +213,61 @@ const accountingCycleData = {
     
     fillBlanks: [
         {
+            id: "2dv8jm",
             sentence: "_______ basis accounting records revenue when cash is received.",
             answer: "Cash",
             hint: "Money in hand..."
         },
         {
+            id: "ssp7c2",
             sentence: "_______ basis accounting records revenue when earned.",
             answer: "Accrual",
             hint: "When it happens, not when paid..."
         },
         {
+            id: "a42cpt",
             sentence: "_______ entries fix errors in previously recorded transactions.",
             answer: "Correcting",
             hint: "To fix mistakes..."
         },
         {
+            id: "f12c18",
             sentence: "The year-end process resets _______ accounts to zero.",
             answer: "temporary",
             hint: "Revenue and expense accounts..."
         },
         {
+            id: "agjfcp",
             sentence: "The post-closing trial balance shows only _______ accounts.",
             answer: "permanent",
             hint: "Assets, liabilities, equity..."
         },
         {
+            id: "ds508w",
             sentence: "The accounting cycle has _______ steps.",
             answer: "ten",
             hint: "10..."
         },
         {
+            id: "n8fs6w",
             sentence: "_______ expenses are paid in advance but expensed later.",
             answer: "Prepaid",
             hint: "Paid before used..."
         },
         {
+            id: "xx410y",
             sentence: "The _______ Principle requires expenses to match related revenues.",
             answer: "Matching",
             hint: "Pairing up..."
         },
         {
+            id: "us8rns",
             sentence: "_______ revenue is cash received before it is earned.",
             answer: "Unearned",
             hint: "Not yet earned..."
         },
         {
+            id: "jrlhzi",
             sentence: "Revenue, expenses, and dividends are _______ accounts.",
             answer: "temporary",
             hint: "Closed each period..."
@@ -231,6 +275,7 @@ const accountingCycleData = {
     ],
     
     learn: {
+        id: "lblup3",
         title: "Accounting Cycle and Adjustments",
         content: `
             <h3>📚 Chapter Overview: The Accounting Cycle</h3>

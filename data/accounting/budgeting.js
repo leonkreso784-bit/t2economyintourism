@@ -2,107 +2,128 @@
 // Category 2 of Accounting Theory
 
 const budgetingData = {
+    id: "cug1xw",
     name: "Budgeting & Costs",
     icon: "fa-calculator",
     color: "#7c3aed",
     
     flashcards: [
         {
+            id: "n1euvy",
             question: "What is a budget?",
             answer: "A budget is a formal written financial plan that expresses management's expectations for revenues, expenses, and profits for a future period.",
             explanation: "Budgets guide business operations and planning."
         },
         {
+            id: "bog4by",
             question: "What are the advantages of budgeting?",
             answer: "Budgeting advantages:\n• Provides a plan for future operations\n• Improves coordination and communication\n• Helps control costs and expenses\n• Serves as a standard for performance evaluation\n• Encourages management discipline",
             explanation: "Budgeting is essential for business success."
         },
         {
+            id: "npgne8",
             question: "Why can predicting sales be difficult?",
             answer: "Sales prediction is difficult due to uncertain factors:\n• Economic conditions\n• Competition\n• Consumer behavior\n• Seasonality\n• Pricing changes\n• Unexpected events",
             explanation: "Many external factors affect sales."
         },
         {
+            id: "fyndl6",
             question: "What is sales forecasting?",
             answer: "Sales forecasting is the process of estimating future sales revenue for a given period. It forms the foundation for budgeting, staffing, purchasing, pricing, and profit planning.",
             explanation: "Everything starts with sales forecasting."
         },
         {
+            id: "oxxug5",
             question: "What factors should be considered in forecasting sales for a new business?",
             answer: "Factors include:\n• Market size and demand\n• Location\n• Target customers\n• Competition\n• Pricing strategy\n• Management experience\n• Economic conditions\n• Marketing plans",
             explanation: "New businesses face more uncertainty."
         },
         {
+            id: "q52swy",
             question: "What is the formula for forecasting room sales?",
             answer: "Room Sales = Number of Available Rooms × Occupancy Percentage × Average Room Rate (ADR)",
             explanation: "Key formula for hotel revenue forecasting."
         },
         {
+            id: "bf0q3r",
             question: "What is the formula for forecasting food sales?",
             answer: "Food Sales = Number of Seats × Turnover × Average Check",
             explanation: "Key formula for restaurant revenue forecasting."
         },
         {
+            id: "e64hks",
             question: "What three kinds of expenses are closely related to sales?",
             answer: "1. Food cost\n2. Labor cost\n3. Other variable operating expenses",
             explanation: "These expenses change with sales volume."
         },
         {
+            id: "pa4tah",
             question: "What is the total cost equation?",
             answer: "Total Cost = Fixed Costs + Variable Costs",
             explanation: "Fundamental cost accounting equation."
         },
         {
+            id: "ssghy1",
             question: "What is a variable expense?",
             answer: "A variable expense changes directly in proportion to sales volume. Examples: food cost, beverage cost, commissions.",
             explanation: "More sales = more variable costs."
         },
         {
+            id: "uilonz",
             question: "What is a fixed expense?",
             answer: "A fixed expense remains constant regardless of sales volume within a relevant range. Examples: rent, insurance, management salaries.",
             explanation: "Fixed costs don't change with sales."
         },
         {
+            id: "cjflju",
             question: "What is a semi-variable expense?",
             answer: "A semi-variable expense contains both fixed and variable components. Example: utilities (base charge + usage).",
             explanation: "Part fixed, part variable."
         },
         {
+            id: "1x30wt",
             question: "What is the difference between breakeven and breakeven point?",
             answer: "Breakeven is the condition where total revenues equal total costs (zero profit/loss).\n\nBreakeven point is the specific level of sales or volume at which breakeven occurs.",
             explanation: "Condition vs. specific level."
         },
         {
+            id: "eth8tv",
             question: "What is the breakeven point formula?",
             answer: "Breakeven Point (in sales) = Fixed Costs ÷ Contribution Margin Ratio\n\nOR\n\nBreakeven Point (in units) = Fixed Costs ÷ Contribution Margin per Unit",
             explanation: "Two ways to calculate breakeven."
         },
         {
+            id: "35uhye",
             question: "What is Contribution Margin?",
             answer: "Contribution Margin = Sales Revenue − Variable Costs\n\nIt's the amount that 'contributes' to covering fixed costs and generating profit.\n\nCM Ratio = Contribution Margin ÷ Sales Revenue",
             explanation: "Key concept for CVP analysis."
         },
         {
+            id: "4l1jxh",
             question: "What is Margin of Safety?",
             answer: "Margin of Safety = Actual Sales − Breakeven Sales\n\nIt measures how much sales can drop before the company reaches breakeven (starts losing money).\n\nMargin of Safety % = (Actual Sales − Breakeven) ÷ Actual Sales",
             explanation: "Higher margin of safety = lower risk."
         },
         {
+            id: "jx8owg",
             question: "What is Operating Leverage?",
             answer: "Operating Leverage measures how sensitive operating income is to changes in sales.\n\nDegree of Operating Leverage = Contribution Margin ÷ Operating Income\n\nHigh operating leverage = high fixed costs = greater risk but greater reward",
             explanation: "High leverage amplifies both profits and losses."
         },
         {
+            id: "819s4t",
             question: "What is CVP Analysis?",
             answer: "CVP (Cost-Volume-Profit) Analysis examines the relationship between:\n• Costs (fixed and variable)\n• Volume (sales quantity)\n• Profit\n\nUsed for pricing, product mix, and break-even decisions.",
             explanation: "Essential management accounting tool."
         },
         {
+            id: "i262gu",
             question: "What is a Flexible Budget?",
             answer: "A flexible budget adjusts for changes in activity level, showing expected costs at various volumes.\n\nUnlike a static budget, it recognizes that costs change with sales volume.\n\nUseful for performance evaluation - compare actual results to budgeted amounts at actual activity level.",
             explanation: "More realistic than static budgets."
         },
         {
+            id: "ta9veh",
             question: "What is the High-Low Method?",
             answer: "The High-Low Method separates fixed and variable costs using the highest and lowest activity levels:\n\nVariable Cost per Unit = (High Cost − Low Cost) ÷ (High Activity − Low Activity)\n\nFixed Costs = Total Cost − (Variable Cost × Activity Level)",
             explanation: "Simple method to analyze mixed costs."
@@ -111,76 +132,91 @@ const budgetingData = {
     
     quiz: [
         {
+            id: "z7r28m",
             question: "A budget is:",
             options: ["Past financial records", "A formal financial plan for the future", "Tax returns", "Bank statements"],
             correct: 1
         },
         {
+            id: "2kn2a3",
             question: "The formula for Room Sales is:",
             options: ["Rooms × Rate", "Available Rooms × Occupancy % × ADR", "Guests × Rate", "Revenue ÷ Rooms"],
             correct: 1
         },
         {
+            id: "9cohwa",
             question: "The formula for Food Sales is:",
             options: ["Food Cost × Markup", "Seats × Turnover × Average Check", "Menu Items × Price", "Customers ÷ Days"],
             correct: 1
         },
         {
+            id: "6hnu38",
             question: "Total Cost equals:",
             options: ["Fixed Costs only", "Variable Costs only", "Fixed Costs + Variable Costs", "Revenue - Profit"],
             correct: 2
         },
         {
+            id: "35apru",
             question: "A variable expense:",
             options: ["Stays constant", "Changes with sales volume", "Is always the same", "Never changes"],
             correct: 1
         },
         {
+            id: "ue5kyt",
             question: "A fixed expense:",
             options: ["Changes with sales", "Remains constant regardless of sales", "Is always variable", "Depends on weather"],
             correct: 1
         },
         {
+            id: "kkfz5h",
             question: "Breakeven Point (in sales) equals:",
             options: ["Revenue ÷ Costs", "Fixed Costs ÷ Contribution Margin Ratio", "Variable Costs × Sales", "Profit + Loss"],
             correct: 1
         },
         {
+            id: "a2q133",
             question: "Which is NOT closely related to sales?",
             options: ["Food cost", "Labor cost", "Rent expense", "Variable operating expenses"],
             correct: 2
         },
         {
+            id: "wxxmk4",
             question: "A semi-variable expense contains:",
             options: ["Only fixed components", "Only variable components", "Both fixed and variable components", "No cost components"],
             correct: 2
         },
         {
+            id: "g37qqz",
             question: "Sales forecasting is difficult because of:",
             options: ["Certain market conditions", "Predictable consumer behavior", "Uncertain external factors", "Stable competition"],
             correct: 2
         },
         {
+            id: "ywxoxz",
             question: "Contribution Margin equals:",
             options: ["Fixed Costs + Variable Costs", "Sales Revenue − Variable Costs", "Net Income + Taxes", "Total Revenue"],
             correct: 1
         },
         {
+            id: "yhh48w",
             question: "Margin of Safety measures:",
             options: ["Total profit", "How much sales can drop before breakeven", "Fixed costs only", "Variable costs only"],
             correct: 1
         },
         {
+            id: "8tud4k",
             question: "High Operating Leverage means:",
             options: ["Low risk, low reward", "High fixed costs, greater profit sensitivity", "No fixed costs", "Only variable costs"],
             correct: 1
         },
         {
+            id: "39n6sy",
             question: "CVP Analysis examines the relationship between:",
             options: ["Only costs", "Costs, Volume, and Profit", "Only revenue", "Only expenses"],
             correct: 1
         },
         {
+            id: "xmicyh",
             question: "The High-Low Method is used to:",
             options: ["Calculate revenue", "Separate fixed and variable costs", "Determine selling price", "Calculate taxes"],
             correct: 1
@@ -189,51 +225,61 @@ const budgetingData = {
     
     fillBlanks: [
         {
+            id: "fz8wr5",
             sentence: "Total Cost = Fixed Costs + _______ Costs",
             answer: "Variable",
             hint: "Costs that change..."
         },
         {
+            id: "h7x94l",
             sentence: "Room Sales = Available Rooms × Occupancy % × _______",
             answer: "ADR",
             hint: "Average Daily..."
         },
         {
+            id: "wd1chv",
             sentence: "Food Sales = Seats × Turnover × Average _______",
             answer: "Check",
             hint: "What customers pay..."
         },
         {
+            id: "edjy8e",
             sentence: "Breakeven Point = Fixed Costs ÷ Contribution Margin _______",
             answer: "Ratio",
             hint: "Percentage..."
         },
         {
+            id: "k36fae",
             sentence: "A _______ expense contains both fixed and variable components.",
             answer: "semi-variable",
             hint: "Part fixed, part..."
         },
         {
+            id: "md74us",
             sentence: "Contribution Margin = Sales Revenue − _______ Costs",
             answer: "Variable",
             hint: "Costs that change with volume..."
         },
         {
+            id: "tkia0e",
             sentence: "Margin of _______ measures how much sales can drop before breakeven.",
             answer: "Safety",
             hint: "Protection, security..."
         },
         {
+            id: "eq5wen",
             sentence: "_______ Leverage measures sensitivity of income to sales changes.",
             answer: "Operating",
             hint: "Related to operations..."
         },
         {
+            id: "re6rnm",
             sentence: "CVP stands for Cost-_______-Profit analysis.",
             answer: "Volume",
             hint: "Quantity, amount..."
         },
         {
+            id: "2mlzlf",
             sentence: "The High-_______ Method separates fixed and variable costs.",
             answer: "Low",
             hint: "Opposite of high..."
@@ -241,6 +287,7 @@ const budgetingData = {
     ],
     
     learn: {
+        id: "39bn9a",
         title: "Budgeting, Forecasting & Cost Analysis",
         content: `
             <h3>📚 Chapter Overview: Budgeting & Cost Analysis</h3>

@@ -1,50 +1,60 @@
 {
   "realNumbers": {
+    "id": "amkpc8",
     "name": "Field of Real Numbers ℝ",
     "icon": "fa-infinity",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "ctaiy4",
         "question": "What are the five number sets, and how are they nested?",
         "answer": "• \\(\\mathbb{N}\\) — natural numbers (counting): \\(\\{1,2,3,\\dots\\}\\)\n• \\(\\mathbb{Z}\\) — integers: \\(\\{\\dots,-2,-1,0,1,2,\\dots\\}\\)\n• \\(\\mathbb{Q}\\) — rational numbers: \\(\\frac{m}{n},\\ m,n\\in\\mathbb{Z},\\ n\\neq 0\\)\n• \\(\\mathbb{I}\\) — irrational numbers (infinite non-periodic decimals)\n• \\(\\mathbb{R}\\) — real numbers\n\nThe chain of subsets: \\(\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R}\\), and \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\).",
         "explanation": "Each set is an extension of the previous one, introduced to make a new operation always possible. ℚ and 𝕀 are disjoint (ℚ ⊄ 𝕀)."
       },
       {
+        "id": "yw609p",
         "question": "Why is the set of integers \\(\\mathbb{Z}\\) introduced as an extension of \\(\\mathbb{N}\\)?",
         "answer": "In \\(\\mathbb{N}\\) you cannot always subtract: when the minuend is smaller than the subtrahend (e.g. \\(3-5\\)), there is no natural-number result. So \\(\\mathbb{N}\\) has no inverse element for addition.\n\n\\(\\mathbb{Z}\\) adds \\(0\\) (the neutral element for addition) and the negatives \\(-a\\) (the opposite/inverse), so subtraction \\(a-b=a+(-b)\\) is always defined.",
         "explanation": "ℕ₀ = ℕ ∪ {0}. Each extension is built to supply a missing inverse: ℤ for subtraction, ℚ for division."
       },
       {
+        "id": "7d49n3",
         "question": "What is a rational number, and what three decimal forms can it take?",
         "answer": "A rational number is any number of the form \\(\\frac{m}{n}\\) with \\(m,n\\in\\mathbb{Z},\\ n\\neq 0\\). It is introduced so that division is always possible (the reciprocal \\(a^{-1}=\\tfrac1a\\) exists for \\(a\\neq 0\\)).\n\nDecimal forms:\n1. Finite: \\(\\frac34=0.75\\)\n2. Periodic, one repeating digit: \\(34.5555\\dots=34.\\dot5\\)\n3. Periodic, a repeating group: \\(\\frac{15}{7}=2.\\dot14285\\dot7\\)",
         "explanation": "Every rational number has either a finite or an eventually-periodic decimal expansion — that is exactly what distinguishes it from an irrational number."
       },
       {
+        "id": "u8bgl4",
         "question": "What is an irrational number? Give examples.",
         "answer": "An irrational number is written as an INFINITE, NON-periodic decimal — it cannot be written as a fraction \\(\\frac{m}{n}\\).\n\nExamples: \\(\\sqrt2=1.41421356\\dots\\), \\(\\sqrt{13}=3.605551\\dots\\), \\(\\pi\\approx 3.14159\\dots\\), and \\(0.1234565\\dots\\)\n\nThey appear naturally: \\(x^2=2\\) has solutions \\(x=\\pm\\sqrt2\\), which are NOT rational.",
         "explanation": "The set of irrationals 𝕀 is a SEPARATE set, not an extension of ℚ — together they fill the real line: ℝ = ℚ ∪ 𝕀."
       },
       {
+        "id": "go7e5o",
         "question": "List the properties of addition and multiplication that hold in \\(\\mathbb{R}\\).",
         "answer": "For all \\(a,b,c\\in\\mathbb{R}\\):\n• CLOSEDNESS: \\(a+b\\in\\mathbb{R}\\), \\(a\\cdot b\\in\\mathbb{R}\\)\n• COMMUTATIVITY: \\(a+b=b+a\\), \\(a\\cdot b=b\\cdot a\\)\n• ASSOCIATIVITY: \\((a+b)+c=a+(b+c)\\)\n• NEUTRAL element: \\(a+0=a\\); \\(a\\cdot 1=a\\)\n• INVERSE element: \\(a+(-a)=0\\); \\(a\\cdot a^{-1}=1\\) (for \\(a\\neq 0\\))\n• DISTRIBUTIVITY: \\((a+b)\\cdot c=a\\cdot c+b\\cdot c\\)",
         "explanation": "ℝ has ALL of these for both operations. ℕ lacks an additive neutral & inverse; ℤ lacks a multiplicative inverse; ℚ and ℝ have them all."
       },
       {
+        "id": "xqmx49",
         "question": "Which properties are MISSING in \\(\\mathbb{N}\\) and in \\(\\mathbb{Z}\\)?",
         "answer": "• \\(\\mathbb{N}\\): no neutral element for addition (0 ∉ ℕ) and no inverse for addition → subtraction not always possible.\n• \\(\\mathbb{Z}\\): has a neutral & inverse for addition, but NO inverse for multiplication → division \\(a:b\\) is not always an integer (e.g. \\(2:4=\\tfrac12\\notin\\mathbb{Z}\\)).\n\nThis is exactly why ℚ (and then ℝ) is introduced.",
         "explanation": "Distributivity holds in all four sets ℕ, ℤ, ℚ, ℝ."
       },
       {
+        "id": "lx2lzw",
         "question": "What is a FIELD, and why is \\((\\mathbb{R},+,\\cdot)\\) called the field of real numbers?",
         "answer": "A FIELD is any set with at least two distinct elements and two operations (addition & multiplication) satisfying nine properties: associativity, neutral & inverse of addition, commutativity of addition, associativity, neutral & inverse of multiplication, commutativity of multiplication, and distributivity of multiplication over addition.\n\nThe set \\(\\mathbb{R}\\) with the usual \\(+\\) and \\(\\cdot\\) satisfies all nine, so \\((\\mathbb{R},+,\\cdot)\\) is the FIELD of real numbers.",
         "explanation": "The field structure is what lets us solve equations and do algebra reliably on ℝ."
       },
       {
+        "id": "buks3q",
         "question": "Define exponentiation and the n-th root on \\(\\mathbb{R}\\).",
         "answer": "EXPONENTIATION is repeated multiplication of the same number:\n\\[x^n=\\underbrace{x\\cdot x\\cdots x}_{n\\text{ times}}\\]\n(just as multiplication \\(nx=x+x+\\dots+x\\) is repeated addition).\n\nThe SECOND ROOT: if \\(a=b^2\\) then \\(b=\\sqrt a\\). E.g. \\(x^2=4\\) has two solutions \\(x_1=2,\\ x_2=-2\\).",
         "explanation": "x²=2 has solutions ±√2 — the existence of such non-rational roots forces the introduction of irrational numbers."
       },
       {
+        "id": "9otw8r",
         "question": "What is the reciprocal (multiplicative inverse) of a number \\(a\\)?",
         "answer": "For every \\(a\\in\\mathbb{Q}\\) (or \\(\\mathbb{R}\\)) with \\(a\\neq 0\\) there is a unique INVERSE \\(\\frac1a=a^{-1}\\) such that\n\\[a\\cdot a^{-1}=a^{-1}\\cdot a=1.\\]\nDividing by \\(b\\neq 0\\) means multiplying by its reciprocal: \\(a:b=a\\cdot\\frac1b\\).",
         "explanation": "0 has no reciprocal — that is why division by zero is undefined."
@@ -52,6 +62,7 @@
     ],
     "quiz": [
       {
+        "id": "2m88f7",
         "question": "Which chain of subsets is correct?",
         "options": [
           "\\(\\mathbb{R}\\subset\\mathbb{Q}\\subset\\mathbb{Z}\\subset\\mathbb{N}\\)",
@@ -62,6 +73,7 @@
         "correct": 1
       },
       {
+        "id": "2hnciv",
         "question": "Which number is irrational?",
         "options": [
           "\\(\\frac{15}{7}\\)",
@@ -72,6 +84,7 @@
         "correct": 2
       },
       {
+        "id": "z21ol3",
         "question": "Why is the set of integers \\(\\mathbb{Z}\\) introduced?",
         "options": [
           "To make division always possible",
@@ -82,6 +95,7 @@
         "correct": 1
       },
       {
+        "id": "smup04",
         "question": "Which property does \\(\\mathbb{Z}\\) LACK (but \\(\\mathbb{Q}\\) has)?",
         "options": [
           "Inverse for addition",
@@ -92,6 +106,7 @@
         "correct": 2
       },
       {
+        "id": "v4pkl1",
         "question": "\\(\\mathbb{R}=\\) ?",
         "options": [
           "\\(\\mathbb{Q}\\cap\\mathbb{I}\\)",
@@ -102,6 +117,7 @@
         "correct": 1
       },
       {
+        "id": "3d6oiy",
         "question": "A finite or eventually-periodic decimal expansion always represents a number that is:",
         "options": [
           "Irrational",
@@ -112,6 +128,7 @@
         "correct": 1
       },
       {
+        "id": "t2z7iq",
         "question": "The multiplicative inverse (reciprocal) of \\(a\\neq 0\\) satisfies:",
         "options": [
           "\\(a+(-a)=0\\)",
@@ -122,6 +139,7 @@
         "correct": 1
       },
       {
+        "id": "qe54sh",
         "question": "How many properties must hold for a set with two operations to be a FIELD?",
         "options": [
           "4",
@@ -132,6 +150,7 @@
         "correct": 2
       },
       {
+        "id": "g3afhm",
         "question": "The equation \\(x^2=2\\) shows the need for which set of numbers?",
         "options": [
           "Integers \\(\\mathbb{Z}\\)",
@@ -144,91 +163,109 @@
     ],
     "fillBlanks": [
       {
+        "id": "o3zone",
         "sentence": "The set of counting numbers {1, 2, 3, …} is the set of _______ numbers.",
         "answer": "natural",
         "hint": "Symbol ℕ"
       },
       {
+        "id": "calwde",
         "sentence": "A number that can be written as m/n with integers m, n (n ≠ 0) is called a _______ number.",
         "answer": "rational",
         "hint": "Symbol ℚ"
       },
       {
+        "id": "kxysz7",
         "sentence": "An infinite, non-periodic decimal represents an _______ number.",
         "answer": "irrational",
         "hint": "Symbol 𝕀; e.g. √2, π"
       },
       {
+        "id": "ntcebt",
         "sentence": "The set of real numbers is the union ℝ = ℚ ∪ _______.",
         "answer": "I",
         "hint": "Rationals together with irrationals"
       },
       {
+        "id": "50r918",
         "sentence": "The neutral element for addition is the number _______.",
         "answer": "0",
         "hint": "a + 0 = a"
       },
       {
+        "id": "t6dwom",
         "sentence": "The neutral element for multiplication is the number _______.",
         "answer": "1",
         "hint": "a · 1 = a"
       },
       {
+        "id": "6lc380",
         "sentence": "Dividing by b ≠ 0 means multiplying by its _______.",
         "answer": "reciprocal",
         "hint": "1/b = b⁻¹; also called the multiplicative inverse"
       }
     ],
     "learn": {
+      "id": "lc233e",
       "content": "<h3>The field of real numbers ℝ</h3><p>All of the mathematics in this course lives on the <strong>real line</strong>. Before we can solve equations or differentiate, we have to be clear about <em>which</em> numbers we may use and <em>what rules</em> they obey. The real numbers are built up <strong>step by step</strong>: we begin with the numbers we count with and, every time some operation has no answer, we <span class=\"highlight\">extend</span> the set just enough to give it one. Each extension supplies exactly one missing <em>inverse</em> — that single idea organises the whole picture.</p><h4>The five number sets</h4><ul><li><strong>Natural numbers</strong> \\(\\mathbb{N}=\\{1,2,3,\\dots\\}\\) — the counting numbers.</li><li><strong>Integers</strong> \\(\\mathbb{Z}=\\{\\dots,-2,-1,0,1,2,\\dots\\}\\) — we add \\(0\\) and the negatives so that <em>subtraction</em> always has an answer.</li><li><strong>Rational numbers</strong> \\(\\mathbb{Q}=\\left\\{\\frac{m}{n}: m,n\\in\\mathbb{Z},\\ n\\neq 0\\right\\}\\) — fractions, so that <em>division</em> always has an answer.</li><li><strong>Irrational numbers</strong> \\(\\mathbb{I}\\) — infinite, non-repeating decimals such as \\(\\sqrt2,\\ \\sqrt{13},\\ \\pi\\).</li><li><strong>Real numbers</strong> \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\) — every point on the number line.</li></ul><div class=\"formula-box\">\\[\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R},\\qquad \\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}.\\]</div><div class=\"tip-box\"><h4>Why each extension is forced</h4><p>In \\(\\mathbb{N}\\) the calculation \\(3-5\\) has no answer → introduce \\(\\mathbb{Z}\\) (the additive inverse \\(-a\\)). In \\(\\mathbb{Z}\\) the calculation \\(2:4\\) is not a whole number → introduce \\(\\mathbb{Q}\\) (the multiplicative inverse \\(\\tfrac1a\\)). And \\(x^2=2\\) has no fractional answer → introduce \\(\\mathbb{I}\\). Every new set is the answer to a question the previous one could not solve — that is the single thread running through this unit.</p></div><h4>Rational vs. irrational — the decimal test</h4><p>How do you tell a rational number from an irrational one? Read its decimal expansion. A number is <strong>rational</strong> exactly when that expansion is <em>finite</em> or <em>eventually periodic</em>:</p><div class=\"formula-box\">\\[\\tfrac34=0.75\\ (\\text{finite}),\\qquad \\tfrac{15}{7}=2.\\dot14285\\dot7\\ (\\text{a repeating block}).\\]</div><p>A number is <strong>irrational</strong> when the expansion runs on forever <em>without ever</em> repeating, e.g. \\(\\sqrt2=1.41421356\\dots\\). The two families never overlap (\\(\\mathbb{Q}\\cap\\mathbb{I}=\\varnothing\\)); together they leave no gaps on the line — that is the content of \\(\\mathbb{R}=\\mathbb{Q}\\cup\\mathbb{I}\\). A handy consequence: if a calculator shows a decimal that settles into a repeating pattern, the number is rational; \\(\\sqrt{a}\\) is irrational unless \\(a\\) is a perfect square.</p><h4>The properties of \\(+\\) and \\(\\cdot\\)</h4><p>For all \\(a,b,c\\in\\mathbb{R}\\), addition and multiplication satisfy:</p><ul><li><strong>Closedness</strong> — the result stays in the set;</li><li><strong>Commutativity</strong> \\(a+b=b+a\\), \\(ab=ba\\);</li><li><strong>Associativity</strong> \\((a+b)+c=a+(b+c)\\);</li><li><strong>Neutral element</strong> \\(a+0=a\\), \\(a\\cdot 1=a\\);</li><li><strong>Inverse element</strong> \\(a+(-a)=0\\), \\(a\\cdot a^{-1}=1\\ (a\\neq 0)\\);</li><li><strong>Distributivity</strong> \\((a+b)c=ac+bc\\).</li></ul><p>The smaller sets fail some of these, and the failure is exactly the inverse that is missing: \\(\\mathbb{N}\\) has no additive neutral or inverse (subtracting can throw you out of \\(\\mathbb{N}\\)); \\(\\mathbb{Z}\\) has no multiplicative inverse (dividing can throw you out of \\(\\mathbb{Z}\\), e.g. \\(2:4=\\tfrac12\\notin\\mathbb{Z}\\)). \\(\\mathbb{Q}\\) and \\(\\mathbb{R}\\) have <em>all</em> of them, which is why we can do ordinary algebra in them without ever leaving the set.</p><h4>ℝ is a field</h4><p>A set with two operations obeying the <strong>nine</strong> properties above is called a <span class=\"highlight\">field</span>. Because \\(\\mathbb{R}\\) obeys every one, \\((\\mathbb{R},+,\\cdot)\\) is the <strong>field of real numbers</strong>. This is not abstract decoration: the field axioms are precisely the rules that let us add, cancel, factor and rearrange equations without ever producing a false step — the business of the next unit.</p><div class=\"tip-box\"><h4>Common pitfalls</h4><ul><li><strong>\\(0\\) has no reciprocal</strong> — that is why <em>division by zero is undefined</em>. Every other real number does have one.</li><li>\\(\\mathbb{Q}\\) and \\(\\mathbb{I}\\) are <em>disjoint</em>: an irrational number is never a fraction, no matter how you write it.</li><li>\\(\\sqrt2\\) is irrational, but \\(\\sqrt4=2\\) is a natural number — taking a root does not automatically give an irrational.</li></ul></div>"
     }
   },
   "basicEquations": {
+    "id": "e4cfil",
     "name": "Basic Equations on ℝ",
     "icon": "fa-equals",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "kjfkum",
         "question": "What determines how many solutions an algebraic (polynomial) equation has?",
         "answer": "The DEGREE of the equation — the highest power of the unknown — determines the number of solutions.\n\nE.g. \\(5x^3-3x^2+x^4=x+5\\) is of degree 4 → it has four solutions.\n\nSolutions may be repeated, but they are still counted as separate solutions.",
         "explanation": "An equation in one unknown need not have only one solution. We focus on equations of degree 1 (linear) and 2 (quadratic), plus equations that reduce to them."
       },
       {
+        "id": "cv53ln",
         "question": "What is a linear equation and how do you solve it?",
         "answer": "A linear equation has the form\n\\[ax+b=0,\\quad a\\neq 0,\\ a,b\\in\\mathbb{R}.\\]\nTo solve means to find the number that, put in place of the unknown, gives a true equality. The solution is\n\\[x=-\\frac{b}{a}.\\]",
         "explanation": "It is a 1st-degree equation, so it has exactly one solution."
       },
       {
+        "id": "51ibgs",
         "question": "Give the quadratic equation and the general solution formula.",
         "answer": "A complete quadratic equation:\n\\[ax^2+bx+c=0,\\quad a\\neq 0.\\]\n\\(a\\) = leading (quadratic) coefficient, \\(b\\) = linear coefficient, \\(c\\) = free (constant) coefficient. The two solutions:\n\\[x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}.\\]",
         "explanation": "A 2nd-degree equation has two solutions x₁, x₂ (possibly equal, possibly non-real)."
       },
       {
+        "id": "5umwkq",
         "question": "What are the two INCOMPLETE forms of the quadratic equation and their solutions?",
         "answer": "1. \\(ax^2+c=0\\) (no linear term): \\(x_{1,2}=\\pm\\sqrt{-\\frac{c}{a}}\\)\n\n2. \\(ax^2+bx=0\\) (no constant term): factor \\(x(ax+b)=0\\) →\n\\(x_1=0,\\quad x_2=-\\frac{b}{a}\\)",
         "explanation": "Form 2 always has x = 0 as one solution. These are quicker to solve than using the full formula."
       },
       {
+        "id": "rzdlgj",
         "question": "What does the DISCRIMINANT \\(D=b^2-4ac\\) tell you?",
         "answer": "It is the expression under the root in the quadratic formula, and it decides the NATURE of the solutions:\n• \\(D>0\\) → two distinct real solutions\n• \\(D=0\\) → one (repeated) real solution\n• \\(D<0\\) → no real solution (the solutions are complex)",
         "explanation": "E.g. x² + 8x + 25 = 0 has D = 64 − 100 = −36 < 0 → no real solution."
       },
       {
+        "id": "tcd5iz",
         "question": "How do you solve a BIQUADRATIC equation \\(ax^4+bx^2+c=0\\)?",
         "answer": "Introduce the substitution \\(t=x^2\\). The equation becomes a quadratic in \\(t\\):\n\\[at^2+bt+c=0,\\quad t_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}.\\]\nThen undo the substitution: solve \\(t_1=x^2\\) and \\(t_2=x^2\\). Each gives up to two values of \\(x\\) → up to four solutions \\(x_1,x_2,x_3,x_4\\).",
         "explanation": "Example: 36x⁴ − 25x² + 4 = 0 → x = ±2/3, ±1/2."
       },
       {
+        "id": "zq7qw0",
         "question": "How do you solve an IRRATIONAL equation (unknown under a root), and what must you always do?",
         "answer": "Isolate the root and SQUARE both sides to remove it, then solve the resulting (often quadratic) equation.\n\n⚠ You MUST substitute each obtained solution back into the ORIGINAL equation and check it — squaring can introduce false (extraneous) solutions that do not satisfy the original.",
         "explanation": "Example: √(2x+1) = x − 1. Squaring is a non-reversible step, so checking is mandatory."
       },
       {
+        "id": "nk17x5",
         "question": "How do you solve a system of one quadratic and one linear equation?",
         "answer": "By SUBSTITUTION:\n1. From the LINEAR equation, express one unknown.\n2. Substitute that expression into the QUADRATIC equation and solve for the second unknown.\n3. Put each value back into the expression for the first unknown to get its matching value.",
         "explanation": "Each solution is an ordered pair (x, y). A quadratic-linear system typically yields two pairs."
       },
       {
+        "id": "gd2xrl",
         "question": "What are the steps of the second-stage problem-solving process (word problems / modeling)?",
         "answer": "1. Read the problem carefully several times.\n2. Identify what is known and what must be found.\n3. Name the known and unknown variables.\n4. If helpful, draw a picture/table.\n5. Establish mathematical relations between known and unknown quantities.\n6. Write the equation(s)/system.\n7. Solve the mathematical model.\n8. Interpret the solution.\n9. Check its accuracy and meaningfulness.",
         "explanation": "\"Second-degree problems\" are everyday/professional problems that reduce to quadratic equations or to linear–quadratic systems."
@@ -236,6 +273,7 @@
     ],
     "quiz": [
       {
+        "id": "vs9vyz",
         "question": "The solution of the linear equation \\(ax+b=0\\) (\\(a\\neq 0\\)) is:",
         "options": [
           "\\(x=\\frac{b}{a}\\)",
@@ -246,6 +284,7 @@
         "correct": 1
       },
       {
+        "id": "26sp6i",
         "question": "The solutions of \\(ax^2+bx+c=0\\) are given by:",
         "options": [
           "\\(x=-\\frac{b}{a}\\)",
@@ -256,6 +295,7 @@
         "correct": 1
       },
       {
+        "id": "x4708g",
         "question": "The degree of \\(x^4+5x^3-3x^2=x+5\\) — and hence the number of its solutions — is:",
         "options": [
           "2",
@@ -266,6 +306,7 @@
         "correct": 2
       },
       {
+        "id": "p545rn",
         "question": "If the discriminant \\(D=b^2-4ac<0\\), the quadratic equation has:",
         "options": [
           "Two distinct real solutions",
@@ -276,6 +317,7 @@
         "correct": 2
       },
       {
+        "id": "rckl45",
         "question": "The incomplete quadratic \\(ax^2+bx=0\\) always has which solution?",
         "options": [
           "\\(x=1\\)",
@@ -286,6 +328,7 @@
         "correct": 1
       },
       {
+        "id": "y6gkm7",
         "question": "To solve a biquadratic \\(ax^4+bx^2+c=0\\), the right substitution is:",
         "options": [
           "\\(t=x\\)",
@@ -296,6 +339,7 @@
         "correct": 1
       },
       {
+        "id": "dyjx4j",
         "question": "After squaring both sides of an irrational equation, you MUST:",
         "options": [
           "Square again",
@@ -306,6 +350,7 @@
         "correct": 1
       },
       {
+        "id": "bkmfhz",
         "question": "A system of a quadratic and a linear equation is best solved by:",
         "options": [
           "Squaring",
@@ -318,101 +363,121 @@
     ],
     "fillBlanks": [
       {
+        "id": "3zk738",
         "sentence": "An equation of the form ax + b = 0 (a ≠ 0) is called a _______ equation.",
         "answer": "linear",
         "hint": "1st degree"
       },
       {
+        "id": "wgvsn8",
         "sentence": "An equation of the form ax² + bx + c = 0 (a ≠ 0) is called a _______ equation.",
         "answer": "quadratic",
         "hint": "2nd degree"
       },
       {
+        "id": "w6rvz2",
         "sentence": "The _______ of a polynomial equation determines the number of its solutions.",
         "answer": "degree",
         "hint": "Highest power of the unknown"
       },
       {
+        "id": "i5vo05",
         "sentence": "The expression b² − 4ac under the root is called the _______.",
         "answer": "discriminant",
         "hint": "Its sign decides the nature of the solutions"
       },
       {
+        "id": "sndljz",
         "sentence": "A biquadratic equation is solved with the substitution t = _______.",
         "answer": "x^2",
         "hint": "Turns ax⁴+bx²+c into a quadratic in t"
       },
       {
+        "id": "ilkife",
         "sentence": "After squaring an irrational equation you must _______ each solution in the original.",
         "answer": "check",
         "hint": "Squaring can introduce false solutions"
       }
     ],
     "learn": {
+      "id": "ouv44n",
       "content": "<h3>Basic equations on ℝ</h3><p>An <strong>equation</strong> in one unknown is a statement that two expressions are equal — true only for certain value(s) of the unknown. To <em>solve</em> it is to find every number that, put in place of the unknown, makes the equality literally true. The first thing to read off is the <span class=\"highlight\">degree</span>, the highest power of the unknown: a polynomial equation of degree \\(n\\) has exactly \\(n\\) solutions (counting repeats and complex ones). So \\(x^4+5x^3-3x^2=x+5\\) is degree 4 and has four solutions. In this unit we master the two everyday cases — degree 1 and degree 2 — and the tricks that reduce other equations to them.</p><h4>1. Linear equations</h4><p>Form \\(ax+b=0,\\ a\\neq 0\\). Being first degree, it has exactly <strong>one</strong> solution, found by moving \\(b\\) across and dividing by \\(a\\):</p><div class=\"formula-box\">\\[x=-\\frac{b}{a}.\\]</div><p><strong>Worked example.</strong> \\(3x-12=0\\Rightarrow x=\\tfrac{12}{3}=4\\). The condition \\(a\\neq0\\) matters: if \\(a=0\\) the equation is no longer linear (it is either always true or impossible).</p><h4>2. Quadratic equations</h4><p>Complete form \\(ax^2+bx+c=0,\\ a\\neq 0\\), with leading coefficient \\(a\\), linear coefficient \\(b\\) and free term \\(c\\). The two solutions come from the quadratic formula:</p><div class=\"formula-box\">\\[x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}.\\]</div><p>The expression under the root, the <strong>discriminant</strong> \\(D=b^2-4ac\\), decides the <em>nature</em> of the solutions <strong>before</strong> you finish the calculation: \\(D>0\\) gives two distinct real solutions, \\(D=0\\) one repeated real solution, and \\(D<0\\) no real solution at all (the roots are complex). <strong>Worked example.</strong> \\(x^2-5x+6=0\\) has \\(D=25-24=1>0\\), so \\(x_{1,2}=\\frac{5\\pm1}{2}\\), giving \\(x_1=3,\\ x_2=2\\). By contrast \\(x^2+8x+25=0\\) has \\(D=64-100=-36<0\\) — no real solution.</p><p>When a coefficient is missing, the two <strong>incomplete</strong> forms are far quicker than the formula:</p><ul><li>\\(ax^2+c=0\\) (no linear term) \\(\\Rightarrow x_{1,2}=\\pm\\sqrt{-\\tfrac{c}{a}}\\);</li><li>\\(ax^2+bx=0\\) (no constant) \\(\\Rightarrow x(ax+b)=0\\Rightarrow x_1=0,\\ x_2=-\\tfrac{b}{a}\\) — note \\(x=0\\) is <em>always</em> one root here.</li></ul><h4>3. Equations that reduce to a quadratic</h4><p>Many harder-looking equations become quadratics after one clever move:</p><ul><li><strong>Biquadratic</strong> \\(ax^4+bx^2+c=0\\): substitute \\(t=x^2\\), solve \\(at^2+bt+c=0\\) for \\(t\\), then undo the substitution by solving \\(x^2=t_1\\) and \\(x^2=t_2\\) — up to four solutions. E.g. \\(36x^4-25x^2+4=0\\Rightarrow x=\\pm\\tfrac23,\\ \\pm\\tfrac12\\).</li><li><strong>Irrational</strong> (unknown under a root): isolate the root and square both sides to remove it, then solve. Squaring is a one-way step, so it can introduce <em>false</em> roots — <strong>always substitute every answer back into the original equation</strong> and keep only those that check.</li><li><strong>Linear–quadratic systems</strong>: from the linear equation express one unknown, substitute into the quadratic, solve, then back-substitute. Each solution is an ordered pair \\((x,y)\\), and there are usually two.</li></ul><div class=\"tip-box\"><h4>Modeling — turning a word problem into an equation</h4><p>Many real and professional problems (\"second-degree problems\") reduce to a quadratic. Work in fixed steps: read carefully → name the known and unknown quantities → write the relation between them → solve the model → <strong>interpret and check</strong> the answer against the problem. A 65% discount leaving 192.5 monetary units, two ages whose product is 28, water flowing through pipes of different diameter — each becomes an equation of degree 1 or 2. The final check is part of the method, not an afterthought: a negative length or a fractional number of people is a signal you must reject that root.</p></div>"
     }
   },
   "functions": {
+    "id": "dds84m",
     "name": "Functions",
     "icon": "fa-chart-line",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "efnt09",
         "question": "What is a polynomial of degree \\(n\\)?",
         "answer": "A polynomial of the n-th degree is a mapping \\(x\\mapsto P_n(x)\\):\n\\[P_n(x)=a_nx^n+a_{n-1}x^{n-1}+\\dots+a_2x^2+a_1x+a_0,\\quad a_i\\in\\mathbb{R},\\ a_n\\neq 0.\\]\nThe degree = the highest power. A value \\(x\\) with \\(P_n(x)=0\\) is a ZERO of the polynomial.",
         "explanation": "Degree 0 = constant function; degree 1 = linear; degree 2 = quadratic."
       },
       {
+        "id": "ktxud5",
         "question": "Define a function and its domain, codomain and image.",
         "answer": "Given non-empty sets \\(A,B\\), a FUNCTION \\(f\\) is a rule that assigns to each \\(x\\in A\\) a UNIQUE \\(y\\in B\\), written \\(y=f(x)\\).\n• DOMAIN \\(D_f\\) = set \\(A\\) of all values \\(x\\) can take.\n• CODOMAIN = set \\(B\\) of possible values.\n• IMAGE \\(\\operatorname{Im}f=\\{f(x)\\mid x\\in D_f\\}\\) = the values actually attained.",
         "explanation": "The defining feature: each input maps to exactly ONE output."
       },
       {
+        "id": "bwi8wr",
         "question": "What is the NATURAL DOMAIN of a function? Give the three common restrictions.",
         "answer": "The natural domain is the LARGEST set on which the formula is defined (used when no domain is stated). Common restrictions:\n• Denominator ≠ 0: \\(f(x)=\\frac1x\\Rightarrow D_f=\\mathbb{R}\\setminus\\{0\\}\\)\n• Even root: argument \\(\\ge 0\\): \\(\\sqrt{g(x)}\\Rightarrow g(x)\\ge 0\\)\n• Logarithm: argument \\(>0\\): \\(\\ln g(x)\\Rightarrow g(x)>0\\)",
         "explanation": "A linear function f(x)=ax+b is defined on all of ℝ; f(x)=1/x is not."
       },
       {
+        "id": "l1k4nr",
         "question": "What is the graph of a function, and what do the constant, identity and linear graphs look like?",
         "answer": "The GRAPH is the set of points \\((x,y)\\) with \\(y=f(x)\\):\n\\[G(f)=\\{(x,y)\\in\\mathbb{R}^2\\mid x\\in D_f,\\ y=f(x)\\}.\\]\n• Constant \\(f(x)=c\\): horizontal line.\n• Identity \\(f(x)=x\\): the 45° line through the origin.\n• Linear \\(f(x)=ax+b\\): a straight line.",
         "explanation": "Constant is the 0-degree polynomial; identity is a special linear function mapping every x to itself."
       },
       {
+        "id": "ybyvoe",
         "question": "For a linear function \\(f(x)=ax+b\\), what do \\(a\\) and \\(b\\) mean?",
         "answer": "• \\(a\\) = SLOPE / rate of change / difference quotient — the tangent of the angle the line makes with the x-axis:\n\\[a=\\frac{\\Delta y}{\\Delta x}=\\frac{f(x_2)-f(x_1)}{x_2-x_1}.\\]\nIf \\(a>0\\) the function increases (steeper as \\(a\\) grows); if \\(a<0\\) it decreases.\n• \\(b\\) = the y-intercept (segment cut on the y-axis).",
         "explanation": "The 'difference quotient' a is the key idea that leads to the derivative."
       },
       {
+        "id": "a1imj8",
         "question": "What is the graph of the quadratic function, and of the basic rational function \\(f(x)=\\tfrac1x\\)?",
         "answer": "• Quadratic \\(f(x)=ax^2+bx+c\\): a PARABOLA. (Opens up if \\(a>0\\), down if \\(a<0\\).)\n• Rational \\(f(x)=\\frac1x\\): a hyperbola with \\(D_f=\\mathbb{R}\\setminus\\{0\\}\\); the y-axis is a VERTICAL asymptote and the x-axis a HORIZONTAL asymptote.",
         "explanation": "An asymptote is a line the graph approaches but never meets."
       },
       {
+        "id": "lueuuj",
         "question": "Describe the exponential function and its base \\(e\\).",
         "answer": "Exponential: \\(f(x)=a^x,\\ a>0,\\ a\\neq 1\\). In this course we use the natural base \\(e\\approx 2.71828\\approx 2.72\\):\n\\[f(x)=e^x.\\]\nIt takes only POSITIVE values, has domain \\(\\langle-\\infty,+\\infty\\rangle\\), codomain \\(\\langle 0,+\\infty\\rangle\\), and is strictly increasing. Rules:\n\\[e^a\\cdot e^b=e^{a+b},\\quad e^a\\div e^b=e^{a-b},\\quad (e^a)^b=e^{ab}.\\]",
         "explanation": "e is Euler's number, the base of the natural logarithm; central to growth and financial mathematics."
       },
       {
+        "id": "4bftes",
         "question": "Define the logarithm and the natural logarithm, and give the log rules.",
         "answer": "The logarithm of \\(b\\) to base \\(a\\) is the exponent \\(x\\) with \\(a^x=b\\):\n\\[\\log_a b=x\\iff a^x=b.\\]\nThe NATURAL logarithm has base \\(e\\): \\(f(x)=\\log_e x=\\ln x\\), defined for \\(x>0\\). Rules:\n\\[\\ln 1=0,\\quad \\ln(ab)=\\ln a+\\ln b,\\quad \\ln\\tfrac{a}{b}=\\ln a-\\ln b,\\quad \\ln a^n=n\\ln a.\\]",
         "explanation": "ln is the inverse of eˣ: it maps ⟨0,+∞⟩ onto ⟨−∞,+∞⟩."
       },
       {
+        "id": "eugf2w",
         "question": "How are the trigonometric functions sine and cosine defined on the unit circle?",
         "answer": "On the unit circle (\\(r=1\\)) centred at the origin, for the angle \\(\\theta\\):\n\\[\\sin\\theta=\\frac{y}{r}=y,\\qquad \\cos\\theta=\\frac{x}{r}=x.\\]\n(From a right triangle: \\(\\sin\\theta=\\frac{\\text{opposite}}{\\text{hypotenuse}}\\), \\(\\cos\\theta=\\frac{\\text{adjacent}}{\\text{hypotenuse}}\\).)",
         "explanation": "Because they are periodic, sine and cosine model seasonal (periodic) phenomena — e.g. tourism seasonality / time series."
       },
       {
+        "id": "av20en",
         "question": "Define the cost, revenue and profit functions used in economics.",
         "answer": "• TOTAL COST \\(T(Q)\\) — a polynomial in the quantity \\(Q\\); the FIXED cost is \\(T(0)\\) (the free term).\n• REVENUE (income) \\(P(Q)=pQ\\), where \\(p\\) is the unit price.\n• PROFIT \\(D(Q)=P(Q)-T(Q)\\).\n• BREAK-EVEN (coverage) points: \\(P(Q)=T(Q)\\), i.e. \\(D(Q)=0\\).",
         "explanation": "Between the break-even points the profit is positive; outside them the firm loses money. E.g. T(Q)=4Q³−120Q²+6Q+124 has fixed cost 124."
       },
       {
+        "id": "63s7nr",
         "question": "What is the average cost function?",
         "answer": "The average cost is the total cost divided by the quantity produced:\n\\[\\overline{T(Q)}=\\frac{T(Q)}{Q}.\\]\nExample: \\(T(Q)=2Q+3\\Rightarrow \\overline{T(Q)}=\\frac{2Q+3}{Q}\\). Total cost makes economic sense for \\(Q\\ge 0\\); average cost for \\(Q>0\\).",
         "explanation": "Average cost is a rational function — undefined at Q = 0, where you would divide by zero."
       },
       {
+        "id": "c7mg31",
         "question": "When is a function increasing or decreasing on an interval \\((a,b)\\)?",
         "answer": "\\(f\\) is (strictly) INCREASING on \\((a,b)\\) if for all \\(x_1<x_2\\) in the interval \\(f(x_1)<f(x_2)\\).\n\\(f\\) is (strictly) DECREASING if \\(x_1<x_2\\Rightarrow f(x_1)>f(x_2)\\).",
         "explanation": "Non-strict versions use ≤ and ≥. This 'value' definition is later linked to the sign of the derivative."
@@ -420,6 +485,7 @@
     ],
     "quiz": [
       {
+        "id": "f8oqdm",
         "question": "A function assigns to each element of the domain:",
         "options": [
           "At least one value",
@@ -430,6 +496,7 @@
         "correct": 1
       },
       {
+        "id": "us7rax",
         "question": "The natural domain of \\(f(x)=\\frac1x\\) is:",
         "options": [
           "\\(\\mathbb{R}\\)",
@@ -440,6 +507,7 @@
         "correct": 1
       },
       {
+        "id": "ju8z2d",
         "question": "For \\(f(x)=ax+b\\), the coefficient \\(a\\) represents the:",
         "options": [
           "y-intercept",
@@ -450,6 +518,7 @@
         "correct": 1
       },
       {
+        "id": "dey2c4",
         "question": "The graph of a quadratic function is a:",
         "options": [
           "Straight line",
@@ -460,6 +529,7 @@
         "correct": 2
       },
       {
+        "id": "1ms4hi",
         "question": "The natural domain of \\(f(x)=\\ln(g(x))\\) requires:",
         "options": [
           "\\(g(x)\\ge 0\\)",
@@ -470,6 +540,7 @@
         "correct": 1
       },
       {
+        "id": "cm7hor",
         "question": "\\(\\log_a b=x\\) is equivalent to:",
         "options": [
           "\\(b^x=a\\)",
@@ -480,6 +551,7 @@
         "correct": 1
       },
       {
+        "id": "uwrr0l",
         "question": "Which rule is correct for the natural logarithm?",
         "options": [
           "\\(\\ln(ab)=\\ln a\\cdot\\ln b\\)",
@@ -490,6 +562,7 @@
         "correct": 1
       },
       {
+        "id": "2loekj",
         "question": "The profit function is defined as:",
         "options": [
           "\\(D(Q)=P(Q)+T(Q)\\)",
@@ -500,6 +573,7 @@
         "correct": 1
       },
       {
+        "id": "k16s7w",
         "question": "The fixed cost of a total-cost function \\(T(Q)\\) equals:",
         "options": [
           "\\(T(1)\\)",
@@ -510,6 +584,7 @@
         "correct": 1
       },
       {
+        "id": "c0gvyy",
         "question": "The base \\(e\\) of the natural logarithm is approximately:",
         "options": [
           "2.72",
@@ -522,91 +597,109 @@
     ],
     "fillBlanks": [
       {
+        "id": "9voafb",
         "sentence": "The set of all values x can take is the _______ of the function.",
         "answer": "domain",
         "hint": "Symbol D_f"
       },
       {
+        "id": "d1n2tq",
         "sentence": "A value x for which Pₙ(x) = 0 is a _______ of the polynomial.",
         "answer": "zero",
         "hint": "Where the graph crosses the x-axis"
       },
       {
+        "id": "afwyzu",
         "sentence": "The graph of a quadratic function is a _______.",
         "answer": "parabola",
         "hint": "f(x)=x² shape"
       },
       {
+        "id": "6pdozd",
         "sentence": "A line the graph approaches but never intersects is an _______.",
         "answer": "asymptote",
         "hint": "e.g. axes for f(x)=1/x"
       },
       {
+        "id": "411kg2",
         "sentence": "The inverse of the exponential function eˣ is the natural _______.",
         "answer": "logarithm",
         "hint": "ln x, defined for x > 0"
       },
       {
+        "id": "jozvgy",
         "sentence": "Revenue is P(Q) = p·Q, where p is the unit _______.",
         "answer": "price",
         "hint": "Price × quantity"
       },
       {
+        "id": "i4msn2",
         "sentence": "Total cost ÷ quantity gives the _______ cost function.",
         "answer": "average",
         "hint": "T(Q)/Q"
       }
     ],
     "learn": {
+      "id": "8slorw",
       "content": "<h3>Functions</h3><p>A <strong>function</strong> is the central object of the whole course: a rule that turns each input into one output. Formally, a function \\(f\\) from a set \\(A\\) to a set \\(B\\) assigns to <em>each</em> \\(x\\in A\\) a <span class=\"highlight\">unique</span> \\(y=f(x)\\in B\\). That word \"unique\" is the whole definition — one input may never lead to two different outputs. We name three sets: the <strong>domain</strong> \\(D_f\\) (the allowed inputs), the <strong>codomain</strong> \\(B\\) (where outputs may live), and the <strong>image</strong> \\(\\operatorname{Im}f\\) (the outputs actually reached). Drawing every pair \\((x,f(x))\\) in the plane gives the <strong>graph</strong>, the visual fingerprint of the function.</p><h4>Natural domain — where is the formula allowed?</h4><p>When a problem gives a formula but no domain, we take the <em>largest</em> set on which the formula makes sense. Three restrictions cover almost every case:</p><ul><li>a denominator must be non-zero — \\(\\frac1x\\Rightarrow D_f=\\mathbb{R}\\setminus\\{0\\}\\);</li><li>an even root needs a non-negative argument — \\(\\sqrt{g(x)}\\Rightarrow g(x)\\ge 0\\);</li><li>a logarithm needs a strictly positive argument — \\(\\ln g(x)\\Rightarrow g(x)>0\\).</li></ul><p><strong>Worked example.</strong> For \\(f(x)=\\frac{1}{\\sqrt{x-2}}\\) the root needs \\(x-2\\ge0\\) <em>and</em> the denominator needs \\(x-2\\neq0\\), so \\(D_f=\\langle2,+\\infty\\rangle\\). Finding the domain is always the first step when analysing a function.</p><h4>Polynomials and their graphs</h4><p>A polynomial \\(P_n(x)=a_nx^n+\\dots+a_0\\) has degree equal to its highest power, and a value with \\(P_n(x)=0\\) is a <strong>zero</strong> (where the graph crosses the \\(x\\)-axis). The low degrees are the workhorses: degree 0 is the <strong>constant</strong> \\(f(x)=c\\) (a horizontal line); degree 1 the <strong>linear</strong> \\(f(x)=ax+b\\) (a straight line with slope \\(a\\) and \\(y\\)-intercept \\(b\\)); degree 2 the <strong>quadratic</strong> (a parabola, opening up if \\(a>0\\), down if \\(a<0\\)). For a line the slope is the <strong>difference quotient</strong></p><div class=\"formula-box\">\\[a=\\frac{\\Delta y}{\\Delta x}=\\frac{f(x_2)-f(x_1)}{x_2-x_1}.\\]</div><p>This is the rate of change — how much \\(y\\) moves per unit of \\(x\\) — and it is the <em>seed of the derivative</em> in the next unit. Dividing two polynomials gives a <strong>rational function</strong> such as \\(\\frac1x\\), defined off the zeros of the denominator; near such a zero the graph shoots off along a vertical <em>asymptote</em>, a line the curve approaches but never touches.</p><h4>Exponential, logarithm, trigonometric</h4><p>Beyond polynomials sit three families used constantly in economics. The <strong>exponential</strong> \\(f(x)=e^x\\) (base \\(e\\approx 2.72\\)) is always positive and strictly increasing, and obeys \\(e^a e^b=e^{a+b}\\); it models growth and compound interest. Its inverse is the <strong>natural logarithm</strong> \\(\\ln x\\) (defined only for \\(x>0\\)), which undoes exponentials and turns products into sums:</p><div class=\"formula-box\">\\[\\ln(ab)=\\ln a+\\ln b,\\quad \\ln\\tfrac{a}{b}=\\ln a-\\ln b,\\quad \\ln a^n=n\\ln a.\\]</div><p>Finally the <strong>periodic</strong> \\(\\sin\\theta\\) and \\(\\cos\\theta\\) (read off the unit circle, where \\(\\sin\\theta=y\\) and \\(\\cos\\theta=x\\)) repeat forever and are the natural language for <em>seasonal</em> phenomena — exactly the shape of a tourism demand time series across the year.</p><div class=\"tip-box\"><h4>Economic functions — why we care</h4><p>The functions above are not abstract: a firm's behaviour is described by them. <strong>Total cost</strong> \\(T(Q)\\) is a polynomial in the quantity \\(Q\\), with the <strong>fixed cost</strong> equal to \\(T(0)\\) (the free term). <strong>Revenue</strong> is \\(P(Q)=pQ\\) (price × quantity) and <strong>profit</strong> is \\(D(Q)=P(Q)-T(Q)\\). The <strong>break-even</strong> points solve \\(P(Q)=T(Q)\\), i.e. \\(D(Q)=0\\); between them the firm is profitable, outside them it loses money. The <strong>average cost</strong> \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\) is a rational function, undefined at \\(Q=0\\). In the last unit we will <em>optimise</em> exactly these functions with the derivative.</p></div>"
     }
   },
   "differentiation": {
+    "id": "dc4e60",
     "name": "Differentiation",
     "icon": "fa-superscript",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "aqwabp",
         "question": "What is the derivative of a function at a point \\(x_0\\)?",
         "answer": "The derivative is the limit of the difference quotient as \\(x\\) tends to \\(x_0\\):\n\\[f'(x_0)=\\frac{dy}{dx}(x_0)=\\lim_{x\\to x_0}\\frac{f(x)-f(x_0)}{x-x_0}.\\]\nIt measures the INSTANTANEOUS rate of change of \\(f\\) at \\(x_0\\) — generalising the constant rate (slope \\(a\\)) of a linear function to curves.",
         "explanation": "We let the difference x − x₀ become arbitrarily small but never zero (possible thanks to the continuity of ℝ)."
       },
       {
+        "id": "r0hfvi",
         "question": "What is the GEOMETRIC meaning of the derivative \\(f'(x_0)\\)?",
         "answer": "\\(f'(x_0)\\) is the SLOPE (direction coefficient) of the TANGENT line to the graph of \\(f\\) at the point \\(x_0\\). The tangent is the best linear approximation of the function's growth rate near \\(x_0\\).",
         "explanation": "For a line f(x)=ax+b the tangent is the line itself, so f'(x)=a everywhere."
       },
       {
+        "id": "axgfoo",
         "question": "What are the derivatives of a constant and of a linear function?",
         "answer": "• Constant \\(f(x)=c\\): the difference quotient is always 0, so\n\\[(c)'=0.\\]\n• Linear \\(f(x)=ax+b\\): the difference quotient is \\(a\\), so\n\\[(ax+b)'=a,\\qquad\\text{in particular } (x)'=1.\\]",
         "explanation": "The derivative of a constant is zero because a constant does not change with x."
       },
       {
+        "id": "ii88p5",
         "question": "State the POWER rule for differentiation.",
         "answer": "For \\(f(x)=x^n\\):\n\\[(x^n)'=n\\,x^{n-1}.\\]\nThe derived function has a power one less than the original. E.g. \\((x^3)'=3x^2\\), \\((x^7)'=7x^6\\).",
         "explanation": "This is the single most-used rule; it also covers √x = x^{1/2} and 1/xⁿ = x^{−n}."
       },
       {
+        "id": "flfse3",
         "question": "Give the derivatives of the elementary functions \\(\\frac1x\\), \\(\\sqrt x\\), \\(e^x\\), \\(\\ln x\\), \\(\\sin x\\), \\(\\cos x\\).",
         "answer": "\\[\\left(\\frac1x\\right)'=-\\frac{1}{x^2},\\qquad (\\sqrt x)'=\\frac{1}{2\\sqrt x},\\]\n\\[(e^x)'=e^x,\\qquad (\\ln x)'=\\frac1x,\\]\n\\[(\\sin x)'=\\cos x,\\qquad (\\cos x)'=-\\sin x.\\]",
         "explanation": "eˣ is its own derivative. Note the minus sign for (cos x)' and for (1/x)'."
       },
       {
+        "id": "t1dbxg",
         "question": "State the sum, difference and constant-multiple rules.",
         "answer": "\\[(u\\pm v)'=u'\\pm v',\\]\n\\[(C\\,u)'=C\\,u'\\quad(C=\\text{const}),\\]\n\\[(a\\,u+b\\,v)'=a\\,u'+b\\,v'.\\]\nDifferentiation is LINEAR: you differentiate term by term and pull out constants.",
         "explanation": "So a polynomial is differentiated term by term using the power rule."
       },
       {
+        "id": "9i3z3p",
         "question": "State the PRODUCT rule and the QUOTIENT rule.",
         "answer": "PRODUCT:\n\\[(u\\cdot v)'=u'v+u\\,v'.\\]\nQUOTIENT:\n\\[\\left(\\frac{u}{v}\\right)'=\\frac{u'v-u\\,v'}{v^2}.\\]",
         "explanation": "Order matters in the quotient rule's numerator: u′v − uv′ (not uv′ − u′v)."
       },
       {
+        "id": "28h1iv",
         "question": "State the CHAIN rule for a composite function.",
         "answer": "A composite ('function within a function') \\(f(g(x))\\) has outer function \\(f\\) and inner function \\(g\\). Its derivative:\n\\[[f(g(x))]'=f'(g(x))\\cdot g'(x).\\]\nDifferentiate the outer function (leaving the inner unchanged) and MULTIPLY by the derivative of the inner.",
         "explanation": "E.g. (ln(3x²+5))' = 1/(3x²+5) · 6x. Used for trig/exp/log of expressions."
       },
       {
+        "id": "iha7tk",
         "question": "What is a higher-order derivative?",
         "answer": "Differentiating repeatedly. The n-th derivative is the derivative of the (n−1)-th:\n\\[f^{(n)}(x)=\\left[f^{(n-1)}(x)\\right]'.\\]\nThe SECOND derivative \\(f''\\) is the derivative of \\(f'\\); the third \\(f'''\\) the derivative of \\(f''\\), etc.",
         "explanation": "E.g. f(x)=4x⁵−3x⁴+… → f′, then f″=80x³−36x²+12x−10, then f‴=240x²−72x+12."
@@ -614,6 +707,7 @@
     ],
     "quiz": [
       {
+        "id": "x1xicw",
         "question": "Geometrically, \\(f'(x_0)\\) is the:",
         "options": [
           "Area under the curve",
@@ -624,6 +718,7 @@
         "correct": 1
       },
       {
+        "id": "s1ox9z",
         "question": "\\((x^n)' = \\) ?",
         "options": [
           "\\(n x^{n+1}\\)",
@@ -634,6 +729,7 @@
         "correct": 1
       },
       {
+        "id": "kxxn2y",
         "question": "The derivative of a constant \\(c\\) is:",
         "options": [
           "\\(c\\)",
@@ -644,6 +740,7 @@
         "correct": 2
       },
       {
+        "id": "l519la",
         "question": "\\((e^x)' = \\) ?",
         "options": [
           "\\(x e^{x-1}\\)",
@@ -654,6 +751,7 @@
         "correct": 1
       },
       {
+        "id": "28hvm8",
         "question": "\\((\\ln x)' = \\) ?",
         "options": [
           "\\(\\ln x\\)",
@@ -664,6 +762,7 @@
         "correct": 1
       },
       {
+        "id": "74j0en",
         "question": "The product rule \\((uv)'\\) equals:",
         "options": [
           "\\(u'v'\\)",
@@ -674,6 +773,7 @@
         "correct": 1
       },
       {
+        "id": "sqb777",
         "question": "The quotient rule \\(\\left(\\frac{u}{v}\\right)'\\) equals:",
         "options": [
           "\\(\\frac{u'v-uv'}{v^2}\\)",
@@ -684,6 +784,7 @@
         "correct": 0
       },
       {
+        "id": "ckqyso",
         "question": "The chain rule \\([f(g(x))]'\\) equals:",
         "options": [
           "\\(f'(g(x))\\)",
@@ -694,6 +795,7 @@
         "correct": 2
       },
       {
+        "id": "0a28u8",
         "question": "\\((\\cos x)' = \\) ?",
         "options": [
           "\\(\\sin x\\)",
@@ -706,91 +808,109 @@
     ],
     "fillBlanks": [
       {
+        "id": "1dfmel",
         "sentence": "The derivative is the limit of the _______ quotient (f(x)−f(x₀))/(x−x₀).",
         "answer": "difference",
         "hint": "Δy/Δx as x→x₀"
       },
       {
+        "id": "zgmqt0",
         "sentence": "Geometrically, f′(x₀) is the slope of the _______ to the graph at x₀.",
         "answer": "tangent",
         "hint": "Best linear approximation"
       },
       {
+        "id": "j9onw0",
         "sentence": "By the power rule, (xⁿ)′ = n·x^( _______ ).",
         "answer": "n-1",
         "hint": "One less than the original power"
       },
       {
+        "id": "xavjax",
         "sentence": "The derivative of a constant function is _______.",
         "answer": "0",
         "hint": "A constant does not change"
       },
       {
+        "id": "qw03z7",
         "sentence": "The function eˣ is its own _______.",
         "answer": "derivative",
         "hint": "(eˣ)′ = eˣ"
       },
       {
+        "id": "jjzlq7",
         "sentence": "Differentiating a composite f(g(x)) uses the _______ rule.",
         "answer": "chain",
         "hint": "f′(g(x))·g′(x)"
       },
       {
+        "id": "pym6s4",
         "sentence": "The derivative of f′ is the _______ derivative, written f″.",
         "answer": "second",
         "hint": "Higher-order derivative"
       }
     ],
     "learn": {
+      "id": "wnoa7y",
       "content": "<h3>Differentiation</h3><p>For a straight line the rate of change is a single number — the slope \\(a\\). But most functions bend, so their rate of change is different at every point. The <strong>derivative</strong> is the tool that captures this <em>local</em> rate of change. The idea: zoom in on a point \\(x_0\\), look at the difference quotient \\(\\frac{f(x)-f(x_0)}{x-x_0}\\) (the average slope between two nearby points), and let the second point slide towards \\(x_0\\). Because ℝ is <em>continuous</em> the gap can shrink without ever becoming zero, and the quotient settles on a number:</p><div class=\"formula-box\">\\[f'(x_0)=\\lim_{x\\to x_0}\\frac{f(x)-f(x_0)}{x-x_0}.\\]</div><p>That number is the derivative at \\(x_0\\). <strong>Geometrically</strong> it is the slope of the <span class=\"highlight\">tangent</span> line — the best straight-line approximation of the curve right at \\(x_0\\). Doing this at every point turns the function \\(f\\) into a brand-new function \\(f'\\), its derivative.</p><h4>Table of derivatives</h4><p>You never compute that limit by hand in practice — you memorise a short table of building blocks and combine them with rules. The blocks:</p><div class=\"formula-box\">\\[(c)'=0,\\quad (x)'=1,\\quad (x^n)'=n x^{n-1},\\]\\[\\left(\\tfrac1x\\right)'=-\\tfrac{1}{x^2},\\quad (\\sqrt x)'=\\tfrac{1}{2\\sqrt x},\\]\\[(e^x)'=e^x,\\quad (\\ln x)'=\\tfrac1x,\\quad (\\sin x)'=\\cos x,\\quad (\\cos x)'=-\\sin x.\\]</div><p>The <strong>power rule</strong> \\((x^n)'=nx^{n-1}\\) is the one you use most — bring the power down in front and drop it by one. Note the two minus signs that students forget: \\((\\cos x)'=-\\sin x\\) and \\(\\left(\\tfrac1x\\right)'=-\\tfrac1{x^2}\\). And \\(e^x\\) is the rare function that is its <em>own</em> derivative.</p><h4>Rules of differentiation</h4><p>To differentiate anything built from the blocks, four rules suffice:</p><ul><li><strong>Linearity</strong>: \\((u\\pm v)'=u'\\pm v'\\), \\((Cu)'=Cu'\\) — so a polynomial is differentiated <em>term by term</em>, pulling constants out front.</li><li><strong>Product</strong>: \\((uv)'=u'v+uv'\\) — note you cannot just multiply the two derivatives.</li><li><strong>Quotient</strong>: \\(\\left(\\frac{u}{v}\\right)'=\\dfrac{u'v-uv'}{v^2}\\) — the numerator order \\(u'v-uv'\\) matters; swapping it flips the sign.</li><li><strong>Chain</strong> (composite): \\([f(g(x))]'=f'(g(x))\\cdot g'(x)\\).</li></ul><p><strong>Worked example.</strong> Differentiate \\(f(x)=4x^5-3x^4+2x-7\\) term by term: \\(f'(x)=20x^4-12x^3+2\\). The constant \\(-7\\) vanishes, as every constant does.</p><div class=\"tip-box\"><h4>Chain rule in practice</h4><p>A composite is a \"function inside a function\". Differentiate the <em>outer</em> function (leaving the inner one untouched), then <strong>multiply</strong> by the derivative of the inner: \\((\\ln(3x^2+5))'=\\frac{1}{3x^2+5}\\cdot 6x=\\frac{6x}{3x^2+5}\\). Forgetting the second factor \\(g'(x)\\) is the single most common differentiation mistake. The chain rule is what lets us differentiate the exponential, logarithmic and trigonometric expressions that appear throughout economics.</p></div><h4>Higher-order derivatives</h4><p>Nothing stops you differentiating the result again. The derivative of \\(f'\\) is the <strong>second derivative</strong> \\(f''=\\left(f'\\right)'\\), and in general \\(f^{(n)}=\\left[f^{(n-1)}\\right]'\\). For the example above, \\(f''(x)=80x^3-36x^2\\). The first derivative tells us whether a function rises or falls; the second tells us how it <em>curves</em> — and together, in the next unit, they pin down maxima and minima.</p>"
     }
   },
   "extrema": {
+    "id": "qtvemf",
     "name": "Increase, Decrease & Extrema",
     "icon": "fa-arrow-trend-up",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "he810v",
         "question": "How does the SIGN of the first derivative tell you where a function increases or decreases?",
         "answer": "On an interval \\((a,b)\\):\n\\[f'(x)>0\\ \\text{for all }x\\ \\Rightarrow\\ f\\text{ increases},\\]\n\\[f'(x)<0\\ \\text{for all }x\\ \\Rightarrow\\ f\\text{ decreases}.\\]\nRecall \\(f'(x_0)\\) is the slope of the tangent at \\(x_0\\): positive slope rises, negative slope falls.",
         "explanation": "This links the 'value' definition of increasing/decreasing to the derivative."
       },
       {
+        "id": "e2s14o",
         "question": "What is a STATIONARY point?",
         "answer": "A stationary point is any \\(x_0\\) where the first derivative is zero:\n\\[f'(x_0)=0.\\]\nGeometrically the tangent is horizontal there. At a stationary point the function may have an extremum (min or max) OR an inflection point.",
         "explanation": "Equating f′(x)=0 and solving gives the candidate points for extrema."
       },
       {
+        "id": "k2rnfz",
         "question": "State the FIRST-derivative test for a minimum and a maximum.",
         "answer": "\\(x_0\\) is a MINIMUM if \\(f'(x_0)=0\\) and \\(f'\\) changes from negative to positive:\n• \\(f'(x)<0\\) for \\(x<x_0\\) (falls), \\(f'(x)>0\\) for \\(x>x_0\\) (rises).\n\n\\(x_0\\) is a MAXIMUM if \\(f'(x_0)=0\\) and \\(f'\\) changes from positive to negative:\n• \\(f'(x)>0\\) for \\(x<x_0\\) (rises), \\(f'(x)<0\\) for \\(x>x_0\\) (falls).",
         "explanation": "The extremum is where the function changes from rising to falling (max) or falling to rising (min)."
       },
       {
+        "id": "9oewp9",
         "question": "State the SECOND-derivative test for classifying a stationary point.",
         "answer": "At a stationary point \\(x_0\\) (where \\(f'(x_0)=0\\)):\n\\[f''(x_0)>0\\ \\Rightarrow\\ x_0\\text{ is a MINIMUM},\\]\n\\[f''(x_0)<0\\ \\Rightarrow\\ x_0\\text{ is a MAXIMUM}.\\]\nIf \\(f''(x_0)=0\\), \\(x_0\\) is (typically) an INFLECTION point.",
         "explanation": "f″ measures curvature: positive = curve opens upward (cup → minimum); negative = opens downward (cap → maximum)."
       },
       {
+        "id": "4mztaj",
         "question": "What is an INFLECTION point, and how is it detected at a stationary point?",
         "answer": "An inflection point is where the function changes its CURVATURE. At a stationary point \\(x_0\\), if the first derivative does NOT change sign (or equivalently \\(f''(x_0)=0\\)), then \\(x_0\\) is an inflection point rather than an extremum.",
         "explanation": "So f′(x₀)=0 alone is not enough to guarantee an extremum — you must test the sign change or f″."
       },
       {
+        "id": "et8ump",
         "question": "List the steps of the FUNCTION-FLOW table (to find increase/decrease and extrema).",
         "answer": "1. Determine the domain of the function.\n2. Find the first derivative \\(f'\\).\n3. Find stationary points by solving \\(f'(x)=0\\).\n4. Split the domain into intervals at the stationary points.\n5. Pick a test point in each interval and find the SIGN of \\(f'\\) there.\n6. Read off intervals of increase/decrease and the extrema.",
         "explanation": "This systematic table is the standard exam procedure for analysing a function's flow."
       },
       {
+        "id": "3bn6tm",
         "question": "In economics, what is the marginal cost function?",
         "answer": "Marginal cost is the DERIVATIVE of the total-cost function:\n\\[M(Q)=T'(Q).\\]\nIt is the (approximate) cost of producing one more unit. Likewise: income \\(P(Q)=pQ\\), profit \\(D(Q)=P(Q)-T(Q)\\), average cost \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\).",
         "explanation": "Marginal = derivative of total. Many K1 optimisation problems compare marginal and average cost."
       },
       {
+        "id": "6fzaz0",
         "question": "How do you find the MAXIMUM PROFIT of a firm?",
         "answer": "Maximise the profit function \\(D(Q)=P(Q)-T(Q)\\):\n1. Solve \\(D'(Q)=0\\) for the stationary quantity \\(Q_0\\).\n2. Confirm it is a maximum (\\(D''(Q_0)<0\\), or first-derivative sign change).\n3. The maximum profit is \\(D(Q_0)\\).",
         "explanation": "If D(Q) is a downward parabola, its maximum lies at the midpoint of the break-even interval (by symmetry)."
       },
       {
+        "id": "46emp1",
         "question": "How do you find the MINIMUM AVERAGE COST?",
         "answer": "Form the average cost \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\), then minimise it:\n1. Solve \\(\\overline{T}'(Q)=0\\) for the stationary \\(Q_0\\).\n2. Confirm a minimum (\\(\\overline{T}''(Q_0)>0\\)).\n3. The minimum average cost is \\(\\overline{T}(Q_0)\\).",
         "explanation": "E.g. T(Q)=5Q³−90Q²+540Q → average 5Q²−90Q+540, minimised at Q=9, value 135."
@@ -798,6 +918,7 @@
     ],
     "quiz": [
       {
+        "id": "qt931u",
         "question": "If \\(f'(x)>0\\) on an interval, the function is:",
         "options": [
           "Decreasing",
@@ -808,6 +929,7 @@
         "correct": 1
       },
       {
+        "id": "azs1g8",
         "question": "A stationary point is a point where:",
         "options": [
           "\\(f(x_0)=0\\)",
@@ -818,6 +940,7 @@
         "correct": 1
       },
       {
+        "id": "zt1u32",
         "question": "By the second-derivative test, if \\(f'(x_0)=0\\) and \\(f''(x_0)>0\\), then \\(x_0\\) is a:",
         "options": [
           "Maximum",
@@ -828,6 +951,7 @@
         "correct": 1
       },
       {
+        "id": "a6ln3c",
         "question": "By the second-derivative test, if \\(f'(x_0)=0\\) and \\(f''(x_0)<0\\), then \\(x_0\\) is a:",
         "options": [
           "Maximum",
@@ -838,6 +962,7 @@
         "correct": 0
       },
       {
+        "id": "vb4k9f",
         "question": "At a stationary point, if the first derivative does NOT change sign, the point is:",
         "options": [
           "A maximum",
@@ -848,6 +973,7 @@
         "correct": 2
       },
       {
+        "id": "kya4ik",
         "question": "Marginal cost is defined as:",
         "options": [
           "\\(\\frac{T(Q)}{Q}\\)",
@@ -858,6 +984,7 @@
         "correct": 1
       },
       {
+        "id": "huysvu",
         "question": "To maximise profit \\(D(Q)\\), you first solve:",
         "options": [
           "\\(D(Q)=0\\)",
@@ -868,6 +995,7 @@
         "correct": 1
       },
       {
+        "id": "o57zyc",
         "question": "The FIRST step of the function-flow table is to determine the function's:",
         "options": [
           "Second derivative",
@@ -880,81 +1008,97 @@
     ],
     "fillBlanks": [
       {
+        "id": "htqmh5",
         "sentence": "If f′(x) > 0 on an interval, the function is _______ there.",
         "answer": "increasing",
         "hint": "Positive slope rises"
       },
       {
+        "id": "s9cmux",
         "sentence": "A point where f′(x₀) = 0 is called a _______ point.",
         "answer": "stationary",
         "hint": "Horizontal tangent"
       },
       {
+        "id": "ccf90t",
         "sentence": "If f′(x₀)=0 and f″(x₀) > 0, then x₀ is a _______.",
         "answer": "minimum",
         "hint": "Curve opens upward"
       },
       {
+        "id": "sru7vc",
         "sentence": "If f′(x₀)=0 and f″(x₀) < 0, then x₀ is a _______.",
         "answer": "maximum",
         "hint": "Curve opens downward"
       },
       {
+        "id": "4h6ak0",
         "sentence": "A point where the function changes its curvature is an _______ point.",
         "answer": "inflection",
         "hint": "f″ = 0, no sign change in f′"
       },
       {
+        "id": "6frd4f",
         "sentence": "Marginal cost is the _______ of the total-cost function, M(Q) = T′(Q).",
         "answer": "derivative",
         "hint": "Cost of one more unit"
       },
       {
+        "id": "jcofwf",
         "sentence": "To maximise profit you solve D′(Q) = _______.",
         "answer": "0",
         "hint": "Stationary point of profit"
       }
     ],
     "learn": {
+      "id": "15epji",
       "content": "<h3>Increase, decrease &amp; extrema</h3><p>This unit is where the derivative pays off: it turns the vague idea of a curve \"rising\", \"falling\" or \"turning around\" into something you can <em>compute</em>. The key link is the geometric meaning from the last unit — \\(f'(x_0)\\) is the slope of the tangent — so the <span class=\"highlight\">sign</span> of the derivative reads off the direction of travel:</p><div class=\"formula-box\">\\[f'(x)>0\\Rightarrow f\\text{ increases},\\qquad f'(x)<0\\Rightarrow f\\text{ decreases}.\\]</div><p>A positive slope means the tangent points uphill, so the function is rising; a negative slope points downhill. The interesting places are where it switches from one to the other.</p><h4>Stationary points and the two tests</h4><p>A <strong>stationary point</strong> is any \\(x_0\\) with \\(f'(x_0)=0\\): the tangent is horizontal there. It is only a <em>candidate</em> — the function may have a minimum, a maximum, or merely flatten out at an inflection point. Two tests decide which:</p><ul><li><strong>First-derivative test</strong> — look at how \\(f'\\) changes sign across \\(x_0\\): a switch \\(-\\to+\\) (falling then rising) is a <em>minimum</em>; \\(+\\to-\\) (rising then falling) is a <em>maximum</em>; <em>no</em> sign change is an inflection point.</li><li><strong>Second-derivative test</strong> — evaluate \\(f''(x_0)\\): the value \\(f''(x_0)>0\\) means the curve opens upward (a cup → <em>minimum</em>), \\(f''(x_0)<0\\) means it opens downward (a cap → <em>maximum</em>), and \\(f''(x_0)=0\\) is inconclusive (typically an inflection).</li></ul><p><strong>Worked example.</strong> For \\(f(x)=x^2-6x+5\\): \\(f'(x)=2x-6=0\\Rightarrow x_0=3\\). Since \\(f''(x)=2>0\\), the point \\(x_0=3\\) is a minimum, with value \\(f(3)=-4\\). A single sign decided the whole question.</p><div class=\"tip-box\"><h4>Function-flow table (the exam procedure)</h4><p>The reliable recipe for \"analyse the function\" is a six-step table: (1) find the <strong>domain</strong> → (2) compute \\(f'\\) → (3) solve \\(f'(x)=0\\) for the <strong>stationary points</strong> → (4) split the domain into intervals at those points → (5) test the <strong>sign</strong> of \\(f'\\) in each interval (pick any convenient test point) → (6) read off where the function increases/decreases and which stationary points are maxima or minima. Doing the steps in order means you never miss a turning point.</p></div><h4>Optimisation in economics</h4><p>The same machinery finds a firm's best operating point — the quantitative pay-off of the whole midterm. <strong>Marginal cost</strong> is the derivative of total cost, \\(M(Q)=T'(Q)\\) — roughly the cost of one more unit. To <strong>maximise profit</strong> \\(D(Q)=P(Q)-T(Q)\\), solve \\(D'(Q)=0\\) for the stationary quantity and confirm \\(D''<0\\); to <strong>minimise average cost</strong> \\(\\overline{T(Q)}=\\frac{T(Q)}{Q}\\), solve \\(\\overline{T}'(Q)=0\\) and confirm \\(\\overline{T}''>0\\). <strong>Worked example.</strong> With \\(T(Q)=5Q^3-90Q^2+540Q\\), the average cost \\(\\overline{T}(Q)=5Q^2-90Q+540\\) has \\(\\overline{T}'(Q)=10Q-90=0\\Rightarrow Q=9\\), giving a minimum average cost of \\(135\\). The derivative has turned a business question into one short calculation.</p>"
     }
   },
   "integralElasticity": {
+    "id": "o6iwfa",
     "name": "Integral & Elasticity of Demand",
     "icon": "fa-chart-area",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "5vavof",
         "question": "What is a primitive (antiderivative) function, and what is the indefinite integral?",
         "answer": "Integration is the INVERSE of differentiation. A PRIMITIVE function \\(F\\) of \\(f\\) on \\((a,b)\\) is one whose derivative gives back \\(f\\): \\(F'(x)=f(x)\\).\n\nThe INDEFINITE INTEGRAL of \\(f\\) is the set of ALL primitive functions:\n\\[\\int f(x)\\,dx = F(x)+C,\\quad C\\in\\mathbb{R}.\\]\nHere \\(f\\) is the integrand, \\(x\\) the integration variable, and \\(C\\) the constant of integration.",
         "explanation": "If we know the derivative, integration recovers the original function — up to the constant C (since (C)′ = 0, the constant is lost when differentiating)."
       },
       {
+        "id": "dhij4s",
         "question": "State the power rule for the indefinite integral.",
         "answer": "For the general power function:\n\\[\\int x^n\\,dx = \\frac{1}{n+1}x^{n+1}+C,\\qquad n\\in\\mathbb{Z},\\ n\\neq -1.\\]\nCheck: differentiating \\(\\frac{1}{n+1}x^{n+1}\\) gives \\(\\frac{1}{n+1}(n+1)x^{n}=x^n\\). ✓",
         "explanation": "Integration RAISES the power by one and divides by the new power — the exact reverse of the derivative power rule. (n = −1 is excluded.)"
       },
       {
+        "id": "768jil",
         "question": "What are the integration rules used in this course?",
         "answer": "\\[\\int dx = x+C,\\]\n\\[\\int (f(x)\\pm g(x))\\,dx = \\int f(x)\\,dx \\pm \\int g(x)\\,dx,\\]\n\\[\\int a\\,f(x)\\,dx = a\\int f(x)\\,dx\\quad(a=\\text{const}).\\]\nIntegration, like differentiation, is LINEAR — integrate term by term and pull out constants.",
         "explanation": "So a polynomial is integrated term by term with the power rule."
       },
       {
+        "id": "3o48gf",
         "question": "How do you find the TOTAL COST function from the marginal cost function?",
         "answer": "Marginal cost is the derivative of total cost \\(M(Q)=T'(Q)\\), so total cost is the indefinite integral of marginal cost:\n\\[T(Q)=\\int M(Q)\\,dQ.\\]\nThe constant of integration C is the FIXED COST: marginal cost carries no information about it, so C must be given. If the fixed cost is known, \\(C=\\text{fixed cost}\\).",
         "explanation": "E.g. M(Q)=3Q+100 → T(Q)=1.5Q²+100Q+C; with fixed cost 200, T(Q)=1.5Q²+100Q+200."
       },
       {
+        "id": "bgubas",
         "question": "Define the coefficient of elasticity of demand.",
         "answer": "For a continuous demand function \\(q=q(p)\\) (demand as a function of price), the coefficient of elasticity at a point \\(p_0\\) is:\n\\[E_{q,p}=\\frac{p}{q}\\cdot\\frac{dq}{dp}.\\]\nIt measures (approximately) the % change in demand \\(q\\) when the price \\(p\\) rises by 1%.",
         "explanation": "Elasticity = the ability of one economic quantity to react to a change in another it depends on."
       },
       {
+        "id": "qn9dks",
         "question": "How do you interpret the VALUE of the elasticity coefficient?",
         "answer": "Comparing the absolute change in demand to that in price:\n• \\(|E_{q,p}|>1\\) → demand is ELASTIC (q changes proportionally MORE than p)\n• \\(|E_{q,p}|<1\\) → demand is INELASTIC (q changes LESS than p)\n• \\(|E_{q,p}|=1\\) → UNIT elasticity\n• \\(E_{q,p}=0\\) → perfectly inelastic\n\nThe SIGN shows direction: \\(E>0\\) → q rises with p; \\(E<0\\) → q falls as p rises (the usual demand case).",
         "explanation": "If E = −4/3 at p₀: a 1% price rise lowers demand by about 4/3% (the minus sign means a decrease)."
       },
       {
+        "id": "3aiot2",
         "question": "For a linear demand \\(q=mp+c\\), what is the elasticity at price \\(p\\)?",
         "answer": "Since \\(\\frac{dq}{dp}=m\\),\n\\[E_{q,p}=\\frac{p}{q}\\cdot m=\\frac{m\\,p}{m\\,p+c}.\\]\nFor a downward-sloping demand \\(m<0\\), so \\(E<0\\) — raising the price lowers demand.",
         "explanation": "E.g. q = −25p + 1200: demand is inelastic for small p and becomes elastic as p grows toward the choke price."
@@ -962,6 +1106,7 @@
     ],
     "quiz": [
       {
+        "id": "h7h71i",
         "question": "\\(\\int x^n\\,dx = \\) ? (for \\(n\\neq -1\\))",
         "options": [
           "\\(n x^{n-1}+C\\)",
@@ -972,6 +1117,7 @@
         "correct": 1
       },
       {
+        "id": "8wa8tk",
         "question": "Integration is the inverse operation of:",
         "options": [
           "Multiplication",
@@ -982,6 +1128,7 @@
         "correct": 1
       },
       {
+        "id": "goyylc",
         "question": "The total cost function is obtained from marginal cost by:",
         "options": [
           "Differentiating M(Q)",
@@ -992,6 +1139,7 @@
         "correct": 1
       },
       {
+        "id": "20q0cd",
         "question": "In \\(T(Q)=\\int M(Q)\\,dQ\\), the constant of integration C represents the:",
         "options": [
           "Marginal cost",
@@ -1002,6 +1150,7 @@
         "correct": 2
       },
       {
+        "id": "2obqg0",
         "question": "The coefficient of elasticity of demand is:",
         "options": [
           "\\(\\frac{q}{p}\\cdot\\frac{dp}{dq}\\)",
@@ -1012,6 +1161,7 @@
         "correct": 1
       },
       {
+        "id": "5tehep",
         "question": "If \\(|E_{q,p}|>1\\), demand is:",
         "options": [
           "Inelastic",
@@ -1022,6 +1172,7 @@
         "correct": 1
       },
       {
+        "id": "wtsb4e",
         "question": "A negative elasticity coefficient means that when price rises, demand:",
         "options": [
           "Rises",
@@ -1032,6 +1183,7 @@
         "correct": 1
       },
       {
+        "id": "1yynwi",
         "question": "Why can't total cost be uniquely determined from marginal cost alone?",
         "options": [
           "Marginal cost is always zero",
@@ -1044,71 +1196,85 @@
     ],
     "fillBlanks": [
       {
+        "id": "8j3t55",
         "sentence": "A function F whose derivative is f (F′ = f) is called a _______ function of f.",
         "answer": "primitive",
         "hint": "Also: antiderivative"
       },
       {
+        "id": "mp77so",
         "sentence": "The constant C added to every indefinite integral is the constant of _______.",
         "answer": "integration",
         "hint": "Lost when differentiating because (C)′ = 0"
       },
       {
+        "id": "mljcs7",
         "sentence": "By the power rule, ∫xⁿ dx raises the power by one and divides by n + _______.",
         "answer": "1",
         "hint": "1/(n+1)·xⁿ⁺¹"
       },
       {
+        "id": "e97utd",
         "sentence": "Total cost is the indefinite _______ of marginal cost: T(Q) = ∫ M(Q) dQ.",
         "answer": "integral",
         "hint": "Inverse of differentiation"
       },
       {
+        "id": "au5ici",
         "sentence": "The constant of integration in T(Q) equals the _______ cost.",
         "answer": "fixed",
         "hint": "T(0)"
       },
       {
+        "id": "jdd1qr",
         "sentence": "If |E| > 1 demand is elastic; if |E| < 1 demand is _______.",
         "answer": "inelastic",
         "hint": "q changes less than p"
       }
     ],
     "learn": {
+      "id": "jgkc12",
       "content": "<h3>The indefinite integral — undoing the derivative</h3><p>Differentiation took a function and produced its <em>rate of change</em>. <strong>Integration runs the film backwards</strong>: given a rate, it recovers the original quantity. This is exactly the question a manager asks — \"I know how fast cost grows with each extra unit (the marginal cost); what is the <em>total</em> cost?\" That reverse step is why integration sits at the heart of economic analysis.</p><p>A function \\(F\\) is a <span class=\"highlight\">primitive</span> (antiderivative) of \\(f\\) when differentiating it gives \\(f\\) back: \\(F'(x)=f(x)\\). But \\(F\\) is never unique — since the derivative of <em>any</em> constant is zero, \\(F(x)+5\\), \\(F(x)-200\\) and \\(F(x)\\) all share the same derivative. So the answer is a whole <strong>family</strong> of vertically-shifted curves, written with a constant of integration \\(C\\):</p><div class=\"formula-box\">\\[\\int f(x)\\,dx = F(x)+C,\\qquad C\\in\\mathbb{R}.\\]</div><p>Here \\(f\\) is the <strong>integrand</strong>, \\(x\\) the integration variable, and \\(C\\) the <strong>constant of integration</strong>. That constant is not red tape — in economics it carries real meaning (the fixed cost), as we will see.</p><h4>The power rule, read backwards</h4><p>Recall \\((x^n)'=n x^{n-1}\\): differentiation <em>lowers</em> the power by one. Integration must therefore do the opposite — <em>raise</em> the power and divide by the new one:</p><div class=\"formula-box\">\\[\\int x^n\\,dx=\\frac{1}{n+1}x^{n+1}+C\\quad(n\\neq -1).\\]</div><p>Always check by differentiating your answer back: \\(\\left(\\tfrac{1}{n+1}x^{n+1}\\right)'=\\tfrac{1}{n+1}(n+1)x^{n}=x^n\\) ✓. Integration is <strong>linear</strong> — \\(\\int(f\\pm g)=\\int f\\pm\\int g\\) and \\(\\int a\\,f=a\\int f\\) — so a polynomial is integrated <strong>term by term</strong>.</p><p><strong>Worked example.</strong> To integrate \\(x^5+10x^4+3x^2+x+10\\), lift each term one power and divide by the new power (the \\(10\\) becomes \\(10x\\), since \\(\\int dx=x\\)):</p><div class=\"formula-box\">\\[\\int (x^5+10x^4+3x^2+x+10)\\,dx=\\tfrac16 x^6+2x^5+x^3+\\tfrac12 x^2+10x+C.\\]</div><div class=\"tip-box\"><h4>Application: from marginal cost back to total cost</h4><p>Because marginal cost is the derivative of total cost, \\(M(Q)=T'(Q)\\), we recover total cost by integrating: \\(T(Q)=\\int M(Q)\\,dQ\\). <strong>Example.</strong> If \\(M(Q)=3Q+100\\), then \\(T(Q)=\\tfrac32 Q^2+100Q+C\\). We cannot pin \\(C\\) down from the margin alone — the marginal cost says nothing about what you pay at zero output. That leftover constant <strong>is the fixed cost</strong>: if it is 200, then \\(T(Q)=\\tfrac32 Q^2+100Q+200\\), and indeed \\(T(0)=200\\). This is the single most important economic use of the integral in the course.</p></div><h3>Elasticity of demand</h3><p>A second economic question: <em>how sensitive</em> is demand to price? The raw slope \\(\\frac{dq}{dp}\\) answers it in units (e.g. rooms sold per euro of price), which makes comparison across products impossible — is \"−25 rooms per euro\" a lot? <span class=\"highlight\">Elasticity</span> fixes this by converting the slope into a unit-free percentage: the approximate % change in demand caused by a 1% rise in price.</p><div class=\"formula-box\">\\[E_{q,p}=\\frac{p}{q}\\cdot\\frac{dq}{dp}.\\]</div><p>You can read it as a <em>normalised derivative</em>: take the slope, then re-scale it by the current price-to-quantity ratio so the answer is a pure number.</p><p><strong>Worked example.</strong> For the linear demand \\(q=-25p+1200\\), the slope is constant, \\(\\frac{dq}{dp}=-25\\). At the price \\(p=24\\), demand is \\(q=-25(24)+1200=600\\), so</p><div class=\"formula-box\">\\[E_{q,p}=\\frac{24}{600}\\cdot(-25)=-1\\quad(\\text{unit elasticity at }p=24).\\]</div><p>For smaller prices demand is inelastic; for larger prices it becomes elastic. Reading the number (compare the absolute change in \\(q\\) with that in \\(p\\)):</p><ul><li>\\(|E|>1\\) → <strong>elastic</strong>: demand reacts <em>more</em> than proportionally (luxuries, products with easy substitutes);</li><li>\\(|E|<1\\) → <strong>inelastic</strong>: demand reacts <em>less</em> than proportionally (necessities, few substitutes);</li><li>\\(|E|=1\\) → <strong>unit</strong> elasticity; \\(E=0\\) → <strong>perfectly inelastic</strong> (demand does not react at all).</li></ul><div class=\"tip-box\"><h4>Watch the sign</h4><p>For an ordinary downward-sloping demand the slope is negative, so \\(E<0\\): raising the price <em>lowers</em> demand. The minus sign is the <em>direction</em> of the reaction; the size \\(|E|\\) is its <em>strength</em>. So \\(E=-\\tfrac43\\) reads \"raise the price by 1% and demand falls by about 1.33%\". Two common exam slips: dropping the minus sign, and comparing \\(E\\) itself (rather than \\(|E|\\)) with 1 when classifying elastic vs. inelastic.</p></div>"
     }
   },
   "annuities": {
+    "id": "ipmi4t",
     "name": "Annuities (Rents)",
     "icon": "fa-piggy-bank",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "p341by",
         "question": "What is an annuity (rent), and what are the interest and discount factors?",
         "answer": "An ANNUITY (rent) is a series of periodic payments of nominally equal amount \\(R\\), made at equal time intervals with the same interest rate \\(i\\) applied to each, over \\(n\\) periods.\n\n• INTEREST FACTOR: \\(r=1+i\\)\n• DISCOUNT FACTOR: \\(\\frac1r\\)\n• Basic compounding: \\(C_n=C_0\\cdot r^{n}\\)",
         "explanation": "Compound, decursive capitalization is assumed (interest at the end of each period)."
       },
       {
+        "id": "yk9nfp",
         "question": "Prenumerando vs. postnumerando — what is the difference?",
         "answer": "• PRENUMERANDO: payments are made at the BEGINNING of each period.\n• POSTNUMERANDO: payments are made at the END of each period.\n\nA prenumerando payment earns interest for one extra period, so prenumerando values are the postnumerando values multiplied by \\(r\\).",
         "explanation": "\"Invested at the beginning of the year\" = prenumerando; \"at the end of the year\" = postnumerando."
       },
       {
+        "id": "d4u3be",
         "question": "Give the FUTURE (final) value formulas for an annuity.",
         "answer": "POSTNUMERANDO (end of period):\n\\[S_n'=R\\cdot\\frac{r^{n}-1}{r-1}.\\]\nPRENUMERANDO (beginning of period — one extra period of interest):\n\\[S_n=R\\cdot r\\cdot\\frac{r^{n}-1}{r-1}.\\]",
         "explanation": "Sₙ (prenumerando) = r · S′ₙ (postnumerando). Future value = accumulated worth of all payments at the end."
       },
       {
+        "id": "affbwn",
         "question": "Give the PRESENT value formulas for an annuity.",
         "answer": "POSTNUMERANDO (end of period):\n\\[A_n=\\frac{R}{r^{n}}\\cdot\\frac{r^{n}-1}{r-1}.\\]\nPRENUMERANDO (beginning of period):\n\\[A_n'=\\frac{R}{r^{n-1}}\\cdot\\frac{r^{n}-1}{r-1}.\\]",
         "explanation": "Present value = today's worth of future payments, obtained by discounting (dividing by powers of r)."
       },
       {
+        "id": "5pnk1b",
         "question": "How do you find the periodic payment R from a known future or present value?",
         "answer": "Just invert the relevant formula. E.g. for prenumerando FUTURE value:\n\\[R=S_n\\cdot\\frac{r-1}{r\\,(r^{n}-1)}.\\]\nFor postnumerando PRESENT value:\n\\[R=A_n\\cdot\\frac{r^{n}(r-1)}{r^{n}-1}.\\]",
         "explanation": "Example: S₁₂ = 540 000 €, r = 1.09, prenumerando → R ≈ 24 597.57 €."
       },
       {
+        "id": "2tw47m",
         "question": "What does compound, decursive, annual capitalization mean?",
         "answer": "• COMPOUND: interest is added to the principal and itself earns interest (\\(C_n=C_0 r^n\\)).\n• DECURSIVE: interest is calculated and added at the END of each period.\n• ANNUAL: the compounding period is one year.\n\nThe interest rate \\(p\\%\\) gives \\(i=\\frac{p}{100}\\) and \\(r=1+i\\).",
         "explanation": "These are the standing assumptions for the rent and loan formulas in this course."
@@ -1116,6 +1282,7 @@
     ],
     "quiz": [
       {
+        "id": "d8zfq9",
         "question": "The interest factor r is defined as:",
         "options": [
           "\\(r=i\\)",
@@ -1126,6 +1293,7 @@
         "correct": 1
       },
       {
+        "id": "zuh2ij",
         "question": "In a PRENUMERANDO annuity, payments are made:",
         "options": [
           "At the end of each period",
@@ -1136,6 +1304,7 @@
         "correct": 1
       },
       {
+        "id": "2qhuw7",
         "question": "The future value of a POSTNUMERANDO annuity is:",
         "options": [
           "\\(R\\cdot r\\cdot\\frac{r^n-1}{r-1}\\)",
@@ -1146,6 +1315,7 @@
         "correct": 1
       },
       {
+        "id": "dn917q",
         "question": "The present value of a POSTNUMERANDO annuity is:",
         "options": [
           "\\(R\\cdot\\frac{r^n-1}{r-1}\\)",
@@ -1156,6 +1326,7 @@
         "correct": 1
       },
       {
+        "id": "gehd4l",
         "question": "A prenumerando future value equals the postnumerando one multiplied by:",
         "options": [
           "\\(r^n\\)",
@@ -1166,6 +1337,7 @@
         "correct": 1
       },
       {
+        "id": "nzk8et",
         "question": "An annual interest rate of p = 9% gives an interest factor r =",
         "options": [
           "0.09",
@@ -1176,6 +1348,7 @@
         "correct": 1
       },
       {
+        "id": "qlk9sq",
         "question": "Discounting a future amount to its present value means:",
         "options": [
           "Multiplying by rⁿ",
@@ -1188,71 +1361,85 @@
     ],
     "fillBlanks": [
       {
+        "id": "vpdlm0",
         "sentence": "A series of nominally equal periodic payments is called an _______ (rent).",
         "answer": "annuity",
         "hint": "Marked R"
       },
       {
+        "id": "g0fptn",
         "sentence": "The interest factor is r = 1 + _______.",
         "answer": "i",
         "hint": "i = p/100"
       },
       {
+        "id": "umebye",
         "sentence": "Payments at the beginning of each period define a _______ annuity.",
         "answer": "prenumerando",
         "hint": "Opposite of postnumerando"
       },
       {
+        "id": "2iih27",
         "sentence": "The future value of a postnumerando annuity is S′ₙ = R·(rⁿ − 1)/(r − _______).",
         "answer": "1",
         "hint": "Geometric series sum"
       },
       {
+        "id": "qa969r",
         "sentence": "Computing today's worth of future payments is called _______.",
         "answer": "discounting",
         "hint": "Divide by powers of r"
       },
       {
+        "id": "ncfqon",
         "sentence": "Interest added at the END of each period is called _______ capitalization.",
         "answer": "decursive",
         "hint": "Standing assumption"
       }
     ],
     "learn": {
+      "id": "1g8sx9",
       "content": "<h3>Annuities (rents) — money has a time value</h3><p>The big idea of financial mathematics is that <strong>the same amount of money is worth different amounts at different times</strong>. 1000 € today is worth more than 1000 € in five years, because today's euro can be invested and earn interest. An <span class=\"highlight\">annuity</span> (rent) is a series of nominally equal payments \\(R\\) made at equal intervals over \\(n\\) periods, each earning the same interest rate \\(i\\). We need a way to add up payments that fall at different times — and you cannot simply add them, because each lives at a different point on the time line.</p><p>The tool that moves money through time is the <strong>interest factor</strong>:</p><div class=\"formula-box\">\\[r=1+i,\\qquad C_n=C_0\\,r^{n}\\quad(\\text{compound growth over }n\\text{ periods}).\\]</div><p>So an interest rate of \\(p=8\\%\\) means \\(i=0.08\\) and \\(r=1.08\\). Multiplying by \\(r\\) pushes a sum <em>forward</em> one period; dividing by \\(r\\) (the <strong>discount factor</strong> \\(\\tfrac1r\\)) pulls it <em>back</em> one period. Throughout we assume capitalization is <strong>compound</strong> (interest earns interest), <strong>decursive</strong> (interest credited at the period end) and <strong>annual</strong>.</p><h4>Prenumerando vs. postnumerando — when do you pay?</h4><p>Everything hinges on the <em>timing</em> of each payment within its period:</p><ul><li><strong>Prenumerando</strong> — paid at the <em>beginning</em> of each period (\"invested at the start of the year\");</li><li><strong>Postnumerando</strong> — paid at the <em>end</em> of each period (\"at the end of the year\").</li></ul><p>A beginning-of-period payment sits in the account one extra period and earns interest one more time, so <strong>every prenumerando value is the matching postnumerando value multiplied by \\(r\\)</strong>. Spotting which one a word problem describes is half the battle.</p><h4>Future (final) value — what you will HAVE</h4><p>The future value accumulates every payment forward to the end. Summing the geometric series of compounded payments gives:</p><div class=\"formula-box\">\\[S_n'=R\\cdot\\frac{r^{n}-1}{r-1}\\ \\ (\\text{post}),\\qquad S_n=R\\cdot r\\cdot\\frac{r^{n}-1}{r-1}\\ \\ (\\text{pre}).\\]</div><p><strong>Worked example.</strong> Invest 1000 € at the <em>start</em> of each year for 10 years at 8% (prenumerando). Then \\(r=1.08\\), \\(r^{10}\\approx2.1589\\), and</p><div class=\"formula-box\">\\[S_{10}=1000\\cdot1.08\\cdot\\frac{2.1589-1}{0.08}\\approx 15\\,645.49\\ \\text{€}.\\]</div><h4>Present value — what to invest TODAY</h4><p>The present value discounts every future payment back to now, so you can fund a stream of withdrawals with one deposit today:</p><div class=\"formula-box\">\\[A_n=\\frac{R}{r^{n}}\\cdot\\frac{r^{n}-1}{r-1}\\ \\ (\\text{post}),\\qquad A_n'=\\frac{R}{r^{n-1}}\\cdot\\frac{r^{n}-1}{r-1}\\ \\ (\\text{pre}).\\]</div><p><strong>Worked example.</strong> To secure five end-of-year payments of 30 000 € at 5%, deposit today \\(A_5=\\frac{30000}{1.05^{5}}\\cdot\\frac{1.05^{5}-1}{0.05}\\approx 129\\,884.30\\ \\text{€}\\) — clearly less than \\(5\\times30000\\), because the later payments are discounted.</p><div class=\"tip-box\"><h4>How to read the problem (the exam decision tree)</h4><ul><li>\"How much will I <strong>HAVE</strong> at the end?\" → <strong>future</strong> value \\(S\\).</li><li>\"How much must I invest <strong>TODAY</strong>?\" → <strong>present</strong> value \\(A\\).</li><li>\"At the <strong>beginning</strong> of each period\" → prenumerando (×\\(r\\)); \"at the <strong>end</strong>\" → postnumerando.</li><li>Asked for the payment \\(R\\) instead? <strong>Invert</strong> the matching formula — e.g. \\(R=S_n\\cdot\\frac{r-1}{r(r^{n}-1)}\\).</li></ul></div>"
     }
   },
   "loans": {
+    "id": "n4a19h",
     "name": "Cash Loans",
     "icon": "fa-money-bill-wave",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "oox546",
         "question": "What is a loan annuity, and of what two parts does it consist?",
         "answer": "A loan is repaid through ANNUITIES \\(A_k\\). Each annuity consists of two parts:\n\\[A_k = R_k + I_k,\\]\n• \\(R_k\\) — the REPAYMENT QUOTA (the part that reduces the principal)\n• \\(I_k\\) — the INTEREST on the remaining debt: \\(I_k=\\frac{C_{k-1}\\cdot p}{100}\\).\n\nA repayment plan (table) lists annuity, interest, quota and remaining debt for each period.",
         "explanation": "The loan can be repaid with equal annuities OR equal repayment quotas."
       },
       {
+        "id": "siqif9",
         "question": "What are the three standard CONTROLS of a repayment plan?",
         "answer": "a) The last period's repayment quota equals the previous remaining debt: \\(R_k=C_{k-1}\\).\nb) The sum of all repayment quotas equals the loan: \\(\\sum R_k=C_0\\).\nc) The sum of all quotas + the sum of all interest = the sum of all annuities: \\(\\sum R_k+\\sum I_k=\\sum A_k\\).",
         "explanation": "These checks confirm the repayment table was computed correctly."
       },
       {
+        "id": "c9gd58",
         "question": "Give the formula for the (nominally equal) loan annuity.",
         "answer": "For the equal-annuities model (postnumerando), use the present value of a postnumerando annuity with \\(A_n\\to C\\), \\(R\\to a\\):\n\\[a=C\\cdot\\frac{r^{n}(r-1)}{r^{n}-1},\\qquad r=1+\\frac{p}{100}.\\]\nThe loan is the discounted value of the future equal repayments.",
         "explanation": "Example: C = 130 000 €, n = 6, p = 10% → a ≈ 29 848.96 €."
       },
       {
+        "id": "clgc5e",
         "question": "How does the equal-annuities model behave over time (interest vs. quota)?",
         "answer": "The annuity \\(a\\) is constant, but its split changes:\n• Interest \\(I_k=\\frac{C_{k-1}p}{100}\\) DECREASES (the remaining debt shrinks).\n• Repayment quota \\(R_k=a-I_k\\) INCREASES, and grows geometrically: \\(R_k=R_1\\cdot r^{k-1}\\).\n• Remaining debt \\(C_k=C_{k-1}-R_k\\) decreases to 0.",
         "explanation": "Early annuities are mostly interest; later annuities are mostly principal."
       },
       {
+        "id": "x4crvi",
         "question": "Describe the equal-REPAYMENT-QUOTAS model.",
         "answer": "Here the repayment quota is constant:\n\\[R=\\frac{C}{n}.\\]\nInterest and annuity decrease each period:\n\\[I_i=\\frac{C_{i-1}\\,p}{100},\\quad a_i=R+I_i,\\quad C_i=C\\left(1-\\frac{i}{n}\\right).\\]\nThe annuity \\(a_i\\) falls over time because the interest on a shrinking debt falls.",
         "explanation": "Unlike the equal-annuities model, here the annuity itself is variable (decreasing)."
       },
       {
+        "id": "uadznq",
         "question": "What is total interest paid on a loan?",
         "answer": "The total interest is the price of having the money today — the sum of all annuities minus the loan amount:\n\\[\\sum I_k=\\sum A_k - C_0.\\]",
         "explanation": "It is what the borrower pays the lender over and above repaying the principal."
@@ -1260,6 +1447,7 @@
     ],
     "quiz": [
       {
+        "id": "kstwmj",
         "question": "A loan annuity \\(A_k\\) consists of:",
         "options": [
           "Only interest",
@@ -1270,6 +1458,7 @@
         "correct": 2
       },
       {
+        "id": "j4h9dw",
         "question": "The interest in period k is computed as:",
         "options": [
           "\\(I_k=\\frac{C_{k-1}\\cdot p}{100}\\)",
@@ -1280,6 +1469,7 @@
         "correct": 0
       },
       {
+        "id": "pr5prl",
         "question": "The sum of all repayment quotas equals:",
         "options": [
           "The total interest",
@@ -1290,6 +1480,7 @@
         "correct": 1
       },
       {
+        "id": "ag10gs",
         "question": "The nominally-equal loan annuity is:",
         "options": [
           "\\(a=\\frac{C}{n}\\)",
@@ -1300,6 +1491,7 @@
         "correct": 1
       },
       {
+        "id": "7z9a0d",
         "question": "In the equal-ANNUITIES model, over time the interest part of each annuity:",
         "options": [
           "Increases",
@@ -1310,6 +1502,7 @@
         "correct": 1
       },
       {
+        "id": "qd1bgq",
         "question": "In the equal-repayment-QUOTAS model, the repayment quota is:",
         "options": [
           "\\(R=\\frac{C}{n}\\)",
@@ -1320,6 +1513,7 @@
         "correct": 0
       },
       {
+        "id": "xavrao",
         "question": "Total interest paid equals:",
         "options": [
           "\\(\\sum A_k + C_0\\)",
@@ -1332,81 +1526,97 @@
     ],
     "fillBlanks": [
       {
+        "id": "na15bc",
         "sentence": "Each loan annuity Aₖ = repayment quota Rₖ + _______.",
         "answer": "interest",
         "hint": "Iₖ on the remaining debt"
       },
       {
+        "id": "uhkhcw",
         "sentence": "Interest in period k is Iₖ = Cₖ₋₁·p / _______.",
         "answer": "100",
         "hint": "p is the percentage rate"
       },
       {
+        "id": "84yk36",
         "sentence": "The sum of all repayment quotas equals the loan amount _______.",
         "answer": "C0",
         "hint": "ΣRₖ = C₀ (control b)"
       },
       {
+        "id": "5ykwfb",
         "sentence": "In the equal-annuities model the annuity a is _______ (does not change).",
         "answer": "constant",
         "hint": "Only its split shifts"
       },
       {
+        "id": "tuklbs",
         "sentence": "In the equal-repayment-quotas model R = C / _______.",
         "answer": "n",
         "hint": "n = number of periods"
       },
       {
+        "id": "hjiqlq",
         "sentence": "Total interest = sum of all annuities − loan amount, i.e. ΣIₖ = ΣAₖ − _______.",
         "answer": "C0",
         "hint": "The principal"
       }
     ],
     "learn": {
+      "id": "xsz2le",
       "content": "<h3>Cash loans — an annuity seen from the other side</h3><p>A loan reuses everything from the annuity unit, just viewed from the lender's desk. The bank hands you \\(C=C_0\\) <em>today</em>; in return you make a stream of future payments. So the loan is simply the <strong>present value of your future repayments</strong> — which is why the same compounding factor \\(r=1+\\frac{p}{100}\\) reappears here.</p><p>Each payment is called an <strong>annuity</strong> \\(A_k\\), and it does two jobs at once. Part of it pays the <span class=\"highlight\">interest</span> the bank charges on what you still owe; the rest, the <span class=\"highlight\">repayment quota</span> \\(R_k\\), actually shrinks the debt:</p><div class=\"formula-box\">\\[A_k=R_k+I_k,\\qquad I_k=\\frac{C_{k-1}\\cdot p}{100}.\\]</div><p>Notice the interest is charged on \\(C_{k-1}\\), the debt <em>left over from the previous period</em> — not on the original loan. The whole repayment is laid out in a <strong>repayment plan (table)</strong> with four columns: annuity, interest, quota and remaining debt. Two <strong>controls</strong> confirm the table is correct: the quotas must rebuild the loan, \\(\\sum R_k=C_0\\), and quotas plus interest must equal all annuities, \\(\\sum R_k+\\sum I_k=\\sum A_k\\).</p><h4>Model 1 — nominally equal annuities (the usual home loan)</h4><p>You pay the <em>same amount</em> every period. Since the loan is the present value of these equal postnumerando payments, inverting that annuity formula gives:</p><div class=\"formula-box\">\\[a=C\\cdot\\frac{r^{n}(r-1)}{r^{n}-1},\\qquad r=1+\\frac{p}{100}.\\]</div><p><strong>Worked example.</strong> A loan of 130 000 € over 6 years at 10% gives \\(r=1.1\\), \\(r^{6}\\approx1.7716\\), so \\(a=130000\\cdot\\frac{1.7716\\cdot0.1}{0.7716}\\approx 29\\,848.96\\ \\text{€}\\) per year. Although \\(a\\) is constant, its <em>split shifts</em>: early on the debt is large so most of the payment is interest; as the debt shrinks the interest \\(I_k\\) <strong>falls</strong> and the quota \\(R_k=a-I_k\\) <strong>grows</strong> (in fact \\(R_k=R_1 r^{k-1}\\)). That is why paying a mortgage off early saves so much — the late payments are almost all principal.</p><h4>Model 2 — nominally equal repayment quotas</h4><p>Here you instead repay the <em>same slice of principal</em> each period, so the quota is fixed and easy:</p><div class=\"formula-box\">\\[R=\\frac{C}{n},\\quad I_i=\\frac{C_{i-1}\\,p}{100},\\quad a_i=R+I_i,\\quad C_i=C\\left(1-\\frac{i}{n}\\right).\\]</div><p>Now it is the <strong>annuity that decreases</strong> over time: the quota stays put, but the interest on a steadily shrinking debt falls, so each payment is a little smaller than the last. You pay more at the start than under Model 1, but less interest overall.</p><div class=\"tip-box\"><h4>What does the loan actually cost?</h4><p>The total interest is the price you pay for having the money today — the sum of everything you hand back minus what you borrowed: \\(\\sum I_k=\\sum A_k-C_0\\). It is the single number that tells you how expensive a loan really is, independent of the repayment model.</p></div>"
     }
   },
   "gaussJordan": {
+    "id": "5zn4q5",
     "name": "Gauss & Gauss-Jordan Method",
     "icon": "fa-table-cells",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "3ptmvt",
         "question": "What is the goal of the Gauss-Jordan method?",
         "answer": "To solve a linear system by writing it as an AUGMENTED matrix \\([A\\mid b]\\) and using elementary row operations to reduce the left side to the IDENTITY (unit) matrix:\n\\[\\left[\\begin{array}{ccc|c}a_{11}&a_{12}&a_{13}&b_1\\\\a_{21}&a_{22}&a_{23}&b_2\\\\a_{31}&a_{32}&a_{33}&b_3\\end{array}\\right]\\sim\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right].\\]\nThe last column then gives the solution.",
         "explanation": "Gauss-Jordan reduces fully to reduced row echelon form (identity on the left when a unique solution exists)."
       },
       {
+        "id": "zonfe4",
         "question": "What is the difference between the GAUSS method and the GAUSS-JORDAN method?",
         "answer": "Both use the same elementary row operations on the augmented matrix \\([A\\mid b]\\); they differ in HOW FAR they reduce:\n• GAUSS (elimination): reduce only to an UPPER-TRIANGULAR form (row echelon — zeros below the diagonal), then finish with BACK-SUBSTITUTION (solve the last variable, substitute upward).\n\\[\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]\\]\n• GAUSS-JORDAN: keep going until the left block is the FULL IDENTITY (zeros above AND below the diagonal) — no back-substitution needed; the solution is read straight off the last column.",
         "explanation": "Gauss = upper triangle + back-substitution; Gauss-Jordan = full identity (reduced row echelon), answer read directly. Same operations, Gauss-Jordan just does more of them."
       },
       {
+        "id": "a43kqr",
         "question": "Which part of the augmented matrix may elementary operations act on — rows or columns?",
         "answer": "ROWS ONLY. Each row is one equation, so swapping, scaling or combining ROWS keeps the system equivalent. You must NEVER apply these operations to COLUMNS — a column mixes the coefficients of different unknowns across all equations, which changes the system and destroys the solution.",
         "explanation": "Row operations = legal moves on equations. Column operations are not allowed when solving a system this way."
       },
       {
+        "id": "h153o1",
         "question": "What are the three ELEMENTARY ROW OPERATIONS?",
         "answer": "1. SWAP two rows.\n2. MULTIPLY a row by a non-zero number.\n3. Add a MULTIPLE of one row to another row.\n\nThese operations do not change the solution set of the system.",
         "explanation": "They mirror the legal manipulations of equations: reorder, scale, and add equations."
       },
       {
+        "id": "kud1t7",
         "question": "What is a pivot (leading) element?",
         "answer": "A PIVOT is the leading 1 in a row that we use to eliminate the entries above and below it in its column. We often swap rows or scale a row to place a 1 in the pivot position (e.g. position (1,1)) before clearing the rest of the column.",
         "explanation": "Working pivot by pivot down the diagonal turns the left block into the identity matrix."
       },
       {
+        "id": "922jzd",
         "question": "How can you tell a system has a UNIQUE solution from the reduced matrix?",
         "answer": "The left block reduces to the full IDENTITY matrix:\n\\[\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right].\\]\nThen \\(x_1=a,\\ x_2=b,\\ x_3=c\\) — exactly one solution.",
         "explanation": "Every unknown has a pivot; no free variables and no contradiction."
       },
       {
+        "id": "yjn34g",
         "question": "How do you recognise INFINITELY MANY solutions?",
         "answer": "A row of all zeros appears (including the augmented entry): \\([\\,0\\ 0\\ 0\\mid 0\\,]\\). Then at least one variable is FREE — set it to a parameter \\(t\\in\\mathbb{R}\\) and express the others in terms of \\(t\\).",
         "explanation": "E.g. x₃ = t gives x₁ = 2t − 3, x₂ = 2t − 5 — an infinite family of solutions."
       },
       {
+        "id": "re64yb",
         "question": "How do you recognise that a system has NO solution?",
         "answer": "A row of the form \\([\\,0\\ 0\\ 0\\mid k\\,]\\) with \\(k\\neq 0\\) appears. This says \\(0=k\\) (a contradiction), so the system is inconsistent and has NO solution.",
         "explanation": "0·x₁ + 0·x₂ + 0·x₃ = −2 can never hold → no solution."
@@ -1414,6 +1624,7 @@
     ],
     "quiz": [
       {
+        "id": "h1rknd",
         "question": "The Gauss-Jordan method aims to reduce the left block of the augmented matrix to:",
         "options": [
           "A diagonal of zeros",
@@ -1424,6 +1635,7 @@
         "correct": 1
       },
       {
+        "id": "qd2sl9",
         "question": "Which is NOT an elementary row operation?",
         "options": [
           "Swapping two rows",
@@ -1434,6 +1646,7 @@
         "correct": 3
       },
       {
+        "id": "vlrmg0",
         "question": "The GAUSS method reduces the matrix to an upper-triangular form and then finishes with:",
         "options": [
           "Back-substitution",
@@ -1444,6 +1657,7 @@
         "correct": 0
       },
       {
+        "id": "l8ykil",
         "question": "What distinguishes Gauss-Jordan from the plain Gauss method?",
         "options": [
           "It uses different row operations",
@@ -1454,6 +1668,7 @@
         "correct": 1
       },
       {
+        "id": "6oxb4j",
         "question": "Elementary operations when solving a linear system may be applied to:",
         "options": [
           "Columns only",
@@ -1464,6 +1679,7 @@
         "correct": 1
       },
       {
+        "id": "4fvlk4",
         "question": "A pivot element is used to:",
         "options": [
           "Delete a column",
@@ -1474,6 +1690,7 @@
         "correct": 1
       },
       {
+        "id": "3fn12x",
         "question": "If the left block reduces to the identity matrix, the system has:",
         "options": [
           "No solution",
@@ -1484,6 +1701,7 @@
         "correct": 1
       },
       {
+        "id": "aexb4w",
         "question": "A row \\([\\,0\\ 0\\ 0\\mid 0\\,]\\) in the reduced matrix indicates:",
         "options": [
           "A unique solution",
@@ -1494,6 +1712,7 @@
         "correct": 1
       },
       {
+        "id": "qzw431",
         "question": "A row \\([\\,0\\ 0\\ 0\\mid k\\,]\\) with \\(k\\neq 0\\) indicates:",
         "options": [
           "A unique solution",
@@ -1506,86 +1725,103 @@
     ],
     "fillBlanks": [
       {
+        "id": "a0xdzc",
         "sentence": "A linear system is written for Gauss-Jordan as an _______ matrix [A | b].",
         "answer": "augmented",
         "hint": "Coefficients plus the right-hand side"
       },
       {
+        "id": "vgkjiq",
         "sentence": "The goal is to reduce the left block to the _______ matrix.",
         "answer": "identity",
         "hint": "1s on the diagonal, 0s elsewhere"
       },
       {
+        "id": "p679s1",
         "sentence": "The leading 1 used to clear a column is called the _______.",
         "answer": "pivot",
         "hint": "Pivot element"
       },
       {
+        "id": "fs2v1j",
         "sentence": "The Gauss method stops at an upper-triangular matrix and then uses back-_______.",
         "answer": "substitution",
         "hint": "Solve last variable, work upward"
       },
       {
+        "id": "cf44mw",
         "sentence": "Gauss-Jordan reduces all the way to the _______ matrix, so no back-substitution is needed.",
         "answer": "identity",
         "hint": "Full reduced row echelon form"
       },
       {
+        "id": "29j8vd",
         "sentence": "Elementary operations may be applied to _______, never to columns.",
         "answer": "rows",
         "hint": "Each row is one equation"
       },
       {
+        "id": "u2tjt5",
         "sentence": "Multiplying a row by a _______ number is an elementary row operation.",
         "answer": "non-zero",
         "hint": "Zero would destroy information"
       },
       {
+        "id": "27jk1l",
         "sentence": "A zero row [0 0 0 | 0] signals _______ many solutions (a free variable).",
         "answer": "infinitely",
         "hint": "Set the free variable = t"
       },
       {
+        "id": "to702l",
         "sentence": "A row [0 0 0 | k] with k ≠ 0 means the system has _______ solution.",
         "answer": "no",
         "hint": "Contradiction 0 = k"
       }
     ],
     "learn": {
+      "id": "v7u42x",
       "content": "<h3>The Gauss-Jordan method — solving systems by bookkeeping</h3><p>When several quantities must satisfy several linear conditions at once, we have a <strong>system of linear equations</strong>. Solving it by hand by substitution gets messy fast with three or more unknowns. The Gauss-Jordan method turns it into pure, mechanical <em>bookkeeping</em>: strip away the \\(x\\)'s and \\(y\\)'s, keep only the numbers in a grid, and tidy that grid by fixed rules until the answer is sitting in the last column.</p><p>First write the system as an <span class=\"highlight\">augmented matrix</span> \\([A\\mid b]\\) — the coefficients on the left, the right-hand sides after the bar. The goal is to reshape the left block into the <strong>identity matrix</strong> (ones down the diagonal, zeros elsewhere). When you reach it, each row literally reads \\(x_i = \\text{number}\\):</p><div class=\"formula-box\">\\[\\left[\\begin{array}{ccc|c}a_{11}&a_{12}&a_{13}&b_1\\\\a_{21}&a_{22}&a_{23}&b_2\\\\a_{31}&a_{32}&a_{33}&b_3\\end{array}\\right]\\ \\sim\\ \\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right]\\;\\Rightarrow\\;x_1=a,\\ x_2=b,\\ x_3=c.\\]</div><h4>The only three moves you are allowed</h4><p>You may transform the matrix using exactly three <strong>elementary row operations</strong> — and crucially, none of them changes the system's solution (they are just the legal moves on equations: reorder them, scale one, or add one to another):</p><ul><li><strong>Swap</strong> two rows;</li><li><strong>Multiply</strong> a row by a non-zero number (multiplying by 0 would erase an equation — forbidden);</li><li>Add a <strong>multiple of one row to another</strong> row.</li></ul><p>The strategy is to work <strong>pivot by pivot</strong>: in each diagonal position get a leading 1 (the <strong>pivot</strong>, by swapping or scaling), then use that pivot to clear every other entry in its column to 0. Do this column by column and the left block becomes the identity.</p><p><strong>One absolute rule:</strong> these operations act on <span class=\"highlight\">rows, never on columns</span>. Each row <em>is</em> one equation, so reordering, scaling or combining rows leaves the system equivalent. A column, by contrast, holds the coefficient of a single unknown across <em>all</em> the equations — touching a column would scramble different equations together and change the problem. Operate on rows only.</p><h4>Gauss vs. Gauss-Jordan — how far do you reduce?</h4><p>Two related methods use exactly these row operations; they differ only in <em>where they stop</em>:</p><ul><li><strong>Gauss (elimination)</strong> reduces only to an <strong>upper-triangular</strong> shape — leading 1s on the diagonal and zeros <em>below</em> it (row echelon form). You then finish by <strong>back-substitution</strong>: the bottom row gives the last unknown directly, and you substitute it upward to recover the rest.</li><li><strong>Gauss-Jordan</strong> keeps going past the triangle, clearing the entries <em>above</em> the diagonal too, until the left block is the <strong>full identity</strong> (reduced row echelon form). No back-substitution is needed — every unknown is read straight off the last column.</li></ul><div class=\"formula-box\">\\[\\underbrace{\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]}_{\\text{Gauss: triangle + back-substitution}}\\qquad\\underbrace{\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right]}_{\\text{Gauss-Jordan: identity, read directly}}\\]</div><p>Same legal moves, same answer — Gauss-Jordan simply does the extra work up front so the reading is trivial at the end.</p><div class=\"tip-box\"><h4>Reading the result — three possible outcomes</h4><p>A linear system does not always have one neat answer. The reduced matrix tells you which of three cases you are in:</p><ul><li><strong>Unique solution</strong> — the left block becomes the full identity, so \\(x_1=a,\\ x_2=b,\\ x_3=c\\). Every unknown is pinned down.</li><li><strong>Infinitely many solutions</strong> — a whole row goes to zero, \\([0\\,0\\,0\\mid 0]\\) (it says \\(0=0\\), always true). One unknown is then <em>free</em>: set it to a parameter \\(t\\in\\mathbb{R}\\) and write the rest in terms of \\(t\\), e.g. \\(x_1=2t-3,\\ x_2=2t-5,\\ x_3=t\\).</li><li><strong>No solution</strong> — a row \\([0\\,0\\,0\\mid k]\\) with \\(k\\neq 0\\) appears. It claims \\(0=k\\), a flat contradiction, so the system is inconsistent.</li></ul><p>So a zero on <em>both</em> sides means freedom; a zero only on the left means impossibility. Telling these two apart is the most common exam question on this topic.</p></div>"
     }
   },
   "examPractice": {
+    "id": "v02ar4",
     "name": "Exam Practice (All Topics)",
     "icon": "fa-graduation-cap",
     "color": "#8b5cf6",
     "flashcards": [
       {
+        "id": "1nf4pc",
         "question": "How are differentiation and integration related, and how is each used in cost analysis?",
         "answer": "They are INVERSE operations.\n• DERIVATIVE: marginal cost from total cost — \\(M(Q)=T'(Q)\\).\n• INTEGRAL: total cost from marginal cost — \\(T(Q)=\\int M(Q)\\,dQ\\) (with C = fixed cost).\n\nPower rules mirror each other:\n\\[(x^n)'=n x^{n-1},\\qquad \\int x^n\\,dx=\\frac{1}{n+1}x^{n+1}+C.\\]",
         "explanation": "Differentiate to go total → marginal; integrate to go marginal → total."
       },
       {
+        "id": "dzktic",
         "question": "Optimisation cheat-sheet: how do you find a firm's best operating point?",
         "answer": "Use the first derivative to find stationary points, the second to classify:\n• MAX PROFIT: solve \\(D'(Q)=0\\) (with \\(D''<0\\)), where \\(D(Q)=P(Q)-T(Q)\\).\n• MIN AVERAGE COST: solve \\(\\overline{T}'(Q)=0\\) (with \\(\\overline{T}''>0\\)), where \\(\\overline{T}(Q)=\\frac{T(Q)}{Q}\\).\n• MARGINAL COST: \\(M(Q)=T'(Q)\\).",
         "explanation": "Optimise on the margin: set the relevant derivative to zero, then confirm with the second-derivative test."
       },
       {
+        "id": "febm4n",
         "question": "How does elasticity of demand use the derivative?",
         "answer": "Elasticity combines the derivative with a price/quantity ratio:\n\\[E_{q,p}=\\frac{p}{q}\\cdot\\frac{dq}{dp}.\\]\nFor linear demand \\(q=mp+c\\), \\(E_{q,p}=\\frac{mp}{mp+c}\\). \\(|E|>1\\) elastic, \\(|E|<1\\) inelastic; the sign gives the direction of change.",
         "explanation": "Elasticity is a normalised (unit-free) derivative — % change in q per % change in p."
       },
       {
+        "id": "nr6i4v",
         "question": "How are loans connected to annuities?",
         "answer": "A loan is the PRESENT VALUE of the future repayments (a postnumerando annuity). Replacing \\(A_n\\to C\\), \\(R\\to a\\) in the present-value formula gives the equal loan annuity:\n\\[a=C\\cdot\\frac{r^{n}(r-1)}{r^{n}-1},\\qquad r=1+\\frac{p}{100}.\\]",
         "explanation": "Financial maths reuses the same compounding tool (r = 1 + i) for rents and loans."
       },
       {
+        "id": "h7chti",
         "question": "Which equation type gives how many solutions — quick recap?",
         "answer": "• Linear \\(ax+b=0\\): one solution.\n• Quadratic \\(ax^2+bx+c=0\\): two (\\(D>0\\)), one (\\(D=0\\)), none real (\\(D<0\\)), where \\(D=b^2-4ac\\).\n• Biquadratic \\(ax^4+bx^2+c=0\\): up to four (substitute \\(t=x^2\\)).\n• Linear system (Gauss-Jordan): unique (identity), infinite (zero row \\([0\\,0\\,0\\mid 0]\\)), or none (\\([0\\,0\\,0\\mid k],\\ k\\neq0\\)).",
         "explanation": "The degree (or the reduced matrix form) tells you the number of solutions."
       },
       {
+        "id": "rn9y47",
         "question": "What is the single most-used pair of formulas across the whole course?",
         "answer": "The power rules of calculus, used everywhere from cost curves to integrals:\n\\[\\frac{d}{dx}x^n=n x^{n-1},\\qquad \\int x^n\\,dx=\\frac{1}{n+1}x^{n+1}+C\\ (n\\neq-1).\\]\nWith the chain rule \\([f(g)]'=f'(g)\\,g'\\) they cover polynomials, roots, exponentials and logarithms.",
         "explanation": "Master these two and most exam computations follow."
@@ -1593,6 +1829,7 @@
     ],
     "quiz": [
       {
+        "id": "cfmfr4",
         "question": "Total cost is recovered from marginal cost by:",
         "options": [
           "Differentiating",
@@ -1603,6 +1840,7 @@
         "correct": 1
       },
       {
+        "id": "t1cqew",
         "question": "To maximise profit \\(D(Q)\\) you solve \\(D'(Q)=0\\) and check that:",
         "options": [
           "\\(D''>0\\)",
@@ -1613,6 +1851,7 @@
         "correct": 1
       },
       {
+        "id": "5t9g5p",
         "question": "The elasticity coefficient is:",
         "options": [
           "\\(\\frac{dq}{dp}\\)",
@@ -1623,6 +1862,7 @@
         "correct": 1
       },
       {
+        "id": "6auqlg",
         "question": "The equal loan annuity formula \\(a=C\\cdot\\frac{r^n(r-1)}{r^n-1}\\) comes from the:",
         "options": [
           "Future value of an annuity",
@@ -1633,6 +1873,7 @@
         "correct": 1
       },
       {
+        "id": "f1frcj",
         "question": "A reduced augmented matrix with a row \\([0\\,0\\,0\\mid 5]\\) means the system has:",
         "options": [
           "A unique solution",
@@ -1643,6 +1884,7 @@
         "correct": 2
       },
       {
+        "id": "hrnmwx",
         "question": "Which substitution solves a biquadratic \\(ax^4+bx^2+c=0\\)?",
         "options": [
           "\\(t=x\\)",
@@ -1653,6 +1895,7 @@
         "correct": 1
       },
       {
+        "id": "oxwkg4",
         "question": "Marginal cost is to total cost as the ______ is to the original function:",
         "options": [
           "Integral",
@@ -1665,37 +1908,44 @@
     ],
     "fillBlanks": [
       {
+        "id": "qmswul",
         "sentence": "Differentiation and integration are _______ operations.",
         "answer": "inverse",
         "hint": "One undoes the other"
       },
       {
+        "id": "f4a22c",
         "sentence": "Marginal cost is the derivative of total cost: M(Q) = T′(Q); total cost is the _______ of marginal cost.",
         "answer": "integral",
         "hint": "T(Q) = ∫ M(Q) dQ"
       },
       {
+        "id": "bzt6ey",
         "sentence": "To maximise profit, solve D′(Q) = 0 and confirm with the _______ derivative test.",
         "answer": "second",
         "hint": "D″ < 0 for a maximum"
       },
       {
+        "id": "s9vt2m",
         "sentence": "Elasticity E = (p/q)·(dq/dp); if |E| > 1 demand is _______.",
         "answer": "elastic",
         "hint": "Reacts more than proportionally"
       },
       {
+        "id": "0jnyee",
         "sentence": "A loan equals the _______ value of its future repayments (an annuity).",
         "answer": "present",
         "hint": "Discounted to today"
       },
       {
+        "id": "181en7",
         "sentence": "A linear system reduces (Gauss-Jordan) to the _______ matrix when it has a unique solution.",
         "answer": "identity",
         "hint": "1s on the diagonal"
       }
     ],
     "learn": {
+      "id": "ukcc4x",
       "content": "<h3>Exam practice — the whole picture</h3><p>The course is one connected story: build numbers and functions, learn to differentiate, then use derivatives (and their inverse, the integral) to analyse and optimise economic quantities, and finally apply the same compounding tool to finance and a matrix method to systems. Keep this master list at hand.</p><h4>Calculus core (used everywhere)</h4><div class=\"formula-box\">\\[(x^n)'=n x^{n-1},\\qquad \\int x^n\\,dx=\\frac{1}{n+1}x^{n+1}+C\\ (n\\neq-1),\\qquad [f(g)]'=f'(g)\\,g'.\\]</div><h4>Optimisation &amp; economics</h4><div class=\"formula-box\">\\[M(Q)=T'(Q),\\quad T(Q)=\\int M(Q)\\,dQ,\\quad D(Q)=P(Q)-T(Q),\\quad \\overline{T}(Q)=\\frac{T(Q)}{Q},\\quad E_{q,p}=\\frac{p}{q}\\frac{dq}{dp}.\\]</div><p>Maximise profit: \\(D'(Q)=0,\\ D''<0\\). Minimise average cost: \\(\\overline{T}'(Q)=0,\\ \\overline{T}''>0\\).</p><h4>Equations</h4><div class=\"formula-box\">\\[x=-\\frac{b}{a}\\ (\\text{linear}),\\qquad x_{1,2}=\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}\\ (\\text{quadratic}),\\qquad t=x^2\\ (\\text{biquadratic}).\\]</div><h4>Financial mathematics</h4><div class=\"formula-box\">\\[r=1+\\frac{p}{100},\\quad S_n'=R\\frac{r^n-1}{r-1},\\quad A_n=\\frac{R}{r^n}\\frac{r^n-1}{r-1},\\quad a=C\\frac{r^n(r-1)}{r^n-1}.\\]</div><div class=\"tip-box\"><h4>Gauss-Jordan outcomes</h4><p>Reduce \\([A\\mid b]\\) with elementary row operations: identity → unique solution; zero row \\([0\\,0\\,0\\mid 0]\\) → infinitely many (free parameter \\(t\\)); \\([0\\,0\\,0\\mid k],\\ k\\neq0\\) → no solution.</p></div>"
     }
   }

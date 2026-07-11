@@ -6,87 +6,104 @@
 
 const economicsHospitalityM2Data = {
     unit6BusinessResult: {
+        id: "1shewf",
         name: "Unit 6: Business Result",
         icon: "fa-file-invoice-dollar",
         color: "#6366f1",
 
         flashcards: [
             {
+                id: "ax1epw",
                 question: "How is the business result of a hospitality company expressed?",
                 answer: "Physically — as the product or service delivered (overnight stays, meals); and in value — as the difference between total revenue and total expenditure in the accounting period (usually the fiscal year). A positive result is profit, a negative one is loss.",
                 explanation: "Determined by the Profit & Loss statement at year-end."
             },
             {
+                id: "5vzvm6",
                 question: "What are the basic financial reports?",
                 answer: "Balance sheet, Profit and Loss statement (P&L), Report on retained earnings, and Cash flow statement. Together they show the 'health' of the company.",
                 explanation: "All reports are interlinked."
             },
             {
+                id: "5s5xbs",
                 question: "What is the difference between a static and a dynamic report?",
                 answer: "A static report shows the situation at a specific point in time (the balance sheet); a dynamic report shows changes/performance over a period (the profit and loss statement).",
                 explanation: "Balance sheet = snapshot; P&L = period flow."
             },
             {
+                id: "ln1ljt",
                 question: "Which accounting standards are used in Croatia?",
                 answer: "IFRS (International Financial Reporting Standards) for large/public companies, and Croatian Accounting Standards (published 2008) for small and medium enterprises (to simplify reporting and reduce costs).",
                 explanation: "International standards harmonised reporting (EU decision 2002, IFRS from 2003)."
             },
             {
+                id: "ezdpqd",
                 question: "What is USALI?",
                 answer: "The Uniform System of Accounts for the Lodging Industry — a globally recognised hotel-industry reporting standard for internal reporting, benchmarking and decision-making. Created in 1926 by the Hotel Association of New York (now in its 12th edition).",
                 explanation: "Increasingly used in Croatia too."
             },
             {
+                id: "86lqyu",
                 question: "What is a balance sheet and its key equation?",
                 answer: "A static report showing assets and their sources (capital + liabilities) on a specific date. Key principle: Assets = Liabilities + Equity (the value of assets always equals the value of liabilities).",
                 explanation: "Basis for analysing the financial position."
             },
             {
+                id: "nhpj5k",
                 question: "What is the difference between a budgetary and an invoicing balance sheet?",
                 answer: "Budgetary (planned/earlier) records the values the company plans to dispose of on the balance-sheet date; invoicing (actual/retrospective) records the values it actually has on that date.",
                 explanation: "By date of preparation."
             },
             {
+                id: "g90r5q",
                 question: "How are sources of assets divided?",
                 answer: "By ownership: own funds (capital) and borrowed funds (liabilities). By maturity: short-term sources (current liabilities), long-term sources (long-term liabilities), and permanent sources (capital/equity).",
                 explanation: "Equity = total assets − all liabilities."
             },
             {
+                id: "3w8m3n",
                 question: "What does the Profit and Loss statement show, and its elements?",
                 answer: "It expresses the degree of business success over a period. Elements: Income, Expenditure, Profit (or loss) before tax, Income tax, and Profit after tax (or loss) — the operating result.",
                 explanation: "Balance sheet = state at a point; P&L = success over a period."
             },
             {
+                id: "ga78e1",
                 question: "What types of revenue and expenditure appear in the P&L?",
                 answer: "Revenue: operating (core activity), financial (interest, dividends), and other (grants, sale of fixed assets, write-offs). Expenditure: operating, financial (interest on external funds), and other. Only expenditures incurred to create effects count as costs.",
                 explanation: "Income raises capital; expenditure reduces it."
             },
             {
+                id: "wibngh",
                 question: "How is the business (financial) result calculated?",
                 answer: "Income − Expenditure = financial result. If Income > Expenditure → Profit (successful); if Expenditure > Income → Loss (unsuccessful).",
                 explanation: "Always expressed in value, via the P&L at period end."
             },
             {
+                id: "478fjz",
                 question: "Which principles govern business accounting?",
                 answer: "Continuity (comparability — no unjustified change of method), realisation (revenue linked to turnover, not collection), causality (link income & expenditure by accounting period), and prudence (recognise not only realised but also incurred losses).",
                 explanation: "Ensure reliable, comparable statements."
             },
             {
+                id: "3zh72i",
                 question: "How can the business result be improved?",
                 answer: "By raising income with unchanged expenditure; by cutting expenditure with unchanged income; by a greater rise in income than in expenditure; or by a greater cut in expenditure than the fall in income.",
                 explanation: "Four basic improvement paths."
             },
             {
+                id: "zrebs1",
                 question: "What are the five basic concepts of company value?",
                 answer: "Accounting value, reproduction (replacement) value, liquidation value, market value, and economic value.",
                 explanation: "Each defined differently by the valuation approach."
             },
             {
+                id: "qbb65i",
                 question: "Compare accounting, liquidation and reproduction value (with formulas).",
                 answer: "Accounting value Vk = Ik − Ok (assets − liabilities, balance-sheet based). Liquidation value Vl = Il − Ol (value in a forced sale − liabilities) = the minimum value. Reproduction (replacement) value Vr = Ir − Or (cost to rebuild the same company − liabilities).",
                 explanation: "Static, asset-based methods."
             },
             {
+                id: "ry0ldy",
                 question: "What is the difference between static and dynamic valuation methods?",
                 answer: "Static methods estimate value from the assets on a given day (balance-sheet data). Dynamic methods estimate value from future business success/profit (P&L data) — e.g. Price/Earnings (P/E) method, dividend method, and cash-flow analysis method.",
                 explanation: "Static = present assets; dynamic = future earnings."
@@ -95,51 +112,61 @@ const economicsHospitalityM2Data = {
 
         quiz: [
             {
+                id: "da1rpq",
                 question: "The business result in value terms is:",
                 options: ["Total revenue only", "Total assets minus liabilities", "Total revenue minus total expenditure", "Equity plus liabilities"],
                 correct: 2
             },
             {
+                id: "ntpf00",
                 question: "Which report is STATIC (a snapshot at a point in time)?",
                 options: ["Profit and loss statement", "Balance sheet", "Cash flow statement", "Report on retained earnings"],
                 correct: 1
             },
             {
+                id: "fiv521",
                 question: "The fundamental balance-sheet equation is:",
                 options: ["Assets = Revenue − Costs", "Assets = Liabilities + Equity", "Profit = Income + Expenditure", "Equity = Assets + Liabilities"],
                 correct: 1
             },
             {
+                id: "1i1etx",
                 question: "USALI was created in 1926 by the:",
                 options: ["EU Commission", "Hotel Association of New York", "IFRS Foundation", "Croatian Chamber of Economy"],
                 correct: 1
             },
             {
+                id: "krgj5f",
                 question: "In Croatia, large/public companies report under:",
                 options: ["Croatian Accounting Standards only", "USALI only", "IFRS", "No standard"],
                 correct: 2
             },
             {
+                id: "qvpudo",
                 question: "Equity is mathematically equal to:",
                 options: ["Total assets", "Total assets minus all liabilities", "Total liabilities", "Revenue minus expenditure"],
                 correct: 1
             },
             {
+                id: "j4n406",
                 question: "The accounting principle requiring revenue to be linked to turnover (not collection) is the:",
                 options: ["Prudence principle", "Continuity principle", "Realisation principle", "Causality principle"],
                 correct: 2
             },
             {
+                id: "qeyoi0",
                 question: "The liquidation value of a company represents the:",
                 options: ["Maximum market value", "Minimum value realisable in a forced sale", "Cost to rebuild the company", "Present value of future dividends"],
                 correct: 1
             },
             {
+                id: "j5wrkv",
                 question: "Dynamic valuation methods (P/E, dividend, cash flow) are based on:",
                 options: ["Balance-sheet assets on a given day", "Future business success / profit", "Liquidation proceeds", "Reproduction cost"],
                 correct: 1
             },
             {
+                id: "yo8uu5",
                 question: "Which is NOT one of the five concepts of company value?",
                 options: ["Accounting value", "Liquidation value", "Reproduction value", "Seasonal value"],
                 correct: 3
@@ -148,41 +175,49 @@ const economicsHospitalityM2Data = {
 
         fillBlanks: [
             {
+                id: "qs3g2k",
                 sentence: "Income − Expenditure = the business (financial) _______.",
                 answer: "result",
                 hint: "Profit or loss..."
             },
             {
+                id: "76ojzu",
                 sentence: "The balance sheet is a _______ report (a snapshot at a point in time).",
                 answer: "static",
                 hint: "Opposite of dynamic..."
             },
             {
+                id: "l84m4z",
                 sentence: "Assets = Liabilities + _______.",
                 answer: "Equity",
                 hint: "Owners' capital..."
             },
             {
+                id: "hyn3s1",
                 sentence: "_______ is the global hotel reporting standard created in 1926 in New York.",
                 answer: "USALI",
                 hint: "Uniform System of Accounts for the Lodging Industry..."
             },
             {
+                id: "2xmc9d",
                 sentence: "If expenditure exceeds income, the company makes a _______.",
                 answer: "loss",
                 hint: "Negative result..."
             },
             {
+                id: "cm6uzg",
                 sentence: "The accounting value of a company is Vk = Ik − _______.",
                 answer: "Ok",
                 hint: "Accounting value of liabilities..."
             },
             {
+                id: "4qaa0b",
                 sentence: "Static valuation uses balance-sheet data; _______ valuation uses future profit.",
                 answer: "dynamic",
                 hint: "P/E, dividend, cash-flow methods..."
             },
             {
+                id: "ifnwb4",
                 sentence: "Large and public companies in Croatia report under _______ standards.",
                 answer: "IFRS",
                 hint: "International Financial Reporting Standards..."
@@ -190,6 +225,7 @@ const economicsHospitalityM2Data = {
         ],
 
         learn: {
+            id: "t995mo",
             title: "Unit 6 — The Business Result of the Hospitality Company",
             content: `
                 <h3>1) The Business Result</h3>
@@ -250,82 +286,98 @@ const economicsHospitalityM2Data = {
     },
 
     unit7SuccessIndicators: {
+        id: "76426z",
         name: "Unit 7: Success & KPIs",
         icon: "fa-gauge-high",
         color: "#14b8a6",
 
         flashcards: [
             {
+                id: "kp1y2z",
                 question: "How is the business success of a hospitality company understood?",
                 answer: "As a complex result of the interaction of internal and external factors. It is defined relative to the company's economic objectives (it is not just technical/architectural quality).",
                 explanation: "Success = quality of the 'economy' relative to economic goals."
             },
             {
+                id: "o4i3os",
                 question: "What are the three economic benchmarks of business success?",
                 answer: "Labour productivity, Economy (frugality), and Profitability.",
                 explanation: "The classic trio of economic-efficiency measures."
             },
             {
+                id: "8tqced",
                 question: "What three types of indicator comparison exist?",
                 answer: "Planned comparison (realised vs planned), comparison over time (vs a baseline/previous period), and spatial comparison (one location vs another).",
                 explanation: "Used to reliably assess activity."
             },
             {
+                id: "3vpj2p",
                 question: "What is labour productivity and how is it measured in hotels?",
                 answer: "The effort to achieve the greatest output/turnover with the least human labour. Measured by e.g. realised nights per employee or beds (rooms) per employee. The optimum is about 3.5–5 beds per employee.",
                 explanation: "Higher productivity → lower cost price, higher competitiveness."
             },
             {
+                id: "lpm04s",
                 question: "What is economy (frugality) and its coefficient values?",
                 answer: "The degree of economy in achieving effects = ratio of effects achieved to elements consumed (value: total realisation ÷ total costs). E > 1 = economical; E = 1 = at the limit; E < 1 = uneconomical.",
                 explanation: "Raised by cutting input/prices or raising output/sales prices."
             },
             {
+                id: "rhb306",
                 question: "What is profitability?",
                 answer: "An economic measure of success showing the return on invested capital in a period — the ratio between the business result (profit) and the invested capital.",
                 explanation: "Profit relative to capital."
             },
             {
+                id: "ltyrvi",
                 question: "How do productivity, economy and profitability interrelate?",
                 answer: "They can move together or in opposite directions. E.g. replacing labour with expensive machines can raise productivity but lower economy; higher labour productivity usually raises profitability (less labour per unit).",
                 explanation: "Not always aligned."
             },
             {
+                id: "k685zq",
                 question: "Which factors determine a hospitality company's success?",
                 answer: "Natural, human, organisational, social and technical factors. Profitability is additionally affected by the turnover rate, utilisation of fixed assets, credit/tax policy, and the level of financial/extraordinary income and expenditure.",
                 explanation: "Internal + external factors interact."
             },
             {
+                id: "ut5p5x",
                 question: "What is ADR and how is it calculated?",
                 answer: "Average Daily Rate — the daily average revenue per sold room. ADR = Room Revenue / Sold Rooms. (e.g. €10,000 / 50 = €200.)",
                 explanation: "A core hotel KPI."
             },
             {
+                id: "srtg2w",
                 question: "What is ARR (Average Room Rate)?",
                 answer: "The longer-term average rate per occupied room. ARR = Total Room Revenue / Total Occupied Rooms.",
                 explanation: "Similar to ADR but over a longer term."
             },
             {
+                id: "57yab1",
                 question: "What is RevPAR and how is it calculated?",
                 answer: "Revenue Per Available Room — measures revenue-generation efficiency. RevPAR = Room Revenue / Available Rooms. (e.g. €10,000 / 100 = €100.) It reflects both rate and occupancy.",
                 explanation: "Uses available (not just sold) rooms."
             },
             {
+                id: "bcmwpo",
                 question: "What is TRevPAR?",
                 answer: "Total Revenue Per Available Room — broader than RevPAR. TRevPAR = Total Revenue / Available Rooms (includes F&B, wellness, etc.).",
                 explanation: "Captures all revenue, not only rooms."
             },
             {
+                id: "fninl8",
                 question: "What is GOP and GOPPAR?",
                 answer: "GOP (Gross Operating Profit) = Gross Operating Revenue − Gross Operating Expenses. GOPPAR (GOP per Available Room) = GOP / Available Rooms — combines profitability with room inventory.",
                 explanation: "Profitability KPIs."
             },
             {
+                id: "lzkcyg",
                 question: "What are NOP and EBITDA?",
                 answer: "NOP (Net Operating Profit) = Total Revenue − Operating Costs. EBITDA = Earnings Before Interest, Taxes, Depreciation and Amortization = Revenue − Expenses (excluding interest, taxes, depreciation).",
                 explanation: "'What gets measured, gets managed.'"
             },
             {
+                id: "i18d5a",
                 question: "On which system are hospitality KPIs based?",
                 answer: "On the Uniform System of Accounts for the Lodging Industry (USALI) — enabling benchmarking against competitors and real-time performance tracking.",
                 explanation: "KPIs = quantifiable financial/operational metrics."
@@ -334,51 +386,61 @@ const economicsHospitalityM2Data = {
 
         quiz: [
             {
+                id: "x8b6ez",
                 question: "The three economic benchmarks of business success are:",
                 options: ["Liquidity, solvency, turnover", "Labour productivity, economy, profitability", "ADR, RevPAR, GOP", "Income, expenditure, profit"],
                 correct: 1
             },
             {
+                id: "zi3s2b",
                 question: "A company is economical when its economy coefficient is:",
                 options: ["E < 1", "E = 0", "E > 1", "E = 0.5"],
                 correct: 2
             },
             {
+                id: "uyh10d",
                 question: "ADR (Average Daily Rate) is calculated as:",
                 options: ["Room Revenue / Available Rooms", "Room Revenue / Sold Rooms", "Total Revenue / Available Rooms", "GOP / Available Rooms"],
                 correct: 1
             },
             {
+                id: "fmk6yt",
                 question: "RevPAR is calculated as:",
                 options: ["Room Revenue / Sold Rooms", "Total Revenue / Sold Rooms", "Room Revenue / Available Rooms", "GOP / Sold Rooms"],
                 correct: 2
             },
             {
+                id: "1npdmp",
                 question: "TRevPAR differs from RevPAR because it uses:",
                 options: ["Only room revenue", "Total revenue (all departments)", "Only sold rooms", "Gross operating profit"],
                 correct: 1
             },
             {
+                id: "ncunrc",
                 question: "GOP (Gross Operating Profit) equals:",
                 options: ["Revenue / Available Rooms", "Gross Operating Revenue − Gross Operating Expenses", "Revenue − Interest − Taxes", "Total Revenue / Sold Rooms"],
                 correct: 1
             },
             {
+                id: "jk0n3n",
                 question: "The optimal number of beds per employee in hotels is about:",
                 options: ["1–2", "3.5–5", "8–10", "15–20"],
                 correct: 1
             },
             {
+                id: "tl51e7",
                 question: "Profitability measures:",
                 options: ["Output per worker", "Effects ÷ elements consumed", "Return on invested capital", "Rooms sold per day"],
                 correct: 2
             },
             {
+                id: "e6cizj",
                 question: "EBITDA excludes:",
                 options: ["Revenue", "Operating wages", "Interest, taxes, depreciation & amortization", "Food costs"],
                 correct: 2
             },
             {
+                id: "7bdqro",
                 question: "GOPPAR is calculated as:",
                 options: ["GOP / Available Rooms", "GOP / Sold Rooms", "Revenue / GOP", "Total Revenue / Available Rooms"],
                 correct: 0
@@ -387,41 +449,49 @@ const economicsHospitalityM2Data = {
 
         fillBlanks: [
             {
+                id: "01fk54",
                 sentence: "The three economic benchmarks are labour productivity, economy and _______.",
                 answer: "profitability",
                 hint: "Return on capital..."
             },
             {
+                id: "7ar26a",
                 sentence: "A company is economical when the economy coefficient E is greater than _______.",
                 answer: "1",
                 hint: "Single digit..."
             },
             {
+                id: "cn7kbq",
                 sentence: "ADR = Room Revenue / _______ Rooms.",
                 answer: "Sold",
                 hint: "Rooms actually occupied..."
             },
             {
+                id: "ke68fo",
                 sentence: "RevPAR = Room Revenue / _______ Rooms.",
                 answer: "Available",
                 hint: "All rooms, sold or not..."
             },
             {
+                id: "cuwls6",
                 sentence: "GOP = Gross Operating Revenue − Gross Operating _______.",
                 answer: "Expenses",
                 hint: "Costs of operating..."
             },
             {
+                id: "3lsb1h",
                 sentence: "_______ Revenue Per Available Room (TRevPAR) includes all departments.",
                 answer: "Total",
                 hint: "Broader than RevPAR..."
             },
             {
+                id: "ijp3uy",
                 sentence: "The optimum is roughly 3.5 to _______ beds per employee.",
                 answer: "5",
                 hint: "Single digit..."
             },
             {
+                id: "s7azlt",
                 sentence: "EBITDA = earnings before interest, taxes, depreciation and _______.",
                 answer: "amortization",
                 hint: "Writing off intangibles..."
@@ -429,6 +499,7 @@ const economicsHospitalityM2Data = {
         ],
 
         learn: {
+            id: "c6l3id",
             title: "Unit 7 — Success & Economic Indicators (KPIs)",
             content: `
                 <h3>1) Business Success</h3>
@@ -467,82 +538,98 @@ const economicsHospitalityM2Data = {
     },
 
     unit8PricePolicy: {
+        id: "mhsprs",
         name: "Unit 8: Price Policy",
         icon: "fa-tag",
         color: "#f59e0b",
 
         flashcards: [
             {
+                id: "kvlli6",
                 question: "Why is price important in hospitality?",
                 answer: "Price completes the hospitality product (without it the product is undefined), reflects its value, and is a constitutive element of the tourism market that directly affects demand.",
                 explanation: "Price is a key positioning tool."
             },
             {
+                id: "izztm9",
                 question: "What are the basic objectives of pricing policy?",
                 answer: "Ensuring uniformity of pricing within units, influencing customer behaviour, and controlling behaviour / harmonising prices with legal regulations.",
                 explanation: "Pricing policy = the process of pricing decisions."
             },
             {
+                id: "8wa810",
                 question: "How are hospitality prices grouped?",
                 answer: "Accommodation prices (board, half board, overnight stays, day rentals, mobile homes, household accommodation) and prices for other services (F&B, wellness, events). Accommodation prices position the hotel on the foreign market.",
                 explanation: "Two basic groups."
             },
             {
+                id: "25ccld",
                 question: "How does pricing differ between hotel types?",
                 answer: "Business-centre (urban) hotels operate year-round with fairly consistent occupancy and prices; tourist-destination hotels operate seasonally — in the 2–3 month high season prices are raised to the competitive maximum to cover fixed costs and earn a reasonable profit.",
                 explanation: "Seasonality drives price differentiation."
             },
             {
+                id: "zggj75",
                 question: "What criteria are used for price differentiation?",
                 answer: "Intensity of tourist demand (season), time of purchase, category of tourist (individuals/families/groups), number of bookings (group/long-stay discounts), position in the sales channel (agency commission), and utilisation/geographical criteria (domestic vs foreign guests).",
                 explanation: "Many criteria beyond just season."
             },
             {
+                id: "jsik27",
                 question: "What are the three groups of pricing methods?",
                 answer: "Cost-oriented ('cost-plus' — costs + desired profit, ignores supply/demand), market-oriented (demand-oriented and lowest-price methods), and competition-oriented (responding to rivals to grow sales/market share).",
                 explanation: "Three method families."
             },
             {
+                id: "9slgbt",
                 question: "How do costs and demand set price limits?",
                 answer: "Costs determine the lower limit (below which the business makes a loss), while the actual selling price is determined by tourist demand. Demand has the dominant influence on the price of the hospitality product.",
                 explanation: "Cost = floor; demand = actual price."
             },
             {
+                id: "7o31yp",
                 question: "What internal and external factors influence selling prices?",
                 answer: "External: market development, product life cycle, product differentiation, consumer buying behaviour, price elasticity, competition. Internal: costs and working conditions (which affect, but don't dominate, price formation).",
                 explanation: "External factors dominate."
             },
             {
+                id: "1cd03s",
                 question: "Which product life-cycle phases matter most for pricing?",
                 answer: "The introduction phase (price reflects invested resources), the decline phase (price-reduction policy to hold market position), and the revitalisation phase (modernising and enriching the offer).",
                 explanation: "Phase shapes pricing strategy."
             },
             {
+                id: "gqps8b",
                 question: "What is price elasticity of demand?",
                 answer: "The sensitivity of demand to price changes — in practice, falling traffic when prices rise, or rising traffic when prices fall.",
                 explanation: "Key for stimulating pricing policy."
             },
             {
+                id: "kd1t2w",
                 question: "What is calculation (costing) and its purpose?",
                 answer: "From Latin 'calculus' (counting stone) — the method used to calculate prices: to include and distribute costs and check whether the price covers the elements used. It supports standard/prime-cost calculation, analysis, planning and comparison.",
                 explanation: "Costing underpins pricing."
             },
             {
+                id: "r97xoe",
                 question: "What are the elements of the classic sales-price calculation?",
                 answer: "Direct material costs + amortisation + gross wages + other direct costs + general production costs + general administrative costs = I. Cost price; + profit/loss = II. sales price without tax; + sales tax = III. sales price.",
                 explanation: "Selling price = cost price + margin + VAT."
             },
             {
+                id: "9oibzv",
                 question: "What is the difference between prior and post calculation?",
                 answer: "Prior (planned) calculation is done before the period, based on consumption/labour standards, to set prices in advance. Post (accounting) calculation is done at period end to determine actual costs and check the prior calculation (identify deviations).",
                 explanation: "Planned vs actual."
             },
             {
+                id: "nupczh",
                 question: "What is the margin (marža) and what must it cover?",
                 answer: "The margin must cover all indirect business costs and accumulation (planned profit) — i.e. indirect material costs, services, advertising, depreciation, gross personnel costs, etc. It can be raised/lowered without changing the selling price.",
                 explanation: "Margin varies by product type and place."
             },
             {
+                id: "okoydj",
                 question: "What is the division method vs the additional (markup) method?",
                 answer: "The division method is used under complete homogeneity of assortment (limited use in hospitality). The additional method is used for a heterogeneous assortment — especially food and beverage — to calculate prices.",
                 explanation: "Cost-price calculation methods."
@@ -551,51 +638,61 @@ const economicsHospitalityM2Data = {
 
         quiz: [
             {
+                id: "v98jrk",
                 question: "Costs in pricing primarily determine the:",
                 options: ["Actual selling price", "Lower price limit (below which there is a loss)", "Upper price limit", "Agency commission"],
                 correct: 1
             },
             {
+                id: "nulrqj",
                 question: "A 'cost-plus' approach is a:",
                 options: ["Market-oriented method", "Competition-oriented method", "Cost-oriented method", "Demand-oriented method"],
                 correct: 2
             },
             {
+                id: "butsc2",
                 question: "The dominant influence on the price of a hospitality product is:",
                 options: ["Cost", "Tourist demand", "Staff wages", "Depreciation"],
                 correct: 1
             },
             {
+                id: "72vnuj",
                 question: "The selling price is built as:",
                 options: ["Cost price + margin + VAT", "Cost price − margin", "Margin + depreciation only", "Revenue − expenditure"],
                 correct: 0
             },
             {
+                id: "y3806o",
                 question: "The additional (markup) method is mainly used for:",
                 options: ["A fully homogeneous assortment", "A heterogeneous assortment (e.g. F&B)", "Only accommodation", "Only wellness services"],
                 correct: 1
             },
             {
+                id: "xv2pw7",
                 question: "Prior (planned) calculation is carried out:",
                 options: ["At the end of the period", "Before the period, based on standards", "Only for foreign markets", "Only after a loss"],
                 correct: 1
             },
             {
+                id: "hbo5v7",
                 question: "Which is an EXTERNAL factor of price formation?",
                 options: ["Working conditions", "Internal costs", "Price elasticity / competition", "Staff relationships"],
                 correct: 2
             },
             {
+                id: "9eklll",
                 question: "In a tourist-destination hotel, high-season prices are raised to:",
                 options: ["The legal minimum", "The competitive maximum (to cover fixed costs + profit)", "Match the low season", "Zero margin"],
                 correct: 1
             },
             {
+                id: "5iidtl",
                 question: "The margin must cover indirect costs and:",
                 options: ["Only VAT", "Accumulation (planned profit)", "Direct material only", "Agency commission only"],
                 correct: 1
             },
             {
+                id: "dpjopt",
                 question: "Price elasticity of demand measures:",
                 options: ["Cost per room", "Sensitivity of demand to price changes", "Fixed-cost share", "Number of sold rooms"],
                 correct: 1
@@ -604,41 +701,49 @@ const economicsHospitalityM2Data = {
 
         fillBlanks: [
             {
+                id: "1lmtue",
                 sentence: "Costs set the _______ limit, below which the business makes a loss.",
                 answer: "lower",
                 hint: "Floor of the price..."
             },
             {
+                id: "z4p3u4",
                 sentence: "The dominant influence on the hospitality price is tourist _______.",
                 answer: "demand",
                 hint: "How much the market wants..."
             },
             {
+                id: "q8zckd",
                 sentence: "Selling price = cost price + margin + _______.",
                 answer: "VAT",
                 hint: "Sales tax..."
             },
             {
+                id: "p1sw0m",
                 sentence: "'Cost-plus' is a _______-oriented pricing method.",
                 answer: "cost",
                 hint: "Based on expenses..."
             },
             {
+                id: "izweu2",
                 sentence: "The _______ method is used for a heterogeneous assortment (e.g. F&B).",
                 answer: "additional",
                 hint: "Markup-based..."
             },
             {
+                id: "6fkr1f",
                 sentence: "_______ (planned) calculation is done before the period using standards.",
                 answer: "Prior",
                 hint: "Opposite of post/accounting..."
             },
             {
+                id: "dc7e33",
                 sentence: "Price _______ of demand is the sensitivity of demand to price changes.",
                 answer: "elasticity",
                 hint: "Responsiveness..."
             },
             {
+                id: "myke0a",
                 sentence: "The margin must cover indirect costs and _______ (planned profit).",
                 answer: "accumulation",
                 hint: "The profit component..."
@@ -646,6 +751,7 @@ const economicsHospitalityM2Data = {
         ],
 
         learn: {
+            id: "td8nk1",
             title: "Unit 8 — Price Policy in Hospitality",
             content: `
                 <h3>1) Why Price Matters</h3>
@@ -692,82 +798,98 @@ const economicsHospitalityM2Data = {
     },
 
     unit9SalesPrinciples: {
+        id: "l57081",
         name: "Unit 9: Principles of Sales",
         icon: "fa-handshake",
         color: "#ec4899",
 
         flashcards: [
             {
+                id: "4ye65g",
                 question: "Why is sales central to a hospitality company?",
                 answer: "Realised turnover is one of the most important indicators of business success. Sales generate revenue (from F&B and accommodation) and directly influence costs and profit — the most important means of achieving business objectives.",
                 explanation: "Sales connect product with demand."
             },
             {
+                id: "hgud1n",
                 question: "What does the marketing concept require?",
                 answer: "Determining the needs and desires of target markets and satisfying them more successfully and effectively than the competition. Marketing connects products with demand profitably and systematically.",
                 explanation: "Customer-need orientation (Kotler; UK CIM)."
             },
             {
+                id: "djd8eh",
                 question: "What is the marketing mix (4P + 3P)?",
                 answer: "The 4Ps: Product, Price, Place (placement), Promotion. Booms & Bitner (1981) added 3 for services: People, Process, Physical evidence (= the 7P services mix).",
                 explanation: "Extended mix for services."
             },
             {
+                id: "5iaht7",
                 question: "What is interactive marketing?",
                 answer: "Ensuring quality through two-way communication between the parties; using an information network and connected devices for interaction between organisations and consumers (Varadarajan & Yadav, 2009).",
                 explanation: "Changes pricing, selling, communication."
             },
             {
+                id: "a2priz",
                 question: "What is 'placement' in hospitality sales?",
                 answer: "All efforts and measures undertaken to ensure the hospitality product reaches the tourism market and finds a customer. The product becomes a true commodity only when its utility value is confirmed on the market.",
                 explanation: "Sales = a basic marketing function."
             },
             {
+                id: "hu9lhf",
                 question: "What makes selling hospitality services special?",
                 answer: "The product cannot be presented to the market before the actual purchase, and sales (especially of accommodation) often occur many months in advance — separating sales from consumption and raising the importance of intermediaries.",
                 explanation: "Drives the role of agencies/tour operators."
             },
             {
+                id: "i9o0l4",
                 question: "What is the goal of sales and the sales policy?",
                 answer: "To sell as many products/services as possible at the most favourable financial result. Sales policy controls sales activities to achieve business policy — formulating sales objectives, principles, and the means to reach targets. It links 'production' with market demand.",
                 explanation: "Sales policy = bridge to demand."
             },
             {
+                id: "lw62rd",
                 question: "Which factors determine sales policy?",
                 answer: "Marketing philosophy, market research, and sales pricing policy (closed offers to achieve goals: survival, maximising current profit, market-share leadership, product-quality leadership), plus promotion, sales channels and product policy.",
                 explanation: "Pricing-policy goals are a frequent exam list."
             },
             {
+                id: "9nyazz",
                 question: "What are the two basic sales channels?",
                 answer: "Direct distribution (tourist buys directly from the producer, e.g. at hotel reception) and indirect distribution (via an intermediary — travel agency, tour operator).",
                 explanation: "Direct vs indirect."
             },
             {
+                id: "0dbyho",
                 question: "What does direct sale include?",
                 answer: "Sales in the hotel's own sales department / reception, via the own network of outlets, by mail/order, and via video technology and the company's own reservation system (and own website).",
                 explanation: "No intermediary → lower distribution costs."
             },
             {
+                id: "alcvt6",
                 question: "What is a reservation (booking) and its required elements?",
                 answer: "Securing a service in advance (room, meal, etc.). Made in writing, it includes: guest name, dates (arrival/first service, departure/last service), type of service & number of persons, and price & terms of payment.",
                 explanation: "Can depend on a deposit; 'last minute' sells unsold capacity."
             },
             {
+                id: "znbq4c",
                 question: "What does indirect sale include, and what are tour operators known for?",
                 answer: "Sale via tour operators, travel agencies, or transport organisations. Tour operators use the 'law of large numbers', renting large capacities in advance — securing occupancy for providers.",
                 explanation: "Intermediaries cover the vast market."
             },
             {
+                id: "c20snu",
                 question: "What commissions do agencies receive, and how much capacity is given to them?",
                 answer: "Domestic agencies receive about 3% of revenue; foreign agencies about 11%. A hospitality company usually makes about 50% of its capacity available to agencies and sells the rest directly.",
                 explanation: "Agencies bring occupancy certainty and longer stays."
             },
             {
+                id: "exl5jg",
                 question: "Which contracts underpin indirect sales?",
                 answer: "Allotment contract (hotelier reserves capacity for a tour operator for a period/season/year), capacity-rental contract (hotel rents part of capacity with staff/inventory for an agreed fee), and a contract based on a reservation (confirmed booking).",
                 explanation: "Three contract types."
             },
             {
+                id: "m605jd",
                 question: "How has the Internet changed hospitality sales?",
                 answer: "It enabled rapid information dissemination, direct booking platforms (e.g. Booking.com) and lower distribution costs, giving global market access and changing classic business methods (communication, transactions, distribution).",
                 explanation: "A global megatrend."
@@ -776,51 +898,61 @@ const economicsHospitalityM2Data = {
 
         quiz: [
             {
+                id: "58egut",
                 question: "The classic marketing mix (4Ps) consists of:",
                 options: ["People, Process, Physical evidence, Price", "Product, Price, Place, Promotion", "Product, People, Profit, Promotion", "Price, Place, Process, People"],
                 correct: 1
             },
             {
+                id: "l8xdx0",
                 question: "Booms & Bitner (1981) added which 3 elements for services?",
                 options: ["Profit, Process, People", "People, Process, Physical evidence", "Place, Promotion, Price", "People, Profit, Placement"],
                 correct: 1
             },
             {
+                id: "jkkh8s",
                 question: "Selling directly at hotel reception is an example of:",
                 options: ["Indirect distribution", "Direct distribution", "Allotment", "Tour operating"],
                 correct: 1
             },
             {
+                id: "vpd92i",
                 question: "Tour operators are known for using the:",
                 options: ["Law of diminishing returns", "Law of large numbers (renting capacity in advance)", "Cost-plus method", "Break-even rule"],
                 correct: 1
             },
             {
+                id: "lrx7tk",
                 question: "Foreign travel agencies typically receive a commission of about:",
                 options: ["3%", "5%", "11%", "25%"],
                 correct: 2
             },
             {
+                id: "mr2vuq",
                 question: "A hospitality company usually makes about what share of capacity available to agencies?",
                 options: ["10%", "30%", "50%", "90%"],
                 correct: 2
             },
             {
+                id: "yjrw15",
                 question: "A contract where the hotelier reserves capacity for a tour operator for a season is a(n):",
                 options: ["Allotment contract", "Employment contract", "Insurance contract", "Lease of land"],
                 correct: 0
             },
             {
+                id: "gt3t91",
                 question: "A special challenge of selling hospitality services is that:",
                 options: ["Prices never change", "The product cannot be presented before purchase", "There are no intermediaries", "Demand is always constant"],
                 correct: 1
             },
             {
+                id: "89fm5x",
                 question: "Which is a sales-pricing-policy goal?",
                 options: ["Reducing room count", "Market-share leadership", "Avoiding all promotion", "Eliminating reservations"],
                 correct: 1
             },
             {
+                id: "42h93c",
                 question: "A required element of a written reservation is:",
                 options: ["The competitor's price", "Guest name, dates, service type, price & payment terms", "The hotel's tax return", "The agency's profit margin"],
                 correct: 1
@@ -829,41 +961,49 @@ const economicsHospitalityM2Data = {
 
         fillBlanks: [
             {
+                id: "y58dib",
                 sentence: "The 4Ps of the marketing mix are product, price, place and _______.",
                 answer: "promotion",
                 hint: "Communicating the offer..."
             },
             {
+                id: "gqgzhj",
                 sentence: "Booms & Bitner added people, process and physical _______.",
                 answer: "evidence",
                 hint: "The service environment..."
             },
             {
+                id: "bdkd40",
                 sentence: "Selling without an intermediary is _______ distribution.",
                 answer: "direct",
                 hint: "Straight to the tourist..."
             },
             {
+                id: "7i2t9m",
                 sentence: "Tour operators apply the law of large _______ to rent capacity in advance.",
                 answer: "numbers",
                 hint: "Quantities..."
             },
             {
+                id: "5bf715",
                 sentence: "Foreign agencies receive a commission of about _______%.",
                 answer: "11",
                 hint: "Two digits (domestic is 3%)..."
             },
             {
+                id: "r7bp5x",
                 sentence: "A hotel usually makes about _______% of its capacity available to agencies.",
                 answer: "50",
                 hint: "Half..."
             },
             {
+                id: "uzzhko",
                 sentence: "An _______ contract reserves capacity for a tour operator for a period/season.",
                 answer: "allotment",
                 hint: "Capacity set aside..."
             },
             {
+                id: "odzeo9",
                 sentence: "Online platforms such as _______ lowered distribution costs and widened reach.",
                 answer: "Booking.com",
                 hint: "Major OTA..."
@@ -871,6 +1011,7 @@ const economicsHospitalityM2Data = {
         ],
 
         learn: {
+            id: "73hjce",
             title: "Unit 9 — Principles of Sales in Hospitality",
             content: `
                 <h3>1) Importance of Sales</h3>
@@ -915,77 +1056,92 @@ const economicsHospitalityM2Data = {
     },
 
     unit10InvestmentProfitability: {
+        id: "jnx2lz",
         name: "Unit 10: Investment Profitability",
         icon: "fa-money-bill-trend-up",
         color: "#10b981",
 
         flashcards: [
             {
+                id: "b2hy1c",
                 question: "What do investments include in hospitality?",
                 answer: "Investments in both material assets (buildings, equipment) and non-material assets (education, science, human capital). They aim to enhance service quality, capacity and competitiveness.",
                 explanation: "Broad scope of investment."
             },
             {
+                id: "3zt9gu",
                 question: "What are the three components of an investment?",
                 answer: "The success component (contribute to future success), the liquidity component (strengthen liquidity/solvency), and the risk component (planned values, tasks and returns under risk).",
                 explanation: "Every investment balances these."
             },
             {
+                id: "dgbfjm",
                 question: "What are the motives for investing?",
                 answer: "Modernising equipment/service, expanding capacity, innovation and scientific development, and increasing short- and long-term assets. Motives split into social needs and the company's own investment needs.",
                 explanation: "Needs drive investment objectives."
             },
             {
+                id: "to1pyq",
                 question: "What are gross, net and new investments?",
                 answer: "Gross = total investments from all sources. Net = gross minus depreciation. New = net investments increased by investments financed from the free part of depreciation/amortisation.",
                 explanation: "By source of financing."
             },
             {
+                id: "vg2769",
                 question: "What are the investment types by effect on the process?",
                 answer: "Replacement investments (replace worn equipment), rationalisation/modernisation investments (raise efficiency, cut costs, improve quality), and expansion investments (new facilities/services to grow output).",
                 explanation: "By purpose in the process."
             },
             {
+                id: "l000y5",
                 question: "How is investment structured?",
                 answer: "Investments in fixed assets (raise production/service capacity) and investments in working capital (enable normal-capacity operation), plus intangible investments (staff training, studies, research).",
                 explanation: "Fixed vs working capital."
             },
             {
+                id: "x6b3bj",
                 question: "What is the technical structure of fixed-asset investment?",
                 answer: "Land and infrastructure; building facilities (accommodation + F&B); equipment (transport, HVAC, laundry, kitchen machines); and other investments (studies, projects, staff training).",
                 explanation: "Where the capital goes physically."
             },
             {
+                id: "t14l31",
                 question: "What are the development-policy principles for investment?",
                 answer: "Liquidity (convert assets to cash to meet obligations), Security (achieve objectives under risk without jeopardising survival), and Profitability (highest possible profit relative to capital invested).",
                 explanation: "Guide the investment process."
             },
             {
+                id: "val4n5",
                 question: "What phases does an investment decision pass through?",
                 answer: "Emergence of the idea/need; determining possible/acceptable solutions; choosing judgement methods to evaluate acceptability; and the final investment decision (based on investment documentation).",
                 explanation: "A multi-phase business decision."
             },
             {
+                id: "xfctw1",
                 question: "What are the three phases of planning the investment process?",
                 answer: "Preparation phase, evaluation phase, and implementation phase. Studies: pre-investment study, investment study, and performance study.",
                 explanation: "Phased project planning."
             },
             {
+                id: "funiiy",
                 question: "Which analyses are done when preparing an investment project?",
                 answer: "Market analysis, procurement-market analysis, technical-technological analysis, location analysis, and economic-financial analysis.",
                 explanation: "Location is critical ('location, location, location' — Hilton)."
             },
             {
+                id: "vvhh8f",
                 question: "When is an investment project solvent?",
                 answer: "When its net cash flow is equal to or greater than zero; it is insolvent if the net cash flow is negative. Insolvency can be resolved by reducing planned investment and/or increasing financing.",
                 explanation: "Solvency of the project."
             },
             {
+                id: "jj0gdc",
                 question: "Which methods evaluate the profitability of an investment project?",
                 answer: "The rate-of-return method, the annuity method, the present-value (NPV) method, and the return-on-invested-capital (payback) method. The annuity method is the most commonly used in hospitality.",
                 explanation: "Annuity = amount used to repay a loan over time."
             },
             {
+                id: "dmc45a",
                 question: "What methods plan the realisation of an investment project?",
                 answer: "Linear programming (developed by American mathematician George Dantzig) and network planning (visualising activities and their interdependencies in a network diagram).",
                 explanation: "Implementation = construction prep, construction, service prep."
@@ -994,51 +1150,61 @@ const economicsHospitalityM2Data = {
 
         quiz: [
             {
+                id: "oadtxt",
                 question: "Net investment is calculated as:",
                 options: ["Gross investment + depreciation", "Gross investment − depreciation", "Working capital + fixed assets", "Revenue − costs"],
                 correct: 1
             },
             {
+                id: "tyxzsk",
                 question: "An investment aimed at replacing worn-out equipment is a(n):",
                 options: ["Expansion investment", "Rationalisation investment", "Replacement investment", "New investment"],
                 correct: 2
             },
             {
+                id: "se8khv",
                 question: "The three development-policy principles for investment are:",
                 options: ["Liquidity, security, profitability", "Product, price, promotion", "ADR, RevPAR, GOP", "Gross, net, new"],
                 correct: 0
             },
             {
+                id: "5n1333",
                 question: "The method most commonly used to assess investment profitability in hospitality is the:",
                 options: ["Rate-of-return method", "Annuity method", "Present-value method", "Payback method"],
                 correct: 1
             },
             {
+                id: "pjns6b",
                 question: "An investment project is solvent when its net cash flow is:",
                 options: ["Negative", "Equal to or greater than zero", "Always zero", "Less than the investment"],
                 correct: 1
             },
             {
+                id: "g5c8ms",
                 question: "Investments in working capital primarily enable the company to:",
                 options: ["Increase production capacity", "Operate at normal capacity", "Replace the building", "Pay dividends"],
                 correct: 1
             },
             {
+                id: "iqatnm",
                 question: "The famous 'location, location, location' answer is attributed to the founder of:",
                 options: ["Booking.com", "Hilton hotels", "Marriott", "USALI"],
                 correct: 1
             },
             {
+                id: "qksmzt",
                 question: "Linear programming as a realisation-planning method was developed by:",
                 options: ["Philip Kotler", "George Dantzig", "Eugen Schmalenbach", "Alfred Marshall"],
                 correct: 1
             },
             {
+                id: "gnxing",
                 question: "Which is NOT a phase of planning the investment process?",
                 options: ["Preparation", "Evaluation", "Implementation", "Liquidation"],
                 correct: 3
             },
             {
+                id: "ksity6",
                 question: "New investments are net investments increased by funds from:",
                 options: ["Loans only", "The free part of depreciation/amortisation", "Share issues only", "Government grants only"],
                 correct: 1
@@ -1047,41 +1213,49 @@ const economicsHospitalityM2Data = {
 
         fillBlanks: [
             {
+                id: "ifvacp",
                 sentence: "Net investment = gross investment − _______.",
                 answer: "depreciation",
                 hint: "Amortisation deducted..."
             },
             {
+                id: "q1imkt",
                 sentence: "Investments aimed at replacing worn equipment are _______ investments.",
                 answer: "replacement",
                 hint: "Swap old for new..."
             },
             {
+                id: "f2b6fa",
                 sentence: "The development principles are liquidity, security and _______.",
                 answer: "profitability",
                 hint: "Return on capital..."
             },
             {
+                id: "pjcrqf",
                 sentence: "The _______ method is the most common for assessing investment profitability in hospitality.",
                 answer: "annuity",
                 hint: "Loan-repayment amount over time..."
             },
             {
+                id: "smsxdm",
                 sentence: "A project is solvent if its net cash flow is equal to or greater than _______.",
                 answer: "zero",
                 hint: "The break point..."
             },
             {
+                id: "srmbtp",
                 sentence: "Investments in _______ capital enable operation at normal capacity.",
                 answer: "working",
                 hint: "Day-to-day funds..."
             },
             {
+                id: "4q9q9g",
                 sentence: "Location analysis is vital — recall the Hilton founder: 'location, location, _______'.",
                 answer: "location",
                 hint: "Same word three times..."
             },
             {
+                id: "6ouk9t",
                 sentence: "Linear programming was developed by George _______.",
                 answer: "Dantzig",
                 hint: "American mathematician..."
@@ -1089,6 +1263,7 @@ const economicsHospitalityM2Data = {
         ],
 
         learn: {
+            id: "ollmyq",
             title: "Unit 10 — Profitability of Investments in Hospitality",
             content: `
                 <h3>1) Scope & Motives</h3>

@@ -2,102 +2,122 @@
 // Category 6 of Accounting Theory
 
 const financialAnalysisData = {
+    id: "4zvuz7",
     name: "Financial Analysis",
     icon: "fa-chart-line",
     color: "#7c3aed",
     
     flashcards: [
         {
+            id: "m1mz5n",
             question: "When can accounts receivable be posted to the general ledger less frequently?",
             answer: "When the customer account number is recorded on the source document, enabling posting to subsidiary ledgers at any time while updating the general ledger less frequently.",
             explanation: "Efficiency in posting procedures."
         },
         {
+            id: "i47kpl",
             question: "What is the Hospitality Current Ratio?",
             answer: "The Hospitality Current Ratio compares current assets to current liabilities, but excludes inventory and prepaid expenses from current assets.\n\nFormula: (Cash + Receivables + Marketable Securities) ÷ Current Liabilities",
             explanation: "More conservative than standard current ratio."
         },
         {
+            id: "ljhj0y",
             question: "What would a person compare in horizontal analysis?",
             answer: "In horizontal analysis, a person compares the same item across different time periods to identify trends and changes.",
             explanation: "Year-over-year comparison."
         },
         {
+            id: "2bci7d",
             question: "What would a person compare in vertical analysis?",
             answer: "In vertical analysis, a person compares each item to a base amount within the same period, typically as a percentage of total revenue or total assets.",
             explanation: "Percentage of the whole."
         },
         {
+            id: "x71k1t",
             question: "What groups are typically interested in financial ratios?",
             answer: "Groups interested include:\n• Owners/investors\n• Creditors/lenders\n• Management\n• Potential investors\n• Financial analysts",
             explanation: "Various stakeholders use ratios."
         },
         {
+            id: "grrd59",
             question: "What does a solvency ratio indicate?",
             answer: "Solvency ratios indicate a company's ability to meet its long-term debt obligations.",
             explanation: "Long-term financial health."
         },
         {
+            id: "3ufew4",
             question: "What does a liquidity ratio indicate?",
             answer: "Liquidity ratios indicate a company's ability to meet its short-term obligations.",
             explanation: "Short-term financial health."
         },
         {
+            id: "qh07c1",
             question: "What does an activity ratio indicate?",
             answer: "Activity ratios (turnover ratios) indicate how efficiently a company uses its assets to generate revenue.",
             explanation: "Asset efficiency measurement."
         },
         {
+            id: "xtto7v",
             question: "What is the most common reference item in a common-size balance sheet?",
             answer: "Total Assets is the most common reference item (base) in a common-size balance sheet.",
             explanation: "Each item as % of total assets."
         },
         {
+            id: "homjn2",
             question: "What is the most common reference item in a common-size income statement?",
             answer: "Total Revenue (or Net Sales) is the most common reference item (base) in a common-size income statement.",
             explanation: "Each item as % of revenue."
         },
         {
+            id: "58eyj6",
             question: "What is the earnings per share formula for a corporation?",
             answer: "EPS = (Net Income − Preferred Dividends) ÷ Weighted Average Common Shares Outstanding",
             explanation: "Earnings available to common shareholders."
         },
         {
+            id: "vkbeqr",
             question: "Which service can only be performed by CPAs?",
             answer: "Only CPAs can perform audits (opinion engagements).",
             explanation: "CPAs have exclusive audit authority."
         },
         {
+            id: "k0iuod",
             question: "What are the three CPA services?",
             answer: "The three levels of CPA financial services are:\n\n1. Compilation - lowest level, no assurance\n2. Review - limited assurance\n3. Audit - highest level, reasonable assurance",
             explanation: "Different levels of assurance."
         },
         {
+            id: "h3y2ai",
             question: "What are the five types of Audit Opinions?",
             answer: "1. Unqualified (Clean) - Best, no issues\n2. Qualified - Minor issues/limitations\n3. Adverse - Major GAAP violations\n4. Disclaimer - Insufficient evidence\n5. Unqualified with Explanatory - Clean with added paragraph",
             explanation: "From best to most concerning."
         },
         {
+            id: "d3lyki",
             question: "What are the main categories of Financial Ratios?",
             answer: "Five main categories:\n\n1. Liquidity Ratios - Short-term debt ability\n2. Solvency Ratios - Long-term debt ability\n3. Activity Ratios - Asset efficiency\n4. Profitability Ratios - Profit generation\n5. Operating Ratios - Operational efficiency",
             explanation: "Different aspects of financial health."
         },
         {
+            id: "2565tr",
             question: "What are key Liquidity Ratios?",
             answer: "KEY LIQUIDITY RATIOS:\n\n• Current Ratio = Current Assets ÷ Current Liabilities\n\n• Quick Ratio = (Cash + Receivables + Securities) ÷ Current Liabilities\n\n• Hospitality Current Ratio = Same as Quick Ratio (excludes inventory)",
             explanation: "Ability to pay short-term debts."
         },
         {
+            id: "am078v",
             question: "What are key Solvency Ratios?",
             answer: "KEY SOLVENCY RATIOS:\n\n• Debt-to-Equity = Total Liabilities ÷ Total Equity\n\n• Debt Ratio = Total Liabilities ÷ Total Assets\n\n• Times Interest Earned = EBIT ÷ Interest Expense",
             explanation: "Ability to pay long-term debts."
         },
         {
+            id: "fbb8kr",
             question: "What are key Profitability Ratios?",
             answer: "KEY PROFITABILITY RATIOS:\n\n• Profit Margin = Net Income ÷ Revenue\n\n• ROA = Net Income ÷ Total Assets\n\n• ROE = Net Income ÷ Shareholders' Equity\n\n• EPS = (Net Income − Preferred Div) ÷ Common Shares",
             explanation: "How well the company generates profit."
         },
         {
+            id: "s6w33l",
             question: "What are key Activity Ratios?",
             answer: "KEY ACTIVITY RATIOS:\n\n• Inventory Turnover = COGS ÷ Average Inventory\n\n• Receivables Turnover = Revenue ÷ Average Receivables\n\n• Asset Turnover = Revenue ÷ Total Assets",
             explanation: "How efficiently assets are used."
@@ -106,76 +126,91 @@ const financialAnalysisData = {
     
     quiz: [
         {
+            id: "2gc0d5",
             question: "Horizontal analysis compares:",
             options: ["Items to a base", "Same item across time periods", "Revenue to expenses", "Assets to liabilities"],
             correct: 1
         },
         {
+            id: "c76r28",
             question: "Vertical analysis compares each item to:",
             options: ["Prior year", "Industry average", "A base amount in the same period", "Competitor data"],
             correct: 2
         },
         {
+            id: "2zjwyw",
             question: "Solvency ratios measure ability to meet:",
             options: ["Short-term obligations", "Long-term obligations", "Daily operations", "Inventory needs"],
             correct: 1
         },
         {
+            id: "zrvmgc",
             question: "Liquidity ratios measure ability to meet:",
             options: ["Long-term obligations", "Short-term obligations", "Capital needs", "Growth targets"],
             correct: 1
         },
         {
+            id: "7ltunc",
             question: "Activity ratios measure:",
             options: ["Debt levels", "Asset efficiency", "Stock price", "Interest rates"],
             correct: 1
         },
         {
+            id: "q5x2ef",
             question: "Common-size balance sheets use what base?",
             options: ["Total Revenue", "Net Income", "Total Assets", "Stockholders Equity"],
             correct: 2
         },
         {
+            id: "mwg6ki",
             question: "Common-size income statements use what base?",
             options: ["Total Assets", "Total Revenue", "Net Income", "Gross Profit"],
             correct: 1
         },
         {
+            id: "l59sgc",
             question: "EPS formula includes:",
             options: ["Total revenue", "Preferred dividends subtracted from net income", "Total assets", "Operating expenses"],
             correct: 1
         },
         {
+            id: "5po92y",
             question: "Only CPAs can perform:",
             options: ["Compilations", "Reviews", "Audits", "Tax returns"],
             correct: 2
         },
         {
+            id: "ad7ep3",
             question: "The Hospitality Current Ratio excludes:",
             options: ["Cash", "Receivables", "Inventory and prepaid expenses", "Marketable securities"],
             correct: 2
         },
         {
+            id: "xdnwkn",
             question: "An unqualified audit opinion means:",
             options: ["Major problems found", "Clean, no issues", "Auditor could not finish", "Minor issues present"],
             correct: 1
         },
         {
+            id: "a8q543",
             question: "Which CPA service provides the HIGHEST level of assurance?",
             options: ["Compilation", "Review", "Audit", "All provide equal assurance"],
             correct: 2
         },
         {
+            id: "jdmdxy",
             question: "Current Ratio equals:",
             options: ["Current Assets ÷ Total Assets", "Current Assets ÷ Current Liabilities", "Cash ÷ Current Liabilities", "Revenue ÷ Current Assets"],
             correct: 1
         },
         {
+            id: "zlsp56",
             question: "ROE (Return on Equity) equals:",
             options: ["Net Income ÷ Total Assets", "Net Income ÷ Revenue", "Net Income ÷ Shareholders' Equity", "Revenue ÷ Equity"],
             correct: 2
         },
         {
+            id: "3o1vcu",
             question: "An adverse audit opinion indicates:",
             options: ["Minor issues", "No problems", "Major GAAP violations", "Insufficient evidence"],
             correct: 2
@@ -184,51 +219,61 @@ const financialAnalysisData = {
     
     fillBlanks: [
         {
+            id: "qisfi1",
             sentence: "_______ analysis compares the same item across time periods.",
             answer: "Horizontal",
             hint: "Across time (horizontal timeline)..."
         },
         {
+            id: "r1x7qc",
             sentence: "_______ analysis compares items to a base in the same period.",
             answer: "Vertical",
             hint: "Up and down within one period..."
         },
         {
+            id: "1pffpx",
             sentence: "_______ ratios measure ability to meet short-term obligations.",
             answer: "Liquidity",
             hint: "How easily converted to cash..."
         },
         {
+            id: "mlvx88",
             sentence: "_______ ratios measure ability to meet long-term obligations.",
             answer: "Solvency",
             hint: "Able to stay in business long-term..."
         },
         {
+            id: "9a161c",
             sentence: "Common-size balance sheets use Total _______ as the base.",
             answer: "Assets",
             hint: "Everything the company owns..."
         },
         {
+            id: "pyq5g6",
             sentence: "Only _______ can perform audits.",
             answer: "CPAs",
             hint: "Certified Public..."
         },
         {
+            id: "j87wih",
             sentence: "The highest CPA assurance service is the _______.",
             answer: "audit",
             hint: "Full examination..."
         },
         {
+            id: "u0smxo",
             sentence: "An _______ audit opinion indicates major GAAP violations.",
             answer: "adverse",
             hint: "The worst type of opinion..."
         },
         {
+            id: "qt354i",
             sentence: "ROE stands for Return on _______.",
             answer: "Equity",
             hint: "Owners' investment..."
         },
         {
+            id: "flsc1z",
             sentence: "Inventory _______ = COGS ÷ Average Inventory.",
             answer: "Turnover",
             hint: "How fast it moves..."
@@ -236,6 +281,7 @@ const financialAnalysisData = {
     ],
     
     learn: {
+        id: "ba7f0r",
         title: "Financial Analysis & Ratios",
         content: `
             <h3>📚 Chapter Overview: Financial Analysis</h3>

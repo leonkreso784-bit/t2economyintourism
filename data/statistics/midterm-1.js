@@ -11,53 +11,65 @@
 
 const statisticsM1 = {
   describingDataGraphical: {
+    id: "6v7l8o",
     name: 'Describing Data — Graphical',
     icon: 'fa-chart-pie',
     color: '#0ea5e9',
 
     flashcards: [
       {
+        id: "b0qoix",
         question: 'Distinguish a population from a sample, and a parameter from a statistic.',
         answer: 'A population is the collection of ALL items of interest (size \\(N\\)); a sample is an observed subset (size \\(n\\)).\nA parameter is a numerical characteristic of a POPULATION; a statistic is a numerical characteristic of a SAMPLE.',
         explanation: 'We use a sample statistic to estimate an unknown population parameter.'
       },
       {
+        id: "tfegv8",
         question: 'Descriptive vs. inferential statistics — what is the difference?',
         answer: 'Descriptive statistics collect, summarize and present data (tables, graphs, averages) to turn data into information.\nInferential statistics use a sample to make estimates, forecasts and decisions about the population (estimation + hypothesis testing).'
       },
       {
+        id: "3lcdrd",
         question: 'What is simple random sampling?',
         answer: 'A sampling procedure in which each member of the population is chosen strictly by chance, every member is equally likely to be selected, and every possible sample of \\(n\\) objects is equally likely.'
       },
       {
+        id: "jlpv9c",
         question: 'Classify data: categorical vs. numerical, discrete vs. continuous.',
         answer: 'Categorical (qualitative) data fall into categories (eye color, marital status).\nNumerical (quantitative) data are numbers — DISCRETE (counted, e.g. number of children) or CONTINUOUS (measured, e.g. weight, time).'
       },
       {
+        id: "mxx5eh",
         question: 'What are the four levels of measurement?',
         answer: 'Qualitative:\n• Nominal — categories with no order (eye color)\n• Ordinal — ordered categories/rankings (satisfaction 1–5)\nQuantitative:\n• Interval — differences meaningful, NO true zero (temperature °C)\n• Ratio — differences meaningful AND a true zero (weight, income)'
       },
       {
+        id: "9si46x",
         question: 'Which graphs are used for CATEGORICAL data?',
         answer: 'Frequency distribution table, bar chart, pie chart, and the Pareto diagram (bars in descending order of frequency with a cumulative line — separates the “vital few” from the “trivial many”).'
       },
       {
+        id: "ua485x",
         question: 'Which graphs are used for NUMERICAL data?',
         answer: 'Line chart (time series), frequency distribution, histogram, ogive (cumulative line graph), and the stem-and-leaf display. Scatter diagrams show the relationship between two numerical variables.'
       },
       {
+        id: "yhbv0w",
         question: 'How do you choose the class width for a frequency distribution?',
         answer: 'First pick the number of classes \\(k\\) (a quick guide ties \\(k\\) to sample size). Then compute the width and round UP:\n\\( w = \\dfrac{\\text{Largest} - \\text{Smallest}}{k} \\)\nClasses must be equal width, inclusive and non-overlapping.'
       },
       {
+        id: "y8dnn4",
         question: 'What does an ogive show?',
         answer: 'An ogive (cumulative line graph) connects points giving the CUMULATIVE percentage (or frequency) of observations below the upper limit of each class — it reads off “what fraction is below value x”.'
       },
       {
+        id: "jk9pv8",
         question: 'What is a Pareto diagram used for?',
         answer: 'A bar chart of categorical data with bars in DESCENDING order of frequency plus a cumulative polygon. It highlights the few categories that account for most of the total (the “vital few vs. trivial many”).'
       },
       {
+        id: "5oajoe",
         question: 'What is a cross (contingency) table?',
         answer: 'A table listing the number of observations for every combination of two categorical/ordinal variables. With \\(r\\) row-categories and \\(c\\) column-categories it is an \\(r\\times c\\) cross table.'
       }
@@ -65,51 +77,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "k8fe2i",
         question: 'A numerical characteristic of a population is a:',
         options: ['Statistic', 'Parameter', 'Sample', 'Variable'],
         correct: 1
       },
       {
+        id: "g3x7of",
         question: 'Estimating a population mean from a sample mean is an example of:',
         options: ['Descriptive statistics', 'Inferential statistics', 'A census', 'A parameter'],
         correct: 1
       },
       {
+        id: "c54j65",
         question: 'The number of children in a family is which type of data?',
         options: ['Categorical nominal', 'Numerical discrete', 'Numerical continuous', 'Categorical ordinal'],
         correct: 1
       },
       {
+        id: "fo5a1m",
         question: 'A satisfaction rating from 1 (low) to 5 (high) is measured on which scale?',
         options: ['Nominal', 'Ordinal', 'Interval', 'Ratio'],
         correct: 1
       },
       {
+        id: "u7y4ti",
         question: 'Which graph is appropriate ONLY for categorical data?',
         options: ['Histogram', 'Pie chart', 'Stem-and-leaf display', 'Ogive'],
         correct: 1
       },
       {
+        id: "706bp2",
         question: 'A bar chart with categories in descending order plus a cumulative line is a:',
         options: ['Histogram', 'Pareto diagram', 'Ogive', 'Scatter plot'],
         correct: 1
       },
       {
+        id: "or9lsu",
         question: 'The cumulative line graph for numerical data is called a(n):',
         options: ['Ogive', 'Pie chart', 'Pareto diagram', 'Box plot'],
         correct: 0
       },
       {
+        id: "gch4u7",
         question: 'Class width for a frequency distribution is approximately:',
         options: ['\\((\\text{Max}-\\text{Min})/k\\)', '\\(k/n\\)', '\\(\\text{Max}+\\text{Min}\\)', '\\(n/2\\)'],
         correct: 0
       },
       {
+        id: "450k2t",
         question: 'A scatter diagram is used to display:',
         options: ['One categorical variable', 'The relationship between two numerical variables', 'Cumulative frequency', 'Time only'],
         correct: 1
       },
       {
+        id: "cijjk5",
         question: 'A measurement scale with a true zero point is:',
         options: ['Nominal', 'Ordinal', 'Interval', 'Ratio'],
         correct: 3
@@ -118,40 +140,49 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "5hvtm1",
         sentence: 'A specific numerical characteristic of a population is a _______.',
         answer: 'parameter'
       },
       {
+        id: "60qgcb",
         sentence: 'A characteristic of a sample is a _______.',
         answer: 'statistic'
       },
       {
+        id: "cpwxy3",
         sentence: 'Data that fall into unordered categories are nominal _______ data.',
         answer: 'categorical'
       },
       {
+        id: "1enqlb",
         sentence: 'Counted numerical data (e.g. number of cars) are _______.',
         answer: 'discrete'
       },
       {
+        id: "5aivoc",
         sentence: 'Measured numerical data (e.g. weight) are _______.',
         answer: 'continuous'
       },
       {
+        id: "8gorqw",
         sentence: 'A bar chart with categories in descending order is a _______ diagram.',
         answer: 'Pareto'
       },
       {
+        id: "6uc5b3",
         sentence: 'A graph of a numerical frequency distribution is a _______.',
         answer: 'histogram'
       },
       {
+        id: "pojw16",
         sentence: 'Class width equals the range divided by the number of _______.',
         answer: 'classes'
       }
     ],
 
     learn: {
+      id: "jpbiua",
       content:
         '<h3>Describing Data — Graphical</h3>' +
         '<p>Statistics is the science of turning <strong>data</strong> (raw numbers and labels) into <strong>information</strong> — knowledge we can actually act on. A long list of 500 customer ages tells you almost nothing at a glance; a single histogram of those ages reveals the shape, the center and the outliers instantly. That translation is the whole job of descriptive statistics, and it always begins with the right picture.</p>' +
@@ -211,49 +242,60 @@ const statisticsM1 = {
   },
 
   describingDataNumerical: {
+    id: "5en6kl",
     name: 'Describing Data — Numerical',
     icon: 'fa-calculator',
     color: '#14b8a6',
 
     flashcards: [
       {
+        id: "zlejb9",
         question: 'Define the three measures of central tendency.',
         answer: '• Mean — the arithmetic average: \\( \\bar{x} = \\dfrac{\\sum x_i}{n} \\)\n• Median — the middle value of ordered data (50% above, 50% below)\n• Mode — the most frequently occurring value (may be none or several)'
       },
       {
+        id: "z2er1d",
         question: 'When is the median preferred over the mean?',
         answer: 'When the data contain outliers or are skewed. The mean is pulled toward extreme values, while the median is resistant to them, so it better describes a skewed distribution.'
       },
       {
+        id: "sdh36h",
         question: 'How do you locate the median and the quartiles by position?',
         answer: 'In ascending order:\n• Median is at position \\( \\dfrac{n+1}{2} \\)\n• \\(Q_1\\) at \\( 0.25(n+1) \\), \\(Q_3\\) at \\( 0.75(n+1) \\)\nThe 2nd quartile equals the median.'
       },
       {
+        id: "ay6qk1",
         question: 'Define range and interquartile range.',
         answer: 'Range = largest − smallest (simple but very sensitive to outliers).\nInterquartile range \\( IQR = Q_3 - Q_1 \\) — the spread of the middle 50% of the data, which ignores extreme values.'
       },
       {
+        id: "8oeso4",
         question: 'Write the sample variance and sample standard deviation.',
         answer: '\\( s^2 = \\dfrac{\\sum (x_i-\\bar{x})^2}{n-1}, \\qquad s = \\sqrt{s^2} \\)\n(We divide by \\(n-1\\) for a sample; by \\(N\\) for a population variance \\(\\sigma^2\\).)'
       },
       {
+        id: "hrhpv3",
         question: 'What is the coefficient of variation, and why use it?',
         answer: 'A relative measure of dispersion, in percent:\n\\( CV = \\dfrac{s}{\\bar{x}}\\times 100\\% \\)\nBecause it is unit-free, it lets you compare the variability of data sets measured in different units or with very different means.'
       },
       {
+        id: "avzr77",
         question: 'State the empirical rule (for bell-shaped data).',
         answer: 'For an approximately normal distribution, the intervals around the mean contain:\n• \\( \\mu \\pm 1\\sigma \\): about 68%\n• \\( \\mu \\pm 2\\sigma \\): about 95%\n• \\( \\mu \\pm 3\\sigma \\): about 99.7%'
       },
       {
+        id: "49qwc3",
         question: 'State Chebyshev’s theorem.',
         answer: 'For ANY distribution and \\(k>1\\), at least \\( \\left(1-\\dfrac{1}{k^2}\\right) \\) of the values lie within \\(k\\) standard deviations of the mean. E.g. at least 75% within \\(\\pm 2\\sigma\\), at least 89% within \\(\\pm 3\\sigma\\).',
         explanation: 'Chebyshev works for any shape; the empirical rule needs a bell shape.'
       },
       {
+        id: "g5rtz4",
         question: 'What is the weighted mean and when is it used?',
         answer: 'A mean where each value carries a weight \\(w_i\\):\n\\( \\bar{x} = \\dfrac{\\sum w_i x_i}{\\sum w_i} \\)\nUsed when observations are grouped or have unequal importance (e.g. grouped data with class midpoints).'
       },
       {
+        id: "mz6353",
         question: 'How do you read skewness from the mean and median?',
         answer: 'If mean ≈ median → roughly symmetric. If mean < median → skewed LEFT (negatively). If mean > median → skewed RIGHT (positively). Outliers pull the mean toward the long tail.'
       }
@@ -261,51 +303,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "14xtnb",
         question: 'The middle value of an ordered data set is the:',
         options: ['Mean', 'Median', 'Mode', 'Range'],
         correct: 1
       },
       {
+        id: "l7ah4m",
         question: 'Sample variance divides the sum of squared deviations by:',
         options: ['\\(n\\)', '\\(n-1\\)', '\\(N\\)', '\\(n+1\\)'],
         correct: 1
       },
       {
+        id: "3bgohi",
         question: 'The interquartile range equals:',
         options: ['\\(Q_3 - Q_1\\)', '\\(\\text{Max}-\\text{Min}\\)', '\\(Q_2 - Q_1\\)', '\\(s^2\\)'],
         correct: 0
       },
       {
+        id: "71cs52",
         question: 'The coefficient of variation is:',
         options: ['\\(s^2/\\bar{x}\\)', '\\((s/\\bar{x})\\times 100\\%\\)', '\\(\\bar{x}/s\\)', '\\(Q_3-Q_1\\)'],
         correct: 1
       },
       {
+        id: "r9jdi7",
         question: 'For bell-shaped data, about 95% of values lie within:',
         options: ['\\(\\mu\\pm 1\\sigma\\)', '\\(\\mu\\pm 2\\sigma\\)', '\\(\\mu\\pm 3\\sigma\\)', '\\(\\mu\\pm 0.5\\sigma\\)'],
         correct: 1
       },
       {
+        id: "am3gbs",
         question: 'Chebyshev’s theorem guarantees at least what fraction within \\(\\pm 2\\sigma\\)?',
         options: ['50%', '68%', '75%', '95%'],
         correct: 2
       },
       {
+        id: "n89fni",
         question: 'Which measure is LEAST affected by outliers?',
         options: ['Mean', 'Median', 'Range', 'Standard deviation'],
         correct: 1
       },
       {
+        id: "727k2a",
         question: 'If the mean is greater than the median, the distribution is skewed:',
         options: ['Left (negatively)', 'Right (positively)', 'Not at all', 'Bimodally'],
         correct: 1
       },
       {
+        id: "cd69r0",
         question: 'The most frequently occurring value is the:',
         options: ['Median', 'Mode', 'Mean', 'Midrange'],
         correct: 1
       },
       {
+        id: "xt1vjd",
         question: 'A unit-free measure that compares variability across data sets is the:',
         options: ['Range', 'Variance', 'Coefficient of variation', 'IQR'],
         correct: 2
@@ -314,41 +366,50 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "64qkhq",
         sentence: 'The arithmetic average of the data is the _______.',
         answer: 'mean'
       },
       {
+        id: "gkguov",
         sentence: 'The value with 50% of observations above and below it is the _______.',
         answer: 'median'
       },
       {
+        id: "qeq0ky",
         sentence: 'Sample variance divides the sum of squared deviations by n minus _______.',
         answer: '1'
       },
       {
+        id: "cep2ig",
         sentence: 'The square root of the variance is the standard _______.',
         answer: 'deviation'
       },
       {
+        id: "ujnouh",
         sentence: 'IQR equals Q3 minus _______.',
         answer: 'Q1'
       },
       {
+        id: "1uc41m",
         sentence: 'For bell-shaped data, about 68% of values lie within one _______ of the mean.',
         answer: 'standard deviation',
         hint: '\\(\\mu \\pm 1\\sigma\\).'
       },
       {
+        id: "x201dw",
         sentence: 'Chebyshev’s theorem applies to data of _______ shape.',
         answer: 'any'
       },
       {
+        id: "dfgj71",
         sentence: 'The coefficient of variation is always expressed as a _______.',
         answer: 'percentage'
       }
     ],
 
     learn: {
+      id: "ris53v",
       content:
         '<h3>Describing Data — Numerical</h3>' +
         '<p>A graph shows the shape of data; numerical measures pin it down with two numbers we can compute, compare and feed into later inference. Every numerical summary answers one of two questions: <strong>where is the center</strong> of the data, and <strong>how spread out</strong> is it around that center? Center without spread is only half the story — two hotels can have the same average occupancy while one is steady and the other swings wildly.</p>' +
@@ -399,48 +460,59 @@ const statisticsM1 = {
   },
 
   probability: {
+    id: "9tj0dp",
     name: 'Probability Methods',
     icon: 'fa-dice',
     color: '#8b5cf6',
 
     flashcards: [
       {
+        id: "l3u39f",
         question: 'Define random experiment, sample space and event.',
         answer: 'A random experiment is a process with two or more possible outcomes, unknown in advance. The sample space \\(S\\) is the set of ALL possible outcomes. An event is any subset of the sample space.'
       },
       {
+        id: "ringey",
         question: 'Define the intersection, union and complement of events.',
         answer: '• Intersection \\(A\\cap B\\): outcomes in BOTH A and B.\n• Union \\(A\\cup B\\): outcomes in A OR B (or both).\n• Complement \\(\\bar{A}\\): all outcomes NOT in A, with \\( P(\\bar{A}) = 1 - P(A) \\).'
       },
       {
+        id: "z9u1ih",
         question: 'What are mutually exclusive and collectively exhaustive events?',
         answer: 'Mutually exclusive: they cannot occur together, \\( A\\cap B = \\varnothing \\) so \\( P(A\\cap B)=0 \\).\nCollectively exhaustive: together they cover the whole sample space, \\( E_1\\cup E_2\\cup\\dots\\cup E_k = S \\).'
       },
       {
+        id: "oqsuyw",
         question: 'What are the three approaches to assessing probability?',
         answer: '1. Classical — equally likely outcomes: \\( P(A)=\\dfrac{N_A}{N} \\).\n2. Relative frequency — long-run proportion of times A occurs.\n3. Subjective — a personal degree of belief.'
       },
       {
+        id: "h1eket",
         question: 'Write the number of combinations of n things taken k at a time.',
         answer: '\\( \\binom{n}{k} = \\dfrac{n!}{k!\\,(n-k)!} \\)\nwith \\(0! = 1\\). It counts the unordered ways to choose \\(k\\) items from \\(n\\).'
       },
       {
+        id: "q8al77",
         question: 'State the addition rule.',
         answer: '\\( P(A\\cup B) = P(A) + P(B) - P(A\\cap B) \\)\nIf A and B are mutually exclusive, \\( P(A\\cap B)=0 \\), so \\( P(A\\cup B)=P(A)+P(B) \\).'
       },
       {
+        id: "y50v5b",
         question: 'Define conditional probability.',
         answer: 'The probability of A given that B has occurred:\n\\( P(A\\mid B) = \\dfrac{P(A\\cap B)}{P(B)} \\), provided \\( P(B) > 0 \\).'
       },
       {
+        id: "fkk2yo",
         question: 'State the multiplication rule.',
         answer: '\\( P(A\\cap B) = P(A\\mid B)\\,P(B) = P(B\\mid A)\\,P(A) \\).\nIt rearranges the conditional-probability definition to get the joint probability.'
       },
       {
+        id: "o1ddac",
         question: 'When are two events statistically independent?',
         answer: 'When the occurrence of one does not change the probability of the other:\n\\( P(A\\cap B) = P(A)\\,P(B) \\) — equivalently \\( P(A\\mid B) = P(A) \\).'
       },
       {
+        id: "37yqnl",
         question: 'What is a marginal probability?',
         answer: 'The probability of a single event regardless of the others, found by summing its joint probabilities over a set of mutually exclusive, collectively exhaustive events:\n\\( P(A) = P(A\\cap B_1) + P(A\\cap B_2) + \\dots + P(A\\cap B_k) \\).'
       }
@@ -448,51 +520,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "oem4ig",
         question: 'The set of all possible outcomes of a random experiment is the:',
         options: ['Event', 'Sample space', 'Complement', 'Union'],
         correct: 1
       },
       {
+        id: "nlzyd7",
         question: 'Outcomes belonging to BOTH A and B form the:',
         options: ['Union', 'Intersection', 'Complement', 'Sample space'],
         correct: 1
       },
       {
+        id: "aj6yhv",
         question: 'If A and B are mutually exclusive, then \\(P(A\\cap B)\\) equals:',
         options: ['1', '0', '\\(P(A)P(B)\\)', '\\(P(A)+P(B)\\)'],
         correct: 1
       },
       {
+        id: "cyvpre",
         question: 'The probability of the union of two events is \\(P(A)+P(B)\\) minus:',
         options: ['\\(P(A\\mid B)\\)', '\\(P(A\\cap B)\\)', '\\(P(\\bar A)\\)', '1'],
         correct: 1
       },
       {
+        id: "be0hfm",
         question: 'Conditional probability \\(P(A\\mid B)\\) equals:',
         options: ['\\(P(A\\cap B)/P(B)\\)', '\\(P(A)P(B)\\)', '\\(P(A)+P(B)\\)', '\\(P(B)/P(A)\\)'],
         correct: 0
       },
       {
+        id: "ql16z8",
         question: 'Two events are independent if:',
         options: ['\\(P(A\\cap B)=0\\)', '\\(P(A\\cap B)=P(A)P(B)\\)', '\\(P(A\\cup B)=1\\)', '\\(P(A)=P(B)\\)'],
         correct: 1
       },
       {
+        id: "hslxhu",
         question: 'The number of unordered ways to choose k from n is:',
         options: ['\\(n^k\\)', '\\(\\dfrac{n!}{k!(n-k)!}\\)', '\\(\\dfrac{n!}{(n-k)!}\\)', '\\(nk\\)'],
         correct: 1
       },
       {
+        id: "87esep",
         question: 'Events that together cover the entire sample space are:',
         options: ['Mutually exclusive', 'Collectively exhaustive', 'Independent', 'Complementary only'],
         correct: 1
       },
       {
+        id: "d2vjgb",
         question: 'The complement rule says \\(P(\\bar A)\\) equals:',
         options: ['\\(1-P(A)\\)', '\\(P(A)\\)', '\\(1+P(A)\\)', '\\(P(A)^2\\)'],
         correct: 0
       },
       {
+        id: "ac7qhl",
         question: 'Assuming all outcomes equally likely is the _______ approach to probability.',
         options: ['Subjective', 'Relative frequency', 'Classical', 'Bayesian'],
         correct: 2
@@ -501,40 +583,49 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "yy9zy7",
         sentence: 'The collection of all possible outcomes is the sample _______.',
         answer: 'space'
       },
       {
+        id: "6dt6dw",
         sentence: 'Events that cannot occur together are mutually _______.',
         answer: 'exclusive'
       },
       {
+        id: "abwwpu",
         sentence: 'The probability of A or B is P(A)+P(B) minus P(A and B) — the _______ rule.',
         answer: 'addition'
       },
       {
+        id: "o9xtfr",
         sentence: 'The probability of A given B is the _______ probability of A.',
         answer: 'conditional'
       },
       {
+        id: "nbd0se",
         sentence: 'If P(A and B) = P(A)·P(B), the events are _______.',
         answer: 'independent'
       },
       {
+        id: "9304j6",
         sentence: 'P(complement of A) equals 1 minus _______.',
         answer: 'P(A)'
       },
       {
+        id: "aytaoc",
         sentence: 'Choosing k items from n without order uses the formula for _______.',
         answer: 'combinations'
       },
       {
+        id: "2rg91f",
         sentence: 'A probability is always between 0 and _______.',
         answer: '1'
       }
     ],
 
     learn: {
+      id: "4rz7ir",
       content:
         '<h3>Probability Methods</h3>' +
         '<p>Descriptive statistics looked backward at data we already have. Probability looks <strong>forward</strong>: it is the language of uncertainty, and it is the bridge to all of inference. Every confidence interval and hypothesis test in K2 is ultimately a probability statement, so the rules here are the grammar for everything that follows.</p>' +
@@ -580,48 +671,59 @@ const statisticsM1 = {
   },
 
   discreteRandomVariables: {
+    id: "rnyyjx",
     name: 'Discrete Random Variables',
     icon: 'fa-chart-column',
     color: '#f59e0b',
 
     flashcards: [
       {
+        id: "9ijcq6",
         question: 'What is a discrete random variable?',
         answer: 'A variable representing a numerical outcome of a random experiment that can take only a COUNTABLE number of values — e.g. the number of defective items, claims, or arrivals.'
       },
       {
+        id: "hx4x45",
         question: 'What two properties must a discrete probability distribution satisfy?',
         answer: '\\( P(x) \\ge 0 \\) for every value \\(x\\), and the probabilities sum to one: \\( \\sum_x P(x) = 1 \\).'
       },
       {
+        id: "lyz1rt",
         question: 'Define the expected value of a discrete random variable.',
         answer: 'The probability-weighted average (its mean):\n\\( \\mu = E(X) = \\sum_x x\\,P(x) \\).'
       },
       {
+        id: "o8mazr",
         question: 'Write the variance and standard deviation of a discrete random variable.',
         answer: '\\( \\sigma^2 = E[(X-\\mu)^2] = \\sum_x (x-\\mu)^2 P(x), \\qquad \\sigma = \\sqrt{\\sigma^2} \\).'
       },
       {
+        id: "zmkbab",
         question: 'What conditions define a binomial experiment?',
         answer: 'A fixed number \\(n\\) of trials; each trial has two outcomes (success/failure); the success probability \\(P\\) is constant; and the trials are independent.'
       },
       {
+        id: "glbnic",
         question: 'Write the binomial probability formula.',
         answer: '\\( P(x) = \\dfrac{n!}{x!\\,(n-x)!}\\,P^{x}(1-P)^{n-x} \\)\nfor \\(x = 0,1,\\dots,n\\) successes.'
       },
       {
+        id: "jetq3q",
         question: 'Give the mean and variance of the binomial distribution.',
         answer: '\\( \\mu = nP, \\qquad \\sigma^2 = nP(1-P), \\qquad \\sigma = \\sqrt{nP(1-P)} \\).'
       },
       {
+        id: "guccdd",
         question: 'When is the Poisson distribution used, and what is its formula?',
         answer: 'For the number of times an event occurs in a fixed interval (arrivals, breakdowns, defects), with average rate \\(\\lambda\\):\n\\( P(x) = \\dfrac{e^{-\\lambda}\\lambda^{x}}{x!} \\).'
       },
       {
+        id: "1zj1xl",
         question: 'What is special about the mean and variance of the Poisson distribution?',
         answer: 'They are EQUAL: \\( \\mu = \\sigma^2 = \\lambda \\) (so \\( \\sigma = \\sqrt{\\lambda} \\)).'
       },
       {
+        id: "gs8xo9",
         question: 'What does the cumulative probability function \\(F(x_0)\\) give?',
         answer: 'The probability that X is at most \\(x_0\\): \\( F(x_0) = P(X \\le x_0) = \\sum_{x \\le x_0} P(x) \\). It is handy for “at least / at most / more than” questions.'
       }
@@ -629,51 +731,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "3lnfnb",
         question: 'A variable taking only countable values is a _______ random variable.',
         options: ['Continuous', 'Discrete', 'Normal', 'Standardized'],
         correct: 1
       },
       {
+        id: "6me3y7",
         question: 'For any discrete distribution, the probabilities must sum to:',
         options: ['0', '0.5', '1', 'n'],
         correct: 2
       },
       {
+        id: "syccxm",
         question: 'The expected value of X equals:',
         options: ['\\(\\sum x P(x)\\)', '\\(\\sum P(x)\\)', '\\(nP(1-P)\\)', '\\(\\sqrt{\\lambda}\\)'],
         correct: 0
       },
       {
+        id: "169rhc",
         question: 'The mean of a binomial distribution is:',
         options: ['\\(nP(1-P)\\)', '\\(nP\\)', '\\(\\lambda\\)', '\\(P/n\\)'],
         correct: 1
       },
       {
+        id: "qz8r2e",
         question: 'The variance of a binomial distribution is:',
         options: ['\\(nP\\)', '\\(nP(1-P)\\)', '\\(\\lambda\\)', '\\(\\sqrt{nP}\\)'],
         correct: 1
       },
       {
+        id: "wnbo6k",
         question: 'The number of arrivals per hour is best modeled by the:',
         options: ['Binomial distribution', 'Poisson distribution', 'Normal distribution', 'Uniform distribution'],
         correct: 1
       },
       {
+        id: "rdhwmb",
         question: 'For the Poisson distribution, the mean and variance are:',
         options: ['Both equal to \\(\\lambda\\)', 'Equal to \\(nP\\)', 'Always 0 and 1', 'Unrelated'],
         correct: 0
       },
       {
+        id: "0qg4ts",
         question: 'The binomial requires that trials be:',
         options: ['Dependent', 'Independent with constant P', 'Continuous', 'Infinite'],
         correct: 1
       },
       {
+        id: "zelvj6",
         question: '\\(F(x_0)=P(X\\le x_0)\\) is called the _______ probability function.',
         options: ['Marginal', 'Cumulative', 'Conditional', 'Joint'],
         correct: 1
       },
       {
+        id: "29161o",
         question: 'In the Poisson formula, e is approximately:',
         options: ['3.14', '2.72', '1.61', '0.50'],
         correct: 1
@@ -682,41 +794,50 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "mh783x",
         sentence: 'A random variable with a countable set of values is _______.',
         answer: 'discrete'
       },
       {
+        id: "qgcnjt",
         sentence: 'The probabilities of a discrete distribution must sum to _______.',
         answer: '1'
       },
       {
+        id: "9yra2h",
         sentence: 'The expected value E(X) is the probability-weighted _______.',
         answer: 'average'
       },
       {
+        id: "729d79",
         sentence: 'The mean of a binomial distribution is n times _______.',
         answer: 'P',
         hint: '\\(\\mu = nP\\).'
       },
       {
+        id: "cmxdiy",
         sentence: 'The binomial variance is nP(1 minus _______).',
         answer: 'P'
       },
       {
+        id: "xitdic",
         sentence: 'Counts of events in a fixed interval follow the _______ distribution.',
         answer: 'Poisson'
       },
       {
+        id: "vmj7is",
         sentence: 'For the Poisson distribution, the mean equals the _______.',
         answer: 'variance'
       },
       {
+        id: "m86x3x",
         sentence: 'The cumulative function F(x0) gives P(X ≤ _______).',
         answer: 'x0'
       }
     ],
 
     learn: {
+      id: "kct3n7",
       content:
         '<h3>Discrete Random Variables</h3>' +
         '<p>A <strong>random variable</strong> attaches a number to each outcome of a random experiment — it turns “heads/tails” or “satisfied/unsatisfied” into something we can average and add. A <strong>discrete</strong> random variable takes a <em>countable</em> set of values (0, 1, 2, …): the number of defective items in a batch, claims filed in a day, guests who no-show. The point of this topic is that many business situations follow one of two famous patterns — the <strong>binomial</strong> and the <strong>Poisson</strong> — so once you recognise the pattern you get all the probabilities from a formula instead of collecting data.</p>' +
@@ -761,48 +882,59 @@ const statisticsM1 = {
   },
 
   continuousRandomVariables: {
+    id: "klf3ok",
     name: 'Continuous Random Variables',
     icon: 'fa-chart-area',
     color: '#10b981',
 
     flashcards: [
       {
+        id: "m76omn",
         question: 'What is a continuous random variable?',
         answer: 'A variable that can take ANY value within an interval (weight, time, temperature). Because there are infinitely many possible values, the probability of any single exact value is zero.'
       },
       {
+        id: "bcfl2v",
         question: 'What are the properties of a probability density function f(x)?',
         answer: '\\( f(x) \\ge 0 \\) for all \\(x\\); the total area under \\(f(x)\\) equals 1; and the probability that X lies between two values is the AREA under the curve between them.'
       },
       {
+        id: "amv1fl",
         question: 'How is probability found for a continuous variable?',
         answer: 'As an area under the density curve: \\( P(a < X < b) = F(b) - F(a) \\), where \\(F\\) is the cumulative distribution function. Single-point probabilities are zero.'
       },
       {
+        id: "bnu4dv",
         question: 'What are the key features of the normal distribution?',
         answer: 'It is bell-shaped and symmetric; its mean, median and mode are equal; its location is set by \\(\\mu\\) and its spread by \\(\\sigma\\); and it has an infinite theoretical range.'
       },
       {
+        id: "0yhzp9",
         question: 'How do you standardize a normal variable?',
         answer: 'Convert X into a Z-score by subtracting the mean and dividing by the standard deviation:\n\\( Z = \\dfrac{X-\\mu}{\\sigma} \\).'
       },
       {
+        id: "mk7f3c",
         question: 'What is the standard normal distribution?',
         answer: 'The normal distribution with mean 0 and variance 1, written \\( Z \\sim N(0,1) \\). Any normal variable can be transformed to it to use the Z-table.'
       },
       {
+        id: "5m1jk1",
         question: 'How do you find \\(P(X > c)\\) using the Z-table?',
         answer: 'Standardize: \\( Z = \\dfrac{c-\\mu}{\\sigma} \\). The table gives \\(P(Z<z)\\), so use the complement: \\( P(X>c) = 1 - P(Z < z) \\).'
       },
       {
+        id: "ni1n9c",
         question: 'Why is the normal distribution so widely used?',
         answer: 'It approximates many real-world variables; sample means become approximately normal for large \\(n\\) (Central Limit Theorem); its probabilities are easy to compute; and it underlies much of statistical inference.'
       },
       {
+        id: "7ocguo",
         question: 'How do you compute \\(P(a < X < b)\\) for a normal variable?',
         answer: 'Standardize both ends and subtract cumulative probabilities:\n\\( P(a<X<b) = P\\!\\left(Z < \\dfrac{b-\\mu}{\\sigma}\\right) - P\\!\\left(Z < \\dfrac{a-\\mu}{\\sigma}\\right) \\).'
       },
       {
+        id: "f3827l",
         question: 'What is a standardized random variable’s mean and variance?',
         answer: 'After the transformation \\( Z = (X-\\mu)/\\sigma \\), the new variable has mean 0 and variance 1 — regardless of the original units.'
       }
@@ -810,51 +942,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "h2ebci",
         question: 'For a continuous random variable, the probability of any single exact value is:',
         options: ['1', '0.5', '0', 'Undefined'],
         correct: 2
       },
       {
+        id: "dg5dn8",
         question: 'Probability for a continuous variable corresponds to:',
         options: ['A bar height', 'An area under the density curve', 'A single point', 'A frequency count'],
         correct: 1
       },
       {
+        id: "wq143n",
         question: 'The total area under any probability density function equals:',
         options: ['0', '0.5', '1', 'n'],
         correct: 2
       },
       {
+        id: "8xh6i6",
         question: 'In a normal distribution, the mean, median and mode are:',
         options: ['All different', 'Equal', 'Always zero', 'Skewed'],
         correct: 1
       },
       {
+        id: "7pb86e",
         question: 'The standardized normal variable Z equals:',
         options: ['\\((X-\\mu)/\\sigma\\)', '\\(X\\mu\\)', '\\(\\sigma/\\mu\\)', '\\(X-\\sigma\\)'],
         correct: 0
       },
       {
+        id: "vadqkt",
         question: 'The standard normal distribution has mean and variance:',
         options: ['0 and 1', '1 and 0', '\\(\\mu\\) and \\(\\sigma\\)', '0 and 0'],
         correct: 0
       },
       {
+        id: "isqi8k",
         question: 'If the Z-table gives \\(P(Z<z)\\), then \\(P(Z>z)\\) equals:',
         options: ['\\(P(Z<z)\\)', '\\(1-P(Z<z)\\)', '\\(2P(Z<z)\\)', '\\(z\\)'],
         correct: 1
       },
       {
+        id: "kacdv5",
         question: 'The normal distribution is:',
         options: ['Skewed right', 'Bell-shaped and symmetric', 'Discrete', 'Bounded at 0 and 1'],
         correct: 1
       },
       {
+        id: "95w5lx",
         question: 'Standardizing converts X (units) into Z (units of):',
         options: ['Dollars', 'Standard deviations from the mean', 'Counts', 'Percentages'],
         correct: 1
       },
       {
+        id: "5fn382",
         question: 'For \\(X \\sim N(80,100)\\), the standard deviation is:',
         options: ['100', '10', '80', '1'],
         correct: 1
@@ -863,41 +1005,50 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "jn5avd",
         sentence: 'A variable that can take any value in an interval is _______.',
         answer: 'continuous'
       },
       {
+        id: "mq85ox",
         sentence: 'For a continuous variable, probability equals the _______ under the density curve.',
         answer: 'area'
       },
       {
+        id: "nwq40e",
         sentence: 'The total area under a density function equals _______.',
         answer: '1'
       },
       {
+        id: "x7aa9h",
         sentence: 'The normal distribution is bell-shaped and _______.',
         answer: 'symmetric'
       },
       {
+        id: "suvnus",
         sentence: 'The Z-score equals (X minus mu) divided by _______.',
         answer: 'sigma',
         hint: '\\(Z=(X-\\mu)/\\sigma\\).'
       },
       {
+        id: "mm6jti",
         sentence: 'The standard normal distribution has mean _______.',
         answer: '0'
       },
       {
+        id: "esnj0t",
         sentence: 'The standard normal distribution has variance _______.',
         answer: '1'
       },
       {
+        id: "fwxuko",
         sentence: 'Converting X to a Z-score is called _______.',
         answer: 'standardizing'
       }
     ],
 
     learn: {
+      id: "vqi4fc",
       content:
         '<h3>Continuous Random Variables</h3>' +
         '<p>A <strong>continuous</strong> random variable can take <em>any</em> value in an interval — a guest’s weight could be 70 kg, 70.4 kg, 70.41 kg, and so on without limit. Because there are infinitely many possible values, the probability of any single exact value is <strong>zero</strong>, and we can only sensibly ask about <em>ranges</em>. This forces a different tool from the discrete world: instead of a list of probabilities we use a smooth curve.</p>' +
@@ -940,48 +1091,59 @@ const statisticsM1 = {
   },
 
   samplingDistributions: {
+    id: "mu3jeq",
     name: 'Sampling Distributions',
     icon: 'fa-vials',
     color: '#ef4444',
 
     flashcards: [
       {
+        id: "i4hx7b",
         question: 'What is a sampling distribution?',
         answer: 'The distribution of all possible values of a statistic (e.g. the sample mean) for a given sample size taken from a population. Different samples give different statistic values, and the sampling distribution describes that variability.'
       },
       {
+        id: "t1rakg",
         question: 'Write the standard error of the mean and explain it.',
         answer: '\\( \\sigma_{\\bar{x}} = \\dfrac{\\sigma}{\\sqrt{n}} \\)\nIt measures how much the sample mean varies from sample to sample. It DECREASES as the sample size \\(n\\) grows — larger samples give more precise means.'
       },
       {
+        id: "igx33e",
         question: 'If the population is normal, what is the sampling distribution of \\(\\bar{x}\\)?',
         answer: 'Also normal, with the same mean and a smaller spread:\n\\( \\mu_{\\bar{x}} = \\mu, \\qquad \\sigma_{\\bar{x}} = \\dfrac{\\sigma}{\\sqrt{n}} \\).'
       },
       {
+        id: "e0neys",
         question: 'State the Central Limit Theorem.',
         answer: 'For a large enough sample size, the sampling distribution of the sample mean is approximately NORMAL even if the population is NOT normal — with mean \\(\\mu\\) and standard error \\(\\sigma/\\sqrt{n}\\).'
       },
       {
+        id: "c88tti",
         question: 'How large is “large enough” for the CLT?',
         answer: 'For most distributions \\( n > 25 \\) (often stated as \\(n \\ge 30\\)) gives a nearly normal sampling distribution. If the population is already normal, \\(\\bar{x}\\) is normal for any \\(n\\).'
       },
       {
+        id: "mw5xcf",
         question: 'Write the Z-value for the sampling distribution of the mean.',
         answer: '\\( Z = \\dfrac{\\bar{x}-\\mu}{\\sigma/\\sqrt{n}} \\)\n— standardize the sample mean using the standard error in the denominator.'
       },
       {
+        id: "tbo1oq",
         question: 'When do you apply the finite population correction?',
         answer: 'When sampling WITHOUT replacement and the sample is large relative to the population (\\(n\\) more than about 5% of \\(N\\)). Then multiply the standard error by \\( \\sqrt{\\dfrac{N-n}{N-1}} \\).'
       },
       {
+        id: "3vhz53",
         question: 'Define the sample proportion and its sampling distribution.',
         answer: '\\( \\hat{p} = \\dfrac{x}{n} \\) estimates the population proportion \\(P\\). For large \\(n\\) (when \\(nP(1-P)>5\\)) it is approximately normal with\n\\( E(\\hat{p}) = P, \\qquad \\sigma_{\\hat{p}} = \\sqrt{\\dfrac{P(1-P)}{n}} \\).'
       },
       {
+        id: "ywkwh9",
         question: 'Write the Z-value for a sample proportion.',
         answer: '\\( Z = \\dfrac{\\hat{p}-P}{\\sqrt{P(1-P)/n}} \\)\n— standardize the sample proportion using its standard error.'
       },
       {
+        id: "9rkyuf",
         question: 'Why does a larger sample give a more reliable estimate?',
         answer: 'Because the standard error \\( \\sigma/\\sqrt{n} \\) shrinks as \\(n\\) increases, the sampling distribution becomes narrower, so sample statistics cluster more tightly around the true parameter.'
       }
@@ -989,51 +1151,61 @@ const statisticsM1 = {
 
     quiz: [
       {
+        id: "fsdn60",
         question: 'The distribution of all possible values of a statistic is a:',
         options: ['Population distribution', 'Sampling distribution', 'Frequency distribution', 'Density function'],
         correct: 1
       },
       {
+        id: "fokl90",
         question: 'The standard error of the mean equals:',
         options: ['\\(\\sigma\\)', '\\(\\sigma/\\sqrt{n}\\)', '\\(\\sigma^2/n\\)', '\\(\\sqrt{n}\\,\\sigma\\)'],
         correct: 1
       },
       {
+        id: "6px3qv",
         question: 'As the sample size increases, the standard error of the mean:',
         options: ['Increases', 'Decreases', 'Stays the same', 'Becomes 1'],
         correct: 1
       },
       {
+        id: "q7bt9n",
         question: 'The Central Limit Theorem says the sampling distribution of the mean is approximately:',
         options: ['Uniform', 'Normal', 'Binomial', 'Skewed'],
         correct: 1
       },
       {
+        id: "abmeom",
         question: 'The Z-value for a sample mean uses which denominator?',
         options: ['\\(\\sigma\\)', '\\(\\sigma/\\sqrt{n}\\)', '\\(n\\)', '\\(s^2\\)'],
         correct: 1
       },
       {
+        id: "ghnpfk",
         question: 'The mean of the sampling distribution of \\(\\bar{x}\\) equals:',
         options: ['\\(\\mu/n\\)', '\\(\\mu\\)', '0', '\\(\\sigma\\)'],
         correct: 1
       },
       {
+        id: "e1zgj4",
         question: 'The standard error of a sample proportion is:',
         options: ['\\(\\sqrt{P(1-P)/n}\\)', '\\(P(1-P)\\)', '\\(\\sigma/\\sqrt{n}\\)', '\\(P/n\\)'],
         correct: 0
       },
       {
+        id: "mcgp6w",
         question: 'A common rule of thumb for the CLT to apply is:',
         options: ['\\(n>5\\)', '\\(n>25\\) (often \\(n\\ge 30\\))', '\\(n>500\\)', '\\(n=1\\)'],
         correct: 1
       },
       {
+        id: "hyr6cz",
         question: 'The finite population correction is used when sampling:',
         options: ['With replacement', 'Without replacement and n > ~5% of N', 'From a normal population only', 'When n = 1'],
         correct: 1
       },
       {
+        id: "1ky0kw",
         question: 'The expected value of the sample proportion \\(\\hat p\\) is:',
         options: ['\\(P\\)', '\\(0\\)', '\\(n\\)', '\\(1-P\\)'],
         correct: 0
@@ -1042,41 +1214,50 @@ const statisticsM1 = {
 
     fillBlanks: [
       {
+        id: "jfdhzy",
         sentence: 'The distribution of a statistic over all possible samples is a _______ distribution.',
         answer: 'sampling'
       },
       {
+        id: "cuwved",
         sentence: 'The standard error of the mean is sigma divided by the square root of _______.',
         answer: 'n',
         hint: '\\(\\sigma_{\\bar x}=\\sigma/\\sqrt{n}\\).'
       },
       {
+        id: "21x77a",
         sentence: 'As n increases, the standard error _______.',
         answer: 'decreases'
       },
       {
+        id: "pkvhbm",
         sentence: 'The Central Limit Theorem makes the sample mean approximately _______.',
         answer: 'normal'
       },
       {
+        id: "dmym48",
         sentence: 'The mean of the sampling distribution of x-bar equals the population _______.',
         answer: 'mean'
       },
       {
+        id: "eczgf7",
         sentence: 'The sample proportion p-hat equals x divided by _______.',
         answer: 'n'
       },
       {
+        id: "fznpe3",
         sentence: 'The CLT applies even when the population is not _______.',
         answer: 'normal'
       },
       {
+        id: "9iabrb",
         sentence: 'A larger sample gives a more _______ estimate of the parameter.',
         answer: 'precise'
       }
     ],
 
     learn: {
+      id: "odcq1o",
       content:
         '<h3>Sampling Distributions</h3>' +
         '<p>This topic is the hinge between description and inference — the single most important idea in the course. The puzzle it solves: we take <em>one</em> sample and compute one \\(\\bar{x}\\), but a different sample would have given a different \\(\\bar{x}\\). So how far might our \\(\\bar{x}\\) be from the true \\(\\mu\\)? To answer that we imagine the statistic itself as a random variable with its own distribution.</p>' +

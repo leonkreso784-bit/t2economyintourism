@@ -6,42 +6,50 @@
 // window.managementM1 and window.managementM2 at module-load time.
 
 const managementExamPractice = {
+    id: "3ya08m",
     name: "Exam Practice (All Topics)",
     icon: "fa-graduation-cap",
     color: "#f59e0b",
 
     flashcards: [
         {
+            id: "l1wtwz",
             question: "Which topics make up the two midterm 'halves' that the final combines?",
             answer: "1st midterm (TU2–TU7): Management & its history · Problem solving & decision making · Strategic & operational planning · Organizing & delegating · Managing teamwork · Human resource management.\n\n2nd midterm (TU8–TU11): Organizational behavior · Motivating for high performance · Leading with influence · Managing control systems, finances & people.",
             explanation: "K1 = environment + planning + organizing; K2 = leading + controlling."
         },
         {
+            id: "l4qh1r",
             question: "EXAM REVIEW: name the FOUR management functions and link each to its main chapter.",
             answer: "1. PLANNING — decision making + strategic/operational planning.\n2. ORGANIZING — organizing & delegating work (+ HRM staffing, teamwork).\n3. LEADING — organizational behavior, motivation, leadership.\n4. CONTROLLING — control systems, finances & people.\n\nThey are distinct yet interrelated, performed simultaneously — NOT linear steps.",
             explanation: "The whole course is structured around the four functions."
         },
         {
+            id: "x1lj3b",
             question: "Cross-topic: the word 'CONTINGENCY' appears in several chapters — where?",
             answer: "• HISTORY — contingency theory: the best management approach depends on the situation (stable→mechanistic, innovative→organic).\n• PLANNING — contingency plans: backup plans for uncontrollable events.\n• LEADERSHIP — situational leadership is also called contingency theory (style depends on the situation).",
             explanation: "'It depends on the situation' is a recurring management idea."
         },
         {
+            id: "b7n5xd",
             question: "EXAM REVIEW: contrast MECHANISTIC vs ORGANIC across the course.",
             answer: "• STRUCTURE — mechanistic = bureaucratic, centralized, specialized; organic = flexible, decentralized, broad jobs.\n• ENVIRONMENT — mechanistic fits stable; organic fits dynamic.\n• TEAMS — mechanistic firms use management-directed groups; organic firms use self-directed teams.\n• APPRAISAL — mechanistic = manager evaluates; organic = peers (360-degree).",
             explanation: "The mechanistic–organic continuum ties together organizing, teamwork and HRM."
         },
         {
+            id: "qfthxp",
             question: "Cross-topic: which decision-making STEPS and control STEPS overlap?",
             answer: "Both end in PLANNING, IMPLEMENTING and CONTROLLING.\n• Decision-making model step 5–6 = plan/implement + control.\n• Control systems process = set standards → measure → compare → correct.\n\nObjectives are the common starting point: 'objectives are the ends; plans are the means.'",
             explanation: "Planning and controlling are two sides of the same coin (you can't control without objectives)."
         },
         {
+            id: "6gfu5c",
             question: "EXAM REVIEW: match the theorist to the idea — Taylor, Maslow, Herzberg, Vroom, Mintzberg, Tuckman.",
             answer: "• TAYLOR — scientific management (job efficiency).\n• MASLOW — hierarchy of needs (5 levels).\n• HERZBERG — two-factor theory (maintenance vs motivators).\n• VROOM — expectancy theory (E × I × V).\n• MINTZBERG — 10 management roles (3 categories).\n• TUCKMAN — 5 stages of group development.",
             explanation: "Knowing the name behind each model is a common exam question."
         },
         {
+            id: "wmyvpj",
             question: "Cross-topic: how does MOTIVATION connect content, process and reinforcement theories?",
             answer: "• CONTENT (Maslow, ERG, Herzberg, McClelland) = WHAT needs motivate.\n• PROCESS (equity, goal-setting, expectancy) = HOW/WHY we choose behaviors.\n• REINFORCEMENT (positive, avoidance, punishment, extinction) = consequences shape behavior.\n\nAll feed the performance formula: performance = ability × motivation × resources.",
             explanation: "Three complementary lenses on the single question 'how do I motivate people?'"
@@ -50,6 +58,7 @@ const managementExamPractice = {
 
     quiz: [
         {
+            id: "wtvz5q",
             question: "The four management functions are:",
             options: [
                 "Plan, hire, sell, report",
@@ -60,6 +69,7 @@ const managementExamPractice = {
             correct: 1
         },
         {
+            id: "fdmwsy",
             question: "'The best approach depends on the situation' is the core idea of:",
             options: [
                 "Scientific management",
@@ -70,6 +80,7 @@ const managementExamPractice = {
             correct: 1
         },
         {
+            id: "m7pf27",
             question: "Which pairing is correct?",
             options: [
                 "Maslow – two-factor theory",
@@ -80,21 +91,25 @@ const managementExamPractice = {
             correct: 2
         },
         {
+            id: "ol8ipx",
             question: "A self-directed team appears at which Tuckman stage?",
             options: ["Forming", "Storming", "Norming", "Performing"],
             correct: 3
         },
         {
+            id: "odr9h5",
             question: "On the Leadership Grid, the ideal style is:",
             options: ["(1,1)", "(9,1)", "(1,9)", "(9,9)"],
             correct: 3
         },
         {
+            id: "8pbdke",
             question: "Which is an EQUITY/EQUITY-financing instrument the firm never repays?",
             options: ["Bonds", "Stock", "Loans", "Budgets"],
             correct: 1
         },
         {
+            id: "71nzpa",
             question: "Selling products closer to the final customer (e.g. Apple Stores) is:",
             options: [
                 "Backward integration",
@@ -105,6 +120,7 @@ const managementExamPractice = {
             correct: 1
         },
         {
+            id: "4zyyiv",
             question: "Which control anticipates and PREVENTS problems at the input stage?",
             options: [
                 "Concurrent",
@@ -118,26 +134,31 @@ const managementExamPractice = {
 
     fillBlanks: [
         {
+            id: "9zanwz",
             sentence: "The four management functions are planning, organizing, leading and _______.",
             answer: "controlling",
             hint: "Monitor and correct..."
         },
         {
+            id: "9b9kcm",
             sentence: "Performance = ability × _______ × resources.",
             answer: "motivation",
             hint: "Willingness to achieve objectives..."
         },
         {
+            id: "wfeh9l",
             sentence: "The best management approach depends on the situation — this is _______ theory.",
             answer: "contingency",
             hint: "'It depends'..."
         },
         {
+            id: "47rrqi",
             sentence: "Vroom's expectancy formula is expectancy × instrumentality × _______.",
             answer: "valence",
             hint: "The value of the reward..."
         },
         {
+            id: "leq0js",
             sentence: "On the balance sheet, assets = liabilities + owners' _______.",
             answer: "equity",
             hint: "The owners' share..."
@@ -145,6 +166,7 @@ const managementExamPractice = {
     ],
 
     learn: {
+        id: "gpvlck",
         title: "Final Exam Practice — How to Use",
         content: `
             <h3>What is this category?</h3>

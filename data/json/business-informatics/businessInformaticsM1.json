@@ -1,50 +1,60 @@
 {
   "systemApproach": {
+    "id": "g9nm7r",
     "name": "System Approach & Informatics",
     "icon": "fa-sitemap",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "9linmx",
         "question": "What is the systems approach?",
         "answer": "A view based on the idea that everything is inter-related and interdependent.\nA system is composed of related and dependent elements which, when in interaction, form a unitary whole — an assemblage or combination of parts forming a complex whole.",
         "explanation": "The whole is understood through the relationships between its parts."
       },
       {
+        "id": "upvf76",
         "question": "What are the major concepts of the systems approach (Dinesh Thakur)?",
         "answer": "• Holism\n• Specialization\n• Non-summational\n• Grouping\n• Coordination\n• Emergent properties",
         "explanation": "These six concepts define how a system behaves as a whole."
       },
       {
+        "id": "1sqwns",
         "question": "What does \"holism\" mean in the systems approach?",
         "answer": "A change in any part/component of a system affects the whole system, directly or indirectly.",
         "explanation": "You cannot change one part in isolation."
       },
       {
+        "id": "9zuhjm",
         "question": "What does \"non-summational\" mean?",
         "answer": "Every component (subsystem) is important to the whole, so you must understand the actions of each component to get the holistic perspective. The whole is not simply the sum of its parts.",
         "explanation": "Understanding parts individually is not enough."
       },
       {
+        "id": "0hxj3n",
         "question": "What are \"emergent properties\"?",
         "answer": "A group of interrelated components has properties as a group that are not present in any individual component.\nExample: multicellular organisms show characteristics not present in individual cells.",
         "explanation": "This is the essence of the holistic view."
       },
       {
+        "id": "k6uy0l",
         "question": "What are the four key components of a system in the hospitality industry?",
         "answer": "• Inputs — resources: labour, equipment, raw materials (e.g. food ingredients)\n• Processes — activities that convert inputs to outputs (cooking, cleaning, guest service)\n• Outputs — services/products delivered (dining experience, accommodation)\n• Feedback — information from customers/staff used to improve future operations",
         "explanation": "Inputs → Processes → Outputs, with Feedback closing the loop."
       },
       {
+        "id": "gdaabz",
         "question": "What characterizes a system in hospitality?",
         "answer": "• Interdependence — all parts depend on each other (a kitchen problem affects food service)\n• Holistic view — decisions in one area affect the whole organization\n• Synergy — when parts work together, overall performance exceeds the sum of individual parts",
         "explanation": "Synergy is the practical payoff of the systems approach."
       },
       {
+        "id": "f1qe7k",
         "question": "What is systems thinking, and who founded it?",
         "answer": "A holistic way to investigate factors and interactions that could contribute to an outcome — a mindset more than a prescribed practice.\nFounded in 1956 by MIT professor Jay Forrester.",
         "explanation": "It helps see the big picture and how structure influences performance."
       },
       {
+        "id": "zduhd9",
         "question": "How does systems thinking differ from traditional analysis?",
         "answer": "Traditional analysis breaks what is studied into separate, individual parts.\nSystems thinking instead focuses on how the parts interrelate and on the whole.",
         "explanation": "\"Analysis\" literally means breaking into constituent parts; systems thinking does the opposite."
@@ -52,6 +62,7 @@
     ],
     "quiz": [
       {
+        "id": "5uk01d",
         "question": "The systems approach is based on the idea that elements are:",
         "options": [
           "Independent and separate",
@@ -62,6 +73,7 @@
         "correct": 1
       },
       {
+        "id": "wmfx7q",
         "question": "Which is NOT a major concept of the systems approach?",
         "options": [
           "Holism",
@@ -72,6 +84,7 @@
         "correct": 3
       },
       {
+        "id": "fxlu8h",
         "question": "In a hospitality system, cooking, cleaning and guest service are examples of:",
         "options": [
           "Inputs",
@@ -82,6 +95,7 @@
         "correct": 1
       },
       {
+        "id": "u415z3",
         "question": "Systems thinking was founded in 1956 by:",
         "options": [
           "Albert Einstein",
@@ -92,6 +106,7 @@
         "correct": 1
       },
       {
+        "id": "s4cjxp",
         "question": "\"The performance of the whole is greater than the sum of its parts\" describes:",
         "options": [
           "Interdependence",
@@ -104,72 +119,86 @@
     ],
     "fillBlanks": [
       {
+        "id": "80md8r",
         "sentence": "A system is composed of related and dependent elements which, in interaction, form a _______ whole.",
         "answer": "unitary",
         "hint": "Single / unified."
       },
       {
+        "id": "bj8wj7",
         "sentence": "In the systems approach, _______ means that a change in one part affects the whole system.",
         "answer": "holism",
         "hint": "The \"whole\" concept."
       },
       {
+        "id": "ss755s",
         "sentence": "In hospitality, resources such as labour, equipment and food ingredients are the system’s _______.",
         "answer": "inputs",
         "hint": "What enters the process."
       },
       {
+        "id": "eq9xia",
         "sentence": "_______ thinking is a holistic way to investigate factors and interactions that contribute to an outcome.",
         "answer": "systems",
         "hint": "Founded by Jay Forrester."
       }
     ],
     "learn": {
+      "id": "9snst9",
       "content": "\n        <h3>System Approach &amp; Informatics</h3>\n        <p>The <strong>systems approach</strong> is based on the generalization that everything is\n        inter-related and interdependent. A <em>system</em> is a combination of related, dependent\n        elements which, in interaction, form a unitary whole.</p>\n\n        <h4>Major concepts (Dinesh Thakur)</h4>\n        <ul>\n          <li><strong>Holism</strong> — a change in any part affects the whole.</li>\n          <li><strong>Specialization</strong> — the whole is divided into smaller components, each with a specialized role.</li>\n          <li><strong>Non-summational</strong> — every component matters; the whole is not just the sum of its parts.</li>\n          <li><strong>Grouping</strong> — related components are grouped to manage complexity.</li>\n          <li><strong>Coordination</strong> — grouped components must be coordinated to avoid chaos.</li>\n          <li><strong>Emergent properties</strong> — the group has properties no single component has.</li>\n        </ul>\n\n        <h4>The system in the hospitality industry</h4>\n        <p>A hospitality organization is a unified whole where each department is interdependent:</p>\n        <ul>\n          <li><strong>Inputs</strong> — labour, equipment, raw materials (e.g. food ingredients).</li>\n          <li><strong>Processes</strong> — cooking, cleaning, guest service.</li>\n          <li><strong>Outputs</strong> — dining experience, accommodation.</li>\n          <li><strong>Feedback</strong> — information from customers/staff to improve operations.</li>\n        </ul>\n        <p>Key characteristics: <strong>interdependence</strong>, a <strong>holistic view</strong>, and\n        <strong>synergy</strong> (the whole performs better than the sum of its parts).</p>\n\n        <h4>Systems thinking</h4>\n        <p><strong>Systems thinking</strong> is a holistic way to investigate factors and interactions\n        that contribute to an outcome — a mindset more than a practice. It was founded in 1956 by MIT\n        professor <strong>Jay Forrester</strong>. It is used to examine how we create our own problems,\n        to see the big picture, and to understand how structure influences performance.</p>\n        <p>Unlike <em>traditional analysis</em> (which breaks things into separate parts), systems\n        thinking focuses on how the parts <strong>interrelate</strong>.</p>\n      ",
       "image": null
     }
   },
   "dataInfoKnowledge": {
+    "id": "7itp4o",
     "name": "Data, Information & Knowledge",
     "icon": "fa-database",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "2vcg3v",
         "question": "What is data?",
         "answer": "Raw facts and figures that on their own have no meaning. Data can be any alphanumeric characters — text, numbers or symbols.\nExample: \"15012002\", \"23\", \"English\" mean nothing without context.",
         "explanation": "Data has no meaning until it is given a context and processed."
       },
       {
+        "id": "qe7gcz",
         "question": "What is information?",
         "answer": "Data that has been processed within a context to give it meaning, presented in a useful format.\nExample: \"Maja’s date of birth is 15/01/02\" or \"The computer costs $1066\".",
         "explanation": "Context + processing turns data into information."
       },
       {
+        "id": "wklcqh",
         "question": "What is knowledge?",
         "answer": "The ability to interpret information and apply it to solve problems or make decisions — the understanding of the rules needed to interpret information.",
         "explanation": "Debbie Jones: understanding the relationship between pieces of information and what to do with it."
       },
       {
+        "id": "gd9nic",
         "question": "How does data become information?",
         "answer": "Data must be processed within a context to give it meaning, then presented in its most useful format.",
         "explanation": "Without context, data stays meaningless."
       },
       {
+        "id": "0gcfv9",
         "question": "Give hotel-industry examples of DATA.",
         "answer": "• 100 guests checked in yesterday\n• The average room rate is $150\n• The restaurant sold 250 steaks last week",
         "explanation": "Raw numbers/facts, not yet interpreted."
       },
       {
+        "id": "gdb816",
         "question": "Give hotel-industry examples of INFORMATION.",
         "answer": "• The most popular room type is the deluxe suite\n• The busiest day of the week is Friday\n• July occupancy rate was 85%",
         "explanation": "Processed and organized data."
       },
       {
+        "id": "j1f995",
         "question": "Give hotel-industry examples of KNOWLEDGE.",
         "answer": "• Predicting high room demand in summer from occupancy rates\n• Scheduling extra staff on the busiest day\n• Using guest preferences to improve the guest experience",
         "explanation": "Interpreting information to make decisions."
       },
       {
+        "id": "eda4l2",
         "question": "What is the relationship Data → Information → Knowledge?",
         "answer": "Data (raw facts) → processed within a context → Information (meaningful) → interpreted and applied → Knowledge (decisions, problem-solving).",
         "explanation": "Each stage adds meaning and usefulness."
@@ -177,6 +206,7 @@
     ],
     "quiz": [
       {
+        "id": "tvzev0",
         "question": "Raw facts and figures that have no meaning on their own are:",
         "options": [
           "Information",
@@ -187,6 +217,7 @@
         "correct": 1
       },
       {
+        "id": "72nrjk",
         "question": "\"The hotel’s July occupancy rate was 85%\" is an example of:",
         "options": [
           "Data",
@@ -197,6 +228,7 @@
         "correct": 1
       },
       {
+        "id": "bo799d",
         "question": "The ability to interpret information and apply it to make decisions is:",
         "options": [
           "Data",
@@ -207,6 +239,7 @@
         "correct": 2
       },
       {
+        "id": "a27429",
         "question": "Data becomes information when it is:",
         "options": [
           "Deleted",
@@ -217,6 +250,7 @@
         "correct": 1
       },
       {
+        "id": "ihbilf",
         "question": "\"Predicting high demand for rooms in summer from occupancy rates\" is an example of:",
         "options": [
           "Data",
@@ -229,77 +263,92 @@
     ],
     "fillBlanks": [
       {
+        "id": "lh2a2x",
         "sentence": "_______ are raw facts and figures that on their own have no meaning.",
         "answer": "data",
         "hint": "Raw facts and numbers."
       },
       {
+        "id": "n8zfr1",
         "sentence": "Information is data that has been processed within a _______ to give it meaning.",
         "answer": "context",
         "hint": "The situation that gives meaning."
       },
       {
+        "id": "t51nxo",
         "sentence": "_______ is the ability to interpret information and apply it to solve problems.",
         "answer": "knowledge",
         "hint": "Comes after information."
       },
       {
+        "id": "c0bvyj",
         "sentence": "\"100 guests checked in yesterday\" is an example of _______ in the hotel industry.",
         "answer": "data",
         "hint": "A raw fact."
       }
     ],
     "learn": {
+      "id": "fgoc44",
       "content": "\n        <h3>Data, Information &amp; Knowledge</h3>\n        <h4>Data</h4>\n        <p><strong>Data</strong> are raw facts and figures (text, numbers, symbols) that on their own\n        have <em>no meaning</em> — e.g. <code>15012002</code>, <code>23</code>, \"English\".</p>\n        <h4>Information</h4>\n        <p><strong>Information</strong> is data processed within a <strong>context</strong> to give it\n        meaning, presented usefully — e.g. \"Maja’s date of birth is 15/01/02\".</p>\n        <h4>Knowledge</h4>\n        <p><strong>Knowledge</strong> is the ability to interpret information and apply it to solve\n        problems or make decisions (understanding the rules needed to interpret information).</p>\n        <h4>Hotel industry example</h4>\n        <ul>\n          <li><strong>Data:</strong> 100 guests checked in yesterday; average room rate $150.</li>\n          <li><strong>Information:</strong> busiest day is Friday; July occupancy was 85%.</li>\n          <li><strong>Knowledge:</strong> expect high demand in summer → schedule more staff.</li>\n        </ul>\n        <div class=\"tip-box\"><strong>Chain:</strong> Data → (context + processing) → Information → (interpretation) → Knowledge.</div>\n      ",
       "image": null
     }
   },
   "hardware": {
+    "id": "sogaq1",
     "name": "Hardware",
     "icon": "fa-microchip",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "s6f98g",
         "question": "What is computer hardware?",
         "answer": "The physical devices that make up a computer. A computer is a system composed of several components that all work together.",
         "explanation": "Tangible parts, as opposed to software (the instructions)."
       },
       {
+        "id": "s9vyjv",
         "question": "What are the typical major components of a computer?",
         "answer": "• Central Processing Unit (CPU)\n• Main memory (RAM)\n• Secondary storage devices\n• Input and output devices",
         "explanation": "These work together as one system."
       },
       {
+        "id": "mmsvha",
         "question": "What is the CPU and why is it important?",
         "answer": "The part of the computer that actually runs programs — the most important component; without it you cannot run software. CPUs on small chips are called microprocessors.",
         "explanation": "It executes instructions and controls data flow."
       },
       {
+        "id": "1ln761",
         "question": "What is RAM (main memory)?",
         "answer": "Where the computer stores a program while it runs and the data it uses; the CPU accesses it quickly. RAM is volatile — its contents are erased when the computer is turned off (temporary storage).",
         "explanation": "Volatile = lost without power."
       },
       {
+        "id": "2pxcj6",
         "question": "What is secondary storage, and what is it for?",
         "answer": "Storage that holds data for long periods. Programs are normally stored here and then loaded into main memory when needed.",
         "explanation": "Permanent storage, unlike RAM."
       },
       {
+        "id": "lup9u6",
         "question": "Name the types of secondary storage.",
         "answer": "• Disk drive (HDD) — magnetic spinning disk\n• Solid State Drive (SSD) — faster, no moving parts\n• Flash memory — portable, e.g. USB drive\n• Optical devices — CD, DVD, Blu-ray",
         "explanation": "SSD is faster than a mechanical disk drive."
       },
       {
+        "id": "2o7hjd",
         "question": "What are input devices?",
         "answer": "Components that collect data from people or other devices — e.g. keyboard, mouse, touchscreen, scanner, camera. Disk drives can act as input (they load programs into main memory).",
         "explanation": "Input = data the computer collects."
       },
       {
+        "id": "20ed7u",
         "question": "What are output devices?",
         "answer": "Components that format and present output (text, image, audio) — e.g. video display, printer. Disk and USB drives can act as output because data is sent to them to be saved.",
         "explanation": "Output = data produced by the computer."
       },
       {
+        "id": "1n7v7m",
         "question": "How do hardware and software relate?",
         "answer": "They are complementary: a computing device works efficiently and produces useful output only when both hardware and software work together.",
         "explanation": "Neither is useful alone."
@@ -307,6 +356,7 @@
     ],
     "quiz": [
       {
+        "id": "6392nd",
         "question": "The most important component, which actually runs programs, is the:",
         "options": [
           "RAM",
@@ -317,6 +367,7 @@
         "correct": 1
       },
       {
+        "id": "wfztdd",
         "question": "RAM is described as ____ memory (its contents are erased when power is off):",
         "options": [
           "Permanent",
@@ -327,6 +378,7 @@
         "correct": 1
       },
       {
+        "id": "0b2iqp",
         "question": "Which of these is an example of secondary storage?",
         "options": [
           "CPU",
@@ -337,6 +389,7 @@
         "correct": 2
       },
       {
+        "id": "meyp7g",
         "question": "A keyboard is an example of a(n):",
         "options": [
           "Output device",
@@ -347,6 +400,7 @@
         "correct": 1
       },
       {
+        "id": "wy6mhx",
         "question": "Which secondary storage has no moving parts and is faster than a disk drive?",
         "options": [
           "HDD",
@@ -359,72 +413,86 @@
     ],
     "fillBlanks": [
       {
+        "id": "5dt9ma",
         "sentence": "The _______ is the component that actually runs programs and is the most important part of the computer.",
         "answer": "CPU",
         "hint": "Central Processing Unit."
       },
       {
+        "id": "xaeqrt",
         "sentence": "RAM is _______ memory, so its contents are erased when the computer is turned off.",
         "answer": "volatile",
         "hint": "Lost without power."
       },
       {
+        "id": "ifb1vz",
         "sentence": "An _______ device collects data from people, e.g. a keyboard or mouse.",
         "answer": "input",
         "hint": "Opposite of output."
       },
       {
+        "id": "u2xeso",
         "sentence": "An _______ (no moving parts) is faster than a magnetic disk drive.",
         "answer": "SSD",
         "hint": "Solid State Drive."
       }
     ],
     "learn": {
+      "id": "09ycvj",
       "content": "\n        <h3>Hardware</h3>\n        <p><strong>Hardware</strong> is the physical devices that make up a computer. A computer is a\n        system of components that work together.</p>\n        <h4>Major components</h4>\n        <ul>\n          <li><strong>CPU</strong> — runs programs; the most important component (a microprocessor on a chip).</li>\n          <li><strong>Main memory (RAM)</strong> — fast, temporary storage for running programs/data; <em>volatile</em> (erased when off).</li>\n          <li><strong>Secondary storage</strong> — long-term: HDD (magnetic), SSD (fast, no moving parts), flash/USB, optical (CD/DVD/Blu-ray).</li>\n          <li><strong>Input / Output devices</strong> — input: keyboard, mouse, scanner; output: display, printer.</li>\n        </ul>\n        <p>Hardware and software are <strong>complementary</strong> — a device is useful only when both work together.</p>\n      ",
       "image": null
     }
   },
   "software": {
+    "id": "vn7epk",
     "name": "Software",
     "icon": "fa-code",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "rep5xa",
         "question": "What is software?",
         "answer": "A set of instructions, data, or programs used to operate a computer and execute specific tasks — software tells a computer how to function. It is a generic term for applications, scripts and programs.",
         "explanation": "Without software, most computers would be useless."
       },
       {
+        "id": "rg2gcg",
         "question": "What are the two main types of software?",
         "answer": "1. System software\n2. Application software",
         "explanation": "System software runs the machine; application software serves the user."
       },
       {
+        "id": "oles74",
         "question": "What is application software?",
         "answer": "Software that helps an end user complete tasks (research, notes, graphics, accounting). It sits above system software, is designed for the end user and is specific in functionality (sometimes called \"non-essential\" software).",
         "explanation": "Installed and used based on the user’s needs."
       },
       {
+        "id": "zu52h4",
         "question": "Give types/examples of application software.",
         "answer": "• Word processors — MS Word, Google Docs\n• Spreadsheets — Excel, Google Sheets\n• Database (DBMS) — MySQL, FileMaker\n• Multimedia — Adobe Photoshop\n• Application suites — Microsoft Office\n• Browsers — Chrome\n• Email — Outlook, Gmail",
         "explanation": "Each targets a specific end-user task."
       },
       {
+        "id": "hu9vpb",
         "question": "What is system software?",
         "answer": "Software that helps the user, hardware and application software interact — a mediator/middle layer between the user and the hardware. It manages the whole system, is loaded first at startup, and runs in the background (not used directly by end users).",
         "explanation": "Essential, unlike \"non-essential\" application software."
       },
       {
+        "id": "9kf216",
         "question": "What is an operating system (OS)?",
         "answer": "System software that serves as the interface between other applications and the hardware, managing all other programs in the computer.",
         "explanation": "The best-known example of system software."
       },
       {
+        "id": "p57xya",
         "question": "Give examples of system software (besides the OS).",
         "answer": "• BIOS — built-in firmware: what a computer can do without disk programs\n• Boot — loads the OS into RAM\n• Assembler — converts basic instructions into bits the processor uses\n• Device driver — controls a device (e.g. keyboard, mouse)",
         "explanation": "All run in the background to manage the system."
       },
       {
+        "id": "pjcoaz",
         "question": "How do software and hardware differ?",
         "answer": "Software is logical (instructions that enable interaction); hardware is physical (devices that store and run software). Software failure is systematic and it does not wear out (though bugs arise); hardware failure is random and hardware wears out over time.",
         "explanation": "They are complementary but different in nature."
@@ -432,6 +500,7 @@
     ],
     "quiz": [
       {
+        "id": "upp6s7",
         "question": "Software is best described as:",
         "options": [
           "Physical devices",
@@ -442,6 +511,7 @@
         "correct": 1
       },
       {
+        "id": "dbpfpi",
         "question": "The two main types of software are:",
         "options": [
           "Input & output",
@@ -452,6 +522,7 @@
         "correct": 1
       },
       {
+        "id": "lee10k",
         "question": "Microsoft Excel and Google Docs are examples of:",
         "options": [
           "System software",
@@ -462,6 +533,7 @@
         "correct": 1
       },
       {
+        "id": "e7ason",
         "question": "Which acts as the interface between applications and the hardware?",
         "options": [
           "Spreadsheet",
@@ -472,6 +544,7 @@
         "correct": 1
       },
       {
+        "id": "6pmn40",
         "question": "Which is an example of system software?",
         "options": [
           "Adobe Photoshop",
@@ -484,77 +557,92 @@
     ],
     "fillBlanks": [
       {
+        "id": "mq1vhk",
         "sentence": "_______ is a set of instructions that tells a computer how to function.",
         "answer": "software",
         "hint": "Opposite of hardware."
       },
       {
+        "id": "hiemq0",
         "sentence": "_______ software helps the end user complete tasks like writing documents or editing photos.",
         "answer": "application",
         "hint": "Sits above system software."
       },
       {
+        "id": "xylk24",
         "sentence": "The _______ system is system software that manages all programs and interfaces with the hardware.",
         "answer": "operating",
         "hint": "OS."
       },
       {
+        "id": "y5voiv",
         "sentence": "_______ is built-in firmware that sets what a computer can do without accessing programs from a disk.",
         "answer": "BIOS",
         "hint": "Basic Input/Output System."
       }
     ],
     "learn": {
+      "id": "pq32zm",
       "content": "\n        <h3>Software</h3>\n        <p><strong>Software</strong> is a set of instructions, data or programs used to operate a\n        computer and execute tasks — it tells the computer how to function. There are two main types:</p>\n        <h4>Application software</h4>\n        <p>Helps the <strong>end user</strong> complete tasks; sits above system software. Examples:\n        word processors (Word), spreadsheets (Excel), databases (MySQL), multimedia (Photoshop),\n        suites (MS Office), browsers (Chrome), email (Outlook).</p>\n        <h4>System software</h4>\n        <p>A <strong>middle layer</strong> between the user and the hardware; manages the whole system\n        and runs in the background. Examples: <strong>OS</strong> (interface to hardware), BIOS, Boot,\n        Assembler, Device drivers.</p>\n        <h4>Software vs hardware</h4>\n        <ul>\n          <li>Software is <strong>logical</strong> (instructions); hardware is <strong>physical</strong> (devices).</li>\n          <li>Software failure is systematic and it doesn’t wear out; hardware failure is random and it wears out.</li>\n        </ul>\n      ",
       "image": null
     }
   },
   "networks": {
+    "id": "4z0tlc",
     "name": "Computer Networks",
     "icon": "fa-network-wired",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "m9bh9i",
         "question": "What is a computer network?",
         "answer": "Two or more computers connected so they can share their data, resources and applications.",
         "explanation": "Networks are classified by size and function."
       },
       {
+        "id": "layq9i",
         "question": "What are the main types of network by size?",
         "answer": "• LAN — Local Area Network\n• PAN — Personal Area Network\n• MAN — Metropolitan Area Network\n• WAN — Wide Area Network\n• GAN — Global Area Network",
         "explanation": "They differ by geographic range."
       },
       {
+        "id": "aoq8fx",
         "question": "What is a LAN?",
         "answer": "A Local Area Network — computers linked over a limited range (apartment, office) via communication devices such as cables, routers and switches.",
         "explanation": "Smallest common business network."
       },
       {
+        "id": "5d8322",
         "question": "What is a PAN?",
         "answer": "A Personal Area Network — very short range (~10–30 m) for personal devices: laptop, smartphone, game stations, gadgets. Can be wired or wireless.",
         "explanation": "Centered on one person."
       },
       {
+        "id": "aecsz5",
         "question": "What is a MAN?",
         "answer": "A Metropolitan Area Network — covers a large geographical area (e.g. a city) by interconnecting several LANs, often via telephone communication technology.",
         "explanation": "Bigger than LAN, smaller than WAN."
       },
       {
+        "id": "lu4tsh",
         "question": "What is a WAN, and what is a GAN?",
         "answer": "WAN (Wide Area Network) covers a huge geographic range (e.g. a whole city/region), often using mobile-operator infrastructure.\nGAN (Global Area Network) covers a country or the entire world — a \"network of networks\" (satellite/wireless).",
         "explanation": "WAN = wide; GAN = global."
       },
       {
+        "id": "ia4s4b",
         "question": "Name the main networking devices (nodes).",
         "answer": "NIC, Repeater, Hub, Switch, Bridge, Router, Gateway, Firewall.",
         "explanation": "Each plays a role in moving/controlling data."
       },
       {
+        "id": "xk37lb",
         "question": "What is a NIC, and what is a MAC address?",
         "answer": "A Network Interface Card (NIC) physically connects a host to the network media (a circuit board / network adapter). Each NIC has a unique Media Access Control (MAC) address used to control data communication for that host.",
         "explanation": "MAC = unique hardware identifier."
       },
       {
+        "id": "c4g1a2",
         "question": "How does a switch differ from a hub, and what does a router add?",
         "answer": "A hub passively concentrates connections (all hosts seen as one unit). A switch is more intelligent — it sends data only to the connection that needs it. A router has all capabilities and can connect to a WAN, linking LANs separated by great distances.",
         "explanation": "Hub → Switch → Router: increasing intelligence."
@@ -562,6 +650,7 @@
     ],
     "quiz": [
       {
+        "id": "824uh2",
         "question": "A computer network lets connected computers share:",
         "options": [
           "Only electricity",
@@ -572,6 +661,7 @@
         "correct": 1
       },
       {
+        "id": "njm2fg",
         "question": "A network limited to an office or apartment is a:",
         "options": [
           "WAN",
@@ -582,6 +672,7 @@
         "correct": 1
       },
       {
+        "id": "0v2htn",
         "question": "A network covering a whole city by connecting several LANs is a:",
         "options": [
           "PAN",
@@ -592,6 +683,7 @@
         "correct": 2
       },
       {
+        "id": "7hyr54",
         "question": "The unique hardware address of a NIC is called the ___ address:",
         "options": [
           "IP",
@@ -602,6 +694,7 @@
         "correct": 1
       },
       {
+        "id": "1hhfw3",
         "question": "Which device has all capabilities and can connect LANs over great distances via a WAN?",
         "options": [
           "Hub",
@@ -614,72 +707,86 @@
     ],
     "fillBlanks": [
       {
+        "id": "yn27wj",
         "sentence": "A computer _______ is two or more computers connected to share data and resources.",
         "answer": "network",
         "hint": "The topic of this chapter."
       },
       {
+        "id": "lk18bn",
         "sentence": "A _______ (Local Area Network) connects computers within a limited area like an office.",
         "answer": "LAN",
         "hint": "Smallest type."
       },
       {
+        "id": "5is15r",
         "sentence": "Each NIC is identified by a unique _______ address.",
         "answer": "MAC",
         "hint": "Media Access Control."
       },
       {
+        "id": "kqys3y",
         "sentence": "A _______ can connect to a WAN and link LANs separated by great distances.",
         "answer": "router",
         "hint": "Most capable node."
       }
     ],
     "learn": {
+      "id": "mgst73",
       "content": "\n        <h3>Computer Networks</h3>\n        <p>A <strong>computer network</strong> is two or more computers connected so they can share\n        data, resources and applications.</p>\n        <h4>Types by size</h4>\n        <ul>\n          <li><strong>LAN</strong> — Local Area Network (office/apartment).</li>\n          <li><strong>PAN</strong> — Personal Area Network (~10–30 m, personal devices).</li>\n          <li><strong>MAN</strong> — Metropolitan Area Network (city; connects LANs).</li>\n          <li><strong>WAN</strong> — Wide Area Network (region/city, mobile infrastructure).</li>\n          <li><strong>GAN</strong> — Global Area Network (country/world; network of networks).</li>\n        </ul>\n        <h4>Networking devices (nodes)</h4>\n        <p><strong>NIC</strong> (with a unique <strong>MAC</strong> address), Repeater, Hub, Bridge,\n        Switch, Router, Gateway, Firewall. Intelligence increases from a passive <em>hub</em> → a\n        <em>switch</em> (sends data only where needed) → a <em>router</em> (connects LANs across a WAN).</p>\n      ",
       "image": null
     }
   },
   "www": {
+    "id": "icbl82",
     "name": "World Wide Web",
     "icon": "fa-globe",
     "color": "#2563eb",
     "flashcards": [
       {
+        "id": "tlg7v7",
         "question": "What is the Internet?",
         "answer": "An enormous network of networks — the massive computer network that connects devices using copper wires, wireless networks or fibre-optic cables.",
         "explanation": "It is the infrastructure; the Web is a service on top of it."
       },
       {
+        "id": "77jvmy",
         "question": "What is the World Wide Web (WWW)?",
         "answer": "A way of accessing information over the Internet — one of its major services. It is a large collection of web pages (text, graphics, sound, video) linked by hyperlinks, delivered via the HTTP protocol and viewed in browsers.",
         "explanation": "The Web is content; the Internet is the network."
       },
       {
+        "id": "1vi2a3",
         "question": "What is the difference between the Internet and the WWW?",
         "answer": "The Internet is the enormous network of networks (infrastructure connecting devices via cables/wireless/fibre).\nThe WWW is a large collection of web pages linked by hyperlinks — a service provided by the Internet.",
         "explanation": "Often used interchangeably, but the Web is just one service of the Internet."
       },
       {
+        "id": "oihwrg",
         "question": "How does the WWW work (clients and servers)?",
         "answer": "Clients are users’ internet-connected devices plus a web browser. Servers are computers that store web pages/sites/apps. When a client requests a page, a copy is downloaded from the server and displayed in the browser.",
         "explanation": "Request → download copy → display."
       },
       {
+        "id": "ba54d5",
         "question": "What is a web browser, and what is a search engine?",
         "answer": "A web browser is software that lets a user locate, access and display web pages (e.g. Chrome, Firefox, Safari).\nA search engine is a service that lets users search for content via the WWW.",
         "explanation": "Browser = view pages; search engine = find pages."
       },
       {
+        "id": "ghhb5n",
         "question": "What is DNS (Domain Name System)?",
         "answer": "A system that maps memorable domain names (e.g. example.com) to numeric IP addresses (e.g. 93.184.216.34), so humans use names while computers use IP addresses.",
         "explanation": "A \"phone book\" of the Internet."
       },
       {
+        "id": "5ublvk",
         "question": "What is the client/server model on the web?",
         "answer": "The client (a web browser) requests a service; the server (a web server) fulfils the request and transmits the results back over the network, following agreed protocols.",
         "explanation": "Client requests, server responds."
       },
       {
+        "id": "uykheo",
         "question": "Name key Internet protocols and their roles.",
         "answer": "• HTTP — transfers web pages\n• FTP — transfers files between computers\n• SMTP — sends email\n• POP / IMAP — receive email\n• TCP/IP — official Internet protocol: TCP breaks data into packets & ensures integrity, IP routes packets to the destination",
         "explanation": "Protocols are the rules of communication."
@@ -687,6 +794,7 @@
     ],
     "quiz": [
       {
+        "id": "zgf9zj",
         "question": "The Internet is best described as:",
         "options": [
           "A collection of web pages",
@@ -697,6 +805,7 @@
         "correct": 1
       },
       {
+        "id": "xml6uu",
         "question": "The World Wide Web is:",
         "options": [
           "Exactly the same as the Internet",
@@ -707,6 +816,7 @@
         "correct": 1
       },
       {
+        "id": "17ujmi",
         "question": "DNS maps domain names to:",
         "options": [
           "MAC addresses",
@@ -717,6 +827,7 @@
         "correct": 1
       },
       {
+        "id": "qiicr6",
         "question": "Which protocol is used to transfer web pages?",
         "options": [
           "FTP",
@@ -727,6 +838,7 @@
         "correct": 1
       },
       {
+        "id": "0287pw",
         "question": "In the web client/server model, the client is usually the:",
         "options": [
           "Web server",
@@ -739,27 +851,32 @@
     ],
     "fillBlanks": [
       {
+        "id": "qvgzci",
         "sentence": "The _______ is an enormous network of networks connecting devices via cables, wireless and fibre.",
         "answer": "Internet",
         "hint": "The infrastructure."
       },
       {
+        "id": "cvbr9h",
         "sentence": "The World Wide Web is a collection of web pages linked by _______.",
         "answer": "hyperlinks",
         "hint": "Clickable links."
       },
       {
+        "id": "vi36iq",
         "sentence": "_______ maps memorable domain names to numeric IP addresses.",
         "answer": "DNS",
         "hint": "Domain Name System."
       },
       {
+        "id": "2le9md",
         "sentence": "The Web uses the _______ protocol to transmit web pages.",
         "answer": "HTTP",
         "hint": "HyperText Transfer Protocol."
       }
     ],
     "learn": {
+      "id": "7027vm",
       "content": "\n        <h3>World Wide Web</h3>\n        <h4>Internet vs WWW</h4>\n        <p>The <strong>Internet</strong> is an enormous network of networks (devices connected via\n        cables, wireless, fibre). The <strong>WWW</strong> is a large collection of web pages linked by\n        <strong>hyperlinks</strong> — a <em>service provided by</em> the Internet, delivered over HTTP\n        and viewed in browsers.</p>\n        <h4>How it works</h4>\n        <p><strong>Clients</strong> (your device + browser) request pages; <strong>servers</strong>\n        store them and send a copy back to display. Tools: <strong>web browser</strong> (view pages),\n        <strong>search engine</strong> (find content), <strong>DNS</strong> (maps domain names ↔ IP addresses).</p>\n        <h4>Key protocols</h4>\n        <ul>\n          <li><strong>HTTP</strong> — web pages; <strong>FTP</strong> — files.</li>\n          <li><strong>SMTP</strong> — send email; <strong>POP/IMAP</strong> — receive email.</li>\n          <li><strong>TCP/IP</strong> — the Internet’s official protocol (TCP packets + integrity, IP routing).</li>\n        </ul>\n      ",
       "image": null
     }

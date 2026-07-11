@@ -10,52 +10,64 @@
 
 const microeconomicsM2 = {
   profitMaximization: {
+    id: "t12q5f",
     name: 'Profit Maximization & Competitive Supply',
     icon: 'fa-bullseye',
     color: '#0ea5e9',
 
     flashcards: [
       {
+        id: "yltex8",
         question: 'How is profit defined, and what does a firm maximize?',
         answer: 'Profit is total revenue minus total cost:\n\\( \\pi = TR - TC \\)\nThe firm chooses the output level that makes this difference as large as possible.'
       },
       {
+        id: "5pxwd8",
         question: 'State the profit-maximizing rule for any firm.',
         answer: 'Produce the output where marginal revenue equals marginal cost:\n\\( MR = MC \\)\nIf \\(MR > MC\\), producing more adds to profit; if \\(MR < MC\\), cutting output raises profit.'
       },
       {
+        id: "zgyl33",
         question: 'Why is a perfectly competitive firm a "price taker", and what does that imply for MR?',
         answer: 'It is one of many sellers of a homogeneous product, so it cannot influence the market price — it faces a horizontal (infinitely elastic) demand curve at the market price. Therefore price equals average and marginal revenue:\n\\( P = AR = MR \\)\nso the profit-max condition becomes \\( P = MR = MC \\).'
       },
       {
+        id: "wm2q5h",
         question: 'List the four market structures.',
         answer: '1. Perfect competition — many firms, homogeneous product\n2. Monopoly — a single seller\n3. Monopolistic competition — many firms, DIFFERENTIATED products, free entry\n4. Oligopoly — a few firms, entry possible but not easy'
       },
       {
+        id: "tm4sm9",
         question: 'What are the defining characteristics of perfect competition?',
         answer: '• A great number of buyers and sellers\n• A homogeneous (identical) product\n• Perfect mobility of resources\n• Perfect knowledge of present and future prices, costs and opportunities\nEach firm is a price taker.'
       },
       {
+        id: "v77ypp",
         question: 'What is the short-run shut-down rule?',
         answer: 'A competitive firm keeps producing as long as price covers average variable cost (\\(P \\ge AVC\\)). If \\(P < AVC\\) it shuts down, because it would lose less by producing nothing (it still pays fixed cost either way).'
       },
       {
+        id: "68xehk",
         question: 'What is the short-run supply curve of a competitive firm?',
         answer: 'The rising portion of its marginal cost curve that lies ABOVE the average variable cost curve. Below the minimum of AVC the firm supplies zero (shut-down).'
       },
       {
+        id: "ijy3o6",
         question: 'Distinguish producer surplus from profit.',
         answer: 'Producer surplus is the sum, over all units, of the difference between price and marginal cost (price minus variable cost) — it is revenue minus VARIABLE cost. Profit is revenue minus TOTAL cost. They differ by fixed cost: producer surplus exceeds profit by the amount of fixed cost.'
       },
       {
+        id: "7q68sw",
         question: 'What conditions hold in long-run competitive equilibrium?',
         answer: '1. Every firm maximizes profit (\\(P = MR = MC\\)).\n2. No firm has an incentive to enter or exit — economic profit is ZERO.\n3. The price clears the market (quantity supplied = quantity demanded).\nFirms produce at the lowest point of their long-run average cost curve: \\( P = MR = LMC = \\min(LAC) \\).'
       },
       {
+        id: "ve6wg5",
         question: 'Why is long-run economic profit zero in perfect competition?',
         answer: 'Free entry: if firms earn positive economic profit, new firms enter, supply rises and price falls until profit is competed away to zero. Losses cause exit, raising price back to break-even. Zero ECONOMIC profit still means a normal return on resources.'
       },
       {
+        id: "rt1kcz",
         question: 'What is economic rent?',
         answer: 'The amount firms are willing to pay for an input ABOVE the minimum amount needed to obtain it (its opportunity cost). It arises for inputs in fixed/limited supply (e.g. especially productive land).'
       }
@@ -63,51 +75,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "tramni",
         question: 'Every profit-maximizing firm produces where:',
         options: ['\\(P = AVC\\)', '\\(MR = MC\\)', '\\(TR = TC\\)', '\\(AFC = 0\\)'],
         correct: 1
       },
       {
+        id: "urbfip",
         question: 'For a perfectly competitive firm, marginal revenue equals:',
         options: ['Marginal cost only', 'The market price', 'Average fixed cost', 'Total revenue'],
         correct: 1
       },
       {
+        id: "gr2nen",
         question: 'A competitive firm is best described as a:',
         options: ['Price maker', 'Price taker', 'Quantity taker only', 'Monopolist'],
         correct: 1
       },
       {
+        id: "82fh1x",
         question: 'In the short run a competitive firm shuts down when:',
         options: ['\\(P < AVC\\)', '\\(P < ATC\\)', 'Profit is zero', '\\(MR = MC\\)'],
         correct: 0
       },
       {
+        id: "pln67z",
         question: 'The short-run supply curve of a competitive firm is the MC curve above:',
         options: ['ATC', 'AVC', 'AFC', 'MR'],
         correct: 1
       },
       {
+        id: "uj2q6b",
         question: 'A homogeneous product and a great many sellers are features of:',
         options: ['Monopoly', 'Perfect competition', 'Oligopoly', 'Monopsony'],
         correct: 1
       },
       {
+        id: "ez57us",
         question: 'In long-run competitive equilibrium, economic profit is:',
         options: ['Maximized and large', 'Zero', 'Negative', 'Equal to fixed cost'],
         correct: 1
       },
       {
+        id: "fxf2fy",
         question: 'Producer surplus exceeds profit by the amount of:',
         options: ['Variable cost', 'Fixed cost', 'Marginal cost', 'Consumer surplus'],
         correct: 1
       },
       {
+        id: "nmax4k",
         question: 'In the long run a competitive firm produces at the:',
         options: ['Lowest point of its LAC curve', 'Highest point of its demand curve', 'Shut-down point', 'Point where \\(MR > MC\\)'],
         correct: 0
       },
       {
+        id: "2wubw5",
         question: 'Payment to an input above the minimum needed to obtain it is called:',
         options: ['Marginal cost', 'Economic rent', 'Producer surplus', 'A sunk cost'],
         correct: 1
@@ -116,41 +138,50 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "dxizzu",
         sentence: 'Profit equals total revenue minus total _______.',
         answer: 'cost'
       },
       {
+        id: "tlq7nf",
         sentence: 'Every firm maximizes profit where marginal revenue equals marginal _______.',
         answer: 'cost'
       },
       {
+        id: "c8c8u5",
         sentence: 'For a competitive firm price equals marginal revenue, so it produces where P equals _______.',
         answer: 'MC',
         hint: '\\(P = MR = MC\\).'
       },
       {
+        id: "86ujm3",
         sentence: 'A competitive firm is a price _______.',
         answer: 'taker'
       },
       {
+        id: "s3y6rm",
         sentence: 'In the short run a firm shuts down if price is below average _______ cost.',
         answer: 'variable'
       },
       {
+        id: "zvfxzs",
         sentence: 'In long-run competitive equilibrium economic profit is _______.',
         answer: 'zero'
       },
       {
+        id: "n5s7cq",
         sentence: 'The firm’s short-run supply curve is its MC curve above the _______ curve.',
         answer: 'AVC'
       },
       {
+        id: "spngfi",
         sentence: 'Payment to an input above its opportunity cost is economic _______.',
         answer: 'rent'
       }
     ],
 
     learn: {
+      id: "twkk6o",
       content:
         '<h3>Profit Maximization &amp; Competitive Supply</h3>' +
         '<p>A firm maximizes <strong>profit</strong>, the gap between revenue and cost:</p>' +
@@ -183,48 +214,59 @@ const microeconomicsM2 = {
   },
 
   competitiveMarkets: {
+    id: "s1uewi",
     name: 'Analysis of Competitive Markets',
     icon: 'fa-scale-balanced',
     color: '#14b8a6',
 
     flashcards: [
       {
+        id: "wbam55",
         question: 'What are consumer surplus and producer surplus?',
         answer: 'Consumer surplus is the difference between what consumers are willing to pay and what they actually pay (area under the demand curve, above the price). Producer surplus is the difference between the price received and the minimum suppliers would accept (area above the supply curve, below the price).'
       },
       {
+        id: "0xg30o",
         question: 'What is deadweight loss?',
         answer: 'The net loss of total surplus (consumer + producer) caused by a market distortion — such as a price control, tax, quota or monopoly — that moves output away from the competitive equilibrium quantity. It represents mutually beneficial trades that no longer happen.'
       },
       {
+        id: "y293kp",
         question: 'What does a price ceiling (below equilibrium) do?',
         answer: 'A binding price ceiling holds price BELOW the market-clearing level → quantity demanded exceeds quantity supplied (a SHORTAGE). Consumers who still buy gain, but the reduced quantity creates a deadweight loss.'
       },
       {
+        id: "g0qbud",
         question: 'What does a price floor / price support (above equilibrium) do?',
         answer: 'A binding price floor holds price ABOVE the market-clearing level → quantity supplied exceeds quantity demanded (a SURPLUS). A minimum wage and agricultural price supports are examples; they also create deadweight loss (and, with supports, a government purchase cost).'
       },
       {
+        id: "4au0wt",
         question: 'When is a competitive market economically efficient, and what is market failure?',
         answer: 'A competitive market maximizes the sum of consumer and producer surplus, so it is efficient. MARKET FAILURE occurs when unregulated markets are inefficient — chiefly because of externalities or a lack of information.'
       },
       {
+        id: "kh6o5l",
         question: 'What is a specific tax, and who bears its burden (tax incidence)?',
         answer: 'A specific tax is a fixed amount of money per unit sold. The INCIDENCE (who actually bears it) does not depend on who legally pays it — it falls more heavily on the side of the market that is LESS elastic (more inelastic). The tax also creates a deadweight loss.'
       },
       {
+        id: "cmkd41",
         question: 'How does relative elasticity determine who bears a tax?',
         answer: 'The more INELASTIC side bears the larger share. If demand is more inelastic than supply, buyers pay most of the tax (price rises a lot); if supply is more inelastic, sellers absorb most of it.'
       },
       {
+        id: "5jzie9",
         question: 'What is the effect of a production quota or import quota?',
         answer: 'A quota restricts the quantity that may be produced or imported, pushing price up. Consumers lose surplus; domestic producers (or quota/license holders) gain; the restriction on quantity creates a deadweight loss.'
       },
       {
+        id: "utp086",
         question: 'What is the effect of a subsidy?',
         answer: 'A subsidy is a negative tax — a payment per unit that lowers the price buyers pay and raises the price sellers receive, increasing the quantity traded ABOVE the efficient level. It too generates a deadweight loss (and a government cost) because output exceeds the efficient amount.'
       },
       {
+        id: "26tcps",
         question: 'What is an import tariff?',
         answer: 'A tax on imported goods. It raises the domestic price toward (or above) the world-price-plus-tariff, reducing imports. Domestic producers and the government (tariff revenue) gain, consumers lose more, and there is a deadweight loss.'
       }
@@ -232,51 +274,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "f8oo76",
         question: 'The area under the demand curve and above the price is:',
         options: ['Producer surplus', 'Consumer surplus', 'Deadweight loss', 'Total revenue'],
         correct: 1
       },
       {
+        id: "z8l9kw",
         question: 'A binding price ceiling set below equilibrium causes a:',
         options: ['Surplus', 'Shortage', 'Higher equilibrium price', 'Tax'],
         correct: 1
       },
       {
+        id: "t8ifx4",
         question: 'A minimum wage above the equilibrium wage tends to cause:',
         options: ['A labor shortage', 'A labor surplus (unemployment)', 'No effect', 'Higher demand for labor'],
         correct: 1
       },
       {
+        id: "3hk2rp",
         question: 'A specific tax is levied as:',
         options: ['A percentage of price', 'A fixed amount per unit', 'A lump sum on firms only', 'A subsidy to buyers'],
         correct: 1
       },
       {
+        id: "noei80",
         question: 'The burden of a tax falls mainly on the side of the market that is more:',
         options: ['Elastic', 'Inelastic', 'Profitable', 'Competitive'],
         correct: 1
       },
       {
+        id: "zmepy0",
         question: 'The net loss of total surplus from a distortion is called:',
         options: ['Consumer surplus', 'Deadweight loss', 'Economic rent', 'Producer surplus'],
         correct: 1
       },
       {
+        id: "3xw5z6",
         question: 'A subsidy increases the quantity traded to a level that is:',
         options: ['Below the efficient quantity', 'Above the efficient quantity', 'Exactly efficient', 'Zero'],
         correct: 1
       },
       {
+        id: "ovr2g3",
         question: 'Externalities and lack of information are examples of:',
         options: ['Market efficiency', 'Market failure', 'Consumer surplus', 'Price taking'],
         correct: 1
       },
       {
+        id: "5gk88h",
         question: 'A binding price support for farmers (above equilibrium) produces a:',
         options: ['Shortage', 'Surplus the government may have to buy', 'Lower market price', 'Deadweight gain'],
         correct: 1
       },
       {
+        id: "tzeanx",
         question: 'An import tariff is essentially a tax on:',
         options: ['Exports', 'Imported goods', 'Domestic labor', 'Consumer surplus'],
         correct: 1
@@ -285,40 +337,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "d3ym8a",
         sentence: 'The benefit buyers get above what they pay is consumer _______.',
         answer: 'surplus'
       },
       {
+        id: "3yg60b",
         sentence: 'The net welfare loss from a market distortion is the _______ loss.',
         answer: 'deadweight'
       },
       {
+        id: "uddjnc",
         sentence: 'A binding price ceiling below equilibrium creates a _______.',
         answer: 'shortage'
       },
       {
+        id: "zc29oz",
         sentence: 'A binding price floor above equilibrium creates a _______.',
         answer: 'surplus'
       },
       {
+        id: "7aqztu",
         sentence: 'A tax burden falls mainly on the more _______ side of the market.',
         answer: 'inelastic'
       },
       {
+        id: "wslym6",
         sentence: 'A fixed amount of tax per unit sold is a _______ tax.',
         answer: 'specific'
       },
       {
+        id: "ivehcj",
         sentence: 'A subsidy is in effect a negative _______.',
         answer: 'tax'
       },
       {
+        id: "ic2po7",
         sentence: 'A tax on imported goods is an import _______.',
         answer: 'tariff'
       }
     ],
 
     learn: {
+      id: "7titv3",
       content:
         '<h3>The Analysis of Competitive Markets</h3>' +
         '<p>We measure the well-being of a market with <strong>consumer surplus</strong> (value to buyers above the price they pay) and <strong>producer surplus</strong> (price received above the seller’s minimum). A competitive equilibrium maximizes their sum, so it is <strong>efficient</strong>.</p>' +
@@ -344,52 +405,64 @@ const microeconomicsM2 = {
   },
 
   monopolyMonopsony: {
+    id: "sdytnp",
     name: 'Market Power: Monopoly & Monopsony',
     icon: 'fa-chess-king',
     color: '#8b5cf6',
 
     flashcards: [
       {
+        id: "3ajvhx",
         question: 'What is a monopoly, and why is its marginal revenue below price?',
         answer: 'A monopoly is the single seller of a product with no close substitutes; it faces the entire downward-sloping market demand curve. To sell one more unit it must lower the price on ALL units, so marginal revenue is less than price:\n\\( MR < P \\).'
       },
       {
+        id: "ltatgg",
         question: 'For a linear demand curve, how does the MR curve relate to the demand curve?',
         answer: 'The marginal revenue curve has the same intercept but is TWICE as steep. If demand is \\(P = a - bQ\\), then\n\\( MR = a - 2bQ \\)\n(the absolute slope of MR is double that of demand).'
       },
       {
+        id: "fzszqc",
         question: 'How does a monopolist choose output and price?',
         answer: 'It sets output where \\(MR = MC\\), then charges the highest price the demand curve allows for that quantity. Because \\(MR < P\\), the monopoly produces LESS and charges MORE than a competitive industry would.'
       },
       {
+        id: "sx9i4z",
         question: 'What is the Lerner index of monopoly power?',
         answer: 'A measure of markup over marginal cost:\n\\( L = \\dfrac{P - MC}{P} = -\\dfrac{1}{E_d} \\)\nIt ranges from 0 (price taker) toward 1; the more inelastic the demand the firm faces, the greater its monopoly power.'
       },
       {
+        id: "6csp3s",
         question: 'What are the sources of monopoly power?',
         answer: '1. The elasticity of market demand (less elastic → more power)\n2. The number of firms in the market (fewer → more power; barriers to entry)\n3. The interaction among firms (more rivalrous → less power)'
       },
       {
+        id: "ogo24e",
         question: 'What are the social costs of monopoly power?',
         answer: 'A monopoly restricts output below the efficient level, creating a DEADWEIGHT LOSS (lost consumer and producer surplus). Firms may also spend resources to gain or keep monopoly power — RENT SEEKING — which wastes resources. Price regulation can reduce the loss.'
       },
       {
+        id: "2unqly",
         question: 'What is a natural monopoly, and how is it often regulated?',
         answer: 'A natural monopoly has economies of scale so large that one firm can serve the whole market at lower cost than several could (e.g. water, electricity grids). It is often regulated by setting a price (e.g. rate-of-return regulation) closer to average or marginal cost.'
       },
       {
+        id: "nr9r65",
         question: 'What is monopsony (and monopsony power)?',
         answer: 'Monopsony is a market with a single BUYER (oligopsony = a few buyers). Monopsony power is a buyer’s ability to affect the price it pays. The buyer faces an upward-sloping supply curve, so its marginal expenditure exceeds the average expenditure (price).'
       },
       {
+        id: "to4yx7",
         question: 'What is the monopsonist’s purchasing rule?',
         answer: 'It buys up to the point where the marginal VALUE of the input equals the marginal EXPENDITURE:\n\\( MV = ME \\)\nBecause \\(ME > \\) price, the monopsonist buys LESS and pays a LOWER price than a competitive buyer would.'
       },
       {
+        id: "z4s838",
         question: 'What are the sources of monopsony power?',
         answer: '1. The elasticity of market supply (less elastic → more power)\n2. The number of buyers (fewer → more power)\n3. The interaction among buyers'
       },
       {
+        id: "ib39kx",
         question: 'How do antitrust laws limit market power?',
         answer: 'They prohibit anticompetitive behavior — e.g. agreements to fix prices or restrict output (parallel conduct / collusion) and predatory pricing aimed at driving out rivals — and restrict mergers that would create excessive market power.'
       }
@@ -397,51 +470,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "irkm26",
         question: 'For a monopoly, marginal revenue is:',
         options: ['Equal to price', 'Greater than price', 'Less than price', 'Always zero'],
         correct: 2
       },
       {
+        id: "jfxivb",
         question: 'If demand is \\(P = a - bQ\\), marginal revenue is:',
         options: ['\\(a - bQ\\)', '\\(a - 2bQ\\)', '\\(2a - bQ\\)', '\\(a - \\tfrac{1}{2}bQ\\)'],
         correct: 1
       },
       {
+        id: "us4dkt",
         question: 'A monopoly maximizes profit by producing where:',
         options: ['\\(P = MC\\)', '\\(MR = MC\\)', '\\(P = AVC\\)', '\\(MR = 0\\) always'],
         correct: 1
       },
       {
+        id: "pmxl8z",
         question: 'Compared with perfect competition, a monopoly produces:',
         options: ['More output at a lower price', 'Less output at a higher price', 'The same output', 'Output where \\(P = MC\\)'],
         correct: 1
       },
       {
+        id: "w9t05e",
         question: 'The Lerner index equals:',
         options: ['\\(P - MC\\)', '\\((P - MC)/P\\)', '\\(MC/P\\)', '\\(P\\times Q\\)'],
         correct: 1
       },
       {
+        id: "ew0rbn",
         question: 'A market with a single BUYER is a:',
         options: ['Monopoly', 'Monopsony', 'Oligopoly', 'Duopoly'],
         correct: 1
       },
       {
+        id: "usbku4",
         question: 'A monopsonist buys where:',
         options: ['\\(MV = ME\\)', '\\(P = MV\\)', '\\(MR = MC\\)', 'price equals marginal value'],
         correct: 0
       },
       {
+        id: "3vrkx4",
         question: 'A single firm that serves the whole market at lowest cost due to economies of scale is a:',
         options: ['Cartel', 'Natural monopoly', 'Price taker', 'Monopsony'],
         correct: 1
       },
       {
+        id: "cz5igh",
         question: 'Resources spent to acquire or protect monopoly power are:',
         options: ['Producer surplus', 'Rent seeking', 'Economies of scope', 'Marginal cost'],
         correct: 1
       },
       {
+        id: "wgihuq",
         question: 'Monopoly power is greater when the firm’s demand is more:',
         options: ['Elastic', 'Inelastic', 'Horizontal', 'Competitive'],
         correct: 1
@@ -450,40 +533,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "gr99em",
         sentence: 'A monopolist faces the whole downward-sloping market _______ curve.',
         answer: 'demand'
       },
       {
+        id: "7m4p3z",
         sentence: 'For a monopoly, marginal revenue is _______ than price.',
         answer: 'less'
       },
       {
+        id: "nl306p",
         sentence: 'With linear demand, the MR curve is twice as _______ as the demand curve.',
         answer: 'steep'
       },
       {
+        id: "qmyp7u",
         sentence: 'A monopoly produces where marginal revenue equals marginal _______.',
         answer: 'cost'
       },
       {
+        id: "gqvnp0",
         sentence: 'The Lerner index measures the markup of price over marginal _______ relative to price.',
         answer: 'cost'
       },
       {
+        id: "clsqde",
         sentence: 'A market with a single buyer is a _______.',
         answer: 'monopsony'
       },
       {
+        id: "tgwjqk",
         sentence: 'A monopsonist buys until marginal value equals marginal _______.',
         answer: 'expenditure'
       },
       {
+        id: "kib9x9",
         sentence: 'A single firm serving the whole market at lowest cost is a natural _______.',
         answer: 'monopoly'
       }
     ],
 
     learn: {
+      id: "ahi3pq",
       content:
         '<h3>Market Power: Monopoly &amp; Monopsony</h3>' +
         '<p>A <strong>monopoly</strong> is the only seller, so it faces the whole downward-sloping demand curve. To sell one more unit it must cut the price on every unit, which is why <strong>marginal revenue lies below price</strong>. For a linear demand the MR curve shares the intercept but is twice as steep:</p>' +
@@ -512,52 +604,64 @@ const microeconomicsM2 = {
   },
 
   monopolisticOligopoly: {
+    id: "egsfpg",
     name: 'Monopolistic Competition & Oligopoly',
     icon: 'fa-people-group',
     color: '#ec4899',
 
     flashcards: [
       {
+        id: "00yjmr",
         question: 'What defines monopolistic competition?',
         answer: 'Many firms selling DIFFERENTIATED products, with free entry and exit. Each firm has a little market power over its own variety (so it faces a downward-sloping demand and sets price), but free entry drives long-run economic profit to zero.'
       },
       {
+        id: "mq3fdm",
         question: 'What can a monopolistically competitive firm choose?',
         answer: 'The characteristics of its product, its selling/advertising expenses, and the price and quantity of its product — because product differentiation gives it some pricing discretion.'
       },
       {
+        id: "zqqy2k",
         question: 'Why is monopolistic competition not fully efficient in the long run?',
         answer: 'In long-run equilibrium price equals average cost (zero profit), but production occurs where \\(P > MC\\) and NOT at the minimum of average cost. The firm operates with EXCESS CAPACITY, so there is a small efficiency loss — the price of product variety.'
       },
       {
+        id: "0qvy6q",
         question: 'What defines an oligopoly?',
         answer: 'A few firms account for most or all production; the product may or may not be differentiated; there are barriers to entry, so firms can earn long-run profit. Each firm’s best action depends on what rivals do — they are INTERDEPENDENT.'
       },
       {
+        id: "zlh9h4",
         question: 'What is a Nash equilibrium?',
         answer: 'A set of strategies (one per firm) in which each firm is doing the best it can GIVEN what its competitors are doing — so no firm wants to change its choice unilaterally.'
       },
       {
+        id: "5l283r",
         question: 'What is the Cournot model?',
         answer: 'An oligopoly model where firms compete by choosing QUANTITIES simultaneously, each taking the other’s output as given. Each firm’s reaction curve shows its best output given the rival’s; the Cournot equilibrium is where the reaction curves intersect (a Nash equilibrium in quantities).'
       },
       {
+        id: "jgsa83",
         question: 'What is the Stackelberg model?',
         answer: 'A quantity-setting oligopoly where one firm moves FIRST (the leader) and the other responds (the follower). The leader gains a first-mover advantage, producing more and earning more than the follower.'
       },
       {
+        id: "fig94w",
         question: 'What is the Bertrand model?',
         answer: 'An oligopoly model where firms compete by setting PRICES (rather than quantities). With identical products, price competition drives price down to marginal cost — even with only two firms — so profits are competed away.'
       },
       {
+        id: "inyukr",
         question: 'What is the prisoners’ dilemma, and how does it apply to oligopoly?',
         answer: 'A non-cooperative game in which each player’s dominant strategy leads to an outcome that is worse for BOTH than if they had cooperated. In oligopoly, firms would jointly profit by keeping prices high, but each has an incentive to undercut — so they often end up in a low-price (competitive-like) outcome.'
       },
       {
+        id: "jf59kn",
         question: 'What are kinked demand and price leadership?',
         answer: 'The KINKED demand curve model explains price RIGIDITY: rivals match price cuts but not price rises, so demand is more elastic above the current price than below it, discouraging changes. PRICE LEADERSHIP (e.g. a dominant firm) is a way firms coordinate prices without explicit collusion.'
       },
       {
+        id: "tr33wn",
         question: 'What is a cartel?',
         answer: 'A group of producers that EXPLICITLY agree to cooperate in setting prices and output (acting like a monopoly). Examples: OPEC (oil), CIPEC (copper). Cartels are unstable because each member is tempted to cheat by producing more.'
       }
@@ -565,51 +669,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "iyyumu",
         question: 'Many firms selling differentiated products with free entry describes:',
         options: ['Perfect competition', 'Monopolistic competition', 'Monopoly', 'Monopsony'],
         correct: 1
       },
       {
+        id: "jru5si",
         question: 'In long-run monopolistic competition, economic profit is:',
         options: ['Large and positive', 'Zero', 'Always negative', 'Equal to fixed cost'],
         correct: 1
       },
       {
+        id: "brfdjq",
         question: 'A monopolistically competitive firm in the long run produces with:',
         options: ['Minimum average cost', 'Excess capacity', 'Zero output', '\\(P = MC\\)'],
         correct: 1
       },
       {
+        id: "je0dj9",
         question: 'A market dominated by a few interdependent firms is a(n):',
         options: ['Monopoly', 'Oligopoly', 'Perfect competition', 'Monopsony'],
         correct: 1
       },
       {
+        id: "333hxx",
         question: 'Each firm doing the best it can given rivals’ choices defines:',
         options: ['A cartel', 'A Nash equilibrium', 'Perfect competition', 'A price ceiling'],
         correct: 1
       },
       {
+        id: "sutopi",
         question: 'In the Cournot model, firms compete by choosing:',
         options: ['Prices', 'Quantities', 'Advertising only', 'Product location only'],
         correct: 1
       },
       {
+        id: "986eww",
         question: 'In the Bertrand model with identical products, price is driven down to:',
         options: ['The monopoly price', 'Marginal cost', 'Average fixed cost', 'Zero output'],
         correct: 1
       },
       {
+        id: "5mffv1",
         question: 'The Stackelberg model gives an advantage to the firm that:',
         options: ['Moves second', 'Moves first', 'Advertises least', 'Has the highest cost'],
         correct: 1
       },
       {
+        id: "2u8y56",
         question: 'A group of firms that explicitly agree to fix price and output is a:',
         options: ['Cartel', 'Duopoly', 'Natural monopoly', 'Price taker'],
         correct: 0
       },
       {
+        id: "55uln5",
         question: 'The kinked demand curve model is used to explain price:',
         options: ['Discrimination', 'Rigidity', 'Elasticity', 'Ceilings'],
         correct: 1
@@ -618,40 +732,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "naxrfl",
         sentence: 'Monopolistic competition has many firms selling _______ products.',
         answer: 'differentiated'
       },
       {
+        id: "exdv2g",
         sentence: 'In the long run monopolistically competitive firms earn _______ economic profit.',
         answer: 'zero'
       },
       {
+        id: "wh2vpy",
         sentence: 'A monopolistically competitive firm operates with excess _______.',
         answer: 'capacity'
       },
       {
+        id: "zh75gr",
         sentence: 'A market with only a few interdependent firms is an _______.',
         answer: 'oligopoly'
       },
       {
+        id: "jlxpku",
         sentence: 'In a _______ equilibrium each firm does the best it can given its rivals.',
         answer: 'Nash'
       },
       {
+        id: "ewdk20",
         sentence: 'In the Cournot model firms compete by choosing _______.',
         answer: 'quantities'
       },
       {
+        id: "bigrhz",
         sentence: 'In the Bertrand model firms compete by choosing _______.',
         answer: 'prices'
       },
       {
+        id: "pvpttr",
         sentence: 'Firms that explicitly agree to fix prices and output form a _______.',
         answer: 'cartel'
       }
     ],
 
     learn: {
+      id: "hk1fvc",
       content:
         '<h3>Monopolistic Competition &amp; Oligopoly</h3>' +
         '<p><strong>Monopolistic competition</strong> mixes both worlds: many firms, but each sells a <strong>differentiated</strong> product, giving it a downward-sloping demand and some pricing power. Free entry still drives long-run profit to zero — yet the firm ends up producing where \\(P > MC\\) and not at minimum average cost, leaving <strong>excess capacity</strong>. That small inefficiency is the price we pay for product variety.</p>' +
@@ -677,52 +800,64 @@ const microeconomicsM2 = {
   },
 
   gameTheory: {
+    id: "s0umta",
     name: 'Game Theory & Competitive Strategy',
     icon: 'fa-chess',
     color: '#f59e0b',
 
     flashcards: [
       {
+        id: "4vaka6",
         question: 'What is a "game" in game theory, and what are payoffs and strategies?',
         answer: 'A game is any situation in which players make strategic decisions that take account of one another’s actions. PAYOFFS are the outcomes (rewards) that result; a STRATEGY is a rule or plan of action for playing the game; an OPTIMAL strategy maximizes a player’s expected payoff.'
       },
       {
+        id: "8zjwwk",
         question: 'Cooperative vs. non-cooperative games — what is the difference?',
         answer: 'In a COOPERATIVE game players can negotiate binding contracts that let them plan joint strategies. In a NON-COOPERATIVE game binding agreements are not possible, so each player acts in its own interest. Most strategic interaction in markets is non-cooperative.'
       },
       {
+        id: "yq1ky9",
         question: 'What is a dominant strategy?',
         answer: 'A strategy that is optimal NO MATTER what the opponent does. When every player has a dominant strategy, the outcome is an equilibrium in dominant strategies — a particularly strong prediction.'
       },
       {
+        id: "emn6um",
         question: 'What is a Nash equilibrium (in game-theory terms)?',
         answer: 'A set of strategies in which each player chooses the best response to the others’ strategies, so no player can improve by changing its own strategy alone. Every dominant-strategy equilibrium is a Nash equilibrium, but not vice versa.'
       },
       {
+        id: "gcekfv",
         question: 'What is a maximin strategy?',
         answer: 'A cautious (risk-averse) strategy that maximizes the player’s MINIMUM possible payoff — it guards against the worst case rather than maximizing the expected payoff. Useful when a player is uncertain or doubts the rationality of the rival.'
       },
       {
+        id: "p2qsf2",
         question: 'What is a mixed strategy?',
         answer: 'A strategy in which a player makes a random choice among two or more possible actions, according to set probabilities. Some games have no pure-strategy Nash equilibrium but do have one in mixed strategies.'
       },
       {
+        id: "ylk8rq",
         question: 'What is a repeated game, and what is tit-for-tat?',
         answer: 'A repeated game is one in which actions are taken and payoffs received over and over. TIT-FOR-TAT is a strategy of cooperating first, then doing whatever the opponent did last period. In infinitely (or indefinitely) repeated games, tit-for-tat can sustain cooperation that a one-shot game cannot.'
       },
       {
+        id: "ui91nu",
         question: 'What is a sequential game and the advantage of moving first?',
         answer: 'A sequential game is one in which players move in TURN, responding to each other’s actions (drawn in EXTENSIVE form, a tree). Moving first can be an advantage: a credible commitment by the first mover can shape the rival’s best response in its favor.'
       },
       {
+        id: "5kwoiu",
         question: 'Why must threats and commitments be credible?',
         answer: 'An EMPTY threat — one it would not be in the player’s interest to carry out — does not influence rivals. To matter, a threat or commitment must be CREDIBLE; building a reputation, or making an irreversible commitment, makes it so.'
       },
       {
+        id: "qaxfba",
         question: 'What is entry deterrence?',
         answer: 'Actions by an incumbent that convince a potential competitor that entering would be unprofitable — e.g. a credible commitment to expand capacity or fight a price war. The threat must be credible (backed by a real commitment) to deter entry.'
       },
       {
+        id: "9uoors",
         question: 'What is the winner’s curse in auctions?',
         answer: 'In a common-value auction (the item is worth roughly the same to all bidders but its value is uncertain), the winner tends to be the one who most OVERESTIMATED the value — so winning often means having overpaid. Rational bidders shade their bids to avoid this.'
       }
@@ -730,51 +865,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "eaqu4e",
         question: 'A strategy that is best no matter what the opponent does is a:',
         options: ['Mixed strategy', 'Dominant strategy', 'Maximin strategy', 'Tit-for-tat strategy'],
         correct: 1
       },
       {
+        id: "rftkod",
         question: 'A set of strategies where each player best-responds to the others is a:',
         options: ['Cartel', 'Nash equilibrium', 'Cooperative game', 'Dominant outcome'],
         correct: 1
       },
       {
+        id: "v6mbe5",
         question: 'Maximizing your minimum possible payoff is a:',
         options: ['Maximin strategy', 'Mixed strategy', 'Dominant strategy', 'Sequential strategy'],
         correct: 0
       },
       {
+        id: "goe5an",
         question: 'Randomizing over actions with set probabilities is a:',
         options: ['Pure strategy', 'Mixed strategy', 'Dominant strategy', 'Maximin strategy'],
         correct: 1
       },
       {
+        id: "hqsy3v",
         question: 'Cooperating, then copying the rival’s last move, is:',
         options: ['Predatory pricing', 'Tit-for-tat', 'A mixed strategy', 'Entry deterrence'],
         correct: 1
       },
       {
+        id: "q6mhm6",
         question: 'In a sequential game, players:',
         options: ['Move simultaneously', 'Move in turn', 'Cannot observe each other', 'Always cooperate'],
         correct: 1
       },
       {
+        id: "3huu3b",
         question: 'A threat a player would not actually want to carry out is:',
         options: ['Credible', 'An empty threat', 'A commitment', 'A dominant strategy'],
         correct: 1
       },
       {
+        id: "gt683i",
         question: 'In a common-value auction, overpaying because you most overestimated value is the:',
         options: ['Winner’s curse', 'Nash equilibrium', 'Reservation price', 'Maximin'],
         correct: 0
       },
       {
+        id: "ppf8qz",
         question: 'Cooperation is easiest to sustain in a game that is:',
         options: ['Played once', 'Repeated indefinitely', 'Sequential and short', 'Zero-sum'],
         correct: 1
       },
       {
+        id: "r1x2zz",
         question: 'Convincing a rival that entry would be unprofitable is:',
         options: ['Price discrimination', 'Entry deterrence', 'A mixed strategy', 'A cartel'],
         correct: 1
@@ -783,40 +928,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "01r88n",
         sentence: 'A strategy that is best regardless of what the rival does is a _______ strategy.',
         answer: 'dominant'
       },
       {
+        id: "ywbarh",
         sentence: 'At a _______ equilibrium no player can do better by changing strategy alone.',
         answer: 'Nash'
       },
       {
+        id: "y7022i",
         sentence: 'A strategy that maximizes the worst-case payoff is a _______ strategy.',
         answer: 'maximin'
       },
       {
+        id: "s1j063",
         sentence: 'Randomizing among actions with probabilities is a _______ strategy.',
         answer: 'mixed'
       },
       {
+        id: "dynpiq",
         sentence: 'In a repeated game, copying the rival’s last move is the _______ strategy.',
         answer: 'tit-for-tat'
       },
       {
+        id: "hfp6fo",
         sentence: 'In a sequential game players move in _______.',
         answer: 'turn'
       },
       {
+        id: "ox8raq",
         sentence: 'A threat a player would not carry out is an _______ threat.',
         answer: 'empty'
       },
       {
+        id: "01fb4i",
         sentence: 'Overpaying in a common-value auction is the winner’s _______.',
         answer: 'curse'
       }
     ],
 
     learn: {
+      id: "nqv6oj",
       content:
         '<h3>Game Theory &amp; Competitive Strategy</h3>' +
         '<p>A <strong>game</strong> is any situation in which players make strategic decisions, anticipating one another. Each player has <strong>strategies</strong> (plans of action) leading to <strong>payoffs</strong>; an optimal strategy maximizes a player’s expected payoff. In <strong>non-cooperative</strong> games binding agreements are impossible, so each acts in self-interest.</p>' +
@@ -846,48 +1000,59 @@ const microeconomicsM2 = {
   },
 
   factorMarkets: {
+    id: "svwkct",
     name: 'Markets for Factor Inputs',
     icon: 'fa-briefcase',
     color: '#10b981',
 
     flashcards: [
       {
+        id: "jak2x9",
         question: 'What does it mean that the demand for a factor of production is a "derived" demand?',
         answer: 'Demand for an input (labor, capital, land) is DERIVED from the demand for the output it helps produce. A firm hires an input not for its own sake but because it contributes to producing a good that can be sold.'
       },
       {
+        id: "i0cqi9",
         question: 'What is the marginal revenue product of labor (MRP_L)?',
         answer: 'The extra revenue from hiring one more unit of labor:\n\\( MRP_L = MR \\times MP_L \\)\nIn a competitive OUTPUT market \\(MR = P\\), so\n\\( MRP_L = P \\times MP_L \\).'
       },
       {
+        id: "1yby4r",
         question: 'How much labor does a firm in a competitive factor market hire?',
         answer: 'It hires up to the point where the marginal revenue product equals the wage (the price of labor):\n\\( MRP_L = w \\)\nHiring more would cost more than it adds; hiring less would forgo profitable output.'
       },
       {
+        id: "22hgni",
         question: 'What are average expenditure and marginal expenditure on an input?',
         answer: 'Average expenditure is the price paid per unit of the input (the input supply curve). Marginal expenditure is the extra cost of buying one more unit. For a COMPETITIVE buyer they are equal (the input price); for a MONOPSONIST, marginal expenditure EXCEEDS average expenditure.'
       },
       {
+        id: "88nltn",
         question: 'What is the backward-bending supply curve of labor?',
         answer: 'At low wages, a wage rise increases hours worked (substitution effect dominates — leisure is more expensive). At high wages, the income effect can dominate: workers feel richer and "buy" more leisure, so hours worked FALL — the supply curve bends backward.'
       },
       {
+        id: "jwijce",
         question: 'Explain the substitution and income effects of a wage increase.',
         answer: 'SUBSTITUTION effect: a higher wage makes leisure more expensive, so the worker substitutes toward work (more hours). INCOME effect: the higher wage makes the worker richer, encouraging more leisure (fewer hours). The net effect determines the slope of labor supply.'
       },
       {
+        id: "z0nqy3",
         question: 'What is economic rent in a factor market?',
         answer: 'The payment to a factor above the minimum needed to keep it in its current use (above its opportunity cost / supply price). LAND RENT is the classic case: land is in fixed supply, so all payment to it is economic rent.'
       },
       {
+        id: "92zape",
         question: 'How does a monopsony buy a factor input, and what is the rule?',
         answer: 'A monopsonist faces an upward-sloping input supply curve, so its marginal expenditure exceeds the price. It maximizes net benefit by buying up to where marginal value equals marginal expenditure (\\(MV = ME\\)); since \\(MV = MRP\\) for a firm, the rule is \\(ME = MRP\\). It hires LESS and pays a LOWER wage than a competitive buyer.'
       },
       {
+        id: "x27nn4",
         question: 'How does monopoly power in a factor market (e.g. a union) affect wages?',
         answer: 'A seller of labor with monopoly power (such as a labor union) can raise the wage above the competitive level, but at the cost of fewer jobs (lower quantity of labor employed) — a trade-off between the wage rate and the number employed.'
       },
       {
+        id: "5fayky",
         question: 'What is equilibrium in a competitive factor market?',
         answer: 'It occurs where the market demand for the input (the sum of firms’ MRP curves) equals the market supply of the input. There the input price (e.g. the wage) and the quantity employed are determined, and every firm hires until \\(MRP = \\) input price.'
       }
@@ -895,51 +1060,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "c0k9tn",
         question: 'The demand for labor is described as a _______ demand.',
         options: ['Final', 'Derived', 'Fixed', 'Joint'],
         correct: 1
       },
       {
+        id: "x5alz9",
         question: 'The marginal revenue product of labor equals:',
         options: ['\\(MR \\times MP_L\\)', '\\(P / MP_L\\)', '\\(w \\times Q\\)', '\\(AFC \\times L\\)'],
         correct: 0
       },
       {
+        id: "elvupi",
         question: 'A firm in a competitive factor market hires labor until:',
         options: ['\\(MRP_L = w\\)', '\\(MP_L = 0\\)', '\\(P = MC\\)', '\\(w = 0\\)'],
         correct: 0
       },
       {
+        id: "kpi59j",
         question: 'For a competitive buyer of an input, marginal expenditure equals:',
         options: ['Twice the price', 'The input price', 'Zero', 'Marginal revenue product'],
         correct: 1
       },
       {
+        id: "8f3yn8",
         question: 'For a monopsonist, marginal expenditure is _______ the input price.',
         options: ['Equal to', 'Greater than', 'Less than', 'Unrelated to'],
         correct: 1
       },
       {
+        id: "zlcp2v",
         question: 'A monopsonist buys an input up to where:',
         options: ['\\(MV = ME\\)', 'price equals marginal value', '\\(MP_L = 0\\)', '\\(MR = P\\)'],
         correct: 0
       },
       {
+        id: "rn5dth",
         question: 'When the income effect outweighs the substitution effect, labor supply:',
         options: ['Is horizontal', 'Bends backward', 'Is perfectly elastic', 'Shifts right'],
         correct: 1
       },
       {
+        id: "djym4m",
         question: 'Payment to a factor above its opportunity cost is economic:',
         options: ['Profit', 'Rent', 'Surplus tax', 'Depreciation'],
         correct: 1
       },
       {
+        id: "ci8kzz",
         question: 'A labor union with monopoly power can raise wages but typically reduces:',
         options: ['The price of output', 'The number of jobs', 'Marginal product', 'Fixed cost'],
         correct: 1
       },
       {
+        id: "qzprbj",
         question: 'In a competitive output market, MRP_L simplifies to:',
         options: ['\\(P \\times MP_L\\)', '\\(MR / P\\)', '\\(w / MP_L\\)', '\\(MC \\times Q\\)'],
         correct: 0
@@ -948,40 +1123,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "myqoo7",
         sentence: 'Demand for an input is _______ from the demand for the output it makes.',
         answer: 'derived'
       },
       {
+        id: "kpm25o",
         sentence: 'Marginal revenue product equals marginal revenue times marginal _______.',
         answer: 'product'
       },
       {
+        id: "vod35s",
         sentence: 'A competitive firm hires labor until MRP equals the _______.',
         answer: 'wage'
       },
       {
+        id: "z927f3",
         sentence: 'For a monopsonist, marginal expenditure exceeds the input _______.',
         answer: 'price'
       },
       {
+        id: "9zoh5u",
         sentence: 'A monopsonist buys until marginal value equals marginal _______.',
         answer: 'expenditure'
       },
       {
+        id: "n15zkt",
         sentence: 'When the income effect dominates, the labor supply curve bends _______.',
         answer: 'backward'
       },
       {
+        id: "1n0c6c",
         sentence: 'Payment to land, which is in fixed supply, is entirely economic _______.',
         answer: 'rent'
       },
       {
+        id: "liyeo6",
         sentence: 'A union can raise wages but usually lowers the number of _______.',
         answer: 'jobs'
       }
     ],
 
     learn: {
+      id: "jaxhed",
       content:
         '<h3>Markets for Factor Inputs</h3>' +
         '<p>Firms buy inputs — labor, capital, land — so the demand for a factor is a <strong>derived demand</strong>: it comes from the demand for the output the factor helps produce. The value of one more worker is the <strong>marginal revenue product</strong>:</p>' +
@@ -1007,52 +1191,64 @@ const microeconomicsM2 = {
   },
 
   externalitiesPublicGoods: {
+    id: "42ng9g",
     name: 'Externalities & Public Goods',
     icon: 'fa-smog',
     color: '#f97316',
 
     flashcards: [
       {
+        id: "eameg9",
         question: 'What is an externality?',
         answer: 'A cost or benefit of an activity that falls on a THIRD party not involved in the transaction, and is not reflected in the market price. It can be NEGATIVE (e.g. pollution) or POSITIVE (e.g. a neighbor’s nice garden, or education).'
       },
       {
+        id: "anxzxu",
         question: 'Why do negative externalities cause inefficiency?',
         answer: 'The producer ignores the external cost, so the private marginal cost is below the marginal SOCIAL cost. The market therefore produces TOO MUCH of the good (output beyond the efficient level), creating a deadweight loss.'
       },
       {
+        id: "5n8pyb",
         question: 'Define marginal external cost and marginal social cost.',
         answer: 'Marginal external cost (MEC) is the cost imposed on third parties by one more unit. Marginal social cost is the private marginal cost plus that external cost:\n\\( MSC = MC + MEC \\)\nThe efficient output is where \\(MSC = MSB\\) (marginal social benefit).'
       },
       {
+        id: "llkelg",
         question: 'Why do positive externalities also cause inefficiency?',
         answer: 'When an activity confers external BENEFITS, the marginal social benefit exceeds the private benefit, so the market produces TOO LITTLE of the good (output below the efficient level). A subsidy can correct it.'
       },
       {
+        id: "vmh1xt",
         question: 'What is an emissions fee (a Pigouvian tax)?',
         answer: 'A charge per unit of pollution emitted, set equal to the marginal external cost at the efficient level. It makes firms internalize the external cost (private cost rises to social cost), so they cut output/emissions to the efficient amount.'
       },
       {
+        id: "cgphfw",
         question: 'Compare an emissions standard with an emissions fee.',
         answer: 'A STANDARD sets a legal limit on emissions (a quantity); a FEE charges per unit emitted (a price). With uncertainty about firms’ abatement costs, the two are NOT equivalent — fees are usually cheaper when abatement costs vary across firms because they let low-cost abaters cut the most.'
       },
       {
+        id: "vfqrn6",
         question: 'What are tradeable emissions permits?',
         answer: 'A system in which the government issues a fixed number of permits (a cap) that firms can BUY and SELL. Firms that can cut emissions cheaply sell permits to those for whom cutting is costly, so the total reduction is achieved at the LOWEST overall cost (cap-and-trade).'
       },
       {
+        id: "kodldg",
         question: 'What is the Coase theorem?',
         answer: 'If property rights are clearly defined and bargaining is costless, private parties can negotiate an EFFICIENT outcome to an externality on their own, regardless of who holds the rights. In practice high transaction costs (and many parties) often prevent this.'
       },
       {
+        id: "u4lg5d",
         question: 'What is the common property resource problem?',
         answer: 'A common property resource is one to which everyone has FREE access (e.g. ocean fisheries, common grazing land). Because no one owns it, each user ignores the cost imposed on others, so it is OVERUSED and depleted — the "tragedy of the commons".'
       },
       {
+        id: "5tguhp",
         question: 'What defines a public good?',
         answer: 'A good that is NONRIVAL (one person’s use does not reduce the amount available to others) and NONEXCLUSIVE (you cannot prevent non-payers from consuming it), e.g. national defense or clean air. These features lead to the FREE-RIDER problem.'
       },
       {
+        id: "pp7nmx",
         question: 'What is the free-rider problem?',
         answer: 'Because a public good is nonexclusive, people can enjoy it without paying — so each has an incentive to "free ride" on others. As a result the private market under-provides public goods, which is why government often supplies them.'
       }
@@ -1060,51 +1256,61 @@ const microeconomicsM2 = {
 
     quiz: [
       {
+        id: "8vfq7k",
         question: 'A cost imposed on third parties not reflected in price is a:',
         options: ['Sunk cost', 'Negative externality', 'Fixed cost', 'Producer surplus'],
         correct: 1
       },
       {
+        id: "bbtnae",
         question: 'A market with a negative externality produces:',
         options: ['Too little output', 'Too much output', 'The efficient output', 'Zero output'],
         correct: 1
       },
       {
+        id: "dlqdvd",
         question: 'Marginal social cost equals private marginal cost plus marginal external:',
         options: ['Benefit', 'Cost', 'Revenue', 'Product'],
         correct: 1
       },
       {
+        id: "vib0v6",
         question: 'A market with a positive externality produces:',
         options: ['Too much output', 'Too little output', 'The efficient output', 'Only public goods'],
         correct: 1
       },
       {
+        id: "e82hba",
         question: 'A per-unit charge on pollution equal to the external cost is a(n):',
         options: ['Emissions standard', 'Emissions fee (Pigouvian tax)', 'Quota', 'Subsidy'],
         correct: 1
       },
       {
+        id: "8nw3t7",
         question: 'A cap with permits firms can buy and sell is:',
         options: ['An emissions standard', 'Tradeable emissions permits', 'A price ceiling', 'A tariff'],
         correct: 1
       },
       {
+        id: "28y6qy",
         question: 'Clear property rights + costless bargaining → efficient outcome describes the:',
         options: ['Lerner index', 'Coase theorem', 'Nash equilibrium', 'Laffer curve'],
         correct: 1
       },
       {
+        id: "e1q1s0",
         question: 'A resource everyone can access freely tends to be:',
         options: ['Underused', 'Overused (depleted)', 'Efficiently used', 'A public good'],
         correct: 1
       },
       {
+        id: "bo0bvi",
         question: 'A good that is nonrival and nonexclusive is a:',
         options: ['Private good', 'Public good', 'Inferior good', 'Giffen good'],
         correct: 1
       },
       {
+        id: "pe1xsi",
         question: 'Enjoying a public good without paying for it is the _______ problem.',
         options: ['Free-rider', 'Winner’s curse', 'Principal-agent', 'Adverse selection'],
         correct: 0
@@ -1113,40 +1319,49 @@ const microeconomicsM2 = {
 
     fillBlanks: [
       {
+        id: "1uvxku",
         sentence: 'A cost or benefit falling on a third party is an _______.',
         answer: 'externality'
       },
       {
+        id: "fndocm",
         sentence: 'A market with a negative externality produces too _______ output.',
         answer: 'much'
       },
       {
+        id: "xdzt0x",
         sentence: 'Marginal social cost equals private marginal cost plus marginal external _______.',
         answer: 'cost'
       },
       {
+        id: "ekqdkx",
         sentence: 'A per-unit charge on pollution is an emissions _______.',
         answer: 'fee'
       },
       {
+        id: "a56s5s",
         sentence: 'A cap with permits firms can trade is known as cap-and-_______.',
         answer: 'trade'
       },
       {
+        id: "7srsos",
         sentence: 'With clear property rights and costless bargaining, the _______ theorem predicts an efficient outcome.',
         answer: 'Coase'
       },
       {
+        id: "vwcs03",
         sentence: 'A good that is nonrival and nonexclusive is a _______ good.',
         answer: 'public'
       },
       {
+        id: "b2pxq8",
         sentence: 'Enjoying a public good without paying is the _______ problem.',
         answer: 'free-rider'
       }
     ],
 
     learn: {
+      id: "bj56l9",
       content:
         '<h3>Externalities &amp; Public Goods</h3>' +
         '<p>An <strong>externality</strong> is a cost or benefit that spills onto a third party and is not in the price. With a <strong>negative</strong> externality (pollution) the firm ignores the harm, so private cost understates the true social cost and the market <strong>overproduces</strong>. The efficient rule compares full social cost and benefit:</p>' +

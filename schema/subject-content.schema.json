@@ -5,6 +5,9 @@
   "description": "Kanonski oblik JEDNOG payloada sadrzaja: jedna window-varijabla = kategorije jedne lekcije (M1/M2), ili spojeni 'final'. Kljuc = camelCase ID kategorije; vrijednost = Category. Vjeran validate-content.js + docs/content/CONTENT_SCHEMA.md, ukljucujuci stvarna polja nadena u zivim podacima: quiz.image/imageAlt (Geography 'koji grad je na slici') i learn.title, learn.image=null. Ovo je STRUKTURNI ugovor (oblik + tipovi + nepoznata polja). SEMANTICKE provjere (quiz.correct u rasponu 0..options-1, KaTeX currency-safe balans, _______ praznina) i dalje radi scripts/validate-content.js — dvije razine se nadopunjuju.",
   "type": "object",
   "minProperties": 1,
+  "properties": {
+    "schemaVersion": { "type": "integer", "minimum": 1 }
+  },
   "additionalProperties": { "$ref": "#/definitions/category" },
   "definitions": {
     "category": {
@@ -12,6 +15,7 @@
       "required": ["name", "icon", "color"],
       "additionalProperties": false,
       "properties": {
+        "id":    { "type": "string", "minLength": 1 },
         "name":  { "type": "string", "minLength": 1 },
         "icon":  { "type": "string", "minLength": 1 },
         "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
@@ -32,6 +36,7 @@
       "required": ["question", "answer"],
       "additionalProperties": false,
       "properties": {
+        "id":          { "type": "string", "minLength": 1 },
         "question":    { "type": "string", "minLength": 1 },
         "answer":      { "type": "string", "minLength": 1 },
         "explanation": { "type": "string" }
@@ -42,6 +47,7 @@
       "required": ["question", "options", "correct"],
       "additionalProperties": false,
       "properties": {
+        "id":       { "type": "string", "minLength": 1 },
         "question": { "type": "string", "minLength": 1 },
         "options":  { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "string", "minLength": 1 } },
         "correct":  { "type": "integer", "minimum": 0 },
@@ -54,6 +60,7 @@
       "required": ["sentence", "answer"],
       "additionalProperties": false,
       "properties": {
+        "id":       { "type": "string", "minLength": 1 },
         "sentence": { "type": "string", "minLength": 1, "pattern": "_______" },
         "answer":   { "type": "string", "minLength": 1 },
         "hint":     { "type": "string" }
@@ -64,6 +71,7 @@
       "required": ["content"],
       "additionalProperties": false,
       "properties": {
+        "id":      { "type": "string", "minLength": 1 },
         "title":   { "type": "string" },
         "content": { "type": "string", "minLength": 1 },
         "image":   { "type": ["string", "null"] }

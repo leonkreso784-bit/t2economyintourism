@@ -9,56 +9,69 @@
 
 const statisticsM2 = {
   confidenceIntervals: {
+    id: "b9sflx",
     name: 'Confidence Interval Estimation',
     icon: 'fa-ruler-horizontal',
     color: '#0ea5e9',
 
     flashcards: [
       {
+        id: "chjkfo",
         question: 'Distinguish an estimator from an estimate, and a point estimate from an interval estimate.',
         answer: 'An estimator is a random variable (a rule) based on sample data; a specific computed value of it is an estimate.\nA point estimate is a single number (e.g. \\(\\bar{x}\\)); an interval estimate (confidence interval) gives a RANGE that reflects sampling variability.'
       },
       {
+        id: "nkcz6m",
         question: 'What is the general structure of every confidence interval?',
         answer: '\\[ \\text{Point estimate} \\pm (\\text{Reliability factor})\\times(\\text{Standard error}) \\]\nThe reliability factor (a \\(z\\) or \\(t\\) value) depends on the chosen confidence level.'
       },
       {
+        id: "4d7zq3",
         question: 'How is a 95% confidence level interpreted?',
         answer: 'In repeated sampling, about 95% of all the intervals constructed this way would contain the true parameter. A single specific interval either does or does not contain it — there is no probability attached to one realized interval. You can never be 100% confident.'
       },
       {
+        id: "t8ro4l",
         question: 'Write the confidence interval for μ when σ is KNOWN.',
         answer: '\\[ \\bar{x} \\pm z_{\\alpha/2}\\,\\frac{\\sigma}{\\sqrt{n}} \\]\nValid when the population is normal (or \\(n\\) is large). The margin of error is \\( ME = z_{\\alpha/2}\\dfrac{\\sigma}{\\sqrt{n}} \\).'
       },
       {
+        id: "wrns7g",
         question: 'Give the z reliability factors for 90%, 95% and 99% confidence.',
         answer: '• 90% → \\( z_{\\alpha/2} = 1.645 \\)\n• 95% → \\( z_{\\alpha/2} = 1.96 \\)\n• 99% → \\( z_{\\alpha/2} = 2.58 \\)'
       },
       {
+        id: "rkyhs4",
         question: 'Write the confidence interval for μ when σ is UNKNOWN.',
         answer: '\\[ \\bar{x} \\pm t_{n-1,\\,\\alpha/2}\\,\\frac{s}{\\sqrt{n}} \\]\nWe replace \\(\\sigma\\) with the sample SD \\(s\\) and use the Student’s \\(t\\) distribution.'
       },
       {
+        id: "e8u5pe",
         question: 'What is the Student’s t distribution and its degrees of freedom?',
         answer: 'A family of bell-shaped distributions, slightly wider than the normal, used when \\(\\sigma\\) is unknown. It has \\( df = n-1 \\) degrees of freedom; as \\(n\\) grows, \\(t\\) approaches the standard normal.'
       },
       {
+        id: "lk2sxf",
         question: 'Why use the t distribution instead of z when σ is unknown?',
         answer: 'Replacing \\(\\sigma\\) with the sample \\(s\\) adds extra uncertainty (because \\(s\\) varies from sample to sample). The \\(t\\) distribution has heavier tails to account for it, giving a correctly wider interval.'
       },
       {
+        id: "2orx6z",
         question: 'Write the confidence interval for a population proportion.',
         answer: '\\[ \\hat{p} \\pm z_{\\alpha/2}\\,\\sqrt{\\frac{\\hat{p}(1-\\hat{p})}{n}} \\]\nwhere \\( \\hat{p}=x/n \\). It uses the normal approximation, valid for large \\(n\\).'
       },
       {
+        id: "ow3qlj",
         question: 'What is the margin of error, and how does it relate to interval width?',
         answer: 'The margin of error is the half-width: \\( ME = (\\text{reliability factor})\\times(\\text{standard error}) \\). The full interval width is \\( w = 2\\,ME \\).'
       },
       {
+        id: "dqmdvw",
         question: 'What happens to the width of a confidence interval as n increases or confidence rises?',
         answer: 'Larger \\(n\\) → smaller standard error → NARROWER interval (more precise). Higher confidence level → larger reliability factor → WIDER interval. There is a trade-off between precision and confidence.'
       },
       {
+        id: "3mkg21",
         question: 'What three things widen a confidence interval?',
         answer: '1. A higher confidence level (bigger \\(z\\) or \\(t\\)).\n2. A larger standard deviation / variability.\n3. A smaller sample size \\(n\\).'
       }
@@ -66,51 +79,61 @@ const statisticsM2 = {
 
     quiz: [
       {
+        id: "vm4aoe",
         question: 'A single-number estimate of a parameter is a:',
         options: ['Interval estimate', 'Point estimate', 'Confidence level', 'Reliability factor'],
         correct: 1
       },
       {
+        id: "3kjlfu",
         question: 'Every confidence interval equals the point estimate plus or minus:',
         options: ['The variance', '(Reliability factor)(Standard error)', 'The sample size', 'The mean'],
         correct: 1
       },
       {
+        id: "0pjkx5",
         question: 'For a 95% confidence interval (σ known), the z value is:',
         options: ['1.645', '1.96', '2.33', '2.58'],
         correct: 1
       },
       {
+        id: "0jvu1c",
         question: 'When σ is unknown, the confidence interval for μ uses the:',
         options: ['z distribution', 'Student’s t distribution', 'Binomial distribution', 'Poisson distribution'],
         correct: 1
       },
       {
+        id: "1aefqi",
         question: 'The degrees of freedom for a one-sample t interval are:',
         options: ['\\(n\\)', '\\(n-1\\)', '\\(n-2\\)', '\\(2n\\)'],
         correct: 1
       },
       {
+        id: "ooujfa",
         question: 'The margin of error is the _______ of the confidence interval.',
         options: ['Full width', 'Half-width', 'Center', 'Standard deviation'],
         correct: 1
       },
       {
+        id: "rgh3v8",
         question: 'As the sample size increases, a confidence interval becomes:',
         options: ['Wider', 'Narrower', 'Unchanged', 'Skewed'],
         correct: 1
       },
       {
+        id: "15t107",
         question: 'Raising the confidence level from 90% to 99% makes the interval:',
         options: ['Narrower', 'Wider', 'Unchanged', 'Negative'],
         correct: 1
       },
       {
+        id: "j3far8",
         question: 'The confidence interval for a proportion uses the standard error:',
         options: ['\\(\\sqrt{\\hat{p}(1-\\hat{p})/n}\\)', '\\(\\sigma/\\sqrt{n}\\)', '\\(s/\\sqrt{n}\\)', '\\(\\hat{p}/n\\)'],
         correct: 0
       },
       {
+        id: "g2r96y",
         question: 'The width of a confidence interval equals:',
         options: ['\\(ME\\)', '\\(2\\,ME\\)', '\\(ME/2\\)', '\\(ME^2\\)'],
         correct: 1
@@ -119,40 +142,49 @@ const statisticsM2 = {
 
     fillBlanks: [
       {
+        id: "qk713d",
         sentence: 'A single number estimating a parameter is a _______ estimate.',
         answer: 'point'
       },
       {
+        id: "micpht",
         sentence: 'A confidence interval = point estimate ± reliability factor × standard _______.',
         answer: 'error'
       },
       {
+        id: "i8h2m1",
         sentence: 'For 95% confidence with σ known, the z value is _______.',
         answer: '1.96'
       },
       {
+        id: "0x5hxc",
         sentence: 'When the population σ is unknown, we use the Student’s _______ distribution.',
         answer: 't'
       },
       {
+        id: "wo3zl9",
         sentence: 'The t distribution has n minus _______ degrees of freedom.',
         answer: '1'
       },
       {
+        id: "jykhq4",
         sentence: 'The half-width of a confidence interval is the margin of _______.',
         answer: 'error'
       },
       {
+        id: "fhtixm",
         sentence: 'Increasing the sample size makes the interval _______.',
         answer: 'narrower'
       },
       {
+        id: "6wkd1u",
         sentence: 'A higher confidence level makes the interval _______.',
         answer: 'wider'
       }
     ],
 
     learn: {
+      id: "gz8pfq",
       content:
         '<h3>Confidence Interval Estimation</h3>' +
         '<p>K1 ended with the sampling distribution — the realisation that one sample’s \\(\\bar{x}\\) is just one draw from a distribution centred on \\(\\mu\\). Confidence intervals turn that insight into a practical tool: instead of reporting a single guess, we report a <strong>range</strong> that honestly admits sampling uncertainty. This is <strong>estimation</strong>, the first half of inference.</p>' +
@@ -194,52 +226,64 @@ const statisticsM2 = {
   },
 
   hypothesisTesting: {
+    id: "gys9a3",
     name: 'Hypothesis Testing (Single Population)',
     icon: 'fa-scale-balanced',
     color: '#8b5cf6',
 
     flashcards: [
       {
+        id: "4a54o8",
         question: 'What is a statistical hypothesis, and what are H0 and H1?',
         answer: 'A hypothesis is a claim about a population parameter. The NULL hypothesis \\(H_0\\) is the status quo (always contains \\(=,\\ \\le,\\ \\ge\\)); the ALTERNATIVE \\(H_1\\) is its opposite (\\(\\ne,\\ <,\\ >\\)) and is what the researcher tries to support.'
       },
       {
+        id: "gfhm94",
         question: 'How do we treat the null hypothesis (the logic of testing)?',
         answer: 'We assume \\(H_0\\) is true and look for evidence against it — “innocent until proven guilty”. We either REJECT \\(H_0\\) (strong evidence for \\(H_1\\)) or FAIL TO REJECT it (insufficient evidence); we never “prove” \\(H_0\\).'
       },
       {
+        id: "hbaw7b",
         question: 'Define the level of significance α.',
         answer: 'The probability of rejecting a true null hypothesis — the size of the rejection region. It is chosen in advance (typically 0.01, 0.05 or 0.10) and supplies the critical value(s).'
       },
       {
+        id: "kblbg9",
         question: 'Define Type I and Type II errors.',
         answer: '• Type I error: rejecting a TRUE \\(H_0\\); its probability is \\(\\alpha\\) (considered serious).\n• Type II error: failing to reject a FALSE \\(H_0\\); its probability is \\(\\beta\\).\nThe power of a test is \\(1-\\beta\\).'
       },
       {
+        id: "d6ls92",
         question: 'Write the test statistic for a mean when σ is known.',
         answer: '\\[ z = \\frac{\\bar{x}-\\mu_0}{\\sigma/\\sqrt{n}} \\]\nReject \\(H_0\\) if \\(z\\) falls in the rejection region defined by the critical value(s).'
       },
       {
+        id: "najvre",
         question: 'Write the test statistic for a mean when σ is unknown.',
         answer: '\\[ t = \\frac{\\bar{x}-\\mu_0}{s/\\sqrt{n}} \\quad (df=n-1) \\]\nUse the Student’s t distribution with the sample standard deviation \\(s\\).'
       },
       {
+        id: "dx575c",
         question: 'How do one-tailed and two-tailed tests differ?',
         answer: 'A two-tailed test (\\(H_1:\\mu\\ne\\mu_0\\)) splits \\(\\alpha\\) into both tails. A one-tailed test puts all of \\(\\alpha\\) in one tail: right tail for \\(H_1:\\mu>\\mu_0\\), left tail for \\(H_1:\\mu<\\mu_0\\).'
       },
       {
+        id: "11vrtm",
         question: 'What is the p-value, and the decision rule based on it?',
         answer: 'The p-value is the probability of a test statistic at least as extreme as the observed one, ASSUMING \\(H_0\\) is true (the smallest \\(\\alpha\\) at which \\(H_0\\) is rejected). Rule: if \\( p < \\alpha \\) reject \\(H_0\\); if \\( p \\ge \\alpha \\) do not reject.'
       },
       {
+        id: "ziw9eb",
         question: 'Write the test statistic for a population proportion.',
         answer: '\\[ z = \\frac{\\hat{p}-P_0}{\\sqrt{P_0(1-P_0)/n}} \\]\nwhere \\( \\hat{p}=x/n \\). Valid for large samples (normal approximation).'
       },
       {
+        id: "b33t04",
         question: 'What are the two equivalent decision rules in hypothesis testing?',
         answer: '1. Critical-value rule: reject \\(H_0\\) if the test statistic falls beyond the critical value.\n2. p-value rule: reject \\(H_0\\) if \\( p < \\alpha \\).\nBoth always lead to the same conclusion.'
       },
       {
+        id: "kvndoo",
         question: 'Which error does decreasing α reduce, and at what cost?',
         answer: 'A smaller \\(\\alpha\\) reduces the chance of a Type I error (rejecting a true \\(H_0\\)), but — holding \\(n\\) fixed — it raises \\(\\beta\\), the chance of a Type II error, lowering the power \\(1-\\beta\\).'
       }
@@ -247,51 +291,61 @@ const statisticsM2 = {
 
     quiz: [
       {
+        id: "5jbb6t",
         question: 'The null hypothesis H0 always contains:',
         options: ['Only \\(\\ne\\)', 'An equality (\\(=,\\le,\\ge\\))', 'Only \\(<\\)', 'No parameter'],
         correct: 1
       },
       {
+        id: "v255g7",
         question: 'Rejecting a TRUE null hypothesis is a:',
         options: ['Type II error', 'Type I error', 'Correct decision', 'p-value'],
         correct: 1
       },
       {
+        id: "gops8u",
         question: 'The probability of a Type I error equals:',
         options: ['\\(\\beta\\)', '\\(\\alpha\\)', '\\(1-\\beta\\)', 'the p-value'],
         correct: 1
       },
       {
+        id: "xnueav",
         question: 'Failing to reject a FALSE null hypothesis is a:',
         options: ['Type I error', 'Type II error', 'Correct decision', 'Critical value'],
         correct: 1
       },
       {
+        id: "h5n0db",
         question: 'The power of a test equals:',
         options: ['\\(\\alpha\\)', '\\(\\beta\\)', '\\(1-\\beta\\)', '\\(1-\\alpha\\)'],
         correct: 2
       },
       {
+        id: "ikgmbb",
         question: 'When σ is unknown, the test statistic for a mean follows the:',
         options: ['z distribution', 't distribution', 'binomial distribution', 'F distribution'],
         correct: 1
       },
       {
+        id: "xy7jh9",
         question: 'Using the p-value, we reject H0 when:',
         options: ['\\(p \\ge \\alpha\\)', '\\(p < \\alpha\\)', '\\(p = 1\\)', '\\(p > 0.5\\)'],
         correct: 1
       },
       {
+        id: "x8kny1",
         question: 'A test of \\(H_1:\\mu \\ne \\mu_0\\) is:',
         options: ['Right-tailed', 'Left-tailed', 'Two-tailed', 'Not a valid test'],
         correct: 2
       },
       {
+        id: "901pp4",
         question: 'The test statistic \\(z=(\\bar{x}-\\mu_0)/(\\sigma/\\sqrt{n})\\) is used when σ is:',
         options: ['Unknown', 'Known', 'Zero', 'Negative'],
         correct: 1
       },
       {
+        id: "ws1ejz",
         question: 'The significance level α is chosen:',
         options: ['After seeing the data', 'In advance by the researcher', 'Always 0.5', 'By the sample size'],
         correct: 1
@@ -300,42 +354,51 @@ const statisticsM2 = {
 
     fillBlanks: [
       {
+        id: "blx2ez",
         sentence: 'The status-quo claim being tested is the _______ hypothesis.',
         answer: 'null'
       },
       {
+        id: "mlrzqw",
         sentence: 'The probability of a Type I error is denoted by _______.',
         answer: 'alpha',
         hint: 'The Greek letter \\(\\alpha\\).'
       },
       {
+        id: "xjotrp",
         sentence: 'Rejecting a true null hypothesis is a Type _______ error.',
         answer: 'I'
       },
       {
+        id: "m8bl3d",
         sentence: 'Failing to reject a false null hypothesis is a Type _______ error.',
         answer: 'II'
       },
       {
+        id: "txu7bl",
         sentence: 'The power of a test equals 1 minus _______.',
         answer: 'beta',
         hint: 'The Greek letter \\(\\beta\\).'
       },
       {
+        id: "gv7k57",
         sentence: 'When σ is unknown, the test of a mean uses the _______ distribution.',
         answer: 't'
       },
       {
+        id: "cu81no",
         sentence: 'Using the p-value, reject H0 when p is less than _______.',
         answer: 'alpha'
       },
       {
+        id: "ojmki3",
         sentence: 'A test with H1 using “≠” is a _______-tailed test.',
         answer: 'two'
       }
     ],
 
     learn: {
+      id: "njykia",
       content:
         '<h3>Hypothesis Testing (Single Population)</h3>' +
         '<p>Confidence intervals <em>estimate</em> a parameter; hypothesis tests <strong>decide</strong> between two competing claims about it. This is the second half of inference, and the engine is identical — the same standard error from K1 — but now the question is yes/no: is there enough evidence to overturn the status quo?</p>' +
@@ -385,56 +448,69 @@ const statisticsM2 = {
   },
 
   regression: {
+    id: "8gbplh",
     name: 'Regression Analysis',
     icon: 'fa-chart-line',
     color: '#10b981',
 
     flashcards: [
       {
+        id: "niewgh",
         question: 'What is the purpose of regression analysis?',
         answer: 'To model the relationship between variables — to PREDICT a dependent variable \\(Y\\) from one or more independent variables \\(X\\), and to EXPLAIN how changes in \\(X\\) affect \\(Y\\).'
       },
       {
+        id: "ibdn8q",
         question: 'Write the population and estimated simple linear regression models.',
         answer: 'Population: \\( Y_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i \\) (with random error \\(\\varepsilon\\)).\nEstimated: \\( \\hat{y}_i = b_0 + b_1 x_i \\), where \\(b_0,b_1\\) estimate \\(\\beta_0,\\beta_1\\).'
       },
       {
+        id: "utkow4",
         question: 'Which variable is dependent and which is independent?',
         answer: 'The DEPENDENT variable \\(Y\\) is the one we explain/predict (endogenous). The INDEPENDENT variable \\(X\\) is the explanatory one (exogenous). Changes in \\(Y\\) are assumed to be caused by changes in \\(X\\).'
       },
       {
+        id: "ka2fvy",
         question: 'What does the method of least squares do?',
         answer: 'It chooses \\(b_0\\) and \\(b_1\\) to MINIMIZE the sum of squared residuals (errors):\n\\[ \\min \\sum (y_i-\\hat{y}_i)^2 = \\min \\;SSE \\]'
       },
       {
+        id: "zujpzf",
         question: 'Write the least-squares slope and intercept.',
         answer: '\\[ b_1 = \\frac{\\sum (x_i-\\bar{x})(y_i-\\bar{y})}{\\sum (x_i-\\bar{x})^2}, \\qquad b_0 = \\bar{y} - b_1\\bar{x} \\]\nThe line always passes through the point \\((\\bar{x},\\bar{y})\\).'
       },
       {
+        id: "5o1p4n",
         question: 'How do you interpret the slope b1 and intercept b0?',
         answer: '\\(b_1\\): the estimated change in the average value of \\(Y\\) for a one-unit increase in \\(X\\).\n\\(b_0\\): the estimated average value of \\(Y\\) when \\(X=0\\) (meaningful only if \\(X=0\\) is within the data range).'
       },
       {
+        id: "wlnvkj",
         question: 'Decompose total variation: write SST, SSR and SSE.',
         answer: '\\[ SST = SSR + SSE \\]\n\\( SST=\\sum(y_i-\\bar{y})^2 \\) (total), \\( SSR=\\sum(\\hat{y}_i-\\bar{y})^2 \\) (explained), \\( SSE=\\sum(y_i-\\hat{y}_i)^2 \\) (unexplained / error).'
       },
       {
+        id: "kfzg3v",
         question: 'Define the coefficient of determination R².',
         answer: '\\[ R^2 = \\frac{SSR}{SST} = 1 - \\frac{SSE}{SST}, \\qquad 0 \\le R^2 \\le 1 \\]\nIt is the proportion of the variation in \\(Y\\) explained by \\(X\\) (and equals \\(r^2\\) in simple regression).'
       },
       {
+        id: "8b208h",
         question: 'How do you estimate the model error variance?',
         answer: '\\[ s_e^2 = \\frac{SSE}{n-2} \\]\nWe divide by \\(n-2\\) because two parameters (\\(b_0\\) and \\(b_1\\)) were estimated. \\(s_e\\) is the standard error of the estimate.'
       },
       {
+        id: "4jeypi",
         question: 'How do you test whether a linear relationship exists (slope test)?',
         answer: 'Test \\(H_0:\\beta_1=0\\) (no linear relationship) vs. \\(H_1:\\beta_1\\ne 0\\) using\n\\[ t=\\frac{b_1-\\beta_1}{s_{b_1}} \\quad (df=n-2) \\]\nReject \\(H_0\\) if \\(|t|\\) exceeds the critical value — then the relationship is significant.'
       },
       {
+        id: "pll57j",
         question: 'What is the relationship between the t and F statistics in simple regression?',
         answer: 'For simple (one-predictor) regression the F statistic equals the square of the slope t statistic: \\( F = t^2 \\). Both test the same hypothesis \\( \\beta_1=0 \\) and give the same conclusion.'
       },
       {
+        id: "xma2bw",
         question: 'What are the key assumptions of the linear regression model?',
         answer: 'Linearity (Y is linear in X plus error); errors independent of X; errors have mean 0 and constant variance \\(\\sigma^2\\) (homoscedasticity); and errors are uncorrelated with each other.'
       }
@@ -442,51 +518,61 @@ const statisticsM2 = {
 
     quiz: [
       {
+        id: "sm2d9q",
         question: 'In regression, the variable we predict is the:',
         options: ['Independent variable', 'Dependent variable', 'Residual', 'Slope'],
         correct: 1
       },
       {
+        id: "xe1dhx",
         question: 'The least-squares method minimizes:',
         options: ['\\(SSR\\)', '\\(\\sum (y_i-\\hat{y}_i)^2\\) (SSE)', '\\(R^2\\)', 'the slope'],
         correct: 1
       },
       {
+        id: "rum4p8",
         question: 'The slope b1 measures the change in average Y for a one-unit change in:',
         options: ['Y', 'X', 'the residual', 'SST'],
         correct: 1
       },
       {
+        id: "wwxeao",
         question: 'The regression line always passes through:',
         options: ['The origin', '\\((\\bar{x},\\bar{y})\\)', '\\((0,1)\\)', 'the largest point'],
         correct: 1
       },
       {
+        id: "tfovc6",
         question: 'Total variation decomposes as:',
         options: ['\\(SST=SSR-SSE\\)', '\\(SST=SSR+SSE\\)', '\\(SSE=SSR+SST\\)', '\\(SSR=SST\\times SSE\\)'],
         correct: 1
       },
       {
+        id: "fp9nfy",
         question: 'The coefficient of determination R² equals:',
         options: ['\\(SSE/SST\\)', '\\(SSR/SST\\)', '\\(SST/SSR\\)', '\\(1+SSE/SST\\)'],
         correct: 1
       },
       {
+        id: "u870or",
         question: 'R² of 0.77 means that 77% of the variation in Y is:',
         options: ['Unexplained', 'Explained by X', 'Due to error', 'Random'],
         correct: 1
       },
       {
+        id: "tacak6",
         question: 'The model error variance is estimated by dividing SSE by:',
         options: ['\\(n\\)', '\\(n-1\\)', '\\(n-2\\)', '\\(n+2\\)'],
         correct: 2
       },
       {
+        id: "0aq8ou",
         question: 'The slope t test has null hypothesis:',
         options: ['\\(\\beta_1=0\\)', '\\(\\beta_1>0\\)', '\\(b_1=1\\)', '\\(R^2=0.5\\)'],
         correct: 0
       },
       {
+        id: "sdl3i6",
         question: 'In simple regression, the F statistic equals:',
         options: ['\\(t\\)', '\\(t^2\\)', '\\(\\sqrt{t}\\)', '\\(R^2\\)'],
         correct: 1
@@ -495,40 +581,49 @@ const statisticsM2 = {
 
     fillBlanks: [
       {
+        id: "ksptjs",
         sentence: 'The variable we try to explain is the _______ variable.',
         answer: 'dependent'
       },
       {
+        id: "l6aa2n",
         sentence: 'Least squares minimizes the sum of squared _______.',
         answer: 'residuals'
       },
       {
+        id: "nxlhgi",
         sentence: 'The slope b1 is the change in average Y per one-unit change in _______.',
         answer: 'X'
       },
       {
+        id: "r2ovq2",
         sentence: 'The regression line passes through the point (x-bar, _______).',
         answer: 'y-bar'
       },
       {
+        id: "a4ls9x",
         sentence: 'Total sum of squares equals SSR plus _______.',
         answer: 'SSE'
       },
       {
+        id: "7mpiaj",
         sentence: 'The coefficient of determination equals SSR divided by _______.',
         answer: 'SST'
       },
       {
+        id: "enfkv0",
         sentence: 'The model error variance divides SSE by n minus _______.',
         answer: '2'
       },
       {
+        id: "w5t3ad",
         sentence: 'The slope test has null hypothesis beta-1 equals _______.',
         answer: '0'
       }
     ],
 
     learn: {
+      id: "f28627",
       content:
         '<h3>Regression Analysis</h3>' +
         '<p>Everything so far described <em>one</em> variable. Regression studies how <strong>two</strong> variables move together — and, crucially, lets us <strong>predict</strong> one from the other. Does advertising spend drive sales? How does room price affect occupancy? Regression fits a line that both summarises the relationship and produces forecasts.</p>' +

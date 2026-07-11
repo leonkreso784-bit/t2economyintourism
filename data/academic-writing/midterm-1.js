@@ -4,73 +4,89 @@
 
 const academicWritingM1 = {
   "fundamentalsOfResearch": {
+    id: "cxn8ru",
     "name": "Fundamentals Of Research",
     "icon": "fa-book-open",
     "color": "#3b82f6",
     "flashcards": [
       {
+        id: "k58uxb",
         "question": "Who was Claudius Galen and what was he known for?",
         "answer": "Claudius Galen was a Greek physician, expert anatomist, and philosopher who was one of the ancient world's most influential doctors. He believed in direct observation of patients and saw good health as the balanced working of all the body's organs.",
         "explanation": "Galen is highlighted as an early example of using observation as a primary means to understand medicine."
       },
       {
+        id: "t0yzhk",
         "question": "What is the difference between implicit and explicit knowledge?",
         "answer": "Implicit knowledge refers to practical skills (e.g., riding a bike, swimming), while explicit knowledge refers to theoretical understanding of a subject (e.g., a manual explaining how to operate a machine).",
         "explanation": "Both types fall under the broader definition of knowledge as theoretical and practical understanding."
       },
       {
+        id: "grsj84",
         "question": "What is a priori knowledge?",
         "answer": "A priori knowledge is knowledge that is known independent of experience, typically derived through deductive reasoning. Most mathematical equations are examples of a priori knowledge."
       },
       {
+        id: "c4ynic",
         "question": "What is a posteriori knowledge?",
         "answer": "A posteriori knowledge is knowledge that can only be known through experience, gathered via inductive reasoning based on empirical evidence."
       },
       {
+        id: "249zsl",
         "question": "What is the Method of Tenacity?",
         "answer": "The method of tenacity involves believing and accepting certain things as true because they have always been believed or because superstition supports them. Religious beliefs, omens, and astrology are common examples.",
         "explanation": "Described by Kerliger (1986) as one of four methods of acquiring knowledge."
       },
       {
+        id: "xns6i9",
         "question": "What is the Method of Intuition?",
         "answer": "The method of intuition involves relying on hunches and instinct when answering questions, especially when a person has no information or cannot make rational considerations. Information is accepted as true because it 'feels right.'"
       },
       {
+        id: "zv21z3",
         "question": "What is the Method of Authority?",
         "answer": "The method of authority involves relying on information or answers from an expert in a subject area. A key limitation is that expert opinion can be subjective, and expertise in one area is often incorrectly generalized to other topics.",
         "explanation": "The method of authority is also called the method of faith when people have unquestioning trust in the authority figure."
       },
       {
+        id: "rwy5rm",
         "question": "What are the three important principles of the scientific method?",
         "answer": "Science is empirical (answers are obtained after systematic empirical research), science is public (methods and results are available for evaluation and replication by other scientists), and science is objective (observations are structured to avoid researcher bias)."
       },
       {
+        id: "s2r81s",
         "question": "What does the word 'science' derive from and what does it mean?",
         "answer": "The word 'science' derives from the Latin term 'scientia,' meaning knowledge."
       },
       {
+        id: "n8nwik",
         "question": "What is bias in the context of scientific research?",
         "answer": "Bias occurs when the research results in a study are influenced by the researcher's expectations or personal beliefs."
       },
       {
+        id: "mrwofl",
         "question": "What is the empirical method of acquiring knowledge?",
         "answer": "The empirical method, or empiricism, uses observation or direct sensory experience to obtain knowledge about the world."
       },
       {
+        id: "4aesec",
         "question": "What is the rational method of acquiring knowledge?",
         "answer": "The rational method, or rationalism, seeks answers through logical reasoning using premise statements that are presumed to be true, combined to yield a conclusion that must conform to the rules of logic."
       },
       {
+        id: "y9s0vc",
         "question": "Under which scientific area and field does 'trade and tourism' fall according to the Croatian Ordinance on Scientific Areas?",
         "answer": "Trade and tourism (branch 5.01.07) falls under the Area of Social Sciences, field of Economy."
       },
       {
+        id: "khj7pq",
         "question": "What is research in academic fields?",
         "answer": "In academic fields, research denotes activities such as defining, redefining, and solving problems; observing facts and their interpretation; formulating and testing hypotheses; revising existing theories and laws; and practically applying already generated information."
       }
     ],
     "quiz": [
       {
+        id: "9cc0vd",
         "question": "Which scientist is referred to as the 'father of observational astronomy' in the source text?",
         "options": [
           "Claudius Galen",
@@ -81,6 +97,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "3asxsl",
         "question": "According to Kerliger (1986), which method of acquiring knowledge involves accepting information as true because it has always been believed or because superstition supports it?",
         "options": [
           "Method of intuition",
@@ -91,6 +108,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "e7qiec",
         "question": "A student believes their exam performance improves when they wear a lucky hat. Which method of knowing are they using?",
         "options": [
           "Method of empiricism",
@@ -101,6 +119,7 @@ const academicWritingM1 = {
         "correct": 3
       },
       {
+        id: "y9a75n",
         "question": "Which of the following is a key limitation of the method of authority?",
         "options": [
           "It relies too heavily on direct observation",
@@ -111,6 +130,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "pwf4en",
         "question": "Which of the three principles of scientific method states that research results should be available for evaluation and replication by other scientists?",
         "options": [
           "Science is empirical",
@@ -121,6 +141,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "4s7al7",
         "question": "Under the Croatian Ordinance on Scientific Areas, which area does 'Economy' belong to?",
         "options": [
           "Area of Natural Sciences",
@@ -131,6 +152,7 @@ const academicWritingM1 = {
         "correct": 3
       },
       {
+        id: "1m0qov",
         "question": "When does information become knowledge, according to the source text?",
         "options": [
           "When it is published in a scientific journal",
@@ -141,6 +163,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "7506ae",
         "question": "Which accidental discovery resulted from Chinese attempts to find an elixir for eternal life?",
         "options": [
           "Penicillin",
@@ -151,6 +174,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "dusrgi",
         "question": "Tim knows he is taller than his friend Jack, who just became tall enough to ride a roller coaster. Tim concludes he can also ride it. Which method of knowing is Tim using?",
         "options": [
           "Method of empiricism",
@@ -161,6 +185,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "xbjzbu",
         "question": "Which of the following best describes why objective measurements are more challenging in social sciences than in natural sciences?",
         "options": [
           "Social sciences do not use the scientific method",
@@ -171,6 +196,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "htqb4e",
         "question": "What distinguishes scientific empiricism from the simple empirical method?",
         "options": [
           "Scientific empiricism does not rely on observation",
@@ -183,128 +209,155 @@ const academicWritingM1 = {
     ],
     "fillBlanks": [
       {
+        id: "jjj5zo",
         "sentence": "Galileo Galilei improved the telescope so he could see with a magnification _______ or 9 times.",
         "answer": "8",
         "hint": "A single-digit number just below 9."
       },
       {
+        id: "o9ypu4",
         "sentence": "Knowledge is only considered as such when it is convinced and _______.",
         "answer": "understood",
         "hint": "The process of grasping meaning."
       },
       {
+        id: "351kiq",
         "sentence": "A priori knowledge is known _______ of experience, while a posteriori knowledge is known only by experience.",
         "answer": "independent",
         "hint": "Not relying on something."
       },
       {
+        id: "gx7tx9",
         "sentence": "The method of _______ involves relying on hunches and instinct when answering questions.",
         "answer": "intuition",
         "hint": "A gut feeling or inner sense."
       },
       {
+        id: "tg8xve",
         "sentence": "The method of authority is also called the method of _______ when people have unquestioning trust in the authority figure.",
         "answer": "faith",
         "hint": "Unquestioning belief or trust."
       },
       {
+        id: "aiwrpj",
         "sentence": "Science is described as a '_______ search for knowledge' because observations are structured to avoid researcher bias.",
         "answer": "dispassionate",
         "hint": "Without personal emotion or bias."
       },
       {
+        id: "k7aokz",
         "sentence": "The word 'science' comes from the Latin term _______, meaning knowledge.",
         "answer": "scientia",
         "hint": "A Latin word."
       },
       {
+        id: "k7mult",
         "sentence": "_______ occurs when research results are influenced by the researcher's expectations or personal beliefs.",
         "answer": "Bias",
         "hint": "A skewing of results due to personal influence."
       },
       {
+        id: "ryhow2",
         "sentence": "Trade and tourism is branch number _______ within the field of Economy in the Area of Social Sciences.",
         "answer": "5.01.07",
         "hint": "It follows 5.01.06 general economics."
       },
       {
+        id: "ppmdws",
         "sentence": "The scientific method is based on observation, measurement, _______, and evaluation.",
         "answer": "verification",
         "hint": "Confirming the accuracy of findings."
       }
     ],
     "learn": {
+      id: "p5ww31",
       "content": "<h3>Fundamentals of Research: The Search for Knowledge</h3><p>From the earliest days of human civilization, curiosity has driven people to seek truth and understanding. Ancient scholars like <strong>Claudius Galen</strong> used direct observation of patients to advance medicine, while <strong>Galileo Galilei</strong> (1564–1642) improved the telescope and made groundbreaking astronomical discoveries. Many important discoveries also happened <em>accidentally</em> — gunpowder, penicillin, and Corn Flakes are classic examples.</p><h3>What is Knowledge?</h3><p>According to C. George Tomas (2021), knowledge refers to both <strong>theoretical and practical understanding</strong> of a subject, including facts, descriptions, information, and skills acquired through experience or study. Knowledge becomes knowledge only when it is <em>convinced and understood</em>.</p><ul><li><strong>Implicit knowledge:</strong> Practical skills such as riding a bike or swimming.</li><li><strong>Explicit knowledge:</strong> Theoretical understanding, such as a manual explaining how to operate a machine.</li><li><strong>A priori knowledge:</strong> Known independent of experience (e.g., mathematical equations), derived through deductive reasoning.</li><li><strong>A posteriori knowledge:</strong> Known only through experience, gathered via inductive reasoning and empirical evidence.</li></ul><h3>Methods of Acquiring Knowledge</h3><p>Kerliger (1986) described four non-scientific methods, alongside the scientific method:</p><ul><li><strong>Method of Tenacity:</strong> Accepting things as true because they have always been believed or because superstition supports them (e.g., religious beliefs, omens, astrology). These beliefs are deeply ingrained and very difficult to change.</li><li><strong>Method of Intuition:</strong> Relying on hunches and instinct. Information is accepted as true because it 'feels right.' Often used in ethical or moral decisions.</li><li><strong>Method of Authority:</strong> Relying on an expert's opinion. Also called the <em>method of faith</em> when trust is unquestioning. Key limitations: expert opinion can be subjective, and expertise in one area is often incorrectly generalized to others. Example: Linus Pauling's claim about vitamin C and the common cold was widely accepted on authority despite lack of scientific support.</li><li><strong>Rationalism (Rational Method):</strong> Using logical reasoning with premise statements to reach conclusions. Logic is described as 'a way of establishing truth in the absence of evidence.' Conclusions must conform to the rules of logic.</li><li><strong>Empiricism (Empirical Method):</strong> Using direct observation or sensory experience to obtain knowledge.</li><li><strong>Scientific Method:</strong> The most reliable method. Combines observation, measurement, verification, and evaluation. It is systematic and designed to avoid the pitfalls of any single method used alone.</li></ul><h3>Three Principles of the Scientific Method</h3><ul><li><strong>Empirical:</strong> Answers are obtained after systematic empirical research using adequate procedures and techniques.</li><li><strong>Public:</strong> Methods and results are available for evaluation and replication by other scientists, often published in scientific journals or presented at conferences.</li><li><strong>Objective:</strong> Observations are structured to prevent researcher bias — science is called 'a dispassionate search for knowledge.' <em>Bias</em> occurs when results are influenced by the researcher's expectations or personal beliefs.</li></ul><h3>Science and Its Classification</h3><p>The word <strong>science</strong> derives from the Latin <em>scientia</em>, meaning knowledge. Scientific knowledge is not static — it is constantly revised and expanded through observation and experimentation. In Croatia, the classification of science is determined by the <strong>Ordinance on Scientific and Artistic Areas, Fields and Branches (Official Gazette No. 118/09)</strong>, which defines nine scientific and artistic areas including Natural Sciences, Social Sciences, Humanities, and others. Tourism-related research falls under the <strong>Area of Social Sciences → Economy → branch 5.01.07 Trade and Tourism</strong>.</p><h3>What is Research?</h3><p>In academic fields, research involves defining, redefining, and solving problems; observing and interpreting facts; formulating and testing hypotheses; revising existing theories; and applying generated information practically. <strong>Logic, reason, and evidence</strong> are essential parts of modern research. Objective measurements are far easier in natural sciences than in social sciences due to the nature of the disciplines.</p><h3>Common Pitfalls</h3><ul><li>Relying solely on authority without corroborating evidence — not all 'experts' are genuine experts.</li><li>Confusing a priori and a posteriori knowledge: not all knowledge can be derived by reasoning alone.</li><li>Allowing personal bias to influence research outcomes — this undermines the objectivity that science requires.</li><li>Assuming that accidental discoveries are not valid — many important findings arose from trial and error or accident, but they were later verified through systematic study.</li></ul>"
     }
   },
   "literatureReview": {
+    id: "jau495",
     "name": "Literature Review",
     "icon": "fa-lightbulb",
     "color": "#f59e0b",
     "flashcards": [
       {
+        id: "wtsola",
         "question": "What is a literature review?",
         "answer": "A critical and evaluative description of publications on a chosen topic.",
         "explanation": "It provides the background and justification for the research undertaken, shows existing knowledge, and identifies gaps related to the research work."
       },
       {
+        id: "u1g4r8",
         "question": "What is the primary purpose of a literature review?",
         "answer": "To demonstrate that the author has extensively surveyed the literature of a particular subject and critically evaluated its quality by classifying and summarizing findings in comparison with previous research works.",
         "explanation": "A good review must have a clear focus and be presented in a logical and well-organized style."
       },
       {
+        id: "8l7m5u",
         "question": "What is an annotated bibliography?",
         "answer": "A bibliography giving the summary of different sources, where each annotation is a short explanatory note about the contents of a source along with an evaluation.",
         "explanation": "Unlike a literature review, an annotated bibliography is organized around the sources themselves, not around ideas."
       },
       {
+        id: "ihp1r5",
         "question": "How does a literature review differ from an annotated bibliography?",
         "answer": "A literature review provides a narrative organized around ideas using references, whereas an annotated bibliography is organized around the sources themselves and provides summaries and evaluations of individual sources."
       },
       {
+        id: "b47bse",
         "question": "Name three objectives of conducting a literature survey according to Hartley (2008), Randolph (2009), and Kumar (2011).",
         "answer": "Examples include: to understand the current level of knowledge on the chosen subject; to identify seminal works; to identify shortcomings in the existing knowledge base; to see whether the work has already been investigated; to identify opposing views; to identify methodologies used."
       },
       {
+        id: "icjgyh",
         "question": "What is the IMRAD format?",
         "answer": "A structure used for research papers: Introduction, Methods, Results, and Discussion. A reliable research paper source should be presented in this format."
       },
       {
+        id: "zf0lw4",
         "question": "What is peer reviewing?",
         "answer": "A rigorous process of quality evaluation that a paper must go through before being accepted for publication in a journal.",
         "explanation": "Journals that publish results of original research and use peer reviewing are often called primary journals."
       },
       {
+        id: "60sjg5",
         "question": "What are primary journals?",
         "answer": "Journals that publish the results of original research and require papers to go through a rigorous peer review process before acceptance."
       },
       {
+        id: "ykutv6",
         "question": "What four key planning steps should be taken before conducting a literature search?",
         "answer": "(1) Determine the scope of review, (2) decide the period to be covered, (3) settle on the range (regional, national, or international), and (4) identify key concepts and keywords."
       },
       {
+        id: "unnn0x",
         "question": "Why should extra vigilance be maintained on electronic sources?",
         "answer": "Because not all electronic sources are trustworthy; researchers should rely only on websites sponsored by universities and reputable organizations."
       },
       {
+        id: "ybuuq5",
         "question": "What bibliographic details should be recorded for a printed book source?",
         "answer": "Name of author(s)/editor(s)/organization, title of book or chapter, edition and reprint, name of publisher, place of publication, year of publication, and total pages."
       },
       {
+        id: "hxndu7",
         "question": "What additional details must be noted for electronic publications?",
         "answer": "Name of author(s)/editor(s)/organization, title of the article, title of the site (homepage), date of creation, date last modified or updated, date of access, and DOI or full URL address."
       },
       {
+        id: "1ls9mj",
         "question": "Why are books sometimes considered less useful than journals for a literature review?",
         "answer": "Because books do not include recent developments due to the long preparation time involved in their making, whereas journals publish more current research findings."
       },
       {
+        id: "9qfxos",
         "question": "What does it mean to 'identify opposing views' in a literature review?",
         "answer": "It means recognizing and acknowledging perspectives or findings in the existing literature that contradict or challenge the researcher's own position or the dominant view in the field."
       }
     ],
     "quiz": [
       {
+        id: "es917g",
         "question": "Which of the following best describes a literature review?",
         "options": [
           "A list of sources with short summaries and evaluations",
@@ -315,6 +368,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "o9zmde",
         "question": "According to the source text, what is the primary purpose of a literature review?",
         "options": [
           "To list all publications ever written on a topic",
@@ -325,6 +379,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "ynpw2o",
         "question": "How is a literature review organized, in contrast to an annotated bibliography?",
         "options": [
           "Around the sources themselves",
@@ -335,6 +390,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "kbdbqb",
         "question": "Which of the following is NOT listed as an objective of conducting a literature survey (Hartley 2008; Randolph 2009; Kumar 2011)?",
         "options": [
           "To identify seminal works in the proposed subject area",
@@ -345,6 +401,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "xkhj62",
         "question": "What is peer reviewing?",
         "options": [
           "A process where students evaluate each other's essays",
@@ -355,6 +412,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "1x9vvi",
         "question": "When planning a literature search, what should a researcher do FIRST?",
         "options": [
           "Use online databases efficiently",
@@ -365,6 +423,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "5ayaw8",
         "question": "Why are books sometimes less useful than journals for a literature review?",
         "options": [
           "Books are not peer reviewed and contain biased information",
@@ -375,6 +434,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "0cvhtb",
         "question": "Which format should a reliable research paper follow, according to the source text?",
         "options": [
           "APA format",
@@ -385,6 +445,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "pohxrn",
         "question": "What type of electronic sources should researchers rely on, according to the source text?",
         "options": [
           "Any website with recent publication dates",
@@ -395,6 +456,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "97j31k",
         "question": "Which of the following details is required when recording bibliographic information for an electronic publication?",
         "options": [
           "Name of the printer",
@@ -405,6 +467,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "hrn3b6",
         "question": "According to the source text, what should a good literature review have?",
         "options": [
           "A minimum of 50 references",
@@ -415,6 +478,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "mr2329",
         "question": "Which of the following is listed as a reason to avoid certain sources when assessing reliability?",
         "options": [
           "Sources published more than 10 years ago",
@@ -427,126 +491,153 @@ const academicWritingM1 = {
     ],
     "fillBlanks": [
       {
+        id: "exwy8f",
         "sentence": "A literature review is a critical and _______ description of publications on a chosen topic.",
         "answer": "evaluative",
         "hint": "It involves judging the quality and relevance of sources."
       },
       {
+        id: "kkbs3b",
         "sentence": "A literature review is organized around _______ and not the sources themselves, in contrast to an annotated bibliography.",
         "answer": "ideas",
         "hint": "Think about what structures the narrative of a literature review."
       },
       {
+        id: "91gsid",
         "sentence": "An _______ is a short explanatory note about the contents of a source, giving the reader a summary along with an evaluation.",
         "answer": "annotation",
         "hint": "This term is part of the name 'annotated bibliography'."
       },
       {
+        id: "93nfka",
         "sentence": "Before a paper is accepted for publication in a journal, it should go through a rigorous process of quality evaluation called _______.",
         "answer": "peer reviewing",
         "hint": "Other experts in the field evaluate the paper."
       },
       {
+        id: "z6q8fl",
         "sentence": "Journals that publish the results of original research are often called _______ journals.",
         "answer": "primary",
         "hint": "They are the first to publish new research findings."
       },
       {
+        id: "wkcnj9",
         "sentence": "If the source is a research paper, it should be presented in the _______ format.",
         "answer": "IMRAD",
         "hint": "This acronym stands for Introduction, Methods, Results, and Discussion."
       },
       {
+        id: "rmwfzm",
         "sentence": "Researchers should maintain extra vigilance on electronic sources and rely only on websites sponsored by universities and _______ organizations.",
         "answer": "reputed",
         "hint": "The opposite of disreputable or unknown."
       },
       {
+        id: "9sexfs",
         "sentence": "Using a list of _______ or key phrases, you will be able to search the literature easily and effectively.",
         "answer": "keywords",
         "hint": "These are the most important terms related to your research topic."
       },
       {
+        id: "8r5qub",
         "sentence": "A literature review provides a _______ using the references in the annotated bibliography.",
         "answer": "narrative",
         "hint": "It tells a story or argument connecting the sources."
       },
       {
+        id: "gvhy6c",
         "sentence": "For electronic publications, researchers must note the Digital Object Identifier (DOI) or the full address of the _______.",
         "answer": "URL",
         "hint": "This is the web address of the online source."
       }
     ],
     "learn": {
+      id: "6upljk",
       "content": "<h3>The Literature Review</h3><p>A <strong>literature review</strong> is a critical and evaluative description of publications on a chosen topic. It is an essential component of research proposals, theses, and research papers. Its core function is to provide the <strong>background and justification</strong> for the research undertaken, to show what knowledge already exists, and to highlight the <strong>gaps in knowledge</strong> related to the research work.</p><h3>Literature Review vs. Annotated Bibliography</h3><p>Students often confuse a literature review with an annotated bibliography. These are <em>not</em> the same thing:</p><ul><li><strong>Annotated Bibliography:</strong> A bibliography that gives a summary and evaluation of each individual source. Each entry (annotation) is a short explanatory note about the contents of a source.</li><li><strong>Literature Review:</strong> Provides a <em>narrative</em> using the references gathered, organized around <strong>ideas</strong> rather than around the sources themselves.</li></ul><p><em>Common pitfall:</em> Writing a literature review as a list of summaries (one source after another) is a mistake — it should weave sources together into a coherent argument or discussion organized by themes or ideas.</p><h3>Importance of the Literature Review</h3><p>The primary purpose of a literature review is to demonstrate that the author has <strong>extensively surveyed</strong> the literature and <strong>critically evaluated</strong> its quality. A good review must have a clear focus and be presented in a logical and well-organized style. Key objectives include:</p><ul><li>To understand the current level of knowledge on the chosen subject</li><li>To identify <strong>seminal works</strong> in the proposed subject area</li><li>To identify <strong>shortcomings</strong> in the existing knowledge base</li><li>To see whether the work has already been investigated</li><li>To identify <strong>opposing views</strong></li><li>To carry on from where others have already reached</li><li>To identify other scientists working in the same field</li><li>To identify the <strong>methodologies and research techniques</strong> that have been used</li><li>To relate new findings to previous findings in the discussion section</li></ul><h3>Planning a Literature Search</h3><p>Before beginning a search, careful planning is essential:</p><ul><li><strong>Determine the Scope:</strong> Define your research question and assess what you already know about the area.</li><li><strong>Decide the Period:</strong> Determine whether you need everything ever written on the topic, or only publications from the last 5 or 30 years.</li><li><strong>Settle on the Range:</strong> Decide if the information needed is of regional, national, or international importance.</li><li><strong>Identify Key Concepts and Keywords:</strong> A list of keywords or key phrases enables effective and efficient searching.</li></ul><h3>Locating Relevant Literature</h3><p>Effective location of literature involves:</p><ul><li>Selecting appropriate tools such as library catalogues, abstracts, and search engines</li><li>Tracing relevant publications using keywords, synonyms, and alternative terms</li><li>Taking careful notes from each source</li><li>Keeping <strong>detailed bibliographic records</strong> including author names, title, volume, issue, publisher, place and year of publication, and page numbers. For electronic sources, also record the date of access, date last modified, and the <strong>DOI or full URL</strong>.</li></ul><h3>Reliability of a Source</h3><p>Not all sources can be taken for granted. Researchers must assess the <strong>trustworthiness</strong> of each source by considering:</p><ul><li>Who the authors and publishers are</li><li>The <strong>impact factor</strong> or rating of the publication</li><li>The purpose of the publication and for whom it was written</li><li>Whether the subject matter has been presented clearly and objectively</li><li>The theoretical perspective of the author</li><li>Whether the source follows the <strong>IMRAD format</strong> (Introduction, Methods, Results, and Discussion) if it is a research paper</li><li>Avoiding <strong>biased sources</strong> from lobbyists and advocacy groups</li><li>Relying only on electronic sources from <strong>universities and reputable organizations</strong></li></ul><h3>Writing the Review</h3><p>Journals that publish original research are called <strong>primary journals</strong>. Before publication, papers must pass <strong>peer reviewing</strong> — a rigorous quality evaluation process. Books are more accessible but may lack recent developments due to long preparation times, making journals often more valuable for current research. A well-written literature review integrates sources into a coherent narrative, critically evaluates findings, and clearly demonstrates the researcher's command of the field.</p>"
     }
   },
   "structureOfAThesis": {
+    id: "p9prt0",
     "name": "Structure Of A Thesis",
     "icon": "fa-compass",
     "color": "#14b8a6",
     "flashcards": [
       {
+        id: "5qee0r",
         "question": "What is the difference between a 'thesis' and a 'dissertation' in the US system?",
         "answer": "In the US, a dissertation is submitted for a PhD degree, while a thesis is submitted for a Master's degree.",
         "explanation": "This is the opposite of the British convention."
       },
       {
+        id: "1n7vi8",
         "question": "How do British-based academic systems use the terms 'thesis' and 'dissertation'?",
         "answer": "In British-based systems, 'dissertation' refers to work at the end of an undergraduate or master's level degree, while 'thesis' refers to work produced at the end of a PhD.",
         "explanation": "This is the reverse of the US convention."
       },
       {
+        id: "dwl815",
         "question": "What are the three main parts of a thesis?",
         "answer": "Preliminary Pages, Subject Proper, and References/Appendixes."
       },
       {
+        id: "v3vzfv",
         "question": "What is the IMRAD structure?",
         "answer": "IMRAD stands for Introduction, Review of literature, Materials and methods, Results, and Discussion — the structure of the main body of a thesis."
       },
       {
+        id: "45jt18",
         "question": "What is the purpose of the 'Introduction' chapter in a thesis?",
         "answer": "It introduces the reader to the state of knowledge before the research, defines the gap in knowledge, states what the student planned to do, and provides justification and rationale for the research."
       },
       {
+        id: "a4e5m7",
         "question": "Which section of a thesis is considered the most important part?",
         "answer": "The 'Results' section is considered the most important part of a thesis, as it presents the student's findings with supporting data."
       },
       {
+        id: "2910by",
         "question": "Which section of a thesis is considered the most difficult to write?",
         "answer": "The 'Discussion' section is considered the most difficult section to write in any research report including a thesis."
       },
       {
+        id: "mlmk5p",
         "question": "What is an acronym?",
         "answer": "An acronym is an abbreviation created by joining the first letters of each successive word of a long compound term, pronounced as a single word (e.g., AIDS, ICRISAT)."
       },
       {
+        id: "vybux3",
         "question": "What is an initialism?",
         "answer": "An initialism is produced by joining the initial letters of all words in a long multiword term, but the letters are pronounced separately (e.g., ICAR pronounced I-C-A-R)."
       },
       {
+        id: "w04xna",
         "question": "When should an abbreviation be written in full?",
         "answer": "An abbreviation shall be written in full at least the first time it is used in the document, followed immediately by the abbreviated form in parentheses."
       },
       {
+        id: "wavura",
         "question": "What does 'etc.' stand for and what language does it come from?",
         "answer": "'Etc.' stands for 'et cetera', a Latin phrase meaning 'and so forth' or 'and other things'."
       },
       {
+        id: "opqo2c",
         "question": "Why is writing 'and etc.' incorrect?",
         "answer": "Because 'and' is already implied in 'et cetera' (which means 'and so forth'), making 'and' redundant."
       },
       {
+        id: "dpnie3",
         "question": "In British English, when is a period omitted after an abbreviation?",
         "answer": "When the last letter of the abbreviation and the last letter of the original word are the same (e.g., 'Dr' for Doctor, 'Mr' for Mister)."
       },
       {
+        id: "xuw1hs",
         "question": "How are academic degrees written with respect to periods?",
         "answer": "Periods are not used between letters of academic degrees, whether composed of upper case letters alone or combined with upper and lower case letters (e.g., BA, BSc, MPhil, PhD)."
       }
     ],
     "quiz": [
       {
+        id: "s56xs3",
         "question": "In the US academic system, what is the research report submitted for a PhD degree called?",
         "options": [
           "Thesis",
@@ -557,6 +648,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "7tfeq9",
         "question": "How many main parts does a thesis have?",
         "options": [
           "Two",
@@ -567,6 +659,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "frg03m",
         "question": "Which of the following is NOT listed as part of the Preliminary Pages of a thesis?",
         "options": [
           "Acknowledgements",
@@ -577,6 +670,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "pbuz01",
         "question": "According to the source, figures and illustrations should be numbered using:",
         "options": [
           "Roman numerals",
@@ -587,6 +681,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "fvsfjh",
         "question": "The 'Discussion' section of a thesis should answer which question?",
         "options": [
           "What did the student find?",
@@ -597,6 +692,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "wx3qjm",
         "question": "Which of the following is an example of an acronym (pronounced as a single word)?",
         "options": [
           "ICAR",
@@ -607,6 +703,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "ue9pja",
         "question": "How should 'etc.' be punctuated when used in a sentence?",
         "options": [
           "Preceded by a comma and followed by a period",
@@ -617,6 +714,7 @@ const academicWritingM1 = {
         "correct": 0
       },
       {
+        id: "f5j6fp",
         "question": "In British English, which abbreviation correctly omits the period?",
         "options": [
           "ed. (edition)",
@@ -627,6 +725,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "4o42w3",
         "question": "Which Latin abbreviation means 'for example'?",
         "options": [
           "i.e.",
@@ -637,6 +736,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "cpdsq6",
         "question": "According to the source, what is the recommended modern alternative to using 'etc.' in formal writing?",
         "options": [
           "Use 'and so on' instead",
@@ -647,6 +747,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "ixj53x",
         "question": "Where is the Acknowledgements section placed in a thesis?",
         "options": [
           "After the table of contents",
@@ -657,6 +758,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "ult28l",
         "question": "Which statement about initialisms is correct?",
         "options": [
           "They are pronounced as a single word",
@@ -669,131 +771,157 @@ const academicWritingM1 = {
     ],
     "fillBlanks": [
       {
+        id: "wj5flx",
         "sentence": "In the US system, the research report submitted for a Master's degree is called a _______.",
         "answer": "thesis",
         "hint": "Not a dissertation."
       },
       {
+        id: "f9k0td",
         "sentence": "The main body of a thesis follows the _______ structure, which stands for Introduction, Review of literature, Materials and methods, Results, and Discussion.",
         "answer": "IMRAD",
         "hint": "An acronym for the chapter sequence."
       },
       {
+        id: "c6vdmq",
         "sentence": "Figures and illustrations in a thesis should be numbered in _______ numerals.",
         "answer": "Arabic",
         "hint": "1, 2, 3 — not Roman numerals."
       },
       {
+        id: "m57voz",
         "sentence": "An abbreviation created by joining the first letters of successive words and pronounced as a single word is called an _______.",
         "answer": "acronym",
         "hint": "Examples include AIDS and ICRISAT."
       },
       {
+        id: "ru02ii",
         "sentence": "An abbreviation whose letters are pronounced separately, such as ICAR, is called an _______.",
         "answer": "initialism",
         "hint": "Each letter is said individually."
       },
       {
+        id: "2yhhep",
         "sentence": "An abbreviation should be written in full the _______ time it is used in the document, followed by the abbreviated form in parentheses.",
         "answer": "first",
         "hint": "Introduce before shortening."
       },
       {
+        id: "q5txeb",
         "sentence": "The Latin phrase 'et cetera', abbreviated as etc., means 'and so _______.",
         "answer": "forth",
         "hint": "It implies continuation of a list."
       },
       {
+        id: "e7moqn",
         "sentence": "Writing 'and etc.' is incorrect because the word 'and' is _______ since it is already implied in 'et cetera'.",
         "answer": "redundant",
         "hint": "It means the same thing twice."
       },
       {
+        id: "pc3vft",
         "sentence": "In British English, periods are omitted after honorific contractions such as _______ (Doctor) because the last letter of the abbreviation matches the last letter of the original word.",
         "answer": "Dr",
         "hint": "A common title for a medical doctor or academic."
       },
       {
+        id: "va029x",
         "sentence": "The _______ section is considered the most important part of a thesis, as it presents the student's findings with supporting data.",
         "answer": "Results",
         "hint": "It answers the question: What did the student find?"
       }
     ],
     "learn": {
+      id: "qsy0mx",
       "content": "<h3>Structure of a Thesis</h3><p>A thesis (or dissertation) is a formal academic research document. Understanding its structure is essential for any student undertaking seminar, bachelor, or master-level research at FMTU Opatija and similar institutions.</p><h3>Thesis vs. Dissertation: Terminology</h3><p>The terms <strong>thesis</strong> and <strong>dissertation</strong> are used differently depending on the academic tradition:</p><ul><li><strong>US system:</strong> A <em>dissertation</em> is submitted for a PhD; a <em>thesis</em> is submitted for a Master's degree.</li><li><strong>British-based system:</strong> A <em>dissertation</em> refers to work at the end of an undergraduate or master's degree; a <em>thesis</em> refers to work produced at the end of a PhD.</li></ul><h3>The Three Main Parts of a Thesis</h3><p>Every thesis is divided into three main parts:</p><ul><li><strong>Preliminary Pages</strong></li><li><strong>Subject Proper</strong></li><li><strong>References and Appendixes</strong></li></ul><h3>Preliminary Pages</h3><p>The preliminary pages set the administrative and contextual foundation of the thesis. They include:</p><ul><li><strong>Title Page(s):</strong> Usually two are provided. The first (cover page) includes the thesis title, author's name, and department/college name. The second adds the degree name, faculty, department, institute, and mentor's name and title.</li><li><strong>Signature Page:</strong> Contains signatures of all Advisory Committee members as an official endorsement.</li><li><strong>Declaration by the Student</strong> and <strong>Certificate from the Guide (Major Advisor)</strong>.</li><li><strong>Acknowledgements:</strong> Placed just before the Table of Contents. Students acknowledge help from supervisors, colleagues, and friends. The modern style uses first person: <em>'I wish to acknowledge…'</em> rather than the old-fashioned third person.</li><li><strong>Table of Contents:</strong> All major divisions must be listed.</li><li><strong>List of Tables:</strong> All tables listed with the same captions as in the text.</li><li><strong>List of Figures:</strong> All illustrations (maps, diagrams, photographs, etc.) numbered in <strong>Arabic numerals</strong> and referred to as 'Figure' in the text.</li></ul><h3>The Subject Proper (IMRAD)</h3><p>The main body follows the <strong>IMRAD</strong> structure across six chapters:</p><ul><li><strong>Introduction:</strong> Introduces the state of knowledge, defines the gap, states the research plan, hypothesis, importance, scope, and methodology.</li><li><strong>Review of Literature:</strong> Must be up to date; assumes the candidate has read all original references.</li><li><strong>Materials and Methods:</strong> Described exhaustively in a thesis (unlike a research paper where it is concise).</li><li><strong>Results:</strong> The <em>most important</em> part — presents findings with supporting data. Answers: <em>What did the student find?</em></li><li><strong>Discussion:</strong> The <em>most difficult</em> section to write. Answers: <em>What do the results mean and how do they relate to what is already known?</em></li><li><strong>Summary and Conclusion:</strong> Sums up all the key messages of the thesis.</li></ul><h3>Abbreviations, Acronyms, and Initialisms</h3><p>Proper use of abbreviations is critical in academic writing:</p><ul><li><strong>Abbreviation:</strong> A shortened form of a word or group of words, normally written with a period (e.g., <em>abstr.</em> for abstract). If composed of only capital letters, written without periods (e.g., IARI).</li><li><strong>Acronym:</strong> Formed by joining the first letters of successive words and <em>pronounced as a single word</em> (e.g., AIDS, ICRISAT). Some acronyms like <em>radar</em> and <em>laser</em> are now written in lower case as they are accepted as common nouns.</li><li><strong>Initialism:</strong> Formed by joining initial letters but <em>pronounced as separate letters</em> (e.g., ICAR = I-C-A-R, FBI).</li></ul><p><strong>Key rules for abbreviations:</strong></p><ul><li>Write the full form the <strong>first time</strong> it appears, followed by the abbreviation in parentheses.</li><li>Repeat the full form if the abbreviation reappears after a lengthy gap.</li><li>List and explain abbreviations at the beginning of the document.</li></ul><h3>The Abbreviation 'etc.'</h3><p><em>Etc.</em> stands for the Latin <em>et cetera</em>, meaning 'and so forth'. Key rules:</p><ul><li>Always followed by a <strong>period</strong>.</li><li>Always preceded by a <strong>comma</strong> in both American and British English.</li><li>Never write <strong>'and etc.'</strong> — 'and' is redundant.</li><li>The implied extension must be clear to the reader.</li><li>Modern formal writing prefers <strong>'including'</strong>, <strong>'such as'</strong>, or <strong>'like'</strong> instead of 'etc.'</li></ul><h3>Capital Letters and Periods in Abbreviations</h3><ul><li>Acronyms: written in <strong>capital letters without periods</strong> (e.g., WHO, IRRI), except those accepted as common nouns (radar, laser — lower case, no periods).</li><li>Initialisms: may be upper or lower case. No periods when all uppercase (WHO); periods used when lower case (a.m.).</li><li>Academic degrees: <strong>no periods</strong> between letters (BA, BSc, MPhil, PhD).</li><li>SI unit symbols: <strong>no periods</strong> after symbols (g, s, m).</li><li>In British English, if the last letter of the abbreviation equals the last letter of the original word, the period is <strong>omitted</strong> (Dr, Mr, Mrs, Ms). In the USA, periods are used (Dr., Mr., Mrs., Ms.).</li></ul><h3>Common Pitfalls</h3><ul><li>Do <strong>not</strong> use an abbreviation without first defining it in full.</li><li>Do <strong>not</strong> write 'and etc.' — it is redundant.</li><li>Do <strong>not</strong> use Latin abbreviations like <em>loc. cit.</em>, <em>op. cit.</em>, or <em>ibid.</em> in technical writing as they can cause ambiguity; prefer English equivalents.</li><li>Do <strong>not</strong> overuse abbreviations — they can obstruct reading if the reader must constantly search back through the document.</li><li>Ensure the implied meaning of 'etc.' is always clear from context.</li></ul>"
     }
   },
   "methodsOfScientificResearch": {
+    id: "9xwcrs",
     "name": "Methods Of Scientific Research",
     "icon": "fa-book-open",
     "color": "#3b82f6",
     "flashcards": [
       {
+        id: "7w3bic",
         "question": "What are the five means of scientific research?",
         "answer": "Material, Informational, Mathematical, Logical, and Linguistic means.",
         "explanation": "All five means share a common property: they are constructed, created, designed, and substantiated for certain goals of research."
       },
       {
+        id: "lyl2ca",
         "question": "What is Analysis as a scientific method?",
         "answer": "Decomposing a studied object into several parts, identifying specific attributes and qualities of a phenomenon, process, or relations among phenomena and processes.",
         "explanation": "Analysis is an integral component of any scientific research, often forming its first phase when an investigator passes from the whole description to identifying structure, properties, and attributes."
       },
       {
+        id: "jx3bga",
         "question": "What is Synthesis as a scientific method?",
         "answer": "Uniting different elements or sides of an object into a whole system — not just summing up elements, but combining them in a certain sense.",
         "explanation": "Synthesis is opposite to analysis, yet both are inseparably linked."
       },
       {
+        id: "s90m7y",
         "question": "What is the method of Comparison?",
         "answer": "Procedures and operations of comparing properties, characteristics, relationships, connections, structures, functions, and behaviors of at least two phenomena to determine basic differences or similarities.",
         "explanation": "Comparison helps set the basic hypothesis that a new phenomenon has or does not have similar properties to a known phenomenon."
       },
       {
+        id: "d8h7t6",
         "question": "What is Abstracting?",
         "answer": "A basic mental operation enabling mental separation of sides, properties, or states of an object; its major function is separating the common properties of a set of objects and fixing them.",
         "explanation": "Example: Helping your little brother clean his room can be abstracted as 'being responsible'."
       },
       {
+        id: "nhm5ru",
         "question": "What is Concretizing?",
         "answer": "The opposite process to abstracting; it means identifying whole, interconnected, versatile, and complex entities.",
         "explanation": "Example: The big idea 'being helpful' is concretized by the specific act of helping a friend carry a heavy bag."
       },
       {
+        id: "etni4t",
         "question": "What is Generalization?",
         "answer": "A basic mental operation consisting in identification and fixation of relatively stable invariant properties of objects and their relations, forming the content of a notion about a group or class of objects.",
         "explanation": "Example: Observing a few cats sleeping in the sun and concluding 'Cats like to sleep in sunlight.'"
       },
       {
+        id: "tg1p5r",
         "question": "What is Formalization?",
         "answer": "Reflecting the result of thinking in the form of exact notions or assertions; in mathematics and formal logic, it means reflecting conceptual knowledge in the form of signs or a formalized language.",
         "explanation": "Formalization is opposite to intuitive thinking. Example: '80% of tourists who travel between June and August book beach destinations, based on the past five years of travel data.'"
       },
       {
+        id: "v4h15w",
         "question": "What is Induction?",
         "answer": "An inference from particular objects or phenomena to a common conclusion.",
         "explanation": "Example: Observing several birds that can fly and inferring 'Most birds I've seen can fly.'"
       },
       {
+        id: "8wfnw2",
         "question": "What is Deduction?",
         "answer": "An inference from the common to the particular, from general judgements to particular conclusions.",
         "explanation": "Deduction moves in the opposite direction from induction."
       },
       {
+        id: "ov3zdb",
         "question": "What is Idealization?",
         "answer": "Mental construction of beliefs about objects (nonexistent or unrealizable ones) whose preimages still exist in the real world; used in science to determine an ideal case for making predictions.",
         "explanation": "Example: A travel agency models tourism flow assuming all tourists behave rationally, ignoring emotions and spontaneous decisions."
       },
       {
+        id: "nc8li5",
         "question": "What is the difference between Analogy and Modeling?",
         "answer": "Analogy involves comparing two different things to highlight similarities and explain a concept; Modeling is creating a simplified representation of a real-world system to understand, analyze, or predict its behavior.",
         "explanation": "In a special case of modeling called simulation, the behavior of a prototype and a model are described by identical mathematical formulas."
       },
       {
+        id: "ndg3te",
         "question": "What is a Gedanken (Thought) Experiment?",
         "answer": "A mental exercise where a person imagines a situation or concept to explore its possible outcomes, implications, or principles, without actually performing a physical experiment.",
         "explanation": "Gedanken is a focused, structured form of imagination used to logically test or explore theoretical ideas, unlike free-form imagination."
       },
       {
+        id: "3cgxdc",
         "question": "What is Epistemology?",
         "answer": "The theory of knowledge, especially with regard to its methods, validity, and scope, and the distinction between justified belief and opinion.",
         "explanation": "Most publications on epistemology and methodology suggest a double division (classification) of scientific methods, in particular theoretical methods."
@@ -801,6 +929,7 @@ const academicWritingM1 = {
     ],
     "quiz": [
       {
+        id: "y73nrp",
         "question": "Which of the following is NOT listed as one of the five means of scientific research?",
         "options": [
           "Material means",
@@ -811,6 +940,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "lawvfl",
         "question": "What is the primary role of material means of research?",
         "options": [
           "Processing statistical data",
@@ -821,6 +951,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "alk3dr",
         "question": "According to the source text, what is the main difference between Synthesis and simply summing up elements?",
         "options": [
           "Synthesis only applies to empirical methods",
@@ -831,6 +962,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "m0lorg",
         "question": "In the double division of scientific methods, which two broad categories are identified?",
         "options": [
           "Quantitative and qualitative",
@@ -841,6 +973,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "j3j6qi",
         "question": "Which method involves inferring from particular observations to a common conclusion?",
         "options": [
           "Deduction",
@@ -851,6 +984,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "7fwckt",
         "question": "What does Formalization involve, according to the source text?",
         "options": [
           "Decomposing an object into its parts",
@@ -861,6 +995,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "9dsynm",
         "question": "Which of the following best describes Idealization as a scientific method?",
         "options": [
           "Comparing two real-world objects to find similarities",
@@ -871,6 +1006,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "mu8hhd",
         "question": "How does a Gedanken experiment differ from general Imagination?",
         "options": [
           "Gedanken is free-form and used for creativity; Imagination is structured",
@@ -881,6 +1017,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "nhds18",
         "question": "What is the key function of Logical means in constructing judgements and proofs?",
         "options": [
           "Simplifying statistical data processing",
@@ -891,6 +1028,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "toa1g9",
         "question": "According to the source text, what is the relationship between Analysis and Synthesis?",
         "options": [
           "They are completely independent methods",
@@ -901,6 +1039,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "382ygr",
         "question": "Which example from the source text illustrates Concretizing?",
         "options": [
           "Observing cats sleeping in the sun and concluding 'Cats like sunlight'",
@@ -911,6 +1050,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "h9tx5z",
         "question": "What distinguishes Generalization from Induction?",
         "options": [
           "Induction is the process of drawing a conclusion from specific observations; Generalization is the broad statement or rule created based on that inductive process",
@@ -923,131 +1063,157 @@ const academicWritingM1 = {
     ],
     "fillBlanks": [
       {
+        id: "4r2t3z",
         "sentence": "Analysis is decomposing a studied object into several parts and is often the _______ phase of scientific research.",
         "answer": "first",
         "hint": "Think about the order in which analysis appears in a research process."
       },
       {
+        id: "of2d1v",
         "sentence": "Synthesis is _______ to analysis, yet both are inseparably linked.",
         "answer": "opposite",
         "hint": "Consider the directional relationship between these two methods."
       },
       {
+        id: "l0uh7c",
         "sentence": "Induction is an inference from _______ objects or phenomena to a common conclusion.",
         "answer": "particular",
         "hint": "Induction moves from the specific to the general."
       },
       {
+        id: "839vrz",
         "sentence": "Deduction is an inference from the _______ to the particular, from general judgements to particular conclusions.",
         "answer": "common",
         "hint": "Deduction moves in the opposite direction from induction."
       },
       {
+        id: "xxtgz8",
         "sentence": "Formalization is opposite to _______ thinking.",
         "answer": "intuitive",
         "hint": "Think about the type of thinking that relies on gut feeling rather than exact notions."
       },
       {
+        id: "jcyloz",
         "sentence": "Epistemology is the theory of _______, especially with regard to its methods, validity, and scope.",
         "answer": "knowledge",
         "hint": "The word comes from the Greek root for 'knowledge'."
       },
       {
+        id: "o023v5",
         "sentence": "Idealization is used in science to determine an ideal case, and if the model is accurate it has high _______ power.",
         "answer": "predictability",
         "hint": "The model is applied to make forecasts based on the ideal case."
       },
       {
+        id: "lnfobs",
         "sentence": "Logical means help a researcher separate _______ arguments from true ones in the process of constructing judgements and proofs.",
         "answer": "false",
         "hint": "One of the three separations listed for logical means involves truth value."
       },
       {
+        id: "pobhas",
         "sentence": "Modeling is creating a _______ representation of a real-world system to understand, analyze, or predict its behavior.",
         "answer": "simplified",
         "hint": "Models do not capture every detail of reality."
       },
       {
+        id: "lsxf9e",
         "sentence": "The five means of scientific research share a common property: they are constructed, created, designed, and _______ for certain goals of research.",
         "answer": "substantiated",
         "hint": "This word means supported or justified with evidence or reasoning."
       }
     ],
     "learn": {
+      id: "quo14w",
       "content": "<h3>Introduction: Means and Methods in Scientific Research</h3><p>In the logical structure of any scientific activity, <strong>means</strong> and <strong>methods</strong> are essential components. They are important subjects of study for <strong>methodology</strong> — the theory of the organization of an activity. Over the course of science's development, both means and methods have been gradually designed and perfected to serve the goals of researchers across all disciplines.</p><h3>The Five Means of Scientific Research</h3><p>All means of scientific research share a common property: they are <strong>constructed, created, designed, and substantiated</strong> for specific research goals. The five recognized means are:</p><ul><li><strong>Material means</strong> — Devices and instruments for scientific investigations, closely connected with empirical methods such as observation, measurement, and experiment. They are directed towards objects being studied and play a principal role in the empirical verification of hypotheses.</li><li><strong>Informational means</strong> — Large-scale implementation of computer technology that simplifies research procedures, reduces data processing time, and enables statistical data processing across all sciences.</li><li><strong>Mathematical means</strong> — Tools that simplify, facilitate, and accelerate the cognition process, assist in identifying relationships among abstracted objects, and cause essential changes in the theoretical framework of descriptive sciences by systematizing empirical data and formulating quantitative laws.</li><li><strong>Logical means</strong> — Help researchers separate controlled arguments from intuitively accepted ones, false arguments from true ones, and confusions from contradictions when constructing judgements and proofs.</li><li><strong>Linguistic means</strong> — Definitions and linguistic rules (in both natural and artificial languages) that form the base of cognitive activity when stating hypotheses, constructing judgements, and making conclusions.</li></ul><h3>Theoretical Methods: Operations</h3><p>Scientific methods are broadly divided into <strong>theoretical</strong> and <strong>empirical</strong> categories — a double division suggested by most publications on <strong>epistemology</strong> (the theory of knowledge regarding its methods, validity, and scope). Key theoretical methods classified as operations include:</p><ul><li><strong>Analysis</strong> — Decomposing a studied object into parts to identify its structure, properties, and attributes; often the first phase of research.</li><li><strong>Synthesis</strong> — Uniting elements into a whole system; not merely summing them up, but combining them meaningfully. Synthesis is opposite to, yet inseparably linked with, analysis.</li><li><strong>Comparison</strong> — Comparing properties, characteristics, and behaviors of at least two phenomena to determine basic differences or similarities.</li><li><strong>Abstracting &amp; Concretizing</strong> — Abstracting separates common properties of a set of objects; concretizing is the opposite process, identifying whole, interconnected, complex entities.</li><li><strong>Generalization</strong> — Identifying and fixing relatively stable, invariant properties of objects to form the content of a notion about a group or class.</li><li><strong>Formalization</strong> — Reflecting the result of thinking in the form of exact notions or assertions; opposite to intuitive thinking.</li><li><strong>Induction</strong> — Inference from particular observations to a common conclusion.</li><li><strong>Deduction</strong> — Inference from the general to the particular.</li><li><strong>Idealization</strong> — Mental construction of beliefs about ideal (nonexistent or unrealizable) objects whose preimages exist in the real world, used to determine ideal cases and make predictions.</li><li><strong>Analogy &amp; Modeling</strong> — Analogy compares two different things to highlight similarities; modeling creates a simplified representation of a real-world system to understand or predict behavior.</li><li><strong>Gedanken Experiment (Thought Experiment)</strong> — A structured mental exercise to explore outcomes or principles of a concept without physical experimentation; more focused than general imagination.</li><li><strong>Imagination</strong> — A mental process for creating new beliefs and images, including fantasy and dreams; free-form and general, used for creativity and exploration.</li></ul><h3>Common Pitfalls</h3><p>A frequent confusion arises between <strong>induction</strong> and <strong>generalization</strong>: induction is the <em>process</em> of drawing a conclusion from specific observations, while generalization is the <em>broad statement or rule</em> produced by that process. Another pitfall is treating <strong>synthesis</strong> as mere summation — it requires meaningful combination, not just addition of parts. Finally, <strong>idealization</strong> is not about ignoring reality permanently; the idealized model is a tool for prediction, and its accuracy determines its predictability power.</p>"
     }
   },
   "bibliographicDatabasesAndSearch": {
+    id: "ydq956",
     "name": "Bibliographic Databases And Search",
     "icon": "fa-book-open",
     "color": "#3b82f6",
     "flashcards": [
       {
+        id: "5f0a4m",
         "question": "What is a bibliographic database?",
         "answer": "An organized collection of scientific and professional articles, book chapters, conference proceedings, and similar academic resources.",
         "explanation": "Databases serve as structured repositories that allow researchers to search and access academic literature efficiently."
       },
       {
+        id: "u6d6tm",
         "question": "What are the three types of databases mentioned in the source?",
         "answer": "Bibliographic, citation, and hybrid databases.",
         "explanation": "Different databases may focus on references/metadata (bibliographic), track how works cite each other (citation), or combine both functions (hybrid)."
       },
       {
+        id: "n9yad4",
         "question": "What are the three main reasons to use academic databases?",
         "answer": "Reliable information (peer-reviewed sources), efficiency (quickly find relevant articles), and comprehensive coverage (vast collections of academic resources).",
         "explanation": "These three benefits make databases the preferred tool for academic research over general internet searches."
       },
       {
+        id: "g3nx25",
         "question": "When was Web of Science founded, and what is notable about it?",
         "answer": "Web of Science has been available since 1997 and is the largest scientific database in the world, covering over 33,000 journals with multiple indexes.",
         "explanation": "It is a multidisciplinary bibliographic and citation database that also provides metrics, quartiles, and citation data."
       },
       {
+        id: "q25i33",
         "question": "When was Scopus founded, and how does it compare to Web of Science?",
         "answer": "Scopus was founded in 2004 and is the second largest database, covering over 20,000 journals with a stronger focus on European journals.",
         "explanation": "While smaller than Web of Science, Scopus is particularly valued for its broader coverage of European academic publications."
       },
       {
+        id: "avf05m",
         "question": "What does the Boolean operator AND do in a database search?",
         "answer": "AND narrows the search by requiring both terms to appear in the results (e.g., tourism AND Europe).",
         "explanation": "Using AND reduces the number of results by making the search more specific."
       },
       {
+        id: "u6s4xc",
         "question": "What does the Boolean operator OR do in a database search?",
         "answer": "OR widens the search by including results that contain either term, making it useful for synonyms (e.g., rural tourism OR agricultural tourism).",
         "explanation": "OR is especially helpful when a concept can be expressed with multiple equivalent terms."
       },
       {
+        id: "yskbkv",
         "question": "What does the Boolean operator NOT do in a database search?",
         "answer": "NOT excludes results containing a specific term (e.g., corona NOT virus).",
         "explanation": "NOT helps eliminate irrelevant results that share a keyword with the desired topic."
       },
       {
+        id: "4e5iiv",
         "question": "What is the function of the asterisk (*) wildcard in database searches?",
         "answer": "The asterisk (*) replaces multiple characters to capture singular, plural, and related word forms (e.g., *manag* retrieves management, manager/s, manage, comanage, overmanage).",
         "explanation": "Wildcards broaden a search by accounting for different word endings or prefixes."
       },
       {
+        id: "ybkx7i",
         "question": "What is the function of the question mark (?) wildcard in database searches?",
         "answer": "The question mark (?) replaces exactly one letter, useful for spelling variations (e.g., wom?n retrieves woman and women; colo?r retrieves color and colour).",
         "explanation": "This wildcard is particularly helpful for handling British vs. American English spelling differences."
       },
       {
+        id: "pok9ru",
         "question": "What is the purpose of quotation marks (\"\") in a database search?",
         "answer": "Quotation marks search for an exact phrase or term (e.g., \"sustainable development\", \"health tourism\", \"artificial intelligence\").",
         "explanation": "Using quotation marks prevents the database from splitting the phrase into individual keywords."
       },
       {
+        id: "h21soh",
         "question": "What is the purpose of brackets () in a database search?",
         "answer": "Brackets group keywords together to control the logic of a search (e.g., (city tourism OR urban tourism) AND \"european funds\").",
         "explanation": "Brackets work similarly to parentheses in mathematics, ensuring the correct order of operations in complex searches."
       },
       {
+        id: "y66qb3",
         "question": "How can students access databases from home at FMTU?",
         "answer": "By using a Proxy connection combined with an AAI@edu.hr account for access.",
         "explanation": "Remote access tools allow students to use institutional database subscriptions from outside the university network."
       },
       {
+        id: "n1yqwd",
         "question": "Name at least four other useful databases or search engines mentioned in the source besides Web of Science and Scopus.",
         "answer": "Any four of: DOAJ, DOAR, DOAB, Institute of Hospitality, UNWTO E-Library, Google Scholar, JSTOR, Summon, EconLit, Science Direct, Taylor & Francis, Emerald Insight.",
         "explanation": "These resources complement the two major databases and are particularly relevant for hospitality and economics research."
@@ -1055,6 +1221,7 @@ const academicWritingM1 = {
     ],
     "quiz": [
       {
+        id: "p8utpn",
         "question": "Which of the following best describes a bibliographic database?",
         "options": [
           "A social media platform for researchers",
@@ -1065,6 +1232,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "xrdqyk",
         "question": "Which database is described as the largest scientific database in the world?",
         "options": [
           "Scopus",
@@ -1075,6 +1243,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "fre59b",
         "question": "In what year was Scopus launched?",
         "options": [
           "1997",
@@ -1085,6 +1254,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "i30vvm",
         "question": "Which Boolean operator would you use to search for synonyms and widen your results?",
         "options": [
           "AND",
@@ -1095,6 +1265,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "o6kldu",
         "question": "What does the search string *manag* retrieve?",
         "options": [
           "Only the word 'management'",
@@ -1105,6 +1276,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "qapsfa",
         "question": "Which search technique would you use to find the exact phrase 'health tourism'?",
         "options": [
           "Brackets: (health tourism)",
@@ -1115,6 +1287,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "tg4zka",
         "question": "How many journals does Scopus cover, according to the source?",
         "options": [
           "Over 10,000",
@@ -1125,6 +1298,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "bv6f5p",
         "question": "Which of the following is listed as a reason to use academic databases?",
         "options": [
           "To access entertainment content",
@@ -1135,6 +1309,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "k61jjd",
         "question": "What does the search query (city tourism OR urban tourism) AND \"european funds\" demonstrate?",
         "options": [
           "Use of wildcards only",
@@ -1145,6 +1320,7 @@ const academicWritingM1 = {
         "correct": 2
       },
       {
+        id: "zfhswe",
         "question": "Which of the following is NOT listed as one of the three types of databases in the source?",
         "options": [
           "Bibliographic",
@@ -1155,6 +1331,7 @@ const academicWritingM1 = {
         "correct": 3
       },
       {
+        id: "ndwsz4",
         "question": "How can FMTU students access databases from home?",
         "options": [
           "By purchasing individual article licenses",
@@ -1165,6 +1342,7 @@ const academicWritingM1 = {
         "correct": 1
       },
       {
+        id: "seuxqa",
         "question": "Which of the following is a sign that a source may be UNRELIABLE, according to the source text?",
         "options": [
           "It is indexed in multiple databases",
@@ -1177,57 +1355,68 @@ const academicWritingM1 = {
     ],
     "fillBlanks": [
       {
+        id: "l0dxiq",
         "sentence": "Bibliographic databases are organized collections of scientific and professional articles, book chapters, and _______ proceedings.",
         "answer": "conference",
         "hint": "Think of academic events where researchers present their work."
       },
       {
+        id: "4uir6e",
         "sentence": "Web of Science has been available since _______ and is the largest scientific database in the world.",
         "answer": "1997",
         "hint": "It was launched in the late 1990s."
       },
       {
+        id: "vkcjv0",
         "sentence": "Scopus is the _______ largest database and covers over 20,000 journals, with a stronger focus on European publications.",
         "answer": "second",
         "hint": "It ranks just below Web of Science."
       },
       {
+        id: "yaxxbq",
         "sentence": "The Boolean operator _______ narrows a search by requiring both terms to appear in the results.",
         "answer": "AND",
         "hint": "It is used to combine two required concepts."
       },
       {
+        id: "kqcrxc",
         "sentence": "The Boolean operator _______ widens a search and is especially useful for finding synonyms.",
         "answer": "OR",
         "hint": "It retrieves results containing either of the terms."
       },
       {
+        id: "y7vjb7",
         "sentence": "The wildcard symbol _______ replaces exactly one letter, for example wom?n retrieves both woman and women.",
         "answer": "?",
         "hint": "It is a punctuation mark used as a question."
       },
       {
+        id: "18ih94",
         "sentence": "Using _______ marks around a phrase like \"sustainable development\" ensures the database searches for that exact phrase.",
         "answer": "quotation",
         "hint": "These marks appear at the beginning and end of a phrase."
       },
       {
+        id: "yqnsnx",
         "sentence": "Students can access databases from home using a _______ connection combined with an AAI@edu.hr account.",
         "answer": "Proxy",
         "hint": "It is a type of server that acts as an intermediary for remote access."
       },
       {
+        id: "ll6jhg",
         "sentence": "When evaluating source quality, researchers should fact-check and _______ with other databases or reviews.",
         "answer": "cross-check",
         "hint": "It means verifying information against multiple sources."
       },
       {
+        id: "homohb",
         "sentence": "The asterisk (*) wildcard is used to capture singular and plural forms; for example, *manag* can retrieve management, manager, and even _______.",
         "answer": "comanage",
         "hint": "Think of a word that means to manage jointly, starting with a prefix."
       }
     ],
     "learn": {
+      id: "h00e7p",
       "content": "<h3>Bibliographic Databases</h3>\n<p>A <strong>bibliographic database</strong> is an organized collection of scientific and professional articles, book chapters, conference proceedings and similar materials. Databases differ in their evaluation criteria — passing a database's quality evaluation can be difficult, which is part of what makes indexed sources trustworthy.</p>\n<ul>\n  <li><strong>Three types:</strong> bibliographic, citation, and hybrid.</li>\n  <li><strong>Access:</strong> full-text, open access, or closed.</li>\n  <li><strong>Scope:</strong> multidisciplinary or specific-field.</li>\n</ul>\n<h3>Why use databases?</h3>\n<ul>\n  <li><strong>Reliable information:</strong> access to peer-reviewed articles and credible sources.</li>\n  <li><strong>Efficiency:</strong> quickly find relevant articles on a specific topic.</li>\n  <li><strong>Comprehensive coverage:</strong> access to vast collections of academic resources.</li>\n</ul>\n<h3>Judging source quality</h3>\n<p>Always fact-check and cross-check a source against other databases or reviews. Three checks help:</p>\n<ul>\n  <li><strong>Relevancy:</strong> author, publisher, publication, topic, year.</li>\n  <li><strong>Reliability:</strong> is it indexed in databases, is it consistent, does it make extreme statements?</li>\n  <li><strong>Citations &amp; predatory red flags:</strong> what does the bibliography cite — blogs and predatory journals are warning signs.</li>\n</ul>\n<h3>The two largest databases</h3>\n<ul>\n  <li><strong>Web of Science</strong> (since 1997): the largest scientific database in the world, over 33,000 journals, multiple indexes, both bibliographic and citation, multidisciplinary, with metrics, quartiles and citation counts.</li>\n  <li><strong>Scopus</strong> (since 2004): the second-largest database, over 20,000 journals, with more European journals.</li>\n</ul>\n<p>Other useful resources include DOAJ, Google Scholar, JSTOR (books and journals), EconLit, ScienceDirect, Emerald Insight, Taylor &amp; Francis, and the UNWTO E-Library.</p>\n<h3>Search strategy: keywords</h3>\n<p>Start by defining your topic, then brainstorm keywords and be creative with <strong>synonyms</strong> (for example: <em>financial development</em>, <em>financial growth/progress</em>, <em>economic development</em>). Good keywords make the literature search far easier and more effective.</p>\n<h3>Search techniques</h3>\n<ul>\n  <li><strong>Boolean operators:</strong> <strong>AND</strong> narrows a search (tourism AND Europe); <strong>OR</strong> widens it and captures synonyms (rural tourism OR agricultural tourism); <strong>NOT</strong> excludes a term (corona NOT virus).</li>\n  <li><strong>Wildcards:</strong> the asterisk <strong>*</strong> truncates and catches singular &amp; plural and word variants (*manag* → management, manager, manage); the question mark <strong>?</strong> replaces a single letter (wom?n → woman/women; colo?r → color/colour).</li>\n  <li><strong>Quotation marks \"\" </strong> search for an exact phrase (for example, \"sustainable development\" or \"health tourism\").</li>\n  <li><strong>Brackets ()</strong> group keywords: (city tourism OR urban tourism) AND \"european funds\".</li>\n</ul>\n<h3>Accessing databases from home</h3>\n<p>Many databases are licensed by the library. Off-campus access is possible through a <strong>proxy</strong> combined with an institutional <strong>AAI@EduHr</strong> login.</p>"
     }
   }

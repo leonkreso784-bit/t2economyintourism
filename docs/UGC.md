@@ -161,8 +161,9 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 |---|---|---|
 | U0 | UGC.md (ovaj dok) + naznaka u VISION | ✅ 2026-07-09 |
 | U1 | **Staging Supabase** (2. projekt, SQL sync, rls-check/authed na staging) | ✅ 2026-07-10 (`40dc07b`): `sokrat-staging` + shema + test-admin; test-only override u `js/auth.js` (prod default no-op); test:authed 6/6 + write-verify + rls-check vs staging; PROD audit NETAKNUT |
-| U2 | **Schema v2**: ID-jevi po stavci + `schemaVersion` + `style` tokeni (migracija + validatori v1/v2 + progress dual-key) | ⬜ |
-| U2.5 | **ADR-022 catalog identitet (PULL-FORWARD, ADR-023):** placement≠sadržaj, dijeljenje veznih predmeta unutar fakulteta — preduvjet MUT/MOR (S7). **3 tvrda uvjeta:** nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging | ⬜ |
+| U2a | **Schema v2 — stabilni `id` po stavci** (migracija AST-surgical `scripts/add-item-ids.js` + validator prima v1/v2) — id po kartici/quizu/fillu/kategoriji/learn; **čisto aditivno, render netaknut, napredak se NE prevezuje** | 🔄 gotovo, čeka commit — rollout na **svih 18** (56 study-datoteka, ~4800 id-jeva; 7 exercises/lib i 5 praznih kompozicija isključeni); content-identical **dokazan** (strip-id === HEAD 56/56); `validate:schema` 54/54; `verify` 0. **`schemaVersion` IZBAČEN iz U2a → U2b** (top-level meta-ključ ruši `Object.keys(content)` iteracije u ~9 runtime-mjesta → smoke test to uhvatio) |
+| U2b | **`schemaVersion` + runtime meta-filter (`getCategories()` helper) · `style`-tokeni · progress dual-key** — SVJESNO ODGOĐENO (id-jevi „samo leže" = nula rizika; ovo nosi rizik / treba runtime-podršku, čeka razlog: **SRS/F5 ili reorder/U6**). Nije preduvjet za U2.5. Skripta već ima opt-in `--schema-version` flag | ⬜ |
+| U2.5 | **ADR-022 catalog identitet (PULL-FORWARD, ADR-023):** placement≠sadržaj, dijeljenje veznih predmeta unutar fakulteta — preduvjet MUT/MOR (S7). **3 tvrda uvjeta:** nakon U1+**U2a** (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging | ⬜ |
 | U3 | **Draft-sloj + ops + edit-mode ljuska**; 4 postojeća editora → pišu opove u draft | ⬜ |
 | U4 | **Publish-RPC** (atomično: validacija+upis+verzija+final-sync+`base_version`); klijent objavljuje kroz RPC | ⬜ |
 | U5 | **Povijest verzija / Vrati UI** (čita `content_versions`; restore kroz RPC) + čišćenje test-audita (uz OK) | ⬜ |

@@ -10,67 +10,80 @@ const te2M2 = {
 
     // ========== UNIT 7: STRATEGIC PRICING ==========
     pricing: {
+        id: "rfa888",
         name: "Strategic Pricing",
         icon: "fa-tags",
         color: "#8b5cf6",
 
         flashcards: [
             {
+                id: "4em1pz",
                 question: "How important is price as a decision variable for a tourism firm?",
                 answer: "Price is not the ONLY decision variable, but it is perhaps the MOST CRITICAL — and it is the MOST ADJUSTABLE. Unlike product, distribution and promotion (which take time to change), price can be altered QUICKLY.",
                 explanation: "Pricing decisions, good or bad, have serious consequences for the firm."
             },
             {
+                id: "qkpl5s",
                 question: "Where does price sit in the marketing mix, and what does it signal?",
                 answer: "Price is one of the 4 P's of the marketing mix (Product, Place, Price, Promotion) and should complement the others. Price triggers buyer PERCEPTION of the product's quality and its positioning within market segments — attracting or deterring buyers.",
                 explanation: "Price is both a revenue lever and a quality/positioning signal."
             },
             {
+                id: "pgugws",
                 question: "Why do tourism firms differentiate their product (relative to pricing)?",
                 answer: "To REDUCE the demand elasticity of their product, so they can RAISE its price and total revenue.",
                 explanation: "Less elastic (less price-sensitive) demand gives the firm more pricing power."
             },
             {
+                id: "5ek2om",
                 question: "List key determinants of tourism prices.",
                 answer: "The firm's objective; ownership characteristics; market structure; method of distribution; the firm's market position; degree of competition; cost structure; the seasonal nature of demand; capacity constraints; product quality & brand strength; ease of switching to a substitute; the perishable nature of the product; and government involvement.",
                 explanation: "Prices are governed by the interplay of many internal and external factors."
             },
             {
+                id: "rzcf8u",
                 question: "How does elasticity of demand affect a pricing decision?",
                 answer: "Setting HIGHER prices may bring FEWER buyers and smaller revenue if demand is ELASTIC. Setting LOWER prices may bring more buyers but small revenue potential if demand is INELASTIC.",
                 explanation: "The effect of a price change on total revenue depends on elasticity."
             },
             {
+                id: "i4ub8n",
                 question: "What are the 3 types of tourism pricing strategies?",
                 answer: "1. COST-BASED — price based on the costs of production (+ a fair return), not external factors.\n2. MARKET-BASED (customer-oriented) — price based on current market conditions / what customers are willing to pay.\n3. COMPETITION-BASED — price based on competitors' strategies, costs, prices and offerings.",
                 explanation: "Three broad approaches; firms may combine them."
             },
             {
+                id: "87q0ua",
                 question: "Name the COST-BASED pricing sub-strategies.",
                 answer: "a) Cost-plus pricing (add a mark-up to average cost).\nb) Pricing for profit maximization (price where Marginal Revenue = Marginal Cost).\nc) Marginal cost pricing (price = just above the extra cost of one more unit, ignoring fixed costs).\nd) Peak-load pricing (higher prices when demand peaks, to regulate demand to supply).",
                 explanation: "All anchor the price to the firm's costs."
             },
             {
+                id: "a4437w",
                 question: "What is price discrimination and what 4 conditions must hold?",
                 answer: "Charging DIFFERENT prices to different buyers for the same/similar product, based on willingness to pay (value-based pricing). Conditions: (1) the seller has some price-setting power; (2) can identify groups willing to pay different prices; (3) elasticity of demand differs across groups; (4) can prevent resale between groups.",
                 explanation: "A market-based strategy that captures different consumers' willingness to pay."
             },
             {
+                id: "5t66rk",
                 question: "Distinguish price skimming and penetration pricing.",
                 answer: "Price SKIMMING: sell at a HIGH price first to those willing to pay (a firm first into a new market enjoys a temporary monopoly), then lower it for price-sensitive buyers.\nPENETRATION pricing: set a LOW initial entry price (often below market) to attract new, low-loyalty customers and win market share.",
                 explanation: "Skimming starts high and comes down; penetration starts low to grab share."
             },
             {
+                id: "gd4ij9",
                 question: "What are loss-leader, promotional and bundling pricing?",
                 answer: "Loss-leader: a product sold at a very low price (even at a loss) to stimulate interest in the business/product line. Promotional pricing: supports promotion (special offers, psychological pricing ending in '9', high-low, premium). Bundling: combine two or more products into one 'package' at a single, lower price than buying separately.",
                 explanation: "Market-based tactics that use price to drive volume or perception."
             },
             {
+                id: "r64vja",
                 question: "Name the COMPETITION-BASED pricing sub-strategies.",
                 answer: "a) Price leadership — one (usually dominant, lowest-cost) firm sets a price closely followed by competitors.\nb) Predatory pricing — deliberately setting prices so low that competitors cannot compete and are driven from the market.\nc) Transfer pricing — pricing of inputs and outputs between divisions of the SAME firm.",
                 explanation: "These anchor price to rivals' behaviour or to internal divisions."
             },
             {
+                id: "lvjn5y",
                 question: "What are NON-PROFIT goals in pricing?",
                 answer: "Firms can pursue goals that are NOT profit-driven: some managers focus on GROWTH and pursue sales at the expense of profit; some businesses are driven by LIFESTYLE choice.",
                 explanation: "Not every firm sets price purely to maximise profit."
@@ -79,41 +92,49 @@ const te2M2 = {
 
         quiz: [
             {
+                id: "x90oj6",
                 question: "Compared with product, distribution and promotion, price is:",
                 options: ["The slowest to change", "The most adjustable (can be altered quickly)", "Never changed", "Irrelevant"],
                 correct: 1
             },
             {
+                id: "ms23r5",
                 question: "Price is one of the 4 P's of the marketing mix; the others are:",
                 options: ["Product, Place, Promotion", "People, Process, Physical evidence", "Profit, Position, Power", "Product, Profit, Place"],
                 correct: 0
             },
             {
+                id: "7beu74",
                 question: "Profit-maximizing price corresponds to the output where:",
                 options: ["AC = AR", "Marginal Revenue = Marginal Cost", "Price = 0", "TC = TR"],
                 correct: 1
             },
             {
+                id: "1t8bhv",
                 question: "Charging higher prices during peak demand to regulate it is:",
                 options: ["Penetration pricing", "Peak-load pricing", "Loss-leader pricing", "Transfer pricing"],
                 correct: 1
             },
             {
+                id: "z1ojq7",
                 question: "Selling at a high price first (as a temporary monopolist) then lowering it is:",
                 options: ["Penetration pricing", "Price skimming", "Predatory pricing", "Bundling"],
                 correct: 1
             },
             {
+                id: "hcwp89",
                 question: "Charging different buyers different prices based on willingness to pay is:",
                 options: ["Cost-plus pricing", "Price discrimination", "Transfer pricing", "Loss-leader pricing"],
                 correct: 1
             },
             {
+                id: "6wtamk",
                 question: "Setting prices so low that rivals are driven from the market is:",
                 options: ["Price leadership", "Predatory pricing", "Penetration pricing", "Promotional pricing"],
                 correct: 1
             },
             {
+                id: "mqik8p",
                 question: "Firms differentiate their product mainly to:",
                 options: [
                     "Increase demand elasticity",
@@ -127,31 +148,37 @@ const te2M2 = {
 
         fillBlanks: [
             {
+                id: "7flnel",
                 sentence: "Price is the most _______ of the firm's decision variables — it can be changed quickly.",
                 answer: "adjustable",
                 hint: "Easy/quick to alter..."
             },
             {
+                id: "tn1qi2",
                 sentence: "The three pricing strategies are cost-based, market-based and _______-based.",
                 answer: "competition",
                 hint: "Based on rivals..."
             },
             {
+                id: "ce9qza",
                 sentence: "_______ pricing sets a low initial price to attract new customers and win market share.",
                 answer: "Penetration",
                 hint: "Break into the market..."
             },
             {
+                id: "mv81tb",
                 sentence: "Cost-plus pricing adds a _______ (usually a percentage) to average cost.",
                 answer: "mark-up",
                 hint: "A margin on top of cost..."
             },
             {
+                id: "l8s45a",
                 sentence: "_______ pricing combines two or more products into one package at a single price.",
                 answer: "Bundling",
                 hint: "Sell them together..."
             },
             {
+                id: "skaos0",
                 sentence: "Firms differentiate to REDUCE the demand _______ of their product.",
                 answer: "elasticity",
                 hint: "Price sensitivity..."
@@ -159,6 +186,7 @@ const te2M2 = {
         ],
 
         learn: {
+            id: "2jtm5u",
             title: "Strategic Pricing in Tourism",
             content: `
                 <h3>💲 Why Price Matters</h3>
@@ -200,67 +228,80 @@ const te2M2 = {
 
     // ========== UNIT 8: ECONOMIC IMPACTS & THE MULTIPLIER ==========
     expenditure: {
+        id: "8dwe2m",
         name: "Economic Impacts & Multiplier",
         icon: "fa-money-bill-trend-up",
         color: "#059669",
 
         flashcards: [
             {
+                id: "kpnt2q",
                 question: "Where does the economic contribution of tourism start, and what is the basic measure?",
                 answer: "It starts with TOURIST EXPENDITURE. The basic measure is expenditure injected by type of visitor, by visitor night, and by length of stay.",
                 explanation: "Expenditure data alone is not enough — we then need the economic IMPACTS of that expenditure."
             },
             {
+                id: "0f1qdd",
                 question: "What are the 7 major impacts of increased tourist expenditure?",
                 answer: "1. Increased local production & output\n2. Creates new business & employment\n3. Generates foreign-exchange earnings (international, NOT domestic tourism)\n4. Creates new investment opportunities\n5. Increased government revenue (via taxes)\n6. Assists regional development\n7. Reduces poverty in some locations",
                 explanation: "FX earnings come only from INTERNATIONAL tourism (an export industry)."
             },
             {
+                id: "uli8gf",
                 question: "Why is tourist expenditure described as an injection of 'new money'?",
                 answer: "Expenditure by visitors to a destination is 'new money' entering it, boosting output and employment in local primary, secondary and tertiary industries. The size of the output increase depends on the strength of business links between tourism and other sectors.",
                 explanation: "Stronger links to local suppliers = bigger local impact (fewer leakages)."
             },
             {
+                id: "7kium4",
                 question: "On what does the value of foreign-exchange (FX) earnings from inbound tourism depend?",
                 answer: "On the number of visitors, the average expenditure per day, the average length of stay, and the exchange rate.",
                 explanation: "International tourism is an export industry that can help stabilise total export earnings."
             },
             {
+                id: "jc7j9m",
                 question: "How does tourism contribute to government revenue (direct vs indirect taxes)?",
                 answer: "Direct taxes (paid directly to government): airport departure taxes, noise taxes, visa fees. Indirect taxes (levied on goods/services): sales taxes, fuel taxes, tariffs, accommodation taxes. Companies also pay profit tax and employees pay income tax.",
                 explanation: "But governments also SPEND heavily supporting tourism (infrastructure, marketing, ministries)."
             },
             {
+                id: "vmmm5v",
                 question: "Define direct, indirect and induced expenditure effects.",
                 answer: "DIRECT: suppliers who sell goods/services directly to tourists (accommodation, F&B, tours, attractions, entertainment, shopping).\nINDIRECT ('upstream'): firms receiving tourist money buy inputs from other firms, who buy from others, along the supply chain.\nINDUCED ('downstream'): recipients (owners, workers, families) spend their increased incomes on consumption.",
                 explanation: "Tourist expenditure (the starting point) generates direct + secondary (indirect + induced) effects."
             },
             {
+                id: "5t5rgu",
                 question: "What is the multiplier and the total multiplier effect?",
                 answer: "Multiplier = Total Impact / Direct Expenditure. The total multiplier effect = the SUM of direct + indirect + induced effects, reflected as overall increases in output, sales, value added, GDP, household income, and employment.",
                 explanation: "It shows how the initial spending 'multiplies' through the economy."
             },
             {
+                id: "la1wq4",
                 question: "What are the 5 most common types of multipliers?",
                 answer: "1. Sales (transactions) multiplier\n2. Output multiplier\n3. Income multiplier\n4. Value-added multiplier\n5. Employment multiplier",
                 explanation: "Each relates total economic activity generated to an extra unit of final demand."
             },
             {
+                id: "lfy9zq",
                 question: "How large is the tourism multiplier in reality?",
                 answer: "Not as large as the industry thinks — more sophisticated modelling shows it is unlikely to EXCEED 2. When indirect effects = direct effects, the multiplier value is 2. So €100 million of new tourism expenditure is likely to add LESS than €200 million to household income or GDP.",
                 explanation: "A key 'reality check' from Dwyer's lectures against over-stated multiplier claims."
             },
             {
+                id: "hpkjlq",
                 question: "What are leakages, and name some types of FX leakage.",
                 answer: "Leakages are expenditure flowing to agents OUTSIDE the economy, which REDUCE the multiplier. Types of FX leakage: imported goods consumed by visitors (e.g. duty free); imported capital goods (planes, ski lifts, rental cars); imports from increased local consumption (demonstration effect); factor payments abroad (wages, holiday-home rents, foreign tour operators); destination-promotion spent externally.",
                 explanation: "The more a destination imports, the smaller the local multiplier."
             },
             {
+                id: "9o232q",
                 question: "Which models are used for economic impact analysis (EIA)?",
                 answer: "Input-Output (I-O) models — trace direct/indirect/induced effects through a matrix of inter-industry relationships (but assume fixed production relationships, no supply constraints). Computable General Equilibrium (CGE) models — simulate economy-wide impacts including price and wage adjustments and resource constraints (but need extensive data).",
                 explanation: "CGE answers 'if we change X, how does the WHOLE economy adjust?'"
             },
             {
+                id: "ujgmph",
                 question: "What factor constraints and conditions limit tourism's economic impact?",
                 answer: "Factor supply constraints (land, labour, capital), real exchange-rate appreciation (which reduces other exports and the multiplier), government fiscal stance, import content/leakages, the strength of business linkages, and the size of the shock.",
                 explanation: "Tourism booms can bid up land/labour prices and crowd out other industries (deindustrialisation)."
@@ -269,11 +310,13 @@ const te2M2 = {
 
         quiz: [
             {
+                id: "rpkzvq",
                 question: "Foreign-exchange earnings are generated by:",
                 options: ["Domestic tourism", "International (inbound) tourism", "Government spending", "Local consumption"],
                 correct: 1
             },
             {
+                id: "znfdix",
                 question: "Induced effects arise when:",
                 options: [
                     "Tourists pay hotels directly",
@@ -284,21 +327,25 @@ const te2M2 = {
                 correct: 2
             },
             {
+                id: "nim022",
                 question: "The multiplier is calculated as:",
                 options: ["Direct / Total Impact", "Total Impact / Direct Expenditure", "Indirect + Induced", "GDP / Arrivals"],
                 correct: 1
             },
             {
+                id: "nwkjfw",
                 question: "When indirect effects equal direct effects, the multiplier value is:",
                 options: ["1", "2", "5", "10"],
                 correct: 1
             },
             {
+                id: "z3nj4r",
                 question: "€100 million of new tourism expenditure is likely to add to GDP:",
                 options: ["Exactly €100 m", "Less than €200 m", "More than €500 m", "Exactly €1 billion"],
                 correct: 1
             },
             {
+                id: "sn8zo4",
                 question: "Which is a leakage that reduces the multiplier?",
                 options: [
                     "Local wages spent locally",
@@ -309,11 +356,13 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "29jbks",
                 question: "An airport departure tax is an example of a:",
                 options: ["Indirect tax", "Direct tax", "Leakage", "Subsidy"],
                 correct: 1
             },
             {
+                id: "xaz3l3",
                 question: "Which model captures economy-wide price and wage adjustments?",
                 options: ["Input-Output (I-O)", "Computable General Equilibrium (CGE)", "Time-series", "Regression only"],
                 correct: 1
@@ -322,31 +371,37 @@ const te2M2 = {
 
         fillBlanks: [
             {
+                id: "abexpa",
                 sentence: "Total Effect = Direct + Indirect + _______ effects.",
                 answer: "Induced",
                 hint: "Recipients spending their incomes downstream..."
             },
             {
+                id: "wayi0m",
                 sentence: "Multiplier = Total Impact / _______ Expenditure.",
                 answer: "Direct",
                 hint: "The initial spending..."
             },
             {
+                id: "38zs1o",
                 sentence: "More sophisticated modelling shows the tourism multiplier is unlikely to exceed _______.",
                 answer: "2",
                 hint: "When indirect = direct..."
             },
             {
+                id: "n6qppj",
                 sentence: "_______ are flows of expenditure to agents outside the economy that reduce the multiplier.",
                 answer: "Leakages",
                 hint: "Money 'leaking' out..."
             },
             {
+                id: "8nv2ta",
                 sentence: "Foreign-exchange earnings come from _______ tourism, not domestic tourism.",
                 answer: "international",
                 hint: "Across borders (an export industry)..."
             },
             {
+                id: "m7lti4",
                 sentence: "The five multiplier types are sales, output, income, value-added and _______.",
                 answer: "employment",
                 hint: "Jobs..."
@@ -354,6 +409,7 @@ const te2M2 = {
         ],
 
         learn: {
+            id: "7zex9e",
             title: "Economic Impacts & the Multiplier",
             content: `
                 <h3>💰 From Expenditure to Impact</h3>
@@ -388,72 +444,86 @@ const te2M2 = {
 
     // ========== UNITS 9–10: ECONOMIC CONTRIBUTION & TSA ==========
     tsa: {
+        id: "tndy2f",
         name: "Economic Contribution & TSA",
         icon: "fa-chart-bar",
         color: "#ec4899",
 
         flashcards: [
             {
+                id: "k58r94",
                 question: "What is tourism expenditure?",
                 answer: "The total consumption expenditure made by a visitor, or on behalf of a visitor, for goods and services during their trip and stay at the destination — including payments made in advance or after the trip for services received during it.",
                 explanation: "No economic tourism impact occurs unless visitors actually spend money on tourism products/services."
             },
             {
+                id: "83o1mk",
                 question: "Into which three groups can visitor expenditure be divided by timing?",
                 answer: "1. Expenses in PREPARATION for the trip.\n2. Expenses DURING the trip (when travelling and at the places visited).\n3. Expenses AFTER the trip (travel-related expenses in the country of origin on return).",
                 explanation: "Expenditure spans before, during and after the journey."
             },
             {
+                id: "20ut3j",
                 question: "What are the main categories of visitor expenditure?",
                 answer: "Package travel (holidays/tours), accommodation, food & drinks, transport, recreation/culture/sporting activities, shopping, and other.",
                 explanation: "The standard breakdown of what tourists spend on."
             },
             {
+                id: "x7wmd3",
                 question: "What are the four indicator categories used to express expenditure levels?",
                 answer: "1. Total expenditure for the whole trip\n2. Expenditure per day\n3. Total expenditure per person\n4. Expenditure per person per day",
                 explanation: "Different ways of normalising expenditure for comparison (Brida & Scuderi, 2013)."
             },
             {
+                id: "gsd8jv",
                 question: "What internal and external factors influence tourism expenditure?",
                 answer: "Internal: income, property status, size & phase of the family life cycle, educational level, motivation, cultural characteristics/preferences/habits. External: the destination's price positioning on the market, level of tourism-offering development, marketing activities of intermediaries/destinations, quality, and travel safety.",
                 explanation: "Internal = the traveller; external = the destination/market."
             },
             {
+                id: "jphp62",
                 question: "What is the economic CONTRIBUTION of tourism?",
                 answer: "Tourism's economic significance — the contribution that tourist expenditure makes to key economic variables such as gross domestic (regional) product, household income, value added, foreign-exchange earnings, and employment.",
                 explanation: "It captures how much tourism matters to the economy."
             },
             {
+                id: "myrm0e",
                 question: "What are the limitations of using tourist EXPENDITURE data alone?",
                 answer: "It doesn't show WHAT goods/services are purchased (so it doesn't identify which sectors get the revenue); it is NOT an indicator of profitability (no info on costs of serving each segment); and it doesn't show how the expenditure affects other industries or the wider economy.",
                 explanation: "Expenditure tells you the size of spending, not its distribution, profit or knock-on effects."
             },
             {
+                id: "1yhign",
                 question: "Why is it difficult to measure the economic significance of tourism?",
                 answer: "Because 'tourism' does NOT exist as a distinct sector in any system of economic statistics or national accounts. Focusing on national accounts alone seriously underestimates total tourist expenditure and tourism's significance.",
                 explanation: "Tourism cuts across many sectors, so it needs a special accounting framework."
             },
             {
+                id: "nhq6bd",
                 question: "What is the TSA (Tourism Satellite Account)?",
                 answer: "The standard framework for organising statistical data on tourism, endorsed by the UN Statistical Commission. It is an EXTENSION of the core national accounts that allows estimates of the size and role of tourism activities that are not separately identified in the conventional framework.",
                 explanation: "A 'satellite' account that orbits and extends the national accounts."
             },
             {
+                id: "sj4r8o",
                 question: "What is the difference between tourism CHARACTERISTIC and CONNECTED products?",
                 answer: "Characteristic products would cease to exist in meaningful quantity in the ABSENCE of visitors (e.g. accommodation, air transport). Connected products are linked to tourism but less significant for the visitor/producer (e.g. automotive fuel retailing).",
                 explanation: "In the TSA, the 'tourism industry' is identified from the consumer (demand) side."
             },
             {
+                id: "vz24ag",
                 question: "Name the key measures captured by a TSA.",
                 answer: "Tourism expenditure; tourism consumption; tourism output; Tourism Gross Value Added (TGVA = output of tourism products less inputs used); Tourism GDP (TGDP); tourism employment; tourism exports (bought by international visitors); tourism imports (outbound consumption by residents abroad).",
                 explanation: "TGVA subtracts intermediate inputs; TGDP is the market value after deducting goods used up in production."
             },
             {
+                id: "2qakwo",
                 question: "On what does the impact of tourism on a country's economy depend?",
                 answer: "On (1) the content and quality of the direct tourist services (the tourist product), and (2) the extent to which the country's economy can offer products and services that directly or indirectly feed into the tourism consumption sector.",
                 explanation: "A locally integrated economy keeps more of the benefit (fewer leakages)."
             },
             {
+                id: "hrirnc",
                 question: "What is the Global Code of Ethics for Tourism?",
                 answer: "A comprehensive set of principles (10 articles) guiding key players towards responsible and sustainable tourism — maximising benefits while minimising negative impacts on the environment, cultural heritage and societies. Adopted by the UNWTO General Assembly in 1999, acknowledged by the UN in 2021; not legally binding (voluntary).",
                 explanation: "It covers the economic, social, cultural and environmental components of tourism."
@@ -462,11 +532,13 @@ const te2M2 = {
 
         quiz: [
             {
+                id: "wfra7z",
                 question: "Tourism expenditure includes payments made:",
                 options: ["Only during the trip", "Only in advance", "In advance, during AND after the trip", "Only on accommodation"],
                 correct: 2
             },
             {
+                id: "9yz3ls",
                 question: "Measuring tourism's economic significance is hard because tourism:",
                 options: [
                     "Is too small",
@@ -477,16 +549,19 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "o8nlwq",
                 question: "The TSA framework is endorsed by:",
                 options: ["The World Bank", "The UN Statistical Commission", "The IMF", "The WTO trade body"],
                 correct: 1
             },
             {
+                id: "xytus9",
                 question: "Accommodation and air transport are examples of tourism _______ products.",
                 options: ["connected", "characteristic", "imported", "intangible"],
                 correct: 1
             },
             {
+                id: "bikdwp",
                 question: "TGVA (Tourism Gross Value Added) is:",
                 options: [
                     "Total tourist arrivals",
@@ -497,6 +572,7 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "b0qqyi",
                 question: "Which is a LIMITATION of tourist expenditure data?",
                 options: [
                     "It shows exact profitability",
@@ -507,11 +583,13 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "qcavzc",
                 question: "'Outbound tourism consumption' by residents abroad is recorded as tourism:",
                 options: ["Exports", "Imports", "Output", "Value added"],
                 correct: 1
             },
             {
+                id: "apw9vw",
                 question: "The Global Code of Ethics for Tourism is:",
                 options: ["Legally binding worldwide", "Voluntary, with 10 articles", "A pricing rule", "A tax treaty"],
                 correct: 1
@@ -520,31 +598,37 @@ const te2M2 = {
 
         fillBlanks: [
             {
+                id: "4j8d5g",
                 sentence: "TSA = Tourism _______ Account, an extension of the national accounts.",
                 answer: "Satellite",
                 hint: "It orbits the main accounts..."
             },
             {
+                id: "kzm0x0",
                 sentence: "Products that would cease to exist without visitors are tourism _______ products.",
                 answer: "characteristic",
                 hint: "e.g. accommodation, air transport..."
             },
             {
+                id: "au9bv5",
                 sentence: "Economic contribution is the contribution tourist expenditure makes to key economic _______.",
                 answer: "variables",
                 hint: "GDP, income, employment..."
             },
             {
+                id: "kyxzaj",
                 sentence: "Visitor expenditure can be split by timing into before, during and _______ the trip.",
                 answer: "after",
                 hint: "Once the trip is over..."
             },
             {
+                id: "1o09qw",
                 sentence: "Tourism is hard to measure because it is not a distinct _______ in national accounts.",
                 answer: "sector",
                 hint: "Like agriculture or industry..."
             },
             {
+                id: "a78enn",
                 sentence: "The Global Code of Ethics for Tourism has _______ articles and is voluntary.",
                 answer: "10",
                 hint: "Ten..."
@@ -552,6 +636,7 @@ const te2M2 = {
         ],
 
         learn: {
+            id: "yzrty8",
             title: "Economic Contribution & Tourism Satellite Account",
             content: `
                 <h3>🧾 Tourism Expenditure</h3>
@@ -591,67 +676,80 @@ const te2M2 = {
 
     // ========== UNIT 11: TOURISM & THE ENVIRONMENT ==========
     environment: {
+        id: "n78bry",
         name: "Environment & Market Failure",
         icon: "fa-leaf",
         color: "#22c55e",
 
         flashcards: [
             {
+                id: "re1587",
                 question: "Through which resources does tourism interact with the environment?",
                 answer: "Natural resources, human resources, and built resources. Remember: NOT all resources are attractions, but ALL attractions are resources.",
                 explanation: "Tourism both depends on and affects these three resource types."
             },
             {
+                id: "4edk87",
                 question: "What are the main negative environmental impacts of tourism?",
                 answer: "Resource depletion, loss of biodiversity, habitat destruction, pollution and waste, increased greenhouse-gas emissions, and the exploitation of coastal wetlands, rainforests and landscapes.",
                 explanation: "Though tourism can raise awareness, its overall environmental effect tends to be negative."
             },
             {
+                id: "2opxr7",
                 question: "What is market failure (in an environmental context)?",
                 answer: "When there are NO markets for some valuable resources/products, OR markets do NOT function properly, the resulting resource allocation will not be optimal.",
                 explanation: "The market fails to price environmental resources correctly."
             },
             {
+                id: "tzabj2",
                 question: "What are the 3 major sources of market failure relevant to tourism's environmental impacts?",
                 answer: "1. Lack of property rights to environmental resources\n2. Public goods\n3. Externalities",
                 explanation: "These three explain why markets under-protect the environment."
             },
             {
+                id: "qubu7g",
                 question: "Why does a lack of property rights cause environmental damage?",
                 answer: "With well-defined property rights, resources are used efficiently and sustainably. When it is unclear who has the right to use a resource, it is unclear whose rights can be restricted if something goes wrong — so environmentally destructive behaviour occurs because no one takes responsibility for the costs.",
                 explanation: "Clear ownership creates an incentive to protect the resource."
             },
             {
+                id: "ga9vj0",
                 question: "How are the 4 types of goods classified by excludability and rivalry?",
                 answer: "Excludable + Rivalrous = PRIVATE goods. Non-excludable + Rivalrous = COMMON goods. Excludable + Non-rivalrous = CLUB goods. Non-excludable + Non-rivalrous = PUBLIC goods.",
                 explanation: "Excludable = you can prevent access (e.g. by payment); rivalrous = one person's use prevents another's."
             },
             {
+                id: "xpqvjq",
                 question: "Give examples of club goods and common goods.",
                 answer: "Club goods (high excludability, low rivalry): cable television, cinemas, Wi-Fi. Common goods (non-excludable but rival): lakes, oceans, forests, fresh air, clean water.",
                 explanation: "Common goods are especially prone to over-use in tourism."
             },
             {
+                id: "n5xxc3",
                 question: "What are externalities?",
                 answer: "Costs or benefits received by a THIRD PARTY who is not a direct participant in an economic transaction. Positive: more restaurants, events, better traffic infrastructure. Negative: noise, crowded roads and city centres.",
                 explanation: "Externalities are 'spillover' effects the market doesn't price."
             },
             {
+                id: "anq90z",
                 question: "What is the 'tragedy of the commons'?",
                 answer: "In a shared-resource system (e.g. a wilderness area), individual users acting in their own self-interest behave contrary to the common good by depleting or spoiling the resource through their collective action. Many tourism resources are common-pool / open-access resources.",
                 explanation: "A core problem for sustainable tourism development."
             },
             {
+                id: "p1ivco",
                 question: "What is Tourism Carrying Capacity (UNWTO definition)?",
                 answer: "The maximum number of people that may visit a tourist destination at the same time WITHOUT causing destruction of the physical, economic and socio-cultural environment, and without an unacceptable decrease in the quality of visitors' satisfaction. It can be FIXED or FLUID.",
                 explanation: "Beyond carrying capacity, the destination and the visitor experience both degrade."
             },
             {
+                id: "hyy19y",
                 question: "What are economic instruments and the strategies for pollution control?",
                 answer: "Economic instruments are CONTROLS imposed on environmentally damaging activity to avoid or lessen the damage. Pollution-control strategies: voluntary agreements (to reduce GHGs), merger, subsidies (for cleaner technology), tax on output and on pollution, and others (education, information, codes of conduct).",
                 explanation: "They use economic incentives/penalties to change behaviour."
             },
             {
+                id: "0l22u4",
                 question: "What is the definition of sustainable tourism development (UNWTO 1995) and Agenda 21?",
                 answer: "Sustainable tourism development 'meets the needs of present tourists and host regions while protecting and enhancing opportunity for the future' — managing all resources so economic, social and aesthetic needs are met while maintaining cultural integrity, ecological processes, biodiversity and life-support systems. Agenda 21 = the UN action plan for the future (especially environmental protection) adopted in Rio de Janeiro, 1992.",
                 explanation: "The 20th century asked 'sustainable development?' — the 21st-century question is HOW to implement it."
@@ -660,31 +758,37 @@ const te2M2 = {
 
         quiz: [
             {
+                id: "lpnfi5",
                 question: "Tourism interacts with the environment through natural, human and ___ resources:",
                 options: ["financial", "built", "digital", "imported"],
                 correct: 1
             },
             {
+                id: "hs6l3v",
                 question: "Which is NOT one of the 3 sources of market failure?",
                 options: ["Lack of property rights", "Public goods", "Externalities", "High prices"],
                 correct: 3
             },
             {
+                id: "fu41op",
                 question: "A good that is non-excludable but rivalrous (e.g. ocean fish stocks) is a:",
                 options: ["Private good", "Club good", "Common good", "Public good"],
                 correct: 2
             },
             {
+                id: "tpd2um",
                 question: "Wi-Fi and cable TV (excludable, low rivalry) are examples of:",
                 options: ["Public goods", "Common goods", "Club goods", "Private goods"],
                 correct: 2
             },
             {
+                id: "jpsefd",
                 question: "A cost imposed on a third party not in the transaction (e.g. noise) is a(n):",
                 options: ["Subsidy", "Externality", "Tax", "Tariff"],
                 correct: 1
             },
             {
+                id: "m1i77d",
                 question: "Carrying capacity is the maximum number of visitors at the same time without:",
                 options: [
                     "Making any profit",
@@ -695,11 +799,13 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "h3f6i3",
                 question: "Which is an economic instrument / pollution-control strategy?",
                 options: ["Advertising", "Tax on pollution", "More flights", "Lower wages"],
                 correct: 1
             },
             {
+                id: "e5obvb",
                 question: "Agenda 21 (the UN action plan for the environment) was adopted in:",
                 options: ["Kyoto 1997", "Rio de Janeiro 1992", "Paris 2015", "Stockholm 1972"],
                 correct: 1
@@ -708,31 +814,37 @@ const te2M2 = {
 
         fillBlanks: [
             {
+                id: "ncvg0p",
                 sentence: "Not all resources are attractions, but all attractions are _______.",
                 answer: "resources",
                 hint: "The thing tourism draws on..."
             },
             {
+                id: "b3vwep",
                 sentence: "The 3 sources of market failure are externalities, public goods and lack of _______ rights.",
                 answer: "property",
                 hint: "Who owns the resource..."
             },
             {
+                id: "g7k42w",
                 sentence: "A good that is non-excludable and non-rivalrous is a _______ good.",
                 answer: "public",
                 hint: "Everyone can use it; no one can be excluded..."
             },
             {
+                id: "iwcjn2",
                 sentence: "The tragedy of the _______ describes over-use of a shared resource by self-interested users.",
                 answer: "commons",
                 hint: "Common-pool resources..."
             },
             {
+                id: "ql6ut3",
                 sentence: "Tourism Carrying _______ is the maximum visitors at one time without destruction.",
                 answer: "Capacity",
                 hint: "How much it can hold..."
             },
             {
+                id: "do9stm",
                 sentence: "Economic instruments include voluntary agreements, subsidies and a _______ on pollution.",
                 answer: "tax",
                 hint: "A charge on damaging activity..."
@@ -740,6 +852,7 @@ const te2M2 = {
         ],
 
         learn: {
+            id: "pxkfar",
             title: "Tourism & the Environment",
             content: `
                 <h3>🌿 Tourism and Resources</h3>
@@ -774,72 +887,86 @@ const te2M2 = {
 
     // ========== UNIT 12: SUSTAINABLE TOURISM DEVELOPMENT ==========
     sustainability: {
+        id: "bkvpbt",
         name: "Sustainable Tourism Development",
         icon: "fa-seedling",
         color: "#14b8a6",
 
         flashcards: [
             {
+                id: "nhbfvl",
                 question: "What is 'tourism growth mania' and why is it criticised?",
                 answer: "The implicit assumption that the market requires ever-increasing economic growth, where 'more' (more GDP, income, jobs) is wrongly equated with 'better' and with social progress. It is criticised because GDP does not measure quality of life, well-being or happiness, and tourism's drive for expansion destroys the very environments that attract visitors.",
                 explanation: "Growth ≠ progress — a central theme of Dwyer's critique."
             },
             {
+                id: "w5txcn",
                 question: "What are the potential BENEFITS of tourism growth (3 dimensions)?",
                 answer: "Economic: stimulates local production & employment, raises tax revenues, catalyses development (esp. small local enterprise), develops remote areas.\nSocio-cultural: fosters civic pride & pride in traditions, improves cross-cultural understanding, creates local jobs (avoiding relocation), adds recreation facilities, employs poorer people/women/youth.\nEnvironmental: fosters conservation and community revitalisation/beautification.",
                 explanation: "Benefits span the same three pillars as the costs."
             },
             {
+                id: "3rn6hy",
                 question: "What are the COSTS of tourism growth (3 dimensions)?",
                 answer: "Economic: higher prices/cost of living/property taxes, demands on public services, deindustrialisation (crowding out), dependency on one industry, low-quality seasonal employment, leakages.\nSocio-cultural: hectic lifestyle, immigrant-workforce problems, tourist–resident conflict, loss of identity, commodification & loss of authenticity, congestion ('overtourism').\nEnvironmental: water-quality damage, coastal erosion, habitat destruction, biodiversity loss, landscape degradation, rising carbon footprint.",
                 explanation: "'Overtourism' is now seen as a challenge facing all destinations."
             },
             {
+                id: "hl26ea",
                 question: "What is sustainable tourism, and what are the 3 pillars of sustainability?",
                 answer: "Tourism that takes full account of its current and future economic, social and environmental impacts, addressing the needs of all stakeholders. The 3 pillars: ENVIRONMENTAL, SOCIO-CULTURAL, and ECONOMIC sustainability (plus holistic, stakeholder-based planning).",
                 explanation: "Sustainable development meets present needs without compromising future generations."
             },
             {
+                id: "fgrrri",
                 question: "What does sustainable tourism imply (its requirements)?",
                 answer: "Viable, long-term economic operations; respect for host communities; benefits distributed fairly among all stakeholders; and making optimal use of environmental resources. Sustainability is dynamic — preserving/enhancing a destination's stock of capital to transmit well-being over time.",
                 explanation: "The four classic requirements of sustainable tourism."
             },
             {
+                id: "5lzgw7",
                 question: "What are the UN Sustainable Development Goals (SDGs)?",
                 answer: "The UN 2030 Agenda with 17 Goals and an initial set of 230 indicators, promoting economic, socio-cultural and environmental sustainability through a global partnership of destinations and stakeholders.",
                 explanation: "The headline international sustainability framework."
             },
             {
+                id: "u6bbc8",
                 question: "What is the 'growth management' approach to sustainability?",
                 answer: "The standard approach assuming that tourism's problems can be solved by better, more efficient management of tourism development, supported by improvements in technology. UNWTO: 'growth is not the problem — it's how we manage it.' It is exemplified by green growth and inclusive growth, aiming for economic, socio-cultural and environmental sustainability.",
                 explanation: "The mainstream 'business-as-usual' solution to tourism's problems."
             },
             {
+                id: "s0v7tk",
                 question: "What is the Easterlin Paradox (a countercriticism of growth)?",
                 answer: "Increasing GDP is unlikely to improve social well-being once a comfortable standard of living has been reached — higher income doesn't always raise life satisfaction (diminishing returns, adaptation, social comparison). This undercuts the argument for continued tourism growth in developed destinations.",
                 explanation: "One of four countercriticisms of the growth-management approach."
             },
             {
+                id: "4gh96j",
                 question: "What is decoupling, and what is the 'myth of decoupling'?",
                 answer: "Decoupling = separating economic growth from environmental degradation. Relative decoupling: impact grows more slowly than output (GDP +5%, emissions +2%). Absolute decoupling: output grows while impact FALLS (GDP +5%, emissions −3%). The 'myth' is that there is NO evidence absolute decoupling is occurring anywhere — so tourism GDP cannot grow indefinitely without adverse environmental impacts.",
                 explanation: "Absolute decoupling is what sustainability needs — but it isn't happening."
             },
             {
+                id: "aso54c",
                 question: "What are rebound effects in tourism?",
                 answer: "Efficiency gains can be counter-productive because lower prices raise demand and emissions. Types: Direct (fuel-efficient aircraft → cheaper tickets → more flying); Indirect (savings spent on other consumption); Economy-wide (freed resources boost other sectors); Time-savings (faster travel enables extra/longer trips).",
                 explanation: "Rebound effects reduce the effectiveness of green-growth strategies."
             },
             {
+                id: "abwt6q",
                 question: "What is the 'heterodox' alternative view, and what is regenerative tourism vs sustainable tourism?",
                 answer: "Heterodox approaches reject 'business-as-usual' growth management; they include regenerative tourism, tourism degrowth, and putting human well-being first. Sustainable tourism seeks to LESSEN the harm done by tourism; REGENERATIVE tourism goes further — a commitment to a NET POSITIVE benefit to the environment and communities (restoration & regeneration), further along the continuum.",
                 explanation: "Regenerative = leave the destination better than you found it."
             },
             {
+                id: "ih590s",
                 question: "What is tourism degrowth?",
                 answer: "If producing more while polluting less is unachievable, the industry should produce LESS to pollute less — a planned, gradual, equitable 'downsizing/rightsizing' of production and consumption. Three goals: reduce environmental impact (less consumption/investment/work-time); redistribute income & wealth (intra- and inter-generationally); promote a transition to a convivial, caring, sharing, participatory society.",
                 explanation: "Requires a transformative shift in values away from 'business as usual'."
             },
             {
+                id: "r3sbkw",
                 question: "What is meant by 'sustainable well-being' rather than 'sustainable development'?",
                 answer: "Human well-being is now widely regarded as the primary public-policy objective. Destination managers and researchers should treat sustainable development not as an 'end in itself' but as a STEPPING STONE towards the enhanced well-being of residents — i.e. focus on sustainable well-being.",
                 explanation: "Dwyer's 'Beyond GDP' / well-being perspective on tourism."
@@ -848,21 +975,25 @@ const te2M2 = {
 
         quiz: [
             {
+                id: "enxz3x",
                 question: "'Tourism growth mania' wrongly equates more GDP with:",
                 options: ["More pollution", "Social progress / 'better'", "Fewer tourists", "Lower prices"],
                 correct: 1
             },
             {
+                id: "2jur73",
                 question: "The 3 pillars of sustainability are environmental, socio-cultural and:",
                 options: ["Political", "Economic", "Technological", "Legal"],
                 correct: 1
             },
             {
+                id: "w1z1pe",
                 question: "'Overtourism' is primarily an example of a:",
                 options: ["Benefit of tourism", "Cost of tourism growth", "Pricing strategy", "Forecasting method"],
                 correct: 1
             },
             {
+                id: "y7omla",
                 question: "The growth-management approach assumes problems are solved by:",
                 options: [
                     "Stopping all tourism",
@@ -873,6 +1004,7 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "frvygn",
                 question: "The Easterlin Paradox states that beyond a comfortable level, higher GDP:",
                 options: [
                     "Always raises well-being",
@@ -883,11 +1015,13 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "7gp7u6",
                 question: "ABSOLUTE decoupling means economic output grows while environmental impact:",
                 options: ["Grows faster", "Grows more slowly", "Falls in absolute terms", "Stays the same"],
                 correct: 2
             },
             {
+                id: "c61qbj",
                 question: "Regenerative tourism (vs sustainable tourism) aims for:",
                 options: [
                     "Only lessening harm",
@@ -898,6 +1032,7 @@ const te2M2 = {
                 correct: 1
             },
             {
+                id: "m8p8qi",
                 question: "Tourism degrowth proposes that the industry should:",
                 options: [
                     "Produce more to pollute less",
@@ -911,31 +1046,37 @@ const te2M2 = {
 
         fillBlanks: [
             {
+                id: "95gnd5",
                 sentence: "The three pillars of sustainability are environmental, economic and _______.",
                 answer: "socio-cultural",
                 hint: "People, communities, culture..."
             },
             {
+                id: "24smxo",
                 sentence: "Sustainable tourism seeks to lessen harm; _______ tourism aims for a net positive benefit.",
                 answer: "regenerative",
                 hint: "Restore and renew..."
             },
             {
+                id: "2bvbzs",
                 sentence: "The UN 2030 Agenda has _______ Sustainable Development Goals.",
                 answer: "17",
                 hint: "Seventeen..."
             },
             {
+                id: "zo32vw",
                 sentence: "The _______ Paradox: beyond a comfortable level, higher GDP doesn't raise well-being.",
                 answer: "Easterlin",
                 hint: "Named after economist Richard..."
             },
             {
+                id: "48y7mw",
                 sentence: "_______ decoupling (output up, impact down in absolute terms) has no real-world evidence.",
                 answer: "Absolute",
                 hint: "Opposite of 'relative'..."
             },
             {
+                id: "4i2pmi",
                 sentence: "Tourism _______ involves a planned, equitable downsizing of production and consumption.",
                 answer: "degrowth",
                 hint: "Opposite of growth..."
@@ -943,6 +1084,7 @@ const te2M2 = {
         ],
 
         learn: {
+            id: "pd27es",
             title: "Sustainable Tourism Development",
             content: `
                 <h3>📈 Growth Mania vs Sustainability</h3>

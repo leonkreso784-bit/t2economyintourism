@@ -11,77 +11,92 @@
 // and covers ALL material — Topics 1–14 (food quality → healthy diet).
 
 const foodNutritionExamPractice = {
+    id: "fcv6xu",
     name: "Exam Practice (All Topics)",
     icon: "fa-graduation-cap",
     color: "#16a34a",
 
     flashcards: [
         {
+            id: "1nz500",
             question: "What is the structure and weight of the Food & Nutrition final exam?",
             answer: "The final exam is worth 30% (minimum 15% to pass) and is obligatory. It has 16 questions: 12 with short/suggested answers (1.5% each) + 4 essay-type questions (max 3% each). It covers all material, Topics 1–14.",
             explanation: "The prerequisite to take the final is at least 35% from coursework (midterms, seminars, activities)."
         },
         {
+            id: "zrl54u",
             question: "Which topics make up the two midterm 'halves' that the final combines?",
             answer: "1st midterm = Topics 1–7: Food Quality, Food Components, Food Preservation, Cereals & Bakery, Fruits & Vegetables, Coffee/Tea/Cocoa, and Wine.\n2nd midterm = Topics 8–14: Beer, Distilled Spirits & Liqueurs, Meat, Fish, Milk & Dairy, Eggs, and Healthy Diet.",
             explanation: "Per the syllabus, Beer (Topic 8) belongs to the 2nd midterm, not the 1st."
         },
         {
+            id: "swfqq8",
             question: "What are the energy values of the three energy-yielding macronutrients?",
             answer: "Proteins: 4 kcal/g (≈17 kJ/g)\nCarbohydrates: 4 kcal/g (≈17 kJ/g)\nFats: 9 kcal/g (≈39 kJ/g)\n(1 kcal ≈ 4.187 kJ). Vitamins, minerals, bioactive compounds, and water provide NO energy.",
             explanation: "Fat provides more than double the energy per gram of protein or carbohydrate — a recurring exam number."
         },
         {
+            id: "pjsicg",
             question: "Distinguish complete and incomplete proteins and give a hospitality example of combining them.",
             answer: "Complete proteins contain all essential amino acids and come from animal origin (meat, milk, eggs, fish). Incomplete proteins (plant origin) have a limiting amino acid. Combining legumes + cereals (≈35:65) creates a complete amino-acid profile.",
             explanation: "This 'protein complementation' is the basis of balanced vegetarian menus."
         },
         {
+            id: "w5zwlw",
             question: "Compare the key preservation principles and their critical temperatures.",
             answer: "ABIOSIS = destroy/remove microorganisms (sterilization >100°C). ANABIOSIS = inhibit them (cooling, freezing, drying, fermentation). Key temps: pasteurization <100°C, sterilization >100°C, blanching 75-95°C, frozen storage -18°C, lyophilization freezes at -50°C.",
             explanation: "ABIOSIS eliminates microbes; ANABIOSIS just creates unfavourable conditions for them."
         },
         {
+            id: "72beu3",
             question: "Rank the alcoholic beverages by minimum alcohol content and state the common reaction.",
             answer: "Beer: standard 3.5-5.5% vol. → Wine: ≥8.5% vol. → Distilled spirits & liqueurs: ≥15% vol. (distilled spirits 30-50%; liqueurs also need ≥100 g/L sugar). All rely on alcoholic fermentation: C₆H₁₂O₆ + yeast → 2 C₂H₅OH + 2 CO₂.",
             explanation: "Saccharomyces yeast drives fermentation in bread, beer, wine and spirits alike; distillation then concentrates the spirit's alcohol."
         },
         {
+            id: "enzdqy",
             question: "Name the characteristic stimulant compound of coffee, tea, and cocoa.",
             answer: "Coffee → caffeine (stimulates the central nervous and respiratory systems). Tea → theophylline. Cocoa → theobromine (named after Theobroma cacao). Theobromine and theophylline have a milder, relaxing effect.",
             explanation: "All three are bioactive alkaloids acting on the central nervous system."
         },
         {
+            id: "z51mxw",
             question: "Summarise the nutritional 'signature' of each animal-origin food group.",
             answer: "Meat: 15-20% protein, the best heme-iron source, B12. Fish: omega-3 PUFA (EPA + DHA), low cholesterol. Milk: protein biological value higher than meat/fish, calcium (Ca:P ≈ 1.2-1.4:1). Eggs: egg-white protein has biological value 94 (one of the highest).",
             explanation: "Animal foods are complete-protein sources; fish adds heart-protective omega-3s."
         },
         {
+            id: "qnqi4z",
             question: "How does fermentation appear across the whole course?",
             answer: "Alcoholic fermentation (yeast → alcohol + CO₂): bread, beer, wine, spirits. Lactic-acid fermentation: dairy (yogurt, kefir — kefir is also alcoholic), pickled vegetables (sauerkraut), fermented sausages. Biological preservation of food relies on these microbial processes.",
             explanation: "Recognising the type of fermentation per product is a strong cross-topic exam skill."
         },
         {
+            id: "d8yjcd",
             question: "Match each food group with its main freshness/quality indicator.",
             answer: "Meat: colour from myoglobin (red/white), elastic surface. Fish: clear full eyes, bright-red moist gills, firm flesh; spoilage smell = TMA (trimethylamine). Eggs: densitometry (12% salt solution) and candling (ovoscope). Milk: heat treatment (pasteurization 72°C / UHT 135-140°C).",
             explanation: "Each group has its own sensory and instrumental quality tests."
         },
         {
+            id: "p4a01m",
             question: "List the core WHO healthy-diet recommendations.",
             answer: "Total fat ≤30% of energy; saturated fat <10%; cholesterol <300 mg/day; carbohydrates 55-75%; added sugars <10% (≈50 g); protein 10-15%; salt <5 g/day; fruit & vegetables ≥400 g/day; dietary fibre ≥25 g/day.",
             explanation: "These are the headline numbers from the Healthy Diet topic (Topic 14)."
         },
         {
+            id: "6x5rk2",
             question: "Explain BMI classification and the components of energy expenditure.",
             answer: "BMI: <18.5 malnutrition, 18.5-24.9 normal, 25-29.9 overweight, ≥30 obesity (grades 1/2/3). Energy expenditure = basal metabolic rate (60-75%) + thermic effect of food (~10%) + physical activity (10-35%, the most variable).",
             explanation: "BMR is the largest, most stable component of daily energy use."
         },
         {
+            id: "jjz10y",
             question: "Compare the four nutrition models for health promotion.",
             answer: "Mediterranean: whole grains, olive oil, fish, legumes, moderate red wine with meals. DASH: stops hypertension; sodium <2300 mg/day. MIND: Mediterranean + DASH for brain health (greens, berries, nuts, fish). Nordic: Nordic foods, berries, oats/barley (β-glucan), canola oil.",
             explanation: "All four emphasise plants, whole grains and healthy fats while limiting red meat."
         },
         {
+            id: "jgsjns",
             question: "What are the main food-safety hazards across the animal-origin foods?",
             answer: "Meat: putrefaction → toxic biogenic amines. Fish: histamine (histidine→histamine by bacteria) and the Anisakis parasite (raw fish/sushi). Eggs: Salmonella and Campylobacter. Overarching principle: traceability — 'one step forward, one step back' / 'from farm to fork'.",
             explanation: "Food safety is a prerequisite for food quality — a key Topic 1 concept that recurs throughout."
@@ -90,61 +105,73 @@ const foodNutritionExamPractice = {
 
     quiz: [
         {
+            id: "htymzm",
             question: "The Food & Nutrition final exam consists of:",
             options: ["10 questions (5 closed + 5 open)", "16 questions (12 short + 4 essay)", "20 multiple-choice questions", "1 essay only"],
             correct: 1
         },
         {
+            id: "x39ta0",
             question: "Which nutrient provides the most energy per gram?",
             options: ["Protein (4 kcal/g)", "Carbohydrate (4 kcal/g)", "Fat (9 kcal/g)", "Alcohol (2 kcal/g)"],
             correct: 2
         },
         {
+            id: "8z29sd",
             question: "Sterilization destroys spores because it occurs:",
             options: ["Below 100°C", "Above 100°C", "At 75-95°C", "At -18°C"],
             correct: 1
         },
         {
+            id: "m05bjc",
             question: "Which beverage requires the highest minimum alcohol content?",
             options: ["Standard beer (3.5-5.5%)", "Wine (≥8.5%)", "Distilled spirits & liqueurs (≥15%)", "They are all equal"],
             correct: 2
         },
         {
+            id: "r9v0az",
             question: "The characteristic bioactive compound of cocoa is:",
             options: ["Caffeine", "Theophylline", "Theobromine", "Catechin"],
             correct: 2
         },
         {
+            id: "f128n6",
             question: "The best dietary source of heme-iron is:",
             options: ["Red meat", "Milk", "Fruit", "White bread"],
             correct: 0
         },
         {
+            id: "ok2kg7",
             question: "EPA and DHA — the omega-3 fatty acids — are characteristic of:",
             options: ["Cereals", "Fish", "Cheese", "Eggs"],
             correct: 1
         },
         {
+            id: "7ls2y4",
             question: "Egg white protein has a biological value of:",
             options: ["50", "75", "94", "120"],
             correct: 2
         },
         {
+            id: "wg2qua",
             question: "The WHO recommends a daily salt intake of less than:",
             options: ["2 g", "5 g", "10 g", "15 g"],
             correct: 1
         },
         {
+            id: "b5l3uu",
             question: "Basal metabolic rate accounts for what share of energy expenditure?",
             options: ["10%", "30%", "60-75%", "90%"],
             correct: 2
         },
         {
+            id: "qo32w2",
             question: "Which fermentation produces yogurt and kefir?",
             options: ["Alcoholic only", "Lactic-acid (kefir also alcoholic)", "Acetic-acid", "No fermentation"],
             correct: 1
         },
         {
+            id: "cm0x2c",
             question: "The DASH diet was specifically designed to:",
             options: ["Build muscle mass", "Lower blood pressure (stop hypertension)", "Increase alcohol tolerance", "Promote weight gain"],
             correct: 1
@@ -153,41 +180,49 @@ const foodNutritionExamPractice = {
 
     fillBlanks: [
         {
+            id: "zhhs96",
             sentence: "The final exam is worth _______% of the grade (minimum 15% to pass).",
             answer: "30",
             hint: "Thirty..."
         },
         {
+            id: "yah3a5",
             sentence: "Fats provide _______ kcal per gram — more than double protein or carbohydrate.",
             answer: "9",
             hint: "Nine..."
         },
         {
+            id: "p4jqh2",
             sentence: "ABIOSIS destroys microorganisms, while _______ only inhibits them.",
             answer: "anabiosis",
             hint: "Cooling, freezing, drying..."
         },
         {
+            id: "r9h9w1",
             sentence: "Wine must have at least _______% vol alcohol, while distilled spirits need ≥15%.",
             answer: "8.5",
             hint: "Eight and a half..."
         },
         {
+            id: "9ki25d",
             sentence: "The stimulant in coffee is _______.",
             answer: "caffeine",
             hint: "Acts on the central nervous system..."
         },
         {
+            id: "7whhov",
             sentence: "The 'fishy smell' of less-fresh fish comes from the compound _______ (TMA).",
             answer: "trimethylamine",
             hint: "Abbreviated TMA..."
         },
         {
+            id: "okietq",
             sentence: "The WHO recommends a fruit and vegetable intake of at least _______ g per day.",
             answer: "400",
             hint: "Four hundred..."
         },
         {
+            id: "ylcsk6",
             sentence: "Food safety is described by the principle 'from farm to _______'.",
             answer: "fork",
             hint: "Where food is eaten..."
@@ -195,6 +230,7 @@ const foodNutritionExamPractice = {
     ],
 
     learn: {
+        id: "y3n6en",
         title: "Final Exam Roadmap (Topics 1–14)",
         content: `
             <h3>📋 What the Final Covers</h3>

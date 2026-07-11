@@ -7,57 +7,68 @@ const ebusinessM2 = {
 
     // ========== CATEGORY 7: VISUAL DESIGN & IDENTITY (Unit 8) ==========
     visualDesign: {
+        id: "kcr5kz",
         name: "Visual Design & Identity",
         icon: "fa-paint-brush",
         color: "#06b6d4",
         
         flashcards: [
             {
+                id: "wjl65m",
                 question: "What is Visual Design vs Graphic Design?",
                 answer: "VISUAL DESIGN:\n• Problem solvers\n• Build and maintain brand's design strategy\n• Ensure consistent brand voice across platforms\n\nGRAPHIC DESIGN:\n• Focus on conveying specific messages\n• Work on individual projects\n• Print and digital visuals\n\nKey difference: Visual = brand consistency, Graphic = individual messages",
                 explanation: "Two related but different disciplines."
             },
             {
+                id: "1d3qkl",
                 question: "What is Visual Identity?",
                 answer: "Visual identity is everything that visually represents a brand:\n\n• Logo\n• Color palette\n• Typography\n• Images\n• Symbols, shapes, patterns\n\nPurpose: Make company recognizable and create emotional impressions.",
                 explanation: "The visual face of a brand."
             },
             {
+                id: "31jmcw",
                 question: "What are the Elements of Visual Identity?",
                 answer: "Elements include:\n\n• Brand logo\n• Brand color palette (usually max 3 colors)\n• Brand fonts and typography\n• Brand images and photography style\n• Shapes, patterns, textures\n• Brand book (style guide)",
                 explanation: "Components of visual branding."
             },
             {
+                id: "3z5dzv",
                 question: "What is the difference between Brand, Identity, and Logo?",
                 answer: "BRAND:\n• How people PERCEIVE the company\n• Emotional connection\n\nIDENTITY:\n• Visual GUIDELINES supporting the brand\n• Design system\n\nLOGO:\n• Visual MARK identifying the company\n• Most recognizable element\n\nLogo ⊂ Identity ⊂ Brand",
                 explanation: "Hierarchy of branding elements."
             },
             {
+                id: "wwknys",
                 question: "What are the color roles in a brand palette?",
                 answer: "Usually no more than 3 main colors:\n\n• PRIMARY color - Main brand color\n• SECONDARY color - Background support\n• ACCENT color - Emphasis and highlights\n\nColor affects perception and behavior.",
                 explanation: "Strategic use of color in branding."
             },
             {
+                id: "visa00",
                 question: "What is a Brand Book (Book of Standards)?",
                 answer: "A Brand Book defines rules for visual presentation:\n\n• Logo usage and variants\n• Color palettes\n• Typography rules\n• Icons, illustrations, patterns\n• Applications across media\n\nEnsures consistency across all brand touchpoints.",
                 explanation: "The rulebook for brand visuals."
             },
             {
+                id: "dd48l9",
                 question: "Why do Infographics work?",
                 answer: "Infographics work because:\n\n• Humans learn visually\n• Images improve memory and recall\n• Brain processes visual and verbal info together\n\nCombines: Text + Images + Data visualization",
                 explanation: "Visual learning is more effective."
             },
             {
+                id: "7uin4n",
                 question: "What is the VARK learning model?",
                 answer: "VARK identifies learning preferences:\n\n• V = Visual - Learning through images and diagrams\n• A = Auditory - Learning through listening\n• R = Reading/Writing - Learning through text\n• K = Kinesthetic - Learning by doing",
                 explanation: "Different people learn differently."
             },
             {
+                id: "l0j5o5",
                 question: "What are examples of hidden meanings in logos?",
                 answer: "Famous logo hidden meanings:\n\n• Amazon - Arrow from A to Z + smile\n• FedEx - Hidden arrow symbolizing speed\n• BMW - Colors from Bavarian flag\n• Toblerone - Hidden bear in the mountain",
                 explanation: "Clever design creates memorable logos."
             },
             {
+                id: "q4vzll",
                 question: "What is the difference between a logomark and a combination logo?",
                 answer: "LOGOMARK (logo symbol):\n• A symbol alone, without text\n\nCOMBINATION LOGO:\n• Logo symbol PLUS logotype (text)\n\nTYPOGRAPHIC LOGO:\n• No symbol at all — consists only of letters (existing fonts or unique hand-drawn letters)\n\nA logo usually also has sub-variants (black, inverse, horizontal/vertical composition) — all considered ONE logo.",
                 explanation: "Logo terminology from Unit 8."
@@ -66,6 +77,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "zap68q",
                 question: "Visual Design focuses on:",
                 options: [
                     "Individual project messages",
@@ -76,6 +88,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "rez94n",
                 question: "Visual Identity includes all EXCEPT:",
                 options: [
                     "Logo",
@@ -86,6 +99,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "ob49ag",
                 question: "The hierarchy is: Logo is part of Identity, Identity is part of:",
                 options: [
                     "Website",
@@ -96,6 +110,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "6fabga",
                 question: "A Brand Book defines:",
                 options: [
                     "Financial rules",
@@ -106,6 +121,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "gseayw",
                 question: "In VARK, 'K' stands for:",
                 options: [
                     "Knowledge",
@@ -116,6 +132,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "ltemyy",
                 question: "Amazon's logo features:",
                 options: [
                     "A hidden bear",
@@ -126,6 +143,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "cyrirw",
                 question: "Brand palette usually has maximum:",
                 options: [
                     "10 colors",
@@ -136,6 +154,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "nweo6g",
                 question: "Infographics combine:",
                 options: [
                     "Only text",
@@ -149,26 +168,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "cyqkzf",
                 sentence: "Visual _______ is everything that visually represents a brand.",
                 answer: "identity",
                 hint: "Who the brand is..."
             },
             {
+                id: "552qea",
                 sentence: "A Brand _______ defines rules for visual presentation.",
                 answer: "Book",
                 hint: "Document with guidelines..."
             },
             {
+                id: "vsgov5",
                 sentence: "Logo ⊂ Identity ⊂ _______.",
                 answer: "Brand",
                 hint: "The biggest concept..."
             },
             {
+                id: "uw5qe3",
                 sentence: "VARK stands for Visual, Auditory, Reading/Writing, and _______.",
                 answer: "Kinesthetic",
                 hint: "Learning by doing..."
             },
             {
+                id: "w5uypm",
                 sentence: "FedEx logo has a hidden _______ symbolizing speed.",
                 answer: "arrow",
                 hint: "Points in a direction..."
@@ -176,6 +200,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "ao1cwj",
             title: "Visual Design & Identity",
             content: `
                 <h3>Visual Design vs Graphic Design</h3>
@@ -213,67 +238,80 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 8: DIGITAL MARKETING (Unit 9) ==========
     digitalMarketing: {
+        id: "9swp7x",
         name: "Digital Marketing",
         icon: "fa-bullhorn",
         color: "#f97316",
         
         flashcards: [
             {
+                id: "97udzo",
                 question: "What is Digital Marketing?",
                 answer: "Digital marketing refers to all marketing activities that use:\n\n• Digital channels\n• Digital devices\n• Online platforms\n\nIt combines: Advertising + Sales + Data Analytics\n\nGoal: Attract customers, influence buying decisions, increase market share.",
                 explanation: "Marketing in the digital age."
             },
             {
+                id: "cpsy9r",
                 question: "What are the core benefits of Digital Marketing?",
                 answer: "Key benefits:\n\n1. WIDE REACH - Global audiences, no geographical barriers\n2. COST EFFICIENCY - Social media and blogs are inexpensive\n3. MEASURABLE RESULTS - Analytics track everything\n4. PERSONALIZATION - Segment audiences, personalize messages\n5. ENGAGEMENT - Interact before, during, and after purchase\n6. EASY CONVERSIONS - Few clicks from ad to purchase",
                 explanation: "Why digital marketing matters."
             },
             {
+                id: "rr5ukm",
                 question: "What is SEO (Search Engine Optimization)?",
                 answer: "SEO improves website visibility in ORGANIC (unpaid) search results.\n\nKey SEO areas:\n• ON-PAGE SEO - Content and keywords\n• OFF-PAGE SEO - Backlinks and authority\n• TECHNICAL SEO - Speed, structure, performance",
                 explanation: "Getting found on search engines."
             },
             {
+                id: "3m1vhe",
                 question: "What is SEM (Search Engine Marketing)?",
                 answer: "SEM uses PAID ads in search engine results.\n\n• Advertisers pay per click (PPC)\n• Ads appear for specific keywords\n• Immediate visibility\n\nSEO + PPC = SEM",
                 explanation: "Paid search advertising."
             },
             {
+                id: "gj7sp6",
                 question: "What is Content Marketing?",
                 answer: "Content Marketing includes:\n\n• Blogs\n• Ebooks\n• Newsletters\n• Infographics\n• Podcasts\n• Videos\n\nGoal: Provide valuable content to attract and retain customers.",
                 explanation: "Marketing through valuable content."
             },
             {
+                id: "86ea24",
                 question: "What is Affiliate Marketing?",
                 answer: "Affiliate Marketing:\n\n• Uses third parties to promote products\n• Pays commission only AFTER a sale\n• Performance-based model\n\nExample: Bloggers earning commission for product recommendations.",
                 explanation: "Commission-based promotion."
             },
             {
+                id: "7f0ld5",
                 question: "What is Marketing Automation?",
                 answer: "Marketing Automation uses:\n\n• AI and machine learning\n• Automated workflows\n\nIt helps with:\n• Campaign management\n• Performance measurement\n• ROI calculation\n• Personalized messaging at scale",
                 explanation: "Technology-driven marketing efficiency."
             },
             {
+                id: "anihfs",
                 question: "What makes video marketing effective?",
                 answer: "Video Marketing:\n\n• Communicates more in less time\n• Increases engagement\n• Highly shareable\n\nPlatforms:\n• YouTube (also a search engine!)\n• TikTok\n• Instagram\n\nVideo is the most consumed content format.",
                 explanation: "The power of video content."
             },
             {
+                id: "8c2md0",
                 question: "What is Influencer Marketing?",
                 answer: "Influencer Marketing:\n\n• Uses trusted content creators\n• Leverages established audiences\n• Authentic and relatable\n\nInfluencers have built trust with their followers, making recommendations more effective.\n\nDifference vs affiliate: the influencer is paid a FLAT FEE regardless of sales; an affiliate earns only per sale.",
                 explanation: "Marketing through trusted voices."
             },
             {
+                id: "4mo49p",
                 question: "What are ALL 11 types of digital marketing from the lecture?",
                 answer: "1. Content marketing (blogs, ebooks, podcasts…)\n2. SEO\n3. SEM (paid search: Google Ads, Bing Ads)\n4. Social media marketing\n5. PPC (pay per click)\n6. Affiliate marketing\n7. Marketing automation (AI/ML)\n8. Email marketing\n9. Mobile/SMS marketing\n10. Video marketing\n11. Influencer marketing",
                 explanation: "The full list — exam questions often ask you to name several."
             },
             {
+                id: "yr38ig",
                 question: "What are Email marketing and Mobile (SMS) marketing?",
                 answer: "EMAIL MARKETING — direct marketing via strategic emails:\n• Newsletters, welcome emails, holiday promotions, post-purchase follow-ups\n• Still the quickest, most direct way to reach customers\n\nMOBILE/SMS MARKETING — tailored to mobile devices and wearables:\n• Timely one-on-one SMS messages (phones are with us 24/7)\n• Companies report ~102% ROI on SMS marketing",
                 explanation: "Two direct one-on-one channels."
             },
             {
+                id: "cs31so",
                 question: "What do famous digital campaigns (Nike, Heineken, Airbnb) teach us?",
                 answer: "NIKE — #JustDoIt (since 1987): a forceful, commanding slogan can define a brand globally (viral marketing).\n\nHEINEKEN — \"Cheers to All\": reverse gender expectations, keep it lighthearted, create global (image-based) content, upload natively to each platform.\n\nAIRBNB — \"Made Possible by Hosts\": video-first, mute-friendly, real people via UGC (user-generated content), sentimental storytelling.",
                 explanation: "Campaign case studies from Unit 9."
@@ -282,6 +320,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "glvgaa",
                 question: "SEO focuses on:",
                 options: [
                     "Paid advertisements",
@@ -292,6 +331,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "7tzxjo",
                 question: "SEM includes:",
                 options: [
                     "Only SEO",
@@ -302,6 +342,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "4jegml",
                 question: "Affiliate marketing pays commission:",
                 options: [
                     "Before any action",
@@ -312,6 +353,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "q1spn0",
                 question: "Which is NOT a content marketing format?",
                 options: [
                     "Blogs",
@@ -322,6 +364,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "ndrvn6",
                 question: "YouTube is also considered a:",
                 options: [
                     "Bank",
@@ -332,6 +375,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "apfsn5",
                 question: "Digital marketing benefit includes:",
                 options: [
                     "Limited reach",
@@ -342,6 +386,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "v229du",
                 question: "On-page SEO involves:",
                 options: [
                     "Backlinks from other sites",
@@ -352,6 +397,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "yrftps",
                 question: "Marketing automation uses:",
                 options: [
                     "Only manual work",
@@ -362,6 +408,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "rxit5o",
                 question: "Companies report approximately what ROI on SMS marketing?",
                 options: [
                     "10%",
@@ -372,6 +419,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "hvf7tp",
                 question: "Unlike affiliates, influencers are typically paid:",
                 options: [
                     "Only per sale",
@@ -385,26 +433,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "wasqfb",
                 sentence: "SEO improves visibility in _______ (unpaid) search results.",
                 answer: "organic",
                 hint: "Natural, not paid..."
             },
             {
+                id: "errt8w",
                 sentence: "SEM combines SEO and _______ advertising.",
                 answer: "PPC",
                 hint: "Pay-Per-Click..."
             },
             {
+                id: "xrc3pg",
                 sentence: "_______ marketing pays commission only after a sale.",
                 answer: "Affiliate",
                 hint: "Third-party promotion..."
             },
             {
+                id: "1dhztk",
                 sentence: "YouTube is also considered a search _______.",
                 answer: "engine",
                 hint: "Like Google..."
             },
             {
+                id: "zx2th5",
                 sentence: "_______ marketing uses trusted content creators with established audiences.",
                 answer: "Influencer",
                 hint: "People with followers..."
@@ -412,6 +465,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "h18mt5",
             title: "Digital Marketing",
             content: `
                 <h3>Core Benefits of Digital Marketing</h3>
@@ -447,57 +501,68 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 9: SOCIAL MEDIA (Unit 10) ==========
     socialMedia: {
+        id: "qku540",
         name: "Social Media",
         icon: "fa-share-alt",
         color: "#3b82f6",
         
         flashcards: [
             {
+                id: "ywiirx",
                 question: "What is Social Media?",
                 answer: "Social media refers to digital technologies that enable users to:\n\n• Create content\n• Share information\n• Interact and communicate with others\n\nPlatforms: Facebook, Instagram, TikTok, YouTube, X (Twitter), LinkedIn",
                 explanation: "Digital communication and content sharing."
             },
             {
+                id: "wq0lxp",
                 question: "What are the key social media statistics?",
                 answer: "Global insights:\n\n• Over 5.41 billion active users worldwide\n• Average daily usage: ~143 minutes\n• ~98% of users access via mobile devices",
                 explanation: "The scale of social media."
             },
             {
+                id: "ipz6yt",
                 question: "Why is Social Media important for business?",
                 answer: "Business benefits:\n\n• Raise brand awareness\n• Discover and research customers\n• Communicate directly with audiences\n• Support sales and conversions\n• Build community and loyalty",
                 explanation: "Social media for business success."
             },
             {
+                id: "khrh4o",
                 question: "What are the characteristics of Facebook?",
                 answer: "Facebook:\n\n• Over 3 billion monthly active users\n• Strong advertising ecosystem\n• Dominant in brand discovery and communities\n\nEffective for:\n• Broad audiences\n• Advertising campaigns\n• Brand pages and groups",
                 explanation: "The dominant social platform."
             },
             {
+                id: "2uabqe",
                 question: "What are the characteristics of TikTok?",
                 answer: "TikTok:\n\n• Extremely high engagement\n• Short-form video content\n• Strong influence on younger generations\n• Highest average time spent per user\n• Over 90% of users interact after watching\n\nPowerful for:\n• Viral marketing\n• Storytelling through video\n• Trend-driven campaigns",
                 explanation: "The rising star of social media."
             },
             {
+                id: "1fkilp",
                 question: "What are the characteristics of YouTube?",
                 answer: "YouTube:\n\n• A social media platform AND second-largest search engine\n• Billions of active users\n• Strong purchase influence\n\nIdeal for:\n• Long-form content\n• Tutorials and reviews\n• Brand storytelling",
                 explanation: "The video giant."
             },
             {
+                id: "iwzc7z",
                 question: "What are the characteristics of LinkedIn?",
                 answer: "LinkedIn:\n\n• Leading professional platform\n• Strong B2B focus\n• High-quality content distribution\n• Effective lead generation\n\nBest for:\n• Employer branding\n• Professional visibility\n• B2B marketing",
                 explanation: "Professional networking platform."
             },
             {
+                id: "x15ljz",
                 question: "Which platforms do different generations prefer?",
                 answer: "Generational preferences:\n\n• Gen Z: TikTok, Instagram, Snapchat\n• Millennials: Instagram, Facebook, YouTube\n• Gen X: Facebook, YouTube\n• Baby Boomers: Facebook, messaging apps",
                 explanation: "Demographics drive platform choice."
             },
             {
+                id: "okp6g2",
                 question: "What makes social media content go viral?",
                 answer: "Viral content characteristics:\n\n• Emotional impact\n• Simplicity\n• Relatability\n• Strong visual elements\n\nContent that triggers emotions spreads faster.",
                 explanation: "The science of viral content."
             },
             {
+                id: "smf6p3",
                 question: "What are social media future trends?",
                 answer: "Key future directions:\n\n• Short-form video dominance\n• Growth of social commerce\n• AI-driven personalization\n• Immersive AR and VR experiences\n• Stronger focus on authenticity and privacy",
                 explanation: "Where social media is heading."
@@ -506,6 +571,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "ykjm43",
                 question: "How many active social media users are there globally?",
                 options: [
                     "1 billion",
@@ -516,6 +582,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "67ww04",
                 question: "TikTok is known for:",
                 options: [
                     "Long-form articles",
@@ -526,6 +593,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "yt95nb",
                 question: "YouTube is also considered:",
                 options: [
                     "A bank",
@@ -536,6 +604,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "0i754c",
                 question: "LinkedIn is best for:",
                 options: [
                     "Viral videos",
@@ -546,6 +615,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "yidmmt",
                 question: "Gen Z prefers which platforms?",
                 options: [
                     "Facebook and LinkedIn",
@@ -556,6 +626,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "9gsod4",
                 question: "Viral content typically has:",
                 options: [
                     "No emotional impact",
@@ -566,6 +637,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "ugr9z6",
                 question: "What percentage of users access social media via mobile?",
                 options: [
                     "50%",
@@ -576,6 +648,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "zgox2q",
                 question: "Facebook has over how many monthly active users?",
                 options: [
                     "500 million",
@@ -589,26 +662,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "besnts",
                 sentence: "There are over _______ billion active social media users worldwide.",
                 answer: "5",
                 hint: "More than 4..."
             },
             {
+                id: "na0bvi",
                 sentence: "_______ is known for short-form video content and high engagement.",
                 answer: "TikTok",
                 hint: "Popular with Gen Z..."
             },
             {
+                id: "miqz4c",
                 sentence: "YouTube is also the _______-largest search engine.",
                 answer: "second",
                 hint: "After Google..."
             },
             {
+                id: "y2rxxe",
                 sentence: "_______ is the leading professional networking platform.",
                 answer: "LinkedIn",
                 hint: "For B2B and careers..."
             },
             {
+                id: "l8wbva",
                 sentence: "Viral content typically has emotional impact and _______.",
                 answer: "relatability",
                 hint: "People can connect with it..."
@@ -616,6 +694,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "ky1svc",
             title: "Social Media",
             content: `
                 <h3>Social Media Statistics</h3>
@@ -650,52 +729,62 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 10: GOOGLE ANALYTICS & TRENDS (Unit 11) ==========
     googleAnalytics: {
+        id: "yjf9x5",
         name: "Google Analytics",
         icon: "fa-chart-bar",
         color: "#14b8a6",
         
         flashcards: [
             {
+                id: "bx2c26",
                 question: "What is Google Analytics?",
                 answer: "Google Analytics (GA) is a web analytics tool providing insights into:\n\n• Website performance\n• User behavior\n• Traffic sources\n• Conversions and goals\n\nSupports: Digital marketing, SEO, PPC, content optimization, e-commerce",
                 explanation: "The standard for web analytics."
             },
             {
+                id: "7ly9x3",
                 question: "How does Google Analytics work?",
                 answer: "GA works by:\n\n1. Adding a JavaScript tracking code to website pages\n2. Collecting user interaction data when pages load\n3. Sending data to Google servers\n4. Displaying results in reports and dashboards",
                 explanation: "The technical process."
             },
             {
+                id: "zh35ov",
                 question: "What Real-Time data does GA provide?",
                 answer: "Real-Time data shows:\n\n• Active users on the website right now\n• Pages being viewed at the moment\n• Device type (desktop or mobile)\n• User locations\n\nUseful for monitoring live campaigns.",
                 explanation: "See what's happening now."
             },
             {
+                id: "nlld5x",
                 question: "What Audience Insights does GA provide?",
                 answer: "Audience insights include:\n\n• Number of visitors and sessions\n• New vs returning users\n• Session duration\n• Pages per session\n• Demographics and interests",
                 explanation: "Understanding your visitors."
             },
             {
+                id: "1206fn",
                 question: "What is Goal and Conversion Tracking in GA?",
                 answer: "Goals represent desired user actions:\n\n• Purchases\n• Form submissions\n• Newsletter sign-ups\n• Downloads\n• Account creation\n\nConversions measure how many users complete these goals.",
                 explanation: "Measuring success."
             },
             {
+                id: "d8r599",
                 question: "What are the 5 key benefits of Google Analytics?",
                 answer: "1. ACCESS TO REAL-TIME DATA — live users, pageviews, top pages and locations\n2. INSIGHTS INTO YOUR AUDIENCE — visitors, sessions, new vs returning, interests\n3. ENHANCED AD MANAGEMENT — track Google Ads clicks, cost per click, campaign costs in one place\n4. UNDERSTANDING USER BEHAVIOR — most popular content, bounce rate, what drives conversions\n5. BETTER TRACKING OF GOALS & CONVERSIONS — what is completed, where, and its value",
                 explanation: "The lecture's '5 incredible benefits' list."
             },
             {
+                id: "0w32jq",
                 question: "What is Google Trends?",
                 answer: "Google Trends is a FREE tool that analyzes the popularity of search terms.\n\nIt:\n• Measures RELATIVE popularity, not absolute volume\n• Compares search interest across time and regions\n• Normalizes data for fair comparison",
                 explanation: "Understanding search popularity."
             },
             {
+                id: "ayaf09",
                 question: "What are practical uses of Google Trends?",
                 answer: "Practical uses:\n\n• Identify trending topics\n• Detect seasonal demand patterns\n• Support local SEO strategies\n• Analyze competitors\n• Optimize keyword strategies\n• Understand market interest",
                 explanation: "Applications of Google Trends."
             },
             {
+                id: "at8jee",
                 question: "Google Analytics vs Google Trends - What's the difference?",
                 answer: "GOOGLE ANALYTICS:\n• Focuses on YOUR website\n• Behavior and conversions\n• Performance metrics\n\nGOOGLE TRENDS:\n• Focuses on OVERALL market interest\n• External search behavior\n• Popularity comparisons",
                 explanation: "Internal vs external data."
@@ -704,6 +793,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "2gn5f0",
                 question: "Google Analytics tracks:",
                 options: [
                     "Only sales",
@@ -714,6 +804,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "hdxez9",
                 question: "GA works by adding what to website pages?",
                 options: [
                     "Images",
@@ -724,6 +815,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "xuj2mb",
                 question: "Google Trends measures:",
                 options: [
                     "Absolute search volume",
@@ -734,6 +826,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "8wrjxc",
                 question: "GA Real-Time data shows:",
                 options: [
                     "Last year's data",
@@ -744,6 +837,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "qbhpq4",
                 question: "Goals in GA represent:",
                 options: [
                     "Random actions",
@@ -754,6 +848,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "0hcxj1",
                 question: "Google Trends is useful for:",
                 options: [
                     "Only paid advertising",
@@ -764,6 +859,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "m47fht",
                 question: "Google Analytics focuses on:",
                 options: [
                     "Overall market interest",
@@ -774,6 +870,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "78cnse",
                 question: "GA Audience Insights include:",
                 options: [
                     "Only one metric",
@@ -787,26 +884,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "fu8m6i",
                 sentence: "Google Analytics uses _______ tracking code on websites.",
                 answer: "JavaScript",
                 hint: "A programming language..."
             },
             {
+                id: "84tkv4",
                 sentence: "Google Trends measures _______ popularity, not absolute volume.",
                 answer: "relative",
                 hint: "Compared to other terms..."
             },
             {
+                id: "s5gysz",
                 sentence: "_______ in GA represent desired user actions like purchases.",
                 answer: "Goals",
                 hint: "Targets to achieve..."
             },
             {
+                id: "z1d946",
                 sentence: "GA shows _______ data about active users on the website right now.",
                 answer: "Real-Time",
                 hint: "Happening now..."
             },
             {
+                id: "f8osp7",
                 sentence: "Google Analytics focuses on your website, while Google Trends focuses on _______ interest.",
                 answer: "market",
                 hint: "Overall demand..."
@@ -814,6 +916,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "mf3r2z",
             title: "Google Analytics & Trends",
             content: `
                 <h3>Google Analytics</h3>
@@ -851,67 +954,80 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 11: SEO, SEM & SERP (Unit 12) ==========
     seoSem: {
+        id: "63bn5s",
         name: "SEO, SEM & SERP",
         icon: "fa-search",
         color: "#84cc16",
         
         flashcards: [
             {
+                id: "pjls85",
                 question: "What is SERP?",
                 answer: "SERP = Search Engine Results Page\n\nThe page displayed after a user enters a query into a search engine.\n\nContains:\n• Organic results (SEO)\n• Paid ads (PPC)\n• Featured snippets\n• Local results",
                 explanation: "What you see after searching."
             },
             {
+                id: "ffpje1",
                 question: "What is SEO?",
                 answer: "SEO = Search Engine Optimization\n\nFocuses on optimizing a website to:\n• Rank higher in ORGANIC search results\n• Attract UNPAID traffic\n\nFOUR main subcategories:\n• On-page SEO\n• Off-page SEO\n• Technical SEO\n• User Interaction Signals\n\nGoogle uses 200+ ranking signals in its algorithm.",
                 explanation: "Getting free search traffic — note: FOUR subcategories, not three."
             },
             {
+                id: "qgxonl",
                 question: "What are User Interaction Signals in SEO?",
                 answer: "The 4th SEO subcategory — how users interact with your site tells Google whether your page matches the search:\n\n• High BOUNCE RATE → page may not answer the query → rankings can drop\n• CTR (click-through rate) → better titles/descriptions raise it\n• DWELL TIME → how long a visitor stays; longer = more relevant content",
                 explanation: "Same signals reappear as ranking factor #10 (on-page experience)."
             },
             {
+                id: "l3z7fc",
                 question: "What is SEM?",
                 answer: "SEM = Search Engine Marketing\n\nA broader concept that includes:\n• SEO (organic)\n• PPC (paid advertising)\n\nSEO + PPC = SEM\n\nAims to maximize visibility on search engines.",
                 explanation: "All search marketing activities."
             },
             {
+                id: "of0tbq",
                 question: "What is Quality Score in Google Ads?",
                 answer: "Quality Score measures how relevant and useful an ad is.\n\nBased on:\n• Expected click-through rate\n• Ad relevance to search query\n• Landing page experience\n\nHigher Quality Score = Lower costs, better positions.",
                 explanation: "Google Ads ranking factor."
             },
             {
+                id: "hbuie5",
                 question: "SEO vs SEM - Speed difference?",
                 answer: "SPEED:\n\nSEO:\n• Slow to show results\n• On average it takes ~2 YEARS to rank on the first page of Google (many top pages are 3+ years old)\n• Long-tail keywords + best practices can bring first results within a few months\n\nSEM (PPC):\n• Immediate visibility — run an ad in the morning, get traffic in the afternoon\n• But positive ROI can still take months of testing and tweaking",
                 explanation: "Time to results."
             },
             {
+                id: "twjbjb",
                 question: "Is SEO really 'free traffic'?",
                 answer: "NO — you don't pay per click, but SEO is NOT free:\n\n• Quality, unique content costs many hours of labour\n• Building domain authority requires consistent top content + promotion\n• SEO tools (ahrefs, semrush…) can cost ~$350/month\n• You pay website designers and developers\n• It requires a broad knowledge base built over years",
                 explanation: "The 'SEO costs' reality check from the lecture."
             },
             {
+                id: "oybhzi",
                 question: "What is High-Quality Content in SEO?",
                 answer: "Content quality is the STRONGEST ranking factor.\n\nQuality content is:\n• Unique\n• Fresh\n• Useful\n• Written for USERS, not search engines\n\nGoogle rewards valuable content.",
                 explanation: "Content is king."
             },
             {
+                id: "4d5znp",
                 question: "What are Backlinks in SEO?",
                 answer: "Backlinks are links from other websites to your site.\n\nThey act as:\n• Votes of confidence\n• Authority signals\n\nMore quality backlinks = Higher rankings.\n\nPart of OFF-PAGE SEO.",
                 explanation: "Links as endorsements."
             },
             {
+                id: "490snv",
                 question: "What is Mobile-First Indexing?",
                 answer: "Google uses MOBILE-FIRST indexing.\n\nThis means:\n• Mobile version is used for ranking\n• Responsive design is essential\n• Desktop-only sites may rank lower\n\nMost users browse on mobile!",
                 explanation: "Mobile is priority."
             },
             {
+                id: "s8o60v",
                 question: "What are Core Web Vitals?",
                 answer: "Core Web Vitals measure:\n\n• Loading speed (LCP)\n• Interactivity (FID)\n• Visual stability (CLS)\n\nPart of Google's ranking factors.\nFast websites rank better!",
                 explanation: "User experience metrics."
             },
             {
+                id: "t7ly5g",
                 question: "What are the 10 most important Google ranking factors?",
                 answer: "Top ranking factors:\n\n1. High-quality content\n2. Backlinks\n3. Search intent & relevance\n4. Website loading speed\n5. Mobile friendliness\n6. Domain authority\n7. Keyword optimization\n8. Website structure\n9. Website security (HTTPS)\n10. User experience signals (CTR, bounce rate)",
                 explanation: "What Google values most."
@@ -920,6 +1036,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "9n65s8",
                 question: "SERP stands for:",
                 options: [
                     "Search Engine Ranking Protocol",
@@ -930,6 +1047,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "e1fd0w",
                 question: "SEO focuses on:",
                 options: [
                     "Paid advertising",
@@ -940,6 +1058,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "pyr5ds",
                 question: "SEM includes:",
                 options: [
                     "Only SEO",
@@ -950,6 +1069,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "u5zlc8",
                 question: "Quality Score affects:",
                 options: [
                     "Social media followers",
@@ -960,6 +1080,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "u32n1v",
                 question: "SEO results typically take:",
                 options: [
                     "Minutes",
@@ -970,6 +1091,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "ai0i4b",
                 question: "Backlinks are:",
                 options: [
                     "Links on your site to yourself",
@@ -980,6 +1102,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "f8t3m9",
                 question: "Mobile-first indexing means:",
                 options: [
                     "Desktop is priority",
@@ -990,6 +1113,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "kxz9dt",
                 question: "The strongest ranking factor is:",
                 options: [
                     "Website age",
@@ -1003,26 +1127,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "b7wwsn",
                 sentence: "SERP stands for Search Engine Results _______.",
                 answer: "Page",
                 hint: "What you see..."
             },
             {
+                id: "wim0ip",
                 sentence: "SEO focuses on _______ (unpaid) search results.",
                 answer: "organic",
                 hint: "Natural, not paid..."
             },
             {
+                id: "wk0r4j",
                 sentence: "SEM = SEO + _______.",
                 answer: "PPC",
                 hint: "Pay-Per-Click..."
             },
             {
+                id: "g7e9wd",
                 sentence: "_______ are links from other websites to your site.",
                 answer: "Backlinks",
                 hint: "External links..."
             },
             {
+                id: "ecfm99",
                 sentence: "Google uses _______-first indexing for rankings.",
                 answer: "mobile",
                 hint: "Smartphones..."
@@ -1030,6 +1159,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "yw5lnx",
             title: "SEO, SEM & SERP",
             content: `
                 <h3>Key Definitions</h3>
@@ -1068,52 +1198,62 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 12: HOTEL PMS (Unit 13) ==========
     hotelPMS: {
+        id: "3vl0ou",
         name: "Hotel PMS",
         icon: "fa-hotel",
         color: "#a855f7",
         
         flashcards: [
             {
+                id: "jin4l2",
                 question: "What is a Property Management System (PMS)?",
                 answer: "A PMS is a software platform that automates a hotel's daily operations.\n\nIt supports:\n• Daily hotel operations\n• Administrative and financial tasks\n• Guest experience management\n\nThe digital backbone of hotel operations.",
                 explanation: "Core hotel technology."
             },
             {
+                id: "ruqkbc",
                 question: "What factors influence PMS adoption?",
                 answer: "Factors affecting PMS adoption:\n\n• HOTEL SIZE: <20 rooms often without PMS; 100+ rooms nearly 100% adoption\n• OWNERSHIP: Chains/franchises usually have PMS; independents less likely\n• STAR RATING: 3+ stars higher adoption; 4-5 stars require PMS\n• OCCUPANCY: High occupancy increases need for PMS",
                 explanation: "Why some hotels have PMS."
             },
             {
+                id: "v4x9vy",
                 question: "What are the main PMS functionalities?",
                 answer: "Main PMS functionalities:\n\n• Reservation systems\n• Front-desk operations\n• Housekeeping\n• Customer data management (CRM)\n• Revenue management\n• Reports and analytics\n• Point of Sale (POS)\n• Back-office management",
                 explanation: "What PMS can do."
             },
             {
+                id: "4jrcf6",
                 question: "What are the mandatory PMS modules?",
                 answer: "Every PMS MUST include:\n\n1. RESERVATION SYSTEM:\n• Stores inventory and availability\n• Synchronizes dates and room status\n• Integrates with booking engine and channels\n\n2. FRONT-DESK OPERATIONS:\n• Manages reservation status\n• Check-in and check-out\n• Payment processing\n• Room status control",
                 explanation: "Essential modules."
             },
             {
+                id: "eisbx3",
                 question: "What does the Revenue Management module do?",
                 answer: "Revenue Management uses:\n\n• Historical booking data\n• Forecasting algorithms\n\nTo support:\n• Dynamic pricing\n• Occupancy optimization\n• Revenue maximization\n\nKey KPIs: Occupancy rate, ADR, RevPAR",
                 explanation: "Maximizing hotel revenue."
             },
             {
+                id: "mdjaky",
                 question: "What is ADR and RevPAR?",
                 answer: "ADR = Average Daily Rate\n• Average revenue per occupied room\n• Formula: Room Revenue / Rooms Sold\n\nRevPAR = Revenue Per Available Room\n• Revenue per ALL rooms (occupied + empty)\n• Formula: Room Revenue / Total Rooms Available\n\nOr: ADR × Occupancy Rate",
                 explanation: "Key hotel performance metrics."
             },
             {
+                id: "nyczpl",
                 question: "What does the POS module manage?",
                 answer: "POS (Point of Sale) manages transactions beyond accommodation:\n\n• Restaurants and cafés\n• Spa and gym services\n• In-room services\n• Minibar, TV, and Wi-Fi charges\n\nAll charges link to guest folio.",
                 explanation: "Non-room revenue tracking."
             },
             {
+                id: "7vx1bo",
                 question: "What does the Customer Data Management module do?",
                 answer: "Stores ALL guest data to build relationships during and after the stay:\n\n• Integrates with front desk + reservation system (derives guest info from them)\n• Should integrate with the hotel's existing CRM, if there is one\n• Supports marketing: measures guest experience through the stay and after\n• Powers PERSONALIZATION via membership and LOYALTY programs (especially important for chains and resorts)",
                 explanation: "The CRM side of the PMS."
             },
             {
+                id: "r23nc8",
                 question: "What is the future of PMS?",
                 answer: "Modern PMS developments:\n\n• Integration with hotel mobile applications\n• Remote check-in and digital ID upload\n• Mobile communication between guests and staff\n• Cloud-based systems\n• AI-powered features",
                 explanation: "Where PMS is heading."
@@ -1122,6 +1262,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "dy0qyp",
                 question: "PMS stands for:",
                 options: [
                     "Personal Management Software",
@@ -1132,6 +1273,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "t7b8kc",
                 question: "Hotels with 100+ rooms have PMS adoption rate of:",
                 options: [
                     "20%",
@@ -1142,6 +1284,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "8c4i17",
                 question: "Mandatory PMS modules include:",
                 options: [
                     "Only housekeeping",
@@ -1152,6 +1295,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "4nd21q",
                 question: "RevPAR stands for:",
                 options: [
                     "Revenue Per All Rooms",
@@ -1162,6 +1306,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "vkeik2",
                 question: "Revenue management uses:",
                 options: [
                     "Random pricing",
@@ -1172,6 +1317,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "t06lk0",
                 question: "POS module manages:",
                 options: [
                     "Only room bookings",
@@ -1182,6 +1328,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "aqyk3l",
                 question: "ADR measures:",
                 options: [
                     "Total hotel revenue",
@@ -1192,6 +1339,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "er7roe",
                 question: "Future PMS features include:",
                 options: [
                     "Only paper-based systems",
@@ -1205,26 +1353,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "u1izff",
                 sentence: "PMS stands for Property _______ System.",
                 answer: "Management",
                 hint: "Operating and controlling..."
             },
             {
+                id: "25elvi",
                 sentence: "_______ = Revenue Per Available Room.",
                 answer: "RevPAR",
                 hint: "Key hotel metric..."
             },
             {
+                id: "cj7f23",
                 sentence: "Hotels with 100+ rooms have nearly _______% PMS adoption.",
                 answer: "100",
                 hint: "Almost all..."
             },
             {
+                id: "veylrc",
                 sentence: "Revenue management uses historical data and _______ algorithms.",
                 answer: "forecasting",
                 hint: "Predicting the future..."
             },
             {
+                id: "5gyjeq",
                 sentence: "ADR stands for Average _______ Rate.",
                 answer: "Daily",
                 hint: "Per day..."
@@ -1232,6 +1385,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "65atkm",
             title: "Hotel Property Management System",
             content: `
                 <h3>What is PMS?</h3>
@@ -1267,57 +1421,68 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 13: E-BUSINESS SECURITY (Unit 14) ==========
     ebusinessSecurity: {
+        id: "51h9jw",
         name: "E-Business Security",
         icon: "fa-shield-alt",
         color: "#dc2626",
         
         flashcards: [
             {
+                id: "q1btv8",
                 question: "Why is security critical in E-Business?",
                 answer: "E-business depends on TRUST.\n\nSecurity is essential for:\n• Protecting customer information\n• Ensuring safe online transactions\n• Maintaining brand reputation\n• Complying with legal and industry standards",
                 explanation: "Trust is the foundation."
             },
             {
+                id: "khn2x0",
                 question: "What are the 4 fundamental principles of E-Commerce Security?",
                 answer: "Four principles:\n\n1. PRIVACY - Data accessed only by authorized parties\n2. INTEGRITY - Data remains unchanged during storage/transmission\n3. AUTHENTICATION - Both parties are verified as real\n4. NON-REPUDIATION - Neither party can deny completed transaction",
                 explanation: "The pillars of secure transactions."
             },
             {
+                id: "jm2qvu",
                 question: "What is Privacy in E-Commerce Security?",
                 answer: "Privacy ensures customer data is accessed only by authorized parties.\n\nProtection methods:\n• Antivirus software\n• Firewalls\n• Encryption\n• Data protection systems",
                 explanation: "Keeping data confidential."
             },
             {
+                id: "jfs9cs",
                 question: "What is Non-Repudiation?",
                 answer: "Non-repudiation means neither the buyer nor seller can DENY a completed transaction.\n\nAchieved through:\n• Digital signatures\n• Transaction logs\n• Certificates\n\nProvides legal proof of transaction.",
                 explanation: "No denying what happened."
             },
             {
+                id: "f3zruj",
                 question: "What are common E-Commerce cybersecurity risks?",
                 answer: "Common risks:\n\n• Data breaches\n• Hacking and malware\n• Phishing attacks\n• SQL injection\n• DDoS attacks\n• Credit card fraud",
                 explanation: "Threats to online business."
             },
             {
+                id: "6mjtvn",
                 question: "What makes a strong password?",
                 answer: "Strong passwords:\n\n• Include numbers and special characters\n• Combine uppercase and lowercase letters\n• Are unique for each platform\n• Are long (12+ characters recommended)\n• Avoid personal information",
                 explanation: "First line of defense."
             },
             {
+                id: "x7g61c",
                 question: "What are SSL Certificates and HTTPS?",
                 answer: "SSL Certificates:\n• Encrypt data between user and server\n• Convert HTTP into HTTPS\n• Show padlock icon in browser\n\nHTTPS = Secure communication\nGoogle confirmed HTTPS as a ranking signal.",
                 explanation: "Secure website communication."
             },
             {
+                id: "2ofsi2",
                 question: "What is PCI-DSS?",
                 answer: "PCI-DSS = Payment Card Industry Data Security Standard\n\nSecurity standard for businesses handling credit card data.\n\nRequires:\n• Firewalls\n• Strong passwords\n• Secure data storage\n• Antivirus protection\n• Encryption",
                 explanation: "Credit card security standard."
             },
             {
+                id: "8snim8",
                 question: "What should a secure hosting provider offer?",
                 answer: "A secure hosting provider offers:\n\n• Threat monitoring\n• Regular security upgrades\n• Fast issue resolution\n• Built-in security features\n• DDoS protection\n• Regular backups",
                 explanation: "Choosing secure infrastructure."
             },
             {
+                id: "2tlmx0",
                 question: "What are the 10 e-commerce security tips to protect a business?",
                 answer: "1. Suggest STRONG PASSWORDS (unique per login)\n2. Implement MULTILAYER security\n3. Use a FIREWALL (blocks DDoS, SQL injection)\n4. Use a PAYMENT PROVIDER — never store customer financial data on company servers\n5. Install an SSL certificate (HTTPS) — 64% of users leave a site on a 'Not secure' warning\n6. UPDATE software and hardware (patches fix vulnerabilities)\n7. Follow PCI-DSS requirements\n8. BACK UP data routinely\n9. Establish best practices — educate employees and customers\n10. Choose the right HOSTING provider",
                 explanation: "The complete 10-tip checklist from Unit 14."
@@ -1326,6 +1491,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "57e1of",
                 question: "The 4 security principles are Privacy, Integrity, Authentication, and:",
                 options: [
                     "Popularity",
@@ -1336,6 +1502,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "hm58rl",
                 question: "Non-repudiation means:",
                 options: [
                     "Anyone can access data",
@@ -1346,6 +1513,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "9nk5r0",
                 question: "HTTPS is created by:",
                 options: [
                     "Strong passwords",
@@ -1356,6 +1524,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "i72utx",
                 question: "PCI-DSS is a standard for:",
                 options: [
                     "Social media security",
@@ -1366,6 +1535,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "1jvhyl",
                 question: "Strong passwords should:",
                 options: [
                     "Be the same for all sites",
@@ -1376,6 +1546,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "4iebqm",
                 question: "Common cyber risks include all EXCEPT:",
                 options: [
                     "Phishing attacks",
@@ -1386,6 +1557,7 @@ const ebusinessM2 = {
                 correct: 2
             },
             {
+                id: "nkazwt",
                 question: "Integrity in security means:",
                 options: [
                     "Data is kept private",
@@ -1396,6 +1568,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "gua1gw",
                 question: "Firewalls protect against:",
                 options: [
                     "Good weather",
@@ -1409,26 +1582,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "u85zhd",
                 sentence: "The 4 security principles are Privacy, Integrity, Authentication, and _______-repudiation.",
                 answer: "Non",
                 hint: "Cannot deny..."
             },
             {
+                id: "8hbfcl",
                 sentence: "_______ certificates encrypt data and convert HTTP to HTTPS.",
                 answer: "SSL",
                 hint: "Secure Sockets Layer..."
             },
             {
+                id: "2ghosg",
                 sentence: "PCI-DSS is a security standard for handling _______ card data.",
                 answer: "credit",
                 hint: "Payment method..."
             },
             {
+                id: "nhqllg",
                 sentence: "_______ means data remains unchanged during storage and transmission.",
                 answer: "Integrity",
                 hint: "Completeness and accuracy..."
             },
             {
+                id: "h469f9",
                 sentence: "Strong passwords should be _______ for each platform.",
                 answer: "unique",
                 hint: "Different everywhere..."
@@ -1436,6 +1614,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "xrdh22",
             title: "E-Business Security",
             content: `
                 <h3>4 Security Principles</h3>
@@ -1471,52 +1650,62 @@ const ebusinessM2 = {
     
     // ========== CATEGORY 14: CHALLENGES & TRENDS (Unit 15) ==========
     challengesTrends: {
+        id: "9oh0jr",
         name: "Challenges & Trends",
         icon: "fa-rocket",
         color: "#0891b2",
         
         flashcards: [
             {
+                id: "1kapx8",
                 question: "What are the main technology challenges in hospitality e-business?",
                 answer: "Key challenges:\n\n• High technology implementation costs\n• Integration of legacy systems\n• Incompatibility with modern solutions\n• Limited scalability\n• Higher security vulnerabilities",
                 explanation: "Barriers to digital transformation."
             },
             {
+                id: "gb65lo",
                 question: "What are customer expectations in the digital era?",
                 answer: "Customers expect:\n\n• Personalized experiences\n• Fast and seamless digital interactions\n• Immediate responses\n• 24/7 availability\n• Consistent experience across channels",
                 explanation: "The demanding digital customer."
             },
             {
+                id: "5zk6xb",
                 question: "How does AI enhance marketing in hospitality?",
                 answer: "AI-Enhanced Marketing:\n\n• Micro-segmentation of customers\n• AI-generated marketing content\n• Real-time campaign optimization\n• Predictive analytics\n• Personalized recommendations",
                 explanation: "AI making marketing smarter."
             },
             {
+                id: "8h3az0",
                 question: "What is Hyper-Personalization?",
                 answer: "Hyper-personalization uses AI to tailor experiences:\n\n• AI-powered guest profiling\n• Personalized booking flows\n• Customized in-stay services\n• Recommendations based on behavior\n\nGoes beyond basic personalization.",
                 explanation: "Next-level customization."
             },
             {
+                id: "q107hk",
                 question: "Why is mobile optimization critical?",
                 answer: "Hospitality e-business is increasingly mobile-driven:\n\n• Growth of mobile bookings\n• Increase in last-minute reservations\n• Guests use phones for everything\n• Mobile-first indexing by Google\n\nMobile is not optional!",
                 explanation: "Mobile is essential."
             },
             {
+                id: "tdgcpf",
                 question: "What are the risks of overloading guests with technology?",
                 answer: "Excessive technology can harm guest experience:\n\n• Self-service kiosks everywhere\n• Multiple mandatory mobile apps\n• Complex smart-room controls\n• Technology fatigue\n\nBalance is needed!",
                 explanation: "Too much of a good thing."
             },
             {
+                id: "xylnlw",
                 question: "What is the 'Loss of Human Touch' concern?",
                 answer: "Over-automation creates emotional risks:\n\n• Reduced emotional hospitality\n• Lower guest satisfaction\n• Changing job roles\n• Loss of personal connection\n\nHospitality is about PEOPLE.",
                 explanation: "Keeping the human element."
             },
             {
+                id: "fmc288",
                 question: "What opportunities emerge from AI challenges?",
                 answer: "Challenges create opportunities:\n\n• Building trust through transparency\n• Re-humanizing hospitality using technology wisely\n• Creating new digital job roles\n• Modernizing outdated systems\n• Promoting fair and inclusive AI use",
                 explanation: "Finding the silver lining."
             },
             {
+                id: "fup959",
                 question: "What are the key e-business trends for hospitality?",
                 answer: "Key trends:\n\n• Automated customer service (chatbots, virtual concierges)\n• 24/7 multilingual support\n• Mobile optimization\n• Hyper-personalization\n• AI-driven operations\n• Balance of tech and human touch",
                 explanation: "Where the industry is heading."
@@ -1525,6 +1714,7 @@ const ebusinessM2 = {
         
         quiz: [
             {
+                id: "g1ytkm",
                 question: "Legacy system integration is a challenge because of:",
                 options: [
                     "Too many customers",
@@ -1535,6 +1725,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "xwaneg",
                 question: "Hyper-personalization uses:",
                 options: [
                     "No technology",
@@ -1545,6 +1736,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "dyva1m",
                 question: "Mobile optimization is critical because:",
                 options: [
                     "Nobody uses mobile",
@@ -1555,6 +1747,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "as7ue2",
                 question: "'Loss of human touch' refers to:",
                 options: [
                     "Physical illness",
@@ -1565,6 +1758,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "mjxelp",
                 question: "Digital era customers expect:",
                 options: [
                     "Slow responses",
@@ -1575,6 +1769,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "r9ax2p",
                 question: "Too much technology in hotels can cause:",
                 options: [
                     "Higher satisfaction",
@@ -1585,6 +1780,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "r0rvos",
                 question: "AI-enhanced marketing includes:",
                 options: [
                     "Only print ads",
@@ -1595,6 +1791,7 @@ const ebusinessM2 = {
                 correct: 1
             },
             {
+                id: "nypm5y",
                 question: "Opportunities from AI challenges include:",
                 options: [
                     "Ignoring problems",
@@ -1608,26 +1805,31 @@ const ebusinessM2 = {
         
         fillBlanks: [
             {
+                id: "gozv3w",
                 sentence: "_______-personalization uses AI to tailor individual guest experiences.",
                 answer: "Hyper",
                 hint: "Beyond normal..."
             },
             {
+                id: "yspd2z",
                 sentence: "Over-automation can lead to loss of _______ touch in hospitality.",
                 answer: "human",
                 hint: "Personal connection..."
             },
             {
+                id: "iqatak",
                 sentence: "_______ systems are older technologies that may be incompatible with modern solutions.",
                 answer: "Legacy",
                 hint: "Inherited from the past..."
             },
             {
+                id: "3emx0v",
                 sentence: "Digital era customers expect _______ and seamless interactions.",
                 answer: "fast",
                 hint: "Quick response..."
             },
             {
+                id: "avgy40",
                 sentence: "AI creates opportunities for new digital job _______.",
                 answer: "roles",
                 hint: "Positions or jobs..."
@@ -1635,6 +1837,7 @@ const ebusinessM2 = {
         ],
         
         learn: {
+            id: "lehll8",
             title: "E-Business Challenges & Trends",
             content: `
                 <h3>Key Challenges</h3>

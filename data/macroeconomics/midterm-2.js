@@ -12,49 +12,60 @@
 
 const macroeconomicsM2 = {
   labourMarket: {
+    id: "kdh2gq",
     name: 'The Labour Market & Natural Rate',
     icon: 'fa-people-group',
     color: '#f59e0b',
 
     flashcards: [
       {
+        id: "e33x4n",
         question: 'Why does the medium-run analysis start with the labour market?',
         answer: 'In the medium run, higher output → higher employment → lower unemployment → higher wages → higher production costs → higher prices. The unemployment rate is the key variable that links output Y and the price level P, and it is determined on the labour market.'
       },
       {
+        id: "75atqe",
         question: 'What are the participation rate and the unemployment rate?',
         answer: 'Participation rate = labour force / working-age population.\nUnemployment rate \\( u = \\dfrac{U}{L} \\) = unemployed / labour force.',
         explanation: 'Discouraged workers leave the labour force, which lowers the measured participation rate.'
       },
       {
+        id: "hnuto7",
         question: 'What is the wage-setting (WS) relation?',
         answer: 'The nominal wage depends on the expected price level, the unemployment rate and a catch-all z:\n\\( W = P^e\\, F(u, z) \\)\n• higher expected prices \\(P^e\\) → higher wages\n• higher unemployment u → LOWER wages (weaker bargaining power)\n• higher z (benefits, protection, minimum wage) → higher wages'
       },
       {
+        id: "j65z4u",
         question: 'Why do wages depend on the EXPECTED price level?',
         answer: 'Because workers and firms care about the REAL wage W/P, and wages are negotiated for a future period. If a higher price level is expected, workers demand higher nominal wages and firms can grant them without losing profitability.'
       },
       {
+        id: "4f75xw",
         question: 'What are efficiency wages?',
         answer: 'Wages paid ABOVE the reservation wage to reduce turnover and raise productivity. The reservation wage is the wage that makes a worker indifferent between working and being unemployed. Firms pay more than this to keep and motivate workers.'
       },
       {
+        id: "e2zlvo",
         question: 'What is the price-setting (PS) relation?',
         answer: 'With a markup μ over marginal cost (one worker produces one unit, so marginal cost = W):\n\\( P = (1 + \\mu)\\,W \\quad\\Rightarrow\\quad \\dfrac{W}{P} = \\dfrac{1}{1+\\mu} \\)\nA higher markup (more monopoly power) lowers the real wage.'
       },
       {
+        id: "329v7x",
         question: 'How is the natural rate of unemployment determined?',
         answer: 'Set \\(P^e = P\\) so the WS real wage equals the PS real wage:\n\\( F(u_n, z) = \\dfrac{1}{1+\\mu} \\)\nThe natural rate \\(u_n\\) is the unemployment rate consistent with both relations — determined by the STRUCTURE of the labour market (z) and the product market (μ).'
       },
       {
+        id: "t8lvdo",
         question: 'Using F = 1 − u + z, what is the natural rate formula?',
         answer: 'From \\( 1 - u_n + z = \\dfrac{1}{1+\\mu} \\):\n\\( u_n = 1 - \\dfrac{1}{1+\\mu} + z \\)\nA higher markup μ or higher benefits z RAISES the natural rate of unemployment.'
       },
       {
+        id: "c6hhg4",
         question: 'What raises the natural rate of unemployment?',
         answer: '• An increase in the markup μ (more market power, less product-market competition).\n• An increase in z — higher unemployment benefits, stronger employment protection, a higher minimum wage (less labour-market flexibility).'
       },
       {
+        id: "o0cwne",
         question: 'What is the natural level of output?',
         answer: 'The output the economy produces when unemployment equals the natural rate. With \\(Y = N\\) and \\(N = L(1 - u_n)\\):\n\\( Y_n = L\\,(1 - u_n) \\)\nIn the short run output fluctuates AROUND this natural level.'
       }
@@ -62,46 +73,55 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "8laqty",
         question: 'The wage-setting relation W = Pᵉ·F(u, z) says wages rise when:',
         options: ['Unemployment rises', 'The expected price level rises', 'The markup rises', 'Output falls'],
         correct: 1
       },
       {
+        id: "e3unck",
         question: 'In the wage-setting relation, a higher unemployment rate leads to:',
         options: ['Higher wages', 'Lower wages', 'Unchanged wages', 'Higher prices'],
         correct: 1
       },
       {
+        id: "hw2gwf",
         question: 'The reservation wage is the wage that makes a worker:',
         options: ['Maximally productive', 'Indifferent between working and being unemployed', 'Quit immediately', 'Accept any job'],
         correct: 1
       },
       {
+        id: "ab2s1k",
         question: 'The price-setting relation P = (1 + μ)W implies a real wage of:',
         options: ['1 + μ', '1/(1 + μ)', 'μ', 'W − μ'],
         correct: 1
       },
       {
+        id: "1u2kcf",
         question: 'If the markup μ = 5%, the price-setting real wage W/P is about:',
         options: ['1.05', '0.952', '0.05', '5'],
         correct: 1
       },
       {
+        id: "f9q5y3",
         question: 'With W/P = 0.952 and z = 0, the natural rate of unemployment is about:',
         options: ['9.5%', '4.8%', '0.95%', '52%'],
         correct: 1
       },
       {
+        id: "qq5uuj",
         question: 'An increase in unemployment benefits (z) will:',
         options: ['Lower the natural rate', 'Raise the natural rate', 'Not affect the natural rate', 'Raise the markup'],
         correct: 1
       },
       {
+        id: "2bfnw1",
         question: 'In the medium run, the natural rate of unemployment is determined by:',
         options: ['Aggregate demand', 'The structure of the labour and product markets (z and μ)', 'The money supply', 'Net exports'],
         correct: 1
       },
       {
+        id: "68kkky",
         question: 'The natural level of output is the output when:',
         options: ['Prices are zero', 'Unemployment equals the natural rate', 'Net exports are zero', 'The budget is balanced'],
         correct: 1
@@ -109,17 +129,18 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The wage-setting relation is W = Pᵉ·F(u, z), where wages fall as _______ rises.', answer: 'unemployment' },
-      { sentence: 'Wages depend on the _______ price level because wages are set for the future.', answer: 'expected' },
-      { sentence: 'A wage paid above the reservation wage to cut turnover is an _______ wage.', answer: 'efficiency' },
-      { sentence: 'The price-setting relation is P = (1 + μ)W, where μ is the _______.', answer: 'markup' },
-      { sentence: 'The price-setting real wage equals 1 divided by (1 + _______).', answer: 'μ' },
-      { sentence: 'A higher markup _______ the natural rate of unemployment.', answer: 'raises' },
-      { sentence: 'The natural rate is determined by the _______ of the labour and product markets.', answer: 'structure' },
-      { sentence: 'The natural level of output corresponds to the natural rate of _______.', answer: 'unemployment' }
+      { id: "x1gynf", sentence: 'The wage-setting relation is W = Pᵉ·F(u, z), where wages fall as _______ rises.', answer: 'unemployment' },
+      { id: "pid653", sentence: 'Wages depend on the _______ price level because wages are set for the future.', answer: 'expected' },
+      { id: "xkxxzl", sentence: 'A wage paid above the reservation wage to cut turnover is an _______ wage.', answer: 'efficiency' },
+      { id: "731g3p", sentence: 'The price-setting relation is P = (1 + μ)W, where μ is the _______.', answer: 'markup' },
+      { id: "882j3w", sentence: 'The price-setting real wage equals 1 divided by (1 + _______).', answer: 'μ' },
+      { id: "utybtg", sentence: 'A higher markup _______ the natural rate of unemployment.', answer: 'raises' },
+      { id: "pg7y6l", sentence: 'The natural rate is determined by the _______ of the labour and product markets.', answer: 'structure' },
+      { id: "ylmszg", sentence: 'The natural level of output corresponds to the natural rate of _______.', answer: 'unemployment' }
     ],
 
     learn: {
+      id: "mfukr5",
       content:
         '<h3>Why the medium run starts here</h3>' +
         '<p>The IS-LM model rested on one big assumption: prices are fixed. Over a few quarters that is fine, but it cannot last. Trace the chain: higher output needs more workers → unemployment falls → workers gain bargaining power → wages rise → production costs rise → firms raise prices. So once we let prices move, output and the price level become linked — and the hinge that connects them is the <strong>unemployment rate</strong>. That is why, before we can draw the AS-AD model, we must understand how the labour market sets wages, prices and unemployment. Two relations do all the work.</p>' +
@@ -165,40 +186,49 @@ const macroeconomicsM2 = {
   },
 
   mediumRun: {
+    id: "i0us2k",
     name: 'The Medium Run: AS-AD',
     icon: 'fa-arrows-up-down',
     color: '#fbbf24',
 
     flashcards: [
       {
+        id: "e87x0s",
         question: 'What is the AS-AD model?',
         answer: 'The standard framework for analysing output Y and the price level P in the short and medium run. The Aggregate Supply (AS) curve comes from the labour market; the Aggregate Demand (AD) curve comes from the IS-LM model.'
       },
       {
+        id: "8aeehm",
         question: 'How is the AS curve derived, and why does it slope up?',
         answer: 'From the labour-market relations:\n\\( P = P^e (1+\\mu)\\,F\\!\\left(1 - \\dfrac{Y}{L}, z\\right) \\)\nIt slopes UP (positive P–Y relation): higher Y → lower unemployment → higher wages → higher costs → higher prices.'
       },
       {
+        id: "xj6595",
         question: 'What shifts the AS curve?',
         answer: 'Changes in the expected price level \\(P^e\\), the markup \\(\\mu\\), or the catch-all \\(z\\). In particular, a rise in \\(P^e\\) shifts AS up.'
       },
       {
+        id: "9jv2ma",
         question: 'How is the AD curve derived, and why does it slope down?',
         answer: 'From the IS-LM model. A higher price level reduces the real money supply \\(M/P\\) → raises the interest rate → lowers investment and demand → lowers output. So the AD relation \\( Y = Y\\!\\left(\\dfrac{M}{P}, G, T\\right) \\) is DOWNWARD sloping in P.'
       },
       {
+        id: "3q40sb",
         question: 'What shifts the AD curve?',
         answer: 'Anything (other than P) that shifts IS or LM: a change in the money supply M, government spending G, or taxes T. Expansionary fiscal or monetary policy shifts AD to the right.'
       },
       {
+        id: "65srkx",
         question: 'What is the medium-run (natural) equilibrium?',
         answer: 'When \\(P = P^e\\), unemployment equals the natural rate \\(u_n\\) and output equals the natural level \\(Y_n\\). The economy is in medium-run equilibrium; the price level has fully adjusted to expectations.'
       },
       {
+        id: "z6lwu8",
         question: 'What happens when output is above the natural level (Y > Yₙ)?',
         answer: 'Low unemployment pushes wages up, so prices rise above the expected level: \\(P > P^e\\). Expectations then adjust upward, shifting AS up, and output returns toward \\(Y_n\\). (Symmetrically, \\(Y < Y_n \\Rightarrow P < P^e\\).)'
       },
       {
+        id: "buizqu",
         question: 'In the short run vs. the medium run, what determines output?',
         answer: 'SHORT run: output is determined by aggregate demand (AD) and can differ from \\(Y_n\\).\nMEDIUM run: output returns to the natural level \\(Y_n\\), which is set by supply-side structure; demand affects only the price level.'
       }
@@ -206,46 +236,55 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "by5z84",
         question: 'The AS curve is derived from equilibrium in the:',
         options: ['Money market', 'Goods market', 'Labour market', 'Bond market'],
         correct: 2
       },
       {
+        id: "lyyrqy",
         question: 'The AS curve slopes upward because higher output leads to:',
         options: ['Lower wages and prices', 'Lower unemployment, higher wages and prices', 'A lower money supply', 'Higher taxes'],
         correct: 1
       },
       {
+        id: "g9q5y3",
         question: 'The AD curve is derived from the:',
         options: ['Labour market', 'IS-LM model', 'Production function', 'Phillips curve'],
         correct: 1
       },
       {
+        id: "ehdl2s",
         question: 'The AD curve slopes downward because a higher price level:',
         options: ['Raises the real money supply', 'Reduces M/P, raises i and lowers demand', 'Raises government spending', 'Lowers the markup'],
         correct: 1
       },
       {
+        id: "mec91b",
         question: 'In medium-run equilibrium:',
         options: ['P > Pᵉ', 'P = Pᵉ and Y = Yₙ', 'Y > Yₙ', 'Unemployment is zero'],
         correct: 1
       },
       {
+        id: "o8l71p",
         question: 'If output is above the natural level (Y > Yₙ), then:',
         options: ['P < Pᵉ', 'P > Pᵉ', 'Prices do not change', 'Unemployment rises'],
         correct: 1
       },
       {
+        id: "ncigxa",
         question: 'An increase in the money supply shifts the AD curve:',
         options: ['Left', 'Right', 'It does not move', 'Vertical'],
         correct: 1
       },
       {
+        id: "wi1o3n",
         question: 'In the medium run, aggregate demand affects mainly the:',
         options: ['Natural level of output', 'Price level (output returns to Yₙ)', 'Markup', 'Labour force'],
         correct: 1
       },
       {
+        id: "5gijqe",
         question: 'A rise in the expected price level shifts the AS curve:',
         options: ['Down', 'Up', 'It does not move', 'Right only'],
         correct: 1
@@ -253,17 +292,18 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The AS curve is derived from equilibrium in the _______ market.', answer: 'labour' },
-      { sentence: 'The AS curve slopes _______ in the (Y, P) diagram.', answer: 'upward' },
-      { sentence: 'The AD curve is derived from the _______ model.', answer: 'IS-LM' },
-      { sentence: 'A higher price level reduces the real money supply M over _______.', answer: 'P' },
-      { sentence: 'In medium-run equilibrium, the actual price level equals the _______ price level.', answer: 'expected' },
-      { sentence: 'When Y exceeds Yₙ, the price level rises above the _______ level.', answer: 'expected' },
-      { sentence: 'An increase in the money supply shifts the AD curve to the _______.', answer: 'right' },
-      { sentence: 'In the medium run, output returns to its _______ level.', answer: 'natural' }
+      { id: "xgd40y", sentence: 'The AS curve is derived from equilibrium in the _______ market.', answer: 'labour' },
+      { id: "rvwslt", sentence: 'The AS curve slopes _______ in the (Y, P) diagram.', answer: 'upward' },
+      { id: "woe9jj", sentence: 'The AD curve is derived from the _______ model.', answer: 'IS-LM' },
+      { id: "1tpwbz", sentence: 'A higher price level reduces the real money supply M over _______.', answer: 'P' },
+      { id: "izy4p0", sentence: 'In medium-run equilibrium, the actual price level equals the _______ price level.', answer: 'expected' },
+      { id: "jk0o9g", sentence: 'When Y exceeds Yₙ, the price level rises above the _______ level.', answer: 'expected' },
+      { id: "4xjzmw", sentence: 'An increase in the money supply shifts the AD curve to the _______.', answer: 'right' },
+      { id: "hlyi7a", sentence: 'In the medium run, output returns to its _______ level.', answer: 'natural' }
     ],
 
     learn: {
+      id: "29skds",
       content:
         '<h3>The complete short-and-medium-run picture</h3>' +
         '<p>We now have both halves of the economy: the <strong>demand</strong> side (goods + money markets → IS-LM) and the <strong>supply</strong> side (the labour market → wages and prices). The <strong>AS-AD model</strong> combines them in a diagram of output \\(Y\\) against the price level \\(P\\), and it is the standard framework for analysing how \\(Y\\) and \\(P\\) move in the short and medium run. The whole story is the interaction of two curves.</p>' +
@@ -300,48 +340,59 @@ const macroeconomicsM2 = {
   },
 
   longRun: {
+    id: "5kczfu",
     name: 'The Long Run: Growth',
     icon: 'fa-seedling',
     color: '#f59e0b',
 
     flashcards: [
       {
+        id: "spmxk6",
         question: 'What is the difference between the short/medium run and the long run?',
         answer: 'The short and medium run are about output FLUCTUATIONS (business cycles around trend). The long run is about output GROWTH — the steady, decades-long rise in aggregate output and living standards.'
       },
       {
+        id: "zf5atl",
         question: 'How do we compare standards of living across countries?',
         answer: 'By GDP per capita, ideally adjusted for purchasing power: GDP per capita at PPP (purchasing power parity), because prices differ across countries. What matters for welfare is how many goods income can buy.'
       },
       {
+        id: "158ewg",
         question: 'What is the aggregate production function?',
         answer: '\\( Y = F(K, N) \\), where K = capital (machines, plants, buildings) and N = labour. It shows how much output is produced from given capital and labour.'
       },
       {
+        id: "gtu25q",
         question: 'What are the key properties of the production function?',
         answer: '• Constant returns to scale: \\( xY = F(xK, xN) \\).\n• Decreasing (diminishing) returns to capital.\n• Decreasing (diminishing) returns to labour.'
       },
       {
+        id: "99p7e0",
         question: 'What does output per worker depend on?',
         answer: 'Setting \\(x = 1/N\\): \\( \\dfrac{Y}{N} = F\\!\\left(\\dfrac{K}{N}, 1\\right) \\). Output per worker rises with capital per worker (K/N), but by smaller and smaller amounts — diminishing returns to capital.'
       },
       {
+        id: "f6unpk",
         question: 'What is the central message of the Solow growth model?',
         answer: 'Capital accumulation is driven by saving (\\(I = sY\\); capital evolves as \\(K_{t+1} = (1-\\delta)K_t + I_t\\)). A higher saving rate raises the LEVEL of output per worker, but because of diminishing returns, capital accumulation ALONE cannot sustain growth — the long-run growth rate of Y/N from capital alone is zero.'
       },
       {
+        id: "prbyqz",
         question: 'What is required for SUSTAINED long-run growth?',
         answer: 'Sustained technological progress. Adding the state of technology A to the production function \\( Y = F(K, N, A) \\), a higher A raises output for given K and N. Continuous output growth requires continuous technological progress.'
       },
       {
+        id: "i55u73",
         question: 'What determines the rate of technological progress?',
         answer: 'Investment in R&D, which depends on:\n• the FERTILITY of research (basic vs. applied research, education, entrepreneurial culture)\n• the APPROPRIABILITY of results (how much profit a firm can capture — e.g. patent protection).'
       },
       {
+        id: "emrbxi",
         question: 'What is human capital, and why does it matter for growth?',
         answer: 'Human capital is the knowledge and skills of workers: \\( \\dfrac{Y}{N} = f\\!\\left(\\dfrac{K}{N}, \\dfrac{H}{N}\\right) \\). Output per worker depends on investment in BOTH physical capital (saving) and human capital (spending on education).'
       },
       {
+        id: "09cr4q",
         question: 'What is convergence?',
         answer: 'The tendency of poorer countries (lower initial output per capita) to grow faster and catch up to richer ones. It holds among similar (e.g. OECD) economies but is NOT unconditional — many countries have not converged.'
       }
@@ -349,46 +400,55 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "2x2pj5",
         question: 'The long run is concerned with output:',
         options: ['Fluctuations', 'Growth', 'Equilibrium prices', 'The money supply'],
         correct: 1
       },
       {
+        id: "b3v77f",
         question: 'The best cross-country measure of living standards is:',
         options: ['Nominal GDP', 'GDP per capita at PPP', 'Total exports', 'The markup'],
         correct: 1
       },
       {
+        id: "fnvixk",
         question: 'The aggregate production function Y = F(K, N) exhibits diminishing returns to:',
         options: ['Scale', 'Capital (and to labour)', 'Technology', 'Money'],
         correct: 1
       },
       {
+        id: "0wb1xm",
         question: 'Constant returns to scale means:',
         options: ['xY = F(xK, xN)', 'Y = F(K) only', 'Output is fixed', 'Y = K + N'],
         correct: 0
       },
       {
+        id: "by8nyt",
         question: 'In the Solow model, capital accumulation is ultimately financed by:',
         options: ['Government spending', 'Saving', 'Imports', 'The markup'],
         correct: 1
       },
       {
+        id: "ivmffn",
         question: 'Because of diminishing returns, capital accumulation ALONE produces a long-run growth rate of Y/N equal to:',
         options: ['The saving rate', 'Zero', 'The depreciation rate', 'Infinity'],
         correct: 1
       },
       {
+        id: "0eu9af",
         question: 'Sustained long-run growth requires sustained:',
         options: ['Capital accumulation', 'Technological progress', 'Inflation', 'Trade deficits'],
         correct: 1
       },
       {
+        id: "2dfwno",
         question: 'The amount of profit a firm can capture from a new idea is called its:',
         options: ['Fertility', 'Appropriability', 'Markup', 'Depreciation'],
         correct: 1
       },
       {
+        id: "37f4qx",
         question: 'The tendency of poorer countries to grow faster and catch up is called:',
         options: ['Divergence', 'Convergence', 'Depreciation', 'Stagnation'],
         correct: 1
@@ -396,17 +456,18 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The long run is about output growth, not output _______.', answer: 'fluctuations' },
-      { sentence: 'Living standards are best compared with GDP per capita at _______.', answer: 'PPP' },
-      { sentence: 'The production function Y = F(K, N) has diminishing returns to _______.', answer: 'capital' },
-      { sentence: 'Constant returns to scale: xY = F(xK, x_______).', answer: 'N' },
-      { sentence: 'In the Solow model, investment is financed by _______.', answer: 'saving' },
-      { sentence: 'Capital accumulation alone cannot _______ long-run growth.', answer: 'sustain' },
-      { sentence: 'Sustained growth requires sustained technological _______.', answer: 'progress' },
-      { sentence: 'Patent protection raises the _______ of research results.', answer: 'appropriability' }
+      { id: "p6a3gr", sentence: 'The long run is about output growth, not output _______.', answer: 'fluctuations' },
+      { id: "pqd0fa", sentence: 'Living standards are best compared with GDP per capita at _______.', answer: 'PPP' },
+      { id: "jx80uv", sentence: 'The production function Y = F(K, N) has diminishing returns to _______.', answer: 'capital' },
+      { id: "adpnp9", sentence: 'Constant returns to scale: xY = F(xK, x_______).', answer: 'N' },
+      { id: "38xafu", sentence: 'In the Solow model, investment is financed by _______.', answer: 'saving' },
+      { id: "il9270", sentence: 'Capital accumulation alone cannot _______ long-run growth.', answer: 'sustain' },
+      { id: "wo427j", sentence: 'Sustained growth requires sustained technological _______.', answer: 'progress' },
+      { id: "8v22nv", sentence: 'Patent protection raises the _______ of research results.', answer: 'appropriability' }
     ],
 
     learn: {
+      id: "7k1hse",
       content:
         '<h3>From fluctuations to growth: the biggest question in economics</h3>' +
         '<p>The short and medium run are about <em>fluctuations</em> — output bobbing up and down around its natural level. Zoom out to decades, though, and those wiggles vanish next to the dominant feature: the relentless, compounding rise of output. The long run asks the questions that matter most for human welfare: <em>why are some countries rich and others poor? What makes an economy grow? Why do some grow fast and others stagnate?</em></p>' +
@@ -454,37 +515,45 @@ const macroeconomicsM2 = {
   },
 
   expectations: {
+    id: "eawbpg",
     name: 'Expectations',
     icon: 'fa-lightbulb',
     color: '#fbbf24',
 
     flashcards: [
       {
+        id: "o45w5d",
         question: 'Why do expectations matter in macroeconomics?',
         answer: 'Many decisions of consumers, managers and financial investors depend not only on current conditions but on EXPECTATIONS of the future. To analyse their effects we need the distinction between nominal and real interest rates and the idea of expected present discounted value.'
       },
       {
+        id: "fdq64u",
         question: 'How are the nominal and real interest rates related (the Fisher relation)?',
         answer: 'The real rate is the nominal rate minus EXPECTED inflation:\n\\( r_t \\approx i_t - \\pi^e_{t+1} \\)\nExactly: \\( 1 + r_t = \\dfrac{1 + i_t}{1 + \\pi^e_{t+1}} \\).',
         explanation: 'Example: nominal 4%, expected inflation 2% → real ≈ 2%.'
       },
       {
+        id: "nuz3hf",
         question: 'Why is the real interest rate the one that matters for decisions?',
         answer: 'From a saver’s view: giving up goods today to get goods in the future, the real rate measures the extra GOODS earned, not extra money. Spending and investment decisions depend on the real (purchasing-power) cost of borrowing.'
       },
       {
+        id: "4tyj5r",
         question: 'What is expected present discounted value?',
         answer: 'The value today of an expected future sequence of payments, obtained by DISCOUNTING each future payment. A payment of \\(z\\) one year ahead is worth \\( \\dfrac{z}{1 + r} \\) today; further-off payments are discounted more heavily.'
       },
       {
+        id: "nf998x",
         question: 'How do expectations enter the IS relation?',
         answer: 'Consumption and investment depend on EXPECTED future income, profits and interest rates, not just current ones. Replacing the current interest rate with the real rate, the IS relation becomes \\( Y = C(Y - T) + I(Y, r) + G \\), and expectations of the future shift it.'
       },
       {
+        id: "x3bq5g",
         question: 'How can a change in expectations affect today’s economy?',
         answer: 'Optimistic expectations (higher expected future income/profits, lower expected future rates) raise current consumption and investment → shift IS right → raise output today. Pessimism does the reverse. Expectations are themselves a source of demand fluctuations.'
       },
       {
+        id: "gnwbgr",
         question: 'Why does monetary policy work partly through expectations?',
         answer: 'Spending depends on the EXPECTED future path of real interest rates, not just today’s rate. A central bank that credibly signals lower rates for longer can stimulate demand more than a one-off cut — expectations amplify (or mute) policy.'
       }
@@ -492,36 +561,43 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "t2oqo1",
         question: 'The real interest rate approximately equals the nominal rate minus:',
         options: ['The tax rate', 'Expected inflation', 'The growth rate', 'The markup'],
         correct: 1
       },
       {
+        id: "fq0y5b",
         question: 'If the nominal interest rate is 4% and expected inflation is 2%, the real rate is about:',
         options: ['6%', '2%', '8%', '0%'],
         correct: 1
       },
       {
+        id: "doobaa",
         question: 'Spending and investment decisions depend mainly on the:',
         options: ['Nominal interest rate', 'Real interest rate', 'Tax rate', 'Exchange rate'],
         correct: 1
       },
       {
+        id: "5ypjep",
         question: 'A payment of z received one year from now is worth today:',
         options: ['z × (1 + r)', 'z / (1 + r)', 'z − r', 'z'],
         correct: 1
       },
       {
+        id: "snwlox",
         question: 'Expected present discounted value is found by _______ future payments.',
         options: ['Adding up', 'Discounting', 'Taxing', 'Doubling'],
         correct: 1
       },
       {
+        id: "m82tv1",
         question: 'More optimistic expectations about the future tend to:',
         options: ['Shift the IS curve left', 'Shift the IS curve right (raise current output)', 'Lower the money supply', 'Raise the natural rate'],
         correct: 1
       },
       {
+        id: "epb2v7",
         question: 'Monetary policy affects demand partly through expectations of the future path of:',
         options: ['Taxes', 'Real interest rates', 'The markup', 'Net exports'],
         correct: 1
@@ -529,16 +605,17 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The real interest rate equals the nominal rate minus _______ inflation.', answer: 'expected' },
-      { sentence: 'With a 4% nominal rate and 2% expected inflation, the real rate is about _______ percent.', answer: '2' },
-      { sentence: 'Spending decisions depend mainly on the _______ interest rate.', answer: 'real' },
-      { sentence: 'A payment z one year ahead is worth z divided by (1 + _______) today.', answer: 'r' },
-      { sentence: 'Present value is computed by _______ future payments.', answer: 'discounting' },
-      { sentence: 'Optimistic expectations shift the IS curve to the _______.', answer: 'right' },
-      { sentence: 'Monetary policy works partly through expectations of future _______ rates.', answer: 'interest' }
+      { id: "ji3hcx", sentence: 'The real interest rate equals the nominal rate minus _______ inflation.', answer: 'expected' },
+      { id: "fnwqrd", sentence: 'With a 4% nominal rate and 2% expected inflation, the real rate is about _______ percent.', answer: '2' },
+      { id: "x7lp9e", sentence: 'Spending decisions depend mainly on the _______ interest rate.', answer: 'real' },
+      { id: "9z8r66", sentence: 'A payment z one year ahead is worth z divided by (1 + _______) today.', answer: 'r' },
+      { id: "xju5bd", sentence: 'Present value is computed by _______ future payments.', answer: 'discounting' },
+      { id: "jfao5k", sentence: 'Optimistic expectations shift the IS curve to the _______.', answer: 'right' },
+      { id: "ngeliq", sentence: 'Monetary policy works partly through expectations of future _______ rates.', answer: 'interest' }
     ],
 
     learn: {
+      id: "5zpulx",
       content:
         '<h3>The future shapes the present</h3>' +
         '<p>Almost every important economic decision is forward-looking. A family deciding how much to consume thinks about its <em>future</em> income; a firm deciding whether to invest weighs <em>expected future</em> profits; an investor pricing an asset is buying a stream of <em>future</em> payments. So expectations are not a footnote — they are a driving force. To handle them we need two precise tools: the distinction between nominal and real interest rates, and the idea of present discounted value.</p>' +
@@ -571,52 +648,64 @@ const macroeconomicsM2 = {
   },
 
   openEconomyGoods: {
+    id: "7wlkdt",
     name: 'Open Economy: Trade & Exchange Rates',
     icon: 'fa-arrow-right-arrow-left',
     color: '#f59e0b',
 
     flashcards: [
       {
+        id: "rrfpd3",
         question: 'How is the openness of an economy measured?',
         answer: 'By the share of foreign trade in GDP:\n• Exports/GDP (goal: high)\n• Imports/GDP (goal: low)\n• (EX − IM)/GDP — the trade balance (goal: positive and growing)\n• EX/IM — coverage of imports by exports (goal: high).'
       },
       {
+        id: "zo1e3b",
         question: 'What is the import function, and the marginal propensity to import?',
         answer: 'Imports rise with domestic output:\n\\( IM = IM_0 + m\\,Y \\)\nwhere \\(IM_0\\) is autonomous import and \\(m\\) (0 < m < 1) is the marginal propensity to import — the extra import per unit of extra output.'
       },
       {
+        id: "mkz7w9",
         question: 'What is the open-economy multiplier, and how does importing change it?',
         answer: 'With a tax rate t and marginal propensity to import m:\n\\( \\text{multiplier} = \\dfrac{1}{1 - \\beta(1 - t) + m} \\)\nImports REDUCE the multiplier (the +m in the denominator). The smaller m, the larger the multiplier.'
       },
       {
+        id: "z797pr",
         question: 'What is the difference between domestic demand for goods and demand for domestic goods?',
         answer: 'Domestic demand for goods = \\( C + I + G \\) (what residents want).\nDemand for domestic goods = \\( C + I + G - IM + X \\) — subtract imports (foreign goods inside C+I+G) and add exports. The difference is net exports \\( NX = X - IM \\).'
       },
       {
+        id: "qa4ynj",
         question: 'What is the goods-market equilibrium condition in an open economy?',
         answer: 'Output equals the demand for domestic goods:\n\\( Y = C + I + G + X - IM = (C + I + G) + NX \\).\nEquivalently \\( Y - (C + I + G) = X - IM \\): any gap between output and domestic spending is the trade balance.'
       },
       {
+        id: "39da3x",
         question: 'What is the nominal exchange rate, and what are appreciation/depreciation?',
         answer: 'The nominal exchange rate is the price of one currency in terms of another. An APPRECIATION is a rise in a currency’s value relative to others; a DEPRECIATION is a fall. Both result from supply and demand on the foreign-exchange market.'
       },
       {
+        id: "fkjysf",
         question: 'How do devaluation and revaluation differ from depreciation and appreciation?',
         answer: 'Depreciation/appreciation are MARKET-driven changes in a (flexible) exchange rate. Devaluation/revaluation are changes made by the MONETARY AUTHORITIES (in a fixed-rate regime): devaluation lowers the currency’s value, revaluation raises it.'
       },
       {
+        id: "k4jwrt",
         question: 'What is the real exchange rate?',
         answer: 'The price of domestic goods in terms of foreign goods (it adjusts the nominal rate for price levels). A RISE in the real exchange rate means domestic goods are relatively more expensive (foreign goods cheaper) → less competitive → net exports fall.'
       },
       {
+        id: "heea6r",
         question: 'What determines exports and imports?',
         answer: '• Exports rise with foreign output and with a real DEPRECIATION (domestic goods cheaper abroad).\n• Imports rise with domestic output and with a real APPRECIATION (foreign goods cheaper).\nSo \\(NX\\) falls when domestic output or the real exchange rate rises.'
       },
       {
+        id: "bm3c7b",
         question: 'What is the Marshall-Lerner condition?',
         answer: 'A real DEPRECIATION improves net exports provided the sum of the price elasticities of export and import demand exceeds 1. If the condition holds, a fall in the real exchange rate (cheaper domestic goods) raises NX.'
       },
       {
+        id: "issipu",
         question: 'How does an open economy change the effect of fiscal policy on net exports?',
         answer: 'An increase in government spending raises output, which raises imports → net exports FALL (a trade deficit). Fiscal expansion in an open economy partly leaks abroad through higher imports.'
       }
@@ -624,46 +713,55 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "rinri2",
         question: 'The marginal propensity to import (m) is the extra import per unit of extra:',
         options: ['Taxes', 'Output (Y)', 'Exports', 'Government spending'],
         correct: 1
       },
       {
+        id: "gdrpsv",
         question: 'In the open-economy multiplier 1/(1 − β(1−t) + m), a higher m makes the multiplier:',
         options: ['Larger', 'Smaller', 'Unchanged', 'Negative'],
         correct: 1
       },
       {
+        id: "pdnbad",
         question: 'With β = 0.8, t = 0.1 and m = 0.12, the multiplier equals:',
         options: ['3.57', '2.5', '5', '1.0'],
         correct: 1
       },
       {
+        id: "a8e1i6",
         question: 'Demand for domestic goods differs from domestic demand for goods by:',
         options: ['Taxes', 'Net exports (X − IM)', 'The markup', 'Government spending'],
         correct: 1
       },
       {
+        id: "sbrdhf",
         question: 'A depreciation of the domestic currency is:',
         options: ['A rise in its value set by authorities', 'A fall in its value driven by the market', 'A rise driven by the market', 'A fall set by authorities'],
         correct: 1
       },
       {
+        id: "xba4bs",
         question: 'A change in the exchange rate made by the monetary authorities (lowering value) is a:',
         options: ['Depreciation', 'Devaluation', 'Appreciation', 'Revaluation'],
         correct: 1
       },
       {
+        id: "ln4rhd",
         question: 'A rise in the real exchange rate means domestic goods become:',
         options: ['Relatively cheaper', 'Relatively more expensive', 'Free', 'Unchanged in price'],
         correct: 1
       },
       {
+        id: "5gproz",
         question: 'Assuming the Marshall-Lerner condition holds, net exports rise after a:',
         options: ['Real appreciation', 'Real depreciation', 'Rise in domestic output', 'Rise in the markup'],
         correct: 1
       },
       {
+        id: "hn5ttb",
         question: 'In an open economy, an increase in government spending tends to make net exports:',
         options: ['Rise', 'Fall', 'Stay constant', 'Become zero'],
         correct: 1
@@ -671,17 +769,18 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The import function is IM = IM₀ + m·Y, where m is the marginal propensity to _______.', answer: 'import' },
-      { sentence: 'Imports _______ the size of the open-economy multiplier.', answer: 'reduce' },
-      { sentence: 'With β = 0.8, t = 0.1 and m = 0.12 the multiplier equals _______.', answer: '2.5' },
-      { sentence: 'Net exports equal exports minus _______.', answer: 'imports' },
-      { sentence: 'A market-driven fall in a currency’s value is a _______.', answer: 'depreciation' },
-      { sentence: 'A change in value made by the authorities (downward) is a _______.', answer: 'devaluation' },
-      { sentence: 'A rise in the real exchange rate makes domestic goods relatively more _______.', answer: 'expensive' },
-      { sentence: 'Under the Marshall-Lerner condition, a real depreciation raises net _______.', answer: 'exports' }
+      { id: "9zqj1a", sentence: 'The import function is IM = IM₀ + m·Y, where m is the marginal propensity to _______.', answer: 'import' },
+      { id: "i8l2zy", sentence: 'Imports _______ the size of the open-economy multiplier.', answer: 'reduce' },
+      { id: "ntevr7", sentence: 'With β = 0.8, t = 0.1 and m = 0.12 the multiplier equals _______.', answer: '2.5' },
+      { id: "l2hqgs", sentence: 'Net exports equal exports minus _______.', answer: 'imports' },
+      { id: "vjdkmz", sentence: 'A market-driven fall in a currency’s value is a _______.', answer: 'depreciation' },
+      { id: "doh8q2", sentence: 'A change in value made by the authorities (downward) is a _______.', answer: 'devaluation' },
+      { id: "qv2876", sentence: 'A rise in the real exchange rate makes domestic goods relatively more _______.', answer: 'expensive' },
+      { id: "ffjyav", sentence: 'Under the Marshall-Lerner condition, a real depreciation raises net _______.', answer: 'exports' }
     ],
 
     learn: {
+      id: "25sgdp",
       content:
         '<h3>Opening the economy to the world</h3>' +
         '<p>Until now we assumed a closed economy. Reality is open: countries trade goods and services, move capital across borders, and exchange currencies. Opening up adds the foreign sector to demand:</p>' +
@@ -731,44 +830,54 @@ const macroeconomicsM2 = {
   },
 
   balanceOfPayments: {
+    id: "58nh80",
     name: 'Balance of Payments',
     icon: 'fa-file-invoice-dollar',
     color: '#fbbf24',
 
     flashcards: [
       {
+        id: "0h9yos",
         question: 'What is the balance of payments?',
         answer: 'A summary statement of all monetary transactions of a country’s residents with the rest of the world during one year. It records trade in goods and services, incomes, and capital/financial flows.'
       },
       {
+        id: "odsmfh",
         question: 'What are the two main accounts of the balance of payments?',
         answer: '1. The CURRENT account — goods, services, primary income and secondary income.\n2. The FINANCIAL (capital) account — direct, portfolio and other investments, financial derivatives.\nAcross the accounts (plus the change in reserves), the balance of payments sums to zero.'
       },
       {
+        id: "qrz9qp",
         question: 'What does the current account include?',
         answer: 'The trade balance (goods), the services balance, primary income (compensation of employees, investment income such as dividends and interest) and secondary income (transfers with no reciprocal obligation — pensions, gifts, aid).'
       },
       {
+        id: "nbuqd5",
         question: 'How is the tourism (travel) balance defined?',
         answer: 'Income (Export) − Expenditure (Import):\n• Income = spending of foreign tourists in the country (a foreign-exchange inflow, an EXPORT).\n• Expenditure = spending of domestic tourists abroad (an outflow, an IMPORT).\nSurplus → a tourist-RECEPTIVE country; deficit → a tourist-EMITTING country.'
       },
       {
+        id: "j9nlmp",
         question: 'Why is the tourism balance important for Croatia?',
         answer: 'In the Croatian balance of payments, the large TRAVEL surplus within services typically offsets the persistent deficit in the goods (trade) balance — tourism is the key foreign-exchange earner that supports the current account.'
       },
       {
+        id: "dqs1g9",
         question: 'How does net capital export depend on the interest rate?',
         answer: 'Net capital export \\(K\\) is a DECREASING function of the domestic interest rate: \\( K = f(r),\\ \\dfrac{dK}{dr} < 0 \\). A higher domestic rate attracts capital inflows (reduces net capital export).'
       },
       {
+        id: "xmhxav",
         question: 'How does a rise in the domestic interest rate affect the trade balance (indirectly)?',
         answer: 'Higher r → capital inflows → higher demand for the domestic currency → the currency appreciates → exports fall and imports rise → the trade balance DETERIORATES. (Lower rates work the opposite way.)'
       },
       {
+        id: "blqcly",
         question: 'What is the BP curve?',
         answer: 'The set of combinations of output Y and interest rate r for which the balance of payments is in equilibrium (BP = 0): the trade balance matches net capital flows. Points below the curve are in deficit, points above in surplus.'
       },
       {
+        id: "ho3i8w",
         question: 'What does internal and external balance mean, and how are they related?',
         answer: 'INTERNAL balance is goods+money market equilibrium (IS = LM). EXTERNAL balance is balance-of-payments equilibrium (on the BP curve). They are interdependent: a BoP deficit reduces reserves and the money supply, shifting LM left and raising r, which over time moves the economy toward simultaneous internal and external balance.'
       }
@@ -776,46 +885,55 @@ const macroeconomicsM2 = {
 
     quiz: [
       {
+        id: "w6q3zw",
         question: 'The balance of payments records a country’s transactions with the rest of the world over:',
         options: ['One day', 'One year', 'One quarter only', 'A decade'],
         correct: 1
       },
       {
+        id: "o6pyv8",
         question: 'The current account includes goods, services, primary income and:',
         options: ['Direct investment', 'Secondary income', 'Portfolio investment', 'Reserves'],
         correct: 1
       },
       {
+        id: "h64r5y",
         question: 'In the travel (tourism) balance, spending by foreign tourists in the country is recorded as an:',
         options: ['Import', 'Export', 'Transfer', 'Investment'],
         correct: 1
       },
       {
+        id: "127iax",
         question: 'A country with a tourism-balance surplus is:',
         options: ['Tourist-emitting', 'Tourist-receptive', 'In a trade deficit by definition', 'Closed'],
         correct: 1
       },
       {
+        id: "js9qwf",
         question: 'Net capital export K is a _______ function of the domestic interest rate.',
         options: ['Increasing', 'Decreasing', 'Constant', 'Random'],
         correct: 1
       },
       {
+        id: "kvtfq9",
         question: 'A rise in the domestic interest rate tends to make the trade balance:',
         options: ['Improve', 'Deteriorate (currency appreciates)', 'Unchanged', 'Always balanced'],
         correct: 1
       },
       {
+        id: "57jfm5",
         question: 'On the BP curve, the balance of payments is:',
         options: ['In deficit', 'In surplus', 'In equilibrium (BP = 0)', 'Undefined'],
         correct: 2
       },
       {
+        id: "vv1ky3",
         question: 'Internal balance corresponds to the intersection of:',
         options: ['IS and BP', 'IS and LM', 'LM and BP', 'AS and AD'],
         correct: 1
       },
       {
+        id: "r8jgdw",
         question: 'Across all its accounts (with reserves), the balance of payments sums to:',
         options: ['A surplus', 'A deficit', 'Zero', 'The trade balance'],
         correct: 2
@@ -823,17 +941,18 @@ const macroeconomicsM2 = {
     ],
 
     fillBlanks: [
-      { sentence: 'The balance of payments records transactions with the rest of the world over one _______.', answer: 'year' },
-      { sentence: 'The two main accounts are the current account and the _______ account.', answer: 'financial' },
-      { sentence: 'In the travel balance, foreign tourists’ spending in the country is an _______.', answer: 'export' },
-      { sentence: 'A tourism-balance surplus indicates a tourist-_______ country.', answer: 'receptive' },
-      { sentence: 'Net capital export is a _______ function of the domestic interest rate.', answer: 'decreasing' },
-      { sentence: 'A higher domestic interest rate causes the currency to _______.', answer: 'appreciate' },
-      { sentence: 'On the BP curve the balance of payments equals _______.', answer: 'zero' },
-      { sentence: 'Internal balance is the intersection of the IS and _______ curves.', answer: 'LM' }
+      { id: "zdw2v8", sentence: 'The balance of payments records transactions with the rest of the world over one _______.', answer: 'year' },
+      { id: "d5hg63", sentence: 'The two main accounts are the current account and the _______ account.', answer: 'financial' },
+      { id: "2ug7kp", sentence: 'In the travel balance, foreign tourists’ spending in the country is an _______.', answer: 'export' },
+      { id: "o4b7m1", sentence: 'A tourism-balance surplus indicates a tourist-_______ country.', answer: 'receptive' },
+      { id: "7c76rz", sentence: 'Net capital export is a _______ function of the domestic interest rate.', answer: 'decreasing' },
+      { id: "3rqftp", sentence: 'A higher domestic interest rate causes the currency to _______.', answer: 'appreciate' },
+      { id: "w3rn0b", sentence: 'On the BP curve the balance of payments equals _______.', answer: 'zero' },
+      { id: "1v0akq", sentence: 'Internal balance is the intersection of the IS and _______ curves.', answer: 'LM' }
     ],
 
     learn: {
+      id: "lr5xg7",
       content:
         '<h3>The country’s ledger with the rest of the world</h3>' +
         '<p>Just as a firm keeps accounts, so does a country. The <strong>balance of payments (BoP)</strong> is the summary statement of <em>all</em> monetary transactions between a country’s residents and the rest of the world over one year. It is organised into two main accounts:</p>' +

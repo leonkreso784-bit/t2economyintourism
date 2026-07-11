@@ -1,54 +1,66 @@
 {
   "fundamentals": {
+    "id": "l20jaz",
     "name": "Fundamentals & Objectives",
     "icon": "fa-globe",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "mhdcfs",
         "question": "What does macroeconomics study, and how does it differ from microeconomics?",
         "answer": "Macroeconomics studies the functioning of the economy as a WHOLE — overall national production, employment, prices and foreign trade (\"macros\" = big in Greek).\nMicroeconomics analyses individual prices, quantities and markets of a single supplier or consumer (\"micros\" = small).",
         "explanation": "In macro the two basic entities are aggregated: all households (consumers) and all businesses (the economy)."
       },
       {
+        "id": "k02rlf",
         "question": "How do we obtain aggregate demand and aggregate supply?",
         "answer": "Aggregate demand is obtained by aggregating the demand of all households.\nAggregate supply is obtained by aggregating the supply of all companies."
       },
       {
+        "id": "il5gwu",
         "question": "What are the four fundamental macroeconomic objectives?",
         "answer": "1. A high and growing level of production\n2. High employment (low unemployment)\n3. Price stability\n4. Internal and external (foreign-exchange) stability"
       },
       {
+        "id": "g7p4qh",
         "question": "What are the four main macroeconomic variables?",
         "answer": "1. Gross Domestic Product (GDP) / aggregate output\n2. The unemployment rate\n3. The inflation rate\n4. The interest rate"
       },
       {
+        "id": "tl1z0p",
         "question": "What is economic policy, and what makes it expansive or restrictive?",
         "answer": "Economic policy is the set of government measures that steer GDP growth and the other macro objectives.\n• EXPANSIVE (expansionary) measures stimulate economic growth.\n• RESTRICTIVE measures reduce economic activity (cool the economy)."
       },
       {
+        "id": "tpxpey",
         "question": "What are the main types of economic policy?",
         "answer": "• Fiscal policy (taxation + public spending)\n• Monetary policy (control of the money supply / interest rate)\n• Policy of international economic relations (tariffs, quotas, exchange rate)\n• Income policy (wage and price control)"
       },
       {
+        "id": "d04tby",
         "question": "What does expansionary FISCAL policy do?",
         "answer": "It aims to increase GDP by: increasing public spending (G), reducing taxes (T), or increasing transfers (TR).\nRestrictive fiscal policy does the opposite — it limits personal and public spending."
       },
       {
+        "id": "orq36j",
         "question": "What does expansionary MONETARY policy do?",
         "answer": "It aims to increase GDP by increasing the money supply and reducing interest rates, which stimulates investment and economic activity.\nRestrictive monetary policy restricts the money supply → higher interest rates, lower investment, lower GDP and lower inflation."
       },
       {
+        "id": "x1oa47",
         "question": "What primarily determines GDP in the short, medium and long run?",
         "answer": "• SHORT run (a few years): annual changes in GDP are driven mainly by DEMAND.\n• MEDIUM run (~ten years): the level of production is determined by SUPPLY factors (capital, technology, size of the workforce).\n• LONG run (decades): innovation, savings, the quality of education and of public administration.",
         "explanation": "This is exactly why the short-run model (Goods/Financial markets, IS-LM) focuses on demand."
       },
       {
+        "id": "z9ib1h",
         "question": "In the short run, what is the dominant cause of recessions?",
         "answer": "A fall in aggregate demand. The short-run model assumes firms supply whatever quantity is demanded at a given price, so output follows demand."
       }
     ],
     "quiz": [
       {
+        "id": "nri8ee",
         "question": "Macroeconomics studies:",
         "options": [
           "A single firm’s pricing",
@@ -59,6 +71,7 @@
         "correct": 1
       },
       {
+        "id": "1eupnq",
         "question": "Which is NOT one of the four fundamental macroeconomic objectives?",
         "options": [
           "High and growing production",
@@ -69,6 +82,7 @@
         "correct": 2
       },
       {
+        "id": "plof8j",
         "question": "Which is NOT one of the four main macroeconomic variables?",
         "options": [
           "GDP",
@@ -79,6 +93,7 @@
         "correct": 2
       },
       {
+        "id": "nv8mnd",
         "question": "Reducing taxes and increasing government spending is:",
         "options": [
           "Restrictive fiscal policy",
@@ -89,6 +104,7 @@
         "correct": 1
       },
       {
+        "id": "f7gstp",
         "question": "Expansionary monetary policy involves:",
         "options": [
           "Decreasing the money supply and raising rates",
@@ -99,6 +115,7 @@
         "correct": 1
       },
       {
+        "id": "zuz2yl",
         "question": "In the SHORT run, annual changes in GDP are caused primarily by:",
         "options": [
           "Demand factors",
@@ -109,6 +126,7 @@
         "correct": 0
       },
       {
+        "id": "ezxq4w",
         "question": "In the LONG run, the level of production is determined primarily by:",
         "options": [
           "Monetary policy",
@@ -119,6 +137,7 @@
         "correct": 2
       },
       {
+        "id": "bks6ip",
         "question": "Wage and price control is an instrument of:",
         "options": [
           "Fiscal policy",
@@ -129,6 +148,7 @@
         "correct": 1
       },
       {
+        "id": "iga4r5",
         "question": "Aggregate supply is obtained by aggregating:",
         "options": [
           "The demand of all households",
@@ -141,93 +161,114 @@
     ],
     "fillBlanks": [
       {
+        "id": "ll5et4",
         "sentence": "Macroeconomics studies the functioning of the economy as a _______.",
         "answer": "whole"
       },
       {
+        "id": "w4vt2k",
         "sentence": "Aggregating the demand of all households gives aggregate _______.",
         "answer": "demand"
       },
       {
+        "id": "8kddh3",
         "sentence": "Measures that stimulate economic growth are called _______ measures.",
         "answer": "expansive"
       },
       {
+        "id": "kpiipv",
         "sentence": "Fiscal policy works through taxation and public _______.",
         "answer": "spending"
       },
       {
+        "id": "f1gabo",
         "sentence": "Monetary policy controls the money _______.",
         "answer": "supply"
       },
       {
+        "id": "rpy6r0",
         "sentence": "In the short run, changes in GDP are driven mainly by _______.",
         "answer": "demand"
       },
       {
+        "id": "zv2b0i",
         "sentence": "In the medium run, output is determined mainly by _______ factors.",
         "answer": "supply"
       },
       {
+        "id": "65op2j",
         "sentence": "Controlling wages and prices is an instrument of _______ policy.",
         "answer": "income"
       }
     ],
     "learn": {
+      "id": "8w6n91",
       "content": "<h3>Zooming out: the economy as a whole</h3><p>Microeconomics puts a single market under the microscope — one good, one firm, one consumer. <strong>Macroeconomics</strong> does the opposite: it steps back to study the economy <em>as a whole</em> — total national production, overall employment, the general price level, and trade with the rest of the world. (\"Macro\" is Greek for big; \"micro\" for small.)</p><p>The trick that makes this possible is <strong>aggregation</strong>. Instead of one buyer and one seller, macro works with two giant blocks:</p><ul><li>all households together → <strong>aggregate demand</strong> (the total desire to buy);</li><li>all firms together → <strong>aggregate supply</strong> (the total ability to produce).</li></ul><p>Almost every macro debate — growth, unemployment, inflation, policy — is ultimately about how these two aggregates interact.</p><h3>What a healthy economy aims for: the four objectives</h3><p>Governments and central banks judge an economy against four <strong>fundamental objectives</strong>:</p><ol><li><strong>A high and growing level of production</strong> — more output means more income and a higher standard of living.</li><li><strong>High employment</strong> (low unemployment) — idle workers are lost output and lost welfare.</li><li><strong>Price stability</strong> — low, predictable inflation so money keeps its value.</li><li><strong>Internal and external stability</strong> — a balanced budget at home and a sustainable position abroad (foreign-exchange/trade balance).</li></ol><h3>The four variables we actually watch</h3><p>To see whether those objectives are being met, macroeconomists track four headline <strong>variables</strong> — and the whole course is essentially the story of these four and how they move together:</p><ul><li><strong>GDP</strong> — aggregate output (objective 1).</li><li>the <strong>unemployment rate</strong> (objective 2).</li><li>the <strong>inflation rate</strong> (objective 3).</li><li>the <strong>interest rate</strong> — the price of money, the main lever of policy.</li></ul><h3>How governments steer the economy: economic policy</h3><p>The objectives do not take care of themselves. <strong>Economic policy</strong> is the set of measures used to steer the four variables. Every policy comes in two directions:</p><ul><li><strong>Expansive (expansionary)</strong> — stimulate activity, push GDP up (used in recessions).</li><li><strong>Restrictive</strong> — cool activity, slow GDP and inflation (used when the economy overheats).</li></ul><p>The main toolkits are:</p><ul><li><strong>Fiscal policy</strong> — taxes (T) and government spending (G). Cutting T or raising G is expansionary.</li><li><strong>Monetary policy</strong> — the money supply and the interest rate, run by the central bank. More money / lower rates is expansionary.</li><li><strong>International (trade) policy</strong> — tariffs, quotas, the exchange rate.</li><li><strong>Income policy</strong> — direct control of wages and prices.</li></ul><div class=\"tip-box\"><h4>The three horizons — the backbone of the whole course</h4><p>The same variables behave differently depending on the time frame, and this is the single most important organising idea in macroeconomics:</p><ul><li><strong>Short run</strong> (a few years): GDP is driven by <strong>demand</strong>. If spending rises, output rises.</li><li><strong>Medium run</strong> (~a decade): output is pinned down by <strong>supply</strong> factors — capital, technology, the size of the workforce.</li><li><strong>Long run</strong> (decades): growth depends on <strong>innovation, savings and institutions</strong> (education, the quality of government).</li></ul><p>The Goods-market, Financial-market and IS-LM models in <em>this</em> midterm all describe the <strong>short run</strong> — which is exactly why they focus on aggregate demand. The second midterm then moves to the medium and long run, where supply takes over.</p></div>",
       "image": null
     }
   },
   "unemploymentInflation": {
+    "id": "v83dc9",
     "name": "Unemployment & Inflation",
     "icon": "fa-arrow-trend-down",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "e5kl5x",
         "question": "How is the labour force defined, and who is excluded?",
         "answer": "The labour force consists of the employed and the unemployed:\n\\( L = E + U \\)\nExcluded (NOT in the labour force): students, homemakers, retirees, those unable to work, and those who do not want to work."
       },
       {
+        "id": "dlr3hl",
         "question": "How are the unemployment and employment rates calculated?",
         "answer": "Unemployment rate \\( = \\dfrac{U}{L} \\) (the unemployed as a share of the labour force).\nEmployment rate \\( = \\dfrac{E}{L} \\) (the employed as a share of the labour force)."
       },
       {
+        "id": "tz86uz",
         "question": "What is the economic cost of unemployment?",
         "answer": "Behind every unemployed worker there is a LOSS — the economy produces less than it could. The cost is the difference between the potential output (at full employment) and the actual output. The higher unemployment, the further actual output falls below potential."
       },
       {
+        "id": "pqofyf",
         "question": "What is inflation, deflation, and the inflation rate?",
         "answer": "Inflation is a permanent increase in the general price level; the inflation rate is the rate at which prices rise.\nDeflation is a permanent decrease in the price level (a negative inflation rate) — rare (e.g. Japan in the late 1990s).",
         "explanation": "The general price level is tracked by the Consumer Price Index (CPI)."
       },
       {
+        "id": "5uxopt",
         "question": "What is the CPI?",
         "answer": "The Consumer Price Index measures the average price (cost of living) of a FIXED basket of goods bought by typical consumers. In the base period CPI = 100, and we read its movement relative to 100."
       },
       {
+        "id": "w6ajn5",
         "question": "What is considered the optimal inflation rate?",
         "answer": "Low and stable inflation, around 1–4% per year (often targeted near 2%). Both very high inflation and deflation create uncertainty and harm the economy."
       },
       {
+        "id": "uqvfxj",
         "question": "How are the real and nominal interest rates related?",
         "answer": "The nominal interest rate is the rate at which the nominal value of a deposit grows; the real interest rate is the rate at which its purchasing power grows. Approximately:\n\\( \\text{real rate} \\approx \\text{nominal rate} - \\text{inflation rate} \\)",
         "explanation": "Example: nominal 8%, inflation 3% → real ≈ 5%."
       },
       {
+        "id": "4r0owe",
         "question": "What is Okun’s law?",
         "answer": "Okun’s law links output and unemployment: output growth ABOVE trend is associated with FALLING unemployment, and growth BELOW trend with RISING unemployment. (A roughly 2% shortfall of output relative to potential raises unemployment by about 1%.)"
       },
       {
+        "id": "5chk5i",
         "question": "What does the Phillips curve tell us?",
         "answer": "The Phillips curve describes an INVERSE relationship between unemployment and inflation: a low unemployment rate tends to raise the inflation rate, and a high unemployment rate tends to lower it. A country trades off lower unemployment against higher inflation."
       },
       {
+        "id": "nnc4om",
         "question": "Why do economists worry about inflation if all prices and wages rose together?",
         "answer": "If inflation were \"pure\" (all prices and wages rising at the same rate) it would not be a problem. In reality the changes are NOT proportional — goods prices often rise faster than wages, relative prices distort, uncertainty rises, and nominal-income tax brackets push up real tax burdens."
       }
     ],
     "quiz": [
       {
+        "id": "20q9hx",
         "question": "The labour force is:",
         "options": [
           "Only the employed",
@@ -238,6 +279,7 @@
         "correct": 1
       },
       {
+        "id": "bupujx",
         "question": "Which group is NOT counted in the labour force?",
         "options": [
           "The unemployed actively seeking work",
@@ -248,6 +290,7 @@
         "correct": 1
       },
       {
+        "id": "psnfgf",
         "question": "The unemployment rate equals:",
         "options": [
           "U / E",
@@ -258,6 +301,7 @@
         "correct": 2
       },
       {
+        "id": "y30zy3",
         "question": "A permanent decrease in the general price level is called:",
         "options": [
           "Disinflation",
@@ -268,6 +312,7 @@
         "correct": 1
       },
       {
+        "id": "xnikrz",
         "question": "The CPI measures the price of:",
         "options": [
           "A single good",
@@ -278,6 +323,7 @@
         "correct": 1
       },
       {
+        "id": "1zejv5",
         "question": "If the nominal interest rate is 8% and inflation is 3%, the real interest rate is about:",
         "options": [
           "11%",
@@ -288,6 +334,7 @@
         "correct": 1
       },
       {
+        "id": "f0ergz",
         "question": "Okun’s law links:",
         "options": [
           "Inflation and the money supply",
@@ -298,6 +345,7 @@
         "correct": 1
       },
       {
+        "id": "n9a8o7",
         "question": "The Phillips curve describes the relationship between unemployment and:",
         "options": [
           "GDP",
@@ -308,6 +356,7 @@
         "correct": 1
       },
       {
+        "id": "y34upt",
         "question": "A low unemployment rate tends to be associated with:",
         "options": [
           "Lower inflation",
@@ -320,87 +369,107 @@
     ],
     "fillBlanks": [
       {
+        "id": "05yq2l",
         "sentence": "The labour force equals the employed plus the _______.",
         "answer": "unemployed"
       },
       {
+        "id": "0of9ne",
         "sentence": "The unemployment rate is the ratio U over _______.",
         "answer": "L"
       },
       {
+        "id": "ja6iel",
         "sentence": "A permanent fall in the general price level is called _______.",
         "answer": "deflation"
       },
       {
+        "id": "o9yafq",
         "sentence": "The general price level is measured by the Consumer Price _______.",
         "answer": "index"
       },
       {
+        "id": "12n2mt",
         "sentence": "The optimal inflation rate is considered low and stable, around 1–4 _______.",
         "answer": "percent"
       },
       {
+        "id": "vzfe7m",
         "sentence": "The real interest rate ≈ nominal rate minus the _______ rate.",
         "answer": "inflation"
       },
       {
+        "id": "5hryci",
         "sentence": "Okun’s law links output growth with the _______ rate.",
         "answer": "unemployment"
       },
       {
+        "id": "0t4aj5",
         "sentence": "The Phillips curve shows an _______ relationship between unemployment and inflation.",
         "answer": "inverse"
       }
     ],
     "learn": {
+      "id": "09675q",
       "content": "<h3>Two things that hurt: idle workers and an unstable currency</h3><p>Beyond producing a lot (GDP), a healthy economy must keep two other numbers under control: <strong>unemployment</strong> and <strong>inflation</strong>. Both are costly, both are watched constantly, and — as we will see — they are linked to each other and to output.</p><h3>Unemployment: measuring lost potential</h3><p>Start by splitting the working-age population. The <strong>labour force</strong> is everyone who is either working or actively looking for work:</p><div class=\"formula-box\">\\[ L = E + U \\]</div><p>where \\(E\\) = employed and \\(U\\) = unemployed. Crucially, many people are <em>outside</em> the labour force altogether: full-time students, homemakers, retirees, those unable to work, and those who simply do not want to. They are neither \\(E\\) nor \\(U\\). The two headline ratios are:</p><div class=\"formula-box\">\\[ \\text{unemployment rate} = \\frac{U}{L}, \\qquad \\text{employment rate} = \\frac{E}{L} \\]</div><p><strong>Why we care:</strong> unemployment is not just a social problem, it is an <em>economic</em> one. Every unemployed worker represents output that was never produced. The <strong>economic cost of unemployment</strong> is exactly the gap between the potential output of full employment and the actual output — the higher unemployment, the further the economy falls below its potential. The unemployment rate also rises and falls with the business cycle: up in recessions, down in expansions.</p><h3>Inflation: when money loses its value</h3><p><strong>Inflation</strong> is a <em>permanent, ongoing</em> rise in the general price level; <strong>deflation</strong> is a permanent fall (a negative inflation rate — rare, e.g. Japan in the late 1990s). The general price level is measured by the <strong>Consumer Price Index (CPI)</strong>: the cost of a <em>fixed basket</em> of goods bought by a typical household, set to 100 in the base year.</p><p>Surprisingly, economists do not aim for zero inflation — the target is <strong>low and stable inflation, around 1–4%</strong> (often ≈2%). Why not zero?</p><ul><li><strong>High inflation</strong> creates uncertainty, distorts relative prices, complicates investment, and quietly raises real tax burdens (as nominal incomes drift into higher brackets).</li><li><strong>Deflation</strong> is also harmful: it signals a weak economy, encourages people to delay spending, and limits the power of monetary policy.</li></ul><div class=\"warning-box\"><h4>\"Pure\" inflation would be harmless — but it never happens</h4><p>If <em>all</em> prices and wages rose at exactly the same rate, inflation would not hurt anyone. The damage comes because the changes are <strong>not proportional</strong>: goods prices typically rise faster than wages, so real purchasing power and relative prices shift in unpredictable ways.</p></div><h3>Real vs. nominal interest rates</h3><p>Interest is the price of money. But a 10% return means little if prices also rose 10%. So we separate the <strong>nominal</strong> rate (how fast the money value of a deposit grows) from the <strong>real</strong> rate (how fast its <em>purchasing power</em> grows):</p><div class=\"formula-box\">\\[ \\text{real rate} \\approx \\text{nominal rate} - \\text{inflation rate} \\]</div><div class=\"example-box\"><h4>Worked example — the real interest rate</h4><p>If the nominal interest rate is 8% and prices rise by 3%, the real (purchasing-power) return is</p><div class=\"formula-box\">\\[ r \\approx i - \\pi = 8\\% - 3\\% = 5\\% \\]</div><p><strong>Interpretation:</strong> your money grew 8% in euros, but since everything costs 3% more, you are only about 5% better off in real terms. This is the rate that actually matters for saving and borrowing decisions.</p></div><h3>How the three connect: Okun and Phillips</h3><p>Output, unemployment and inflation are not independent — two famous empirical relationships tie them together:</p><ul><li><strong>Okun’s law</strong> (output ↔ unemployment): when output grows <em>faster</em> than trend, unemployment falls; when it grows <em>slower</em> than trend, unemployment rises. (Roughly, a 2% shortfall of output below potential raises unemployment by about 1%.)</li><li><strong>The Phillips curve</strong> (unemployment ↔ inflation): the two move <em>inversely</em>. Low unemployment strengthens workers’ bargaining power, pushing wages and prices up (higher inflation); high unemployment does the reverse.</li></ul><div class=\"tip-box\"><h4>The policy trade-off</h4><p>Put together, Okun and Phillips imply a choice: a country can aim for <strong>lower unemployment but higher inflation</strong>, or <strong>higher unemployment but lower inflation</strong>. There is no free lunch in the short run — this tension is exactly what the AS-AD model in the second midterm formalises.</p></div>",
       "image": null
     }
   },
   "gdpMeasurement": {
+    "id": "wd41kq",
     "name": "GDP: Nominal, Real & Growth",
     "icon": "fa-chart-area",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "wup011",
         "question": "What is GDP?",
         "answer": "Gross Domestic Product is the market value of all FINAL products and services produced in a country during one year — the most comprehensive measure of a country’s total economic production."
       },
       {
+        "id": "k6acax",
         "question": "How does GDP differ from GNP?",
         "answer": "GDP is GEOGRAPHIC: all output produced WITHIN a country’s borders, regardless of ownership (e.g. a foreign-owned bank in Croatia counts in Croatian GDP).\nGNP is by OWNERSHIP: output produced by a country’s factors of production, wherever they are located."
       },
       {
+        "id": "5rckjo",
         "question": "Nominal vs. real vs. potential GDP — what is each?",
         "answer": "• NOMINAL GDP — at current market prices (changes with both quantity and prices).\n• REAL GDP — at constant prices (changes only with the volume of production); the true measure of economic activity.\n• POTENTIAL GDP — the maximum output the economy can produce at stable prices (high employment)."
       },
       {
+        "id": "txlft9",
         "question": "How is real GDP calculated from nominal GDP?",
         "answer": "Using the GDP deflator (or a price index):\n\\( \\text{Nominal GDP} = \\text{Real GDP}\\times \\text{deflator} \\)\n\\( \\Rightarrow \\text{Real GDP} = \\dfrac{\\text{Nominal GDP}}{\\text{deflator}} \\)\nWith a base-100 index: \\( \\text{Real GDP}_n = \\text{Nominal GDP}_n \\times \\dfrac{\\text{CPI}_{\\text{base}}}{\\text{CPI}_n} \\)."
       },
       {
+        "id": "racztc",
         "question": "How do prices affect the relationship between real and nominal GDP?",
         "answer": "• Prices RISE → real GDP is LESS than nominal GDP.\n• Prices FALL → real GDP is GREATER than nominal GDP.\n• Prices UNCHANGED → real GDP equals nominal GDP."
       },
       {
+        "id": "a8fnop",
         "question": "What is the GDP gap, and its two types?",
         "answer": "The GDP gap is the difference between potential and actual (real) GDP.\n• RECESSIONAL gap — the economy produces LESS than its capacity (idle resources); the goal is to raise GDP. (Most common.)\n• INFLATIONARY gap — the economy produces MORE than capacity; the goal is to cool GDP. (Rare, only in the most developed economies.)"
       },
       {
+        "id": "ocegnq",
         "question": "How is the GDP growth rate calculated?",
         "answer": "It compares output across years:\n\\( \\text{growth rate} = \\dfrac{Y_t - Y_{t-1}}{Y_{t-1}}\\times 100 \\)\nPositive growth = expansion; negative growth = recession."
       },
       {
+        "id": "gp9nk3",
         "question": "What is the technical definition of a recession?",
         "answer": "A recession occurs when the economy records negative growth rates in at least two consecutive quarters. (Economists watch quarterly, not just annual, data.)"
       },
       {
+        "id": "ayu57m",
         "question": "Why is GDP per capita important?",
         "answer": "GDP per capita = real GDP / number of inhabitants. It indicates the average standard of living — the higher it is, the higher the population’s living standard, and it allows fairer comparison across countries."
       }
     ],
     "quiz": [
       {
+        "id": "dnxkl8",
         "question": "GDP measures the market value of all _______ produced in a country in a year.",
         "options": [
           "Intermediate goods",
@@ -411,6 +480,7 @@
         "correct": 1
       },
       {
+        "id": "nm2658",
         "question": "A foreign-owned bank operating in Croatia is counted in:",
         "options": [
           "Croatia’s GNP only",
@@ -421,6 +491,7 @@
         "correct": 1
       },
       {
+        "id": "6x4tr3",
         "question": "Real GDP is measured at:",
         "options": [
           "Current prices",
@@ -431,6 +502,7 @@
         "correct": 1
       },
       {
+        "id": "x7dv7m",
         "question": "If prices rise during the year, real GDP will be:",
         "options": [
           "Greater than nominal GDP",
@@ -441,6 +513,7 @@
         "correct": 1
       },
       {
+        "id": "px2nbz",
         "question": "Nominal GDP is 325 and the price index is 130 (base = 100). Real GDP is:",
         "options": [
           "422.5",
@@ -451,6 +524,7 @@
         "correct": 1
       },
       {
+        "id": "g8xhzx",
         "question": "An economy producing LESS than its capacity has a:",
         "options": [
           "Inflationary gap",
@@ -461,6 +535,7 @@
         "correct": 1
       },
       {
+        "id": "sg3tvw",
         "question": "A recession is defined as negative growth for at least:",
         "options": [
           "One month",
@@ -471,6 +546,7 @@
         "correct": 1
       },
       {
+        "id": "e83cl1",
         "question": "The best indicator of the average standard of living is:",
         "options": [
           "Nominal GDP",
@@ -481,6 +557,7 @@
         "correct": 1
       },
       {
+        "id": "1ipioe",
         "question": "Potential GDP is:",
         "options": [
           "Output at current prices",
@@ -493,88 +570,108 @@
     ],
     "fillBlanks": [
       {
+        "id": "1b6gq9",
         "sentence": "GDP is the market value of all _______ goods and services produced in a year.",
         "answer": "final"
       },
       {
+        "id": "iwh9af",
         "sentence": "GDP is geographic; GNP is based on _______.",
         "answer": "ownership"
       },
       {
+        "id": "s7jd1a",
         "sentence": "Real GDP is measured at _______ prices.",
         "answer": "constant"
       },
       {
+        "id": "aqpwli",
         "sentence": "Real GDP equals nominal GDP divided by the _______.",
         "answer": "deflator"
       },
       {
+        "id": "780orx",
         "sentence": "When prices rise, real GDP is _______ than nominal GDP.",
         "answer": "less"
       },
       {
+        "id": "avm324",
         "sentence": "An economy producing less than capacity has a _______ gap.",
         "answer": "recessional"
       },
       {
+        "id": "ewem9p",
         "sentence": "A recession is negative growth for at least two consecutive _______.",
         "answer": "quarters"
       },
       {
+        "id": "1fbu6r",
         "sentence": "The average standard of living is best shown by GDP per _______.",
         "answer": "capita"
       }
     ],
     "learn": {
+      "id": "o24ss3",
       "content": "<h3>Measuring an entire economy with one number</h3><p>How do you summarise the activity of millions of firms and households in a single figure? That is the job of <strong>Gross Domestic Product (GDP)</strong> — the market value of all <em>final</em> goods and services produced inside a country during one year. It is the most comprehensive measure of a nation’s economic output, published monthly, quarterly and annually for every country (Eurostat, the IMF, national statistical offices).</p><p>Two words in that definition do a lot of work:</p><ul><li><strong>\"Final\"</strong> — only goods sold to their last user are counted. The flour a bakery buys is an <em>intermediate</em> good; counting both the flour and the bread would double-count. We count the bread only.</li><li><strong>\"Inside a country\"</strong> — GDP is <strong>geographic</strong>. Everything produced within the borders counts, no matter who owns the firm. A foreign-owned bank operating in Croatia adds to <em>Croatian</em> GDP.</li></ul><div class=\"tip-box\"><h4>GDP vs. GNP — borders vs. owners</h4><p><strong>GDP</strong> follows the <em>location</em> of production (within the borders). <strong>GNP</strong> (Gross National Product) follows <em>ownership</em> — output produced by a country’s factors of production, wherever in the world they sit. Most statistics switched from GNP to GDP after 1992.</p></div><h3>Why we strip out prices: nominal, real and potential GDP</h3><p>Suppose a country’s GDP \"grows\" from 300 to 330. Did it really produce more — or did prices simply rise? To answer this, economists always distinguish three versions of GDP:</p><ul><li><strong>Nominal GDP</strong> — valued at <em>current</em> market prices. It moves for two reasons at once: changes in quantities <em>and</em> changes in prices. Useful, but it can mislead.</li><li><strong>Real GDP</strong> — valued at <em>constant</em> (base-year) prices, so it moves <em>only</em> when the volume of production changes. This is the honest measure of economic activity and the one economists care about.</li><li><strong>Potential GDP</strong> — the maximum output the economy could produce at stable prices with a high level of employment. It is the benchmark the economy \"should\" reach.</li></ul><p>The bridge between nominal and real is the <strong>GDP deflator</strong> (or a price index such as the CPI, set to 100 in the base year):</p><div class=\"formula-box\">\\[ \\text{Nominal GDP} = \\text{Real GDP}\\times \\text{deflator} \\;\\;\\Longrightarrow\\;\\; \\text{Real GDP}_n = \\text{Nominal GDP}_n \\times \\frac{\\text{CPI}_{\\text{base}}}{\\text{CPI}_n} \\]</div><div class=\"example-box\"><h4>Worked example — deflating nominal GDP</h4><p>Nominal GDP in 1990 is 325 (billion EUR), and the price index has risen to 130 (base year 1990 = 100). To express it in base-year purchasing power:</p><div class=\"formula-box\">\\[ \\text{Real GDP} = 325 \\times \\frac{100}{130} = 250 \\]</div><p><strong>Interpretation:</strong> the headline (nominal) figure is 325, but once we remove the price increase, real output is only 250. The \"growth\" was largely inflation, not extra production. This is exactly why a country can have a rising nominal GDP and a <em>falling</em> standard of living.</p></div><div class=\"warning-box\"><h4>Read the price effect correctly</h4><p>The relationship between the two always follows the price movement:</p><ul><li>Prices <strong>rose</strong> → real GDP &lt; nominal GDP.</li><li>Prices <strong>fell</strong> → real GDP &gt; nominal GDP.</li><li>Prices <strong>unchanged</strong> → real GDP = nominal GDP.</li></ul><p>A common exam trap is to celebrate a big nominal rise — always check what happened to prices first.</p></div><h3>The GDP gap: is the economy under- or over-performing?</h3><p>The <strong>GDP gap</strong> compares actual (real) output with potential output. Because of business cycles, the two rarely coincide:</p><ul><li><strong>Recessional gap</strong> — the economy produces <em>less</em> than its potential; resources sit idle (unemployment). This is the common situation, and policy aims to <em>raise</em> GDP.</li><li><strong>Inflationary gap</strong> — the economy produces <em>more</em> than its sustainable capacity, straining resources and pushing prices up. Rare, and seen only in the most developed economies; policy aims to <em>cool</em> GDP.</li></ul><h3>Measuring growth and living standards</h3><p>The pace of the economy is captured by the <strong>growth rate</strong> of real GDP:</p><div class=\"formula-box\">\\[ \\text{growth rate} = \\frac{Y_t - Y_{t-1}}{Y_{t-1}}\\times 100 \\]</div><p>Sustained positive growth is an <strong>expansion</strong>; sustained negative growth is a <strong>recession</strong> — technically defined as at least <em>two consecutive quarters</em> of negative growth (which is why economists watch quarterly, not just annual, data).</p><div class=\"tip-box\"><h4>For living standards, use real GDP per capita</h4><p>Total GDP tells you how <em>big</em> an economy is, not how <em>well-off</em> its people are. For that, divide by population:</p><div class=\"formula-box\">\\[ \\text{GDP per capita} = \\frac{\\text{real GDP}}{\\text{population}} \\]</div><p>This is the standard measure of the average standard of living and the only fair way to compare a large country with a small one. (For cross-country comparisons it is refined further into PPP terms — see the Long Run.)</p></div>",
       "image": null
     }
   },
   "nationalAccounts": {
+    "id": "juxo71",
     "name": "National Accounts",
     "icon": "fa-scale-balanced",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "todcwi",
         "question": "What is the fundamental national-accounting identity?",
         "answer": "Total production = Total consumption = Total income.\nEconomic activity can be measured three equivalent ways, all giving the SAME value."
       },
       {
+        "id": "0ju0in",
         "question": "What are the three approaches to measuring GDP?",
         "answer": "1. PRODUCTION approach — the value of final output (excluding intermediate stages).\n2. EXPENDITURE (consumption) approach — total spending by final buyers.\n3. INCOME approach — total income received.\nAll three give the same GDP."
       },
       {
+        "id": "noxznl",
         "question": "What is the expenditure (consumption) formula for GDP?",
         "answer": "\\( \\text{GDP} = C + I + G + (E - U) \\)\nwhere C = personal consumption, I = investment, G = government spending, E = exports, U = imports. Net exports \\( NX = E - U \\)."
       },
       {
+        "id": "sf3mtx",
         "question": "What are the four economic models of GDP?",
         "answer": "• One-sector: \\( Y = C \\)\n• Two-sector: \\( Y = C + I \\)\n• Three-sector: \\( Y = C + I + G \\)\n• Four-sector: \\( Y = C + I + G + (E - U) \\)"
       },
       {
+        "id": "iky3fw",
         "question": "What is the saving–investment identity in the four-sector model?",
         "answer": "\\( S - I = (G + TR - T) + NX \\)\nwhere NX = E − U.\n(In the simple two-sector model this collapses to \\( S = I \\).)",
         "explanation": "Private saving minus investment equals the budget deficit plus net exports."
       },
       {
+        "id": "cz9q3r",
         "question": "What is value added?",
         "answer": "Value added = gross value of production − intermediate consumption. Summing value added across all activities (the NACE structure) avoids double-counting and yields GDP by the production approach."
       },
       {
+        "id": "ksx9vp",
         "question": "What is intermediate consumption?",
         "answer": "The value of products and services that are transformed, used up or consumed within the production process — they are NOT counted directly in GDP (only the final output is)."
       },
       {
+        "id": "yd601s",
         "question": "How is tourism treated in the national classification of activities (NACE)?",
         "answer": "Tourism is NOT a separate activity or sector in any classification. An activity is defined by the producer / the product, so tourism is monitored across several activities rather than as one — this is why a satellite account is needed (covered later)."
       },
       {
+        "id": "mab7fg",
         "question": "What are the macroeconomic aggregate symbols?",
         "answer": "Y = GDP, C = personal consumption, I = investment, S = savings, G = government (fiscal) spending, E = exports, U = imports, T = taxes, TR = transfers."
       }
     ],
     "quiz": [
       {
+        "id": "mgd12g",
         "question": "The three approaches to GDP (production, expenditure, income) give:",
         "options": [
           "Three different values",
@@ -585,6 +682,7 @@
         "correct": 1
       },
       {
+        "id": "hctxa0",
         "question": "The expenditure formula for GDP is:",
         "options": [
           "Y = C − I − G",
@@ -595,6 +693,7 @@
         "correct": 1
       },
       {
+        "id": "4dfbbj",
         "question": "Net exports (NX) equal:",
         "options": [
           "Imports − exports",
@@ -605,6 +704,7 @@
         "correct": 1
       },
       {
+        "id": "y5t5gn",
         "question": "The three-sector model of GDP is:",
         "options": [
           "Y = C",
@@ -615,6 +715,7 @@
         "correct": 2
       },
       {
+        "id": "i21s2v",
         "question": "Value added equals gross value of production minus:",
         "options": [
           "Taxes",
@@ -625,6 +726,7 @@
         "correct": 1
       },
       {
+        "id": "3ycoww",
         "question": "In national accounting, total production equals total income and total:",
         "options": [
           "Exports",
@@ -635,6 +737,7 @@
         "correct": 1
       },
       {
+        "id": "oi4w4g",
         "question": "In the national classification of activities, tourism is:",
         "options": [
           "A single sector",
@@ -645,6 +748,7 @@
         "correct": 2
       },
       {
+        "id": "qehes6",
         "question": "Intermediate consumption is:",
         "options": [
           "Counted directly in GDP",
@@ -655,6 +759,7 @@
         "correct": 1
       },
       {
+        "id": "ypw4ed",
         "question": "In the symbols, G stands for:",
         "options": [
           "Gross saving",
@@ -667,88 +772,108 @@
     ],
     "fillBlanks": [
       {
+        "id": "5x8392",
         "sentence": "Total production equals total income equals total _______.",
         "answer": "consumption"
       },
       {
+        "id": "gglj50",
         "sentence": "GDP = C + I + G + (E − _______).",
         "answer": "U"
       },
       {
+        "id": "bgklk1",
         "sentence": "Net exports equal exports minus _______.",
         "answer": "imports"
       },
       {
+        "id": "uf4cve",
         "sentence": "The three-sector model is Y = C + I + _______.",
         "answer": "G"
       },
       {
+        "id": "st4i1v",
         "sentence": "Value added equals gross production minus _______ consumption.",
         "answer": "intermediate"
       },
       {
+        "id": "wuivf1",
         "sentence": "In the four-sector model, S − I = (G + TR − T) + _______.",
         "answer": "NX"
       },
       {
+        "id": "zq7yjs",
         "sentence": "Tourism is _______ a separate activity in the NACE classification.",
         "answer": "not"
       },
       {
+        "id": "cklv95",
         "sentence": "In the macro symbols, the letter T stands for _______.",
         "answer": "taxes"
       }
     ],
     "learn": {
+      "id": "nsmbr0",
       "content": "<h3>One economy, three ways to count it</h3><p>National accounts are the bookkeeping system of a whole country. They rest on a single, almost philosophical identity: every euro of output is also a euro that someone spends and a euro that someone earns. In other words,</p><div class=\"formula-box\">\\[ \\text{Total production} = \\text{Total consumption} = \\text{Total income} \\]</div><p>This is why GDP can be measured in <strong>three equivalent ways</strong>, each starting from a different side of the same circular flow:</p><ol><li><strong>Production approach</strong> — add up the value of all final output.</li><li><strong>Expenditure (consumption) approach</strong> — add up what all buyers spend.</li><li><strong>Income approach</strong> — add up all the income earned.</li></ol><p>All three <em>must</em> give the same number. If your textbook computes GDP three different ways and gets three answers, something is mis-measured, not three \"kinds\" of GDP.</p><h3>The expenditure approach: building GDP sector by sector</h3><p>The expenditure form is the one we use for modelling, because it names <em>who</em> does the spending. Adding one sector at a time gives the four classic models of GDP:</p><div class=\"formula-box\">\\[ \\underbrace{Y = C}_{\\text{1 sector}} \\;\\to\\; \\underbrace{Y = C + I}_{\\text{2 sectors}} \\;\\to\\; \\underbrace{Y = C + I + G}_{\\text{3 sectors}} \\;\\to\\; \\underbrace{Y = C + I + G + (E - U)}_{\\text{4 sectors}} \\]</div><p>Each letter is one spender: <strong>C</strong> households, <strong>I</strong> firms (investment), <strong>G</strong> the government, and <strong>E − U</strong> the rest of the world (exports minus imports). Net exports are \\(NX = E - U\\). The goods-market model you study next is built directly on the three-sector version \\(Y = C + I + G\\).</p><h4>The saving–investment identity</h4><p>Rearranging the full four-sector model yields a deep relationship between a country’s saving, its government budget and its trade balance:</p><div class=\"formula-box\">\\[ S - I = (G + TR - T) + NX \\]</div><p><strong>Interpretation:</strong> the term \\(G + TR - T\\) is the government <em>budget deficit</em> (spending plus transfers minus taxes). So a country’s private saving over investment must equal the budget deficit <em>plus</em> net exports — the seed of the \"twin deficits\" idea that reappears in the open economy.</p><h3>The production approach: value added (no double-counting)</h3><p>If you simply summed every firm’s sales you would count the same output many times (the steel inside a car, the flour inside bread). The production approach avoids this by summing only the <strong>value added</strong> at each stage:</p><div class=\"formula-box\">\\[ \\text{Value added} = \\text{gross value of production} - \\text{intermediate consumption} \\]</div><p>where <strong>intermediate consumption</strong> is the value of inputs used up in production. Summed across all activities — organised by the <strong>NACE</strong> classification (primary, secondary, tertiary, quaternary, quintary sectors) — value added equals GDP.</p><div class=\"warning-box\"><h4>Tourism is not an \"activity\" — a key point for this faculty</h4><p>In NACE an activity is defined by the producer and the product, so <strong>tourism does not exist as a separate activity or sector</strong> in any classification. A tourist’s spending is spread across accommodation, transport, food service, retail and more. This is precisely why measuring tourism requires a special construction — a tourism <em>satellite account</em> — rather than reading one line off the national accounts.</p></div>",
       "image": null
     }
   },
   "goodsMarket": {
+    "id": "8tlpqt",
     "name": "The Goods Market",
     "icon": "fa-cart-shopping",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "wh2fj1",
         "question": "What is the consumption function?",
         "answer": "\\( C = c_0 + c_1 Y_D \\)\n• \\( c_0 \\) = autonomous consumption (consumption when disposable income is zero)\n• \\( c_1 \\) = the marginal propensity to consume (MPC), with \\( 0 < c_1 < 1 \\)\n• \\( Y_D \\) = disposable income",
         "explanation": "Example: C = 1000 + 0.6·YD."
       },
       {
+        "id": "4ul67c",
         "question": "What is the marginal propensity to consume?",
         "answer": "The fraction of an extra unit of disposable income that is consumed, \\( c_1 \\). Since \\( 0 < c_1 < 1 \\), consumption rises with income but less than one-for-one (the rest is saved)."
       },
       {
+        "id": "1wt3bn",
         "question": "What is disposable income?",
         "answer": "Income left to households after taxes and transfers:\n\\( Y_D = Y - T \\)\nSubstituting into the consumption function: \\( C = c_0 + c_1 (Y - T) \\)."
       },
       {
+        "id": "fhz7nt",
         "question": "What is the equilibrium condition in the goods market?",
         "answer": "Production equals demand:\n\\( Y = Z \\), where \\( Z = C + I + G \\) (closed economy, X = IM = 0).\nBecause firms supply whatever is demanded, demand determines output."
       },
       {
+        "id": "ch4u6h",
         "question": "What is the equilibrium-output formula?",
         "answer": "Solving \\( Y = c_0 + c_1(Y - T) + I + G \\):\n\\( Y = \\dfrac{1}{1 - c_1}\\,[\\,c_0 + I + G - c_1 T\\,] \\)\nThe bracket is autonomous spending; the front factor is the multiplier."
       },
       {
+        "id": "putiz9",
         "question": "What is the multiplier?",
         "answer": "\\( \\text{multiplier} = \\dfrac{1}{1 - c_1} \\)\nSince \\( 0 < c_1 < 1 \\), the multiplier is greater than 1: a one-unit rise in autonomous spending raises output by more than one unit. A higher MPC (or a lower MPС to save) makes the multiplier larger."
       },
       {
+        "id": "t1hduh",
         "question": "Why is the effect of autonomous spending greater than one-to-one?",
         "answer": "A rise in spending raises output and income; the extra income raises consumption by \\( c_1 \\); that raises output again, and so on. The geometric series \\( 1 + c_1 + c_1^2 + \\cdots = \\dfrac{1}{1-c_1} \\)."
       },
       {
+        "id": "yrgn7b",
         "question": "Which variables are endogenous vs. exogenous in the goods-market model?",
         "answer": "Endogenous (determined inside the model): output Y, consumption C, disposable income.\nExogenous / policy instruments: government spending G, taxes T (political decisions); investment I is taken as given (simplification)."
       },
       {
+        "id": "sdp527",
         "question": "What is autonomous spending?",
         "answer": "The part of demand that does NOT depend on current income: \\( c_0 + I + G - c_1 T \\). It is the constant term the multiplier acts on."
       }
     ],
     "quiz": [
       {
+        "id": "fh0o75",
         "question": "In C = c₀ + c₁·YD, the term c₁ is the:",
         "options": [
           "Autonomous consumption",
@@ -759,6 +884,7 @@
         "correct": 1
       },
       {
+        "id": "hqifl3",
         "question": "Disposable income is:",
         "options": [
           "Y + T",
@@ -769,6 +895,7 @@
         "correct": 1
       },
       {
+        "id": "1jw2th",
         "question": "Goods-market equilibrium requires:",
         "options": [
           "Saving = 0",
@@ -779,6 +906,7 @@
         "correct": 1
       },
       {
+        "id": "akivm4",
         "question": "If c₁ = 0.75, the multiplier 1/(1−c₁) equals:",
         "options": [
           "0.75",
@@ -789,6 +917,7 @@
         "correct": 2
       },
       {
+        "id": "kuqo7w",
         "question": "With C = 250 + 0.75·YD, an increase in G of 100 raises equilibrium output by:",
         "options": [
           "100",
@@ -799,6 +928,7 @@
         "correct": 2
       },
       {
+        "id": "nw7ivy",
         "question": "The multiplier is greater than 1 because:",
         "options": [
           "Taxes are zero",
@@ -809,6 +939,7 @@
         "correct": 1
       },
       {
+        "id": "20l5rn",
         "question": "An increase in the marginal propensity to consume makes the multiplier:",
         "options": [
           "Smaller",
@@ -819,6 +950,7 @@
         "correct": 1
       },
       {
+        "id": "onydec",
         "question": "In the simple goods-market model, which is a policy instrument (exogenous)?",
         "options": [
           "Output Y",
@@ -829,6 +961,7 @@
         "correct": 2
       },
       {
+        "id": "xpz5l4",
         "question": "When disposable income is zero, consumption equals:",
         "options": [
           "Zero",
@@ -841,83 +974,102 @@
     ],
     "fillBlanks": [
       {
+        "id": "zffmat",
         "sentence": "In the consumption function, c₀ is _______ consumption.",
         "answer": "autonomous"
       },
       {
+        "id": "86klai",
         "sentence": "The marginal propensity to consume is denoted c_______.",
         "answer": "1"
       },
       {
+        "id": "vomr80",
         "sentence": "Disposable income equals income Y minus _______.",
         "answer": "taxes"
       },
       {
+        "id": "vqh49k",
         "sentence": "Goods-market equilibrium requires production Y to equal _______.",
         "answer": "demand"
       },
       {
+        "id": "tljms7",
         "sentence": "The multiplier equals 1 divided by (1 minus _______).",
         "answer": "c1"
       },
       {
+        "id": "95stny",
         "sentence": "If c₁ = 0.75 the multiplier equals _______.",
         "answer": "4"
       },
       {
+        "id": "y5ess2",
         "sentence": "A higher marginal propensity to consume makes the multiplier _______.",
         "answer": "larger"
       },
       {
+        "id": "yzx39c",
         "sentence": "Government spending G and taxes T are _______ variables (policy instruments).",
         "answer": "exogenous"
       }
     ],
     "learn": {
+      "id": "xwbi2d",
       "content": "<h3>The big question of the short run: what sets the level of output?</h3><p>Over a few quarters, prices and wages barely move (\"sticky prices\"), and firms are willing to supply whatever quantity is demanded. So in the short run a single force drives output: <strong>aggregate demand</strong>. If people and firms want to buy more, more gets produced; if demand falls, output falls (the dominant cause of recessions). The goods-market model makes this precise.</p><p>Demand has four components — \\( Z = C + I + G + (X - IM) \\) — but to see the mechanism clearly we start with a <strong>closed economy</strong> (no trade, \\(X = IM = 0\\)), so \\( Z = C + I + G \\). The open-economy version comes back in the Open Economy topic.</p><h3>Consumption: the engine of demand</h3><p>Consumption \\(C\\) is by far the largest piece of demand (around two-thirds of GDP), and what mainly drives it is <strong>disposable income</strong> \\(Y_D\\) — income left after taxes and transfers, \\(Y_D = Y - T\\). The <strong>consumption function</strong> captures this:</p><div class=\"formula-box\">\\[ C = c_0 + c_1 Y_D, \\qquad Y_D = Y - T \\]</div><ul><li>\\(c_0\\) — <strong>autonomous consumption</strong>: what households consume even at zero disposable income (drawing on savings or borrowing). It captures confidence and other non-income influences.</li><li>\\(c_1\\) — the <strong>marginal propensity to consume (MPC)</strong>: the fraction of each extra unit of disposable income that is spent, with \\(0 < c_1 < 1\\).</li></ul><p><strong>Intuition:</strong> when you earn one extra euro you spend part of it (\\(c_1\\)) and save the rest (\\(1 - c_1\\), the marginal propensity to save). So consumption rises with income, but <em>less than one-for-one</em> — that single fact is what later gives the multiplier its size.</p><h3>Equilibrium: production equals demand</h3><p>Because firms produce to meet demand, the goods market is in equilibrium when output equals the demand for goods, \\( Y = Z \\). Substituting consumption (and treating investment \\(I\\), spending \\(G\\) and taxes \\(T\\) as given) :</p><div class=\"formula-box\">\\[ Y = c_0 + c_1(Y - T) + I + G \\]</div><p>This equation is a little subtle: \\(Y\\) appears on <em>both</em> sides, because income determines consumption, which is itself part of demand, which determines income. Solving for \\(Y\\) untangles the loop:</p><div class=\"formula-box\">\\[ Y = \\underbrace{\\frac{1}{1 - c_1}}_{\\text{multiplier}}\\; \\underbrace{\\big[\\,c_0 + I + G - c_1 T\\,\\big]}_{\\text{autonomous spending}} \\]</div><p>The bracket is <strong>autonomous spending</strong> — the part of demand that does <em>not</em> depend on current income. The fraction in front is the <strong>multiplier</strong>.</p><h3>The multiplier: why a small push moves output a lot</h3><p>The multiplier \\( \\dfrac{1}{1-c_1} \\) is greater than 1 (since \\(0<c_1<1\\)), so any change in autonomous spending changes output by <em>more</em> than itself:</p><div class=\"formula-box\">\\[ \\Delta Y = \\frac{1}{1 - c_1}\\times \\Delta(\\text{autonomous spending}) \\]</div><p><strong>Why more than one-to-one?</strong> Trace the chain. Extra spending of 1 raises output and income by 1; that extra income raises consumption by \\(c_1\\); the new spending raises income again, lifting consumption by \\(c_1^2\\); and so on. The rounds form a geometric series:</p><div class=\"formula-box\">\\[ 1 + c_1 + c_1^2 + c_1^3 + \\cdots = \\frac{1}{1 - c_1} \\]</div><p><strong>Interpretation:</strong> a higher MPC means each round leaks less into saving, so the chain runs longer and the multiplier is <em>larger</em>. (In the real world, taxes and imports leak demand out of the loop and shrink the multiplier — we add those later.)</p><div class=\"example-box\"><h4>Worked example 1 — the multiplier in action</h4><p>Let \\( C = 250 + 0.75\\,Y_D \\), so the MPC is \\(c_1 = 0.75\\). The multiplier is</p><div class=\"formula-box\">\\[ \\frac{1}{1 - 0.75} = \\frac{1}{0.25} = 4 \\]</div><p>A fiscal stimulus of \\( \\Delta G = 100 \\) therefore raises equilibrium output by</p><div class=\"formula-box\">\\[ \\Delta Y = 4 \\times 100 = 400 \\]</div><p>The initial 100 of spending ultimately generates 400 of output — the extra 300 comes from the induced consumption rounds.</p></div><div class=\"example-box\"><h4>Worked example 2 — computing equilibrium output</h4><p>Given \\( C = 500 + 0.5\\,Y_D,\\; T = 600,\\; I = 300,\\; G = 2000 \\). First the multiplier is \\( \\tfrac{1}{1-0.5} = 2 \\); then:</p><div class=\"formula-box\">\\[ Y = \\frac{1}{1-0.5}\\,[\\,500 + 300 + 2000 - 0.5(600)\\,] = 2 \\times 2500 = 5000 \\]</div><p><strong>Check the logic:</strong> notice taxes enter as \\(-c_1 T\\), not \\(-T\\). A tax only reduces demand through the part of income households would have <em>spent</em> (\\(c_1\\)); the part they would have saved never affected demand. This is why a tax cut is a weaker stimulus than an equal rise in \\(G\\).</p></div><div class=\"warning-box\"><h4>Common pitfalls</h4><ul><li>The multiplier uses \\(c_1\\) (the MPC), <em>not</em> the tax rate or the interest rate.</li><li>Government spending \\(G\\) and taxes \\(T\\) are <strong>exogenous</strong> policy choices; output \\(Y\\), consumption \\(C\\) and disposable income are <strong>endogenous</strong> (determined inside the model).</li><li>This is a <em>short-run, demand-driven</em> story. It does not describe the long run, where supply (capital, technology) sets output.</li></ul></div>",
       "image": null
     }
   },
   "financialMarkets": {
+    "id": "4rdbc9",
     "name": "Financial Markets & Money",
     "icon": "fa-money-bill-trend-up",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "qla3n9",
         "question": "What is money in this model?",
         "answer": "Money = currency (cash) + checkable deposits — the financial asset that can be used directly to buy goods. The alternative is bonds, which pay interest but cannot be spent directly."
       },
       {
+        "id": "bgki6x",
         "question": "What determines the demand for money?",
         "answer": "The demand for money \\( M^d = \\$Y \\cdot L(i) \\) depends on:\n• the level of transactions, proportional to nominal income \\( \\$Y \\) (more income → more money demanded)\n• the interest rate \\( i \\) (higher i → less money demanded, because bonds become more attractive)."
       },
       {
+        "id": "eizsun",
         "question": "Why does the money-demand curve slope downward in i?",
         "answer": "The interest rate is the opportunity cost of holding money (instead of interest-bearing bonds). The higher the interest rate, the less money people want to hold. An increase in income shifts the whole curve to the right."
       },
       {
+        "id": "pb8gma",
         "question": "What is the money supply, and how is the interest rate determined?",
         "answer": "The money supply \\( M^s = M \\) is set by the central bank and is independent of the interest rate (a vertical line). Equilibrium is where supply meets demand:\n\\( M^s = M^d \\;\\Rightarrow\\; M = \\$Y\\,L(i) \\) — this pins down the equilibrium interest rate."
       },
       {
+        "id": "xeq9hf",
         "question": "How are bond prices and the interest rate related?",
         "answer": "Inversely. For a one-year bond of nominal value 100 bought at price \\( P_B \\):\n\\( i = \\dfrac{100 - P_B}{P_B} \\)\nThe higher the bond’s price, the lower its yield (interest rate)."
       },
       {
+        "id": "04x3th",
         "question": "What are open-market operations?",
         "answer": "The central bank changes the money supply by trading (short-term government) bonds:\n• Buys bonds → raises bond demand → bond prices up → interest rate DOWN → money supply UP (expansionary).\n• Sells bonds → bond prices down → interest rate UP → money supply DOWN (contractionary)."
       },
       {
+        "id": "4604j2",
         "question": "What does expansionary vs. contractionary monetary policy do to i?",
         "answer": "• Expansionary: CB increases M (buys bonds) → interest rate falls.\n• Contractionary: CB decreases M (sells bonds) → interest rate rises."
       },
       {
+        "id": "pgmg32",
         "question": "What happens to the equilibrium interest rate when income rises?",
         "answer": "A rise in income increases money demand (shifts M^d right). With money supply fixed, the equilibrium interest rate RISES. (This relationship becomes the upward-sloping LM curve.)"
       }
     ],
     "quiz": [
       {
+        "id": "2qui9x",
         "question": "Money in this model is defined as:",
         "options": [
           "Bonds only",
@@ -928,6 +1080,7 @@
         "correct": 1
       },
       {
+        "id": "qblyvp",
         "question": "The demand for money increases when:",
         "options": [
           "The interest rate rises",
@@ -938,6 +1091,7 @@
         "correct": 1
       },
       {
+        "id": "673i41",
         "question": "The money-demand curve slopes downward because a higher interest rate:",
         "options": [
           "Raises income",
@@ -948,6 +1102,7 @@
         "correct": 1
       },
       {
+        "id": "99mqro",
         "question": "The money supply curve is:",
         "options": [
           "Upward-sloping",
@@ -958,6 +1113,7 @@
         "correct": 1
       },
       {
+        "id": "hd3sw0",
         "question": "When the central bank BUYS bonds, the interest rate:",
         "options": [
           "Rises",
@@ -968,6 +1124,7 @@
         "correct": 1
       },
       {
+        "id": "dx3912",
         "question": "The relationship between bond prices and the interest rate is:",
         "options": [
           "Direct (positive)",
@@ -978,6 +1135,7 @@
         "correct": 1
       },
       {
+        "id": "al7ij3",
         "question": "With money demand M = Y(0.4 − i), Y = 150 and money supply = 50, the equilibrium interest rate is about:",
         "options": [
           "6.7%",
@@ -988,6 +1146,7 @@
         "correct": 0
       },
       {
+        "id": "7ya4nt",
         "question": "Contractionary monetary policy means the central bank:",
         "options": [
           "Buys bonds and lowers i",
@@ -998,6 +1157,7 @@
         "correct": 1
       },
       {
+        "id": "v1ezvs",
         "question": "An increase in income (with fixed money supply) makes the equilibrium interest rate:",
         "options": [
           "Fall",
@@ -1010,87 +1170,107 @@
     ],
     "fillBlanks": [
       {
+        "id": "o0y8em",
         "sentence": "Money equals currency plus checkable _______.",
         "answer": "deposits"
       },
       {
+        "id": "cvhasp",
         "sentence": "The demand for money rises with the level of _______.",
         "answer": "income"
       },
       {
+        "id": "shl7fj",
         "sentence": "The money-demand curve slopes downward in the _______ rate.",
         "answer": "interest"
       },
       {
+        "id": "ng3q6o",
         "sentence": "The money supply is set by the _______ bank.",
         "answer": "central"
       },
       {
+        "id": "0t26gc",
         "sentence": "When the central bank buys bonds, the interest rate _______.",
         "answer": "falls"
       },
       {
+        "id": "i5bljq",
         "sentence": "Bond prices and the interest rate are related _______.",
         "answer": "inversely"
       },
       {
+        "id": "2uz7nv",
         "sentence": "Selling bonds is _______ monetary policy.",
         "answer": "contractionary"
       },
       {
+        "id": "fvxqsg",
         "sentence": "Equilibrium in the money market is where money supply equals money _______.",
         "answer": "demand"
       }
     ],
     "learn": {
+      "id": "8iklan",
       "content": "<h3>The other half of the short run: where the interest rate is born</h3><p>The goods-market model took the interest rate as given. But the interest rate is one of our four key variables, and it has enormous influence on investment and spending. So we now ask: <em>what determines the interest rate?</em> The answer comes from the financial market, using the same supply-and-demand logic as any other market — except the \"good\" being traded is <strong>money</strong> itself, and its price is the interest rate.</p><h3>Money vs. bonds: the portfolio choice</h3><p>Imagine you have some financial wealth. You can hold it in two broad forms:</p><ul><li><strong>Money</strong> (currency + checkable deposits) — instantly spendable, but pays little or no interest.</li><li><strong>Bonds</strong> (and similar interest-bearing assets) — pay a return, but cannot be used directly to buy goods.</li></ul><p>The <strong>demand for money</strong> is the decision of how much wealth to keep in spendable form. It depends on two things — how much you transact, and how costly it is to hold money instead of bonds:</p><div class=\"formula-box\">\\[ M^d = \\$Y \\cdot L(i) \\]</div><ul><li>It rises with the <strong>level of transactions</strong>, proportional to nominal income \\(\\$Y\\) (more income and spending → you need more money on hand).</li><li>It falls with the <strong>interest rate</strong> \\(i\\), which is the <em>opportunity cost</em> of holding money rather than interest-bearing bonds.</li></ul><p>So the \\(M^d\\) curve slopes <strong>downward</strong> in \\(i\\), and a rise in income shifts the whole curve to the <strong>right</strong>.</p><h3>Equilibrium: the interest rate that clears the money market</h3><p>The <strong>money supply</strong> \\(M^s = M\\) is set by the central bank and does not depend on the interest rate — a vertical line. The interest rate then adjusts until people are willing to hold exactly the money that exists:</p><div class=\"formula-box\">\\[ M^s = M^d \\quad\\Longrightarrow\\quad M = \\$Y\\,L(i) \\]</div><div class=\"example-box\"><h4>Worked example — equilibrium interest rate</h4><p>Let money demand be \\( M^d = Y(0.4 - i) \\) with income \\( Y = 150 \\) and a money supply \\( M^s = 50 \\). Set supply equal to demand and solve for \\(i\\):</p><div class=\"formula-box\">\\[ 50 = 150\\,(0.4 - i) \\;\\Rightarrow\\; 0.4 - i = \\tfrac{50}{150} = \\tfrac{1}{3} \\;\\Rightarrow\\; i \\approx 0.067 = 6.7\\% \\]</div><p><strong>Interpretation:</strong> at 6.7% people are content to hold the 50 of money in existence. If the central bank printed more money, \\(i\\) would have to <em>fall</em> to persuade them to hold it; if income rose, money demand would rise and \\(i\\) would climb.</p></div><h3>How the central bank actually moves the rate</h3><p>The central bank does not \"set\" the interest rate by decree — it changes the <strong>money supply</strong> by buying and selling government bonds (<strong>open-market operations</strong>). The link runs through bond prices, which move <em>inversely</em> to the interest rate. For a one-year bond of face value 100 bought at price \\(P_B\\):</p><div class=\"formula-box\">\\[ i = \\frac{100 - P_B}{P_B} \\]</div><p>The higher the price you pay today, the smaller your return — so a higher bond price means a lower interest rate.</p><div class=\"tip-box\"><h4>The two policy levers</h4><ul><li><strong>Expansionary:</strong> the central bank <em>buys</em> bonds → bond demand and prices rise → \\(i\\) falls → money supply rises.</li><li><strong>Contractionary:</strong> the central bank <em>sells</em> bonds → prices fall → \\(i\\) rises → money supply falls.</li></ul><p>One more result will matter enormously next: a rise in income raises money demand and pushes the equilibrium interest rate <strong>up</strong>. That positive link between output and the interest rate is exactly the <strong>LM curve</strong> of the IS-LM model.</p></div>",
       "image": null
     }
   },
   "isLmModel": {
+    "id": "44qrd8",
     "name": "The IS-LM Model",
     "icon": "fa-arrows-to-dot",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "uqfj3e",
         "question": "What is the IS-LM model?",
         "answer": "A single framework that puts the GOODS market (the IS relation) and the FINANCIAL/money market (the LM relation) on one graph (output Y on the horizontal axis, interest rate i on the vertical), to find the short-run equilibrium and analyse economic policy."
       },
       {
+        "id": "wojpcv",
         "question": "What is the IS curve?",
         "answer": "The IS curve represents goods-market equilibrium when investment depends on the interest rate:\n\\( Y = C(Y - T) + I(Y, i) + G \\)\nIt is DOWNWARD sloping: a higher interest rate reduces investment, hence demand and output."
       },
       {
+        "id": "p3ohm7",
         "question": "What shifts the IS curve?",
         "answer": "A change in anything (other than i) that affects demand:\n• Increase in G, C, or I, or a DECREASE in T → IS shifts RIGHT.\n• Decrease in G, C, or I, or an INCREASE in T → IS shifts LEFT."
       },
       {
+        "id": "9a93k9",
         "question": "What is the LM curve?",
         "answer": "The LM curve represents financial-market (money-market) equilibrium:\n\\( \\dfrac{M}{P} = Y\\,L(i) \\)\nIt is UPWARD sloping: a higher income raises money demand, which raises the interest rate."
       },
       {
+        "id": "566h5i",
         "question": "What shifts the LM curve?",
         "answer": "A change in the (real) money supply:\n• Increase in M → LM shifts DOWN/right (lower i at each Y).\n• Decrease in M → LM shifts UP/left (higher i at each Y).\nIncome does NOT shift LM — it is a movement along it."
       },
       {
+        "id": "jmuggp",
         "question": "How does FISCAL policy work in IS-LM?",
         "answer": "Fiscal expansion (increase G / transfers, or cut T) shifts IS RIGHT → output UP and interest rate UP.\nFiscal contraction (cut G, raise T) shifts IS LEFT → output DOWN and interest rate DOWN."
       },
       {
+        "id": "akd6sr",
         "question": "How does MONETARY policy work in IS-LM?",
         "answer": "Monetary expansion (increase M) shifts LM DOWN → output UP and interest rate DOWN.\nMonetary contraction (decrease M) shifts LM UP → output DOWN and interest rate UP."
       },
       {
+        "id": "57w214",
         "question": "What is a policy mix?",
         "answer": "The combined use of fiscal and monetary policy. Because they push the interest rate in opposite or reinforcing directions, a mix lets policymakers target output and the interest rate together (e.g. fiscal expansion + monetary expansion to boost output while keeping i from rising)."
       },
       {
+        "id": "o9fgfr",
         "question": "According to Table 5-1, what does an INCREASE in the money supply do?",
         "answer": "It shifts LM down (IS unchanged) → output rises and the interest rate falls. (An increase in government spending, by contrast, shifts IS right → output up and interest rate up.)"
       }
     ],
     "quiz": [
       {
+        "id": "7deyld",
         "question": "The IS curve represents equilibrium in the:",
         "options": [
           "Money market",
@@ -1101,6 +1281,7 @@
         "correct": 1
       },
       {
+        "id": "xulcuy",
         "question": "The IS curve is downward-sloping because a higher interest rate:",
         "options": [
           "Raises investment and output",
@@ -1111,6 +1292,7 @@
         "correct": 1
       },
       {
+        "id": "q62hbi",
         "question": "An increase in government spending shifts the IS curve:",
         "options": [
           "Left",
@@ -1121,6 +1303,7 @@
         "correct": 1
       },
       {
+        "id": "eqyba9",
         "question": "The LM curve represents equilibrium in the:",
         "options": [
           "Goods market",
@@ -1131,6 +1314,7 @@
         "correct": 1
       },
       {
+        "id": "cjrjt1",
         "question": "The LM curve is upward-sloping because a higher income:",
         "options": [
           "Lowers money demand",
@@ -1141,6 +1325,7 @@
         "correct": 1
       },
       {
+        "id": "fzm9l9",
         "question": "An increase in the money supply shifts the LM curve:",
         "options": [
           "Up/left",
@@ -1151,6 +1336,7 @@
         "correct": 1
       },
       {
+        "id": "9z324r",
         "question": "A fiscal contraction (higher taxes) leads to:",
         "options": [
           "Higher output and interest rate",
@@ -1161,6 +1347,7 @@
         "correct": 1
       },
       {
+        "id": "407h5f",
         "question": "Monetary expansion (increase in M) results in:",
         "options": [
           "Output up, interest rate down",
@@ -1171,6 +1358,7 @@
         "correct": 0
       },
       {
+        "id": "44fh2j",
         "question": "Using fiscal and monetary policy together is called a:",
         "options": [
           "Liquidity trap",
@@ -1183,92 +1371,113 @@
     ],
     "fillBlanks": [
       {
+        "id": "w18glg",
         "sentence": "The IS curve represents equilibrium in the _______ market.",
         "answer": "goods"
       },
       {
+        "id": "ff5zit",
         "sentence": "The IS curve slopes downward because higher interest rates reduce _______.",
         "answer": "investment"
       },
       {
+        "id": "3u7fh2",
         "sentence": "An increase in government spending shifts the IS curve to the _______.",
         "answer": "right"
       },
       {
+        "id": "ginidp",
         "sentence": "The LM curve represents equilibrium in the _______ market.",
         "answer": "money"
       },
       {
+        "id": "w421q2",
         "sentence": "The LM curve slopes _______ in the (Y, i) diagram.",
         "answer": "upward"
       },
       {
+        "id": "b6x8x6",
         "sentence": "An increase in the money supply shifts the LM curve _______.",
         "answer": "down"
       },
       {
+        "id": "i90bw9",
         "sentence": "A fiscal expansion raises output and raises the _______ rate.",
         "answer": "interest"
       },
       {
+        "id": "mhzbad",
         "sentence": "Using fiscal and monetary policy together is called a policy _______.",
         "answer": "mix"
       }
     ],
     "learn": {
+      "id": "x2dnkv",
       "content": "<h3>Bringing the two markets together</h3><p>So far we have two separate short-run models: the <strong>goods market</strong> (which set output, taking the interest rate as given) and the <strong>financial market</strong> (which set the interest rate, taking income as given). But output and the interest rate clearly affect each other — higher income raises the interest rate; a higher interest rate lowers investment and output. The <strong>IS-LM model</strong> resolves this two-way dependence by putting both markets on a single diagram, with output \\(Y\\) on the horizontal axis and the interest rate \\(i\\) on the vertical. The economy settles where the two curves cross.</p><h3>The IS curve — equilibrium in the goods market</h3><p>We now drop the simplification that investment is fixed and let it depend (negatively) on the interest rate. Goods-market equilibrium becomes:</p><div class=\"formula-box\">\\[ Y = C(Y - T) + I(Y, i) + G \\]</div><p><strong>Why it slopes down:</strong> a higher interest rate \\(i\\) makes borrowing dearer, so investment \\(I\\) falls; lower investment means lower demand, and lower demand (through the multiplier) means lower output \\(Y\\). High \\(i\\) ↔ low \\(Y\\): the IS curve slopes <strong>downward</strong>.</p><p><strong>What shifts it:</strong> anything that changes demand at a given interest rate. An increase in \\(G\\), \\(C\\) or \\(I\\), or a cut in \\(T\\), shifts IS to the <strong>right</strong>; the opposite shifts it <strong>left</strong>.</p><h3>The LM curve — equilibrium in the money market</h3><p>From the financial-market model, equilibrium requires the real money supply to equal real money demand:</p><div class=\"formula-box\">\\[ \\frac{M}{P} = Y\\,L(i) \\]</div><p><strong>Why it slopes up:</strong> a higher income \\(Y\\) raises the demand for money; with a fixed money supply, the interest rate \\(i\\) must rise to restore balance. High \\(Y\\) ↔ high \\(i\\): the LM curve slopes <strong>upward</strong>.</p><p><strong>What shifts it:</strong> a change in the <em>money supply</em> \\(M\\). More money shifts LM <strong>down</strong> (a lower \\(i\\) at every \\(Y\\)); less money shifts it <strong>up</strong>. Note carefully: a change in income is a <em>movement along</em> the LM curve, not a shift of it.</p><h3>Reading economic policy off the diagram</h3><p>The power of IS-LM is that every policy becomes a clean prediction about the direction of output and the interest rate. The golden rule: <em>a curve moves only if a variable in its own equation changes.</em></p><table><tr><th>Policy</th><th>Shift</th><th>Output</th><th>Interest rate</th></tr><tr><td>Increase in taxes (T)</td><td>IS left</td><td>Down</td><td>Down</td></tr><tr><td>Decrease in taxes (T)</td><td>IS right</td><td>Up</td><td>Up</td></tr><tr><td>Increase in spending (G)</td><td>IS right</td><td>Up</td><td>Up</td></tr><tr><td>Decrease in spending (G)</td><td>IS left</td><td>Down</td><td>Down</td></tr><tr><td>Increase in money (M)</td><td>LM down</td><td>Up</td><td>Down</td></tr><tr><td>Decrease in money (M)</td><td>LM up</td><td>Down</td><td>Up</td></tr></table><p>Notice the tell-tale signatures: a <strong>fiscal expansion</strong> raises output <em>and</em> the interest rate (it works on IS), whereas a <strong>monetary expansion</strong> raises output but <em>lowers</em> the interest rate (it works on LM). That difference is how you identify which policy was used just from what happened to \\(Y\\) and \\(i\\).</p><div class=\"tip-box\"><h4>The policy mix</h4><p>Because fiscal expansion pushes \\(i\\) <em>up</em> while monetary expansion pushes it <em>down</em>, the two can be combined into a deliberate <strong>policy mix</strong> — for example, a fiscal stimulus paired with monetary easing to raise output <em>without</em> letting the interest rate spike. This is precisely the combination used in the COVID-19 crisis. The IS-LM model is the workhorse for analysing such combinations.</p></div>",
       "image": null
     }
   },
   "labourMarket": {
+    "id": "kdh2gq",
     "name": "The Labour Market & Natural Rate",
     "icon": "fa-people-group",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "e33x4n",
         "question": "Why does the medium-run analysis start with the labour market?",
         "answer": "In the medium run, higher output → higher employment → lower unemployment → higher wages → higher production costs → higher prices. The unemployment rate is the key variable that links output Y and the price level P, and it is determined on the labour market."
       },
       {
+        "id": "75atqe",
         "question": "What are the participation rate and the unemployment rate?",
         "answer": "Participation rate = labour force / working-age population.\nUnemployment rate \\( u = \\dfrac{U}{L} \\) = unemployed / labour force.",
         "explanation": "Discouraged workers leave the labour force, which lowers the measured participation rate."
       },
       {
+        "id": "hnuto7",
         "question": "What is the wage-setting (WS) relation?",
         "answer": "The nominal wage depends on the expected price level, the unemployment rate and a catch-all z:\n\\( W = P^e\\, F(u, z) \\)\n• higher expected prices \\(P^e\\) → higher wages\n• higher unemployment u → LOWER wages (weaker bargaining power)\n• higher z (benefits, protection, minimum wage) → higher wages"
       },
       {
+        "id": "j65z4u",
         "question": "Why do wages depend on the EXPECTED price level?",
         "answer": "Because workers and firms care about the REAL wage W/P, and wages are negotiated for a future period. If a higher price level is expected, workers demand higher nominal wages and firms can grant them without losing profitability."
       },
       {
+        "id": "4f75xw",
         "question": "What are efficiency wages?",
         "answer": "Wages paid ABOVE the reservation wage to reduce turnover and raise productivity. The reservation wage is the wage that makes a worker indifferent between working and being unemployed. Firms pay more than this to keep and motivate workers."
       },
       {
+        "id": "e2zlvo",
         "question": "What is the price-setting (PS) relation?",
         "answer": "With a markup μ over marginal cost (one worker produces one unit, so marginal cost = W):\n\\( P = (1 + \\mu)\\,W \\quad\\Rightarrow\\quad \\dfrac{W}{P} = \\dfrac{1}{1+\\mu} \\)\nA higher markup (more monopoly power) lowers the real wage."
       },
       {
+        "id": "329v7x",
         "question": "How is the natural rate of unemployment determined?",
         "answer": "Set \\(P^e = P\\) so the WS real wage equals the PS real wage:\n\\( F(u_n, z) = \\dfrac{1}{1+\\mu} \\)\nThe natural rate \\(u_n\\) is the unemployment rate consistent with both relations — determined by the STRUCTURE of the labour market (z) and the product market (μ)."
       },
       {
+        "id": "t8lvdo",
         "question": "Using F = 1 − u + z, what is the natural rate formula?",
         "answer": "From \\( 1 - u_n + z = \\dfrac{1}{1+\\mu} \\):\n\\( u_n = 1 - \\dfrac{1}{1+\\mu} + z \\)\nA higher markup μ or higher benefits z RAISES the natural rate of unemployment."
       },
       {
+        "id": "c6hhg4",
         "question": "What raises the natural rate of unemployment?",
         "answer": "• An increase in the markup μ (more market power, less product-market competition).\n• An increase in z — higher unemployment benefits, stronger employment protection, a higher minimum wage (less labour-market flexibility)."
       },
       {
+        "id": "o0cwne",
         "question": "What is the natural level of output?",
         "answer": "The output the economy produces when unemployment equals the natural rate. With \\(Y = N\\) and \\(N = L(1 - u_n)\\):\n\\( Y_n = L\\,(1 - u_n) \\)\nIn the short run output fluctuates AROUND this natural level."
       }
     ],
     "quiz": [
       {
+        "id": "8laqty",
         "question": "The wage-setting relation W = Pᵉ·F(u, z) says wages rise when:",
         "options": [
           "Unemployment rises",
@@ -1279,6 +1488,7 @@
         "correct": 1
       },
       {
+        "id": "e3unck",
         "question": "In the wage-setting relation, a higher unemployment rate leads to:",
         "options": [
           "Higher wages",
@@ -1289,6 +1499,7 @@
         "correct": 1
       },
       {
+        "id": "hw2gwf",
         "question": "The reservation wage is the wage that makes a worker:",
         "options": [
           "Maximally productive",
@@ -1299,6 +1510,7 @@
         "correct": 1
       },
       {
+        "id": "ab2s1k",
         "question": "The price-setting relation P = (1 + μ)W implies a real wage of:",
         "options": [
           "1 + μ",
@@ -1309,6 +1521,7 @@
         "correct": 1
       },
       {
+        "id": "1u2kcf",
         "question": "If the markup μ = 5%, the price-setting real wage W/P is about:",
         "options": [
           "1.05",
@@ -1319,6 +1532,7 @@
         "correct": 1
       },
       {
+        "id": "f9q5y3",
         "question": "With W/P = 0.952 and z = 0, the natural rate of unemployment is about:",
         "options": [
           "9.5%",
@@ -1329,6 +1543,7 @@
         "correct": 1
       },
       {
+        "id": "qq5uuj",
         "question": "An increase in unemployment benefits (z) will:",
         "options": [
           "Lower the natural rate",
@@ -1339,6 +1554,7 @@
         "correct": 1
       },
       {
+        "id": "2bfnw1",
         "question": "In the medium run, the natural rate of unemployment is determined by:",
         "options": [
           "Aggregate demand",
@@ -1349,6 +1565,7 @@
         "correct": 1
       },
       {
+        "id": "68kkky",
         "question": "The natural level of output is the output when:",
         "options": [
           "Prices are zero",
@@ -1361,83 +1578,102 @@
     ],
     "fillBlanks": [
       {
+        "id": "x1gynf",
         "sentence": "The wage-setting relation is W = Pᵉ·F(u, z), where wages fall as _______ rises.",
         "answer": "unemployment"
       },
       {
+        "id": "pid653",
         "sentence": "Wages depend on the _______ price level because wages are set for the future.",
         "answer": "expected"
       },
       {
+        "id": "xkxxzl",
         "sentence": "A wage paid above the reservation wage to cut turnover is an _______ wage.",
         "answer": "efficiency"
       },
       {
+        "id": "731g3p",
         "sentence": "The price-setting relation is P = (1 + μ)W, where μ is the _______.",
         "answer": "markup"
       },
       {
+        "id": "882j3w",
         "sentence": "The price-setting real wage equals 1 divided by (1 + _______).",
         "answer": "μ"
       },
       {
+        "id": "utybtg",
         "sentence": "A higher markup _______ the natural rate of unemployment.",
         "answer": "raises"
       },
       {
+        "id": "pg7y6l",
         "sentence": "The natural rate is determined by the _______ of the labour and product markets.",
         "answer": "structure"
       },
       {
+        "id": "ylmszg",
         "sentence": "The natural level of output corresponds to the natural rate of _______.",
         "answer": "unemployment"
       }
     ],
     "learn": {
+      "id": "mfukr5",
       "content": "<h3>Why the medium run starts here</h3><p>The IS-LM model rested on one big assumption: prices are fixed. Over a few quarters that is fine, but it cannot last. Trace the chain: higher output needs more workers → unemployment falls → workers gain bargaining power → wages rise → production costs rise → firms raise prices. So once we let prices move, output and the price level become linked — and the hinge that connects them is the <strong>unemployment rate</strong>. That is why, before we can draw the AS-AD model, we must understand how the labour market sets wages, prices and unemployment. Two relations do all the work.</p><h3>A quick tour of the labour market</h3><p>The working-age population splits into employed \\(E\\), unemployed \\(U\\), and those out of the labour force. Two ratios summarise it: the <strong>participation rate</strong> (labour force ÷ working-age population) and the <strong>unemployment rate</strong> \\(u = U/L\\). Workers also flow constantly between these states — hires, quits, layoffs, and movements in and out of the labour force (including \"discouraged workers\" who stop searching).</p><h3>Wage setting (WS): what determines wages</h3><p>Wages are set by bargaining (collective or individual) and by firms’ desire to retain productive workers. Formally, the nominal wage depends on three things:</p><div class=\"formula-box\">\\[ W = P^e\\, F(u, z) \\]</div><ul><li><strong>The expected price level \\(P^e\\):</strong> workers and firms care about the <em>real</em> wage \\(W/P\\), and wages are negotiated for the future. If everyone expects higher prices, nominal wages are set higher to match.</li><li><strong>Unemployment \\(u\\):</strong> higher unemployment <em>weakens</em> workers’ bargaining power (easier to replace, harder to find a new job), so it pushes wages <em>down</em>. \\(F\\) is decreasing in \\(u\\).</li><li><strong>The catch-all \\(z\\):</strong> everything else that strengthens workers — unemployment benefits, employment protection, the minimum wage. Higher \\(z\\) → higher wages.</li></ul><p><strong>Efficiency wages</strong> explain why firms often pay <em>above</em> the reservation wage (the wage that leaves a worker indifferent between working and not): paying more cuts turnover and raises productivity.</p><h3>Price setting (PS): what determines prices</h3><p>By setting wages, the labour market also sets prices, because prices are built on costs. In the simplest case one worker produces one unit, so marginal cost equals the wage \\(W\\). Firms with some market power add a <strong>markup</strong> \\(\\mu\\):</p><div class=\"formula-box\">\\[ P = (1+\\mu)\\,W \\quad\\Longrightarrow\\quad \\frac{W}{P} = \\frac{1}{1+\\mu} \\]</div><p><strong>Interpretation:</strong> the price-setting relation pins down the real wage that firms are <em>willing to pay</em>. A bigger markup (more monopoly power, less competition) means higher prices relative to wages — i.e. a <em>lower</em> real wage for workers.</p><h3>Putting them together: the natural rate of unemployment</h3><p>Here is the key insight: wage setting and price setting describe the <em>same</em> real wage from two sides, so in equilibrium they must agree. Setting expectations correct (\\(P^e = P\\)) and equating the two real wages:</p><div class=\"formula-box\">\\[ \\underbrace{F(u_n, z)}_{\\text{WS real wage}} = \\underbrace{\\frac{1}{1+\\mu}}_{\\text{PS real wage}} \\]</div><p>The unemployment rate \\(u_n\\) that solves this is the <strong>natural rate of unemployment</strong> — the rate consistent with stable, correctly-expected prices. With a simple linear form \\(F = 1 - u + z\\):</p><div class=\"formula-box\">\\[ u_n = 1 - \\frac{1}{1+\\mu} + z \\]</div><div class=\"example-box\"><h4>Worked example — computing the natural rate</h4><p>Take \\(z = 0\\) and a markup \\(\\mu = 5\\%\\). The price-setting real wage is</p><div class=\"formula-box\">\\[ \\frac{W}{P} = \\frac{1}{1.05} = 0.952, \\qquad u_n = 1 - 0.952 = 4.8\\% \\]</div><p>Now suppose competition weakens and the markup rises to 10%: \\( \\tfrac{1}{1.10} = 0.909 \\Rightarrow u_n = 9.1\\% \\).</p><p><strong>Interpretation:</strong> more market power (or more generous benefits \\(z\\)) <em>raises</em> the natural rate of unemployment. The natural rate is therefore a <em>structural</em> feature of the economy, not something demand policy can permanently change.</p></div><div class=\"tip-box\"><h4>From the natural rate to the natural level of output</h4><p>Once we know \\(u_n\\), employment is \\(N = L(1 - u_n)\\), and with one unit of output per worker the <strong>natural level of output</strong> is</p><div class=\"formula-box\">\\[ Y_n = L\\,(1 - u_n) \\]</div><p>This is the anchor of the medium run: in the short run output fluctuates <em>around</em> \\(Y_n\\) (driven by demand), but \\(Y_n\\) itself is set by structure — the markup \\(\\mu\\) and labour-market flexibility \\(z\\) — not by demand.</p></div>",
       "image": null
     }
   },
   "mediumRun": {
+    "id": "i0us2k",
     "name": "The Medium Run: AS-AD",
     "icon": "fa-arrows-up-down",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "e87x0s",
         "question": "What is the AS-AD model?",
         "answer": "The standard framework for analysing output Y and the price level P in the short and medium run. The Aggregate Supply (AS) curve comes from the labour market; the Aggregate Demand (AD) curve comes from the IS-LM model."
       },
       {
+        "id": "8aeehm",
         "question": "How is the AS curve derived, and why does it slope up?",
         "answer": "From the labour-market relations:\n\\( P = P^e (1+\\mu)\\,F\\!\\left(1 - \\dfrac{Y}{L}, z\\right) \\)\nIt slopes UP (positive P–Y relation): higher Y → lower unemployment → higher wages → higher costs → higher prices."
       },
       {
+        "id": "xj6595",
         "question": "What shifts the AS curve?",
         "answer": "Changes in the expected price level \\(P^e\\), the markup \\(\\mu\\), or the catch-all \\(z\\). In particular, a rise in \\(P^e\\) shifts AS up."
       },
       {
+        "id": "9jv2ma",
         "question": "How is the AD curve derived, and why does it slope down?",
         "answer": "From the IS-LM model. A higher price level reduces the real money supply \\(M/P\\) → raises the interest rate → lowers investment and demand → lowers output. So the AD relation \\( Y = Y\\!\\left(\\dfrac{M}{P}, G, T\\right) \\) is DOWNWARD sloping in P."
       },
       {
+        "id": "3q40sb",
         "question": "What shifts the AD curve?",
         "answer": "Anything (other than P) that shifts IS or LM: a change in the money supply M, government spending G, or taxes T. Expansionary fiscal or monetary policy shifts AD to the right."
       },
       {
+        "id": "65srkx",
         "question": "What is the medium-run (natural) equilibrium?",
         "answer": "When \\(P = P^e\\), unemployment equals the natural rate \\(u_n\\) and output equals the natural level \\(Y_n\\). The economy is in medium-run equilibrium; the price level has fully adjusted to expectations."
       },
       {
+        "id": "z6lwu8",
         "question": "What happens when output is above the natural level (Y > Yₙ)?",
         "answer": "Low unemployment pushes wages up, so prices rise above the expected level: \\(P > P^e\\). Expectations then adjust upward, shifting AS up, and output returns toward \\(Y_n\\). (Symmetrically, \\(Y < Y_n \\Rightarrow P < P^e\\).)"
       },
       {
+        "id": "buizqu",
         "question": "In the short run vs. the medium run, what determines output?",
         "answer": "SHORT run: output is determined by aggregate demand (AD) and can differ from \\(Y_n\\).\nMEDIUM run: output returns to the natural level \\(Y_n\\), which is set by supply-side structure; demand affects only the price level."
       }
     ],
     "quiz": [
       {
+        "id": "by5z84",
         "question": "The AS curve is derived from equilibrium in the:",
         "options": [
           "Money market",
@@ -1448,6 +1684,7 @@
         "correct": 2
       },
       {
+        "id": "lyyrqy",
         "question": "The AS curve slopes upward because higher output leads to:",
         "options": [
           "Lower wages and prices",
@@ -1458,6 +1695,7 @@
         "correct": 1
       },
       {
+        "id": "g9q5y3",
         "question": "The AD curve is derived from the:",
         "options": [
           "Labour market",
@@ -1468,6 +1706,7 @@
         "correct": 1
       },
       {
+        "id": "ehdl2s",
         "question": "The AD curve slopes downward because a higher price level:",
         "options": [
           "Raises the real money supply",
@@ -1478,6 +1717,7 @@
         "correct": 1
       },
       {
+        "id": "mec91b",
         "question": "In medium-run equilibrium:",
         "options": [
           "P > Pᵉ",
@@ -1488,6 +1728,7 @@
         "correct": 1
       },
       {
+        "id": "o8l71p",
         "question": "If output is above the natural level (Y > Yₙ), then:",
         "options": [
           "P < Pᵉ",
@@ -1498,6 +1739,7 @@
         "correct": 1
       },
       {
+        "id": "ncigxa",
         "question": "An increase in the money supply shifts the AD curve:",
         "options": [
           "Left",
@@ -1508,6 +1750,7 @@
         "correct": 1
       },
       {
+        "id": "wi1o3n",
         "question": "In the medium run, aggregate demand affects mainly the:",
         "options": [
           "Natural level of output",
@@ -1518,6 +1761,7 @@
         "correct": 1
       },
       {
+        "id": "5gijqe",
         "question": "A rise in the expected price level shifts the AS curve:",
         "options": [
           "Down",
@@ -1530,91 +1774,112 @@
     ],
     "fillBlanks": [
       {
+        "id": "xgd40y",
         "sentence": "The AS curve is derived from equilibrium in the _______ market.",
         "answer": "labour"
       },
       {
+        "id": "rvwslt",
         "sentence": "The AS curve slopes _______ in the (Y, P) diagram.",
         "answer": "upward"
       },
       {
+        "id": "woe9jj",
         "sentence": "The AD curve is derived from the _______ model.",
         "answer": "IS-LM"
       },
       {
+        "id": "1tpwbz",
         "sentence": "A higher price level reduces the real money supply M over _______.",
         "answer": "P"
       },
       {
+        "id": "izy4p0",
         "sentence": "In medium-run equilibrium, the actual price level equals the _______ price level.",
         "answer": "expected"
       },
       {
+        "id": "jk0o9g",
         "sentence": "When Y exceeds Yₙ, the price level rises above the _______ level.",
         "answer": "expected"
       },
       {
+        "id": "4xjzmw",
         "sentence": "An increase in the money supply shifts the AD curve to the _______.",
         "answer": "right"
       },
       {
+        "id": "hlyi7a",
         "sentence": "In the medium run, output returns to its _______ level.",
         "answer": "natural"
       }
     ],
     "learn": {
+      "id": "29skds",
       "content": "<h3>The complete short-and-medium-run picture</h3><p>We now have both halves of the economy: the <strong>demand</strong> side (goods + money markets → IS-LM) and the <strong>supply</strong> side (the labour market → wages and prices). The <strong>AS-AD model</strong> combines them in a diagram of output \\(Y\\) against the price level \\(P\\), and it is the standard framework for analysing how \\(Y\\) and \\(P\\) move in the short and medium run. The whole story is the interaction of two curves.</p><h3>Aggregate Supply (AS): upward-sloping</h3><p>The AS curve comes straight from the labour market. Combine wage setting and price setting and substitute the link between output and unemployment, \\(u = 1 - Y/L\\):</p><div class=\"formula-box\">\\[ P = P^e\\,(1+\\mu)\\,F\\!\\left(1 - \\frac{Y}{L},\\, z\\right) \\]</div><p><strong>Why it slopes up:</strong> follow the chain. Higher output \\(Y\\) → more employment → lower unemployment \\(u\\) → stronger worker bargaining → higher wages \\(W\\) → higher costs → higher prices \\(P\\). A positive relationship between \\(P\\) and \\(Y\\).</p><p><strong>What shifts it:</strong> the expected price level \\(P^e\\), the markup \\(\\mu\\), and the catch-all \\(z\\). A rise in \\(P^e\\) in particular shifts AS <em>up</em> — the mechanism that drives the medium-run adjustment below.</p><h3>Aggregate Demand (AD): downward-sloping</h3><p>The AD curve comes from IS-LM. The key is the real money supply \\(M/P\\):</p><div class=\"formula-box\">\\[ Y = Y\\!\\left(\\frac{M}{P},\\, G,\\, T\\right) \\]</div><p><strong>Why it slopes down:</strong> a higher price level \\(P\\) shrinks the <em>real</em> money supply \\(M/P\\); that raises the interest rate \\(i\\), which cuts investment and demand, lowering output. So higher \\(P\\) ↔ lower \\(Y\\).</p><p><strong>What shifts it:</strong> anything that shifts IS or LM — the money supply \\(M\\), government spending \\(G\\), or taxes \\(T\\). Expansionary monetary or fiscal policy shifts AD to the <strong>right</strong>.</p><h3>Equilibrium — and the heart of the medium run</h3><p>In the short run, AS and AD together fix \\(Y\\) and \\(P\\). The deep result concerns what happens to expectations over time:</p><ul><li>If \\(P = P^e\\): expectations are correct, \\(u = u_n\\), and output is at its natural level \\(Y = Y_n\\). This is <strong>medium-run equilibrium</strong>.</li><li>If \\(Y > Y_n\\): unemployment is below \\(u_n\\), wages and prices rise above what was expected, so \\(P > P^e\\).</li><li>If \\(Y < Y_n\\): the reverse, \\(P < P^e\\).</li></ul><div class=\"example-box\"><h4>Worked example — a demand boom fades</h4><p>Start at \\(Y_n\\). A monetary expansion shifts AD right, raising output to \\(Y > Y_n\\) and prices to \\(P > P^e\\). But now expectations are too low. As people revise \\(P^e\\) upward, the AS curve shifts <em>up</em>, pushing output back down. The process continues until \\(P = P^e\\) again and \\(Y = Y_n\\) — at a permanently <em>higher price level</em>.</p></div><div class=\"tip-box\"><h4>The one-sentence takeaway</h4><p><strong>Demand determines output in the short run; supply (structure) determines it in the medium run.</strong> A demand stimulus can lift output temporarily, but once expectations catch up the economy returns to \\(Y_n\\) and only the price level is permanently higher. This is the bridge to the long run, where \\(Y_n\\) itself grows.</p></div>",
       "image": null
     }
   },
   "longRun": {
+    "id": "5kczfu",
     "name": "The Long Run: Growth",
     "icon": "fa-seedling",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "spmxk6",
         "question": "What is the difference between the short/medium run and the long run?",
         "answer": "The short and medium run are about output FLUCTUATIONS (business cycles around trend). The long run is about output GROWTH — the steady, decades-long rise in aggregate output and living standards."
       },
       {
+        "id": "zf5atl",
         "question": "How do we compare standards of living across countries?",
         "answer": "By GDP per capita, ideally adjusted for purchasing power: GDP per capita at PPP (purchasing power parity), because prices differ across countries. What matters for welfare is how many goods income can buy."
       },
       {
+        "id": "158ewg",
         "question": "What is the aggregate production function?",
         "answer": "\\( Y = F(K, N) \\), where K = capital (machines, plants, buildings) and N = labour. It shows how much output is produced from given capital and labour."
       },
       {
+        "id": "gtu25q",
         "question": "What are the key properties of the production function?",
         "answer": "• Constant returns to scale: \\( xY = F(xK, xN) \\).\n• Decreasing (diminishing) returns to capital.\n• Decreasing (diminishing) returns to labour."
       },
       {
+        "id": "99p7e0",
         "question": "What does output per worker depend on?",
         "answer": "Setting \\(x = 1/N\\): \\( \\dfrac{Y}{N} = F\\!\\left(\\dfrac{K}{N}, 1\\right) \\). Output per worker rises with capital per worker (K/N), but by smaller and smaller amounts — diminishing returns to capital."
       },
       {
+        "id": "f6unpk",
         "question": "What is the central message of the Solow growth model?",
         "answer": "Capital accumulation is driven by saving (\\(I = sY\\); capital evolves as \\(K_{t+1} = (1-\\delta)K_t + I_t\\)). A higher saving rate raises the LEVEL of output per worker, but because of diminishing returns, capital accumulation ALONE cannot sustain growth — the long-run growth rate of Y/N from capital alone is zero."
       },
       {
+        "id": "prbyqz",
         "question": "What is required for SUSTAINED long-run growth?",
         "answer": "Sustained technological progress. Adding the state of technology A to the production function \\( Y = F(K, N, A) \\), a higher A raises output for given K and N. Continuous output growth requires continuous technological progress."
       },
       {
+        "id": "i55u73",
         "question": "What determines the rate of technological progress?",
         "answer": "Investment in R&D, which depends on:\n• the FERTILITY of research (basic vs. applied research, education, entrepreneurial culture)\n• the APPROPRIABILITY of results (how much profit a firm can capture — e.g. patent protection)."
       },
       {
+        "id": "emrbxi",
         "question": "What is human capital, and why does it matter for growth?",
         "answer": "Human capital is the knowledge and skills of workers: \\( \\dfrac{Y}{N} = f\\!\\left(\\dfrac{K}{N}, \\dfrac{H}{N}\\right) \\). Output per worker depends on investment in BOTH physical capital (saving) and human capital (spending on education)."
       },
       {
+        "id": "09cr4q",
         "question": "What is convergence?",
         "answer": "The tendency of poorer countries (lower initial output per capita) to grow faster and catch up to richer ones. It holds among similar (e.g. OECD) economies but is NOT unconditional — many countries have not converged."
       }
     ],
     "quiz": [
       {
+        "id": "2x2pj5",
         "question": "The long run is concerned with output:",
         "options": [
           "Fluctuations",
@@ -1625,6 +1890,7 @@
         "correct": 1
       },
       {
+        "id": "b3v77f",
         "question": "The best cross-country measure of living standards is:",
         "options": [
           "Nominal GDP",
@@ -1635,6 +1901,7 @@
         "correct": 1
       },
       {
+        "id": "fnvixk",
         "question": "The aggregate production function Y = F(K, N) exhibits diminishing returns to:",
         "options": [
           "Scale",
@@ -1645,6 +1912,7 @@
         "correct": 1
       },
       {
+        "id": "0wb1xm",
         "question": "Constant returns to scale means:",
         "options": [
           "xY = F(xK, xN)",
@@ -1655,6 +1923,7 @@
         "correct": 0
       },
       {
+        "id": "by8nyt",
         "question": "In the Solow model, capital accumulation is ultimately financed by:",
         "options": [
           "Government spending",
@@ -1665,6 +1934,7 @@
         "correct": 1
       },
       {
+        "id": "ivmffn",
         "question": "Because of diminishing returns, capital accumulation ALONE produces a long-run growth rate of Y/N equal to:",
         "options": [
           "The saving rate",
@@ -1675,6 +1945,7 @@
         "correct": 1
       },
       {
+        "id": "0eu9af",
         "question": "Sustained long-run growth requires sustained:",
         "options": [
           "Capital accumulation",
@@ -1685,6 +1956,7 @@
         "correct": 1
       },
       {
+        "id": "2dfwno",
         "question": "The amount of profit a firm can capture from a new idea is called its:",
         "options": [
           "Fertility",
@@ -1695,6 +1967,7 @@
         "correct": 1
       },
       {
+        "id": "37f4qx",
         "question": "The tendency of poorer countries to grow faster and catch up is called:",
         "options": [
           "Divergence",
@@ -1707,80 +1980,98 @@
     ],
     "fillBlanks": [
       {
+        "id": "p6a3gr",
         "sentence": "The long run is about output growth, not output _______.",
         "answer": "fluctuations"
       },
       {
+        "id": "pqd0fa",
         "sentence": "Living standards are best compared with GDP per capita at _______.",
         "answer": "PPP"
       },
       {
+        "id": "jx80uv",
         "sentence": "The production function Y = F(K, N) has diminishing returns to _______.",
         "answer": "capital"
       },
       {
+        "id": "adpnp9",
         "sentence": "Constant returns to scale: xY = F(xK, x_______).",
         "answer": "N"
       },
       {
+        "id": "38xafu",
         "sentence": "In the Solow model, investment is financed by _______.",
         "answer": "saving"
       },
       {
+        "id": "il9270",
         "sentence": "Capital accumulation alone cannot _______ long-run growth.",
         "answer": "sustain"
       },
       {
+        "id": "wo427j",
         "sentence": "Sustained growth requires sustained technological _______.",
         "answer": "progress"
       },
       {
+        "id": "8v22nv",
         "sentence": "Patent protection raises the _______ of research results.",
         "answer": "appropriability"
       }
     ],
     "learn": {
+      "id": "7k1hse",
       "content": "<h3>From fluctuations to growth: the biggest question in economics</h3><p>The short and medium run are about <em>fluctuations</em> — output bobbing up and down around its natural level. Zoom out to decades, though, and those wiggles vanish next to the dominant feature: the relentless, compounding rise of output. The long run asks the questions that matter most for human welfare: <em>why are some countries rich and others poor? What makes an economy grow? Why do some grow fast and others stagnate?</em></p><p>Living standards are measured by <strong>GDP per capita</strong>, and for honest cross-country comparison by <strong>GDP per capita at PPP</strong> (purchasing power parity), which corrects for the fact that the same income buys different amounts of goods in different countries. Because growth compounds, even a 1% difference in the growth rate becomes an enormous gap in living standards over a generation.</p><h3>The engine room: the production function</h3><p>What does an economy turn into output? Capital and labour:</p><div class=\"formula-box\">\\[ Y = F(K, N) \\]</div><p>where \\(K\\) = capital (machines, plants, buildings) and \\(N\\) = labour. Two properties shape everything that follows:</p><ul><li><strong>Constant returns to scale:</strong> double both inputs and you double output, \\(xY = F(xK, xN)\\).</li><li><strong>Diminishing returns</strong> to each input separately: adding more capital to a fixed workforce raises output by less and less.</li></ul><p>Setting \\(x = 1/N\\) rewrites this in the form that matters for living standards — output per worker as a function of capital per worker:</p><div class=\"formula-box\">\\[ \\frac{Y}{N} = F\\!\\left(\\frac{K}{N},\\, 1\\right) \\]</div><p>More capital per worker raises output per worker — but, because of diminishing returns, by ever-smaller increments.</p><h3>The Solow model: saving, and the limits of capital</h3><p>Where does capital come from? From investment, which is financed by saving. Capital accumulates as old capital depreciates and new investment is added:</p><div class=\"formula-box\">\\[ K_{t+1} = (1-\\delta)K_t + I_t, \\qquad I_t = sY_t \\]</div><p>where \\(\\delta\\) is the depreciation rate and \\(s\\) the saving rate. The chain is: the saving rate sets investment → investment builds capital → capital determines output per worker.</p><div class=\"warning-box\"><h4>The central — and surprising — result</h4><p>A higher saving rate raises the <strong>level</strong> of output per worker (a richer steady state), and lifts growth <em>during the transition</em>. But because of <strong>diminishing returns</strong>, capital accumulation alone <strong>cannot sustain growth forever</strong> — its contribution to the long-run growth rate of \\(Y/N\\) is <em>zero</em>. You cannot get rich indefinitely just by saving more.</p></div><h3>What actually sustains growth: technology and human capital</h3><p>If capital alone runs out of steam, what keeps living standards rising? <strong>Technological progress.</strong> Adding the state of technology \\(A\\) to the production function:</p><div class=\"formula-box\">\\[ Y = F(K, N, A) \\]</div><p>A higher \\(A\\) produces more output from the same \\(K\\) and \\(N\\). Sustained growth requires <em>continuous</em> technological progress, which comes from investment in R&D. That investment depends on:</p><ul><li>the <strong>fertility</strong> of research — the interplay of basic and applied research, the education system, a culture of entrepreneurship;</li><li>the <strong>appropriability</strong> of results — how much profit an innovator can capture, which is why patent protection matters.</li></ul><p>Output per worker also depends on <strong>human capital</strong> \\(H\\) — the knowledge and skills of workers:</p><div class=\"formula-box\">\\[ \\frac{Y}{N} = f\\!\\left(\\frac{K}{N},\\, \\frac{H}{N}\\right) \\]</div><p>So living standards depend on how much a society saves (physical capital) <em>and</em> how much it invests in education (human capital).</p><div class=\"tip-box\"><h4>Convergence — and a note for tourism</h4><p>The model predicts <strong>convergence</strong>: poorer countries, starting with less capital, should grow faster and catch up. This holds <em>conditionally</em>, within similar groups like the OECD, but is not universal — many economies have not converged. One caution relevant to this faculty: technological progress in <strong>tourism and hospitality (services)</strong> is on average slower than in industry, which tends to dampen long-run productivity growth in service-heavy economies.</p></div>",
       "image": null
     }
   },
   "expectations": {
+    "id": "eawbpg",
     "name": "Expectations",
     "icon": "fa-lightbulb",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "o45w5d",
         "question": "Why do expectations matter in macroeconomics?",
         "answer": "Many decisions of consumers, managers and financial investors depend not only on current conditions but on EXPECTATIONS of the future. To analyse their effects we need the distinction between nominal and real interest rates and the idea of expected present discounted value."
       },
       {
+        "id": "fdq64u",
         "question": "How are the nominal and real interest rates related (the Fisher relation)?",
         "answer": "The real rate is the nominal rate minus EXPECTED inflation:\n\\( r_t \\approx i_t - \\pi^e_{t+1} \\)\nExactly: \\( 1 + r_t = \\dfrac{1 + i_t}{1 + \\pi^e_{t+1}} \\).",
         "explanation": "Example: nominal 4%, expected inflation 2% → real ≈ 2%."
       },
       {
+        "id": "nuz3hf",
         "question": "Why is the real interest rate the one that matters for decisions?",
         "answer": "From a saver’s view: giving up goods today to get goods in the future, the real rate measures the extra GOODS earned, not extra money. Spending and investment decisions depend on the real (purchasing-power) cost of borrowing."
       },
       {
+        "id": "4tyj5r",
         "question": "What is expected present discounted value?",
         "answer": "The value today of an expected future sequence of payments, obtained by DISCOUNTING each future payment. A payment of \\(z\\) one year ahead is worth \\( \\dfrac{z}{1 + r} \\) today; further-off payments are discounted more heavily."
       },
       {
+        "id": "nf998x",
         "question": "How do expectations enter the IS relation?",
         "answer": "Consumption and investment depend on EXPECTED future income, profits and interest rates, not just current ones. Replacing the current interest rate with the real rate, the IS relation becomes \\( Y = C(Y - T) + I(Y, r) + G \\), and expectations of the future shift it."
       },
       {
+        "id": "x3bq5g",
         "question": "How can a change in expectations affect today’s economy?",
         "answer": "Optimistic expectations (higher expected future income/profits, lower expected future rates) raise current consumption and investment → shift IS right → raise output today. Pessimism does the reverse. Expectations are themselves a source of demand fluctuations."
       },
       {
+        "id": "gnwbgr",
         "question": "Why does monetary policy work partly through expectations?",
         "answer": "Spending depends on the EXPECTED future path of real interest rates, not just today’s rate. A central bank that credibly signals lower rates for longer can stimulate demand more than a one-off cut — expectations amplify (or mute) policy."
       }
     ],
     "quiz": [
       {
+        "id": "t2oqo1",
         "question": "The real interest rate approximately equals the nominal rate minus:",
         "options": [
           "The tax rate",
@@ -1791,6 +2082,7 @@
         "correct": 1
       },
       {
+        "id": "fq0y5b",
         "question": "If the nominal interest rate is 4% and expected inflation is 2%, the real rate is about:",
         "options": [
           "6%",
@@ -1801,6 +2093,7 @@
         "correct": 1
       },
       {
+        "id": "doobaa",
         "question": "Spending and investment decisions depend mainly on the:",
         "options": [
           "Nominal interest rate",
@@ -1811,6 +2104,7 @@
         "correct": 1
       },
       {
+        "id": "5ypjep",
         "question": "A payment of z received one year from now is worth today:",
         "options": [
           "z × (1 + r)",
@@ -1821,6 +2115,7 @@
         "correct": 1
       },
       {
+        "id": "snwlox",
         "question": "Expected present discounted value is found by _______ future payments.",
         "options": [
           "Adding up",
@@ -1831,6 +2126,7 @@
         "correct": 1
       },
       {
+        "id": "m82tv1",
         "question": "More optimistic expectations about the future tend to:",
         "options": [
           "Shift the IS curve left",
@@ -1841,6 +2137,7 @@
         "correct": 1
       },
       {
+        "id": "epb2v7",
         "question": "Monetary policy affects demand partly through expectations of the future path of:",
         "options": [
           "Taxes",
@@ -1853,91 +2150,112 @@
     ],
     "fillBlanks": [
       {
+        "id": "ji3hcx",
         "sentence": "The real interest rate equals the nominal rate minus _______ inflation.",
         "answer": "expected"
       },
       {
+        "id": "fnwqrd",
         "sentence": "With a 4% nominal rate and 2% expected inflation, the real rate is about _______ percent.",
         "answer": "2"
       },
       {
+        "id": "x7lp9e",
         "sentence": "Spending decisions depend mainly on the _______ interest rate.",
         "answer": "real"
       },
       {
+        "id": "9z8r66",
         "sentence": "A payment z one year ahead is worth z divided by (1 + _______) today.",
         "answer": "r"
       },
       {
+        "id": "xju5bd",
         "sentence": "Present value is computed by _______ future payments.",
         "answer": "discounting"
       },
       {
+        "id": "jfao5k",
         "sentence": "Optimistic expectations shift the IS curve to the _______.",
         "answer": "right"
       },
       {
+        "id": "ngeliq",
         "sentence": "Monetary policy works partly through expectations of future _______ rates.",
         "answer": "interest"
       }
     ],
     "learn": {
+      "id": "5zpulx",
       "content": "<h3>The future shapes the present</h3><p>Almost every important economic decision is forward-looking. A family deciding how much to consume thinks about its <em>future</em> income; a firm deciding whether to invest weighs <em>expected future</em> profits; an investor pricing an asset is buying a stream of <em>future</em> payments. So expectations are not a footnote — they are a driving force. To handle them we need two precise tools: the distinction between nominal and real interest rates, and the idea of present discounted value.</p><h3>Nominal vs. real interest rates (the Fisher relation)</h3><p>A 4% return is not really 4% if prices also rise. The <strong>real</strong> interest rate strips out <em>expected</em> inflation from the nominal rate:</p><div class=\"formula-box\">\\[ r_t \\approx i_t - \\pi^e_{t+1}, \\qquad 1 + r_t = \\frac{1 + i_t}{1 + \\pi^e_{t+1}} \\]</div><p>Notice it is <em>expected</em> inflation \\(\\pi^e\\), not past inflation — because borrowing and lending decisions are about the future.</p><div class=\"example-box\"><h4>Worked example — the real rate</h4><p>Nominal rate 4%, expected inflation 2%:</p><div class=\"formula-box\">\\[ r \\approx 4\\% - 2\\% = 2\\% \\]</div><p><strong>Interpretation:</strong> a saver gives up goods today to get about 2% <em>more goods</em> next year. That real, goods-denominated return — not the headline money return — is what actually shapes saving, borrowing and investment.</p></div><h3>Expected present discounted value</h3><p>Money tomorrow is worth less than money today, because today’s money could earn interest. To compare payments across time we <strong>discount</strong> them back to the present. A payment \\(z\\) one year ahead is worth</p><div class=\"formula-box\">\\[ \\frac{z}{1+r} \\]</div><p>today; payments two years out are divided by \\((1+r)^2\\), and so on — the further away, the more heavily discounted. Summing the discounted <em>expected</em> payments gives the <strong>expected present discounted value</strong>, which is how any asset (a bond, a share, a factory) is valued. A higher interest rate lowers every present value.</p><h3>Why this matters for the whole model</h3><p>Because consumption and investment depend on <em>expected</em> future income, profits and interest rates, expectations feed straight into demand. Written with the real rate, the IS relation is:</p><div class=\"formula-box\">\\[ Y = C(Y - T) + I(Y, r) + G \\]</div><div class=\"tip-box\"><h4>Optimism, pessimism, and the power of credible policy</h4><p>A wave of <strong>optimism</strong> (higher expected future income/profits, lower expected future rates) raises consumption and investment <em>today</em>, shifting IS right and lifting output now; <strong>pessimism</strong> does the reverse. This also explains why monetary policy works partly through expectations: a central bank that <em>credibly</em> signals lower rates \"for longer\" can boost demand more than a single rate cut, because spending responds to the whole <em>expected path</em> of real rates, not just today’s.</p></div>",
       "image": null
     }
   },
   "openEconomyGoods": {
+    "id": "7wlkdt",
     "name": "Open Economy: Trade & Exchange Rates",
     "icon": "fa-arrow-right-arrow-left",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "rrfpd3",
         "question": "How is the openness of an economy measured?",
         "answer": "By the share of foreign trade in GDP:\n• Exports/GDP (goal: high)\n• Imports/GDP (goal: low)\n• (EX − IM)/GDP — the trade balance (goal: positive and growing)\n• EX/IM — coverage of imports by exports (goal: high)."
       },
       {
+        "id": "zo1e3b",
         "question": "What is the import function, and the marginal propensity to import?",
         "answer": "Imports rise with domestic output:\n\\( IM = IM_0 + m\\,Y \\)\nwhere \\(IM_0\\) is autonomous import and \\(m\\) (0 < m < 1) is the marginal propensity to import — the extra import per unit of extra output."
       },
       {
+        "id": "mkz7w9",
         "question": "What is the open-economy multiplier, and how does importing change it?",
         "answer": "With a tax rate t and marginal propensity to import m:\n\\( \\text{multiplier} = \\dfrac{1}{1 - \\beta(1 - t) + m} \\)\nImports REDUCE the multiplier (the +m in the denominator). The smaller m, the larger the multiplier."
       },
       {
+        "id": "z797pr",
         "question": "What is the difference between domestic demand for goods and demand for domestic goods?",
         "answer": "Domestic demand for goods = \\( C + I + G \\) (what residents want).\nDemand for domestic goods = \\( C + I + G - IM + X \\) — subtract imports (foreign goods inside C+I+G) and add exports. The difference is net exports \\( NX = X - IM \\)."
       },
       {
+        "id": "qa4ynj",
         "question": "What is the goods-market equilibrium condition in an open economy?",
         "answer": "Output equals the demand for domestic goods:\n\\( Y = C + I + G + X - IM = (C + I + G) + NX \\).\nEquivalently \\( Y - (C + I + G) = X - IM \\): any gap between output and domestic spending is the trade balance."
       },
       {
+        "id": "39da3x",
         "question": "What is the nominal exchange rate, and what are appreciation/depreciation?",
         "answer": "The nominal exchange rate is the price of one currency in terms of another. An APPRECIATION is a rise in a currency’s value relative to others; a DEPRECIATION is a fall. Both result from supply and demand on the foreign-exchange market."
       },
       {
+        "id": "fkjysf",
         "question": "How do devaluation and revaluation differ from depreciation and appreciation?",
         "answer": "Depreciation/appreciation are MARKET-driven changes in a (flexible) exchange rate. Devaluation/revaluation are changes made by the MONETARY AUTHORITIES (in a fixed-rate regime): devaluation lowers the currency’s value, revaluation raises it."
       },
       {
+        "id": "k4jwrt",
         "question": "What is the real exchange rate?",
         "answer": "The price of domestic goods in terms of foreign goods (it adjusts the nominal rate for price levels). A RISE in the real exchange rate means domestic goods are relatively more expensive (foreign goods cheaper) → less competitive → net exports fall."
       },
       {
+        "id": "heea6r",
         "question": "What determines exports and imports?",
         "answer": "• Exports rise with foreign output and with a real DEPRECIATION (domestic goods cheaper abroad).\n• Imports rise with domestic output and with a real APPRECIATION (foreign goods cheaper).\nSo \\(NX\\) falls when domestic output or the real exchange rate rises."
       },
       {
+        "id": "bm3c7b",
         "question": "What is the Marshall-Lerner condition?",
         "answer": "A real DEPRECIATION improves net exports provided the sum of the price elasticities of export and import demand exceeds 1. If the condition holds, a fall in the real exchange rate (cheaper domestic goods) raises NX."
       },
       {
+        "id": "issipu",
         "question": "How does an open economy change the effect of fiscal policy on net exports?",
         "answer": "An increase in government spending raises output, which raises imports → net exports FALL (a trade deficit). Fiscal expansion in an open economy partly leaks abroad through higher imports."
       }
     ],
     "quiz": [
       {
+        "id": "rinri2",
         "question": "The marginal propensity to import (m) is the extra import per unit of extra:",
         "options": [
           "Taxes",
@@ -1948,6 +2266,7 @@
         "correct": 1
       },
       {
+        "id": "gdrpsv",
         "question": "In the open-economy multiplier 1/(1 − β(1−t) + m), a higher m makes the multiplier:",
         "options": [
           "Larger",
@@ -1958,6 +2277,7 @@
         "correct": 1
       },
       {
+        "id": "pdnbad",
         "question": "With β = 0.8, t = 0.1 and m = 0.12, the multiplier equals:",
         "options": [
           "3.57",
@@ -1968,6 +2288,7 @@
         "correct": 1
       },
       {
+        "id": "a8e1i6",
         "question": "Demand for domestic goods differs from domestic demand for goods by:",
         "options": [
           "Taxes",
@@ -1978,6 +2299,7 @@
         "correct": 1
       },
       {
+        "id": "sbrdhf",
         "question": "A depreciation of the domestic currency is:",
         "options": [
           "A rise in its value set by authorities",
@@ -1988,6 +2310,7 @@
         "correct": 1
       },
       {
+        "id": "xba4bs",
         "question": "A change in the exchange rate made by the monetary authorities (lowering value) is a:",
         "options": [
           "Depreciation",
@@ -1998,6 +2321,7 @@
         "correct": 1
       },
       {
+        "id": "ln4rhd",
         "question": "A rise in the real exchange rate means domestic goods become:",
         "options": [
           "Relatively cheaper",
@@ -2008,6 +2332,7 @@
         "correct": 1
       },
       {
+        "id": "5gproz",
         "question": "Assuming the Marshall-Lerner condition holds, net exports rise after a:",
         "options": [
           "Real appreciation",
@@ -2018,6 +2343,7 @@
         "correct": 1
       },
       {
+        "id": "hn5ttb",
         "question": "In an open economy, an increase in government spending tends to make net exports:",
         "options": [
           "Rise",
@@ -2030,87 +2356,107 @@
     ],
     "fillBlanks": [
       {
+        "id": "9zqj1a",
         "sentence": "The import function is IM = IM₀ + m·Y, where m is the marginal propensity to _______.",
         "answer": "import"
       },
       {
+        "id": "i8l2zy",
         "sentence": "Imports _______ the size of the open-economy multiplier.",
         "answer": "reduce"
       },
       {
+        "id": "ntevr7",
         "sentence": "With β = 0.8, t = 0.1 and m = 0.12 the multiplier equals _______.",
         "answer": "2.5"
       },
       {
+        "id": "l2hqgs",
         "sentence": "Net exports equal exports minus _______.",
         "answer": "imports"
       },
       {
+        "id": "vjdkmz",
         "sentence": "A market-driven fall in a currency’s value is a _______.",
         "answer": "depreciation"
       },
       {
+        "id": "doh8q2",
         "sentence": "A change in value made by the authorities (downward) is a _______.",
         "answer": "devaluation"
       },
       {
+        "id": "qv2876",
         "sentence": "A rise in the real exchange rate makes domestic goods relatively more _______.",
         "answer": "expensive"
       },
       {
+        "id": "ffjyav",
         "sentence": "Under the Marshall-Lerner condition, a real depreciation raises net _______.",
         "answer": "exports"
       }
     ],
     "learn": {
+      "id": "25sgdp",
       "content": "<h3>Opening the economy to the world</h3><p>Until now we assumed a closed economy. Reality is open: countries trade goods and services, move capital across borders, and exchange currencies. Opening up adds the foreign sector to demand:</p><div class=\"formula-box\">\\[ Y = C + I + G + X - IM \\]</div><p>How open a country is can be measured by trade shares — exports/GDP and imports/GDP (and the balance \\((EX-IM)/GDP\\), and coverage \\(EX/IM\\)). The more open an economy, the larger its gains from trade <em>and</em> the more exposed it is to shocks from abroad — a point that matters enormously for a small, tourism-dependent economy like Croatia’s.</p><h3>Imports and the multiplier</h3><p>Exports \\(X\\) are largely set abroad (foreign demand), so we treat them as exogenous. Imports, by contrast, rise with domestic income — when we are richer, we buy more from abroad:</p><div class=\"formula-box\">\\[ IM = IM_0 + m\\,Y \\]</div><p>where \\(m\\) is the <strong>marginal propensity to import</strong> (the extra import per unit of extra output). Imports are a new <em>leak</em> from the income–spending loop, so they shrink the multiplier. With consumption \\( C = \\beta(1-t)Y + c_0 \\):</p><div class=\"formula-box\">\\[ \\text{multiplier} = \\frac{1}{1 - \\beta(1 - t) + m} \\]</div><div class=\"example-box\"><h4>Worked example — imports shrink the multiplier</h4><p>Let \\( \\beta = 0.8,\\ t = 0.1,\\ m = 0.12 \\). First ignore imports:</p><div class=\"formula-box\">\\[ \\frac{1}{1 - 0.8(1-0.1)} = \\frac{1}{0.28} = 3.57 \\]</div><p>Now add the import leak:</p><div class=\"formula-box\">\\[ \\frac{1}{1 - 0.8(0.9) + 0.12} = \\frac{1}{0.40} = 2.5 \\]</div><p><strong>Interpretation:</strong> the multiplier falls from 3.57 to 2.5 — part of every extra euro of income is now spent on <em>foreign</em> goods, so it stops circulating in the domestic economy. The smaller \\(m\\), the larger the multiplier.</p></div><h3>Two demands that are easy to confuse</h3><p>Opening up forces a careful distinction:</p><ul><li><strong>Domestic demand for goods</strong> = \\(C + I + G\\) — what domestic residents want to buy (from anywhere).</li><li><strong>Demand for domestic goods</strong> = \\(C + I + G - IM + X\\) — subtract the imports hidden inside \\(C+I+G\\), add exports. This is what is actually produced at home.</li></ul><p>So goods-market equilibrium is \\( Y = (C + I + G) + NX \\) with net exports \\(NX = X - IM\\). A <strong>trade surplus</strong> (\\(NX>0\\)) means the demand for domestic goods exceeds domestic demand — the country produces more than its residents absorb.</p><h3>The exchange rate: nominal, real, and who moves it</h3><p>Trade across currencies introduces the exchange rate. Keep four terms straight:</p><ul><li><strong>Appreciation / depreciation</strong> — a <em>market-driven</em> rise / fall in a currency’s value (flexible regime).</li><li><strong>Revaluation / devaluation</strong> — a rise / fall set by the <em>monetary authorities</em> (fixed regime).</li><li><strong>Real exchange rate</strong> — the price of domestic goods <em>in terms of foreign goods</em> (the nominal rate adjusted for price levels). This is the one that drives competitiveness.</li></ul><p><strong>How it drives trade:</strong> a <em>rise</em> in the real exchange rate makes domestic goods relatively more expensive (foreign goods cheaper) → exports fall, imports rise → \\(NX\\) falls. A <em>fall</em> (a real depreciation) does the reverse. Net exports also fall when domestic output rises (more imports) and rise when foreign output rises (more exports).</p><div class=\"warning-box\"><h4>Two results students get wrong</h4><ul><li><strong>Marshall-Lerner condition:</strong> a real depreciation improves net exports <em>only if</em> the sum of the price elasticities of export and import demand exceeds 1. A cheaper currency is not automatically good for the trade balance.</li><li><strong>Fiscal expansion worsens \\(NX\\):</strong> raising \\(G\\) lifts output, which pulls in more imports, so net exports <em>fall</em>. Open-economy fiscal policy partly leaks abroad.</li></ul></div>",
       "image": null
     }
   },
   "balanceOfPayments": {
+    "id": "58nh80",
     "name": "Balance of Payments",
     "icon": "fa-file-invoice-dollar",
     "color": "#fbbf24",
     "flashcards": [
       {
+        "id": "0h9yos",
         "question": "What is the balance of payments?",
         "answer": "A summary statement of all monetary transactions of a country’s residents with the rest of the world during one year. It records trade in goods and services, incomes, and capital/financial flows."
       },
       {
+        "id": "odsmfh",
         "question": "What are the two main accounts of the balance of payments?",
         "answer": "1. The CURRENT account — goods, services, primary income and secondary income.\n2. The FINANCIAL (capital) account — direct, portfolio and other investments, financial derivatives.\nAcross the accounts (plus the change in reserves), the balance of payments sums to zero."
       },
       {
+        "id": "qrz9qp",
         "question": "What does the current account include?",
         "answer": "The trade balance (goods), the services balance, primary income (compensation of employees, investment income such as dividends and interest) and secondary income (transfers with no reciprocal obligation — pensions, gifts, aid)."
       },
       {
+        "id": "nbuqd5",
         "question": "How is the tourism (travel) balance defined?",
         "answer": "Income (Export) − Expenditure (Import):\n• Income = spending of foreign tourists in the country (a foreign-exchange inflow, an EXPORT).\n• Expenditure = spending of domestic tourists abroad (an outflow, an IMPORT).\nSurplus → a tourist-RECEPTIVE country; deficit → a tourist-EMITTING country."
       },
       {
+        "id": "j9nlmp",
         "question": "Why is the tourism balance important for Croatia?",
         "answer": "In the Croatian balance of payments, the large TRAVEL surplus within services typically offsets the persistent deficit in the goods (trade) balance — tourism is the key foreign-exchange earner that supports the current account."
       },
       {
+        "id": "dqs1g9",
         "question": "How does net capital export depend on the interest rate?",
         "answer": "Net capital export \\(K\\) is a DECREASING function of the domestic interest rate: \\( K = f(r),\\ \\dfrac{dK}{dr} < 0 \\). A higher domestic rate attracts capital inflows (reduces net capital export)."
       },
       {
+        "id": "xmhxav",
         "question": "How does a rise in the domestic interest rate affect the trade balance (indirectly)?",
         "answer": "Higher r → capital inflows → higher demand for the domestic currency → the currency appreciates → exports fall and imports rise → the trade balance DETERIORATES. (Lower rates work the opposite way.)"
       },
       {
+        "id": "blqcly",
         "question": "What is the BP curve?",
         "answer": "The set of combinations of output Y and interest rate r for which the balance of payments is in equilibrium (BP = 0): the trade balance matches net capital flows. Points below the curve are in deficit, points above in surplus."
       },
       {
+        "id": "ho3i8w",
         "question": "What does internal and external balance mean, and how are they related?",
         "answer": "INTERNAL balance is goods+money market equilibrium (IS = LM). EXTERNAL balance is balance-of-payments equilibrium (on the BP curve). They are interdependent: a BoP deficit reduces reserves and the money supply, shifting LM left and raising r, which over time moves the economy toward simultaneous internal and external balance."
       }
     ],
     "quiz": [
       {
+        "id": "w6q3zw",
         "question": "The balance of payments records a country’s transactions with the rest of the world over:",
         "options": [
           "One day",
@@ -2121,6 +2467,7 @@
         "correct": 1
       },
       {
+        "id": "o6pyv8",
         "question": "The current account includes goods, services, primary income and:",
         "options": [
           "Direct investment",
@@ -2131,6 +2478,7 @@
         "correct": 1
       },
       {
+        "id": "h64r5y",
         "question": "In the travel (tourism) balance, spending by foreign tourists in the country is recorded as an:",
         "options": [
           "Import",
@@ -2141,6 +2489,7 @@
         "correct": 1
       },
       {
+        "id": "127iax",
         "question": "A country with a tourism-balance surplus is:",
         "options": [
           "Tourist-emitting",
@@ -2151,6 +2500,7 @@
         "correct": 1
       },
       {
+        "id": "js9qwf",
         "question": "Net capital export K is a _______ function of the domestic interest rate.",
         "options": [
           "Increasing",
@@ -2161,6 +2511,7 @@
         "correct": 1
       },
       {
+        "id": "kvtfq9",
         "question": "A rise in the domestic interest rate tends to make the trade balance:",
         "options": [
           "Improve",
@@ -2171,6 +2522,7 @@
         "correct": 1
       },
       {
+        "id": "57jfm5",
         "question": "On the BP curve, the balance of payments is:",
         "options": [
           "In deficit",
@@ -2181,6 +2533,7 @@
         "correct": 2
       },
       {
+        "id": "vv1ky3",
         "question": "Internal balance corresponds to the intersection of:",
         "options": [
           "IS and BP",
@@ -2191,6 +2544,7 @@
         "correct": 1
       },
       {
+        "id": "r8jgdw",
         "question": "Across all its accounts (with reserves), the balance of payments sums to:",
         "options": [
           "A surplus",
@@ -2203,100 +2557,123 @@
     ],
     "fillBlanks": [
       {
+        "id": "zdw2v8",
         "sentence": "The balance of payments records transactions with the rest of the world over one _______.",
         "answer": "year"
       },
       {
+        "id": "d5hg63",
         "sentence": "The two main accounts are the current account and the _______ account.",
         "answer": "financial"
       },
       {
+        "id": "2ug7kp",
         "sentence": "In the travel balance, foreign tourists’ spending in the country is an _______.",
         "answer": "export"
       },
       {
+        "id": "o4b7m1",
         "sentence": "A tourism-balance surplus indicates a tourist-_______ country.",
         "answer": "receptive"
       },
       {
+        "id": "7c76rz",
         "sentence": "Net capital export is a _______ function of the domestic interest rate.",
         "answer": "decreasing"
       },
       {
+        "id": "3rqftp",
         "sentence": "A higher domestic interest rate causes the currency to _______.",
         "answer": "appreciate"
       },
       {
+        "id": "w3rn0b",
         "sentence": "On the BP curve the balance of payments equals _______.",
         "answer": "zero"
       },
       {
+        "id": "1v0akq",
         "sentence": "Internal balance is the intersection of the IS and _______ curves.",
         "answer": "LM"
       }
     ],
     "learn": {
+      "id": "lr5xg7",
       "content": "<h3>The country’s ledger with the rest of the world</h3><p>Just as a firm keeps accounts, so does a country. The <strong>balance of payments (BoP)</strong> is the summary statement of <em>all</em> monetary transactions between a country’s residents and the rest of the world over one year. It is organised into two main accounts:</p><ul><li><strong>Current account</strong> — the \"income statement\" of trade: goods, services, <em>primary income</em> (wages, dividends, interest on cross-border investment) and <em>secondary income</em> (transfers with no quid pro quo — pensions, aid, gifts).</li><li><strong>Financial account</strong> — the \"capital\" side: direct investment, portfolio investment, other investment and financial derivatives (the cross-border movement of assets and liabilities).</li></ul><div class=\"tip-box\"><h4>The BoP always balances to zero</h4><p>Together with the change in official reserves, the whole balance of payments sums to <strong>zero</strong>. The deep implication: a <strong>current-account deficit must be financed by capital inflows</strong> (borrowing from or selling assets to the rest of the world), and a surplus means lending to it. The two accounts are mirror images.</p></div><h3>The tourism (travel) balance — the line that matters most here</h3><p>Within the services account sits the <strong>travel (tourism) balance</strong>, defined exactly like any trade balance — income minus expenditure:</p><div class=\"formula-box\">\\[ \\text{Travel balance} = \\underbrace{\\text{income from foreign tourists}}_{\\text{export, inflow}} - \\underbrace{\\text{spending of residents abroad}}_{\\text{import, outflow}} \\]</div><p>Spending by foreigners <em>in</em> the country is an <strong>export</strong> (a foreign-exchange inflow); spending by residents abroad is an <strong>import</strong> (an outflow). A surplus marks a tourist-<strong>receptive</strong> country; a deficit a tourist-<strong>emitting</strong> one.</p><p><strong>Why this is central for Croatia:</strong> the country runs a large, persistent <em>deficit</em> in the goods trade (it imports more merchandise than it exports). What keeps the current account afloat is the huge <strong>travel surplus</strong> — foreign tourists bring in foreign exchange that offsets the goods deficit. Tourism is, quite literally, the line item that balances the national accounts.</p><h3>Capital flows and the BP curve</h3><p>Capital chases returns. Net capital <em>export</em> \\(K\\) (capital leaving minus capital entering) <strong>falls</strong> as the domestic interest rate rises — a higher \\(r\\) attracts foreign capital in:</p><div class=\"formula-box\">\\[ K = f(r), \\qquad \\frac{dK}{dr} < 0 \\]</div><p>This creates an indirect link from interest rates to trade: a higher \\(r\\) → capital inflows → higher demand for the domestic currency → the currency <em>appreciates</em> → exports fall, imports rise → the trade balance <em>deteriorates</em>. The <strong>BP curve</strong> collects all combinations of output \\(Y\\) and interest rate \\(r\\) for which the balance of payments is in equilibrium (\\(BP = 0\\)); points below it are deficits, points above surpluses.</p><div class=\"tip-box\"><h4>Internal and external balance are interdependent</h4><p><strong>Internal</strong> balance is goods + money market equilibrium (IS = LM); <strong>external</strong> balance is a point on the BP curve. They do not move independently. A balance-of-payments deficit drains official reserves, which shrinks the money supply, shifts LM left and raises the interest rate; the higher rate cuts output and imports, nudging the external balance back toward zero. Left alone, the system tends to grind toward <em>simultaneous</em> internal and external balance.</p></div>",
       "image": null
     }
   },
   "examPractice": {
+    "id": "vcvb9l",
     "name": "Exam Practice (All Topics)",
     "icon": "fa-graduation-cap",
     "color": "#f59e0b",
     "flashcards": [
       {
+        "id": "mm7mc2",
         "question": "What is the single thread linking the whole macro course?",
         "answer": "The same variables (Y, u, π, i) are looked at over three horizons:\n• SHORT run — output is set by DEMAND (Goods, Financial, IS-LM markets).\n• MEDIUM run — output returns to its NATURAL level set by SUPPLY (the labour market, AS-AD).\n• LONG run — the natural level itself GROWS through capital, human capital and technology.",
         "explanation": "Demand moves output around a supply-determined trend that itself grows over time."
       },
       {
+        "id": "fkn6e8",
         "question": "Collect the key equilibrium conditions of the course in one place.",
         "answer": "Goods market: \\( Y = Z \\). Money market: \\( M^s = M^d \\). IS-LM: IS \\(\\cap\\) LM. Labour market: \\( F(u_n,z)=\\dfrac{1}{1+\\mu} \\). Medium run: \\( P=P^e \\Rightarrow Y=Y_n \\). Open economy / external balance: trade balance = net capital flows (BP = 0)."
       },
       {
+        "id": "33nsp1",
         "question": "Three ways to express GDP — and the expenditure identity.",
         "answer": "Production = expenditure = income (all equal). The expenditure identity is\n\\( Y = C + I + G + (X - IM) \\),\nand the saving–investment identity is \\( S - I = (G + TR - T) + NX \\)."
       },
       {
+        "id": "o7ieyi",
         "question": "How do you compute the multiplier in the closed and the open economy?",
         "answer": "Closed: \\( \\dfrac{1}{1 - c_1} \\). Open (with tax rate t and marginal propensity to import m): \\( \\dfrac{1}{1 - \\beta(1-t) + m} \\). Both taxes and imports SHRINK the multiplier because they leak demand out of the income–spending loop."
       },
       {
+        "id": "0ik4id",
         "question": "How do fiscal and monetary policy each move output and the interest rate (IS-LM)?",
         "answer": "Fiscal expansion (↑G or ↓T) shifts IS right → \\(Y\\uparrow,\\ i\\uparrow\\). Monetary expansion (↑M) shifts LM down → \\(Y\\uparrow,\\ i\\downarrow\\). A policy mix combines them to hit both output and the interest rate."
       },
       {
+        "id": "4bdj1o",
         "question": "How is the medium-run equilibrium reached after a demand boom?",
         "answer": "A demand boom pushes \\(Y > Y_n\\), so \\(u < u_n\\); wages and prices rise above expectations (\\(P > P^e\\)). Expectations adjust up, the AS curve shifts up, and output falls back to \\(Y_n\\) at a higher price level. Demand affects output only temporarily."
       },
       {
+        "id": "1sx0qq",
         "question": "What determines the natural rate of unemployment and the natural level of output?",
         "answer": "From wage setting \\(=\\) price setting: \\( F(u_n,z)=\\dfrac{1}{1+\\mu} \\Rightarrow u_n = 1 - \\dfrac{1}{1+\\mu} + z \\). Then \\( Y_n = L(1-u_n) \\). A higher markup μ or higher z (benefits/protection) raises \\(u_n\\) and lowers \\(Y_n\\)."
       },
       {
+        "id": "putc29",
         "question": "What ultimately drives long-run growth, and why is capital not enough?",
         "answer": "Capital accumulation (saving) raises the LEVEL of output per worker, but diminishing returns mean its contribution to the long-run growth rate is zero. SUSTAINED growth requires sustained TECHNOLOGICAL PROGRESS (R&D, human capital)."
       },
       {
+        "id": "l1fict",
         "question": "Why is the real interest rate the one that matters, and how is it found?",
         "answer": "Decisions depend on the purchasing-power cost of borrowing/saving, not the money cost. \\( r \\approx i - \\pi^e \\). Expectations of future income, profits and real rates shift the IS curve — optimism raises current output."
       },
       {
+        "id": "6s1sj8",
         "question": "How does an open economy change the picture (exchange rate, NX, BoP)?",
         "answer": "Output equals demand for domestic goods \\( Y = C + I + G + NX \\), \\(NX = X - IM\\). A real depreciation raises NX if Marshall-Lerner holds; higher domestic output or a real appreciation lowers NX. The balance of payments (current + financial account) must balance: a current-account deficit is financed by capital inflows."
       },
       {
+        "id": "yc8yqb",
         "question": "Why is the tourism (travel) balance central for a country like Croatia?",
         "answer": "Travel = income from foreign tourists (export/inflow) − spending of residents abroad (import/outflow). A surplus marks a tourist-receptive country. For Croatia, the large travel surplus typically offsets the persistent goods-trade deficit, supporting the current account."
       },
       {
+        "id": "81auf9",
         "question": "Connect Okun’s law and the Phillips curve to the rest of the model.",
         "answer": "Okun’s law links output growth to changes in unemployment (above-trend growth lowers u). The Phillips curve links low unemployment to higher inflation. Together they tie the demand side (Y) to the labour market (u) and to prices (π) — the same chain the AS curve formalizes."
       }
     ],
     "quiz": [
       {
+        "id": "beohmg",
         "question": "Over the three horizons, output is determined by demand in the:",
         "options": [
           "Long run",
@@ -2307,6 +2684,7 @@
         "correct": 1
       },
       {
+        "id": "a21il2",
         "question": "The expenditure identity for GDP is:",
         "options": [
           "Y = C − I − G",
@@ -2317,6 +2695,7 @@
         "correct": 1
       },
       {
+        "id": "kvcckn",
         "question": "Compared with the closed economy, the open-economy multiplier is:",
         "options": [
           "Larger",
@@ -2327,6 +2706,7 @@
         "correct": 1
       },
       {
+        "id": "9j3p3d",
         "question": "A fiscal expansion in the IS-LM model moves output and the interest rate:",
         "options": [
           "Both down",
@@ -2337,6 +2717,7 @@
         "correct": 1
       },
       {
+        "id": "cq66q9",
         "question": "After a demand boom, the economy returns to Yₙ because:",
         "options": [
           "The money supply falls automatically",
@@ -2347,6 +2728,7 @@
         "correct": 1
       },
       {
+        "id": "krlnif",
         "question": "The natural rate of unemployment rises when:",
         "options": [
           "The markup μ falls",
@@ -2357,6 +2739,7 @@
         "correct": 1
       },
       {
+        "id": "naw72u",
         "question": "Sustained long-run growth in output per worker requires:",
         "options": [
           "More saving only",
@@ -2367,6 +2750,7 @@
         "correct": 1
       },
       {
+        "id": "o0fmrf",
         "question": "The real interest rate is approximately the nominal rate minus:",
         "options": [
           "The tax rate",
@@ -2377,6 +2761,7 @@
         "correct": 1
       },
       {
+        "id": "hnduvt",
         "question": "Assuming Marshall-Lerner holds, net exports rise after a real:",
         "options": [
           "Appreciation",
@@ -2387,6 +2772,7 @@
         "correct": 1
       },
       {
+        "id": "uj8gx8",
         "question": "In the travel balance, spending by foreign tourists in the country is recorded as an:",
         "options": [
           "Import",
@@ -2397,6 +2783,7 @@
         "correct": 1
       },
       {
+        "id": "5n3spu",
         "question": "A current-account deficit must be financed by:",
         "options": [
           "A bigger trade deficit",
@@ -2407,6 +2794,7 @@
         "correct": 1
       },
       {
+        "id": "7i0owf",
         "question": "In the medium run, aggregate demand determines mainly the:",
         "options": [
           "Natural level of output",
@@ -2419,43 +2807,53 @@
     ],
     "fillBlanks": [
       {
+        "id": "v9w2kp",
         "sentence": "In the short run, output is determined by aggregate _______.",
         "answer": "demand"
       },
       {
+        "id": "6dvesd",
         "sentence": "The expenditure identity is Y = C + I + G + (X − _______).",
         "answer": "IM"
       },
       {
+        "id": "9nza8i",
         "sentence": "Both taxes and imports _______ the size of the multiplier.",
         "answer": "reduce"
       },
       {
+        "id": "hgdn1g",
         "sentence": "A fiscal expansion shifts the IS curve to the _______.",
         "answer": "right"
       },
       {
+        "id": "oaozuo",
         "sentence": "In medium-run equilibrium the price level equals the _______ price level.",
         "answer": "expected"
       },
       {
+        "id": "krpsje",
         "sentence": "A higher markup raises the _______ rate of unemployment.",
         "answer": "natural"
       },
       {
+        "id": "twnf75",
         "sentence": "Sustained long-run growth requires technological _______.",
         "answer": "progress"
       },
       {
+        "id": "6wtg1h",
         "sentence": "The real interest rate equals the nominal rate minus expected _______.",
         "answer": "inflation"
       },
       {
+        "id": "bc6cz6",
         "sentence": "In the travel balance, foreign tourists’ spending in the country is an _______.",
         "answer": "export"
       }
     ],
     "learn": {
+      "id": "uqmw3j",
       "content": "<h3>Final Exam Roadmap — the whole of macro on one page</h3><p>The course follows the same variables — output \\(Y\\), unemployment \\(u\\), inflation \\(\\pi\\), the interest rate \\(i\\) — across three horizons. In the <strong>short run</strong> demand rules; in the <strong>medium run</strong> output returns to a supply-determined natural level; in the <strong>long run</strong> that level grows. Drill the per-topic categories in this lesson, then use this set to connect them.</p><div class=\"formula-box\">\\[ \\begin{aligned}\\text{GDP identity:}\\quad & Y = C + I + G + (X - IM)\\\\[2pt]\\text{Goods-market multiplier:}\\quad & \\frac{1}{1 - c_1}\\;\\; \\Big(\\text{open: } \\tfrac{1}{1-\\beta(1-t)+m}\\Big)\\\\[2pt]\\text{Money market:}\\quad & M = \\$Y\\,L(i)\\\\[2pt]\\text{Natural rate:}\\quad & u_n = 1 - \\frac{1}{1+\\mu} + z\\\\[2pt]\\text{Medium run:}\\quad & P = P^e \\;\\Rightarrow\\; Y = Y_n\\\\[2pt]\\text{Real interest rate:}\\quad & r \\approx i - \\pi^e\\\\[2pt]\\text{External balance:}\\quad & NX = X - IM,\\;\\; BP = 0\\end{aligned} \\]</div><h4>First midterm (Intro + L2–L5)</h4><ul><li><strong>Fundamentals:</strong> objectives, variables, fiscal/monetary/income policy, the three horizons.</li><li><strong>Unemployment &amp; inflation:</strong> \\(L = E + U\\), CPI, real vs nominal rates, Okun’s law, the Phillips curve.</li><li><strong>GDP:</strong> nominal/real/potential, the deflator, the GDP gap, growth rates, per capita.</li><li><strong>National accounts:</strong> three approaches, the models \\(Y=C+I+G+NX\\), value added, NACE.</li><li><strong>Goods market:</strong> \\(C = c_0 + c_1 Y_D\\), equilibrium \\(Y = Z\\), the multiplier.</li><li><strong>Financial markets:</strong> \\(M^d = \\$Y\\,L(i)\\), \\(M^s = M^d\\), bonds, open-market operations.</li><li><strong>IS-LM:</strong> IS (goods) ∩ LM (money), fiscal + monetary policy, the policy mix.</li></ul><h4>Second midterm (Ch6 + AS-AD + Long Run + Expectations + Open Economy)</h4><ul><li><strong>Labour market:</strong> WS \\(W = P^e F(u,z)\\), PS \\(P = (1+\\mu)W\\), natural rate \\(u_n\\), natural output \\(Y_n\\).</li><li><strong>AS-AD (medium run):</strong> AS up (labour market), AD down (IS-LM); \\(P = P^e \\Rightarrow Y = Y_n\\).</li><li><strong>Long run / growth:</strong> \\(Y = F(K, N)\\), diminishing returns, Solow saving, technology, human capital, convergence.</li><li><strong>Expectations:</strong> Fisher \\(r \\approx i - \\pi^e\\), present value, expectations in the IS relation.</li><li><strong>Open economy — trade:</strong> import function \\(IM = IM_0 + mY\\), open multiplier, the exchange rate, NX, Marshall-Lerner.</li><li><strong>Balance of payments:</strong> current + financial account, the tourism balance, \\(K = f(r)\\), the BP curve, internal/external balance.</li></ul><div class=\"tip-box\"><h4>Exam strategy</h4><p>Closed questions reward exact <strong>conditions and formulas</strong> (the multiplier, \\(u_n\\), \\(r \\approx i - \\pi^e\\), \\(NX = X - IM\\)). Open questions reward <strong>concept + mechanism</strong> (\"a fiscal expansion shifts IS right → Y and i rise; in an open economy imports rise, so NX falls\"). Anchor one formula per topic, then trace the chain demand → labour market → prices → external sector.</p></div><p class=\"highlight\">One sentence for the whole course: aggregate demand moves output around a supply-determined natural level in the short and medium run, while technological progress lifts that natural level in the long run.</p>",
       "image": null
     }

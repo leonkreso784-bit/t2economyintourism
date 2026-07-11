@@ -16,42 +16,50 @@ const mathM2 = {
   // CATEGORY 1: THE INDEFINITE INTEGRAL & ELASTICITY OF DEMAND
   // ========================================================================
   integralElasticity: {
+    id: "o6iwfa",
     name: "Integral & Elasticity of Demand",
     icon: "fa-chart-area",
     color: "#8b5cf6",
 
     flashcards: [
       {
+        id: "5vavof",
         question: "What is a primitive (antiderivative) function, and what is the indefinite integral?",
         answer: "Integration is the INVERSE of differentiation. A PRIMITIVE function \\(F\\) of \\(f\\) on \\((a,b)\\) is one whose derivative gives back \\(f\\): \\(F'(x)=f(x)\\).\n\nThe INDEFINITE INTEGRAL of \\(f\\) is the set of ALL primitive functions:\n\\[\\int f(x)\\,dx = F(x)+C,\\quad C\\in\\mathbb{R}.\\]\nHere \\(f\\) is the integrand, \\(x\\) the integration variable, and \\(C\\) the constant of integration.",
         explanation: "If we know the derivative, integration recovers the original function — up to the constant C (since (C)′ = 0, the constant is lost when differentiating)."
       },
       {
+        id: "dhij4s",
         question: "State the power rule for the indefinite integral.",
         answer: "For the general power function:\n\\[\\int x^n\\,dx = \\frac{1}{n+1}x^{n+1}+C,\\qquad n\\in\\mathbb{Z},\\ n\\neq -1.\\]\nCheck: differentiating \\(\\frac{1}{n+1}x^{n+1}\\) gives \\(\\frac{1}{n+1}(n+1)x^{n}=x^n\\). ✓",
         explanation: "Integration RAISES the power by one and divides by the new power — the exact reverse of the derivative power rule. (n = −1 is excluded.)"
       },
       {
+        id: "768jil",
         question: "What are the integration rules used in this course?",
         answer: "\\[\\int dx = x+C,\\]\n\\[\\int (f(x)\\pm g(x))\\,dx = \\int f(x)\\,dx \\pm \\int g(x)\\,dx,\\]\n\\[\\int a\\,f(x)\\,dx = a\\int f(x)\\,dx\\quad(a=\\text{const}).\\]\nIntegration, like differentiation, is LINEAR — integrate term by term and pull out constants.",
         explanation: "So a polynomial is integrated term by term with the power rule."
       },
       {
+        id: "3o48gf",
         question: "How do you find the TOTAL COST function from the marginal cost function?",
         answer: "Marginal cost is the derivative of total cost \\(M(Q)=T'(Q)\\), so total cost is the indefinite integral of marginal cost:\n\\[T(Q)=\\int M(Q)\\,dQ.\\]\nThe constant of integration C is the FIXED COST: marginal cost carries no information about it, so C must be given. If the fixed cost is known, \\(C=\\text{fixed cost}\\).",
         explanation: "E.g. M(Q)=3Q+100 → T(Q)=1.5Q²+100Q+C; with fixed cost 200, T(Q)=1.5Q²+100Q+200."
       },
       {
+        id: "bgubas",
         question: "Define the coefficient of elasticity of demand.",
         answer: "For a continuous demand function \\(q=q(p)\\) (demand as a function of price), the coefficient of elasticity at a point \\(p_0\\) is:\n\\[E_{q,p}=\\frac{p}{q}\\cdot\\frac{dq}{dp}.\\]\nIt measures (approximately) the % change in demand \\(q\\) when the price \\(p\\) rises by 1%.",
         explanation: "Elasticity = the ability of one economic quantity to react to a change in another it depends on."
       },
       {
+        id: "qn9dks",
         question: "How do you interpret the VALUE of the elasticity coefficient?",
         answer: "Comparing the absolute change in demand to that in price:\n• \\(|E_{q,p}|>1\\) → demand is ELASTIC (q changes proportionally MORE than p)\n• \\(|E_{q,p}|<1\\) → demand is INELASTIC (q changes LESS than p)\n• \\(|E_{q,p}|=1\\) → UNIT elasticity\n• \\(E_{q,p}=0\\) → perfectly inelastic\n\nThe SIGN shows direction: \\(E>0\\) → q rises with p; \\(E<0\\) → q falls as p rises (the usual demand case).",
         explanation: "If E = −4/3 at p₀: a 1% price rise lowers demand by about 4/3% (the minus sign means a decrease)."
       },
       {
+        id: "3aiot2",
         question: "For a linear demand \\(q=mp+c\\), what is the elasticity at price \\(p\\)?",
         answer: "Since \\(\\frac{dq}{dp}=m\\),\n\\[E_{q,p}=\\frac{p}{q}\\cdot m=\\frac{m\\,p}{m\\,p+c}.\\]\nFor a downward-sloping demand \\(m<0\\), so \\(E<0\\) — raising the price lowers demand.",
         explanation: "E.g. q = −25p + 1200: demand is inelastic for small p and becomes elastic as p grows toward the choke price."
@@ -60,41 +68,49 @@ const mathM2 = {
 
     quiz: [
       {
+        id: "h7h71i",
         question: "\\(\\int x^n\\,dx = \\) ? (for \\(n\\neq -1\\))",
         options: ["\\(n x^{n-1}+C\\)", "\\(\\frac{1}{n+1}x^{n+1}+C\\)", "\\(\\frac{1}{n-1}x^{n-1}+C\\)", "\\(x^{n+1}+C\\)"],
         correct: 1
       },
       {
+        id: "8wa8tk",
         question: "Integration is the inverse operation of:",
         options: ["Multiplication", "Differentiation", "Taking logarithms", "Squaring"],
         correct: 1
       },
       {
+        id: "goyylc",
         question: "The total cost function is obtained from marginal cost by:",
         options: ["Differentiating M(Q)", "Integrating M(Q): \\(T(Q)=\\int M(Q)\\,dQ\\)", "Dividing M(Q) by Q", "Multiplying M(Q) by Q"],
         correct: 1
       },
       {
+        id: "20q0cd",
         question: "In \\(T(Q)=\\int M(Q)\\,dQ\\), the constant of integration C represents the:",
         options: ["Marginal cost", "Variable cost", "Fixed cost", "Average cost"],
         correct: 2
       },
       {
+        id: "2obqg0",
         question: "The coefficient of elasticity of demand is:",
         options: ["\\(\\frac{q}{p}\\cdot\\frac{dp}{dq}\\)", "\\(\\frac{p}{q}\\cdot\\frac{dq}{dp}\\)", "\\(\\frac{dq}{dp}\\)", "\\(p\\cdot q\\)"],
         correct: 1
       },
       {
+        id: "5tehep",
         question: "If \\(|E_{q,p}|>1\\), demand is:",
         options: ["Inelastic", "Elastic", "Perfectly inelastic", "Of unit elasticity"],
         correct: 1
       },
       {
+        id: "wtsb4e",
         question: "A negative elasticity coefficient means that when price rises, demand:",
         options: ["Rises", "Falls", "Stays constant", "Becomes zero"],
         correct: 1
       },
       {
+        id: "1yynwi",
         question: "Why can't total cost be uniquely determined from marginal cost alone?",
         options: ["Marginal cost is always zero", "The constant of integration (fixed cost) is unknown", "Integration is impossible", "Q is unknown"],
         correct: 1
@@ -102,15 +118,16 @@ const mathM2 = {
     ],
 
     fillBlanks: [
-      { sentence: "A function F whose derivative is f (F′ = f) is called a _______ function of f.", answer: "primitive", hint: "Also: antiderivative" },
-      { sentence: "The constant C added to every indefinite integral is the constant of _______.", answer: "integration", hint: "Lost when differentiating because (C)′ = 0" },
-      { sentence: "By the power rule, ∫xⁿ dx raises the power by one and divides by n + _______.", answer: "1", hint: "1/(n+1)·xⁿ⁺¹" },
-      { sentence: "Total cost is the indefinite _______ of marginal cost: T(Q) = ∫ M(Q) dQ.", answer: "integral", hint: "Inverse of differentiation" },
-      { sentence: "The constant of integration in T(Q) equals the _______ cost.", answer: "fixed", hint: "T(0)" },
-      { sentence: "If |E| > 1 demand is elastic; if |E| < 1 demand is _______.", answer: "inelastic", hint: "q changes less than p" }
+      { id: "8j3t55", sentence: "A function F whose derivative is f (F′ = f) is called a _______ function of f.", answer: "primitive", hint: "Also: antiderivative" },
+      { id: "mp77so", sentence: "The constant C added to every indefinite integral is the constant of _______.", answer: "integration", hint: "Lost when differentiating because (C)′ = 0" },
+      { id: "mljcs7", sentence: "By the power rule, ∫xⁿ dx raises the power by one and divides by n + _______.", answer: "1", hint: "1/(n+1)·xⁿ⁺¹" },
+      { id: "e97utd", sentence: "Total cost is the indefinite _______ of marginal cost: T(Q) = ∫ M(Q) dQ.", answer: "integral", hint: "Inverse of differentiation" },
+      { id: "au5ici", sentence: "The constant of integration in T(Q) equals the _______ cost.", answer: "fixed", hint: "T(0)" },
+      { id: "jdd1qr", sentence: "If |E| > 1 demand is elastic; if |E| < 1 demand is _______.", answer: "inelastic", hint: "q changes less than p" }
     ],
 
     learn: {
+      id: "jgkc12",
       content:
         '<h3>The indefinite integral — undoing the derivative</h3>' +
         '<p>Differentiation took a function and produced its <em>rate of change</em>. <strong>Integration runs the film backwards</strong>: given a rate, it recovers the original quantity. This is exactly the question a manager asks — "I know how fast cost grows with each extra unit (the marginal cost); what is the <em>total</em> cost?" That reverse step is why integration sits at the heart of economic analysis.</p>' +
@@ -153,37 +170,44 @@ const mathM2 = {
   // CATEGORY 2: ANNUITIES (RENTS) — FUTURE & PRESENT VALUE
   // ========================================================================
   annuities: {
+    id: "ipmi4t",
     name: "Annuities (Rents)",
     icon: "fa-piggy-bank",
     color: "#8b5cf6",
 
     flashcards: [
       {
+        id: "p341by",
         question: "What is an annuity (rent), and what are the interest and discount factors?",
         answer: "An ANNUITY (rent) is a series of periodic payments of nominally equal amount \\(R\\), made at equal time intervals with the same interest rate \\(i\\) applied to each, over \\(n\\) periods.\n\n• INTEREST FACTOR: \\(r=1+i\\)\n• DISCOUNT FACTOR: \\(\\frac1r\\)\n• Basic compounding: \\(C_n=C_0\\cdot r^{n}\\)",
         explanation: "Compound, decursive capitalization is assumed (interest at the end of each period)."
       },
       {
+        id: "yk9nfp",
         question: "Prenumerando vs. postnumerando — what is the difference?",
         answer: "• PRENUMERANDO: payments are made at the BEGINNING of each period.\n• POSTNUMERANDO: payments are made at the END of each period.\n\nA prenumerando payment earns interest for one extra period, so prenumerando values are the postnumerando values multiplied by \\(r\\).",
         explanation: "\"Invested at the beginning of the year\" = prenumerando; \"at the end of the year\" = postnumerando."
       },
       {
+        id: "d4u3be",
         question: "Give the FUTURE (final) value formulas for an annuity.",
         answer: "POSTNUMERANDO (end of period):\n\\[S_n'=R\\cdot\\frac{r^{n}-1}{r-1}.\\]\nPRENUMERANDO (beginning of period — one extra period of interest):\n\\[S_n=R\\cdot r\\cdot\\frac{r^{n}-1}{r-1}.\\]",
         explanation: "Sₙ (prenumerando) = r · S′ₙ (postnumerando). Future value = accumulated worth of all payments at the end."
       },
       {
+        id: "affbwn",
         question: "Give the PRESENT value formulas for an annuity.",
         answer: "POSTNUMERANDO (end of period):\n\\[A_n=\\frac{R}{r^{n}}\\cdot\\frac{r^{n}-1}{r-1}.\\]\nPRENUMERANDO (beginning of period):\n\\[A_n'=\\frac{R}{r^{n-1}}\\cdot\\frac{r^{n}-1}{r-1}.\\]",
         explanation: "Present value = today's worth of future payments, obtained by discounting (dividing by powers of r)."
       },
       {
+        id: "5pnk1b",
         question: "How do you find the periodic payment R from a known future or present value?",
         answer: "Just invert the relevant formula. E.g. for prenumerando FUTURE value:\n\\[R=S_n\\cdot\\frac{r-1}{r\\,(r^{n}-1)}.\\]\nFor postnumerando PRESENT value:\n\\[R=A_n\\cdot\\frac{r^{n}(r-1)}{r^{n}-1}.\\]",
         explanation: "Example: S₁₂ = 540 000 €, r = 1.09, prenumerando → R ≈ 24 597.57 €."
       },
       {
+        id: "2tw47m",
         question: "What does compound, decursive, annual capitalization mean?",
         answer: "• COMPOUND: interest is added to the principal and itself earns interest (\\(C_n=C_0 r^n\\)).\n• DECURSIVE: interest is calculated and added at the END of each period.\n• ANNUAL: the compounding period is one year.\n\nThe interest rate \\(p\\%\\) gives \\(i=\\frac{p}{100}\\) and \\(r=1+i\\).",
         explanation: "These are the standing assumptions for the rent and loan formulas in this course."
@@ -192,36 +216,43 @@ const mathM2 = {
 
     quiz: [
       {
+        id: "d8zfq9",
         question: "The interest factor r is defined as:",
         options: ["\\(r=i\\)", "\\(r=1+i\\)", "\\(r=1-i\\)", "\\(r=\\frac{1}{i}\\)"],
         correct: 1
       },
       {
+        id: "zuh2ij",
         question: "In a PRENUMERANDO annuity, payments are made:",
         options: ["At the end of each period", "At the beginning of each period", "Only once", "Randomly"],
         correct: 1
       },
       {
+        id: "2qhuw7",
         question: "The future value of a POSTNUMERANDO annuity is:",
         options: ["\\(R\\cdot r\\cdot\\frac{r^n-1}{r-1}\\)", "\\(R\\cdot\\frac{r^n-1}{r-1}\\)", "\\(\\frac{R}{r^n}\\cdot\\frac{r^n-1}{r-1}\\)", "\\(R\\cdot r^n\\)"],
         correct: 1
       },
       {
+        id: "dn917q",
         question: "The present value of a POSTNUMERANDO annuity is:",
         options: ["\\(R\\cdot\\frac{r^n-1}{r-1}\\)", "\\(\\frac{R}{r^n}\\cdot\\frac{r^n-1}{r-1}\\)", "\\(R\\cdot r^n\\)", "\\(\\frac{R}{r-1}\\)"],
         correct: 1
       },
       {
+        id: "gehd4l",
         question: "A prenumerando future value equals the postnumerando one multiplied by:",
         options: ["\\(r^n\\)", "\\(r\\)", "\\(\\frac1r\\)", "\\(n\\)"],
         correct: 1
       },
       {
+        id: "nzk8et",
         question: "An annual interest rate of p = 9% gives an interest factor r =",
         options: ["0.09", "1.09", "9", "1.9"],
         correct: 1
       },
       {
+        id: "qlk9sq",
         question: "Discounting a future amount to its present value means:",
         options: ["Multiplying by rⁿ", "Dividing by the appropriate power of r", "Adding interest", "Subtracting the rate"],
         correct: 1
@@ -229,15 +260,16 @@ const mathM2 = {
     ],
 
     fillBlanks: [
-      { sentence: "A series of nominally equal periodic payments is called an _______ (rent).", answer: "annuity", hint: "Marked R" },
-      { sentence: "The interest factor is r = 1 + _______.", answer: "i", hint: "i = p/100" },
-      { sentence: "Payments at the beginning of each period define a _______ annuity.", answer: "prenumerando", hint: "Opposite of postnumerando" },
-      { sentence: "The future value of a postnumerando annuity is S′ₙ = R·(rⁿ − 1)/(r − _______).", answer: "1", hint: "Geometric series sum" },
-      { sentence: "Computing today's worth of future payments is called _______.", answer: "discounting", hint: "Divide by powers of r" },
-      { sentence: "Interest added at the END of each period is called _______ capitalization.", answer: "decursive", hint: "Standing assumption" }
+      { id: "vpdlm0", sentence: "A series of nominally equal periodic payments is called an _______ (rent).", answer: "annuity", hint: "Marked R" },
+      { id: "g0fptn", sentence: "The interest factor is r = 1 + _______.", answer: "i", hint: "i = p/100" },
+      { id: "umebye", sentence: "Payments at the beginning of each period define a _______ annuity.", answer: "prenumerando", hint: "Opposite of postnumerando" },
+      { id: "2iih27", sentence: "The future value of a postnumerando annuity is S′ₙ = R·(rⁿ − 1)/(r − _______).", answer: "1", hint: "Geometric series sum" },
+      { id: "qa969r", sentence: "Computing today's worth of future payments is called _______.", answer: "discounting", hint: "Divide by powers of r" },
+      { id: "ncfqon", sentence: "Interest added at the END of each period is called _______ capitalization.", answer: "decursive", hint: "Standing assumption" }
     ],
 
     learn: {
+      id: "1g8sx9",
       content:
         '<h3>Annuities (rents) — money has a time value</h3>' +
         '<p>The big idea of financial mathematics is that <strong>the same amount of money is worth different amounts at different times</strong>. 1000 € today is worth more than 1000 € in five years, because today\'s euro can be invested and earn interest. An <span class="highlight">annuity</span> (rent) is a series of nominally equal payments \\(R\\) made at equal intervals over \\(n\\) periods, each earning the same interest rate \\(i\\). We need a way to add up payments that fall at different times — and you cannot simply add them, because each lives at a different point on the time line.</p>' +
@@ -280,37 +312,44 @@ const mathM2 = {
   // CATEGORY 3: CASH LOANS
   // ========================================================================
   loans: {
+    id: "n4a19h",
     name: "Cash Loans",
     icon: "fa-money-bill-wave",
     color: "#8b5cf6",
 
     flashcards: [
       {
+        id: "oox546",
         question: "What is a loan annuity, and of what two parts does it consist?",
         answer: "A loan is repaid through ANNUITIES \\(A_k\\). Each annuity consists of two parts:\n\\[A_k = R_k + I_k,\\]\n• \\(R_k\\) — the REPAYMENT QUOTA (the part that reduces the principal)\n• \\(I_k\\) — the INTEREST on the remaining debt: \\(I_k=\\frac{C_{k-1}\\cdot p}{100}\\).\n\nA repayment plan (table) lists annuity, interest, quota and remaining debt for each period.",
         explanation: "The loan can be repaid with equal annuities OR equal repayment quotas."
       },
       {
+        id: "siqif9",
         question: "What are the three standard CONTROLS of a repayment plan?",
         answer: "a) The last period's repayment quota equals the previous remaining debt: \\(R_k=C_{k-1}\\).\nb) The sum of all repayment quotas equals the loan: \\(\\sum R_k=C_0\\).\nc) The sum of all quotas + the sum of all interest = the sum of all annuities: \\(\\sum R_k+\\sum I_k=\\sum A_k\\).",
         explanation: "These checks confirm the repayment table was computed correctly."
       },
       {
+        id: "c9gd58",
         question: "Give the formula for the (nominally equal) loan annuity.",
         answer: "For the equal-annuities model (postnumerando), use the present value of a postnumerando annuity with \\(A_n\\to C\\), \\(R\\to a\\):\n\\[a=C\\cdot\\frac{r^{n}(r-1)}{r^{n}-1},\\qquad r=1+\\frac{p}{100}.\\]\nThe loan is the discounted value of the future equal repayments.",
         explanation: "Example: C = 130 000 €, n = 6, p = 10% → a ≈ 29 848.96 €."
       },
       {
+        id: "clgc5e",
         question: "How does the equal-annuities model behave over time (interest vs. quota)?",
         answer: "The annuity \\(a\\) is constant, but its split changes:\n• Interest \\(I_k=\\frac{C_{k-1}p}{100}\\) DECREASES (the remaining debt shrinks).\n• Repayment quota \\(R_k=a-I_k\\) INCREASES, and grows geometrically: \\(R_k=R_1\\cdot r^{k-1}\\).\n• Remaining debt \\(C_k=C_{k-1}-R_k\\) decreases to 0.",
         explanation: "Early annuities are mostly interest; later annuities are mostly principal."
       },
       {
+        id: "x4crvi",
         question: "Describe the equal-REPAYMENT-QUOTAS model.",
         answer: "Here the repayment quota is constant:\n\\[R=\\frac{C}{n}.\\]\nInterest and annuity decrease each period:\n\\[I_i=\\frac{C_{i-1}\\,p}{100},\\quad a_i=R+I_i,\\quad C_i=C\\left(1-\\frac{i}{n}\\right).\\]\nThe annuity \\(a_i\\) falls over time because the interest on a shrinking debt falls.",
         explanation: "Unlike the equal-annuities model, here the annuity itself is variable (decreasing)."
       },
       {
+        id: "uadznq",
         question: "What is total interest paid on a loan?",
         answer: "The total interest is the price of having the money today — the sum of all annuities minus the loan amount:\n\\[\\sum I_k=\\sum A_k - C_0.\\]",
         explanation: "It is what the borrower pays the lender over and above repaying the principal."
@@ -319,36 +358,43 @@ const mathM2 = {
 
     quiz: [
       {
+        id: "kstwmj",
         question: "A loan annuity \\(A_k\\) consists of:",
         options: ["Only interest", "Only the repayment quota", "Repayment quota + interest (\\(A_k=R_k+I_k\\))", "Principal × rate"],
         correct: 2
       },
       {
+        id: "j4h9dw",
         question: "The interest in period k is computed as:",
         options: ["\\(I_k=\\frac{C_{k-1}\\cdot p}{100}\\)", "\\(I_k=\\frac{C_0\\cdot p}{100}\\)", "\\(I_k=a\\cdot r\\)", "\\(I_k=\\frac{C}{n}\\)"],
         correct: 0
       },
       {
+        id: "pr5prl",
         question: "The sum of all repayment quotas equals:",
         options: ["The total interest", "The loan amount \\(C_0\\)", "The last annuity", "Zero"],
         correct: 1
       },
       {
+        id: "ag10gs",
         question: "The nominally-equal loan annuity is:",
         options: ["\\(a=\\frac{C}{n}\\)", "\\(a=C\\cdot\\frac{r^n(r-1)}{r^n-1}\\)", "\\(a=C\\cdot r^n\\)", "\\(a=C\\cdot(r-1)\\)"],
         correct: 1
       },
       {
+        id: "7z9a0d",
         question: "In the equal-ANNUITIES model, over time the interest part of each annuity:",
         options: ["Increases", "Decreases", "Stays constant", "Is always zero"],
         correct: 1
       },
       {
+        id: "qd1bgq",
         question: "In the equal-repayment-QUOTAS model, the repayment quota is:",
         options: ["\\(R=\\frac{C}{n}\\)", "\\(R=C\\cdot r^n\\)", "Variable", "Equal to the interest"],
         correct: 0
       },
       {
+        id: "xavrao",
         question: "Total interest paid equals:",
         options: ["\\(\\sum A_k + C_0\\)", "\\(\\sum A_k - C_0\\)", "\\(C_0\\)", "\\(\\frac{C_0}{n}\\)"],
         correct: 1
@@ -356,15 +402,16 @@ const mathM2 = {
     ],
 
     fillBlanks: [
-      { sentence: "Each loan annuity Aₖ = repayment quota Rₖ + _______.", answer: "interest", hint: "Iₖ on the remaining debt" },
-      { sentence: "Interest in period k is Iₖ = Cₖ₋₁·p / _______.", answer: "100", hint: "p is the percentage rate" },
-      { sentence: "The sum of all repayment quotas equals the loan amount _______.", answer: "C0", hint: "ΣRₖ = C₀ (control b)" },
-      { sentence: "In the equal-annuities model the annuity a is _______ (does not change).", answer: "constant", hint: "Only its split shifts" },
-      { sentence: "In the equal-repayment-quotas model R = C / _______.", answer: "n", hint: "n = number of periods" },
-      { sentence: "Total interest = sum of all annuities − loan amount, i.e. ΣIₖ = ΣAₖ − _______.", answer: "C0", hint: "The principal" }
+      { id: "na15bc", sentence: "Each loan annuity Aₖ = repayment quota Rₖ + _______.", answer: "interest", hint: "Iₖ on the remaining debt" },
+      { id: "uhkhcw", sentence: "Interest in period k is Iₖ = Cₖ₋₁·p / _______.", answer: "100", hint: "p is the percentage rate" },
+      { id: "84yk36", sentence: "The sum of all repayment quotas equals the loan amount _______.", answer: "C0", hint: "ΣRₖ = C₀ (control b)" },
+      { id: "5ykwfb", sentence: "In the equal-annuities model the annuity a is _______ (does not change).", answer: "constant", hint: "Only its split shifts" },
+      { id: "tuklbs", sentence: "In the equal-repayment-quotas model R = C / _______.", answer: "n", hint: "n = number of periods" },
+      { id: "hjiqlq", sentence: "Total interest = sum of all annuities − loan amount, i.e. ΣIₖ = ΣAₖ − _______.", answer: "C0", hint: "The principal" }
     ],
 
     learn: {
+      id: "xsz2le",
       content:
         '<h3>Cash loans — an annuity seen from the other side</h3>' +
         '<p>A loan reuses everything from the annuity unit, just viewed from the lender\'s desk. The bank hands you \\(C=C_0\\) <em>today</em>; in return you make a stream of future payments. So the loan is simply the <strong>present value of your future repayments</strong> — which is why the same compounding factor \\(r=1+\\frac{p}{100}\\) reappears here.</p>' +
@@ -393,47 +440,56 @@ const mathM2 = {
   // CATEGORY 4: GAUSS-JORDAN METHOD
   // ========================================================================
   gaussJordan: {
+    id: "5zn4q5",
     name: "Gauss & Gauss-Jordan Method",
     icon: "fa-table-cells",
     color: "#8b5cf6",
 
     flashcards: [
       {
+        id: "3ptmvt",
         question: "What is the goal of the Gauss-Jordan method?",
         answer: "To solve a linear system by writing it as an AUGMENTED matrix \\([A\\mid b]\\) and using elementary row operations to reduce the left side to the IDENTITY (unit) matrix:\n\\[\\left[\\begin{array}{ccc|c}a_{11}&a_{12}&a_{13}&b_1\\\\a_{21}&a_{22}&a_{23}&b_2\\\\a_{31}&a_{32}&a_{33}&b_3\\end{array}\\right]\\sim\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right].\\]\nThe last column then gives the solution.",
         explanation: "Gauss-Jordan reduces fully to reduced row echelon form (identity on the left when a unique solution exists)."
       },
       {
+        id: "zonfe4",
         question: "What is the difference between the GAUSS method and the GAUSS-JORDAN method?",
         answer: "Both use the same elementary row operations on the augmented matrix \\([A\\mid b]\\); they differ in HOW FAR they reduce:\n• GAUSS (elimination): reduce only to an UPPER-TRIANGULAR form (row echelon — zeros below the diagonal), then finish with BACK-SUBSTITUTION (solve the last variable, substitute upward).\n\\[\\left[\\begin{array}{ccc|c}1&*&*&*\\\\0&1&*&*\\\\0&0&1&*\\end{array}\\right]\\]\n• GAUSS-JORDAN: keep going until the left block is the FULL IDENTITY (zeros above AND below the diagonal) — no back-substitution needed; the solution is read straight off the last column.",
         explanation: "Gauss = upper triangle + back-substitution; Gauss-Jordan = full identity (reduced row echelon), answer read directly. Same operations, Gauss-Jordan just does more of them."
       },
       {
+        id: "a43kqr",
         question: "Which part of the augmented matrix may elementary operations act on — rows or columns?",
         answer: "ROWS ONLY. Each row is one equation, so swapping, scaling or combining ROWS keeps the system equivalent. You must NEVER apply these operations to COLUMNS — a column mixes the coefficients of different unknowns across all equations, which changes the system and destroys the solution.",
         explanation: "Row operations = legal moves on equations. Column operations are not allowed when solving a system this way."
       },
       {
+        id: "h153o1",
         question: "What are the three ELEMENTARY ROW OPERATIONS?",
         answer: "1. SWAP two rows.\n2. MULTIPLY a row by a non-zero number.\n3. Add a MULTIPLE of one row to another row.\n\nThese operations do not change the solution set of the system.",
         explanation: "They mirror the legal manipulations of equations: reorder, scale, and add equations."
       },
       {
+        id: "kud1t7",
         question: "What is a pivot (leading) element?",
         answer: "A PIVOT is the leading 1 in a row that we use to eliminate the entries above and below it in its column. We often swap rows or scale a row to place a 1 in the pivot position (e.g. position (1,1)) before clearing the rest of the column.",
         explanation: "Working pivot by pivot down the diagonal turns the left block into the identity matrix."
       },
       {
+        id: "922jzd",
         question: "How can you tell a system has a UNIQUE solution from the reduced matrix?",
         answer: "The left block reduces to the full IDENTITY matrix:\n\\[\\left[\\begin{array}{ccc|c}1&0&0&a\\\\0&1&0&b\\\\0&0&1&c\\end{array}\\right].\\]\nThen \\(x_1=a,\\ x_2=b,\\ x_3=c\\) — exactly one solution.",
         explanation: "Every unknown has a pivot; no free variables and no contradiction."
       },
       {
+        id: "yjn34g",
         question: "How do you recognise INFINITELY MANY solutions?",
         answer: "A row of all zeros appears (including the augmented entry): \\([\\,0\\ 0\\ 0\\mid 0\\,]\\). Then at least one variable is FREE — set it to a parameter \\(t\\in\\mathbb{R}\\) and express the others in terms of \\(t\\).",
         explanation: "E.g. x₃ = t gives x₁ = 2t − 3, x₂ = 2t − 5 — an infinite family of solutions."
       },
       {
+        id: "re64yb",
         question: "How do you recognise that a system has NO solution?",
         answer: "A row of the form \\([\\,0\\ 0\\ 0\\mid k\\,]\\) with \\(k\\neq 0\\) appears. This says \\(0=k\\) (a contradiction), so the system is inconsistent and has NO solution.",
         explanation: "0·x₁ + 0·x₂ + 0·x₃ = −2 can never hold → no solution."
@@ -442,46 +498,55 @@ const mathM2 = {
 
     quiz: [
       {
+        id: "h1rknd",
         question: "The Gauss-Jordan method aims to reduce the left block of the augmented matrix to:",
         options: ["A diagonal of zeros", "The identity (unit) matrix", "An upper triangle of 2s", "A single row"],
         correct: 1
       },
       {
+        id: "qd2sl9",
         question: "Which is NOT an elementary row operation?",
         options: ["Swapping two rows", "Multiplying a row by a non-zero number", "Adding a multiple of one row to another", "Multiplying a row by 0"],
         correct: 3
       },
       {
+        id: "vlrmg0",
         question: "The GAUSS method reduces the matrix to an upper-triangular form and then finishes with:",
         options: ["Back-substitution", "Reducing to the identity matrix", "Column operations", "The quadratic formula"],
         correct: 0
       },
       {
+        id: "l8ykil",
         question: "What distinguishes Gauss-Jordan from the plain Gauss method?",
         options: ["It uses different row operations", "It reduces all the way to the identity matrix (no back-substitution)", "It works on columns instead of rows", "It only finds the first variable"],
         correct: 1
       },
       {
+        id: "6oxb4j",
         question: "Elementary operations when solving a linear system may be applied to:",
         options: ["Columns only", "Rows only", "Both rows and columns freely", "The diagonal only"],
         correct: 1
       },
       {
+        id: "4fvlk4",
         question: "A pivot element is used to:",
         options: ["Delete a column", "Eliminate the other entries in its column", "Swap the matrix", "Add a new equation"],
         correct: 1
       },
       {
+        id: "3fn12x",
         question: "If the left block reduces to the identity matrix, the system has:",
         options: ["No solution", "A unique solution", "Infinitely many solutions", "Two solutions"],
         correct: 1
       },
       {
+        id: "aexb4w",
         question: "A row \\([\\,0\\ 0\\ 0\\mid 0\\,]\\) in the reduced matrix indicates:",
         options: ["A unique solution", "Infinitely many solutions (a free variable)", "No solution", "An error"],
         correct: 1
       },
       {
+        id: "qzw431",
         question: "A row \\([\\,0\\ 0\\ 0\\mid k\\,]\\) with \\(k\\neq 0\\) indicates:",
         options: ["A unique solution", "Infinitely many solutions", "No solution (contradiction)", "A pivot"],
         correct: 2
@@ -489,18 +554,19 @@ const mathM2 = {
     ],
 
     fillBlanks: [
-      { sentence: "A linear system is written for Gauss-Jordan as an _______ matrix [A | b].", answer: "augmented", hint: "Coefficients plus the right-hand side" },
-      { sentence: "The goal is to reduce the left block to the _______ matrix.", answer: "identity", hint: "1s on the diagonal, 0s elsewhere" },
-      { sentence: "The leading 1 used to clear a column is called the _______.", answer: "pivot", hint: "Pivot element" },
-      { sentence: "The Gauss method stops at an upper-triangular matrix and then uses back-_______.", answer: "substitution", hint: "Solve last variable, work upward" },
-      { sentence: "Gauss-Jordan reduces all the way to the _______ matrix, so no back-substitution is needed.", answer: "identity", hint: "Full reduced row echelon form" },
-      { sentence: "Elementary operations may be applied to _______, never to columns.", answer: "rows", hint: "Each row is one equation" },
-      { sentence: "Multiplying a row by a _______ number is an elementary row operation.", answer: "non-zero", hint: "Zero would destroy information" },
-      { sentence: "A zero row [0 0 0 | 0] signals _______ many solutions (a free variable).", answer: "infinitely", hint: "Set the free variable = t" },
-      { sentence: "A row [0 0 0 | k] with k ≠ 0 means the system has _______ solution.", answer: "no", hint: "Contradiction 0 = k" }
+      { id: "a0xdzc", sentence: "A linear system is written for Gauss-Jordan as an _______ matrix [A | b].", answer: "augmented", hint: "Coefficients plus the right-hand side" },
+      { id: "vgkjiq", sentence: "The goal is to reduce the left block to the _______ matrix.", answer: "identity", hint: "1s on the diagonal, 0s elsewhere" },
+      { id: "p679s1", sentence: "The leading 1 used to clear a column is called the _______.", answer: "pivot", hint: "Pivot element" },
+      { id: "fs2v1j", sentence: "The Gauss method stops at an upper-triangular matrix and then uses back-_______.", answer: "substitution", hint: "Solve last variable, work upward" },
+      { id: "cf44mw", sentence: "Gauss-Jordan reduces all the way to the _______ matrix, so no back-substitution is needed.", answer: "identity", hint: "Full reduced row echelon form" },
+      { id: "29j8vd", sentence: "Elementary operations may be applied to _______, never to columns.", answer: "rows", hint: "Each row is one equation" },
+      { id: "u2tjt5", sentence: "Multiplying a row by a _______ number is an elementary row operation.", answer: "non-zero", hint: "Zero would destroy information" },
+      { id: "27jk1l", sentence: "A zero row [0 0 0 | 0] signals _______ many solutions (a free variable).", answer: "infinitely", hint: "Set the free variable = t" },
+      { id: "to702l", sentence: "A row [0 0 0 | k] with k ≠ 0 means the system has _______ solution.", answer: "no", hint: "Contradiction 0 = k" }
     ],
 
     learn: {
+      id: "v7u42x",
       content:
         '<h3>The Gauss-Jordan method — solving systems by bookkeeping</h3>' +
         '<p>When several quantities must satisfy several linear conditions at once, we have a <strong>system of linear equations</strong>. Solving it by hand by substitution gets messy fast with three or more unknowns. The Gauss-Jordan method turns it into pure, mechanical <em>bookkeeping</em>: strip away the \\(x\\)\'s and \\(y\\)\'s, keep only the numbers in a grid, and tidy that grid by fixed rules until the answer is sitting in the last column.</p>' +

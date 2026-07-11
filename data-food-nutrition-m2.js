@@ -8,62 +8,74 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 8: BEER ====================
     beer: {
+        id: "jzrmo9",
         name: "Beer",
         icon: "fa-beer-mug-empty",
         color: "#ca8a04",
 
         flashcards: [
             {
+                id: "p8pwob",
                 question: "What is beer and what are its basic raw materials?",
                 answer: "Beer: product obtained by alcoholic fermentation (brewing) of beer wort using pure cultures of beer yeast (Saccharomyces), exceptionally by spontaneous fermentation.\nRaw materials:\n1. Malt (germinated and dried barley)\n2. Water (~90%)\n3. Yeast (converts sugars to alcohol + CO₂)\n4. Hops (Humulus lupulus — bitterness, aroma, antiseptic)",
                 explanation: "Beer is the 5th most consumed drink in the world after tea, soft drinks, milk, and coffee."
             },
             {
+                id: "m8ab66",
                 question: "What is malting and what is malt?",
                 answer: "Malting: conversion of barley into malt through soaking, germination, and drying.\nDuring germination, amylolytic and proteolytic enzymes are activated — they break down starch into fermentable sugars and proteins into amino acids.\nLight beers: malt dried at lower temperatures.\nDark beers: malt dried at higher temperatures.",
                 explanation: "Wheat, rye, and millet can also be malted, but barley is the primary cereal."
             },
             {
+                id: "rdliwz",
                 question: "What is mashing and what is wort?",
                 answer: "Mashing: mixing milled grains (malt) with hot water. Enzymes (α-amylase and β-amylase) break down starch into sugars (mainly maltose). Takes 1-2 hours.\nTwo methods:\n• Infusion mashing: gradual heating in one vessel → more fermentable sugars → highly brewed beer (top-fermented/ale)\n• Decoction mashing: part boiled and returned → more unfermentable extract (dextrin) → lower brewed beer (bottom-fermented/lager)\nWort: the sweet liquid obtained from mashing.",
                 explanation: "After mashing, wort is boiled with hops for about 1 hour."
             },
             {
+                id: "62fgyx",
                 question: "What are the three roles of hops in beer production?",
                 answer: "1. Provides ingredients for bitterness and hoppy aroma\n2. Has antiseptic effect (preservative)\n3. Promotes protein coagulation (clarification)\nHops are the virgin unfertilized flowers of Humulus lupulus.",
                 explanation: "Hops are added during wort boiling."
             },
             {
+                id: "rvb7k1",
                 question: "What are the four steps of beer production?",
                 answer: "1. Malt production: cleaning, soaking, germination, drying of barley\n2. Wort production: milling malt, mashing, boiling with hops\n3. Fermentation: primary (wort → young beer with alcohol + CO₂) + secondary (conditioning/maturation — yeast settles, beer clears, flavours balance)\n4. Processing and packaging: clarification, stabilization, pasteurization, filling",
                 explanation: "Fermentation may take one week to several months depending on beer style."
             },
             {
+                id: "k18hqb",
                 question: "What is the difference between lager and ale?",
                 answer: "Lager (bottom-fermented):\n• Yeast: Saccharomyces uvarum\n• Starts at 9-18°C, ends at 6-8°C\n• Long secondary fermentation at 0-10°C (lagering)\n• Full flavour, pronounced bitterness, thick foam\n• Most European beers\n\nAle (top-fermented):\n• Yeast: Saccharomyces cerevisiae\n• Starts at 10°C, ends at 25°C (warm brewing)\n• Yeast floats to surface\n• Slightly fruity (apple, pear, banana)\n• Shorter maturation at 20°C",
                 explanation: "Stout is a special ale: dark, uses roasted malt/barley, nitrogen for dense foam."
             },
             {
+                id: "hov0bq",
                 question: "How is beer classified by colour?",
                 answer: "Using European Brewing Convention (EBC) units:\n• White/pale/blonde/beige: up to 15 EBC\n• Orange/bronze/red: 16-40 EBC\n• Caramel/chocolate/black: above 40 EBC",
                 explanation: "EBC is the standard unit for measuring beer colour intensity."
             },
             {
+                id: "j33acr",
                 question: "How is beer classified by alcohol content?",
                 answer: "• Non-alcoholic: <0.5% vol.\n• Standard lager and ale: 3.5-5.5% vol.\n• Strong beers: >5.5% vol. (usually 5.5-7%)\n• Barley wine: >10% vol.\nStandard beers typically have 10-12% extract.",
                 explanation: "Non-alcoholic beer still contains trace amounts of alcohol."
             },
             {
+                id: "u6as2o",
                 question: "What is spontaneously fermented beer?",
                 answer: "Fermentation uses 'wild' unselected yeast strains from the air, or from equipment and fermentation rooms.\nIncludes the famous Belgian Lambic beers — they have unfermented extract giving a specific aroma.",
                 explanation: "Lambic beers are a unique tradition compared to controlled fermentation methods."
             },
             {
+                id: "80rd3f",
                 question: "What is the nutritional value of beer?",
                 answer: "Approximate composition:\n• Water: 92.9%\n• Alcohol: 3.9%\n• Carbohydrates: 2.5%\n• CO₂: 0.5%\n• Proteins: 0.2%\nEnergy: ~45 kcal/100ml\nContains B-vitamins (B1, B2, B3, B6) and minerals (K, P, Mg, Ca, Na).\nOne unit of alcohol ≈ 12g alcohol ≈ 0.33L lager (4.5% vol).",
                 explanation: "Daily recommended max: 2-3 units for men, half for women."
             },
             {
+                id: "5v1xsq",
                 question: "What are the sensory evaluation criteria for beer?",
                 answer: "• Smell: pleasant and fresh, without yeast smell\n• Flavour: pleasant, characteristic for the type; formed during fermentation\n• Colour: depends on technological process\n• Clarity: clear and transparent, no sediment or turbidity\n• Foam: evaluated by height and persistence",
                 explanation: "These criteria are used to assess beer quality."
@@ -72,61 +84,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "69hee9",
                 question: "The four basic raw materials for beer are:",
                 options: ["Barley, sugar, yeast, spices", "Malt, water, yeast, hops", "Wheat, water, salt, hops", "Corn, water, yeast, herbs"],
                 correct: 1
             },
             {
+                id: "4turyn",
                 question: "Lager beer uses which type of fermentation?",
                 options: ["Top-fermentation (ale)", "Bottom-fermentation", "Spontaneous fermentation", "No fermentation"],
                 correct: 1
             },
             {
+                id: "ysvvn5",
                 question: "The main enzymes activated during mashing are:",
                 options: ["Lipase and protease", "α-amylase and β-amylase", "Polyphenol oxidase", "Lactase and sucrase"],
                 correct: 1
             },
             {
+                id: "68edij",
                 question: "Hops provide all of the following EXCEPT:",
                 options: ["Bitterness", "Antiseptic effect", "Sugar content", "Protein coagulation"],
                 correct: 2
             },
             {
+                id: "ginjhd",
                 question: "Ale fermentation ends at approximately what temperature?",
                 options: ["6-8°C", "15°C", "25°C", "40°C"],
                 correct: 2
             },
             {
+                id: "steuko",
                 question: "Beer with a colour intensity above 40 EBC is classified as:",
                 options: ["Pale/blonde", "Orange/bronze", "Caramel/chocolate/black", "Clear/transparent"],
                 correct: 2
             },
             {
+                id: "7dzctn",
                 question: "Non-alcoholic beer contains a maximum of:",
                 options: ["0% alcohol", "0.5% vol. alcohol", "2% vol. alcohol", "3.5% vol. alcohol"],
                 correct: 1
             },
             {
+                id: "ld8um5",
                 question: "Belgian Lambic beers are examples of:",
                 options: ["Bottom-fermented beer", "Top-fermented beer", "Spontaneously fermented beer", "Non-alcoholic beer"],
                 correct: 2
             },
             {
+                id: "o394e0",
                 question: "The approximate energy value of 100ml beer is:",
                 options: ["15 kcal", "45 kcal", "100 kcal", "200 kcal"],
                 correct: 1
             },
             {
+                id: "uygga8",
                 question: "During malting, enzymes break down starch into:",
                 options: ["Fatty acids", "Fermentable sugars", "Vitamins", "Minerals"],
                 correct: 1
             },
             {
+                id: "l5ogcc",
                 question: "Infusion mashing is used primarily for:",
                 options: ["Lager/bottom-fermented beer", "Ale/top-fermented beer", "Distilled spirits", "Non-alcoholic beer"],
                 correct: 1
             },
             {
+                id: "42vdik",
                 question: "One unit of alcohol is approximately equal to:",
                 options: ["0.33L of lager beer (4.5%)", "1L of lager beer", "0.1L of lager beer", "2L of lager beer"],
                 correct: 0
@@ -135,41 +159,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "kq0zkc",
                 sentence: "The four basic beer ingredients are malt, water, yeast, and _______.",
                 answer: "hops",
                 hint: "Provides bitterness and aroma..."
             },
             {
+                id: "yebivg",
                 sentence: "Lager beer uses _______-fermentation with yeast settling to the bottom.",
                 answer: "bottom",
                 hint: "Opposite of top..."
             },
             {
+                id: "gwadyl",
                 sentence: "Malt is germinated and dried _______.",
                 answer: "barley",
                 hint: "The primary cereal for beer..."
             },
             {
+                id: "h5hozp",
                 sentence: "The sweet liquid obtained from mashing is called _______.",
                 answer: "wort",
                 hint: "Four-letter word..."
             },
             {
+                id: "nsr1f4",
                 sentence: "The famous Belgian beers using wild yeast are called _______ beers.",
                 answer: "lambic",
                 hint: "A Belgian specialty..."
             },
             {
+                id: "r00k5a",
                 sentence: "Beer colour is measured in _______ units (European Brewing Convention).",
                 answer: "EBC",
                 hint: "Three-letter abbreviation..."
             },
             {
+                id: "ohqiiy",
                 sentence: "Standard beer alcohol content ranges from 3.5 to _______% vol.",
                 answer: "5.5",
                 hint: "Five and a half..."
             },
             {
+                id: "20msur",
                 sentence: "The approximate energy value of 100 ml of beer is _______ kcal.",
                 answer: "45",
                 hint: "Forty-five..."
@@ -177,6 +209,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "cgsp2m",
             title: "Lecture 8 – Beer",
             content: `
                 <h3>🍺 What is Beer?</h3>
@@ -242,57 +275,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 9: DISTILLED SPIRITS & LIQUEURS ====================
     distilledSpirits: {
+        id: "gohmp7",
         name: "Distilled Spirits & Liqueurs",
         icon: "fa-whiskey-glass",
         color: "#b45309",
 
         flashcards: [
             {
+                id: "ohj4ab",
                 question: "What defines distilled spirits and liqueurs, and what is the minimum alcohol content?",
                 answer: "Both are alcoholic beverages whose main ingredient is ethyl alcohol (ethanol), with at least 15% vol. (ABV = alcohol by volume).\n• Distilled spirits: produced by distillation of naturally fermented raw materials of agricultural origin (with or without added aromas).\n• Liqueurs: produced by maceration of herbs/fruits in ethyl alcohol, or by adding aromas, sugar or sweeteners to ethyl alcohol.",
                 explanation: "In maceration, the raw material isn't dissolved — only its essential oils and active ingredients are extracted into the alcohol."
             },
             {
+                id: "r3yz7y",
                 question: "How are distilled spirits and liqueurs classified?",
                 answer: "Distilled spirits (30-50 vol% alcohol):\n• Wine spirit → Brandy\n• Cereal spirit → Gin, Vodka\n• Fruit spirit\n• Sugar spirit → Rum\n• Tequila (agave)\n\nLiqueurs (>15 vol% alcohol, >100 g/L sugar):\n• Herb and spice liqueurs\n• Fruit liqueurs\n• Cream liqueurs",
                 explanation: "The raw material (wine, cereal, fruit, sugar, agave) defines the spirit category."
             },
             {
+                id: "wtki9u",
                 question: "What are the two essential processes for making spirits, and what does each do?",
                 answer: "1. Fermentation: where ALL the alcohol is created (yeast + sugar → alcohol + CO₂).\n2. Distillation: where the alcohol is concentrated.\nDistillation works because ethanol boils at a lower temperature than water — when heated, ethanol evaporates in higher concentration in the steam, which is condensed and collected.\nMost distilleries use copper stills (copper reacts with sulfur by-products → cleaner, more aromatic spirit).",
                 explanation: "One-step distillation gives a product of approximately 25-35% alcohol."
             },
             {
+                id: "wqznb3",
                 question: "What alcohol concentrations result from the two-step distillation process?",
                 answer: "First distillation: the still is filled 50-75% with mash/wine; ethanol concentrates and solids separate → spirit of 20-50 vol% alcohol.\nSecond distillation (rectification): the still is filled to 2/3 with the first distillate; ethanol and desirable substances concentrate further, undesirable substances removed → spirit of 60-70 vol% alcohol.",
                 explanation: "Rectification (redistillation) was introduced in the 19th century for greater purity."
             },
             {
+                id: "iulwxt",
                 question: "What is brandy and what are its most famous types?",
                 answer: "Brandy: spirit produced exclusively from wine distillate, distilled to <86 vol% alcohol; no flavouring (only caramel for colour); market product ≥37.5% vol.\nThe name comes from the Dutch 'wijnbranders' (wine burnt) → brandywijn → brandy.\nFamous types: Cognac & Armagnac (France), Sherry brandy (Spain, Jerez), Metaxa (Greece, quality 3*-7*).",
                 explanation: "Cognac's name is protected — only brandy from the Charente province in France. Armagnac (Gascony) is distilled only once."
             },
             {
+                id: "rji78g",
                 question: "What are fruit spirits, Calvados, and famous examples?",
                 answer: "Fruit spirits: produced exclusively by fermentation and distillation of fleshy fruits or fruit must; not flavoured; market ≥37.5% vol.\nExamples: Kirsch (cherries), Mirabelle (yellow plums), Poire Williams (pears), Barack (apricots), Šljivovica (plums).\nCalvados: from Normandy (16th c.) — apples fermented into apple wine (5-6% vol), distilled, aged in French oak (2-6+ years) → 40-45 vol%.\nApplejack: US version of Calvados (double distillation, 5 years in oak).",
                 explanation: "Calvados is made where grapes don't thrive — apples are the main raw material."
             },
             {
+                id: "rpvje5",
                 question: "How is rum produced and what is grog?",
                 answer: "Rum: made by distilling fermented sugar and water — sugar from sugar cane (cane juice, concentrated juice, or molasses). Most rum is from molasses (>50% sugar). Origin: Caribbean (Barbados).\nTraditionally clear, but often aged/coloured (often in ex-whiskey/bourbon barrels) for a dark or golden tint.\nGrog: the British Navy's daily half-pint of rum diluted with an equal amount of water.",
                 explanation: "Molasses is the sticky residue left after sugar cane juice is boiled and crystallised sugar extracted."
             },
             {
+                id: "nrijvg",
                 question: "How are tequila, whisky, gin and vodka produced?",
                 answer: "Tequila: distillation of fermented agave juice; protected origin of Mexico; agave matures ~8 years, the 'heart' (piña) is heated; distilled in copper stills.\nWhisky/whiskey: from cereals ('uisce beatha' = water of life); matured ≥3 years in wooden casks. Bourbon (American) = ≥51% corn, aged in burnt American oak.\nGin: cereal spirit flavoured with juniper berries (Juniperus communis). London gin (dry, 42 vol%).\nVodka: clear, neutral; from potato or grain ethyl alcohol distilled to 96 vol%; final 35-50 vol%.",
                 explanation: "Irish whiskey is triple-distilled for a milder taste; Kentucky Bourbon is a protected designation."
             },
             {
+                id: "s7duir",
                 question: "What are liqueurs and what is maceration?",
                 answer: "Liqueurs: alcoholic drinks with at least 70-100 g/L sugar and at least 15% vol alcohol.\nMaceration: immersing fruits, herbs and/or spices in an alcohol base, during which aromatic and biologically active compounds (flavours, pigments) are extracted into the alcohol by diffusion.\n• Macerate: the coloured solution obtained.\n• Macerate distillate: colourless (volatile substances distilled from the macerate).",
                 explanation: "Liqueur production began with monks (13th-14th century); today Italy and France are the largest producers."
             },
             {
+                id: "r1yakk",
                 question: "What are the main types of liqueurs with examples?",
                 answer: "Herb/spice/bitter liqueurs: anise liqueurs — pastis (France), ouzo (Greece, ~45 vol%), sambuca (Italy), arak (Syria), raki (Turkey). Absinthe: wormwood + anise + fennel, very high strength (65-70 vol%), neurotoxic.\nFruit liqueurs: cherry liqueur (~31 vol%), walnut liqueur (≥30 vol%), limoncello (lemon peel, Italy).\nCream liqueurs: ≥250 g/L sugar, ≥15 vol%; ethyl alcohol + additives (eggs, coffee, chocolate, hazelnut) emulsified with milk or cream.",
                 explanation: "Ouzo is the protected national drink of Greece; cream liqueurs are most often coffee or chocolate flavoured."
@@ -301,61 +345,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "7wtwz2",
                 question: "The minimum alcohol content for distilled spirits and liqueurs is:",
                 options: ["5% vol.", "10% vol.", "15% vol.", "20% vol."],
                 correct: 2
             },
             {
+                id: "jk27f9",
                 question: "In spirit production, where is ALL the alcohol created?",
                 options: ["During distillation", "During fermentation", "During aging", "During bottling"],
                 correct: 1
             },
             {
+                id: "5c7iet",
                 question: "Distillation works because ethanol:",
                 options: ["Boils at a higher temperature than water", "Boils at a lower temperature than water", "Does not evaporate", "Freezes before water"],
                 correct: 1
             },
             {
+                id: "flkfed",
                 question: "Brandy is produced exclusively from:",
                 options: ["Grain mash", "Wine distillate", "Sugar cane molasses", "Agave juice"],
                 correct: 1
             },
             {
+                id: "mp52wy",
                 question: "Cognac can only be produced in which French province?",
                 options: ["Gascony", "Normandy", "Charente", "Champagne"],
                 correct: 2
             },
             {
+                id: "2ux9tl",
                 question: "Rum is most commonly produced from:",
                 options: ["Potatoes", "Molasses (sugar cane)", "Barley malt", "Juniper berries"],
                 correct: 1
             },
             {
+                id: "fddiu4",
                 question: "Tequila is made by distilling fermented:",
                 options: ["Apple wine", "Agave juice", "Grape must", "Rye mash"],
                 correct: 1
             },
             {
+                id: "rapf6j",
                 question: "Gin is flavoured with:",
                 options: ["Anise", "Juniper berries", "Wormwood", "Lemon peel"],
                 correct: 1
             },
             {
+                id: "zl4t13",
                 question: "A finished fruit spirit on the market must contain at least:",
                 options: ["20% vol.", "30% vol.", "37.5% vol.", "50% vol."],
                 correct: 2
             },
             {
+                id: "x394oa",
                 question: "Calvados is a spirit made from:",
                 options: ["Cherries", "Apples", "Plums", "Pears only"],
                 correct: 1
             },
             {
+                id: "4bf1nt",
                 question: "Liqueurs must contain at least how much sugar?",
                 options: ["10-20 g/L", "70-100 g/L", "300 g/L", "500 g/L"],
                 correct: 1
             },
             {
+                id: "ykvzhv",
                 question: "Which liqueur is the protected national drink of Greece?",
                 options: ["Sambuca", "Pastis", "Ouzo", "Limoncello"],
                 correct: 2
@@ -364,41 +420,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "hvuz51",
                 sentence: "Distilled spirits and liqueurs must contain at least _______% vol. alcohol.",
                 answer: "15",
                 hint: "Fifteen..."
             },
             {
+                id: "qqj8xd",
                 sentence: "In spirit production, fermentation creates the alcohol and _______ concentrates it.",
                 answer: "distillation",
                 hint: "Uses boiling and condensation..."
             },
             {
+                id: "qy81qm",
                 sentence: "Most distilleries use _______ stills because the metal reacts with sulfur for a cleaner spirit.",
                 answer: "copper",
                 hint: "A reddish-brown metal..."
             },
             {
+                id: "mpoqya",
                 sentence: "Brandy is produced exclusively from _______ distillate.",
                 answer: "wine",
                 hint: "Made from grapes..."
             },
             {
+                id: "uk4vv8",
                 sentence: "_______ is a French apple brandy from Normandy.",
                 answer: "calvados",
                 hint: "Made from apples..."
             },
             {
+                id: "5tf2kl",
                 sentence: "Gin is a cereal spirit flavoured with _______ berries.",
                 answer: "juniper",
                 hint: "From Juniperus communis..."
             },
             {
+                id: "o135oz",
                 sentence: "The process of extracting aromas by soaking herbs in alcohol is called _______.",
                 answer: "maceration",
                 hint: "Soaking and diffusion..."
             },
             {
+                id: "m9x29y",
                 sentence: "Whisky's name comes from 'uisce beatha', meaning water of _______.",
                 answer: "life",
                 hint: "The opposite of death..."
@@ -406,6 +470,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "z6e2jf",
             title: "Lecture 9 – Distilled Spirits & Liqueurs",
             content: `
                 <h3>🥃 Definitions</h3>
@@ -448,57 +513,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 10: MEAT AND MEAT PRODUCTS ====================
     meat: {
+        id: "ljfc7k",
         name: "Meat & Meat Products",
         icon: "fa-drumstick-bite",
         color: "#dc2626",
 
         flashcards: [
             {
+                id: "zbn4zw",
                 question: "How have meat production and consumption changed, and what are the main meat types by share?",
                 answer: "In the last 50 years, meat consumption has increased fivefold.\n1961: 70.8 million tons (largest producers Europe 42%, North America 25%).\n2018: 338 million tons (largest producers Asian countries 42%).\nBy type (share): poultry 37.2%, pork 35.6%, beef 21.1%, mutton & goat 4.5%.",
                 explanation: "Consumption per capita: World 43 kg, Europe 76.2 kg, Croatia 79.8 kg, USA 123.2 kg, China 124.4 kg."
             },
             {
+                id: "tmomq0",
                 question: "How is meat defined and what are the raw material sources?",
                 answer: "Meat includes: muscle tissue (±skin), edible offal (tongue, heart, lungs, liver, spleen, kidneys, brain, stomach, intestines), fatty tissue (bacon, fat, tallow) and blood.\nSources:\n• Livestock: cattle, pigs, sheep, goats, horses, donkeys, mules\n• Poultry: chickens, turkeys, geese, ducks, guinea fowls, pigeons\n• Game: rabbits, wild boar, deer, roe deer, quail, pheasants, etc.",
                 explanation: "Offal has a chemical composition and nutritional value approximately equal to muscle tissue, with little fat."
             },
             {
+                id: "95kvem",
                 question: "What are the tissues that make up meat?",
                 answer: "• Muscle tissue: transversely striated muscle fibres connected in bundles\n• Fatty tissue: fat cells separated by connective tissue (marbled meat = thin fat layers in muscle → fullness of taste, softness, juiciness)\n• Connective tissue: increases toughness, reduces nutritional value\n• Bone tissue: skeleton (used for soups)\n• Cartilage: collagen and elastin fibres\n• Offal: organs (brain, liver, heart, kidneys)",
                 explanation: "Marbling is highly desirable because intramuscular fat improves taste, tenderness, and juiciness."
             },
             {
+                id: "r9d22r",
                 question: "What is the nutritional value of meat?",
                 answer: "• Water: 65-75%\n• Proteins: 15-20%\n• Fats: 3-30%\n• Carbohydrates: 0.05-0.9% (glycogen)\n• Vitamins: B-complex (thiamin B1, riboflavin B2, niacin B3, B5, B6, folic acid, B12, biotin)\n• Minerals: zinc, selenium, iron, phosphorus\nRed meat is the most valuable source of heme-iron.",
                 explanation: "Nutritional value depends on animal type, age, feeding regime, body part, and degree of postmortem changes."
             },
             {
+                id: "nsmdml",
                 question: "What are the nutritional specifics of beef, pork, lamb, and poultry?",
                 answer: "Beef: less fat, more B-complex, the most iron, selenium and B12.\nPork: more fat (saturated + unsaturated), more thiamine and biotin, less iron and B12, lighter colour (less myoglobin).\nLamb: best digestibility, B12 and phosphorus.\nPoultry (chicken/turkey): more protein, less saturated fat, less B-vitamins/iron/zinc than red meat. Protein: turkey > chicken > duck. Duck: more fat, more iron and selenium.",
                 explanation: "Meat colour depends on myoglobin: white (turkey, chicken, duck) vs red (beef, pork, lamb, mutton, horse, goat)."
             },
             {
+                id: "nk8piz",
                 question: "How is meat quality and freshness assessed?",
                 answer: "• Surface: dry, moderately fatty, elastic under pressure, typical for the type\n• Softness: depends on muscle fibre size/diameter and amount of connective tissue\n• Colour: depends on myoglobin pigment and its oxidation — white or red meat\n• Flavour: slightly salty, acidic, species-specific (assessed using a probe)",
                 explanation: "Softness is also affected by the intensity and duration of the ripening process."
             },
             {
+                id: "b5abpf",
                 question: "What is putrefaction and the other forms of meat spoilage?",
                 answer: "Spoilage is biological (microorganisms) or physico-chemical.\nPutrefaction: the most common and dangerous microbiological spoilage — bacteria/molds/yeasts break down proteins into toxic biogenic amines. Occurs at 22-37°C with high humidity; produces gases (CO₂, NH₃), mucus, sour rot smell, yellow-green colour.\nOthers: glow/phosphorescence (photobacteria), sliminess, moldiness, smelly ripening (in pork, rotten-egg smell, low pH), discoloration.",
                 explanation: "Putrefaction produces toxic biogenic amines — a serious food-safety hazard."
             },
             {
+                id: "1u206z",
                 question: "What temperatures are required for cooling and freezing meat?",
                 answer: "Cooling: optimal storage -1 to 2°C. In the depth of the meat: beef/pig/sheep <7°C, poultry <4°C, offal <3°C.\nFreezing: internal temperature drops below -12°C. Shelf life: 12 months at -18°C; relative humidity 95-100%; freezing mass loss 1.0-1.5%.\nQuick freezing = small crystals = less tissue damage (better). Slow freezing = large crystals = damage and more drip loss.",
                 explanation: "Best practice: quick freezing + slow thawing in the refrigerator preserves nutritional value."
             },
             {
+                id: "3f2645",
                 question: "What is the difference between thermally and non-thermally treated meat products?",
                 answer: "Thermally treated: produced by salting/brining + heat treatment (pasteurization or sterilization), may be smoked. Examples: smoked ham, cooked ham, sausages.\n• Pasteurization: ≤100°C, centre ≥70°C\n• Sterilization: >100°C\nNon-thermally treated: salting/brining + drying and ripening, ± fermentation, ± smoking. Examples: prosciutto, dry ham, dry sausages.",
                 explanation: "Prosciutto (Mediterranean dry ham) is the classic permanent dried meat product."
             },
             {
+                id: "wogjd1",
                 question: "What are ripening and fermentation in meat products?",
                 answer: "Ripening: proteolytic and lipolytic breakdown of muscle and fatty tissue, plus biochemical reactions, giving specific sensory properties and quality. Starter cultures of microorganisms can be added to control it.\nFermentation: preservation process where meat carbohydrates / added sugars are broken down into lactic acid by microorganisms, lowering the product's pH.\nSmoking: processing meat with smoke from burning wood (or regenerated smoke aromas).",
                 explanation: "A starter culture is one or more microorganism types used to control fermentation in meat products."
@@ -507,61 +583,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "uih11o",
                 question: "Which meat type has the largest share of global consumption?",
                 options: ["Beef (21.1%)", "Pork (35.6%)", "Poultry (37.2%)", "Mutton & goat (4.5%)"],
                 correct: 2
             },
             {
+                id: "gwm6rm",
                 question: "In the last 50 years, meat consumption has increased:",
                 options: ["Twofold", "Threefold", "Fivefold", "Tenfold"],
                 correct: 2
             },
             {
+                id: "d99uso",
                 question: "The water content of meat is approximately:",
                 options: ["30-40%", "50-60%", "65-75%", "85-95%"],
                 correct: 2
             },
             {
+                id: "o6u3r2",
                 question: "Which meat is the most valuable source of heme-iron?",
                 options: ["Chicken", "Red meat", "Fish", "Pork"],
                 correct: 1
             },
             {
+                id: "93vchu",
                 question: "Marbled meat refers to:",
                 options: ["Meat with bone fragments", "Thin fat layers within the muscle", "Discoloured spoiled meat", "Connective tissue toughness"],
                 correct: 1
             },
             {
+                id: "6uz2xt",
                 question: "The most common and dangerous microbiological spoilage of meat is:",
                 options: ["Sliminess", "Putrefaction", "Moldiness", "Discoloration"],
                 correct: 1
             },
             {
+                id: "yimkxk",
                 question: "Putrefaction produces toxic compounds called:",
                 options: ["Biogenic amines", "Tannins", "Antioxidants", "Probiotics"],
                 correct: 0
             },
             {
+                id: "fek847",
                 question: "Frozen meat is stored for 12 months at:",
                 options: ["-5°C", "-12°C", "-18°C", "-30°C"],
                 correct: 2
             },
             {
+                id: "xbnrnz",
                 question: "Pasteurization of meat products requires a centre temperature of at least:",
                 options: ["50°C", "70°C", "100°C", "120°C"],
                 correct: 1
             },
             {
+                id: "9bokjr",
                 question: "Which is a NON-thermally treated meat product?",
                 options: ["Cooked ham", "Sausages", "Prosciutto", "Smoked ham (cooked)"],
                 correct: 2
             },
             {
+                id: "7pdmi8",
                 question: "White meat (vs red) comes from:",
                 options: ["Beef and lamb", "Turkey, chicken, duck", "Pork and horse", "Goat and mutton"],
                 correct: 1
             },
             {
+                id: "5w9s78",
                 question: "The best method to thaw frozen meat while preserving quality is:",
                 options: ["In hot water", "At room temperature", "In the refrigerator (slow thawing)", "In direct sunlight"],
                 correct: 2
@@ -570,41 +658,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "b0itec",
                 sentence: "By share, _______ accounts for the largest part of meat consumption (37.2%).",
                 answer: "poultry",
                 hint: "Chicken, turkey, duck..."
             },
             {
+                id: "jq7lna",
                 sentence: "The protein content of meat is approximately 15-_______%.",
                 answer: "20",
                 hint: "Twenty..."
             },
             {
+                id: "f9kcnn",
                 sentence: "_______ meat is the most valuable source of heme-iron.",
                 answer: "red",
                 hint: "Beef, lamb..."
             },
             {
+                id: "yx62tk",
                 sentence: "Meat colour depends on the pigment _______.",
                 answer: "myoglobin",
                 hint: "Related to muscle, similar to haemoglobin..."
             },
             {
+                id: "pjp2nt",
                 sentence: "Putrefaction produces toxic _______ amines from protein breakdown.",
                 answer: "biogenic",
                 hint: "Produced by living organisms..."
             },
             {
+                id: "6wdkjx",
                 sentence: "Frozen meat is stored at _______ °C for up to 12 months.",
                 answer: "-18",
                 hint: "Negative eighteen..."
             },
             {
+                id: "xt712c",
                 sentence: "_______ is the classic Mediterranean non-thermally treated dry ham.",
                 answer: "prosciutto",
                 hint: "An Italian dry-cured ham..."
             },
             {
+                id: "1xe5il",
                 sentence: "Meat fermentation lowers the product's _______ by producing lactic acid.",
                 answer: "pH",
                 hint: "Measure of acidity..."
@@ -612,6 +708,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "6wr5bg",
             title: "Lecture 10 – Meat & Meat Products",
             content: `
                 <h3>📈 Production & Consumption</h3>
@@ -659,57 +756,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 11: FISH AND FISHERY PRODUCTS ====================
     fish: {
+        id: "madc5l",
         name: "Fish & Fishery Products",
         icon: "fa-fish",
         color: "#0891b2",
 
         flashcards: [
             {
+                id: "wwv7ye",
                 question: "What is fishery, and what do aquaculture and mariculture mean?",
                 answer: "Fishery: an economic sector exploiting the living resources of water (catch + cultivation of fish and other organisms) in marine and freshwater environments.\nAquaculture: the cultivation of fishery products.\nMariculture: the part of aquaculture referring to the cultivation of marine organisms (mainly fish and shellfish).",
                 explanation: "Fishery products are freshwater or marine animals of fishing or farming origin, including their edible parts and products."
             },
             {
+                id: "ngndag",
                 question: "How are marine organisms classified?",
                 answer: "FISH:\n• White fish: hake, cod, sea bream, sea bass\n• Fatty small: sardines, anchovies, mackerel\n• Fatty big: tuna, bonito\nMOLLUSCS:\n• Cephalopods: cuttlefish, squid, octopus\n• Bivalves: mussel, oysters\nCRUSTACEANS: lobster, shrimp, prawn",
                 explanation: "Freshwater fish include pond and river species: rainbow trout, catfish, perch, pike."
             },
             {
+                id: "c2ga23",
                 question: "What is the nutritional value of fish flesh?",
                 answer: "• Water: 60-80%\n• Proteins: 12-24% (high digestibility 2-3 hours, good amino acid composition)\n• Fats: 0.7-20%\n   - Lean fish: up to 3% (hake, cod, grouper)\n   - Medium-fatty: up to 8% (sardines, sea bream, sea bass)\n   - Fatty: more than 8% (mackerel, tuna, salmon, herring)\n• Carbohydrates: 0.5-0.8% (glycogen)\nLow in cholesterol (exception: shrimp, prawns).",
                 explanation: "Fish protein is highly digestible (2-3 hours) with an excellent amino acid profile."
             },
             {
+                id: "13x6lc",
                 question: "Which fatty acids are found in fish flesh?",
                 answer: "• Saturated fatty acids: 17-21% (palmitic, C16:0)\n• Unsaturated fatty acids: 60-84% (oleic, linolenic)\n• Polyunsaturated ω-3 group:\n   - EPA: eicosapentaenoic acid (C20:5 n-3)\n   - DHA: docosahexaenoic acid (C22:6 n-3)\nMinerals: iodine, zinc, selenium; phosphorus, calcium (small fish with bones). Vitamins: B-complex, A, D, E.",
                 explanation: "EPA and DHA are the heart-protective omega-3 polyunsaturated fatty acids."
             },
             {
+                id: "sd8mm8",
                 question: "How is the freshness and quality of fish assessed?",
                 answer: "Fresh fish of satisfactory quality must have:\n• Smell: typically fresh\n• Eyes: clear and full\n• Gills: moist and bright red\n• Skin: wet, characteristic colour\n• Mucus: insignificant amount, thin consistency\n• Flesh: firm — indentation from finger pressure disappears when released\n• Belly: intact and shiny",
                 explanation: "Cloudy/sunken eyes, dull gills, and thick sticky mucus indicate spoilage."
             },
             {
+                id: "1eipy0",
                 question: "What are the four phases of changes in fish after catching?",
                 answer: "1. Increased mucus secretion: mucus becomes cloudy — a substrate for microorganisms.\n2. Rigor mortis: 30 minutes to 12 hours; pH drops (unfavourable for microbes); actin + myosin join; body becomes hard.\n3. Ripening phase: conditions for microbial activity; TMA (trimethylamine = 'fishy smell'); fat oxidation.\n4. Spoilage phase.",
                 explanation: "Trimethylamine (TMA) is the compound responsible for the characteristic 'fishy' smell of less-fresh fish."
             },
             {
+                id: "rs96f4",
                 question: "How is fish preserved by chilling and freezing?",
                 answer: "Chilling: most often done immediately on board with flake ice in a 1:1 ratio of ice and water; the depth of the fish should reach about +4°C. Chilled fish can be stored below 4°C for 7 days.\nFreezing: the depth of the fish should reach -18°C. Frozen fish can be stored at -18°C for up to 1 year.",
                 explanation: "Icing fish immediately on board with a 1:1 ice-to-fish ratio is the standard chilling practice."
             },
             {
+                id: "sx0wet",
                 question: "How is canned fish produced and what is caviar?",
                 answer: "Canned fish: thermal sterilization of fish in hermetically sealed packaging; sauce must be ≤10% of the net mass. Small fatty fish (sardines, anchovies) production: cutting → brining → stacking → cooking → infusion → sterilization (115°C) → maturation (2 months); shelf life 3 years at 15-20°C.\nCaviar: salt-cured roe of the sturgeon family (Acipenseridae) — traditionally wild sturgeon from the Caspian and Black Sea (Beluga, Ossetra, Sevruga). Red caviar comes from salmon or trout.",
                 explanation: "The sauce in canned fish must not exceed 10% of the product's net mass."
             },
             {
+                id: "tgfkse",
                 question: "What are the other fish products and smoking methods?",
                 answer: "Salted fish (whole or gutted, freshwater or marine), Smoked fish, Dried fish, Frozen fish products (<-18°C, e.g., breaded).\nSmoking (usually herring or salmon; beech wood):\n• Cold smoking: <40°C (salmon pre-brined 12 hours, then cold-smoked 50-90 hours)\n• Warm smoking: >60-150°C",
                 explanation: "Drying dehydrates muscle tissue, improves taste, and develops a specific aroma."
             },
             {
+                id: "15zusw",
                 question: "What are the health benefits and risks of fish consumption?",
                 answer: "Benefits: longer lifespan; reduced risk of cardiovascular disease, obesity, metabolic syndrome, depression and liver cancer; anti-inflammatory (n-3 EPA + DHA).\nRecommended intake: 2 servings/week (one fatty), ~240 g, 250 mg EPA+DHA.\nRisks: histamine (bacteria convert histidine → histamine in fatty fish), parasites (Anisakis in raw/undercooked fish/sushi), mercury and heavy metals (risk for children and pregnant women), microplastics (<5 mm).",
                 explanation: "The recommendation is 2 fish servings per week, one of which should be fatty fish."
@@ -718,61 +826,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "rnx79a",
                 question: "The cultivation of marine organisms specifically is called:",
                 options: ["Aquaculture", "Mariculture", "Fishery", "Agriculture"],
                 correct: 1
             },
             {
+                id: "jycztv",
                 question: "Which are classified as fatty big fish?",
                 options: ["Hake and cod", "Tuna and bonito", "Mussels and oysters", "Lobster and shrimp"],
                 correct: 1
             },
             {
+                id: "ehocub",
                 question: "Lean fish (hake, cod, grouper) contain up to how much fat?",
                 options: ["Up to 3%", "Up to 8%", "Up to 15%", "Up to 20%"],
                 correct: 0
             },
             {
+                id: "2497kb",
                 question: "EPA and DHA are:",
                 options: ["Saturated fatty acids", "Omega-3 polyunsaturated fatty acids", "Proteins", "Minerals"],
                 correct: 1
             },
             {
+                id: "dzbsiy",
                 question: "The 'fishy smell' of less-fresh fish comes from:",
                 options: ["Lactic acid", "Trimethylamine (TMA)", "Ammonia only", "Carbon dioxide"],
                 correct: 1
             },
             {
+                id: "tt3aal",
                 question: "During chilling, fish are iced on board in an ice-to-water ratio of:",
                 options: ["1:3", "1:2", "1:1", "2:1"],
                 correct: 2
             },
             {
+                id: "mzaz4c",
                 question: "Frozen fish should reach a depth temperature of:",
                 options: ["-4°C", "-10°C", "-18°C", "-30°C"],
                 correct: 2
             },
             {
+                id: "3n2rs9",
                 question: "In canned fish, the sauce must not exceed what proportion of net mass?",
                 options: ["5%", "10%", "20%", "30%"],
                 correct: 1
             },
             {
+                id: "9cn48b",
                 question: "Traditional caviar comes from the roe of:",
                 options: ["Salmon", "Tuna", "Sturgeon (Acipenseridae)", "Cod"],
                 correct: 2
             },
             {
+                id: "gydqxm",
                 question: "Cold smoking of fish is carried out at:",
                 options: ["<40°C", "60-90°C", "100-120°C", ">150°C"],
                 correct: 0
             },
             {
+                id: "7urra6",
                 question: "The recommended fish intake is:",
                 options: ["Every day", "2 servings per week (one fatty)", "Once per month", "Only fatty fish daily"],
                 correct: 1
             },
             {
+                id: "yr0q6m",
                 question: "Anisakis is a health risk associated with:",
                 options: ["Canned fish", "Raw or undercooked fish (sushi)", "Smoked fish", "Dried fish"],
                 correct: 1
@@ -781,41 +901,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "c4lxaq",
                 sentence: "The cultivation of fishery products is called _______.",
                 answer: "aquaculture",
                 hint: "Farming in water..."
             },
             {
+                id: "ti3rx1",
                 sentence: "Fish protein has high digestibility, taking only _______ to 3 hours.",
                 answer: "2",
                 hint: "Two..."
             },
             {
+                id: "qsh3x5",
                 sentence: "The two main omega-3 fatty acids in fish are EPA and _______.",
                 answer: "DHA",
                 hint: "Docosahexaenoic acid..."
             },
             {
+                id: "5l69w6",
                 sentence: "The 'fishy smell' is caused by the compound _______ (TMA).",
                 answer: "trimethylamine",
                 hint: "Abbreviated TMA..."
             },
             {
+                id: "varsde",
                 sentence: "Fish are chilled with flake ice in a _______ ratio of ice and water.",
                 answer: "1:1",
                 hint: "Equal parts..."
             },
             {
+                id: "z4fk58",
                 sentence: "Frozen fish can be stored at -18°C for up to _______ year(s).",
                 answer: "1",
                 hint: "One..."
             },
             {
+                id: "aho40y",
                 sentence: "Traditional caviar is the salt-cured roe of the _______ fish.",
                 answer: "sturgeon",
                 hint: "Family Acipenseridae..."
             },
             {
+                id: "yhw1wu",
                 sentence: "The recommended fish intake is _______ servings per week.",
                 answer: "2",
                 hint: "Two, one of which should be fatty..."
@@ -823,6 +951,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "6q996y",
             title: "Lecture 11 – Fish & Fishery Products",
             content: `
                 <h3>🎣 Fishery</h3>
@@ -871,57 +1000,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 12: MILK AND DAIRY PRODUCTS ====================
     milkDairy: {
+        id: "tuha2j",
         name: "Milk & Dairy Products",
         icon: "fa-cheese",
         color: "#3b82f6",
 
         flashcards: [
             {
+                id: "mlwsq9",
                 question: "What is milk and what is the chemical composition of cow's milk?",
                 answer: "Milk: a biological liquid (white to yellowish-white) secreted by the mammary glands of mammals after birth; nothing added or taken away.\nCow's milk composition:\n• Water: 87.1%\n• Lactose: 4.6%\n• Milk fat: 4.0%\n• Proteins: 3.3% (of which casein 2.6%)\n• Minerals: 0.7%",
                 explanation: "Types include cow, sheep, goat, buffalo, and donkey milk."
             },
             {
+                id: "teltqp",
                 question: "What are the key facts about milk's lactose, fat, proteins and minerals?",
                 answer: "Lactose: disaccharide (glucose + galactose); causes lactose intolerance; basis of fermented products.\nMilk fat: saturated FA 70% (palmitic, stearic, butyric), MUFA oleic 30-40%, PUFA linoleic 2-3%.\nProteins: biological value higher than meat or fish; casein + whey proteins.\nMinerals: potassium (most abundant); Ca:P in favourable ratio 1.2-1.4:1; absorption depends on lactose and vitamin D.",
                 explanation: "Lactose intolerance is the inability to digest lactose (glucose + galactose)."
             },
             {
+                id: "hswt7d",
                 question: "How is milk classified by fat content?",
                 answer: "• Raw milk: not heated above 40°C\n• Whole milk (standardized): at least 3.5% milk fat\n• Partial skimmed milk: 1.5-1.8% milk fat\n• Skimmed milk: maximum 0.5% milk fat",
                 explanation: "Standardization adjusts milk fat to a defined level during processing."
             },
             {
+                id: "bsijbh",
                 question: "What is the difference between pasteurized and sterilized (UHT) milk?",
                 answer: "Pasteurized milk: 72°C for 15-20 seconds ('short-term' pasteurization); shelf life 8-14 days at refrigerator temperature (5°C).\nSterilized milk: UHT (Ultra High Temperature) 135-140°C for a few seconds, filled aseptically into sterile multilayer packaging; shelf life at least 3-4 months at room temperature.",
                 explanation: "Primary processing also includes filtration, fat standardization, homogenization, and deaeration."
             },
             {
+                id: "ddeimu",
                 question: "What happens during the fermentation of milk products?",
                 answer: "The main objective is conversion of lactose into lactic acid.\nLactic acid fermentation: by lactic acid bacteria (Streptococcus thermophilus + Lactobacillus) → yogurt, sour milk, acidophilus milk, buttermilk.\nAlcoholic fermentation: produces alcohol + CO₂; combined with lactic fermentation it is characteristic of kefir (yeasts + bacteria).\nCultures: mesophilic (20-30°C), thermophilic (37-45°C), therapeutic/probiotic (37-40°C).",
                 explanation: "Kefir uses kefir grains containing both bacteria and yeasts → milk-acid + alcoholic fermentation."
             },
             {
+                id: "bspbrf",
                 question: "What are Greek yogurt, Skyr, and kefir?",
                 answer: "Greek-type yogurt: whole milk + cream; higher dry matter and more milk fat (7-10%).\nSkyr: traditional Icelandic yogurt; skimmed milk, rennet added; significantly higher protein (~10-11 g/100g vs ~3.5 g/100g in classic yogurt).\nKefir: cooled milk infused with kefir grains (hundreds of bacteria + yeasts), milk-acid + alcoholic fermentation (CO₂ produced); grains are sifted out and reused.",
                 explanation: "Buttermilk is a by-product of butter production and belongs to fermented milk products."
             },
             {
+                id: "7bu48m",
                 question: "What is cheese and how is it classified by fat content?",
                 answer: "Cheese: a fresh or matured product made by separating whey after coagulation of milk/cream.\nBy milk fat in dry matter:\n• Extra greasy: ≥60%\n• Full-fat: 45-60%\n• Greasy: 25-45%\n• Semi-fat: 10-25%\n• Low fat: <10%",
                 explanation: "Cheese can be made from cow, goat, sheep, or buffalo milk (or mixtures)."
             },
             {
+                id: "3ycg18",
                 question: "What are the main steps of cheese production?",
                 answer: "1. Standardization (protein-casein ratio)\n2. Homogenization (or cream addition)\n3. Additives (calcium chloride for curd strength, rennet, enzymes)\n4. Adding dairy cultures (lactic acid bacteria)\n5. Milk curdling/spreading (~30°C) → cheese curd\n6. Curd cutting (whey extraction)\n7. Shaping → 8. Pressing → 9. Salting (brine, stops fermentation) → 10. Ripening → 11. Packaging",
                 explanation: "Rennet and lactic acid bacteria cause the milk to coagulate into curd."
             },
             {
+                id: "iikxey",
                 question: "How are cheeses classified by water content, and name Croatian cheeses.",
                 answer: "By water in fat-free substance:\n• Extra hard: <51% (Parmesan)\n• Hard: 49-56% (Emmental, Cheddar)\n• Semi-hard: 54-63% (Gouda, Edam, Trappist)\n• Semi-soft: 61-69% (Brie, Gorgonzola)\n• Soft: >67% · Fresh: 69-85%\nCroatian cheeses: Pag cheese (sheep, 2-5 months, intense), Krk cheese (sheep, mild), Istrian cheese (sheep, 60-120 days), Tounj, Squeak cheese.",
                 explanation: "Pag cheese is a famous intense, aromatic Croatian sheep's-milk cheese ripened 2-5 months."
             },
             {
+                id: "j1l6hq",
                 question: "How are butter and ice cream produced?",
                 answer: "Butter: from cream (~40% milk fat); butrification = phase inversion turning cream into butter grains, with buttermilk separated; stored at 4-5°C for up to a month.\nIce cream: pasteurized/sterilized milk products + non-dairy ingredients; air is incorporated to increase volume; maturation 2-24 h.\n• Creamy ice cream: ≥5% milk fat\n• Milky ice cream: ≥2.5% milk fat\nStored frozen at least -15°C, up to one year.",
                 explanation: "Butrification (churning) is the phase inversion of fat-in-water emulsion into water-in-fat."
@@ -930,61 +1070,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "kv1c5i",
                 question: "The water content of cow's milk is approximately:",
                 options: ["75%", "87%", "92%", "65%"],
                 correct: 1
             },
             {
+                id: "zo14mm",
                 question: "Lactose is a disaccharide made of glucose and:",
                 options: ["Fructose", "Galactose", "Maltose", "Sucrose"],
                 correct: 1
             },
             {
+                id: "tilzlp",
                 question: "The most abundant mineral in milk is:",
                 options: ["Calcium", "Iron", "Potassium", "Sodium"],
                 correct: 2
             },
             {
+                id: "1smc3k",
                 question: "Pasteurized milk is heated to:",
                 options: ["50°C for 1 hour", "72°C for 15-20 seconds", "135-140°C for a few seconds", "100°C for 10 minutes"],
                 correct: 1
             },
             {
+                id: "15o2zc",
                 question: "UHT sterilized milk has a shelf life of:",
                 options: ["8-14 days", "1 month", "3-4 months", "1 year"],
                 correct: 2
             },
             {
+                id: "1vfgyp",
                 question: "Kefir is produced by:",
                 options: ["Only lactic acid fermentation", "Lactic acid + alcoholic fermentation", "Only alcoholic fermentation", "No fermentation"],
                 correct: 1
             },
             {
+                id: "o5chk4",
                 question: "Which yogurt has the highest protein content (~10-11 g/100g)?",
                 options: ["Classic yogurt", "Frozen yogurt", "Skyr", "Sour milk"],
                 correct: 2
             },
             {
+                id: "dpjrzg",
                 question: "Whole (standardized) milk contains at least:",
                 options: ["0.5% fat", "1.5% fat", "3.5% fat", "5% fat"],
                 correct: 2
             },
             {
+                id: "ux6oit",
                 question: "Extra hard cheese (e.g., Parmesan) has water content in fat-free substance of:",
                 options: ["<51%", "54-63%", "69-85%", ">90%"],
                 correct: 0
             },
             {
+                id: "glh3pz",
                 question: "Which is a traditional Croatian sheep's-milk cheese?",
                 options: ["Cheddar", "Gouda", "Pag cheese", "Emmental"],
                 correct: 2
             },
             {
+                id: "l3nox8",
                 question: "The phase inversion that turns cream into butter is called:",
                 options: ["Pasteurization", "Butrification", "Homogenization", "Coagulation"],
                 correct: 1
             },
             {
+                id: "ekznqj",
                 question: "Creamy ice cream must contain at least:",
                 options: ["1% milk fat", "2.5% milk fat", "5% milk fat", "10% milk fat"],
                 correct: 2
@@ -993,41 +1145,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "7zmd0p",
                 sentence: "Cow's milk contains approximately _______% water.",
                 answer: "87",
                 hint: "Eighty-seven..."
             },
             {
+                id: "tvzuyy",
                 sentence: "Lactose is a disaccharide made of glucose and _______.",
                 answer: "galactose",
                 hint: "The other monosaccharide in milk sugar..."
             },
             {
+                id: "icviko",
                 sentence: "Pasteurization heats milk to _______ °C for 15-20 seconds.",
                 answer: "72",
                 hint: "Seventy-two..."
             },
             {
+                id: "p60hp0",
                 sentence: "UHT sterilization is carried out at 135-140 °C for a few _______.",
                 answer: "seconds",
                 hint: "A very short time..."
             },
             {
+                id: "dqs5qj",
                 sentence: "_______ is produced using kefir grains with both bacteria and yeasts.",
                 answer: "kefir",
                 hint: "A fermented milk drink with CO₂..."
             },
             {
+                id: "2tiwdm",
                 sentence: "Whole standardized milk contains at least _______% milk fat.",
                 answer: "3.5",
                 hint: "Three and a half..."
             },
             {
+                id: "mkjhmm",
                 sentence: "Cheese is made by separating _______ after coagulation of milk.",
                 answer: "whey",
                 hint: "The watery part left after curdling..."
             },
             {
+                id: "yzm98d",
                 sentence: "The Croatian sheep's cheese ripened 2-5 months is _______ cheese.",
                 answer: "Pag",
                 hint: "Named after an Adriatic island..."
@@ -1035,6 +1195,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "binhal",
             title: "Lecture 12 – Milk & Dairy Products",
             content: `
                 <h3>🥛 Milk & Composition</h3>
@@ -1082,57 +1243,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 13: EGGS ====================
     eggs: {
+        id: "a8kxuj",
         name: "Eggs",
         icon: "fa-egg",
         color: "#eab308",
 
         flashcards: [
             {
+                id: "pjlafs",
                 question: "What is an egg and which types are consumed?",
                 answer: "An egg is a complex reproductive cell whose structure and composition support the development of new life — sometimes described as an 'organism in miniature'.\nFresh chicken eggs are the most commonly consumed. Eggs may also come from goose, turkey, duck, quail, or ostrich.\nPackaging must indicate the type of poultry the eggs originate from.",
                 explanation: "World egg production is ~83.4 million tons; Asia leads with ~51.9 million tons."
             },
             {
+                id: "09romh",
                 question: "What is the anatomy of an egg?",
                 answer: "• Shell: porous, made of calcium carbonate\n• Skin (membrane): on the surface, protects against bacteria\n• Airspace: space between two membranes\n• Egg white (albumen): two layers — thick and thin\n• Chalaza: keeps the yolk in the middle\n• Yolk + yolk membrane: yellow, dark and light parts",
                 explanation: "The chalazae are the twisted strands that hold the yolk centered within the white."
             },
             {
+                id: "xo2qa8",
                 question: "What is the average chemical composition of a whole egg, yolk, and white?",
                 answer: "Whole egg: water 72-75%, protein 12.5-13.3%, fat 10.7-11.6%, carbohydrates 0.7%, minerals 1.0%.\nYolk: water 47-50%, protein 15-17%, fat 28-36%.\nWhite: water 86-88%, protein 10.5-12.3%, fat in traces.",
                 explanation: "Almost all of the egg's fat is in the yolk; the white is essentially fat-free."
             },
             {
+                id: "kzxh7l",
                 question: "What is in the egg yolk?",
                 answer: "• Fats (65%): monounsaturated (oleic), saturated (palmitic, stearic), polyunsaturated (mainly n-6)\n• Phospholipids (31%): lecithin\n• Cholesterol (4%)\n• Carbohydrates: 0.7-1.4%\n• Minerals: iron, phosphorus\n• Carotenoids: colour and antioxidants",
                 explanation: "Lecithin (a phospholipid) makes egg yolk an excellent natural emulsifier."
             },
             {
+                id: "2nca5w",
                 question: "What is in the egg white (albumen)?",
                 answer: "• Protein of high biological value (BV = 94), essential amino acids, good digestibility\n• Avidin: an antinutritive factor\n• Minerals: potassium, phosphorus, iron, iodine, copper, cobalt, magnesium, zinc, manganese, calcium\n• Vitamins: all except vitamin C",
                 explanation: "Egg white protein has a biological value of 94 — one of the highest of any food protein."
             },
             {
+                id: "wuu5y3",
                 question: "How is egg freshness assessed?",
                 answer: "• Densitometry: immersion in a 12% salt solution (fresh eggs sink; stale eggs float due to a larger air chamber)\n• Candling: examination using an ovoscope (a light source revealing the interior)",
                 explanation: "As an egg ages, its air chamber grows, so it becomes more buoyant in salt water."
             },
             {
+                id: "v3uh14",
                 question: "How are eggs classified by quality and size?",
                 answer: "By quality:\n• Class A: extra/fresh (for consumers)\n• Class B: for industrial processing\nBy size: S (<53 g), M (53-63 g), L (63-73 g), XL (≥73 g).\nClass A requirements: clean undamaged shell; air chamber ≤6 mm (≤4 mm for 'extra'); clear compact white; yolk centered.",
                 explanation: "An 'extra' Class A egg must have an air chamber no larger than 4 mm."
             },
             {
+                id: "m1k80w",
                 question: "What do the egg farming codes mean?",
                 answer: "The first digit on an egg indicates the farming method:\n• 0 = organic eggs\n• 1 = free-range eggs\n• 2 = barn / floor farming\n• 3 = cage (battery) farming\nEU welfare standards for enriched cages (more space, nests, perches, litter) apply from 1 January 2012.",
                 explanation: "Code 0 = organic; code 3 = cage farming — useful for menu transparency in hospitality."
             },
             {
+                id: "mlzmat",
                 question: "How are eggs stored and what egg products exist?",
                 answer: "Storage: eggs are mainly consumed fresh; the sale period must not exceed 21 days after laying (summer ~10 days, winter ~21 days). Eggs easily absorb foreign odours — don't store with strong-smelling foods.\nEgg products: liquid chilled, frozen liquid, dried, and boiled egg products.",
                 explanation: "Because eggs readily pick up odours, they should be stored away from pungent foods."
             },
             {
+                id: "3ffo99",
                 question: "What are the health benefits and risks of egg consumption?",
                 answer: "Benefits: high nutritional density, high biological-value protein, lowering blood pressure, anti-inflammatory effects, antioxidant action, improved bioavailability of certain minerals.\nRisks: contamination with Salmonella and Campylobacter bacteria (shell contamination after laying or through the shell), allergic reactions.",
                 explanation: "Proper handling and storage prevent Salmonella and Campylobacter contamination — critical in hospitality."
@@ -1141,61 +1313,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "t5ido1",
                 question: "The egg shell is made of:",
                 options: ["Keratin", "Calcium carbonate", "Cellulose", "Silica"],
                 correct: 1
             },
             {
+                id: "6pkqv4",
                 question: "The structure that keeps the yolk centered is the:",
                 options: ["Airspace", "Chalaza", "Albumen", "Membrane"],
                 correct: 1
             },
             {
+                id: "uac9z2",
                 question: "Most of an egg's fat is found in the:",
                 options: ["Egg white", "Yolk", "Shell", "Membrane"],
                 correct: 1
             },
             {
+                id: "w2l4wl",
                 question: "The biological value of egg white protein is:",
                 options: ["50", "75", "94", "100"],
                 correct: 2
             },
             {
+                id: "9laocf",
                 question: "The antinutritive factor in egg white is:",
                 options: ["Avidin", "Lecithin", "Casein", "Gluten"],
                 correct: 0
             },
             {
+                id: "7z7bdo",
                 question: "Egg white contains all vitamins EXCEPT:",
                 options: ["Vitamin A", "Vitamin C", "B vitamins", "Vitamin D"],
                 correct: 1
             },
             {
+                id: "2jqa0e",
                 question: "Densitometry tests egg freshness by immersion in a:",
                 options: ["Sugar solution", "12% salt solution", "Vinegar solution", "Plain water bath"],
                 correct: 1
             },
             {
+                id: "l9t5v7",
                 question: "An egg marked with code '0' is:",
                 options: ["Cage (battery) farmed", "Barn farmed", "Free-range", "Organic"],
                 correct: 3
             },
             {
+                id: "xkj6w3",
                 question: "A size L egg weighs:",
                 options: ["<53 g", "53-63 g", "63-73 g", "≥73 g"],
                 correct: 2
             },
             {
+                id: "jb2o2l",
                 question: "The egg sale period must not exceed:",
                 options: ["7 days", "21 days", "60 days", "90 days"],
                 correct: 1
             },
             {
+                id: "5827vj",
                 question: "The main microbiological risk of eggs is:",
                 options: ["Listeria and E. coli", "Salmonella and Campylobacter", "Botulism", "Norovirus"],
                 correct: 1
             },
             {
+                id: "288o7c",
                 question: "The yolk's natural emulsifier is the phospholipid:",
                 options: ["Avidin", "Lecithin", "Casein", "Albumin"],
                 correct: 1
@@ -1204,41 +1388,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "ldicn9",
                 sentence: "The egg shell is made of calcium _______.",
                 answer: "carbonate",
                 hint: "CaCO₃..."
             },
             {
+                id: "dtb1px",
                 sentence: "The _______ keeps the yolk centered in the egg.",
                 answer: "chalaza",
                 hint: "Twisted strands of albumen..."
             },
             {
+                id: "3w7gr1",
                 sentence: "The biological value of egg white protein is _______.",
                 answer: "94",
                 hint: "Ninety-four..."
             },
             {
+                id: "5x9qff",
                 sentence: "The antinutritive factor found in egg white is _______.",
                 answer: "avidin",
                 hint: "Binds biotin..."
             },
             {
+                id: "3rgv84",
                 sentence: "Egg white contains all vitamins except vitamin _______.",
                 answer: "C",
                 hint: "Ascorbic acid..."
             },
             {
+                id: "rz2n9j",
                 sentence: "Egg farming code _______ indicates organic eggs.",
                 answer: "0",
                 hint: "Zero..."
             },
             {
+                id: "ikkkfv",
                 sentence: "The egg sale period must not exceed _______ days after laying.",
                 answer: "21",
                 hint: "Twenty-one..."
             },
             {
+                id: "qqukm4",
                 sentence: "The main bacterial risks from eggs are Salmonella and _______.",
                 answer: "Campylobacter",
                 hint: "A spiral-shaped bacterium..."
@@ -1246,6 +1438,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "7rnbi2",
             title: "Lecture 13 – Eggs",
             content: `
                 <h3>🥚 The Egg</h3>
@@ -1287,57 +1480,68 @@ const foodNutritionM2Data = {
 
     // ==================== LECTURE 14: HEALTHY DIET ====================
     healthyDiet: {
+        id: "vc1rcq",
         name: "Healthy Diet",
         icon: "fa-heart-pulse",
         color: "#16a34a",
 
         flashcards: [
             {
+                id: "fto5ns",
                 question: "What is a healthy diet and what are its three principles?",
                 answer: "A healthy (balanced) diet provides an adequate intake and ratio of macronutrients meeting energy and physiological needs (without excess), with sufficient micronutrients and fluids.\nPrinciples:\n1. Variety: combining food groups for nutritional synergy (legumes + cereals; non-heme iron + vitamin C)\n2. Moderation: of fats, added sugar, salt, alcohol, energy\n3. Balance: 85% nutrient-dense foods : 15% 'discretionary calories'",
                 explanation: "Nutritional synergy means combining foods so nutrients enhance each other (e.g., vitamin C boosts non-heme iron absorption)."
             },
             {
+                id: "fduq4u",
                 question: "What are the WHO dietary recommendations?",
                 answer: "• Total fat: ≤30% of daily energy\n• Saturated fatty acids: <10% of energy\n• Cholesterol: <300 mg/day\n• Carbohydrates: 55-75% of energy\n• Added sugars: <10% of energy (≈50 g)\n• Protein: 10-15% of energy\n• Salt: <5 g/day\n• Fruit & vegetables: ≥400 g/day\n• Dietary fibre: ≥25 g/day",
                 explanation: "WHO also targets a 30% reduction in population salt intake by 2025."
             },
             {
+                id: "eaaxjr",
                 question: "How is nutritional status classified by Body Mass Index (BMI)?",
                 answer: "• <18.5 — Malnutrition\n• 18.5-24.9 — Normal nutrition\n• 25.0-29.9 — Overweight\n• 30.0-34.9 — Obesity Grade 1\n• 35.0-39.9 — Obesity Grade 2\n• >40 — Obesity Grade 3",
                 explanation: "BMI is a rough indicator of energy balance, but not of macro-/micronutrient adequacy."
             },
             {
+                id: "cbreaz",
                 question: "What are the three components of energy expenditure?",
                 answer: "1. Basal metabolic rate (BMR): minimum energy to sustain life (respiration, circulation, etc.) — 60-75% of total expenditure.\n2. Thermic effect of food (TEF): energy used to digest food — on average ~10% (highest for protein 15-30%, carbs 5-8%, fats 2-3%).\n3. Thermic effect of physical activity: the most variable component (100-3000 kcal/day) — 10-35% of total.",
                 explanation: "BMR is the largest component of daily energy expenditure (60-75%)."
             },
             {
+                id: "0p4wrs",
                 question: "What are the acceptable macronutrient intake ranges?",
                 answer: "• Protein: 10-35% of energy (recommended ~10% for an adult; the upper range is for replenishment)\n• Carbohydrates: 45-65% (recommended ~60%; ~300 g/day on 2000 kcal)\n• Fats: 20-35% (recommended ~30%; ~67 g/day)\n• Added sugars: ≤25% (≤500 kcal)",
                 explanation: "On a 2000 kcal diet: ~50 g protein, ~300 g carbs, ~67 g fat."
             },
             {
+                id: "redkhm",
                 question: "How did dietary guideline graphics evolve?",
                 answer: "• Food Guide Pyramid (USDA, 1992): optimal servings from each food group.\n• MyPyramid (2005): added a physical-activity symbol (person on stairs), measured in cups/ounces.\n• MyPlate (2011-): a plate divided into food groups — a simple visual of what and how much to eat.",
                 explanation: "Food groups were invented as a public-health tool to prevent nutrient deficiencies and now address chronic diseases too."
             },
             {
+                id: "mfvwuo",
                 question: "What are the main food groups in MyPlate?",
                 answer: "• Fruits (whole preferred over juice)\n• Vegetables (5 subgroups: dark green; red & orange; beans/peas/lentils; starchy; other)\n• Grains (whole = bran+germ+endosperm; refined = milled, less fibre/iron/B-vitamins)\n• Protein foods (seafood, meat/poultry/eggs, beans, nuts/soy — the 'protein package')\n• Dairy (milk, yogurt, cheese, fortified soy; excludes butter, cream, cream cheese)",
                 explanation: "The 'protein package' = all nutrients that come with protein (fats, fibre, sodium) — this is what matters for health."
             },
             {
+                id: "sza3xm",
                 question: "What is the Planetary Health plate and the environmental impact of foods?",
                 answer: "The Planetary Health plate recommends: half the plate fruits and vegetables (starchy limited), the other half primarily whole grains and plant-based proteins, with unsaturated oils and modest animal-based protein.\nAnimal foods (especially red meat — beef, lamb, goat) have higher greenhouse-gas emissions than plant foods. Beef accounts for ~36% of US food-related GHG emissions; one pound of lamb generates ~5× the GHG of chicken and ~30× of lentils.",
                 explanation: "Dairy and especially red meat stand out for their disproportionate environmental impact."
             },
             {
+                id: "okjjx5",
                 question: "What are the Mediterranean and DASH diets?",
                 answer: "Mediterranean diet: whole grains, varied fruits/vegetables, fibre, low-fat fermented dairy, legumes, olive oil, nuts/seeds, honey for sweetening; eggs and poultry in moderation, red meat occasionally; water + moderate red wine with meals; plus physical activity and social interaction.\nDASH diet (Dietary Approaches to Stop Hypertension): vegetables, fruits, low-fat dairy, whole grains, varied protein; limits added sugar (<10%), saturated fat (<10%), sodium (<2300 mg/day), alcohol.",
                 explanation: "DASH was designed to lower blood pressure; it strictly limits sodium to <2300 mg/day."
             },
             {
+                id: "j1z75e",
                 question: "What are the MIND and Nordic diets, and food/health claims?",
                 answer: "MIND diet (Mediterranean-DASH for Neurodegenerative Delay): prevents cognitive decline; emphasizes dark leafy greens, nuts, berries, whole grains, fish, poultry, olive oil; avoids red meat, cheese, butter, fried food.\nNordic diet: Nordic foods — green vegetables, berries, fish, whole grains (barley, rye, oats), almonds, β-glucan foods, canola oil; little red meat.\nClaims: a nutrition claim states beneficial nutrient content; a health claim links a food/component to health. Front-of-package labels (FoPL) are voluntary.",
                 explanation: "The MIND diet specifically targets brain health and slowing age-related cognitive decline."
@@ -1346,61 +1550,73 @@ const foodNutritionM2Data = {
 
         quiz: [
             {
+                id: "pybbru",
                 question: "WHO recommends total fat intake should not exceed:",
                 options: ["10% of energy", "20% of energy", "30% of energy", "50% of energy"],
                 correct: 2
             },
             {
+                id: "lzzr9a",
                 question: "The WHO recommended salt intake is:",
                 options: ["<5 g/day", "<10 g/day", "<15 g/day", "<20 g/day"],
                 correct: 0
             },
             {
+                id: "yjkczu",
                 question: "A BMI of 27 is classified as:",
                 options: ["Normal nutrition", "Overweight", "Obesity Grade 1", "Malnutrition"],
                 correct: 1
             },
             {
+                id: "h6up3c",
                 question: "The largest component of energy expenditure is:",
                 options: ["Thermic effect of food", "Physical activity", "Basal metabolic rate (60-75%)", "Digestion of fibre"],
                 correct: 2
             },
             {
+                id: "2x8bo4",
                 question: "The thermic effect of food is highest for:",
                 options: ["Fats", "Carbohydrates", "Proteins (15-30%)", "Alcohol"],
                 correct: 2
             },
             {
+                id: "ql58rf",
                 question: "The acceptable carbohydrate intake range is:",
                 options: ["10-35%", "20-35%", "45-65%", "70-80%"],
                 correct: 2
             },
             {
+                id: "0zuu85",
                 question: "Which dietary graphic came LAST?",
                 options: ["Food Guide Pyramid (1992)", "MyPyramid (2005)", "MyPlate (2011)", "Eating Right Pyramid"],
                 correct: 2
             },
             {
+                id: "rebazu",
                 question: "Whole grains contain the bran, germ, and:",
                 options: ["Husk", "Endosperm", "Chaff", "Aleurone only"],
                 correct: 1
             },
             {
+                id: "yxbudo",
                 question: "The MyPlate Dairy group EXCLUDES:",
                 options: ["Milk", "Yogurt", "Butter and cream", "Cheese"],
                 correct: 2
             },
             {
+                id: "djs8j4",
                 question: "The DASH diet was designed primarily to:",
                 options: ["Build muscle", "Stop hypertension (lower blood pressure)", "Promote weight gain", "Increase fibre only"],
                 correct: 1
             },
             {
+                id: "se6nsy",
                 question: "Which diet specifically targets brain health / cognitive decline?",
                 options: ["Nordic diet", "DASH diet", "MIND diet", "Mediterranean diet"],
                 correct: 2
             },
             {
+                id: "3h6yim",
                 question: "WHO recommends a daily fruit and vegetable intake of at least:",
                 options: ["100 g", "200 g", "400 g", "1000 g"],
                 correct: 2
@@ -1409,41 +1625,49 @@ const foodNutritionM2Data = {
 
         fillBlanks: [
             {
+                id: "ve25ti",
                 sentence: "The WHO recommends fruit and vegetable intake of at least _______ g per day.",
                 answer: "400",
                 hint: "Four hundred..."
             },
             {
+                id: "8chf4l",
                 sentence: "The WHO recommends salt intake of less than _______ g per day.",
                 answer: "5",
                 hint: "Five..."
             },
             {
+                id: "wm3mw9",
                 sentence: "A BMI between 18.5 and _______ is considered normal nutrition.",
                 answer: "24.9",
                 hint: "Just under 25..."
             },
             {
+                id: "czre3r",
                 sentence: "Basal metabolic rate accounts for _______-75% of total energy expenditure.",
                 answer: "60",
                 hint: "Sixty..."
             },
             {
+                id: "xqp7u3",
                 sentence: "Whole grains contain the bran, germ, and _______.",
                 answer: "endosperm",
                 hint: "The starchy inner part of the grain..."
             },
             {
+                id: "8zycag",
                 sentence: "The _______ diet was designed to stop hypertension.",
                 answer: "DASH",
                 hint: "Dietary Approaches to Stop Hypertension..."
             },
             {
+                id: "ufpsd5",
                 sentence: "The current US dietary graphic (2011) is called My_______.",
                 answer: "Plate",
                 hint: "A round dish divided into food groups..."
             },
             {
+                id: "co7gim",
                 sentence: "The recommended carbohydrate share of energy is 45-_______%.",
                 answer: "65",
                 hint: "Sixty-five..."
@@ -1451,6 +1675,7 @@ const foodNutritionM2Data = {
         ],
 
         learn: {
+            id: "sonyx4",
             title: "Lecture 14 – Healthy Diet",
             content: `
                 <h3>🥗 Definition & Principles</h3>

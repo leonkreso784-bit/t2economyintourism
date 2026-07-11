@@ -7,87 +7,104 @@ const foodNutritionData = {
 
     // ==================== LECTURE 1: FOOD QUALITY ====================
     foodQuality: {
+        id: "5gb1ff",
         name: "Food Quality",
         icon: "fa-award",
         color: "#ef4444",
 
         flashcards: [
             {
+                id: "sr1fum",
                 question: "What is the legal definition of food?",
                 answer: "Food is any substance or product, processed, partially processed or unprocessed, intended for human consumption or reasonably expected to be consumed by humans. It includes drink, chewing gum, and water intentionally incorporated during production.",
                 explanation: "It does NOT include animal feed, live animals, pre-harvest plants, medicines, cosmetics, tobacco, narcotics, or residues/contaminants."
             },
             {
+                id: "lgeser",
                 question: "What are the 6 classifications of food according to origin?",
                 answer: "1. Vegetable origin (bread, fruit, vegetables, coffee, tea, beer, wine)\n2. Animal origin (meat, fish, milk, eggs)\n3. Vegetable-animal origin (honey)\n4. Microbial origin (xanthan gum, vitamins B2 & B12, enzymes)\n5. Fungal origin (beta-glucans)\n6. Mineral/Synthetic origin (table salt; olestra, aspartame)",
                 explanation: "Most foods come from plant or animal sources, but some have microbial, fungal, mineral, or synthetic origins."
             },
             {
+                id: "glpam7",
                 question: "How is food classified according to function?",
                 answer: "1. Builds and restores the body: milk, meat, fish, legumes, vegetables, nuts\n2. Provides energy: fats, oils, sugar, cereals, dried fruits, starchy foods\n3. Regulatory role: water, vegetables, fruits\n4. Protective role: milk, whole grains, meat, vegetables, fruits",
                 explanation: "This classification groups food by what it does in the body."
             },
             {
+                id: "50bm1n",
                 question: "How is food classified according to nutrient content?",
                 answer: "• Rich in carbohydrates: cereals, starchy vegetables, sugars\n• Rich in proteins: milk, meat, fish, eggs\n• Rich in fats: oils, fats, nuts\n• Rich in vitamins and minerals: fruits and vegetables",
                 explanation: "Foods are grouped by their predominant macronutrient or micronutrient content."
             },
             {
+                id: "4i1b52",
                 question: "How is food classified according to shelf-life?",
                 answer: "• Perishable (short): milk, meat, poultry, eggs, fish, seafood\n• Semi-perishable (medium): certain fruits and vegetables, cheese, potatoes\n• Non-perishable (long): dry legumes, salt, sugar, flour",
                 explanation: "Shelf-life classification helps determine storage and handling requirements."
             },
             {
+                id: "0l8szv",
                 question: "What are macronutrients and micronutrients?",
                 answer: "Macronutrients: proteins, carbohydrates, fats, water (needed in large amounts).\nMicronutrients: vitamins, minerals, bioactive components (needed in small amounts).",
                 explanation: "Food is composed of more than 60 nutrients classified by prevalence in the body."
             },
             {
+                id: "pu3gx1",
                 question: "What is the energy value of proteins, carbohydrates, and fats?",
                 answer: "• Proteins: 4 kcal/g (≈17 kJ/g)\n• Carbohydrates: 4 kcal/g (≈17 kJ/g)\n• Fats: 9 kcal/g (≈39 kJ/g)\n1 kcal ≈ 4.187 kJ",
                 explanation: "Fats provide more than double the energy per gram compared to proteins or carbohydrates. Vitamins, minerals, bioactive compounds, and water do NOT provide energy."
             },
             {
+                id: "z657gb",
                 question: "What is food quality?",
                 answer: "Food quality is a set of complex characteristics of food that determine its value, suitability for consumption, and acceptability by consumers. It is influenced by nutritional properties, sensory properties, shelf-life, packaging, labeling, and other characteristics.",
                 explanation: "Food safety is a prerequisite for quality — it guarantees that food will not harm health if consumed as intended."
             },
             {
+                id: "2l9lf2",
                 question: "What are horizontal and vertical food regulations?",
                 answer: "Horizontal regulation: legal regulations that generally apply to ALL food groups (e.g., labelling, hygiene).\nVertical regulation: regulations that refer to specific food groups only.",
                 explanation: "Both types ensure consumer protection and food safety within the EU framework."
             },
             {
+                id: "fzkl0v",
                 question: "What are objective and subjective methods of food quality assessment?",
                 answer: "Objective methods: conducted by instruments using physical/chemical methods; results are correct, reliable, and repeatable; faster and cheaper; necessary for routine quality control.\nSubjective methods: conducted by humans using their senses; results are variable; necessary for development and promotion of new products; provide information on consumer acceptability.",
                 explanation: "Both methods complement each other in food quality assessment."
             },
             {
+                id: "b8csds",
                 question: "What is energy density and nutrient density?",
                 answer: "Energy density (kcal/g): describes the amount of energy contained in a given quantity of food.\nNutrient density (g/kcal): the opposite of 'empty calories' — foods with high nutrient density provide many desirable nutrients without high energy value.",
                 explanation: "'Empty calories' refer to foods providing energy but very few desirable nutrients (e.g., sweets, sweetened beverages, snacks)."
             },
             {
+                id: "9iuc28",
                 question: "What 7 items must appear on a nutrition label?",
                 answer: "Per 100g/100ml:\n1. Energy (kJ/kcal)\n2. Fats (g)\n3. Of which saturated fatty acids (g)\n4. Carbohydrates (g)\n5. Of which sugars (g)\n6. Proteins (g)\n7. Salt (g)",
                 explanation: "Mandatory on all food products since December 13, 2016. Helps consumers make informed choices."
             },
             {
+                id: "8aogkl",
                 question: "What are the five senses used in sensory evaluation of food?",
                 answer: "1. Sight – color, shape, size, foaming, clarity/turbidity, shine\n2. Smell – odour\n3. Taste – salty, sweet, sour, bitter, umami\n4. Touch – texture, softness/hardness\n5. Hearing – complements perception\nAROMA = taste + smell",
                 explanation: "Sensory properties are key to food acceptability."
             },
             {
+                id: "n9oe0c",
                 question: "What is the difference between 'use by' and 'best before' dates?",
                 answer: "'Use by...' is for easily perishable food from a microbiological point of view.\n'Best before...' indicates minimum shelf-life for all other foods; after this date food may still be safe but quality may decrease.",
                 explanation: "These are shelf-life indicators on food packaging."
             },
             {
+                id: "a8aehl",
                 question: "What is food authenticity?",
                 answer: "Authenticity refers to the credibility of all information provided about food: name, list of ingredients, net quantity, origin, or special features (organic production, protected designation of origin, nutrition or health claims).",
                 explanation: "Authentic labelling protects consumers from fraud."
             },
             {
+                id: "6rtxxd",
                 question: "What is food safety and traceability?",
                 answer: "Food safety: a guarantee that food will not harm health when consumed as intended.\nTraceability: the ability to track food through all stages of production, processing, and distribution.\nPrinciple: 'One step forward, one step back.'\nConcept: 'From farm to fork.'",
                 explanation: "Traceability ensures accountability throughout the entire food chain."
@@ -96,61 +113,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "5yoxti",
                 question: "Which of the following is NOT considered food by legal definition?",
                 options: ["Chewing gum", "Drinking water", "Animal feed", "Processed juice"],
                 correct: 2
             },
             {
+                id: "oiszom",
                 question: "Honey is classified as food of which origin?",
                 options: ["Animal origin", "Vegetable origin", "Vegetable-animal origin", "Microbial origin"],
                 correct: 2
             },
             {
+                id: "xst30y",
                 question: "Which nutrient provides the highest energy per gram?",
                 options: ["Proteins (4 kcal/g)", "Carbohydrates (4 kcal/g)", "Fats (9 kcal/g)", "Vitamins (2 kcal/g)"],
                 correct: 2
             },
             {
+                id: "uyvvna",
                 question: "What does 'empty calories' mean?",
                 options: ["Foods with zero calories", "Foods providing energy but very few desirable nutrients", "Foods that have expired", "Foods with high nutrient density"],
                 correct: 1
             },
             {
+                id: "ek5umo",
                 question: "Nutrition labelling has been mandatory since:",
                 options: ["January 1, 2010", "December 13, 2016", "March 1, 2020", "June 15, 2014"],
                 correct: 1
             },
             {
+                id: "z8zsac",
                 question: "Which is a subjective method of food quality assessment?",
                 options: ["Chemical analysis", "Sensory evaluation by humans", "Instrumental measurement", "pH testing"],
                 correct: 1
             },
             {
+                id: "48j503",
                 question: "'Best before' date indicates:",
                 options: ["Food is dangerous after this date", "Minimum shelf-life; food may still be safe after", "Maximum storage temperature", "Date of production"],
                 correct: 1
             },
             {
+                id: "yy4zn0",
                 question: "AROMA is defined as:",
                 options: ["Only smell", "Only taste", "Taste + smell combined", "Texture + appearance"],
                 correct: 2
             },
             {
+                id: "lusgie",
                 question: "The 'From farm to fork' concept relates to:",
                 options: ["Food marketing", "Energy density", "Traceability", "Sensory evaluation"],
                 correct: 2
             },
             {
+                id: "f5uwsl",
                 question: "Which foods are classified as perishable?",
                 options: ["Salt, sugar, flour", "Dry legumes, beans, lentils", "Milk, meat, poultry, eggs, fish", "Potatoes, cheese, certain fruits"],
                 correct: 2
             },
             {
+                id: "ow4kr2",
                 question: "How many nutrients does food contain (approximately)?",
                 options: ["About 10", "About 30", "More than 60", "Exactly 100"],
                 correct: 2
             },
             {
+                id: "72f8nf",
                 question: "What is the relationship between food safety and food quality?",
                 options: ["They are the same thing", "Food safety is a prerequisite for quality", "Quality is more important than safety", "They are unrelated concepts"],
                 correct: 1
@@ -159,41 +188,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "auprsu",
                 sentence: "Fats provide _______ kcal per gram of energy.",
                 answer: "9",
                 hint: "More than double that of proteins..."
             },
             {
+                id: "m4c44h",
                 sentence: "Proteins and carbohydrates each provide _______ kcal per gram.",
                 answer: "4",
                 hint: "Same energy value for both..."
             },
             {
+                id: "rjawsu",
                 sentence: "AROMA is defined as taste combined with _______.",
                 answer: "smell",
                 hint: "One of the five senses..."
             },
             {
+                id: "7pdg9m",
                 sentence: "The traceability principle is: One step forward, one step _______.",
                 answer: "back",
                 hint: "Tracking in both directions..."
             },
             {
+                id: "35vfpi",
                 sentence: "Food safety is a _______ for food quality.",
                 answer: "prerequisite",
                 hint: "It must come first..."
             },
             {
+                id: "gmaf4y",
                 sentence: "The concept 'From farm to _______' describes complete food traceability.",
                 answer: "fork",
                 hint: "Where food ends up being consumed..."
             },
             {
+                id: "1r04zt",
                 sentence: "Macronutrients include proteins, carbohydrates, fats, and _______.",
                 answer: "water",
                 hint: "The most basic necessity..."
             },
             {
+                id: "l2uj17",
                 sentence: "_______ regulation applies to specific food groups only, while horizontal applies to all.",
                 answer: "vertical",
                 hint: "Opposite of horizontal..."
@@ -201,6 +238,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "wecjdc",
             title: "Lecture 1 – Food Quality",
             content: `
                 <h3>🍽️ Definition of Food</h3>
@@ -269,107 +307,128 @@ const foodNutritionData = {
 
     // ==================== LECTURE 2: FOOD COMPONENTS ====================
     foodComponents: {
+        id: "9tfxhx",
         name: "Food Components",
         icon: "fa-flask",
         color: "#8b5cf6",
 
         flashcards: [
             {
+                id: "leaxkf",
                 question: "What are proteins and what are their building blocks?",
                 answer: "Proteins (Greek 'protos' = first) are complex macromolecular compounds. Their basic building blocks are amino acids, which contain a carboxyl group (-COOH) and an amino group (-NH₂), connected by peptide bonds (-CONH-).",
                 explanation: "Multiple amino acids linked together form polypeptides, which fold into proteins."
             },
             {
+                id: "5fjvuy",
                 question: "What is the difference between complete and incomplete proteins?",
                 answer: "Complete proteins: contain all essential amino acids; ensure growth and development; found in animal origin food (meat, milk, eggs, fish).\nIncomplete proteins: lower quality amino acid composition; plant origin; have a limiting amino acid (the essential amino acid present in the lowest concentration).",
                 explanation: "The limiting amino acid restricts the utilization of all other amino acids."
             },
             {
+                id: "q8o5zq",
                 question: "What are the functions of proteins in the body?",
                 answer: "1. Maintenance, growth and development\n2. Building enzymes and hormones\n3. Immune system functioning\n4. Fluid and electrolyte balance\n5. Acid-base balance\n6. Transport and storage of substances",
                 explanation: "Proteins are the most versatile macromolecule in the body."
             },
             {
+                id: "w0cuqi",
                 question: "What are the protein intake recommendations?",
                 answer: "• 0.8 g per kg of body weight\n• 10-15% of total energy intake\n• Energy density: 4 kcal/g (17.17 kJ/g)",
                 explanation: "The amino acid pool concept refers to all free amino acids available for protein synthesis."
             },
             {
+                id: "smzuyk",
                 question: "What are the types of simple carbohydrates?",
                 answer: "Monosaccharides:\n• Hexoses: glucose, fructose, galactose\n• Pentoses: ribose, deoxyribose\n• Sugar alcohols: mannitol, xylitol, sorbitol\n\nDisaccharides:\n• Saccharose (sucrose) = glucose + fructose\n• Lactose = glucose + galactose\n• Maltose = glucose + glucose",
                 explanation: "Saccharose (table sugar) is the most commonly used sugar in the human diet."
             },
             {
+                id: "6fvkw8",
                 question: "What are complex carbohydrates?",
                 answer: "Oligosaccharides: 3-10 monosaccharide units (raffinose, verbascose, stachyose).\nPolysaccharides:\n• Starch (glucose polymer)\n• Cellulose (glucose polymer)\n• Dietary fiber (soluble and insoluble)",
                 explanation: "Starch and cellulose are both glucose polymers but differ in their bond structure."
             },
             {
+                id: "g4y1t5",
                 question: "What is the Glycemic Index (GI) and Glycemic Load?",
                 answer: "GI measures the rate at which blood glucose rises after consuming food and drops back to normal.\n• Low GI: <55\n• Intermediate GI: 56-69\n• High GI: >70\nGlycemic Load = GI × grams of carbohydrates in one serving.",
                 explanation: "GI helps assess carbohydrate quality, while glycemic load considers portion size."
             },
             {
+                id: "j2jsv6",
                 question: "What are the carbohydrate intake recommendations?",
                 answer: "• Energy density: 4 kcal/g (17.17 kJ/g)\n• Should comprise 45-65% of total daily kcal\n• Dietary fiber: 14 g per 1000 kcal",
                 explanation: "Carbohydrates should be the largest source of energy in a balanced diet."
             },
             {
+                id: "46s4pv",
                 question: "What are the three main types of lipids?",
                 answer: "1. Fats: esters of glycerol and fatty acids (triglycerides)\n2. Phospholipids: esters of glycerol, fatty acids, and phosphoric acid\n3. Sterols: made of four linked rings; cholesterol is the main sterol in animals",
                 explanation: "Fats are the most concentrated source of energy at 9 kcal/g (39 kJ/g)."
             },
             {
+                id: "mevaka",
                 question: "What are the three types of fatty acids?",
                 answer: "1. Saturated: all single bonds; solid; mostly animal origin\n2. Monounsaturated: one double bond; liquid; plant oils (oleic acid in olive oil)\n3. Polyunsaturated: several double bonds; liquid; mainly vegetable oils\nEssential fatty acids: linoleic and α-linolenic\nOmega-3: EPA (C20:5), DHA (C22:6)",
                 explanation: "The omega (ω) number indicates the position of the first double bond from the methyl end."
             },
             {
+                id: "myqo66",
                 question: "What are the functions of fat in the body?",
                 answer: "1. Builds adipose tissue (energy reserve + hormonally active)\n2. Solvent and carrier for fat-soluble vitamins (A, D, E, K) and carotenoids\n3. Phospholipids and sterols contribute to cell structure\n4. Cholesterol is a precursor of sex hormones, vitamin D, and bile acids",
                 explanation: "Fat serves both structural and functional roles in the body."
             },
             {
+                id: "4dmngy",
                 question: "What are the fat intake recommendations?",
                 answer: "• Energy density: 9 kcal/g (39 kJ/g)\n• 20-35% of total daily energy intake\n• Saturated fatty acids: no more than 10% of kcal\n• Unsaturated fatty acids: as high as possible\n• Ratio n-6/n-3 = 2-3:1\n• Cholesterol: max 300 mg/day",
                 explanation: "Emphasis should be on replacing saturated fats with unsaturated fats."
             },
             {
+                id: "pf5t15",
                 question: "What is cholesterol and how is it transported?",
                 answer: "Cholesterol is a steroid — an ester of fatty acids and complex polycyclic alcohols. Found in animal-origin foods. Can be endogenous (made by body) or exogenous (from diet).\nTransport:\n• LDL (Low Density Lipoproteins) — 'bad' cholesterol\n• HDL (High Density Lipoproteins) — 'good' cholesterol",
                 explanation: "LDL carries cholesterol to tissues while HDL carries it away to the liver."
             },
             {
+                id: "vuuegg",
                 question: "How are vitamins classified?",
                 answer: "Fat-soluble (liposoluble): A, D, E, K\nWater-soluble (hydrosoluble): B-complex (B1, B2, B3, B5, B6, B9, B12, Biotin) and Vitamin C",
                 explanation: "Fat-soluble vitamins can be stored in body fat; water-soluble vitamins need regular intake."
             },
             {
+                id: "xn7vbt",
                 question: "What are the functions and sources of Vitamin A?",
                 answer: "Functions: regulation of visual cycle (prevents night blindness), maintaining skin health, immune system, growth and reproduction.\nSources:\n• Active form (retinol/retinal): liver, eggs, enriched products\n• β-carotene (provitamin): dark-green and yellow-orange fruits and vegetables",
                 explanation: "β-carotene is converted to vitamin A in the body."
             },
             {
+                id: "9mqlqu",
                 question: "What is Vitamin D and why is it called the 'sun vitamin'?",
                 answer: "Called the 'sun vitamin' because it can be synthesized by the body with sunlight exposure.\nFunction: helps incorporate calcium and phosphorus into bones and teeth.\nSources: D2 (plant: fortified margarines, cereals), D3 (animal: liver, egg yolk, fatty fish).\nDeficiency: rickets (children), osteomalacia/osteoporosis (adults).",
                 explanation: "Vitamin D deficiency is common in regions with limited sunlight."
             },
             {
+                id: "jm8qvq",
                 question: "What are the functions of Vitamin E and Vitamin K?",
                 answer: "Vitamin E (tocopherols): antioxidant; sources = vegetable oils; deficiency is rare.\nVitamin K: improves blood clotting; helps synthesis of bone proteins and mineral binding (higher bone density); sources = liver, green leafy vegetables, cabbage.",
                 explanation: "Both are fat-soluble vitamins stored in the body."
             },
             {
+                id: "obceqk",
                 question: "What are the key B-complex vitamins and Vitamin C?",
                 answer: "B-complex: water-soluble; help convert carbohydrates into glucose for energy; active in protein and fat metabolism; ensure nervous system and skin health.\n• B9 (folic acid): DNA synthesis, red blood cells; critical in pregnancy.\n• B12 (cyanocobalamin): central nervous system; red blood cells; ONLY in animal foods.\nVitamin C: collagen production, antioxidant, immune system. Sources: citrus fruits, berries, cabbage, tomatoes.",
                 explanation: "B12 deficiency causes pernicious anemia; B9 deficiency increases heart disease risk."
             },
             {
+                id: "rash3d",
                 question: "What is the difference between macrominerals and microminerals?",
                 answer: "Macrominerals (>5g in body): calcium, phosphorus, magnesium, sodium, chlorine, potassium.\nMicrominerals (<5g in body): iron, chromium, copper, iodine, manganese, molybdenum, selenium, zinc.",
                 explanation: "Both groups are essential nutrients with no energy value but participate in energy metabolism."
             },
             {
+                id: "09w4ze",
                 question: "What are the functions of calcium and iron?",
                 answer: "Calcium: builds bones and teeth, maintains fluid balance, regulates blood pressure, nerve impulse transmission. Sources: milk/dairy + vitamin D, small fish with bones, dark green leafy vegetables.\n\nIron: builds hemoglobin and myoglobin. Heme iron (animal: 20-40% absorption) vs. Non-heme iron (plant: 1-10% absorption). Vitamin C increases absorption; phytic acid reduces it.",
                 explanation: "Iron deficiency causes anemia (fatigue, low concentration, susceptibility to infections)."
@@ -378,71 +437,85 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "dhtw8a",
                 question: "The limiting amino acid in a protein is:",
                 options: ["The most abundant essential amino acid", "The essential amino acid present in the lowest concentration", "A non-essential amino acid", "An amino acid that limits fat absorption"],
                 correct: 1
             },
             {
+                id: "vqy3l5",
                 question: "Saccharose (sucrose) is a disaccharide composed of:",
                 options: ["Glucose + galactose", "Glucose + glucose", "Glucose + fructose", "Fructose + galactose"],
                 correct: 2
             },
             {
+                id: "yzq9ga",
                 question: "A food with a Glycemic Index of 40 is classified as:",
                 options: ["High GI", "Intermediate GI", "Low GI", "Very high GI"],
                 correct: 2
             },
             {
+                id: "op5vl4",
                 question: "Which fatty acids are considered essential?",
                 options: ["Oleic and stearic", "Linoleic and α-linolenic", "Palmitic and lauric", "EPA and DHA"],
                 correct: 1
             },
             {
+                id: "ikz0fx",
                 question: "Fat-soluble vitamins include all EXCEPT:",
                 options: ["Vitamin A", "Vitamin D", "Vitamin C", "Vitamin K"],
                 correct: 2
             },
             {
+                id: "e5jhtg",
                 question: "Vitamin B12 is unique because it is found only in:",
                 options: ["Fruits and vegetables", "Foods of animal origin", "Cereals and grains", "Vegetable oils"],
                 correct: 1
             },
             {
+                id: "h8ye36",
                 question: "Heme iron absorption rate is approximately:",
                 options: ["1-10%", "10-15%", "20-40%", "50-60%"],
                 correct: 2
             },
             {
+                id: "jexcnz",
                 question: "The recommended ratio of n-6 to n-3 fatty acids is:",
                 options: ["10:1", "5:1", "2-3:1", "1:1"],
                 correct: 2
             },
             {
+                id: "sbu4bj",
                 question: "Which mineral deficiency causes rickets in children?",
                 options: ["Iron", "Calcium (via Vitamin D deficiency)", "Sodium", "Zinc"],
                 correct: 1
             },
             {
+                id: "mlp5jp",
                 question: "Recommended carbohydrate intake should be what percentage of total kcal?",
                 options: ["10-15%", "20-35%", "45-65%", "70-80%"],
                 correct: 2
             },
             {
+                id: "ze9pcy",
                 question: "LDL is commonly known as:",
                 options: ["Good cholesterol", "Bad cholesterol", "Essential cholesterol", "Neutral cholesterol"],
                 correct: 1
             },
             {
+                id: "ikh23s",
                 question: "Dietary fiber intake recommendation is:",
                 options: ["5 g per 1000 kcal", "14 g per 1000 kcal", "25 g per 1000 kcal", "50 g per 1000 kcal"],
                 correct: 1
             },
             {
+                id: "gekmpi",
                 question: "Which vitamin is critical during pregnancy to reduce neural tube defects?",
                 options: ["Vitamin A", "Vitamin C", "Folic acid (B9)", "Vitamin E"],
                 correct: 2
             },
             {
+                id: "yboled",
                 question: "What increases iron absorption?",
                 options: ["Phytic acid", "Vitamin C", "Calcium", "Fiber"],
                 correct: 1
@@ -451,51 +524,61 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "8bhzsx",
                 sentence: "Complete proteins are found in foods of _______ origin.",
                 answer: "animal",
                 hint: "Meat, milk, eggs, fish..."
             },
             {
+                id: "qqck56",
                 sentence: "Saccharose is composed of glucose and _______.",
                 answer: "fructose",
                 hint: "The sweetest natural sugar..."
             },
             {
+                id: "6zqtkm",
                 sentence: "Fat-soluble vitamins are A, D, E, and _______.",
                 answer: "K",
                 hint: "Important for blood clotting..."
             },
             {
+                id: "q34oj1",
                 sentence: "The 'sun vitamin' is Vitamin _______.",
                 answer: "D",
                 hint: "Synthesized with sunlight..."
             },
             {
+                id: "pae819",
                 sentence: "Cholesterol intake should not exceed _______ mg per day.",
                 answer: "300",
                 hint: "Three hundred..."
             },
             {
+                id: "8vot56",
                 sentence: "A low Glycemic Index is below _______.",
                 answer: "55",
                 hint: "Less than fifty-five..."
             },
             {
+                id: "wogooe",
                 sentence: "Vitamin B12 deficiency causes _______ anemia.",
                 answer: "pernicious",
                 hint: "A specific type of anemia..."
             },
             {
+                id: "zqrlfv",
                 sentence: "Calcium is the most _______ mineral in the human body.",
                 answer: "abundant",
                 hint: "Present in the greatest amount..."
             },
             {
+                id: "gct6e7",
                 sentence: "Essential fatty acids are linoleic and _______-linolenic.",
                 answer: "alpha",
                 hint: "First letter of the Greek alphabet (α)..."
             },
             {
+                id: "4irmzh",
                 sentence: "Recommended protein intake is _______ g per kg of body weight.",
                 answer: "0.8",
                 hint: "Less than one gram..."
@@ -503,6 +586,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "p8bo58",
             title: "Lecture 2 – Food Components (Nutrients)",
             content: `
                 <h3>🧬 Proteins</h3>
@@ -564,67 +648,80 @@ const foodNutritionData = {
 
     // ==================== LECTURE 3: FOOD PRESERVATION ====================
     foodPreservation: {
+        id: "cbx9yl",
         name: "Food Preservation",
         icon: "fa-snowflake",
         color: "#0ea5e9",
 
         flashcards: [
             {
+                id: "oly161",
                 question: "What is food spoilage?",
                 answer: "A process that significantly reduces food quality by: threatening health (becoming unsafe), losing desirable properties, and causing changes — visible (colour, taste, smell, consistency) or invisible (microbiological spoilage, change in nutritional composition).",
                 explanation: "Two categories of spoilage factors: physico-chemical and biological."
             },
             {
+                id: "0xnhcs",
                 question: "What are the physico-chemical factors causing food spoilage?",
                 answer: "• Oxygen: oxidation of unsaturated fatty acids; loss of water, vitamins, aroma\n• Heat: accelerates chemical reactions and microbial growth\n• Light/radiation: colour change, vitamin inactivation, acceleration of reactions\n• Water: water activity (aw) > 0.6 and relative humidity enable microbial growth",
                 explanation: "Controlling these factors is key to preservation."
             },
             {
+                id: "6c308m",
                 question: "What are the biological factors causing food spoilage?",
                 answer: "• Microorganisms: yeasts (unicellular fungi, alcoholic fermentation), moulds (multicellular fungi), bacteria (simple division, aerobic/anaerobic, form spores), viruses\n• Enzymes: decompose food ingredients, cause browning and softening\n• Pests: rodents and insects that destroy food and transfer infections",
                 explanation: "Bacteriostatic agents are antiseptic; bactericidal agents are for disinfection."
             },
             {
+                id: "j6gtdh",
                 question: "What is the difference between ABIOSIS and ANABIOSIS in food preservation?",
                 answer: "ABIOSIS: destruction or complete extraction of microorganisms (sterilization by heat, ionizing radiation, ultrasound, high pressure, pulsed electric field; ultrafiltration).\nANABIOSIS: reducing/restricting microbial activity by creating unfavorable conditions (cooling, freezing, water removal, biological and chemical preservation).",
                 explanation: "Abiosis eliminates microorganisms; anabiosis inhibits them."
             },
             {
+                id: "46p4qz",
                 question: "What is the difference between pasteurization and sterilization?",
                 answer: "Pasteurization: temperature <100°C; destroys vegetative forms of microorganisms; done in flow.\nSterilization: temperature >100°C; also destroys spores; done in packaging, in an autoclave (device for heating under pressure above boiling point).",
                 explanation: "Spores are resistant forms of microorganisms that survive unfavorable conditions."
             },
             {
+                id: "p5a585",
                 question: "How does cooling preserve food?",
                 answer: "Keeping food above the freezing point slows microbial activity and chemical/biochemical reactions. Uses cold air in thermally insulated chambers, dry ice (solid CO₂) for solid food, or plate/tube heat exchangers for liquids.",
                 explanation: "Shelf-life depends on temperature AND relative humidity — too high causes rotting, too low causes drying."
             },
             {
+                id: "wpwzvv",
                 question: "What is the difference between controlled atmosphere and modified atmosphere?",
                 answer: "Controlled atmosphere: O₂ is lowered, CO₂ and N₂ increased; composition is kept constant within set limits.\nModified atmosphere: composition changes as a result of the breathing of fruits themselves (consuming O₂, releasing CO₂).",
                 explanation: "Both slow maturation, enzyme inactivation, and vitamin loss."
             },
             {
+                id: "zgvzkz",
                 question: "How does freezing preserve food, and what is blanching?",
                 answer: "Freezing lowers temperature below the freezing point of cell juice. Recommendation: freeze as quickly as possible at the lowest temperature = small ice crystals (preserves texture).\nBlanching: heat treatment with water or steam at 75-95°C for several minutes to inactivate enzymes, soften tissues, and remove air. Storage: -18°C.",
                 explanation: "Slow freezing creates large ice crystals that damage cell structure."
             },
             {
+                id: "0tn3mb",
                 question: "What are the three methods of water removal for preservation?",
                 answer: "1. Drying: removal of water from solid food (10-20% moisture); for fruits, vegetables, meat, fish. Uses warm air, floating layer, infrared, heated surface.\n2. Concentrating: removal of water from liquid food.\n3. Lyophilization (freeze-drying): food is quickly frozen at -50°C, then water evaporates under vacuum. Used for instant coffee and tea.",
                 explanation: "Reducing water content below the threshold needed for microbial activity extends shelf-life."
             },
             {
+                id: "yodany",
                 question: "What is biological preservation of food?",
                 answer: "Controlled application of microorganisms (bacteria and yeasts) that create unfavorable conditions for spoilage agents. Main method: lactic-sour fermentation — changes consistency and sensory properties, reduces fermentable sugars.\nExamples: dairy fermented products, pickled cabbage/cucumbers/turnips/olives.",
                 explanation: "Lactic acid bacteria inhibit undesirable microflora, creating a new product with characteristic taste and smell."
             },
             {
+                id: "qf2iki",
                 question: "What are natural and chemical preservatives?",
                 answer: "Natural preservatives:\n• Sugar >70% (candied fruit), >65% + heat (jams)\n• Salt: 3-20% (dry salting or brining)\n• Vinegar (acetic acid): 3%\n• Alcohol: >15%\n• Spices: onion, citrus, clove, cinnamon, rosemary\n\nChemical preservatives: E200-E290; prevent microbial development without significantly changing sensory properties. SO₂ (sulfur dioxide) used in wine = allergen, must be marked.",
                 explanation: "Additives are substances added to improve technological and sensory properties, marked with E numbers."
             },
             {
+                id: "jewevk",
                 question: "What are novel non-thermal preservation techniques?",
                 answer: "1. High hydrostatic pressure (100-800 MPa): pasteurization effect without vitamin/aroma loss; environmentally acceptable but expensive.\n2. Ionizing radiation (X-rays, gamma rays, UV): 'cold pasteurization'; for raw food and dried herbs.\n3. Pulsed electric field (20-40 kV/cm): very short time (<1 second); inactivates microorganisms.",
                 explanation: "All process at room temperature (with slight temperature rise) in 1-10 minutes."
@@ -633,61 +730,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "czocc5",
                 question: "Water activity (aw) above which value enables microbial growth?",
                 options: ["0.3", "0.6", "0.9", "1.0"],
                 correct: 1
             },
             {
+                id: "jyvsh1",
                 question: "ABIOSIS in food preservation means:",
                 options: ["Inhibiting microorganism growth", "Complete destruction of microorganisms", "Adding sugar for preservation", "Biological fermentation"],
                 correct: 1
             },
             {
+                id: "9xjid9",
                 question: "What temperature defines sterilization vs. pasteurization?",
                 options: ["50°C is the dividing line", "100°C — pasteurization below, sterilization above", "200°C is the dividing line", "75°C is the dividing line"],
                 correct: 1
             },
             {
+                id: "um7ixt",
                 question: "Blanching is performed at:",
                 options: ["0-5°C", "20-30°C", "75-95°C for several minutes", "200°C for 1 hour"],
                 correct: 2
             },
             {
+                id: "qyqcaz",
                 question: "Lyophilization (freeze-drying) first freezes food at:",
                 options: ["-18°C", "-30°C", "-50°C", "-100°C"],
                 correct: 2
             },
             {
+                id: "9282l1",
                 question: "For sugar to have a preserving effect (as in jams), the concentration must exceed:",
                 options: ["30%", "50%", "65%", "90%"],
                 correct: 2
             },
             {
+                id: "37cjwb",
                 question: "Frozen food should be stored at:",
                 options: ["-5°C", "-10°C", "-18°C", "-30°C"],
                 correct: 2
             },
             {
+                id: "xq78xx",
                 question: "Which is an example of biological preservation?",
                 options: ["Adding salt", "Lactic-sour fermentation", "Pasteurization", "Ionizing radiation"],
                 correct: 1
             },
             {
+                id: "q96i1g",
                 question: "High hydrostatic pressure processing uses pressures of:",
                 options: ["10-50 MPa", "100-800 MPa", "1000-2000 MPa", "5000+ MPa"],
                 correct: 1
             },
             {
+                id: "llhini",
                 question: "Chemical preservatives are labeled with E numbers in the range:",
                 options: ["E100-E199", "E200-E290", "E300-E399", "E400-E499"],
                 correct: 1
             },
             {
+                id: "tur880",
                 question: "SO₂ used in wine production is classified as a(n):",
                 options: ["Vitamin", "Mineral", "Allergen", "Probiotic"],
                 correct: 2
             },
             {
+                id: "t461oh",
                 question: "In controlled atmosphere storage, what gas is increased?",
                 options: ["Oxygen", "Carbon dioxide and nitrogen", "Methane", "Hydrogen"],
                 correct: 1
@@ -696,41 +805,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "zp9v97",
                 sentence: "Pasteurization occurs below _______ °C, while sterilization occurs above it.",
                 answer: "100",
                 hint: "Boiling point of water..."
             },
             {
+                id: "31quht",
                 sentence: "Freeze-drying is also called _______.",
                 answer: "lyophilization",
                 hint: "Starts with 'lyo'..."
             },
             {
+                id: "z7x6g2",
                 sentence: "Blanching inactivates _______ in food before freezing.",
                 answer: "enzymes",
                 hint: "Biological catalysts..."
             },
             {
+                id: "ytggj4",
                 sentence: "Frozen food should be stored at _______ °C.",
                 answer: "-18",
                 hint: "Negative eighteen..."
             },
             {
+                id: "quxq73",
                 sentence: "Lactic-sour fermentation is an example of _______ preservation.",
                 answer: "biological",
                 hint: "Uses living microorganisms..."
             },
             {
+                id: "6zt25l",
                 sentence: "ABIOSIS means complete _______ of microorganisms.",
                 answer: "destruction",
                 hint: "Eliminating them entirely..."
             },
             {
+                id: "mrw1bg",
                 sentence: "Additives in the ingredient list are marked with _______ numbers.",
                 answer: "E",
                 hint: "A single letter used in Europe..."
             },
             {
+                id: "nys1fo",
                 sentence: "_______ are resistant forms of microorganisms that survive unfavorable conditions.",
                 answer: "spores",
                 hint: "Bacteria can form these to survive..."
@@ -738,6 +855,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "266dx9",
             title: "Lecture 3 – Food Preservation",
             content: `
                 <h3>⚠️ Food Spoilage</h3>
@@ -799,57 +917,68 @@ const foodNutritionData = {
 
     // ==================== LECTURE 4: CEREALS AND BAKERY PRODUCTS ====================
     cerealsBakery: {
+        id: "5wfbip",
         name: "Cereals & Bakery",
         icon: "fa-bread-slice",
         color: "#d97706",
 
         flashcards: [
             {
+                id: "esy8r8",
                 question: "What are cereal grains and which are the most important?",
                 answer: "Plant species from the grass family (Poaceae): wheat, rye, barley, oats, corn (maize), rice, millet, sorghum, triticale, and buckwheat.\nPseudocereals: amaranth and quinoa.\nCereals account for ~50% of cultivated agricultural land worldwide.\nBy cultivated area: 1. wheat, 2. corn, 3. rice.\nBy production volume: 1. corn, 2. wheat, 3. rice.",
                 explanation: "Cereals are the world's most widely grown agricultural crops."
             },
             {
+                id: "boc1qf",
                 question: "What is the difference between bread cereals, non-bread cereals, and pseudocereals?",
                 answer: "Bread cereals: can produce quality bakery products (wheat, rye).\nNon-bread cereals: not suitable alone for bread but serve as supplements (corn, oat, barley, millet, buckwheat, rice, sorghum).\nPseudocereals: old cereal types not genetically altered (amaranth, quinoa).",
                 explanation: "Only wheat and rye have enough gluten to make bread independently."
             },
             {
+                id: "rwwe57",
                 question: "What are the three parts of a cereal grain?",
                 answer: "1. Bran (outer layer): insoluble dietary fiber, minerals, polyphenols, phytochemicals\n2. Endosperm: carbohydrates (starch), proteins, B-complex vitamins; aleurone layer (nutritionally valuable outer part)\n3. Germ: oils, proteins, vitamins, minerals; removed during flour processing",
                 explanation: "Whole grain flour retains all three parts in their natural proportions."
             },
             {
+                id: "aiozzy",
                 question: "What is gluten and why is it important for bakery products?",
                 answer: "Gluten is formed from two protein fractions: gliadin (prolamin) + glutelin.\nIt provides: elasticity, plasticity, and gas retention capacity to dough.\nFound in: wheat, rye, barley, and often oats.\nImportant for hospitality: gluten-free menu options, avoiding cross-contamination, clear allergen labeling.",
                 explanation: "Celiac disease is an autoimmune disorder triggered by gluten."
             },
             {
+                id: "7uoxqo",
                 question: "What is starch gelatinization and retrogradation?",
                 answer: "Gelatinization: swelling and dissolution of starch at elevated temperatures (during cooking/baking).\nRetrogradation: recrystallization during cooling of starch paste (bread going stale).\nStarch consists of two fractions: amylose and amylopectin.",
                 explanation: "Starch makes up 55-70% of cereal composition and is mainly in the endosperm."
             },
             {
+                id: "h959pf",
                 question: "What is flour type and how is it determined?",
                 answer: "Flour type = ash content (%) × 1000. Ash represents mineral content (mostly from bran).\nHigher type = darker color = more minerals.\nWheat flour: white (type 400, 550), semi-white (700, 850), dark (1100, 1600).\nWhole grain flour contains all parts: endosperm, germ, and bran.",
                 explanation: "Corn and buckwheat flour are not classified into types."
             },
             {
+                id: "dj4hvr",
                 question: "What are the 9 steps of direct bread production?",
                 answer: "1. Selection and preparation of raw materials (flour, water 40°C, salt ≤1.4%, baker's yeast)\n2. Dough making (6-12 min: homogenization, gluten development, aeration)\n3. Bulk fermentation (28-30°C, 15-60 min)\n4. Dividing the dough\n5. Intermediate fermentation (6-20 min, 28-30°C)\n6. Final shaping\n7. Final fermentation (45-60 min, 32°C, 75-80% humidity)\n8. Baking (200-250°C: starch gelatinizes, proteins coagulate, crust forms, aroma develops)\n9. Cooling and handling (30-40 min to ~25°C)",
                 explanation: "C₆H₁₂O₆ + yeast → 2C₂H₅OH + 2CO₂ (fermentation equation)."
             },
             {
+                id: "wxg500",
                 question: "What is sourdough technology and its advantages?",
                 answer: "Uses lactic acid bacteria + yeasts (not just baker's yeast). Fermentation: 24-48h at 25-35°C.\nAdvantages: better flavour, longer shelf-life, rustic look, increased nutritional value (less gluten, more dietary fiber, more micronutrients, decomposition of phytic acid, more bioactive components, no need for additives).",
                 explanation: "Repeated refreshment of sourdough lowers pH over time."
             },
             {
+                id: "h1baf7",
                 question: "What are the main defects and diseases of bakery products?",
                 answer: "Defects (technology issues): unclean/cracked/burnt crust, soft/wet middle, unusual colour or taste, underdone, deformed.\nDiseases (microbial activity):\n• Ropiness: Bacillus bacteria survive baking via heat-resistant spores; crumb becomes sticky/slimy with rotting fruit smell.\n• Mouldiness: white, green, black, or red spots on surface after baking.",
                 explanation: "Ropiness makes bread inedible and potentially harmful."
             },
             {
+                id: "lrs4wx",
                 question: "How is pasta produced?",
                 answer: "Kneading wheat semolina with water, shaping, and thermal drying.\nSalt: not more than 1%. Dried pasta water content: up to 13%.\nSteps: sifting flour → mixing with water/additives → kneading dough → shaping → drying in warm/dry air → sorting → packaging.",
                 explanation: "Note: pasta uses kneading, not mixing — this develops different texture than bread."
@@ -858,61 +987,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "khgmre",
                 question: "Which cereal is #1 by production volume worldwide?",
                 options: ["Wheat", "Rice", "Corn (maize)", "Barley"],
                 correct: 2
             },
             {
+                id: "wegss0",
                 question: "Gluten is formed from which two protein fractions?",
                 options: ["Albumins + globulins", "Gliadin + glutelin", "Amylose + amylopectin", "Prolamin + albumin"],
                 correct: 1
             },
             {
+                id: "4fh8wl",
                 question: "What does flour type number represent?",
                 options: ["Protein content × 100", "Ash content (%) × 1000", "Water content × 10", "Gluten percentage"],
                 correct: 1
             },
             {
+                id: "ey8fyz",
                 question: "The optimal temperature for bulk fermentation of bread is:",
                 options: ["15-20°C", "28-30°C", "40-50°C", "60-70°C"],
                 correct: 1
             },
             {
+                id: "ykq7s7",
                 question: "What is starch retrogradation?",
                 options: ["Swelling of starch at high temperature", "Recrystallization during cooling (bread going stale)", "Breaking starch into sugars", "Dissolving starch in water"],
                 correct: 1
             },
             {
+                id: "5ld24z",
                 question: "Baking temperature for bread is typically:",
                 options: ["100-150°C", "150-200°C", "200-250°C", "300-350°C"],
                 correct: 2
             },
             {
+                id: "vpbdlp",
                 question: "Which cereals contain gluten?",
                 options: ["Rice, corn, millet", "Wheat, rye, barley (and often oats)", "Quinoa, amaranth, buckwheat", "Sorghum, rice, corn"],
                 correct: 1
             },
             {
+                id: "aohqx5",
                 question: "The fermentation equation produces alcohol and:",
                 options: ["Oxygen", "Carbon dioxide (CO₂)", "Nitrogen", "Methane"],
                 correct: 1
             },
             {
+                id: "r1pmm2",
                 question: "Ropiness in bread is caused by:",
                 options: ["Excessive salt", "Bacillus bacteria with heat-resistant spores", "Too much yeast", "Lack of water"],
                 correct: 1
             },
             {
+                id: "erivrc",
                 question: "What is the water content limit for dried pasta?",
                 options: ["Up to 5%", "Up to 13%", "Up to 20%", "Up to 30%"],
                 correct: 1
             },
             {
+                id: "2deqwp",
                 question: "Sourdough advantages include all EXCEPT:",
                 options: ["More gluten content", "Better flavour", "Longer shelf-life", "Less need for additives"],
                 correct: 0
             },
             {
+                id: "4tdrpz",
                 question: "Pseudocereals include:",
                 options: ["Wheat and rye", "Amaranth and quinoa", "Corn and rice", "Barley and oats"],
                 correct: 1
@@ -921,41 +1062,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "75duqy",
                 sentence: "Gluten is formed from gliadin and _______.",
                 answer: "glutelin",
                 hint: "A protein fraction from cereal endosperm..."
             },
             {
+                id: "s5k6xp",
                 sentence: "Starch consists of two fractions: amylose and _______.",
                 answer: "amylopectin",
                 hint: "The branched fraction..."
             },
             {
+                id: "wu9wga",
                 sentence: "Baker's yeast species is Saccharomyces _______.",
                 answer: "cerevisiae",
                 hint: "Also used in beer and wine making..."
             },
             {
+                id: "8gtvit",
                 sentence: "Bread is baked at temperatures between 200 and _______ °C.",
                 answer: "250",
                 hint: "Two hundred and fifty..."
             },
             {
+                id: "k4utmg",
                 sentence: "The two bread cereals are wheat and _______.",
                 answer: "rye",
                 hint: "Used for dark, dense bread..."
             },
             {
+                id: "nspzhx",
                 sentence: "Flour type is calculated as ash content multiplied by _______.",
                 answer: "1000",
                 hint: "One thousand..."
             },
             {
+                id: "e8m0m5",
                 sentence: "An autoimmune disorder triggered by gluten is called _______ disease.",
                 answer: "celiac",
                 hint: "Also spelled coeliac..."
             },
             {
+                id: "rko8no",
                 sentence: "The most common bacterial disease of bread is called _______.",
                 answer: "ropiness",
                 hint: "Slimy threads when bread is broken..."
@@ -963,6 +1112,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "uew3s3",
             title: "Lecture 4 – Cereals & Bakery Products",
             content: `
                 <h3>🌾 Cereal Grains</h3>
@@ -1014,57 +1164,68 @@ const foodNutritionData = {
 
     // ==================== LECTURE 5: FRUITS AND VEGETABLES ====================
     fruitsVegetables: {
+        id: "k1kpc3",
         name: "Fruits & Vegetables",
         icon: "fa-apple-whole",
         color: "#22c55e",
 
         flashcards: [
             {
+                id: "dcnq6k",
                 question: "How are fruits classified?",
                 answer: "• Pome fruits: apple, pear, quince\n• Stone fruits: plum, cherry, apricot, sour cherry\n• Berries: blueberries, strawberries, blackberries, raspberries\n• Nuts: walnut, almond, hazelnut, coconut\n• Citrus fruits: tangerine, orange, grapefruit\n• Mediterranean fruits: fig, banana, pineapple, dates",
                 explanation: "Fruits are products of cultivated fruit trees and wild plants used fresh or processed."
             },
             {
+                id: "lf68ut",
                 question: "How are vegetables classified?",
                 answer: "• Fruity vegetables: tomatoes, peppers, cucumbers, pumpkins\n• Leafy vegetables: lettuce, spinach, radicchio, kale\n• Flowering vegetables: artichoke, cauliflower\n• Legumes: beans, peas, lentils, chickpeas (dry = pulses)\n• Stem vegetables: asparagus\n• Bulbous vegetables: onion, garlic\n• Root vegetables: carrot, parsley, celery, radish\n• Tuberous vegetables: potatoes, sweet potatoes",
                 explanation: "Vegetables can be ripe or physiologically unripe (cucumbers, pumpkins)."
             },
             {
+                id: "wlru30",
                 question: "What is the nutritional composition of fruits and vegetables?",
                 answer: "Water: 75-95%\nCarbohydrates: fruits 8.3-14.3%, vegetables 3.2-10.3% (glucose, fructose, sucrose, starch, cellulose, pectin)\nFats: very low (0.1-0.7%)\nProteins: fruits 0.3-1.4%, vegetables 0.8-2.6%\nVitamins: carotenoids and vitamin C\nMinerals: Mg, Ca, P, Fe\nEnergy: fruits 39-93 kcal/100g, vegetables 16-43 kcal/100g",
                 explanation: "Fruits and vegetables are mainly water and carbohydrates with low fat and protein."
             },
             {
+                id: "a30ll6",
                 question: "What makes pulses (dry legumes) nutritionally special?",
                 answer: "Proteins: 18-35% (rich in lysine — combine with cereals at 35:65 ratio for complete protein)\nCarbohydrates: ~60% (starch, fiber)\nFats: ~3% (exception: soy at 20%)\nVitamins: B-complex\nMinerals: zinc, iron, Ca, P, Cu, Na, Mg\nAntinutritional factors: lectins and saponins",
                 explanation: "Pulses are one of the best plant protein sources, especially when combined with cereals."
             },
             {
+                id: "k27kbz",
                 question: "What is special about the nutritional profile of nuts?",
                 answer: "Fats: 36% (coconut) to 68.5% (walnut) — fat-rich fruit\nCarbohydrates: 3-7%\nProteins: 14-20%\nEnergy: 350-688 kcal/100g\nExceptions: Chestnut (low fat 2.7%, high starch 36.6%); Coconut (high saturated fat 31%)",
                 explanation: "Nuts are calorie-dense due to their high fat content."
             },
             {
+                id: "igpzsd",
                 question: "What are the four main plant pigment groups?",
                 answer: "1. Chlorophyll: green (a and b)\n2. Carotenoids: beta-carotene (yellow-orange), lycopene (red), xanthophylls (lutein, zeaxanthin)\n3. Anthocyanins: red, blue-red, blue, blue-violet\n4. Anthoxanthins: light yellow and white",
                 explanation: "These pigments change during cooking and processing."
             },
             {
+                id: "j5y9wj",
                 question: "How do cooking and heat treatment affect fruits and vegetables?",
                 answer: "Water retention: osmosis and diffusion change shape and composition.\nColour: chlorophyll → pheophytin (green to olive); carotenoids less sensitive; anthoxanthins intensify.\nTexture: affected by pH, maturity, duration, medium.\nTaste: sulfur compounds in onions and cabbage (enhanced by prolonged cooking).\nNutritional value: vitamins oxidize and decompose; minerals remain retained.",
                 explanation: "Cook green vegetables in a covered container to preserve chlorophyll."
             },
             {
+                id: "m5d1bg",
                 question: "What are enzymatic and non-enzymatic browning?",
                 answer: "Enzymatic browning: caused by enzyme polyphenol oxidase + substrate + air (e.g., cut apple turning brown).\nNon-enzymatic browning: caramelization and Maillard reaction (sugar + amino acids during heating).",
                 explanation: "Enzymatic browning requires an enzyme, substrate, and oxygen."
             },
             {
+                id: "ch2yue",
                 question: "What are the key fruit products?",
                 answer: "Semi-finished: fruit pulp, fruit puree, aqueous fruit extract.\nGelled products: jam (35g fruit/100g), extra jam (45g fruit/100g), jelly (fruit juice), marmalade (citrus-based).\nOther: candied fruit (sugar impregnation), dried fruit, frozen fruit, fruit juice (mother, clear, cloudy, mushy).",
                 explanation: "The difference between jam and extra jam is the amount of fruit used."
             },
             {
+                id: "skoxgw",
                 question: "How are fruits and vegetables stored and what post-harvest processes occur?",
                 answer: "Post-harvest processes: respiration (O₂ in, CO₂ out), transpiration (water release), sprouting.\nStorage conditions: temperature ~0°C, relative humidity 85-90%.\nControlled atmosphere: reduced O₂, increased CO₂.",
                 explanation: "These processes continue after harvest and affect shelf-life."
@@ -1073,61 +1234,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "jimbqp",
                 question: "Fruits contain approximately how much water?",
                 options: ["30-50%", "50-70%", "75-95%", "95-99%"],
                 correct: 2
             },
             {
+                id: "3y7r3i",
                 question: "Pulses (dry legumes) are rich in:",
                 options: ["Fats (30-40%)", "Proteins (18-35%)", "Water (90%)", "Vitamin C"],
                 correct: 1
             },
             {
+                id: "ybgla7",
                 question: "Which nut has the highest fat content?",
                 options: ["Coconut", "Almond", "Walnut (68.5%)", "Chestnut"],
                 correct: 2
             },
             {
+                id: "uu8gyj",
                 question: "Lycopene is responsible for which colour?",
                 options: ["Green", "Yellow-orange", "Red", "Blue-violet"],
                 correct: 2
             },
             {
+                id: "91yv0f",
                 question: "Enzymatic browning requires polyphenol oxidase, substrate, and:",
                 options: ["Water", "Air (oxygen)", "Heat", "Salt"],
                 correct: 1
             },
             {
+                id: "bqluyv",
                 question: "Extra jam must contain at least how many grams of fruit per 100g of product?",
                 options: ["25g", "35g", "45g", "55g"],
                 correct: 2
             },
             {
+                id: "gfnsny",
                 question: "Ideal storage temperature for fruits and vegetables is around:",
                 options: ["-18°C", "0°C", "10°C", "25°C"],
                 correct: 1
             },
             {
+                id: "41o8ic",
                 question: "Soy is unique among legumes because of its high:",
                 options: ["Sugar content", "Fat content (20%)", "Water content", "Vitamin C content"],
                 correct: 1
             },
             {
+                id: "y2gum8",
                 question: "Chlorophyll changes to what compound during cooking?",
                 options: ["Anthocyanin", "Lycopene", "Pheophytin", "Carotene"],
                 correct: 2
             },
             {
+                id: "377c2v",
                 question: "The recommended daily fruit and vegetable intake is at least:",
                 options: ["100g", "200g", "400g", "1000g"],
                 correct: 2
             },
             {
+                id: "0wg34o",
                 question: "Marmalade is specifically made from:",
                 options: ["Any fruit", "Only berries", "Citrus fruits", "Stone fruits"],
                 correct: 2
             },
             {
+                id: "2b4sz2",
                 question: "Chestnut differs from other nuts by having:",
                 options: ["High fat and low starch", "Low fat (2.7%) and high starch (36.6%)", "High protein (40%)", "No carbohydrates"],
                 correct: 1
@@ -1136,41 +1309,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "dar9am",
                 sentence: "Dry legumes are also known as _______.",
                 answer: "pulses",
                 hint: "A specific term for dried beans and lentils..."
             },
             {
+                id: "cwscd5",
                 sentence: "The red colour in tomatoes comes from the pigment _______.",
                 answer: "lycopene",
                 hint: "A type of carotenoid..."
             },
             {
+                id: "43ncrh",
                 sentence: "Enzymatic browning is caused by the enzyme polyphenol _______.",
                 answer: "oxidase",
                 hint: "Related to oxidation..."
             },
             {
+                id: "jrxa28",
                 sentence: "Jam must contain at least _______ grams of fruit per 100g of product.",
                 answer: "35",
                 hint: "Thirty-five..."
             },
             {
+                id: "wwtlz6",
                 sentence: "Pulses should be combined with _______ to form a complete protein.",
                 answer: "cereals",
                 hint: "Grains like wheat, rice..."
             },
             {
+                id: "14nsfr",
                 sentence: "The Maillard reaction is an example of _______-enzymatic browning.",
                 answer: "non",
                 hint: "It does NOT involve enzymes..."
             },
             {
+                id: "dl48zj",
                 sentence: "Optimal relative humidity for fruit/vegetable storage is _______-90%.",
                 answer: "85",
                 hint: "Eighty-five..."
             },
             {
+                id: "uwtrio",
                 sentence: "Marmalade is made specifically from _______ fruits.",
                 answer: "citrus",
                 hint: "Lemon, orange, grapefruit..."
@@ -1178,6 +1359,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "mffnsx",
             title: "Lecture 5 – Fruits & Vegetables",
             content: `
                 <h3>🍎 Fruit Classification</h3>
@@ -1243,57 +1425,68 @@ const foodNutritionData = {
 
     // ==================== LECTURE 6: COFFEE, TEA & COCOA ====================
     coffeeTeaCocoa: {
+        id: "iwwyhk",
         name: "Coffee, Tea & Cocoa",
         icon: "fa-mug-hot",
         color: "#78350f",
 
         flashcards: [
             {
+                id: "my8mou",
                 question: "What bioactive compounds are found in coffee, tea, and cocoa?",
                 answer: "• Caffeine — in coffee: stimulates central nervous and respiratory systems\n• Theophylline — in tea: milder, relaxing effect\n• Theobromine — in cocoa: milder, relaxing effect\nAll affect the central nervous system.",
                 explanation: "Each beverage has its characteristic stimulant compound."
             },
             {
+                id: "495w72",
                 question: "What are the two main coffee species and their differences?",
                 answer: "Arabica (70% of world production): mild, aromatic; less caffeine (1.1-1.3%); higher price; grown in Brazil, Colombia, India, Jamaica.\nRobusta (30%): bitter-sour taste; more caffeine (2.4-2.5%); more resistant, cheaper; grown in Asia and Africa.",
                 explanation: "Inside each coffee berry there are two hemispherical coffee beans."
             },
             {
+                id: "tbafkw",
                 question: "What is the difference between dry and wet coffee processing?",
                 answer: "Dry process: drying in the sun; cheaper, lower quality; 'unwashed coffee'; used for Robusta.\nWet process: immersion in water and fermentation; 'washed coffee'; used for Arabica.\nAfter processing → sorting → packaging in jute bags (60 kg each) = green coffee beans.",
                 explanation: "The process separates the seeds (beans) from the fruit pulp."
             },
             {
+                id: "4127ug",
                 question: "What happens during coffee roasting?",
                 answer: "Temperature: 200-220°C for 15-20 minutes.\nChanges: colour change (melanoidins = brown color), water evaporates, bean loses weight, aroma forms, breakdown of carbohydrates and proteins, changes in phenolic compounds.\nCaffeine content does NOT change during roasting.\nPotentially toxic compound produced: acrylamide.",
                 explanation: "Different roasting conditions produce different coffee types — blending creates desired flavour profiles."
             },
             {
+                id: "unoobi",
                 question: "What types of coffee are available on the market?",
                 answer: "• Blend (mixture)\n• Decaf (caffeine <0.1%, removed via steam, carbon filters, or supercritical CO₂)\n• Instant coffee (granules via lyophilization)\n• Coffee extract\n• Coffee substitutes (roasted barley, barley malt, chicory root — no caffeine)",
                 explanation: "Moderate adult consumption: 3-4 cups/day (300-400 mg caffeine)."
             },
             {
+                id: "7df1kn",
                 question: "What are the two varieties of tea plant and four basic tea types?",
                 answer: "Varieties:\n• Camellia sinensis var. sinensis: high, cold mountains; small leaves; for green and oolong tea.\n• Camellia sinensis var. assamica: humid tropical; large leaves; for black tea.\n\nFour types (all from same plant, different processing):\n1. White tea: buds/leaves, steam + drying only\n2. Green/Yellow tea: unfermented (enzyme inactivated by heat)\n3. Oolong tea: semi-fermented\n4. Black tea: fully fermented",
                 explanation: "Fermentation = oxidation of catechins by polyphenol oxidase enzyme."
             },
             {
+                id: "vae2mq",
                 question: "What are the main tea grades?",
                 answer: "Whole leaf grades:\n• O.P. (Orange Pekoe): top bud + 2 youngest leaves; golden, pleasant\n• F.O.P. (Flowery Orange Pekoe): earlier harvest, more delicate; highest quality = F.T.G.F.O.P.\n• Pekoe (P.): lower quality, no buds\n• Souchong (S.): 3rd-4th leaves, larger, often smoked\n\nBroken grades: Broken → Fannings → Dust (smallest pieces)",
                 explanation: "Grading uses vibrating sieves based on leaf size, shape, and proportion of stems."
             },
             {
+                id: "1uy07b",
                 question: "What types of tea beverages are on the market?",
                 answer: "• Tea: prepared from Camellia sinensis (green, black, white, oolong)\n• Herbal infusion: from dried aromatic/medicinal plants (chamomile, rosehip, mint, linden)\n• Fruit tea: from flowers, seeds, peels of various fruits\n• Mate tea: from Yerba mate leaves (contains caffeine, theophylline, theobromine)\n• Rooibos tea: from Red Bush (Africa), no caffeine, rich in polyphenols",
                 explanation: "Technically, only Camellia sinensis products are 'tea' — others are infusions."
             },
             {
+                id: "w402fa",
                 question: "How are cocoa beans processed?",
                 answer: "Trees grow in humid tropical climates; fruit is 15-25 cm, weighing 400-500g.\nProcessing: harvest → fermentation (1st stage: alcoholic = ethanol; 2nd stage: acetic acid bacteria) → drying → packing in jute bags (65 kg).\nComposition: fat 50-55%, proteins 11.8-14%, theobromine 1.2-1.6%, caffeine 0.2-0.3%, polyphenols 6%.",
                 explanation: "Fermentation develops the characteristic flavour and aroma of cocoa."
             },
             {
+                id: "xugvl9",
                 question: "What are the steps to produce cocoa products and chocolate?",
                 answer: "Crushed cocoa → Cocoa nibs → Cocoa mass (ground) → Pressed at 200°C/550 bar → Cocoa butter separates + Cocoa cake remains → Ground into Cocoa powder.\n\nChocolate: mixing ingredients (cocoa butter + cocoa mass + sugar + milk powder) → Shredding/rolling (smooth texture) → Conching (refinement: full aroma development, viscosity changes).",
                 explanation: "Conching is the final stage where chocolate aroma is fully developed."
@@ -1302,61 +1495,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "9rhf1w",
                 question: "Arabica coffee accounts for what percentage of world production?",
                 options: ["30%", "50%", "70%", "90%"],
                 correct: 2
             },
             {
+                id: "pr6wdv",
                 question: "Which coffee species has more caffeine?",
                 options: ["Arabica (1.1-1.3%)", "Robusta (2.4-2.5%)", "They have equal caffeine", "Liberica"],
                 correct: 1
             },
             {
+                id: "s62c6w",
                 question: "Coffee is roasted at approximately:",
                 options: ["100-120°C", "150-180°C", "200-220°C", "300-350°C"],
                 correct: 2
             },
             {
+                id: "00673i",
                 question: "During roasting, caffeine content:",
                 options: ["Increases significantly", "Decreases significantly", "Does NOT change", "Is completely destroyed"],
                 correct: 2
             },
             {
+                id: "v15uvk",
                 question: "Black tea is:",
                 options: ["Unfermented", "Semi-fermented", "Fully fermented", "Not made from Camellia sinensis"],
                 correct: 2
             },
             {
+                id: "r74ub0",
                 question: "The highest quality tea grade is:",
                 options: ["Dust", "Souchong", "Broken Pekoe", "Fine Tippy Golden Flowery Orange Pekoe (F.T.G.F.O.P.)"],
                 correct: 3
             },
             {
+                id: "fkcsoo",
                 question: "Cocoa beans contain approximately what percentage of fat?",
                 options: ["10-15%", "25-30%", "50-55%", "70-75%"],
                 correct: 2
             },
             {
+                id: "4z29eg",
                 question: "The main bioactive compound in cocoa is:",
                 options: ["Caffeine", "Theophylline", "Theobromine", "Catechins"],
                 correct: 2
             },
             {
+                id: "3asc8o",
                 question: "Rooibos tea is characterized by:",
                 options: ["High caffeine content", "No caffeine, rich in polyphenols", "Made from Camellia sinensis", "Only grown in Asia"],
                 correct: 1
             },
             {
+                id: "bt4jo8",
                 question: "The final stage in chocolate production is:",
                 options: ["Roasting", "Tempering", "Conching (refinement)", "Fermentation"],
                 correct: 2
             },
             {
+                id: "kp7qh6",
                 question: "Moderate coffee consumption for adults is:",
                 options: ["1 cup/day", "3-4 cups/day (300-400 mg caffeine)", "8-10 cups/day", "No limit"],
                 correct: 1
             },
             {
+                id: "faplcy",
                 question: "Green coffee beans are packed in jute bags weighing:",
                 options: ["30 kg each", "60 kg each", "100 kg each", "200 kg each"],
                 correct: 1
@@ -1365,41 +1570,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "ziz5zw",
                 sentence: "Arabica makes up _______% of world coffee production.",
                 answer: "70",
                 hint: "Seventy percent..."
             },
             {
+                id: "ofwo3g",
                 sentence: "The wet coffee processing method produces '_______ coffee'.",
                 answer: "washed",
                 hint: "Cleaned with water..."
             },
             {
+                id: "he0fvj",
                 sentence: "Tea fermentation is actually the oxidation of _______ by polyphenol oxidase.",
                 answer: "catechins",
                 hint: "A type of polyphenol compound..."
             },
             {
+                id: "9serqw",
                 sentence: "The dominant bioactive compound in cocoa is _______.",
                 answer: "theobromine",
                 hint: "Named after Theobroma cacao..."
             },
             {
+                id: "kbcuqw",
                 sentence: "The final chocolate production stage that develops full aroma is called _______.",
                 answer: "conching",
                 hint: "A refinement process..."
             },
             {
+                id: "qujw0b",
                 sentence: "During coffee roasting, _______ is a potentially toxic compound formed.",
                 answer: "acrylamide",
                 hint: "A chemical that forms at high temperatures..."
             },
             {
+                id: "c0ac0p",
                 sentence: "Cocoa butter is separated from cocoa mass by pressing at _______ bar.",
                 answer: "550",
                 hint: "Five hundred and fifty..."
             },
             {
+                id: "ptgqus",
                 sentence: "_______ tea is made from the Red Bush plant and contains no caffeine.",
                 answer: "rooibos",
                 hint: "African origin..."
@@ -1407,6 +1620,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "qrcndd",
             title: "Lecture 6 – Coffee, Tea & Cocoa",
             content: `
                 <h3>☕ Coffee</h3>
@@ -1458,62 +1672,74 @@ const foodNutritionData = {
 
     // ==================== LECTURE 7: WINE ====================
     wine: {
+        id: "wsk91e",
         name: "Wine",
         icon: "fa-wine-glass",
         color: "#7c2d12",
 
         flashcards: [
             {
+                id: "4kqe38",
                 question: "What is the definition of wine, winemaking, vinification, and oenology?",
                 answer: "Wine: product with ≥8.5% vol. alcohol from full or partial fermentation of fruit juice or must (must = mixture of liquid, pulp, and skin).\nWinemaking: all activities from grape selection to bottling.\nVinification: series of operations processing grapes into wine.\nOenology: the science of vine cultivation, wine production, and storage.",
                 explanation: "Must is specifically the mixture of solid and liquid components after crushing grapes."
             },
             {
+                id: "y85nq2",
                 question: "What are terroir and the factors affecting grape quality?",
                 answer: "Terroir includes: grape variety, weather during growing season, soil composition, minerals, acidity, and timing of harvest.\nGeographical hierarchy: Wine region → Viticulture subregion → Vineyard → Vineyard positions.\nDuring ripening: total acids decrease, sugar content increases, colour and aroma substances form.",
                 explanation: "Grape quality determines wine quality more than any other factor."
             },
             {
+                id: "5d9rr1",
                 question: "What are the first two stages of grape processing?",
                 answer: "1. Destemming: separating stems from grapes (stems have high tannin content — removing them lowers tannin and vegetal flavours).\n2. Crushing: gently squeezing berries and breaking skins to release contents → produces MUST (solid pulp+skin + liquid juice).\nTannins: astringent polyphenolic biomolecules.",
                 explanation: "White wine ferments in juice (pressed first); red wine ferments in must (pressed after)."
             },
             {
+                id: "ijt8pm",
                 question: "How does white wine production differ from red wine?",
                 answer: "White wine: pressing first → fermentation in juice only; minimal skin contact; temperature 15-18°C.\nRed wine: fermentation in must (with skins) → pressing after; skins give colour (anthocyanins); temperature 22-25°C; involves maceration and malolactic fermentation.\nRosé: either short skin contact (maceration) from red grapes, or (less commonly) blending red + white wine.",
                 explanation: "White and rosé wines extract little tannin from skins."
             },
             {
+                id: "ij5z33",
                 question: "What are the three phases of alcoholic fermentation in wine?",
                 answer: "1. Initial phase (aerobic): with oxygen; yeast grows and reproduces\n2. Intensive fermentation (anaerobic): without oxygen; sugar breaks down to alcohol; lasts 4-8 days\n3. Slow fermentation: lasts 10-30 days\nYeast: Saccharomyces cerevisiae. Fermentation typically takes 1-2 weeks total.",
                 explanation: "Temperature affects both taste and fermentation speed."
             },
             {
+                id: "swfhyo",
                 question: "What is maceration in red wine production?",
                 answer: "The process of gradually extracting individual ingredients from solid parts of grapes (primarily skin, also seeds) into the liquid part.\nExtracts: anthocyanins (colour), tannins (structure/taste), aromatic substances, nitrogenous compounds, minerals.\nDuration and method greatly affect wine quality.\nUsually carried out parallel with fermentation.",
                 explanation: "Colour substances determine intensity; tannins affect harmony and taste."
             },
             {
+                id: "unyc6b",
                 question: "What is malolactic fermentation?",
                 answer: "Conversion of malic acid into lactic acid, leading to:\n• Reduction in acidity\n• Better wine stability\n• Changed aroma (buttery aromas — butter, cream, toasted hazelnuts)\nDone by malolactic bacteria that can act at high ethanol and acid concentrations.",
                 explanation: "This secondary fermentation softens the wine's sharp acidity."
             },
             {
+                id: "c4vzjc",
                 question: "What are the main wine diseases and faults?",
                 answer: "Diseases (microbial):\n• Acidity: acetic bacteria turn wine to vinegar\n• Wine flower: yeasts create white-gray membrane\n• Mucilage: bacteria cause oily consistency\n\nFaults (chemical/physical):\n• Browning: unwanted enzymatic oxidation\n• Heavy metals: Fe, Cu, Al from vineyard/equipment\n• Cork taint: undesirable smells detected only after opening",
                 explanation: "Diseases are caused by microorganisms; faults by chemical/physical changes."
             },
             {
+                id: "9fka30",
                 question: "How are sparkling wines produced by the Champagne method?",
                 answer: "1. Base wine (9-11.5% alc) + tirage liqueur (yeast + sugar)\n2. Bottle with crown cap in horizontal position\n3. Secondary fermentation in bottle (min 5-6 months, turning)\n4. Riddling (remuage): bottles gradually tilted, lees move to neck\n5. Disgorgement: freeze the neck, remove sediment by pressure\n6. Add expedition liqueur (dosage)\n7. Cork + wire mesh → aging → labelling",
                 explanation: "Pressure at 20°C is at least 3-6 bars. The Charmat method uses large tanks instead — faster and cheaper."
             },
             {
+                id: "hyztkh",
                 question: "What are the sparkling wine sweetness classifications?",
                 answer: "• Brut nature: <3 g/L sugar\n• Extra brut: <6 g/L\n• Brut: <12 g/L\n• Extra dry/sec: 12-17 g/L\n• Dry/sec: 17-32 g/L\n• Demi-sec: 32-50 g/L\n• Doux: >50 g/L",
                 explanation: "Blancs de blancs = from Chardonnay; Blancs de noirs = from Pinot Noir/Meunier."
             },
             {
+                id: "gthr72",
                 question: "What are sweet/dessert wines and ice wine?",
                 answer: "Sweet wines contain a large amount of unfermented sugar.\n• From dried grapes (actual alcohol ≥9% vol)\n• From overripe grapes (actual alcohol ≥12%)\nIce wine: produced from grapes frozen in the vineyard; water freezes but sugars don't → concentrated juice. Matures in bottles for 3-5 additional years.",
                 explanation: "The freezing process naturally concentrates sugars and other dissolved solids."
@@ -1522,61 +1748,73 @@ const foodNutritionData = {
 
         quiz: [
             {
+                id: "j7zmni",
                 question: "Wine must have an actual alcohol strength of at least:",
                 options: ["5% vol.", "8.5% vol.", "12% vol.", "15% vol."],
                 correct: 1
             },
             {
+                id: "4s4573",
                 question: "White wine is fermented in:",
                 options: ["Must (juice + skins)", "Juice only (pressed first)", "Whole grapes including stems", "Must without seeds"],
                 correct: 1
             },
             {
+                id: "1vxucv",
                 question: "The ideal fermentation temperature for red wine is:",
                 options: ["5-10°C", "15-18°C", "22-25°C", "35-40°C"],
                 correct: 2
             },
             {
+                id: "mcdvc6",
                 question: "Anthocyanins are responsible for:",
                 options: ["Wine aroma", "Wine colour (red)", "Wine acidity", "Alcohol content"],
                 correct: 1
             },
             {
+                id: "zzcjrl",
                 question: "Malolactic fermentation converts malic acid into:",
                 options: ["Citric acid", "Acetic acid", "Lactic acid", "Tartaric acid"],
                 correct: 2
             },
             {
+                id: "pcrs90",
                 question: "In the Champagne method, riddling (remuage) is:",
                 options: ["Adding sugar to wine", "Turning bottles to move lees to the neck", "Blending different wines", "Filtering wine through charcoal"],
                 correct: 1
             },
             {
+                id: "1d7kzd",
                 question: "'Brut' sparkling wine contains less than:",
                 options: ["3 g/L sugar", "6 g/L sugar", "12 g/L sugar", "32 g/L sugar"],
                 correct: 2
             },
             {
+                id: "8rc8cf",
                 question: "Ice wine is produced from grapes that are:",
                 options: ["Artificially frozen after harvest", "Frozen in the vineyard naturally", "Dried in the sun", "Fermented with ice"],
                 correct: 1
             },
             {
+                id: "wolrlv",
                 question: "Cork taint is classified as a wine:",
                 options: ["Disease", "Fault", "Style", "Vintage characteristic"],
                 correct: 1
             },
             {
+                id: "plcn7g",
                 question: "Tannins are described as:",
                 options: ["Sweet aromatic compounds", "Astringent polyphenolic biomolecules", "Volatile alcohols", "Simple sugars"],
                 correct: 1
             },
             {
+                id: "fp3v3w",
                 question: "Wine flower disease is caused by:",
                 options: ["Bacteria", "Yeasts", "Moulds", "Chemical oxidation"],
                 correct: 1
             },
             {
+                id: "g4zot7",
                 question: "The Charmat method differs from the Champagne method by performing secondary fermentation in:",
                 options: ["Bottles", "Large stainless steel tanks", "Oak barrels", "Clay amphorae"],
                 correct: 1
@@ -1585,41 +1823,49 @@ const foodNutritionData = {
 
         fillBlanks: [
             {
+                id: "bkwajv",
                 sentence: "Must is a mixture of solid ingredients (pulp and skin) and _______ ingredients (juice).",
                 answer: "liquid",
                 hint: "The other state of matter..."
             },
             {
+                id: "fauyv1",
                 sentence: "The colour compounds in red wine are called _______.",
                 answer: "anthocyanins",
                 hint: "A type of plant pigment..."
             },
             {
+                id: "izq608",
                 sentence: "Malolactic fermentation produces buttery aromas by converting malic acid into _______ acid.",
                 answer: "lactic",
                 hint: "Related to milk..."
             },
             {
+                id: "e6ae3e",
                 sentence: "The process of removing lees from Champagne bottles is called _______.",
                 answer: "disgorgement",
                 hint: "Removing sediment after riddling..."
             },
             {
+                id: "312x8r",
                 sentence: "Wine made from grapes frozen in the vineyard is called _______ wine.",
                 answer: "ice",
                 hint: "Named after the frozen condition..."
             },
             {
+                id: "3ccswv",
                 sentence: "The yeast used in wine fermentation is Saccharomyces _______.",
                 answer: "cerevisiae",
                 hint: "Same species used for bread and beer..."
             },
             {
+                id: "j1kdz6",
                 sentence: "Destemming lowers the development of _______ and vegetal flavors in wine.",
                 answer: "tannins",
                 hint: "Astringent polyphenolic compounds..."
             },
             {
+                id: "10ftow",
                 sentence: "Wine with an alcohol content of at least 8.5% is obtained from the fermentation of grape juice or _______.",
                 answer: "must",
                 hint: "The mixture of pulp, skin, and juice..."
@@ -1627,6 +1873,7 @@ const foodNutritionData = {
         ],
 
         learn: {
+            id: "4o2gvj",
             title: "Lecture 7 – Wine",
             content: `
                 <h3>🍷 Definitions</h3>

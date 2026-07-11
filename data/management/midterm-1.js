@@ -12,52 +12,62 @@ const managementM1 = {
 
     // ========== CATEGORY 1: MANAGEMENT & ITS HISTORY ==========
     foundations: {
+        id: "cpbk1f",
         name: "Management & Its History",
         icon: "fa-sitemap",
         color: "#6366f1",
 
         flashcards: [
             {
+                id: "izskvi",
                 question: "What is MANAGEMENT, and what are the four management FUNCTIONS?",
                 answer: "Management = working with human, financial, physical and informational resources to achieve organizational objectives by performing the four functions.\n\nThe FOUR FUNCTIONS are:\n1. PLANNING — setting objectives and deciding in advance how to meet them\n2. ORGANIZING — delegating and coordinating tasks and allocating resources\n3. LEADING — influencing employees to work toward objectives\n4. CONTROLLING — monitoring progress and taking corrective action",
                 explanation: "The word derives from Latin 'manus' (hand) + 'agere' (to act). The functions are distinct yet interrelated — performed simultaneously, not as linear steps."
             },
             {
+                id: "gdrqj5",
                 question: "What is the difference between EFFICIENT and EFFECTIVE?",
                 answer: "• EFFICIENT = doing things RIGHT, so as to maximize the utilization of resources (do it with least waste).\n• EFFECTIVE = doing the RIGHT thing in order to attain an objective.\n\nHigh performance = selecting the right resources (effective) AND using them well (efficient).",
                 explanation: "A manager achieves objectives through efficient AND effective use of resources."
             },
             {
+                id: "cq05lf",
                 question: "What are the FOUR organizational RESOURCES managers manage?",
                 answer: "1. HUMAN resources — people ('human capital'), the most valuable asset\n2. FINANCIAL resources — money/budget needed to operate\n3. PHYSICAL resources — products, equipment, materials, supplies\n4. INFORMATIONAL resources — information/knowledge to set objectives and make decisions",
                 explanation: "Performance depends on how well managers acquire and use these four resources."
             },
             {
+                id: "dpaazo",
                 question: "What are the THREE management SKILLS?",
                 answer: "1. TECHNICAL skills ('hard skills') — ability to use methods/techniques to perform a task; more important for non-managers.\n2. INTERPERSONAL skills ('people/soft skills') — ability to understand, communicate and work well with others; increasingly the most important.\n3. DECISION-MAKING skills — ability to conceptualize situations and select alternatives to solve problems / seize opportunities.",
                 explanation: "Technical skills matter more at lower levels; decision-making skills matter more at the top (e.g. Reed Hastings at Netflix)."
             },
             {
+                id: "yz99ju",
                 question: "What are Mintzberg's 10 MANAGEMENT ROLES, grouped into 3 categories?",
                 answer: "A ROLE = a set of expectations of how one will behave. Henry Mintzberg grouped 10 roles into 3 categories:\n\n1. INTERPERSONAL — figurehead, leader, liaison\n2. INFORMATIONAL — monitor, disseminator, spokesperson\n3. DECISIONAL — entrepreneur, disturbance-handler, resource-allocator, negotiator",
                 explanation: "Managers use interpersonal, informational and conceptual/decision-making skills as they play these roles."
             },
             {
+                id: "15lk3k",
                 question: "What are the THREE LEVELS of management (plus team leader & operatives)?",
                 answer: "1. TOP managers (CEO, president, VP) — manage the whole organization; set purpose, objectives, strategy.\n2. MIDDLE managers (sales/branch manager, dept head) — implement top strategy via short-term operating plans.\n3. FIRST-LINE managers (supervisor, crew leader) — implement operational plans; supervise OPERATIVE employees (not other managers).\n\n+ TEAM LEADER (non-permanent, team-based) and NONMANAGEMENT OPERATIVE employees (do the actual work).",
                 explanation: "Types by level: general managers, functional managers, project managers."
             },
             {
+                id: "mo1qcc",
                 question: "CLASSICAL theory: who were Taylor, Fayol, Weber and Follett?",
                 answer: "Classical theorists focus on the JOB and management functions to find the best way to manage.\n\n• Frederick TAYLOR — 'Father of Scientific Management' (job efficiency, time studies, wage incentives).\n• Henri FAYOL — 'Father of Modern Management'; 5 functions + 14 principles (administrative theory).\n• Max WEBER — developed the BUREAUCRACY concept (rules/procedures for fair treatment).\n• Mary Parker FOLLETT — stressed PEOPLE; known for integrative conflict resolution.",
                 explanation: "Scientific management = job efficiency; administrative theory = rules & organizational structure."
             },
             {
+                id: "s977nq",
                 question: "BEHAVIORAL theory: who were Mayo, Maslow and McGregor?",
                 answer: "Behavioral theorists focus on PEOPLE (human skills over technical) to find the best way to manage.\n\n• Elton MAYO — pioneered the HUMAN RELATIONS movement; how a manager treats people affects performance.\n• Abraham MASLOW — hierarchy of needs theory (motivation).\n• Douglas McGREGOR — Theory X (people dislike work, need control) vs Theory Y (people like to work, need little supervision).",
                 explanation: "Behaviorists believed happy employees are productive — later research questioned this."
             },
             {
+                id: "dfubo7",
                 question: "What is the INTEGRATIVE perspective (systems, sociotechnical, contingency)?",
                 answer: "It integrates classical, behavioral and management-science theories. Three components:\n\n1. SYSTEMS theory — view the organization as a WHOLE; an open system transforming inputs into outputs, interacting with the environment.\n2. SOCIOTECHNICAL theory — integrate PEOPLE and TECHNOLOGY.\n3. CONTINGENCY theory — there is no one best way; the best approach DEPENDS on the situation (stable→mechanistic, innovative→organic).",
                 explanation: "Management science theorists use math (operations research, operations management, MIS) to aid decisions."
@@ -66,6 +76,7 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "k7x489",
                 question: "Which list correctly states the four management functions?",
                 options: [
                     "Planning, staffing, marketing, selling",
@@ -76,11 +87,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "6ld7fe",
                 question: "'Doing the RIGHT thing to attain an objective' defines being:",
                 options: ["Efficient", "Effective", "Economical", "Ethical"],
                 correct: 1
             },
             {
+                id: "v3yotu",
                 question: "Which skill is generally MORE important for top managers than for operatives?",
                 options: [
                     "Technical skills",
@@ -91,11 +104,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "svr5em",
                 question: "Mintzberg's figurehead, leader and liaison roles belong to which category?",
                 options: ["Decisional", "Informational", "Interpersonal", "Technical"],
                 correct: 2
             },
             {
+                id: "s7lro0",
                 question: "A first-line manager (supervisor) primarily supervises:",
                 options: [
                     "Other managers",
@@ -106,6 +121,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "np8imh",
                 question: "Frederick Taylor is known as the father of:",
                 options: [
                     "Administrative theory",
@@ -116,11 +132,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "xekd9o",
                 question: "Theory X / Theory Y was developed by:",
                 options: ["Henri Fayol", "Max Weber", "Douglas McGregor", "Elton Mayo"],
                 correct: 2
             },
             {
+                id: "yzrs4t",
                 question: "Which approach holds that the best way to manage DEPENDS on the situation?",
                 options: [
                     "Scientific management",
@@ -134,26 +152,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "hasm15",
                 sentence: "The four management functions are planning, organizing, leading and _______.",
                 answer: "controlling",
                 hint: "Monitoring and corrective action..."
             },
             {
+                id: "wmxwzu",
                 sentence: "Doing things right to maximize resource use is being _______.",
                 answer: "efficient",
                 hint: "Least waste..."
             },
             {
+                id: "39kl8f",
                 sentence: "Mintzberg grouped 10 management roles into interpersonal, informational and _______ roles.",
                 answer: "decisional",
                 hint: "Entrepreneur, negotiator..."
             },
             {
+                id: "xq2s6b",
                 sentence: "Henri Fayol is sometimes called the father of _______ management.",
                 answer: "modern",
                 hint: "5 functions + 14 principles..."
             },
             {
+                id: "hp01yc",
                 sentence: "_______ theory views the organization as a whole that transforms inputs into outputs.",
                 answer: "Systems",
                 hint: "Open system interacting with the environment..."
@@ -161,6 +184,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "qbrvht",
             title: "Management & Its History",
             content: `
                 <h3>What is management?</h3>
@@ -193,57 +217,68 @@ const managementM1 = {
 
     // ========== CATEGORY 2: PROBLEM SOLVING & DECISION MAKING ==========
     decisionMaking: {
+        id: "ajmod6",
         name: "Problem Solving & Decision Making",
         icon: "fa-code-branch",
         color: "#0ea5e9",
 
         flashcards: [
             {
+                id: "xll7sl",
                 question: "What is the difference between PROBLEM SOLVING and DECISION MAKING?",
                 answer: "• A PROBLEM exists whenever objectives are not being met — a gap between what IS happening and what you WANT to happen.\n• PROBLEM SOLVING = the process of taking corrective action to meet objectives.\n• DECISION MAKING = the process of selecting a course of action that will solve a problem.",
                 explanation: "Decision making is one of the three critical management skills."
             },
             {
+                id: "hvkl6g",
                 question: "What are the THREE decision-making STYLES?",
                 answer: "1. REFLEXIVE — likes quick decisions ('shooting from the hip'), little information; decisive but can be wasteful.\n2. REFLECTIVE — takes plenty of time, gathers much information; thorough but may procrastinate and lose opportunities.\n3. CONSISTENT — neither rushes nor wastes time; knows when enough info is gathered → best record of good decisions.",
                 explanation: "Reflexive too fast, reflective too slow, consistent = balanced."
             },
             {
+                id: "g3lc3o",
                 question: "What are the 6 STEPS of the decision-making model?",
                 answer: "1. Classify and define the problem (or opportunity)\n2. Set objectives and criteria\n3. Generate creative & innovative alternatives\n4. Analyze alternatives and select the most feasible\n5. Plan and implement the decision\n6. Control (monitor outcomes; take corrective action)",
                 explanation: "Half of managers' decisions fail to solve the problems they target — following the model improves odds."
             },
             {
+                id: "rw3iin",
                 question: "PROGRAMMED vs NONPROGRAMMED decisions?",
                 answer: "• PROGRAMMED — recurring/routine situations; use decision rules, policies, procedures (e.g. reordering inventory). No need to follow all model steps.\n• NONPROGRAMMED — significant, nonrecurring, nonroutine; expensive or major consequences (e.g. new product, new facility). Use the full decision-making model.",
                 explanation: "Upper-level managers make more nonprogrammed decisions."
             },
             {
+                id: "xblmk0",
                 question: "What are the three DECISION-MAKING CONDITIONS?",
                 answer: "1. CERTAINTY — you know the outcome of each alternative in advance.\n2. RISK — you don't know exact outcomes but can assign PROBABILITIES.\n3. UNCERTAINTY — lack of information makes outcomes unpredictable; you cannot determine probabilities.",
                 explanation: "High risk/uncertainty + significant decisions → use group decision making."
             },
             {
+                id: "ehyxe0",
                 question: "MAXIMIZER vs SATISFICER?",
                 answer: "• MAXIMIZER — makes RATIONAL decisions; takes time, weighs a wide range of options to pick the BEST.\n• SATISFICER (satisfy + suffice) — makes BOUNDED-rational decisions; fast over thorough; picks the first option meeting MINIMUM criteria.\n\nUse maximizing for complex/nonprogrammed/high-risk decisions; satisficing for programmed/certain/low-importance ones.",
                 explanation: "'Must' criteria are essential; 'want' criteria are desirable and weighted by importance."
             },
             {
+                id: "g6nh5x",
                 question: "What is the difference between CREATIVITY and INNOVATION?",
                 answer: "• CREATIVITY = a way of thinking that generates NEW ideas ('thinking outside the box'). It is the DRIVER of innovation.\n• INNOVATION = the IMPLEMENTATION of a new idea.\n\nTwo types: PRODUCT innovation (new goods/services) and PROCESS innovation (new ways of doing things). Creativity is useless if not implemented.",
                 explanation: "The 3 stages of the creative process: (1) preparation, (2) incubation & illumination, (3) evaluation."
             },
             {
+                id: "h2k3d2",
                 question: "Name the 5 GROUP creativity techniques.",
                 answer: "1. BRAINSTORMING — suggesting many alternatives without evaluation (no criticism).\n2. SYNECTICS — generating NOVEL alternatives via role-playing and fantasizing.\n3. NOMINAL GROUPING — generate + evaluate via a structured voting method (6 steps).\n4. CONSENSUS MAPPING — developing group AGREEMENT (Japanese 'ringi'); no vote forced.\n5. DELPHI TECHNIQUE — series of confidential questionnaires to refine a solution (forecasting).",
                 explanation: "Brainstorming/nominal/consensus = work groups; synectics/Delphi = upper-level managers."
             },
             {
+                id: "hoygnx",
                 question: "Name the main QUANTITATIVE decision techniques.",
                 answer: "• BREAK-EVEN analysis — sales volume at which there's no profit/loss.\n• CAPITAL BUDGETING — analyze asset investments (payback, average rate of return, discounted cash flow).\n• LINEAR PROGRAMMING — optimum allocation of scarce resources.\n• QUEUING theory — balances the cost of waiting vs service capacity.\n• PROBABILITY theory — assign probabilities, compute expected value (payoff matrix).\n• BIG DATA — analysis of large quantified facts to maximize decisions.",
                 explanation: "Quantitative = management science; uses math in the objective analysis of alternatives."
             },
             {
+                id: "1gla6e",
                 question: "What is OPPORTUNITY COST, and what is COST-BENEFIT analysis?",
                 answer: "• OPPORTUNITY COST = the next best alternative FOREGONE (e.g. €20 on a textbook means giving up the restaurant meal).\n• COST-BENEFIT analysis = a MIXED technique comparing the cost vs benefit of each alternative using subjective judgment + some quantitative math (a mix of evidence-based management and judgment).",
                 explanation: "Pros-and-cons analysis lists advantages (benefits) vs disadvantages (costs)."
@@ -252,6 +287,7 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "qhg37y",
                 question: "A problem exists whenever:",
                 options: [
                     "Sales are high",
@@ -262,11 +298,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "u1lteh",
                 question: "The decision style that 'shoots from the hip' with little information is:",
                 options: ["Reflective", "Consistent", "Reflexive", "Rational"],
                 correct: 2
             },
             {
+                id: "uk2gww",
                 question: "Reordering inventory when stock hits a set level is an example of a:",
                 options: [
                     "Nonprogrammed decision",
@@ -277,11 +315,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "c56tqx",
                 question: "Under which condition can you assign PROBABILITIES to outcomes?",
                 options: ["Certainty", "Risk", "Uncertainty", "Chaos"],
                 correct: 1
             },
             {
+                id: "xgsz9e",
                 question: "A 'satisficer' tends to:",
                 options: [
                     "Weigh all options to find the best",
@@ -292,6 +332,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "h0q9p7",
                 question: "Innovation is best defined as:",
                 options: [
                     "Generating new ideas",
@@ -302,11 +343,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "0p06i4",
                 question: "Which technique uses confidential questionnaires over several rounds?",
                 options: ["Brainstorming", "Synectics", "Delphi technique", "Nominal grouping"],
                 correct: 2
             },
             {
+                id: "vim8f1",
                 question: "The next best alternative foregone is called:",
                 options: ["Sunk cost", "Fixed cost", "Opportunity cost", "Marginal cost"],
                 correct: 2
@@ -315,26 +358,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "tellx4",
                 sentence: "Decision making is selecting a course of action that will solve a _______.",
                 answer: "problem",
                 hint: "Gap between actual and desired..."
             },
             {
+                id: "1f363u",
                 sentence: "The decision-making model has _______ steps.",
                 answer: "6",
                 hint: "Classify → set criteria → generate → analyze → implement → control"
             },
             {
+                id: "2naw0v",
                 sentence: "Significant, nonrecurring decisions are called _______ decisions.",
                 answer: "nonprogrammed",
                 hint: "Opposite of routine..."
             },
             {
+                id: "jetesx",
                 sentence: "Creativity generates new ideas; _______ is the implementation of a new idea.",
                 answer: "innovation",
                 hint: "Putting the idea into practice..."
             },
             {
+                id: "831ocp",
                 sentence: "_______ analysis finds the sales volume at which there is no profit or loss.",
                 answer: "Break-even",
                 hint: "The point of zero profit..."
@@ -342,6 +390,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "nz5r8l",
             title: "Problem Solving & Decision Making",
             content: `
                 <h3>Core relationships</h3>
@@ -373,57 +422,68 @@ const managementM1 = {
 
     // ========== CATEGORY 3: STRATEGIC & OPERATIONAL PLANNING ==========
     strategicPlanning: {
+        id: "a6p951",
         name: "Strategic & Operational Planning",
         icon: "fa-chess",
         color: "#8b5cf6",
 
         flashcards: [
             {
+                id: "8ubjq5",
                 question: "STRATEGIC vs OPERATIONAL planning?",
                 answer: "• STRATEGIC planning = developing a MISSION and LONG-RANGE objectives (usually 5 years, reviewed yearly) and how to accomplish them. Done by top/middle managers.\n• OPERATIONAL planning = setting SHORT-RANGE objectives (one year or less) and how to meet them. Done by lower-level/functional managers.\n\nDifference is mainly TIME FRAME and MANAGEMENT LEVEL.",
                 explanation: "A strategy is a plan for pursuing a mission and achieving objectives."
             },
             {
+                id: "zmouxl",
                 question: "What are the 3 PLANNING LEVELS (corporate, business, functional)?",
                 answer: "• CORPORATE strategy — plan for managing MULTIPLE lines of business (strategic).\n• BUSINESS strategy — plan for managing ONE line of business (strategic).\n• FUNCTIONAL strategy — operational plan for managing ONE AREA of a business (marketing, operations, finance, HR).\n\nCorporate + business = strategic planning; functional = operational planning.",
                 explanation: "For a single-line firm, corporate and business strategies are the same."
             },
             {
+                id: "0meeyr",
                 question: "What are the 5 STEPS of the strategic planning PROCESS?",
                 answer: "1. Develop the MISSION (the foundation; based on a vision).\n2. Analyze the ENVIRONMENT (situation analysis / SWOT).\n3. Set OBJECTIVES.\n4. Develop STRATEGIES (corporate, business, functional).\n5. Implement and CONTROL strategies.\n\nNot strictly linear — you may return to prior steps (an ongoing process).",
                 explanation: "Mission is the foundation of the other four steps."
             },
             {
+                id: "qdsr06",
                 question: "What is a SWOT analysis and Porter's FIVE FORCES?",
                 answer: "• SWOT — internal STRENGTHS & WEAKNESSES (management, culture, resources, systems) + external OPPORTUNITIES & THREATS (customers, competitors, suppliers).\n• Porter's FIVE FORCES — for industry/competitive analysis: rivalry among competitors, threat of new entrants, threat of substitutes, bargaining power of buyers, bargaining power of suppliers.",
                 explanation: "Part of step 2 (analyzing the environment / situation analysis)."
             },
             {
+                id: "mpzk8m",
                 question: "COMPETITIVE ADVANTAGE, core competency and benchmarking?",
                 answer: "• COMPETITIVE ADVANTAGE — specifies how a firm offers UNIQUE customer value ('what makes us different from and better than competitors?').\n• CORE COMPETENCY — what a firm does WELL.\n• BENCHMARKING — comparing your products/processes with those of OTHER companies (legally/ethically) to copy or improve them.",
                 explanation: "Most benchmarking is within an industry, but non-competitors can inspire ideas too."
             },
             {
+                id: "mxp9yn",
                 question: "What are the GRAND strategies?",
                 answer: "An overall corporate strategy:\n1. GROWTH — aggressively increase size/sales.\n2. STABILITY — hold present size or grow slowly (balance growth & profits).\n3. TURNAROUND & RETRENCHMENT — turnaround reverses a declining business; retrenchment is divestiture/liquidation of assets (a SPINOFF sets up a unit as a separate company).\n4. COMBINATION — a mix across different lines of business.",
                 explanation: "SMART objectives = specific, measurable, attainable, realistic, timely."
             },
             {
+                id: "olw04b",
                 question: "What are the three GROWTH strategies?",
                 answer: "1. CONCENTRATION — grow aggressively in the EXISTING line of business.\n2. INTEGRATION — enter a related line: FORWARD (closer to the final customer, e.g. Apple Stores) or BACKWARD (farther from customer, e.g. Delta buying a refinery).\n3. DIVERSIFICATION — go into RELATED (concentric) or UNRELATED (conglomerate) lines.\n\n+ MERGERS & ACQUISITIONS (M&A): merger = two firms form one; acquisition = one buys another.",
                 explanation: "Business portfolio analysis uses the BCG matrix to allocate resources among SBUs."
             },
             {
+                id: "z9abnv",
                 question: "What is the BCG GROWTH-SHARE MATRIX (4 cells)?",
                 answer: "Boston Consulting Group matrix for each business/product line:\n• CASH COWS — generate more than they need; fund the others.\n• STARS — question marks that succeeded (high growth, high share).\n• QUESTION MARKS — entries into new businesses.\n• DOGS — doing poorly; usually sold or liquidated.",
                 explanation: "Used in corporate portfolio management (CPM) to allocate resources among strategic business units (SBUs)."
             },
             {
+                id: "x4ww1k",
                 question: "What are the ADAPTIVE and Porter's COMPETITIVE business-level strategies?",
                 answer: "ADAPTIVE (adapt to environmental change):\n• PROSPECTING — aggressively offer new products/markets (≈ growth).\n• DEFENDING — stay with present products/markets (≈ stability).\n• ANALYZING — midrange between the two (≈ combination).\n\nPorter's COMPETITIVE strategies:\n• DIFFERENTIATION — stress distinctiveness (charge higher prices).\n• COST LEADERSHIP — stress lower prices via tight cost control.\n• FOCUS — target a specific niche/segment.",
                 explanation: "Porter warns against mixing differentiation + cost leadership (you get 'stuck in the middle')."
             },
             {
+                id: "9pcp62",
                 question: "STANDING vs SINGLE-USE vs CONTINGENCY plans?",
                 answer: "• STANDING plans — used repeatedly for routine issues: POLICIES (general guides), PROCEDURES/SOPs (sequence of actions), RULES (exactly what to do/not do).\n• SINGLE-USE plans — for nonrepetitive situations: PROGRAMS and BUDGETS.\n• CONTINGENCY plans — alternative 'backup' plans implemented if uncontrollable events occur.",
                 explanation: "Most strategic plans are single-use; operational plans are more often standing plans."
@@ -432,11 +492,13 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "stbkcv",
                 question: "Strategic plans are commonly developed for about:",
                 options: ["One week", "One month", "Five years", "Twenty years"],
                 correct: 2
             },
             {
+                id: "xz17qo",
                 question: "A plan for managing ONE area such as marketing or finance is a:",
                 options: [
                     "Corporate strategy",
@@ -447,6 +509,7 @@ const managementM1 = {
                 correct: 2
             },
             {
+                id: "9ubysi",
                 question: "Which is the FIRST step of the strategic planning process?",
                 options: [
                     "Set objectives",
@@ -457,11 +520,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "tsnj9c",
                 question: "In SWOT, opportunities and threats are part of the ____ environment.",
                 options: ["Internal", "External", "Personal", "Financial"],
                 correct: 1
             },
             {
+                id: "xvxik6",
                 question: "Apple opening Apple Stores (moving closer to the final customer) is:",
                 options: [
                     "Backward integration",
@@ -472,11 +537,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "i072ox",
                 question: "In the BCG matrix, a business that is doing poorly and is usually sold is a:",
                 options: ["Star", "Cash cow", "Question mark", "Dog"],
                 correct: 3
             },
             {
+                id: "ak5lc8",
                 question: "Walmart's strategy of stressing lower prices via tight cost control is:",
                 options: [
                     "Differentiation",
@@ -487,6 +554,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "aantoo",
                 question: "A 'no smoking in the work area' statement is an example of a:",
                 options: ["Policy", "Procedure", "Rule", "Program"],
                 correct: 2
@@ -495,26 +563,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "5phtyr",
                 sentence: "Operational plans have short-term objectives met in _______ year or less.",
                 answer: "one",
                 hint: "A number..."
             },
             {
+                id: "jg94pg",
                 sentence: "The first step of the strategic planning process is developing the _______.",
                 answer: "mission",
                 hint: "The foundation of the process..."
             },
             {
+                id: "rt5900",
                 sentence: "SWOT stands for strengths, weaknesses, opportunities and _______.",
                 answer: "threats",
                 hint: "External negatives..."
             },
             {
+                id: "qlybi6",
                 sentence: "In the BCG matrix, a high-growth high-share business is called a _______.",
                 answer: "star",
                 hint: "A question mark that succeeded..."
             },
             {
+                id: "pf2m97",
                 sentence: "Policies, procedures and rules are types of _______ plans.",
                 answer: "standing",
                 hint: "Used over and over..."
@@ -522,6 +595,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "pp0co0",
             title: "Strategic & Operational Planning",
             content: `
                 <h3>Two types, three levels</h3>
@@ -556,47 +630,56 @@ const managementM1 = {
 
     // ========== CATEGORY 4: ORGANIZING & DELEGATING WORK ==========
     organizing: {
+        id: "3wan43",
         name: "Organizing & Delegating Work",
         icon: "fa-diagram-project",
         color: "#10b981",
 
         flashcards: [
             {
+                id: "fjc7t4",
                 question: "What is ORGANIZING, and MECHANISTIC vs ORGANIC organizations?",
                 answer: "ORGANIZING (the 2nd management function) = the process of delegating and coordinating tasks and resources to achieve objectives.\n\n• MECHANISTIC — bureaucratic: tight controls, rules/procedures, specialized jobs, top-down decisions. Works in STABLE environments.\n• ORGANIC — flexible: minimal rules, broadly defined jobs, decisions at lower levels. Works in DYNAMIC environments.\n\nThey lie on a CONTINUUM.",
                 explanation: "Larger firms tend to be more mechanistic; mass production → mechanistic; custom → organic."
             },
             {
+                id: "mu4n30",
                 question: "Name the key PRINCIPLES of organization.",
                 answer: "• UNITY OF COMMAND — each employee reports to ONLY ONE boss.\n• UNITY OF DIRECTION — all activities directed toward the same objectives.\n• CHAIN OF COMMAND (scalar principle) — clear line of authority top to bottom.\n• SPAN OF MANAGEMENT (span of control) — number of employees reporting to a manager (tall = narrow spans; flat = wide spans).\n• DIVISION OF LABOR — specialized jobs.\n• COORDINATION — differentiation (split into departments) + integration (coordinate them).",
                 explanation: "Mechanistic orgs enforce these principles more closely; flatter orgs cut management layers."
             },
             {
+                id: "pbm3f3",
                 question: "RESPONSIBILITY, AUTHORITY, ACCOUNTABILITY and DELEGATION?",
                 answer: "• RESPONSIBILITY — obligation to achieve objectives by performing activities.\n• AUTHORITY — the right to make decisions, issue orders, use resources.\n• ACCOUNTABILITY — evaluation of how well one meets responsibilities.\n• DELEGATION — assigning responsibility AND authority to accomplish objectives.\n\nResponsibility & authority flow DOWN the chain of command; accountability flows UP. Delegation only occurs when you give a NEW task.",
                 explanation: "You can be a manager without power, and have power without being a manager."
             },
             {
+                id: "5fmdyd",
                 question: "AUTHORITY vs POWER; LINE vs STAFF; the 4 LEVELS of authority?",
                 answer: "• Authority = formal right from the organization; POWER = the ability to INFLUENCE others (broader).\n• LINE authority — make decisions & issue orders down the chain (operations, marketing). STAFF authority — advise & assist (HR, PR, IT).\n• 4 LEVELS of authority: (1) inform, (2) recommend, (3) report, (4) full authority.",
                 explanation: "Formal authority = sanctioned; informal authority = unsanctioned (relationships)."
             },
             {
+                id: "khpfq1",
                 question: "CENTRALIZED vs DECENTRALIZED authority?",
                 answer: "• CENTRALIZED — important decisions made by TOP managers. Advantages: control, reduced duplication. (Mechanistic.)\n• DECENTRALIZED — important decisions made by MIDDLE and FIRST-LINE managers. Advantages: efficiency, flexibility. (Organic.)\n\nMICROMANAGEMENT = a manager closely controls employees' work and avoids delegating — the opposite of empowerment.",
                 explanation: "No single answer is best — it depends on the situation."
             },
             {
+                id: "18gqvy",
                 question: "What is DEPARTMENTALIZATION? Name the traditional types.",
                 answer: "Departmentalization = grouping related activities into units. Traditional types:\n• FUNCTIONAL — by internal activity (production, sales, finance); used by small firms.\n• PRODUCT (service) — by goods/services.\n• CUSTOMER — by type of customer.\n• TERRITORY (geographic) — by area (most MNCs).\n• DIVISIONAL — semi-autonomous SBUs (M-form); CONGLOMERATE = unrelated profit centers.\n• MATRIX — combines functional + product/divisional (employee has TWO bosses).",
                 explanation: "Matrix's strength is flexibility; its weakness is violating unity of command (two bosses)."
             },
             {
+                id: "th5796",
                 question: "Name the 5 CONTEMPORARY organizational designs.",
                 answer: "1. TEAM organization — based on teams (multiteam systems).\n2. NETWORK organization — boundaryless interrelationships among firms (a hub + outside specialists).\n3. MODULAR organization — design/market in-house, OUTSOURCE manufacturing (Nike, Dell).\n4. VIRTUAL organization — evolving network of contingent workers/firms uniting temporarily (no central hub).\n5. PLATFORM organization — connects buyers & sellers via the shared economy (Uber, Airbnb).",
                 explanation: "REENGINEERING = fundamental rethinking and radical redesign of business processes."
             },
             {
+                id: "83keut",
                 question: "What is JOB DESIGN — simplification vs expansion?",
                 answer: "JOB DESIGN = identifying the tasks each employee is responsible for.\n• JOB SIMPLIFICATION — eliminate, combine, or change the sequence of tasks (more specialized; based on division of labor / Taylor). Work smarter, not harder.\n• JOB EXPANSION — make jobs LESS specialized via:\n  – ROTATION (perform different jobs in sequence; cross-training)\n  – ENLARGEMENT (add tasks for variety)\n  – ENRICHMENT (build MOTIVATORS into the job itself).",
                 explanation: "Job enrichment uses flexible arrangements: telecommuting, flextime, compressed workweek, job sharing."
@@ -605,11 +688,13 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "9sgdyb",
                 question: "An organic organization works best in environments that are:",
                 options: ["Stable", "Dynamic", "Bureaucratic", "Centralized"],
                 correct: 1
             },
             {
+                id: "mz29ke",
                 question: "The principle that each employee reports to only one boss is:",
                 options: [
                     "Unity of direction",
@@ -620,21 +705,25 @@ const managementM1 = {
                 correct: 2
             },
             {
+                id: "jt6c31",
                 question: "Responsibility and authority flow ____ the chain of command.",
                 options: ["Up", "Down", "Sideways", "Nowhere"],
                 correct: 1
             },
             {
+                id: "a6aen2",
                 question: "HR, public relations and IT departments usually hold ____ authority.",
                 options: ["Line", "Staff", "Full", "Informal"],
                 correct: 1
             },
             {
+                id: "wz4lao",
                 question: "Decisions made by top managers only describe ____ authority.",
                 options: ["Decentralized", "Centralized", "Delegated", "Informal"],
                 correct: 1
             },
             {
+                id: "qemzkj",
                 question: "The structure where an employee has TWO bosses (functional + project) is:",
                 options: [
                     "Functional",
@@ -645,11 +734,13 @@ const managementM1 = {
                 correct: 2
             },
             {
+                id: "6dxl0g",
                 question: "Uber connecting riders and drivers exemplifies a ____ organization.",
                 options: ["Modular", "Virtual", "Platform", "Team"],
                 correct: 2
             },
             {
+                id: "wxm0ix",
                 question: "Building motivators into the job itself is job:",
                 options: ["Rotation", "Enlargement", "Enrichment", "Simplification"],
                 correct: 2
@@ -658,26 +749,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "dq33o3",
                 sentence: "Bureaucratic organizations with tight controls and rules are called _______.",
                 answer: "mechanistic",
                 hint: "Opposite of organic..."
             },
             {
+                id: "s7krz3",
                 sentence: "The number of employees reporting to a manager is the span of _______.",
                 answer: "management",
                 hint: "Also called span of control..."
             },
             {
+                id: "jh3kxs",
                 sentence: "Delegation assigns both responsibility and _______ to accomplish objectives.",
                 answer: "authority",
                 hint: "The right to decide and use resources..."
             },
             {
+                id: "oeozj9",
                 sentence: "Grouping departments by area or region is _______ departmentalization.",
                 answer: "territory",
                 hint: "Also called geographic..."
             },
             {
+                id: "1smmka",
                 sentence: "Adding tasks to a job for variety is job _______.",
                 answer: "enlargement",
                 hint: "Broaden, not deepen..."
@@ -685,6 +781,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "1poizx",
             title: "Organizing & Delegating Work",
             content: `
                 <h3>Two ends of a continuum</h3>
@@ -714,47 +811,56 @@ const managementM1 = {
 
     // ========== CATEGORY 5: MANAGING TEAMWORK ==========
     teamwork: {
+        id: "v9d9tr",
         name: "Managing Teamwork",
         icon: "fa-people-group",
         color: "#f59e0b",
 
         flashcards: [
             {
+                id: "sm8wq7",
                 question: "What is the difference between a GROUP and a TEAM?",
                 answer: "• GROUP — two or more members, a CLEAR leader, performing INDEPENDENT jobs with INDIVIDUAL accountability, evaluation and rewards.\n• TEAM — a small number of members, SHARED leadership, performing INTERDEPENDENT jobs with INDIVIDUAL AND GROUP accountability, evaluation and rewards.\n\n'All teams are groups, but not all groups are teams.'",
                 explanation: "Continuum: management-directed (group) → semiautonomous → self-managed (team)."
             },
             {
+                id: "tokcri",
                 question: "What four factors make up the GROUP PERFORMANCE MODEL?",
                 answer: "Group performance = f(organizational context, group structure, group process, group development).\n\nGroups/teams are the 'backbone' of organizations because of the SYSTEMS EFFECT — each group affects others and the total organization.",
                 explanation: "Engaged teams grow profits about three times faster than disengaged ones."
             },
             {
+                id: "0ambe4",
                 question: "What are the dimensions of GROUP STRUCTURE?",
                 answer: "Group type, SIZE, COMPOSITION, leadership, and objectives.\n\nGroup TYPES: formal vs informal; functional (vertical) vs cross-functional (horizontal); command vs task (task force/ad hoc committee vs standing committee); plus GLOBAL VIRTUAL teams.",
                 explanation: "Composition = the mix of members' skills and abilities; include diverse members."
             },
             {
+                id: "zx8fzj",
                 question: "What is the ideal GROUP SIZE (and the 'two-pizza rule')?",
                 answer: "There is NO single ideal size, but generally 5–9 members give the best relationships and performance (short-term memory holds 7 ± 2 items).\n\n• Too SMALL → limits ideas/creativity.\n• Too LARGE → slow, less innovative, FREE-RIDING (social loafing).\n• Amazon's TWO-PIZZA RULE: if two pizzas can't feed the team, it's too big (≤ ~8).",
                 explanation: "Smaller groups < 5 risk groupthink; over 9, communication breaks down."
             },
             {
+                id: "3cyoai",
                 question: "What is GROUP PROCESS, and what are its dimensions?",
                 answer: "Group process (group dynamics) = the patterns of INTERACTIONS that emerge as members do their jobs (how they get along, not how they do the work).\n\nDimensions: ROLES, NORMS, COHESIVENESS, STATUS, decision making, and conflict resolution.",
                 explanation: "The 3 group roles: task roles, maintenance roles, and self-interest roles."
             },
             {
+                id: "4iyftu",
                 question: "NORMS, COHESIVENESS and STATUS in a group?",
                 answer: "• NORMS — unwritten, shared expectations of appropriate behavior that develop as members interact (not set by management, unlike rules).\n• COHESIVENESS — the extent to which members stick together; higher when goals are shared, the group is small/homogeneous, participation is equal, and it competes against external teams.\n• STATUS — the perceived ranking of a member relative to others (based on performance, title, seniority, expertise, etc.).",
                 explanation: "Groups listen more to high-status members and overlook their norm-breaking."
             },
             {
+                id: "t2yowu",
                 question: "What are TUCKMAN'S 5 stages of group development?",
                 answer: "Bruce Tuckman's stages:\n1. FORMING (orientation) — low development; concerns about structure/leadership.\n2. STORMING (dissatisfaction) — moderate development; frustration, conflict.\n3. NORMING (resolution) — high development; members resolve differences.\n4. PERFORMING (production) — outstanding development; works as a self-directed team.\n5. TERMINATION (adjourning) — task groups disband.",
                 explanation: "Two key variables: competence (rises over time) and commitment (starts high, drops, then rises)."
             },
             {
+                id: "74wpbr",
                 question: "Which MANAGEMENT STYLE matches each development stage?",
                 answer: "• FORMING → AUTOCRATIC (high task, low support — tell them what to do).\n• STORMING → CONSULTATIVE (high task, high support).\n• NORMING → PARTICIPATIVE (low task, high support — share decisions).\n• PERFORMING → EMPOWERMENT (low task, low support — let them decide; self-directed team).\n• TERMINATION → no style needed.",
                 explanation: "Change your leadership behavior as the group develops through the stages."
@@ -763,11 +869,13 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "dxczzp",
                 question: "Shared leadership and interdependent jobs characterize a:",
                 options: ["Group", "Team", "Crowd", "Department"],
                 correct: 1
             },
             {
+                id: "vb99oi",
                 question: "Which is NOT a factor in the group performance model?",
                 options: [
                     "Group structure",
@@ -778,6 +886,7 @@ const managementM1 = {
                 correct: 3
             },
             {
+                id: "4j3zh9",
                 question: "A temporary group formed for a specific purpose is a:",
                 options: [
                     "Standing committee",
@@ -788,6 +897,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "71vfr2",
                 question: "Amazon's 'two-pizza rule' is about keeping the team:",
                 options: [
                     "Well fed",
@@ -798,11 +908,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "518zif",
                 question: "Unwritten, shared expectations of behavior in a group are called:",
                 options: ["Rules", "Norms", "Policies", "Procedures"],
                 correct: 1
             },
             {
+                id: "92hlh9",
                 question: "Members relying on others to carry their workload is called:",
                 options: [
                     "Cohesiveness",
@@ -813,11 +925,13 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "f2ra74",
                 question: "In Tuckman's stages, the 'dissatisfaction' stage is:",
                 options: ["Forming", "Storming", "Norming", "Performing"],
                 correct: 1
             },
             {
+                id: "rysawf",
                 question: "The appropriate management style during the PERFORMING stage is:",
                 options: ["Autocratic", "Consultative", "Participative", "Empowerment"],
                 correct: 3
@@ -826,26 +940,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "kvzg7p",
                 sentence: "All teams are groups, but not all groups are _______.",
                 answer: "teams",
                 hint: "The interdependent, shared-leadership kind..."
             },
             {
+                id: "dyt71y",
                 sentence: "The best group size is generally five to _______ members.",
                 answer: "nine",
                 hint: "7 plus or minus two..."
             },
             {
+                id: "gpin5u",
                 sentence: "Unwritten shared expectations of behavior are group _______.",
                 answer: "norms",
                 hint: "Not formal rules..."
             },
             {
+                id: "l0l0o1",
                 sentence: "Tuckman's five stages are forming, storming, norming, performing and _______.",
                 answer: "termination",
                 hint: "Also called adjourning..."
             },
             {
+                id: "zuxjgd",
                 sentence: "During the forming stage the appropriate management style is _______.",
                 answer: "autocratic",
                 hint: "Tell them what to do..."
@@ -853,6 +972,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "9dmb9r",
             title: "Managing Teamwork",
             content: `
                 <h3>Group vs team</h3>
@@ -887,47 +1007,56 @@ const managementM1 = {
 
     // ========== CATEGORY 6: HUMAN RESOURCE MANAGEMENT ==========
     humanResources: {
+        id: "v88iza",
         name: "Human Resource Management",
         icon: "fa-users-gear",
         color: "#ec4899",
 
         flashcards: [
             {
+                id: "9ulo2c",
                 question: "What are the FOUR parts of the HRM (staffing) PROCESS?",
                 answer: "Human Resources Management = managing people for competitive advantage. Four parts:\n1. PLANNING for human resources (strategic HR planning).\n2. ATTRACTING employees (recruiting + selecting).\n3. DEVELOPING employees (orientation, training, appraisal).\n4. RETAINING employees (compensation, retention, separation).",
                 explanation: "Also called the staffing process. HR is a STAFF department (advises/assists)."
             },
             {
+                id: "ox20fm",
                 question: "What is JOB ANALYSIS (description vs specifications)?",
                 answer: "JOB ANALYSIS = determining what a position entails and the qualifications needed.\n• JOB DESCRIPTION — identifies the TASKS and responsibilities of a position (often a Realistic Job Preview).\n• JOB SPECIFICATIONS — identify the QUALIFICATIONS needed by the person to fill it.\n\nDone BEFORE searching for a new employee.",
                 explanation: "Making the job sound better than it is just creates turnover problems."
             },
             {
+                id: "qqnesr",
                 question: "What is RECRUITING, and the main internal/external sources?",
                 answer: "RECRUITING = attracting QUALIFIED candidates to apply (not just lots of applications).\n• INTERNAL — promotions / lateral transfers ('internal mobility').\n• EXTERNAL — employee REFERRALS (often the favorite; based on networking), walk-ins, outside organizations (schools/colleges/fairs), AGENCIES (temporary, public, private; executive 'headhunters'), advertising/internet/social media.",
                 explanation: "More people get jobs through networking than all other methods combined."
             },
             {
+                id: "x6nu16",
                 question: "What are the 6 parts of the SELECTION PROCESS?",
                 answer: "1. APPLICATION form / résumé (used to screen)\n2. SCREENING interviews (HR narrows the field)\n3. TESTING\n4. BACKGROUND & reference checks\n5. INTERVIEWING (usually the MOST heavily weighted step)\n6. HIRING\n\nNot all parts are used for every job, and there's no fixed sequence.",
                 explanation: "Selection = choosing the most qualified applicant while ensuring equal opportunity."
             },
             {
+                id: "c55yrm",
                 question: "In employment TESTING, what are VALIDITY and RELIABILITY?",
                 answer: "• VALIDITY — people who score HIGH on the test do WELL on the job (and low scorers do poorly). The test actually predicts job success.\n• RELIABILITY — taking the same test on different days yields approximately the SAME score.\n\nLarge firms use ASSESSMENT CENTERS (tests + interviews + simulations).",
                 explanation: "Tests include achievement, aptitude, personality, interest and physical exams."
             },
             {
+                id: "5uifac",
                 question: "ORIENTATION/onboarding and TRAINING vs DEVELOPMENT?",
                 answer: "• ORIENTATION (now called ONBOARDING) — introducing new employees to the organization and their jobs; includes newcomer SOCIALIZATION (acquiring knowledge, skills, behaviors).\n• TRAINING — teaching the skills necessary to perform the CURRENT job.\n• DEVELOPMENT — ongoing education to improve skills for PRESENT and FUTURE jobs.",
                 explanation: "Socialization is ranked more important than the formal orientation program."
             },
             {
+                id: "vd18xk",
                 question: "What is PERFORMANCE APPRAISAL and 360-degree feedback?",
                 answer: "PERFORMANCE APPRAISAL = the ongoing process of EVALUATING employee performance.\n\n• Mechanistic orgs → manager evaluates subordinates.\n• Organic self-managed teams → PEERS also evaluate each other (e.g. Zappos).\n• 360-DEGREE feedback → evaluation expanded to everyone the employee contacts: peers, other departments, customers, suppliers.",
                 explanation: "Used both for current performance and potential promotions."
             },
             {
+                id: "vs4qdg",
                 question: "What is COMPENSATION — the 3 pay methods and benefits?",
                 answer: "COMPENSATION = total of pay + benefits (affects attracting AND retaining). PAY LEVEL = the choice to be a high-/medium-/low-paying firm.\n\nThree PAY METHODS:\n1. WAGES — paid hourly.\n2. SALARY — based on time (week/month/year), regardless of hours.\n3. INCENTIVES — pay for performance: piece rate, commissions, merit raises, bonuses, profit sharing, stock options.\n\nBENEFITS = nonwage compensation (legally required: workers' comp, unemployment, Medicare, Social Security).",
                 explanation: "The trend is pay for performance. Job evaluation determines each job's worth internally."
@@ -936,16 +1065,19 @@ const managementM1 = {
 
         quiz: [
             {
+                id: "mcciai",
                 question: "The HRM process is also known as the ____ process.",
                 options: ["Marketing", "Staffing", "Budgeting", "Control"],
                 correct: 1
             },
             {
+                id: "pstqvh",
                 question: "A document identifying the TASKS of a position is the job:",
                 options: ["Specification", "Description", "Analysis", "Evaluation"],
                 correct: 1
             },
             {
+                id: "8fwm7n",
                 question: "Which recruiting method is based on networking and is often the favorite?",
                 options: [
                     "Walk-ins",
@@ -956,6 +1088,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "u23p10",
                 question: "Which step is usually the MOST heavily weighted in selection?",
                 options: [
                     "Application form",
@@ -966,16 +1099,19 @@ const managementM1 = {
                 correct: 2
             },
             {
+                id: "xse2h4",
                 question: "A test where high scorers do well on the job has high:",
                 options: ["Reliability", "Validity", "Difficulty", "Bias"],
                 correct: 1
             },
             {
+                id: "cxecug",
                 question: "Teaching the skills needed for the CURRENT job is:",
                 options: ["Development", "Training", "Onboarding", "Appraisal"],
                 correct: 1
             },
             {
+                id: "gerep3",
                 question: "Evaluation that includes peers, customers and suppliers is called:",
                 options: [
                     "Self-appraisal",
@@ -986,6 +1122,7 @@ const managementM1 = {
                 correct: 1
             },
             {
+                id: "ojqhg2",
                 question: "Commissions and merit raises are examples of:",
                 options: ["Wages", "Salary", "Incentives", "Benefits"],
                 correct: 2
@@ -994,26 +1131,31 @@ const managementM1 = {
 
         fillBlanks: [
             {
+                id: "sga49o",
                 sentence: "The four parts of HRM are planning, attracting, developing and _______.",
                 answer: "retaining",
                 hint: "Keeping good employees..."
             },
             {
+                id: "gh4080",
                 sentence: "Job _______ identify the qualifications needed to fill a position.",
                 answer: "specifications",
                 hint: "Not the description of tasks..."
             },
             {
+                id: "s4fe8a",
                 sentence: "A test gives the same score on different days when it has high _______.",
                 answer: "reliability",
                 hint: "Consistency over time..."
             },
             {
+                id: "aek61q",
                 sentence: "Ongoing education for present and future jobs is called _______.",
                 answer: "development",
                 hint: "Broader than training..."
             },
             {
+                id: "hc9se6",
                 sentence: "Pay based on time, regardless of hours worked, is a _______.",
                 answer: "salary",
                 hint: "Not hourly wages..."
@@ -1021,6 +1163,7 @@ const managementM1 = {
         ],
 
         learn: {
+            id: "lxaejf",
             title: "Human Resource Management",
             content: `
                 <h3>The HRM (staffing) process</h3>

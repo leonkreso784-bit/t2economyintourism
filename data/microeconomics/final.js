@@ -13,57 +13,70 @@
 //   jedan `$` se NE koristi (valuta → "USD").
 
 const microeconomicsExamPractice = {
+  id: "ppbdpz",
   name: 'Exam Practice (All Chapters)',
   icon: 'fa-graduation-cap',
   color: '#6366f1',
 
   flashcards: [
     {
+      id: "1grmh8",
       question: 'What single idea unifies almost every optimization in microeconomics?',
       answer: '"Optimize at the margin" — keep doing an activity until its marginal benefit equals its marginal cost. Each topic is one version of that rule:\n\\( MR = MC \\) (profit), \\( MRS = \\dfrac{P_x}{P_y} \\) (consumer), \\( MRTS = \\dfrac{w}{r} \\) (cost-min), \\( MRP_L = w \\) (hiring), \\( MSC = MSB \\) (social efficiency).',
       explanation: 'If MB > MC, do more; if MB < MC, do less. Equality = optimum.'
     },
     {
+      id: "cq028x",
       question: 'Summarize the four market structures (firms, product, entry, price vs MC, long-run profit).',
       answer: '• Perfect competition: many firms, homogeneous, free entry, \\(P = MC\\), zero LR profit.\n• Monopolistic competition: many firms, differentiated, free entry, \\(P > MC\\), zero LR profit (excess capacity).\n• Oligopoly: a few interdependent firms, barriers, \\(P > MC\\), possible LR profit.\n• Monopoly: one firm, no substitutes, blocked entry, \\(P > MC\\), LR profit persists.'
     },
     {
+      id: "vfuwea",
       question: 'How is the consumer optimum characterized in two equivalent ways?',
       answer: 'At the best affordable basket the indifference curve is tangent to the budget line:\n\\( MRS = \\dfrac{P_x}{P_y} \\)\nequivalently, the marginal utility per dollar is equal across all goods:\n\\( \\dfrac{MU_x}{P_x} = \\dfrac{MU_y}{P_y} \\) (the equal-marginal principle).'
     },
     {
+      id: "9ww29x",
       question: 'Define price elasticity of demand and its link to revenue and monopoly markup.',
       answer: '\\( E_p = \\dfrac{\\%\\,\\Delta Q}{\\%\\,\\Delta P} \\). Demand is elastic if \\(|E_p|>1\\) (a price cut RAISES revenue), inelastic if \\(|E_p|<1\\) (a price cut LOWERS revenue). Monopoly markup is tied to it through the Lerner index: \\( \\dfrac{P-MC}{P} = -\\dfrac{1}{E_d} \\).'
     },
     {
+      id: "wp4t70",
       question: 'Where does deadweight loss appear, and what is the common cause?',
       answer: 'In monopoly, taxes/subsidies, price controls, quotas/tariffs, and externalities. The common cause is always the same: output moves AWAY from the efficient level (where \\(P = MC\\) for private goods, or \\(MSC = MSB\\) with externalities), so mutually beneficial trades are lost.'
     },
     {
+      id: "nrzoy5",
       question: 'Contrast diminishing marginal returns with returns to scale.',
       answer: 'Diminishing marginal returns is a SHORT-RUN idea: adding more of ONE variable input (with others fixed) eventually raises output by less and less. Returns to scale is a LONG-RUN idea: scaling ALL inputs by the same factor — output may rise more than (increasing), equal to (constant) or less than (decreasing) proportionally.'
     },
     {
+      id: "5iyice",
       question: 'State the firm’s short-run produce/shut-down rule and the long-run entry/exit rule.',
       answer: 'Short run: produce where \\(MR = MC\\), but shut down if \\(P < AVC\\) (then lose only fixed cost). Long run: exit if \\(P < ATC\\); under perfect competition free entry/exit drives \\(P\\) to \\(\\min(ATC)\\) and economic profit to zero.'
     },
     {
+      id: "yr38ly",
       question: 'How does a monopoly’s choice differ from a competitive firm’s, and why is it inefficient?',
       answer: 'Both set \\(MR = MC\\), but for a competitive firm \\(P = MR\\), so \\(P = MC\\); for a monopoly \\(MR < P\\), so it stops where \\(P > MC\\). Producing where \\(P>MC\\) means some units worth more than they cost are not made → deadweight loss.'
     },
     {
+      id: "09ccpr",
       question: 'Recap the economics of risk: expected value and attitudes to risk.',
       answer: 'Expected value is the probability-weighted average payoff, \\( E(X) = \\sum p_i x_i \\). A risk-AVERSE person prefers a sure thing to a fair gamble of equal expected value (diminishing marginal utility of wealth); risk-NEUTRAL is indifferent; risk-LOVING prefers the gamble. Risk is reduced by diversification, insurance and more information.'
     },
     {
+      id: "u215ce",
       question: 'How does a firm decide how much labor to hire, in competition and under monopsony?',
       answer: 'Competitive factor market: hire until \\(MRP_L = w\\), where \\(MRP_L = P \\times MP_L\\). Monopsony (single buyer): the supply curve slopes up so marginal expenditure exceeds the wage — hire until \\(MV = ME\\) (i.e. \\(MRP = ME\\)), employing less and paying less.'
     },
     {
+      id: "8yrwct",
       question: 'List the toolkit for correcting externalities.',
       answer: 'For NEGATIVE externalities (over-production): a Pigouvian fee/tax equal to the marginal external cost, an emissions standard, or tradeable permits (cap-and-trade); private Coasean bargaining if property rights are clear and transaction costs low. For POSITIVE externalities (under-production): a subsidy.'
     },
     {
+      id: "ckktc6",
       question: 'Why do private markets under-provide public goods?',
       answer: 'Public goods are NONRIVAL (one person’s use does not reduce others’) and NONEXCLUSIVE (non-payers cannot be shut out). Nonexclusivity creates the FREE-RIDER problem: each person hopes others will pay, so too little is funded — which is why government often provides them.'
     }
@@ -71,61 +84,73 @@ const microeconomicsExamPractice = {
 
   quiz: [
     {
+      id: "j931ry",
       question: 'The general optimization rule across micro is: keep going until:',
       options: ['Total benefit is zero', 'Marginal benefit equals marginal cost', 'Average cost is highest', 'Revenue is maximized'],
       correct: 1
     },
     {
+      id: "ebhgth",
       question: 'A competitive firm in long-run equilibrium earns economic profit of:',
       options: ['A large positive amount', 'Zero', 'A negative amount', 'Exactly its fixed cost'],
       correct: 1
     },
     {
+      id: "lcy1dp",
       question: 'The consumer optimum requires the MRS to equal:',
       options: ['The wage–rental ratio', 'The price ratio of the two goods', 'Marginal cost', 'The Lerner index'],
       correct: 1
     },
     {
+      id: "5m113c",
       question: 'If demand is elastic (|Ep| > 1), a price cut makes total revenue:',
       options: ['Fall', 'Rise', 'Stay constant', 'Become zero'],
       correct: 1
     },
     {
+      id: "n5f0zc",
       question: 'A monopoly produces where MR = MC, which leaves price:',
       options: ['Below MC', 'Equal to MC', 'Above MC', 'Equal to AVC'],
       correct: 2
     },
     {
+      id: "tdryoa",
       question: 'A competitive firm shuts down in the short run when price is below:',
       options: ['ATC', 'AVC', 'AFC', 'MR'],
       correct: 1
     },
     {
+      id: "af6v2o",
       question: 'Scaling ALL inputs and getting more-than-proportional output is:',
       options: ['Diminishing marginal returns', 'Increasing returns to scale', 'A sunk cost', 'Economies of scope'],
       correct: 1
     },
     {
+      id: "uldniw",
       question: 'A competitive firm hires labor until MRP_L equals the:',
       options: ['Price of output', 'Wage', 'Marginal product', 'Average cost'],
       correct: 1
     },
     {
+      id: "fqoa6t",
       question: 'A per-unit tax equal to marginal external cost is a:',
       options: ['Price ceiling', 'Pigouvian (corrective) tax', 'Quota', 'Subsidy'],
       correct: 1
     },
     {
+      id: "pcjsj0",
       question: 'A good that is nonrival and nonexclusive is a:',
       options: ['Private good', 'Public good', 'Common resource', 'Giffen good'],
       correct: 1
     },
     {
+      id: "2iyujc",
       question: 'A risk-averse person prefers a sure amount to a fair gamble of the same:',
       options: ['Variance', 'Expected value', 'Maximum payoff', 'Probability'],
       correct: 1
     },
     {
+      id: "tu4ew6",
       question: 'Deadweight loss arises whenever output moves away from where:',
       options: ['\\(P = MC\\) (or \\(MSC = MSB\\))', '\\(AFC = 0\\)', 'Total revenue is maximized', '\\(MR > MC\\)'],
       correct: 0
@@ -134,40 +159,49 @@ const microeconomicsExamPractice = {
 
   fillBlanks: [
     {
+      id: "qslk74",
       sentence: 'The master rule of micro: act until marginal benefit equals marginal _______.',
       answer: 'cost'
     },
     {
+      id: "0r0yc4",
       sentence: 'In long-run perfect competition, economic profit is _______.',
       answer: 'zero'
     },
     {
+      id: "8ed47x",
       sentence: 'At the consumer optimum, MRS equals the _______ ratio of the two goods.',
       answer: 'price'
     },
     {
+      id: "21zi8g",
       sentence: 'A monopoly sets MR = MC, leaving price _______ marginal cost.',
       answer: 'above'
     },
     {
+      id: "o0ikat",
       sentence: 'A firm shuts down in the short run if price is below average _______ cost.',
       answer: 'variable'
     },
     {
+      id: "0hivef",
       sentence: 'A competitive firm hires labor until MRP equals the _______.',
       answer: 'wage'
     },
     {
+      id: "uaaa20",
       sentence: 'A corrective tax on a negative externality is called a _______ tax.',
       answer: 'Pigouvian'
     },
     {
+      id: "wto9eq",
       sentence: 'Because non-payers cannot be excluded, public goods suffer the _______ problem.',
       answer: 'free-rider'
     }
   ],
 
   learn: {
+    id: "b24n0l",
     content:
       '<h3>Final Exam Roadmap — the whole of micro on one page</h3>' +
       '<p>The course tells one story: scarce resources are allocated by people and firms <strong>optimizing at the margin</strong> and by <strong>prices</strong> coordinating them. Drill the per-chapter categories in this lesson, then use this set to link them.</p>' +
