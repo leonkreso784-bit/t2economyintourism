@@ -23,6 +23,13 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-019 — Back-navigacija: petlja profil ⇄ admin (povratak na početnu nemoguć)
+- Status: ✅ riješen 2026-07-12 (grana `foundation/f4` = preview; NIJE na produkciji — admin stranica postoji samo na f4) · Težina: srednji (UX, admin tok) · Prijavio: **korisnik** (2026-07-12, živo klikanje).
+- **Simptom:** početna → profil → admin → back-strelica vrati na profil ✓, ali back s profila tada vrati **NATRAG U ADMIN** — i tako u krug (profil ⇄ admin); početna stranica postaje nedostižna.
+- **Uzrok:** app nema povijest navigacije — samo jedno-slotni `profileReturnPage` (`js/navigation.js`) koji se postavlja pri **svakom** ulasku na profil. Back iz admina ide `navigateTo('profile')` (`js/admin.js` `#backFromAdmin`) → dolazak IZ ADMINA pregazi slot u `{page:'admin'}` → back s profila vodi u admin → admin back opet na profil → beskonačna petlja, izvorni cilj (početna/study) izgubljen.
+- **Rješenje:** dolazak **iz admina** NE prepisuje `profileReturnPage` (admin je pod-stranica profila — ulaz i back idu kroz profil, pa profilov back mora preživjeti taj skok). 1 uvjet u `navigateTo()`. Regresijski test u `tests/admin.spec.js` („BUG-019", pravi klikovi na `#backFromAdmin`/`#backFromProfile`, sva 4 profila) — **dokazano PADA bez fixa** (stash-provjera). Cache `20260712180655`.
+- **Lekcija:** jedno-slotni „return" pointer se sam pojede čim se pojavi druga razina navigacije — svaka nova pod-stranica mora ili čuvati tuđi slot ili treba **pravi navigacijski stog**. Stog (+ browser History API da i sistemska back-gesta radi u SPA-u) = kandidat uz editor-UX ciglu (U8), ne krpati sad.
+
 ### BUG-018 — Admin (F4.3a) se nije detektirao + „Admin" curio na dno; Playwright to NIJE uhvatio
 - Status: ✅ riješen 2026-07-06 (grana `foundation/f4` = preview; NIJE bilo na produkciji) · Težina: srednji (admin-only značajka) · Našao: **korisnik živom prijavom** („samo admin dole"), pa potvrđeno login-skriptom.
 - **Simptom:** prijavljen kao admin — (a) nije se pojavila admin kartica/„Uredi sadržaj"; (b) na DNU svake stranice pisalo je „Admin"; (c) native `<select>` popup u admin viewer-u bio bijel (ignorira dark temu).

@@ -50,7 +50,9 @@ let profileReturnPage = null; // kamo vodi "back" s Profile stranice
 function navigateTo(page, data = {}) {
     // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
     // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
-    if (page === 'profile' && AppState.nav.page !== 'profile') {
+    // Dolazak IZ ADMINA ne prepisuje cilj: admin je pod-stranica profila (ulaz i back idu
+    // kroz profil), pa bi "back = admin" stvorio petlju profil ⇄ admin (BUG-019).
+    if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin') {
         profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
     }
     AppState.nav.page = page;

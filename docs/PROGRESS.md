@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-12 (FABLE, 3. sesija) — BUG-019 fix (profil ⇄ admin petlja) · Sašin DRAFT PR #1 pregledan · post-compact reground
+**Kontekst:** korisnik živim klikanjem našao navigacijski bug u admin toku + izrazio da je admin/draft UX grub. Odluka korisnika: **sad SAMO bugfix; bogato editor-sučelje ostaje po planu (U8)** — držimo se EDITOR_PLAN §12.
+
+**🐛 BUG-019 (fix na `foundation/f4`):** back iz admina pregazio jedno-slotni `profileReturnPage` → petlja profil ⇄ admin, početna nedostižna. Fix = 1 uvjet u `navigateTo()` (dolazak IZ ADMINA ne prepisuje cilj profila). Regresijski test `admin.spec.js` „BUG-019" (pravi klikovi, 4 profila) — **dokazano PADA bez fixa** (stash-provjera), s fixom admin suite **36/36**. Gate: verify 0/0 · typecheck 0 · unit **213/0** · bump 96 (`20260712180655`). Napomena za U8: pravi navigacijski stog + browser History API (sistemska back-gesta) idu uz editor-UX redizajn, ne krpati sad.
+
+**👥 Saša — DRAFT PR #1 otvoren (13:50):** `content/management-hr` → `main`, head `9d2f5c3` (bez novog koda). Pregledano: diff u TEAM.md §2 granicama (catalog +31/−0 čista adicija, identičan EN-u u icon/color/god/sem; bump-datoteke = samo `?v=` tokeni), **CI na PR-u sav zelen**, redak za ploču u PR-OPISU po privremenom pravilu ✓. Ostaje DRAFT do §5.2 (čeka Leonove materijale na Driveu) → onda „Ready for review"; **merge = Leon** (= deploy). Ploča ažurirana + 3 sitna doc-drifta počišćena (`96e3405`: docs/README ADR-raspon, CATALOG_ARCHITECTURE §9 nadiđen, VISION §7 MONETIZATION postoji).
+
+---
+
 ## 2026-07-12 (FABLE, kasnije) — U3 dionice 1+2: draft-store + edit-mode ljuska (editori pišu u draft)
 **Kontekst:** korisnik potvrdio prioritet (dovršetak admin CRUD-a = draft+editor); U3 podijeljen na 3 dionice. Sve na `foundation/f4`; **prod baza NIJE dirnuta** (obje dionice čisto klijentske; staging seedan za testove).
 

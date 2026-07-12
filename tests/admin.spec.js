@@ -63,6 +63,34 @@ test('#admin-page je SKRIVEN dok nije aktivan (regresija: ne curi na dno stranic
   expect(res.display).toBe('none');     // → mora biti skriven (inače „Admin" curi na dno)
 });
 
+test('BUG-019 — back iz admina NE stvara petlju profil ⇄ admin (back s profila vraća na početnu)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => typeof window.navigateTo === 'function');
+  await page.waitForSelector('#landing-page.active');
+
+  // Korisnikov tijek: početna → profil → admin.
+  await page.evaluate(() => navigateTo('profile'));
+  await page.waitForSelector('#profile-page.active');
+  await page.evaluate(() => navigateTo('admin'));
+  await page.waitForSelector('#admin-page.active');
+
+  // Back iz admina → profil (pravi klik na gumb).
+  await page.click('#backFromAdmin');
+  await page.waitForSelector('#profile-page.active');
+
+  // Back s profila → POČETNA, ne natrag u admin (prije fixa: profil ⇄ admin zauvijek).
+  await page.click('#backFromProfile');
+  await page.waitForSelector('#landing-page.active');
+  const res = await page.evaluate(() => ({
+    landingActive: document.getElementById('landing-page').classList.contains('active'),
+    adminActive: document.getElementById('admin-page').classList.contains('active'),
+    profileActive: document.getElementById('profile-page').classList.contains('active'),
+  }));
+  expect(res.landingActive).toBe(true);
+  expect(res.adminActive).toBe(false);
+  expect(res.profileActive).toBe(false);
+});
+
 test('F4.3b — admin viewer: navigateTo(admin) renderira picker predmeta → lekcija', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(() => typeof window.navigateTo === 'function' && !!window.SokratContent);
