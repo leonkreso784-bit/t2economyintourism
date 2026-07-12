@@ -24,6 +24,7 @@ odluka), ali je prava planirana stavka.
 **Nalaz (korisnik, 2026-07-10):** spriječiti da netko udara login endpoint (npr. 10.000 pokušaja prijave).
 **Put (dashboard-only, bez koda):** Supabase Auth (GoTrue) ima ugrađene rate-limite → **Auth → Rate Limits** (po IP-u/satu za login/signup/reset/token-refresh) — provjeriti i pojačati po potrebi. Opcionalno **Bot/CAPTCHA zaštita** (hCaptcha/Turnstile) u Auth settings za signup/login. Primijeniti na **PROD i staging**.
 **Kad:** ne sad (nema napada, baza mala); planirano prije šireg rasta / uz **F6 sigurnost** (CSP/DOMPurify/UGC). Sitno, brzo — čim bude prometa vrijedno uključiti.
+**+ Leaked Password Protection (advisor-nalaz, 2026-07-12):** Supabase Auth provjera lozinki protiv HaveIBeenPwned je ISKLJUČENA (WARN na oba projekta) → uključiti u istom dashboard-prolazu (Auth → Password security), PROD i staging.
 
 ## 🧱 Hardening v1 + perf (2026-06-29) — sad u [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) Faza 1/3
 Nalazi iz `archive/SONNET_REVIEW_2026-06.md` (vanjski review; **provjereni protiv koda** — #7 display=swap je bio NETOČAN, već postoji).

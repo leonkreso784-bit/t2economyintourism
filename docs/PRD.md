@@ -20,12 +20,12 @@ generiraju i dijele skripte te se natječu.
 - Sadržaj: **2. god HM = 8/8 ✅ + 1. god HM = 9/9 ✅ LIVE** (17 EN + HR pilot). ⛔ Intro to Hospitality blokiran (nema PDF-ova). **HR program u tijeku** (Saša, content-suradnik — `docs/TEAM.md`; pilot Management HR).
 - Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (7 tipova uklj. „napiši citat"), Progress (+ Blind Map). **KaTeX** za kvantitativne.
 - **Platforma-first pregradnja (`FOUNDATION_PLAN.md`): F0–F3 KOMPLETNE + LIVE** — F1 reliability rails (CI/CD, gateovi) · F2 reusable jezgra (JSON dual-read, ContentRepository, AppState, Web Components, Sentry) · F3 performanse (Service Worker/offline, CSS bundling, auto-bump). **Auth + cloud-sync** LIVE; read-path Supabase anon+RLS (ADR-011).
-- **AKTIVNO (grana `foundation/f4`, Vercel preview, NIJE produkcija):** F4 Admin CRUD (F4.1–F4.4 ✅ — identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) → prelazi u **UGC-stazu** (`UGC.md`, model draft→objavi): ✅ U1 staging Supabase · ✅ U2a stabilni id-jevi (`b490172`).
-- **Sljedeće (engineering):** U-staza (schema/draft/publish-RPC/editor) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `UGC.md` §12 + `HISTORY.md`.**
+- **AKTIVNO (grana `foundation/f4`, Vercel preview, NIJE produkcija):** F4 Admin CRUD (F4.1–F4.4 ✅ — identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) → prelazi u **UGC-stazu** (`EDITOR_PLAN.md`, model draft→objavi): ✅ U1 staging Supabase · ✅ U2a stabilni id-jevi (`b490172`).
+- **Sljedeće (engineering):** U-staza (schema/draft/publish-RPC/editor) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `EDITOR_PLAN.md` §12 + `HISTORY.md`.**
 
 ## 4. Opseg po fazama
 - **Faza 0 (✅ GOTOVA + platforma-first pregradnja F0–F3 LIVE):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +
-  backend **Supabase** (read-path anon+RLS, ADR-011; migracija datoteka→baza kroz F4 flip). Hijerarhija fakultet→smjer→godina→semestar→predmet. **Nastavak = F4 CRUD → U-staza (`UGC.md`) → F5/F6 → UGC.**
+  backend **Supabase** (read-path anon+RLS, ADR-011; migracija datoteka→baza kroz F4 flip). Hijerarhija fakultet→smjer→godina→semestar→predmet. **Nastavak = F4 CRUD → U-staza (`EDITOR_PLAN.md`) → F5/F6 → UGC.**
 - **Faza 1:** UGC MVP — korisnik uploada PDF/PPT → AI radi privatnu skriptu. Kvote troška.
 - **Faza 2:** dijeljenje — javna biblioteka, pretraga, kopiranje tuđih skripti.
 - **Faza 3:** natjecanje + društveno — ljestvice, profili, statistika učenja, anti-cheat.

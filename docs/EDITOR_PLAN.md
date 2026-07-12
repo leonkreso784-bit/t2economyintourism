@@ -1,7 +1,9 @@
-# UGC.md — Autorstvo, draft→objavi i put do UGC-a (north-star dizajn-dok)
+# EDITOR_PLAN.md — dovršetak Admin CRUD-a: draft→objavi + editor (nastavak F4)
 
+> **🎯 ČITAJ PRVO:** ovaj plan = **DOVRŠETAK ADMIN CRUD-a** (nastavak F4, [CRUD_PLAN.md](CRUD_PLAN.md)). U-cigle (U3 draft → U4 publish-RPC → … → U8 editor) su **CRUD cigle**, ne „UGC". Pravi UGC (studenti objavljuju) = **H2 horizont**, dolazi tek IZA F5 SRS + F6 sigurnosti (§2). *(Datoteka se do 2026-07-12 zvala `UGC.md` — preimenovana jer je ime stalno stvaralo zabunu da radimo UGC umjesto CRUD-a.)*
+>
 > **Status:** ▶ AKTIVNO (napisano 2026-07-09 iz razgovora korisnik+Claude 2026-07-08/09).
-> **Što je ovo:** trajni dizajn-dokument za smjer „bogato autorsko sučelje → draft→objavi → UGC → AI".
+> **Što je ovo:** trajni dizajn-dokument za smjer „bogato autorsko sučelje → draft→objavi → (kasnije) UGC → AI".
 > Sekcije 3–6 su **duboke** (skupo ih je kasnije mijenjati — model sadržaja, write-put, editor, sigurnost);
 > sekcije 7–9 su **skice** (daleko; dovoljno da arhitektura ostane koherentna). Brick-plan na dnu je ŽIV (mijenja se usput).
 > **Vezano:** [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (F4–F6) · [CRUD_PLAN.md](CRUD_PLAN.md) (F4 dosad) · ADR-013/016/018/021 · [VISION.md](VISION.md).
@@ -159,7 +161,7 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 
 | # | Cigla | Status |
 |---|---|---|
-| U0 | UGC.md (ovaj dok) + naznaka u VISION | ✅ 2026-07-09 |
+| U0 | EDITOR_PLAN.md (ovaj dok) + naznaka u VISION | ✅ 2026-07-09 |
 | U1 | **Staging Supabase** (2. projekt, SQL sync, rls-check/authed na staging) | ✅ 2026-07-10 (`40dc07b`): `sokrat-staging` + shema + test-admin; test-only override u `js/auth.js` (prod default no-op); test:authed 6/6 + write-verify + rls-check vs staging; PROD audit NETAKNUT |
 | U2a | **Schema v2 — stabilni `id` po stavci** (migracija AST-surgical `scripts/add-item-ids.js` + validator prima v1/v2) — id po kartici/quizu/fillu/kategoriji/learn; **čisto aditivno, render netaknut, napredak se NE prevezuje** | ✅ **2026-07-11 (`b490172`)** — rollout na **svih 18** (56 study-datoteka, ~4787 id-jeva; 7 exercises/lib i 5 praznih kompozicija isključeni); content-identical **dokazan** (strip-id === HEAD 56/56); `validate:schema` 54/54; `verify` 0; **smoke test 223/0**. **`schemaVersion` IZBAČEN iz U2a → U2b** (top-level meta-ključ ruši `Object.keys(content)` iteracije u ~9 runtime-mjesta → smoke test to uhvatio) |
 | U2b | **`schemaVersion` + runtime meta-filter (`getCategories()` helper) · `style`-tokeni · progress dual-key** — SVJESNO ODGOĐENO (id-jevi „samo leže" = nula rizika; ovo nosi rizik / treba runtime-podršku, čeka razlog: **SRS/F5 ili reorder/U6**). Nije preduvjet za U2.5. Skripta već ima opt-in `--schema-version` flag | ⬜ |

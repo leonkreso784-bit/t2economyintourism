@@ -5,8 +5,20 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-12 (FABLE) — docs-jasnoća: UGC.md → EDITOR_PLAN.md · Supabase health-check (oba projekta zdrava)
+**Kontekst:** korisnik frustriran što Claude opetovano miješa „UGC" i „dovršetak CRUD-a" — korijen = ime datoteke `UGC.md` za plan koji je zapravo NASTAVAK F4 admin CRUD-a. Nalog: „sredi te datoteke" + „provjeri Supabase".
+
+**Preimenovanje (git mv, povijest očuvana):** `docs/UGC.md` → **`docs/EDITOR_PLAN.md`** + novi naslov („dovršetak Admin CRUD-a: draft→objavi + editor, nastavak F4") + 🎯 ČITAJ-PRVO banner (U-cigle = CRUD cigle; pravi UGC = H2, iza F5/F6). **Link-sweep 14 datoteka** (`grep UGC.md` = 0 preostalih). CLAUDE.md: nova prva linija stanja **„🎯 ŠTO SADA RADIMO"** (dovršavamo ADMIN CRUD; sljedeća cigla U3 draft-sloj). Memorija (checkpoint + follow-recorded-plan) usklađena.
+
+**Supabase health-check (MCP, read-only):**
+- **PROD `naxjubnedhrbhsuasayu`: ACTIVE_HEALTHY** (Postgres 17.6). Redovi točno po zapisu: `subject_content` **51** (17×3) · `content_versions` **22** (te2 test-audit, netaknut) · `profiles` 4 · `progress` 48 · auth users 4. **RLS na SVE 4 tablice** (0 bez RLS-a). API logovi 24h: **100% status 200, nula grešaka** (uklj. pravog studenta na iPhoneu koji lista predmete — organski promet!).
+- **STAGING `czljmvigkgiajzjxtndq`: ACTIVE_HEALTHY.** Čist: sc=0 · cv=0 · profiles=1 (test-admin) · progress=1 (od authed testova). RLS 4/4.
+- **Advisori: identičan set benignih WARN-ova na OBA projekta** (= paritet shema): `is_admin`/`handle_new_user`/`snapshot_content_version` SECURITY DEFINER izloženi anon/authenticated (poznato; `is_admin` anon = namjerno, ostale su trigger-funkcije) · `set_updated_at` search_path · **NOVO uočeno: „Leaked Password Protection" ISKLJUČEN** (HaveIBeenPwned provjera) → ide uz postojeći BACKLOG TODO auth-hardeninga (dashboard toggle, F6 kandidat).
+
+---
+
 ## 2026-07-11 (FABLE, kasnije) — U2.5: placement dual-mode (ADR-022 identitet predmeta)
-**Kontekst:** nastavak nakon compacta; korisnik potvrdio prioritet = dovršetak admin CRUD-a (draft+editor staza, UGC.md §12 = nastavak F4); U2.5 prva jer je zacementirana „odmah iza U2" (ADR-023) i skida ovisnost sa Sašine S7. Sve na `foundation/f4` (preview).
+**Kontekst:** nastavak nakon compacta; korisnik potvrdio prioritet = dovršetak admin CRUD-a (draft+editor staza, EDITOR_PLAN.md §12 = nastavak F4); U2.5 prva jer je zacementirana „odmah iza U2" (ADR-023) i skida ovisnost sa Sašine S7. Sve na `foundation/f4` (preview).
 
 **U2.5 — placement dual-mode (`b969892`, ✅ dokazano):**
 - **`data/catalog.js`:** predmet se smjesta legacy poljima (`programId/year/semester`) ILI `placement: [{faculty, program, year, semester}, …]` — dijeljeni „vezni" predmet na više koordinata, sadržaj+`storageKey` JEDNOM (CATALOG_ARCHITECTURE §5). Novi helperi `placementsOf()` (legacy derivacija) + `isInProgram()`; `yearsOf/subjectsOf/semestersOf` preko placementa. **Legacy predmeti vraćaju ISTE reference** (ponašanje identično); placement-predmet = plitka kopija dekorirana koordinatama pogođenog placementa (prikaz year/semester), `content/storageKey` dijele referencu s originalom.
@@ -15,12 +27,12 @@ testirano, što slijedi.
 - **Dokazi:** `tests/unit/catalog-placement.test.js` **11/11** (legacy ekvivalencija po referencama · sintetički dijeljeni predmet u 3 smjera in-memory · **gate dokazano PADA (exit 1) na svih 5 prekršaja** nad `tests/fixtures/catalog-placement-invalid.js`, valjan fixture prolazi) · `verify` 0/0 · typecheck 0 (dodani potpisi u `types/globals.d.ts`) · unit lanac 197/0 · **smoke 223/0** · `npm run bump` (95 tokena).
 - **Napomene:** staging nije bio potreban (čisto klijentski/catalog sloj — baza nedirnuta). Stvarni MUH/MUT/MOR programi i podjela veznih predmeta = S7 (silabusi presuđuju, §8).
 
-**Stanje:** `b969892` na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U3 draft-sloj** (DraftStore + ops + edit-mode ljuska, UGC.md §4.1) — ulaz u draft+editor stazu koju je korisnik potvrdio kao prioritet. Usput uočeno: Saša pushao `9d2f5c3` na `content/management-hr` (catalog-unos po šabloni + JSON export + bump — čisto, PR još nije otvoren).
+**Stanje:** `b969892` na `foundation/f4`. Produkcija (`main` `5d24a96`) NETAKNUTA. **SLIJEDI: U3 draft-sloj** (DraftStore + ops + edit-mode ljuska, EDITOR_PLAN.md §4.1) — ulaz u draft+editor stazu koju je korisnik potvrdio kao prioritet. Usput uočeno: Saša pushao `9d2f5c3` na `content/management-hr` (catalog-unos po šabloni + JSON export + bump — čisto, PR još nije otvoren).
 
 ---
 
 ## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (Saša)
-**Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (UGC.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
+**Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (EDITOR_PLAN.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
 
 **Branch-vidljivost (Saša) — `c26dcfc`:** Saša klonirao repo, ne vidi `docs/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad Saša čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
 
@@ -36,7 +48,7 @@ testirano, što slijedi.
 ---
 
 ## 2026-07-10 (OPUS) — U1 staging Supabase + test-only override · Sašin onboarding operativan
-**Kontekst:** nastavak nakon compacta; U1 = prva U-cigla (UGC.md §12). Sve na grani `foundation/f4` (preview).
+**Kontekst:** nastavak nakon compacta; U1 = prva U-cigla (EDITOR_PLAN.md §12). Sve na grani `foundation/f4` (preview).
 
 **U1 — STAGING Supabase (`40dc07b` kod + `3fde8fe` docs, ✅ dokazano):**
 - **Kreiran 2. free projekt `sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, eu-central, ista org, $0/mj) preko MCP-a; 3 repo SQL fajla (`schema`/`f4-admin`/`f4-content-write`) primijenjena → **4 tablice + RLS + trigeri = identično produkciji**. Advisori = isti benigni WARN-ovi kao prod (is_admin grant anon = namjerno).
@@ -56,14 +68,14 @@ testirano, što slijedi.
 
 ---
 
-## 2026-07-09 (FABLE) — DOC-REORG (2 faze) + UGC.md north-star dizajn-dok
-**Kontekst:** korisnik prije UGC.md tražio pospremanje docs-a („savršeno održivo i snalažljivo, ništa se ne smije izgubiti"). Sve na grani `foundation/f4`.
+## 2026-07-09 (FABLE) — DOC-REORG (2 faze) + EDITOR_PLAN.md north-star dizajn-dok
+**Kontekst:** korisnik prije EDITOR_PLAN.md tražio pospremanje docs-a („savršeno održivo i snalažljivo, ništa se ne smije izgubiti"). Sve na grani `foundation/f4`.
 
 **Faza 1 — reorganizacija (`08ab604`):** `git mv` (povijest očuvana): `docs/content/` (SCHEMA/GUIDE/INTAKE/GENERATOR/EXERCISES_ENGINE) · `docs/subjects/` (4 plana + **NOVA autoritativna tablica svih predmeta** `subjects/README.md`) · `docs/archive/` (EXERCISES_DB_FIX_PLAN + `sonnet.md`→`SONNET_REVIEW_2026-06.md`) + **NOVI `docs/HISTORY.md`** (vremenska crta milestone-a) + prepisan `docs/README.md` indeks (grupiran) + root README tree. **Link-sweep ~85 referenci u 45 datoteka** (docs+CLAUDE+README+schema.json+komentari u data/js/scripts/tests); `git grep` starih putanja = 0. Gate: verify 0/0 · validate:content 0/0 · validate:schema 54/54 · unit 8/8 · export:json --check 0 (komentari ne diraju evaluaciju) · bump:check/build:css --check OK · typecheck 0.
 
 **Faza 2 — CLAUDE.md dijeta (`0d17689`, korisnik pregledao + odobrio):** **463 → 94 retka** (verify-then-cut: svaka činjenica verificirana da živi drugdje PRIJE reza — subjects-tablica/HISTORY/PROGRESS/CHANGELOG/planovi; pouke za sadržajni rad dodane u `subjects/README.md` §Pouke prije rezanja). Novi CLAUDE.md = identitet+stack (ispravljeno zastarjelo: backend=Supabase direkt, ne „planirani /api") · arhitektura s GOTCHA-ma · **8 kritičnih pravila** (6 starih + #7 Vercel-check/vercel.json + #8 živa admin-prijava za RLS cigle) · komande · **„Stanje — TRENUTNO"** · ADR jedan-red + docs-mapa. Trajna ušteda konteksta svake sesije; post-compact orijentacija s točne slike.
 
-**UGC.md (U0) — north-star dizajn-dok:** `docs/UGC.md` = cijela dogovorena arhitektura smjera „autorstvo→draft→objavi→UGC→AI": **dokument u sredini** (stabilni ID-jevi+`schemaVersion`+stil-TOKENI+learn-BLOKOVI+YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC** s `base_version`) · **jedan renderer = sigurnosna invarijanta** · `final`=kompozicija · editor=biblioteka pod 4 uvjeta (vendorana/adapter/samo-autorska-strana/spike) · rizici↓ (staging Supabase, dual-mode, datoteke=mreža, fuzz) · marketplace/AI-tutor/MCP skice · **brick-slijed U0–U9**. Naznaka u VISION.md; docs/README indeks + CRUD_PLAN križna referenca (F4.4-kategorije → U6; F4.5/4.6 → U9+).
+**EDITOR_PLAN.md (U0) — north-star dizajn-dok:** `docs/EDITOR_PLAN.md` = cijela dogovorena arhitektura smjera „autorstvo→draft→objavi→UGC→AI": **dokument u sredini** (stabilni ID-jevi+`schemaVersion`+stil-TOKENI+learn-BLOKOVI+YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC** s `base_version`) · **jedan renderer = sigurnosna invarijanta** · `final`=kompozicija · editor=biblioteka pod 4 uvjeta (vendorana/adapter/samo-autorska-strana/spike) · rizici↓ (staging Supabase, dual-mode, datoteke=mreža, fuzz) · marketplace/AI-tutor/MCP skice · **brick-slijed U0–U9**. Naznaka u VISION.md; docs/README indeks + CRUD_PLAN križna referenca (F4.4-kategorije → U6; F4.5/4.6 → U9+).
 
 **Stanje:** grana `foundation/f4` lokalno (commiti ispred origina; push = preview uz OK). **Slijedi: U1 staging Supabase → U2 schema v2 (ID-jevi).**
 
@@ -72,7 +84,7 @@ testirano, što slijedi.
 - **`docs/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za Sašu+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
 - **Role-router u CLAUDE.md:** `git config user.name` → Sašin Claude STANE i čita TEAM.md §2 (naš CLAUDE.md se učitava i njemu!).
 - **ADR-023** (DECISIONS.md): suradnički model + **ADR-022 PULL-FORWARD = U2.5** (odmah iza U1+U2, umjesto „nakon F4"; 3 tvrda uvjeta: uzastopno-ne-isprepleteno · aditivno/dual-mode · gate+staging). Obrazloženje: identitet prije write-puta; alternativa (MUT/MOR copy-paste) = veći rizik. ADR-022 status ažuriran.
-- **UGC.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; Saša ažurira samo nju). **docs/README:** +TEAM.md red.
+- **EDITOR_PLAN.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; Saša ažurira samo nju). **docs/README:** +TEAM.md red.
 - **Procjena izvedivosti (dano korisniku):** HR MuH kompletan ~2–3 mj (S2 pilot ~tjedan · S3 batch 4–6 tj · S4/S5 +2–4 tj); trošak API ~$15–30; MUT/MOR spremni za ~4–6 tj platformskog rada (U1+U2+U2.5) — prije nego što Saši zatrebaju. **Otvoreni slotovi (TEAM.md §9):** pilot-predmet (prijedlog Management) · budget-cap iznos · Sašin GitHub username · review-ritam.
 - **Naše nove obveze:** docx→tekst skripta (Word intake) · ADR-022/U2.5 na vrijeme · review 24–48 h · šablona catalog-unosa (S2).
 

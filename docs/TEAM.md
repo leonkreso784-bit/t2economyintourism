@@ -3,7 +3,7 @@
 > **Status:** ▶ AKTIVNO (2026-07-09; Saša se pridružio 2026-07-08). **Svrha:** jedan dom za „tko što radi,
 > kako, i što NIKAD ne dira" — da drugi par ruku UBRZA projekt, a da pritom bude **fizički nemoguće srušiti sustav**
 > (granice + CI gateovi + PR review = trostruka brava; ne oslanjamo se na dobru volju nego na mehanizme).
-> **Vezano:** [UGC.md](UGC.md) (platformska U-staza) · [HRV_PLAN.md](HRV_PLAN.md) (prijevodi) ·
+> **Vezano:** [EDITOR_PLAN.md](EDITOR_PLAN.md) (platformska U-staza) · [HRV_PLAN.md](HRV_PLAN.md) (prijevodi) ·
 > [subjects/README.md](subjects/README.md) (statusna ploča) · ADR-023 (ovaj model) · [content/](content/) (autorski alati).
 
 ## 1. Tim i uloge
@@ -103,7 +103,7 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 - **Saša radi v1-format datoteke ODMAH** — ništa ne čeka. Kad U2 (ID-jevi stavki) sleti, migracijska skripta obuhvaća
   i njegove predmete; alati (translate/generator) se bumpaju na v2 tada. Njegov rad se NE baca niti prerađuje.
 - **ADR-022 pull-forward (U2.5, odmah iza U2):** preduvjet za S7 (MUT/MOR — vezni predmeti se DIJELE, ne kopiraju).
-  Tri tvrda uvjeta: nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging. Detalji: ADR-023 + UGC.md §12.
+  Tri tvrda uvjeta: nakon U1+U2 (nikad isprepleteno) · aditivno/dual-mode · puni gate + staging. Detalji: ADR-023 + EDITOR_PLAN.md §12.
 - **Naše obveze prema Saši:** ⬜ docx→tekst skripta (Word ispitna pitanja; ~pola dana) · ⬜ ADR-022 na vrijeme (prije kraja S3/S4) ·
   review u ~24–48 h · šablona catalog-unosa u S2 · HR statusna ploča (postoji).
 - **Očekivani sudar i rješenje:** obojica bumpaju tokene → bump-konflikt u PR-u = trivijalan (rebase + ponovni `npm run bump`).

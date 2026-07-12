@@ -17,7 +17,7 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 3. **Least-privilege pristupi:** vlastiti Anthropic ključ (Leon financira, budget-cap); BEZ Supabase/`service_role`/TEST_ADMIN/Vercel.
 4. **Kvaliteta:** „prijevod je BAZA, HR materijali su AUTORITET" (pouka te2) — obavezan korak u definition-of-done (TEAM.md §5);
    dnevnik-pravila protiv drifta (Saša piše samo subjects-ploču + PR-opis; PROGRESS/CHANGELOG pri mergeu piše Leon/Claude).
-5. **ADR-022 se POVLAČI NAPRIJED = cigla U2.5** (odmah iza U1+U2 u UGC.md §12; umjesto „nakon F4"): preduvjet MUT/MOR (S7).
+5. **ADR-022 se POVLAČI NAPRIJED = cigla U2.5** (odmah iza U1+U2 u EDITOR_PLAN.md §12; umjesto „nakon F4"): preduvjet MUT/MOR (S7).
    Tri tvrda uvjeta: nakon U1+U2 (migracije uzastopno, NIKAD isprepleteno) · aditivna/dual-mode izvedba · puni gate + staging.
    Obrazloženje: identitet PRIJE write-puta je zdraviji redoslijed (draft/editor sjedaju na stabilan temelj); ne-povlačenje
    ima veći rizik (Saša bi MUT/MOR gradio copy-pasteom = dupliciran sadržaj + rascjepkan napredak).
@@ -26,7 +26,7 @@ dvije paralelne pruge (U-staza platforma · S-staza content) s jednom ovisnošć
 automatska obrana od suradničkih grešaka. Nadopunjuje ADR-012 (HR klon), ADR-018 (platform-first), ADR-022 (identitet).
 
 ## ADR-022 — Identitet predmeta preko programa i fakulteta: placement ≠ sadržaj, prefiks fakulteta, dijeli-unutar-fakulteta
-**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik) · **Implementacija: povučena NAPRIJED = cigla U2.5** (UGC.md §12; bilo „nakon F4" — resekvencirano ADR-023 t.5, 2026-07-09)
+**Datum:** 2026-07-06 · **Status:** ✅ ODLUČENO (korisnik) · **Implementacija: povučena NAPRIJED = cigla U2.5** (EDITOR_PLAN.md §12; bilo „nakon F4" — resekvencirano ADR-023 t.5, 2026-07-09)
 **Kontekst:** Rast ide preko **HR 1. godine za 3 smjera** (Menadžment u Hotelijerstvu / u Turizmu / održivog razvoja), koji **dijele „vezne" predmete**
 (isti kolegij u više smjerova). Kasnije i drugi fakulteti. Korisnik strahuje da baza „pukne" kad se isti predmet pojavi na više mjesta
 („matematika na drugom fakultetu"). Ovo je i odgovor na #5 (grubi-blob/model podataka): pitanje je zapravo **identitet sadržaja vs mjesto prikaza.**

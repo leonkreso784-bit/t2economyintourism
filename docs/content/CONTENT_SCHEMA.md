@@ -37,7 +37,7 @@ Ključ kategorije u objektu predmeta je `camelCase` (npr. `marketingConcept`) i 
 kao stabilan ID (filteri, napredak). **Ne mijenjaj ključ nakon objave** — veže se uz
 spremljeni napredak korisnika.
 
-> **🆔 Schema v2 (U2a, 2026-07-11):** svaka kategorija I svaka stavka (flashcard/quiz/fill/learn) nosi opcionalni `id: "xxxxxx"` (6-char, stabilan po stavci — temelj za reorder/delete/propagaciju/SRS). **Auto-generiran** skriptom `scripts/add-item-ids.js` (AST-surgical) — **NE piše se ni ne uređuje ručno.** Schema ga prihvaća opcionalno (v1 bez / v2 s). Dokument-`schemaVersion` je ODGOĐEN na U2b (traži runtime meta-filter — vidi `UGC.md` §12).
+> **🆔 Schema v2 (U2a, 2026-07-11):** svaka kategorija I svaka stavka (flashcard/quiz/fill/learn) nosi opcionalni `id: "xxxxxx"` (6-char, stabilan po stavci — temelj za reorder/delete/propagaciju/SRS). **Auto-generiran** skriptom `scripts/add-item-ids.js` (AST-surgical) — **NE piše se ni ne uređuje ručno.** Schema ga prihvaća opcionalno (v1 bez / v2 s). Dokument-`schemaVersion` je ODGOĐEN na U2b (traži runtime meta-filter — vidi `EDITOR_PLAN.md` §12).
 
 ## Flashcard
 ```js
