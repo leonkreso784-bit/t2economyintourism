@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-12 (FABLE, kasnije) — U3 dionice 1+2: draft-store + edit-mode ljuska (editori pišu u draft)
+**Kontekst:** korisnik potvrdio prioritet (dovršetak admin CRUD-a = draft+editor); U3 podijeljen na 3 dionice. Sve na `foundation/f4`; **prod baza NIJE dirnuta** (obje dionice čisto klijentske; staging seedan za testove).
+
+**d1 (`281f5e3`) — `js/draft-store.js` (`window.SokratDraft`):** begin = deep-copy {original, working, dirty} po (subject, lesson) · applyOp = imenovane operacije (updateCard/Quiz/Fill/Learn; registar → U6 dodaje tipove) s **id-prednošću + idx-fallbackom** (DB payloadi pre-U2a nemaju id-jeve) · autosave u localStorage (restore SAMO uz isti fingerprint baze; zastarjeli se briše) · discard/commitDone · `applyOpsTo(payload, ops)` za sibling-sync (update-opovi idempotentni; null u patchu briše ključ — learn.title semantika). Testovi **16/16**; modul ožičen tek u d2 (d1 = nula rizika).
+
+**d2 (`468e477`) — edit-mode ljuska + prevezivanje editora:**
+- **„Uredi lekciju"** (admin-only) → svježi DB payload → begin (uz „Nastavi uređivanje (N)" i toast za autosave-restore); traka `.admin-editbar`: indikator + brojač + **Objavi/Odbaci**; beforeunload upozorenje dok je dirty.
+- **4 editora → `applyOp` u working** (bez mreže); **edit-gumbi postoje SAMO u draft-modu** → jedini write-put = „Objavi" (working blob → primarni red pod RLS + verzija-trigger; **isti opovi na sestrinske redove** kroz `applyOpsTo` — final=kopija ostaje u sinku; in-memory sync bez reloada). Stari per-item RMW/propagate put **uklonjen**. „Odbaci" = discard uz `askConfirm` (baza nikad dirnuta).
+- **`scripts/seed-staging.js`** (čisti fetch, GoTrue+PostgREST pod test-admin JWT-om; **tvrdi guard: odbija sve što nije staging ref**) → staging seedan `te2` (3 reda) — podloga za authed/draft testove i d3 živu verifikaciju.
+- i18n `admin.*` +14 (en/hr; `finalNote`→`draftNote`) · CSS `.admin-editbar` · `index.html` + `draft-store.js` · bump 96.
+- **Gateovi:** unit 213/0 · typecheck 0 · verify 0 · **authed 7/7 vs staging** (novi E2E: uđi u draft → uredi karticu → brojač 1 + Objavi enabled → **Odbaci** → original vraćen, autosave očišćen, 0 writeova) · **smoke 224/0**.
+
+**SLIJEDI — U3 d3:** živa verifikacija **Objavi-puta** na stagingu (edit → Objavi → MCP: primarni red + `content_versions` verzija + final-sync → revert drugom objavom) + docs/checkpoint. ⚠ Poznato/namjerno: publish piše cijeli blob BEZ base_version provjere — concurrency stiže s **U4 publish-RPC** (jedini admin → prihvatljivo). Sesija stala ovdje (usage limit) — checkpoint ažuriran.
+
+---
+
 ## 2026-07-12 (FABLE) — docs-jasnoća: UGC.md → EDITOR_PLAN.md · Supabase health-check (oba projekta zdrava)
 **Kontekst:** korisnik frustriran što Claude opetovano miješa „UGC" i „dovršetak CRUD-a" — korijen = ime datoteke `UGC.md` za plan koji je zapravo NASTAVAK F4 admin CRUD-a. Nalog: „sredi te datoteke" + „provjeri Supabase".
 
