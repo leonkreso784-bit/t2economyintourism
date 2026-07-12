@@ -49,8 +49,11 @@
   `TEST_ADMIN_PASSWORD` postavljeni** (lokalno preko `.env` → `dotenv`; CI preko secrets). Bez njih → default suite NEPROMIJENJEN/deterministički.
 - **`auth.setup.js`** (dependency): prijavi se kroz `SokratAuth.getClient().auth.signInWithPassword(env creds)`, provjeri `is_admin()`,
   spremi sesiju u `tests/.auth/admin.json` (gitignored; Supabase persistira u localStorage → storageState ga uhvati).
-- **`admin-detect.authed.spec.js`** (reusea storageState): (1) `SokratAdmin.isAdmin()=true` + `body.sokrat-is-admin`;
-  (2) admin VIDI `.admin-edit-btn` na pravoj lekciji (te2).
+- **`admin-detect.authed.spec.js`** (reusea storageState; **7 testova, U3 draft-mod**): (1) `isAdmin()=true` + body-klasa;
+  (2) „Uredi lekciju" ulazi u draft-mod — edit-gumbi vidljivi TEK u draftu (prije: read-only viewer); (3) **E2E draft-tok**
+  (edit kartice → brojač 1 + Objavi enabled → Odbaci → original vraćen + autosave očišćen, 0 writeova); (4–6) quiz/fill/learn
+  editori se otvore prefilani (bez spremanja). ⚠️ **Traže SEEDAN staging** (draft-mod povlači payload iz baze):
+  `node scripts/seed-staging.js te2` (idempotentan; tvrdi guard — odbija ne-staging URL).
 - **Setup:** dediciran **test-admin account (NE osobni)** → napravi kroz app + `profiles.role='admin'` → kopiraj creds u `.env`.
 - **🏗️ STAGING (U1, 2026-07-10):** postoji **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, 2. free projekt) = izolirani test-DB. Kad su `STAGING_SUPABASE_URL/ANON/TEST_ADMIN_EMAIL/PASSWORD` u `.env`, **`test:authed` + `rls-check` automatski gađaju staging** (`js/auth.js` `_readSupabaseOverride()` preusmjeri app; `SUPABASE_TARGET=staging` za rls-check) → **write-testovi (edit-pa-revert) sad rade na stagingu, prod audit ostaje čist.** Bez `STAGING_*` → staro ponašanje (prod TEST_ADMIN).
   ⚠️ Protiv **PROD** baze WRITE-testovi i dalje mijenjaju živi sadržaj / ostavljaju `content_versions` audit-redove (append-only, admin ih ne može RLS-obrisati) → zato ih vozimo na stagingu; committani `admin-detect.authed.spec.js` je READ/detekcijski (siguran i na prod i na staging).

@@ -309,8 +309,8 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/migrate-content.js <subje
 - ✅ Service Worker (true offline PWA) + CSS bundling + auto cache-versioning (F3)
 
 ### **In Progress** 🔄
-- 🔄 **Admin CRUD** — custom content editor (not a CMS), evolving toward user-generated content
-- 🔄 **Stable content IDs + schema v2** — foundation for reordering, spaced repetition & authoring
+- 🔄 **Admin CRUD with draft→publish editing** — edit lessons in a working draft, publish atomically (not a CMS), evolving toward user-generated content
+- ✅ **Stable content IDs + schema v2** — foundation for reordering, spaced repetition & authoring
 - 📅 Spaced repetition algorithms (SRS)
 
 ### **Planned** 📅
@@ -412,4 +412,4 @@ If Sokrat Study helped you study better, **give it a star!** ⭐ Stars help othe
 ---
 
 ### **Last Updated**
-July 11, 2026 | Live on [www.sokratstudy.com](https://www.sokratstudy.com)
+July 12, 2026 | Live on [www.sokratstudy.com](https://www.sokratstudy.com)
