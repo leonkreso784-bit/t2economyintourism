@@ -5,6 +5,7 @@
 ## Platforma (Foundation, 2026-06-29 → )
 | Datum | Milestone | Ref |
 |---|---|---|
+| 2026-07-13 | **🚀 F4 NA PRODUKCIJI** — ff-merge f4→main (F4.1–4.4 + U1–U3 draft→objavi; ~35 commita; live-verified `20260712180655`; studentima nevidljivo). Docs na main-u → TEAM.md privremena pravila ukinuta · **PRESLAGIVANJE (Leon):** nakon U4 → U-UX dizajn-faza (mockupi prije editor-koda); U5 odgođen; osvježenje platforme = zasebna kasnija faza | `5d24a96..79f17c7` |
 | 2026-07-12 | **U3 KOMPLETAN (d3)** — Objavi-put ŽIVO verificiran na stagingu (marker→Objavi→svježi DB fetch→revert; MCP: md5==baseline, `content_versions` 0→4 = undo dokazan, final sinkan, PROD netaknut) · **BUG-019** (petlja profil ⇄ admin na back) popravljen + regresijski test · Sašin **DRAFT PR #1** pregledan (čist, CI zelen) | `aed691e`+d3 |
 | 2026-07-12 | **U3 draft-sloj 2/3** — `js/draft-store.js` (opovi + autosave) + edit-mode ljuska (Uredi→brojač→Objavi/Odbaci); **4 editora pišu u DRAFT, jedini write-put = „Objavi"**; staging seedan te2 (`scripts/seed-staging.js`); authed 7/7 vs staging + smoke 224/0 · **docs-jasnoća: `UGC.md`→`EDITOR_PLAN.md`** (git mv + sweep 14 dat.) · Supabase health-check oba projekta ✅ | `281f5e3`+`468e477`+`a8b8b85` |
 | 2026-07-11 | **U2.5 — placement dual-mode** (ADR-022 identitet predmeta): `placement[]` koordinate za dijeljene vezne predmete + `placementsOf/isInProgram` + verify-gate s 4 invarijante (fixture-dokazano da pada); legacy 18 grandfathered; unit 11/11 + smoke 223/0 | `b969892` |
