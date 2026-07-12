@@ -156,6 +156,46 @@ const V = 'te2M1';
   });
 }
 
+// ---- applyOpsTo (sibling-sync pri objavi) + null-briše-ključ ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const d = store.begin(S, L, V, sampleData());
+
+  test('updateLearn s title:null BRIŠE ključ (semantika praznog naslova iz F4.4)', () => {
+    const r = store.applyOp(S, L, { type: 'updateLearn', catId: 'demand', patch: { content: '<p>n</p>', title: null } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual('title' in d.working.demand.learn, false);
+    assert.strictEqual(d.working.demand.learn.content, '<p>n</p>');
+  });
+
+  test('applyOpsTo: isti opovi primijenjeni na SIBLING payload (final-kopija) — applied broji pogotke', () => {
+    store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', patch: { question: 'SYNC?' } });
+    const sibling = sampleData(); // final = kopija istih kategorija
+    const r = store.applyOpsTo(sibling, store.opsOf(S, L));
+    assert.strictEqual(r.applied, 2);
+    assert.strictEqual(r.skipped, 0);
+    assert.strictEqual(sibling.demand.flashcards[0].question, 'SYNC?');
+    assert.strictEqual('title' in sibling.demand.learn, false);
+  });
+
+  test('applyOpsTo: payload BEZ te kategorije (examPractice-only red) → skipped, bez rušenja', () => {
+    const other = { examPractice: { name: 'EP', icon: 'fa-x', color: '#000', flashcards: [] } };
+    const r = store.applyOpsTo(other, store.opsOf(S, L));
+    assert.strictEqual(r.applied, 0);
+    assert.strictEqual(r.skipped, 2);
+  });
+
+  test('applyOpsTo je idempotentan za update-opove (druga primjena = isto stanje)', () => {
+    const sibling = sampleData();
+    store.applyOpsTo(sibling, store.opsOf(S, L));
+    const snapshot = JSON.stringify(sibling);
+    store.applyOpsTo(sibling, store.opsOf(S, L));
+    assert.strictEqual(JSON.stringify(sibling), snapshot);
+  });
+}
+
 // ---- discard ----
 
 {

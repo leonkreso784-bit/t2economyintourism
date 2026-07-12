@@ -114,6 +114,7 @@ function renderAdminPage() {
     '      <select id="adminLessonSel" class="auth-modal__input" disabled></select></label>' +
     '  </div>' +
     '</div>' +
+    '<div id="adminEditBar"></div>' +
     '<div id="adminCards"></div>';
 
   document.getElementById('adminSubjectSel').addEventListener('change', _onAdminSubjectChange);
@@ -145,7 +146,8 @@ async function _onAdminLessonChange() {
   const holder = document.getElementById('adminCards');
   if (!holder) return;
   _adminCtx = { subjectId: '', lessonId: '', varName: '', data: null }; // reset (F4.3c-1)
-  if (!subjectId || !lessonId) { holder.innerHTML = ''; return; }
+  _draftMode = false; // U3: promjena lekcije izlazi iz draft-moda (draft ostaje u memoriji + autosave)
+  if (!subjectId || !lessonId) { holder.innerHTML = ''; _renderEditBar(); return; }
 
   holder.innerHTML = '<p class="profile-meta">' + _adminT('admin.loading', 'Loading…') + '</p>';
   let data = {};
@@ -157,7 +159,11 @@ async function _onAdminLessonChange() {
   }
   // F4.3c-1: zapamti KOJI window-var ovoj lekciji pripada (resolve[lessonId]) — write ide u TAJ red.
   _adminCtx = { subjectId: subjectId, lessonId: lessonId, varName: _adminResolveVar(subjectId, lessonId) || '', data: data };
-  _renderAdminCards(holder, data);
+  // U3: ako za ovu lekciju već postoji draft s promjenama → automatski nastavi u draft-modu.
+  const existing = _adminDraft();
+  _draftMode = !!(existing && existing.dirty);
+  _renderEditBar();
+  _renderAdminCards(holder, _adminWorking());
 }
 
 /** Edit-gumb (samo adminu) za stavku (type ∈ flashcard|quiz). */
@@ -171,7 +177,8 @@ function _adminEditBtn(canEdit, type, catId, idx) {
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
-  const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin());
+  // U3: i SAMO u draft-modu — jedini put do izmjene je draft → „Objavi" (EDITOR_PLAN §4.1).
+  const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin()) && _draftMode;
   let html = '';
   let total = 0;
 
@@ -294,6 +301,186 @@ function _adminResolveVar(subjectId, lessonId) {
     ? SokratCatalog.resolveDataVar(subjectId, lessonId) : null;
 }
 
+// ===== U3 — DRAFT-MOD (EDITOR_PLAN §4.1): uredi → radna kopija → Objavi/Odbaci =====
+//
+// „Uredi lekciju" povlači SVJEŽU bazu iz DB-a i otvara draft (SokratDraft.begin →
+// original/working + autosave-restore iz localStoragea). Editori pišu OPOVE u working
+// (bez mreže); „Objavi" upisuje working u primarni red (RLS + verzija-trigger = undo/audit)
+// i sinka sestrinske redove primjenom ISTIH opova (final = kopija M1+M2); „Odbaci" baca
+// kopiju — baza i aplikacija nikad nisu ni dirnute. Edit-gumbi postoje SAMO u draft-modu
+// (jedan write-put). ⚠ base_version concurrency dolazi s U4 publish-RPC-om (jedini smo
+// admin → prihvatljivo u U3); autosave čuva draft preko refresha/crasha.
+
+let _draftMode = false;
+
+function _adminDraft() {
+  return (window.SokratDraft && _adminCtx.subjectId)
+    ? SokratDraft.get(_adminCtx.subjectId, _adminCtx.lessonId) : null;
+}
+
+/** Izvor za render/editore: working kopija u draft-modu, inače pročitani sadržaj. */
+function _adminWorking() {
+  const d = _adminDraft();
+  return (_draftMode && d) ? d.working : _adminCtx.data;
+}
+
+function _adminRerender() {
+  const holder = document.getElementById('adminCards');
+  if (holder) _renderAdminCards(holder, _adminWorking());
+  _renderEditBar();
+}
+
+/** Traka draft-moda: gumb za ulaz, odnosno indikator „uređuješ" + Objavi/Odbaci. */
+function _renderEditBar() {
+  const host = document.getElementById('adminEditBar');
+  if (!host) return;
+  const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin());
+  if (!canEdit || !_adminCtx.varName || !_adminCtx.data || !window.SokratDraft) { host.innerHTML = ''; return; }
+  const d = _adminDraft();
+  if (!_draftMode) {
+    const resume = !!(d && d.dirty);
+    host.innerHTML =
+      '<div class="profile-card profile-card--wide admin-editbar">' +
+      '  <button type="button" class="cta-button primary" id="adminDraftBtn"><i class="fas fa-pen"></i><span>' +
+      (resume
+        ? _adminT('admin.resumeEditing', 'Resume editing') + ' (' + d.ops.length + ')'
+        : _adminT('admin.editLesson', 'Edit lesson')) +
+      '</span></button>' +
+      '</div>';
+    return;
+  }
+  const n = d ? d.ops.length : 0;
+  host.innerHTML =
+    '<div class="profile-card profile-card--wide admin-editbar is-active">' +
+    '  <span class="admin-editbar__status"><i class="fas fa-pen"></i> ' +
+    _adminT('admin.draftOn', 'Editing draft — changes stay local until you publish.') +
+    (n ? ' <strong class="admin-editbar__count">' + n + '</strong>' : '') + '</span>' +
+    '  <span class="admin-editbar__actions">' +
+    '    <button type="button" class="cta-button secondary" id="adminDiscardBtn">' + _adminT('admin.discard', 'Discard') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminPublishBtn"' + (n ? '' : ' disabled') + '>' +
+    '      <i class="fas fa-upload"></i><span>' + _adminT('admin.publish', 'Publish') + '</span></button>' +
+    '  </span>' +
+    '</div>';
+}
+
+/** Ulaz u draft-mod: svježa autoritativna baza iz DB-a → SokratDraft.begin (uz autosave-restore). */
+async function _enterDraftMode() {
+  if (_draftMode) return;
+  const s = _adminCtx.subjectId, l = _adminCtx.lessonId, v = _adminCtx.varName;
+  if (!s || !v || !window.SokratDraft) return;
+  if (SokratDraft.get(s, l)) { _draftMode = true; _adminRerender(); return; } // nastavak in-memory drafta
+
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) return;
+  try {
+    // Baza drafta = svjež DB payload (ne JSON/js fallback — objava piše u DB, pa je DB istina za edit).
+    const sel = await client.from('subject_content').select('payload')
+      .eq('subject_id', s).eq('var_name', v).single();
+    if (sel.error || !sel.data || !sel.data.payload) {
+      if (typeof showToast === 'function') showToast(_adminT('admin.notInDb', 'This subject is not in the database yet.'));
+      return;
+    }
+    const d = SokratDraft.begin(s, l, v, sel.data.payload);
+    _draftMode = true;
+    if (d.restored && typeof showToast === 'function') showToast(_adminT('admin.draftRestored', 'Unsaved draft restored.'));
+    _adminRerender();
+  } catch (e) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.loadFail', 'Could not load content.'));
+  }
+}
+
+/** „Objavi": working → primarni red (verzija-trigger) + isti opovi → sestrinski redovi + in-memory. */
+async function _publishDraft() {
+  const d = _adminDraft();
+  if (!_draftMode || !d || !d.dirty) return;
+  const btn = document.getElementById('adminPublishBtn');
+  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
+  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
+  if (!client) return;
+  if (btn) btn.disabled = true;
+  try {
+    // 1) Primarni red = cijeli working blob (RLS is_admin; trigger snapshota STARO stanje → undo/audit).
+    const upd = await client.from('subject_content').update({ payload: d.working })
+      .eq('subject_id', d.subjectId).eq('var_name', d.varName);
+    if (upd.error) {
+      if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.') + ' (' + upd.error.message + ')');
+      if (btn) btn.disabled = false;
+      return;
+    }
+
+    // 2) Sestrinski redovi: primijeni ISTE opove (final = kopija M1+M2 dijeli kategorije). Best-effort.
+    const ops = d.ops.slice();
+    const failed = [];
+    const patchedVars = [];
+    try {
+      const sel = await client.from('subject_content').select('var_name,payload')
+        .eq('subject_id', d.subjectId).neq('var_name', d.varName);
+      if (!sel.error && Array.isArray(sel.data)) {
+        for (const row of sel.data) {
+          const r = SokratDraft.applyOpsTo(row.payload, ops);
+          if (!r.applied) continue; // red ne dijeli ove kategorije (npr. examPractice-only)
+          const su = await client.from('subject_content').update({ payload: row.payload })
+            .eq('subject_id', d.subjectId).eq('var_name', row.var_name);
+          if (su.error) failed.push(row.var_name); else patchedVars.push(row.var_name);
+        }
+      }
+    } catch (e) { /* best-effort — primarni je već objavljen */ }
+
+    // 3) In-memory sync bez reloada (study/viewer čitaju iste reference; update-opovi su idempotentni).
+    if (typeof window !== 'undefined' && window[d.varName]) SokratDraft.applyOpsTo(window[d.varName], ops);
+    if (_adminCtx.data) SokratDraft.applyOpsTo(_adminCtx.data, ops);
+    patchedVars.forEach(function (sv) {
+      if (typeof window !== 'undefined' && window[sv]) SokratDraft.applyOpsTo(window[sv], ops);
+    });
+
+    // 4) Re-baseline drafta + izlaz iz draft-moda.
+    SokratDraft.commitDone(d.subjectId, d.lessonId);
+    _draftMode = false;
+    if (typeof showToast === 'function') {
+      const okMsg = _adminT('admin.publishOk', 'Published.');
+      showToast(failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
+    }
+    _adminRerender();
+  } catch (e) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.'));
+    if (btn) btn.disabled = false;
+  }
+}
+
+/** „Odbaci": potvrdi ako ima promjena → baci draft (baza/aplikacija nisu ni dirnute). */
+async function _discardDraft() {
+  const d = _adminDraft();
+  if (d && d.dirty && typeof window.askConfirm === 'function') {
+    const ok = await window.askConfirm({
+      title: _adminT('admin.discardTitle', 'Discard changes?'),
+      message: _adminT('admin.discardMsg', 'All unpublished changes to this lesson will be lost.'),
+      confirmText: _adminT('admin.discard', 'Discard'),
+      danger: true
+    });
+    if (!ok) return;
+  }
+  if (window.SokratDraft) SokratDraft.discard(_adminCtx.subjectId, _adminCtx.lessonId);
+  _draftMode = false;
+  _adminRerender();
+}
+
+// Upozorenje pri zatvaranju taba s nespremljenim promjenama (autosave ionako čuva draft).
+window.addEventListener('beforeunload', function (e) {
+  if (_draftMode && window.SokratDraft && _adminCtx.subjectId &&
+      SokratDraft.isDirty(_adminCtx.subjectId, _adminCtx.lessonId)) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+
+// Delegat za traku draft-moda.
+document.addEventListener('click', function (e) {
+  if (e.target.closest('#adminDraftBtn')) { _enterDraftMode(); return; }
+  if (e.target.closest('#adminPublishBtn')) { _publishDraft(); return; }
+  if (e.target.closest('#adminDiscardBtn')) { _discardDraft(); }
+});
+
 /** Kreiraj (jednom) edit-modal singleton na <sokrat-modal> primitivu. */
 function _ensureEditModal() {
   let m = document.getElementById('adminEditModal');
@@ -341,7 +528,7 @@ function _closeEditor() {
 
 /** Otvori editor za karticu (catId, idx) iz trenutnog konteksta. */
 function _openCardEditor(catId, idx) {
-  const data = _adminCtx.data;
+  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
   const fc = (cat && Array.isArray(cat.flashcards)) ? cat.flashcards[idx] : null;
   if (!fc) return;
@@ -352,137 +539,43 @@ function _openCardEditor(catId, idx) {
   const note = document.getElementById('adminEditNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.finalNote', 'saves this lesson only (final not synced in this step).');
+      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
   }
   _editStatus('', false);
   const m = document.getElementById('adminEditModal');
   if (m && typeof m.open === 'function') m.open();
 }
 
-/**
- * Zakrpaj jedan objekt (payload/window-var) na (catId, arrayKey, idx) ako stavka postoji.
- * `applyItem(item)` mutira stavku na mjestu (isti obrazac za flashcards/quiz/fill/…).
- */
-function _patchObj(obj, catId, arrayKey, idx, applyItem) {
-  if (obj && obj[catId] && Array.isArray(obj[catId][arrayKey]) && obj[catId][arrayKey][idx]) {
-    applyItem(obj[catId][arrayKey][idx]);
-    return true;
-  }
-  return false;
-}
+// (U3) Stari per-item RMW put (_patchObj/_patchInMemory/_propagateToSiblings) je uklonjen —
+// jedini write-put je sada draft → „Objavi" (_publishDraft: working blob + isti opovi na siblinge).
 
-/** Zakrpaj window-var (ako je učitan u memoriji) — study/viewer to čitaju. */
-function _patchWindowVar(varName, catId, arrayKey, idx, applyItem) {
-  if (typeof window !== 'undefined') _patchObj(window[varName], catId, arrayKey, idx, applyItem);
-}
-
-/** Zakrpaj in-memory objekt(e) da se promjena vidi bez reloada (isti ref koji study/viewer čitaju). */
-function _patchInMemory(varName, catId, arrayKey, idx, applyItem) {
-  _patchWindowVar(varName, catId, arrayKey, idx, applyItem); // study čita window[var]
-  _patchObj(_adminCtx.data, catId, arrayKey, idx, applyItem); // viewer re-render izvor (isti ref za midterm)
-}
-
-/**
- * F4.3c-2: propagiraj istu izmjenu u SESTRINSKE redove predmeta koji dijele ovu kategoriju.
- * Zašto: `final` je `Object.assign(M1, M2, …)` KOPIJA → u bazi zaseban red (npr. `te2Final`) koji
- * duplicira midterm stavke. Bez ovoga bi edit midterma i finalni razišli. Kategorije su unikatne
- * po predmetu (nema kolizije M1/M2), a final je čista kopija → (catId, arrayKey, idx) je ista stavka svugdje.
- * Generičko po tipu: `arrayKey` ∈ {flashcards, quiz, fillBlanks, …}; `applyItem(item)` mutira na mjestu.
- * Best-effort: primarni red je već spremljen; svaki sibling-write ide pod istim RLS + snapshotom.
- * @returns {Promise<{patched:string[], failed:string[]}>}
- */
-async function _propagateToSiblings(client, subjectId, primaryVar, catId, arrayKey, idx, applyItem) {
-  const patched = [];
-  const failed = [];
-  try {
-    const sel = await client.from('subject_content').select('var_name,payload')
-      .eq('subject_id', subjectId).neq('var_name', primaryVar);
-    if (sel.error || !Array.isArray(sel.data)) return { patched: patched, failed: failed };
-    for (const row of sel.data) {
-      const p = row.payload;
-      const arr = (p && p[catId] && Array.isArray(p[catId][arrayKey])) ? p[catId][arrayKey] : null;
-      if (!arr || !arr[idx]) continue; // ta kategorija/indeks ne postoji ovdje → preskoči (npr. examPractice-only)
-      applyItem(arr[idx]);
-      const upd = await client.from('subject_content').update({ payload: p })
-        .eq('subject_id', subjectId).eq('var_name', row.var_name);
-      if (upd.error) failed.push(row.var_name); else patched.push(row.var_name);
-    }
-  } catch (e) {
-    // best-effort; primarni je već spremljen — sib-neuspjeh ne ruši glavni write.
-  }
-  return { patched: patched, failed: failed };
-}
-
-/** Spremi uređenu karticu: read-modify-write JEDNOG reda pod admin JWT-om (RLS). */
-async function _saveCard() {
+/** Spremi uređenu karticu U DRAFT (op nad working kopijom; baza se dira tek na „Objavi" — U3). */
+function _saveCard() {
   const qEl = document.getElementById('adminEditQ');
   const aEl = document.getElementById('adminEditA');
-  const saveBtn = document.getElementById('adminEditSave');
   if (!qEl || !aEl || !_editTarget) return;
 
   const q = qEl.value.trim();
   const a = aEl.value.trim();
   if (!q || !a) { _editStatus(_adminT('admin.emptyErr', 'Question and answer must not be empty.'), true); return; }
 
-  const subjectId = _adminCtx.subjectId;
-  const varName = _adminCtx.varName;
+  const d = _adminDraft();
   const catId = _editTarget.catId;
   const idx = _editTarget.idx;
-  if (!subjectId || !varName) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  const w = (_draftMode && d) ? d.working : null;
+  const item = (w && w[catId] && Array.isArray(w[catId].flashcards)) ? w[catId].flashcards[idx] : null;
+  if (!item) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
-  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
-  if (!client) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  // Op se adresira stabilnim id-om (U2a) s idx fallbackom (DB payloadi pre-U2a nemaju id-jeve).
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+    type: 'updateCard', catId: catId, id: item.id, idx: idx,
+    patch: { question: q, answer: a }
+  });
+  if (!res.ok) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  if (saveBtn) saveBtn.disabled = true;
-  _editStatus(_adminT('admin.saving', 'Saving…'), false);
-  try {
-    // 1) SVJEŽI autoritativni payload iz baze (read-modify-write; ne pišemo preko stale/JSON-fallbacka).
-    const sel = await client.from('subject_content').select('payload')
-      .eq('subject_id', subjectId).eq('var_name', varName).single();
-    if (sel.error || !sel.data || !sel.data.payload) {
-      _editStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    const payload = sel.data.payload;
-    const target = (payload[catId] && Array.isArray(payload[catId].flashcards)) ? payload[catId].flashcards[idx] : null;
-    if (!target) {
-      _editStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    const applyItem = function (fc) { fc.question = q; fc.answer = a; };
-    applyItem(target);
-
-    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
-    const upd = await client.from('subject_content').update({ payload: payload })
-      .eq('subject_id', subjectId).eq('var_name', varName);
-    if (upd.error) {
-      _editStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-
-    // 3) F4.3c-2: propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
-    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'flashcards', idx, applyItem);
-
-    // 4) In-memory patch → live promjena bez reloada (primarni + svi zakrpani sestrinski varovi).
-    _patchInMemory(varName, catId, 'flashcards', idx, applyItem);
-    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'flashcards', idx, applyItem); });
-
-    if (saveBtn) saveBtn.disabled = false;
-    _closeEditor();
-    if (typeof showToast === 'function') {
-      const okMsg = _adminT('admin.saveOk', 'Flashcard saved.');
-      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
-    }
-    const holder = document.getElementById('adminCards');
-    if (holder) _renderAdminCards(holder, _adminCtx.data);
-  } catch (e) {
-    _editStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-    if (saveBtn) saveBtn.disabled = false;
-  }
+  _closeEditor();
+  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+  _adminRerender();
 }
 
 // ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
@@ -602,7 +695,7 @@ function _quizDeleteOption(delBtn) {
 
 /** Otvori quiz-editor za (catId, idx) iz trenutnog konteksta. */
 function _openQuizEditor(catId, idx) {
-  const data = _adminCtx.data;
+  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
   const qz = (cat && Array.isArray(cat.quiz)) ? cat.quiz[idx] : null;
   if (!qz) return;
@@ -615,17 +708,16 @@ function _openQuizEditor(catId, idx) {
   const note = document.getElementById('adminQuizNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
   }
   _quizStatus('', false);
   const m = document.getElementById('adminQuizModal');
   if (m && typeof m.open === 'function') m.open();
 }
 
-/** Spremi uređeno quiz pitanje: validacija → RMW jednog reda → verzija → propagacija → live re-render. */
-async function _saveQuiz() {
+/** Spremi uređeno quiz pitanje U DRAFT: validacija → op nad working kopijom (U3). */
+function _saveQuiz() {
   const qEl = document.getElementById('adminQuizQ');
-  const saveBtn = document.getElementById('adminQuizSave');
   if (!qEl || !_quizTarget) return;
 
   const q = qEl.value.trim();
@@ -639,66 +731,23 @@ async function _saveQuiz() {
   if (options.some(function (s) { return !s; })) { _quizStatus(_adminT('admin.quizEmptyErr', 'Question and all options must not be empty.'), true); return; }
   if (correct < 0 || correct >= options.length) { _quizStatus(_adminT('admin.quizCorrectErr', 'Pick which option is correct.'), true); return; }
 
-  const subjectId = _adminCtx.subjectId;
-  const varName = _adminCtx.varName;
+  const d = _adminDraft();
   const catId = _quizTarget.catId;
   const idx = _quizTarget.idx;
-  if (!subjectId || !varName) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  const w = (_draftMode && d) ? d.working : null;
+  const item = (w && w[catId] && Array.isArray(w[catId].quiz)) ? w[catId].quiz[idx] : null;
+  if (!item) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
-  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
-  if (!client) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  // Patch mijenja samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+    type: 'updateQuiz', catId: catId, id: item.id, idx: idx,
+    patch: { question: q, options: options.slice(), correct: correct }
+  });
+  if (!res.ok) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  if (saveBtn) saveBtn.disabled = true;
-  _quizStatus(_adminT('admin.saving', 'Saving…'), false);
-  try {
-    // 1) Svjež autoritativni payload iz baze (read-modify-write; ne preko stale/JSON-fallbacka).
-    const sel = await client.from('subject_content').select('payload')
-      .eq('subject_id', subjectId).eq('var_name', varName).single();
-    if (sel.error || !sel.data || !sel.data.payload) {
-      _quizStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    const payload = sel.data.payload;
-    const target = (payload[catId] && Array.isArray(payload[catId].quiz)) ? payload[catId].quiz[idx] : null;
-    if (!target) {
-      _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    // Mijenjamo samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
-    const applyItem = function (t) { t.question = q; t.options = options.slice(); t.correct = correct; };
-    applyItem(target);
-
-    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
-    const upd = await client.from('subject_content').update({ payload: payload })
-      .eq('subject_id', subjectId).eq('var_name', varName);
-    if (upd.error) {
-      _quizStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-
-    // 3) Propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
-    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'quiz', idx, applyItem);
-
-    // 4) In-memory patch → live promjena bez reloada (primarni + zakrpani sestrinski varovi).
-    _patchInMemory(varName, catId, 'quiz', idx, applyItem);
-    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'quiz', idx, applyItem); });
-
-    if (saveBtn) saveBtn.disabled = false;
-    _closeQuizEditor();
-    if (typeof showToast === 'function') {
-      const okMsg = _adminT('admin.quizSaveOk', 'Quiz question saved.');
-      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
-    }
-    const holder = document.getElementById('adminCards');
-    if (holder) _renderAdminCards(holder, _adminCtx.data);
-  } catch (e) {
-    _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-    if (saveBtn) saveBtn.disabled = false;
-  }
+  _closeQuizEditor();
+  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+  _adminRerender();
 }
 
 // ===== F4.4 — Uredi FILL-IN-THE-BLANK: rečenica (s _______) + odgovor =====
@@ -758,7 +807,7 @@ function _closeFillEditor() {
 
 /** Otvori fill-editor za (catId, idx) iz trenutnog konteksta. */
 function _openFillEditor(catId, idx) {
-  const data = _adminCtx.data;
+  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
   const fb = (cat && Array.isArray(cat.fillBlanks)) ? cat.fillBlanks[idx] : null;
   if (!fb) return;
@@ -769,18 +818,17 @@ function _openFillEditor(catId, idx) {
   const note = document.getElementById('adminFillNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
   }
   _fillStatus('', false);
   const m = document.getElementById('adminFillModal');
   if (m && typeof m.open === 'function') m.open();
 }
 
-/** Spremi uređeni fill: validacija → RMW jednog reda → verzija → propagacija → live re-render. */
-async function _saveFill() {
+/** Spremi uređeni fill U DRAFT: validacija → op nad working kopijom (U3). */
+function _saveFill() {
   const sEl = document.getElementById('adminFillS');
   const aEl = document.getElementById('adminFillA');
-  const saveBtn = document.getElementById('adminFillSave');
   if (!sEl || !aEl || !_fillTarget) return;
 
   const sentence = sEl.value.trim();
@@ -790,66 +838,23 @@ async function _saveFill() {
   if (!sentence || !answer) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
   if (sentence.indexOf(_FILL_BLANK) === -1) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence must contain the blank (_______).'), true); return; }
 
-  const subjectId = _adminCtx.subjectId;
-  const varName = _adminCtx.varName;
+  const d = _adminDraft();
   const catId = _fillTarget.catId;
   const idx = _fillTarget.idx;
-  if (!subjectId || !varName) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  const w = (_draftMode && d) ? d.working : null;
+  const item = (w && w[catId] && Array.isArray(w[catId].fillBlanks)) ? w[catId].fillBlanks[idx] : null;
+  if (!item) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
-  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
-  if (!client) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  // Patch mijenja samo sentence/answer → hint (ako postoji) ostaje netaknut.
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+    type: 'updateFill', catId: catId, id: item.id, idx: idx,
+    patch: { sentence: sentence, answer: answer }
+  });
+  if (!res.ok) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  if (saveBtn) saveBtn.disabled = true;
-  _fillStatus(_adminT('admin.saving', 'Saving…'), false);
-  try {
-    // 1) Svjež autoritativni payload iz baze (read-modify-write).
-    const sel = await client.from('subject_content').select('payload')
-      .eq('subject_id', subjectId).eq('var_name', varName).single();
-    if (sel.error || !sel.data || !sel.data.payload) {
-      _fillStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    const payload = sel.data.payload;
-    const target = (payload[catId] && Array.isArray(payload[catId].fillBlanks)) ? payload[catId].fillBlanks[idx] : null;
-    if (!target) {
-      _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    // Mijenjamo samo sentence/answer → hint (ako postoji) ostaje netaknut.
-    const applyItem = function (t) { t.sentence = sentence; t.answer = answer; };
-    applyItem(target);
-
-    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
-    const upd = await client.from('subject_content').update({ payload: payload })
-      .eq('subject_id', subjectId).eq('var_name', varName);
-    if (upd.error) {
-      _fillStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-
-    // 3) Propagiraj u sestrinske redove (final = kopija M1+M2 → mora ostati u sinku).
-    const prop = await _propagateToSiblings(client, subjectId, varName, catId, 'fillBlanks', idx, applyItem);
-
-    // 4) In-memory patch → live promjena bez reloada.
-    _patchInMemory(varName, catId, 'fillBlanks', idx, applyItem);
-    prop.patched.forEach(function (sv) { _patchWindowVar(sv, catId, 'fillBlanks', idx, applyItem); });
-
-    if (saveBtn) saveBtn.disabled = false;
-    _closeFillEditor();
-    if (typeof showToast === 'function') {
-      const okMsg = _adminT('admin.fillSaveOk', 'Sentence saved.');
-      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
-    }
-    const holder = document.getElementById('adminCards');
-    if (holder) _renderAdminCards(holder, _adminCtx.data);
-  } catch (e) {
-    _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-    if (saveBtn) saveBtn.disabled = false;
-  }
+  _closeFillEditor();
+  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+  _adminRerender();
 }
 
 // ===== F4.4 — Uredi LEARN: naslov + HTML sadržaj (jedan objekt po kategoriji) =====
@@ -862,42 +867,7 @@ async function _saveFill() {
 /** Learn koji se uređuje: { catId }. */
 let _learnTarget = null;
 
-/** Zakrpaj `obj[catId].learn` (objekt) ako postoji; applyItem mutira na mjestu. */
-function _patchLearnObj(obj, catId, applyItem) {
-  if (obj && obj[catId] && obj[catId].learn && typeof obj[catId].learn === 'object') {
-    applyItem(obj[catId].learn);
-    return true;
-  }
-  return false;
-}
-
-/** In-memory patch learn objekta (window-var + viewer izvor). */
-function _patchLearnInMemory(varName, catId, applyItem) {
-  if (typeof window !== 'undefined') _patchLearnObj(window[varName], catId, applyItem);
-  _patchLearnObj(_adminCtx.data, catId, applyItem);
-}
-
-/** Propagacija learn izmjene u sestrinske redove (final = kopija → learn objekt mora ostati u sinku). */
-async function _propagateLearnToSiblings(client, subjectId, primaryVar, catId, applyItem) {
-  const patched = [];
-  const failed = [];
-  try {
-    const sel = await client.from('subject_content').select('var_name,payload')
-      .eq('subject_id', subjectId).neq('var_name', primaryVar);
-    if (sel.error || !Array.isArray(sel.data)) return { patched: patched, failed: failed };
-    for (const row of sel.data) {
-      const p = row.payload;
-      if (!(p && p[catId] && p[catId].learn && typeof p[catId].learn === 'object')) continue;
-      applyItem(p[catId].learn);
-      const upd = await client.from('subject_content').update({ payload: p })
-        .eq('subject_id', subjectId).eq('var_name', row.var_name);
-      if (upd.error) failed.push(row.var_name); else patched.push(row.var_name);
-    }
-  } catch (e) {
-    // best-effort; primarni je već spremljen.
-  }
-  return { patched: patched, failed: failed };
-}
+// (U3) Stari learn RMW/propagate put je uklonjen — learn ide kroz draft kao i ostali tipovi.
 
 function _ensureLearnModal() {
   let m = document.getElementById('adminLearnModal');
@@ -945,7 +915,7 @@ function _closeLearnEditor() {
 
 /** Otvori learn-editor za kategoriju (learn = jedan objekt, bez idx). */
 function _openLearnEditor(catId) {
-  const data = _adminCtx.data;
+  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
   const L = (cat && cat.learn && typeof cat.learn === 'object') ? cat.learn : null;
   if (!L) return;
@@ -956,18 +926,17 @@ function _openLearnEditor(catId) {
   const note = document.getElementById('adminLearnNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.finalNote', 'syncs across this lesson and the final exam.');
+      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
   }
   _learnStatus('', false);
   const m = document.getElementById('adminLearnModal');
   if (m && typeof m.open === 'function') m.open();
 }
 
-/** Spremi uređeni learn: validacija → RMW learn objekta → verzija → propagacija → live re-render. */
-async function _saveLearn() {
+/** Spremi uređeni learn U DRAFT: validacija → op nad working kopijom (U3). */
+function _saveLearn() {
   const tEl = document.getElementById('adminLearnT');
   const cEl = document.getElementById('adminLearnC');
-  const saveBtn = document.getElementById('adminLearnSave');
   if (!cEl || !_learnTarget) return;
 
   const title = tEl ? tEl.value.trim() : '';
@@ -975,68 +944,22 @@ async function _saveLearn() {
   const content = cEl.value;
   if (!content.trim()) { _learnStatus(_adminT('admin.learnEmptyErr', 'Content must not be empty.'), true); return; }
 
-  const subjectId = _adminCtx.subjectId;
-  const varName = _adminCtx.varName;
+  const d = _adminDraft();
   const catId = _learnTarget.catId;
-  if (!subjectId || !varName) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  const w = (_draftMode && d) ? d.working : null;
+  const target = (w && w[catId] && w[catId].learn && typeof w[catId].learn === 'object') ? w[catId].learn : null;
+  if (!target) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
-  const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
-  if (!client) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  // Patch mijenja content (+ title: prazan → null BRIŠE ključ, semantika F4.4). `image` ostaje netaknut.
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+    type: 'updateLearn', catId: catId,
+    patch: { content: content, title: title || null }
+  });
+  if (!res.ok) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  if (saveBtn) saveBtn.disabled = true;
-  _learnStatus(_adminT('admin.saving', 'Saving…'), false);
-  try {
-    // 1) Svjež autoritativni payload iz baze (read-modify-write).
-    const sel = await client.from('subject_content').select('payload')
-      .eq('subject_id', subjectId).eq('var_name', varName).single();
-    if (sel.error || !sel.data || !sel.data.payload) {
-      _learnStatus(_adminT('admin.notInDb', 'This subject is not in the database yet.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    const payload = sel.data.payload;
-    const target = (payload[catId] && payload[catId].learn && typeof payload[catId].learn === 'object') ? payload[catId].learn : null;
-    if (!target) {
-      _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-    // Mijenjamo content (+ title: prazan → makni ključ). `image` ostaje netaknut.
-    const applyItem = function (t) {
-      t.content = content;
-      if (title) t.title = title; else delete t.title;
-    };
-    applyItem(target);
-
-    // 2) Write natrag — RLS is_admin() čuvar; trigger snapshota STARI red u content_versions PRIJE prepisa.
-    const upd = await client.from('subject_content').update({ payload: payload })
-      .eq('subject_id', subjectId).eq('var_name', varName);
-    if (upd.error) {
-      _learnStatus(_adminT('admin.saveErr', 'Could not save.') + ' (' + upd.error.message + ')', true);
-      if (saveBtn) saveBtn.disabled = false;
-      return;
-    }
-
-    // 3) Propagiraj learn u sestrinske redove (final = kopija).
-    const prop = await _propagateLearnToSiblings(client, subjectId, varName, catId, applyItem);
-
-    // 4) In-memory patch → live promjena bez reloada.
-    _patchLearnInMemory(varName, catId, applyItem);
-    prop.patched.forEach(function (sv) { if (typeof window !== 'undefined') _patchLearnObj(window[sv], catId, applyItem); });
-
-    if (saveBtn) saveBtn.disabled = false;
-    _closeLearnEditor();
-    if (typeof showToast === 'function') {
-      const okMsg = _adminT('admin.learnSaveOk', 'Learn content saved.');
-      showToast(prop.failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
-    }
-    const holder = document.getElementById('adminCards');
-    if (holder) _renderAdminCards(holder, _adminCtx.data);
-  } catch (e) {
-    _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true);
-    if (saveBtn) saveBtn.disabled = false;
-  }
+  _closeLearnEditor();
+  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+  _adminRerender();
 }
 
 // Delegat: klik na edit-gumb stavke → otvori editor (grana po tipu).

@@ -103,13 +103,21 @@
       if (!arr) return { ok: false, error: 'no-array' };
       const i = _findIndex(arr, op);
       if (i === -1) return { ok: false, error: 'not-found' };
-      Object.assign(arr[i], op.patch);
+      _assignPatch(arr[i], op.patch);
       return { ok: true };
     }
     // object-op (learn): kategorijin objekt; kreiraj ako ne postoji (learn je opcionalan u shemi)
     const obj = (cat[spec.objectKey] && typeof cat[spec.objectKey] === 'object') ? cat[spec.objectKey] : (cat[spec.objectKey] = {});
-    Object.assign(obj, op.patch);
+    _assignPatch(obj, op.patch);
     return { ok: true };
+  }
+
+  /** Object.assign s brisanjem: `null` vrijednost u patchu BRIŠE ključ (npr. prazan learn.title — schema nema prazne stringove). */
+  function _assignPatch(target, patch) {
+    Object.keys(patch).forEach(function (k) {
+      if (patch[k] === null) delete target[k];
+      else target[k] = patch[k];
+    });
   }
 
   const SokratDraft = {
@@ -176,6 +184,22 @@
     discard(subjectId, lessonId) {
       delete _drafts[_key(subjectId, lessonId)];
       _autosaveClear(subjectId, lessonId);
+    },
+
+    /**
+     * Primijeni niz opova na PROIZVOLJAN payload (in-place) — za sync sestrinskih redova
+     * pri objavi (`final` = kopija M1+M2 dijeli kategorije) i in-memory window-varova.
+     * Update-opovi su idempotentni (apsolutne vrijednosti) → smije se primijeniti i na
+     * već ažuriran objekt. ⚠ add/remove/reorder (U6) NEĆE biti idempotentni — tada sibling
+     * sync prelazi na server (U4 publish-RPC to ionako preuzima).
+     * @returns {{applied:number, skipped:number}} skipped = kategorija/stavka ne postoji u tom payloadu (npr. examPractice-only red)
+     */
+    applyOpsTo(payload, ops) {
+      let applied = 0, skipped = 0;
+      (ops || []).forEach(function (op) {
+        if (payload && _dispatch(payload, op).ok) applied++; else skipped++;
+      });
+      return { applied: applied, skipped: skipped };
     },
 
     /** Nakon USPJEŠNE objave: nova baza = working (re-baseline), oplog i autosave se čiste. */

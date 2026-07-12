@@ -8877,6 +8877,27 @@ sokrat-modal.auth-modal > * {
 .admin-card-q { font-weight: 600; color: var(--text-primary); margin-bottom: 0.35rem; white-space: pre-wrap; }
 .admin-card-a { font-size: 0.9rem; color: var(--text-secondary); white-space: pre-wrap; }
 
+/* ===== U3 — draft-mod traka (Uredi lekciju → Objavi/Odbaci) ===== */
+.admin-editbar {
+    display: flex; align-items: center; justify-content: flex-end;
+    flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem;
+    padding: 0.8rem 1rem;
+}
+.admin-editbar.is-active {
+    justify-content: space-between;
+    border: 1px solid var(--primary, #6366f1);
+}
+.admin-editbar__status { color: var(--text-secondary); font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; }
+.admin-editbar__status i { color: var(--primary, #6366f1); }
+.admin-editbar__count {
+    display: inline-block; min-width: 1.5rem; text-align: center;
+    padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.8rem;
+    background: var(--primary, #6366f1); color: #fff;
+}
+.admin-editbar__actions { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; }
+.admin-editbar .cta-button { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+.admin-editbar .cta-button[disabled] { opacity: 0.5; cursor: not-allowed; }
+
 /* ===== F4.3c-1 Uredi karticu ===== */
 .admin-edit-btn {
     flex: 0 0 auto; width: 34px; height: 34px; border-radius: 8px;
