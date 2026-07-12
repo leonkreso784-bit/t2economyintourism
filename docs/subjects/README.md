@@ -40,7 +40,8 @@
 ## HR program „Menadžment u Hotelijerstvu" (klon, ADR-012) — STATUSNA PLOČA (vodi: Saša, [TEAM.md](../TEAM.md))
 
 > **Aktivno od 2026-07-09** (ADR-023): Saša prevodi/gradi HR program do pune 2 godine. Tok po predmetu = [TEAM.md](../TEAM.md) §5
-> (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Saša ažurira SAMO ovu tablicu.
+> (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Saša ažurira SAMO ovu tablicu —
+> **⚠️ privremeno (dok su docs samo na f4, TEAM.md §2/§9): redak šalje u PR-OPISU, u tablicu ga upisuje Leon/Claude.**
 
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|

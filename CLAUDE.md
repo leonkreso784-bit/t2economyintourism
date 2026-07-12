@@ -50,7 +50,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 5. Radi polako, korak po korak, s provjerama; pazi na bugove; **kraće dionice, češće se javi korisniku**.
 6. **PRIJE SVAKOG COMPACTA (korisnikovo pravilo, 2026-06-24):** proći **APSOLUTNO SVE `.md` datoteke** (root + `docs/**` + memorija) i provjeriti točnost (status, brojevi, ADR-ovi, linkovi) — ispraviti zastarjelo PRIJE compacta. [[doc-audit-before-compact]]
 7. **Nakon pusha provjeri i Vercel check na commitu, ne samo GitHub Actions** (Actions ne validira `vercel.json`!); `vercel.json` = bez komentar-ključeva (ruše schema-validaciju prije builda).
-8. **Auth/RLS-gated značajke:** pozitivan put verificiraj pravom admin-prijavom (`npm run test:authed`); WRITE = privremeni edit-pa-revert spec + Supabase MCP provjera (nema izoliranog test-DB-a; spec se briše). [[live-login-verifies-crud]]
+8. **Auth/RLS-gated značajke:** pozitivan put verificiraj pravom admin-prijavom (`npm run test:authed` — gađa STAGING kad su `STAGING_*` u `.env`); **write/draft tokovi se automatiziraju vs STAGING** (`sokrat-staging` = izolirani test-DB od U1; seed: `node scripts/seed-staging.js`); protiv PROD-a write SAMO edit-pa-revert + Supabase MCP provjera (append-only audit). [[live-login-verifies-crud]]
 
 ## Komande
 - `npm run verify` — integritet catalog-a. · `npm run typecheck` — tsc bez build-a (scoped).
