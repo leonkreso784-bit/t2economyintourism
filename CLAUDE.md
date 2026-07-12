@@ -62,7 +62,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 - `npm run export:json [id] [--check]` — export u `data/json/`; **⚠️ nakon izmjene `data/*.js` migriranog predmeta OBAVEZNO re-export — inače CI drift-gate pada.** Vježbe se NE exportaju.
 - `npm run scaffold -- <id> "<Naziv>" <god> <sem>` · `node scripts/pdf-text.js "<pdf>"` · **`node scripts/seed-staging.js [id]`** — seed staging sadržajem (STAGING-only guard; authed specovi traže te2) · generator: vidi `docs/content/CONTENT_GENERATOR.md`.
 
-## Stanje — TRENUTNO (2026-07-12; povijest: `docs/HISTORY.md`)
+## Stanje — TRENUTNO (2026-07-13; povijest: `docs/HISTORY.md`)
 - **🎯 ŠTO SADA RADIMO (jedna rečenica):** dovršavamo **ADMIN CRUD (F4)** kroz draft→objavi + editor cigle — plan `docs/EDITOR_PLAN.md` (**sljedeća = U4 publish-RPC**, potom **U-UX dizajn-faza**: mockupi + `EDITOR_UX.md` PRIJE U6–U8 editor-koda; U5 odgođen; osvježenje cijele platforme = zasebna kasnija faza — EDITOR_PLAN §12 preslagivanje 2026-07-13); „UGC" NIJE trenutni posao (to je H2, tek iza F5/F6).
 - **PRODUKCIJA (`main`): sve do F3 + F4.1–4.4 + U1–U3 — 🚀 DEPLOY 2026-07-13 (`5d24a96..79f17c7`, ff-merge f4→main uz izričit OK; live-verified: token `20260712180655`, draft-store/admin.js serviraju, SW bumpan, BUG-019 fix živ, admin skriven ne-adminu).** 18 predmeta live (17 EN + HR pilot; tablica `docs/subjects/README.md`), auth + cloud-sync + profil, pravne stranice, GA4 + Sentry (consent), SW offline, i18n HR/EN, JSON dual-read 18/18, CI. **+ admin draft→objavi tok** (vidljiv SAMO adminu; jedini write-put = „Objavi"). Docs su od ovog deploya NA MAIN-u (Saša ih vidi u klonu). [[foundation-pivot]]
 - **F4 dosad (sve živo verificirano):** F4.1 identitet · F4.2 write-RLS+versioning · F4.3 viewer + edit kartice (+propagacija na final) · **F4.4 quiz/fill/learn editori** · Playwright LOGIN (`test:authed`). Novi rad = nova grana s `main` → preview → merge uz OK.
@@ -95,7 +95,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 - **Logo:** `assets/logo.svg` — vektorizirani originalni Sokrat (potrace), glava ispunjava krug, indigo gradijent; favikoni iz SVG-a. Kvaliteta = vektorizacija ORIGINALA, ne ručno crtanje.
 
 ## Dokumentacija (`docs/` — indeks: `docs/README.md`)
-**Aktivno:** `FOUNDATION_PLAN` (faze F0–F6) · `CRUD_PLAN` (F4) · **`EDITOR_PLAN.md` (SLJEDEĆE — draft→objavi + autorstvo + UGC arhitektura)** · `CATALOG_ARCHITECTURE` · `HRV_PLAN`.
+**Aktivno:** `FOUNDATION_PLAN` (faze F0–F6) · `CRUD_PLAN` (F4) · **`EDITOR_PLAN.md` (AKTIVNO — draft→objavi + autorstvo + UGC arhitektura; §5.1 = Leonovi zahtjevi za editor)** · `CATALOG_ARCHITECTURE` · `HRV_PLAN`.
 **Referenca:** `PRD` · `VISION` · `ARCHITECTURE` · `BACKEND` · `ROADMAP` · `TESTING` · `MONETIZATION`.
 **Sadržaj:** `content/` (SCHEMA · GUIDE · INTAKE · GENERATOR · EXERCISES_ENGINE) · `subjects/` (tablica predmeta + planovi).
 **Zapisnici:** `HISTORY` (vremenska crta) · `CHANGELOG` · `PROGRESS` · `DECISIONS` · `BUGS` · `BACKLOG`. **Arhiva:** `archive/`.

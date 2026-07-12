@@ -46,7 +46,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT** | 🟡 **DRAFT PR #1 otvoren** (2026-07-12) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi zeleni (185/0) ✓ + živa provjera ✓ + CI na PR-u zelen ✓ (grana `content/management-hr`, `9d2f5c3`); PR-opis po privremenom pravilu (redak u opisu) ✓; **čeka:** 1.god materijali (Leon) za §5.2 terminologiju → Saša flipa u „Ready for review" |
+| Management | `management-hr` | **S2 PILOT** | 🟡 **DRAFT PR #1 otvoren** (2026-07-12) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi zeleni (185/0) ✓ + živa provjera ✓ + CI na PR-u zelen ✓ (grana `content/management-hr`, `9d2f5c3`); PR-opis po privremenom pravilu (redak u opisu) ✓; **čeka:** (1) rebase na novi main (F4 deploy 2026-07-13 → bump-konflikt, trivijalan — TEAM.md §7) · (2) 1.god materijali (Leon) za §5.2 terminologiju → Saša flipa u „Ready for review" |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
