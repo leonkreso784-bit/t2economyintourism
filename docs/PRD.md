@@ -1,6 +1,6 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.4 · **Zadnja izmjena:** 2026-07-11
+**Status:** živi dokument · **Verzija PRD-a:** 0.4 · **Zadnja izmjena:** 2026-07-13
 
 ## 1. Vizija
 Sokrat Study je platforma za učenje koja studentima pretvara nastavne materijale
@@ -15,7 +15,7 @@ generiraju i dijele skripte te se natječu.
 - **(Faza 1+) Korisnik-autor:** uploada svoj materijal i radi privatne skripte.
 - **(Faza 4) Pretplatnik:** plaća premium funkcionalnosti.
 
-## 3. Trenutno stanje (2026-07-11)
+## 3. Trenutno stanje (2026-07-13)
 - Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com). Data-driven katalog + drill-down nav.
 - Sadržaj: **2. god HM = 8/8 ✅ + 1. god HM = 9/9 ✅ LIVE** (17 EN + HR pilot). ⛔ Intro to Hospitality blokiran (nema PDF-ova). **HR program u tijeku** (Saša, content-suradnik — `docs/TEAM.md`; pilot Management HR).
 - Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (7 tipova uklj. „napiši citat"), Progress (+ Blind Map). **KaTeX** za kvantitativne.

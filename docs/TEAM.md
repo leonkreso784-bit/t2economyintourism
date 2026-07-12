@@ -67,7 +67,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 | # | Cigla | Opis | Preduvjet |
 |---|---|---|---|
-| S1 | **Onboarding** | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) → [HRV_PLAN.md](HRV_PLAN.md) → [subjects/README.md](subjects/README.md) (⚠️ ovi docs su zasad SAMO na grani `foundation/f4` — vidi §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
+| S1 | **Onboarding** ✅ | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) → [HRV_PLAN.md](HRV_PLAN.md) → [subjects/README.md](subjects/README.md) (od 2026-07-13 docs su na `main`-u — §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
 | S2 | **PILOT: 1 predmet end-to-end** | prijedlog: **Management** (srednji, tekstualan, bez vježbi); cijeli §5 tok kroz PR; svrha = naučiti put, kalibrirati review | S1 |
 | S3 | **Batch tekstualni** (~11 predmeta) | ritam ~2–3/tjedan; jedan PR po predmetu | S2 mergean glatko |
 | S4 | **Kvantitativni** (micro/macro/stat/math) | KaTeX — alat čuva formule, čovjek provjerava currency-safe/balans (alat to i verificira) | S3 iskustvo |
