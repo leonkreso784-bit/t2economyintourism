@@ -1,0 +1,184 @@
+/* eslint-disable no-console */
+// ===== Node unit testovi za js/draft-store.js (U3 — draft-sloj, EDITOR_PLAN §4.1) =====
+// Pokreni: `npm run test:unit` (ili: node tests/unit/draft-store.test.js)
+// Isti obrazac kao app-state.test.js: klasična skripta se učitava kroz window-shim
+// (new Function), localStorage = fake u shimu (autosave testovi bez preglednika).
+
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+
+let passed = 0;
+let failed = 0;
+function test(name, fn) {
+  try { fn(); passed++; console.log('  ✓ ' + name); }
+  catch (e) { failed++; console.error('  ✗ ' + name + '\n      ' + e.message); }
+}
+
+console.log('\n=== draft-store (U3) ===\n');
+
+const code = fs.readFileSync(path.join(__dirname, '..', '..', 'js', 'draft-store.js'), 'utf8');
+
+function fakeStorage() {
+  const m = {};
+  return {
+    getItem: (k) => (k in m ? m[k] : null),
+    setItem: (k, v) => { m[k] = String(v); },
+    removeItem: (k) => { delete m[k]; },
+    _dump: () => m
+  };
+}
+
+/** Svježa instanca store-a (npr. simulacija refresha) nad ZAJEDNIČKIM localStorage-om. */
+function loadStore(ls) {
+  /** @type {{ SokratDraft?: any, localStorage?: any }} */
+  const win = { localStorage: ls };
+  new Function('window', code)(win);
+  return win.SokratDraft;
+}
+
+/** Mini lekcijski payload — kategorija s id-jevima (v2) i bez (v1/DB pre-U2a). */
+function sampleData() {
+  return {
+    demand: {
+      name: 'Demand', icon: 'fa-x', color: '#111',
+      flashcards: [
+        { id: 'aaa111', question: 'Q1?', answer: 'A1' },
+        { id: 'bbb222', question: 'Q2?', answer: 'A2' }
+      ],
+      quiz: [{ id: 'qqq111', question: 'Pick', options: ['a', 'b'], correct: 0 }],
+      fillBlanks: [{ sentence: 'Fill _______ here.', answer: 'me' }], // BEZ id (DB pre-U2a)
+      learn: { title: 'T', content: '<p>x</p>' }
+    }
+  };
+}
+
+const S = 'te2';
+const L = 'first-midterm';
+const V = 'te2M1';
+
+// ---- osnovni životni ciklus ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const src = sampleData();
+  const d = store.begin(S, L, V, src);
+
+  test('begin: original i working su DEEP kopije (izvor i original netaknuti mutacijom workinga)', () => {
+    d.working.demand.flashcards[0].question = 'MUTIRANO';
+    assert.strictEqual(src.demand.flashcards[0].question, 'Q1?');
+    assert.strictEqual(d.original.demand.flashcards[0].question, 'Q1?');
+    d.working.demand.flashcards[0].question = 'Q1?'; // vrati za daljnje testove
+  });
+
+  test('applyOp updateCard po ID-u: working ažuriran, dirty=true, original netaknut', () => {
+    const r = store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'bbb222', patch: { question: 'NQ', answer: 'NA' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.flashcards[1].question, 'NQ');
+    assert.strictEqual(d.original.demand.flashcards[1].question, 'Q2?');
+    assert.strictEqual(store.isDirty(S, L), true);
+    assert.strictEqual(store.opsOf(S, L).length, 1);
+  });
+
+  test('id ima PREDNOST nad krivim idx (id pogađa stavku 0, idx pokazuje na 1)', () => {
+    const r = store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', idx: 1, patch: { answer: 'A1-nova' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.flashcards[0].answer, 'A1-nova');
+    assert.strictEqual(d.working.demand.flashcards[1].answer, 'NA'); // netaknut ovim opom
+  });
+
+  test('fallback na idx kad stavka NEMA id (DB payload pre-U2a): updateFill', () => {
+    const r = store.applyOp(S, L, { type: 'updateFill', catId: 'demand', idx: 0, patch: { sentence: 'New _______ !', answer: 'x' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.fillBlanks[0].sentence, 'New _______ !');
+  });
+
+  test('updateQuiz i updateLearn (object-op) rade', () => {
+    assert.strictEqual(store.applyOp(S, L, { type: 'updateQuiz', catId: 'demand', id: 'qqq111', patch: { correct: 1 } }).ok, true);
+    assert.strictEqual(d.working.demand.quiz[0].correct, 1);
+    assert.strictEqual(store.applyOp(S, L, { type: 'updateLearn', catId: 'demand', patch: { title: 'Novi naslov' } }).ok, true);
+    assert.strictEqual(d.working.demand.learn.title, 'Novi naslov');
+    assert.strictEqual(d.working.demand.learn.content, '<p>x</p>'); // ostala polja očuvana
+  });
+
+  test('nepostojeća stavka/kategorija/op → ok:false, oplog se NE puni', () => {
+    const before = store.opsOf(S, L).length;
+    assert.strictEqual(store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'nema-me', patch: { q: 'x' } }).ok, false);
+    assert.strictEqual(store.applyOp(S, L, { type: 'updateCard', catId: 'ghost', idx: 0, patch: { q: 'x' } }).ok, false);
+    assert.strictEqual(store.applyOp(S, L, { type: 'eksplodiraj', catId: 'demand', patch: {} }).ok, false);
+    assert.strictEqual(store.applyOp('nepostojeci', L, { type: 'updateCard', catId: 'demand', idx: 0, patch: {} }).ok, false);
+    assert.strictEqual(store.opsOf(S, L).length, before);
+  });
+
+  test('commitDone: re-baseline (original=working, dirty=false, oplog i autosave očišćeni)', () => {
+    store.commitDone(S, L);
+    assert.strictEqual(store.isDirty(S, L), false);
+    assert.strictEqual(store.opsOf(S, L).length, 0);
+    assert.deepStrictEqual(d.original, d.working);
+    assert.strictEqual(ls.getItem('sokrat-draft:te2::first-midterm'), null);
+  });
+}
+
+// ---- autosave / restore (preživi „refresh") ----
+
+{
+  const ls = fakeStorage();
+  const store1 = loadStore(ls);
+  store1.begin(S, L, V, sampleData());
+  store1.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', patch: { question: 'PREŽIVI-ME' } });
+
+  test('autosave: nakon applyOp postoji localStorage zapis drafta', () => {
+    const raw = ls.getItem('sokrat-draft:te2::first-midterm');
+    assert.ok(raw, 'autosave zapis mora postojati');
+    assert.ok(raw.includes('PREŽIVI-ME'));
+  });
+
+  test('restore: NOVA instanca (refresh) + ISTA baza → working i oplog vraćeni, restored=true', () => {
+    const store2 = loadStore(ls); // svjež eval = simulacija reload-a stranice
+    const d2 = store2.begin(S, L, V, sampleData());
+    assert.strictEqual(d2.restored, true);
+    assert.strictEqual(d2.working.demand.flashcards[0].question, 'PREŽIVI-ME');
+    assert.strictEqual(d2.original.demand.flashcards[0].question, 'Q1?'); // original = svježa baza
+    assert.strictEqual(store2.isDirty(S, L), true);
+    assert.strictEqual(store2.opsOf(S, L).length, 1);
+  });
+
+  test('restore se ODBIJA kad se baza promijenila (zastarjeli autosave se briše)', () => {
+    const store3 = loadStore(ls);
+    const changed = sampleData();
+    changed.demand.flashcards[0].answer = 'baza se promijenila drugdje';
+    const d3 = store3.begin(S, L, V, changed);
+    assert.strictEqual(d3.restored, false);
+    assert.strictEqual(d3.working.demand.flashcards[0].question, 'Q1?'); // čista kopija nove baze
+    assert.strictEqual(store3.isDirty(S, L), false);
+    assert.strictEqual(ls.getItem('sokrat-draft:te2::first-midterm'), null, 'zastarjeli autosave obrisan');
+  });
+}
+
+// ---- discard ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  store.begin(S, L, V, sampleData());
+  store.applyOp(S, L, { type: 'updateLearn', catId: 'demand', patch: { content: '<p>y</p>' } });
+
+  test('discard: draft i autosave nestaju („Odbaci" = ništa nije otišlo nikamo)', () => {
+    store.discard(S, L);
+    assert.strictEqual(store.get(S, L), null);
+    assert.strictEqual(store.isDirty(S, L), false);
+    assert.strictEqual(ls.getItem('sokrat-draft:te2::first-midterm'), null);
+  });
+
+  test('store radi i BEZ localStorage-a (autosave = tihi no-op)', () => {
+    const bare = loadStore(undefined);
+    const d = bare.begin(S, L, V, sampleData());
+    const r = bare.applyOp(S, L, { type: 'updateCard', catId: 'demand', idx: 0, patch: { answer: 'ok' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.flashcards[0].answer, 'ok');
+  });
+}
+
+console.log(`\ndraft-store: ${passed} prošlo, ${failed} palo\n`);
+process.exit(failed ? 1 : 0);

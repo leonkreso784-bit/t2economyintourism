@@ -9,7 +9,7 @@
     "serve:test": "node scripts/static-server.js",
     "test:responsive": "playwright test",
     "test:authed": "playwright test --project=authenticated",
-    "test:unit": "node tests/unit/exercises-core.test.js && node tests/unit/acc-kernel.test.js && node tests/unit/stat-parse.test.js && node tests/unit/stat-lib.test.js && node tests/unit/app-state.test.js && node tests/unit/catalog-placement.test.js",
+    "test:unit": "node tests/unit/exercises-core.test.js && node tests/unit/acc-kernel.test.js && node tests/unit/stat-parse.test.js && node tests/unit/stat-lib.test.js && node tests/unit/app-state.test.js && node tests/unit/catalog-placement.test.js && node tests/unit/draft-store.test.js",
     "test:rls": "node scripts/rls-check.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "stats": "node scripts/compute-stats.js",
