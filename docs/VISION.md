@@ -89,4 +89,4 @@ Svaka je otvorena; rješavamo ih jednu po jednu i tad upisujemo ADR.
 - `SECURITY.md` — kad krene backend/auth (ključevi, RLS, rate-limit, prompt-injection).
 - `DATA_MODEL.md` — kad krene Blok B (detaljna schema; sad živi u [ARCHITECTURE.md](ARCHITECTURE.md)).
 - `AI_PIPELINE.md` — kad krene F3 (PDF→ekstrakcija→Claude→draft→pregled→publish).
-- `MONETIZATION.md` — kad odlučimo plaćanje (cijena/jedinice, MoR vs Stripe, PDV).
+- ~~`MONETIZATION.md`~~ ✅ postoji od 2026-06-27 ([MONETIZATION.md](MONETIZATION.md) — modeli, matura-tržište, MoR vs Stripe).

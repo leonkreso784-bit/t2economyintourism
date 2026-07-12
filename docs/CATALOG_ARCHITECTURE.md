@@ -80,8 +80,7 @@ Vjerojatna **zajednička jezgra** (dijeli se, jedan sadržaj): matematika, stati
 **Smjer-specifično** (duplicira se): predmeti gdje se silabus razlikuje po smjeru. → **Točnu podjelu daju silabusi (korisnik).**
 
 ## 9. Redoslijed
-Implementacija ide **NAKON F4** (ADR-018 platforma-first; HR-ekspanzija = sadržajna faza). Timeline: ~3 mj do početka godine,
-kolokviji ~4. mj → runway za dovršetak F4 pa HR-unos. Ovaj model se postavlja u catalog PRIJE kreiranja 3 HR programa (da se ne stvori nered koji bi se poslije čistio).
+~~Implementacija ide **NAKON F4**~~ **NADIĐENO (ADR-023 t.5, 2026-07-09): povučeno naprijed = cigla U2.5 → ✅ IMPLEMENTIRANO 2026-07-11 (`b969892`)** — vidi status na vrhu. Izvorni razlog timinga (kolokviji ~4. mj = runway) i pravilo „model u catalog PRIJE kreiranja 3 HR programa" su ispunjeni: mehanizam postoji prije S7.
 
 ## 10. Reference
 ADR-022 (ova odluka) · ADR-002 (hijerarhija institucija) · ADR-003 (catalog izvor istine) · ADR-012 (HR klon, ne i18n u sadržaju) ·

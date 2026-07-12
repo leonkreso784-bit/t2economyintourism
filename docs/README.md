@@ -49,7 +49,7 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [HISTORY.md](HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
 | [CHANGELOG.md](CHANGELOG.md) | Verzije i što se mijenjalo |
 | [PROGRESS.md](PROGRESS.md) | Dnevnik rada po sesijama |
-| [DECISIONS.md](DECISIONS.md) | Arhitektonske odluke (ADR-001…022) i zašto |
+| [DECISIONS.md](DECISIONS.md) | Arhitektonske odluke (ADR-001…023) i zašto |
 | [BUGS.md](BUGS.md) | Bugovi + lekcije naučene |
 | [BACKLOG.md](BACKLOG.md) | Parkiralište ideja |
 
