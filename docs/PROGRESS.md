@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-12 (FABLE, 3. sesija, nastavak) — U3-d3 ✅: ŽIVA verifikacija Objavi-puta na stagingu → U3 KOMPLETAN
+**Tok (privremeni authed spec `_tmp-u3d3-publish.authed.spec.js`, obrisan nakon runa; staging `czljmvigkgiajzjxtndq`):** draft na te2 first-midterm → marker edit prve kartice → **Objavi** (pravi RLS-write) → in-memory sync bez reloada ✓ → **re-enter draft = svježi payload iz BAZE pokazao marker** (dokaz persistencije) → revert drugom objavom → re-enter pokazao original. Playwright 2/2 (auth-setup STAGING mode + test).
+
+**MCP cross-check (neovisan, SQL):** završni **md5 sva 3 te2 reda == baseline** (te2M1 `8633b39b…` · te2M2 `a9a2eab5…` · te2Final `6a8ff581…`) — bit-točan revert, marker nigdje · **`content_versions` 0→4**: #1 te2M1 + #2 te2Final = snapshoti ORIGINALA (otisci == baseline → „Vrati" bi radio) · #3 te2M1 + #4 te2Final = snapshoti S MARKEROM (dokaz: marker je bio živ u bazi + propagacija na final nosila istu izmjenu) · svi `op=UPDATE`, editor `test-admin@sokrat.local` · **te2M2 bez ijednog reda** (sibling-skip logika točna) · **PROD potpuno netaknut**. ⚠ Poznato/namjerno: publish bez `base_version` → U4 publish-RPC.
+
+**→ U3 KOMPLETAN (3/3).** Docs: EDITOR_PLAN §12 U3 ✅ · CLAUDE.md stanje (sljedeća = U4) · checkpoint. Staging cv=4 test-reda (potrošan projekt — smije). **SLIJEDI: točka odluke o 1. deployu `foundation/f4`→main (uz Leonov izričit OK), potom U4 publish-RPC.**
+
+---
+
 ## 2026-07-12 (FABLE, 3. sesija) — BUG-019 fix (profil ⇄ admin petlja) · Sašin DRAFT PR #1 pregledan · post-compact reground
 **Kontekst:** korisnik živim klikanjem našao navigacijski bug u admin toku + izrazio da je admin/draft UX grub. Odluka korisnika: **sad SAMO bugfix; bogato editor-sučelje ostaje po planu (U8)** — držimo se EDITOR_PLAN §12.
 
