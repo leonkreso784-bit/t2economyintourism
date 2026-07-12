@@ -108,6 +108,14 @@ Restore stare verzije = publish starog payloada kroz ISTU RPC (→ i restore je 
   4. **Spike prije obveze** — prototip s pravim sadržajem: mobitel, paste iz Worda/Docsa, mapiranje na shemu → tek onda commit odluke (kriteriji ovdje, rezultat se upiše).
 - Kandidati za spike: blok-editor s JSON outputom, CDN/IIFE loadable (npr. Editor.js klasa rješenja) vs Quill (dokument-stil, Delta JSON). Ručni editor = fallback ako spike padne (blokovi ga čine izvedivim, ali contenteditable rat ne želimo bez potrebe).
 
+### 5.1 ⭐ Leonovi proizvodni zahtjevi za editor (2026-07-13) — OBAVEZNI ulaz za `EDITOR_UX.md` i mockupe
+> Leon: „za cijeli design edit koji radimo jako je bitno da se ovo napravi." Svaki mockup se mjeri prema ovome.
+
+1. **Struktura-CRUD u sučelju:** admin kroz UI stvara **fakultet → smjer → godinu → pod godinom predmete** („ne mora ići toliko u dubinu — bitno je da mogu kreirati sadržaj"). ⚠️ Arhitektonska implikacija: katalog je danas `data/catalog.js` DATOTEKA (izvor istine) → stvaranje strukture kroz UI traži katalog-kao-podatak (kurikulum-stablo u bazi, §3.5 + ADR-022 placement-tablica; prirodno sjeda uz F4.5/4.6 flip). Dizajn-faza crta tok; implementacija = zasebna cigla NAKON editora stavki.
+2. **Izbor modova po skripti („imaš izbore"):** pri kreiranju skripte autor bira ŠTO ona sadrži — samo learn · samo kartice+kviz · sve. Study-UI prikazuje samo odabrane tabove (obrazac već postoji: `features.exercises`/`blindMap`); validator poštuje izbor (prazan mod ≠ greška ako nije odabran).
+3. **Learn autorstvo = „+" blok:** klik na **+** otvori blok (kvadratić) s **editabilnim naslovom + tekstom + slikama + grafovima** itd. — ovo je doslovno §3.2 (learn-BLOKOVI) + §5 (blok-editor); **primarni ekran mockupa.** Grafovi = image-blok u v1 (interaktivni grafovi nisu cilj).
+4. **Premium (kasnije): „napiši sve → sustav sam napravi ostalo"** — korisnik samo napiše gradivo, a sustav automatski generira flash-kartice kroz learn, kvizove i sve što treba. = **H3 AI-autorstvo (§8/§9) + monetizacijska premium-featura** ([MONETIZATION.md](MONETIZATION.md)); arhitektura već sjeda: AI čita BLOKOVE kao strukturiran kontekst, piše kroz OPOVE (akcijski prostor) i publish-RPC — naš generator-pipeline (ADR-010) izložen u proizvodu. NE gradi se sad; dizajn samo ostavlja mjesto (npr. gumb „Generiraj iz learna" disabled/premium).
+
 ## 6. Sigurnost (DUBOKO — dizajnira se s editorom od 1. dana, formalizira u F6)
 - **INVARIJANTA:** *jedini put do `innerHTML` je JEDAN blok-renderer; renderira samo whitelistane tipove blokova s
   escapanim poljima; ISTI renderer u editor-previewu, study-modu i marketplaceu.* Editor po konstrukciji ne može
