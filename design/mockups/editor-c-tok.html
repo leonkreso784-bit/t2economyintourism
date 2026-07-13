@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup C — „Tok" (Studio + Vodič kao ulaz) · Sokrat editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#6366f1; --primary-dark:#4f46e5; --primary-light:#818cf8;
+  --secondary:#10b981; --accent:#f59e0b; --danger:#ef4444; --success:#22c55e;
+  --bg-primary:#0f172a; --bg-secondary:#1e293b; --bg-tertiary:#334155;
+  --text-primary:#f1f5f9; --text-secondary:#e2e8f0; --text-muted:#94a3b8;
+  --border:#334155; --radius:12px; --radius-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg-primary);color:var(--text-primary);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+h1,h2,h3{font-family:'Space Grotesk',Inter,sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+select,input[type=text]{background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font:inherit;padding:10px 12px;width:100%}
+select:focus,input:focus{outline:2px solid var(--primary)}
+[contenteditable]:focus{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+/* ==== Top bar ==== */
+.topbar{display:flex;align-items:center;gap:14px;padding:10px 18px;background:var(--bg-secondary);border-bottom:1px solid var(--border);flex-shrink:0}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-family:'Space Grotesk'}
+.logo .dot{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:grid;place-items:center;font-size:13px}
+.crumb{color:var(--text-muted);font-size:13px}
+.crumb b{color:var(--text-secondary)}
+.spacer{flex:1}
+.chip{font-size:12px;padding:4px 10px;border-radius:99px;background:var(--bg-tertiary);color:var(--text-secondary)}
+.chip.draft{background:rgba(245,158,11,.15);color:var(--accent);border:1px solid rgba(245,158,11,.35)}
+.btn{padding:8px 16px;border-radius:var(--radius);font-weight:600;font-size:14px;transition:.15s}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
+.btn.primary:hover{filter:brightness(1.15)}
+.btn.ghost{border:1px solid var(--border);color:var(--text-secondary)}
+.btn.ghost:hover{border-color:var(--primary-light);color:var(--text-primary)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+.layout{display:grid;grid-template-columns:252px 1fr 236px;flex:1;min-height:0}
+@media(max-width:980px){.layout{grid-template-columns:222px 1fr}.inspector{display:none}}
+
+/* ==== Stablo ==== */
+.tree{background:var(--bg-secondary);border-right:1px solid var(--border);overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column}
+.newscript{margin:2px 4px 14px;padding:10px;border-radius:var(--radius);border:1px dashed var(--primary-light);color:var(--primary-light);font-weight:600;font-size:13.5px;transition:.15s}
+.newscript:hover{background:rgba(99,102,241,.12)}
+.tree h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);padding:0 8px 8px}
+.node .row{display:flex;align-items:center;gap:6px;padding:5px 8px;border-radius:8px;font-size:13.5px;color:var(--text-secondary);cursor:pointer;user-select:none}
+.node .row:hover{background:var(--bg-tertiary)}
+.node .row.active{background:rgba(99,102,241,.18);color:var(--primary-light);font-weight:600}
+.node .kids{margin-left:14px;border-left:1px dashed var(--border);padding-left:6px;display:none}
+.node.open>.kids{display:block}
+.node .tw{width:12px;font-size:10px;color:var(--text-muted);transition:.15s}
+.node.open>.row .tw{transform:rotate(90deg)}
+.addline{display:flex;align-items:center;gap:6px;padding:4px 8px;font-size:12.5px;color:var(--text-muted);cursor:pointer;border-radius:8px}
+.addline:hover{color:var(--primary-light);background:rgba(99,102,241,.08)}
+
+/* ==== Canvas ==== */
+.canvas{overflow-y:auto;min-width:0}
+.script-head{padding:20px 28px 0}
+.script-head h1{font-size:22px}
+.script-head p{color:var(--text-muted);font-size:13px;margin-top:2px}
+.tabs{display:flex;gap:4px;padding:14px 28px 0;border-bottom:1px solid var(--border)}
+.tab{padding:8px 16px;border-radius:10px 10px 0 0;font-size:13.5px;font-weight:600;color:var(--text-muted);border-bottom:2px solid transparent}
+.tab.on{color:var(--primary-light);border-bottom-color:var(--primary);background:rgba(99,102,241,.08)}
+.tab.off{display:none}
+.pane{display:none;padding:22px 28px 90px;max-width:760px}
+.pane.on{display:block}
+
+/* ==== KVADRATIĆI (B-toplina u A-layoutu) ==== */
+.kv{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:4px;transition:.15s;position:relative}
+.kv:hover{border-color:#475569;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.kv .head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.kv .n{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:12px;flex-shrink:0;background:rgba(99,102,241,.18);color:var(--primary-light);font-weight:700}
+.kv h2[contenteditable]{font-size:16.5px;flex:1}
+.kv .x{color:var(--text-muted);font-size:13px;opacity:0}
+.kv:hover .x{opacity:1}
+.kv .x:hover{color:var(--danger)}
+.kv .body[contenteditable]{font-size:14.5px;line-height:1.65;color:var(--text-secondary);min-height:24px}
+.kv .media{display:flex;gap:8px;margin-top:12px;opacity:0;transition:.15s}
+.kv:hover .media{opacity:1}
+.kv .media button{font-size:12px;color:var(--text-muted);border:1px dashed var(--border);border-radius:8px;padding:5px 11px}
+.kv .media button:hover{color:var(--primary-light);border-color:var(--primary-light)}
+.kv .imgph{margin-top:12px;border:2px dashed var(--border);border-radius:10px;padding:26px;text-align:center;color:var(--text-muted);font-size:12.5px;cursor:pointer}
+.kv .imgph:hover{border-color:var(--primary-light);color:var(--primary-light)}
+/* + između kvadratića (A) — izbornik = vizualne pločice */
+.adder{position:relative;height:24px;display:grid;place-items:center;opacity:.3;transition:.15s}
+.adder:hover{opacity:1}
+.adder>button{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:15px;line-height:1}
+.menu{position:absolute;top:28px;left:50%;transform:translateX(-50%);background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:10px;display:none;z-index:20;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.menu.on{display:grid;grid-template-columns:repeat(4,72px);gap:8px}
+.menu button{display:flex;flex-direction:column;gap:6px;align-items:center;padding:10px 4px;border-radius:10px;font-size:11px;color:var(--text-secondary)}
+.menu button:hover{background:var(--bg-tertiary)}
+.menu .mi{font-size:20px}
+/* veliki + na dnu (B) */
+.bigplus{width:100%;border:2px dashed var(--border);border-radius:var(--radius-lg);padding:16px;color:var(--text-muted);font-size:14.5px;font-weight:600;transition:.15s;margin-top:10px}
+.bigplus:hover{border-color:var(--primary);color:var(--primary-light);background:rgba(99,102,241,.06)}
+
+/* kartice + kviz (iz A) */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.fcard{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:110px;cursor:pointer}
+.fcard .q{font-weight:600;font-size:14px}
+.fcard .a{color:var(--secondary);font-size:13.5px;margin-top:8px;display:none}
+.fcard.flip .a{display:block}
+.fcard.flip .q{color:var(--text-muted)}
+.fcard.new{border-style:dashed;display:grid;place-items:center;color:var(--text-muted)}
+.fcard.new:hover{color:var(--primary-light);border-color:var(--primary-light)}
+.qz{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.qz .opt{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:8px;font-size:14px;color:var(--text-secondary)}
+.qz .opt input{accent-color:var(--success)}
+
+/* ==== Inspektor ==== */
+.inspector{background:var(--bg-secondary);border-left:1px solid var(--border);padding:18px 16px;overflow-y:auto}
+.inspector h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:16px 0 10px}
+.inspector h3:first-child{margin-top:0}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:26px;height:26px;border-radius:8px;cursor:pointer;border:2px solid transparent}
+.sw.on{border-color:#fff}
+.premium{margin-top:18px;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(245,158,11,.10));border:1px solid rgba(129,140,248,.35);border-radius:var(--radius-lg);padding:14px}
+.premium h4{font-size:13.5px;margin-bottom:6px}
+.premium p{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:10px}
+.pill{font-size:10px;background:var(--accent);color:#1a1206;font-weight:800;border-radius:99px;padding:2px 8px;vertical-align:2px;margin-left:6px}
+
+/* ==== WIZARD MODAL (B kao ulaz u Studio) ==== */
+.veil{position:fixed;inset:0;background:rgba(2,6,23,.72);backdrop-filter:blur(5px);display:none;place-items:center;z-index:50}
+.veil.on{display:grid}
+.wiz{width:min(620px,94vw);max-height:90vh;overflow-y:auto;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:26px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.wiz .steps{display:flex;gap:8px;margin-bottom:20px}
+.wiz .step{flex:1;text-align:center;font-size:11.5px;color:var(--text-muted);padding-top:8px;border-top:3px solid var(--border)}
+.wiz .step.on{color:var(--primary-light);border-top-color:var(--primary);font-weight:600}
+.wiz .step.done{color:var(--secondary);border-top-color:var(--secondary)}
+.wiz h1{font-size:20px;margin-bottom:4px}
+.wiz .sub{color:var(--text-muted);font-size:13px;margin-bottom:18px}
+.wp{display:none}.wp.on{display:block}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--text-secondary);margin-bottom:6px}
+.mode{display:flex;gap:13px;align-items:center;background:var(--bg-primary);border:2px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px;cursor:pointer;margin-bottom:10px;transition:.15s}
+.mode.on{border-color:var(--primary);background:rgba(99,102,241,.10)}
+.mode .em{font-size:24px}
+.mode h3{font-size:15px}
+.mode p{font-size:12px;color:var(--text-muted);margin-top:1px}
+.mode .tick{margin-left:auto;width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:12px;color:transparent;flex-shrink:0}
+.mode.on .tick{background:var(--primary);border-color:var(--primary);color:#fff}
+.prem{margin-top:6px;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(245,158,11,.10));border:1px solid rgba(129,140,248,.35);border-radius:var(--radius-lg);padding:13px 16px;display:flex;gap:12px;align-items:center;font-size:12px;color:var(--text-muted)}
+.wiz .foot{display:flex;justify-content:space-between;margin-top:20px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--bg-tertiary);border:1px solid var(--border);padding:10px 18px;border-radius:99px;font-size:13.5px;display:none;z-index:99;max-width:92vw}
+.hint{position:fixed;bottom:18px;right:18px;font-size:11.5px;color:var(--text-muted);background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:8px 12px;max-width:240px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo"><span class="dot">🦉</span> Sokrat <span class="chip" style="font-family:'Space Grotesk'">EDITOR</span></div>
+  <div class="crumb" id="crumb">FMTU · MUH (HR) · 1. god · <b>Management — Kolokvij 1</b></div>
+  <div class="spacer"></div>
+  <span class="chip draft" id="draftChip">✏️ Draft · 0 izmjena</span>
+  <button class="btn ghost" onclick="toast('Odbačeno — vraćen zadnji objavljeni sadržaj.')">Odbaci</button>
+  <button class="btn primary" onclick="publish()">⬆ Objavi</button>
+</div>
+
+<div class="layout">
+  <!-- ============ STABLO + ULAZ U WIZARD ============ -->
+  <aside class="tree">
+    <button class="newscript" onclick="openWiz()">＋ &nbsp;Nova skripta</button>
+    <h3>Struktura</h3>
+    <div class="node open">
+      <div class="row" onclick="tgl(this)"><span class="tw">▶</span>🏛️ FMTU Opatija</div>
+      <div class="kids">
+        <div class="node open">
+          <div class="row" onclick="tgl(this)"><span class="tw">▶</span>🎓 Menadžment u hotelijerstvu</div>
+          <div class="kids">
+            <div class="node open">
+              <div class="row" onclick="tgl(this)"><span class="tw">▶</span>📅 1. godina</div>
+              <div class="kids" id="yr1">
+                <div class="node open">
+                  <div class="row" onclick="tgl(this)"><span class="tw">▶</span>📖 Management</div>
+                  <div class="kids">
+                    <div class="node"><div class="row active">📝 Kolokvij 1</div></div>
+                    <div class="node"><div class="row" onclick="pick(this)">📝 Kolokvij 2</div></div>
+                    <div class="node"><div class="row" onclick="pick(this)">🏁 Završni</div></div>
+                  </div>
+                </div>
+                <div class="node"><div class="row" onclick="pick(this)">📖 Mikroekonomija</div></div>
+              </div>
+            </div>
+            <div class="node"><div class="row" onclick="tgl(this)"><span class="tw">▶</span>📅 2. godina</div><div class="kids"><div class="addline" onclick="toast('＋ radi i direktno u stablu (kao mockup A).')">＋ Novi predmet…</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="addline" onclick="toast('＋ radi i direktno u stablu (kao mockup A).')">＋ Novi fakultet…</div>
+  </aside>
+
+  <!-- ============ CANVAS ============ -->
+  <main class="canvas">
+    <div class="script-head">
+      <h1 contenteditable spellcheck="false" id="title">Kolokvij 1 — Uvod u menadžment</h1>
+      <p id="meta">Lussier 9e · zadnja objava prije 2 h (v14)</p>
+    </div>
+    <div class="tabs">
+      <button class="tab on" id="t-learn" onclick="showPane('learn',this)">📚 Learn</button>
+      <button class="tab" id="t-cards" onclick="showPane('cards',this)">🃏 Kartice</button>
+      <button class="tab" id="t-quiz" onclick="showPane('quiz',this)">❓ Kviz</button>
+      <button class="tab off" id="t-fill" onclick="showPane('fill',this)">✍️ Dopuni</button>
+    </div>
+
+    <section class="pane on" id="pane-learn">
+      <div id="blocks">
+        <div class="kv">
+          <div class="head"><span class="n">1</span><h2 contenteditable spellcheck="false">Što je menadžment?</h2><button class="x" onclick="delKv(this)">✕</button></div>
+          <div class="body" contenteditable spellcheck="false">Menadžment je proces <b>planiranja, organiziranja, vođenja i kontroliranja</b> resursa radi učinkovitog postizanja ciljeva organizacije.</div>
+          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok — siguran embed iz linka.')">▶️ Video</button></div>
+        </div>
+        <div class="adder"><button onclick="menu(this)">＋</button><div class="menu"></div></div>
+        <div class="kv">
+          <div class="head"><span class="n">2</span><h2 contenteditable spellcheck="false">Efektivnost vs. efikasnost</h2><button class="x" onclick="delKv(this)">✕</button></div>
+          <div class="body" contenteditable spellcheck="false">Efektivnost = raditi <i>prave stvari</i>. Efikasnost = raditi stvari <i>ispravno</i>, uz minimalan utrošak resursa.</div>
+          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok.')">▶️ Video</button></div>
+        </div>
+        <div class="adder"><button onclick="menu(this)">＋</button><div class="menu"></div></div>
+      </div>
+      <button class="bigplus" onclick="addKv()">＋ &nbsp;Dodaj kvadratić (naslov · tekst · slike · grafovi)</button>
+    </section>
+
+    <section class="pane" id="pane-cards">
+      <p style="color:var(--text-muted);font-size:12.5px;margin-bottom:14px">Klik = okreni karticu. Tekst je direktno editabilan.</p>
+      <div class="card-grid">
+        <div class="fcard" onclick="this.classList.toggle('flip')">
+          <div class="q" contenteditable onclick="event.stopPropagation()">Koje su 4 funkcije menadžmenta?</div>
+          <div class="a" contenteditable onclick="event.stopPropagation()">Planiranje, organiziranje, vođenje, kontroliranje.</div>
+        </div>
+        <div class="fcard new" onclick="newCard(this)">＋ Nova kartica</div>
+      </div>
+    </section>
+
+    <section class="pane" id="pane-quiz">
+      <div class="qz">
+        <div contenteditable style="font-weight:600;margin-bottom:10px">Tko je „otac" znanstvenog menadžmenta?</div>
+        <label class="opt"><input type="radio" name="q1"><span contenteditable>Henri Fayol</span></label>
+        <label class="opt"><input type="radio" name="q1" checked><span contenteditable>Frederick W. Taylor</span> <span class="chip" style="font-size:10px">TOČAN</span></label>
+        <label class="opt"><input type="radio" name="q1"><span contenteditable>Max Weber</span></label>
+      </div>
+      <button class="btn ghost" onclick="toast('＋ novo kviz-pitanje.')">＋ Novo pitanje</button>
+    </section>
+    <section class="pane" id="pane-fill"><p style="color:var(--text-muted)">✍️ Dopuni-vježbe…</p></section>
+  </main>
+
+  <!-- ============ INSPEKTOR ============ -->
+  <aside class="inspector">
+    <h3>Kategorija · boja (tokeni)</h3>
+    <div class="swatches">
+      <div class="sw on" style="background:#6366f1" onclick="pickSw(this)"></div>
+      <div class="sw" style="background:#10b981" onclick="pickSw(this)"></div>
+      <div class="sw" style="background:#f59e0b" onclick="pickSw(this)"></div>
+      <div class="sw" style="background:#ef4444" onclick="pickSw(this)"></div>
+      <div class="sw" style="background:#06b6d4" onclick="pickSw(this)"></div>
+      <div class="sw" style="background:#a855f7" onclick="pickSw(this)"></div>
+    </div>
+    <h3>Publish</h3>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6">Objava = <b>publish-RPC</b>: atomično, verzija v14 → v15, konflikt s drugim autorom se ne gazi.</p>
+    <div class="premium">
+      <h4>✨ AI autor <span class="pill">PREMIUM</span></h4>
+      <p>Napiši samo Learn — kartice, kviz i dopuni nastaju automatski.</p>
+      <button class="btn primary" style="width:100%" disabled>Generiraj iz Learna</button>
+    </div>
+  </aside>
+</div>
+
+<!-- ============ WIZARD MODAL (B kao ulaz) ============ -->
+<div class="veil" id="veil">
+  <div class="wiz">
+    <div class="steps">
+      <div class="step on" id="ws1">1 · Gdje?</div>
+      <div class="step" id="ws2">2 · Što sadrži?</div>
+      <div class="step" id="ws3">3 · Piši ✨</div>
+    </div>
+
+    <div class="wp on" id="wp1">
+      <h1>Gdje ova skripta živi?</h1>
+      <p class="sub">Odaberi postojeće ili dodaj novo na bilo kojoj razini.</p>
+      <div class="row2">
+        <div class="field"><label>Fakultet</label><select><option>FMTU Opatija</option><option>＋ Dodaj novi…</option></select></div>
+        <div class="field"><label>Smjer</label><select><option>Menadžment u hotelijerstvu (HR)</option><option>＋ Dodaj novi…</option></select></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Godina · semestar</label><select><option>1. godina · 2. semestar</option><option>＋ Dodaj godinu…</option></select></div>
+        <div class="field"><label>Predmet</label><select id="wSubj"><option>Management</option><option selected>＋ Novi: Organizacijsko ponašanje</option></select></div>
+      </div>
+      <div class="field"><label>Naziv skripte</label><input type="text" id="wName" value="Kolokvij 1" spellcheck="false"></div>
+    </div>
+
+    <div class="wp" id="wp2">
+      <h1>Što će skripta sadržavati?</h1>
+      <p class="sub">Ti biraš — studenti vide samo uključene modove.</p>
+      <div class="mode" data-m="learn" onclick="wMode(this)"><span class="em">📚</span><div><h3>Samo Learn</h3><p>Gradivo u kvadratićima, bez vježbi.</p></div><span class="tick">✓</span></div>
+      <div class="mode" data-m="cards,quiz" onclick="wMode(this)"><span class="em">🃏</span><div><h3>Kartice + Kviz</h3><p>Samo aktivno ponavljanje.</p></div><span class="tick">✓</span></div>
+      <div class="mode on" data-m="learn,cards,quiz,fill" onclick="wMode(this)"><span class="em">🎯</span><div><h3>Sve</h3><p>Learn + kartice + kviz + dopuni.</p></div><span class="tick">✓</span></div>
+      <div class="prem">✨ <b>AI autor</b> <span class="pill">PREMIUM</span> — napiši samo gradivo, ostalo nastaje samo. <button class="btn ghost" style="margin-left:auto" disabled>Uskoro</button></div>
+    </div>
+
+    <div class="foot">
+      <button class="btn ghost" id="wBack" onclick="wGo(-1)" disabled>← Natrag</button>
+      <span style="align-self:center;font-size:12px;color:var(--text-muted)" id="wHint">korak 1 / 2</span>
+      <button class="btn primary" id="wNext" onclick="wGo(1)">Dalje →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="hint">🖱️ Probaj: „＋ Nova skripta" (wizard → sletiš u Studio) · ＋ između kvadratića i veliki ＋ na dnu · tabovi = odabrani modovi.</div>
+
+<script>
+let ops = 0;
+function bump(){ ops++; document.getElementById('draftChip').textContent = '✏️ Draft · ' + ops + ' izmjena'; }
+document.addEventListener('input', e => { if (e.target.isContentEditable) bump(); });
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display='none',3400); }
+function publish(){ toast(ops ? '✅ Objavljeno (v15) — atomično kroz publish-RPC.' : 'Nema izmjena za objavu.'); ops=0; document.getElementById('draftChip').textContent='✏️ Draft · 0 izmjena'; }
+
+/* stablo */
+function tgl(r){ r.parentElement.classList.toggle('open'); }
+function pick(r){ document.querySelectorAll('.tree .row.active').forEach(x=>x.classList.remove('active')); r.classList.add('active'); toast('Otvara se ta skripta (mockup).'); }
+
+/* tabovi */
+function showPane(m, tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
+  tab.classList.add('on'); document.getElementById('pane-'+m).classList.add('on');
+}
+
+/* kvadratići */
+const TYPES = [
+  ['📝','Tekst'], ['🔠','Naslov'], ['🖼️','Slika/graf'], ['▶️','YouTube']
+];
+function menu(btn){
+  const m = btn.nextElementSibling;
+  if (!m.innerHTML) m.innerHTML = TYPES.map((t,i)=>'<button onclick="insKv(this)"><span class="mi">'+t[0]+'</span>'+t[1]+'</button>').join('');
+  document.querySelectorAll('.menu.on').forEach(x=>x!==m&&x.classList.remove('on'));
+  m.classList.toggle('on');
+}
+function kvHtml(n, title, body){
+  return '<div class="head"><span class="n">'+n+'</span><h2 contenteditable spellcheck="false">'+title+'</h2><button class="x" onclick="delKv(this)">✕</button></div>'+
+         '<div class="body" contenteditable spellcheck="false">'+body+'</div>'+
+         '<div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast(\'▶️ YouTube blok.\')">▶️ Video</button></div>';
+}
+function renum(){ document.querySelectorAll('#blocks .kv .n').forEach((n,i)=>n.textContent=i+1); }
+function newAdder(){ const a=document.createElement('div'); a.className='adder'; a.innerHTML='<button onclick="menu(this)">＋</button><div class="menu"></div>'; return a; }
+function insKv(item){
+  const adder = item.closest('.adder');
+  const b = document.createElement('div'); b.className='kv'; b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
+  adder.after(b); b.after(newAdder());
+  item.closest('.menu').classList.remove('on');
+  renum(); bump(); b.querySelector('h2').focus();
+}
+function addKv(){
+  const wrap = document.getElementById('blocks');
+  const b = document.createElement('div'); b.className='kv'; b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
+  wrap.appendChild(b); wrap.appendChild(newAdder());
+  renum(); bump(); b.querySelector('h2').focus();
+}
+function delKv(x){ const b=x.closest('.kv'); b.nextElementSibling?.classList.contains('adder') && b.nextElementSibling.remove(); b.remove(); renum(); bump(); }
+function addImg(btn){
+  const kv = btn.closest('.kv');
+  const ph = document.createElement('div'); ph.className='imgph'; ph.textContent='🖼️ Povuci sliku/graf ovdje ili klikni (grafovi = slika u v1)';
+  kv.appendChild(ph); bump();
+}
+document.addEventListener('click', e => { if (!e.target.closest('.adder')) document.querySelectorAll('.menu.on').forEach(m=>m.classList.remove('on')); });
+function newCard(ph){
+  const c=document.createElement('div'); c.className='fcard'; c.onclick=()=>c.classList.toggle('flip');
+  c.innerHTML='<div class="q" contenteditable onclick="event.stopPropagation()">Novo pitanje…</div><div class="a" contenteditable onclick="event.stopPropagation()">Odgovor…</div>';
+  ph.before(c); bump();
+}
+function pickSw(sw){ document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on')); sw.classList.add('on'); bump(); toast('Boja = token, svugdje konzistentno.'); }
+
+/* ==== WIZARD → sletiš u Studio ==== */
+let wStep = 1;
+function openWiz(){ wStep=1; wSync(); document.getElementById('veil').classList.add('on'); }
+function wMode(el){ document.querySelectorAll('.mode').forEach(m=>m.classList.remove('on')); el.classList.add('on'); }
+function wSync(){
+  for (let i=1;i<=2;i++){
+    document.getElementById('wp'+i).classList.toggle('on', i===wStep);
+    document.getElementById('ws'+i).className = 'step' + (i<wStep?' done':i===wStep?' on':'');
+  }
+  document.getElementById('ws3').className='step';
+  document.getElementById('wBack').disabled = (wStep===1);
+  document.getElementById('wNext').textContent = wStep===2 ? '✨ Kreni pisati' : 'Dalje →';
+  document.getElementById('wHint').textContent = 'korak ' + wStep + ' / 2';
+}
+function wGo(d){
+  if (wStep===2 && d===1) return landInStudio();
+  wStep = Math.min(2, Math.max(1, wStep+d)); wSync();
+}
+function landInStudio(){
+  const name = document.getElementById('wName').value.trim() || 'Nova skripta';
+  const modes = document.querySelector('.mode.on').dataset.m.split(',');
+  document.getElementById('veil').classList.remove('on');
+
+  // tabovi = točno odabrani modovi (zahtjev 2, end-to-end)
+  ['learn','cards','quiz','fill'].forEach(m => {
+    document.getElementById('t-'+m).classList.toggle('off', !modes.includes(m));
+    document.getElementById('t-'+m).classList.remove('on');
+    document.getElementById('pane-'+m).classList.remove('on');
+  });
+  const first = modes[0];
+  document.getElementById('t-'+first).classList.add('on');
+  document.getElementById('pane-'+first).classList.add('on');
+
+  // naslov + prazno-prijateljski canvas: jedan starter kvadratić
+  document.getElementById('title').textContent = name + ' — Organizacijsko ponašanje';
+  document.getElementById('meta').textContent = 'nova skripta · još neobjavljeno (v0)';
+  document.getElementById('crumb').innerHTML = 'FMTU · MUH (HR) · 1. god · <b>Organizacijsko ponašanje — ' + name + '</b>';
+  if (modes.includes('learn')){
+    const wrap = document.getElementById('blocks');
+    wrap.innerHTML='';
+    const b=document.createElement('div'); b.className='kv';
+    b.innerHTML = kvHtml(1,'Prvo poglavlje — daj mu ime ✍️','Ovo je tvoj prvi kvadratić. Piši, dodaj sliku ili graf — ili ＋ za novi.');
+    wrap.appendChild(b); wrap.appendChild(newAdder());
+  }
+  // novi predmet u stablu
+  const n = document.createElement('div'); n.className='node open';
+  n.innerHTML = '<div class="row" onclick="tgl(this)"><span class="tw">▶</span>📖 Organizacijsko ponašanje</div><div class="kids"><div class="node"><div class="row active">📝 '+name+'</div></div></div>';
+  document.querySelectorAll('.tree .row.active').forEach(x=>x.classList.remove('active'));
+  document.getElementById('yr1').appendChild(n);
+
+  toast('✨ Skripta stvorena — sletio si u Studio. Tabovi = modovi koje si odabrao.');
+}
+</script>
+</body>
+</html>
