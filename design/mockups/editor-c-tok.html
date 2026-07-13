@@ -97,6 +97,26 @@ select:focus,input:focus{outline:2px solid var(--primary)}
 .bigplus{width:100%;border:2px dashed var(--border);border-radius:var(--radius-lg);padding:16px;color:var(--text-muted);font-size:14.5px;font-weight:600;transition:.15s;margin-top:10px}
 .bigplus:hover{border-color:var(--primary);color:var(--primary-light);background:rgba(99,102,241,.06)}
 
+/* ＋ TAB: naknadno dodavanje modova (Leon 2026-07-14) */
+.tabs{position:relative}
+.tab.addtab{color:var(--primary-light);border:1px dashed var(--border);border-bottom:none;border-radius:10px 10px 0 0;padding:8px 13px;font-size:15px}
+.tab.addtab:hover{background:rgba(99,102,241,.10)}
+.tabmenu{position:absolute;top:44px;right:24px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:6px;display:none;z-index:30;box-shadow:0 12px 40px rgba(0,0,0,.5);min-width:180px}
+.tabmenu.on{display:block}
+.tabmenu button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--text-secondary)}
+.tabmenu button:hover{background:var(--bg-tertiary)}
+
+/* BOJA SEKCIJE (token) → nasljeđuju je kartice/kviz te sekcije (Leon 2026-07-14) */
+.kv{border-left:4px solid var(--acc,var(--border))}
+.cdot{width:18px;height:18px;border-radius:50%;background:var(--acc,var(--bg-tertiary));border:2px solid rgba(255,255,255,.28);flex-shrink:0;cursor:pointer}
+.cdot:hover{transform:scale(1.15)}
+.cpop{position:fixed;background:var(--bg-secondary);border:1px solid var(--border);border-radius:12px;padding:8px;display:none;gap:7px;z-index:60;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.cpop.on{display:flex}
+.fcard{border-left:4px solid var(--acc,var(--border))}
+.qz{border-left:4px solid var(--acc,var(--border))}
+.seclbl{font-size:10.5px;color:var(--text-muted);margin-bottom:7px;display:flex;align-items:center;gap:5px}
+.seclbl i{width:8px;height:8px;border-radius:50%;background:var(--acc,var(--bg-tertiary));display:inline-block}
+
 /* kartice + kviz (iz A) */
 .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
 .fcard{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius);padding:14px;min-height:110px;cursor:pointer}
@@ -204,18 +224,20 @@ select:focus,input:focus{outline:2px solid var(--primary)}
       <button class="tab" id="t-cards" onclick="showPane('cards',this)">🃏 Kartice</button>
       <button class="tab" id="t-quiz" onclick="showPane('quiz',this)">❓ Kviz</button>
       <button class="tab off" id="t-fill" onclick="showPane('fill',this)">✍️ Dopuni</button>
+      <button class="tab addtab" id="t-add" onclick="tabMenu(event)" title="Dodaj mod">＋</button>
+      <div class="tabmenu" id="tabMenuEl"></div>
     </div>
 
     <section class="pane on" id="pane-learn">
       <div id="blocks">
-        <div class="kv">
-          <div class="head"><span class="n">1</span><h2 contenteditable spellcheck="false">Što je menadžment?</h2><button class="x" onclick="delKv(this)">✕</button></div>
+        <div class="kv" data-sec="s1">
+          <div class="head"><span class="n">1</span><button class="cdot" onclick="cPop(event)" title="Boja sekcije"></button><h2 contenteditable spellcheck="false">Što je menadžment?</h2><button class="x" onclick="delKv(this)">✕</button></div>
           <div class="body" contenteditable spellcheck="false">Menadžment je proces <b>planiranja, organiziranja, vođenja i kontroliranja</b> resursa radi učinkovitog postizanja ciljeva organizacije.</div>
           <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok — siguran embed iz linka.')">▶️ Video</button></div>
         </div>
         <div class="adder"><button onclick="menu(this)">＋</button><div class="menu"></div></div>
-        <div class="kv">
-          <div class="head"><span class="n">2</span><h2 contenteditable spellcheck="false">Efektivnost vs. efikasnost</h2><button class="x" onclick="delKv(this)">✕</button></div>
+        <div class="kv" data-sec="s2">
+          <div class="head"><span class="n">2</span><button class="cdot" onclick="cPop(event)" title="Boja sekcije"></button><h2 contenteditable spellcheck="false">Efektivnost vs. efikasnost</h2><button class="x" onclick="delKv(this)">✕</button></div>
           <div class="body" contenteditable spellcheck="false">Efektivnost = raditi <i>prave stvari</i>. Efikasnost = raditi stvari <i>ispravno</i>, uz minimalan utrošak resursa.</div>
           <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok.')">▶️ Video</button></div>
         </div>
@@ -225,18 +247,25 @@ select:focus,input:focus{outline:2px solid var(--primary)}
     </section>
 
     <section class="pane" id="pane-cards">
-      <p style="color:var(--text-muted);font-size:12.5px;margin-bottom:14px">Klik = okreni karticu. Tekst je direktno editabilan.</p>
+      <p style="color:var(--text-muted);font-size:12.5px;margin-bottom:14px">Klik = okreni karticu. Kartica pripada sekciji learna i <b>nasljeđuje njenu boju</b> (promijeni boju krugom na kvadratiću u Learnu).</p>
       <div class="card-grid">
-        <div class="fcard" onclick="this.classList.toggle('flip')">
+        <div class="fcard" data-sec="s1" onclick="this.classList.toggle('flip')">
+          <div class="seclbl"><i></i> §1 Što je menadžment?</div>
           <div class="q" contenteditable onclick="event.stopPropagation()">Koje su 4 funkcije menadžmenta?</div>
           <div class="a" contenteditable onclick="event.stopPropagation()">Planiranje, organiziranje, vođenje, kontroliranje.</div>
+        </div>
+        <div class="fcard" data-sec="s2" onclick="this.classList.toggle('flip')">
+          <div class="seclbl"><i></i> §2 Efektivnost vs. efikasnost</div>
+          <div class="q" contenteditable onclick="event.stopPropagation()">Efektivnost vs. efikasnost — razlika?</div>
+          <div class="a" contenteditable onclick="event.stopPropagation()">Prave stvari vs. stvari ispravno.</div>
         </div>
         <div class="fcard new" onclick="newCard(this)">＋ Nova kartica</div>
       </div>
     </section>
 
     <section class="pane" id="pane-quiz">
-      <div class="qz">
+      <div class="qz" data-sec="s1">
+        <div class="seclbl"><i></i> §1 Što je menadžment?</div>
         <div contenteditable style="font-weight:600;margin-bottom:10px">Tko je „otac" znanstvenog menadžmenta?</div>
         <label class="opt"><input type="radio" name="q1"><span contenteditable>Henri Fayol</span></label>
         <label class="opt"><input type="radio" name="q1" checked><span contenteditable>Frederick W. Taylor</span> <span class="chip" style="font-size:10px">TOČAN</span></label>
@@ -249,7 +278,8 @@ select:focus,input:focus{outline:2px solid var(--primary)}
 
   <!-- ============ INSPEKTOR ============ -->
   <aside class="inspector">
-    <h3>Kategorija · boja (tokeni)</h3>
+    <h3>Boje sekcija (tokeni)</h3>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:8px">Klikni <b>krug na kvadratiću</b> u Learnu — sekcija dobije boju, a <b>kartice i kviz te sekcije je nasljeđuju</b> (crvena sekcija = crvene kartice).</p>
     <div class="swatches">
       <div class="sw on" style="background:#6366f1" onclick="pickSw(this)"></div>
       <div class="sw" style="background:#10b981" onclick="pickSw(this)"></div>
@@ -309,7 +339,8 @@ select:focus,input:focus{outline:2px solid var(--primary)}
 </div>
 
 <div class="toast" id="toast"></div>
-<div class="hint">🖱️ Probaj: „＋ Nova skripta" (wizard → sletiš u Studio) · ＋ između kvadratića i veliki ＋ na dnu · tabovi = odabrani modovi.</div>
+<div class="cpop" id="cpop"></div>
+<div class="hint">🖱️ Probaj: „＋ Nova skripta" (wizard → Studio) · ＋ tab dodaje mod · <b>krug na kvadratiću = boja sekcije</b> (kartice/kviz je nasljeđuju) · ＋ između kvadratića i veliki ＋ na dnu.</div>
 
 <script>
 let ops = 0;
@@ -329,6 +360,46 @@ function showPane(m, tab){
   tab.classList.add('on'); document.getElementById('pane-'+m).classList.add('on');
 }
 
+/* ＋ TAB — autor NAKNADNO dodaje mod (uz izbor u wizardu) */
+const MODES = { learn:'📚 Learn', cards:'🃏 Kartice', quiz:'❓ Kviz', fill:'✍️ Dopuni' };
+function tabMenu(e){
+  e.stopPropagation();
+  const m = document.getElementById('tabMenuEl');
+  const off = Object.keys(MODES).filter(k => document.getElementById('t-'+k).classList.contains('off'));
+  m.innerHTML = off.length
+    ? off.map(k=>'<button onclick="addMode(\''+k+'\')">'+MODES[k]+'</button>').join('')
+    : '<button disabled style="color:var(--text-muted)">Svi modovi su uključeni ✓</button>';
+  m.classList.toggle('on');
+}
+function addMode(k){
+  const t = document.getElementById('t-'+k);
+  t.classList.remove('off');
+  document.getElementById('tabMenuEl').classList.remove('on');
+  showPane(k, t); bump();
+  toast('Mod „'+MODES[k]+'" dodan skripti — izbor nije jednokratan.');
+}
+
+/* BOJA SEKCIJE — token paleta; kartice/kviz sekcije je nasljeđuju */
+const PAL = ['#6366f1','#10b981','#f59e0b','#ef4444','#06b6d4','#a855f7'];
+let _cKv = null;
+function cPop(e){
+  e.stopPropagation();
+  _cKv = e.target.closest('.kv');
+  const p = document.getElementById('cpop');
+  p.innerHTML = PAL.map(c=>'<div class="sw" style="background:'+c+'" onclick="setSec(\''+c+'\')"></div>').join('');
+  p.style.left = Math.min(e.clientX, innerWidth-260) + 'px';
+  p.style.top = (e.clientY + 16) + 'px';
+  p.classList.add('on');
+}
+function setSec(c){
+  if (_cKv){
+    const s = _cKv.dataset.sec;
+    document.querySelectorAll('[data-sec="'+s+'"]').forEach(el => el.style.setProperty('--acc', c));
+    bump(); toast('🎨 Boja sekcije primijenjena — kartice i kviz te sekcije je nasljeđuju.');
+  }
+  document.getElementById('cpop').classList.remove('on');
+}
+
 /* kvadratići */
 const TYPES = [
   ['📝','Tekst'], ['🔠','Naslov'], ['🖼️','Slika/graf'], ['▶️','YouTube']
@@ -339,8 +410,9 @@ function menu(btn){
   document.querySelectorAll('.menu.on').forEach(x=>x!==m&&x.classList.remove('on'));
   m.classList.toggle('on');
 }
+let secN = 2;
 function kvHtml(n, title, body){
-  return '<div class="head"><span class="n">'+n+'</span><h2 contenteditable spellcheck="false">'+title+'</h2><button class="x" onclick="delKv(this)">✕</button></div>'+
+  return '<div class="head"><span class="n">'+n+'</span><button class="cdot" onclick="cPop(event)" title="Boja sekcije"></button><h2 contenteditable spellcheck="false">'+title+'</h2><button class="x" onclick="delKv(this)">✕</button></div>'+
          '<div class="body" contenteditable spellcheck="false">'+body+'</div>'+
          '<div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast(\'▶️ YouTube blok.\')">▶️ Video</button></div>';
 }
@@ -348,14 +420,16 @@ function renum(){ document.querySelectorAll('#blocks .kv .n').forEach((n,i)=>n.t
 function newAdder(){ const a=document.createElement('div'); a.className='adder'; a.innerHTML='<button onclick="menu(this)">＋</button><div class="menu"></div>'; return a; }
 function insKv(item){
   const adder = item.closest('.adder');
-  const b = document.createElement('div'); b.className='kv'; b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
+  const b = document.createElement('div'); b.className='kv'; b.dataset.sec = 's'+(++secN);
+  b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
   adder.after(b); b.after(newAdder());
   item.closest('.menu').classList.remove('on');
   renum(); bump(); b.querySelector('h2').focus();
 }
 function addKv(){
   const wrap = document.getElementById('blocks');
-  const b = document.createElement('div'); b.className='kv'; b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
+  const b = document.createElement('div'); b.className='kv'; b.dataset.sec = 's'+(++secN);
+  b.innerHTML = kvHtml('•','Novi naslov…','Tekst gradiva — počni pisati…');
   wrap.appendChild(b); wrap.appendChild(newAdder());
   renum(); bump(); b.querySelector('h2').focus();
 }
@@ -365,13 +439,19 @@ function addImg(btn){
   const ph = document.createElement('div'); ph.className='imgph'; ph.textContent='🖼️ Povuci sliku/graf ovdje ili klikni (grafovi = slika u v1)';
   kv.appendChild(ph); bump();
 }
-document.addEventListener('click', e => { if (!e.target.closest('.adder')) document.querySelectorAll('.menu.on').forEach(m=>m.classList.remove('on')); });
+document.addEventListener('click', e => {
+  if (!e.target.closest('.adder')) document.querySelectorAll('.menu.on').forEach(m=>m.classList.remove('on'));
+  if (!e.target.closest('.addtab')) document.getElementById('tabMenuEl').classList.remove('on');
+  if (!e.target.closest('.cdot') && !e.target.closest('.cpop')) document.getElementById('cpop').classList.remove('on');
+});
 function newCard(ph){
-  const c=document.createElement('div'); c.className='fcard'; c.onclick=()=>c.classList.toggle('flip');
-  c.innerHTML='<div class="q" contenteditable onclick="event.stopPropagation()">Novo pitanje…</div><div class="a" contenteditable onclick="event.stopPropagation()">Odgovor…</div>';
+  const c=document.createElement('div'); c.className='fcard'; c.dataset.sec='s1'; c.onclick=()=>c.classList.toggle('flip');
+  const acc = document.querySelector('.kv[data-sec="s1"]')?.style.getPropertyValue('--acc');
+  if (acc) c.style.setProperty('--acc', acc);
+  c.innerHTML='<div class="seclbl"><i></i> §1 Što je menadžment?</div><div class="q" contenteditable onclick="event.stopPropagation()">Novo pitanje…</div><div class="a" contenteditable onclick="event.stopPropagation()">Odgovor…</div>';
   ph.before(c); bump();
 }
-function pickSw(sw){ document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on')); sw.classList.add('on'); bump(); toast('Boja = token, svugdje konzistentno.'); }
+function pickSw(sw){ document.querySelectorAll('.inspector .sw').forEach(s=>s.classList.remove('on')); sw.classList.add('on'); bump(); toast('Boja = token, svugdje konzistentno.'); }
 
 /* ==== WIZARD → sletiš u Studio ==== */
 let wStep = 1;
@@ -413,8 +493,8 @@ function landInStudio(){
   if (modes.includes('learn')){
     const wrap = document.getElementById('blocks');
     wrap.innerHTML='';
-    const b=document.createElement('div'); b.className='kv';
-    b.innerHTML = kvHtml(1,'Prvo poglavlje — daj mu ime ✍️','Ovo je tvoj prvi kvadratić. Piši, dodaj sliku ili graf — ili ＋ za novi.');
+    const b=document.createElement('div'); b.className='kv'; b.dataset.sec = 's'+(++secN);
+    b.innerHTML = kvHtml(1,'Prvo poglavlje — daj mu ime ✍️','Ovo je tvoj prvi kvadratić. Piši, dodaj sliku ili graf — ili ＋ za novi. Krug lijevo = boja sekcije.');
     wrap.appendChild(b); wrap.appendChild(newAdder());
   }
   // novi predmet u stablu
