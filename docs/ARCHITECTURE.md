@@ -21,7 +21,7 @@ SUPABASE                                  ADMIN UI (/admin, zaštićen)
 ```
 
 **Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](BACKEND.md) (ADR-008).
-**Stanje (2026-07-12):** Auth + cloud-sync napretka LIVE; **sadržaj se čita iz baze direktno preko
+**Stanje (2026-07-13):** Auth + cloud-sync napretka LIVE; **admin draft→objavi tok LIVE od 2026-07-13** (F4 deploy); **sadržaj se čita iz baze direktno preko
 supabase-js (anon key + RLS), NE preko `/api`** (ADR-011) — privilegirano (`service_role`) ide **SAMO u Supabase Edge Functions, ne Vercel `/api`** (ADR-016); admin-write = direktno klijent→RLS (ADR-021).
 **Read-path redoslijed (od F2 2A): baza → `data/json/*.json` (predmeti s `dataFormat:'json'`, 18/18) → `.js` fallback.**
 
@@ -103,7 +103,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 ### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](BACKEND.md))
 - **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
 - **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
-- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza, u tijeku na `foundation/f4`)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`); source-of-truth flip na bazu = U9+/F4.6.
+- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; dalje U4 publish-RPC); source-of-truth flip na bazu = U9+/F4.6.
 
 ### Blok F — Platforma-first temelj (FOUNDATION_PLAN, ADR-013/014)
 - **F1 ✅ LIVE** — reliability rails: CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi (axe/layout-guard/Lighthouse) + RLS-test.
@@ -135,7 +135,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   (`sw.js` + `js/sw-register.js`: navigacija network-first + offline app-shell fallback; asseti SWR; Supabase/CDN network-only; kill-switch; `vercel.json` `/sw.js` no-cache; „Works offline" istina).
   **3A.3 (FABLE): Fable-pregled popravio 3 nalaza u sw.js** (navigate-keš samo `res.ok`; `cache.put`→`event.waitUntil`; verzioniran precache) **+ update-flow** (`<sokrat-toast>`→`skipWaiting`→jedan reload). Testovi `tests/sw.spec.js` (offline load + update-flow e2e); app-testovi `serviceWorkers:'block'`.
   **✅ DEPLOYANO** (main `c115a5d..868dc9f`; vercel.json `"//"` komentar-incident popravljen `868dc9f`). ✅ **3D.1** blind-map→WebP (−98%) · ✅ **3D.2** async KaTeX/Fonts · ✅ **3E.1/3E.2** a11y (0 axe violationa, sve 4 stranice) — **sve DEPLOYANO 2026-07-06 → F3 KOMPLETNA LIVE.**
-- **F4 🟡 U TIJEKU (grana `foundation/f4`, preview)** — custom Admin CRUD (= B9/B10 gore): F4.1–4.4 ✅ + draft→objavi staza (`EDITOR_PLAN.md`; U3 2/3); source-of-truth flip = U9+/F4.6 — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
+- **F4 🟡 U TIJEKU — dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13 (`5d24a96..79f17c7`)** — custom Admin CRUD (= B9/B10 gore): F4.1–4.4 ✅ + draft→objavi staza (`EDITOR_PLAN.md`; U1–U3 ✅ KOMPLETNI, dalje U4 publish-RPC → U-UX dizajn-faza); source-of-truth flip = U9+/F4.6 — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.

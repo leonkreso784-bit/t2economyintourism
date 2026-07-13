@@ -30,7 +30,7 @@ zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opseg
 - **`data/<subject>-hr/`** — nove HR mape predmeta (midterm-1/2, final, kasnije exercises po §5 fazi S5).
 - **`data/json/<subject>-hr/`** — SAMO kroz `npm run export:json <subject>-hr` (nikad ručno).
 - **`data/catalog.js`** — SAMO dodavanje novog `-hr` subject-unosa (šablonu ispiše alat / daje se u S2); ništa postojeće se ne mijenja niti briše.
-- **`docs/subjects/README.md`** — SAMO svoj redak u „HR statusna ploča" tablici. **⚠️ PRIVREMENO SUSPENDIRANO (2026-07-11, dok su docs samo na `foundation/f4` — §9):** datoteka NE postoji na `main` → redak u PR-u bi stvorio duplikat/merge-konflikt. **Umjesto toga: status za svoj redak napiši u PR-OPIS**, Leon/Claude ga upišu u ploču na f4. Vraća se na normalu kad f4 sleti na main.
+- **`docs/subjects/README.md`** — SAMO svoj redak u „HR statusna ploča" tablici. **✅ PONOVNO NORMALNO od 2026-07-13** (f4 je sletio na `main` → docs postoje na main-u): redak ažuriraš direktno u svom PR-u. *(Privremeno pravilo „redak u PR-OPISU" iz 2026-07-11 više ne vrijedi.)*
 - **Cache-bump datoteke** (`index.html`, `*.html`, `manifest.json`, `js/content-loader.js`, `sw.js`) — **ISKLJUČIVO kroz `npm run bump`**, NIKAD ručno (reviewer provjerava da je diff = samo tokeni).
 - Pokretanje SVIH skripti/gateova (`translate-subject`, `validate:*`, `verify`, `export:json`, `bump`, `test:responsive`).
 
@@ -67,7 +67,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 
 | # | Cigla | Opis | Preduvjet |
 |---|---|---|---|
-| S1 | **Onboarding** | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) → [HRV_PLAN.md](HRV_PLAN.md) → [subjects/README.md](subjects/README.md) (⚠️ ovi docs su zasad SAMO na grani `foundation/f4` — vidi §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
+| S1 | **Onboarding** ✅ | pročitati: ovaj doc → [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) → [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) → [HRV_PLAN.md](HRV_PLAN.md) → [subjects/README.md](subjects/README.md) (od 2026-07-13 docs su na `main`-u — §9); lokalni setup (`npm ci`); pokrenuti SVE gateove na netaknutom repou (moraju biti zeleni — to je baseline) | GitHub invite + API ključ |
 | S2 | **PILOT: 1 predmet end-to-end** | prijedlog: **Management** (srednji, tekstualan, bez vježbi); cijeli §5 tok kroz PR; svrha = naučiti put, kalibrirati review | S1 |
 | S3 | **Batch tekstualni** (~11 predmeta) | ritam ~2–3/tjedan; jedan PR po predmetu | S2 mergean glatko |
 | S4 | **Kvantitativni** (micro/macro/stat/math) | KaTeX — alat čuva formule, čovjek provjerava currency-safe/balans (alat to i verificira) | S3 iskustvo |
@@ -84,7 +84,7 @@ grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni ga
 5. ⬜ `npm run validate:content <id>-hr` = 0 · `npm run verify` = 0
 6. ⬜ `npm run export:json <id>-hr` (ako subject ima `dataFormat:'json'`) · `npm run bump`
 7. ⬜ `npm run test:responsive` zeleno lokalno
-8. ⬜ PR: opis = što/izvori/posebnosti **+ redak za subjects-ploču u OPISU** (privremeno, dok su docs samo na f4 — §2/§9); **diff sadrži SAMO dopuštene putanje (§2)**
+8. ⬜ PR: opis = što/izvori/posebnosti + **svoj redak u subjects-ploči (u PR-diffu — od 2026-07-13 docs su na main-u)**; **diff sadrži SAMO dopuštene putanje (§2)**
 
 ## 6. Pristupi, ključevi, troškovi (least-privilege)
 
@@ -123,4 +123,4 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 - ✅ **S2 pilot-predmet:** **Management (HR)** — potvrđeno (Sašin prvi end-to-end predmet).
 - ✅ **Review-ritam:** PR odgovor u **24–48 h**.
 - ✅ **API ključ:** Saša kreira **VLASTITI** na svom Anthropic računu (sigurnije — ne dijeli se). **Financiranje = B: Leon refundira gotovinom** (~$15–30 ukupno za HR batch; trošak sitan → bez tvrdog konzolnog capa, po dogovoru). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.
-- ⚠️ **Vidljivost docs (odluka 2026-07-10):** TEAM.md + ostali `docs/**` + role-router u CLAUDE.md trenutno žive **SAMO na grani `foundation/f4`** (aktivni razvoj), NE na `main`. Svjež klon padne na `main` → ne vidi ih (uzrok „Saša ne vidi TEAM.md"). **Odluka: NE radimo zaseban produkcijski push samo za docs** — landaju na `main` prirodno kad jednom sliječe `foundation/f4 → main` (kad F4/U1 budu produkcijski spremni, uz bump+verify+Leonov OK). **Dotad Saša čita docs na `foundation/f4`** (GitHub: branch-dropdown → `foundation/f4`, ili lokalno `git switch foundation/f4`). **Radni tok ostaje nepromijenjen** (§2/§3): grana s `main` → PR na `main`; sadržajni rad NE ovisi o tome jesu li docs na njegovoj grani. Trošak odluke = sitno „čitaj na f4, radi s main"; ako ikad zasmeta → jedan benigni docs-only push riješi trajno (Leonov poziv).
+- ✅ **Vidljivost docs — RIJEŠENO 2026-07-13:** `foundation/f4` je deployan na `main` (`5d24a96..79f17c7`) → **svi `docs/**` + role-router su sad na main-u** i vidljivi u svježem klonu. Privremeno pravilo „redak u PR-OPISU" ukinuto (§2/§5.8 vraćeni na normalu). ⚠️ **Sašin otvoreni PR #1 treba rebase na novi main** (bump-token konflikt = očekivan i trivijalan: rebase + ponovni `npm run bump`, §7).

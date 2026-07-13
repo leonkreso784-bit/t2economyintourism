@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-13 (FABLE) — 🚀 PRVI F4 DEPLOY NA PRODUKCIJU + preslagivanje plana (dizajn prije editora)
+**Kontekst:** Leon iskreno: admin CRUD mu sam po sebi ne koristi — gradi se kao TEMELJ UGC-a, a frontend ga žulja i želi ga prilagoditi „u pravom trenutku". Odluke (AskUserQuestion): **(1) redizajn = oboje, postupno** — prvo editor/autorsko sučelje (UGC sjeme), pa osvježenje ostatka platforme kao zasebna faza; **(2) deploy f4→main = DA, sada.**
+
+**🚀 DEPLOY (`5d24a96..79f17c7`, ff-merge uz izričit OK):** CI zelen na SHA (uklj. authed suite) + bump:check 96 ✓ prije merga; Vercel check `success`. **Live-verified:** token `20260712180655` · `draft-store.js`/`admin.js` 200 · `sw.js` `max-age=0` + SW_VERSION bumpan · BUG-019 fix živ · `#admin-page` skriven. Za studente nevidljivo (sve iza `is_admin()`; write-RLS na PROD-u od 6.7.). **Docs sad na main-u** → TEAM.md §2/§5.8/§9 privremeno pravilo (redak u PR-OPISU) UKINUTO; subjects-ploča natrag na normalu. ⚠️ Sašin PR #1 → trivijalan rebase + `npm run bump` (TEAM.md §7; javiti mu).
+
+**🎨 PRESLAGIVANJE U-staze (EDITOR_PLAN §12 napomena):** nakon **U4 publish-RPC** ide **U-UX dizajn-faza** (2–3 interaktivna HTML mockupa → Leon presudi → `EDITOR_UX.md`) pa se U6/U7/U8 grade JEDNOM u tom dizajnu („pravi trenutak" za editor = prije editor-koda); **U5 odgođen** (admin-only kozmetika); **osvježenje cijele platforme = zasebna faza nakon U-staze** (kandidat uz F5/pred-UGC; ne usred CRUD-a i ne dok Saša gura content-PR-ove — CSS konflikti).
+
+**SLIJEDI: U4 publish-RPC** (atomično: validacija+upis+verzija+final-sync+`base_version`; gradi se i verificira na stagingu).
+
+---
+
 ## 2026-07-12 (FABLE, 3. sesija, nastavak) — U3-d3 ✅: ŽIVA verifikacija Objavi-puta na stagingu → U3 KOMPLETAN
 **Tok (privremeni authed spec `_tmp-u3d3-publish.authed.spec.js`, obrisan nakon runa; staging `czljmvigkgiajzjxtndq`):** draft na te2 first-midterm → marker edit prve kartice → **Objavi** (pravi RLS-write) → in-memory sync bez reloada ✓ → **re-enter draft = svježi payload iz BAZE pokazao marker** (dokaz persistencije) → revert drugom objavom → re-enter pokazao original. Playwright 2/2 (auth-setup STAGING mode + test).
 

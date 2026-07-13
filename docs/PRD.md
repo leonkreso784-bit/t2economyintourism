@@ -1,6 +1,6 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.4 · **Zadnja izmjena:** 2026-07-11
+**Status:** živi dokument · **Verzija PRD-a:** 0.4 · **Zadnja izmjena:** 2026-07-13
 
 ## 1. Vizija
 Sokrat Study je platforma za učenje koja studentima pretvara nastavne materijale
@@ -15,12 +15,12 @@ generiraju i dijele skripte te se natječu.
 - **(Faza 1+) Korisnik-autor:** uploada svoj materijal i radi privatne skripte.
 - **(Faza 4) Pretplatnik:** plaća premium funkcionalnosti.
 
-## 3. Trenutno stanje (2026-07-11)
+## 3. Trenutno stanje (2026-07-13)
 - Statički sajt (HTML/CSS/vanilla JS), live na Vercelu (sokratstudy.com). Data-driven katalog + drill-down nav.
 - Sadržaj: **2. god HM = 8/8 ✅ + 1. god HM = 9/9 ✅ LIVE** (17 EN + HR pilot). ⛔ Intro to Hospitality blokiran (nema PDF-ova). **HR program u tijeku** (Saša, content-suradnik — `docs/TEAM.md`; pilot Management HR).
 - Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (7 tipova uklj. „napiši citat"), Progress (+ Blind Map). **KaTeX** za kvantitativne.
 - **Platforma-first pregradnja (`FOUNDATION_PLAN.md`): F0–F3 KOMPLETNE + LIVE** — F1 reliability rails (CI/CD, gateovi) · F2 reusable jezgra (JSON dual-read, ContentRepository, AppState, Web Components, Sentry) · F3 performanse (Service Worker/offline, CSS bundling, auto-bump). **Auth + cloud-sync** LIVE; read-path Supabase anon+RLS (ADR-011).
-- **AKTIVNO (grana `foundation/f4`, Vercel preview, NIJE produkcija):** F4 Admin CRUD (F4.1–F4.4 ✅ — identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) → nastavak = **draft+editor staza** (`EDITOR_PLAN.md`, model draft→objavi): ✅ U1 staging · ✅ U2a id-jevi · ✅ U2.5 placement (ADR-022) · ✅ U3 draft-sloj KOMPLETAN (editori pišu u draft; Objavi-put živo verificiran na stagingu).
+- **F4 Admin CRUD — 🚀 DEPLOYAN NA PRODUKCIJU 2026-07-13** (`5d24a96..79f17c7`; studentima nevidljivo — sve iza `is_admin()`): F4.1–F4.4 ✅ (identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) + **draft+editor staza** (`EDITOR_PLAN.md`): ✅ U1 staging · ✅ U2a id-jevi · ✅ U2.5 placement (ADR-022) · ✅ U3 draft-sloj KOMPLETAN (jedini write-put = „Objavi"; živo verificiran na stagingu). **Preslagivanje 2026-07-13 (EDITOR_PLAN §12+§5.1):** nakon U4 → U-UX dizajn-faza (mockupi prije editor-koda); U5 odgođen; osvježenje platforme = zasebna kasnija faza.
 - **Sljedeće (engineering):** U4 publish-RPC → U5–U8 (povijest/strukturne ops/blokovi/editor) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `EDITOR_PLAN.md` §12 + `HISTORY.md`.**
 
 ## 4. Opseg po fazama

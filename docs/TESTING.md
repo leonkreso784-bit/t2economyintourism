@@ -39,7 +39,7 @@
   - `legal.spec.js` — statične stranice privacy/terms/faq/contact (200, h1, footer nav, mailto,
     bez overflowa) + landing footer linkovi na njih.
   - `admin.spec.js` (F4): `SokratAdmin` postoji + bez sesije `isAdmin()=false`; `.admin-only` skriven za ne-admina;
-    **`#admin-page` skriven na landingu (regresija BUG-018 „Admin curi na dno")**; F4.3b viewer — `navigateTo('admin')` renderira picker predmeta→lekcija;
+    **`#admin-page` skriven na landingu (regresija BUG-018 „Admin curi na dno")**; **BUG-019 regresija — back iz admina NE stvara petlju profil ⇄ admin** (pravi klikovi na back-gumbe); F4.3b viewer — `navigateTo('admin')` renderira picker predmeta→lekcija;
     **F4.3c-1:** edit-gumbi (`.admin-edit-btn`) skriveni ne-adminu, viewer i dalje renderira kartice. *(Ovo su NEGATIVNI/odjavljeni putovi — vrte se u default suiteu.)*
 
 ## Authenticated (admin) suite — POZITIVAN admin-put (`npm run test:authed`)
