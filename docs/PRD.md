@@ -21,7 +21,7 @@ generiraju i dijele skripte te se natječu.
 - Modovi: Learn, Flashcards, Quiz, Fill, **Exercises** (7 tipova uklj. „napiši citat"), Progress (+ Blind Map). **KaTeX** za kvantitativne.
 - **Platforma-first pregradnja (`FOUNDATION_PLAN.md`): F0–F3 KOMPLETNE + LIVE** — F1 reliability rails (CI/CD, gateovi) · F2 reusable jezgra (JSON dual-read, ContentRepository, AppState, Web Components, Sentry) · F3 performanse (Service Worker/offline, CSS bundling, auto-bump). **Auth + cloud-sync** LIVE; read-path Supabase anon+RLS (ADR-011).
 - **F4 Admin CRUD — 🚀 DEPLOYAN NA PRODUKCIJU 2026-07-13** (`5d24a96..79f17c7`; studentima nevidljivo — sve iza `is_admin()`): F4.1–F4.4 ✅ (identitet/write-RLS+versioning/viewer/quiz-fill-learn editori) + **draft+editor staza** (`EDITOR_PLAN.md`): ✅ U1 staging · ✅ U2a id-jevi · ✅ U2.5 placement (ADR-022) · ✅ U3 draft-sloj KOMPLETAN (jedini write-put = „Objavi"; živo verificiran na stagingu). **Preslagivanje 2026-07-13 (EDITOR_PLAN §12+§5.1):** nakon U4 → U-UX dizajn-faza (mockupi prije editor-koda); U5 odgođen; osvježenje platforme = zasebna kasnija faza.
-- **Sljedeće (engineering):** U4 publish-RPC → U5–U8 (povijest/strukturne ops/blokovi/editor) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `EDITOR_PLAN.md` §12 + `HISTORY.md`.**
+- **Sljedeće (engineering):** U4 publish-RPC ✅ (2026-07-13, grana — čeka deploy) → **U-UX dizajn-faza** (mockupi → `EDITOR_UX.md`) → U6–U8 (strukturne ops/blokovi/editor; U5 odgođen) → F5 SRS → F6 sigurnost → UGC. Redoslijed = ADR-018. **Živi tracker: `EDITOR_PLAN.md` §12 + `HISTORY.md`.**
 
 ## 4. Opseg po fazama
 - **Faza 0 (✅ GOTOVA + platforma-first pregradnja F0–F3 LIVE):** data-driven katalog (✅ A1–A3) + hijerarhijska navigacija/redizajn (M0.5) +

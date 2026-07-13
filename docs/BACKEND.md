@@ -83,7 +83,7 @@ uređivanje sadržaja kroz sučelje, **direktno preglednik→Supabase pod admin-
 - **`public.profiles`** (`user_id → auth.users`, `role text default 'user'`, `created_at`) — tko je admin. `handle_new_user` trigger auto-provisionira red na svaki novi `auth.users`; **select-own RLS** (korisnik čita svoj profil; NEMA client write → `role` immutable, mijenja se samo dashboard/service_role). Helper **`public.is_admin()`** (SECURITY DEFINER) = reusable u RLS policyjima. Leon seedan `role='admin'`.
 - **`subject_content` write RLS:** admin-only `insert/update/delete` (`using (is_admin())`); public SELECT ostaje. → samo admin piše sadržaj, izravno iz preglednika.
 - **`public.content_versions`** (`id, subject_id, var_name, payload jsonb, op, edited_by, edited_at`) — **append-only povijest**. BEFORE UPDATE/DELETE trigger na `subject_content` (SECURITY DEFINER) snapshota STARI red = **undo + audit „tko/kad"** od prve izmjene (4E). Admin-only read RLS.
-- **Frontend:** `js/admin.js` (`SokratAdmin.isAdmin()` = `client.rpc('is_admin')`) + `#admin-page` viewer. **Write (U3, 2026-07-12): draft→objavi** — editori pišu opove u radnu kopiju (`js/draft-store.js`, `SokratDraft`), a „Objavi" upisuje working `payload` blob pod admin-JWT-om + sinka sestrinske redove (final=kopija); atomični publish-RPC s `base_version` = U4. **⚠️ `SokratAuth`/`SokratCatalog` su top-level `const` (leksički globali, NE `window` props) → referenciraj golo** ([[live-login-verifies-crud]]).
+- **Frontend:** `js/admin.js` (`SokratAdmin.isAdmin()` = `client.rpc('is_admin')`) + `#admin-page` viewer. **Write (U3→U4): draft→objavi kroz `publish_document` RPC** — editori pišu opove u radnu kopiju (`js/draft-store.js`, `SokratDraft`), a „Objavi" (U4, 2026-07-13) šalje working + svježe sibling-payloade s istim opovima u **jedan RPC poziv**: SECURITY DEFINER fn = is_admin + `base_version` optimistic concurrency (konflikt = ništa upisano + toast) + validacija + svi redovi u 1 transakciji; `subject_content.version` bumpa touch-trigger na svaki update (SQL: `supabase/u4-publish-rpc.sql`; na PROD ide PRIJE klijenta). **⚠️ `SokratAuth`/`SokratCatalog` su top-level `const` (leksički globali, NE `window` props) → referenciraj golo** ([[live-login-verifies-crud]]).
 - **Datoteke ostaju izvor istine dok F4.6 ne flipne autoritet** (predmet-po-predmet, nakon dry-run diffa). `rls-check.js` čuva 4 invarijante (anon ne vidi progress/profiles/content_versions).
 
 ## Arhitektura
@@ -100,7 +100,7 @@ Supabase  (Postgres + Auth + Storage)
   Vercel Project Settings → Environment Variables (nikad u frontend).
 
 ## API površina (POVIJESNI plan — NADIĐENO)
-> ⚠️ **Nadiđeno odlukama:** read = direktno supabase-js anon+RLS bez `/api` (ADR-011) · admin-write = direktno klijent→RLS (ADR-021) · privilegirano = Supabase Edge Functions, NE Vercel `/api` (ADR-016) · budući write-kanal = **publish-RPC** (U4, `EDITOR_PLAN.md` §4.2). Ostavljeno kao trag razmišljanja.
+> ⚠️ **Nadiđeno odlukama:** read = direktno supabase-js anon+RLS bez `/api` (ADR-011) · admin-write = direktno klijent→RLS (ADR-021) · privilegirano = Supabase Edge Functions, NE Vercel `/api` (ADR-016) · write-kanal = **publish-RPC ✅** (U4, 2026-07-13; `EDITOR_PLAN.md` §4.2). Ostavljeno kao trag razmišljanja.
 - `GET /api/catalog` — hijerarhija (faculties→programs→years→subjects/lessons), lagano, keširano.
 - `GET /api/subject?slug=…` — sadržaj jednog predmeta (lazy, na otvaranje).
 - `POST /api/admin/*` — CRUD (iza Supabase Auth, samo admin).

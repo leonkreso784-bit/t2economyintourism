@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-13 (FABLE, 2. sesija) — 🔐 U4 KOMPLETAN: publish-RPC (atomično + base_version) + security-pregled
+**Kontekst:** post-compact reground (svi gateovi re-pokrenuti zeleni; obje Supabase baze ACTIVE_HEALTHY; Sašin PR #1 još čeka rebase). Usput **security-pregled na Leonovo pitanje:** RLS živo dokazan (`test:rls` vs PROD: anon vidi 0 progress/profiles/cv; policyji provjereni SQL-om), signup = 30 req/h/IP + obavezna email potvrda + built-in SMTP limit; **gap = CAPTCHA** (dashboard + sitna auth.js izmjena; F6 kandidat) · Leaked Password Protection i dalje OFF (BACKLOG).
+
+**U4 (grana `feature/u4-publish-rpc` s maina + merge f4 docs-commita):**
+- **d1 (`1e89f99`):** `supabase/u4-publish-rpc.sql` — `version` stupac + `touch_subject_content` trigger + **`publish_document`** (SECURITY DEFINER; is_admin → FOR UPDATE → base_version → validacija → svi redovi u 1 transakciji; EXECUTE revokean anon). Primijenjen SAMO na staging (MCP). **Živa verifikacija REST-om 10/10:** anon 401 · conflict · **atomičnost** (valjan+nevaljan batch = ništa) · bad_payload · publish v1→2 · stale-base · revert v2→3; MCP: md5 == baseline, cv +2.
+- **d2 (`d251e78`):** `begin()` pamti `baseVersion` (svjež fetch, ne autosave; +3 unit testa = 19/19), `_publishDraft` = 1 rpc() poziv, konflikt-toast (i18n `admin.publishConflict`), `propWarn` uklonjen; bump 96.
+- **d3:** novi **TRAJNI** `tests/publish-rpc.authed.spec.js` — (1) publish-ciklus kroz PRAVI UI (marker→Objavi→reload+svjež DB fetch→revert→original); (2) **konflikt-E2E** (out-of-band bump verzije „drugog admina" → RPC odbija, draft preživi, brojač ostaje, gumb re-enabled). **Authed 9/9** (1 flake setup-logina na free-tier stagingu — retry čist; DB je bio ispravan). **MCP cross-check točno po predviđanju:** md5 sva 3 reda == baseline · M1 v3→6, Final v1→3 (propagacija kroz RPC radi), M2 v1 · cv 6→11 (+2 marker-snapshota u auditu = undo trag; KONFLIKT-tekst NIGDJE — odbijeni write ne postoji ni u auditu).
+
+**⚠ DEPLOY-REDOSLIJED (zapisan svugdje):** na PROD prvo SQL migracija (aditivna, kompatibilna sa živim kodom), TEK ONDA klijent. **SLIJEDI: U-UX dizajn-faza** (2–3 HTML mockupa po EDITOR_PLAN §5.1 → Leon presudi → `EDITOR_UX.md`); deploy U4 uz Leonov izričit OK (nosi i 5 f4 docs-commita na main).
+
 ## 2026-07-13 (FABLE) — 🚀 PRVI F4 DEPLOY NA PRODUKCIJU + preslagivanje plana (dizajn prije editora)
 **Kontekst:** Leon iskreno: admin CRUD mu sam po sebi ne koristi — gradi se kao TEMELJ UGC-a, a frontend ga žulja i želi ga prilagoditi „u pravom trenutku". Odluke (AskUserQuestion): **(1) redizajn = oboje, postupno** — prvo editor/autorsko sučelje (UGC sjeme), pa osvježenje ostatka platforme kao zasebna faza; **(2) deploy f4→main = DA, sada.**
 

@@ -54,6 +54,10 @@
   (edit kartice → brojač 1 + Objavi enabled → Odbaci → original vraćen + autosave očišćen, 0 writeova); (4–6) quiz/fill/learn
   editori se otvore prefilani (bez spremanja). ⚠️ **Traže SEEDAN staging** (draft-mod povlači payload iz baze):
   `node scripts/seed-staging.js te2` (idempotentan; tvrdi guard — odbija ne-staging URL).
+- **`publish-rpc.authed.spec.js`** (U4; **WRITE testovi — pokreći SAMO sa STAGING_*!**): (1) puni publish-ciklus kroz UI —
+  marker edit → „Objavi" (`publish_document` RPC) → reload + re-enter (svjež DB fetch dokazuje objavu) → revert → original;
+  (2) **konflikt** — out-of-band write bumpa `version` između drafta i objave → RPC odbija (`publish_version_conflict`),
+  draft/rad preživi, konflikt-tekst ne završi ni u bazi ni u auditu. Staging verzije rastu (touch-trigger) — očekivano.
 - **Setup:** dediciran **test-admin account (NE osobni)** → napravi kroz app + `profiles.role='admin'` → kopiraj creds u `.env`.
 - **🏗️ STAGING (U1, 2026-07-10):** postoji **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, 2. free projekt) = izolirani test-DB. Kad su `STAGING_SUPABASE_URL/ANON/TEST_ADMIN_EMAIL/PASSWORD` u `.env`, **`test:authed` + `rls-check` automatski gađaju staging** (`js/auth.js` `_readSupabaseOverride()` preusmjeri app; `SUPABASE_TARGET=staging` za rls-check) → **write-testovi (edit-pa-revert) sad rade na stagingu, prod audit ostaje čist.** Bez `STAGING_*` → staro ponašanje (prod TEST_ADMIN).
   ⚠️ Protiv **PROD** baze WRITE-testovi i dalje mijenjaju živi sadržaj / ostavljaju `content_versions` audit-redove (append-only, admin ih ne može RLS-obrisati) → zato ih vozimo na stagingu; committani `admin-detect.authed.spec.js` je READ/detekcijski (siguran i na prod i na staging).
