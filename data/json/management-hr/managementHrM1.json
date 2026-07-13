@@ -10,9 +10,9 @@
         "explanation": "Riječ potječe od latinskog 'manus' (ruka) + 'agere' (djelovati). Funkcije su međusobno različite, ali i isprepletene — obavljaju se istovremeno, a ne kao linearni slijed koraka."
       },
       {
-        "question": "Koja je razlika između UČINKOVITOSTI i DJELOTVORNOSTI?",
-        "answer": "• UČINKOVIT = raditi stvari NA PRAVI NAČIN, kako bi se maksimalno iskoristili resursi (uz minimalno rasipanje).\n• DJELOTVORAN = raditi PRAVU STVAR radi ostvarivanja cilja.\n\nVisoka uspješnost = odabir pravih resursa (djelotvornost) I njihova dobra upotreba (učinkovitost).",
-        "explanation": "Menadžer ostvaruje ciljeve učinkovitom I djelotvornom upotrebom resursa."
+        "question": "Koja je razlika između EFIKASNOSTI i EFEKTIVNOSTI?",
+        "answer": "• EFIKASAN = raditi stvari NA PRAVI NAČIN, kako bi se maksimalno iskoristili resursi (uz minimalno rasipanje).\n• EFEKTIVAN = raditi PRAVU STVAR radi ostvarivanja cilja.\n\nVisoka uspješnost = odabir pravih resursa (efektivnost) I njihova dobra upotreba (efikasnost).",
+        "explanation": "Menadžer ostvaruje ciljeve efikasnom I efektivnom upotrebom resursa."
       },
       {
         "question": "Koja su ČETIRI organizacijska RESURSA kojima menadžeri upravljaju?",
@@ -36,8 +36,8 @@
       },
       {
         "question": "KLASIČNA teorija: tko su bili Taylor, Fayol, Weber i Follett?",
-        "answer": "Klasični teoretičari usredotočuju se na POSAO i funkcije menadžmenta kako bi pronašli najbolji način upravljanja.\n\n• Frederick TAYLOR — 'otac znanstvenog menadžmenta' (učinkovitost rada, studije vremena, poticajne plaće).\n• Henri FAYOL — 'otac modernog menadžmenta'; 5 funkcija + 14 načela (administrativna teorija).\n• Max WEBER — razvio koncept BIROKRACIJE (pravila/procedure za pravedno postupanje).\n• Mary Parker FOLLETT — naglašavala LJUDE; poznata po integrativnom rješavanju sukoba.",
-        "explanation": "Znanstveni menadžment = učinkovitost rada; administrativna teorija = pravila i organizacijska struktura."
+        "answer": "Klasični teoretičari usredotočuju se na POSAO i funkcije menadžmenta kako bi pronašli najbolji način upravljanja.\n\n• Frederick TAYLOR — 'otac znanstvenog menadžmenta' (efikasnost rada, studije vremena, poticajne plaće).\n• Henri FAYOL — 'otac modernog menadžmenta'; 5 funkcija + 14 načela (administrativna teorija).\n• Max WEBER — razvio koncept BIROKRACIJE (pravila/procedure za pravedno postupanje).\n• Mary Parker FOLLETT — naglašavala LJUDE; poznata po integrativnom rješavanju sukoba.",
+        "explanation": "Znanstveni menadžment = efikasnost rada; administrativna teorija = pravila i organizacijska struktura."
       },
       {
         "question": "BIHEVIORALNA teorija: tko su bili Mayo, Maslow i McGregor?",
@@ -64,8 +64,8 @@
       {
         "question": "„Činiti PRAVU stvar radi postizanja cilja\" definira:",
         "options": [
-          "Učinkovitost (efikasnost)",
-          "Djelotvornost (efektivnost)",
+          "Efikasnost (efikasnost)",
+          "Efektivnost (efektivnost)",
           "Ekonomična",
           "Etična"
         ],
@@ -140,7 +140,7 @@
       },
       {
         "sentence": "Ispravno obavljanje zadataka radi maksimalnog iskorištavanja resursa znači biti _______.",
-        "answer": "učinkovit",
+        "answer": "efikasan",
         "hint": "Najmanji otpad..."
       },
       {
@@ -161,7 +161,7 @@
     ],
     "learn": {
       "title": "Management & Its History",
-      "content": "\n                <h3>Što je menadžment?</h3>\n                <p>Rad s <strong>ljudskim, financijskim, fizičkim i informacijskim</strong> resursima radi ostvarivanja organizacijskih ciljeva kroz obavljanje četiri funkcije.</p>\n                <div class=\"formula-box\">\n                    UČINKOVITOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; DJELOTVORNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n\n                <h4>Škole menadžerske misli</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Klasična</strong> (posao): Taylor (znanstveni menadžment), Fayol (administrativni), Weber (birokracija), Follett (ljudi)</li>\n                        <li><strong>Bihevioralna</strong> (ljudi): Mayo (ljudski odnosi), Maslow (potrebe), McGregor (Teorija X/Y)</li>\n                        <li><strong>Menadžerska znanost</strong> (matematika): operacijska istraživanja, MIS</li>\n                        <li><strong>Integrativna</strong>: sustavska · sociotehničke · kontingencijska („ovisi o situaciji\")</li>\n                    </ul>\n                </div>\n            "
+      "content": "\n                <h3>Što je menadžment?</h3>\n                <p>Rad s <strong>ljudskim, financijskim, fizičkim i informacijskim</strong> resursima radi ostvarivanja organizacijskih ciljeva kroz obavljanje četiri funkcije.</p>\n                <div class=\"formula-box\">\n                    EFIKASNOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; EFEKTIVNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n\n                <h4>Škole menadžerske misli</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Klasična</strong> (posao): Taylor (znanstveni menadžment), Fayol (administrativni), Weber (birokracija), Follett (ljudi)</li>\n                        <li><strong>Bihevioralna</strong> (ljudi): Mayo (ljudski odnosi), Maslow (potrebe), McGregor (Teorija X/Y)</li>\n                        <li><strong>Menadžerska znanost</strong> (matematika): operacijska istraživanja, MIS</li>\n                        <li><strong>Integrativna</strong>: sustavska · sociotehničke · kontingencijska („ovisi o situaciji\")</li>\n                    </ul>\n                </div>\n            "
     }
   },
   "decisionMaking": {
@@ -531,7 +531,7 @@
       },
       {
         "question": "CENTRALIZIRANI nasuprot DECENTRALIZIRANOM autoritetu?",
-        "answer": "• CENTRALIZIRANI — važne odluke donose TOP menadžeri. Prednosti: kontrola, smanjeno dupliciranje. (Mehanički.)\n• DECENTRALIZIRANI — važne odluke donose menadžeri SREDNJE i PRVE RAZINE. Prednosti: učinkovitost, fleksibilnost. (Organski.)\n\nMIKROUPRAVLJANJE = menadžer koji pomno nadzire rad zaposlenika i izbjegava delegiranje — suprotnost osnaživanju (empowermentu).",
+        "answer": "• CENTRALIZIRANI — važne odluke donose TOP menadžeri. Prednosti: kontrola, smanjeno dupliciranje. (Mehanički.)\n• DECENTRALIZIRANI — važne odluke donose menadžeri SREDNJE i PRVE RAZINE. Prednosti: efikasnost, fleksibilnost. (Organski.)\n\nMIKROUPRAVLJANJE = menadžer koji pomno nadzire rad zaposlenika i izbjegava delegiranje — suprotnost osnaživanju (empowermentu).",
         "explanation": "Ne postoji jedan jedini najbolji odgovor — sve ovisi o situaciji."
       },
       {
@@ -821,7 +821,7 @@
     ],
     "learn": {
       "title": "Managing Teamwork",
-      "content": "\n                <h3>Skupina vs. tim</h3>\n                <div class=\"formula-box\">\n                    SKUPINA: jasan vođa · neovisni poslovi · individualna odgovornost<br>\n                    TIM: podijeljeno vodstvo · međuovisni poslovi · individualna + skupna odgovornost\n                </div>\n\n                <h4>Model učinkovitosti skupine</h4>\n                <p>učinkovitost = f(organizacijski <strong>kontekst</strong> · <strong>struktura</strong> ·\n                <strong>proces</strong> · <strong>razvoj</strong>). <em>Sustavski učinak</em> povezuje svaku\n                skupinu s cjelokupnom organizacijom.</p>\n\n                <ul>\n                    <li><strong>Struktura:</strong> vrsta · veličina (5–9 / pravilo dvije pizze) · sastav · vodstvo · ciljevi</li>\n                    <li><strong>Proces:</strong> uloge · norme · kohezivnost · status · odluke · sukob</li>\n                </ul>\n\n                <h4>Tuckmanove faze → stil upravljanja</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Formiranje → <strong>autokratski</strong></li>\n                        <li>Olujanje → <strong>konzultativni</strong></li>\n                        <li>Normiranje → <strong>participativni</strong></li>\n                        <li>Izvođenje → <strong>osnaživanje</strong> (samousmjeravajući tim)</li>\n                        <li>Završetak → nije potreban nikakav stil</li>\n                    </ul>\n                </div>\n            "
+      "content": "\n                <h3>Skupina vs. tim</h3>\n                <div class=\"formula-box\">\n                    SKUPINA: jasan vođa · neovisni poslovi · individualna odgovornost<br>\n                    TIM: podijeljeno vodstvo · međuovisni poslovi · individualna + skupna odgovornost\n                </div>\n\n                <h4>Model efikasnosti skupine</h4>\n                <p>efikasnost = f(organizacijski <strong>kontekst</strong> · <strong>struktura</strong> ·\n                <strong>proces</strong> · <strong>razvoj</strong>). <em>Sustavski učinak</em> povezuje svaku\n                skupinu s cjelokupnom organizacijom.</p>\n\n                <ul>\n                    <li><strong>Struktura:</strong> vrsta · veličina (5–9 / pravilo dvije pizze) · sastav · vodstvo · ciljevi</li>\n                    <li><strong>Proces:</strong> uloge · norme · kohezivnost · status · odluke · sukob</li>\n                </ul>\n\n                <h4>Tuckmanove faze → stil upravljanja</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Formiranje → <strong>autokratski</strong></li>\n                        <li>Olujanje → <strong>konzultativni</strong></li>\n                        <li>Normiranje → <strong>participativni</strong></li>\n                        <li>Izvođenje → <strong>osnaživanje</strong> (samousmjeravajući tim)</li>\n                        <li>Završetak → nije potreban nikakav stil</li>\n                    </ul>\n                </div>\n            "
     }
   },
   "humanResources": {

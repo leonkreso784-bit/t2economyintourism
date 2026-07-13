@@ -8,7 +8,7 @@ const managementHrFinalExamPractice = {
   "flashcards": [
     {
       "question": "Koje teme čine dvije polovice međuispita koje završni ispit objedinjuje?",
-      "answer": "1. međuispit (TU2–TU7): Menadžment i njegova povijest · Rješavanje problema i donošenje odluka · Strateško i operativno planiranje · Organiziranje i delegiranje · Upravljanje timskim radom · Upravljanje ljudskim resursima.\n\n2. međuispit (TU8–TU11): Organizacijsko ponašanje · Motiviranje za visoku učinkovitost · Vođenje putem utjecaja · Upravljanje sustavima kontrole, financijama i ljudima.",
+      "answer": "1. međuispit (TU2–TU7): Menadžment i njegova povijest · Rješavanje problema i donošenje odluka · Strateško i operativno planiranje · Organiziranje i delegiranje · Upravljanje timskim radom · Upravljanje ljudskim resursima.\n\n2. međuispit (TU8–TU11): Organizacijsko ponašanje · Motiviranje za visoku efikasnost · Vođenje putem utjecaja · Upravljanje sustavima kontrole, financijama i ljudima.",
       "explanation": "K1 = okolina + planiranje + organiziranje; K2 = vođenje + kontroliranje."
     },
     {
@@ -33,7 +33,7 @@ const managementHrFinalExamPractice = {
     },
     {
       "question": "PRIPREMA ZA ISPIT: povežite teoretičara s idejom — Taylor, Maslow, Herzberg, Vroom, Mintzberg, Tuckman.",
-      "answer": "• TAYLOR — znanstveno upravljanje (učinkovitost rada).\n• MASLOW — hijerarhija potreba (5 razina).\n• HERZBERG — dvofaktorska teorija (higijenski čimbenici nasuprot motivatorima).\n• VROOM — teorija očekivanja (E × I × V).\n• MINTZBERG — 10 menadžerskih uloga (3 kategorije).\n• TUCKMAN — 5 faza razvoja grupe.",
+      "answer": "• TAYLOR — znanstveno upravljanje (efikasnost rada).\n• MASLOW — hijerarhija potreba (5 razina).\n• HERZBERG — dvofaktorska teorija (higijenski čimbenici nasuprot motivatorima).\n• VROOM — teorija očekivanja (E × I × V).\n• MINTZBERG — 10 menadžerskih uloga (3 kategorije).\n• TUCKMAN — 5 faza razvoja grupe.",
       "explanation": "Poznavanje autora pojedinog modela često je ispitno pitanje."
     },
     {

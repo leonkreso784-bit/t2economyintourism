@@ -46,7 +46,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT** | 🟡 **DRAFT PR #1** (2026-07-12) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi zeleni ✓ + živa provjera ✓ + CI zelen ✓; **rebase na novi main** (`a795c94`, 2026-07-13); **čeka:** 1.god materijali (Leon) za §5.2 terminologiju → Saša flipa u „Ready for review" |
+| Management | `management-hr` | **S2 PILOT** | 🟢 **spreman za review** (2026-07-13) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi zeleni ✓ + živa provjera ✓ + CI zelen ✓ + **§5.2 terminologija uz HR skripte ✓** (učinkovitost/djelotvornost → efikasnost/efektivnost, kako koriste skripta i ispitna pitanja); PR #1 → „Ready for review". ⚠ Napomena Leonu: HR skripte koriste Weihrich&Koontz okvir (5 funkcija + kadroviranje) vs EN Lussier (4 funkcije) — ostavljeno kao vjeran prijevod EN sadržaja (opcija A); reci ako želiš dublje usklađivanje |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
