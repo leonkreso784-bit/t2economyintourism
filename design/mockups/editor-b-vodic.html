@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup B — „Vodič" (vođeni tok u 3 koraka) · Sokrat editor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#6366f1; --primary-dark:#4f46e5; --primary-light:#818cf8;
+  --secondary:#10b981; --accent:#f59e0b; --danger:#ef4444; --success:#22c55e;
+  --bg-primary:#0f172a; --bg-secondary:#1e293b; --bg-tertiary:#334155;
+  --text-primary:#f1f5f9; --text-secondary:#e2e8f0; --text-muted:#94a3b8;
+  --border:#334155; --radius:12px; --radius-lg:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(1200px 500px at 50% -10%,rgba(99,102,241,.14),transparent),var(--bg-primary);color:var(--text-primary);min-height:100vh}
+h1,h2,h3{font-family:'Space Grotesk',Inter,sans-serif}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+select,input[type=text]{background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;color:var(--text-primary);font:inherit;padding:10px 12px;width:100%}
+select:focus,input:focus{outline:2px solid var(--primary)}
+[contenteditable]:focus{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+.wrap{max-width:680px;margin:0 auto;padding:28px 18px 100px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.logo{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-light));display:grid;place-items:center}
+.top b{font-family:'Space Grotesk'}
+.chip{font-size:11px;padding:3px 9px;border-radius:99px;background:var(--bg-tertiary);color:var(--text-secondary)}
+
+/* stepper */
+.steps{display:flex;gap:8px;margin-bottom:26px}
+.step{flex:1;text-align:center;font-size:12px;color:var(--text-muted);padding-top:10px;border-top:3px solid var(--border)}
+.step.on{color:var(--primary-light);border-top-color:var(--primary);font-weight:600}
+.step.done{color:var(--secondary);border-top-color:var(--secondary)}
+
+.panel{display:none}
+.panel.on{display:block;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.panel h1{font-size:24px;margin-bottom:6px}
+.panel .sub{color:var(--text-muted);font-size:14px;margin-bottom:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12.5px;font-weight:600;color:var(--text-secondary);margin-bottom:6px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.note{font-size:12px;color:var(--text-muted);margin-top:4px}
+.note b{color:var(--primary-light)}
+
+/* korak 2: veliki mode-izbori („imaš izbore") */
+.modes{display:grid;gap:12px}
+.mode{display:flex;gap:14px;align-items:center;background:var(--bg-secondary);border:2px solid var(--border);border-radius:var(--radius-lg);padding:18px;cursor:pointer;transition:.15s}
+.mode:hover{border-color:var(--bg-tertiary)}
+.mode.on{border-color:var(--primary);background:rgba(99,102,241,.10)}
+.mode .em{font-size:28px}
+.mode h3{font-size:16px}
+.mode p{font-size:12.5px;color:var(--text-muted);margin-top:2px}
+.mode .tick{margin-left:auto;width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:grid;place-items:center;font-size:13px;color:transparent}
+.mode.on .tick{background:var(--primary);border-color:var(--primary);color:#fff}
+.custom{margin-top:14px;background:var(--bg-secondary);border:1px dashed var(--border);border-radius:var(--radius);padding:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:13.5px;color:var(--text-secondary)}
+.custom label{display:flex;gap:7px;align-items:center;cursor:pointer}
+.custom input{accent-color:var(--primary)}
+.prem{margin-top:16px;background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(245,158,11,.10));border:1px solid rgba(129,140,248,.35);border-radius:var(--radius-lg);padding:16px;display:flex;gap:14px;align-items:center}
+.prem .em{font-size:26px}
+.prem h4{font-size:14px}
+.prem h4 .pill{font-size:10px;background:var(--accent);color:#1a1206;font-weight:800;border-radius:99px;padding:2px 8px;margin-left:6px;vertical-align:2px}
+.prem p{font-size:12px;color:var(--text-muted);margin-top:2px}
+.prem button{margin-left:auto;flex-shrink:0}
+
+/* korak 3: editor — mode-pilule + learn kvadratići */
+.pills{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.pill-m{padding:8px 16px;border-radius:99px;border:1px solid var(--border);font-size:13.5px;font-weight:600;color:var(--text-muted)}
+.pill-m.on{background:var(--primary);border-color:var(--primary);color:#fff}
+.kv{background:var(--bg-secondary);border:1px solid var(--border);border-radius:var(--radius-lg);padding:18px;margin-bottom:14px}
+.kv .head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.kv .head .n{width:26px;height:26px;border-radius:8px;background:var(--bg-tertiary);display:grid;place-items:center;font-size:12px;color:var(--text-muted);flex-shrink:0}
+.kv h2[contenteditable]{font-size:16.5px;flex:1}
+.kv .x{color:var(--text-muted);font-size:13px}
+.kv .x:hover{color:var(--danger)}
+.kv div.body[contenteditable]{font-size:14.5px;line-height:1.65;color:var(--text-secondary);min-height:40px}
+.kv .media{display:flex;gap:8px;margin-top:12px}
+.kv .media button{font-size:12px;color:var(--text-muted);border:1px dashed var(--border);border-radius:8px;padding:6px 12px}
+.kv .media button:hover{color:var(--primary-light);border-color:var(--primary-light)}
+.kv .imgph{margin-top:12px;border:2px dashed var(--border);border-radius:10px;padding:26px;text-align:center;color:var(--text-muted);font-size:12.5px}
+.bigplus{width:100%;border:2px dashed var(--border);border-radius:var(--radius-lg);padding:18px;color:var(--text-muted);font-size:15px;font-weight:600;transition:.15s}
+.bigplus:hover{border-color:var(--primary);color:var(--primary-light);background:rgba(99,102,241,.06)}
+
+/* fiksna traka */
+.bar{position:fixed;bottom:0;left:0;right:0;background:rgba(15,23,42,.92);backdrop-filter:blur(8px);border-top:1px solid var(--border);padding:12px 18px;display:flex;gap:10px;justify-content:center}
+.btn{padding:10px 22px;border-radius:var(--radius);font-weight:600;font-size:14px}
+.btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff}
+.btn.ghost{border:1px solid var(--border);color:var(--text-secondary)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);background:var(--bg-tertiary);border:1px solid var(--border);padding:10px 18px;border-radius:99px;font-size:13.5px;display:none;z-index:99;max-width:90vw}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="logo">🦉</div><b>Sokrat</b> <span class="chip">NOVA SKRIPTA</span></div>
+
+  <div class="steps">
+    <div class="step on" id="s1">1 · Gdje?</div>
+    <div class="step" id="s2">2 · Što sadrži?</div>
+    <div class="step" id="s3">3 · Piši</div>
+  </div>
+
+  <!-- ============ KORAK 1: struktura (zahtjev 1 — kaskadni izbor + „dodaj novi" na svakoj razini) ============ -->
+  <section class="panel on" id="p1">
+    <h1>Gdje ova skripta živi?</h1>
+    <p class="sub">Odaberi postojeće ili dodaj novo na bilo kojoj razini — fakultet, smjer, godina, predmet.</p>
+    <div class="row2">
+      <div class="field"><label>Fakultet</label>
+        <select onchange="maybeNew(this,'fakultet')"><option>FMTU Opatija</option><option>＋ Dodaj novi fakultet…</option></select>
+      </div>
+      <div class="field"><label>Smjer</label>
+        <select onchange="maybeNew(this,'smjer')"><option>Menadžment u hotelijerstvu (HR)</option><option>Hospitality Management (EN)</option><option>＋ Dodaj novi smjer…</option></select>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Godina · semestar</label>
+        <select><option>1. godina · 2. semestar</option><option>1. godina · 1. semestar</option><option>2. godina · 1. semestar</option><option>＋ Dodaj godinu…</option></select>
+      </div>
+      <div class="field"><label>Predmet</label>
+        <select onchange="maybeNew(this,'predmet')"><option>Management</option><option>Mikroekonomija</option><option selected>＋ Dodaj novi predmet…</option></select>
+      </div>
+    </div>
+    <div class="field" id="newSubj"><label>Naziv novog predmeta</label>
+      <input type="text" value="Organizacijsko ponašanje" spellcheck="false">
+      <p class="note">Stvara se kroz UI — bez koda, bez deploya. <b>Ovo je zahtjev §5.1-1.</b></p>
+    </div>
+    <div class="field"><label>Naziv skripte</label>
+      <input type="text" value="Kolokvij 1" spellcheck="false">
+    </div>
+  </section>
+
+  <!-- ============ KORAK 2: izbor modova (zahtjev 2 — „imaš izbore") ============ -->
+  <section class="panel" id="p2">
+    <h1>Što će skripta sadržavati?</h1>
+    <p class="sub">Ti biraš. Studenti vide samo modove koje uključiš — prazan mod nije greška ako nije odabran.</p>
+    <div class="modes">
+      <div class="mode" onclick="pickMode(this,['learn'])"><span class="em">📚</span>
+        <div><h3>Samo Learn</h3><p>Gradivo u blokovima — čitanje i učenje, bez vježbi.</p></div><span class="tick">✓</span>
+      </div>
+      <div class="mode" onclick="pickMode(this,['cards','quiz'])"><span class="em">🃏</span>
+        <div><h3>Kartice + Kviz</h3><p>Samo aktivno ponavljanje — bez learn poglavlja.</p></div><span class="tick">✓</span>
+      </div>
+      <div class="mode on" onclick="pickMode(this,['learn','cards','quiz','fill'])"><span class="em">🎯</span>
+        <div><h3>Sve</h3><p>Learn + kartice + kviz + dopuni — potpuna skripta.</p></div><span class="tick">✓</span>
+      </div>
+    </div>
+    <div class="custom">
+      <b style="width:100%;font-size:12px;color:var(--text-muted)">ILI PRECIZNO:</b>
+      <label><input type="checkbox" checked> 📚 Learn</label>
+      <label><input type="checkbox" checked> 🃏 Kartice</label>
+      <label><input type="checkbox" checked> ❓ Kviz</label>
+      <label><input type="checkbox" checked> ✍️ Dopuni</label>
+    </div>
+    <div class="prem"><span class="em">✨</span>
+      <div><h4>AI autor <span class="pill">PREMIUM</span></h4><p>Napiši samo gradivo — kartice, kviz i dopuni nastaju automatski.</p></div>
+      <button class="btn ghost" disabled>Uskoro</button>
+    </div>
+  </section>
+
+  <!-- ============ KORAK 3: editor (zahtjev 3 — „+" otvara KVADRATIĆ s naslovom/tekstom/slikama) ============ -->
+  <section class="panel" id="p3">
+    <h1 contenteditable spellcheck="false">Kolokvij 1 — Organizacijsko ponašanje</h1>
+    <p class="sub">Uređuješ draft — promjene su lokalne dok ne objaviš.</p>
+    <div class="pills" id="pills">
+      <button class="pill-m on" onclick="swMode(this)">📚 Learn</button>
+      <button class="pill-m" onclick="swMode(this)">🃏 Kartice</button>
+      <button class="pill-m" onclick="swMode(this)">❓ Kviz</button>
+      <button class="pill-m" onclick="swMode(this)">✍️ Dopuni</button>
+    </div>
+
+    <div id="blocks">
+      <div class="kv">
+        <div class="head"><span class="n">1</span><h2 contenteditable spellcheck="false">Što je organizacijsko ponašanje?</h2><button class="x" onclick="this.closest('.kv').remove()">✕</button></div>
+        <div class="body" contenteditable spellcheck="false">Organizacijsko ponašanje (OB) proučava kako se pojedinci i grupe ponašaju unutar organizacija — i kako to znanje iskoristiti za bolju motivaciju, timove i vodstvo.</div>
+        <div class="media">
+          <button onclick="addImg(this)">🖼️ Slika</button>
+          <button onclick="addImg(this)">📈 Graf</button>
+          <button onclick="toast('▶️ YouTube blok — zalijepi link, gradimo siguran embed.')">▶️ Video</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="bigplus" onclick="addKv()">＋ &nbsp;Dodaj kvadratić (naslov · tekst · slike · grafovi)</button>
+  </section>
+</div>
+
+<div class="bar" id="bar">
+  <button class="btn ghost" id="back" onclick="go(-1)" disabled>← Natrag</button>
+  <button class="btn primary" id="next" onclick="go(1)">Dalje →</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let step = 1;
+function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display='none',3200); }
+
+function go(d){
+  if (step===3 && d===1){ toast('✅ Objavljeno — atomično kroz publish-RPC, s poviješću verzija.'); return; }
+  step = Math.min(3, Math.max(1, step+d));
+  for (let i=1;i<=3;i++){
+    document.getElementById('p'+i).classList.toggle('on', i===step);
+    const s = document.getElementById('s'+i);
+    s.className = 'step' + (i<step?' done':i===step?' on':'');
+  }
+  document.getElementById('back').disabled = (step===1);
+  document.getElementById('next').textContent = step===3 ? '⬆ Objavi' : 'Dalje →';
+}
+
+function maybeNew(sel, what){
+  if (sel.value.startsWith('＋')) toast('U stvarnoj izvedbi: inline polje za novi ' + what + ' — struktura se stvara kroz UI (§5.1-1).');
+}
+
+function pickMode(el){
+  document.querySelectorAll('.mode').forEach(m=>m.classList.remove('on'));
+  el.classList.add('on');
+  toast('Zapamćeno — studentima se prikazuju samo odabrani modovi.');
+}
+
+function swMode(p){
+  document.querySelectorAll('.pill-m').forEach(x=>x.classList.remove('on'));
+  p.classList.add('on');
+  if (!p.textContent.includes('Learn')) toast('U punoj izvedbi: fokusirani editor za ' + p.textContent.trim() + ' (kartica-flip / kviz-builder / označi-prazninu).');
+}
+
+let n = 1;
+function addKv(){
+  n++;
+  const d = document.createElement('div'); d.className='kv';
+  d.innerHTML = '<div class="head"><span class="n">'+n+'</span><h2 contenteditable spellcheck="false">Novi naslov…</h2><button class="x" onclick="this.closest(\'.kv\').remove()">✕</button></div>'+
+    '<div class="body" contenteditable spellcheck="false">Tekst gradiva — počni pisati…</div>'+
+    '<div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast(\'▶️ YouTube blok.\')">▶️ Video</button></div>';
+  document.getElementById('blocks').appendChild(d);
+  d.querySelector('h2').focus();
+}
+function addImg(btn){
+  const kv = btn.closest('.kv');
+  if (kv.querySelector('.imgph')) return toast('U stvarnoj izvedbi: više slika po kvadratiću.');
+  const ph = document.createElement('div'); ph.className='imgph'; ph.textContent='🖼️ Povuci sliku/graf ovdje ili klikni za odabir (grafovi = slika u v1)';
+  kv.appendChild(ph);
+}
+</script>
+</body>
+</html>

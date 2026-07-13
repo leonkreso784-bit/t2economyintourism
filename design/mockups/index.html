@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U-UX mockupi — Sokrat editor (Leon presuđuje)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#6366f1;--primary-light:#818cf8;--secondary:#10b981;--accent:#f59e0b;
+--bg:#0f172a;--card:#1e293b;--t3:#334155;--text:#f1f5f9;--text2:#e2e8f0;--muted:#94a3b8;--border:#334155}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:radial-gradient(900px 400px at 50% -5%,rgba(99,102,241,.15),transparent),var(--bg);color:var(--text);min-height:100vh;padding:40px 18px}
+h1,h2,h3{font-family:'Space Grotesk',Inter,sans-serif}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-size:26px;margin-bottom:8px}
+.sub{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:28px}
+.sub b{color:var(--primary-light)}
+.v{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;transition:.15s}
+.v:hover{border-color:var(--primary);transform:translateY(-2px)}
+.v .tag{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--primary-light)}
+.v h2{font-size:19px;margin:4px 0 8px}
+.v p{font-size:13.5px;color:var(--text2);line-height:1.6}
+.v .for{margin-top:10px;font-size:12.5px;color:var(--muted)}
+.v .for b{color:var(--secondary)}
+.crit{background:var(--card);border:1px dashed var(--border);border-radius:16px;padding:18px 20px;margin-top:26px}
+.crit h3{font-size:14px;margin-bottom:10px}
+.crit ol{margin-left:18px;font-size:13.5px;color:var(--text2);line-height:1.9}
+.crit .q{margin-top:12px;font-size:13px;color:var(--muted)}
+.crit .q b{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎨 Sokrat editor — dizajn-varijante</h1>
+  <p class="sub">Dva različita <b>smjera</b> za autorsko sučelje (U-UX faza, EDITOR_PLAN §12). Oba pokrivaju ista 4 zahtjeva iz <b>§5.1</b>, ali drugačijom filozofijom.
+  Sve je klikabilno: dodavanje strukture, „+" blokovi, tabovi/pilule modova, kartice koje se okreću, Objavi. Pravi podaci ne postoje — ovo je mockup.</p>
+
+  <a class="v" href="editor-a-studio.html">
+    <span class="tag">VARIJANTA A</span>
+    <h2>🎛️ „Studio" — sve na jednom ekranu</h2>
+    <p>Notion-lite radni prostor: <b>stablo strukture lijevo</b> (＋ na svakoj razini) · <b>blok-editor u sredini</b> (＋ između blokova otvara izbornik: tekst/naslov/slika/video) · <b>inspektor desno</b> (boje-tokeni, ikone, premium AI kutija). Modovi = tabovi iznad sadržaja.</p>
+    <p class="for"><b>Kome paše:</b> power-autoru (tebi) — sve vidljivo odjednom, najbrži rad; složeniji je za prvi susret (UGC početnik vidi puno toga).</p>
+  </a>
+
+  <a class="v" href="editor-b-vodic.html">
+    <span class="tag">VARIJANTA B</span>
+    <h2>🧭 „Vodič" — vođeni tok u 3 koraka</h2>
+    <p><b>1) Gdje?</b> (kaskadni izbor strukture + „dodaj novi" na svakoj razini) → <b>2) Što sadrži?</b> (veliki izbori: samo learn / kartice+kviz / sve — „imaš izbore") → <b>3) Piši</b> (＋ otvara <b>kvadratić</b> s naslovom, tekstom, slikama i grafovima). Jedna kolona, mobile-friendly.</p>
+    <p class="for"><b>Kome paše:</b> UGC korisniku-početniku — nemoguće se izgubiti; power-autoru sporiji (više klikova do cilja).</p>
+  </a>
+
+  <div class="crit">
+    <h3>📏 Prema čemu suditi (tvoja 4 zahtjeva, §5.1)</h3>
+    <ol>
+      <li><b>Struktura kroz UI</b> — možeš li stvoriti fakultet → smjer → godinu → predmet bez koda?</li>
+      <li><b>Izbor modova po skripti</b> — biraš li jasno što skripta sadrži (samo learn / kartice+kviz / sve)?</li>
+      <li><b>Learn = „+" kvadratić</b> — naslov, tekst, slike, grafovi; je li dodavanje prirodno?</li>
+      <li><b>Premium AI placeholder</b> — vidi se gdje će jednog dana biti „napiši sve → sustav generira ostalo"?</li>
+    </ol>
+    <p class="q">Moguće je i <b>miješati</b>: npr. B-wizard za novu skriptu + A-studio za uređivanje postojeće. Presuda ide u <b>EDITOR_UX.md</b>, pa se U6–U8 grade točno u tom dizajnu.</p>
+  </div>
+</div>
+</body>
+</html>
