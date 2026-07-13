@@ -220,5 +220,45 @@ const V = 'te2M1';
   });
 }
 
+// ---- baseVersion (U4 — publish-RPC optimistic concurrency) ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+
+  test('begin pamti baseVersion; bez parametra = null', () => {
+    const d = store.begin(S, L, V, sampleData(), 4);
+    assert.strictEqual(d.baseVersion, 4);
+    store.discard(S, L);
+    const d2 = store.begin(S, L, V, sampleData());
+    assert.strictEqual(d2.baseVersion, null);
+    store.discard(S, L);
+  });
+
+  test('commitDone(newVersion) re-baselinea verziju; bez parametra je NE dira', () => {
+    const d = store.begin(S, L, V, sampleData(), 4);
+    store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', patch: { answer: 'v5' } });
+    store.commitDone(S, L, 5);
+    assert.strictEqual(d.baseVersion, 5);
+    assert.strictEqual(d.dirty, false);
+    store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', patch: { answer: 'opet' } });
+    store.commitDone(S, L); // npr. stari pozivatelj bez verzije
+    assert.strictEqual(d.baseVersion, 5, 'bez newVersion baseVersion ostaje');
+    store.discard(S, L);
+  });
+
+  test('autosave-restore zadržava SVJEŽU baseVersion (ne onu iz vremena spremanja)', () => {
+    const d1 = store.begin(S, L, V, sampleData(), 1);
+    store.applyOp(S, L, { type: 'updateCard', catId: 'demand', id: 'aaa111', patch: { question: 'PREŽIVI' } });
+    assert.strictEqual(d1.baseVersion, 1);
+    // refresh: ista baza (fingerprint match, npr. tuđa objava identičnog sadržaja bumpa verziju)
+    const store2 = loadStore(ls);
+    const d2 = store2.begin(S, L, V, sampleData(), 7);
+    assert.strictEqual(d2.restored, true);
+    assert.strictEqual(d2.working.demand.flashcards[0].question, 'PREŽIVI');
+    assert.strictEqual(d2.baseVersion, 7, 'publish mora ići sa svježom verzijom iz DB-a');
+  });
+}
+
 console.log(`\ndraft-store: ${passed} prošlo, ${failed} palo\n`);
 process.exit(failed ? 1 : 0);

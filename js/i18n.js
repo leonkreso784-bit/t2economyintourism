@@ -49,7 +49,6 @@
     'admin.saveErr': { en: 'Could not save.', hr: 'Spremanje nije uspjelo.' },
     'admin.emptyErr': { en: 'Question and answer must not be empty.', hr: 'Pitanje i odgovor ne smiju biti prazni.' },
     'admin.notInDb': { en: 'This subject is not in the database yet.', hr: 'Ovaj predmet još nije u bazi.' },
-    'admin.propWarn': { en: '(final sync incomplete)', hr: '(finalni nije potpuno sinkroniziran)' },
     // U3 — draft-mod (uredi → radna kopija → Objavi/Odbaci)
     'admin.editLesson': { en: 'Edit lesson', hr: 'Uredi lekciju' },
     'admin.resumeEditing': { en: 'Resume editing', hr: 'Nastavi uređivanje' },
@@ -60,6 +59,8 @@
     'admin.publish': { en: 'Publish', hr: 'Objavi' },
     'admin.publishOk': { en: 'Published.', hr: 'Objavljeno.' },
     'admin.publishErr': { en: 'Publish failed.', hr: 'Objava nije uspjela.' },
+    // U4 — publish-RPC (base_version optimistic concurrency)
+    'admin.publishConflict': { en: 'This lesson was changed elsewhere in the meantime — reopen it and repeat the edit.', hr: 'Netko je u međuvremenu promijenio ovu lekciju — ponovno je otvori i ponovi izmjenu.' },
     'admin.discard': { en: 'Discard', hr: 'Odbaci' },
     'admin.discardTitle': { en: 'Discard changes?', hr: 'Odbaciti promjene?' },
     'admin.discardMsg': { en: 'All unpublished changes to this lesson will be lost.', hr: 'Sve neobjavljene promjene ove lekcije bit će izgubljene.' },

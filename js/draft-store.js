@@ -126,11 +126,15 @@
      * Ako postoji autosave S ISTOM bazom (fingerprint) → vrati radnu kopiju i opove (restored=true).
      * @param {string} subjectId @param {string} lessonId @param {string} varName
      * @param {any} data autoritativni payload lekcije (iz baze — read se radi u admin.js)
+     * @param {number} [baseVersion] `subject_content.version` reda u trenutku dohvata — publish-RPC
+     *   (U4) njime lovi tuđu izmjenu (optimistic concurrency). Uvijek iz SVJEŽEG fetcha, ne iz
+     *   autosavea: fingerprint jamči isti sadržaj, a svježa verzija je istinita i kad se poklapaju.
      */
-    begin(subjectId, lessonId, varName, data) {
+    begin(subjectId, lessonId, varName, data, baseVersion) {
       const baseFp = _fp(data);
       const d = {
         subjectId, lessonId, varName, baseFp,
+        baseVersion: (baseVersion == null) ? null : baseVersion,
         original: _copy(data),
         working: _copy(data),
         ops: [], dirty: false, restored: false, startedAt: Date.now()
@@ -202,12 +206,16 @@
       return { applied: applied, skipped: skipped };
     },
 
-    /** Nakon USPJEŠNE objave: nova baza = working (re-baseline), oplog i autosave se čiste. */
-    commitDone(subjectId, lessonId) {
+    /**
+     * Nakon USPJEŠNE objave: nova baza = working (re-baseline), oplog i autosave se čiste.
+     * @param {number} [newVersion] verzija koju je publish-RPC vratio — nova baza za idući publish
+     */
+    commitDone(subjectId, lessonId, newVersion) {
       const d = this.get(subjectId, lessonId);
       if (!d) return;
       d.original = _copy(d.working);
       d.baseFp = _fp(d.working);
+      if (newVersion != null) d.baseVersion = newVersion;
       d.ops = [];
       d.dirty = false;
       d.restored = false;

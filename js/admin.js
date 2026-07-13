@@ -303,13 +303,13 @@ function _adminResolveVar(subjectId, lessonId) {
 
 // ===== U3 — DRAFT-MOD (EDITOR_PLAN §4.1): uredi → radna kopija → Objavi/Odbaci =====
 //
-// „Uredi lekciju" povlači SVJEŽU bazu iz DB-a i otvara draft (SokratDraft.begin →
-// original/working + autosave-restore iz localStoragea). Editori pišu OPOVE u working
-// (bez mreže); „Objavi" upisuje working u primarni red (RLS + verzija-trigger = undo/audit)
-// i sinka sestrinske redove primjenom ISTIH opova (final = kopija M1+M2); „Odbaci" baca
-// kopiju — baza i aplikacija nikad nisu ni dirnute. Edit-gumbi postoje SAMO u draft-modu
-// (jedan write-put). ⚠ base_version concurrency dolazi s U4 publish-RPC-om (jedini smo
-// admin → prihvatljivo u U3); autosave čuva draft preko refresha/crasha.
+// „Uredi lekciju" povlači SVJEŽU bazu iz DB-a (payload + version) i otvara draft
+// (SokratDraft.begin → original/working + autosave-restore iz localStoragea). Editori pišu
+// OPOVE u working (bez mreže); „Objavi" (U4) šalje working + sibling-payloade s ISTIM opovima
+// (final = kopija M1+M2) kroz publish_document RPC — atomično, uz base_version optimistic
+// concurrency (tuđa izmjena = konflikt-toast, ništa nije upisano) i snapshot-trigger
+// (undo/audit); „Odbaci" baca kopiju — baza i aplikacija nikad nisu ni dirnute. Edit-gumbi
+// postoje SAMO u draft-modu (jedan write-put); autosave čuva draft preko refresha/crasha.
 
 let _draftMode = false;
 
@@ -374,14 +374,15 @@ async function _enterDraftMode() {
   const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
   if (!client) return;
   try {
-    // Baza drafta = svjež DB payload (ne JSON/js fallback — objava piše u DB, pa je DB istina za edit).
-    const sel = await client.from('subject_content').select('payload')
+    // Baza drafta = svjež DB payload (ne JSON/js fallback — objava piše u DB, pa je DB istina za edit)
+    // + version reda: publish-RPC (U4) njime lovi tuđu izmjenu između ulaska u draft i objave.
+    const sel = await client.from('subject_content').select('payload,version')
       .eq('subject_id', s).eq('var_name', v).single();
     if (sel.error || !sel.data || !sel.data.payload) {
       if (typeof showToast === 'function') showToast(_adminT('admin.notInDb', 'This subject is not in the database yet.'));
       return;
     }
-    const d = SokratDraft.begin(s, l, v, sel.data.payload);
+    const d = SokratDraft.begin(s, l, v, sel.data.payload, sel.data.version);
     _draftMode = true;
     if (d.restored && typeof showToast === 'function') showToast(_adminT('admin.draftRestored', 'Unsaved draft restored.'));
     _adminRerender();
@@ -390,7 +391,7 @@ async function _enterDraftMode() {
   }
 }
 
-/** „Objavi": working → primarni red (verzija-trigger) + isti opovi → sestrinski redovi + in-memory. */
+/** „Objavi" (U4): working + sibling-payloadi → publish_document RPC — atomično + base_version. */
 async function _publishDraft() {
   const d = _adminDraft();
   if (!_draftMode || !d || !d.dirty) return;
@@ -400,32 +401,39 @@ async function _publishDraft() {
   if (!client) return;
   if (btn) btn.disabled = true;
   try {
-    // 1) Primarni red = cijeli working blob (RLS is_admin; trigger snapshota STARO stanje → undo/audit).
-    const upd = await client.from('subject_content').update({ payload: d.working })
-      .eq('subject_id', d.subjectId).eq('var_name', d.varName);
-    if (upd.error) {
-      if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.') + ' (' + upd.error.message + ')');
+    // 1) Sestrinski redovi (final = kopija M1+M2 dijeli kategorije): SVJEŽ payload + version,
+    //    pa isti opovi. Svježina je bitna — tuđa izmjena siblinga od ulaska u draft se ne gazi
+    //    (opovi idu na aktualno stanje), a race do samog upisa lovi base_version u RPC-u.
+    const ops = d.ops.slice();
+    const writes = [{ var_name: d.varName, payload: d.working, base_version: d.baseVersion }];
+    const patchedVars = [];
+    const sel = await client.from('subject_content').select('var_name,payload,version')
+      .eq('subject_id', d.subjectId).neq('var_name', d.varName);
+    if (sel.error) {
+      if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.') + ' (' + sel.error.message + ')');
       if (btn) btn.disabled = false;
       return;
     }
+    for (const row of (sel.data || [])) {
+      const r = SokratDraft.applyOpsTo(row.payload, ops);
+      if (!r.applied) continue; // red ne dijeli ove kategorije (npr. examPractice-only)
+      writes.push({ var_name: row.var_name, payload: row.payload, base_version: row.version });
+      patchedVars.push(row.var_name);
+    }
 
-    // 2) Sestrinski redovi: primijeni ISTE opove (final = kopija M1+M2 dijeli kategorije). Best-effort.
-    const ops = d.ops.slice();
-    const failed = [];
-    const patchedVars = [];
-    try {
-      const sel = await client.from('subject_content').select('var_name,payload')
-        .eq('subject_id', d.subjectId).neq('var_name', d.varName);
-      if (!sel.error && Array.isArray(sel.data)) {
-        for (const row of sel.data) {
-          const r = SokratDraft.applyOpsTo(row.payload, ops);
-          if (!r.applied) continue; // red ne dijeli ove kategorije (npr. examPractice-only)
-          const su = await client.from('subject_content').update({ payload: row.payload })
-            .eq('subject_id', d.subjectId).eq('var_name', row.var_name);
-          if (su.error) failed.push(row.var_name); else patchedVars.push(row.var_name);
-        }
+    // 2) JEDINA točka pisanja: publish_document (is_admin + base_version + validacija + svi redovi
+    //    u JEDNOJ transakciji — konflikt/greška = ništa nije upisano; snapshot-trigger čuva undo/audit).
+    const rpc = await client.rpc('publish_document', { p_subject_id: d.subjectId, p_writes: writes });
+    if (rpc.error) {
+      const conflict = /publish_version_conflict/.test(rpc.error.message || '');
+      if (typeof showToast === 'function') {
+        showToast(conflict
+          ? _adminT('admin.publishConflict', 'This lesson was changed elsewhere in the meantime — reopen it and repeat the edit.')
+          : _adminT('admin.publishErr', 'Publish failed.') + ' (' + rpc.error.message + ')');
       }
-    } catch (e) { /* best-effort — primarni je već objavljen */ }
+      if (btn) btn.disabled = false;
+      return;
+    }
 
     // 3) In-memory sync bez reloada (study/viewer čitaju iste reference; update-opovi su idempotentni).
     if (typeof window !== 'undefined' && window[d.varName]) SokratDraft.applyOpsTo(window[d.varName], ops);
@@ -434,13 +442,11 @@ async function _publishDraft() {
       if (typeof window !== 'undefined' && window[sv]) SokratDraft.applyOpsTo(window[sv], ops);
     });
 
-    // 4) Re-baseline drafta + izlaz iz draft-moda.
-    SokratDraft.commitDone(d.subjectId, d.lessonId);
+    // 4) Re-baseline drafta (nova verzija iz RPC-a = baza za idući publish) + izlaz iz draft-moda.
+    const newVersion = (rpc.data && rpc.data[d.varName] != null) ? rpc.data[d.varName] : null;
+    SokratDraft.commitDone(d.subjectId, d.lessonId, newVersion);
     _draftMode = false;
-    if (typeof showToast === 'function') {
-      const okMsg = _adminT('admin.publishOk', 'Published.');
-      showToast(failed.length ? (okMsg + ' ' + _adminT('admin.propWarn', '(final sync incomplete)')) : okMsg);
-    }
+    if (typeof showToast === 'function') showToast(_adminT('admin.publishOk', 'Published.'));
     _adminRerender();
   } catch (e) {
     if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.'));
@@ -547,7 +553,7 @@ function _openCardEditor(catId, idx) {
 }
 
 // (U3) Stari per-item RMW put (_patchObj/_patchInMemory/_propagateToSiblings) je uklonjen —
-// jedini write-put je sada draft → „Objavi" (_publishDraft: working blob + isti opovi na siblinge).
+// jedini write-put je draft → „Objavi" (_publishDraft; od U4 kroz publish_document RPC).
 
 /** Spremi uređenu karticu U DRAFT (op nad working kopijom; baza se dira tek na „Objavi" — U3). */
 function _saveCard() {
