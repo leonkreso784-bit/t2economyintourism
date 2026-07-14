@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-15 (OPUS) — 🚀 Management (HR) OBJAVLJEN: prvi Sašin content-PR mergean (opcija B)
+**Kontekst:** post-compact pregled cijelog projekta → sve zeleno; nalaz = **Saša je 2026-07-14 navečer odradio doradu po opciji B** (2 nova commita `36cdcb1`+`00a9ef1`). Leon: „napravi sve da možemo Sašin rad objaviti." Radim kao voditelj: integracija → review → gateovi → objava.
+1. **Due-diligence PR-a:** grana 7 ispred / 20 iza main (merge-base `79f17c7`). **Platformski file-ovi u diffu (index/styles/sw/manifest/legal-stranice/content-loader) = ISKLJUČIVO `npm run bump` tokeni** (ripgrep-provjera svih 7: nula ne-bump izmjena) → **nula prekršaja TEAM.md §2** (Saša ostao u content-opsegu, samo obavezni bump).
+2. **Integracija (merge, NE rebase — čuvam Sašino autorstvo/SHA):** `integ/management-hr` = main + `git merge --no-ff origin/content/management-hr` → konflikti = 10 bump-file + `subjects/README` redak. Riješeno: README ručno (LIVE 2026-07-15), bump-file-ovi `--ours` + **`npm run bump`** = svjež uniforman token **`20260715002009`** → merge-commit `fec1a35`.
+3. **Content-review (merge=produkcija → moram vidjeti):** terminologija po opciji B ✓ (KADROVIRANJE = 3. od 5 W&K funkcija · efikasnost/efektivnost) · 2 nove kat žive · **Drucker fact-fix činjenično točan i `correct`-indeksi provjereni** (otac modernog=Drucker `correct:2` · Drucker→sistemski `correct:1` · Fayol→operacijski `correct:1`). **Nalaz:** 1 ćirilični artefakt prijevoda (`Manualне` u netočnom distraktoru) → **popravljen** `d7bec06` + re-export JSON + Grep-potvrda 0 ćirilice u cijelom `management-hr`.
+4. **Gateovi (integrirani rezultat):** verify 0/0 · bump:check 96=`20260715002009` · validate:content 0/0 · validate:schema 3/0 · export --check u sinku · unit 19/0 · build:css sinc.
+**Objava:** FF `main`→integ + push = produkcija (uz izričit Leonov per-push OK). PR #1 se time zatvara (Sašin head postaje predak main-a).
+**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · docx→tekst skripta prije Sašinog S6 · napomena Saši: ripgrep ćirilica-sken prije PR-a.
+
 ## 2026-07-14 (OPUS) — 🚀 U4 + U-UX DEPLOYANI NA PRODUKCIJU (`056d963`)
 **Kontekst:** post-compact pregled cijelog projekta → sve zeleno (git/gateovi/Supabase/PR) → Leon dao izričit OK za deploy. **Redoslijed (sveti): PROD SQL PRIJE klijenta.**
 1. **Pre-flight (read-only MCP):** PROD `is_admin` postoji · trigeri mapirani (`subject_content_set_updated_at`→zamjena touch-triggerom, `snapshot`→ostaje). **Nalaz drifta:** PROD `content_versions` 22→**24** → istraženo do korijena = **Leonov živi `entrepreneurship` edit 2026-07-12** (history kartica #0, `'ability…'`→`(ability…)`, ista duljina → sitni ispravak); baza je imala, repo-datoteke ne (dual-read servira DB pa je bilo živo, ali datoteke=izvor-istine odstupale).
