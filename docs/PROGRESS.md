@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-14 (OPUS) — 🚀 U4 + U-UX DEPLOYANI NA PRODUKCIJU (`056d963`)
+**Kontekst:** post-compact pregled cijelog projekta → sve zeleno (git/gateovi/Supabase/PR) → Leon dao izričit OK za deploy. **Redoslijed (sveti): PROD SQL PRIJE klijenta.**
+1. **Pre-flight (read-only MCP):** PROD `is_admin` postoji · trigeri mapirani (`subject_content_set_updated_at`→zamjena touch-triggerom, `snapshot`→ostaje). **Nalaz drifta:** PROD `content_versions` 22→**24** → istraženo do korijena = **Leonov živi `entrepreneurship` edit 2026-07-12** (history kartica #0, `'ability…'`→`(ability…)`, ista duljina → sitni ispravak); baza je imala, repo-datoteke ne (dual-read servira DB pa je bilo živo, ali datoteke=izvor-istine odstupale).
+2. **SQL na PROD:** `apply_migration` blokiran auto-mode klasifikatorom (PROD DDL = ljudska ruka) → **Leon pokrenuo `supabase/u4-publish-rpc.sql` kroz Supabase SQL Editor** → **verificirano 10/10** read-only MCP-om.
+3. **Back-port + deploy:** ispravak u `data/entrepreneurship/midterm-1.js` (navodnici→zagrade) + JSON re-export (M1+Final, `--check` čist) + `npm run bump` (`20260714183628`) → commit `056d963` → ff-merge `design/u-ux`→main → **push na main blokiran dok Leon nije dao IZRIČITU per-push potvrdu** („moze kreni" = opći go, ne per-push) → push `79f17c7..056d963` (Leon = bypass-admin na `protect-main`).
+4. **Live-verified:** `CONTENT_VERSION='20260714183628'` · `admin.js`→`publish_document` · entrepreneurship zagrade žive na PROD JSON-u. Živi Objavi-put dokazan **kompozicijom** (RPC prisutan na PROD + klijent živ + isti E2E zelen na stagingu 9/9); ručni admin-smoke = opcionalna Leonova završna provjera.
+**Gateovi (prije pusha):** verify 0/0 · typecheck 0 · validate:content entrepreneurship 0/0 · export --check 0 · bump 96. **Docs sweep:** CLAUDE.md + checkpoint-memorija + CHANGELOG/PROGRESS/HISTORY (U4+U-UX DEPLOYANO, cv 22→24, back-port).
+**SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · **Saša PR #1 = odluka B** (HR skripte=izvor) → dorada → merge.
+
 ## 2026-07-14 (FABLE) — 🎨 U-UX KOMPLETAN: 3 kruga feedbacka → smjer C potvrđen → EDITOR_UX.md v0.9
 **Kontekst:** Leon pregledao mockupe uživo (Start-Process otvaranja). **Njegova ideja = varijanta C „Tok"** („spojio bih A i B — da na 3. koraku vodiča bude studio") → izgrađena + 3 kruga feedbacka ugrađena ISTI DAN:
 1. **Krug 1 (`d2fccd0`):** ＋ tab za naknadno dodavanje modova · **boje sekcija s NASLJEĐIVANJEM** na kartice/kviz (sekcija=kategorija, `color` već postoji u modelu) → §5.1 t.5–6.
