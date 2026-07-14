@@ -1,9 +1,11 @@
 // Management (HR) — M1
-// Auto-generirano: scripts/translate-subject.js (HRV program — docs/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.
+// Izvor: prijevod EN `management` (scripts/translate-subject.js) + RUČNO USKLAĐENO S HRVATSKOM SKRIPTOM
+// kolegija (Weihrich&Koontz okvir, 5 funkcija; `managementHistory` i `hotelEnterprise` autorski iz skripte).
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom — pregazio bi usklađivanje sa skriptom!
 
 const managementHrM1 = {
   "foundations": {
-    "name": "Menadžment i njegova povijest",
+    "name": "Opći pristup i razvoj znanosti o menadžmentu",
     "icon": "fa-sitemap",
     "color": "#6366f1",
     "flashcards": [
@@ -38,19 +40,14 @@ const managementHrM1 = {
         "explanation": "Vrste prema razini: generalni menadžeri, funkcionalni menadžeri, projektni menadžeri."
       },
       {
-        "question": "KLASIČNA teorija: tko su bili Taylor, Fayol, Weber i Follett?",
-        "answer": "Klasični teoretičari usredotočuju se na POSAO i funkcije menadžmenta kako bi pronašli najbolji način upravljanja.\n\n• Frederick TAYLOR — 'otac znanstvenog menadžmenta' (efikasnost rada, studije vremena, poticajne plaće).\n• Henri FAYOL — 'otac modernog menadžmenta'; 5 funkcija + 14 načela (administrativna teorija).\n• Max WEBER — razvio koncept BIROKRACIJE (pravila/procedure za pravedno postupanje).\n• Mary Parker FOLLETT — naglašavala LJUDE; poznata po integrativnom rješavanju sukoba.",
-        "explanation": "Znanstveni menadžment = efikasnost rada; administrativna teorija = pravila i organizacijska struktura."
+        "question": "Na koja se DVA OSNOVNA PRISTUPA dijeli razvoj znanosti o menadžmentu?",
+        "answer": "1. VIŠEDISCIPLINSKI (multidisciplinarni) — pristupa znanosti o menadžmentu s aspekata matematike, sociologije, psihologije, kliničkog iskustva, teorije odlučivanja i teorije sustava\n2. POVIJESNO-KRONOLOŠKI — slijedi razvoj misli kroz povijest/vrijeme",
+        "explanation": "Povijesno-kronološki pristup obrađen je zasebno (Prapočeci → Konvencionalni → Nekonvencionalni → Suvremeni)."
       },
       {
-        "question": "BIHEVIORALNA teorija: tko su bili Mayo, Maslow i McGregor?",
-        "answer": "Bihevioralni teoretičari usredotočuju se na LJUDE (ljudske vještine iznad tehničkih) kako bi pronašli najbolji način upravljanja.\n\n• Elton MAYO — začetnik pokreta LJUDSKIH ODNOSA; način na koji menadžer postupa s ljudima utječe na radnu uspješnost.\n• Abraham MASLOW — teorija hijerarhije potreba (motivacija).\n• Douglas McGREGOR — Teorija X (ljudi ne vole rad, potrebna im je kontrola) nasuprot Teoriji Y (ljudi vole raditi, potreban im je minimalan nadzor).",
-        "explanation": "Bihevioristi su vjerovali da su zadovoljni zaposlenici produktivni — kasnija istraživanja dovela su to u pitanje."
-      },
-      {
-        "question": "Što je INTEGRATIVNA perspektiva (sustavna, sociotehnička, kontingencijska)?",
-        "answer": "Ona integrira klasične, bihevioralne i teorije upravljačkih znanosti. Tri komponente:\n\n1. SUSTAVNA teorija — organizacija se promatra kao CJELINA; otvoreni sustav koji pretvara ulaze u izlaze i koji je u interakciji s okolinom.\n2. SOCIOTEHNIČKA teorija — integracija LJUDI i TEHNOLOGIJE.\n3. KONTINGENCIJSKA teorija — ne postoji jedan jedini najbolji način; najbolji pristup OVISI o situaciji (stabilna→mehanistička, inovativna→organska).",
-        "explanation": "Teoretičari upravljačkih znanosti koriste matematiku (operacijska istraživanja, upravljanje operacijama, MIS) kao potporu odlučivanju."
+        "question": "Koje su KLJUČNE KOMPONENTE efektivnog menadžera?",
+        "answer": "• Aktivan VOĐA\n• Osigurava POTICAJ za ostvarenje visokih rezultata\n• Osigurava MOGUĆNOST ostvarenja visokih rezultata\n• Kreira POZITIVNU RADNU OKOLINU",
+        "explanation": "S pojmom „menadžer\" mogu se izjednačiti: supervisor, leader, organiser, director, administrator, governer, controller, boss."
       }
     ],
     "quiz": [
@@ -103,36 +100,6 @@ const managementHrM1 = {
           "Menadžere srednje razine"
         ],
         "correct": 1
-      },
-      {
-        "question": "Frederick Taylor poznat je kao otac:",
-        "options": [
-          "Administrativne teorije",
-          "Znanstvenog menadžmenta",
-          "Birokracije",
-          "Kontingencijske teorije"
-        ],
-        "correct": 1
-      },
-      {
-        "question": "Teoriju X / Teoriju Y razvio je:",
-        "options": [
-          "Henri Fayol",
-          "Max Weber",
-          "Douglas McGregor",
-          "Elton Mayo"
-        ],
-        "correct": 2
-      },
-      {
-        "question": "Koji pristup zastupa stajalište da najbolji način upravljanja OVISI o situaciji?",
-        "options": [
-          "Znanstveno upravljanje",
-          "Birokracija",
-          "Kontingencijska teorija",
-          "Administrativna teorija"
-        ],
-        "correct": 2
       }
     ],
     "fillBlanks": [
@@ -150,21 +117,581 @@ const managementHrM1 = {
         "sentence": "Mintzberg je grupirao 10 menadžerskih uloga u interpersonalne, informacijske i _______ uloge.",
         "answer": "odlučivačke",
         "hint": "Poduzetnik, pregovarač..."
-      },
-      {
-        "sentence": "Henri Fayol ponekad se naziva ocem _______ menadžmenta.",
-        "answer": "modernog",
-        "hint": "5 funkcija + 14 načela..."
-      },
-      {
-        "sentence": "_______ teorija promatra organizaciju kao cjelinu koja pretvara ulazne resurse u izlazne rezultate.",
-        "answer": "Sustavska",
-        "hint": "Otvoreni sustav u interakciji s okolinom..."
       }
     ],
     "learn": {
       "title": "Management & Its History",
-      "content": "\n                <h3>Što je menadžment?</h3>\n                <p><strong>Menadžment</strong> = proces oblikovanja, usmjeravanja i usklađivanja svih čimbenika proizvodno-uslužnog procesa u kojem pojedinci, radeći zajedno u poduzeću, <strong>efikasno ostvaruju odabrane ciljeve</strong> — kroz pet funkcija (Weihrich i Koontz). Ključni aspekti: rad s i putem drugih · ravnoteža efektivnosti i efikasnosti · racionalno korištenje ograničenih resursa · utjecaj promjenjive okoline.</p>\n                <div class=\"formula-box\">\n                    EFIKASNOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; EFEKTIVNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → KADROVIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n\n                <h4>Škole menadžerske misli</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Klasična</strong> (posao): Taylor (znanstveni menadžment), Fayol (administrativni), Weber (birokracija), Follett (ljudi)</li>\n                        <li><strong>Bihevioralna</strong> (ljudi): Mayo (ljudski odnosi), Maslow (potrebe), McGregor (Teorija X/Y)</li>\n                        <li><strong>Menadžerska znanost</strong> (matematika): operacijska istraživanja, MIS</li>\n                        <li><strong>Integrativna</strong>: sustavska · sociotehničke · kontingencijska („ovisi o situaciji\")</li>\n                    </ul>\n                </div>\n            "
+      "content": "\n                <h3>Što je menadžment?</h3>\n                <p><strong>Menadžment</strong> = proces oblikovanja, usmjeravanja i usklađivanja svih čimbenika proizvodno-uslužnog procesa u kojem pojedinci, radeći zajedno u poduzeću, <strong>efikasno ostvaruju odabrane ciljeve</strong> — kroz pet funkcija (Weihrich i Koontz). Ključni aspekti: rad s i putem drugih · ravnoteža efektivnosti i efikasnosti · racionalno korištenje ograničenih resursa · utjecaj promjenjive okoline.</p>\n                <div class=\"formula-box\">\n                    EFIKASNOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; EFEKTIVNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → KADROVIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n            "
+    }
+  },
+  "managementHistory": {
+    "name": "Povijesno-kronološki pristup menadžmentu",
+    "icon": "fa-clock-rotate-left",
+    "color": "#64748b",
+    "flashcards": [
+      {
+        "question": "Kako se dijeli POVIJESNO-KRONOLOŠKI pristup znanosti o menadžmentu?",
+        "answer": "1. PRAPOČECI\n2. KONVENCIONALNI\n3. NEKONVENCIONALNI\n4. SUVREMENI",
+        "explanation": "Ovaj pristup slijedi razvoj misli kroz povijest odnosno vrijeme."
+      },
+      {
+        "question": "Što obuhvaćaju PRAPOČECI pristupa menadžmentu?",
+        "answer": "• ANTIČKI pristup — Mojsije, Platon, Aristotel, Sokrat, kršćanstvo\n• SREDNJOVJEKOVNI pristup — Milanski edikt, sv. Toma Akvinski\n• PREDINDUSTRIJSKI pristup — Sir W. Petty, Cantillon, Smith, Mill, Bacon, Cournot",
+        "explanation": "Prapočeci pokazuju da je razmišljanje o upravljanju starije od same znanosti o menadžmentu."
+      },
+      {
+        "question": "Na što se dijeli KONVENCIONALNI pristup menadžmentu (5 pristupa)?",
+        "answer": "1. ZNANSTVENI\n2. ADMINISTRATIVNO-BIROKRATSKI (univerzalni)\n3. BIHEVIORALNI\n4. SISTEMSKI\n5. KONTIGENCIJSKI",
+        "explanation": "Javlja se početkom 20. st. — tehnički napredak, parobrodi i željeznice, pojava masovnog putovanja tražili su bolje sustave organizacije i upravljanja."
+      },
+      {
+        "question": "ZNANSTVENI pristup: tko su teoretičari i koja su Taylorova NAČELA?",
+        "answer": "TEORETIČARI: Taylor, Gantt, F. i L. Gilbreth.\nFrederick Winslow TAYLOR — OTAC ZNANSTVENOG MENADŽMENTA; u knjizi „Shop Management\" prvi put spominje riječ menadžment.\n\nNAČELA (Taylor):\n• znanost (organizirano znanje) umjesto postupanja odoka\n• sklad u skupnom djelovanju umjesto nesklada\n• suradnja među ljudima umjesto kaotičnog individualizma\n• rad radi maksimalnog, a ne ograničenog outputa\n• maksimalan razvitak svih radnika radi prosperiteta njih samih i kompanije",
+        "explanation": "Taylor = ZNANSTVENI menadžment (pazi: „otac MODERNOG menadžmenta\" je Drucker!)."
+      },
+      {
+        "question": "ADMINISTRATIVNO-BIROKRATSKI (univerzalni) pristup: teoretičari i Fayolova načela?",
+        "answer": "Najstariji i najpopularniji teorijski pristup menadžmentu.\nTEORETIČARI: Fayol, Weber.\nHenri FAYOL — najistaknutiji predstavnik OPERACIJSKOG menadžmenta; postavio 14 načela.\n\n14 NAČELA: podjela rada · nagrađivanje · kooperativni duh (esprit de corps) · jedinstveno usmjerenje · jedinstvo zapovijedi · disciplina · autoritet i odgovornost · podređivanje pojedinačnih interesa općima · inicijativa · stabilnost zaposlenja · pravednost · red · linija autoriteta · centralizacija",
+        "explanation": "Weber je u ovom pristupu vezan uz birokraciju."
+      },
+      {
+        "question": "BIHEVIORALNI pristup: teoretičari i koja su DVA POKRETA?",
+        "answer": "TEORETIČARI: Hawthorne, Mayo, Parker-Follett, McGregor. Naglašava socijalnu dimenziju, razumijevanje ljudskog ponašanja i potrebu za povećanjem organizacijske uspješnosti.\n\nDVA POKRETA:\n1. POKRET LJUDSKIH ODNOSA — prva polovica 20. st.; menadžment se čini osjetljivijim za potrebe zaposlenih; McGregor formulira TEORIJU X i Y\n2. POKRET ORGANIZACIJSKOG PONAŠANJA — određuje uzroke ljudskog ponašanja; koristi psihologiju, sociologiju i kulturnu antropologiju",
+        "explanation": "Bihevioralne teorije: teorija međuljudskih odnosa · teorija ljudskih potencijala · teorija organizacijskog ponašanja."
+      },
+      {
+        "question": "Što tvrdi McGREGOROVA teorija Y (nasuprot teoriji X)?",
+        "answer": "Teorija Y (suprotstavljena klasičnoj teoriji X) smatra da su zaposleni MOTIVIRANI, imaju mogućnost razvoja, sposobnost preuzimanja odgovornosti i usmjeravanja svog ponašanja prema ciljevima organizacije.",
+        "explanation": "McGregor pripada pokretu ljudskih odnosa unutar bihevioralnog pristupa."
+      },
+      {
+        "question": "SISTEMSKI pristup: kako gleda na poduzeće i tko su teoretičari?",
+        "answer": "Poduzeće je KOMPLEKSAN, DINAMIČKI i OTVOREN sustav — s jedne strane sastavljen od podsustava, a s druge je i sâm podsustav sustava višeg reda. Posebna pažnja: pravilni odnosi između dijelova te dijelova i cjeline.\n\nTEORETIČARI: Drucker, Bertalanffy, Luhmann.\nPeter Ferdinand DRUCKER — OTAC MODERNOG MENADŽMENTA; prvi povezao teoriju sustava i definirao ciljeve kao novi pristup menadžmentu.",
+        "explanation": "⚠️ Ispitno: „Kojem pristupu pripada Drucker?\" → SISTEMSKI; on je otac MODERNOG menadžmenta (Taylor je otac ZNANSTVENOG)."
+      },
+      {
+        "question": "KONTIGENCIJSKI pristup: što uvažava i tko su teoretičari?",
+        "answer": "Uvažava SVE utjecajne čimbenike koji određuju organizacijsku strukturu poduzeća. Kontekst: razvoj znanosti i tehnologije, masovna primjena informatike, sustavi za brzo komuniciranje, sateliti, prve naznake postindustrijske revolucije, studije utjecaja tehnologije na organizaciju, daljnji razvoj teorije sustava.\n\nTEORETIČARI: Kreitner, Chandler, Woodward, Lawrence, Lorsch, Child, Khandwalla.",
+        "explanation": "Bit: ne postoji jedan najbolji način — sve OVISI o utjecajnim čimbenicima."
+      },
+      {
+        "question": "NEKONVENCIONALNI pristup: što ga obilježava i što je model „7S\"?",
+        "answer": "Kontekst: snažan razvoj informatičke tehnologije, primjena novih materijala, razvoj standarda ljudi u razvijenim zemljama. Pitanje: kako u novim uvjetima voditi poduzeće da bude EFEKTIVNIJE i EFIKASNIJE.\n\nATRIBUTI SAVRŠENOSTI — teoretičari: McKinsey, Kreitner, Peters, Waterman, Austin, Steves.\nMcKINSEYEV model „7S\" = pomagalo za menadžersku analizu i akciju radi boljeg razumijevanja efikasnosti poduzeća:\nstrategy · skills · systems · style · staff · shared values · structure",
+        "explanation": "Sedam „S\" — svi počinju slovom S na engleskom."
+      },
+      {
+        "question": "Tko je razvio MODEL VJEČNO USPJEŠNE ORGANIZACIJE i koje su njegove odrednice?",
+        "answer": "Philip Bayard CROSBY — prvi ističe važnost CJELOKUPNE KVALITETE.\n\nMODEL VJEČNO USPJEŠNE ORGANIZACIJE:\n• ljudi rutinski rade dobro\n• rast je unosan i postojan\n• unaprijed se predviđaju potrebe kupaca\n• promjene se planiraju i njima se upravlja\n• ljudi se ponose što tu rade",
+        "explanation": "Crosby pripada nekonvencionalnom pristupu."
+      },
+      {
+        "question": "SUVREMENI pristup: koja ga tri koncepta obilježavaju?",
+        "answer": "1. TQM — upravljanje cjelokupnom kvalitetom\n2. BPR — preoblikovanje (reinženjering) poslovnih procesa\n3. UČEĆA ORGANIZACIJA (Learning Organization)\n\nSuvremeno poduzeće egzistira pod utjecajem brojnih eksternih i internih čimbenika te mora unapređivati kvalitetu proizvoda, procesa i osoblja.",
+        "explanation": "Sva tri odgovaraju na pitanje kako se prilagoditi stalnim promjenama."
+      },
+      {
+        "question": "Što je TQM i što znače slova T, Q i M?",
+        "answer": "TQM (Total Quality Management) = sustav unapređenja, povećanja fleksibilnosti, efektivnosti i efikasnosti poslovanja; temelji se na stalnom unapređivanju procesa, trajnoj kvaliteti i timskom radu.\n\n• T (potpuno) — za sve zaposlene, sve strukture, sve funkcije\n• Q (kvaliteta) — proizvodi, usluge, procesi i cjelokupni sustav\n• M (menadžment) — opredijeljenost uprave za upravljanje kvalitetom na svim linijama\n\nTEORETIČARI: Schmidt, Finnigan.",
+        "explanation": "TQM je japanskog porijekla; BPR je američki odgovor na njega."
+      },
+      {
+        "question": "Što je BPR (preoblikovanje poslovnih procesa) i koji su mu ključni pojmovi?",
+        "answer": "BPR (Business Process Reengineering) = AMERIČKI ODGOVOR NA JAPANSKI TQM. Temeljito redefiniranje i korjenit redizajn poboljšanja ključnih parametara poslovanja (troškovi, kvaliteta, brzina).\n\nKLJUČNI POJMOVI: TEMELJITO → KORJENITO → DRASTIČNO → PROCESI\nKLJUČNI ELEMENTI: informatička tehnologija + poslovni procesi + ljudski resursi\n\nTEORETIČARI: Hammer, Champy, Johannson, Machugh, Pendlebury, Wheeler.",
+        "explanation": "Za razliku od TQM-a (postupno unapređenje), BPR je korjenit rez."
+      },
+      {
+        "question": "Što je UČEĆA ORGANIZACIJA i koje su joj karakteristike?",
+        "answer": "Svi zaposleni moraju tražiti ZAJEDNIČKO rješavanje problema kako bi udovoljili potrebama kupaca; fokus na kvaliteti i zadovoljstvu kupaca; ističe timove i sustave.\n\nKARAKTERISTIKE:\n• vodstvo\n• horizontalna organizacijska struktura\n• opunomoćenje zaposlenih\n• komuniciranje / podjela informacija\n• izviruća strategija\n• snažna organizacijska kultura\n\nTEORETIČARI: Senge, Daft.",
+        "explanation": "Učeća organizacija je vrhunac suvremenog pristupa — organizacija koja uči brže od promjena."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Kako se dijeli povijesno-kronološki pristup menadžmentu?",
+        "options": [
+          "Klasični, bihevioralni, integrativni",
+          "Prapočeci, konvencionalni, nekonvencionalni, suvremeni",
+          "Znanstveni, administrativni, sistemski",
+          "Antički, industrijski, digitalni"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Frederick Winslow Taylor poznat je kao otac:",
+        "options": [
+          "Modernog menadžmenta",
+          "Znanstvenog menadžmenta",
+          "Operacijskog menadžmenta",
+          "Birokracije"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tko je „otac modernog menadžmenta\"?",
+        "options": [
+          "Henri Fayol",
+          "Frederick Taylor",
+          "Peter Drucker",
+          "Max Weber"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Kojem pristupu pripada Peter Drucker?",
+        "options": [
+          "Znanstvenom",
+          "Sistemskom",
+          "Bihevioralnom",
+          "Kontigencijskom"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Henri Fayol najistaknutiji je predstavnik:",
+        "options": [
+          "Znanstvenog menadžmenta",
+          "Operacijskog menadžmenta",
+          "Bihevioralnog pristupa",
+          "Učeće organizacije"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji pristup NIJE dio konvencionalnog pristupa menadžmentu?",
+        "options": [
+          "Znanstveni",
+          "Administrativno-birokratski",
+          "Kontigencijski",
+          "Atributi savršenosti (7S)"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Teoriju X i teoriju Y formulirao je:",
+        "options": [
+          "Elton Mayo",
+          "Douglas McGregor",
+          "Mary Parker-Follett",
+          "Ludwig von Bertalanffy"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Model „7S\" (strategy, skills, systems, style, staff, shared values, structure) veže se uz:",
+        "options": [
+          "McKinsey — atributi savršenosti",
+          "Taylorov znanstveni menadžment",
+          "Fayolovih 14 načela",
+          "Sengeovu učeću organizaciju"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Philip Crosby poznat je po:",
+        "options": [
+          "Modelu vječno uspješne organizacije i isticanju cjelokupne kvalitete",
+          "Teoriji birokracije",
+          "14 načela menadžmenta",
+          "Hawthorne eksperimentima"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "BPR (preoblikovanje poslovnih procesa) opisuje se kao:",
+        "options": [
+          "Japanski odgovor na američki TQM",
+          "Američki odgovor na japanski TQM",
+          "Dio prapočetaka menadžmenta",
+          "Sinonim za učeću organizaciju"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Slovo „T\" u TQM-u znači:",
+        "options": [
+          "Timski rad",
+          "Potpuno — za sve zaposlene, strukture i funkcije",
+          "Tehnologija",
+          "Trajnost proizvoda"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja NIJE karakteristika učeće organizacije?",
+        "options": [
+          "Horizontalna organizacijska struktura",
+          "Opunomoćenje zaposlenih",
+          "Stroga centralizacija odlučivanja",
+          "Snažna organizacijska kultura"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Povijesno-kronološki pristup dijeli se na prapočetke, konvencionalni, nekonvencionalni i _______ pristup.",
+        "answer": "suvremeni",
+        "hint": "Najnoviji u nizu…"
+      },
+      {
+        "sentence": "Frederick Winslow Taylor naziva se ocem _______ menadžmenta.",
+        "answer": "znanstvenog",
+        "hint": "Knjiga „Shop Management\"…"
+      },
+      {
+        "sentence": "Peter Ferdinand Drucker naziva se ocem _______ menadžmenta i pripada sistemskom pristupu.",
+        "answer": "modernog",
+        "hint": "Pazi — nije Fayol!"
+      },
+      {
+        "sentence": "Henri Fayol najistaknutiji je predstavnik _______ menadžmenta i autor 14 načela.",
+        "answer": "operacijskog",
+        "hint": "Ne „modernog\" — to je Drucker…"
+      },
+      {
+        "sentence": "Bihevioralni pristup dijeli se na pokret ljudskih odnosa i pokret _______ ponašanja.",
+        "answer": "organizacijskog",
+        "hint": "Proučava zašto se ljudi tako ponašaju u organizaciji…"
+      },
+      {
+        "sentence": "Prema sistemskom pristupu, poduzeće je kompleksan, dinamički i _______ sustav.",
+        "answer": "otvoren",
+        "hint": "Razmjenjuje s okolinom…"
+      },
+      {
+        "sentence": "McKinseyev model „7S\" pomagalo je za bolje razumijevanje _______ poduzeća.",
+        "answer": "efikasnosti",
+        "hint": "Kako dobro poduzeće koristi resurse…"
+      },
+      {
+        "sentence": "BPR je američki odgovor na japanski _______.",
+        "answer": "TQM",
+        "hint": "Upravljanje cjelokupnom kvalitetom…"
+      },
+      {
+        "sentence": "Model vječno uspješne organizacije razvio je Philip _______.",
+        "answer": "Crosby",
+        "hint": "Prvi istaknuo važnost cjelokupne kvalitete…"
+      }
+    ],
+    "learn": {
+      "title": "Povijesno-kronološki pristup menadžmentu",
+      "content": "\n                <h3>Četiri razdoblja razvoja menadžerske misli</h3>\n                <p>Povijesno-kronološki pristup slijedi razvoj misli kroz vrijeme i dijeli ga na <strong>prapočetke, konvencionalni, nekonvencionalni i suvremeni</strong> pristup.</p>\n                <div class=\"formula-box\">\n                    PRAPOČECI → KONVENCIONALNI → NEKONVENCIONALNI → SUVREMENI\n                </div>\n\n                <h4>1. Prapočeci</h4>\n                <ul>\n                    <li><strong>Antički</strong> — Mojsije, Platon, Aristotel, Sokrat, kršćanstvo</li>\n                    <li><strong>Srednjovjekovni</strong> — Milanski edikt, sv. Toma Akvinski</li>\n                    <li><strong>Predindustrijski</strong> — Petty, Cantillon, Smith, Mill, Bacon, Cournot</li>\n                </ul>\n\n                <h4>2. Konvencionalni (početak 20. st.)</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Znanstveni</strong> — Taylor (<em>otac znanstvenog menadžmenta</em>, „Shop Management\"), Gantt, Gilbreth</li>\n                        <li><strong>Administrativno-birokratski (univerzalni)</strong> — najstariji i najpopularniji; Fayol (<em>operacijski menadžment</em>, 14 načela), Weber (birokracija)</li>\n                        <li><strong>Bihevioralni</strong> — Hawthorne, Mayo, Parker-Follett, McGregor (teorija X/Y); pokret ljudskih odnosa + pokret organizacijskog ponašanja</li>\n                        <li><strong>Sistemski</strong> — poduzeće = kompleksan, dinamički, <em>otvoren</em> sustav; Drucker (<em>otac modernog menadžmenta</em>), Bertalanffy, Luhmann</li>\n                        <li><strong>Kontigencijski</strong> — uvažava sve utjecajne čimbenike; Kreitner, Chandler, Woodward, Lawrence, Lorsch, Child, Khandwalla</li>\n                    </ul>\n                </div>\n                <div class=\"warning-box\">\n                    <strong>Pazi na zamku:</strong> TAYLOR = otac <em>znanstvenog</em> menadžmenta · DRUCKER = otac <em>modernog</em> menadžmenta (sistemski pristup) · FAYOL = najistaknutiji predstavnik <em>operacijskog</em> menadžmenta.\n                </div>\n\n                <h4>3. Nekonvencionalni</h4>\n                <ul>\n                    <li><strong>Atributi savršenosti</strong> — McKinsey, Peters, Waterman, Austin; model <strong>7S</strong>: strategy · skills · systems · style · staff · shared values · structure</li>\n                    <li><strong>Model vječno uspješne organizacije</strong> — Philip Crosby (prvi ističe cjelokupnu kvalitetu)</li>\n                </ul>\n\n                <h4>4. Suvremeni</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>TQM</strong> — T (potpuno: svi zaposleni/strukture/funkcije) · Q (kvaliteta: proizvodi, usluge, procesi, sustav) · M (menadžment: opredijeljenost uprave); Schmidt, Finnigan</li>\n                        <li><strong>BPR</strong> — američki odgovor na japanski TQM; TEMELJITO → KORJENITO → DRASTIČNO → PROCESI; Hammer, Champy</li>\n                        <li><strong>Učeća organizacija</strong> — vodstvo · horizontalna struktura · opunomoćenje · komuniciranje · izviruća strategija · snažna kultura; Senge, Daft</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "hotelEnterprise": {
+    "name": "Hotelsko poduzeće i poduzetništvo",
+    "icon": "fa-hotel",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "S koja se ČETIRI ASPEKTA može sagledavati poduzeće kao samostalni gospodarski sustav?",
+        "answer": "1. ORGANIZACIJSKI\n2. EKONOMSKI\n3. SOCIOLOŠKI\n4. PRAVNI",
+        "explanation": "Poduzeće nije samo pravni oblik — svaki aspekt otkriva drugu stranu istoga sustava."
+      },
+      {
+        "question": "Što je HOTELSKO PODUZEĆE?",
+        "answer": "Pravna osoba koja obavlja ugostiteljsko-hotelijersku djelatnost na tržištu radi stjecanja profita i realizacije vlastitih postavljenih ciljeva.",
+        "explanation": "Odrednice: pravna osoba · ugostiteljsko-hotelijerska djelatnost · tržište · profit + vlastiti ciljevi."
+      },
+      {
+        "question": "Koja je podjela PRAVNIH OBLIKA poduzeća u svijetu?",
+        "answer": "1. INDIVIDUALNA\n2. PARTNERSKA društva (ortaška)\n3. KORPORACIJE",
+        "explanation": "Redoslijed ide od najjednostavnijeg (jedan vlasnik) prema najsloženijem (korporacija)."
+      },
+      {
+        "question": "Kako se prema Zakonu o trgovačkim društvima (RH) dijele TRGOVAČKA DRUŠTVA?",
+        "answer": "DRUŠTVA OSOBA:\n• javno trgovačko društvo\n• komanditno društvo\n• tajno društvo\n• gospodarsko interesno udruženje\n\nDRUŠTVA KAPITALA:\n• dioničko društvo (d.d.)\n• društvo s ograničenom odgovornošću (d.o.o.)",
+        "explanation": "Društva OSOBA počivaju na osobama članova; društva KAPITALA na uloženom kapitalu."
+      },
+      {
+        "question": "Što je PODUZETNIŠTVO i koji su njegovi OBLICI?",
+        "answer": "PODUZETNIŠTVO = sposobnost/resurs kreiranja i generiranja novog gospodarskog poduhvata koji se verificira na tržištu, a ogleda se u stvaranju novog proizvoda, usluge ili ideje. Poduhvatni duh koji stvara nove resurse BEZ OBZIRA na stvarno vlasništvo nad kapitalom.\n\nOBLICI: individualno · kolektivno · interno · eksterno",
+        "explanation": "Ključno: poduzetništvo NE ovisi o vlasništvu nad kapitalom."
+      },
+      {
+        "question": "Kako Peter DRUCKER definira poduzetništvo i koji su STAVOVI za određivanje prioriteta?",
+        "answer": "DRUCKER: poduzetništvo = „sposobnost odabira pravilnih prioriteta radi postizanja postavljenih ciljeva\".\n\nSTAVOVI:\n• odabrati BUDUĆNOST, a ne prošlost\n• usredotočiti se na MOGUĆNOST, a ne na problem\n• odabrati VLASTITI SMJER, a ne slijepo slijediti većinu\n• CILJATI VISOKO — na ono što donosi promjenu, ne u već poznato",
+        "explanation": "Drucker poduzetništvo veže uz ODABIR PRIORITETA, ne uz veličinu pothvata."
+      },
+      {
+        "question": "Tko je PODUZETNIK?",
+        "answer": "Osoba poduzetnog duha koja raspoloživim resursima, POD PRIJETNJOM RIZIKA, poduzima poduzetničku aktivnost kako bi stvorila nešto novo — robu, uslugu ili ideju — i tako stvorila novu dobit ili profit.",
+        "explanation": "Rizik je sastavni dio definicije poduzetnika."
+      },
+      {
+        "question": "Koja su ČETIRI TIPA PODUZETNIKA s obzirom na brzinu odlučivanja i sklonost riziku?",
+        "answer": "• PIONIR — 1. faza, BRZO odlučivanje, VISOK rizik\n• MAHER — 2. faza, BRZO odlučivanje, NIZAK rizik\n• STRATEG — 3. faza, SPORO odlučivanje, VISOK rizik\n• TRENER — 4. faza, SPORO odlučivanje, NIZAK rizik",
+        "explanation": "Svaki tip odgovara jednoj fazi životnog ciklusa poduzeća."
+      },
+      {
+        "question": "Koje su FAZE ŽIVOTNOG CIKLUSA poduzeća i koji im tip poduzetnika odgovara?",
+        "answer": "1. IZGRADNJA — pionir\n2. RAST — maher\n3. DIFERENCIJACIJA — strateg\n4. KONSOLIDACIJA — trener\n5. LIKVIDACIJA",
+        "explanation": "Prve četiri faze imaju „svoga\" poduzetnika; peta je gašenje."
+      },
+      {
+        "question": "Što je OKOLINA poduzeća i koji su SEGMENTI okoline hotelskog poduzeća?",
+        "answer": "OKOLINA = ukupnost činitelja koji svojim aktivnostima djeluju na poslovanje poduzeća, a koje menadžment mora uvažavati kod donošenja poslovnih odluka. Prirodna je sila koja okružuje poduzeće; može biti INTERNA i EKSTERNA (opća/socijalna → poslovna/okolina zadatka → interna).\n\nSEGMENTI okoline hotelskog poduzeća:\n• političko-pravna\n• tehnološka\n• socijalno-kulturna\n• ekonomska",
+        "explanation": "Menadžment okolinu ne bira — mora je uvažiti pri odlučivanju."
+      },
+      {
+        "question": "Kako turistička SEZONA utječe na NEIZVJESNOST hotelskog poduzeća?",
+        "answer": "• NAJVEĆA neizvjesnost — turistička sezona (ljeto)\n• NAJMANJA neizvjesnost — zimsko razdoblje\n• UMJERENA neizvjesnost — prijelazna razdoblja",
+        "explanation": "Sezonalnost je ključna specifičnost hotelijerstva."
+      },
+      {
+        "question": "Što su STANDARDIZACIJA i STANDARD te koji su ISO ciljevi standardizacije?",
+        "answer": "STANDARDIZACIJA = postupak donošenja i promjenjivanja standarda, tehničkih normativa i normi kvalitete.\nSTANDARD = propis kako nešto treba izgledati i što treba sadržavati — dakle PROPISANA KVALITETA.\n\nISO ciljevi (6):\n1. pojednostavljenje sve većeg broja varijanti i postupaka\n2. sporazumijevanje\n3. opća ekonomičnost\n4. sigurnost zdravlja i zaštita čovjeka\n5. zaštita interesa potrošača i društava\n6. uklanjanje zapreka u trgovini",
+        "explanation": "Ciljeve standardizacije razvila je i u šest točaka precizirala ISO."
+      },
+      {
+        "question": "Što je KATEGORIZACIJA?",
+        "answer": "Utvrđivanje razine kvalitete najznačajnijih elemenata ponude, koji su zajednička značajka određene vrste ugostiteljskog objekta, NA TEMELJU PROPISANIH STANDARDA.",
+        "explanation": "Kategorizacija (npr. zvjezdice) počiva na standardima — bez standarda nema kategorizacije."
+      },
+      {
+        "question": "Koje su VRSTE HOTELA i na koje se načine povezuju HOTELSKI LANCI?",
+        "answer": "VRSTE:\n• NEZAVISNI hotel — posluje bez ikakvog vezanog standarda s bilo kime\n• HOTELSKI LANAC — sustav povezanih hotela s prepoznatljivim imenom i zagarantiranim standardom iza kojeg stoji poznato ime (brand)\n\nNAČINI UGOVORNOG POVEZIVANJA:\n• potpuno vlasništvo\n• franšizni ugovor\n• ugovor o menadžmentu\n• ugovor o najmu\n• hotelski rezervacijski sustavi — konzorcij",
+        "explanation": "Lanci se stvaraju temeljem ugovora zainteresiranih strana."
+      },
+      {
+        "question": "Koja je razlika između ETIKE i MORALA?",
+        "answer": "ETIKA = filozofija morala; ŠIRA je od pojma moral; filozofsko i teoretsko poimanje morala odnosno ponašanja.\nMORAL = PRIMJENA etike; konkretni oblik ljudske slobode; skup pisanih i nepisanih pravila normiranih kodeksom ponašanja među ljudima.",
+        "explanation": "Etika je teorija, moral je primjena."
+      },
+      {
+        "question": "Koje su ETIČKE TEORIJE (pristupi)?",
+        "answer": "• DESKRIPTIVNA etika — izučava i opisuje moral ljudi, kulture i društva\n• NORMATIVNA etika — izučava temelje moralnih vrijednosti sustava (principi i vrijednosti)\n• METAETIKA — uključuje deskriptivnu i normativnu etiku (analitička etika)",
+        "explanation": "Metaetika je „krovna\" — obuhvaća obje."
+      },
+      {
+        "question": "Koji ČIMBENICI utječu na etički izbor menadžera?",
+        "answer": "INDIVIDUALNE KARAKTERISTIKE (osobne vrijednosti, snaga ega, lokus kontrole)\n+ STRUKTURNE VARIJABLE (formalna pravila i propisi, ponašanje nadređenih, sustav procjene, nagrade, pritisak posla)\n+ ORGANIZACIJSKA KULTURA (sadržaj, snaga)\n= ETIČNO / NEETIČNO ponašanje",
+        "explanation": "Etičnost nije samo osobina pojedinca — struktura i kultura jednako presuđuju."
+      },
+      {
+        "question": "Što je POSLOVNI BONTON i koje su njegove RAZINE?",
+        "answer": "POSLOVNI BONTON = skup neformalnih pravila i obveza koje proizlaze iz tradicije, kojima menadžer ostvaruje bolju komunikaciju i time postaje uspješniji u provođenju svojih poslovnih zadataka.\n\nRAZINE:\n• predstavljanje\n• upoznavanje\n• komuniciranje\n• uredsko poslovanje",
+        "explanation": "Bonton je NEFORMALAN (tradicija), za razliku od propisa."
+      },
+      {
+        "question": "Što je POSLOVNA ETIKA?",
+        "answer": "Skup moralnih načela i normi kojima se usmjerava ponašanje aktivnih sudionika u gospodarskom sustavu, u skladu s vrijednosnim sustavima utemeljenim na općim ljudskim vrijednostima i usmjerenim na dobrobit čovjeka. Ujedno: način koncipiranja, sklapanja, komuniciranja i izvođenja poslova u skladu s duhovnim, sociološkim, biološkim i prirodnim zakonitostima čovjeka i okruženja.",
+        "explanation": "Poslovna etika = „prirodno vođenje poslova\" — poslovanje u skladu s prirodom."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Hotelsko poduzeće je:",
+        "options": [
+          "Udruga građana koja promiče turizam",
+          "Pravna osoba koja obavlja ugostiteljsko-hotelijersku djelatnost na tržištu radi profita i vlastitih ciljeva",
+          "Državna ustanova za kategorizaciju objekata",
+          "Neformalna skupina ugostitelja"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji NIJE jedan od četiriju aspekata sagledavanja poduzeća?",
+        "options": [
+          "Organizacijski",
+          "Ekonomski",
+          "Geografski",
+          "Pravni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Društvo s ograničenom odgovornošću (d.o.o.) prema ZTD-u spada u:",
+        "options": [
+          "Društva osoba",
+          "Društva kapitala",
+          "Ortaška društva",
+          "Gospodarska interesna udruženja"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tko je poduzetništvo definirao kao „sposobnost odabira pravilnih prioriteta radi postizanja postavljenih ciljeva\"?",
+        "options": [
+          "Frederick Taylor",
+          "Henri Fayol",
+          "Peter Drucker",
+          "Max Weber"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Poduzetnik koji odlučuje BRZO i preuzima VISOK rizik (1. faza) je:",
+        "options": [
+          "Pionir",
+          "Maher",
+          "Strateg",
+          "Trener"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Poduzetnik tipa TRENER odlikuje se:",
+        "options": [
+          "Brzim odlučivanjem i visokim rizikom",
+          "Brzim odlučivanjem i niskim rizikom",
+          "Sporim odlučivanjem i visokim rizikom",
+          "Sporim odlučivanjem i niskim rizikom"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Treća faza životnog ciklusa poduzeća je:",
+        "options": [
+          "Rast",
+          "Diferencijacija",
+          "Konsolidacija",
+          "Likvidacija"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji NIJE segment okoline hotelskog poduzeća?",
+        "options": [
+          "Političko-pravna",
+          "Tehnološka",
+          "Socijalno-kulturna",
+          "Meteorološko-astronomska"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Za hotelsko poduzeće NAJVEĆA neizvjesnost je:",
+        "options": [
+          "U zimskom razdoblju",
+          "U turističkoj sezoni (ljeto)",
+          "U prijelaznim razdobljima",
+          "Neizvjesnost je jednaka tijekom cijele godine"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Standard se najkraće može odrediti kao:",
+        "options": [
+          "Propisana kvaliteta",
+          "Prosječna cijena usluge",
+          "Broj zaposlenih po sobi",
+          "Dobrovoljna preporuka bez obveze"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Kategorizacija je:",
+        "options": [
+          "Postupak donošenja i promjenjivanja standarda",
+          "Utvrđivanje razine kvalitete najznačajnijih elemenata ponude na temelju propisanih standarda",
+          "Podjela poduzeća na društva osoba i kapitala",
+          "Popis hotelskih lanaca u nekoj zemlji"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji od navedenih NIJE način ugovornog povezivanja hotelskih lanaca?",
+        "options": [
+          "Franšizni ugovor",
+          "Ugovor o menadžmentu",
+          "Ugovor o najmu",
+          "Ugovor o djelu sa sezonskim radnikom"
+        ],
+        "correct": 3
+      },
+      {
+        "question": "Etika je:",
+        "options": [
+          "Primjena morala u praksi",
+          "Filozofija morala, šira od pojma moral",
+          "Skup pisanih propisa poduzeća",
+          "Isto što i poslovni bonton"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Metaetika:",
+        "options": [
+          "Opisuje moral ljudi i kultura",
+          "Izučava temelje moralnih vrijednosti sustava",
+          "Uključuje deskriptivnu i normativnu etiku (analitička etika)",
+          "Bavi se isključivo poslovnim bontonom"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Na etički izbor menadžera utječu:",
+        "options": [
+          "Isključivo osobne vrijednosti pojedinca",
+          "Individualne karakteristike + strukturne varijable + organizacijska kultura",
+          "Isključivo formalna pravila i propisi",
+          "Isključivo pritisak posla"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Hotelsko poduzeće je pravna osoba koja obavlja ugostiteljsko-hotelijersku _______ na tržištu radi stjecanja profita.",
+        "answer": "djelatnost",
+        "hint": "Ono čime se poduzeće bavi…"
+      },
+      {
+        "sentence": "Prema Zakonu o trgovačkim društvima, dioničko društvo i d.o.o. spadaju u društva _______.",
+        "answer": "kapitala",
+        "hint": "Suprotno od društava osoba…"
+      },
+      {
+        "sentence": "Peter _______ definira poduzetništvo kao sposobnost odabira pravilnih prioriteta.",
+        "answer": "Drucker",
+        "hint": "Poznati teoretičar menadžmenta…"
+      },
+      {
+        "sentence": "Poduzetnik tipa _______ odlučuje brzo i preuzima visok rizik te odgovara prvoj fazi životnog ciklusa.",
+        "answer": "pionir",
+        "hint": "Onaj koji prvi krči put…"
+      },
+      {
+        "sentence": "Treća faza životnog ciklusa poduzeća naziva se _______.",
+        "answer": "diferencijacija",
+        "hint": "Faza u kojoj se poduzeće razlikuje od konkurencije…"
+      },
+      {
+        "sentence": "Standard je, najkraće rečeno, propisana _______.",
+        "answer": "kvaliteta",
+        "hint": "Ono što standard jamči…"
+      },
+      {
+        "sentence": "_______ je utvrđivanje razine kvalitete najznačajnijih elemenata ponude na temelju propisanih standarda.",
+        "answer": "kategorizacija",
+        "hint": "Zbog nje hotel dobiva zvjezdice…"
+      },
+      {
+        "sentence": "Hotel koji posluje bez ikakvog vezanog standarda s bilo kime naziva se _______ hotel.",
+        "answer": "nezavisni",
+        "hint": "Suprotno od hotela u lancu…"
+      },
+      {
+        "sentence": "_______ je filozofija morala i šira je od pojma moral.",
+        "answer": "etika",
+        "hint": "Teorija, a ne primjena…"
+      },
+      {
+        "sentence": "Za hotelsko poduzeće najveća neizvjesnost javlja se u _______ sezoni.",
+        "answer": "turističkoj",
+        "hint": "Ljetni vrhunac poslovanja…"
+      },
+      {
+        "sentence": "Poslovni _______ je skup neformalnih pravila koja proizlaze iz tradicije, a razine su mu predstavljanje, upoznavanje, komuniciranje i uredsko poslovanje.",
+        "answer": "bonton",
+        "hint": "Lijepo ponašanje u poslu…"
+      }
+    ],
+    "learn": {
+      "title": "Hotelsko poduzeće i poduzetništvo",
+      "content": "\n                <h3>Poduzeće i hotelsko poduzeće</h3>\n                <p>Poduzeće se kao samostalni gospodarski sustav promatra s <strong>četiri aspekta</strong>: organizacijskog, ekonomskog, sociološkog i pravnog.\n                <strong>Hotelsko poduzeće</strong> = pravna osoba koja obavlja ugostiteljsko-hotelijersku djelatnost na tržištu radi stjecanja profita i realizacije vlastitih ciljeva.</p>\n                <div class=\"formula-box\">\n                    PRAVNI OBLICI (svijet): individualna &nbsp;·&nbsp; partnerska (ortaška) &nbsp;·&nbsp; korporacije<br>\n                    ZTD (RH): DRUŠTVA OSOBA (j.t.d. · komanditno · tajno · GIU) &nbsp;|&nbsp; DRUŠTVA KAPITALA (d.d. · d.o.o.)\n                </div>\n\n                <h4>Poduzetništvo i poduzetnik</h4>\n                <ul>\n                    <li><strong>Poduzetništvo</strong> — sposobnost kreiranja novog gospodarskog poduhvata koji se verificira na tržištu; poduhvatni duh koji stvara nove resurse <em>bez obzira na vlasništvo nad kapitalom</em>. Oblici: individualno · kolektivno · interno · eksterno.</li>\n                    <li><strong>Drucker</strong> — poduzetništvo je „sposobnost odabira pravilnih prioriteta radi postizanja postavljenih ciljeva\".</li>\n                    <li><strong>Poduzetnik</strong> — osoba poduzetnog duha koja <em>pod prijetnjom rizika</em> stvara nešto novo (robu, uslugu, ideju) i time novu dobit.</li>\n                </ul>\n                <div class=\"formula-box\">\n                    TIPOVI ⇄ FAZE: PIONIR (brzo/visok rizik) → izgradnja &nbsp;·&nbsp; MAHER (brzo/nizak) → rast<br>\n                    STRATEG (sporo/visok) → diferencijacija &nbsp;·&nbsp; TRENER (sporo/nizak) → konsolidacija &nbsp;→&nbsp; (5) likvidacija\n                </div>\n\n                <h4>Okolina hotelskog poduzeća</h4>\n                <p><strong>Okolina</strong> = ukupnost činitelja koji djeluju na poslovanje poduzeća, a menadžment ih mora uvažavati pri odlučivanju (interna i eksterna; opća/socijalna → poslovna/zadatka → interna).</p>\n                <ul>\n                    <li>Segmenti: <strong>političko-pravna · tehnološka · socijalno-kulturna · ekonomska</strong></li>\n                    <li>Neizvjesnost: <strong>najveća u turističkoj sezoni (ljeto)</strong>, najmanja zimi, umjerena u prijelaznim razdobljima</li>\n                </ul>\n\n                <h4>Standardizacija, kategorizacija i hotelski lanci</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Standardizacija</strong> — postupak donošenja i promjenjivanja standarda i normi kvalitete; <strong>standard = propisana kvaliteta</strong> (ISO precizirao 6 ciljeva).</li>\n                        <li><strong>Kategorizacija</strong> — utvrđivanje razine kvalitete elemenata ponude <em>na temelju propisanih standarda</em>.</li>\n                        <li><strong>Vrste hotela:</strong> nezavisni (bez vezanog standarda) · hotelski lanci (prepoznatljivo ime + zagarantirani standard/brand).</li>\n                        <li><strong>Povezivanje lanaca:</strong> potpuno vlasništvo · franšizni ugovor · ugovor o menadžmentu · ugovor o najmu · rezervacijski sustavi (konzorcij).</li>\n                    </ul>\n                </div>\n\n                <h4>Etika i moral u menadžmentu</h4>\n                <ul>\n                    <li><strong>Etika</strong> = filozofija morala (šira, teorijska); <strong>moral</strong> = primjena etike, normiran pisanim/nepisanim kodeksom.</li>\n                    <li>Teorije: <strong>deskriptivna</strong> (opisuje) · <strong>normativna</strong> (temelji vrijednosti) · <strong>metaetika</strong> (obuhvaća obje).</li>\n                    <li>Etički izbor menadžera = <strong>individualne karakteristike + strukturne varijable + organizacijska kultura</strong>.</li>\n                    <li><strong>Poslovni bonton</strong> (neformalna pravila iz tradicije): predstavljanje · upoznavanje · komuniciranje · uredsko poslovanje.</li>\n                </ul>\n            "
     }
   },
   "decisionMaking": {
