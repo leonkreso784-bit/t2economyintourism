@@ -312,8 +312,28 @@ function showQuizSetup() {
     document.getElementById('quizSetup').classList.remove('hidden');
 }
 
+// Reset kviza na učitavanju NOVE lekcije/predmeta. Study-stranica je JEDAN dijeljeni
+// DOM za sve lekcije (isti #quizSetup/#quizGame/#quizResults + globalni AppState.quiz),
+// pa in-progress kviz prethodne lekcije PROCURI u novu ako se stanje i vidljivi panel
+// ne ponište. Flashcards/Fill se već čiste kroz init*() u initStudyPage; kviz je bio
+// jedini izostavljen (samo se punio dropdown) → ovo zatvara tu rupu.
+function resetQuiz() {
+    const quiz = AppState.quiz;
+    quiz.questions = [];
+    quiz.index = 0;
+    quiz.correct = 0;
+    quiz.wrong = 0;
+    quiz.wrongList = [];
+    quiz.answers = [];
+    quiz.startTime = null;
+    quiz.shuffledOptions = [];
+    quiz.shuffledCorrectIndex = 0;
+    showQuizSetup(); // vrati vidljivi panel na setup (sakrij game/results)
+}
+
 window.startQuiz = startQuiz;
 window.retryQuiz = retryQuiz;
 window.showQuizSetup = showQuizSetup;
+window.resetQuiz = resetQuiz;
 window.quizPrev = quizPrev;
 window.quizNext = quizNext;

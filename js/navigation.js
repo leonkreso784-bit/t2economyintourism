@@ -588,9 +588,17 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
     initNavigation();
     updateCategoryButtons();
     updateLearnFilters();
-    updateQuizCategories();
-    initFlashcards();
-    initFill();
+
+    // ⚠️ RESET SVIH STUDY POD-MODOVA NA UČITAVANJU LEKCIJE.
+    // Study-stranica je JEDAN dijeljeni DOM za sve lekcije/predmete (isti #quizGame,
+    // #flashcard, #fill… + globalni AppState). Ako novi mod ne resetira svoje stanje I
+    // svoj vidljivi panel, sadržaj prethodne lekcije PROCURI (BUG-020: kviz je ostajao
+    // od prošlog predmeta). Svaki NOVI study-mod OBAVEZNO dodaje svoj reset OVDJE.
+    updateQuizCategories();  // napuni dropdown kategorija za novi predmet
+    resetQuiz();             // + očisti stanje/panel kviza (bila rupa → BUG-020)
+    initFlashcards();        // reset deck/index/known/unknown
+    initFill();              // reset pitanja/index/correct/wrong
+
     renderLearnContent();
     renderProgressPage();
     updateHomeStats();

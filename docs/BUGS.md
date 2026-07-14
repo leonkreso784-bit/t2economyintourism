@@ -23,6 +23,14 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-020 — Kviz procuri između predmeta/lekcija (stari kviz ostane pri promjeni predmeta)
+- Status: ✅ riješen 2026-07-15 (grana `fix/quiz-state-leak`) · Težina: **visok** (pogađa SVE studente uživo — netočan kviz, može upisati krivi rezultat) · Prijavio: **korisnik** (Leon, živo).
+- **Simptom:** započneš kviz u predmetu A i NE završiš ga → odeš na drugi predmet (ili drugu lekciju istog predmeta) → otvoriš Quiz tab i **još je uvijek kviz iz predmeta A** (stara pitanja, stari napredak).
+- **Koraci:** predmet A → Quiz → *Start* (odgovori par pitanja, ne završi) → natrag → predmet B → Quiz tab → vidiš kviz predmeta A.
+- **Uzrok (sistemski — „navigacija"):** study-stranica je **JEDAN dijeljeni DOM** za sve lekcije (isti `#quizSetup`/`#quizGame`/`#quizResults` + globalni `AppState.quiz`). `initStudyPage()` na učitavanju nove lekcije **potpuno resetira flashcards i fill** (`initFlashcards()`/`initFill()` čiste stanje+prikaz), ali za kviz zove **SAMO `updateQuizCategories()`** (napuni dropdown) — **nikad ne resetira `AppState.quiz` ni vidljivi panel**. Kviz je bio JEDINI mod bez reseta → in-progress panel + stara pitanja procure u sljedeću lekciju.
+- **Rješenje (`fix/quiz-state-leak`):** nova `resetQuiz()` (`js/quiz.js`) čisti `AppState.quiz` + vrati panel na setup (`showQuizSetup()`); pozvana u `initStudyPage()` uz ostale resete, **pod eksplicitnim komentarom** „RESET SVIH STUDY POD-MODOVA — svaki novi mod OBAVEZNO dodaje svoj reset ovdje". Regresijski test `tests/quiz-reset.spec.js` (A→Start→B→Quiz mora biti SETUP + `questions=0`) — **dokazano PADA bez fixa** (privremeno-isključen-reset run: `setupVisible=false`). Smoke 19/0, typecheck 0, verify 0/0.
+- **Lekcija:** kod **dijeljenog DOM-a + globalnog stanja**, učitavanje novog konteksta mora **potpuno resetirati SVAKI** pod-prikaz; ad-hoc reset raspršen po mjestima znači da će se novi/zaboravljeni mod tiho „zalijepiti". Centralizirano, imenovano mjesto reseta (s komentarom-ugovorom) sprječava ponavljanje klase. Ista obitelj kao BUG-019 (nedostatak pravog nav-modela) — **pravi navigacijski stog + čist per-lekcija lifecycle = kandidat za U8** (ne krpati širenje sad). [[live-login-verifies-crud]]
+
 ### BUG-019 — Back-navigacija: petlja profil ⇄ admin (povratak na početnu nemoguć)
 - Status: ✅ riješen 2026-07-12 + ✅ **LIVE 2026-07-13** (deployano s F4; bug NIKAD nije bio na produkciji — admin stranica je do deploya postojala samo na f4) · Težina: srednji (UX, admin tok) · Prijavio: **korisnik** (2026-07-12, živo klikanje).
 - **Simptom:** početna → profil → admin → back-strelica vrati na profil ✓, ali back s profila tada vrati **NATRAG U ADMIN** — i tako u krug (profil ⇄ admin); početna stranica postaje nedostižna.
