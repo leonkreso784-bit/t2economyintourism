@@ -106,6 +106,27 @@ select:focus,input:focus{outline:2px solid var(--primary)}
 .tabmenu button{display:flex;gap:9px;align-items:center;width:100%;text-align:left;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--text-secondary)}
 .tabmenu button:hover{background:var(--bg-tertiary)}
 
+/* ✕ NA TABU — uklanjanje moda, kao browser-tab (Leon 2026-07-14) */
+.tab .tx{margin-left:8px;opacity:0;font-size:11px;color:var(--text-muted);transition:.15s}
+.tab:hover .tx{opacity:.85}
+.tab .tx:hover{color:var(--danger)}
+
+/* PLUTAJUĆA TRAKA za označeni tekst: boja TEKSTA (tokeni) + B/I + link (Leon 2026-07-14) */
+.txtbar{position:fixed;display:none;gap:4px;align-items:center;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;padding:5px 7px;z-index:70;box-shadow:0 10px 34px rgba(0,0,0,.55)}
+.txtbar.on{display:flex}
+.txtbar button{min-width:26px;height:26px;border-radius:7px;display:grid;place-items:center;font-size:13px;color:var(--text-secondary)}
+.txtbar button:hover{background:var(--bg-tertiary)}
+.txtbar .cd{width:16px;height:16px;min-width:16px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);padding:0}
+.txtbar input{width:170px;background:var(--bg-primary);border:1px solid var(--border);border-radius:7px;color:var(--text-primary);font-size:12px;padding:4px 8px;display:none}
+.txtbar input.on{display:block}
+.body a{color:var(--primary-light)}
+
+/* KARTICA-POVEZNICA na drugu stranicu/izvor (Leon 2026-07-14) */
+.linkcard{margin-top:12px;display:flex;gap:10px;align-items:center;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.linkcard .g{font-size:18px}
+.linkcard b[contenteditable]{font-size:13px}
+.linkcard span[contenteditable]{font-size:11.5px;color:var(--primary-light)}
+
 /* BOJA SEKCIJE (token) → nasljeđuju je kartice/kviz te sekcije (Leon 2026-07-14) */
 .kv{border-left:4px solid var(--acc,var(--border))}
 .cdot{width:18px;height:18px;border-radius:50%;background:var(--acc,var(--bg-tertiary));border:2px solid rgba(255,255,255,.28);flex-shrink:0;cursor:pointer}
@@ -220,10 +241,10 @@ select:focus,input:focus{outline:2px solid var(--primary)}
       <p id="meta">Lussier 9e · zadnja objava prije 2 h (v14)</p>
     </div>
     <div class="tabs">
-      <button class="tab on" id="t-learn" onclick="showPane('learn',this)">📚 Learn</button>
-      <button class="tab" id="t-cards" onclick="showPane('cards',this)">🃏 Kartice</button>
-      <button class="tab" id="t-quiz" onclick="showPane('quiz',this)">❓ Kviz</button>
-      <button class="tab off" id="t-fill" onclick="showPane('fill',this)">✍️ Dopuni</button>
+      <button class="tab on" id="t-learn" onclick="showPane('learn',this)">📚 Learn<span class="tx" onclick="rmMode(event,'learn')" title="Ukloni mod">✕</span></button>
+      <button class="tab" id="t-cards" onclick="showPane('cards',this)">🃏 Kartice<span class="tx" onclick="rmMode(event,'cards')" title="Ukloni mod">✕</span></button>
+      <button class="tab" id="t-quiz" onclick="showPane('quiz',this)">❓ Kviz<span class="tx" onclick="rmMode(event,'quiz')" title="Ukloni mod">✕</span></button>
+      <button class="tab off" id="t-fill" onclick="showPane('fill',this)">✍️ Dopuni<span class="tx" onclick="rmMode(event,'fill')" title="Ukloni mod">✕</span></button>
       <button class="tab addtab" id="t-add" onclick="tabMenu(event)" title="Dodaj mod">＋</button>
       <div class="tabmenu" id="tabMenuEl"></div>
     </div>
@@ -233,13 +254,13 @@ select:focus,input:focus{outline:2px solid var(--primary)}
         <div class="kv" data-sec="s1">
           <div class="head"><span class="n">1</span><button class="cdot" onclick="cPop(event)" title="Boja sekcije"></button><h2 contenteditable spellcheck="false">Što je menadžment?</h2><button class="x" onclick="delKv(this)">✕</button></div>
           <div class="body" contenteditable spellcheck="false">Menadžment je proces <b>planiranja, organiziranja, vođenja i kontroliranja</b> resursa radi učinkovitog postizanja ciljeva organizacije.</div>
-          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok — siguran embed iz linka.')">▶️ Video</button></div>
+          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok — siguran embed iz linka.')">▶️ Video</button><button onclick="addLink(this)">🔗 Link / stranica</button></div>
         </div>
         <div class="adder"><button onclick="menu(this)">＋</button><div class="menu"></div></div>
         <div class="kv" data-sec="s2">
           <div class="head"><span class="n">2</span><button class="cdot" onclick="cPop(event)" title="Boja sekcije"></button><h2 contenteditable spellcheck="false">Efektivnost vs. efikasnost</h2><button class="x" onclick="delKv(this)">✕</button></div>
           <div class="body" contenteditable spellcheck="false">Efektivnost = raditi <i>prave stvari</i>. Efikasnost = raditi stvari <i>ispravno</i>, uz minimalan utrošak resursa.</div>
-          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok.')">▶️ Video</button></div>
+          <div class="media"><button onclick="addImg(this)">🖼️ Slika</button><button onclick="addImg(this)">📈 Graf</button><button onclick="toast('▶️ YouTube blok.')">▶️ Video</button><button onclick="addLink(this)">🔗 Link / stranica</button></div>
         </div>
         <div class="adder"><button onclick="menu(this)">＋</button><div class="menu"></div></div>
       </div>
@@ -340,7 +361,18 @@ select:focus,input:focus{outline:2px solid var(--primary)}
 
 <div class="toast" id="toast"></div>
 <div class="cpop" id="cpop"></div>
-<div class="hint">🖱️ Probaj: „＋ Nova skripta" (wizard → Studio) · ＋ tab dodaje mod · <b>krug na kvadratiću = boja sekcije</b> (kartice/kviz je nasljeđuju) · ＋ između kvadratića i veliki ＋ na dnu.</div>
+<div class="txtbar" id="txtbar">
+  <button onmousedown="fmt(event,'bold')" title="Podebljano"><b>B</b></button>
+  <button onmousedown="fmt(event,'italic')" title="Kurziv"><i>I</i></button>
+  <button class="cd" style="background:#f1f5f9" onmousedown="fmtColor(event,'#f1f5f9')" title="Boja teksta"></button>
+  <button class="cd" style="background:#818cf8" onmousedown="fmtColor(event,'#818cf8')" title="Boja teksta"></button>
+  <button class="cd" style="background:#34d399" onmousedown="fmtColor(event,'#34d399')" title="Boja teksta"></button>
+  <button class="cd" style="background:#fbbf24" onmousedown="fmtColor(event,'#fbbf24')" title="Boja teksta"></button>
+  <button class="cd" style="background:#f87171" onmousedown="fmtColor(event,'#f87171')" title="Boja teksta"></button>
+  <button onmousedown="linkStart(event)" title="Pretvori u link">🔗</button>
+  <input id="linkUrl" placeholder="https://… (Enter)" onkeydown="linkApply(event)">
+</div>
+<div class="hint">🖱️ Probaj: „＋ Nova skripta" (wizard → Studio) · ＋ tab dodaje mod, <b>✕ na tabu ga uklanja</b> · krug na kvadratiću = boja sekcije (kartice/kviz nasljeđuju) · <b>označi tekst → traka za boju/B/I/🔗</b> · „🔗 Link / stranica" u kvadratiću.</div>
 
 <script>
 let ops = 0;
@@ -377,6 +409,68 @@ function addMode(k){
   document.getElementById('tabMenuEl').classList.remove('on');
   showPane(k, t); bump();
   toast('Mod „'+MODES[k]+'" dodan skripti — izbor nije jednokratan.');
+}
+function rmMode(e, k){
+  e.stopPropagation();
+  const vis = Object.keys(MODES).filter(m => !document.getElementById('t-'+m).classList.contains('off'));
+  if (vis.length === 1) return toast('Skripta mora imati barem jedan mod.');
+  const t = document.getElementById('t-'+k);
+  t.classList.add('off');
+  if (t.classList.contains('on')){
+    const first = Object.keys(MODES).find(m => !document.getElementById('t-'+m).classList.contains('off'));
+    showPane(first, document.getElementById('t-'+first));
+  }
+  bump(); toast('Mod uklonjen — studenti ga više ne vide. Sadržaj se NE briše: vrati ga ＋ tabom.');
+}
+
+/* PLUTAJUĆA TRAKA: boja TEKSTA (tokeni) + B/I + link nad označenim tekstom */
+const txtbar = document.getElementById('txtbar');
+let _savedRange = null;
+document.addEventListener('selectionchange', () => {
+  if (txtbar.contains(document.activeElement)) return; // upisuješ URL — ne skrivaj
+  const sel = document.getSelection();
+  if (!sel.rangeCount || sel.isCollapsed) { hideBar(); return; }
+  const a = sel.anchorNode;
+  const n = a && (a.nodeType === 1 ? a : a.parentElement);
+  if (!n || !n.closest('[contenteditable]') || !n.closest('.pane')) { hideBar(); return; }
+  const r = sel.getRangeAt(0).getBoundingClientRect();
+  txtbar.style.left = Math.max(8, Math.min(r.left, innerWidth - 340)) + 'px';
+  txtbar.style.top = Math.max(8, r.top - 44) + 'px';
+  txtbar.classList.add('on');
+});
+function hideBar(){ txtbar.classList.remove('on'); const i=document.getElementById('linkUrl'); i.classList.remove('on'); i.value=''; }
+function fmt(e, cmd){ e.preventDefault(); document.execCommand(cmd); bump(); }
+function fmtColor(e, c){
+  e.preventDefault();
+  document.execCommand('styleWithCSS', false, true);
+  document.execCommand('foreColor', false, c);
+  bump(); toast('🎨 Boja teksta = token (a11y-sigurna nijansa na tamnoj podlozi).');
+}
+function linkStart(e){
+  e.preventDefault();
+  const sel = document.getSelection();
+  if (sel.rangeCount) _savedRange = sel.getRangeAt(0).cloneRange();
+  const i = document.getElementById('linkUrl');
+  i.classList.add('on'); i.focus();
+}
+function linkApply(e){
+  if (e.key === 'Escape') return hideBar();
+  if (e.key !== 'Enter') return;
+  const url = e.target.value.trim() || 'https://example.com';
+  const sel = document.getSelection();
+  sel.removeAllRanges(); if (_savedRange) sel.addRange(_savedRange);
+  document.execCommand('createLink', false, url);
+  hideBar(); bump();
+  toast('🔗 Link dodan — u pravoj izvedbi renderer sanitizira URL (whitelist + noopener).');
+}
+
+/* kartica-poveznica na drugu stranicu/izvor */
+function addLink(btn){
+  const kv = btn.closest('.kv');
+  const d = document.createElement('div'); d.className = 'linkcard';
+  d.innerHTML = '<span class="g">🌐</span><div><b contenteditable spellcheck="false">Naziv izvora / druge stranice</b><br><span contenteditable spellcheck="false">https://…</span></div>';
+  kv.appendChild(d); bump();
+  toast('Kartica-poveznica dodana (renderer: whitelist domena + noopener).');
 }
 
 /* BOJA SEKCIJE — token paleta; kartice/kviz sekcije je nasljeđuju */
