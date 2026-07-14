@@ -24,7 +24,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 ## Riješeni / Lekcije
 
 ### BUG-020 — Kviz procuri između predmeta/lekcija (stari kviz ostane pri promjeni predmeta)
-- Status: ✅ riješen 2026-07-15 (grana `fix/quiz-state-leak`) · Težina: **visok** (pogađa SVE studente uživo — netočan kviz, može upisati krivi rezultat) · Prijavio: **korisnik** (Leon, živo).
+- Status: ✅ riješen + 🚀 **LIVE 2026-07-15** (`25bba1e`, token `20260715004951`; live-verified: `resetQuiz` u serviranom `quiz.js` + poziv u `navigation.js`) · Težina: **visok** (pogađao SVE studente uživo — netočan kviz, mogao upisati krivi rezultat) · Prijavio: **korisnik** (Leon, živo).
 - **Simptom:** započneš kviz u predmetu A i NE završiš ga → odeš na drugi predmet (ili drugu lekciju istog predmeta) → otvoriš Quiz tab i **još je uvijek kviz iz predmeta A** (stara pitanja, stari napredak).
 - **Koraci:** predmet A → Quiz → *Start* (odgovori par pitanja, ne završi) → natrag → predmet B → Quiz tab → vidiš kviz predmeta A.
 - **Uzrok (sistemski — „navigacija"):** study-stranica je **JEDAN dijeljeni DOM** za sve lekcije (isti `#quizSetup`/`#quizGame`/`#quizResults` + globalni `AppState.quiz`). `initStudyPage()` na učitavanju nove lekcije **potpuno resetira flashcards i fill** (`initFlashcards()`/`initFill()` čiste stanje+prikaz), ali za kviz zove **SAMO `updateQuizCategories()`** (napuni dropdown) — **nikad ne resetira `AppState.quiz` ni vidljivi panel**. Kviz je bio JEDINI mod bez reseta → in-progress panel + stara pitanja procure u sljedeću lekciju.
