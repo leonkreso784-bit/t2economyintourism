@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-15 (OPUS) — 🐛 BUG-020 (kviz curi) popravljen+deployan · model sadržaja potvrđen
+**Kontekst:** Leon živo našao bug + izrazio nezadovoljstvo sadržajem (kartice prevelike, learn tanak).
+1. **BUG-020 (kviz curi između predmeta) — RIJEŠEN + 🚀 DEPLOYAN (`ddfc9f7`, token `20260715004951`).** Korijen (sistemski, „navigacija"): study-stranica = JEDAN dijeljeni DOM; `initStudyPage()` na novoj lekciji resetira flashcards+fill (`init*()`), ali za kviz zove SAMO `updateQuizCategories()` (dropdown) → kviz je bio jedini mod bez reseta → in-progress kviz prethodne lekcije procurio. Fix: `resetQuiz()` (`js/quiz.js`) + poziv u `initStudyPage` pod „reset SVIH pod-modova" komentarom (da se klasa ne ponovi). Regresija `tests/quiz-reset.spec.js` — **dokazano pada bez fixa** (isključen-reset run: setupVisible=false). Gateovi: smoke 19/0, typecheck 0, verify 0/0. Live-verified: `resetQuiz` + poziv u serviranom kodu. BUGS.md §BUG-020.
+2. **Sadržajni model — potvrđen (Leon, AskUserQuestion): kartice = kratke definicije (<200 znak.), learn = cijela skripta.** Podatkovni nalaz: problem je **platformski, ne Sašin** (EN `management` original avg 355 znak./kartica; uzor = te2 avg 174). Demo na grani `content/model-demo-management-hr` (foundations: kartice avg 363→85, learn 1269→5017; činjenice identične, detalj preseljen kartice→learn; **NIJE mergean**). Preview live na Vercelu (studymaster projekt).
+3. **Management sadržajni rebalans → Saša** (Leon: „pusti to sada, on će riješiti"): kviz-pitanja neuravnotežena po lekciji (M1 72 / M2 28 / Final 108 = M1+M2 pa najveći) + rollout modela = Sašin posao (HR content = njegov domen). Standard treba upisati u CONTENT_SCHEMA/GENERATOR kad se vratimo sadržaju.
+**SLIJEDI (platforma): U6 strukturne ops** (nova grana s main, EDITOR_UX dizajn).
+
 ## 2026-07-15 (OPUS) — 🚀 Management (HR) OBJAVLJEN: prvi Sašin content-PR mergean (opcija B)
 **Kontekst:** post-compact pregled cijelog projekta → sve zeleno; nalaz = **Saša je 2026-07-14 navečer odradio doradu po opciji B** (2 nova commita `36cdcb1`+`00a9ef1`). Leon: „napravi sve da možemo Sašin rad objaviti." Radim kao voditelj: integracija → review → gateovi → objava.
 1. **Due-diligence PR-a:** grana 7 ispred / 20 iza main (merge-base `79f17c7`). **Platformski file-ovi u diffu (index/styles/sw/manifest/legal-stranice/content-loader) = ISKLJUČIVO `npm run bump` tokeni** (ripgrep-provjera svih 7: nula ne-bump izmjena) → **nula prekršaja TEAM.md §2** (Saša ostao u content-opsegu, samo obavezni bump).
