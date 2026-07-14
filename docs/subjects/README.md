@@ -46,7 +46,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT** | 🟢 **spreman za review** (2026-07-13) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi/CI zeleni ✓ + živa provjera ✓ + **§5.2 uz SVE HR materijale ✓** (K1 + završna skripta + 4 seta ispitnih pitanja): učinkovitost/djelotvornost → **efikasnost/efektivnost**. PR #1 → „Ready for review". ⚠ Napomena Leonu (okvir = opcija B, tvoja odluka): HR skripte = Weihrich&Koontz (5 funkcija, uklj. **„kadroviranje"**) i koriste **„kadrovi"** gdje EN Lussier = 4 funkcije + **„ljudski resursi"**; ostavljeno vjerno EN-u (opcija A) — reci ako želiš dublje usklađivanje |
+| Management | `management-hr` | **S2 PILOT** | 🟡 **dorada — opcija B** (Leon odlučio 2026-07-14: HR skripte = izvor; W&K 5 funkcija/„kadrovi") | prijevod ✓ + catalog/JSON/bump ✓ + gateovi/CI zeleni ✓ + živa provjera ✓ + **§5.2 uz SVE HR materijale ✓** (K1 + završna skripta + 4 seta ispitnih pitanja): učinkovitost/djelotvornost → **efikasnost/efektivnost**. PR #1 → dorada (opcija B). ⚠ Napomena Leonu (okvir = opcija B, tvoja odluka): HR skripte = Weihrich&Koontz (5 funkcija, uklj. **„kadroviranje"**) i koriste **„kadrovi"** gdje EN Lussier = 4 funkcije + **„ljudski resursi"**; bilo ostavljeno vjerno EN-u (opcija A) → **Leon odlučio opcija B (2026-07-14): HR skripte = izvor** → dorada po skriptama |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |
