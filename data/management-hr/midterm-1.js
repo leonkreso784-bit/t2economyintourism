@@ -76,7 +76,7 @@ const managementHrM1 = {
         "options": [
           "Tehničke vještine",
           "Vještine odlučivanja (konceptualne vještine)",
-          "Manualне vještine",
+          "Manualne vještine",
           "Vještine tipkanja"
         ],
         "correct": 1
