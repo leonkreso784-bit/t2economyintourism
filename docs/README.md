@@ -12,7 +12,8 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 |----------|-------|
 | [TEAM.md](TEAM.md) | **Tim: uloge, workflow, zaštita sustava** — Leon (platforma) + Saša (content, S-cigle); PR+CI, tvrde granice, least-privilege (ADR-023) |
 | [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **Platforma-first temelj** — misije/faze F0–F6, reusable podsistemi, brick-liste (ADR-013/014) |
-| [EDITOR_PLAN.md](EDITOR_PLAN.md) | **▶ AKTIVNO — dovršetak Admin CRUD-a: draft→objavi + editor (nastavak F4; bivši UGC.md)** — model sadržaja (ID+blokovi+tokeni), publish-RPC, editor, sigurnost; brick-slijed U0–U9; UGC/AI = kasniji horizonti H2/H3 |
+| [EDITOR_PLAN.md](EDITOR_PLAN.md) | **▶ AKTIVNO — dovršetak Admin CRUD-a: draft→objavi + editor (nastavak F4; bivši UGC.md)** — model sadržaja (ID+blokovi+tokeni), publish-RPC, editor, sigurnost; brick-slijed U0–U9; §5.1 = Leonovi zahtjevi 1–8; UGC/AI = kasniji horizonti H2/H3 |
+| [EDITOR_UX.md](EDITOR_UX.md) | **Dizajn-ugovor editora (U-UX presuda 2026-07-14: smjer C „Tok")** — Studio+wizard, kvadratići, boje-tokeni s nasljeđivanjem, vizualni standard; živi izgled = `design/mockups/editor-c-tok.html` |
 | [CRUD_PLAN.md](CRUD_PLAN.md) | **F4 Admin CRUD** — brick-slijed F4.1–F4.6; ADR-021; F4.1–4.4 (quiz/fill/learn) ✅ živo verificirano; nastavak KROZ EDITOR_PLAN.md U-slijed |
 | [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj; ADR-022) — **✅ mehanizam implementiran (U2.5)**; stvarni MUT/MOR programi = S7 |
 | [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅; ostatak pauziran |

@@ -103,7 +103,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 ### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](BACKEND.md))
 - **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
 - **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
-- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; dalje U4 publish-RPC); source-of-truth flip na bazu = U9+/F4.6.
+- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; U4 publish-RPC ✅ + U-UX dizajn ✅ na granama, čeka deploy; dalje U6); source-of-truth flip na bazu = U9+/F4.6.
 
 ### Blok F — Platforma-first temelj (FOUNDATION_PLAN, ADR-013/014)
 - **F1 ✅ LIVE** — reliability rails: CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi (axe/layout-guard/Lighthouse) + RLS-test.
@@ -135,7 +135,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   (`sw.js` + `js/sw-register.js`: navigacija network-first + offline app-shell fallback; asseti SWR; Supabase/CDN network-only; kill-switch; `vercel.json` `/sw.js` no-cache; „Works offline" istina).
   **3A.3 (FABLE): Fable-pregled popravio 3 nalaza u sw.js** (navigate-keš samo `res.ok`; `cache.put`→`event.waitUntil`; verzioniran precache) **+ update-flow** (`<sokrat-toast>`→`skipWaiting`→jedan reload). Testovi `tests/sw.spec.js` (offline load + update-flow e2e); app-testovi `serviceWorkers:'block'`.
   **✅ DEPLOYANO** (main `c115a5d..868dc9f`; vercel.json `"//"` komentar-incident popravljen `868dc9f`). ✅ **3D.1** blind-map→WebP (−98%) · ✅ **3D.2** async KaTeX/Fonts · ✅ **3E.1/3E.2** a11y (0 axe violationa, sve 4 stranice) — **sve DEPLOYANO 2026-07-06 → F3 KOMPLETNA LIVE.**
-- **F4 🟡 U TIJEKU — dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13 (`5d24a96..79f17c7`)** — custom Admin CRUD (= B9/B10 gore): F4.1–4.4 ✅ + draft→objavi staza (`EDITOR_PLAN.md`; U1–U3 ✅ KOMPLETNI, dalje U4 publish-RPC → U-UX dizajn-faza); source-of-truth flip = U9+/F4.6 — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
+- **F4 🟡 U TIJEKU — dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13 (`5d24a96..79f17c7`)** — custom Admin CRUD (= B9/B10 gore): F4.1–4.4 ✅ + draft→objavi staza (`EDITOR_PLAN.md`; U1–U4 ✅ + U-UX ✅ → smjer C „Tok" u `EDITOR_UX.md`; dalje deploy uz OK pa U6 strukturne ops); source-of-truth flip = U9+/F4.6 — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
 
 ### Blok C — priprema za budućnost (ne gradi se sad)
 Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.
