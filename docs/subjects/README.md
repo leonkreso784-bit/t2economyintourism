@@ -46,7 +46,7 @@
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
 | Business Informatics | `business-informatics-hr` | pilot (prije S-staze) | ✅ LIVE 2026-06-28 | 11 kat/86 fc; ~$0.66 |
-| Management | `management-hr` | **S2 PILOT** | 🟢 **spreman za review** (2026-07-13) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi/CI zeleni ✓ + živa provjera ✓ + **§5.2 uz SVE HR materijale ✓** (K1 + završna skripta + 4 seta ispitnih pitanja): učinkovitost/djelotvornost → **efikasnost/efektivnost**. PR #1 → „Ready for review". ⚠ Napomena Leonu (okvir = opcija B, tvoja odluka): HR skripte = Weihrich&Koontz (5 funkcija, uklj. **„kadroviranje"**) i koriste **„kadrovi"** gdje EN Lussier = 4 funkcije + **„ljudski resursi"**; ostavljeno vjerno EN-u (opcija A) — reci ako želiš dublje usklađivanje |
+| Management | `management-hr` | **S2 PILOT** | 🟢 **spreman za review** (2026-07-14) | prijevod ✓ + catalog/JSON/bump ✓ + gateovi/CI zeleni ✓ + živa provjera ✓ + **§5.2 uz SVE HR materijale ✓** (K1 + završna skripta + 4 seta pitanja): učinkovitost/djelotvornost → **efikasnost/efektivnost** · **opcija B ✓ (Leon, 2026-07-14): jezgra po HR skripti** — definicija menadžmenta + **Weihrich&Koontz 5 funkcija (uklj. „kadroviranje")** umjesto Lussierove 4, + „Ključni aspekti menadžment procesa" (6 mjesta: foundations fc/quiz/fill/learn + examPractice fc/learn; quiz.correct indeks i `_______` očuvani). ⬜ Ostatak skripte (npr. „hotelsko poduzeće i poduzetništvo", povijesna podjela Prapočeci/Konvencionalni/Nekonvencionalni/Suvremeni) = veći zahvat, čeka Leonov OK |
 | Special Interest Tourism | `sit-hr` | S3 | ⬜ | |
 | Traffic in Tourism | `traffic-hr` | S3 | ⬜ | |
 | Tourism Economics 2 | `te2-hr` | S3 | ⬜ | |

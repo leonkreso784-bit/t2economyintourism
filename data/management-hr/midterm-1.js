@@ -8,9 +8,9 @@ const managementHrM1 = {
     "color": "#6366f1",
     "flashcards": [
       {
-        "question": "Što je MENADŽMENT i koje su četiri FUNKCIJE menadžmenta?",
-        "answer": "Menadžment = rad s ljudskim, financijskim, fizičkim i informacijskim resursima radi ostvarivanja organizacijskih ciljeva kroz obavljanje četiriju funkcija.\n\nČETIRI FUNKCIJE su:\n1. PLANIRANJE — postavljanje ciljeva i unaprijedno odlučivanje o načinu njihova ostvarivanja\n2. ORGANIZIRANJE — delegiranje i koordinacija zadataka te raspodjela resursa\n3. VOĐENJE — utjecanje na zaposlenike kako bi radili prema postavljenim ciljevima\n4. KONTROLIRANJE — praćenje napretka i poduzimanje korektivnih mjera",
-        "explanation": "Riječ potječe od latinskog 'manus' (ruka) + 'agere' (djelovati). Funkcije su međusobno različite, ali i isprepletene — obavljaju se istovremeno, a ne kao linearni slijed koraka."
+        "question": "Što je MENADŽMENT i kojih je PET FUNKCIJA menadžmenta (Weihrich i Koontz)?",
+        "answer": "Menadžment = proces oblikovanja, usmjeravanja i usklađivanja svih čimbenika proizvodno-uslužnog procesa u kojem pojedinci, radeći zajedno u poduzeću, efikasno ostvaruju odabrane ciljeve.\n\nWeihrich i Koontz definiraju menadžment kroz PET FUNKCIJA:\n1. PLANIRANJE — postavljanje ciljeva i unaprijedno odlučivanje o načinu njihova ostvarivanja\n2. ORGANIZIRANJE — delegiranje i koordinacija zadataka te raspodjela resursa\n3. KADROVIRANJE — popunjavanje radnih mjesta i briga o ljudima (pravi ljudi na pravim mjestima)\n4. VOĐENJE — utjecanje na zaposlenike kako bi radili prema postavljenim ciljevima\n5. KONTROLIRANJE — praćenje napretka i poduzimanje korektivnih mjera",
+        "explanation": "Riječ potječe od latinskog 'manus' (ruka) + 'agere' (djelovati). KLJUČNI ASPEKTI menadžment procesa: rad s i putem drugih · ravnoteža efektivnosti i efikasnosti · racionalno korištenje ograničenih resursa · utjecaj promjenjive okoline — sve radi ostvarivanja ciljeva poduzeća. Funkcije su međusobno različite, ali isprepletene — obavljaju se istovremeno, a ne kao linearni slijed koraka."
       },
       {
         "question": "Koja je razlika između EFIKASNOSTI i EFEKTIVNOSTI?",
@@ -55,10 +55,10 @@ const managementHrM1 = {
     ],
     "quiz": [
       {
-        "question": "Koji popis ispravno navodi četiri funkcije menadžmenta?",
+        "question": "Koji popis ispravno navodi pet funkcija menadžmenta (Weihrich i Koontz)?",
         "options": [
           "Planiranje, kadroviranje, marketing, prodaja",
-          "Planiranje, organiziranje, vođenje, kontroliranje",
+          "Planiranje, organiziranje, kadroviranje, vođenje, kontroliranje",
           "Zapošljavanje, budžetiranje, proizvodnja, izvještavanje",
           "Strategija, struktura, sustavi, osoblje"
         ],
@@ -137,7 +137,7 @@ const managementHrM1 = {
     ],
     "fillBlanks": [
       {
-        "sentence": "Četiri funkcije menadžmenta su planiranje, organiziranje, vođenje i _______.",
+        "sentence": "Pet funkcija menadžmenta (Weihrich i Koontz) su planiranje, organiziranje, kadroviranje, vođenje i _______.",
         "answer": "kontroliranje",
         "hint": "Praćenje i korektivne mjere..."
       },
@@ -164,7 +164,7 @@ const managementHrM1 = {
     ],
     "learn": {
       "title": "Management & Its History",
-      "content": "\n                <h3>Što je menadžment?</h3>\n                <p>Rad s <strong>ljudskim, financijskim, fizičkim i informacijskim</strong> resursima radi ostvarivanja organizacijskih ciljeva kroz obavljanje četiri funkcije.</p>\n                <div class=\"formula-box\">\n                    EFIKASNOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; EFEKTIVNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n\n                <h4>Škole menadžerske misli</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Klasična</strong> (posao): Taylor (znanstveni menadžment), Fayol (administrativni), Weber (birokracija), Follett (ljudi)</li>\n                        <li><strong>Bihevioralna</strong> (ljudi): Mayo (ljudski odnosi), Maslow (potrebe), McGregor (Teorija X/Y)</li>\n                        <li><strong>Menadžerska znanost</strong> (matematika): operacijska istraživanja, MIS</li>\n                        <li><strong>Integrativna</strong>: sustavska · sociotehničke · kontingencijska („ovisi o situaciji\")</li>\n                    </ul>\n                </div>\n            "
+      "content": "\n                <h3>Što je menadžment?</h3>\n                <p><strong>Menadžment</strong> = proces oblikovanja, usmjeravanja i usklađivanja svih čimbenika proizvodno-uslužnog procesa u kojem pojedinci, radeći zajedno u poduzeću, <strong>efikasno ostvaruju odabrane ciljeve</strong> — kroz pet funkcija (Weihrich i Koontz). Ključni aspekti: rad s i putem drugih · ravnoteža efektivnosti i efikasnosti · racionalno korištenje ograničenih resursa · utjecaj promjenjive okoline.</p>\n                <div class=\"formula-box\">\n                    EFIKASNOST = raditi stvari ISPRAVNO (najmanji otpad) &nbsp;·&nbsp; EFEKTIVNOST = raditi ISPRAVNE stvari<br>\n                    PLANIRANJE → ORGANIZIRANJE → KADROVIRANJE → VOĐENJE → KONTROLIRANJE (zasebne, ali međusobno povezane)\n                </div>\n\n                <h4>Vještine, uloge i razine</h4>\n                <ul>\n                    <li><strong>Vještine:</strong> tehničke (tvrde) · interpersonalne (meke) · odlučivačke (konceptualne)</li>\n                    <li><strong>Mintzbergovih 10 uloga</strong> → interpersonalne · informacijske · odlučivačke</li>\n                    <li><strong>Razine:</strong> vrhovna · srednja · prva linija (+ vođa tima, operativni djelatnici)</li>\n                </ul>\n\n                <h4>Škole menadžerske misli</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Klasična</strong> (posao): Taylor (znanstveni menadžment), Fayol (administrativni), Weber (birokracija), Follett (ljudi)</li>\n                        <li><strong>Bihevioralna</strong> (ljudi): Mayo (ljudski odnosi), Maslow (potrebe), McGregor (Teorija X/Y)</li>\n                        <li><strong>Menadžerska znanost</strong> (matematika): operacijska istraživanja, MIS</li>\n                        <li><strong>Integrativna</strong>: sustavska · sociotehničke · kontingencijska („ovisi o situaciji\")</li>\n                    </ul>\n                </div>\n            "
     }
   },
   "decisionMaking": {
