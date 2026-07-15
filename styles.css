@@ -24,55 +24,55 @@
    ===================================================== */
 
 /* Core variables and base styles */
-@import url('css/variables.css?v=20260715164123');
+@import url('css/variables.css?v=20260715201049');
 
 /* Landing page styles */
-@import url('css/landing.css?v=20260715164123');
+@import url('css/landing.css?v=20260715201049');
 
 /* Subjects sidebar */
-@import url('css/sidebar.css?v=20260715164123');
+@import url('css/sidebar.css?v=20260715201049');
 
 /* Browse page (drill-down: Faculty → Program → Year → Subject) */
-@import url('css/browse.css?v=20260715164123');
+@import url('css/browse.css?v=20260715201049');
 
 /* Pages (Lessons, Study, About) */
-@import url('css/pages.css?v=20260715164123');
+@import url('css/pages.css?v=20260715201049');
 
 /* Components (Header, Navigation, Main Content) */
-@import url('css/components.css?v=20260715164123');
+@import url('css/components.css?v=20260715201049');
 
 /* UI-primitivi (Web Components, F2 2D) */
-@import url('css/sokrat-modal.css?v=20260715164123');
-@import url('css/sokrat-confirm.css?v=20260715164123');
+@import url('css/sokrat-modal.css?v=20260715201049');
+@import url('css/sokrat-confirm.css?v=20260715201049');
 
 /* Study sections (split into modular files) */
-@import url('css/subject-selector.css?v=20260715164123');
-@import url('css/home-section.css?v=20260715164123');
-@import url('css/flashcards-section.css?v=20260715164123');
-@import url('css/quiz-section.css?v=20260715164123');
-@import url('css/fill-blanks-section.css?v=20260715164123');
-@import url('css/progress-section.css?v=20260715164123');
-@import url('css/blind-map.css?v=20260715164123');
-@import url('css/exercises.css?v=20260715164123');
+@import url('css/subject-selector.css?v=20260715201049');
+@import url('css/home-section.css?v=20260715201049');
+@import url('css/flashcards-section.css?v=20260715201049');
+@import url('css/quiz-section.css?v=20260715201049');
+@import url('css/fill-blanks-section.css?v=20260715201049');
+@import url('css/progress-section.css?v=20260715201049');
+@import url('css/blind-map.css?v=20260715201049');
+@import url('css/exercises.css?v=20260715201049');
 
 /* Responsive styles (all media queries) — razbijeno na uređene dijelove (css/responsive/).
    ⚠ REDOSLIJED JE BITAN: učitava se ZADNJI (prije learn.css) i gazi module po redoslijedu.
    Ne presložuj dijelove; konkatenacija 01→06 = bivši responsive.css (1:1). */
-@import url('css/responsive/01-up-and-phone-breakpoints.css?v=20260715164123');
-@import url('css/responsive/02-mobile-core.css?v=20260715164123');
-@import url('css/responsive/03-modes-a11y-print.css?v=20260715164123');
-@import url('css/responsive/04-mobile-extra.css?v=20260715164123');
-@import url('css/responsive/05-device-sizes.css?v=20260715164123');
-@import url('css/responsive/06-component-improvements.css?v=20260715164123');
+@import url('css/responsive/01-up-and-phone-breakpoints.css?v=20260715201049');
+@import url('css/responsive/02-mobile-core.css?v=20260715201049');
+@import url('css/responsive/03-modes-a11y-print.css?v=20260715201049');
+@import url('css/responsive/04-mobile-extra.css?v=20260715201049');
+@import url('css/responsive/05-device-sizes.css?v=20260715201049');
+@import url('css/responsive/06-component-improvements.css?v=20260715201049');
 
 /* Learn section - LAST to override responsive.css conflicts */
-@import url('css/learn.css?v=20260715164123');
+@import url('css/learn.css?v=20260715201049');
 
 /* Auth (Sign-in gumb + email+lozinka modal) — samostalan modul, ne gazi ništa */
-@import url('css/auth.css?v=20260715164123');
+@import url('css/auth.css?v=20260715201049');
 
 /* Profile stranica + header auth gumbi — samostalan modul */
-@import url('css/profile.css?v=20260715164123');
+@import url('css/profile.css?v=20260715201049');
 
 /* KaTeX math (ADR-009) — dark theme + mobile overflow; samostalan modul, ne gazi ništa */
-@import url('css/math.css?v=20260715164123');
+@import url('css/math.css?v=20260715201049');

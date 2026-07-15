@@ -196,75 +196,85 @@ function _renderAdminCards(holder, data) {
     const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
     const fills = Array.isArray(cat.fillBlanks) ? cat.fillBlanks : [];
     const hasLearn = !!(cat.learn && typeof cat.learn === 'object' && cat.learn.content);
-    if (fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
+    // Studenti preskaču praznu kategoriju; u draft-modu (canEdit) prikaži je da se može dodavati (U6c).
+    if (!canEdit && fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
 
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
       _adminEscape(cat.name || catId) + '</h3>';
 
-    // — Flashcards —
-    if (fcs.length) {
+    // — Flashcards — (u draft-modu prikaži i prazan mod: subhead + „Dodaj")
+    if (fcs.length || canEdit) {
       html += '<h4 class="admin-subhead">' + _adminT('admin.flashcards', 'Flashcards') +
-        ' <span class="admin-count">' + fcs.length + '</span></h4><ol class="admin-card-list">';
-      fcs.forEach(function (fc, i) {
-        total++;
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
-          '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'flashcard', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
+        ' <span class="admin-count">' + fcs.length + '</span></h4>';
+      if (fcs.length) {
+        html += '<ol class="admin-card-list">';
+        fcs.forEach(function (fc, i) {
+          total++;
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
+            '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
+            '  </div>' +
+            _adminEditBtn(canEdit, 'flashcard', catId, i) +
+            '</li>';
+        });
+        html += '</ol>';
+      }
       html += _adminAddBtn(canEdit, 'flashcard', catId, _adminT('admin.addCardBtn', 'Add flashcard'));
     }
 
-    // — Quiz (F4.4) —
-    if (quiz.length) {
+    // — Quiz (F4.4) — (u draft-modu prikaži i prazan mod)
+    if (quiz.length || canEdit) {
       html += '<h4 class="admin-subhead">' + _adminT('admin.quiz', 'Quiz') +
-        ' <span class="admin-count">' + quiz.length + '</span></h4><ol class="admin-card-list">';
-      quiz.forEach(function (qz, i) {
-        total++;
-        const opts = Array.isArray(qz.options) ? qz.options : [];
-        let optsHtml = '<ul class="admin-quiz-opts">';
-        opts.forEach(function (opt, oi) {
-          const isCorrect = (oi === qz.correct);
-          optsHtml += '<li' + (isCorrect ? ' class="is-correct"' : '') + '>' +
-            (isCorrect ? '<i class="fas fa-check"></i> ' : '') + _adminEscape(opt) + '</li>';
+        ' <span class="admin-count">' + quiz.length + '</span></h4>';
+      if (quiz.length) {
+        html += '<ol class="admin-card-list">';
+        quiz.forEach(function (qz, i) {
+          total++;
+          const opts = Array.isArray(qz.options) ? qz.options : [];
+          let optsHtml = '<ul class="admin-quiz-opts">';
+          opts.forEach(function (opt, oi) {
+            const isCorrect = (oi === qz.correct);
+            optsHtml += '<li' + (isCorrect ? ' class="is-correct"' : '') + '>' +
+              (isCorrect ? '<i class="fas fa-check"></i> ' : '') + _adminEscape(opt) + '</li>';
+          });
+          optsHtml += '</ul>';
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
+            '    ' + optsHtml +
+            '  </div>' +
+            _adminEditBtn(canEdit, 'quiz', catId, i) +
+            '</li>';
         });
-        optsHtml += '</ul>';
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
-          '    ' + optsHtml +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'quiz', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
+        html += '</ol>';
+      }
       html += _adminAddBtn(canEdit, 'quiz', catId, _adminT('admin.addQuizBtn', 'Add quiz question'));
     }
 
-    // — Fill in the blank (F4.4) —
-    if (fills.length) {
+    // — Fill in the blank (F4.4) — (u draft-modu prikaži i prazan mod)
+    if (fills.length || canEdit) {
       html += '<h4 class="admin-subhead">' + _adminT('admin.fill', 'Fill blanks') +
-        ' <span class="admin-count">' + fills.length + '</span></h4><ol class="admin-card-list">';
-      fills.forEach(function (fb, i) {
-        total++;
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
-          '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'fill', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
+        ' <span class="admin-count">' + fills.length + '</span></h4>';
+      if (fills.length) {
+        html += '<ol class="admin-card-list">';
+        fills.forEach(function (fb, i) {
+          total++;
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
+            '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
+            '  </div>' +
+            _adminEditBtn(canEdit, 'fill', catId, i) +
+            '</li>';
+        });
+        html += '</ol>';
+      }
       html += _adminAddBtn(canEdit, 'fill', catId, _adminT('admin.addFillBtn', 'Add fill-in-the-blank'));
     }
 
@@ -285,7 +295,7 @@ function _renderAdminCards(holder, data) {
     html += '</div>';
   });
 
-  holder.innerHTML = total
+  holder.innerHTML = (total || (canEdit && html))
     ? html
     : '<p class="profile-meta">' + _adminT('admin.noContent', 'No flashcards or quiz in this lesson.') + '</p>';
 }
