@@ -260,5 +260,116 @@ const V = 'te2M1';
   });
 }
 
+// ---- U6: strukturne operacije (add / remove) — idempotentne ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const d = store.begin(S, L, V, sampleData()); // flashcards: aaa111, bbb222
+
+  test('addCard: dodaje na kraj, dobiva generiran id ako fali, dirty + op logiran', () => {
+    const before = d.working.demand.flashcards.length;
+    const r = store.applyOp(S, L, { type: 'addCard', catId: 'demand', item: { question: 'NOVA?', answer: 'DA' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.flashcards.length, before + 1);
+    const added = d.working.demand.flashcards[before];
+    assert.strictEqual(added.question, 'NOVA?');
+    assert.ok(added.id && added.id.length === 6, 'nova kartica ima generiran 6-char id');
+    assert.strictEqual(store.isDirty(S, L), true);
+  });
+
+  test('addCard IDEMPOTENTAN: isti op (isti id) dvaput → jedna kartica (guard po id)', () => {
+    const op = { type: 'addCard', catId: 'demand', item: { id: 'new001', question: 'X?', answer: 'Y' } };
+    store.applyOp(S, L, op);
+    store.applyOpsTo(d.working, [op]); // replay (kao sibling/in-memory) NE smije duplirati
+    assert.strictEqual(d.working.demand.flashcards.filter((c) => c.id === 'new001').length, 1);
+  });
+
+  test('addCard s op.at umeće na točan indeks; upisuje KOPIJU (op.item ≠ referenca u nizu)', () => {
+    const item = { id: 'ins001', question: 'INS?', answer: 'A' };
+    store.applyOp(S, L, { type: 'addCard', catId: 'demand', item: item, at: 0 });
+    assert.strictEqual(d.working.demand.flashcards[0].id, 'ins001');
+    d.working.demand.flashcards[0].answer = 'MUT';
+    assert.strictEqual(item.answer, 'A', 'op.item ostaje netaknut kad se mijenja niz (kopija)');
+  });
+
+  test('removeCard po id: makne; IDEMPOTENTNO (drugi remove = no-op uspjeh, bez rušenja)', () => {
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeCard', catId: 'demand', id: 'ins001' }).ok, true);
+    assert.strictEqual(d.working.demand.flashcards.some((c) => c.id === 'ins001'), false);
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeCard', catId: 'demand', id: 'ins001' }).ok, true);
+  });
+
+  test('removeFill po IDX (stavka bez id, DB pre-U2a)', () => {
+    const before = d.working.demand.fillBlanks.length;
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeFill', catId: 'demand', idx: 0 }).ok, true);
+    assert.strictEqual(d.working.demand.fillBlanks.length, before - 1);
+  });
+
+  test('addQuiz kreira niz ako kategorija nema mod (dodavanje sadržaja u prazan mod)', () => {
+    const st2 = loadStore(fakeStorage());
+    const dd = st2.begin('s2', 'l2', 'v2', { intro: { name: 'Intro', icon: 'fa-x', color: '#000' } });
+    const r = st2.applyOp('s2', 'l2', { type: 'addQuiz', catId: 'intro', item: { id: 'z1', question: 'Q', options: ['a', 'b'], correct: 0 } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(dd.working.intro.quiz.length, 1);
+  });
+}
+
+// ---- U6: reorder (apsolutni redoslijed, nedestruktivan, idempotentan) ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const d = store.begin(S, L, V, sampleData());
+  store.applyOp(S, L, { type: 'addCard', catId: 'demand', item: { id: 'ccc333', question: 'Q3', answer: 'A3' } });
+
+  test('reorderCards: apsolutni redoslijed po id (b, a, c)', () => {
+    const r = store.applyOp(S, L, { type: 'reorderCards', catId: 'demand', order: ['bbb222', 'aaa111', 'ccc333'] });
+    assert.strictEqual(r.ok, true);
+    assert.deepStrictEqual(d.working.demand.flashcards.map((c) => c.id), ['bbb222', 'aaa111', 'ccc333']);
+  });
+
+  test('reorderCards: nelistane stavke ostaju NA KRAJU (nedestruktivno)', () => {
+    store.applyOp(S, L, { type: 'reorderCards', catId: 'demand', order: ['ccc333'] });
+    const ids = d.working.demand.flashcards.map((c) => c.id);
+    assert.strictEqual(ids[0], 'ccc333');
+    assert.deepStrictEqual(ids.slice(1).sort(), ['aaa111', 'bbb222']);
+  });
+
+  test('reorderCards IDEMPOTENTAN: ista lista dvaput = isto', () => {
+    const order = ['aaa111', 'bbb222', 'ccc333'];
+    store.applyOp(S, L, { type: 'reorderCards', catId: 'demand', order: order });
+    const snap = d.working.demand.flashcards.map((c) => c.id).join(',');
+    store.applyOpsTo(d.working, [{ type: 'reorderCards', catId: 'demand', order: order }]);
+    assert.strictEqual(d.working.demand.flashcards.map((c) => c.id).join(','), snap);
+  });
+}
+
+// ---- U6: strukturni sibling-sync — dvostruka primjena = jednom (čuva publish-put admin.js 439-443) ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  store.begin(S, L, V, sampleData());
+  store.applyOp(S, L, { type: 'addCard', catId: 'demand', item: { id: 'sib001', question: 'SIB?', answer: 'OK' } });
+  store.applyOp(S, L, { type: 'removeCard', catId: 'demand', id: 'aaa111' });
+
+  test('strukturni opovi: DVOSTRUKA applyOpsTo na sibling = kao JEDNOM (add-guard + remove-noop)', () => {
+    const sibling = sampleData();
+    store.applyOpsTo(sibling, store.opsOf(S, L));
+    const once = JSON.stringify(sibling);
+    store.applyOpsTo(sibling, store.opsOf(S, L)); // 2. prolaz (kad _adminCtx.data === window[var])
+    assert.strictEqual(JSON.stringify(sibling), once);
+    assert.strictEqual(sibling.demand.flashcards.some((c) => c.id === 'sib001'), true);
+    assert.strictEqual(sibling.demand.flashcards.some((c) => c.id === 'aaa111'), false);
+  });
+
+  test('strukturni opovi na payloadu BEZ kategorije (examPractice-only red) → skipped, bez rušenja', () => {
+    const other = { examPractice: { name: 'EP', icon: 'fa-x', color: '#000', flashcards: [] } };
+    const r = store.applyOpsTo(other, store.opsOf(S, L));
+    assert.strictEqual(r.applied, 0);
+    assert.strictEqual(r.skipped, 2);
+  });
+}
+
 console.log(`\ndraft-store: ${passed} prošlo, ${failed} palo\n`);
 process.exit(failed ? 1 : 0);
