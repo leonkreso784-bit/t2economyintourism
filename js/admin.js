@@ -246,6 +246,7 @@ function _renderAdminCards(holder, data) {
           '</li>';
       });
       html += '</ol>';
+      html += _adminAddBtn(canEdit, 'quiz', catId, _adminT('admin.addQuizBtn', 'Add quiz question'));
     }
 
     // — Fill in the blank (F4.4) —
@@ -264,6 +265,7 @@ function _renderAdminCards(holder, data) {
           '</li>';
       });
       html += '</ol>';
+      html += _adminAddBtn(canEdit, 'fill', catId, _adminT('admin.addFillBtn', 'Add fill-in-the-blank'));
     }
 
     // — Learn (F4.4) — jedan objekt po kategoriji (ne niz) —
@@ -722,14 +724,21 @@ function _quizDeleteOption(delBtn) {
   _quizStatus('', false);
 }
 
-/** Otvori quiz-editor za (catId, idx) iz trenutnog konteksta. */
+/** Otvori quiz-editor. idx === null → ADD mod (novo pitanje s 2 prazne opcije), inače uređivanje. */
 function _openQuizEditor(catId, idx) {
   const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
-  const qz = (cat && Array.isArray(cat.quiz)) ? cat.quiz[idx] : null;
+  if (!cat) return;
+  const isAdd = (idx == null);
+  const qz = isAdd ? { question: '', options: ['', ''], correct: 0 } : (Array.isArray(cat.quiz) ? cat.quiz[idx] : null);
   if (!qz) return;
-  _quizTarget = { catId: catId, idx: idx };
+  _quizTarget = { catId: catId, idx: idx, add: isAdd };
   _ensureQuizModal();
+  const titleEl = document.getElementById('adminQuizTitle');
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-' + (isAdd ? 'plus' : 'pen') + '"></i> ' +
+      (isAdd ? _adminT('admin.addQuiz', 'Add quiz question') : _adminT('admin.editQuiz', 'Edit quiz question'));
+  }
   document.getElementById('adminQuizQ').value = qz.question || '';
   const options = Array.isArray(qz.options) ? qz.options.slice() : [];
   const correct = (typeof qz.correct === 'number' && qz.correct >= 0 && qz.correct < options.length) ? qz.correct : 0;
@@ -762,16 +771,23 @@ function _saveQuiz() {
 
   const d = _adminDraft();
   const catId = _quizTarget.catId;
-  const idx = _quizTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].quiz)) ? w[catId].quiz[idx] : null;
-  if (!item) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  // Patch mijenja samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateQuiz', catId: catId, id: item.id, idx: idx,
-    patch: { question: q, options: options.slice(), correct: correct }
-  });
+  let res;
+  if (_quizTarget.add) {
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'addQuiz', catId: catId, item: { question: q, options: options.slice(), correct: correct }
+    });
+  } else {
+    const idx = _quizTarget.idx;
+    const w = (_draftMode && d) ? d.working : null;
+    const item = (w && w[catId] && Array.isArray(w[catId].quiz)) ? w[catId].quiz[idx] : null;
+    if (!item) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+    // Patch mijenja samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'updateQuiz', catId: catId, id: item.id, idx: idx,
+      patch: { question: q, options: options.slice(), correct: correct }
+    });
+  }
   if (!res.ok) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
   _closeQuizEditor();
@@ -834,14 +850,21 @@ function _closeFillEditor() {
   if (m && typeof m.close === 'function') m.close();
 }
 
-/** Otvori fill-editor za (catId, idx) iz trenutnog konteksta. */
+/** Otvori fill-editor. idx === null → ADD mod (nova rečenica), inače uređivanje postojeće. */
 function _openFillEditor(catId, idx) {
   const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
-  const fb = (cat && Array.isArray(cat.fillBlanks)) ? cat.fillBlanks[idx] : null;
+  if (!cat) return;
+  const isAdd = (idx == null);
+  const fb = isAdd ? { sentence: '', answer: '' } : (Array.isArray(cat.fillBlanks) ? cat.fillBlanks[idx] : null);
   if (!fb) return;
-  _fillTarget = { catId: catId, idx: idx };
+  _fillTarget = { catId: catId, idx: idx, add: isAdd };
   _ensureFillModal();
+  const titleEl = document.getElementById('adminFillTitle');
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-' + (isAdd ? 'plus' : 'pen') + '"></i> ' +
+      (isAdd ? _adminT('admin.addFill', 'Add fill-in-the-blank') : _adminT('admin.editFill', 'Edit fill-in-the-blank'));
+  }
   document.getElementById('adminFillS').value = fb.sentence || '';
   document.getElementById('adminFillA').value = fb.answer || '';
   const note = document.getElementById('adminFillNote');
@@ -869,16 +892,23 @@ function _saveFill() {
 
   const d = _adminDraft();
   const catId = _fillTarget.catId;
-  const idx = _fillTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].fillBlanks)) ? w[catId].fillBlanks[idx] : null;
-  if (!item) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  // Patch mijenja samo sentence/answer → hint (ako postoji) ostaje netaknut.
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateFill', catId: catId, id: item.id, idx: idx,
-    patch: { sentence: sentence, answer: answer }
-  });
+  let res;
+  if (_fillTarget.add) {
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'addFill', catId: catId, item: { sentence: sentence, answer: answer }
+    });
+  } else {
+    const idx = _fillTarget.idx;
+    const w = (_draftMode && d) ? d.working : null;
+    const item = (w && w[catId] && Array.isArray(w[catId].fillBlanks)) ? w[catId].fillBlanks[idx] : null;
+    if (!item) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+    // Patch mijenja samo sentence/answer → hint (ako postoji) ostaje netaknut.
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'updateFill', catId: catId, id: item.id, idx: idx,
+      patch: { sentence: sentence, answer: answer }
+    });
+  }
   if (!res.ok) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
   _closeFillEditor();
@@ -1012,5 +1042,7 @@ document.addEventListener('click', function (e) {
   const type = add.getAttribute('data-type') || 'flashcard';
   const catId = add.getAttribute('data-cat');
   if (!catId) return;
-  if (type === 'flashcard') _openCardEditor(catId, null);
+  if (type === 'quiz') _openQuizEditor(catId, null);
+  else if (type === 'fill') _openFillEditor(catId, null);
+  else _openCardEditor(catId, null);
 });
