@@ -49,6 +49,11 @@ const isNonEmptyStr = (v) => typeof v === 'string' && v.trim().length > 0;
 const HEX = /^#[0-9a-fA-F]{6}$/;
 const CAMEL = /^[a-z][a-zA-Z0-9]*$/;
 
+// Standard duljine kartice (CONTENT_SCHEMA §Standard duljine, Leon 2026-07-15): kartica = KRATKA
+// definicija, detalj ide u learn. SOFT gate — surface-a dug, NE ruši build (warnings ne mijenjaju exit).
+const CARD_ANSWER_SOFT_MAX = 200;   // jezgra definicije, cilj ≤ 200 znak
+const CARD_EXPL_SOFT_MAX = 250;     // nijansa/mnemonik, ne odlagalište skripte
+
 // --- KaTeX currency-safety: delimiteri moraju biti uravnoteženi -------------------
 // (?<!\\) lookbehind: ignoriraj \\( \\[ itd. — dvostruka kosa crta je LaTeX prijelom
 // retka (npr. "\\\\[2pt]" unutar aligned), NE display-math delimiter.
@@ -92,6 +97,12 @@ function validateCategory(subjId, lessonId, key, cat, counts) {
       if (f.explanation !== undefined && typeof f.explanation !== 'string') fail(`${w} "explanation" nije string`);
       checkKatex(w + '.question', f.question); checkKatex(w + '.answer', f.answer); checkKatex(w + '.explanation', f.explanation);
       counts.fc++;
+      // Soft standard duljine (ne ruši build): kartica = kratka definicija, detalj → learn.
+      if (typeof f.answer === 'string') {
+        counts.ansLenSum += f.answer.length;
+        if (f.answer.length > CARD_ANSWER_SOFT_MAX) counts.longAns.push(`${w} answer=${f.answer.length} znak · ${f.question ? f.question.slice(0, 50) : ''}`);
+      }
+      if (typeof f.explanation === 'string' && f.explanation.length > CARD_EXPL_SOFT_MAX) counts.longExpl.push(`${w} explanation=${f.explanation.length} znak`);
     });
   }
   // Quiz
@@ -147,7 +158,7 @@ for (const s of subjects) {
   const scripts = (s.content && s.content.scripts) || [];
   if (!scripts.length) { console.log(`[${s.id}] nema content.scripts (coming soon) — preskačem`); continue; }
   const win = loadWindowVars(scripts);
-  const counts = { fc: 0, qz: 0, fb: 0, ln: 0 };
+  const counts = { fc: 0, qz: 0, fb: 0, ln: 0, ansLenSum: 0, longAns: [], longExpl: [] };
   let cats = 0;
 
   for (const lesson of (s.lessons || [])) {
@@ -161,6 +172,21 @@ for (const s of subjects) {
     }
   }
   console.log(`[${s.id}] kategorija=${cats} · fc=${counts.fc} quiz=${counts.qz} fill=${counts.fb} learn=${counts.ln}`);
+
+  // Soft standard duljine kartica (CONTENT_SCHEMA §Standard duljine) — sažetak po predmetu;
+  // detaljan popis samo kad ciljaš JEDAN predmet (autor tada aktivno popravlja taj predmet).
+  const nLong = counts.longAns.length;
+  if (nLong || counts.longExpl.length) {
+    const pct = counts.fc ? Math.round((nLong / counts.fc) * 100) : 0;
+    const avg = counts.fc ? Math.round(counts.ansLenSum / counts.fc) : 0;
+    warn(`[${s.id}] ${nLong}/${counts.fc} kartica answer > ${CARD_ANSWER_SOFT_MAX} znak (${pct}%, prosjek ${avg})`
+       + (counts.longExpl.length ? ` · ${counts.longExpl.length} explanation > ${CARD_EXPL_SOFT_MAX}` : '')
+       + ' — CONTENT_SCHEMA §Standard duljine');
+    if (onlyId) {
+      counts.longAns.slice(0, 40).forEach((m) => console.warn('        · ' + m));
+      if (nLong > 40) console.warn(`        · … i još ${nLong - 40}`);
+    }
+  }
 }
 
 console.log('\n================ REZULTAT ================');

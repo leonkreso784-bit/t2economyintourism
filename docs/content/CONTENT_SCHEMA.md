@@ -48,6 +48,26 @@ spremljeni napredak korisnika.
 }
 ```
 
+### 📏 Standard duljine — kartica = KRATKA definicija (Leon, 2026-07-15)
+> Kartica služi **pamćenju jezgre**, ne čitanju skripte. Cijeli detalj ide u `learn`.
+> Render: `question` je prednja strana; `answer` **i** `explanation` se prikazuju **zajedno** na
+> stražnjoj (`explanation` manjim, ispod) — pa oboje moraju biti kratki.
+
+| Polje | Uloga | Cilj | Tvrda granica |
+|---|---|---|---|
+| `question` | jedan pojam, jasan prompt | — | ne spajaj „A i B i C" u jedno pitanje |
+| `answer` | **jezgra definicije** (1–2 rečenice) | **≤ 200 znak** | ~300 (samo formule/iznimke) |
+| `explanation` | kratka nijansa/mnemonik | ≤ ~250 znak | nije odlagalište skripte |
+
+- **NE nabrajaj 5 stavki u jednoj kartici.** Ako gradivo ima listu od 5 (npr. „5 funkcija menadžmenta"),
+  ili napravi 5 kartica (svaka jedna funkcija), ili jednu karticu „koje su glavne funkcije" s kratkim popisom naziva —
+  a **objašnjenje svake ide u `learn`**.
+- **Pravilo palca:** ako moraš skrolati karticu → sadržaj je na krivom mjestu (→ `learn`).
+- **Soft-gate:** `npm run validate:content` ispisuje po-predmetni sažetak kartica preko granice (ne ruši build);
+  `npm run validate:content <id>` daje popis pojedinačnih prekršitelja kad aktivno popravljaš predmet.
+- **Kontekst:** 56% postojećih kartica krši ovo (prosjek `answer` = 229 znak) — **naslijeđeno iz EN generatora, nije autorova greška.**
+  Rebalans je postupan, predmet-po-predmet; novo autorstvo poštuje standard od početka.
+
 ## QuizQuestion
 ```js
 {
@@ -132,6 +152,7 @@ dirali taj modul. Predmet je u catalogu označen `features.blindMap: true`.
 ## Checklist prije dodavanja sadržaja
 - [ ] Kategorija ima `name`, `icon`, `color`.
 - [ ] Svaka flashcard ima `question` + `answer`.
+- [ ] `answer` je KRATAK (≤ 200 znak — vidi §Standard duljine); detalj je u `learn`, ne na kartici.
 - [ ] Svaki quiz ima `options` i valjan `correct` indeks.
 - [ ] Svaki fillBlank ima `_______` u `sentence` i `answer`.
 - [ ] Learn `content` je validan HTML.
