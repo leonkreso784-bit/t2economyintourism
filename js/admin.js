@@ -174,6 +174,13 @@ function _adminEditBtn(canEdit, type, catId, idx) {
     '" aria-label="' + _adminT('admin.edit', 'Edit') + '"><i class="fas fa-pen"></i></button>';
 }
 
+/** „Dodaj stavku" gumb (samo adminu, samo draft-mod) — U6c strukturne operacije. */
+function _adminAddBtn(canEdit, type, catId, label) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-add-btn" data-admin-add data-type="' + type +
+    '" data-cat="' + _adminEscape(catId) + '"><i class="fas fa-plus"></i> ' + label + '</button>';
+}
+
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
@@ -212,6 +219,7 @@ function _renderAdminCards(holder, data) {
           '</li>';
       });
       html += '</ol>';
+      html += _adminAddBtn(canEdit, 'flashcard', catId, _adminT('admin.addCardBtn', 'Add flashcard'));
     }
 
     // — Quiz (F4.4) —
@@ -532,14 +540,21 @@ function _closeEditor() {
   if (m && typeof m.close === 'function') m.close();
 }
 
-/** Otvori editor za karticu (catId, idx) iz trenutnog konteksta. */
+/** Otvori editor za karticu. idx === null → ADD mod (nova kartica; U6c), inače uređivanje postojeće. */
 function _openCardEditor(catId, idx) {
   const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
   const cat = data && data[catId];
-  const fc = (cat && Array.isArray(cat.flashcards)) ? cat.flashcards[idx] : null;
+  if (!cat) return;
+  const isAdd = (idx == null);
+  const fc = isAdd ? { question: '', answer: '' } : (Array.isArray(cat.flashcards) ? cat.flashcards[idx] : null);
   if (!fc) return;
-  _editTarget = { catId: catId, idx: idx };
+  _editTarget = { catId: catId, idx: idx, add: isAdd };
   _ensureEditModal();
+  const titleEl = document.getElementById('adminEditTitle');
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-' + (isAdd ? 'plus' : 'pen') + '"></i> ' +
+      (isAdd ? _adminT('admin.addCard', 'Add flashcard') : _adminT('admin.editCard', 'Edit flashcard'));
+  }
   document.getElementById('adminEditQ').value = fc.question || '';
   document.getElementById('adminEditA').value = fc.answer || '';
   const note = document.getElementById('adminEditNote');
@@ -567,16 +582,24 @@ function _saveCard() {
 
   const d = _adminDraft();
   const catId = _editTarget.catId;
-  const idx = _editTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].flashcards)) ? w[catId].flashcards[idx] : null;
-  if (!item) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
-  // Op se adresira stabilnim id-om (U2a) s idx fallbackom (DB payloadi pre-U2a nemaju id-jeve).
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateCard', catId: catId, id: item.id, idx: idx,
-    patch: { question: q, answer: a }
-  });
+  let res;
+  if (_editTarget.add) {
+    // U6c: nova kartica → addCard (item dobiva svjež stabilni id u draft-sloju; idempotentno).
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'addCard', catId: catId, item: { question: q, answer: a }
+    });
+  } else {
+    const idx = _editTarget.idx;
+    const w = (_draftMode && d) ? d.working : null;
+    const item = (w && w[catId] && Array.isArray(w[catId].flashcards)) ? w[catId].flashcards[idx] : null;
+    if (!item) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+    // Op se adresira stabilnim id-om (U2a) s idx fallbackom (DB payloadi pre-U2a nemaju id-jeve).
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'updateCard', catId: catId, id: item.id, idx: idx,
+      patch: { question: q, answer: a }
+    });
+  }
   if (!res.ok) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
   _closeEditor();
@@ -980,4 +1003,14 @@ document.addEventListener('click', function (e) {
   else if (type === 'fill') _openFillEditor(catId, idx);
   else if (type === 'learn') _openLearnEditor(catId);
   else _openCardEditor(catId, idx);
+});
+
+// Delegat: klik na „Dodaj" gumb → otvori editor u ADD modu (U6c strukturne operacije).
+document.addEventListener('click', function (e) {
+  const add = e.target.closest('[data-admin-add]');
+  if (!add) return;
+  const type = add.getAttribute('data-type') || 'flashcard';
+  const catId = add.getAttribute('data-cat');
+  if (!catId) return;
+  if (type === 'flashcard') _openCardEditor(catId, null);
 });

@@ -41,6 +41,8 @@
     'admin.noCards': { en: 'No flashcards in this lesson.', hr: 'Nema kartica u ovoj lekciji.' },
     'admin.edit': { en: 'Edit', hr: 'Uredi' },
     'admin.editCard': { en: 'Edit flashcard', hr: 'Uredi karticu' },
+    'admin.addCard': { en: 'Add flashcard', hr: 'Dodaj karticu' },
+    'admin.addCardBtn': { en: 'Add flashcard', hr: 'Dodaj karticu' },
     'admin.question': { en: 'Question', hr: 'Pitanje' },
     'admin.answer': { en: 'Answer', hr: 'Odgovor' },
     'admin.save': { en: 'Save', hr: 'Spremi' },

@@ -312,6 +312,16 @@
 }
 .admin-edit-btn:hover { background: var(--primary-dark, #4338ca); color: #fff; border-color: var(--primary, #6366f1); }
 
+/* „Dodaj stavku" gumb (U6c strukturne operacije) — dashed, diskretan dok se ne hoverne */
+.admin-add-btn {
+    margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; font-family: inherit;
+    border: 1px dashed var(--border-color, #334155); background: transparent; color: var(--text-secondary);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
+
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
 .admin-edit .admin-edit__card {
     position: relative; width: min(92vw, 460px);
