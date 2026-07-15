@@ -87,7 +87,13 @@
     reorderQuiz:  { arrayKey: 'quiz',       struct: 'reorder' },
     addFill:      { arrayKey: 'fillBlanks', struct: 'add' },
     removeFill:   { arrayKey: 'fillBlanks', struct: 'remove' },
-    reorderFill:  { arrayKey: 'fillBlanks', struct: 'reorder' }
+    reorderFill:  { arrayKey: 'fillBlanks', struct: 'reorder' },
+    // U6b — operacije nad KATEGORIJAMA (top-level dokumenta). Ključ = stabilni ID (napredak);
+    // updateCategory dira SAMO meta (name/icon/color), NIKAD nizove ni ključ.
+    addCategory:       { doc: 'addCat' },
+    removeCategory:    { doc: 'removeCat' },
+    reorderCategories: { doc: 'reorderCat' },
+    updateCategory:    { doc: 'updateCat' }
   };
 
   /** Nađi indeks stavke: preferiraj stabilni `id`, fallback na `idx` (DB payloadi pre-U2a nemaju id). */
@@ -105,6 +111,15 @@
   function _dispatch(working, op) {
     const spec = op && OPS[op.type];
     if (!spec) return { ok: false, error: 'unknown-op' };
+
+    // U6b operacije nad KATEGORIJAMA (top-level dokumenta, ne unutar kategorije) — idempotentne.
+    if (spec.doc) {
+      if (spec.doc === 'addCat')     return _catAdd(working, op);
+      if (spec.doc === 'removeCat')  return _catRemove(working, op);
+      if (spec.doc === 'reorderCat') return _catReorder(working, op);
+      return _catUpdate(working, op);
+    }
+
     const cat = op.catId != null ? working[op.catId] : null;
     if (!cat || typeof cat !== 'object') return { ok: false, error: 'no-category' };
 
@@ -187,6 +202,60 @@
     for (let i = 0; i < arr.length; i++) { const it = arr[i]; if (it && (it.id == null || !seen[it.id])) out.push(it); }
     arr.length = 0;
     Array.prototype.push.apply(arr, out);
+    return { ok: true };
+  }
+
+  /* ---- U6b kategorije-operacije (nad top-level dokumentom; idempotentne) ---- */
+
+  /** Presloži KLJUČEVE objekta in-place po `keys` (nelistane ključeve zadrži na kraju). Čuva referencu objekta. */
+  function _setKeyOrder(obj, keys) {
+    const vals = {};
+    keys.forEach(function (k) { if (Object.prototype.hasOwnProperty.call(obj, k)) vals[k] = obj[k]; });
+    Object.keys(obj).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(vals, k)) vals[k] = obj[k]; });
+    Object.keys(obj).forEach(function (k) { delete obj[k]; });
+    Object.keys(vals).forEach(function (k) { obj[k] = vals[k]; });
+  }
+
+  /** addCategory: novi ključ (op.catId) = KOPIJA op.category, na op.at (default kraj). Idempotentno: ključ postoji → no-op. */
+  function _catAdd(working, op) {
+    const key = op.catId;
+    if (!key || typeof key !== 'string') return { ok: false, error: 'no-catId' };
+    if (!op.category || typeof op.category !== 'object') return { ok: false, error: 'no-category-obj' };
+    if (Object.prototype.hasOwnProperty.call(working, key)) return { ok: true };
+    const keys = Object.keys(working);
+    let at = Number.isInteger(op.at) ? op.at : keys.length;
+    if (at < 0) at = 0; else if (at > keys.length) at = keys.length;
+    keys.splice(at, 0, key);
+    working[key] = JSON.parse(JSON.stringify(op.category)); // KOPIJA (bez aliasinga siblinga)
+    _setKeyOrder(working, keys);
+    return { ok: true };
+  }
+
+  /** removeCategory: makni ključ. Idempotentno: nema ga → no-op uspjeh. (Ključ = stabilni ID; brisanje je poništivo kroz content_versions.) */
+  function _catRemove(working, op) {
+    const key = op.catId;
+    if (!key) return { ok: false, error: 'no-catId' };
+    if (Object.prototype.hasOwnProperty.call(working, key)) delete working[key];
+    return { ok: true };
+  }
+
+  /** reorderCategories: apsolutni redoslijed ključeva (op.order); nelistani na kraju. Idempotentno. */
+  function _catReorder(working, op) {
+    if (!Array.isArray(op.order)) return { ok: false, error: 'no-order' };
+    _setKeyOrder(working, op.order);
+    return { ok: true };
+  }
+
+  /** updateCategory: patcha SAMO meta-polja (name/icon/color/id) kategorije — NIKAD nizove (idu kroz item-ops) ni ključ. */
+  function _catUpdate(working, op) {
+    const cat = op.catId != null ? working[op.catId] : null;
+    if (!cat || typeof cat !== 'object') return { ok: false, error: 'no-category' };
+    if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
+    const ALLOWED = { name: 1, icon: 1, color: 1, id: 1 };
+    Object.keys(op.patch).forEach(function (k) {
+      if (!ALLOWED[k]) return; // ignoriraj pokušaj patcha flashcards/quiz/... kroz updateCategory (obrana)
+      if (op.patch[k] === null) delete cat[k]; else cat[k] = op.patch[k];
+    });
     return { ok: true };
   }
 

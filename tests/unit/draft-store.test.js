@@ -371,5 +371,83 @@ const V = 'te2M1';
   });
 }
 
+// ---- U6b: operacije nad KATEGORIJAMA (add/remove/reorder/update) — idempotentne ----
+
+function multiCat() {
+  return {
+    intro: { name: 'Intro', icon: 'fa-a', color: '#111', flashcards: [{ id: 'i1', question: 'Q', answer: 'A' }] },
+    core:  { name: 'Core',  icon: 'fa-b', color: '#222', flashcards: [{ id: 'c1', question: 'Q', answer: 'A' }] }
+  };
+}
+
+{
+  const store = loadStore(fakeStorage());
+  const d = store.begin(S, L, V, multiCat());
+
+  test('addCategory: novi ključ + KOPIJA; idempotentno (replay ne mijenja)', () => {
+    const op = { type: 'addCategory', catId: 'extra', category: { name: 'Extra', icon: 'fa-c', color: '#333', flashcards: [] } };
+    assert.strictEqual(store.applyOp(S, L, op).ok, true);
+    assert.deepStrictEqual(Object.keys(d.working), ['intro', 'core', 'extra']);
+    assert.strictEqual(d.working.extra.name, 'Extra');
+    store.applyOpsTo(d.working, [op]);
+    assert.deepStrictEqual(Object.keys(d.working), ['intro', 'core', 'extra']);
+  });
+
+  test('addCategory s op.at umeće na poziciju u redoslijedu ključeva', () => {
+    store.applyOp(S, L, { type: 'addCategory', catId: 'first', category: { name: 'First', icon: 'fa-x', color: '#444' }, at: 0 });
+    assert.strictEqual(Object.keys(d.working)[0], 'first');
+  });
+
+  test('removeCategory: makne ključ; IDEMPOTENTNO (drugi put no-op uspjeh)', () => {
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeCategory', catId: 'extra' }).ok, true);
+    assert.strictEqual('extra' in d.working, false);
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeCategory', catId: 'extra' }).ok, true);
+  });
+
+  test('updateCategory: rename+recolor; pokušaj patcha flashcards se IGNORIRA (whitelist)', () => {
+    const r = store.applyOp(S, L, { type: 'updateCategory', catId: 'core', patch: { name: 'CORE!', color: '#ef4444', flashcards: [] } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.core.name, 'CORE!');
+    assert.strictEqual(d.working.core.color, '#ef4444');
+    assert.strictEqual(d.working.core.flashcards.length, 1, 'nizovi se NE diraju kroz updateCategory');
+  });
+}
+
+{
+  const store = loadStore(fakeStorage());
+  const d = store.begin(S, L, V, multiCat());
+
+  test('reorderCategories: apsolutni redoslijed ključeva (core, intro)', () => {
+    assert.strictEqual(store.applyOp(S, L, { type: 'reorderCategories', order: ['core', 'intro'] }).ok, true);
+    assert.deepStrictEqual(Object.keys(d.working), ['core', 'intro']);
+  });
+
+  test('reorderCategories: nelistani ključevi ostaju na kraju + idempotentno', () => {
+    store.applyOp(S, L, { type: 'addCategory', catId: 'z', category: { name: 'Z', icon: 'fa-z', color: '#000' } });
+    store.applyOp(S, L, { type: 'reorderCategories', order: ['z'] });
+    assert.strictEqual(Object.keys(d.working)[0], 'z');
+    const snap = Object.keys(d.working).join(',');
+    store.applyOpsTo(d.working, [{ type: 'reorderCategories', order: ['z'] }]);
+    assert.strictEqual(Object.keys(d.working).join(','), snap);
+  });
+}
+
+{
+  const store = loadStore(fakeStorage());
+  store.begin(S, L, V, multiCat());
+  store.applyOp(S, L, { type: 'addCategory', catId: 'nova', category: { name: 'Nova', icon: 'fa-n', color: '#555', flashcards: [] } });
+  store.applyOp(S, L, { type: 'removeCategory', catId: 'intro' });
+
+  test('kategorija-opovi: DVOSTRUKA applyOpsTo na sibling = kao JEDNOM', () => {
+    const sib = multiCat();
+    store.applyOpsTo(sib, store.opsOf(S, L));
+    const once = JSON.stringify(sib);
+    store.applyOpsTo(sib, store.opsOf(S, L));
+    assert.strictEqual(JSON.stringify(sib), once);
+    assert.strictEqual('nova' in sib, true);
+    assert.strictEqual('intro' in sib, false);
+  });
+}
+
 console.log(`\ndraft-store: ${passed} prošlo, ${failed} palo\n`);
 process.exit(failed ? 1 : 0);
