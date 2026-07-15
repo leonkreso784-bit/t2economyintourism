@@ -297,7 +297,7 @@ SUPABASE_URL=... SUPABASE_SERVICE_KEY=... node scripts/migrate-content.js <subje
 
 ### **Completed (Live)** ✅
 - ✅ Data-driven catalog & hirerarchical navigation
-- ✅ 18 subjects, 2,000+ flashcards, 3,000+ questions
+- ✅ 19 subjects, 2,000+ flashcards, 3,000+ questions
 - ✅ Supabase auth + cloud progress sync
 - ✅ Interactive exercises (accounting, statistics, macroeconomics, math, academic writing)
 - ✅ KaTeX math rendering
