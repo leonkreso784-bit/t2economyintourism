@@ -5,6 +5,12 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-16 (OPUS) — 🧱 U6d-1: kategorije-UI (dodaj / uredi) na grani
+**Kontekst:** post-compact projekt-analiza (git kroz vrijeme — Leon 363 commita / Saša 7, Saša samo Management HR i tek 5 dana na timu; danas Saša 0). Leon: „kreni" → nastavak U6, sljedeća odblokirana cigla. Grana `feature/u6-structural-ops` (PREVIEW).
+1. **U6d-1 kategorije-UI DODAJ+UREDI (`211daad`):** „Uredi" gumb (`data-admin-cat-edit`) na zaglavlju svake kategorije + „Dodaj kategoriju" (`data-admin-cat-add`) na dnu — SAMO u draft-modu. Novi `adminCatModal` (`<sokrat-modal>` singleton) s poljima **name / icon (fa-*) / color** piše u DRAFT: **Dodaj** → `addCategory` op (svjež 6-char ključ = id, prazni nizovi flashcards/quiz/fillBlanks → svi „Dodaj" modovi odmah vidljivi; idempotentno po ključu); **Uredi** → `updateCategory` op (patcha SAMO name/icon/color; nizovi/ključ netaknuti — whitelist to i sam brani).
+2. **Ops-sloj U6b nedirnut** → publish-put + sibling-replay (`applyOpsTo`) ostaju isti; sve aditivno na admin.js/i18n.js/profile.css. i18n HR/EN +7 (addCategory/editCategory/catName/catIcon/catColor/catNameErr). CSS: lebdeći „Uredi" na kartici kategorije + široki „Dodaj kategoriju" + color-swatch.
+**Gateovi:** verify 0/0 · typecheck 0 · draft-store unit **37/37** · `node --check` admin.js+i18n.js OK · bump 96 (`20260716145042`) · build:css --check u sinku. Grana pushana na origin (preview). Live-verifikacija (staging authed) ide sa ostatkom U6. **SLIJEDI:** U6d-2 kategorije reorder/remove (odblokirano) → DB id-resync (Leonov OK) → item delete/reorder → živa verifikacija → C-vizual (U8).
+
 ## 2026-07-15 (OPUS) — 🧱 U6 START: strukturne ops (ops-sloj + „Dodaj" UI) na grani
 **Kontekst:** nakon prioriteta (kartica-standard ↓ + branch cleanup), Leon: „idem na u6". Grana `feature/u6-structural-ops` s `main`. Gradimo U6c UI **inkrementalno u postojeći editor** (Leonova odluka; puni C-Studio = U8).
 1. **U6a ops-sloj — stavke (`d9dc764`):** `SokratDraft` + `_dispatch` prošireni s `add/remove/reorder` × flashcards/quiz/fillBlanks. **Idempotentni po konstrukciji** (add=guard po id + upisuje kopiju bez aliasinga · remove=no-op ako nema · reorder=apsolutni red po id-evima, nelistane na kraju). Nova stavka dobiva svjež 6-char id. **Posljedica: op-replay sibling-sync (`applyOpsTo` na final + in-memory) ostaje ispravan → publish-put `_publishDraft` NETAKNUT** — ranija bojazan (kôd lin.193-199) razriješena dizajnom, ne arhitekturom. +11 testova.
