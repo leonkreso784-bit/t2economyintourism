@@ -1,5 +1,6 @@
 // Management (HR) — Final
-// Auto-generirano: scripts/translate-subject.js (HRV program). Spaja HR M1 + M2 + prevedeni examPractice. MORA se učitati POSLIJE midterm-1/2.
+// Spaja HR M1 + M2 + examPractice. RUČNO USKLAĐENO S HRVATSKOM SKRIPTOM (kartice <200 znak, detalj u learn).
+// MORA se učitati POSLIJE midterm-1/2. ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
 
 const managementHrFinalExamPractice = {
   "name": "Vježba za ispit (sve teme)",
@@ -8,46 +9,46 @@ const managementHrFinalExamPractice = {
   "flashcards": [
     {
       "question": "Koje teme čine dvije polovice međuispita koje završni ispit objedinjuje?",
-      "answer": "1. međuispit (TU2–TU7): Menadžment i njegova povijest · Rješavanje problema i donošenje odluka · Strateško i operativno planiranje · Organiziranje i delegiranje · Upravljanje timskim radom · Upravljanje ljudskim resursima.\n\n2. međuispit (TU8–TU11): Organizacijsko ponašanje · Motiviranje za visoku efikasnost · Vođenje putem utjecaja · Upravljanje sustavima kontrole, financijama i ljudima.",
+      "answer": "1. međuispit (TU2–7): povijest · odlučivanje · planiranje · organiziranje · timski rad · ljudski resursi. 2. međuispit (TU8–11): organizacijsko ponašanje · motivacija · vodstvo · kontrola i financije.",
       "explanation": "K1 = okolina + planiranje + organiziranje; K2 = vođenje + kontroliranje."
     },
     {
-      "question": "PONAVLJANJE ZA ISPIT: navedite PET funkcija menadžmenta (Weihrich i Koontz) i povežite svaku s odgovarajućim glavnim poglavljem.",
-      "answer": "1. PLANIRANJE — donošenje odluka + strateško/operativno planiranje.\n2. ORGANIZIRANJE — organiziranje i delegiranje rada, organizacijske strukture.\n3. KADROVIRANJE — popunjavanje radnih mjesta i briga o ljudima (upravljanje ljudskim resursima, timski rad).\n4. VOĐENJE — organizacijsko ponašanje, motivacija, vodstvo.\n5. KONTROLIRANJE — sustavi kontrole, financije i ljudi.\n\nOne su međusobno različite, ali i isprepletene te se provode istovremeno — NISU linearni koraci.",
-      "explanation": "Cijeli kolegij strukturiran je oko pet funkcija menadžmenta (Weihrich i Koontz)."
+      "question": "PONAVLJANJE: povežite PET funkcija menadžmenta s poglavljima.",
+      "answer": "Planiranje (odlučivanje, planiranje) · organiziranje (strukture) · kadroviranje (ljudski resursi, timovi) · vođenje (org. ponašanje, motivacija, vodstvo) · kontroliranje (kontrola, financije).",
+      "explanation": "Kolegij je strukturiran oko 5 funkcija (Weihrich i Koontz); nisu linearni koraci."
     },
     {
-      "question": "Međutematski: pojam 'KONTINGENCIJA' pojavljuje se u nekoliko poglavlja — u kojima?",
-      "answer": "• POVIJEST — teorija kontingencije: najbolji menadžerski pristup ovisi o situaciji (stabilna okolina → mehanistički pristup, inovativna okolina → organski pristup).\n• PLANIRANJE — kontingencijski planovi: rezervni planovi za nekontrolabilne događaje.\n• VOĐENJE — situacijsko vodstvo naziva se i teorijom kontingencije (stil ovisi o situaciji).",
-      "explanation": "'Ovisi o situaciji' ponavljajuća je ideja u menadžmentu."
+      "question": "Međutematski: u kojim se poglavljima pojavljuje 'KONTINGENCIJA'?",
+      "answer": "Povijest (teorija kontingencije — pristup ovisi o situaciji), planiranje (kontingencijski/pričuvni planovi) i vođenje (situacijsko vodstvo).",
+      "explanation": "'Ovisi o situaciji' je ponavljajuća ideja u menadžmentu. Detalj → sekcija Uči."
     },
     {
-      "question": "PONAVLJANJE ZA ISPIT: usporedite MEHANISTIČKI i ORGANSKI pristup kroz gradivo kolegija.",
-      "answer": "• STRUKTURA — mehanistička = birokratska, centralizirana, specijalizirana; organska = fleksibilna, decentralizirana, široko definirani poslovi.\n• OKOLINA — mehanistička odgovara stabilnoj okolini; organska odgovara dinamičnoj okolini.\n• TIMOVI — mehanistička poduzeća koriste grupe kojima upravljaju menadžeri; organska poduzeća koriste samoupravljajuće timove.\n• OCJENJIVANJE — mehanistička = menadžer ocjenjuje; organska = kolege (360-stupanjska procjena).",
-      "explanation": "Mehaničko-organski kontinuum povezuje organiziranje, timski rad i upravljanje ljudskim resursima."
+      "question": "PONAVLJANJE: usporedite MEHANISTIČKI i ORGANSKI pristup.",
+      "answer": "Mehanistički = birokratski, centraliziran, stabilna okolina, grupe pod menadžerom. Organski = fleksibilan, decentraliziran, dinamična okolina, samoupravni timovi.",
+      "explanation": "Kontinuum povezuje organiziranje, timski rad i ljudske resurse. Detalj → sekcija Uči."
     },
     {
-      "question": "Međutematski pregled: koji se KORACI donošenja odluka i KORACI kontrole preklapaju?",
-      "answer": "Oba procesa završavaju PLANIRANJEM, PROVEDBOM i KONTROLOM.\n• Koraci 5–6 modela donošenja odluka = planiranje/provedba + kontrola.\n• Proces kontrolnih sustava = postavljanje standarda → mjerenje → uspoređivanje → ispravljanje.\n\nCiljevi su zajednička polazišna točka: 'ciljevi su svrha; planovi su sredstvo.'",
-      "explanation": "Planiranje i kontrola dvije su strane iste medalje (bez ciljeva nema kontrole)."
+      "question": "Koji se KORACI odlučivanja i KORACI kontrole preklapaju?",
+      "answer": "Oba završavaju planiranjem, provedbom i kontrolom; ciljevi su zajedničko polazište ('ciljevi = svrha, planovi = sredstvo').",
+      "explanation": "Planiranje i kontrola = dvije strane iste medalje (bez ciljeva nema kontrole)."
     },
     {
-      "question": "PRIPREMA ZA ISPIT: povežite teoretičara s idejom — Taylor, Maslow, Herzberg, Vroom, Mintzberg, Tuckman.",
-      "answer": "• TAYLOR — znanstveno upravljanje (efikasnost rada).\n• MASLOW — hijerarhija potreba (5 razina).\n• HERZBERG — dvofaktorska teorija (higijenski čimbenici nasuprot motivatorima).\n• VROOM — teorija očekivanja (E × I × V).\n• MINTZBERG — 10 menadžerskih uloga (3 kategorije).\n• TUCKMAN — 5 faza razvoja grupe.",
+      "question": "PRIPREMA: povežite teoretičara s idejom.",
+      "answer": "Taylor (znanstveno upravljanje) · Maslow (hijerarhija potreba) · Herzberg (dvofaktorska) · Vroom (očekivanje) · Mintzberg (10 uloga) · Tuckman (5 faza grupe).",
       "explanation": "Poznavanje autora pojedinog modela često je ispitno pitanje."
     },
     {
-      "question": "Međutematski pregled: kako MOTIVACIJA povezuje teorije sadržaja, procesa i potkrepljenja?",
-      "answer": "• TEORIJE SADRŽAJA (Maslow, ERG, Herzberg, McClelland) = ŠTO nas motivira (koje potrebe).\n• TEORIJE PROCESA (pravednost, postavljanje ciljeva, očekivanje) = KAKO/ZAŠTO biramo određena ponašanja.\n• TEORIJE POTKREPLJENJA (pozitivno potkrepljenje, izbjegavanje, kazna, gašenje) = posljedice oblikuju ponašanje.\n\nSve teorije doprinose formuli uspješnosti: uspješnost = sposobnost × motivacija × resursi.",
-      "explanation": "Tri komplementarne perspektive na jedinstveno pitanje: 'Kako motivirati ljude?'"
+      "question": "Kako MOTIVACIJA povezuje teorije sadržaja, procesa i potkrepljenja?",
+      "answer": "Sadržaj (Maslow, Herzberg…) = ŠTO motivira; proces (pravednost, ciljevi, očekivanje) = KAKO/ZAŠTO; potkrepljenje = posljedice oblikuju ponašanje.",
+      "explanation": "Sve doprinose formuli: uspješnost = sposobnost × motivacija × resursi."
     }
   ],
   "quiz": [
     {
-      "question": "Četiri temeljne menadžerske funkcije su:",
+      "question": "Pet funkcija menadžmenta (Weihrich i Koontz) su:",
       "options": [
         "Planiranje, zapošljavanje, prodaja, izvještavanje",
-        "Planirati, organizirati, voditi, kontrolirati",
+        "Planirati, organizirati, kadrovirati, voditi, kontrolirati",
         "Analizirati, odlučivati, djelovati, preispitivati",
         "Misija, vizija, vrijednosti, ciljevi"
       ],
@@ -126,7 +127,7 @@ const managementHrFinalExamPractice = {
   ],
   "fillBlanks": [
     {
-      "sentence": "Četiri upravljačke funkcije su planiranje, organiziranje, vođenje i _______.",
+      "sentence": "Pet funkcija menadžmenta su planiranje, organiziranje, kadroviranje, vođenje i _______.",
       "answer": "kontroliranje",
       "hint": "Praćenje i ispravljanje..."
     },
@@ -152,8 +153,8 @@ const managementHrFinalExamPractice = {
     }
   ],
   "learn": {
-    "title": "Final Exam Practice — How to Use",
-    "content": "\n            <h3>Što je ova kategorija?</h3>\n            <p>Skup zadataka za vježbu koji obuhvaća sve teme kolegija — upravo onako kako ih kombinira završni ispit.\n            Koristite ga NAKON što ponovite oba dijela međuispita.</p>\n\n            <h4>Kolegij na jednoj karti</h4>\n            <div class=\"formula-box\">\n                K1 (TU2–TU7): povijest · donošenje odluka · strateško planiranje · organiziranje · timski rad · HRM<br>\n                K2 (TU8–TU11): organizacijsko ponašanje · motivacija · vodstvo · sustavi kontrole\n            </div>\n\n            <div class=\"tip-box\">\n                <h4><i class=\"fas fa-lightbulb\"></i> Omiljene međutematske veze</h4>\n                <ul>\n                    <li>Pet funkcija menadžmenta (Weihrich i Koontz): planiranje · organiziranje · kadroviranje · vođenje · kontroliranje</li>\n                    <li>Teoretičar → ideja: Taylor, Fayol, Maslow, Herzberg, McClelland, Vroom, Mintzberg, Tuckman</li>\n                    <li>Mehanistički nasuprot organskom (struktura · okolina · timovi · ocjenjivanje)</li>\n                    <li>„Kontingencijski pristup\" kroz povijest, planiranje i vodstvo</li>\n                    <li>Motivacija: sadržajne teorije (potrebe) · procesne teorije (kako/zašto) · teorije pojačavanja (posljedice)</li>\n                    <li>Financije: glavni proračun · tri financijska izvještaja · obveznice nasuprot dionicama</li>\n                </ul>\n            </div>\n        "
+    "title": "Vježba za ispit (sve teme)",
+    "content": "\n                <h3>Kolegij na jednoj karti</h3>\n                <p>Završni ispit spaja oba međuispita (pojednostavljeno). Koristite ovu kategoriju NAKON ponavljanja K1 i K2.</p>\n                <div class=\"formula-box\">\n                    K1 (TU2–7): povijest · donošenje odluka · strateško planiranje · organiziranje · timski rad · ljudski resursi<br>\n                    K2 (TU8–11): organizacijsko ponašanje · motivacija · vodstvo · sustavi kontrole i financije\n                </div>\n                <h4>Pet funkcija ↔ poglavlja</h4>\n                <ul>\n                    <li><strong>Planiranje</strong> → donošenje odluka, strateško/operativno planiranje</li>\n                    <li><strong>Organiziranje</strong> → organizacijske strukture, delegiranje</li>\n                    <li><strong>Kadroviranje</strong> → upravljanje ljudskim resursima, timski rad</li>\n                    <li><strong>Vođenje</strong> → organizacijsko ponašanje, motivacija, vodstvo</li>\n                    <li><strong>Kontroliranje</strong> → sustavi kontrole, financije, ljudi</li>\n                </ul>\n                <h4>Međutematske veze (česta ispitna pitanja)</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>„Kontingencija\" / „ovisi o situaciji\":</strong> povijest (teorija kontingencije: stabilna okolina → mehanistički, inovativna → organski) · planiranje (kontingencijski planovi) · vođenje (situacijsko vodstvo).</li>\n                        <li><strong>Mehanistički vs organski</strong> (kroz cijeli kolegij): struktura (birokratska/centralizirana vs fleksibilna/decentralizirana) · okolina (stabilna vs dinamična) · timovi (menadžerski vođeni vs samoupravni) · ocjenjivanje (menadžer vs 360°).</li>\n                        <li><strong>Odlučivanje ⇄ kontrola:</strong> oba završavaju planiranjem, provedbom i kontrolom; ciljevi su polazište („ciljevi su svrha, planovi su sredstvo\").</li>\n                    </ul>\n                </div>\n                <h4>Teoretičar → ideja</h4>\n                <div class=\"formula-box\">\n                    Taylor (znanstveno upravljanje) · Fayol (14 načela) · Weber (birokracija) · Maslow (hijerarhija potreba) · Herzberg (dvofaktorska) · McClelland (stečene potrebe) · Vroom (očekivanje E×I×V) · Adams (pravednost) · Mintzberg (10 uloga) · Tuckman (5 faza grupe) · Drucker (otac modernog menadžmenta)\n                </div>\n                <h4>Motivacija — tri perspektive</h4>\n                <p>Teorije <strong>sadržaja</strong> (Maslow, ERG, Herzberg, McClelland) = ŠTO motivira; teorije <strong>procesa</strong> (pravednost, postavljanje ciljeva, očekivanje) = KAKO/ZAŠTO; teorije <strong>potkrepljenja</strong> = posljedice oblikuju ponašanje. Sve doprinose formuli <em>uspješnost = sposobnost × motivacija × resursi</em>.</p>\n            "
   }
 };
 
