@@ -8861,7 +8861,7 @@ sokrat-modal.auth-modal > * {
 /* Native <select> popup poštuje dark temu (inače bijeli browser-default popup) */
 .admin-field select { color-scheme: dark; }
 .admin-field select option { background: var(--bg-secondary); color: var(--text-primary); }
-.admin-cat { margin-top: 1rem; position: relative; }
+.admin-cat { margin-top: 1rem; }
 .admin-count {
     display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem;
     font-size: 0.75rem; border-radius: 999px;
@@ -8918,9 +8918,13 @@ sokrat-modal.auth-modal > * {
 }
 .admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
 
-/* U6d — kategorije-UI: „Uredi" na zaglavlju kategorije (lebdi gore-desno) + „Dodaj kategoriju" (široki) */
-.admin-cat-edit { position: absolute; top: 1.05rem; right: 1.05rem; }
-.admin-cat .profile-card-title { padding-right: 2.6rem; }
+/* U6d — kategorije-UI: zaglavlje = naslov + kontrole (presloži ↑↓ / uredi / obriši) u flex-redu; „Dodaj kategoriju" (široki) */
+.admin-cat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.admin-cat-head .profile-card-title { margin: 0; flex: 1 1 auto; min-width: 0; }
+.admin-cat-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
+.admin-cat-del:hover { background: var(--danger-bg, #7f1d1d); color: #fff; border-color: var(--danger-text, #f87171); }
+.admin-edit-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
+.admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border-color, #334155); }
 .admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
 
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */

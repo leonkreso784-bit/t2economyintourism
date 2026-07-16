@@ -194,6 +194,23 @@ function _adminCatAddBtn(canEdit, label) {
     '<i class="fas fa-folder-plus"></i> ' + label + '</button>';
 }
 
+// U6d-2 — kontrole kategorije (gore-desno): presloži ↑↓ · uredi ✎ · obriši 🗑. Krajnje strelice disabled.
+function _adminCatControls(canEdit, catId, catIdx, total) {
+  if (!canEdit) return '';
+  const esc = _adminEscape(catId);
+  const upDis = (catIdx <= 0) ? ' disabled' : '';
+  const downDis = (catIdx >= total - 1) ? ' disabled' : '';
+  return '<div class="admin-cat-ctrls">' +
+    '<button type="button" class="admin-edit-btn" data-admin-cat-move="up" data-cat="' + esc + '"' + upDis +
+      ' aria-label="' + _adminT('admin.moveUp', 'Move up') + '"><i class="fas fa-arrow-up"></i></button>' +
+    '<button type="button" class="admin-edit-btn" data-admin-cat-move="down" data-cat="' + esc + '"' + downDis +
+      ' aria-label="' + _adminT('admin.moveDown', 'Move down') + '"><i class="fas fa-arrow-down"></i></button>' +
+    _adminCatEditBtn(canEdit, catId) +
+    '<button type="button" class="admin-edit-btn admin-cat-del" data-admin-cat-del data-cat="' + esc + '"' +
+      ' aria-label="' + _adminT('admin.removeCategory', 'Remove category') + '"><i class="fas fa-trash"></i></button>' +
+    '</div>';
+}
+
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
@@ -202,7 +219,7 @@ function _renderAdminCards(holder, data) {
   let html = '';
   let total = 0;
 
-  cats.forEach(function (catId) {
+  cats.forEach(function (catId, catIdx) {
     const cat = data[catId];
     if (!cat || typeof cat !== 'object') return;
     const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
@@ -214,9 +231,11 @@ function _renderAdminCards(holder, data) {
 
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
+      '<div class="admin-cat-head">' +
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
       _adminEscape(cat.name || catId) + '</h3>' +
-      _adminCatEditBtn(canEdit, catId);
+      _adminCatControls(canEdit, catId, catIdx, cats.length) +
+      '</div>';
 
     // — Flashcards — (u draft-modu prikaži i prazan mod: subhead + „Dodaj")
     if (fcs.length || canEdit) {
@@ -768,6 +787,46 @@ function _saveCat() {
   _adminRerender();
 }
 
+/** Presloži kategoriju za dir (-1 gore / +1 dolje): izračunaj novi red ključeva → reorderCategories op. */
+function _moveCategory(catId, dir) {
+  const d = _adminDraft();
+  const data = _adminWorking();
+  if (!d || !data || typeof data !== 'object') return;
+  const keys = Object.keys(data);
+  const i = keys.indexOf(catId);
+  if (i < 0) return;
+  const j = i + dir;
+  if (j < 0 || j >= keys.length) return; // rub → no-op
+  keys.splice(i, 1);
+  keys.splice(j, 0, catId);
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: 'reorderCategories', order: keys });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
+}
+
+/** Obriši kategoriju iz DRAFTA (uz potvrdu; poništivo „Odbaci"-jem / content_versions). removeCategory op. */
+async function _removeCategory(catId) {
+  const d = _adminDraft();
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  if (typeof window.askConfirm === 'function') {
+    const ok = await window.askConfirm({
+      title: _adminT('admin.removeCatTitle', 'Remove category?'),
+      message: _adminT('admin.removeCatMsg', 'This category and all its cards/quiz will be removed from the draft. You can restore it by discarding the draft.'),
+      confirmText: _adminT('admin.remove', 'Remove'),
+      danger: true
+    });
+    if (!ok) return;
+  }
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: 'removeCategory', catId: catId });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
+}
+
 // ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
 //
 // Isti pipeline kao flashcards (RMW jednog reda → verzija → propagacija u sestrinske redove →
@@ -1206,9 +1265,16 @@ document.addEventListener('click', function (e) {
   else _openCardEditor(catId, null);
 });
 
-// Delegat: klik na kategorije-gumbe (U6d) → editor kategorije (dodaj/uredi meta name/icon/color).
+// Delegat: klik na kategorije-gumbe (U6d) → dodaj/uredi meta · presloži ↑↓ · obriši.
 document.addEventListener('click', function (e) {
   if (e.target.closest('[data-admin-cat-add]')) { _openCatEditor(null); return; }
   const edit = e.target.closest('[data-admin-cat-edit]');
   if (edit) { _openCatEditor(edit.getAttribute('data-cat')); return; }
+  const move = e.target.closest('[data-admin-cat-move]');
+  if (move) {
+    if (!move.disabled) _moveCategory(move.getAttribute('data-cat'), move.getAttribute('data-admin-cat-move') === 'up' ? -1 : 1);
+    return;
+  }
+  const del = e.target.closest('[data-admin-cat-del]');
+  if (del) { _removeCategory(del.getAttribute('data-cat')); return; }
 });
