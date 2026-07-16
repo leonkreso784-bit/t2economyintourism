@@ -181,6 +181,19 @@ function _adminAddBtn(canEdit, type, catId, label) {
     '" data-cat="' + _adminEscape(catId) + '"><i class="fas fa-plus"></i> ' + label + '</button>';
 }
 
+// U6d — kategorije-UI: „Uredi" (meta: name/icon/color) na zaglavlju + „Dodaj kategoriju" na dnu.
+function _adminCatEditBtn(canEdit, catId) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-edit-btn admin-cat-edit" data-admin-cat-edit' +
+    ' data-cat="' + _adminEscape(catId) + '" aria-label="' + _adminT('admin.editCategory', 'Edit category') +
+    '"><i class="fas fa-pen"></i></button>';
+}
+function _adminCatAddBtn(canEdit, label) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-add-btn admin-add-btn--cat" data-admin-cat-add>' +
+    '<i class="fas fa-folder-plus"></i> ' + label + '</button>';
+}
+
 function _renderAdminCards(holder, data) {
   const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
@@ -202,7 +215,8 @@ function _renderAdminCards(holder, data) {
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
-      _adminEscape(cat.name || catId) + '</h3>';
+      _adminEscape(cat.name || catId) + '</h3>' +
+      _adminCatEditBtn(canEdit, catId);
 
     // — Flashcards — (u draft-modu prikaži i prazan mod: subhead + „Dodaj")
     if (fcs.length || canEdit) {
@@ -294,6 +308,9 @@ function _renderAdminCards(holder, data) {
 
     html += '</div>';
   });
+
+  // U6d: „Dodaj kategoriju" (samo draft-mod). U praznoj lekciji je jedini sadržaj htmla → i tada se prikaže.
+  html += _adminCatAddBtn(canEdit, _adminT('admin.addCategoryBtn', 'Add category'));
 
   holder.innerHTML = (total || (canEdit && html))
     ? html
@@ -615,6 +632,138 @@ function _saveCard() {
   if (!res.ok) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
 
   _closeEditor();
+  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+  _adminRerender();
+}
+
+// ===== U6d — Kategorije-UI: dodaj / uredi kategoriju (meta name/icon/color) =====
+//
+// Kategorija = ključ dokumenta (stabilni ID). „Dodaj" generira svjež 6-char ključ (+ isti id-field)
+// i šalje addCategory op (idempotentno po ključu); „Uredi" šalje updateCategory op (patcha SAMO
+// name/icon/color — nizovi/ključ se NIKAD ne diraju odavde). Kao i svi editori: piše u DRAFT, baza
+// se dira tek na „Objavi" (sibling final se sinka replayem istih opova).
+
+/** Kategorija koja se uređuje: { catId, add }. U add-modu je catId svjež generirani ključ. */
+let _catTarget = null;
+
+/** Svjež 6-char ključ za novu kategoriju (isti alfabet kao draft-store _genId / U2a id-jevi). */
+function _genCatKey() {
+  const A = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  let s = '';
+  for (let i = 0; i < 6; i++) s += A.charAt((Math.random() * A.length) | 0);
+  return s;
+}
+
+/** Normaliziraj boju u #rrggbb za <input type=color> (fallback = indigo default). */
+function _adminHexColor(c) {
+  return (typeof c === 'string' && /^#[0-9a-fA-F]{6}$/.test(c)) ? c : '#6366f1';
+}
+
+function _ensureCatModal() {
+  let m = document.getElementById('adminCatModal');
+  if (m) return m;
+  m = document.createElement('sokrat-modal');
+  m.id = 'adminCatModal';
+  m.className = 'admin-edit';
+  m.setAttribute('aria-labelledby', 'adminCatTitle');
+  m.innerHTML =
+    '<div class="admin-edit__card">' +
+    '  <button type="button" class="admin-edit__close" data-admin-cat-close aria-label="Close">&times;</button>' +
+    '  <h3 id="adminCatTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editCategory', 'Edit category') + '</h3>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.catName', 'Name') + '</span>' +
+    '    <input type="text" id="adminCatName" class="admin-edit__input" /></label>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.catIcon', 'Icon (FontAwesome class)') + '</span>' +
+    '    <input type="text" id="adminCatIcon" class="admin-edit__input" placeholder="fa-book" /></label>' +
+    '  <label class="admin-edit__field admin-edit__field--color"><span>' + _adminT('admin.catColor', 'Color') + '</span>' +
+    '    <input type="color" id="adminCatColor" class="admin-edit__color" value="#6366f1" /></label>' +
+    '  <p class="admin-edit__note" id="adminCatNote"></p>' +
+    '  <p class="admin-edit__status" id="adminCatStatus" hidden></p>' +
+    '  <div class="admin-edit__actions">' +
+    '    <button type="button" class="cta-button secondary" data-admin-cat-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
+    '    <button type="button" class="cta-button primary" id="adminCatSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
+    '  </div>' +
+    '</div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function (e) {
+    if (e.target.closest('[data-admin-cat-close]')) _closeCatEditor();
+  });
+  const saveBtn = document.getElementById('adminCatSave');
+  if (saveBtn) saveBtn.addEventListener('click', _saveCat);
+  return m;
+}
+
+function _catStatus(msg, isErr) {
+  const el = document.getElementById('adminCatStatus');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.hidden = !msg;
+  el.classList.toggle('is-error', !!isErr);
+}
+
+function _closeCatEditor() {
+  const m = document.getElementById('adminCatModal');
+  if (m && typeof m.close === 'function') m.close();
+}
+
+/** Otvori editor kategorije. catId === null → ADD mod (svjež ključ), inače uredi postojeću. */
+function _openCatEditor(catId) {
+  const data = _adminWorking();
+  if (!data || typeof data !== 'object') return;
+  const isAdd = (catId == null);
+  const cat = isAdd ? { name: '', icon: 'fa-book', color: '#6366f1' } : data[catId];
+  if (!cat) return;
+  _catTarget = { catId: isAdd ? _genCatKey() : catId, add: isAdd };
+  _ensureCatModal();
+  const titleEl = document.getElementById('adminCatTitle');
+  if (titleEl) {
+    titleEl.innerHTML = '<i class="fas fa-' + (isAdd ? 'folder-plus' : 'pen') + '"></i> ' +
+      (isAdd ? _adminT('admin.addCategory', 'Add category') : _adminT('admin.editCategory', 'Edit category'));
+  }
+  document.getElementById('adminCatName').value = cat.name || '';
+  document.getElementById('adminCatIcon').value = cat.icon || '';
+  document.getElementById('adminCatColor').value = _adminHexColor(cat.color);
+  const note = document.getElementById('adminCatNote');
+  if (note) {
+    note.textContent = _adminCtx.varName + ' — ' +
+      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
+  }
+  _catStatus('', false);
+  const m = document.getElementById('adminCatModal');
+  if (m && typeof m.open === 'function') m.open();
+}
+
+/** Spremi kategoriju U DRAFT: add → addCategory (svjež ključ+id), edit → updateCategory (meta patch). */
+function _saveCat() {
+  const nameEl = document.getElementById('adminCatName');
+  const iconEl = document.getElementById('adminCatIcon');
+  const colorEl = document.getElementById('adminCatColor');
+  if (!nameEl || !_catTarget) return;
+  const name = nameEl.value.trim();
+  const icon = (iconEl && iconEl.value.trim()) || 'fa-book';
+  const color = _adminHexColor(colorEl && colorEl.value);
+  if (!name) { _catStatus(_adminT('admin.catNameErr', 'Category name must not be empty.'), true); return; }
+
+  const d = _adminDraft();
+  if (!d) { _catStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+  const key = _catTarget.catId;
+
+  let res;
+  if (_catTarget.add) {
+    // Nova kategorija: ključ = id = svjež 6-char; prazni nizovi → svi „Dodaj" modovi odmah vidljivi.
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'addCategory', catId: key,
+      category: { id: key, name: name, icon: icon, color: color, flashcards: [], quiz: [], fillBlanks: [] }
+    });
+  } else {
+    // Patcha SAMO meta — nizovi/ključ se ne diraju (updateCategory to i sam brani whitelistom).
+    res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
+      type: 'updateCategory', catId: key,
+      patch: { name: name, icon: icon, color: color }
+    });
+  }
+  if (!res.ok) { _catStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
+
+  _closeCatEditor();
   if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
   _adminRerender();
 }
@@ -1055,4 +1204,11 @@ document.addEventListener('click', function (e) {
   if (type === 'quiz') _openQuizEditor(catId, null);
   else if (type === 'fill') _openFillEditor(catId, null);
   else _openCardEditor(catId, null);
+});
+
+// Delegat: klik na kategorije-gumbe (U6d) → editor kategorije (dodaj/uredi meta name/icon/color).
+document.addEventListener('click', function (e) {
+  if (e.target.closest('[data-admin-cat-add]')) { _openCatEditor(null); return; }
+  const edit = e.target.closest('[data-admin-cat-edit]');
+  if (edit) { _openCatEditor(edit.getAttribute('data-cat')); return; }
 });

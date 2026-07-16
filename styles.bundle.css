@@ -8861,7 +8861,7 @@ sokrat-modal.auth-modal > * {
 /* Native <select> popup poštuje dark temu (inače bijeli browser-default popup) */
 .admin-field select { color-scheme: dark; }
 .admin-field select option { background: var(--bg-secondary); color: var(--text-primary); }
-.admin-cat { margin-top: 1rem; }
+.admin-cat { margin-top: 1rem; position: relative; }
 .admin-count {
     display: inline-block; margin-left: 0.4rem; padding: 0.05rem 0.5rem;
     font-size: 0.75rem; border-radius: 999px;
@@ -8918,6 +8918,11 @@ sokrat-modal.auth-modal > * {
 }
 .admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
 
+/* U6d — kategorije-UI: „Uredi" na zaglavlju kategorije (lebdi gore-desno) + „Dodaj kategoriju" (široki) */
+.admin-cat-edit { position: absolute; top: 1.05rem; right: 1.05rem; }
+.admin-cat .profile-card-title { padding-right: 2.6rem; }
+.admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
+
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
 .admin-edit .admin-edit__card {
     position: relative; width: min(92vw, 460px);
@@ -8943,6 +8948,12 @@ sokrat-modal.auth-modal > * {
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
 .admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
+/* U6d — color-polje u editoru kategorije (label + swatch u istom redu) */
+.admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
+.admin-edit__color {
+    width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
+    border: 1px solid var(--border-color, #334155); background: var(--bg-primary, #0f172a);
+}
 .admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
 .admin-edit__status.is-error { color: var(--danger-text, #f87171); }
