@@ -5,6 +5,12 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-16 (OPUS) — 🧱 U6d-2: kategorije presloži / obriši (kategorije-UI kompletna)
+**Kontekst:** Leon „kreni dalje" → sljedeća odblokirana cigla (ops `reorderCategories`/`removeCategory` već iz U6b). Grana `feature/u6-structural-ops` (PREVIEW).
+1. **U6d-2 (`b5e8408`):** zaglavlje kategorije prešlo iz jednog ✎ gumba u **flex-red** (`.admin-cat-head`): naslov lijevo + kontrolna grupa desno **↑ ↓ ✎ 🗑** (samo draft-mod). **Presloži** (↑/↓) → izračun novog reda ključeva → `reorderCategories` op; krajnje strelice `disabled`. **Obriši** (🗑) → `askConfirm` (danger) → `removeCategory` op; poništivo „Odbaci"-jem drafta / content_versions. Flex-header (umjesto ranijeg apsolutnog pozicioniranja iz U6d-1) → naslov i kontrole se ne preklapaju na uskim ekranima.
+2. **Ops-sloj U6b i dalje nedirnut** → publish-put + sibling-replay isti. i18n HR/EN +6 (moveUp/moveDown/removeCategory/removeCatTitle/removeCatMsg/remove). CSS: `.admin-cat-head` flex, delete-hover (danger), `[disabled]` stil.
+**Gateovi:** verify 0/0 · typecheck 0 · draft-store unit **37/37** · `node --check` OK · bump 96 (`20260716165908`) · build:css --check u sinku. Grana pushana. **Kategorije-UI time KOMPLETNA (add/edit/reorder/remove).** **SLIJEDI:** DB id-resync (Leonov OK) → item delete/reorder → živa verifikacija (staging authed) → C-vizual (U8).
+
 ## 2026-07-16 (OPUS) — 🧱 U6d-1: kategorije-UI (dodaj / uredi) na grani
 **Kontekst:** post-compact projekt-analiza (git kroz vrijeme — Leon 363 commita / Saša 7, Saša samo Management HR i tek 5 dana na timu; danas Saša 0). Leon: „kreni" → nastavak U6, sljedeća odblokirana cigla. Grana `feature/u6-structural-ops` (PREVIEW).
 1. **U6d-1 kategorije-UI DODAJ+UREDI (`211daad`):** „Uredi" gumb (`data-admin-cat-edit`) na zaglavlju svake kategorije + „Dodaj kategoriju" (`data-admin-cat-add`) na dnu — SAMO u draft-modu. Novi `adminCatModal` (`<sokrat-modal>` singleton) s poljima **name / icon (fa-*) / color** piše u DRAFT: **Dodaj** → `addCategory` op (svjež 6-char ključ = id, prazni nizovi flashcards/quiz/fillBlanks → svi „Dodaj" modovi odmah vidljivi; idempotentno po ključu); **Uredi** → `updateCategory` op (patcha SAMO name/icon/color; nizovi/ključ netaknuti — whitelist to i sam brani).
