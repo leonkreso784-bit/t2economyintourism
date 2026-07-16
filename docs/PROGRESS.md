@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-16 (OPUS) — ✅ U6d živa verifikacija (authed E2E + smoke) + ⚠ prod test-kartica
+**Kontekst:** Leon isprobao kategorije-UI na previewu; usput objavio test-karticu („theory of cost" + šaljivi tekst) na PROD econ-hospitality (kliknuo „Objavi") → tražio smoke + Playwright test.
+1. **Novi authed spec `tests/category-ops.authed.spec.js`:** vozi cijeli U6d tok kroz PRAVI admin UI na staging (te2, draft-mod) — addCategory (prazna kat pokaže sva 3 „Dodaj" moda) → updateCategory (rename, modal prefilled) → reorderCategories (↑) → removeCategory (sokrat-confirm) → Odbaci. **SVE u draftu → staging DB netaknut.** Commit `97342c9` (test-only, bez bumpa).
+2. **Verifikacija zelena:** `test:responsive` (smoke, app+responsive+postojeći authed) **234/0** (15 skip, 13.1 min) · `test:authed` (uklj. novi spec) **10/10** (31.5s). Kategorije-UI time i ŽIVO potvrđena.
+3. **⚠ PROD incident (čeka Leonov OK za povrat):** read-only MCP potvrdio test-karticu u `economicsHospitalityData` **i** `economicsHospitalityFinalData` (v2, publish sibling-sync M1→final). Datoteke = ČISTE (grep bez test-karticu), `content_versions` = 3 snapshota od danas svi bez joke-teksta → jedini edit ikad = ovaj test → **povrat iz datoteka bezopasan**: `node scripts/migrate-content.js econ-hospitality` (PROD service_role upis → čeka izričit OK). NIJE izvršeno.
+**SLIJEDI:** (a) povrat prod test-kartice na Leonov OK; (b) DB id-resync → item delete/reorder + živa verif; (c) C-vizual U8.
+
 ## 2026-07-16 (OPUS) — 🧱 U6d-2: kategorije presloži / obriši (kategorije-UI kompletna)
 **Kontekst:** Leon „kreni dalje" → sljedeća odblokirana cigla (ops `reorderCategories`/`removeCategory` već iz U6b). Grana `feature/u6-structural-ops` (PREVIEW).
 1. **U6d-2 (`b5e8408`):** zaglavlje kategorije prešlo iz jednog ✎ gumba u **flex-red** (`.admin-cat-head`): naslov lijevo + kontrolna grupa desno **↑ ↓ ✎ 🗑** (samo draft-mod). **Presloži** (↑/↓) → izračun novog reda ključeva → `reorderCategories` op; krajnje strelice `disabled`. **Obriši** (🗑) → `askConfirm` (danger) → `removeCategory` op; poništivo „Odbaci"-jem drafta / content_versions. Flex-header (umjesto ranijeg apsolutnog pozicioniranja iz U6d-1) → naslov i kontrole se ne preklapaju na uskim ekranima.
