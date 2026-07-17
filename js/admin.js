@@ -189,10 +189,17 @@ function _adminItemDelBtn(canEdit, type, catId, idx) {
     '" aria-label="' + _adminT('admin.removeItem', 'Remove') + '"><i class="fas fa-trash"></i></button>';
 }
 
-// U6e — kontrole stavke (desno): uredi ✎ + obriši 🗑 (U6e-2 doda ↑↓ ovdje). Grupa za flashcard/quiz/fill.
-function _adminItemControls(canEdit, type, catId, idx) {
+// U6e — kontrole stavke (desno): presloži ↑↓ + uredi ✎ + obriši 🗑. Grupa za flashcard/quiz/fill.
+function _adminItemControls(canEdit, type, catId, idx, total) {
   if (!canEdit) return _adminEditBtn(canEdit, type, catId, idx);
+  const esc = _adminEscape(catId);
+  const upDis = (idx <= 0) ? ' disabled' : '';
+  const downDis = (idx >= total - 1) ? ' disabled' : '';
   return '<div class="admin-card-ctrls">' +
+    '<button type="button" class="admin-edit-btn" data-admin-move="up" data-type="' + type + '" data-cat="' + esc + '" data-idx="' + idx + '"' + upDis +
+      ' aria-label="' + _adminT('admin.moveUp', 'Move up') + '"><i class="fas fa-arrow-up"></i></button>' +
+    '<button type="button" class="admin-edit-btn" data-admin-move="down" data-type="' + type + '" data-cat="' + esc + '" data-idx="' + idx + '"' + downDis +
+      ' aria-label="' + _adminT('admin.moveDown', 'Move down') + '"><i class="fas fa-arrow-down"></i></button>' +
     _adminEditBtn(canEdit, type, catId, idx) +
     _adminItemDelBtn(canEdit, type, catId, idx) +
     '</div>';
@@ -268,7 +275,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
             '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
             '  </div>' +
-            _adminItemControls(canEdit, 'flashcard', catId, i) +
+            _adminItemControls(canEdit, 'flashcard', catId, i, fcs.length) +
             '</li>';
         });
         html += '</ol>';
@@ -298,7 +305,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
             '    ' + optsHtml +
             '  </div>' +
-            _adminItemControls(canEdit, 'quiz', catId, i) +
+            _adminItemControls(canEdit, 'quiz', catId, i, quiz.length) +
             '</li>';
         });
         html += '</ol>';
@@ -320,7 +327,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
             '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
             '  </div>' +
-            _adminItemControls(canEdit, 'fill', catId, i) +
+            _adminItemControls(canEdit, 'fill', catId, i, fills.length) +
             '</li>';
         });
         html += '</ol>';
@@ -879,6 +886,35 @@ async function _removeItem(type, catId, idx) {
   }
 }
 
+// ===== U6e-2 — Presloži STAVKU (kartica/kviz/fill) u DRAFTU (↑↓) =====
+//
+// reorder* op = apsolutni ciljni red ID-eva (op.order); ↑↓ pomak = swap idx↔idx±dir (isti splice-obrazac
+// kao _moveCategory). Idempotentno (U6a _structReorder). Stavke imaju stabilne id-jeve (DB resyncan 07-17).
+function _moveItem(type, catId, idx, dir) {
+  const d = _adminDraft();
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  const MAP = {
+    flashcard: { arr: 'flashcards', op: 'reorderCards' },
+    quiz:      { arr: 'quiz',       op: 'reorderQuiz' },
+    fill:      { arr: 'fillBlanks', op: 'reorderFill' }
+  };
+  const m = MAP[type];
+  if (!m) return;
+  const arr = Array.isArray(data[catId][m.arr]) ? data[catId][m.arr] : null;
+  if (!arr) return;
+  const j = idx + dir;
+  if (idx < 0 || idx >= arr.length || j < 0 || j >= arr.length) return; // rub → no-op
+  const order = arr.map(function (it) { return it && it.id; });
+  const moved = order.splice(idx, 1)[0];
+  order.splice(j, 0, moved);
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: m.op, catId: catId, order: order });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
+}
+
 // ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
 //
 // Isti pipeline kao flashcards (RMW jednog reda → verzija → propagacija u sestrinske redove →
@@ -1326,6 +1362,17 @@ document.addEventListener('click', function (e) {
   const idx = parseInt(del.getAttribute('data-idx'), 10);
   if (!catId || isNaN(idx)) return;
   _removeItem(type, catId, idx);
+});
+
+// Delegat: klik na ↑↓ stavke (U6e-2) → presloži (reorder* op; disabled rub = no-op).
+document.addEventListener('click', function (e) {
+  const move = e.target.closest('[data-admin-move]');
+  if (!move || move.disabled) return;
+  const type = move.getAttribute('data-type') || 'flashcard';
+  const catId = move.getAttribute('data-cat');
+  const idx = parseInt(move.getAttribute('data-idx'), 10);
+  if (!catId || isNaN(idx)) return;
+  _moveItem(type, catId, idx, move.getAttribute('data-admin-move') === 'up' ? -1 : 1);
 });
 
 // Delegat: klik na kategorije-gumbe (U6d) → dodaj/uredi meta · presloži ↑↓ · obriši.
