@@ -1,5 +1,7 @@
 // Management (HR) — M2
-// Auto-generirano: scripts/translate-subject.js (HRV program — docs/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.
+// Izvor: prijevod EN + RUČNO USKLAĐENO S HRVATSKOM SKRIPTOM (Weihrich&Koontz okvir).
+// MODEL: kartice = kratke definicije (<200 znak), detalj u learn (Leon 2026-07-15).
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom — pregazio bi usklađivanje!
 
 const managementHrM2 = {
   "organizationalBehavior": {
@@ -9,38 +11,38 @@ const managementHrM2 = {
     "flashcards": [
       {
         "question": "Što je ORGANIZACIJSKO PONAŠANJE (OP) i koji mu je CILJ?",
-        "answer": "PONAŠANJE = jednostavno, sve što ljudi čine i govore (naše radnje).\nOP = proučavanje RADNJI koje utječu na radnu uspješnost.\n\nCilj teoretičara OP-a jest RAZUMJETI, OBJASNITI, PREDVIDJETI i UTJECATI na ponašanje kako bi se poboljšala radna uspješnost.",
-        "explanation": "OP se odnosi na 'čitanje ljudi'; interpersonalne vještine ključne su za uspjeh."
+        "answer": "OP = proučavanje radnji koje utječu na radnu uspješnost. Cilj: razumjeti, objasniti, predvidjeti i utjecati na ponašanje radi bolje uspješnosti.",
+        "explanation": "OP = 'čitanje ljudi'; interpersonalne vještine ključne su za uspjeh."
       },
       {
         "question": "Što su TEMELJI individualnog ponašanja?",
-        "answer": "Naše misli, samopouzdanje, samopoštovanje, osobnost, percepcija i stavovi.\n\nTi temelji NISU vidljivi — moguće je jedino promatrati radnje te pokušati objasniti/predvidjeti ponašanje na temelju razumijevanja tih temelja.",
-        "explanation": "Radi se o 'čitanju ljudi'; vještine OP-a pomažu u izgradnji i održavanju dobrih odnosa."
+        "answer": "Misli, samopouzdanje, samopoštovanje, osobnost, percepcija i stavovi — nisu vidljivi, pa se ponašanje objašnjava preko njih.",
+        "explanation": "Radi se o 'čitanju ljudi' — vještine OP-a grade dobre odnose."
       },
       {
-        "question": "SAMOPOŠTOVANJE nasuprot SAMOPOUZDANJU nasuprot SUMNJI U SEBE?",
-        "answer": "• SAMOPOŠTOVANJE — opći doživljaj samoga sebe (sviđate li se sebi ili ne). Nije urođeno; oblikuju ga iskustvo i misli.\n• SAMOPOUZDANJE — uvjerenje da možete obaviti ODREĐENI zadatak (poznato i kao samoefikasnost/samopoimanje); stav 'ja to mogu'.\n• SUMNJA U SEBE — negativne misli koje nas koče; dovodi do straha od odbijanja/neuspjeha/rizika.",
-        "explanation": "Poboljšajte ih pozitivnim UNUTARNJIM GOVOROM i vizualizacijom uspjeha."
+        "question": "SAMOPOŠTOVANJE vs SAMOPOUZDANJE vs SUMNJA U SEBE?",
+        "answer": "Samopoštovanje = opći doživljaj sebe. Samopouzdanje (samoefikasnost) = 'ja to mogu' za određeni zadatak. Sumnja u sebe = negativne misli koje koče.",
+        "explanation": "Poboljšava se pozitivnim unutarnjim govorom i vizualizacijom uspjeha."
       },
       {
         "question": "Kako MISLI, optimizam i zahvalnost utječu na ponašanje?",
-        "answer": "Misli uzrokuju naše osjećaje, ponašanje i radnu uspješnost ('što misliš, to i dobiješ').\n• OPTIMIZAM — uvjerenje da će stvari ići dobro; manji stres, veća sreća i viša radna uspješnost u usporedbi s pesimistima.\n• ZAHVALNOST — zahvalni su ljudi sretniji, zdraviji i manje pod stresom.\n• UNUTARNJI GOVOR — komentari/podsjetnici/savjeti koje dajete sami sebi ('bez negativnog razmišljanja').",
-        "explanation": "Kako je rekao Henry Ford: svejedno je mislite li da ćete uspjeti ili ne — u oba slučaja ste u pravu."
+        "answer": "Misli uzrokuju osjećaje i uspješnost ('što misliš, to dobiješ'). Optimizam → manji stres i veća uspješnost; zahvalnost → sretniji i zdraviji ljudi.",
+        "explanation": "Henry Ford: mislite li da ćete uspjeti ili ne — u oba ste slučaja u pravu."
       },
       {
-        "question": "Što je LIČNOST i što je osobina LOKUS KONTROLE?",
-        "answer": "LIČNOST = kombinacija bihevioralnih, mentalnih i emocionalnih osobina koje definiraju pojedinca; primarni čimbenik koji utječe na naše ponašanje.\n\nLOKUS KONTROLE nalazi se na kontinuumu:\n• EKSTERNALIZATORI — vjeruju da nemaju nadzor nad vlastitom sudbinom.\n• INTERNALIZATORI — vjeruju da sami upravljaju svojom sudbinom; njihovo ponašanje izravno utječe na učinak → viši su im samopoštovanje, samopouzdanje i radna uspješnost.",
-        "explanation": "Istraživanja su pokazala da internalizatori postižu višu razinu radne uspješnosti."
+        "question": "Što je LIČNOST i osobina LOKUS KONTROLE?",
+        "answer": "Ličnost = kombinacija bihevioralnih, mentalnih i emocionalnih osobina. Lokus kontrole: eksternalizatori (nemaju nadzor) vs internalizatori (upravljaju sudbinom).",
+        "explanation": "Internalizatori postižu višu razinu radne uspješnosti."
       },
       {
-        "question": "Što su SKLONOST RIZIKU, poduzetnički tipovi i MAKIJAVELIZAM?",
-        "answer": "• SKLONOST RIZIKU — kontinuum od preuzimanja rizika do izbjegavanja rizika; poduzetnici su skloni preuzimanju rizika.\n• PODUZETNIČKI TIPOVI — marljivci (hustlers), inovatori, strojevi, čudesna djeca (prodigies), vizionari.\n• MAKIJAVELIZAM — osobina utemeljena na uvjerenju da cilj opravdava sredstva te da se moć treba koristiti za postizanje željenih ciljeva. Naziva se i NARCIZAM — manipuliranje drugima radi sebičnog dobitka; nedostatak empatije.",
-        "explanation": "Menadžeri skloni izbjegavanju rizika često propadaju jer ne prate promjene u okruženju."
+        "question": "Što su SKLONOST RIZIKU i MAKIJAVELIZAM?",
+        "answer": "Sklonost riziku = kontinuum (poduzetnici skloni riziku). Makijavelizam = 'cilj opravdava sredstva'; blisko narcizmu (manipulacija, bez empatije).",
+        "explanation": "Poduzetnički tipovi: marljivci, inovatori, strojevi, čudesna djeca, vizionari."
       },
       {
         "question": "Koje su VELIKIH PET dimenzija ličnosti (OCEAN)?",
-        "answer": "Model pet faktora — skraćeno OCEAN:\n• OTVORENOST (OPENNESS) — spremnost na isprobavanje novih stvari (pogodna za kreativna radna mjesta).\n• SAVJESNOST (CONSCIENTIOUSNESS) — odgovornost, pouzdanost, marljivost (ukupno najbolji prediktor uspjeha na poslu).\n• EKSTRAVERZIJA (EXTRAVERSION) — društvenost, komunikativnost, asertivnost (pogodna za prodaju/vodstvo); srednja vrijednost = 'ambivert'.\n• UGODNOST (AGREEABLENESS) — suradljivost, lakoća suradnje s drugima (pogodna za timski rad).\n• NEUROTICIZAM / EMOCIONALIZAM (NEUROTICISM / EMOTIONALISM) — kontinuum emocionalne stabilnosti nasuprot nestabilnosti.",
-        "explanation": "Emocionalna inteligencija (EI) opisuje osobe s razvijenim međuljudskim vještinama."
+        "answer": "Model pet faktora (OCEAN): otvorenost, savjesnost, ekstraverzija, ugodnost i neuroticizam/emocionalnost.",
+        "explanation": "Savjesnost = najbolji prediktor uspjeha na poslu. Opis svake → sekcija Uči."
       }
     ],
     "quiz": [
@@ -143,8 +145,8 @@ const managementHrM2 = {
       }
     ],
     "learn": {
-      "title": "Organizational Behavior",
-      "content": "\n                <h3>Što je OB?</h3>\n                <p>Proučavanje <strong>postupaka koji utječu na radnu uspješnost</strong>. Cilj:\n                <strong>razumjeti → objasniti → predvidjeti → utjecati</strong> na ponašanje.</p>\n\n                <h4>Temelji ponašanja</h4>\n                <ul>\n                    <li>Samopoštovanje (opći pogled) · samopouzdanje/samoefikasnost (zadatak) · sumnja u sebe</li>\n                    <li>Misli · optimizam · zahvalnost · pozitivan unutarnji govor + vizualizacija</li>\n                </ul>\n\n                <h4>Osobnost</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Lokus kontrole:</strong> internalizatori (kontroliraju vlastitu sudbinu, viša uspješnost) nasuprot eksternalizatorima</li>\n                        <li><strong>Sklonost riziku</strong> · poduzetnički tipovi · makijavelizam (narcizam)</li>\n                        <li><strong>Velikih pet (OCEAN):</strong> Otvorenost · Savjesnost · Ekstraverzija · Ugodnost · Neuroticizam</li>\n                    </ul>\n                </div>\n            "
+      "title": "Organizacijsko ponašanje",
+      "content": "\n                <h3>Što je organizacijsko ponašanje?</h3>\n                <p><strong>Ponašanje</strong> = sve što ljudi čine i govore. <strong>Organizacijsko ponašanje (OP)</strong> = proučavanje radnji koje utječu na radnu uspješnost; cilj je RAZUMJETI, OBJASNITI, PREDVIDJETI i UTJECATI na ponašanje. OP se svodi na „čitanje ljudi\".</p>\n                <h4>Temelji individualnog ponašanja (nevidljivi)</h4>\n                <ul>\n                    <li><strong>Samopoštovanje</strong> — opći doživljaj sebe; nije urođeno.</li>\n                    <li><strong>Samopouzdanje</strong> (samoefikasnost) — „ja to mogu\" za ODREĐENI zadatak. <strong>Sumnja u sebe</strong> — negativne misli koje koče.</li>\n                    <li><strong>Misli</strong> uzrokuju osjećaje i uspješnost. <strong>Optimizam</strong> → manji stres, veća uspješnost; <strong>zahvalnost</strong> → sretniji/zdraviji; <strong>unutarnji govor</strong> → savjeti sebi. Poboljšanje: pozitivan unutarnji govor + vizualizacija.</li>\n                </ul>\n                <h4>Ličnost</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Ličnost</strong> = kombinacija bihevioralnih, mentalnih i emocionalnih osobina.</li>\n                        <li><strong>Lokus kontrole:</strong> eksternalizatori (nemaju nadzor) ⇄ internalizatori (upravljaju sudbinom → viša uspješnost).</li>\n                        <li><strong>Sklonost riziku</strong> (poduzetnici skloni riziku); <strong>makijavelizam</strong>/narcizam = „cilj opravdava sredstva\". Poduzetnički tipovi: marljivci, inovatori, strojevi, čudesna djeca, vizionari.</li>\n                    </ul>\n                </div>\n                <h4>Velikih pet dimenzija ličnosti — OCEAN</h4>\n                <div class=\"formula-box\">\n                    O — OTVORENOST (novo; kreativni poslovi) · C — SAVJESNOST (odgovornost/marljivost; NAJBOLJI prediktor uspjeha) · E — EKSTRAVERZIJA (društvenost/asertivnost; prodaja/vodstvo; sredina = „ambivert\") · A — UGODNOST (suradljivost; timski rad) · N — NEUROTICIZAM/EMOCIONALIZAM (stabilnost ⇄ nestabilnost)\n                </div>\n                <p>Emocionalna inteligencija (EI) opisuje osobe s razvijenim međuljudskim vještinama.</p>\n            "
     }
   },
   "motivation": {
@@ -154,38 +156,38 @@ const managementHrM2 = {
     "flashcards": [
       {
         "question": "Što je MOTIVACIJA i što je FORMULA USPJEŠNOSTI?",
-        "answer": "MOTIVACIJA = spremnost na ostvarivanje organizacijskih ciljeva ili na nadilaženje očekivanih obveza (organizacijsko građansko ponašanje, OCB; „angažiranost zaposlenika\").\n\nFORMULA USPJEŠNOSTI: uspješnost = sposobnost × motivacija × resursi.\n\nZa maksimalnu uspješnost sva tri čimbenika moraju biti visoka (radi se o multiplikativnom odnosu — nula u bilo kojem čimbeniku poništava ukupnu uspješnost).",
-        "explanation": "Napor se sastoji od tri dijela: pokretanja, usmjeravanja i ustrajnosti."
+        "answer": "Motivacija = spremnost na ostvarivanje ciljeva ili nadilaženje obveza (OCB, angažiranost). Formula: uspješnost = sposobnost × motivacija × resursi.",
+        "explanation": "Multiplikativno — nula u bilo kojem čimbeniku poništava sve. Napor: pokretanje, usmjeravanje, ustrajnost."
       },
       {
         "question": "Što je PROCES MOTIVACIJE?",
-        "answer": "Zaposlenici prolaze put od POTREBE → MOTIVA → PONAŠANJA → POSLJEDICE → ZADOVOLJSTVA ili NEZADOVOLJSTVA.\n\nPrimjer: žeđ (potreba) → želja za pićem (motiv) → uzimanje pića (ponašanje) → utažena žeđ (posljedica/zadovoljstvo). Zadovoljstvo je kratkotrajan osjećaj, pa se radi o POVRATNOJ PETLJI.",
-        "explanation": "Motive nije moguće izravno promatrati, već samo ponašanje — motiv se zaključuje putem procesa atribucije."
+        "answer": "Potreba → motiv → ponašanje → posljedica → zadovoljstvo/nezadovoljstvo (povratna petlja, jer je zadovoljstvo kratkotrajno).",
+        "explanation": "Motive ne vidimo izravno — zaključuju se iz ponašanja (atribucija)."
       },
       {
         "question": "Usporedite tri KLASE teorija motivacije.",
-        "answer": "1. SADRŽAJNE teorije — identificiraju i objašnjavaju POTREBE zaposlenika (što motivira).\n2. PROCESNE teorije — objašnjavaju KAKO i ZAŠTO zaposlenici biraju određena ponašanja radi zadovoljenja potreba.\n3. Teorija POTKREPLJENJA — temelji se na POSLJEDICAMA ponašanja; ne zahtijeva identifikaciju potreba.",
-        "explanation": "Ne postoji jedinstvena, općeprihvaćena teorija o načinu motiviranja ljudi."
+        "answer": "Sadržajne (ŠTO motivira — potrebe), procesne (KAKO i ZAŠTO biramo ponašanje) i teorija potkrepljenja (POSLJEDICE ponašanja).",
+        "explanation": "Nema jedinstvene općeprihvaćene teorije motiviranja ljudi."
       },
       {
         "question": "Koje su četiri SADRŽAJNE teorije motivacije?",
-        "answer": "1. MASLOWLJEVA HIJERARHIJA POTREBA — 5 razina: fiziološke → sigurnost → socijalne → poštovanje → samoostvarenje.\n2. ALDERFEROV ERG model — pojednostavljuje na 3: Egzistencija, Povezanost, Rast (više od jedne može biti aktivno istovremeno).\n3. HERZBERGOVA DVOFAKTORSKA TEORIJA — HIGIJENSKI čimbenici (ekstrinzični; sprječavaju nezadovoljstvo) nasuprot MOTIVATORIMA (intrinzični; stvaraju zadovoljstvo).\n4. McCLELLANDOVA TEORIJA STEČENIH POTREBA — postignuće, moć, pripadnost (naučene; jedna je dominantna).",
-        "explanation": "Menadžeri obično imaju visoku potrebu za Moći, zatim za Postignućem, a nisku potrebu za Pripadnošću."
+        "answer": "Maslowljeva hijerarhija (5 razina), Alderferov ERG (3), Herzbergova dvofaktorska i McClellandova teorija stečenih potreba.",
+        "explanation": "Menadžeri: visoka potreba za moći i postignućem, niska za pripadnošću. Opis → sekcija Uči."
       },
       {
         "question": "Objasnite HERZBERGOVU dvofaktorsku teoriju.",
-        "answer": "Zaposlenike motiviraju MOTIVATORI, a ne higijenski čimbenici.\n• HIGIJENSKI (maintenance) čimbenici — ekstrinzični (plaća, uvjeti rada, sigurnost zaposlenja). Kontinuum: 'nije nezadovoljan ↔ nezadovoljan'. Njihovim uklanjanjem otklanja se nezadovoljstvo, ali se ne postiže motivacija.\n• MOTIVATORI — intrinzični, proizlaze iz samog rada (postignuće, priznanje, rast). Kontinuum: 'zadovoljan ↔ nije zadovoljan'.",
-        "explanation": "Primjer: povišica plaće uklanja nezadovoljstvo, no ubrzo se ciklus ponavlja — plaća je higijenski čimbenik."
+        "answer": "Motiviraju MOTIVATORI (intrinzični: postignuće, priznanje, rast), ne HIGIJENSKI čimbenici (ekstrinzični: plaća, uvjeti — samo uklanjaju nezadovoljstvo).",
+        "explanation": "Povišica uklanja nezadovoljstvo, ali se ciklus ponavlja — plaća je higijenski čimbenik."
       },
       {
         "question": "Koje su tri PROCESNE teorije motivacije?",
-        "answer": "1. Teorija PRAVEDNOSTI (J. S. Adams) — zaposlenik je motiviran kada smatra da su njegovi ULAGANJA = ISHODI u usporedbi s relevantnim drugima; doživljaj nepravednosti mijenja ponašanje.\n2. Teorija POSTAVLJANJA CILJEVA — ostvarivi, ali ZAHTJEVNI i specifični ciljevi motiviraju (tzv. 'stretch goals').\n3. Teorija OČEKIVANJA (Vroom) — motivacija = očekivanje × instrumentalnost × valencija.",
-        "explanation": "Očekivanje = mogu li to učiniti?; instrumentalnost = hoće li učinak dovesti do nagrade?; valencija = vrednujem li tu nagradu?"
+        "answer": "Teorija pravednosti (Adams — ulaganja=ishodi vs drugi), teorija postavljanja ciljeva (zahtjevni specifični ciljevi) i teorija očekivanja (Vroom).",
+        "explanation": "Vroom: očekivanje × instrumentalnost × valencija. → sekcija Uči."
       },
       {
-        "question": "Što je teorija POTKREPLJENJA i koja su njezina 4 tipa?",
-        "answer": "Posljedice ponašanja motiviraju zaposlenike da se ponašaju na unaprijed određene načine. Četiri tipa:\n1. POZITIVNO — ponuda privlačne posljedice (nagrade) → potiče ponašanje.\n2. IZBJEGAVANJE (negativno potkrepljenje) — ponašanjem se sprječava negativna posljedica.\n3. KAZNA — primjena negativne posljedice radi SMANJENJA nepoželjnog ponašanja.\n4. GAŠENJE — USKRAĆIVANJE potkrepljenja radi smanjenja ili eliminacije određenog ponašanja.",
-        "explanation": "Pozitivno (nagrada) i izbjegavanje potiču željeno ponašanje; pozitivno potkrepljenje općenito djeluje bolje od kazne."
+        "question": "Što je teorija POTKREPLJENJA i koja su 4 tipa?",
+        "answer": "Posljedice motiviraju ponašanje. 4 tipa: pozitivno (nagrada), izbjegavanje (negativno potkrepljenje), kazna i gašenje (uskraćivanje potkrepljenja).",
+        "explanation": "Pozitivno i izbjegavanje potiču željeno ponašanje; nagrada djeluje bolje od kazne."
       }
     ],
     "quiz": [
@@ -288,8 +290,8 @@ const managementHrM2 = {
       }
     ],
     "learn": {
-      "title": "Motivating for High Performance",
-      "content": "\n                <h3>Osnove</h3>\n                <div class=\"formula-box\">\n                    učinak = sposobnost × motivacija × resursi &nbsp;(sva tri moraju biti visoka)<br>\n                    proces: POTREBA → MOTIV → PONAŠANJE → POSLJEDICA → (ne)ZADOVOLJSTVO\n                </div>\n\n                <h4>Tri klase teorija</h4>\n                <ul>\n                    <li><strong>Sadržajne</strong> (potrebe): Maslowljeva hijerarhija · Alderferova ERG · Herzbergova dvofaktorska · McClellandove stečene potrebe</li>\n                    <li><strong>Procesne</strong> (kako/zašto): pravednost · postavljanje ciljeva (izazovni ciljevi) · očekivanje (E × I × V)</li>\n                    <li><strong>Pojačanje</strong> (posljedice): pozitivno · izbjegavanje · kazna · gašenje</li>\n                </ul>\n\n                <div class=\"tip-box\">\n                    <p><strong>Herzberg:</strong> čimbenici održavanja samo sprječavaju nezadovoljstvo; motivatori (sam posao) stvaraju pravu motivaciju. <strong>Očekivanje:</strong> mogu li to učiniti? × hoće li se isplatiti? × cijenim li to?</p>\n                </div>\n            "
+      "title": "Motiviranje za visoku radnu uspješnost",
+      "content": "\n                <h3>Što je motivacija?</h3>\n                <p><strong>Motivacija</strong> = spremnost na ostvarivanje ciljeva ili nadilaženje očekivanih obveza (organizacijsko građansko ponašanje, „angažiranost zaposlenika\").</p>\n                <div class=\"formula-box\">USPJEŠNOST = SPOSOBNOST × MOTIVACIJA × RESURSI (multiplikativno — nula u bilo kojem čimbeniku poništava sve)</div>\n                <p>Napor: pokretanje, usmjeravanje, ustrajnost. <strong>Proces:</strong> potreba → motiv → ponašanje → posljedica → zadovoljstvo/nezadovoljstvo (povratna petlja; motiv se zaključuje atribucijom).</p>\n                <h4>Tri klase teorija</h4>\n                <ul><li><strong>Sadržajne</strong> — što motivira (potrebe); <strong>procesne</strong> — kako i zašto biramo ponašanje; <strong>potkrepljenje</strong> — posljedice ponašanja.</li></ul>\n                <h4>Sadržajne teorije (potrebe)</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Maslow</strong> (5): fiziološke → sigurnost → socijalne → poštovanje → samoostvarenje.</li>\n                        <li><strong>Alderfer ERG</strong> (3): Egzistencija, Povezanost, Rast (više aktivno istovremeno).</li>\n                        <li><strong>Herzberg</strong>: HIGIJENSKI (ekstrinzični — plaća, uvjeti; uklanjaju nezadovoljstvo) vs MOTIVATORI (intrinzični — postignuće, priznanje, rast; stvaraju zadovoljstvo).</li>\n                        <li><strong>McClelland</strong> (stečene potrebe): postignuće, moć, pripadnost. Menadžeri: visoka moć/postignuće, niska pripadnost.</li>\n                    </ul>\n                </div>\n                <h4>Procesne teorije i potkrepljenje</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Pravednost</strong> (Adams) — ulaganja = ishodi u usporedbi s drugima.</li>\n                        <li><strong>Postavljanje ciljeva</strong> — zahtjevni, specifični („stretch\") ciljevi.</li>\n                        <li><strong>Očekivanje</strong> (Vroom) = OČEKIVANJE (mogu li?) × INSTRUMENTALNOST (vodi li do nagrade?) × VALENCIJA (vrednujem li je?).</li>\n                        <li><strong>Potkrepljenje</strong>: pozitivno (nagrada) · izbjegavanje (spriječi negativno) · kazna · gašenje (uskrati). Nagrada > kazna.</li>\n                    </ul>\n                </div>\n            "
     }
   },
   "leadership": {
@@ -299,38 +301,38 @@ const managementHrM2 = {
     "flashcards": [
       {
         "question": "Što je VODSTVO i zašto je POVJERENJE važno?",
-        "answer": "VODSTVO = proces UTJECANJA na zaposlenike kako bi radili na ostvarivanju ciljeva.\n\nDobri odnosi temelje se na POVJERENJU. Istraživanje je pokazalo da 74% ANGAŽIRANIH zaposlenika vjeruje svojem menadžeru, dok samo 14% ne vjeruje svojem nadređenom. Ljudi neće dati „više od sebe\" za nadređenog kojemu ne vjeruju — a i menadžeri moraju biti u mogućnosti vjerovati zaposlenicima.",
-        "explanation": "Pouzdanost se temelji na (najmanje) četiri dimenzije."
+        "answer": "Vodstvo = proces utjecanja na zaposlenike da rade na ostvarivanju ciljeva. Dobri odnosi temelje se na POVJERENJU (74% angažiranih vjeruje menadžeru).",
+        "explanation": "Ljudi ne daju „više od sebe\" nadređenom kojemu ne vjeruju. Pouzdanost = 4 dimenzije."
       },
       {
         "question": "Po čemu se VOĐE razlikuju od MENADŽERA?",
-        "answer": "Menadžment daje moć POLOŽAJA i širi je po opsegu; vodstvo je sposobnost UTJECANJA na druge.\n\n• Menadžer može obnašati položaj BEZ toga da bude pravi vođa (bez povjerenja/utjecaja).\n• Postoje dobri vođe koji NISU menadžeri (neformalni/vođe među kolegama).\n\nDakle, vodstvo ne zahtijeva titulu — možete biti neformalni vođa (npr. Steve Jobs = izvrstan vođa, ali ne i izvrstan menadžer; Tim Cook = oboje).",
-        "explanation": "Vodstvo je ključno za uspjeh menadžmenta."
+        "answer": "Menadžment = moć položaja; vodstvo = sposobnost utjecaja. Menadžer može biti bez vodstva, a vođa bez titule (Jobs = vođa; Cook = oboje).",
+        "explanation": "Vodstvo ne zahtijeva titulu i ključno je za uspjeh menadžmenta."
       },
       {
         "question": "Koje su ČETIRI klasifikacije teorija VODSTVA?",
-        "answer": "Sve imaju isti cilj (što čini efikasnog vođu), ali različit fokus:\n1. Teorija OSOBINA — karakteristike/osobine vođa.\n2. Teorija PONAŠANJA — stilovi/ponašanje vođa.\n3. SITUACIJSKA (kontingencijska) teorija — usklađivanje stila sa situacijom.\n4. SUVREMENE/integrativne teorije — vizionarsko, karizmatično, transformacijsko vodstvo itd.",
-        "explanation": "Teorija osobina ličnosti polazila je od pretpostavke da se vođe rađaju, a ne stvaraju."
+        "answer": "Teorija osobina, teorija ponašanja, situacijska (kontingencijska) i suvremene/integrativne teorije.",
+        "explanation": "Teorija osobina pretpostavljala je da se vođe rađaju, a ne stvaraju."
       },
       {
-        "question": "Koji su BIHEVIORALNI stilovi vodstva (Lewinova tri stila)?",
-        "answer": "Kurt Lewin (Sveučilište Iowa) identificirao je tri osnovna stila:\n• AUTOKRATSKI (≈ Teorija X) — vođa donosi odluke i naređuje zaposlenicima što trebaju raditi.\n• DEMOKRATSKI (≈ Teorija Y) — vođa uključuje zaposlenike u donošenje odluka.\n• LAISSEZ-FAIRE — pristup nemiješanja, prepuštanja zaposlenika samima sebi.",
-        "explanation": "Dvodimenzionalni stilovi kombiniraju STRUKTURIRANJE (orijentaciju na zadatak) i UVAŽAVANJE (orijentaciju na odnose)."
+        "question": "Koji su BIHEVIORALNI stilovi vodstva (Lewin)?",
+        "answer": "Kurt Lewin: autokratski (≈Teorija X, naređuje), demokratski (≈Teorija Y, uključuje) i laissez-faire (nemiješanje).",
+        "explanation": "Dvodimenzionalni stilovi: strukturiranje (zadatak) + uvažavanje (odnosi)."
       },
       {
-        "question": "Što je MREŽA VODSTVA i kojih je 5 njezinih stilova?",
-        "answer": "Mjeri brigu za PROIZVODNJU i brigu za LJUDE na ljestvici od 1 do 9. Pet stilova:\n• (1,1) OSIROMAŠENI — niska briga za oboje.\n• (9,1) AUTORITET I POSLUŠNOST — visoka briga za proizvodnju, niska za ljude.\n• (1,9) COUNTRY CLUB — visoka briga za ljude, niska za proizvodnju.\n• (5,5) SREDNJI PUT — uravnotežena srednja razina brige.\n• (9,9) TIMSKI — visoka briga za oboje (idealan stil).",
-        "explanation": "Idealan stil podrazumijeva visoku razinu brige kako za proizvodnju tako i za ljude."
+        "question": "Što je MREŽA VODSTVA i kojih je 5 stilova?",
+        "answer": "Briga za proizvodnju × ljude (1–9): osiromašeni (1,1), autoritet/poslušnost (9,1), country club (1,9), srednji put (5,5) i timski (9,9).",
+        "explanation": "Idealan = timski (9,9) — visoka briga i za proizvodnju i za ljude."
       },
       {
         "question": "Što je SITUACIJSKO (kontingencijsko) vodstvo?",
-        "answer": "Nastoji odrediti odgovarajući stil vodstva za ODREĐENU situaciju — način na koji se vođe ponašaju OVISI o situaciji. Nijedan jedinstveni stil ne odgovara svim situacijama.\n\nMODEL KONTINUUMA VODSTVA (Tannenbaum & Schmidt) bira između 7 stilova, od AUTOKRATSKOG (usmjerenog na nadređenog) do PARTICIPATIVNOG (usmjerenog na zaposlenike), uzimajući u obzir: preferirani stil vođe, preferirani stil sljedbenika i samu situaciju.",
-        "explanation": "Naziva se i kontingencijskom teorijom jer je ponašanje uvjetovano situacijom."
+        "answer": "Odgovarajući stil OVISI o situaciji (nijedan ne odgovara svima). Model kontinuuma (Tannenbaum & Schmidt): 7 stilova od autokratskog do participativnog.",
+        "explanation": "Uzima u obzir stil vođe, stil sljedbenika i situaciju."
       },
       {
         "question": "Navedite SUVREMENE stilove vodstva.",
-        "answer": "• VIZIONARSKO — stvara sliku BUDUĆNOSTI organizacije (npr. Musk → Mars).\n• KARIZMATSKO — nadahnjuje lojalnost i entuzijazam putem samopouzdanih osobnih karakteristika.\n• TRANSFORMACIJSKO — donosi kontinuirano učenje, inovacije i PROMJENE; potiče sljedbenike da nadilaze vlastite interese (npr. Bezos).\n• TRANSAKCIJSKO — temelji se na društvenoj RAZMJENI ('obavi ovaj posao i nagraditi ću te'); promiče stabilnost.\n• AUTENTIČNO — otvoreni, pošteni i povjerljivi odnosi; vodstvo osobnim primjerom.",
-        "explanation": "Transformacijsko vodstvo posebno je potrebno u tvrtkama u fazi rasta koje djeluju u dinamičnim okruženjima."
+        "answer": "Vizionarsko, karizmatsko, transformacijsko, transakcijsko i autentično vodstvo.",
+        "explanation": "Transformacijsko posebno treba u rastu i dinamičnoj okolini. Opis → sekcija Uči."
       }
     ],
     "quiz": [
@@ -433,8 +435,8 @@ const managementHrM2 = {
       }
     ],
     "learn": {
-      "title": "Leading With Influence",
-      "content": "\n                <h3>Vodstvo = utjecaj</h3>\n                <p>Proces <strong>utjecanja</strong> na zaposlenike u smjeru postizanja ciljeva. Temelji se na\n                <strong>povjerenju</strong>. Menadžer može obnašati funkciju bez da je pravi vođa; vođe\n                mogu postojati i bez formalnog naziva.</p>\n\n                <h4>Četiri klasifikacije teorija</h4>\n                <ol>\n                    <li><strong>Teorija osobina</strong> — rođeni vođa nasuprot stečenom vodstvu</li>\n                    <li><strong>Bihevioralne teorije</strong> — Lewin (autokratski/demokratski/laissez-faire); dvodimenzionalni pristup (strukturiranje × uvažavanje); Mreža vodstva (1,1 / 9,1 / 1,9 / 5,5 / <strong>9,9 timski</strong>)</li>\n                    <li><strong>Situacijske/kontingencijske teorije</strong> — Tannenbaum &amp; Schmidt kontinuum (7 stilova, od vođe usmjerenog na šefa → prema zaposleniku)</li>\n                    <li><strong>Suvremene teorije</strong> — vizionarsko · karizmatsko · transformacijsko · transakcijsko · autentično vodstvo</li>\n                </ol>\n\n                <div class=\"tip-box\">\n                    <p><strong>Transformacijsko</strong> vodstvo (promjena, nadilaženje osobnih interesa) nasuprot <strong>transakcijskom</strong>\n                    (razmjena, stabilnost). <strong>Vizionarsko</strong> vodstvo oblikuje budućnost; <strong>autentično</strong> vodi osobnim primjerom.</p>\n                </div>\n            "
+      "title": "Vođenje putem utjecaja",
+      "content": "\n                <h3>Vodstvo i povjerenje</h3>\n                <p><strong>Vodstvo</strong> = proces utjecanja na zaposlenike da rade na ostvarivanju ciljeva. Temelji se na POVJERENJU (74% angažiranih vjeruje menadžeru; samo 14% ne vjeruje). Pouzdanost počiva na (najmanje) četiri dimenzije. <strong>Vođa vs menadžer:</strong> menadžment = moć položaja; vodstvo = utjecaj. Može se biti menadžer bez vodstva i vođa bez titule (Steve Jobs = vođa; Tim Cook = oboje).</p>\n                <h4>Četiri klasifikacije teorija vodstva</h4>\n                <div class=\"formula-box\">1. OSOBINA (kakav je vođa) → 2. PONAŠANJA (kako se ponaša) → 3. SITUACIJSKA (uskladi stil sa situacijom) → 4. SUVREMENE/integrativne</div>\n                <p>Teorija osobina polazila je od pretpostavke da se vođe rađaju, a ne stvaraju.</p>\n                <h4>Bihevioralni stilovi</h4>\n                <ul>\n                    <li><strong>Lewin (3 stila):</strong> autokratski (≈X, naređuje) · demokratski (≈Y, uključuje) · laissez-faire (nemiješanje).</li>\n                    <li><strong>Dvodimenzionalni:</strong> strukturiranje (zadatak) + uvažavanje (odnosi).</li>\n                    <li><strong>Mreža vodstva</strong> (briga za proizvodnju × ljude, 1–9): (1,1) osiromašeni · (9,1) autoritet i poslušnost · (1,9) country club · (5,5) srednji put · <strong>(9,9) timski = idealan</strong>.</li>\n                </ul>\n                <h4>Situacijsko i suvremeno vodstvo</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Situacijsko</strong> — stil ovisi o situaciji; model kontinuuma (Tannenbaum & Schmidt) = 7 stilova od autokratskog (usmjeren na nadređenog) do participativnog (na zaposlenike); uzima u obzir stil vođe, sljedbenika i situaciju.</li>\n                        <li><strong>Vizionarsko</strong> — slika budućnosti (Musk → Mars).</li>\n                        <li><strong>Karizmatsko</strong> — nadahnjuje lojalnost i entuzijazam.</li>\n                        <li><strong>Transformacijsko</strong> — učenje, inovacije, promjene; nadilaženje vlastitih interesa (Bezos).</li>\n                        <li><strong>Transakcijsko</strong> — društvena razmjena („obavi posao i nagradit ću te\"); stabilnost.</li>\n                        <li><strong>Autentično</strong> — otvoreni, pošteni odnosi; vodstvo osobnim primjerom.</li>\n                    </ul>\n                </div>\n            "
     }
   },
   "controlSystems": {
@@ -443,44 +445,44 @@ const managementHrM2 = {
     "color": "#14b8a6",
     "flashcards": [
       {
-        "question": "Što je KONTROLIRANJE i koje su vrste kontrole ORGANIZACIJSKIH SUSTAVA?",
-        "answer": "KONTROLIRANJE = praćenje napretka i poduzimanje korektivnih mjera radi osiguranja ostvarenja ciljeva („ne možeš upravljati onim što ne mjeriš\").\n\nKontrole u procesima sustava:\n• PRELIMINARNA (feedforward) — predviđanje i SPRJEČAVANJE problema (inputi).\n• TEKUĆA — osiguranje ispunjavanja standarda TIJEKOM transformacije.\n• DORADA — ispravljanje neispravnog OUTPUTA.\n• Kontrola ŠTETE — minimiziranje negativnog utjecaja na korisnike (npr. jamstva).\n• POVRATNA VEZA — korištenje povratnih informacija korisnika za kontinuirano poboljšanje.",
-        "explanation": "Preliminarna kontrola = planiranje i organiziranje; bolje je spriječiti nego ispravljati."
+        "question": "Što je KONTROLIRANJE i koje su vrste kontrole sustava?",
+        "answer": "Kontroliranje = praćenje napretka i korektivne mjere ('ne možeš upravljati što ne mjeriš'). Vrste: preliminarna, tekuća, dorada, kontrola štete i povratna veza.",
+        "explanation": "Preliminarna (feedforward) = planiranje; bolje spriječiti nego ispravljati."
       },
       {
-        "question": "Koja su 4 KORAKA PROCESA KONTROLE SUSTAVA?",
-        "answer": "1. POSTAVLJANJE ciljeva i standarda.\n2. MJERENJE učinka.\n3. USPOREĐIVANJE učinka sa standardima (izvješće o učinku/odstupanjima).\n4. KOREKCIJA ili POTKREPLJIVANJE (ispraviti ako postoji odstupanje; potkrijepiti ako je sve u redu).\n\nPrimjenjuje se na razini organizacije i na razini funkcionalnih područja.",
-        "explanation": "Kada su odstupanja značajna, potrebno ih je obrazložiti."
+        "question": "Koja su 4 KORAKA procesa kontrole sustava?",
+        "answer": "Postaviti ciljeve/standarde → mjeriti učinak → usporediti sa standardima → korekcija ili potkrepljivanje.",
+        "explanation": "Kada su odstupanja značajna, treba ih obrazložiti."
       },
       {
-        "question": "Koja 5 PODRUČJA moraju obuhvatiti POTPUNI STANDARDI?",
-        "answer": "Standardi mjere učinak prema:\n1. KOLIČINI (koliko?)\n2. KVALITETI (kako dobro?)\n3. VREMENU (kada / koliko brzo?)\n4. TROŠKU (koliko bi trebalo koštati?)\n5. PONAŠANJU (što činiti / ne činiti; etika)\n\nNepotpuni standardi potiču zaposlenike da „igraju na rupu u sustavu\" (npr. samo količinski standard → zanemarivanje kvalitete).",
-        "explanation": "Kritični čimbenici uspjeha (CSFs) = nekoliko najvažnijih područja koja je potrebno kontrolirati."
+        "question": "Koja 5 PODRUČJA obuhvaćaju potpuni standardi?",
+        "answer": "Standardi mjere: količinu, kvalitetu, vrijeme, trošak i ponašanje (etika).",
+        "explanation": "Nepotpuni standardi → „igranje na rupu u sustavu\". CSF = najvažnija područja za kontrolu."
       },
       {
-        "question": "Koje su 3 učestalosti i 10 METODA kontrole?",
-        "answer": "• STALNA (kontinuirana): samokontrola, klanska kontrola, stalni planovi.\n• PERIODIČNA (redovita/fiksna): redoviti sastanci i izvješća, proračuni, revizije.\n• POVREMENA (sporadična): promatranje, načelo iznimke, posebna izvješća, projektne kontrole.",
-        "explanation": "Klanska kontrola oslanja se na kulturu/norme i pritisak vršnjaka; načelo iznimke prepušta kontrolu zaposlenicima sve dok se ne pojavi problem."
+        "question": "Koje su 3 UČESTALOSTI i metode kontrole?",
+        "answer": "Stalna (samokontrola, klanska, stalni planovi), periodična (sastanci, izvješća, proračuni, revizije) i povremena (promatranje, načelo iznimke, projekti).",
+        "explanation": "Klanska kontrola = kultura/norme + pritisak vršnjaka."
       },
       {
         "question": "Koji je postupak izrade GLAVNOG PRORAČUNA (3 koraka)?",
-        "answer": "PRORAČUN = planirano kvantitativno raspoređivanje resursa (ne samo novca). Koraci:\n1. OPERATIVNI proračuni — proračun PRIHODA (predviđeni prihodi) + proračun RASHODA (predviđena potrošnja).\n2. Proračun KAPITALNIH IZDATAKA — sva planirana veća ulaganja u IMOVINU (zemljište, zgrade, oprema).\n3. FINANCIJSKI proračuni — predviđeni (pro forma) račun dobiti i gubitka, bilanca, novčani tok.",
-        "explanation": "Izrada proračuna zahtijeva vještine PLANIRANJA, a ne matematičke/računovodstvene vještine; povratna petlja omogućuje revizije."
+        "answer": "Proračun = kvantitativno raspoređivanje resursa. Koraci: operativni (prihodi + rashodi) → kapitalni izdaci → financijski (pro forma izvještaji).",
+        "explanation": "Traži vještine planiranja, ne matematike/računovodstva."
       },
       {
         "question": "Koja su TRI temeljna FINANCIJSKA IZVJEŠTAJA?",
-        "answer": "1. RAČUN DOBITI I GUBITKA — prikazuje prihode, rashode te DOBIT ili GUBITAK za određeno razdoblje.\n2. BILANCA — prikazuje IMOVINU = OBVEZE + vlasnički/dioničarski KAPITAL (mora biti uravnotežena u određenom trenutku).\n3. IZVJEŠTAJ O NOVČANOM TOKU — novčani primici i isplate (poslovne + financijske aktivnosti).\n\nSTOPA PROFITNE MARŽE = neto dobit ÷ prihodi. Pro forma = projicirano; stvarni izvještaji prikazuju prošlost.",
-        "explanation": "Moguće je ostvariti visoke prihode uz nisku dobit ili bez dobiti — potrebno je pratiti profitnu maržu."
+        "answer": "Račun dobiti i gubitka (prihodi–rashodi = dobit/gubitak), bilanca (imovina = obveze + kapital) i izvještaj o novčanom toku.",
+        "explanation": "Profitna marža = neto dobit ÷ prihodi. Visok prihod ne znači i dobit."
       },
       {
-        "question": "OBVEZNICE nasuprot DIONICAMA kao načini prikupljanja kapitala?",
-        "answer": "Oboje prikupljaju kapital, ali razlikuju se kao DUG i VLASNIČKI KAPITAL:\n• OBVEZNICE (dug) — poduzeće MORA vratiti imateljima obveznica glavnicu i kamate; ne prenosi se vlasništvo; niži rizik, niži prinos.\n• DIONICE (vlasnički kapital) — poduzeće NIKADA ne vraća uloženi iznos; dioničari postaju SUVLASNICI; poduzeće dobiva novac samo pri prvoj javnoj ponudi (IPO). Ako se odrekne previše vlasništva, može izgubiti kontrolu nad poduzećem.",
-        "explanation": "Prodaja obveznica ili dionica ne utječe na račun dobiti i gubitka, ali utječe na bilancu i novčani tok."
+        "question": "OBVEZNICE nasuprot DIONICAMA za prikupljanje kapitala?",
+        "answer": "Obveznice (dug) = vraća se glavnica + kamate, bez vlasništva. Dionice (kapital) = ne vraćaju se, dioničari postaju suvlasnici (novac samo pri IPO-u).",
+        "explanation": "Previše prodanih dionica → gubitak kontrole nad poduzećem. → sekcija Uči."
       },
       {
         "question": "Što su COACHING, SAVJETOVANJE i DISCIPLINA?",
-        "answer": "• COACHING — pružanje MOTIVACIJSKE povratne informacije radi održavanja ili poboljšanja radne uspješnosti.\n• MENADŽERSKO SAVJETOVANJE — pružanje povratne informacije kako bi zaposlenici prepoznali da određeni problem utječe na njihov rad, uz upućivanje na program pomoći zaposlenicima (NIJE psihoterapija).\n• DISCIPLINA — korektivne mjere kojima se zaposlenike navodi na poštivanje standarda i ustaljenih planova; cilj je PROMIJENITI ponašanje (devijacija = negativno voljno ponašanje).",
-        "explanation": "Coaching i savjetovanje primjenjuju se kao prve mjere; disciplina slijedi ako zaposlenik odbija promijeniti ponašanje ili prekrši pravilo."
+        "answer": "Coaching = motivacijska povratna informacija. Savjetovanje = upozorenje na problem + program pomoći (nije terapija). Disciplina = korektivne mjere za promjenu ponašanja.",
+        "explanation": "Coaching/savjetovanje prvo; disciplina ako se ponašanje ne mijenja."
       }
     ],
     "quiz": [
@@ -583,8 +585,8 @@ const managementHrM2 = {
       }
     ],
     "learn": {
-      "title": "Managing Control Systems, Finances & People",
-      "content": "\n                <h3>Kontroliranje = praćenje + ispravljanje</h3>\n                <div class=\"formula-box\">\n                    SUSTAVNE KONTROLE: preliminarna (inputi) → tekuća (proces) → dorada (outputi) → šteta → povratna veza<br>\n                    PROCES: postavljanje standarda → mjerenje → usporedba → ispravljanje/učvršćivanje\n                </div>\n\n                <h4>Standardi i učestalost</h4>\n                <ul>\n                    <li><strong>5 standardnih područja:</strong> količina · kvaliteta · vrijeme · trošak · ponašanje (+ kritični čimbenici uspjeha)</li>\n                    <li><strong>Stalna kontrola:</strong> samokontola · grupna · stalni planovi · <strong>Periodična:</strong> sastanci · proračuni · revizije · <strong>Povremena:</strong> opažanje · načelo iznimke · posebna izvješća · projekt</li>\n                </ul>\n\n                <h4>Financije i ljudski resursi</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Glavni proračun:</strong> poslovni (prihodi + rashodi) → kapitalni izdaci → financijski (pro forma)</li>\n                        <li><strong>Financijska izvješća:</strong> račun dobiti i gubitka · bilanca stanja (A = L + E) · novčani tok; profitna marža = neto dobit ÷ prihod</li>\n                        <li><strong>Prikupljanje sredstava:</strong> obveznice (dug, otplata + kamate) nasuprot dionicama (glavnica, vlasništvo, IPO)</li>\n                        <li><strong>Ljudski resursi:</strong> coaching → savjetovanje → disciplina (promjena ponašanja); rješavanje pritužbi</li>\n                    </ul>\n                </div>\n            "
+      "title": "Sustavi kontrole, financije i ljudski resursi",
+      "content": "\n                <h3>Kontroliranje</h3>\n                <p><strong>Kontroliranje</strong> = praćenje napretka i poduzimanje korektivnih mjera radi ostvarenja ciljeva („ne možeš upravljati onim što ne mjeriš\"). Vrste kontrole u sustavu:</p>\n                <ul>\n                    <li><strong>Preliminarna</strong> (feedforward) — predviđa i sprječava probleme (inputi); = planiranje/organiziranje.</li>\n                    <li><strong>Tekuća</strong> — standardi tijekom transformacije; <strong>dorada</strong> — ispravljanje neispravnog outputa; <strong>kontrola štete</strong> — minimiziranje utjecaja na korisnike (jamstva); <strong>povratna veza</strong> — kontinuirano poboljšanje.</li>\n                </ul>\n                <div class=\"formula-box\">PROCES (4 koraka): postaviti standarde → mjeriti učinak → usporediti sa standardima → korekcija ili potkrepljivanje</div>\n                <p><strong>Potpuni standardi</strong> mjere 5 područja: KOLIČINA · KVALITETA · VRIJEME · TROŠAK · PONAŠANJE (etika). Nepotpuni → „igranje na rupu\". CSF = najvažnija područja za kontrolu.</p>\n                <h4>Učestalost i metode kontrole</h4>\n                <div class=\"tip-box\"><ul>\n                    <li><strong>Stalna:</strong> samokontrola, klanska kontrola (kultura/norme + pritisak vršnjaka), stalni planovi.</li>\n                    <li><strong>Periodična:</strong> redoviti sastanci i izvješća, proračuni, revizije.</li>\n                    <li><strong>Povremena:</strong> promatranje, načelo iznimke (kontrola zaposlenicima dok se ne pojavi problem), posebna izvješća, projektne kontrole.</li>\n                </ul></div>\n                <h4>Financije</h4>\n                <ul>\n                    <li><strong>Glavni proračun</strong> (kvantitativno raspoređivanje resursa): 1) operativni = prihodi + rashodi → 2) kapitalni izdaci (ulaganja u imovinu) → 3) financijski (pro forma izvještaji). Traži vještine planiranja.</li>\n                    <li><strong>Tri financijska izvještaja:</strong> račun dobiti i gubitka (prihodi–rashodi) · bilanca (IMOVINA = OBVEZE + KAPITAL) · novčani tok. Profitna marža = neto dobit ÷ prihodi.</li>\n                    <li><strong>Obveznice</strong> (dug — vraća se glavnica + kamate, bez vlasništva; niži rizik/prinos) vs <strong>dionice</strong> (kapital — ne vraćaju se, dioničari = suvlasnici, novac samo pri IPO-u; previše → gubitak kontrole).</li>\n                </ul>\n                <h4>Ljudski resursi u kontroli</h4>\n                <p><strong>Coaching</strong> — motivacijska povratna informacija za bolji učinak. <strong>Menadžersko savjetovanje</strong> — upozorenje da problem utječe na rad + program pomoći zaposlenicima (NIJE psihoterapija). <strong>Disciplina</strong> — korektivne mjere radi promjene ponašanja. Coaching/savjetovanje su prve mjere; disciplina slijedi ako se ponašanje ne mijenja.</p>\n            "
     }
   }
 };
