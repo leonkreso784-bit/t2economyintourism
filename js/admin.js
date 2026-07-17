@@ -181,6 +181,23 @@ function _adminAddBtn(canEdit, type, catId, label) {
     '" data-cat="' + _adminEscape(catId) + '"><i class="fas fa-plus"></i> ' + label + '</button>';
 }
 
+// U6e-1 — „Obriši stavku" gumb (kartica/kviz/fill; samo draft-mod). remove* op (id + idx fallback).
+function _adminItemDelBtn(canEdit, type, catId, idx) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-edit-btn admin-del" data-admin-del data-type="' + type +
+    '" data-cat="' + _adminEscape(catId) + '" data-idx="' + idx +
+    '" aria-label="' + _adminT('admin.removeItem', 'Remove') + '"><i class="fas fa-trash"></i></button>';
+}
+
+// U6e — kontrole stavke (desno): uredi ✎ + obriši 🗑 (U6e-2 doda ↑↓ ovdje). Grupa za flashcard/quiz/fill.
+function _adminItemControls(canEdit, type, catId, idx) {
+  if (!canEdit) return _adminEditBtn(canEdit, type, catId, idx);
+  return '<div class="admin-card-ctrls">' +
+    _adminEditBtn(canEdit, type, catId, idx) +
+    _adminItemDelBtn(canEdit, type, catId, idx) +
+    '</div>';
+}
+
 // U6d — kategorije-UI: „Uredi" (meta: name/icon/color) na zaglavlju + „Dodaj kategoriju" na dnu.
 function _adminCatEditBtn(canEdit, catId) {
   if (!canEdit) return '';
@@ -251,7 +268,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
             '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
             '  </div>' +
-            _adminEditBtn(canEdit, 'flashcard', catId, i) +
+            _adminItemControls(canEdit, 'flashcard', catId, i) +
             '</li>';
         });
         html += '</ol>';
@@ -281,7 +298,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
             '    ' + optsHtml +
             '  </div>' +
-            _adminEditBtn(canEdit, 'quiz', catId, i) +
+            _adminItemControls(canEdit, 'quiz', catId, i) +
             '</li>';
         });
         html += '</ol>';
@@ -303,7 +320,7 @@ function _renderAdminCards(holder, data) {
             '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
             '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
             '  </div>' +
-            _adminEditBtn(canEdit, 'fill', catId, i) +
+            _adminItemControls(canEdit, 'fill', catId, i) +
             '</li>';
         });
         html += '</ol>';
@@ -827,6 +844,41 @@ async function _removeCategory(catId) {
   }
 }
 
+// ===== U6e-1 — Obriši STAVKU (kartica/kviz/fill) iz DRAFTA =====
+//
+// Uz potvrdu; poništivo „Odbaci"-jem drafta / content_versions. Op je adresiran stabilnim id-om
+// (U2a; DB predmeti resyncani 2026-07-17) s idx fallbackom. Ops-sloj (U6a remove*) idempotentan →
+// publish-put + sibling-replay netaknuti. Learn nema remove (jedan objekt/kat; miče se kroz kategoriju).
+async function _removeItem(type, catId, idx) {
+  const d = _adminDraft();
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  const MAP = {
+    flashcard: { arr: 'flashcards', op: 'removeCard' },
+    quiz:      { arr: 'quiz',       op: 'removeQuiz' },
+    fill:      { arr: 'fillBlanks', op: 'removeFill' }
+  };
+  const m = MAP[type];
+  if (!m) return;
+  const arr = Array.isArray(data[catId][m.arr]) ? data[catId][m.arr] : null;
+  const item = (arr && idx >= 0 && idx < arr.length) ? arr[idx] : null;
+  if (!item) return;
+  if (typeof window.askConfirm === 'function') {
+    const ok = await window.askConfirm({
+      title: _adminT('admin.removeItemTitle', 'Remove item?'),
+      message: _adminT('admin.removeItemMsg', 'This item will be removed from the draft. You can restore it by discarding the draft.'),
+      confirmText: _adminT('admin.remove', 'Remove'),
+      danger: true
+    });
+    if (!ok) return;
+  }
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: m.op, catId: catId, id: item.id, idx: idx });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
+}
+
 // ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
 //
 // Isti pipeline kao flashcards (RMW jednog reda → verzija → propagacija u sestrinske redove →
@@ -1263,6 +1315,17 @@ document.addEventListener('click', function (e) {
   if (type === 'quiz') _openQuizEditor(catId, null);
   else if (type === 'fill') _openFillEditor(catId, null);
   else _openCardEditor(catId, null);
+});
+
+// Delegat: klik na „Obriši stavku" 🗑 (U6e-1) → potvrda → remove* op.
+document.addEventListener('click', function (e) {
+  const del = e.target.closest('[data-admin-del]');
+  if (!del) return;
+  const type = del.getAttribute('data-type') || 'flashcard';
+  const catId = del.getAttribute('data-cat');
+  const idx = parseInt(del.getAttribute('data-idx'), 10);
+  if (!catId || isNaN(idx)) return;
+  _removeItem(type, catId, idx);
 });
 
 // Delegat: klik na kategorije-gumbe (U6d) → dodaj/uredi meta · presloži ↑↓ · obriši.
