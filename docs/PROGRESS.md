@@ -5,6 +5,14 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-17 (OPUS) — 🎉 U6e: item delete/reorder → STRUKTURNE OPS KOMPLETNE + pred-compact audit
+**Kontekst:** nakon DB id-resynca (item-ops odblokirani), Leon: „moze" → U6e po dvije male cigle, pa „lagano krenut pripremati za compact".
+1. **U6e-1 (`4522644`) — obriši stavku:** 🗑 uz ✎ po kartici/kvizu/fillu (grupa `.admin-card-ctrls`, samo draft-mod) → `askConfirm` (danger) → `removeCard/Quiz/Fill` op (id-adresirano + idx fallback). Learn izuzet (jedan objekt/kat, nema remove-op). i18n HR/EN +3, CSS grupa + `.admin-del` danger-hover.
+2. **U6e-2 (`579f373`) — presloži stavku:** ↑↓ u istu grupu (krajnje strelice disabled) → `reorderCards/Quiz/Fill` op (apsolutni red ID-eva, swap idx↔idx±dir, isti splice-obrazac kao `_moveCategory`). Bez novog CSS/i18n (reuse `.admin-edit-btn` + `moveUp/moveDown`). Ops-sloj U6a NEDIRNUT → publish-put + sibling-replay isti.
+3. **Živa verifikacija (`1d38841`):** novi trajni `tests/item-ops.authed.spec.js` (svježa test-kat + 3 kartice sa svježim id-jevima → presloži ↑ → obriši, draft-only → staging netaknut) → **test:authed 11/11** (novi #9). Puni **smoke `test:responsive` 236/0** (15 skip, 13.3m). Gateovi po cigli: node --check · typecheck 0 · draft-store 37/37 · verify 0/0 · bump 96.
+**→ STRUKTURNE OPS KOMPLETNE** (kategorije + stavke: add/edit/reorder/remove; jedini write = „Objavi"). **SLIJEDI: C-vizual U8** (EDITOR_UX ugovor; prije razmotriti rascjep `admin.js` ~1500 LOC). management-hr treba `add-item-ids.js` prije nego HR podrži item-ops.
+4. **Pred-compact audit (pravilo #6):** CLAUDE.md (datum→07-17 · ŠTO SADA RADIMO U6✅ · PRODUKCIJA +rebalans deploy · brick-slijed U6e · **`content_versions` 24→135** [resync+HR-ops] · ispravak „accounting NIJE u bazi"→jest [17 predmeta u bazi] · HR file-first) · EDITOR_PLAN §12 U6→✅ KOMPLETAN · 5 current-state pointera (CRUD/ROADMAP/PRD/FOUNDATION/ARCHITECTURE) „U6 U TIJEKU"→✅ · HISTORY +2 unosa (07-17) · subjects/README management-hr rebalans OBJAVLJEN · memorija (checkpoint+MEMORY).
+
 ## 2026-07-17 (OPUS) — 🔓 DB id-resync (16 eng. predmeta) → item delete/reorder odblokiran + HR-removal
 **Kontekst:** Leon: „idemo A prvo, sve treba biti savršeno" → A = DB id-resync (preduvjet za item delete/reorder; U2a DB-zrcalo je pre-id). Prvo poslije-deploy uskladili feature/u6 s main (merge `e26c1a6`; 9 bump-datoteka `--ours` + PROGRESS oba-zadržana; token `20260717034340`; gateovi zeleni) i potvrdili PR #2 (ceb0eaf predak main-a → auto-merged).
 1. **„datoteke==baza" dokaz (read-only):** skripta uspoređuje DB payload vs `data/json/*` uz **strip svih `id` ključeva** (md5 stabilnog stringa) → **51/51 sadržajno identično** (0 divergencija, 0 nedostajućih). Time je resync dokazano čisto-aditivan (samo id-jevi, sadržaj nepromijenjen, studentima nevidljiv).
