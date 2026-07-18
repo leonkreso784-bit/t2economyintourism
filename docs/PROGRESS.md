@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-18 (OPUS) — 🧹 U8-prep: admin.js rascjep → admin-editors.js (nula-regresije)
+**Kontekst:** Leon: „Pobrini se o rizicima kako treba po pravilima… pripremi sve za U8 profesionalno i savršeno; imaš OK." → rizik #1 (`admin.js` 1391 LOC) = jedina konkretna prep-akcija. **Prod-merge NE** (traži zaseban izričit deploy-OK; sve na preview grani). Usput nalaz istaknut Leonu: po EDITOR_PLAN §12 SLIJEDI **U7** (blok-model + JEDAN renderer), ne U8 direktno → Leon potvrdio („kreni").
+1. **Analiza:** `admin.js` NIJE zapetljan closure — IIFE je samo glava (11–79, `SokratAdmin` detekcija); od 81 naniže ravne top-level funkcije + 7 `let` stanja u dijeljenom scope-u → rascjep = mehanička seoba, ne refaktor logike. Editori = 3 kontinuirana bloka (375–376 `_editTarget` · 570–812 kartica+kategorija · 918–1328 kviz+fill+learn); strukturne akcije (`_moveCategory/_removeCategory/_removeItem/_moveItem`) ostaju u jezgri IZMEĐU njih.
+2. **Ekstrakcija (deterministička node-skripta, anchor-provjere granica):** 5 modal-editora → `js/admin-editors.js` (**670** lin.); jezgra `admin.js` = **735** lin. `<script src="js/admin-editors.js">` odmah IZA admin.js u `index.html` (jedini HTML koji ga učitava; SW ne precachea statičku listu → bez promjene). `npm run bump` (97 tokena → `20260718193210`).
+3. **Verifikacija (nula-regresije):** grep-dokaz **17/17** editor-fn + **6/6** stanja SAMO u editors · **11/11** strukturnih+render SAMO u jezgri · `node --check` ×2 · verify 0/0 · typecheck 0 · draft-store **37/37** · bump:check 97 · build:css u sinku · **test:authed 11/11** (46.9s — svi editori kartica/kviz/fill/learn/kategorija + item-ops + publish-ciklus kroz pravi UI, staging netaknut) · **smoke `test:responsive` 236/0** (15 skip, 13.5m).
+**→ U8-prep GOTOV.** Budući U7/U8 kod ide u vlastite datoteke (jezgra ne buja). **SLIJEDI: U7** (learn-blokovi + JEDAN renderer = sigurnosna granica) → U8 (blok-editor/vizual). Ostali rizici: `management-hr` bez id-jeva (odgođeno, treba `add-item-ids.js`); `feature/u6`→main merge = **čeka izričit deploy-OK** (prod netaknut).
+
 ## 2026-07-17 (OPUS) — 🎉 U6e: item delete/reorder → STRUKTURNE OPS KOMPLETNE + pred-compact audit
 **Kontekst:** nakon DB id-resynca (item-ops odblokirani), Leon: „moze" → U6e po dvije male cigle, pa „lagano krenut pripremati za compact".
 1. **U6e-1 (`4522644`) — obriši stavku:** 🗑 uz ✎ po kartici/kvizu/fillu (grupa `.admin-card-ctrls`, samo draft-mod) → `askConfirm` (danger) → `removeCard/Quiz/Fill` op (id-adresirano + idx fallback). Learn izuzet (jedan objekt/kat, nema remove-op). i18n HR/EN +3, CSS grupa + `.admin-del` danger-hover.
