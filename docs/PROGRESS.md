@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-20 (OPUS) — 🧱 U7b: JEDAN renderer (blocks-renderer.js) = sigurnosna granica
+**Kontekst:** Leon „idemo to dobro napravit da bude savršeno ispolirano". Usput: procjena zdravlja projekta (🟢 zdrav + dobar smjer; watch-items = duga staza do UGC-isplate · `feature` 24 ispred `main` · U7c = prvi flip živog student-puta).
+1. **`js/blocks-renderer.js` (IIFE, `window.renderBlocks` + `window.SokratBlocks` s helperima za test):** 9 tipova (`heading/paragraph/list/callout/image/video/table/formula/legacy-html`), svaki s ESCAPANIM poljima; `renderInline` (runs b/i/boja-token/link, boja iz kuriranog seta), `safeUrl` (scheme-allowlist; `data:image/svg` nikad — nosi skripte), YouTube facade (validiran 11-znak ID → `youtube-nocookie`, klik-za-učitavanje delegatom → 0 poziva prije klika), `formula` → `renderMath` delimiteri, `legacy-html` → `window.DOMPurify` uz raw-fallback (v1 = naš sadržaj). `document` guardan (node pure-fn test).
+2. **Ožičenje (izolirano):** `css/learn-blocks.css` (27. modul, tokeni) + `@import` u styles.css + `build:css` + `<script>` u index.html iza math.js (prije learn.js za U7c). **NIJE spojen na study** → 0 student-utjecaja.
+3. **Odstupanje od plana (svjesno):** stvarno DOMPurify-CDN-učitavanje + student-wiring = **U7c** (zajedno s parity-harnessom) → U7b istinski izoliran (0 CDN/perf, 0 neprovjerenog CDN-a sad).
+**Dokazi:** novi `tests/unit/blocks-renderer.test.js` **23/23** (svaki tip + **XSS-fixtures** `<script>`/`onerror`/`javascript:`/`data:svg` · safeUrl · YT-ID) · verify 0/0 · typecheck 0 · draft-store 37/37 · getCategories 8/8 · **smoke 236/0** (15 skip, 15.9m) · bump 99 (`20260720013555`) · build:css 27 sinc. **SLIJEDI: U7c** (flip `learn.js` dual-mode v1/v2 + DOMPurify-load + parity-harness 18/18 = osigurač; **odluka legacy-kroz-DOMPurify-sad vs odgoditi se ovdje donosi**).
+
 ## 2026-07-19 (OPUS) — 🔎 loose-ends sken + 🧱 U7 plan (§12.1) + U7a (meta-safe getCategories)
 **Kontekst:** Leon potvrdio U7-prije-U8 → „mozes jos malo provjerit ako nam je nesto zaostalo" → „napravi sve pametno korak po korak… idemo po redu jedno po jedno kako je po planu".
 1. **Loose-ends sken:** kod čist (0 pravih TODO-a; consent.js l.7 = stara „paste GA4 ID" uputa iako je ID postavljen), **0 otvorenih bugova** (BUG-001…020 riješeni; jedini 🔴 = legenda + template), rascjep bez dangling refova. **Glavni nalaz — U2b JE preduvjet U7:** `getCategories()` ne postoji, **10** sirovih `Object.keys(content)` mjesta, top-level `schemaVersion` bi ih srušio (lažna kategorija) → „razlog" koji je U2b čekao = U7. F6/GDPR/CAPTCHA/rate-limit/Leaked-PW = parkirano (ne blokira U7); management-hr id-jevi + `feature`→main merge = zasebno.
