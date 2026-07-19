@@ -222,6 +222,9 @@
     if (!key || typeof key !== 'string') return { ok: false, error: 'no-catId' };
     if (!op.category || typeof op.category !== 'object') return { ok: false, error: 'no-category-obj' };
     if (Object.prototype.hasOwnProperty.call(working, key)) return { ok: true };
+    // U7a napomena: sirovi Object.keys je OK ovdje — nova kategorija ide na kraj (op.at default),
+    // a _setKeyOrder čuva eventualne meta-ključeve (schemaVersion/…) na mjestu → meta-safe bez
+    // globalnog getCategories (draft-store je node-testiran IIFE, bez browser-globala).
     const keys = Object.keys(working);
     let at = Number.isInteger(op.at) ? op.at : keys.length;
     if (at < 0) at = 0; else if (at > keys.length) at = keys.length;

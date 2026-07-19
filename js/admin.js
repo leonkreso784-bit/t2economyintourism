@@ -236,7 +236,7 @@ function _adminCatControls(canEdit, catId, catIdx, total) {
 }
 
 function _renderAdminCards(holder, data) {
-  const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
+  const cats = getCategories(data);
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
   // U3: i SAMO u draft-modu — jedini put do izmjene je draft → „Objavi" (EDITOR_PLAN §4.1).
   const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin()) && _draftMode;
@@ -571,7 +571,7 @@ function _moveCategory(catId, dir) {
   const d = _adminDraft();
   const data = _adminWorking();
   if (!d || !data || typeof data !== 'object') return;
-  const keys = Object.keys(data);
+  const keys = getCategories(data); // U7a: samo kategorije (meta-ključevi ostaju na mjestu kroz _setKeyOrder)
   const i = keys.indexOf(catId);
   if (i < 0) return;
   const j = i + dir;

@@ -15,7 +15,7 @@ function renderLearnContent() {
 
     container.innerHTML = '';
 
-    const categories = Object.keys(content);
+    const categories = getCategories(content);
     if (categories.length === 0) {
         container.innerHTML = '<div class="learn-card"><div class="learn-card-content"><p>No categories found in this lesson.</p></div></div>';
         return;

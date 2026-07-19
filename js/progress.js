@@ -8,7 +8,7 @@ function updateCategoryButtons() {
 
     container.innerHTML = '';
 
-    Object.keys(content).forEach(category => {
+    getCategories(content).forEach(category => {
         const data = content[category];
         const btn = document.createElement('button');
         btn.className = 'category-btn';
@@ -36,7 +36,7 @@ function updateLearnFilters() {
 
     container.innerHTML = '<button class="filter-btn active" data-filter="all">All</button>';
 
-    Object.keys(content).forEach(category => {
+    getCategories(content).forEach(category => {
         const data = content[category];
         const btn = document.createElement('button');
         btn.className = 'filter-btn';
@@ -99,7 +99,7 @@ function updateQuizCategories() {
 
     select.innerHTML = '<option value="all">All Categories</option>';
 
-    Object.keys(content).forEach(category => {
+    getCategories(content).forEach(category => {
         const data = content[category];
         const option = document.createElement('option');
         option.value = category;
