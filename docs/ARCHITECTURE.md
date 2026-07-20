@@ -103,7 +103,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
 ### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](BACKEND.md))
 - **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
 - **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
-- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; U4 publish-RPC ✅ + U-UX dizajn ✅ 🚀 DEPLOYANO na PROD 2026-07-14 (`79f17c7..056d963`); dalje U6); source-of-truth flip na bazu = U9+/F4.6.
+- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; U4 publish-RPC ✅ + U-UX dizajn ✅ 🚀 DEPLOYANO na PROD 2026-07-14 (`79f17c7..056d963`); **U6 strukturne ops ✅ + U7 learn-blokovi/renderer ✅ 2026-07-20 → U8 vizualni editor „Studio" U TIJEKU**, grana `feature/u6-structural-ops`, PREVIEW); source-of-truth flip na bazu = U9+/F4.6.
 
 ### Blok F — Platforma-first temelj (FOUNDATION_PLAN, ADR-013/014)
 - **F1 ✅ LIVE** — reliability rails: CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi (axe/layout-guard/Lighthouse) + RLS-test.
