@@ -788,3 +788,22 @@ document.addEventListener('click', function (e) {
   const del = e.target.closest('[data-admin-cat-del]');
   if (del) { _removeCategory(del.getAttribute('data-cat')); return; }
 });
+
+
+// ===== U8.1 — STUDIO BRIDGE =====
+// Novi „Studio" editor (js/studio.js) dijeli JEDAN draft/publish engine s adminom — bez
+// duplikata publish-logike (U4 RPC/versioning/audit). Studio postavi kontekst lekcije, a
+// Objavi/Odbaci pozovu iste funkcije (_publishDraft/_discardDraft). `_adminRerender()` unutar
+// njih je no-op ako admin-DOM nije renderiran (guard `if (holder)`), pa se ne miješaju sučelja.
+window.SokratAdmin.studioBridge = {
+  // Postavi kontekst na odabranu lekciju (data = svjež sadržaj iz Studija). Vrati draft (ako postoji).
+  setLesson: function (subjectId, lessonId, data) {
+    _adminCtx = { subjectId: subjectId, lessonId: lessonId, varName: _adminResolveVar(subjectId, lessonId) || '', data: data || null };
+    const d = _adminDraft();
+    _draftMode = !!(d && d.dirty); // nastavi draft ako postoji dirty (npr. iz starog admina)
+    return d;
+  },
+  draft: function () { return _adminDraft(); },
+  publish: function () { return _publishDraft(); },  // U4 publish_document RPC (atomično + base_version)
+  discard: function () { return _discardDraft(); }
+};
