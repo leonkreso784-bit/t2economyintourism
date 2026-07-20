@@ -1,22 +1,24 @@
 // ===== SOKRAT STUDY — STUDIO EDITOR (U8) =====
 //
 // U8.1 = SKELET novog vizualnog editora „Studio" (kosti iz design/mockups/editor-c-tok.html):
-//   topbar+breadcrumb · STABLO (fakultet→smjer→godina→predmet→skripte, iz kataloga) ·
-//   canvas (naslov + meta + mode-tabovi + read-only PREVIEW) · inspektor (stub).
-// Zamjenjuje ružne „select predmet/lekcija" dropdowne starog #admin-page.
+//   topbar+breadcrumb · STABLO (fakultet→smjer→godina→predmet→skripte) · canvas
+//   (naslov + meta + mode-tabovi + PREVIEW) · inspektor-stub. Zamjenjuje dropdowne #admin-page.
+// U8.2 = LEARN-PANE = blok-editor u canvasu: u draft-modu se `block-editor.js` jezgra
+//   (`SokratBlockEditor`) montira u learn-pane → blokovi (kvadratići) postaju editabilni
+//   (add/reorder/remove kroz U7e draft-ops). „Uredi lekciju" ulazi u draft (svjež DB payload +
+//   base_version), „Objavi" = U4 RPC. **SIGURNOST:** `learn.js` bira blokove NAD `content`, pa
+//   se blok-editor montira SAMO na v2/prazne kategorije; v1 (content) dobiva eksplicitnu, poništivu
+//   „Uredi kao blokove" migraciju (content → jedan `legacy-html` blok; ništa se ne gubi). Kartice/
+//   kviz/fill ostaju read-only preview (uređivanje = U8.3). Vizualni „čisto i bogato" prolaz = U8.6.
 //
-// OPSEG U8.1 (svjesno): navigacija + preview + prebacivanje modova. NE uređuje sadržaj
-//   (blok-editor u learn = U8.2 · kartice/kviz/fill = U8.3 · tekst/media/boje = U8.4–5 ·
-//   vizualni „čisto i bogato" prolaz = U8.6 · struktura-CRUD u stablu + wizard = kasnije).
-// „Objavi/Odbaci" su ožičeni na JEDAN postojeći draft/publish engine (admin.js) preko
-//   SokratAdmin.studioBridge — bez duplikata publish-logike; RPC/versioning/audit = U4.
-//
-// Stari #admin-page ostaje dostupan (koegzistira; umirovljuje se kad Studio sazrije).
+// JEDAN draft/publish engine: sve ide preko `SokratAdmin.studioBridge` (bez duplikata publish-logike).
+// Stari #admin-page koegzistira (umirovljuje se kad Studio sazrije).
 
 const SokratStudio = (function () {
   'use strict';
 
   let _sel = { subjectId: '', lessonId: '' }; // trenutno odabrana skripta
+  let _data = null;                            // učitani sadržaj (dijeli referencu s _adminCtx.data preko setLesson)
 
   // ---- helpers ----
   function esc(s) {
@@ -26,6 +28,10 @@ const SokratStudio = (function () {
   }
   function t(key, fb) { return (window.t) ? window.t(key) : fb; }
   function toast(m) { if (typeof window.showToast === 'function') window.showToast(m); }
+  function byId(id) { return document.getElementById(id); }
+  function bridge() { return (window.SokratAdmin && SokratAdmin.studioBridge) ? SokratAdmin.studioBridge : null; }
+  function editing() { const b = bridge(); return !!(b && b.isEditing && b.isEditing()); }
+  function currentData() { const b = bridge(); if (b && editing()) { const w = b.workingData(); if (w) return w; } return _data; }
   function cats(data) {
     if (typeof getCategories === 'function') return getCategories(data);
     return Object.keys(data || {}).filter(function (k) {
@@ -35,24 +41,26 @@ const SokratStudio = (function () {
   function yearLabel(y) {
     return (typeof getUiLang === 'function' && getUiLang() === 'hr') ? (y + '. godina') : ('Year ' + y);
   }
+  // learn-stanje kategorije: 'v2' (blocks) · 'v1' (content, bez blocks) · '' (nema learn)
+  function learnKind(c) {
+    if (!c || typeof c !== 'object' || !c.learn || typeof c.learn !== 'object') return '';
+    if (Array.isArray(c.learn.blocks)) return 'v2';
+    if (typeof c.learn.content === 'string' && c.learn.content) return 'v1';
+    return '';
+  }
 
   // ---- STABLO (iz kataloga) ----
-  // Gradi fakultet→smjer→godina→predmet→skripte. Svaki list (skripta) nosi data-subj/lesson
-  // + data-crumb (za breadcrumb) + .soon ako lekcija nema sadržaj (isLessonComingSoon).
   function buildTree() {
     if (typeof SokratCatalog === 'undefined') return '<p class="st-hint" style="padding:12px">Katalog nije učitan.</p>';
     var facs = SokratCatalog.faculties();
     var html = '';
     facs.forEach(function (f) {
-      var progs = SokratCatalog.programsOf(f.id);
       var progHtml = '';
-      progs.forEach(function (p) {
-        var years = SokratCatalog.yearsOf(p.id);
+      SokratCatalog.programsOf(f.id).forEach(function (p) {
         var yearHtml = '';
-        years.forEach(function (y) {
-          var subs = SokratCatalog.subjectsOf(p.id, y);
+        SokratCatalog.yearsOf(p.id).forEach(function (y) {
           var subHtml = '';
-          subs.forEach(function (s) {
+          SokratCatalog.subjectsOf(p.id, y).forEach(function (s) {
             var crumbBase = esc(f.name) + ' › ' + esc(p.name) + ' › ' + esc(yearLabel(y)) + ' › ' + esc(s.name);
             var lessonHtml = '';
             (s.lessons || []).forEach(function (l) {
@@ -89,7 +97,7 @@ const SokratStudio = (function () {
 
   // ---- SHELL ----
   function render() {
-    var page = document.getElementById('editor-page');
+    var page = byId('editor-page');
     if (!page) return;
     page.innerHTML =
       '<div class="st-topbar">' +
@@ -97,9 +105,10 @@ const SokratStudio = (function () {
       '  <div class="st-logo"><span class="st-dot">🦉</span> Sokrat <span class="st-ed">STUDIO</span></div>' +
       '  <div class="st-crumb" id="stCrumb"><span class="st-c">' + esc(t('studio.pickHint', 'Odaberi skriptu iz stabla')) + '</span></div>' +
       '  <div class="st-spacer"></div>' +
+      '  <button class="st-btn ghost" id="stEdit" hidden><i class="fas fa-pen"></i> ' + esc(t('studio.edit', 'Uredi')) + '</button>' +
       '  <span class="st-chip" id="stDraftChip">—</span>' +
-      '  <button class="st-btn ghost" id="stDiscard">' + esc(t('admin.discard', 'Odbaci')) + '</button>' +
-      '  <button class="st-btn primary" id="stPublish">⬆ ' + esc(t('admin.publish', 'Objavi')) + '</button>' +
+      '  <button class="st-btn ghost" id="stDiscard" hidden>' + esc(t('admin.discard', 'Odbaci')) + '</button>' +
+      '  <button class="st-btn primary" id="stPublish" hidden>⬆ ' + esc(t('admin.publish', 'Objavi')) + '</button>' +
       '  <button class="st-iconbtn" id="stOldEditor" title="Stari editor" aria-label="Stari editor">⚙</button>' +
       '</div>' +
       '<div class="st-layout">' +
@@ -112,31 +121,32 @@ const SokratStudio = (function () {
       '  <aside class="st-inspector">' + inspectorStub() + '</aside>' +
       '</div>';
 
-    // topbar akcije
     byId('stBack').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('profile'); });
     byId('stOldEditor').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('admin'); });
     byId('stNewScript').addEventListener('click', function () { toast(t('studio.wizardSoon', 'Čarobnjak „Nova skripta" stiže u kasnijoj cigli.')); });
+    byId('stEdit').addEventListener('click', enterEdit);
     byId('stPublish').addEventListener('click', publish);
     byId('stDiscard').addEventListener('click', discard);
 
-    // stablo (delegirano): klik na skriptu = odaberi; klik na granu = toggle; soon = toast
+    // stablo (delegirano)
     byId('stTree').addEventListener('click', function (e) {
       var row = e.target.closest('.st-row');
       if (!row) return;
       if (row.classList.contains('soon')) { toast(t('studio.soon', 'Ova lekcija još nema sadržaj.')); return; }
       var subj = row.getAttribute('data-subj');
       var lesson = row.getAttribute('data-lesson');
-      if (subj && lesson) {
-        selectLesson(subj, lesson, row);
-      } else {
-        row.parentElement.classList.toggle('open'); // grana
-      }
+      if (subj && lesson) selectLesson(subj, lesson, row);
+      else row.parentElement.classList.toggle('open');
     });
 
-    refreshDraftChip();
-  }
+    // canvas (delegirano): migracija v1→blokovi
+    byId('stCanvas').addEventListener('click', function (e) {
+      var mig = e.target.closest('[data-migrate-cat]');
+      if (mig) { migrateToBlocks(mig.getAttribute('data-migrate-cat')); }
+    });
 
-  function byId(id) { return document.getElementById(id); }
+    refreshTopbar();
+  }
 
   function emptyCanvas() {
     return '<div class="st-empty"><div><div class="st-emoji">🦉</div>' +
@@ -157,10 +167,9 @@ const SokratStudio = (function () {
       '<button class="st-btn primary" style="width:100%" disabled>' + esc(t('studio.aiBtn', 'Generiraj iz Learna')) + '</button></div>';
   }
 
-  // ---- ODABIR SKRIPTE → CANVAS PREVIEW ----
+  // ---- ODABIR SKRIPTE → CANVAS ----
   async function selectLesson(subjectId, lessonId, row) {
     _sel = { subjectId: subjectId, lessonId: lessonId };
-    // aktivni red u stablu
     var tree = byId('stTree');
     if (tree) tree.querySelectorAll('.st-row.active').forEach(function (r) { r.classList.remove('active'); });
     if (row) row.classList.add('active');
@@ -168,14 +177,11 @@ const SokratStudio = (function () {
     var canvas = byId('stCanvas');
     if (canvas) canvas.innerHTML = '<div class="st-empty"><p>' + esc(t('admin.loading', 'Učitavanje…')) + '</p></div>';
 
-    // breadcrumb iz podataka reda
     if (row && byId('stCrumb')) {
-      var crumb = row.getAttribute('data-crumb') || '';
-      var lname = row.getAttribute('data-lname') || '';
-      var parts = crumb.split(' › ');
+      var parts = (row.getAttribute('data-crumb') || '').split(' › ');
       var html = '';
       parts.forEach(function (p, i) { html += (i ? '<span class="st-sep">›</span>' : '') + '<span class="st-c">' + esc(p) + '</span>'; });
-      html += '<span class="st-sep">›</span><span class="st-c now">' + esc(lname) + '</span>';
+      html += '<span class="st-sep">›</span><span class="st-c now">' + esc(row.getAttribute('data-lname') || '') + '</span>';
       byId('stCrumb').innerHTML = html;
     }
 
@@ -186,14 +192,12 @@ const SokratStudio = (function () {
       if (canvas) canvas.innerHTML = '<div class="st-empty"><p>' + esc(t('admin.loadFail', 'Sadržaj se nije mogao učitati.')) + '</p></div>';
       return;
     }
+    _data = data;
+    // ožiči JEDAN draft/publish engine na ovu lekciju (nastavi draft ako postoji dirty)
+    if (bridge()) { try { bridge().setLesson(subjectId, lessonId, data); } catch (e) {} }
 
-    // ožiči JEDAN draft/publish engine na ovu lekciju (bez uređivanja u U8.1)
-    if (window.SokratAdmin && SokratAdmin.studioBridge) {
-      try { SokratAdmin.studioBridge.setLesson(subjectId, lessonId, data); } catch (e) {}
-    }
-
-    renderCanvas(data);
-    refreshDraftChip();
+    renderCanvas();
+    refreshTopbar();
   }
 
   function presentModes(data) {
@@ -204,21 +208,25 @@ const SokratStudio = (function () {
       if (Array.isArray(c.flashcards) && c.flashcards.length) m.cards = true;
       if (Array.isArray(c.quiz) && c.quiz.length) m.quiz = true;
       if (Array.isArray(c.fillBlanks) && c.fillBlanks.length) m.fill = true;
-      var L = c.learn;
-      if (L && typeof L === 'object' && ((typeof L.content === 'string' && L.content) || Array.isArray(L.blocks))) m.learn = true;
+      if (learnKind(c)) m.learn = true;
     });
     return m;
   }
 
-  function renderCanvas(data) {
+  function renderCanvas() {
     var canvas = byId('stCanvas');
     if (!canvas) return;
+    var data = currentData();
+    if (!data) { canvas.innerHTML = emptyCanvas(); return; }
+
     var lname = '';
     var subj = (typeof SokratContent !== 'undefined') ? SokratContent.getSubject(_sel.subjectId) : null;
     if (subj && Array.isArray(subj.lessons)) {
       var lo = subj.lessons.find(function (l) { return l.id === _sel.lessonId; });
       lname = lo ? (lo.name || lo.id) : _sel.lessonId;
     }
+    var isEd = editing();
+    // U draft-modu prikaži i learn tab ako neka kategorija UOPĆE ima learn (za migraciju/dodavanje).
     var m = presentModes(data);
     var order = ['learn', 'cards', 'quiz', 'fill'].filter(function (k) { return m[k]; });
     var LABEL = { learn: '📚 Learn', cards: '🃏 ' + t('studio.cards', 'Kartice'), quiz: '❓ ' + t('studio.quiz', 'Kviz'), fill: '✍️ ' + t('studio.fill', 'Dopuni') };
@@ -227,16 +235,18 @@ const SokratStudio = (function () {
     var tabs = order.map(function (k) {
       return '<button class="st-tab' + (k === active ? ' on' : '') + '" data-mode="' + k + '">' + LABEL[k] + '</button>';
     }).join('');
-
     var panes = order.map(function (k) {
-      return '<section class="st-pane' + (k === active ? ' on' : '') + '" data-pane="' + k + '">' + renderPane(k, data) + '</section>';
+      var body = (k === 'learn') ? renderLearnPane(data, isEd) : renderPane(k, data, isEd);
+      return '<section class="st-pane' + (k === active ? ' on' : '') + '" data-pane="' + k + '">' + body + '</section>';
     }).join('');
 
     canvas.innerHTML =
       '<div class="st-head"><h1>' + esc(lname) + '</h1>' +
       '<div class="st-metas">' +
       '<span class="st-m">👁 ' + order.length + ' ' + esc(t('studio.modes', 'moda')) + '</span>' +
-      '<span class="st-m">📄 ' + esc(t('studio.previewTag', 'pregled (uređivanje: sljedeća cigla)')) + '</span>' +
+      (isEd
+        ? '<span class="st-m st-editing">✏️ ' + esc(t('studio.editingTag', 'uređuješ (draft)')) + '</span>'
+        : '<span class="st-m">📄 ' + esc(t('studio.previewTag', 'pregled')) + '</span>') +
       '</div></div>' +
       (order.length ? '<div class="st-tabs" id="stTabs">' + tabs + '</div>' : '') +
       (order.length ? panes : '<div class="st-empty" style="height:auto;padding:40px"><p>' + esc(t('studio.noModes', 'Ova skripta još nema sadržaja.')) + '</p></div>');
@@ -248,35 +258,67 @@ const SokratStudio = (function () {
       canvas.querySelectorAll('.st-tab').forEach(function (x) { x.classList.toggle('on', x === b); });
       canvas.querySelectorAll('.st-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === mode); });
     });
+
+    if (isEd) mountLearnEditors();
   }
 
-  // read-only PREVIEW panea (uređivanje = kasnije cigle). Boja kategorije (cat.color) → --st-acc.
-  function renderPane(mode, data) {
+  // ---- LEARN PANE (edit-svjestan) ----
+  function renderLearnPane(data, isEd) {
     var out = '';
     var n = 0;
     cats(data).forEach(function (catId) {
       var c = data[catId];
       if (!c || typeof c !== 'object') return;
+      var kind = learnKind(c);
+      if (!isEd && !kind) return;              // read-only: preskoči kategorije bez learn-a
+      if (isEd && !kind) return;               // U8.2: dodavanje learn-a praznoj kategoriji = kasnija cigla
+      n++;
       var accStyle = c.color ? ' style="--st-acc:' + esc(c.color) + '"' : '';
       var catName = esc(c.name || catId);
 
-      if (mode === 'learn') {
-        var L = c.learn;
-        var hasLearn = L && typeof L === 'object' && ((typeof L.content === 'string' && L.content) || Array.isArray(L.blocks));
-        if (!hasLearn) return;
-        n++;
-        var body = '';
-        if (Array.isArray(L.blocks) && typeof window.renderBlocks === 'function') {
-          body = window.renderBlocks(L.blocks);
-        } else if (typeof L.content === 'string' && typeof window.renderBlocks === 'function') {
-          body = window.renderBlocks([{ type: 'legacy-html', html: L.content }]); // v1 kroz ISTI renderer (granica)
-        } else {
-          body = esc(String(L.content || ''));
-        }
+      if (!isEd) {
+        // READ-ONLY preview (U8.1) kroz JEDAN renderer
+        var body = renderLearnBody(c.learn, kind);
         out += '<div class="st-kv"' + accStyle + '><div class="st-kvhead"><span class="st-n">' + n + '</span>' +
-          '<h2>' + catName + (L.title ? ' — ' + esc(L.title) : '') + '</h2></div>' +
+          '<h2>' + catName + (c.learn.title ? ' — ' + esc(c.learn.title) : '') + '</h2></div>' +
           '<div class="st-body">' + body + '</div></div>';
-      } else if (mode === 'cards') {
+        return;
+      }
+
+      // EDIT-MOD
+      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">§ ' + catName + '</div>';
+      if (kind === 'v2') {
+        // blok-editor (kvadratići) — montira se u post-renderu
+        out += '<div class="be-mount" data-be-cat="' + esc(catId) + '"></div>';
+      } else {
+        // v1: read-only + sigurna migracija na blokove (learn.js bira blokove nad content → ne montiramo editor na v1)
+        out += '<div class="st-kv"' + accStyle + '><div class="st-body">' + renderLearnBody(c.learn, 'v1') + '</div></div>' +
+          '<div class="st-legacy-note">' + esc(t('studio.v1Note', 'Stari format (jedan HTML). Prebaci na blokove za uređivanje po kvadratićima:')) + '</div>' +
+          '<button type="button" class="st-migrate" data-migrate-cat="' + esc(catId) + '"><i class="fas fa-cubes"></i> ' +
+          esc(t('studio.migrate', 'Uredi kao blokove')) + '</button>';
+      }
+      out += '</div>';
+    });
+    if (!out) return '<p class="st-hint">' + esc(t('studio.learnEmpty', 'Nema learn-sadržaja u ovoj skripti.')) + '</p>';
+    return out;
+  }
+
+  function renderLearnBody(L, kind) {
+    if (kind === 'v2' && typeof window.renderBlocks === 'function') return window.renderBlocks(L.blocks);
+    if (kind === 'v1' && typeof window.renderBlocks === 'function') return window.renderBlocks([{ type: 'legacy-html', html: L.content }]);
+    return esc(String((L && L.content) || ''));
+  }
+
+  // ---- KARTICE/KVIZ/FILL PANE (read-only preview; uređivanje = U8.3) ----
+  function renderPane(mode, data, isEd) {
+    var out = '';
+    if (isEd) out += '<p class="st-hint">' + esc(t('studio.modeSoon', 'Uređivanje ovog moda stiže u sljedećoj cigli — zasad pregled.')) + '</p>';
+    cats(data).forEach(function (catId) {
+      var c = data[catId];
+      if (!c || typeof c !== 'object') return;
+      var accStyle = c.color ? ' style="--st-acc:' + esc(c.color) + '"' : '';
+      var catName = esc(c.name || catId);
+      if (mode === 'cards') {
         var fcs = Array.isArray(c.flashcards) ? c.flashcards : [];
         if (!fcs.length) return;
         out += '<div class="st-seclbl">§ ' + catName + '</div><div class="st-cardgrid">' +
@@ -309,15 +351,66 @@ const SokratStudio = (function () {
     return out || '<p class="st-hint">' + esc(t('studio.paneEmpty', 'Nema sadržaja u ovom modu.')) + '</p>';
   }
 
-  // ---- draft-chip + Objavi/Odbaci (JEDAN engine preko SokratAdmin.studioBridge) ----
-  function currentDraft() {
-    return (window.SokratDraft && _sel.subjectId)
-      ? SokratDraft.get(_sel.subjectId, _sel.lessonId) : null;
+  // ---- BLOK-EDITOR mount (U8.2): montira SokratBlockEditor u svaki .be-mount learn-panea ----
+  function mountLearnEditors() {
+    var b = bridge();
+    if (!b || !window.SokratBlockEditor || typeof SokratBlockEditor.mount !== 'function') return;
+    var canvas = byId('stCanvas');
+    if (!canvas) return;
+    canvas.querySelectorAll('.be-mount').forEach(function (el) {
+      var catId = el.getAttribute('data-be-cat');
+      SokratBlockEditor.mount(el, {
+        catId: catId,
+        getBlocks: function () { return b.getBlocks(catId); },
+        applyOp: function (op) { var r = b.applyOp(op); refreshTopbar(); return r; }
+      });
+    });
   }
-  function refreshDraftChip() {
+
+  // v1 → v2: sadržaj postaje jedan legacy-html blok (addBlock dodijeli id). Poništivo (Odbaci/content_versions).
+  function migrateToBlocks(catId) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var data = currentData();
+    var c = data && data[catId];
+    if (!c || learnKind(c) !== 'v1') return;
+    var res = b.applyOp({ type: 'addBlock', catId: catId, item: { type: 'legacy-html', html: c.learn.content } });
+    if (res && res.ok) {
+      renderCanvas();
+      refreshTopbar();
+      toast(t('studio.migrated', 'Sekcija prebačena na blokove — postojeći sadržaj je sad prvi blok.'));
+    }
+  }
+
+  // ---- ULAZ U EDIT / OBJAVI / ODBACI (JEDAN engine preko bridge-a) ----
+  async function enterEdit() {
+    var b = bridge();
+    if (!b || !_sel.subjectId) return;
+    if (editing()) return;
+    await b.enter();                 // svjež DB payload + SokratDraft.begin (toast „nije u bazi" ako fali)
+    if (editing()) { renderCanvas(); refreshTopbar(); }
+  }
+
+  function currentDraft() {
+    return (window.SokratDraft && _sel.subjectId) ? SokratDraft.get(_sel.subjectId, _sel.lessonId) : null;
+  }
+
+  function refreshTopbar() {
     var chip = byId('stDraftChip');
+    var editBtn = byId('stEdit');
+    var pub = byId('stPublish');
+    var dis = byId('stDiscard');
+    var b = bridge();
+    var isEd = editing();
+    var hasLesson = !!_sel.subjectId;
+    var canEdit = hasLesson && b && (typeof b.hasVar !== 'function' || b.hasVar());
+
+    if (editBtn) editBtn.hidden = !(canEdit && !isEd);
+    if (pub) pub.hidden = !isEd;
+    if (dis) dis.hidden = !isEd;
+
     if (!chip) return;
-    if (!_sel.subjectId) { chip.textContent = '—'; chip.classList.remove('dirty'); return; }
+    if (!hasLesson) { chip.textContent = '—'; chip.classList.remove('dirty'); return; }
     var d = currentDraft();
     if (d && d.dirty) {
       chip.textContent = '✏️ ' + d.ops.length + ' ' + t('studio.changes', 'izmjena');
@@ -327,19 +420,22 @@ const SokratStudio = (function () {
       chip.classList.remove('dirty');
     }
   }
+
   async function publish() {
     var d = currentDraft();
     if (!d || !d.dirty) { toast(t('studio.nothingToPublish', 'Nema izmjena za objavu.')); return; }
-    if (!(window.SokratAdmin && SokratAdmin.studioBridge)) return;
-    await SokratAdmin.studioBridge.publish();
-    refreshDraftChip();
+    if (!bridge()) return;
+    await bridge().publish();          // U4 publish_document RPC
+    renderCanvas();                    // izašli iz draft-moda → read-only sinkroniziran sadržaj
+    refreshTopbar();
   }
   async function discard() {
     var d = currentDraft();
     if (!d || !d.dirty) { toast(t('studio.nothingToDiscard', 'Nema izmjena.')); return; }
-    if (!(window.SokratAdmin && SokratAdmin.studioBridge)) return;
-    await SokratAdmin.studioBridge.discard();
-    refreshDraftChip();
+    if (!bridge()) return;
+    await bridge().discard();
+    renderCanvas();
+    refreshTopbar();
   }
 
   return { render: render };

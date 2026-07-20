@@ -1,0 +1,69 @@
+// U8.2 — STUDIO EDITOR E2E (STAGING): novi „Studio" (#editor-page) → learn blok-editor.
+// Trajni regresijski spec (pravilo #8): pokreće se SAMO u `authenticated` projektu sa STAGING_*
+// (staging seedan: node scripts/seed-staging.js te2). SVE ostaje u DRAFTU (nikad Objavi) → staging DB NETAKNUT.
+//
+// Dokazuje da U8.2 radi na Studio-kostima: uđi u Studio → odaberi te2 iz STABLA → „Uredi" (draft) →
+// learn v1 kategorija → „Uredi kao blokove" (sigurna migracija content→legacy-html blok) → block-editor
+// se montira → dodaj blok kroz ＋ → draft-brojač raste → Odbaci. Jedan draft/publish engine (studioBridge).
+const { test, expect } = require('@playwright/test');
+
+/** Uđi u Studio i otvori te2 skriptu iz stabla. */
+async function openStudioLesson(page) {
+  await page.goto('/');
+  await page.waitForFunction(
+    () => !!window.SokratStudio && !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
+  );
+  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+  await page.evaluate(() => navigateTo('editor'));
+  await page.waitForSelector('#editor-page.active #stTree .st-row');
+  // rasklopi sve čvorove pa klikni te2 lekciju
+  await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach(n => n.classList.add('open')); });
+  const leaf = page.locator('#stTree .st-row[data-subj="te2"][data-lesson]').first();
+  await expect(leaf).toHaveCount(1);
+  await leaf.click();
+  await page.waitForSelector('#stCanvas .st-head h1');
+}
+
+test('U8.2 — Studio learn: Uredi → migracija v1→blokovi → dodaj blok → draft raste → Odbaci', async ({ page }) => {
+  await openStudioLesson(page);
+
+  // read-only preview najprije (U8.1): learn kv postoji, Uredi gumb ponuđen
+  await expect(page.locator('#stCanvas .st-pane[data-pane="learn"]')).toHaveCount(1);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+  // → uđi u draft-mod (svjež staging payload + base_version)
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+  await expect(page.locator('#stPublish:not([hidden])')).toHaveCount(1);
+  await expect(page.locator('#stDiscard:not([hidden])')).toHaveCount(1);
+
+  // learn tab (ako nije aktivan)
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+
+  // te2 learn = v1 → „Uredi kao blokove" (sigurna migracija; sadržaj ostaje kao prvi blok)
+  const migrate = page.locator('#stCanvas .st-migrate').first();
+  await expect(migrate).toHaveCount(1);
+  await migrate.click();
+
+  // block-editor montiran; migracija = 1 op → draft dirty
+  await page.waitForSelector('#stCanvas .be-mount .be-root', { timeout: 20000 });
+  await expect(page.locator('#stCanvas .be-mount .be-block')).toHaveCount(1); // legacy-html blok
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+
+  // dodaj TEKST blok kroz ＋ (bigplus → izbornik → Tekst) → 2 bloka
+  await page.locator('#stCanvas .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Tekst' }).click();
+  await expect(page.locator('#stCanvas .be-mount').first().locator('.be-block')).toHaveCount(2);
+
+  // presloži: ↓ na prvom bloku → i dalje 2 bloka (dokaz da reorderBlocks op prolazi)
+  await page.locator('#stCanvas .be-mount .be-block').first().locator('[data-be-act="down"]').click();
+  await expect(page.locator('#stCanvas .be-mount').first().locator('.be-block')).toHaveCount(2);
+
+  // Odbaci (draft dirty) → čist izlaz; staging nikad nije pisan
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

@@ -110,7 +110,9 @@
   if (typeof document !== 'undefined' && document.addEventListener && !window.__beMenuWired) {
     window.__beMenuWired = true;
     document.addEventListener('click', function (e) {
-      const keep = e.target.closest ? e.target.closest('.be-menu, .be-add') : null;
+      // ＋ izvori (mali adder `.be-add` I veliki `.be-bigplus`) + sam meni ne smiju zatvoriti meni
+      // koji upravo otvaraju (container-handler kreira meni PRIJE nego ovaj bubbling-listener stigne).
+      const keep = e.target.closest ? e.target.closest('.be-menu, .be-add, .be-bigplus') : null;
       if (!keep) closeAllMenus();
     });
   }

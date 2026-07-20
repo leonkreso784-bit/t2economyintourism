@@ -805,5 +805,14 @@ window.SokratAdmin.studioBridge = {
   },
   draft: function () { return _adminDraft(); },
   publish: function () { return _publishDraft(); },  // U4 publish_document RPC (atomično + base_version)
-  discard: function () { return _discardDraft(); }
+  discard: function () { return _discardDraft(); },
+  // U8.2 — ulaz u draft-mod (svjež DB payload + version → SokratDraft.begin; async). Vraća promise.
+  enter: function () { return _enterDraftMode(); },
+  isEditing: function () { return _draftMode; },
+  hasVar: function () { return !!_adminCtx.varName; }, // je li lekcija u bazi (inače nema editiranja)
+  // Izvor za render u edit-modu = WORKING kopija drafta (inače pročitani sadržaj).
+  workingData: function () { return _adminWorking(); },
+  // U8.2 — blok-ops (learn v2) preko iste draft-mašinerije kao admin (_beApplyOp osvježi i admin-traku, no-op ako skrivena).
+  getBlocks: function (catId) { return _beGetBlocks(catId); },
+  applyOp: function (op) { return _beApplyOp(op); }
 };

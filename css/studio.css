@@ -167,6 +167,24 @@
 #editor-page .st-kv .st-body p{ margin:.5em 0; }
 #editor-page .st-kv .st-body ul,#editor-page .st-kv .st-body ol{ margin:.4em 0 .4em 1.2em; }
 
+/* ==== EDIT-MOD: learn sekcija + migracija v1→blokovi (U8.2) ==== */
+#editor-page .st-editing{ color:#fbbf24!important; background:rgba(245,158,11,.12)!important; border-color:rgba(245,158,11,.35)!important; }
+#editor-page .st-learn-cat{
+  border:1px solid var(--st-line); border-left:4px solid var(--st-acc,var(--primary));
+  border-radius:16px; padding:16px 18px; margin-bottom:18px; background:rgba(15,23,42,.35);
+}
+#editor-page .st-learn-cathead{
+  font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
+  color:var(--text-muted); margin-bottom:12px;
+}
+#editor-page .st-legacy-note{ font-size:12px; color:var(--text-muted); margin:12px 0 8px; }
+#editor-page .st-migrate{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:11px;
+  border:1.5px dashed rgba(99,102,241,.5); background:rgba(99,102,241,.06); color:var(--primary-light);
+  font-weight:600; font-size:13px; cursor:pointer; transition:.15s; font-family:inherit;
+}
+#editor-page .st-migrate:hover{ border-color:var(--primary); background:rgba(99,102,241,.12); box-shadow:var(--st-glow); }
+
 /* ==== PREVIEW: kartice ==== */
 #editor-page .st-cardgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
 #editor-page .st-fcard{
