@@ -556,6 +556,37 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/management-hr/*.json)
       }
+    },
+    {
+      id: 'sit-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 2,
+      name: 'Specifični oblici turizma',
+      shortName: 'SOT',
+      icon: 'fa-compass',
+      color: '#14b8a6',
+      iconGradient: ['#14b8a6', '#2dd4bf'],
+      description: 'Pojam i razvoj turizma, vrste i oblici, faktori i funkcije, turističko tržište i destinacija (Butler); specifični oblici: zdravstveni, kulturni, sportski, ekoturizam, nautički i poslovni (MICE)',
+      storageKey: 'sit-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Pojam i razvoj turizma, vrste i oblici, faktori nastanka, funkcije, turističko tržište i turistička destinacija' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Specifični (selektivni) oblici: zdravstveni, kulturni, sportski, ekoturizam, nautički i poslovni turizam' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ponavljanje kroz sve teme' }
+      ],
+      content: {
+        scripts: [
+          'data/sit-hr/midterm-1.js',
+          'data/sit-hr/midterm-2.js',
+          'data/sit-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'sitHrM1',
+          'second-midterm': 'sitHrM2',
+          'final': 'sitHrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/sit-hr/*.json)
+      }
     }
   ]
 };

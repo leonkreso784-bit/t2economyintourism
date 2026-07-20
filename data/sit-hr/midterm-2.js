@@ -1,0 +1,665 @@
+// Specifični oblici turizma (HR) — M2 (2. kolokvij)
+// AUTORSKI IZ HRVATSKE SKRIPTE (prof. dr. sc. Daniela Gračan, FMTU Opatija) + ispitna pitanja.
+// MODEL: kartice = kratke definicije (<200 znak), detalj u learn.
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
+
+const sitHrM2 = {
+  "selectiveClassification": {
+    "name": "Selektivni (specifični) oblici turizma",
+    "icon": "fa-filter",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što je SELEKTIVNI turizam?",
+        "answer": "Kvalitativno nova vrsta turizma utemeljena na selekciji programa, odgovornom ponašanju i uravnoteženom razvoju; obuhvaća odgovorni, individualni turizam i turizam posebnih oblika.",
+        "explanation": "Suprotnost masovnom turizmu; naziva se i „soft” turizam."
+      },
+      {
+        "question": "Na čemu se temelje SPECIFIČNI OBLICI turizma?",
+        "answer": "Na dominantnom turističkom MOTIVU i na posebnim obilježjima prirodnih resursa (more, termalne vode, klima, planine).",
+        "explanation": "Za razvoj su potrebni omasovljenje potražnje i specijalizacija ponude."
+      },
+      {
+        "question": "Što je ALTERNATIVNI turizam?",
+        "answer": "Turizam usklađen s prirodnim i društvenim vrijednostima lokalne zajednice; cilj = zadovoljiti posebne želje suvremenih turista uz odgovornost i „povratak korijenima”.",
+        "explanation": "Osnovni motiv nisu sunce i more nego drugi (specifični) motivi."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Selektivni turizam poznat je i kao:",
+        "options": [
+          "„hard” turizam",
+          "„soft” turizam",
+          "masovni turizam",
+          "pansionski turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Specifični oblici turizma temelje se na:",
+        "options": [
+          "Statističkom kriteriju",
+          "Dominantnom turističkom motivu",
+          "Broju noćenja",
+          "Vrsti prijevoza"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Što je potrebno za razvoj specifičnih oblika turizma?",
+        "options": [
+          "Samo sunce i more",
+          "Omasovljenje potražnje i specijalizacija ponude",
+          "Smanjenje broja turista",
+          "Ukidanje agencija"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Osnovni motiv alternativnog turizma su:",
+        "options": [
+          "Sunce i more",
+          "Drugi (specifični) motivi, ne sunce i more",
+          "Niska cijena",
+          "Masovnost"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Selektivni turizam poznat je i kao tzv. _______ turizam.",
+        "answer": "soft",
+        "hint": "Suprotno od „hard”…"
+      },
+      {
+        "sentence": "Specifični oblici turizma temelje se na dominantnom turističkom _______.",
+        "answer": "motivu",
+        "hint": "Ono što pokreće turista…"
+      },
+      {
+        "sentence": "Turizam usklađen s vrijednostima lokalne zajednice naziva se _______ turizam.",
+        "answer": "alternativni",
+        "hint": "„Povratak korijenima”…"
+      }
+    ],
+    "learn": {
+      "title": "Selektivni (specifični) oblici turizma",
+      "content": "\n                <h3>Od masovnog prema selektivnom turizmu</h3>\n                <p><strong>Selektivni turizam</strong> je kvalitativno nova vrsta turizma utemeljena na selekciji programa, odgovornom ponašanju svih sudionika, ekološkom i ekonomskom načelu uravnoteženog razvoja te izvornom identitetu. Suprotnost je masovnom („hard”) turizmu; naziva se i <strong>„soft” turizam</strong>. Obuhvaća odgovorni turizam, individualni turizam i turizam posebnih oblika.</p>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Specifični oblici</strong> temelje se na dominantnom turističkom <strong>motivu</strong> i na posebnim obilježjima prirodnih resursa (more, termomineralne vode, klima, planine).</li>\n                        <li>Za razvoj su nužni <strong>omasovljenje potražnje</strong> i <strong>specijalizacija ponude</strong>.</li>\n                        <li><strong>Alternativni turizam</strong> — usklađen s prirodnim i društvenim vrijednostima lokalne zajednice; osnovni motiv nisu sunce i more, nego drugi motivi (zdravstveni, kulturni, sportski, ekološki…).</li>\n                    </ul>\n                </div>\n            "
+    }
+  },
+  "healthTourism": {
+    "name": "Zdravstveni turizam",
+    "icon": "fa-heart-pulse",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Što je ZDRAVSTVENI turizam?",
+        "answer": "Složena gospodarska aktivnost kontroliranog korištenja prirodnih ljekovitih činitelja i postupaka fizikalne medicine radi održanja i unapređenja fizičkog, mentalnog i duhovnog zdravlja turista.",
+        "explanation": "Zdravlje = najstariji i najjači motiv turističkih kretanja."
+      },
+      {
+        "question": "Kako se ZDRAVLJE shvaća u zdravstvenom turizmu?",
+        "answer": "Holistički: nije samo odsutnost bolesti, nego opće fizičko, mentalno i socijalno (duhovno) blagostanje i njihova međuovisnost.",
+        "explanation": "Osnovni cilj = očuvanje i unapređenje zdravlja."
+      },
+      {
+        "question": "Koja su TRI TIPA zdravstveno-turističkih destinacija?",
+        "answer": "Toplička, primorska (klimatsko-primorska) i planinska (klimatsko-planinska).",
+        "explanation": "Prema vrsti prirodnih ljekovitih činitelja."
+      },
+      {
+        "question": "Kako prirodni činitelji PRODUŽUJU sezonu?",
+        "answer": "Obilni (more i mediteranska klima), standardni (ljekovite vode i blata) i iznimni (naftalan — ljekovita nafta).",
+        "explanation": "Naftalan može utrostručiti trajanje primorske sezone."
+      },
+      {
+        "question": "Što su WELLNESS i SPA?",
+        "answer": "Wellness = tretmani za zdravstvenu preventivu i fizičko/mentalno blagostanje. Spa („Salus per aquam” = „vodom do zdravlja”) = termalni izvor / mjesto s izvorom.",
+        "explanation": "Wellness je najznačajniji dio hrvatske zdravstveno-turističke ponude."
+      },
+      {
+        "question": "Što je MPAO i hotel „Minerva”?",
+        "answer": "MPAO = medicinski programirani aktivni odmor. Hotel „Minerva” (Varaždinske toplice) zasnovan je na načelima MPAO-a (nije bio za medicinsku rehabilitaciju).",
+        "explanation": "Ključna godina: 1936. — Pravilnik o proglašenju turističkih mjesta."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Tri osnovna tipa zdravstveno-turističkih destinacija su:",
+        "options": [
+          "Gradska, seoska, otočna",
+          "Toplička, primorska i planinska",
+          "Ljetna, zimska, prijelazna",
+          "Domaća, inozemna, tranzitna"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Zdravlje se u zdravstvenom turizmu shvaća:",
+        "options": [
+          "Samo kao odsutnost bolesti",
+          "Holistički (fizičko, mentalno i duhovno blagostanje)",
+          "Samo kao fizička kondicija",
+          "Isključivo kroz liječenje"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "„Salus per aquam” (spa) znači:",
+        "options": [
+          "Zdrav duh u zdravom tijelu",
+          "Vodom do zdravlja",
+          "Odmor uz more",
+          "Planinski zrak"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Iznimni prirodni ljekoviti činitelj u Hrvatskoj je:",
+        "options": [
+          "More",
+          "Mediteranska klima",
+          "Naftalan (ljekovita nafta)",
+          "Ljekovito blato"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Hotel „Minerva” u Varaždinskim toplicama zasnovan je na načelima:",
+        "options": [
+          "Talasoterapije",
+          "Medicinski programiranog aktivnog odmora (MPAO)",
+          "Bolničkog liječenja",
+          "Wellnessa"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Najstariji i najjači motiv turističkih kretanja je _______.",
+        "answer": "zdravlje",
+        "hint": "Cilj zdravstvenog turizma…"
+      },
+      {
+        "sentence": "Tri tipa zdravstveno-turističkih destinacija su toplička, primorska i _______.",
+        "answer": "planinska",
+        "hint": "Uz planinske ljekovite činitelje…"
+      },
+      {
+        "sentence": "Kratica MPAO označava medicinski programirani aktivni _______.",
+        "answer": "odmor",
+        "hint": "Hotel „Minerva”…"
+      },
+      {
+        "sentence": "Spa dolazi od izraza „Salus per _______” (vodom do zdravlja).",
+        "answer": "aquam",
+        "hint": "Latinski za „vodu”…"
+      }
+    ],
+    "learn": {
+      "title": "Zdravstveni turizam",
+      "content": "\n                <h3>Pojam i cilj</h3>\n                <p><strong>Zdravlje</strong> je najstariji i najjači motiv turističkih kretanja, pa se cjelokupni turizam u najširem smislu može smatrati zdravstvenim. <strong>Zdravstveni turizam</strong> = složena gospodarska aktivnost stručnog i kontroliranog korištenja <strong>prirodnih ljekovitih činitelja</strong>, postupaka fizikalne medicine i programiranih fizičkih aktivnosti radi održanja i unapređenja fizičkog, mentalnog i duhovnog zdravlja turista.</p>\n                <p><strong>Zdravlje</strong> se shvaća <strong>holistički</strong> — nije samo odsutnost bolesti, nego opće fizičko, mentalno i socijalno blagostanje.</p>\n                <h4>Prirodni ljekoviti činitelji i destinacije</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Produženje sezone: <strong>obilni</strong> (more, mediteranska klima) · <strong>standardni</strong> (ljekovite vode i blata) · <strong>iznimni</strong> (naftalan — može utrostručiti primorsku sezonu).</li>\n                        <li>Tri tipa destinacija: <strong>toplička</strong> · <strong>primorska (klimatsko-primorska)</strong> · <strong>planinska (klimatsko-planinska)</strong>.</li>\n                        <li>Klasifikacija činitelja: geološke tvorevine · klima · voda (more, termomineralne vode, ljekovita blata) · biljni svijet.</li>\n                    </ul>\n                </div>\n                <h4>Wellness, spa i MPAO</h4>\n                <p><strong>Wellness</strong> = tretmani za preventivu i fizičko/mentalno blagostanje (najznačajniji dio hrvatske ponude). <strong>Spa</strong> („Salus per aquam” = „vodom do zdravlja”) = termalni izvor ili mjesto s izvorom. <strong>MPAO</strong> (medicinski programirani aktivni odmor) — načela hotela „Minerva” u Varaždinskim toplicama. Ključna godina: <strong>1936.</strong> (Pravilnik o proglašenju turističkih mjesta). Zdravstveno-turistički kompleks ima zdravstveni trakt, wellness trakt i rekreacijsku zonu.</p>\n            "
+    }
+  },
+  "culturalTourism": {
+    "name": "Kulturni turizam",
+    "icon": "fa-landmark",
+    "color": "#a855f7",
+    "flashcards": [
+      {
+        "question": "Kada i gdje se pojavljuje termin KULTURNI TURIZAM?",
+        "answer": "Termin „kulturni turizam” pojavljuje se 1969. na kongresu ICOMOS-a.",
+        "explanation": "ICOMOS = Međunarodno vijeće za spomenike i lokalitete."
+      },
+      {
+        "question": "Što je projekt EUROPSKI GRAD KULTURE?",
+        "answer": "Pokrenut 1983. na prijedlog grčke ministrice Meline Mercouri; zaživio 1985. proglašenjem Atene kao prvog grada. Svake godine jedan grad ima cjelogodišnja kulturna zbivanja.",
+        "explanation": "Gradu donosi dugoročnu promotivnu i financijsku dobit."
+      },
+      {
+        "question": "Što je TURISTIČKI CVIJET — kvaliteta za Hrvatsku?",
+        "answer": "Projekt Hrvatske gospodarske komore (od 1996.); nagrade najuspješnijim/najuređenijim turističkim destinacijama; održavaju se Dani hrvatskog turizma.",
+        "explanation": "Akcija „Plavi cvijet” ocjenjuje uređenost primorskih mjesta (npr. Nin 2008.)."
+      },
+      {
+        "question": "Koji su OBLICI kulturnog turizma?",
+        "answer": "Turizam baštine (spomenici, muzeji), umjetnički, urbani, religijski (vjerski) turizam, festivali i kulturne manifestacije te kreativni turizam.",
+        "explanation": "Privlači turiste specifičnih interesa i veće platežne moći."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Termin „kulturni turizam” pojavljuje se:",
+        "options": [
+          "1936. u Varaždinu",
+          "1969. na kongresu ICOMOS-a",
+          "1983. u Ateni",
+          "1996. u Hrvatskoj"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Projekt Europski grad kulture pokrenut je na prijedlog:",
+        "options": [
+          "Thomasa Cooka",
+          "Meline Mercouri (grčke ministrice)",
+          "Butlera",
+          "Hrvatske gospodarske komore"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prvi Europski grad kulture (1985.) bila je:",
+        "options": [
+          "Atena",
+          "Pariz",
+          "Berlin",
+          "Bologna"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Projekt „Turistički cvijet — kvaliteta za Hrvatsku” pokrenula je:",
+        "options": [
+          "Ministarstvo turizma",
+          "Hrvatska gospodarska komora (1996.)",
+          "ICOMOS",
+          "UNESCO"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Termin „kulturni turizam” pojavljuje se 1969. na kongresu _______.",
+        "answer": "ICOMOS",
+        "hint": "Vijeće za spomenike i lokalitete…"
+      },
+      {
+        "sentence": "Prvi proglašeni Europski grad kulture (1985.) bila je _______.",
+        "answer": "Atena",
+        "hint": "Glavni grad Grčke…"
+      },
+      {
+        "sentence": "Projekt „Turistički cvijet” pokrenula je Hrvatska gospodarska _______.",
+        "answer": "komora",
+        "hint": "HGK…"
+      }
+    ],
+    "learn": {
+      "title": "Kulturni turizam",
+      "content": "\n                <h3>Pojam i razvoj</h3>\n                <p><strong>Kulturni turizam</strong> = putovanja motivirana upoznavanjem kulturne baštine, umjetnosti, običaja i identiteta destinacije; privlači turiste specifičnih interesa i veće platežne moći. Termin se pojavljuje <strong>1969. na kongresu ICOMOS-a</strong> (Međunarodno vijeće za spomenike i lokalitete).</p>\n                <h4>Ključni projekti</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Europski grad kulture</strong> — pokrenut 1983. na prijedlog grčke ministrice <strong>Meline Mercouri</strong>; zaživio 1985. proglašenjem <strong>Atene</strong> kao prvog grada. Svake godine jedan grad ima cjelogodišnja kulturna zbivanja (isprva veliki gradovi — Berlin, Pariz; kasnije manji — Avignon, Bologna) → dugoročna promotivna i financijska dobit.</li>\n                        <li><strong>Turistički cvijet — kvaliteta za Hrvatsku</strong> — projekt <strong>HGK</strong> (od 1996.); nagrade najuređenijim destinacijama; Dani hrvatskog turizma.</li>\n                        <li><strong>Plavi cvijet</strong> — ocjenjuje uređenost primorskih gradova/mjesta (npr. <strong>Nin</strong>, 2008.).</li>\n                    </ul>\n                </div>\n                <p>Oblici kulturnog turizma: turizam baštine (spomenici, muzeji), umjetnički, urbani, religijski (vjerski), festivali i manifestacije te kreativni turizam.</p>\n            "
+    }
+  },
+  "sportsTourism": {
+    "name": "Sportski turizam",
+    "icon": "fa-person-running",
+    "color": "#22c55e",
+    "flashcards": [
+      {
+        "question": "Kako se definira SPORTSKI turizam (šire i uže)?",
+        "answer": "Šire = pasivno ili aktivno sudjelovanje na sportskom događaju (npr. navijač na utakmici). Uže = primarno aktivno rekreativno sudjelovanje u sportu (npr. golf).",
+        "explanation": "Sport je primarni motiv putovanja."
+      },
+      {
+        "question": "Što je „TURISTIČKI SPORT”?",
+        "answer": "Šire = turisti koji se u sport uključuju kao SEKUNDARNU aktivnost. Uže = posjetitelji koji se slučajno uključe u neki manji oblik sporta/rekreacije.",
+        "explanation": "Sport je ovdje sporedan, ne primarni motiv."
+      },
+      {
+        "question": "Koje su KORISTI i TROŠKOVI Olimpijskih igara?",
+        "answer": "Koristi: turizam, stadioni i infrastruktura, olimpijski poslovi, urbana obnova, međunarodni ugled. Troškovi: investicije, operativni troškovi, onečišćenje, održavanje stadiona.",
+        "explanation": "Promatraju se prije, za vrijeme i nakon igara."
+      },
+      {
+        "question": "Koji oblik pruža najveće mogućnosti razvoja sportskog turizma u RH?",
+        "answer": "Ljetni sportsko-rekreacijski turizam.",
+        "explanation": "Zbog obale, klime i prirodnih uvjeta."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Najveće mogućnosti za razvoj sportskog turizma u RH pruža:",
+        "options": [
+          "Zimski skijaški turizam",
+          "Ljetni sportsko-rekreacijski turizam",
+          "Gradski turizam",
+          "Kongresni turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "U UŽEM smislu, sportski turizam je:",
+        "options": [
+          "Gledanje utakmice kao navijač",
+          "Primarno aktivno rekreativno sudjelovanje u sportu",
+          "Slučajno uključivanje u sport",
+          "Poslovni put uz sport"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Kod „turističkog sporta” sport je:",
+        "options": [
+          "Primarni motiv",
+          "Sekundarna (sporedna) aktivnost",
+          "Jedini sadržaj",
+          "Zabranjen"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koristi Olimpijskih igara promatraju se:",
+        "options": [
+          "Samo za vrijeme igara",
+          "Prije, za vrijeme i nakon igara",
+          "Samo nakon igara",
+          "Samo prije igara"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "U užem smislu, sportski turizam je primarno aktivno _______ sudjelovanje u sportu.",
+        "answer": "rekreativno",
+        "hint": "Npr. igranje golfa…"
+      },
+      {
+        "sentence": "Najveće mogućnosti razvoja sportskog turizma u RH pruža ljetni sportsko-_______ turizam.",
+        "answer": "rekreacijski",
+        "hint": "Uz obalu i klimu…"
+      },
+      {
+        "sentence": "Kod „turističkog sporta” sport je _______ (sporedna) aktivnost.",
+        "answer": "sekundarna",
+        "hint": "Nije primarni motiv…"
+      }
+    ],
+    "learn": {
+      "title": "Sportski turizam",
+      "content": "\n                <h3>Sportski turizam i „turistički sport”</h3>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Sportski turizam</strong> (sport = primarni motiv): <em>šire</em> — pasivno ili aktivno sudjelovanje na sportskom događaju (sportaš na OI, navijač na utakmici); <em>uže</em> — primarno aktivno rekreativno sudjelovanje u sportu (npr. golf).</li>\n                        <li><strong>„Turistički sport”</strong> (sport = sekundarna aktivnost): <em>šire</em> — turisti se u sport uključuju usput; <em>uže</em> — slučajno uključivanje u manji oblik sporta/rekreacije.</li>\n                    </ul>\n                </div>\n                <h4>Olimpijske igre — koristi i troškovi</h4>\n                <p>Promatraju se <strong>prije, za vrijeme i nakon</strong> igara.</p>\n                <ul>\n                    <li><strong>Koristi:</strong> turizam, građevinske aktivnosti, stadioni i infrastruktura, olimpijski poslovi, ljudski kapital, urbana obnova, međunarodni ugled.</li>\n                    <li><strong>Troškovi:</strong> investicijska potrošnja, operativni troškovi, onečišćenje, održavanje stadiona i infrastrukture, izgubljene koristi drugih projekata.</li>\n                </ul>\n                <p>U Hrvatskoj najveće mogućnosti razvoja pruža <strong>ljetni sportsko-rekreacijski turizam</strong> (obala, klima, prirodni uvjeti).</p>\n            "
+    }
+  },
+  "ecoTourism": {
+    "name": "Ekoturizam",
+    "icon": "fa-leaf",
+    "color": "#16a34a",
+    "flashcards": [
+      {
+        "question": "Što je EKOTURIZAM?",
+        "answer": "Odgovorno putovanje u prirodna područja koje čuva okoliš i pridonosi dobrobiti lokalnog stanovništva. Udio na tržištu 3–7%; putovanja vezana uz prirodu rastu 10–20% godišnje.",
+        "explanation": "Razvoj je vezan uz osnivanje prvih nacionalnih parkova."
+      },
+      {
+        "question": "Koji su glavni CILJEVI ekoturizma?",
+        "answer": "Ekološka edukacija posjetitelja i lokalnog stanovništva, zaštita prirodnih područja te postizanje određene ekonomske koristi.",
+        "explanation": "Nacionalni parkovi imaju glavnu ulogu u postizanju tih ciljeva."
+      },
+      {
+        "question": "Koji su prvi NACIONALNI PARKOVI (svijet i Hrvatska)?",
+        "answer": "Prvi NP u svijetu = Yellowstone (SAD, 1872.). Prvi hrvatski NP-ovi = Plitvička jezera i Paklenica (1949.).",
+        "explanation": "Ekoturizam je vezan uz osnivanje prvih parkova prije više od 130 godina."
+      },
+      {
+        "question": "Kakvi su počeci zaštite prirode u Hrvatskoj?",
+        "answer": "Časopisi „Priroda” i „Hrvatski planinar”, Hrvatsko prirodoslovno društvo (1885.) te prvi zakoni o zaštiti (Zakon o zaštiti ptica, 1893.).",
+        "explanation": "Preteče ekološke svijesti u Hrvatskoj."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Prvi nacionalni park u svijetu (1872.) je:",
+        "options": [
+          "Plitvička jezera",
+          "Yellowstone (SAD)",
+          "Paklenica",
+          "Brijuni"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prvi hrvatski nacionalni parkovi (1949.) su:",
+        "options": [
+          "Kornati i Mljet",
+          "Plitvička jezera i Paklenica",
+          "Risnjak i Krka",
+          "Brijuni i Velebit"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Glavni ciljevi ekoturizma su:",
+        "options": [
+          "Samo zabava",
+          "Ekološka edukacija, zaštita prirode i ekonomska korist",
+          "Masovnost i niska cijena",
+          "Isključivo profit"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Udio ekoturizma na svjetskom turističkom tržištu kreće se između:",
+        "options": [
+          "3 i 7 posto",
+          "20 i 30 posto",
+          "50 i 60 posto",
+          "1 i 2 posto"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Prvi nacionalni park u svijetu (1872.) je _______.",
+        "answer": "Yellowstone",
+        "hint": "U SAD-u…"
+      },
+      {
+        "sentence": "Prvi hrvatski nacionalni parkovi (1949.) su Plitvička jezera i _______.",
+        "answer": "Paklenica",
+        "hint": "Velebitski park…"
+      },
+      {
+        "sentence": "Glavnu ulogu u ostvarenju ciljeva ekoturizma imaju nacionalni _______.",
+        "answer": "parkovi",
+        "hint": "Zaštićena prirodna područja…"
+      }
+    ],
+    "learn": {
+      "title": "Ekoturizam",
+      "content": "\n                <h3>Pojam i tržište</h3>\n                <p><strong>Ekoturizam</strong> = odgovorno putovanje u prirodna područja koje čuva okoliš i pridonosi dobrobiti lokalnog stanovništva. Udio na svjetskom tržištu kreće se između <strong>3 i 7 posto</strong>, a putovanja vezana uz prirodu rastu po stopi od <strong>10 do 20 posto</strong> godišnje. Razvoj je vezan uz osnivanje prvih nacionalnih parkova prije više od 130 godina.</p>\n                <h4>Ciljevi i nacionalni parkovi</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li>Glavni ciljevi: <strong>ekološka edukacija</strong> posjetitelja i lokalnog stanovništva · <strong>zaštita prirodnih područja</strong> · postizanje <strong>ekonomske koristi</strong>.</li>\n                        <li>Prvi NP u svijetu: <strong>Yellowstone</strong> (SAD, 1872.).</li>\n                        <li>Prvi hrvatski NP-ovi: <strong>Plitvička jezera i Paklenica</strong> (1949.).</li>\n                    </ul>\n                </div>\n                <h4>Počeci zaštite prirode u Hrvatskoj</h4>\n                <p>Krajem 19. st. izlaze časopisi „Priroda” i „Hrvatski planinar”; osnovano je <strong>Hrvatsko prirodoslovno društvo (1885.)</strong> i <strong>Društvo za uređenje Plitvičkih jezera (1893.)</strong>; doneseni su prvi zakoni o zaštiti prirode (<strong>Zakon o zaštiti ptica, 1893.</strong>).</p>\n            "
+    }
+  },
+  "nauticalTourism": {
+    "name": "Nautički turizam",
+    "icon": "fa-anchor",
+    "color": "#0284c7",
+    "flashcards": [
+      {
+        "question": "Kako se dijeli NAUTIČKI turizam (motiv i plovilo)?",
+        "answer": "Prema motivu: mobilni, boravišni, športski, izletnički i ribolovni. Prema veličini/vrsti plovila: brodski, jahting i moto-nautički.",
+        "explanation": "Postoje i podjele prema opsegu plovidbe, organizaciji i sektorima."
+      },
+      {
+        "question": "Što su LUKE nautičkog turizma?",
+        "answer": "Sidrište, privezište, suha marina i marina (kategorije I, II i III).",
+        "explanation": "Luka nautičkog turizma = objekt uređen za potrebe nautičara."
+      },
+      {
+        "question": "Koja je razlika između MARINE, SIDRIŠTA i SUHE MARINE?",
+        "answer": "Marina = uređeni dio vode i obale za vez, smještaj i usluge. Sidrište = dio vode za sigurno sidrenje. Suha marina = kopno za skladištenje plovila na suhom.",
+        "explanation": "Privezište = dio obale opremljen priveznim sustavom."
+      },
+      {
+        "question": "Što je ČARTER u nautičkom turizmu?",
+        "answer": "Iznajmljivanje plovila (sa skipperom ili bez) uz dodatne usluge (škola jedrenja, čuvanje broda). Čarter menadžment = iznajmljivanje tuđih plovila.",
+        "explanation": "Raspodjela neto prihoda vlasnik:tvrtka npr. 25:75 ili 17:83."
+      },
+      {
+        "question": "Koje su ključne godine u KRUZING turizmu?",
+        "answer": "1965. — brod Oceanic (početak modernog kruzinga). 1966. — Norwegian Caribbean Line, prva kompanija koja je nudila krstarenja (brod Sunward).",
+        "explanation": "Kruzing = kružna putovanja velikim brodovima."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Prema motivu, nautički turizam NE dijeli se na:",
+        "options": [
+          "Mobilni",
+          "Boravišni",
+          "Kongresni",
+          "Ribolovni"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Uređeni dio vode i obale za vez i smještaj turista u plovilima je:",
+        "options": [
+          "Sidrište",
+          "Marina",
+          "Suha marina",
+          "Odlagalište"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Početak modernog kruzinga (1965.) veže se uz brod:",
+        "options": [
+          "Sunward",
+          "Oceanic",
+          "Titanic",
+          "Queen Mary"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Iznajmljivanje tuđih (nevlastitih) plovila naziva se:",
+        "options": [
+          "Čarter menadžment",
+          "Sidrenje",
+          "Kruzing",
+          "Kabotaža"
+        ],
+        "correct": 0
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Uređeni dio vode i obale za vez plovila naziva se _______.",
+        "answer": "marina",
+        "hint": "Kategorije I, II i III…"
+      },
+      {
+        "sentence": "Iznajmljivanje plovila u nautičkom turizmu naziva se _______.",
+        "answer": "čarter",
+        "hint": "Sa skipperom ili bez…"
+      },
+      {
+        "sentence": "Prva kompanija koja je nudila krstarenja (1966.) bila je _______ Caribbean Line.",
+        "answer": "Norwegian",
+        "hint": "Brod Sunward…"
+      }
+    ],
+    "learn": {
+      "title": "Nautički turizam",
+      "content": "\n                <h3>Podjele nautičkog turizma</h3>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Prema motivu:</strong> mobilni · boravišni · športski · izletnički · ribolovni.</li>\n                        <li><strong>Prema plovilu:</strong> brodski · jahting · moto-nautički.</li>\n                        <li><strong>Prema sektorima:</strong> obalni · kupališni · nautički kamping · boravak u lukama · na otvorenom moru · otočni.</li>\n                    </ul>\n                </div>\n                <h4>Luke nautičkog turizma</h4>\n                <ul>\n                    <li><strong>Sidrište</strong> — dio vode za sigurno sidrenje.</li>\n                    <li><strong>Privezište</strong> — dio obale opremljen priveznim sustavom.</li>\n                    <li><strong>Suha marina</strong> — kopno za skladištenje plovila na suhom.</li>\n                    <li><strong>Marina</strong> — uređeni dio vode i obale za vez, smještaj i usluge (kategorije I, II, III).</li>\n                </ul>\n                <h4>Čarter i kruzing</h4>\n                <p><strong>Čarter</strong> = iznajmljivanje plovila (sa skipperom ili bez) uz dodatne usluge (škola jedrenja/skippera, čuvanje broda, regate). <strong>Čarter menadžment</strong> = iznajmljivanje tuđih plovila; raspodjela neto prihoda vlasnik:tvrtka npr. 25:75 ili 17:83. <strong>Kruzing</strong> (kružna putovanja): brod <strong>Oceanic (1965.)</strong> = početak modernog kruzinga; <strong>Norwegian Caribbean Line (1966.)</strong> = prva kompanija (brod Sunward).</p>\n            "
+    }
+  },
+  "businessTourism": {
+    "name": "Poslovni turizam (MICE)",
+    "icon": "fa-briefcase",
+    "color": "#64748b",
+    "flashcards": [
+      {
+        "question": "Što je POSLOVNI turizam (MICE)?",
+        "answer": "Putovanja radi poslovnih aktivnosti: sastanci (Meetings), poticajna putovanja (Incentives), konferencije/kongresi (Conferences) i izložbe/sajmovi (Exhibitions).",
+        "explanation": "Ugostiteljstvo čini oko 70% potrošnje sudionika."
+      },
+      {
+        "question": "Kako se dijele SASTANCI prema veličini?",
+        "answer": "Sasvim mali (do 100), mali (100–500), srednji (500–1000), veliki (1000–5000) i jumbo (preko 5000 osoba).",
+        "explanation": "Kriterij = broj sudionika."
+      },
+      {
+        "question": "Koje su glavne VRSTE skupova?",
+        "answer": "Kongres (nekoliko tisuća, za širu javnost), konferencija (uža, profesionalna), simpozij (specijalizirani tehničari), seminar, panel diskusija i okrugli stol.",
+        "explanation": "Razlikuju se po veličini, cilju i sastavu."
+      },
+      {
+        "question": "Koji su IZVORI PRIHODA u kongresnom turizmu?",
+        "answer": "Kotizacija (najveći izvor), prodaja tiskanih izvještaja/izlaganja, novčana pomoć (vlada, industrija, donori) i reklamne izložbe.",
+        "explanation": "Kotizacija = iznos koji plaćaju sudionici sastanka."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Najveći izvor prihoda u kongresnom turizmu je:",
+        "options": [
+          "Reklame",
+          "Kotizacija sudionika",
+          "Državna pomoć",
+          "Prodaja izvještaja"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Sastanak s preko 5000 osoba naziva se:",
+        "options": [
+          "Veliki",
+          "Srednji",
+          "Jumbo",
+          "Mali"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Ugostiteljstvo u poslovnom turizmu čini otprilike:",
+        "options": [
+          "10% potrošnje",
+          "30% potrošnje",
+          "70% potrošnje",
+          "100% potrošnje"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Skup namijenjen široj javnosti s nekoliko tisuća sudionika je:",
+        "options": [
+          "Simpozij",
+          "Kongres",
+          "Radni ručak",
+          "Panel diskusija"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Najveći izvor prihoda u kongresnom turizmu je _______.",
+        "answer": "kotizacija",
+        "hint": "Plaćaju je sudionici…"
+      },
+      {
+        "sentence": "Sastanak od preko 5000 osoba naziva se _______ sastanak.",
+        "answer": "jumbo",
+        "hint": "Najveći po veličini…"
+      },
+      {
+        "sentence": "Ugostiteljstvo čini oko _______ % potrošnje sudionika poslovnog turizma.",
+        "answer": "70",
+        "hint": "Većina potrošnje…"
+      }
+    ],
+    "learn": {
+      "title": "Poslovni turizam (MICE)",
+      "content": "\n                <h3>Pojam MICE</h3>\n                <p><strong>Poslovni turizam (MICE)</strong> = putovanja radi poslovnih aktivnosti: <strong>M</strong>eetings (sastanci) · <strong>I</strong>ncentives (poticajna putovanja) · <strong>C</strong>onferences (konferencije/kongresi) · <strong>E</strong>xhibitions (izložbe/sajmovi). <strong>Ugostiteljstvo</strong> čini oko <strong>70%</strong> ukupne potrošnje sudionika.</p>\n                <h4>Podjela sastanaka prema veličini</h4>\n                <div class=\"formula-box\">\n                    SASVIM MALI (do 100) · MALI (100–500) · SREDNJI (500–1000) · VELIKI (1000–5000) · JUMBO (preko 5000 osoba)\n                </div>\n                <h4>Vrste skupova i prihodi</h4>\n                <ul>\n                    <li><strong>Kongres</strong> — nekoliko tisuća posjetitelja, zaključci za širu javnost; <strong>konferencija</strong> — uža, jedna profesionalna grupa; <strong>simpozij</strong> — specijalizirani tehničari; <strong>seminar</strong>, <strong>panel diskusija</strong>, <strong>okrugli stol</strong> (30-ak osoba, ravnopravna diskusija).</li>\n                    <li>Glavni izvori prihoda: <strong>kotizacija</strong> (najveći) · prodaja tiskanih izvještaja · novčana pomoć (vlada, industrija, donori) · reklamne izložbe.</li>\n                </ul>\n            "
+    }
+  }
+};
+
+if (typeof window !== 'undefined') { window.sitHrM2 = sitHrM2; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = sitHrM2; }
