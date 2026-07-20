@@ -28,7 +28,19 @@ function renderLearnContent() {
         const icon = data.icon || 'fa-book';
         const name = data.name || category;
         const flashcardsCount = data.flashcards ? data.flashcards.length : 0;
-        const learnContent = data.learn && data.learn.content ? data.learn.content : '<p>No learn content available for this category.</p>';
+        // U7c: SAV learn ide kroz JEDAN renderer (sigurnosna granica). v2 = blokovi (escapani po tipu);
+        // v1 = legacy-html blok kroz DOMPurify (allowlist pokriva naš sadržaj — legacy-html-coverage.test.js).
+        // Krajnji fallback (renderer nekako nije učitan) = staro ponašanje, da učenje nikad ne ostane prazno.
+        let learnHtml;
+        if (typeof renderBlocks === 'function' && data.learn && Array.isArray(data.learn.blocks)) {
+            learnHtml = renderBlocks(data.learn.blocks);
+        } else if (data.learn && data.learn.content) {
+            learnHtml = (typeof renderBlocks === 'function')
+                ? renderBlocks([{ type: 'legacy-html', html: data.learn.content }])
+                : data.learn.content;
+        } else {
+            learnHtml = '<p>No learn content available for this category.</p>';
+        }
         const learnImage = data.learn && data.learn.image ? data.learn.image : null;
         
         const card = document.createElement('div');
@@ -42,7 +54,7 @@ function renderLearnContent() {
             </div>
             <div class="learn-card-content">
                 ${learnImage ? `<img src="${learnImage}" alt="${name}" class="learn-image learn-zoomable" loading="lazy">` : ''}
-                ${learnContent}
+                ${learnHtml}
             </div>
         `;
         

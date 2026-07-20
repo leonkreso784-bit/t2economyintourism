@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-20 (OPUS) — 🔒 U7c: FLIP sigurnosne granice learn-a (sav learn kroz sanitizirajući renderer)
+**Kontekst:** Leon „idemo sada" (odobrio legacy-kroz-DOMPurify) + „kako bog zapovjeda" (temeljita provjera). Usput 529-prekid (server-side, prolazno). Kraj sesije → i pred-compact audit.
+1. **Flip (`learn.js renderLearnContent`):** dual-mode — v2 `learn.blocks`→`renderBlocks`; v1 `learn.content`→`renderBlocks([{legacy-html}])`→DOMPurify. SAV learn sad kroz JEDAN renderer (study + editor-preview + budući marketplace) = **granica zatvorena**. `renderMath` ostaje na kraju (KaTeX delimiteri = tekst, prežive).
+2. **DOMPurify učitan** (CDN 3.2.6, defer, obrazac kao KaTeX; renderer ima raw-fallback ako padne — v1 = naš sadržaj). cdnjs verzija provjerena (HEAD 200).
+3. **Parity BEZ jsdom-a (nema ga) = statička POKRIVENOST + runtime:** ① `tests/unit/legacy-html-coverage.test.js` (trajni gate) skenirao **468 blokova / 19 predmeta** → allowlist SUPERSET (23 taga, 7 atr.); config izložen `SokratBlocks._domPurifyConfig`. **KLJUČNI NALAZ: `style` (331×) nije bio dopušten** (gradijenti/centriranje `tip-box`) → dodao `style`+`value`; da nisam = 331 stil nestao = regresija. ② `tests/learn-parity.spec.js` (Playwright, PRAVI DOMPurify): klase+style+gradient sačuvani, XSS blokiran.
+**Dokazi:** coverage 4/4 · parity-spec ✅ · blocks 23/23 · verify 0/0 · typecheck 0 · **authed 11/11** (admin netaknut) · **smoke 240/0** (15 skip, 14.0m; +4 = parity spec × 4 profila) · bump 99 (`20260720023900`). **Sigurnosna granica learn-a ZATVORENA. SLIJEDI: U7d** (schema v2 + validator) + **U7e** (blok-ops).
+
 ## 2026-07-20 (OPUS) — 🧱 U7b: JEDAN renderer (blocks-renderer.js) = sigurnosna granica
 **Kontekst:** Leon „idemo to dobro napravit da bude savršeno ispolirano". Usput: procjena zdravlja projekta (🟢 zdrav + dobar smjer; watch-items = duga staza do UGC-isplate · `feature` 24 ispred `main` · U7c = prvi flip živog student-puta).
 1. **`js/blocks-renderer.js` (IIFE, `window.renderBlocks` + `window.SokratBlocks` s helperima za test):** 9 tipova (`heading/paragraph/list/callout/image/video/table/formula/legacy-html`), svaki s ESCAPANIM poljima; `renderInline` (runs b/i/boja-token/link, boja iz kuriranog seta), `safeUrl` (scheme-allowlist; `data:image/svg` nikad — nosi skripte), YouTube facade (validiran 11-znak ID → `youtube-nocookie`, klik-za-učitavanje delegatom → 0 poziva prije klika), `formula` → `renderMath` delimiteri, `legacy-html` → `window.DOMPurify` uz raw-fallback (v1 = naš sadržaj). `document` guardan (node pure-fn test).

@@ -70,12 +70,17 @@
     return renderRun(content);
   }
 
-  // ── DOMPurify config za legacy-html (strogi-ish whitelist; U7c ga fino ugađa parity-harnessom) ──
+  // ── DOMPurify config za legacy-html (whitelist ugođen parity-provjerom U7c) ──
+  // ALLOWED_TAGS/ATTR = SUPERSET svega što naš v1 learn HTML koristi (dokazano
+  // tests/unit/legacy-html-coverage.test.js nad svih 19 predmeta / 468 blokova) → DOMPurify
+  // ne struže naš sadržaj. `style` (331×) i `value` (li) su tu radi PARITETA legacy prikaza
+  // (gradijenti/centriranje/margine u tip-box itd.); DOMPurify i dalje sanitizira CSS-vrijednosti
+  // (miče url(javascript:)/expression). Novo v2 autorstvo = tokeni-only (blokovi ne emitiraju style).
   const DOMPURIFY_CFG = {
     ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr', 'strong', 'b', 'em', 'i', 'u', 's',
       'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre', 'span', 'div', 'sup', 'sub',
       'table', 'thead', 'tbody', 'tr', 'th', 'td', 'img', 'figure', 'figcaption'],
-    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'colspan', 'rowspan', 'target', 'rel'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style', 'value', 'colspan', 'rowspan', 'target', 'rel'],
     ALLOW_DATA_ATTR: false
   };
 
@@ -208,7 +213,8 @@
       _esc: esc,
       _safeUrl: safeUrl,
       _youtubeId: youtubeId,
-      _renderInline: renderInline
+      _renderInline: renderInline,
+      _domPurifyConfig: DOMPURIFY_CFG   // za legacy-html-coverage.test.js (parity gate)
     };
   }
 })();
