@@ -449,5 +449,149 @@ function multiCat() {
   });
 }
 
+// ---- U7e: learn-blok operacije (cat.learn.blocks; idempotentne po id-u, kao U6a) ----
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const d = store.begin(S, L, V, sampleData()); // demand.learn = v1 (content, BEZ blocks)
+
+  test('addBlock: v1 learn (content-only) dobiva PRVI blok → kreira learn.blocks, generiran id, dirty', () => {
+    assert.strictEqual(Array.isArray(d.working.demand.learn.blocks), false); // v1 na početku
+    const r = store.applyOp(S, L, { type: 'addBlock', catId: 'demand', item: { type: 'paragraph', text: 'Prvi' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.learn.blocks.length, 1);
+    const b = d.working.demand.learn.blocks[0];
+    assert.strictEqual(b.type, 'paragraph');
+    assert.ok(b.id && b.id.length === 6, 'novi blok ima generiran 6-char id');
+    assert.strictEqual(d.working.demand.learn.content, '<p>x</p>', 'v1 content ostaje netaknut (dual-mode)');
+    assert.strictEqual(store.isDirty(S, L), true);
+  });
+
+  test('addBlock IDEMPOTENTAN: isti op (isti id) + replay → jedan blok (guard po id)', () => {
+    const op = { type: 'addBlock', catId: 'demand', item: { id: 'blk001', type: 'heading', level: 2, text: 'H' } };
+    store.applyOp(S, L, op);
+    store.applyOpsTo(d.working, [op]); // replay (kao sibling/in-memory) NE smije duplirati
+    assert.strictEqual(d.working.demand.learn.blocks.filter((b) => b.id === 'blk001').length, 1);
+  });
+
+  test('addBlock s op.at umeće na točan indeks; upisuje KOPIJU (op.item ≠ referenca u nizu)', () => {
+    const item = { id: 'ins9', type: 'paragraph', text: 'INS' };
+    store.applyOp(S, L, { type: 'addBlock', catId: 'demand', item: item, at: 0 });
+    assert.strictEqual(d.working.demand.learn.blocks[0].id, 'ins9');
+    d.working.demand.learn.blocks[0].text = 'MUT';
+    assert.strictEqual(item.text, 'INS', 'op.item ostaje netaknut kad se mijenja niz (kopija)');
+  });
+}
+
+{
+  const store = loadStore(fakeStorage());
+  const dd = store.begin('s2', 'l2', 'v2', { intro: { name: 'Intro', icon: 'fa-x', color: '#000' } }); // BEZ learn
+
+  test('addBlock kreira learn I blocks ako kategorija nema learn (prazan mod)', () => {
+    const r = store.applyOp('s2', 'l2', { type: 'addBlock', catId: 'intro', item: { type: 'paragraph', text: 'X' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(typeof dd.working.intro.learn, 'object');
+    assert.strictEqual(dd.working.intro.learn.blocks.length, 1);
+  });
+
+  test('removeBlock na kategoriji bez learn → no-learn error (ne ruši)', () => {
+    const st = loadStore(fakeStorage());
+    st.begin('s3', 'l3', 'v3', { c: { name: 'C', icon: 'fa-x', color: '#000' } });
+    const r = st.applyOp('s3', 'l3', { type: 'removeBlock', catId: 'c', id: 'nema' });
+    assert.strictEqual(r.ok, false);
+    assert.strictEqual(r.error, 'no-learn');
+  });
+}
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const src = sampleData();
+  src.demand.learn = { title: 'T', blocks: [   // v2 learn (kao DB v2 payload)
+    { id: 'a', type: 'paragraph', text: 'A' },
+    { id: 'b', type: 'paragraph', text: 'B' },
+    { type: 'paragraph', text: 'NOID' }        // blok BEZ id → idx fallback
+  ] };
+  const d = store.begin(S, L, V, src);
+
+  test('removeBlock po id: makne; IDEMPOTENTNO (drugi remove = no-op uspjeh)', () => {
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeBlock', catId: 'demand', id: 'a' }).ok, true);
+    assert.strictEqual(d.working.demand.learn.blocks.some((b) => b.id === 'a'), false);
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeBlock', catId: 'demand', id: 'a' }).ok, true);
+  });
+
+  test('removeBlock po IDX (blok bez id, kao DB pre-U2a)', () => {
+    const before = d.working.demand.learn.blocks.length;
+    const idxNoId = d.working.demand.learn.blocks.findIndex((b) => b.id == null);
+    assert.strictEqual(store.applyOp(S, L, { type: 'removeBlock', catId: 'demand', idx: idxNoId }).ok, true);
+    assert.strictEqual(d.working.demand.learn.blocks.length, before - 1);
+  });
+
+  test('updateLearnBlock: patch jednog bloka po id (apsolutne vrijednosti)', () => {
+    const r = store.applyOp(S, L, { type: 'updateLearnBlock', catId: 'demand', id: 'b', patch: { text: 'B-NOVO' } });
+    assert.strictEqual(r.ok, true);
+    assert.strictEqual(d.working.demand.learn.blocks.find((b) => b.id === 'b').text, 'B-NOVO');
+  });
+
+  test('updateLearnBlock: null u patchu BRIŠE ključ (kao update-ops)', () => {
+    store.applyOp(S, L, { type: 'updateLearnBlock', catId: 'demand', id: 'b', patch: { note: 'privremeno' } });
+    store.applyOp(S, L, { type: 'updateLearnBlock', catId: 'demand', id: 'b', patch: { note: null } });
+    assert.strictEqual('note' in d.working.demand.learn.blocks.find((b) => b.id === 'b'), false);
+  });
+
+  test('updateLearnBlock nepostojeći blok → not-found (ne ruši)', () => {
+    const r = store.applyOp(S, L, { type: 'updateLearnBlock', catId: 'demand', id: 'nema', patch: { text: 'x' } });
+    assert.strictEqual(r.ok, false);
+    assert.strictEqual(r.error, 'not-found');
+  });
+}
+
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const src = sampleData();
+  src.demand.learn = { blocks: [
+    { id: 'a', type: 'paragraph', text: 'A' },
+    { id: 'b', type: 'paragraph', text: 'B' },
+    { id: 'c', type: 'paragraph', text: 'C' }
+  ] };
+  const d = store.begin(S, L, V, src);
+
+  test('reorderBlocks: apsolutni redoslijed po id (b, a, c)', () => {
+    const r = store.applyOp(S, L, { type: 'reorderBlocks', catId: 'demand', order: ['b', 'a', 'c'] });
+    assert.strictEqual(r.ok, true);
+    assert.deepStrictEqual(d.working.demand.learn.blocks.map((b) => b.id), ['b', 'a', 'c']);
+  });
+
+  test('reorderBlocks: nelistani NA KRAJU (nedestruktivno) + IDEMPOTENTAN (replay = isto)', () => {
+    store.applyOp(S, L, { type: 'reorderBlocks', catId: 'demand', order: ['c'] });
+    assert.strictEqual(d.working.demand.learn.blocks[0].id, 'c');
+    const snap = d.working.demand.learn.blocks.map((b) => b.id).join(',');
+    store.applyOpsTo(d.working, [{ type: 'reorderBlocks', catId: 'demand', order: ['c'] }]);
+    assert.strictEqual(d.working.demand.learn.blocks.map((b) => b.id).join(','), snap);
+  });
+}
+
+// sibling-replay (publish-put): dvostruka applyOpsTo na SIBLING = kao JEDNOM
+{
+  const ls = fakeStorage();
+  const store = loadStore(ls);
+  const d = store.begin(S, L, V, sampleData()); // demand.learn v1 (content, bez blocks)
+  store.applyOp(S, L, { type: 'addBlock', catId: 'demand', item: { id: 'sibB', type: 'paragraph', text: 'SIB' } });
+  store.applyOp(S, L, { type: 'updateLearnBlock', catId: 'demand', id: 'sibB', patch: { text: 'SIB2' } });
+
+  test('blok-opovi: DVOSTRUKA applyOpsTo na SIBLING (final-kopija) = kao JEDNOM (add-guard + update-apsolutno)', () => {
+    const sibling = sampleData(); // final-kopija = isti demand.learn v1
+    store.applyOpsTo(sibling, store.opsOf(S, L));
+    const once = JSON.stringify(sibling.demand.learn.blocks);
+    store.applyOpsTo(sibling, store.opsOf(S, L)); // 2. prolaz (kad _adminCtx.data === window[var])
+    assert.strictEqual(JSON.stringify(sibling.demand.learn.blocks), once);
+    assert.strictEqual(sibling.demand.learn.blocks.filter((b) => b.id === 'sibB').length, 1);
+    assert.strictEqual(sibling.demand.learn.blocks.find((b) => b.id === 'sibB').text, 'SIB2');
+    assert.strictEqual(sibling.demand.learn.content, '<p>x</p>', 'sibling v1 content očuvan (dual-mode)');
+  });
+}
+
 console.log(`\ndraft-store: ${passed} prošlo, ${failed} palo\n`);
 process.exit(failed ? 1 : 0);

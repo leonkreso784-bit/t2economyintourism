@@ -93,7 +93,14 @@
     addCategory:       { doc: 'addCat' },
     removeCategory:    { doc: 'removeCat' },
     reorderCategories: { doc: 'reorderCat' },
-    updateCategory:    { doc: 'updateCat' }
+    updateCategory:    { doc: 'updateCat' },
+    // U7e — operacije nad LEARN-BLOKOVIMA (schema v2). Blokovi žive na cat.learn.blocks =
+    // JEDAN nivo dublje od flashcards/quiz/fill → _dispatch ih razrješava posebno, ali dijele
+    // isti idempotentni struct-mehanizam (add: guard po id · remove: no-op · reorder: apsolutni red).
+    addBlock:         { learnBlocks: true, struct: 'add' },
+    removeBlock:      { learnBlocks: true, struct: 'remove' },
+    reorderBlocks:    { learnBlocks: true, struct: 'reorder' },
+    updateLearnBlock: { learnBlocks: true } // patch jednog bloka (po id/idx), apsolutne vrijednosti
   };
 
   /** Nađi indeks stavke: preferiraj stabilni `id`, fallback na `idx` (DB payloadi pre-U2a nemaju id). */
@@ -122,6 +129,32 @@
 
     const cat = op.catId != null ? working[op.catId] : null;
     if (!cat || typeof cat !== 'object') return { ok: false, error: 'no-category' };
+
+    // U7e — learn-blokovi (cat.learn.blocks). Razriješi ugniježđeni niz pa reuse-aj isti
+    // struct-mehanizam (add/remove/reorder) + patch (updateLearnBlock). add smije kreirati
+    // learn/blocks (learn je opcionalan; prvi blok u praznom modu).
+    if (spec.learnBlocks) {
+      const creating = spec.struct === 'add';
+      let learn = cat.learn;
+      if (!learn || typeof learn !== 'object') {
+        if (!creating) return { ok: false, error: 'no-learn' };
+        learn = cat.learn = {};
+      }
+      let arr = learn.blocks;
+      if (!Array.isArray(arr)) {
+        if (!creating) return { ok: false, error: 'no-blocks' };
+        arr = learn.blocks = [];
+      }
+      if (spec.struct === 'add') return _structAdd(arr, op);
+      if (spec.struct === 'remove') return _structRemove(arr, op);
+      if (spec.struct === 'reorder') return _structReorder(arr, op);
+      // updateLearnBlock: patch jednog bloka po id (fallback idx) — apsolutne vrijednosti.
+      if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
+      const i = _findIndex(arr, op);
+      if (i === -1) return { ok: false, error: 'not-found' };
+      _assignPatch(arr[i], op.patch);
+      return { ok: true };
+    }
 
     // U6 strukturne operacije (add/remove/reorder) — idempotentne (v. _struct*).
     if (spec.struct) {
