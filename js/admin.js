@@ -249,7 +249,11 @@ function _renderAdminCards(holder, data) {
     const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
     const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
     const fills = Array.isArray(cat.fillBlanks) ? cat.fillBlanks : [];
-    const hasLearn = !!(cat.learn && typeof cat.learn === 'object' && cat.learn.content);
+    // Learn dual-mode: v1 = HTML string (content), v2 = blok-niz (blocks; U7/U8).
+    const _learnObj = (cat.learn && typeof cat.learn === 'object') ? cat.learn : null;
+    const learnV1 = !!(_learnObj && typeof _learnObj.content === 'string' && _learnObj.content && !Array.isArray(_learnObj.blocks));
+    const learnV2 = !!(_learnObj && Array.isArray(_learnObj.blocks));
+    const hasLearn = learnV1 || learnV2;
     // Studenti preskaču praznu kategoriju; u draft-modu (canEdit) prikaži je da se može dodavati (U6c).
     if (!canEdit && fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
 
@@ -335,8 +339,8 @@ function _renderAdminCards(holder, data) {
       html += _adminAddBtn(canEdit, 'fill', catId, _adminT('admin.addFillBtn', 'Add fill-in-the-blank'));
     }
 
-    // — Learn (F4.4) — jedan objekt po kategoriji (ne niz) —
-    if (hasLearn) {
+    // — Learn v1 (F4.4) — HTML string; postojeći modal-editor NEDIRNUT —
+    if (learnV1) {
       total++;
       const L = cat.learn;
       html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + '</h4>' +
@@ -347,6 +351,20 @@ function _renderAdminCards(holder, data) {
         '  </div>' +
         _adminEditBtn(canEdit, 'learn', catId, 0) +
         '</li></ol>';
+    } else if (learnV2 && !canEdit) {
+      // v2 learn izvan drafta = read-only preview kroz JEDAN renderer (ista granica kao study).
+      total++;
+      html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
+        '<div class="admin-card admin-card--learn"><div class="admin-card-body be-body">' +
+        (typeof window.renderBlocks === 'function' ? window.renderBlocks(cat.learn.blocks) : '') +
+        '</div></div>';
+    }
+
+    // — Learn v2 blok-editor (U8a) — SAMO draft-mod; za v2 learn ILI prazan/nov (nema v1 sadržaja
+    //   → nula dodira postojećeg v1 `content`; migracija v1→v2 je zasebna cigla). Mount ide u post-render.
+    if (canEdit && !learnV1) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
+        '<div class="be-mount" data-be-cat="' + _adminEscape(catId) + '"></div>';
     }
 
     html += '</div>';
@@ -358,9 +376,47 @@ function _renderAdminCards(holder, data) {
   holder.innerHTML = (total || (canEdit && html))
     ? html
     : '<p class="profile-meta">' + _adminT('admin.noContent', 'No flashcards or quiz in this lesson.') + '</p>';
+
+  _mountBlockEditors(holder); // U8a-2: oživi .be-mount kontejnere (draft-mod, learn-blokovi)
 }
 
 window.renderAdminPage = renderAdminPage;
+
+// ===== U8a-2 — blok-editor (learn v2) ožičen na draft-ops =====
+// Editor je samostalan modul (js/block-editor.js); admin mu daje SAMO callbacke → nema vezanja.
+// Blok-ops idu kroz istu draft-mašineriju kao ostali editori (SokratDraft.applyOp; „Objavi" = U4 RPC).
+
+/** Trenutni blokovi kategorije iz WORKING kopije (draft). Prazno = editor pokaže ＋ (dodaj prvi). */
+function _beGetBlocks(catId) {
+  const data = _adminWorking();
+  const cat = data && data[catId];
+  return (cat && cat.learn && Array.isArray(cat.learn.blocks)) ? cat.learn.blocks : [];
+}
+
+/** Primijeni blok-op na draft + osvježi brojač trake. NE full-rerenderira (editor sam re-crta svoj container). */
+function _beApplyOp(op) {
+  const d = _adminDraft();
+  if (!d) return { ok: false, error: 'no-draft' };
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, op);
+  _renderEditBar(); // brojač „N izmjena"
+  return res;
+}
+
+/** Nakon rendera: montiraj blok-editor u svaki .be-mount (draft-mod). Idempotentno (fresh container po renderu). */
+function _mountBlockEditors(holder) {
+  if (!holder || !window.SokratBlockEditor || typeof SokratBlockEditor.mount !== 'function') return;
+  const mounts = holder.querySelectorAll('.be-mount');
+  for (let i = 0; i < mounts.length; i++) {
+    (function (el) {
+      const catId = el.getAttribute('data-be-cat');
+      SokratBlockEditor.mount(el, {
+        catId: catId,
+        getBlocks: function () { return _beGetBlocks(catId); },
+        applyOp: _beApplyOp
+      });
+    })(mounts[i]);
+  }
+}
 
 // ===== F4.3c-1 — Uredi JEDNU karticu: write JEDNOG reda + auto-verzija + live re-render =====
 //

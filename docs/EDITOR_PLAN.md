@@ -207,4 +207,22 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 
 **Redoslijed/ovisnosti:** a → b → c = lanac (temelj → renderer → flip); d i e relativno neovisni (mogu zamijenjeno) ali logično iza c. Nakon U7 → **U8** (blok-editor ožičuje `renderBlocks` za preview + blok-ops).
 **Nedirano u U7:** `final`=kompozicija (§3.4 = U9) · kartice/kviz ostaju ČISTI TEKST (§3.2) · migracija legacy→blokovi = OPCIONALNA, predmet-po-predmet, kasnije (ne blokira U7).
-**⚖️ Odluka (cigla U7c) — čeka Leona:** rutirati legacy kroz DOMPurify SAD (**preporuka** — „jedan renderer" je cijela poanta U7-a; 18 kontroliranih predmeta + parity-harness = sigurnije nego retrofit poslije UGC-a) vs. odgoditi (v1 ostaje sirov dok ne stigne UGC). Preporuka = SAD, uz parity-gate kao osigurač.
+**⚖️ Odluka (cigla U7c) — čeka Leona:** rutirati legacy kroz DOMPurify SAD (**preporuka** — „jedan renderer" je cijela poanta U7-a; 18 kontroliranih predmeta + parity-harness = sigurnije nego retrofit poslije UGC-a) vs. odgoditi (v1 ostaje sirov dok ne stigne UGC). Preporuka = SAD, uz parity-gate kao osigurač. **[RIJEŠENO 2026-07-20: rutirano SAD — U7c ✅.]**
+
+### 12.2 U8 razrada — vizualni editor (mockup „C-Tok" → pravi editor) (plan 2026-07-20)
+
+**Polazište:** `design/mockups/editor-c-tok.html` (644 LOC, QA smoke 36/36) = POTVRĐEN vizual+ponašanje (Leon 2026-07-20: „već imamo primjer editora"). **U8 = oživjeti taj mockup** = spojiti ga na dokazane slojeve: draft-OPOVE (U7e), JEDAN renderer (U7c), publish-RPC (U4), katalog/subject-podatke. **Spike biblioteke NIJE potreban** — mockup je custom i to JE odluka (§5 uvjet 4 zadovoljen dizajnom; biblioteka bi tražila adapter+vendor bez dobitka za naš uski inline-model B/I/boja/link; „contenteditable rat" držimo minimalnim jer je model jednostavan).
+
+**Sigurnosno (nepregovorljivo):** editor-preview ide kroz ISTI `renderBlocks` (granica zatvorena U7c); autor mijenja SAMO kroz opove (U7e) → „Objavi" = `publish_document` RPC (U4, atomično+verzija). **Nula novog write-puta.** Editor je admin-only + lazy → 0 utjecaja na studente.
+
+| Cigla | Što | Rizik | Provjera |
+|---|---|---|---|
+| **U8a** | **Learn blok-editor (jezgra, primarni ekran §5.1-3):** novi `js/block-editor.js` — renderira `learn.blocks` kao editabilne „kvadratiće" (vizual iz mockupa); ＋ (Tekst/Naslov/Slika/YouTube/…), ✕ ukloni, ↑↓ presloži, inline edit naslova/tijela → SVE kroz U7e ops. Preview kroz `renderBlocks`. | SREDNJI (novi UI na DOKAZANIM ops) | authed E2E (blok add/edit/reorder/remove u draftu) + draft-store 50/50 |
+| **U8b** | **Tekst-traka (plutajuća, na selekciji):** B · I · 5 boja teksta (a11y tokeni) · 🔗 link (sanitiziran) → piše `inline runs` u blok (mapiranje selekcija→runs). | SREDNJI (contenteditable→runs) | unit (selekcija→runs) + authed |
+| **U8c** | **Media/strukturni blok-editori:** slika (URL; upload=odluka) · YouTube (link→ID, facade) · callout · lista · tablica · formula (KaTeX live-preview) · **resize-ručka** (§5.1-8 → stil-token). | SREDNJI | authed + validate:schema v2 |
+| **U8d** | **Kartice/kviz/fill u Studio (custom form-UI, §5):** reuse U6 modal-editora → inline u pane; ＋/✕ mode-tabovi (features-flag; prazan mod ≠ greška); boje sekcija + **nasljeđivanje** na kartice/kviz (§4). | SREDNJI | authed 11/11 (postojeći) + novi |
+| **U8e** | **Studio ljuska + wizard + vizual „čisto i bogato":** topbar/stablo/canvas/inspektor iz mockupa ožičeni na katalog+draft+publish; wizard „Nova skripta" (modovi). Parity s mockupom C. | VELIK (integracija) | smoke + authed + vizual (Leon presuđuje) |
+| — | struktura-CRUD u stablu (fakultet→…→predmet, §5.1-1) = **zasebna cigla NAKON U8** (traži katalog-kao-podatak, §3.5) | — | — |
+
+**Redoslijed:** a→b→c = learn-lanac (jezgra→tekst→media); d (kartice/kviz) relativno neovisno; e (ljuska/vizual) objedinjuje na kraju. Svaka cigla se **mjeri prema mockupu C** i diže letvicu (Leon: „mršavo" = bug). Aditivno/reverzibilno; grana `feature/u6-structural-ops`, prod netaknut do izričitog deploy-OK-a.
+**Otvorene odluke (padaju u ciglama):** upload slika (storage) · undo/redo UI (op-stog postoji) · mobilni layout (inspektor <1020px) · gdje editor „živi" (evoluira postojeći `#admin-page` vs nova Studio-stranica) — **U8a bira: `block-editor.js` = samostalan modul nad `learn.blocks`, hostiv u oba** (bez preranog vezanja).
