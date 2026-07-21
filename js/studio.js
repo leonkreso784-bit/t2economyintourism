@@ -19,6 +19,7 @@ const SokratStudio = (function () {
 
   let _sel = { subjectId: '', lessonId: '' }; // trenutno odabrana skripta
   let _data = null;                            // učitani sadržaj (dijeli referencu s _adminCtx.data preko setLesson)
+  let _activeMode = null;                      // zadnji odabrani mode-tab (očuva se kroz re-render)
 
   // ---- helpers ----
   function esc(s) {
@@ -170,6 +171,7 @@ const SokratStudio = (function () {
   // ---- ODABIR SKRIPTE → CANVAS ----
   async function selectLesson(subjectId, lessonId, row) {
     _sel = { subjectId: subjectId, lessonId: lessonId };
+    _activeMode = null; // nova skripta → počni od prvog moda
     var tree = byId('stTree');
     if (tree) tree.querySelectorAll('.st-row.active').forEach(function (r) { r.classList.remove('active'); });
     if (row) row.classList.add('active');
@@ -230,7 +232,7 @@ const SokratStudio = (function () {
     var m = presentModes(data);
     var order = ['learn', 'cards', 'quiz', 'fill'].filter(function (k) { return m[k]; });
     var LABEL = { learn: '📚 Learn', cards: '🃏 ' + t('studio.cards', 'Kartice'), quiz: '❓ ' + t('studio.quiz', 'Kviz'), fill: '✍️ ' + t('studio.fill', 'Dopuni') };
-    var active = order[0] || null;
+    var active = (_activeMode && order.indexOf(_activeMode) >= 0) ? _activeMode : (order[0] || null);
 
     var tabs = order.map(function (k) {
       return '<button class="st-tab' + (k === active ? ' on' : '') + '" data-mode="' + k + '">' + LABEL[k] + '</button>';
@@ -255,6 +257,7 @@ const SokratStudio = (function () {
     if (tabBar) tabBar.addEventListener('click', function (e) {
       var b = e.target.closest('.st-tab'); if (!b) return;
       var mode = b.getAttribute('data-mode');
+      _activeMode = mode;
       canvas.querySelectorAll('.st-tab').forEach(function (x) { x.classList.toggle('on', x === b); });
       canvas.querySelectorAll('.st-pane').forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === mode); });
     });
@@ -309,44 +312,59 @@ const SokratStudio = (function () {
     return esc(String((L && L.content) || ''));
   }
 
-  // ---- KARTICE/KVIZ/FILL PANE (read-only preview; uređivanje = U8.3) ----
+  // ---- KARTICE/KVIZ/FILL PANE (read-only preview + U8.3 edit-mod) ----
+  // Tijela stavki (dijele read-only i edit).
+  function cardBody(fc) { return '<div class="st-q">' + esc(fc.question || '') + '</div><div class="st-a">' + esc(fc.answer || '') + '</div>'; }
+  function quizBody(qz) {
+    var opts = Array.isArray(qz.options) ? qz.options : [];
+    return '<div class="st-qtext">' + esc(qz.question || '') + '</div>' + opts.map(function (o, oi) {
+      var ok = (oi === qz.correct);
+      return '<div class="st-opt' + (ok ? ' correct' : '') + '">' + esc(o) + (ok ? '<span class="st-ok">TOČAN</span>' : '') + '</div>';
+    }).join('');
+  }
+  function fillBody(fb) { return '<div class="st-fsent">' + esc(fb.sentence || '') + '</div><div class="st-fans">→ ' + esc(fb.answer || '') + '</div>'; }
+
+  var PANE_MAP = {
+    cards: { arr: 'flashcards', type: 'flashcard', body: cardBody, add: 'Dodaj karticu' },
+    quiz:  { arr: 'quiz',       type: 'quiz',      body: quizBody, add: 'Dodaj pitanje' },
+    fill:  { arr: 'fillBlanks', type: 'fill',      body: fillBody, add: 'Dodaj dopunu' }
+  };
+
+  // U8.3: uređivanje kartica/kviza/fill-a REUSE-a admin modal-editore + kontrole (data-admin-*),
+  // koje već hvataju globalni listeneri u admin.js (edit ✎ / dodaj ＋ / obriši 🗑 / presloži ↑↓).
+  // Op ide u ISTI draft → `_adminRerender` → `onDraftChanged` osvježi Studio canvas.
   function renderPane(mode, data, isEd) {
+    var m = PANE_MAP[mode];
+    if (!m) return '';
+    var hasCtrls = (typeof _adminItemControls === 'function' && typeof _adminAddBtn === 'function');
     var out = '';
-    if (isEd) out += '<p class="st-hint">' + esc(t('studio.modeSoon', 'Uređivanje ovog moda stiže u sljedećoj cigli — zasad pregled.')) + '</p>';
     cats(data).forEach(function (catId) {
       var c = data[catId];
       if (!c || typeof c !== 'object') return;
+      var arr = Array.isArray(c[m.arr]) ? c[m.arr] : [];
+      if (!isEd && !arr.length) return;                    // read-only: preskoči prazne
       var accStyle = c.color ? ' style="--st-acc:' + esc(c.color) + '"' : '';
-      var catName = esc(c.name || catId);
-      if (mode === 'cards') {
-        var fcs = Array.isArray(c.flashcards) ? c.flashcards : [];
-        if (!fcs.length) return;
-        out += '<div class="st-seclbl">§ ' + catName + '</div><div class="st-cardgrid">' +
-          fcs.map(function (fc) {
-            return '<div class="st-fcard"' + accStyle + '><div class="st-q">' + esc(fc.question || '') + '</div>' +
-              '<div class="st-a">' + esc(fc.answer || '') + '</div></div>';
+      out += '<div class="st-seclbl">§ ' + esc(c.name || catId) + '</div>';
+
+      if (!isEd) {
+        if (mode === 'cards') {
+          out += '<div class="st-cardgrid">' + arr.map(function (fc) {
+            return '<div class="st-fcard"' + accStyle + '>' + m.body(fc) + '</div>';
           }).join('') + '</div>';
-      } else if (mode === 'quiz') {
-        var qs = Array.isArray(c.quiz) ? c.quiz : [];
-        if (!qs.length) return;
-        out += '<div class="st-seclbl">§ ' + catName + '</div>' +
-          qs.map(function (qz) {
-            var opts = Array.isArray(qz.options) ? qz.options : [];
-            return '<div class="st-qz"' + accStyle + '><div class="st-qtext">' + esc(qz.question || '') + '</div>' +
-              opts.map(function (o, oi) {
-                var ok = (oi === qz.correct);
-                return '<div class="st-opt' + (ok ? ' correct' : '') + '">' + esc(o) + (ok ? '<span class="st-ok">TOČAN</span>' : '') + '</div>';
-              }).join('') + '</div>';
+        } else {
+          out += arr.map(function (it) {
+            return '<div class="' + (mode === 'quiz' ? 'st-qz' : 'st-fill') + '"' + accStyle + '>' + m.body(it) + '</div>';
           }).join('');
-      } else if (mode === 'fill') {
-        var fbs = Array.isArray(c.fillBlanks) ? c.fillBlanks : [];
-        if (!fbs.length) return;
-        out += '<div class="st-seclbl">§ ' + catName + '</div>' +
-          fbs.map(function (fb) {
-            return '<div class="st-fill"' + accStyle + '><div class="st-fsent">' + esc(fb.sentence || '') + '</div>' +
-              '<div class="st-fans">→ ' + esc(fb.answer || '') + '</div></div>';
-          }).join('');
+        }
+        return;
       }
+
+      // EDIT: svaka stavka = tijelo + admin-kontrole + „＋ Dodaj" na dnu kategorije
+      arr.forEach(function (it, i) {
+        out += '<div class="st-edit-item"' + accStyle + '><div class="st-edit-body">' + m.body(it) + '</div>' +
+          (hasCtrls ? _adminItemControls(true, m.type, catId, i, arr.length) : '') + '</div>';
+      });
+      if (hasCtrls) out += '<div class="st-addwrap">' + _adminAddBtn(true, m.type, catId, m.add) + '</div>';
     });
     return out || '<p class="st-hint">' + esc(t('studio.paneEmpty', 'Nema sadržaja u ovom modu.')) + '</p>';
   }
@@ -438,7 +456,17 @@ const SokratStudio = (function () {
     refreshTopbar();
   }
 
-  return { render: render };
+  // Hook: admin draft-op (`_adminRerender`) je promijenio isti draft → osvježi Studio canvas.
+  // No-op ako Studio nije aktivan (npr. op je došao sa starog #admin-page).
+  function onDraftChanged() {
+    var page = byId('editor-page');
+    if (!page || !page.classList.contains('active')) return;
+    if (!_sel.subjectId) return;
+    renderCanvas();
+    refreshTopbar();
+  }
+
+  return { render: render, onDraftChanged: onDraftChanged };
 })();
 
 window.SokratStudio = SokratStudio;

@@ -462,6 +462,8 @@ function _adminRerender() {
   const holder = document.getElementById('adminCards');
   if (holder) _renderAdminCards(holder, _adminWorking());
   _renderEditBar();
+  // U8.3: ako je Studio aktivan, isti draft-op mijenja i njegov canvas → osvježi ga (no-op inače).
+  if (window.SokratStudio && typeof SokratStudio.onDraftChanged === 'function') SokratStudio.onDraftChanged();
 }
 
 /** Traka draft-moda: gumb za ulaz, odnosno indikator „uređuješ" + Objavi/Odbaci. */

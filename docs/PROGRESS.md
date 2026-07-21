@@ -5,6 +5,12 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-21 (OPUS) — U8.3 kartice/kviz/fill uredljivi u Studio canvasu (100% reuse admin mašinerije)
+**Kontekst:** Leon: „provjeri sa testovima jos jednom detaljno pa nastavi". Prvo puna baterija, pa U8.3.
+1. **Detaljna test-provjera (na `cc7d8d3`):** verify 0/0 · typecheck 0 · bump:check 103 · css-drift 0 · **export:json --check 57/0** · validate:schema 57/0 · validate:content 0 grešaka/18 upoz. · unit 130/0 · **full-responsive 241 prošlo/15 skip/0 palo (12.9min, 4 profila + authed uklj. Studio spec)**. Sve zeleno.
+2. **U8.3 ✅ — kartice/kviz/fill uredljivi u Studiju (100% reuse):** čitanjem `admin-editors.js` potvrđeno da su modal-editori + `document`-listeneri (`[data-admin-edit/add/del/move]`) + strukturne ops (`_moveItem`/`_removeItem`) + kontrola-graditelji (`_adminItemControls`/`_adminAddBtn`) svi GLOBALNI → Studio ih samo pozove. `studio.js renderPane` edit-mod: svaka stavka = `.st-edit-item` (tijelo + iste `data-admin-*` kontrole) + `_adminAddBtn` po kategoriji; tijela izdvojena u `cardBody`/`quizBody`/`fillBody`. **Sinkronizacija:** hook `_adminRerender()`→`SokratStudio.onDraftChanged()` (no-op ako Studio nije aktivan) re-renderira canvas nakon svake draft-op; **aktivni tab očuvan** `_activeMode` (postavljen na tab-klik, reset na novu skriptu). `css/studio.css` +3 klase. Nula novih editora/listenera; read-only preview nepromijenjen.
+**Dokazi:** `tests/studio.authed.spec.js` +2. test (Studio→te2→Uredi→Kartice→„Dodaj karticu" modal→spremi[chip dirty+tab očuvan]→uredi✎→obriši🗑→Odbaci) · **authed 13/13** (11 admin-tokova NETAKNUTO) · smoke+admin 10/10 (0 real errors) · unit 130/0 · typecheck 0 · verify 0/0 · bump 103. Backend U7 100% reused; prod netaknut (main=`a106daa`). **SLIJEDI: U8.4** (inline uređivanje teksta blokova — contenteditable→`inline runs`: B/I/boja/link; plutajuća traka iz mockupa).
+
 ## 2026-07-20-d (OPUS) — U8.2 blok-editor u Studio learn-pane (uređivanje na pravim kostima)
 **Kontekst:** Leon nakon U8.1: „ovo je burtalno, svaka cast — nastavi korak po korak". U8.2 = prva cigla u kojoj se STVARNO uređuje u Studiju.
 1. **Prizemljenje:** `block-editor.js` mount-potpis (`mount(container, {catId,getBlocks,applyOp})` → poziva U7e ops, sam re-crta) + `learn.js` dual-mode (**blokovi POBJEĐUJU nad `content`**, `Array.isArray` na l.35) + draft ima `updateLearn`+`addBlock`. Ključni sigurnosni nalaz: dodavanje bloka v1-kategoriji bi zasjenilo postojeći sadržaj.

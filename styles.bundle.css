@@ -8821,6 +8821,23 @@ h4.lb-heading { font-size: 1.1rem; }
 #editor-page .st-fill .st-fsent{ font-size:14px; color:var(--text-secondary); line-height:1.6; }
 #editor-page .st-fill .st-fans{ font-size:12.5px; color:var(--primary-light); margin-top:6px; }
 
+/* ==== EDIT-MOD: stavka (kartica/kviz/fill) s admin-kontrolama (U8.3) ==== */
+#editor-page .st-edit-item{
+  display:flex; align-items:flex-start; gap:12px;
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-left:4px solid var(--st-acc,var(--bg-tertiary));
+  border-radius:14px; padding:13px 15px; margin-bottom:10px; box-shadow:var(--shadow);
+}
+#editor-page .st-edit-item .st-edit-body{ flex:1; min-width:0; }
+#editor-page .st-edit-item .st-q,#editor-page .st-edit-item .st-qtext{ font-weight:600; font-size:14px; line-height:1.5; }
+#editor-page .st-edit-item .st-a{ color:#6ee7b7; font-size:13px; margin-top:6px; }
+#editor-page .st-edit-item .st-opt{ font-size:13px; padding:6px 9px; margin-top:4px; border-radius:8px; color:var(--text-secondary); }
+#editor-page .st-edit-item .st-opt.correct{ background:rgba(34,197,94,.10); }
+#editor-page .st-edit-item .st-fsent{ font-size:14px; color:var(--text-secondary); }
+#editor-page .st-edit-item .st-fans{ font-size:12.5px; color:var(--primary-light); margin-top:5px; }
+#editor-page .st-edit-item .admin-card-ctrls{ flex-shrink:0; display:flex; gap:4px; align-items:flex-start; }
+#editor-page .st-addwrap{ margin:4px 0 22px; }
+
 /* ==== INSPEKTOR (stub u U8.1) ==== */
 #editor-page .st-inspector{
   background:linear-gradient(180deg,rgba(30,41,59,.55),rgba(15,23,42,.3));

@@ -67,3 +67,47 @@ test('U8.2 — Studio learn: Uredi → migracija v1→blokovi → dodaj blok →
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.3 — Studio kartice: Uredi → Dodaj (modal) → uredi ✎ → obriši 🗑 (draft-only, tab očuvan)', async ({ page }) => {
+  await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  // → Kartice tab (edit-mod = admin kontrole na stavkama)
+  const cardsTab = page.locator('#stCanvas .st-tab[data-mode="cards"]');
+  await expect(cardsTab).toHaveCount(1);
+  await cardsTab.click();
+  await page.waitForSelector('#stCanvas .st-pane[data-pane="cards"].on');
+  const pane = page.locator('#stCanvas .st-pane[data-pane="cards"]');
+
+  // Dodaj karticu (reuse admin modal preko data-admin-add) → spremi
+  await pane.locator('[data-admin-add][data-type="flashcard"]').first().click();
+  await page.waitForSelector('#adminEditModal #adminEditQ');
+  await page.fill('#adminEditQ', 'U83-pitanje');
+  await page.fill('#adminEditA', 'U83-odgovor');
+  await page.click('#adminEditSave');
+  // onDraftChanged re-render → nova kartica vidljiva, chip dirty, TAB očuvan (Kartice još aktivan)
+  await expect(pane.locator('.st-edit-item', { hasText: 'U83-pitanje' })).toHaveCount(1);
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+  await expect(page.locator('#stCanvas .st-tab[data-mode="cards"].on')).toHaveCount(1);
+
+  // Uredi (✎) → promijeni odgovor
+  await pane.locator('.st-edit-item', { hasText: 'U83-pitanje' }).locator('[data-admin-edit]').click();
+  await page.waitForSelector('#adminEditModal #adminEditA');
+  await page.fill('#adminEditA', 'U83-odgovor-2');
+  await page.click('#adminEditSave');
+  await expect(pane.locator('.st-edit-item', { hasText: 'U83-odgovor-2' })).toHaveCount(1);
+
+  // Obriši (🗑) → potvrda → nema je
+  await pane.locator('.st-edit-item', { hasText: 'U83-pitanje' }).locator('[data-admin-del]').click();
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await expect(pane.locator('.st-edit-item', { hasText: 'U83-pitanje' })).toHaveCount(0);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
