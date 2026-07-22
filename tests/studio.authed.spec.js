@@ -360,8 +360,10 @@ test('U8.5c — Studio learn: dodaj Formulu → upiši LaTeX → draft tex+displ
   expect(draft).not.toBeNull();
   expect(draft.display).toBe(true);
 
-  // preview živi kroz JEDAN renderer (.lb-formula); KaTeX ga tipografira ako je CDN učitan
+  // preview živi kroz JEDAN renderer (.lb-formula)
   await expect(fblock.locator('.be-media__preview .lb-formula')).toHaveCount(1);
+  // KaTeX je STVARNO tipografirao (renderMath prošao) — .katex output, ne sirovi \[…\] tekst
+  await expect(fblock.locator('.be-media__preview .katex').first()).toBeVisible({ timeout: 10000 });
 
   // isključi „veliki blok" → display:false (inline)
   await fblock.locator('[data-be-mcheck="display"]').uncheck();
