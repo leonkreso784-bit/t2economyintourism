@@ -587,6 +587,38 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/sit-hr/*.json)
       }
+    },
+    {
+      id: 'traffic-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 2,
+      name: 'Promet u turizmu',
+      shortName: 'PUT',
+      icon: 'fa-route',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'Promet u turizmu (Mrnjavac; prof. Kovačić): teorijske osnove prometa i njegova međuovisnost s turizmom, mobilnost i putovanja te svaki prometni oblik kao konektor i kao dio turističkog proizvoda — cestovni, željeznički (+ uspinjača/žičara), zračni i vodeni — uz vrijednost i kvalitetu usluge, sigurnost, ekološke aspekte i budućnost prometa (EU strategija održive i pametne mobilnosti)',
+      storageKey: 'traffic-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Teorijske osnove prometa, međuovisnost prometa i turizma, mobilnost i putovanja, cestovni promet (konektor i turistički proizvod) te željeznički promet kao konektor (tjedni 1–6)' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Željeznica kao turistički proizvod (+ uspinjača/žičara), zračni i vodeni promet, vrijednost i kvaliteta usluge, sigurnost, ekološki aspekti i budućnost prometa (tjedni 7–15)' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/traffic-hr/final.js MORA se učitati zadnji (Object.assign trafficHrM1 + trafficHrM2 + examPractice)
+        scripts: [
+          'data/traffic-hr/midterm-1.js',
+          'data/traffic-hr/midterm-2.js',
+          'data/traffic-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'trafficHrM1',
+          'second-midterm': 'trafficHrM2',
+          'final': 'trafficHrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/traffic-hr/*.json)
+      }
     }
   ]
 };
