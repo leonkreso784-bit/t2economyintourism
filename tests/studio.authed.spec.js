@@ -20,8 +20,11 @@ async function openStudioLesson(page) {
   await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach(n => n.classList.add('open')); });
   const leaf = page.locator('#stTree .st-row[data-subj="te2"][data-lesson]').first();
   await expect(leaf).toHaveCount(1);
+  const subj = await leaf.getAttribute('data-subj');
+  const lesson = await leaf.getAttribute('data-lesson');
   await leaf.click();
   await page.waitForSelector('#stCanvas .st-head h1');
+  return { subj, lesson };
 }
 
 test('U8.2 — Studio learn: Uredi → migracija v1→blokovi → dodaj blok → draft raste → Odbaci', async ({ page }) => {
@@ -104,6 +107,70 @@ test('U8.3 — Studio kartice: Uredi → Dodaj (modal) → uredi ✎ → obriši
   await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await expect(pane.locator('.st-edit-item', { hasText: 'U83-pitanje' })).toHaveCount(0);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
+
+test('U8.4a — Studio learn: dodaj Tekst blok → upiši → bold (traka) → runs u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  // learn tab + migracija prve v1 kategorije → block-editor se montira
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Tekst (paragraph) blok kroz ＋
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Tekst' }).click();
+  const editable = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-field="text"]');
+  await expect(editable).toHaveCount(1);
+
+  // UPIŠI tekst → blur → focusout serijalizira u draft (plain string)
+  await editable.click();
+  await page.keyboard.type('Bold tekst ovdje');
+  await page.locator('#stCanvas .st-head h1').click();  // klik izvan = blur
+  const hasPlain = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    if (!d) return false;
+    return Object.keys(d.working).some((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      return Array.isArray(blks) && blks.some((b) => b.text === 'Bold tekst ovdje');
+    });
+  }, sel);
+  expect(hasPlain).toBe(true);
+
+  // BOLD: selektiraj sav tekst polja → traka se pojavi → klik B → blur → runs s b:true
+  await editable.click();
+  await page.evaluate(() => {
+    const blocks = document.querySelectorAll('#stCanvas .be-mount .be-block');
+    const el = blocks[blocks.length - 1].querySelector('[data-be-field="text"]');
+    const r = document.createRange(); r.selectNodeContents(el);
+    const sel = document.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    document.dispatchEvent(new Event('selectionchange'));
+  });
+  await page.waitForSelector('.be-toolbar.on', { timeout: 5000 });
+  await page.locator('.be-toolbar .be-tb[data-be-fmt="bold"]').click();
+  await page.locator('#stCanvas .st-head h1').click();  // blur → serijalizacija
+  const isBold = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return Object.keys(d.working).some((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      return Array.isArray(blks) && blks.some((b) =>
+        Array.isArray(b.text) && b.text.some((run) => run.b && /Bold tekst/.test(run.text)));
+    });
+  }, sel);
+  expect(isBold).toBe(true);
 
   // Odbaci
   await page.click('#stDiscard');

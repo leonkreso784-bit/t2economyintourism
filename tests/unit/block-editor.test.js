@@ -86,11 +86,85 @@ test('kontrole nose data-be-act + data-be-id (za U8a-2 wiring)', function () {
   assert.ok(h.indexOf('data-be-act="remove" data-be-id="bbb222"') !== -1);
 });
 
-test('tijelo bloka = preview kroz renderBlocks (isti renderer = granica)', function () {
+test('U8.4a: tekstualni blok = editabilno polje (contenteditable + data-be-field), NE read-only preview', function () {
   const h = E.renderEditor(sample);
-  assert.ok(h.indexOf('<h2 class="lb-heading">Naslov</h2>') !== -1, 'heading preview');
-  assert.ok(h.indexOf('<p class="lb-paragraph">Neki tekst.</p>') !== -1, 'paragraph preview');
-  assert.ok(h.indexOf('lb-list') !== -1, 'list preview');
+  assert.ok(h.indexOf('data-be-field="text"') !== -1, 'heading/paragraph editabilno polje');
+  assert.ok(h.indexOf('be-edit--h2') !== -1, 'heading = h2 editabilno');
+  assert.ok(h.indexOf('<h2 class="lb-heading">') === -1, 'heading NIJE renderBlocks-preview');
+  assert.ok(h.indexOf('Naslov') !== -1 && h.indexOf('Neki tekst.') !== -1, 'tekst sadržaja prisutan');
+  assert.ok(h.indexOf('be-editlist') !== -1, 'lista editabilna');
+  assert.strictEqual(count(h, /data-be-field="items"/g), 2, 'dvije editabilne stavke liste');
+});
+
+test('U8.4a: NE-tekstualni blok (table) ostaje read-only preview kroz renderBlocks (granica)', function () {
+  const h = E.renderEditor([{ id: 't1', type: 'table', header: ['A'], rows: [['1']] }]);
+  assert.ok(h.indexOf('lb-table') !== -1, 'table preview kroz renderBlocks');
+  assert.ok(h.indexOf('data-be-field') === -1, 'ne-tekstualni blok nema editabilna polja');
+});
+
+// ── U8.4a: serijalizator runs → editabilni HTML ──
+test('runsToEditable: plain string → escapan tekst', function () {
+  assert.strictEqual(E._runsToEditable('a<b>&'), 'a&lt;b&gt;&amp;');
+});
+test('runsToEditable: b/i/color/href → strong/em/span.lb-color/a', function () {
+  assert.strictEqual(E._runsToEditable([{ text: 'x', b: true }]), '<strong>x</strong>');
+  assert.strictEqual(E._runsToEditable([{ text: 'y', i: true }]), '<em>y</em>');
+  assert.strictEqual(E._runsToEditable([{ text: 'z', color: 'green' }]), '<span class="lb-color-green">z</span>');
+  assert.ok(E._runsToEditable([{ text: 'l', href: 'https://a.b' }]).indexOf('<a href="https://a.b" data-be-link>l</a>') !== -1);
+});
+test('runsToEditable: nepoznata boja se ignorira (kurirani token-set)', function () {
+  assert.strictEqual(E._runsToEditable([{ text: 'q', color: 'pink' }]), 'q');
+});
+
+// ── U8.4a: serijalizator DOM → runs (mini fake-DOM: firstChild/nextSibling/nodeType/tagName/data/getAttribute/className) ──
+function T(s) { return { nodeType: 3, data: s, nextSibling: null }; }
+function EL(tag, kids, attrs) {
+  attrs = attrs || {};
+  const node = {
+    nodeType: 1, tagName: tag.toUpperCase(), className: attrs.class || '',
+    getAttribute: function (k) { return attrs[k] != null ? attrs[k] : null; },
+    firstChild: null, nextSibling: null
+  };
+  for (let i = 0; i < kids.length; i++) { if (i === 0) node.firstChild = kids[i]; if (i > 0) kids[i - 1].nextSibling = kids[i]; }
+  return node;
+}
+const EROOT = (kids) => EL('div', kids);
+
+test('editableToInline: čisti tekst → plain string', function () {
+  assert.strictEqual(E._editableToInline(EROOT([T('zdravo')])), 'zdravo');
+});
+test('editableToInline: susjedni tekst-čvorovi istog formata → spojen string', function () {
+  assert.strictEqual(E._editableToInline(EROOT([T('a'), T('b')])), 'ab');
+});
+test('editableToInline: prazno → prazan string', function () {
+  assert.strictEqual(E._editableToInline(EROOT([])), '');
+  assert.strictEqual(E._editableToInline(EROOT([T('')])), '');
+});
+test('editableToInline: <strong> → run b:true', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('strong', [T('bold')])])), [{ text: 'bold', b: true }]);
+});
+test('editableToInline: <b> i <i> alias (strong/em)', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('b', [T('x')])])), [{ text: 'x', b: true }]);
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('i', [T('y')])])), [{ text: 'y', i: true }]);
+});
+test('editableToInline: ugniježđeno <em><strong> → b+i', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('em', [EL('strong', [T('x')])])])), [{ text: 'x', b: true, i: true }]);
+});
+test('editableToInline: <a href> → run href', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('a', [T('link')], { href: 'https://a.b' })])), [{ text: 'link', href: 'https://a.b' }]);
+});
+test('editableToInline: span.lb-color-green → run color', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([EL('span', [T('g')], { class: 'lb-color-green' })])), [{ text: 'g', color: 'green' }]);
+});
+test('editableToInline: miješano tekst+bold+tekst → 3 runa (array)', function () {
+  assert.deepStrictEqual(
+    E._editableToInline(EROOT([T('a'), EL('strong', [T('b')]), T('c')])),
+    [{ text: 'a' }, { text: 'b', b: true }, { text: 'c' }]
+  );
+});
+test('editableToInline: nepoznato formatiranje (span style) → curi u čisti tekst (granica)', function () {
+  // span bez lb-color-* klase → ne unosi boju; tekst ostaje
+  assert.strictEqual(E._editableToInline(EROOT([EL('span', [T('plain')], { style: 'color:red' })])), 'plain');
 });
 
 test('badge tipa = ljudski naziv (heading→Naslov, paragraph→Tekst, list→Lista)', function () {
