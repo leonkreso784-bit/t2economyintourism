@@ -241,3 +241,42 @@ test('U8.4b — Studio learn: boja (traka) + link (prompt) → runs u draftu →
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.5a — Studio learn: dodaj Sliku → upiši URL → draft ima src → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  // learn tab + migracija → block-editor
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Slika blok kroz ＋
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Slika' }).click();
+  const srcInput = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-mfield="src"]');
+  await expect(srcInput).toHaveCount(1);
+
+  // upiši URL → blur → change → draft ima src
+  await srcInput.fill('https://example.com/slika.png');
+  await page.locator('#stCanvas .st-head h1').click();  // blur = change
+  const hasSrc = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return Object.keys(d.working).some((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      return Array.isArray(blks) && blks.some((b) => b.type === 'image' && b.src === 'https://example.com/slika.png');
+    });
+  }, sel);
+  expect(hasSrc).toBe(true);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

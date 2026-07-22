@@ -205,14 +205,37 @@ test('swappedOrder: blokovi bez id preskočeni (red samo od id-eva)', function (
 test('swappedOrder: nepoznat id → null', function () {
   assert.strictEqual(E._swappedOrder(sample, 'nema', -1), null);
 });
-test('ADD_TYPES: 4 tekstualna tipa, svaki make() = valjan default-blok', function () {
-  assert.strictEqual(E._addTypes.length, 4);
+test('ADD_TYPES: 5 tipova (4 tekst + slika), svaki make() = valjan default-blok', function () {
+  assert.strictEqual(E._addTypes.length, 5);
   E._addTypes.forEach(function (t) {
     const b = t.make();
     assert.strictEqual(b.type, t.type);
   });
   assert.strictEqual(E._addTypes[0].make().level, 2);       // heading default h2
   assert.deepStrictEqual(E._addTypes[2].make().items, ['']); // lista = jedna prazna stavka
+  assert.strictEqual(E._addTypes[4].type, 'image');          // 5. = slika (U8.5a)
+});
+
+// ── U8.5a — media (slika) ──
+test('inlineToPlain: string/runs/null/objekt → plain string', function () {
+  assert.strictEqual(E._inlineToPlain('x'), 'x');
+  assert.strictEqual(E._inlineToPlain([{ text: 'a', b: true }, 'b']), 'ab');
+  assert.strictEqual(E._inlineToPlain(null), '');
+  assert.strictEqual(E._inlineToPlain({ text: 'z' }), 'z');
+});
+
+test('mediaImageBody: prazna slika → 3 polja (src/alt/caption) + placeholder', function () {
+  const html = E._mediaImageBody({ type: 'image', src: '', alt: '' });
+  assert.ok(html.indexOf('data-be-mfield="src"') !== -1);
+  assert.ok(html.indexOf('data-be-mfield="alt"') !== -1);
+  assert.ok(html.indexOf('data-be-mfield="caption"') !== -1);
+  assert.ok(html.indexOf('be-media__ph') !== -1);            // nema src → placeholder
+});
+
+test('mediaImageBody: vrijednosti polja escapane (bez HTML-injekcije)', function () {
+  const html = E._mediaImageBody({ type: 'image', src: 'a"b', alt: 'A<b>' });
+  assert.ok(html.indexOf('value="a&quot;b"') !== -1);
+  assert.ok(html.indexOf('value="A&lt;b&gt;"') !== -1);
 });
 
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');

@@ -8641,6 +8641,23 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 .be-tbc:hover::after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45), 0 0 0 2px rgba(99, 102, 241, .4); }
 
+/* ===== U8.5a — media blok (slika): forma polja + živi preview ===== */
+.be-media { display: flex; flex-direction: column; gap: 10px; }
+.be-media__preview { border-radius: 10px; overflow: hidden; }
+.be-media__preview img { max-width: 100%; display: block; border-radius: 10px; }
+.be-media__ph {
+  border: 2px dashed rgba(148, 163, 184, .25); border-radius: 10px; padding: 22px;
+  text-align: center; color: var(--text-muted); font-size: 13px; background: rgba(15, 23, 42, .3);
+}
+.be-media__fields { display: flex; flex-direction: column; gap: 6px; }
+.be-mfield {
+  width: 100%; padding: 8px 10px; border-radius: 8px; font-size: 13px;
+  color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+}
+.be-mfield:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+.be-mfield::placeholder { color: var(--text-muted); }
+
 /* ==================== css/studio.css ==================== */
 /* ============================================================
    STUDIO EDITOR (U8) — kosti iz design/mockups/editor-c-tok.html

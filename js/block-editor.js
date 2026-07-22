@@ -109,6 +109,29 @@
     return '<div class="be-edit' + (extraClass ? ' ' + extraClass : '') + '" contenteditable="true" data-be-field="' + field + '"' +
       (ph ? ' data-be-ph="' + esc(ph) + '"' : '') + '>' + inlineHtml + '</div>';
   }
+  // ── ne-tekstualni (media) blok: plain-text pomoćnik + polja-forma (U8.5) ──
+  function inlineToPlain(inline) {                        // inline (string/runs) → plain string za <input>
+    if (inline == null) return '';
+    if (typeof inline === 'string') return inline;
+    if (Array.isArray(inline)) return inline.map(function (r) { return typeof r === 'string' ? r : (r && r.text) || ''; }).join('');
+    return String((inline && inline.text) || '');
+  }
+  function mField(name, ph, val) {
+    return '<input type="text" class="be-mfield" data-be-mfield="' + name + '" placeholder="' + esc(ph) + '" value="' + esc(val == null ? '' : val) + '">';
+  }
+  function imagePreviewHtml(block) {                       // preview kroz JEDAN renderer, ili placeholder ako nema src
+    return (block && block.src && String(block.src)) ? preview(block) : '<div class="be-media__ph">Zalijepi URL slike ↓</div>';
+  }
+  function mediaImageBody(block) {
+    return '<div class="be-media be-media--image">' +
+      '<div class="be-media__preview">' + imagePreviewHtml(block) + '</div>' +
+      '<div class="be-media__fields">' +
+        mField('src', 'URL slike (https://…)', block.src) +
+        mField('alt', 'Opis za pristupačnost (alt)', block.alt) +
+        mField('caption', 'Naslov ispod (opcionalno)', inlineToPlain(block.caption)) +
+      '</div></div>';
+  }
+
   function editableBody(block) {
     const type = block && block.type;
     if (type === 'heading') {
@@ -133,7 +156,8 @@
       }).join('');
       return '<' + tag + ' class="lb-list be-editlist">' + lis + '</' + tag + '>';
     }
-    return preview(block);                              // image/video/table/formula/legacy = read-only
+    if (type === 'image') return mediaImageBody(block); // U8.5a: slika = forma (src/alt/caption) + živi preview
+    return preview(block);                              // video/table/formula/legacy = read-only (U8.5b+)
   }
 
   // ── jedna blok-kartica (glava s kontrolama + tijelo = editabilno/preview) ──
@@ -184,7 +208,8 @@
     { type: 'heading',   label: 'Naslov',    make: function () { return { type: 'heading', level: 2, text: '' }; } },
     { type: 'paragraph', label: 'Tekst',     make: function () { return { type: 'paragraph', text: '' }; } },
     { type: 'list',      label: 'Lista',     make: function () { return { type: 'list', ordered: false, items: [''] }; } },
-    { type: 'callout',   label: 'Isticanje', make: function () { return { type: 'callout', variant: 'info', text: '' }; } }
+    { type: 'callout',   label: 'Isticanje', make: function () { return { type: 'callout', variant: 'info', text: '' }; } },
+    { type: 'image',     label: 'Slika',     make: function () { return { type: 'image', src: '', alt: '' }; } }
   ];
 
   // ── apsolutni ciljni redoslijed s id-om pomaknutim za dir (±1) — hrani U7e reorderBlocks ──
@@ -440,6 +465,29 @@
         }
         c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: patch });
       });
+
+      // U8.5a: media-polja (<input>) → draft na `change`; osvježi SAMO preview (inpute ne diramo → fokus ostaje).
+      container.addEventListener('change', function (e) {
+        const inp = e.target.closest ? e.target.closest('[data-be-mfield]') : null;
+        if (!inp || !container.contains(inp)) return;
+        const c = container._beCtx;
+        const blockEl = inp.closest('[data-be-block]');
+        const id = blockEl ? blockEl.getAttribute('data-be-block') : '';
+        if (!id) return;
+        const fields = blockEl.querySelectorAll('[data-be-mfield]');
+        const patch = {};
+        for (let k = 0; k < fields.length; k++) {
+          const key = fields[k].getAttribute('data-be-mfield');
+          const val = fields[k].value;
+          patch[key] = (val === '') ? null : val;         // prazno → briše ključ (_assignPatch null)
+        }
+        c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: patch });
+        const blocks = (c.getBlocks && c.getBlocks()) || [];
+        let updated = null;
+        for (let k = 0; k < blocks.length; k++) { if (blocks[k] && String(blocks[k].id) === String(id)) { updated = blocks[k]; break; } }
+        const prev = blockEl.querySelector('.be-media__preview');
+        if (prev && updated) prev.innerHTML = imagePreviewHtml(updated);
+      });
     }
     draw();
   }
@@ -454,6 +502,8 @@
       _typeLabel: TYPE_LABEL,
       _swappedOrder: swappedOrder,
       _addTypes: ADD_TYPES,
+      _inlineToPlain: inlineToPlain,     // U8.5a (inline → plain za media-inpute)
+      _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
       _editableBody: editableBody
