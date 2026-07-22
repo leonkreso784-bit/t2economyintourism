@@ -205,8 +205,8 @@ test('swappedOrder: blokovi bez id preskočeni (red samo od id-eva)', function (
 test('swappedOrder: nepoznat id → null', function () {
   assert.strictEqual(E._swappedOrder(sample, 'nema', -1), null);
 });
-test('ADD_TYPES: 5 tipova (4 tekst + slika), svaki make() = valjan default-blok', function () {
-  assert.strictEqual(E._addTypes.length, 5);
+test('ADD_TYPES: 6 tipova (4 tekst + slika + video), svaki make() = valjan default-blok', function () {
+  assert.strictEqual(E._addTypes.length, 6);
   E._addTypes.forEach(function (t) {
     const b = t.make();
     assert.strictEqual(b.type, t.type);
@@ -214,6 +214,7 @@ test('ADD_TYPES: 5 tipova (4 tekst + slika), svaki make() = valjan default-blok'
   assert.strictEqual(E._addTypes[0].make().level, 2);       // heading default h2
   assert.deepStrictEqual(E._addTypes[2].make().items, ['']); // lista = jedna prazna stavka
   assert.strictEqual(E._addTypes[4].type, 'image');          // 5. = slika (U8.5a)
+  assert.strictEqual(E._addTypes[5].type, 'video');          // 6. = video (U8.5b)
 });
 
 // ── U8.5a — media (slika) ──
@@ -236,6 +237,18 @@ test('mediaImageBody: vrijednosti polja escapane (bez HTML-injekcije)', function
   const html = E._mediaImageBody({ type: 'image', src: 'a"b', alt: 'A<b>' });
   assert.ok(html.indexOf('value="a&quot;b"') !== -1);
   assert.ok(html.indexOf('value="A&lt;b&gt;"') !== -1);
+});
+
+// ── U8.5b — video ──
+test('mediaVideoBody: prazan video → 1 polje (url) + placeholder', function () {
+  const html = E._mediaVideoBody({ type: 'video', url: '' });
+  assert.ok(html.indexOf('data-be-mfield="url"') !== -1);
+  assert.ok(html.indexOf('be-media__ph') !== -1);            // prazno → placeholder (preview '' u nodeu)
+});
+
+test('mediaVideoBody: postojeći videoId prikazan u url-polju (escapan)', function () {
+  const html = E._mediaVideoBody({ type: 'video', videoId: 'ab"cd' });
+  assert.ok(html.indexOf('value="ab&quot;cd"') !== -1);      // videoId pada u url-polje
 });
 
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');

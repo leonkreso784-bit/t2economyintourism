@@ -131,6 +131,22 @@
         mField('caption', 'Naslov ispod (opcionalno)', inlineToPlain(block.caption)) +
       '</div></div>';
   }
+  function videoPreviewHtml(block) {                       // renderVideo facade, ili placeholder ako ID nevaljan/prazan
+    const html = preview(block);
+    return (html && String(html).trim()) ? html : '<div class="be-media__ph">Zalijepi YouTube link ili ID ↓</div>';
+  }
+  function mediaVideoBody(block) {
+    const val = block.url != null ? block.url : (block.videoId != null ? block.videoId : '');
+    return '<div class="be-media be-media--video">' +
+      '<div class="be-media__preview">' + videoPreviewHtml(block) + '</div>' +
+      '<div class="be-media__fields">' +
+        mField('url', 'YouTube link ili ID (npr. youtu.be/abc123)', val) +
+      '</div></div>';
+  }
+  function mediaPreviewHtml(block) {                       // preview-osvježenje po tipu (change-handler)
+    if (block && block.type === 'video') return videoPreviewHtml(block);
+    return imagePreviewHtml(block);
+  }
 
   function editableBody(block) {
     const type = block && block.type;
@@ -157,7 +173,8 @@
       return '<' + tag + ' class="lb-list be-editlist">' + lis + '</' + tag + '>';
     }
     if (type === 'image') return mediaImageBody(block); // U8.5a: slika = forma (src/alt/caption) + živi preview
-    return preview(block);                              // video/table/formula/legacy = read-only (U8.5b+)
+    if (type === 'video') return mediaVideoBody(block); // U8.5b: video = forma (YouTube link/ID) + facade preview
+    return preview(block);                              // table/formula/legacy = read-only (U8.5c+)
   }
 
   // ── jedna blok-kartica (glava s kontrolama + tijelo = editabilno/preview) ──
@@ -209,7 +226,8 @@
     { type: 'paragraph', label: 'Tekst',     make: function () { return { type: 'paragraph', text: '' }; } },
     { type: 'list',      label: 'Lista',     make: function () { return { type: 'list', ordered: false, items: [''] }; } },
     { type: 'callout',   label: 'Isticanje', make: function () { return { type: 'callout', variant: 'info', text: '' }; } },
-    { type: 'image',     label: 'Slika',     make: function () { return { type: 'image', src: '', alt: '' }; } }
+    { type: 'image',     label: 'Slika',     make: function () { return { type: 'image', src: '', alt: '' }; } },
+    { type: 'video',     label: 'Video',     make: function () { return { type: 'video', url: '' }; } }
   ];
 
   // ── apsolutni ciljni redoslijed s id-om pomaknutim za dir (±1) — hrani U7e reorderBlocks ──
@@ -486,7 +504,7 @@
         let updated = null;
         for (let k = 0; k < blocks.length; k++) { if (blocks[k] && String(blocks[k].id) === String(id)) { updated = blocks[k]; break; } }
         const prev = blockEl.querySelector('.be-media__preview');
-        if (prev && updated) prev.innerHTML = imagePreviewHtml(updated);
+        if (prev && updated) prev.innerHTML = mediaPreviewHtml(updated);
       });
     }
     draw();
@@ -504,6 +522,7 @@
       _addTypes: ADD_TYPES,
       _inlineToPlain: inlineToPlain,     // U8.5a (inline → plain za media-inpute)
       _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
+      _mediaVideoBody: mediaVideoBody,   // U8.5b (video-forma)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
       _editableBody: editableBody

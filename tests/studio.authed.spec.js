@@ -280,3 +280,45 @@ test('U8.5a — Studio learn: dodaj Sliku → upiši URL → draft ima src → O
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.5b — Studio learn: dodaj Video → zalijepi YouTube link → draft url + facade → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Video blok kroz ＋
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Video' }).click();
+  const urlInput = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-mfield="url"]');
+  await expect(urlInput).toHaveCount(1);
+
+  // zalijepi YouTube link → blur → change
+  await urlInput.fill('https://youtu.be/dQw4w9WgXcQ');
+  await page.locator('#stCanvas .st-head h1').click();
+  const hasUrl = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return Object.keys(d.working).some((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      return Array.isArray(blks) && blks.some((b) => b.type === 'video' && b.url === 'https://youtu.be/dQw4w9WgXcQ');
+    });
+  }, sel);
+  expect(hasUrl).toBe(true);
+
+  // preview = facade (klik-za-učitavanje; NULA YT-poziva prije klika)
+  const block = page.locator('#stCanvas .be-mount .be-block').last();
+  await expect(block.locator('.lb-video__play')).toHaveCount(1);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
