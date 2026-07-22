@@ -5,6 +5,12 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-22 (OPUS) — U8.5a Slika blok uredljiv u learn-editoru (media pod-cigla 1/6)
+**Kontekst:** Leon U8.4b live-potvrdio („provjerio sam, izgleda fantastično") → „mozemo nastavit". U8.5 (media/strukturni blokovi) = velik → podijeljen: **a=slika · b=video · c=formula · d=tablica · e=resize+callout-varijanta · f=boje sekcija**. **Prizemljenje:** schema (`additionalProperties:false`) — image`{src*,alt?,caption?}` · video`{videoId|url}` · table`{rows*,header?}` · formula`{tex*,display?}`; renderer već ima renderImage/Video/Table/Formula.
+**U8.5a ✅ (`576d73b`):** obrazac za uređivanje NE-tekstualnih blokova = **forma-polja** (ne contenteditable). `editableBody` image→`mediaImageBody` = 3 `<input data-be-mfield>` (src/alt/caption) + `.be-media__preview` (renderBlocks ili placeholder). `mount` +**`change`-handler**: media-input → patch iz SVIH polja bloka → `updateLearnBlock` → osvježi **SAMO preview** (inpute ne dira → fokus na sljedećem polju ostaje); prazno polje→`null` (briše ključ). ADD_TYPES +Slika (5. tip). `caption` preko `inlineToPlain` (runs→plain za input). `css/block-editor.css` +`.be-media`/`.be-mfield`.
+**Sigurnost:** `src` kroz `safeUrl{image}` na PRIKAZU (renderer); polja escapana; video/table/formula ostaju read-only preview (U8.5b+).
+**Dokazi:** block-editor unit **35/0** (+3: `inlineToPlain`, `mediaImageBody` polja+placeholder, escaping) · `studio.authed.spec.js` +test (dodaj Sliku→upiši URL→draft `src`) · **test:authed 16/16** (15 tokova NETAKNUTO) · verify 0/0 · typecheck 0 · css-drift 0 · bump 103 (`20260722060239`). Backend U7 100% reused; prod netaknut. **SLIJEDI: U8.5b** (video: YouTube URL/ID → facade).
+
 ## 2026-07-22 (OPUS) — U8.4b boja + link u plutajućoj traci
 **Kontekst:** Leon: „krenimo polako korak po korak" + „plan je zakon, ne otvaraj ga bez problema (a problema nema)". Sljedeća cigla po EDITOR_PLAN §12.2. Podijeljeno u sub-korake: A=boje, B=link.
 1. **Prizemljenje:** renderer `INLINE_COLORS={indigo,green,amber,red,default}` (`default`=bez spana; renderer preskače); boje `#818cf8/#34d399/#fbbf24/#f87171` (`learn-blocks.css`); `safeUrl`=scheme-allowlist. **execCommand ne može stvoriti `lb-color` klasu** (samo inline-style, koji serijalizator svjesno ignorira) → ručno omatanje selekcije.
