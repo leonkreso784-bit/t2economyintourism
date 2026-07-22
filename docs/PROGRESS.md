@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-22 (OPUS) — U8.4b boja + link u plutajućoj traci
+**Kontekst:** Leon: „krenimo polako korak po korak" + „plan je zakon, ne otvaraj ga bez problema (a problema nema)". Sljedeća cigla po EDITOR_PLAN §12.2. Podijeljeno u sub-korake: A=boje, B=link.
+1. **Prizemljenje:** renderer `INLINE_COLORS={indigo,green,amber,red,default}` (`default`=bez spana; renderer preskače); boje `#818cf8/#34d399/#fbbf24/#f87171` (`learn-blocks.css`); `safeUrl`=scheme-allowlist. **execCommand ne može stvoriti `lb-color` klasu** (samo inline-style, koji serijalizator svjesno ignorira) → ručno omatanje selekcije.
+2. **U8.4b ✅ (`a40799f`):** traka +4 boja-swatch-a (`data-be-color`) + „ukloni boju" ⊘ + 🔗 (`data-be-linkact`). `applyColor` = `extractContents`→`unwrapColorSpans`→omotaj u `<span class="lb-color-<token>">` (default=bez omotača)→reselektiraj (traka ostaje). `promptLink` = `prompt` (predpopunjen `enclosingHref`; prazno=ukloni)→`sanitizeLink`→omotaj u `<a href data-be-link>` (unwrap postojećih linkova prije). `sanitizeLink` odbija `javascript:`/`data:`, goli domen→`https://`. `css/block-editor.css` +`.be-tbsep`/`.be-tbc`.
+**Sigurnost:** serijalizator (`editableToInline`) čita SAMO kurirani `lb-color-token`+`href`; inline-style boja i dalje curi u čisti tekst (dokazano); `safeUrl` = granica na prikazu.
+**Dokazi:** block-editor unit **32/0** (round-trip color/href) · `studio.authed.spec.js` +U8.4b test (selektiraj→zeleni swatch→run `color:'green'`; 🔗 prompt[dialog `example.com`]→run `href`) · **test:authed 15/15** (14 tokova NETAKNUTO) · verify 0/0 · typecheck 0 · css-drift 0 · bump 103 (`20260722050431`). Backend U7 100% reused; prod netaknut (main=`f59eed0`, +2 HR predmeta live 07-22). **SLIJEDI: U8.5** (media/strukturni blokovi: slika/video/tablica/formula + resize + boje sekcija s nasljeđivanjem).
+
 ## 2026-07-22 (OPUS) — U8.4a inline uređivanje teksta learn-blokova (contenteditable → runs)
 **Kontekst:** Leon: „krenut slobodno". Najosjetljivija cigla dosad = contenteditable→runs serijalizacija (i sigurnosna granica i točnost). Sesija 2× prekinuta (usage), oba puta oporavak bez gubitka (git čist). Podjela po pacu: **U8.4a = upisivanje + B/I** (sad), U8.4b = boja/link.
 1. **Prizemljenje:** `blocks-renderer.js renderInline` = run-model `{text,b?,i?,color?,href?}` (b→strong · i→em · color∈{indigo,green,amber,red}→`lb-color-<token>` klasa · href→a); `draft-store _assignPatch` = **replace** (`target[k]=patch[k]`, `null` briše) → `updateLearnBlock` patch `{text}`/`{items}` = zamjena. Ključni nalaz: `learn.js` bira blokove NAD content već poznato (U8.2).
