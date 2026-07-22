@@ -322,3 +322,63 @@ test('U8.5b — Studio learn: dodaj Video → zalijepi YouTube link → draft ur
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.5c — Studio learn: dodaj Formulu → upiši LaTeX → draft tex+display → KaTeX preview → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Formula blok kroz ＋
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Formula' }).click();
+  const fblock = page.locator('#stCanvas .be-mount .be-block').last();
+  const texInput = fblock.locator('[data-be-mfield="tex"]');
+  await expect(texInput).toHaveCount(1);
+
+  // upiši LaTeX → blur → change → draft ima tex + display:true (default = veliki blok)
+  await texInput.fill('E = mc^2');
+  await page.locator('#stCanvas .st-head h1').click();  // blur = change
+  const draft = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) {
+        const f = blks.find((b) => b.type === 'formula' && b.tex === 'E = mc^2');
+        if (f) return { tex: f.tex, display: f.display };
+      }
+    }
+    return null;
+  }, sel);
+  expect(draft).not.toBeNull();
+  expect(draft.display).toBe(true);
+
+  // preview živi kroz JEDAN renderer (.lb-formula); KaTeX ga tipografira ako je CDN učitan
+  await expect(fblock.locator('.be-media__preview .lb-formula')).toHaveCount(1);
+
+  // isključi „veliki blok" → display:false (inline)
+  await fblock.locator('[data-be-mcheck="display"]').uncheck();
+  const display2 = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) { const f = blks.find((b) => b.type === 'formula' && b.tex === 'E = mc^2'); if (f) return f.display; }
+    }
+    return null;
+  }, sel);
+  expect(display2).toBe(false);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

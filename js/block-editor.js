@@ -13,7 +13,9 @@
 // **SIGURNOSNA GRANICA:** editabilni sadržaj se NIKAD ne sprema kao HTML — `editableToInline`
 // destilira DOM u kurirani model `{text,b?,i?,color?,href?}` (prepoznaje samo b/i/link/token-boju;
 // ostalo curi u čisti tekst), a `renderInline` (blocks-renderer) escapa/whitelista + `safeUrl` na prikazu.
-// Ne-tekstualni blokovi (image/video/table/formula/legacy) = read-only preview kroz `renderBlocks`.
+// U8.5 — MEDIA/STRUKTURNI blokovi = forma-polja (`data-be-mfield` tekst + `data-be-mcheck` boolean) + živi
+// preview kroz JEDAN renderer: slika (a) · video (b) · formula (c, KaTeX preko `renderMath`). Autor NIKAD ne
+// piše HTML — samo vrijednosti polja (src/alt/tex/…) koje renderer escapa/sanitizira. table/legacy = read-only.
 
 (function () {
   'use strict';
@@ -143,9 +145,29 @@
         mField('url', 'YouTube link ili ID (npr. youtu.be/abc123)', val) +
       '</div></div>';
   }
+  function formulaPreviewHtml(block) {                     // renderBlocks izbaci \[tex\]; renderMath ga tipografira POSLIJE
+    return (block && block.tex != null && String(block.tex).trim()) ? preview(block) : '<div class="be-media__ph">Upiši LaTeX formulu ↓</div>';
+  }
+  function mediaFormulaBody(block) {                       // U8.5c: formula = tex-polje + „veliki blok" prekidač + živi KaTeX preview
+    const display = block.display !== false;              // default = veliki (blok/centrirano); false = inline
+    return '<div class="be-media be-media--formula">' +
+      '<div class="be-media__preview">' + formulaPreviewHtml(block) + '</div>' +
+      '<div class="be-media__fields">' +
+        mField('tex', 'LaTeX (npr. E = mc^2  ·  \\frac{a}{b}  ·  \\sum_{i=1}^{n})', block.tex) +
+        '<label class="be-mcheck"><input type="checkbox" data-be-mcheck="display"' + (display ? ' checked' : '') +
+          '> Veliki blok (centrirano) — isključi za formulu u redu s tekstom</label>' +
+      '</div></div>';
+  }
   function mediaPreviewHtml(block) {                       // preview-osvježenje po tipu (change-handler)
     if (block && block.type === 'video') return videoPreviewHtml(block);
+    if (block && block.type === 'formula') return formulaPreviewHtml(block);
     return imagePreviewHtml(block);
+  }
+  // ── KaTeX-tipografiranje formula-previewa (delimiteri su tekst dok renderMath ne prođe) ──
+  function typesetFormulas(root) {
+    if (typeof window === 'undefined' || typeof window.renderMath !== 'function' || !root || !root.querySelectorAll) return;
+    const prevs = root.querySelectorAll('.be-media--formula .be-media__preview');
+    for (let i = 0; i < prevs.length; i++) window.renderMath(prevs[i]);
   }
 
   function editableBody(block) {
@@ -174,7 +196,8 @@
     }
     if (type === 'image') return mediaImageBody(block); // U8.5a: slika = forma (src/alt/caption) + živi preview
     if (type === 'video') return mediaVideoBody(block); // U8.5b: video = forma (YouTube link/ID) + facade preview
-    return preview(block);                              // table/formula/legacy = read-only (U8.5c+)
+    if (type === 'formula') return mediaFormulaBody(block); // U8.5c: formula = tex-polje + prekidač + živi KaTeX preview
+    return preview(block);                              // table/legacy = read-only (U8.5d+)
   }
 
   // ── jedna blok-kartica (glava s kontrolama + tijelo = editabilno/preview) ──
@@ -227,7 +250,8 @@
     { type: 'list',      label: 'Lista',     make: function () { return { type: 'list', ordered: false, items: [''] }; } },
     { type: 'callout',   label: 'Isticanje', make: function () { return { type: 'callout', variant: 'info', text: '' }; } },
     { type: 'image',     label: 'Slika',     make: function () { return { type: 'image', src: '', alt: '' }; } },
-    { type: 'video',     label: 'Video',     make: function () { return { type: 'video', url: '' }; } }
+    { type: 'video',     label: 'Video',     make: function () { return { type: 'video', url: '' }; } },
+    { type: 'formula',   label: 'Formula',   make: function () { return { type: 'formula', tex: '', display: true }; } }
   ];
 
   // ── apsolutni ciljni redoslijed s id-om pomaknutim za dir (±1) — hrani U7e reorderBlocks ──
@@ -437,7 +461,7 @@
     if (!container || typeof document === 'undefined') return;
     container._beCtx = ctx;
     ensureToolbar();
-    function draw() { container.innerHTML = renderEditor(container._beCtx.getBlocks()); }
+    function draw() { container.innerHTML = renderEditor(container._beCtx.getBlocks()); typesetFormulas(container); }
     if (!container._beWired) {
       container._beWired = true;
 
@@ -484,27 +508,30 @@
         c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: patch });
       });
 
-      // U8.5a: media-polja (<input>) → draft na `change`; osvježi SAMO preview (inpute ne diramo → fokus ostaje).
+      // U8.5a/b/c: media-polja (<input> tekst + checkbox) → draft na `change`; osvježi SAMO preview
+      // (inpute/checkboxe ne diramo → fokus ostaje). Formula-preview se KaTeX-tipografira po osvježenju.
       container.addEventListener('change', function (e) {
-        const inp = e.target.closest ? e.target.closest('[data-be-mfield]') : null;
+        const inp = e.target.closest ? e.target.closest('[data-be-mfield], [data-be-mcheck]') : null;
         if (!inp || !container.contains(inp)) return;
         const c = container._beCtx;
         const blockEl = inp.closest('[data-be-block]');
         const id = blockEl ? blockEl.getAttribute('data-be-block') : '';
         if (!id) return;
-        const fields = blockEl.querySelectorAll('[data-be-mfield]');
         const patch = {};
+        const fields = blockEl.querySelectorAll('[data-be-mfield]');
         for (let k = 0; k < fields.length; k++) {
           const key = fields[k].getAttribute('data-be-mfield');
           const val = fields[k].value;
           patch[key] = (val === '') ? null : val;         // prazno → briše ključ (_assignPatch null)
         }
+        const checks = blockEl.querySelectorAll('[data-be-mcheck]');  // U8.5c: boolean (npr. formula display)
+        for (let k = 0; k < checks.length; k++) patch[checks[k].getAttribute('data-be-mcheck')] = !!checks[k].checked;
         c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: patch });
         const blocks = (c.getBlocks && c.getBlocks()) || [];
         let updated = null;
         for (let k = 0; k < blocks.length; k++) { if (blocks[k] && String(blocks[k].id) === String(id)) { updated = blocks[k]; break; } }
         const prev = blockEl.querySelector('.be-media__preview');
-        if (prev && updated) prev.innerHTML = mediaPreviewHtml(updated);
+        if (prev && updated) { prev.innerHTML = mediaPreviewHtml(updated); if (updated.type === 'formula') typesetFormulas(blockEl); }
       });
     }
     draw();
@@ -523,6 +550,7 @@
       _inlineToPlain: inlineToPlain,     // U8.5a (inline → plain za media-inpute)
       _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
       _mediaVideoBody: mediaVideoBody,   // U8.5b (video-forma)
+      _mediaFormulaBody: mediaFormulaBody, // U8.5c (formula-forma)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
       _editableBody: editableBody

@@ -159,3 +159,11 @@
 }
 .be-mfield:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
 .be-mfield::placeholder { color: var(--text-muted); }
+
+/* ===== U8.5c — formula (KaTeX): tex-polje + „veliki blok" prekidač + centrirani živi preview ===== */
+.be-media--formula .be-media__preview { padding: 10px 4px; text-align: center; min-height: 2.2em; }
+.be-mcheck {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 12.5px; color: var(--text-muted); padding: 2px 1px; user-select: none;
+}
+.be-mcheck input { accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }

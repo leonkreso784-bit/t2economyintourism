@@ -205,8 +205,8 @@ test('swappedOrder: blokovi bez id preskočeni (red samo od id-eva)', function (
 test('swappedOrder: nepoznat id → null', function () {
   assert.strictEqual(E._swappedOrder(sample, 'nema', -1), null);
 });
-test('ADD_TYPES: 6 tipova (4 tekst + slika + video), svaki make() = valjan default-blok', function () {
-  assert.strictEqual(E._addTypes.length, 6);
+test('ADD_TYPES: 7 tipova (4 tekst + slika + video + formula), svaki make() = valjan default-blok', function () {
+  assert.strictEqual(E._addTypes.length, 7);
   E._addTypes.forEach(function (t) {
     const b = t.make();
     assert.strictEqual(b.type, t.type);
@@ -215,6 +215,8 @@ test('ADD_TYPES: 6 tipova (4 tekst + slika + video), svaki make() = valjan defau
   assert.deepStrictEqual(E._addTypes[2].make().items, ['']); // lista = jedna prazna stavka
   assert.strictEqual(E._addTypes[4].type, 'image');          // 5. = slika (U8.5a)
   assert.strictEqual(E._addTypes[5].type, 'video');          // 6. = video (U8.5b)
+  assert.strictEqual(E._addTypes[6].type, 'formula');        // 7. = formula (U8.5c)
+  assert.strictEqual(E._addTypes[6].make().display, true);   // formula default = veliki blok
 });
 
 // ── U8.5a — media (slika) ──
@@ -249,6 +251,33 @@ test('mediaVideoBody: prazan video → 1 polje (url) + placeholder', function ()
 test('mediaVideoBody: postojeći videoId prikazan u url-polju (escapan)', function () {
   const html = E._mediaVideoBody({ type: 'video', videoId: 'ab"cd' });
   assert.ok(html.indexOf('value="ab&quot;cd"') !== -1);      // videoId pada u url-polje
+});
+
+// ── U8.5c — formula (KaTeX) ──
+test('mediaFormulaBody: prazna formula → tex-polje + display-checkbox + placeholder', function () {
+  const html = E._mediaFormulaBody({ type: 'formula', tex: '', display: true });
+  assert.ok(html.indexOf('data-be-mfield="tex"') !== -1);
+  assert.ok(html.indexOf('data-be-mcheck="display"') !== -1);
+  assert.ok(html.indexOf('be-media__ph') !== -1);            // prazan tex → placeholder
+  assert.ok(html.indexOf('be-media--formula') !== -1);
+});
+
+test('mediaFormulaBody: display=true → checkbox checked; display=false → unchecked', function () {
+  assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x', display: true }).indexOf('checked') !== -1);
+  assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x', display: false }).indexOf('checked') === -1);
+  // izostavljen display → default veliki blok (checked)
+  assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x' }).indexOf('checked') !== -1);
+});
+
+test('mediaFormulaBody: tex s LaTeX-backslashevima ide u value bez HTML-injekcije', function () {
+  const html = E._mediaFormulaBody({ type: 'formula', tex: '\\frac{a}{b}<x>"' });
+  assert.ok(html.indexOf('value="\\frac{a}{b}&lt;x&gt;&quot;"') !== -1);  // backslash literal, <>" escapani
+});
+
+test('mediaFormulaBody: neprazan tex → preview kroz renderBlocks (\\[…\\] delimiteri, ne placeholder)', function () {
+  const html = E._mediaFormulaBody({ type: 'formula', tex: 'E = mc^2', display: true });
+  assert.ok(html.indexOf('lb-formula') !== -1, 'preview kroz renderBlocks');
+  assert.ok(html.indexOf('be-media__ph') === -1, 'nema placeholdera kad tex postoji');
 });
 
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');
