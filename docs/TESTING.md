@@ -58,6 +58,10 @@
   marker edit → „Objavi" (`publish_document` RPC) → reload + re-enter (svjež DB fetch dokazuje objavu) → revert → original;
   (2) **konflikt** — out-of-band write bumpa `version` između drafta i objave → RPC odbija (`publish_version_conflict`),
   draft/rad preživi, konflikt-tekst ne završi ni u bazi ni u auditu. Staging verzije rastu (touch-trigger) — očekivano.
+- **`category-ops.authed.spec.js`** (U6d; 1 test): kategorija dodaj→uredi→presloži→obriši kroz UI (draft-only, staging netaknut).
+- **`item-ops.authed.spec.js`** (U6e; 1 test): stavka dodaj 3→presloži (↑↓)→obriši (draft-only).
+- **`studio.authed.spec.js`** (U8; **8 testova, draft-only**): Studio blok-editor — U8.2 Uredi→migracija v1→blokovi→dodaj/presloži · U8.3 kartice/kviz/fill (Dodaj/uredi/obriši, tab očuvan) · U8.4a inline tekst→bold→`runs` · U8.4b boja-swatch/link · U8.5a slika · U8.5b video-facade · U8.5c formula (`.katex` STVARNO tipografira) · U8.5d tablica (+red/+stupac/header-toggle→`.lb-table`). Svaki završi „Odbaci" (0 writeova).
+- **Ukupno `test:authed` = 19** (auth-setup 1 + admin-detect 7 + category-ops 1 + item-ops 1 + publish-rpc 2 + studio 8); traže SEEDAN staging (`node scripts/seed-staging.js te2`).
 - **Setup:** dediciran **test-admin account (NE osobni)** → napravi kroz app + `profiles.role='admin'` → kopiraj creds u `.env`.
 - **🏗️ STAGING (U1, 2026-07-10):** postoji **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, 2. free projekt) = izolirani test-DB. Kad su `STAGING_SUPABASE_URL/ANON/TEST_ADMIN_EMAIL/PASSWORD` u `.env`, **`test:authed` + `rls-check` automatski gađaju staging** (`js/auth.js` `_readSupabaseOverride()` preusmjeri app; `SUPABASE_TARGET=staging` za rls-check) → **write-testovi (edit-pa-revert) sad rade na stagingu, prod audit ostaje čist.** Bez `STAGING_*` → staro ponašanje (prod TEST_ADMIN).
   ⚠️ Protiv **PROD** baze WRITE-testovi i dalje mijenjaju živi sadržaj / ostavljaju `content_versions` audit-redove (append-only, admin ih ne može RLS-obrisati) → zato ih vozimo na stagingu; committani `admin-detect.authed.spec.js` je READ/detekcijski (siguran i na prod i na staging).
