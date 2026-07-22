@@ -18,7 +18,7 @@
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
-  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno **19** = 17 EN + 2 HR: business-informatics-hr + management-hr): renderiranje, protok podataka
+  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno **21** = 17 EN + 4 HR: business-informatics-hr + management-hr + sit-hr + traffic-hr): renderiranje, protok podataka
     kroz catalog, 0 JS grešaka, 0 overflowa.
   - `katex.spec.js` — KaTeX render (learn/flashcards/quiz/fill) + currency-safety (`$NN` se ne parsira kao matematika).
   - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
