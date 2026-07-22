@@ -178,3 +178,66 @@ test('U8.4a — Studio learn: dodaj Tekst blok → upiši → bold (traka) → r
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.4b — Studio learn: boja (traka) + link (prompt) → runs u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  // learn tab + migracija prve v1 kategorije → block-editor
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Tekst blok + upiši
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Tekst' }).click();
+  const editable = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-field="text"]');
+  await editable.click();
+  await page.keyboard.type('Boja i link tekst');
+  await page.locator('#stCanvas .st-head h1').click();
+
+  // helper: selektiraj sav tekst zadnjeg polja → traka se pojavi
+  const selectAllLast = async () => {
+    await editable.click();
+    await page.evaluate(() => {
+      const blocks = document.querySelectorAll('#stCanvas .be-mount .be-block');
+      const el = blocks[blocks.length - 1].querySelector('[data-be-field="text"]');
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = document.getSelection(); s.removeAllRanges(); s.addRange(r);
+      document.dispatchEvent(new Event('selectionchange'));
+    });
+    await page.waitForSelector('.be-toolbar.on', { timeout: 5000 });
+  };
+  const runHas = (pred) => page.evaluate(({ s, src }) => {
+    const fn = new Function('run', 'return (' + src + ')(run);');
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return Object.keys(d.working).some((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      return Array.isArray(blks) && blks.some((b) => Array.isArray(b.text) && b.text.some(fn));
+    });
+  }, { s: sel, src: pred.toString() });
+
+  // BOJA: zeleni swatch → blur → run color:'green'
+  await selectAllLast();
+  await page.locator('.be-toolbar .be-tb[data-be-color="green"]').click();
+  await page.locator('#stCanvas .st-head h1').click();
+  expect(await runHas((run) => run.color === 'green')).toBe(true);
+
+  // LINK: prompt (dialog) prihvati goli domen → sanitizeLink doda https:// → run href
+  page.once('dialog', (d) => d.accept('example.com/x'));
+  await selectAllLast();
+  await page.locator('.be-toolbar .be-tb[data-be-linkact]').click();
+  await page.locator('#stCanvas .st-head h1').click();
+  expect(await runHas((run) => !!run.href && /example\.com/.test(run.href))).toBe(true);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

@@ -7,10 +7,12 @@
 // U8.4a — INLINE UREĐIVANJE TEKSTA: tekstualni blokovi (heading/paragraph/callout/list)
 // renderiraju `contenteditable` polje; upisivanje → focusout → serijalizacija u `inline runs`
 // → `updateLearnBlock` op (BEZ re-crtanja, čuva caret). Plutajuća traka B/I (execCommand).
+// U8.4b — BOJA + LINK u traci: 4 swatch-a (`lb-color-<token>`) + „ukloni boju"; 🔗 = prompt za URL
+// (prazno = ukloni link) → ručno omatanje selekcije u `<span class="lb-color-…">` / `<a href>`
+// (execCommand ne može stvoriti klasu; ručno omatanje je konzistentno i za link).
 // **SIGURNOSNA GRANICA:** editabilni sadržaj se NIKAD ne sprema kao HTML — `editableToInline`
 // destilira DOM u kurirani model `{text,b?,i?,color?,href?}` (prepoznaje samo b/i/link/token-boju;
-// ostalo curi u čisti tekst), a `renderInline` (blocks-renderer) escapa/whitelista na prikazu.
-// Boja/link u traci = U8.4b (serijalizator ih VEĆ round-trippa radi postojećeg v2 sadržaja).
+// ostalo curi u čisti tekst), a `renderInline` (blocks-renderer) escapa/whitelista + `safeUrl` na prikazu.
 // Ne-tekstualni blokovi (image/video/table/formula/legacy) = read-only preview kroz `renderBlocks`.
 
 (function () {
@@ -236,7 +238,106 @@
     (anchor.parentNode || container).appendChild(menu);
   }
 
-  // ── plutajuća tekst-traka (B/I; boja/link = U8.4b). Singleton, vezan JEDNOM. ──
+  // ── polje [data-be-field] koje sadrži trenutnu selekciju (ili null) ──
+  function selectionField() {
+    if (typeof document === 'undefined') return null;
+    const sel = document.getSelection();
+    if (!sel || !sel.rangeCount) return null;
+    const a = sel.anchorNode;
+    const node = a && (a.nodeType === 1 ? a : a.parentElement);
+    return node && node.closest ? node.closest('[data-be-field]') : null;
+  }
+
+  // ── ukloni sve lb-color spanove u fragmentu (zadrži djecu) — spriječi ugniježđene boje ──
+  function unwrapColorSpans(root) {
+    if (!root || !root.querySelectorAll) return;
+    const spans = root.querySelectorAll('span[class*="lb-color-"]');
+    for (let i = 0; i < spans.length; i++) {
+      const s = spans[i];
+      while (s.firstChild) s.parentNode.insertBefore(s.firstChild, s);
+      s.parentNode.removeChild(s);
+    }
+  }
+
+  // ── boja selekcije = omotaj u <span class="lb-color-token"> (token='default' → ukloni boju).
+  //    Serijalizator (editableToInline) čita lb-color klasu → boja round-trippa. ──
+  function applyColor(token) {
+    const sel = document.getSelection();
+    if (!sel || !sel.rangeCount || sel.isCollapsed) return;
+    if (!selectionField()) return;                      // samo unutar editabilnog polja
+    const range = sel.getRangeAt(0);
+    const frag = range.extractContents();
+    unwrapColorSpans(frag);                             // makni staru boju (bez ugnježđivanja)
+    let first, last;
+    if (token && token !== 'default' && INLINE_COLORS[token]) {
+      const span = document.createElement('span');
+      span.className = 'lb-color-' + token;
+      span.appendChild(frag);
+      range.insertNode(span);
+      first = last = span;
+    } else {
+      first = frag.firstChild; last = frag.lastChild;   // 'default' = bez omotača (čisti tekst)
+      range.insertNode(frag);
+    }
+    if (first && last) {                                // zadrži selekciju (traka ostaje, ulanči)
+      const r = document.createRange();
+      r.setStartBefore(first); r.setEndAfter(last);
+      sel.removeAllRanges(); sel.addRange(r);
+    }
+  }
+
+  // ── link: pretvori selekciju u <a href> (prazan URL = ukloni link). Serijalizator čita href;
+  //    safeUrl (renderer) ostaje granica na PRIKAZU. Ovdje light-provjera sheme na UNOSU. ──
+  function sanitizeLink(url) {
+    const u = String(url == null ? '' : url).trim();
+    if (!u) return '';
+    const m = u.match(/^([a-zA-Z][a-zA-Z0-9+.-]*):/);   // ima li eksplicitnu shemu?
+    if (m) {
+      const s = m[1].toLowerCase();
+      return (s === 'http' || s === 'https' || s === 'mailto') ? u : '';  // javascript:/data:/… = odbij
+    }
+    if (u.charAt(0) === '#' || u.charAt(0) === '/') return u;  // relativni / #anchor → OK
+    return 'https://' + u;                              // goli domen → dodaj https://
+  }
+  function unwrapEls(frag, tag) {
+    const els = frag && frag.querySelectorAll ? frag.querySelectorAll(tag) : [];
+    for (let i = 0; i < els.length; i++) { const el = els[i]; while (el.firstChild) el.parentNode.insertBefore(el.firstChild, el); el.parentNode.removeChild(el); }
+  }
+  function reselectRange(first, last) {
+    if (!first || !last) return;
+    const sel = document.getSelection();
+    const r = document.createRange(); r.setStartBefore(first); r.setEndAfter(last);
+    sel.removeAllRanges(); sel.addRange(r);
+  }
+  function enclosingHref(range) {                       // href linka koji obuhvaća selekciju (za predpopunu)
+    let n = range.commonAncestorContainer;
+    n = n && (n.nodeType === 1 ? n : n.parentElement);
+    const a = n && n.closest ? n.closest('a') : null;
+    return a ? (a.getAttribute('href') || '') : '';
+  }
+  function promptLink() {
+    const sel = document.getSelection();
+    if (!sel || !sel.rangeCount || sel.isCollapsed) return;
+    if (!selectionField()) return;
+    const range = sel.getRangeAt(0).cloneRange();       // kloniraj PRIJE prompta (DOM se ne mijenja tijekom njega)
+    const input = window.prompt('URL linka (prazno = ukloni):', enclosingHref(range));
+    if (input === null) return;                         // Odustani
+    const url = sanitizeLink(input);
+    const frag = range.extractContents();
+    unwrapEls(frag, 'a');                               // makni postojeće linkove u selekciji (bez ugnježđivanja)
+    let first, last;
+    if (url) {
+      const a = document.createElement('a');
+      a.setAttribute('href', url); a.setAttribute('data-be-link', '');
+      a.appendChild(frag); range.insertNode(a); first = last = a;
+    } else {
+      first = frag.firstChild; last = frag.lastChild;   // prazno → čisti tekst (link uklonjen)
+      range.insertNode(frag);
+    }
+    reselectRange(first, last);
+  }
+
+  // ── plutajuća tekst-traka (B/I + boja + link). Singleton, vezan JEDNOM. ──
   function ensureToolbar() {
     if (typeof document === 'undefined') return null;
     if (window.__beToolbar) return window.__beToolbar;
@@ -244,12 +345,23 @@
     bar.className = 'be-toolbar';
     bar.innerHTML =
       '<button type="button" class="be-tb" data-be-fmt="bold" title="Podebljano"><b>B</b></button>' +
-      '<button type="button" class="be-tb" data-be-fmt="italic" title="Kurziv"><em>I</em></button>';
+      '<button type="button" class="be-tb" data-be-fmt="italic" title="Kurziv"><em>I</em></button>' +
+      '<span class="be-tbsep"></span>' +
+      '<button type="button" class="be-tb be-tbc" data-be-color="indigo" title="Indigo" style="--sw:#818cf8"></button>' +
+      '<button type="button" class="be-tb be-tbc" data-be-color="green" title="Zelena" style="--sw:#34d399"></button>' +
+      '<button type="button" class="be-tb be-tbc" data-be-color="amber" title="Jantar" style="--sw:#fbbf24"></button>' +
+      '<button type="button" class="be-tb be-tbc" data-be-color="red" title="Crvena" style="--sw:#f87171"></button>' +
+      '<button type="button" class="be-tb" data-be-color="default" title="Ukloni boju">⊘</button>' +
+      '<span class="be-tbsep"></span>' +
+      '<button type="button" class="be-tb" data-be-linkact="1" title="Link (prazno = ukloni)">🔗</button>';
     document.body.appendChild(bar);
     bar.addEventListener('mousedown', function (e) {
-      const b = e.target.closest ? e.target.closest('[data-be-fmt]') : null;
+      const b = e.target.closest ? e.target.closest('[data-be-fmt], [data-be-color], [data-be-linkact]') : null;
       if (!b) return;
       e.preventDefault();                               // NE gubi selekciju/fokus editabilnog
+      const color = b.getAttribute('data-be-color');
+      if (color != null) { applyColor(color); return; } // boja = ručno omatanje (lb-color-token)
+      if (b.getAttribute('data-be-linkact') != null) { promptLink(); return; }  // link = prompt + <a href>
       try { document.execCommand('styleWithCSS', false, false); } catch (_) {}  // <b>/<i> tagovi, ne inline-style
       try { document.execCommand(b.getAttribute('data-be-fmt')); } catch (_) {}
     });
