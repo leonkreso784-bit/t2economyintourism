@@ -205,8 +205,8 @@ test('swappedOrder: blokovi bez id preskočeni (red samo od id-eva)', function (
 test('swappedOrder: nepoznat id → null', function () {
   assert.strictEqual(E._swappedOrder(sample, 'nema', -1), null);
 });
-test('ADD_TYPES: 7 tipova (4 tekst + slika + video + formula), svaki make() = valjan default-blok', function () {
-  assert.strictEqual(E._addTypes.length, 7);
+test('ADD_TYPES: 8 tipova (4 tekst + slika + video + formula + tablica), svaki make() = valjan default-blok', function () {
+  assert.strictEqual(E._addTypes.length, 8);
   E._addTypes.forEach(function (t) {
     const b = t.make();
     assert.strictEqual(b.type, t.type);
@@ -217,6 +217,10 @@ test('ADD_TYPES: 7 tipova (4 tekst + slika + video + formula), svaki make() = va
   assert.strictEqual(E._addTypes[5].type, 'video');          // 6. = video (U8.5b)
   assert.strictEqual(E._addTypes[6].type, 'formula');        // 7. = formula (U8.5c)
   assert.strictEqual(E._addTypes[6].make().display, true);   // formula default = veliki blok
+  assert.strictEqual(E._addTypes[7].type, 'table');          // 8. = tablica (U8.5d)
+  const tbl = E._addTypes[7].make();                          // default = 2×2 + zaglavlje
+  assert.deepStrictEqual(tbl.header, ['', '']);
+  assert.deepStrictEqual(tbl.rows, [['', ''], ['', '']]);
 });
 
 // ── U8.5a — media (slika) ──
@@ -278,6 +282,63 @@ test('mediaFormulaBody: neprazan tex → preview kroz renderBlocks (\\[…\\] de
   const html = E._mediaFormulaBody({ type: 'formula', tex: 'E = mc^2', display: true });
   assert.ok(html.indexOf('lb-formula') !== -1, 'preview kroz renderBlocks');
   assert.ok(html.indexOf('be-media__ph') === -1, 'nema placeholdera kad tex postoji');
+});
+
+// ── U8.5d — tablica (grid-forma) ──
+test('tableModel: normalizira u pravokutnik (max stupaca), header opcionalan', function () {
+  const m = E._tableModel({ type: 'table', header: ['A', 'B', 'C'], rows: [['1', '2'], ['3']] });
+  assert.strictEqual(m.hasHeader, true);
+  assert.strictEqual(m.cols, 3);                             // max(header=3, rows)
+  assert.deepStrictEqual(m.header, ['A', 'B', 'C']);
+  const m2 = E._tableModel({ type: 'table', rows: [['x']] }); // bez headera
+  assert.strictEqual(m2.hasHeader, false);
+  assert.strictEqual(m2.header, null);
+  const m3 = E._tableModel({ type: 'table' });               // prazno → default 2 stupca
+  assert.strictEqual(m3.cols, 2);
+});
+
+test('mediaTableBody: default 2×2 → header-ćelije + tijelo-ćelije + toggle + dodaj-gumbi', function () {
+  const html = E._mediaTableBody({ type: 'table', header: ['', ''], rows: [['', ''], ['', '']] });
+  assert.ok(html.indexOf('be-media--table') !== -1);
+  assert.strictEqual(count(html, /class="be-tcell be-tcell--h"/g), 2);   // 2 header-ćelije
+  assert.strictEqual(count(html, /data-be-tr="-1"/g), 2);                // header red = -1
+  assert.strictEqual(count(html, /data-be-tr="0"/g), 2);                 // 1. tijelo-red
+  assert.ok(html.indexOf('data-be-tcheck="header"') !== -1);             // header-toggle prisutan
+  assert.ok(html.indexOf('data-be-tact="addrow"') !== -1);
+  assert.ok(html.indexOf('data-be-tact="addcol"') !== -1);
+  assert.ok(html.indexOf('data-be-tact="delrow"') !== -1);               // 2 reda → delrow postoji
+  assert.ok(html.indexOf('data-be-tact="delcol"') !== -1);
+});
+
+test('mediaTableBody: header-toggle checked kad header postoji; bez headera → unchecked + 0 header-ćelija', function () {
+  assert.ok(E._mediaTableBody({ type: 'table', header: [''], rows: [['']] }).indexOf('data-be-tcheck="header" checked') !== -1);
+  const noHead = E._mediaTableBody({ type: 'table', rows: [['a']] });
+  assert.ok(noHead.indexOf('data-be-tcheck="header" checked') === -1);
+  assert.strictEqual(count(noHead, /be-tcell--h/g), 0);
+});
+
+test('mediaTableBody: jedan red → NEMA delrow; jedan stupac → NEMA delcol (ne može ispod 1×1)', function () {
+  const oneRow = E._mediaTableBody({ type: 'table', rows: [['a', 'b']] });   // 1 red
+  assert.ok(oneRow.indexOf('data-be-tact="delrow"') === -1);
+  const oneCol = E._mediaTableBody({ type: 'table', rows: [['a'], ['b']] }); // 1 stupac
+  assert.ok(oneCol.indexOf('data-be-tact="delcol"') === -1);
+});
+
+test('mediaTableBody: vrijednosti ćelija escapane u input value (bez HTML-injekcije)', function () {
+  const html = E._mediaTableBody({ type: 'table', rows: [['a"<x>']] });
+  assert.ok(html.indexOf('value="a&quot;&lt;x&gt;"') !== -1);  // ćelija-vrijednost escapana
+});
+
+test('mediaTableBody: sve ćelije prazne → placeholder (nema preview tablice)', function () {
+  const html = E._mediaTableBody({ type: 'table', header: ['', ''], rows: [['', ''], ['  ', '']] });
+  assert.ok(html.indexOf('be-media__ph') !== -1);            // prazno/whitespace → placeholder
+  assert.ok(html.indexOf('lb-table') === -1);
+});
+
+test('mediaTableBody: neprazna ćelija → preview kroz renderBlocks (lb-table, ne placeholder)', function () {
+  const html = E._mediaTableBody({ type: 'table', header: ['Stup'], rows: [['vrij']] });
+  assert.ok(html.indexOf('lb-table') !== -1, 'preview kroz renderBlocks');
+  assert.ok(html.indexOf('be-media__ph') === -1);
 });
 
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');

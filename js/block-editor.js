@@ -13,9 +13,10 @@
 // **SIGURNOSNA GRANICA:** editabilni sadržaj se NIKAD ne sprema kao HTML — `editableToInline`
 // destilira DOM u kurirani model `{text,b?,i?,color?,href?}` (prepoznaje samo b/i/link/token-boju;
 // ostalo curi u čisti tekst), a `renderInline` (blocks-renderer) escapa/whitelista + `safeUrl` na prikazu.
-// U8.5 — MEDIA/STRUKTURNI blokovi = forma-polja (`data-be-mfield` tekst + `data-be-mcheck` boolean) + živi
-// preview kroz JEDAN renderer: slika (a) · video (b) · formula (c, KaTeX preko `renderMath`). Autor NIKAD ne
-// piše HTML — samo vrijednosti polja (src/alt/tex/…) koje renderer escapa/sanitizira. table/legacy = read-only.
+// U8.5 — MEDIA/STRUKTURNI blokovi = forma-polja (`data-be-mfield` tekst · `data-be-mcheck` boolean · `.be-tcell`
+// grid) + živi preview kroz JEDAN renderer: slika (a) · video (b) · formula (c, KaTeX preko `renderMath`) ·
+// tablica (d, 2D grid + dodaj/obriši red-stupac + header-toggle). Autor NIKAD ne piše HTML — samo vrijednosti
+// polja (src/alt/tex/ćelije…) koje renderer escapa/sanitizira. `legacy-html` = read-only preview.
 
 (function () {
   'use strict';
@@ -161,6 +162,7 @@
   function mediaPreviewHtml(block) {                       // preview-osvježenje po tipu (change-handler)
     if (block && block.type === 'video') return videoPreviewHtml(block);
     if (block && block.type === 'formula') return formulaPreviewHtml(block);
+    if (block && block.type === 'table') return tablePreviewHtml(block);
     return imagePreviewHtml(block);
   }
   // ── KaTeX-tipografiranje formula-previewa (delimiteri su tekst dok renderMath ne prođe) ──
@@ -168,6 +170,97 @@
     if (typeof window === 'undefined' || typeof window.renderMath !== 'function' || !root || !root.querySelectorAll) return;
     const prevs = root.querySelectorAll('.be-media--formula .be-media__preview');
     for (let i = 0; i < prevs.length; i++) window.renderMath(prevs[i]);
+  }
+
+  // ── U8.5d — TABLICA: 2D grid-forma (ćelije = plain-text inputi; dodaj/obriši red/stupac; header-toggle) ──
+  //    Model: {type:'table', header?:[cell,…], rows:[[cell,…],…]} (renderTable u blocks-rendereru).
+  //    Ćelije se uređuju kao PLAIN tekst (renderInline prima string) → rich-ćelije (runs) se pri uredu spljošte.
+  function tableHasContent(block) {
+    if (Array.isArray(block.header) && block.header.some(function (c) { return String(inlineToPlain(c)).trim() !== ''; })) return true;
+    if (Array.isArray(block.rows) && block.rows.some(function (r) {
+      return Array.isArray(r) && r.some(function (c) { return String(inlineToPlain(c)).trim() !== ''; });
+    })) return true;
+    return false;
+  }
+  function tablePreviewHtml(block) {
+    return tableHasContent(block) ? preview(block) : '<div class="be-media__ph">Ispuni ćelije tablice ↓</div>';
+  }
+  function tableModel(block) {                              // normaliziraj u pravokutnik za render grida
+    const hasHeader = Array.isArray(block.header);
+    const header = hasHeader ? block.header.slice() : null;
+    const rows = Array.isArray(block.rows) ? block.rows.map(function (r) { return Array.isArray(r) ? r.slice() : []; }) : [];
+    let cols = 0;
+    if (header) cols = Math.max(cols, header.length);
+    for (let i = 0; i < rows.length; i++) cols = Math.max(cols, rows[i].length);
+    if (cols === 0) cols = 2;
+    return { hasHeader: hasHeader, header: header, rows: rows, cols: cols };
+  }
+  function tCell(val, r, c, isHeader) {                    // r = -1 za header-red
+    return '<input type="text" class="be-tcell' + (isHeader ? ' be-tcell--h' : '') +
+      '" data-be-tr="' + r + '" data-be-tc="' + c + '" value="' + esc(inlineToPlain(val)) +
+      '" placeholder="' + (isHeader ? 'Zaglavlje' : '…') + '">';
+  }
+  function delBtn(tact, key, val, title) {
+    return '<button type="button" class="be-btn be-del" data-be-tact="' + tact + '" data-be-' + key + '="' + val +
+      '" title="' + title + '" aria-label="' + title + '">✕</button>';
+  }
+  function mediaTableBody(block) {
+    const m = tableModel(block);
+    let grid = '<table class="be-tgrid"><tbody>';
+    if (m.hasHeader) {                                     // header-red (bez delrow kontrole)
+      grid += '<tr class="be-tgrid-hrow">';
+      for (let c = 0; c < m.cols; c++) grid += '<td>' + tCell(m.header[c], -1, c, true) + '</td>';
+      grid += '<td class="be-tgrid-rc"></td></tr>';
+    }
+    for (let r = 0; r < m.rows.length; r++) {              // tijelo-redovi (+ ✕ obriši red)
+      grid += '<tr>';
+      for (let c = 0; c < m.cols; c++) grid += '<td>' + tCell(m.rows[r][c], r, c, false) + '</td>';
+      grid += '<td class="be-tgrid-rc">' + (m.rows.length > 1 ? delBtn('delrow', 'r', r, 'Ukloni red') : '') + '</td></tr>';
+    }
+    grid += '<tr class="be-tgrid-crow">';                  // red kontrola stupaca (✕ obriši stupac)
+    for (let c = 0; c < m.cols; c++) grid += '<td>' + (m.cols > 1 ? delBtn('delcol', 'c', c, 'Ukloni stupac') : '') + '</td>';
+    grid += '<td class="be-tgrid-rc"></td></tr>';
+    grid += '</tbody></table>';
+    return '<div class="be-media be-media--table">' +
+      '<div class="be-media__preview">' + tablePreviewHtml(block) + '</div>' +
+      '<label class="be-mcheck"><input type="checkbox" data-be-tcheck="header"' + (m.hasHeader ? ' checked' : '') +
+        '> Prvi red = zaglavlje</label>' +
+      '<div class="be-tgrid-wrap">' + grid + '</div>' +
+      '<div class="be-tgrid-add">' +
+        '<button type="button" class="be-tbtn" data-be-tact="addrow">＋ red</button>' +
+        '<button type="button" class="be-tbtn" data-be-tact="addcol">＋ stupac</button>' +
+      '</div></div>';
+  }
+  // broj stupaca modela pročitanog iz grida
+  function colCountOf(t) {
+    if (t.header && t.header.length) return t.header.length;
+    if (t.rows[0]) return t.rows[0].length;
+    return 0;
+  }
+  // pročitaj TRENUTNE vrijednosti ćelija iz DOM-grida → {header|null, rows} (pravokutnik)
+  function readGridCells(blockEl) {
+    const cells = (blockEl && blockEl.querySelectorAll) ? blockEl.querySelectorAll('.be-tcell') : [];
+    let hasHeader = false, maxRow = -1, maxCol = -1;
+    const hmap = {}, rmap = {};
+    for (let i = 0; i < cells.length; i++) {
+      const el = cells[i];
+      const r = parseInt(el.getAttribute('data-be-tr'), 10);
+      const c = parseInt(el.getAttribute('data-be-tc'), 10);
+      if (isNaN(r) || isNaN(c)) continue;
+      if (c > maxCol) maxCol = c;
+      if (r === -1) { hasHeader = true; hmap[c] = el.value; }
+      else { if (r > maxRow) maxRow = r; if (!rmap[r]) rmap[r] = {}; rmap[r][c] = el.value; }
+    }
+    const cols = maxCol + 1;
+    const header = hasHeader ? [] : null;
+    if (hasHeader) for (let c = 0; c < cols; c++) header.push(hmap[c] != null ? hmap[c] : '');
+    const rows = [];
+    for (let r = 0; r <= maxRow; r++) { const row = []; const rm = rmap[r] || {}; for (let c = 0; c < cols; c++) row.push(rm[c] != null ? rm[c] : ''); rows.push(row); }
+    return { header: header, rows: rows };
+  }
+  function findBlockById(blocks, id) {
+    for (let k = 0; k < blocks.length; k++) if (blocks[k] && String(blocks[k].id) === String(id)) return blocks[k];
+    return null;
   }
 
   function editableBody(block) {
@@ -197,7 +290,8 @@
     if (type === 'image') return mediaImageBody(block); // U8.5a: slika = forma (src/alt/caption) + živi preview
     if (type === 'video') return mediaVideoBody(block); // U8.5b: video = forma (YouTube link/ID) + facade preview
     if (type === 'formula') return mediaFormulaBody(block); // U8.5c: formula = tex-polje + prekidač + živi KaTeX preview
-    return preview(block);                              // table/legacy = read-only (U8.5d+)
+    if (type === 'table') return mediaTableBody(block); // U8.5d: tablica = 2D grid-forma + živi preview
+    return preview(block);                              // legacy = read-only
   }
 
   // ── jedna blok-kartica (glava s kontrolama + tijelo = editabilno/preview) ──
@@ -251,7 +345,8 @@
     { type: 'callout',   label: 'Isticanje', make: function () { return { type: 'callout', variant: 'info', text: '' }; } },
     { type: 'image',     label: 'Slika',     make: function () { return { type: 'image', src: '', alt: '' }; } },
     { type: 'video',     label: 'Video',     make: function () { return { type: 'video', url: '' }; } },
-    { type: 'formula',   label: 'Formula',   make: function () { return { type: 'formula', tex: '', display: true }; } }
+    { type: 'formula',   label: 'Formula',   make: function () { return { type: 'formula', tex: '', display: true }; } },
+    { type: 'table',     label: 'Tablica',   make: function () { return { type: 'table', header: ['', ''], rows: [['', ''], ['', '']] }; } }
   ];
 
   // ── apsolutni ciljni redoslijed s id-om pomaknutim za dir (±1) — hrani U7e reorderBlocks ──
@@ -467,6 +562,23 @@
 
       container.addEventListener('click', function (e) {
         const c = container._beCtx;
+        // U8.5d: strukturne ops tablice (addrow/addcol/delrow/delcol) → mutiraj model iz grida → draft → re-crtaj
+        const tact = e.target.closest ? e.target.closest('[data-be-tact]') : null;
+        if (tact && container.contains(tact)) {
+          const tBlockEl = tact.closest('[data-be-block]');
+          const tId = tBlockEl ? tBlockEl.getAttribute('data-be-block') : '';
+          if (!tId) return;
+          const op = tact.getAttribute('data-be-tact');
+          const t = readGridCells(tBlockEl);              // uhvati trenutno upisane vrijednosti
+          const cols = colCountOf(t);
+          if (op === 'addrow') t.rows.push(new Array(cols || 1).fill(''));
+          else if (op === 'addcol') { if (t.header) t.header.push(''); for (let k = 0; k < t.rows.length; k++) t.rows[k].push(''); }
+          else if (op === 'delrow') { const r = parseInt(tact.getAttribute('data-be-r'), 10); if (t.rows.length > 1 && r >= 0) t.rows.splice(r, 1); }
+          else if (op === 'delcol') { const cc = parseInt(tact.getAttribute('data-be-c'), 10); if (cols > 1 && cc >= 0) { if (t.header) t.header.splice(cc, 1); for (let k = 0; k < t.rows.length; k++) t.rows[k].splice(cc, 1); } }
+          c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: tId, patch: { header: t.header, rows: t.rows } });
+          draw();
+          return;
+        }
         const btn = e.target.closest ? e.target.closest('[data-be-act]') : null;
         if (!btn || !container.contains(btn)) return;
         const act = btn.getAttribute('data-be-act');
@@ -511,9 +623,28 @@
       // U8.5a/b/c: media-polja (<input> tekst + checkbox) → draft na `change`; osvježi SAMO preview
       // (inpute/checkboxe ne diramo → fokus ostaje). Formula-preview se KaTeX-tipografira po osvježenju.
       container.addEventListener('change', function (e) {
+        const c = container._beCtx;
+        // U8.5d: tablica — ćelija (preview-only, čuva fokus) ili header-toggle (re-crtaj, oblik se mijenja)
+        const tEl = e.target.closest ? e.target.closest('.be-tcell, [data-be-tcheck]') : null;
+        if (tEl && container.contains(tEl)) {
+          const tBlockEl = tEl.closest('[data-be-block]');
+          const tId = tBlockEl ? tBlockEl.getAttribute('data-be-block') : '';
+          if (!tId) return;
+          const grid = readGridCells(tBlockEl);
+          if (tEl.getAttribute('data-be-tcheck') === 'header') {   // uključi/isključi zaglavlje
+            grid.header = tEl.checked ? new Array(colCountOf(grid) || 2).fill('') : null;
+            c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: tId, patch: { header: grid.header, rows: grid.rows } });
+            draw();
+          } else {                                                  // uređena ćelija → preview-only
+            c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: tId, patch: { header: grid.header, rows: grid.rows } });
+            const updated = findBlockById((c.getBlocks && c.getBlocks()) || [], tId);
+            const prev = tBlockEl.querySelector('.be-media__preview');
+            if (prev && updated) prev.innerHTML = mediaPreviewHtml(updated);
+          }
+          return;
+        }
         const inp = e.target.closest ? e.target.closest('[data-be-mfield], [data-be-mcheck]') : null;
         if (!inp || !container.contains(inp)) return;
-        const c = container._beCtx;
         const blockEl = inp.closest('[data-be-block]');
         const id = blockEl ? blockEl.getAttribute('data-be-block') : '';
         if (!id) return;
@@ -551,6 +682,8 @@
       _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
       _mediaVideoBody: mediaVideoBody,   // U8.5b (video-forma)
       _mediaFormulaBody: mediaFormulaBody, // U8.5c (formula-forma)
+      _mediaTableBody: mediaTableBody,   // U8.5d (tablica-grid-forma)
+      _tableModel: tableModel,           // U8.5d (normalizacija modela)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
       _editableBody: editableBody

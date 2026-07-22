@@ -8666,6 +8666,30 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 .be-mcheck input { accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
 
+/* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */
+.be-tgrid-wrap { overflow-x: auto; }
+.be-tgrid { border-collapse: separate; border-spacing: 4px; }
+.be-tgrid td { padding: 0; }
+.be-tcell {
+  min-width: 90px; padding: 7px 9px; border-radius: 7px; font-size: 13px;
+  color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+}
+.be-tcell:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+.be-tcell::placeholder { color: var(--text-muted); opacity: .5; }
+.be-tcell--h { font-weight: 700; background: rgba(99, 102, 241, .12); border-color: rgba(99, 102, 241, .3); }
+.be-tgrid-rc { width: 30px; text-align: center; vertical-align: middle; }
+/* delete-gumbi (red/stupac) preuzimaju .be-btn.be-del; suptilni dok se ne hoverira red */
+.be-tgrid-crow .be-btn, .be-tgrid-rc .be-btn { opacity: .45; }
+.be-tgrid:hover .be-btn { opacity: 1; }
+.be-tgrid-add { display: flex; gap: 8px; margin-top: 8px; }
+.be-tbtn {
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  color: var(--text-muted); background: rgba(99, 102, 241, .06);
+  border: 1px dashed rgba(99, 102, 241, .32); transition: .14s;
+}
+.be-tbtn:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); }
+
 /* ==================== css/studio.css ==================== */
 /* ============================================================
    STUDIO EDITOR (U8) — kosti iz design/mockups/editor-c-tok.html

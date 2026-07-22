@@ -384,3 +384,71 @@ test('U8.5c — Studio learn: dodaj Formulu → upiši LaTeX → draft tex+displ
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.5d — Studio learn: dodaj Tablicu → upiši ćelije → +red/+stupac → toggle header → preview → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // čitač tablice iz drafta
+  const readTable = () => page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) { const t = blks.find((b) => b.type === 'table'); if (t) return { header: t.header || null, rows: t.rows }; }
+    }
+    return null;
+  }, sel);
+  const tblock = () => page.locator('#stCanvas .be-mount .be-block').last();
+
+  // dodaj Tablica blok (default 2×2 + zaglavlje)
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Tablica' }).click();
+  await expect(tblock().locator('.be-tgrid')).toHaveCount(1);
+
+  // upiši header-ćeliju (r=-1,c=0) + tijelo-ćeliju (r=0,c=0) → blur → change
+  await tblock().locator('[data-be-tr="-1"][data-be-tc="0"]').fill('Pojam');
+  await tblock().locator('[data-be-tr="0"][data-be-tc="0"]').fill('Vrijednost');
+  await page.locator('#stCanvas .st-head h1').click();  // blur
+  const t1 = await readTable();
+  expect(t1).not.toBeNull();
+  expect(t1.header[0]).toBe('Pojam');
+  expect(t1.rows[0][0]).toBe('Vrijednost');
+  expect(t1.rows.length).toBe(2);       // default 2 reda
+  expect(t1.header.length).toBe(2);     // default 2 stupca
+
+  // ＋ red → 3 reda (upisane vrijednosti sačuvane)
+  await tblock().locator('[data-be-tact="addrow"]').click();
+  const t2 = await readTable();
+  expect(t2.rows.length).toBe(3);
+  expect(t2.rows[0][0]).toBe('Vrijednost');
+
+  // ＋ stupac → 3 stupca
+  await tblock().locator('[data-be-tact="addcol"]').click();
+  const t3 = await readTable();
+  expect(t3.header.length).toBe(3);
+  expect(t3.rows[0].length).toBe(3);
+
+  // isključi zaglavlje → header uklonjen (null/undefined), rows ostaju
+  await tblock().locator('[data-be-tcheck="header"]').uncheck();
+  const t4 = await readTable();
+  expect(t4.header == null).toBe(true);
+  expect(t4.rows.length).toBe(3);
+
+  // živi preview kroz JEDAN renderer (.lb-table)
+  await expect(tblock().locator('.be-media__preview .lb-table')).toHaveCount(1);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
