@@ -44,7 +44,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 
 ## ⚠️ KRITIČNA PRAVILA
 1. **Cache bump:** pri izmjeni BILO KOJEG `css/*.css`/`js/*.js`/`data*.js` pokreni **`npm run bump`** (svi `?v=` + `CONTENT_VERSION` + `SW_VERSION` odjednom). `bump:check` = CI gate. Bez bumpa deploy je NEVIDLJIV (immutable cache 1 god; BUG-004, ADR-017).
-2. **Deploy samo uz izričitu potvrdu korisnika** (`git push` na main = produkcija). Commit lokalno / push na feature-granu (preview) je OK.
+2. **Deploy samo uz izričitu potvrdu korisnika** (`git push` na main = produkcija). Commit lokalno / push na feature-granu (preview) je OK. **Deploy-guard:** pre-push hook (`.githooks/pre-push`) blokira push na `main` ako `npm run preflight` padne (aktiviraj po klonu: `git config core.hooksPath .githooks`; svjestan bypass = `--no-verify`). Direktan bypass-push na `main` preskače CI → **preflight je zadnja mreža** (BUG-004).
 3. **Uvijek ažuriraj `docs/`** nakon izmjene (PROGRESS/CHANGELOG + tematske; stanje predmeta u `docs/subjects/README.md`).
 4. **Provjeri prije commita:** `npm run verify` + `npm run test:responsive`; nakon izmjene css-a i `npm run build:css`.
 5. Radi polako, korak po korak, s provjerama; pazi na bugove; **kraće dionice, češće se javi korisniku**.
@@ -55,6 +55,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 ## Komande
 - `npm run verify` — integritet catalog-a. · `npm run typecheck` — tsc bez build-a (scoped).
 - **`npm run bump`** — svi `?v=` tokeni + verzije na isti timestamp; `bump:check` = CI gate.
+- **`npm run preflight`** — svi brzi deploy-gate-ovi u jednom (verify · bump:check · css-drift · typecheck · schema · export-drift · unit); pokreni PRIJE svakog main-pusha (i pre-push hook ga automatski vrti na main).
 - **`npm run build:css`** — regeneriraj `styles.bundle.css` iz 26 modula; `-- --check` = CI drift-gate.
 - `npm run test:responsive` — Playwright (iPhone profili, default suite). · **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env`; CI = zaseban secret-gated job).
 - `npm run test:unit` — node unit testovi. · `npm run serve:test` — lokalni server :5050.
