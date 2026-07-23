@@ -258,9 +258,10 @@ test('mediaVideoBody: postojeći videoId prikazan u url-polju (escapan)', functi
 });
 
 // ── U8.5c — formula (KaTeX) ──
-test('mediaFormulaBody: prazna formula → tex-polje + display-checkbox + placeholder', function () {
+test('mediaFormulaBody: prazna formula → <math-field> + display-checkbox + placeholder', function () {
   const html = E._mediaFormulaBody({ type: 'formula', tex: '', display: true });
-  assert.ok(html.indexOf('data-be-mfield="tex"') !== -1);
+  assert.ok(html.indexOf('<math-field') !== -1);              // U8.9a: vizualni unos (MathLive), ne sirovi <input>
+  assert.ok(html.indexOf('data-be-mathfield="tex"') !== -1);
   assert.ok(html.indexOf('data-be-mcheck="display"') !== -1);
   assert.ok(html.indexOf('be-media__ph') !== -1);            // prazan tex → placeholder
   assert.ok(html.indexOf('be-media--formula') !== -1);
@@ -273,9 +274,10 @@ test('mediaFormulaBody: display=true → checkbox checked; display=false → unc
   assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x' }).indexOf('checked') !== -1);
 });
 
-test('mediaFormulaBody: tex s LaTeX-backslashevima ide u value bez HTML-injekcije', function () {
+test('mediaFormulaBody: tex s LaTeX-backslashevima ide u math-field bez HTML-injekcije', function () {
   const html = E._mediaFormulaBody({ type: 'formula', tex: '\\frac{a}{b}<x>"' });
-  assert.ok(html.indexOf('value="\\frac{a}{b}&lt;x&gt;&quot;"') !== -1);  // backslash literal, <>" escapani
+  assert.ok(html.indexOf('data-be-tex="\\frac{a}{b}&lt;x&gt;&quot;"') !== -1);  // backslash literal, <>" escapani u atributu
+  assert.ok(html.indexOf('<x>') === -1);                                        // NIKAD sirovi HTML iz tex-a (ni u textContentu)
 });
 
 test('mediaFormulaBody: neprazan tex → preview kroz renderBlocks (\\[…\\] delimiteri, ne placeholder)', function () {

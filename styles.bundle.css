@@ -8666,6 +8666,19 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 .be-mcheck input { accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
 
+/* ===== U8.9a — MathLive math-field (autorski VIZUALNI unos formule; SAMO editor, student ne učita) ===== */
+.be-mathfield {
+  display: block; width: 100%; padding: 10px 12px; border-radius: 8px;
+  font-size: 19px; color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+  --caret-color: var(--primary-light);
+  --selection-background-color: rgba(99, 102, 241, .35);
+}
+.be-mathfield:focus-within { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+/* Tvornička virtualna tipkovnica UGAŠENA (U8.9b = naša čista paleta) → sakrij MathLive ugrađene toggle-gumbe. */
+.be-mathfield::part(virtual-keyboard-toggle),
+.be-mathfield::part(menu-toggle) { display: none; }
+
 /* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */
 .be-tgrid-wrap { overflow-x: auto; }
 .be-tgrid { border-collapse: separate; border-spacing: 4px; }

@@ -339,44 +339,55 @@ test('U8.5c — Studio learn: dodaj Formulu → upiši LaTeX → draft tex+displ
   await page.waitForSelector('.be-menu .be-menu-item');
   await page.locator('.be-menu .be-menu-item', { hasText: 'Formula' }).click();
   const fblock = page.locator('#stCanvas .be-mount .be-block').last();
-  const texInput = fblock.locator('[data-be-mfield="tex"]');
-  await expect(texInput).toHaveCount(1);
-
-  // upiši LaTeX → blur → change → draft ima tex + display:true (default = veliki blok)
-  await texInput.fill('E = mc^2');
-  await page.locator('#stCanvas .st-head h1').click();  // blur = change
+  // U8.9a: tex se unosi kroz <math-field> (MathLive, vizualno) — ne sirovi <input>.
+  const mathField = fblock.locator('math-field[data-be-mathfield="tex"]');
+  await expect(mathField).toHaveCount(1);
+  // pričekaj da MathLive (CDN, lijeno) upgrade-a element I da ga naš adapter ožiči (_beMF = listeneri spojeni)
+  await page.waitForFunction(() => {
+    const mf = document.querySelector('#stCanvas .be-mount math-field[data-be-mathfield="tex"]');
+    return !!(mf && mf._beMF && typeof mf.value !== 'undefined');
+  }, null, { timeout: 20000 });
+  // postavi LaTeX kroz MathLive .value + dispatch → commit u draft. MathLive NORMALIZIRA LaTeX
+  // (npr. makne razmake) → NE tvrdimo točan string, samo da jezgra „mc" stigne u draft.
+  await mathField.evaluate((el) => {
+    el.value = 'E = mc^2';
+    el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
   const draft = await page.evaluate((s) => {
     const d = window.SokratDraft.get(s.subj, s.lesson);
     for (const k of Object.keys(d.working)) {
       const cat = d.working[k];
       const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
       if (Array.isArray(blks)) {
-        const f = blks.find((b) => b.type === 'formula' && b.tex === 'E = mc^2');
+        const f = blks.find((b) => b.type === 'formula' && b.tex && /mc/.test(b.tex));
         if (f) return { tex: f.tex, display: f.display };
       }
     }
     return null;
   }, sel);
   expect(draft).not.toBeNull();
-  expect(draft.display).toBe(true);
+  expect(draft.tex).toContain('mc');          // MathLive LaTeX-izlaz stigao u draft (tex)
+  expect(draft.display).toBe(true);           // default = veliki blok
 
   // preview živi kroz JEDAN renderer (.lb-formula)
   await expect(fblock.locator('.be-media__preview .lb-formula')).toHaveCount(1);
   // KaTeX je STVARNO tipografirao (renderMath prošao) — .katex output, ne sirovi \[…\] tekst
   await expect(fblock.locator('.be-media__preview .katex').first()).toBeVisible({ timeout: 10000 });
 
-  // isključi „veliki blok" → display:false (inline)
+  // isključi „veliki blok" → display:false (inline); tex mora PREŽIVJETI (nije u istom patchu)
   await fblock.locator('[data-be-mcheck="display"]').uncheck();
-  const display2 = await page.evaluate((s) => {
+  const after = await page.evaluate((s) => {
     const d = window.SokratDraft.get(s.subj, s.lesson);
     for (const k of Object.keys(d.working)) {
       const cat = d.working[k];
       const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
-      if (Array.isArray(blks)) { const f = blks.find((b) => b.type === 'formula' && b.tex === 'E = mc^2'); if (f) return f.display; }
+      if (Array.isArray(blks)) { const f = blks.find((b) => b.type === 'formula' && b.tex && /mc/.test(b.tex)); if (f) return { tex: f.tex, display: f.display }; }
     }
     return null;
   }, sel);
-  expect(display2).toBe(false);
+  expect(after).not.toBeNull();               // tex preživio uncheck (updateLearnBlock ne dira nespomente ključeve)
+  expect(after.display).toBe(false);
 
   // Odbaci
   await page.click('#stDiscard');

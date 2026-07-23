@@ -146,15 +146,100 @@
         mField('url', 'YouTube link ili ID (npr. youtu.be/abc123)', val) +
       '</div></div>';
   }
+  // ── U8.9 MathLive adapter (SAMO autorska strana; biblioteka pod 4 uvjeta: vendorana/CDN kao KaTeX ·
+  //    iza ovog adaptera · SAMO editor · spike-dokazan). Motor za VIZUALNO slaganje formule → izlaz LaTeX
+  //    → isti `block.tex` → student render (KaTeX) NEPROMIJENJEN. Student NIKAD ne učita MathLive
+  //    (lijeno, tek kad admin otvori formula-editor) = nula utjecaja na perf/bundle. Tvornička virtualna
+  //    tipkovnica UGAŠENA (U8.9b = naša čista paleta). CDN padne → graceful fallback na sirovi <input>. ──
+  var MATHLIVE_SRC = 'https://cdn.jsdelivr.net/npm/mathlive';
+  var _mlState = 'idle';                                   // idle | loading | ready | failed
+  var _mlPromise = null;
+  function ensureMathLive() {
+    if (_mlPromise) return _mlPromise;
+    _mlPromise = new Promise(function (resolve, reject) {
+      if (typeof document === 'undefined' || typeof window === 'undefined') { _mlState = 'failed'; reject(); return; }
+      if (window.customElements && customElements.get && customElements.get('math-field')) { _mlState = 'ready'; resolve(); return; }
+      _mlState = 'loading';
+      var s = document.createElement('script');
+      s.src = MATHLIVE_SRC; s.async = true;
+      var to = setTimeout(function () { _mlState = 'failed'; reject(new Error('mathlive timeout')); }, 9000);
+      s.onload = function () {
+        clearTimeout(to);
+        if (window.customElements && customElements.whenDefined) {
+          customElements.whenDefined('math-field').then(function () { _mlState = 'ready'; resolve(); }, function () { _mlState = 'ready'; resolve(); });
+        } else { _mlState = 'ready'; resolve(); }
+      };
+      s.onerror = function () { clearTimeout(to); _mlState = 'failed'; reject(new Error('mathlive load error')); };
+      document.head.appendChild(s);
+    });
+    return _mlPromise;
+  }
+  // CDN padne → zamijeni inertni <math-field> sirovim <input> (hvata ga postojeći media change-handler).
+  function mathFieldsToInputs(container) {
+    var fs = container.querySelectorAll ? container.querySelectorAll('[data-be-mathfield]') : [];
+    for (var i = 0; i < fs.length; i++) {
+      var mf = fs[i];
+      var inp = document.createElement('input');
+      inp.type = 'text'; inp.className = 'be-mfield';
+      inp.setAttribute('data-be-mfield', mf.getAttribute('data-be-mathfield') || 'tex');
+      inp.setAttribute('placeholder', 'LaTeX (npr. E = mc^2)');
+      inp.value = mf.getAttribute('data-be-tex') || '';
+      if (mf.parentNode) mf.parentNode.replaceChild(inp, mf);
+    }
+  }
+  // Konfiguriraj svaki <math-field> jednom: keyboard OFF · init vrijednost · živi preview na `input`
+  // (BEZ op-a → nema op-spama po tipki) · JEDAN commit na `change` (blur/enter) — kao media-polja.
+  function setupMathField(container, mf) {
+    if (mf._beMF) return; mf._beMF = true;
+    try { mf.mathVirtualKeyboardPolicy = 'manual'; } catch (_) {} // ne pop-aj tvorničku tipkovnicu (U8.9b = naša paleta)
+    try { mf.menuItems = []; } catch (_) {}                        // makni kontekst-meni gumb (čisto)
+    try { mf.value = mf.getAttribute('data-be-tex') || ''; } catch (_) {}
+    function latexOf() { try { return mf.value || ''; } catch (_) { return ''; } }
+    function livePreview() {                                       // vizualna povratna veza dok autor slaže (ne dira draft)
+      var blockEl = mf.closest ? mf.closest('[data-be-block]') : null;
+      if (!blockEl) return;
+      var prev = blockEl.querySelector('.be-media__preview');
+      if (prev) { prev.innerHTML = formulaPreviewHtml({ type: 'formula', tex: latexOf() }); typesetFormulas(blockEl); }
+    }
+    function commit() {                                            // jedan op po uređivanju (na blur/enter)
+      var c = container._beCtx; if (!c) return;
+      var blockEl = mf.closest ? mf.closest('[data-be-block]') : null;
+      var id = blockEl ? blockEl.getAttribute('data-be-block') : '';
+      if (!id) return;
+      var latex = latexOf();
+      c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: { tex: latex ? latex : null } });
+    }
+    mf.addEventListener('input', livePreview);
+    mf.addEventListener('change', function () { commit(); livePreview(); });
+  }
+  // Nadogradi sve math-fieldove u containeru (lijeno učita MathLive; fallback na <input> ako CDN padne).
+  function enhanceMathFields(container) {
+    if (typeof document === 'undefined' || !container || !container.querySelectorAll) return;
+    var fs = container.querySelectorAll('[data-be-mathfield]');
+    if (!fs.length) return;
+    if (_mlState === 'failed') { mathFieldsToInputs(container); return; }
+    if (_mlState !== 'ready') {
+      ensureMathLive().then(function () { enhanceMathFields(container); }, function () { mathFieldsToInputs(container); });
+      return;
+    }
+    for (var i = 0; i < fs.length; i++) setupMathField(container, fs[i]);
+  }
+
   function formulaPreviewHtml(block) {                     // renderBlocks izbaci \[tex\]; renderMath ga tipografira POSLIJE
     return (block && block.tex != null && String(block.tex).trim()) ? preview(block) : '<div class="be-media__ph">Upiši LaTeX formulu ↓</div>';
   }
-  function mediaFormulaBody(block) {                       // U8.5c: formula = tex-polje + „veliki blok" prekidač + živi KaTeX preview
+  function mediaFormulaBody(block) {                       // U8.9a: formula = <math-field> (vizualno slaganje, MathLive) + „veliki blok" prekidač + živi KaTeX preview
     const display = block.display !== false;              // default = veliki (blok/centrirano); false = inline
+    const tex = block.tex == null ? '' : String(block.tex);
+    // Autor slaže formulu VIZUALNO (MathLive → LaTeX); enhanceMathFields ožiči nakon učitavanja.
+    // CDN padne (_mlState==='failed') → sirovi <input> (autor i dalje može upisati LaTeX ručno).
+    const field = (_mlState === 'failed')
+      ? mField('tex', 'LaTeX (npr. E = mc^2  ·  \\frac{a}{b})', tex)
+      : '<math-field class="be-mathfield" data-be-mathfield="tex" data-be-tex="' + esc(tex) + '">' + esc(tex) + '</math-field>';
     return '<div class="be-media be-media--formula">' +
       '<div class="be-media__preview">' + formulaPreviewHtml(block) + '</div>' +
       '<div class="be-media__fields">' +
-        mField('tex', 'LaTeX (npr. E = mc^2  ·  \\frac{a}{b}  ·  \\sum_{i=1}^{n})', block.tex) +
+        field +
         '<label class="be-mcheck"><input type="checkbox" data-be-mcheck="display"' + (display ? ' checked' : '') +
           '> Veliki blok (centrirano) — isključi za formulu u redu s tekstom</label>' +
       '</div></div>';
@@ -556,7 +641,7 @@
     if (!container || typeof document === 'undefined') return;
     container._beCtx = ctx;
     ensureToolbar();
-    function draw() { container.innerHTML = renderEditor(container._beCtx.getBlocks()); typesetFormulas(container); }
+    function draw() { container.innerHTML = renderEditor(container._beCtx.getBlocks()); typesetFormulas(container); enhanceMathFields(container); }
     if (!container._beWired) {
       container._beWired = true;
 
