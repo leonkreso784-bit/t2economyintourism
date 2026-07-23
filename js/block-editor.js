@@ -230,22 +230,43 @@
   }
   // ── U8.9b — naša ČISTA paleta („Photomath keypad"): gumbi ubacuju LaTeX-template u math-field.
   //    #? = MathLive placeholder (prazna kutija), #@ = trenutna selekcija (potencija/indeks obuhvate označeno). ──
+  // Svaki gumb = [label, kod, displayTex?]. `kod` "!cmd:<naredba>" = MathLive executeCommand (npr. ⌫),
+  // inače insert-template (#?=prazna kutija, #@=selekcija). displayTex (opcionalno) = RENDERANA labela
+  // kroz KaTeX (razlomak → ▯/▯, korijen → √‾) radi jasnoće; bez njega = tekstualni label.
   var MATH_PAD = [
-    ['Funkcije', [['sin', '\\sin'], ['cos', '\\cos'], ['tan', '\\tan'], ['log', '\\log'], ['ln', '\\ln'], ['eˣ', 'e^{#?}'], ['10ˣ', '10^{#?}'], ['x⁻¹', '#@^{-1}']]],
-    ['Strukture', [['a⁄b', '\\frac{#?}{#?}'], ['x²', '#@^{2}'], ['xⁿ', '#@^{#?}'], ['xₙ', '#@_{#?}'], ['√', '\\sqrt{#?}'], ['ⁿ√', '\\sqrt[#?]{#?}'], ['( )', '\\left(#?\\right)'], ['|x|', '\\left|#?\\right|'], ['n!', '#@!']]],
-    ['Analiza', [['Σ', '\\sum_{#?}^{#?}'], ['∫', '\\int_{#?}^{#?}'], ['∬', '\\iint_{#?}'], ['∏', '\\prod_{#?}^{#?}'], ['lim', '\\lim_{#?\\to#?}'], ['d⁄dx', '\\frac{\\mathrm{d}}{\\mathrm{d}x}'], ['∂', '\\partial'], ['∞', '\\infty']]],
+    ['Funkcije', [['sin', '\\sin'], ['cos', '\\cos'], ['tan', '\\tan'], ['log', '\\log'], ['logₐ', '\\log_{#?}', '\\log_a'], ['ln', '\\ln'], ['eˣ', 'e^{#?}', 'e^x'], ['10ˣ', '10^{#?}', '10^x'], ['x⁻¹', '#@^{-1}', 'x^{-1}']]],
+    ['Strukture', [['a⁄b', '\\frac{#?}{#?}', '\\frac{a}{b}'], ['x²', '#@^{2}', 'x^2'], ['xⁿ', '#@^{#?}', 'x^n'], ['xₙ', '#@_{#?}', 'x_n'], ['√', '\\sqrt{#?}', '\\sqrt{x}'], ['ⁿ√', '\\sqrt[#?]{#?}', '\\sqrt[n]{x}'], ['( )', '\\left(#?\\right)', '(\\ )'], ['|x|', '\\left|#?\\right|', '|x|'], ['n!', '#@!', 'n!']]],
+    ['Statistika', [['x̄', '\\bar{#@}', '\\bar{x}'], ['x̂', '\\hat{#@}', '\\hat{x}'], ['(ⁿₖ)', '\\binom{#?}{#?}', '\\binom{n}{k}'], ['x′', "#@'", "x'"], ['%', '\\%', '\\%'], [',', ',']]],
+    ['Analiza', [['Σ', '\\sum_{#?}^{#?}', '\\textstyle\\sum'], ['∫', '\\int_{#?}^{#?}', '\\int'], ['∬', '\\iint_{#?}', '\\iint'], ['∏', '\\prod_{#?}^{#?}', '\\textstyle\\prod'], ['lim', '\\lim_{#?\\to#?}', '\\lim'], ['d⁄dx', '\\frac{\\mathrm{d}}{\\mathrm{d}x}', '\\tfrac{d}{dx}'], ['∂', '\\partial', '\\partial'], ['∞', '\\infty', '\\infty']]],
     ['Brojevi', [['7', '7'], ['8', '8'], ['9', '9'], ['4', '4'], ['5', '5'], ['6', '6'], ['1', '1'], ['2', '2'], ['3', '3'], ['0', '0'], ['.', '.'], ['=', '=']]],
-    ['Operacije', [['+', '+'], ['−', '-'], ['×', '\\times'], ['÷', '\\div'], ['·', '\\cdot'], ['±', '\\pm'], ['(', '('], [')', ')']]],
+    ['Operacije', [['+', '+'], ['−', '-'], ['×', '\\times', '\\times'], ['÷', '\\div', '\\div'], ['·', '\\cdot', '\\cdot'], ['±', '\\pm', '\\pm'], ['(', '('], [')', ')'], ['⌫', '!cmd:deleteBackward']]],
     ['Grčka', [['π', '\\pi'], ['α', '\\alpha'], ['β', '\\beta'], ['γ', '\\gamma'], ['θ', '\\theta'], ['λ', '\\lambda'], ['μ', '\\mu'], ['σ', '\\sigma'], ['φ', '\\phi'], ['ω', '\\omega'], ['Δ', '\\Delta'], ['Ω', '\\Omega']]],
-    ['Relacije', [['≤', '\\le'], ['≥', '\\ge'], ['≠', '\\ne'], ['≈', '\\approx'], ['∈', '\\in'], ['→', '\\to'], ['°', '^{\\circ}']]]
+    ['Relacije', [['≤', '\\le'], ['≥', '\\ge'], ['≠', '\\ne'], ['≈', '\\approx'], ['≡', '\\equiv'], ['∝', '\\propto'], ['∈', '\\in'], ['∉', '\\notin'], ['⊂', '\\subset'], ['∪', '\\cup'], ['∩', '\\cap'], ['∅', '\\emptyset'], ['→', '\\to'], ['⇒', '\\Rightarrow'], ['°', '^{\\circ}']]]
   ];
+  // Renderiraj labelu gumba kroz KaTeX (keširano po tex-u; renderToString = sinkrono, bez DOM-a).
+  // KaTeX još nije učitan → tekstualni fallback (labela). Trusted (naš tex) → sigurno u innerHTML.
+  var _keyTexCache = {};
+  function keyLabelHtml(displayTex, fallback) {
+    if (displayTex && typeof window !== 'undefined' && window.katex && typeof window.katex.renderToString === 'function') {
+      if (_keyTexCache[displayTex] != null) return _keyTexCache[displayTex];
+      try {
+        var h = window.katex.renderToString(displayTex, { throwOnError: false, displayMode: false });
+        _keyTexCache[displayTex] = h; return h;
+      } catch (_) { /* fallback ispod */ }
+    }
+    return esc(fallback);
+  }
   function mathPadHtml() {
     let html = '<div class="be-mathpad" data-be-mathpad>';
     for (let g = 0; g < MATH_PAD.length; g++) {
       const keys = MATH_PAD[g][1];
       html += '<div class="be-mathpad__group" data-be-padgroup="' + esc(MATH_PAD[g][0]) + '">';
       for (let i = 0; i < keys.length; i++) {
-        html += '<button type="button" class="be-mathkey" data-be-mathins="' + esc(keys[i][1]) + '">' + esc(keys[i][0]) + '</button>';
+        const label = keys[i][0], code = keys[i][1], disp = keys[i][2];
+        const attr = (code.indexOf('!cmd:') === 0)
+          ? 'data-be-mathcmd="' + esc(code.slice(5)) + '"'
+          : 'data-be-mathins="' + esc(code) + '"';
+        html += '<button type="button" class="be-mathkey" ' + attr + ' title="' + esc(label) + '">' + keyLabelHtml(disp, label) + '</button>';
       }
       html += '</div>';
     }
@@ -671,16 +692,22 @@
       // U8.9b: paleta („Photomath keypad") — mousedown+preventDefault ČUVA selekciju math-fielda
       // (inače bi klik gumba ukrao fokus); ubaci LaTeX-template (MathLive `insert`) → change → commit.
       container.addEventListener('mousedown', function (e) {
-        const key = e.target.closest ? e.target.closest('[data-be-mathins]') : null;
+        const key = e.target.closest ? e.target.closest('[data-be-mathins],[data-be-mathcmd]') : null;
         if (!key || !container.contains(key)) return;
         e.preventDefault();                                    // ne kradi fokus math-fieldu
         const blockEl = key.closest('[data-be-block]');
         const mf = blockEl ? blockEl.querySelector('math-field[data-be-mathfield]') : null;
-        if (!mf || typeof mf.insert !== 'function') return;    // MathLive još nije spreman → no-op
-        const latex = key.getAttribute('data-be-mathins') || '';
+        if (!mf) return;
         try { mf.focus(); } catch (_) {}
-        try { mf.insert(latex, { focus: true, selectionMode: 'placeholder' }); }
-        catch (_) { try { mf.insert(latex); } catch (__) {} }
+        const cmd = key.getAttribute('data-be-mathcmd');
+        if (cmd) {                                             // naredba (npr. ⌫ deleteBackward)
+          if (typeof mf.executeCommand === 'function') { try { mf.executeCommand(cmd); } catch (_) {} }
+        } else {                                               // insert-template
+          if (typeof mf.insert !== 'function') return;         // MathLive još nije spreman → no-op
+          const latex = key.getAttribute('data-be-mathins') || '';
+          try { mf.insert(latex, { focus: true, selectionMode: 'placeholder' }); }
+          catch (_) { try { mf.insert(latex); } catch (__) {} }
+        }
         mf.dispatchEvent(new Event('change', { bubbles: true })); // commit u draft (+ živi preview)
       });
 

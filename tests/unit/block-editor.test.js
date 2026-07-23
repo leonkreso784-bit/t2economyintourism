@@ -267,12 +267,17 @@ test('mediaFormulaBody: prazna formula → <math-field> + display-checkbox + pla
   assert.ok(html.indexOf('be-media--formula') !== -1);
 });
 
-test('mediaFormulaBody: uključuje NAŠU paletu (Photomath keypad) s template-gumbima', function () {
+test('mediaFormulaBody: uključuje NAŠU paletu (math-keypad) s template-gumbima + naredbama', function () {
   const html = E._mediaFormulaBody({ type: 'formula', tex: '', display: true });
   assert.ok(html.indexOf('be-mathpad') !== -1);                              // paleta prisutna
   assert.ok(html.indexOf('be-mathkey') !== -1);                              // gumbi
   assert.ok(html.indexOf('data-be-mathins="\\frac{#?}{#?}"') !== -1);        // razlomak-template (#? = MathLive placeholder)
   assert.ok(html.indexOf('data-be-mathins="\\sqrt{#?}"') !== -1);            // korijen-template
+  // U8.9c — proširena paleta (statistika/skupovi) + naredba ⌫
+  assert.ok(html.indexOf('data-be-mathins="\\bar{#@}"') !== -1);             // x̄ (sredina) — statistika
+  assert.ok(html.indexOf('data-be-mathins="\\binom{#?}{#?}"') !== -1);       // binomni koeficijent
+  assert.ok(html.indexOf('data-be-mathins="\\cup"') !== -1);                 // ∪ (skupovi)
+  assert.ok(html.indexOf('data-be-mathcmd="deleteBackward"') !== -1);        // ⌫ = MathLive naredba, ne insert
 });
 
 test('mediaFormulaBody: display=true → checkbox checked; display=false → unchecked', function () {

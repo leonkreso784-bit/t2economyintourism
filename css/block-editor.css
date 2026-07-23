@@ -190,14 +190,18 @@
 /* broj-grupa = uredni 3-stupčani grid (kalkulator-osjećaj) */
 .be-mathpad__group[data-be-padgroup="Brojevi"] { display: grid; grid-template-columns: repeat(3, 40px); gap: 5px; }
 .be-mathkey {
-  min-width: 40px; height: 38px; padding: 0 10px; border-radius: 8px; cursor: pointer;
+  min-width: 42px; height: 44px; padding: 0 10px; border-radius: 8px; cursor: pointer;
   font-size: 15px; line-height: 1; color: var(--text-primary);
   display: inline-flex; align-items: center; justify-content: center;
   background: rgba(99, 102, 241, .12); border: 1px solid rgba(99, 102, 241, .3); transition: .12s;
 }
+.be-mathpad__group[data-be-padgroup="Brojevi"] { grid-template-columns: repeat(3, 44px); }
 .be-mathpad__group[data-be-padgroup="Brojevi"] .be-mathkey { min-width: 0; width: 100%; }
 .be-mathkey:hover { background: rgba(99, 102, 241, .26); border-color: var(--primary-light); }
 .be-mathkey:active { transform: translateY(1px); }
+/* renderirane KaTeX-labele gumba (razlomak ▯/▯ itd.) — naslijedi svijetlu boju, stani u gumb */
+.be-mathkey .katex { font-size: 1.02em; color: inherit; }
+.be-mathkey .katex .frac-line { border-color: currentColor; }
 
 /* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */
 .be-tgrid-wrap { overflow-x: auto; }
