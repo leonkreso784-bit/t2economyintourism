@@ -1,7 +1,7 @@
 {
   "name": "sokrat-study",
   "version": "2.0.0",
-  "description": "Interactive study application for Tourism Economics, Entrepreneurship and Innovation, and Accounting - Flashcards, Quizzes, Fill-in-the-blank exercises",
+  "description": "Sokrat Study — interactive exam-prep platform for FMTU Opatija (Hospitality Management): lessons, flashcards, quizzes, fill-in-the-blank and interactive exercises across Year 1 & 2 subjects (EN + HR).",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
@@ -24,10 +24,10 @@
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
-    "tourism",
-    "economics",
-    "entrepreneurship",
-    "accounting",
+    "sokrat-study",
+    "fmtu-opatija",
+    "hospitality-management",
+    "exam-prep",
     "education",
     "flashcards",
     "quiz",
@@ -39,7 +39,7 @@
     "type": "git",
     "url": "https://github.com/leonkreso784-bit/t2economyintourism.git"
   },
-  "homepage": "https://t2economyintourism.vercel.app",
+  "homepage": "https://www.sokratstudy.com",
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",
