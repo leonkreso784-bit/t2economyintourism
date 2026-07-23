@@ -1,0 +1,986 @@
+// Specifični oblici turizma (HR) — M1 (1. kolokvij)
+// AUTORSKI IZ HRVATSKE SKRIPTE (prof. dr. sc. Daniela Gračan, FMTU Opatija) — NE prijevod EN SIT-a.
+// HR SOT kolegij bitno se razlikuje od EN "Special Interest Tourism" (opcija B — HR skripta = izvor istine).
+// MODEL: kartice = kratke definicije (<200 znak), detalj u learn.
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom!
+
+const sitHrM1 = {
+  "tourismConcept": {
+    "name": "Pojam i razvoj turizma",
+    "icon": "fa-compass",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što je TURIZAM i koje su njegove OSNOVE?",
+        "answer": "Skup odnosa i pojava vezanih uz privremeni boravak izvan stalnog mjesta, radi zadovoljenja potreba (ne stjecanja prihoda). Osnove: kretanje + boravak, privremenost, potrošnja donesenih sredstava.",
+        "explanation": "Turizam je interdisciplinarna djelatnost: ugostiteljstvo, hotelijerstvo, posredništvo, transport. Detalj → sekcija Uči."
+      },
+      {
+        "question": "Koja je razlika između TURISTA i EKSKURZISTA?",
+        "answer": "Turist = posjetitelj koji provede najmanje JEDNU noć u posjećenoj zemlji. Ekskurzist (izletnik) = posjetitelj koji stigne i otputuje ISTI dan (ne noći).",
+        "explanation": "Glavni motiv posjete definiran je na Konferenciji UN-a u Rimu 1963."
+      },
+      {
+        "question": "Tko i kada započinje MODERNI turizam?",
+        "answer": "Thomas Cook — organizirao prvo masovno putovanje vlakom 1841. (za 570 osoba), a prvu turističku agenciju 1845. u Liverpoolu.",
+        "explanation": "Željeznica je bila nositelj novog masovnog turizma; kasnije parobrod, pa auto i avion."
+      },
+      {
+        "question": "Što je bio GRAND TOUR?",
+        "answer": "Putovanja engleskih plemića (1547.–1830.) kao završna faza obrazovanja; trajala su od 2 do 6 godina. Ruta: Pariz → talijanski gradovi → Njemačka → natrag preko Francuske.",
+        "explanation": "Smatra se pretečom turističkih putovanja, ali još nije imao karakter masovne pojave."
+      },
+      {
+        "question": "Kojih je 5 povijesnih FAZA razvoja turizma po DOBI?",
+        "answer": "Rano doba (Grčka, Rim), srednje doba (hodočašća), renesansa (Grand Tour), industrijska revolucija (1750.–1850.) i moderni turizam (masovni).",
+        "explanation": "Kriterij podjele je razvoj društva, prometa i motiva putovanja. Opis → sekcija Uči."
+      },
+      {
+        "question": "Koje su FAZE razvoja turizma prema FREYERU?",
+        "answer": "Pretfaza (do 1850.), početna (1850.–1914., vlak/parobrod), razvojna (1914.–1945., auto/avion) i visoka faza (od 1945., automobil i charter-avion).",
+        "explanation": "Freyer razlikuje 4 faze prema prometnim sredstvima, motivima i broju sudionika. Detalj → sekcija Uči."
+      },
+      {
+        "question": "Koji se promet smatra POČETKOM masovnog turizma?",
+        "answer": "Željeznički promet (razvoj željeznice).",
+        "explanation": "Prvo organizirano putovanje (Thomas Cook, 1841.) bilo je vlakom."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Moderni turizam počinje „revolucijom u turizmu” koju je započeo:",
+        "options": [
+          "Henry Ford",
+          "Thomas Cook",
+          "César Ritz",
+          "Grand Tour"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Turist je posjetitelj koji u posjećenoj zemlji provede najmanje:",
+        "options": [
+          "Jednu noć",
+          "Tri dana",
+          "Jedan sat",
+          "Tjedan dana"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Grand Tour se odvijao u razdoblju:",
+        "options": [
+          "1841.–1845.",
+          "1547.–1830.",
+          "1914.–1945.",
+          "Od 1945."
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji se promet smatra početkom novog masovnog turizma?",
+        "options": [
+          "Zračni",
+          "Cestovni",
+          "Željeznički",
+          "Pomorski"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Prvu turističku agenciju (1845., Liverpool) osnovao je:",
+        "options": [
+          "Thomas Cook",
+          "Burkart",
+          "Medlik",
+          "Freyer"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Prema Freyeru, „visoka faza” razvoja turizma počinje:",
+        "options": [
+          "1850.",
+          "1914.",
+          "Od 1945.",
+          "Do 1850."
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Posjetitelj koji stigne i otputuje isti dan naziva se:",
+        "options": [
+          "Turist",
+          "Ekskurzist (izletnik)",
+          "Tranzitni putnik",
+          "Nomad"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Turizam je po svojoj naravi djelatnost:",
+        "options": [
+          "Isključivo ugostiteljska",
+          "Interdisciplinarna",
+          "Isključivo prometna",
+          "Isključivo trgovačka"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Prvo masovno putovanje vlakom organizirao je Thomas _______ 1841. godine.",
+        "answer": "Cook",
+        "hint": "Osnivač prve turističke agencije…"
+      },
+      {
+        "sentence": "Posjetitelj koji provede najmanje jednu noć u posjećenoj zemlji naziva se _______.",
+        "answer": "turist",
+        "hint": "Za razliku od izletnika…"
+      },
+      {
+        "sentence": "Putovanja engleskih plemića radi obrazovanja (1547.–1830.) zvala su se Grand _______.",
+        "answer": "Tour",
+        "hint": "„Veliko putovanje”…"
+      },
+      {
+        "sentence": "Prema Freyeru, razdoblje do 1850. naziva se _______ razvoja turizma.",
+        "answer": "pretfaza",
+        "hint": "Prije prve prave faze…"
+      },
+      {
+        "sentence": "Nositelj novog masovnog turizma na početku bila je _______.",
+        "answer": "željeznica",
+        "hint": "Prometno sredstvo Thomasa Cooka…"
+      }
+    ],
+    "learn": {
+      "title": "Pojam i razvoj turizma",
+      "content": "\n                <h3>Što je turizam?</h3>\n                <p><strong>Turizam</strong> = skup odnosa i pojava vezanih uz putovanje i privremeni boravak izvan stalnog mjesta boravka, radi zadovoljenja potreba (ne stjecanja prihoda). <strong>Osnove turizma:</strong></p>\n                <ul>\n                    <li>nastaje kao posljedica <strong>kretanja</strong> (putovanja) i <strong>boravka</strong> u odabranoj destinaciji;</li>\n                    <li>turist putuje i boravi <strong>izvan</strong> stalnog mjesta boravka, a boravak je <strong>privremen</strong>;</li>\n                    <li>turist troši sredstva ostvarena u mjestu stalnog boravka;</li>\n                    <li>zadovoljavaju se osobne potrebe proizašle iz različitih <strong>motiva</strong>.</li>\n                </ul>\n                <p>Turizam je <strong>interdisciplinarna</strong> djelatnost — obuhvaća ugostiteljstvo, hotelijerstvo, turističko posredništvo, transport i dodatne djelatnosti. Riječ „turist” spominje se u Engleskoj oko 1800., a „turizam” 1811. godine.</p>\n\n                <h4>Turist vs ekskurzist (klasifikacija putnika)</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Turist</strong> — provede najmanje JEDNU noć u posjećenoj zemlji.</li>\n                        <li><strong>Ekskurzist (izletnik)</strong> — stigne i otputuje ISTI dan.</li>\n                        <li>Izvan statistike turizma: granični/sezonski radnici, diplomati, nomadi, izbjeglice, tranzitni putnici koji ne napuštaju aerodrom.</li>\n                    </ul>\n                </div>\n\n                <h4>Moderni turizam — Thomas Cook</h4>\n                <p><strong>Thomas Cook</strong> započinje „revoluciju u turizmu”: prvo <strong>masovno putovanje vlakom 5. srpnja 1841.</strong> (za 570 osoba, iz Leicestera u Loughborough, povodom kongresa Antialkoholičarskog društva), a <strong>prvu turističku agenciju 1845.</strong> u Liverpoolu. Željeznica je bila nositelj novog masovnog turizma, a kasnije se pridružuju parobrod te automobilska i zrakoplovna industrija.</p>\n\n                <h4>Turizam kroz povijest</h4>\n                <p>Preteča turizma = <strong>Grand Tour</strong> (1547.–1830.): engleski plemići putovali su radi obrazovanja 2–6 godina (Pariz → talijanski gradovi → Njemačka → Francuska). Podjela razvoja <strong>prema dobi</strong>: rano doba (Grčka, Rim) → srednje doba (hodočašća) → renesansa (Grand Tour) → industrijska revolucija (1750.–1850.) → moderni turizam.</p>\n                <div class=\"formula-box\">\n                    FREYEROVE FAZE: PRETFAZA (do 1850.) → POČETNA (1850.–1914., vlak/parobrod) → RAZVOJNA (1914.–1945., auto/avion) → VISOKA (od 1945., automobil/charter-avion)\n                </div>\n                <p>Burkart i Medlik razlikuju tri razdoblja: prije industrijske revolucije (do 1840.), razdoblje željeznice i parobroda (1840.–1914.) te razdoblje ubrzanog razvoja automobila i zrakoplova.</p>\n            "
+    }
+  },
+  "typesAndForms": {
+    "name": "Vrste i oblici turizma",
+    "icon": "fa-layer-group",
+    "color": "#0ea5e9",
+    "flashcards": [
+      {
+        "question": "Koja je razlika između VRSTA i OBLIKA turizma?",
+        "answer": "Vrste se temelje na statističkom kriteriju podjele (segmentaciji); oblici turizma na dominantnom turističkom MOTIVU koji uvjetuje ponašanje ponude i potražnje.",
+        "explanation": "Zato govorimo o „specifičnim oblicima” turizma (motiv), a ne o vrstama."
+      },
+      {
+        "question": "Vrste turizma prema PROSTORNOM OBUHVATU?",
+        "answer": "Lokalni, regionalni, nacionalni i međunarodni turizam.",
+        "explanation": "Kriterij = prostorni doseg turističkih kretanja."
+      },
+      {
+        "question": "Vrste turizma prema TRAJANJU boravka?",
+        "answer": "Boravišni, izletnički i vikend-turizam.",
+        "explanation": "Kriterij = duljina boravka turista."
+      },
+      {
+        "question": "Vrste turizma prema NAČINU ORGANIZACIJE?",
+        "answer": "Individualni, organizirani i mješoviti.",
+        "explanation": "Kriterij = tko i kako organizira putovanje."
+      },
+      {
+        "question": "Koja su obilježja MASOVNOG turizma?",
+        "answer": "Uniformiran, standardiziran, konfekcioniran, kvantitativan, monostrukturan, ekspanzivan, „jeftin” i orijentiran na godišnje odmore.",
+        "explanation": "Tzv. „hard” turizam — pansionski, vezan uz primarne usluge."
+      },
+      {
+        "question": "Koja su obilježja SELEKTIVNOG turizma?",
+        "answer": "Kvalitativan, heterogen, autentičan, individualan, odgovoran, ekološki održiv, ekskluzivan, jake izvanpansionske potrošnje.",
+        "explanation": "Tzv. „soft” turizam; javlja se sa zahtjevnom potražnjom 1990-ih. Detalj → sekcija Uči."
+      },
+      {
+        "question": "Koje su KARAKTERISTIKE suvremenog turizma?",
+        "answer": "Mobilnost, masovnost, dispergiranost (prostorna disperzija), heterogenost, elastičnost i sezonske oscilacije.",
+        "explanation": "Sezonalnost je negativna karakteristika koju se nastoji smanjiti."
+      },
+      {
+        "question": "Što je ALTERNATIVNI turizam?",
+        "answer": "Oblici turizma usklađeni s prirodnim i društvenim vrijednostima lokalne zajednice; osnovni motiv nisu sunce i more, nego drugi motivi (selekcija, odgovornost, ekologija).",
+        "explanation": "Naziva se i odgovorni / posebnih oblika turizam."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Na čemu se temelje OBLICI turizma?",
+        "options": [
+          "Na statističkom kriteriju podjele",
+          "Na dominantnom turističkom motivu",
+          "Na broju noćenja",
+          "Na visini cijene"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Na čemu se temelje VRSTE turizma?",
+        "options": [
+          "Na dominantnom motivu",
+          "Na statističkom kriteriju podjele (segmentaciji)",
+          "Na godišnjem dobu",
+          "Na vrsti smještaja"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Vrste turizma prema prostornom obuhvatu su:",
+        "options": [
+          "Boravišni, izletnički, vikend",
+          "Lokalni, regionalni, nacionalni, međunarodni",
+          "Individualni, organizirani, mješoviti",
+          "Ljetni i zimski"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Vrste turizma prema trajanju boravka su:",
+        "options": [
+          "Boravišni, izletnički, vikend",
+          "Lokalni i međunarodni",
+          "Masovni i selektivni",
+          "Hard i soft"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Vrste turizma prema načinu organizacije putovanja su:",
+        "options": [
+          "Individualni, organizirani, mješoviti",
+          "Ljetni, zimski, prijelazni",
+          "Domaći i inozemni",
+          "Primarni i sekundarni"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Koje obilježje NE pripada masovnom turizmu?",
+        "options": [
+          "Uniformiran",
+          "Standardiziran",
+          "Individualan i autentičan",
+          "Orijentiran na godišnje odmore"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Masovni turizam poznat je i pod nazivom:",
+        "options": [
+          "„soft” turizam",
+          "„hard” turizam",
+          "alternativni turizam",
+          "selektivni turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja NIJE karakteristika suvremenog turizma?",
+        "options": [
+          "Mobilnost",
+          "Masovnost",
+          "Statičnost i uniformnost potražnje",
+          "Sezonske oscilacije"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Selektivni turizam pripada tzv.:",
+        "options": [
+          "„hard” turizmu",
+          "„soft” turizmu",
+          "masovnom turizmu",
+          "pansionskom turizmu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Sezonalnost je za turizam:",
+        "options": [
+          "Pozitivna karakteristika koju se potiče",
+          "Negativna karakteristika koju se nastoji smanjiti",
+          "Nebitna pojava",
+          "Isto što i mobilnost"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Oblici turizma temelje se na dominantnom turističkom _______.",
+        "answer": "motivu",
+        "hint": "Ono što pokreće turista…"
+      },
+      {
+        "sentence": "Masovni turizam poznat je i kao tzv. _______ turizam.",
+        "answer": "hard",
+        "hint": "Suprotno od „soft”…"
+      },
+      {
+        "sentence": "Prema trajanju boravka razlikujemo boravišni, izletnički i _______ turizam.",
+        "answer": "vikend",
+        "hint": "Kratki odmor na kraju tjedna…"
+      },
+      {
+        "sentence": "Sezonske _______ stalna su (negativna) karakteristika turizma.",
+        "answer": "oscilacije",
+        "hint": "Kolebanja prometa kroz godinu…"
+      },
+      {
+        "sentence": "Prema prostornom obuhvatu turizam globalnih razmjera je _______ turizam.",
+        "answer": "međunarodni",
+        "hint": "Preko državnih granica…"
+      }
+    ],
+    "learn": {
+      "title": "Vrste i oblici turizma",
+      "content": "\n                <h3>Vrste vs oblici turizma</h3>\n                <p><strong>Vrste turizma</strong> temelje se na određenom <strong>statističkom kriteriju</strong> podjele (segmentaciji), dok se <strong>oblici turizma</strong> temelje na <strong>dominantnom turističkom motivu</strong> koji uvjetuje ponašanje ponude i potražnje. Zato „specifične oblike” definira motiv.</p>\n                <div class=\"formula-box\">\n                    PROSTORNI OBUHVAT: lokalni · regionalni · nacionalni · međunarodni<br>\n                    TRAJANJE BORAVKA: boravišni · izletnički · vikend<br>\n                    NAČIN ORGANIZACIJE: individualni · organizirani · mješoviti\n                </div>\n                <h4>Masovni vs selektivni turizam</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Masovni („hard”)</strong> — uniformiran, standardiziran, konfekcioniran, kvantitativan, monostrukturan, ekspanzivan, „jeftin”, orijentiran na godišnje odmore; pansionski, primarne usluge, visoke investicije, kruta ponuda.</li>\n                        <li><strong>Selektivni („soft”)</strong> — kvalitativan, heterogen, inventivan, autentičan, ekološki i infrastrukturno održiv, individualan, odgovoran, ekskluzivan, jake izvanpansionske potrošnje; human i odgovoran prema lokalnom stanovništvu.</li>\n                    </ul>\n                </div>\n                <p>Devedesetih godina 20. st. sa zahtjevnom potražnjom prelazi se s koncepta masovnog („hard”) na „soft” turizam. <strong>Alternativni turizam</strong> = organizacija oblika usklađenih s vrijednostima lokalne zajednice; osnovni motiv nisu sunce i more.</p>\n                <h4>Karakteristike suvremenog turizma</h4>\n                <p><strong>Mobilnost</strong> (razvoj prometa), <strong>masovnost</strong>, <strong>dispergiranost</strong> (prostorna disperzija), <strong>heterogenost</strong> (raznolika klijentela), <strong>elastičnost</strong> (osjetljivost na krize) i <strong>sezonske oscilacije</strong> (sezonalnost = negativna karakteristika).</p>\n            "
+    }
+  },
+  "factors": {
+    "name": "Faktori nastanka turizma",
+    "icon": "fa-diagram-project",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Koje su TRI SKUPINE faktora nastanka turizma?",
+        "answer": "Pokretački faktori (faktori potražnje), faktori ponude i posrednički faktori.",
+        "explanation": "Djeluju kao cjelina tek od sredine 19. st. (prije toga pojedinačno)."
+      },
+      {
+        "question": "Koji su OBJEKTIVNI (racionalni) pokretački faktori?",
+        "answer": "Stanovništvo, industrijalizacija, urbanizacija, slobodna financijska sredstva i slobodno vrijeme.",
+        "explanation": "Faktori potražnje; mjerljivi, materijalni preduvjeti."
+      },
+      {
+        "question": "Koji su SUBJEKTIVNI (iracionalni) pokretački faktori?",
+        "answer": "Moda, oponašanje, navike, prestiž/snobizam, vjera i ljubav.",
+        "explanation": "Faktori potražnje; psihološki motivi putovanja."
+      },
+      {
+        "question": "Na što se dijele FAKTORI PONUDE?",
+        "answer": "Na atraktivne, komunikacijske i receptivne.",
+        "explanation": "Ono što destinacija nudi: privlačnost, prometna dostupnost, prihvatni kapaciteti."
+      },
+      {
+        "question": "Što su POSREDNIČKI faktori?",
+        "answer": "Faktori koji povezuju/posreduju ponudu i potražnju (turističke agencije, touroperatori, informacije, promidžba).",
+        "explanation": "Bez posrednika ponuda i potražnja teže se susreću."
+      },
+      {
+        "question": "Što obilježava PREDTURISTIČKU epohu?",
+        "answer": "Od antike do sredine 19. st.; putovanja neorganizirana, privilegij viših klasa (zimi, u toplice) → „aristokratski turizam”.",
+        "explanation": "Putnik = gost, ne klijent; uloga države pasivna."
+      },
+      {
+        "question": "Što obilježava EPOHU suvremenog turizma?",
+        "answer": "Omasovljenje i organizirana putovanja radi odmora; demokratizacija dohotka → „demokratski turizam”.",
+        "explanation": "Turist = klijent; država postaje aktivna u razvoju turizma."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Faktori nastanka turizma dijele se u tri skupine:",
+        "options": [
+          "Prirodni, društveni, ekonomski",
+          "Pokretački, faktori ponude, posrednički",
+          "Ljetni, zimski, prijelazni",
+          "Lokalni, regionalni, globalni"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koji je OBJEKTIVNI (racionalni) pokretački faktor?",
+        "options": [
+          "Moda",
+          "Snobizam",
+          "Urbanizacija",
+          "Ljubav"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Koji je SUBJEKTIVNI (iracionalni) pokretački faktor?",
+        "options": [
+          "Slobodno vrijeme",
+          "Stanovništvo",
+          "Snobizam",
+          "Industrijalizacija"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Faktori ponude dijele se na:",
+        "options": [
+          "Objektivne i subjektivne",
+          "Atraktivne, komunikacijske, receptivne",
+          "Ljetne i zimske",
+          "Primarne i sekundarne"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Predturistička epoha naziva se i:",
+        "options": [
+          "Demokratski turizam",
+          "Aristokratski turizam (turizam privilegiranih klasa)",
+          "Masovni turizam",
+          "Selektivni turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Epoha suvremenog turizma naziva se i:",
+        "options": [
+          "Aristokratski turizam",
+          "Demokratski turizam",
+          "Pretfaza",
+          "Alternativni turizam"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Faktori turizma počinju djelovati kao cjelina:",
+        "options": [
+          "U antici",
+          "Od sredine 19. stoljeća",
+          "Nakon 1945.",
+          "U 21. stoljeću"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Posrednički faktori:",
+        "options": [
+          "Povezuju faktore ponude i potražnje",
+          "Su isto što i prirodni resursi",
+          "Djeluju samo na cijenu",
+          "Odnose se na klimu"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Pokretački faktori nazivaju se i:",
+        "options": [
+          "Faktori ponude",
+          "Faktori potražnje",
+          "Posrednički faktori",
+          "Receptivni faktori"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Faktori potražnje nazivaju se i _______ faktori.",
+        "answer": "pokretački",
+        "hint": "Ono što pokreće turista na put…"
+      },
+      {
+        "sentence": "Moda, snobizam i vjera pripadaju _______ (iracionalnim) pokretačkim faktorima.",
+        "answer": "subjektivnim",
+        "hint": "Suprotno od objektivnih…"
+      },
+      {
+        "sentence": "Faktori ponude dijele se na atraktivne, komunikacijske i _______.",
+        "answer": "receptivne",
+        "hint": "Prihvatni kapaciteti…"
+      },
+      {
+        "sentence": "Predturistička epoha naziva se i _______ turizam.",
+        "answer": "aristokratski",
+        "hint": "Turizam privilegiranih klasa…"
+      },
+      {
+        "sentence": "Faktori koji povezuju ponudu i potražnju su _______ faktori.",
+        "answer": "posrednički",
+        "hint": "Agencije i touroperatori…"
+      }
+    ],
+    "learn": {
+      "title": "Faktori nastanka turizma",
+      "content": "\n                <h3>Tri skupine faktora</h3>\n                <p>Razvoj turizma uvjetovan je urbanizacijom, industrijalizacijom, razvojem komunikacija te rastom standarda i slobodnog vremena. Faktori nastanka dijele se u tri skupine i od sredine 19. st. djeluju <strong>kao cjelina</strong>:</p>\n                <div class=\"formula-box\">1. POKRETAČKI (faktori potražnje) · 2. FAKTORI PONUDE · 3. POSREDNIČKI FAKTORI</div>\n                <h4>Pokretački faktori (potražnje)</h4>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Objektivni (racionalni):</strong> stanovništvo · industrijalizacija · urbanizacija · slobodna financijska sredstva · slobodno vrijeme.</li>\n                        <li><strong>Subjektivni (iracionalni):</strong> moda · oponašanje · navike · prestiž/snobizam · vjera · ljubav.</li>\n                    </ul>\n                </div>\n                <h4>Faktori ponude i posrednički faktori</h4>\n                <ul>\n                    <li><strong>Faktori ponude:</strong> atraktivni (privlačnost) · komunikacijski (prometna dostupnost) · receptivni (prihvatni kapaciteti).</li>\n                    <li><strong>Posrednički faktori:</strong> povezuju ponudu i potražnju (agencije, touroperatori, informiranje, promidžba).</li>\n                </ul>\n                <h4>Dvije epohe razvoja</h4>\n                <ul>\n                    <li><strong>Predturistička epoha</strong> (antika – sredina 19. st.) — neorganizirana putovanja, privilegij viših klasa, zimi u toplice; putnik = gost, država pasivna → „aristokratski turizam”.</li>\n                    <li><strong>Epoha suvremenog turizma</strong> — omasovljenje, organizirana putovanja, demokratizacija dohotka; turist = klijent, država aktivna → „demokratski turizam”.</li>\n                </ul>\n            "
+    }
+  },
+  "functions": {
+    "name": "Funkcije turizma",
+    "icon": "fa-list-check",
+    "color": "#f43f5e",
+    "flashcards": [
+      {
+        "question": "Što je POLIFUNKCIONALNOST i koje su funkcije turizma?",
+        "answer": "Turizam ima mnoštvo funkcija (Cicvarić): zdravstvena, rekreativno-zabavna, obrazovno-kulturna, politička, socijalna, religijska + grupa ekonomskih funkcija.",
+        "explanation": "Prvih pet = neekonomske funkcije. Opis → sekcija Uči."
+      },
+      {
+        "question": "Koja je razlika između NEEKONOMSKIH i EKONOMSKIH funkcija?",
+        "answer": "Neekonomske (zdravstvena, rekreativna, kulturna, politička, socijalna) = komplementarne, prije izučavane. Ekonomske = djelovanja usmjerena na gospodarske ciljeve (dohodak).",
+        "explanation": "Neekonomske su se povijesno prije pojavile i izučavale."
+      },
+      {
+        "question": "Objasnite ZDRAVSTVENU funkciju turizma.",
+        "answer": "Najstarija i najznačajnija funkcija; promjene sredine, ljudi i klime pozitivno utječu na fizičku i psihičku kondiciju. Prisutna je u svakom turističkom kretanju.",
+        "explanation": "Zato zdravstveni turizam ima duboke korijene."
+      },
+      {
+        "question": "Objasnite REKREATIVNO-ZABAVNU funkciju.",
+        "answer": "Turizam predstavlja rekreaciju i zabavu. Svaki turizam je rekreacija, ali svaka rekreacija nije turizam.",
+        "explanation": "Rekreacija je širi pojam od turizma."
+      },
+      {
+        "question": "Objasnite OBRAZOVNO-KULTURNU funkciju.",
+        "answer": "Proizlazi iz čovjekove znatiželje i potrebe za učenjem te upoznavanjem novih kultura i običaja.",
+        "explanation": "Temelj je kulturnog i obrazovnog turizma."
+      },
+      {
+        "question": "Objasnite POLITIČKU i SOCIJALNU funkciju.",
+        "answer": "Politička = kontakti i upoznavanje naroda, sustava i dostignuća. Socijalna = humanizacija ljudskih odnosa (nacionalno i međunarodno).",
+        "explanation": "Obje zbližavaju ljude i narode."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Svojstvo turizma da ima mnogo funkcija naziva se:",
+        "options": [
+          "Multiplikativnost",
+          "Polifunkcionalnost",
+          "Elastičnost",
+          "Sezonalnost"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najstarija i najznačajnija funkcija turizma je:",
+        "options": [
+          "Politička",
+          "Zdravstvena",
+          "Ekonomska",
+          "Socijalna"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "„Svaki turizam je rekreacija, ali svaka rekreacija nije turizam” opisuje funkciju:",
+        "options": [
+          "Zdravstvenu",
+          "Rekreativno-zabavnu",
+          "Političku",
+          "Ekonomsku"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Funkcija koja proizlazi iz znatiželje i učenja o novim kulturama je:",
+        "options": [
+          "Obrazovno-kulturna",
+          "Socijalna",
+          "Zdravstvena",
+          "Politička"
+        ],
+        "correct": 0
+      },
+      {
+        "question": "Humanizacija ljudskih odnosa vezana je uz funkciju:",
+        "options": [
+          "Ekonomsku",
+          "Socijalnu",
+          "Zdravstvenu",
+          "Rekreativnu"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prvih pet funkcija (osim ekonomskih) nazivaju se:",
+        "options": [
+          "Primarne funkcije",
+          "Neekonomske funkcije",
+          "Sekundarne funkcije",
+          "Posredničke funkcije"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Ekonomske funkcije turizma povezane su prije svega s:",
+        "options": [
+          "Klimom",
+          "Dohotkom",
+          "Slobodnim vremenom",
+          "Sezonom"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koja funkcija NIJE neekonomska?",
+        "options": [
+          "Zdravstvena",
+          "Kulturno-obrazovna",
+          "Ekonomska",
+          "Socijalna"
+        ],
+        "correct": 2
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Najstarija i najznačajnija funkcija turizma je _______ funkcija.",
+        "answer": "zdravstvena",
+        "hint": "Utječe na kondiciju i zdravlje…"
+      },
+      {
+        "sentence": "Prvih pet funkcija turizma zajedno se nazivaju _______ funkcije.",
+        "answer": "neekonomske",
+        "hint": "Nisu usmjerene na dohodak…"
+      },
+      {
+        "sentence": "„Svaki turizam je rekreacija, ali svaka rekreacija nije _______.”",
+        "answer": "turizam",
+        "hint": "Rekreacija je širi pojam…"
+      },
+      {
+        "sentence": "Ekonomske funkcije turizma povezane su sa stvaranjem i cirkulacijom _______.",
+        "answer": "dohotka",
+        "hint": "Gospodarski učinak…"
+      },
+      {
+        "sentence": "Svojstvo turizma da ima mnogo funkcija zove se _______.",
+        "answer": "polifunkcionalnost",
+        "hint": "Poli = mnogo…"
+      }
+    ],
+    "learn": {
+      "title": "Funkcije turizma",
+      "content": "\n                <h3>Polifunkcionalnost turizma</h3>\n                <p>Suvremeni turizam prepoznatljiv je po <strong>polifunkcionalnosti</strong> (mnoštvu funkcija). Prema Cicvariću, funkcije su: <strong>zdravstvena, rekreativno-zabavna, obrazovno-kulturna, politička, socijalna, religijska</strong> te <strong>grupa ekonomskih funkcija</strong>.</p>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Zdravstvena</strong> — najstarija i najznačajnija; promjene sredine i klime pozitivno utječu na fizičku i psihičku kondiciju; prisutna u svakom turističkom kretanju.</li>\n                        <li><strong>Rekreativno-zabavna</strong> — turizam = rekreacija i zabava; svaki turizam je rekreacija, ali svaka rekreacija nije turizam (rekreacija je širi pojam).</li>\n                        <li><strong>Obrazovno-kulturna</strong> — iz znatiželje i potrebe za učenjem i upoznavanjem novih kultura i običaja.</li>\n                        <li><strong>Politička</strong> — kontakti među stanovništvom, upoznavanje naroda, sustava i dostignuća.</li>\n                        <li><strong>Socijalna</strong> — humanizacija ljudskih odnosa na nacionalnoj i međunarodnoj razini.</li>\n                    </ul>\n                </div>\n                <h4>Neekonomske vs ekonomske funkcije</h4>\n                <p>Zdravstvena, rekreativno-zabavna, obrazovno-kulturna, politička i socijalna funkcija su <strong>komplementarne</strong> i zajedno se nazivaju <strong>neekonomske funkcije</strong> (povijesno su se prije pojavile i izučavale). <strong>Ekonomske funkcije</strong> = sva djelovanja turizma usmjerena na gospodarske ciljeve, povezana s <strong>dohotkom</strong> (njegovim stvaranjem i cirkulacijom).</p>\n            "
+    }
+  },
+  "market": {
+    "name": "Turističko tržište",
+    "icon": "fa-scale-balanced",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Koja su OBILJEŽJA turističkog tržišta?",
+        "answer": "Heterogenost ponude, istovrsnost proizvodnje i potrošnje, periodičnost potražnje (sezonalnost), manji utjecaj ekonomskih ograničenja, privlačnost rekreacijskih sadržaja i prevlast potražnje.",
+        "explanation": "Elementi svakog tržišta: subjekti (ponuda/potražnja), objekti razmjene i cijena."
+      },
+      {
+        "question": "Koja je SPECIFIČNOST turističkog tržišta?",
+        "answer": "Ponuda je odvojena od potražnje → turistička POTRAŽNJA putuje ponudi (kupac ide na mjesto gdje se ponuda nalazi).",
+        "explanation": "Time se turističko bitno razlikuje od robnog tržišta."
+      },
+      {
+        "question": "Što je TURISTIČKA PONUDA?",
+        "answer": "Količina roba i usluga koja se nudi turistima na određenom tržištu, u određeno vrijeme i po određenoj cijeni.",
+        "explanation": "Formiraju je atraktivni, komunikacijski i receptivni faktori."
+      },
+      {
+        "question": "Što je TURISTIČKA POTRAŽNJA i koja su joj obilježja?",
+        "answer": "Količina turističkih dobara, usluga i roba koju su turisti skloni pribaviti uz određeni nivo cijena. Obilježja: raznovrsnost i elastičnost.",
+        "explanation": "Turisti se razlikuju po platežnim mogućnostima."
+      },
+      {
+        "question": "Koje su TRI SKUPINE turističke potražnje?",
+        "answer": "Idealna (postoji potreba, ali nema sredstava), potencijalna (potreba + materijalne mogućnosti) i realna (potreba, sredstva i donesena odluka o putovanju).",
+        "explanation": "Realna skupina stvarno putuje."
+      },
+      {
+        "question": "Koji faktori utječu na turističku potražnju?",
+        "answer": "Objektivni (geografski, demografski, socijalni, politički, ekonomski, kulturni) i subjektivni (osobne sklonosti, tradicija, moda, promocija).",
+        "explanation": "Prema Žuveli. Detalj → sekcija Uči."
+      },
+      {
+        "question": "Što je TURISTIČKA POTROŠNJA i kakva joj je struktura?",
+        "answer": "Osobna, neproizvodna potrošnja izvan mjesta boravka. Struktura: ~49% ugostiteljstvo, 31% prijevoz, 15% trgovina, 9% agencije, 5% ostalo.",
+        "explanation": "Faze: prije putovanja, u mjestu boravka, za vrijeme putovanja, u odredištu, nakon povratka."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Turistička potražnja je:",
+        "options": [
+          "Broj hotelskih soba u destinaciji",
+          "Količina dobara i usluga koju su turisti skloni pribaviti uz određeni nivo cijena",
+          "Ukupan broj zaposlenih u turizmu",
+          "Cijena turističkog aranžmana"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Na turističkom tržištu vrijedi da:",
+        "options": [
+          "Ponuda putuje potražnji",
+          "Potražnja putuje ponudi",
+          "Ponuda i potražnja su na istom mjestu",
+          "Nema posrednika"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Tri skupine turističke potražnje su:",
+        "options": [
+          "Mala, srednja, velika",
+          "Idealna, potencijalna, realna",
+          "Ljetna, zimska, prijelazna",
+          "Domaća, inozemna, tranzitna"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Dva bitna obilježja turističke potražnje su:",
+        "options": [
+          "Stalnost i krutost",
+          "Raznovrsnost i elastičnost",
+          "Jednoličnost i statičnost",
+          "Sezonalnost i jeftinoća"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najveći udio u strukturi turističke potrošnje ima:",
+        "options": [
+          "Prijevoz",
+          "Trgovina",
+          "Ugostiteljstvo",
+          "Turističke agencije"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Geografski, demografski i ekonomski faktori potražnje su:",
+        "options": [
+          "Subjektivni",
+          "Objektivni",
+          "Posrednički",
+          "Receptivni"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Koje NIJE obilježje turističkog tržišta?",
+        "options": [
+          "Heterogenost ponude",
+          "Periodičnost potražnje",
+          "Potpuna neovisnost o sezoni",
+          "Prevlast potražnje"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Skupina potražnje koja ima potrebu, ali ne raspolaže sredstvima je:",
+        "options": [
+          "Realna",
+          "Potencijalna",
+          "Idealna",
+          "Elastična"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Turistička ponuda obuhvaća robe i usluge:",
+        "options": [
+          "Bez određene cijene",
+          "U određeno vrijeme i po određenoj cijeni",
+          "Samo za domaće turiste",
+          "Neovisno o tržištu"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Na turističkom tržištu turistička _______ putuje ponudi.",
+        "answer": "potražnja",
+        "hint": "Kupac ide na mjesto ponude…"
+      },
+      {
+        "sentence": "Tri skupine potražnje su idealna, potencijalna i _______.",
+        "answer": "realna",
+        "hint": "Ona koja stvarno putuje…"
+      },
+      {
+        "sentence": "Dva obilježja turističke potražnje su raznovrsnost i _______.",
+        "answer": "elastičnost",
+        "hint": "Osjetljivost na promjene…"
+      },
+      {
+        "sentence": "Najveći udio turističke potrošnje ostvaruje se u _______.",
+        "answer": "ugostiteljstvu",
+        "hint": "Smještaj, hrana, piće…"
+      },
+      {
+        "sentence": "Periodičnost potražnje očituje se u njezinu _______ karakteru.",
+        "answer": "sezonskom",
+        "hint": "Vezano uz godišnje doba…"
+      }
+    ],
+    "learn": {
+      "title": "Turističko tržište",
+      "content": "\n                <h3>Obilježja turističkog tržišta</h3>\n                <p>Turističko tržište dio je općeg tržišta roba i usluga, ali ima specifičnosti. Osnovni elementi: <strong>subjekti</strong> (nositelji ponude i potražnje), <strong>objekti razmjene</strong> i <strong>cijena</strong>.</p>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Heterogenost ponude</strong> — više ponuđača sudjeluje u formiranju proizvoda.</li>\n                        <li><strong>Istovrsnost proizvodnje i potrošnje</strong> — usluge se pripremaju za poznatog korisnika (turista).</li>\n                        <li><strong>Periodičnost potražnje</strong> — sezonski karakter.</li>\n                        <li><strong>Manji utjecaj ekonomskih ograničenja</strong> i <strong>privlačnost rekreacijskih sadržaja</strong>.</li>\n                        <li><strong>Prevlast potražnje</strong> — potražnja je jači tržišni partner od ponude.</li>\n                    </ul>\n                </div>\n                <p><strong>Specifičnost:</strong> ponuda je odvojena od potražnje → <strong>potražnja putuje ponudi</strong>, izravno ili preko posrednika.</p>\n                <h4>Ponuda, potražnja i potrošnja</h4>\n                <ul>\n                    <li><strong>Turistička ponuda</strong> — količina roba i usluga koja se nudi turistima na tržištu, u određeno vrijeme i po određenoj cijeni (atraktivni, komunikacijski, receptivni faktori).</li>\n                    <li><strong>Turistička potražnja</strong> — količina dobara koju su turisti skloni pribaviti uz određeni nivo cijena; obilježja: raznovrsnost i elastičnost. Faktori: objektivni (geografski, demografski, socijalni, politički, ekonomski, kulturni) i subjektivni. Skupine: <strong>idealna</strong> (bez sredstava), <strong>potencijalna</strong> (potreba + sredstva), <strong>realna</strong> (donesena odluka).</li>\n                    <li><strong>Turistička potrošnja</strong> — osobna, neproizvodna potrošnja izvan mjesta boravka. Struktura: ~49% ugostiteljstvo · 31% prijevoz · 15% trgovina · 9% agencije · 5% ostalo. Faze: prije putovanja → u mjestu boravka → za vrijeme putovanja → u odredištu → nakon povratka. Izvor sredstava = dohodak.</li>\n                </ul>\n            "
+    }
+  },
+  "destination": {
+    "name": "Turistička destinacija",
+    "icon": "fa-map-location-dot",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "Kojih je 6 FAZA životnog ciklusa destinacije (Butler)?",
+        "answer": "Istraživanje → uključivanje → razvoj → konsolidacija → stagnacija → pad ili preporod.",
+        "explanation": "Model prikazuje broj turista kroz vrijeme. Razvoj je najkritičnija faza."
+      },
+      {
+        "question": "Što obilježava faze ISTRAŽIVANJA i UKLJUČIVANJA?",
+        "answer": "Istraživanje (exploration) = mali broj turista otkriva destinaciju. Uključivanje (involvement) = više turista + prvi manji objekti smještaja i prehrane.",
+        "explanation": "Prve dvije faze Butlerova modela."
+      },
+      {
+        "question": "Što obilježava faze RAZVOJA i KONSOLIDACIJE?",
+        "answer": "Razvoj (development) = intenzivna izgradnja kapaciteta — NAJKRITIČNIJA faza. Konsolidacija = protok turista se stabilizira.",
+        "explanation": "Izgrađena infrastruktura mora se plasirati na tržište."
+      },
+      {
+        "question": "Što se događa nakon faze STAGNACIJE?",
+        "answer": "Stagnacija = promet se zaustavlja (zasićenost). Zatim slijedi PAD (turisti biraju druge destinacije) ILI PREPOROD (novi proizvodi/ponude).",
+        "explanation": "Krajnji ishod ovisi o upravljanju destinacijom."
+      },
+      {
+        "question": "Koja je razlika između MISIJE i VIZIJE destinacije?",
+        "answer": "Misija = zašto destinacija postoji i čime poboljšava kvalitetu života. Vizija = što destinacija želi postati/predstavljati u budućnosti.",
+        "explanation": "Vizija gleda u budućnost; misija određuje svrhu."
+      },
+      {
+        "question": "Koji EU PROGRAMI podupiru razvoj turizma?",
+        "answer": "Leonardo da Vinci (stručno obrazovanje u turizmu), Youth (suradnja mladih) i Joint European Venture (zajednička ulaganja malih i srednjih poduzeća).",
+        "explanation": "Programi EU za obrazovanje i ulaganja u turizmu."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Model životnog ciklusa turističke destinacije razvio je:",
+        "options": [
+          "Freyer",
+          "Butler",
+          "Thomas Cook",
+          "Cicvarić"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Prva faza životnog ciklusa destinacije je:",
+        "options": [
+          "Razvoj",
+          "Istraživanje",
+          "Stagnacija",
+          "Konsolidacija"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Najkritičnija faza životnog ciklusa destinacije je:",
+        "options": [
+          "Istraživanje",
+          "Uključivanje",
+          "Razvoj",
+          "Stagnacija"
+        ],
+        "correct": 2
+      },
+      {
+        "question": "Nakon faze stagnacije destinacija ide u:",
+        "options": [
+          "Samo pad",
+          "Pad ili preporod",
+          "Samo preporod",
+          "Ponovno istraživanje"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Vizija turističke destinacije govori:",
+        "options": [
+          "Zašto destinacija postoji",
+          "Što destinacija želi postati u budućnosti",
+          "Koliko destinacija ima hotela",
+          "Kolika je cijena aranžmana"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Misija destinacije odražava:",
+        "options": [
+          "Budući izgled destinacije",
+          "Zašto destinacija postoji i čime poboljšava kvalitetu života",
+          "Broj turista",
+          "Sezonske oscilacije"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Program Leonardo da Vinci odnosi se na:",
+        "options": [
+          "Zajednička ulaganja",
+          "Stručno obrazovanje u turizmu",
+          "Izgradnju hotela",
+          "Zaštitu okoliša"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Joint European Venture program podupire:",
+        "options": [
+          "Suradnju mladih",
+          "Zajednička ulaganja malih i srednjih poduzeća",
+          "Stručno usavršavanje",
+          "Kategorizaciju hotela"
+        ],
+        "correct": 1
+      },
+      {
+        "question": "Pojava prvih manjih objekata smještaja i prehrane obilježava fazu:",
+        "options": [
+          "Istraživanja",
+          "Uključivanja",
+          "Konsolidacije",
+          "Pada"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Model životnog ciklusa destinacije razvio je _______.",
+        "answer": "Butler",
+        "hint": "Autor modela iz 1980.…"
+      },
+      {
+        "sentence": "Prva faza životnog ciklusa destinacije naziva se _______.",
+        "answer": "istraživanje",
+        "hint": "Kada turisti otkrivaju destinaciju…"
+      },
+      {
+        "sentence": "Najkritičnija faza životnog ciklusa destinacije je faza _______.",
+        "answer": "razvoja",
+        "hint": "Intenzivna izgradnja kapaciteta…"
+      },
+      {
+        "sentence": "_______ destinacije govori što ona želi postati u budućnosti.",
+        "answer": "vizija",
+        "hint": "Pogled u budućnost…"
+      },
+      {
+        "sentence": "Nakon faze stagnacije destinacija ide u pad ili _______.",
+        "answer": "preporod",
+        "hint": "Obnova kroz nove ponude…"
+      }
+    ],
+    "learn": {
+      "title": "Turistička destinacija",
+      "content": "\n                <h3>Životni ciklus destinacije (Butler, 1980.)</h3>\n                <p>Butler tvrdi da turističke destinacije prolaze kroz <strong>šest faza</strong> razvoja, prikazanih kroz broj turista tijekom vremena:</p>\n                <div class=\"formula-box\">\n                    ISTRAŽIVANJE → UKLJUČIVANJE → RAZVOJ → KONSOLIDACIJA → STAGNACIJA → PAD ili PREPOROD\n                </div>\n                <div class=\"tip-box\">\n                    <ul>\n                        <li><strong>Istraživanje</strong> (exploration) — mali broj turista otkriva odredište.</li>\n                        <li><strong>Uključivanje</strong> (involvement) — više turista; prvi manji objekti smještaja i prehrane.</li>\n                        <li><strong>Razvoj</strong> (development) — intenzivna izgradnja kapaciteta; <em>najkritičnija</em> faza (infrastruktura se mora plasirati).</li>\n                        <li><strong>Konsolidacija</strong> (consolidation) — protok turista se stabilizira.</li>\n                        <li><strong>Stagnacija</strong> (stagnation) — promet se zaustavlja (zasićenost).</li>\n                        <li><strong>Pad</strong> (decline) — turisti biraju druge destinacije; ili <strong>preporod</strong> (rejuvenation) — novi proizvodi/ponude.</li>\n                    </ul>\n                </div>\n                <p>Buhalis razlikuje faze predstavljanja, rasta, zrelosti i opadanja/preporoda — svaka traži drugu marketinšku strategiju. Model je koristan okvir za strateške odluke o destinaciji.</p>\n                <h4>Misija, vizija i EU programi</h4>\n                <ul>\n                    <li><strong>Misija</strong> destinacije — zašto postoji i čime poboljšava kvalitetu svakidašnjeg života (jednostavna, trajna, prilagodljiva).</li>\n                    <li><strong>Vizija</strong> destinacije — što destinacija želi postati i predstavljati u budućnosti.</li>\n                    <li><strong>EU programi:</strong> Leonardo da Vinci (stručno obrazovanje u turizmu, 1994.) · Youth (suradnja mladih) · Joint European Venture (zajednička ulaganja malih i srednjih poduzeća iz barem dvije zemlje članice).</li>\n                </ul>\n            "
+    }
+  }
+};
+
+if (typeof window !== 'undefined') { window.sitHrM1 = sitHrM1; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = sitHrM1; }
