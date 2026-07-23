@@ -31,6 +31,19 @@
         { left: '\\(', right: '\\)', display: false }
     ];
 
+    // MathLive (autorski math-field, U8.9) emitira nekoliko vlastitih naredbi koje KaTeX NE poznaje
+    // (najvažnije `\placeholder{}` za prazne kutije) → bez ovih makroa bi se prikazale kao crveni
+    // "\placeholder". Mapiramo ih na KaTeX-ekvivalente: prazna kutija → sivi okvir □ (isto što autor
+    // vidi u math-fieldu). Bezopasno za sav ostali sadržaj (makro se koristi SAMO ako se naredba pojavi).
+    var MACROS = {
+        '\\placeholder': '{\\color{#94a3b8}\\square}',
+        '\\mleft': '\\left',
+        '\\mright': '\\right',
+        '\\differentialD': '\\mathrm{d}',
+        '\\exponentialE': 'e',
+        '\\imaginaryI': 'i'
+    };
+
     function renderMath(container) {
         if (!container) return;
         var auto = window.renderMathInElement;
@@ -38,6 +51,7 @@
         try {
             auto(container, {
                 delimiters: DELIMITERS,
+                macros: MACROS,                 // MathLive-izmi (\placeholder itd.) → KaTeX-ekvivalenti
                 throwOnError: false,            // a formula typo renders red, never throws
                 ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'option'],
                 ignoredClasses: ['no-math']     // escape hatch: opt a node out of math parsing

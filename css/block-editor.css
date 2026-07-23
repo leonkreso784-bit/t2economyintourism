@@ -181,18 +181,22 @@
 .be-mathfield::part(virtual-keyboard-toggle),
 .be-mathfield::part(menu-toggle) { display: none; }
 
-/* U8.9b — naša čista paleta („Photomath keypad") ispod math-fielda */
-.be-mathpad { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+/* U8.9b — naša paleta (math-keypad, Casio-stil) ispod math-fielda */
+.be-mathpad { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; align-items: flex-start; }
 .be-mathpad__group {
-  display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 8px;
-  background: rgba(15, 23, 42, .35); border: 1px solid rgba(148, 163, 184, .12);
+  display: flex; flex-wrap: wrap; gap: 5px; padding: 6px; border-radius: 10px;
+  background: rgba(15, 23, 42, .4); border: 1px solid rgba(148, 163, 184, .14);
 }
+/* broj-grupa = uredni 3-stupčani grid (kalkulator-osjećaj) */
+.be-mathpad__group[data-be-padgroup="Brojevi"] { display: grid; grid-template-columns: repeat(3, 40px); gap: 5px; }
 .be-mathkey {
-  min-width: 34px; padding: 6px 9px; border-radius: 6px; cursor: pointer;
-  font-size: 14px; line-height: 1; color: var(--text-primary);
-  background: rgba(99, 102, 241, .1); border: 1px solid rgba(99, 102, 241, .28); transition: .12s;
+  min-width: 40px; height: 38px; padding: 0 10px; border-radius: 8px; cursor: pointer;
+  font-size: 15px; line-height: 1; color: var(--text-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(99, 102, 241, .12); border: 1px solid rgba(99, 102, 241, .3); transition: .12s;
 }
-.be-mathkey:hover { background: rgba(99, 102, 241, .22); border-color: var(--primary-light); }
+.be-mathpad__group[data-be-padgroup="Brojevi"] .be-mathkey { min-width: 0; width: 100%; }
+.be-mathkey:hover { background: rgba(99, 102, 241, .26); border-color: var(--primary-light); }
 .be-mathkey:active { transform: translateY(1px); }
 
 /* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */

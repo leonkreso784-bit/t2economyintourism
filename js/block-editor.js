@@ -231,10 +231,13 @@
   // ── U8.9b — naša ČISTA paleta („Photomath keypad"): gumbi ubacuju LaTeX-template u math-field.
   //    #? = MathLive placeholder (prazna kutija), #@ = trenutna selekcija (potencija/indeks obuhvate označeno). ──
   var MATH_PAD = [
-    ['Strukture', [['a⁄b', '\\frac{#?}{#?}'], ['xⁿ', '#@^{#?}'], ['xₙ', '#@_{#?}'], ['√', '\\sqrt{#?}'], ['ⁿ√', '\\sqrt[#?]{#?}'], ['( )', '\\left(#?\\right)']]],
-    ['Operatori', [['Σ', '\\sum_{#?}^{#?}'], ['∫', '\\int_{#?}^{#?}'], ['∏', '\\prod_{#?}^{#?}'], ['lim', '\\lim_{#?\\to#?}'], ['d⁄dx', '\\frac{d}{dx}']]],
-    ['Grčka', [['π', '\\pi'], ['α', '\\alpha'], ['β', '\\beta'], ['θ', '\\theta'], ['Δ', '\\Delta'], ['μ', '\\mu'], ['λ', '\\lambda'], ['σ', '\\sigma']]],
-    ['Relacije', [['≤', '\\le'], ['≥', '\\ge'], ['≠', '\\ne'], ['≈', '\\approx'], ['±', '\\pm'], ['×', '\\times'], ['÷', '\\div'], ['·', '\\cdot'], ['∞', '\\infty']]]
+    ['Funkcije', [['sin', '\\sin'], ['cos', '\\cos'], ['tan', '\\tan'], ['log', '\\log'], ['ln', '\\ln'], ['eˣ', 'e^{#?}'], ['10ˣ', '10^{#?}'], ['x⁻¹', '#@^{-1}']]],
+    ['Strukture', [['a⁄b', '\\frac{#?}{#?}'], ['x²', '#@^{2}'], ['xⁿ', '#@^{#?}'], ['xₙ', '#@_{#?}'], ['√', '\\sqrt{#?}'], ['ⁿ√', '\\sqrt[#?]{#?}'], ['( )', '\\left(#?\\right)'], ['|x|', '\\left|#?\\right|'], ['n!', '#@!']]],
+    ['Analiza', [['Σ', '\\sum_{#?}^{#?}'], ['∫', '\\int_{#?}^{#?}'], ['∬', '\\iint_{#?}'], ['∏', '\\prod_{#?}^{#?}'], ['lim', '\\lim_{#?\\to#?}'], ['d⁄dx', '\\frac{\\mathrm{d}}{\\mathrm{d}x}'], ['∂', '\\partial'], ['∞', '\\infty']]],
+    ['Brojevi', [['7', '7'], ['8', '8'], ['9', '9'], ['4', '4'], ['5', '5'], ['6', '6'], ['1', '1'], ['2', '2'], ['3', '3'], ['0', '0'], ['.', '.'], ['=', '=']]],
+    ['Operacije', [['+', '+'], ['−', '-'], ['×', '\\times'], ['÷', '\\div'], ['·', '\\cdot'], ['±', '\\pm'], ['(', '('], [')', ')']]],
+    ['Grčka', [['π', '\\pi'], ['α', '\\alpha'], ['β', '\\beta'], ['γ', '\\gamma'], ['θ', '\\theta'], ['λ', '\\lambda'], ['μ', '\\mu'], ['σ', '\\sigma'], ['φ', '\\phi'], ['ω', '\\omega'], ['Δ', '\\Delta'], ['Ω', '\\Omega']]],
+    ['Relacije', [['≤', '\\le'], ['≥', '\\ge'], ['≠', '\\ne'], ['≈', '\\approx'], ['∈', '\\in'], ['→', '\\to'], ['°', '^{\\circ}']]]
   ];
   function mathPadHtml() {
     let html = '<div class="be-mathpad" data-be-mathpad>';
