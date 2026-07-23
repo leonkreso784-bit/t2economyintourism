@@ -276,9 +276,11 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 | **2** | **`final`-drift check** — `scripts/check-final-drift.js` (`npm run check:final`). **Nalaz:** file-drift STRUKTURNO nemoguć (svih 21 predmet = runtime `Object.assign`); provjera gađa BAZU (materijaliziran `final` red), read-only anon, graceful skip na sleep, **nije u preflight** (mrežno). Uživo protiv PROD: **0 drifta** (16/16) | ✅ | `a1b416b` |
 | **6** | **T1 rez** — `block-editor.js` 843→578 + `block-editor-media.js` 312 (tvornica `window.__beMedia`); v. §12.3 T1 | ✅ | `30ac142` |
 | 3 | Backup-skripta `profiles`/progress (read-only export) | ⏳ nizak prio (nema podataka; pred-rujan) | — |
+| **5** | **supabase-js exact pin + SRI** — `@2` plutajući → `@2.110.8` (točan pin) + `cdnIntegrity` sha384 (računat nad stvarnim jsDelivr bajtovima, 208196 B, reproducibilan ×2); `loadSdk()` +`integrity`+`crossOrigin='anonymous'`; kriv bajt → onerror → auth graceful off. Jedini loader = `auth.js`. **Dokaz: test:authed 20/20 UŽIVO** (prava prijava učita lib s enforce-anim SRI). Preview-push; deploy čeka main-OK | ✅ | `27812f3` |
 | 4 | Keep-alive GH Action (Supabase ne zaspi) | ⏳ traži main-push | — |
-| 5 | supabase-js **exact pin + SRI** hashevi (sad `@2` plutajući, 0 SRI) | ⏳ traži main-push, pažljivo (kriv SRI = pukne lib) | — |
 | 7 | Load-test (drži li free-tier razred) + prošireni QA-sweep svih tokova | ⏳ | — |
+
+**Sprint: 4/7 gotovo** (#1·#2·#5·#6). Preostalo: **#4 keep-alive** i **#5-deploy** traže tvoj main-push OK · **#3 backup** i **#7 load-test/QA** ne traže push.
 
 **Usput (2026-07-23-d): te2-hr platformski blocker RIJEŠEN → main.** Sašin 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2** → otkrio bug u `tests/browse.spec.js:45` (očekivani broj year-2 računao nad CIJELIM katalogom, render prikazuje samo prvi program → 9≠8; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove isti `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi. Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (Leon per-push OK, Vercel READY, student-nevidljivo). Saša: rebase te2-hr na novi main → PR → lead-review.
 
