@@ -39,11 +39,16 @@ test('browse drill-down renders from catalog and navigates to a subject', async 
   await page.click('.browse-card[data-browse="year"][data-id="2"]');
   await page.waitForSelector('.browse-card[data-browse="subject"]');
 
-  // Subject count for year 2 matches catalog
+  // Subject count for year 2 matches catalog — SCOPED to the program we drilled into
+  // (faculties[0].programs[0]), NOT the whole catalog. Other programs (e.g. the HR clone
+  // `hospitality-management-hr`) carry their own year-2 subjects rendered under THEIR
+  // program; counting across all programs would over-count. Mirror the renderer exactly
+  // via SokratCatalog.subjectsOf(programId, year) so this stays correct as HR grows.
   const subjCount = await page.$$eval('.browse-card[data-browse="subject"]', (e) => e.length);
-  const expectedSubj = await page.evaluate(
-    () => window.SOKRAT_CATALOG.subjects.filter((s) => s.year === 2).length
-  );
+  const expectedSubj = await page.evaluate(() => {
+    const pid = window.SOKRAT_CATALOG.faculties[0].programs[0].id;
+    return window.SokratCatalog.subjectsOf(pid, 2).length;
+  });
   expect(subjCount).toBe(expectedSubj);
 
   // Semester sections present
