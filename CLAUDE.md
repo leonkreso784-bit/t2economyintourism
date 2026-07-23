@@ -60,6 +60,7 @@ kasnije UGC + AI tutor + natjecanje. Vlasnik/jedini autor: **Leon Kreso**. Vizua
 - `npm run test:responsive` — Playwright (iPhone profili, default suite). · **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env`; CI = zaseban secret-gated job).
 - `npm run test:unit` — node unit testovi. · `npm run serve:test` — lokalni server :5050.
 - `npm run validate:content [id]` — sadržajni validator. · `npm run validate:schema [id]` — JSON Schema gate (ajv).
+- **`npm run check:final`** — provjeri da BAZNI `final` red == M1⊕M2(+examPractice) za sve migrirane predmete (hvata drift ako publish-RPC propagacija zakaže). Read-only anon; graceful skip na uspavanu bazu; **NIJE u preflight** (mrežno) — pokreni nakon uređivanja sadržaja / prije content-deploya.
 - `npm run export:json [id] [--check]` — export u `data/json/`; **⚠️ nakon izmjene `data/*.js` migriranog predmeta OBAVEZNO re-export — inače CI drift-gate pada.** Vježbe se NE exportaju.
 - `npm run scaffold -- <id> "<Naziv>" <god> <sem>` · `node scripts/pdf-text.js "<pdf>"` · **`node scripts/seed-staging.js [id]`** — seed staging sadržajem (STAGING-only guard; authed specovi traže te2) · generator: vidi `docs/content/CONTENT_GENERATOR.md`.
 
