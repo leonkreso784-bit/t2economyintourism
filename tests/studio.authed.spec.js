@@ -510,6 +510,11 @@ test('U8.9b — Studio learn: paleta (Photomath keypad) ubaci razlomak u math-fi
   expect(draftTex).not.toBeNull();
   expect(draftTex).toContain('frac');
 
+  // preview tipografiran KROZ JEDAN renderer i prazne kutije (\placeholder) su □, NE crveni
+  // KaTeX-error tekst (math.js makro) — dokaz da fix radi na student-putu (renderMath).
+  await expect(fblock.locator('.be-media__preview .katex').first()).toBeVisible({ timeout: 10000 });
+  await expect(fblock.locator('.be-media__preview .katex-error')).toHaveCount(0);
+
   // Odbaci
   await page.click('#stDiscard');
   await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
