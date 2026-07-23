@@ -6,3 +6,7 @@ data/json/**/*.json text eol=lf
 # Generirani CSS bundle (F3 3B) — UVIJEK LF (build-css.js normalizira \r\n→\n) da je
 # `npm run build:css -- --check` drift-gate deterministički stabilan na Windows/Linux (CI).
 styles.bundle.css text eol=lf
+
+# Git hookovi (deploy-guard, risk-sanacija #1) — UVIJEK LF: CRLF u shell-shebangu
+# (`#!/bin/sh\r`) puca izvršavanje na Unix/CI klonovima. Radna kopija ostaje LF.
+.githooks/** text eol=lf
