@@ -277,10 +277,10 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 | **6** | **T1 rez** — `block-editor.js` 843→578 + `block-editor-media.js` 312 (tvornica `window.__beMedia`); v. §12.3 T1 | ✅ | `30ac142` |
 | 3 | Backup-skripta `profiles`/progress (read-only export) | ⏳ nizak prio (nema podataka; pred-rujan) | — |
 | **5** | **supabase-js exact pin + SRI** — `@2` plutajući → `@2.110.8` (točan pin) + `cdnIntegrity` sha384 (računat nad stvarnim jsDelivr bajtovima, 208196 B, reproducibilan ×2); `loadSdk()` +`integrity`+`crossOrigin='anonymous'`; kriv bajt → onerror → auth graceful off. Jedini loader = `auth.js`. **Dokaz: test:authed 20/20 UŽIVO** (prava prijava učita lib s enforce-anim SRI). Preview-push; deploy čeka main-OK | ✅ | `27812f3` |
+| **7** | **Load-test + QA-sweep** — `scripts/load-probe.js` (`npm run load-probe`, read-only anon, N×rundi): **PROD 30×3 = 90/90 OK · 50×1 = 50/50 OK · 0 grešaka** → propusnost NIJE rizik (free-tier drži razred); pravi rizik = SLEEP (→#4). QA-sweep `test:responsive` = **249 prošlo / 15 skip / 0 palo** (4 iPhone profila × 22 spec + authed). **Nalaz (Leonova odluka, ne bug):** student content-read gađa DB-first (1–3s) iako je CDN JSON brži+skalabilniji → moguć CDN-first za student u rujnu (Supabase izlazi iz student-kritične staze). | ✅ | `—` (skripta+QA, bez bumpa) |
 | 4 | Keep-alive GH Action (Supabase ne zaspi) | ⏳ traži main-push | — |
-| 7 | Load-test (drži li free-tier razred) + prošireni QA-sweep svih tokova | ⏳ | — |
 
-**Sprint: 4/7 gotovo** (#1·#2·#5·#6). Preostalo: **#4 keep-alive** i **#5-deploy** traže tvoj main-push OK · **#3 backup** i **#7 load-test/QA** ne traže push.
+**Sprint: 5/7 gotovo** (#1·#2·#5·#6·#7). Preostalo: **#4 keep-alive** i **#5-deploy** (pin+SRI na prod) traže tvoj main-push OK · **#3 backup** ne traži push (nizak prio — nema podataka).
 
 **Usput (2026-07-23-d): te2-hr platformski blocker RIJEŠEN → main.** Sašin 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2** → otkrio bug u `tests/browse.spec.js:45` (očekivani broj year-2 računao nad CIJELIM katalogom, render prikazuje samo prvi program → 9≠8; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove isti `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi. Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (Leon per-push OK, Vercel READY, student-nevidljivo). Saša: rebase te2-hr na novi main → PR → lead-review.
 
