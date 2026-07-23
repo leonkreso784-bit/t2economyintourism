@@ -181,6 +181,20 @@
 .be-mathfield::part(virtual-keyboard-toggle),
 .be-mathfield::part(menu-toggle) { display: none; }
 
+/* U8.9b — naša čista paleta („Photomath keypad") ispod math-fielda */
+.be-mathpad { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.be-mathpad__group {
+  display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border-radius: 8px;
+  background: rgba(15, 23, 42, .35); border: 1px solid rgba(148, 163, 184, .12);
+}
+.be-mathkey {
+  min-width: 34px; padding: 6px 9px; border-radius: 6px; cursor: pointer;
+  font-size: 14px; line-height: 1; color: var(--text-primary);
+  background: rgba(99, 102, 241, .1); border: 1px solid rgba(99, 102, 241, .28); transition: .12s;
+}
+.be-mathkey:hover { background: rgba(99, 102, 241, .22); border-color: var(--primary-light); }
+.be-mathkey:active { transform: translateY(1px); }
+
 /* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */
 .be-tgrid-wrap { overflow-x: auto; }
 .be-tgrid { border-collapse: separate; border-spacing: 4px; }

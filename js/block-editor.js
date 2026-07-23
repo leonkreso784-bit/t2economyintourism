@@ -228,14 +228,34 @@
   function formulaPreviewHtml(block) {                     // renderBlocks izbaci \[tex\]; renderMath ga tipografira POSLIJE
     return (block && block.tex != null && String(block.tex).trim()) ? preview(block) : '<div class="be-media__ph">Upiši LaTeX formulu ↓</div>';
   }
-  function mediaFormulaBody(block) {                       // U8.9a: formula = <math-field> (vizualno slaganje, MathLive) + „veliki blok" prekidač + živi KaTeX preview
+  // ── U8.9b — naša ČISTA paleta („Photomath keypad"): gumbi ubacuju LaTeX-template u math-field.
+  //    #? = MathLive placeholder (prazna kutija), #@ = trenutna selekcija (potencija/indeks obuhvate označeno). ──
+  var MATH_PAD = [
+    ['Strukture', [['a⁄b', '\\frac{#?}{#?}'], ['xⁿ', '#@^{#?}'], ['xₙ', '#@_{#?}'], ['√', '\\sqrt{#?}'], ['ⁿ√', '\\sqrt[#?]{#?}'], ['( )', '\\left(#?\\right)']]],
+    ['Operatori', [['Σ', '\\sum_{#?}^{#?}'], ['∫', '\\int_{#?}^{#?}'], ['∏', '\\prod_{#?}^{#?}'], ['lim', '\\lim_{#?\\to#?}'], ['d⁄dx', '\\frac{d}{dx}']]],
+    ['Grčka', [['π', '\\pi'], ['α', '\\alpha'], ['β', '\\beta'], ['θ', '\\theta'], ['Δ', '\\Delta'], ['μ', '\\mu'], ['λ', '\\lambda'], ['σ', '\\sigma']]],
+    ['Relacije', [['≤', '\\le'], ['≥', '\\ge'], ['≠', '\\ne'], ['≈', '\\approx'], ['±', '\\pm'], ['×', '\\times'], ['÷', '\\div'], ['·', '\\cdot'], ['∞', '\\infty']]]
+  ];
+  function mathPadHtml() {
+    let html = '<div class="be-mathpad" data-be-mathpad>';
+    for (let g = 0; g < MATH_PAD.length; g++) {
+      const keys = MATH_PAD[g][1];
+      html += '<div class="be-mathpad__group" data-be-padgroup="' + esc(MATH_PAD[g][0]) + '">';
+      for (let i = 0; i < keys.length; i++) {
+        html += '<button type="button" class="be-mathkey" data-be-mathins="' + esc(keys[i][1]) + '">' + esc(keys[i][0]) + '</button>';
+      }
+      html += '</div>';
+    }
+    return html + '</div>';
+  }
+  function mediaFormulaBody(block) {                       // U8.9a/b: formula = <math-field> (MathLive) + naša paleta + „veliki blok" prekidač + živi KaTeX preview
     const display = block.display !== false;              // default = veliki (blok/centrirano); false = inline
     const tex = block.tex == null ? '' : String(block.tex);
-    // Autor slaže formulu VIZUALNO (MathLive → LaTeX); enhanceMathFields ožiči nakon učitavanja.
-    // CDN padne (_mlState==='failed') → sirovi <input> (autor i dalje može upisati LaTeX ručno).
+    // Autor slaže formulu VIZUALNO (MathLive → LaTeX) preko math-fielda + NAŠE palete; enhanceMathFields ožiči.
+    // CDN padne (_mlState==='failed') → sirovi <input> bez palete (autor i dalje upiše LaTeX ručno).
     const field = (_mlState === 'failed')
       ? mField('tex', 'LaTeX (npr. E = mc^2  ·  \\frac{a}{b})', tex)
-      : '<math-field class="be-mathfield" data-be-mathfield="tex" data-be-tex="' + esc(tex) + '">' + esc(tex) + '</math-field>';
+      : '<math-field class="be-mathfield" data-be-mathfield="tex" data-be-tex="' + esc(tex) + '">' + esc(tex) + '</math-field>' + mathPadHtml();
     return '<div class="be-media be-media--formula">' +
       '<div class="be-media__preview">' + formulaPreviewHtml(block) + '</div>' +
       '<div class="be-media__fields">' +
@@ -644,6 +664,22 @@
     function draw() { container.innerHTML = renderEditor(container._beCtx.getBlocks()); typesetFormulas(container); enhanceMathFields(container); }
     if (!container._beWired) {
       container._beWired = true;
+
+      // U8.9b: paleta („Photomath keypad") — mousedown+preventDefault ČUVA selekciju math-fielda
+      // (inače bi klik gumba ukrao fokus); ubaci LaTeX-template (MathLive `insert`) → change → commit.
+      container.addEventListener('mousedown', function (e) {
+        const key = e.target.closest ? e.target.closest('[data-be-mathins]') : null;
+        if (!key || !container.contains(key)) return;
+        e.preventDefault();                                    // ne kradi fokus math-fieldu
+        const blockEl = key.closest('[data-be-block]');
+        const mf = blockEl ? blockEl.querySelector('math-field[data-be-mathfield]') : null;
+        if (!mf || typeof mf.insert !== 'function') return;    // MathLive još nije spreman → no-op
+        const latex = key.getAttribute('data-be-mathins') || '';
+        try { mf.focus(); } catch (_) {}
+        try { mf.insert(latex, { focus: true, selectionMode: 'placeholder' }); }
+        catch (_) { try { mf.insert(latex); } catch (__) {} }
+        mf.dispatchEvent(new Event('change', { bubbles: true })); // commit u draft (+ živi preview)
+      });
 
       container.addEventListener('click', function (e) {
         const c = container._beCtx;

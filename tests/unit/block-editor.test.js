@@ -267,6 +267,14 @@ test('mediaFormulaBody: prazna formula → <math-field> + display-checkbox + pla
   assert.ok(html.indexOf('be-media--formula') !== -1);
 });
 
+test('mediaFormulaBody: uključuje NAŠU paletu (Photomath keypad) s template-gumbima', function () {
+  const html = E._mediaFormulaBody({ type: 'formula', tex: '', display: true });
+  assert.ok(html.indexOf('be-mathpad') !== -1);                              // paleta prisutna
+  assert.ok(html.indexOf('be-mathkey') !== -1);                              // gumbi
+  assert.ok(html.indexOf('data-be-mathins="\\frac{#?}{#?}"') !== -1);        // razlomak-template (#? = MathLive placeholder)
+  assert.ok(html.indexOf('data-be-mathins="\\sqrt{#?}"') !== -1);            // korijen-template
+});
+
 test('mediaFormulaBody: display=true → checkbox checked; display=false → unchecked', function () {
   assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x', display: true }).indexOf('checked') !== -1);
   assert.ok(E._mediaFormulaBody({ type: 'formula', tex: 'x', display: false }).indexOf('checked') === -1);

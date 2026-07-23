@@ -463,3 +463,56 @@ test('U8.5d — Studio learn: dodaj Tablicu → upiši ćelije → +red/+stupac 
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('U8.9b — Studio learn: paleta (Photomath keypad) ubaci razlomak u math-field → draft tex (\\frac) → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Formula blok
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Formula' }).click();
+  const fblock = page.locator('#stCanvas .be-mount .be-block').last();
+
+  // paleta prisutna + math-field spreman (MathLive lijeno učitan + naš adapter ožičen)
+  await expect(fblock.locator('.be-mathpad')).toHaveCount(1);
+  await page.waitForFunction(() => {
+    const mf = document.querySelector('#stCanvas .be-mount math-field[data-be-mathfield="tex"]');
+    return !!(mf && mf._beMF && typeof mf.insert === 'function');
+  }, null, { timeout: 20000 });
+
+  // KLIK na razlomak u paleti → MathLive insert \frac{…}{…} → change → commit u draft
+  await fblock.locator('.be-mathpad [data-be-mathins*="frac"]').first().click();
+
+  // math-field vrijednost sadrži \frac (MathLive ubacio template)
+  await expect.poll(async () => page.evaluate(() => {
+    const mf = document.querySelector('#stCanvas .be-mount math-field[data-be-mathfield="tex"]');
+    try { return mf ? mf.value : ''; } catch (_) { return ''; }
+  }), { timeout: 10000 }).toContain('frac');
+
+  // draft tex isto sadrži \frac (commit prošao)
+  const draftTex = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) { const f = blks.find((b) => b.type === 'formula' && b.tex && /frac/.test(b.tex)); if (f) return f.tex; }
+    }
+    return null;
+  }, sel);
+  expect(draftTex).not.toBeNull();
+  expect(draftTex).toContain('frac');
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
