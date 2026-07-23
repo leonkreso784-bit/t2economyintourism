@@ -21,6 +21,7 @@ console.log('\n=== block-editor (U8a) ===\n');
 const ROOT = path.join(__dirname, '..', '..');
 const win = {};
 new Function('window', fs.readFileSync(path.join(ROOT, 'js', 'blocks-renderer.js'), 'utf8'))(win);
+new Function('window', fs.readFileSync(path.join(ROOT, 'js', 'block-editor-media.js'), 'utf8'))(win); // T1 rez: media PRIJE jezgre (window.__beMedia)
 new Function('window', fs.readFileSync(path.join(ROOT, 'js', 'block-editor.js'), 'utf8'))(win);
 const E = win.SokratBlockEditor;
 
