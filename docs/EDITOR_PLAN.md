@@ -253,11 +253,33 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
   **Postupak (izolirano, prod netaknut):** `git worktree` → `git merge origin/main` u feature (**NE obrnuto** — `main`=produkcija, ostaje netaknut) → riješi mehanički → `npm run build:css` + `npm run bump` → SVI gateovi (`verify`/`test:unit`/`typecheck`/`build:css --check`/`bump:check` + `test:authed` + `test:responsive`) → push feature (**PREVIEW, ne main → ne treba deploy-potvrda**). **Zašto PRVI:** svaka nova U-cigla širi divergenciju; sad je 4 commita — čekanje čini index.html/docs merge bolnijim.
 
 **Tripwiri (zabilježeni; izvršavaju se PO OKIDAČU, ne sada):**
-- **T1 — rez `block-editor.js`** kad pređe **~900 LOC** (sad 692; U8.5e/f + U8.10 će ga gurnuti). Pred-dizajniran rez: media-editori (slika/video/formula/tablica + grid-handleri) → `js/block-editor-media.js`, **čista seoba nula-logike** (obrazac = U8-prep rascjep `admin.js`→`admin-editors.js`, nula-regresije). Okida se automatski na pragu, ne prije — refaktor-radi-refaktora usred feature-a = churn.
+- **T1 — rez `block-editor.js` ✅ RIJEŠEN 2026-07-23-d (`30ac142`, risk-sprint #6).** Narastao na 843 → media-blokovi (slika/video/formula/tablica + MathLive keypad, ~275 linija) izdvojeni u `js/block-editor-media.js`. Kako je `block-editor.js` IIFE (zatvoreni scope, NE kao `admin.js` shared-scope) → rez preko **tvornice** `window.__beMedia(core)` (injekcija = samo `esc`+`preview`); javni API `window.SokratBlockEditor` nepromijenjen. **block-editor.js 843→578, block-editor-media.js 312.** Nula-regresija: unit 49/0 · authed studio 10/10 uživo.
 - **T2 — legacy-html hard-fail = F6 gate** (NE dira se sada). Izmjereno: **DOMPurify JE pouzdano učitan** (`index.html:75`, `defer`) → raw fallback u `renderLegacyHtml` je **praktički mrtav kod u produkciji** (okida se samo ako CDN padne, a legacy = naš povjerljivi v1 sadržaj). Prije UGC/F6: bez DOMPurify → **NE renderiraj** (nema raw fallbacka za neprovjeren tuđi sadržaj). Parkirano svjesno — mijenjati živi renderer bez potrebe = rizik bez dobitka.
 - **T3 — HR item-ops preduvjet:** `scripts/add-item-ids.js` nad `management-hr`/`sit-hr`/`traffic-hr` **PRIJE** nego HR dobije item-ops (kreirani nakon U2a → nemaju stabilne `id`-jeve po stavci). Sašin domen sadržaja ne dira; ovo je platformski preduvjet.
-- **T4 — metadata higijena:** `package.json` `description`/`keywords`/`homepage` zastarjeli (govore „Tourism Economics/Entrepreneurship/Accounting" + stari `t2economyintourism.vercel.app`). Trivijalno; bundle-aj u R1 ili zaseban mini-commit.
+- **T4 — metadata higijena ✅ RIJEŠEN** (`f981537`, uz R1): `package.json` `description`/`keywords`/`homepage` → platforma (FMTU Opatija, 21 predmet) + `www.sokratstudy.com`.
+- **T2/T3 — i dalje parkirani** (F6 gate / HR add-item-ids preduvjet; okidaju se sami).
 
 **Kadenca (novo pravilo):** re-sync grane s `main` čim `main` dobije **>~5 commita** (ili tjedno) — da se 53/4 divergencija nikad ne ponovi.
 
 **Poravnanje s planom rada:** R1 se umeće **PRIJE U8.9**; nakon R1 postojeća sekvenca teče **NEPROMIJENJENA** (U8.9 MathLive → U8.5e/f → U8.10 → U8.6 vizual ZADNJI → U8.7 upload/U8.8 chart). R-sekvenca **ne mijenja nijednu U-ciglu** — samo čisti teren da U8.9+ gradimo na sinkroniziranoj, čistoj grani.
+
+### 12.4 Risk-sanacija sprint — „savršeno + spremno za rujan" (2026-07-23-d)
+
+**Kontekst:** Leon (nakon compacta) → nova inženjerska analiza + zahtjev: *„riješio bih sve rizike sada da platforma bude bez ikakvih problema"* + cilj *„savršeno radi + spremno do 9. mjeseca"*. Ključni okvir: **nema korisnika ljeti → gubitak trenutnih podataka nije prioritet; prioritet = sve radi besprijekorno za studente u rujnu.** Ljestvica rizika re-rangirana za rujan-spremnost.
+
+**Ljestvica rizika (Šteta × Vjerojatnost, za rujan):** Tier-1 = ① loš deploy razbije prod (direktan main-push preskače CI) · ② dostupnost/skaliranje (Supabase sleep + free-tier limit netestiran pod razredom) · ③ neotkriveni bugovi u student-tokovima (nema potpunog QA-sweepa). Tier-2 = kompletnost sadržaja (Saša) + U8 dovršen/siguran. Tier-3 = supabase-js pin+SRI · `final` drift · točnost. Deferrano: user-data backup (nema podataka sad), XSS/UGC (F6).
+
+**Sprint (7 cigli; sve na `feature/u6-structural-ops`, PREVIEW — bez pusha na main osim gdje naznačeno):**
+| # | Cigla | Status | Commit |
+|---|---|---|---|
+| **1** | **Deploy-guard** — `npm run preflight` (verify·bump·css·typecheck·schema·export·unit u jednom) + `.githooks/pre-push` (blokira main-push ako preflight padne; `git config core.hooksPath .githooks`) + `.gitattributes` LF | ✅ | `dcc84c3`·`aacaa23` |
+| **2** | **`final`-drift check** — `scripts/check-final-drift.js` (`npm run check:final`). **Nalaz:** file-drift STRUKTURNO nemoguć (svih 21 predmet = runtime `Object.assign`); provjera gađa BAZU (materijaliziran `final` red), read-only anon, graceful skip na sleep, **nije u preflight** (mrežno). Uživo protiv PROD: **0 drifta** (16/16) | ✅ | `a1b416b` |
+| **6** | **T1 rez** — `block-editor.js` 843→578 + `block-editor-media.js` 312 (tvornica `window.__beMedia`); v. §12.3 T1 | ✅ | `30ac142` |
+| 3 | Backup-skripta `profiles`/progress (read-only export) | ⏳ nizak prio (nema podataka; pred-rujan) | — |
+| 4 | Keep-alive GH Action (Supabase ne zaspi) | ⏳ traži main-push | — |
+| 5 | supabase-js **exact pin + SRI** hashevi (sad `@2` plutajući, 0 SRI) | ⏳ traži main-push, pažljivo (kriv SRI = pukne lib) | — |
+| 7 | Load-test (drži li free-tier razred) + prošireni QA-sweep svih tokova | ⏳ | — |
+
+**Usput (2026-07-23-d): te2-hr platformski blocker RIJEŠEN → main.** Sašin 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2** → otkrio bug u `tests/browse.spec.js:45` (očekivani broj year-2 računao nad CIJELIM katalogom, render prikazuje samo prvi program → 9≠8; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove isti `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi. Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (Leon per-push OK, Vercel READY, student-nevidljivo). Saša: rebase te2-hr na novi main → PR → lead-review.
+
+**SLIJEDI (poslije sprinta): nastavak U8** = U8.5e (resize+callout) → f (boje sekcija) → U8.10 (tablica-paste) → **U8.6 (VIZUAL „čisto i bogato" ZADNJI)** → U8.7/U8.8.
