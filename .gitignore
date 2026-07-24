@@ -45,6 +45,9 @@ build/
 # Vercel
 .vercel
 
+# DB backupi (risk-sprint #3) — sadrže KORISNIČKE podatke (profiles/progress); NIKAD u git
+backups/
+
 # Source materials (professor PPT/PDF/JPG) — copyright, never commit
 _materials/
 
