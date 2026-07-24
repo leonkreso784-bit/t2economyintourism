@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-24 (OPUS) — RISK-SPRINT #3 backup KOMPLETAN (sprint 6/7) + compact-prep
+**Kontekst:** Nastavak istog dana. Leon odabrao #3 kao sljedeću ciglu; nakon istrage ADR-016 zaključeno da **lokalna** backup-skripta sa `service_role` iz `.env` NIJE prekršaj (ADR-016 zabranjuje samo DEPLOYane sustave; presedan = `migrate-content.js` već koristi `SUPABASE_SERVICE_KEY`). Leon dao izričit „da" za lokalni `service_role`.
+**#3 backup ✅ (`259c9c1` + restore dodaci, PREVIEW):**
+- **Reframe rizika (ključni uvid):** shema je backupirana u gitu (`supabase/*.sql`), sadržaj u gitu (`data/*.js`, `data/json/`). **Jedina rupa = korisnički + audit podaci** (`profiles`/`progress`/`content_versions`) koji postoje SAMO u bazi. Backup krpa točno tu rupu.
+- **`scripts/backup-db.js`** (`npm run backup` / `backup:verify` / `--list` / `--restore`): Node+REST, `.env` loader kao migrate-content. Backup = paginirani GET svih tablica (Range) → **gzip-JSON/tablica + `_manifest.json` sa sha256** u `backups/<timestamp>/` (atomično: tmp→rename). `backups/` dodan u `.gitignore` (sadrži korisničke podatke). Verify = gunzip→parse→re-hash vs manifest (bez mreže). Graceful-skip na sleep.
+- **Restore** = guarded upsert (merge-duplicates po PK): **dry-run default** · `--confirm` piše · `--force-prod` obavezan ako cilj nije staging (spriječi slučajni prod-overwrite). `content_versions` isključen (identity PK → ručni SQL). on_conflict mapa po tablici.
+- **Živi PROD dokaz:** backup = **244 retka** (profiles 4 / progress 54 / content_versions 135 / subject_content 51) · verify **sha256 OK 4/4** · `backups/` potvrđeno gitignored · **preflight EXIT 0** · prod netaknut (backup/verify = 100% read-only GET). Restore dry-run OK · prod-guard ispravno ODBIJA bez `--force-prod` (exit 2). MCP snimljeno stanje `profiles` prije (4 reda, bez `updated_at` → potvrda 0 nuspojava).
+- **Tvrdi prod-write drill SVJESNO PRESKOČEN (Leonova odluka):** živi idempotentni upsert u prod blokirao harness-klasifikator (NISAM zaobilazio); dogovoreno da ne treba jer **isti `merge-duplicates` upsert-put već dokazuje `migrate-content.js`** protiv PROD-a + dry-run round-trip → restore dokazan iz dva smjera bez rizika. **Rezultat: 0 rizičnih operacija na čekanju.**
+**Sprint sad 6/7** (#1·#2·#3·#5·#6·#7). **PREOSTALO SAMO:** #4 keep-alive (traži main-push) · **deploy #5** pin+SRI na prod (traži main-push) — jedan „idemo na prod" trenutak kad Leon kaže. **SLIJEDI (Leonova odluka):** compact → nastavak gradnje platforme po planovima (U8: U8.5e → f → U8.10 → U8.6 VIZUAL). **Napomena:** commitovi `259c9c1`+restore+docs NISU pushani (klasifikator blokira push; čeka Leonov OK) — lokalno sigurni.
+
 ## 2026-07-24 (OPUS) — RISK-SANACIJA SPRINT nastavak: #5 supabase-js exact pin + SRI
 **Kontekst:** Nastavak sprinta (§12.4). Post-compact živa re-orijentacija: git čist, HEAD `1579fe5`, **preflight EXIT 0** (verify·bump·css·typecheck·schema·export·unit), unit 347/0, tri gotove cigle fizički potvrđene (hooks aktiviran, block-editor 578+312, check-final-drift postoji), prod `388e3c5` netaknut. Odabrana sljedeća cigla = **#5** (jedini preostali supply-chain rizik; gradi se cijeli na preview, deploy čeka main-OK).
 **#5 supabase-js exact pin + SRI ✅ (`27812f3`, PREVIEW):**

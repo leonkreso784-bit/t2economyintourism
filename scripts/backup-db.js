@@ -36,6 +36,15 @@ const BACKUP_DIR = path.join(ROOT, 'backups');
 // (u git-u kao data/), ali jeftino i korisno za snapshot verzija + materijaliziranog final-a.
 const TABLES = ['profiles', 'progress', 'content_versions', 'subject_content'];
 
+// on_conflict ključ po tablici za restore (upsert = merge-duplicates po PK-u).
+// content_versions NIJE ovdje: PK je `id generated always as identity` (append-only audit) →
+// REST upsert ne može umetati eksplicitan id; obnova te tablice = ručni SQL (rijedak DR-scenarij).
+const RESTORE_CONFLICT = {
+    profiles: 'user_id',
+    progress: 'user_id,key',
+    subject_content: 'subject_id,var_name'
+};
+
 const PAGE = 1000; // PostgREST Range stranica
 
 // --- .env loader (isti obrazac kao migrate-content.js, bez ovisnosti) ------------
@@ -189,6 +198,52 @@ function doVerify(arg) {
     console.log(`\n✅ Snapshot cjelovit i vjeran (${manifest.rows_total} redova, ${Object.keys(manifest.tables).length} tablica).`);
 }
 
+// Restore = upsert (merge-duplicates) redova iz snapshota natrag u bazu.
+// SIGURNOST: dry-run po defaultu (bez mreže); --confirm da stvarno piše; --force-prod
+// obavezan ako cilj (SUPABASE_URL) NIJE staging (spriječi slučajni prod-overwrite).
+async function doRestore(dir, table, opts) {
+    if (!dir || !table) { console.error('Uporaba: --restore <dir> <table> [--confirm] [--force-prod]'); process.exit(1); }
+    const conflict = RESTORE_CONFLICT[table];
+    if (!conflict) { console.error(`Restore tablice "${table}" nije podržan preko REST-a (v. RESTORE_CONFLICT).`); process.exit(1); }
+
+    const snapDir = path.join(BACKUP_DIR, path.basename(dir));
+    const f = path.join(snapDir, `${table}.json.gz`);
+    if (!fs.existsSync(f)) { console.error(`Snapshot nema ${table}.json.gz: ${snapDir}`); process.exit(1); }
+    const rows = JSON.parse(zlib.gunzipSync(fs.readFileSync(f)).toString());
+
+    const base = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+    const key = process.env.SUPABASE_SERVICE_KEY;
+    if (!base || !key) { console.error('Nedostaje SUPABASE_URL ili SUPABASE_SERVICE_KEY u .env'); process.exit(1); }
+    const isProd = !/staging|czljmvig/i.test(base) && !(process.env.STAGING_SUPABASE_URL && base === process.env.STAGING_SUPABASE_URL.replace(/\/$/, ''));
+
+    console.log(`Restore: ${rows.length} redova → ${table} (on_conflict=${conflict}) · cilj ${base.replace(/https?:\/\//, '')}`);
+    if (!opts.confirm) {
+        console.log(`  [DRY-RUN] ništa nije zapisano. Ključevi 1. reda: ${Object.keys(rows[0] || {}).join(', ')}`);
+        console.log('  Za stvarni upis dodaj --confirm' + (isProd ? ' --force-prod' : ''));
+        return;
+    }
+    if (isProd && !opts.forceProd) {
+        console.error('  ⛔ Cilj je PROD. Za pisanje u prod dodaj i --force-prod (namjerno).'); process.exit(2);
+    }
+
+    const BATCH = 20;
+    for (let i = 0; i < rows.length; i += BATCH) {
+        const chunk = rows.slice(i, i + BATCH);
+        const res = await fetch(`${base}/rest/v1/${table}?on_conflict=${conflict}`, {
+            method: 'POST',
+            headers: {
+                apikey: key, Authorization: 'Bearer ' + key,
+                'content-type': 'application/json',
+                Prefer: 'resolution=merge-duplicates,return=minimal'
+            },
+            body: JSON.stringify(chunk)
+        });
+        if (!res.ok) throw new Error(`restore ${table}: HTTP ${res.status} ${(await res.text()).slice(0, 300)}`);
+        console.log(`  ✓ upsert ${Math.min(i + BATCH, rows.length)}/${rows.length}`);
+    }
+    console.log(`✅ Restore ${table} gotov (${rows.length} redova).`);
+}
+
 (async function main() {
     const args = process.argv.slice(2);
     try {
@@ -196,6 +251,11 @@ function doVerify(arg) {
         if (args.includes('--verify')) {
             const i = args.indexOf('--verify');
             return doVerify(args[i + 1]);
+        }
+        if (args.includes('--restore')) {
+            const i = args.indexOf('--restore');
+            const rest = args.slice(i + 1).filter((a) => !a.startsWith('--'));
+            return doRestore(rest[0], rest[1], { confirm: args.includes('--confirm'), forceProd: args.includes('--force-prod') });
         }
         await doBackup();
     } catch (err) {
