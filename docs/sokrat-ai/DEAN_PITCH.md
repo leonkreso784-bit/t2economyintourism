@@ -92,15 +92,15 @@ Ne traži novac od dekana. **Ali pokaži da znaš gdje novac postoji** — to č
 | **9. mj** | Prvi pravi trening-run (iznajmljen GPU, ~10–20 €) | **Model koji generira hrvatski** |
 | **9.–10. mj** | Kvantizacija → laptop + preglednik; pravni okvir; slajdovi i proba | **Demo uživo + pravni dokument** |
 
-⚠️ **Sokrat Study paralelno:** risk-sprint (5/7) i U8 editor **nisu odvojen posao od ovoga** —
-stabilna, dovršena platforma **je dio prezentacije** (točka ①). Ne zapuštati je.
+⚠️ **Sokrat Study je ZASEBAN projekt** (Leonova odluka): Sokrat AI se **ne ugrađuje u platformu**.
+Platforma se pred dekanom samo **spominje kao dokaz isporuke** (točka ①) i ide svojim tempom.
 
 ## 8. Kontrolna lista spremnosti
 
 - [ ] Sokrat Study stabilan i pokaziv (risk-sprint dovršen, editor u upotrebljivom stanju)
 - [ ] Tokenizer-usporedba: mjerljiv rezultat s brojkama
 - [ ] Model generira hrvatski i **radi offline na laptopu**
-- [ ] Demo u pregledniku unutar sokratstudy.com
+- [ ] Demo u pregledniku — **samostalna stranica**, izvan platforme
 - [ ] Registar izvora s licencama
 - [ ] Pravni dokument (sažetak GDPR/autorskog pristupa) — **1 stranica, čitljiva ne-tehničaru**
 - [ ] Kontakt uspostavljen s hrvatskom NLP zajednicom

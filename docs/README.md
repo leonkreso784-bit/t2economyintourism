@@ -45,7 +45,8 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [subjects/ACCOUNTING_PLAN.md](subjects/ACCOUNTING_PLAN.md) · [subjects/STATISTICS_PLAN.md](subjects/STATISTICS_PLAN.md) · [subjects/TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md) · [subjects/MATH_PLAN.md](subjects/MATH_PLAN.md) | Detaljni planovi pojedinih predmeta (✅ done) |
 
 ## Sokrat AI (vlastiti jezični model) — `sokrat-ai/`
-> 🌱 **Zaseban dugoročni istraživački projekt** (od 2026-07-24). Platforma **nije blokirana** njime.
+> ⚠️ **POTPUNO ZASEBAN PROJEKT — NE implementira se na ovu platformu i nema veze s njom**
+> (Leonova izričita odluka 2026-07-24). Ovdje samo živi zapis. Platforma ne ovisi o njemu ni u čemu.
 > Rok prve prezentacije dekanu: **10. mjesec 2026.**
 
 | Dokument | Svrha |

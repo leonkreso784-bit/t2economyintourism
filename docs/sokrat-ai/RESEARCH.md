@@ -129,7 +129,7 @@ pisati eval-harnese, raditi pregled literature.
 ```
 TRENIRANJE  →  iznajmljen GPU (jednokratno, ~10–20 € po runu)
 POKRETANJE  →  Leonov laptop (CPU, kvantizirano) — besplatno, offline, zauvijek
-            →  preglednik (WebGPU/wasm) — demo unutar sokratstudy.com
+            →  preglednik (WebGPU/wasm) — SAMOSTALNA demo-stranica (NE unutar platforme)
 ```
 
 **Ključna razlika koju ljudi miješaju:** treniranje traži GPU; **pokretanje malog modela ne traži ništa.**

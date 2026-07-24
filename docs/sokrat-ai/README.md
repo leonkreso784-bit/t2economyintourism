@@ -1,8 +1,11 @@
 # Sokrat AI — vlastiti jezični model od nule
 
 > **Status:** 🌱 istraživačka faza (zapis razgovora 2026-07-24) · **Rok za prezentaciju dekanu: 10. mjesec 2026.**
-> **Odnos prema Sokrat Study:** ovo je **zaseban, dugoročan projekt**. Platforma (`docs/EDITOR_PLAN.md`) ide svojim tempom
-> i **nije blokirana** ovime. Sokrat Study je istovremeno **dokaz isporuke** za prezentaciju dekanu.
+> ⚠️ **ODNOS PREMA SOKRAT STUDY (Leonova izričita odluka 2026-07-24):**
+> **Sokrat AI se NE implementira na platformu Sokrat Study i nema veze s njom — to je potpuno ZASEBAN projekt.**
+> Ovdje živi samo zato što je zapis nastao u ovom repozitoriju. Platforma ide svojim tempom
+> (`docs/EDITOR_PLAN.md`) i **ni na koji način ne ovisi o ovome**. Model se ne ugrađuje u platformu.
+> (Sokrat Study se pred dekanom smije *spomenuti* kao dokaz da Leon isporučuje — ali to je sve.)
 
 ## Što je ovo
 
@@ -45,7 +48,7 @@ mali modeli, kvaliteta i porijeklo podataka, morfološki bogati jezici, i arhite
 | **0 — Temelji** | 8. mj | Razumijevanje + cjevovod: tokenizer (BPE na hrvatskom), sićušni modeli na CPU/besplatnom GPU-u, prvi eksperimenti |
 | **1 — Podaci** | 8.–9. mj | Prikupljanje i čišćenje **otvoreno licenciranih** hrvatskih izvora (Hrčak, otvoreni DABAR, Wikipedija, hrWaC) |
 | **2 — Prvi pravi model** | 9. mj | Jedan iznajmljen GPU-run: mali hrvatski model (~20–50M) koji radi **lokalno** |
-| **3 — Demo + pitch** | 9.–10. mj | Model u pregledniku unutar Sokrata + prezentacijski materijali + pravni okvir |
+| **3 — Demo + pitch** | 9.–10. mj | **Samostalan** demo (laptop + preglednik, izvan platforme) + prezentacijski materijali + pravni okvir |
 
 > **Načelo:** pred dekana se ne ide s idejom nego s **radećom stvari koja se može pokazati uživo.**
 
