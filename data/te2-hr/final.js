@@ -3,7 +3,7 @@
 // MORA se učitati POSLIJE midterm-1/2. ⚠️ NE pokretati translate-subject.js (ručno usklađeno)!
 
 const te2HrFinalExamPractice = {
-  "id": "cjlprm",
+  "id": "zwuxrn",
   "name": "Ispitna pitanja (sve teme)",
   "icon": "fa-graduation-cap",
   "color": "#6366f1",
@@ -51,7 +51,7 @@ const te2HrFinalExamPractice = {
   ],
   "quiz": [
     {
-      "id": "3l96sj",
+      "id": "nfpf7v",
       "question": "Posrednici koji snose rizik za neprodane kapacitete jesu:",
       "options": [
         "turističke agencije",
@@ -62,7 +62,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "7amiz7",
+      "id": "mfjcr7",
       "question": "Obilježje ponude „nemogućnost prostornog premještanja\" naziva se:",
       "options": [
         "diverzificiranost",
@@ -73,7 +73,7 @@ const te2HrFinalExamPractice = {
       "correct": 2
     },
     {
-      "id": "nqi3cp",
+      "id": "v6e57n",
       "question": "Što se definira kao „visoko sofisticiran integralni sustav u okviru nacionalnog gospodarstva\"?",
       "options": [
         "turistička djelatnost",
@@ -84,7 +84,7 @@ const te2HrFinalExamPractice = {
       "correct": 2
     },
     {
-      "id": "bexp8g",
+      "id": "0zmbx6",
       "question": "Dohodak korigiran za inflacijski utjecaj na cijene je:",
       "options": [
         "nominalni dohodak",
@@ -95,7 +95,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "3jdecx",
+      "id": "m0kue1",
       "question": "Čimbenike utjecaja na potražnju Freyer dijeli na:",
       "options": [
         "ekonomske, društvene i ekološke",
@@ -106,7 +106,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "gtefs4",
+      "id": "hc2o03",
       "question": "Sposobnost turizma da pretvara neprivredne resurse u privredne je:",
       "options": [
         "multiplikativna funkcija",
@@ -117,7 +117,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "mrfr5n",
+      "id": "sawasc",
       "question": "TSA je model za utvrđivanje:",
       "options": [
         "cijena hotela",
@@ -128,7 +128,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "e9vuwf",
+      "id": "xipvyu",
       "question": "Turistička potrošnja je polazište svih:",
       "options": [
         "društvenih funkcija",
@@ -139,7 +139,7 @@ const te2HrFinalExamPractice = {
       "correct": 1
     },
     {
-      "id": "g7vg7h",
+      "id": "vg1bbn",
       "question": "Element koji NE spada u ocjenu turističkih resursa je:",
       "options": [
         "stupanj atraktivnosti",
@@ -150,7 +150,7 @@ const te2HrFinalExamPractice = {
       "correct": 2
     },
     {
-      "id": "c34y3s",
+      "id": "6nwrb2",
       "question": "Sezonska aprecijacija valute je:",
       "options": [
         "pozitivan ekonomski učinak",
@@ -163,44 +163,44 @@ const te2HrFinalExamPractice = {
   ],
   "fillBlanks": [
     {
-      "id": "cvsquf",
+      "id": "aiqbci",
       "sentence": "Za razliku od ponude koja je neelastična, turistička potražnja je _______.",
       "answer": "elastična",
       "hint": "reagira na promjene"
     },
     {
-      "id": "s8w2ru",
+      "id": "pb8mr3",
       "sentence": "Turizam je visoko sofisticiran _______ sustav u okviru nacionalnog gospodarstva.",
       "answer": "integralni",
       "hint": "objedinjuje mnoge grane"
     },
     {
-      "id": "k2n9qi",
+      "id": "jyw3im",
       "sentence": "Turoperator posluje u svoje ime i za _______ račun te snosi rizik.",
       "answer": "svoj",
       "hint": "vlastiti"
     },
     {
-      "id": "vhftat",
+      "id": "48y8ef",
       "sentence": "_______ funkcija umnožava inicijalno ostvareni dohodak kroz više ciklusa.",
       "answer": "Multiplikativna",
       "hint": "množenje"
     },
     {
-      "id": "d3vayd",
+      "id": "9k6i2a",
       "sentence": "TSA preuzima podatke iz Sustava nacionalnih računa, ali nije njegov _______.",
       "answer": "dio",
       "hint": "sastavni element"
     },
     {
-      "id": "44mh68",
+      "id": "ttfusa",
       "sentence": "Turistička potrošnja je _______ svih ekonomskih učinaka turizma.",
       "answer": "polazište",
       "hint": "ishodište"
     }
   ],
   "learn": {
-    "id": "ptkrdr",
+    "id": "sfee07",
     "title": "Ispitna priprema — most kroz obje cjeline",
     "content": "\n                <h3>Kako je ispit posložen</h3>\n                <p>Završni objedinjuje <strong>1. kolokvij</strong> (pojmovi, tržište, ponuda/potražnja, resursi, posrednici, turizam u gospodarstvu) i <strong>2. kolokvij</strong> (ekonomske i društvene funkcije, slobodno vrijeme, potrošnja, ekonomski učinci, TSA). Ova kartica povezuje cjeline u nekoliko okosnica koje se najčešće ispituju.</p>\n\n                <h4>Četiri okosnice za ponavljanje</h4>\n                <div class=\"formula-box\">\n                    1) POTREBA → (slobodno vrijeme + slobodni dohodak) → POTROŠNJA → EKONOMSKI UČINCI<br>\n                    2) PONUDA (neelastična, statična) ↔ POTRAŽNJA (elastična, dislocirana)<br>\n                    3) TURIZAM = integralni sustav → obuhvat se ne može potpuno mjeriti → TSA<br>\n                    4) FUNKCIJE: ekonomske (multiplikativna, konverzijska…) + društvene (kulturna, zdravstvena…)\n                </div>\n\n                <h4>Najčešće zamke</h4>\n                <ul>\n                    <li><strong>Agencija vs turoperator</strong> — agencija: provizija, tuđi račun, bez rizika; turoperator: vlastiti proizvod, na veliko, snosi rizik.</li>\n                    <li><strong>Elastičnost</strong> — ponuda je NEelastična, potražnja JE elastična (primarna: dohodovna i cjenovna).</li>\n                    <li><strong>Realni vs slobodni dohodak</strong> — realni = korigiran za inflaciju; slobodni = ostaje za potrošnju/štednju i određuje turističku potrošnju.</li>\n                    <li><strong>Atrakcija vs resurs</strong> — svaka atrakcija je resurs, ali svaki resurs nije atrakcija.</li>\n                    <li><strong>TSA i SNA</strong> — TSA koristi podatke SNA, ali nije njegov dio.</li>\n                </ul>\n                <p>Detaljna razrada svake teme nalazi se u sekcijama <em>Uči</em> pojedinih kategorija 1. i 2. kolokvija.</p>\n            "
   }

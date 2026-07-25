@@ -50,7 +50,7 @@
           "nikada ne prelazi državnu granicu"
         ],
         "correct": 1,
-        "id": "z8jl87"
+        "id": "dqxr6f"
       },
       {
         "question": "Determinante turizma su:",
@@ -61,7 +61,7 @@
           "ponuda i potražnja"
         ],
         "correct": 1,
-        "id": "529ryy"
+        "id": "do4f1k"
       },
       {
         "question": "Dinamična komponenta turizma odnosi se na:",
@@ -72,7 +72,7 @@
           "zadovoljenje potreba turista"
         ],
         "correct": 1,
-        "id": "74h732"
+        "id": "dc3k1p"
       },
       {
         "question": "Tko se NE smatra turistom prema UNWTO-u?",
@@ -83,7 +83,7 @@
           "domaći gost u apartmanu"
         ],
         "correct": 1,
-        "id": "i5uoh0"
+        "id": "190pnd"
       },
       {
         "question": "Definicija „skup odnosa i pojava koje proizlaze iz putovanja i boravka posjetitelja...\" pripada:",
@@ -94,7 +94,7 @@
           "WTTC-u"
         ],
         "correct": 2,
-        "id": "lhho9m"
+        "id": "6gclq9"
       },
       {
         "question": "Koje obilježje NIJE jedno od pet temeljnih obilježja turizma?",
@@ -105,7 +105,7 @@
           "svrha nije stalni boravak"
         ],
         "correct": 2,
-        "id": "3lx8wv"
+        "id": "bttdik"
       }
     ],
     "fillBlanks": [
@@ -113,39 +113,39 @@
         "sentence": "Prema UNWTO-u turist je posjetitelj koji provede najmanje jednu _______ u objektu za smještaj.",
         "answer": "noć",
         "hint": "kriterij noćenja",
-        "id": "xcphsk"
+        "id": "i7spe3"
       },
       {
         "sentence": "_______ komponenta turizma odnosi se na putovanje, a statična na boravak u destinaciji.",
         "answer": "Dinamična",
         "hint": "kretanje",
-        "id": "we0d06"
+        "id": "bucyq2"
       },
       {
         "sentence": "Turizam se zasniva na dvosmjernom, odnosno _______ putovanju koje traje najviše 12 mjeseci.",
         "answer": "kružnom",
         "hint": "oblik putovanja",
-        "id": "dmvm7q"
+        "id": "yv4uoy"
       },
       {
         "sentence": "U turističkom odredištu turisti _______, a ne privređuju.",
         "answer": "troše",
         "hint": "ekonomska uloga",
-        "id": "7tu3wm"
+        "id": "79t6t4"
       },
       {
         "sentence": "Izletnik koji ne noći ubraja se u _______, ali ne u turiste.",
         "answer": "posjetitelje",
         "hint": "nadređeni pojam",
-        "id": "ufn7uh"
+        "id": "oldrgz"
       }
     ],
     "learn": {
       "title": "Pojam turista i turizma",
-      "content": "\n                <h3>Tko je turist?</h3>\n                <p>Različiti autori definiraju turista, no svima je zajedničko privremeno putovanje izvan uobičajene sredine radi zadovoljstva, a ne zarade.</p>\n                <ul>\n                    <li><strong>UNWTO (WTO)</strong> — turist je <em>posjetitelj</em> koji u posjećenom mjestu provede najmanje jednu <strong>noć</strong> u ugostiteljskom ili drugom objektu za smještaj; razlog boravka: odmor/rekreacija, zdravlje, studij, sport, religija, obitelj, posao, javne misije i skupovi. Izletnik na jedan dan nije turist.</li>\n                    <li><strong>Cohen</strong> — dobrovoljni, privremeni putnik koji putuje u očekivanju zadovoljstva od novosti i promjene na relativno dugom i neučestalom <strong>dvosmjernom</strong> putovanju.</li>\n                    <li><strong>Smith</strong> — osoba privremeno nezauzeta poslom koja putuje da doživi promjenu.</li>\n                </ul>\n\n                <h4>Klasifikacija putnika prema UNWTO-u</h4>\n                <div class=\"formula-box\">\n                    PUTNICI → uključeni u statistiku = POSJETITELJI<br>\n                    &nbsp;&nbsp;• TURISTI (noće ≥ 1) &nbsp;&nbsp; • IZLETNICI (ne noće: dnevni posjetitelji, putnici na krstarenjima)<br>\n                    PUTNICI → NEuključeni: imigranti (stalni/privremeni), diplomati, konzularni predstavnici, vojska, izbjeglice, radnici u tranzitu, nomadi, radnici u pograničnim zonama\n                </div>\n\n                <h4>Turizam kao pojava</h4>\n                <p><strong>AIEST:</strong> turizam je skup odnosa i pojava koje proizlaze iz putovanja i boravka posjetitelja nekog mjesta, ako se tim boravkom ne zasniva stalno prebivalište i ako s njime nije povezana nikakva privredna djelatnost. Turizam je splet odnosa <strong>društvenog i ekonomskog</strong> karaktera.</p>\n\n                <h4>Determinante i komponente</h4>\n                <ul>\n                    <li><strong>Determinante</strong>: prostor izvan domicila + potrošnja sredstava stečenih izvan mjesta boravka.</li>\n                    <li><strong>Dinamična komponenta</strong>: putovanje koje se mora poduzeti da bi do turističke aktivnosti došlo.</li>\n                    <li><strong>Statična komponenta</strong>: boravak u destinaciji koji osigurava zadovoljenje potreba i očekivani doživljaj.</li>\n                </ul>\n\n                <h4>Pet temeljnih obilježja turizma</h4>\n                <ol>\n                    <li>Nema turizma bez putovanja i kretanja ljudi te boravka u odredištima.</li>\n                    <li>Putovanje i boravak zbivaju se izvan uobičajene sredine.</li>\n                    <li>Turizam se zasniva na dvosmjernom (kružnom) putovanju s definiranim intervalom (ne duljim od 12 mjeseci).</li>\n                    <li>Svrha putovanja nikad se ne veže uz stalni boravak ni zaposlenje u destinaciji.</li>\n                    <li>U odredištu turisti <strong>troše, ne privređuju</strong>.</li>\n                </ol>\n            ",
-      "id": "km6p67"
+      "content": "\n                <h3>Tko je turist?</h3>\n                <p>Različiti autori definiraju turista, no svima je zajedničko privremeno putovanje izvan uobičajene sredine radi zadovoljstva, a ne zarade.</p>\n                <ul>\n                    <li><strong>UNWTO (WTO)</strong> — turist je <em>posjetitelj</em> koji u posjećenom mjestu provede najmanje jednu <strong>noć</strong> u ugostiteljskom ili drugom objektu za smještaj; razlog boravka: odmor/rekreacija, zdravlje, studij, sport, religija, obitelj, posao, javne misije i skupovi. Izletnik na jedan dan nije turist.</li>\n                    <li><strong>Cohen</strong> — dobrovoljni, privremeni putnik koji putuje u očekivanju zadovoljstva od novosti i promjene na relativno dugom i neučestalom <strong>dvosmjernom</strong> putovanju.</li>\n                    <li><strong>Smith</strong> — osoba privremeno nezauzeta poslom koja putuje da doživi promjenu.</li>\n                </ul>\n\n                <h4>Klasifikacija putnika prema UNWTO-u</h4>\n                <div class=\"formula-box\">\n                    PUTNICI → uključeni u statistiku = POSJETITELJI<br>\n                    &nbsp;&nbsp;• TURISTI (noće ≥ 1) &nbsp;&nbsp; • IZLETNICI (ne noće: dnevni posjetitelji, putnici na krstarenjima)<br>\n                    PUTNICI → NEuključeni: imigranti (stalni/privremeni), diplomati, konzularni predstavnici, vojska, izbjeglice, radnici u tranzitu, nomadi, radnici u pograničnim zonama\n                </div>\n\n                <h4>Turizam kao pojava</h4>\n                <p><strong>AIEST:</strong> turizam je skup odnosa i pojava koje proizlaze iz putovanja i boravka posjetitelja nekog mjesta, ako se tim boravkom ne zasniva stalno prebivalište i ako s njime nije povezana nikakva privredna djelatnost. Turizam je splet odnosa <strong>društvenog i ekonomskog</strong> karaktera.</p>\n\n                <h4>Determinante i komponente</h4>\n                <ul>\n                    <li><strong>Determinante</strong>: prostor izvan domicila + potrošnja sredstava stečenih izvan mjesta boravka.</li>\n                    <li><strong>Dinamična komponenta</strong>: putovanje koje se mora poduzeti da bi do turističke aktivnosti došlo.</li>\n                    <li><strong>Statična komponenta</strong>: boravak u destinaciji koji osigurava zadovoljenje potreba i očekivani doživljaj.</li>\n                </ul>\n\n                <h4>Pet temeljnih obilježja turizma</h4>\n                <ol>\n                    <li>Nema turizma bez putovanja i kretanja ljudi te boravka u odredištima.</li>\n                    <li>Putovanje i boravak zbivaju se izvan uobičajene sredine.</li>\n                    <li>Turizam se zasniva na dvosmjernom (kružnom) putovanju s definiranim intervalom (ne duljim od 12 mjeseci).</li>\n                    <li>Svrha putovanja nikad se ne veže uz stalni boravak ni zaposlenje u destinaciji.</li>\n                    <li>U odredištu turisti <strong>troše, ne privređuju</strong>.</li>\n                </ol>\n\n                <h4>Dopuna iz teorije turizma (EN izvor)</h4>\n                <p><strong>„5 A\" turizma</strong> — elementi koje destinacija mora imati:</p>\n                <div class=\"formula-box\">\n                    ATTRACTIONS (atrakcije) · ACCESS (pristup/promet) · AMENITIES (sadržaji i usluge) ·<br>\n                    ACCOMMODATION (smještaj) · ACTIVITIES (aktivnosti i doživljaji)\n                </div>\n                <p><strong>Turistički proizvod je „nematerijalan\" i „bez prijenosa vlasništva\":</strong> usluga se proizvodi i troši istodobno, ne može se uskladištiti niti unaprijed isprobati, a turist stječe samo pravo <em>korištenja</em> (npr. noćenja), ne i vlasništvo. Riječ <em>„tour\"</em> potječe od latinskog <em>tornare</em> / grčkog <em>tornos</em> (kružno kretanje) — što odgovara dvosmjernom (kružnom) putovanju.</p>\n            ",
+      "id": "g1tm7g"
     },
-    "id": "f7naut"
+    "id": "grqg9i"
   },
   "needsTypes": {
     "name": "Turistička potreba, dohodak i vrste turizma",
@@ -198,7 +198,7 @@
           "obiteljski prihod"
         ],
         "correct": 1,
-        "id": "dhaa7d"
+        "id": "72qcdp"
       },
       {
         "question": "Mogućnost turističke potrošnje najizravnije određuje:",
@@ -209,7 +209,7 @@
           "obiteljski prihod"
         ],
         "correct": 2,
-        "id": "h9fwjn"
+        "id": "1awftk"
       },
       {
         "question": "Emitivni (outbound) turizam uključuje:",
@@ -220,7 +220,7 @@
           "kombinaciju domaćeg i receptivnog turizma"
         ],
         "correct": 1,
-        "id": "4dniah"
+        "id": "llxono"
       },
       {
         "question": "Kombinacija domaćeg i receptivnog turizma naziva se:",
@@ -231,7 +231,7 @@
           "intraregionalni turizam"
         ],
         "correct": 1,
-        "id": "9ezrch"
+        "id": "1solgy"
       },
       {
         "question": "Dva preduvjeta za zadovoljenje turističke potrebe su:",
@@ -242,7 +242,7 @@
           "motiv i destinacija"
         ],
         "correct": 1,
-        "id": "jt7ia3"
+        "id": "zby8bz"
       },
       {
         "question": "Putovanja Europljana unutar Europe primjer su:",
@@ -253,7 +253,7 @@
           "emitivnog turizma"
         ],
         "correct": 1,
-        "id": "f60igc"
+        "id": "cbfbhq"
       }
     ],
     "fillBlanks": [
@@ -261,39 +261,39 @@
         "sentence": "Razina _______ dohotka određuje mogućnost turističke potrošnje.",
         "answer": "slobodnog",
         "hint": "ostaje nakon osnovnih troškova",
-        "id": "azphy7"
+        "id": "u4e66n"
       },
       {
         "sentence": "Realni dohodak su raspoloživa sredstva korigirana za _______ utjecaj na cijene.",
         "answer": "inflacijski",
         "hint": "rast cijena",
-        "id": "z4rlx1"
+        "id": "drf0qo"
       },
       {
         "sentence": "Receptivni turizam još se naziva _______ (inbound) turizam.",
         "answer": "ulazni",
         "hint": "suprotno od izlaznog",
-        "id": "b5rxhb"
+        "id": "2os0e4"
       },
       {
         "sentence": "Za zadovoljenje turističke potrebe potrebno je imati slobodno vrijeme i slobodna _______.",
         "answer": "sredstva",
         "hint": "novac",
-        "id": "gp6z4r"
+        "id": "gr8z6w"
       },
       {
         "sentence": "_______ turizam kombinacija je receptivnog i emitivnog turizma.",
         "answer": "Međunarodni",
         "hint": "ulaz + izlaz",
-        "id": "mnam9b"
+        "id": "oc2uy3"
       }
     ],
     "learn": {
       "title": "Turistička potreba, dohodak i vrste turizma",
       "content": "\n                <h3>Turistička potreba</h3>\n                <p><strong>Rječnik turizma</strong> definira turističku potrebu kao skup pojedinačnih potreba koje zajednički (skupno) zadovoljavaju pojedinca ili skupinu potrošača u namjeri da se odmore i rekreiraju na turistički način. Osnovne skupine potreba su <strong>primarne (egzistencijalne)</strong> i <strong>sekundarne</strong>.</p>\n                <p>Da bi se turistička potreba zadovoljila, potrebno je imati na raspolaganju <strong>slobodno vrijeme</strong> i <strong>slobodna sredstva</strong>.</p>\n\n                <h4>Dohodak i kupovna moć</h4>\n                <ul>\n                    <li><strong>Realni dohodak</strong> — raspoloživa sredstva korigirana za inflacijski utjecaj na cijene (nominalno ≠ realno povećanje).</li>\n                    <li><strong>Slobodni dohodak</strong> — ono što ostaje nakon obveznih davanja i osnovnih troškova života; namijenjen potrošnji ili štednji. <em>Njegova razina određuje mogućnost turističke potrošnje.</em></li>\n                    <li><strong>Obiteljski prihod</strong> — može rasti i bez rasta realnog dohotka (npr. novo zaposlenje člana obitelji).</li>\n                </ul>\n\n                <h4>Vrste turizma prema UNWTO-u (smjer kretanja)</h4>\n                <ul>\n                    <li><strong>Domaći</strong> (domestic) — rezidenti unutar granica vlastite zemlje.</li>\n                    <li><strong>Receptivni / ulazni</strong> (inbound) — nerezidenti u promatranoj zemlji.</li>\n                    <li><strong>Emitivni / izlazni</strong> (outbound) — rezidenti u drugim zemljama.</li>\n                    <li><strong>Interni</strong> — domaći + receptivni.</li>\n                    <li><strong>Nacionalni</strong> — sva putovanja domicilnog stanovništva u zemlji i inozemstvu.</li>\n                    <li><strong>Međunarodni</strong> — receptivni + emitivni.</li>\n                    <li><strong>Intraregionalni</strong> — unutar iste regije (Europljani unutar Europe).</li>\n                    <li><strong>Interregionalni</strong> — izvan vlastite regije (Europljani izvan Europe).</li>\n                </ul>\n\n                <h4>Vrste turističkih kretanja (kriteriji)</h4>\n                <div class=\"formula-box\">\n                    trajanje: izletnički · vikend · boravišni &nbsp;|&nbsp; mobilnost: stacionarni · mobilni · tranzitni<br>\n                    dob: dječji · omladinski · obiteljski · treće dobi &nbsp;|&nbsp; nacionalnost: domaći · inozemni<br>\n                    organizacija: individualni · organizirani · mješoviti &nbsp;|&nbsp; sudionici: individualni · grupni<br>\n                    godišnje doba: ljetni · zimski &nbsp;|&nbsp; bilanca: aktivni · pasivni<br>\n                    prostor: primorski · planinski · termalni · jezerski · seoski · gradski\n                </div>\n            ",
-      "id": "erc9tp"
+      "id": "ylnw98"
     },
-    "id": "y6pi3u"
+    "id": "etse72"
   },
   "marketSupply": {
     "name": "Turističko tržište i ponuda",
@@ -346,7 +346,7 @@
           "diverzificiranost"
         ],
         "correct": 2,
-        "id": "j79bpa"
+        "id": "2pmwim"
       },
       {
         "question": "Preduvjeti za formiranje turističke ponude i nastup na tržištu su:",
@@ -357,7 +357,7 @@
           "tržišne prednosti"
         ],
         "correct": 1,
-        "id": "jv2es4"
+        "id": "iwzrc8"
       },
       {
         "question": "Što NE spada u komponente turističke ponude?",
@@ -368,7 +368,7 @@
           "atrakcije"
         ],
         "correct": 2,
-        "id": "57dzxq"
+        "id": "rm7l4o"
       },
       {
         "question": "Turističko tržište definira se kao skup odnosa:",
@@ -379,7 +379,7 @@
           "države i poduzeća"
         ],
         "correct": 1,
-        "id": "9aensn"
+        "id": "q1nfzk"
       },
       {
         "question": "Zašto u turizmu nije moguće stvarati „zalihe\" usluga?",
@@ -390,7 +390,7 @@
           "jer to zabranjuje zakon"
         ],
         "correct": 1,
-        "id": "l0ym9f"
+        "id": "luqjkq"
       },
       {
         "question": "Spremnost za nastup na zahtjevnom globalnom tržištu predstavlja:",
@@ -401,7 +401,7 @@
           "apsolutnu prednost"
         ],
         "correct": 1,
-        "id": "telrsp"
+        "id": "wh9lpc"
       }
     ],
     "fillBlanks": [
@@ -409,39 +409,39 @@
         "sentence": "Turistička ponuda i potražnja susreću se u _______ turističkoj destinaciji.",
         "answer": "receptivnoj",
         "hint": "prima turiste",
-        "id": "7kbucx"
+        "id": "70vb34"
       },
       {
         "sentence": "Nemogućnost prostornog premještanja ponude naziva se _______ turističke ponude.",
         "answer": "statičnost",
         "hint": "nepokretljivost",
-        "id": "0wvsfy"
+        "id": "9u7uoo"
       },
       {
         "sentence": "_______ prednosti su preduvjeti za formiranje ponude, a konkurentske spremnost za globalno tržište.",
         "answer": "Komparativne",
         "hint": "temelje se na resursima",
-        "id": "zsv0bp"
+        "id": "9bpfcq"
       },
       {
         "sentence": "Subjekti na turističkom tržištu su potražnja, _______ i ponuda.",
         "answer": "posrednici",
         "hint": "agencije, turoperatori",
-        "id": "bmmwgr"
+        "id": "d75c7i"
       },
       {
         "sentence": "U turizmu nije moguće proizvoditi _______ turističkih usluga za kasniju prodaju.",
         "answer": "zalihe",
         "hint": "uskladištena roba",
-        "id": "5nv23f"
+        "id": "r4y5lw"
       }
     ],
     "learn": {
       "title": "Turističko tržište i ponuda",
-      "content": "\n                <h3>Turističko tržište</h3>\n                <p><strong>Turističko tržište</strong> je skup odnosa ponude i potražnje u području usluga i dobara što služe podmirenju turističkih potreba na određenom prostoru, a nastaju pod utjecajem turističkih kretanja. Ponuda i potražnja susreću se u <strong>receptivnoj destinaciji</strong>. Cijena se pojavljuje kao regulator veličine ponude i potražnje.</p>\n                <p><strong>Subjekti</strong>: turistička potražnja · turistički posrednici · turistička ponuda.</p>\n\n                <h3>Turistička ponuda</h3>\n                <p>Količina roba i usluga koja se nudi turistima na određenom tržištu, u određeno vrijeme i po određenoj cijeni. Specifičnost: u turizmu nije moguće proizvoditi <strong>„zalihe\"</strong> usluga (neprodano noćenje trajno je izgubljeno).</p>\n\n                <h4>Faktori koji utječu na ponudu</h4>\n                <p>Poduzeće/poduzetnik · država · potražnja · gospodarstvo · okolina · društvo.</p>\n\n                <h4>Komponente turističke ponude</h4>\n                <ul>\n                    <li>Atrakcije (prirodne i društvene)</li>\n                    <li>Ugostiteljstvo (smještaj, prehrana, prateće usluge)</li>\n                    <li>Prijevoz (zračni, željeznički, brodski, autobusni, rent-a-car)</li>\n                    <li>Turističko posredništvo (agencije, turoperatori)</li>\n                    <li>Organizacije turizma (turističke zajednice, udruge)</li>\n                    <li>Trgovina</li>\n                </ul>\n\n                <h4>Pet obilježja turističke ponude</h4>\n                <div class=\"formula-box\">\n                    HETEROGENOST — uvjetovana heterogenošću potražnje; razmjerna razvijenosti gospodarstva<br>\n                    NEELASTIČNOST — kapaciteti ne mogu proporcionalno reagirati na promjene potražnje<br>\n                    STATIČNOST — ponuda se ne može prostorno premjestiti → nužna marketinška komunikacija<br>\n                    SEZONSKI KARAKTER — prati sezonalnost potražnje; cilj: produljiti sezonu<br>\n                    DIVERZIFICIRANOST — prostorno raspršena, usitnjeni kapaciteti\n                </div>\n\n                <h4>Prednosti i trendovi</h4>\n                <p><strong>Komparativne prednosti</strong> = preduvjeti (resursi) za nastup na tržištu; <strong>konkurentske prednosti</strong> = spremnost za zahtjevno globalno tržište. Glavni opći trend je <strong>globalizacija</strong>, a iz nje: konkurentska borba, supstitutivnost destinacija, branding, last-minute booking te horizontalne i vertikalne integracije.</p>\n            ",
-      "id": "naz7xl"
+      "content": "\n                <h3>Turističko tržište</h3>\n                <p><strong>Turističko tržište</strong> je skup odnosa ponude i potražnje u području usluga i dobara što služe podmirenju turističkih potreba na određenom prostoru, a nastaju pod utjecajem turističkih kretanja. Ponuda i potražnja susreću se u <strong>receptivnoj destinaciji</strong>. Cijena se pojavljuje kao regulator veličine ponude i potražnje.</p>\n                <p><strong>Subjekti</strong>: turistička potražnja · turistički posrednici · turistička ponuda.</p>\n\n                <h3>Turistička ponuda</h3>\n                <p>Količina roba i usluga koja se nudi turistima na određenom tržištu, u određeno vrijeme i po određenoj cijeni. Specifičnost: u turizmu nije moguće proizvoditi <strong>„zalihe\"</strong> usluga (neprodano noćenje trajno je izgubljeno).</p>\n\n                <h4>Faktori koji utječu na ponudu</h4>\n                <p>Poduzeće/poduzetnik · država · potražnja · gospodarstvo · okolina · društvo.</p>\n\n                <h4>Komponente turističke ponude</h4>\n                <ul>\n                    <li>Atrakcije (prirodne i društvene)</li>\n                    <li>Ugostiteljstvo (smještaj, prehrana, prateće usluge)</li>\n                    <li>Prijevoz (zračni, željeznički, brodski, autobusni, rent-a-car)</li>\n                    <li>Turističko posredništvo (agencije, turoperatori)</li>\n                    <li>Organizacije turizma (turističke zajednice, udruge)</li>\n                    <li>Trgovina</li>\n                </ul>\n\n                <h4>Pet obilježja turističke ponude</h4>\n                <div class=\"formula-box\">\n                    HETEROGENOST — uvjetovana heterogenošću potražnje; razmjerna razvijenosti gospodarstva<br>\n                    NEELASTIČNOST — kapaciteti ne mogu proporcionalno reagirati na promjene potražnje<br>\n                    STATIČNOST — ponuda se ne može prostorno premjestiti → nužna marketinška komunikacija<br>\n                    SEZONSKI KARAKTER — prati sezonalnost potražnje; cilj: produljiti sezonu<br>\n                    DIVERZIFICIRANOST — prostorno raspršena, usitnjeni kapaciteti\n                </div>\n\n                <h4>Prednosti i trendovi</h4>\n                <p><strong>Komparativne prednosti</strong> = preduvjeti (resursi) za nastup na tržištu; <strong>konkurentske prednosti</strong> = spremnost za zahtjevno globalno tržište. Glavni opći trend je <strong>globalizacija</strong>, a iz nje: konkurentska borba, supstitutivnost destinacija, branding, last-minute booking te horizontalne i vertikalne integracije.</p>\n\n                <h4>Dopuna iz ekonomske teorije (EN izvor)</h4>\n                <p><strong>Čimbenici proizvodnje</strong> (inputi ponude): zemlja (prirodni resursi), rad, kapital te poduzetništvo. U <strong>kratkom roku</strong> barem je jedan input fiksan; u <strong>dugom roku</strong> svi su promjenjivi.</p>\n                <p><strong>Ekonomija razmjera</strong> — jedinični trošak pada kako raste opseg proizvodnje (masovnost turizma to omogućuje); <strong>disekonomija razmjera</strong> — jedinični trošak počne rasti kad poduzeće postane preveliko za učinkovito upravljanje.</p>\n                <p><strong>Tržišne strukture</strong> (prema broju ponuđača i vrsti proizvoda):</p>\n                <div class=\"formula-box\">\n                    SAVRŠENA KONKURENCIJA — mnogo malih ponuđača, homogen proizvod (mnoštvo sličnih pansiona)<br>\n                    MONOPOLISTIČKA KONKURENCIJA — mnogo ponuđača, diferenciran proizvod (hoteli, restorani)<br>\n                    OLIGOPOL — malo velikih ponuđača (zračni prijevoznici, veliki turoperatori)<br>\n                    MONOPOL — jedan ponuđač (jedinstvena atrakcija, npr. jedini pristup nacionalnom parku)\n                </div>\n                <p>Poduzeća se natječu kroz tri strategije: <strong>troškovno vodstvo</strong> (najniža cijena), <strong>diferencijaciju</strong> (jedinstven proizvod) i <strong>fokusiranje</strong> (uska tržišna niša).</p>\n            ",
+      "id": "mp5cp2"
     },
-    "id": "pymw9t"
+    "id": "3ol421"
   },
   "resources": {
     "name": "Turistički resursi",
@@ -494,7 +494,7 @@
           "zaštitu okoliša"
         ],
         "correct": 1,
-        "id": "e6ydht"
+        "id": "jw67qs"
       },
       {
         "question": "Koja tvrdnja je točna?",
@@ -505,7 +505,7 @@
           "nijedan resurs nije atrakcija"
         ],
         "correct": 1,
-        "id": "7nqdcl"
+        "id": "duwhel"
       },
       {
         "question": "Što NE spada u elemente ocjene turističkih resursa?",
@@ -516,7 +516,7 @@
           "prometna povezanost s emitivnim tržištima"
         ],
         "correct": 2,
-        "id": "wcu8mc"
+        "id": "1ixe2g"
       },
       {
         "question": "Prema WTO-u, kulturno-povijesna baština obuhvaća:",
@@ -527,7 +527,7 @@
           "banke i mjenjačnice"
         ],
         "correct": 1,
-        "id": "2l5yqf"
+        "id": "xfe650"
       },
       {
         "question": "Prva faza analize resursne osnove je:",
@@ -538,7 +538,7 @@
           "prodaja resursa"
         ],
         "correct": 1,
-        "id": "s6gnpr"
+        "id": "pxbp53"
       },
       {
         "question": "Resursi se u ekonomiji ubrajaju u temeljne čimbenike proizvodnje uz:",
@@ -549,7 +549,7 @@
           "tehnologiju i obrazovanje"
         ],
         "correct": 1,
-        "id": "m8wyz3"
+        "id": "qt1nma"
       }
     ],
     "fillBlanks": [
@@ -557,39 +557,39 @@
         "sentence": "Svaka turistička atrakcija jest resurs, ali svaki resurs ne mora biti _______.",
         "answer": "atrakcija",
         "hint": "resurs visoke privlačnosti",
-        "id": "gb42mn"
+        "id": "18lx0m"
       },
       {
         "sentence": "Ocjena turističke vrijednosti nekog resursa naziva se _______.",
         "answer": "valorizacija",
         "hint": "vrednovanje",
-        "id": "endd6e"
+        "id": "0ekug9"
       },
       {
         "sentence": "Efikasnost korištenja resursa determinira _______ uspješnost turizma.",
         "answer": "ekonomsku",
         "hint": "financijsku",
-        "id": "y314yw"
+        "id": "0iewx9"
       },
       {
         "sentence": "Prva faza analize resursne osnove je _______ resursa.",
         "answer": "identifikacija",
         "hint": "prepoznavanje",
-        "id": "jflo1g"
+        "id": "mwkt8j"
       },
       {
         "sentence": "Prema WTO-u među turističke resurse ubrajaju se prirodni resursi, kulturno-povijesna _______, klimatski uvjeti i infrastruktura.",
         "answer": "baština",
         "hint": "naslijeđe",
-        "id": "l854jz"
+        "id": "gfma5i"
       }
     ],
     "learn": {
       "title": "Turistički resursi",
       "content": "\n                <h3>Pojam resursa</h3>\n                <p><strong>Resursi</strong> su opći naziv za prirodne i proizvedene stvari te ljudsko znanje i sposobnosti kojima se koristimo za zadovoljavanje potreba. U ekonomiji: materijalna i duhovna dobra koja se mogu gospodarski valorizirati; ubrajaju se u temeljne čimbenike proizvodnje (uz rad, kapital i poduzetništvo). Bitno obilježje je <strong>ograničenost</strong>.</p>\n                <p><strong>Turistički resursi</strong> = prirodna ili antropogena dobra koja se mogu gospodarski iskoristiti i imaju visok stupanj privlačnosti. Cjelokupna ponuda temelji se na njihovoj atraktivnosti. <em>Svaka atrakcija je resurs, ali svaki resurs nije atrakcija.</em></p>\n\n                <h4>Podjela turističkih resursa (WTO)</h4>\n                <ul>\n                    <li><strong>Prirodni</strong> — plaže, planine, šume, jezera, rijeke, špilje, flora i fauna, zaštićena područja.</li>\n                    <li><strong>Kulturno-povijesna baština</strong> — povijesne zgrade, spomenici, arheološki lokaliteti, folklor, muzeji, umjetnost.</li>\n                    <li><strong>Klimatski uvjeti</strong> — temperature, vlažnost, padaline, sunčani dani, vjetrovi, čistoća zraka.</li>\n                    <li><strong>Infrastruktura</strong> — prijevoz i pristup, energija, voda, komunikacije, banke, zdravstvo.</li>\n                    <li><strong>Turističke usluge i sadržaji</strong> — smještaj, prehrana, agencije, vodiči, zabava, sport, kadrovi.</li>\n                </ul>\n                <p>Druga podjela: <strong>prirodni</strong> (klimatski, geomorfološki, hidrografski, biogeografski, pejsažni) i <strong>društveni</strong> (kulturno-povijesni, etnosocijalni, umjetnički, manifestacijski, ambijentalni).</p>\n\n                <h4>Valorizacija i vrednovanje</h4>\n                <p><strong>Valorizacija</strong> = ocjena turističke vrijednosti resursa/prostora. Ne ocjenjuje se samo po atraktivnosti (rekreativno, kuriozitetno, znamenito, estetsko svojstvo).</p>\n                <div class=\"formula-box\">\n                    ELEMENTI VREDNOVANJA:<br>\n                    • stupanj atraktivnosti • povoljnost geografskog položaja<br>\n                    • položaj prema glavnim turističkim tokovima • udaljenost i povezanost s emitivnim tržištima<br>\n                    • veličina izvora potražnje • položaj prema konkurentskim i komplementarnim prostorima\n                </div>\n                <p><strong>Analiza resursne osnove</strong> (početni korak planiranja razvoja): 1) identifikacija → 2) procjena → 3) mjere optimalne valorizacije. Efikasnost korištenja resursa determinira ekonomsku uspješnost turizma; resurse treba koristiti tako da se ne umanji kvaliteta života budućih generacija.</p>\n            ",
-      "id": "3kpdxp"
+      "id": "hn359b"
     },
-    "id": "u5a625"
+    "id": "bxxga4"
   },
   "demand": {
     "name": "Turistička potražnja",
@@ -630,6 +630,16 @@
         "question": "Kako Freyer dijeli čimbenike utjecaja na potražnju?",
         "answer": "Na individualne, društvene, ekološke, ekonomske, državne i utjecaje ponude.",
         "explanation": "Konkretna podjela koja se traži na ispitu."
+      },
+      {
+        "question": "Što su Bandwagon, Snob i Veblen efekt?",
+        "answer": "Bandwagon = potražnja raste jer kupuju i drugi. Snob = pada kad proizvod postane prepopularan. Veblen = raste s cijenom jer visoka cijena znači status.",
+        "explanation": "Netipična ponašanja potražnje (dopuna iz EN teorije)."
+      },
+      {
+        "question": "Što je unakrsna, a što marketinška elastičnost potražnje?",
+        "answer": "Unakrsna = reakcija potražnje na cijenu drugog dobra (supstituti/komplementi). Marketinška = reakcija na promotivne aktivnosti.",
+        "explanation": "Dva dodatna oblika uz cjenovnu i dohodovnu elastičnost."
       }
     ],
     "quiz": [
@@ -642,7 +652,29 @@
           "latentna potražnja"
         ],
         "correct": 2,
-        "id": "x57x44"
+        "id": "at489t"
+      },
+      {
+        "question": "Kad potražnja za proizvodom RASTE jer ga kupuju i drugi, riječ je o:",
+        "options": [
+          "Snob efektu",
+          "Bandwagon efektu",
+          "Veblen efektu",
+          "zakonu potražnje"
+        ],
+        "correct": 1,
+        "id": "y5rz75"
+      },
+      {
+        "question": "Reakcija potražnje na promjenu cijene DRUGOG dobra naziva se:",
+        "options": [
+          "dohodovna elastičnost",
+          "unakrsna elastičnost",
+          "marketinška elastičnost",
+          "primarna elastičnost"
+        ],
+        "correct": 1,
+        "id": "en3cmt"
       },
       {
         "question": "Čimbenike utjecaja na potražnju Freyer dijeli na:",
@@ -653,7 +685,7 @@
           "socijalne, kulturne, ekonomske i ekološke"
         ],
         "correct": 1,
-        "id": "bssctz"
+        "id": "rr8c2v"
       },
       {
         "question": "Osjetljivost potražnje na promjene dohotka i cijena naziva se:",
@@ -664,7 +696,7 @@
           "statičnost"
         ],
         "correct": 1,
-        "id": "n8sqzt"
+        "id": "ao14bu"
       },
       {
         "question": "Potražnju koju čine svi stanovnici s objektivnom potrebom za putovanjem nazivamo:",
@@ -675,7 +707,7 @@
           "potencijalnom"
         ],
         "correct": 2,
-        "id": "pqk4mn"
+        "id": "mf7o51"
       },
       {
         "question": "Što NIJE obilježje turističke potražnje?",
@@ -686,7 +718,7 @@
           "sezonski karakter"
         ],
         "correct": 2,
-        "id": "rvbure"
+        "id": "p3mhj8"
       },
       {
         "question": "Reakcija potražnje na promjene u strukturi ponude naziva se:",
@@ -697,7 +729,7 @@
           "cjenovna elastičnost"
         ],
         "correct": 1,
-        "id": "xp8w5t"
+        "id": "9wy1n3"
       }
     ],
     "fillBlanks": [
@@ -705,39 +737,45 @@
         "sentence": "_______ potražnja je dio realne potražnje koji koristi uslugu kod točno određenog pružatelja.",
         "answer": "Efektivna",
         "hint": "najuža kategorija",
-        "id": "auhy2x"
+        "id": "dbis2a"
       },
       {
         "sentence": "Osjetljivost potražnje na promjene dohotka i cijena naziva se _______ elastičnost.",
         "answer": "primarna",
         "hint": "ekonomske kategorije",
-        "id": "b4gyys"
+        "id": "fle3al"
       },
       {
         "sentence": "Za razliku od ponude, turistička potražnja je _______.",
         "answer": "elastična",
         "hint": "reagira na promjene",
-        "id": "okt4a9"
+        "id": "exl7h9"
       },
       {
         "sentence": "Čimbenike utjecaja na potražnju _______ dijeli na individualne, društvene, ekološke, ekonomske, državne i utjecaje ponude.",
         "answer": "Freyer",
         "hint": "autor podjele",
-        "id": "vwhush"
+        "id": "9gq7xz"
       },
       {
         "sentence": "Prostorna odvojenost potražnje od ponude naziva se _______ turističke potražnje.",
         "answer": "dislociranost",
         "hint": "razdvojenost",
-        "id": "ojk3p6"
+        "id": "4zqo1c"
+      },
+      {
+        "sentence": "_______ efekt znači da potražnja raste s cijenom jer visoka cijena signalizira status.",
+        "answer": "Veblen",
+        "hint": "luksuzni proizvodi",
+        "id": "s0kc6g"
       }
     ],
     "learn": {
       "title": "Turistička potražnja",
-      "content": "\n                <h3>Definicija</h3>\n                <p>Za statistiku: ukupan broj osoba koje sudjeluju u turističkim kretanjima ili se žele uključiti. S ekonomskog aspekta: količina robe i usluga koja se pod određenim uvjetima i uz određenu cijenu može plasirati na tržištu (Rječnik turizma). <em>Na potražnju utječe više čimbenika, ne samo cijena</em>; ona uključuje i osobe koje bi se željele uključiti, ali ne mogu.</p>\n\n                <h4>Podjela potražnje</h4>\n                <ul>\n                    <li><strong>Idealna</strong> — svi stanovnici s objektivnom potrebom za uključivanjem.</li>\n                    <li><strong>Potencijalna</strong> — imaju potrebu i mogućnost, ali još nisu odlučili.</li>\n                    <li><strong>Realna</strong> — odlučili potrošiti sredstva/vrijeme na turizam.</li>\n                    <li><strong>Efektivna</strong> — dio realne; koriste uslugu kod točno određenog davatelja u konkretnoj destinaciji.</li>\n                </ul>\n\n                <h4>Obilježja potražnje</h4>\n                <div class=\"formula-box\">\n                    DISLOCIRANOST — prostorno odvojena od ponude → nužan prijevoz i marketing<br>\n                    HETEROGENOST — različite potrebe, navike, kulturna/vjerska pripadnost<br>\n                    ELASTIČNOST — primarna (dohodak, cijene) i sekundarna (promjene u ponudi)<br>\n                    DINAMIČNOST — mijenja se brže/sporije od zavisnih pojava; potiče je tehnološki napredak<br>\n                    SEZONSKI KARAKTER — vezan uz godišnji odmor, vikende, blagdane\n                </div>\n                <p><strong>Primarna elastičnost</strong> dijeli se na <strong>dohodovnu</strong> (reakcija na promjene dohotka) i <strong>cjenovnu</strong> (reakcija na promjene cijena). <strong>Sekundarna elastičnost</strong> = promjene potražnje uvjetovane promjenama u strukturi ponude.</p>\n\n                <h4>Čimbenici i trendovi</h4>\n                <p><strong>Freyer</strong> dijeli čimbenike na: individualne, društvene, ekološke, ekonomske, državne i utjecaje ponude. Na potražnju djeluju i moda/ukus, promidžba, populacija, cijena, dohodak, cijene drugih dobara i kvaliteta.</p>\n                <p>Trendovi: rast potražnje; starenje populacije (segment <strong>„treće dobi\"</strong> — češće putuje, dulje ostaje, kombinira destinacije, troši više); rast ekološke svijesti i osjetljivosti na kvalitetu; polarizacija na potrošače visoke kvalitete i one najniže cijene; okretanje specifičnim oblicima turizma.</p>\n            ",
-      "id": "zfewi1"
+      "content": "\n                <h3>Definicija</h3>\n                <p>Za statistiku: ukupan broj osoba koje sudjeluju u turističkim kretanjima ili se žele uključiti. S ekonomskog aspekta: količina robe i usluga koja se pod određenim uvjetima i uz određenu cijenu može plasirati na tržištu (Rječnik turizma). <em>Na potražnju utječe više čimbenika, ne samo cijena</em>; ona uključuje i osobe koje bi se željele uključiti, ali ne mogu.</p>\n\n                <h4>Podjela potražnje</h4>\n                <ul>\n                    <li><strong>Idealna</strong> — svi stanovnici s objektivnom potrebom za uključivanjem.</li>\n                    <li><strong>Potencijalna</strong> — imaju potrebu i mogućnost, ali još nisu odlučili.</li>\n                    <li><strong>Realna</strong> — odlučili potrošiti sredstva/vrijeme na turizam.</li>\n                    <li><strong>Efektivna</strong> — dio realne; koriste uslugu kod točno određenog davatelja u konkretnoj destinaciji.</li>\n                </ul>\n\n                <h4>Obilježja potražnje</h4>\n                <div class=\"formula-box\">\n                    DISLOCIRANOST — prostorno odvojena od ponude → nužan prijevoz i marketing<br>\n                    HETEROGENOST — različite potrebe, navike, kulturna/vjerska pripadnost<br>\n                    ELASTIČNOST — primarna (dohodak, cijene) i sekundarna (promjene u ponudi)<br>\n                    DINAMIČNOST — mijenja se brže/sporije od zavisnih pojava; potiče je tehnološki napredak<br>\n                    SEZONSKI KARAKTER — vezan uz godišnji odmor, vikende, blagdane\n                </div>\n                <p><strong>Primarna elastičnost</strong> dijeli se na <strong>dohodovnu</strong> (reakcija na promjene dohotka) i <strong>cjenovnu</strong> (reakcija na promjene cijena). <strong>Sekundarna elastičnost</strong> = promjene potražnje uvjetovane promjenama u strukturi ponude.</p>\n\n                <h4>Čimbenici i trendovi</h4>\n                <p><strong>Freyer</strong> dijeli čimbenike na: individualne, društvene, ekološke, ekonomske, državne i utjecaje ponude. Na potražnju djeluju i moda/ukus, promidžba, populacija, cijena, dohodak, cijene drugih dobara i kvaliteta.</p>\n                <p>Trendovi: rast potražnje; starenje populacije (segment <strong>„treće dobi\"</strong> — češće putuje, dulje ostaje, kombinira destinacije, troši više); rast ekološke svijesti i osjetljivosti na kvalitetu; polarizacija na potrošače visoke kvalitete i one najniže cijene; okretanje specifičnim oblicima turizma.</p>\n\n                <h4>Dopuna iz ekonomske teorije (EN izvor)</h4>\n                <p><strong>Zakon potražnje:</strong> uz ostale uvjete nepromijenjene, kad cijena raste, tražena količina pada (i obrnuto). No na turizam snažno djeluju i <em>necjenovni</em> čimbenici (dohodak, ukus, moda), koji pomiču cijelu krivulju potražnje.</p>\n                <p><strong>Netipična ponašanja potražnje:</strong></p>\n                <ul>\n                    <li><strong>Bandwagon efekt</strong> — potražnja raste jer proizvod kupuju i drugi (efekt „mode\"/gomile).</li>\n                    <li><strong>Snob efekt</strong> — potražnja pada kad proizvod postane previše popularan (težnja za ekskluzivnošću).</li>\n                    <li><strong>Veblen efekt</strong> — potražnja raste s cijenom jer visoka cijena signalizira status (luksuzni proizvodi).</li>\n                </ul>\n                <p><strong>Četiri oblika elastičnosti potražnje</strong> (dopuna uz primarnu/sekundarnu): cjenovna (na vlastitu cijenu), dohodovna (na dohodak), <strong>unakrsna</strong> (na cijenu drugog dobra — supstituti/komplementi) i <strong>marketinška</strong> (na promotivne aktivnosti).</p>\n            ",
+      "id": "jji1m3"
     },
-    "id": "76pmih"
+    "id": "90rgkl"
   },
   "intermediaries": {
     "name": "Turistički posrednici",
@@ -790,7 +828,7 @@
           "lokalni vodič"
         ],
         "correct": 1,
-        "id": "b9tziz"
+        "id": "7wbgch"
       },
       {
         "question": "Turistička agencija prodaje usluge:",
@@ -801,7 +839,7 @@
           "isključivo vlastite proizvode"
         ],
         "correct": 1,
-        "id": "ad2k6e"
+        "id": "3zcx0p"
       },
       {
         "question": "Osnovni izvor prihoda turističke agencije je:",
@@ -812,7 +850,7 @@
           "članarina"
         ],
         "correct": 1,
-        "id": "clav1y"
+        "id": "a8yuey"
       },
       {
         "question": "Prvo organizirano turističko putovanje (1841.) pokrenuo je:",
@@ -823,7 +861,7 @@
           "Wagonlit"
         ],
         "correct": 1,
-        "id": "rwx334"
+        "id": "ksn3v7"
       },
       {
         "question": "Koje obilježje NE pripada turoperatoru?",
@@ -834,7 +872,7 @@
           "snosi rizik za neprodane kapacitete"
         ],
         "correct": 2,
-        "id": "i55dcl"
+        "id": "0ca3iq"
       },
       {
         "question": "Turistički aranžman je skup od najmanje:",
@@ -845,7 +883,7 @@
           "pet noćenja"
         ],
         "correct": 1,
-        "id": "se9oe2"
+        "id": "5zzdnk"
       }
     ],
     "fillBlanks": [
@@ -853,39 +891,39 @@
         "sentence": "Turoperator posluje u svoje ime i za _______ račun te snosi rizik za neprodane kapacitete.",
         "answer": "svoj",
         "hint": "vlastiti",
-        "id": "0aw3z9"
+        "id": "87v334"
       },
       {
         "sentence": "Osnovni izvor prihoda turističke agencije je _______.",
         "answer": "provizija",
         "hint": "postotak od prodaje",
-        "id": "prem42"
+        "id": "2a245c"
       },
       {
         "sentence": "Prvo organizirano putovanje 1841. pokrenuo je Thomas _______.",
         "answer": "Cook",
         "hint": "britanski pionir",
-        "id": "quip74"
+        "id": "jj67km"
       },
       {
         "sentence": "Turistički aranžman prodaje se po jedinstvenoj, _______ cijeni.",
         "answer": "paušalnoj",
         "hint": "jedinstvena, skupna",
-        "id": "fhgmql"
+        "id": "7gf43e"
       },
       {
         "sentence": "Turoperator se označava kao trgovac na _______, a agencija na malo.",
         "answer": "veliko",
         "hint": "grosist",
-        "id": "fu0dbp"
+        "id": "ev6l9c"
       }
     ],
     "learn": {
       "title": "Turistički posrednici",
       "content": "\n                <h3>Zašto posrednici?</h3>\n                <p>Nastanak posrednika uvjetovan je specifičnošću turističkog tržišta: kompleksnošću putovanja, tehničkim usavršavanjem prijevoza, masovnošću putovanja i mogućnošću zarade. Posrednici su <strong>koordinatori i realizatori</strong> interesa pružatelja i korisnika usluga; glavni su <strong>turističke agencije</strong> i <strong>turoperatori</strong>.</p>\n\n                <h4>Turistička agencija</h4>\n                <p>Prema Zakonu o pružanju usluga u turizmu — trgovačko društvo/obrtnik koji organizira putovanja ili posreduje usluge vezane uz putovanje i boravak. Funkcije: <strong>posrednička</strong> (temeljna), <strong>informativno-savjetodavna</strong>, <strong>oglašavanja</strong> i <strong>organizatorska</strong>. Prema karakteru: emitivne, receptivne i emitivno-receptivne.</p>\n\n                <h4>Aranžman</h4>\n                <p><strong>Turistički (paušalni) aranžman</strong> = skup od najmanje dvije usluge sinkronizirane u vremenu i sadržaju, prodane po jedinstvenoj cijeni koja je niža nego da turist sam sve organizira. Korisnik iz paušalne cijene ne razaznaje cijenu pojedinačnih usluga.</p>\n\n                <h4>Turoperator</h4>\n                <p>Objedinjuje usluge više ponuđača i kreira paušalna putovanja <strong>na veliko, u svoje ime i za svoj račun</strong>, za još nepoznate kupce. Prvi: <strong>Horizon Holidays (1950.)</strong>.</p>\n                <div class=\"formula-box\">\n                    TUROPERATOR: trgovac na veliko · kreira vlastiti proizvod · prihod = prodaja proizvoda ·<br>\n                    &nbsp;&nbsp;snosi rizik neprodanih kapaciteta · nema izravan kontakt · glavna funkcija: organizatorska<br>\n                    AGENCIJA: trgovac na malo · prodaje tuđe u svoje ime, za tuđi račun · prihod = provizija ·<br>\n                    &nbsp;&nbsp;ne snosi rizik · izravan kontakt s klijentom · glavna funkcija: posrednička · lokacija bitna\n                </div>\n\n                <h4>Povijesne crtice</h4>\n                <ul>\n                    <li><strong>Thomas Cook</strong> — 5. srpnja 1841. pokrenuo prvo organizirano putovanje s programom.</li>\n                    <li>Braća <strong>Mihanović</strong> — 1863. paušalno putovanje Zagreb–Gradac–Beč (vlakom).</li>\n                    <li>Prva agencija na prostoru današnje Hrvatske — <strong>Wagonlit</strong>.</li>\n                </ul>\n            ",
-      "id": "cidi6i"
+      "id": "uubd33"
     },
-    "id": "5i6p9j"
+    "id": "gb2z7c"
   },
   "nationalEconomy": {
     "name": "Turizam u nacionalnom gospodarstvu",
@@ -938,7 +976,7 @@
           "gospodarski sektor"
         ],
         "correct": 2,
-        "id": "9g6v8e"
+        "id": "kvmuc2"
       },
       {
         "question": "Glavne ekonomske koristi turizma NE uključuju:",
@@ -949,7 +987,7 @@
           "rast kapitalnih ulaganja"
         ],
         "correct": 2,
-        "id": "g4w2pc"
+        "id": "1uzon1"
       },
       {
         "question": "S ekonomskog stajališta turist je:",
@@ -960,7 +998,7 @@
           "posrednik"
         ],
         "correct": 1,
-        "id": "3xj0b4"
+        "id": "mzprqo"
       },
       {
         "question": "Ekonomika turizma je dio:",
@@ -971,7 +1009,7 @@
           "humanističkih znanosti"
         ],
         "correct": 1,
-        "id": "egjt45"
+        "id": "hx2vw8"
       },
       {
         "question": "Zbog čega se obuhvat turizma ne može potpuno metodološki definirati?",
@@ -982,7 +1020,7 @@
           "jer turizam nije ekonomski važan"
         ],
         "correct": 1,
-        "id": "wt81cd"
+        "id": "w0jf5d"
       },
       {
         "question": "Politika tečaja i politika izvoznih poticaja suštinske su za:",
@@ -993,7 +1031,7 @@
           "ukidanje izvoza"
         ],
         "correct": 1,
-        "id": "lxuy6b"
+        "id": "mfh5ih"
       }
     ],
     "fillBlanks": [
@@ -1001,39 +1039,39 @@
         "sentence": "Turizam je visoko sofisticiran _______ sustav u okviru nacionalnog gospodarstva.",
         "answer": "integralni",
         "hint": "objedinjujući",
-        "id": "k7458o"
+        "id": "cdn217"
       },
       {
         "sentence": "S ekonomskog stajališta turist je _______.",
         "answer": "potrošač",
         "hint": "troši, ne proizvodi",
-        "id": "r0kb6u"
+        "id": "0kmnb1"
       },
       {
         "sentence": "Turizam ostvaruje inozemne prihode „nevidljivim _______\".",
         "answer": "izvozom",
         "hint": "izvoz na licu mjesta",
-        "id": "i5vfqv"
+        "id": "iz33uv"
       },
       {
         "sentence": "_______ turizma je dio ekonomskih znanosti koji analizira ekonomske učinke turizma.",
         "answer": "Ekonomika",
         "hint": "naziv discipline",
-        "id": "6fws2p"
+        "id": "dj6mia"
       },
       {
         "sentence": "Glavne ekonomske koristi turizma su rast dohotka, zapošljavanja, kapitalnih ulaganja i javnih _______.",
         "answer": "prihoda",
         "hint": "proračun države",
-        "id": "6q927i"
+        "id": "mm6e5s"
       }
     ],
     "learn": {
       "title": "Turizam u nacionalnom gospodarstvu",
       "content": "\n                <h3>Ekonomske koristi</h3>\n                <p>Turizam je iznimno važna komponenta mnogih nacionalnih gospodarstava. Glavne koristi:</p>\n                <div class=\"formula-box\">\n                    RAST DOHOTKA · RAST ZAPOŠLJAVANJA · RAST KAPITALNIH ULAGANJA · RAST JAVNIH PRIHODA\n                </div>\n                <p>Postoje i negativne posljedice, koje mogu sezati do ireverzibilnih promjena u društvu i okolišu — zato vlasti pomno utvrđuju koristi i štete.</p>\n\n                <h4>Turizam kao integralni sustav</h4>\n                <p>Turizam <strong>NIJE</strong> gospodarska djelatnost, grana, industrija, sektor ni gospodarstvo. To je <strong>visoko sofisticiran integralni sustav</strong> koji čine povezani, heterogeni, međuovisni i komplementarni fragmenti različitih grana. Zato se njegov obuhvat ne može metodološki potpuno definirati — dio učinaka uvijek ostaje skriven u nizu drugih djelatnosti. Najveća snaga proizlazi iz <strong>sinergijskog učinka</strong>.</p>\n\n                <h4>Ekonomika turizma</h4>\n                <p>Dio ekonomskih znanosti koji opisuje, analizira i objašnjava pojave i odnose u turizmu s gledišta ekonomskih učinaka, uzimajući u obzir i društvene i ekološke utjecaje.</p>\n                <ul>\n                    <li><strong>Makroekonomski aspekt</strong> — utjecaj na ukupne društveno-ekonomske odnose; traži sistemska rješenja i ekonomsku politiku.</li>\n                    <li><strong>Mikroekonomski aspekt</strong> — mnoštvo subjekata koji izravno/neizravno sudjeluju u turizmu.</li>\n                </ul>\n                <p>S ekonomskog stajališta <strong>turist je potrošač</strong> — privremeno se isključuje iz rada i troši dohodak ostvaren drugdje i u drugo vrijeme.</p>\n\n                <h4>Turizam u strategiji razvoja</h4>\n                <p>Za izvozno orijentirano gospodarstvo suštinske su <strong>politika tečaja</strong> (podiže konkurentnost i cjenovnu poziciju; fiksni ili plivajući tečaj) i <strong>politika izvoznih poticaja</strong> (fiskalni poticaji, carinske olakšice, kreditiranje i osiguranje izvoza, slobodne zone). Turizam ostvaruje devize <strong>„nevidljivim izvozom\"</strong>.</p>\n                <p>Tri koncepta razvoja turizma: model u <strong>zatvorenoj privredi</strong>, model baziran na <strong>državnim subvencijama</strong> i <strong>tržišni</strong> koncept. RH svoj razvoj temelji na jakim izvoznim sektorima.</p>\n            ",
-      "id": "2mie5u"
+      "id": "eqh4jj"
     },
-    "id": "t3ohlq"
+    "id": "244bm5"
   },
   "economicFunctions": {
     "name": "Ekonomske funkcije turizma",
@@ -1091,7 +1129,7 @@
           "zbroj svih poreza"
         ],
         "correct": 1,
-        "id": "px8acf"
+        "id": "bl71z7"
       },
       {
         "question": "Što NIJE razlog odljeva sredstava iz gospodarstva?",
@@ -1102,7 +1140,7 @@
           "repatrijacija profita"
         ],
         "correct": 2,
-        "id": "w0m26e"
+        "id": "wuemfi"
       },
       {
         "question": "Pretvaranje neprivrednih resursa u privredne opisuje:",
@@ -1113,7 +1151,7 @@
           "induktivnu funkciju"
         ],
         "correct": 1,
-        "id": "5a85yi"
+        "id": "rqtvpt"
       },
       {
         "question": "Koje obilježje zaposlenih u turizmu u RH je točno?",
@@ -1124,7 +1162,7 @@
           "dominira mlada radna snaga"
         ],
         "correct": 1,
-        "id": "9r373k"
+        "id": "10ro6g"
       },
       {
         "question": "Apsorpcijska funkcija temelji se na:",
@@ -1135,7 +1173,7 @@
           "povećanju uvoza"
         ],
         "correct": 1,
-        "id": "nzgi3l"
+        "id": "qzrl5n"
       },
       {
         "question": "Snaga turizma da razvija područja brže od drugih grana naziva se:",
@@ -1146,7 +1184,7 @@
           "konverzijska funkcija"
         ],
         "correct": 1,
-        "id": "xfvpy5"
+        "id": "mjlod0"
       }
     ],
     "fillBlanks": [
@@ -1154,39 +1192,39 @@
         "sentence": "_______ funkcija opisuje snagu turizma da umnožava inicijalno ostvareni dohodak.",
         "answer": "Multiplikativna",
         "hint": "množenje dohotka",
-        "id": "bce46d"
+        "id": "1pnlql"
       },
       {
         "sentence": "Dio novca koji na svakoj razini nestaje iz cirkulacije naziva se _______.",
         "answer": "odljev",
         "hint": "curenje sredstava",
-        "id": "dh8x2s"
+        "id": "yt1n31"
       },
       {
         "sentence": "_______ funkcija pretvara neprivredne resurse u privredne.",
         "answer": "Konverzijska",
         "hint": "pretvaranje",
-        "id": "an9i2x"
+        "id": "xbe80a"
       },
       {
         "sentence": "Ukupan multiplikativni učinak čini zbroj direktnih, indirektnih i _______ učinaka.",
         "answer": "induciranih",
         "hint": "potaknuti",
-        "id": "ututo4"
+        "id": "xow2pi"
       },
       {
         "sentence": "U hrvatskom turizmu dominira _______ radna snaga (sezonska, ženska, starija).",
         "answer": "sezonska",
         "hint": "privremena tijekom sezone",
-        "id": "dwhs6b"
+        "id": "04dlsv"
       }
     ],
     "learn": {
       "title": "Ekonomske funkcije turizma",
-      "content": "\n                <h3>Polifunkcionalnost</h3>\n                <p><strong>Ekonomske funkcije turizma</strong> su djelovanja usmjerena na ostvarivanje ekonomskih ciljeva koja rezultiraju ekonomskim učincima. One se međusobno ne isključuju, već su komplementarne i međuzavisne — to je <strong>ekonomska polifunkcionalnost</strong> turizma.</p>\n                <div class=\"formula-box\">\n                    FUNKCIJE: multiplikativna · induktivna · konverzijska · zapošljavanja ·<br>\n                    poticanja međunarodne razmjene · apsorpcijska · uravnoteženja platne bilance ·<br>\n                    razvoja nedovoljno razvijenih područja · integracijska · akceleracijska\n                </div>\n\n                <h4>Multiplikativna funkcija</h4>\n                <p>Snaga turizma da <strong>umnožava dohodak</strong> ostvaren inicijalnom potrošnjom kroz više ciklusa. Ukupni učinak = zbroj <strong>direktnih + indirektnih + induciranih</strong> učinaka. Multiplikativni učinak = inicijalna potrošnja × multiplikator (prosječan broj iteracija). Na svakoj razini dio novca izlazi iz cirkulacije — <strong>odljev</strong> (uvoz, štednja, porezi, plaće izvan zemlje, franšize, repatrijacija profita).</p>\n\n                <h4>Induktivna i konverzijska funkcija</h4>\n                <ul>\n                    <li><strong>Induktivna</strong> — počiva na multiplikaciji; potiče stvaranje nove i povećanje postojeće ponude (ekonomija razmjera).</li>\n                    <li><strong>Konverzijska</strong> — pretvara <em>neprivredne</em> resurse u <em>privredne</em> koji bez turizma ne bi ostvarivali prihod.</li>\n                </ul>\n\n                <h4>Zapošljavanje</h4>\n                <p>Izravno (ugostiteljstvo, posredništvo, promet, trgovina) i neizravno. Obilježja zaposlenih u RH: dominira <strong>ženska, starija, niže obrazovana i sezonska</strong> radna snaga. Turizam zapošljava sve kvalifikacije, mlade, oba spola, u manje razvijenim područjima.</p>\n\n                <h4>Ostale funkcije</h4>\n                <ul>\n                    <li><strong>Poticanje međunarodne razmjene</strong> — „nevidljivi izvoz\"; devizni prihodi.</li>\n                    <li><strong>Apsorpcijska</strong> — apsorbira višak kupovne moći iz razvijenih zemalja (globalna redistribucija dohotka).</li>\n                    <li><strong>Uravnoteženje platne bilance</strong> — stabilizacijska funkcija.</li>\n                    <li><strong>Redistribucija / kompenzacijska</strong> — preraspodjela dohotka i kapitala (međunarodno i nacionalno).</li>\n                    <li><strong>Integracijska</strong> — gospodarsko povezivanje regija (jadranska regija ≈ 95% prometa u RH).</li>\n                    <li><strong>Akceleracijska</strong> — razvija područja brže od drugih grana.</li>\n                </ul>\n            ",
-      "id": "7xuxcl"
+      "content": "\n                <h3>Polifunkcionalnost</h3>\n                <p><strong>Ekonomske funkcije turizma</strong> su djelovanja usmjerena na ostvarivanje ekonomskih ciljeva koja rezultiraju ekonomskim učincima. One se međusobno ne isključuju, već su komplementarne i međuzavisne — to je <strong>ekonomska polifunkcionalnost</strong> turizma.</p>\n                <div class=\"formula-box\">\n                    FUNKCIJE: multiplikativna · induktivna · konverzijska · zapošljavanja ·<br>\n                    poticanja međunarodne razmjene · apsorpcijska · uravnoteženja platne bilance ·<br>\n                    razvoja nedovoljno razvijenih područja · integracijska · akceleracijska\n                </div>\n\n                <h4>Multiplikativna funkcija</h4>\n                <p>Snaga turizma da <strong>umnožava dohodak</strong> ostvaren inicijalnom potrošnjom kroz više ciklusa. Ukupni učinak = zbroj <strong>direktnih + indirektnih + induciranih</strong> učinaka. Multiplikativni učinak = inicijalna potrošnja × multiplikator (prosječan broj iteracija). Na svakoj razini dio novca izlazi iz cirkulacije — <strong>odljev</strong> (uvoz, štednja, porezi, plaće izvan zemlje, franšize, repatrijacija profita).</p>\n\n                <h4>Induktivna i konverzijska funkcija</h4>\n                <ul>\n                    <li><strong>Induktivna</strong> — počiva na multiplikaciji; potiče stvaranje nove i povećanje postojeće ponude (ekonomija razmjera).</li>\n                    <li><strong>Konverzijska</strong> — pretvara <em>neprivredne</em> resurse u <em>privredne</em> koji bez turizma ne bi ostvarivali prihod.</li>\n                </ul>\n\n                <h4>Zapošljavanje</h4>\n                <p>Izravno (ugostiteljstvo, posredništvo, promet, trgovina) i neizravno. Obilježja zaposlenih u RH: dominira <strong>ženska, starija, niže obrazovana i sezonska</strong> radna snaga. Turizam zapošljava sve kvalifikacije, mlade, oba spola, u manje razvijenim područjima.</p>\n\n                <h4>Ostale funkcije</h4>\n                <ul>\n                    <li><strong>Poticanje međunarodne razmjene</strong> — „nevidljivi izvoz\"; devizni prihodi.</li>\n                    <li><strong>Apsorpcijska</strong> — apsorbira višak kupovne moći iz razvijenih zemalja (globalna redistribucija dohotka).</li>\n                    <li><strong>Uravnoteženje platne bilance</strong> — stabilizacijska funkcija.</li>\n                    <li><strong>Redistribucija / kompenzacijska</strong> — preraspodjela dohotka i kapitala (međunarodno i nacionalno).</li>\n                    <li><strong>Integracijska</strong> — gospodarsko povezivanje regija (jadranska regija ≈ 95% prometa u RH).</li>\n                    <li><strong>Akceleracijska</strong> — razvija područja brže od drugih grana.</li>\n                </ul>\n\n                <h4>Dopuna iz ekonomske teorije (EN izvor)</h4>\n                <p><strong>Pet najčešćih vrsta multiplikatora</strong> mjeri koliko inicijalna turistička potrošnja utječe na:</p>\n                <div class=\"formula-box\">\n                    1) multiplikator PRODAJE (transakcija) · 2) multiplikator OUTPUTA (proizvodnje) ·<br>\n                    3) multiplikator DOHOTKA · 4) multiplikator DODANE VRIJEDNOSTI ·<br>\n                    5) multiplikator ZAPOSLENOSTI\n                </div>\n                <p>U stvarnosti turistički multiplikator <strong>rijetko prelazi 2</strong>: kad su neizravni učinci jednaki izravnima, vrijednost je 2 (npr. 100 mil. € nove potrošnje doda manje od 200 mil. €). Što je veći <strong>odljev</strong> (uvoz, štednja), to je multiplikator manji.</p>\n            ",
+      "id": "vuitbc"
     },
-    "id": "i46y7x"
+    "id": "w7udpj"
   },
   "leisure": {
     "name": "Slobodno vrijeme i dokolica",
@@ -1229,7 +1267,7 @@
           "dokolica nije slobodno vrijeme"
         ],
         "correct": 1,
-        "id": "9maz28"
+        "id": "cvp702"
       },
       {
         "question": "Dokolica podrazumijeva:",
@@ -1240,7 +1278,7 @@
           "fiziološke potrebe"
         ],
         "correct": 1,
-        "id": "h6lpmx"
+        "id": "s5iiuk"
       },
       {
         "question": "Produktivno ponašanje u slobodnom vremenu znači da čovjek:",
@@ -1251,7 +1289,7 @@
           "troši bez cilja"
         ],
         "correct": 1,
-        "id": "6e4jlh"
+        "id": "bx7wra"
       },
       {
         "question": "Aktivnosti u dokolici određene su subjektivnim i:",
@@ -1262,7 +1300,7 @@
           "klimatskim čimbenicima"
         ],
         "correct": 1,
-        "id": "46noog"
+        "id": "6sdzyq"
       },
       {
         "question": "Za osobe koje slobodno vrijeme provode neproduktivno, njegovo povećanje je:",
@@ -1273,7 +1311,7 @@
           "jamstvo sreće"
         ],
         "correct": 1,
-        "id": "ot4o0h"
+        "id": "kud7mc"
       }
     ],
     "fillBlanks": [
@@ -1281,39 +1319,39 @@
         "sentence": "Svaka _______ je slobodno vrijeme, ali svako slobodno vrijeme nije dokolica.",
         "answer": "dokolica",
         "hint": "kvalitetno provedeno vrijeme",
-        "id": "yc9ijw"
+        "id": "8jyzov"
       },
       {
         "sentence": "Turistička dokolica je _______ komponenta slobodnog vremena.",
         "answer": "kvalitativna",
         "hint": "odnosi se na kvalitetu",
-        "id": "cw5lal"
+        "id": "aritmq"
       },
       {
         "sentence": "Aktivnosti u dokolici određene su subjektivnim i _______ čimbenicima.",
         "answer": "objektivnim",
         "hint": "ponuda, dostupnost",
-        "id": "ec9v0d"
+        "id": "u9baet"
       },
       {
         "sentence": "_______ (djelatno) ponašanje obogaćuje čovjekovu ličnost.",
         "answer": "Produktivno",
         "hint": "suprotno od potrošačkog",
-        "id": "yekf09"
+        "id": "yijicf"
       },
       {
         "sentence": "Slobodno vrijeme je ishodišna točka istraživanja _______.",
         "answer": "turizma",
         "hint": "predmet kolegija",
-        "id": "ppygxg"
+        "id": "pvpx8q"
       }
     ],
     "learn": {
       "title": "Slobodno vrijeme i dokolica",
       "content": "\n                <h3>Ishodište turizma</h3>\n                <p>Slobodno je vrijeme jedan od temeljnih faktora koji omogućava turizam; istraživanje turizma polazi iz njega. U suvremenom društvu izvor identiteta premješta se iz proizvodnje u <strong>potrošnju</strong> (potrošačko društvo), kao posljedica skraćivanja radnog vremena (sa 70 na 40 sati tjedno u sto godina).</p>\n\n                <h4>Slobodno vrijeme vs dokolica</h4>\n                <ul>\n                    <li><strong>Slobodno vrijeme</strong> — ostaje nakon radnih obveza, ali nije potpuno slobodno (obiteljske i društvene dužnosti).</li>\n                    <li><strong>Dokolica</strong> — ostaje nakon <em>svih</em> obveza (rad, radne i neradne obveze, fiziološke potrebe); kvalitetno i produktivno provedeno vrijeme.</li>\n                </ul>\n                <div class=\"formula-box\">\n                    SVAKA DOKOLICA JE SLOBODNO VRIJEME,<br>\n                    ALI SVAKO SLOBODNO VRIJEME NIJE DOKOLICA.\n                </div>\n\n                <h4>Čimbenici i ponašanje</h4>\n                <p>Aktivnosti u dokolici određuju <strong>subjektivni</strong> (društveni položaj, obrazovanje, sposobnosti, navike) i <strong>objektivni</strong> čimbenici (kulturno nasljeđe, aktualna ponuda, dostupnost).</p>\n                <ul>\n                    <li><strong>Produktivno (djelatno)</strong> — čovjek se potvrđuje kao činitelj, obogaćuje ličnost i doprinosi ekonomskom blagostanju.</li>\n                    <li><strong>Neproduktivno (potrošačko)</strong> — tek prividna ravnoteža, emocionalno pražnjenje; više slobodnog vremena vodi alijenaciji.</li>\n                </ul>\n                <p><strong>Turizam, slobodno vrijeme i turistička dokolica</strong> međuzavisne su pojave: slobodno vrijeme stvara prostor za turizam, a turistička dokolica njegova je kvalitativna komponenta koja kompenzira ono što nedostaje u svakodnevici (potrebna je „kultura odmora\").</p>\n            ",
-      "id": "iapdsq"
+      "id": "qgn8wb"
     },
-    "id": "7rh5ej"
+    "id": "a0pu00"
   },
   "socialFunctions": {
     "name": "Društvene (humanističke) funkcije turizma",
@@ -1361,7 +1399,7 @@
           "sportsko-rekreacijska"
         ],
         "correct": 2,
-        "id": "7e6qlt"
+        "id": "ps2t7q"
       },
       {
         "question": "Turisti koje posebno privlače predstave i koncerti (~30%) su:",
@@ -1372,7 +1410,7 @@
           "nezainteresirani za kulturu"
         ],
         "correct": 1,
-        "id": "l2gsdl"
+        "id": "tz8qgg"
       },
       {
         "question": "Wellness se definira kao:",
@@ -1383,7 +1421,7 @@
           "medicinska dijagnostika"
         ],
         "correct": 1,
-        "id": "y223mn"
+        "id": "g7em70"
       },
       {
         "question": "Politička funkcija turizma ogleda se u:",
@@ -1394,7 +1432,7 @@
           "smanjenju putovanja"
         ],
         "correct": 1,
-        "id": "kszkeo"
+        "id": "l30nio"
       },
       {
         "question": "Zdravstveni turizam obuhvaća preventivu, kurativu i:",
@@ -1405,7 +1443,7 @@
           "transport"
         ],
         "correct": 1,
-        "id": "0z41t0"
+        "id": "1tfdti"
       },
       {
         "question": "Na kojim funkcijama je turizam započeo i gradi budućnost?",
@@ -1416,7 +1454,7 @@
           "tehnološkim"
         ],
         "correct": 1,
-        "id": "148ucc"
+        "id": "vw2duv"
       }
     ],
     "fillBlanks": [
@@ -1424,39 +1462,39 @@
         "sentence": "Turisti _______ kulturom čine 5–15% turista i motivirani su isključivo kulturom.",
         "answer": "motivirani",
         "hint": "najviši stupanj interesa",
-        "id": "vrniop"
+        "id": "gycoab"
       },
       {
         "sentence": "_______ se definira kao cjelovit koncept zdravlja (kretanje, prehrana, opuštanje).",
         "answer": "Wellness",
         "hint": "engleski pojam",
-        "id": "h0g7rd"
+        "id": "w9kjst"
       },
       {
         "sentence": "Zdravstveni turizam obuhvaća preventivu, kurativu i _______.",
         "answer": "rehabilitaciju",
         "hint": "oporavak",
-        "id": "q9t557"
+        "id": "t2hmjr"
       },
       {
         "sentence": "_______ funkcija turizma pridonosi miru i razumijevanju među ljudima.",
         "answer": "Politička",
         "hint": "odnosi među narodima",
-        "id": "4tijlv"
+        "id": "kvdxvg"
       },
       {
         "sentence": "Turizam je započeo i gradi budućnost na _______ (humanističkim) funkcijama.",
         "answer": "društvenim",
         "hint": "ne ekonomskim",
-        "id": "osuo50"
+        "id": "p79zz5"
       }
     ],
     "learn": {
       "title": "Društvene (humanističke) funkcije turizma",
       "content": "\n                <h3>Zašto društvene funkcije?</h3>\n                <p>Zbog važnosti ekonomskih funkcija često se zapostavljaju društvene, no koristi turizma ne smiju se mjeriti samo ekonomski. <strong>Društvene (humanističke) funkcije</strong> su one na kojima je turizam započeo i na kojima gradi budući razvoj. Nužno ih je tretirati jednako važno kao ekonomske.</p>\n\n                <h4>Kulturno-obrazovna funkcija</h4>\n                <p>Omogućava upoznavanje i uživanje u kulturnim vrijednostima destinacije te pridonosi općoj naobrazbi (učenje jezika, stručni skupovi). Tri skupine kulturnih turista:</p>\n                <ul>\n                    <li><strong>Motivirani kulturom</strong> — 5–15% turista (npr. Dubrovačke ljetne igre).</li>\n                    <li><strong>Inspirirani kulturom</strong> — ~30%; privlače ih predstave, koncerti, izložbe.</li>\n                    <li><strong>Privučeni kulturom</strong> — posjećuju atrakcije ako su ponuđene, iako ih ne planiraju.</li>\n                </ul>\n\n                <h4>Zdravstvena funkcija</h4>\n                <p><strong>Zdravstveni turizam</strong> = privremena promjena boravišta u povoljno klimatsko/kupališno mjesto radi <strong>preventive, kurative i rehabilitacije</strong>.</p>\n                <ul>\n                    <li><strong>Medicinski turizam</strong> — postupci liječenja (plastična kirurgija, stomatologija).</li>\n                    <li><strong>Zdravstveno-preventivni</strong> — programi prevencije bolesti i očuvanja zdravlja.</li>\n                    <li><strong>Wellness</strong> — cjelovit koncept zdravlja: kretanje, vježbanje, prehrana, opuštanje, ovladavanje stresom.</li>\n                </ul>\n\n                <h4>Sportsko-rekreacijska funkcija</h4>\n                <p>Rekreacija je postala sinonim turizma. Iz nje se razvija <strong>sportski turizam</strong> (aktivni, događajni, nostalgični; natjecateljski, zimski i ljetni sportsko-rekreacijski).</p>\n\n                <h4>Politička i socijalna funkcija</h4>\n                <p><strong>Politička</strong> — doprinos miru i razumijevanju; <strong>socijalna</strong> — smanjenje socijalnih i klasnih razlika, zbližavanje kultura. Sociologija turizma istražuje odnose domaćeg stanovništva i turista.</p>\n            ",
-      "id": "pbwl6r"
+      "id": "sr5s3v"
     },
-    "id": "5fasaf"
+    "id": "4cbj49"
   },
   "expenditure": {
     "name": "Turistička potrošnja",
@@ -1504,7 +1542,7 @@
           "izgradnja hotela"
         ],
         "correct": 1,
-        "id": "2xum3r"
+        "id": "mu8ikf"
       },
       {
         "question": "Turistička potrošnja je finalna jer:",
@@ -1515,7 +1553,7 @@
           "je najveća potrošnja"
         ],
         "correct": 1,
-        "id": "tkpl7v"
+        "id": "1d5gkm"
       },
       {
         "question": "Koje NIJE faza turističke potrošnje?",
@@ -1526,7 +1564,7 @@
           "nakon smrti"
         ],
         "correct": 3,
-        "id": "3xj2un"
+        "id": "gbqrw9"
       },
       {
         "question": "Potrošač na turističkom putovanju u pravilu:",
@@ -1537,7 +1575,7 @@
           "ima visoku orijentaciju na vrijednost za novac"
         ],
         "correct": 1,
-        "id": "hi5i95"
+        "id": "p44gcf"
       },
       {
         "question": "Cjenovna pozicija destinacije i njezin imidž su:",
@@ -1548,7 +1586,7 @@
           "segmenti potrošnje"
         ],
         "correct": 1,
-        "id": "aaae3i"
+        "id": "80nd4j"
       },
       {
         "question": "Turistička potrošnja pripada dijelu osobne potrošnje koji je:",
@@ -1559,7 +1597,7 @@
           "državni"
         ],
         "correct": 1,
-        "id": "3tauj7"
+        "id": "yhxk2e"
       }
     ],
     "fillBlanks": [
@@ -1567,39 +1605,39 @@
         "sentence": "Turistička potrošnja je _______ svih ekonomskih učinaka turizma.",
         "answer": "polazište",
         "hint": "ishodište, temelj",
-        "id": "dl4azz"
+        "id": "hd6oe7"
       },
       {
         "sentence": "Turistička potrošnja je _______ jer se dobra konzumiraju bez stvaranja nove vrijednosti.",
         "answer": "finalna",
         "hint": "krajnja, neproizvodna",
-        "id": "sm9ob6"
+        "id": "3twe36"
       },
       {
         "sentence": "Tri faze potrošnje su: u mjestu boravka, na putu i u turističkoj _______.",
         "answer": "destinaciji",
         "hint": "odredište",
-        "id": "h6rznb"
+        "id": "0j224t"
       },
       {
         "sentence": "Dohodak i obrazovanje su _______ čimbenici turističke potrošnje.",
         "answer": "unutrašnji",
         "hint": "osobni",
-        "id": "3c7p1s"
+        "id": "w1610h"
       },
       {
         "sentence": "Na putovanju je utjecaj _______ čimbenika na potrošnju visok.",
         "answer": "iracionalnih",
         "hint": "nerazumskih",
-        "id": "8egu6y"
+        "id": "ifbzaf"
       }
     ],
     "learn": {
       "title": "Turistička potrošnja",
       "content": "\n                <h3>Polazište ekonomskih učinaka</h3>\n                <p><strong>Turistička potrošnja</strong> je potrošnja pojedinca na proizvode i usluge u pripremi i realizaciji putovanja i boravka, bez obzira na izvor sredstava. Obuhvaća potrošnju <strong>turista i izletnika</strong>. Nijedan ekonomski učinak nije ostvariv bez prethodne potrošnje posjetitelja.</p>\n\n                <h4>Obilježja</h4>\n                <ul>\n                    <li>Makroekonomski: dio <strong>osobne, finalne (neproizvodne)</strong> potrošnje.</li>\n                    <li><strong>Diskrecijska</strong> — nije uvjetovana nikakvom prisilom; jedan od najslobodnijih oblika potrošnje.</li>\n                    <li><strong>Finalna</strong> — dobra se konzumiraju bez stvaranja nove (dodane) vrijednosti.</li>\n                    <li>Financira se pretežno iz <strong>kućnog budžeta</strong>.</li>\n                </ul>\n\n                <h4>Segmenti i faze</h4>\n                <p>Segmenti: <strong>domaća</strong> i <strong>inozemna</strong>. Faze: u mjestu stalnog boravka → na putu → u destinaciji.</p>\n                <div class=\"formula-box\">\n                    KOD KUĆE: potrošnja iz nužde · dobro poznaje okolinu i supstitute ·<br>\n                    &nbsp;&nbsp;nizak utjecaj iracionalnog · visoka procjena vrijednosti za novac<br>\n                    NA PUTOVANJU: potrošnja iz zabave · ne poznaje okolinu ni supstitute ·<br>\n                    &nbsp;&nbsp;visok utjecaj iracionalnog · niska procjena vrijednosti za novac\n                </div>\n\n                <h4>Čimbenici potrošnje</h4>\n                <ul>\n                    <li><strong>Unutrašnji</strong> — dohodak, imovina, faza životnog ciklusa obitelji, obrazovanje, sigurnost, motivacija, kultura, navike.</li>\n                    <li><strong>Vanjski</strong> — cjenovna pozicija i imidž destinacije, razvijenost ponude, trendovi, marketing posrednika, kvaliteta radne snage, sigurnost putovanja.</li>\n                </ul>\n            ",
-      "id": "hc2gop"
+      "id": "gcq6rx"
     },
-    "id": "9uxovd"
+    "id": "1cdnly"
   },
   "economicEffects": {
     "name": "Ekonomski učinci turizma",
@@ -1642,7 +1680,7 @@
           "društvena funkcija"
         ],
         "correct": 1,
-        "id": "66hzk5"
+        "id": "p3qyv9"
       },
       {
         "question": "Što je POZITIVAN ekonomski učinak turizma?",
@@ -1653,7 +1691,7 @@
           "odljev sredstava"
         ],
         "correct": 2,
-        "id": "h4nei2"
+        "id": "7usq98"
       },
       {
         "question": "Ostvareni dolasci i noćenja spadaju u:",
@@ -1664,7 +1702,7 @@
           "društvene funkcije"
         ],
         "correct": 1,
-        "id": "laf01p"
+        "id": "ibabax"
       },
       {
         "question": "Udio turizma u BDP-u je:",
@@ -1675,7 +1713,7 @@
           "društveni učinak"
         ],
         "correct": 1,
-        "id": "ny3zfb"
+        "id": "fsl9a2"
       },
       {
         "question": "Zašto su ekonomski učinci turizma uglavnom procjene?",
@@ -1686,7 +1724,7 @@
           "jer se ne prate"
         ],
         "correct": 1,
-        "id": "yw61xi"
+        "id": "7qqgdz"
       },
       {
         "question": "Koje je NEGATIVNI ekonomski učinak?",
@@ -1697,7 +1735,7 @@
           "rast javnih prihoda"
         ],
         "correct": 2,
-        "id": "cm6aae"
+        "id": "5jfr75"
       }
     ],
     "fillBlanks": [
@@ -1705,39 +1743,39 @@
         "sentence": "Ostvareni turistički dolasci i noćenja primjer su _______ ekonomskih učinaka.",
         "answer": "fizičkih",
         "hint": "mjere se u jedinicama",
-        "id": "mf9e8u"
+        "id": "1k0xps"
       },
       {
         "sentence": "Udio turizma u BDP-u primjer je _______ ekonomskog učinka.",
         "answer": "financijskog",
         "hint": "novčani",
-        "id": "ns707l"
+        "id": "g9v38x"
       },
       {
         "sentence": "Rast vrijednosti valute za vrijeme sezone naziva se sezonska _______.",
         "answer": "aprecijacija",
         "hint": "jačanje valute",
-        "id": "aq3t2s"
+        "id": "yqylh6"
       },
       {
         "sentence": "Podaci o ekonomskim učincima turizma uglavnom su znanstvene _______, ne egzaktni izračuni.",
         "answer": "procjene",
         "hint": "približne vrijednosti",
-        "id": "pa704h"
+        "id": "qs09k9"
       },
       {
         "sentence": "Prekomjerna gospodarska _______ o turizmu je negativan ekonomski učinak.",
         "answer": "ovisnost",
         "hint": "oslanjanje",
-        "id": "r0e582"
+        "id": "gnlki0"
       }
     ],
     "learn": {
       "title": "Ekonomski učinci turizma",
       "content": "\n                <h3>Pojam</h3>\n                <p><strong>Ekonomski učinci turizma</strong> su promjene u strukturi gospodarstva emitivnih, tranzitnih i receptivnih područja kao posljedica turističkih kretanja, potrošnje i razvoja. U neraskidivoj su vezi s društvenim, kulturološkim, ekološkim i drugim učincima — nužan je sustavan, interdisciplinaran pristup.</p>\n                <p><em>Podaci su u pravilu znanstveno utemeljene procjene, a ne egzaktni izračuni</em> (jednostavniji učinci prate se kontinuirano, složeniji kvartalno/godišnje).</p>\n\n                <h4>Pozitivni učinci</h4>\n                <ul>\n                    <li>rast prihoda ponude, BDP-a, javnih prihoda i prihoda od izvoza</li>\n                    <li>rast izravnog i neizravnog zapošljavanja te poduzetničke aktivnosti</li>\n                    <li>rast kapitalnih ulaganja; aktiviranje neprivrednih resursa</li>\n                    <li>regionalni razvoj i rast životnog standarda</li>\n                </ul>\n\n                <h4>Negativni učinci</h4>\n                <ul>\n                    <li>sezonalnost; sezonska aprecijacija valute</li>\n                    <li>rast cijena proizvoda i nekretnina na receptivnim područjima</li>\n                    <li>rast uvoza zbog turizma; odljev sredstava</li>\n                    <li>prekomjerna gospodarska ovisnost o turizmu; niska stopa povrata na investicije</li>\n                </ul>\n\n                <h4>Fizički i financijski učinci</h4>\n                <div class=\"formula-box\">\n                    FIZIČKI: dolasci i noćenja · poslovni skupovi · krstarenja · registrirani posjetitelji ·<br>\n                    &nbsp;&nbsp;broj i struktura zaposlenih · kapaciteti objekata, marina i prijevoza<br>\n                    FINANCIJSKI: veličina i struktura potrošnje · prihodi/rashodi · udio u BDP-u ·<br>\n                    &nbsp;&nbsp;izvoz/uvoz usluga · javni prihodi (porezi, boravišna pristojba) · inozemna ulaganja\n                </div>\n                <p><strong>Pokazatelji fizičkih učinaka</strong>: prosječan broj noćenja po dolasku, iskorištenost kapaciteta, sezonske oscilacije, opteretni kapaciteti atrakcija.</p>\n            ",
-      "id": "8s6ou6"
+      "id": "4s8ejh"
     },
-    "id": "xr38o4"
+    "id": "xb5m9f"
   },
   "tsa": {
     "name": "Turistička satelitska bilanca (TSA)",
@@ -1780,7 +1818,7 @@
           "kategorizaciju hotela"
         ],
         "correct": 1,
-        "id": "shrno8"
+        "id": "glji3j"
       },
       {
         "question": "TSA prikazuje učinke na uravnotežen način, što znači:",
@@ -1791,7 +1829,7 @@
           "država = tržište"
         ],
         "correct": 1,
-        "id": "ggcf0a"
+        "id": "0c1z33"
       },
       {
         "question": "TSA — WTTC model utvrđuje doprinos turizma nacionalnom proizvodu i:",
@@ -1802,7 +1840,7 @@
           "cijeni goriva"
         ],
         "correct": 1,
-        "id": "mhcu31"
+        "id": "8pn2wy"
       },
       {
         "question": "Kakav je odnos TSA i Sustava nacionalnih računa (SNA)?",
@@ -1813,7 +1851,7 @@
           "nemaju veze"
         ],
         "correct": 1,
-        "id": "axrkwq"
+        "id": "ttz7uj"
       },
       {
         "question": "Koncepcija TSA obuhvaća:",
@@ -1824,7 +1862,7 @@
           "20 grafikona"
         ],
         "correct": 1,
-        "id": "psibi9"
+        "id": "f8jk4i"
       },
       {
         "question": "Što NIJE ulazna veličina za TSA?",
@@ -1835,7 +1873,7 @@
           "kapitalna ulaganja u turizam"
         ],
         "correct": 2,
-        "id": "8417mj"
+        "id": "drmrul"
       }
     ],
     "fillBlanks": [
@@ -1843,42 +1881,195 @@
         "sentence": "TSA prikazuje ekonomske učinke turizma na uravnotežen način, gdje je potražnja jednaka _______.",
         "answer": "ponudi",
         "hint": "druga strana tržišta",
-        "id": "2gg4t8"
+        "id": "l1970q"
       },
       {
         "sentence": "TSA je model za utvrđivanje _______ turizma ukupnoj ekonomiji.",
         "answer": "doprinosa",
         "hint": "udjela, koristi",
-        "id": "ktblga"
+        "id": "bi24dd"
       },
       {
         "sentence": "TSA preuzima podatke iz Sustava nacionalnih računa (SNA), ali nije njegov _______.",
         "answer": "dio",
         "hint": "sastavni element",
-        "id": "66iut0"
+        "id": "v7lhta"
       },
       {
         "sentence": "TSA — _______ model utvrđuje doprinos sektora Travel & Tourism.",
         "answer": "WTTC",
         "hint": "Svjetsko vijeće za putovanja i turizam",
-        "id": "18kca9"
+        "id": "isspi1"
       },
       {
         "sentence": "Koncepcija TSA obuhvaća 10 povezanih _______ i 7 popratnih listova.",
         "answer": "tablica",
         "hint": "redci i stupci",
-        "id": "59ridz"
+        "id": "aexa1v"
       }
     ],
     "learn": {
       "title": "Turistička satelitska bilanca (TSA)",
-      "content": "\n                <h3>Zašto TSA?</h3>\n                <p>Budući da turizam nije zasebna gospodarska djelatnost, njegov doprinos teško je izmjeriti. <strong>TSA (Turistička satelitska bilanca)</strong> osmišljena je da na <strong>uravnotežen</strong> (potražnja = ponuda) i konzistentan način prikaže vrijednosti ključnih ekonomskih učinaka turizma — model za utvrđivanje doprinosa turizma ukupnoj ekonomiji.</p>\n\n                <h4>Ulazne veličine</h4>\n                <p>Za TSA potrebno je utvrditi:</p>\n                <ul>\n                    <li>veličinu domaće turističke potrošnje</li>\n                    <li>potrošnju na poslovna putovanja u zemlji</li>\n                    <li>državnu potrošnju na turizam</li>\n                    <li>izvoz putem turizma</li>\n                    <li>kapitalna ulaganja u turizam</li>\n                </ul>\n\n                <h4>TSA — WTTC model</h4>\n                <p>Metodologija <strong>Svjetskog vijeća za putovanja i turizam (WTTC)</strong> utvrđuje doprinos sektora <em>Travel &amp; Tourism</em> ukupnoj ekonomiji — nacionalnom proizvodu i zaposlenosti. Uključuje svu osobnu potrošnju prije, tijekom i nakon putovanja (put, smještaj, prehrana, kupovina). Procjenjuje se:</p>\n                <div class=\"formula-box\">\n                    • udio turizma u BDP-u (izravno i neizravno)<br>\n                    • zapošljavanje u turizmu (izravno i neizravno)<br>\n                    • uvoz robe i usluga za potrebe turizma (odljev)<br>\n                    • udio javnih prihoda ostvarenih po osnovi turizma\n                </div>\n\n                <h4>Odnos prema SNA</h4>\n                <p>Koncepcija TSA obuhvaća <strong>10 povezanih tablica i 7 popratnih listova</strong>; ulazni podaci preuzimaju se ili deriviraju iz <strong>Sustava nacionalnih računa (SNA)</strong>. Naziv „satelitska\" znači da <em>kruži oko</em> nacionalnih računa — <strong>TSA nije sastavni dio metodologije SNA</strong>.</p>\n            ",
-      "id": "sncq4z"
+      "content": "\n                <h3>Zašto TSA?</h3>\n                <p>Budući da turizam nije zasebna gospodarska djelatnost, njegov doprinos teško je izmjeriti. <strong>TSA (Turistička satelitska bilanca)</strong> osmišljena je da na <strong>uravnotežen</strong> (potražnja = ponuda) i konzistentan način prikaže vrijednosti ključnih ekonomskih učinaka turizma — model za utvrđivanje doprinosa turizma ukupnoj ekonomiji.</p>\n\n                <h4>Ulazne veličine</h4>\n                <p>Za TSA potrebno je utvrditi:</p>\n                <ul>\n                    <li>veličinu domaće turističke potrošnje</li>\n                    <li>potrošnju na poslovna putovanja u zemlji</li>\n                    <li>državnu potrošnju na turizam</li>\n                    <li>izvoz putem turizma</li>\n                    <li>kapitalna ulaganja u turizam</li>\n                </ul>\n\n                <h4>TSA — WTTC model</h4>\n                <p>Metodologija <strong>Svjetskog vijeća za putovanja i turizam (WTTC)</strong> utvrđuje doprinos sektora <em>Travel &amp; Tourism</em> ukupnoj ekonomiji — nacionalnom proizvodu i zaposlenosti. Uključuje svu osobnu potrošnju prije, tijekom i nakon putovanja (put, smještaj, prehrana, kupovina). Procjenjuje se:</p>\n                <div class=\"formula-box\">\n                    • udio turizma u BDP-u (izravno i neizravno)<br>\n                    • zapošljavanje u turizmu (izravno i neizravno)<br>\n                    • uvoz robe i usluga za potrebe turizma (odljev)<br>\n                    • udio javnih prihoda ostvarenih po osnovi turizma\n                </div>\n\n                <h4>Odnos prema SNA</h4>\n                <p>Koncepcija TSA obuhvaća <strong>10 povezanih tablica i 7 popratnih listova</strong>; ulazni podaci preuzimaju se ili deriviraju iz <strong>Sustava nacionalnih računa (SNA)</strong>. Naziv „satelitska\" znači da <em>kruži oko</em> nacionalnih računa — <strong>TSA nije sastavni dio metodologije SNA</strong>.</p>\n\n                <h4>Dopuna iz teorije turizma (EN izvor)</h4>\n                <p>TSA razlikuje dvije vrste proizvoda:</p>\n                <ul>\n                    <li><strong>Karakteristični (tourism characteristic) proizvodi</strong> — oni koji bi u odsutnosti turizma prestali postojati u znatnoj mjeri (smještaj, prijevoz putnika, agencije, restorani).</li>\n                    <li><strong>Povezani (tourism connected) proizvodi</strong> — troše ih i turisti, ali bi postojali i bez turizma (trgovina na malo, gorivo).</li>\n                </ul>\n                <p><strong>Globalni etički kodeks turizma</strong> (UNWTO) — skup načela za odgovoran i održiv razvoj turizma koji uravnotežuje ekonomske, društvene, kulturne i okolišne interese svih dionika (turisti, domaćini, poduzeća, države).</p>\n            ",
+      "id": "imibk7"
     },
-    "id": "g25ax1"
+    "id": "5f5hf3"
+  },
+  "sustainability": {
+    "name": "Turizam, okoliš i održivi razvoj",
+    "icon": "fa-leaf",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "Kako turizam djeluje na okoliš?",
+        "answer": "Preko istih resursa o kojima ovisi (zrak, voda, tlo, priroda, krajobraz). Negativni učinci: onečišćenje, otpad, gubitak staništa, prekomjerno korištenje vode i energije, degradacija atrakcija.",
+        "explanation": "Turizam istodobno ovisi o okolišu i ugrožava ga."
+      },
+      {
+        "question": "Što je tržišni neuspjeh (market failure)?",
+        "answer": "Stanje u kojem tržište samo ne alocira resurse učinkovito pa nastaje šteta za društvo/okoliš — cijena ne odražava sve stvarne troškove.",
+        "explanation": "Tri glavna izvora: eksternalije, javna dobra i nepostojanje vlasničkih prava."
+      },
+      {
+        "question": "Što su eksternalije?",
+        "answer": "Učinci (troškovi ili koristi) koje netko trpi ili uživa, a nisu uključeni u tržišnu cijenu. Negativna eksternalija turizma: buka, gužve, onečišćenje koje snosi lokalna zajednica.",
+        "explanation": "Ključan uzrok tržišnog neuspjeha u okolišu."
+      },
+      {
+        "question": "Kako se dobra dijele prema isključivosti i suparništvu?",
+        "answer": "Privatna (isključiva + suparnička), javna (neisključiva + nesuparnička), klupska (isključiva + nesuparnička) i zajednička/opća dobra (neisključiva + suparnička).",
+        "explanation": "Plaža i more često su zajednička dobra → sklona prekomjernom korištenju."
+      },
+      {
+        "question": "Što je „tragedija zajedničkog dobra\"?",
+        "answer": "Kad svatko slobodno koristi zajednički resurs (npr. plažu, more) prema vlastitom interesu, resurs se prekomjerno iskorištava i propada jer nitko nije odgovoran za njegovo očuvanje.",
+        "explanation": "Tipičan problem zajedničkih dobara u turizmu."
+      },
+      {
+        "question": "Što je opteretni (prihvatni) kapacitet turizma?",
+        "answer": "Najveći broj posjetitelja koji istodobno mogu boraviti u destinaciji bez neprihvatljive štete za okoliš te bez pada kvalitete doživljaja posjetitelja (UNWTO).",
+        "explanation": "Prekoračenje vodi degradaciji resursa i nezadovoljstvu."
+      },
+      {
+        "question": "Što je održivi razvoj turizma i koja su mu tri stupa?",
+        "answer": "Razvoj koji zadovoljava potrebe sadašnjih turista i domaćina štiteći i unapređujući mogućnosti za budućnost. Tri stupa: ekonomski, društveni (sociokulturni) i okolišni.",
+        "explanation": "Definicija UNWTO (1995.); operacionalizirana Agendom 21."
+      },
+      {
+        "question": "Koje ekonomske instrumente država koristi za zaštitu okoliša?",
+        "answer": "Porezi na onečišćenje, naknade i pristojbe, subvencije za čiste tehnologije te dozvole/kvote (npr. trgovanje emisijama). Cilj: uključiti eksternalije u cijenu.",
+        "explanation": "Načelo „onečišćivač plaća\"."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Učinci koji nisu uključeni u tržišnu cijenu (npr. buka, onečišćenje) nazivaju se:",
+        "options": [
+          "subvencije",
+          "eksternalije",
+          "kamate",
+          "poticaji"
+        ],
+        "correct": 1,
+        "id": "h3vtjf"
+      },
+      {
+        "question": "Prekomjerno iskorištavanje slobodno dostupnog zajedničkog resursa naziva se:",
+        "options": [
+          "ekonomija razmjera",
+          "tragedija zajedničkog dobra",
+          "multiplikator",
+          "apsorpcijska funkcija"
+        ],
+        "correct": 1,
+        "id": "p06jow"
+      },
+      {
+        "question": "Tri stupa održivosti su ekonomski, društveni i:",
+        "options": [
+          "politički",
+          "okolišni",
+          "tehnološki",
+          "kulturni"
+        ],
+        "correct": 1,
+        "id": "zivb79"
+      },
+      {
+        "question": "Najveći broj posjetitelja koji destinacija podnosi bez neprihvatljive štete je:",
+        "options": [
+          "multiplikator",
+          "opteretni (prihvatni) kapacitet",
+          "elastičnost",
+          "boravišna pristojba"
+        ],
+        "correct": 1,
+        "id": "byegy6"
+      },
+      {
+        "question": "More i plaža koje svatko može koristiti, ali čije korištenje smanjuje dostupnost drugima, primjer su:",
+        "options": [
+          "privatnog dobra",
+          "javnog dobra",
+          "zajedničkog (općeg) dobra",
+          "klupskog dobra"
+        ],
+        "correct": 2,
+        "id": "nmuoik"
+      },
+      {
+        "question": "Načelo „onečišćivač plaća\" provodi se putem:",
+        "options": [
+          "ukidanja poreza",
+          "ekonomskih instrumenata (poreza, naknada, dozvola)",
+          "zabrane turizma",
+          "državnih subvencija turistima"
+        ],
+        "correct": 1,
+        "id": "okmnr4"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Učinci koji nisu uključeni u tržišnu cijenu nazivaju se _______.",
+        "answer": "eksternalije",
+        "hint": "vanjski učinci",
+        "id": "5g4dp9"
+      },
+      {
+        "sentence": "Prekomjerno iskorištavanje zajedničkog resursa je _______ zajedničkog dobra.",
+        "answer": "tragedija",
+        "hint": "propast resursa",
+        "id": "lggdxk"
+      },
+      {
+        "sentence": "Najveći broj posjetitelja bez neprihvatljive štete je _______ kapacitet.",
+        "answer": "opteretni",
+        "hint": "prihvatni",
+        "id": "vaw2vu"
+      },
+      {
+        "sentence": "Tri stupa održivosti su ekonomski, društveni i _______.",
+        "answer": "okolišni",
+        "hint": "environment",
+        "id": "f9b5z4"
+      },
+      {
+        "sentence": "Stanje u kojem tržište samo ne alocira resurse učinkovito je tržišni _______.",
+        "answer": "neuspjeh",
+        "hint": "market failure",
+        "id": "f7c91b"
+      }
+    ],
+    "learn": {
+      "title": "Turizam, okoliš i održivi razvoj",
+      "content": "\n                <h3>Turizam i okoliš</h3>\n                <p>Turizam je u dvostrukoj vezi s okolišem: <strong>ovisi</strong> o kvalitetnom okolišu (atraktivnost destinacije) i istodobno ga <strong>ugrožava</strong>. Djeluje preko istih resursa — zraka, vode, tla, prirode i krajobraza. Glavni negativni učinci: onečišćenje, otpad, gubitak staništa, prekomjerno korištenje vode i energije te degradacija atrakcija.</p>\n                <p><em>Napomena: HR skripta ovu temu tek dotiče (ekološki učinci, „ne umanjiti kvalitetu života budućih generacija\"); ova je cjelina dopunjena iz EN kolegija radi cjelovitosti.</em></p>\n\n                <h3>Tržišni neuspjeh (market failure)</h3>\n                <p>Do štete za okoliš dolazi jer tržište samo ne alocira resurse učinkovito — cijena ne odražava sve stvarne troškove. Tri glavna izvora:</p>\n                <ul>\n                    <li><strong>Eksternalije</strong> — troškovi/koristi izvan cijene (npr. buku i gužve snosi lokalna zajednica).</li>\n                    <li><strong>Javna dobra</strong> — nitko ne plaća izravno pa se prekomjerno koriste.</li>\n                    <li><strong>Nepostojanje vlasničkih prava</strong> — nitko nije odgovoran za očuvanje resursa.</li>\n                </ul>\n\n                <h4>Podjela dobara i tragedija zajedničkog dobra</h4>\n                <div class=\"formula-box\">\n                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ISKLJUČIVO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NEISKLJUČIVO<br>\n                    SUPARNIČKO&nbsp;&nbsp;&nbsp;privatno&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;zajedničko (opće)<br>\n                    NESUPARNIČKO&nbsp;klupsko&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;javno\n                </div>\n                <p><strong>Tragedija zajedničkog dobra</strong>: kad svatko slobodno koristi zajednički resurs (plaža, more, čisti zrak) prema vlastitom interesu, resurs se prekomjerno iskorištava i propada jer za njegovo očuvanje nitko nije odgovoran.</p>\n\n                <h4>Opteretni (prihvatni) kapacitet</h4>\n                <p>Prema UNWTO-u, najveći broj posjetitelja koji istodobno mogu boraviti u destinaciji <strong>bez neprihvatljive štete za okoliš</strong> i <strong>bez pada kvalitete doživljaja</strong>. Prekoračenje vodi degradaciji i nezadovoljstvu.</p>\n\n                <h3>Održivi razvoj turizma</h3>\n                <p><strong>Definicija (UNWTO 1995.):</strong> razvoj koji zadovoljava potrebe sadašnjih turista i domaćina, štiteći i unapređujući mogućnosti za budućnost. Operacionaliziran <strong>Agendom 21</strong>.</p>\n                <div class=\"formula-box\">\n                    TRI STUPA ODRŽIVOSTI: EKONOMSKI · DRUŠTVENI (sociokulturni) · OKOLIŠNI\n                </div>\n                <p>Održivi turizam mora biti ekonomski isplativ, društveno pravedan i okolišno odgovoran istodobno. U širem okviru povezuje se s <strong>UN-ovim ciljevima održivog razvoja (SDG)</strong>.</p>\n                <p><strong>Ekonomski instrumenti zaštite</strong> (načelo „onečišćivač plaća\"): porezi na onečišćenje, naknade i pristojbe, subvencije za čiste tehnologije te dozvole/kvote (trgovanje emisijama) — svrha im je uključiti eksternalije u cijenu.</p>\n            ",
+      "id": "2buze6"
+    },
+    "id": "kgveky"
   },
   "examPractice": {
-    "id": "cjlprm",
+    "id": "zwuxrn",
     "name": "Ispitna pitanja (sve teme)",
     "icon": "fa-graduation-cap",
     "color": "#6366f1",
@@ -1926,7 +2117,7 @@
     ],
     "quiz": [
       {
-        "id": "3l96sj",
+        "id": "nfpf7v",
         "question": "Posrednici koji snose rizik za neprodane kapacitete jesu:",
         "options": [
           "turističke agencije",
@@ -1937,7 +2128,7 @@
         "correct": 1
       },
       {
-        "id": "7amiz7",
+        "id": "mfjcr7",
         "question": "Obilježje ponude „nemogućnost prostornog premještanja\" naziva se:",
         "options": [
           "diverzificiranost",
@@ -1948,7 +2139,7 @@
         "correct": 2
       },
       {
-        "id": "nqi3cp",
+        "id": "v6e57n",
         "question": "Što se definira kao „visoko sofisticiran integralni sustav u okviru nacionalnog gospodarstva\"?",
         "options": [
           "turistička djelatnost",
@@ -1959,7 +2150,7 @@
         "correct": 2
       },
       {
-        "id": "bexp8g",
+        "id": "0zmbx6",
         "question": "Dohodak korigiran za inflacijski utjecaj na cijene je:",
         "options": [
           "nominalni dohodak",
@@ -1970,7 +2161,7 @@
         "correct": 1
       },
       {
-        "id": "3jdecx",
+        "id": "m0kue1",
         "question": "Čimbenike utjecaja na potražnju Freyer dijeli na:",
         "options": [
           "ekonomske, društvene i ekološke",
@@ -1981,7 +2172,7 @@
         "correct": 1
       },
       {
-        "id": "gtefs4",
+        "id": "hc2o03",
         "question": "Sposobnost turizma da pretvara neprivredne resurse u privredne je:",
         "options": [
           "multiplikativna funkcija",
@@ -1992,7 +2183,7 @@
         "correct": 1
       },
       {
-        "id": "mrfr5n",
+        "id": "sawasc",
         "question": "TSA je model za utvrđivanje:",
         "options": [
           "cijena hotela",
@@ -2003,7 +2194,7 @@
         "correct": 1
       },
       {
-        "id": "e9vuwf",
+        "id": "xipvyu",
         "question": "Turistička potrošnja je polazište svih:",
         "options": [
           "društvenih funkcija",
@@ -2014,7 +2205,7 @@
         "correct": 1
       },
       {
-        "id": "g7vg7h",
+        "id": "vg1bbn",
         "question": "Element koji NE spada u ocjenu turističkih resursa je:",
         "options": [
           "stupanj atraktivnosti",
@@ -2025,7 +2216,7 @@
         "correct": 2
       },
       {
-        "id": "c34y3s",
+        "id": "6nwrb2",
         "question": "Sezonska aprecijacija valute je:",
         "options": [
           "pozitivan ekonomski učinak",
@@ -2038,44 +2229,44 @@
     ],
     "fillBlanks": [
       {
-        "id": "cvsquf",
+        "id": "aiqbci",
         "sentence": "Za razliku od ponude koja je neelastična, turistička potražnja je _______.",
         "answer": "elastična",
         "hint": "reagira na promjene"
       },
       {
-        "id": "s8w2ru",
+        "id": "pb8mr3",
         "sentence": "Turizam je visoko sofisticiran _______ sustav u okviru nacionalnog gospodarstva.",
         "answer": "integralni",
         "hint": "objedinjuje mnoge grane"
       },
       {
-        "id": "k2n9qi",
+        "id": "jyw3im",
         "sentence": "Turoperator posluje u svoje ime i za _______ račun te snosi rizik.",
         "answer": "svoj",
         "hint": "vlastiti"
       },
       {
-        "id": "vhftat",
+        "id": "48y8ef",
         "sentence": "_______ funkcija umnožava inicijalno ostvareni dohodak kroz više ciklusa.",
         "answer": "Multiplikativna",
         "hint": "množenje"
       },
       {
-        "id": "d3vayd",
+        "id": "9k6i2a",
         "sentence": "TSA preuzima podatke iz Sustava nacionalnih računa, ali nije njegov _______.",
         "answer": "dio",
         "hint": "sastavni element"
       },
       {
-        "id": "44mh68",
+        "id": "ttfusa",
         "sentence": "Turistička potrošnja je _______ svih ekonomskih učinaka turizma.",
         "answer": "polazište",
         "hint": "ishodište"
       }
     ],
     "learn": {
-      "id": "ptkrdr",
+      "id": "sfee07",
       "title": "Ispitna priprema — most kroz obje cjeline",
       "content": "\n                <h3>Kako je ispit posložen</h3>\n                <p>Završni objedinjuje <strong>1. kolokvij</strong> (pojmovi, tržište, ponuda/potražnja, resursi, posrednici, turizam u gospodarstvu) i <strong>2. kolokvij</strong> (ekonomske i društvene funkcije, slobodno vrijeme, potrošnja, ekonomski učinci, TSA). Ova kartica povezuje cjeline u nekoliko okosnica koje se najčešće ispituju.</p>\n\n                <h4>Četiri okosnice za ponavljanje</h4>\n                <div class=\"formula-box\">\n                    1) POTREBA → (slobodno vrijeme + slobodni dohodak) → POTROŠNJA → EKONOMSKI UČINCI<br>\n                    2) PONUDA (neelastična, statična) ↔ POTRAŽNJA (elastična, dislocirana)<br>\n                    3) TURIZAM = integralni sustav → obuhvat se ne može potpuno mjeriti → TSA<br>\n                    4) FUNKCIJE: ekonomske (multiplikativna, konverzijska…) + društvene (kulturna, zdravstvena…)\n                </div>\n\n                <h4>Najčešće zamke</h4>\n                <ul>\n                    <li><strong>Agencija vs turoperator</strong> — agencija: provizija, tuđi račun, bez rizika; turoperator: vlastiti proizvod, na veliko, snosi rizik.</li>\n                    <li><strong>Elastičnost</strong> — ponuda je NEelastična, potražnja JE elastična (primarna: dohodovna i cjenovna).</li>\n                    <li><strong>Realni vs slobodni dohodak</strong> — realni = korigiran za inflaciju; slobodni = ostaje za potrošnju/štednju i određuje turističku potrošnju.</li>\n                    <li><strong>Atrakcija vs resurs</strong> — svaka atrakcija je resurs, ali svaki resurs nije atrakcija.</li>\n                    <li><strong>TSA i SNA</strong> — TSA koristi podatke SNA, ali nije njegov dio.</li>\n                </ul>\n                <p>Detaljna razrada svake teme nalazi se u sekcijama <em>Uči</em> pojedinih kategorija 1. i 2. kolokvija.</p>\n            "
     }
