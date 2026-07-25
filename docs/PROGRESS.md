@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25 (FABLE) — RISK-SPRINT #4 keep-alive IZGRAĐEN (sprint 7/7 izgrađeno; aktivacija = main-merge)
+**Kontekst:** Post-compact; Leon: „pregledaj cijeli projekt … koja je sljedeća cigla" → detaljna analiza (repo živo provjeren: HEAD `0cd270f`, čisto, origin 0/0, 79↑/1↓ vs main) → #4 keep-alive potvrđena kao zadnja cigla sprinta → Leon: „kreni".
+**#4 keep-alive ✅ IZGRAĐEN (PREVIEW):**
+- **Rizik koji krpa:** Supabase free-tier pauzira projekt nakon ~7 dana neaktivnosti → login/cloud-sync/DB-read padaju (app fallbacka na datoteke, auth ne radi). Load-test #7 dokazao da propusnost NIJE rizik — **SLEEP je zadnji Tier-1 rizik dostupnosti** za rujan.
+- **`.github/workflows/keep-alive.yml`:** dnevni cron **05:17 UTC** (ne top-of-hour → manji GitHub delay/drop; ~7-dnevni prag = ogroman buffer) + `workflow_dispatch` (ručni test). Ping = **1 lagani read-only anon upit** (`subject_content?select=subject_id&limit=1` kroz PostgREST) čistim curl-om — bez checkouta/Node-a = najbrži/najjeftiniji job. **Anon key javan po dizajnu** (zrcali `js/auth.js`; RLS štiti podatke) → nula tajni u workflowu.
+- **Tvrdi fail po dizajnu** (za razliku od `check:final`/`load-probe` graceful-skipa): crveni run = keep-alive ne radi = vidljiv signal. Guard traži **neprazan JSON-redak** (`[{…]`) — dokaz da je upit prošao kroz Postgres, ne samo gateway; prazan `[]`/error-objekt = fail.
+- **Dokazi:** YAML parse OK (job `ping`, cron+dispatch) · **identična komanda uživo vs PROD → `[{"subject_id":"marketing"}]`** (read-only, 1 redak) · guard negativno testiran (`[]` FAIL / error-objekt FAIL / pravi redak PASS). Bez bumpa (workflow-yml nije css/js/data).
+- **⚠️ KLJUČNO OGRANIČENJE (zapisano u workflow + §12.4):** GitHub pokreće `schedule` SAMO s default-grane → workflow se **AKTIVIRA TEK MERGE-om na `main`**; postojeći CI `authed` job budi bazu samo na push (ljeti bez pusheva ne štiti).
+**Sprint sad 7/7 IZGRAĐENO** (#1–#7). **PREOSTALO SAMO AKTIVACIJA NA PRODU:** merge grane na `main` = aktivira #4 (cron) + deploya #5 (pin+SRI) + cijeli U8 Studio — **jedan „idemo na prod" trenutak uz Leonov izričit OK**. Nakon toga: povratak U8 (U8.5e → f → U8.10 → U8.6 VIZUAL) + Saša te2-hr rebase→PR→lead-review.
+
 ## 2026-07-24 (OPUS) — RISK-SPRINT #3 backup KOMPLETAN (sprint 6/7) + compact-prep
 **Kontekst:** Nastavak istog dana. Leon odabrao #3 kao sljedeću ciglu; nakon istrage ADR-016 zaključeno da **lokalna** backup-skripta sa `service_role` iz `.env` NIJE prekršaj (ADR-016 zabranjuje samo DEPLOYane sustave; presedan = `migrate-content.js` već koristi `SUPABASE_SERVICE_KEY`). Leon dao izričit „da" za lokalni `service_role`.
 **#3 backup ✅ (`259c9c1` + restore dodaci, PREVIEW):**
