@@ -5,6 +5,18 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25-b (FABLE) — U8 nastavak: vizualna revizija editora (2 buga popravljena) + U8.5e resize+callout
+**Kontekst:** Leon: „nastavi s U8.5, pregledaj editor/learn, screenshotaj i pronađi greške" → napravljena screenshot-tura kroz Studio (staging admin, 14 shotova, 0 console grešaka u toku) → **3 vizualna nalaza** → 2 bug-fixa + U8.5e u istoj cigli.
+**Nalazi vizualne revizije:**
+1. **Studio prikazivao SIROVE i18n ključeve** (`studio.pickHint`, `studio.publishHint`, `studio.cards`, „22 studio.changes"…) — lokalni `t(key, fb)` u `studio.js` zvao globalni `window.t(key)` koji **vraća ključ** kad prijevoda nema (studio.* nisu u rječniku) → hrvatski fallbackovi nikad prikazani. **Fix:** ključ==rezultat ⇒ fallback (svih 26 poziva ima fb). Sada cijeli Studio govori hrvatski.
+2. **＋ tip-izbornik gotovo nevidljiv** — appendan u `anchor.parentNode` (mali ＋ → `.be-adder` s `opacity:0`; veliki ＋ → `.be-root`) pa nasljeđivao opacity/stacking predaka → poluproziran ISPOD kartica. **Fix:** meni na `document.body`, `position:fixed` uz sidro (centriran, clamp na viewport, flip iznad ako ne stane), z-index 1400 (isti rang kao `.be-toolbar`).
+3. **Slika-preview bez ograničenja** — SVG bez intrinzičnih dimenzija (logo.svg) razvukao preview preko cijelog canvasa. **Fix:** editor-cap `340px` + `width:100%` default (bez toga SVG kolabira na 0px — nađeno debug-skriptom); student-render netaknut. (Manji nalaz: B/I traka se preklapa s header-om bloka — kozmetika, ide u U8.6 vizual-prolaz.)
+**U8.5e ✅ (resize slike + callout-varijanta):**
+- **Slika `width`** (kurirano 10–99 %; 100 = default → ključ se briše): **⇲ drag-ručka** + %-badge u previewu (prežive preview-refresh jer su dio `imagePreviewHtml`); `imageResizePointerDown` u media-modulu (pointerdown → živi `style.width` bez opova → JEDAN `updateLearnBlock {width}` na puštanju); jezgra ožičila `pointerdown`. **Renderer** emitira `style="width:NN%"` SAMO za validan zaokruženi broj (ne-broj/izvan raspona/injekcija se ignorira — test to zaključava). **Schema** `blockImage` +`width` (10–100).
+- **Callout:** varijanta-gumbi ℹ️ info / ⚠️ warning / 💡 tip (klik → op + redraw, aktivna `.on`) + naslov kroz `data-be-mfield="title"` (postojeći change-handler; prazno=null briše). Renderer je oboje VEĆ podržavao (`lb-callout--*` + title) — cigla je čisti UI.
+**Dokazi:** unit **block-editor 53/0** (+4: cvar gumbi/escape/ručka/badge) + **blocks-renderer 25/0** (+2: width valid/invalid+injekcija) → ukupno **353/0** · **authed studio 11/11 UŽIVO** (novi U8.5e test: varijanta+naslov u draft · **pravi mouse-drag** ručke → `width` 10–99 u draftu; `scrollIntoViewIfNeeded` nužan — ručka izvan viewporta = mouse-event u prazno) · preflight **EXIT 0** · bump 104 · vizualna verifikacija ponovnom turom (meni čitljiv na body-u; svi stringovi HR; slika ukroćena s ručkom i badgeom).
+**SLIJEDI:** U8.5f (boje sekcija) → U8.10 (tablica-paste) → U8.6 (VIZUAL ZADNJI). Prod netaknut; sve na `feature/u6-structural-ops` (preview).
+
 ## 2026-07-25 (FABLE) — RISK-SPRINT #4 keep-alive IZGRAĐEN (sprint 7/7 izgrađeno; aktivacija = main-merge)
 **Kontekst:** Post-compact; Leon: „pregledaj cijeli projekt … koja je sljedeća cigla" → detaljna analiza (repo živo provjeren: HEAD `0cd270f`, čisto, origin 0/0, 79↑/1↓ vs main) → #4 keep-alive potvrđena kao zadnja cigla sprinta → Leon: „kreni".
 **#4 keep-alive ✅ IZGRAĐEN (PREVIEW):**
