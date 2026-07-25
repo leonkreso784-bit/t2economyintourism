@@ -105,6 +105,15 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
   kao zasebni mali koraci (svaki testabilan/commitabilan). Kvadratić se gradi slojevito, ne u jednom velikom PR-u.
 - Alt: sve odjednom (veći, teže za review/rollback).
 
+### 4.1 ODLUKE — PRESUĐENE (Leon, 2026-07-25) 🔒
+- **D1 = `contenteditable` naslov** (izgleda kao naslov, ne polje; `focusout`→`updateCategory{name}`).
+- **D2 = chrome bloka STANJEN** (bez tip-labele; ↑↓✕ samo na hover; blokovi teku kao tijelo).
+- **D3 = JEDAN vidljivi naslov = `cat.name`** (`learn.title` se ne izlaže u edit-modu; view nepromijenjen).
+- **D4 = VANILLA pointer-drag** (bez SortableJS; `pointerdown/move/up`→`reorderBlocks`/`reorderCategories`; nula ovisnosti).
+- **D5 = SUPTILNI tint + rub/glow** (8–14% boje preko tamne kartice; čitljivost WCAG na tamnoj temi).
+- **D6 = SLOJEVITO korak-po-korak** (K1→K6, svaki mali/testabilan/commitabilan; ne u jednom zamahu).
+→ Sve odluke zaključane → gradnja kreće po planu §6 (K1) uz Leonov „kreni".
+
 ## 5. Izmjene po datoteci (kad odluke padnu)
 - **`js/studio.js`** — `renderLearnPane` EDIT-grana: `st-learn-cat` → kvadratić-kartica (broj + uredljiv naslov +
   color-dot + drag-ručka + 🗑); ožičiti naslov `focusout`→`updateCategory{name}`; VIEW `st-kv` uskladiti.
@@ -146,4 +155,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ POTREBNE ODLUKE PRIJE KODA: D1, D2, D3, D4, D5, D6 (§4). Kad ih presudimo → K1 kreće.
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). Definicija potpuna → **K1 kreće uz Leonov „kreni".**
