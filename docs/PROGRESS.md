@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25-c (FABLE) — U8.5f boje sekcija → U8.5 KOMPLETAN (a–f)
+**Kontekst:** Leon: „možeš krenuti na sljedeću ciglu" → U8.5f po planu.
+**Ključni uvid (prizemljenje):** `color` je **već obavezno meta-polje kategorije** (schema `#rrggbb`), `updateCategory` op ga **već podržava** (U6b, ALLOWED mapa), a Studio canvas **već koristi** `cat.color` kao `--st-acc` akcent na learn-sekcijama i kartice/kviz/fill stavkama (U8.1) → cigla = čisti UI, nula backend promjena.
+**U8.5f ✅:**
+- **Kvadratić-paleta uz naslov svake sekcije u edit-modu** (learn `.st-learn-cathead` + kartice/kviz/fill `.st-seclbl`): 6 kuriranih boja (iste kao panel-legenda: indigo/zeleni/amber/crveni/cijan/ljubičasti) + **native color-input** za vlastitu boju (dugin kružić). Aktivna boja označena prstenom (`.on`).
+- Klik → `setCatColor` (validira **točno `#rrggbb`** kao schema-pattern) → `bridge().applyOp({updateCategory, patch:{color}})` → re-render → **akcent se istog trena nasljeđuje** na learn-sekciju, kartice, kviz i dopune — „nasljeđivanje" iz dizajn-ugovora (EDITOR_UX) sad vidljivo uživo.
+- Inspektor-panel „BOJE SEKCIJA" prestao biti stub: uputa („klikni kvadratić uz naslov sekcije…") + legenda iz iste `SECTION_COLORS` konstante.
+**Dokazi:** **authed studio 12/12 UŽIVO** (novi trajni test: klik zeleni kvadratić → draft `color==#10b981` + chip dirty + `.on` + akcent na learn-sekciji + prebaci na kartice-tab → isti kvadratić `.on` i akcent na stavkama te kategorije) · preflight **EXIT 0** · bump 104 (`20260725175714`) · vizualni dokaz screenshotom (zelena lijeva linija sekcije + označeni kvadratić + novi panel-tekst).
+**SLIJEDI:** U8.10 (tablica-paste) → U8.6 (VIZUAL ZADNJI) → U8.7/U8.8. Prod netaknut.
+
 ## 2026-07-25-b (FABLE) — U8 nastavak: vizualna revizija editora (2 buga popravljena) + U8.5e resize+callout
 **Kontekst:** Leon: „nastavi s U8.5, pregledaj editor/learn, screenshotaj i pronađi greške" → napravljena screenshot-tura kroz Studio (staging admin, 14 shotova, 0 console grešaka u toku) → **3 vizualna nalaza** → 2 bug-fixa + U8.5e u istoj cigli.
 **Nalazi vizualne revizije:**
