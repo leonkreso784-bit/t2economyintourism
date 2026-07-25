@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-b (OPUS) — F7 K2 ✅: kvadratić-kartica vizual (broj + prominentan naslov + tijelo, VIEW/EDIT usklađeni)
+**Kontekst:** Leon „nastavi dalje" (nakon što je dobio preview-link za probu K1) → K2 iz `EDITOR_F7_SPEC.md §6`.
+**K2 ✅ (`js/studio.js` + `css/studio.css`; NULA promjene sheme/ops/rendera):** EDIT learn-sekcija (`st-learn-cat`) prestala biti plosnata traka i postala **prava kvadratić-kartica**, vizualno usklađena s VIEW `st-kv`:
+- **broj-badge** (`.st-n`, dijeljeni selektor s VIEW) + **prominentan naslov** (`.st-cat-name` sad 16.5px/700, kao VIEW `h2` — više nije sitni uppercase label) + paleta boja desno; **tijelo-omotač** `.st-learn-body` drži blok-editor (v2) ili v1-preview+migracija.
+- kartica dobila **gradijent-pozadinu + radius 18 + `::before` accent-traku** (boja sekcije, sa suptilnim glow-om) = isti card-jezik kao read-only preview. v1-grana više **ne ugnježđuje** `st-kv` u `st-learn-cat` (čišće — kartica JE kvadratić, tijelo je sadržaj).
+- **Bez pop-animacije na edit-kartici** (edit-mod se re-crta na svaku op → izbjegnut trzaj; pop ostaje samo na read-only preview).
+**Dokazi:** preflight **EXIT 0** (unit 58/0) · **puni `studio.authed` 14/14 uživo vs staging** (0 regresije od strukturne izmjene — U8.2 migracija/U8.3–U8.5/U8.9b/U8.5f/K1 svi zeleni) · screenshot-provjera (2 kvadratića: broj-badge+naslov+accent-traka+paleta; blok-editor u tijelu s „＋ Dodaj blok") · build:css bundle + bump 104.
+**SLIJEDI:** K3 (stanjen chrome bloka — bez tip-labele, ↑↓✕ na hover) → K4 boja cijelog bloka → K5 ＋ afordancija → K6 drag.
+
 ## 2026-07-26 (OPUS) — F7 K1 ✅: uredljiv naslov sekcije (kvadratić) → `updateCategory{name}`
 **Kontekst:** Leon (nakon razgovora o budućem frontend/UGC redizajnu — dogovoreno **NAKON** CRUD-a): „nastavi ti sa prvom isplaniranom i već zapisanom ciglom" = izričit „kreni" za **K1** iz `EDITOR_F7_SPEC.md`.
 **K1 ✅ (prvi sloj F7 kvadratića; `js/studio.js` + `css/studio.css` + test):**

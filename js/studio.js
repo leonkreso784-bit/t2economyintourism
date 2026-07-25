@@ -362,24 +362,27 @@ const SokratStudio = (function () {
         return;
       }
 
-      // EDIT-MOD — naslov sekcije = uredljiv (K1/F7): contenteditable → updateCategory {name} na focusout.
-      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">' +
-        '<span class="st-cat-sec" aria-hidden="true">§</span> ' +
+      // EDIT-MOD — kvadratić-kartica (K2): broj-badge + uredljiv naslov (K1) + tijelo-omotač;
+      // vizual usklađen s VIEW `st-kv` (isti card-jezik). Naslov = contenteditable → updateCategory{name}.
+      out += '<div class="st-learn-cat"' + accStyle + '>' +
+        '<div class="st-learn-cathead">' +
+        '<span class="st-n">' + n + '</span>' +
         '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
         'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +
         catName + '</span>' +
-        colorDots(catId, c.color) + '</div>';
+        colorDots(catId, c.color) + '</div>' +
+        '<div class="st-learn-body">';
       if (kind === 'v2') {
         // blok-editor (kvadratići) — montira se u post-renderu
         out += '<div class="be-mount" data-be-cat="' + esc(catId) + '"></div>';
       } else {
-        // v1: read-only + sigurna migracija na blokove (learn.js bira blokove nad content → ne montiramo editor na v1)
-        out += '<div class="st-kv"' + accStyle + '><div class="st-body">' + renderLearnBody(c.learn, 'v1') + '</div></div>' +
+        // v1: read-only tijelo + sigurna migracija na blokove (learn.js bira blokove nad content → ne montiramo editor na v1)
+        out += '<div class="st-body">' + renderLearnBody(c.learn, 'v1') + '</div>' +
           '<div class="st-legacy-note">' + esc(t('studio.v1Note', 'Stari format (jedan HTML). Prebaci na blokove za uređivanje po kvadratićima:')) + '</div>' +
           '<button type="button" class="st-migrate" data-migrate-cat="' + esc(catId) + '"><i class="fas fa-cubes"></i> ' +
           esc(t('studio.migrate', 'Uredi kao blokove')) + '</button>';
       }
-      out += '</div>';
+      out += '</div></div>';
     });
     if (!out) return '<p class="st-hint">' + esc(t('studio.learnEmpty', 'Nema learn-sadržaja u ovoj skripti.')) + '</p>';
     return out;

@@ -128,8 +128,9 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
 1. **K1 ✅ (2026-07-26) — Uredljiv naslov kvadratića** (D1): `st-learn-cathead` → `contenteditable` `.st-cat-name` →
    commit na focusout → `updateCategory{name}` (plain-text granica; paste=plain; Enter=potvrdi; prazan/no-op se ne sprema;
    bez re-rendera na blur). authed uživo vs staging **2/2** (upiši naslov → draft `name` promijenjen → Odbaci). *Bez vizualnog redizajna još — puni kvadratić = K2.*
-2. **K2 — Kvadratić-kartica vizual** (struktura): `st-learn-cat` postaje kartica (broj + naslov + body-omotač),
-   VIEW `st-kv` usklađen; screenshot-review.
+2. **K2 ✅ (2026-07-26) — Kvadratić-kartica vizual** (struktura): `st-learn-cat` = kartica (broj-badge `.st-n` + prominentan naslov
+   16.5px + `st-learn-body` omotač), gradijent+radius18+`::before` accent = isti card-jezik kao VIEW `st-kv`; v1 više ne ugnježđuje `st-kv`.
+   authed 14/14 uživo (0 regresije) + screenshot-review.
 3. **K3 — Stanjeni chrome bloka** (D2, dio F1): `be-head` bez tip-labele, kontrole na hover; unit + authed (kontrole rade).
 4. **K4 — Boja cijelog bloka** (F4, D5): `--st-acc` tint kartice + rub; paleta po sekciji; authed (boja→draft→nasljeđivanje).
 5. **K5 — ＋ afordancija** (F1): `adder`/`bigplus` redizajn; screenshot-review.
@@ -156,4 +157,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1 ✅ ISPORUČEN (2026-07-26) → SLIJEDI K2 (kvadratić-kartica vizual).**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1+K2 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K3 (stanjen chrome bloka).**

@@ -8920,7 +8920,8 @@ h4.lb-heading { font-size: 1.1rem; }
   border-radius:18px 0 0 18px; background:var(--st-acc,var(--bg-tertiary));
 }
 #editor-page .st-kv .st-kvhead{ display:flex; align-items:center; gap:11px; margin-bottom:9px; }
-#editor-page .st-kv .st-n{
+#editor-page .st-kv .st-n,
+#editor-page .st-learn-cat .st-n{
   width:28px; height:28px; border-radius:9px; display:grid; place-items:center; font-size:12px;
   flex-shrink:0; background:linear-gradient(135deg,rgba(99,102,241,.25),rgba(139,92,246,.12));
   color:#c7d2fe; font-weight:800; border:1px solid rgba(99,102,241,.3);
@@ -8933,25 +8934,32 @@ h4.lb-heading { font-size: 1.1rem; }
 
 /* ==== EDIT-MOD: learn sekcija + migracija v1→blokovi (U8.2) ==== */
 #editor-page .st-editing{ color:#fbbf24!important; background:rgba(245,158,11,.12)!important; border-color:rgba(245,158,11,.35)!important; }
+/* ── EDIT kvadratić-kartica (K2): vizual usklađen s VIEW `st-kv` (broj + naslov + tijelo) ── */
 #editor-page .st-learn-cat{
-  border:1px solid var(--st-line); border-left:4px solid var(--st-acc,var(--primary));
-  border-radius:16px; padding:16px 18px; margin-bottom:18px; background:rgba(15,23,42,.35);
+  position:relative; margin-bottom:16px;
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-radius:18px;
+  padding:18px 20px 18px 24px; box-shadow:var(--shadow);
 }
-#editor-page .st-learn-cathead{
-  font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
-  color:var(--text-muted); margin-bottom:12px;
-  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+#editor-page .st-learn-cat::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:5px;
+  border-radius:18px 0 0 18px; background:var(--st-acc,var(--bg-tertiary));
+  box-shadow:2px 0 14px -2px var(--st-acc,transparent);
 }
-/* ── K1 (F7): uredljiv naslov sekcije (contenteditable; puni vizual = K2) ── */
-#editor-page .st-cat-sec{ opacity:.55; }
+#editor-page .st-learn-cathead{ display:flex; align-items:center; gap:11px; margin-bottom:12px; flex-wrap:wrap; }
+#editor-page .st-learn-cat .st-body{ font-size:14px; line-height:1.7; color:var(--text-secondary); }
+#editor-page .st-learn-cat .st-body :is(h1,h2,h3,h4){ color:var(--text-primary); margin:.6em 0 .3em; }
+#editor-page .st-learn-cat .st-body p{ margin:.5em 0; }
+#editor-page .st-learn-cat .st-body ul,#editor-page .st-learn-cat .st-body ol{ margin:.4em 0 .4em 1.2em; }
+/* ── K1 (F7): uredljiv naslov sekcije = prominentan (kao VIEW h2), inline-editabilan ── */
 #editor-page .st-cat-name{
-  cursor:text; border-radius:5px; padding:1px 6px; margin:0 -2px; min-width:26px;
-  display:inline-block; outline:1px solid transparent;
-  transition:background .12s, outline-color .12s;
+  font-size:16.5px; font-weight:700; color:var(--text-primary); line-height:1.3;
+  cursor:text; border-radius:7px; padding:2px 8px; margin:0 -4px; min-width:40px;
+  outline:1px solid transparent; transition:background .12s, outline-color .12s;
 }
 #editor-page .st-cat-name:hover{ background:rgba(148,163,184,.12); }
 #editor-page .st-cat-name:focus{ background:rgba(148,163,184,.16); outline-color:var(--st-acc,var(--primary)); }
-#editor-page .st-cat-name:empty::before{ content:'naziv sekcije'; color:var(--text-muted); opacity:.45; }
+#editor-page .st-cat-name:empty::before{ content:'naziv sekcije'; color:var(--text-muted); font-weight:400; opacity:.5; }
 
 /* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
 #editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }
