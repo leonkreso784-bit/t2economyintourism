@@ -249,9 +249,12 @@
 .be-tcell::placeholder { color: var(--text-muted); opacity: .5; }
 .be-tcell--h { font-weight: 700; background: rgba(99, 102, 241, .12); border-color: rgba(99, 102, 241, .3); }
 .be-tgrid-rc { width: 30px; text-align: center; vertical-align: middle; }
-/* delete-gumbi (red/stupac) preuzimaju .be-btn.be-del; suptilni dok se ne hoverira red */
-.be-tgrid-crow .be-btn, .be-tgrid-rc .be-btn { opacity: .45; }
-.be-tgrid:hover .be-btn { opacity: 1; }
+/* U8.10: ✕ kontrole SAMO na hover (manje vizualnog šuma) — red-delete na hover tog reda,
+   stupac-delete na hover grida; +focus-within (tipkovnica) da ostanu dostupne bez miša. */
+.be-tgrid-crow .be-btn, .be-tgrid-rc .be-btn { opacity: 0; transition: opacity .12s; }
+.be-tgrid tr:hover .be-tgrid-rc .be-btn { opacity: 1; }
+.be-tgrid:hover .be-tgrid-crow .be-btn,
+.be-tgrid:focus-within .be-btn { opacity: 1; }
 .be-tgrid-add { display: flex; gap: 8px; margin-top: 8px; }
 .be-tbtn {
   padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;

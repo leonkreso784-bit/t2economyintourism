@@ -122,7 +122,7 @@
     mediaTableBody = _media.mediaTableBody, mediaPreviewHtml = _media.mediaPreviewHtml,
     typesetFormulas = _media.typesetFormulas, enhanceMathFields = _media.enhanceMathFields,
     tableModel = _media.tableModel, readGridCells = _media.readGridCells, colCountOf = _media.colCountOf,
-    imageResizePointerDown = _media.imageResizePointerDown;
+    imageResizePointerDown = _media.imageResizePointerDown, parsePastedTable = _media.parsePastedTable;
   function findBlockById(blocks, id) {
     for (let k = 0; k < blocks.length; k++) if (blocks[k] && String(blocks[k].id) === String(id)) return blocks[k];
     return null;
@@ -521,6 +521,49 @@
         if (typeof imageResizePointerDown === 'function') imageResizePointerDown(e, container);
       });
 
+      // U8.10: PASTE u ćeliju tablice → ako je clipboard tablica (TSV/HTML), izgradi cijeli grid.
+      container.addEventListener('paste', function (e) {
+        const cell = e.target.closest ? e.target.closest('.be-tcell') : null;
+        if (!cell || !container.contains(cell)) return;
+        const cd = e.clipboardData || (typeof window !== 'undefined' && window.clipboardData);
+        if (!cd || typeof parsePastedTable !== 'function') return;
+        const grid = parsePastedTable(cd.getData('text/plain'), cd.getData('text/html'));
+        if (!grid) return;                                    // jedna ćelija → normalan (default) paste
+        e.preventDefault();
+        const c = container._beCtx;
+        const blockEl = cell.closest('[data-be-block]');
+        const id = blockEl ? blockEl.getAttribute('data-be-block') : '';
+        if (!id) return;
+        const cur = readGridCells(blockEl);                   // zadrži trenutni header-mod
+        let header = null, rows = grid;
+        if (cur.header) { header = grid[0].slice(); rows = grid.slice(1); }  // header aktivan → prvi red = zaglavlje
+        if (!rows.length) rows = [new Array((header ? header.length : (grid[0] || []).length) || 1).fill('')];
+        c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: { header: header, rows: rows } });
+        draw();
+      });
+
+      // U8.10: Enter u ćeliji → ćelija ISPOD (Excel); na dnu → dodaj red pa fokusiraj novu ćeliju.
+      container.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' || e.shiftKey) return;
+        const cell = e.target.closest ? e.target.closest('.be-tcell') : null;
+        if (!cell || !container.contains(cell)) return;
+        e.preventDefault();
+        const r = parseInt(cell.getAttribute('data-be-tr'), 10);
+        const cc = parseInt(cell.getAttribute('data-be-tc'), 10);
+        const blockEl = cell.closest('[data-be-block]');
+        const below = blockEl.querySelector('.be-tcell[data-be-tr="' + (r + 1) + '"][data-be-tc="' + cc + '"]');
+        if (below) { below.focus(); return; }                 // postoji red ispod → samo pomakni fokus
+        const c = container._beCtx;                            // zadnji red → dodaj red (readGridCells hvata živi .value)
+        const id = blockEl.getAttribute('data-be-block');
+        const t = readGridCells(blockEl);
+        t.rows.push(new Array(colCountOf(t) || 1).fill(''));
+        c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: { header: t.header, rows: t.rows } });
+        draw();
+        const nb = container.querySelector('[data-be-block="' + id + '"]');
+        const focusCell = nb && nb.querySelector('.be-tcell[data-be-tr="' + (r + 1) + '"][data-be-tc="' + cc + '"]');
+        if (focusCell) focusCell.focus();
+      });
+
       // U8.4a: inline-tekst → draft (updateLearnBlock) na focusout; BEZ draw() (caret/fokus ostaju).
       container.addEventListener('focusout', function (e) {
         const ed = e.target.closest ? e.target.closest('[data-be-field]') : null;
@@ -607,6 +650,7 @@
       _mediaFormulaBody: mediaFormulaBody, // U8.5c (formula-forma)
       _mediaTableBody: mediaTableBody,   // U8.5d (tablica-grid-forma)
       _tableModel: tableModel,           // U8.5d (normalizacija modela)
+      _parsePastedTable: parsePastedTable, // U8.10 (paste TSV/HTML → grid)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
       _editableBody: editableBody

@@ -528,6 +528,68 @@ test('U8.5e — Studio learn: callout varijanta+naslov · slika resize-ručkom �
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
 
+test('U8.10 — Studio tablica: paste TSV → grid izgrađen · Enter dodaje red · Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  const readTable = () => page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) { const t = blks.find((b) => b.type === 'table'); if (t) return { header: t.header || null, rows: t.rows }; }
+    }
+    return null;
+  }, sel);
+  const tblock = () => page.locator('#stCanvas .be-mount .be-block').last();
+
+  // dodaj Tablicu (default 2×2 + zaglavlje)
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Tablica' }).click();
+  await expect(tblock().locator('.be-tgrid')).toHaveCount(1);
+
+  // PASTE: simuliraj clipboard TSV (3×3) u prvu tijelo-ćeliju → paste-handler izgradi grid.
+  // (Playwright ne može puniti pravi OS-clipboard pouzdano → dispatch ClipboardEvent s DataTransfer.)
+  const bodyCell = tblock().locator('[data-be-tr="0"][data-be-tc="0"]');
+  await bodyCell.click();
+  await bodyCell.evaluate((el) => {
+    const tsv = 'Pojam\tGodina\tUdio\nHoteli\t2019\t42%\nKampovi\t2020\t18%';
+    const dt = new DataTransfer();
+    dt.setData('text/plain', tsv);
+    el.dispatchEvent(new ClipboardEvent('paste', { clipboardData: dt, bubbles: true, cancelable: true }));
+  });
+  // header-mod je uključen (default) → prvi red = zaglavlje, ostatak = 2 reda × 3 stupca
+  const t1 = await readTable();
+  expect(t1.header).toEqual(['Pojam', 'Godina', 'Udio']);
+  expect(t1.rows.length).toBe(2);
+  expect(t1.rows[0]).toEqual(['Hoteli', '2019', '42%']);
+  expect(t1.rows[1][0]).toBe('Kampovi');
+
+  // Enter u zadnjem redu → dodaje novi red (Excel-osjećaj)
+  const lastCell = tblock().locator('[data-be-tr="1"][data-be-tc="0"]');
+  await lastCell.click();
+  await lastCell.press('Enter');
+  const t2 = await readTable();
+  expect(t2.rows.length).toBe(3);          // dodan prazan red
+
+  // preview kroz JEDAN renderer
+  await expect(tblock().locator('.be-media__preview .lb-table')).toHaveCount(1);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
+
 test('U8.5f — Studio: boja sekcije kvadratićem → updateCategory u draftu + akcent nasljeđen → Odbaci', async ({ page }) => {
   const sel = await openStudioLesson(page);
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });

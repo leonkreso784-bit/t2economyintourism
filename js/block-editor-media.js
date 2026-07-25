@@ -242,7 +242,8 @@
         '" placeholder="' + (isHeader ? 'Zaglavlje' : '…') + '">';
     }
     function delBtn(tact, key, val, title) {
-      return '<button type="button" class="be-btn be-del" data-be-tact="' + tact + '" data-be-' + key + '="' + val +
+      // tabindex=-1: Tab teče ĆELIJA→ĆELIJA (Excel-osjećaj), ne preko delete-gumba (U8.10)
+      return '<button type="button" class="be-btn be-del" tabindex="-1" data-be-tact="' + tact + '" data-be-' + key + '="' + val +
         '" title="' + title + '" aria-label="' + title + '">✕</button>';
     }
     function mediaTableBody(block) {
@@ -278,6 +279,53 @@
       if (t.rows[0]) return t.rows[0].length;
       return 0;
     }
+    // ── U8.10 — PASTE iz Excela/Worda/Sheets → grid. SIGURNOST: HTML se NIKAD ne umeće kao HTML;
+    //    parsira se DOMParser-om (ne izvršava skripte/ne učitava resurse) i uzima se SAMO textContent
+    //    svake ćelije → plain string (renderer ionako escapa). TSV = tab-stupac, newline-red. ──
+    var PASTE_MAX_ROWS = 200, PASTE_MAX_COLS = 40;              // razuman strop (perf; studij-tablice su male)
+    function collapseWs(s) { return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
+    function rectangularize(rows) {                             // dopuni sve retke na max broj stupaca ('')
+      var cols = 0, i;
+      for (i = 0; i < rows.length; i++) if (rows[i].length > cols) cols = rows[i].length;
+      cols = Math.min(cols, PASTE_MAX_COLS);
+      var out = [];
+      for (i = 0; i < rows.length && i < PASTE_MAX_ROWS; i++) {
+        var r = rows[i].slice(0, cols);
+        while (r.length < cols) r.push('');
+        out.push(r);
+      }
+      return out;
+    }
+    function parsePastedTable(text, html) {
+      // 1) HTML tablica (Excel/Word/Sheets/preglednik postave text/html) → plain-text ćelije
+      if (html && /<table[\s>]/i.test(html) && typeof DOMParser !== 'undefined') {
+        try {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var table = doc.querySelector('table');
+          if (table) {
+            var rows = [], trs = table.querySelectorAll('tr');
+            for (var i = 0; i < trs.length; i++) {
+              var cells = trs[i].querySelectorAll('th,td');
+              if (!cells.length) continue;
+              var row = [];
+              for (var j = 0; j < cells.length; j++) row.push(collapseWs(cells[j].textContent));
+              rows.push(row);
+            }
+            if (rows.length) { var rect = rectangularize(rows); if (rect.length && rect[0].length) return rect; }
+          }
+        } catch (_) { /* padne → TSV niže */ }
+      }
+      // 2) TSV/plain (tab = stupac, newline = red). Tablica SAMO ako ima >1 ćeliju (inače normalan paste).
+      if (text && (text.indexOf('\t') !== -1 || /\r?\n/.test(text.replace(/\s+$/, '')))) {
+        var lines = String(text).replace(/\r\n?/g, '\n').replace(/\n+$/, '').split('\n');
+        var trows = lines.map(function (ln) { return ln.split('\t').map(collapseWs); });
+        if (trows.length > 1 || (trows[0] && trows[0].length > 1)) {
+          var tr = rectangularize(trows); if (tr.length && tr[0].length) return tr;
+        }
+      }
+      return null;
+    }
+
     // pročitaj TRENUTNE vrijednosti ćelija iz DOM-grida → {header|null, rows} (pravokutnik)
     function readGridCells(blockEl) {
       const cells = (blockEl && blockEl.querySelectorAll) ? blockEl.querySelectorAll('.be-tcell') : [];
@@ -346,7 +394,8 @@
       enhanceMathFields: enhanceMathFields,
       tableModel: tableModel,
       readGridCells: readGridCells,
-      colCountOf: colCountOf
+      colCountOf: colCountOf,
+      parsePastedTable: parsePastedTable            // U8.10 (paste TSV/HTML → grid; granica u parseru)
     };
   };
 })();

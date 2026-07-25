@@ -387,5 +387,26 @@ test('mediaImageBody: bez src → placeholder BEZ ručke; bez width → badge 10
   assert.ok(noW.indexOf('>100%<') !== -1);
 });
 
+// ── U8.10 — paste TSV/HTML → grid (parser; HTML-grana traži DOMParser pa se u Node-u testira TSV) ──
+test('parsePastedTable: TSV (tab+newline) → pravokutni grid', function () {
+  const g = E._parsePastedTable('a\tb\nc\td', '');
+  assert.deepStrictEqual(g, [['a', 'b'], ['c', 'd']]);
+});
+test('parsePastedTable: neravni redovi → dopunjeni na max stupaca ("")', function () {
+  const g = E._parsePastedTable('a\tb\tc\nd\te', '');
+  assert.deepStrictEqual(g, [['a', 'b', 'c'], ['d', 'e', '']]);
+});
+test('parsePastedTable: jedna ćelija (bez taba/newlinea) → null (normalan paste)', function () {
+  assert.strictEqual(E._parsePastedTable('samo tekst', ''), null);
+  assert.strictEqual(E._parsePastedTable('', ''), null);
+});
+test('parsePastedTable: whitespace u ćelijama kolabiran + trailing newline odbačen', function () {
+  const g = E._parsePastedTable('  a  b \tc\n\n', '');
+  assert.deepStrictEqual(g, [['a b', 'c']]);
+});
+test('parsePastedTable: jedan red više stupaca → grid (1×N)', function () {
+  assert.deepStrictEqual(E._parsePastedTable('x\ty\tz', ''), [['x', 'y', 'z']]);
+});
+
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');
 process.exit(failed ? 1 : 0);
