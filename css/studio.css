@@ -178,6 +178,16 @@
   color:var(--text-muted); margin-bottom:12px;
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
 }
+/* ── K1 (F7): uredljiv naslov sekcije (contenteditable; puni vizual = K2) ── */
+#editor-page .st-cat-sec{ opacity:.55; }
+#editor-page .st-cat-name{
+  cursor:text; border-radius:5px; padding:1px 6px; margin:0 -2px; min-width:26px;
+  display:inline-block; outline:1px solid transparent;
+  transition:background .12s, outline-color .12s;
+}
+#editor-page .st-cat-name:hover{ background:rgba(148,163,184,.12); }
+#editor-page .st-cat-name:focus{ background:rgba(148,163,184,.16); outline-color:var(--st-acc,var(--primary)); }
+#editor-page .st-cat-name:empty::before{ content:'naziv sekcije'; color:var(--text-muted); opacity:.45; }
 
 /* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
 #editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }

@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26 (OPUS) — F7 K1 ✅: uredljiv naslov sekcije (kvadratić) → `updateCategory{name}`
+**Kontekst:** Leon (nakon razgovora o budućem frontend/UGC redizajnu — dogovoreno **NAKON** CRUD-a): „nastavi ti sa prvom isplaniranom i već zapisanom ciglom" = izričit „kreni" za **K1** iz `EDITOR_F7_SPEC.md`.
+**K1 ✅ (prvi sloj F7 kvadratića; `js/studio.js` + `css/studio.css` + test):**
+- Naslov learn-sekcije u **edit-modu** = `contenteditable` span (`.st-cat-name[data-st-catname]`) → commit na **focusout** kroz **POSTOJEĆI** `updateCategory{name}` op (isti put kao U8.5f boja). **NULA promjene sheme/ops/publish-RPC/rendera-granice** (D1–D6).
+- **Sigurnosna granica:** sadržaj se čita kao PLAIN TEXT (`textContent`, nikad HTML); paste = plain-text (execCommand insertText); Enter = potvrdi (blur). Prazan/nepromijenjen naziv se **ne sprema** (ne prlja draft). **Bez re-rendera na blur** (samo `refreshTopbar`) → izbjegnut „blur pojede idući klik" bug; ostali paneli sinkroniziraju naziv na idućem renderu.
+- CSS afordancija **minimalna** (cursor:text, hover/focus highlight, empty-placeholder) — puni vizual kvadratića = **K2**.
+**Dokazi:** preflight **EXIT 0** (unit 58/0) · **authed K1 uživo vs staging 2/2** (auth.setup login → triple-click naslov → utipkaj → Enter → `draft.working[cat].name == novi` → `#stDraftChip.dirty` → Odbaci čist; staging draft-only, nikad pisan) · build:css bundle (29 modula) + bump 104. Prod netaknut.
+**SLIJEDI:** K2 (kvadratić-kartica vizual) → K3 stanjen chrome → K4 boja cijelog bloka → K5 ＋ afordancija → K6 drag. [[editor-must-be-real-product]] [[preflight-before-every-push]]
+
 ## 2026-07-25-f (OPUS) — ZAOKRET: editor re-scope (F1–F8) + F7 inženjerski spec (odluke D1–D6)
 **Kontekst:** nakon U8.6a Leon prošao **živi editor** (dan mu preview-link) i dao **detaljan feedback**: „editor je sam po sebi ružan i loš — moraš početi razmišljati kao developer editora da bude STVARNO dobar, kreativan i lako korištan. Ovo je tek početak." → **editor RE-SCOPE iz „CSS-polish" u pravi UX/proizvodni redizajn** (Notion/Photomath razina).
 **Zapisano (ništa se ne gubi):**

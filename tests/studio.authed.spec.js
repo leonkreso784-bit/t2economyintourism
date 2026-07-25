@@ -707,3 +707,44 @@ test('U8.9b — Studio learn: paleta (Photomath keypad) ubaci razlomak u math-fi
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('K1 (F7) — Studio: uredljiv naslov sekcije → updateCategory {name} u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.waitForSelector('#stCanvas .st-pane[data-pane="learn"].on');
+
+  // contenteditable naslov prve learn-sekcije (kvadratić)
+  const nameEl = page.locator('#stCanvas .st-pane[data-pane="learn"] .st-learn-cathead .st-cat-name').first();
+  await expect(nameEl).toBeVisible();
+  const catId = await nameEl.getAttribute('data-st-catname');
+  const before = await page.evaluate(({ s, catId }) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return d.working[catId] && d.working[catId].name;
+  }, { s: sel, catId });
+
+  // triple-click = označi cijeli naslov → utipkaj novi → Enter potvrđuje (blur → focusout commit)
+  const NEW = 'K1 Naslov ' + Date.now();
+  await nameEl.click({ clickCount: 3 });
+  await page.keyboard.type(NEW);
+  await page.keyboard.press('Enter');
+
+  // draft: kategorija ima novi name (updateCategory op prošao, plain-text)
+  const after = await page.evaluate(({ s, catId }) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return d.working[catId] && d.working[catId].name;
+  }, { s: sel, catId });
+  expect(after).toBe(NEW);
+  expect(after).not.toBe(before);
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+
+  // Odbaci → čist izlaz (staging nikad pisan; draft-only)
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

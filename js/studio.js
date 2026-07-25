@@ -158,6 +158,22 @@ const SokratStudio = (function () {
       var pick = e.target.closest('[data-st-catcolorpick]');
       if (pick) setCatColor(pick.getAttribute('data-st-cat'), pick.value);
     });
+    // K1 (F7): uredljiv naslov sekcije → commit na focusout; Enter=potvrdi (blur); paste=plain-text.
+    byId('stCanvas').addEventListener('focusout', function (e) {
+      var el = e.target.closest('[data-st-catname]');
+      if (el) commitCatName(el);
+    });
+    byId('stCanvas').addEventListener('keydown', function (e) {
+      var el = e.target.closest('[data-st-catname]');
+      if (el && e.key === 'Enter') { e.preventDefault(); el.blur(); }
+    });
+    byId('stCanvas').addEventListener('paste', function (e) {
+      var el = e.target.closest('[data-st-catname]');
+      if (!el) return;   // paste izvan naslova (npr. tablica-paste u block-editoru) → ne diramo
+      e.preventDefault();
+      var text = String(((e.clipboardData || window.clipboardData).getData('text/plain')) || '').replace(/\s+/g, ' ');
+      if (document.execCommand) document.execCommand('insertText', false, text);
+    });
 
     refreshTopbar();
   }
@@ -304,6 +320,25 @@ const SokratStudio = (function () {
     if (res && res.ok) { renderCanvas(); refreshTopbar(); }
   }
 
+  // ---- K1 (F7): uredljiv naslov sekcije (kvadratić) → updateCategory {name} ----
+  // Commit na focusout; sadržaj se čita kao PLAIN TEXT (textContent, bez HTML-a = granica).
+  // NE re-crtamo canvas (element već prikazuje upisano; re-crtanje na blur bi „pojelo" idući klik) —
+  // samo osvježimo draft-chip. Ostali paneli (kartice/kviz seclbl) sinkroniziraju naziv na idućem renderu.
+  function commitCatName(el) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var catId = el.getAttribute('data-st-catname');
+    var data = currentData();
+    var c = data && data[catId];
+    if (!c) return;
+    var prev = String(c.name == null ? '' : c.name);
+    var next = String(el.textContent || '').replace(/\s+/g, ' ').trim();
+    if (!next || next === prev) { el.textContent = prev; return; }  // prazan/nepromijenjen → vrati stari (ne prljaj draft)
+    var res = b.applyOp({ type: 'updateCategory', catId: catId, patch: { name: next } });
+    el.textContent = (res && res.ok) ? next : prev;
+    if (res && res.ok) refreshTopbar();
+  }
+
   // ---- LEARN PANE (edit-svjestan) ----
   function renderLearnPane(data, isEd) {
     var out = '';
@@ -327,8 +362,12 @@ const SokratStudio = (function () {
         return;
       }
 
-      // EDIT-MOD
-      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">§ ' + catName +
+      // EDIT-MOD — naslov sekcije = uredljiv (K1/F7): contenteditable → updateCategory {name} na focusout.
+      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">' +
+        '<span class="st-cat-sec" aria-hidden="true">§</span> ' +
+        '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
+        'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +
+        catName + '</span>' +
         colorDots(catId, c.color) + '</div>';
       if (kind === 'v2') {
         // blok-editor (kvadratići) — montira se u post-renderu

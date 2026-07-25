@@ -125,8 +125,9 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
 ## 6. Korak-po-korak build-plan (svaki korak = mali, testabilan, commitabilan)
 > Pokreće se TEK nakon potvrde odluka D1–D6. Svaki korak: `preflight` prije pusha + authed studio.
 
-1. **K1 — Uredljiv naslov kvadratića** (D1): `st-learn-cat` header → contenteditable naslov → `updateCategory{name}`;
-   authed test (upiši naslov → draft `name` promijenjen → Odbaci). *Bez vizualnog redizajna još.*
+1. **K1 ✅ (2026-07-26) — Uredljiv naslov kvadratića** (D1): `st-learn-cathead` → `contenteditable` `.st-cat-name` →
+   commit na focusout → `updateCategory{name}` (plain-text granica; paste=plain; Enter=potvrdi; prazan/no-op se ne sprema;
+   bez re-rendera na blur). authed uživo vs staging **2/2** (upiši naslov → draft `name` promijenjen → Odbaci). *Bez vizualnog redizajna još — puni kvadratić = K2.*
 2. **K2 — Kvadratić-kartica vizual** (struktura): `st-learn-cat` postaje kartica (broj + naslov + body-omotač),
    VIEW `st-kv` usklađen; screenshot-review.
 3. **K3 — Stanjeni chrome bloka** (D2, dio F1): `be-head` bez tip-labele, kontrole na hover; unit + authed (kontrole rade).
@@ -155,4 +156,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). Definicija potpuna → **K1 kreće uz Leonov „kreni".**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1 ✅ ISPORUČEN (2026-07-26) → SLIJEDI K2 (kvadratić-kartica vizual).**
