@@ -9033,6 +9033,56 @@ h4.lb-heading { font-size: 1.1rem; }
 #editor-page .st-premium p{ font-size:12px; color:var(--text-muted); line-height:1.55; margin:0 0 12px; }
 #editor-page .st-pill{ font-size:9.5px; background:linear-gradient(135deg,#f59e0b,#fbbf24); color:#1a1206; font-weight:800; border-radius:99px; padding:2.5px 9px; margin-left:6px; letter-spacing:.05em; }
 
+/* ============================================================
+   U8.6a — VIZUALNI PROLAZ „čisto i bogato" (Studio shell + preview)
+   ------------------------------------------------------------
+   Dodatni sloj RICHNESS-a preko postojećih st-* kostiju: mekane
+   ulazne animacije, hover-podizanje, glow na accent-traci, staklo
+   na tabovima, shimmer na premium kartici, prilagođeni scrollbar.
+   Sve ADITIVNO i scope-ano pod #editor-page (nula kolizije s
+   app/admin/mockup CSS-om). Prati design/mockups/editor-c-tok.html.
+   Keyframe imena st-prefiksana (globalna su → izbjegni sudar).
+   POP ide SAMO na read-only preview (st-kv/st-fcard/st-qz/st-fill,
+   crta se rijetko: pick lekcije / promjena taba); NE na st-edit-item
+   (edit-mod se re-crta na svaku draft-op → pop bi jarko trzao).
+   ============================================================ */
+@keyframes stpop{ from{ opacity:0; transform:translateY(10px) scale(.985); } to{ opacity:1; transform:none; } }
+@keyframes stshimmer{ 0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } }
+
+/* prilagođeni scrollbar (osjećaj alata) */
+#editor-page ::-webkit-scrollbar{ width:9px; height:9px; }
+#editor-page ::-webkit-scrollbar-thumb{ background:var(--bg-tertiary); border-radius:99px; border:2px solid var(--bg-primary); }
+#editor-page ::-webkit-scrollbar-track{ background:transparent; }
+
+/* TABOVI — staklo iza pilula + slojevitost */
+#editor-page .st-tabs{ backdrop-filter:blur(8px); position:relative; z-index:15; }
+#editor-page .st-tab{ display:flex; align-items:center; }
+
+/* KVADRATIĆ (learn preview) — ulaz + hover-podizanje + glow na accent-traci */
+#editor-page .st-kv{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-kv:hover{ border-color:rgba(148,163,184,.28); transform:translateY(-2px); box-shadow:0 14px 38px rgba(0,0,0,.38); }
+#editor-page .st-kv::before{ box-shadow:2px 0 14px -2px var(--st-acc,transparent); transition:box-shadow .2s,background .2s; }
+
+/* KARTICE (flip preview) — ulaz + hover-podizanje s blagim 3D nagibom */
+#editor-page .st-cardgrid{ perspective:1000px; }
+#editor-page .st-fcard{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-fcard:hover{ transform:translateY(-3px) rotateX(2deg); box-shadow:0 16px 40px rgba(0,0,0,.4); }
+
+/* KVIZ + FILL (view preview) — blagi ulaz + hover-rub */
+#editor-page .st-qz,#editor-page .st-fill{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-qz:hover,#editor-page .st-fill:hover{ border-color:rgba(148,163,184,.26); transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.34); }
+
+/* EDIT-ITEM (edit-mod, česti redraw → BEZ pop, samo hover-glatkoća) */
+#editor-page .st-edit-item{ transition:border-color .2s,box-shadow .2s,transform .2s; }
+#editor-page .st-edit-item:hover{ border-color:rgba(148,163,184,.26); transform:translateY(-1px); box-shadow:0 10px 26px rgba(0,0,0,.3); }
+
+/* META-čipovi — mikro-glatkoća na hover */
+#editor-page .st-metas .st-m{ transition:.15s; }
+#editor-page .st-metas .st-m:hover{ border-color:rgba(99,102,241,.35); color:var(--text-secondary); }
+
+/* PREMIUM (inspektor) — živi shimmer gradijent (kao mockup) */
+#editor-page .st-premium{ background-size:220% 220%; animation:stshimmer 6s ease infinite; }
+
 /* ==================== css/auth.css ==================== */
 /* =====================================================
    SOKRAT STUDY — AUTH (Sign-in gumb + email+lozinka modal)
