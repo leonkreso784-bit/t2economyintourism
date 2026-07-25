@@ -5,6 +5,17 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25-e (OPUS) — U8.6a vizualni prolaz (Studio shell/preview „čisto i bogato")
+**Kontekst:** Leon delegirao Sašin te2-hr (PR #4 — dopuštenje da sam objavi kad dovrši lead-review) → „ti nastavi sa 8.6". Prizemljenje: usporedba mockupa C (`design/mockups/editor-c-tok.html`) i `css/studio.css` pokazala da kosti VEĆ nose većinu vizualnog jezika (tokeni/staklo-topbar/dot-grid/accent-trake/gradijent-tabovi) → U8.6 je **polish, ne prepis** (kako plan i predviđa). Jaz = RICHNESS (animacije/hover/glow/shimmer/scrollbar). U8.6 podijeljen: **a = Studio shell+preview (st-*), b = block-editor edit-surface (be-*), c = mikro-interakcije + B/I-overlap fix.**
+**U8.6a ✅ (aditivni CSS-sloj, `css/studio.css`, scope `#editor-page`):**
+- **Ulazna animacija `stpop`** SAMO na read-only preview (st-kv/st-fcard/st-qz/st-fill — crta se rijetko: pick lekcije / promjena taba); **NE na `st-edit-item`** (edit-mod se re-crta na svaku draft-op → pop bi jarko trzao). Odluka svjesna.
+- **Hover-podizanje + glow na accent-traci** kvadratića (`box-shadow` na `::before` u boji sekcije); **blagi 3D nagib** (`rotateX(2deg)` + `perspective`) na flip-kartici.
+- **Staklo (`backdrop-blur`) iza tab-pilula**; **shimmer** (`stshimmer`) na PREMIUM inspektor-kartici; **prilagođeni scrollbar** (osjećaj alata).
+- st-prefiksana keyframe imena (globalna su → izbjegnut sudar); sve ADITIVNO preko postojećih selektora (0 strukturne promjene).
+**Dokazi:** **authed studio 13/13 uživo** (nula funkcionalne regresije od CSS-a) · screenshot-tura (shell/learn + kartice + kv-hover) **0 console-grešaka** · bump 104. Commit `9c7dc01`, pushano preview (86↑→87↑? vs main). Prod netaknut.
+**Saši (PR #4 te2-hr):** tehnički besprijekoran (rebasean na main `388e3c5`, CI zelen, 0 ćirilice, model kartica avg ~145/max 195/0>200, 13 kat/84 fc/77 quiz/65 fill, catalog čist, platformske datoteke = samo `?v=` bump) → Leon dao dopuštenje da SAM objavi nakon sadržajnog lead-reviewa (točnost vs HR skripta, balans kviza). Poruka pripremljena za PR (nemam `gh`/token u okruženju → Leon lijepi).
+**SLIJEDI: U8.6b** (block-editor be-* edit-surface na isti vizualni jezik) → U8.6c (mikro-interakcije + B/I-overlap) → U8.7 upload/U8.8 chart. [[follow-recorded-plan-dont-reopen]] [[pace-short-stretches-check-in]] [[live-login-verifies-crud]]
+
 ## 2026-07-25-d (OPUS) — U8.10 tablica-paste (paste iz Excela/Worda → grid + ergonomija)
 **Kontekst:** Leon: „nastavi" (model prebačen na Opus) → U8.10 po planu. Leon usput: „kad završiš zapiši i pripremi za compact".
 **U8.10 ✅ (paste + ergonomija tablice):**
