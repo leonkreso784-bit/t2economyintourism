@@ -5,6 +5,16 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25-f (OPUS) — ZAOKRET: editor re-scope (F1–F8) + F7 inženjerski spec (odluke D1–D6)
+**Kontekst:** nakon U8.6a Leon prošao **živi editor** (dan mu preview-link) i dao **detaljan feedback**: „editor je sam po sebi ružan i loš — moraš početi razmišljati kao developer editora da bude STVARNO dobar, kreativan i lako korištan. Ovo je tek početak." → **editor RE-SCOPE iz „CSS-polish" u pravi UX/proizvodni redizajn** (Notion/Photomath razina).
+**Zapisano (ništa se ne gubi):**
+- **`docs/EDITOR_FEEDBACK.md`** — punch-lista **F1–F8** s developerskom analizom + rješenjem + sekvencom: F1 ＋afordancija („mršav i ružan") · F2 **pravi upload slike** (file-picker/drag-drop = U8.7 Storage) · F3 blokovi „loše napravljeni" (kišobran) · F4 **boja CIJELOG bloka** kao kartice · F5 **drag-and-drop** blokova · F6 bogatija **boja teksta** · F7 **naslov+tijelo kvadratić-model** (SRŽ) · F8 **lista-redoslijed**. Vodeći uvid: editor je odlutao od mockup-„kvadratić" vizije → vratiti ga.
+- **Provjereno da paše:** F1–F8 se **poklapaju s Leonovim §5.1 zahtjevima (2026-07-13)** (§5.1-3 „kvadratić s naslovom+tekstom"=F7 · §5.1-6 boja nasljeđuje=F4 · §5.1-8 „editor NE smije izgledati mršavo"=F1). Nije skretanje — ista vizija, sad ispravno isporučena.
+**F7 izabran prvi** (Leon) + izričito: „**ništa ne gradi dok inženjerski savršeno ne odredimo svu tehnologiju korak po korak**".
+- **`docs/EDITOR_F7_SPEC.md`** — inženjerski ugovor prije koda: izmjerena arhitektura (model/ops/pipeline iz `draft-store.js`/`studio.js`/`blocks-renderer.js`), ciljni kvadratić, izmjene po datoteci, **K1–K6** build-plan, rizici+mitigacije, testiranje. **KLJUČNO: F7 = čist redizajn rendera/edit-UI-ja + CSS, NULA promjene sheme/ops/publish-RPC/rendera-granice** (naslov=`cat.name`→`updateCategory{name}` postoji; ne duplicira nijedan north-star stup §0).
+- **6 ODLUKA PRESUĐENO (D1–D6) 🔒:** D1 `contenteditable` naslov · D2 chrome bloka stanjen (bez tip-labele, ↑↓✕ na hover) · D3 jedan naslov=`cat.name` · **D4 VANILLA pointer-drag** (bez SortableJS) · D5 suptilni boja-tint+rub/glow · D6 slojevito K1–K6.
+**SLIJEDI: K1** (uredljiv naslov kvadratića → `updateCategory{name}`) **čim Leon kaže „kreni" — NE graditi dok ne kaže.** Commiti: `80a2e3f` (FEEDBACK) · `6a93389`+`cea655d` (F7 SPEC+odluke). Pushano preview; prod netaknut. [[editor-must-be-real-product]] [[preflight-before-every-push]] [[follow-recorded-plan-dont-reopen]]
+
 ## 2026-07-25-e (OPUS) — U8.6a vizualni prolaz (Studio shell/preview „čisto i bogato")
 **Kontekst:** Leon delegirao Sašin te2-hr (PR #4 — dopuštenje da sam objavi kad dovrši lead-review) → „ti nastavi sa 8.6". Prizemljenje: usporedba mockupa C (`design/mockups/editor-c-tok.html`) i `css/studio.css` pokazala da kosti VEĆ nose većinu vizualnog jezika (tokeni/staklo-topbar/dot-grid/accent-trake/gradijent-tabovi) → U8.6 je **polish, ne prepis** (kako plan i predviđa). Jaz = RICHNESS (animacije/hover/glow/shimmer/scrollbar). U8.6 podijeljen: **a = Studio shell+preview (st-*), b = block-editor edit-surface (be-*), c = mikro-interakcije + B/I-overlap fix.**
 **U8.6a ✅ (aditivni CSS-sloj, `css/studio.css`, scope `#editor-page`):**
