@@ -8582,7 +8582,9 @@ h4.lb-heading { font-size: 1.1rem; }
 
 /* ── tip-izbornik (na ＋) ── */
 .be-menu {
-  position: absolute; z-index: 30; margin-top: 4px;
+  /* na document.body s fixed-pozicijom (JS računa left/top od sidra) — izvan opacity/stacking
+     konteksta kartica; z-index u rangu .be-toolbar (1400) da je UVIJEK iznad sadržaja */
+  position: fixed; z-index: 1400; margin: 0;
   display: flex; flex-direction: column; min-width: 150px; padding: 5px;
   background: rgba(20, 27, 45, .98); border: 1px solid rgba(148, 163, 184, .22);
   border-radius: 12px; box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
@@ -8643,8 +8645,39 @@ h4.lb-heading { font-size: 1.1rem; }
 
 /* ===== U8.5a — media blok (slika): forma polja + živi preview ===== */
 .be-media { display: flex; flex-direction: column; gap: 10px; }
-.be-media__preview { border-radius: 10px; overflow: hidden; }
+.be-media__preview { border-radius: 10px; overflow: hidden; position: relative; }
 .be-media__preview img { max-width: 100%; display: block; border-radius: 10px; }
+/* U8.5e: EDITOR-cap — SVG/megaslike bez intrinzične veličine ne smiju progutati canvas
+   (student-render netaknut; tamo vlada width% iz modela + max-width:100%).
+   width:100% je NUŽAN default: bez njega SVG bez intrinzičnih dimenzija kolabira na 0px
+   (inline style="width:NN%" iz modela ga legitimno pregazi). */
+.be-media--image .be-media__preview .lb-figure__img { width: 100%; max-height: 340px; object-fit: contain; margin: 0 auto; }
+.be-media--image .be-media__preview .lb-figure { margin: 0; }
+
+/* U8.5e — resize-ručka (⇲ donji desni kut previewa) + %-badge */
+.be-imgresize {
+  position: absolute; right: 8px; bottom: 8px; z-index: 2;
+  width: 30px; height: 30px; border-radius: 8px; cursor: nwse-resize; touch-action: none;
+  color: #fff; font-size: 15px; line-height: 1; border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(15, 23, 42, .75); backdrop-filter: blur(3px); transition: .13s;
+}
+.be-imgresize:hover { background: rgba(99, 102, 241, .85); }
+.be-imgw {
+  position: absolute; left: 8px; bottom: 8px; z-index: 2; pointer-events: none;
+  padding: 3px 8px; border-radius: 7px; font-size: 11.5px; font-weight: 700;
+  color: #e2e8f0; background: rgba(15, 23, 42, .75);
+}
+
+/* U8.5e — callout kontrole (varijanta info/warning/tip + naslov) */
+.be-cvars { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
+.be-cvar {
+  padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  color: var(--text-secondary); background: rgba(15, 23, 42, .4);
+  border: 1px solid rgba(148, 163, 184, .2); transition: .12s;
+}
+.be-cvar:hover { color: #fff; border-color: rgba(99, 102, 241, .5); }
+.be-cvar.on { color: #fff; background: rgba(99, 102, 241, .25); border-color: var(--primary); }
+.be-cvtitle { flex: 1; min-width: 160px; width: auto; }
 .be-media__ph {
   border: 2px dashed rgba(148, 163, 184, .25); border-radius: 10px; padding: 22px;
   text-align: center; color: var(--text-muted); font-size: 13px; background: rgba(15, 23, 42, .3);

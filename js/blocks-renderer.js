@@ -114,8 +114,12 @@
     const alt = esc(b.alt || '');
     const cap = (b.caption != null && String(b.caption) !== '')
       ? '<figcaption class="lb-figure__cap">' + renderInline(b.caption) + '</figcaption>' : '';
+    // U8.5e: kurirana širina u % (10–99; 100/nevaljano = bez stila → max-width:100% iz CSS-a).
+    // Ne-broj/izvan raspona se IGNORIRA (granica: u style ide isključivo naš računati broj).
+    const w = Math.round(Number(b.width));
+    const wStyle = (isFinite(w) && w >= 10 && w <= 99) ? ' style="width:' + w + '%"' : '';
     return '<figure class="lb-figure"><img class="lb-figure__img" src="' + esc(src) +
-      '" alt="' + alt + '" loading="lazy">' + cap + '</figure>';
+      '" alt="' + alt + '" loading="lazy"' + wStyle + '>' + cap + '</figure>';
   }
   function renderVideo(b) {
     const id = youtubeId(b.videoId != null ? b.videoId : b.url);

@@ -121,7 +121,8 @@
     mediaVideoBody = _media.mediaVideoBody, mediaFormulaBody = _media.mediaFormulaBody,
     mediaTableBody = _media.mediaTableBody, mediaPreviewHtml = _media.mediaPreviewHtml,
     typesetFormulas = _media.typesetFormulas, enhanceMathFields = _media.enhanceMathFields,
-    tableModel = _media.tableModel, readGridCells = _media.readGridCells, colCountOf = _media.colCountOf;
+    tableModel = _media.tableModel, readGridCells = _media.readGridCells, colCountOf = _media.colCountOf,
+    imageResizePointerDown = _media.imageResizePointerDown;
   function findBlockById(blocks, id) {
     for (let k = 0; k < blocks.length; k++) if (blocks[k] && String(blocks[k].id) === String(id)) return blocks[k];
     return null;
@@ -138,9 +139,19 @@
     }
     if (type === 'callout') {
       const variant = CALLOUT_VARIANTS[block.variant] ? block.variant : 'info';
-      const title = (block.title != null && String(block.title) !== '')
-        ? '<div class="lb-callout__title">' + esc(block.title) + '</div>' : '';
-      return '<div class="lb-callout lb-callout--' + variant + '">' + title +
+      // U8.5e: varijanta + naslov postaju uredljivi — kurirane vrijednosti koje renderer VEĆ
+      // podržava (lb-callout--info/warning/tip + title). Naslov = mfield (hvata ga postojeći
+      // change-handler; prazno → null briše ključ). Statični title-div se u EDITORU ne crta
+      // (input ga zamjenjuje); student-render (renderCallout) nepromijenjen.
+      const CVAR_LABEL = { info: 'ℹ️ Info', warning: '⚠️ Upozorenje', tip: '💡 Savjet' };
+      let ctrls = '<div class="be-cvars">';
+      Object.keys(CALLOUT_VARIANTS).forEach(function (v) {
+        ctrls += '<button type="button" class="be-cvar' + (v === variant ? ' on' : '') +
+          '" data-be-cvar="' + v + '">' + (CVAR_LABEL[v] || v) + '</button>';
+      });
+      ctrls += '<input type="text" class="be-mfield be-cvtitle" data-be-mfield="title" placeholder="Naslov isticanja (opcionalno)" value="' +
+        esc(block.title == null ? '' : block.title) + '"></div>';
+      return ctrls + '<div class="lb-callout lb-callout--' + variant + '">' +
         editField('text', 'Tekst isticanja…', runsToEditable(block.text), 'lb-callout__body') + '</div>';
     }
     if (type === 'list') {
@@ -227,8 +238,8 @@
   }
 
   function closeMenu(container) {
-    const m = container.querySelector('.be-menu');
-    if (m) m.parentNode.removeChild(m);
+    // Meniji žive na document.body (ne u containeru) → zatvaranje je uvijek globalno.
+    closeAllMenus();
   }
   function closeAllMenus() {
     if (typeof document === 'undefined') return;
@@ -261,7 +272,17 @@
       });
       menu.appendChild(b);
     });
-    (anchor.parentNode || container).appendChild(menu);
+    // Na BODY s fixed-pozicijom od sidra (kao .be-toolbar): meni u containeru je nasljeđivao
+    // opacity/stacking predaka (.be-adder opacity:0, .st-card) → bio poluproziran/prekriven.
+    document.body.appendChild(menu);
+    const r = anchor.getBoundingClientRect ? anchor.getBoundingClientRect() : { left: 0, right: 0, top: 0, bottom: 0 };
+    const mw = menu.offsetWidth || 150, mh = menu.offsetHeight || 200;
+    let left = Math.round(r.left + ((r.right - r.left) - mw) / 2);   // centriran ispod sidra
+    left = Math.max(8, Math.min(left, window.innerWidth - mw - 8));
+    let top = r.bottom + 4;
+    if (top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);  // ne stane dolje → iznad
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
   }
 
   // ── polje [data-be-field] koje sadrži trenutnu selekciju (ili null) ──
@@ -448,6 +469,17 @@
 
       container.addEventListener('click', function (e) {
         const c = container._beCtx;
+        // U8.5e: callout-varijanta (info/warning/tip) → op → re-crtaj (boja/stil se mijenja)
+        const cv = e.target.closest ? e.target.closest('[data-be-cvar]') : null;
+        if (cv && container.contains(cv)) {
+          const cvEl = cv.closest('[data-be-block]');
+          const cvId = cvEl ? cvEl.getAttribute('data-be-block') : '';
+          if (cvId) {
+            c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: cvId, patch: { variant: cv.getAttribute('data-be-cvar') } });
+            draw();
+          }
+          return;
+        }
         // U8.5d: strukturne ops tablice (addrow/addcol/delrow/delcol) → mutiraj model iz grida → draft → re-crtaj
         const tact = e.target.closest ? e.target.closest('[data-be-tact]') : null;
         if (tact && container.contains(tact)) {
@@ -482,6 +514,11 @@
             draw();
           });
         }
+      });
+
+      // U8.5e: resize-ručka slike (⇲) — drag u media-modulu; jedan op na puštanju.
+      container.addEventListener('pointerdown', function (e) {
+        if (typeof imageResizePointerDown === 'function') imageResizePointerDown(e, container);
       });
 
       // U8.4a: inline-tekst → draft (updateLearnBlock) na focusout; BEZ draw() (caret/fokus ostaju).

@@ -357,5 +357,35 @@ test('mediaTableBody: neprazna ćelija → preview kroz renderBlocks (lb-table, 
   assert.ok(html.indexOf('be-media__ph') === -1);
 });
 
+// ── U8.5e — callout: varijanta + naslov uredljivi ──
+test('editableBody(callout): 3 varijanta-gumba (info/warning/tip), aktivna označena + title mfield', function () {
+  const html = E._editableBody({ type: 'callout', variant: 'warning', title: 'Pazi', text: 'txt' });
+  assert.ok(html.indexOf('data-be-cvar="info"') !== -1);
+  assert.ok(html.indexOf('data-be-cvar="warning"') !== -1);
+  assert.ok(html.indexOf('data-be-cvar="tip"') !== -1);
+  assert.ok(/class="be-cvar on" data-be-cvar="warning"/.test(html), 'aktivna varijanta ima .on');
+  assert.ok(html.indexOf('data-be-mfield="title"') !== -1, 'naslov = mfield');
+  assert.ok(html.indexOf('value="Pazi"') !== -1);
+  assert.ok(html.indexOf('lb-callout--warning') !== -1, 'tijelo nosi varijanta-klasu');
+});
+test('editableBody(callout): naslov escapan (bez HTML-injekcije u value)', function () {
+  const html = E._editableBody({ type: 'callout', variant: 'info', title: 'a"><script>', text: '' });
+  assert.ok(html.indexOf('"><script>') === -1);
+});
+
+// ── U8.5e — slika: resize-ručka u previewu ──
+test('mediaImageBody: sa src → resize-ručka (⇲) + %-badge; width 60 → badge 60%', function () {
+  const html = E._mediaImageBody({ type: 'image', src: 'https://a.com/x.png', width: 60 });
+  assert.ok(html.indexOf('data-be-imgresize') !== -1, 'ručka prisutna');
+  assert.ok(html.indexOf('data-be-imgw') !== -1, 'badge prisutan');
+  assert.ok(html.indexOf('>60%<') !== -1, 'badge pokazuje 60%');
+});
+test('mediaImageBody: bez src → placeholder BEZ ručke; bez width → badge 100%', function () {
+  const empty = E._mediaImageBody({ type: 'image', src: '', alt: '' });
+  assert.ok(empty.indexOf('data-be-imgresize') === -1);
+  const noW = E._mediaImageBody({ type: 'image', src: 'https://a.com/x.png' });
+  assert.ok(noW.indexOf('>100%<') !== -1);
+});
+
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');
 process.exit(failed ? 1 : 0);

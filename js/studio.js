@@ -27,7 +27,12 @@ const SokratStudio = (function () {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
-  function t(key, fb) { return (window.t) ? window.t(key) : fb; }
+  // Globalni i18n t() vraća KLJUČ kad prijevoda nema (studio.* nisu u rječniku) → bez ove
+  // provjere bi UI pokazivao sirove ključeve („studio.publishHint"). Ključ==rezultat ⇒ fallback.
+  function t(key, fb) {
+    if (window.t) { const s = window.t(key); if (s && s !== key) return s; }
+    return fb;
+  }
   function toast(m) { if (typeof window.showToast === 'function') window.showToast(m); }
   function byId(id) { return document.getElementById(id); }
   function bridge() { return (window.SokratAdmin && SokratAdmin.studioBridge) ? SokratAdmin.studioBridge : null; }

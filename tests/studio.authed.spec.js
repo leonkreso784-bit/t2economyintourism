@@ -464,6 +464,70 @@ test('U8.5d — Studio learn: dodaj Tablicu → upiši ćelije → +red/+stupac 
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
 
+test('U8.5e — Studio learn: callout varijanta+naslov · slika resize-ručkom → draft width → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // čitač zadnjeg bloka danog tipa iz drafta
+  const readBlock = (type) => page.evaluate(({ s, type }) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) { const b = blks.filter((x) => x.type === type).pop(); if (b) return b; }
+    }
+    return null;
+  }, { s: sel, type });
+
+  // CALLOUT: dodaj Isticanje → klik varijante 'tip' → draft variant; naslov kroz mfield → draft title
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Isticanje' }).click();
+  let cblock = page.locator('#stCanvas .be-mount .be-block').last();
+  await cblock.locator('[data-be-cvar="tip"]').click();          // → op + draw()
+  cblock = page.locator('#stCanvas .be-mount .be-block').last(); // re-render → svjež locator
+  await expect(cblock.locator('.be-cvar.on[data-be-cvar="tip"]')).toHaveCount(1);
+  let cb = await readBlock('callout');
+  expect(cb.variant).toBe('tip');
+  await cblock.locator('[data-be-mfield="title"]').fill('Zlatno pravilo');
+  await page.locator('#stCanvas .st-head h1').click();           // blur = change
+  cb = await readBlock('callout');
+  expect(cb.title).toBe('Zlatno pravilo');
+
+  // SLIKA: dodaj → lokalni asset (preview STVARNO renderira) → resize-ručka drag → draft width 10–99
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Slika' }).click();
+  const iblock = page.locator('#stCanvas .be-mount .be-block').last();
+  await iblock.locator('[data-be-mfield="src"]').fill('/assets/logo.svg');
+  await page.locator('#stCanvas .st-head h1').click();           // blur → preview + ručka
+  const handle = iblock.locator('[data-be-imgresize]');
+  await expect(handle).toHaveCount(1);
+  await handle.scrollIntoViewIfNeeded();               // ručka je duboko u learn-pane → mora u viewport za mouse-drag
+  const hb = await handle.boundingBox();
+  await page.mouse.move(hb.x + hb.width / 2, hb.y + hb.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(hb.x + hb.width / 2 - 220, hb.y + hb.height / 2, { steps: 6 });
+  await page.mouse.up();                                          // → jedan op {width}
+  const ib = await readBlock('image');
+  expect(typeof ib.width).toBe('number');
+  expect(ib.width).toBeGreaterThanOrEqual(10);
+  expect(ib.width).toBeLessThanOrEqual(99);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
+
 test('U8.9b — Studio learn: paleta (Photomath keypad) ubaci razlomak u math-field → draft tex (\\frac) → Odbaci', async ({ page }) => {
   const sel = await openStudioLesson(page);
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });

@@ -29,7 +29,13 @@
       return '<input type="text" class="be-mfield" data-be-mfield="' + name + '" placeholder="' + esc(ph) + '" value="' + esc(val == null ? '' : val) + '">';
     }
     function imagePreviewHtml(block) {                       // preview kroz JEDAN renderer, ili placeholder ako nema src
-      return (block && block.src && String(block.src)) ? preview(block) : '<div class="be-media__ph">Zalijepi URL slike ↓</div>';
+      if (!(block && block.src && String(block.src))) return '<div class="be-media__ph">Zalijepi URL slike ↓</div>';
+      // U8.5e: resize-ručka + %-badge žive UNUTAR previewa (prežive preview-only osvježenje na change).
+      const w = Math.round(Number(block.width));
+      const wl = (isFinite(w) && w >= 10 && w <= 99) ? w : 100;
+      return preview(block) +
+        '<button type="button" class="be-imgresize" data-be-imgresize title="Povuci za širinu slike" aria-label="Promijeni širinu slike">⇲</button>' +
+        '<span class="be-imgw" data-be-imgw>' + wl + '%</span>';
     }
     function mediaImageBody(block) {
       return '<div class="be-media be-media--image">' +
@@ -294,6 +300,39 @@
       return { header: header, rows: rows };
     }
 
+    // ── U8.5e — RESIZE SLIKE: povuci ⇲ ručku → živi width% na <img> → JEDAN op na puštanju.
+    //    Kurirano: cijeli broj 10–99 (%); 100 = default (ključ se briše → renderer bez stila). ──
+    function imageResizePointerDown(e, container) {
+      const h = (e.target && e.target.closest) ? e.target.closest('[data-be-imgresize]') : null;
+      if (!h || !container.contains(h)) return false;
+      e.preventDefault();
+      const blockEl = h.closest('[data-be-block]');
+      const prev = blockEl ? blockEl.querySelector('.be-media__preview') : null;
+      const img = prev ? prev.querySelector('.lb-figure__img') : null;
+      if (!blockEl || !prev || !img) return false;
+      const contW = prev.clientWidth || 1;
+      const startX = e.clientX;
+      const startPct = Math.max(10, Math.min(100, Math.round((img.getBoundingClientRect().width / contW) * 100) || 100));
+      const badge = blockEl.querySelector('[data-be-imgw]');
+      let pct = startPct;
+      function onMove(ev) {                                  // živa povratna veza (ne dira draft)
+        const p = Math.round(startPct + ((ev.clientX - startX) / contW) * 100);
+        pct = Math.max(10, Math.min(100, p));
+        img.style.width = pct + '%';
+        if (badge) badge.textContent = pct + '%';
+      }
+      function onUp() {
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onUp);
+        const c = container._beCtx; if (!c) return;
+        const id = blockEl.getAttribute('data-be-block'); if (!id) return;
+        c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: id, patch: { width: pct >= 100 ? null : pct } });
+      }
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onUp);
+      return true;
+    }
+
     // ── javni API media-modula (jezgra destrukturira ovo iz window.__beMedia(core)) ──
     return {
       inlineToPlain: inlineToPlain,
@@ -302,6 +341,7 @@
       mediaFormulaBody: mediaFormulaBody,
       mediaTableBody: mediaTableBody,
       mediaPreviewHtml: mediaPreviewHtml,
+      imageResizePointerDown: imageResizePointerDown,  // U8.5e (drag-ručka širine slike)
       typesetFormulas: typesetFormulas,
       enhanceMathFields: enhanceMathFields,
       tableModel: tableModel,

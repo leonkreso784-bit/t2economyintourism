@@ -161,5 +161,19 @@ test('safeUrl: data:image/png samo uz {image:true}; svg uvijek odbijen', functio
   assert.strictEqual(B._safeUrl('data:image/svg+xml,<svg>', { image: true }), '');
 });
 
+// ── U8.5e — image width (kurirana širina u %) ──
+test('image width: 10–99 → style="width:NN%" (zaokružen broj)', function () {
+  const out = R([{ type: 'image', src: 'https://a.com/x.png', width: 55 }]);
+  assert.ok(out.indexOf('style="width:55%"') !== -1, out);
+  const out2 = R([{ type: 'image', src: 'https://a.com/x.png', width: 33.4 }]);
+  assert.ok(out2.indexOf('style="width:33%"') !== -1, out2);
+});
+test('image width: 100 / izvan raspona / ne-broj → BEZ style (granica: samo naš broj u style)', function () {
+  [100, 5, 500, -20, 'abc', null, undefined, '55; background:url(x)'].forEach(function (w) {
+    const out = R([{ type: 'image', src: 'https://a.com/x.png', width: w }]);
+    assert.ok(out.indexOf('style=') === -1, 'width=' + w + ' → ' + out);
+  });
+});
+
 console.log('\nblocks-renderer: ' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);
