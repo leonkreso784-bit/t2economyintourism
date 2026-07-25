@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-25-d (OPUS) — U8.10 tablica-paste (paste iz Excela/Worda → grid + ergonomija)
+**Kontekst:** Leon: „nastavi" (model prebačen na Opus) → U8.10 po planu. Leon usput: „kad završiš zapiši i pripremi za compact".
+**U8.10 ✅ (paste + ergonomija tablice):**
+- **`parsePastedTable(text, html)`** u `block-editor-media.js` — **SIGURNOSNA GRANICA:** HTML tablica (Excel/Word/Google Sheets/preglednik postave `text/html`) parsira se **DOMParser-om** (ne izvršava skripte/ne učitava resurse) i uzima se **SAMO `textContent`** svake ćelije → plain string (renderer ionako escapa). Fallback = TSV/plain (tab=stupac, newline=red). **Jedna ćelija (bez taba/newlinea) → `null`** = normalan paste (ne otima). Pravokutnik (dopuni kraće retke) + strop **200×40** (perf). Kolabira whitespace, odbaci trailing newline.
+- **`paste`-listener u jezgri** (`block-editor.js`): paste u `.be-tcell` → ako parser vrati grid, **zamijeni cijelu tablicu** poštujući trenutni header-mod (header uključen → prvi red = zaglavlje, ostatak = redovi). `updateLearnBlock {header, rows}` → draw().
+- **Ergonomija (Leon 07-22):** ✕ kontrole **samo na hover** (red-delete na hover tog reda, stupac-delete na hover grida; +`focus-within` = dostupno tipkovnicom) · **Tab teče ćelija→ćelija** (delete-gumbi `tabindex=-1`, Excel-osjećaj) · **Enter = ćelija ISPOD**; na dnu **dodaje red** i fokusira novu ćeliju.
+**Dokazi:** unit block-editor **58/0** (+5 parser: TSV grid / neravni→dopunjeni / jedna ćelija→null / whitespace-kolaps / 1×N; HTML-grana traži DOMParser → pokriva ju authed) · **authed studio 13/13 UŽIVO** (novi test: dispatch `ClipboardEvent` s `DataTransfer` TSV 3×3 → grid+header izgrađen, Enter na dnu → +1 red) · preflight **EXIT 0** · bump 104 · vizualni dokaz screenshotom (jedan paste → čitava 3×4 tablica + ✕ na hoveranom redu).
+**SLIJEDI:** **U8.6 (VIZUAL „čisto i bogato" ZADNJI)** → U8.7 upload / U8.8 chart. **U8 preostaje SAMO vizual + 2 osne cigle.** Prod netaknut; sve na `feature/u6-structural-ops` (preview).
+
 ## 2026-07-25-c (FABLE) — U8.5f boje sekcija → U8.5 KOMPLETAN (a–f)
 **Kontekst:** Leon: „možeš krenuti na sljedeću ciglu" → U8.5f po planu.
 **Ključni uvid (prizemljenje):** `color` je **već obavezno meta-polje kategorije** (schema `#rrggbb`), `updateCategory` op ga **već podržava** (U6b, ALLOWED mapa), a Studio canvas **već koristi** `cat.color` kao `--st-acc` akcent na learn-sekcijama i kartice/kviz/fill stavkama (U8.1) → cigla = čisti UI, nula backend promjena.
