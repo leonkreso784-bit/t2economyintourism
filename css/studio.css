@@ -176,7 +176,20 @@
 #editor-page .st-learn-cathead{
   font-size:11px; text-transform:uppercase; letter-spacing:.08em; font-weight:700;
   color:var(--text-muted); margin-bottom:12px;
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
 }
+
+/* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
+#editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }
+#editor-page .st-cdot{
+  width:18px; height:18px; padding:0; border-radius:6px; cursor:pointer;
+  background:var(--dot,#64748b); border:1px solid rgba(255,255,255,.22); transition:.12s;
+}
+#editor-page .st-cdot:hover{ transform:scale(1.15); box-shadow:0 0 0 2px rgba(99,102,241,.4); }
+#editor-page .st-cdot.on{ box-shadow:0 0 0 2px #fff inset, 0 0 0 2px var(--dot,#64748b); }
+#editor-page .st-cdot--custom{ background:conic-gradient(#ef4444,#f59e0b,#10b981,#06b6d4,#6366f1,#a855f7,#ef4444); }
+#editor-page .st-cdot--custom::-webkit-color-swatch-wrapper{ padding:0; opacity:0; }
+#editor-page .st-cdot--custom::-webkit-color-swatch{ border:none; opacity:0; }
 #editor-page .st-legacy-note{ font-size:12px; color:var(--text-muted); margin:12px 0 8px; }
 #editor-page .st-migrate{
   display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:11px;

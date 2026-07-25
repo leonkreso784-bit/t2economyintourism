@@ -147,8 +147,16 @@ const SokratStudio = (function () {
 
     // canvas (delegirano): migracija v1→blokovi
     byId('stCanvas').addEventListener('click', function (e) {
+      // U8.5f: boja-kvadratić uz naslov sekcije → updateCategory {color} → re-render (akcent se nasljeđuje)
+      var dot = e.target.closest('[data-st-catcolor]');
+      if (dot) { setCatColor(dot.getAttribute('data-st-cat'), dot.getAttribute('data-st-catcolor')); return; }
       var mig = e.target.closest('[data-migrate-cat]');
       if (mig) { migrateToBlocks(mig.getAttribute('data-migrate-cat')); }
+    });
+    // U8.5f: vlastita boja kroz native color-input (commit na change = zatvaranje pickera)
+    byId('stCanvas').addEventListener('change', function (e) {
+      var pick = e.target.closest('[data-st-catcolorpick]');
+      if (pick) setCatColor(pick.getAttribute('data-st-cat'), pick.value);
     });
 
     refreshTopbar();
@@ -159,11 +167,14 @@ const SokratStudio = (function () {
       '<p>' + esc(t('studio.emptyTitle', 'Odaberi skriptu iz stabla lijevo')) + '</p></div></div>';
   }
 
+  // U8.5f — kurirana paleta boja sekcija (ista u panelu i uz naslove sekcija u edit-modu).
+  var SECTION_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7'];
+
   function inspectorStub() {
     return '<div class="st-icard"><h3>🎨 ' + esc(t('studio.colors', 'Boje sekcija')) + '</h3>' +
-      '<p>' + esc(t('studio.colorsHint', 'Uređivanje boja stiže u kasnijoj cigli.')) + '</p>' +
+      '<p>' + esc(t('studio.colorsHint', 'U uređivanju klikni kvadratić uz naslov sekcije — boja se nasljeđuje na kartice, kviz, dopune i learn.')) + '</p>' +
       '<div class="st-swatches" style="margin-top:10px">' +
-      ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7'].map(function (c) {
+      SECTION_COLORS.map(function (c) {
         return '<div class="st-sw" style="background:' + c + '"></div>';
       }).join('') + '</div></div>' +
       '<div class="st-icard"><h3>⬆ Publish</h3><p>' +
@@ -270,6 +281,29 @@ const SokratStudio = (function () {
     if (isEd) mountLearnEditors();
   }
 
+  // ---- U8.5f: boja-kvadratići po sekciji (edit-mod) → updateCategory {color} ----
+  // Kurirano: paleta + native color-input; sve validira setCatColor na #rrggbb (schema pattern).
+  function colorDots(catId, current) {
+    var cur = String(current || '').toLowerCase();
+    var html = '<span class="st-cdots">';
+    SECTION_COLORS.forEach(function (col) {
+      html += '<button type="button" class="st-cdot' + (col === cur ? ' on' : '') +
+        '" data-st-catcolor="' + col + '" data-st-cat="' + esc(catId) +
+        '" style="--dot:' + col + '" title="' + col + '" aria-label="' + esc(t('studio.colorPick', 'Boja sekcije')) + ' ' + col + '"></button>';
+    });
+    html += '<input type="color" class="st-cdot st-cdot--custom" data-st-catcolorpick data-st-cat="' + esc(catId) +
+      '" value="' + (/^#[0-9a-f]{6}$/.test(cur) ? cur : '#6366f1') +
+      '" title="' + esc(t('studio.colorCustom', 'Vlastita boja')) + '">';
+    return html + '</span>';
+  }
+  function setCatColor(catId, color) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    if (!/^#[0-9a-fA-F]{6}$/.test(String(color || ''))) return;  // točno #rrggbb (kao schema)
+    var res = b.applyOp({ type: 'updateCategory', catId: catId, patch: { color: String(color).toLowerCase() } });
+    if (res && res.ok) { renderCanvas(); refreshTopbar(); }
+  }
+
   // ---- LEARN PANE (edit-svjestan) ----
   function renderLearnPane(data, isEd) {
     var out = '';
@@ -294,7 +328,8 @@ const SokratStudio = (function () {
       }
 
       // EDIT-MOD
-      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">§ ' + catName + '</div>';
+      out += '<div class="st-learn-cat"' + accStyle + '><div class="st-learn-cathead">§ ' + catName +
+        colorDots(catId, c.color) + '</div>';
       if (kind === 'v2') {
         // blok-editor (kvadratići) — montira se u post-renderu
         out += '<div class="be-mount" data-be-cat="' + esc(catId) + '"></div>';
@@ -349,7 +384,7 @@ const SokratStudio = (function () {
       var arr = Array.isArray(c[m.arr]) ? c[m.arr] : [];
       if (!isEd && !arr.length) return;                    // read-only: preskoči prazne
       var accStyle = c.color ? ' style="--st-acc:' + esc(c.color) + '"' : '';
-      out += '<div class="st-seclbl">§ ' + esc(c.name || catId) + '</div>';
+      out += '<div class="st-seclbl">§ ' + esc(c.name || catId) + (isEd ? colorDots(catId, c.color) : '') + '</div>';
 
       if (!isEd) {
         if (mode === 'cards') {

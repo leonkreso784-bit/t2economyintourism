@@ -528,6 +528,66 @@ test('U8.5e — Studio learn: callout varijanta+naslov · slika resize-ručkom �
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
 
+test('U8.5f — Studio: boja sekcije kvadratićem → updateCategory u draftu + akcent nasljeđen → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+
+  // kvadratići uz naslov prve sekcije (edit-mod)
+  const dots = page.locator('#stCanvas .st-cdots').first();
+  await expect(dots).toHaveCount(1);
+  const catId = await dots.locator('[data-st-catcolor]').first().getAttribute('data-st-cat');
+  await dots.locator('[data-st-catcolor="#10b981"]').click();     // zeleni iz palete
+
+  // draft: kategorija ima novu boju (updateCategory op prošao)
+  const color = await page.evaluate(({ s, catId }) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    return d.working[catId] && d.working[catId].color;
+  }, { s: sel, catId });
+  expect(color).toBe('#10b981');
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+
+  // re-render: aktivni kvadratić .on + akcent (--st-acc) nasljeđen na sekciju
+  await expect(page.locator('#stCanvas .st-cdot.on[data-st-catcolor="#10b981"]').first()).toBeVisible();
+  const acc = await page.evaluate(() => {
+    const el = document.querySelector('#stCanvas .st-learn-cat');
+    return el ? (el.getAttribute('style') || '') : '';
+  });
+  expect(acc).toContain('#10b981');
+
+  // i kartice-tab nasljeđuje istu boju: aktivan kvadratić NAŠE kategorije + akcent na njezinim stavkama
+  const cardsTab = page.locator('#stCanvas .st-tab[data-mode="cards"]');
+  if (await cardsTab.count()) {
+    await cardsTab.click();
+    await page.waitForSelector('#stCanvas .st-pane[data-pane="cards"].on');
+    const cardAcc = await page.evaluate((catId) => {
+      const dot = Array.from(document.querySelectorAll('#stCanvas .st-pane[data-pane="cards"] .st-cdots .st-cdot.on'))
+        .find((d) => d.getAttribute('data-st-cat') === catId);
+      if (!dot) return { dotOn: false, itemStyle: null };
+      // stavke NAŠE kategorije = siblings nakon njezinog st-seclbl do sljedećeg st-seclbl
+      let el = dot.closest('.st-seclbl') && dot.closest('.st-seclbl').nextElementSibling;
+      let itemStyle = null;
+      while (el && !el.classList.contains('st-seclbl')) {
+        if (el.classList.contains('st-edit-item')) { itemStyle = el.getAttribute('style') || ''; break; }
+        el = el.nextElementSibling;
+      }
+      return { dotOn: true, itemStyle };
+    }, catId);
+    expect(cardAcc.dotOn).toBe(true);                       // draft-boja vidljiva i u kartice-panelu
+    if (cardAcc.itemStyle !== null) expect(cardAcc.itemStyle).toContain('#10b981');  // akcent nasljeđen (ako kat ima kartica)
+  }
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
+
 test('U8.9b — Studio learn: paleta (Photomath keypad) ubaci razlomak u math-field → draft tex (\\frac) → Odbaci', async ({ page }) => {
   const sel = await openStudioLesson(page);
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
