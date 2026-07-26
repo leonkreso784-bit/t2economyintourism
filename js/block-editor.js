@@ -247,6 +247,17 @@
     return others.slice(0, k).concat([draggedId], others.slice(k));
   }
 
+  // najbliži skrolabilni predak (za auto-scroll tijekom draga; host = admin/Studio)
+  function scrollParent(el) {
+    let n = el ? el.parentElement : null;
+    while (n && n.nodeType === 1) {
+      const s = (typeof getComputedStyle === 'function') ? getComputedStyle(n) : null;
+      if (s && /(auto|scroll)/.test(s.overflowY) && n.scrollHeight > n.clientHeight) return n;
+      n = n.parentElement;
+    }
+    return (typeof document !== 'undefined' && document.scrollingElement) || null;
+  }
+
   // ── K6 (F5/D4): VANILLA pointer-drag preslagivanje blokova (ručka ⠿; ne otima caret naslova/contenteditable) ──
   // Drop-indikator = jedna fixed linija; na ispuštanju izračunaj apsolutni redoslijed → reorderBlocks → draw().
   function startBlockDrag(e, container, handle, draw) {
@@ -256,9 +267,28 @@
     const draggedId = blockEl.getAttribute('data-be-block');
     e.preventDefault();
     blockEl.classList.add('be-dragging');
+    const scroller = scrollParent(container);
+    const isDoc = !scroller || (typeof document !== 'undefined' && scroller === document.scrollingElement);
     const line = document.createElement('div');
     line.className = 'be-dropline';
     document.body.appendChild(line);
+    // Fix B: ghost = kompaktna pilula (grip + broj + tip) koja PRATI kursor.
+    const nEl = blockEl.querySelector('.be-n');
+    const ghost = document.createElement('div');
+    ghost.className = 'be-ghost';
+    ghost.innerHTML = '<i class="fas fa-grip-vertical"></i> ' +
+      (nEl && nEl.textContent ? '<b>' + esc(nEl.textContent) + '</b> ' : '') +
+      esc((nEl && nEl.getAttribute('title')) || 'Blok');
+    document.body.appendChild(ghost);
+    let px = e.clientX, py = e.clientY, raf = 0;
+    function scrollerBox() {
+      if (!isDoc && scroller.getBoundingClientRect) return scroller.getBoundingClientRect();
+      return { top: 0, bottom: (typeof window !== 'undefined' ? window.innerHeight : 800) };
+    }
+    function scrollByY(dy) {
+      if (!isDoc) scroller.scrollTop += dy;
+      else if (typeof window !== 'undefined') window.scrollBy(0, dy);
+    }
 
     function otherEls() {
       return Array.prototype.slice.call(container.querySelectorAll('.be-block'))
@@ -274,22 +304,36 @@
     }
     function placeLine(idx, oth) {
       const box = container.getBoundingClientRect();
+      const vp = scrollerBox();
       let y;
       if (!oth.length) y = box.top;
       else if (idx < oth.length) y = oth[idx].getBoundingClientRect().top;
       else y = oth[oth.length - 1].getBoundingClientRect().bottom;
+      y = Math.max(vp.top + 2, Math.min(y - 1, vp.bottom - 2));   // clamp u vidljivi dio
       line.style.left = box.left + 'px';
       line.style.width = box.width + 'px';
-      line.style.top = (y - 1) + 'px';
+      line.style.top = y + 'px';
     }
-    function onMove(ev) {
+    function refresh() {
+      ghost.style.left = (px + 14) + 'px';
+      ghost.style.top = (py + 12) + 'px';
       const oth = otherEls();
-      placeLine(dropIndex(ev.clientY, oth), oth);
+      placeLine(dropIndex(py, oth), oth);
     }
+    function tick() {
+      const vp = scrollerBox(), EDGE = 60, SPEED = 13;
+      if (py < vp.top + EDGE) scrollByY(-SPEED);
+      else if (py > vp.bottom - EDGE) scrollByY(SPEED);
+      refresh();
+      raf = requestAnimationFrame(tick);
+    }
+    function onMove(ev) { px = ev.clientX; py = ev.clientY; refresh(); }
     function onUp(ev) {
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
+      if (raf) cancelAnimationFrame(raf);
       if (line.parentNode) line.parentNode.removeChild(line);
+      if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
       blockEl.classList.remove('be-dragging');
       const oth = otherEls();
       const idx = dropIndex(ev.clientY, oth);
@@ -304,7 +348,8 @@
     }
     document.addEventListener('pointermove', onMove);
     document.addEventListener('pointerup', onUp);
-    onMove(e);   // odmah pozicioniraj liniju
+    raf = requestAnimationFrame(tick);
+    refresh();   // odmah pozicioniraj ghost + liniju
   }
 
   function closeMenu(container) {

@@ -8561,6 +8561,18 @@ h4.lb-heading { font-size: 1.1rem; }
   background: var(--primary-light, #818cf8);
   box-shadow: 0 0 8px 1px rgba(129, 140, 248, .6);
 }
+/* Fix B: ghost = pilula koja prati kursor tijekom draga (blok I sekcija; globalno = na body). */
+.be-ghost {
+  position: fixed; z-index: 1500; pointer-events: none;
+  display: inline-flex; align-items: center; gap: 7px; max-width: 260px;
+  padding: 6px 12px; border-radius: 9px; font-size: 12.5px; font-weight: 600;
+  color: #e5e7eb; background: rgba(30, 41, 59, .97);
+  border: 1px solid rgba(129, 140, 248, .55);
+  box-shadow: 0 10px 26px -6px rgba(0, 0, 0, .65);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.be-ghost i { opacity: .65; }
+.be-ghost b { color: #c7d2fe; }
 
 .be-body { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
 .be-body > *:first-child { margin-top: 0; }
@@ -8981,12 +8993,9 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }
-#editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(148,163,184,.4); }
-#editor-page .st-dropline{
-  position:fixed; height:3px; border-radius:3px; pointer-events:none; z-index:1450;
-  background:var(--st-acc,var(--primary-light,#818cf8));
-  box-shadow:0 0 10px 1px var(--st-acc,rgba(129,140,248,.6));
-}
+#editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(129,140,248,.5); }
+/* drop-linija sekcije koristi GLOBALNU `.be-dropline` (Fix B) — `#editor-page`-scopano pravilo se ne bi
+   primijenilo jer se element dodaje na `document.body`. */
 
 /* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
 #editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }

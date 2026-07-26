@@ -368,8 +368,16 @@ const SokratStudio = (function () {
     var draggedId = catEl.getAttribute('data-st-cat'); if (!draggedId) return;
     e.preventDefault();
     catEl.classList.add('st-dragging');
-    var line = document.createElement('div'); line.className = 'st-dropline'; document.body.appendChild(line);
-    var pointerY = e.clientY, raf = 0;
+    // Fix B: drop-linija = GLOBALNA `.be-dropline` (bila `st-dropline` scopana pod #editor-page,
+    // a dodaje se na body → nije se stilizirala = nevidljiva). + ghost koji prati kursor.
+    var line = document.createElement('div'); line.className = 'be-dropline'; document.body.appendChild(line);
+    var nEl = catEl.querySelector('.st-n'), nameEl = catEl.querySelector('.st-cat-name');
+    var ghost = document.createElement('div'); ghost.className = 'be-ghost';
+    ghost.innerHTML = '<i class="fas fa-grip-vertical"></i> ' +
+      (nEl && nEl.textContent ? '<b>' + esc(nEl.textContent) + '</b> ' : '') +
+      esc((nameEl && nameEl.textContent) || 'Sekcija');
+    document.body.appendChild(ghost);
+    var pointerX = e.clientX, pointerY = e.clientY, raf = 0;
 
     function others() {
       return Array.prototype.slice.call(canvas.querySelectorAll('.st-learn-cat'))
@@ -383,7 +391,10 @@ const SokratStudio = (function () {
       y = Math.max(box.top + 2, Math.min(y, box.bottom - 2));      // clamp u vidljivi canvas
       line.style.left = box.left + 'px'; line.style.width = box.width + 'px'; line.style.top = y + 'px';
     }
-    function refresh() { var oth = others(); placeLine(catDropIndex(pointerY, oth), oth); }
+    function refresh() {
+      ghost.style.left = (pointerX + 14) + 'px'; ghost.style.top = (pointerY + 12) + 'px';
+      var oth = others(); placeLine(catDropIndex(pointerY, oth), oth);
+    }
     function tick() {                                              // auto-scroll dok je pointer u edge-zoni
       var box = canvas.getBoundingClientRect(), EDGE = 64, SPEED = 14;
       if (pointerY < box.top + EDGE) canvas.scrollTop -= SPEED;
@@ -391,12 +402,13 @@ const SokratStudio = (function () {
       refresh();
       raf = requestAnimationFrame(tick);
     }
-    function onMove(ev) { pointerY = ev.clientY; refresh(); }
+    function onMove(ev) { pointerX = ev.clientX; pointerY = ev.clientY; refresh(); }
     function onUp(ev) {
       document.removeEventListener('pointermove', onMove);
       document.removeEventListener('pointerup', onUp);
       if (raf) cancelAnimationFrame(raf);
       if (line.parentNode) line.parentNode.removeChild(line);
+      if (ghost.parentNode) ghost.parentNode.removeChild(ghost);
       catEl.classList.remove('st-dragging');
       var visIds = Array.prototype.slice.call(canvas.querySelectorAll('.st-learn-cat'))
         .map(function (el) { return el.getAttribute('data-st-cat'); });
