@@ -5,6 +5,13 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-d (OPUS) — F7 K4 ✅: boja CIJELE kartice (suptilni --st-acc tint, F4/D5)
+**Kontekst:** Leon „super nastavi" → K4 iz `EDITOR_F7_SPEC.md §6` = feedback **F4** („kad se bira boja, cijeli blok mora biti obojan kao i kartice").
+**K4 ✅ (čisti CSS, `css/studio.css`; NULA promjene sheme/ops/rendera/JS):** boja sekcije više ne boji samo tanku traku/rub — **CIJELA kartica dobiva suptilni (12%) wash** u boji sekcije. Jedno **dijeljeno pravilo** za svih 6 Studio-površina (`st-learn-cat`/`st-kv`/`st-fcard`/`st-qz`/`st-fill`/`st-edit-item`): `--st-wash: color-mix(in srgb, var(--st-acc,transparent) 12%, transparent)` kao **GORNJI** background-layer preko dark-kartice, **ISPOD sadržaja** → tekst netaknut (WCAG na tamnoj temi). Postojeće accent-trake/rubovi (`::before`/`border-left/top`) ostaju kao „rub/glow" (D5). Bez boje → wash=transparent → neutralna tamna kartica. `color-mix` = Baseline (već korišten u `browse.css`/`landing.css`).
+- Boja se **dosljedno nasljeđuje** na learn + kartice + kviz + dopune (mehanizam nasljeđivanja `--st-acc` postoji od U8.5f — K4 ga učini VIDLJIVIM kao tint cijele kartice, ne samo bar).
+**Dokazi:** preflight **EXIT 0** (unit 58/0) · **puni `studio.authed` 14/14 uživo vs staging** (uklj. U8.5f nasljeđivanje boje) · screenshot-provjera (sekcija 1 ljubičasta / 2 zelena = cijela kartica tintirana, tekst čitljiv; kartice-tab nasljeđuje istu boju cijelom karticom). build:css bundle + bump 104.
+**SLIJEDI:** K5 (＋ afordancija — F1, „mršav i ružan" ＋ → elegantnija add-linija) → K6 drag (F5/D4, vanilla pointer-drag).
+
 ## 2026-07-26-c (OPUS) — F7 K3 ✅: stanjen chrome bloka (blokovi „teku kao tijelo")
 **Kontekst:** Leon „nastavi" → K3 iz `EDITOR_F7_SPEC.md §6` (D2).
 **K3 ✅ (`js/block-editor.js` + `css/block-editor.css` + 3 unit-testa; NULA promjene sheme/ops/rendera):**
