@@ -174,6 +174,11 @@ const SokratStudio = (function () {
       var text = String(((e.clipboardData || window.clipboardData).getData('text/plain')) || '').replace(/\s+/g, ' ');
       if (document.execCommand) document.execCommand('insertText', false, text);
     });
+    // K6b (F7): drag preslagivanje SEKCIJA — SAMO s ručke ⠿ (block-grip `data-be-drag` ne dira ovo).
+    byId('stCanvas').addEventListener('pointerdown', function (e) {
+      var h = e.target.closest('[data-st-catdrag]');
+      if (h) startCatDrag(e, h);
+    });
 
     refreshTopbar();
   }
@@ -339,6 +344,78 @@ const SokratStudio = (function () {
     if (res && res.ok) refreshTopbar();
   }
 
+  // ---- K6b (F7): drag preslagivanje SEKCIJA (learn kvadratića) → reorderCategories ----
+  // Vanilla pointer-drag (D4) SAMO s ručke ⠿ (R-C: ne otima caret naslova). Auto-scroll uz rubove
+  // canvasa (sekcije su visoke). Na ispuštanju: full-key merge (ne-learn kat. ostaju na apsolutnim
+  // mjestima, permutira se samo skup vidljivih learn-cat) → reorderCategories op → re-render.
+  function catDropIndex(y, others) {
+    var idx = 0;
+    for (var i = 0; i < others.length; i++) {
+      var r = others[i].getBoundingClientRect();
+      if (y > r.top + r.height / 2) idx++;
+    }
+    return idx;
+  }
+  function reorderedCatIds(ids, draggedId, idx) {
+    var others = ids.filter(function (id) { return id !== draggedId; });
+    var k = idx < 0 ? 0 : (idx > others.length ? others.length : idx);
+    return others.slice(0, k).concat([draggedId], others.slice(k));
+  }
+  function startCatDrag(e, handle) {
+    var b = bridge(); if (!b || !editing()) return;
+    var canvas = byId('stCanvas'); if (!canvas) return;
+    var catEl = handle.closest('.st-learn-cat'); if (!catEl) return;
+    var draggedId = catEl.getAttribute('data-st-cat'); if (!draggedId) return;
+    e.preventDefault();
+    catEl.classList.add('st-dragging');
+    var line = document.createElement('div'); line.className = 'st-dropline'; document.body.appendChild(line);
+    var pointerY = e.clientY, raf = 0;
+
+    function others() {
+      return Array.prototype.slice.call(canvas.querySelectorAll('.st-learn-cat'))
+        .filter(function (el) { return el.getAttribute('data-st-cat') !== draggedId; });
+    }
+    function placeLine(idx, oth) {
+      var box = canvas.getBoundingClientRect(), y;
+      if (!oth.length) y = box.top + 6;
+      else if (idx < oth.length) y = oth[idx].getBoundingClientRect().top - 8;
+      else y = oth[oth.length - 1].getBoundingClientRect().bottom + 8;
+      y = Math.max(box.top + 2, Math.min(y, box.bottom - 2));      // clamp u vidljivi canvas
+      line.style.left = box.left + 'px'; line.style.width = box.width + 'px'; line.style.top = y + 'px';
+    }
+    function refresh() { var oth = others(); placeLine(catDropIndex(pointerY, oth), oth); }
+    function tick() {                                              // auto-scroll dok je pointer u edge-zoni
+      var box = canvas.getBoundingClientRect(), EDGE = 64, SPEED = 14;
+      if (pointerY < box.top + EDGE) canvas.scrollTop -= SPEED;
+      else if (pointerY > box.bottom - EDGE) canvas.scrollTop += SPEED;
+      refresh();
+      raf = requestAnimationFrame(tick);
+    }
+    function onMove(ev) { pointerY = ev.clientY; refresh(); }
+    function onUp(ev) {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      if (raf) cancelAnimationFrame(raf);
+      if (line.parentNode) line.parentNode.removeChild(line);
+      catEl.classList.remove('st-dragging');
+      var visIds = Array.prototype.slice.call(canvas.querySelectorAll('.st-learn-cat'))
+        .map(function (el) { return el.getAttribute('data-st-cat'); });
+      var after = reorderedCatIds(visIds, draggedId, catDropIndex(ev.clientY, others()));
+      if (after.join('') === visIds.join('')) return;   // nepromijenjeno
+      // full-key merge: sve ključeve zadrži, permutiraj SAMO vidljive learn-cat na njihovim mjestima
+      var full = Object.keys(currentData() || {});
+      var vset = {}; after.forEach(function (id) { vset[id] = 1; });
+      var vi = 0;
+      var order = full.map(function (k) { return vset[k] ? after[vi++] : k; });
+      var res = b.applyOp({ type: 'reorderCategories', order: order });
+      if (res && res.ok) { renderCanvas(); refreshTopbar(); }
+    }
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+    raf = requestAnimationFrame(tick);
+    refresh();
+  }
+
   // ---- LEARN PANE (edit-svjestan) ----
   function renderLearnPane(data, isEd) {
     var out = '';
@@ -364,8 +441,10 @@ const SokratStudio = (function () {
 
       // EDIT-MOD — kvadratić-kartica (K2): broj-badge + uredljiv naslov (K1) + tijelo-omotač;
       // vizual usklađen s VIEW `st-kv` (isti card-jezik). Naslov = contenteditable → updateCategory{name}.
-      out += '<div class="st-learn-cat"' + accStyle + '>' +
+      out += '<div class="st-learn-cat" data-st-cat="' + esc(catId) + '"' + accStyle + '>' +
         '<div class="st-learn-cathead">' +
+        '<button type="button" class="st-catdrag" data-st-catdrag="' + esc(catId) + '" ' +
+        'title="' + esc(t('studio.dragCat', 'Povuci za preslagivanje sekcije')) + '" aria-label="' + esc(t('studio.dragCat', 'Povuci sekciju')) + '">⠿</button>' +
         '<span class="st-n">' + n + '</span>' +
         '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
         'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +

@@ -8963,6 +8963,21 @@ h4.lb-heading { font-size: 1.1rem; }
 #editor-page .st-cat-name:focus{ background:rgba(148,163,184,.16); outline-color:var(--st-acc,var(--primary)); }
 #editor-page .st-cat-name:empty::before{ content:'naziv sekcije'; color:var(--text-muted); font-weight:400; opacity:.5; }
 
+/* ── K6b (F7): drag-ručka sekcije ⠿ + drag-stanje + drop-linija (vanilla pointer-drag) ── */
+#editor-page .st-catdrag{
+  flex-shrink:0; width:24px; height:26px; padding:0; border:none; background:transparent;
+  color:var(--text-muted); font-size:15px; letter-spacing:-1px; line-height:1;
+  cursor:grab; touch-action:none; border-radius:7px; opacity:.5; transition:.13s;
+}
+#editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
+#editor-page .st-catdrag:active{ cursor:grabbing; }
+#editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(148,163,184,.4); }
+#editor-page .st-dropline{
+  position:fixed; height:3px; border-radius:3px; pointer-events:none; z-index:1450;
+  background:var(--st-acc,var(--primary-light,#818cf8));
+  box-shadow:0 0 10px 1px var(--st-acc,rgba(129,140,248,.6));
+}
+
 /* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
 #editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }
 #editor-page .st-cdot{

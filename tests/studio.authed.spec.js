@@ -807,3 +807,47 @@ test('K6 (F7) — Studio learn: povuci-ispusti blok (ručka ⠿) → redoslijed 
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('K6b (F7) — Studio learn: povuci-ispusti SEKCIJU (ručka ⠿) → reorderCategories u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.waitForSelector('#stCanvas .st-learn-cat');
+
+  const keys = () => page.evaluate((s) => Object.keys(window.SokratDraft.get(s.subj, s.lesson).working), sel);
+  const before = await keys();
+  expect(before.length).toBeGreaterThan(2);                            // te2 ima više sekcija
+
+  // draggedId = prva vidljiva learn-sekcija; njen index u ključevima
+  const draggedId = await page.locator('#stCanvas .st-learn-cat').first().getAttribute('data-st-cat');
+  const beforeIdx = before.indexOf(draggedId);
+
+  // povuci ručku ⠿ prve sekcije prema DNU (auto-scroll odnese je dolje)
+  const grip = page.locator('#stCanvas .st-learn-cat').first().locator('[data-st-catdrag]');
+  await grip.scrollIntoViewIfNeeded();
+  const gb = await grip.boundingBox();
+  const cbox = await page.locator('#stCanvas').boundingBox();
+  await page.mouse.move(gb.x + gb.width / 2, gb.y + gb.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(gb.x + gb.width / 2, cbox.y + cbox.height - 24, { steps: 10 });  // u donju edge-zonu → auto-scroll
+  await page.waitForTimeout(700);
+  await page.mouse.move(gb.x + gb.width / 2, cbox.y + cbox.height - 24, { steps: 3 });    // ostani u zoni
+  await page.waitForTimeout(500);
+  await page.mouse.up();                                               // → reorderCategories op + re-render
+
+  const after = await keys();
+  const afterIdx = after.indexOf(draggedId);
+  expect(after.slice().sort()).toEqual(before.slice().sort());         // isti skup ključeva (ništa izgubljeno)
+  expect(after.join()).not.toBe(before.join());                        // redoslijed se STVARNO promijenio
+  expect(afterIdx).toBeGreaterThan(beforeIdx);                         // povučena sekcija otišla NIŽE
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+
+  // Odbaci → čist izlaz (staging nikad pisan; draft-only)
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
