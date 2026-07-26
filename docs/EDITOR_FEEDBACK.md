@@ -19,6 +19,8 @@ razina — očite afordancije, direktna manipulacija, ugodno i lako.
 
 ## 📋 Stavke (F1–F8)
 
+> **STATUS (2026-07-26):** **F7 kvadratić-model KOMPLETAN (K1–K6)** — naslov+tijelo, kartica-vizual, boja cijelog bloka (**F4 ✅**), ＋ afordancija (**F1 ✅**), **drag-and-drop blokova I sekcija (F5 ✅**, K6). **Editor-fix (duboka revizija 07-26-h):** drag je bio nevidljiv → drag-ručka sad UVIJEK vidljiva u lijevom žlijebu (⣿) + živi ghost prati kursor + auto-scroll (**F1/F5 dodatno pojačani** — afordancija mora biti vidljiva; Kartice = uzor). **Preostaje:** **F2** (pravi upload slike = U8.7 Supabase Storage) · **F6** (bogatija text-boja) · **F8** (lista redoslijed/tip) · U8.6b/c mikro-vizual.
+
 ### F1 — ＋ za dodavanje bloka je „mršav i ružan"
 - **Leon:** „ne sviđa mi se kako je plus pozicioniran, nekako je mršavo i ružno."
 - **Analiza:** između-blokovni ＋ je tanka linija + sitni krug (`.be-adder`/`.be-bigplus`). Nema vizualne

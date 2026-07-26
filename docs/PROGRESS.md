@@ -5,6 +5,22 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-i (OPUS) — 🚀 te2-hr DEPLOYAN NA PROD + profil-README
+**Kontekst:** Leon nakon editor-fixeva: „pregledaj Sašin PR #4 i ako je dobro pusti na deploy" + „napiši mi profil-README i pomozi oko achievementa".
+**Sašin PR #4 (te2-hr Ekonomika turizma) — lead-review (ono što MOGU):** scope=samo sadržaj+`?v=` bump (index.html/styles.css/etc = čisti bump, 0 platformske logike, provjereno liniju po liniju) · CI zelen (Vercel/Lighthouse/Lint+verify+tests/Authed) · **ćirilica 0** (M1/M2/Final) · model kartica ≤200 (max 195, avg 138–155, 0 prekršaja) · struktura M1 7kat/51fc/44q/36f + M2 7kat/43fc/41q/35f · **Final=Object.assign 15kat** (7+7+examPractice, 0 višak/manjak). **NE mogu:** činjenična točnost vs HR skripta (nemam materijale) = Sašina domena (autor, ADR-020). **DEPLOY (uz izričito Leonovo dopuštenje):** nema `gh` → local `--no-ff` merge `origin/content/te2-hr`→`main` (`7fb2d61`) → gate-ovi svi 0 (verify/bump/css/typecheck/schema/export-drift/unit) + `validate:content te2-hr` 0/0 → `git push origin main` (`388e3c5..7fb2d61`, protect-main bypass=Leon). **Verificirano:** PR #4 = **Merged**, **Vercel Production „Deployment completed"=SUCCESS**, te2-hr u catalog.js (7 ref). **22 predmeta live (17 EN + 5 HR file-served).** **profil-README:** iskreno pokresan napuhani stack (11 jezika/React/Docker/Blender… → JS/TS/Python/HTML/CSS + Supabase/PostgreSQL/Vercel/Node/Playwright/Git = ono što STVARNO stoji u repoima); README spremljen u scratchpad (`PROFILE_README.md`). **SLIJEDI:** achievementi (trebaju Leonov GitHub-login — dane upute) · U8.6b/c vizual · U8.7 upload · Saša `content/entrepreneurship-hr` (nova grana, još nije PR).
+
+## 2026-07-26-h (OPUS) — EDITOR-FIX: „gdje je drag" → drag vidljiv + živi (duboka revizija)
+**Kontekst:** Leon nakon F7 K6: „ma gdje je drag, pregledaj/testiraj cijeli editor sa screenshotovima, mislim da ima grešaka." Napravio **duboku vizualnu reviziju kroz 12 stanja** (0 console-grešaka).
+**Dijagnoza „gdje je drag":** drag RADI ali je **vizualno nevidljiv** — (1) blok-kontrole (uklj. ručku) 100% skrivene do hovera + ručka ⠿ gore-desno zbijena uz ↑↓✕ (izgleda kao gumb); kontrast: **Kartice-mod** ima ↑↓✎🗑 UVIJEK vidljive → jasne, blokovi ne (K3 „stanjen chrome"/D2 otišao PREDALEKO); (2) drag nema živi osjećaj (ništa ne prati kursor, drop-linija ispod fold-a); (3) **STVARNI BUG:** section drop-linija `.st-dropline` stilizirana pod `#editor-page` a dodaje se na `body` → nikad stilizirana = nevidljiva.
+**Popravci (svih 5; Leon: „kreni sa popravcima"):**
+- **A `bef8e1d`** — drag-ručka UVIJEK vidljiva u LIJEVOM žlijebu (`.be-grip`, Notion-stil, FA `fa-grip-vertical` ⣿ umjesto braille ⠿; opacity .4→.85→1); ↑↓✕ ostaju hover desno; grip sekcije isto FA ikona.
+- **C `bef8e1d`** — `.be-block` dobio suptilnu stalnu granicu (rub+bg) + lijevi žlijeb → izgleda kao blok.
+- **B `0c4e57c`** — ŽIVI DRAG: `.be-ghost` pilula (grip+broj+tip) PRATI kursor (blok I sekcija) + AUTO-SCROLL preko `scrollParent(container)` (host-agnostičan rAF-loop) + drop-linija CLAMP u vidljivo; **fix nevidljive section-linije** (koristi globalnu `.be-dropline`).
+- **#6 `9a37e8b`** — read-only naslov ne duplicira „X — X" kad `learn.title==name`.
+- **#7 `9a37e8b`** — inspektor mode-svjestan: read-only „✏️ Kako urediti" (uputa+spomen ⣿ ručke), edit „🎨 Boje sekcije"; `_inspEd` guard refresh samo na promjenu edit-stanja.
+**Dokazi:** unit 64/0 · **authed studio 16/16 UŽIVO** (3× kroz popravke) · preflight EXIT 0 · screenshotovi (grip lijevo vidljiv · ghost „⣿ 1 HTML"/„⣿ 1 Tourism Demand" prati kursor · naslov bez duplikata · inspektor R/O vs edit). Pushano `cda3db7..9a37e8b`.
+**POUKA:** afordancija u editoru mora biti VIDLJIVA (Kartice = uzor: kontrole stalno vidljive); K3 „stanjen chrome" bio predaleko za drag-ručku. Drop-indikatori na `body` NE smiju biti stilizirani `#editor-page`-scopanim selektorom. [[editor-must-be-real-product]]
+
 ## 2026-07-26-g (OPUS) — F7 K6b ✅: drag-and-drop preslagivanje SEKCIJA → **F7 KVADRATIĆ-MODEL KOMPLETAN (K1–K6)**
 **Kontekst:** Leon isprobao K6a na previewu (screenshot potvrdio grip ⠿ radi) → „nastavi". K6b = zadnji dio F7 (drag sekcija). Usput primijetio Vercelov **INP-hint na `button.st-migrate`** (klik „Uredi kao blokove" radi puni re-render canvasa) — benigno (rijetka admin-akcija, ne dira studente), zabilježeno kao mogući kasniji hardening.
 **K6b ✅ (`df80713`; F5/D4 = VANILLA pointer-drag; NULA promjene sheme/ops/publish-RPC/rendera):**
