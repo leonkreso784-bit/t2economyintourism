@@ -269,6 +269,18 @@
 #editor-page .st-edit-item .admin-card-ctrls{ flex-shrink:0; display:flex; gap:4px; align-items:flex-start; }
 #editor-page .st-addwrap{ margin:4px 0 22px; }
 
+/* ==== K4/F4/D5: boja CIJELE kartice = suptilni --st-acc tint (ne samo traka) ====
+   Wash (12% boje) = GORNJI background-layer preko dark-kartice, ISPOD sadržaja → tekst
+   netaknut (WCAG na tamnoj temi). Bez boje (--st-acc nedef.) → wash=transparent → neutralno.
+   Postojeće accent-trake/rubovi (::before / border-left/top) ostaju kao „rub/glow" (D5).
+   Pravilo je NAKON definicija kartica → override `background` (color-mix = Baseline). */
+#editor-page :is(.st-learn-cat,.st-kv,.st-fcard,.st-qz,.st-fill,.st-edit-item){
+  --st-wash: color-mix(in srgb, var(--st-acc, transparent) 12%, transparent);
+  background:
+    linear-gradient(var(--st-wash), var(--st-wash)),
+    linear-gradient(180deg, rgba(30,41,59,.92), rgba(30,41,59,.55));
+}
+
 /* ==== INSPEKTOR (stub u U8.1) ==== */
 #editor-page .st-inspector{
   background:linear-gradient(180deg,rgba(30,41,59,.55),rgba(15,23,42,.3));
