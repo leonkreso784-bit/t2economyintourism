@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-c (OPUS) — F7 K3 ✅: stanjen chrome bloka (blokovi „teku kao tijelo")
+**Kontekst:** Leon „nastavi" → K3 iz `EDITOR_F7_SPEC.md §6` (D2).
+**K3 ✅ (`js/block-editor.js` + `css/block-editor.css` + 3 unit-testa; NULA promjene sheme/ops/rendera):**
+- **tip-labela uklonjena** (`be-type` „Naslov/Tekst/…" maknut iz `be-head`) → tip ostaje kao `title` na broju (hover-tooltip + a11y, `TYPE_LABEL` i dalje u uporabi).
+- **↑↓✕ kontrole** = već hover-only (potvrđeno u CSS-u, ne novo); `.be-ctrls` sad `margin-left:auto` (bez tip-labele-spacera).
+- **`.be-block` stanjen:** transparentna pozadina, **bez okvira/accent-trake `::before`/box-shadowa/hover-lifta/pop-animacije** → hover = blagi highlight (`rgba(148,163,184,.05)` + tanki rub) = „koji si blok"; broj suptilan (mali, muted, boja se pojača na hover). Rezultat: **sekcija (kvadratić K2) = kartica, a blokovi unutra teku kao sadržaj** (ne kao zasebne kutije).
+**Dokazi:** preflight **EXIT 0** (unit 58/0 — 3 ažurirana K3 testa: `be-type` count=0, tip=`title` na `be-n`, numeracija-regex tolerira title) · **puni `studio.authed` 14/14 uživo vs staging** (0 regresije — `.be-block`/`data-be-act` kontrole rade) · screenshot-provjera (blok „2" suptilan broj + `Piši tekst…`, bez tip-labele; sekcija ostaje kartica-kvadratić s accent-trakom). build:css bundle + bump 104.
+**SLIJEDI:** K4 (boja CIJELOG bloka/kartice — `--st-acc` tint, F4/D5) → K5 ＋ afordancija → K6 drag.
+
 ## 2026-07-26-b (OPUS) — F7 K2 ✅: kvadratić-kartica vizual (broj + prominentan naslov + tijelo, VIEW/EDIT usklađeni)
 **Kontekst:** Leon „nastavi dalje" (nakon što je dobio preview-link za probu K1) → K2 iz `EDITOR_F7_SPEC.md §6`.
 **K2 ✅ (`js/studio.js` + `css/studio.css`; NULA promjene sheme/ops/rendera):** EDIT learn-sekcija (`st-learn-cat`) prestala biti plosnata traka i postala **prava kvadratić-kartica**, vizualno usklađena s VIEW `st-kv`:

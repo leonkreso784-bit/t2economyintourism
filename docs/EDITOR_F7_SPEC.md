@@ -131,7 +131,8 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
 2. **K2 ✅ (2026-07-26) — Kvadratić-kartica vizual** (struktura): `st-learn-cat` = kartica (broj-badge `.st-n` + prominentan naslov
    16.5px + `st-learn-body` omotač), gradijent+radius18+`::before` accent = isti card-jezik kao VIEW `st-kv`; v1 više ne ugnježđuje `st-kv`.
    authed 14/14 uživo (0 regresije) + screenshot-review.
-3. **K3 — Stanjeni chrome bloka** (D2, dio F1): `be-head` bez tip-labele, kontrole na hover; unit + authed (kontrole rade).
+3. **K3 ✅ (2026-07-26) — Stanjeni chrome bloka** (D2, dio F1): `be-type` uklonjen (tip=`title` na broju); `.be-block` transparentan bez okvira/accent/lift/pop → blokovi teku kao tijelo, hover=highlight+kontrole; broj suptilan.
+   unit 58/0 (3 K3 testa) + authed 14/14 uživo (kontrole rade).
 4. **K4 — Boja cijelog bloka** (F4, D5): `--st-acc` tint kartice + rub; paleta po sekciji; authed (boja→draft→nasljeđivanje).
 5. **K5 — ＋ afordancija** (F1): `adder`/`bigplus` redizajn; screenshot-review.
 6. **K6 — Drag kvadratića + blokova** (F5, D4): pointer-drag → `reorderCategories`/`reorderBlocks`; authed (drag→redoslijed u draftu).
@@ -157,4 +158,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1+K2 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K3 (stanjen chrome bloka).**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1+K2+K3 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K4 (boja cijelog bloka, F4/D5).**
