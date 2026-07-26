@@ -174,92 +174,173 @@ function _adminEditBtn(canEdit, type, catId, idx) {
     '" aria-label="' + _adminT('admin.edit', 'Edit') + '"><i class="fas fa-pen"></i></button>';
 }
 
+/** „Dodaj stavku" gumb (samo adminu, samo draft-mod) — U6c strukturne operacije. */
+function _adminAddBtn(canEdit, type, catId, label) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-add-btn" data-admin-add data-type="' + type +
+    '" data-cat="' + _adminEscape(catId) + '"><i class="fas fa-plus"></i> ' + label + '</button>';
+}
+
+// U6e-1 — „Obriši stavku" gumb (kartica/kviz/fill; samo draft-mod). remove* op (id + idx fallback).
+function _adminItemDelBtn(canEdit, type, catId, idx) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-edit-btn admin-del" data-admin-del data-type="' + type +
+    '" data-cat="' + _adminEscape(catId) + '" data-idx="' + idx +
+    '" aria-label="' + _adminT('admin.removeItem', 'Remove') + '"><i class="fas fa-trash"></i></button>';
+}
+
+// U6e — kontrole stavke (desno): presloži ↑↓ + uredi ✎ + obriši 🗑. Grupa za flashcard/quiz/fill.
+function _adminItemControls(canEdit, type, catId, idx, total) {
+  if (!canEdit) return _adminEditBtn(canEdit, type, catId, idx);
+  const esc = _adminEscape(catId);
+  const upDis = (idx <= 0) ? ' disabled' : '';
+  const downDis = (idx >= total - 1) ? ' disabled' : '';
+  return '<div class="admin-card-ctrls">' +
+    '<button type="button" class="admin-edit-btn" data-admin-move="up" data-type="' + type + '" data-cat="' + esc + '" data-idx="' + idx + '"' + upDis +
+      ' aria-label="' + _adminT('admin.moveUp', 'Move up') + '"><i class="fas fa-arrow-up"></i></button>' +
+    '<button type="button" class="admin-edit-btn" data-admin-move="down" data-type="' + type + '" data-cat="' + esc + '" data-idx="' + idx + '"' + downDis +
+      ' aria-label="' + _adminT('admin.moveDown', 'Move down') + '"><i class="fas fa-arrow-down"></i></button>' +
+    _adminEditBtn(canEdit, type, catId, idx) +
+    _adminItemDelBtn(canEdit, type, catId, idx) +
+    '</div>';
+}
+
+// U6d — kategorije-UI: „Uredi" (meta: name/icon/color) na zaglavlju + „Dodaj kategoriju" na dnu.
+function _adminCatEditBtn(canEdit, catId) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-edit-btn admin-cat-edit" data-admin-cat-edit' +
+    ' data-cat="' + _adminEscape(catId) + '" aria-label="' + _adminT('admin.editCategory', 'Edit category') +
+    '"><i class="fas fa-pen"></i></button>';
+}
+function _adminCatAddBtn(canEdit, label) {
+  if (!canEdit) return '';
+  return '<button type="button" class="admin-add-btn admin-add-btn--cat" data-admin-cat-add>' +
+    '<i class="fas fa-folder-plus"></i> ' + label + '</button>';
+}
+
+// U6d-2 — kontrole kategorije (gore-desno): presloži ↑↓ · uredi ✎ · obriši 🗑. Krajnje strelice disabled.
+function _adminCatControls(canEdit, catId, catIdx, total) {
+  if (!canEdit) return '';
+  const esc = _adminEscape(catId);
+  const upDis = (catIdx <= 0) ? ' disabled' : '';
+  const downDis = (catIdx >= total - 1) ? ' disabled' : '';
+  return '<div class="admin-cat-ctrls">' +
+    '<button type="button" class="admin-edit-btn" data-admin-cat-move="up" data-cat="' + esc + '"' + upDis +
+      ' aria-label="' + _adminT('admin.moveUp', 'Move up') + '"><i class="fas fa-arrow-up"></i></button>' +
+    '<button type="button" class="admin-edit-btn" data-admin-cat-move="down" data-cat="' + esc + '"' + downDis +
+      ' aria-label="' + _adminT('admin.moveDown', 'Move down') + '"><i class="fas fa-arrow-down"></i></button>' +
+    _adminCatEditBtn(canEdit, catId) +
+    '<button type="button" class="admin-edit-btn admin-cat-del" data-admin-cat-del data-cat="' + esc + '"' +
+      ' aria-label="' + _adminT('admin.removeCategory', 'Remove category') + '"><i class="fas fa-trash"></i></button>' +
+    '</div>';
+}
+
 function _renderAdminCards(holder, data) {
-  const cats = (data && typeof data === 'object') ? Object.keys(data) : [];
+  const cats = getCategories(data);
   // F4.3c-1: edit-gumbi samo adminu (RLS je prava zaštita; ovo je UX/defense-in-depth).
   // U3: i SAMO u draft-modu — jedini put do izmjene je draft → „Objavi" (EDITOR_PLAN §4.1).
   const canEdit = !!(window.SokratAdmin && typeof SokratAdmin.isAdmin === 'function' && SokratAdmin.isAdmin()) && _draftMode;
   let html = '';
   let total = 0;
 
-  cats.forEach(function (catId) {
+  cats.forEach(function (catId, catIdx) {
     const cat = data[catId];
     if (!cat || typeof cat !== 'object') return;
     const fcs = Array.isArray(cat.flashcards) ? cat.flashcards : [];
     const quiz = Array.isArray(cat.quiz) ? cat.quiz : [];
     const fills = Array.isArray(cat.fillBlanks) ? cat.fillBlanks : [];
-    const hasLearn = !!(cat.learn && typeof cat.learn === 'object' && cat.learn.content);
-    if (fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
+    // Learn dual-mode: v1 = HTML string (content), v2 = blok-niz (blocks; U7/U8).
+    const _learnObj = (cat.learn && typeof cat.learn === 'object') ? cat.learn : null;
+    const learnV1 = !!(_learnObj && typeof _learnObj.content === 'string' && _learnObj.content && !Array.isArray(_learnObj.blocks));
+    const learnV2 = !!(_learnObj && Array.isArray(_learnObj.blocks));
+    const hasLearn = learnV1 || learnV2;
+    // Studenti preskaču praznu kategoriju; u draft-modu (canEdit) prikaži je da se može dodavati (U6c).
+    if (!canEdit && fcs.length === 0 && quiz.length === 0 && fills.length === 0 && !hasLearn) return;
 
     html +=
       '<div class="profile-card profile-card--wide admin-cat">' +
+      '<div class="admin-cat-head">' +
       '  <h3 class="profile-card-title"><i class="fas ' + _adminEscape(cat.icon || 'fa-book') + '"></i> ' +
-      _adminEscape(cat.name || catId) + '</h3>';
+      _adminEscape(cat.name || catId) + '</h3>' +
+      _adminCatControls(canEdit, catId, catIdx, cats.length) +
+      '</div>';
 
-    // — Flashcards —
-    if (fcs.length) {
+    // — Flashcards — (u draft-modu prikaži i prazan mod: subhead + „Dodaj")
+    if (fcs.length || canEdit) {
       html += '<h4 class="admin-subhead">' + _adminT('admin.flashcards', 'Flashcards') +
-        ' <span class="admin-count">' + fcs.length + '</span></h4><ol class="admin-card-list">';
-      fcs.forEach(function (fc, i) {
-        total++;
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
-          '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'flashcard', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
-    }
-
-    // — Quiz (F4.4) —
-    if (quiz.length) {
-      html += '<h4 class="admin-subhead">' + _adminT('admin.quiz', 'Quiz') +
-        ' <span class="admin-count">' + quiz.length + '</span></h4><ol class="admin-card-list">';
-      quiz.forEach(function (qz, i) {
-        total++;
-        const opts = Array.isArray(qz.options) ? qz.options : [];
-        let optsHtml = '<ul class="admin-quiz-opts">';
-        opts.forEach(function (opt, oi) {
-          const isCorrect = (oi === qz.correct);
-          optsHtml += '<li' + (isCorrect ? ' class="is-correct"' : '') + '>' +
-            (isCorrect ? '<i class="fas fa-check"></i> ' : '') + _adminEscape(opt) + '</li>';
+        ' <span class="admin-count">' + fcs.length + '</span></h4>';
+      if (fcs.length) {
+        html += '<ol class="admin-card-list">';
+        fcs.forEach(function (fc, i) {
+          total++;
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(fc.question || '') + '</div>' +
+            '    <div class="admin-card-a">' + _adminEscape(fc.answer || '') + '</div>' +
+            '  </div>' +
+            _adminItemControls(canEdit, 'flashcard', catId, i, fcs.length) +
+            '</li>';
         });
-        optsHtml += '</ul>';
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
-          '    ' + optsHtml +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'quiz', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
+        html += '</ol>';
+      }
+      html += _adminAddBtn(canEdit, 'flashcard', catId, _adminT('admin.addCardBtn', 'Add flashcard'));
     }
 
-    // — Fill in the blank (F4.4) —
-    if (fills.length) {
+    // — Quiz (F4.4) — (u draft-modu prikaži i prazan mod)
+    if (quiz.length || canEdit) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.quiz', 'Quiz') +
+        ' <span class="admin-count">' + quiz.length + '</span></h4>';
+      if (quiz.length) {
+        html += '<ol class="admin-card-list">';
+        quiz.forEach(function (qz, i) {
+          total++;
+          const opts = Array.isArray(qz.options) ? qz.options : [];
+          let optsHtml = '<ul class="admin-quiz-opts">';
+          opts.forEach(function (opt, oi) {
+            const isCorrect = (oi === qz.correct);
+            optsHtml += '<li' + (isCorrect ? ' class="is-correct"' : '') + '>' +
+              (isCorrect ? '<i class="fas fa-check"></i> ' : '') + _adminEscape(opt) + '</li>';
+          });
+          optsHtml += '</ul>';
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(qz.question || '') + '</div>' +
+            '    ' + optsHtml +
+            '  </div>' +
+            _adminItemControls(canEdit, 'quiz', catId, i, quiz.length) +
+            '</li>';
+        });
+        html += '</ol>';
+      }
+      html += _adminAddBtn(canEdit, 'quiz', catId, _adminT('admin.addQuizBtn', 'Add quiz question'));
+    }
+
+    // — Fill in the blank (F4.4) — (u draft-modu prikaži i prazan mod)
+    if (fills.length || canEdit) {
       html += '<h4 class="admin-subhead">' + _adminT('admin.fill', 'Fill blanks') +
-        ' <span class="admin-count">' + fills.length + '</span></h4><ol class="admin-card-list">';
-      fills.forEach(function (fb, i) {
-        total++;
-        html +=
-          '<li class="admin-card">' +
-          '  <div class="admin-card-body">' +
-          '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
-          '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
-          '  </div>' +
-          _adminEditBtn(canEdit, 'fill', catId, i) +
-          '</li>';
-      });
-      html += '</ol>';
+        ' <span class="admin-count">' + fills.length + '</span></h4>';
+      if (fills.length) {
+        html += '<ol class="admin-card-list">';
+        fills.forEach(function (fb, i) {
+          total++;
+          html +=
+            '<li class="admin-card">' +
+            '  <div class="admin-card-body">' +
+            '    <div class="admin-card-q">' + _adminEscape(fb.sentence || '') + '</div>' +
+            '    <div class="admin-card-a">' + _adminEscape(fb.answer || '') + '</div>' +
+            '  </div>' +
+            _adminItemControls(canEdit, 'fill', catId, i, fills.length) +
+            '</li>';
+        });
+        html += '</ol>';
+      }
+      html += _adminAddBtn(canEdit, 'fill', catId, _adminT('admin.addFillBtn', 'Add fill-in-the-blank'));
     }
 
-    // — Learn (F4.4) — jedan objekt po kategoriji (ne niz) —
-    if (hasLearn) {
+    // — Learn v1 (F4.4) — HTML string; postojeći modal-editor NEDIRNUT —
+    if (learnV1) {
       total++;
       const L = cat.learn;
       html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + '</h4>' +
@@ -270,17 +351,72 @@ function _renderAdminCards(holder, data) {
         '  </div>' +
         _adminEditBtn(canEdit, 'learn', catId, 0) +
         '</li></ol>';
+    } else if (learnV2 && !canEdit) {
+      // v2 learn izvan drafta = read-only preview kroz JEDAN renderer (ista granica kao study).
+      total++;
+      html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
+        '<div class="admin-card admin-card--learn"><div class="admin-card-body be-body">' +
+        (typeof window.renderBlocks === 'function' ? window.renderBlocks(cat.learn.blocks) : '') +
+        '</div></div>';
+    }
+
+    // — Learn v2 blok-editor (U8a) — SAMO draft-mod; za v2 learn ILI prazan/nov (nema v1 sadržaja
+    //   → nula dodira postojećeg v1 `content`; migracija v1→v2 je zasebna cigla). Mount ide u post-render.
+    if (canEdit && !learnV1) {
+      html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
+        '<div class="be-mount" data-be-cat="' + _adminEscape(catId) + '"></div>';
     }
 
     html += '</div>';
   });
 
-  holder.innerHTML = total
+  // U6d: „Dodaj kategoriju" (samo draft-mod). U praznoj lekciji je jedini sadržaj htmla → i tada se prikaže.
+  html += _adminCatAddBtn(canEdit, _adminT('admin.addCategoryBtn', 'Add category'));
+
+  holder.innerHTML = (total || (canEdit && html))
     ? html
     : '<p class="profile-meta">' + _adminT('admin.noContent', 'No flashcards or quiz in this lesson.') + '</p>';
+
+  _mountBlockEditors(holder); // U8a-2: oživi .be-mount kontejnere (draft-mod, learn-blokovi)
 }
 
 window.renderAdminPage = renderAdminPage;
+
+// ===== U8a-2 — blok-editor (learn v2) ožičen na draft-ops =====
+// Editor je samostalan modul (js/block-editor.js); admin mu daje SAMO callbacke → nema vezanja.
+// Blok-ops idu kroz istu draft-mašineriju kao ostali editori (SokratDraft.applyOp; „Objavi" = U4 RPC).
+
+/** Trenutni blokovi kategorije iz WORKING kopije (draft). Prazno = editor pokaže ＋ (dodaj prvi). */
+function _beGetBlocks(catId) {
+  const data = _adminWorking();
+  const cat = data && data[catId];
+  return (cat && cat.learn && Array.isArray(cat.learn.blocks)) ? cat.learn.blocks : [];
+}
+
+/** Primijeni blok-op na draft + osvježi brojač trake. NE full-rerenderira (editor sam re-crta svoj container). */
+function _beApplyOp(op) {
+  const d = _adminDraft();
+  if (!d) return { ok: false, error: 'no-draft' };
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, op);
+  _renderEditBar(); // brojač „N izmjena"
+  return res;
+}
+
+/** Nakon rendera: montiraj blok-editor u svaki .be-mount (draft-mod). Idempotentno (fresh container po renderu). */
+function _mountBlockEditors(holder) {
+  if (!holder || !window.SokratBlockEditor || typeof SokratBlockEditor.mount !== 'function') return;
+  const mounts = holder.querySelectorAll('.be-mount');
+  for (let i = 0; i < mounts.length; i++) {
+    (function (el) {
+      const catId = el.getAttribute('data-be-cat');
+      SokratBlockEditor.mount(el, {
+        catId: catId,
+        getBlocks: function () { return _beGetBlocks(catId); },
+        applyOp: _beApplyOp
+      });
+    })(mounts[i]);
+  }
+}
 
 // ===== F4.3c-1 — Uredi JEDNU karticu: write JEDNOG reda + auto-verzija + live re-render =====
 //
@@ -292,8 +428,6 @@ window.renderAdminPage = renderAdminPage;
 
 /** Kontekst trenutno otvorene lekcije u vieweru (write ide u _adminCtx.varName). */
 let _adminCtx = { subjectId: '', lessonId: '', varName: '', data: null };
-/** Kartica koja se uređuje: { catId, idx }. */
-let _editTarget = null;
 
 /** lessonId → window-var (koji red u subject_content). */
 function _adminResolveVar(subjectId, lessonId) {
@@ -328,6 +462,8 @@ function _adminRerender() {
   const holder = document.getElementById('adminCards');
   if (holder) _renderAdminCards(holder, _adminWorking());
   _renderEditBar();
+  // U8.3: ako je Studio aktivan, isti draft-op mijenja i njegov canvas → osvježi ga (no-op inače).
+  if (window.SokratStudio && typeof SokratStudio.onDraftChanged === 'function') SokratStudio.onDraftChanged();
 }
 
 /** Traka draft-moda: gumb za ulaz, odnosno indikator „uređuješ" + Objavi/Odbaci. */
@@ -487,486 +623,111 @@ document.addEventListener('click', function (e) {
   if (e.target.closest('#adminDiscardBtn')) { _discardDraft(); }
 });
 
-/** Kreiraj (jednom) edit-modal singleton na <sokrat-modal> primitivu. */
-function _ensureEditModal() {
-  let m = document.getElementById('adminEditModal');
-  if (m) return m;
-  m = document.createElement('sokrat-modal');
-  m.id = 'adminEditModal';
-  m.className = 'admin-edit';
-  m.setAttribute('aria-labelledby', 'adminEditTitle');
-  m.innerHTML =
-    '<div class="admin-edit__card">' +
-    '  <button type="button" class="admin-edit__close" data-admin-edit-close aria-label="Close">&times;</button>' +
-    '  <h3 id="adminEditTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editCard', 'Edit flashcard') + '</h3>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.question', 'Question') + '</span>' +
-    '    <textarea id="adminEditQ" class="admin-edit__input" rows="3"></textarea></label>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
-    '    <textarea id="adminEditA" class="admin-edit__input" rows="4"></textarea></label>' +
-    '  <p class="admin-edit__note" id="adminEditNote"></p>' +
-    '  <p class="admin-edit__status" id="adminEditStatus" hidden></p>' +
-    '  <div class="admin-edit__actions">' +
-    '    <button type="button" class="cta-button secondary" data-admin-edit-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
-    '    <button type="button" class="cta-button primary" id="adminEditSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
-    '  </div>' +
-    '</div>';
-  document.body.appendChild(m);
-  m.addEventListener('click', function (e) {
-    if (e.target.closest('[data-admin-edit-close]')) _closeEditor();
-  });
-  const saveBtn = document.getElementById('adminEditSave');
-  if (saveBtn) saveBtn.addEventListener('click', _saveCard);
-  return m;
-}
 
-function _editStatus(msg, isErr) {
-  const el = document.getElementById('adminEditStatus');
-  if (!el) return;
-  el.textContent = msg || '';
-  el.hidden = !msg;
-  el.classList.toggle('is-error', !!isErr);
-}
-
-function _closeEditor() {
-  const m = document.getElementById('adminEditModal');
-  if (m && typeof m.close === 'function') m.close();
-}
-
-/** Otvori editor za karticu (catId, idx) iz trenutnog konteksta. */
-function _openCardEditor(catId, idx) {
-  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
-  const cat = data && data[catId];
-  const fc = (cat && Array.isArray(cat.flashcards)) ? cat.flashcards[idx] : null;
-  if (!fc) return;
-  _editTarget = { catId: catId, idx: idx };
-  _ensureEditModal();
-  document.getElementById('adminEditQ').value = fc.question || '';
-  document.getElementById('adminEditA').value = fc.answer || '';
-  const note = document.getElementById('adminEditNote');
-  if (note) {
-    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
-  }
-  _editStatus('', false);
-  const m = document.getElementById('adminEditModal');
-  if (m && typeof m.open === 'function') m.open();
-}
-
-// (U3) Stari per-item RMW put (_patchObj/_patchInMemory/_propagateToSiblings) je uklonjen —
-// jedini write-put je draft → „Objavi" (_publishDraft; od U4 kroz publish_document RPC).
-
-/** Spremi uređenu karticu U DRAFT (op nad working kopijom; baza se dira tek na „Objavi" — U3). */
-function _saveCard() {
-  const qEl = document.getElementById('adminEditQ');
-  const aEl = document.getElementById('adminEditA');
-  if (!qEl || !aEl || !_editTarget) return;
-
-  const q = qEl.value.trim();
-  const a = aEl.value.trim();
-  if (!q || !a) { _editStatus(_adminT('admin.emptyErr', 'Question and answer must not be empty.'), true); return; }
-
+/** Presloži kategoriju za dir (-1 gore / +1 dolje): izračunaj novi red ključeva → reorderCategories op. */
+function _moveCategory(catId, dir) {
   const d = _adminDraft();
-  const catId = _editTarget.catId;
-  const idx = _editTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].flashcards)) ? w[catId].flashcards[idx] : null;
-  if (!item) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  // Op se adresira stabilnim id-om (U2a) s idx fallbackom (DB payloadi pre-U2a nemaju id-jeve).
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateCard', catId: catId, id: item.id, idx: idx,
-    patch: { question: q, answer: a }
-  });
-  if (!res.ok) { _editStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  _closeEditor();
-  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
-  _adminRerender();
+  const data = _adminWorking();
+  if (!d || !data || typeof data !== 'object') return;
+  const keys = getCategories(data); // U7a: samo kategorije (meta-ključevi ostaju na mjestu kroz _setKeyOrder)
+  const i = keys.indexOf(catId);
+  if (i < 0) return;
+  const j = i + dir;
+  if (j < 0 || j >= keys.length) return; // rub → no-op
+  keys.splice(i, 1);
+  keys.splice(j, 0, catId);
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: 'reorderCategories', order: keys });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
 }
 
-// ===== F4.4 — Uredi QUIZ pitanje: pitanje + dinamičke opcije (2–6) + točan odgovor =====
+/** Obriši kategoriju iz DRAFTA (uz potvrdu; poništivo „Odbaci"-jem / content_versions). removeCategory op. */
+async function _removeCategory(catId) {
+  const d = _adminDraft();
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  if (typeof window.askConfirm === 'function') {
+    const ok = await window.askConfirm({
+      title: _adminT('admin.removeCatTitle', 'Remove category?'),
+      message: _adminT('admin.removeCatMsg', 'This category and all its cards/quiz will be removed from the draft. You can restore it by discarding the draft.'),
+      confirmText: _adminT('admin.remove', 'Remove'),
+      danger: true
+    });
+    if (!ok) return;
+  }
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: 'removeCategory', catId: catId });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
+}
+
+// ===== U6e-1 — Obriši STAVKU (kartica/kviz/fill) iz DRAFTA =====
 //
-// Isti pipeline kao flashcards (RMW jednog reda → verzija → propagacija u sestrinske redove →
-// live re-render), ali s dinamičkim opcijama i validacijom `correct` indeksa. `image`/`imageAlt`
-// ostaju netaknuti (mijenjamo samo question/options/correct na postojećem objektu).
-
-/** Quiz koji se uređuje: { catId, idx }. */
-let _quizTarget = null;
-
-/** Kreiraj (jednom) quiz-editor singleton na <sokrat-modal> primitivu. */
-function _ensureQuizModal() {
-  let m = document.getElementById('adminQuizModal');
-  if (m) return m;
-  m = document.createElement('sokrat-modal');
-  m.id = 'adminQuizModal';
-  m.className = 'admin-edit';
-  m.setAttribute('aria-labelledby', 'adminQuizTitle');
-  m.innerHTML =
-    '<div class="admin-edit__card">' +
-    '  <button type="button" class="admin-edit__close" data-admin-quiz-close aria-label="Close">&times;</button>' +
-    '  <h3 id="adminQuizTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editQuiz', 'Edit quiz question') + '</h3>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.question', 'Question') + '</span>' +
-    '    <textarea id="adminQuizQ" class="admin-edit__input" rows="3"></textarea></label>' +
-    '  <div class="admin-edit__field">' +
-    '    <span>' + _adminT('admin.options', 'Options (pick the correct one)') + '</span>' +
-    '    <div id="adminQuizOpts" class="admin-quiz-editopts"></div>' +
-    '    <button type="button" class="admin-quiz-addopt" id="adminQuizAddOpt"><i class="fas fa-plus"></i> ' + _adminT('admin.addOption', 'Add option') + '</button>' +
-    '  </div>' +
-    '  <p class="admin-edit__note" id="adminQuizNote"></p>' +
-    '  <p class="admin-edit__status" id="adminQuizStatus" hidden></p>' +
-    '  <div class="admin-edit__actions">' +
-    '    <button type="button" class="cta-button secondary" data-admin-quiz-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
-    '    <button type="button" class="cta-button primary" id="adminQuizSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
-    '  </div>' +
-    '</div>';
-  document.body.appendChild(m);
-  m.addEventListener('click', function (e) {
-    if (e.target.closest('[data-admin-quiz-close]')) { _closeQuizEditor(); return; }
-    if (e.target.closest('#adminQuizAddOpt')) { _quizAddOption(); return; }
-    const del = e.target.closest('[data-opt-del]');
-    if (del) { _quizDeleteOption(del); return; }
-  });
-  const saveBtn = document.getElementById('adminQuizSave');
-  if (saveBtn) saveBtn.addEventListener('click', _saveQuiz);
-  return m;
-}
-
-function _quizStatus(msg, isErr) {
-  const el = document.getElementById('adminQuizStatus');
-  if (!el) return;
-  el.textContent = msg || '';
-  el.hidden = !msg;
-  el.classList.toggle('is-error', !!isErr);
-}
-
-function _closeQuizEditor() {
-  const m = document.getElementById('adminQuizModal');
-  if (m && typeof m.close === 'function') m.close();
-}
-
-/** Pročitaj trenutne opcije + odabrani correct iz DOM-a (izvor istine dok je modal otvoren). */
-function _readQuizOptsFromDom() {
-  const rows = document.querySelectorAll('#adminQuizOpts .admin-quiz-optrow');
-  const options = [];
-  let correct = 0;
-  rows.forEach(function (row, i) {
-    const inp = row.querySelector('.admin-quiz-optinput');
-    options.push(inp ? inp.value : '');
-    const radio = row.querySelector('input[type=radio]');
-    if (radio && radio.checked) correct = i;
-  });
-  return { options: options, correct: correct };
-}
-
-/** (Pre)crtaj redove opcija iz danog niza (svaki = radio „točan" + tekst + brisanje). */
-function _renderQuizOptRows(options, correct) {
-  const host = document.getElementById('adminQuizOpts');
-  if (!host) return;
-  let html = '';
-  options.forEach(function (opt, i) {
-    html +=
-      '<div class="admin-quiz-optrow" data-opt-idx="' + i + '">' +
-      '  <input type="radio" name="adminQuizCorrect" value="' + i + '"' + (i === correct ? ' checked' : '') +
-      '    aria-label="' + _adminT('admin.correct', 'Correct') + '">' +
-      '  <input type="text" class="admin-quiz-optinput" value="' + _adminEscape(opt) + '">' +
-      '  <button type="button" class="admin-quiz-delopt" data-opt-del aria-label="' + _adminT('admin.removeOption', 'Remove option') + '"><i class="fas fa-times"></i></button>' +
-      '</div>';
-  });
-  host.innerHTML = html;
-}
-
-/** Dodaj praznu opciju (max 6). Čuva postojeće vrijednosti (čita iz DOM-a prije re-crtanja). */
-function _quizAddOption() {
-  const cur = _readQuizOptsFromDom();
-  if (cur.options.length >= 6) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
-  cur.options.push('');
-  _renderQuizOptRows(cur.options, cur.correct);
-  _quizStatus('', false);
-}
-
-/** Obriši jednu opciju (min 2); pomakni `correct` ako treba. */
-function _quizDeleteOption(delBtn) {
-  const row = delBtn.closest('.admin-quiz-optrow');
-  if (!row || !row.parentNode) return;
-  const cur = _readQuizOptsFromDom();
-  if (cur.options.length <= 2) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
-  const delIdx = Array.prototype.indexOf.call(row.parentNode.children, row);
-  cur.options.splice(delIdx, 1);
-  let correct = cur.correct;
-  if (delIdx === cur.correct) correct = 0;           // obrisan točan → prvi preostali
-  else if (delIdx < cur.correct) correct = cur.correct - 1; // pomak indeksa
-  _renderQuizOptRows(cur.options, correct);
-  _quizStatus('', false);
-}
-
-/** Otvori quiz-editor za (catId, idx) iz trenutnog konteksta. */
-function _openQuizEditor(catId, idx) {
-  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
-  const cat = data && data[catId];
-  const qz = (cat && Array.isArray(cat.quiz)) ? cat.quiz[idx] : null;
-  if (!qz) return;
-  _quizTarget = { catId: catId, idx: idx };
-  _ensureQuizModal();
-  document.getElementById('adminQuizQ').value = qz.question || '';
-  const options = Array.isArray(qz.options) ? qz.options.slice() : [];
-  const correct = (typeof qz.correct === 'number' && qz.correct >= 0 && qz.correct < options.length) ? qz.correct : 0;
-  _renderQuizOptRows(options, correct);
-  const note = document.getElementById('adminQuizNote');
-  if (note) {
-    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
-  }
-  _quizStatus('', false);
-  const m = document.getElementById('adminQuizModal');
-  if (m && typeof m.open === 'function') m.open();
-}
-
-/** Spremi uređeno quiz pitanje U DRAFT: validacija → op nad working kopijom (U3). */
-function _saveQuiz() {
-  const qEl = document.getElementById('adminQuizQ');
-  if (!qEl || !_quizTarget) return;
-
-  const q = qEl.value.trim();
-  const cur = _readQuizOptsFromDom();
-  const options = cur.options.map(function (s) { return String(s).trim(); });
-  const correct = cur.correct;
-
-  // Validacija (odražava JSON Schemu: 2–6 nepraznih opcija, question neprazan, correct valjan indeks).
-  if (!q) { _quizStatus(_adminT('admin.quizEmptyErr', 'Question and all options must not be empty.'), true); return; }
-  if (options.length < 2 || options.length > 6) { _quizStatus(_adminT('admin.quizCountErr', 'A question needs 2–6 options.'), true); return; }
-  if (options.some(function (s) { return !s; })) { _quizStatus(_adminT('admin.quizEmptyErr', 'Question and all options must not be empty.'), true); return; }
-  if (correct < 0 || correct >= options.length) { _quizStatus(_adminT('admin.quizCorrectErr', 'Pick which option is correct.'), true); return; }
-
+// Uz potvrdu; poništivo „Odbaci"-jem drafta / content_versions. Op je adresiran stabilnim id-om
+// (U2a; DB predmeti resyncani 2026-07-17) s idx fallbackom. Ops-sloj (U6a remove*) idempotentan →
+// publish-put + sibling-replay netaknuti. Learn nema remove (jedan objekt/kat; miče se kroz kategoriju).
+async function _removeItem(type, catId, idx) {
   const d = _adminDraft();
-  const catId = _quizTarget.catId;
-  const idx = _quizTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].quiz)) ? w[catId].quiz[idx] : null;
-  if (!item) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  // Patch mijenja samo question/options/correct → image/imageAlt (ako postoje) ostaju netaknuti.
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateQuiz', catId: catId, id: item.id, idx: idx,
-    patch: { question: q, options: options.slice(), correct: correct }
-  });
-  if (!res.ok) { _quizStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  _closeQuizEditor();
-  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
-  _adminRerender();
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  const MAP = {
+    flashcard: { arr: 'flashcards', op: 'removeCard' },
+    quiz:      { arr: 'quiz',       op: 'removeQuiz' },
+    fill:      { arr: 'fillBlanks', op: 'removeFill' }
+  };
+  const m = MAP[type];
+  if (!m) return;
+  const arr = Array.isArray(data[catId][m.arr]) ? data[catId][m.arr] : null;
+  const item = (arr && idx >= 0 && idx < arr.length) ? arr[idx] : null;
+  if (!item) return;
+  if (typeof window.askConfirm === 'function') {
+    const ok = await window.askConfirm({
+      title: _adminT('admin.removeItemTitle', 'Remove item?'),
+      message: _adminT('admin.removeItemMsg', 'This item will be removed from the draft. You can restore it by discarding the draft.'),
+      confirmText: _adminT('admin.remove', 'Remove'),
+      danger: true
+    });
+    if (!ok) return;
+  }
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: m.op, catId: catId, id: item.id, idx: idx });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
+  }
 }
 
-// ===== F4.4 — Uredi FILL-IN-THE-BLANK: rečenica (s _______) + odgovor =====
+// ===== U6e-2 — Presloži STAVKU (kartica/kviz/fill) u DRAFTU (↑↓) =====
 //
-// Najjednostavniji tip (sentence + answer). Isti pipeline (RMW → verzija → propagacija → live).
-// Validacija: rečenica neprazna I sadrži prazninu `_______` (7 podvlaka, JSON Schema pattern);
-// odgovor neprazan. `hint` (ako postoji) ostaje netaknut (mijenja se samo sentence/answer).
-
-const _FILL_BLANK = '_______'; // 7 podvlaka — mora se poklapati sa schemom (fillBlank.sentence.pattern)
-
-/** Fill koji se uređuje: { catId, idx }. */
-let _fillTarget = null;
-
-function _ensureFillModal() {
-  let m = document.getElementById('adminFillModal');
-  if (m) return m;
-  m = document.createElement('sokrat-modal');
-  m.id = 'adminFillModal';
-  m.className = 'admin-edit';
-  m.setAttribute('aria-labelledby', 'adminFillTitle');
-  m.innerHTML =
-    '<div class="admin-edit__card">' +
-    '  <button type="button" class="admin-edit__close" data-admin-fill-close aria-label="Close">&times;</button>' +
-    '  <h3 id="adminFillTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editFill', 'Edit fill-in-the-blank') + '</h3>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.sentence', 'Sentence (use _______ for the blank)') + '</span>' +
-    '    <textarea id="adminFillS" class="admin-edit__input" rows="3"></textarea></label>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
-    '    <textarea id="adminFillA" class="admin-edit__input" rows="2"></textarea></label>' +
-    '  <p class="admin-edit__note" id="adminFillNote"></p>' +
-    '  <p class="admin-edit__status" id="adminFillStatus" hidden></p>' +
-    '  <div class="admin-edit__actions">' +
-    '    <button type="button" class="cta-button secondary" data-admin-fill-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
-    '    <button type="button" class="cta-button primary" id="adminFillSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
-    '  </div>' +
-    '</div>';
-  document.body.appendChild(m);
-  m.addEventListener('click', function (e) {
-    if (e.target.closest('[data-admin-fill-close]')) _closeFillEditor();
-  });
-  const saveBtn = document.getElementById('adminFillSave');
-  if (saveBtn) saveBtn.addEventListener('click', _saveFill);
-  return m;
-}
-
-function _fillStatus(msg, isErr) {
-  const el = document.getElementById('adminFillStatus');
-  if (!el) return;
-  el.textContent = msg || '';
-  el.hidden = !msg;
-  el.classList.toggle('is-error', !!isErr);
-}
-
-function _closeFillEditor() {
-  const m = document.getElementById('adminFillModal');
-  if (m && typeof m.close === 'function') m.close();
-}
-
-/** Otvori fill-editor za (catId, idx) iz trenutnog konteksta. */
-function _openFillEditor(catId, idx) {
-  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
-  const cat = data && data[catId];
-  const fb = (cat && Array.isArray(cat.fillBlanks)) ? cat.fillBlanks[idx] : null;
-  if (!fb) return;
-  _fillTarget = { catId: catId, idx: idx };
-  _ensureFillModal();
-  document.getElementById('adminFillS').value = fb.sentence || '';
-  document.getElementById('adminFillA').value = fb.answer || '';
-  const note = document.getElementById('adminFillNote');
-  if (note) {
-    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
-  }
-  _fillStatus('', false);
-  const m = document.getElementById('adminFillModal');
-  if (m && typeof m.open === 'function') m.open();
-}
-
-/** Spremi uređeni fill U DRAFT: validacija → op nad working kopijom (U3). */
-function _saveFill() {
-  const sEl = document.getElementById('adminFillS');
-  const aEl = document.getElementById('adminFillA');
-  if (!sEl || !aEl || !_fillTarget) return;
-
-  const sentence = sEl.value.trim();
-  const answer = aEl.value.trim();
-
-  // Validacija (odražava JSON Schemu: rečenica neprazna + sadrži prazninu; odgovor neprazan).
-  if (!sentence || !answer) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
-  if (sentence.indexOf(_FILL_BLANK) === -1) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence must contain the blank (_______).'), true); return; }
-
+// reorder* op = apsolutni ciljni red ID-eva (op.order); ↑↓ pomak = swap idx↔idx±dir (isti splice-obrazac
+// kao _moveCategory). Idempotentno (U6a _structReorder). Stavke imaju stabilne id-jeve (DB resyncan 07-17).
+function _moveItem(type, catId, idx, dir) {
   const d = _adminDraft();
-  const catId = _fillTarget.catId;
-  const idx = _fillTarget.idx;
-  const w = (_draftMode && d) ? d.working : null;
-  const item = (w && w[catId] && Array.isArray(w[catId].fillBlanks)) ? w[catId].fillBlanks[idx] : null;
-  if (!item) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  // Patch mijenja samo sentence/answer → hint (ako postoji) ostaje netaknut.
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateFill', catId: catId, id: item.id, idx: idx,
-    patch: { sentence: sentence, answer: answer }
-  });
-  if (!res.ok) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  _closeFillEditor();
-  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
-  _adminRerender();
-}
-
-// ===== F4.4 — Uredi LEARN: naslov + HTML sadržaj (jedan objekt po kategoriji) =====
-//
-// Learn je JEDAN objekt `cat.learn = {title?, content, image?}` (ne niz) → vlastiti object-put
-// (nema idx). Sadržaj je sirovi HTML (+ moguć KaTeX `\( \)`/`\[ \]`/`$$ $$`) — uređuje se kao
-// tekst u textarei, sprema se doslovno (bez render/sanitize, kao u izvornim datotekama).
-// Validacija: content neprazan (title/image opcionalni po schemi). `image` ostaje netaknut.
-
-/** Learn koji se uređuje: { catId }. */
-let _learnTarget = null;
-
-// (U3) Stari learn RMW/propagate put je uklonjen — learn ide kroz draft kao i ostali tipovi.
-
-function _ensureLearnModal() {
-  let m = document.getElementById('adminLearnModal');
-  if (m) return m;
-  m = document.createElement('sokrat-modal');
-  m.id = 'adminLearnModal';
-  m.className = 'admin-edit admin-learn';
-  m.setAttribute('aria-labelledby', 'adminLearnTitle');
-  m.innerHTML =
-    '<div class="admin-edit__card">' +
-    '  <button type="button" class="admin-edit__close" data-admin-learn-close aria-label="Close">&times;</button>' +
-    '  <h3 id="adminLearnTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editLearn', 'Edit learn content') + '</h3>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.learnTitle', 'Title (optional)') + '</span>' +
-    '    <input type="text" id="adminLearnT" class="admin-edit__input"></label>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.learnContent', 'Content (HTML)') + '</span>' +
-    '    <textarea id="adminLearnC" class="admin-edit__input admin-learn__content" rows="14"></textarea></label>' +
-    '  <p class="admin-edit__note" id="adminLearnNote"></p>' +
-    '  <p class="admin-edit__status" id="adminLearnStatus" hidden></p>' +
-    '  <div class="admin-edit__actions">' +
-    '    <button type="button" class="cta-button secondary" data-admin-learn-close>' + _adminT('common.cancel', 'Cancel') + '</button>' +
-    '    <button type="button" class="cta-button primary" id="adminLearnSave"><i class="fas fa-check"></i><span>' + _adminT('admin.save', 'Save') + '</span></button>' +
-    '  </div>' +
-    '</div>';
-  document.body.appendChild(m);
-  m.addEventListener('click', function (e) {
-    if (e.target.closest('[data-admin-learn-close]')) _closeLearnEditor();
-  });
-  const saveBtn = document.getElementById('adminLearnSave');
-  if (saveBtn) saveBtn.addEventListener('click', _saveLearn);
-  return m;
-}
-
-function _learnStatus(msg, isErr) {
-  const el = document.getElementById('adminLearnStatus');
-  if (!el) return;
-  el.textContent = msg || '';
-  el.hidden = !msg;
-  el.classList.toggle('is-error', !!isErr);
-}
-
-function _closeLearnEditor() {
-  const m = document.getElementById('adminLearnModal');
-  if (m && typeof m.close === 'function') m.close();
-}
-
-/** Otvori learn-editor za kategoriju (learn = jedan objekt, bez idx). */
-function _openLearnEditor(catId) {
-  const data = _adminWorking(); // U3: u draft-modu editor čita working kopiju (re-edit vidi draftane vrijednosti)
-  const cat = data && data[catId];
-  const L = (cat && cat.learn && typeof cat.learn === 'object') ? cat.learn : null;
-  if (!L) return;
-  _learnTarget = { catId: catId };
-  _ensureLearnModal();
-  document.getElementById('adminLearnT').value = L.title || '';
-  document.getElementById('adminLearnC').value = L.content || '';
-  const note = document.getElementById('adminLearnNote');
-  if (note) {
-    note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
-      _adminT('admin.draftNote', 'edits the draft — publish to save (final syncs on publish).');
+  const data = _adminWorking();
+  if (!d || !data || !data[catId]) return;
+  const MAP = {
+    flashcard: { arr: 'flashcards', op: 'reorderCards' },
+    quiz:      { arr: 'quiz',       op: 'reorderQuiz' },
+    fill:      { arr: 'fillBlanks', op: 'reorderFill' }
+  };
+  const m = MAP[type];
+  if (!m) return;
+  const arr = Array.isArray(data[catId][m.arr]) ? data[catId][m.arr] : null;
+  if (!arr) return;
+  const j = idx + dir;
+  if (idx < 0 || idx >= arr.length || j < 0 || j >= arr.length) return; // rub → no-op
+  const order = arr.map(function (it) { return it && it.id; });
+  const moved = order.splice(idx, 1)[0];
+  order.splice(j, 0, moved);
+  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, { type: m.op, catId: catId, order: order });
+  if (res && res.ok) {
+    if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
+    _adminRerender();
   }
-  _learnStatus('', false);
-  const m = document.getElementById('adminLearnModal');
-  if (m && typeof m.open === 'function') m.open();
 }
 
-/** Spremi uređeni learn U DRAFT: validacija → op nad working kopijom (U3). */
-function _saveLearn() {
-  const tEl = document.getElementById('adminLearnT');
-  const cEl = document.getElementById('adminLearnC');
-  if (!cEl || !_learnTarget) return;
-
-  const title = tEl ? tEl.value.trim() : '';
-  // Sadržaj NE trimamo — čuvamo formatiranje/uvlake HTML-a bit-točno (validiramo nepraznost preko .trim()).
-  const content = cEl.value;
-  if (!content.trim()) { _learnStatus(_adminT('admin.learnEmptyErr', 'Content must not be empty.'), true); return; }
-
-  const d = _adminDraft();
-  const catId = _learnTarget.catId;
-  const w = (_draftMode && d) ? d.working : null;
-  const target = (w && w[catId] && w[catId].learn && typeof w[catId].learn === 'object') ? w[catId].learn : null;
-  if (!target) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  // Patch mijenja content (+ title: prazan → null BRIŠE ključ, semantika F4.4). `image` ostaje netaknut.
-  const res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-    type: 'updateLearn', catId: catId,
-    patch: { content: content, title: title || null }
-  });
-  if (!res.ok) { _learnStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }
-
-  _closeLearnEditor();
-  if (typeof showToast === 'function') showToast(_adminT('admin.draftSaved', 'Saved to draft.'));
-  _adminRerender();
-}
 
 // Delegat: klik na edit-gumb stavke → otvori editor (grana po tipu).
 document.addEventListener('click', function (e) {
@@ -981,3 +742,79 @@ document.addEventListener('click', function (e) {
   else if (type === 'learn') _openLearnEditor(catId);
   else _openCardEditor(catId, idx);
 });
+
+// Delegat: klik na „Dodaj" gumb → otvori editor u ADD modu (U6c strukturne operacije).
+document.addEventListener('click', function (e) {
+  const add = e.target.closest('[data-admin-add]');
+  if (!add) return;
+  const type = add.getAttribute('data-type') || 'flashcard';
+  const catId = add.getAttribute('data-cat');
+  if (!catId) return;
+  if (type === 'quiz') _openQuizEditor(catId, null);
+  else if (type === 'fill') _openFillEditor(catId, null);
+  else _openCardEditor(catId, null);
+});
+
+// Delegat: klik na „Obriši stavku" 🗑 (U6e-1) → potvrda → remove* op.
+document.addEventListener('click', function (e) {
+  const del = e.target.closest('[data-admin-del]');
+  if (!del) return;
+  const type = del.getAttribute('data-type') || 'flashcard';
+  const catId = del.getAttribute('data-cat');
+  const idx = parseInt(del.getAttribute('data-idx'), 10);
+  if (!catId || isNaN(idx)) return;
+  _removeItem(type, catId, idx);
+});
+
+// Delegat: klik na ↑↓ stavke (U6e-2) → presloži (reorder* op; disabled rub = no-op).
+document.addEventListener('click', function (e) {
+  const move = e.target.closest('[data-admin-move]');
+  if (!move || move.disabled) return;
+  const type = move.getAttribute('data-type') || 'flashcard';
+  const catId = move.getAttribute('data-cat');
+  const idx = parseInt(move.getAttribute('data-idx'), 10);
+  if (!catId || isNaN(idx)) return;
+  _moveItem(type, catId, idx, move.getAttribute('data-admin-move') === 'up' ? -1 : 1);
+});
+
+// Delegat: klik na kategorije-gumbe (U6d) → dodaj/uredi meta · presloži ↑↓ · obriši.
+document.addEventListener('click', function (e) {
+  if (e.target.closest('[data-admin-cat-add]')) { _openCatEditor(null); return; }
+  const edit = e.target.closest('[data-admin-cat-edit]');
+  if (edit) { _openCatEditor(edit.getAttribute('data-cat')); return; }
+  const move = e.target.closest('[data-admin-cat-move]');
+  if (move) {
+    if (!move.disabled) _moveCategory(move.getAttribute('data-cat'), move.getAttribute('data-admin-cat-move') === 'up' ? -1 : 1);
+    return;
+  }
+  const del = e.target.closest('[data-admin-cat-del]');
+  if (del) { _removeCategory(del.getAttribute('data-cat')); return; }
+});
+
+
+// ===== U8.1 — STUDIO BRIDGE =====
+// Novi „Studio" editor (js/studio.js) dijeli JEDAN draft/publish engine s adminom — bez
+// duplikata publish-logike (U4 RPC/versioning/audit). Studio postavi kontekst lekcije, a
+// Objavi/Odbaci pozovu iste funkcije (_publishDraft/_discardDraft). `_adminRerender()` unutar
+// njih je no-op ako admin-DOM nije renderiran (guard `if (holder)`), pa se ne miješaju sučelja.
+window.SokratAdmin.studioBridge = {
+  // Postavi kontekst na odabranu lekciju (data = svjež sadržaj iz Studija). Vrati draft (ako postoji).
+  setLesson: function (subjectId, lessonId, data) {
+    _adminCtx = { subjectId: subjectId, lessonId: lessonId, varName: _adminResolveVar(subjectId, lessonId) || '', data: data || null };
+    const d = _adminDraft();
+    _draftMode = !!(d && d.dirty); // nastavi draft ako postoji dirty (npr. iz starog admina)
+    return d;
+  },
+  draft: function () { return _adminDraft(); },
+  publish: function () { return _publishDraft(); },  // U4 publish_document RPC (atomično + base_version)
+  discard: function () { return _discardDraft(); },
+  // U8.2 — ulaz u draft-mod (svjež DB payload + version → SokratDraft.begin; async). Vraća promise.
+  enter: function () { return _enterDraftMode(); },
+  isEditing: function () { return _draftMode; },
+  hasVar: function () { return !!_adminCtx.varName; }, // je li lekcija u bazi (inače nema editiranja)
+  // Izvor za render u edit-modu = WORKING kopija drafta (inače pročitani sadržaj).
+  workingData: function () { return _adminWorking(); },
+  // U8.2 — blok-ops (learn v2) preko iste draft-mašinerije kao admin (_beApplyOp osvježi i admin-traku, no-op ako skrivena).
+  getBlocks: function (catId) { return _beGetBlocks(catId); },
+  applyOp: function (op) { return _beApplyOp(op); }
+};

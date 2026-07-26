@@ -10,7 +10,7 @@
 // ⚠ CACHE: data/* su pod immutable cacheom (vercel.json). Pri izmjeni BILO KOJEG
 // data/* sadržaja bumpaj CONTENT_VERSION — inače preglednik servira stari cache.
 
-const CONTENT_VERSION = '20260725202459';
+const CONTENT_VERSION = '20260727014811';
 
 // subjectId -> true (sadržaj učitan) ; subjectId -> Promise (učitavanje u tijeku)
 const _contentLoaded = {};
@@ -153,9 +153,26 @@ function isSubjectContentLoaded(subjectId) {
     return !!_contentLoaded[subjectId];
 }
 
+// ── U7a — KATEGORIJE dokumenta (meta-safe) ─────────────────────────────────────
+// Sadržaj lekcije = mapa `{ <catId>: {name, icon, flashcards, quiz, fillBlanks, learn}, … }`.
+// Od U7 (schema v2) dokument može nositi i TOP-LEVEL META ključeve (`schemaVersion` = broj,
+// `composedOf` = niz, …). Sirovi `Object.keys(content)` bi ih tretirao kao kategoriju →
+// study/progress renderiraju LAŽNU kategoriju (isti razred bag koji je smoke uhvatio u U2a).
+// Pravilo: kategorija = ključ čija je vrijednost OBJEKT (ne niz). Time se meta (broj/niz/skalar)
+// automatski isključuje, a prazna kategorija `{}` (objekt) OSTAJE. Koristi se na SVIM
+// category-iteracijama (flashcards/quiz/fill/learn/progress/admin).
+function getCategories(content) {
+    if (!content || typeof content !== 'object') return [];
+    return Object.keys(content).filter(function (k) {
+        const v = content[k];
+        return v && typeof v === 'object' && !Array.isArray(v);
+    });
+}
+
 if (typeof window !== 'undefined') {
     window.CONTENT_VERSION = CONTENT_VERSION;
     window.loadSubjectContent = loadSubjectContent;
     window.loadScriptOnce = loadScriptOnce;
     window.isSubjectContentLoaded = isSubjectContentLoaded;
+    window.getCategories = getCategories;
 }

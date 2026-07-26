@@ -68,13 +68,155 @@
     },
     "learn": {
       "type": "object",
-      "required": ["content"],
       "additionalProperties": false,
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "title":   { "type": "string" },
         "content": { "type": "string", "minLength": 1 },
-        "image":   { "type": ["string", "null"] }
+        "image":   { "type": ["string", "null"] },
+        "blocks":  { "type": "array", "items": { "$ref": "#/definitions/block" } }
+      },
+      "anyOf": [
+        { "required": ["content"] },
+        { "required": ["blocks"] }
+      ]
+    },
+
+    "inline": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "$ref": "#/definitions/run" } }
+      ]
+    },
+    "run": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text":  { "type": "string" },
+        "b":     { "type": "boolean" },
+        "i":     { "type": "boolean" },
+        "color": { "type": "string", "enum": ["indigo", "green", "amber", "red", "default"] },
+        "href":  { "type": "string" }
+      }
+    },
+    "block": {
+      "type": "object",
+      "required": ["type"],
+      "oneOf": [
+        { "$ref": "#/definitions/blockHeading" },
+        { "$ref": "#/definitions/blockParagraph" },
+        { "$ref": "#/definitions/blockList" },
+        { "$ref": "#/definitions/blockCallout" },
+        { "$ref": "#/definitions/blockImage" },
+        { "$ref": "#/definitions/blockVideo" },
+        { "$ref": "#/definitions/blockTable" },
+        { "$ref": "#/definitions/blockFormula" },
+        { "$ref": "#/definitions/blockLegacyHtml" }
+      ]
+    },
+    "blockHeading": {
+      "type": "object",
+      "required": ["type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "id":    { "type": "string", "minLength": 1 },
+        "type":  { "const": "heading" },
+        "level": { "type": "integer", "minimum": 2, "maximum": 4 },
+        "text":  { "$ref": "#/definitions/inline" }
+      }
+    },
+    "blockParagraph": {
+      "type": "object",
+      "required": ["type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "id":   { "type": "string", "minLength": 1 },
+        "type": { "const": "paragraph" },
+        "text": { "$ref": "#/definitions/inline" }
+      }
+    },
+    "blockList": {
+      "type": "object",
+      "required": ["type", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "type":    { "const": "list" },
+        "ordered": { "type": "boolean" },
+        "items":   { "type": "array", "items": { "$ref": "#/definitions/inline" } }
+      }
+    },
+    "blockCallout": {
+      "type": "object",
+      "required": ["type", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "type":    { "const": "callout" },
+        "variant": { "type": "string", "enum": ["info", "warning", "tip"] },
+        "title":   { "type": "string" },
+        "text":    { "$ref": "#/definitions/inline" }
+      }
+    },
+    "blockImage": {
+      "type": "object",
+      "required": ["type", "src"],
+      "additionalProperties": false,
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "type":    { "const": "image" },
+        "src":     { "type": "string", "minLength": 1 },
+        "alt":     { "type": "string" },
+        "caption": { "$ref": "#/definitions/inline" },
+        "width":   { "type": "number", "minimum": 10, "maximum": 100 }
+      }
+    },
+    "blockVideo": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": false,
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "type":    { "const": "video" },
+        "videoId": { "type": "string", "minLength": 1 },
+        "url":     { "type": "string", "minLength": 1 }
+      },
+      "anyOf": [
+        { "required": ["videoId"] },
+        { "required": ["url"] }
+      ]
+    },
+    "blockTable": {
+      "type": "object",
+      "required": ["type", "rows"],
+      "additionalProperties": false,
+      "properties": {
+        "id":     { "type": "string", "minLength": 1 },
+        "type":   { "const": "table" },
+        "header": { "type": "array", "items": { "$ref": "#/definitions/inline" } },
+        "rows":   { "type": "array", "items": { "type": "array", "items": { "$ref": "#/definitions/inline" } } }
+      }
+    },
+    "blockFormula": {
+      "type": "object",
+      "required": ["type", "tex"],
+      "additionalProperties": false,
+      "properties": {
+        "id":      { "type": "string", "minLength": 1 },
+        "type":    { "const": "formula" },
+        "tex":     { "type": "string", "minLength": 1 },
+        "display": { "type": "boolean" }
+      }
+    },
+    "blockLegacyHtml": {
+      "type": "object",
+      "required": ["type", "html"],
+      "additionalProperties": false,
+      "properties": {
+        "id":   { "type": "string", "minLength": 1 },
+        "type": { "const": "legacy-html" },
+        "html": { "type": "string" }
       }
     }
   }

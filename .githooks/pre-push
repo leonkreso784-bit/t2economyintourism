@@ -1,0 +1,29 @@
+#!/bin/sh
+# ─────────────────────────────────────────────────────────────────────────────
+# Deploy-guard (risk-sanacija #1): blokira push na `main` ako preflight gate-ovi
+# padnu. `main` = PRODUKCIJA (Vercel), a direktan push (bypass) preskače CI —
+# ovaj hook je posljednja mreža protiv nevidljivog/slomljenog deploya (BUG-004).
+#
+# AKTIVIRAJ JEDNOM po klonu:   git config core.hooksPath .githooks
+#
+# Pušta SVE ostale grane bez provjere (brzi feature/preview pushevi netaknuti);
+# preflight se vrti ISKLJUČIVO kad je odredište refs/heads/main.
+# ─────────────────────────────────────────────────────────────────────────────
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main)
+      echo "[pre-push] Odredište = main (PRODUKCIJA) → pokrećem 'npm run preflight'…"
+      if ! npm run preflight; then
+        echo ""
+        echo "[pre-push] ❌ PREFLIGHT PAO — push na main ODBIJEN."
+        echo "[pre-push]    Popravi gate-ove (najčešće: 'npm run bump' nakon izmjene css/js/data),"
+        echo "[pre-push]    pa pokušaj ponovno. (Svjestan bypass: 'git push --no-verify' — NE preporuča se.)"
+        exit 1
+      fi
+      echo "[pre-push] ✅ Preflight prošao — dopuštam push na main."
+      ;;
+  esac
+done
+
+exit 0

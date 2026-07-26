@@ -29,7 +29,7 @@ function getAllFlashcards() {
     const content = AppState.nav.data;
     if (!content) return [];
     let all = [];
-    Object.keys(content).forEach(category => {
+    getCategories(content).forEach(category => {
         if (content[category] && content[category].flashcards && Array.isArray(content[category].flashcards)) {
             content[category].flashcards.forEach(card => {
                 all.push({

@@ -8360,6 +8360,795 @@ sokrat-modal.image-modal > * {
     }
 }
 
+/* ==================== css/learn-blocks.css ==================== */
+/* ===== learn-blocks.css — stil za U7 learn-BLOKOVE (renderira js/blocks-renderer.js) =====
+ * Jedan renderer = sigurnosna granica; ovdje živi njegov vizual („čisto i bogato", dark).
+ * Blokovi se učitavaju u #learnContent (U7c). Kartice/kviz/fill = zaseban stil (ne diraju se).
+ * Tokeni iz css/variables.css → preživljava dark-temu i redizajn. */
+
+.lb-heading {
+    font-family: 'Space Grotesk', var(--font-family, sans-serif);
+    color: var(--text-primary);
+    line-height: 1.25;
+    margin: 1.5em 0 0.5em;
+    font-weight: 600;
+}
+.lb-heading:first-child { margin-top: 0; }
+h2.lb-heading { font-size: 1.6rem; }
+h3.lb-heading { font-size: 1.3rem; }
+h4.lb-heading { font-size: 1.1rem; }
+
+.lb-paragraph {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 1em;
+}
+
+.lb-list {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin: 0 0 1em;
+    padding-left: 1.4em;
+}
+.lb-list li { margin: 0.25em 0; }
+
+/* ── inline boje teksta (a11y nijanse za dark; SAMO kurirani token-set) ── */
+.lb-color-indigo { color: #818cf8; }
+.lb-color-green  { color: #34d399; }
+.lb-color-amber  { color: #fbbf24; }
+.lb-color-red    { color: var(--danger-text, #f87171); }
+
+/* ── callout (info / warning / tip) ── */
+.lb-callout {
+    border-left: 3px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.9em 1.1em;
+    margin: 1.2em 0;
+    background: rgba(99, 102, 241, 0.08);
+}
+.lb-callout__title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35em;
+}
+.lb-callout__body { color: var(--text-secondary); line-height: 1.6; }
+.lb-callout--info    { border-left-color: #06b6d4; background: rgba(6, 182, 212, 0.08); }
+.lb-callout--warning { border-left-color: var(--accent); background: rgba(245, 158, 11, 0.08); }
+.lb-callout--tip     { border-left-color: var(--secondary); background: rgba(16, 185, 129, 0.08); }
+
+/* ── image ── */
+.lb-figure { margin: 1.4em 0; text-align: center; }
+.lb-figure__img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.lb-figure__cap {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 0.5em;
+}
+
+/* ── video (YouTube facade → nocookie iframe na klik) ── */
+.lb-video {
+    position: relative;
+    margin: 1.4em 0;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 45%, #1e293b, #0f172a);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+.lb-video__play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 0;
+    cursor: pointer;
+    color: var(--text-primary);
+    background: transparent;
+    transition: background 0.2s ease;
+}
+.lb-video__play:hover { background: rgba(99, 102, 241, 0.12); }
+.lb-video__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--grad, linear-gradient(135deg, #6366f1, #8b5cf6));
+    color: #fff;
+    font-size: 1.5rem;
+    padding-left: 4px;
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+}
+.lb-video__label { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 0.02em; }
+.lb-video__frame { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ── table ── */
+.lb-table-wrap { overflow-x: auto; margin: 1.4em 0; }
+.lb-table {
+    border-collapse: collapse;
+    width: 100%;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+.lb-table th, .lb-table td {
+    border: 1px solid var(--border-color, rgba(148, 163, 184, 0.25));
+    padding: 0.55em 0.8em;
+    text-align: left;
+}
+.lb-table th { color: var(--text-primary); font-weight: 600; background: rgba(148, 163, 184, 0.08); }
+
+/* ── formula (KaTeX se renderira preko renderMath) ── */
+.lb-formula { margin: 1.2em 0; text-align: center; overflow-x: auto; }
+.lb-formula--inline { display: inline; margin: 0; }
+
+/* ── legacy-html (v1 sadržaj kroz DOMPurify; U7c) ── */
+.lb-legacy { color: var(--text-secondary); line-height: 1.7; }
+
+/* ==================== css/block-editor.css ==================== */
+/* ===== BLOCK EDITOR (U8a) — editor-chrome za learn-blokove =====
+   Vizual = design/mockups/editor-c-tok.html (.kv/.adder/.bigplus → .be-*).
+   Sadržaj bloka (.be-body) renderira renderBlocks → stilizira css/learn-blocks.css (.lb-*).
+   Koristi POSTOJEĆE Sokrat tokene; --line/--grad/--glow ne postoje pa su literalni. */
+
+.be-root { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
+
+.be-empty {
+  border: 2px dashed rgba(148, 163, 184, .25);
+  border-radius: 14px; padding: 22px; text-align: center;
+  color: var(--text-muted); font-size: 13px; background: rgba(15, 23, 42, .3);
+}
+
+/* ── blok-kartica (kvadratić) ── */
+/* Fix A/C: blok = suptilna stalna kartica (vidi se granica) + LIJEVI žlijeb s uvijek-vidljivom
+   drag-ručkom; hover pojača granicu + otkrije ↑↓✕. Blokovi i dalje „teku" (tanak chrome). */
+.be-block {
+  position: relative;
+  border: 1px solid rgba(148, 163, 184, .09); border-radius: 12px;
+  background: rgba(148, 163, 184, .022);
+  padding: 6px 12px 9px 34px; transition: background .14s, border-color .14s;
+}
+.be-block:hover, .be-block:focus-within {
+  background: rgba(148, 163, 184, .06); border-color: rgba(148, 163, 184, .2);
+}
+
+/* Fix A: drag-ručka ⣿ = UVIJEK vidljiva u lijevom žlijebu (Notion-stil), jasan „grab". */
+.be-grip {
+  position: absolute; left: 4px; top: 7px; width: 22px; height: 26px; padding: 0;
+  display: grid; place-items: center; background: transparent; border: none;
+  color: var(--text-muted); font-size: 12px; opacity: .4; border-radius: 6px;
+  cursor: grab; touch-action: none; transition: opacity .13s, background .13s, color .13s;
+}
+.be-block:hover .be-grip { opacity: .85; }
+.be-grip:hover { opacity: 1; color: #c7d2fe; background: rgba(148, 163, 184, .16); }
+.be-grip:active { cursor: grabbing; }
+
+@keyframes bePop { from { opacity: 0; transform: translateY(4px) scale(.99); } to { opacity: 1; transform: none; } }
+
+.be-head { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.be-n {
+  min-width: 20px; height: 20px; padding: 0 5px; border-radius: 6px; flex-shrink: 0;
+  display: grid; place-items: center; font-size: 10.5px; font-weight: 700;
+  color: var(--text-muted); background: rgba(148, 163, 184, .1);
+  border: 1px solid rgba(148, 163, 184, .16); transition: color .14s;
+}
+.be-block:hover .be-n, .be-block:focus-within .be-n { color: #c7d2fe; }
+.be-ctrls { display: flex; gap: 3px; margin-left: auto; opacity: 0; transition: .15s; }
+.be-block:hover .be-ctrls, .be-block:focus-within .be-ctrls { opacity: 1; }
+.be-btn {
+  width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center;
+  font-size: 13px; color: var(--text-muted); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); cursor: pointer; transition: .13s;
+}
+.be-btn:hover:not([disabled]) { color: #fff; border-color: var(--primary-light); background: rgba(99, 102, 241, .18); }
+.be-btn[disabled] { opacity: .3; cursor: default; }
+.be-del:hover:not([disabled]) { color: #fff; border-color: var(--danger); background: var(--danger); }
+
+/* K6 (F5/D4): drag-stanje + drop-linija (vanilla pointer-drag). */
+.be-block.be-dragging { opacity: .4; border-style: dashed; border-color: rgba(129, 140, 248, .5); }
+.be-dropline {
+  position: fixed; height: 3px; border-radius: 3px; pointer-events: none; z-index: 1450;
+  background: var(--primary-light, #818cf8);
+  box-shadow: 0 0 8px 1px rgba(129, 140, 248, .6);
+}
+/* Fix B: ghost = pilula koja prati kursor tijekom draga (blok I sekcija; globalno = na body). */
+.be-ghost {
+  position: fixed; z-index: 1500; pointer-events: none;
+  display: inline-flex; align-items: center; gap: 7px; max-width: 260px;
+  padding: 6px 12px; border-radius: 9px; font-size: 12.5px; font-weight: 600;
+  color: #e5e7eb; background: rgba(30, 41, 59, .97);
+  border: 1px solid rgba(129, 140, 248, .55);
+  box-shadow: 0 10px 26px -6px rgba(0, 0, 0, .65);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.be-ghost i { opacity: .65; }
+.be-ghost b { color: #c7d2fe; }
+
+.be-body { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+.be-body > *:first-child { margin-top: 0; }
+.be-body > *:last-child { margin-bottom: 0; }
+
+/* ── ＋ umetni-ovdje (K5/F1): elegantna PUNO-ŠIRINSKA hover-linija + prsten-＋ (fill na hover) ── */
+.be-adder { position: relative; height: 26px; display: grid; place-items: center; opacity: 0; transition: opacity .16s; }
+.be-adder:hover, .be-root:hover .be-adder, .be-adder:focus-within { opacity: .5; }
+.be-adder:hover, .be-adder:focus-within { opacity: 1; }
+.be-adder::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, .4) 18%, rgba(139, 92, 246, .4) 82%, transparent);
+}
+.be-add {
+  width: 28px; height: 28px; border-radius: 999px; z-index: 1; cursor: pointer;
+  display: grid; place-items: center; font-size: 16px; line-height: 1;
+  color: #c7d2fe; background: rgba(20, 27, 45, .96);
+  border: 1.5px solid rgba(99, 102, 241, .55); box-shadow: 0 3px 12px rgba(99, 102, 241, .22); transition: .14s;
+}
+.be-add:hover { color: #fff; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: transparent; transform: scale(1.1); }
+
+/* ── veliki „Dodaj blok" na dnu (K5/F1: primarna add-afordancija) ── */
+.be-bigplus {
+  width: 100%; margin-top: 10px; padding: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1.5px dashed rgba(99, 102, 241, .34); border-radius: 14px;
+  color: var(--text-muted); font-size: 13.5px; font-weight: 600;
+  background: rgba(99, 102, 241, .05); transition: .16s;
+}
+.be-bigplus:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); box-shadow: 0 0 0 3px rgba(99, 102, 241, .09); }
+
+/* ── tip-izbornik (na ＋) ── */
+.be-menu {
+  /* na document.body s fixed-pozicijom (JS računa left/top od sidra) — izvan opacity/stacking
+     konteksta kartica; z-index u rangu .be-toolbar (1400) da je UVIJEK iznad sadržaja */
+  position: fixed; z-index: 1400; margin: 0;
+  display: flex; flex-direction: column; min-width: 150px; padding: 5px;
+  background: rgba(20, 27, 45, .98); border: 1px solid rgba(148, 163, 184, .22);
+  border-radius: 12px; box-shadow: 0 14px 40px rgba(0, 0, 0, .5);
+  animation: bePop .16s ease;
+}
+.be-menu-item {
+  text-align: left; padding: 8px 12px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; color: var(--text-secondary); background: transparent; border: none; transition: .12s;
+}
+.be-menu-item:hover { background: rgba(99, 102, 241, .16); color: #fff; }
+
+/* ── učini blok-editor uočljivim samo u draft-modu (host dodaje .be-mount) ── */
+.be-mount { margin-top: 8px; }
+
+/* ===== U8.4a — inline uređivanje teksta (contenteditable polja + plutajuća traka) ===== */
+.be-edit {
+  outline: none; border-radius: 8px; padding: 4px 8px; margin: 0 -8px;
+  transition: background .13s, box-shadow .13s; min-height: 1.4em; cursor: text;
+}
+.be-edit:hover { background: rgba(148, 163, 184, .06); }
+.be-edit:focus { background: rgba(99, 102, 241, .08); box-shadow: inset 0 0 0 1px rgba(99, 102, 241, .45); }
+/* placeholder u praznom polju */
+.be-edit:empty::before { content: attr(data-be-ph); color: var(--text-muted); opacity: .6; pointer-events: none; }
+/* naslovna polja (veličine kao h2–h4) */
+.be-edit--h2 { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+.be-edit--h3 { font-size: 17px; font-weight: 700; color: var(--text-primary); }
+.be-edit--h4 { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+/* editabilna lista */
+.be-editlist { margin: 0; padding-left: 22px; }
+.be-editlist .be-edit { display: list-item; margin: 2px -8px; }
+/* link u editoru = ne-navigabilan (uređuje se) */
+.be-edit a[data-be-link] { color: var(--primary-light); text-decoration: underline; cursor: text; }
+
+/* plutajuća tekst-traka (B/I; boja/link = U8.4b) */
+.be-toolbar {
+  position: fixed; display: none; gap: 3px; z-index: 1400;
+  padding: 4px; border-radius: 10px;
+  background: rgba(20, 27, 45, .97); border: 1px solid rgba(148, 163, 184, .25);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .55); backdrop-filter: blur(8px);
+  animation: bePop .13s ease;
+}
+.be-toolbar.on { display: flex; }
+.be-tb {
+  min-width: 28px; height: 28px; padding: 0 7px; border-radius: 7px; cursor: pointer;
+  display: grid; place-items: center; font-size: 14px; color: var(--text-secondary);
+  background: transparent; border: none; transition: .12s;
+}
+.be-tb:hover { background: rgba(99, 102, 241, .18); color: #fff; }
+/* razdjelnik u traci */
+.be-tbsep { width: 1px; align-self: stretch; margin: 3px 2px; background: rgba(148, 163, 184, .25); }
+/* boja-swatch (kvadratić boje iz --sw) */
+.be-tbc { min-width: 24px; padding: 0 5px; }
+.be-tbc::after {
+  content: ''; width: 15px; height: 15px; border-radius: 5px;
+  background: var(--sw, #64748b); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
+}
+.be-tbc:hover::after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45), 0 0 0 2px rgba(99, 102, 241, .4); }
+
+/* ===== U8.5a — media blok (slika): forma polja + živi preview ===== */
+.be-media { display: flex; flex-direction: column; gap: 10px; }
+.be-media__preview { border-radius: 10px; overflow: hidden; position: relative; }
+.be-media__preview img { max-width: 100%; display: block; border-radius: 10px; }
+/* U8.5e: EDITOR-cap — SVG/megaslike bez intrinzične veličine ne smiju progutati canvas
+   (student-render netaknut; tamo vlada width% iz modela + max-width:100%).
+   width:100% je NUŽAN default: bez njega SVG bez intrinzičnih dimenzija kolabira na 0px
+   (inline style="width:NN%" iz modela ga legitimno pregazi). */
+.be-media--image .be-media__preview .lb-figure__img { width: 100%; max-height: 340px; object-fit: contain; margin: 0 auto; }
+.be-media--image .be-media__preview .lb-figure { margin: 0; }
+
+/* U8.5e — resize-ručka (⇲ donji desni kut previewa) + %-badge */
+.be-imgresize {
+  position: absolute; right: 8px; bottom: 8px; z-index: 2;
+  width: 30px; height: 30px; border-radius: 8px; cursor: nwse-resize; touch-action: none;
+  color: #fff; font-size: 15px; line-height: 1; border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(15, 23, 42, .75); backdrop-filter: blur(3px); transition: .13s;
+}
+.be-imgresize:hover { background: rgba(99, 102, 241, .85); }
+.be-imgw {
+  position: absolute; left: 8px; bottom: 8px; z-index: 2; pointer-events: none;
+  padding: 3px 8px; border-radius: 7px; font-size: 11.5px; font-weight: 700;
+  color: #e2e8f0; background: rgba(15, 23, 42, .75);
+}
+
+/* U8.5e — callout kontrole (varijanta info/warning/tip + naslov) */
+.be-cvars { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
+.be-cvar {
+  padding: 6px 11px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  color: var(--text-secondary); background: rgba(15, 23, 42, .4);
+  border: 1px solid rgba(148, 163, 184, .2); transition: .12s;
+}
+.be-cvar:hover { color: #fff; border-color: rgba(99, 102, 241, .5); }
+.be-cvar.on { color: #fff; background: rgba(99, 102, 241, .25); border-color: var(--primary); }
+.be-cvtitle { flex: 1; min-width: 160px; width: auto; }
+.be-media__ph {
+  border: 2px dashed rgba(148, 163, 184, .25); border-radius: 10px; padding: 22px;
+  text-align: center; color: var(--text-muted); font-size: 13px; background: rgba(15, 23, 42, .3);
+}
+.be-media__fields { display: flex; flex-direction: column; gap: 6px; }
+.be-mfield {
+  width: 100%; padding: 8px 10px; border-radius: 8px; font-size: 13px;
+  color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+}
+.be-mfield:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+.be-mfield::placeholder { color: var(--text-muted); }
+
+/* ===== U8.5c — formula (KaTeX): tex-polje + „veliki blok" prekidač + centrirani živi preview ===== */
+.be-media--formula .be-media__preview { padding: 10px 4px; text-align: center; min-height: 2.2em; }
+.be-mcheck {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 12.5px; color: var(--text-muted); padding: 2px 1px; user-select: none;
+}
+.be-mcheck input { accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+
+/* ===== U8.9a — MathLive math-field (autorski VIZUALNI unos formule; SAMO editor, student ne učita) ===== */
+.be-mathfield {
+  display: block; width: 100%; padding: 10px 12px; border-radius: 8px;
+  font-size: 19px; color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+  --caret-color: var(--primary-light);
+  --selection-background-color: rgba(99, 102, 241, .35);
+}
+.be-mathfield:focus-within { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+/* Tvornička virtualna tipkovnica UGAŠENA (U8.9b = naša čista paleta) → sakrij MathLive ugrađene toggle-gumbe. */
+.be-mathfield::part(virtual-keyboard-toggle),
+.be-mathfield::part(menu-toggle) { display: none; }
+
+/* U8.9b — naša paleta (math-keypad, Casio-stil) ispod math-fielda */
+.be-mathpad { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; align-items: flex-start; }
+.be-mathpad__group {
+  display: flex; flex-wrap: wrap; gap: 5px; padding: 6px; border-radius: 10px;
+  background: rgba(15, 23, 42, .4); border: 1px solid rgba(148, 163, 184, .14);
+}
+/* broj-grupa = uredni 3-stupčani grid (kalkulator-osjećaj) */
+.be-mathpad__group[data-be-padgroup="Brojevi"] { display: grid; grid-template-columns: repeat(3, 40px); gap: 5px; }
+.be-mathkey {
+  min-width: 42px; height: 44px; padding: 0 10px; border-radius: 8px; cursor: pointer;
+  font-size: 15px; line-height: 1; color: var(--text-primary);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(99, 102, 241, .12); border: 1px solid rgba(99, 102, 241, .3); transition: .12s;
+}
+.be-mathpad__group[data-be-padgroup="Brojevi"] { grid-template-columns: repeat(3, 44px); }
+.be-mathpad__group[data-be-padgroup="Brojevi"] .be-mathkey { min-width: 0; width: 100%; }
+.be-mathkey:hover { background: rgba(99, 102, 241, .26); border-color: var(--primary-light); }
+.be-mathkey:active { transform: translateY(1px); }
+/* renderirane KaTeX-labele gumba (razlomak ▯/▯ itd.) — naslijedi svijetlu boju, stani u gumb */
+.be-mathkey .katex { font-size: 1.02em; color: inherit; }
+.be-mathkey .katex .frac-line { border-color: currentColor; }
+
+/* ===== U8.5d — tablica: 2D grid-forma (ćelije + dodaj/obriši red-stupac) ===== */
+.be-tgrid-wrap { overflow-x: auto; }
+.be-tgrid { border-collapse: separate; border-spacing: 4px; }
+.be-tgrid td { padding: 0; }
+.be-tcell {
+  min-width: 90px; padding: 7px 9px; border-radius: 7px; font-size: 13px;
+  color: var(--text-primary); background: rgba(15, 23, 42, .5);
+  border: 1px solid rgba(148, 163, 184, .2); outline: none; transition: .13s;
+}
+.be-tcell:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
+.be-tcell::placeholder { color: var(--text-muted); opacity: .5; }
+.be-tcell--h { font-weight: 700; background: rgba(99, 102, 241, .12); border-color: rgba(99, 102, 241, .3); }
+.be-tgrid-rc { width: 30px; text-align: center; vertical-align: middle; }
+/* U8.10: ✕ kontrole SAMO na hover (manje vizualnog šuma) — red-delete na hover tog reda,
+   stupac-delete na hover grida; +focus-within (tipkovnica) da ostanu dostupne bez miša. */
+.be-tgrid-crow .be-btn, .be-tgrid-rc .be-btn { opacity: 0; transition: opacity .12s; }
+.be-tgrid tr:hover .be-tgrid-rc .be-btn { opacity: 1; }
+.be-tgrid:hover .be-tgrid-crow .be-btn,
+.be-tgrid:focus-within .be-btn { opacity: 1; }
+.be-tgrid-add { display: flex; gap: 8px; margin-top: 8px; }
+.be-tbtn {
+  padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 12.5px; font-weight: 600;
+  color: var(--text-muted); background: rgba(99, 102, 241, .06);
+  border: 1px dashed rgba(99, 102, 241, .32); transition: .14s;
+}
+.be-tbtn:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); }
+
+/* ==================== css/studio.css ==================== */
+/* ============================================================
+   STUDIO EDITOR (U8) — kosti iz design/mockups/editor-c-tok.html
+   ------------------------------------------------------------
+   U8.1 = SKELET: topbar + stablo + canvas(mode-tabovi/preview) + inspektor.
+   Grubo stilizirano, VIDLJIVO. Vizualni „čisto i bogato" prolaz = U8.6.
+   Sve klase su `st-` prefiksane i scope-ane pod #editor-page (nema kolizije
+   s app/admin/mockup CSS-om). Tokeni iz css/variables.css; par koji fali
+   (--violet/--glass/--line/--grad/--glow/--radius-lg) definiran lokalno.
+   ============================================================ */
+
+#editor-page{
+  --st-violet:#8b5cf6;
+  --st-glass:rgba(30,41,59,.72);
+  --st-line:rgba(148,163,184,.14);
+  --st-grad:linear-gradient(135deg,var(--primary),var(--st-violet));
+  --st-glow:0 0 22px rgba(99,102,241,.35);
+  --st-radius-lg:20px;
+}
+
+/* Puni preuzimanje viewporta (app-shell osjećaj) — skriveno dok nije aktivno. */
+#editor-page.studio-page{ display:none; }
+#editor-page.studio-page.active{
+  display:flex; flex-direction:column;
+  position:fixed; inset:0; z-index:1200;
+  background:var(--bg-primary); color:var(--text-primary);
+  overflow:hidden;
+}
+
+/* ==== TOP BAR ==== */
+#editor-page .st-topbar{
+  display:flex; align-items:center; gap:12px; padding:10px 16px;
+  background:var(--st-glass); backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--st-line); flex-shrink:0;
+  box-shadow:0 4px 24px rgba(0,0,0,.25); z-index:10;
+}
+#editor-page .st-logo{ display:flex; align-items:center; gap:9px; font-weight:700; font-size:15px; }
+#editor-page .st-logo .st-dot{
+  width:30px; height:30px; border-radius:50%; background:var(--st-grad);
+  display:grid; place-items:center; font-size:15px; box-shadow:var(--st-glow);
+}
+#editor-page .st-logo .st-ed{
+  font-size:10px; font-weight:800; letter-spacing:.14em;
+  background:rgba(99,102,241,.16); color:var(--primary-light);
+  border:1px solid rgba(99,102,241,.35); border-radius:99px; padding:3px 8px;
+}
+#editor-page .st-crumb{ display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text-muted); flex-wrap:wrap; }
+#editor-page .st-crumb .st-c{ background:rgba(51,65,85,.5); border:1px solid var(--st-line); border-radius:8px; padding:4px 9px; }
+#editor-page .st-crumb .st-sep{ opacity:.5; }
+#editor-page .st-crumb .st-c.now{ color:var(--text-primary); font-weight:600; background:rgba(99,102,241,.14); border-color:rgba(99,102,241,.35); }
+#editor-page .st-spacer{ flex:1; }
+#editor-page .st-chip{
+  font-size:12px; padding:5px 12px; border-radius:99px; font-weight:600;
+  background:rgba(148,163,184,.12); color:var(--text-muted); border:1px solid var(--st-line);
+}
+#editor-page .st-chip.dirty{ background:rgba(245,158,11,.12); color:#fbbf24; border-color:rgba(245,158,11,.35); }
+#editor-page .st-btn{
+  padding:8px 16px; border-radius:var(--radius); font-weight:600; font-size:13.5px;
+  transition:.18s; border:none; cursor:pointer; color:inherit; background:none; font-family:inherit;
+}
+#editor-page .st-btn.primary{ background:var(--st-grad); color:#fff; box-shadow:0 4px 18px rgba(99,102,241,.4); }
+#editor-page .st-btn.primary:hover{ transform:translateY(-1px); box-shadow:0 8px 26px rgba(99,102,241,.55); }
+#editor-page .st-btn.ghost{ border:1px solid var(--st-line); color:var(--text-secondary); background:rgba(51,65,85,.25); }
+#editor-page .st-btn.ghost:hover{ border-color:var(--primary-light); color:var(--text-primary); }
+#editor-page .st-btn:disabled{ opacity:.45; cursor:not-allowed; transform:none!important; box-shadow:none!important; }
+#editor-page .st-iconbtn{
+  width:36px; height:36px; border-radius:10px; display:grid; place-items:center;
+  border:1px solid var(--st-line); background:rgba(51,65,85,.25); color:var(--text-secondary);
+  cursor:pointer; transition:.15s; font-size:15px;
+}
+#editor-page .st-iconbtn:hover{ border-color:var(--primary-light); color:var(--text-primary); }
+
+/* ==== LAYOUT 3-stupca ==== */
+#editor-page .st-layout{ display:grid; grid-template-columns:262px 1fr 250px; flex:1; min-height:0; }
+@media(max-width:1020px){ #editor-page .st-layout{ grid-template-columns:220px 1fr; } #editor-page .st-inspector{ display:none; } }
+@media(max-width:680px){ #editor-page .st-layout{ grid-template-columns:1fr; } #editor-page .st-tree{ display:none; } }
+
+/* ==== STABLO ==== */
+#editor-page .st-tree{
+  background:linear-gradient(180deg,rgba(30,41,59,.55),rgba(15,23,42,.3));
+  border-right:1px solid var(--st-line); overflow-y:auto; padding:14px 10px;
+  display:flex; flex-direction:column;
+}
+#editor-page .st-newscript{
+  margin:0 2px 16px; padding:11px; border-radius:14px; background:var(--st-grad); color:#fff;
+  font-weight:700; font-size:13.5px; box-shadow:0 6px 22px rgba(99,102,241,.4); transition:.18s;
+  border:none; cursor:pointer; font-family:inherit;
+}
+#editor-page .st-newscript:hover{ transform:translateY(-1px); box-shadow:0 10px 30px rgba(99,102,241,.55); }
+#editor-page .st-tree h3{
+  font-size:10.5px; text-transform:uppercase; letter-spacing:.14em; color:var(--text-muted);
+  padding:0 8px 10px; margin:0; display:flex; gap:6px; align-items:center; font-weight:700;
+}
+#editor-page .st-node .st-row{
+  display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:10px;
+  font-size:13px; color:var(--text-secondary); cursor:pointer; user-select:none;
+  transition:.15s; position:relative;
+}
+#editor-page .st-node .st-row:hover{ background:rgba(51,65,85,.45); }
+#editor-page .st-node .st-row.active{
+  background:linear-gradient(90deg,rgba(99,102,241,.22),rgba(139,92,246,.10));
+  color:#c7d2fe; font-weight:600;
+}
+#editor-page .st-node .st-row.active::before{
+  content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px;
+  border-radius:99px; background:var(--st-grad);
+}
+#editor-page .st-node .st-row.soon{ opacity:.5; cursor:not-allowed; }
+#editor-page .st-node .st-kids{ margin-left:14px; border-left:1px solid var(--st-line); padding-left:7px; display:none; }
+#editor-page .st-node.open>.st-kids{ display:block; }
+#editor-page .st-node .st-tw{ width:12px; font-size:9px; color:var(--text-muted); transition:.18s; flex-shrink:0; }
+#editor-page .st-node.open>.st-row .st-tw{ transform:rotate(90deg); }
+#editor-page .st-node .st-lbl{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* ==== CANVAS — dot-grid podloga ==== */
+#editor-page .st-canvas{
+  overflow-y:auto; min-width:0;
+  background:radial-gradient(900px 300px at 50% -80px,rgba(99,102,241,.10),transparent),
+             radial-gradient(rgba(148,163,184,.055) 1px,transparent 1px);
+  background-size:auto,24px 24px;
+}
+#editor-page .st-empty{ display:grid; place-items:center; height:100%; color:var(--text-muted); text-align:center; padding:40px; }
+#editor-page .st-empty .st-emoji{ font-size:40px; margin-bottom:14px; opacity:.7; }
+#editor-page .st-head{ padding:24px 30px 0; }
+#editor-page .st-head h1{ font-size:24px; letter-spacing:-.01em; margin:0; }
+#editor-page .st-metas{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+#editor-page .st-metas .st-m{
+  font-size:11.5px; color:var(--text-muted); background:rgba(30,41,59,.7);
+  border:1px solid var(--st-line); border-radius:99px; padding:4px 11px;
+  display:flex; gap:5px; align-items:center;
+}
+
+/* ==== TABOVI ==== */
+#editor-page .st-tabs{
+  display:flex; gap:6px; align-items:center; margin:18px 30px 0; padding:6px;
+  background:rgba(30,41,59,.65); border:1px solid var(--st-line); border-radius:16px;
+  width:max-content; max-width:calc(100% - 60px); flex-wrap:wrap;
+}
+#editor-page .st-tab{
+  padding:8px 16px; border-radius:11px; font-size:13px; font-weight:600; color:var(--text-muted);
+  transition:.18s; border:none; cursor:pointer; background:none; font-family:inherit;
+}
+#editor-page .st-tab:hover{ color:var(--text-primary); }
+#editor-page .st-tab.on{ background:var(--st-grad); color:#fff; box-shadow:0 4px 16px rgba(99,102,241,.45); }
+#editor-page .st-pane{ display:none; padding:22px 30px 90px; max-width:820px; }
+#editor-page .st-pane.on{ display:block; }
+#editor-page .st-pane .st-hint{ color:var(--text-muted); font-size:12.5px; margin:0 0 16px; }
+
+/* ==== PREVIEW: learn-kvadratić (read-only u U8.1) ==== */
+#editor-page .st-kv{
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-radius:18px; padding:18px 20px 18px 24px;
+  margin-bottom:12px; position:relative; box-shadow:var(--shadow);
+}
+#editor-page .st-kv::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:5px;
+  border-radius:18px 0 0 18px; background:var(--st-acc,var(--bg-tertiary));
+}
+#editor-page .st-kv .st-kvhead{ display:flex; align-items:center; gap:11px; margin-bottom:9px; }
+#editor-page .st-kv .st-n,
+#editor-page .st-learn-cat .st-n{
+  width:28px; height:28px; border-radius:9px; display:grid; place-items:center; font-size:12px;
+  flex-shrink:0; background:linear-gradient(135deg,rgba(99,102,241,.25),rgba(139,92,246,.12));
+  color:#c7d2fe; font-weight:800; border:1px solid rgba(99,102,241,.3);
+}
+#editor-page .st-kv h2{ font-size:16.5px; margin:0; }
+#editor-page .st-kv .st-body{ font-size:14px; line-height:1.7; color:var(--text-secondary); }
+#editor-page .st-kv .st-body :is(h1,h2,h3,h4){ color:var(--text-primary); margin:.6em 0 .3em; }
+#editor-page .st-kv .st-body p{ margin:.5em 0; }
+#editor-page .st-kv .st-body ul,#editor-page .st-kv .st-body ol{ margin:.4em 0 .4em 1.2em; }
+
+/* ==== EDIT-MOD: learn sekcija + migracija v1→blokovi (U8.2) ==== */
+#editor-page .st-editing{ color:#fbbf24!important; background:rgba(245,158,11,.12)!important; border-color:rgba(245,158,11,.35)!important; }
+/* ── EDIT kvadratić-kartica (K2): vizual usklađen s VIEW `st-kv` (broj + naslov + tijelo) ── */
+#editor-page .st-learn-cat{
+  position:relative; margin-bottom:16px;
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-radius:18px;
+  padding:18px 20px 18px 24px; box-shadow:var(--shadow);
+}
+#editor-page .st-learn-cat::before{
+  content:''; position:absolute; left:0; top:0; bottom:0; width:5px;
+  border-radius:18px 0 0 18px; background:var(--st-acc,var(--bg-tertiary));
+  box-shadow:2px 0 14px -2px var(--st-acc,transparent);
+}
+#editor-page .st-learn-cathead{ display:flex; align-items:center; gap:11px; margin-bottom:12px; flex-wrap:wrap; }
+#editor-page .st-learn-cat .st-body{ font-size:14px; line-height:1.7; color:var(--text-secondary); }
+#editor-page .st-learn-cat .st-body :is(h1,h2,h3,h4){ color:var(--text-primary); margin:.6em 0 .3em; }
+#editor-page .st-learn-cat .st-body p{ margin:.5em 0; }
+#editor-page .st-learn-cat .st-body ul,#editor-page .st-learn-cat .st-body ol{ margin:.4em 0 .4em 1.2em; }
+/* ── K1 (F7): uredljiv naslov sekcije = prominentan (kao VIEW h2), inline-editabilan ── */
+#editor-page .st-cat-name{
+  font-size:16.5px; font-weight:700; color:var(--text-primary); line-height:1.3;
+  cursor:text; border-radius:7px; padding:2px 8px; margin:0 -4px; min-width:40px;
+  outline:1px solid transparent; transition:background .12s, outline-color .12s;
+}
+#editor-page .st-cat-name:hover{ background:rgba(148,163,184,.12); }
+#editor-page .st-cat-name:focus{ background:rgba(148,163,184,.16); outline-color:var(--st-acc,var(--primary)); }
+#editor-page .st-cat-name:empty::before{ content:'naziv sekcije'; color:var(--text-muted); font-weight:400; opacity:.5; }
+
+/* ── K6b (F7): drag-ručka sekcije ⠿ + drag-stanje + drop-linija (vanilla pointer-drag) ── */
+#editor-page .st-catdrag{
+  flex-shrink:0; width:24px; height:26px; padding:0; border:none; background:transparent;
+  color:var(--text-muted); font-size:13px; line-height:1;
+  cursor:grab; touch-action:none; border-radius:7px; opacity:.55; transition:.13s;
+}
+#editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
+#editor-page .st-catdrag:active{ cursor:grabbing; }
+#editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(129,140,248,.5); }
+/* drop-linija sekcije koristi GLOBALNU `.be-dropline` (Fix B) — `#editor-page`-scopano pravilo se ne bi
+   primijenilo jer se element dodaje na `document.body`. */
+
+/* ── U8.5f: boja-kvadratići sekcije (uz naslov u edit-modu) ── */
+#editor-page .st-cdots{ display:inline-flex; align-items:center; gap:5px; margin-left:auto; }
+#editor-page .st-cdot{
+  width:18px; height:18px; padding:0; border-radius:6px; cursor:pointer;
+  background:var(--dot,#64748b); border:1px solid rgba(255,255,255,.22); transition:.12s;
+}
+#editor-page .st-cdot:hover{ transform:scale(1.15); box-shadow:0 0 0 2px rgba(99,102,241,.4); }
+#editor-page .st-cdot.on{ box-shadow:0 0 0 2px #fff inset, 0 0 0 2px var(--dot,#64748b); }
+#editor-page .st-cdot--custom{ background:conic-gradient(#ef4444,#f59e0b,#10b981,#06b6d4,#6366f1,#a855f7,#ef4444); }
+#editor-page .st-cdot--custom::-webkit-color-swatch-wrapper{ padding:0; opacity:0; }
+#editor-page .st-cdot--custom::-webkit-color-swatch{ border:none; opacity:0; }
+#editor-page .st-legacy-note{ font-size:12px; color:var(--text-muted); margin:12px 0 8px; }
+#editor-page .st-migrate{
+  display:inline-flex; align-items:center; gap:8px; padding:9px 15px; border-radius:11px;
+  border:1.5px dashed rgba(99,102,241,.5); background:rgba(99,102,241,.06); color:var(--primary-light);
+  font-weight:600; font-size:13px; cursor:pointer; transition:.15s; font-family:inherit;
+}
+#editor-page .st-migrate:hover{ border-color:var(--primary); background:rgba(99,102,241,.12); box-shadow:var(--st-glow); }
+
+/* ==== PREVIEW: kartice ==== */
+#editor-page .st-cardgrid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; }
+#editor-page .st-fcard{
+  border-radius:16px; min-height:120px; background:linear-gradient(180deg,rgba(30,41,59,.95),rgba(30,41,59,.6));
+  border:1px solid var(--st-line); border-top:3px solid var(--st-acc,var(--bg-tertiary));
+  padding:14px 16px; box-shadow:var(--shadow);
+}
+#editor-page .st-fcard .st-q{ font-weight:600; font-size:14px; line-height:1.5; }
+#editor-page .st-fcard .st-a{ color:#6ee7b7; font-size:13.5px; margin-top:10px; padding-top:10px; border-top:1px dashed rgba(148,163,184,.25); }
+#editor-page .st-seclbl{ font-size:10.5px; color:var(--text-muted); margin-bottom:8px; display:flex; align-items:center; gap:6px; text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
+
+/* ==== PREVIEW: kviz ==== */
+#editor-page .st-qz{
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-left:5px solid var(--st-acc,var(--bg-tertiary));
+  border-radius:16px; padding:16px 18px; margin-bottom:14px; box-shadow:var(--shadow);
+}
+#editor-page .st-qz .st-qtext{ font-weight:600; margin-bottom:10px; font-size:14.5px; }
+#editor-page .st-qz .st-opt{
+  display:flex; gap:10px; align-items:center; padding:8px 11px; border-radius:10px;
+  font-size:13.5px; color:var(--text-secondary); border:1px solid transparent; margin-bottom:4px;
+}
+#editor-page .st-qz .st-opt.correct{ background:rgba(34,197,94,.10); border-color:rgba(34,197,94,.35); }
+#editor-page .st-qz .st-ok{
+  font-size:9.5px; background:rgba(34,197,94,.18); color:#4ade80; border:1px solid rgba(34,197,94,.4);
+  font-weight:800; border-radius:99px; padding:2px 8px; letter-spacing:.06em; margin-left:auto;
+}
+
+/* ==== PREVIEW: fill ==== */
+#editor-page .st-fill{
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-radius:14px; padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow);
+}
+#editor-page .st-fill .st-fsent{ font-size:14px; color:var(--text-secondary); line-height:1.6; }
+#editor-page .st-fill .st-fans{ font-size:12.5px; color:var(--primary-light); margin-top:6px; }
+
+/* ==== EDIT-MOD: stavka (kartica/kviz/fill) s admin-kontrolama (U8.3) ==== */
+#editor-page .st-edit-item{
+  display:flex; align-items:flex-start; gap:12px;
+  background:linear-gradient(180deg,rgba(30,41,59,.92),rgba(30,41,59,.55));
+  border:1px solid var(--st-line); border-left:4px solid var(--st-acc,var(--bg-tertiary));
+  border-radius:14px; padding:13px 15px; margin-bottom:10px; box-shadow:var(--shadow);
+}
+#editor-page .st-edit-item .st-edit-body{ flex:1; min-width:0; }
+#editor-page .st-edit-item .st-q,#editor-page .st-edit-item .st-qtext{ font-weight:600; font-size:14px; line-height:1.5; }
+#editor-page .st-edit-item .st-a{ color:#6ee7b7; font-size:13px; margin-top:6px; }
+#editor-page .st-edit-item .st-opt{ font-size:13px; padding:6px 9px; margin-top:4px; border-radius:8px; color:var(--text-secondary); }
+#editor-page .st-edit-item .st-opt.correct{ background:rgba(34,197,94,.10); }
+#editor-page .st-edit-item .st-fsent{ font-size:14px; color:var(--text-secondary); }
+#editor-page .st-edit-item .st-fans{ font-size:12.5px; color:var(--primary-light); margin-top:5px; }
+#editor-page .st-edit-item .admin-card-ctrls{ flex-shrink:0; display:flex; gap:4px; align-items:flex-start; }
+#editor-page .st-addwrap{ margin:4px 0 22px; }
+
+/* ==== K4/F4/D5: boja CIJELE kartice = suptilni --st-acc tint (ne samo traka) ====
+   Wash (12% boje) = GORNJI background-layer preko dark-kartice, ISPOD sadržaja → tekst
+   netaknut (WCAG na tamnoj temi). Bez boje (--st-acc nedef.) → wash=transparent → neutralno.
+   Postojeće accent-trake/rubovi (::before / border-left/top) ostaju kao „rub/glow" (D5).
+   Pravilo je NAKON definicija kartica → override `background` (color-mix = Baseline). */
+#editor-page :is(.st-learn-cat,.st-kv,.st-fcard,.st-qz,.st-fill,.st-edit-item){
+  --st-wash: color-mix(in srgb, var(--st-acc, transparent) 12%, transparent);
+  background:
+    linear-gradient(var(--st-wash), var(--st-wash)),
+    linear-gradient(180deg, rgba(30,41,59,.92), rgba(30,41,59,.55));
+}
+
+/* ==== INSPEKTOR (stub u U8.1) ==== */
+#editor-page .st-inspector{
+  background:linear-gradient(180deg,rgba(30,41,59,.55),rgba(15,23,42,.3));
+  border-left:1px solid var(--st-line); padding:16px 14px; overflow-y:auto;
+}
+#editor-page .st-icard{ background:rgba(30,41,59,.7); border:1px solid var(--st-line); border-radius:14px; padding:14px; margin-bottom:14px; }
+#editor-page .st-icard h3{ font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted); margin:0 0 10px; display:flex; gap:6px; align-items:center; }
+#editor-page .st-icard p{ font-size:12px; color:var(--text-muted); line-height:1.6; margin:0; }
+#editor-page .st-swatches{ display:flex; gap:8px; flex-wrap:wrap; }
+#editor-page .st-sw{ width:26px; height:26px; border-radius:8px; border:2px solid transparent; }
+#editor-page .st-premium{
+  background:linear-gradient(120deg,rgba(99,102,241,.16),rgba(245,158,11,.12),rgba(99,102,241,.16));
+  border:1px solid rgba(129,140,248,.4); border-radius:16px; padding:14px;
+}
+#editor-page .st-premium h4{ font-size:13px; margin:0 0 7px; }
+#editor-page .st-premium p{ font-size:12px; color:var(--text-muted); line-height:1.55; margin:0 0 12px; }
+#editor-page .st-pill{ font-size:9.5px; background:linear-gradient(135deg,#f59e0b,#fbbf24); color:#1a1206; font-weight:800; border-radius:99px; padding:2.5px 9px; margin-left:6px; letter-spacing:.05em; }
+
+/* ============================================================
+   U8.6a — VIZUALNI PROLAZ „čisto i bogato" (Studio shell + preview)
+   ------------------------------------------------------------
+   Dodatni sloj RICHNESS-a preko postojećih st-* kostiju: mekane
+   ulazne animacije, hover-podizanje, glow na accent-traci, staklo
+   na tabovima, shimmer na premium kartici, prilagođeni scrollbar.
+   Sve ADITIVNO i scope-ano pod #editor-page (nula kolizije s
+   app/admin/mockup CSS-om). Prati design/mockups/editor-c-tok.html.
+   Keyframe imena st-prefiksana (globalna su → izbjegni sudar).
+   POP ide SAMO na read-only preview (st-kv/st-fcard/st-qz/st-fill,
+   crta se rijetko: pick lekcije / promjena taba); NE na st-edit-item
+   (edit-mod se re-crta na svaku draft-op → pop bi jarko trzao).
+   ============================================================ */
+@keyframes stpop{ from{ opacity:0; transform:translateY(10px) scale(.985); } to{ opacity:1; transform:none; } }
+@keyframes stshimmer{ 0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; } }
+
+/* prilagođeni scrollbar (osjećaj alata) */
+#editor-page ::-webkit-scrollbar{ width:9px; height:9px; }
+#editor-page ::-webkit-scrollbar-thumb{ background:var(--bg-tertiary); border-radius:99px; border:2px solid var(--bg-primary); }
+#editor-page ::-webkit-scrollbar-track{ background:transparent; }
+
+/* TABOVI — staklo iza pilula + slojevitost */
+#editor-page .st-tabs{ backdrop-filter:blur(8px); position:relative; z-index:15; }
+#editor-page .st-tab{ display:flex; align-items:center; }
+
+/* KVADRATIĆ (learn preview) — ulaz + hover-podizanje + glow na accent-traci */
+#editor-page .st-kv{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-kv:hover{ border-color:rgba(148,163,184,.28); transform:translateY(-2px); box-shadow:0 14px 38px rgba(0,0,0,.38); }
+#editor-page .st-kv::before{ box-shadow:2px 0 14px -2px var(--st-acc,transparent); transition:box-shadow .2s,background .2s; }
+
+/* KARTICE (flip preview) — ulaz + hover-podizanje s blagim 3D nagibom */
+#editor-page .st-cardgrid{ perspective:1000px; }
+#editor-page .st-fcard{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-fcard:hover{ transform:translateY(-3px) rotateX(2deg); box-shadow:0 16px 40px rgba(0,0,0,.4); }
+
+/* KVIZ + FILL (view preview) — blagi ulaz + hover-rub */
+#editor-page .st-qz,#editor-page .st-fill{ transition:border-color .2s,box-shadow .2s,transform .2s; animation:stpop .22s ease; }
+#editor-page .st-qz:hover,#editor-page .st-fill:hover{ border-color:rgba(148,163,184,.26); transform:translateY(-1px); box-shadow:0 12px 30px rgba(0,0,0,.34); }
+
+/* EDIT-ITEM (edit-mod, česti redraw → BEZ pop, samo hover-glatkoća) */
+#editor-page .st-edit-item{ transition:border-color .2s,box-shadow .2s,transform .2s; }
+#editor-page .st-edit-item:hover{ border-color:rgba(148,163,184,.26); transform:translateY(-1px); box-shadow:0 10px 26px rgba(0,0,0,.3); }
+
+/* META-čipovi — mikro-glatkoća na hover */
+#editor-page .st-metas .st-m{ transition:.15s; }
+#editor-page .st-metas .st-m:hover{ border-color:rgba(99,102,241,.35); color:var(--text-secondary); }
+
+/* PREMIUM (inspektor) — živi shimmer gradijent (kao mockup) */
+#editor-page .st-premium{ background-size:220% 220%; animation:stshimmer 6s ease infinite; }
+
 /* ==================== css/auth.css ==================== */
 /* =====================================================
    SOKRAT STUDY — AUTH (Sign-in gumb + email+lozinka modal)
@@ -8908,6 +9697,27 @@ sokrat-modal.auth-modal > * {
 }
 .admin-edit-btn:hover { background: var(--primary-dark, #4338ca); color: #fff; border-color: var(--primary, #6366f1); }
 
+/* „Dodaj stavku" gumb (U6c strukturne operacije) — dashed, diskretan dok se ne hoverne */
+.admin-add-btn {
+    margin-top: 0.6rem; display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.45rem 0.85rem; border-radius: 8px; cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; font-family: inherit;
+    border: 1px dashed var(--border-color, #334155); background: transparent; color: var(--text-secondary);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.admin-add-btn:hover { background: var(--bg-tertiary); color: var(--primary-light, #818cf8); border-color: var(--primary, #6366f1); }
+
+/* U6d — kategorije-UI: zaglavlje = naslov + kontrole (presloži ↑↓ / uredi / obriši) u flex-redu; „Dodaj kategoriju" (široki) */
+.admin-cat-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.75rem; }
+.admin-cat-head .profile-card-title { margin: 0; flex: 1 1 auto; min-width: 0; }
+.admin-cat-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
+/* U6e — grupa kontrola stavke (uredi ✎ + obriši 🗑; U6e-2 doda ↑↓) */
+.admin-card-ctrls { flex: 0 0 auto; display: inline-flex; gap: 0.35rem; }
+.admin-cat-del:hover, .admin-del:hover { background: var(--danger-bg, #7f1d1d); color: #fff; border-color: var(--danger-text, #f87171); }
+.admin-edit-btn[disabled] { opacity: 0.35; cursor: not-allowed; }
+.admin-edit-btn[disabled]:hover { background: var(--bg-tertiary); color: var(--text-secondary); border-color: var(--border-color, #334155); }
+.admin-add-btn--cat { margin-top: 1rem; width: 100%; justify-content: center; padding: 0.6rem 0.85rem; font-size: 0.9rem; }
+
 /* Edit-modal (na <sokrat-modal> primitivu, light-DOM kartica) */
 .admin-edit .admin-edit__card {
     position: relative; width: min(92vw, 460px);
@@ -8933,6 +9743,12 @@ sokrat-modal.auth-modal > * {
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
 .admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
+/* U6d — color-polje u editoru kategorije (label + swatch u istom redu) */
+.admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
+.admin-edit__color {
+    width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
+    border: 1px solid var(--border-color, #334155); background: var(--bg-primary, #0f172a);
+}
 .admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
 .admin-edit__status.is-error { color: var(--danger-text, #f87171); }
