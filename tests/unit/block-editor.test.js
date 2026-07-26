@@ -208,6 +208,28 @@ test('swappedOrder: blokovi bez id preskočeni (red samo od id-eva)', function (
 test('swappedOrder: nepoznat id → null', function () {
   assert.strictEqual(E._swappedOrder(sample, 'nema', -1), null);
 });
+
+// ── K6: reorderedIds (drag → apsolutni redoslijed) + drag-ručka ⠿ ──
+test('reorderedIds: povuci prvi na kraj', function () {
+  assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'a', 2), ['b', 'c', 'a']);
+});
+test('reorderedIds: povuci zadnji na početak (idx 0)', function () {
+  assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'c', 0), ['c', 'a', 'b']);
+});
+test('reorderedIds: sredina na početak', function () {
+  assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'b', 0), ['b', 'a', 'c']);
+});
+test('reorderedIds: ista pozicija = nepromijenjeno', function () {
+  assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'b', 1), ['a', 'b', 'c']);
+});
+test('reorderedIds: idx clamp preko duljine', function () {
+  assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'a', 99), ['b', 'c', 'a']);
+});
+test('blockCard: drag-ručka ⠿ (data-be-drag) prisutna', function () {
+  const h = E._blockCard({ id: 'bbb222', type: 'paragraph', text: 'x' }, 1, 3);
+  assert.ok(h.indexOf('data-be-drag="bbb222"') !== -1, 'ručka nosi block id');
+  assert.ok(h.indexOf('be-drag') !== -1, 'be-drag klasa');
+});
 test('ADD_TYPES: 8 tipova (4 tekst + slika + video + formula + tablica), svaki make() = valjan default-blok', function () {
   assert.strictEqual(E._addTypes.length, 8);
   E._addTypes.forEach(function (t) {

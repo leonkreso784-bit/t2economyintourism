@@ -748,3 +748,62 @@ test('K1 (F7) — Studio: uredljiv naslov sekcije → updateCategory {name} u dr
   await page.click('sokrat-confirm .sokrat-confirm__ok');
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
+
+test('K6 (F7) — Studio learn: povuci-ispusti blok (ručka ⠿) → redoslijed u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();        // v1 → 1 legacy-html blok
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj još 2 bloka (Naslov, pa Tekst) → 3 bloka za preslagivanje
+  for (const label of ['Naslov', 'Tekst']) {
+    await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+    await page.waitForSelector('.be-menu .be-menu-item');
+    await page.locator('.be-menu .be-menu-item', { hasText: label }).click();
+  }
+  await expect(page.locator('#stCanvas .be-mount').first().locator('.be-block')).toHaveCount(3);
+
+  // redoslijed id-eva iz drafta (prva kategorija s blokovima)
+  const readOrder = () => page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    for (const k of Object.keys(d.working)) {
+      const c = d.working[k];
+      const blks = c && typeof c === 'object' && c.learn && c.learn.blocks;
+      if (Array.isArray(blks) && blks.length) return blks.map((b) => String(b.id));
+    }
+    return [];
+  }, sel);
+
+  const before = await readOrder();
+  expect(before.length).toBe(3);
+
+  // povuci PRVI blok za ručku ⠿ ispod zadnjeg → treba postati zadnji
+  const firstBlock = page.locator('#stCanvas .be-mount .be-block').first();
+  await firstBlock.hover();                                            // otkrij hover-kontrole (⠿ u .be-ctrls)
+  const grip = firstBlock.locator('[data-be-drag]');
+  await grip.scrollIntoViewIfNeeded();
+  const gb = await grip.boundingBox();
+  const lastBox = await page.locator('#stCanvas .be-mount .be-block').last().boundingBox();
+  await page.mouse.move(gb.x + gb.width / 2, gb.y + gb.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(gb.x + gb.width / 2, lastBox.y + lastBox.height + 14, { steps: 8 });  // ispod zadnjeg
+  await page.mouse.up();                                               // → reorderBlocks op + draw()
+
+  const after = await readOrder();
+  expect(after.length).toBe(3);
+  expect(after[after.length - 1]).toBe(before[0]);                     // bivši prvi = sad zadnji
+  expect(after.slice().sort()).toEqual(before.slice().sort());         // isti skup id-eva (ništa izgubljeno)
+  expect(after.join()).not.toBe(before.join());                        // redoslijed se STVARNO promijenio
+  await expect(page.locator('#stDraftChip.dirty')).toHaveCount(1);
+
+  // Odbaci → čist izlaz (staging nikad pisan; draft-only)
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});

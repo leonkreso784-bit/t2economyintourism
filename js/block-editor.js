@@ -181,6 +181,7 @@
       '<div class="be-head">' +
         '<span class="be-n" title="' + esc(label) + '">' + (i + 1) + '</span>' +
         '<span class="be-ctrls">' +
+          '<button type="button" class="be-btn be-drag" data-be-drag="' + esc(id) + '" title="Povuci za preslagivanje" aria-label="Povuci za preslagivanje">⠿</button>' +
           '<button type="button" class="be-btn" data-be-act="up" data-be-id="' + esc(id) + '"' + upDis + ' title="Pomakni gore" aria-label="Pomakni gore">↑</button>' +
           '<button type="button" class="be-btn" data-be-act="down" data-be-id="' + esc(id) + '"' + downDis + ' title="Pomakni dolje" aria-label="Pomakni dolje">↓</button>' +
           '<button type="button" class="be-btn be-del" data-be-act="remove" data-be-id="' + esc(id) + '" title="Ukloni blok" aria-label="Ukloni blok">✕</button>' +
@@ -235,6 +236,74 @@
     const out = ids.slice();
     const tmp = out[i]; out[i] = out[j]; out[j] = tmp;
     return out;
+  }
+
+  // ── K6 (F5/D4): čisti reorder — izvadi `draggedId` i ubaci ga na `idx` među OSTALE id-jeve ──
+  // (idx = pozicija među ostalima; clamp na [0, others.length]) → apsolutni redoslijed za reorderBlocks.
+  function reorderedIds(ids, draggedId, idx) {
+    const others = ids.filter(function (id) { return String(id) !== String(draggedId); });
+    let k = idx < 0 ? 0 : (idx > others.length ? others.length : idx);
+    return others.slice(0, k).concat([draggedId], others.slice(k));
+  }
+
+  // ── K6 (F5/D4): VANILLA pointer-drag preslagivanje blokova (ručka ⠿; ne otima caret naslova/contenteditable) ──
+  // Drop-indikator = jedna fixed linija; na ispuštanju izračunaj apsolutni redoslijed → reorderBlocks → draw().
+  function startBlockDrag(e, container, handle, draw) {
+    if (typeof document === 'undefined') return;
+    const blockEl = handle.closest ? handle.closest('[data-be-block]') : null;
+    if (!blockEl) return;
+    const draggedId = blockEl.getAttribute('data-be-block');
+    e.preventDefault();
+    blockEl.classList.add('be-dragging');
+    const line = document.createElement('div');
+    line.className = 'be-dropline';
+    document.body.appendChild(line);
+
+    function otherEls() {
+      return Array.prototype.slice.call(container.querySelectorAll('.be-block'))
+        .filter(function (el) { return el.getAttribute('data-be-block') !== draggedId; });
+    }
+    function dropIndex(y, oth) {
+      let idx = 0;
+      for (let i = 0; i < oth.length; i++) {
+        const r = oth[i].getBoundingClientRect();
+        if (y > r.top + r.height / 2) idx++;
+      }
+      return idx;
+    }
+    function placeLine(idx, oth) {
+      const box = container.getBoundingClientRect();
+      let y;
+      if (!oth.length) y = box.top;
+      else if (idx < oth.length) y = oth[idx].getBoundingClientRect().top;
+      else y = oth[oth.length - 1].getBoundingClientRect().bottom;
+      line.style.left = box.left + 'px';
+      line.style.width = box.width + 'px';
+      line.style.top = (y - 1) + 'px';
+    }
+    function onMove(ev) {
+      const oth = otherEls();
+      placeLine(dropIndex(ev.clientY, oth), oth);
+    }
+    function onUp(ev) {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      if (line.parentNode) line.parentNode.removeChild(line);
+      blockEl.classList.remove('be-dragging');
+      const oth = otherEls();
+      const idx = dropIndex(ev.clientY, oth);
+      const curIds = Array.prototype.slice.call(container.querySelectorAll('.be-block'))
+        .map(function (el) { return el.getAttribute('data-be-block'); });
+      const newOrder = reorderedIds(curIds, draggedId, idx);
+      if (newOrder.join('') !== curIds.join('')) {
+        const c = container._beCtx;
+        c.applyOp({ type: 'reorderBlocks', catId: c.catId, order: newOrder });
+        draw();
+      }
+    }
+    document.addEventListener('pointermove', onMove);
+    document.addEventListener('pointerup', onUp);
+    onMove(e);   // odmah pozicioniraj liniju
   }
 
   function closeMenu(container) {
@@ -521,6 +590,13 @@
         if (typeof imageResizePointerDown === 'function') imageResizePointerDown(e, container);
       });
 
+      // K6 (F5/D4): povuci-ispusti preslagivanje blokova — SAMO s ručke ⠿ (ne dira contenteditable).
+      container.addEventListener('pointerdown', function (e) {
+        const handle = e.target.closest ? e.target.closest('[data-be-drag]') : null;
+        if (!handle || !container.contains(handle)) return;
+        startBlockDrag(e, container, handle, draw);
+      });
+
       // U8.10: PASTE u ćeliju tablice → ako je clipboard tablica (TSV/HTML), izgradi cijeli grid.
       container.addEventListener('paste', function (e) {
         const cell = e.target.closest ? e.target.closest('.be-tcell') : null;
@@ -643,6 +719,7 @@
       _blockCard: blockCard,
       _typeLabel: TYPE_LABEL,
       _swappedOrder: swappedOrder,
+      _reorderedIds: reorderedIds,       // K6 (drag → apsolutni redoslijed blokova)
       _addTypes: ADD_TYPES,
       _inlineToPlain: inlineToPlain,     // U8.5a (inline → plain za media-inpute)
       _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
