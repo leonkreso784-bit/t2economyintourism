@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-g (OPUS) — F7 K6b ✅: drag-and-drop preslagivanje SEKCIJA → **F7 KVADRATIĆ-MODEL KOMPLETAN (K1–K6)**
+**Kontekst:** Leon isprobao K6a na previewu (screenshot potvrdio grip ⠿ radi) → „nastavi". K6b = zadnji dio F7 (drag sekcija). Usput primijetio Vercelov **INP-hint na `button.st-migrate`** (klik „Uredi kao blokove" radi puni re-render canvasa) — benigno (rijetka admin-akcija, ne dira studente), zabilježeno kao mogući kasniji hardening.
+**K6b ✅ (`df80713`; F5/D4 = VANILLA pointer-drag; NULA promjene sheme/ops/publish-RPC/rendera):**
+- **`studio.js`:** grip ⠿ (`data-st-catdrag`) u `st-learn-cathead` + `data-st-cat` na `.st-learn-cat`; `startCatDrag` = `pointerdown` na ručki → `document`-level `move/up` + **AUTO-SCROLL** uz rubove canvasa (sekcije su visoke → rAF-loop scrolla `stCanvas` dok je pointer u edge-zoni od 64px) + fixed drop-linija. Na ispuštanju: **FULL-KEY MERGE** — `full = Object.keys(currentData())`, permutira se SAMO skup vidljivih learn-cat (ne-learn kategorije + meta ostaju na apsolutnim mjestima) → **postojeći `reorderCategories` op** → `renderCanvas()`.
+- **`studio.css`:** `.st-catdrag` (grab + `touch-action:none`, hover-reveal), `.st-dragging` (dim/dashed), `.st-dropline` (fixed accent-linija + glow).
+- **R-C:** drag SAMO s ručke ⠿ (ne s naslova/teksta → caret siguran). **R-B:** naziv/boja sekcije dijele kartice/kviz/fill → svi modovi poštuju novi redoslijed (željeno = jedna istina sekcije).
+**Dokazi:** **authed studio 16/16 UŽIVO** vs staging (novi K6b test: pravi `mouse.down→move u edge-zonu→auto-scroll→up` → povučena sekcija otišla **NIŽE** u `Object.keys(working)`, isti skup ključeva, dirty → Odbaci; staging DB nikad pisan) · preflight **EXIT 0** · unit 64/0 · build:css (29) + bump 104 · screenshot-review (grip ⠿ suptilan lijevo od broja; dragging-dim).
+**🎉 F7 KVADRATIĆ-MODEL KOMPLETAN: K1 uredljiv naslov · K2 kartica-vizual · K3 stanjen chrome · K4 boja cijele kartice · K5 ＋ afordancija · K6 drag (blokovi+sekcije).** Editor je sad pravi vizualni proizvod (Leonov feedback F1/F4/F5/F7 riješen). **SLIJEDI:** U8.6b/c (mikro-vizual polish) → **U8.7 upload slika (Storage, F2)** → U8.8 chart. Zatim F5→F6→UGC.
+
 ## 2026-07-26-f (OPUS) — F7 K6a ✅: drag-and-drop preslagivanje BLOKOVA (vanilla pointer-drag, ručka ⠿)
 **Kontekst:** post-compact; Leon „analiziraj sljedeći zadatak i baci se na posao". Sljedeće = **K6 = zadnja F7 cigla** (drag). Podijeljeno na **K6a (blokovi)** + **K6b (sekcije)** radi pacinga i jer je section-drag složeniji (reorderCategories + full-key merge). K6a = self-contained u block-editoru.
 **K6a ✅ (`2c6b6d4`; F5/D4 = VANILLA pointer-drag; NULA promjene sheme/ops/publish-RPC/rendera-granice):**

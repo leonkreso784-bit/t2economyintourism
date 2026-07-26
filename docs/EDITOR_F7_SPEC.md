@@ -138,7 +138,7 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
 5. **K5 ✅ (2026-07-26) — ＋ afordancija** (F1): `be-adder` = puno-širinska accent-linija + prsten-＋ (fill na hover) umjesto malog kružića; `bigplus` flex + glow-ring. Čisti CSS. preflight EXIT 0 + add-flow provjeren + screenshot.
 6. **K6 — Drag kvadratića + blokova** (F5, D4): pointer-drag → `reorderCategories`/`reorderBlocks`. Podijeljeno na **K6a (blokovi) + K6b (sekcije)**.
    - **K6a ✅ (2026-07-26, `2c6b6d4`) — drag BLOKOVA:** grip ⠿ (`data-be-drag`) u `be-head` → `startBlockDrag` (vanilla `pointerdown`/document-`move`/`up`) → fixed drop-linija → `reorderBlocks` op → `draw()`. Helper `reorderedIds` (clamp). R-C: drag samo s ručke (caret naslova/teksta netaknut). unit 64/0 (+`reorderedIds`) · authed studio 15/15 uživo (pravi mouse-drag → prvi blok = zadnji u draftu).
-   - **K6b — drag SEKCIJA:** drag-ručka u `st-learn-cathead` → `reorderCategories {order}`; **full-key merge** (ne-learn kategorije ostaju na apsolutnim mjestima, permutira se samo skup vidljivih learn-cat); R-B: naziv/boja dijeljeni s karticama/kvizom → test da se render ne razbije.
+   - **K6b ✅ (2026-07-26, `df80713`) — drag SEKCIJA:** grip ⠿ (`data-st-catdrag`) u `st-learn-cathead` + `data-st-cat` na `.st-learn-cat`; `startCatDrag` = vanilla pointer-drag + **auto-scroll** uz rubove `stCanvas` (rAF-loop, sekcije su visoke) + fixed drop-linija. Na ispuštanju: **full-key merge** (`Object.keys(currentData())`, permutira SAMO vidljive learn-cat → ne-learn kat.+meta na apsolutnim mjestima) → `reorderCategories` op → `renderCanvas()`. R-B: naziv/boja dijele kartice/kviz/fill → poštuju novi redoslijed. authed studio 16/16 uživo (mouse-drag+auto-scroll → sekcija niže u `Object.keys(working)`).
 > F6 (text-boja) i F8 (lista) su zasebne stavke NAKON kvadratića; F2 (upload) = U8.7.
 
 ## 7. Rizici + mitigacije
@@ -161,4 +161,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1–K5 + K6a ✅ ISPORUČENI (2026-07-26) → SLIJEDI K6b (drag SEKCIJA, `reorderCategories`) = ZADNJI dio F7.**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **🎉 F7 KVADRATIĆ-MODEL KOMPLETAN — K1–K6 ✅ ISPORUČENI (2026-07-26).** SLIJEDI: U8.6b/c vizual → U8.7 upload (F2) → U8.8 chart; F6 (text-boja)/F8 (lista) su zasebne stavke kasnije.
