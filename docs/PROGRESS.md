@@ -5,6 +5,14 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-e (OPUS) — F7 K5 ✅: ＋ afordancija (elegantna puno-širinska hover-linija, F1)
+**Kontekst:** Leon „fantastično" + „možeš još jednu ciglu ili treba compact?" → procjena: memorija sinkana nakon svake cigle (compact siguran bilo kad), K5 mala → K5 sad, compact prije K6 (drag=najveća).
+**K5 ✅ (čisti CSS, `css/block-editor.css`; NULA promjene sheme/ops/rendera/JS) = feedback F1 („＋ je mršav i ružan"):**
+- **inter-blok ＋** (`.be-adder`): puno-širinska accent-linija (indigo→ljubičasti gradijent preko **cijele** širine, ne 10–90%) + **prsten-＋** (outline koji se PUNI gradijentom na hover) umjesto malog solid kružića; progresivni reveal na `.be-root:hover` očuvan + `focus-within` (a11y).
+- **bigplus** (primarna add-afordancija na dnu): flex-centriran + suptilni **glow-ring** na hover.
+**Dokazi:** preflight **EXIT 0** (unit 58/0) · temp authed provjera (bigplus→menu→+blok = 2 bloka → add-flow radi s novim CSS-om) · screenshot (puno-širinska linija+prsten-＋; bigplus hover-glow). build:css bundle + bump 104.
+**SLIJEDI:** K6 (drag-and-drop blokova + sekcija, F5/D4 vanilla pointer-drag) = ZADNJA F7 cigla — **preporuka: compact prije K6** (najveća, nova pointer-drag logika, zaslužuje svjež kontekst).
+
 ## 2026-07-26-d (OPUS) — F7 K4 ✅: boja CIJELE kartice (suptilni --st-acc tint, F4/D5)
 **Kontekst:** Leon „super nastavi" → K4 iz `EDITOR_F7_SPEC.md §6` = feedback **F4** („kad se bira boja, cijeli blok mora biti obojan kao i kartice").
 **K4 ✅ (čisti CSS, `css/studio.css`; NULA promjene sheme/ops/rendera/JS):** boja sekcije više ne boji samo tanku traku/rub — **CIJELA kartica dobiva suptilni (12%) wash** u boji sekcije. Jedno **dijeljeno pravilo** za svih 6 Studio-površina (`st-learn-cat`/`st-kv`/`st-fcard`/`st-qz`/`st-fill`/`st-edit-item`): `--st-wash: color-mix(in srgb, var(--st-acc,transparent) 12%, transparent)` kao **GORNJI** background-layer preko dark-kartice, **ISPOD sadržaja** → tekst netaknut (WCAG na tamnoj temi). Postojeće accent-trake/rubovi (`::before`/`border-left/top`) ostaju kao „rub/glow" (D5). Bez boje → wash=transparent → neutralna tamna kartica. `color-mix` = Baseline (već korišten u `browse.css`/`landing.css`).

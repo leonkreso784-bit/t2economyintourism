@@ -135,7 +135,7 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
    unit 58/0 (3 K3 testa) + authed 14/14 uživo (kontrole rade).
 4. **K4 ✅ (2026-07-26) — Boja cijelog bloka** (F4, D5): dijeljeno pravilo → `--st-wash: color-mix(--st-acc 12%, transparent)` kao gornji bg-layer
    na svih 6 Studio-kartica (learn/kv/fcard/qz/fill/edit-item), ispod sadržaja (tekst WCAG); accent-trake ostaju kao rub. authed 14/14 (U8.5f nasljeđivanje) + screenshot.
-5. **K5 — ＋ afordancija** (F1): `adder`/`bigplus` redizajn; screenshot-review.
+5. **K5 ✅ (2026-07-26) — ＋ afordancija** (F1): `be-adder` = puno-širinska accent-linija + prsten-＋ (fill na hover) umjesto malog kružića; `bigplus` flex + glow-ring. Čisti CSS. preflight EXIT 0 + add-flow provjeren + screenshot.
 6. **K6 — Drag kvadratića + blokova** (F5, D4): pointer-drag → `reorderCategories`/`reorderBlocks`; authed (drag→redoslijed u draftu).
 > F6 (text-boja) i F8 (lista) su zasebne stavke NAKON kvadratića; F2 (upload) = U8.7.
 
@@ -159,4 +159,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1–K4 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K5 (＋ afordancija, F1).**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1–K5 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K6 (drag, F5/D4) = ZADNJA F7 cigla.**
