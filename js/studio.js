@@ -444,7 +444,7 @@ const SokratStudio = (function () {
       out += '<div class="st-learn-cat" data-st-cat="' + esc(catId) + '"' + accStyle + '>' +
         '<div class="st-learn-cathead">' +
         '<button type="button" class="st-catdrag" data-st-catdrag="' + esc(catId) + '" ' +
-        'title="' + esc(t('studio.dragCat', 'Povuci za preslagivanje sekcije')) + '" aria-label="' + esc(t('studio.dragCat', 'Povuci sekciju')) + '">⠿</button>' +
+        'title="' + esc(t('studio.dragCat', 'Povuci za preslagivanje sekcije')) + '" aria-label="' + esc(t('studio.dragCat', 'Povuci sekciju')) + '"><i class="fas fa-grip-vertical"></i></button>' +
         '<span class="st-n">' + n + '</span>' +
         '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
         'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +

@@ -177,11 +177,12 @@
     const upDis = i <= 0 ? ' disabled' : '';
     const downDis = i >= total - 1 ? ' disabled' : '';
     // K3 (D2): tip-labela uklonjena (chrome stanjen) → tip ostaje kao `title` na broju (hover/a11y).
+    // Fix A: drag-ručka = UVIJEK vidljiva, u LIJEVOM žlijebu (Notion-stil); ↑↓✕ ostaju hover-only desno.
     return '<div class="be-block" data-be-block="' + esc(id) + '">' +
+      '<button type="button" class="be-grip" data-be-drag="' + esc(id) + '" title="Povuci za preslagivanje" aria-label="Povuci blok"><i class="fas fa-grip-vertical"></i></button>' +
       '<div class="be-head">' +
         '<span class="be-n" title="' + esc(label) + '">' + (i + 1) + '</span>' +
         '<span class="be-ctrls">' +
-          '<button type="button" class="be-btn be-drag" data-be-drag="' + esc(id) + '" title="Povuci za preslagivanje" aria-label="Povuci za preslagivanje">⠿</button>' +
           '<button type="button" class="be-btn" data-be-act="up" data-be-id="' + esc(id) + '"' + upDis + ' title="Pomakni gore" aria-label="Pomakni gore">↑</button>' +
           '<button type="button" class="be-btn" data-be-act="down" data-be-id="' + esc(id) + '"' + downDis + ' title="Pomakni dolje" aria-label="Pomakni dolje">↓</button>' +
           '<button type="button" class="be-btn be-del" data-be-act="remove" data-be-id="' + esc(id) + '" title="Ukloni blok" aria-label="Ukloni blok">✕</button>' +

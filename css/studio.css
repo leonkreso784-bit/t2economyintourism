@@ -200,8 +200,8 @@
 /* ── K6b (F7): drag-ručka sekcije ⠿ + drag-stanje + drop-linija (vanilla pointer-drag) ── */
 #editor-page .st-catdrag{
   flex-shrink:0; width:24px; height:26px; padding:0; border:none; background:transparent;
-  color:var(--text-muted); font-size:15px; letter-spacing:-1px; line-height:1;
-  cursor:grab; touch-action:none; border-radius:7px; opacity:.5; transition:.13s;
+  color:var(--text-muted); font-size:13px; line-height:1;
+  cursor:grab; touch-action:none; border-radius:7px; opacity:.55; transition:.13s;
 }
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }

@@ -225,10 +225,11 @@ test('reorderedIds: ista pozicija = nepromijenjeno', function () {
 test('reorderedIds: idx clamp preko duljine', function () {
   assert.deepStrictEqual(E._reorderedIds(['a', 'b', 'c'], 'a', 99), ['b', 'c', 'a']);
 });
-test('blockCard: drag-ručka ⠿ (data-be-drag) prisutna', function () {
+test('blockCard: drag-ručka (be-grip, data-be-drag) uvijek prisutna, lijevi žlijeb', function () {
   const h = E._blockCard({ id: 'bbb222', type: 'paragraph', text: 'x' }, 1, 3);
   assert.ok(h.indexOf('data-be-drag="bbb222"') !== -1, 'ručka nosi block id');
-  assert.ok(h.indexOf('be-drag') !== -1, 'be-drag klasa');
+  assert.ok(h.indexOf('be-grip') !== -1, 'be-grip klasa');
+  assert.ok(h.indexOf('fa-grip-vertical') !== -1, 'FA drag-ikona (jasan grab)');
 });
 test('ADD_TYPES: 8 tipova (4 tekst + slika + video + formula + tablica), svaki make() = valjan default-blok', function () {
   assert.strictEqual(E._addTypes.length, 8);

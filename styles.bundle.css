@@ -8510,16 +8510,28 @@ h4.lb-heading { font-size: 1.1rem; }
 }
 
 /* ── blok-kartica (kvadratić) ── */
-/* K3/D2: blokovi „teku kao tijelo" — tanak chrome (bez okvira/accent-trake/lifta/pop-a);
-   hover = blagi highlight (vidi se koji si blok) + otkrivene ↑↓✕ kontrole. */
+/* Fix A/C: blok = suptilna stalna kartica (vidi se granica) + LIJEVI žlijeb s uvijek-vidljivom
+   drag-ručkom; hover pojača granicu + otkrije ↑↓✕. Blokovi i dalje „teku" (tanak chrome). */
 .be-block {
   position: relative;
-  border: 1px solid transparent; border-radius: 12px;
-  padding: 6px 10px 9px 12px; transition: background .14s, border-color .14s;
+  border: 1px solid rgba(148, 163, 184, .09); border-radius: 12px;
+  background: rgba(148, 163, 184, .022);
+  padding: 6px 12px 9px 34px; transition: background .14s, border-color .14s;
 }
 .be-block:hover, .be-block:focus-within {
-  background: rgba(148, 163, 184, .05); border-color: rgba(148, 163, 184, .14);
+  background: rgba(148, 163, 184, .06); border-color: rgba(148, 163, 184, .2);
 }
+
+/* Fix A: drag-ručka ⣿ = UVIJEK vidljiva u lijevom žlijebu (Notion-stil), jasan „grab". */
+.be-grip {
+  position: absolute; left: 4px; top: 7px; width: 22px; height: 26px; padding: 0;
+  display: grid; place-items: center; background: transparent; border: none;
+  color: var(--text-muted); font-size: 12px; opacity: .4; border-radius: 6px;
+  cursor: grab; touch-action: none; transition: opacity .13s, background .13s, color .13s;
+}
+.be-block:hover .be-grip { opacity: .85; }
+.be-grip:hover { opacity: 1; color: #c7d2fe; background: rgba(148, 163, 184, .16); }
+.be-grip:active { cursor: grabbing; }
 
 @keyframes bePop { from { opacity: 0; transform: translateY(4px) scale(.99); } to { opacity: 1; transform: none; } }
 
@@ -8542,10 +8554,8 @@ h4.lb-heading { font-size: 1.1rem; }
 .be-btn[disabled] { opacity: .3; cursor: default; }
 .be-del:hover:not([disabled]) { color: #fff; border-color: var(--danger); background: var(--danger); }
 
-/* K6 (F5/D4): povuci-ručka ⠿ + drag-stanje + drop-linija (vanilla pointer-drag). */
-.be-drag { cursor: grab; touch-action: none; letter-spacing: -1px; font-size: 12px; }
-.be-drag:active { cursor: grabbing; }
-.be-block.be-dragging { opacity: .45; border-style: dashed; border-color: rgba(148, 163, 184, .35); }
+/* K6 (F5/D4): drag-stanje + drop-linija (vanilla pointer-drag). */
+.be-block.be-dragging { opacity: .4; border-style: dashed; border-color: rgba(129, 140, 248, .5); }
 .be-dropline {
   position: fixed; height: 3px; border-radius: 3px; pointer-events: none; z-index: 1450;
   background: var(--primary-light, #818cf8);
@@ -8966,8 +8976,8 @@ h4.lb-heading { font-size: 1.1rem; }
 /* ── K6b (F7): drag-ručka sekcije ⠿ + drag-stanje + drop-linija (vanilla pointer-drag) ── */
 #editor-page .st-catdrag{
   flex-shrink:0; width:24px; height:26px; padding:0; border:none; background:transparent;
-  color:var(--text-muted); font-size:15px; letter-spacing:-1px; line-height:1;
-  cursor:grab; touch-action:none; border-radius:7px; opacity:.5; transition:.13s;
+  color:var(--text-muted); font-size:13px; line-height:1;
+  cursor:grab; touch-action:none; border-radius:7px; opacity:.55; transition:.13s;
 }
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }
