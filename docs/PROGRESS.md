@@ -5,6 +5,15 @@ testirano, što slijedi.
 
 ---
 
+## 2026-07-26-f (OPUS) — F7 K6a ✅: drag-and-drop preslagivanje BLOKOVA (vanilla pointer-drag, ručka ⠿)
+**Kontekst:** post-compact; Leon „analiziraj sljedeći zadatak i baci se na posao". Sljedeće = **K6 = zadnja F7 cigla** (drag). Podijeljeno na **K6a (blokovi)** + **K6b (sekcije)** radi pacinga i jer je section-drag složeniji (reorderCategories + full-key merge). K6a = self-contained u block-editoru.
+**K6a ✅ (`2c6b6d4`; F5/D4 = VANILLA pointer-drag; NULA promjene sheme/ops/publish-RPC/rendera-granice):**
+- **`block-editor.js`:** grip ⠿ (`data-be-drag`) u `be-head` (prva kontrola u `.be-ctrls`, hover-reveal kao K3); `startBlockDrag` = `pointerdown` na ručki → `document`-level `pointermove/up` (self-cleaning listeneri) → fixed **drop-linija** (accent+glow) prati granicu → na ispuštanju izračun apsolutnog redoslijeda → **postojeći `reorderBlocks` op** → `draw()`. Čisti helper `reorderedIds(ids, draggedId, idx)` (clamp) izvezen kao `_reorderedIds`.
+- **`block-editor.css`:** `.be-drag` (grab + **`touch-action:none`** = ne otima touch-scroll), `.be-dragging` (dim/dashed), `.be-dropline` (fixed accent-linija + glow, z-1450).
+- **R-C mitigacija:** drag SAMO s ručke ⠿ → `contenteditable` naslov/tekst zadržava caret (pointerdown na tekstu ne pokreće drag).
+**Dokazi:** unit **64/0** (+6: `reorderedIds` 5 + grip-render 1) · **authed studio 15/15 UŽIVO** vs staging (novi K6 test: pravi `mouse.down→move→up` grip-ručke → bivši prvi blok postao **zadnji** u draftu, isti skup id-eva, `#stDraftChip.dirty` → Odbaci; staging DB nikad pisan) · preflight **EXIT 0** · build:css (29) + bump 104 · screenshot-review (grip+↑↓✕ na hover; dragging-dim).
+**SLIJEDI:** **K6b = drag SEKCIJA** (`reorderCategories`; drag-ručka u `st-learn-cathead`; full-key merge da ne-learn kategorije ostanu na mjestu; R-B: naslov/boja dijeljeni s karticama/kvizom) = **ZADNJI dio F7** → onda U8.6b/c vizual → U8.7 upload.
+
 ## 2026-07-26-e (OPUS) — F7 K5 ✅: ＋ afordancija (elegantna puno-širinska hover-linija, F1)
 **Kontekst:** Leon „fantastično" + „možeš još jednu ciglu ili treba compact?" → procjena: memorija sinkana nakon svake cigle (compact siguran bilo kad), K5 mala → K5 sad, compact prije K6 (drag=najveća).
 **K5 ✅ (čisti CSS, `css/block-editor.css`; NULA promjene sheme/ops/rendera/JS) = feedback F1 („＋ je mršav i ružan"):**

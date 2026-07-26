@@ -136,7 +136,9 @@ EDIT-MOD kvadratić (st-learn-cat POSTAJE kartica):
 4. **K4 ✅ (2026-07-26) — Boja cijelog bloka** (F4, D5): dijeljeno pravilo → `--st-wash: color-mix(--st-acc 12%, transparent)` kao gornji bg-layer
    na svih 6 Studio-kartica (learn/kv/fcard/qz/fill/edit-item), ispod sadržaja (tekst WCAG); accent-trake ostaju kao rub. authed 14/14 (U8.5f nasljeđivanje) + screenshot.
 5. **K5 ✅ (2026-07-26) — ＋ afordancija** (F1): `be-adder` = puno-širinska accent-linija + prsten-＋ (fill na hover) umjesto malog kružića; `bigplus` flex + glow-ring. Čisti CSS. preflight EXIT 0 + add-flow provjeren + screenshot.
-6. **K6 — Drag kvadratića + blokova** (F5, D4): pointer-drag → `reorderCategories`/`reorderBlocks`; authed (drag→redoslijed u draftu).
+6. **K6 — Drag kvadratića + blokova** (F5, D4): pointer-drag → `reorderCategories`/`reorderBlocks`. Podijeljeno na **K6a (blokovi) + K6b (sekcije)**.
+   - **K6a ✅ (2026-07-26, `2c6b6d4`) — drag BLOKOVA:** grip ⠿ (`data-be-drag`) u `be-head` → `startBlockDrag` (vanilla `pointerdown`/document-`move`/`up`) → fixed drop-linija → `reorderBlocks` op → `draw()`. Helper `reorderedIds` (clamp). R-C: drag samo s ručke (caret naslova/teksta netaknut). unit 64/0 (+`reorderedIds`) · authed studio 15/15 uživo (pravi mouse-drag → prvi blok = zadnji u draftu).
+   - **K6b — drag SEKCIJA:** drag-ručka u `st-learn-cathead` → `reorderCategories {order}`; **full-key merge** (ne-learn kategorije ostaju na apsolutnim mjestima, permutira se samo skup vidljivih learn-cat); R-B: naziv/boja dijeljeni s karticama/kvizom → test da se render ne razbije.
 > F6 (text-boja) i F8 (lista) su zasebne stavke NAKON kvadratića; F2 (upload) = U8.7.
 
 ## 7. Rizici + mitigacije
@@ -159,4 +161,4 @@ Kvadratić = numerirana kartica s uredljivim naslovom (=`cat.name`) + tijelom (b
 kartice + drag; view/edit isti vizualni jezik; svi authed/unit zeleni; Leon vizualno potvrdi. Tek onda F6/F8/F2.
 
 ---
-## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1–K5 ✅ ISPORUČENI (2026-07-26) → SLIJEDI K6 (drag, F5/D4) = ZADNJA F7 cigla.**
+## ✅ ODLUKE D1–D6 PRESUĐENE (§4.1, 2026-07-25). **K1–K5 + K6a ✅ ISPORUČENI (2026-07-26) → SLIJEDI K6b (drag SEKCIJA, `reorderCategories`) = ZADNJI dio F7.**
