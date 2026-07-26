@@ -1,0 +1,2010 @@
+{
+  "theories": {
+    "name": "Teorije i teoretičari poduzetništva",
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Tko je uveo pojam „entrepreneur\" (poduzetnik)?",
+        "answer": "Richard Cantillon — prvi koristi pojam „entrepreneur\" i daje prvu teoriju poduzetništva u ranoj tržišnoj ekonomici (djelo „Rasprava o naravi trgovine\").",
+        "explanation": "Cantillon = začetnik pojma poduzetnika."
+      },
+      {
+        "question": "Zašto se Joseph Schumpeter naziva „ocem poduzetništva\"?",
+        "answer": "Jer poduzetništvo definira kao smisao i akcije u izvođenju INOVACIJA i drugih dostignuća koja znače napredak gospodarskih subjekata.",
+        "explanation": "Schumpeter povezuje poduzetništvo s inovacijama."
+      },
+      {
+        "question": "Koga mnogi smatraju „ocem poduzetništva\" uz Schumpetera i kako on vidi poduzetnika?",
+        "answer": "Jean Baptiste Say — poduzetnika opisuje kao onoga „koji unosi pomutnju i nered\" (premješta resurse iz manje u produktivnija područja).",
+        "explanation": "Say je klasik teorije poduzetništva."
+      },
+      {
+        "question": "Koje su dvije osnovne škole proučavanja poduzetništva?",
+        "answer": "Klasična i suvremena. Klasična (Say, Schumpeter, Mises, Kirzner, Casson, Schultz, Baumol) i suvremena (Škorić, Birch, Zimmerer i Scarborough, Cunningham i Lischeron).",
+        "explanation": "Popis teoretičara → sekcija Uči."
+      },
+      {
+        "question": "Kojih je 6 suvremenih mikro pristupa (škola) poduzetništva?",
+        "answer": "Karizmatična, psihološka, klasična, menadžerska, voditeljska i unutarnje-poduzetnička škola.",
+        "explanation": "Značajke svake → sekcija Uči."
+      },
+      {
+        "question": "Kako Kirzner vidi poduzetnika?",
+        "answer": "Kao posebno budnog i pozornog pojedinca koji uvijek vreba na potencijalno vrijedne prilike (resurse) koje su ostali previdjeli.",
+        "explanation": "Naglasak na „budnosti\" (alertness)."
+      },
+      {
+        "question": "Kako se definira poduzetništvo (u turizmu i ugostiteljstvu)?",
+        "answer": "Sposobnost i resurs kreiranja i generiranja novog gospodarskog poduhvata u području turizma i ugostiteljstva, koji se verificira na turističkom tržištu.",
+        "explanation": "Poduzetništvo = temelj poduzeća."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Pojam „entrepreneur\" prvi koristi:",
+        "options": [
+          "Adam Smith",
+          "Richard Cantillon",
+          "Jean Baptiste Say",
+          "Joseph Schumpeter"
+        ],
+        "correct": 1,
+        "id": "7sfie8"
+      },
+      {
+        "question": "„Ocem poduzetništva\" naziva se, zbog povezivanja s inovacijama:",
+        "options": [
+          "Cantillon",
+          "Marshall",
+          "Schumpeter",
+          "Mises"
+        ],
+        "correct": 2,
+        "id": "noaryr"
+      },
+      {
+        "question": "Koja NIJE jedna od 6 suvremenih škola poduzetništva?",
+        "options": [
+          "karizmatična",
+          "psihološka",
+          "birokratska",
+          "menadžerska"
+        ],
+        "correct": 2,
+        "id": "0zmrlq"
+      },
+      {
+        "question": "Poduzetnika kao posebno „budnog\" koji vreba prilike definira:",
+        "options": [
+          "Kirzner",
+          "Baumol",
+          "Schultz",
+          "Casson"
+        ],
+        "correct": 0,
+        "id": "kxztkz"
+      },
+      {
+        "question": "Dvije osnovne škole proučavanja poduzetništva su:",
+        "options": [
+          "mikro i makro",
+          "klasična i suvremena",
+          "domaća i strana",
+          "teorijska i praktična"
+        ],
+        "correct": 1,
+        "id": "ibwttq"
+      },
+      {
+        "question": "Say poduzetnika opisuje kao onoga koji:",
+        "options": [
+          "optimizira postojeće resurse",
+          "unosi pomutnju i nered",
+          "izbjegava rizik",
+          "upravlja zalihama"
+        ],
+        "correct": 1,
+        "id": "151nf6"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Pojam „entrepreneur\" prvi koristi Richard _______.",
+        "answer": "Cantillon",
+        "hint": "rana tržišna ekonomika",
+        "id": "zbq47e"
+      },
+      {
+        "sentence": "_______ se naziva „ocem poduzetništva\" jer ga povezuje s inovacijama.",
+        "answer": "Schumpeter",
+        "hint": "Joseph A.",
+        "id": "7nqsf0"
+      },
+      {
+        "sentence": "Kirzner naglašava poduzetnikovu _______ — vrebanje na prilike koje su drugi previdjeli.",
+        "answer": "budnost",
+        "hint": "engl. alertness",
+        "id": "vyswsp"
+      },
+      {
+        "sentence": "Dvije osnovne škole proučavanja poduzetništva su klasična i _______.",
+        "answer": "suvremena",
+        "hint": "moderna",
+        "id": "byn0z7"
+      },
+      {
+        "sentence": "Karizmatična, psihološka, klasična, menadžerska, voditeljska i _______ su 6 škola poduzetništva.",
+        "answer": "unutarnje-poduzetnička",
+        "hint": "intrapreneurship",
+        "id": "ytc9w8"
+      }
+    ],
+    "learn": {
+      "title": "Teorije i teoretičari poduzetništva",
+      "content": "\n                <h3>Razvoj poduzetništva</h3>\n                <p>Poduzetništvo se kao djelatnost razvilo između 12. i 15. stoljeća (prvi tipovi poduzetnika: gusari, feudalci, trgovci, obrtnici). Počeci se vežu uz <strong>ugostiteljstvo</strong>. Proučava se kroz dvije osnovne škole: <strong>klasičnu</strong> i <strong>suvremenu</strong>.</p>\n\n                <h4>Klasične teorije</h4>\n                <ul>\n                    <li><strong>Jean Baptiste Say</strong> — mnogi ga smatraju ocem poduzetništva; poduzetnik „unosi pomutnju i nered\".</li>\n                    <li><strong>Joseph A. Schumpeter</strong> — poduzetništvo = smisao i akcije u izvođenju <strong>inovacija</strong>; „otac poduzetništva\".</li>\n                    <li><strong>Ludwig von Mises</strong> — svatko je sposoban za poduzetničke aktivnosti.</li>\n                    <li><strong>Israel Kirzner</strong> — poduzetnik je posebno <em>budan</em>, vreba na previđene prilike.</li>\n                    <li><strong>Mark Casson</strong> — poduzetnik specijaliziran za donošenje važnih odluka.</li>\n                    <li><strong>Theodore Schultz</strong> — sposoban uhvatiti se ukoštac s neravnotežom.</li>\n                    <li><strong>William Baumol</strong> — nije svako poduzetništvo usmjereno razvoju.</li>\n                </ul>\n\n                <h4>Suvremene teorije</h4>\n                <p>Škorić (skup aktivnosti osnivanja i upravljanja), Birch (poduzetnici kao „heroji\"), Zimmerer i Scarborough (profil poduzetnika), Cunningham i Lischeron (6 škola poduzetništva).</p>\n\n                <h4>Najvažniji teoretičari</h4>\n                <div class=\"formula-box\">\n                    Richard CANTILLON — prvi pojam „entrepreneur\"<br>\n                    Adam SMITH — razmatra poduzetničku aktivnost<br>\n                    Jean Baptiste SAY — „unosi pomutnju i nered\"<br>\n                    Alfred MARSHALL — poduzetništvo kao slobodna djelatnost<br>\n                    Joseph SCHUMPETER — „otac poduzetništva\" (inovacije)\n                </div>\n\n                <h4>Šest suvremenih škola (mikro pristupa)</h4>\n                <ul>\n                    <li><strong>Karizmatična</strong> — poduzetnici su iznimno sposobni, ambiciozni.</li>\n                    <li><strong>Psihološka</strong> — poduzetnici su „rođeni\", odlikuje ih sustav vrednota i sklonost riziku.</li>\n                    <li><strong>Klasična</strong> — poduzetnici su inovatori sposobni preuzeti rizik i odlučivati u neizvjesnosti.</li>\n                    <li><strong>Menadžerska</strong> — prepoznaju prilike i uz menadžersko znanje ih iskorištavaju.</li>\n                    <li><strong>Voditeljska</strong> — poduzetnik je vizionar, mentor i vođa.</li>\n                    <li><strong>Unutarnje-poduzetnička</strong> — poduzetničko ponašanje unutar postojećeg poduzeća.</li>\n                </ul>\n            ",
+      "id": "cx5h4c"
+    },
+    "id": "74kmvv"
+  },
+  "entrepreneur": {
+    "name": "Poduzetnik i poduzetništvo",
+    "icon": "fa-user-tie",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Tko je poduzetnik?",
+        "answer": "Osoba poduzetnog duha koja raspoloživim resursima, uz prijetnju rizika, poduzima poduzetničku aktivnost da stvori novi proizvod, uslugu ili ideju i ostvari dobit.",
+        "explanation": "Pojam uveo Richard Cantillon."
+      },
+      {
+        "question": "Koji su oblici poduzetništva u turizmu i ugostiteljstvu?",
+        "answer": "Individualno, kolektivno, interno i eksterno poduzetništvo.",
+        "explanation": "Objašnjenje svakog → sekcija Uči."
+      },
+      {
+        "question": "Što je individualno poduzetništvo?",
+        "answer": "Zasniva se na malim i srednjim poduzećima; u istoj osobi sjedinjuju se poduzetnička, upravljačka, vlasnička i menadžerska funkcija (npr. obiteljski hotel).",
+        "explanation": "Najčešće: obiteljski hotel/pansion; nositelj turističke ponude."
+      },
+      {
+        "question": "Interno vs eksterno poduzetništvo?",
+        "answer": "Interno — poduzetnička aktivnost UNUTAR poduzeća (nove usluge, odjeli, kvaliteta). Eksterno — najstariji oblik, vezan uz promjenjivu okolinu; poduzeće se prilagođava okolini.",
+        "explanation": "Interno obogaćuje poduzeće; eksterno reagira na okruženje."
+      },
+      {
+        "question": "Koje su faze životnog ciklusa poduzetništva?",
+        "answer": "Izgradnja, rast, diferencijacija, konsolidacija i likvidacija.",
+        "explanation": "Pet faza; svakoj odgovara tip poduzetnika."
+      },
+      {
+        "question": "Koji su tipovi poduzetnika (Pionir/Maher/Strateg/Trener)?",
+        "answer": "Pionir (1. faza) — osnivač, pun ideja, sklon riziku. Maher (2.) — organiziran, nije sklon riziku. Strateg (3.) — dalekovidan, spreman na rizik, spor. Trener (4.) — gradi odnose, nije sklon riziku.",
+        "explanation": "Tip poduzetnika prati fazu ciklusa."
+      },
+      {
+        "question": "Ključne razlike poduzetnika i menadžera?",
+        "answer": "Poduzetnik: koristi prilike, stvara vizije, mijenja resurse, promjenu vidi kao šansu. Menadžer: rješava probleme, optimizira postojeće resurse, promjenu vidi kao prijetnju.",
+        "explanation": "Poduzetnik ≠ menadžer."
+      },
+      {
+        "question": "Interni vs eksterni lokus kontrole (psihologija poduzetnika)?",
+        "answer": "Interni — vjeruju da sami upravljaju sudbinom i preuzimaju odgovornost (poduzetniji). Eksterni — vjeruju da ishode određuju vanjske sile (manje poduzetni).",
+        "explanation": "Dopuna iz EN kolegija; interni lokus veže se uz poduzetništvo."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Oblik u kojem se poduzetnička, vlasnička i menadžerska funkcija sjedinjuju u jednoj osobi je:",
+        "options": [
+          "kolektivno poduzetništvo",
+          "individualno poduzetništvo",
+          "interno poduzetništvo",
+          "korporacijsko poduzetništvo"
+        ],
+        "correct": 1,
+        "id": "mde3f8"
+      },
+      {
+        "question": "Poduzetnici s INTERNIM lokusom kontrole:",
+        "options": [
+          "krive okolnosti za ishode",
+          "vjeruju da sami upravljaju svojom sudbinom",
+          "izbjegavaju odgovornost",
+          "ne preuzimaju rizik"
+        ],
+        "correct": 1,
+        "id": "fal8t4"
+      },
+      {
+        "question": "Potreba za postignućem (nAch) uključuje sklonost:",
+        "options": [
+          "nultom riziku",
+          "umjerenom riziku",
+          "maksimalnom riziku",
+          "izbjegavanju ciljeva"
+        ],
+        "correct": 1,
+        "id": "1hzqx1"
+      },
+      {
+        "question": "Tip poduzetnika u 1. fazi (osnivač, sklon visokom riziku) je:",
+        "options": [
+          "Maher",
+          "Strateg",
+          "Pionir",
+          "Trener"
+        ],
+        "correct": 2,
+        "id": "1crqkr"
+      },
+      {
+        "question": "Najstariji oblik poduzetništva, vezan uz promjenjivu okolinu, je:",
+        "options": [
+          "interno",
+          "eksterno",
+          "individualno",
+          "kolektivno"
+        ],
+        "correct": 1,
+        "id": "hgib7h"
+      },
+      {
+        "question": "Koja tvrdnja opisuje PODUZETNIKA (a ne menadžera)?",
+        "options": [
+          "optimalno koristi postojeće resurse",
+          "promjenu vidi kao prijetnju",
+          "stvara nove vizije i mijenja resurse",
+          "orijentiran na rješavanje problema"
+        ],
+        "correct": 2,
+        "id": "is9zbk"
+      },
+      {
+        "question": "Koja NIJE faza životnog ciklusa poduzetništva?",
+        "options": [
+          "izgradnja",
+          "rast",
+          "privatizacija",
+          "likvidacija"
+        ],
+        "correct": 2,
+        "id": "t8mip0"
+      },
+      {
+        "question": "Tip poduzetnika „Trener\" javlja se u:",
+        "options": [
+          "1. fazi",
+          "2. fazi",
+          "3. fazi",
+          "4. fazi"
+        ],
+        "correct": 3,
+        "id": "5iabq6"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "U _______ poduzetništvu ista osoba objedinjuje vlasničku, upravljačku i menadžersku funkciju.",
+        "answer": "individualnom",
+        "hint": "obiteljski hotel",
+        "id": "r7wse8"
+      },
+      {
+        "sentence": "Tip poduzetnika u prvoj fazi, osnivač sklon riziku, zove se _______.",
+        "answer": "Pionir",
+        "hint": "začetnik",
+        "id": "dhwzf7"
+      },
+      {
+        "sentence": "_______ poduzetništvo odvija se unutar postojećeg poduzeća (nove usluge, odjeli).",
+        "answer": "Interno",
+        "hint": "unutar",
+        "id": "wh3ren"
+      },
+      {
+        "sentence": "Poduzetnik promjenu i neizvjesnost vidi kao _______, a menadžer kao prijetnju.",
+        "answer": "šansu",
+        "hint": "priliku",
+        "id": "kel9sx"
+      },
+      {
+        "sentence": "Peta faza životnog ciklusa poduzetništva je _______.",
+        "answer": "likvidacija",
+        "hint": "gašenje",
+        "id": "gcpuy6"
+      },
+      {
+        "sentence": "Poduzetnici s _______ lokusom kontrole vjeruju da sami upravljaju svojom sudbinom.",
+        "answer": "internim",
+        "hint": "unutarnji",
+        "id": "vcxatt"
+      }
+    ],
+    "learn": {
+      "title": "Poduzetnik i poduzetništvo",
+      "content": "\n                <h3>Poduzetnik</h3>\n                <p><strong>Poduzetnik</strong> je osoba poduzetnog duha koja raspoloživim resursima, uz prijetnju rizika, poduzima poduzetničku aktivnost kako bi stvorila novi program, uslugu ili ideju i ostvarila dobit. Pojam je uveo <strong>Richard Cantillon</strong>. U turizmu i ugostiteljstvu poduzetnik je vodeća osoba, autor inovacija usluga i kreator zadovoljstva gostiju.</p>\n\n                <h4>Oblici poduzetništva</h4>\n                <ul>\n                    <li><strong>Individualno</strong> — mala i srednja poduzeća; jedna osoba objedinjuje poduzetničku, upravljačku, vlasničku i menadžersku funkciju (obiteljski hotel/pansion); nositelj turističke ponude.</li>\n                    <li><strong>Kolektivno</strong> — velika turističko-ugostiteljska poduzeća; struktura kapitala = društva kapitala; neprimjereno za inovacije, teža prilagodba.</li>\n                    <li><strong>Interno</strong> — poduzetnička aktivnost unutar poduzeća (nove usluge, odjeli, kvaliteta); obogaćuje poduzeće; počiva na motiviranju djelatnika.</li>\n                    <li><strong>Eksterno</strong> — najstariji oblik; vezan uz promjenjivu okolinu; poduzeće se prilagođava.</li>\n                </ul>\n\n                <h4>Životni ciklus i tipovi poduzetnika</h4>\n                <div class=\"formula-box\">\n                    FAZA 1 izgradnja → PIONIR (ideje, energija, visok rizik, brz)<br>\n                    FAZA 2 rast → MAHER (organiziran, ambiciozan, NIJE sklon riziku, brz)<br>\n                    FAZA 3 diferencijacija → STRATEG (dalekovidan, visok rizik, spor)<br>\n                    FAZA 4 konsolidacija → TRENER (gradi odnose, motivira, nizak rizik, spor)<br>\n                    FAZA 5 likvidacija\n                </div>\n\n                <h4>Poduzetnik ≠ menadžer</h4>\n                <table>\n                    <tr><th>Poduzetnik</th><th>Menadžer</th></tr>\n                    <tr><td>koristi mogućnosti</td><td>rješava probleme</td></tr>\n                    <tr><td>stvara nove vizije</td><td>eksploatira prošle uspjehe</td></tr>\n                    <tr><td>stvara i mijenja resurse</td><td>optimalno koristi postojeće</td></tr>\n                    <tr><td>promjenu vidi kao šansu</td><td>promjenu vidi kao prijetnju</td></tr>\n                </table>\n                <p>Društvene komponente poduzetništva: inovacije, rad, rizik, znanje, obrazovanje, procjena, predviđanje, planiranje, moral, motiv, etika i društvena odgovornost.</p>\n\n                <h4>Dopuna iz EN kolegija — psihologija poduzetnika</h4>\n                <ul>\n                    <li><strong>Lokus kontrole</strong>: <em>interni</em> — vjeruju da sami upravljaju svojom sudbinom i preuzimaju odgovornost (poduzetniji); <em>eksterni</em> — vjeruju da ishode određuju vanjske sile (manje poduzetni).</li>\n                    <li><strong>Potreba za postignućem (nAch)</strong> — psihološki nagon za izvrsnošću, postavljanjem izazovnih ciljeva, preuzimanjem odgovornosti i traženjem povratne informacije; sklonost <em>umjerenom</em> riziku. Snažno povezana s poduzetničkim uspjehom.</li>\n                    <li><strong>Lifestyle poduzetništvo</strong> — poslovi vođeni željenim načinom života, a ne maksimalnim rastom.</li>\n                    <li><strong>Mitovi</strong> — da su poduzetnici „rođeni\", da rade sami i da ih pokreće isključivo novac; u stvarnosti poduzetništvo se uči, timsko je i višemotivirano.</li>\n                </ul>\n            ",
+      "id": "kn8tnz"
+    },
+    "id": "18v7if"
+  },
+  "entrepMgmt": {
+    "name": "Poduzetnički menadžment u turizmu i ugostiteljstvu",
+    "icon": "fa-hotel",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što je poduzetnički menadžment?",
+        "answer": "Upravljanje tvrtkom i objektom temeljeno na stalnim inovacijama i usmjereno na ostvarivanje poslovnih ciljeva (Radišić); poduzetnik-vlasnik-menadžer u jednoj osobi.",
+        "explanation": "Spajanje poduzetničke i menadžerske funkcije (Drucker)."
+      },
+      {
+        "question": "Iz čega proizlaze specifičnosti poduzetničkog menadžmenta u turizmu?",
+        "answer": "Iz dvije ključne odrednice: sezonskih ograničenja poslovanja te naravi, funkcija i tehnologije usluga koje se pružaju.",
+        "explanation": "Sezonalnost + priroda usluge."
+      },
+      {
+        "question": "Što znači „uno-actu\" princip i nematerijalnost usluge?",
+        "answer": "Nematerijalnost — usluga (npr. noćenje) ne može se uskladištiti. Uno-actu — usluga se pruža i istodobno konzumira od strane gosta.",
+        "explanation": "Zato neiskorišten krevet „propada\"."
+      },
+      {
+        "question": "Navedi nekoliko specifičnosti turističko-ugostiteljske usluge.",
+        "answer": "Nematerijalnost, uno-actu princip, integracija vanjskih čimbenika (gost mora doći), potrošnja na mjestu, paket usluga, prolaznost i vremenska vezanost.",
+        "explanation": "Puni popis → sekcija Uči."
+      },
+      {
+        "question": "Kako Megginson vidi značaj malih poduzeća?",
+        "answer": "Broj malih poduzeća naglo raste, pružaju mogućnost zapošljavanja novih djelatnika i uživaju opći ugled u društvu.",
+        "explanation": "Middleton dodaje: pojačavaju jedinstvenost destinacije, nose osobnost i originalnost."
+      },
+      {
+        "question": "Prednosti i nedostaci poduzetničkog menadžmenta u turizmu?",
+        "answer": "Prednosti: neovisnost, tržišna prilagodljivost, financijski uspjeh, sigurnost posla, obiteljsko zapošljavanje. Nedostaci: porast odgovornosti, mogućnost propasti, financijska slabost.",
+        "explanation": "Balans slobode i rizika; nedostatak je i ovisnost o konkurenciji."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Specifičnosti poduzetničkog menadžmenta u turizmu proizlaze iz sezonalnosti i:",
+        "options": [
+          "veličine poduzeća",
+          "naravi i tehnologije usluga",
+          "broja zaposlenih",
+          "lokacije"
+        ],
+        "correct": 1,
+        "id": "mmnzbs"
+      },
+      {
+        "question": "Da se usluga pruža i istodobno konzumira opisuje:",
+        "options": [
+          "nematerijalnost",
+          "uno-actu princip",
+          "prolaznost",
+          "paket usluga"
+        ],
+        "correct": 1,
+        "id": "98cegu"
+      },
+      {
+        "question": "Da neiskorišten krevet „propada\" posljedica je obilježja:",
+        "options": [
+          "prolaznosti (i nematerijalnosti)",
+          "paketa usluga",
+          "komfornosti",
+          "integracije čimbenika"
+        ],
+        "correct": 0,
+        "id": "uo19n9"
+      },
+      {
+        "question": "Koja NIJE prednost poduzetničkog menadžmenta u turizmu?",
+        "options": [
+          "neovisnost",
+          "tržišna prilagodljivost",
+          "ovisnost o konkurenciji",
+          "sigurnost posla"
+        ],
+        "correct": 2,
+        "id": "34ev0z"
+      },
+      {
+        "question": "Značaj malih poduzeća (nagli rast broja, zapošljavanje, ugled) ističe:",
+        "options": [
+          "Middleton",
+          "Megginson",
+          "Drucker",
+          "Radišić"
+        ],
+        "correct": 1,
+        "id": "ebble6"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Da se usluga pruža i odmah konzumira opisuje _______ princip.",
+        "answer": "uno-actu",
+        "hint": "istodobno",
+        "id": "dtqn6a"
+      },
+      {
+        "sentence": "Zbog _______ usluge (npr. noćenja) neiskorišten krevet trajno „propada\".",
+        "answer": "nematerijalnosti",
+        "hint": "ne može se uskladištiti",
+        "id": "xxkj73"
+      },
+      {
+        "sentence": "Specifičnosti proizlaze iz sezonskih ograničenja i _______ usluga.",
+        "answer": "naravi",
+        "hint": "priroda i tehnologija",
+        "id": "q00b0v"
+      },
+      {
+        "sentence": "Značaj malih poduzeća kroz nagli rast broja i zapošljavanje ističe _______.",
+        "answer": "Megginson",
+        "hint": "autor",
+        "id": "xqos9v"
+      },
+      {
+        "sentence": "Poduzetnički menadžment temelji se na stalnim _______ i ostvarivanju poslovnih ciljeva.",
+        "answer": "inovacijama",
+        "hint": "novine",
+        "id": "sq31gz"
+      }
+    ],
+    "learn": {
+      "title": "Poduzetnički menadžment u turizmu i ugostiteljstvu",
+      "content": "\n                <h3>Pojam</h3>\n                <p><strong>Poduzetnički menadžment</strong> (Radišić) je upravljanje tvrtkom i objektom temeljeno na stalnim inovacijama i usmjereno na poslovne ciljeve. <strong>Drucker</strong> je pojam uočio u spajanju poduzetničke i menadžerske funkcije. Riječ je o osobi u kojoj se utjelovljuje <strong>poduzetnik-vlasnik-menadžer</strong>; rastom poduzeća te se funkcije razdvajaju.</p>\n\n                <h4>Specifičnosti turističko-ugostiteljske usluge</h4>\n                <p>Proizlaze iz <strong>sezonskih ograničenja</strong> te <strong>naravi i tehnologije usluga</strong>:</p>\n                <ul>\n                    <li><strong>Nematerijalnost</strong> — usluga (noćenje) ne može se uskladištiti.</li>\n                    <li><strong>Uno-actu princip</strong> — usluga se pruža i istodobno konzumira.</li>\n                    <li><strong>Integracija vanjskih čimbenika</strong> — gost mora doći na mjesto pružanja.</li>\n                    <li><strong>Potrošnja na mjestu</strong> pružanja usluge.</li>\n                    <li><strong>Paket usluga</strong> — putovanje, noćenje, prehrana, izleti.</li>\n                    <li><strong>Prolaznost</strong> — ponuda je prostorno i vremenski ograničena (neiskorišten krevet propada).</li>\n                    <li><strong>Vremenska vezanost</strong> — usluge se pružaju u točno određeno vrijeme.</li>\n                </ul>\n\n                <h4>Značaj malih poduzeća</h4>\n                <ul>\n                    <li><strong>Megginson</strong> — broj malih poduzeća naglo raste, pružaju zapošljavanje, uživaju ugled.</li>\n                    <li><strong>Middleton</strong> — pojačavaju jedinstvenost destinacije, nose osobnost i originalnost, vodeći su u pružanju najboljeg.</li>\n                </ul>\n\n                <h4>Prednosti i nedostaci</h4>\n                <div class=\"formula-box\">\n                    PREDNOSTI: neovisnost · tržišna prilagodljivost · financijski uspjeh · sigurnost posla · obiteljsko zapošljavanje · izazov<br>\n                    NEDOSTACI: porast odgovornosti · mogućnost propasti · fluktuacije tržišta · ovisnost o konkurenciji · financijska slabost\n                </div>\n                <p>Trend razvoja: približiti se gostima, poticati poduzetnički duh i osigurati adekvatnu naobrazbu kadrova.</p>\n            ",
+      "id": "imq85j"
+    },
+    "id": "qatne4"
+  },
+  "functions": {
+    "name": "Funkcije poduzetništva",
+    "icon": "fa-sitemap",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Koje su četiri najvažnije funkcije poduzetništva?",
+        "answer": "Strateška i planska, organizacijska, upravljačka te kontrolna funkcija. U malim poduzećima sve ih provodi jedna osoba — poduzetnik.",
+        "explanation": "Grupe poslovnih zadataka i aktivnosti."
+      },
+      {
+        "question": "Što obuhvaća strateška i planska funkcija?",
+        "answer": "Definiranje strategije razvoja malog poduzeća i izgradnju strateškog poslovnog plana; jača tržišnu poziciju i konkurentsku prednost.",
+        "explanation": "Strategija = plan akcija za ostvarenje vizije i ciljeva."
+      },
+      {
+        "question": "Kako se dijele planovi prema vremenu?",
+        "answer": "Dugoročni (dulje od 5 god.), srednjoročni (1–5 god.), kratkoročni (jedna poslovna godina) i tekući (dan, tjedan, mjesec, tromjesečje).",
+        "explanation": "Prema strategiji: strateški, taktički, operativni."
+      },
+      {
+        "question": "Što obuhvaća organizacijska funkcija?",
+        "answer": "Postavljanje organizacijske strukture poduzeća i veza među zaposlenima. Organizacijska shema = grafički prikaz strukture.",
+        "explanation": "Determinante: funkcija, proizvodi, teritorij, potrošači, procesi."
+      },
+      {
+        "question": "Što obuhvaća upravljačka funkcija i zašto je posebna?",
+        "answer": "Upravljanje ograničenim resursima i njihovu transformaciju u proizvode/usluge. Posebna je jer je TRAJNA zadaća poduzetnika. Aktivnosti: motiviranje, vođenje, kadrovska politika, komuniciranje.",
+        "explanation": "Trajna, za razliku od ostalih funkcija."
+      },
+      {
+        "question": "Koja tri stila vođenja koristi poduzetnik?",
+        "answer": "Autokratski (centraliziran, sva moć u jednim rukama), demokratski (participacija podređenih) i laissez-faire (vođa izbjegava autoritet).",
+        "explanation": "Vrste moći: legitimna, ekspertna, referentna."
+      },
+      {
+        "question": "Što je kontrolna funkcija poduzetništva?",
+        "answer": "Mjerenje i procjena djelovanja svih funkcija u skladu s planom, radi efikasnosti i efektivnosti. Naziva se i završnom funkcijom.",
+        "explanation": "Razine: operacijska, organizacijska, strateška."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koja funkcija poduzetništva je TRAJNA zadaća poduzetnika?",
+        "options": [
+          "planska",
+          "organizacijska",
+          "upravljačka",
+          "kontrolna"
+        ],
+        "correct": 2,
+        "id": "n2lfdj"
+      },
+      {
+        "question": "Plan koji pokriva razdoblje dulje od 5 godina je:",
+        "options": [
+          "kratkoročni",
+          "srednjoročni",
+          "dugoročni",
+          "tekući"
+        ],
+        "correct": 2,
+        "id": "fthw6q"
+      },
+      {
+        "question": "Stil vođenja u kojem vođa izbjegava autoritet i prepušta zaposlenicima je:",
+        "options": [
+          "autokratski",
+          "demokratski",
+          "laissez-faire",
+          "birokratski"
+        ],
+        "correct": 2,
+        "id": "49fnu6"
+      },
+      {
+        "question": "Kontrolna funkcija naziva se i:",
+        "options": [
+          "početnom funkcijom",
+          "završnom funkcijom",
+          "glavnom funkcijom",
+          "pomoćnom funkcijom"
+        ],
+        "correct": 1,
+        "id": "5rov8r"
+      },
+      {
+        "question": "Koja NIJE jedna od četiri funkcije poduzetništva?",
+        "options": [
+          "strateška i planska",
+          "organizacijska",
+          "marketinška",
+          "kontrolna"
+        ],
+        "correct": 2,
+        "id": "nfs9p5"
+      },
+      {
+        "question": "Moć koja se temelji na znanju i vještinama vođe je:",
+        "options": [
+          "legitimna moć",
+          "ekspertna moć",
+          "referentna moć",
+          "moć prisile"
+        ],
+        "correct": 1,
+        "id": "u7k9si"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ funkcija je trajna zadaća poduzetnika (upravljanje resursima).",
+        "answer": "Upravljačka",
+        "hint": "management",
+        "id": "w7ow9q"
+      },
+      {
+        "sentence": "Kontrolna funkcija naziva se i _______ funkcijom.",
+        "answer": "završnom",
+        "hint": "zadnja u nizu",
+        "id": "o073xw"
+      },
+      {
+        "sentence": "Stil vođenja u kojem vođa prepušta zaposlenicima izbor zadataka je _______.",
+        "answer": "laissez-faire",
+        "hint": "francuski izraz",
+        "id": "0lgkfe"
+      },
+      {
+        "sentence": "Dugoročni planovi pokrivaju razdoblje dulje od _______ godina.",
+        "answer": "pet",
+        "hint": "broj",
+        "id": "y7w7yw"
+      },
+      {
+        "sentence": "Grafički prikaz organizacijske strukture je organizacijska _______.",
+        "answer": "shema",
+        "hint": "dijagram",
+        "id": "iazfci"
+      }
+    ],
+    "learn": {
+      "title": "Funkcije poduzetništva",
+      "content": "\n                <h3>Četiri funkcije</h3>\n                <p>Funkcije poduzetništva su grupe poslovnih zadataka i aktivnosti; u malim poduzećima sve ih provodi jedna osoba — poduzetnik.</p>\n                <div class=\"formula-box\">\n                    1) STRATEŠKA I PLANSKA · 2) ORGANIZACIJSKA · 3) UPRAVLJAČKA · 4) KONTROLNA\n                </div>\n\n                <h4>1. Strateška i planska</h4>\n                <p>Definira strategiju razvoja i gradi strateški poslovni plan; jača tržišnu poziciju. <strong>Strategija</strong> = plan akcija za viziju, misiju i ciljeve. Planiranje: pokretačko (start-up) i tekuće (on-going). Planovi po vremenu: <strong>dugoročni</strong> (&gt;5 g.), <strong>srednjoročni</strong> (1–5 g.), <strong>kratkoročni</strong> (1 g.), <strong>tekući</strong>. Po strategiji: strateški, taktički, operativni.</p>\n\n                <h4>2. Organizacijska</h4>\n                <p>Postavljanje organizacijske strukture i veza među zaposlenima (organizacijska shema = grafički prikaz). Determinante strukture: funkcija poduzeća, proizvodi, teritorij, potrošači, proizvodni procesi.</p>\n\n                <h4>3. Upravljačka (trajna zadaća)</h4>\n                <p>Upravljanje ograničenim resursima i njihova transformacija u proizvode/usluge. Aktivnosti: <strong>motiviranje, vođenje, kadrovska politika, poslovno komuniciranje</strong>.</p>\n                <ul>\n                    <li><strong>Vrste moći</strong>: legitimna (pozicijska), ekspertna (znanje), referentna (osobne karakteristike).</li>\n                    <li><strong>Stilovi vođenja</strong>: autokratski, demokratski, laissez-faire.</li>\n                    <li><strong>Kadrovska politika</strong>: planiranje, selekcija, procjena, edukacija, rješavanje problema.</li>\n                </ul>\n\n                <h4>4. Kontrolna (završna)</h4>\n                <p>Mjeri i procjenjuje djelovanje svih funkcija radi efikasnosti i efektivnosti. Razine: operacijska, organizacijska, strateška. Prema objektu: kontrola inputa (unaprijed), izvođenja (usporedna), outputa (unatrag). Učinkovita kontrola: standardi → mjerenje → komparacija → procjena i odluka.</p>\n            ",
+      "id": "gj5k5o"
+    },
+    "id": "hey32e"
+  },
+  "formsTypes": {
+    "name": "Vrste i oblici poduzetništva",
+    "icon": "fa-shapes",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Koje su tri vrste poduzetništva u turizmu i ugostiteljstvu?",
+        "answer": "Tradicionalno, korporacijsko i socijalno poduzetništvo.",
+        "explanation": "Uz njih: međunarodno, seosko i strateško poduzetništvo."
+      },
+      {
+        "question": "Što je tradicionalno poduzetništvo i koji su oblici obiteljskih poduzeća?",
+        "answer": "Klasično poduzetništvo (često obiteljska poduzeća). Oblici: aktivna obiteljska, s odsutnošću vlasnika te latentna (pritajena) obiteljska poduzeća.",
+        "explanation": "Objašnjenje svakog → sekcija Uči."
+      },
+      {
+        "question": "Što je aktivno obiteljsko poduzeće?",
+        "answer": "Ugostiteljsko poduzeće s osobnim nadzorom članova obitelji, vlasništvom u rukama obitelji i članovima obitelji kao zaposlenicima.",
+        "explanation": "Obitelj vlasnik + upravlja + radi."
+      },
+      {
+        "question": "Što je korporacijsko poduzetništvo?",
+        "answer": "Poduzetništvo unutar velikih korporacija — poticanje inovativnosti i poduzetničkog ponašanja u okviru velikog poduzeća.",
+        "explanation": "Suprotno maloj obiteljskoj tvrtki."
+      },
+      {
+        "question": "Što je socijalno (društveno) poduzetništvo?",
+        "answer": "Poduzetništvo usmjereno na društvene ciljeve — obrazovanje, kultura, zdravstvo, sport — a ne samo na profit.",
+        "explanation": "Stvara društvenu vrijednost."
+      },
+      {
+        "question": "Što je strateško poduzetništvo?",
+        "answer": "Stvaranje inovativne ekonomske organizacije (ili mreže) radi dobitka i rasta pod rizikom; povezuje poduzetničke i strateške aktivnosti za dugoročnu održivu uspješnost.",
+        "explanation": "Spoj poduzetništva i strategije."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Koje NIJE jedna od tri osnovne vrste poduzetništva?",
+        "options": [
+          "tradicionalno",
+          "korporacijsko",
+          "birokratsko",
+          "socijalno"
+        ],
+        "correct": 2,
+        "id": "g5esis"
+      },
+      {
+        "question": "Obiteljsko poduzeće u kojem obitelj posjeduje, upravlja i radi je:",
+        "options": [
+          "latentno obiteljsko",
+          "s odsutnošću vlasnika",
+          "aktivno obiteljsko",
+          "korporacijsko"
+        ],
+        "correct": 2,
+        "id": "outoi0"
+      },
+      {
+        "question": "Poduzetništvo usmjereno na obrazovanje, kulturu i zdravstvo je:",
+        "options": [
+          "tradicionalno",
+          "socijalno",
+          "korporacijsko",
+          "strateško"
+        ],
+        "correct": 1,
+        "id": "tluut1"
+      },
+      {
+        "question": "Poduzetništvo unutar velikih korporacija naziva se:",
+        "options": [
+          "individualno",
+          "korporacijsko",
+          "seosko",
+          "tradicionalno"
+        ],
+        "correct": 1,
+        "id": "ydc7dc"
+      },
+      {
+        "question": "Povezivanje poduzetničkih i strateških aktivnosti za dugoročnu uspješnost je:",
+        "options": [
+          "socijalno poduzetništvo",
+          "strateško poduzetništvo",
+          "tradicionalno poduzetništvo",
+          "međunarodno poduzetništvo"
+        ],
+        "correct": 1,
+        "id": "rq1qnj"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Tri osnovne vrste poduzetništva su tradicionalno, korporacijsko i _______.",
+        "answer": "socijalno",
+        "hint": "društveno",
+        "id": "jgu8zf"
+      },
+      {
+        "sentence": "_______ obiteljsko poduzeće ima samo jednog člana obitelji uključenog u poslovanje.",
+        "answer": "Latentno",
+        "hint": "pritajeno",
+        "id": "zuttz9"
+      },
+      {
+        "sentence": "_______ poduzetništvo odvija se unutar velikih korporacija.",
+        "answer": "Korporacijsko",
+        "hint": "velike tvrtke",
+        "id": "wy7910"
+      },
+      {
+        "sentence": "_______ poduzetništvo povezuje poduzetničke i strateške aktivnosti radi dugoročne uspješnosti.",
+        "answer": "Strateško",
+        "hint": "strategija",
+        "id": "5p1rdf"
+      },
+      {
+        "sentence": "Socijalno poduzetništvo usmjereno je na obrazovanje, kulturu, zdravstvo i _______.",
+        "answer": "sport",
+        "hint": "tjelesna aktivnost",
+        "id": "6g36xa"
+      }
+    ],
+    "learn": {
+      "title": "Vrste i oblici poduzetništva",
+      "content": "\n                <h3>Tri osnovne vrste</h3>\n                <div class=\"formula-box\">\n                    1) TRADICIONALNO · 2) KORPORACIJSKO · 3) SOCIJALNO\n                </div>\n\n                <h4>1. Tradicionalno poduzetništvo</h4>\n                <p>Klasično poduzetništvo, često u obliku obiteljskih poduzeća:</p>\n                <ul>\n                    <li><strong>Aktivna obiteljska</strong> — osobni nadzor obitelji, vlasništvo obitelji, članovi obitelji su zaposlenici.</li>\n                    <li><strong>S odsutnošću vlasnika</strong> — u vlasništvu i pod kontrolom obitelji koja NIJE zaposlena; posao vode drugi u ime obitelji.</li>\n                    <li><strong>Latentna (pritajena)</strong> — samo jedan član obitelji (vlasnik/nasljednik) uključen u poslovanje.</li>\n                </ul>\n\n                <h4>2. Korporacijsko poduzetništvo</h4>\n                <p>Poticanje inovativnosti i poduzetničkog ponašanja unutar velikih korporacija.</p>\n\n                <h4>3. Socijalno poduzetništvo</h4>\n                <p>Usmjereno na društvene ciljeve — obrazovanje, kultura, zdravstvo, sport — a ne samo na profit; stvara društvenu vrijednost.</p>\n\n                <h4>Ostali oblici</h4>\n                <ul>\n                    <li><strong>Međunarodno</strong> — poduzetništvo na inozemnim tržištima.</li>\n                    <li><strong>Seosko</strong> — razvoj ruralnih područja kroz turizam.</li>\n                    <li><strong>Strateško</strong> — stvaranje inovativne organizacije (ili mreže) radi dobitka i rasta pod rizikom; spaja poduzetničke i strateške aktivnosti za dugoročnu održivu uspješnost i konkurentsku prednost.</li>\n                </ul>\n            ",
+      "id": "lv6zj0"
+    },
+    "id": "b2zf5f"
+  },
+  "legalIdea": {
+    "name": "Pravni oblici i poduzetnička ideja",
+    "icon": "fa-scale-balanced",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Koji su osnovni pravni oblici poslovanja poduzetnika?",
+        "answer": "Trgovačka društva, obrt (obrtnik) i trgovac pojedinac. Izbor ovisi o djelatnosti, broju zaposlenih, financijama i poreznom sustavu.",
+        "explanation": "Pojam „poduzeće\" zamijenjen je „trgovačkim društvom\"."
+      },
+      {
+        "question": "Kako se dijele trgovačka društva?",
+        "answer": "Na društva OSOBA (javno trgovačko, komanditno, gospodarsko interesno udruženje) i društva KAPITALA (dioničko društvo, društvo s ograničenom odgovornošću).",
+        "explanation": "Ključna podjela ZTD-a."
+      },
+      {
+        "question": "Što je obrt, a što obrtnik?",
+        "answer": "Obrt — samostalno i trajno obavljanje gospodarske djelatnosti fizičke osobe radi dobiti. Obrtnik — fizička osoba koja obrt obavlja u svoje ime i za svoj račun.",
+        "explanation": "Vrste obrta: slobodni, vezani, povlašteni."
+      },
+      {
+        "question": "Prednosti i nedostaci obrta?",
+        "answer": "Prednosti: jednostavno otvaranje/zatvaranje, brzo odlučivanje, relativna tajnost. Nedostaci: NEOGRANIČENA odgovornost (rizik osobne imovine), ograničeni izvori financiranja, nedostatak kontinuiteta.",
+        "explanation": "Obrtnik odgovara cjelokupnom imovinom."
+      },
+      {
+        "question": "Kako se poduzeća dijele prema veličini?",
+        "answer": "Na mikro, mala, srednja i velika. Kriteriji: iznos ukupne aktive, iznos prihoda i prosječan broj zaposlenih tijekom godine.",
+        "explanation": "Prema Zakonu o računovodstvu / poticanju malog gospodarstva."
+      },
+      {
+        "question": "Koje su metode generiranja poduzetničkih ideja?",
+        "answer": "Fokus grupe, brainstorming i problemska analiza. Izvori ideja: gosti, postojeći proizvodi, distribucijski kanali, odluke Vlade, istraživanje i razvoj.",
+        "explanation": "Poduzetnička ideja = zamisao o proizvodnji prema potrebama kupaca."
+      },
+      {
+        "question": "Kojim redom teče put od ideje do poduzetničke prakse?",
+        "answer": "Ideja → gruba poslovna skica → obrazovanje za poslovni plan → POSLOVNI PLAN → poslovni prostor → kapital → suradnici → tržište.",
+        "explanation": "Provjera: marketing, proizvodnja, nabava, zapošljavanje, ulaganje, godišnji plan."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Dioničko društvo i d.o.o. spadaju u:",
+        "options": [
+          "društva osoba",
+          "društva kapitala",
+          "obrte",
+          "trgovce pojedince"
+        ],
+        "correct": 1,
+        "id": "9os9k2"
+      },
+      {
+        "question": "Ključni nedostatak obrta je:",
+        "options": [
+          "spor postupak otvaranja",
+          "neograničena odgovornost (rizik osobne imovine)",
+          "obvezni veliki kapital",
+          "nemogućnost zapošljavanja"
+        ],
+        "correct": 1,
+        "id": "6e09tm"
+      },
+      {
+        "question": "Koja NIJE metoda generiranja poduzetničkih ideja?",
+        "options": [
+          "fokus grupe",
+          "brainstorming",
+          "problemska analiza",
+          "likvidacija"
+        ],
+        "correct": 3,
+        "id": "bnvjzp"
+      },
+      {
+        "question": "Prema veličini poduzeća se dijele na mikro, mala, srednja i:",
+        "options": [
+          "obiteljska",
+          "velika",
+          "globalna",
+          "javna"
+        ],
+        "correct": 1,
+        "id": "mlarlh"
+      },
+      {
+        "question": "Što u putu od ideje do prakse dolazi ODMAH prije „poslovnog prostora\"?",
+        "options": [
+          "kapital",
+          "poslovni plan",
+          "tržište",
+          "suradnici"
+        ],
+        "correct": 1,
+        "id": "5dsynl"
+      },
+      {
+        "question": "Javno trgovačko i komanditno društvo spadaju u:",
+        "options": [
+          "društva kapitala",
+          "društva osoba",
+          "obrte",
+          "zadruge"
+        ],
+        "correct": 1,
+        "id": "2vtk9t"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Trgovačka društva dijele se na društva osoba i društva _______.",
+        "answer": "kapitala",
+        "hint": "d.d. i d.o.o.",
+        "id": "m2aze7"
+      },
+      {
+        "sentence": "Ključni nedostatak obrta je _______ odgovornost obrtnika.",
+        "answer": "neograničena",
+        "hint": "cijelom imovinom",
+        "id": "0hhegq"
+      },
+      {
+        "sentence": "Grupna metoda za dobivanje novih ideja je _______.",
+        "answer": "brainstorming",
+        "hint": "oluja ideja",
+        "id": "d83thl"
+      },
+      {
+        "sentence": "Prema veličini poduzeća se dijele na mikro, mala, srednja i _______.",
+        "answer": "velika",
+        "hint": "najveća",
+        "id": "og1sdq"
+      },
+      {
+        "sentence": "U putu od ideje do prakse središnji dokument je _______ plan.",
+        "answer": "poslovni",
+        "hint": "business plan",
+        "id": "1mt8k7"
+      }
+    ],
+    "learn": {
+      "title": "Pravni oblici i poduzetnička ideja",
+      "content": "\n                <h3>Pravni i porezni oblici poslovanja</h3>\n                <p>Pravni oblik ovisi o djelatnosti, broju zaposlenih, financijama i poreznom sustavu. Osnovni oblici: <strong>trgovačka društva</strong>, <strong>obrt</strong> i <strong>trgovac pojedinac</strong>. Pojam „poduzeće\" zamijenjen je izrazom „trgovačko društvo\".</p>\n\n                <h4>Trgovačka društva</h4>\n                <div class=\"formula-box\">\n                    DRUŠTVA OSOBA: javno trgovačko · komanditno · gospodarsko interesno udruženje<br>\n                    DRUŠTVA KAPITALA: dioničko društvo (d.d.) · društvo s ograničenom odgovornošću (d.o.o.)\n                </div>\n\n                <h4>Obrt</h4>\n                <p>Samostalno i trajno obavljanje gospodarske djelatnosti fizičke osobe (obrtnika) radi dobiti. Vrste: <strong>slobodni, vezani, povlašteni</strong>. Prednosti: jednostavno otvaranje/zatvaranje, brzo odlučivanje, relativna tajnost. Nedostaci: <strong>neograničena odgovornost</strong> (rizik osobne imovine), nedostatak kontinuiteta, ograničeni izvori financiranja.</p>\n                <p><em>Napomena: konkretne porezne stope i minimalni kapital iz starije skripte su se u međuvremenu mijenjali (uvođenje eura) — ovdje je naglasak na oblicima, ne na iznosima.</em></p>\n\n                <h4>Veličina poduzeća</h4>\n                <p>Mikro, mala, srednja i velika. Kriteriji: iznos ukupne aktive, iznos prihoda, prosječan broj zaposlenih. Obilježja malih poduzeća: nezavisno privatno vlasništvo, mali dio tržišta, niža razina profita, ograničen asortiman.</p>\n\n                <h3>Poduzetnička kreativnost i poslovna ideja</h3>\n                <p><strong>Poduzetnička ideja</strong> = zamisao o proizvodnji konkretnih proizvoda i usluga prema potrebama kupaca, radi dobiti. Izvori: gosti, postojeći proizvodi, distribucijski kanali, odluke Vlade, istraživanje i razvoj. Metode generiranja: <strong>fokus grupe, brainstorming, problemska analiza</strong> (te obrnuti brainstorming, brainwriting, Gordonova metoda...).</p>\n                <div class=\"formula-box\">\n                    IDEJA → gruba poslovna skica → obrazovanje za poslovni plan →<br>\n                    POSLOVNI PLAN → poslovni prostor → kapital → suradnici → tržište\n                </div>\n                <p>Provjera ideje kroz programe: marketinga (ima li kupaca?), tehničko-tehnološki (možemo li proizvoditi?), nabave (imamo li dobavljače?), zapošljavanja, ulaganja kapitala i godišnji plan (je li rentabilno?).</p>\n            ",
+      "id": "004i42"
+    },
+    "id": "hb83jo"
+  },
+  "businessPlan": {
+    "name": "Poslovno planiranje i poslovni plan",
+    "icon": "fa-clipboard-list",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Što je poslovno planiranje?",
+        "answer": "Svjesna akcija racionalne uporabe resursa, predviđanja budućih događaja i smanjivanja rizika gubitka vremena i sredstava; raspored aktivnosti prilagođen uvjetima u okruženju.",
+        "explanation": "Priprema za poduzetničke aktivnosti."
+      },
+      {
+        "question": "Što je poslovni plan?",
+        "answer": "Pisani dokument s obrazloženjem ulaganja u posao — ocjena očekivanih učinaka i varijantnih rješenja za rizične situacije, izrađen PRIJE poduzetnih aktivnosti.",
+        "explanation": "Vrijedi za novo ili dodatno ulaganje."
+      },
+      {
+        "question": "Kome služi i čemu poslovni plan?",
+        "answer": "Poduzetniku, investitorima, bankama, osiguravateljima i partnerima — za postavljanje ciljeva i usporedbu s ostvarenim rezultatima; dokazuje opravdanost pothvata.",
+        "explanation": "Alat planiranja i pregovaranja."
+      },
+      {
+        "question": "Koji je temeljni sadržaj poslovnog plana?",
+        "answer": "Sažetak, informacija o poduzetniku, analiza tržišta, tehničko-tehnološka analiza i organizacija, lokacijska analiza, financijska priprema te ocjena učinkovitosti i osjetljivosti.",
+        "explanation": "Standardna struktura elaborata."
+      },
+      {
+        "question": "Kojih 5 pitanja pokriva razvoj poslovnog plana?",
+        "answer": "ŠTO (struktura proizvoda/usluga), KADA (vrijeme izvedbe), KOLIKO (količina), KAKO (tehnološko-organizacijska izvedba) i GDJE (mjesto i prostor).",
+        "explanation": "Okvir za razradu pothvata."
+      },
+      {
+        "question": "Koje programe provjere prolazi poduzetnička ideja?",
+        "answer": "Program marketinga (ima li kupaca?), proizvodnje, nabave, zapošljavanja, ulaganja kapitala te godišnji plan poslovanja (je li rentabilno?).",
+        "explanation": "Redom, prije odluke DA."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Poslovni plan izrađuje se:",
+        "options": [
+          "nakon početka poslovanja",
+          "prije poduzetnih poslovnih aktivnosti",
+          "tek na kraju godine",
+          "samo za velika poduzeća"
+        ],
+        "correct": 1,
+        "id": "19qngn"
+      },
+      {
+        "question": "Pitanje „KOLIKO?\" u razvoju poslovnog plana odnosi se na:",
+        "options": [
+          "vrijeme izvedbe",
+          "količinu proizvoda i usluga",
+          "mjesto izvedbe",
+          "tehnološku izvedbu"
+        ],
+        "correct": 1,
+        "id": "gbqjc6"
+      },
+      {
+        "question": "Što NIJE dio temeljnog sadržaja poslovnog plana?",
+        "options": [
+          "analiza tržišta",
+          "financijska priprema",
+          "horoskop poduzetnika",
+          "lokacijska analiza"
+        ],
+        "correct": 2,
+        "id": "eo5g13"
+      },
+      {
+        "question": "Poslovno planiranje prvenstveno služi:",
+        "options": [
+          "povećanju rizika",
+          "racionalnoj uporabi resursa i smanjenju rizika",
+          "izbjegavanju poreza",
+          "zapošljavanju obitelji"
+        ],
+        "correct": 1,
+        "id": "jz7mlu"
+      },
+      {
+        "question": "Prvo pitanje/program u provjeri ideje je najčešće:",
+        "options": [
+          "program zapošljavanja",
+          "program marketinga (ima li kupaca?)",
+          "godišnji plan",
+          "program nabave"
+        ],
+        "correct": 1,
+        "id": "6nj5ac"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Poslovni plan izrađuje se _______ poduzetnih poslovnih aktivnosti.",
+        "answer": "prije",
+        "hint": "unaprijed",
+        "id": "kv6a96"
+      },
+      {
+        "sentence": "Pitanje „_______?\" odnosi se na količinu proizvoda i usluga u pothvatu.",
+        "answer": "KOLIKO",
+        "hint": "kvantiteta",
+        "id": "zn7tki"
+      },
+      {
+        "sentence": "Program _______ provjerava ima li kupaca za proizvod.",
+        "answer": "marketinga",
+        "hint": "tržište i prodaja",
+        "id": "1gnnuj"
+      },
+      {
+        "sentence": "Poslovni plan služi za postavljanje ciljeva i _______ s ostvarenim rezultatima.",
+        "answer": "usporedbu",
+        "hint": "komparacija",
+        "id": "ljjubx"
+      },
+      {
+        "sentence": "Poslovno _______ je svjesna akcija racionalne uporabe resursa i smanjenja rizika.",
+        "answer": "planiranje",
+        "hint": "proces",
+        "id": "lw3xt4"
+      }
+    ],
+    "learn": {
+      "title": "Poslovno planiranje i poslovni plan",
+      "content": "\n                <h3>Poslovno planiranje</h3>\n                <p><strong>Poslovno planiranje</strong> je svjesna akcija racionalne uporabe resursa, predviđanja budućih događaja, smanjivanja rizika gubitka vremena i sredstava te prilagodbe uvjetima u okruženju.</p>\n                <div class=\"formula-box\">\n                    IDEJA → 1. skica → 2. gruba poslovna skica → 3. obrazovanje za poslovni plan →<br>\n                    4. POSLOVNI PLAN → 5. poslovni prostor → 6. kapital → 7. suradnici → 8. tržište\n                </div>\n\n                <h3>Poslovni plan</h3>\n                <p>Pisani dokument s obrazloženjem ulaganja u posao — ocjena očekivanih učinaka i varijantnih rješenja za rizike, izrađen <strong>prije</strong> poduzetnih aktivnosti (obično za razdoblje od godine dana). Izražava se u kraćem (tablice) ili dužem obliku (elaborat).</p>\n                <p><strong>Kome služi:</strong> poduzetniku, investitorima, bankama, osiguravateljima, dobavljačima i partnerima — za postavljanje ciljeva i usporedbu s ostvarenim.</p>\n\n                <h4>Temeljni sadržaj</h4>\n                <ul>\n                    <li>Sažetak poslovnog plana</li>\n                    <li>Informacija o poduzetniku – investitoru</li>\n                    <li>Analiza tržišta</li>\n                    <li>Tehnološko-tehnička analiza i organizacija</li>\n                    <li>Lokacijska analiza</li>\n                    <li>Financijska priprema</li>\n                    <li>Ocjena učinkovitosti i osjetljivosti</li>\n                </ul>\n\n                <h4>Pet pitanja razvoja plana</h4>\n                <div class=\"formula-box\">\n                    ŠTO? struktura proizvoda i usluga · KADA? vrijeme izvedbe · KOLIKO? količina ·<br>\n                    KAKO? tehnološko-organizacijska izvedba · GDJE? mjesto i prostor\n                </div>\n                <p>Ideja se provjerava kroz programe: <strong>marketinga</strong> (ima li kupaca?), <strong>tehničko-tehnološki</strong> (možemo li proizvoditi?), <strong>nabave</strong> (dobavljači?), <strong>zapošljavanja</strong>, <strong>ulaganja kapitala</strong> te <strong>godišnji plan</strong> (je li rentabilno?).</p>\n            ",
+      "id": "lhgnb9"
+    },
+    "id": "d0txr9"
+  },
+  "financing": {
+    "name": "Izvori financiranja poduzetništva",
+    "icon": "fa-money-bill-trend-up",
+    "color": "#10b981",
+    "flashcards": [
+      {
+        "question": "Koje su mogućnosti ulaska u poduzetništvo?",
+        "answer": "Postati partner, kupiti postojeće poduzeće/obrt/zadrugu, osnovati vlastito ili ući putem franšize (ugovor o franšizi).",
+        "explanation": "Četiri glavna puta."
+      },
+      {
+        "question": "Što su vlastiti izvori financiranja?",
+        "answer": "Ušteđevina, prihodi i slično — sredstva samog poduzetnika, bez zaduživanja.",
+        "explanation": "Uz njih: pozajmice od obitelji i prijatelja."
+      },
+      {
+        "question": "Tko su poslovni anđeli (business angels)?",
+        "answer": "Imućni pojedinci iz gospodarstva koji osiguravaju početni kapital i savjetodavnu pomoć te ulažu u temeljni kapital poduzeća.",
+        "explanation": "Kapital + mentorstvo."
+      },
+      {
+        "question": "Što su poslovni inkubatori?",
+        "answer": "Institucije koje početnicima smanjuju najamnine i računovodstvene troškove te omogućuju zajedničke tržišne nastupe.",
+        "explanation": "Podrška u ranoj fazi."
+      },
+      {
+        "question": "Što je leasing kao izvor financiranja?",
+        "answer": "Dugoročni najam sredstava (vozila, strojeva, plovila, opreme) umjesto njihove kupnje.",
+        "explanation": "Financira korištenje, ne vlasništvo."
+      },
+      {
+        "question": "Što je franšiza?",
+        "answer": "Ulazak u poduzetništvo putem ugovora o franšizi — korištenje provjerenog poslovnog modela, marke i podrške davatelja franšize uz naknadu.",
+        "explanation": "Provjereni model uz naknadu."
+      },
+      {
+        "question": "Što je inicijalna javna ponuda (IPO)?",
+        "answer": "Prikupljanje kapitala prodajom dionica na tržištu kapitala; zatvorena javna ponuda = prodaja udjela odabranim ulagačima.",
+        "explanation": "Financiranje putem tržišta kapitala."
+      },
+      {
+        "question": "Što je bootstrapping?",
+        "answer": "Pokretanje posla s vrlo malo ili nimalo kapitala — kreativno korištenje svakog dostupnog resursa uz minimalno trošenje novca („podigni se vlastitim silama\").",
+        "explanation": "Dopuna iz EN kolegija."
+      },
+      {
+        "question": "Poslovni anđeli vs rizični kapital (VC)?",
+        "answer": "Poslovni anđeli — pojedinci, manji iznosi, ranija faza. Rizični kapital (VC) — fondovi institucionalnih ulagača, veći iznosi, velik potencijal rasta, očekuju povrat u ~3 god., odbijaju ~95% zahtjeva.",
+        "explanation": "VC = kasnija faza, veći iznosi."
+      },
+      {
+        "question": "Koja su 4 tipa crowdfundinga?",
+        "answer": "Donacijski (ništa zauzvrat), kreditni (posudba i povrat), nagradni (Kickstarter — nenovčane nagrade) i investicijski (udjeli/dionice).",
+        "explanation": "Grupno financiranje putem mnoštva."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Imućni pojedinci koji daju početni kapital i savjete su:",
+        "options": [
+          "poslovni inkubatori",
+          "poslovni anđeli",
+          "leasing kuće",
+          "mikrokreditori"
+        ],
+        "correct": 1,
+        "id": "n1qw39"
+      },
+      {
+        "question": "Pokretanje posla s vrlo malo ili nimalo kapitala naziva se:",
+        "options": [
+          "bootstrapping",
+          "leasing",
+          "IPO",
+          "faktoring"
+        ],
+        "correct": 0,
+        "id": "bh7xzy"
+      },
+      {
+        "question": "Fondovi institucionalnih ulagača koji ulažu veće iznose u tvrtke velikog rasta su:",
+        "options": [
+          "poslovni anđeli",
+          "rizični kapital (VC)",
+          "mikrokrediti",
+          "inkubatori"
+        ],
+        "correct": 1,
+        "id": "fzasfn"
+      },
+      {
+        "question": "Nagradni crowdfunding (npr. Kickstarter) daje ulagačima:",
+        "options": [
+          "udjele u tvrtki",
+          "nenovčane nagrade",
+          "kamate",
+          "ništa"
+        ],
+        "correct": 1,
+        "id": "qluwng"
+      },
+      {
+        "question": "Dugoročni najam vozila i opreme umjesto kupnje je:",
+        "options": [
+          "franšiza",
+          "leasing",
+          "faktoring",
+          "IPO"
+        ],
+        "correct": 1,
+        "id": "pha2b3"
+      },
+      {
+        "question": "Ulazak u poduzetništvo korištenjem provjerenog modela i marke uz naknadu je:",
+        "options": [
+          "franšiza",
+          "zadruga",
+          "inkubator",
+          "partnerstvo"
+        ],
+        "correct": 0,
+        "id": "yibc4h"
+      },
+      {
+        "question": "Prodaja dionica na tržištu kapitala radi prikupljanja sredstava je:",
+        "options": [
+          "leasing",
+          "mikrokredit",
+          "inicijalna javna ponuda (IPO)",
+          "odgoda plaćanja"
+        ],
+        "correct": 2,
+        "id": "ac05dj"
+      },
+      {
+        "question": "Institucije koje početnicima smanjuju najamnine i troškove su:",
+        "options": [
+          "poslovni anđeli",
+          "poslovni inkubatori",
+          "banke",
+          "osiguravatelji"
+        ],
+        "correct": 1,
+        "id": "xzycqz"
+      },
+      {
+        "question": "Što NIJE način ulaska u poduzetništvo?",
+        "options": [
+          "postati partner",
+          "kupiti postojeće poduzeće",
+          "osnovati vlastito",
+          "proglasiti stečaj"
+        ],
+        "correct": 3,
+        "id": "gy7mba"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Imućni pojedinci koji daju početni kapital i savjete su poslovni _______.",
+        "answer": "anđeli",
+        "hint": "business angels",
+        "id": "rogzty"
+      },
+      {
+        "sentence": "_______ je dugoročni najam vozila, strojeva i opreme.",
+        "answer": "Leasing",
+        "hint": "najam umjesto kupnje",
+        "id": "mhnxxs"
+      },
+      {
+        "sentence": "Ulazak u posao putem provjerenog modela i marke uz naknadu je _______.",
+        "answer": "franšiza",
+        "hint": "ugovor o…",
+        "id": "28bfva"
+      },
+      {
+        "sentence": "Poslovni _______ smanjuju najamnine i troškove poduzetnicima početnicima.",
+        "answer": "inkubatori",
+        "hint": "podrška u ranoj fazi",
+        "id": "4lxh2z"
+      },
+      {
+        "sentence": "Prodaja dionica na tržištu kapitala je inicijalna javna _______.",
+        "answer": "ponuda",
+        "hint": "IPO",
+        "id": "0dmhcm"
+      }
+    ],
+    "learn": {
+      "title": "Izvori financiranja poduzetništva",
+      "content": "\n                <h3>Mogućnosti ulaska u poduzetništvo</h3>\n                <ul>\n                    <li>Postati <strong>partner</strong> (nekome s registriranom djelatnošću)</li>\n                    <li><strong>Kupiti postojeće</strong> (poduzeće, obrt, zadrugu)</li>\n                    <li><strong>Osnovati vlastito</strong> (poduzeće, obrt, OPG, slobodno zanimanje)</li>\n                    <li><strong>Franšiza</strong> (ugovor o franšizi)</li>\n                </ul>\n\n                <h3>Izvori financiranja</h3>\n                <div class=\"formula-box\">\n                    VLASTITI: ušteđevina, prihodi · pozajmice obitelji/prijatelja<br>\n                    VANJSKI: poslovni anđeli · krediti · mikrokrediti · leasing · inkubatori ·<br>\n                    &nbsp;&nbsp;privatna kreditna jamstva · odgoda plaćanja · razmjena roba · IPO / zatvorena ponuda\n                </div>\n                <ul>\n                    <li><strong>Poslovni anđeli</strong> — imućni pojedinci koji daju početni kapital i savjetodavnu pomoć (ulažu u temeljni kapital).</li>\n                    <li><strong>Mikrokrediti</strong> — za kućna poduzetništva, slobodne obrte, male tvrtke, poljoprivrednike.</li>\n                    <li><strong>Leasing</strong> — dugoročni najam (vozila, strojevi, plovila, oprema).</li>\n                    <li><strong>Poslovni inkubatori</strong> — smanjuju najamnine, računovodstvene troškove i omogućuju zajednički nastup.</li>\n                    <li><strong>Franšiza</strong> — provjereni poslovni model, marka i podrška davatelja uz naknadu.</li>\n                    <li><strong>Inicijalna javna ponuda (IPO)</strong> — prodaja dionica na tržištu kapitala; <em>zatvorena</em> = prodaja udjela odabranim ulagačima.</li>\n                </ul>\n\n                <h4>Dopuna iz EN kolegija — suvremeni izvori</h4>\n                <ul>\n                    <li><strong>Bootstrapping</strong> — pokretanje posla s vrlo malo (ili nimalo) kapitala, kreativnim korištenjem svakog dostupnog resursa uz minimalno trošenje novca („podigni se vlastitim silama\").</li>\n                    <li><strong>Crowdfunding</strong> (grupno financiranje) — 4 tipa: <em>donacijski</em> (donatori ne očekuju ništa), <em>kreditni</em> (sredstva se posuđuju i vraćaju), <em>nagradni</em> (Kickstarter — nenovčane nagrade) i <em>investicijski</em> (ulagači dobivaju udjele).</li>\n                    <li><strong>Rizični kapital (venture capital, VC)</strong> — fondovi koji prikupljaju kapital institucionalnih ulagača i ulažu veće iznose u tvrtke s velikim potencijalom rasta; očekuju visok povrat u ~3 godine i odbijaju ~95% zahtjeva. Razlika od <em>poslovnih anđela</em> (pojedinci, manji iznosi, ranija faza).</li>\n                </ul>\n\n                <h4>Franšiza detaljnije</h4>\n                <p>Dva formata: <strong>proizvodni</strong> (isključivo pravo prodaje proizvoda na području — primatelji kao distribucijski kanali) i <strong>poslovni</strong> (cjelovit sustav poslovanja). Prema opsegu: <strong>izravna</strong> (davatelj posluje izravno sa svakim primateljem) i <strong>master</strong> franšiza (primatelj drži prava podfranšiziranja na određenom području).</p>\n            ",
+      "id": "moosa1"
+    },
+    "id": "3xacxy"
+  },
+  "strategicInnovation": {
+    "name": "Strateško poduzetništvo i inovacije",
+    "icon": "fa-lightbulb",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Što je inoviranje (inovacija)?",
+        "answer": "Svako obnavljanje dizajna, kvalitete ili karakteristike proizvoda/usluge radi jačanja konkurentskog položaja i dugoročnog konkurentskog probitka.",
+        "explanation": "Ključ inovacije je prepoznavanje od strane potrošača."
+      },
+      {
+        "question": "Koje su temeljne dimenzije strateškog poduzetništva?",
+        "answer": "Poduzetničko razmišljanje, poduzetnička kultura, poduzetničko vođenje, strateško upravljanje resursima te kreativnost u razvoju inovacija.",
+        "explanation": "Fokus na kreativnost, inovacije i strategiju."
+      },
+      {
+        "question": "Zašto su kreativnost te rizik i neizvjesnost bitni?",
+        "answer": "Kreativnost pokreće nove ideje i inovacije, a rizik i neizvjesnost neizbježni su okvir poduzetničkog djelovanja — poduzetnik ih prihvaća i njima upravlja.",
+        "explanation": "Poduzetnik posluje u uvjetima neizvjesnosti."
+      },
+      {
+        "question": "Što je strateško vođenje?",
+        "answer": "Proces u kojem poduzetnik/menadžer koordinira aktivnosti zaposlenih da pridonesu strateškim ciljevima i poslovnim planovima; temeljni čimbenik održive učinkovitosti.",
+        "explanation": "Trajna zadaća strateških poduzetnika."
+      },
+      {
+        "question": "Komparativne vs konkurentske prednosti danas?",
+        "answer": "Globalizacijom raspoloživost resursa (komparativne prednosti) više nije presudna — osnovu uspjeha čine KONKURENTSKE (tržišne) prednosti u kojima je poduzeće bolje od suparnika.",
+        "explanation": "Održiva konkurentska prednost = otpornost na kopiranje."
+      },
+      {
+        "question": "Što je cilj strateškog poduzetništva?",
+        "answer": "Povećati dugoročnu i održivu učinkovitost poduzeća te stvoriti novu vrijednost za društvo s trajnim posljedicama.",
+        "explanation": "Spoj profita i budućeg razvoja."
+      },
+      {
+        "question": "Invencija vs inovacija?",
+        "answer": "Invencija = stvaranje nečeg novog. Inovacija = pretvaranje tog novog u nešto korisno i primjenjivo. Izum koji nitko ne koristi nije inovacija.",
+        "explanation": "Dopuna iz EN kolegija."
+      },
+      {
+        "question": "Inkrementalna vs radikalna inovacija?",
+        "answer": "Inkrementalna — postupna, mala poboljšanja, niži rizik. Radikalna — disruptivna, stvara nova tržišta, viši rizik. Otvorena inovacija = inoviranje kroz vanjsku suradnju.",
+        "explanation": "Tipovi po dometu promjene."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Ključ svake inovacije je:",
+        "options": [
+          "niska cijena",
+          "prepoznavanje od strane potrošača",
+          "velika reklama",
+          "patent"
+        ],
+        "correct": 1,
+        "id": "cfkhxb"
+      },
+      {
+        "question": "Razlika invencije i inovacije je da je inovacija:",
+        "options": [
+          "bilo koji izum",
+          "pretvaranje novog u korisno i primjenjivo",
+          "samo patent",
+          "kopiranje konkurencije"
+        ],
+        "correct": 1,
+        "id": "wdsgmi"
+      },
+      {
+        "question": "Disruptivna promjena koja stvara nova tržišta uz viši rizik je:",
+        "options": [
+          "inkrementalna inovacija",
+          "radikalna inovacija",
+          "procesna inovacija",
+          "zatvorena inovacija"
+        ],
+        "correct": 1,
+        "id": "8199py"
+      },
+      {
+        "question": "Osnovu uspjeha danas, uslijed globalizacije, čine:",
+        "options": [
+          "komparativne prednosti",
+          "konkurentske (tržišne) prednosti",
+          "prirodni resursi",
+          "jeftin rad"
+        ],
+        "correct": 1,
+        "id": "0w4ebn"
+      },
+      {
+        "question": "Koordiniranje zaposlenih radi ostvarenja strateških ciljeva je:",
+        "options": [
+          "kontrola",
+          "strateško vođenje",
+          "kadrovska politika",
+          "planiranje"
+        ],
+        "correct": 1,
+        "id": "8i6uda"
+      },
+      {
+        "question": "Inoviranje je obnavljanje dizajna, kvalitete ili karakteristike radi:",
+        "options": [
+          "smanjenja broja zaposlenih",
+          "jačanja konkurentskog položaja",
+          "plaćanja manje poreza",
+          "skraćenja radnog vremena"
+        ],
+        "correct": 1,
+        "id": "ph28en"
+      },
+      {
+        "question": "Koja NIJE dimenzija strateškog poduzetništva?",
+        "options": [
+          "poduzetnička kultura",
+          "poduzetničko vođenje",
+          "izbjegavanje inovacija",
+          "kreativnost u inovacijama"
+        ],
+        "correct": 2,
+        "id": "5mx14w"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Ključ svake inovacije je njezino _______ od strane potrošača.",
+        "answer": "prepoznavanje",
+        "hint": "prihvaćanje na tržištu",
+        "id": "950gat"
+      },
+      {
+        "sentence": "Uslijed globalizacije osnovu uspjeha čine _______ prednosti, a ne više komparativne.",
+        "answer": "konkurentske",
+        "hint": "tržišne",
+        "id": "s60i4z"
+      },
+      {
+        "sentence": "Strateško _______ koordinira zaposlene radi ostvarenja strateških ciljeva.",
+        "answer": "vođenje",
+        "hint": "leadership",
+        "id": "dxyeb1"
+      },
+      {
+        "sentence": "_______ je obnavljanje dizajna, kvalitete ili karakteristike proizvoda radi konkurentnosti.",
+        "answer": "Inoviranje",
+        "hint": "stvaranje novina",
+        "id": "bpvjgn"
+      },
+      {
+        "sentence": "Održiva konkurentska prednost otporna je na _______ od strane suparnika.",
+        "answer": "kopiranje",
+        "hint": "oponašanje",
+        "id": "iwd2uj"
+      },
+      {
+        "sentence": "Inoviranje kroz vanjsku suradnju (partnerstva, crowdsourcing) je _______ inovacija.",
+        "answer": "otvorena",
+        "hint": "open innovation",
+        "id": "0xzh8q"
+      }
+    ],
+    "learn": {
+      "title": "Strateško poduzetništvo i inovacije",
+      "content": "\n                <h3>Strateško poduzetništvo</h3>\n                <p>Stvaranje inovativne ekonomske organizacije (ili mreže) radi dobitka i rasta pod rizikom; povezuje poduzetničke i strateške aktivnosti za <strong>dugoročnu održivu uspješnost</strong>. Cilj: povećati održivu učinkovitost i stvoriti novu vrijednost za društvo.</p>\n                <div class=\"formula-box\">\n                    DIMENZIJE: poduzetničko razmišljanje · poduzetnička kultura · poduzetničko vođenje ·<br>\n                    strateško upravljanje resursima · kreativnost u razvoju inovacija\n                </div>\n\n                <h4>Kreativnost, rizik i neizvjesnost</h4>\n                <p>Kreativnost pokreće nove ideje; <strong>rizik i neizvjesnost</strong> neizbježan su okvir poduzetničkog djelovanja koji poduzetnik prihvaća i njime upravlja.</p>\n\n                <h4>Inovacije</h4>\n                <p><strong>Inoviranje</strong> = svako obnavljanje dizajna, kvalitete ili karakteristike proizvoda/usluge radi jačanja konkurentskog položaja i dugoročnog konkurentskog probitka. <em>Ključ svake inovacije je prepoznavanje od strane potrošača.</em> Strateška opcija: razvoj vlastitih inovacija i njihovo pretvaranje u konkurentsku prednost.</p>\n\n                <h4>Strateško vođenje i konkurentska prednost</h4>\n                <p><strong>Strateško vođenje</strong> — poduzetnik/menadžer koordinira zaposlene da pridonesu strateškim ciljevima; temeljni čimbenik održive učinkovitosti. Globalizacijom <strong>komparativne prednosti</strong> (resursi) više nisu presudne — osnovu uspjeha čine <strong>konkurentske (tržišne) prednosti</strong>, a održiva prednost otporna je na kopiranje (Barney).</p>\n\n                <h4>Dopuna iz EN kolegija — inovacije detaljnije</h4>\n                <p><strong>Invencija vs inovacija:</strong> invencija = stvaranje nečeg novog; <strong>inovacija</strong> = pretvaranje tog novog u nešto <em>korisno i primjenjivo</em>. Moguće je izumiti nešto što nitko ne koristi — to nije inovacija.</p>\n                <p><strong>Šest tipova inovacije:</strong></p>\n                <div class=\"formula-box\">\n                    PROIZVODNA · PROCESNA · INOVACIJA POSLOVNOG MODELA ·<br>\n                    ORGANIZACIJSKA · MARKETINŠKA · OTVORENA (open innovation)\n                </div>\n                <ul>\n                    <li><strong>Inkrementalna</strong> — postupna, mala poboljšanja, niži rizik; <strong>radikalna</strong> — disruptivna, stvara nova tržišta, viši rizik.</li>\n                    <li><strong>Otvorena inovacija</strong> — inoviranje kroz vanjsku suradnju (partnerstva, crowdsourcing, sveučilišta, licenciranje), suprotno zatvorenom internom R&D-u.</li>\n                </ul>\n                <p><strong>Druckerovih 7 izvora prilika za inovaciju:</strong> neočekivano, nesukladnosti (jaz stvarnosti i percepcije), potreba procesa, promjene u strukturi industrije/tržišta, demografija, promjene u percepciji te novo znanje.</p>\n            ",
+      "id": "xe9y34"
+    },
+    "id": "h4fg80"
+  },
+  "financialIndicators": {
+    "name": "Financijski pokazatelji poslovanja",
+    "icon": "fa-chart-pie",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Čemu služe financijski pokazatelji?",
+        "answer": "Za mjerenje uspješnosti poslovanja poduzeća — likvidnosti, zaduženosti, aktivnosti, profitabilnosti i uspješnosti ulaganja — na temelju financijskih izvještaja.",
+        "explanation": "Alat financijske analize."
+      },
+      {
+        "question": "Što mjere pokazatelji zaduženosti?",
+        "answer": "Do koje mjere poduzeće koristi zaduživanje kao oblik financiranja. Veći odnos duga i imovine = veći financijski rizik; u pravilu bi trebao biti 50% ili manji.",
+        "explanation": "Odnos duga i kapitala ne bi trebao prijeći ~50:50."
+      },
+      {
+        "question": "Što je ROA (povrat na imovinu)?",
+        "answer": "Indikator uspješnosti korištenja imovine u stvaranju dobiti — pokazuje dobit koju poduzeće generira iz jedne novčane jedinice imovine.",
+        "explanation": "Pokazatelj profitabilnosti."
+      },
+      {
+        "question": "Što je EVA (ekonomska dodana vrijednost)?",
+        "answer": "Mjeri dodatnu vrijednost stvorenu investicijom: od profita nakon oporezivanja oduzima trošak uloženih sredstava. Pozitivna EVA = vrijednost za dioničare.",
+        "explanation": "Negativna EVA = tvrtka „jede svoju supstancu\"."
+      },
+      {
+        "question": "Što mjere pokazatelji investiranja (npr. P/E, EPS)?",
+        "answer": "Uspješnost ulaganja u dionice. EPS = dobit po dionici; P/E = odnos cijene i dobiti po dionici; uz njih i prinos po dividendi.",
+        "explanation": "Traže i podatke o dionicama, ne samo izvještaje."
+      },
+      {
+        "question": "Što mjere pokazatelji aktivnosti (obrtaja)?",
+        "answer": "Koliko uspješno poduzeće koristi imovinu za stvaranje učinaka (prihoda). U turizmu se naturalno mjeri iskorištenost kapaciteta (noćenja/broj ležajeva).",
+        "explanation": "Poželjna je što veća vrijednost."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Povrat na imovinu (dobit iz jedne jedinice imovine) je:",
+        "options": [
+          "EVA",
+          "ROA",
+          "P/E",
+          "EPS"
+        ],
+        "correct": 1,
+        "id": "oiyihd"
+      },
+      {
+        "question": "Ako je EVA negativna, to znači da tvrtka:",
+        "options": [
+          "stvara vrijednost za dioničare",
+          "„jede svoju supstancu\"",
+          "nema dugova",
+          "ima visok P/E"
+        ],
+        "correct": 1,
+        "id": "jnx9g6"
+      },
+      {
+        "question": "Veći odnos duga i imovine znači:",
+        "options": [
+          "manji financijski rizik",
+          "veći financijski rizik",
+          "veću likvidnost",
+          "veću dobit po dionici"
+        ],
+        "correct": 1,
+        "id": "fij2vm"
+      },
+      {
+        "question": "Dobit po dionici označava se pokazateljem:",
+        "options": [
+          "ROA",
+          "EPS",
+          "EVA",
+          "koeficijent zaduženosti"
+        ],
+        "correct": 1,
+        "id": "0zd7oa"
+      },
+      {
+        "question": "U turizmu se pokazatelji aktivnosti naturalno mjere kroz:",
+        "options": [
+          "broj dionica",
+          "iskorištenost kapaciteta (noćenja/ležajevi)",
+          "stopu poreza",
+          "broj franšiza"
+        ],
+        "correct": 1,
+        "id": "5a1417"
+      },
+      {
+        "question": "Koeficijent zaduženosti u pravilu bi trebao biti:",
+        "options": [
+          "100% ili više",
+          "50% ili manji",
+          "točno 70%",
+          "nebitan"
+        ],
+        "correct": 1,
+        "id": "l34hkr"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ pokazuje dobit koju poduzeće generira iz jedne novčane jedinice imovine.",
+        "answer": "ROA",
+        "hint": "povrat na imovinu",
+        "id": "vb34kx"
+      },
+      {
+        "sentence": "Negativna EVA znači da tvrtka „jede svoju _______\".",
+        "answer": "supstancu",
+        "hint": "imovinu/vrijednost",
+        "id": "coozry"
+      },
+      {
+        "sentence": "Veći odnos duga i imovine znači veći financijski _______.",
+        "answer": "rizik",
+        "hint": "opasnost",
+        "id": "307z3r"
+      },
+      {
+        "sentence": "Dobit po dionici označava pokazatelj _______.",
+        "answer": "EPS",
+        "hint": "earnings per share",
+        "id": "noq9n1"
+      },
+      {
+        "sentence": "Koeficijent zaduženosti u pravilu bi trebao biti _______ posto ili manji.",
+        "answer": "50",
+        "hint": "polovica",
+        "id": "wi9wp0"
+      }
+    ],
+    "learn": {
+      "title": "Financijski pokazatelji poslovanja",
+      "content": "\n                <h3>Svrha</h3>\n                <p>Financijski pokazatelji mjere uspješnost poslovanja na temelju financijskih izvještaja. Glavne skupine:</p>\n                <div class=\"formula-box\">\n                    LIKVIDNOST · ZADUŽENOST · AKTIVNOST (obrtaj) ·<br>\n                    EKONOMIČNOST · PROFITABILNOST · INVESTIRANJE\n                </div>\n                <p><em>Napomena: u ovom su predmetu pokazatelji obrađeni opisno (bez formula); detaljne formule pripadaju računovodstvu.</em></p>\n\n                <h4>Zaduženost</h4>\n                <p>Mjeri koliko poduzeće koristi zaduživanje. Veći odnos duga i imovine = veći <strong>financijski rizik</strong>; u pravilu bi koeficijent zaduženosti trebao biti <strong>50% ili manji</strong>, a odnos duga i kapitala ne bi trebao znatno prijeći 50:50. Zaduženost nije nužno loša ako je pod kontrolom (stopa povrata &gt; kamata).</p>\n\n                <h4>Profitabilnost</h4>\n                <ul>\n                    <li><strong>ROA</strong> (povrat na imovinu) — dobit iz jedne jedinice imovine.</li>\n                    <li><strong>ROE</strong> (povrat na kapital) — dobit u odnosu na vlastiti kapital.</li>\n                    <li><strong>EVA</strong> (ekonomska dodana vrijednost) — od profita nakon poreza oduzima trošak uloženih sredstava; pozitivna = vrijednost za dioničare, negativna = tvrtka „jede svoju supstancu\".</li>\n                </ul>\n\n                <h4>Aktivnost i investiranje</h4>\n                <ul>\n                    <li><strong>Aktivnost (obrtaj)</strong> — koliko uspješno imovina stvara prihode; u turizmu naturalno: iskorištenost kapaciteta (noćenja/broj ležajeva).</li>\n                    <li><strong>Investiranje</strong> — uspješnost ulaganja u dionice: <strong>EPS</strong> (dobit po dionici), <strong>P/E</strong> (cijena/dobit po dionici), prinos po dividendi.</li>\n                </ul>\n            ",
+      "id": "x70z4r"
+    },
+    "id": "f9bfgi"
+  },
+  "euSustainability": {
+    "name": "Poduzetništvo u EU i održivi razvoj",
+    "icon": "fa-earth-europe",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Što je Europska povelja o malom poduzetništvu?",
+        "answer": "Dokument EU-a koji mala poduzeća prepoznaje kao glavne pokretače inovacija, zapošljavanja te socijalne i lokalne integracije; utjelovljuje načelo „najprije misli u malom\".",
+        "explanation": "„Think small first\"."
+      },
+      {
+        "question": "Što znači načelo „najprije misli u malom\"?",
+        "answer": "Da se politike i propisi prvo prilagode potrebama malih poduzeća, jer ona su temelj gospodarstva i zapošljavanja.",
+        "explanation": "Prioritet malom gospodarstvu."
+      },
+      {
+        "question": "Koji je bio strateški cilj EU-a (Lisabonska strategija)?",
+        "answer": "Postati najkonkurentnije i najdinamičnije gospodarstvo svijeta temeljeno na znanju, sposobno za održiv rast te nova i bolja radna mjesta uz veću socijalnu koheziju.",
+        "explanation": "Gospodarstvo znanja + održivost."
+      },
+      {
+        "question": "Što je održivi razvoj turizma i ugostiteljstva?",
+        "answer": "Razvoj koji ne ugrožava sposobnost budućih generacija da ostvare svoje potrebe; usklađuje gospodarski rast s očuvanjem resursa i društva.",
+        "explanation": "Poštivanje budućih generacija."
+      },
+      {
+        "question": "Kako se u strateškom poduzetništvu povezuje profit i održivost?",
+        "answer": "Strateško poduzetništvo istodobno ostvaruje profit i brine o budućem razvoju i rastu — dugoročna održiva uspješnost, ne samo kratkoročna dobit.",
+        "explanation": "Profit + briga o budućnosti."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Načelo Europske povelje o malom poduzetništvu glasi:",
+        "options": [
+          "„najprije misli u velikom\"",
+          "„najprije misli u malom\"",
+          "„profit iznad svega\"",
+          "„samo domaće tržište\""
+        ],
+        "correct": 1,
+        "id": "ndcfj2"
+      },
+      {
+        "question": "Mala poduzeća su prema Povelji glavni pokretači:",
+        "options": [
+          "birokracije",
+          "inovacija i zapošljavanja",
+          "monopola",
+          "inflacije"
+        ],
+        "correct": 1,
+        "id": "7s7enf"
+      },
+      {
+        "question": "Održivi razvoj turizma ne smije ugroziti potrebe:",
+        "options": [
+          "sadašnjih turista",
+          "budućih generacija",
+          "velikih korporacija",
+          "države"
+        ],
+        "correct": 1,
+        "id": "56g5h9"
+      },
+      {
+        "question": "Lisabonski cilj EU-a bio je gospodarstvo temeljeno na:",
+        "options": [
+          "jeftinom radu",
+          "znanju",
+          "prirodnim resursima",
+          "niskim porezima"
+        ],
+        "correct": 1,
+        "id": "hh1edd"
+      },
+      {
+        "question": "Strateško poduzetništvo usklađuje profit s:",
+        "options": [
+          "izbjegavanjem poreza",
+          "brigom o budućem razvoju i rastu",
+          "smanjenjem plaća",
+          "ukidanjem inovacija"
+        ],
+        "correct": 1,
+        "id": "2zckz5"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Načelo Europske povelje o malom poduzetništvu je „najprije misli u _______\".",
+        "answer": "malom",
+        "hint": "think small first",
+        "id": "ofw0ig"
+      },
+      {
+        "sentence": "Mala poduzeća su glavni pokretači inovacija i _______ u Europi.",
+        "answer": "zapošljavanja",
+        "hint": "nova radna mjesta",
+        "id": "xhxd7e"
+      },
+      {
+        "sentence": "Održivi razvoj ne smije ugroziti potrebe _______ generacija.",
+        "answer": "budućih",
+        "hint": "koje dolaze",
+        "id": "y5ot82"
+      },
+      {
+        "sentence": "Lisabonski cilj EU-a bio je gospodarstvo temeljeno na _______.",
+        "answer": "znanju",
+        "hint": "obrazovanje, R&D",
+        "id": "kapuik"
+      },
+      {
+        "sentence": "Strateško poduzetništvo usklađuje profit s brigom o budućem _______ i rastu.",
+        "answer": "razvoju",
+        "hint": "napredak",
+        "id": "kpca9w"
+      }
+    ],
+    "learn": {
+      "title": "Poduzetništvo u EU i održivi razvoj",
+      "content": "\n                <h3>Europska povelja o malom poduzetništvu</h3>\n                <p>Dokument EU-a koji <strong>mala poduzeća</strong> prepoznaje kao glavne pokretače <strong>inovacija, novog zapošljavanja te socijalne i lokalne integracije</strong> u Europi. Utjelovljuje načelo <strong>„najprije misli u malom\" (think small first)</strong> — politike i propise treba prvo prilagoditi potrebama malih poduzeća.</p>\n\n                <h4>Lisabonski strateški cilj</h4>\n                <p>EU je težio „postati najkonkurentnije i najdinamičnije gospodarstvo svijeta temeljeno na <strong>znanju</strong>, sposobno ostvariti održiv gospodarski rast te osigurati nova i bolja radna mjesta uz veću socijalnu koheziju\".</p>\n\n                <h3>Održivi razvoj</h3>\n                <p><strong>Održivi razvoj turizma i ugostiteljstva</strong> promiče razvoj na način da se ne ugrozi sposobnost budućih generacija da ostvare svoje potrebe. Uključuje promicanje restrukturiranja i repozicioniranja uz jačanje sposobnosti tržišnog natjecanja.</p>\n                <p>U <strong>strateškom poduzetništvu</strong> održivost je ugrađena: cilj je istodobno ostvarivati profit i brinuti o budućem razvoju i rastu — dugoročna održiva uspješnost, a ne samo kratkoročna dobit.</p>\n            ",
+      "id": "j8ep0s"
+    },
+    "id": "rqjkcz"
+  },
+  "modernTools": {
+    "name": "Suvremeni alati i učenje iz neuspjeha",
+    "icon": "fa-toolbox",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Što je Business Model Canvas (BMC)?",
+        "answer": "Vizualni prikaz cijelog poslovnog modela na JEDNOJ stranici kroz 9 blokova (partneri, aktivnosti, resursi, vrijednosna ponuda, odnosi s kupcima, segmenti, kanali, troškovi, prihodi).",
+        "explanation": "Brz pregled poslovnog modela."
+      },
+      {
+        "question": "Što je studija izvedivosti (feasibility study)?",
+        "answer": "Alat koji provjerava je li ideja vrijedna daljnjeg razvoja — fokus na veličinu tržišta, dobavljače/distributere i sposobnosti poduzetnika; utvrđuje je li ideja izvediva i profitabilna.",
+        "explanation": "Pravilo: do 10 stranica; razgovarati s ≥50 potencijalnih kupaca; odluka GO / NO-GO."
+      },
+      {
+        "question": "Što je pitch deck?",
+        "answer": "Kratka vizualna prezentacija poslovne ideje ulagačima; treba biti sažet (obično do desetak slajdova) i jasno prenijeti vrijednost pothvata.",
+        "explanation": "Alat za privlačenje ulagača."
+      },
+      {
+        "question": "Growth vs fixed mindset (način razmišljanja)?",
+        "answer": "Growth (rastući) — sposobnosti se razvijaju trudom i učenjem; neuspjeh je prilika za rast. Fixed (fiksni) — sposobnosti su urođene i nepromjenjive; izbjegava se izazov.",
+        "explanation": "Poduzetnicima pogoduje growth mindset."
+      },
+      {
+        "question": "Što je poduzetnička prilika (opportunity)?",
+        "answer": "Povoljna situacija za stvaranje nove vrijednosti; može stvoriti ekonomsku, društvenu ili okolišnu vrijednost. Prepoznaje se otkrivanjem ili aktivnom izgradnjom.",
+        "explanation": "Srž poduzetništva je prepoznavanje prilike."
+      },
+      {
+        "question": "Je li neuspjeh događaj ili proces?",
+        "answer": "Neuspjeh je PROCES — slijed faza organizacijskog opadanja, a ne jednokratni događaj. Ishod ovisi o sposobnosti poduzetnika da upravlja rizicima.",
+        "explanation": "Amankwah-Amoah (2016): „faze opadanja\"."
+      },
+      {
+        "question": "Kako se u poduzetništvu gleda na neuspjeh?",
+        "answer": "Kao na priliku za učenje. Edison o 1000 pokušaja žarulje: nije pogriješio tisuću puta, nego pronašao tisuću načina koji ne rade.",
+        "explanation": "Strah od neuspjeha koči poduzetništvo; kultura ga oblikuje."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Prikaz cijelog poslovnog modela na jednoj stranici s 9 blokova je:",
+        "options": [
+          "poslovni plan",
+          "Business Model Canvas",
+          "pitch deck",
+          "studija izvedivosti"
+        ],
+        "correct": 1,
+        "id": "tne370"
+      },
+      {
+        "question": "Studija izvedivosti trebala bi imati najviše:",
+        "options": [
+          "1 stranicu",
+          "10 stranica",
+          "50 stranica",
+          "100 stranica"
+        ],
+        "correct": 1,
+        "id": "20ezig"
+      },
+      {
+        "question": "Neuspjeh je prema suvremenom shvaćanju:",
+        "options": [
+          "jednokratan događaj",
+          "proces (faze opadanja)",
+          "nevažan",
+          "uvijek kraj"
+        ],
+        "correct": 1,
+        "id": "awo9an"
+      },
+      {
+        "question": "Rastući (growth) način razmišljanja znači da se sposobnosti:",
+        "options": [
+          "ne mogu mijenjati",
+          "razvijaju trudom i učenjem",
+          "nasljeđuju",
+          "ne koriste"
+        ],
+        "correct": 1,
+        "id": "8qukbl"
+      },
+      {
+        "question": "Kratka vizualna prezentacija ideje ulagačima je:",
+        "options": [
+          "Business Model Canvas",
+          "pitch deck",
+          "bilanca",
+          "obrtnica"
+        ],
+        "correct": 1,
+        "id": "rqtxyo"
+      },
+      {
+        "question": "Edisonovih „1000 pokušaja\" ilustrira da je neuspjeh:",
+        "options": [
+          "razlog za odustajanje",
+          "prilika za učenje",
+          "nemoguć",
+          "nebitan za inovaciju"
+        ],
+        "correct": 1,
+        "id": "49th0q"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Poslovni model na jednoj stranici s 9 blokova prikazuje Business Model _______.",
+        "answer": "Canvas",
+        "hint": "platno",
+        "id": "dljh4e"
+      },
+      {
+        "sentence": "Studija _______ provjerava je li ideja vrijedna daljnjeg razvoja.",
+        "answer": "izvedivosti",
+        "hint": "feasibility",
+        "id": "2u2ow0"
+      },
+      {
+        "sentence": "Neuspjeh je prema suvremenom shvaćanju _______, a ne jednokratni događaj.",
+        "answer": "proces",
+        "hint": "niz faza",
+        "id": "6umyyy"
+      },
+      {
+        "sentence": "_______ mindset znači da se sposobnosti razvijaju trudom i učenjem.",
+        "answer": "Growth",
+        "hint": "rastući",
+        "id": "ake2pr"
+      },
+      {
+        "sentence": "Kratka prezentacija ideje ulagačima naziva se pitch _______.",
+        "answer": "deck",
+        "hint": "slajdovi",
+        "id": "px2x2b"
+      }
+    ],
+    "learn": {
+      "title": "Suvremeni alati i učenje iz neuspjeha",
+      "content": "\n                <h3>Suvremeni alati planiranja (dopuna iz EN kolegija)</h3>\n                <p>Uz klasičan poslovni plan, poduzetnici koriste brže, vizualne alate.</p>\n                <ul>\n                    <li><strong>Business Model Canvas (BMC)</strong> — cijeli poslovni model na jednoj stranici, 9 blokova: ključni partneri, ključne aktivnosti, ključni resursi, vrijednosna ponuda, odnosi s kupcima, segmenti kupaca, kanali, struktura troškova, tokovi prihoda.</li>\n                    <li><strong>Studija izvedivosti (feasibility study)</strong> — provjerava je li ideja vrijedna razvoja (tržište, dobavljači, sposobnosti). Pravila: do 10 stranica; razgovor s najmanje 50 potencijalnih kupaca; cilj = odluka <strong>GO / NO-GO</strong>.</li>\n                    <li><strong>Pitch deck</strong> — kratka vizualna prezentacija ideje ulagačima.</li>\n                    <li><strong>Business Model Canvas ≠ poslovni plan</strong> — BMC je skica, plan je detaljan elaborat.</li>\n                </ul>\n\n                <h3>Način razmišljanja i prilike</h3>\n                <p><strong>Growth vs fixed mindset:</strong> rastući način razmišljanja vidi sposobnosti kao nešto što se razvija trudom i učenjem (neuspjeh = prilika); fiksni ih vidi kao urođene i nepromjenjive. <strong>Prilika (opportunity)</strong> je povoljna situacija za stvaranje nove vrijednosti (ekonomske, društvene ili okolišne) — prepoznaje se otkrivanjem ili aktivnom izgradnjom.</p>\n\n                <h3>Učenje iz neuspjeha</h3>\n                <p>Velika većina start-upova ne uspije. <strong>Neuspjeh je proces</strong> — slijed faza organizacijskog opadanja (Amankwah-Amoah, 2016), a ne jednokratni događaj; ishod ovisi o sposobnosti poduzetnika da upravlja rizicima. <strong>Strah od neuspjeha</strong> koči poduzetništvo, a kultura ga oblikuje.</p>\n                <div class=\"formula-box\">\n                    EDISON o 1000 pokušaja žarulje: „Nisam pogriješio tisuću puta —<br>\n                    pronašao sam tisuću načina koji ne rade.\"\n                </div>\n                <p>Pozitivan pogled na neuspjeh: izvor učenja i temelj budućeg uspjeha.</p>\n            ",
+      "id": "u27hq3"
+    },
+    "id": "kdrzw4"
+  },
+  "examPractice": {
+    "id": "var5t3",
+    "name": "Ispitna pitanja (sve teme)",
+    "icon": "fa-graduation-cap",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "MEĐUTEMA: povuci liniju od TEORIJE do PRAKSE poduzetništva.",
+        "answer": "Cantillon uvodi pojam → Schumpeter ga veže uz inovacije → poduzetnik (Pionir→Trener kroz životni ciklus) → poduzetnički menadžment → poslovni plan i financiranje.",
+        "explanation": "Teorija → osoba → menadžment → pothvat."
+      },
+      {
+        "question": "PONAVLJANJE: usporedi PODUZETNIKA i MENADŽERA.",
+        "answer": "Poduzetnik: koristi prilike, stvara vizije, mijenja resurse, rizik = šansa. Menadžer: rješava probleme, optimizira postojeće, rizik = prijetnja.",
+        "explanation": "Klasično ispitno pitanje."
+      },
+      {
+        "question": "MEĐUTEMA: koje su 4 funkcije poduzetništva i koja je trajna?",
+        "answer": "Strateško-planska, organizacijska, upravljačka i kontrolna. UPRAVLJAČKA je trajna zadaća; kontrolna je „završna\".",
+        "explanation": "U malom poduzeću sve provodi poduzetnik."
+      },
+      {
+        "question": "PRIPREMA: kojim redom ideja postaje posao?",
+        "answer": "Ideja → gruba skica → obrazovanje → POSLOVNI PLAN → prostor → kapital → suradnici → tržište; usput provjera programa (marketing, proizvodnja, nabava, ulaganje).",
+        "explanation": "Poslovni plan je središnji dokument."
+      },
+      {
+        "question": "PONAVLJANJE: nabroji izvore financiranja poduzetništva.",
+        "answer": "Vlastiti (ušteđevina), pozajmice obitelji, poslovni anđeli, krediti/mikrokrediti, leasing, inkubatori, franšiza te IPO (dionice).",
+        "explanation": "Vlastiti + vanjski izvori."
+      },
+      {
+        "question": "MEĐUTEMA: kako su povezani INOVACIJE i KONKURENTSKA prednost?",
+        "answer": "Inoviranje jača konkurentski položaj; globalizacijom komparativne prednosti (resursi) više nisu presudne — presuđuju konkurentske (tržišne) prednosti otporne na kopiranje.",
+        "explanation": "Inovacija → održiva konkurentska prednost."
+      },
+      {
+        "question": "PRIPREMA: koji su pravni oblici i po čemu se razlikuju?",
+        "answer": "Trgovačka društva (osoba: j.t.d., komanditno; kapitala: d.d., d.o.o.), obrt (neograničena odgovornost) i trgovac pojedinac.",
+        "explanation": "Ključ: odgovornost i struktura kapitala."
+      },
+      {
+        "question": "MEĐUTEMA: kako mali poduzetnik i EU/održivost idu zajedno?",
+        "answer": "Europska povelja „misli u malom\" prepoznaje mala poduzeća kao pokretače inovacija i zapošljavanja; održivi razvoj čuva mogućnosti budućih generacija.",
+        "explanation": "Malo poduzetništvo + održivost = EU okvir."
+      }
+    ],
+    "quiz": [
+      {
+        "id": "vba2py",
+        "question": "Pojam „entrepreneur\" prvi je koristio:",
+        "options": [
+          "Schumpeter",
+          "Cantillon",
+          "Say",
+          "Marshall"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "ryjgfz",
+        "question": "Trajna zadaća poduzetnika je koja funkcija?",
+        "options": [
+          "planska",
+          "organizacijska",
+          "upravljačka",
+          "kontrolna"
+        ],
+        "correct": 2
+      },
+      {
+        "id": "7n88qu",
+        "question": "Tip poduzetnika u 1. fazi (osnivač, visok rizik) je:",
+        "options": [
+          "Maher",
+          "Pionir",
+          "Strateg",
+          "Trener"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "jfbgwq",
+        "question": "Imućni pojedinci koji daju početni kapital i savjete su:",
+        "options": [
+          "inkubatori",
+          "poslovni anđeli",
+          "leasing kuće",
+          "zadruge"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "p7lbgq",
+        "question": "D.d. i d.o.o. spadaju u društva:",
+        "options": [
+          "osoba",
+          "kapitala",
+          "obrte",
+          "zadruge"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "vfgbgg",
+        "question": "Ključ svake inovacije je:",
+        "options": [
+          "patent",
+          "prepoznavanje od strane potrošača",
+          "niska cijena",
+          "velika reklama"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "c4tqyt",
+        "question": "Načelo Europske povelje o malom poduzetništvu je:",
+        "options": [
+          "„misli u velikom\"",
+          "„najprije misli u malom\"",
+          "„profit iznad svega\"",
+          "„samo izvoz\""
+        ],
+        "correct": 1
+      },
+      {
+        "id": "ixpea3",
+        "question": "Negativna EVA znači da tvrtka:",
+        "options": [
+          "stvara vrijednost",
+          "„jede svoju supstancu\"",
+          "nema dugova",
+          "ima visok ROA"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "efah7d",
+        "question": "Ključni nedostatak obrta je:",
+        "options": [
+          "spor postupak",
+          "neograničena odgovornost",
+          "obvezni veliki kapital",
+          "zabrana zapošljavanja"
+        ],
+        "correct": 1
+      },
+      {
+        "id": "sns2te",
+        "question": "Uslijed globalizacije uspjeh presuđuju:",
+        "options": [
+          "komparativne prednosti",
+          "konkurentske (tržišne) prednosti",
+          "prirodni resursi",
+          "niski porezi"
+        ],
+        "correct": 1
+      }
+    ],
+    "fillBlanks": [
+      {
+        "id": "iaw75t",
+        "sentence": "Pojam „entrepreneur\" prvi koristi Richard _______.",
+        "answer": "Cantillon",
+        "hint": "rana tržišna ekonomika"
+      },
+      {
+        "id": "hwj0kg",
+        "sentence": "Trajna zadaća poduzetnika je _______ funkcija.",
+        "answer": "upravljačka",
+        "hint": "management"
+      },
+      {
+        "id": "xtqrf5",
+        "sentence": "Središnji dokument u putu od ideje do posla je _______ plan.",
+        "answer": "poslovni",
+        "hint": "business plan"
+      },
+      {
+        "id": "481zz7",
+        "sentence": "Ključni nedostatak obrta je _______ odgovornost.",
+        "answer": "neograničena",
+        "hint": "cijelom imovinom"
+      },
+      {
+        "id": "0d4grn",
+        "sentence": "Načelo Europske povelje je „najprije misli u _______\".",
+        "answer": "malom",
+        "hint": "think small first"
+      },
+      {
+        "id": "5l8y0m",
+        "sentence": "Uslijed globalizacije presuđuju _______ prednosti, ne komparativne.",
+        "answer": "konkurentske",
+        "hint": "tržišne"
+      }
+    ],
+    "learn": {
+      "id": "wzg83c",
+      "title": "Ispitna priprema — most kroz obje cjeline",
+      "content": "\n                <h3>Kako je ispit posložen</h3>\n                <p>Završni objedinjuje <strong>1. kolokvij</strong> (teorije i teoretičari, poduzetnik i oblici, poduzetnički menadžment, funkcije, vrste/oblici, pravni oblici i ideja) i <strong>2. kolokvij</strong> (poslovni plan, financiranje, strateško poduzetništvo i inovacije, financijski pokazatelji, EU i održivost).</p>\n\n                <h4>Četiri okosnice za ponavljanje</h4>\n                <div class=\"formula-box\">\n                    1) TEORIJA (Cantillon→Schumpeter) → POSLOVNI PLAN → FINANCIRANJE<br>\n                    2) PODUZETNIK (prilike, vizije, rizik=šansa) ↔ MENADŽER (problemi, resursi, rizik=prijetnja)<br>\n                    3) FUNKCIJE: planska · organizacijska · UPRAVLJAČKA (trajna) · kontrolna (završna)<br>\n                    4) INOVACIJE → KONKURENTSKA prednost → održivost (EU „misli u malom\")\n                </div>\n\n                <h4>Najčešće zamke</h4>\n                <ul>\n                    <li><strong>Cantillon vs Schumpeter</strong> — Cantillon uvodi pojam; Schumpeter = „otac poduzetništva\" (inovacije).</li>\n                    <li><strong>Tipovi poduzetnika</strong> — Pionir(1)→Maher(2)→Strateg(3)→Trener(4), prate faze ciklusa.</li>\n                    <li><strong>Društva osoba vs kapitala</strong> — j.t.d./komanditno vs d.d./d.o.o.</li>\n                    <li><strong>Komparativne vs konkurentske prednosti</strong> — danas presuđuju konkurentske.</li>\n                    <li><strong>EVA</strong> — pozitivna = vrijednost za dioničare; negativna = „jede supstancu\".</li>\n                </ul>\n                <p>Detaljna razrada svake teme nalazi se u sekcijama <em>Uči</em> pojedinih kategorija 1. i 2. kolokvija.</p>\n            "
+    }
+  }
+}
