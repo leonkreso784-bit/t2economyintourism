@@ -8546,30 +8546,31 @@ h4.lb-heading { font-size: 1.1rem; }
 .be-body > *:first-child { margin-top: 0; }
 .be-body > *:last-child { margin-bottom: 0; }
 
-/* ── ＋ umetni-ovdje (između blokova) ── */
-.be-adder { position: relative; height: 22px; display: grid; place-items: center; opacity: 0; transition: .16s; }
-.be-adder:hover, .be-root:hover .be-adder { opacity: .55; }
-.be-adder:hover { opacity: 1; }
+/* ── ＋ umetni-ovdje (K5/F1): elegantna PUNO-ŠIRINSKA hover-linija + prsten-＋ (fill na hover) ── */
+.be-adder { position: relative; height: 26px; display: grid; place-items: center; opacity: 0; transition: opacity .16s; }
+.be-adder:hover, .be-root:hover .be-adder, .be-adder:focus-within { opacity: .5; }
+.be-adder:hover, .be-adder:focus-within { opacity: 1; }
 .be-adder::before {
-  content: ''; position: absolute; left: 10%; right: 10%; top: 50%; height: 1.5px;
-  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, .5), transparent);
+  content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%); border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(99, 102, 241, .4) 18%, rgba(139, 92, 246, .4) 82%, transparent);
 }
 .be-add {
-  width: 26px; height: 26px; border-radius: 50%; z-index: 1; cursor: pointer;
-  color: #fff; font-size: 15px; line-height: 1; border: none;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 3px 12px rgba(99, 102, 241, .45);
+  width: 28px; height: 28px; border-radius: 999px; z-index: 1; cursor: pointer;
+  display: grid; place-items: center; font-size: 16px; line-height: 1;
+  color: #c7d2fe; background: rgba(20, 27, 45, .96);
+  border: 1.5px solid rgba(99, 102, 241, .55); box-shadow: 0 3px 12px rgba(99, 102, 241, .22); transition: .14s;
 }
-.be-add:hover { transform: scale(1.08); }
+.be-add:hover { color: #fff; background: linear-gradient(135deg, #6366f1, #8b5cf6); border-color: transparent; transform: scale(1.1); }
 
-/* ── veliki „Dodaj blok" na dnu ── */
+/* ── veliki „Dodaj blok" na dnu (K5/F1: primarna add-afordancija) ── */
 .be-bigplus {
-  width: 100%; margin-top: 8px; padding: 14px; cursor: pointer;
-  border: 2px dashed rgba(99, 102, 241, .32); border-radius: 14px;
+  width: 100%; margin-top: 10px; padding: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1.5px dashed rgba(99, 102, 241, .34); border-radius: 14px;
   color: var(--text-muted); font-size: 13.5px; font-weight: 600;
-  background: rgba(99, 102, 241, .04); transition: .16s;
+  background: rgba(99, 102, 241, .05); transition: .16s;
 }
-.be-bigplus:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .1); }
+.be-bigplus:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); box-shadow: 0 0 0 3px rgba(99, 102, 241, .09); }
 
 /* ── tip-izbornik (na ＋) ── */
 .be-menu {
