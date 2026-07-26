@@ -20,6 +20,7 @@ const SokratStudio = (function () {
   let _sel = { subjectId: '', lessonId: '' }; // trenutno odabrana skripta
   let _data = null;                            // učitani sadržaj (dijeli referencu s _adminCtx.data preko setLesson)
   let _activeMode = null;                      // zadnji odabrani mode-tab (očuva se kroz re-render)
+  let _inspEd = null;                          // zadnje edit-stanje inspektora (#7: refresh samo na promjenu)
 
   // ---- helpers ----
   function esc(s) {
@@ -124,7 +125,7 @@ const SokratStudio = (function () {
       '    <div id="stTree">' + buildTree() + '</div>' +
       '  </aside>' +
       '  <main class="st-canvas" id="stCanvas">' + emptyCanvas() + '</main>' +
-      '  <aside class="st-inspector">' + inspectorStub() + '</aside>' +
+      '  <aside class="st-inspector" id="stInspector">' + inspectorStub(false) + '</aside>' +
       '</div>';
 
     byId('stBack').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('profile'); });
@@ -191,13 +192,16 @@ const SokratStudio = (function () {
   // U8.5f — kurirana paleta boja sekcija (ista u panelu i uz naslove sekcija u edit-modu).
   var SECTION_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7'];
 
-  function inspectorStub() {
-    return '<div class="st-icard"><h3>🎨 ' + esc(t('studio.colors', 'Boje sekcija')) + '</h3>' +
-      '<p>' + esc(t('studio.colorsHint', 'U uređivanju klikni kvadratić uz naslov sekcije — boja se nasljeđuje na kartice, kviz, dopune i learn.')) + '</p>' +
-      '<div class="st-swatches" style="margin-top:10px">' +
-      SECTION_COLORS.map(function (c) {
-        return '<div class="st-sw" style="background:' + c + '"></div>';
-      }).join('') + '</div></div>' +
+  function inspectorStub(isEd) {
+    // #7: mode-svjestan — read-only prikazuje „kako urediti", edit prikazuje aktivnu paletu boja.
+    var top = isEd
+      ? '<div class="st-icard"><h3>🎨 ' + esc(t('studio.colors', 'Boje sekcija')) + '</h3>' +
+        '<p>' + esc(t('studio.colorsHint', 'Klikni kvadratić uz naslov sekcije — boja se nasljeđuje na kartice, kviz, dopune i learn.')) + '</p>' +
+        '<div class="st-swatches" style="margin-top:10px">' +
+        SECTION_COLORS.map(function (c) { return '<div class="st-sw" style="background:' + c + '"></div>'; }).join('') + '</div></div>'
+      : '<div class="st-icard"><h3>✏️ ' + esc(t('studio.howEdit', 'Kako urediti')) + '</h3>' +
+        '<p>' + esc(t('studio.howEditHint', 'Klikni „Uredi" (gore desno) pa mijenjaj naslove, tekst i boje. Povuci ⣿ ručku za preslagivanje blokova i sekcija.')) + '</p></div>';
+    return top +
       '<div class="st-icard"><h3>⬆ Publish</h3><p>' +
       esc(t('studio.publishHint', 'Objava = publish-RPC: atomično, verzija, konflikt se ne gazi.')) + '</p></div>' +
       '<div class="st-premium"><h4>✨ AI autor <span class="st-pill">PREMIUM</span></h4>' +
@@ -445,8 +449,11 @@ const SokratStudio = (function () {
       if (!isEd) {
         // READ-ONLY preview (U8.1) kroz JEDAN renderer
         var body = renderLearnBody(c.learn, kind);
+        // Fix #6: ne dupliciraj naslov kad je learn.title == name (npr. „Tourism Demand — Tourism Demand").
+        var sub = (c.learn.title && String(c.learn.title).trim().toLowerCase() !== String(c.name || catId).trim().toLowerCase())
+          ? ' — ' + esc(c.learn.title) : '';
         out += '<div class="st-kv"' + accStyle + '><div class="st-kvhead"><span class="st-n">' + n + '</span>' +
-          '<h2>' + catName + (c.learn.title ? ' — ' + esc(c.learn.title) : '') + '</h2></div>' +
+          '<h2>' + catName + sub + '</h2></div>' +
           '<div class="st-body">' + body + '</div></div>';
         return;
       }
@@ -599,6 +606,10 @@ const SokratStudio = (function () {
     if (editBtn) editBtn.hidden = !(canEdit && !isEd);
     if (pub) pub.hidden = !isEd;
     if (dis) dis.hidden = !isEd;
+
+    // #7: inspektor je mode-svjestan → osvježi ga SAMO kad se edit-stanje promijeni (ne na svaku op).
+    var insp = byId('stInspector');
+    if (insp && _inspEd !== isEd) { _inspEd = isEd; insp.innerHTML = inspectorStub(isEd); }
 
     if (!chip) return;
     if (!hasLesson) { chip.textContent = '—'; chip.classList.remove('dirty'); return; }
