@@ -55,9 +55,9 @@ test('N blokova → N kartica + (N+1) addera + numeracija 1..N', function () {
   const h = E.renderEditor(sample);
   assert.strictEqual(count(h, /class="be-block"/g), 3);
   assert.strictEqual(count(h, /class="be-adder"/g), 4); // prije svakog (3) + kraj (1)
-  assert.ok(h.indexOf('<span class="be-n">1</span>') !== -1);
-  assert.ok(h.indexOf('<span class="be-n">2</span>') !== -1);
-  assert.ok(h.indexOf('<span class="be-n">3</span>') !== -1);
+  assert.ok(/<span class="be-n"[^>]*>1<\/span>/.test(h));
+  assert.ok(/<span class="be-n"[^>]*>2<\/span>/.test(h));
+  assert.ok(/<span class="be-n"[^>]*>3<\/span>/.test(h));
   assert.strictEqual(count(h, /class="be-empty"/g), 0);
 });
 
@@ -168,16 +168,18 @@ test('editableToInline: nepoznato formatiranje (span style) → curi u čisti te
   assert.strictEqual(E._editableToInline(EROOT([EL('span', [T('plain')], { style: 'color:red' })])), 'plain');
 });
 
-test('badge tipa = ljudski naziv (heading→Naslov, paragraph→Tekst, list→Lista)', function () {
+test('K3: tip-labela (be-type) uklonjena; tip = title na broju (heading→Naslov, paragraph→Tekst, list→Lista)', function () {
   const h = E.renderEditor(sample);
-  assert.ok(h.indexOf('<span class="be-type">Naslov</span>') !== -1);
-  assert.ok(h.indexOf('<span class="be-type">Tekst</span>') !== -1);
-  assert.ok(h.indexOf('<span class="be-type">Lista</span>') !== -1);
+  assert.strictEqual(count(h, /class="be-type"/g), 0, 'chrome stanjen — nema vidljive tip-labele');
+  assert.ok(h.indexOf('<span class="be-n" title="Naslov">1</span>') !== -1);
+  assert.ok(h.indexOf('<span class="be-n" title="Tekst">2</span>') !== -1);
+  assert.ok(h.indexOf('<span class="be-n" title="Lista">3</span>') !== -1);
 });
 
-test('nepoznat tip → badge = sirovi tip (fail-safe, escapan)', function () {
+test('nepoznat tip → title = sirovi tip (fail-safe, escapan), bez be-type', function () {
   const h = E.renderEditor([{ id: 'z1', type: 'wat' }]);
-  assert.ok(h.indexOf('<span class="be-type">wat</span>') !== -1);
+  assert.strictEqual(count(h, /class="be-type"/g), 0);
+  assert.ok(h.indexOf('<span class="be-n" title="wat">1</span>') !== -1);
 });
 
 test('id se escapa u atributima (obrana)', function () {

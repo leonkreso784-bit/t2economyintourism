@@ -176,10 +176,10 @@
     const label = TYPE_LABEL[type] || type;
     const upDis = i <= 0 ? ' disabled' : '';
     const downDis = i >= total - 1 ? ' disabled' : '';
+    // K3 (D2): tip-labela uklonjena (chrome stanjen) → tip ostaje kao `title` na broju (hover/a11y).
     return '<div class="be-block" data-be-block="' + esc(id) + '">' +
       '<div class="be-head">' +
-        '<span class="be-n">' + (i + 1) + '</span>' +
-        '<span class="be-type">' + esc(label) + '</span>' +
+        '<span class="be-n" title="' + esc(label) + '">' + (i + 1) + '</span>' +
         '<span class="be-ctrls">' +
           '<button type="button" class="be-btn" data-be-act="up" data-be-id="' + esc(id) + '"' + upDis + ' title="Pomakni gore" aria-label="Pomakni gore">↑</button>' +
           '<button type="button" class="be-btn" data-be-act="down" data-be-id="' + esc(id) + '"' + downDis + ' title="Pomakni dolje" aria-label="Pomakni dolje">↓</button>' +
