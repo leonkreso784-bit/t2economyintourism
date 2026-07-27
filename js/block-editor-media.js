@@ -42,13 +42,15 @@
         '<div class="be-media__preview">' + imagePreviewHtml(block) + '</div>' +
         '<div class="be-media__fields">' +
           // U8.7: pravi upload (file-picker + drop-zona) → Storage → URL u block.src. Cijela zona = drop-meta.
+          //   Nema URL-paste polja (Leonov zahtjev): normalan tok = klik „Odaberi" otvori datoteke/galeriju
+          //   ili povuci sliku. `src` = skriveni nosač (upload ga puni + okine `change` = postojeći save-put).
           '<div class="be-upload" data-be-upload>' +
             '<input type="file" class="be-upload__file" data-be-imgfile accept="image/png,image/jpeg,image/webp,image/gif">' +
-            '<button type="button" class="be-upload__btn" data-be-imgpick>📁 Odaberi sliku s računala</button>' +
-            '<span class="be-upload__hint">ili povuci sliku ovamo · ili zalijepi URL ↓</span>' +
+            '<button type="button" class="be-upload__btn" data-be-imgpick>📁 Odaberi sliku</button>' +
+            '<span class="be-upload__hint">ili povuci sliku ovamo</span>' +
             '<span class="be-upload__status" data-be-imgstatus aria-live="polite"></span>' +
           '</div>' +
-          mField('src', 'URL slike (https://…)', block.src) +
+          '<input type="hidden" data-be-mfield="src" value="' + esc(block.src == null ? '' : block.src) + '">' +
           mField('alt', 'Opis za pristupačnost (alt)', block.alt) +
           mField('caption', 'Naslov ispod (opcionalno)', inlineToPlain(block.caption)) +
         '</div></div>';

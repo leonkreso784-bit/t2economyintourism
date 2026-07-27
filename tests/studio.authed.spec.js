@@ -242,45 +242,6 @@ test('U8.4b — Studio learn: boja (traka) + link (prompt) → runs u draftu →
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
 
-test('U8.5a — Studio learn: dodaj Sliku → upiši URL → draft ima src → Odbaci', async ({ page }) => {
-  const sel = await openStudioLesson(page);
-  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
-  await page.click('#stEdit');
-  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
-
-  // learn tab + migracija → block-editor
-  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
-  if (await learnTab.count()) await learnTab.click();
-  await page.locator('#stCanvas .st-migrate').first().click();
-  await page.waitForSelector('#stCanvas .be-mount .be-root');
-
-  // dodaj Slika blok kroz ＋
-  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
-  await page.waitForSelector('.be-menu .be-menu-item');
-  await page.locator('.be-menu .be-menu-item', { hasText: 'Slika' }).click();
-  const srcInput = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-mfield="src"]');
-  await expect(srcInput).toHaveCount(1);
-
-  // upiši URL → blur → change → draft ima src
-  await srcInput.fill('https://example.com/slika.png');
-  await page.locator('#stCanvas .st-head h1').click();  // blur = change
-  const hasSrc = await page.evaluate((s) => {
-    const d = window.SokratDraft.get(s.subj, s.lesson);
-    return Object.keys(d.working).some((k) => {
-      const cat = d.working[k];
-      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
-      return Array.isArray(blks) && blks.some((b) => b.type === 'image' && b.src === 'https://example.com/slika.png');
-    });
-  }, sel);
-  expect(hasSrc).toBe(true);
-
-  // Odbaci
-  await page.click('#stDiscard');
-  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
-  await page.click('sokrat-confirm .sokrat-confirm__ok');
-  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
-});
-
 test('U8.7 — Studio learn: dodaj Sliku → UPLOAD datoteke → Storage URL u draftu → Odbaci', async ({ page }) => {
   const sel = await openStudioLesson(page);
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
@@ -554,16 +515,27 @@ test('U8.5e — Studio learn: callout varijanta+naslov · slika resize-ručkom �
   await page.waitForSelector('.be-menu .be-menu-item');
   await page.locator('.be-menu .be-menu-item', { hasText: 'Slika' }).click();
   const iblock = page.locator('#stCanvas .be-mount .be-block').last();
-  await iblock.locator('[data-be-mfield="src"]').fill('/assets/logo.svg');
-  await page.locator('#stCanvas .st-head h1').click();           // blur → preview + ručka
+  // src je SKRIVEN (U8.7: nema URL-paste, samo upload) → postavi ga programski + okini `change` = isti
+  // save-put; lokalni asset da preview STVARNO renderira (bez mrežnog uploada) → resize-ručka se pojavi.
+  await iblock.locator('[data-be-mfield="src"]').evaluate((el) => {
+    el.value = '/assets/logo.svg';
+    el.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  // pričekaj da se slika STVARNO rasporedi (layout) prije drag-a — inače boundingBox=0 → width se ne izračuna
+  await expect(iblock.locator('.be-media__preview .lb-figure__img')).toBeVisible();
   const handle = iblock.locator('[data-be-imgresize]');
   await expect(handle).toHaveCount(1);
-  await handle.scrollIntoViewIfNeeded();               // ručka je duboko u learn-pane → mora u viewport za mouse-drag
-  const hb = await handle.boundingBox();
-  await page.mouse.move(hb.x + hb.width / 2, hb.y + hb.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(hb.x + hb.width / 2 - 220, hb.y + hb.height / 2, { steps: 6 });
-  await page.mouse.up();                                          // → jedan op {width}
+  // resize drag = deterministički sintetički pointer-slijed na ručki (pouzdanije od page.mouse u headlessu);
+  //   vozi PRAVI put: container pointerdown → imageResizePointerDown → document pointermove/up → applyOp{width}.
+  //   povlačenje ULIJEVO (−220px) < startPct(100) → width 10–99.
+  await handle.evaluate((h) => {
+    const r = h.getBoundingClientRect();
+    const cy = r.top + r.height / 2, cx = r.left + r.width / 2;
+    const mk = (type, x) => new PointerEvent(type, { bubbles: true, cancelable: true, clientX: x, clientY: cy, pointerId: 1, button: 0 });
+    h.dispatchEvent(mk('pointerdown', cx));
+    document.dispatchEvent(mk('pointermove', cx - 220));
+    document.dispatchEvent(mk('pointerup', cx - 220));
+  });
   const ib = await readBlock('image');
   expect(typeof ib.width).toBe('number');
   expect(ib.width).toBeGreaterThanOrEqual(10);
