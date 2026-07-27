@@ -281,6 +281,54 @@ test('U8.5a — Studio learn: dodaj Sliku → upiši URL → draft ima src → O
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
 });
 
+test('U8.7 — Studio learn: dodaj Sliku → UPLOAD datoteke → Storage URL u draftu → Odbaci', async ({ page }) => {
+  const sel = await openStudioLesson(page);
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+  await page.click('#stEdit');
+  await page.waitForSelector('#stCanvas .st-editing', { timeout: 20000 });
+
+  const learnTab = page.locator('#stCanvas .st-tab[data-mode="learn"]');
+  if (await learnTab.count()) await learnTab.click();
+  await page.locator('#stCanvas .st-migrate').first().click();
+  await page.waitForSelector('#stCanvas .be-mount .be-root');
+
+  // dodaj Slika blok kroz ＋
+  await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+  await page.waitForSelector('.be-menu .be-menu-item');
+  await page.locator('.be-menu .be-menu-item', { hasText: 'Slika' }).click();
+  const imgBlock = page.locator('#stCanvas .be-mount .be-block').last();
+  const fileInput = imgBlock.locator('[data-be-imgfile]');
+  await expect(fileInput).toHaveCount(1);
+
+  // PRAVI UPLOAD: postavi malenu PNG datoteku na (skriveni) file-input → change → upload u staging Storage.
+  //   1×1 transparentni PNG (validan; prolazi validateImageFile + bucket MIME/size); RLS admin-insert radi
+  //   jer smo prijavljeni kao staging test-admin. Datoteka ostaje u staging bucketu (potrošan) — draft = Odbaci.
+  const PNG_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+  await fileInput.setInputFiles({ name: 'u8-7-test.png', mimeType: 'image/png', buffer: Buffer.from(PNG_B64, 'base64') });
+
+  // pričekaj uspjeh (status „✓ Preneseno") — mrežni upload na staging Storage
+  await expect(imgBlock.locator('[data-be-imgstatus].is-ok')).toBeVisible({ timeout: 30000 });
+
+  // draft-blok src = pravi lesson-images public URL (dokaz da je upload prošao kroz RLS)
+  const src = await page.evaluate((s) => {
+    const d = window.SokratDraft.get(s.subj, s.lesson);
+    let found = '';
+    Object.keys(d.working).forEach((k) => {
+      const cat = d.working[k];
+      const blks = cat && typeof cat === 'object' && cat.learn && cat.learn.blocks;
+      if (Array.isArray(blks)) blks.forEach((b) => { if (b.type === 'image' && b.src && /lesson-images/.test(b.src)) found = b.src; });
+    });
+    return found;
+  }, sel);
+  expect(src).toMatch(/\/storage\/v1\/object\/public\/lesson-images\//);
+
+  // Odbaci
+  await page.click('#stDiscard');
+  await page.waitForSelector('sokrat-confirm .sokrat-confirm__ok', { state: 'visible' });
+  await page.click('sokrat-confirm .sokrat-confirm__ok');
+  await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+});
+
 test('U8.5b — Studio learn: dodaj Video → zalijepi YouTube link → draft url + facade → Odbaci', async ({ page }) => {
   const sel = await openStudioLesson(page);
   await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
