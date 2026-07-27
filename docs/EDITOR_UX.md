@@ -6,6 +6,8 @@ vizualna letvica se **dalje diže iterativno** tijekom U6–U8 (Leon presuđuje 
 QA smoke 36/36). Zahtjevi-ugovor: **[EDITOR_PLAN.md §5.1](EDITOR_PLAN.md) točke 1–8.** Varijante A (Studio) i B (Vodič) ostaju
 u `design/mockups/` kao referenca — C ih spaja.
 
+> **⚠️ RE-PLAN U8 (2026-07-20) — build-pristup:** izgradnja editora ide po **[EDITOR_PLAN.md §12.2](EDITOR_PLAN.md)**: Studio se gradi kao **nova `#editor-page` iz KOSTIJU ovog mockupa** (stablo/canvas/paneli/kvadratići) — **funkcija prva (grubo stilizirano + VIDLJIVO), a vizualni „čisto i bogato" prolaz ZADNJI** (U8.6). Pouka koja je do ovoga dovela: prva U8a-verzija bolt-ala editor na stari admin (kriva kost) → Leon „katastrofa" → od sad **kreni od strukture ciljnog dizajna, ne bolt-aj na staro, ne skrivaj funkciju**.
+
 ## 1. Temeljna filozofija (presuda)
 - **Studio = dom, Vodič = ulaz.** Puni radni prostor (stablo + canvas + inspektor) je stalno sučelje; **„＋ Nova skripta"
   otvara wizard kao MODAL preko Studija** (1. Gdje? → 2. Što sadrži?) i „✨ Kreni pisati" **ispusti autora natrag u Studio**

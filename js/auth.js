@@ -16,7 +16,11 @@ const SOKRAT_AUTH_CONFIG = {
     enabled: true,
     url: 'https://naxjubnedhrbhsuasayu.supabase.co',
     publishableKey: 'sb_publishable_KatBQDLB8GRohKEyb3eDSQ_ToXJuL7L',
-    cdnSrc: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'
+    // Supply-chain (risk-sprint #5): TOČAN pin (ne plutajući @2) + SRI hash računat nad
+    // stvarnim bajtovima koje jsDelivr servira → mijenja li CDN sadržaj, skripta se ODBIJA
+    // (browser SRI enforce). Nadogradnja verzije = svjesna: novi pin + novi hash + re-test.
+    cdnSrc: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.8/dist/umd/supabase.min.js',
+    cdnIntegrity: 'sha384-Tve8O+C6PBzsIMK/IRCwHbi8fyEzXIlIs6OfVBZHubplwYhaQF/4Mzxqgg+pp/oy'
 };
 
 // TEST-ONLY seam (U1): dopusti automatiziranim testovima (Playwright) da preusmjere Supabase
@@ -54,6 +58,13 @@ const SokratAuth = (function () {
             if (typeof window.supabase !== 'undefined') { resolve(); return; }
             const s = document.createElement('script');
             s.src = SOKRAT_AUTH_CONFIG.cdnSrc;
+            // SRI (#5): integrity + crossOrigin='anonymous' obavezni za enforce na cross-origin
+            // skripti. jsDelivr šalje CORS (ACAO:*) → radi. Kriv/promijenjen bajt → onerror → auth
+            // se tiho ugasi (isti graceful put kao CDN-nedostupan), app nastavlja bez computa.
+            if (SOKRAT_AUTH_CONFIG.cdnIntegrity) {
+                s.integrity = SOKRAT_AUTH_CONFIG.cdnIntegrity;
+                s.crossOrigin = 'anonymous';
+            }
             s.async = true;
             s.onload = resolve;
             s.onerror = function () { reject(new Error('supabase-js CDN load failed')); };

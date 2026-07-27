@@ -621,6 +621,38 @@ const SOKRAT_CATALOG = {
       }
     },
     {
+      id: 'te2-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 1,
+      name: 'Ekonomika turizma',
+      shortName: 'EKT',
+      icon: 'fa-plane',
+      color: '#6366f1',
+      iconGradient: ['#6366f1', '#818cf8'],
+      description: 'Ekonomika turizma (FMTU): pojam turista i turizma, turistička potreba i vrste turizma, turističko tržište, ponuda i potražnja, turistički resursi i posrednici te turizam u nacionalnom gospodarstvu; potom ekonomske i društvene funkcije turizma, slobodno vrijeme i dokolica, turistička potrošnja, ekonomski učinci i Turistička satelitska bilanca (TSA)',
+      storageKey: 'te2-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Pojam turista i turizma, turistička potreba i vrste turizma, turističko tržište i ponuda, turistički resursi, turistička potražnja, turistički posrednici te turizam u nacionalnom gospodarstvu' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Ekonomske funkcije turizma, slobodno vrijeme i dokolica, društvene (humanističke) funkcije, turistička potrošnja, ekonomski učinci turizma te Turistička satelitska bilanca (TSA)' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/te2-hr/final.js MORA se učitati zadnji (Object.assign te2HrM1 + te2HrM2 + examPractice)
+        scripts: [
+          'data/te2-hr/midterm-1.js',
+          'data/te2-hr/midterm-2.js',
+          'data/te2-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'te2HrM1',
+          'second-midterm': 'te2HrM2',
+          'final': 'te2HrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/te2-hr/*.json)
+      }
+    },
+    {
       id: 'entrepreneurship-hr',
       programId: 'hospitality-management-hr',
       year: 2, semester: 1,

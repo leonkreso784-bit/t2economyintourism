@@ -44,6 +44,20 @@ bilježimo napredak, verzioniramo, učimo iz grešaka.
 | [subjects/README.md](subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe/napomene) |
 | [subjects/ACCOUNTING_PLAN.md](subjects/ACCOUNTING_PLAN.md) · [subjects/STATISTICS_PLAN.md](subjects/STATISTICS_PLAN.md) · [subjects/TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md) · [subjects/MATH_PLAN.md](subjects/MATH_PLAN.md) | Detaljni planovi pojedinih predmeta (✅ done) |
 
+## Sokrat AI (vlastiti jezični model) — `sokrat-ai/`
+> ⚠️ **POTPUNO ZASEBAN PROJEKT — NE implementira se na ovu platformu i nema veze s njom**
+> (Leonova izričita odluka 2026-07-24). Ovdje samo živi zapis. Platforma ne ovisi o njemu ni u čemu.
+> Rok prve prezentacije dekanu: **10. mjesec 2026.**
+
+| Dokument | Svrha |
+|----------|-------|
+| [sokrat-ai/README.md](sokrat-ai/README.md) | **Ulazna točka** — što je, temeljne odluke, putanja do 10. mj |
+| [sokrat-ai/VISION.md](sokrat-ai/VISION.md) | Teza: nekontaminirani ljudski podaci, pozicioniranje, naša prednost |
+| [sokrat-ai/RESEARCH.md](sokrat-ai/RESEARCH.md) | 4 istraživačke oklade (A–D), jeftina metodologija, tehnička arhitektura |
+| [sokrat-ai/DATA.md](sokrat-ai/DATA.md) | Izvori (Hrčak/DABAR/hrWaC/Wikipedia), porijeklo, cjevovod podataka |
+| [sokrat-ai/LEGAL_GDPR.md](sokrat-ai/LEGAL_GDPR.md) | **GDPR + autorsko pravo + TDM iznimka** (⚠️ nije pravni savjet) |
+| [sokrat-ai/DEAN_PITCH.md](sokrat-ai/DEAN_PITCH.md) | Prezentacija dekanu: što tražimo/nudimo, plan i kontrolna lista |
+
 ## Živi zapisnici
 | Dokument | Svrha |
 |----------|-------|

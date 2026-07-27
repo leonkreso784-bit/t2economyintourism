@@ -37,7 +37,7 @@ Ključ kategorije u objektu predmeta je `camelCase` (npr. `marketingConcept`) i 
 kao stabilan ID (filteri, napredak). **Ne mijenjaj ključ nakon objave** — veže se uz
 spremljeni napredak korisnika.
 
-> **🆔 Schema v2 (U2a, 2026-07-11):** svaka kategorija I svaka stavka (flashcard/quiz/fill/learn) nosi opcionalni `id: "xxxxxx"` (6-char, stabilan po stavci — temelj za reorder/delete/propagaciju/SRS). **Auto-generiran** skriptom `scripts/add-item-ids.js` (AST-surgical) — **NE piše se ni ne uređuje ručno.** Schema ga prihvaća opcionalno (v1 bez / v2 s). Dokument-`schemaVersion` je ODGOĐEN na U2b (traži runtime meta-filter — vidi `EDITOR_PLAN.md` §12).
+> **🆔 Schema v2 (U2a, 2026-07-11):** svaka kategorija I svaka stavka (flashcard/quiz/fill/learn) nosi opcionalni `id: "xxxxxx"` (6-char, stabilan po stavci — temelj za reorder/delete/propagaciju/SRS). **Auto-generiran** skriptom `scripts/add-item-ids.js` (AST-surgical) — **NE piše se ni ne uređuje ručno.** Schema ga prihvaća opcionalno (v1 bez / v2 s). Dokument-`schemaVersion` je **isporučen u U7a** (2026-07-19): runtime meta-filter `getCategories()` (`content-loader.js`) isključuje ga iz category-iteracija, schema ga prihvaća (`integer ≥ 1`). Marker: odsutan/1 = v1 · 2 = learn-blokovi. Vidi §Learn v2 + `EDITOR_PLAN.md` §12.1.
 
 ## Flashcard
 ```js
@@ -101,6 +101,29 @@ nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE 
 ```
 `content` je HTML (dozvoljeni `<h3> <p> <ul> <li> <strong> <em> <table>` itd.). Slike
 unutar `content` automatski postaju zoomabilne. Drži sadržaj samostojećim po kategoriji.
+
+### 🧱 Learn v2 — blok-model (U7, schema v2; autorstvo = editor U8)
+> **Status:** v1 (`content` HTML-string) je i dalje aktivan i valjan; v2 se **dodaje**, ne zamjenjuje. Svaki learn ima **`content` ILI `blocks`** (schema `anyOf`). Blokove zasad NE piše čovjek ručno — generira ih blok-editor (U8); ova sekcija dokumentira UGOVOR.
+
+Umjesto sirovog HTML-a, v2 learn je niz tipiziranih blokova → **sav render ide kroz jedan sanitizirajući renderer** (`js/blocks-renderer.js` = sigurnosna granica; autor nikad ne piše sirovi HTML osim `legacy-html` tipa koji ide kroz DOMPurify).
+```js
+learn: {
+  id: "xxxxxx",                                   // opcionalno (U2a)
+  title: "Naslov",                                // opcionalno
+  blocks: [                                        // v2 — XOR s "content"
+    { id, type: "heading",    level: 2..4, text },        // text = inline
+    { id, type: "paragraph",  text },
+    { id, type: "list",       ordered?: bool, items: [inline,…] },
+    { id, type: "callout",    variant?: "info|warning|tip", title?, text },
+    { id, type: "image",      src, alt?, caption?: inline },
+    { id, type: "video",      videoId | url },            // YouTube (nocookie, klik-za-učitavanje)
+    { id, type: "table",      header?: [inline,…], rows: [[inline,…],…] },
+    { id, type: "formula",    tex, display?: bool },      // KaTeX; tex = RAW (bez delimitera)
+    { id, type: "legacy-html", html }                     // v1 most → DOMPurify
+  ]
+}
+```
+**`inline`** = obični string ILI niz „runs" `[{ text, b?, i?, color?, href? }]`; `color` samo iz kuriranog seta **`indigo|green|amber|red|default`** (nikad proizvoljna vrijednost). Ugovor je strojno provjeren: `schema/subject-content.schema.json` (`block` = `oneOf` 9 tipova, `additionalProperties:false`) + `validate-content.js` (`validateBlocks`). Blokovi žive u `payload` jsonb → export/dual-read ih nose kao čiste podatke (bez DB DDL-a).
 
 ## Strojno-čitljiv ugovor + JSON format pohrane (F2 2A, ✅ LIVE 2026-07-02)
 - **`schema/subject-content.schema.json`** (JSON Schema draft-07) = strojno-čitljiva verzija OVE sheme

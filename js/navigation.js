@@ -52,14 +52,14 @@ function navigateTo(page, data = {}) {
     // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
     // Dolazak IZ ADMINA ne prepisuje cilj: admin je pod-stranica profila (ulaz i back idu
     // kroz profil), pa bi "back = admin" stvorio petlju profil ⇄ admin (BUG-019).
-    if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin') {
+    if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin' && AppState.nav.page !== 'editor') {
         profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
     }
     AppState.nav.page = page;
-    // Profile i Admin se NE spremaju kao "last position" (ovise o auth sesiji / admin statusu koji na reloadu još nisu spremni).
-    if (page !== 'profile' && page !== 'admin') saveCurrentPosition(page, data);
+    // Profile/Admin/Editor se NE spremaju kao "last position" (ovise o auth sesiji / admin statusu koji na reloadu još nisu spremni).
+    if (page !== 'profile' && page !== 'admin' && page !== 'editor') saveCurrentPosition(page, data);
 
-    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page, .admin-page').forEach(p => {
+    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page, .admin-page, .studio-page').forEach(p => {
         p.classList.remove('active');
     });
 
@@ -103,6 +103,12 @@ function navigateTo(page, data = {}) {
             // F4.3b: read-only content viewer. Ulaz je admin-only (skriveni gumb); write (F4.3c) je RLS-zaštićen.
             if (typeof renderAdminPage === 'function') renderAdminPage();
             document.getElementById('admin-page').classList.add('active');
+            closeSidebar();
+            break;
+        case 'editor':
+            // U8: novi vizualni editor „Studio" (#editor-page). Admin-only ulaz; koegzistira sa #admin-page.
+            if (typeof renderStudioPage === 'function') renderStudioPage();
+            document.getElementById('editor-page').classList.add('active');
             closeSidebar();
             break;
     }

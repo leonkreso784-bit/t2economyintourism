@@ -31,7 +31,7 @@ function getAllFillQuestions() {
     const content = AppState.nav.data;
     if (!content) return [];
     let all = [];
-    Object.keys(content).forEach(category => {
+    getCategories(content).forEach(category => {
         if (content[category].fillBlanks) {
             content[category].fillBlanks.forEach(q => {
                 all.push({

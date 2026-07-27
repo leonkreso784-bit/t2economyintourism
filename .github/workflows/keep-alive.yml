@@ -1,0 +1,45 @@
+name: Keep-alive
+
+# Risk-sprint #4 (EDITOR_PLAN §12.4): Supabase free-tier PAUZIRA projekt nakon ~7 dana
+# neaktivnosti — login/cloud-sync/DB-read tada padaju dok se projekt ručno ne probudi
+# (app fallbacka na datoteke, ali auth ne radi). Ovaj cron radi JEDAN lagani read-only
+# anon upit dnevno → projekt se vodi kao aktivan i nikad ne zaspi.
+#
+# ⚠️ VAŽNO:
+#  - GitHub pokreće `schedule` SAMO s default-grane (main) → workflow postaje AKTIVAN
+#    tek merge-om na main (batchano s deploy risk-#5 u jedan "idemo na prod" trenutak).
+#  - Publishable (anon) ključ je JAVAN PO DIZAJNU (isti kao u js/auth.js koji svaki
+#    posjetitelj dohvati; RLS štiti podatke) → ovdje NEMA tajni. Vrijednosti zrcale
+#    js/auth.js — ako se Supabase projekt ikad promijeni, ažuriraj oba mjesta.
+#  - GitHub auto-gasi schedule ako repo miruje 60 dana → uz aktivan razvoj nebitno;
+#    ako se ikad ugasi: Actions tab → Re-enable workflow.
+#  - Crveni run = keep-alive NE radi (baza može zaspati) → namjerno TVRDI fail, ne tihi
+#    skip (za razliku od check:final/load-probe kojima je graceful-skip ispravan).
+
+on:
+  schedule:
+    - cron: '17 5 * * *' # dnevno 05:17 UTC (ne top-of-hour → manji GitHub delay/drop; prag sna ~7 dana = ogroman buffer)
+  workflow_dispatch: {} # ručni test-run (i jedini način pokretanja s ne-default grane)
+
+jobs:
+  ping:
+    name: Supabase anon ping (read-only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping baze (1 redak subject_content kroz PostgREST)
+        env:
+          SUPABASE_URL: https://naxjubnedhrbhsuasayu.supabase.co
+          SUPABASE_ANON: sb_publishable_KatBQDLB8GRohKEyb3eDSQ_ToXJuL7L
+        run: |
+          body=$(curl -sS --fail-with-body --retry 3 --retry-all-errors --max-time 30 \
+            -H "apikey: $SUPABASE_ANON" \
+            -H "Authorization: Bearer $SUPABASE_ANON" \
+            "$SUPABASE_URL/rest/v1/subject_content?select=subject_id&limit=1")
+          echo "Odgovor: $body"
+          # Dokaz da je upit STVARNO prošao kroz Postgres (ne samo gateway):
+          # neprazan JSON array s retkom. Prazan [] ili error-objekt = fail.
+          case "$body" in
+            \[\{*\]) echo "✅ Baza budna (redak vraćen)" ;;
+            *) echo "❌ Neočekivan odgovor — baza spava ili se shema/RLS promijenio"; exit 1 ;;
+          esac

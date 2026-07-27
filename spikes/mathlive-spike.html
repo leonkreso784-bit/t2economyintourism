@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="hr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SPIKE — MathLive math-tipkovnica (U8.9)</title>
+
+  <!--
+    ⚠️ SPIKE (U8.9) — IZOLIRANA PROBA, NIJE dio aplikacije.
+    Ne učitava se iz index.html; ne utječe na student-bundle ni prod. Svrha:
+    dokazati (1) MathLive = vizualna math-tipkovnica, (2) njegov izlaz (LaTeX)
+    prolazi kroz NAŠ STVARNI renderer (blocks-renderer.js → math.js/KaTeX)
+    identično kako student vidi → round-trip potvrda prije integracije.
+    Ako usvojimo: MathLive se VENDORA + ožiči u formula-blok editor (U8.5c tex-polje),
+    SAMO autorska strana (student nikad ne učita MathLive → nula utjecaja na perf).
+  -->
+
+  <!-- KaTeX (isti CDN/verzija kao index.html) — student-render formula -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+
+  <!-- NAŠ produkcijski renderer + math helper (dokaz round-tripa kroz pravi kod) -->
+  <script defer src="../js/math.js"></script>
+  <script defer src="../js/blocks-renderer.js"></script>
+
+  <!-- MathLive (CDN samo za spike; vendoranje = korak usvajanja) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/mathlive"></script>
+
+  <style>
+    :root {
+      --bg: #0b1120; --panel: #1e293b; --line: rgba(148,163,184,.2);
+      --text: #e2e8f0; --muted: #94a3b8; --primary: #818cf8; --accent: #34d399;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 24px; background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height: 1.5;
+    }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    .sub { color: var(--muted); font-size: 13px; margin: 0 0 20px; max-width: 760px; }
+    .sub code { background: rgba(148,163,184,.15); padding: 1px 5px; border-radius: 4px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 1100px; }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+    }
+    .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0 0 12px; }
+    math-field {
+      display: block; font-size: 22px; padding: 12px; border-radius: 10px;
+      background: #0f172a; border: 1px solid var(--line); color: var(--text);
+    }
+    math-field:focus-within { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(129,140,248,.25); }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    button {
+      padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600;
+      color: var(--text); background: rgba(129,140,248,.12); border: 1px solid rgba(129,140,248,.35);
+      transition: .13s;
+    }
+    button:hover { background: rgba(129,140,248,.24); border-color: var(--primary); }
+    button.primary { background: linear-gradient(135deg,#6366f1,#8b5cf6); border: none; color: #fff; }
+    .latex {
+      width: 100%; min-height: 88px; margin-top: 4px; padding: 12px; border-radius: 10px; resize: vertical;
+      background: #0f172a; border: 1px solid var(--line); color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px; line-height: 1.6;
+    }
+    .studentview {
+      min-height: 88px; padding: 16px; border-radius: 10px; background: #0f172a; border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+    .note { font-size: 12px; color: var(--muted); margin-top: 10px; }
+    .ok { color: var(--accent); } .bad { color: #f87171; }
+    .verdict { margin-top: 20px; max-width: 1100px; font-size: 13px; color: var(--muted); }
+    .verdict b { color: var(--text); }
+    /* renderer stilovi (učitali bismo learn-blocks.css u pravoj integraciji; ovdje minimalni za formulu) */
+    .lb-formula { margin: 0; }
+  </style>
+</head>
+<body>
+  <h1>🧪 SPIKE — MathLive math-tipkovnica <span style="color:var(--muted);font-weight:400">(U8.9)</span></h1>
+  <p class="sub">
+    Upiši formulu vizualno (bez LaTeX-a) — klikni <b>„Prikaži tipkovnicu"</b> ili sam field pa ikonu tipkovnice.
+    Lijevo je <b>autorski unos</b> (MathLive), desno je <b>kako student vidi</b> — renderirano kroz NAŠ
+    <code>blocks-renderer.js</code> + <code>math.js</code>/KaTeX (isti kod kao u aplikaciji). Ako su desno i unos
+    jednaki → round-trip radi i integracija je sigurna.
+  </p>
+
+  <div class="grid">
+    <!-- LIJEVO: autorski unos -->
+    <div class="card">
+      <h2>✍️ Autorski unos — MathLive (vizualno)</h2>
+      <math-field id="mf">x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}</math-field>
+      <div class="row">
+        <button class="primary" id="showKb">⌨️ Prikaži tipkovnicu</button>
+        <button data-ex="\frac{a}{b}">½ razlomak</button>
+        <button data-ex="\sqrt[n]{x}">√ korijen</button>
+        <button data-ex="\sum_{i=1}^{n} i^2">Σ suma</button>
+        <button data-ex="\int_{0}^{\infty} e^{-x}\,dx">∫ integral</button>
+        <button data-ex="\alpha\beta\gamma\pi\theta">grčka</button>
+      </div>
+      <p class="note">MathLive nudi 800+ LaTeX naredbi + mobilnu virtualnu tipkovnicu. Autor NIKAD ne piše LaTeX ručno.</p>
+    </div>
+
+    <!-- DESNO: kako student vidi (naš renderer) -->
+    <div class="card">
+      <h2>👁️ Kako student vidi — naš renderer (blocks-renderer → KaTeX)</h2>
+      <div class="studentview" id="studentView">…</div>
+      <p class="note">Renderirano preko <code>renderBlocks([{type:'formula', tex, display:true}])</code> → <code>renderMath()</code>.</p>
+    </div>
+
+    <!-- LaTeX izlaz (ono što bi se spremilo u tex) -->
+    <div class="card" style="grid-column: 1 / -1;">
+      <h2>🔤 LaTeX izlaz (= spremilo bi se u <code>block.tex</code>)</h2>
+      <textarea class="latex" id="latexOut" readonly></textarea>
+      <p class="note" id="status">Učitavam MathLive + KaTeX…</p>
+    </div>
+  </div>
+
+  <div class="verdict">
+    <b>Kriterij uspjeha spikea:</b> (1) virtualna tipkovnica se prikaže i omogući vizualni unos; (2) LaTeX izlaz je čist;
+    (3) desni „student view" = točno ista formula kroz NAŠ renderer. <br>
+    <b>Ako prolazi</b> → usvajamo: vendoraj MathLive + ožiči u formula-blok editor (U8.5c <code>tex</code>-polje), samo autorska strana.
+    <b>Ako ne</b> → fallback = laka vanilla-paleta LaTeX-isječaka (isti desni render).
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+      var booted = false;
+      function boot() {
+        if (booted) return;              // whenDefined + setTimeout fallback → izvrši SAMO jednom (bez duplih listenera)
+        booted = true;
+        var mf = document.getElementById('mf');
+        var latexOut = document.getElementById('latexOut');
+        var studentView = document.getElementById('studentView');
+        var status = document.getElementById('status');
+
+        if (!mf || typeof mf.value === 'undefined') {
+          status.innerHTML = '<span class="bad">✗ MathLive nije učitan (CDN blokiran/offline?). Otvori s mrežom.</span>';
+          return;
+        }
+
+        // desni preview = NAŠ produkcijski put (dokaz round-tripa)
+        function renderStudent(latex) {
+          latexOut.value = latex;
+          if (typeof window.renderBlocks === 'function') {
+            studentView.innerHTML = window.renderBlocks([{ type: 'formula', tex: latex, display: true }]);
+            if (typeof window.renderMath === 'function') window.renderMath(studentView); // KaTeX tipografira \[…\]
+          } else {
+            studentView.textContent = '(blocks-renderer.js nije učitan)';
+          }
+        }
+
+        mf.addEventListener('input', function (e) { renderStudent(e.target.value); });
+
+        // primjer-gumbi (brzo testiranje) + „grčka" itd.
+        document.querySelectorAll('button[data-ex]').forEach(function (b) {
+          b.addEventListener('click', function () { mf.value = b.getAttribute('data-ex'); renderStudent(mf.value); mf.focus(); });
+        });
+
+        // virtualna tipkovnica (MathLive globalni kontroler)
+        document.getElementById('showKb').addEventListener('click', function () {
+          mf.focus();
+          if (window.mathVirtualKeyboard && typeof window.mathVirtualKeyboard.show === 'function') window.mathVirtualKeyboard.show();
+        });
+
+        var katexReady = typeof window.renderMathInElement === 'function';
+        status.innerHTML = '<span class="ok">✓ MathLive učitan.</span> KaTeX: ' +
+          (katexReady ? '<span class="ok">✓</span>' : '<span class="bad">✗ (formula ostaje sirovi LaTeX)</span>') +
+          ' · renderBlocks: ' + (typeof window.renderBlocks === 'function' ? '<span class="ok">✓</span>' : '<span class="bad">✗</span>');
+
+        renderStudent(mf.value); // inicijalni render
+      }
+
+      // defer skripte izvrše se prije DOMContentLoaded; čekamo i registraciju <math-field>
+      window.addEventListener('DOMContentLoaded', function () {
+        if (window.customElements && customElements.whenDefined) {
+          customElements.whenDefined('math-field').then(boot).catch(boot);
+          setTimeout(boot, 1500); // fallback ako CDN kasni/padne (boot je idempotentan po sadržaju)
+        } else { boot(); }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -69,6 +69,52 @@ function checkKatex(where, text) {
   if (cDouble % 2 !== 0) fail(`${where}: neparan broj $$ delimitera (${cDouble})`);
 }
 
+// --- Learn-blokovi (schema v2): semanticka provjera POVRH JSON Scheme -------------
+// Schema (subject-content.schema.json) provjerava OBLIK/tipove/polja; ovdje dodajemo
+// semantiku: poznat tip + KaTeX-balans na inline prozi (currency-safe, kao v1 content).
+// Ugovor 1:1 prati js/blocks-renderer.js (9 tipova, inline = string ILI runs).
+const BLOCK_TYPES = { heading: 1, paragraph: 1, list: 1, callout: 1, image: 1, video: 1, table: 1, formula: 1, 'legacy-html': 1 };
+
+// inline = string ILI runs [{text,b?,i?,color?,href?}] → KaTeX-balans na prozi
+function checkInline(where, x) {
+  if (typeof x === 'string') { checkKatex(where, x); return; }
+  if (Array.isArray(x)) x.forEach((run, i) => {
+    if (run && typeof run === 'object' && typeof run.text === 'string') checkKatex(`${where}.run[${i}]`, run.text);
+  });
+}
+
+function validateBlocks(where, blocks) {
+  blocks.forEach((b, i) => {
+    const w = `${where}.block[${i}]`;
+    if (!b || typeof b !== 'object') { fail(`${w} nije objekt`); return; }
+    if (!BLOCK_TYPES[b.type]) { fail(`${w} nepoznat tip bloka "${b.type}"`); return; }
+    switch (b.type) {
+      case 'heading':
+      case 'paragraph':
+        checkInline(`${w}.text`, b.text);
+        break;
+      case 'callout':
+        checkInline(`${w}.text`, b.text);
+        if (b.title != null) checkKatex(`${w}.title`, b.title);
+        break;
+      case 'list':
+        if (Array.isArray(b.items)) b.items.forEach((it, j) => checkInline(`${w}.items[${j}]`, it));
+        break;
+      case 'image':
+        if (b.caption != null) checkInline(`${w}.caption`, b.caption);
+        break;
+      case 'table':
+        if (Array.isArray(b.header)) b.header.forEach((c, j) => checkInline(`${w}.header[${j}]`, c));
+        if (Array.isArray(b.rows)) b.rows.forEach((row, r) => {
+          if (Array.isArray(row)) row.forEach((c, cc) => checkInline(`${w}.rows[${r}][${cc}]`, c));
+        });
+        break;
+      // video/formula/legacy-html: KaTeX-balans se NE primjenjuje
+      //   (formula.tex je RAW tex → renderer dodaje \[ \]; legacy-html → DOMPurify; video = ID)
+    }
+  });
+}
+
 // --- Validacija jedne kategorije --------------------------------------------------
 function validateCategory(subjId, lessonId, key, cat, counts) {
   const at = `[${subjId}/${lessonId}/${key}]`;
@@ -134,14 +180,19 @@ function validateCategory(subjId, lessonId, key, cat, counts) {
       counts.fb++;
     });
   }
-  // Learn
+  // Learn (dual-mode: v1 "content" HTML-string ILI v2 "blocks" niz)
   if (cat.learn !== undefined) {
     if (typeof cat.learn !== 'object' || cat.learn === null) fail(`${at} learn nije objekt`);
     else {
-      if (!isNonEmptyStr(cat.learn.content)) fail(`${at} learn.content nedostaje/prazno`);
+      const hasBlocks = Array.isArray(cat.learn.blocks);
+      if (hasBlocks) {
+        validateBlocks(`${at}.learn`, cat.learn.blocks);
+      } else if (!isNonEmptyStr(cat.learn.content)) {
+        fail(`${at} learn: nema ni "content" (v1) ni "blocks" (v2)`);
+      }
+      if (!hasBlocks && typeof cat.learn.content === 'string') checkKatex(at + '.learn.content', cat.learn.content);
       // image je opcionalan; undefined / null / '' = "nema slike" (legitimne konvencije)
       if (cat.learn.image != null && typeof cat.learn.image !== 'string') fail(`${at} learn.image nije string`);
-      checkKatex(at + '.learn.content', cat.learn.content);
       counts.ln++;
     }
   }

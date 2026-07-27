@@ -70,13 +70,37 @@
   }
 
   /* ---- Registar operacija -------------------------------------------------
-   * update-ops za 4 postojeća editora (F4.3/F4.4). U6 dodaje add/remove/reorder.
-   * arrayKey-ops ciljaju stavku niza; object-ops cijeli objekt kategorije. */
+   * update-ops za 4 postojeća editora (F4.3/F4.4): arrayKey = stavka niza, objectKey = cijeli objekt.
+   * U6 strukturne (add/remove/reorder) = arrayKey + `struct` — IDEMPOTENTNE po konstrukciji
+   * (add: guard po id · remove: no-op ako nema · reorder: apsolutni red) → op-replay sibling-sync
+   * (applyOpsTo) ostaje ispravan, publish-put se NE mijenja. */
   const OPS = {
     updateCard:  { arrayKey: 'flashcards' },
     updateQuiz:  { arrayKey: 'quiz' },
     updateFill:  { arrayKey: 'fillBlanks' },
-    updateLearn: { objectKey: 'learn' }
+    updateLearn: { objectKey: 'learn' },
+    addCard:      { arrayKey: 'flashcards', struct: 'add' },
+    removeCard:   { arrayKey: 'flashcards', struct: 'remove' },
+    reorderCards: { arrayKey: 'flashcards', struct: 'reorder' },
+    addQuiz:      { arrayKey: 'quiz',       struct: 'add' },
+    removeQuiz:   { arrayKey: 'quiz',       struct: 'remove' },
+    reorderQuiz:  { arrayKey: 'quiz',       struct: 'reorder' },
+    addFill:      { arrayKey: 'fillBlanks', struct: 'add' },
+    removeFill:   { arrayKey: 'fillBlanks', struct: 'remove' },
+    reorderFill:  { arrayKey: 'fillBlanks', struct: 'reorder' },
+    // U6b — operacije nad KATEGORIJAMA (top-level dokumenta). Ključ = stabilni ID (napredak);
+    // updateCategory dira SAMO meta (name/icon/color), NIKAD nizove ni ključ.
+    addCategory:       { doc: 'addCat' },
+    removeCategory:    { doc: 'removeCat' },
+    reorderCategories: { doc: 'reorderCat' },
+    updateCategory:    { doc: 'updateCat' },
+    // U7e — operacije nad LEARN-BLOKOVIMA (schema v2). Blokovi žive na cat.learn.blocks =
+    // JEDAN nivo dublje od flashcards/quiz/fill → _dispatch ih razrješava posebno, ali dijele
+    // isti idempotentni struct-mehanizam (add: guard po id · remove: no-op · reorder: apsolutni red).
+    addBlock:         { learnBlocks: true, struct: 'add' },
+    removeBlock:      { learnBlocks: true, struct: 'remove' },
+    reorderBlocks:    { learnBlocks: true, struct: 'reorder' },
+    updateLearnBlock: { learnBlocks: true } // patch jednog bloka (po id/idx), apsolutne vrijednosti
   };
 
   /** Nađi indeks stavke: preferiraj stabilni `id`, fallback na `idx` (DB payloadi pre-U2a nemaju id). */
@@ -94,10 +118,58 @@
   function _dispatch(working, op) {
     const spec = op && OPS[op.type];
     if (!spec) return { ok: false, error: 'unknown-op' };
+
+    // U6b operacije nad KATEGORIJAMA (top-level dokumenta, ne unutar kategorije) — idempotentne.
+    if (spec.doc) {
+      if (spec.doc === 'addCat')     return _catAdd(working, op);
+      if (spec.doc === 'removeCat')  return _catRemove(working, op);
+      if (spec.doc === 'reorderCat') return _catReorder(working, op);
+      return _catUpdate(working, op);
+    }
+
     const cat = op.catId != null ? working[op.catId] : null;
     if (!cat || typeof cat !== 'object') return { ok: false, error: 'no-category' };
-    if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
 
+    // U7e — learn-blokovi (cat.learn.blocks). Razriješi ugniježđeni niz pa reuse-aj isti
+    // struct-mehanizam (add/remove/reorder) + patch (updateLearnBlock). add smije kreirati
+    // learn/blocks (learn je opcionalan; prvi blok u praznom modu).
+    if (spec.learnBlocks) {
+      const creating = spec.struct === 'add';
+      let learn = cat.learn;
+      if (!learn || typeof learn !== 'object') {
+        if (!creating) return { ok: false, error: 'no-learn' };
+        learn = cat.learn = {};
+      }
+      let arr = learn.blocks;
+      if (!Array.isArray(arr)) {
+        if (!creating) return { ok: false, error: 'no-blocks' };
+        arr = learn.blocks = [];
+      }
+      if (spec.struct === 'add') return _structAdd(arr, op);
+      if (spec.struct === 'remove') return _structRemove(arr, op);
+      if (spec.struct === 'reorder') return _structReorder(arr, op);
+      // updateLearnBlock: patch jednog bloka po id (fallback idx) — apsolutne vrijednosti.
+      if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
+      const i = _findIndex(arr, op);
+      if (i === -1) return { ok: false, error: 'not-found' };
+      _assignPatch(arr[i], op.patch);
+      return { ok: true };
+    }
+
+    // U6 strukturne operacije (add/remove/reorder) — idempotentne (v. _struct*).
+    if (spec.struct) {
+      let arr = cat[spec.arrayKey];
+      if (!Array.isArray(arr)) {
+        if (spec.struct !== 'add') return { ok: false, error: 'no-array' };
+        arr = cat[spec.arrayKey] = []; // add smije kreirati niz (prvi sadržaj u modu)
+      }
+      if (spec.struct === 'add') return _structAdd(arr, op);
+      if (spec.struct === 'remove') return _structRemove(arr, op);
+      return _structReorder(arr, op);
+    }
+
+    // update-ops (F4.3/4.4): apsolutne vrijednosti kroz patch.
+    if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
     if (spec.arrayKey) {
       const arr = Array.isArray(cat[spec.arrayKey]) ? cat[spec.arrayKey] : null;
       if (!arr) return { ok: false, error: 'no-array' };
@@ -118,6 +190,109 @@
       if (patch[k] === null) delete target[k];
       else target[k] = patch[k];
     });
+  }
+
+  /* ---- U6 strukturne operacije (idempotentne po konstrukciji) -------------- */
+
+  /** Kratki stabilni id (6-char, isti alfabet kao U2a `scripts/add-item-ids.js`) za NOVE stavke. */
+  function _genId() {
+    const A = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let s = '';
+    for (let i = 0; i < 6; i++) s += A.charAt((Math.random() * A.length) | 0);
+    return s;
+  }
+
+  /** add: umetni KOPIJU op.item na op.at (default kraj). Idempotentno: ako id VEĆ postoji → no-op uspjeh.
+   *  Id se fiksira JEDNOM na samom op-u (ako ga pozivatelj nije dao) → replay i sibling-sync koriste isti id. */
+  function _structAdd(arr, op) {
+    const item = op.item;
+    if (!item || typeof item !== 'object') return { ok: false, error: 'no-item' };
+    if (item.id == null) item.id = _genId();
+    for (let i = 0; i < arr.length; i++) if (arr[i] && arr[i].id === item.id) return { ok: true };
+    let at = Number.isInteger(op.at) ? op.at : arr.length;
+    if (at < 0) at = 0; else if (at > arr.length) at = arr.length;
+    arr.splice(at, 0, JSON.parse(JSON.stringify(item))); // KOPIJA → svaki red/sibling drži svoj objekt (bez aliasinga)
+    return { ok: true };
+  }
+
+  /** remove: makni stavku po id (ili idx fallback). Idempotentno: nema je → no-op uspjeh. */
+  function _structRemove(arr, op) {
+    const i = _findIndex(arr, op);
+    if (i === -1) return { ok: true };
+    arr.splice(i, 1);
+    return { ok: true };
+  }
+
+  /** reorder: apsolutni ciljni redoslijed po id-evima (op.order). Stavke koje order ne spominje (ili bez id-a)
+   *  zadrže relativni redoslijed NA KRAJU → nedestruktivno + idempotentno (ista lista dvaput = isto). Mutira arr in-place (čuva referencu za siblinge). */
+  function _structReorder(arr, op) {
+    const order = Array.isArray(op.order) ? op.order : null;
+    if (!order) return { ok: false, error: 'no-order' };
+    const byId = {};
+    for (let i = 0; i < arr.length; i++) { const it = arr[i]; if (it && it.id != null) byId[it.id] = it; }
+    const out = [], seen = {};
+    order.forEach(function (id) { if (byId[id] && !seen[id]) { out.push(byId[id]); seen[id] = 1; } });
+    for (let i = 0; i < arr.length; i++) { const it = arr[i]; if (it && (it.id == null || !seen[it.id])) out.push(it); }
+    arr.length = 0;
+    Array.prototype.push.apply(arr, out);
+    return { ok: true };
+  }
+
+  /* ---- U6b kategorije-operacije (nad top-level dokumentom; idempotentne) ---- */
+
+  /** Presloži KLJUČEVE objekta in-place po `keys` (nelistane ključeve zadrži na kraju). Čuva referencu objekta. */
+  function _setKeyOrder(obj, keys) {
+    const vals = {};
+    keys.forEach(function (k) { if (Object.prototype.hasOwnProperty.call(obj, k)) vals[k] = obj[k]; });
+    Object.keys(obj).forEach(function (k) { if (!Object.prototype.hasOwnProperty.call(vals, k)) vals[k] = obj[k]; });
+    Object.keys(obj).forEach(function (k) { delete obj[k]; });
+    Object.keys(vals).forEach(function (k) { obj[k] = vals[k]; });
+  }
+
+  /** addCategory: novi ključ (op.catId) = KOPIJA op.category, na op.at (default kraj). Idempotentno: ključ postoji → no-op. */
+  function _catAdd(working, op) {
+    const key = op.catId;
+    if (!key || typeof key !== 'string') return { ok: false, error: 'no-catId' };
+    if (!op.category || typeof op.category !== 'object') return { ok: false, error: 'no-category-obj' };
+    if (Object.prototype.hasOwnProperty.call(working, key)) return { ok: true };
+    // U7a napomena: sirovi Object.keys je OK ovdje — nova kategorija ide na kraj (op.at default),
+    // a _setKeyOrder čuva eventualne meta-ključeve (schemaVersion/…) na mjestu → meta-safe bez
+    // globalnog getCategories (draft-store je node-testiran IIFE, bez browser-globala).
+    const keys = Object.keys(working);
+    let at = Number.isInteger(op.at) ? op.at : keys.length;
+    if (at < 0) at = 0; else if (at > keys.length) at = keys.length;
+    keys.splice(at, 0, key);
+    working[key] = JSON.parse(JSON.stringify(op.category)); // KOPIJA (bez aliasinga siblinga)
+    _setKeyOrder(working, keys);
+    return { ok: true };
+  }
+
+  /** removeCategory: makni ključ. Idempotentno: nema ga → no-op uspjeh. (Ključ = stabilni ID; brisanje je poništivo kroz content_versions.) */
+  function _catRemove(working, op) {
+    const key = op.catId;
+    if (!key) return { ok: false, error: 'no-catId' };
+    if (Object.prototype.hasOwnProperty.call(working, key)) delete working[key];
+    return { ok: true };
+  }
+
+  /** reorderCategories: apsolutni redoslijed ključeva (op.order); nelistani na kraju. Idempotentno. */
+  function _catReorder(working, op) {
+    if (!Array.isArray(op.order)) return { ok: false, error: 'no-order' };
+    _setKeyOrder(working, op.order);
+    return { ok: true };
+  }
+
+  /** updateCategory: patcha SAMO meta-polja (name/icon/color/id) kategorije — NIKAD nizove (idu kroz item-ops) ni ključ. */
+  function _catUpdate(working, op) {
+    const cat = op.catId != null ? working[op.catId] : null;
+    if (!cat || typeof cat !== 'object') return { ok: false, error: 'no-category' };
+    if (!op.patch || typeof op.patch !== 'object') return { ok: false, error: 'no-patch' };
+    const ALLOWED = { name: 1, icon: 1, color: 1, id: 1 };
+    Object.keys(op.patch).forEach(function (k) {
+      if (!ALLOWED[k]) return; // ignoriraj pokušaj patcha flashcards/quiz/... kroz updateCategory (obrana)
+      if (op.patch[k] === null) delete cat[k]; else cat[k] = op.patch[k];
+    });
+    return { ok: true };
   }
 
   const SokratDraft = {
@@ -193,9 +368,9 @@
     /**
      * Primijeni niz opova na PROIZVOLJAN payload (in-place) — za sync sestrinskih redova
      * pri objavi (`final` = kopija M1+M2 dijeli kategorije) i in-memory window-varova.
-     * Update-opovi su idempotentni (apsolutne vrijednosti) → smije se primijeniti i na
-     * već ažuriran objekt. ⚠ add/remove/reorder (U6) NEĆE biti idempotentni — tada sibling
-     * sync prelazi na server (U4 publish-RPC to ionako preuzima).
+     * SVI opovi (update + U6 strukturne) su idempotentni po konstrukciji → smiju se primijeniti
+     * i na već ažuriran objekt (add = guard po id · remove = no-op ako nema · reorder = apsolutni red).
+     * Zato op-replay sibling-sync ostaje ispravan i za strukturne ops — publish-put se NE mijenja.
      * @returns {{applied:number, skipped:number}} skipped = kategorija/stavka ne postoji u tom payloadu (npr. examPractice-only red)
      */
     applyOpsTo(payload, ops) {

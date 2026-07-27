@@ -1,7 +1,7 @@
 {
   "name": "sokrat-study",
   "version": "2.0.0",
-  "description": "Interactive study application for Tourism Economics, Entrepreneurship and Innovation, and Accounting - Flashcards, Quizzes, Fill-in-the-blank exercises",
+  "description": "Sokrat Study — interactive exam-prep platform for FMTU Opatija (Hospitality Management): lessons, flashcards, quizzes, fill-in-the-blank and interactive exercises across Year 1 & 2 subjects (EN + HR).",
   "main": "index.html",
   "scripts": {
     "start": "npx serve .",
@@ -9,7 +9,7 @@
     "serve:test": "node scripts/static-server.js",
     "test:responsive": "playwright test",
     "test:authed": "playwright test --project=authenticated",
-    "test:unit": "node tests/unit/exercises-core.test.js && node tests/unit/acc-kernel.test.js && node tests/unit/stat-parse.test.js && node tests/unit/stat-lib.test.js && node tests/unit/app-state.test.js && node tests/unit/catalog-placement.test.js && node tests/unit/draft-store.test.js",
+    "test:unit": "node tests/unit/exercises-core.test.js && node tests/unit/acc-kernel.test.js && node tests/unit/stat-parse.test.js && node tests/unit/stat-lib.test.js && node tests/unit/app-state.test.js && node tests/unit/catalog-placement.test.js && node tests/unit/draft-store.test.js && node tests/unit/get-categories.test.js && node tests/unit/blocks-renderer.test.js && node tests/unit/legacy-html-coverage.test.js && node tests/unit/schema-v2-blocks.test.js && node tests/unit/block-editor.test.js",
     "test:rls": "node scripts/rls-check.js",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "stats": "node scripts/compute-stats.js",
@@ -20,14 +20,19 @@
     "verify:catalog": "node scripts/verify-catalog.js",
     "validate:content": "node scripts/validate-content.js",
     "validate:schema": "node scripts/validate-json-schema.js",
+    "check:final": "node scripts/check-final-drift.js",
+    "load-probe": "node scripts/load-probe.js",
+    "backup": "node scripts/backup-db.js",
+    "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
+    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run test:unit",
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
-    "tourism",
-    "economics",
-    "entrepreneurship",
-    "accounting",
+    "sokrat-study",
+    "fmtu-opatija",
+    "hospitality-management",
+    "exam-prep",
     "education",
     "flashcards",
     "quiz",
@@ -39,7 +44,7 @@
     "type": "git",
     "url": "https://github.com/leonkreso784-bit/t2economyintourism.git"
   },
-  "homepage": "https://t2economyintourism.vercel.app",
+  "homepage": "https://www.sokratstudy.com",
   "devDependencies": {
     "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",

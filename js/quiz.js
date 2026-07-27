@@ -39,7 +39,7 @@ function getQuizQuestions(category, count) {
     let questions = [];
 
     if (category === 'all') {
-        Object.keys(content).forEach(cat => {
+        getCategories(content).forEach(cat => {
             if (content[cat] && content[cat].quiz && Array.isArray(content[cat].quiz)) {
                 content[cat].quiz.forEach(q => {
                     questions.push({
