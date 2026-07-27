@@ -271,6 +271,30 @@ test('mediaImageBody: vrijednosti polja escapane (bez HTML-injekcije)', function
   assert.ok(html.indexOf('value="A&lt;b&gt;"') !== -1);
 });
 
+// ── U8.7 — upload slike ──
+test('mediaImageBody: upload-zona (drop + „Odaberi" gumb + file-input) prisutna', function () {
+  const html = E._mediaImageBody({ type: 'image', src: '', alt: '' });
+  assert.ok(html.indexOf('data-be-upload') !== -1, 'drop-zona');
+  assert.ok(html.indexOf('data-be-imgpick') !== -1, '„Odaberi" gumb');
+  assert.ok(html.indexOf('data-be-imgfile') !== -1, 'file input');
+  assert.ok(html.indexOf('data-be-imgstatus') !== -1, 'status polje');
+  assert.ok(/accept="[^"]*image\/png[^"]*"/.test(html), 'accept ograničava na slike');
+});
+test('validateImageFile: null/prazno → poruka; SVG i ostali tipovi odbijeni', function () {
+  assert.strictEqual(E._validateImageFile(null), 'Nema datoteke.');
+  assert.ok(/Dopušteni formati/.test(E._validateImageFile({ type: 'image/svg+xml', size: 100 })), 'SVG odbijen (skripte)');
+  assert.ok(/Dopušteni formati/.test(E._validateImageFile({ type: 'application/pdf', size: 100 })), 'PDF odbijen');
+});
+test('validateImageFile: >5 MB odbijen, ≤5 MB dopuštenog tipa OK (null)', function () {
+  assert.ok(/prevelika/.test(E._validateImageFile({ type: 'image/png', size: 6 * 1024 * 1024 })), 'oversize');
+  assert.strictEqual(E._validateImageFile({ type: 'image/png', size: 1024 }), null, 'PNG 1KB OK');
+  assert.strictEqual(E._validateImageFile({ type: 'image/jpeg', size: 5 * 1024 * 1024 }), null, 'JPG točno 5MB OK');
+  assert.strictEqual(E._validateImageFile({ type: 'image/webp', size: 10 }), null, 'WEBP OK');
+});
+test('uploadImage: izvezen kao funkcija (async put; pravi upload = authed E2E vs staging)', function () {
+  assert.strictEqual(typeof E._uploadImage, 'function');
+});
+
 // ── U8.5b — video ──
 test('mediaVideoBody: prazan video → 1 polje (url) + placeholder', function () {
   const html = E._mediaVideoBody({ type: 'video', url: '' });

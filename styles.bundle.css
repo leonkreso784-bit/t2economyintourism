@@ -8715,6 +8715,29 @@ h4.lb-heading { font-size: 1.1rem; }
 .be-mfield:focus { border-color: var(--primary-light); box-shadow: 0 0 0 2px rgba(99, 102, 241, .2); }
 .be-mfield::placeholder { color: var(--text-muted); }
 
+/* ===== U8.7 — upload slike (drop-zona + „📁 Odaberi" gumb + status) ===== */
+.be-upload {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px;
+  padding: 12px; margin-bottom: 2px;
+  border: 2px dashed rgba(148, 163, 184, .28); border-radius: 10px;
+  background: rgba(15, 23, 42, .3); transition: .13s;
+}
+.be-upload--over { border-color: var(--primary-light, #818cf8); background: rgba(99, 102, 241, .14); }
+.be-upload__file { display: none; }
+.be-upload__btn {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+  padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600;
+  color: #fff; border: 0;
+  background: linear-gradient(135deg, var(--primary, #6366f1), var(--primary-light, #818cf8));
+  transition: .13s;
+}
+.be-upload__btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.be-upload__hint { font-size: 12px; color: var(--text-muted); }
+.be-upload__status { font-size: 12.5px; font-weight: 600; margin-left: auto; min-height: 1em; }
+.be-upload__status.is-busy { color: var(--text-muted); }
+.be-upload__status.is-ok { color: #34d399; }
+.be-upload__status.is-err { color: #f87171; }
+
 /* ===== U8.5c — formula (KaTeX): tex-polje + „veliki blok" prekidač + centrirani živi preview ===== */
 .be-media--formula .be-media__preview { padding: 10px 4px; text-align: center; min-height: 2.2em; }
 .be-mcheck {

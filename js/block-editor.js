@@ -122,7 +122,9 @@
     mediaTableBody = _media.mediaTableBody, mediaPreviewHtml = _media.mediaPreviewHtml,
     typesetFormulas = _media.typesetFormulas, enhanceMathFields = _media.enhanceMathFields,
     tableModel = _media.tableModel, readGridCells = _media.readGridCells, colCountOf = _media.colCountOf,
-    imageResizePointerDown = _media.imageResizePointerDown, parsePastedTable = _media.parsePastedTable;
+    imageResizePointerDown = _media.imageResizePointerDown, parsePastedTable = _media.parsePastedTable,
+    uploadImage = _media.uploadImage,                       // U8.7 (file → Storage → public URL)
+    validateImageFile = _media.validateImageFile;           // U8.7 (sinkroni tip/veličina validator)
   function findBlockById(blocks, id) {
     for (let k = 0; k < blocks.length; k++) if (blocks[k] && String(blocks[k].id) === String(id)) return blocks[k];
     return null;
@@ -643,6 +645,62 @@
         startBlockDrag(e, container, handle, draw);
       });
 
+      // U8.7: upload slike — „📁 Odaberi" ili povlačenje datoteke na zonu → Storage → block.src.
+      //   Uspjeh piše URL u src-input pa okine njegov `change` = ISTI save-put kao ručni paste URL-a
+      //   (applyOp updateLearnBlock{src} + osvježen preview). Status se ispisuje u zoni.
+      function runImageUpload(blockEl, file) {
+        if (!blockEl || !file || typeof uploadImage !== 'function') return;
+        const statusEl = blockEl.querySelector('[data-be-imgstatus]');
+        const srcInput = blockEl.querySelector('[data-be-mfield="src"]');
+        function setStatus(txt, cls) {
+          if (statusEl) { statusEl.textContent = txt || ''; statusEl.className = 'be-upload__status' + (cls ? ' ' + cls : ''); }
+        }
+        setStatus('Prenosim…', 'is-busy');
+        uploadImage(file).then(function (url) {
+          if (srcInput) {
+            srcInput.value = url;
+            srcInput.dispatchEvent(new Event('change', { bubbles: true }));  // reuse mfield save-put → src + preview
+          }
+          setStatus('✓ Preneseno', 'is-ok');
+        }).catch(function (err) {
+          setStatus('✕ ' + ((err && err.message) ? err.message : 'Greška pri uploadu'), 'is-err');
+        });
+      }
+      container.addEventListener('click', function (e) {                     // „📁 Odaberi" → otvori file-picker
+        const pick = e.target.closest ? e.target.closest('[data-be-imgpick]') : null;
+        if (!pick || !container.contains(pick)) return;
+        const zone = pick.closest('[data-be-upload]');
+        const fileInput = zone ? zone.querySelector('[data-be-imgfile]') : null;
+        if (fileInput) fileInput.click();
+      });
+      container.addEventListener('change', function (e) {                    // odabrana datoteka → upload
+        const fileInput = e.target.closest ? e.target.closest('[data-be-imgfile]') : null;
+        if (!fileInput || !container.contains(fileInput)) return;
+        const blockEl = fileInput.closest('[data-be-block]');
+        const f = fileInput.files && fileInput.files[0];
+        if (blockEl && f) runImageUpload(blockEl, f);
+        fileInput.value = '';                                               // dopusti ponovni odabir iste datoteke
+      });
+      container.addEventListener('dragover', function (e) {                  // drop-zona: dopusti ispuštanje
+        const zone = e.target.closest ? e.target.closest('[data-be-upload]') : null;
+        if (!zone || !container.contains(zone)) return;
+        e.preventDefault();
+        zone.classList.add('be-upload--over');
+      });
+      container.addEventListener('dragleave', function (e) {
+        const zone = e.target.closest ? e.target.closest('[data-be-upload]') : null;
+        if (zone) zone.classList.remove('be-upload--over');
+      });
+      container.addEventListener('drop', function (e) {                      // ispuštena datoteka → upload
+        const zone = e.target.closest ? e.target.closest('[data-be-upload]') : null;
+        if (!zone || !container.contains(zone)) return;
+        e.preventDefault();
+        zone.classList.remove('be-upload--over');
+        const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+        const blockEl = zone.closest('[data-be-block]');
+        if (blockEl && f) runImageUpload(blockEl, f);
+      });
+
       // U8.10: PASTE u ćeliju tablice → ako je clipboard tablica (TSV/HTML), izgradi cijeli grid.
       container.addEventListener('paste', function (e) {
         const cell = e.target.closest ? e.target.closest('.be-tcell') : null;
@@ -769,6 +827,8 @@
       _addTypes: ADD_TYPES,
       _inlineToPlain: inlineToPlain,     // U8.5a (inline → plain za media-inpute)
       _mediaImageBody: mediaImageBody,   // U8.5a (slika-forma)
+      _uploadImage: uploadImage,         // U8.7 (file → Storage → public URL; validacija)
+      _validateImageFile: validateImageFile, // U8.7 (sinkroni tip/veličina validator)
       _mediaVideoBody: mediaVideoBody,   // U8.5b (video-forma)
       _mediaFormulaBody: mediaFormulaBody, // U8.5c (formula-forma)
       _mediaTableBody: mediaTableBody,   // U8.5d (tablica-grid-forma)
