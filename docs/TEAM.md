@@ -33,12 +33,13 @@ zatim drugi smjerovi FMTU (MUT/MOR, nakon ADR-022). Platformski kod NIJE u opseg
 - **`docs/subjects/README.md`** — SAMO svoj redak u „HR statusna ploča" tablici. **✅ PONOVNO NORMALNO od 2026-07-13** (f4 je sletio na `main` → docs postoje na main-u): redak ažuriraš direktno u svom PR-u. *(Privremeno pravilo „redak u PR-OPISU" iz 2026-07-11 više ne vrijedi.)*
 - **Cache-bump datoteke** (`index.html`, `*.html`, `manifest.json`, `js/content-loader.js`, `sw.js`) — **ISKLJUČIVO kroz `npm run bump`**, NIKAD ručno (reviewer provjerava da je diff = samo tokeni).
 - Pokretanje SVIH skripti/gateova (`translate-subject`, `validate:*`, `verify`, `export:json`, `bump`, `test:responsive`).
+- **🆕 (2026-07-28) Mergeati VLASTITI PR u `main` (= produkcijski deploy) — ISKLJUČIVO nakon Leonovog IZRIČITOG approvala** (Leon pregleda, potvrdi da je sve točno i „slaže se"; vidi §3). CI-gate-ovi zeleni su PREDUVJET, ne zamjena za Leonov pregled. Standard = **savršeno** (ništa aljkavo ne ide na produkciju).
 
 ### NE SMIJEŠ (tvrdo; PR koji ovo dira se odbija bez rasprave)
 - ❌ `js/**`, `css/**`, `sw.js` (osim SW_VERSION kroz bump), `index.html` struktura, `schema/**`, `scripts/**` (kod skripti), `tests/**`, `.github/**`, `vercel.json`, `package.json`, `supabase/**`
 - ❌ **EN predmeti** (`data/<subj>/` bez `-hr`) i tuđi HR predmeti — ni slovo
 - ❌ `docs/**` osim svog retka u subjects-ploči (PROGRESS/CHANGELOG piše Leon/njegov Claude pri mergeu — sprječava merge-konflikte)
-- ❌ push na `main` · merge · deploy · Supabase (bilo što) · brisanje bilo čega postojećeg
+- ❌ **direktan** push na `main` (bez PR-a) · merge **BEZ Leonovog approvala** · Supabase (bilo što) · brisanje bilo čega postojećeg *(merge/deploy VLASTITOG PR-a SMIJE tek uz Leonov izričit approval — §2 SMIJEŠ / §3)*
 - ❌ commit `.env`, ključeva, `_materials/` sadržaja (gitignored ostaje gitignored)
 
 ### ZAŠTO su granice ovakve (da ih se razumije, ne samo slijedi)
@@ -51,14 +52,16 @@ može nešto slomiti. Sloboda unutar `data/<subj>-hr/` je potpuna — tamo si au
 ```
 grana content/<subject-id>-hr  →  rad (prijevod+verifikacija)  →  lokalni gateovi zeleni
 →  PR na main (ispunjena checklista §5)  →  CI ZELEN (automatski)  →  review: Leon (ili njegov Claude)
-→  MERGE radi SAMO Leon  (⚠️ merge u main = produkcijski deploy → Leon mergea kad je spreman deployati)
+→  Leon IZRIČITO approva PR (pregled + „slažem se, sve je točno")  →  Saša TADA SAM mergea  (= produkcijski deploy)
+   ⚠️ bez Leonovog approvala NEMA mergea; standard = savršeno  (promjena 2026-07-28; ranije je mergeao samo Leon)
 ```
 
 - **Grane:** `content/<subject-id>-hr` (jedan predmet = jedna grana = jedan PR). Male, pregledive jedinice.
 - **CI na PR-u** (već postoji, `.github/workflows/ci.yml`): validate:content · validate:schema · verify · test:unit ·
   typecheck · export:json --check · bump:check · build:css --check · RLS · Playwright. **Crveno = nema mergea, bez iznimke.**
 - **Branch protection na `main`** (Leon postavlja u GitHub Settings → Branches): require PR + require status checks;
-  Leon kao admin ima bypass za svoj direktni workflow. → Sašin push na main postaje **tehnički nemoguć**, ne samo zabranjen.
+  Leon kao admin ima bypass za svoj direktni workflow. → Sašin **direktan** push na main ostaje **tehnički nemoguć**, ne samo zabranjen.
+  **🆕 (2026-07-28):** Saša SMIJE mergeati **approvani** PR (Leonov approval = 1 required approval u rulesetu) → merge-gumb je njegov TEK kad Leon odobri.
 - **Dnevnici (anti-konflikt pravilo):** Saša piše SAMO subjects-ploču + PR-opis (njegov radni log).
   PROGRESS/CHANGELOG unos dodaje Leon/Claude pri mergeu. Tako dva pisca nikad ne diraju iste retke.
 - **Supabase re-sync** HR sadržaja (read-path) NIJE Sašin posao — radi ga Leon/Claude nakon mergea (traži ključeve).
@@ -125,3 +128,6 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 - ✅ **API ključ:** Saša kreira **VLASTITI** na svom Anthropic računu (sigurnije — ne dijeli se). **Financiranje = B: Leon refundira gotovinom** (~$15–30 ukupno za HR batch; trošak sitan → bez tvrdog konzolnog capa, po dogovoru). Sašin `.env` drži SAMO taj ključ, nikad se ne commita.
 - ✅ **Vidljivost docs — RIJEŠENO 2026-07-13:** `foundation/f4` je deployan na `main` (`5d24a96..79f17c7`) → **svi `docs/**` + role-router su sad na main-u** i vidljivi u svježem klonu. Privremeno pravilo „redak u PR-OPISU" ukinuto (§2/§5.8 vraćeni na normalu). ✅ **Sašin PR #1: SAM se rebasean na novi main + §5.2 uz SVE HR materijale → 🟢 Ready (2026-07-14, `d9b8ee8`)** → ⚖️ **Leon odlučio OPCIJA B** (HR skripte = izvor istine) → Saša odradio doradu → ✅ **PR #1 OBJAVLJEN NA PROD 2026-07-15** (`7ed18d7`; W&K 5 funkcija/„kadrovi", +2 autorske kat, Drucker fact-fix; lead-review pri objavi: merge ne rebase, bump-konflikt riješen, 1 ćirilica popravljena). ✅ **PR #2 (rebalans kartica po modelu ≤200 znak, detalj→learn) OBJAVLJEN NA PROD 2026-07-17** (`08dd383`, grana `content/management-hr-rebalance`; Saša sam — svih 122 kartice management-hr skraćene, avg 359→127, kviz/fill netaknuti; lead-review: gate-ovi zeleni + ćirilica 0; HR ostaje file-served, nije u Supabase).
 - ⚖️ **Terminološka odluka za PR #1 (Leon, 2026-07-14): opcija B — HR SKRIPTE = izvor istine, NE prijevod EN-a.** Razlog: HR program predaju **drugi profesori** — ispiti prate NJIHOVE skripte (W&K okvir: 5 funkcija uklj. „kadroviranje", termin „kadrovi"). Ovo potvrđuje §5 pravilo **„HR materijali = autoritet"** i vrijedi za SVE buduće `-hr` predmete: gdje se prijevod i skripta razilaze u okviru/terminologiji/gradivu — **skripta pobjeđuje**. PR #1 objavljen 2026-07-15 (dorada gotova).
+- 🎯 **NOVI ZADATAK (Leon, 2026-07-28) — aktivirani S4+S5 za 4 KVANTITATIVNA predmeta:** **Matematika · Statistika · Makroekonomija · Računovodstvo** → HR verzije. **Razlog/naglasak: VJEŽBE moraju biti na hrvatskom** (ta 4 su jedini predmeti s vježbama). Vježbe = **S5 pravilo**: prevode se SAMO string-polja (`prompt/title/choices/explain` + `meta.lang:'en'→'hr'`); `generate()/params/answer/type` **NEDIRLJIVI** (logika/matematika bit-identična), `test:unit` mora ostati zelen. Study sadržaj (kartice/kviz/fill/learn) = normalni HR tok. Jedan predmet = jedna grana `content/<id>-hr` = jedan PR. Redoslijed po Sašinim materijalima (prijedlog: makro → stat → math → računovodstvo). **Nijedan još nema HR verziju; sva 4 imaju EN + vježbe** (`data/<id>/exercises.js`). **Nakon ova 4 → Saša prelazi na IZGRADNJU MATURE.**
+- ✅ **DEPLOY-PERMISIJA (Leon, 2026-07-28):** Saša SMIJE sam **mergeati vlastiti PR u `main` (= deploy)** — ali TEK nakon Leonovog **izričitog approvala** (pregled + „slažem se, sve je točno"). CI zeleni = preduvjet, ne zamjena za pregled. Standard = **savršeno**. Mehanizam: `protect-main` traži 1 approval → Leon approva, Saša mergea. (Detalji §2/§3.)
+- 📌 **BUDUĆE (nakon pune 2 god HR):** kad HR program bude **potpun (obje godine)**, **HR predmeti se dodaju u Supabase bazu** (sad su svi HR **file-served** → dual-read pada na `data/json/<id>-hr/`). Migracija HR→Supabase = **Leon/Claude** (traži `service_role`/ključeve, `scripts/migrate-content.js`), **NIJE Sašin posao** (§6). Do tada HR ostaje file-first (radi jednako studentu).

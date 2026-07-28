@@ -42,6 +42,8 @@
 > **Aktivno od 2026-07-09** (ADR-023): Saša prevodi/gradi HR program do pune 2 godine. Tok po predmetu = [TEAM.md](../TEAM.md) §5
 > (prijevod alatom → **HR materijali = autoritet** → gate → PR). Faza = S-cigla iz TEAM.md §4. Saša ažurira SAMO ovu tablicu
 > (svoj redak, direktno u PR-u — **normalno pravilo vraćeno 2026-07-13**, docs su na main-u).
+>
+> 🎯 **AKTIVNI ZADATAK (Leon, 2026-07-28):** 4 KVANTITATIVNA predmeta s vježbama → **`macroeconomics-hr` · `statistics-hr` · `math-hr` · `accounting-hr`** (S4 study + **S5 vježbe = SAMO string-polja**; `generate/answer/type` nedirljivi, `test:unit` zelen). **Razlog: vježbe moraju biti na hrvatskom.** Nakon ova 4 → **izgradnja mature**. Deploy: Saša sam mergea approvani PR (TEAM.md §9). *(`microeconomics-hr` NIJE u ovoj rundi.)*
 
 | Predmet (EN izvor) | HR ID | Faza | Status | PR / napomena |
 |---|---|---|---|---|
