@@ -37,7 +37,16 @@
     image: 'Slika', video: 'Video', table: 'Tablica', formula: 'Formula', 'legacy-html': 'HTML'
   };
   const CALLOUT_VARIANTS = { info: 1, warning: 1, tip: 1 };
-  const INLINE_COLORS = { indigo: 1, green: 1, amber: 1, red: 1 }; // 'default' = bez boje (nema spana)
+  // F6 — kurirana paleta boja teksta (legibilna na tamnoj temi): token → hex (swatch) + naziv (title).
+  // JEDINI izvor: allowlist + serijalizator-regex + traka-swatch-evi svi se izvode odavde (bez drift-a).
+  // ⚠ blocks-renderer.js ima ZASEBAN INLINE_COLORS (drugi IIFE) — mora ostati usklađen s ovim tokenima.
+  const TB_COLORS = [
+    ['red', '#f87171', 'Crvena'], ['amber', '#fbbf24', 'Jantar'], ['green', '#34d399', 'Zelena'],
+    ['cyan', '#22d3ee', 'Tirkiz'], ['blue', '#60a5fa', 'Plava'], ['indigo', '#818cf8', 'Indigo'],
+    ['violet', '#c084fc', 'Ljubičasta'], ['pink', '#f472b6', 'Roza']
+  ];
+  const INLINE_COLORS = TB_COLORS.reduce(function (m, c) { m[c[0]] = 1; return m; }, {}); // 'default' = bez boje (nema spana)
+  const COLOR_CLASS_RE = new RegExp('(?:^|\\s)lb-color-(' + Object.keys(INLINE_COLORS).join('|') + ')(?:\\s|$)');
   const TEXT_TYPES = { heading: 1, paragraph: 1, callout: 1, list: 1 };
 
   // ── inline runs/string → editabilni HTML (ista formatna klasa kao renderer → vizualni paritet) ──
@@ -81,7 +90,7 @@
         if (tag === 'B' || tag === 'STRONG') ns.b = true;
         if (tag === 'I' || tag === 'EM') ns.i = true;
         if (tag === 'A') { const h = child.getAttribute('href'); if (h) ns.href = h; }
-        const cm = /(?:^|\s)lb-color-(indigo|green|amber|red)(?:\s|$)/.exec(child.className || '');
+        const cm = COLOR_CLASS_RE.exec(child.className || '');
         if (cm) ns.color = cm[1];
         _walk(child, ns, out);
       }
@@ -509,10 +518,9 @@
       '<button type="button" class="be-tb" data-be-fmt="bold" title="Podebljano"><b>B</b></button>' +
       '<button type="button" class="be-tb" data-be-fmt="italic" title="Kurziv"><em>I</em></button>' +
       '<span class="be-tbsep"></span>' +
-      '<button type="button" class="be-tb be-tbc" data-be-color="indigo" title="Indigo" style="--sw:#818cf8"></button>' +
-      '<button type="button" class="be-tb be-tbc" data-be-color="green" title="Zelena" style="--sw:#34d399"></button>' +
-      '<button type="button" class="be-tb be-tbc" data-be-color="amber" title="Jantar" style="--sw:#fbbf24"></button>' +
-      '<button type="button" class="be-tb be-tbc" data-be-color="red" title="Crvena" style="--sw:#f87171"></button>' +
+      TB_COLORS.map(function (c) {
+        return '<button type="button" class="be-tb be-tbc" data-be-color="' + c[0] + '" title="' + c[2] + '" style="--sw:' + c[1] + '"></button>';
+      }).join('') +
       '<button type="button" class="be-tb" data-be-color="default" title="Ukloni boju">⊘</button>' +
       '<span class="be-tbsep"></span>' +
       '<button type="button" class="be-tb" data-be-linkact="1" title="Link (prazno = ukloni)">🔗</button>';
@@ -542,10 +550,11 @@
       const node = a && (a.nodeType === 1 ? a : a.parentElement);
       if (!node || !node.closest || !node.closest('[data-be-field]')) { hideToolbar(); return; }
       const r = sel.getRangeAt(0).getBoundingClientRect();
+      bar.classList.add('on');                          // prikaži prije mjerenja širine (šira paleta F6)
       const vw = window.innerWidth || 800;
-      bar.style.left = Math.max(8, Math.min(r.left, vw - 110)) + 'px';
+      const bw = bar.offsetWidth || 110;
+      bar.style.left = Math.max(8, Math.min(r.left, vw - bw - 8)) + 'px';
       bar.style.top = Math.max(8, r.top - 44) + 'px';
-      bar.classList.add('on');
     });
   }
 

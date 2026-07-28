@@ -51,6 +51,9 @@ backups/
 # Source materials (professor PPT/PDF/JPG) — copyright, never commit
 _materials/
 
+# Dokazni screenshotovi (ad-hoc, izvan gita)
+_screenshots/
+
 # Scratch / staging dirs (generator + PDF→img + ad-hoc) — all temporary
 tmp/
 tmp-*/

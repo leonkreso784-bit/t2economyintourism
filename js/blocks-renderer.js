@@ -48,7 +48,8 @@
 
   // ── inline tekst: plain string ILI runs [{text, b?, i?, color?, href?}] ──
   // Boja = SAMO iz kuriranog seta imena (token → CSS klasa) — nikad proizvoljna vrijednost.
-  const INLINE_COLORS = { indigo: 1, green: 1, amber: 1, red: 1, default: 1 };
+  // ⚠ mora ostati usklađen s TB_COLORS u block-editor.js (F6 paleta boja teksta)
+  const INLINE_COLORS = { indigo: 1, green: 1, amber: 1, red: 1, cyan: 1, blue: 1, violet: 1, pink: 1, default: 1 };
   function renderRun(run) {
     if (run == null) return '';
     if (typeof run === 'string') return esc(run);

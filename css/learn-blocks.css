@@ -34,6 +34,10 @@ h4.lb-heading { font-size: 1.1rem; }
 .lb-color-green  { color: #34d399; }
 .lb-color-amber  { color: #fbbf24; }
 .lb-color-red    { color: var(--danger-text, #f87171); }
+.lb-color-cyan   { color: #22d3ee; }
+.lb-color-blue   { color: #60a5fa; }
+.lb-color-violet { color: #c084fc; }
+.lb-color-pink   { color: #f472b6; }
 
 /* ── callout (info / warning / tip) ── */
 .lb-callout {
