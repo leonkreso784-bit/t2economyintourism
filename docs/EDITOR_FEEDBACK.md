@@ -19,7 +19,7 @@ razina — očite afordancije, direktna manipulacija, ugodno i lako.
 
 ## 📋 Stavke (F1–F8)
 
-> **STATUS (2026-07-28):** **F7 kvadratić-model KOMPLETAN (K1–K6)** + **F1 ✅** (＋ afordancija) + **F4 ✅** (boja cijelog bloka) + **F5 ✅** (drag-drop blokova/sekcija, K6) + **F2 ✅** (**pravi upload slike = U8.7 Supabase Storage, 2026-07-27/28** — 📁 gumb + drag-drop, slika-blok SAMO upload bez URL-polja; grana `feature/u8.7-image-upload`, prod bucket čeka deploy). **Editor-fix (07-26-h):** drag-ručka UVIJEK vidljiva u lijevom žlijebu (⣿) + živi ghost + auto-scroll. **Preostaje:** **F6** (bogatija text-boja) · **F8** (lista redoslijed/tip) · U8.6 mikro-vizual **+ MOBILNI editor** (Leon 07-27: editor neupotrebljiv na mobitelu → dio U8.6 vizualne faze).
+> **STATUS (2026-07-28):** **F7 kvadratić-model KOMPLETAN (K1–K6)** + **F1 ✅** (＋ afordancija) + **F4 ✅** (boja cijelog bloka) + **F5 ✅** (drag-drop blokova/sekcija, K6) + **F2 ✅ 🚀 DEPLOYAN** (**pravi upload slike = U8.7 Supabase Storage, 2026-07-28, prod=`3634a1e`** — 📁 gumb + drag-drop, slika-blok SAMO upload bez URL-polja; PROD bucket `lesson-images` kreiran) + **F6 ✅ 🚀 DEPLOYAN** (bogatija text-boja: paleta 4→8, `3634a1e`). **Editor-fix (07-26-h):** drag-ručka UVIJEK vidljiva u lijevom žlijebu (⣿) + živi ghost + auto-scroll. **Preostaje:** **F8** (lista redoslijed/tip) · U8.6 mikro-vizual **+ MOBILNI editor** (Leon 07-27: editor neupotrebljiv na mobitelu → dio U8.6 vizualne faze).
 
 ### F1 — ＋ za dodavanje bloka je „mršav i ružan"
 - **Leon:** „ne sviđa mi se kako je plus pozicioniran, nekako je mršavo i ružno."
@@ -62,7 +62,8 @@ razina — očite afordancije, direktna manipulacija, ugodno i lako.
   ↑↓ ostaju kao a11y-fallback; vizualni indikator mjesta ispuštanja.
 - **Tip:** interakcija · **Prioritet:** VISOK
 
-### F6 — Mijenjanje BOJE TEKSTA koji se piše
+### F6 — Mijenjanje BOJE TEKSTA koji se piše — ✅ RIJEŠENO (deploy 2026-07-28, prod `3634a1e`)
+> **RIJEŠENO:** paleta boja teksta proširena 4→8 (+cyan/blue/violet/pink), traka uočljivija (mjeri stvarnu širinu), `TB_COLORS` = jedini izvor (allowlist+regex+swatchevi izvedeni, drift-zamka uklonjena). Grana `feature/f6-text-colors` → main.
 - **Leon:** „mora postojati mogućnost da se mijenjaju boje teksta koji se piše."
 - **Analiza:** POSTOJI (U8.4b: traka na selekciji ima 4 `lb-color` swatcha + ukloni-boju). Ali očito nedovoljno
   vidljivo/bogato → treba jasnija, bogatija paleta boja teksta + bolja discoverability.
