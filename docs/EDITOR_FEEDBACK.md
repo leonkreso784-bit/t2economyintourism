@@ -19,7 +19,7 @@ razina — očite afordancije, direktna manipulacija, ugodno i lako.
 
 ## 📋 Stavke (F1–F8)
 
-> **STATUS (2026-07-26):** **F7 kvadratić-model KOMPLETAN (K1–K6)** — naslov+tijelo, kartica-vizual, boja cijelog bloka (**F4 ✅**), ＋ afordancija (**F1 ✅**), **drag-and-drop blokova I sekcija (F5 ✅**, K6). **Editor-fix (duboka revizija 07-26-h):** drag je bio nevidljiv → drag-ručka sad UVIJEK vidljiva u lijevom žlijebu (⣿) + živi ghost prati kursor + auto-scroll (**F1/F5 dodatno pojačani** — afordancija mora biti vidljiva; Kartice = uzor). **Preostaje:** **F2** (pravi upload slike = U8.7 Supabase Storage) · **F6** (bogatija text-boja) · **F8** (lista redoslijed/tip) · U8.6b/c mikro-vizual.
+> **STATUS (2026-07-28):** **F7 kvadratić-model KOMPLETAN (K1–K6)** + **F1 ✅** (＋ afordancija) + **F4 ✅** (boja cijelog bloka) + **F5 ✅** (drag-drop blokova/sekcija, K6) + **F2 ✅** (**pravi upload slike = U8.7 Supabase Storage, 2026-07-27/28** — 📁 gumb + drag-drop, slika-blok SAMO upload bez URL-polja; grana `feature/u8.7-image-upload`, prod bucket čeka deploy). **Editor-fix (07-26-h):** drag-ručka UVIJEK vidljiva u lijevom žlijebu (⣿) + živi ghost + auto-scroll. **Preostaje:** **F6** (bogatija text-boja) · **F8** (lista redoslijed/tip) · U8.6 mikro-vizual **+ MOBILNI editor** (Leon 07-27: editor neupotrebljiv na mobitelu → dio U8.6 vizualne faze).
 
 ### F1 — ＋ za dodavanje bloka je „mršav i ružan"
 - **Leon:** „ne sviđa mi se kako je plus pozicioniran, nekako je mršavo i ružno."
@@ -30,7 +30,8 @@ razina — očite afordancije, direktna manipulacija, ugodno i lako.
   paddingom/ikonama/hoverom. Tip-izbornik s lijepim ikonama i mrežom.
 - **Tip:** vizual + interakcija · **Prioritet:** VISOK (svaki blok počinje ovdje)
 
-### F2 — Slika: pravi UPLOAD (file-picker), ne URL-paste
+### F2 — Slika: pravi UPLOAD (file-picker), ne URL-paste — ✅ GOTOVO (U8.7, 2026-07-27/28)
+> **RIJEŠENO:** slika-blok = **SAMO upload** („📁 Odaberi sliku" otvori datoteke/galeriju + drag-drop; URL-polje maknuto na Leonov izričit zahtjev). Supabase Storage bucket `lesson-images` (javan read, admin RLS-upis) + direktan klijent-upload → `block.src`. Grana `feature/u8.7-image-upload`; **prod bucket + deploy = preostali korak** (uz OK). Dokaz: test:authed 27/27 (pravi upload vs staging).
 - **Leon:** „kada se stavi slika nema opcije da se stisne gumb i otvori se odmah dio s datotekama gdje biraš koju sliku želiš."
 - **Analiza:** slika-blok = samo `<input>` „Zalijepi URL slike". Nitko nema URL slike pri ruci → mora se moći
   **odabrati datoteka s diska** (i drag-drop na drop-zonu). = **U8.7 (Supabase Storage upload).**

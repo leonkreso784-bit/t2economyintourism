@@ -41,10 +41,55 @@
       return '<div class="be-media be-media--image">' +
         '<div class="be-media__preview">' + imagePreviewHtml(block) + '</div>' +
         '<div class="be-media__fields">' +
-          mField('src', 'URL slike (https://…)', block.src) +
+          // U8.7: pravi upload (file-picker + drop-zona) → Storage → URL u block.src. Cijela zona = drop-meta.
+          //   Nema URL-paste polja (Leonov zahtjev): normalan tok = klik „Odaberi" otvori datoteke/galeriju
+          //   ili povuci sliku. `src` = skriveni nosač (upload ga puni + okine `change` = postojeći save-put).
+          '<div class="be-upload" data-be-upload>' +
+            '<input type="file" class="be-upload__file" data-be-imgfile accept="image/png,image/jpeg,image/webp,image/gif">' +
+            '<button type="button" class="be-upload__btn" data-be-imgpick>📁 Odaberi sliku</button>' +
+            '<span class="be-upload__hint">ili povuci sliku ovamo</span>' +
+            '<span class="be-upload__status" data-be-imgstatus aria-live="polite"></span>' +
+          '</div>' +
+          '<input type="hidden" data-be-mfield="src" value="' + esc(block.src == null ? '' : block.src) + '">' +
           mField('alt', 'Opis za pristupačnost (alt)', block.alt) +
           mField('caption', 'Naslov ispod (opcionalno)', inlineToPlain(block.caption)) +
         '</div></div>';
+    }
+    // ── U8.7 upload: klijent (admin JWT) → Storage bucket → public URL. Bez /api / Edge / service_role
+    //    (ADR-011). Validacija (tip/veličina) je klijentska UDOBNOST; bucket to nameće i server-side.
+    //    SokratAuth = leksički global (auth.js prije nas) → referenca GOLO uz typeof-guard (CLAUDE GOTCHA).
+    const UPLOAD_BUCKET = 'lesson-images';
+    const UPLOAD_MAX_BYTES = 5 * 1024 * 1024;              // 5 MB (= bucket file_size_limit)
+    const UPLOAD_EXT = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
+    function validateImageFile(file) {                     // sinkroni validator → null ako OK, inače ljudska poruka
+      if (!file) return 'Nema datoteke.';
+      if (!UPLOAD_EXT[file.type]) return 'Dopušteni formati: PNG, JPG, WEBP, GIF.';  // SVG odbijen (može nositi skripte)
+      if (file.size > UPLOAD_MAX_BYTES) return 'Slika je prevelika (max 5 MB).';
+      return null;
+    }
+    function uploadImage(file) {                            // → Promise<string publicUrl>; baca Error s ljudskom porukom
+      return new Promise(function (resolve, reject) {
+        const verr = validateImageFile(file);
+        if (verr) { reject(new Error(verr)); return; }
+        const ext = UPLOAD_EXT[file.type];
+        if (typeof SokratAuth === 'undefined' || !SokratAuth || typeof SokratAuth.getClient !== 'function') {
+          reject(new Error('Prijava nije spremna — uloguj se pa pokušaj ponovno.')); return;
+        }
+        const client = SokratAuth.getClient();
+        if (!client || !client.storage) { reject(new Error('Prijavi se za upload slike.')); return; }
+        const uuid = (typeof crypto !== 'undefined' && crypto.randomUUID)
+          ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
+        const path = uuid + '.' + ext;                     // ravan namespace + UUID = bez kolizije
+        client.storage.from(UPLOAD_BUCKET).upload(path, file, { contentType: file.type, upsert: false })
+          .then(function (res) {
+            if (res && res.error) throw res.error;
+            const pub = client.storage.from(UPLOAD_BUCKET).getPublicUrl(path);
+            const url = pub && pub.data && pub.data.publicUrl;
+            if (!url) throw new Error('Upload uspio, ali URL nije dobiven.');
+            resolve(url);
+          })
+          .catch(function (err) { reject(new Error((err && err.message) ? err.message : 'Upload nije uspio.')); });
+      });
     }
     function videoPreviewHtml(block) {                       // renderVideo facade, ili placeholder ako ID nevaljan/prazan
       const html = preview(block);
@@ -390,6 +435,8 @@
       mediaTableBody: mediaTableBody,
       mediaPreviewHtml: mediaPreviewHtml,
       imageResizePointerDown: imageResizePointerDown,  // U8.5e (drag-ručka širine slike)
+      uploadImage: uploadImage,                        // U8.7 (file → Storage → public URL)
+      validateImageFile: validateImageFile,            // U8.7 (sinkroni tip/veličina validator)
       typesetFormulas: typesetFormulas,
       enhanceMathFields: enhanceMathFields,
       tableModel: tableModel,
