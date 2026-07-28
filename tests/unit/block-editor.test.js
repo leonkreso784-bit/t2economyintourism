@@ -114,7 +114,12 @@ test('runsToEditable: b/i/color/href → strong/em/span.lb-color/a', function ()
   assert.ok(E._runsToEditable([{ text: 'l', href: 'https://a.b' }]).indexOf('<a href="https://a.b" data-be-link>l</a>') !== -1);
 });
 test('runsToEditable: nepoznata boja se ignorira (kurirani token-set)', function () {
-  assert.strictEqual(E._runsToEditable([{ text: 'q', color: 'pink' }]), 'q');
+  assert.strictEqual(E._runsToEditable([{ text: 'q', color: 'brown' }]), 'q');
+});
+test('F6: proširena paleta (cyan/blue/violet/pink) → span kroz runsToEditable', function () {
+  ['cyan', 'blue', 'violet', 'pink'].forEach(function (tok) {
+    assert.strictEqual(E._runsToEditable([{ text: 't', color: tok }]), '<span class="lb-color-' + tok + '">t</span>', tok + ' → span');
+  });
 });
 
 // ── U8.4a: serijalizator DOM → runs (mini fake-DOM: firstChild/nextSibling/nodeType/tagName/data/getAttribute/className) ──
@@ -156,6 +161,11 @@ test('editableToInline: <a href> → run href', function () {
 });
 test('editableToInline: span.lb-color-green → run color', function () {
   assert.deepStrictEqual(E._editableToInline(EROOT([EL('span', [T('g')], { class: 'lb-color-green' })])), [{ text: 'g', color: 'green' }]);
+});
+test('F6: nove boje (cyan/blue/violet/pink) → run color kroz editableToInline (regex izveden iz allowlista)', function () {
+  ['cyan', 'blue', 'violet', 'pink'].forEach(function (tok) {
+    assert.deepStrictEqual(E._editableToInline(EROOT([EL('span', [T('t')], { class: 'lb-color-' + tok })])), [{ text: 't', color: tok }], tok);
+  });
 });
 test('editableToInline: miješano tekst+bold+tekst → 3 runa (array)', function () {
   assert.deepStrictEqual(
