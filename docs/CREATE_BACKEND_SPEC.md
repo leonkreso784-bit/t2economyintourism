@@ -93,9 +93,9 @@ Tempo = **faza-checkpoint** (Leon Q3): unutar faze tečem kroz cigle (gate na sv
 
 | Faza | Isporuka | Gate / dokaz | Dira prod? |
 |---|---|---|---|
-| **F0** | ovaj spec v3 + potvrda | čitaš ovo | ne ← **ovdje smo** |
-| **F1 · DB temelj** | `nodes` + `node_content` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/publish_node) — **STAGING** (Supabase skill/MCP) | `list_tables` + RLS (owner-izolacija dokazana) + REST smoke; PROD netaknut | ne (staging) |
-| **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | `test:authed` vs staging: složi stablo, provjeri owner-izolaciju | ne (grana/preview) |
+| **F0** | ovaj spec v3 + potvrda | čitaš ovo | ne ✅ |
+| **F1 · DB temelj** | `nodes` + `node_content` + `node_content_versions` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/restore/publish_node) — **STAGING** | **✅ 51/51** — v. §9 | ne (staging) ✅ |
+| **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | `test:authed` vs staging: složi stablo, provjeri owner-izolaciju | ne (grana/preview) ← **ovdje smo** |
 | **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | authed: uredi čvor → publish → re-load = sadržaj ostao | ne |
 | **F4 · Polish + E2E** | drag-nest, breadcrumb, prazna stanja; puni tok na stagingu | authed E2E: create→nest→uredi→publish→delete→restore | ne |
 | **F5 · PROD** | migracija (SQL prvo, U4-obrazac) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** |
@@ -119,4 +119,44 @@ Nakon F5 → **osobni UGC-graditelj radi** → **frontend redizajn** (Leon) → 
 Vanjski AI (ChatGPT/Claude/Gemini) preko MCP-servera: autentificira korisnika → zove **iste** `create_node` + `publish_node` → puni korisnikovo stablo iz PDF-a. **Isti backend, još jedna vrata.** Ne gradi se sad; shema/RPC-ovi su mu spremni.
 
 ---
-*F0 checkpoint: čeka Leonov „idemo F1". Zatim F1 = `nodes`/`node_content` + RLS + RPC-ovi na STAGINGU. Nula koda/deploya do tada.*
+
+## 9 · F1 — IZVEDENO (STAGING `czljmvigkgiajzjxtndq`, 2026-08-02)
+**Artefakt:** [`supabase/f1-nodes.sql`](../supabase/f1-nodes.sql) — idempotentan, **isti fajl ide na PROD u F5**.
+**Otisak dokazan:** md5 tijela svih 13 funkcija u fajlu == deployano na stagingu (13/13) → nema drifta repo↔baza.
+
+**Odluke zaključane u F1 (razlika vs §2/§3 nacrt):**
+| Odluka | Obrazloženje |
+|---|---|
+| `node_content` = **zasebna tablica** (ne reuse `subject_content`) | čista owner-RLS; `publish_document` i javni predmeti ostaju potpuno nedirnuti |
+| **+`node_content_versions`** (audit) | spec §0 invarijanta 2 traži audit; zrcali `content_versions`, cascade-briše s čvorom (GDPR) |
+| **+`restore_node`** | soft-delete je bez smisla bez povrata; treba ga F4 E2E |
+| Dijete smije visjeti **samo o `folder`-u** | study-čvor = list koji nosi gradivo; lakše kasnije popustiti nego stegnuti |
+| `anon` = NIŠTA, `authenticated` = **samo SELECT** | svaki upis ide kroz SECURITY DEFINER RPC → klijent ne treba write-grantove; usput zatvara i `TRUNCATE` (na njega se RLS NE primjenjuje) |
+
+**Gate — 51/51:**
+| Paket | Rezultat |
+|---|---|
+| Integritet `nodes` (ciklus/self-parent/kind/ime/cascade) | **7/7** |
+| `node_content` (study-only · version-bump · cascade) | **4/4** |
+| RPC-ovi strukture (create/rename/reorder/move/delete/restore + tuđi čvor + bez prijave) | **20/20** |
+| `publish_node` + audit (base_version konflikt · validacija payloada · folder/tuđi/obrisan) | **12/12** |
+| **RLS izolacija** (`set role authenticated`, korisnik A vs B-ovi podaci u bazi) | **10/10** — A ne vidi B-ove čvorove/payload/audit; direktan UPDATE/INSERT/DELETE/**TRUNCATE** blokiran (42501) |
+| `anon` (neprijavljen) | **4/4** — SELECT i RPC blokirani (42501) |
+| **REST smoke** (pravi JWT kroz PostgREST, isti put kao preglednik) | **11/11** — prijava · create_node · GET /nodes (RLS-filtriran) · publish_node · GET /node_content · stale base odbijen · anon 401 · delete_node |
+| Regresija nakon poravnanja funkcija na repo-fajl | **19/19** |
+
+**Advisors (security):** 0 ERROR. Tri WARN-a koja sam uveo (trigger-funkcije izložene kao `/rest/v1/rpc/`) **zatvorena**
+revokeom. Preostali WARN-i za 7 novih RPC-ova (`authenticated` ih smije zvati) su **po dizajnu** — to JE write-API,
+owner-check je unutra; ista klasa kao postojeći `publish_document`.
+
+**Ostalo netaknuto (provjereno):** `subject_content` 3 retka · `content_versions` 162 · `publish_document` postoji.
+Staging očišćen od testnih podataka (`nodes` 0). Testni fixture-korisnik `rls-fixture-b@sokrat.local` ostavljen
+na stagingu za buduće RLS-provjere.
+
+**Nalaz za PROD (nije regresija, nije hitno):** Supabase-ov default daje `anon`/`authenticated` **pune** privilegije
+(uklj. `TRUNCATE`) na SVE tablice u `public` — na produ vrijedi za sve 4 postojeće tablice. Nije iskoristivo preko
+API-ja (PostgREST nema TRUNCATE glagol; anon ključ je PostgREST JWT, ne Postgres lozinka), ali je vrijedno stegnuti
+istim revoke-obrascem kad se dira prod. Također: **leaked-password protection** je isključen (jedan toggle u dashboardu).
+
+---
+*F1 gotov. **SLIJEDI F2** = „Moji materijali" na profilu (render stabla + add/rename/nest/reorder/delete kroz RPC-ove) — čeka Leonov OK.*

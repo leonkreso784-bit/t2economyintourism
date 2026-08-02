@@ -4,6 +4,42 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-024 — Osobni UGC-graditelj = ZASEBAN otok (`nodes` stablo, owner-RLS), a ne proširenje kataloga
+**Datum:** 2026-08-02 · **Status:** ✅ ODLUČENO (Leon) · **Dokument:** `docs/CREATE_BACKEND_SPEC.md` v3 · **F1 izveden na STAGINGU**
+
+**Kontekst.** B1 („predmet od nule") blokirao je editor na 4 sloja: UI-stub (`studio.js:133`), draft-ops bez
+`addSubject/addLesson`, `publish_document` radi SAMO `UPDATE` (`publish_missing_row`), a struktura kataloga je
+statički kôd. Prva dva nacrta spec-a (v1/v2) rješavala su to **proširenjem javnog kataloga** (`subjects` tablica +
+`create_subject` + dual-read strukture). Senior-revizija našla 5 rupa, od kojih je najveća bila **guranje async
+baze u sinkroni studentski vrući put**. Leon je zatim presudio smjer: korisnik gradi **vlastito ugniježđeno stablo**
+(„nešto unutar nečega"), **privatno na profilu, BEZ objave na javni katalog**; platforma je **za SVE** (FMTU =
+odskočna daska), matura izbačena.
+
+**Odluka.** Osobni graditelj je **zaseban otok**, ne proširenje kataloga:
+- **`nodes`** — self-referencijalno stablo (`folder` | `study`), `owner_id`, `position`, soft-delete. Korisnik
+  imenuje i gnijezdi po želji → entitet je **institucijski-agnostičan** (nema `subject`/`program`/`faculty` pojmova).
+- **`node_content`** — payload study-čvora u **istom obliku koji editor VEĆ uređuje** + `version` (optimistic concurrency).
+- **`node_content_versions`** — append-only audit (STARO stanje prije upisa), zrcali `content_versions`.
+- **Sigurnost:** `anon` nema NIŠTA · `authenticated` ima **SAMO SELECT** (RLS filtrira na vlasnika) · **svaki upis ide
+  kroz SECURITY DEFINER RPC s owner-checkom**. RLS write-policyji ostaju kao druga brava.
+- **Javni katalog, 22 predmeta, studentski vrući put i `publish_document` = NEDIRNUTI.**
+
+**Zašto ovako (a ne v1/v2).** Nestaje najveći rizik (async u sinkroni katalog), nema grandfather-migracije
+postojećih predmeta, nema split-brain strukture, a privatnost je jednostavan i tvrd invarijant (`owner_id = auth.uid()`)
+umjesto matrice `visibility × status × role`. Duh ADR-018 („student uploada PODATKE, nikad KOD") je očuvan.
+
+**Posljedice.**
+- Editor se veže na čvor kroz **`SokratAdmin.studioBridge`** — mijenjaju se samo 3 IO-metode (`setLesson`/`enter`/`publish`);
+  draft-store, block-editor, media i renderer ostaju **nepromijenjeni** (~100 % reuse).
+- **Dva publish-puta** svjesno koegzistiraju: `publish_document` (admin → javni predmeti) i `publish_node`
+  (vlasnik → osobni čvor). Isti kalup (FOR UPDATE + `base_version` + validacija payloada), različita autorizacija.
+- **Objava/dijeljenje na javni katalog = kasnija faza** i tražit će vlastitu odluku (moderacija, sigurnost).
+- **MCP** kasnije koristi **iste** `create_node`/`publish_node` — vanjski AI su samo još jedna vrata na isti backend.
+- Ograničenje po dizajnu: dijete smije visjeti samo o `folder`-u (study-čvor = list), payload je jedan po čvoru
+  (bez M1/M2/Final kompozicije). Lakše je kasnije popustiti nego stegnuti.
+
+---
+
 ## ADR-023 — Prvi suradnik (Saša Vudrag): content-staza kroz PR+CI, least-privilege, ADR-022 pull-forward
 **Datum:** 2026-07-09 · **Status:** ✅ ODLUČENO (korisnik 2026-07-08/09) · **Dokument:** `docs/TEAM.md`
 **Kontekst:** Saša Vudrag (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
