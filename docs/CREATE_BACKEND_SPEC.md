@@ -95,8 +95,8 @@ Tempo = **faza-checkpoint** (Leon Q3): unutar faze tečem kroz cigle (gate na sv
 |---|---|---|---|
 | **F0** | ovaj spec v3 + potvrda | čitaš ovo | ne ✅ |
 | **F1 · DB temelj** | `nodes` + `node_content` + `node_content_versions` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/restore/publish_node) — **STAGING** | **✅ 51/51** — v. §9 | ne (staging) ✅ |
-| **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | `test:authed` vs staging: složi stablo, provjeri owner-izolaciju | ne (grana/preview) ← **ovdje smo** |
-| **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | authed: uredi čvor → publish → re-load = sadržaj ostao | ne |
+| **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | **✅ 5/5 authed + 24 unit** — v. §10 | ne (grana `feature/f2-my-materials`) ✅ |
+| **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | authed: uredi čvor → publish → re-load = sadržaj ostao | ne ← **ovdje smo** |
 | **F4 · Polish + E2E** | drag-nest, breadcrumb, prazna stanja; puni tok na stagingu | authed E2E: create→nest→uredi→publish→delete→restore | ne |
 | **F5 · PROD** | migracija (SQL prvo, U4-obrazac) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** |
 
@@ -159,4 +159,36 @@ API-ja (PostgREST nema TRUNCATE glagol; anon ključ je PostgREST JWT, ne Postgre
 istim revoke-obrascem kad se dira prod. Također: **leaked-password protection** je isključen (jedan toggle u dashboardu).
 
 ---
-*F1 gotov. **SLIJEDI F2** = „Moji materijali" na profilu (render stabla + add/rename/nest/reorder/delete kroz RPC-ove) — čeka Leonov OK.*
+
+## 10 · F2 — IZVEDENO („Moji materijali" na profilu, 2026-08-03)
+**Artefakti:** `js/my-materials.js` (`window.SokratMaterials`) · `css/my-materials.css` (`mm-` modul) ·
+kartica u `js/profile.js` (`#myMaterials`) · 29 i18n ključeva (HR+EN) · `tests/unit/my-materials.test.js` ·
+`tests/my-materials.authed.spec.js`. Grana: `feature/f2-my-materials` (PROD netaknut).
+
+**Što korisnik sad može:** složiti vlastito stablo (folder u folderu, koliko god duboko), napraviti
+gradivo-čvor, preimenovati inline, obrisati uz potvrdu i **vratiti obrisano**, te **povlačenjem** ugnijezditi
+u folder ili presložiti među braćom. Stanje otvorenih foldera pamti se u `localStorage`.
+
+**Granice poštovane:** čitanje = direktan `SELECT` (RLS filtrira na vlasnika) · **svaki upis kroz RPC** ·
+`anon` ne vidi ništa · javni katalog i studentski put **nedirnuti**.
+
+**Gate:** unit **24/24** (buildTree · flattenVisible · isSelfOrDescendant · humanError) ·
+**authed 5/5 uživo vs staging** · **puni `test:authed` 32/32** (0 regresije na 27 postojećih) · preflight EXIT 0 ·
+drag-test **6/6 uzastopno** (bez flakea nakon ispravka uzroka).
+
+**Tri PRAVA buga uhvaćena i popravljena (ne test-šminka):**
+| Bug | Posljedica | Ispravak |
+|---|---|---|
+| `_lastDeleted` postavljen **nakon** `refresh()` | gumb „Vrati obrisano" se nikad ne nacrta | postaviti prije `refresh()` |
+| `refresh()` brisao stablo i pokazivao „Učitavam…" **prije** mrežnog poziva | korisnik vidi gumb i klikne ga dok posao traje → akcija **tiho ne radi ništa** | skeleton samo pri PRVOM učitavanju (`_loaded`) + **`setBusy()`** koji gasi pointer-evente (`.mm-busy`) dok akcija traje |
+| auto-scroll s marginom 70px (viewport 800px) | stranica kliže ispod korisnika dok samo lebdi nad donjim retkom → cilj ispuštanja se pomakne | margina 24px = namjerna gesta uz sam rub |
+
+Usput: `dropTargetAt` je sad **totalan** — ispuštanje u sub-piksel procjep između redaka više ne propada u prazno.
+
+**Naučeno o testiranju pointer-drag UI-a** (zapisano i u `TESTING.md`): fiksni cookie-banner presreće
+pointer-evente na dnu stranice → pred-postavi consent; a `scroll-behavior: smooth` (`css/variables.css`)
+znači da `scrollIntoView` **animira** → `boundingBox()` izmjeri koordinate usred animacije i sintetički miš
+sleti na krivi redak. To je bio korijen „flakea" koji je izgledao kao bug u dragu.
+
+---
+*F2 gotov. **SLIJEDI F3** = otvori study-čvor postojećim Studio editorom (`studioBridge` vezan na `node_content`, `publish_node` umjesto `publish_document`) — čeka Leonov OK.*
