@@ -19,11 +19,18 @@ async function openProfile(page) {
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('profile'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
+  // ⚠️ ČEKAJ da učitavanje ZAVRŠI. Spinner-stanje ima isti `.mm-state-title` kao prazno stanje,
+  // pa bi tvrdnje inače prolazile NAD SPINNEROM (lažno zeleno — vidi test „učitavanje se dovrši").
+  await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
   // App ima `scroll-behavior: smooth` (css/variables.css) → scrollIntoView ANIMIRA, pa
   // boundingBox() izmjeri koordinate usred animacije i sintetički miš sleti na krivi redak.
   // Gasimo animaciju SAMO u testu (proizvod ostaje gladak).
   await page.addStyleTag({ content: 'html, body { scroll-behavior: auto !important; }' });
 }
+
+/** Koliko KORIJENSKIH redaka stablo pokazuje (test se ne smije oslanjati na prazan račun). */
+const rootRowCount = (page) =>
+  page.locator('#myMaterials .mm-row[style*="--mm-depth:0"]').count();
 
 /** Napravi čvor kroz RPC (isti put koji UI koristi). */
 async function mkNode(page, parentId, kind, name) {
@@ -39,10 +46,27 @@ async function rmNode(page, id) {
 }
 
 test.describe('F2 — Moji materijali', () => {
-  test('prazno stanje kad korisnik nema ništa', async ({ page }) => {
+  // Prije je ovaj test tvrdio „`.mm-state-title` vidljiv + 0 redaka" i time PROLAZIO NAD
+  // SPINNEROM (spinner ima isti naslov-element) — dakle prolazio bi i da je učitavanje potpuno
+  // slomljeno. Sada gate-a stvarni invarijant: učitavanje se DOVRŠI i UI ZRCALI podatke.
+  test('učitavanje se dovrši i UI zrcali podatke (prazno stanje samo kad je stvarno prazno)', async ({ page }) => {
     await openProfile(page);
-    await expect(page.locator('#myMaterials .mm-state-title')).toBeVisible();
-    await expect(page.locator('#myMaterials .mm-row')).toHaveCount(0);
+
+    // 1) nije zaglavilo u spinneru i nije u stanju greške
+    await expect(page.locator('#myMaterials .mm-spin')).toHaveCount(0);
+    await expect(page.locator('#myMaterials [data-mm-retry]')).toHaveCount(0);
+
+    // 2) UI mora odgovarati onome što baza vrati — neovisno o tome ima li račun podataka
+    const roots = await page.evaluate(async () => {
+      const r = await window.SokratMaterials.loadTree();
+      return r.tree.length;
+    });
+    if (roots === 0) {
+      await expect(page.locator('#myMaterials .mm-state-title')).toBeVisible();
+      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(0);
+    } else {
+      expect(await rootRowCount(page)).toBe(roots);
+    }
   });
 
   test('stablo se crta ugniježđeno; chevron otvara/zatvara; naziv je ESCAPAN', async ({ page }) => {
@@ -51,28 +75,33 @@ test.describe('F2 — Moji materijali', () => {
     const XSS = '<img src=x onerror="window.__pwned=1">';
     const fid = await mkNode(page, null, 'folder', 'F2 Test fakultet');
     const sub = await mkNode(page, fid, 'folder', 'F2 Godina');
-    await mkNode(page, sub, 'study', XSS);
+    const studyId = await mkNode(page, sub, 'study', XSS);
 
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
       await page.waitForSelector('#myMaterials .mm-row', { timeout: 20000 });
 
-      // 1) korijen vidljiv, djeca skrivena dok folder nije otvoren
-      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(1);
+      // ⚠️ Tvrdnje su SCOPE-ane na vlastite čvorove (data-mm-id): račun smije imati i druge
+      // podatke (demo stablo, ručno testiranje) — globalni brojevi bi test činili lažno crvenim.
       const rootRow = page.locator('#myMaterials .mm-row[data-mm-id="' + fid + '"]');
+      const subRow = page.locator('#myMaterials .mm-row[data-mm-id="' + sub + '"]');
+      const studyRow = page.locator('#myMaterials .mm-row[data-mm-id="' + studyId + '"]');
+
+      // 1) korijen vidljiv, djeca skrivena dok folder nije otvoren
       await expect(rootRow).toHaveCount(1);
       await expect(rootRow.locator('.mm-name')).toHaveText('F2 Test fakultet');
+      await expect(subRow).toHaveCount(0);
+      await expect(studyRow).toHaveCount(0);
 
       // 2) chevron otvara → podfolder se pojavi na dubini 1
       await rootRow.locator('[data-mm-toggle]').click();
-      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(2);
-      const subRow = page.locator('#myMaterials .mm-row[data-mm-id="' + sub + '"]');
+      await expect(subRow).toHaveCount(1);
       await expect(subRow).toHaveAttribute('style', /--mm-depth:1/);
+      await expect(studyRow).toHaveCount(0);          // unuk i dalje skriven
 
       // 3) otvori i podfolder → study-čvor na dubini 2, s book ikonom
       await subRow.locator('[data-mm-toggle]').click();
-      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(3);
-      const studyRow = page.locator('#myMaterials .mm-row--study');
+      await expect(studyRow).toHaveCount(1);
       await expect(studyRow).toHaveAttribute('style', /--mm-depth:2/);
       await expect(studyRow.locator('.mm-icon .fa-book-open')).toHaveCount(1);
 
@@ -81,9 +110,11 @@ test.describe('F2 — Moji materijali', () => {
       await expect(page.locator('#myMaterials img')).toHaveCount(0);
       expect(await page.evaluate(() => window.__pwned)).toBeUndefined();
 
-      // 5) zatvaranje vraća na jedan redak
+      // 5) zatvaranje korijena sklanja cijelo podstablo (korijen ostaje)
       await rootRow.locator('[data-mm-toggle]').click();
-      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(1);
+      await expect(rootRow).toHaveCount(1);
+      await expect(subRow).toHaveCount(0);
+      await expect(studyRow).toHaveCount(0);
     } finally {
       await rmNode(page, fid);
     }
@@ -108,41 +139,47 @@ test.describe('F2 — Moji materijali', () => {
       await page.fill('#myMaterials [data-mm-input]', 'F2 Gradivo');
       await page.press('#myMaterials [data-mm-input]', 'Enter');
 
-      const study = page.locator('#myMaterials .mm-row--study', { hasText: 'F2 Gradivo' });
-      await expect(study).toHaveCount(1, { timeout: 20000 });
-      await expect(study).toHaveAttribute('style', /--mm-depth:1/);
+      const created = page.locator('#myMaterials .mm-row--study', { hasText: 'F2 Gradivo' });
+      await expect(created).toHaveCount(1, { timeout: 20000 });
+      await expect(created).toHaveAttribute('style', /--mm-depth:1/);
+
+      // Uhvati ID i dalje ciljaj NJEGA — naziv se mijenja, a `.mm-row--study` bi uhvatio i
+      // tuđe/postojeće čvorove na računu (strict-mode sudar).
+      const sid = await created.getAttribute('data-mm-id');
+      const study = page.locator('#myMaterials .mm-row[data-mm-id="' + sid + '"]');
+      const studyName = study.locator('.mm-name');
 
       // 3) preimenuj — unos je PREDPOPUNJEN starim nazivom
       await study.locator('[data-mm-rename]').click();
       await expect(page.locator('#myMaterials [data-mm-input]')).toHaveValue('F2 Gradivo');
       await page.fill('#myMaterials [data-mm-input]', 'F2 Preimenovano');
       await page.press('#myMaterials [data-mm-input]', 'Enter');
-      await expect(page.locator('#myMaterials .mm-row--study .mm-name')).toHaveText('F2 Preimenovano', { timeout: 20000 });
+      await expect(studyName).toHaveText('F2 Preimenovano', { timeout: 20000 });
 
       // 3b) ✓ gumb potvrđuje jednako kao Enter (mišem — blur ga ne smije pojesti)
-      await page.locator('#myMaterials .mm-row--study [data-mm-rename]').click();
+      await study.locator('[data-mm-rename]').click();
       await page.fill('#myMaterials [data-mm-input]', 'F2 Gumbom');
       await page.click('#myMaterials [data-mm-commit]');
-      await expect(page.locator('#myMaterials .mm-row--study .mm-name')).toHaveText('F2 Gumbom', { timeout: 20000 });
+      await expect(studyName).toHaveText('F2 Gumbom', { timeout: 20000 });
 
       // 3c) ✕ gumb odustaje
-      await page.locator('#myMaterials .mm-row--study [data-mm-rename]').click();
+      await study.locator('[data-mm-rename]').click();
       await page.fill('#myMaterials [data-mm-input]', 'NE OVO');
       await page.click('#myMaterials [data-mm-cancel]');
-      await expect(page.locator('#myMaterials .mm-row--study .mm-name')).toHaveText('F2 Gumbom');
+      await expect(studyName).toHaveText('F2 Gumbom');
 
       // 3d) tipkovnica: Tab s unosa na ✓ pa Enter — blur NE smije otkazati unos
-      await page.locator('#myMaterials .mm-row--study [data-mm-rename]').click();
+      await study.locator('[data-mm-rename]').click();
       await page.fill('#myMaterials [data-mm-input]', 'F2 Tipkovnicom');
       await page.press('#myMaterials [data-mm-input]', 'Tab');
       await page.keyboard.press('Enter');
-      await expect(page.locator('#myMaterials .mm-row--study .mm-name')).toHaveText('F2 Tipkovnicom', { timeout: 20000 });
+      await expect(studyName).toHaveText('F2 Tipkovnicom', { timeout: 20000 });
 
       // 4) Escape odustaje (naziv ostaje)
-      await page.locator('#myMaterials .mm-row--study [data-mm-rename]').click();
+      await study.locator('[data-mm-rename]').click();
       await page.fill('#myMaterials [data-mm-input]', 'NE SPREMAJ');
       await page.press('#myMaterials [data-mm-input]', 'Escape');
-      await expect(page.locator('#myMaterials .mm-row--study .mm-name')).toHaveText('F2 Tipkovnicom');
+      await expect(studyName).toHaveText('F2 Tipkovnicom');
     } finally {
       if (fid) await rmNode(page, fid);
     }
@@ -204,7 +241,11 @@ test.describe('F2 — Moji materijali', () => {
 
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
-      await expect(page.locator('#myMaterials .mm-row')).toHaveCount(3, { timeout: 20000 });
+      // scope-ano na vlastite čvorove (račun smije imati i druge podatke)
+      for (const id of [A, B, S]) {
+        await expect(page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]'))
+          .toHaveCount(1, { timeout: 20000 });
+      }
 
       // 1) ispusti gradivo na SREDINU foldera A → ugnijezdi se u njega
       await drag(S, A, 0.5);
@@ -242,6 +283,120 @@ test.describe('F2 — Moji materijali', () => {
       await rmNode(page, B);
       await rmNode(page, S);
     }
+  });
+
+  // ── Rubni slučajevi (lov na bugove 2026-08-04; svi su prošli iz prve — drže to tako) ──
+
+  test('duboko ugnježđivanje (8 razina) ne razbija layout ni čitljivost', async ({ page }) => {
+    await openProfile(page);
+    let root = null;
+    try {
+      let parent = null;
+      for (let i = 0; i < 8; i++) {
+        parent = await mkNode(page, parent, i === 7 ? 'study' : 'folder', 'Razina ' + (i + 1));
+        if (i === 0) root = parent;
+      }
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      await page.waitForSelector('#myMaterials .mm-row', { timeout: 20000 });
+      for (let i = 0; i < 8; i++) {
+        const t = page.locator('#myMaterials [data-mm-toggle][aria-expanded="false"]').first();
+        if (await t.count()) await t.click(); else break;
+      }
+      // Stranica se NIKAD ne smije vodoravno skrolati (klasa BUG-003/007).
+      const overflow = await page.evaluate(() =>
+        document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow, 'stranica se vodoravno skrola na dubokom stablu').toBeLessThanOrEqual(1);
+      // Naziv na najdubljoj razini mora ostati čitljiv (uvlaka ga ne smije stisnuti).
+      const nameBox = await page.locator('#myMaterials .mm-row').last().locator('.mm-name').boundingBox();
+      expect(nameBox.width, 'naziv na dubokoj razini stisnut').toBeGreaterThan(40);
+    } finally {
+      if (root) await rmNode(page, root);
+    }
+  });
+
+  test('naziv od 120 znakova (granica sheme) ne razbija layout', async ({ page }) => {
+    await openProfile(page);
+    let id = null;
+    try {
+      id = await mkNode(page, null, 'folder', 'D'.repeat(120));
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      const overflow = await page.evaluate(() =>
+        document.documentElement.scrollWidth - window.innerWidth);
+      expect(overflow, 'dugačak naziv gura stranicu vodoravno').toBeLessThanOrEqual(1);
+      const rowBox = await row.boundingBox();
+      const treeBox = await page.locator('#myMaterials .mm-tree').boundingBox();
+      expect(rowBox.width).toBeLessThanOrEqual(treeBox.width + 2);
+    } finally {
+      if (id) await rmNode(page, id);
+    }
+  });
+
+  test('brzi dvoklik na „+ Folder" ne otvara dva unosa', async ({ page }) => {
+    await openProfile(page);
+    const btn = page.locator('#myMaterials [data-mm-new="folder"]');
+    await btn.click();
+    await btn.click({ force: true });
+    await expect(page.locator('#myMaterials [data-mm-input]')).toHaveCount(1);
+    await page.keyboard.press('Escape');
+  });
+
+  test('dvostruki Enter ne stvara duplikat čvora', async ({ page }) => {
+    await openProfile(page);
+    await page.click('#myMaterials [data-mm-new="folder"]');
+    await page.fill('#myMaterials [data-mm-input]', 'F2 DvaPuta');
+    await page.press('#myMaterials [data-mm-input]', 'Enter');
+    await page.keyboard.press('Enter');
+    await page.waitForSelector('#myMaterials:not(.mm-busy)');
+    await expect(page.locator('#myMaterials .mm-row', { hasText: 'F2 DvaPuta' }))
+      .toHaveCount(1, { timeout: 20000 });
+    const made = await page.evaluate(async () => {
+      const r = await window.SokratMaterials.loadTree();
+      return r.rows.filter((x) => x.name === 'F2 DvaPuta' && !x.deleted_at).map((x) => x.id);
+    });
+    try {
+      expect(made.length, 'dupli čvor od dvostrukog Enter-a').toBe(1);
+    } finally {
+      for (const id of made) await rmNode(page, id);
+    }
+  });
+
+  test('ispuštanje retka na SAMOG SEBE ne mijenja ništa', async ({ page }) => {
+    await openProfile(page);
+    const A = await mkNode(page, null, 'folder', 'F2 Self A');
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + A + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      await page.waitForSelector('#myMaterials:not(.mm-busy)');
+      const g = await row.locator('[data-mm-drag]').boundingBox();
+      const t = await row.boundingBox();
+      await page.mouse.move(g.x + g.width / 2, g.y + g.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(t.x + t.width / 2, t.y + t.height * 0.5, { steps: 6 });
+      await page.mouse.up();
+      await page.waitForSelector('#myMaterials:not(.mm-busy)');
+      const parent = await page.evaluate(async (id) => {
+        const r = await window.SokratMaterials.loadTree();
+        return (r.rows.find((x) => x.id === id) || {}).parent_id;
+      }, A);
+      expect(parent, 'čvor postao vlastito dijete').toBe(null);
+      await expect(row).toHaveCount(1);
+    } finally {
+      await rmNode(page, A);
+    }
+  });
+
+  test('otvaranje drugog unosa dok je prvi otvoren ne ostavlja siroče', async ({ page }) => {
+    await openProfile(page);
+    await page.click('#myMaterials [data-mm-new="folder"]');
+    await page.fill('#myMaterials [data-mm-input]', 'nedovrseno');
+    await page.click('#myMaterials [data-mm-new="study"]');
+    const inputs = page.locator('#myMaterials [data-mm-input]');
+    await expect(inputs).toHaveCount(1);
+    await expect(inputs).toHaveValue('');   // stari tekst se NE prenosi
+    await page.keyboard.press('Escape');
   });
 
   test('odustajanje od potvrde NE briše', async ({ page }) => {
