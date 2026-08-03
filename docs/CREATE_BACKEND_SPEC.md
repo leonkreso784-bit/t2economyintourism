@@ -173,7 +173,7 @@ u folder ili presložiti među braćom. Stanje otvorenih foldera pamti se u `loc
 `anon` ne vidi ništa · javni katalog i studentski put **nedirnuti**.
 
 **Gate:** unit **24/24** (buildTree · flattenVisible · isSelfOrDescendant · humanError) ·
-**authed 5/5 uživo vs staging** · **puni `test:authed` 32/32** (0 regresije na 27 postojećih) · preflight EXIT 0 ·
+**authed 5/5 uživo vs staging** · **puni `test:authed` 32/32** (0 regresije na 27 postojećih) · **`test:responsive` 261/0/15skip** · preflight EXIT 0 ·
 drag-test **6/6 uzastopno** (bez flakea nakon ispravka uzroka).
 
 **Tri PRAVA buga uhvaćena i popravljena (ne test-šminka):**
