@@ -181,6 +181,42 @@ test('sokrat-modal: ESC i backdrop-klik zatvaraju', async ({ page }) => {
   await expect(modal).not.toHaveClass(/is-open/);
 });
 
+// REGRESIJA (Leon, živo 2026-08-04): označavanje teksta u polju zatvaralo je modal.
+// Uzrok: `click` puca na NAJBLIŽEM ZAJEDNIČKOM PRETKU mousedown-a i mouseup-a. Povuci li se
+// selekcija iz inputa preko ruba kartice, taj predak je sam overlay → `e.target === this` je
+// istina iako korisnik nikad nije kliknuo backdrop. Pritisak MORA početi na overlayu.
+test('sokrat-modal: drag-selekcija teksta iz kartice preko ruba NE zatvara modal', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => !!customElements.get('sokrat-modal'));
+
+  await page.evaluate(() => {
+    const m = document.createElement('sokrat-modal');
+    m.id = 'testModal3';
+    m.innerHTML = '<div class="card" style="position:relative;margin:120px auto;width:220px;'
+      + 'background:#222;padding:20px">'
+      + '<input id="inTxt" value="lozinka123" style="width:100%">'
+      + '</div>';
+    document.body.appendChild(m);
+    /** @type {any} */ (m).open();
+  });
+  const modal = page.locator('#testModal3');
+  await expect(modal).toHaveClass(/is-open/);
+
+  // Povuci od sredine inputa prema van (lijevo-gore), otpusti NA OVERLAYU — kao kad korisnik
+  // označi cijelu lozinku i „prebaci" preko ruba kartice.
+  const box = /** @type {any} */ (await page.locator('#inTxt').boundingBox());
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x - 60, box.y - 60, { steps: 8 });
+  await page.mouse.up();
+
+  await expect(modal).toHaveClass(/is-open/);   // modal MORA ostati otvoren
+
+  // Kontrola: pravi klik na overlay (pritisak POČINJE na overlayu) i dalje zatvara.
+  await modal.click({ position: { x: 4, y: 4 } });
+  await expect(modal).not.toHaveClass(/is-open/);
+});
+
 // NB: fokus-management (pomak-u-modal na open, Tab-trap, focus-restore na close) NIJE gate-an ovdje —
 // cijela Playwright matrica su iPhone (touch) profili, gdje tap NE fokusira gumb (mobilna focus-semantika),
 // pa je programatski/tap fokus nepouzdan. Ponašanje je ispravno u pravom desktop pregledniku (ručno + scratch
