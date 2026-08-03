@@ -1,8 +1,9 @@
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
-> **Status:** DRAFT v3 · ugovor PRIJE koda · **vizija POTVRĐENA (Leon 2026-08-02)**.
-> **Sljedeći korak nakon ovoga:** frontend redizajn (Leon).
-> **Pravilo:** NULA koda dok Leon ne kaže „idemo F1". Implementacija slijedi §6 fazni plan.
+> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ (grana) → SLIJEDI F3.**
+> **Gdje je kôd:** grana `feature/f2-my-materials` (`f5a1bad`+`fa1f5fa`); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
+> **Nakon F5:** frontend redizajn (Leon), pa objava/dijeljenje + MCP.
+> **Pravilo:** svaka faza staje na checkpoint za Leonov OK; **deploy = uvijek izričit OK**. Implementacija slijedi §6.
 > **Povijest odluke:** v1/v2 bili su uokvireni oko „službenih predmeta + objava studentima" → **Leon presudio: to NIJE ono što želi.** v3 = prava vizija.
 
 ---
