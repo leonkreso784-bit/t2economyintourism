@@ -225,7 +225,7 @@ zastarjeli `base_version` → `publish_version_conflict` (izgubljeni upis odbač
 Studio na čvoru (crumb/naslov/panel/„Uredi" ponuđen) · „←" → profil · **prazan čvor → „＋ Nova sekcija" →
 Objavi → sadržaj u bazi** · druga sekcija dobiva nesudarajući ključ · `setLesson` gasi node-mod.
 
-**Regresija: nula.** `test:authed` 46/46 (admin `publish_document` put netaknut) · `preflight` EXIT 0.
+**Regresija: nula.** `test:authed` 46/46 (admin `publish_document` put netaknut) · `test:responsive` 279/0/15skip · `preflight` EXIT 0.
 
 ---
 *F3 gotov. **SLIJEDI F4** = polish + puni E2E (breadcrumb, prazna stanja, create→nest→uredi→publish→delete→restore).*
