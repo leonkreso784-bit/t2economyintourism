@@ -171,10 +171,19 @@ test('buildTree: position koji nije broj → 0 (ne ruši sortiranje)', () => {
     assert.match(M.humanError({ message: 'publish_version_conflict: base 1, u bazi 2' }), /edited elsewhere/i);
     assert.match(M.humanError({ message: 'node_parent_deleted: prvo vrati roditelja' }), /parent folder first/i);
   });
+  test('humanError: tablica ne postoji na toj bazi → jasna poruka, NE „nešto je pošlo po zlu"', () => {
+    // Prod prije F5-migracije: PostgREST PGRST205 / Postgres 42P01.
+    assert.match(M.humanError({ code: 'PGRST205', message: "Could not find the table 'public.nodes' in the schema cache" }), /Not available on this environment/i);
+    assert.match(M.humanError({ code: '42P01', message: 'relation "public.nodes" does not exist' }), /Not available on this environment/i);
+    assert.match(M.humanError({ message: 'Could not find the table public.nodes' }), /Not available on this environment/i);
+  });
+  test('humanError: istekao/neispravan token → „moraš biti prijavljen"', () => {
+    assert.match(M.humanError({ code: 'PGRST301', message: 'JWSError JWSInvalidSignature' }), /signed in/i);
+  });
   test('humanError: nepoznata greška → generička poruka (bez curenja internih detalja)', () => {
-    const msg = M.humanError({ message: 'PGRST301 JWSError JWSInvalidSignature' });
+    const msg = M.humanError({ code: 'XX000', message: 'deadlock detected at pid 4711 in relation foo' });
     assert.match(msg, /went wrong/i);
-    assert.ok(msg.indexOf('JWS') === -1, 'interni detalj procurio korisniku');
+    assert.ok(msg.indexOf('pid 4711') === -1, 'interni detalj procurio korisniku');
   });
   test('humanError: null/prazna greška → generička poruka (ne baca)', () => {
     assert.match(M.humanError(null), /went wrong/i);

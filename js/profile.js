@@ -5,7 +5,13 @@
 // Ulaz: klik na bilo koji .auth-entry gumb kad je korisnik prijavljen (js/auth.js).
 
 // Lokalni i18n helper: t() ako postoji, inače fallback (engleski original).
-function pt(key, fb) { return (window.t) ? t(key) : fb; }
+// ⚠️ `t()` vraća SAM KLJUČ kad prijevoda nema → bez ove provjere korisnik vidi
+// sirovo „admin.openStudio". Isti obrazac kao studio.js/my-materials.js.
+function pt(key, fb) {
+    if (!window.t) return fb;
+    const v = t(key);
+    return (v === key) ? fb : v;
+}
 
 function renderProfilePage() {
     const root = document.getElementById('profileContent');

@@ -52,8 +52,22 @@
   /** Pretvori supabase/PostgREST grešku u kratku poruku za korisnika. */
   function humanError(err) {
     const raw = String((err && (err.message || err.hint || err.details)) || '');
-    for (const code in ERRORS) {
-      if (raw.indexOf(code) !== -1) return mt(ERRORS[code][0], ERRORS[code][1]);
+    const code = String((err && err.code) || '');
+
+    // Tablice još nema na OVOJ bazi (npr. prod prije F5-migracije). To nije „greška"
+    // nego „značajka ovdje još ne postoji" — reci to ravno umjesto generičkog mumljanja.
+    // PostgREST: PGRST205 (nema u schema cacheu) · Postgres: 42P01 (undefined_table).
+    if (code === 'PGRST205' || code === '42P01'
+        || /Could not find the table|does not exist|schema cache/i.test(raw)) {
+      return mt('materials.errNoTable', 'Not available on this environment yet.');
+    }
+    // Nema prijave / istekao token.
+    if (code === 'PGRST301' || /JWT|JWS/i.test(raw)) {
+      return mt('materials.errAuth', 'You need to be signed in.');
+    }
+
+    for (const key in ERRORS) {
+      if (raw.indexOf(key) !== -1) return mt(ERRORS[key][0], ERRORS[key][1]);
     }
     return mt('materials.errGeneric', 'Something went wrong. Please try again.');
   }

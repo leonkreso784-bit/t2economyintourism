@@ -28,6 +28,7 @@
 
     // Admin (F4 CRUD) — vidljivo samo adminu
     'admin.title': { en: 'Admin', hr: 'Admin' },
+    'admin.openStudio': { en: 'Studio editor', hr: 'Studio editor' },
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
@@ -390,6 +391,7 @@
     'materials.errConflict': { en: 'This was edited elsewhere. Reload and try again.', hr: 'Ovo je uređeno drugdje. Osvježi pa pokušaj ponovno.' },
     'materials.errNotStudy': { en: 'Only study items hold material.', hr: 'Samo gradivo-stavke nose sadržaj.' },
     'materials.errGeneric': { en: 'Something went wrong. Please try again.', hr: 'Nešto je pošlo po zlu. Pokušaj ponovno.' },
+    'materials.errNoTable': { en: 'Not available on this environment yet.', hr: 'Još nije dostupno na ovom okruženju.' },
     'materials.drag': { en: 'Drag to move', hr: 'Povuci za premještanje' },
     'materials.phFolder': { en: 'Folder name…', hr: 'Naziv foldera…' },
     'materials.phStudy': { en: 'Material name…', hr: 'Naziv gradiva…' },

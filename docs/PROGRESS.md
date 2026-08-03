@@ -5,6 +5,21 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-03-b (OPUS) — 🐞 Leonov živi pregled F2 → 2 BUGA popravljena + ⚠️ OTVORENA NIT (prod nema `nodes`)
+**Kontekst:** Leon je htio vidjeti F2 uživo. Digao sam lokalni server (:5050) + demo-stablo na stagingu i dao mu upute s `sokrat-supabase-override`. **Njegov ekran je pokazao dvije stvari** (screenshot): sirovi ključ **`admin.openStudio`** umjesto teksta, i **„Could not load your materials / Something went wrong"**.
+**Leonova presuda (zapisati, važno za smjer):** *„frontend će morat biti potpuno preuređen, trenutno ništa ne radi i ne mogu ništa napravit… frontend je naravno zadnji na redu, ali moramo se potrudit da SVE savršeno radi prije nego što ga uredimo."*
+
+**🐞 BUG 1 — sirovi i18n ključevi (bio ŽIV NA PRODUKCIJI, nije nov):** `js/profile.js:8` i `js/auth.js:154` imali su pokvaren helper — `function pt(key, fb) { return (window.t) ? t(key) : fb; }`. `t()` vraća **sam ključ** kad prijevoda nema → korisnik vidi `admin.openStudio`. Studio (`studio.js:33`) i `my-materials.js` imaju ISPRAVAN obrazac (ključ==rezultat ⇒ fallback) — profil i auth su ostali nepopravljeni od ranije. **Popravak:** oba helpera na ispravan obrazac + dodan ključ `admin.openStudio` (HR+EN). **Dokaz uživo:** gumb sad piše „Studio editor"; sken profila = 0 sirovih ključeva. **Sistemski sken:** ostali moduli (`studio.js`, `block-editor.js`, `admin.js`) imaju dosta ključeva bez prijevoda, ali su **bezopasni** jer njihovi helperi imaju fallback — jedina dva pokvarena helpera bila su profile/auth.
+**🐞 BUG 2 — greška je lagala:** „Something went wrong. Please try again." pokazivalo se i kad tablica `nodes` **uopće ne postoji na toj bazi**. To nije greška nego „značajka ovdje još nije dostupna". **Popravak:** `humanError` sad gleda i `err.code` → `PGRST205`/`42P01`/„Could not find the table" → **`materials.errNoTable`** („Još nije dostupno na ovom okruženju"); `PGRST301`/JWT → „moraš biti prijavljen". Unit **26/26** (+2 nove grane; stari test koji je JWT-poruku tretirao kao „nepoznatu" ispravljen).
+
+**⚠️ OTVORENA NIT (glavni razlog zašto Leon nije mogao ništa napraviti):** klijent po defaultu gađa **PROD** Supabase, a `nodes`/`node_content` **na produkciji NE POSTOJE** (namjerno — to je F5). Dok se to ne riješi, „Moji materijali" na produ **uvijek** pokazuju prazno/nedostupno. **Dvije opcije za Leona:**
+- **(a) Staging-override** (bez diranja produkcije): odjavi se → u konzoli `localStorage.setItem('sokrat-supabase-override', JSON.stringify({url:'https://czljmvigkgiajzjxtndq.supabase.co', publishableKey:'sb_publishable_EZ_04lVZ8MJUFt6Mjmif8Q_hL4YYBFy'}))` → reload → prijava kao `test-admin@sokrat.local` (lozinka = `STAGING_TEST_ADMIN_PASSWORD` u `.env`). Krhko jer traži odjavu/prijavu drugim računom.
+- **(b) Primijeniti `supabase/f1-nodes.sql` na PROD** (= F5 korak ranije). **Čisto additivno** (3 nove tablice + 13 funkcija + policyji; NULA `ALTER` na postojećem, `publish_document` nedirnut), isti idempotentni fajl već dokazan na stagingu (md5 13/13). Rizik za studente = nula (prijavljen-only, owner-scoped, klijentski kôd još nije na produ). **⛔ Traži Leonov IZRIČIT OK — produkcijski DDL.**
+**Napravljena demo-podloga:** na stagingu je posloženo demo-stablo za `test-admin` (FMTU Opatija › 1./2. godina › 3 predmeta + „Moje bilješke" › 1) — slobodno obrisati.
+**Stanje:** preflight EXIT 0 · bump · lokalni server ugašen · PROD i dalje netaknut, ništa pushano.
+
+---
+
 ## 2026-08-03 (OPUS) — 🌳 F2 IZVEDEN: „Moji materijali" na profilu (stablo + CRUD + drag; 24 unit + 5 authed)
 **Kontekst:** Leon „kreni" → F2 po `CREATE_BACKEND_SPEC` v3. Grana `feature/f2-my-materials` (PROD netaknut, ništa na `main`).
 **Isporuka:** `js/my-materials.js` (`window.SokratMaterials`) + `css/my-materials.css` (`mm-` modul, samostalan) + kartica u `js/profile.js` (`#myMaterials`, montira se iz `renderProfilePage`) + **29 i18n ključeva HR+EN** + `<script>` u `index.html` (prije `profile.js`).

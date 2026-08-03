@@ -151,7 +151,13 @@ const SokratAuth = (function () {
     window.refreshAuthNav = updateNavButton;
 
     // i18n helper: t() ako postoji, inače fallback (engleski original).
-    function at(key, fb) { return (window.t) ? t(key) : fb; }
+    // ⚠️ `t()` vraća SAM KLJUČ kad prijevoda nema → bez ove provjere korisnik vidi
+    // sirovi ključ umjesto teksta. Isti obrazac kao studio.js/my-materials.js.
+    function at(key, fb) {
+        if (!window.t) return fb;
+        const v = t(key);
+        return (v === key) ? fb : v;
+    }
 
     function injectModal() {
         if (document.getElementById('authModal')) return;
