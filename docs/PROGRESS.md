@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-04 (OPUS) — 🐞 debug-sesija (3 buga + 2 defekta gate-a) → 🎯 **F3 IZVEDEN** (editor u čvoru, K1–K4)
+**Kontekst:** Leon: *„ovu sesiju koristimo za debugging kompletne stranice i cruda."* Okruženje = **lokalno :5050 + STAGING baza** (Leonov izbor; `sokrat-supabase-override`). Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
+
+### 🐞 Bug A — modal se zatvara pri OZNAČAVANJU teksta (Leon, živo na polju za lozinku)
+**Korijen** ([`sokrat-modal.js:114`](../js/components/sokrat-modal.js#L114)): zatvaranje je viselo na `click` + `e.target === this`. DOM `click` puca na **najbližem ZAJEDNIČKOM PRETKU** `mousedown`-a i `mouseup`-a → povuče li korisnik selekciju iz polja u kartici **preko ruba** i pusti vani, taj predak je **sam overlay** → uvjet istinit iako backdrop nikad nije kliknut. **Pogađalo SVE modale**: auth, image-viewer, `<sokrat-confirm>` i **editor-modale u Studiju** (`admin-editors.js`) → u editoru je moglo **pojesti nedovršeni unos**. **Popravak:** zapamti je li pritisak POČEO na overlayu (`pointerdown`) i zatvori samo tada. Test prvo **pada** na sva 4 profila, pa prolazi; kontrolna tvrdnja čuva da pravi backdrop-klik i dalje zatvara. `components` **36/36**. Commit `9912ef9`.
+**Statički sken iste klase drugdje:** `admin-editors.js:39` i `studio.js:661` = sigurni (gledaju konkretan gumb); `block-editor.js:378` (＋ izbornik) = isti obrazac ali unutra su samo gumbi (nema što označiti) → teoretski rizik, **nije diran bez dokaza**.
+
+### 🔍 Dva defekta GATE-a (našla se jer je Leon ručno klikao na istom staging računu)
+1. **3 testa u `my-materials.authed.spec.js` pretpostavljala su PRAZAN račun** (globalni `.mm-row` brojevi, nescope-an `.mm-row--study`) → čim račun ima podatke: `Expected 1, Received 5` i `strict mode violation` s Leonovim čvorom „nesto novo materijal". **Nije bug u proizvodu** — proizvod je radio točno; gate je bio nepouzdan. **Popravak:** sve tvrdnje scope-ane na `data-mm-id` čvorova koje test sam stvori.
+2. **Test „prazno stanje" PROLAZIO JE NAD SPINNEROM** — spinner-stanje koristi isti `.mm-state-title`, pa su „naslov vidljiv + 0 redaka" bile istinite dok se još učitava → **test bi prošao i da je učitavanje potpuno slomljeno.** Zamijenjen testom stvarnog invarijanta (učitavanje se DOVRŠI + UI zrcali podatke iz baze); `openProfile` sad čeka nestanak spinnera.
+**+ 6 rubnih testova promovirano** iz istraživačkog prolaza (svi prošli **iz prve** → proizvod je izdržao): dubina 8 razina bez vodoravnog overflowa (naziv 406px) · naziv od 120 znakova (redak 766px u stablu 768px) · dvoklik na „+ Folder" = 1 unos · dvostruki Enter = 1 čvor · drop na samog sebe = bez promjene · prebacivanje inline unosa bez sirotišta. `my-materials` **13/13** (i to S tuđim podacima u stablu). Commit `8c0207e`.
+
+### 🎯 F3 — editor u study-čvoru (K1–K4), detalji: `CREATE_BACKEND_SPEC.md §11`
+- **K1 · adapter** (`49167cd`): node-mod u `studioBridge` (`setNode`/`nodeCtx`); `_enterDraftMode` čita `node_content`, `_publishDraft` zove `publish_node`; `setLesson` gasi node-mod.
+- **K2 · ulaz:** gumb „Uredi gradivo" na study-retku → `SokratStudio.openNode()` → Studio s crumbom „Moji materijali › «naziv»" i **panelom čvora umjesto katalog-stabla** (čvor NIJE u katalogu).
+- **K3 · prazan čvor:** „＋ Nova sekcija" (u zaglavlju i u praznom stanju) → postojeći `addCategory` op → Learn odmah aktivan.
+- **K4 · povratak:** „←" vraća na profil (već je bilo tako — sad gate-ano).
+
+**🔑 Ključni nalaz — adapter je bio TANJI nego što je spec pretpostavljao:** draft-stroj je **generičan po ključu** (`subjectId::lessonId` = obični string), pa čvor koristi **sintetički ključ `node:<uuid>`/`content`** i draft/opovi/autosave/blok-editor/draft-chip/Uredi-Objavi-Odbaci rade **bez ijedne izmjene**. `draft-store.js`, `block-editor.js`, `blocks-renderer.js`, `admin-editors.js` = **0 promjena**.
+**Ostali nalazi:** `create_node` svakom study-čvoru odmah upisuje `node_content` s `{}` → prazan payload je legitimno početno stanje (K3 manji rizik nego procijenjen) · **Studio uopće nije imao način da doda sekciju** — `addCategory` postoji u draft-storeu, ali ga nitko nije zvao → bez K3 je nov čvor slijepa ulica · `learnKind` vraća `'v2'` i za prazan `learn.blocks` → nova sekcija odmah prikaže Learn · `publish_node` odbija payload čije top-level vrijednosti nisu objekti (RPC brani shemu).
+**Dva buga bila su u MOJIM testovima, ne u proizvodu:** čitanje `draft.dirty` **nakon** `publish()` (a `commitDone` ga re-baselinea) i testni payload `{a:1}` koji je pao na RPC-validaciji.
+
+**✅ GATE:** novi `tests/node-editor.authed.spec.js` **9/9** (prazan čvor → draft-mod · uredi → `publish_node` → re-load = sadržaj ostao + verzija 1→2 + audit-redak · zastarjeli `base_version` → `publish_version_conflict` i izgubljeni upis odbačen · klik „Uredi gradivo" → Studio na čvoru · „←" → profil · **prazan čvor → „＋ Nova sekcija" → Objavi → sadržaj u bazi** · nesudarajući ključ druge sekcije · `setLesson` gasi node-mod) · **`test:authed` 46/46** (admin `publish_document` put bez regresije) · preflight **EXIT 0** · bump + `build:css`.
+
+**SLIJEDI:** F4 = polish + puni E2E (create→nest→uredi→publish→delete→restore). ⚠️ **OTVORENA NIT i dalje stoji:** prod nema `nodes` → za korištenje uživo treba (a) staging-override ili (b) **`supabase/f1-nodes.sql` na PROD uz Leonov izričit OK**.
+
+---
+
 ## 2026-08-03-b (OPUS) — 🐞 Leonov živi pregled F2 → 2 BUGA popravljena + ⚠️ OTVORENA NIT (prod nema `nodes`)
 **Kontekst:** Leon je htio vidjeti F2 uživo. Digao sam lokalni server (:5050) + demo-stablo na stagingu i dao mu upute s `sokrat-supabase-override`. **Njegov ekran je pokazao dvije stvari** (screenshot): sirovi ključ **`admin.openStudio`** umjesto teksta, i **„Could not load your materials / Something went wrong"**.
 **Leonova presuda (zapisati, važno za smjer):** *„frontend će morat biti potpuno preuređen, trenutno ništa ne radi i ne mogu ništa napravit… frontend je naravno zadnji na redu, ali moramo se potrudit da SVE savršeno radi prije nego što ga uredimo."*

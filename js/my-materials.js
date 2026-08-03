@@ -290,7 +290,9 @@
           '<i class="fas fa-folder-plus" aria-hidden="true"></i></button>' +
           '<button type="button" class="mm-act" data-mm-new-in="study" title="' + esc(mt('materials.addStudyIn', 'New material inside')) + '">' +
           '<i class="fas fa-plus" aria-hidden="true"></i></button>'
-        : '') +
+        // F3 K2: study-čvor se otvara POSTOJEĆIM Studio editorom (isti renderer, isti draft-stroj).
+        : '<button type="button" class="mm-act mm-act--open" data-mm-open title="' + esc(mt('materials.open', 'Edit material')) + '">' +
+          '<i class="fas fa-pen-to-square" aria-hidden="true"></i></button>') +
       '    <button type="button" class="mm-act" data-mm-rename title="' + esc(mt('materials.rename', 'Rename')) + '">' +
       '<i class="fas fa-pen" aria-hidden="true"></i></button>' +
       '    <button type="button" class="mm-act mm-act--danger" data-mm-del title="' + esc(mt('materials.delete', 'Delete')) + '">' +
@@ -370,6 +372,22 @@
     if (parentId) { _expanded[parentId] = true; saveExpanded(); }   // da se unos vidi
     _edit = { mode: 'create', parentId: parentId || null, kind: kind };
     draw();
+  }
+
+  /**
+   * F3 K2 — otvori study-čvor u Studio editoru. Sadržaj NE učitavamo ovdje: Studio je
+   * vlasnik tog toka (`openNode` → `node_content` → `studioBridge.setNode`), pa ostaje
+   * JEDNO mjesto koje zna kako se čvor uređuje.
+   */
+  function openStudy(id) {
+    if (_busy) return;
+    const row = _rows.find(function (r) { return r.id === id; });
+    if (!row || row.kind !== 'study') return;
+    if (!window.SokratStudio || typeof SokratStudio.openNode !== 'function') {
+      toast(mt('materials.errNoEditor', 'The editor is not available here yet.'));
+      return;
+    }
+    SokratStudio.openNode(id, row.name);
   }
 
   /** Otvori inline unos za PREIMENOVANJE. */
@@ -686,6 +704,14 @@
       return;
     }
 
+    // F3 K2: otvori study-čvor u Studio editoru
+    const open = e.target.closest('[data-mm-open]');
+    if (open) {
+      const row = open.closest('[data-mm-id]');
+      if (row) openStudy(row.getAttribute('data-mm-id'));
+      return;
+    }
+
     const ren = e.target.closest('[data-mm-rename]');
     if (ren) {
       const row = ren.closest('[data-mm-id]');
@@ -762,6 +788,7 @@
     startRename: startRename,
     removeNode: removeNode,
     undoDelete: undoDelete,
+    openStudy: openStudy,
     // čisto (testabilno bez preglednika)
     buildTree: buildTree,
     flattenVisible: flattenVisible,

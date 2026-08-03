@@ -32,7 +32,7 @@ const readContent = (page, id) => page.evaluate(async (nodeId) => {
   return r.error ? { error: r.error.message } : r.data;
 }, id);
 
-test.describe('F3 K1 — editor u čvoru (studioBridge → node_content)', () => {
+test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   test('novi study-čvor ima PRAZAN payload i može u draft-mod', async ({ page }) => {
     await openProfile(page);
     const id = await mkNode(page, null, 'study', 'F3 Prazan');
@@ -117,6 +117,129 @@ test.describe('F3 K1 — editor u čvoru (studioBridge → node_content)', () =>
       // izgubljeni pokušaj NIJE upisan
       const after = await readContent(page, id);
       expect(after.payload).toEqual({ a: {} });
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  // ── K2 — ULAZ: klik na study-čvor otvara Studio vezan na taj čvor ──
+  test('K2: klik „Uredi gradivo" otvara Studio na čvoru (crumb, naslov, panel)', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'F3 Ulaz');
+    try {
+      // pripremi sadržaj da canvas ima što nacrtati
+      await page.evaluate(async (nodeId) => {
+        const c = SokratAuth.getClient();
+        await c.rpc('publish_node', {
+          p_node_id: nodeId,
+          p_payload: { uvod: { name: 'Uvod', flashcards: [{ question: 'P1', answer: 'O1' }], quiz: [], fillBlanks: [] } },
+          p_base_version: 1
+        });
+      }, id);
+      await page.evaluate(() => window.SokratMaterials.refresh());
+
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      await row.locator('[data-mm-open]').click();
+
+      // 1) prebacio se na editor-stranicu i zna koji je čvor
+      await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
+      await expect(page.locator('#stCrumb')).toContainText('F3 Ulaz', { timeout: 20000 });
+
+      // 2) aside je panel ČVORA, ne katalog-stablo
+      await expect(page.locator('#editor-page .st-nodename')).toHaveText('F3 Ulaz');
+      await expect(page.locator('#stTree')).toHaveCount(0);
+
+      // 3) canvas je nacrtao sadržaj čvora (naslov = naziv čvora), a bridge je u node-modu
+      await expect(page.locator('#editor-page .st-head h1')).toHaveText('F3 Ulaz', { timeout: 20000 });
+      expect(await page.evaluate(() => window.SokratAdmin.studioBridge.nodeCtx().nodeId)).toBe(id);
+
+      // 4) „Uredi" je ponuđen (čvor je uredljiv) — bez toga K3 nema gdje početi
+      await expect(page.locator('#stEdit')).toBeVisible();
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  test('K2: „natrag" iz Studija vraća na profil (ne na katalog)', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'F3 Natrag');
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      await row.locator('[data-mm-open]').click();
+      await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
+
+      await page.click('#stBack');
+      await expect(page.locator('#profile-page')).toHaveClass(/active/, { timeout: 20000 });
+      await expect(page.locator('#myMaterials .mm-bar')).toBeVisible();
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  // ── K3 — PRAZAN ČVOR: mora postojati put od `{}` do sadržaja ──
+  test('K3: prazan čvor → „Uredi" → „＋ Nova sekcija" → Objavi → sadržaj u bazi', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'F3 OdNule');
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      await row.locator('[data-mm-open]').click();
+      await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
+
+      // prazan čvor: nema modova, ali NIJE slijepa ulica — „Uredi" postoji
+      await expect(page.locator('#editor-page .st-empty')).toBeVisible({ timeout: 20000 });
+      await page.click('#stEdit');
+
+      // u edit-modu prazno stanje nudi „＋ Nova sekcija"
+      const add = page.locator('#editor-page [data-st-addcat]').first();
+      await expect(add).toBeVisible({ timeout: 20000 });
+      await add.click();
+
+      // sekcija se pojavila i Learn je odmah aktivan (ima gdje pisati)
+      await expect(page.locator('#editor-page .st-tabs')).toBeVisible({ timeout: 20000 });
+      await expect(page.locator('#editor-page .st-pane[data-pane="learn"]')).toHaveCount(1);
+      await expect(page.locator('#stDraftChip')).toHaveClass(/dirty/);
+
+      // objavi → sadržaj je STVARNO u bazi
+      await page.click('#stPublish');
+      await expect(page.locator('#stDraftChip')).not.toHaveClass(/dirty/, { timeout: 20000 });
+
+      const saved = await readContent(page, id);
+      expect(saved.version).toBe(2);
+      const keys = Object.keys(saved.payload);
+      expect(keys).toContain('sekcija-1');
+      expect(saved.payload['sekcija-1'].learn.blocks).toEqual([]);
+      expect(saved.payload['sekcija-1'].flashcards).toEqual([]);
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  test('K3: druga sekcija dobiva NESUDARAJUĆI ključ', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'F3 Dvije');
+    try {
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+      await expect(row).toHaveCount(1, { timeout: 20000 });
+      await row.locator('[data-mm-open]').click();
+      await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
+      await page.click('#stEdit');
+
+      await page.locator('#editor-page [data-st-addcat]').first().click();
+      await expect(page.locator('#editor-page .st-tabs')).toBeVisible({ timeout: 20000 });
+      await page.locator('#editor-page [data-st-addcat]').first().click();
+
+      await page.click('#stPublish');
+      await expect(page.locator('#stDraftChip')).not.toHaveClass(/dirty/, { timeout: 20000 });
+
+      const saved = await readContent(page, id);
+      const keys = Object.keys(saved.payload).sort();
+      expect(keys, 'druga sekcija je pregazila prvu').toEqual(['sekcija-1', 'sekcija-2']);
     } finally {
       await rmNode(page, id);
     }

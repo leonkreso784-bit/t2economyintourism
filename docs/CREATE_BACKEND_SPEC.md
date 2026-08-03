@@ -1,7 +1,7 @@
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
-> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ (grana) → SLIJEDI F3.**
-> **Gdje je kôd:** grana `feature/f2-my-materials` (`f5a1bad`+`fa1f5fa`); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
+> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ (grana) → SLIJEDI F4.**
+> **Gdje je kôd:** grana `feature/f3-node-editor` (F2+F3); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
 > **Nakon F5:** frontend redizajn (Leon), pa objava/dijeljenje + MCP.
 > **Pravilo:** svaka faza staje na checkpoint za Leonov OK; **deploy = uvijek izričit OK**. Implementacija slijedi §6.
 > **Povijest odluke:** v1/v2 bili su uokvireni oko „službenih predmeta + objava studentima" → **Leon presudio: to NIJE ono što želi.** v3 = prava vizija.
@@ -97,8 +97,8 @@ Tempo = **faza-checkpoint** (Leon Q3): unutar faze tečem kroz cigle (gate na sv
 | **F0** | ovaj spec v3 + potvrda | čitaš ovo | ne ✅ |
 | **F1 · DB temelj** | `nodes` + `node_content` + `node_content_versions` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/restore/publish_node) — **STAGING** | **✅ 51/51** — v. §9 | ne (staging) ✅ |
 | **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | **✅ 5/5 authed + 24 unit** — v. §10 | ne (grana `feature/f2-my-materials`) ✅ |
-| **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | authed: uredi čvor → publish → re-load = sadržaj ostao | ne ← **ovdje smo** |
-| **F4 · Polish + E2E** | drag-nest, breadcrumb, prazna stanja; puni tok na stagingu | authed E2E: create→nest→uredi→publish→delete→restore | ne |
+| **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | **✅ 9/9 authed** — v. §11 | ne (grana `feature/f3-node-editor`) ✅ |
+| **F4 · Polish + E2E** | drag-nest, breadcrumb, prazna stanja; puni tok na stagingu | authed E2E: create→nest→uredi→publish→delete→restore | ne ← **ovdje smo** |
 | **F5 · PROD** | migracija (SQL prvo, U4-obrazac) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** |
 
 Nakon F5 → **osobni UGC-graditelj radi** → **frontend redizajn** (Leon) → kasnije: objava/dijeljenje + MCP.
@@ -192,4 +192,40 @@ znači da `scrollIntoView` **animira** → `boundingBox()` izmjeri koordinate us
 sleti na krivi redak. To je bio korijen „flakea" koji je izgledao kao bug u dragu.
 
 ---
-*F2 gotov. **SLIJEDI F3** = otvori study-čvor postojećim Studio editorom (`studioBridge` vezan na `node_content`, `publish_node` umjesto `publish_document`) — čeka Leonov OK.*
+
+## 11 · F3 — IZVEDENO (editor u čvoru, 2026-08-04)
+Grana `feature/f3-node-editor`. **Staging only, prod netaknut.**
+
+### Što je isporučeno
+| cigla | isporuka |
+|---|---|
+| **K1 · adapter** | node-mod u `studioBridge`: `setNode`/`nodeCtx`; `_enterDraftMode` čita `node_content`, `_publishDraft` zove `publish_node`. `setLesson` gasi node-mod. |
+| **K2 · ulaz** | gumb „Uredi gradivo" na study-retku → `SokratStudio.openNode()` → Studio s crumbom „Moji materijali › «naziv»", panelom čvora umjesto katalog-stabla. |
+| **K3 · prazan čvor** | „＋ Nova sekcija" (zaglavlje + prazno stanje) → `addCategory` op → Learn odmah aktivan. |
+| **K4 · povratak** | „←" iz Studija vraća na profil (već je bilo tako — sad je i gate-ano). |
+
+### Ključni nalaz: adapter je bio TANJI nego što je spec pretpostavljao
+Draft-stroj je **generičan po ključu** (`subjectId::lessonId` = obični string). Čvor koristi
+**sintetički ključ `node:<uuid>` / `content`**, pa draft, opovi, autosave, blok-editor, draft-chip,
+Uredi/Objavi/Odbaci i `onDraftChanged` rade **bez ijedne izmjene**. Promijenile su se točno dvije
+IO-točke (odakle se čita, kamo se piše). `draft-store.js`, `block-editor.js`, `blocks-renderer.js`
+i `admin-editors.js` = **0 promjena**.
+
+### Nalazi iz izvedbe
+| nalaz | značaj |
+|---|---|
+| `create_node` svakom study-čvoru odmah upisuje `node_content` s `{}` | prazan payload = legitimno početno stanje → K3 je bio manji rizik nego procijenjeno |
+| Studio **nije imao nikakav način da doda sekciju** — `addCategory` op postoji u draft-storeu, ali ga nitko nije zvao | bez K3 je nov čvor slijepa ulica; sad postoji jedina afordancija |
+| `learnKind` vraća `'v2'` i za **prazan** `learn.blocks` | nova sekcija odmah prikaže Learn → korisnik ima gdje pisati |
+| `publish_node` odbija payload čije top-level vrijednosti nisu objekti | RPC brani shemu (uhvaćeno testom koji je slao `{a:1}`) |
+
+### Gate — `tests/node-editor.authed.spec.js`, 9/9
+prazan čvor → draft-mod · uredi → `publish_node` → re-load = sadržaj ostao + verzija 1→2 + audit-redak ·
+zastarjeli `base_version` → `publish_version_conflict` (izgubljeni upis odbačen) · klik „Uredi gradivo" →
+Studio na čvoru (crumb/naslov/panel/„Uredi" ponuđen) · „←" → profil · **prazan čvor → „＋ Nova sekcija" →
+Objavi → sadržaj u bazi** · druga sekcija dobiva nesudarajući ključ · `setLesson` gasi node-mod.
+
+**Regresija: nula.** `test:authed` 46/46 (admin `publish_document` put netaknut) · `preflight` EXIT 0.
+
+---
+*F3 gotov. **SLIJEDI F4** = polish + puni E2E (breadcrumb, prazna stanja, create→nest→uredi→publish→delete→restore).*
