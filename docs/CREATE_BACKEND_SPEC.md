@@ -227,5 +227,23 @@ Objavi → sadržaj u bazi** · druga sekcija dobiva nesudarajući ključ · `se
 
 **Regresija: nula.** `test:authed` 46/46 (admin `publish_document` put netaknut) · `test:responsive` 279/0/15skip · `preflight` EXIT 0.
 
+### ⚠️ Dva BLOKATORA za F5 (nađena pregledom Leonovog živog rada 2026-08-04)
+Leon je uređivao čvor uživo (verzija 3: preimenovao sekciju, promijenio boju, dodao odlomak **i sliku**).
+Upload je uspio **samo zato što je `test-admin` ujedno admin**. Pregled `storage.objects` policyja otkrio je:
+
+| # | nalaz | posljedica | kad se mora riješiti |
+|---|---|---|---|
+| **S1** | bucket `lesson-images` ima **INSERT/UPDATE/DELETE uz `is_admin()`** | **običan korisnik NE MOŽE uploadati sliku** u svoje osobno gradivo — pada na RLS | **prije F5** (inače je značajka mrtva za prave korisnike) |
+| **S2** | isti bucket ima **`public read`** (`bucket_id='lesson-images'`, bez owner-provjere) | slike iz **privatnog** čvora su **javno čitljive po URL-u** — stablo i payload jesu owner-only, ali slika nije | **prije F5** (privatnost je obećanje ovog otoka) |
+
+**Smjer rješenja (za F4/F5, nije još izvedeno):** zaseban bucket za osobne materijale (npr. `node-images`)
+s owner-scoped policyjima i putanjom `<auth.uid()>/<node_id>/<file>`; javni `lesson-images` ostaje kakav jest
+za katalog. Alternativa (privatan bucket + potpisani URL-ovi) traži promjenu renderera → **skuplje**, jer
+`blocks-renderer.js` je sveta granica.
+
+### Manji nalazi
+- **Studio nema „obriši sekciju"** — `removeCategory` op postoji u draft-storeu, ali ga (kao i `addCategory` do K3) nitko ne zove. Za F4.
+- Staging nakuplja **soft-delete debris** (214 obrisanih `nodes` + 97 `node_content` redaka od testova). Bezopasno, ali vrijedi povremeno pomesti.
+
 ---
 *F3 gotov. **SLIJEDI F4** = polish + puni E2E (breadcrumb, prazna stanja, create→nest→uredi→publish→delete→restore).*

@@ -29,7 +29,16 @@ testirano, što slijedi.
 
 **✅ GATE:** novi `tests/node-editor.authed.spec.js` **9/9** (prazan čvor → draft-mod · uredi → `publish_node` → re-load = sadržaj ostao + verzija 1→2 + audit-redak · zastarjeli `base_version` → `publish_version_conflict` i izgubljeni upis odbačen · klik „Uredi gradivo" → Studio na čvoru · „←" → profil · **prazan čvor → „＋ Nova sekcija" → Objavi → sadržaj u bazi** · nesudarajući ključ druge sekcije · `setLesson` gasi node-mod) · **`test:authed` 46/46** (admin `publish_document` put bez regresije) · **`test:responsive` 279/0/15skip** (4 iPhone profila) · preflight **EXIT 0** · bump + `build:css`. Staging očišćen (0 zaostalih testnih čvorova).
 
-**SLIJEDI:** F4 = polish + puni E2E (create→nest→uredi→publish→delete→restore). ⚠️ **OTVORENA NIT i dalje stoji:** prod nema `nodes` → za korištenje uživo treba (a) staging-override ili (b) **`supabase/f1-nodes.sql` na PROD uz Leonov izričit OK**.
+### 🔎 Leonov živi test F3 → **2 BLOKATORA za F5** (spec §11)
+Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao sekciju („Nova sekcija" → „nesto nesto"), promijenio joj boju, dodao odlomak **i sliku (475 KB jpg)**. Dakle F7-naslov, U8.5f-boja, blok-editor i U8.7-upload rade i u node-modu — **reuse editora je potvrđen uživo, ne samo testom.**
+**ALI:** upload je uspio **samo zato što je `test-admin` ujedno admin**. Pregled `storage.objects` policyja:
+- **S1 — `lesson-images` INSERT/UPDATE/DELETE traže `is_admin()`** → **običan korisnik NE MOŽE uploadati sliku** u svoje osobno gradivo (pada na RLS). Značajka bi za prave korisnike bila mrtva.
+- **S2 — isti bucket ima `public read` bez owner-provjere** → slike iz **privatnog** čvora su **javno čitljive po URL-u**, iako su stablo i payload owner-only. Privatnost je obećanje ovog otoka.
+**Smjer (F4/F5, nije izvedeno):** zaseban `node-images` bucket, owner-scoped policyji, putanja `<auth.uid()>/<node_id>/<file>`; javni `lesson-images` ostaje za katalog. (Privatan bucket + potpisani URL-ovi bi tražio diranje `blocks-renderer.js` = sveta granica → skuplje.)
+**Manji nalaz:** Studio nema **„obriši sekciju"** — `removeCategory` op postoji, ali ga nitko ne zove (ista klasa kao `addCategory` prije K3). Za F4.
+**Počišćeno:** Leonovi čvorovi (`nesto novo`, `nesto novo materijal`) hard-deletani + njegova slika maknuta kroz Storage API (izravni SQL-delete nad `storage.objects` je blokiran by design). Staging = 8 čvorova demo-stabla.
+
+**SLIJEDI:** F4 = polish + puni E2E (create→nest→uredi→publish→delete→restore) + **S1/S2 + „obriši sekciju"**. ⚠️ **OTVORENA NIT i dalje stoji:** prod nema `nodes` → za korištenje uživo treba (a) staging-override ili (b) **`supabase/f1-nodes.sql` na PROD uz Leonov izričit OK**.
 
 ---
 
