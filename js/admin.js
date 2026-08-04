@@ -356,7 +356,11 @@ function _renderAdminCards(holder, data) {
       total++;
       html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
         '<div class="admin-card admin-card--learn"><div class="admin-card-body be-body">' +
-        (typeof window.renderBlocks === 'function' ? window.renderBlocks(cat.learn.blocks) : '') +
+        // F4: `node-img:` oznake → potpisani URL-ovi kod pozivatelja (no-op ako oznaka nema).
+        (typeof window.renderBlocks === 'function'
+          ? window.renderBlocks(window.SokratNodeImages
+              ? window.SokratNodeImages.resolveBlocks(cat.learn.blocks) : cat.learn.blocks)
+          : '') +
         '</div></div>';
     }
 

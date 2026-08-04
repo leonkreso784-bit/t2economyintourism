@@ -5,6 +5,43 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-04-b (OPUS) — 🔒 **F4-S: privatne slike osobnog gradiva** (blokatori S1+S2 RIJEŠENI)
+**Kontekst:** Leon: *„moze kreni."* Prvi posao u F4 = dva blokatora za F5 nađena na kraju F3. Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
+
+### 🧭 Leonova odluka: **prava privatnost, ne obskurnost**
+Ponudio sam dvije staze i izložio cijenu obje: **(a)** privatan bucket + potpisani URL-ovi (~100 linija, renderer nedirnut) · **(b)** javan bucket s neprobojnom UUID-putanjom (gotovo bez koda, ali slika ostaje čitljiva svakome tko ima URL — zauvijek). Leon je izabrao **(a)**. Pitao sam **prije** pisanja koda jer odluka određuje **što se sprema u payload** — mijenjati to poslije značilo bi migrirati već uploadane slike.
+
+### 🔑 Ključni potez: oznaka u payloadu, potpis tek pri prikazu
+Potpisani URL **istječe**. Da je u payloadu, objavljeni sadržaj bi „istrunuo", a draft-autosave u `localStorage` vraćao bi mrtve linkove. Zato payload nosi **stabilnu oznaku** `node-img:<uid>/<node_id>/<uuid>.<ext>`, a potpis se traži **tek pri prikazu** — i to **kod pozivatelja** renderera. Posljedice: objava **ne treba obrnutu pretvorbu**, a **[`blocks-renderer.js`](../js/blocks-renderer.js) ostaje NEDIRNUT** (sveta granica). Fail-safe: nerazriješena oznaka → `safeUrl` odbija nepoznatu shemu → slika se **izostavi** (nikad polomljen `<img>`).
+
+### 📦 Isporuka
+- **[`supabase/f4-node-images.sql`](../supabase/f4-node-images.sql)** — bucket `node-images` **`public=false`**; 4 policyja `to authenticated` s uvjetom `(storage.foldername(name))[1] = auth.uid()::text`. **Nijedan `public`/`anon` policy, nijedan `is_admin()`.** Idempotentno; isti fajl ide na PROD u F5. Primijenjeno na STAGING.
+- **[`js/node-images.js`](../js/node-images.js)** (novo, `window.SokratNodeImages`) — oznaka↔putanja · `newPath` · `collectPaths` (dubinski) · `prefetch` (batch-potpis, nikad ne baca) · `resolveBlock(s)` (**kopija**, original s oznakom netaknut) · `clear`.
+- **[`js/block-editor-media.js`](../js/block-editor-media.js)** — u node-modu upload ide u `node-images` pod vlasnički prefiks i vraća oznaku; **katalog-mod (`lesson-images`) nedirnut**.
+- Razrješavanje na 3 pozivna mjesta: [`studio.js`](../js/studio.js) (learn-body + `prefetch` prije prvog crtanja) · [`block-editor.js`](../js/block-editor.js) (preview) · [`admin.js`](../js/admin.js) (read-only preview).
+- **[`scripts/storage-check.js`](../scripts/storage-check.js)** + `npm run test:storage` — novi sigurnosni gate; **tvrdo odbija gađati produkciju** (write-test).
+
+### ✅ Gate
+| provjera | rezultat |
+|---|---|
+| `npm run test:storage` (HTTP, staging) | **8/8** — vlastiti upload 200 · tuđi prefiks 400 · javni URL 400 · anon dohvat 400 · anon list 0 · potpis tuđe putanje 400 · **potpisani URL vratio istih 70 B** · brisanje 200 |
+| policy-razina u bazi, **pod NE-admin identitetom**, u transakciji s rollbackom | **5/5** — T1 vlastiti upis prošao · T2 tuđi prefiks odbijen · T3 korijen bucketa odbijen · T4 vidi samo svoje · T5 anon vidi 0 |
+| `tests/node-images.authed.spec.js` (novo) | **4/4** |
+| `tests/unit/node-images.test.js` (novo) | **17/17** |
+| `test:authed` (puni) | **50/50** (bilo 46; stari U8.7 upload-test zelen ⇒ nema regresije na katalogu) |
+| `preflight` | **EXIT 0** |
+
+### 🔍 Nalazi
+- **Dokaz da S1 vrijedi za OBIČNOG korisnika** nije se mogao izvesti kroz HTTP: pisanje u `auth.users` je blokirano (i dobro je tako), Supabase odbija `@…​.local` e-mail pri signupu, a staging traži potvrdu e-maila. Zato je izveden **u bazi**, pod identitetom `rls-fixture-b` (`role='user'`). Uz to: **nijedan policy na `node-images` ne spominje `is_admin()`** — uloga tu ne daje ništa, što T2/T6 i pokazuju (admin odbijen na tuđem prefiksu).
+- **Zamalo lažno zeleno:** sinkroni `test()` u node unit-harnessu ne čeka `async` tijelo → dva testa bi uvijek bila zelena. Dodan `atest` koji se čeka. ([[tests-must-be-data-independent]])
+- `uploadImage` je već bio izložen kroz `window.__beMedia(core)` → authed test gađa **baš proizvodni kod**, ne zaobilaznicu.
+- **Manji:** stari `studio.authed.spec.js` U8.7 test **ne čisti** uploadanu sliku (staging `lesson-images` = 18 objekata). Novi F4 testovi čiste za sobom (provjereno: broj ostao 18).
+- **Za F4 dalje:** siročad u Storageu (brisanje bloka/čvora ne briše objekt) · **„obriši sekciju"** u Studiju · puni E2E.
+
+**Slijedi:** ostatak F4 — „obriši sekciju" + puni E2E (create→nest→uredi→publish→delete→restore).
+
+---
+
 ## 2026-08-04 (OPUS) — 🐞 debug-sesija (3 buga + 2 defekta gate-a) → 🎯 **F3 IZVEDEN** (editor u čvoru, K1–K4)
 **Kontekst:** Leon: *„ovu sesiju koristimo za debugging kompletne stranice i cruda."* Okruženje = **lokalno :5050 + STAGING baza** (Leonov izbor; `sokrat-supabase-override`). Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
 

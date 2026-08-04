@@ -556,7 +556,12 @@ const SokratStudio = (function () {
   }
 
   function renderLearnBody(L, kind) {
-    if (kind === 'v2' && typeof window.renderBlocks === 'function') return window.renderBlocks(L.blocks);
+    // F4: `node-img:` oznake → potpisani URL-ovi kod POZIVATELJA (blocks-renderer.js ostaje nedirnut).
+    if (kind === 'v2' && typeof window.renderBlocks === 'function') {
+      var blocks = (window.SokratNodeImages && typeof window.SokratNodeImages.resolveBlocks === 'function')
+        ? window.SokratNodeImages.resolveBlocks(L.blocks) : L.blocks;
+      return window.renderBlocks(blocks);
+    }
     if (kind === 'v1' && typeof window.renderBlocks === 'function') return window.renderBlocks([{ type: 'legacy-html', html: L.content }]);
     return esc(String((L && L.content) || ''));
   }
@@ -670,6 +675,9 @@ const SokratStudio = (function () {
     _sel = { subjectId: 'node:' + nodeId, lessonId: 'content' };
     _data = null;
     _activeMode = null;
+    // F4: svjež cache potpisa po otvaranju — potpisi ne smiju preživjeti promjenu čvora ni identiteta
+    // (cijena je jedan batch-potpis; alternativa bi bila vući istekle URL-ove kroz dugu sesiju).
+    if (window.SokratNodeImages && typeof window.SokratNodeImages.clear === 'function') window.SokratNodeImages.clear();
     if (typeof navigateTo === 'function') navigateTo('editor');   // → render() (ljuska + „učitavam")
     await loadNode();
   }
@@ -695,6 +703,11 @@ const SokratStudio = (function () {
     }
     if (bridge() && typeof bridge().setNode === 'function') {
       try { bridge().setNode(_node.id, _node.name, _data); } catch (e) { /* bridge opcionalan */ }
+    }
+    // F4: potpiši sve `node-img:` oznake PRIJE prvog crtanja — inače bi renderer fail-safe izostavio
+    // slike na jedan kadar. `prefetch` nikad ne baca: neuspjeh potpisa ne smije srušiti otvaranje čvora.
+    if (window.SokratNodeImages && typeof window.SokratNodeImages.prefetch === 'function') {
+      try { await window.SokratNodeImages.prefetch(_data); } catch (e) { /* prikaz bez slike je OK */ }
     }
     renderCanvas();
     refreshTopbar();

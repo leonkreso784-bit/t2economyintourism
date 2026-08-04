@@ -1,6 +1,6 @@
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
-> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ (grana) → SLIJEDI F4.**
+> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ · F4 u tijeku: S1+S2 (slike) ✅ — v. §12.**
 > **Gdje je kôd:** grana `feature/f3-node-editor` (F2+F3); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
 > **Nakon F5:** frontend redizajn (Leon), pa objava/dijeljenje + MCP.
 > **Pravilo:** svaka faza staje na checkpoint za Leonov OK; **deploy = uvijek izričit OK**. Implementacija slijedi §6.
@@ -98,7 +98,7 @@ Tempo = **faza-checkpoint** (Leon Q3): unutar faze tečem kroz cigle (gate na sv
 | **F1 · DB temelj** | `nodes` + `node_content` + `node_content_versions` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/restore/publish_node) — **STAGING** | **✅ 51/51** — v. §9 | ne (staging) ✅ |
 | **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | **✅ 5/5 authed + 24 unit** — v. §10 | ne (grana `feature/f2-my-materials`) ✅ |
 | **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | **✅ 9/9 authed** — v. §11 | ne (grana `feature/f3-node-editor`) ✅ |
-| **F4 · Polish + E2E** | drag-nest, breadcrumb, prazna stanja; puni tok na stagingu | authed E2E: create→nest→uredi→publish→delete→restore | ne ← **ovdje smo** |
+| **F4 · Polish + E2E** | **S1+S2 privatne slike ✅ (§12)** · preostaje: „obriši sekciju", puni tok na stagingu | storage 8/8 + node-images 4/4 + unit 17/17 ✅; još: authed E2E create→nest→uredi→publish→delete→restore | ne ← **ovdje smo** |
 | **F5 · PROD** | migracija (SQL prvo, U4-obrazac) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** |
 
 Nakon F5 → **osobni UGC-graditelj radi** → **frontend redizajn** (Leon) → kasnije: objava/dijeljenje + MCP.
@@ -236,14 +236,68 @@ Upload je uspio **samo zato što je `test-admin` ujedno admin**. Pregled `storag
 | **S1** | bucket `lesson-images` ima **INSERT/UPDATE/DELETE uz `is_admin()`** | **običan korisnik NE MOŽE uploadati sliku** u svoje osobno gradivo — pada na RLS | **prije F5** (inače je značajka mrtva za prave korisnike) |
 | **S2** | isti bucket ima **`public read`** (`bucket_id='lesson-images'`, bez owner-provjere) | slike iz **privatnog** čvora su **javno čitljive po URL-u** — stablo i payload jesu owner-only, ali slika nije | **prije F5** (privatnost je obećanje ovog otoka) |
 
-**Smjer rješenja (za F4/F5, nije još izvedeno):** zaseban bucket za osobne materijale (npr. `node-images`)
-s owner-scoped policyjima i putanjom `<auth.uid()>/<node_id>/<file>`; javni `lesson-images` ostaje kakav jest
-za katalog. Alternativa (privatan bucket + potpisani URL-ovi) traži promjenu renderera → **skuplje**, jer
-`blocks-renderer.js` je sveta granica.
+**→ OBA RIJEŠENA u F4-S (2026-08-04). Vidi §12.**
 
 ### Manji nalazi
-- **Studio nema „obriši sekciju"** — `removeCategory` op postoji u draft-storeu, ali ga (kao i `addCategory` do K3) nitko ne zove. Za F4.
+- **Studio nema „obriši sekciju"** — `removeCategory` op postoji u draft-storeu i **zove ga stari admin-overlay** (`js/admin.js`), ali **Studio ga ne nudi**: ima dodaj/preimenuj/boja/presloži, brisanja nema. Za F4.
 - Staging nakuplja **soft-delete debris** (214 obrisanih `nodes` + 97 `node_content` redaka od testova). Bezopasno, ali vrijedi povremeno pomesti.
 
 ---
-*F3 gotov. **SLIJEDI F4** = polish + puni E2E (breadcrumb, prazna stanja, create→nest→uredi→publish→delete→restore).*
+
+## 12 · F4-S — SLIKE OSOBNOG GRADIVA: S1+S2 RIJEŠENI (2026-08-04)
+Grana `feature/f3-node-editor`. **Staging only, prod netaknut.**
+
+### Odluka (Leon, 2026-08-04): **prava privatnost, ne obskurnost**
+Ponuđene su bile dvije staze: (a) privatan bucket + potpisani URL-ovi, (b) javan bucket s neprobojnom
+(UUID) putanjom. Leon je izabrao **(a)** — slika osobnog gradiva ne smije biti dostupna nikome bez prijave.
+
+### Ključni potez: oznaka u payloadu, potpis tek pri prikazu
+Potpisani URL **istječe** — da je u payloadu, objavljeni sadržaj bi „istrunuo", a draft-autosave u
+localStorage bi vraćao mrtve linkove. Zato:
+
+| sloj | što nosi |
+|---|---|
+| `node_content.payload` (baza, draft, autosave) | **stabilna oznaka** `node-img:<uid>/<node_id>/<uuid>.<ext>` |
+| prikaz (`renderBlocks`) | **potpisani URL**, razriješen kod POZIVATELJA |
+
+Zbog toga **objava ne treba obrnutu pretvorbu** (`working` cijelo vrijeme drži oznake), a
+**`js/blocks-renderer.js` ostaje NEDIRNUT** — razrješavanje radi `js/node-images.js` na 3 pozivna
+mjesta (`studio.js` learn-body · `block-editor.js` preview · `admin.js` read-only preview).
+Fail-safe: nerazriješena oznaka → `safeUrl` odbija nepoznatu shemu → slika se **izostavi**
+(nikad polomljen `<img>`, nikad injektiran URL).
+
+### Isporučeno
+| cigla | isporuka |
+|---|---|
+| **S-A · SQL** | `supabase/f4-node-images.sql` — bucket `node-images` **`public=false`**, 5 MB, raster-MIME; 4 policyja (SELECT/INSERT/UPDATE/DELETE) `to authenticated`, uvjet `(storage.foldername(name))[1] = auth.uid()::text`. **Nijedan `public`/`anon` policy. Nijedan `is_admin()`.** Idempotentno; isti fajl ide na PROD u F5. |
+| **S-B · dokaz** | policy-razina (u bazi, pod NE-admin identitetom) + HTTP-razina (`scripts/storage-check.js`) |
+| **S-C · upload** | `js/block-editor-media.js`: u node-modu → `node-images` + vlasnička putanja + vraća oznaku. Katalog-mod (`lesson-images`) **nedirnut**. |
+| **S-D · prikaz** | `js/node-images.js` (`window.SokratNodeImages`): oznaka↔putanja · `newPath` · `collectPaths` (dubinski) · `prefetch` (batch-potpis) · `resolveBlock(s)` (kopija, original netaknut) · `clear`. Prefetch se čeka u `loadNode()` prije prvog crtanja. |
+
+### Gate
+| provjera | rezultat |
+|---|---|
+| **`npm run test:storage`** (novo; HTTP, staging) | **8/8** — vlastiti upload 200 · tuđi prefiks 400 · javni URL 400 · anon dohvat 400 · anon list 0 stavki · potpis tuđe putanje 400 · **potpisani URL vrati istih 70 B** · brisanje 200 |
+| **policy-razina u bazi** (ne-admin identitet, transakcija s rollbackom) | **5/5** — T1 vlastiti upis prošao · T2 tuđi prefiks odbijen · T3 korijen bucketa odbijen · T4 vidi samo svoje · T5 anon vidi 0 |
+| **`tests/node-images.authed.spec.js`** (novo) | **4/4** — putanja pod vlasnikom · payload zadrži OZNAKU (bez `token=`) · prikaz razriješi u potpis koji stvarno vrati sliku · **katalog-mod nedirnut** |
+| `tests/unit/node-images.test.js` (novo) | **17/17** |
+| `test:authed` (puni) | **50/50** (bilo 46 — stari U8.7 upload-test i dalje zelen ⇒ nema regresije na katalogu) |
+| `preflight` | **EXIT 0** |
+
+### Nalazi iz izvedbe
+| nalaz | značaj |
+|---|---|
+| `uploadImage` je već bio izložen kroz `window.__beMedia(core)` | test gađa **baš proizvodni kod**, ne zaobilaznicu |
+| Sinkroni `test()` u node unit-harnessu bi **async tijelo uvijek prikazao zelenim** | dodan `atest` koji se čeka — inače bi 2 testa bila lažno zelena ([[tests-must-be-data-independent]]) |
+| Pisanje u `auth.users` je blokirano (i dobro je tako) | fixture-korisniku se ne može postaviti lozinka → ne-admin dokaz izveden u bazi, ne kroz HTTP |
+| Supabase odbija `@…​.local` e-mail pri signupu, a staging traži potvrdu e-maila | drugi HTTP-identitet nije bilo moguće dobiti bez diranja `auth.users` |
+| Stari `studio.authed.spec.js` U8.7 test **ne čisti** uploadanu sliku | staging `lesson-images` nakupio 18 objekata. Bezopasno; novi F4 testovi čiste za sobom. |
+
+### Ostalo za F4 (nije dio S1/S2)
+- **„Obriši sekciju"** u Studiju.
+- **Puni E2E** create→nest→uredi→publish→delete→restore.
+- **Siročad u Storageu:** brisanje bloka/čvora ne briše objekt iz `node-images`. Nije sigurnosni problem
+  (owner-scoped), ali je otpad. Kandidat: `delete_node` RPC koji pobriše i prefiks, ili periodično mesenje.
+
+---
+*S1+S2 gotovi. **SLIJEDI ostatak F4** = „obriši sekciju" + puni E2E.*
