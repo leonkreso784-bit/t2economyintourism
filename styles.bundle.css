@@ -9021,6 +9021,16 @@ h4.lb-heading { font-size: 1.1rem; }
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }
 #editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(129,140,248,.5); }
+
+/* ── F4: 🗑 obriši sekciju. Gura se na kraj zaglavlja (`margin-left:auto`) da destruktivna radnja
+   NE stoji uz naslov/kvadratiće — suzdržana dok ne pređeš mišem, crvena tek na hoveru. ── */
+#editor-page .st-catdel{
+  flex-shrink:0; margin-left:auto; width:26px; height:26px; padding:0; border:none; background:transparent;
+  color:var(--text-muted); font-size:12px; line-height:1;
+  cursor:pointer; border-radius:7px; opacity:.45; transition:.13s;
+}
+#editor-page .st-catdel:hover{ opacity:1; color:var(--danger-text,#f87171); background:rgba(248,113,113,.12); }
+#editor-page .st-catdel:focus-visible{ opacity:1; outline:2px solid rgba(248,113,113,.6); outline-offset:1px; }
 /* drop-linija sekcije koristi GLOBALNU `.be-dropline` (Fix B) — `#editor-page`-scopano pravilo se ne bi
    primijenilo jer se element dodaje na `document.body`. */
 

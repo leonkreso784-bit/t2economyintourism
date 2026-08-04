@@ -1,6 +1,6 @@
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
-> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ · F4 u tijeku: S1+S2 (slike) ✅ — v. §12.**
+> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ · F4 ✅ (§12 slike + §13 E2E) → SLIJEDI F5 = PROD (traži Leonov izričit OK).**
 > **Gdje je kôd:** grana `feature/f3-node-editor` (F2+F3); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
 > **Nakon F5:** frontend redizajn (Leon), pa objava/dijeljenje + MCP.
 > **Pravilo:** svaka faza staje na checkpoint za Leonov OK; **deploy = uvijek izričit OK**. Implementacija slijedi §6.
@@ -98,8 +98,8 @@ Tempo = **faza-checkpoint** (Leon Q3): unutar faze tečem kroz cigle (gate na sv
 | **F1 · DB temelj** | `nodes` + `node_content` + `node_content_versions` + tvrda owner-RLS + RPC-ovi (create/rename/move/reorder/delete/restore/publish_node) — **STAGING** | **✅ 51/51** — v. §9 | ne (staging) ✅ |
 | **F2 · „Moji materijali" UI** | Profil-područje: render stabla + add folder/study + rename/nest/reorder/delete (async, prijavljen-only) | **✅ 5/5 authed + 24 unit** — v. §10 | ne (grana `feature/f2-my-materials`) ✅ |
 | **F3 · Editor u čvoru** | Otvori study-čvor → postojeći Studio editor vezan na `node_content` → uredi → `publish_node` | **✅ 9/9 authed** — v. §11 | ne (grana `feature/f3-node-editor`) ✅ |
-| **F4 · Polish + E2E** | **S1+S2 privatne slike ✅ (§12)** · preostaje: „obriši sekciju", puni tok na stagingu | storage 8/8 + node-images 4/4 + unit 17/17 ✅; još: authed E2E create→nest→uredi→publish→delete→restore | ne ← **ovdje smo** |
-| **F5 · PROD** | migracija (SQL prvo, U4-obrazac) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** |
+| **F4 · Polish + E2E** | **✅** — privatne slike (§12) · „obriši sekciju" · puni tok na stagingu (§13) | **✅** storage 8/8 · node-images 4/4 · unit 17/17 · **E2E 2/2** · `test:authed` 52/52 | ne ✅ |
+| **F5 · PROD** | migracija (SQL prvo, U4-obrazac: `f1-nodes.sql` **pa** `f4-node-images.sql`) → klijent | Vercel READY (pravilo #7) + live-verified | **DA — samo uz izričit OK** ← **ovdje smo** |
 
 Nakon F5 → **osobni UGC-graditelj radi** → **frontend redizajn** (Leon) → kasnije: objava/dijeljenje + MCP.
 
@@ -293,11 +293,41 @@ Fail-safe: nerazriješena oznaka → `safeUrl` odbija nepoznatu shemu → slika 
 | Supabase odbija `@…​.local` e-mail pri signupu, a staging traži potvrdu e-maila | drugi HTTP-identitet nije bilo moguće dobiti bez diranja `auth.users` |
 | Stari `studio.authed.spec.js` U8.7 test **ne čisti** uploadanu sliku | staging `lesson-images` nakupio 18 objekata. Bezopasno; novi F4 testovi čiste za sobom. |
 
-### Ostalo za F4 (nije dio S1/S2)
-- **„Obriši sekciju"** u Studiju.
-- **Puni E2E** create→nest→uredi→publish→delete→restore.
-- **Siročad u Storageu:** brisanje bloka/čvora ne briše objekt iz `node-images`. Nije sigurnosni problem
-  (owner-scoped), ali je otpad. Kandidat: `delete_node` RPC koji pobriše i prefiks, ili periodično mesenje.
+---
+
+## 13 · F4 — DOVRŠEN (2026-08-04)
+Grana `feature/f3-node-editor`. **Staging only, prod netaknut.**
+
+### Zadnje dvije cigle
+| cigla | isporuka |
+|---|---|
+| **S-G · „obriši sekciju"** | 🗑 u zaglavlju sekcije u Studiju (`data-st-catdel`) → potvrda (`askConfirm`, `danger`) → **postojeći `removeCategory` op** → draft. Poništivo „Odbaci"-jem, a nakon objave i kroz append-only audit. **Ispravak ranijeg zapisa:** op NIJE bio „mrtav" — zvao ga je stari admin-overlay (`js/admin.js:859`); **Studio** ga nije nudio. Gumb ide `margin-left:auto` (destruktivna radnja odvojena od naslova/kvadratića), crven tek na hoveru. |
+| **S-H · puni E2E** | `tests/f4-e2e.authed.spec.js` — **napravi → ugnijezdi → uredi → objavi → obriši → VRATI** u jednom toku, uz tvrdnju koja se najlakše promaši: **sadržaj i verzija prežive soft-delete + restore**, i gradivo se vrati u ISTI folder. |
+
+### Gate (F4 ukupno)
+| provjera | rezultat |
+|---|---|
+| `tests/f4-e2e.authed.spec.js` (novo) | **2/2** |
+| `tests/node-images.authed.spec.js` | **4/4** |
+| `tests/unit/node-images.test.js` | **17/17** |
+| `npm run test:storage` | **8/8** |
+| `test:authed` (puni) | **52/52** (bilo 46 prije F4) |
+| `preflight` | **EXIT 0** |
+
+### Nalaz iz izvedbe
+- **Test mi je prvo pao na krivoj pretpostavci, ne na bugu:** nakon „Odbaci" brojao sam `.st-learn-cat`
+  i dobio 0. Studio crta **`.st-learn-cat` u edit-modu, a `.st-kv` u read-onlyju** — izlazak iz drafta
+  znači promjenu selektora. Tvrdnja ispravljena (+ dodana provjera da je draft očišćen).
+- **Prolazni pad `auth.setup`** („signed in but NOT admin"): `signInWithPassword` prošao, `is_admin()` RPC
+  vratio ne-true. Baza provjerena — `test-admin` JEST admin i funkcija je ispravna; ponovno pokretanje prošlo.
+  Zaključak: kratkotrajni hiccup nakon mnogo uzastopnih prijava, **ne** defekt.
+
+### Svjesno ostavljeno (nije blokator za F5)
+- **Siročad u Storageu:** brisanje bloka ili čvora ne briše objekt iz `node-images`. Nije sigurnosni
+  problem (owner-scoped, privatan bucket), nego otpad. Kandidat: `delete_node` koji pomete i prefiks,
+  ili periodično mesenje.
+- Stari `studio.authed.spec.js` U8.7 test ne čisti uploadanu sliku (staging `lesson-images` = 18 objekata).
 
 ---
-*S1+S2 gotovi. **SLIJEDI ostatak F4** = „obriši sekciju" + puni E2E.*
+*F4 GOTOV. **SLIJEDI F5 = PROD** — SQL prvo (`f1-nodes.sql` pa `f4-node-images.sql`, U4-obrazac), pa klijent.
+**Traži Leonov IZRIČIT OK** (produkcijski DDL + deploy).*

@@ -412,6 +412,14 @@
     'studio.newSectionName': { en: 'New section', hr: 'Nova sekcija' },
     'studio.emptyEditHint': { en: 'Empty so far. Add your first section and start writing.', hr: 'Prazno je. Dodaj prvu sekciju pa počni pisati.' },
     'studio.addSectionFail': { en: 'Could not add the section.', hr: 'Sekciju nije bilo moguće dodati.' },
+    'studio.delCat': { en: 'Delete section', hr: 'Obriši sekciju' },
+    'studio.delCatTitle': { en: 'Delete this section?', hr: 'Obrisati sekciju?' },
+    'studio.delCatMsg': {
+      en: 'Section “{name}” and everything in it (cards, quiz, fill, learn) will be removed from the draft. You can bring it back with “Discard”.',
+      hr: 'Sekcija „{name}" i sve u njoj (kartice, kviz, fill, learn) miču se iz drafta. Možeš je vratiti gumbom „Odbaci".'
+    },
+    'studio.del': { en: 'Delete', hr: 'Obriši' },
+    'studio.delCatFail': { en: 'Could not delete the section.', hr: 'Sekciju nije bilo moguće obrisati.' },
     'materials.delTitle': { en: 'Delete this item?', hr: 'Obrisati ovu stavku?' },
     'materials.delMsg': { en: 'You can restore it right after.', hr: 'Možeš je odmah vratiti.' },
     'materials.delMsgTree': { en: 'Everything inside it will be deleted too. You can restore it right after.', hr: 'Sve unutar nje se također briše. Možeš je odmah vratiti.' },

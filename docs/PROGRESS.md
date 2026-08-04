@@ -5,7 +5,7 @@ testirano, što slijedi.
 
 ---
 
-## 2026-08-04-b (OPUS) — 🔒 **F4-S: privatne slike osobnog gradiva** (blokatori S1+S2 RIJEŠENI)
+## 2026-08-04-b (OPUS) — 🔒 **F4 DOVRŠEN**: privatne slike (S1+S2) + „obriši sekciju" + puni E2E
 **Kontekst:** Leon: *„moze kreni."* Prvi posao u F4 = dva blokatora za F5 nađena na kraju F3. Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
 
 ### 🧭 Leonova odluka: **prava privatnost, ne obskurnost**
@@ -38,7 +38,16 @@ Potpisani URL **istječe**. Da je u payloadu, objavljeni sadržaj bi „istrunuo
 - **Manji:** stari `studio.authed.spec.js` U8.7 test **ne čisti** uploadanu sliku (staging `lesson-images` = 18 objekata). Novi F4 testovi čiste za sobom (provjereno: broj ostao 18).
 - **Za F4 dalje:** siročad u Storageu (brisanje bloka/čvora ne briše objekt) · **„obriši sekciju"** u Studiju · puni E2E.
 
-**Slijedi:** ostatak F4 — „obriši sekciju" + puni E2E (create→nest→uredi→publish→delete→restore).
+### 🗑 „Obriši sekciju" + puni E2E → **F4 DOVRŠEN**
+- **„Obriši sekciju"** u Studiju ([`studio.js`](../js/studio.js) `delSection`): 🗑 u zaglavlju sekcije → `askConfirm` (danger, ime sekcije u poruci) → **postojeći `removeCategory` op** → draft; poništivo „Odbaci"-jem. Gumb `margin-left:auto` (destruktivna radnja odvojena od naslova i kvadratića boja), crven tek na hoveru. **Ispravak ranijeg zapisa:** op NIJE bio mrtav — zvao ga je stari admin-overlay ([`admin.js:859`](../js/admin.js#L859)); **Studio** ga nije nudio.
+- **Puni E2E** ([`tests/f4-e2e.authed.spec.js`](../tests/f4-e2e.authed.spec.js), 2/2): napravi → **ugnijezdi** → uredi → objavi → obriši → **VRATI**, uz tvrdnju koja se najlakše promaši: **sadržaj i verzija prežive soft-delete + restore**, i gradivo se vrati u ISTI folder.
+- **Gate:** `test:authed` **52/52** · preflight EXIT 0 · bump.
+
+### 🔍 Dva nalaza pri testiranju
+- **Prvi pad je bio moja kriva pretpostavka, ne bug:** nakon „Odbaci" brojao sam `.st-learn-cat` i dobio 0. Studio crta **`.st-learn-cat` u edit-modu, a `.st-kv` u read-onlyju** — izlazak iz drafta mijenja selektor. Tvrdnja ispravljena + dodana provjera da je draft očišćen.
+- **Prolazni pad `auth.setup`** („signed in but NOT admin"): prijava je prošla, ali `is_admin()` RPC nije vratio `true`. **Prije zaključka provjerio bazu:** `test-admin` JEST admin i funkcija je ispravna → ponovno pokretanje prošlo. Kratkotrajni hiccup nakon mnogo uzastopnih prijava, **ne** defekt.
+
+**Slijedi:** **F5 = PROD** — SQL prvo (`f1-nodes.sql` pa `f4-node-images.sql`, U4-obrazac), pa klijent. **Traži Leonov izričit OK** (produkcijski DDL + deploy).
 
 ---
 

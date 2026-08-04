@@ -170,6 +170,9 @@ const SokratStudio = (function () {
       // U8.5f: boja-kvadratić uz naslov sekcije → updateCategory {color} → re-render (akcent se nasljeđuje)
       // F3 K3: „＋ Nova sekcija" (u zaglavlju i u praznom stanju)
       if (e.target.closest('[data-st-addcat]')) { addSection(); return; }
+      // F4: 🗑 obriši sekciju (prije boje — kanta je unutar zaglavlja sekcije, kao i kvadratići)
+      var del = e.target.closest('[data-st-catdel]');
+      if (del) { delSection(del.getAttribute('data-st-catdel')); return; }
       var dot = e.target.closest('[data-st-catcolor]');
       if (dot) { setCatColor(dot.getAttribute('data-st-cat'), dot.getAttribute('data-st-catcolor')); return; }
       var mig = e.target.closest('[data-migrate-cat]');
@@ -390,6 +393,37 @@ const SokratStudio = (function () {
     else toast(t('studio.addSectionFail', 'Sekciju nije bilo moguće dodati.'));
   }
 
+  /**
+   * F4 — obriši sekciju iz DRAFTA (uz potvrdu). Poništivo „Odbaci"-jem, a nakon objave i kroz
+   * `node_content_versions` / `content_versions` (append-only audit). Ide kroz POSTOJEĆI
+   * `removeCategory` op — bez novog write-puta.
+   */
+  async function delSection(catId) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var data = currentData();
+    if (!data || !data[catId]) return;
+    var name = (data[catId] && data[catId].name) ? String(data[catId].name) : catId;
+    if (typeof window.askConfirm === 'function') {
+      var ok = await window.askConfirm({
+        title: t('studio.delCatTitle', 'Obrisati sekciju?'),
+        message: t('studio.delCatMsg', 'Sekcija „{name}" i sve u njoj (kartice, kviz, fill, learn) miču se iz drafta. Možeš je vratiti gumbom „Odbaci".')
+          .replace('{name}', name),
+        confirmText: t('studio.del', 'Obriši'),
+        danger: true
+      });
+      if (!ok) return;
+    }
+    var res = b.applyOp({ type: 'removeCategory', catId: catId });
+    if (res && res.ok) {
+      // Obrisana je možda bila JEDINA sekcija → mod više nema pokrića; renderCanvas to razriješi.
+      renderCanvas();
+      refreshTopbar();
+    } else {
+      toast(t('studio.delCatFail', 'Sekciju nije bilo moguće obrisati.'));
+    }
+  }
+
   function setCatColor(catId, color) {
     var b = bridge();
     if (!b || !editing()) return;
@@ -537,7 +571,12 @@ const SokratStudio = (function () {
         '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
         'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +
         catName + '</span>' +
-        colorDots(catId, c.color) + '</div>' +
+        colorDots(catId, c.color) +
+        // F4: brisanje sekcije. Op `removeCategory` postojao je od U6c, ali ga je zvao SAMO stari
+        // admin-overlay — Studio je imao dodaj/preimenuj/boju/presloži, a brisanja nije bilo nigdje.
+        '<button type="button" class="st-catdel" data-st-catdel="' + esc(catId) + '" ' +
+        'title="' + esc(t('studio.delCat', 'Obriši sekciju')) + '" aria-label="' + esc(t('studio.delCat', 'Obriši sekciju')) +
+        '"><i class="fas fa-trash"></i></button>' + '</div>' +
         '<div class="st-learn-body">';
       if (kind === 'v2') {
         // blok-editor (kvadratići) — montira se u post-renderu
