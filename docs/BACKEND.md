@@ -78,13 +78,34 @@ s **fallbackom na datoteke** (offline-first; datoteke ostaju izvor istine + sigu
 JSON preuzima prije `.js`. `.json` su generirani export (`npm run export:json`) — **nakon izmjene `.js` migriranog
 predmeta obavezan i re-export I `migrate-content.js` re-sync** (dva zrcala istog izvora). Vježbe i dalje SAMO `.js` (BUG-012).
 
-**🆕 F4 Admin CRUD — write-path + identitet (▶ U TIJEKU; dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13; ADR-021/ADR-022):**
+**F4 Admin CRUD — write-path + identitet (✅ FUNKCIONALNO GOTOV i 🚀 NA PRODUKCIJI od 2026-07-13; ADR-021/ADR-022).**
+*(Ovo je FOUNDATION-F4 = javni katalog. Ne miješati s CREATE_BACKEND-F4 = osobni graditelj, opisan niže.)*
 uređivanje sadržaja kroz sučelje, **direktno preglednik→Supabase pod admin-JWT-om + RLS** (bez server-koda; ADR-016 — admin-write ne treba `service_role`). Nove tablice (SQL u `supabase/f4-admin.sql` + `supabase/f4-content-write.sql`, primijenjeno preko MCP-a):
 - **`public.profiles`** (`user_id → auth.users`, `role text default 'user'`, `created_at`) — tko je admin. `handle_new_user` trigger auto-provisionira red na svaki novi `auth.users`; **select-own RLS** (korisnik čita svoj profil; NEMA client write → `role` immutable, mijenja se samo dashboard/service_role). Helper **`public.is_admin()`** (SECURITY DEFINER) = reusable u RLS policyjima. Leon seedan `role='admin'`.
 - **`subject_content` write RLS:** admin-only `insert/update/delete` (`using (is_admin())`); public SELECT ostaje. → samo admin piše sadržaj, izravno iz preglednika.
 - **`public.content_versions`** (`id, subject_id, var_name, payload jsonb, op, edited_by, edited_at`) — **append-only povijest**. BEFORE UPDATE/DELETE trigger na `subject_content` (SECURITY DEFINER) snapshota STARI red = **undo + audit „tko/kad"** od prve izmjene (4E). Admin-only read RLS.
 - **Frontend:** `js/admin.js` (`SokratAdmin.isAdmin()` = `client.rpc('is_admin')`) + `#admin-page` viewer. **Write (U3→U4): draft→objavi kroz `publish_document` RPC** — editori pišu opove u radnu kopiju (`js/draft-store.js`, `SokratDraft`), a „Objavi" (U4, 2026-07-13) šalje working + svježe sibling-payloade s istim opovima u **jedan RPC poziv**: SECURITY DEFINER fn = is_admin + `base_version` optimistic concurrency (konflikt = ništa upisano + toast) + validacija + svi redovi u 1 transakciji; `subject_content.version` bumpa touch-trigger na svaki update (SQL: `supabase/u4-publish-rpc.sql`; na PROD ide PRIJE klijenta). **⚠️ `SokratAuth`/`SokratCatalog` su top-level `const` (leksički globali, NE `window` props) → referenciraj golo** ([[live-login-verifies-crud]]).
 - **Datoteke ostaju izvor istine dok F4.6 ne flipne autoritet** (predmet-po-predmet, nakon dry-run diffa). `rls-check.js` čuva 4 invarijante (anon ne vidi progress/profiles/content_versions).
+
+**🆕 OSOBNI UGC-GRADITELJ = ZASEBAN OTOK (ADR-024; `CREATE_BACKEND_SPEC.md`) — na STAGINGU, PROD tek u F5:**
+Korisnik slaže **vlastito** ugniježđeno stablo i u study-čvorovima gradi gradivo **istim editorom i istim rendererom**.
+**Javni katalog, 22 predmeta, studentski vrući put i `publish_document` = NEDIRNUTI.**
+- **`public.nodes`** — self-referencijalno stablo (`folder` | `study`), `owner_id → auth.users`, `position`, soft-delete.
+  Integritet-trigger: roditelj postoji · isti vlasnik · mora biti folder · **anti-ciklus** (rekurzivni CTE).
+- **`public.node_content`** — payload study-čvora (**isti oblik koji editor već uređuje**) + `version` (optimistic concurrency), touch-trigger.
+- **`public.node_content_versions`** — append-only audit (STARO stanje prije upisa), zrcali `content_versions`.
+- **Sigurnosni model (stroži od kataloga):** `anon` **NIŠTA** · `authenticated` **samo SELECT** (RLS filtrira na vlasnika) ·
+  **svaki upis kroz SECURITY DEFINER RPC s `owner_id = auth.uid()`**: `create_node` · `rename_node` · `move_node` ·
+  `reorder_nodes` · `delete_node` (soft, rekurzivno) · `restore_node` · **`publish_node`** (po `publish_document` kalupu:
+  FOR UPDATE + `base_version` + validacija payloada). SQL: **`supabase/f1-nodes.sql`** (idempotentan).
+- **Slike (F4, `supabase/f4-node-images.sql`):** bucket **`node-images` `public=false`**, putanja `<auth.uid()>/<node_id>/<uuid>.<ext>`;
+  4 policyja `to authenticated` uz `(storage.foldername(name))[1] = auth.uid()::text` — **nijedan `anon`/`public`, nijedan `is_admin()`**.
+  Javni `lesson-images` (katalog) ostaje kakav jest. **U payload ide stabilna oznaka `node-img:<putanja>`**, a **potpisani URL
+  se traži tek pri prikazu** (`js/node-images.js`, razrješava POZIVATELJ) → `js/blocks-renderer.js` **nedirnut**, objava bez
+  obrnute pretvorbe, potpis ne može isteći u bazi. Gate: **`npm run test:storage`**.
+- **Frontend:** `js/my-materials.js` (`SokratMaterials`, stablo na profilu) · `SokratStudio.openNode()` · node-mod u
+  `SokratAdmin.studioBridge` (`setNode`/`nodeCtx`). **Draft-stroj je generičan po ključu** → čvor koristi sintetički
+  **`node:<uuid>` / `content`**, pa draft/opovi/autosave/blok-editor rade bez izmjene.
 
 ## Arhitektura
 ```

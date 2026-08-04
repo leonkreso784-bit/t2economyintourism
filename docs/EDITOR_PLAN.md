@@ -31,7 +31,7 @@ marketplace ga dijeli, AI ga konzumira i mutira, verzioniranje ga čuva. Savrše
 ## 2. Tri horizonta (tajming)
 | Horizont | Što | Gate |
 |---|---|---|
-| **H1 — SAD** | draft→objavi + bogato autorsko sučelje za nas (admin) | F4 u tijeku; ovo je nastavak F4 |
+| **H1 — ✅ ISPUNJEN** | draft→objavi + bogato autorsko sučelje za nas (admin) | FOUNDATION-F4 gotov (§12); editor funkc. dovršen 2026-07-28 |
 | **H2 — UGC** | per-user server-draftovi · publish pod vlastitim računom · marketplace tuđih objava | **F6 sigurnost** (ADR-018: student-upload NIKAD prije F6) |
 | **H3 — AI/MCP** | AI-tutor „donesi svoj ključ" · vanjski AI (ChatGPT/Claude) stvara sadržaj kroz naš API/MCP | H2 + auth za strojeve (PAT/OAuth) |
 

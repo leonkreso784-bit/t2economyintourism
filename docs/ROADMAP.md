@@ -1,5 +1,18 @@
 # ROADMAP — Milestones
 
+> ## ⚠️ ČITAJ PRVO — SEKVENCA NIŽE JE NADGLAŠENA (Leon, 2026-08-02)
+> Rečenica „F4 custom Admin CRUD → **F5 SRS** → **F6 pred-UGC sigurnost**" niže je **POVIJESNI ZAPIS**, ne plan.
+> **Važeća sekvenca:** dovrši **osobni UGC-graditelj** (`CREATE_BACKEND_SPEC.md` v3) → **frontend redizajn** →
+> **objava/dijeljenje + MCP**. **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
+>
+> ### ⚠️ DVA RAZLIČITA „F" NUMERIRANJA — ne miješaj ih
+> | oznaka | gdje | značenje | status |
+> |---|---|---|---|
+> | **F1–F6** | ovaj dokument + `FOUNDATION_PLAN.md` | faze **platformskog temelja** (CI/CD, jezgra, performanse, Admin CRUD, SRS, sigurnost) | F1–F4 isporučeni; F5/F6 nadglašeni |
+> | **F0–F5** | **`CREATE_BACKEND_SPEC.md`** ← **AKTIVNO** | faze **osobnog UGC-graditelja** (spec → DB → UI → editor → polish → PROD) | **F0–F4 ✅, slijedi F5 = PROD** |
+>
+> Kad u svježoj sesiji vidiš „F4", provjeri **koji** je dokument izvor. Trenutni rad = **CREATE_BACKEND F5**.
+
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
 ## 🧱 STRATEŠKI ZAOKRET (2026-06-29) — PLATFORMA-FIRST

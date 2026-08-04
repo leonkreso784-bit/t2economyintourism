@@ -329,5 +329,50 @@ Grana `feature/f3-node-editor`. **Staging only, prod netaknut.**
 - Stari `studio.authed.spec.js` U8.7 test ne čisti uploadanu sliku (staging `lesson-images` = 18 objekata).
 
 ---
-*F4 GOTOV. **SLIJEDI F5 = PROD** — SQL prvo (`f1-nodes.sql` pa `f4-node-images.sql`, U4-obrazac), pa klijent.
-**Traži Leonov IZRIČIT OK** (produkcijski DDL + deploy).*
+
+## 14 · F5 — RUNBOOK ZA PRODUKCIJU (pripremljeno 2026-08-04; **NIJE izvedeno**)
+> **Ništa iz ovog poglavlja ne pokreće se bez Leonova IZRIČITOG OK-a.** Ovo je plan, ne dozvola.
+> Napisano tako da se sljedeća sesija ne mora prisjećati redoslijeda.
+
+### 14.0 · Zatečeno stanje (provjereno 2026-08-04)
+| stavka | stanje |
+|---|---|
+| PROD baza `naxjubnedhrbhsuasayu` | **4 tablice**: `content_versions`, `profiles`, `progress`, `subject_content`. **`nodes` NE POSTOJE.** |
+| PROD Storage | samo `lesson-images` (javan, admin-only upis). **`node-images` ne postoji.** |
+| `origin/main` | `8b99775` |
+| lokalni `main` | **2 commita NEPUSHANA**: `e1a8fde` (spec v3 + CLAUDE) · `63f898f` (F1 SQL) |
+| grana `feature/f3-node-editor` | **13 commita** ispred lokalnog `main` (F2+F3+F4) |
+| klijent koji ide na prod | `js/node-images.js` (nov) · `js/my-materials.js` (nov) · `css/my-materials.css` (nov) + izmjene u `admin/studio/block-editor*/auth/profile/i18n/sokrat-modal/index.html` |
+
+### 14.1 · Redoslijed (SVETI — U4-obrazac: **infra PRVO, klijent POSLIJE**)
+**Zašto tim redom:** SQL je čisto additivan i nitko ga ne koristi dok klijent ne stigne → međustanje je bezopasno.
+Obrnuto (klijent prvi) značilo bi da prijavljeni korisnici dobiju „Moje materijale" nad tablicama kojih nema.
+*(Klijent to doduše podnosi — `humanError` mapira `PGRST205`/`42P01` u „Još nije dostupno na ovom okruženju" —
+ali to je sigurnosna mreža, ne plan.)*
+
+| # | korak | tko | provjera |
+|---|---|---|---|
+| **1** | **`supabase/f1-nodes.sql`** na PROD | Leon (Supabase SQL Editor) — produkcijski DDL gejtira klasifikator | 3 tablice + 7 RPC-ova postoje; `anon` bez EXECUTE; md5-otisak funkcija == fajl |
+| **2** | **`supabase/f4-node-images.sql`** na PROD | isto | bucket `node-images` `public=false`; **4 policyja, svi `authenticated`, nijedan `public`, nijedan `is_admin()`**; `lesson-images` nedirnut |
+| **3** | Advisors (security) na PROD | Claude (MCP, read-only) | 0 ERROR; WARN-i za nove RPC-ove = po dizajnu (isto kao `publish_document`) |
+| **4** | `git merge feature/f3-node-editor` → `main` (`--no-ff`) | **vjerojatno Leon** — merge/push na `main` klasifikator je već 2× odbio | konflikti = očekivano SAMO token-fajlovi (`--ours` + `npm run bump`); 0 markera |
+| **5** | `npm run preflight` na `main` | Claude | EXIT 0 (pre-push hook ga ionako vrti) |
+| **6** | `git push origin main` (nosi i 2 zaostala commita) | **Leon, izričit OK po pushu** | — |
+| **7** | **Vercel check na commitu** (pravilo #7 — Actions NE validira `vercel.json`) | Claude | deployment **READY, target=production** |
+| **8** | Živa verifikacija | Leon prijavom + Claude MCP-om | „Moji materijali" se crta · napravi folder+gradivo · uredi · **objavi** · upload slike · obriši+vrati |
+| **9** | `npm run test:storage` **NE pokretati protiv PROD-a** | — | skripta to i sama tvrdo odbija (write-test) |
+
+### 14.2 · Rizici i gašenje
+| rizik | gašenje |
+|---|---|
+| DDL pokvari postojeći katalog | SQL je **100 % additivan** — 0 `ALTER` nad postojećim tablicama; `publish_document`, `subject_content`, `content_versions` nedirnuti. Oba fajla dokazana na stagingu i **idempotentna** (ponovno pokretanje bezopasno). |
+| Merge pokvari klijent | konflikti su povijesno bili SAMO `?v=` tokeni → `--ours` + re-bump; feature-superset u `index.html` |
+| Nešto pođe po zlu nakon deploya | Vercel rollback na `8b99775`. **DB se NE rollbacka** — nove tablice ostaju prazne i neiskorištene (bezopasno). |
+| Slike korisnika procure | riješeno u F4 (§12): privatan bucket + owner-prefiks + potpisani URL-ovi; gate `test:storage` 8/8 |
+
+### 14.3 · Nakon F5
+**Frontend redizajn** (Leon: *„sve mora savršeno raditi prije nego ga uredimo"*) → tek onda **objava/dijeljenje + MCP**.
+Otvoreno, ne blokira F5: siročad u Storageu · „obriši sekciju" postoji ali brisanje **stavki** unutar sekcije ide starim putem.
+
+---
+*F4 GOTOV. **SLIJEDI F5 = PROD** po runbooku §14. **Traži Leonov IZRIČIT OK** (produkcijski DDL + deploy).*
