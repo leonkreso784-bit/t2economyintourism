@@ -374,5 +374,20 @@ ali to je sigurnosna mreža, ne plan.)*
 **Frontend redizajn** (Leon: *„sve mora savršeno raditi prije nego ga uredimo"*) → tek onda **objava/dijeljenje + MCP**.
 Otvoreno, ne blokira F5: siročad u Storageu · „obriši sekciju" postoji ali brisanje **stavki** unutar sekcije ide starim putem.
 
+### 14.4 · ⚠️ Siročad u Storageu — POTVRĐENO U PRAKSI, ne teorijski (2026-08-04)
+Na kraju sesije staging `node-images` sadrži **1 objekt od 2,5 MB** pod prefiksom test-admina, u čvoru
+**„Njemački B2 — vokabular"** — a payload tog čvora je **prazan `{}` (verzija 1)**. Dakle: slika je uspješno
+uploadana kroz **novi privatni put**, ali **nikad objavljena** u sadržaj → visi kao siroče.
+(Nije iz automatiziranih testova — oni šalju 1×1 PNG od 70 B i čiste za sobom; ovo je gotovo sigurno
+Leonov živi klik na localhostu. **Usput = koristan dokaz da privatni upload radi s pravom fotografijom
+kroz pravo sučelje.**)
+
+**Pouka za dizajn:** upload se dogodi **odmah**, a payload se mijenja **tek na „Objavi"** — svaki prekid
+između to dvoje (odustane, zatvori tab, odbaci draft) ostavlja siroče. Nije sigurnosni problem
+(privatan bucket, owner-scoped), ali kvota nije beskonačna.
+**Kandidati:** (a) `delete_node` pomete i `<uid>/<node_id>/` prefiks · (b) periodično mesenje objekata
+kojih nema ni u jednom payloadu · (c) „Odbaci" briše ono što je uploadano unutar tog drafta.
+**Nije blokator za F5** — ali jest prava stavka za popis odmah nakon.
+
 ---
 *F4 GOTOV. **SLIJEDI F5 = PROD** po runbooku §14. **Traži Leonov IZRIČIT OK** (produkcijski DDL + deploy).*
