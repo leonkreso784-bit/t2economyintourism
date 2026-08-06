@@ -5,6 +5,117 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-04-b (OPUS) — 🔒 **F4 DOVRŠEN**: privatne slike (S1+S2) + „obriši sekciju" + puni E2E
+**Kontekst:** Leon: *„moze kreni."* Prvi posao u F4 = dva blokatora za F5 nađena na kraju F3. Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
+
+### 🧭 Leonova odluka: **prava privatnost, ne obskurnost**
+Ponudio sam dvije staze i izložio cijenu obje: **(a)** privatan bucket + potpisani URL-ovi (~100 linija, renderer nedirnut) · **(b)** javan bucket s neprobojnom UUID-putanjom (gotovo bez koda, ali slika ostaje čitljiva svakome tko ima URL — zauvijek). Leon je izabrao **(a)**. Pitao sam **prije** pisanja koda jer odluka određuje **što se sprema u payload** — mijenjati to poslije značilo bi migrirati već uploadane slike.
+
+### 🔑 Ključni potez: oznaka u payloadu, potpis tek pri prikazu
+Potpisani URL **istječe**. Da je u payloadu, objavljeni sadržaj bi „istrunuo", a draft-autosave u `localStorage` vraćao bi mrtve linkove. Zato payload nosi **stabilnu oznaku** `node-img:<uid>/<node_id>/<uuid>.<ext>`, a potpis se traži **tek pri prikazu** — i to **kod pozivatelja** renderera. Posljedice: objava **ne treba obrnutu pretvorbu**, a **[`blocks-renderer.js`](../js/blocks-renderer.js) ostaje NEDIRNUT** (sveta granica). Fail-safe: nerazriješena oznaka → `safeUrl` odbija nepoznatu shemu → slika se **izostavi** (nikad polomljen `<img>`).
+
+### 📦 Isporuka
+- **[`supabase/f4-node-images.sql`](../supabase/f4-node-images.sql)** — bucket `node-images` **`public=false`**; 4 policyja `to authenticated` s uvjetom `(storage.foldername(name))[1] = auth.uid()::text`. **Nijedan `public`/`anon` policy, nijedan `is_admin()`.** Idempotentno; isti fajl ide na PROD u F5. Primijenjeno na STAGING.
+- **[`js/node-images.js`](../js/node-images.js)** (novo, `window.SokratNodeImages`) — oznaka↔putanja · `newPath` · `collectPaths` (dubinski) · `prefetch` (batch-potpis, nikad ne baca) · `resolveBlock(s)` (**kopija**, original s oznakom netaknut) · `clear`.
+- **[`js/block-editor-media.js`](../js/block-editor-media.js)** — u node-modu upload ide u `node-images` pod vlasnički prefiks i vraća oznaku; **katalog-mod (`lesson-images`) nedirnut**.
+- Razrješavanje na 3 pozivna mjesta: [`studio.js`](../js/studio.js) (learn-body + `prefetch` prije prvog crtanja) · [`block-editor.js`](../js/block-editor.js) (preview) · [`admin.js`](../js/admin.js) (read-only preview).
+- **[`scripts/storage-check.js`](../scripts/storage-check.js)** + `npm run test:storage` — novi sigurnosni gate; **tvrdo odbija gađati produkciju** (write-test).
+
+### ✅ Gate
+| provjera | rezultat |
+|---|---|
+| `npm run test:storage` (HTTP, staging) | **8/8** — vlastiti upload 200 · tuđi prefiks 400 · javni URL 400 · anon dohvat 400 · anon list 0 · potpis tuđe putanje 400 · **potpisani URL vratio istih 70 B** · brisanje 200 |
+| policy-razina u bazi, **pod NE-admin identitetom**, u transakciji s rollbackom | **5/5** — T1 vlastiti upis prošao · T2 tuđi prefiks odbijen · T3 korijen bucketa odbijen · T4 vidi samo svoje · T5 anon vidi 0 |
+| `tests/node-images.authed.spec.js` (novo) | **4/4** |
+| `tests/unit/node-images.test.js` (novo) | **17/17** |
+| `test:authed` (puni) | **50/50** (bilo 46; stari U8.7 upload-test zelen ⇒ nema regresije na katalogu) |
+| `preflight` | **EXIT 0** |
+
+### 🔍 Nalazi
+- **Dokaz da S1 vrijedi za OBIČNOG korisnika** nije se mogao izvesti kroz HTTP: pisanje u `auth.users` je blokirano (i dobro je tako), Supabase odbija `@…​.local` e-mail pri signupu, a staging traži potvrdu e-maila. Zato je izveden **u bazi**, pod identitetom `rls-fixture-b` (`role='user'`). Uz to: **nijedan policy na `node-images` ne spominje `is_admin()`** — uloga tu ne daje ništa, što T2/T6 i pokazuju (admin odbijen na tuđem prefiksu).
+- **Zamalo lažno zeleno:** sinkroni `test()` u node unit-harnessu ne čeka `async` tijelo → dva testa bi uvijek bila zelena. Dodan `atest` koji se čeka. ([[tests-must-be-data-independent]])
+- `uploadImage` je već bio izložen kroz `window.__beMedia(core)` → authed test gađa **baš proizvodni kod**, ne zaobilaznicu.
+- **Manji:** stari `studio.authed.spec.js` U8.7 test **ne čisti** uploadanu sliku (staging `lesson-images` = 18 objekata). Novi F4 testovi čiste za sobom (provjereno: broj ostao 18).
+- **Za F4 dalje:** siročad u Storageu (brisanje bloka/čvora ne briše objekt) · **„obriši sekciju"** u Studiju · puni E2E.
+
+### 🗑 „Obriši sekciju" + puni E2E → **F4 DOVRŠEN**
+- **„Obriši sekciju"** u Studiju ([`studio.js`](../js/studio.js) `delSection`): 🗑 u zaglavlju sekcije → `askConfirm` (danger, ime sekcije u poruci) → **postojeći `removeCategory` op** → draft; poništivo „Odbaci"-jem. Gumb `margin-left:auto` (destruktivna radnja odvojena od naslova i kvadratića boja), crven tek na hoveru. **Ispravak ranijeg zapisa:** op NIJE bio mrtav — zvao ga je stari admin-overlay ([`admin.js:859`](../js/admin.js#L859)); **Studio** ga nije nudio.
+- **Puni E2E** ([`tests/f4-e2e.authed.spec.js`](../tests/f4-e2e.authed.spec.js), 2/2): napravi → **ugnijezdi** → uredi → objavi → obriši → **VRATI**, uz tvrdnju koja se najlakše promaši: **sadržaj i verzija prežive soft-delete + restore**, i gradivo se vrati u ISTI folder.
+- **Gate:** `test:authed` **52/52** · preflight EXIT 0 · bump.
+
+### 🔍 Dva nalaza pri testiranju
+- **Prvi pad je bio moja kriva pretpostavka, ne bug:** nakon „Odbaci" brojao sam `.st-learn-cat` i dobio 0. Studio crta **`.st-learn-cat` u edit-modu, a `.st-kv` u read-onlyju** — izlazak iz drafta mijenja selektor. Tvrdnja ispravljena + dodana provjera da je draft očišćen.
+- **Prolazni pad `auth.setup`** („signed in but NOT admin"): prijava je prošla, ali `is_admin()` RPC nije vratio `true`. **Prije zaključka provjerio bazu:** `test-admin` JEST admin i funkcija je ispravna → ponovno pokretanje prošlo. Kratkotrajni hiccup nakon mnogo uzastopnih prijava, **ne** defekt.
+
+**Slijedi:** **F5 = PROD** — SQL prvo (`f1-nodes.sql` pa `f4-node-images.sql`, U4-obrazac), pa klijent. **Traži Leonov izričit OK** (produkcijski DDL + deploy).
+
+---
+
+## 2026-08-04 (OPUS) — 🐞 debug-sesija (3 buga + 2 defekta gate-a) → 🎯 **F3 IZVEDEN** (editor u čvoru, K1–K4)
+**Kontekst:** Leon: *„ovu sesiju koristimo za debugging kompletne stranice i cruda."* Okruženje = **lokalno :5050 + STAGING baza** (Leonov izbor; `sokrat-supabase-override`). Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
+
+### 🐞 Bug A — modal se zatvara pri OZNAČAVANJU teksta (Leon, živo na polju za lozinku)
+**Korijen** ([`sokrat-modal.js:114`](../js/components/sokrat-modal.js#L114)): zatvaranje je viselo na `click` + `e.target === this`. DOM `click` puca na **najbližem ZAJEDNIČKOM PRETKU** `mousedown`-a i `mouseup`-a → povuče li korisnik selekciju iz polja u kartici **preko ruba** i pusti vani, taj predak je **sam overlay** → uvjet istinit iako backdrop nikad nije kliknut. **Pogađalo SVE modale**: auth, image-viewer, `<sokrat-confirm>` i **editor-modale u Studiju** (`admin-editors.js`) → u editoru je moglo **pojesti nedovršeni unos**. **Popravak:** zapamti je li pritisak POČEO na overlayu (`pointerdown`) i zatvori samo tada. Test prvo **pada** na sva 4 profila, pa prolazi; kontrolna tvrdnja čuva da pravi backdrop-klik i dalje zatvara. `components` **36/36**. Commit `9912ef9`.
+**Statički sken iste klase drugdje:** `admin-editors.js:39` i `studio.js:661` = sigurni (gledaju konkretan gumb); `block-editor.js:378` (＋ izbornik) = isti obrazac ali unutra su samo gumbi (nema što označiti) → teoretski rizik, **nije diran bez dokaza**.
+
+### 🔍 Dva defekta GATE-a (našla se jer je Leon ručno klikao na istom staging računu)
+1. **3 testa u `my-materials.authed.spec.js` pretpostavljala su PRAZAN račun** (globalni `.mm-row` brojevi, nescope-an `.mm-row--study`) → čim račun ima podatke: `Expected 1, Received 5` i `strict mode violation` s Leonovim čvorom „nesto novo materijal". **Nije bug u proizvodu** — proizvod je radio točno; gate je bio nepouzdan. **Popravak:** sve tvrdnje scope-ane na `data-mm-id` čvorova koje test sam stvori.
+2. **Test „prazno stanje" PROLAZIO JE NAD SPINNEROM** — spinner-stanje koristi isti `.mm-state-title`, pa su „naslov vidljiv + 0 redaka" bile istinite dok se još učitava → **test bi prošao i da je učitavanje potpuno slomljeno.** Zamijenjen testom stvarnog invarijanta (učitavanje se DOVRŠI + UI zrcali podatke iz baze); `openProfile` sad čeka nestanak spinnera.
+**+ 6 rubnih testova promovirano** iz istraživačkog prolaza (svi prošli **iz prve** → proizvod je izdržao): dubina 8 razina bez vodoravnog overflowa (naziv 406px) · naziv od 120 znakova (redak 766px u stablu 768px) · dvoklik na „+ Folder" = 1 unos · dvostruki Enter = 1 čvor · drop na samog sebe = bez promjene · prebacivanje inline unosa bez sirotišta. `my-materials` **13/13** (i to S tuđim podacima u stablu). Commit `8c0207e`.
+
+### 🎯 F3 — editor u study-čvoru (K1–K4), detalji: `CREATE_BACKEND_SPEC.md §11`
+- **K1 · adapter** (`49167cd`): node-mod u `studioBridge` (`setNode`/`nodeCtx`); `_enterDraftMode` čita `node_content`, `_publishDraft` zove `publish_node`; `setLesson` gasi node-mod.
+- **K2 · ulaz:** gumb „Uredi gradivo" na study-retku → `SokratStudio.openNode()` → Studio s crumbom „Moji materijali › «naziv»" i **panelom čvora umjesto katalog-stabla** (čvor NIJE u katalogu).
+- **K3 · prazan čvor:** „＋ Nova sekcija" (u zaglavlju i u praznom stanju) → postojeći `addCategory` op → Learn odmah aktivan.
+- **K4 · povratak:** „←" vraća na profil (već je bilo tako — sad gate-ano).
+
+**🔑 Ključni nalaz — adapter je bio TANJI nego što je spec pretpostavljao:** draft-stroj je **generičan po ključu** (`subjectId::lessonId` = obični string), pa čvor koristi **sintetički ključ `node:<uuid>`/`content`** i draft/opovi/autosave/blok-editor/draft-chip/Uredi-Objavi-Odbaci rade **bez ijedne izmjene**. `draft-store.js`, `block-editor.js`, `blocks-renderer.js`, `admin-editors.js` = **0 promjena**.
+**Ostali nalazi:** `create_node` svakom study-čvoru odmah upisuje `node_content` s `{}` → prazan payload je legitimno početno stanje (K3 manji rizik nego procijenjen) · **Studio uopće nije imao način da doda sekciju** — `addCategory` postoji u draft-storeu, ali ga nitko nije zvao → bez K3 je nov čvor slijepa ulica · `learnKind` vraća `'v2'` i za prazan `learn.blocks` → nova sekcija odmah prikaže Learn · `publish_node` odbija payload čije top-level vrijednosti nisu objekti (RPC brani shemu).
+**Dva buga bila su u MOJIM testovima, ne u proizvodu:** čitanje `draft.dirty` **nakon** `publish()` (a `commitDone` ga re-baselinea) i testni payload `{a:1}` koji je pao na RPC-validaciji.
+
+**✅ GATE:** novi `tests/node-editor.authed.spec.js` **9/9** (prazan čvor → draft-mod · uredi → `publish_node` → re-load = sadržaj ostao + verzija 1→2 + audit-redak · zastarjeli `base_version` → `publish_version_conflict` i izgubljeni upis odbačen · klik „Uredi gradivo" → Studio na čvoru · „←" → profil · **prazan čvor → „＋ Nova sekcija" → Objavi → sadržaj u bazi** · nesudarajući ključ druge sekcije · `setLesson` gasi node-mod) · **`test:authed` 46/46** (admin `publish_document` put bez regresije) · **`test:responsive` 279/0/15skip** (4 iPhone profila) · preflight **EXIT 0** · bump + `build:css`. Staging očišćen (0 zaostalih testnih čvorova).
+
+### 🔎 Leonov živi test F3 → **2 BLOKATORA za F5** (spec §11)
+Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao sekciju („Nova sekcija" → „nesto nesto"), promijenio joj boju, dodao odlomak **i sliku (475 KB jpg)**. Dakle F7-naslov, U8.5f-boja, blok-editor i U8.7-upload rade i u node-modu — **reuse editora je potvrđen uživo, ne samo testom.**
+**ALI:** upload je uspio **samo zato što je `test-admin` ujedno admin**. Pregled `storage.objects` policyja:
+- **S1 — `lesson-images` INSERT/UPDATE/DELETE traže `is_admin()`** → **običan korisnik NE MOŽE uploadati sliku** u svoje osobno gradivo (pada na RLS). Značajka bi za prave korisnike bila mrtva.
+- **S2 — isti bucket ima `public read` bez owner-provjere** → slike iz **privatnog** čvora su **javno čitljive po URL-u**, iako su stablo i payload owner-only. Privatnost je obećanje ovog otoka.
+**Smjer (F4/F5, nije izvedeno):** zaseban `node-images` bucket, owner-scoped policyji, putanja `<auth.uid()>/<node_id>/<file>`; javni `lesson-images` ostaje za katalog. (Privatan bucket + potpisani URL-ovi bi tražio diranje `blocks-renderer.js` = sveta granica → skuplje.)
+**Manji nalaz:** Studio nema **„obriši sekciju"** — `removeCategory` op postoji, ali ga nitko ne zove (ista klasa kao `addCategory` prije K3). Za F4.
+**Počišćeno:** Leonovi čvorovi (`nesto novo`, `nesto novo materijal`) hard-deletani + njegova slika maknuta kroz Storage API (izravni SQL-delete nad `storage.objects` je blokiran by design). Staging = 8 čvorova demo-stabla.
+
+**SLIJEDI:** F4 = polish + puni E2E (create→nest→uredi→publish→delete→restore) + **S1/S2 + „obriši sekciju"**. ⚠️ **OTVORENA NIT i dalje stoji:** prod nema `nodes` → za korištenje uživo treba (a) staging-override ili (b) **`supabase/f1-nodes.sql` na PROD uz Leonov izričit OK**.
+
+---
+
+## 2026-08-03-b (OPUS) — 🐞 Leonov živi pregled F2 → 2 BUGA popravljena + ⚠️ OTVORENA NIT (prod nema `nodes`)
+**Kontekst:** Leon je htio vidjeti F2 uživo. Digao sam lokalni server (:5050) + demo-stablo na stagingu i dao mu upute s `sokrat-supabase-override`. **Njegov ekran je pokazao dvije stvari** (screenshot): sirovi ključ **`admin.openStudio`** umjesto teksta, i **„Could not load your materials / Something went wrong"**.
+**Leonova presuda (zapisati, važno za smjer):** *„frontend će morat biti potpuno preuređen, trenutno ništa ne radi i ne mogu ništa napravit… frontend je naravno zadnji na redu, ali moramo se potrudit da SVE savršeno radi prije nego što ga uredimo."*
+
+**🐞 BUG 1 — sirovi i18n ključevi (bio ŽIV NA PRODUKCIJI, nije nov):** `js/profile.js:8` i `js/auth.js:154` imali su pokvaren helper — `function pt(key, fb) { return (window.t) ? t(key) : fb; }`. `t()` vraća **sam ključ** kad prijevoda nema → korisnik vidi `admin.openStudio`. Studio (`studio.js:33`) i `my-materials.js` imaju ISPRAVAN obrazac (ključ==rezultat ⇒ fallback) — profil i auth su ostali nepopravljeni od ranije. **Popravak:** oba helpera na ispravan obrazac + dodan ključ `admin.openStudio` (HR+EN). **Dokaz uživo:** gumb sad piše „Studio editor"; sken profila = 0 sirovih ključeva. **Sistemski sken:** ostali moduli (`studio.js`, `block-editor.js`, `admin.js`) imaju dosta ključeva bez prijevoda, ali su **bezopasni** jer njihovi helperi imaju fallback — jedina dva pokvarena helpera bila su profile/auth.
+**🐞 BUG 2 — greška je lagala:** „Something went wrong. Please try again." pokazivalo se i kad tablica `nodes` **uopće ne postoji na toj bazi**. To nije greška nego „značajka ovdje još nije dostupna". **Popravak:** `humanError` sad gleda i `err.code` → `PGRST205`/`42P01`/„Could not find the table" → **`materials.errNoTable`** („Još nije dostupno na ovom okruženju"); `PGRST301`/JWT → „moraš biti prijavljen". Unit **26/26** (+2 nove grane; stari test koji je JWT-poruku tretirao kao „nepoznatu" ispravljen).
+
+**⚠️ OTVORENA NIT (glavni razlog zašto Leon nije mogao ništa napraviti):** klijent po defaultu gađa **PROD** Supabase, a `nodes`/`node_content` **na produkciji NE POSTOJE** (namjerno — to je F5). Dok se to ne riješi, „Moji materijali" na produ **uvijek** pokazuju prazno/nedostupno. **Dvije opcije za Leona:**
+- **(a) Staging-override** (bez diranja produkcije): odjavi se → u konzoli `localStorage.setItem('sokrat-supabase-override', JSON.stringify({url:'https://czljmvigkgiajzjxtndq.supabase.co', publishableKey:'sb_publishable_EZ_04lVZ8MJUFt6Mjmif8Q_hL4YYBFy'}))` → reload → prijava kao `test-admin@sokrat.local` (lozinka = `STAGING_TEST_ADMIN_PASSWORD` u `.env`). Krhko jer traži odjavu/prijavu drugim računom.
+- **(b) Primijeniti `supabase/f1-nodes.sql` na PROD** (= F5 korak ranije). **Čisto additivno** (3 nove tablice + 13 funkcija + policyji; NULA `ALTER` na postojećem, `publish_document` nedirnut), isti idempotentni fajl već dokazan na stagingu (md5 13/13). Rizik za studente = nula (prijavljen-only, owner-scoped, klijentski kôd još nije na produ). **⛔ Traži Leonov IZRIČIT OK — produkcijski DDL.**
+**Napravljena demo-podloga:** na stagingu je posloženo demo-stablo za `test-admin` (FMTU Opatija › 1./2. godina › 3 predmeta + „Moje bilješke" › 1) — slobodno obrisati.
+**Stanje:** preflight EXIT 0 · bump · lokalni server ugašen · PROD i dalje netaknut, ništa pushano.
+
+---
+
+## 2026-08-03 (OPUS) — 🌳 F2 IZVEDEN: „Moji materijali" na profilu (stablo + CRUD + drag; 24 unit + 5 authed)
+**Kontekst:** Leon „kreni" → F2 po `CREATE_BACKEND_SPEC` v3. Grana `feature/f2-my-materials` (PROD netaknut, ništa na `main`).
+**Isporuka:** `js/my-materials.js` (`window.SokratMaterials`) + `css/my-materials.css` (`mm-` modul, samostalan) + kartica u `js/profile.js` (`#myMaterials`, montira se iz `renderProfilePage`) + **29 i18n ključeva HR+EN** + `<script>` u `index.html` (prije `profile.js`).
+**Što korisnik može:** složiti VLASTITO stablo (folder u folderu, koliko god duboko) · napraviti gradivo-čvor · **inline** preimenovati (Enter potvrdi / Escape odustane) · obrisati uz potvrdu (`<sokrat-confirm>`) i **vratiti obrisano** (`restore_node`) · **povlačenjem ⠿** ugnijezditi u folder ili presložiti među braćom (pravila: sredina folder-retka = „u folder", rub = granica među braćom, ispod svega = korijen). Otvoreni folderi pamte se u `localStorage`.
+**Granice (ADR-024) poštovane:** čitanje = direktan `SELECT` (RLS filtrira na vlasnika) · **svaki upis kroz owner-scoped RPC** · `anon` ne vidi ništa · javni katalog + studentski vrući put + `publish_document` **nedirnuti**.
+**✅ GATE:** unit **24/24** (`buildTree` · `flattenVisible` · `isSelfOrDescendant` · `humanError`; ožičeno u `test:unit`) · **authed 5/5 uživo vs staging** (uklj. **XSS-granicu**: naziv `<img onerror>` se renderira kao TEKST, `window.__pwned` undefined) · **puni `test:authed` 32/32** (0 regresije na 27 postojećih) · **`test:responsive` 261/0/15skip** (4 iPhone profila) · preflight EXIT 0 · **drag-test 6/6 uzastopno** nakon ispravka korijenskog uzroka · bump 106 · staging očišćen (`nodes` 0).
+**🐞 TRI PRAVA BUGA uhvaćena i popravljena (ne test-šminka):** ① `_lastDeleted` postavljan **nakon** `refresh()` → gumb „Vrati obrisano" se nikad ne nacrta; ② **`refresh()` je brisao stablo i pokazivao „Učitavam…" PRIJE mrežnog poziva** → korisnik vidi gumb i klikne ga dok posao još traje, a akcija **tiho ne napravi ništa** → ispravak = skeleton samo pri PRVOM učitavanju (`_loaded`) + **`setBusy()`** koji gasi pointer-evente (`.mm-busy`) dok akcija traje; ③ **auto-scroll s marginom 70px** (viewport 800px) → stranica kliže ispod korisnika dok samo lebdi nad donjim retkom → cilj ispuštanja se pomakne → margina 24px (namjerna gesta uz rub). Usput: `dropTargetAt` je sad **totalan** (ispuštanje u sub-piksel procjep više ne propada u prazno).
+**🔍 Korijen „flakea" koji je izgledao kao bug u dragu:** app ima **`scroll-behavior: smooth`** (`css/variables.css:110`) → `scrollIntoView` ANIMIRA, `boundingBox()` izmjeri koordinate usred animacije, sintetički miš sleti na krivi redak (na samog sebe → drop bez učinka). Dijagnosticirano instrumentacijom (8× ponavljanje s logom `pointerdown` mete), ne nagađanjem. Ispravak = `addStyleTag` gasi glatko klizanje SAMO u testu; proizvod ostaje gladak. Druga zamka: fiksni cookie-banner presreće pointer-evente na dnu → `localStorage 'sokrat-cookie-consent'='denied'` u `addInitScript` (utvrđeni obrazac iz `auth.spec.js`).
+**Zapisano:** `CREATE_BACKEND_SPEC.md` §10 · `TESTING.md` (novi spec + obje zamke) · CLAUDE.md · ovo · memorija.
+**SLIJEDI: F3** = otvori study-čvor POSTOJEĆIM Studio editorom (`SokratAdmin.studioBridge` vezan na `node_content`, `publish_node` umjesto `publish_document`) — čeka Leonov OK (faza-checkpoint).
+
+---
+
 ## 2026-08-02-b (OPUS) — 🧱 F1 IZVEDEN: `nodes`+`node_content`+audit+owner-RLS+7 RPC-ova na STAGINGU (gate 51/51)
 **Kontekst:** Leon „pregledaj i analiziraj sve, imat ćemo puno posla, pripremi se" → uživo-analiza → „Kreni" = **idemo F1**.
 **Uživo-analiza (ne iz pamćenja):** `main`=`e1a8fde` (docs v3, **1 ispred origin, nepushano**), radni dir čist (samo `mcp-admin/` untracked), **preflight EXIT 0** (unit 70/0); **obje Supabase baze ACTIVE_HEALTHY** (keep-alive cron radi) — PROD 51 `subject_content`/4 `profiles`/135 `content_versions`, STAGING 3/1/162. `nodes`/`node_content` nisu postojali nigdje → F1 = čist greenfield.

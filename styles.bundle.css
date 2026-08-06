@@ -9021,6 +9021,16 @@ h4.lb-heading { font-size: 1.1rem; }
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }
 #editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(129,140,248,.5); }
+
+/* ── F4: 🗑 obriši sekciju. Gura se na kraj zaglavlja (`margin-left:auto`) da destruktivna radnja
+   NE stoji uz naslov/kvadratiće — suzdržana dok ne pređeš mišem, crvena tek na hoveru. ── */
+#editor-page .st-catdel{
+  flex-shrink:0; margin-left:auto; width:26px; height:26px; padding:0; border:none; background:transparent;
+  color:var(--text-muted); font-size:12px; line-height:1;
+  cursor:pointer; border-radius:7px; opacity:.45; transition:.13s;
+}
+#editor-page .st-catdel:hover{ opacity:1; color:var(--danger-text,#f87171); background:rgba(248,113,113,.12); }
+#editor-page .st-catdel:focus-visible{ opacity:1; outline:2px solid rgba(248,113,113,.6); outline-offset:1px; }
 /* drop-linija sekcije koristi GLOBALNU `.be-dropline` (Fix B) — `#editor-page`-scopano pravilo se ne bi
    primijenilo jer se element dodaje na `document.body`. */
 
@@ -9175,6 +9185,19 @@ h4.lb-heading { font-size: 1.1rem; }
 
 /* PREMIUM (inspektor) — živi shimmer gradijent (kao mockup) */
 #editor-page .st-premium{ background-size:220% 220%; animation:stshimmer 6s ease infinite; }
+
+/* ── F3 — panel osobnog čvora (zamjenjuje katalog-stablo kad se uređuje „Moj materijal") ── */
+#editor-page .st-nodecard{
+  margin-top:10px; padding:16px 14px; border-radius:14px; text-align:center;
+  background:linear-gradient(180deg, rgba(99,102,241,.14), rgba(99,102,241,.04));
+  border:1px solid rgba(99,102,241,.28);
+}
+#editor-page .st-nodeicon{ font-size:26px; line-height:1; margin-bottom:8px; }
+#editor-page .st-nodename{
+  font-weight:700; font-size:15px; color:var(--text-primary);
+  overflow-wrap:anywhere;                      /* dug naziv ne smije gurati layout */
+}
+#editor-page .st-nodecard .st-hint{ margin-top:6px; font-size:12px; }
 
 /* ==================== css/auth.css ==================== */
 /* =====================================================
@@ -9826,6 +9849,366 @@ sokrat-modal.auth-modal > * {
     min-height: 280px; resize: vertical;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.82rem; line-height: 1.5;
+}
+
+/* ==================== css/my-materials.css ==================== */
+/* ===== „Moji materijali" — osobni UGC-graditelj (F2) =====
+   Stablo korisnikovih foldera/gradiva unutar profil-kartice.
+   Samostalan modul (mm- prefiks) — ne gazi ništa postojeće.
+   Dizajn slijedi „čisto i bogato, dark": suptilne plohe, accent tek na interakciji. */
+
+.mm {
+    margin-top: 16px;
+}
+
+/* Zauzet = NIJE interaktivan. Sprječava utrku „vidim gumb, kliknem, ništa se ne dogodi"
+   dok akcija još traje (v. setBusy u js/my-materials.js). */
+.mm-busy {
+    pointer-events: none;
+    opacity: 0.65;
+}
+
+/* ── Traka s akcijama ───────────────────────────────────────────── */
+.mm-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.mm-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mm-add:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+    background: rgba(99, 102, 241, 0.12);
+}
+
+.mm-add i {
+    color: var(--primary-light);
+}
+
+/* ── Stablo ─────────────────────────────────────────────────────── */
+.mm-tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.35);
+}
+
+.mm-row {
+    --mm-depth: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;                       /* touch target */
+    padding: 4px 10px 4px calc(10px + var(--mm-depth) * 22px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    transition: background 0.18s ease;
+}
+
+.mm-row:last-child {
+    border-bottom: 0;
+}
+
+.mm-row:hover {
+    background: rgba(99, 102, 241, 0.08);
+}
+
+/* Ručka za povlačenje — jedini hvat za drag (klikovi ostaju netaknuti) */
+.mm-grip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 16px;
+    width: 16px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    cursor: grab;
+    opacity: 0;
+    touch-action: none;
+    transition: opacity 0.18s ease, color 0.18s ease;
+}
+
+.mm-row:hover .mm-grip,
+.mm-row:focus-within .mm-grip {
+    opacity: 0.55;
+}
+
+.mm-grip:hover {
+    opacity: 1;
+    color: var(--text-primary);
+}
+
+.mm-row--dragging {
+    opacity: 0.45;
+}
+
+/* Cilj „u folder" */
+.mm-row--into {
+    background: rgba(99, 102, 241, 0.22);
+    box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+/* Crta ubacivanja među braćom */
+.mm-dropline {
+    position: fixed;
+    z-index: 1400;
+    height: 2px;
+    display: none;
+    pointer-events: none;
+    background: var(--primary);
+    box-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
+}
+
+body.mm-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+/* Chevron (samo folder s djecom) */
+.mm-twisty {
+    display: inline-flex;
+    justify-content: center;
+    width: 20px;
+    flex: 0 0 20px;
+}
+
+.mm-twisty-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mm-twisty-btn:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.mm-twisty-btn i {
+    font-size: 0.7rem;
+    transition: transform 0.18s ease;
+}
+
+.mm-twisty-btn[aria-expanded="true"] i {
+    transform: rotate(90deg);
+}
+
+/* Ikona tipa */
+.mm-icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 20px;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.mm-row--folder .mm-icon {
+    color: var(--accent);
+}
+
+.mm-row--study .mm-icon {
+    color: var(--primary-light);
+}
+
+/* Naziv */
+.mm-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--text-secondary);
+    font-size: 0.94rem;
+}
+
+.mm-row--folder .mm-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Brojač djece */
+.mm-count {
+    flex: 0 0 auto;
+    min-width: 22px;
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Akcije — vidljive na hover/focus (miš), uvijek na dodir */
+.mm-acts {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.18s ease;
+}
+
+.mm-row:hover .mm-acts,
+.mm-row:focus-within .mm-acts {
+    opacity: 1;
+}
+
+.mm-act {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.mm-act:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.mm-act--danger:hover {
+    color: var(--danger-text);
+    background: rgba(239, 68, 68, 0.12);
+}
+
+.mm-add--undo {
+    border-color: rgba(245, 158, 11, 0.45);
+    color: var(--accent);
+}
+
+.mm-add--undo:hover {
+    border-color: var(--accent);
+    background: rgba(245, 158, 11, 0.12);
+}
+
+.mm-add--undo i {
+    color: var(--accent);
+}
+
+/* ── Inline unos (novi čvor / preimenovanje) ────────────────────── */
+.mm-row--edit {
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.mm-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.94rem;
+}
+
+.mm-input:focus {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 1px;
+}
+
+.mm-acts--edit {
+    opacity: 1;
+}
+
+/* ── Stanja (prazno / učitavanje / greška) ──────────────────────── */
+.mm-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 34px 20px;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+.mm-state-icon {
+    font-size: 1.6rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.mm-state-title {
+    margin: 0;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.mm-state-sub {
+    margin: 0;
+    max-width: 46ch;
+    color: var(--text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.mm-spin {
+    animation: mmSpin 1s linear infinite;
+}
+
+@keyframes mmSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ── Mobitel ────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+    .mm-row {
+        padding-left: calc(8px + var(--mm-depth) * 14px);
+    }
+
+    /* Na dodir nema hovera → akcije i ručka su uvijek vidljive. */
+    .mm-acts,
+    .mm-grip {
+        opacity: 1;
+    }
+
+    .mm-add {
+        flex: 1 1 auto;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mm-spin {
+        animation: none;
+    }
 }
 
 /* ==================== css/math.css ==================== */

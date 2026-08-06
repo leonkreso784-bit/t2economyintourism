@@ -111,7 +111,7 @@ tanki blok.** Stoga **OBA trebaju izvorne PDF-ove/silabus od korisnika** (folder
 - 🔥 **Novi program „Menadžment u ugostiteljstvu" (HRV)** — vrlo vjerojatno **prijevod cijelog Hospitality Managementa na hrvatski**. Catalog već podržava više programa (ADR-002/003) → novi `program` + prevedeni `data/*`. **Aktivira potrebu za i18n (HR/EN).**
 - ➖ **3. godina HM** — doći će, timing neodlučen.
 - ➖ **Studentski UGC za 3./4. godinu** — studenti uploadaju sadržaj i grade više godine (HM i/ili Menadžment u ugostiteljstvu); jezik (HR/EN) neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderacija/autorska prava ([VISION.md](VISION.md) §4 gating-odluke).
-- **Prioritet nakon sadržaja (korisnik):** (1) Admin CRUD → (2) AI tutor → (3) Matura prep. (Detalji [ROADMAP.md](ROADMAP.md) §DALJE.)
+- ~~**Prioritet nakon sadržaja (korisnik):** (1) Admin CRUD → (2) AI tutor → (3) Matura prep.~~ **⚠️ NADGLAŠENO 2026-08-02 (Leon).** Admin CRUD = ✅ gotov; **matura IZBAČENA iz build-plana** (ostaje samo kao tržišna hipoteza u [MONETIZATION.md](MONETIZATION.md), ne kao posao). Aktualni redoslijed: **osobni UGC-graditelj ([CREATE_BACKEND_SPEC.md](CREATE_BACKEND_SPEC.md) F0–F5) → frontend redizajn → objava/dijeljenje + MCP.** [[follow-recorded-plan-dont-reopen]]
 
 ## Monetizacija (Faza 4 — tek na skali)
 - 🔥 Freemium pretplata (~2–3 €/mj): neograničeni kvizovi, exam mode, bez reklama, analitika.

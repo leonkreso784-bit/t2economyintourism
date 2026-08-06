@@ -206,6 +206,16 @@
 #editor-page .st-catdrag:hover{ opacity:1; color:#c7d2fe; background:rgba(148,163,184,.12); }
 #editor-page .st-catdrag:active{ cursor:grabbing; }
 #editor-page .st-learn-cat.st-dragging{ opacity:.5; outline:1px dashed rgba(129,140,248,.5); }
+
+/* ── F4: 🗑 obriši sekciju. Gura se na kraj zaglavlja (`margin-left:auto`) da destruktivna radnja
+   NE stoji uz naslov/kvadratiće — suzdržana dok ne pređeš mišem, crvena tek na hoveru. ── */
+#editor-page .st-catdel{
+  flex-shrink:0; margin-left:auto; width:26px; height:26px; padding:0; border:none; background:transparent;
+  color:var(--text-muted); font-size:12px; line-height:1;
+  cursor:pointer; border-radius:7px; opacity:.45; transition:.13s;
+}
+#editor-page .st-catdel:hover{ opacity:1; color:var(--danger-text,#f87171); background:rgba(248,113,113,.12); }
+#editor-page .st-catdel:focus-visible{ opacity:1; outline:2px solid rgba(248,113,113,.6); outline-offset:1px; }
 /* drop-linija sekcije koristi GLOBALNU `.be-dropline` (Fix B) — `#editor-page`-scopano pravilo se ne bi
    primijenilo jer se element dodaje na `document.body`. */
 
@@ -360,3 +370,16 @@
 
 /* PREMIUM (inspektor) — živi shimmer gradijent (kao mockup) */
 #editor-page .st-premium{ background-size:220% 220%; animation:stshimmer 6s ease infinite; }
+
+/* ── F3 — panel osobnog čvora (zamjenjuje katalog-stablo kad se uređuje „Moj materijal") ── */
+#editor-page .st-nodecard{
+  margin-top:10px; padding:16px 14px; border-radius:14px; text-align:center;
+  background:linear-gradient(180deg, rgba(99,102,241,.14), rgba(99,102,241,.04));
+  border:1px solid rgba(99,102,241,.28);
+}
+#editor-page .st-nodeicon{ font-size:26px; line-height:1; margin-bottom:8px; }
+#editor-page .st-nodename{
+  font-weight:700; font-size:15px; color:var(--text-primary);
+  overflow-wrap:anywhere;                      /* dug naziv ne smije gurati layout */
+}
+#editor-page .st-nodecard .st-hint{ margin-top:6px; font-size:12px; }

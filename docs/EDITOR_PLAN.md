@@ -2,7 +2,10 @@
 
 > **🎯 ČITAJ PRVO:** ovaj plan = **DOVRŠETAK ADMIN CRUD-a** (nastavak F4, [CRUD_PLAN.md](CRUD_PLAN.md)). U-cigle (U3 draft → U4 publish-RPC → … → U8 editor) su **CRUD cigle**, ne „UGC". Pravi UGC (studenti objavljuju) = **H2 horizont**, dolazi tek IZA F5 SRS + F6 sigurnosti (§2). *(Datoteka se do 2026-07-12 zvala `UGC.md` — preimenovana jer je ime stalno stvaralo zabunu da radimo UGC umjesto CRUD-a.)*
 >
-> **Status:** ▶ AKTIVNO (napisano 2026-07-09 iz razgovora korisnik+Claude 2026-07-08/09).
+> **Status:** ✅ **ISPUNJEN — admin CRUD/editor je funkcionalno gotov** (napisano 2026-07-09; zaključeno 2026-07-28).
+> Ovaj dokument je od 2026-08-02 **REFERENCA za editor-detalje** (§12 = povijest cigli, §12.3 tripwiri), **NE aktivni plan.**
+> ▶ **Aktivni plan je [`CREATE_BACKEND_SPEC.md`](CREATE_BACKEND_SPEC.md) v3** (osobni UGC-graditelj; F0✅ F1✅ F2✅ → F3).
+> ⚠️ Stariji „SLIJEDI" retci niže su POVIJEST — ne slijedi ih. Matura je **izbačena**, MCP je **odgođen** (ADR-024).
 > **Što je ovo:** trajni dizajn-dokument za smjer „bogato autorsko sučelje → draft→objavi → (kasnije) UGC → AI".
 > Sekcije 3–6 su **duboke** (skupo ih je kasnije mijenjati — model sadržaja, write-put, editor, sigurnost);
 > sekcije 7–9 su **skice** (daleko; dovoljno da arhitektura ostane koherentna). Brick-plan na dnu je ŽIV (mijenja se usput).
@@ -28,7 +31,7 @@ marketplace ga dijeli, AI ga konzumira i mutira, verzioniranje ga čuva. Savrše
 ## 2. Tri horizonta (tajming)
 | Horizont | Što | Gate |
 |---|---|---|
-| **H1 — SAD** | draft→objavi + bogato autorsko sučelje za nas (admin) | F4 u tijeku; ovo je nastavak F4 |
+| **H1 — ✅ ISPUNJEN** | draft→objavi + bogato autorsko sučelje za nas (admin) | FOUNDATION-F4 gotov (§12); editor funkc. dovršen 2026-07-28 |
 | **H2 — UGC** | per-user server-draftovi · publish pod vlastitim računom · marketplace tuđih objava | **F6 sigurnost** (ADR-018: student-upload NIKAD prije F6) |
 | **H3 — AI/MCP** | AI-tutor „donesi svoj ključ" · vanjski AI (ChatGPT/Claude) stvara sadržaj kroz naš API/MCP | H2 + auth za strojeve (PAT/OAuth) |
 
@@ -284,4 +287,6 @@ rate-limit/zloupotreba. = naš generator-pipeline izložen kao „donesi svoj AI
 
 **Usput (2026-07-23-d): te2-hr platformski blocker RIJEŠEN → main.** Sašin 3. autorski HR predmet (Ekonomika turizma) = **prvi HR year-2** → otkrio bug u `tests/browse.spec.js:45` (očekivani broj year-2 računao nad CIJELIM katalogom, render prikazuje samo prvi program → 9≠8; svaki budući HR year-2 bi rušio). **Fix:** očekivani broj sad zove isti `SokratCatalog.subjectsOf(faculties[0].programs[0].id, 2)` koji render koristi. Test-only (bez bumpa) → **`main` `f59eed0..388e3c5`** (Leon per-push OK, Vercel READY, student-nevidljivo). Saša: rebase te2-hr na novi main → PR → lead-review.
 
-**SLIJEDI (poslije sprinta): nastavak U8** = U8.5e (resize+callout) → f (boje sekcija) → U8.10 (tablica-paste) → **U8.6 (VIZUAL „čisto i bogato" ZADNJI)** → U8.7/U8.8.
+~~**SLIJEDI (poslije sprinta): nastavak U8** = U8.5e → f → U8.10 → **U8.6 (VIZUAL)** → U8.7/U8.8.~~
+**(POVIJEST — sve navedeno je izvedeno; U8.6 vizual · F8 lista · U8.8 chart · mobilni editor ostali su kao NEobavezni polish.
+Aktivni plan je `CREATE_BACKEND_SPEC.md` v3.)**

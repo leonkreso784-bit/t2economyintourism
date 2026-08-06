@@ -29,6 +29,10 @@
             this._onKeydown = this._handleKeydown.bind(this);
             /** @type {(e: MouseEvent) => void} */
             this._onBackdrop = this._handleBackdrop.bind(this);
+            /** @type {(e: PointerEvent) => void} */
+            this._onPressStart = this._handlePressStart.bind(this);
+            /** Je li pritisak (pointerdown) počeo na samom overlayu? Vidi `_handleBackdrop`. */
+            this._pressStartedOnOverlay = false;
         }
 
         connectedCallback() {
@@ -39,6 +43,7 @@
             // Zatvoren po defaultu (osim ako je konzument eksplicitno postavio drugačije).
             if (!this.hasAttribute('aria-hidden')) this.setAttribute('aria-hidden', 'true');
 
+            this.addEventListener('pointerdown', this._onPressStart);
             this.addEventListener('click', this._onBackdrop);
             document.addEventListener('keydown', this._onKeydown);
         }
@@ -110,10 +115,19 @@
             else doFocus();
         }
 
+        /** Zapamti je li pritisak počeo na overlayu (a ne unutar kartice). @param {PointerEvent} e */
+        _handlePressStart(e) {
+            this._pressStartedOnOverlay = (e.target === this);
+        }
+
         /** @param {MouseEvent} e */
         _handleBackdrop(e) {
-            // Klik izravno na overlay (ne na dijete/karticu) zatvara.
-            if (e.target === this) this.close();
+            // `click` puca na NAJBLIŽEM ZAJEDNIČKOM PRETKU pritiska i otpuštanja. Povuče li korisnik
+            // selekciju iz polja u kartici preko ruba i pusti vani, taj predak je sam overlay →
+            // `e.target === this` je istina iako backdrop nikad nije kliknut, pa bi se modal zatvorio
+            // usred označavanja teksta (npr. lozinke). Zato zatvara SAMO ako je i pritisak počeo ovdje.
+            if (e.target === this && this._pressStartedOnOverlay) this.close();
+            this._pressStartedOnOverlay = false;
         }
 
         /** @param {KeyboardEvent} e */

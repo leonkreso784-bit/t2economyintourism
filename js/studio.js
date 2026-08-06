@@ -18,6 +18,11 @@ const SokratStudio = (function () {
   'use strict';
 
   let _sel = { subjectId: '', lessonId: '' }; // trenutno odabrana skripta
+  // F3 — OSOBNI study-čvor (`nodes`). Kad je postavljen, `_sel` drži SINTETIČKI ključ
+  // (`node:<uuid>` / `content`) pa draft-chip, Uredi/Objavi/Odbaci i onDraftChanged rade
+  // NEPROMIJENJENI — generični su po ključu. Razlikuje se samo odakle sadržaj dolazi.
+  /** @type {{ id: string, name: string }|null} */
+  let _node = null;
   let _data = null;                            // učitani sadržaj (dijeli referencu s _adminCtx.data preko setLesson)
   let _activeMode = null;                      // zadnji odabrani mode-tab (očuva se kroz re-render)
   let _inspEd = null;                          // zadnje edit-stanje inspektora (#7: refresh samo na promjenu)
@@ -110,7 +115,10 @@ const SokratStudio = (function () {
       '<div class="st-topbar">' +
       '  <button class="st-iconbtn" id="stBack" aria-label="' + esc(t('common.back', 'Back')) + '">←</button>' +
       '  <div class="st-logo"><span class="st-dot">🦉</span> Sokrat <span class="st-ed">STUDIO</span></div>' +
-      '  <div class="st-crumb" id="stCrumb"><span class="st-c">' + esc(t('studio.pickHint', 'Odaberi skriptu iz stabla')) + '</span></div>' +
+      '  <div class="st-crumb" id="stCrumb">' + (_node
+        ? '<span class="st-c">' + esc(t('studio.myMaterials', 'Moji materijali')) + '</span>' +
+          '<span class="st-sep">›</span><span class="st-c now">' + esc(_node.name) + '</span>'
+        : '<span class="st-c">' + esc(t('studio.pickHint', 'Odaberi skriptu iz stabla')) + '</span>') + '</div>' +
       '  <div class="st-spacer"></div>' +
       '  <button class="st-btn ghost" id="stEdit" hidden><i class="fas fa-pen"></i> ' + esc(t('studio.edit', 'Uredi')) + '</button>' +
       '  <span class="st-chip" id="stDraftChip">—</span>' +
@@ -119,24 +127,35 @@ const SokratStudio = (function () {
       '  <button class="st-iconbtn" id="stOldEditor" title="Stari editor" aria-label="Stari editor">⚙</button>' +
       '</div>' +
       '<div class="st-layout">' +
-      '  <aside class="st-tree">' +
-      '    <button class="st-newscript" id="stNewScript">＋ ' + esc(t('studio.newScript', 'Nova skripta')) + '</button>' +
-      '    <h3>🗂️ ' + esc(t('studio.structure', 'Struktura')) + '</h3>' +
-      '    <div id="stTree">' + buildTree() + '</div>' +
+      // F3: u osobnom čvoru katalog-stablo nema smisla (čvor NIJE u katalogu) → panel čvora.
+      '  <aside class="st-tree">' + (_node
+        ? '<h3>📁 ' + esc(t('studio.myMaterials', 'Moji materijali')) + '</h3>' +
+          '<div class="st-nodecard"><div class="st-nodeicon">📘</div>' +
+          '<div class="st-nodename">' + esc(_node.name) + '</div>' +
+          '<p class="st-hint">' + esc(t('studio.nodeHint', 'Osobno gradivo — vidiš ga samo ti.')) + '</p></div>'
+        : '<button class="st-newscript" id="stNewScript">＋ ' + esc(t('studio.newScript', 'Nova skripta')) + '</button>' +
+          '<h3>🗂️ ' + esc(t('studio.structure', 'Struktura')) + '</h3>' +
+          '<div id="stTree">' + buildTree() + '</div>') +
       '  </aside>' +
-      '  <main class="st-canvas" id="stCanvas">' + emptyCanvas() + '</main>' +
+      '  <main class="st-canvas" id="stCanvas">' +
+      (_node ? '<div class="st-empty"><div><div class="st-emoji">⏳</div><p>'
+             + esc(t('studio.loadingNode', 'Učitavam gradivo…')) + '</p></div></div>'
+             : emptyCanvas()) + '</main>' +
       '  <aside class="st-inspector" id="stInspector">' + inspectorStub(false) + '</aside>' +
       '</div>';
 
     byId('stBack').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('profile'); });
     byId('stOldEditor').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('admin'); });
-    byId('stNewScript').addEventListener('click', function () { toast(t('studio.wizardSoon', 'Čarobnjak „Nova skripta" stiže u kasnijoj cigli.')); });
+    // U node-modu ova dva elementa ne postoje (aside je panel čvora, ne katalog-stablo).
+    var newScript = byId('stNewScript');
+    if (newScript) newScript.addEventListener('click', function () { toast(t('studio.wizardSoon', 'Čarobnjak „Nova skripta" stiže u kasnijoj cigli.')); });
     byId('stEdit').addEventListener('click', enterEdit);
     byId('stPublish').addEventListener('click', publish);
     byId('stDiscard').addEventListener('click', discard);
 
-    // stablo (delegirano)
-    byId('stTree').addEventListener('click', function (e) {
+    // stablo (delegirano) — samo u katalog-modu
+    var tree = byId('stTree');
+    if (tree) tree.addEventListener('click', function (e) {
       var row = e.target.closest('.st-row');
       if (!row) return;
       if (row.classList.contains('soon')) { toast(t('studio.soon', 'Ova lekcija još nema sadržaj.')); return; }
@@ -149,6 +168,11 @@ const SokratStudio = (function () {
     // canvas (delegirano): migracija v1→blokovi
     byId('stCanvas').addEventListener('click', function (e) {
       // U8.5f: boja-kvadratić uz naslov sekcije → updateCategory {color} → re-render (akcent se nasljeđuje)
+      // F3 K3: „＋ Nova sekcija" (u zaglavlju i u praznom stanju)
+      if (e.target.closest('[data-st-addcat]')) { addSection(); return; }
+      // F4: 🗑 obriši sekciju (prije boje — kanta je unutar zaglavlja sekcije, kao i kvadratići)
+      var del = e.target.closest('[data-st-catdel]');
+      if (del) { delSection(del.getAttribute('data-st-catdel')); return; }
       var dot = e.target.closest('[data-st-catcolor]');
       if (dot) { setCatColor(dot.getAttribute('data-st-cat'), dot.getAttribute('data-st-catcolor')); return; }
       var mig = e.target.closest('[data-migrate-cat]');
@@ -181,6 +205,10 @@ const SokratStudio = (function () {
       if (h) startCatDrag(e, h);
     });
 
+    // F3: povratak na editor-stranicu s VEĆ učitanim čvorom (npr. navigacija natrag) — ljuska je
+    // svježe nacrtana, pa canvas treba odmah popuniti umjesto da ostane na „učitavam".
+    if (_node && _data) renderCanvas();
+
     refreshTopbar();
   }
 
@@ -211,6 +239,7 @@ const SokratStudio = (function () {
 
   // ---- ODABIR SKRIPTE → CANVAS ----
   async function selectLesson(subjectId, lessonId, row) {
+    _node = null;                                  // F3: odabir iz kataloga gasi node-mod
     _sel = { subjectId: subjectId, lessonId: lessonId };
     _activeMode = null; // nova skripta → počni od prvog moda
     var tree = byId('stTree');
@@ -263,10 +292,14 @@ const SokratStudio = (function () {
     if (!data) { canvas.innerHTML = emptyCanvas(); return; }
 
     var lname = '';
-    var subj = (typeof SokratContent !== 'undefined') ? SokratContent.getSubject(_sel.subjectId) : null;
-    if (subj && Array.isArray(subj.lessons)) {
-      var lo = subj.lessons.find(function (l) { return l.id === _sel.lessonId; });
-      lname = lo ? (lo.name || lo.id) : _sel.lessonId;
+    if (_node) {
+      lname = _node.name;                       // F3: čvor nije u katalogu — naslov je njegov naziv
+    } else {
+      var subj = (typeof SokratContent !== 'undefined') ? SokratContent.getSubject(_sel.subjectId) : null;
+      if (subj && Array.isArray(subj.lessons)) {
+        var lo = subj.lessons.find(function (l) { return l.id === _sel.lessonId; });
+        lname = lo ? (lo.name || lo.id) : _sel.lessonId;
+      }
     }
     var isEd = editing();
     // U draft-modu prikaži i learn tab ako neka kategorija UOPĆE ima learn (za migraciju/dodavanje).
@@ -290,9 +323,18 @@ const SokratStudio = (function () {
       (isEd
         ? '<span class="st-m st-editing">✏️ ' + esc(t('studio.editingTag', 'uređuješ (draft)')) + '</span>'
         : '<span class="st-m">📄 ' + esc(t('studio.previewTag', 'pregled')) + '</span>') +
+      // F3 K3: jedina afordancija za NOVU sekciju (bez nje je prazan čvor slijepa ulica).
+      (isEd ? '<button type="button" class="st-btn ghost st-addcat" data-st-addcat>＋ '
+              + esc(t('studio.addSection', 'Nova sekcija')) + '</button>' : '') +
       '</div></div>' +
       (order.length ? '<div class="st-tabs" id="stTabs">' + tabs + '</div>' : '') +
-      (order.length ? panes : '<div class="st-empty" style="height:auto;padding:40px"><p>' + esc(t('studio.noModes', 'Ova skripta još nema sadržaja.')) + '</p></div>');
+      (order.length ? panes : '<div class="st-empty" style="height:auto;padding:40px"><p>' +
+        esc(isEd
+          ? t('studio.emptyEditHint', 'Prazno je. Dodaj prvu sekciju pa počni pisati.')
+          : t('studio.noModes', 'Ova skripta još nema sadržaja.')) + '</p>' +
+        (isEd ? '<button type="button" class="st-btn primary st-addcat" data-st-addcat style="margin-top:14px">＋ '
+                + esc(t('studio.addSection', 'Nova sekcija')) + '</button>' : '') +
+        '</div>');
 
     var tabBar = byId('stTabs');
     if (tabBar) tabBar.addEventListener('click', function (e) {
@@ -321,6 +363,67 @@ const SokratStudio = (function () {
       '" title="' + esc(t('studio.colorCustom', 'Vlastita boja')) + '">';
     return html + '</span>';
   }
+  /**
+   * F3 K3 — dodaj novu sekciju. Bez ovoga je NOV čvor slijepa ulica: payload je `{}`,
+   * pa nema nijedne kategorije, nijednog moda i nijednog mjesta za pisanje.
+   * Ide kroz POSTOJEĆI `addCategory` op (draft → publish), bez novog write-puta.
+   */
+  function addSection() {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var data = currentData() || {};
+    // Stabilan, čitljiv i NESUDARAJUĆI ključ (addCategory je no-op ako ključ već postoji).
+    var n = 1, key = 'sekcija-1';
+    while (Object.prototype.hasOwnProperty.call(data, key)) { n++; key = 'sekcija-' + n; }
+    var color = SECTION_COLORS[cats(data).length % SECTION_COLORS.length];
+    var res = b.applyOp({
+      type: 'addCategory',
+      catId: key,
+      category: {
+        name: t('studio.newSectionName', 'Nova sekcija'),
+        icon: 'fa-book',
+        color: color,
+        flashcards: [], quiz: [], fillBlanks: [],
+        // Prazan `learn.blocks` je dovoljan da se Learn mod prikaže (learnKind → 'v2'),
+        // pa korisnik odmah ima gdje pisati umjesto praznog ekrana.
+        learn: { blocks: [] }
+      }
+    });
+    if (res && res.ok) { _activeMode = 'learn'; renderCanvas(); refreshTopbar(); }
+    else toast(t('studio.addSectionFail', 'Sekciju nije bilo moguće dodati.'));
+  }
+
+  /**
+   * F4 — obriši sekciju iz DRAFTA (uz potvrdu). Poništivo „Odbaci"-jem, a nakon objave i kroz
+   * `node_content_versions` / `content_versions` (append-only audit). Ide kroz POSTOJEĆI
+   * `removeCategory` op — bez novog write-puta.
+   */
+  async function delSection(catId) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var data = currentData();
+    if (!data || !data[catId]) return;
+    var name = (data[catId] && data[catId].name) ? String(data[catId].name) : catId;
+    if (typeof window.askConfirm === 'function') {
+      var ok = await window.askConfirm({
+        title: t('studio.delCatTitle', 'Obrisati sekciju?'),
+        message: t('studio.delCatMsg', 'Sekcija „{name}" i sve u njoj (kartice, kviz, fill, learn) miču se iz drafta. Možeš je vratiti gumbom „Odbaci".')
+          .replace('{name}', name),
+        confirmText: t('studio.del', 'Obriši'),
+        danger: true
+      });
+      if (!ok) return;
+    }
+    var res = b.applyOp({ type: 'removeCategory', catId: catId });
+    if (res && res.ok) {
+      // Obrisana je možda bila JEDINA sekcija → mod više nema pokrića; renderCanvas to razriješi.
+      renderCanvas();
+      refreshTopbar();
+    } else {
+      toast(t('studio.delCatFail', 'Sekciju nije bilo moguće obrisati.'));
+    }
+  }
+
   function setCatColor(catId, color) {
     var b = bridge();
     if (!b || !editing()) return;
@@ -468,7 +571,12 @@ const SokratStudio = (function () {
         '<span class="st-cat-name" contenteditable="true" spellcheck="false" role="textbox" ' +
         'data-st-catname="' + esc(catId) + '" title="' + esc(t('studio.renameCat', 'Uredi naziv sekcije')) + '">' +
         catName + '</span>' +
-        colorDots(catId, c.color) + '</div>' +
+        colorDots(catId, c.color) +
+        // F4: brisanje sekcije. Op `removeCategory` postojao je od U6c, ali ga je zvao SAMO stari
+        // admin-overlay — Studio je imao dodaj/preimenuj/boju/presloži, a brisanja nije bilo nigdje.
+        '<button type="button" class="st-catdel" data-st-catdel="' + esc(catId) + '" ' +
+        'title="' + esc(t('studio.delCat', 'Obriši sekciju')) + '" aria-label="' + esc(t('studio.delCat', 'Obriši sekciju')) +
+        '"><i class="fas fa-trash"></i></button>' + '</div>' +
         '<div class="st-learn-body">';
       if (kind === 'v2') {
         // blok-editor (kvadratići) — montira se u post-renderu
@@ -487,7 +595,12 @@ const SokratStudio = (function () {
   }
 
   function renderLearnBody(L, kind) {
-    if (kind === 'v2' && typeof window.renderBlocks === 'function') return window.renderBlocks(L.blocks);
+    // F4: `node-img:` oznake → potpisani URL-ovi kod POZIVATELJA (blocks-renderer.js ostaje nedirnut).
+    if (kind === 'v2' && typeof window.renderBlocks === 'function') {
+      var blocks = (window.SokratNodeImages && typeof window.SokratNodeImages.resolveBlocks === 'function')
+        ? window.SokratNodeImages.resolveBlocks(L.blocks) : L.blocks;
+      return window.renderBlocks(blocks);
+    }
     if (kind === 'v1' && typeof window.renderBlocks === 'function') return window.renderBlocks([{ type: 'legacy-html', html: L.content }]);
     return esc(String((L && L.content) || ''));
   }
@@ -589,6 +702,56 @@ const SokratStudio = (function () {
     if (editing()) { renderCanvas(); refreshTopbar(); }
   }
 
+  // ---- F3 — OSOBNI ČVOR ----
+  /**
+   * Otvori study-čvor iz „Mojih materijala" u Studiju. Postavi kontekst, prebaci na
+   * editor-stranicu (render nacrta ljusku), pa dohvati payload i nacrtaj canvas.
+   * @param {string} nodeId @param {string} name
+   */
+  async function openNode(nodeId, name) {
+    if (!nodeId) return;
+    _node = { id: nodeId, name: name || '' };
+    _sel = { subjectId: 'node:' + nodeId, lessonId: 'content' };
+    _data = null;
+    _activeMode = null;
+    // F4: svjež cache potpisa po otvaranju — potpisi ne smiju preživjeti promjenu čvora ni identiteta
+    // (cijena je jedan batch-potpis; alternativa bi bila vući istekle URL-ove kroz dugu sesiju).
+    if (window.SokratNodeImages && typeof window.SokratNodeImages.clear === 'function') window.SokratNodeImages.clear();
+    if (typeof navigateTo === 'function') navigateTo('editor');   // → render() (ljuska + „učitavam")
+    await loadNode();
+  }
+
+  /** Dohvati payload čvora i ožiči bridge. Prazan `{}` je legitimno početno stanje. */
+  async function loadNode() {
+    if (!_node) return;
+    var canvas = byId('stCanvas');
+    var client = (typeof SokratAuth !== 'undefined' && typeof SokratAuth.getClient === 'function')
+      ? SokratAuth.getClient() : null;
+    if (!client) {
+      if (canvas) canvas.innerHTML = '<div class="st-empty"><p>' + esc(t('admin.loadFail', 'Sadržaj se nije mogao učitati.')) + '</p></div>';
+      return;
+    }
+    try {
+      var r = await client.from('node_content').select('payload').eq('node_id', _node.id).single();
+      if (r.error || !r.data) throw (r.error || new Error('no-row'));
+      _data = r.data.payload || {};
+    } catch (e) {
+      _data = null;
+      if (canvas) canvas.innerHTML = '<div class="st-empty"><p>' + esc(t('admin.loadFail', 'Sadržaj se nije mogao učitati.')) + '</p></div>';
+      return;
+    }
+    if (bridge() && typeof bridge().setNode === 'function') {
+      try { bridge().setNode(_node.id, _node.name, _data); } catch (e) { /* bridge opcionalan */ }
+    }
+    // F4: potpiši sve `node-img:` oznake PRIJE prvog crtanja — inače bi renderer fail-safe izostavio
+    // slike na jedan kadar. `prefetch` nikad ne baca: neuspjeh potpisa ne smije srušiti otvaranje čvora.
+    if (window.SokratNodeImages && typeof window.SokratNodeImages.prefetch === 'function') {
+      try { await window.SokratNodeImages.prefetch(_data); } catch (e) { /* prikaz bez slike je OK */ }
+    }
+    renderCanvas();
+    refreshTopbar();
+  }
+
   function currentDraft() {
     return (window.SokratDraft && _sel.subjectId) ? SokratDraft.get(_sel.subjectId, _sel.lessonId) : null;
   }
@@ -650,7 +813,7 @@ const SokratStudio = (function () {
     refreshTopbar();
   }
 
-  return { render: render, onDraftChanged: onDraftChanged };
+  return { render: render, onDraftChanged: onDraftChanged, openNode: openNode };
 })();
 
 window.SokratStudio = SokratStudio;

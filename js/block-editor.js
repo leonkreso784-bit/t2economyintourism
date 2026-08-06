@@ -27,7 +27,13 @@
 
   // ── sadržaj NE-tekstualnog bloka kroz JEDAN renderer (sigurnosna granica) ──
   function preview(block) {
-    if (typeof window !== 'undefined' && typeof window.renderBlocks === 'function') return window.renderBlocks([block]);
+    if (typeof window !== 'undefined' && typeof window.renderBlocks === 'function') {
+      // F4: slika osobnog gradiva nosi oznaku `node-img:<putanja>` → razriješi je u potpisani URL
+      // OVDJE (kod pozivatelja), da renderer ostane nedirnut. Nema oznake → isti blok, bez kopije.
+      const b = (window.SokratNodeImages && typeof window.SokratNodeImages.resolveBlock === 'function')
+        ? window.SokratNodeImages.resolveBlock(block) : block;
+      return window.renderBlocks([b]);
+    }
     return '';
   }
 

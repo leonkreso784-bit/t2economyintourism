@@ -58,6 +58,11 @@
     // ── U8.7 upload: klijent (admin JWT) → Storage bucket → public URL. Bez /api / Edge / service_role
     //    (ADR-011). Validacija (tip/veličina) je klijentska UDOBNOST; bucket to nameće i server-side.
     //    SokratAuth = leksički global (auth.js prije nas) → referenca GOLO uz typeof-guard (CLAUDE GOTCHA).
+    //
+    //    F4: DVA ODREDIŠTA, ovisno o tome što se uređuje (v. js/node-images.js):
+    //      • KATALOG (predmet/lekcija) → `lesson-images`, javan, admin-only  — NEDIRNUTO.
+    //      • OSOBNO GRADIVO (study-čvor) → `node-images`, PRIVATAN, vlasnički prefiks; u payload ide
+    //        oznaka `node-img:<putanja>`, a potpisani URL se traži tek pri prikazu.
     const UPLOAD_BUCKET = 'lesson-images';
     const UPLOAD_MAX_BYTES = 5 * 1024 * 1024;              // 5 MB (= bucket file_size_limit)
     const UPLOAD_EXT = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif' };
@@ -77,6 +82,28 @@
         }
         const client = SokratAuth.getClient();
         if (!client || !client.storage) { reject(new Error('Prijavi se za upload slike.')); return; }
+
+        // F4 · osobno gradivo: privatan bucket, putanja pod vlasnikom, u payload OZNAKA (ne potpis).
+        const NI = window.SokratNodeImages;
+        const nodeCtx = (window.SokratAdmin && SokratAdmin.studioBridge
+          && typeof SokratAdmin.studioBridge.nodeCtx === 'function')
+          ? SokratAdmin.studioBridge.nodeCtx() : null;
+        const me = (typeof SokratAuth.getUser === 'function') ? SokratAuth.getUser() : null;
+        if (nodeCtx && NI && me && me.id) {
+          const npath = NI.newPath(me.id, nodeCtx.nodeId, ext);
+          client.storage.from(NI.BUCKET).upload(npath, file, { contentType: file.type, upsert: false })
+            .then(function (res) {
+              if (res && res.error) throw res.error;
+              return NI.sign(npath);                       // potpiši ODMAH → preview radi bez čekanja
+            })
+            .then(function (signed) {
+              if (!signed) throw new Error('Upload je uspio, ali slika se nije mogla prikazati.');
+              resolve(NI.marker(npath));                   // u block.src ide `node-img:<putanja>`
+            })
+            .catch(function (err) { reject(new Error((err && err.message) ? err.message : 'Upload nije uspio.')); });
+          return;
+        }
+
         const uuid = (typeof crypto !== 'undefined' && crypto.randomUUID)
           ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
         const path = uuid + '.' + ext;                     // ravan namespace + UUID = bez kolizije

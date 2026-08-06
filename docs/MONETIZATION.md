@@ -3,6 +3,8 @@
 > Živi strateški dokument (sažeto iz razgovora 2026-06-27). Brojevi su **hipoteze s pretpostavkama**, ne
 > predviđanja. Povezano: [VISION.md](VISION.md) §Monetizacija/§Gating, [ROADMAP.md](ROADMAP.md), [PRD.md](PRD.md).
 > **Status: planiranje** — naplata nije implementirana; AI tutor (F1/F6) još nije izgrađen.
+> ⚠️ **Napomena (2026-08-02):** matura se ovdje spominje kao **tržišna hipoteza**, a **NE kao posao u planu** —
+> Leon ju je izričito izbacio iz build-plana. Aktivni smjer: [`CREATE_BACKEND_SPEC.md`](CREATE_BACKEND_SPEC.md) (osobni UGC-graditelj).
 
 ## Pravno / setup (Stripe, djelatnost, firma)
 - **Stripe traži poslovni subjekt** (obrt ili d.o.o.): naziv+OIB+adresa+MBS, opis djelatnosti, IBAN (isplate),

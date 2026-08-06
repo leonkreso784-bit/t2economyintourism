@@ -5,7 +5,13 @@
 // Ulaz: klik na bilo koji .auth-entry gumb kad je korisnik prijavljen (js/auth.js).
 
 // Lokalni i18n helper: t() ako postoji, inače fallback (engleski original).
-function pt(key, fb) { return (window.t) ? t(key) : fb; }
+// ⚠️ `t()` vraća SAM KLJUČ kad prijevoda nema → bez ove provjere korisnik vidi
+// sirovo „admin.openStudio". Isti obrazac kao studio.js/my-materials.js.
+function pt(key, fb) {
+    if (!window.t) return fb;
+    const v = t(key);
+    return (v === key) ? fb : v;
+}
 
 function renderProfilePage() {
     const root = document.getElementById('profileContent');
@@ -70,6 +76,14 @@ function renderProfilePage() {
         '    </div>' +
         '  </div>' +
 
+        // Moji materijali (F2) — osobni privatni graditelj gradiva. Sadržaj crta
+        // SokratMaterials.mount(); kartica se skriva ako graditelj nije dostupan.
+        '  <div class="profile-card profile-card--wide">' +
+        '    <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> ' + pt('materials.title', 'My materials') + '</h3>' +
+        '    <p class="profile-meta">' + pt('materials.desc', 'Build your own study material — organise it in folders however you like. Private to you.') + '</p>' +
+        '    <div class="mm" id="myMaterials"></div>' +
+        '  </div>' +
+
         '  <div class="profile-card">' +
         '    <h3 class="profile-card-title"><i class="fas fa-cloud"></i> ' + pt('profile.cloudSync', 'Cloud sync') + '</h3>' +
         '    <p class="profile-meta" id="profileSyncStatus">' + pt('profile.syncAuto', 'Your progress is backed up automatically while you study.') + '</p>' +
@@ -98,6 +112,8 @@ function renderProfilePage() {
     renderProfileStats();
     // Otkrij admin karticu samo adminu (RLS je prava zaštita; ovo je UX). Async re-check.
     if (window.SokratAdmin) SokratAdmin.refresh();
+    // Moji materijali (F2) — async učitavanje korisnikova stabla (RLS-filtrirano).
+    if (window.SokratMaterials) SokratMaterials.mount();
 
     document.getElementById('profileSignOutBtn').addEventListener('click', function () {
         SokratAuth.signOut();

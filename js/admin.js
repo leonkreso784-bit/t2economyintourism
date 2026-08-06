@@ -356,7 +356,11 @@ function _renderAdminCards(holder, data) {
       total++;
       html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
         '<div class="admin-card admin-card--learn"><div class="admin-card-body be-body">' +
-        (typeof window.renderBlocks === 'function' ? window.renderBlocks(cat.learn.blocks) : '') +
+        // F4: `node-img:` oznake → potpisani URL-ovi kod pozivatelja (no-op ako oznaka nema).
+        (typeof window.renderBlocks === 'function'
+          ? window.renderBlocks(window.SokratNodeImages
+              ? window.SokratNodeImages.resolveBlocks(cat.learn.blocks) : cat.learn.blocks)
+          : '') +
         '</div></div>';
     }
 
@@ -428,6 +432,19 @@ function _mountBlockEditors(holder) {
 
 /** Kontekst trenutno otvorene lekcije u vieweru (write ide u _adminCtx.varName). */
 let _adminCtx = { subjectId: '', lessonId: '', varName: '', data: null };
+
+// F3 — kontekst OSOBNOG study-čvora (`nodes`/`node_content`), null = klasični predmet/lekcija.
+// Draft-mašinerija je generična (ključ = `subjectId::lessonId` string), pa čvor koristi
+// SINTETIČKI ključ `node:<uuid>` i sve postojeće (draft/opovi/autosave/blokovi) radi netaknuto.
+// Razlikuju se SAMO dvije IO-točke: odakle se čita (`_enterDraftMode`) i kamo se piše
+// (`_publishDraft` → `publish_node` umjesto `publish_document`). ADR-024.
+/** @type {{ nodeId: string, name: string }|null} */
+let _nodeCtx = null;
+
+/** Sintetički draft-ključ za čvor (nema predmeta/lekcije/var_name — jedan payload po čvoru). */
+function _nodeDraftCtx(nodeId, data) {
+  return { subjectId: 'node:' + nodeId, lessonId: 'content', varName: 'payload', data: data || null };
+}
 
 /** lessonId → window-var (koji red u subject_content). */
 function _adminResolveVar(subjectId, lessonId) {
@@ -509,6 +526,28 @@ async function _enterDraftMode() {
   const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
   const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
   if (!client) return;
+
+  // F3 — osobni čvor: izvor je `node_content` (owner-RLS), a ne `subject_content`.
+  // `create_node` svakom study-čvoru odmah upisuje redak s `{}` → redak UVIJEK postoji;
+  // prazan payload je legitimno početno stanje (čvor bez sadržaja), ne greška.
+  if (_nodeCtx) {
+    try {
+      const sel = await client.from('node_content').select('payload,version')
+        .eq('node_id', _nodeCtx.nodeId).single();
+      if (sel.error || !sel.data) {
+        if (typeof showToast === 'function') showToast(_adminT('admin.loadFail', 'Could not load content.'));
+        return;
+      }
+      const d = SokratDraft.begin(s, l, v, sel.data.payload || {}, sel.data.version);
+      _draftMode = true;
+      if (d.restored && typeof showToast === 'function') showToast(_adminT('admin.draftRestored', 'Unsaved draft restored.'));
+      _adminRerender();
+    } catch (e) {
+      if (typeof showToast === 'function') showToast(_adminT('admin.loadFail', 'Could not load content.'));
+    }
+    return;
+  }
+
   try {
     // Baza drafta = svjež DB payload (ne JSON/js fallback — objava piše u DB, pa je DB istina za edit)
     // + version reda: publish-RPC (U4) njime lovi tuđu izmjenu između ulaska u draft i objave.
@@ -536,6 +575,39 @@ async function _publishDraft() {
   const client = (auth && typeof auth.getClient === 'function') ? auth.getClient() : null;
   if (!client) return;
   if (btn) btn.disabled = true;
+
+  // F3 — osobni čvor: JEDAN payload, BEZ sestrinskih redova (nema `final` kompozicije) i bez
+  // window-vara (čvor ne živi u katalogu). Isti optimistic-concurrency ugovor: `base_version`
+  // lovi tuđu izmjenu, a `publish_node` je jedini write-put (SECURITY DEFINER + owner-check).
+  if (_nodeCtx) {
+    try {
+      const rpc = await client.rpc('publish_node', {
+        p_node_id: _nodeCtx.nodeId,
+        p_payload: d.working,
+        p_base_version: d.baseVersion
+      });
+      if (rpc.error) {
+        const conflict = /publish_version_conflict/.test(rpc.error.message || '');
+        if (typeof showToast === 'function') {
+          showToast(conflict
+            ? _adminT('admin.publishConflict', 'This lesson was changed elsewhere in the meantime — reopen it and repeat the edit.')
+            : _adminT('admin.publishErr', 'Publish failed.') + ' (' + rpc.error.message + ')');
+        }
+        if (btn) btn.disabled = false;
+        return;
+      }
+      if (_adminCtx.data) SokratDraft.applyOpsTo(_adminCtx.data, d.ops.slice());
+      SokratDraft.commitDone(d.subjectId, d.lessonId, (rpc.data == null ? null : rpc.data));
+      _draftMode = false;
+      if (typeof showToast === 'function') showToast(_adminT('admin.publishOk', 'Published.'));
+      _adminRerender();
+    } catch (e) {
+      if (typeof showToast === 'function') showToast(_adminT('admin.publishErr', 'Publish failed.'));
+      if (btn) btn.disabled = false;
+    }
+    return;
+  }
+
   try {
     // 1) Sestrinski redovi (final = kopija M1+M2 dijeli kategorije): SVJEŽ payload + version,
     //    pa isti opovi. Svježina je bitna — tuđa izmjena siblinga od ulaska u draft se ne gazi
@@ -800,11 +872,22 @@ document.addEventListener('click', function (e) {
 window.SokratAdmin.studioBridge = {
   // Postavi kontekst na odabranu lekciju (data = svjež sadržaj iz Studija). Vrati draft (ako postoji).
   setLesson: function (subjectId, lessonId, data) {
+    _nodeCtx = null;   // F3: povratak na klasični predmet/lekciju gasi node-mod
     _adminCtx = { subjectId: subjectId, lessonId: lessonId, varName: _adminResolveVar(subjectId, lessonId) || '', data: data || null };
     const d = _adminDraft();
     _draftMode = !!(d && d.dirty); // nastavi draft ako postoji dirty (npr. iz starog admina)
     return d;
   },
+  // F3 — postavi kontekst na OSOBNI study-čvor. Isti ugovor kao setLesson (vrati draft ako
+  // postoji dirty), samo je izvor/odredište `node_content` + `publish_node`. ADR-024.
+  setNode: function (nodeId, name, data) {
+    _nodeCtx = { nodeId: nodeId, name: name || '' };
+    _adminCtx = _nodeDraftCtx(nodeId, data);
+    const d = _adminDraft();
+    _draftMode = !!(d && d.dirty);
+    return d;
+  },
+  nodeCtx: function () { return _nodeCtx; },
   draft: function () { return _adminDraft(); },
   publish: function () { return _publishDraft(); },  // U4 publish_document RPC (atomično + base_version)
   discard: function () { return _discardDraft(); },
