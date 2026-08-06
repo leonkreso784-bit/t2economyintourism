@@ -336,6 +336,15 @@ const SokratStudio = (function () {
                 + esc(t('studio.addSection', 'Nova sekcija')) + '</button>' : '') +
         '</div>');
 
+    // ── KaTeX: tipografiraj NAKON umetanja (isti obrazac kao js/learn.js:88) ──
+    // `blocks-renderer.js` NAMJERNO ispljune `\[tex\]` kao TEKST (sigurnosna granica: renderer
+    // ne izvršava ništa) → pozivatelj mora dovršiti posao. Studio to dosad NIJE radio, pa je
+    // formula ostajala sirovi LaTeX; za osobno gradivo trajno, jer se čvor gleda SAMO ovdje.
+    // ⚠ SAMO read-only: u edit-modu tekst živi u `contenteditable`, a `editableToInline` bi
+    // KaTeX-markup pročitao natrag u model. Formula-blokove u edit-modu tipografira
+    // `typesetFormulas` iz block-editora (scope = `.be-media--formula` preview).
+    if (!isEd && typeof window.renderMath === 'function') window.renderMath(canvas);
+
     var tabBar = byId('stTabs');
     if (tabBar) tabBar.addEventListener('click', function (e) {
       var b = e.target.closest('.st-tab'); if (!b) return;
