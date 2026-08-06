@@ -1,7 +1,7 @@
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
-> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ (staging) · F2 ✅ · F3 ✅ · F4 ✅ (§12 slike + §13 E2E) → SLIJEDI F5 = PROD (traži Leonov izričit OK).**
-> **Gdje je kôd:** grana `feature/f3-node-editor` (F2+F3); `main` = `63f898f` (F1 SQL+docs). **PROD netaknut.**
+> **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ · F2 ✅ · F3 ✅ · F4 ✅ · F5 ✅ NA PRODUKCIJI (2026-08-06, §15).** Plan je ISPUNJEN.
+> **Gdje je kôd:** `main` = `a9bf52b` (merge grane `feature/f3-node-editor`), **deployan na produkciju** (Vercel `dpl_Coqp…` READY).
 > **Nakon F5:** frontend redizajn (Leon), pa objava/dijeljenje + MCP.
 > **Pravilo:** svaka faza staje na checkpoint za Leonov OK; **deploy = uvijek izričit OK**. Implementacija slijedi §6.
 > **Povijest odluke:** v1/v2 bili su uokvireni oko „službenih predmeta + objava studentima" → **Leon presudio: to NIJE ono što želi.** v3 = prava vizija.
@@ -390,4 +390,50 @@ kojih nema ni u jednom payloadu · (c) „Odbaci" briše ono što je uploadano u
 **Nije blokator za F5** — ali jest prava stavka za popis odmah nakon.
 
 ---
-*F4 GOTOV. **SLIJEDI F5 = PROD** po runbooku §14. **Traži Leonov IZRIČIT OK** (produkcijski DDL + deploy).*
+
+## 15 · F5 — IZVEDEN (produkcija, 2026-08-06)
+
+Runbook §14 odrađen. **Osobni UGC-graditelj je živ na `www.sokratstudy.com`.**
+
+### 15.1 · Tko je što napravio
+Klasifikator je — kako §14.1 i predviđa — blokirao **produkcijski DDL** (`apply_migration`) i **merge/push na `main`**.
+To nije zaobiđeno ni kroz `execute_sql` ni kroz `service_role` iz `.env`. Leon je te korake pokrenuo sam.
+
+| # | korak | tko | ishod |
+|---|---|---|---|
+| 1 | `f1-nodes.sql` na PROD | **Leon** (SQL Editor) | ✅ |
+| 2 | `f4-node-images.sql` na PROD | **Leon** (SQL Editor) | ✅ |
+| 3 | verifikacija + Advisors | Claude (MCP, read-only) | ✅ 0 ERROR |
+| 4–6 | merge `--no-ff` → `main` → push | **Leon** | ✅ `a9bf52b` |
+| 5 | `npm run preflight` na `main` | Claude | ✅ EXIT 0 (pre-push hook ga je vrtio i pri pushu) |
+| 7 | Vercel check (pravilo #7) | Claude | ✅ `dpl_CoqpRtU8ZjCo3awTZVmywhuyimiV` **READY, target=production** |
+| 8 | živa verifikacija | **Leon** | ⏳ preostaje |
+| 9 | `test:storage` vs PROD | — | ✅ nije pokrenut (skripta to i sama tvrdo odbija) |
+
+### 15.2 · Provjereno na PRODU nakon migracije (sve read-only)
+| provjera | rezultat |
+|---|---|
+| tablice | `nodes` · `node_content` · `node_content_versions` — postoje, prazne, RLS uključen |
+| 7 RPC-ova | svi `SECURITY DEFINER`; **`anon` bez EXECUTE**, `authenticated` s EXECUTE |
+| `_node_own` + 5 trigger-funkcija | **nedostupne i anonu i prijavljenima** (revoke je sjeo) |
+| ovlasti nad tablicama | `anon` = ništa · `authenticated` = **samo SELECT** (bez INSERT/UPDATE/DELETE/**TRUNCATE**) |
+| otisak funkcija | **fajl == PROD 13/13** (md5 tijela, uz normalizaciju CRLF) |
+| bucket `node-images` | `public = false`, limit 5 MB |
+| 4 storage-policyja | svi `authenticated`, svi s `(storage.foldername(name))[1] = auth.uid()::text`; **nijedan `public`, nijedan `is_admin()`** |
+| `lesson-images` | netaknut (public read + admin write) |
+| katalog | `subject_content` 51 · `content_versions` 135 · `profiles` 4 · `progress` 61 — **nedirnuti** |
+| Advisors (security) | **0 ERROR** |
+| živi asseti | `js/my-materials.js` · `js/node-images.js` = HTTP 200 · `mm-` pravila u `styles.bundle.css` (55) · bump-token `20260804052805` |
+
+### 15.3 · Nalazi
+- **⚠️ Ispravak ranijeg zapisa: STAGING je taj koji je zastario, ne PROD.** §9 je tvrdio „md5-otisak 13/13 fajl==baza" za staging; danas je **11/13**. `restore_node` i `node_content_validate` na stagingu imaju stariju formu zapisa (`if … then` u tri retka umjesto jednog). **Ponašanje je identično** — razlika je isključivo u prijelomu retka. PROD je usklađen s fajlom 13/13. *(Prvo se činilo da svih 13 ne valja; uzrok je bio CRLF iz Windows-fajla kroz browser. Provjereno normalizacijom prije bilo kakve tvrdnje.)*
+- **Zatečeni WARN-i (nisu naši, nisu regresija):** `handle_new_user`, `is_admin` i `snapshot_content_version` su `SECURITY DEFINER` **dostupni anonu** preko `/rest/v1/rpc/`; `set_updated_at` nema `search_path`; zaštita od procurjelih lozinki isključena. Naših 7 RPC-ova ima WARN **po dizajnu** (to JEST write-API — isti WARN već ima `publish_document`). **`snapshot_content_version` vrijedi zatvoriti** istim revoke-obrascem koji je F1 primijenio na svoje trigger-funkcije.
+- **Merge je bio fast-forward** — grana je sadržavala cijeli `main`, pa strah iz §14.2 od sudara `?v=` tokena nije ni došao na naplatu.
+
+### 15.4 · Što ostaje
+1. **Živa verifikacija (korak 8)** — Leon prijavom: napravi folder + gradivo → uredi → objavi → upload slike → obriši + vrati.
+2. Siročad u Storageu (§14.4) · zatvaranje `snapshot_content_version` · staging poravnati s fajlom.
+3. Pa **frontend redizajn**, pa objava/dijeljenje + MCP.
+
+---
+*F5 ISPUNJEN — osobni UGC-graditelj je na produkciji. Ovaj spec je od sada **referenca**, ne aktivni plan.*

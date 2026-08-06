@@ -5,6 +5,30 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-06 (OPUS) — 🚀 **F5 IZVEDEN: osobni UGC-graditelj NA PRODUKCIJI** (`8b99775..a9bf52b`)
+**Kontekst:** Leon se vratio nakon nekoliko dana (*„izgubio sam se u priči"*). Cijela sesija = izvršenje runbooka [`CREATE_BACKEND_SPEC.md` §14](CREATE_BACKEND_SPEC.md). Rezultat = **§15**.
+
+### Podjela rada (klasifikator je gejt, i to je dobro)
+Auto-mode klasifikator je blokirao **produkcijski DDL** (`apply_migration`) i **merge/push na `main`** — točno kako §14.1 predviđa. **Nisam to zaobilazio** ni kroz `execute_sql` ni kroz `service_role` iz `.env`; stao sam i predao korake Leonu. On je pokrenuo oba SQL-a u Supabase SQL Editoru te merge i push. Ja sam odradio sve provjere, preflight i Vercel-gate.
+
+> **Pouka o vlastitoj grešci:** usred sesije sam Leonu rekao *„koraci 1–3 nisu tvoji, mogu ih sam"* — pa me klasifikator odbio. Runbook je bio u pravu, ja nisam. Kad dokument opisuje ograničenje okruženja, ne pretpostavljaj da je zastario jer imaš alat u ruci.
+
+### Isporučeno na PROD
+- **Baza:** `nodes` + `node_content` + `node_content_versions` (audit) + **7 owner-scoped RPC-ova**; `anon` = ništa, `authenticated` = samo SELECT, svaki upis kroz `SECURITY DEFINER` RPC.
+- **Storage:** bucket **`node-images`, `public=false`**, 4 policyja s owner-prefiksom.
+- **Klijent (`a9bf52b`, fast-forward merge — konflikti nisu bili mogući):** „Moji materijali" na profilu, editor u study-čvoru kroz `publish_node`, privatne slike, popravak `<sokrat-modal>` selekcije i sirovih i18n ključeva.
+
+### Gate
+`preflight` EXIT 0 · Advisors **0 ERROR** · **fajl == PROD 13/13** (md5 tijela funkcija) · Vercel `dpl_Coqp…` **READY target=production** · živi asseti 200 + `mm-` u bundleu (55) · katalog-tablice **brojčano nedirnute** (51/135/4/61).
+
+### 🔍 Nalaz koji je zamalo prošao kao lažna uzbuna
+Prva usporedba otisaka pokazala je da se **svih 13 funkcija** razlikuje između PROD-a i stagninga. Nisam to prijavio kao kvar — uzorak „baš svih 13" miriše na formatiranje, ne na sadržaj. **Uzrok = CRLF** iz Windows-fajla kroz browser. Nakon normalizacije: **11/13 se poklapa**, a preostale 2 (`restore_node`, `node_content_validate`) razlikuju se **samo u prijelomu retka** — i to tako da je **PROD ispravan, a STAGING zastario**. Time je ispravljena i ranija tvrdnja iz §9 („staging 13/13 == fajl") → stvarno stanje je 11/13.
+
+### Otvoreno (ne blokira)
+Živa verifikacija (korak 8, Leon) · siročad u Storageu (§14.4) · zatečeni advisor-WARN `snapshot_content_version` (anon ga može zvati — vrijedi zatvoriti istim revoke-obrascem) · poravnati staging s fajlom.
+
+---
+
 ## 2026-08-04-b (OPUS) — 🔒 **F4 DOVRŠEN**: privatne slike (S1+S2) + „obriši sekciju" + puni E2E
 **Kontekst:** Leon: *„moze kreni."* Prvi posao u F4 = dva blokatora za F5 nađena na kraju F3. Grana `feature/f3-node-editor`. **PROD netaknut, ništa pushano.**
 
