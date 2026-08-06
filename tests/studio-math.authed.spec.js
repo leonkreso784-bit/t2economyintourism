@@ -114,4 +114,82 @@ test.describe('Studio — KaTeX u canvasu', () => {
       await rmNode(page, id);
     }
   });
+
+  test('INLINE matematika: označi dio rečenice → √x u traci → math-run → tipografirano u pregledu', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'Inline Math');
+    try {
+      // Sekcija s običnim odlomkom — dalje sve ide kroz PRAVI editor, ne kroz opove.
+      await page.evaluate(async ([nodeId]) => {
+        const b = window.SokratAdmin.studioBridge;
+        b.setNode(nodeId, 'Inline Math', {});
+        await b.enter();
+        const d = window.SokratDraft.get('node:' + nodeId, 'content');
+        window.SokratDraft.applyOp(d.subjectId, d.lessonId, {
+          type: 'addCategory', catId: 'sekcija-1',
+          category: { name: 'Tekst', icon: 'fa-book', color: '#6366f1',
+            flashcards: [], quiz: [], fillBlanks: [], learn: { blocks: [] } },
+        });
+        await b.publish();
+      }, [id]);
+
+      await page.evaluate((nodeId) => window.SokratStudio.openNode(nodeId, 'Inline Math'), id);
+      await page.waitForSelector('#editor-page.active', { timeout: 15000 });
+      await page.click('#stEdit');
+      await page.waitForSelector('#stCanvas .be-mount .be-root', { timeout: 15000 });
+
+      // Dodaj Tekst blok i upiši rečenicu s matematikom USRED nje.
+      await page.locator('#stCanvas .be-mount .be-bigplus').first().click();
+      await page.waitForSelector('.be-menu .be-menu-item');
+      await page.locator('.be-menu .be-menu-item', { hasText: 'Tekst' }).click();
+      const editable = page.locator('#stCanvas .be-mount .be-block').last().locator('[data-be-field="text"]');
+      await editable.click();
+      await page.keyboard.type('ako je x^2 onda');
+      await page.locator('#stCanvas .st-head h1').click();
+
+      // Označi SAMO „x^2" (znakovi 7–10) — ovo je bit cigle: dio rečenice, ne cijeli blok.
+      await editable.click();
+      await page.evaluate(() => {
+        const blocks = document.querySelectorAll('#stCanvas .be-mount .be-block');
+        const el = blocks[blocks.length - 1].querySelector('[data-be-field="text"]');
+        const node = el.firstChild;
+        const r = document.createRange(); r.setStart(node, 7); r.setEnd(node, 10);
+        const s = document.getSelection(); s.removeAllRanges(); s.addRange(r);
+        document.dispatchEvent(new Event('selectionchange'));
+      });
+      await page.waitForSelector('.be-toolbar.on', { timeout: 5000 });
+      await page.locator('.be-toolbar .be-tb[data-be-mathact]').click();
+      await page.locator('#stCanvas .st-head h1').click();       // blur → serijalizacija
+
+      // Draft: tekst je razlomljen na tekst + math + tekst, a formula nosi TOČAN LaTeX.
+      const runs = await page.evaluate((nodeId) => {
+        const d = window.SokratDraft.get('node:' + nodeId, 'content');
+        const blks = d.working['sekcija-1'].learn.blocks;
+        const p = blks.find((b) => Array.isArray(b.text) && b.text.some((r) => r.math));
+        return p ? p.text : null;
+      }, id);
+      expect(runs, 'nijedan blok nema math-run').not.toBeNull();
+      const math = runs.filter((r) => r.math);
+      expect(math).toHaveLength(1);
+      expect(math[0].text).toBe('x^2');
+      expect(runs.map((r) => r.text).join('')).toBe('ako je x^2 onda');
+
+      // Objavi pa izađi iz edita → u pregledu mora biti TIPOGRAFIRANO, a tekst oko njega cijel.
+      // Objava NEMA potvrdu (za razliku od „Odbaci"/brisanja) — `#stPublish` zove publish izravno.
+      // ⚠ Ne provjeravati `locator.count()` za `<sokrat-confirm>`: komponenta je UVIJEK u DOM-u,
+      // samo zatvorena → count()>0, a `.click()` bi onda čekao vidljivost do isteka testa.
+      await page.click('#stPublish');
+      await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+      await expect.poll(
+        () => page.$$eval('#stCanvas .lb-imath .katex', (els) => els.length),
+        { timeout: 8000, message: 'inline formula nije tipografirana u pregledu' },
+      ).toBeGreaterThan(0);
+      const prose = await page.$eval('.st-pane[data-pane="learn"]', (el) => el.innerText);
+      expect(prose.includes('ako je'), 'tekst prije formule je nestao').toBe(true);
+      expect(prose.includes('onda'), 'tekst poslije formule je nestao').toBe(true);
+    } finally {
+      await rmNode(page, id);
+    }
+  });
 });

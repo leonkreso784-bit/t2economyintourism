@@ -161,6 +161,9 @@
 .be-tb:hover { background: rgba(99, 102, 241, .18); color: #fff; }
 /* razdjelnik u traci */
 .be-tbsep { width: 1px; align-self: stretch; margin: 3px 2px; background: rgba(148, 163, 184, .25); }
+/* inline matematika: √x — kurziv na x da se čita kao varijabla, ne kao slovo u riječi */
+.be-tbmath { font-size: 13px; letter-spacing: .5px; }
+.be-tbmath i { font-family: var(--font-serif, Georgia, "Times New Roman", serif); font-style: italic; }
 /* boja-swatch (kvadratić boje iz --sw) */
 .be-tbc { min-width: 24px; padding: 0 5px; }
 .be-tbc::after {

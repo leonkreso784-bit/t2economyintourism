@@ -467,5 +467,52 @@ test('parsePastedTable: jedan red više stupaca → grid (1×N)', function () {
   assert.deepStrictEqual(E._parsePastedTable('x\ty\tz', ''), [['x', 'y', 'z']]);
 });
 
+// ── INLINE MATEMATIKA (run `math:true`) — round-trip u OBA smjera ──
+// Math-čip u editoru nosi DOSLOVAN LaTeX (`data-be-math`), pa fake-DOM mora znati
+// `hasAttribute` + `textContent` (pravi DOM ih ima; stari EL ih namjerno nema →
+// dokazuje i da guard u _walk ne ruši postojeće čvorove).
+function MATH(tex) {
+  return {
+    nodeType: 1, tagName: 'SPAN', className: 'lb-imath',
+    hasAttribute: function (k) { return k === 'data-be-math'; },
+    getAttribute: function () { return null; },
+    textContent: tex, firstChild: null, nextSibling: null
+  };
+}
+
+test('math: runs → editabilni HTML = čip sa SIROVIM LaTeX-om (ne KaTeX)', function () {
+  const h = E._runsToEditable([{ text: 'x^2', math: true }]);
+  assert.ok(h.indexOf('data-be-math') !== -1, h);
+  assert.ok(h.indexOf('x^2') !== -1, h);
+  assert.ok(h.indexOf('katex') === -1, 'KaTeX ne smije u contenteditable: ' + h);
+});
+test('math: čip → run {text, math:true}, sadržaj se NE tumači kao format', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([MATH('\\frac{1}{2}')])),
+    [{ text: '\\frac{1}{2}', math: true }]);
+});
+test('math: matematika USRED rečenice zadrži i tekst oko sebe', function () {
+  assert.deepStrictEqual(
+    E._editableToInline(EROOT([T('ako je '), MATH('x>0'), T(', onda')])),
+    [{ text: 'ako je ' }, { text: 'x>0', math: true }, { text: ', onda' }]);
+});
+test('math: sam math-run NE prolazi kroz prečac „jedini run → plain string"', function () {
+  const out = E._editableToInline(EROOT([MATH('a+b')]));
+  assert.ok(Array.isArray(out), 'math bi se izgubio kao običan tekst: ' + JSON.stringify(out));
+});
+test('math: dvije susjedne formule se NE spajaju u jednu', function () {
+  assert.deepStrictEqual(E._editableToInline(EROOT([MATH('a'), MATH('b')])),
+    [{ text: 'a', math: true }, { text: 'b', math: true }]);
+});
+test('math: prazan čip se odbacuje (ne stvara prazan run)', function () {
+  assert.strictEqual(E._editableToInline(EROOT([MATH('')])), '');
+});
+test('math: HTML u LaTeX-u ostaje DOSLOVAN tekst (granica je esc na prikazu)', function () {
+  const runs = E._editableToInline(EROOT([MATH('<img onerror=alert(1)>')]));
+  assert.deepStrictEqual(runs, [{ text: '<img onerror=alert(1)>', math: true }]);
+  const h = E._runsToEditable(runs);
+  assert.ok(h.indexOf('&lt;img') !== -1, 'nije escapano u editoru: ' + h);
+  assert.ok(h.indexOf('<img') === -1, 'sirov <img> je ušao u DOM: ' + h);
+});
+
 console.log('\n=== rezultat: ' + passed + ' prošlo / ' + failed + ' palo ===\n');
 process.exit(failed ? 1 : 0);

@@ -23,6 +23,15 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-021 — KaTeX formule ostaju sirovi LaTeX u Studiju (u osobnom gradivu ZAUVIJEK)
+- Status: ✅ riješen (`39e5d09`, grana `fix/studio-katex`) · Težina: **visok** za osobno gradivo, srednji za katalog · Prijavio: **korisnik** (Leon, živo na produkciji, screenshot).
+- **Simptom:** u Studiju se formula prikaže kao kod — `\[\sqrt{55}\pm(\frac{154}{85})\]` — umjesto tipografirano. Slika i tablica u istom bloku rade normalno.
+- **Koraci:** osobno gradivo → „Uredi gradivo" → dodaj Formula blok → upiši LaTeX → Objavi → pogledaj u pregledu.
+- **Uzrok:** `js/blocks-renderer.js` **namjerno** ispljune `\[tex\]` kao **tekst** — renderer je sigurnosna granica i ništa ne izvršava. Ugovor je da **pozivatelj** nakon umetanja pozove `renderMath()`. `js/learn.js:88` to radi za studentsku stranicu, `js/exercises.js`/`quiz.js`/`fill-blanks.js`/`flashcards.js` za svoje panele — ali **`js/studio.js` nikad nije bio na tom popisu**. Promaklo je jer je Studio od početka gledan kao „pregled admina", a ne kao **jedini** prikaz nekog sadržaja.
+- **Zašto je za osobno gradivo teže:** čvor (`nodes`) se gleda **isključivo u Studiju** — nema studentske stranice koja bi spasila prikaz. Formula se tamo nije tipografirala **nikad**: ni u pregledu, ni nakon objave. Kod kataloga je bug bio „samo" u admin-pregledu.
+- **Rješenje:** jedan poziv `window.renderMath(canvas)` u `renderCanvas()`, **isključivo u read-only modu**. U edit-modu se NE smije zvati: tekst živi u `contenteditable`, a `editableToInline` bi pri sljedećem focusoutu pročitao KaTeX-markup natrag u model i **trajno pojeo formulu** (formula-blokove u editu tipografira `typesetFormulas` iz block-editora, scope = `.be-media--formula`). Regresija: `tests/studio-math.authed.spec.js` — prvi test dokazano **pada bez fixa** (0 `.katex`), drugi čuva da KaTeX ne uđe u `contenteditable`.
+- **Lekcija:** kad renderer namjerno prebaci dio posla na pozivatelja, taj ugovor mora imati **popis svih pozivatelja i test po pozivatelju** — inače svaki novi prikaz (Studio, pa sutra dijeljenje/objava) tiho ispada iz njega. Ista obitelj kao BUG-020: dijeljeni mehanizam + implicitna obveza na strani pozivatelja.
+
 ### BUG-020 — Kviz procuri između predmeta/lekcija (stari kviz ostane pri promjeni predmeta)
 - Status: ✅ riješen + 🚀 **LIVE 2026-07-15** (`25bba1e`, token `20260715004951`; live-verified: `resetQuiz` u serviranom `quiz.js` + poziv u `navigation.js`) · Težina: **visok** (pogađao SVE studente uživo — netočan kviz, mogao upisati krivi rezultat) · Prijavio: **korisnik** (Leon, živo).
 - **Simptom:** započneš kviz u predmetu A i NE završiš ga → odeš na drugi predmet (ili drugu lekciju istog predmeta) → otvoriš Quiz tab i **još je uvijek kviz iz predmeta A** (stara pitanja, stari napredak).

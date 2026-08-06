@@ -96,8 +96,9 @@
         "text":  { "type": "string" },
         "b":     { "type": "boolean" },
         "i":     { "type": "boolean" },
-        "color": { "type": "string", "enum": ["indigo", "green", "amber", "red", "default"] },
-        "href":  { "type": "string" }
+        "color": { "type": "string", "enum": ["indigo", "green", "amber", "red", "cyan", "blue", "violet", "pink", "default"] },
+        "href":  { "type": "string" },
+        "math":  { "type": "boolean" }
       }
     },
     "block": {

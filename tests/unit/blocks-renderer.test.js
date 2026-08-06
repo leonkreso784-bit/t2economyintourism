@@ -175,5 +175,32 @@ test('image width: 100 / izvan raspona / ne-broj → BEZ style (granica: samo na
   });
 });
 
+// ── INLINE MATEMATIKA (run `math:true`) ──
+// Ugovor: renderer NE tipografira — ispljune `\(tex\)` kao TEKST, a renderMath ga obradi
+// poslije umetanja (isti put kao formula-blok). `esc()` ostaje → nema nove površine.
+test('inline math: run {math:true} → \\( … \\) unutar lb-imath', function () {
+  const out = R([{ type: 'paragraph', text: [{ text: 'ako je ' }, { text: 'x^2', math: true }] }]);
+  assert.ok(out.indexOf('lb-imath') !== -1, out);
+  assert.ok(out.indexOf('\\(x^2\\)') !== -1, out);
+  assert.ok(out.indexOf('ako je ') !== -1, 'tekst oko formule je izgubljen: ' + out);
+});
+test('inline math: renderer NE tipografira (nikakav katex-markup ne izlazi odavde)', function () {
+  const out = R([{ type: 'paragraph', text: [{ text: 'a+b', math: true }] }]);
+  assert.ok(out.indexOf('katex') === -1, out);
+});
+test('inline math: HTML u LaTeX-u je ESCAPAN (sigurnosna granica drži)', function () {
+  const out = R([{ type: 'paragraph', text: [{ text: '<img src=x onerror=alert(1)>', math: true }] }]);
+  assert.ok(out.indexOf('<img') === -1, 'sirov <img> je procurio: ' + out);
+  assert.ok(out.indexOf('&lt;img') !== -1, out);
+});
+test('inline math: math je EKSKLUZIVAN — b/i/color/href se ignoriraju', function () {
+  const out = R([{ type: 'paragraph', text: [
+    { text: 'x', math: true, b: true, i: true, color: 'red', href: 'javascript:alert(1)' }] }]);
+  assert.ok(out.indexOf('<strong>') === -1, out);
+  assert.ok(out.indexOf('<em>') === -1, out);
+  assert.ok(out.indexOf('lb-color-') === -1, out);
+  assert.ok(out.indexOf('<a ') === -1, 'href se ne smije primijeniti na formulu: ' + out);
+});
+
 console.log('\nblocks-renderer: ' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);

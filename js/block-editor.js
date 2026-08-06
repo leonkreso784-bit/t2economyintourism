@@ -59,6 +59,10 @@
   function runToEditable(run) {
     if (run == null) return '';
     if (typeof run !== 'object') return esc(run);
+    // Inline matematika u EDITORU = sirovi LaTeX u čipu, NAMJERNO netipografiran.
+    // Da ga ovdje tipografiramo, `editableToInline` bi pri sljedećem focusoutu pročitao
+    // KaTeX-markup natrag u model i trajno pojeo formulu. Tipografira se tek na PRIKAZU.
+    if (run.math) return '<span class="lb-imath" data-be-math>' + esc(run.text) + '</span>';
     let html = esc(run.text);
     if (run.b) html = '<strong>' + html + '</strong>';
     if (run.i) html = '<em>' + html + '</em>';
@@ -81,6 +85,12 @@
     if (state.href) r.href = state.href;
     out.push(r);
   }
+  /** Math-run se emitira ZASEBNO: sadržaj je doslovan LaTeX, bez ikakvog drugog formata. */
+  function _emitMath(out, tex) {
+    const t = String(tex == null ? '' : tex);
+    if (t === '') return;
+    out.push({ text: t, math: true });
+  }
   const _BLOCKISH = { DIV: 1, P: 1, LI: 1 };
   function _walk(node, state, out) {
     let child = node.firstChild;
@@ -90,6 +100,11 @@
       } else if (child.nodeType === 1) {                // element
         const tag = child.tagName;
         if (tag === 'BR') { _emit(out, state, ' '); child = child.nextSibling; continue; }
+        // Math-čip: uzmi DOSLOVAN tekst i NE ulazi unutra (sadržaj je LaTeX, ne format).
+        if (child.hasAttribute && child.hasAttribute('data-be-math')) {
+          _emitMath(out, child.textContent);
+          child = child.nextSibling; continue;
+        }
         // blok-element (paste iz više redova) → razmak da se riječi ne spoje
         if (_BLOCKISH[tag] && out.length) { const last = out[out.length - 1]; if (last && !/\s$/.test(last.text)) _emit(out, state, ' '); }
         const ns = { b: state.b, i: state.i, color: state.color, href: state.href };
@@ -104,6 +119,9 @@
     }
   }
   function _sameFmt(a, b) {
+    // Math-runovi se NIKAD ne spajaju — ni s tekstom, ni međusobno: dvije susjedne formule
+    // spojene u jedan `tex` dale bi besmislen izraz.
+    if (a.math || b.math) return false;
     return !!a.b === !!b.b && !!a.i === !!b.i && (a.color || '') === (b.color || '') && (a.href || '') === (b.href || '');
   }
   // root = contenteditable element; vrati plain string (ako nema formata) ili niz runs.
@@ -118,7 +136,9 @@
     }
     const runs = merged.filter(function (r) { return r.text !== ''; });
     if (runs.length === 0) return '';
-    if (runs.length === 1 && !runs[0].b && !runs[0].i && !runs[0].color && !runs[0].href) return runs[0].text;
+    // Jedini run bez ikakvog formata → plain string. Math NE smije proći kroz ovaj prečac
+    // (izgubio bi se `math:true` i formula bi postala običan tekst).
+    if (runs.length === 1 && !runs[0].math && !runs[0].b && !runs[0].i && !runs[0].color && !runs[0].href) return runs[0].text;
     return runs;
   }
 
@@ -516,7 +536,44 @@
     reselectRange(first, last);
   }
 
-  // ── plutajuća tekst-traka (B/I + boja + link). Singleton, vezan JEDNOM. ──
+  // ── inline matematika: selekcija → math-čip (ponovni klik nad čipom = natrag u tekst).
+  //    Sadržaj čipa je DOSLOVAN LaTeX; tipografira ga renderMath tek na PRIKAZU. ──
+  function enclosingMath(range) {
+    let n = range.commonAncestorContainer;
+    n = n && (n.nodeType === 1 ? n : n.parentElement);
+    return (n && n.closest) ? n.closest('[data-be-math]') : null;
+  }
+  function applyMath() {
+    const sel = document.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    if (!selectionField()) return;                      // samo unutar editabilnog polja
+    const range = sel.getRangeAt(0);
+
+    // Već je matematika → pretvori natrag u običan tekst (toggle).
+    const chip = enclosingMath(range);
+    if (chip) {
+      const txt = document.createTextNode(chip.textContent);
+      chip.parentNode.replaceChild(txt, chip);
+      const r = document.createRange(); r.selectNodeContents(txt);
+      sel.removeAllRanges(); sel.addRange(r);
+      return;
+    }
+    if (sel.isCollapsed) return;                        // bez selekcije nema što pretvoriti
+
+    // Uzmi SAMO tekst selekcije — eventualni bold/boja/link unutra se namjerno odbacuju,
+    // jer je sadržaj formule LaTeX, a ne oblikovan tekst.
+    const frag = range.extractContents();
+    const tex = String(frag.textContent || '').trim();
+    if (!tex) { range.insertNode(frag); return; }       // sama praznina → vrati kako je bilo
+    const span = document.createElement('span');
+    span.className = 'lb-imath';
+    span.setAttribute('data-be-math', '');
+    span.textContent = tex;
+    range.insertNode(span);
+    reselectRange(span, span);
+  }
+
+  // ── plutajuća tekst-traka (B/I + boja + link + matematika). Singleton, vezan JEDNOM. ──
   function ensureToolbar() {
     if (typeof document === 'undefined') return null;
     if (window.__beToolbar) return window.__beToolbar;
@@ -531,15 +588,18 @@
       }).join('') +
       '<button type="button" class="be-tb" data-be-color="default" title="Ukloni boju">⊘</button>' +
       '<span class="be-tbsep"></span>' +
-      '<button type="button" class="be-tb" data-be-linkact="1" title="Link (prazno = ukloni)">🔗</button>';
+      '<button type="button" class="be-tb" data-be-linkact="1" title="Link (prazno = ukloni)">🔗</button>' +
+      '<button type="button" class="be-tb be-tbmath" data-be-mathact="1" ' +
+        'title="Matematika u rečenici (ponovni klik = natrag u tekst)">√<i>x</i></button>';
     document.body.appendChild(bar);
     bar.addEventListener('mousedown', function (e) {
-      const b = e.target.closest ? e.target.closest('[data-be-fmt], [data-be-color], [data-be-linkact]') : null;
+      const b = e.target.closest ? e.target.closest('[data-be-fmt], [data-be-color], [data-be-linkact], [data-be-mathact]') : null;
       if (!b) return;
       e.preventDefault();                               // NE gubi selekciju/fokus editabilnog
       const color = b.getAttribute('data-be-color');
       if (color != null) { applyColor(color); return; } // boja = ručno omatanje (lb-color-token)
       if (b.getAttribute('data-be-linkact') != null) { promptLink(); return; }  // link = prompt + <a href>
+      if (b.getAttribute('data-be-mathact') != null) { applyMath(); return; }   // inline matematika
       try { document.execCommand('styleWithCSS', false, false); } catch (_) {}  // <b>/<i> tagovi, ne inline-style
       try { document.execCommand(b.getAttribute('data-be-fmt')); } catch (_) {}
     });
@@ -851,6 +911,7 @@
       _parsePastedTable: parsePastedTable, // U8.10 (paste TSV/HTML → grid)
       _runsToEditable: runsToEditable,   // U8.4a serijalizator (runs → editabilni HTML)
       _editableToInline: editableToInline, // U8.4a serijalizator (DOM → runs/string)
+      _applyMath: applyMath,             // inline matematika (selekcija ↔ math-čip)
       _editableBody: editableBody
     };
   }

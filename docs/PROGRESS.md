@@ -5,6 +5,25 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-07 (OPUS) — ∑ **Matematika: BUG-021 popravljen + INLINE matematika u rečenici**
+**Kontekst:** Leon je uživo isprobao osobno gradivo na produkciji (*„čini mi se da dosta dobro radi"*) i poslao screenshot s jednim kvarom: **KaTeX formula prikazana kao kod**. Uz to presuda: *„način rada nam uopće nije dobar pa niti tipkovnica."*
+
+### 1) BUG-021 — formula ostajala sirovi LaTeX (grana `fix/studio-katex`, `39e5d09`)
+Root cause nije bio ni KaTeX ni tipkovnica. `blocks-renderer.js` **namjerno** ispljune `\[tex\]` kao **tekst** (sigurnosna granica), pa pozivatelj mora pozvati `renderMath()`. `learn.js`/`quiz.js`/`fill-blanks.js`/`flashcards.js`/`exercises.js` to rade — **`studio.js` nikad nije bio na tom popisu.** Za osobno gradivo je posljedica teža: čvor se gleda **isključivo u Studiju**, pa se formula nije tipografirala nikad.
+**Popravak:** jedan poziv u `renderCanvas()`, **samo read-only** — u edit-modu bi `editableToInline` KaTeX-markup vratio u model i **trajno pojeo formulu**. Detalji + lekcija: `BUGS.md` BUG-021.
+
+### 2) Inline matematika u rečenici (grana `feature/inline-math`)
+**Leonov odabir** iz ponuđenih smjerova: formula nije mogla **unutar rečenice** — bila je samo zaseban centrirani blok. Ugovor dogovoren **prije koda**: model inline-runova dobiva **jedno polje `math: true`**; renderer emitira `<span class="lb-imath">\(tex\)</span>` uz **zadržan `esc()`** → nula nove površine za izvršavanje. Gumb **√x** u plutajućoj traci; u `contenteditable` čip nosi **sirovi LaTeX** (tipografiranje bi serijalizator vratio u model — ista zamka od koje čuva BUG-021 fix). Math-run je ekskluzivan i ne spaja se sa susjedima.
+
+### 🔍 Nalazi
+- **Zaostala shema:** `run.color` je imao **4 boje**, a F6 je na produkciju poslao **8** (`cyan/blue/violet/pink`). Prvi autor koji upotrijebi novu boju srušio bi `validate:schema` u CI-ju. Popravljeno usput (dirao sam točno taj objekt).
+- **Zamka u testu (moja, ne proizvodna):** `#stPublish` **nema potvrdu**, a `<sokrat-confirm>` je **uvijek u DOM-u** (samo zatvoren) → `locator.count() > 0`, pa je `.click()` čekao vidljivost do isteka testa (120 s). Screenshot je pritom pokazao da značajka **radi savršeno** — dakle test je lagao o proizvodu. Pouka je zapisana u `TESTING.md`: **`count()` broji prisutnost, ne vidljivost.**
+
+### Gate
+block-editor unit **77/0** (+7) · blocks-renderer **29/0** (+4) · `test:authed` **55/55** · preflight **EXIT 0** · build:css + bump. **Ništa pushano na `main`** — obje grane čekaju Leonov OK.
+
+---
+
 ## 2026-08-06 (OPUS) — 🚀 **F5 IZVEDEN: osobni UGC-graditelj NA PRODUKCIJI** (`8b99775..a9bf52b`)
 **Kontekst:** Leon se vratio nakon nekoliko dana (*„izgubio sam se u priči"*). Cijela sesija = izvršenje runbooka [`CREATE_BACKEND_SPEC.md` §14](CREATE_BACKEND_SPEC.md). Rezultat = **§15**.
 

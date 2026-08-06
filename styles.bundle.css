@@ -8496,6 +8496,21 @@ h4.lb-heading { font-size: 1.1rem; }
 .lb-formula { margin: 1.2em 0; text-align: center; overflow-x: auto; }
 .lb-formula--inline { display: inline; margin: 0; }
 
+/* ── inline matematika unutar rečenice (run `math:true`) ──
+   Na PRIKAZU renderMath zamijeni sadržaj KaTeX-om, pa ovo ostaje samo kao okvir toka.
+   U EDITORU (`[data-be-math]`) sadržaj je NAMJERNO sirovi LaTeX → čip da autor odmah vidi
+   dokle formula seže i da je ne pomiješa s običnim tekstom. */
+.lb-imath { display: inline; }
+.lb-imath[data-be-math] {
+    font-family: var(--font-mono, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace);
+    font-size: 0.92em;
+    padding: 0.05em 0.36em;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--accent, #6366f1) 14%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent, #6366f1) 34%, transparent);
+    white-space: pre-wrap;
+}
+
 /* ── legacy-html (v1 sadržaj kroz DOMPurify; U7c) ── */
 .lb-legacy { color: var(--text-secondary); line-height: 1.7; }
 
@@ -8663,6 +8678,9 @@ h4.lb-heading { font-size: 1.1rem; }
 .be-tb:hover { background: rgba(99, 102, 241, .18); color: #fff; }
 /* razdjelnik u traci */
 .be-tbsep { width: 1px; align-self: stretch; margin: 3px 2px; background: rgba(148, 163, 184, .25); }
+/* inline matematika: √x — kurziv na x da se čita kao varijabla, ne kao slovo u riječi */
+.be-tbmath { font-size: 13px; letter-spacing: .5px; }
+.be-tbmath i { font-family: var(--font-serif, Georgia, "Times New Roman", serif); font-style: italic; }
 /* boja-swatch (kvadratić boje iz --sw) */
 .be-tbc { min-width: 24px; padding: 0 5px; }
 .be-tbc::after {

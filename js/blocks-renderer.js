@@ -54,6 +54,12 @@
     if (run == null) return '';
     if (typeof run === 'string') return esc(run);
     if (typeof run !== 'object') return esc(run);
+    // ── inline matematika: EKSKLUZIVAN run (ne kombinira se s b/i/color/href) ──
+    // Isti obrazac kao formula-blok: delimiteri izlaze kao TEKST, a `renderMath()` ih
+    // tipografira POSLIJE umetanja (js/learn.js, js/studio.js). Ovdje se NIŠTA ne izvršava
+    // i `esc()` ostaje → nema nove površine za injekciju. Loš LaTeX KaTeX crta crveno
+    // (throwOnError:false), nikad ne baca.
+    if (run.math) return '<span class="lb-imath">\\(' + esc(run.text) + '\\)</span>';
     let html = esc(run.text);
     if (run.b) html = '<strong>' + html + '</strong>';
     if (run.i) html = '<em>' + html + '</em>';
