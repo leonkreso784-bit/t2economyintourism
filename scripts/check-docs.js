@@ -77,6 +77,23 @@ if (fs.existsSync(PRODUCT)) {
   }
 }
 
+// ── 3b) ĆIRILICA ────────────────────────────────────────────────────
+// Hrvatski i ćirilica dijele izgled nekoliko slova (а/о/е/с/р…), pa se pri kopiranju
+// ili tipkanju neprimjetno uvuku. Već se jednom provuklo u sadržaj (`Manualне`, PR #1),
+// a i ovaj gate je odmah uhvatio `katalога` u prepisanom ARCHITECTURE.md.
+// ⚠ Ćirilica UNUTAR koda je legitimna — tako se navodi sam detekcijski raspon (`[Ѐ-ӿ]`) i
+// citiraju popravljeni primjeri (`najbržи`). Zato se prije provjere maknu blokovi i inline-kod.
+const stripCode = (s) => s.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '');
+for (const abs of allMd) {
+  const src = stripCode(fs.readFileSync(abs, 'utf8'));
+  const hits = src.match(/[Ѐ-ӿ]+/g);
+  if (hits) {
+    const uniq = Array.from(new Set(hits)).slice(0, 5).map((h) => JSON.stringify(h)).join(', ');
+    problems.push('ĆIRILICA           ' + rel(abs) + '  → ' + uniq +
+      '\n      → hrvatski tekst ne smije sadržavati ćirilične znakove (izgledaju isto, nisu isto)');
+  }
+}
+
 // ── 4) svaki .md pod docs/ mora biti naveden u indeksu ──────────────
 const INDEX = path.join(DOCS, 'README.md');
 if (fs.existsSync(INDEX)) {

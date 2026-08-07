@@ -1423,7 +1423,7 @@ Prva cigla nove faze (prije HRV programa): popravak flashcard buga koji koristi 
 Nastavak iste sesije. Dvije stvari: (1) počišćeno lokalno smeće, (2) logo prebačen na SVG.
 - **Repo čišćenje (~144 MB lokalno, ništa u gitu):** obrisani `test-results/`, svi `tmp-*/`, `tmp/`, `.venv/` + mrtve
   datoteke (`extract_pdfs.py`, `fan_all_text.txt`, `LEARN-PROBLEM-ANALIZA.txt`, `desktop.ini`); food-PDF izvori premješteni
-  u `_materials/food-and-nutrition-source-pdfs/` (konvencija). `.gitignore` konsolidiran (`tmp-*/` glob). Commit `978d119` (pushан).
+  u `_materials/food-and-nutrition-source-pdfs/` (konvencija). `.gitignore` konsolidiran (`tmp-*/` glob). Commit `978d119` (pushan).
 - **LOGO: `logo.png` (raster + crop-hak) → `assets/logo.svg` (vektor).** **Iteracija s renderiranjem** (svaki kandidat → Playwright
   screenshot na 16/40/44/120/200px, tamna+svijetla, pa vizualna ocjena):
   - Prvi pokušaj = trasiran original niske rez → **korisnik: „izgleda kao olovkom skicirano".**

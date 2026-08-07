@@ -200,7 +200,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - Opis: `vercel.json` postavlja `Cache-Control: immutable` (1 god.) na sve `.css`, a
   `styles.css` je uvozio `css/*.css` BEZ `?v=`. Nakon deploya preglednik bi i dalje
   servirao stari cache → popravak "nevidljiv".
-- Rješenje: dodан `?v=YYYYMMDD` na sve `@import` u `styles.css` + bump `styles.css?v=`
+- Rješenje: dodan `?v=YYYYMMDD` na sve `@import` u `styles.css` + bump `styles.css?v=`
   u `index.html`.
 - Lekcija: pri SVAKOJ izmjeni CSS-a bumpaj `?v=` token (komentar je u `styles.css`).
   Inače deploy izgleda kao da "nije prošao".

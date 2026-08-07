@@ -1,147 +1,216 @@
-# Arhitektura i tehnička razrada
+# ARCHITECTURE — kako je Sokrat Study stvarno građen
 
-> Živi dokument. Cilj: pretvoriti statički study app u skalabilnu platformu.
-> Gradi se **korak po korak**; svaki korak je malen, testabilan i ne smije
-> srušiti live verziju. Napredak se prati u [ROADMAP.md](../plan/ROADMAP.md) i [PROGRESS.md](../records/PROGRESS.md).
-
-## Ciljana arhitektura
-
-```
-FRONTEND (Vercel, vanilla JS — minimalne izmjene)
-   • dohvat lakog "catalog" manifesta
-   • lazy load sadržaja predmeta tek na otvaranje
-   • postojeći Learn / Flashcards / Quiz / Fill / Progress UI (nepromijenjen)
-        │ public read                         │ admin (login — samo ja)
-        ▼                                      ▼
-SUPABASE                                  ADMIN UI (/admin, zaštićen)
-   • Postgres (katalog + sadržaj)            • CRUD hijerarhije i sadržaja
-   • Auth                                    • (kasnije) upload + AI generacija
-   • Storage (kasnije: PPT/PDF/slike)
-   • Edge Functions (kasnije: ingest+Claude)
-```
-
-**Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](./BACKEND.md) (ADR-008).
-**Stanje (2026-07-13):** Auth + cloud-sync napretka LIVE; **admin draft→objavi tok LIVE od 2026-07-13** (F4 deploy); **sadržaj se čita iz baze direktno preko
-supabase-js (anon key + RLS), NE preko `/api`** (ADR-011) — privilegirano (`service_role`) ide **SAMO u Supabase Edge Functions, ne Vercel `/api`** (ADR-016); admin-write = direktno klijent→RLS (ADR-021).
-**Read-path redoslijed (od F2 2A): baza → `data/json/*.json` (predmeti s `dataFormat:'json'`, 18/18) → `.js` fallback.**
-
-Postojeća schema kategorije ostaje **identična** — UI logika se ne dira.
-
-## Hijerarhija podataka
-
-```
-institutions (sveučilište)      ← spremno za buduće širenje
-└── faculties (fakultet)        → FMTU Opatija
-    └── programs (smjer)        → Hospitality Management
-        └── (year, semester)    → year=studijska godina; semester∈{1,2} unutar godine
-            └── subjects (predmet)
-                └── lessons (lekcija / kolokvij)
-                    └── categories (tema)
-                        └── content_items: flashcard | quiz | fill | learn (JSONB)
-```
-
-**Trenutni raspored (Hospitality Management):**
-- 2. god, sem 1: Tourism Economics, E-Business, Accounting, Entrepreneurship and Innovation
-- 2. god, sem 2: Economics in Hospitality, Marketing, Tourism Geography, Food & Nutrition
-- **2. god = 8/8 ✅ KOMPLETNO**
-- **1. god = 9/9 ✅ KOMPLETNO:** Business Informatics, Special Interest Tourism, Management, Microeconomics, Statistics,
-  Macroeconomics, **Academic Writing** (prvi kroz generator), Traffic in Tourism, **Mathematics** (zadnji, LIVE 2026-06-27) · ⛔ Intro to Hospitality blokiran (nema PDF-ova)
-
-## Model baze (ciljano, Supabase/Postgres)
-
-```
-institutions   (id, name)
-faculties      (id, institution_id→, name)
-programs       (id, faculty_id→, name)
-subjects       (id, program_id→, slug, name, short_name, icon, color,
-                description, year, semester, features JSONB, status)
-lessons        (id, subject_id→, slug, name, description, sort)
-categories     (id, lesson_id→, slug, name, icon, color, sort)
-content_items  (id, category_id→, type['flashcard'|'quiz'|'fill'|'learn'],
-                payload JSONB, sort, status)
--- Faza 1+ (rezervirano): users, subscriptions, source_docs, shares, scores
-```
-`payload JSONB` čuva **postojeći oblik** (npr. flashcard `{question,answer,explanation}`),
-pa migracija ne mijenja UI.
-
-> **Napomena (2026-06-23):** gore je CILJANI normalizirani model (za admin CRUD/UGC kasnije). Trenutni
-> **read-path** (ADR-011) koristi jednostavniju tablicu **`public.subject_content`** (1 red = 1 window var,
-> cijeli objekt kategorija kao `jsonb`) — dovoljno za čitanje, migracijski isto sigurno. Puni normalizirani
-> model uvodimo s admin CRUD-om (B10). Stvarna shema: `supabase/schema.sql`. **⚠️ U `subject_content` idu SAMO
-> čisto-podatkovni varovi (M1/M2/Final = flashcards/quiz/fill/learn). VJEŽBE (`*Exercises`) NISU u bazi** — sadrže
-> `generate()` funkcije koje JSON briše → uvijek se učitaju iz datoteke (`content.codeScripts`). Vidi BUG-012. Stanje: 51 redova / 17 predmeta.
-
-## Content pipeline (Faza 1+, PPT/PDF → gradivo)
-Upload → ekstrakcija teksta/slika → chunking → Claude generira po postojećoj schemi
-→ draft → ljudski pregled/uredi → publish. Kontrola troška: kvote, kasnije "donesi
-svoj API ključ".
-
-## Math rendering (kvantitativni predmeti — KaTeX)
-✅ implementirano (ADR-009): **KaTeX** (CDN, bez build-a) za prikaz LaTeX formula u Learn/Flashcards/Quiz/Fill.
-Helper `renderMath(container)` (`js/math.js`) poziva se nakon što sekcija ubaci HTML. **⚠️ Delimiteri su
-currency-safe: inline `\( \)`, blok `\[ \]` / `$$ $$` — JEDAN `$` se NE koristi** (postojeći `$NN` valutni iznosi
-bi se inače parsirali kao matematika). Micro/Macro/Statistika koriste „worked problems" + grafove kao slike.
-Schema struktura se NE mijenja (LaTeX je običan string u payloadu → migracijski sigurno).
+> **Ovaj dokument opisuje sustav KAKAV JEST, ne kakav bi trebao biti.**
+> Sve u njemu je provjereno protiv produkcijske baze i koda 2026-08-07. Ako nešto ovdje piše, a ne
+> postoji — to je bug u dokumentu i ispravlja se odmah.
+>
+> **Prethodna verzija je opisivala normalizirani model (`institutions → faculties → … → content_items`)
+> koji NIKAD NIJE IZGRAĐEN**, i nije znala za polovicu proizvoda. Zato je prepisana od nule.
+>
+> Kronologija → [records/HISTORY.md](../records/HISTORY.md) · odluke → [records/DECISIONS.md](../records/DECISIONS.md)
+> · oblik sadržaja → [CONTENT_SCHEMA.md](./CONTENT_SCHEMA.md) · backend-detalji → [BACKEND.md](./BACKEND.md)
 
 ---
 
-## Razrada po koracima (M0 — Faza 0)
+## 1 · Sustav u jednoj rečenici
 
-Redoslijed je namjeran: prvo frontend postaje data-driven **lokalno** (bez backenda,
-nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
+Statička stranica bez build-koraka (vanilla JS, Vercel) koja čita i piše **izravno u Supabase**
+preko korisnikovog JWT-a i RLS-a — **bez vlastitog poslužitelja** i bez `/api` sloja (ADR-011).
 
-### Blok A — Frontend data-driven (lokalno)
-- **A1 — `data/catalog.js`** ✅ — jedinstveni izvor istine; `content.resolve` generalizira `getSubjectData()`.
-- **A2 — refaktor `js/config.js`** ✅ — `subjectDataMap`/`getSubjectData()` iz catalog-a; svi `data-*.js` na `window`. Verificirano.
-- **A3 — sidebar iz catalog-a** ✅ — `renderSubjectsSidebar()`, uklonjen ručni HTML. LIVE.
-- **A4 — lazy loading** ✅ — `js/content-loader.js` (`loadSubjectContent(subjectId)`) učita
-  `content.scripts` predmeta **tek na otvaranje** (`initStudyPage` je async + loader); statički
-  `data-*.js` maknuti iz `index.html`. Ovo je **šav prema backendu**: u Bloku B `loadSubjectContent`
-  postaje `fetch('/api/subject/...')` bez izmjene ostatka app-a. Test `lazy-load.spec.js`.
-- **A5 — UI hijerarhije** ✅ — **puni drill-down nav** (`#browse-page`, M0.5, ADR-007).
+---
 
-### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](./BACKEND.md))
-- **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
-- **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
-- **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; U4 publish-RPC ✅ + U-UX dizajn ✅ 🚀 DEPLOYANO na PROD 2026-07-14 (`79f17c7..056d963`); **U6 strukturne ops ✅ + U7 learn-blokovi/renderer ✅ → U8 vizualni editor „Studio" U TIJEKU (U8.1–U8.5d ✅ 2026-07-22: skelet+blok-editor+kartice/kviz/fill+inline-tekst+boja/link+media slika/video/formula/tablica; **U8.9 math-tipkovnica MathLive ✅ INTEGRIRANA 2026-07-23** [math-field autorska strana + Casio-paleta/renderirane labele; izlaz LaTeX→student KaTeX nepromijenjen] + **R1 grana-sync s main ✅** [55↑/0↓]; slijedi U8.5e/f + U8.10 → U8.6 vizual; ideje U8.7 upload/U8.8 chart zapisane)**, grana `feature/u6-structural-ops`, PREVIEW); source-of-truth flip na bazu = U9+/F4.6.
+## 2 · DVA SVIJETA — središnja činjenica
 
-### Blok F — Platforma-first temelj (FOUNDATION_PLAN, ADR-013/014)
-- **F1 ✅ LIVE** — reliability rails: CI/CD (`.github/workflows/ci.yml`) + `tsc --checkJs` (scoped) + hardening + TVRDI gateovi (axe/layout-guard/Lighthouse) + RLS-test.
-- **F2 2B ✅ LIVE — `ContentRepository` (S1) šav:** `js/content-repo.js` → `window.SokratContent`
-  (`listSubjects/getSubject/isLessonComingSoon/loadLesson/isLoaded`) objedinjuje 3 dosad razbacana puta dohvata
-  (catalog metapodaci + `loadSubjectContent` async + `getSubjectData` resolve). `navigation.js:initStudyPage` sada zove
-  `SokratContent.loadLesson(...)` (fallback na stari dvokorak). **NULA promjene ponašanja** (DB↔datoteka fallback ostaje u loaderu).
-  Ovo je formalizirani „šav prema backendu" iz A4 — budući SW (F3), CRUD (F4) i tutor idu kroz Repo. Test `content-repo.spec.js`.
-- **F2 2E ✅ LIVE — error monitoring:** `js/monitoring.js` → `window.SokratMonitor` (Sentry, consent-gated preko `consent.js`,
-  Loader EU/DE, samo hvatanje grešaka, `sendDefaultPii:false`, release `sokrat-study@…`). Test `monitoring.spec.js`.
-- **F2 2A ✅ LIVE (2026-07-02) — S2 čisti JSON format (dual-read):** study sadržaj = čisti JSON u
-  **`data/json/<subjectId>/<varName>.json`** (1 datoteka = 1 window-var; 51 datoteka). Loader grananje:
-  **baza → JSON (catalog `content.dataFormat:'json'`, 18/18 predmeta) → `.js` fallback**. `.js` OSTAJE izvor
-  istine — `.json` je generirani export (`npm run export:json <id>`); **nakon izmjene `.js` migriranog predmeta
-  obavezan re-export** (CI drift-gate `export:json -- --check`). Strojni ugovor: `schema/subject-content.schema.json`
-  (draft-07) + `npm run validate:schema`. Vježbe NIKAD u JSON (BUG-012, `codeScripts` uvijek iz `.js`). Accounting
-  odgođen. Test `tests/dual-read.spec.js` (JSON put · shadow bajt-ekvivalencija · exercise put · fallback).
-- **F2 2C ✅ LIVE (deployano 2026-07-03, ff-merge `73f3809..f54048a`) — S3 AppState:** SVI mutable globali iz `config.js` (5 grupa:
-  nav/cards/quiz/fill/session) → **`window.AppState`** (`js/app-state.js`, učitava se prije config.js); config.js bez ijednog mutable
-  `let` (`progress`/`analytics` namjerno ne — persist-lifecycle). Funkcionalni testovi `tests/app-state.spec.js` (klik kao korisnik).
-- **F2 2D ▶ (2D.1/2D.2a/2D.2b ✅ LIVE `d2b1e48..9b62428`; 2D.2c ✅ LIVE `ba1c6f9..4ed6e75`, sve deployano 2026-07-04) — UI-primitivi = Web Components (light-DOM):** `<sokrat-toast>`
-  (`js/components/sokrat-toast.js`, `showToast()` delegira) + `<sokrat-modal>` primitiv (`js/components/sokrat-modal.js` + `css/sokrat-modal.css`:
-  open/close/ESC/backdrop/scroll-lock/fokus/Tab-trap) + learn image-viewer (`#imageModal`) migriran + **auth modal (`#authModal`) migriran** (2D.2c, `js/auth.js`+`css/auth.css` override; zadnji ad-hoc overlay pojeden)
-  + **`<sokrat-confirm>`** (2D.3, `js/components/sokrat-confirm.js`+`css/sokrat-confirm.css`: branded confirm-dijalog GRAĐEN NA `<sokrat-modal>` = prva kompozicija; `window.askConfirm()`→Promise; zamijenio 3 native `confirm()`; budući GDPR delete). Testovi `tests/components.spec.js`.
-  **✅ 2D.3 LIVE `7d88e5c..df67766` (2026-07-04) → time F2 (reusable jezgra) KOMPLETNA (2A/2B/2C/2D/2E svi LIVE).**
-- **F3 (performanse) — (3C.1+3B+3A) ✅ DEPLOYANO NA PRODUKCIJU 2026-07-05; 3D+3E na grani `foundation/f3d`:** redoslijed = najsigurnija cigla prva (3C→3B→3A→3D→3E; SW zadnja).
-  **✅ 3C.1** auto version-bump (`scripts/bump-version.js` = JEDAN broj za app: svi `?v=`+`CONTENT_VERSION`+`SW_VERSION`; `npm run bump`/`bump:check` CI gate; ADR-017). **✅ 3B** CSS bundling
-  (`scripts/build-css.js`: 26 `@import`→1 `styles.bundle.css`; `styles.css`=izvor-manifest, `index.html`→bundle; CI drift-gate; eliminiran render-blocking waterfall). **✅ 3A** Service Worker
-  (`sw.js` + `js/sw-register.js`: navigacija network-first + offline app-shell fallback; asseti SWR; Supabase/CDN network-only; kill-switch; `vercel.json` `/sw.js` no-cache; „Works offline" istina).
-  **3A.3 (FABLE): Fable-pregled popravio 3 nalaza u sw.js** (navigate-keš samo `res.ok`; `cache.put`→`event.waitUntil`; verzioniran precache) **+ update-flow** (`<sokrat-toast>`→`skipWaiting`→jedan reload). Testovi `tests/sw.spec.js` (offline load + update-flow e2e); app-testovi `serviceWorkers:'block'`.
-  **✅ DEPLOYANO** (main `c115a5d..868dc9f`; vercel.json `"//"` komentar-incident popravljen `868dc9f`). ✅ **3D.1** blind-map→WebP (−98%) · ✅ **3D.2** async KaTeX/Fonts · ✅ **3E.1/3E.2** a11y (0 axe violationa, sve 4 stranice) — **sve DEPLOYANO 2026-07-06 → F3 KOMPLETNA LIVE.**
-- **F4 🟡 U TIJEKU — dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13 (`5d24a96..79f17c7`)** — custom Admin CRUD (= B9/B10 gore): F4.1–4.4 ✅ + draft→objavi staza (`EDITOR_PLAN.md`; U1–U4 ✅ + U-UX ✅ DEPLOYANO → smjer C „Tok" u `EDITOR_UX.md`; **U6 strukturne ops ✅ KOMPLETNE** — grana `feature/u6-structural-ops`: kategorije + stavke add/edit/reorder/remove; DB id-resync 16 eng. odrađen 2026-07-17; authed 11/11); source-of-truth flip = U9+/F4.6 — **dizajniran UGC-spreman, ali student-upload tek nakon F6** (ADR-018). **F5⬜** SRS · **F6⬜** pred-UGC sigurnost (CSP/DOMPurify/moderacija) → **UGC** → tek onda nazad na sadržaj.
+Sve ostalo slijedi iz ovoga. Sustav nosi **dva odvojena sadržajna svijeta** koji dijele
+**isti prikazivač i isti editor**, ali imaju različito vlasništvo, različita prava i različit put upisa.
 
-### Blok C — priprema za budućnost (ne gradi se sad)
-Rezervirati u modelu: `users`, `subscriptions`, `is_premium`, UGC tablice.
+| | **Javni katalog** | **Osobno gradivo** |
+|---|---|---|
+| što je | gradivo koje objavljujemo mi | gradivo koje korisnik gradi sam, od nule |
+| tko čita | **svi**, i neprijavljeni | **samo vlasnik** |
+| tko piše | **admin** (`is_admin()`) | **vlasnik** (`owner_id = auth.uid()`) |
+| tablice | `subject_content` (+ audit `content_versions`) | `nodes` · `node_content` (+ audit `node_content_versions`) |
+| struktura | fiksna: fakultet → smjer → godina → semestar → predmet → lekcija | **slobodno stablo** koje korisnik sam slaže |
+| izvor strukture | `data/catalog.js` (datoteka) | baza (`nodes`, self-referencijalno) |
+| put upisa | `publish_document()` | `publish_node()` |
+| slike | bucket `lesson-images` (javan) | bucket `node-images` (**privatan**) |
 
-## Pravila rada
-1. Mali koraci, svaki testabilan zasebno.
-2. Live verzija radi nakon svakog koraka.
-3. Postojeća schema sadržaja se ne mijenja bez jako dobrog razloga.
-4. Ništa se ne briše dok zamjena nije dokazano ispravna.
+**Odluka: svjetovi se NE miješaju** (ADR-024 + Leon 2026-08-07). Nema kopiranja kataloga u osobno
+gradivo, nema veze na original, nema zajedničkih redaka. Jedina dodirna točka je **kôd** — isti
+prikazivač, isti editor, isti draft-stroj.
+
+> **Zašto to nije slučajnost nego zaštita:** javni katalog koristi 22 predmeta i studentski „vrući put".
+> Da su svjetovi spojeni, svaka greška u osobnom graditelju mogla bi srušiti učenje svima.
+
+---
+
+## 3 · Model podataka — **stvaran** (produkcija, 7 tablica)
+
+Sve tablice imaju uključen RLS.
+
+```
+── JAVNI KATALOG ────────────────────────────────────────────────────────
+subject_content        (subject_id text, var_name text, payload jsonb,
+                        updated_at timestamptz, version bigint)
+      1 red = 1 „window var" (npr. te2 / midterm-1) → cijeli objekt kategorija kao jsonb
+content_versions       (id bigint, subject_id text, var_name text, payload jsonb,
+                        op text, edited_by uuid, edited_at timestamptz)
+      APPEND-ONLY audit: staro stanje PRIJE svakog upisa
+
+── OSOBNO GRADIVO ───────────────────────────────────────────────────────
+nodes                  (id uuid, owner_id uuid→auth.users ON DELETE CASCADE,
+                        parent_id uuid→nodes ON DELETE CASCADE,
+                        kind text ['folder'|'study'], name text, position int,
+                        icon text, color text,
+                        created_at, updated_at, deleted_at)   ← soft-delete
+node_content           (node_id uuid→nodes PK, payload jsonb, version bigint, updated_at)
+node_content_versions  (id bigint, node_id uuid, payload jsonb, op text,
+                        edited_by uuid, edited_at)            ← APPEND-ONLY audit
+
+── KORISNIK ─────────────────────────────────────────────────────────────
+profiles               (user_id uuid, role text, created_at)  ← role='admin' → is_admin()
+progress               (user_id uuid, key text, data jsonb, updated_at)
+```
+
+### Tri stvari koje treba znati o ovom modelu
+
+1. **`payload jsonb` čuva postojeći oblik sadržaja** (kategorije s `flashcards`/`quiz`/`fillBlanks`/`learn`).
+   Zbog toga su oba svijeta **čitljiva istim prikazivačem** i migracija nikad nije mijenjala UI.
+   Kanonski oblik: [CONTENT_SCHEMA.md](./CONTENT_SCHEMA.md).
+2. **`progress` je generički key-value.** Nije vezan na katalog — ključ je običan tekst. Zato osobno
+   gradivo koristi isti prostor (`node:<uuid>`) i **ne treba nikakvu promjenu sheme**, uključujući
+   cloud-sync (spajanje unijom/max).
+3. **Integritet stabla čuva trigger, ne aplikacija.** `nodes_validate` na svakom upisu provjerava:
+   roditelj postoji · isti je vlasnik · roditelj je **folder** · **nema ciklusa** (rekurzivni CTE).
+   Vrijedi i za izravan SQL, ne samo za RPC.
+
+---
+
+## 4 · Putovi ČITANJA
+
+**Javni katalog — „dual-read", tri razine (`js/content-loader.js`):**
+
+```
+Supabase (subject_content)  →  data/json/<id>/*.json  →  data/<id>/*.js
+        primarno                    CDN fallback            zadnja mreža
+```
+Lijeno po predmetu. Šav prema ostatku aplikacije je **`window.SokratContent`**
+(`js/content-repo.js`): `listSubjects` / `getSubject` / `loadLesson`.
+Datoteke su i dalje izvor istine; baza je zrcalo (re-sync `scripts/migrate-content.js`).
+
+**Osobno gradivo — izravan `SELECT` uz RLS.** Nema fallbacka i ne treba ga: gradivo postoji samo u
+bazi. Ako baza spava ili korisnik nije prijavljen, područje se pošteno prikaže kao nedostupno.
+
+**Vježbe se NIKAD ne čitaju iz baze.** Vidi §6.
+
+---
+
+## 5 · Putovi PISANJA — samo dva, oba kroz RPC
+
+Klijent **nikad ne piše izravno u sadržajne tablice.** Grantovi su namjerno oduzeti; svaki upis ide
+kroz `SECURITY DEFINER` funkciju koja sama provjerava tko smije.
+
+| RPC | tko smije | što radi |
+|---|---|---|
+| `publish_document(subject_id, writes)` | **admin** | atomična objava kataloga + zapis u `content_versions` |
+| `publish_node(node_id, payload, base_version)` | **vlasnik** | atomična objava osobnog gradiva + audit; `base_version` odbija izgubljeni upis |
+| `create_node` · `rename_node` · `move_node` · `reorder_nodes` · `delete_node` · `restore_node` | **vlasnik** | struktura stabla |
+
+**Prava na produkciji (provjereno):** `anon` nema `EXECUTE` ni na jednom od tih RPC-ova;
+`authenticated` ima, a vlasništvo presuđuje **unutar** funkcije. Nad `nodes`/`node_content`/
+`node_content_versions` `anon` nema ništa, a `authenticated` ima **samo `SELECT`** — čime je usput
+zatvoren i `TRUNCATE` (na njega se RLS ne primjenjuje).
+
+**Zašto dva publish-puta, a ne jedan:** admin objavljuje **tuđim** korisnicima, vlasnik **sebi**.
+Spajanje bi značilo jednu funkciju s dvije potpuno različite provjere prava — svjesno su odvojeni (ADR-024).
+
+---
+
+## 6 · Sigurnosne granice — dirati samo uz razumijevanje
+
+1. **`js/blocks-renderer.js` = JEDINI prikazivač sadržaja.** Escapira sve, izvršava ništa.
+   Namjerno **ne tipografira matematiku**: emitira `\(tex\)` kao **tekst**, a `renderMath()` ga
+   obradi *poslije umetanja*. **Svaki pozivatelj mora to dovršiti** — propust je uzrokovao BUG-021.
+2. **Vježbe su KÔD, ne podatak.** Sadrže `generate()` funkcije koje serijalizacija uništava, pa se
+   učitavaju isključivo iz `.js` preko `content.codeScripts` (BUG-012). **Nikad u bazu ni JSON.**
+3. **`editableToInline` (`js/block-editor.js`) = destilacija DOM → kurirani model.** Iz uređivanog
+   HTML-a izvlači samo dopuštena polja. Zato se u `contenteditable` **ne smije** ubaciti tipografirana
+   matematika — serijalizator bi je pročitao natrag i trajno pojeo formulu.
+4. **`service_role` ključ ide SAMO u Supabase Edge Functions i lokalne `.env` skripte** (ADR-016).
+   Nikad u preglednik, Vercel ili GitHub Secrets.
+5. **Audit tablice su append-only.** `content_versions` i `node_content_versions` se ne brišu.
+6. **Slike osobnog gradiva:** payload nosi **stabilnu oznaku** `node-img:<uid>/<node>/<uuid>`, a
+   potpisani URL se traži **tek pri prikazu, kod pozivatelja**. Time potpis koji istječe nikad ne
+   uđe u bazu ni u autosave, a prikazivač ostaje nedirnut.
+
+---
+
+## 7 · Klijent — moduli i ŠAVOVI
+
+Bez frameworka i bez build-koraka. Globalno stanje = `window.AppState`.
+UI-primitivci = light-DOM Web Components (`<sokrat-toast>`, `<sokrat-modal>`, `<sokrat-confirm>`).
+
+**Tri šava nose cijelu ponovnu upotrebu — i objašnjavaju zašto je osobni graditelj bio jeftin:**
+
+| šav | gdje | zašto je važan |
+|---|---|---|
+| **`SokratContent`** | `js/content-repo.js` | sakriva dual-read; pozivatelj ne zna odakle je sadržaj |
+| **`SokratAdmin.studioBridge`** | `js/admin.js` | **jedina** točka spajanja Studija na backend. Osobni graditelj je promijenio samo 3 IO-metode (`setNode`/`enter`/`publish`) |
+| **`SokratDraft`** | `js/draft-store.js` | draft je **generičan po tekstualnom ključu**. Katalog koristi `subjectId::lessonId`, čvor sintetički `node:<uuid>` → autosave, opovi i blok-editor rade **bez ijedne izmjene** |
+
+> **Pouka koja se ponovila dvaput:** kad je šav generičan po ključu (`draft-store`, `progress`),
+> novi svijet se dodaje bez promjene sheme. Kad nije (slike vezane na vlasnički prefiks), dodavanje
+> novog slučaja košta. To je najbolji dostupan kriterij pri projektiranju sljedeće značajke.
+
+---
+
+## 8 · Storage — dva bucketa, namjerno različita
+
+| bucket | javan | tko piše | putanja |
+|---|---|---|---|
+| `lesson-images` | **da** (`public read`) | admin (`is_admin()`) | slobodna |
+| `node-images` | **ne** (`public=false`) | vlasnik | **`<auth.uid()>/<node_id>/<uuid>.<ext>`** |
+
+Sva četiri policyja na `node-images` traže da je **prvi segment putanje === `auth.uid()`**.
+Nijedan ne spominje `is_admin()` i nijedan ne vrijedi za `anon`.
+
+---
+
+## 9 · Boje — ugovor koji TEK TREBA izvesti
+
+Odluka (Leon 2026-08-07): **boja se nasljeđuje od sekcije i smije se pregaziti.**
+
+```
+sekcija.color (#rrggbb)        ← postoji danas, izvor
+     ↓ nasljeđuje
+blok.color?                    ← NE POSTOJI — treba dodati
+kartica/pitanje.color?         ← NE POSTOJI — treba dodati
+     ↓
+tekst (run.color)              ← postoji: 8 kuriranih tokena
+```
+Odsutna vrijednost znači **naslijedi**, ne „bez boje". Danas su to tri nepovezana mehanizma s dvije
+rupe; ujednačavanje traži proširenje sheme, prikazivača i editora.
+
+---
+
+## 10 · Poznati dugovi i otvoreni problemi
+
+| stavka | narav | status |
+|---|---|---|
+| **Vježbe u osobnom gradivu** | vježba je kôd; UGC ne može autorirati kôd | **Odgođeno** (Leon 2026-08-07): *„morat ćemo osmislit potpuno poseban način"*. Traži **vlastiti spec**, nije proširenje sadašnjeg engine-a. Ništa se ne obećava u sučelju. |
+| **Dijeljenje osobnog gradiva** | model je spreman (jedan predikat + RPC-only upis) | **⚠️ jedina stavka koja NIJE besplatna: slike.** Policy veže čitanje na vlasnički prefiks putanje → primatelj podijeljenog gradiva **ne bi vidio slike**. Rješenje traži potpisivanje kroz funkciju ili promjenu policyja. |
+| **Siročad u Storageu** | upload se dogodi odmah, payload tek na „Objavi" | svaki prekid ostavlja neupotrijebljen objekt. Nije sigurnosni problem (privatan bucket), ali kvota nije beskonačna. |
+| **Kvote** | nema ih | Leonova odluka: **granicu zapisati sad, provesti kasnije**. Danas postoji samo 5 MB po datoteci. |
+| **Opseg stabla** | nepoznat | projektirati da izdrži rast: pretraga i lijeno učitavanje grana **planirati, ne graditi**; ograničenja mjeriti. |
+| **Zatečena prava** | `handle_new_user`, `is_admin`, `snapshot_content_version`, `set_updated_at`, `touch_subject_content` su izvršive **anonu** | naslijeđeno iz starije sheme. Nove `*_node` funkcije su zatvorene ispravno; stare treba stegnuti istim obrascem. |
+| **`ARCHITECTURE` je bio fikcija 6 tjedana** | proces, ne kôd | dokument se pisao kao namjera i nikad prepisao nakon isporuke → uveden gate `npm run check:docs` i pravilo da `product/` nosi kriterije prihvaćanja |
+
+---
+
+## 11 · NE-ciljevi (izričito)
+
+- **Vlastiti poslužitelj / `/api` sloj** — čitanje i pisanje idu izravno u Supabase (ADR-011).
+- **Build-korak, framework, bundler** — vanilla ostaje (ADR-014).
+- **Normalizirani katalog** (`institutions/faculties/…`) — planiran 2026-06, **nikad izgrađen i ne gradi se**.
+- **Miješanje dvaju svjetova** — bez kopiranja kataloga u osobno gradivo (Leon 2026-08-07).
+- **Vježbe u osobnom gradivu** — za sada ne; vidi §10.

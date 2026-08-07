@@ -424,7 +424,7 @@ catalog-a (`content.resolve`). Top-level `const` u skripti nije dostupan kao
 **Odluka:** Uvesti `data/catalog.js` kao jedini izvor istine. `content.resolve`
 mapira (predmet, lekcija) → globalna varijabla, čime generalizira `getSubjectData()`.
 **Posljedice:** Novi predmet = jedan unos u katalog. Kasnije katalog dolazi iz baze
-bez promjene UI logike. Migracija na bazu je triviјalna jer model već odgovara.
+bez promjene UI logike. Migracija na bazu je trivijalna jer model već odgovara.
 
 ## ADR-002 — Hijerarhija s `institutions/faculties` od početka
 **Datum:** 2026-06-01 · **Status:** prihvaćeno
