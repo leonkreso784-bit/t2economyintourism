@@ -4,6 +4,58 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-026 — Zove se „materijal"; mobilno autorstvo ide preko korisnikovog AI-a, ne preko touch-editora
+**Datum:** 2026-08-07 · **Status:** ✅ ODLUČENO (Leon) · **Dopunjuje:** [ADR-025](#adr-025--osobno-gradivo-osam-presuda-o-dosegu-vježbe-dijeljenje-napredak-boje-opseg) · [ADR-024](#adr-024--osobni-ugc-graditelj--zaseban-otok-nodes-stablo-owner-rls-a-ne-proširenje-kataloga)
+
+**Kontekst.** Nakon ADR-025 ostala su dva otvorena pitanja koja mijenjaju opseg posla: kako se **zove** ono
+što korisnik gradi, i mora li se to moći graditi **na mobitelu**. Drugo pitanje je izgledalo kao „koliko posla
+oko touch-editora", a odgovor ga je pretvorio u nešto drugo.
+
+**Odluke (Leon).**
+1. **Ono što korisnik gradi zove se „materijal (za učenje)", ne „gradivo".** *„Gradivo"* ostaje rezervirano za
+   **javni katalog** — ono što objavljujemo mi. Riječ povlači granicu između dva svijeta i mora biti
+   **institucijski neutralna**: „gradivo" miriše na propisani kurikul, a po ADR-025 §6 korisnik je **bilo tko**.
+   Kratki oblik **„materijal"** u gumbima, puni **„materijal za učenje"** u prozi.
+2. **Mobilno autorstvo ide preko korisnikovog AI-a (MCP), ne preko editora na dodir.** Podjela uloga:
+
+   | | računalo | mobitel |
+   |---|---|---|
+   | učenje | da | da |
+   | autorstvo **rukom** | **„brutalan" editor** (Leonov izraz) — nosi diferencijaciju | ne |
+   | autorstvo **preko AI-a** | gumb → spoji svoj AI | gumb → spoji svoj AI |
+
+3. **AI-gumb OSTAJE — i na računalu i na mobitelu — ali mijenja značenje.** Nije *„mi generiramo umjesto tebe"*,
+   nego *„ovo te spaja s AI-em kojeg već koristiš"*. Korisnik svom AI-u donese kontekst (bilješke, PDF,
+   predavanje), a taj AI piše u njegovo stablo kroz MCP.
+
+**Izvedene posljedice (ne odluke — proizlaze iz gornjeg).**
+- **Današnji tekst gumba je pogrešan i mora se promijeniti.** [`studio.js:235-237`](../../js/studio.js#L235-L237) obećava
+  *„Napiši samo Learn — kartice, kviz i dopuni nastaju automatski"* uz `disabled` gumb *„Generiraj iz Learna"*.
+  To je **druga značajka** (automatska generacija iz Learna) od one koja je odlučena (spajanje vlastitog AI-a).
+- **Jedna radnja, dva ulaza.** Gumb danas živi u inspektoru Studija — jedinoj površini koje na mobitelu neće biti.
+  Na mobitelu mora stajati ondje gdje mobilno autorstvo počinje: **„Moji materijali"** na profilu
+  (`css/my-materials.css` već ima `@media (max-width: 640px)`). Projektirati kao **jednu radnju s dva ulaza**,
+  da se ne izgradi dvaput.
+- **„Spoji direktno" ovisi o tuđem klijentu, ne o nama.** Najbolji put je dubinska poveznica / instalacija
+  konektora u korisnikovoj AI-aplikaciji, ispravan mehanizam je OAuth, a **zajamčen** put je kopiranje URL-a i
+  koda. Gumb se projektira tako da mu je *najbolji* put dubinska poveznica, a *sigurnosni* kopiranje —
+  besešavnu verziju ne smijemo obećati jer je ne kontroliramo.
+- **MCP ne dobiva nijedan nov put upisa.** Koristi postojećih 7 owner-scoped RPC-ova (ADR-024 je to predvidio).
+
+**Invarijante MCP-a (zapisati sad, dok je jeftino).**
+- MCP alati **nikad** ne izlažu javni katalog ni `is_admin()` — samo čvorove vlasnika.
+- MCP glumi **korisnika** (njegov JWT), **nikad `service_role`** (ADR-016). Iznad korisnika = jedan bug čita svima sve.
+- Time je domet prompt-injectiona iz korisnikovog PDF-a **njegovo vlastito stablo** — ne katalog, ne tuđi
+  materijali. To svojstvo je posljedica „dva svijeta" (ADR-024) i mora se čuvati, ne potrošiti.
+- Mobilni MCP znači **hostani** MCP (stdio-spike `mcp-admin/` je lokalan i read-only → mobitel do njega ne dolazi).
+  Jedini sankcionirani dom = **Supabase Edge Function** (ADR-016), što je i spike-ov vlastiti sljedeći korak.
+
+**Preporuka izvedbe (Claude, nije Leonova odluka).** MCP **ne ide gore** u redoslijedu. Alat koji piše kartice i
+kvizove u model u kojem se oni još ne mogu ni autorirati ni učiti (rupe iz ADR-025) gradi cijev prema
+nedovršenom spremniku. Redoslijed ostaje: **dovrši model → pa MCP.** Gumb do tada ne smije lagati.
+
+---
+
 ## ADR-025 — Osobno gradivo: osam presuda o dosegu (vježbe, dijeljenje, napredak, boje, opseg)
 **Datum:** 2026-08-07 · **Status:** ✅ ODLUČENO (Leon, odgovori na izravna pitanja) · **Dokument:** [ARCHITECTURE.md](../architecture/ARCHITECTURE.md)
 

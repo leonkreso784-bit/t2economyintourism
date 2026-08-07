@@ -10,6 +10,8 @@
 //   2) `plan/` ima više od JEDNOG spec-a             → „koji plan vrijedi?" (uzrok krivih odluka)
 //   3) `product/**` sadrži dnevnički datum           → definicija se pretvara u dnevnik
 //   4) .md postoji, a nije naveden u docs/README.md  → dokument-duh koji nitko ne nađe
+//   5) CONTENT_SCHEMA nabraja druge tokene boje       → dokument zaostaje za KODOM (ne samo za sobom)
+//                       nego schema/*.json
 //
 // Pokreni: npm run check:docs   (dio `npm run preflight`)
 
@@ -106,6 +108,41 @@ if (fs.existsSync(INDEX)) {
     // dovoljno je da se ime pojavi u indeksu (poveznica ili spomen)
     if (idx.indexOf(base) === -1) {
       problems.push('NIJE U INDEKSU     ' + r + '  → dodaj redak u docs/README.md');
+    }
+  }
+}
+
+// ── 5) CONTENT_SCHEMA mora nabrajati TOČNO one tokene boje koje shema dopušta ──
+// Provjere 1–4 čuvaju STRUKTURU dokumentacije; ovo je prva koja čuva njenu ISTINITOST.
+// Povod: odlomak o „runs" tvrdio je 5 tokena boje i nije znao za `math`, dok su u shemi (i na
+// produkciji) bila 9 tokena i `math` — autor sadržaja koji čita dokument ne bi znao da inline
+// matematika postoji. Shema je izvor istine; dokument se mjeri po njoj.
+const SCHEMA = path.join(ROOT, 'schema', 'subject-content.schema.json');
+const CS = path.join(DOCS, 'architecture', 'CONTENT_SCHEMA.md');
+if (fs.existsSync(SCHEMA) && fs.existsSync(CS)) {
+  let want = null;
+  try {
+    const sc = JSON.parse(fs.readFileSync(SCHEMA, 'utf8'));
+    const run = sc.definitions && sc.definitions.run;
+    if (run && run.properties && run.properties.color) want = run.properties.color.enum;
+  } catch (e) {
+    problems.push('SHEMA NEČITLJIVA    schema/subject-content.schema.json → ' + e.message);
+  }
+  if (Array.isArray(want)) {
+    const src = fs.readFileSync(CS, 'utf8');
+    const line = src.split('\n').find((l) => l.indexOf('Tokeni boje') !== -1);
+    if (!line) {
+      problems.push('NEMA POPISA BOJA   ' + rel(CS) +
+        '\n      → treba redak koji počinje „**Tokeni boje" i nabraja tokene u `backtickovima`');
+    } else {
+      const got = (line.match(/`[a-z]+`/g) || []).map((t) => t.slice(1, -1));
+      const missing = want.filter((t) => got.indexOf(t) === -1);
+      const extra = got.filter((t) => want.indexOf(t) === -1);
+      if (missing.length || extra.length) {
+        problems.push('BOJE SE RAZILAZE   ' + rel(CS) + ' vs schema/subject-content.schema.json' +
+          (missing.length ? '\n      → shema ima, dokument NEMA: ' + missing.join(', ') : '') +
+          (extra.length ? '\n      → dokument ima, shema NEMA: ' + extra.join(', ') : ''));
+      }
     }
   }
 }

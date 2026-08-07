@@ -123,7 +123,24 @@ learn: {
   ]
 }
 ```
-**`inline`** = obični string ILI niz „runs" `[{ text, b?, i?, color?, href? }]`; `color` samo iz kuriranog seta **`indigo|green|amber|red|default`** (nikad proizvoljna vrijednost). Ugovor je strojno provjeren: `schema/subject-content.schema.json` (`block` = `oneOf` 9 tipova, `additionalProperties:false`) + `validate-content.js` (`validateBlocks`). Blokovi žive u `payload` jsonb → export/dual-read ih nose kao čiste podatke (bez DB DDL-a).
+**`inline`** = obični string ILI niz „runs" `[{ text, b?, i?, color?, href?, math? }]`. Svako polje osim `text` je neobavezno:
+
+| polje | tip | značenje |
+|---|---|---|
+| `text` | string | sadržaj rana |
+| `b` / `i` | bool | podebljano / kurziv |
+| `color` | token | **samo** iz kuriranog seta — nikad proizvoljna vrijednost |
+| `href` | string | poveznica; sanitizira se na unosu (`sanitizeLink`) **i** na prikazu (`safeUrl`) |
+| `math` | bool | ran je **inline formula**; `text` je RAW LaTeX **bez delimitera** |
+
+**Tokeni boje (9):** `indigo` · `green` · `amber` · `red` · `cyan` · `blue` · `violet` · `pink` · `default`.
+
+> ⚠️ **`math: true` je isključiv.** Renderer takav ran emitira kao `\(tex\)` **u obliku teksta** i namjerno ga ne
+> tipografira — to je sigurnosna granica (`js/blocks-renderer.js` ne izvršava ništa). **Tipografiranje mora
+> dovršiti pozivatelj** pozivom `renderMath()` *nakon* umetanja u DOM. Propust tog koraka je bio **BUG-021**
+> (formule su u Studiju ostajale sirovi LaTeX). Isto vrijedi za blok `formula`.
+
+Ugovor je strojno provjeren: `schema/subject-content.schema.json` (`block` = `oneOf` 9 tipova, `additionalProperties:false`) + `validate-content.js` (`validateBlocks`), a popis tokena boje uspoređuje **`npm run check:docs`** s onim iz sheme (ovaj je odlomak jednom zaostao za kodom za 4 boje i cijeli `math`). Blokovi žive u `payload` jsonb → export/dual-read ih nose kao čiste podatke (bez DB DDL-a).
 
 ## Strojno-čitljiv ugovor + JSON format pohrane (F2 2A, ✅ LIVE 2026-07-02)
 - **`schema/subject-content.schema.json`** (JSON Schema draft-07) = strojno-čitljiva verzija OVE sheme
