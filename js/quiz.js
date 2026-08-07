@@ -45,7 +45,8 @@ function getQuizQuestions(category, count) {
                     questions.push({
                         ...q,
                         category: cat,
-                        categoryName: content[cat].name
+                        categoryName: content[cat].name,
+                        catColor: content[cat].color   // M3b: akcent sekcije (pitanje ga smije pregaziti)
                     });
                 });
             }
@@ -56,7 +57,8 @@ function getQuizQuestions(category, count) {
                 questions.push({
                     ...q,
                     category: category,
-                    categoryName: content[category].name
+                    categoryName: content[category].name,
+                    catColor: content[category].color   // M3b
                 });
             });
         }
@@ -85,6 +87,11 @@ function showQuestion() {
     const percent = ((quiz.index + 1) / quiz.questions.length) * 100;
     document.getElementById('quizProgressBar').style.width = `${percent}%`;
     
+    // M3b: akcent pitanja — vlastita boja, inače naslijeđena od sekcije (UGC_SPEC §3).
+    if (window.SokratBlocks && typeof SokratBlocks.applyAccent === 'function') {
+        SokratBlocks.applyAccent(document.querySelector('#quizGame .question-card'), [q.color, q.catColor]);
+    }
+
     document.getElementById('questionCategory').textContent = q.categoryName;
     document.getElementById('questionText').textContent = q.question;
 

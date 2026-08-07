@@ -37,7 +37,8 @@ function getAllFillQuestions() {
                 all.push({
                     ...q,
                     category: category,
-                    categoryName: content[category].name
+                    categoryName: content[category].name,
+                    catColor: content[category].color   // M3b: akcent sekcije (dopuna ga smije pregaziti)
                 });
             });
         }
@@ -61,7 +62,12 @@ function showFillQuestion() {
     }
 
     const q = fill.questions[fill.index];
-    
+
+    // M3b: akcent dopune — vlastita boja, inače naslijeđena od sekcije (UGC_SPEC §3).
+    if (window.SokratBlocks && typeof SokratBlocks.applyAccent === 'function') {
+        SokratBlocks.applyAccent(document.querySelector('#fill .fill-card'), [q.color, q.catColor]);
+    }
+
     document.getElementById('fillCategory').textContent = q.categoryName;
     
     const sentenceWithBlank = q.sentence.replace('_______', '<span class="blank">_______</span>');

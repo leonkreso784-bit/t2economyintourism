@@ -39,7 +39,8 @@
         "id":          { "type": "string", "minLength": 1 },
         "question":    { "type": "string", "minLength": 1 },
         "answer":      { "type": "string", "minLength": 1 },
-        "explanation": { "type": "string" }
+        "explanation": { "type": "string" },
+        "color":       { "$ref": "#/definitions/accent" }
       }
     },
     "quiz": {
@@ -52,7 +53,8 @@
         "options":  { "type": "array", "minItems": 2, "maxItems": 6, "items": { "type": "string", "minLength": 1 } },
         "correct":  { "type": "integer", "minimum": 0 },
         "image":    { "type": "string", "minLength": 1 },
-        "imageAlt": { "type": "string" }
+        "imageAlt": { "type": "string" },
+        "color":    { "$ref": "#/definitions/accent" }
       }
     },
     "fillBlank": {
@@ -63,7 +65,8 @@
         "id":       { "type": "string", "minLength": 1 },
         "sentence": { "type": "string", "minLength": 1, "pattern": "_______" },
         "answer":   { "type": "string", "minLength": 1 },
-        "hint":     { "type": "string" }
+        "hint":     { "type": "string" },
+        "color":    { "$ref": "#/definitions/accent" }
       }
     },
     "learn": {

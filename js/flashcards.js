@@ -35,7 +35,9 @@ function getAllFlashcards() {
                 all.push({
                     ...card,
                     category: category,
-                    categoryName: content[category].name
+                    categoryName: content[category].name,
+                    // M3b: boja SEKCIJE putuje uz karticu — `card.color` (ako postoji) je pregazi.
+                    catColor: content[category].color
                 });
             });
         }
@@ -47,10 +49,24 @@ function flipCard() {
     document.getElementById('flashcard').classList.toggle('flipped');
 }
 
+/**
+ * M3b — akcent kartice (ugovor: docs/product/UGC_SPEC.md §3).
+ * Kartica bez svoje boje naslijedi boju sekcije; ni jedno ni drugo → svojstvo se UKLONI,
+ * inače bi boja prethodne kartice ostala na sljedećoj (jedan te isti DOM za cijeli špil).
+ * Validacija je u `SokratBlocks` — jedno mjesto istine za sve study-modove.
+ */
+function applyCardAccent(card) {
+    const el = document.getElementById('flashcard');
+    if (window.SokratBlocks && typeof SokratBlocks.applyAccent === 'function') {
+        SokratBlocks.applyAccent(el, card ? [card.color, card.catColor] : []);
+    }
+}
+
 function updateFlashcard() {
     const cards = AppState.cards;
     if (!cards.deck || cards.deck.length === 0) {
         const tr = (k, fb) => (typeof t === 'function' ? t(k) : fb);
+        applyCardAccent(null);
         document.getElementById('cardCategory').textContent = tr('fc.noCards', 'No Cards');
         document.getElementById('cardQuestion').textContent = tr('fc.noCardsAvailable', 'No flashcards available for this lesson.');
         document.getElementById('cardAnswer').textContent = tr('fc.trySelecting', 'Try selecting a different lesson or category.');
@@ -59,6 +75,7 @@ function updateFlashcard() {
     }
     
     const card = cards.deck[cards.index];
+    applyCardAccent(card);
     document.getElementById('cardCategory').textContent = card.categoryName;
     document.getElementById('cardQuestion').textContent = card.question;
     document.getElementById('cardAnswer').textContent = card.answer;

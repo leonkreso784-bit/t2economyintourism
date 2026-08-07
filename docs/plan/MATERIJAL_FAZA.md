@@ -18,7 +18,7 @@ i **iz njega uči**.
 | **M1** | svi modovi dostupni u praznom materijalu | ✅ |
 | **M2** | učenje iz vlastitog materijala | ✅ |
 | **M3a** | boja **bloka** (learn) — shema · prikazivač · CSS · editor | ✅ |
-| **M3b** | boja **kartice / pitanja / dopune** | ⬜ |
+| **M3b** | boja **kartice / pitanja / dopune** (+ akcent sekcije na studentskoj strani) | ✅ |
 | **M5a** | **duljina kartice** — vođenje u editoru (upozorenje 200 · blokada 500) | ⬜ |
 | **M5b** | skratiti 25 zatečenih kartica → tek tada `maxLength` u shemi | ⬜ |
 | **M4** | sučelje prestaje obećavati | ✅ |
@@ -26,19 +26,24 @@ i **iz njega uči**.
 Redoslijed nije proizvoljan: **M1 otključava autorstvo** (bez nje ostale cigle nemaju što pokazati),
 **M2 je pravi posao**, a **M3 ide zadnja jer jedina dira javni katalog**.
 
-### Kriteriji prihvaćanja — **4 od 5**
+### Kriteriji prihvaćanja — **5 od 5**
 
-Mjeri se po [UGC_SPEC §2](../product/UGC_SPEC.md), ne po ovoj tablici cigli. Ostaje **kriterij 4** (boje).
+Mjeri se po [UGC_SPEC §2](../product/UGC_SPEC.md), ne po ovoj tablici cigli.
 
 | | kriterij | |
 |---|---|---|
 | 1 | napravim materijal od nule (kartica + kviz + dopuna) | ✅ M1 |
 | 2 | učim iz njega istim ekranima kao iz kataloga | ✅ M2 |
 | 3 | napredak se pamti i sinkronizira | ✅ M2 |
-| 4 | boja sekcije se vidi na blokovima i karticama, može se pregaziti | 🟦 **M3a ✅ blokovi · M3b ⬜ kartice** |
+| 4 | boja sekcije se vidi na blokovima i karticama, može se pregaziti | ✅ M3a + M3b |
 | 5 | sučelje ne spominje ništa što ne postoji | ✅ M4 |
 
-⚠️ **Nijedan kriterij nije verificiran Leonovom živom prijavom** — sve stoji na grani, ne na produkciji.
+⚠️ **Kriteriji su ispunjeni u kodu i dokazani testovima, ali NISU verificirani Leonovom živom
+prijavom** — sve stoji na grani `docs/stage-a`, ne na produkciji. Faza se **ne proglašava
+gotovom** dok Leon ne prođe tokom rukom; točno ta razlika ju je jednom već krivo zatvorila.
+
+**M5 (duljina kartice) ostaje otvoren**, ali NIJE kriterij prihvaćanja ove faze — nov je nalaz
+iz Leonovog živog pregleda i vodi se kao zaseban posao.
 
 ---
 
@@ -101,7 +106,25 @@ prošlog predmeta). Reset-blok u `initStudyPage` mora pokriti i ovaj put.
 
 ---
 
-### M3 · Boje kao jedan sustav — **M3a ✅ · M3b ⬜**
+### M3 · Boje kao jedan sustav — **M3a ✅ · M3b ✅**
+
+> **M3b — kako je izvedeno.** Tri study-moda **nemaju zajednički prikazivač**: `flashcards.js`,
+> `quiz.js` i `fill-blanks.js` pišu `textContent` u **fiksni DOM**, pa ne postoji omot u koji bi se
+> boja umetnula kao u M3a. Zato akcent ne izlazi kao niz nego se na spremnik postavi **`--item-acc`**
+> (`#flashcard` · `#quizGame .question-card` · `#fill .fill-card`), a CSS ga uzima kroz
+> **`var(--item-acc, <zatečena vrijednost>)`** — bez boje se crta točno ono što se crtalo prije,
+> pa nema uvjetnih selektora ni rizika za 22 živa predmeta.
+>
+> **Validacija živi na JEDNOM mjestu** (`SokratBlocks.accentFrom`) i dijeli je blok, sve tri
+> study-stavke i Studio-panel. Tri kopije regexa bile bi drift koji smo **već platili** (shema je
+> znala 4 boje teksta, editor je deployao 8).
+>
+> **🕳 Rupa nađena usput:** `--st-acc` se do sada postavljao **isključivo u Studiju** → onaj tko
+> **uči** nije vidio boju sekcije u learnu **nigdje**. Blok s vlastitom bojom je radio (emitira
+> `--lb-acc`), ali **nasljeđivanje nije — neobojan blok nema omot koji bi se obojao.** Bez toga bi
+> tri moda od četiri pokazivala boju sekcije, a learn ne. Popravljeno: `js/learn.js` postavlja
+> validiran `--st-acc` na karticu sekcije. **Time kriterij 4 vrijedi na studentskoj strani, ne samo
+> u editoru.**
 
 > **Podijeljeno u dvije polovice.** Leon je imenovao *„mijenjanje boja po blokovima nije završeno
 > u learnu"* kao rupu, a kartice kao *„trebat će biti"*. **M3a (blokovi) je isporučen**; M3b

@@ -79,15 +79,24 @@
     overflow-y: auto;
 }
 
+/* ── M3b — AKCENT KARTICE (ugovor: docs/product/UGC_SPEC.md §3) ──────────────
+   `js/flashcards.js` postavi `--item-acc` na `#flashcard` SAMO za validiran `#rrggbb`
+   (provjera živi u `SokratBlocks.applyAccent` — jedno mjesto za sva tri study-moda).
+
+   Fallback u `var()` je cijeli mehanizam: bez boje se crta točno ono što se crtalo i
+   prije, pa je zatečeni izgled 22 predmeta netaknut i nema uvjetnih selektora.
+   Lice nosi gradijent, pa akcent ide kao unutarnji prsten; naličje već ima rub, pa mu
+   se samo mijenja boja. */
 .flashcard-front {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     color: white;
+    box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-lg);
 }
 
 .flashcard-back {
     background: var(--bg-secondary);
     transform: rotateY(180deg);
-    border: 3px solid var(--secondary);
+    border: 3px solid var(--item-acc, var(--secondary));
 }
 
 .card-category {

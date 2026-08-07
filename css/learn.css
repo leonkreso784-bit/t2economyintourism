@@ -146,12 +146,19 @@
    LEARN CARDS
    ===================================================== */
 
+/* ── M3b — AKCENT SEKCIJE NA STUDENTSKOJ STRANI (ugovor: UGC_SPEC.md §3) ─────
+   `js/learn.js` postavi `--st-acc` na karticu sekcije SAMO za validiran `#rrggbb`.
+   Do M3b se `--st-acc` postavljao isključivo u Studiju, pa je boja sekcije onome
+   tko UČI bila nevidljiva — a kriterij 4 traži da se vidi „na blokovima i karticama".
+   Blok s VLASTITOM bojom je i prije radio (emitira `--lb-acc`); nasljeđivanje nije,
+   jer neobojani blok nema omot koji bi se obojao — nosi ga zato kartica sekcije. */
 #learn .learn-card {
     background: var(--bg-secondary);
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--border);
+    border-left: 4px solid var(--st-acc, var(--border));
     margin: 0;
 }
 

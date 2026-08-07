@@ -420,6 +420,11 @@
     'studio.newSectionName': { en: 'New section', hr: 'Nova sekcija' },
     'studio.emptyEditHint': { en: 'Empty so far. Add your first section and start writing.', hr: 'Prazno je. Dodaj prvu sekciju pa počni pisati.' },
     'studio.addSectionFail': { en: 'Could not add the section.', hr: 'Sekciju nije bilo moguće dodati.' },
+    // M3b — kvadratići boje. „⊘" NIJE „bez boje" nego povratak na nasljeđivanje (UGC_SPEC §3).
+    'studio.colorPick': { en: 'Section colour', hr: 'Boja sekcije' },
+    'studio.colorCustom': { en: 'Custom colour', hr: 'Vlastita boja' },
+    'studio.colorPickItem': { en: 'Item colour', hr: 'Boja stavke' },
+    'studio.colorInherit': { en: 'Inherit the section colour', hr: 'Naslijedi boju sekcije' },
     'studio.delCat': { en: 'Delete section', hr: 'Obriši sekciju' },
     'studio.delCatTitle': { en: 'Delete this section?', hr: 'Obrisati sekciju?' },
     'studio.delCatMsg': {

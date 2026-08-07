@@ -282,6 +282,17 @@
   border-radius:14px; padding:13px 15px; margin-bottom:10px; box-shadow:var(--shadow);
 }
 #editor-page .st-edit-item .st-edit-body{ flex:1; min-width:0; }
+
+/* ==== M3b: kvadratići boje po STAVCI (ugovor: docs/product/UGC_SPEC.md §3) ====
+   Namjerno posuđuju `.be-cdot` iz blok-editora — ista radnja, isti ugovor („⊘" =
+   naslijedi od sekcije), pa i isti izgled; nema druge palete za zapamtiti.
+   Vidljivi tek na hover/fokus stavke, kao ↑↓✕ (K3: chrome ostaje stanjen). */
+#editor-page .st-idots{
+  display:inline-flex; align-items:center; gap:4px; flex-shrink:0;
+  opacity:0; transition:opacity .12s;
+}
+#editor-page .st-edit-item:hover .st-idots,
+#editor-page .st-edit-item:focus-within .st-idots{ opacity:1; }
 #editor-page .st-edit-item .st-q,#editor-page .st-edit-item .st-qtext{ font-weight:600; font-size:14px; line-height:1.5; }
 #editor-page .st-edit-item .st-a{ color:#6ee7b7; font-size:13px; margin-top:6px; }
 #editor-page .st-edit-item .st-opt{ font-size:13px; padding:6px 9px; margin-top:4px; border-radius:8px; color:var(--text-secondary); }

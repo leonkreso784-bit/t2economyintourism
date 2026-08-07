@@ -255,5 +255,78 @@ test('boja bloka: blok koji se IZOSTAVI (nevaljan URL) ne dobiva prazan obojani 
   assert.strictEqual(out, '', 'prazan blok ne smije ostaviti omot iza sebe: ' + out);
 });
 
+// ─────────────────────────────────────────────────────────────────────────────
+// M3b — AKCENT STUDY-STAVKE (kartica / pitanje / dopuna). Ugovor: UGC_SPEC §3.
+// Druga površina od M3a: tri study-prikazivača pišu u FIKSNI DOM (`textContent`), pa
+// nema omota u koji bi se boja umetnula → akcent ide kao `--item-acc` na spremnik.
+// Validacija mora biti ISTA i na JEDNOM mjestu (tri regexa = drift koji smo već platili).
+// ─────────────────────────────────────────────────────────────────────────────
+
+function fakeEl() {
+  return {
+    style: {
+      _p: {},
+      setProperty: function (k, v) { this._p[k] = v; },
+      removeProperty: function (k) { delete this._p[k]; }
+    }
+  };
+}
+
+test('M3b: akcent stavke je izvezen (accentFrom + applyAccent)', function () {
+  assert.strictEqual(typeof B.accentFrom, 'function');
+  assert.strictEqual(typeof B.applyAccent, 'function');
+});
+
+test('M3b: NASLJEĐIVANJE — prvi valjan kandidat pobjeđuje (stavka pregazi sekciju)', function () {
+  assert.strictEqual(B.accentFrom(['#112233', '#445566']), '#112233', 'stavka mora pregaziti sekciju');
+  assert.strictEqual(B.accentFrom([undefined, '#445566']), '#445566', 'bez svoje boje se nasljeđuje sekcija');
+  assert.strictEqual(B.accentFrom(['', '#445566']), '#445566', 'prazan niz je odsutnost, ne izbor');
+  assert.strictEqual(B.accentFrom(['crvena', '#445566']), '#445566', 'nevaljana stavka pada na sekciju');
+  assert.strictEqual(B.accentFrom([undefined, undefined]), '', 'ništa valjano → ništa');
+  assert.strictEqual(B.accentFrom(null), '', 'ne-niz ne smije baciti');
+});
+
+test('M3b: applyAccent postavlja `--item-acc`, a odsutnost ga UKLANJA (ne postavlja prazno)', function () {
+  const el = fakeEl();
+  B.applyAccent(el, ['#10b981']);
+  assert.strictEqual(el.style._p['--item-acc'], '#10b981');
+  // Ista kartica bez boje mora očistiti prethodnu — inače boja CURI na sljedeću stavku.
+  B.applyAccent(el, [undefined, undefined]);
+  assert.ok(!('--item-acc' in el.style._p), 'svojstvo je ostalo: ' + JSON.stringify(el.style._p));
+});
+
+test('M3b: applyAccent ne baca na null/besmislenom elementu', function () {
+  assert.strictEqual(B.applyAccent(null, ['#10b981']), '#10b981');
+  assert.strictEqual(B.applyAccent({}, ['#10b981']), '#10b981');
+});
+
+test('M3b: injekcija kroz boju stavke se ODBIJA (isti skup kao M3a)', function () {
+  const zli = [
+    'red', 'rgb(1,2,3)', '#fff', '#12345', '#1234567', 'var(--x)',
+    '#fff;background:url(javascript:alert(1))',
+    '#ffffff" onload="alert(1)',
+    '#ffffff"><script>alert(1)</script>',
+    'expression(alert(1))', '', null, undefined, 0, {}, []
+  ];
+  zli.forEach(function (c) {
+    assert.strictEqual(B.accentFrom([c]), '', 'propuštena boja ' + JSON.stringify(c));
+    const el = fakeEl();
+    B.applyAccent(el, [c]);
+    assert.ok(!('--item-acc' in el.style._p), 'propušteno u DOM: ' + JSON.stringify(c));
+  });
+});
+
+test('M3b: akcent stavke i akcent bloka dijele ISTU provjeru (nema drifta)', function () {
+  // Ako se ikad raziđu, ovaj test pada prvi.
+  ['#112233', '#abcdef', '#000000'].forEach(function (ok) {
+    assert.strictEqual(B.accentFrom([ok]), ok);
+    assert.ok(R([{ type: 'paragraph', text: 'x', color: ok }]).indexOf('--lb-acc:' + ok) !== -1);
+  });
+  ['#fff', 'red', '#12345g'].forEach(function (bad) {
+    assert.strictEqual(B.accentFrom([bad]), '');
+    assert.ok(R([{ type: 'paragraph', text: 'x', color: bad }]).indexOf('--lb-acc') === -1);
+  });
+});
+
 console.log('\nblocks-renderer: ' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);

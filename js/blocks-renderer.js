@@ -200,6 +200,37 @@
     return HEX6.test(c) ? c : '';
   }
 
+  // ── M3b: AKCENT STUDY-STAVKE (kartica / pitanje kviza / dopuna) ──
+  // Ista uloga i isti prostor kao akcent bloka, ali DRUGA POVRŠINA: `flashcards.js`,
+  // `quiz.js` i `fill-blanks.js` ne grade HTML — pišu `textContent` u fiksni DOM. Nema
+  // omota u koji bi se boja umetnula, pa se akcent ne emitira kao niz nego se na spremnik
+  // postavi `--item-acc`.
+  //
+  // ⚠ ZAŠTO OVDJE, A NE U SVAKOM PRIKAZIVAČU: tri kopije regexa su drift koji smo VEĆ
+  // platili (shema je znala 4 boje teksta, editor je deployao 8 → prvi autor pete boje bi
+  // srušio `validate:schema`). Jedna definicija „što je valjan akcent" = jedno mjesto za
+  // popraviti i jedno za testirati.
+  //
+  // NASLJEĐIVANJE: kandidati idu od najužeg prema najširem (stavka → sekcija), prvi valjan
+  // pobjeđuje. Nijedan → svojstvo se UKLANJA, ne postavlja na prazno: kartica bez boje mora
+  // očistiti onu prethodnu, inače boja curi na sljedeću stavku istog DOM-a.
+  function accentFrom(values) {
+    if (!Array.isArray(values)) return '';
+    for (let i = 0; i < values.length; i++) {
+      const c = (typeof values[i] === 'string') ? values[i].trim() : '';
+      if (HEX6.test(c)) return c;
+    }
+    return '';
+  }
+  function applyAccent(el, values) {
+    const acc = accentFrom(values);
+    if (el && el.style && typeof el.style.setProperty === 'function') {
+      if (acc) el.style.setProperty('--item-acc', acc);
+      else el.style.removeProperty('--item-acc');
+    }
+    return acc;
+  }
+
   // ── glavni ulaz ──
   function renderBlocks(blocks) {
     if (!Array.isArray(blocks)) return '';
@@ -244,6 +275,8 @@
     window.renderBlocks = renderBlocks;
     window.SokratBlocks = {
       render: renderBlocks,
+      accentFrom: accentFrom,     // M3b: jedna definicija valjanog akcenta za sve study-modove
+      applyAccent: applyAccent,
       _esc: esc,
       _safeUrl: safeUrl,
       _youtubeId: youtubeId,

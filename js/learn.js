@@ -46,6 +46,15 @@ function renderLearnContent() {
         const card = document.createElement('div');
         card.className = 'learn-card';
         card.dataset.category = category;
+
+        // M3b: akcent sekcije na studentskoj strani. Do sada se `--st-acc` postavljao SAMO u
+        // Studiju, pa onaj tko uči nije vidio boju sekcije nigdje u learnu. Blok s vlastitom
+        // bojom nosi svoj `--lb-acc`; ovdje se dodaje ono što on nasljeđuje. Validacija ide
+        // kroz istu jednu definiciju kao za kartice/kviz/dopune.
+        if (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function') {
+            const acc = SokratBlocks.accentFrom([data.color]);
+            if (acc) card.style.setProperty('--st-acc', acc);
+        }
         
         card.innerHTML = `
             <div class="learn-card-header">

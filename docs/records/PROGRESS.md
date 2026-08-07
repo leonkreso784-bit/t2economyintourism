@@ -5,6 +5,34 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-07-d (OPUS) — **M3b: boja kartice/pitanja/dopune → kriterij 4 zatvoren** (grana `docs/stage-a`)
+
+**Test prije koda.** Šest unit-testova napisano prvo i **dokazano pada** (`B.accentFrom is not a function`), pa tek onda kod.
+
+### Zašto M3b nije bio „isto što i M3a"
+
+M3a je imao **jedan** prikazivač koji gradi HTML, pa je akcent bio jedan omot. Tri study-moda **nemaju zajednički prikazivač** — `flashcards.js`, `quiz.js` i `fill-blanks.js` pišu `textContent` u **fiksni DOM**. Nema omota u koji bi se boja umetnula.
+
+**Rješenje:** akcent se ne emitira kao niz nego se na spremnik postavi **`--item-acc`**, a CSS ga uzima kroz `var(--item-acc, <zatečena vrijednost>)`. Fallback je cijeli mehanizam: **bez boje se crta točno ono što se crtalo prije**, pa nema uvjetnih selektora ni rizika za 22 živa predmeta.
+
+**Validacija na jednom mjestu.** `SokratBlocks.accentFrom` — dijele je blok, sve tri study-stavke i Studio-panel. Tri kopije regexa bile bi drift koji smo **već platili** (shema je znala 4 boje teksta, editor je deployao 8). Jedan test to i čuva: *„akcent stavke i akcent bloka dijele ISTU provjeru"*.
+
+### 🕳 Rupa nađena usput — kriterij 4 ne bi bio ispunjen
+
+`--st-acc` se do sada postavljao **isključivo u Studiju**. Onaj tko **uči** nije vidio boju sekcije u learnu **nigdje**: blok s vlastitom bojom je radio (emitira `--lb-acc`), ali **nasljeđivanje nije — neobojan blok nema omot koji bi se obojao.**
+
+Da sam stao na „M3b = tri moda", proizvod bi ostao nedosljedan: kartice, kviz i dopune pokazuju boju sekcije, learn ne. Popravljeno u `js/learn.js` (validiran `--st-acc` na kartici sekcije) i pokriveno tvrdnjom u živom testu. **Kriterij 4 sad vrijedi na studentskoj strani, ne samo u editoru.**
+
+### Nula novih write-putova
+
+Kvadratići idu kroz **postojeće** `updateCard`/`updateQuiz`/`updateFill` opove; `color: null` briše ključ preko `_assignPatch` (isto kao M3a). Shema je dobila **6 umetnutih redaka** — tekstualno, jer `JSON.stringify` nad njom preformatira cijeli fajl (M3a zamka, 480 izmjena umjesto 19).
+
+**Gate:** unit blocks-renderer **41/41** (+6) · `test:authed` **63/63** (+3 živa) · `validate:schema` 66/0 · preflight EXIT 0 · `build:css` + `bump` 107.
+
+⚠️ **Faza se NE proglašava gotovom** — 5/5 kriterija stoji u kodu i testovima, ali **Leon nije prošao tokom rukom.** Točno ta razlika ju je jednom već krivo zatvorila.
+
+---
+
 ## 2026-08-07-c (OPUS) — **Stage A4: dokumentacija prestala lagati** (grana `docs/stage-a`)
 
 **Povod.** Leon: *„pregledaj jeli dokumentacija dobra."* Pregled je pokazao da **struktura drži** (jedan aktivni plan, `product/` bez kronologije, indeks potpun, `check:docs` zelen), ali da **stage A4 nikad nije odrađen** — A1/A2/A3 jesu (`c38a39b`, `a017025`, `055a5c2`), A4 je ostao zapisan kao „slijedi" i tu stao.

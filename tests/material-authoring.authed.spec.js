@@ -266,6 +266,164 @@ test.describe('M2 — učenje iz vlastitog materijala', () => {
 // Ovdje se dokazuje CIJELI put: klik u editoru → draft → objava → baza.
 // ─────────────────────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────────────────────
+// M3b — BOJA KARTICE / PITANJA / DOPUNE. Zatvara kriterij 4 iz `UGC_SPEC.md`.
+//
+// Druga površina od M3a: kartice/kviz/dopune NEMAJU zajednički prikazivač — tri
+// zasebna modula pišu u FIKSNI DOM, pa nema omota u koji bi se boja umetnula.
+// Akcent zato ide kao `--item-acc` na spremnik, a nasljeđivanje (sekcija → stavka)
+// mora se dokazati NA STUDY-EKRANU, ne samo u bazi.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Pročitaj akcent koji je prikazivač STVARNO postavio na spremnik. */
+const accentOn = (page, sel) => page.evaluate((s) => {
+  const el = document.querySelector(s);
+  return el ? el.style.getPropertyValue('--item-acc').trim() : null;
+}, sel);
+
+test.describe('M3b — boja kartice, pitanja i dopune', () => {
+  test('kvadratić oboji karticu → objavi → boja u bazi; „⊘" je vrati na nasljeđivanje', async ({ page }) => {
+    await openProfile(page);
+    const id = await openFreshMaterialWithSection(page, 'M3b Boja kartice');
+    try {
+      await page.click('#stCanvas .st-tab[data-mode="cards"]');
+      await page.click('#stCanvas .st-pane[data-pane="cards"] [data-admin-add][data-type="flashcard"]');
+      await page.waitForSelector('#adminEditModal #adminEditQ');
+      await page.fill('#adminEditQ', 'M3b pitanje');
+      await page.fill('#adminEditA', 'M3b odgovor');
+      await page.click('#adminEditSave');
+
+      const stavka = page.locator('#stCanvas .st-pane[data-pane="cards"] .st-edit-item');
+      await expect(stavka).toHaveCount(1);
+
+      // ── OBOJI ── (kvadratići su skriveni do hovera — hover je dio afordancije)
+      await stavka.hover();
+      await stavka.locator('[data-st-icolor="#10b981"]').click();
+      await expect(
+        page.locator('#stCanvas .st-pane[data-pane="cards"] .st-edit-item [data-st-icolor="#10b981"].on'),
+        'kvadratić se ne označi kao odabran'
+      ).toHaveCount(1);
+
+      await page.click('#stPublish');
+      await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+      const obojena = await readContent(page, id);
+      const kartice = Object.values(obojena.payload)[0].flashcards;
+      expect(kartice[0].color, 'boja kartice nije preživjela objavu').toBe('#10b981');
+
+      // ── ⊘ → NASLIJEDI (ključ se MIČE, ne postaje null ni prazan niz) ──
+      await page.click('#stEdit');
+      await page.click('#stCanvas .st-tab[data-mode="cards"]');
+      const stavka2 = page.locator('#stCanvas .st-pane[data-pane="cards"] .st-edit-item');
+      await stavka2.hover();
+      await stavka2.locator('[data-st-icolor=""]').click();
+      await page.click('#stPublish');
+      await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+      const vracena = await readContent(page, id);
+      const k2 = Object.values(vracena.payload)[0].flashcards[0];
+      expect(
+        Object.prototype.hasOwnProperty.call(k2, 'color'),
+        '„⊘" mora UKLONITI ključ (odsutno = naslijedi), ne upisati null ili prazan niz'
+      ).toBe(false);
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  test('na study-ekranu: stavka bez boje NASLIJEDI sekciju, a vlastita boja je PREGAZI', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'M3b Nasljeđivanje');
+    try {
+      // Sekcija je zelena; kartica ima SVOJU crvenu, kviz i dopuna nemaju ništa.
+      await page.evaluate(async (nodeId) => {
+        const c = SokratAuth.getClient();
+        await c.rpc('publish_node', {
+          p_node_id: nodeId,
+          p_payload: {
+            tema1: {
+              name: 'M3b Tema', icon: 'fa-book', color: '#10b981',
+              flashcards: [{ question: 'M3b pitanje', answer: 'M3b odgovor', color: '#ef4444' }],
+              quiz: [{ question: 'M3b kviz', options: ['a', 'b'], correct: 1 }],
+              fillBlanks: [{ sentence: 'M3b rečenica s _______ prazninom', answer: 'jednom' }],
+              learn: { blocks: [{ id: 'b1', type: 'paragraph', text: 'tijelo' }] }
+            }
+          },
+          p_base_version: 1
+        });
+      }, id);
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      await openForStudy(page, id);
+
+      // ── KARTICA: vlastita boja pregazi sekciju ──
+      await gotoSection(page, 'flashcards');
+      await expect(page.locator('#cardQuestion')).toBeVisible();
+      expect(await accentOn(page, '#flashcard'),
+        'kartica sa svojom bojom mora pregaziti sekciju').toBe('#ef4444');
+
+      // ── KVIZ: bez svoje boje → naslijedi sekciju ──
+      await gotoSection(page, 'quiz');
+      await page.evaluate(() => startQuiz());
+      await expect(page.locator('#quizGame .question-card')).toBeVisible();
+      expect(await accentOn(page, '#quizGame .question-card'),
+        'pitanje bez boje mora naslijediti boju sekcije').toBe('#10b981');
+
+      // ── DOPUNA: bez svoje boje → naslijedi sekciju ──
+      await gotoSection(page, 'fill');
+      await expect(page.locator('#fill .fill-card')).toBeVisible();
+      expect(await accentOn(page, '#fill .fill-card'),
+        'dopuna bez boje mora naslijediti boju sekcije').toBe('#10b981');
+
+      // ── LEARN: boju sekcije nosi kartica sekcije ──
+      // Neobojan blok NEMA omot koji bi se obojao (renderer ga namjerno ne stvara), pa se
+      // nasljeđivanje na studentskoj strani vidi na kartici. Do M3b se `--st-acc` postavljao
+      // samo u Studiju → onaj tko uči nije vidio boju sekcije nigdje u learnu.
+      await gotoSection(page, 'learn');
+      const learnAcc = await page.evaluate(() => {
+        const el = document.querySelector('#learn .learn-card');
+        return el ? el.style.getPropertyValue('--st-acc').trim() : null;
+      });
+      expect(learnAcc, 'learn-kartica ne pokazuje boju sekcije onome tko uči').toBe('#10b981');
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  test('NEVALJANA boja stavke pada na sekciju, ne procuri u CSS', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkNode(page, null, 'study', 'M3b Nevaljana boja');
+    try {
+      await page.evaluate(async (nodeId) => {
+        const c = SokratAuth.getClient();
+        await c.rpc('publish_node', {
+          p_node_id: nodeId,
+          p_payload: {
+            tema1: {
+              name: 'M3b Tema', icon: 'fa-book', color: '#6366f1',
+              // Namjerno NEVALJANE boje: prikazivač ih mora odbiti, ne interpolirati.
+              flashcards: [{ question: 'p', answer: 'o', color: '#fff' }],
+              quiz: [{ question: 'q', options: ['a', 'b'], correct: 0 }],
+              fillBlanks: [{ sentence: 'r _______ x', answer: 'y' }],
+              learn: { blocks: [{ id: 'b1', type: 'paragraph', text: 'tijelo' }] }
+            }
+          },
+          p_base_version: 1
+        });
+      }, id);
+      await page.evaluate(() => window.SokratMaterials.refresh());
+      await openForStudy(page, id);
+
+      await gotoSection(page, 'flashcards');
+      await expect(page.locator('#cardQuestion')).toBeVisible();
+      // `#fff` je nevaljan (traži se točno 6 znamenki) → padni na sekciju, ne na smeće.
+      expect(await accentOn(page, '#flashcard'),
+        'nevaljana boja stavke mora pasti na sekciju, ne procuriti u CSS').toBe('#6366f1');
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+});
+
 test.describe('M3a — boja bloka', () => {
   test('kvadratić oboji blok → objavi → boja u bazi; „⊘" je vrati na nasljeđivanje', async ({ page }) => {
     await openProfile(page);

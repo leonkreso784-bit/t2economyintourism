@@ -85,10 +85,16 @@
     font-size: 0.9rem;
 }
 
+/* ── M3b — AKCENT PITANJA (ugovor: docs/product/UGC_SPEC.md §3) ──────────────
+   `js/quiz.js` postavi `--item-acc` samo za validiran `#rrggbb`. Rub + tinta 10 %,
+   isti jezik kao `.lb-tint` u learnu. Bez boje → `transparent` → zatečeni izgled. */
 .question-card {
-    background: var(--bg-secondary);
+    --item-wash: color-mix(in srgb, var(--item-acc, transparent) 10%, transparent);
+    background-color: var(--bg-secondary);
+    background-image: linear-gradient(0deg, var(--item-wash), var(--item-wash));
     padding: 1.25rem;
     border-radius: var(--radius-lg);
+    border-left: 4px solid var(--item-acc, transparent);
     box-shadow: var(--shadow);
     margin-bottom: 1rem;
 }

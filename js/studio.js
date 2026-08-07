@@ -175,6 +175,9 @@ const SokratStudio = (function () {
       if (del) { delSection(del.getAttribute('data-st-catdel')); return; }
       var dot = e.target.closest('[data-st-catcolor]');
       if (dot) { setCatColor(dot.getAttribute('data-st-cat'), dot.getAttribute('data-st-catcolor')); return; }
+      // M3b: boja pojedine kartice/pitanja/dopune (zaseban atribut → ne sudara se s gornjim)
+      var idot = e.target.closest('[data-st-icolor]');
+      if (idot) { setItemColor(idot); return; }
       var mig = e.target.closest('[data-migrate-cat]');
       if (mig) { migrateToBlocks(mig.getAttribute('data-migrate-cat')); }
     });
@@ -394,6 +397,44 @@ const SokratStudio = (function () {
       '" title="' + esc(t('studio.colorCustom', 'Vlastita boja')) + '">';
     return html + '</span>';
   }
+  // ---- M3b: boja-kvadratići po STAVCI (kartica/pitanje/dopuna) → updateCard/Quiz/Fill {color} ----
+  // Vizualni jezik je namjerno ISTI kao u blok-editoru (`be-cdot`), jer je i ugovor isti:
+  // „⊘" = vrati na nasljeđivanje od sekcije, ne „bez boje". Adresiranje ide po stabilnom
+  // `id` kad postoji, inače po indeksu (payloadi pre-U2a ga nemaju) — kao `_findIndex`.
+  function itemColorDots(type, catId, item, idx) {
+    var cur = String((item && item.color) || '').toLowerCase();
+    var addr = ' data-st-itype="' + esc(type) + '" data-st-icat="' + esc(catId) + '"' +
+      (item && item.id != null ? ' data-st-iid="' + esc(String(item.id)) + '"' : ' data-st-iidx="' + idx + '"');
+    var inherit = esc(t('studio.colorInherit', 'Naslijedi boju sekcije'));
+    var html = '<span class="st-idots">';
+    html += '<button type="button" class="be-cdot be-cdot--none' + (cur ? '' : ' on') +
+      '" data-st-icolor=""' + addr + ' title="' + inherit + '" aria-label="' + inherit + '">⊘</button>';
+    SECTION_COLORS.forEach(function (col) {
+      html += '<button type="button" class="be-cdot' + (col === cur ? ' on' : '') +
+        '" data-st-icolor="' + col + '"' + addr + ' style="--dot:' + col +
+        '" title="' + col + '" aria-label="' + esc(t('studio.colorPickItem', 'Boja stavke')) + ' ' + col + '"></button>';
+    });
+    return html + '</span>';
+  }
+
+  var ITEM_COLOR_OPS = { flashcard: 'updateCard', quiz: 'updateQuiz', fill: 'updateFill' };
+
+  function setItemColor(btn) {
+    var b = bridge();
+    if (!b || !editing()) return;
+    var raw = btn.getAttribute('data-st-icolor') || '';
+    if (raw && !/^#[0-9a-fA-F]{6}$/.test(raw)) return;      // točno #rrggbb (kao schema)
+    var op = ITEM_COLOR_OPS[btn.getAttribute('data-st-itype')];
+    if (!op) return;
+    // `null` u patchu BRIŠE ključ (`_assignPatch`) → odsutno = naslijedi od sekcije.
+    var msg = { type: op, catId: btn.getAttribute('data-st-icat'), patch: { color: raw ? raw.toLowerCase() : null } };
+    var id = btn.getAttribute('data-st-iid');
+    if (id != null) msg.id = id;
+    else msg.idx = parseInt(btn.getAttribute('data-st-iidx'), 10);
+    var res = b.applyOp(msg);
+    if (res && res.ok) { renderCanvas(); refreshTopbar(); }
+  }
+
   /**
    * F3 K3 — dodaj novu sekciju. Bez ovoga je NOV čvor slijepa ulica: payload je `{}`,
    * pa nema nijedne kategorije, nijednog moda i nijednog mjesta za pisanje.
@@ -667,25 +708,34 @@ const SokratStudio = (function () {
       if (!c || typeof c !== 'object') return;
       var arr = Array.isArray(c[m.arr]) ? c[m.arr] : [];
       if (!isEd && !arr.length) return;                    // read-only: preskoči prazne
-      var accStyle = c.color ? ' style="--st-acc:' + esc(c.color) + '"' : '';
+      // M3b: akcent STAVKE = vlastita boja, inače naslijeđena od sekcije. Validacija ide kroz
+      // JEDNU definiciju (`SokratBlocks.accentFrom`) — istu koja vrijedi za blok i za study-
+      // prikazivače; u `style` ulazi samo ono što je prošlo `^#[0-9a-fA-F]{6}$`.
+      function itemStyle(it) {
+        var acc = (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function')
+          ? SokratBlocks.accentFrom([it && it.color, c.color])
+          : '';
+        return acc ? ' style="--st-acc:' + acc + '"' : '';
+      }
       out += '<div class="st-seclbl">§ ' + esc(c.name || catId) + (isEd ? colorDots(catId, c.color) : '') + '</div>';
 
       if (!isEd) {
         if (mode === 'cards') {
           out += '<div class="st-cardgrid">' + arr.map(function (fc) {
-            return '<div class="st-fcard"' + accStyle + '>' + m.body(fc) + '</div>';
+            return '<div class="st-fcard"' + itemStyle(fc) + '>' + m.body(fc) + '</div>';
           }).join('') + '</div>';
         } else {
           out += arr.map(function (it) {
-            return '<div class="' + (mode === 'quiz' ? 'st-qz' : 'st-fill') + '"' + accStyle + '>' + m.body(it) + '</div>';
+            return '<div class="' + (mode === 'quiz' ? 'st-qz' : 'st-fill') + '"' + itemStyle(it) + '>' + m.body(it) + '</div>';
           }).join('');
         }
         return;
       }
 
-      // EDIT: svaka stavka = tijelo + admin-kontrole + „＋ Dodaj" na dnu kategorije
+      // EDIT: svaka stavka = tijelo + kvadratići boje + admin-kontrole + „＋ Dodaj" na dnu kategorije
       arr.forEach(function (it, i) {
-        out += '<div class="st-edit-item"' + accStyle + '><div class="st-edit-body">' + m.body(it) + '</div>' +
+        out += '<div class="st-edit-item"' + itemStyle(it) + '><div class="st-edit-body">' + m.body(it) + '</div>' +
+          itemColorDots(m.type, catId, it, i) +
           (hasCtrls ? _adminItemControls(true, m.type, catId, i, arr.length) : '') + '</div>';
       });
       if (hasCtrls) out += '<div class="st-addwrap">' + _adminAddBtn(true, m.type, catId, m.add) + '</div>';
