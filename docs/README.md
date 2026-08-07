@@ -77,7 +77,7 @@
 | [HISTORY.md](./records/HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
 | [CHANGELOG.md](./records/CHANGELOG.md) | Verzije i što se mijenjalo |
 | [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
-| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…024) i zašto |
+| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…026) i zašto |
 | [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene |
 | [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |
 
