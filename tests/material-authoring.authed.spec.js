@@ -140,3 +140,122 @@ test.describe('M1 — autorstvo u praznom materijalu', () => {
     }
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// M2 — UČENJE IZ VLASTITOG MATERIJALA.
+// BUG: `initStudyPage` kreće od `subjectDataMap[subjectId]` = KATALOG, a `js/navigation.js`
+// nema nijednu referencu na čvorove → iz vlastitog materijala se nije moglo učiti.
+// Kriteriji 2 i 3 iz `docs/product/UGC_SPEC.md`.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Napravi materijal s gotovim sadržajem (kroz RPC — brže i neovisno o editoru). */
+async function mkMaterialWithContent(page, name) {
+  const id = await mkNode(page, null, 'study', name);
+  await page.evaluate(async (nodeId) => {
+    const c = SokratAuth.getClient();
+    await c.rpc('publish_node', {
+      p_node_id: nodeId,
+      p_payload: {
+        tema1: {
+          name: 'M2 Tema', icon: 'fa-book', color: '#6366f1',
+          flashcards: [{ question: 'M2 pitanje kartice', answer: 'M2 odgovor kartice' }],
+          quiz: [{ question: 'M2 pitanje kviza', options: ['a', 'b'], correct: 1 }],
+          fillBlanks: [{ sentence: 'M2 rečenica s _______ prazninom', answer: 'jednom' }],
+          learn: { blocks: [{ id: 'b1', type: 'paragraph', text: 'M2 tijelo learna' }] }
+        }
+      },
+      p_base_version: 1
+    });
+  }, id);
+  await page.evaluate(() => window.SokratMaterials.refresh());
+  return id;
+}
+
+/**
+ * Klikni „Uči" i pričekaj da `initStudyPage` STVARNO završi.
+ *
+ * ⚠ Bez ovog čekanja test trči u utrku: `#study-page.active` se doda ODMAH (sinkrono), ali
+ * `initStudyPage` je async i NA KRAJU sam zove `switchSection('home')`. Svaki raniji prelazak
+ * na kartice bio bi pregažen, pa bi klik na gumb kartice čekao vidljivost do isteka testa.
+ * Zato se čeka na STVARNI ishod — učitane podatke u `AppState.nav.data` — a ne na CSS-klasu.
+ */
+async function openForStudy(page, id) {
+  const row = page.locator('#myMaterials .mm-row[data-mm-id="' + id + '"]');
+  await expect(row).toHaveCount(1, { timeout: 20000 });
+  await expect(
+    row.locator('[data-mm-learn]'),
+    'materijal nema gumb „Uči" → iz vlastitog sadržaja se ne može učiti'
+  ).toHaveCount(1);
+  await row.locator('[data-mm-learn]').click();
+  await expect(page.locator('#study-page.active')).toHaveCount(1, { timeout: 20000 });
+  await page.waitForFunction(
+    (nodeId) => AppState.nav.subject === 'node:' + nodeId
+      && AppState.nav.data && Object.keys(AppState.nav.data).length > 0,
+    id, { timeout: 20000 });
+}
+
+/** Prijeđi na mod ISTIM gumbom kojim to radi korisnik. */
+async function gotoSection(page, section) {
+  await page.click('.study-nav-btn[data-section="' + section + '"]');
+  await expect(page.locator('#' + section + '.section.active')).toHaveCount(1, { timeout: 10000 });
+}
+
+test.describe('M2 — učenje iz vlastitog materijala', () => {
+  test('„Uči" otvara study-stranicu s MOJIM sadržajem (kartice, kviz, dopune, learn)', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkMaterialWithContent(page, 'M2 Učenje');
+    try {
+      // ── JEZGRA REGRESIJE: prije M2 gumb „Uči" nije ni postojao ──
+      await openForStudy(page, id);
+      await expect(page.locator('#currentLessonTitle')).toHaveText('M2 Učenje');
+
+      // Sadržaj je STVARNO moj materijal, ne neki katalog-predmet.
+      const loaded = await page.evaluate(() => ({
+        subject: AppState.nav.subject,
+        cats: Object.keys(AppState.nav.data || {}),
+        fc: (AppState.nav.data.tema1 || {}).flashcards
+      }));
+      expect(loaded.subject).toBe('node:' + id);
+      expect(loaded.cats).toEqual(['tema1']);
+      expect(loaded.fc[0].question).toBe('M2 pitanje kartice');
+
+      // Kartice se stvarno crtaju kroz postojeći study-DOM.
+      // ⚠ `toBeVisible`, ne samo `toHaveText`: tekst postoji i u SAKRIVENOJ sekciji, pa bi
+      // provjera teksta prošla i da prelazak na kartice uopće nije uspio (i jednom jest).
+      await gotoSection(page, 'flashcards');
+      await expect(page.locator('#cardQuestion')).toBeVisible();
+      await expect(page.locator('#cardQuestion')).toHaveText('M2 pitanje kartice');
+
+      // Vježbe i slijepa karta se NE nude — materijal nema `features` (mora biti namjerno).
+      await expect(page.locator('#exercisesNavBtn')).toBeHidden();
+      await expect(page.locator('#blindMapNavBtn')).toBeHidden();
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+
+  test('napredak iz materijala živi pod ključem `node:<id>` i vidi ga sinkronizacija', async ({ page }) => {
+    await openProfile(page);
+    const id = await mkMaterialWithContent(page, 'M2 Napredak');
+    try {
+      await openForStudy(page, id);
+
+      // Označi karticu kao naučenu → napredak se mora zapisati pod ključem materijala.
+      await gotoSection(page, 'flashcards');
+      await page.click('#btnCorrect');
+
+      const saved = await page.evaluate((nodeId) => {
+        const raw = localStorage.getItem('node:' + nodeId);
+        return raw ? JSON.parse(raw) : null;
+      }, id);
+      expect(saved, 'napredak materijala se nigdje ne sprema').toBeTruthy();
+      expect(saved.flashcardsLearned.length).toBeGreaterThan(0);
+
+      // Kriterij 3: ista sinkronizacija kao katalog — ključ mora biti NA POPISU za sync.
+      const watched = await page.evaluate(() => CloudSync.watchedKeys());
+      expect(watched, 'ključ materijala nije na popisu za sinkronizaciju').toContain('node:' + id);
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+});

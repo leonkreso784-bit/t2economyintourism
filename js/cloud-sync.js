@@ -208,7 +208,11 @@ const CloudSync = (function () {
 
     return {
         handleAuthChange: handleAuthChange,
-        pushNow: pushChanges
+        pushNow: pushChanges,
+        // M2: izloženo da se može DOKAZATI da napredak osobnog materijala (`node:<uuid>`) ulazi
+        // u sinkronizaciju — kriterij 3 traži „istu sinkronizaciju kao katalog", a to se ne vidi
+        // iz ponašanja bez čekanja intervala.
+        watchedKeys: watchedKeys
     };
 })();
 

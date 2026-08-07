@@ -232,9 +232,14 @@ const SokratStudio = (function () {
     return top +
       '<div class="st-icard"><h3>⬆ Publish</h3><p>' +
       esc(t('studio.publishHint', 'Objava = publish-RPC: atomično, verzija, konflikt se ne gazi.')) + '</p></div>' +
-      '<div class="st-premium"><h4>✨ AI autor <span class="st-pill">PREMIUM</span></h4>' +
-      '<p>' + esc(t('studio.aiHint', 'Napiši samo Learn — kartice, kviz i dopuni nastaju automatski.')) + '</p>' +
-      '<button class="st-btn primary" style="width:100%" disabled>' + esc(t('studio.aiBtn', 'Generiraj iz Learna')) + '</button></div>';
+      // M4 — panel je OBEĆAVAO tuđu značajku: „napiši Learn, kartice nastaju automatski" znači da
+      // MI vrtimo model i plaćamo ga. Odlučeno je drugo (ADR-026): AI dolazi s KORISNIKOVE strane —
+      // gumb ga spaja s AI-em koji već koristi, kroz MCP. Tekst sad govori to, i pošteno kaže da
+      // još ne radi. Ostaje `disabled` dok MCP ne postoji; ništa se ne obećava o vježbama (ADR-025 §1).
+      '<div class="st-premium"><h4>✨ ' + esc(t('studio.aiTitle', 'Tvoj AI')) +
+      ' <span class="st-pill">' + esc(t('studio.soon', 'USKORO')) + '</span></h4>' +
+      '<p>' + esc(t('studio.aiHint', 'Spoji AI koji već koristiš pa mu daj svoje bilješke — gradi materijal izravno ovdje.')) + '</p>' +
+      '<button class="st-btn primary" style="width:100%" disabled>' + esc(t('studio.aiBtn', 'Spoji svoj AI')) + '</button></div>';
   }
 
   // ---- ODABIR SKRIPTE → CANVAS ----

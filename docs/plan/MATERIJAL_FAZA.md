@@ -15,13 +15,27 @@ i **iz njega uči**.
 
 | # | cigla | status |
 |---|---|---|
-| **M1** | svi modovi dostupni u praznom materijalu | ⬜ |
-| **M2** | učenje iz vlastitog materijala | ⬜ |
+| **M1** | svi modovi dostupni u praznom materijalu | ✅ |
+| **M2** | učenje iz vlastitog materijala | ✅ |
 | **M3** | boje kao jedan sustav | ⬜ |
-| **M4** | sučelje prestaje obećavati | ⬜ |
+| **M4** | sučelje prestaje obećavati | ✅ |
 
 Redoslijed nije proizvoljan: **M1 otključava autorstvo** (bez nje ostale cigle nemaju što pokazati),
 **M2 je pravi posao**, a **M3 ide zadnja jer jedina dira javni katalog**.
+
+### Kriteriji prihvaćanja — **4 od 5**
+
+Mjeri se po [UGC_SPEC §2](../product/UGC_SPEC.md), ne po ovoj tablici cigli. Ostaje **kriterij 4** (boje).
+
+| | kriterij | |
+|---|---|---|
+| 1 | napravim materijal od nule (kartica + kviz + dopuna) | ✅ M1 |
+| 2 | učim iz njega istim ekranima kao iz kataloga | ✅ M2 |
+| 3 | napredak se pamti i sinkronizira | ✅ M2 |
+| 4 | boja sekcije se vidi na blokovima i karticama, može se pregaziti | ⬜ M3 |
+| 5 | sučelje ne spominje ništa što ne postoji | ✅ M4 |
+
+⚠️ **Nijedan kriterij nije verificiran Leonovom živom prijavom** — sve stoji na grani, ne na produkciji.
 
 ---
 

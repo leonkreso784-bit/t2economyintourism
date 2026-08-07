@@ -198,6 +198,10 @@
 
   const EXPAND_KEY = 'sokrat-materials-open';
 
+  // M2: materijal nema lekcije kao katalog-predmet — ima jedan sadržaj. Isti ključ koristi i
+  // Studio (`_sel.lessonId`), pa su editor i učenje adresirani jednako.
+  const LESSON_ID = 'content';
+
   /** Stanje UI-a (nije podatak — samo prikaz). */
   let _rows = [];
   let _tree = [];
@@ -290,8 +294,12 @@
           '<i class="fas fa-folder-plus" aria-hidden="true"></i></button>' +
           '<button type="button" class="mm-act" data-mm-new-in="study" title="' + esc(mt('materials.addStudyIn', 'New material inside')) + '">' +
           '<i class="fas fa-plus" aria-hidden="true"></i></button>'
+        // M2: „Uči" ide PRVI — materijal se češće uči nego uređuje, a create/edit je zasebna radnja.
+        // ⚠ Mjesto gumba je PRIVREMENO; konačan raspored je u vlasništvu frontend-redizajna (Leon).
         // F3 K2: study-čvor se otvara POSTOJEĆIM Studio editorom (isti renderer, isti draft-stroj).
-        : '<button type="button" class="mm-act mm-act--open" data-mm-open title="' + esc(mt('materials.open', 'Edit material')) + '">' +
+        : '<button type="button" class="mm-act mm-act--learn" data-mm-learn title="' + esc(mt('materials.learn', 'Study')) + '">' +
+          '<i class="fas fa-graduation-cap" aria-hidden="true"></i></button>' +
+          '<button type="button" class="mm-act mm-act--open" data-mm-open title="' + esc(mt('materials.open', 'Edit material')) + '">' +
           '<i class="fas fa-pen-to-square" aria-hidden="true"></i></button>') +
       '    <button type="button" class="mm-act" data-mm-rename title="' + esc(mt('materials.rename', 'Rename')) + '">' +
       '<i class="fas fa-pen" aria-hidden="true"></i></button>' +
@@ -388,6 +396,73 @@
       return;
     }
     SokratStudio.openNode(id, row.name);
+  }
+
+  // ───────────────────────────────────────────────────────────────────────────
+  // M2 — UČENJE IZ VLASTITOG MATERIJALA
+  //
+  // Study-stranica cijeli život kreće od `subjectDataMap[subjectId]` = KATALOG (13 mjesta u
+  // kodu: storage, analytics, profil, sinkronizacija, napredak). Umjesto da se svih 13 uči za
+  // čvorove, materijal se REGISTRIRA kao sintetički predmet pod ključem `node:<uuid>`.
+  //
+  // To je isti obrazac „šav generičan po tekstualnom ključu" koji je već platio dvaput:
+  // draft-stroj (`node:<uuid>`) i `progress` (generički key-value). `storageKey` je slobodan
+  // tekst → napredak, analitika, profil-statistika i cloud-sync rade BEZ IJEDNE IZMJENE.
+  //
+  // Zastavica `_node` je jedina razlika i služi da se katalog i materijal NE MIJEŠAJU (ADR-024):
+  // po njoj `initStudyPage` zna odakle vuče sadržaj, a `applyFeatureNav` da vježbi nema.
+  // ───────────────────────────────────────────────────────────────────────────
+
+  /** Sintetički upis materijala u `subjectDataMap`. Vraća ključ predmeta (`node:<uuid>`). */
+  function registerStudySubject(row) {
+    if (typeof subjectDataMap === 'undefined' || !row || row.kind !== 'study') return null;
+    const key = 'node:' + row.id;
+    subjectDataMap[key] = {
+      name: row.name,
+      shortName: row.name,
+      icon: row.icon || 'fa-book-open',
+      color: row.color || '#6366f1',
+      description: '',
+      storageKey: key,                       // napredak + analitika + sync žive pod ovim ključem
+      lessons: [{ id: LESSON_ID, name: row.name }],
+      _node: true,                           // NIJE katalog — vidi initStudyPage / applyFeatureNav
+      _nodeId: row.id
+    };
+    return key;
+  }
+
+  /**
+   * Registriraj SVE učitane materijale. Zove se nakon svakog učitavanja stabla, da profil-statistika
+   * i cloud-sync vide ključeve i materijala koje korisnik nije otvorio u ovoj sesiji.
+   */
+  function registerAllStudySubjects() {
+    _rows.forEach(function (r) { if (r.kind === 'study' && !r.deleted_at) registerStudySubject(r); });
+  }
+
+  /**
+   * Sadržaj materijala za učenje (`initStudyPage` ga traži preko ovog šava).
+   * Prazan payload je legitimno početno stanje — materijal bez sadržaja nije greška.
+   */
+  async function loadNodeContent(nodeId) {
+    const client = (typeof SokratAuth !== 'undefined' && typeof SokratAuth.getClient === 'function')
+      ? SokratAuth.getClient() : null;
+    if (!client) throw new Error('auth-unavailable');
+    const r = await client.from('node_content').select('payload').eq('node_id', nodeId).single();
+    if (r.error) throw r.error;
+    return (r.data && r.data.payload) || {};
+  }
+
+  /** M2 — otvori materijal za UČENJE (isti study-DOM i isti modovi kao katalog). */
+  function learnNode(id) {
+    if (_busy) return;
+    const row = _rows.find(function (r) { return r.id === id; });
+    if (!row || row.kind !== 'study') return;
+    const key = registerStudySubject(row);
+    if (!key || typeof navigateTo !== 'function') {
+      toast(mt('materials.errLearn', 'This material cannot be opened for studying.'));
+      return;
+    }
+    navigateTo('study', { subject: key, lesson: LESSON_ID });
   }
 
   /** Otvori inline unos za PREIMENOVANJE. */
@@ -651,6 +726,9 @@
       _rows = res.rows;
       _tree = res.tree;
       _loaded = true;
+      // M2: profil-statistika i cloud-sync iteriraju `subjectDataMap` → materijali moraju biti
+      // ondje i kad ih korisnik nije otvorio, inače im napredak ne bi bio ni prikazan ni sinkroniziran.
+      registerAllStudySubjects();
       draw();
     } catch (err) {
       _rows = []; _tree = [];
@@ -701,6 +779,14 @@
     if (inside) {
       const row = inside.closest('[data-mm-id]');
       if (row) startCreate(row.getAttribute('data-mm-id'), inside.getAttribute('data-mm-new-in'));
+      return;
+    }
+
+    // M2: otvori materijal za UČENJE (prije uređivanja — češća radnja)
+    const learn = e.target.closest('[data-mm-learn]');
+    if (learn) {
+      const row = learn.closest('[data-mm-id]');
+      if (row) learnNode(row.getAttribute('data-mm-id'));
       return;
     }
 
@@ -789,6 +875,10 @@
     removeNode: removeNode,
     undoDelete: undoDelete,
     openStudy: openStudy,
+    // M2 — učenje iz vlastitog materijala
+    learnNode: learnNode,
+    loadNodeContent: loadNodeContent,
+    registerStudySubject: registerStudySubject,
     // čisto (testabilno bez preglednika)
     buildTree: buildTree,
     flattenVisible: flattenVisible,

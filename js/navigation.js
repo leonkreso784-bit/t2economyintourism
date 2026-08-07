@@ -537,6 +537,15 @@ function setNavButtonVisible(navId, mobileId, visible) {
 // `features` flags (e.g. blindMap for Geography, exercises for Accounting). Adding a
 // flag in data/catalog.js is all it takes — no per-subject code here.
 function applyFeatureNav(subjectId) {
+    // M2: osobni materijal NIJE u katalogu → `getSubject` bi vratio null i tabovi bi se sakrili
+    // slučajno. Radimo to NAMJERNO: vježbe su kôd i u osobnom materijalu ih nema (ADR-025 §1),
+    // a slijepa karta je vezana uz katalog-asset. Sučelje ne smije nuditi ono što ne postoji.
+    const meta = (typeof subjectDataMap !== 'undefined') ? subjectDataMap[subjectId] : null;
+    if (meta && meta._node) {
+        setNavButtonVisible('blindMapNavBtn', 'blindMapMobileBtn', false);
+        setNavButtonVisible('exercisesNavBtn', 'exercisesMobileBtn', false);
+        return;
+    }
     const subject = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.getSubject(subjectId) : null;
     const features = (subject && subject.features) || {};
     setNavButtonVisible('blindMapNavBtn', 'blindMapMobileBtn', !!features.blindMap);
@@ -556,7 +565,12 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
     let fullData = {};
     showStudyLoading(true);
     try {
-        if (typeof SokratContent !== 'undefined' && SokratContent.loadLesson) {
+        if (subject._node) {
+            // M2 — OSOBNI MATERIJAL. Sadržaj traži vlasnik toka (`SokratMaterials`), ne katalog-repo:
+            // svjetovi se namjerno ne miješaju (ADR-024), pa dual-read ostaje čist za katalog.
+            // Nema fallbacka i ne treba ga — materijal postoji samo u bazi.
+            fullData = await SokratMaterials.loadNodeContent(subject._nodeId);
+        } else if (typeof SokratContent !== 'undefined' && SokratContent.loadLesson) {
             fullData = await SokratContent.loadLesson(subjectId, lessonId);
         } else {
             if (typeof loadSubjectContent === 'function') await loadSubjectContent(subjectId);

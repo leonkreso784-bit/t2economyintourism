@@ -403,11 +403,19 @@
     'materials.restored': { en: 'Restored.', hr: 'Vraćeno.' },
     'materials.undo': { en: 'Undo delete', hr: 'Vrati obrisano' },
     // F3 — otvaranje study-čvora u Studio editoru
+    'materials.learn': { en: 'Study', hr: 'Uči' },
     'materials.open': { en: 'Edit material', hr: 'Uredi materijal' },
+    'materials.errLearn': { en: 'This material cannot be opened for studying.', hr: 'Ovaj se materijal ne može otvoriti za učenje.' },
     'materials.errNoEditor': { en: 'The editor is not available here yet.', hr: 'Editor ovdje još nije dostupan.' },
     'studio.myMaterials': { en: 'My materials', hr: 'Moji materijali' },
     'studio.nodeHint': { en: 'Personal material — only you can see it.', hr: 'Osobni materijal — vidiš ga samo ti.' },
     'studio.loadingNode': { en: 'Loading your material…', hr: 'Učitavam materijal…' },
+    // M4 — panel „Tvoj AI". Ovi ključevi PRIJE nisu postojali, pa je engleski korisnik gledao
+    // hrvatski rezervni niz iz studio.js. Tekst opisuje ADR-026: AI dolazi s korisnikove strane.
+    'studio.aiTitle': { en: 'Your AI', hr: 'Tvoj AI' },
+    'studio.soon': { en: 'SOON', hr: 'USKORO' },
+    'studio.aiHint': { en: 'Connect the AI you already use, hand it your notes — it builds the material right here.', hr: 'Spoji AI koji već koristiš pa mu daj svoje bilješke — gradi materijal izravno ovdje.' },
+    'studio.aiBtn': { en: 'Connect your AI', hr: 'Spoji svoj AI' },
     'studio.addSection': { en: 'New section', hr: 'Nova sekcija' },
     'studio.newSectionName': { en: 'New section', hr: 'Nova sekcija' },
     'studio.emptyEditHint': { en: 'Empty so far. Add your first section and start writing.', hr: 'Prazno je. Dodaj prvu sekciju pa počni pisati.' },
