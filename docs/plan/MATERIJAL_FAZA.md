@@ -19,6 +19,7 @@ i **iz njega uči**.
 | **M2** | učenje iz vlastitog materijala | ✅ |
 | **M3a** | boja **bloka** (learn) — shema · prikazivač · CSS · editor | ✅ |
 | **M3b** | boja **kartice / pitanja / dopune** | ⬜ |
+| **M5** | **duljina kartice** — nov nalaz (Leon, živi pregled) | ⬜ |
 | **M4** | sučelje prestaje obećavati | ✅ |
 
 Redoslijed nije proizvoljan: **M1 otključava autorstvo** (bez nje ostale cigle nemaju što pokazati),
@@ -127,6 +128,34 @@ provjere `^#[0-9a-fA-F]{6}$` — isti obrazac kao validirana širina slike.
 **Rizik: NAJVEĆI u fazi i jedina cigla koja dira javni katalog.** Mijenja
 `schema/subject-content.schema.json` i `js/blocks-renderer.js` — sigurnosnu granicu i jedini prikazivač
 za svih 22 živa predmeta. Zato ide zadnja: kad M1 i M2 stoje, ovo je jedina promjena u letu.
+
+---
+
+### M5 · Duljina kartice — ⬜ **NOV NALAZ (Leon, živi pregled 2026-08-07)**
+
+*„trebat ćemo poradit na ograničenju koliko jedna kartica ima teksta"*
+
+**Izmjereno prije odluke** (5379 kartica u `data/json/`):
+
+| | |
+|---|---|
+| **pitanja** | **0** prelazi 200 znakova (max 134) → **nisu problem** |
+| odgovori > 200 | **2487 = 46,2 %** |
+| odgovori > 300 | 928 |
+| odgovori > 500 | 48 (max **736**) |
+
+Razliveno je **kroz sve predmete** (food-nutrition 295 · entrepreneurship 254 · microeconomics 196…),
+što potvrđuje raniji zapis: **standard je platformski problem, ne Sašin.** Sašin noviji sadržaj
+standard *poštuje* (max 198/199) jer ga je dobio kao pravilo; naš stariji EN sadržaj mu prethodi.
+
+**Posljedica za dizajn:** tvrdo ograničenje na 200 **srušilo bi gotovo pola kataloga** → ne dolazi u obzir
+retroaktivno. Standard mora **voditi pri pisanju**, ne odbijati postojeće.
+
+**Preporuka (Claude):** brojač uživo + upozorenje na 200 u editoru kartice (bez blokade) · **strop u shemi
+tek na velikodušnoj granici** (samo 48 kartica prelazi 500) · nalaz u `validate:content` kao **izvještaj,
+ne gate** — da se vidi trend čišćenja. Vrijedi za **oba svijeta** (katalog i osobni materijal).
+
+**Otvoreno za Leona:** meko vođenje (preporuka) · meko + tvrdi strop · nešto treće.
 
 ---
 
