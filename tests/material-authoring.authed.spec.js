@@ -259,3 +259,55 @@ test.describe('M2 — učenje iz vlastitog materijala', () => {
     }
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// M3a — BOJA BLOKA (akcent). Kriterij 4 iz `docs/product/UGC_SPEC.md`.
+// Ugovor §3: akcent = slobodni #rrggbb (rub + tinta), odsutno = NASLIJEDI od sekcije.
+// Ovdje se dokazuje CIJELI put: klik u editoru → draft → objava → baza.
+// ─────────────────────────────────────────────────────────────────────────────
+
+test.describe('M3a — boja bloka', () => {
+  test('kvadratić oboji blok → objavi → boja u bazi; „⊘" je vrati na nasljeđivanje', async ({ page }) => {
+    await openProfile(page);
+    const id = await openFreshMaterialWithSection(page, 'M3 Boja');
+    try {
+      // Nova sekcija sije `learn: { blocks: [] }` → dodaj prvi blok.
+      await page.click('#stCanvas .st-tab[data-mode="learn"]');
+      await page.click('#stCanvas .be-bigplus, #stCanvas .be-add');
+      const tip = page.locator('.be-menu button, [data-be-type]').first();
+      await tip.click();
+      const blok = page.locator('#stCanvas .be-block').first();
+      await expect(blok).toHaveCount(1, { timeout: 10000 });
+
+      // ── OBOJI ──
+      await blok.locator('[data-be-bcolor="#10b981"]').click();
+      await expect(
+        page.locator('#stCanvas .be-block [data-be-bcolor="#10b981"].on'),
+        'kvadratić se ne označi kao odabran'
+      ).toHaveCount(1);
+
+      await page.click('#stPublish');
+      await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+      const obojen = await readContent(page, id);
+      const blokovi = Object.values(obojen.payload)[0].learn.blocks;
+      expect(blokovi[0].color, 'boja bloka nije preživjela objavu').toBe('#10b981');
+
+      // ── ⊘ → NASLIJEDI (ključ se MIČE, ne postaje null/prazan string) ──
+      await page.click('#stEdit');
+      await page.click('#stCanvas .st-tab[data-mode="learn"]');
+      await page.locator('#stCanvas .be-block').first().locator('[data-be-bcolor=""]').click();
+      await page.click('#stPublish');
+      await page.waitForSelector('#stEdit:not([hidden])', { timeout: 20000 });
+
+      const vracen = await readContent(page, id);
+      const b2 = Object.values(vracen.payload)[0].learn.blocks[0];
+      expect(
+        Object.prototype.hasOwnProperty.call(b2, 'color'),
+        '„⊘" mora UKLONITI ključ (odsutno = naslijedi), ne upisati null ili prazan niz'
+      ).toBe(false);
+    } finally {
+      await rmNode(page, id);
+    }
+  });
+});

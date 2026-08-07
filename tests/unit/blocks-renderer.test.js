@@ -202,5 +202,58 @@ test('inline math: math je EKSKLUZIVAN — b/i/color/href se ignoriraju', functi
   assert.ok(out.indexOf('<a ') === -1, 'href se ne smije primijeniti na formulu: ' + out);
 });
 
+// ── M3a — BOJA BLOKA (akcent). Ugovor: docs/product/UGC_SPEC.md §3 ──
+// Boja bloka je AKCENT (rub + tinta), ne boja teksta. Prostor je `#rrggbb` kao kod sekcije,
+// pa nasljeđivanje sekcija→blok živi u JEDNOM prostoru. Renderer je sigurnosna granica:
+// u `style` smije ući ISKLJUČIVO vrijednost koja je prošla `^#[0-9a-fA-F]{6}$`.
+test('boja bloka: valjan #rrggbb → omot s --lb-acc', function () {
+  const out = R([{ type: 'paragraph', text: 'x', color: '#ff8800' }]);
+  assert.ok(out.indexOf('class="lb-tint"') !== -1, out);
+  assert.ok(out.indexOf('style="--lb-acc:#ff8800"') !== -1, out);
+  assert.ok(out.indexOf('<p class="lb-paragraph">') !== -1, 'sadržaj bloka mora ostati netaknut: ' + out);
+});
+test('boja bloka: velika slova u hexu prolaze (pattern je case-insensitive)', function () {
+  const out = R([{ type: 'paragraph', text: 'x', color: '#AABBCC' }]);
+  assert.ok(out.indexOf('style="--lb-acc:#AABBCC"') !== -1, out);
+});
+test('boja bloka: ODSUTNA → nema omota (= naslijedi od sekcije, ne „bez boje")', function () {
+  const out = R([{ type: 'paragraph', text: 'x' }]);
+  assert.ok(out.indexOf('lb-tint') === -1, out);
+  assert.ok(out.indexOf('--lb-acc') === -1, out);
+});
+test('boja bloka: INJEKCIJA — sve što nije točno #rrggbb se odbija', function () {
+  const zli = [
+    'red', 'rgb(1,2,3)', '#fff', '#12345', '#1234567', 'var(--x)',
+    '#fff;background:url(javascript:alert(1))',
+    '#ffffff" onload="alert(1)',
+    '#ffffff"><script>alert(1)</script>',
+    'expression(alert(1))', '', null, undefined, 0, {}, []
+  ];
+  zli.forEach(function (c) {
+    const out = R([{ type: 'paragraph', text: 'x', color: c }]);
+    assert.ok(out.indexOf('--lb-acc') === -1, 'propuštena boja ' + JSON.stringify(c) + ': ' + out);
+    assert.ok(out.indexOf('onload') === -1 && out.indexOf('<script') === -1, out);
+    assert.ok(out.indexOf('lb-tint') === -1, out);
+  });
+});
+test('boja bloka: vrijedi za SVE tipove, ne samo paragraph', function () {
+  const uzorci = [
+    { type: 'heading', level: 2, text: 'h', color: '#112233' },
+    { type: 'list', items: ['a'], color: '#112233' },
+    { type: 'callout', text: 'c', color: '#112233' },
+    { type: 'table', rows: [['a']], color: '#112233' },
+    { type: 'formula', tex: 'x', color: '#112233' },
+    { type: 'image', src: 'https://a.com/x.png', color: '#112233' }
+  ];
+  uzorci.forEach(function (b) {
+    const out = R([b]);
+    assert.ok(out.indexOf('style="--lb-acc:#112233"') !== -1, b.type + ' nema akcent: ' + out);
+  });
+});
+test('boja bloka: blok koji se IZOSTAVI (nevaljan URL) ne dobiva prazan obojani omot', function () {
+  const out = R([{ type: 'image', src: 'javascript:alert(1)', color: '#112233' }]);
+  assert.strictEqual(out, '', 'prazan blok ne smije ostaviti omot iza sebe: ' + out);
+});
+
 console.log('\nblocks-renderer: ' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);

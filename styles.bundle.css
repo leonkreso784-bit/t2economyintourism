@@ -8514,6 +8514,31 @@ h4.lb-heading { font-size: 1.1rem; }
 /* ── legacy-html (v1 sadržaj kroz DOMPurify; U7c) ── */
 .lb-legacy { color: var(--text-secondary); line-height: 1.7; }
 
+/* ── M3a — AKCENT BLOKA (ugovor: docs/product/UGC_SPEC.md §3) ───────────────
+   Prikazivač emitira `--lb-acc` SAMO za validiran `#rrggbb`; ovdje se od toga crta
+   rub + tinta niske zasićenosti. Namjerno NIJE boja teksta: tinta na 10 % je čitljiva
+   na bilo kojoj pozadini, pa sloboda hexa ne košta kontrast (boja teksta ostaje
+   kurirana, `.lb-color-*`).
+
+   Nasljeđivanje je besplatno: blok bez vlastite boje ne emitira `--lb-acc`, pa uzme
+   akcent sekcije (`--st-acc`). Odsutno znači „naslijedi", ne „bez boje". */
+.lb-tint {
+  --lb-tint-bg: color-mix(in srgb, var(--lb-acc, var(--st-acc, transparent)) 10%, transparent);
+  border-left: 3px solid var(--lb-acc, var(--st-acc, transparent));
+  background: var(--lb-tint-bg);
+  border-radius: 0 10px 10px 0;
+  padding: 2px 14px;
+  margin: 10px 0;
+}
+/* Prvi/zadnji element unutar tinte ne smije udvostručiti razmak omota. */
+.lb-tint > :first-child { margin-top: 0; }
+.lb-tint > :last-child  { margin-bottom: 0; }
+
+/* `color-mix` bez podrške → ostaje samo rub (čitljivo, bez pozadine). */
+@supports not (background: color-mix(in srgb, red 10%, transparent)) {
+  .lb-tint { background: transparent; }
+}
+
 /* ==================== css/block-editor.css ==================== */
 /* ===== BLOCK EDITOR (U8a) — editor-chrome za learn-blokove =====
    Vizual = design/mockups/editor-c-tok.html (.kv/.adder/.bigplus → .be-*).
@@ -8829,6 +8854,31 @@ h4.lb-heading { font-size: 1.1rem; }
   border: 1px dashed rgba(99, 102, 241, .32); transition: .14s;
 }
 .be-tbtn:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); }
+
+/* ── M3a — kvadratići AKCENTA po bloku (paritet s bojom sekcije, `.st-cdot`) ──────
+   Isti vizualni jezik kao boja sekcije: korisnik uči JEDAN mehanizam, a nasljeđivanje
+   sekcija→blok živi u istom prostoru (`#rrggbb`).
+   Vidljivi su tek na hover/fokus bloka — kao ↑↓✕ — da chrome ostane stanjen (K3). */
+.be-cdots {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 8px; opacity: 0; transition: opacity .12s;
+}
+.be-block:hover .be-cdots,
+.be-block:focus-within .be-cdots { opacity: 1; }
+
+.be-cdot {
+  width: 15px; height: 15px; padding: 0; border-radius: 5px; cursor: pointer;
+  background: var(--dot, #64748b); border: 1px solid rgba(255, 255, 255, .22);
+  transition: .12s; font-size: 10px; line-height: 1; color: var(--text-muted);
+}
+.be-cdot:hover { transform: scale(1.15); box-shadow: 0 0 0 2px rgba(99, 102, 241, .4); }
+.be-cdot.on    { box-shadow: 0 0 0 2px #fff inset, 0 0 0 2px var(--dot, #64748b); }
+
+/* „⊘" = vrati na nasljeđivanje od sekcije (NIJE „bez boje"). */
+.be-cdot--none {
+  background: transparent; display: inline-flex; align-items: center; justify-content: center;
+}
+.be-cdot--none.on { box-shadow: 0 0 0 2px rgba(255, 255, 255, .35); }
 
 /* ==================== css/studio.css ==================== */
 /* ============================================================

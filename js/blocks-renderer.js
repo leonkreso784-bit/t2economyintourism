@@ -181,6 +181,25 @@
     'legacy-html': renderLegacyHtml
   };
 
+  // ── M3a: AKCENT bloka (ugovor: docs/product/UGC_SPEC.md §3) ──
+  // Boja ima DVIJE uloge i one žive u različitim prostorima:
+  //   • TEKST  → `run.color`, kurirani tokeni (kontrast je kritičan, v. INLINE_COLORS)
+  //   • AKCENT → sekcija/blok, slobodni `#rrggbb`, crta se kao rub + tinta niske zasićenosti
+  //     → bilo koji hex je čitljiv na bilo kojoj pozadini, pa sloboda ovdje ne košta a11y.
+  //
+  // NASLJEĐIVANJE JE BESPLATNO: odsutna boja = NE emitiraj ništa, pa blok naslijedi
+  // `--lb-acc` (odn. `--st-acc`) od sekcije kroz običan CSS-kaskadni mehanizam.
+  // Odsutno znači „naslijedi", ne „bez boje" — zato nema fallback-vrijednosti u JS-u.
+  //
+  // ⚠ GRANICA: u `style` ide ISKLJUČIVO vrijednost koja je prošla ovaj obrazac. Isti pristup
+  // kao kurirana širina slike (U8.5e): validiraj pa emitiraj, inače izostavi. Nikad ne
+  // interpoliraj autorov niz u CSS bez provjere — to je jedini put do CSS-injekcije ovdje.
+  const HEX6 = /^#[0-9a-fA-F]{6}$/;
+  function accentOf(b) {
+    const c = (b && typeof b.color === 'string') ? b.color.trim() : '';
+    return HEX6.test(c) ? c : '';
+  }
+
   // ── glavni ulaz ──
   function renderBlocks(blocks) {
     if (!Array.isArray(blocks)) return '';
@@ -189,7 +208,11 @@
       const b = blocks[i];
       if (!b || typeof b !== 'object') continue;
       const fn = RENDERERS[b.type];
-      if (fn) html += fn(b);                            // nepoznat tip → tiho preskoči (fail-safe)
+      if (!fn) continue;                                // nepoznat tip → tiho preskoči (fail-safe)
+      const body = fn(b);
+      if (!body) continue;                              // izostavljen blok ne ostavlja prazan omot
+      const acc = accentOf(b);
+      html += acc ? '<div class="lb-tint" style="--lb-acc:' + acc + '">' + body + '</div>' : body;
     }
     return html;
   }

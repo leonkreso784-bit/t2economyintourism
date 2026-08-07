@@ -17,7 +17,8 @@ i **iz njega uči**.
 |---|---|---|
 | **M1** | svi modovi dostupni u praznom materijalu | ✅ |
 | **M2** | učenje iz vlastitog materijala | ✅ |
-| **M3** | boje kao jedan sustav | ⬜ |
+| **M3a** | boja **bloka** (learn) — shema · prikazivač · CSS · editor | ✅ |
+| **M3b** | boja **kartice / pitanja / dopune** | ⬜ |
 | **M4** | sučelje prestaje obećavati | ✅ |
 
 Redoslijed nije proizvoljan: **M1 otključava autorstvo** (bez nje ostale cigle nemaju što pokazati),
@@ -32,7 +33,7 @@ Mjeri se po [UGC_SPEC §2](../product/UGC_SPEC.md), ne po ovoj tablici cigli. Os
 | 1 | napravim materijal od nule (kartica + kviz + dopuna) | ✅ M1 |
 | 2 | učim iz njega istim ekranima kao iz kataloga | ✅ M2 |
 | 3 | napredak se pamti i sinkronizira | ✅ M2 |
-| 4 | boja sekcije se vidi na blokovima i karticama, može se pregaziti | ⬜ M3 |
+| 4 | boja sekcije se vidi na blokovima i karticama, može se pregaziti | 🟦 **M3a ✅ blokovi · M3b ⬜ kartice** |
 | 5 | sučelje ne spominje ništa što ne postoji | ✅ M4 |
 
 ⚠️ **Nijedan kriterij nije verificiran Leonovom živom prijavom** — sve stoji na grani, ne na produkciji.
@@ -98,7 +99,23 @@ prošlog predmeta). Reset-blok u `initStudyPage` mora pokriti i ovaj put.
 
 ---
 
-### M3 · Boje kao jedan sustav
+### M3 · Boje kao jedan sustav — **M3a ✅ · M3b ⬜**
+
+> **Podijeljeno u dvije polovice.** Leon je imenovao *„mijenjanje boja po blokovima nije završeno
+> u learnu"* kao rupu, a kartice kao *„trebat će biti"*. **M3a (blokovi) je isporučen**; M3b
+> (kartice/pitanja/dopune) traži još 3 definicije sheme i **tri zasebna prikazivača**
+> (`flashcards.js` · `quiz.js` · `fill.js`) — druga površina, druga cigla.
+>
+> **M3a — kako je izvedeno:** `accent` definicija u shemi (jedno mjesto istine) + `color` u svih
+> 9 blokova · prikazivač emitira `<div class="lb-tint" style="--lb-acc:#rrggbb">` **samo** nakon
+> `^#[0-9a-fA-F]{6}$` · CSS crta rub + `color-mix` tintu · kvadratići u editoru (`data-be-bcolor`).
+> **Nasljeđivanje je besplatno:** blok bez boje ne emitira ništa → uzme `--st-acc` sekcije kroz
+> CSS-kaskadu. „⊘" šalje `color: null`, a `_assignPatch` već briše ključ → *odsutno = naslijedi*.
+>
+> **Dvije zamke uhvaćene u izvedbi:** ① `data-be-color` je **već bio zauzet** (boja teksta u
+> plutajućoj traci) → akcent koristi `data-be-bcolor`, inače bi klik gađao krivi rukovatelj.
+> ② `JSON.stringify` nad shemom preformatira cijeli fajl (**480 izmjena umjesto 19**) → izmjena
+> sheme ide **tekstualno**, nikad kroz reparse.
 
 **Problem.** Tri nepovezana mehanizma: `category.color` (`#rrggbb`), `run.color` (9 tokena), a **blok i
 kartica nemaju ništa** — i ne mogu dobiti prešutno, jer je svaka definicija `additionalProperties: false`.

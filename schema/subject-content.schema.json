@@ -116,6 +116,16 @@
         { "$ref": "#/definitions/blockLegacyHtml" }
       ]
     },
+    "accent": {
+
+      "type": "string",
+
+      "pattern": "^#[0-9a-fA-F]{6}$",
+
+      "description": "Akcent (rub + tinta). Odsutno = naslijedi od sekcije. Ugovor: docs/product/UGC_SPEC.md 3."
+
+    },
+
     "blockHeading": {
       "type": "object",
       "required": ["type", "text"],
@@ -123,6 +133,7 @@
       "properties": {
         "id":    { "type": "string", "minLength": 1 },
         "type":  { "const": "heading" },
+        "color": { "$ref": "#/definitions/accent" },
         "level": { "type": "integer", "minimum": 2, "maximum": 4 },
         "text":  { "$ref": "#/definitions/inline" }
       }
@@ -134,6 +145,7 @@
       "properties": {
         "id":   { "type": "string", "minLength": 1 },
         "type": { "const": "paragraph" },
+        "color": { "$ref": "#/definitions/accent" },
         "text": { "$ref": "#/definitions/inline" }
       }
     },
@@ -144,6 +156,7 @@
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "type":    { "const": "list" },
+        "color": { "$ref": "#/definitions/accent" },
         "ordered": { "type": "boolean" },
         "items":   { "type": "array", "items": { "$ref": "#/definitions/inline" } }
       }
@@ -155,6 +168,7 @@
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "type":    { "const": "callout" },
+        "color": { "$ref": "#/definitions/accent" },
         "variant": { "type": "string", "enum": ["info", "warning", "tip"] },
         "title":   { "type": "string" },
         "text":    { "$ref": "#/definitions/inline" }
@@ -167,6 +181,7 @@
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "type":    { "const": "image" },
+        "color": { "$ref": "#/definitions/accent" },
         "src":     { "type": "string", "minLength": 1 },
         "alt":     { "type": "string" },
         "caption": { "$ref": "#/definitions/inline" },
@@ -180,6 +195,7 @@
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "type":    { "const": "video" },
+        "color": { "$ref": "#/definitions/accent" },
         "videoId": { "type": "string", "minLength": 1 },
         "url":     { "type": "string", "minLength": 1 }
       },
@@ -195,6 +211,7 @@
       "properties": {
         "id":     { "type": "string", "minLength": 1 },
         "type":   { "const": "table" },
+        "color": { "$ref": "#/definitions/accent" },
         "header": { "type": "array", "items": { "$ref": "#/definitions/inline" } },
         "rows":   { "type": "array", "items": { "type": "array", "items": { "$ref": "#/definitions/inline" } } }
       }
@@ -206,6 +223,7 @@
       "properties": {
         "id":      { "type": "string", "minLength": 1 },
         "type":    { "const": "formula" },
+        "color": { "$ref": "#/definitions/accent" },
         "tex":     { "type": "string", "minLength": 1 },
         "display": { "type": "boolean" }
       }
@@ -217,6 +235,7 @@
       "properties": {
         "id":   { "type": "string", "minLength": 1 },
         "type": { "const": "legacy-html" },
+        "color": { "$ref": "#/definitions/accent" },
         "html": { "type": "string" }
       }
     }

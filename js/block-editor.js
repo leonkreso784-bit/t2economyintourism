@@ -207,6 +207,25 @@
   }
 
   // ── jedna blok-kartica (glava s kontrolama + tijelo = editabilno/preview) ──
+  // ── M3a: AKCENT BLOKA (ugovor: docs/product/UGC_SPEC.md §3) ──
+  // Isti prostor (`#rrggbb`) i isti kvadratić-jezik kao boja SEKCIJE — nasljeđivanje
+  // sekcija→blok tako živi u jednom prostoru, a korisnik ne uči dva mehanizma.
+  // „⊘" = ukloni vlastitu boju → blok se VRAĆA na nasljeđivanje (nije „bez boje").
+  // ⚠ Kurirani skup je samo PRIJEDLOG; vrijednost validira `setBlockColor` (isti obrazac kao Studio).
+  const BLOCK_COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#06b6d4', '#a855f7'];
+  function blockColorDots(id, current) {
+    const cur = String(current == null ? '' : current).toLowerCase();
+    let html = '<span class="be-cdots">';
+    html += '<button type="button" class="be-cdot be-cdot--none' + (cur ? '' : ' on') +
+      '" data-be-bcolor="" data-be-id="' + esc(id) + '" title="Naslijedi boju sekcije" aria-label="Naslijedi boju sekcije">⊘</button>';
+    BLOCK_COLORS.forEach(function (col) {
+      html += '<button type="button" class="be-cdot' + (col === cur ? ' on' : '') +
+        '" data-be-bcolor="' + col + '" data-be-id="' + esc(id) +
+        '" style="--dot:' + col + '" title="' + col + '" aria-label="Boja bloka ' + col + '"></button>';
+    });
+    return html + '</span>';
+  }
+
   function blockCard(block, i, total) {
     const id = block && block.id != null ? String(block.id) : '';
     const type = block && block.type ? String(block.type) : '?';
@@ -224,6 +243,7 @@
           '<button type="button" class="be-btn" data-be-act="down" data-be-id="' + esc(id) + '"' + downDis + ' title="Pomakni dolje" aria-label="Pomakni dolje">↓</button>' +
           '<button type="button" class="be-btn be-del" data-be-act="remove" data-be-id="' + esc(id) + '" title="Ukloni blok" aria-label="Ukloni blok">✕</button>' +
         '</span>' +
+        blockColorDots(id, block && block.color) +
       '</div>' +
       '<div class="be-body">' + editableBody(block) + '</div>' +
     '</div>';
@@ -661,6 +681,24 @@
 
       container.addEventListener('click', function (e) {
         const c = container._beCtx;
+        // ── M3a: AKCENT bloka → updateLearnBlock {color} → re-crtaj ──
+        // Vrijednost se VALIDIRA ovdje (`#rrggbb`) prije nego uđe u draft, iako je i prikazivač
+        // odbija — dvije brave, jer draft završi u bazi i u autosaveu.
+        // Prazna vrijednost („⊘") upisuje `null` = MAKNI vlastitu boju → blok se vraća na
+        // nasljeđivanje od sekcije. To NIJE isto što i „bez boje".
+        // ⚠ Atribut je `data-be-bcolor`, NE `data-be-color` — potonji je boja TEKSTA u plutajućoj
+        // traci (F6) i dijeljenje imena bi značilo da klik na kvadratić bloka gađa krivi rukovatelj.
+        const bc = e.target.closest ? e.target.closest('[data-be-bcolor]') : null;
+        if (bc && container.contains(bc)) {
+          const bcEl = bc.closest('[data-be-block]');
+          const bcId = bcEl ? bcEl.getAttribute('data-be-block') : '';
+          const raw = bc.getAttribute('data-be-bcolor') || '';
+          if (bcId && (raw === '' || /^#[0-9a-fA-F]{6}$/.test(raw))) {
+            c.applyOp({ type: 'updateLearnBlock', catId: c.catId, id: bcId, patch: { color: raw || null } });
+            draw();
+          }
+          return;
+        }
         // U8.5e: callout-varijanta (info/warning/tip) → op → re-crtaj (boja/stil se mijenja)
         const cv = e.target.closest ? e.target.closest('[data-be-cvar]') : null;
         if (cv && container.contains(cv)) {

@@ -312,3 +312,28 @@
   border: 1px dashed rgba(99, 102, 241, .32); transition: .14s;
 }
 .be-tbtn:hover { border-color: var(--primary); color: #c7d2fe; background: rgba(99, 102, 241, .12); }
+
+/* ── M3a — kvadratići AKCENTA po bloku (paritet s bojom sekcije, `.st-cdot`) ──────
+   Isti vizualni jezik kao boja sekcije: korisnik uči JEDAN mehanizam, a nasljeđivanje
+   sekcija→blok živi u istom prostoru (`#rrggbb`).
+   Vidljivi su tek na hover/fokus bloka — kao ↑↓✕ — da chrome ostane stanjen (K3). */
+.be-cdots {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: 8px; opacity: 0; transition: opacity .12s;
+}
+.be-block:hover .be-cdots,
+.be-block:focus-within .be-cdots { opacity: 1; }
+
+.be-cdot {
+  width: 15px; height: 15px; padding: 0; border-radius: 5px; cursor: pointer;
+  background: var(--dot, #64748b); border: 1px solid rgba(255, 255, 255, .22);
+  transition: .12s; font-size: 10px; line-height: 1; color: var(--text-muted);
+}
+.be-cdot:hover { transform: scale(1.15); box-shadow: 0 0 0 2px rgba(99, 102, 241, .4); }
+.be-cdot.on    { box-shadow: 0 0 0 2px #fff inset, 0 0 0 2px var(--dot, #64748b); }
+
+/* „⊘" = vrati na nasljeđivanje od sekcije (NIJE „bez boje"). */
+.be-cdot--none {
+  background: transparent; display: inline-flex; align-items: center; justify-content: center;
+}
+.be-cdot--none.on { box-shadow: 0 0 0 2px rgba(255, 255, 255, .35); }
