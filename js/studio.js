@@ -132,14 +132,14 @@ const SokratStudio = (function () {
         ? '<h3>📁 ' + esc(t('studio.myMaterials', 'Moji materijali')) + '</h3>' +
           '<div class="st-nodecard"><div class="st-nodeicon">📘</div>' +
           '<div class="st-nodename">' + esc(_node.name) + '</div>' +
-          '<p class="st-hint">' + esc(t('studio.nodeHint', 'Osobno gradivo — vidiš ga samo ti.')) + '</p></div>'
+          '<p class="st-hint">' + esc(t('studio.nodeHint', 'Osobni materijal — vidiš ga samo ti.')) + '</p></div>'
         : '<button class="st-newscript" id="stNewScript">＋ ' + esc(t('studio.newScript', 'Nova skripta')) + '</button>' +
           '<h3>🗂️ ' + esc(t('studio.structure', 'Struktura')) + '</h3>' +
           '<div id="stTree">' + buildTree() + '</div>') +
       '  </aside>' +
       '  <main class="st-canvas" id="stCanvas">' +
       (_node ? '<div class="st-empty"><div><div class="st-emoji">⏳</div><p>'
-             + esc(t('studio.loadingNode', 'Učitavam gradivo…')) + '</p></div></div>'
+             + esc(t('studio.loadingNode', 'Učitavam materijal…')) + '</p></div></div>'
              : emptyCanvas()) + '</main>' +
       '  <aside class="st-inspector" id="stInspector">' + inspectorStub(false) + '</aside>' +
       '</div>';

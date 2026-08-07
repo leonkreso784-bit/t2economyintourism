@@ -16,6 +16,28 @@ oko touch-editora", a odgovor ga je pretvorio u nešto drugo.
    **javni katalog** — ono što objavljujemo mi. Riječ povlači granicu između dva svijeta i mora biti
    **institucijski neutralna**: „gradivo" miriše na propisani kurikul, a po ADR-025 §6 korisnik je **bilo tko**.
    Kratki oblik **„materijal"** u gumbima, puni **„materijal za učenje"** u prozi.
+
+   **Rječnik osobnog prostora (obvezujuć za sučelje):**
+
+   | `nodes.kind` | hrvatski | engleski | radnje |
+   |---|---|---|---|
+   | `folder` | **polica** *(ž. rod: nova polica, nadređenu policu)* | folder | stvori · preimenuj · premjesti · obriši |
+   | `study` | **materijal** | material | **stvori** (*„Novi materijal"*) · **uredi** (*„Uredi materijal"*) |
+
+   Metafora je namjerna i dosljedna: **polica drži materijale**. Zato *ne* „mapa" ni „direktorij" — oni
+   opisuju datotečni sustav, a ovo je polica s gradivom za učenje.
+
+   **Dvije radnje nad materijalom su create i edit** (Leon): *„Novi materijal"* stvara nov, *„Uredi materijal"*
+   otvara **bilo koji** koji je korisnik već napravio. Nema treće radnje ni skrivenog stanja između njih.
+
+   **Izuzetak — dijeljeni nizovi ostaju „gradivo".** Study-stranica je jedan DOM za oba svijeta, pa
+   `learn.title` i `quiz.res.ok.m` vrijede i kad se uči vlastiti materijal; ondje „gradivo" znači *ono što učiš*,
+   ne *ono što smo objavili*. Landing (`how.2.p`, `sec.modes.title`, `mode.learn.p`) opisuje javni katalog i
+   ostaje kakav jest. Dijeljen niz točan u oba svijeta jeftiniji je od dva koja se moraju držati usklađena.
+
+   **Engleski ostaje „folder"** (Leon) — *ne* „shelf". Metafora se **lokalizira, konvencija ne**: engleskom
+   korisniku „folder" je odmah razumljiv, dok hrvatski dobiva topliju i prepoznatljiviju riječ. Namjerna
+   asimetrija, ne propust u prijevodu — nemoj je „ispravljati" pri idućem prolasku kroz `js/i18n.js`.
 2. **Mobilno autorstvo ide preko korisnikovog AI-a (MCP), ne preko editora na dodir.** Podjela uloga:
 
    | | računalo | mobitel |
