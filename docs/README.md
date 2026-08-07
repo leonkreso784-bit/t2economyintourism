@@ -54,7 +54,7 @@
 
 | Dokument | Svrha |
 |---|---|
-| [MATERIJAL_FAZA.md](./plan/MATERIJAL_FAZA.md) | **AKTIVNI SPEC** — faza „Materijal od nule do učenja" (cigle M1–M4) |
+| [MATERIJAL_FAZA.md](./plan/MATERIJAL_FAZA.md) | **AKTIVNI SPEC** — faza „Materijal od nule do učenja" (cigle M1–M5) |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status |
 
 > Definicija i kriteriji prihvaćanja te faze su u [product/UGC_SPEC.md](./product/UGC_SPEC.md) i

@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-07-c (OPUS) — **Stage A4: dokumentacija prestala lagati** (grana `docs/stage-a`)
+
+**Povod.** Leon: *„pregledaj jeli dokumentacija dobra."* Pregled je pokazao da **struktura drži** (jedan aktivni plan, `product/` bez kronologije, indeks potpun, `check:docs` zelen), ali da **stage A4 nikad nije odrađen** — A1/A2/A3 jesu (`c38a39b`, `a017025`, `055a5c2`), A4 je ostao zapisan kao „slijedi" i tu stao.
+
+### Četiri neistine, po težini
+
+| # | mjesto | tvrdilo | stvarnost |
+|---|---|---|---|
+| 1 | `workflow/TEAM.md:131` | *„Nakon ova 4 → Saša prelazi na **IZGRADNJU MATURE**"* | matura izbačena 2026-08-02; **jedina neistina koju čita čovjek** |
+| 2 | `plan/ROADMAP.md` zaglavlje | *„Trenutni rad = CREATE_BACKEND **F5**"*, `CREATE_BACKEND_SPEC.md` ← **AKTIVNO** | F5 na produkciji od 06.08., a dokument je u `archive/` → **`plan/` je pokazivao na arhivu kao na aktivni spec** |
+| 3 | `product/PRD.md` §4 | *„Faza 1: UGC MVP — korisnik uploada PDF/PPT → AI radi skriptu"* | izgrađeno je **ručno autorstvo**; AI dolazi kroz **korisnikov** AI (MCP, ADR-026) — pa ni kvote troška nisu na nama |
+| 4 | `product/PRD.md` §7 | *„Nema sustava uloga — jedini autor sam ja"* | postoji `profiles.role` + `is_admin()` + suradnik s deploy-permisijom |
+
+**Popravljeno uz to:** PRD §3 (rupa koju su M1+M2 zatvorili — bila bi neistinita **u sekundi kad `stage-a` sjedne na `main`**), PRD §1/§2/§8 (UGC kao zvijezda, „korisnik-autor" više nije buduća faza), ROADMAP §DALJE-3 (matura), `docs/README.md` (cigle M1–**M5**), `CLAUDE.md` (M5 upisan; **„ništa nije verificirano živom prijavom" je i samo bilo neistinito** — Leon je pregledao preview vlastitim prod-računom).
+
+### Nalaz koji nadživljuje ovo čišćenje
+
+**`check:docs` ne može uhvatiti ovu klasu.** Provjerava mrtve poveznice, ćirilicu, broj aktivnih planova, članstvo u indeksu i (od A2) boje-vs-shema. **Sve četiri neistine prošle su kroz njega netaknute** — semantičke su.
+
+Ista greška u drugom ruhu kao ona koju smo već platili: prije je gate bio zelen a **proizvod** nije radio; sad je gate zelen a **dokumentacija** ne govori istinu.
+
+**Jedna je mehanički uhvatljiva** i vrijedi je zatvoriti: *nijedan dokument u `plan/` ili `product/` ne smije označiti dokument iz `archive/` kao „AKTIVNO/AKTIVNI"*. To je ~15 redaka u `scripts/check-docs.js` i uhvatilo bi nalaz #2 točno. **Predloženo Leonu, čeka odluku.**
+
+### Usput izmjereno (priprema za M3b)
+
+`flashcard`, `quiz` i `fillBlank` su **sve tri `additionalProperties: false`** → `color` ne može doći prešutno; `accent` definicija iz M3a već postoji pa je shema tri `$ref`-a. Prikazivača su **tri odvojena** (`js/flashcards.js` 138 · `js/quiz.js` 339 · `js/fill-blanks.js`) — nema zajedničke točke kao kod blokova, pa **nasljeđivanje ovdje neće biti besplatno** kao u M3a. To je jedina stvarna razlika u težini.
+
+**Gate:** `check:docs` 46 dok. / 217 poveznica / 0 · preflight EXIT 0. Bez bumpa (`.md` izmjene ga ne traže).
+
+---
+
 ## 2026-08-07-b (OPUS) — ∑ **Faza „Materijal od nule do učenja": 4 od 5 kriterija** (grana `docs/stage-a`)
 
 **Kontekst.** Leon je prethodno uhvatio da je faza proglašena gotovom po **odčekiranoj tablici cigli**, a ne po cilju: u vlastitom materijalu se nije mogla napraviti nijedna kartica niti se iz njega moglo učiti. Ova sesija je to zatvorila — ali **prvo** je definiran ugovor, pa tek onda pisan kod.

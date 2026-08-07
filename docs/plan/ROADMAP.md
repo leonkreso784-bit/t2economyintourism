@@ -1,17 +1,20 @@
 # ROADMAP — Milestones
 
-> ## ⚠️ ČITAJ PRVO — SEKVENCA NIŽE JE NADGLAŠENA (Leon, 2026-08-02)
-> Rečenica „F4 custom Admin CRUD → **F5 SRS** → **F6 pred-UGC sigurnost**" niže je **POVIJESNI ZAPIS**, ne plan.
-> **Važeća sekvenca:** dovrši **osobni UGC-graditelj** (`CREATE_BACKEND_SPEC.md` v3) → **frontend redizajn** →
+> ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
+> **Aktivni spec je [MATERIJAL_FAZA.md](./MATERIJAL_FAZA.md)**, definicija i kriteriji prihvaćanja
+> [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**, ne plan rada.
+>
+> **Važeća sekvenca (Leon, 2026-08-02):** dovrši **fazu „Materijal od nule do učenja"** → **frontend redizajn** →
 > **objava/dijeljenje + MCP**. **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
 >
-> ### ⚠️ DVA RAZLIČITA „F" NUMERIRANJA — ne miješaj ih
+> ### ⚠️ DVA „F" NUMERIRANJA — **oba su ZATVORENA**, ne miješaj ih
 > | oznaka | gdje | značenje | status |
 > |---|---|---|---|
-> | **F1–F6** | ovaj dokument + `FOUNDATION_PLAN.md` | faze **platformskog temelja** (CI/CD, jezgra, performanse, Admin CRUD, SRS, sigurnost) | F1–F4 isporučeni; F5/F6 nadglašeni |
-> | **F0–F5** | **`CREATE_BACKEND_SPEC.md`** ← **AKTIVNO** | faze **osobnog UGC-graditelja** (spec → DB → UI → editor → polish → PROD) | **F0–F4 ✅, slijedi F5 = PROD** |
+> | **F1–F6** | ovaj dokument + [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md) | faze **platformskog temelja** (CI/CD, jezgra, performanse, Admin CRUD, SRS, sigurnost) | F1–F4 isporučeni; **F5/F6 nadglašeni** |
+> | **F0–F5** | [archive/CREATE_BACKEND_SPEC.md](../archive/CREATE_BACKEND_SPEC.md) | faze **osobnog UGC-graditelja** (spec → DB → UI → editor → polish → PROD) | **F0–F5 ✅ SVE ISPORUČENO** (F5 na produkciji 2026-08-06) |
 >
-> Kad u svježoj sesiji vidiš „F4", provjeri **koji** je dokument izvor. Trenutni rad = **CREATE_BACKEND F5**.
+> Kad u svježoj sesiji vidiš „F4", provjeri **koji** je dokument izvor — i znaj da **nijedan od ta dva niza
+> više ne opisuje tekući rad.** Faza sada ima **ime, ne slovo** (`docs/README.md`, pravilo 4).
 
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
@@ -73,7 +76,7 @@ file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](../records/PROGRESS
 **B) Nakon sadržaja — prioriteti** *(2026-06-29: PREUREĐENO platforma-first zaokretom → vidi [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md)):*
 1. **Admin CRUD** — sad **Faza 4** u FOUNDATION_PLAN-u (custom, NA čistom content-sloju S1/S2; source-of-truth flip; ADR-013). Ne radi se dok F1–F2 ne stoje.
 2. **AI tutor** — zaseban produkt-trk, neovisan o source-of-truth; bilo kad nakon jezgre (F2). „Donesi svoj ključ" prvo ([VISION.md](../product/VISION.md)).
-3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci (širenje izvan fakulteta).
+3. ~~**Priprema za MATURU**~~ — ⛔ **IZBAČENO** (Leon, 2026-08-02). Širenje izvan fakulteta ide kroz **UGC**: platforma je institucijski-agnostična, pa srednjoškolac gradi vlastiti materijal kao i svi ostali. Matura ostaje samo **tržišna hipoteza** u [MONETIZATION.md](../product/MONETIZATION.md), ne posao u planu.
 4. **(NOVO) Spaced Repetition (SRS)** — Faza 5; pravi pamet-algoritam učenja, najveći produkt-WOW, reusable preko svih predmeta.
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug + logo + monetizacija:**
