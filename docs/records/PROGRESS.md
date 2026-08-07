@@ -5,6 +5,45 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-07-b (OPUS) — ∑ **Faza „Materijal od nule do učenja": 4 od 5 kriterija** (grana `docs/stage-a`)
+
+**Kontekst.** Leon je prethodno uhvatio da je faza proglašena gotovom po **odčekiranoj tablici cigli**, a ne po cilju: u vlastitom materijalu se nije mogla napraviti nijedna kartica niti se iz njega moglo učiti. Ova sesija je to zatvorila — ali **prvo** je definiran ugovor, pa tek onda pisan kod.
+
+### 0) Definicija prije koda
+- **`docs/product/UGC_SPEC.md`** (`055a5c2`) — prvi dokument u `product/` s kriterijima u obliku *„gotovo kad korisnik može X"*. **Nijedan ne glasi „test je zelen".** Uz to rječnik, ugovor boja i ne-ciljevi s razlogom.
+- **`docs/plan/MATERIJAL_FAZA.md`** — **potrošan** plan (cigle), odvojen od definicije koja ga nadživljuje.
+- **ADR-026** (`a017025`) — Leonove odluke: *materijal* / *polica* (EN ostaje `folder`, namjerna asimetrija) · **mobilno autorstvo ide preko korisnikovog AI-a (MCP), ne preko touch-editora**; računalo nosi „brutalan" editor · AI-gumb ostaje ali znači *„spoji svoj AI"* · MCP invarijante (nikad katalog, nikad `is_admin()`, nikad `service_role`).
+- **A2** — `CONTENT_SCHEMA` je tvrdio 5 tokena boje i nije znao za `math`, a shema i produkcija imaju 9 i `math`. Ispravljeno **i zaštićeno**: `check:docs` dobio petu provjeru koja uspoređuje popis boja u dokumentu s `enum`-om u shemi. Prve četiri čuvaju **strukturu** dokumentacije, ova je prva koja čuva njenu **istinitost**.
+
+### 1) M1 — svi modovi u praznom materijalu (`74d460a`) → **BUG-022**
+`presentModes` je označavao mod postojećim samo za **nepraznan** niz → nov materijal je imao samo Learn → prva kartica se nije mogla dodati **nikad**. Uređivači, put upisa i prava su cijelo vrijeme radili — bili su **nedostupni**. Popravak = **jedan uvjet**. Vrijedi i za javni katalog (predmet bez ijedne dopune nije mogao dobiti prvu).
+
+### 2) M2 — učenje iz vlastitog materijala (`42d0fa1`)
+`initStudyPage` kreće od `subjectDataMap` = katalog; **13 mjesta** u kodu to pretpostavlja. Umjesto da se svih 13 uči za čvorove, materijal se registrira kao **sintetički predmet** `node:<uuid>` sa `storageKey` = isti ključ → napredak, analitika, profil-statistika i cloud-sync rade **bez ijedne izmjene**. **Treći put** da se isplati obrazac „šav generičan po tekstualnom ključu" (draft-stroj, `progress`, sad ovo). Dirane **dvije** funkcije u `navigation.js`; `applyFeatureNav` sad skriva vježbe **namjerno**, ne slučajno preko `null`.
+
+### 3) M4 — sučelje prestaje obećavati (`42d0fa1`)
+AI-panel je tvrdio *„napiši samo Learn — kartice nastaju automatski"* = **treća** značajka koju ne gradimo. Sad: *„Tvoj AI · USKORO · Spoji svoj AI"*, neaktivan dok MCP ne postoji. Ti i18n ključevi **uopće nisu postojali** → engleski korisnik je gledao hrvatski rezervni niz.
+
+### 4) M3a — boja bloka kao akcent (`5298781`)
+Ugovor: **tekst = kurirani tokeni** (kontrast kritičan), **akcent = slobodni `#rrggbb`** (rub + tinta → bilo koji hex čitljiv). Blok je akcent, ista uloga kao sekcija → isti prostor. **Nasljeđivanje ispalo besplatno**: blok bez boje ne emitira ništa → uzme `--st-acc` kroz CSS-kaskadu; „⊘" šalje `color:null`, a `_assignPatch` već briše ključ. Renderer emitira **samo** nakon `^#[0-9a-fA-F]{6}$` (16 injekcijskih vrijednosti odbijeno).
+
+### 5) Rječnik (`5eb172b`)
+18 hrvatskih nizova: **materijal** + **polica** (rod praćen: „Nova polica", „nadređenu policu"). EN već je bio ispravan. Pet nizova namjerno i dalje kaže „gradivo" — tri na landingu (opisuje katalog) i dva na study-stranici koja je **jedan dijeljeni DOM** za oba svijeta.
+
+### 6) M5 — duljina kartice: **izmjereno prije odluke**
+Leonov nalaz iz živog pregleda. 5379 kartica: **pitanja 0 preko 200** (max 134), **odgovori 2487 = 46,2 %** preko 200, 928 preko 300, **48 preko 500**. Razliveno kroz sve predmete → potvrđuje da je standard **platformski** problem, ne Sašin. **Tvrdo ograničenje na 200 srušilo bi pola kataloga.** Leon odabrao strop **500**; podijeljeno u M5a (vođenje u editoru — odmah zaustavlja rast) i M5b (skratiti **25 jedinstvenih** zatečenih pa tek onda `maxLength` u shemi — inače crven CI).
+
+### 7) Sašin brzi pregled
+Zadnji commit **2026-07-27** (11 dana). Dvije grane izvan `main`-a: `content/entrepreneurship-hr` (3) i `content/ebusiness-hr` (1). Kvaliteta dobra — opseg čist, **0 kartica preko 200** (max 198/199), Final = M1+M2+examPractice. **Ćirilica koju je skener našao NIJE njegova** — `MPС` je u `data/macroeconomics/` već na `main`-u. ⚠️ Obje grane diraju `data/catalog.js` + cache-tokene → **druga po redu će konfliktirati**. Naš dug: `check:docs` skenira ćirilicu u `.md`, ali **`data/**` nitko ne skenira**.
+
+**Tri zamke uhvaćene u izvedbi (zapamtiti):** ① `data-be-color` je **već zauzet** (boja teksta) → akcent mora biti `data-be-bcolor`. ② `JSON.stringify` nad shemom preformatira cijeli fajl (**480 izmjena umjesto 19**) → shema se mijenja **tekstualno**. ③ **Test je prošao iz krivog razloga** — `toHaveText` prolazi i na sakrivenom elementu; čekaj stvarni ishod, klikaj pravim gumbom, tvrdi `toBeVisible`.
+
+**Gate:** preflight EXIT 0 · `test:authed` **60/60** · unit blocks-renderer 35/35 · responsive 288/0/15skip · check:docs 46 dok./214 poveznica/0 · validate:schema 66/0. `auth.setup` pao **prolazno dvaput** („NOT admin"), sam prolazi.
+
+**Slijedi:** M3b (boja kartica) → M5a → M5b → **Leonova živa provjera** → merge na `main`. ⚠️ **Ništa iz faze nije na produkciji** — sve stoji na grani.
+
+---
+
 ## 2026-08-07 (OPUS) — ∑ **Matematika: BUG-021 popravljen + INLINE matematika u rečenici**
 **Kontekst:** Leon je uživo isprobao osobno gradivo na produkciji (*„čini mi se da dosta dobro radi"*) i poslao screenshot s jednim kvarom: **KaTeX formula prikazana kao kod**. Uz to presuda: *„način rada nam uopće nije dobar pa niti tipkovnica."*
 

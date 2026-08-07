@@ -23,6 +23,15 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-022 — U vlastitom materijalu se NIJE mogla napraviti nijedna kartica, kviz ni dopuna
+- Status: ✅ riješen (`74d460a`, grana `docs/stage-a`, cigla M1) · Težina: **kritičan** za osobni materijal · Prijavio: **korisnik** (Leon, živo).
+- **Simptom:** nov materijal nudi samo tab **Learn**. Nema Kartica, Kviza ni Dopuna — dakle ni gumba „＋ Dodaj". Zaglavlje pokaže „👁 1 moda".
+- **Koraci:** Profil → Moji materijali → novi materijal → Uredi → „＋ Nova sekcija" → gledaj tabove.
+- **Uzrok:** [`presentModes`](../../js/studio.js#L275) označi mod postojećim **samo ako je niz NEPRAZAN**. Nov materijal ima `flashcards: []` / `quiz: []` / `fillBlanks: []` → mod „ne postoji" → tab se ne nacrta → `renderPane` se **nikad ne pozove** → nema afordancije za prvu stavku. **Slijepa ulica po konstrukciji: prva kartica se nije mogla dodati nikad.**
+- **Zašto je promaklo:** logika je pisana za **katalog**, gdje svaki predmet dolazi s punim nizovima, pa se prazno stanje nikad nije pojavilo. Uređivači kartica/kviza/dopuna, put upisa i prava su cijelo vrijeme **radili** — bili su samo **nedostupni**. Zato se u kodu ništa nije doimalo pokvarenim.
+- **Rješenje:** u edit-modu su `cards`/`quiz`/`fill` prisutni čim postoji barem jedna sekcija (`if (isEd && cats(data).length)`). Read-only ostaje nepromijenjen — onome tko uči ne nudimo prazan mod. `learn` je namjerno izuzet (`renderLearnPane` preskače kategoriju bez `learn`-a → forsiran tab bio bi prazan panel; zapisano kao M1b). **Isti slijepi kraj postojao je i u javnom katalogu** — predmet bez ijedne dopune nije mogao dobiti prvu.
+- **Lekcija:** ovo je uhvatio **korisnik, ne gate.** Faza je bila proglašena gotovom po **odčekiranoj tablici cigli**, a nitko nije pokušao napraviti karticu od nule. Odatle pravilo: **svaka mogućnost ima kriterij prihvaćanja u obliku „gotovo kad korisnik može X"**, nikad „test je zelen" ([UGC_SPEC §2](../product/UGC_SPEC.md)). Druga polovica lekcije: kad se logika piše nad podacima koji su **uvijek popunjeni**, prazno stanje je neispitani put — a za UGC je prazno stanje **početno** stanje.
+
 ### BUG-021 — KaTeX formule ostaju sirovi LaTeX u Studiju (u osobnom gradivu ZAUVIJEK)
 - Status: ✅ riješen (`39e5d09`, grana `fix/studio-katex`) · Težina: **visok** za osobno gradivo, srednji za katalog · Prijavio: **korisnik** (Leon, živo na produkciji, screenshot).
 - **Simptom:** u Studiju se formula prikaže kao kod — `\[\sqrt{55}\pm(\frac{154}{85})\]` — umjesto tipografirano. Slika i tablica u istom bloku rade normalno.
