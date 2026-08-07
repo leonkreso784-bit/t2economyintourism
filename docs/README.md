@@ -36,6 +36,7 @@
 | Dokument | Svrha |
 |---|---|
 | [PRD.md](./product/PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
+| [UGC_SPEC.md](./product/UGC_SPEC.md) | **Osobni materijal** — definicija + kriteriji prihvaćanja, rječnik, ugovor boja |
 | [VISION.md](./product/VISION.md) | Dugoročna vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
 | [MONETIZATION.md](./product/MONETIZATION.md) | Naplata, tržište, scenariji (planiranje) |
 
