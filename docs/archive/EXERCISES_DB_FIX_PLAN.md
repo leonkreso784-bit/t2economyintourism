@@ -2,9 +2,9 @@
 
 > **✅ GOTOVO — Opcija A izvedena i LIVE (2026-06-27).** Cigle: (1) catalog `codeScripts` + (2) loader `filesToLoad` +
 > (4) verify-čuvar → commiti `b7a6b7f`/`801d9a6`, pushano `7176194..801d9a6`. (3) baza očišćena (4 reda vježbi) +
-> (5) Math gradivo migrirano → **51 red / 17 predmeta / 0 redova vježbi**. Cache `20260690`. Detalji: [BUGS.md](../BUGS.md) §BUG-012 (riješen).
+> (5) Math gradivo migrirano → **51 red / 17 predmeta / 0 redova vježbi**. Cache `20260690`. Detalji: [BUGS.md](../records/BUGS.md) §BUG-012 (riješen).
 
-> Vidi [BUGS.md](../BUGS.md) §BUG-012 za pun nalaz i dokaze. Sažetak: randomizirane vježbe
+> Vidi [BUGS.md](../records/BUGS.md) §BUG-012 za pun nalaz i dokaze. Sažetak: randomizirane vježbe
 > (`generate(p)` funkcija na objektu) **ne prežive `JSON.stringify` u Supabase**, a loader u
 > DB-modu **ne učita `content.scripts`** → vježbe razbijene. Pogođeno živo: Statistics 23,
 > Macro 25, Accounting 8. Math (29) još nije u bazi — zato ga ne migriramo dok ovo ne riješimo.

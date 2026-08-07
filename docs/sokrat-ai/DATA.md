@@ -11,7 +11,7 @@ Ne filtriramo AI-tekst iz interneta (izgubljena bitka — detekcija ne radi pouz
 | Polje | Zašto |
 |---|---|
 | `izvor` | odakle (repozitorij, časopis, platforma) |
-| `autor` | dokaz ljudskog autorstva (⚠️ osobni podatak — v. [LEGAL_GDPR.md](LEGAL_GDPR.md)) |
+| `autor` | dokaz ljudskog autorstva (⚠️ osobni podatak — v. [LEGAL_GDPR.md](./LEGAL_GDPR.md)) |
 | `datum` | pred-2022 = „low-background"; kasnije = provjeriti |
 | `licenca` | pravna osnova korištenja — **bez ovoga dokument ne ulazi** |
 | `jezik` | hr / en / de / it / fr |
@@ -36,7 +36,7 @@ iz „dajte mi podatke" u „evo što kao država već imamo, evo što radim s t
 | **UGC / MCP (budući)** | Korisnički materijali | uz pristanak | ⭐⭐ raste s platformom |
 
 > ⚠️ **Provjeriti licencu svakog izvora prije preuzimanja.** „Otvoreni pristup" (čitanje) **nije isto**
-> što i „dopušteno strojno učenje". Detalji: [LEGAL_GDPR.md](LEGAL_GDPR.md).
+> što i „dopušteno strojno učenje". Detalji: [LEGAL_GDPR.md](./LEGAL_GDPR.md).
 
 ## 3. Redoslijed prikupljanja (od najsigurnijeg prema najosjetljivijem)
 
@@ -77,7 +77,7 @@ preuzimanje → ekstrakcija teksta (PDF/HTML→txt) → normalizacija (Unicode, 
 - **Deduplikacija** — web-korpusi imaju ogromno ponavljanje; duplikati kvare model i troše compute
 - **Filtri kvalitete** — izbaci strojni prijevod, spam, generirano, izlomljeni OCR
 - **Uklanjanje osobnih podataka** — imena, e-mailovi, OIB, adrese, matični brojevi → **prije** treninga
-  (v. [LEGAL_GDPR.md](LEGAL_GDPR.md) §4)
+  (v. [LEGAL_GDPR.md](./LEGAL_GDPR.md) §4)
 - **Datumska oznaka** — omogućuje kasniju „pred-2022 vs. poslije" analizu (oklada A)
 
 ## 6. Sintetički podaci — gdje smiju, a gdje ne

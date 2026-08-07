@@ -1,7 +1,7 @@
 // ===== SOKRAT STUDY — „Moji materijali" (osobni UGC-graditelj, F2) =====
 //
 // Korisnikovo VLASTITO ugniježđeno stablo (`nodes`) + gradivo study-čvorova (`node_content`).
-// Ugovor: `docs/CREATE_BACKEND_SPEC.md` v3 · odluka: ADR-024 · SQL: `supabase/f1-nodes.sql`.
+// Ugovor: `docs/archive/CREATE_BACKEND_SPEC.md` v3 · odluka: ADR-024 · SQL: `supabase/f1-nodes.sql`.
 //
 // ⚠️ GRANICE (ADR-024):
 //   • Ovo je ZASEBAN otok — javni katalog, 22 predmeta i studentski vrući put su NEDIRNUTI.

@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// ===== Translate subject → HRVATSKI (HRV program; vidi docs/HRV_PLAN.md) =====
+// ===== Translate subject → HRVATSKI (HRV program; vidi docs/archive/HRV_PLAN.md) =====
 // Usage:
 //   node scripts/translate-subject.js <subjectId> [--limit N] [--file m1|m2] [--dry]
 //
@@ -219,7 +219,7 @@ async function translateSlots(allSlots, model, apiKey, stat) {
 // --- serijalizacija u valjan JS data-fajl (JSON.stringify = bajt-točan escaping) --
 function emitFile(outPath, varName, obj, header) {
   const body = '// ' + header + '\n'
-    + '// Auto-generirano: scripts/translate-subject.js (HRV program — docs/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.\n\n'
+    + '// Auto-generirano: scripts/translate-subject.js (HRV program — docs/archive/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.\n\n'
     + 'const ' + varName + ' = ' + JSON.stringify(obj, null, 2) + ';\n\n'
     + "if (typeof window !== 'undefined') { window." + varName + ' = ' + varName + '; }\n'
     + "if (typeof module !== 'undefined' && module.exports) { module.exports = " + varName + '; }\n';

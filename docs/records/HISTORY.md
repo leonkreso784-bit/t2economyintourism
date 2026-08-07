@@ -1,6 +1,6 @@
 # HISTORY — vremenska crta milestone-a
 
-> **Jedan red po milestone-u** — brza orijentacija „što je sve živo i kad". Detalji: [PROGRESS.md](PROGRESS.md) (dnevnik po sesijama) i [CHANGELOG.md](CHANGELOG.md). Stanje predmeta: [subjects/README.md](subjects/README.md).
+> **Jedan red po milestone-u** — brza orijentacija „što je sve živo i kad". Detalji: [PROGRESS.md](./PROGRESS.md) (dnevnik po sesijama) i [CHANGELOG.md](./CHANGELOG.md). Stanje predmeta: [subjects/README.md](../subjects/README.md).
 
 ## Platforma (Foundation, 2026-06-29 → )
 | Datum | Milestone | Ref |
@@ -72,5 +72,5 @@
 | 2026-06-06/10 | Marketing · Econ Hospitality · Geography · Food & Nutrition (sem-2 kompletni) | `822d788`..`05cb0af` |
 | ranije | M0 Blok A (catalog SSOT · config-iz-catalog · sidebar) · M0.5 drill-down browse · landing rebuild · lazy-load (A4) | — |
 
-## Ključne trajne odluke (puni tekst: [DECISIONS.md](DECISIONS.md))
+## Ključne trajne odluke (puni tekst: [DECISIONS.md](./DECISIONS.md))
 ADR-009 KaTeX currency-safe · ADR-011 read-path anon+RLS bez `/api` · ADR-012 HR=klon · ADR-013 podatak≠ponašanje (JSON⟂JS) · ADR-014 engineering standardi · ADR-015 tech-debt triage „briše li ga F4" · ADR-016 `service_role`→Edge Functions · ADR-017 uniformni cache-token · ADR-018 platforma-first do UGC-a · ADR-019 rizične cigle na Fable · ADR-020 dvo-ključni content-verifier · ADR-021 CRUD odluke · ADR-022 placement≠sadržaj (multi-program).

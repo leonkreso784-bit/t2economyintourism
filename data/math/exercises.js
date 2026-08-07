@@ -2,7 +2,7 @@
 //
 // CONTENT PACK (NOT the engine): all domain data for the interactive, auto-graded math
 // exercises. The generic engine (js/exercises-core.js, js/exercises.js, css/exercises.css)
-// contains NOTHING from here — see docs/content/EXERCISES_ENGINE.md §2 (types) + §3 (conventions)
+// contains NOTHING from here — see docs/architecture/EXERCISES_ENGINE.md §2 (types) + §3 (conventions)
 // and docs/subjects/MATH_PLAN.md.
 //
 // Types used: numeric / choice (NOT journal/classify/statement). Randomization via

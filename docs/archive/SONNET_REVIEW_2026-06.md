@@ -1,7 +1,7 @@
 # Analiza projekta — Claude Sonnet 4.6
 > Datum: 2026-06-28. Ovo je moje (Claude Sonnet 4.6) mišljenje o projektu Sokrat Study
 > nakon čitanja svih ključnih fajlova: index.html, svih js/*, css/*, data/catalog.js,
-> vercel.json, package.json, tests/*, scripts/*, docs/BUGS.md, docs/ROADMAP.md i CLAUDE.md.
+> vercel.json, package.json, tests/*, scripts/*, docs/records/BUGS.md, docs/plan/ROADMAP.md i CLAUDE.md.
 
 ---
 

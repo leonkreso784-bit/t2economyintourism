@@ -132,7 +132,7 @@ function closeSidebar() {
 // Primarni (zadani) program za landing/sidebar showcase. Drugi programi (npr. HRV
 // "hospitality-management-hr") dostupni su kroz Browse drill-down (program-svjestan),
 // pa landing/sidebar pokazuju SAMO primarni → EN iskustvo ostaje nepromijenjeno, bez
-// miješanja jezika. (UI i18n po aktivnom programu = kasniji korak; vidi docs/HRV_PLAN.md.)
+// miješanja jezika. (UI i18n po aktivnom programu = kasniji korak; vidi docs/archive/HRV_PLAN.md.)
 const PRIMARY_PROGRAM = 'hospitality-management';
 function primarySubjects() {
     // placement-svjesno (U2.5): subjectsOf pokriva i legacy (programId) i placement[] predmete

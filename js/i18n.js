@@ -1,4 +1,4 @@
-// ===== Sokrat Study — UI i18n (HRV program; vidi docs/HRV_PLAN.md, Cigla 5) =====
+// ===== Sokrat Study — UI i18n (HRV program; vidi docs/archive/HRV_PLAN.md, Cigla 5) =====
 // Lagani rječnik SUČELJA (NE sadržaja — sadržaj je već jednojezičan po datoteci/programu).
 // Jezik se bira po AKTIVNOM PROGRAMU: predmet iz "hospitality-management-hr" → 'hr', inače 'en'.
 //

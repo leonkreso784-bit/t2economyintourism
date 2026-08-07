@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://www.sokratstudy.com/schema/subject-content.schema.json",
   "title": "Sokrat Study — Subject Content Document",
-  "description": "Kanonski oblik JEDNOG payloada sadrzaja: jedna window-varijabla = kategorije jedne lekcije (M1/M2), ili spojeni 'final'. Kljuc = camelCase ID kategorije; vrijednost = Category. Vjeran validate-content.js + docs/content/CONTENT_SCHEMA.md, ukljucujuci stvarna polja nadena u zivim podacima: quiz.image/imageAlt (Geography 'koji grad je na slici') i learn.title, learn.image=null. Ovo je STRUKTURNI ugovor (oblik + tipovi + nepoznata polja). SEMANTICKE provjere (quiz.correct u rasponu 0..options-1, KaTeX currency-safe balans, _______ praznina) i dalje radi scripts/validate-content.js — dvije razine se nadopunjuju.",
+  "description": "Kanonski oblik JEDNOG payloada sadrzaja: jedna window-varijabla = kategorije jedne lekcije (M1/M2), ili spojeni 'final'. Kljuc = camelCase ID kategorije; vrijednost = Category. Vjeran validate-content.js + docs/architecture/CONTENT_SCHEMA.md, ukljucujuci stvarna polja nadena u zivim podacima: quiz.image/imageAlt (Geography 'koji grad je na slici') i learn.title, learn.image=null. Ovo je STRUKTURNI ugovor (oblik + tipovi + nepoznata polja). SEMANTICKE provjere (quiz.correct u rasponu 0..options-1, KaTeX currency-safe balans, _______ praznina) i dalje radi scripts/validate-content.js — dvije razine se nadopunjuju.",
   "type": "object",
   "minProperties": 1,
   "properties": {

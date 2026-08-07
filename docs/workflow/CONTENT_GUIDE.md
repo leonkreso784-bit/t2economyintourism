@@ -1,6 +1,6 @@
 # Content Guide — kako dodati predmet ili lekciju
 
-> Praktični playbook. Oblik podataka je u [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md).
+> Praktični playbook. Oblik podataka je u [CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md).
 > Trenutni način rada (Faza 0, prije backenda): predmeti se dodaju kroz `data/catalog.js`
 > + `data-*.js` datoteku. Kad dođe admin (korak B10), isto će se raditi kroz su čelje.
 
@@ -73,10 +73,10 @@ Zatim: popuni sadržaj → zalijepi catalog unos → `npm run verify` → testov
    > treba ručno dodavati HTML u `index.html` — dovoljan je ovaj unos.
 3. **(Privremeno, do koraka A4 lazy-load)** uključi datoteku u `index.html` `<script>`
    blok. Nakon koraka A4 ovo više neće trebati — učitavat će se automatski.
-4. **Test** (vidi [TESTING.md](../TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).
+4. **Test** (vidi [TESTING.md](./TESTING.md)) i **ažuriraj docs** (PROGRESS, CHANGELOG, ROADMAP).
 
 ## C) Iz PPT/PDF profesora → predmet (GENERATOR, automatizirano) ✅
-Puni plan i detalji: **[CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)**. Generator-jezgra (bricks 1–4) je gotova;
+Puni plan i detalji: **[CONTENT_GENERATOR.md](./CONTENT_GENERATOR.md)**. Generator-jezgra (bricks 1–4) je gotova;
 bulk drafting ide na **jeftin model (Sonnet) preko tvog API ključa** (`.env` → `ANTHROPIC_API_KEY`), a točnost
 nose deterministički zaštitari + tvoj/Opus činjenični spot-check. Tok:
 

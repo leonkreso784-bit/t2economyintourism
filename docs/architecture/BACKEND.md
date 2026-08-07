@@ -39,7 +39,7 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
   browse/lessons/study) — odjavljen→modal, prijavljen→Profile.
   > **⚠️ Self-service „Obriši račun" (GDPR pravo na zaborav) — PLANIRANO, još NEMA** (trenutno samo „Delete cloud data" + mail-fallback).
   > Odlučeno (ADR-016): brisanje `auth.users` traži `service_role` → ide u **Supabase Edge Function** (`service_role` NIKAD u Vercel), NE frontend.
-  > Dizajn-skica: `docs/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije).
+  > Dizajn-skica: `docs/records/BACKLOG.md` §Brisanje računa. Odgođeno (uz F4 ili ranije).
 - **Pravne/info stranice (Google Ads spremnost):** statične `privacy.html` / `terms.html` /
   `faq.html` / `contact.html` (+ `css/legal.css`), linkane iz landing footera i login modala
   (pristanak na Terms/Privacy). HTML se na Vercelu ne kešira immutable → izmjene su odmah vidljive.
@@ -49,7 +49,7 @@ ključ, `jsonb`). Sadržaj predmeta i dalje u `data/*` fajlovima (staza A, kasni
 > **Stanje baze (2026-06-27, nakon BUG-012 fixa): 51 redova / 17 predmeta / 0 redova vježbi.** (Inicijalno 49/15 → +traffic → +math gradivo → −4 reda vježbi.)
 > Anon-key read provjeren, Playwright 68/68 (sadržaj iz baze). Datoteke = i dalje izvor istine + fallback.
 > **⚠️ BUG-012 PRAVILO: VJEŽBE NIKAD U BAZU** (sadrže `generate()` funkcije koje JSON briše) — read-path nosi SAMO M1/M2/Final;
-> vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`).
+> vježbe+lib se učitaju iz datoteke preko `content.codeScripts` (vidi `docs/records/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`).
 > ⚠️ Free tier: projekt se uspava nakon ~7 dana neaktivnosti → restore je BESPLATAN; dok je uspavan sadržaj radi iz datoteka (fallback), login/sync ne. Re-sync nakon izmjene predmeta: `node scripts/migrate-content.js <id>`.
 > **✅ ODLUKA (2026-07-05): Supabase Pro (€25/mj) PRIJE prvih korisnika** (backup + bez uspavljivanja) — gasi rizik gubitka napretka i login/sync padova. Do tada free tier + fallback ostaje.
 > **🏗️ STAGING (U1, 2026-07-10):** 2. free projekt **`sokrat-staging`** (ref `czljmvigkgiajzjxtndq`, ista org) = zrcalo sheme (3 repo SQL fajla) za write-testove → PROD (`naxjubnedhrbhsuasayu`) ostaje čist. Testovi ga gađaju preko `STAGING_*` u `.env` (vidi TESTING.md). Prod = izvor istine; staging je potrošan.

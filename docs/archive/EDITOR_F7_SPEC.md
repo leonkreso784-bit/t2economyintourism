@@ -1,3 +1,7 @@
+> 🗄 **ARHIVIRANO** (2026-08-07) — ISPUNJEN — kvadratić-model K1–K6 izveden.
+>
+> **Referenca, ne izvor istine.** Što sada vrijedi → [docs/README.md](../README.md).
+
 # EDITOR F7 — KVADRATIĆ-MODEL · Inženjerski spec (korak po korak)
 
 > **Status:** DEFINIRANJE (Leon: „ništa ne gradi dok strukturno kvalitetno ne odredimo svu tehnologiju

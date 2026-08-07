@@ -48,7 +48,7 @@ if (fs.existsSync(dir)) {
 fs.mkdirSync(dir, { recursive: true });
 
 const fileBody = (title, varName) => `// ===== ${name} — ${title} =====
-// Popuni po docs/content/CONTENT_SCHEMA.md. Pokreni \`npm run verify\` nakon izmjena.
+// Popuni po docs/architecture/CONTENT_SCHEMA.md. Pokreni \`npm run verify\` nakon izmjena.
 
 const ${varName} = {
   intro: {

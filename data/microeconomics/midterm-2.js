@@ -3,7 +3,7 @@
 // (deck teaching units TU7–TU13).
 // K1/K2 granica iz službenog DINP rasporeda predavanja: K1 = Ch 1–7, K2 = Ch 8,9,10,12,13,14,18.
 //
-// ⚠ KVANTITATIVNI PREDMET — koristi KaTeX (ADR-009). Konvencija (docs/content/CONTENT_SCHEMA.md):
+// ⚠ KVANTITATIVNI PREDMET — koristi KaTeX (ADR-009). Konvencija (docs/architecture/CONTENT_SCHEMA.md):
 //   inline  \( ... \)   (u JS stringu: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   Jedan `$` se NE koristi (valuta → "USD"). LaTeX backslash u stringu = "\\".

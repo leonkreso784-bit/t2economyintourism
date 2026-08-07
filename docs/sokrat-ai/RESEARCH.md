@@ -14,7 +14,7 @@
 - **Mjerljivo:** kolabira li raznolikost sporije? Jesu li repovi distribucije bogatiji?
   Usporedba s kontrolnim modelom treniranim na miješanom (kontaminiranom) korpusu.
 - **Zašto je jaka:** znanstveno provjerljiva + medijski/institucionalno razumljiva + naslanja se na
-  prednost koju imamo (v. [VISION.md](VISION.md) §3).
+  prednost koju imamo (v. [VISION.md](./VISION.md) §3).
 
 ### 🅱️ Morfološki-nativna arhitektura
 

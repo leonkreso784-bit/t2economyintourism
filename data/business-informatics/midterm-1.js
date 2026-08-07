@@ -1,6 +1,6 @@
 // ===== Business Informatics — Midterm 1 (Chapters 1–6) =====
 // Izvor: profesorske prezentacije (Tomislav Car, FMTU Opatija, 2024/25).
-// Oblik po docs/content/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
+// Oblik po docs/architecture/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
 
 const businessInformaticsM1 = {
   // ---- Chapter 1: System approach and informatics (U1) ----

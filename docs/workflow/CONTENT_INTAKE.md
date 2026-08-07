@@ -14,9 +14,9 @@
    prezentacije u jedan fajl bez reda.
 
 ## ⚠️ Kvantitativni predmeti (Math / Micro / Macro / Statistika) — poseban tretman
-Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](../DECISIONS.md) ADR-009):
+Ovi predmeti idu **drugačije** od tekstualnih (puna razrada: [DECISIONS.md](../records/DECISIONS.md) ADR-009):
 - **Formule → KaTeX/LaTeX.** ✅ KaTeX implementiran (ADR-009). Delimiteri **currency-safe: `\( \)` inline,
-  `\[ \]` / `$$ $$` blok — NE jedan `$`** (valutni `$NN` bi se pokvario). Vidi [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md) §Matematika.
+  `\[ \]` / `$$ $$` blok — NE jedan `$`** (valutni `$NN` bi se pokvario). Vidi [CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) §Matematika.
 - **Slike (JPG slajdovi):** čitam ih (Read alat čita JPG/PNG) i **transkribiram formule u LaTeX**.
   Math materijal su tipkani PPT slajdovi (provjereno čitljivi) → izvedivo, ali **ti OBAVEZNO pregledaš matematiku**.
 - **Grafovi** (tangente, ponuda/potražnja, distribucije): zasad croppani slajd kao slika u `learn.image`.
@@ -43,7 +43,7 @@ Folder: `C:\Users\leonk\OneDrive\Documentos\1. godina Hospitality Managament`
 | English | 2 PDF | tanko (niski prioritet) |
 
 **Stanje (2026-06-27):** **1. god = 9/9 KOMPLETNO i LIVE** (Traffic ✅ 2026-06-25, **Math** ✅ 2026-06-27 — zadnji). **Intro to Hospitality = blokiran** (nema PDF-ova). Novi predmeti se rade kroz
-**generator** ([CONTENT_GENERATOR.md](CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
+**generator** ([CONTENT_GENERATOR.md](./CONTENT_GENERATOR.md)) — jeftino, ali sadržaj VERIFICIRATI protiv predavanja.
 
 ## Marketing (2. god) — intake & plan (2026-06-05) ← SLJEDEĆE
 Folder: `C:\Users\leonk\OneDrive\Documentos\2. godina Hospitaliy Managament\Marketing`

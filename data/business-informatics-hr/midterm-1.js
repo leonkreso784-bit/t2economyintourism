@@ -1,5 +1,5 @@
 // Business Informatics (HR) — M1
-// Auto-generirano: scripts/translate-subject.js (HRV program — docs/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.
+// Auto-generirano: scripts/translate-subject.js (HRV program — docs/archive/HRV_PLAN.md). NE uređuj ručno; ponovno prevedi izvor.
 
 const businessInformaticsHrM1 = {
   "systemApproach": {

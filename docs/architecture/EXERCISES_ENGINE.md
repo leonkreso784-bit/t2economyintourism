@@ -4,8 +4,8 @@
 > vježbe) i njegovog prvog korisnika — **Accounting**. Pisano da **preživi compaction**: §6 je
 > checklist s kvačicama — nakon compacta otvori OVAJ fajl i nastavi od prve nezacrtane cigle.
 >
-> **Vezano:** [ACCOUNTING_PLAN.md](../subjects/ACCOUNTING_PLAN.md) (analiza izvora + katalog vježbi) · [ARCHITECTURE.md](../ARCHITECTURE.md) ·
-> [CONTENT_SCHEMA.md](CONTENT_SCHEMA.md). Datum: 2026-06-10.
+> **Vezano:** [ACCOUNTING_PLAN.md](../subjects/ACCOUNTING_PLAN.md) (analiza izvora + katalog vježbi) · [ARCHITECTURE.md](./ARCHITECTURE.md) ·
+> [CONTENT_SCHEMA.md](./CONTENT_SCHEMA.md). Datum: 2026-06-10.
 
 ---
 

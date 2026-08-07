@@ -19,7 +19,7 @@ const SOKRAT_CATALOG = {
       name: 'FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija',
       programs: [
         { id: 'hospitality-management', name: 'Hospitality Management' },
-        // HRVATSKI paralelni program (klon, Opcija A — vidi docs/HRV_PLAN.md). Isti predmeti,
+        // HRVATSKI paralelni program (klon, Opcija A — vidi docs/archive/HRV_PLAN.md). Isti predmeti,
         // hrvatski sadržaj (data/<subj>-hr/*.js), vlastiti storageKey. Dostupan kroz Browse.
         { id: 'hospitality-management-hr', name: 'Menadžment u Hotelijerstvu' }
       ]
@@ -492,7 +492,7 @@ const SOKRAT_CATALOG = {
       }
     },
 
-    // ===== HRVATSKI program „Menadžment u Hotelijerstvu" (prijevodi; docs/HRV_PLAN.md) =====
+    // ===== HRVATSKI program „Menadžment u Hotelijerstvu" (prijevodi; docs/archive/HRV_PLAN.md) =====
     // Klon EN predmeta: isti icon/color/year/semester, hrvatski sadržaj + vlastiti storageKey.
     // Window varovi = <camelId>Hr{M1,M2,Final}; data u data/<id>-hr/. PILOT: Business Informatics.
     {
@@ -687,7 +687,7 @@ const SokratCatalog = {
     return f ? (f.programs || []) : [];
   },
 
-  // ---- Placement dual-mode (U2.5, ADR-022 / docs/CATALOG_ARCHITECTURE.md) ----
+  // ---- Placement dual-mode (U2.5, ADR-022 / docs/architecture/CATALOG_ARCHITECTURE.md) ----
   // Predmet smjesta se u hijerarhiju na JEDAN od dva načina:
   //   legacy:    programId + year + semester (svi postojeći predmeti — netaknuti)
   //   placement: placement: [{ faculty, program, year, semester }, ...] — dijeljeni

@@ -1,14 +1,18 @@
+> 🗄 **ARHIVIRANO** (2026-08-07) — DJELOMIČNO ISPUNJEN — F1–F4 isporučeni; F5 (SRS) i F6 NADGLAŠENI novim smjerom.
+>
+> **Referenca, ne izvor istine.** Što sada vrijedi → [docs/README.md](../README.md).
+
 # FOUNDATION_PLAN — Platforma-first temelj (Sokrat Study)
 
 > **⚠️ ZASTARJELO ZA SMJER (2026-08-04):** rep ovog statusa („→ F5 SRS → F6 → UGC") je **NADGLAŠEN**. Aktivna staza je **`CREATE_BACKEND_SPEC.md` v3** (osobni UGC-graditelj: F1 ✅ · F2 ✅ · F3 ✅ → F4), a nakon nje **frontend redizajn**, pa objava/dijeljenje + MCP. Editor (U6/U7/U8/F7) je **funkcionalno gotov i na produ**. Zadržano ispod kao POVIJESNI zapis F1–F4 temelja.
 >
 > **Status (ažurirano 2026-07-14):** ▶ U TIJEKU. **F1 ✅ · F2 ✅ · F3 ✅ · F4 dosadašnje cigle 🚀 DEPLOYANE NA PRODUKCIJU 2026-07-13** (`5d24a96..79f17c7`: F4.1–4.4 + U1–U3 draft→objavi; studentima nevidljivo, sve iza `is_admin()`); ADR-021 + `CRUD_PLAN.md`. **Nastavak = draft+editor staza (`EDITOR_PLAN.md` §12): ✅ U1 · ✅ U2a · ✅ U2.5 · ✅ U3 · ✅ U4 publish-RPC · ✅ U-UX dizajn-faza (smjer C „Tok" → `EDITOR_UX.md` v0.9) — **oboje 🚀 DEPLOYANO na PROD 2026-07-14 (`79f17c7..056d963`)** → ✅ **U6 strukturne ops KOMPLETNE** (kategorije + stavke add/edit/reorder/remove; DB id-resync 16 eng. 2026-07-17; authed 11/11) → ✅ **U7 learn-blokovi/renderer KOMPLETAN 2026-07-20** → **U8 vizualni editor „Studio" U TIJEKU** (grana `feature/u6-structural-ops`, PREVIEW; U8.1–U8.5d ✅ 2026-07-22: skelet+blok-editor+kartice/kviz/fill+inline-tekst+boja/link+media slika/video/formula/tablica; **U8.9 math-tipkovnica MathLive ✅ INTEGRIRANA 2026-07-23** [math-field autorska strana lijeno + Casio-paleta/renderirane labele; izlaz LaTeX→student KaTeX nepromijenjen] + **R1 grana-sync s main ✅** [55↑/0↓]; slijedi U8.5e/f + U8.10 tablica-paste → U8.6-vizual; ideje U8.7 upload/U8.8 chart zapisane) → F5 SRS → F6 → UGC. Tim: +Saša (content, S-staza — `TEAM.md`).**
-> **🧭 NASTAVAK F4 IDE KROZ [EDITOR_PLAN.md](EDITOR_PLAN.md) U-STAZU** (korisnik 2026-07-08/09): draft→objavi model + bogato autorsko sučelje; „F4.4-kategorije" = U6, F4.5/4.6 = U9+; **ADR-022 povučen naprijed = U2.5** (ADR-023). Zatim F5 (SRS) → F6 (sigurnost) → UGC.
-> **👥 TIM (2026-07-09, ADR-023):** Saša Vudrag = content-suradnik (HR program, paralelna S-staza — [TEAM.md](TEAM.md)); sadržajna pauza iz odluke dolje sad vrijedi za NAS, ne za njega.
+> **🧭 NASTAVAK F4 IDE KROZ [EDITOR_PLAN.md](./EDITOR_PLAN.md) U-STAZU** (korisnik 2026-07-08/09): draft→objavi model + bogato autorsko sučelje; „F4.4-kategorije" = U6, F4.5/4.6 = U9+; **ADR-022 povučen naprijed = U2.5** (ADR-023). Zatim F5 (SRS) → F6 (sigurnost) → UGC.
+> **👥 TIM (2026-07-09, ADR-023):** Saša Vudrag = content-suradnik (HR program, paralelna S-staza — [TEAM.md](../workflow/TEAM.md)); sadržajna pauza iz odluke dolje sad vrijedi za NAS, ne za njega.
 > **Odluka korisnika (2026-06-29):** staviti DODAVANJE SADRŽAJA na pauzu na koliko god treba i izgraditi
 > **profesionalan, reliable, reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena",
 > pripremljena za sve što planiramo (Admin CRUD, UGC, AI tutor, monetizacija).
-> **Vezano:** ADR-013 (content arhitektura), ADR-014 (engineering standardi) u [DECISIONS.md](DECISIONS.md);
+> **Vezano:** ADR-013 (content arhitektura), ADR-014 (engineering standardi) u [DECISIONS.md](../records/DECISIONS.md);
 > `archive/SONNET_REVIEW_2026-06.md` (hardening checklist); [[foundation-pivot]].
 >
 > **Razina (korisnik 2026-06-29): ne „zdrav" nego „jeben i brutalan".** Cilj nije „radi i neće pasti" (higijena) nego
@@ -83,7 +87,7 @@ Ne razmišljamo o „taskovima" nego o **jezgrenim reusable podsistemima** koje 
 
 ### ▸ FAZA 0 — Zapis odluka + čisti repovi  ✅ (ovo se radi SAD)
 **Cilj:** fiksirati odluke da prežive compact i da se može odmah krenuti.
-- [0.1] `docs/FOUNDATION_PLAN.md` (ovaj doc).
+- [0.1] `docs/archive/FOUNDATION_PLAN.md` (ovaj doc).
 - [0.2] **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) u DECISIONS.md.
 - [0.3] Pokazivači: ROADMAP §AŽURNO + CLAUDE.md §Stanje/§Ključne odluke + MEMORY.md + memory `foundation-pivot`.
 - [0.4] **Commit ne-deployanog i18n chromea LOKALNO** (Odluka 3a — čuva se, deploya se s Fazom 1; treba cache-bump pri deployu).
@@ -383,9 +387,9 @@ zaseban product-analytics (Posthog) dok retencija ne postane pitanje · pune sou
 ---
 
 ## 8. Reference
-- **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) — [DECISIONS.md](DECISIONS.md)
+- **ADR-013** (content arhitektura) + **ADR-014** (engineering standardi) — [DECISIONS.md](../records/DECISIONS.md)
 - `archive/SONNET_REVIEW_2026-06.md` — vanjski hardening-checklist (tretiraj kao prijedloge za PROVJERU, ne istinu; #7 je bio netočan)
-- [BUGS.md](BUGS.md) BUG-012 (vježbe nikad u bazu), BUG-004 (cache bump)
-- [EXERCISES_ENGINE.md](content/EXERCISES_ENGINE.md) — uzor reusable podsistema
-- [ARCHITECTURE.md](ARCHITECTURE.md) · [BACKEND.md](BACKEND.md) · [VISION.md](VISION.md) · [ROADMAP.md](ROADMAP.md)
+- [BUGS.md](../records/BUGS.md) BUG-012 (vježbe nikad u bazu), BUG-004 (cache bump)
+- [EXERCISES_ENGINE.md](../architecture/EXERCISES_ENGINE.md) — uzor reusable podsistema
+- [ARCHITECTURE.md](../architecture/ARCHITECTURE.md) · [BACKEND.md](../architecture/BACKEND.md) · [VISION.md](../product/VISION.md) · [ROADMAP.md](../plan/ROADMAP.md)
 - [[foundation-pivot]] (memorija)

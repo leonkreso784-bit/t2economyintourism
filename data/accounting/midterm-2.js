@@ -1,7 +1,7 @@
 // ===== ACCOUNTING — Midterm 2 (K2, Chapters 7–16) =====
 // Realign postojećih kategorija (cash-control / budgeting / sec-reports / accounting-cycle /
 // hotel-statements / financial-analysis) u lekciju "second-midterm" + 2 NOVE kategorije
-// (restaurantAccounting Ch9, depreciation Ch11). Oblik po docs/content/CONTENT_SCHEMA.md.
+// (restaurantAccounting Ch9, depreciation Ch11). Oblik po docs/architecture/CONTENT_SCHEMA.md.
 //
 // CROSS-ENV: u pregledniku su *Data globali već definirani (category skripte učitane PRIJE ove,
 // vidi catalog scripts order). U node-u (verify/testovi) ih require-amo. Ternar ne evaluira

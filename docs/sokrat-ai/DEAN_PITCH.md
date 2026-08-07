@@ -11,7 +11,7 @@
 |---|---|
 | Pristup **otvorenim** akademskim materijalima | Prvo hrvatsko sveučilište s **vlastitim jezičnim resursom** |
 | Kanal prema profesorima za **dobrovoljni pristanak** | Suvlasništvo nad korpusom i rezultatima |
-| Institucionalni status (**otključava TDM iznimku**, v. [LEGAL_GDPR.md](LEGAL_GDPR.md) §5) | Materijal za EU/nacionalne natječaje |
+| Institucionalni status (**otključava TDM iznimku**, v. [LEGAL_GDPR.md](./LEGAL_GDPR.md) §5) | Materijal za EU/nacionalne natječaje |
 | Kontakt s DPO-om i pravnom službom | Vidljivost i prvenstvo — *„prvi u Hrvatskoj"* |
 | Kasnije: širenje na druga sveučilišta | Studentski rad koji **donosi**, a ne traži uslugu |
 

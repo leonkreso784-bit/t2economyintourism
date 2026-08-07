@@ -5,7 +5,7 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 ---
 
 ## ADR-024 — Osobni UGC-graditelj = ZASEBAN otok (`nodes` stablo, owner-RLS), a ne proširenje kataloga
-**Datum:** 2026-08-02 · **Status:** ✅ ODLUČENO (Leon) · **Dokument:** `docs/CREATE_BACKEND_SPEC.md` v3 · **F1 izveden na STAGINGU**
+**Datum:** 2026-08-02 · **Status:** ✅ ODLUČENO (Leon) · **Dokument:** `docs/archive/CREATE_BACKEND_SPEC.md` v3 · **F1 izveden na STAGINGU**
 
 **Kontekst.** B1 („predmet od nule") blokirao je editor na 4 sloja: UI-stub (`studio.js:133`), draft-ops bez
 `addSubject/addLesson`, `publish_document` radi SAMO `UPDATE` (`publish_missing_row`), a struktura kataloga je
@@ -41,7 +41,7 @@ umjesto matrice `visibility × status × role`. Duh ADR-018 („student uploada 
 ---
 
 ## ADR-023 — Prvi suradnik (Saša Vudrag): content-staza kroz PR+CI, least-privilege, ADR-022 pull-forward
-**Datum:** 2026-07-09 · **Status:** ✅ ODLUČENO (korisnik 2026-07-08/09) · **Dokument:** `docs/TEAM.md`
+**Datum:** 2026-07-09 · **Status:** ✅ ODLUČENO (korisnik 2026-07-08/09) · **Dokument:** `docs/workflow/TEAM.md`
 **Kontekst:** Saša Vudrag (student prog. inž., Algebra) pridružuje se kao content-suradnik: HR program do pune 2 godine
 (prijevod + HR materijali), zatim MUT/MOR smjerovi. Prvi suradnik ikad → treba model koji ubrzava, a **ne može srušiti sustav**.
 **Odluka:**
@@ -73,7 +73,7 @@ automatska obrana od suradničkih grešaka. Nadopunjuje ADR-012 (HR klon), ADR-0
 4. **Napredak prati identitet sadržaja:** dijeljeni predmet = jedan `storageKey` (naučiš jednom = vrijedi u svim smjerovima); duplicirani = vlastiti `storageKey`.
 5. **`verify-catalog.js` gate čuva invarijante** (jedinstveni id-jevi; predmet u više programa smije SAMO ako mu se sadržaj+storageKey identično razrješavaju) → „da se sijebe" je crveno PRIJE deploya. Ovo je sigurnosna mreža, ne oprez.
 6. **Čist maping na bazu (F4+):** jedan red sadržaja po kanonskom id-u + tablica placementa (predmet → fakultet/smjer/godina/semestar, više redaka za dijeljene). Prezentacijski naziv („Matematika") ostaje ljudski, id je interni.
-**Posljedice:** Zajednička 1.-god jezgra se održava jednom umjesto ×3; nula kolizija preko fakulteta; UGC-/multi-fakultet-spremno. Detaljan model + primjeri + verify-pravila: `docs/CATALOG_ARCHITECTURE.md`. Nadopunjuje ADR-002 (hijerarhija), ADR-003 (catalog izvor istine), ADR-012 (HR klon), ADR-021 (F4). [[hrv-program]] [[content-roadmap-sequencing]]
+**Posljedice:** Zajednička 1.-god jezgra se održava jednom umjesto ×3; nula kolizija preko fakulteta; UGC-/multi-fakultet-spremno. Detaljan model + primjeri + verify-pravila: `docs/architecture/CATALOG_ARCHITECTURE.md`. Nadopunjuje ADR-002 (hijerarhija), ADR-003 (catalog izvor istine), ADR-012 (HR klon), ADR-021 (F4). [[hrv-program]] [[content-roadmap-sequencing]]
 
 ---
 
@@ -131,7 +131,7 @@ Razmatrane opcije za svaku os (write-path / identitet / granularnost / prva cigl
 5. **Source-of-truth flip = stupnjeviti**, predmet-po-predmet, **tek nakon čistog dry-run diffa**; dual-read već nosi fallback → reverzibilno. NE „big bang".
 6. **Prva cigla = jedna kartica end-to-end** (najtanji vertikalni rez: uredi→spremi→RLS→verzija→live).
 **Izuzetak:** vježbe ostaju JS moduli (**BUG-012**) — CRUD ih ne dira.
-**Posljedice:** Najjeftiniji/najsigurniji put; nula nove infrastrukture osim 2 tablice; UGC-spreman; poštuje ADR-013/016/018. Detaljan brick-slijed: `docs/CRUD_PLAN.md`. [[foundation-pivot]]
+**Posljedice:** Najjeftiniji/najsigurniji put; nula nove infrastrukture osim 2 tablice; UGC-spreman; poštuje ADR-013/016/018. Detaljan brick-slijed: `docs/archive/CRUD_PLAN.md`. [[foundation-pivot]]
 
 ---
 
@@ -176,7 +176,7 @@ secrets) vs **(B) Vercel `/api`** (ključ u Vercel env). ADR-001/008 su generič
 2. **Manje sustava koji mogu iscuriti ključ** — jedan (Supabase) umjesto dva (Supabase + Vercel env/build-logovi/npm supply-chain).
 3. **Nativna provjera identiteta** — JWT-verify i admin-akcija u istom runtimeu; nema ručne JWT-validacije na Vercelu (izbjegnut klasičan „obriši tuđi račun" bug ako se vjeruje `user_id` iz body-ja umjesto iz tokena).
 4. **Blast-radius** bilo kojeg Vercel incidenta ostaje „statičke datoteke" (kao danas).
-**Cijena / posljedice:** +1 deploy-toolchain (Supabase CLI + Deno) za malu, rijetko-mijenjanu funkciju — prihvatljivo za maksimalno-opasnu, niskofrekventnu operaciju. F4 (Admin CRUD) i dalje smije koristiti Vercel `/api` za operacije pod RLS-om; `service_role` **nikad ne ulazi u Vercel.** ⚠️ Pri gradnji provjeriti postoji li do tada **nativni Supabase „delete self" RPC** (tada ni Edge Function ne treba `service_role`); odluka „gdje živi privilegirani ključ" vrijedi bez obzira. Detaljan dizajn: [BACKLOG.md](BACKLOG.md) §Brisanje računa. [[foundation-pivot]]
+**Cijena / posljedice:** +1 deploy-toolchain (Supabase CLI + Deno) za malu, rijetko-mijenjanu funkciju — prihvatljivo za maksimalno-opasnu, niskofrekventnu operaciju. F4 (Admin CRUD) i dalje smije koristiti Vercel `/api` za operacije pod RLS-om; `service_role` **nikad ne ulazi u Vercel.** ⚠️ Pri gradnji provjeriti postoji li do tada **nativni Supabase „delete self" RPC** (tada ni Edge Function ne treba `service_role`); odluka „gdje živi privilegirani ključ" vrijedi bez obzira. Detaljan dizajn: [BACKLOG.md](./BACKLOG.md) §Brisanje računa. [[foundation-pivot]]
 
 ---
 
@@ -206,7 +206,7 @@ prestaju biti „trebamo li?" teret — eksplicitno su otpisane s razlogom. Slje
 ---
 
 ## ADR-014 — Engineering standardi temelja: CI/CD-gated, type-check bez build-a, Web Components, monitoring
-**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (Faze 1–2)
+**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md) (Faze 1–2)
 **Kontekst:** „Platforma-first" odluka (vidi ADR-013) traži da projekt postane **profesionalniji, reliable, WOW** —
 ne samo „radi". Trenutno: testovi se pokreću RUČNO, nema CI-a, nema type-provjere, UI se gradi ad-hoc `innerHTML`
 stringovima, nema error-monitoringa. Sve to skalira loše kako dolaze CRUD/UGC/tutor.
@@ -223,7 +223,7 @@ stringovima, nema error-monitoringa. Sve to skalira loše kako dolaze CRUD/UGC/t
 Odbačeno: frontend framework, runtime build-step, CMS (vidi ADR-013). [[foundation-pivot]]
 
 **Dodatak (2026-06-29) — razina podignuta na „brutalnu" (korisnik: „ne zdrav nego jeben i brutalan"):** 4 standarda gore
-dobivaju **TVRDE gateove + 5 konkretizacija** (detalji [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) §7):
+dobivaju **TVRDE gateove + 5 konkretizacija** (detalji [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md) §7):
 1. **Perf/a11y/visual = TVRDI gateovi** (Lighthouse budžeti Performance≥0.95/LCP≤2s + axe-core 0 serious + Playwright `toHaveScreenshot` baseline) — **blokada, ne upozorenje**; prošlost ne može truniti (BUG-015 nemoguć).
 2. **Monitoring = Sentry s release-trackingom** (git SHA), consent-aware — ne maglovit „mini-logger".
 3. **RLS + migracije testirane na ephemeral Supabase branchu** u CI (RLS = dokazana, ne nadana).
@@ -240,7 +240,7 @@ Trošak alata = **0 €** (sve free na ovoj skali). Svjesno NE: product-analytic
 ---
 
 ## ADR-013 — Content arhitektura: podatak ≠ ponašanje + ContentRepository šav (source-of-truth)
-**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) (Faza 2, flip u Faza 4)
+**Datum:** 2026-06-29 · **Status:** ▶ ODLUČENO, izvršavanje kroz [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md) (Faza 2, flip u Faza 4)
 **Kontekst:** Sadržaj je trenutno **`.js` kod** (`window.X = {...}`, ponekad s funkcijama). To ne skalira: ne validira se
 kao podatak, ne ide čisto u bazu/CMS, i izvor je BUG-012 (vježbe s `generate()`). Admin CRUD bi ovo obrnuo
 (baza = istina), ali to je velika odluka koju treba donijeti SVJESNO, ne usput. Korisnik bira **platforma-first**.
@@ -285,7 +285,7 @@ do flipa u Fazi 4. Vježbe NIKAD u JSON (BUG-012). **⬜ Preostaje:** formalni `
   EN bajt-identičan.** Landing/sidebar pokazuju `PRIMARY_PROGRAM` (EN); HR program dostupan kroz Browse drill-down.
 **Posljedice:** Hrvatski student dobije potpuno hrvatsko sučelje i sadržaj; engine se nikad ne dira. Baza: HR =
 **novi redovi u POSTOJEĆIM tablicama** (`subject_content`/`progress` su ključani po id-u → 0 novih tablica/koda).
-Long-tail chrome (profil/pravne stranice/blind-map) ostaje za dovršiti. Detalji: [HRV_PLAN.md](HRV_PLAN.md). [[hrv-program]]
+Long-tail chrome (profil/pravne stranice/blind-map) ostaje za dovršiti. Detalji: [HRV_PLAN.md](../archive/HRV_PLAN.md). [[hrv-program]]
 
 ---
 
@@ -301,11 +301,11 @@ Tablica `public.subject_content` (1 red = 1 window var, `jsonb`). `js/content-lo
 `scripts/migrate-content.js` sa service-keyem). `/api` funkcije ostaju za KASNIJE (admin CRUD, AI tutor).
 **Posljedice:** Najmanji setup, ništa se ne kvari ako baza padne/uspava se (fallback). Free tier uspava
 projekt ~7 dana → restore besplatan; uspavan = sadržaj iz datoteka, login/sync stanu. Puna migracija
-(„baza = jedini izvor" + admin CRUD) tek kad je 1. godina gotova. Detalji: [BACKEND.md](BACKEND.md) §Staza B2.
+(„baza = jedini izvor" + admin CRUD) tek kad je 1. godina gotova. Detalji: [BACKEND.md](../architecture/BACKEND.md) §Staza B2.
 **Dopuna (2026-06-27, BUG-012):** read-path nosi SAMO čisto-podatkovne window-varove (M1/M2/Final = flashcards/quiz/fill/learn).
 **VJEŽBE (`*Exercises`) se NE migriraju** — sadrže `generate()` funkcije koje `JSON.stringify` izbriše; uvijek se učitaju iz
 datoteke preko **`content.codeScripts`** (loader: `filesToLoad = fromDb ? codeScripts : scripts`). `verify-catalog.js` to forsira.
-Općenito pravilo: **payload s funkcijama nije JSON-migracijski → kod ostaje u datotekama, baza nosi samo podatke.** Vidi [BUGS.md](BUGS.md) §BUG-012.
+Općenito pravilo: **payload s funkcijama nije JSON-migracijski → kod ostaje u datotekama, baza nosi samo podatke.** Vidi [BUGS.md](./BUGS.md) §BUG-012.
 
 ## ADR-010 — Generator predmeta (manje Opus-usagea) + tool_use structured output
 **Datum:** 2026-06-22/23 · **Status:** ✅ implementirano (pilot: Academic Writing)
@@ -320,7 +320,7 @@ objekt → nestaje cijela klasa „unescaped quote → nevaljan JSON" padova (sa
 (learn kao string) +retry (learn prazan). **Inherentni limit:** validator provjerava da je quiz `correct` u
 rasponu, NE je li stvarno točan → hvata samo Opus/ljudski spot-check (zato gate postoji).
 **Posljedice:** Novi predmet ~$1–1.5 (Sonnet, korisnikov račun) umjesto sati Opus-rada. Pouka: generirani
-sadržaj VERIFICIRATI protiv predavanja. Detalji: [CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md).
+sadržaj VERIFICIRATI protiv predavanja. Detalji: [CONTENT_GENERATOR.md](../workflow/CONTENT_GENERATOR.md).
 
 ## ADR-009 — Kvantitativni predmeti (Math/Micro/Macro/Statistika): KaTeX + "worked problems"
 **Datum:** 2026-06-05 · **Status:** ✅ **implementirano** (KaTeX cigla, 2026-06-14)
@@ -331,7 +331,7 @@ sva četiri renderera (`learn.js`/`flashcards.js`/`quiz.js`/`fill-blanks.js`). T
 valutnih `$NN` (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
 **pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.** Te se
 sekvence ne pojavljuju u običnom tekstu (provjereno grep-om) → render je globalan ali za tekstualne predmete
-**no-op** (nije potreban opt-in flag). Konvencija autorstva: [CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) § Matematika.
+**no-op** (nije potreban opt-in flag). Konvencija autorstva: [CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) § Matematika.
 **Kontekst:** Math, Microeconomics, Macroeconomics i Statistika su **formula- i zadatak-orijentirani**;
 postojeća schema (Learn/Flashcards/Quiz/Fill) rađena je za konceptualno, tekstualno gradivo. Tri problema:
 (1) prikaz **formula** (HTML tekst ne prikazuje razlomke/eksponente/sume/integrale), (2) bit je
@@ -351,7 +351,7 @@ distribucije). Math materijal je u JPG slajdovima (PPT export).
 fill) → cache bump + test. Točnost formula iz slika = glavni rizik → male serije + **obavezan ljudski pregled**.
 **Redoslijed:** prvo lagani tekstualni predmeti; KaTeX cigla PRIJE prvog kvantitativnog; pilot na predmetu
 s materijalima (Statistika je PRAZNA, Micro tanak → realno Math ili Macro); **čista Matematika ZADNJA**.
-Detalji: [CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) (LaTeX konvencija) + [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md) (image→LaTeX, inventar).
+Detalji: [CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) (LaTeX konvencija) + [CONTENT_INTAKE.md](../workflow/CONTENT_INTAKE.md) (image→LaTeX, inventar).
 
 ## ADR-008 — Backend hosting: Vercel Functions + Supabase
 **Datum:** 2026-06-03 · **Status:** prihvaćeno
@@ -363,7 +363,7 @@ samo kao zaseban worker za dugotrajni AI ingest (serverless timeout), ne za cije
 **Razlozi:** besplatno na startu, Auth+Storage+DB u jednom, minimalno održavanja, paše
 postojećem no-build statičkom setupu (Vercel sam servira `/api`).
 **Posljedice:** Serverless timeout (10–60s) → tešku AI obradu chunkamo / kasnije worker.
-**Migracija sadržaja:** ne sad; jednom u Bloku B (datoteke → DB 1:1). Vidi [BACKEND.md](BACKEND.md).
+**Migracija sadržaja:** ne sad; jednom u Bloku B (datoteke → DB 1:1). Vidi [BACKEND.md](../architecture/BACKEND.md).
 
 ## ADR-007 — Navigacija: puni drill-down (Fakultet → Smjer → Godina → Predmet)
 **Datum:** 2026-06-02 · **Status:** ✅ implementirano (2026-06-02, M0.5)
@@ -372,7 +372,7 @@ postojećem no-build statičkom setupu (Vercel sam servira `/api`).
 **Odluka:** Puni drill-down korak po korak: Start → Fakulteti → Smjerovi → Godine →
 Predmeti (po semestru), čak i kad razina ima samo jednu opciju. Breadcrumbs na svakom
 ekranu. (Razmatran "pametni skip" jednolične razine — odbijen jer korisnik želi
-eksplicitnu strukturu.) ~~Logo se zadržava.~~ **PROMJENA (2026-06-28): logo redizajniran** — `logo.png` (raster) → `assets/logo.svg` (vektorizirani glatki Sokrat, glava ispunjava krug, indigo gradijent); ✅ LIVE `19f07db`. Vidi `CLAUDE.md` §Ključne odluke + `docs/PROGRESS.md`.
+eksplicitnu strukturu.) ~~Logo se zadržava.~~ **PROMJENA (2026-06-28): logo redizajniran** — `logo.png` (raster) → `assets/logo.svg` (vektorizirani glatki Sokrat, glava ispunjava krug, indigo gradijent); ✅ LIVE `19f07db`. Vidi `CLAUDE.md` §Ključne odluke + `docs/records/PROGRESS.md`.
 **Vizualni stil (revidirano 2026-06-02):** **„čisto i bogato" (clean & rich, Brilliant/
 Quizlet-feel), dark** — NE preminimalistički; treba izgledati kao „prava stranica"
 (bogate kartice s gradijent-ikonama, breadcrumb, napredak). Mijenja raniji opis

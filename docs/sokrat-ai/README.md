@@ -4,7 +4,7 @@
 > ⚠️ **ODNOS PREMA SOKRAT STUDY (Leonova izričita odluka 2026-07-24):**
 > **Sokrat AI se NE implementira na platformu Sokrat Study i nema veze s njom — to je potpuno ZASEBAN projekt.**
 > Ovdje živi samo zato što je zapis nastao u ovom repozitoriju. Platforma ide svojim tempom
-> (`docs/EDITOR_PLAN.md`) i **ni na koji način ne ovisi o ovome**. Model se ne ugrađuje u platformu.
+> (`docs/archive/EDITOR_PLAN.md`) i **ni na koji način ne ovisi o ovome**. Model se ne ugrađuje u platformu.
 > (Sokrat Study se pred dekanom smije *spomenuti* kao dokaz da Leon isporučuje — ali to je sve.)
 
 ## Što je ovo
@@ -21,11 +21,11 @@ mali modeli, kvaliteta i porijeklo podataka, morfološki bogati jezici, i arhite
 
 | Dokument | Svrha |
 |----------|-------|
-| [VISION.md](VISION.md) | **Zašto** — teza o nekontaminiranim ljudskim podacima, pozicioniranje, u čemu je naša prednost |
-| [RESEARCH.md](RESEARCH.md) | **Što istražujemo i kako** — 4 oklade (A–D), jeftina metodologija testiranja, tehnička arhitektura |
-| [DATA.md](DATA.md) | **Gorivo** — izvori (DABAR, Hrčak, hrWaC, Wikipedia), strategija porijekla, cjevovod podataka |
-| [LEGAL_GDPR.md](LEGAL_GDPR.md) | **Pravni temelj** — GDPR, autorsko pravo, TDM iznimka, pristanak; ⚠️ *nije pravni savjet* |
-| [DEAN_PITCH.md](DEAN_PITCH.md) | **Prezentacija dekanu (10. mj.)** — što tražimo, što nudimo, plan do roka |
+| [VISION.md](./VISION.md) | **Zašto** — teza o nekontaminiranim ljudskim podacima, pozicioniranje, u čemu je naša prednost |
+| [RESEARCH.md](./RESEARCH.md) | **Što istražujemo i kako** — 4 oklade (A–D), jeftina metodologija testiranja, tehnička arhitektura |
+| [DATA.md](./DATA.md) | **Gorivo** — izvori (DABAR, Hrčak, hrWaC, Wikipedia), strategija porijekla, cjevovod podataka |
+| [LEGAL_GDPR.md](./LEGAL_GDPR.md) | **Pravni temelj** — GDPR, autorsko pravo, TDM iznimka, pristanak; ⚠️ *nije pravni savjet* |
+| [DEAN_PITCH.md](./DEAN_PITCH.md) | **Prezentacija dekanu (10. mj.)** — što tražimo, što nudimo, plan do roka |
 
 ## Temeljne odluke (donesene u razgovoru 2026-07-24)
 

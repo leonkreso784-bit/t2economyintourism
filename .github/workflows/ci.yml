@@ -99,7 +99,7 @@ jobs:
   # postavljen (Settings → Secrets → Actions); inače se čisto preskoči (exit 0) → forkovi/PR-ovi
   # bez tajni ostaju zeleni. ⚠ Može pasti ako je free-tier Supabase uspavan (login ne prođe) —
   # zato je ODVOJEN od glavnog `build` gate-a (ne blokira merge osim ako ga korisnik učini required).
-  # Bonus: redoviti run drži bazu budnom. Vidi docs/TESTING.md §Authenticated.
+  # Bonus: redoviti run drži bazu budnom. Vidi docs/workflow/TESTING.md §Authenticated.
   authed:
     name: Authed admin suite (positive path)
     runs-on: ubuntu-latest

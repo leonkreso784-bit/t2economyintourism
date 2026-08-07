@@ -1,10 +1,10 @@
 # MONETIZATION.md — naplata, tržište, scenariji (hipotetski)
 
 > Živi strateški dokument (sažeto iz razgovora 2026-06-27). Brojevi su **hipoteze s pretpostavkama**, ne
-> predviđanja. Povezano: [VISION.md](VISION.md) §Monetizacija/§Gating, [ROADMAP.md](ROADMAP.md), [PRD.md](PRD.md).
+> predviđanja. Povezano: [VISION.md](./VISION.md) §Monetizacija/§Gating, [ROADMAP.md](../plan/ROADMAP.md), [PRD.md](./PRD.md).
 > **Status: planiranje** — naplata nije implementirana; AI tutor (F1/F6) još nije izgrađen.
 > ⚠️ **Napomena (2026-08-02):** matura se ovdje spominje kao **tržišna hipoteza**, a **NE kao posao u planu** —
-> Leon ju je izričito izbacio iz build-plana. Aktivni smjer: [`CREATE_BACKEND_SPEC.md`](CREATE_BACKEND_SPEC.md) (osobni UGC-graditelj).
+> Leon ju je izričito izbacio iz build-plana. Aktivni smjer: [`CREATE_BACKEND_SPEC.md`](../archive/CREATE_BACKEND_SPEC.md) (osobni UGC-graditelj).
 
 ## Pravno / setup (Stripe, djelatnost, firma)
 - **Stripe traži poslovni subjekt** (obrt ili d.o.o.): naziv+OIB+adresa+MBS, opis djelatnosti, IBAN (isplate),
@@ -58,4 +58,4 @@
 - Naplata ~5 % (Stripe/MoR) + PDV (MoR riješi).
 
 ## Predloženi redoslijed uvođenja naplate
-**F6 „tvoj ključ" → sezonska Matura propusnica → AI jedinice → B2B škole.** (Veže se na [ROADMAP.md](ROADMAP.md) §DALJE i VISION Faze 1–4.)
+**F6 „tvoj ključ" → sezonska Matura propusnica → AI jedinice → B2B škole.** (Veže se na [ROADMAP.md](../plan/ROADMAP.md) §DALJE i VISION Faze 1–4.)

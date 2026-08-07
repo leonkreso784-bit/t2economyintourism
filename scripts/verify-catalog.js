@@ -2,7 +2,7 @@
 // ===== Catalog integrity checker =====
 // Pokreni: `node scripts/verify-catalog.js`
 // Provjerava da je data/catalog.js konzistentan i ispravno povezan s data-*.js.
-// Korisno nakon SVAKOG dodavanja/izmjene predmeta (vidi docs/TESTING.md).
+// Korisno nakon SVAKOG dodavanja/izmjene predmeta (vidi docs/workflow/TESTING.md).
 
 const fs = require('fs');
 const path = require('path');
@@ -59,7 +59,7 @@ for (const s of SOKRAT_CATALOG.subjects) {
   const missing = REQUIRED_FIELDS.filter((f) => s[f] === undefined || s[f] === null);
   if (missing.length) fail(`nedostaju polja: ${missing.join(', ')}`); else ok('sva obavezna polja prisutna');
 
-  // 3) Smještaj u hijerarhiju — dual-mode (U2.5, ADR-022 / docs/CATALOG_ARCHITECTURE.md §6):
+  // 3) Smještaj u hijerarhiju — dual-mode (U2.5, ADR-022 / docs/architecture/CATALOG_ARCHITECTURE.md §6):
   //    legacy (programId+year+semester) XOR placement[] — nikad oboje, nikad nijedno.
   const hasLegacy = s.programId != null || s.year != null || s.semester != null;
   const hasPlacement = Array.isArray(s.placement);

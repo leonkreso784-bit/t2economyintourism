@@ -1,3 +1,7 @@
+> 🗄 **ARHIVIRANO** (2026-08-07) — POTROŠEN — Leonovih 8 nalaza; F1/F2/F4/F5/F6/F7 riješeni, F8+U8.6 nisu.
+>
+> **Referenca, ne izvor istine.** Što sada vrijedi → [docs/README.md](../README.md).
+
 # EDITOR_FEEDBACK — Leonov živi review editora (punch-lista)
 
 > **Kontekst (2026-07-25):** Leon je prošao živi editor (preview grana) i dao detaljan feedback.

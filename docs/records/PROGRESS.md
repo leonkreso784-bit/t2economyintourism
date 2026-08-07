@@ -25,7 +25,7 @@ block-editor unit **77/0** (+7) · blocks-renderer **29/0** (+4) · `test:authed
 ---
 
 ## 2026-08-06 (OPUS) — 🚀 **F5 IZVEDEN: osobni UGC-graditelj NA PRODUKCIJI** (`8b99775..a9bf52b`)
-**Kontekst:** Leon se vratio nakon nekoliko dana (*„izgubio sam se u priči"*). Cijela sesija = izvršenje runbooka [`CREATE_BACKEND_SPEC.md` §14](CREATE_BACKEND_SPEC.md). Rezultat = **§15**.
+**Kontekst:** Leon se vratio nakon nekoliko dana (*„izgubio sam se u priči"*). Cijela sesija = izvršenje runbooka [`CREATE_BACKEND_SPEC.md` §14](../archive/CREATE_BACKEND_SPEC.md). Rezultat = **§15**.
 
 ### Podjela rada (klasifikator je gejt, i to je dobro)
 Auto-mode klasifikator je blokirao **produkcijski DDL** (`apply_migration`) i **merge/push na `main`** — točno kako §14.1 predviđa. **Nisam to zaobilazio** ni kroz `execute_sql` ni kroz `service_role` iz `.env`; stao sam i predao korake Leonu. On je pokrenuo oba SQL-a u Supabase SQL Editoru te merge i push. Ja sam odradio sve provjere, preflight i Vercel-gate.
@@ -177,7 +177,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Svježa uživo-analiza:** git čist (`main`, samo `mcp-admin/` untracked), prod=`8b99775` (kôd `3634a1e`); `verify` 0/0; `bump:check` 104; 22 predmeta (17 EN DB + 5 HR file); rizik-sprint 7/7. Zdravlje: stabilno/zeleno.
 **B1 dokazan na 4 sloja:** UI [studio.js:133] stub · draft-ops nema addSubject/addLesson · baza [u4-publish-rpc.sql] samo UPDATE (`publish_missing_row`) · katalog=statički kôd, struktura SAMO iz `SokratCatalog` [content-repo.js:27-36]. Editor = „CRUD bez C".
 **🧠 Senior-revizija spec-a v1 → v2 (5 rupa nađenih pa popravljenih):** ① nedostajao `status` (draft/published) · ② **najveća: async DB u sinkroni vrući put** → ispravak = kôd-22 sinkrono ⊕ DB-predmeti NE-BLOKIRAJUĆE (ne merge-blokiranje) · ③ jedan `program_id` gazi ADR-022 placement[] · ④ nema FK (programi u kodu) → klijentska validacija · ⑤ neimenovan split-brain → imenovan kao MOST prema „flip strukture".
-**🔄 Leon presudio kroz reframe-ove → v1/v2 (službeni predmeti + objava studentima) ODBAČENI, `docs/CREATE_BACKEND_SPEC.md` = v3 (PRAVA vizija, DRAFT, NULA koda):** **osobni PRIVATNI UGC-graditelj gradiva „od nule".** Leon (potvrđeno): korisnik slaže VLASTITO ugniježđeno stablo (folderi fakultet/godina/predmet/tema po želji — „nešto unutar nečega"), u study-čvorovima gradi kartice/kviz/fill/learn **POSTOJEĆIM editorom + istim rendererom**; **PRIVATNO na profilu, BEZ objave na javni katalog** („to još ne radimo"). Platforma za SVE (FMTU=odskočna daska → entitet institucijski-agnostičan). **Model:** `nodes` (self-ref stablo: id/owner_id/parent_id/kind `folder|study`/name/position/soft-delete; **TVRDA owner-RLS** `owner_id=auth.uid()`) + `node_content` (reuse content-payload; version/base_version). **RPC-ovi (owner-scoped):** create_node/rename/move(anti-ciklus)/reorder/delete_node(soft)/publish_node; **admin `publish_document` NEDIRNUT.** **Bitno SIGURNIJE od v1/v2:** privatno+odvojeno → NE dira studentski vrući put ni 22 predmeta → nestaje async-rizik. **Leonove odluke:** objava=odmah-uživo (kad dođe) · tempo=**faza-checkpoint** · entitet=vlasnički/profil/slobodan. **Fazni plan F0–F5:** F0 spec✓ · **F1 nodes+node_content+RLS+RPC na STAGINGU** · F2 „Moji materijali" tree-UI · F3 editor u čvoru · F4 polish+E2E · F5 PROD uz OK. Izvan opsega: objava · vježbe(kôd) · dijeljenje · MCP (kasnije, isti RPC-ovi) · postojeći katalog(NETAKNUT).
+**🔄 Leon presudio kroz reframe-ove → v1/v2 (službeni predmeti + objava studentima) ODBAČENI, `docs/archive/CREATE_BACKEND_SPEC.md` = v3 (PRAVA vizija, DRAFT, NULA koda):** **osobni PRIVATNI UGC-graditelj gradiva „od nule".** Leon (potvrđeno): korisnik slaže VLASTITO ugniježđeno stablo (folderi fakultet/godina/predmet/tema po želji — „nešto unutar nečega"), u study-čvorovima gradi kartice/kviz/fill/learn **POSTOJEĆIM editorom + istim rendererom**; **PRIVATNO na profilu, BEZ objave na javni katalog** („to još ne radimo"). Platforma za SVE (FMTU=odskočna daska → entitet institucijski-agnostičan). **Model:** `nodes` (self-ref stablo: id/owner_id/parent_id/kind `folder|study`/name/position/soft-delete; **TVRDA owner-RLS** `owner_id=auth.uid()`) + `node_content` (reuse content-payload; version/base_version). **RPC-ovi (owner-scoped):** create_node/rename/move(anti-ciklus)/reorder/delete_node(soft)/publish_node; **admin `publish_document` NEDIRNUT.** **Bitno SIGURNIJE od v1/v2:** privatno+odvojeno → NE dira studentski vrući put ni 22 predmeta → nestaje async-rizik. **Leonove odluke:** objava=odmah-uživo (kad dođe) · tempo=**faza-checkpoint** · entitet=vlasnički/profil/slobodan. **Fazni plan F0–F5:** F0 spec✓ · **F1 nodes+node_content+RLS+RPC na STAGINGU** · F2 „Moji materijali" tree-UI · F3 editor u čvoru · F4 polish+E2E · F5 PROD uz OK. Izvan opsega: objava · vježbe(kôd) · dijeljenje · MCP (kasnije, isti RPC-ovi) · postojeći katalog(NETAKNUT).
 **🧹 DOCS PRIPREMLJENI ZA COMPACT (Leonova uputa):** CREATE_BACKEND_SPEC v3 ✓ · **CLAUDE.md SKRAĆEN** (rezana U8/F4/U0–U9 brick-povijest ≈ pola fajla; „Stanje—TRENUTNO" prepisana na UGC-graditelj; cilj=platforma-za-SVE; pravilo #5=faza-checkpoint; docs-indeks=CREATE_BACKEND_SPEC ▶AKTIVNO) · PROGRESS (ovo) · memorija (hook+opener+blok 2026-08-02).
 **SLIJEDI IDUĆU SESIJU:** čim Leon kaže „idemo F1" → **migracija `nodes`/`node_content`+owner-RLS+RPC na STAGING** (Supabase skill/MCP, ref `czljmvigkgiajzjxtndq`). Nakon CRUD → frontend redizajn. Nula koda/deploya ovu sesiju (SVE docs, uncommitted). Leon dodao pluginove (Supabase/Vercel/Playwright/superpowers/frontend-design) — koristiti po potrebi.
 
@@ -281,10 +281,10 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 ## 2026-07-25-f (OPUS) — ZAOKRET: editor re-scope (F1–F8) + F7 inženjerski spec (odluke D1–D6)
 **Kontekst:** nakon U8.6a Leon prošao **živi editor** (dan mu preview-link) i dao **detaljan feedback**: „editor je sam po sebi ružan i loš — moraš početi razmišljati kao developer editora da bude STVARNO dobar, kreativan i lako korištan. Ovo je tek početak." → **editor RE-SCOPE iz „CSS-polish" u pravi UX/proizvodni redizajn** (Notion/Photomath razina).
 **Zapisano (ništa se ne gubi):**
-- **`docs/EDITOR_FEEDBACK.md`** — punch-lista **F1–F8** s developerskom analizom + rješenjem + sekvencom: F1 ＋afordancija („mršav i ružan") · F2 **pravi upload slike** (file-picker/drag-drop = U8.7 Storage) · F3 blokovi „loše napravljeni" (kišobran) · F4 **boja CIJELOG bloka** kao kartice · F5 **drag-and-drop** blokova · F6 bogatija **boja teksta** · F7 **naslov+tijelo kvadratić-model** (SRŽ) · F8 **lista-redoslijed**. Vodeći uvid: editor je odlutao od mockup-„kvadratić" vizije → vratiti ga.
+- **`docs/archive/EDITOR_FEEDBACK.md`** — punch-lista **F1–F8** s developerskom analizom + rješenjem + sekvencom: F1 ＋afordancija („mršav i ružan") · F2 **pravi upload slike** (file-picker/drag-drop = U8.7 Storage) · F3 blokovi „loše napravljeni" (kišobran) · F4 **boja CIJELOG bloka** kao kartice · F5 **drag-and-drop** blokova · F6 bogatija **boja teksta** · F7 **naslov+tijelo kvadratić-model** (SRŽ) · F8 **lista-redoslijed**. Vodeći uvid: editor je odlutao od mockup-„kvadratić" vizije → vratiti ga.
 - **Provjereno da paše:** F1–F8 se **poklapaju s Leonovim §5.1 zahtjevima (2026-07-13)** (§5.1-3 „kvadratić s naslovom+tekstom"=F7 · §5.1-6 boja nasljeđuje=F4 · §5.1-8 „editor NE smije izgledati mršavo"=F1). Nije skretanje — ista vizija, sad ispravno isporučena.
 **F7 izabran prvi** (Leon) + izričito: „**ništa ne gradi dok inženjerski savršeno ne odredimo svu tehnologiju korak po korak**".
-- **`docs/EDITOR_F7_SPEC.md`** — inženjerski ugovor prije koda: izmjerena arhitektura (model/ops/pipeline iz `draft-store.js`/`studio.js`/`blocks-renderer.js`), ciljni kvadratić, izmjene po datoteci, **K1–K6** build-plan, rizici+mitigacije, testiranje. **KLJUČNO: F7 = čist redizajn rendera/edit-UI-ja + CSS, NULA promjene sheme/ops/publish-RPC/rendera-granice** (naslov=`cat.name`→`updateCategory{name}` postoji; ne duplicira nijedan north-star stup §0).
+- **`docs/archive/EDITOR_F7_SPEC.md`** — inženjerski ugovor prije koda: izmjerena arhitektura (model/ops/pipeline iz `draft-store.js`/`studio.js`/`blocks-renderer.js`), ciljni kvadratić, izmjene po datoteci, **K1–K6** build-plan, rizici+mitigacije, testiranje. **KLJUČNO: F7 = čist redizajn rendera/edit-UI-ja + CSS, NULA promjene sheme/ops/publish-RPC/rendera-granice** (naslov=`cat.name`→`updateCategory{name}` postoji; ne duplicira nijedan north-star stup §0).
 - **6 ODLUKA PRESUĐENO (D1–D6) 🔒:** D1 `contenteditable` naslov · D2 chrome bloka stanjen (bez tip-labele, ↑↓✕ na hover) · D3 jedan naslov=`cat.name` · **D4 VANILLA pointer-drag** (bez SortableJS) · D5 suptilni boja-tint+rub/glow · D6 slojevito K1–K6.
 **SLIJEDI: K1** (uredljiv naslov kvadratića → `updateCategory{name}`) **čim Leon kaže „kreni" — NE graditi dok ne kaže.** Commiti: `80a2e3f` (FEEDBACK) · `6a93389`+`cea655d` (F7 SPEC+odluke). Pushano preview; prod netaknut. [[editor-must-be-real-product]] [[preflight-before-every-push]] [[follow-recorded-plan-dont-reopen]]
 
@@ -560,7 +560,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 1. **Krug 1 (`d2fccd0`):** ＋ tab za naknadno dodavanje modova · **boje sekcija s NASLJEĐIVANJEM** na kartice/kviz (sekcija=kategorija, `color` već postoji u modelu) → §5.1 t.5–6.
 2. **Krug 2 (`17f8057`):** **✕ na tabu** (kao browser-tab; sadržaj se ne briše, min 1 mod) · **boja SAMOG teksta** (plutajuća traka: B/I/5 a11y token-nijansi/🔗 link) · learn: link-kartice na druge stranice/izvore → §5.1 t.7.
 3. **Krug 3 (`854a1dd`):** Leon: „izgleda jako mršavo" → **potpuni vizualni redizajn „čisto i bogato"** (staklo+glow topbar, gradijent CTA, dot-grid canvas, pill-tabovi, kvadratići s akcent-glowom i pop-animacijama, 3D-hover kartice, shimmer premium, wizard s numeriranim koracima) + **resize-ručka: povuci donju liniju kvadratića = veća kućica** → §5.1 t.8. Gotcha: `backdrop-filter` = stacking context → z-index na kontejneru tabova.
-**PRESUDA (Leon): smjer C POTVRĐEN** — „za sada tek toliko OK" → **`docs/EDITOR_UX.md` v0.9 = dizajn-ugovor** (filozofija Studio+wizard, regije, kvadratić-anatomija, token-palete s nasljeđivanjem, vizualni standard, sigurnosne invarijante, mapiranje na model, otvorene rupe za U6–U8: fill-UI/reorder/mobile/undo/upload). QA smoke **36/36**. **SLIJEDI: deploy (U4 + design grana) uz Leonov OK → U6 strukturne ops u EDITOR_UX dizajnu.**
+**PRESUDA (Leon): smjer C POTVRĐEN** — „za sada tek toliko OK" → **`docs/archive/EDITOR_UX.md` v0.9 = dizajn-ugovor** (filozofija Studio+wizard, regije, kvadratić-anatomija, token-palete s nasljeđivanjem, vizualni standard, sigurnosne invarijante, mapiranje na model, otvorene rupe za U6–U8: fill-UI/reorder/mobile/undo/upload). QA smoke **36/36**. **SLIJEDI: deploy (U4 + design grana) uz Leonov OK → U6 strukturne ops u EDITOR_UX dizajnu.**
 
 **➕ Nalaz pred-compact audita (isti dan): Sašin PR #1 🟢 READY FOR REVIEW** — Saša se **sam** rebasean na novi main + odradio **§5.2 uz SVE HR materijale** (K1 + završna skripta + 4 seta ispitnih pitanja; učinkovitost/djelotvornost → efikasnost/efektivnost) i ažurirao svoj ploča-redak (`d9b8ee8`). **Terminološko pitanje Leonu** (u ploči): HR skripte = W&K 5 funkcija/„kadrovi", EN Lussier = 4/„ljudski resursi" — zadržana opcija A (vjerno EN-u), Leon odlučuje o dubljem usklađivanju. Naši docs ažurirani (TEAM.md §9, CLAUDE.md TIM+napomene, ploča-redak sinkroniziran s njegovim za čist merge); stari zadatak „poslati Saši poruku o rebaseu" = NADIĐEN.
 **⚖️ LEONOVA ODLUKA (isti dan): opcija B — HR SKRIPTE = izvor istine, ne prijevod EN-a** („ne smije biti izvor iz prijevoda nego iz skripti jer su različiti profesori"). Potvrđuje TEAM.md §5 „HR materijali = autoritet"; zapisano kao trajno pravilo za sve `-hr` predmete (TEAM.md §9). PR #1 se vraća Saši na doradu (W&K okvir, „kadroviranje/kadrovi") → merge nakon dorade.
@@ -627,7 +627,7 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ## 2026-07-12 (FABLE) — docs-jasnoća: UGC.md → EDITOR_PLAN.md · Supabase health-check (oba projekta zdrava)
 **Kontekst:** korisnik frustriran što Claude opetovano miješa „UGC" i „dovršetak CRUD-a" — korijen = ime datoteke `UGC.md` za plan koji je zapravo NASTAVAK F4 admin CRUD-a. Nalog: „sredi te datoteke" + „provjeri Supabase".
 
-**Preimenovanje (git mv, povijest očuvana):** `docs/UGC.md` → **`docs/EDITOR_PLAN.md`** + novi naslov („dovršetak Admin CRUD-a: draft→objavi + editor, nastavak F4") + 🎯 ČITAJ-PRVO banner (U-cigle = CRUD cigle; pravi UGC = H2, iza F5/F6). **Link-sweep 14 datoteka** (`grep UGC.md` = 0 preostalih). CLAUDE.md: nova prva linija stanja **„🎯 ŠTO SADA RADIMO"** (dovršavamo ADMIN CRUD; sljedeća cigla U3 draft-sloj). Memorija (checkpoint + follow-recorded-plan) usklađena.
+**Preimenovanje (git mv, povijest očuvana):** `docs/UGC.md` → **`docs/archive/EDITOR_PLAN.md`** + novi naslov („dovršetak Admin CRUD-a: draft→objavi + editor, nastavak F4") + 🎯 ČITAJ-PRVO banner (U-cigle = CRUD cigle; pravi UGC = H2, iza F5/F6). **Link-sweep 14 datoteka** (`grep UGC.md` = 0 preostalih). CLAUDE.md: nova prva linija stanja **„🎯 ŠTO SADA RADIMO"** (dovršavamo ADMIN CRUD; sljedeća cigla U3 draft-sloj). Memorija (checkpoint + follow-recorded-plan) usklađena.
 
 **Supabase health-check (MCP, read-only):**
 - **PROD `naxjubnedhrbhsuasayu`: ACTIVE_HEALTHY** (Postgres 17.6). Redovi točno po zapisu: `subject_content` **51** (17×3) · `content_versions` **22** (te2 test-audit, netaknut) · `profiles` 4 · `progress` 48 · auth users 4. **RLS na SVE 4 tablice** (0 bez RLS-a). API logovi 24h: **100% status 200, nula grešaka** (uklj. pravog studenta na iPhoneu koji lista predmete — organski promet!).
@@ -653,7 +653,7 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ## 2026-07-11 (OPUS) — U2a: stabilni id-jevi po stavci na svih 18 · branch-vidljivost docs (Saša)
 **Kontekst:** nastavak nakon compacta; U2a = prva polovica U2 (EDITOR_PLAN.md §12). Sve na `foundation/f4` (preview). Usput riješena Sašina „ne vidim TEAM.md" situacija.
 
-**Branch-vidljivost (Saša) — `c26dcfc`:** Saša klonirao repo, ne vidi `docs/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad Saša čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
+**Branch-vidljivost (Saša) — `c26dcfc`:** Saša klonirao repo, ne vidi `docs/workflow/TEAM.md` jer svi `docs/**` + role-router žive samo na `foundation/f4`, a klon padne na `main` (zamrznut 07-06; f4 = 32 commita ispred). **Odluka:** NE guramo zaseban prod-push za docs → landaju na `main` s eventualnim `f4→main` deployem; dotad Saša čita na `foundation/f4`, radi po TEAM.md §2/§3 (grana s `main` → PR na `main`). Zapisano TEAM.md §9 + S1. + isporučena **catalog-šablona** za `management-hr` (S2 obveza).
 
 **U2a — stabilni id-jevi (`b490172`, ✅ dokazano):**
 - **`scripts/add-item-ids.js`** (nova migracija, esprima range-based, **AST-surgical** — čuva formatiranje/komentare): dodaje `id` (6-char random) svakoj kartici/quizu/fillu/kategoriji/learn. Idempotentna; **sigurnosni re-parse** odbija nevaljan JS; document-vs-single-category detekcija (final `examPractice`); inline-vs-newline insert; indent-safe.
@@ -690,17 +690,17 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ## 2026-07-09 (FABLE) — DOC-REORG (2 faze) + EDITOR_PLAN.md north-star dizajn-dok
 **Kontekst:** korisnik prije EDITOR_PLAN.md tražio pospremanje docs-a („savršeno održivo i snalažljivo, ništa se ne smije izgubiti"). Sve na grani `foundation/f4`.
 
-**Faza 1 — reorganizacija (`08ab604`):** `git mv` (povijest očuvana): `docs/content/` (SCHEMA/GUIDE/INTAKE/GENERATOR/EXERCISES_ENGINE) · `docs/subjects/` (4 plana + **NOVA autoritativna tablica svih predmeta** `subjects/README.md`) · `docs/archive/` (EXERCISES_DB_FIX_PLAN + `sonnet.md`→`SONNET_REVIEW_2026-06.md`) + **NOVI `docs/HISTORY.md`** (vremenska crta milestone-a) + prepisan `docs/README.md` indeks (grupiran) + root README tree. **Link-sweep ~85 referenci u 45 datoteka** (docs+CLAUDE+README+schema.json+komentari u data/js/scripts/tests); `git grep` starih putanja = 0. Gate: verify 0/0 · validate:content 0/0 · validate:schema 54/54 · unit 8/8 · export:json --check 0 (komentari ne diraju evaluaciju) · bump:check/build:css --check OK · typecheck 0.
+**Faza 1 — reorganizacija (`08ab604`):** `git mv` (povijest očuvana): `docs/content/` (SCHEMA/GUIDE/INTAKE/GENERATOR/EXERCISES_ENGINE) · `docs/subjects/` (4 plana + **NOVA autoritativna tablica svih predmeta** `subjects/README.md`) · `docs/archive/` (EXERCISES_DB_FIX_PLAN + `sonnet.md`→`SONNET_REVIEW_2026-06.md`) + **NOVI `docs/records/HISTORY.md`** (vremenska crta milestone-a) + prepisan `docs/README.md` indeks (grupiran) + root README tree. **Link-sweep ~85 referenci u 45 datoteka** (docs+CLAUDE+README+schema.json+komentari u data/js/scripts/tests); `git grep` starih putanja = 0. Gate: verify 0/0 · validate:content 0/0 · validate:schema 54/54 · unit 8/8 · export:json --check 0 (komentari ne diraju evaluaciju) · bump:check/build:css --check OK · typecheck 0.
 
 **Faza 2 — CLAUDE.md dijeta (`0d17689`, korisnik pregledao + odobrio):** **463 → 94 retka** (verify-then-cut: svaka činjenica verificirana da živi drugdje PRIJE reza — subjects-tablica/HISTORY/PROGRESS/CHANGELOG/planovi; pouke za sadržajni rad dodane u `subjects/README.md` §Pouke prije rezanja). Novi CLAUDE.md = identitet+stack (ispravljeno zastarjelo: backend=Supabase direkt, ne „planirani /api") · arhitektura s GOTCHA-ma · **8 kritičnih pravila** (6 starih + #7 Vercel-check/vercel.json + #8 živa admin-prijava za RLS cigle) · komande · **„Stanje — TRENUTNO"** · ADR jedan-red + docs-mapa. Trajna ušteda konteksta svake sesije; post-compact orijentacija s točne slike.
 
-**EDITOR_PLAN.md (U0) — north-star dizajn-dok:** `docs/EDITOR_PLAN.md` = cijela dogovorena arhitektura smjera „autorstvo→draft→objavi→UGC→AI": **dokument u sredini** (stabilni ID-jevi+`schemaVersion`+stil-TOKENI+learn-BLOKOVI+YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC** s `base_version`) · **jedan renderer = sigurnosna invarijanta** · `final`=kompozicija · editor=biblioteka pod 4 uvjeta (vendorana/adapter/samo-autorska-strana/spike) · rizici↓ (staging Supabase, dual-mode, datoteke=mreža, fuzz) · marketplace/AI-tutor/MCP skice · **brick-slijed U0–U9**. Naznaka u VISION.md; docs/README indeks + CRUD_PLAN križna referenca (F4.4-kategorije → U6; F4.5/4.6 → U9+).
+**EDITOR_PLAN.md (U0) — north-star dizajn-dok:** `docs/archive/EDITOR_PLAN.md` = cijela dogovorena arhitektura smjera „autorstvo→draft→objavi→UGC→AI": **dokument u sredini** (stabilni ID-jevi+`schemaVersion`+stil-TOKENI+learn-BLOKOVI+YouTube-blok) · **jedan write-put** (draft+ops+**publish-RPC** s `base_version`) · **jedan renderer = sigurnosna invarijanta** · `final`=kompozicija · editor=biblioteka pod 4 uvjeta (vendorana/adapter/samo-autorska-strana/spike) · rizici↓ (staging Supabase, dual-mode, datoteke=mreža, fuzz) · marketplace/AI-tutor/MCP skice · **brick-slijed U0–U9**. Naznaka u VISION.md; docs/README indeks + CRUD_PLAN križna referenca (F4.4-kategorije → U6; F4.5/4.6 → U9+).
 
 **Stanje:** grana `foundation/f4` lokalno (commiti ispred origina; push = preview uz OK). **Slijedi: U1 staging Supabase → U2 schema v2 (ID-jevi).**
 
 ### 👥 TIM: Saša Vudrag se pridružuje (ista sesija, nastavak — ADR-023 + TEAM.md)
 - **Kontekst:** Leon doveo prvog suradnika (Saša Vudrag, student prog. inž. na Algebri; dogovoreno 2026-07-08). Zadaci: **HR program do pune 2 godine** (prijevod + HR materijali: PDF/skripte/ispitna pitanja Word), zatim MUT/MOR smjerovi. Zahtjev: „mora biti savršeno da ne srušimo sustav".
-- **`docs/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za Sašu+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
+- **`docs/workflow/TEAM.md` (novi):** uloge (Leon = jedini merge/deploy) · **tvrde granice za Sašu+njegovog Claudea** (§2: smije SAMO `data/<subj>-hr/`+export+catalog-unos+svoj redak ploče+bump kroz alat; sve ostalo zabranjeno) · workflow grana→PR→CI→review→merge · **S-cigle S1–S7** · definition-of-done (**„prijevod je BAZA, HR materijali su AUTORITET"** — pouka te2 ugrađena) · least-privilege (vlastiti Anthropic ključ s budget-capom; BEZ Supabase/Vercel/TEST_ADMIN) · anti-drift dnevnik-pravila.
 - **Role-router u CLAUDE.md:** `git config user.name` → Sašin Claude STANE i čita TEAM.md §2 (naš CLAUDE.md se učitava i njemu!).
 - **ADR-023** (DECISIONS.md): suradnički model + **ADR-022 PULL-FORWARD = U2.5** (odmah iza U1+U2, umjesto „nakon F4"; 3 tvrda uvjeta: uzastopno-ne-isprepleteno · aditivno/dual-mode · gate+staging). Obrazloženje: identitet prije write-puta; alternativa (MUT/MOR copy-paste) = veći rizik. ADR-022 status ažuriran.
 - **EDITOR_PLAN.md §12:** +U2.5 red + napomena o paralelnoj S-stazi (jedina ovisnost S7←U2.5). **subjects/README.md:** HR sekcija → **statusna ploča svih 17 predmeta** (S-faze; Saša ažurira samo nju). **docs/README:** +TEAM.md red.
@@ -756,12 +756,12 @@ Grana **`design/u-ux`** (s `feature/u4-publish-rpc`, da nosi svježe docs). **`d
 ---
 
 ## 2026-07-06 (OPUS, nastavak) — ▶ FAZA 4 (Admin CRUD) START: F4.1/F4.2/F4.3a/F4.3b + arhitektura predmeta
-**Kontekst:** nakon deploya F3, planiran F4 (Admin CRUD) — odluke fiksirane u **ADR-021** (direktni preglednik→Supabase RLS-write · `profiles.role` admin · grubi blob · stupnjeviti flip · safety-net od prve cigle) + plan `docs/CRUD_PLAN.md`. Sve na grani `foundation/f4`, **lokalno/preview — ništa na produkciju.**
+**Kontekst:** nakon deploya F3, planiran F4 (Admin CRUD) — odluke fiksirane u **ADR-021** (direktni preglednik→Supabase RLS-write · `profiles.role` admin · grubi blob · stupnjeviti flip · safety-net od prve cigle) + plan `docs/archive/CRUD_PLAN.md`. Sve na grani `foundation/f4`, **lokalno/preview — ništa na produkciju.**
 
 **Odrađeno (cigla po cigla, gate nakon svake):**
 - **F4.1 admin identitet (`5ee749e`):** `supabase/f4-admin.sql` (profiles + auto-provision trigger + `is_admin()` + select-own RLS; role immutable iz klijenta). Primijenjeno na bazu preko MCP-a + **Leon seedan admin** (3 ostala user). `rls-check` proširen (anon 0 profiles), zelen.
 - **F4.2 write-path + verzioniranje (`5242e52`):** `supabase/f4-content-write.sql` (admin-only insert/update/delete RLS na `subject_content` + `content_versions` append-only + BEFORE UPDATE/DELETE snapshot trigger SECURITY DEFINER = undo+audit). **Live-dokazano rollback-transakcijama (produkcija netaknuta, 51 red):** admin piše + verzija/audit; običan korisnik I anon → 0 redova.
-- **Arhitektura predmeta (`1a8647b`): ADR-022 + `docs/CATALOG_ARCHITECTURE.md`** — za HR-ekspanziju (3 smjera FMTU dijele vezne predmete): placement (hijerarhija)≠identitet sadržaja; kanonski id `<fakultet>-<predmet>-<jezik>` ubija koliziju; dijeli-unutar-fakulteta kad je silabus identičan, inače dupliciraj; napredak prati sadržaj; verify-gate čuva invarijante. Implementacija NAKON F4.
+- **Arhitektura predmeta (`1a8647b`): ADR-022 + `docs/architecture/CATALOG_ARCHITECTURE.md`** — za HR-ekspanziju (3 smjera FMTU dijele vezne predmete): placement (hijerarhija)≠identitet sadržaja; kanonski id `<fakultet>-<predmet>-<jezik>` ubija koliziju; dijeli-unutar-fakulteta kad je silabus identičan, inače dupliciraj; napredak prati sadržaj; verify-gate čuva invarijante. Implementacija NAKON F4.
 - **F4.3a/b admin UI (`fc655a8`+`28984fe`):** `js/admin.js` (detekcija + `.admin-only` reveal + admin kartica u profilu + `#admin-page` viewer: predmet→lekcija→read-only kartice kroz `SokratContent`).
 
 **🐛 3 buga NAĐENA ŽIVOM ADMIN-PRIJAVOM (login-skripta, Leon) + POPRAVLJENA (`45489f7`+`0bc5e41`):**
@@ -1331,12 +1331,12 @@ ne-pushana commita 25c2474+4cb9c5c✓, Supabase branching dostupan✓) → realn
 ## 2026-06-29 — 🧱 STRATEŠKI ZAOKRET: PLATFORMA-FIRST (odluka + zapis) + i18n chrome (ne-deployan)
 **Glavni ishod sesije = ODLUKA + ZAPIS, ne kod.** Kroz dužu stratešku raspravu korisnik odlučio: **pauzirati dodavanje
 sadržaja** (HRV long-tail, prijevodi, 3. god) i izgraditi **profesionalan, reliable, reusable temelj** prije rasta.
-- **Razrada (vidi `docs/FOUNDATION_PLAN.md`):** reusable podsistemi S1–S6 (ContentRepository, čisti JSON format⟂vježbe=JS moduli,
+- **Razrada (vidi `docs/archive/FOUNDATION_PLAN.md`):** reusable podsistemi S1–S6 (ContentRepository, čisti JSON format⟂vježbe=JS moduli,
   AppState, Web Components, i18n, Auth/RLS) + faze F0→F6. Ključni uvid: **najveći reusable komad nije CRUD nego format sadržaja
   (podatak≠ponašanje) + ContentRepository šav** — CRUD onda sjedi na vrhu i može kasno. „Puno bolje opcije" dodane: **CI/CD gate
   (GitHub Actions + Vercel preview), type-check bez build-a (JSDoc+tsc), Web Components (light-DOM), error monitoring, SRS (spaced
   repetition) kao produkt-WOW.** CRUD=custom (NE CMS, korisnikova odluka); vanilla/no-build ostaje.
-- **Zapisano:** `docs/FOUNDATION_PLAN.md` (nov, detaljan) · **ADR-013** (content arhitektura) + **ADR-014** (eng. standardi) u DECISIONS ·
+- **Zapisano:** `docs/archive/FOUNDATION_PLAN.md` (nov, detaljan) · **ADR-013** (content arhitektura) + **ADR-014** (eng. standardi) u DECISIONS ·
   ROADMAP §STRATEŠKI ZAOKRET + §B preuređen · README index · BACKLOG (hardening v1 + offline-feature + archive/SONNET_REVIEW_2026-06.md provjereno) ·
   CLAUDE.md §DALJE/§Ključne odluke/docs · memorija `foundation-pivot` + MEMORY.md.
 - **`archive/SONNET_REVIEW_2026-06.md` review (raspravljen):** kompetentan ali NE u potpunosti verificiran — **#7 `display=swap` NETOČAN (već postoji `index.html:51`)**,
@@ -1361,7 +1361,7 @@ Korisnik prijavio (screenshot): nakon dodavanja 🌐 jezik-toggle-a, na mobitelu
   (d) `.lessons-title{min-width:0}` (kao `.study-title`, za dug HR naslov na 320px).
 - **Provjera:** širinski sweep 320→1440px × {EN,HR} = **0 overflowa, 0 rezanja CTA-a**; header-test browse/lessons/study 0 overflowa na 320/360/390;
   vizualni screenshot 390px (oba jezika čist jedan red). Gate: verify 0/0, **test:responsive 76/76**. Cache `?v=20260697` (styles+landing+pages).
-- Status: ✅ riješen + **✅ LIVE 2026-06-28 (`ac68ab0`, push `4b795c8..ac68ab0`)**. Dokumentirano: BUG-015 u `docs/BUGS.md` + CHANGELOG.
+- Status: ✅ riješen + **✅ LIVE 2026-06-28 (`ac68ab0`, push `4b795c8..ac68ab0`)**. Dokumentirano: BUG-015 u `docs/records/BUGS.md` + CHANGELOG.
 
 ## 2026-06-28 — HRV: globalni 🌐 toggle + landing/browse prijevod + DEPLOY (cigle 5c)
 Nastavak istog dana. Cilj (korisnik): „cijela platforma na hrv, ali translate ne dira predmete" → globalni toggle.
@@ -1383,7 +1383,7 @@ Nastavak istog dana. Cilj (korisnik): „cijela platforma na hrv, ali translate 
 
 ## 2026-06-28 — HRV program: pokrenut + PILOT (Business Informatics) LIVE-ready
 Nakon BUG-013: krenuo HRVATSKI program „Menadžment u Hotelijerstvu" (prijevod svih predmeta), cigla po cigla.
-- **Cigla 1 — plan** `docs/HRV_PLAN.md` (klon-program Opcija A; konvencije imenovanja; bijeli-popis prevedi/čuvaj). `9e203de`.
+- **Cigla 1 — plan** `docs/archive/HRV_PLAN.md` (klon-program Opcija A; konvencije imenovanja; bijeli-popis prevedi/čuvaj). `9e203de`.
 - **Cigla 2 — `scripts/translate-subject.js`** (Sonnet, `.env` ključ). **Slot-pristup**: izvuče SAMO string-polja iz
   bijelog popisa, model vrati prijevode, JS **rekonstruira strukturu** → ključevi/`correct`/icon/`_______`/HTML/KaTeX
   očuvani po konstrukciji. **Bug ulovljen+riješen:** tool_use često vrati `translations` kao ručno-serijaliziran
@@ -1414,7 +1414,7 @@ Prva cigla nove faze (prije HRV programa): popravak flashcard buga koji koristi 
 - **Fix (CSS-only):** grid-stack — `.flashcard-inner{display:grid}` + lica `grid-area:1/1; position:relative`; svi fiksni `height` → `min-height`.
   Datoteke: `css/flashcards-section.css`, `css/responsive/01-…css`, `css/responsive/02-mobile-core.css`. Cache `?v=20260694`.
 - **Provjera:** ciljani Playwright (iPhone SE/13/Pro Max, ubačen dug odgovor) → kontrole uvijek ispod dna kartice, 0 preklapanja;
-  puni gate **verify 0/0 + test:responsive 68/68**. Detalji: `docs/BUGS.md` §BUG-013.
+  puni gate **verify 0/0 + test:responsive 68/68**. Detalji: `docs/records/BUGS.md` §BUG-013.
 - **Dalje:** HRV program „Menadžment u Hotelijerstvu" (infra + pilot).
 
 ---
@@ -1457,7 +1457,7 @@ Nastavak iste sesije nakon BUG-012; bug-lov + strateško planiranje.
   `position:absolute` → ne rastežu `.flashcard-inner` → duga stražnja strana naraste preko `.flashcard-controls`.
   Plan: **grid-stack** (obje strane u istu grid-ćeliju). **Još NIJE popravljen** — sljedeći na redu.
 - **BUGS.md dotjeran:** dodana napomena o opsegu (BUGS.md = bugovi proizvoda; tooling/proces → PROGRESS/CLAUDE/memorija).
-- **Strateško planiranje (zapisano u `docs/MONETIZATION.md`, NOVO):** Stripe setup + NKD djelatnosti (62.01+63.12 glavne,
+- **Strateško planiranje (zapisano u `docs/product/MONETIZATION.md`, NOVO):** Stripe setup + NKD djelatnosti (62.01+63.12 glavne,
   85.59/58.29/63.11 korisne) + firma tate (Waterfront — provjeriti registar/knjigovođu) + PDV/MoR + **tržište matura**
   (~30–40k/god) + scenariji prihoda (oprezni ~4.5k → lider ~180k €/god) + 9 ideja za profit (engine prošlih matura,
   AI tutor, sezonska propusnica, B2B škole, gamifikacija/viral, UGC). Redoslijed: **F6 „tvoj ključ" → propusnica → jedinice → B2B**.
@@ -1486,7 +1486,7 @@ Analiza „sljedećih koraka" otkrila ozbiljan **živi bug** pri provjeri Supaba
 - **Commiti** `e6588aa` (dok) + `b7a6b7f` (loader+catalog) + `0a5b1f7` (migrate) + `801d9a6` (verify-čuvar). **PUSH/DEPLOY**
   `7176194..801d9a6`. **Math sad čita gradivo iz baze kao ostalih 16; vježbe iz datoteke.**
 - **Pravilo (novo):** read-path iz baze nosi SAMO čisto-podatkovne varove (M1/M2/Final); **vježbe (kod) UVIJEK iz datoteke.**
-  Detalji: `docs/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`.
+  Detalji: `docs/records/BUGS.md` §BUG-012 + `docs/archive/EXERCISES_DB_FIX_PLAN.md`.
 
 ---
 
@@ -1563,7 +1563,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
   prepozna je li točno napisan. Dodano EKSTENZIJOM enginea (ne hack): `normalizeCite()`+`gradeCite()` u `exercises-core.js` + `cite` widget +
   CSS + 9 unit-testova (core 104/104). **Pametno-tolerantno** (korisnikov izbor): case/razmaci/navodnici/en-em-crtica/završna točka forgiven, ali
   zarezi/točke/dvotočke/redoslijed bitni; točan odgovor se UVIJEK pokaže. 2 cite-vježbe (7 items: author-date reference za knjige/časopise/novine/
-  disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/content/EXERCISES_ENGINE.md` §2.
+  disertaciju + in-text), odgovori iz slajdova. Gate: test:unit 104/104 core, verify 0/0, validate 0/0, Playwright 68/68. Doc `docs/architecture/EXERCISES_ENGINE.md` §2.
 - **Dalje:** Blok B (sadržaj→Supabase+/api) ili još pilot-predmeta. **6 commita ispred origin** (+10 ranijih = sve čeka push, NIJE pushano).
 
 ## 2026-06-24 — Doc audit (svi .md izglancani) + budući planovi zapisani + compact-pravilo
@@ -1590,7 +1590,7 @@ koje je profesorica zadala studentima pa iz njih predavala — NE seminari). **K
 
 ## 2026-06-22 — GENERATOR PREDMETA (jezgra bricks 1–4) + macro B11–B12 deploy
 **Strateška odluka korisnika:** dosta ručnog dodavanja predmeta → graditi **generator uz minimalan Opus-usage**, PA **Blok B**
-(backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md). Cigla-po-cigla:
+(backend MVP = **sadržaj→Supabase + `/api`**, ne AI tutor/UGC zasad). Plan: [CONTENT_GENERATOR.md](../workflow/CONTENT_GENERATOR.md). Cigla-po-cigla:
 - **Brick 1 `validate-content.js`** (`0c3dc8e`, `npm run validate:content`) — vm window-shim učita data (stari+novi format), validira shemu
   (name/icon/color, flashcard q+a, quiz options 2–6 + valjan `correct`, fillBlank `_______`, learn.content) + **KaTeX currency-safe** (uravnoteženi
   `\(`/`\[`/`$$`, lookbehind da `\\[2pt]` ne broji). Svih 14 živih predmeta → **0/0** (4000+ stavki); ulovio i vlastiti regex-bug.
@@ -1818,7 +1818,7 @@ LaTeX rendering — payload ostaje string → **migracijski sigurno** (struktura
   **123 valutna `$NN`** (npr. „$25 per night") → s `$...$` bi KaTeX parsirao tekst između dvaju `$` kao matematiku i
   **vizualno pokvario live sadržaj**. Zato: **inline `\( \)`, blok `\[ \]` / `$$ $$`; jedan `$` se NE koristi.**
   Grep-om potvrđeno da se `\(`/`\[`/`$$` NIGDJE ne pojavljuju u postojećem tekstu → render je globalan ali za
-  tekstualne predmete **no-op** (nije potreban opt-in flag). Konvencija autorstva u `docs/content/CONTENT_SCHEMA.md`.
+  tekstualne predmete **no-op** (nije potreban opt-in flag). Konvencija autorstva u `docs/architecture/CONTENT_SCHEMA.md`.
 - **Cache:** novi `js/math.js?v=20260648` + bump `learn/flashcards/quiz/fill .js?v=20260648`; `styles.css?v=20260648`
   + novi `@import css/math.css?v=20260648`. (Data nije dirana → `CONTENT_VERSION` ostaje `20260647`.)
 - **Provjere:** verify **0/0** (11 predmeta) · **Playwright `tests/katex.spec.js` 4/4** (dokaz na sva 4 iPhone profila:
@@ -1885,7 +1885,7 @@ is invalid"}` umjesto preusmjeravanja na stranicu. **Nalaz: NIJE bug u kodu** �
 `supabase.co`. **Popravak (dashboard-only, bez deploya koda):** Auth → URL Configuration → Site URL
 `https://www.sokratstudy.com` + Redirect URLs sa `/**` wildcardom: `https://www.sokratstudy.com/**`,
 `https://sokratstudy.com/**`, `http://localhost:5050/**`; testirati NOVOM registracijom (stari token potrošen).
-Dokumentirano u `docs/BACKEND.md` (commit `06c96a8`). [[backend-track-b-start]]
+Dokumentirano u `docs/architecture/BACKEND.md` (commit `06c96a8`). [[backend-track-b-start]]
 
 ---
 
@@ -2159,7 +2159,7 @@ Izvori (PDF tekst) u temp-u, NISU u repou (autorska prava).
 
 **▶ SLJEDEĆE (odluka 2026-06-12) = BACKEND, staza B:** Auth + cloud sinkronizacija napretka (Supabase + Vercel `/api`); **sadržaj OSTAJE
 u fajlovima (NE migracija — to je staza A, jednom kad je sadržaj gotov).** Treba: korisnik kreira Supabase projekt + ključevi. Detalji
-u memoriji [[backend-track-b-start]] + `docs/BACKEND.md`. **Sadržaj-staza parkirana:** preostala 2 sem-1 (Entrep/E-Biz) = prazni folderi
+u memoriji [[backend-track-b-start]] + `docs/architecture/BACKEND.md`. **Sadržaj-staza parkirana:** preostala 2 sem-1 (Entrep/E-Biz) = prazni folderi
 materijala, čekaju PDF-ove (pouka iz te2: raditi IZ predavanja). **✅ te2 deployan 2026-06-12 (`ca06158`).** **⚠️ Accounting zatvoren.**
 
 ---
@@ -2176,7 +2176,7 @@ dokaz da je sustav vježbi stvarno reusable (novi predmet/jezik = samo nova data
 
 **▶ SLJEDEĆA SESIJA = NOVI sem-1 predmet** (od preostala 3: **Tourism Economics `te2` / Entrepreneurship / E-Business**) — restruktura
 na K1/K2/finalni po obrascu Marketing/Geo/Food&Nutrition (split postojećeg sadržaja + finalni hibrid; **NE** treba exercises sustav).
-Čeka: odabir predmeta + materijali/silabus (plan: `docs/BACKLOG.md`). **⚠️ Korisnik je zasićen računovodstvom — ne vraćati se na Accounting osim izričito.**
+Čeka: odabir predmeta + materijali/silabus (plan: `docs/records/BACKLOG.md`). **⚠️ Korisnik je zasićen računovodstvom — ne vraćati se na Accounting osim izričito.**
 
 ---
 
@@ -2233,7 +2233,7 @@ Nastavak K2 (brick-by-brick). **5 novih vježbi** u `data/accounting/exercises.j
 Definicije ratija usklađene sa study-kategorijom `financialAnalysis`. **Engine NEPROMIJENJEN.** Content pack sad **34 vježbe**.
 **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 16/16, ratios 3/3, vertical 4/4, horizontal 4/4) + randomizacija
 deterministična/≤2-decimale kroz 500 seedova; Playwright **36/36**. Cache `?v=20260636`. **Commit lokalno (NEDEPLOYANO).**
-**Slijedi:** B3.10 (K2 journal: revenue/expense/RE + ending BS) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
+**Slijedi:** B3.10 (K2 journal: revenue/expense/RE + ending BS) — vidi `docs/architecture/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -2251,7 +2251,7 @@ Nastavak K2 (brick-by-brick). **4 nove `ratio` vježbe** u `data/accounting/exer
 **Engine NEPROMIJENJEN.** Content pack sad **29 vježbi**. **USAR/USALI klasifikacija (Assignment 9-1/10-1) ODGOĐENA** — dvosmislene stavke
 (franchise fees/menus/telecom) bez službenog answer-keya za Ch9/10 (solutions = samo Ch2–5) → rizik krivog auto-ocjenjivanja; dodat će se ako se nađe key.
 **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (restaurant 4/4, hotel 3/3) + randomizacija deterministična/čista i givens prisutni kroz 400
-seedova; Playwright **36/36**. Cache `?v=20260635`. **Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.9 (K2 Ch12 Analyzing FS) — `docs/content/EXERCISES_ENGINE.md` §6/§8.
+seedova; Playwright **36/36**. Cache `?v=20260635`. **Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.9 (K2 Ch12 Analyzing FS) — `docs/architecture/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -2268,7 +2268,7 @@ Nastavak K2 (brick-by-brick, bez deploya). **4 nove vježbe** u `data/accounting
 **Engine NEPROMIJENJEN.** Average držan samo u fixnoj vježbi (randomizirani prosjek = decimalni drift). Content pack sad **25 vježbi**
 (16 K1 + 5 K2 Ch11 + 4 K2 Inventory). **Testirano:** verify 0/0; node 95/95 + 13/13; grade-check (concepts 11/11, methods 9/9, sve metode
 COGS+end=4.800) + randomizacija deterministična/cjelobrojna i cross-check kroz 300–400 seedova; Playwright **36/36**. Cache `?v=20260634`.
-**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.8 (K2 Restaurant/Hotel ratios, Ch9/10) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.8 (K2 Restaurant/Hotel ratios, Ch9/10) — vidi `docs/architecture/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -2285,7 +2285,7 @@ Popunjen prazan „Exercises" tab na **Midtermu 2** — prva K2 cigla. **5 novih
 **Engine NEPROMIJENJEN** (potvrđeno — samo sadržaj + bump cache). MACRS ostaje konceptualno (bez izmišljanja IRS postotnih tablica).
 Content pack sad **21 vježba** (16 K1 Ch1–6 + 5 K2 Ch11). **Testirano:** verify 0/0; node 95/95 + 13/13; node grade-check svih 5
 (SL 12/12, DDB 9/9, concepts 12/12) + randomizacija deterministična i cjelobrojna kroz 200 seedova; Playwright **36/36**. Cache `?v=20260633`.
-**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.7 (K2 Inventory FIFO/LIFO/Average COGS) — vidi `docs/content/EXERCISES_ENGINE.md` §6/§8.
+**Commit lokalno (NEDEPLOYANO).** **Slijedi:** B3.7 (K2 Inventory FIFO/LIFO/Average COGS) — vidi `docs/architecture/EXERCISES_ENGINE.md` §6/§8.
 
 ---
 
@@ -2347,7 +2347,7 @@ među njima 2 K2 demoa (CH9 RevPAR, CH11 amortizacija) koji vire u K1. Uzrok: `r
 `accounting-fundamentals` (nema K1/K2 splita — FAZA 4).
 **Nalaz 2 (BUG-011) — Practice ≈ Exam:** jedina razlika je skrivanje hintova na numeric/ratio; ostalo identično, „Check" feedback isti u oba moda.
 
-**Plan (čeka odluku korisnika):** detaljno u `docs/content/EXERCISES_ENGINE.md` §6 „Review-nalazi" (RV-1, RV-2) + `docs/BUGS.md` (BUG-010/011).
+**Plan (čeka odluku korisnika):** detaljno u `docs/architecture/EXERCISES_ENGINE.md` §6 „Review-nalazi" (RV-1, RV-2) + `docs/records/BUGS.md` (BUG-010/011).
 Sažeto: RV-1 = sortiraj listu po poglavlju + naslovi + (preporuka) makni demoe → čisti K1; RV-2 = Exam = samo rezultat bez po-stavci
 označavanja (Practice zadrži punu povratnu info). Oboje dira engine (`renderList`; `checkOpen`/`mark` po modu) → male generičke dopune.
 
@@ -2484,7 +2484,7 @@ specovi po cigli (choice/numeric/ratio/statement/classify/modes/random/progress 
 ---
 
 ## 2026-06-10 — Accounting Exercises engine: FAZA 0 (scaffold) GOTOVA (lokalno, nedeployano)
-**Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/content/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
+**Kontekst:** krenuo razvoj interaktivnog **Exercises** sustava (plan `docs/architecture/EXERCISES_ENGINE.md` §6, cigla-po-cigla).
 Cilj Faze 0: kompletan engine temelj iza feature-flaga, **nula vidljivih promjena** dok predmet nema flag.
 
 **Napravljeno (B0.1–B0.9):**
@@ -2516,7 +2516,7 @@ lekcije). → Ranija tvrdnja „2. god 100% kompletna (9/9)" je **netočna i isp
   Entrepreneurship (1 blok `entrepreneurshipData` 11 kat pod 2 imena lekcije), Accounting (1 lekcija `accountingData` 7 kat /
   7 modula), E-Business (1 lekcija `ebusinessData` 14 kat / „15 units").
 
-**Plan (detaljno u [BACKLOG.md](BACKLOG.md)):** po predmetu — silabus → K1/K2 split → finalni hibrid (`Object.assign({},K1,K2,
+**Plan (detaljno u [BACKLOG.md](./BACKLOG.md)):** po predmetu — silabus → K1/K2 split → finalni hibrid (`Object.assign({},K1,K2,
 {examPractice})`), catalog 3 lekcije + 3 scripta, bump verzija, verify + Playwright. Dio posla je SPLIT postojećeg sadržaja
 (ne pisanje od nule) + kurirana `examPractice`. **Čeka materijale/silabus po predmetu.** ADR-006 „ne preslagivati stare predmete"
 nadjačan za sadržajno upotpunjavanje; migracija u bazu i dalje JEDNOM u Bloku B. **Ovaj korak = samo dokumentacija (bez koda); priprema za compact.**
@@ -2531,7 +2531,7 @@ LIVE 3 commita: **fix BUG-009** (Entrepreneurship fill-blank, `9f32df4`) + **Foo
 Beer premješten iz K1 + K1 verificiran, `1c52a5f`) + **Food & Nutrition finalni hibrid** (15 kat. / 174 fc, `05cb0af`).
 `origin/main` sinkroniziran, radno stablo čisto, ništa lokalno nedeployano. (Pre-flight: verify 0, Playwright 40/40.) Cache `20260621`.
 → **Food & Nutrition 100% KOMPLETAN i LIVE.** (Ispravak: 2. god NIJE potpuno gotova — sem 2 = 4/4, ali sem 1 = 4 stara
-predmeta trebaju restrukturu; vidi unos iznad + [BACKLOG.md](BACKLOG.md).)
+predmeta trebaju restrukturu; vidi unos iznad + [BACKLOG.md](./BACKLOG.md).)
 
 **▶ Sljedeće:** restruktura 4 predmeta 2. god sem 1, pa **1. godina**.
 
@@ -2792,7 +2792,7 @@ Entrepreneurship") i da je u **1. semestru** 2. godine (bio krivo upisan kao sem
 **Napravljeno (`data/catalog.js`):** `name` → „Entrepreneurship and Innovation", `semester: 2 → 1`.
 **`id: 'entrepreneurship'` NIJE diran** → `storageKey`/napredak korisnika i sve reference očuvane; sadržaj
 lekcija nepromijenjen. Navigacija (browse, data-driven) ga sad sama prikazuje pod Sem 1. Bump `catalog.js?v=20260612`
-(index.html). Usklađeni `README.md`, `package.json`, `docs/ARCHITECTURE.md` (povijesni PROGRESS zapisi se ne diraju).
+(index.html). Usklađeni `README.md`, `package.json`, `docs/architecture/ARCHITECTURE.md` (povijesni PROGRESS zapisi se ne diraju).
 
 **Testirano:** `verify` 0 grešaka (ispisuje „Entrepreneurship and Innovation"); **Playwright 36/36**.
 **Stanje:** lokalni commit (NIJE deployano) — ide u isti deploy paket kao BUG-008.
@@ -3034,7 +3034,7 @@ otvaranje predmeta. Ujedno = šav prema backendu (Blok B: `loadSubjectContent` �
 
 ## 2026-06-03 — Sesija 15: VISION.md + pregled svih docova (priprema za lazy-loading)
 **Napravljeno**
-- **`docs/VISION.md`** (novo) — dugoročna full-stack vizija zapisana da se ne izgubi:
+- **`docs/product/VISION.md`** (novo) — dugoročna full-stack vizija zapisana da se ne izgubi:
   5 funkcija (AI tutor, profili, UGC upload→AI, dijeljenje, natjecanje, „donesi svoj ključ"),
   mapirane na Faze 1–4; **mapa ovisnosti** (sve ovisi o Backend+Auth; lazy-loading = šav);
   **6 gating-odluka** (AI trošak, plaćanje/PDV+MoR, autorska prava/moderacija, sigurnost,
@@ -3164,7 +3164,7 @@ Fakultet → Smjer → Godina → Predmet (sve iz catalog-a, spremno za širenje
 - Procjena: 1. god. do ~33 lekcije; sa 2. god. = ~19 predmeta za smjer.
 
 **Odluke/plan:**
-- Dodan `docs/content/CONTENT_INTAKE.md` (kako slagati materijale: PDF>JPG, po predmetu/kolokviju,
+- Dodan `docs/workflow/CONTENT_INTAKE.md` (kako slagati materijale: PDF>JPG, po predmetu/kolokviju,
   Math caveat) + `_materials/` u .gitignore.
 - Novi milestone **M0.5** u ROADMAP: hijerarhijska navigacija (Fakultet→Smjer→Godina→
   Predmet) + minimalistički frontend redesign (logo se zadržava), PRIJE masovnog unosa.

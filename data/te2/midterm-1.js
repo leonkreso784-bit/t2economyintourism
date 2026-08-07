@@ -4,7 +4,7 @@
 //   "Tourism and market structure". Granica kolokvija po silabusu (slajd "Important dates"):
 //   1. test = jedinice 1.–6. (4.11.2025.).
 // Kategorije: fundamentals (U1), demand (U2), forecasting (U3), supply (U4–5), marketStructure (U6).
-// Oblik po docs/content/CONTENT_SCHEMA.md. Pri izmjeni bumpaj CONTENT_VERSION (js/content-loader.js).
+// Oblik po docs/architecture/CONTENT_SCHEMA.md. Pri izmjeni bumpaj CONTENT_VERSION (js/content-loader.js).
 
 const te2M1 = {
 

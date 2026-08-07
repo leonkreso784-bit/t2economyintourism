@@ -16,12 +16,12 @@
 Legenda statusa: ⬜ todo · 🟦 u tijeku · ✅ gotovo
 
 ## 🧱 STRATEŠKI ZAOKRET (2026-06-29) — PLATFORMA-FIRST
-> **🆕 2026-07-09:** nastavak F4 ide kroz **[EDITOR_PLAN.md](EDITOR_PLAN.md)** (draft→objavi, U-staza; ADR-022 = U2.5) · **tim: +Saša** (content, paralelna S-staza — [TEAM.md](TEAM.md), ADR-023) → sadržajna pauza dolje sad vrijedi samo za Leona/Claudea.
+> **🆕 2026-07-09:** nastavak F4 ide kroz **[EDITOR_PLAN.md](../archive/EDITOR_PLAN.md)** (draft→objavi, U-staza; ADR-022 = U2.5) · **tim: +Saša** (content, paralelna S-staza — [TEAM.md](../workflow/TEAM.md), ADR-023) → sadržajna pauza dolje sad vrijedi samo za Leona/Claudea.
 **Korisnik odlučio:** staviti DODAVANJE SADRŽAJA na pauzu (na koliko god treba) i izgraditi **profesionalan, reliable,
 reusable temelj** prije daljnjeg rasta. Cilj: platforma „brutalno napravljena", pripremljena za CRUD/UGC/AI-tutor/monetizaciju.
-Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)** +
+Sve detaljno (misije, faze, reusable podsistemi, brick-liste, KAKO): **[FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md)** +
 **ADR-013** (content arhitektura: podatak≠ponašanje + ContentRepository šav) + **ADR-014** (CI/CD-gated, type-check bez build-a,
-Web Components, monitoring) u [DECISIONS.md](DECISIONS.md). **Redoslijed faza:** F0 zapis → F1 reliability rails (CI/CD + tsc +
+Web Components, monitoring) u [DECISIONS.md](../records/DECISIONS.md). **Redoslijed faza:** F0 zapis → F1 reliability rails (CI/CD + tsc +
 hardening v1) → F2 reusable jezgra (JSON format → ContentRepository → AppState → Web Components → monitoring) → F3 performanse
 (Service Worker + bundling) → F4 custom Admin CRUD (source-of-truth flip) → F5 SRS → F6 pred-UGC sigurnost. **Sadržajne stavke
 ispod (HRV long-tail, 3. god, prijevodi) su PAUZIRANE dok temelj ne stoji.**
@@ -53,46 +53,46 @@ normalizirano 92→`20260704162056`; **ADR-017**. ✅ **3B CSS bundling GOTOVO +
 
 ## 📍 AŽURNO (2026-06-28) — (PAUZIRANO zbog platforma-first zaokreta gore)
 **SADRŽAJ: 2. god HM = 8/8 ✅ LIVE, 1. god HM = 9/9 ✅ LIVE** (Math zadnji). **▶ AKTIVNO: HRV program** „Menadžment u Hotelijerstvu"
-(prijevod na hrvatski) — **cigle 1–5c ✅ LIVE** (pilot Business Informatics HR + globalni 🌐 toggle za cijeli glavni tok; vidi §C + [HRV_PLAN.md](HRV_PLAN.md)).
+(prijevod na hrvatski) — **cigle 1–5c ✅ LIVE** (pilot Business Informatics HR + globalni 🌐 toggle za cijeli glavni tok; vidi §C + [HRV_PLAN.md](../archive/HRV_PLAN.md)).
 **✅ BUG-013 (flashcard) riješen + LIVE. ✅ Logo redizajn LIVE.** Sljedeće: long-tail i18n (profil/pravne) → prijevod ostalih predmeta.
 **1. god (9 LIVE):** Business Informatics, SIT, Management, Microeconomics,
 Statistics, Macroeconomics, Academic Writing, **Traffic in Tourism** (`62a4119`).
 **✅ Math = 9. (zadnji) 1.god predmet — K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`; commiti `b481be5`+`c49422a`+`4eeccf1`+`31be03f`);**
 year1/sem1, KaTeX, 39 vježbi (engine sad renderira KaTeX); K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa. **→ 1. GODINA HM 9/9 KOMPLETNA (uz Intro blokiran).**
 Intro to Hospitality blokiran (nema PDF-ova). **Generator predmeta** (ADR-010,
-`docs/content/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
+`docs/workflow/CONTENT_GENERATOR.md`) gotov i robustan (Sonnet API, ~$1–1.5/predmet). **Interaktivne vježbe**: engine sa 7 tipova
 (novi `cite` = „napiši citat"). **Blok B read-path** (ADR-011): sadržaj se čita iz Supabasea direktno (anon key + RLS) s
-file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](PROGRESS.md).
+file-fallbackom — AKTIVNO. Detaljan dnevnik: [PROGRESS.md](../records/PROGRESS.md).
 
 ## 🧭 DALJE — planovi (korisnik, 2026-06-24)
 **A) Dovršiti sadržaj 1. godine (po redu):**
-1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md)).
-2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](subjects/MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
+1. ~~**Traffic in Tourism**~~ — ✅ GOTOVO i LIVE (2026-06-25 `62a4119`, plan [TRAFFIC_PLAN.md](../subjects/TRAFFIC_PLAN.md)).
+2. **Math** — ZADNJI 1.-god predmet. ✅ **K1+K2+Final ✅ LIVE (deployano 2026-06-27, `89fd669..31be03f`).** K1 learn obogaćen + Gauss-vs-Gauss-Jordan nijansa + korisnik pregledao formule. **→ 1. GODINA HM 9/9 KOMPLETNA.** Plan [MATH_PLAN.md](../subjects/MATH_PLAN.md). ✅ Supabase re-sync Math napravljen 2026-06-27 (gradivo u bazi; vježbe iz datoteke).
 - ⛔ **Introduction to Hospitality** — korisnik NEMA PDF-ove → blokiran dok ih ne nabavi (preskočiti).
 
-**B) Nakon sadržaja — prioriteti** *(2026-06-29: PREUREĐENO platforma-first zaokretom → vidi [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md)):*
+**B) Nakon sadržaja — prioriteti** *(2026-06-29: PREUREĐENO platforma-first zaokretom → vidi [FOUNDATION_PLAN.md](../archive/FOUNDATION_PLAN.md)):*
 1. **Admin CRUD** — sad **Faza 4** u FOUNDATION_PLAN-u (custom, NA čistom content-sloju S1/S2; source-of-truth flip; ADR-013). Ne radi se dok F1–F2 ne stoje.
-2. **AI tutor** — zaseban produkt-trk, neovisan o source-of-truth; bilo kad nakon jezgre (F2). „Donesi svoj ključ" prvo ([VISION.md](VISION.md)).
+2. **AI tutor** — zaseban produkt-trk, neovisan o source-of-truth; bilo kad nakon jezgre (F2). „Donesi svoj ključ" prvo ([VISION.md](../product/VISION.md)).
 3. **Priprema za MATURU** — NOVI smjer proizvoda: srednjoškolci (širenje izvan fakulteta).
 4. **(NOVO) Spaced Repetition (SRS)** — Faza 5; pravi pamet-algoritam učenja, najveći produkt-WOW, reusable preko svih predmeta.
 
 **C) ▶ SAD AKTUALNO (korisnik 2026-06-27) — novi smjer „Menadžment u Hotelijerstvu" (HRV) + flashcard bug + logo + monetizacija:**
 - **Logo ✅ LIVE (deployano 2026-06-28, `19f07db`):** `logo.png` (raster + crop-hak) **vektoriziran → `assets/logo.svg`**
   (indigo medaljon `#6366f1→#818cf8`, bijelo lice, čist prsten). Crop-hak maknut, favikoni regenerirani, glava ispunjava cijeli krug (auto-fit), stari logo obrisan, cache `20260693`.
-  Gate: verify 0/0, Playwright 68/68. Detalji: `docs/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
-- **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
-- **0) Flashcard bug** (**BUG-013**, [BUGS.md](BUGS.md)) — ✅ **RIJEŠEN + LIVE (deployano 2026-06-28, `213b067`):**
+  Gate: verify 0/0, Playwright 68/68. Detalji: `docs/records/PROGRESS.md` + `CLAUDE.md` §Ključne odluke.
+- **Monetizacija (NOVO):** plan/scenariji u [MONETIZATION.md](../product/MONETIZATION.md) (Stripe+NKD djelatnosti, matura tržište, modeli, ideje; F6 „tvoj ključ" prvo).
+- **0) Flashcard bug** (**BUG-013**, [BUGS.md](../records/BUGS.md)) — ✅ **RIJEŠEN + LIVE (deployano 2026-06-28, `213b067`):**
   grid-stack (`.flashcard-inner{display:grid}` + strane `grid-area:1/1; position:relative`) + svi fiksni `height` na `.flashcard` → `min-height`
   (`responsive/01`×4, `02`×1). Kartica naraste do više strane → strelice nikad prekrivene. CSS-only, cache `20260694`.
 - **1) HRV program „Menadžment u Hotelijerstvu" — CIGLE 1–5c ✅ LIVE (deployano 2026-06-28, `320d413..4b795c8`):** prijevod predmeta na hrvatski.
   Arhitektura (ADR-012): **klon programa (Opcija A), NE i18n u sadržaju** — `hospitality-management-hr` + `data/<subj>-hr/*.js` (isti engine 0 promjena,
   vlastiti `storageKey`). Prijevod preko **`scripts/translate-subject.js`** (Sonnet tool_use, slot-pristup + salvage-parser; čuva quiz-indeks/KaTeX/
   `_______`/HTML). **Napravljeno:** ✅ pilot **Business Informatics HR** (11 kat/86fc, ~$0.66) · ✅ catalog (EN nepromijenjen, HR kroz Browse) ·
-  ✅ **UI i18n + globalni 🌐 HR/EN toggle** (`js/i18n.js`, ~160 ključeva; cijeli study UI + landing + browse; EN bajt-identičan). Detaljan plan: [HRV_PLAN.md](HRV_PLAN.md).
+  ✅ **UI i18n + globalni 🌐 HR/EN toggle** (`js/i18n.js`, ~160 ključeva; cijeli study UI + landing + browse; EN bajt-identičan). Detaljan plan: [HRV_PLAN.md](../archive/HRV_PLAN.md).
   **⬜ Preostaje:** long-tail chrome (profil/pravne stranice/lessons-header/blind-map) **PA prijevod ostalih predmeta** (batch alatom) → kvantitativni → vježbe → Supabase re-sync.
 - **2) 3. godina** Hospitality Managementa — doći će, timing TBD.
 - **3) Studentski UGC za više godine:** studenti uploadaju/grade **3. i 4. godinu**. Za randomizirane UGC-vježbe =
-  **deklarativni `params`+formula + sigurni sandbox-evaluator** (NE `eval`), ne klijentski kod (vidi BUG-012 pouku). Veže se na Fazu 1–2 + moderaciju ([VISION.md](VISION.md) §4).
+  **deklarativni `params`+formula + sigurni sandbox-evaluator** (NE `eval`), ne klijentski kod (vidi BUG-012 pouku). Veže se na Fazu 1–2 + moderaciju ([VISION.md](../product/VISION.md) §4).
 
 ## 📍 STANJE (povijesno, 2026-06-10)
 **Napravljeno:** M0 Blok A (A1–A3) gotov i **LIVE** (data-driven katalog, `config.js` i sidebar iz
@@ -107,7 +107,7 @@ datotekama je migracijski sigurno (ADR-006), migracija ide JEDNOM na punom katal
 Contact) ostaje brzi „quick win" kad zatreba za Google Ads.
 **Kvantitativni predmeti (Math/Micro/Macro/Statistika):** poseban tretman — **KaTeX** rendering formula +
 „worked problems" konvencija + grafovi-kao-slike (**ADR-009**). KaTeX = zasebna cigla PRIJE prvog takvog
-predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md).
+predmeta; čista Matematika ZADNJA. Inventar materijala 1. god: [CONTENT_INTAKE.md](../workflow/CONTENT_INTAKE.md).
 **Sadržaj:** 2. god = 8 predmeta ✅ · **Marketing KOMPLETAN** (K1+K2+Finalni, 13 kat.) · **Economics in Hospitality
 KOMPLETAN** (K1 Unit 1–5 + K2 Unit 6–10 + Finalni hibrid, 11 kat. / 162 fc) · **Tourism Geography KOMPLETAN**
 (S30 1. kolokvij popravljen iz izvora: + `introToGeography`, croatiaFeatures, parks/UNESCO, karta netaknuta;
@@ -115,7 +115,7 @@ S31 2. kolokvij „svjetska geografija" 6 kat. po kontinentu; **S32 Finalni hibr
 13 kat. / 128 fc) · **Food & Nutrition KOMPLETAN** (K1 Teme 1–7 verificiran + Beer premješten; K2 Teme 8–14; finalni hibrid;
 15 kat. / 174 fc). **2. god = 8/8 KOMPLETNO (2026-06-13)** — sem 2 (Econ Hospitality, Marketing, Geography, Food & Nutrition) + sem 1
 (Accounting, te2, E-Business, Entrepreneurship), svi K1/K2/finalni. (svi LIVE; Entrepreneurship deployano
-2026-06-13 `8a37404`. Detalji: [BACKLOG.md](BACKLOG.md).) · **▶ 1. god** = Business Informatics ✅ + **SIT ✅ LIVE (2026-06-14
+2026-06-13 `8a37404`. Detalji: [BACKLOG.md](../records/BACKLOG.md).) · **▶ 1. god** = Business Informatics ✅ + **SIT ✅ LIVE (2026-06-14
 `e0e9ca7`, 13 kat/94 fc)** + **Management ✅ LIVE (2026-06-14 `06c96a8`, 11 kat/89 fc)**, ostalih 8 ⬜
 (**Management bio zadnji čisto tekstualni**; dalje KaTeX cigla → Macro 19 / **Stat 26** / **Micro 172-str deck** / Math 109,
 Math zadnja; Acad-writing/Intro-hosp/Traffic PRAZNO).
@@ -138,7 +138,7 @@ Cilj: ukloniti hardkodiranje i postaviti skalabilan backend bez rušenja live ve
   tek na otvaranje; statički `data-*.js` maknuti iz `index.html`). Šav prema `/api` (Blok B). Test `lazy-load.spec.js`.
 - ✅ A5 — UI hijerarhije = **puni drill-down nav** (`#browse-page`, M0.5, ADR-007); test `browse.spec.js`
 
-**Blok B — Backend: Vercel Functions + Supabase** (ADR-008, [BACKEND.md](BACKEND.md))
+**Blok B — Backend: Vercel Functions + Supabase** (ADR-008, [BACKEND.md](../architecture/BACKEND.md))
 
 > **✅ Staza B (MVP) — Auth + cloud sync napretka (2026-06-12):** Supabase projekt + `supabase/schema.sql`
 > (tablica `progress`, RLS) + `js/auth.js` (email magic-link) + `js/cloud-sync.js` (offline-first sync).
@@ -174,7 +174,7 @@ uglađen „čisto i bogato" frontend, spremno za ~19+ predmeta. Logo se zadrža
   How it works, 5 modova, završni CTA, strukturiran footer + **SEO meta**. Test `landing.spec.js`.
   Preostaje: redizajn study/lessons unutarnjih ekrana (kasnije po potrebi).
 - ⬜ **Tier 2 (povjerenje / priprema za Google Ads):** Privacy Policy + Contact + FAQ stranica/sekcija
-- ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](content/CONTENT_INTAKE.md)
+- ⬜ Intake materijala: `_materials/` + [CONTENT_INTAKE.md](../workflow/CONTENT_INTAKE.md)
 - **DoD:** uđeš → fakultet → smjer → godina → predmeti po semestru; izgled uglađen; sve responzivno
   (Playwright zeleno); dodavanje predmeta = catalog + scaffold. **(Navigacija + redizajn browse/landing: ispunjeno ✅)**
 
@@ -192,4 +192,4 @@ Ljestvice, profili, statistika učenja, anti-cheat.
 Freemium/paywall na funkcionalnosti, "donesi svoj API ključ", lokalno sponzorstvo.
 
 ---
-*Detalji koraka i obrazloženja: [ARCHITECTURE.md](ARCHITECTURE.md). Napredak: [PROGRESS.md](PROGRESS.md).*
+*Detalji koraka i obrazloženja: [ARCHITECTURE.md](../architecture/ARCHITECTURE.md). Napredak: [PROGRESS.md](../records/PROGRESS.md).*

@@ -3,7 +3,7 @@
 // MINIMALNA statistička matematika koju koristi SAMO content pack (data/statistics/exercises.js)
 // u svojim solve()/fiksnim odgovorima. NIJE engine: generički engine (js/exercises-core.js,
 // js/exercises.js, css/exercises.css) ovo NE poziva → zato živi u data/ (lazy preko content.scripts),
-// a ne u js/. Vidi docs/subjects/STATISTICS_PLAN.md §2 i docs/content/EXERCISES_ENGINE.md.
+// a ne u js/. Vidi docs/subjects/STATISTICS_PLAN.md §2 i docs/architecture/EXERCISES_ENGINE.md.
 //
 // NAČELO: u lib ide samo „teško/dijeljeno" (normalna CDF + z/t kritične tablice). Elementarna
 // aritmetika (mean, SD, z=(x−μ)/σ, SE, CI granice, test-statistika, slope/R²) ostaje INLINE u solve(p).

@@ -2,7 +2,7 @@
 
 > Živi dokument. Cilj: pretvoriti statički study app u skalabilnu platformu.
 > Gradi se **korak po korak**; svaki korak je malen, testabilan i ne smije
-> srušiti live verziju. Napredak se prati u [ROADMAP.md](ROADMAP.md) i [PROGRESS.md](PROGRESS.md).
+> srušiti live verziju. Napredak se prati u [ROADMAP.md](../plan/ROADMAP.md) i [PROGRESS.md](../records/PROGRESS.md).
 
 ## Ciljana arhitektura
 
@@ -20,7 +20,7 @@ SUPABASE                                  ADMIN UI (/admin, zaštićen)
    • Edge Functions (kasnije: ingest+Claude)
 ```
 
-**Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](BACKEND.md) (ADR-008).
+**Backend hosting:** Supabase (Postgres/Auth/Storage) — vidi [BACKEND.md](./BACKEND.md) (ADR-008).
 **Stanje (2026-07-13):** Auth + cloud-sync napretka LIVE; **admin draft→objavi tok LIVE od 2026-07-13** (F4 deploy); **sadržaj se čita iz baze direktno preko
 supabase-js (anon key + RLS), NE preko `/api`** (ADR-011) — privilegirano (`service_role`) ide **SAMO u Supabase Edge Functions, ne Vercel `/api`** (ADR-016); admin-write = direktno klijent→RLS (ADR-021).
 **Read-path redoslijed (od F2 2A): baza → `data/json/*.json` (predmeti s `dataFormat:'json'`, 18/18) → `.js` fallback.**
@@ -100,7 +100,7 @@ nula rizika), pa tek onda Supabase. Tako live verzija radi nakon svakog koraka.
   postaje `fetch('/api/subject/...')` bez izmjene ostatka app-a. Test `lazy-load.spec.js`.
 - **A5 — UI hijerarhije** ✅ — **puni drill-down nav** (`#browse-page`, M0.5, ADR-007).
 
-### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](BACKEND.md))
+### Blok B — Backend: Supabase (ADR-008/011, [BACKEND.md](./BACKEND.md))
 - **B6 ✅** — Supabase projekt + schema (`progress` + `subject_content`). **B7 ✅** — `scripts/migrate-content.js` (`data/*` → baza).
 - **B8 ✅** — read-path: `loadSubjectContent` čita iz baze **direktno (supabase-js anon, ne `/api`)** + file-fallback (ADR-011).
 - **B9 ✅ (kao F4.1, 2026-07-06)** — admin identitet (`profiles`+`is_admin()` RLS). **B10 🟡 (= F4/U-staza; dosadašnje cigle DEPLOYANE na produkciju 2026-07-13)** — admin CRUD (draft→objavi, `EDITOR_PLAN.md`; U4 publish-RPC ✅ + U-UX dizajn ✅ 🚀 DEPLOYANO na PROD 2026-07-14 (`79f17c7..056d963`); **U6 strukturne ops ✅ + U7 learn-blokovi/renderer ✅ → U8 vizualni editor „Studio" U TIJEKU (U8.1–U8.5d ✅ 2026-07-22: skelet+blok-editor+kartice/kviz/fill+inline-tekst+boja/link+media slika/video/formula/tablica; **U8.9 math-tipkovnica MathLive ✅ INTEGRIRANA 2026-07-23** [math-field autorska strana + Casio-paleta/renderirane labele; izlaz LaTeX→student KaTeX nepromijenjen] + **R1 grana-sync s main ✅** [55↑/0↓]; slijedi U8.5e/f + U8.10 → U8.6 vizual; ideje U8.7 upload/U8.8 chart zapisane)**, grana `feature/u6-structural-ops`, PREVIEW); source-of-truth flip na bazu = U9+/F4.6.

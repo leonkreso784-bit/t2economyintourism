@@ -5,7 +5,7 @@
 // Test 1 covers GDP determinants, the goods market (consumption/multiplier/equilibrium output),
 // money market (money demand/supply, interest rate) and the IS-LM combined policies.
 //
-// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/content/CONTENT_SCHEMA.md):
+// ⚠ QUANTITATIVE SUBJECT — uses KaTeX (ADR-009). Convention (docs/architecture/CONTENT_SCHEMA.md):
 //   inline  \( ... \)   (in a JS string: "\\( ... \\)")
 //   display \[ ... \] / $$ ... $$
 //   A single `$` is NEVER used (currency). LaTeX backslash in a string = "\\".

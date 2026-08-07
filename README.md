@@ -354,7 +354,7 @@ I'm currently the sole maintainer, but I'm open to collaboration!
 **To contribute:**
 1. Fork the repo
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Follow the guidelines in `docs/content/CONTENT_SCHEMA.md` (for new content) or `docs/ARCHITECTURE.md` (for code)
+3. Follow the guidelines in `docs/architecture/CONTENT_SCHEMA.md` (for new content) or `docs/architecture/ARCHITECTURE.md` (for code)
 4. Run tests: `npm run verify && npm run test:responsive`
 5. Submit a pull request with a clear description
 
@@ -367,9 +367,9 @@ I'm currently the sole maintainer, but I'm open to collaboration!
 This project is heavily documented. Start with:
 
 - **For Users:** Visit [sokratstudy.com](https://www.sokratstudy.com), check the FAQ, or read the Help sections in-app
-- **For Contributors:** Read `docs/ARCHITECTURE.md` (system design) + `docs/content/CONTENT_SCHEMA.md` (how to add content)
-- **For Developers:** `docs/FOUNDATION_PLAN.md` (technical roadmap) + `docs/DECISIONS.md` (why we made certain choices)
-- **For Content Creators:** `docs/content/CONTENT_INTAKE.md` (how to prepare materials) + `docs/content/CONTENT_GENERATOR.md` (auto-generation pipeline)
+- **For Contributors:** Read `docs/architecture/ARCHITECTURE.md` (system design) + `docs/architecture/CONTENT_SCHEMA.md` (how to add content)
+- **For Developers:** `docs/archive/FOUNDATION_PLAN.md` (technical roadmap) + `docs/records/DECISIONS.md` (why we made certain choices)
+- **For Content Creators:** `docs/workflow/CONTENT_INTAKE.md` (how to prepare materials) + `docs/workflow/CONTENT_GENERATOR.md` (auto-generation pipeline)
 
 ---
 

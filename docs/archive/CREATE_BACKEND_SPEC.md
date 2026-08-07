@@ -1,3 +1,7 @@
+> 🗄 **ARHIVIRANO** (2026-08-07) — INSTALACIJE ISPUNJENE (F0–F5, prod 2026-08-06) — ALI vizija iz §1 (kartice/kviz/fill u vlastitom gradivu) NIJE dovršena.
+>
+> **Referenca, ne izvor istine.** Što sada vrijedi → [docs/README.md](../README.md).
+
 # CREATE_BACKEND_SPEC v3 — Osobni UGC-graditelj gradiva „od nule"
 
 > **Status:** v3 · vizija POTVRĐENA (Leon 2026-08-02) · **F0 ✅ · F1 ✅ · F2 ✅ · F3 ✅ · F4 ✅ · F5 ✅ NA PRODUKCIJI (2026-08-06, §15).** Plan je ISPUNJEN.

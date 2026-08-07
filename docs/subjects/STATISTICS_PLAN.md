@@ -13,8 +13,8 @@
 > **JEDNU ciglu** → provjerim sve (verify + node + Playwright) → **STANEM** → korisnik
 > pregleda → tek na „nastavi" idem na sljedeću. Polako, pažljivo, pametno.
 >
-> **Vezano:** [EXERCISES_ENGINE.md](../content/EXERCISES_ENGINE.md) (engine spec — SVETO PRAVILO: engine se ne dira za sadržaj) ·
-> [CONTENT_SCHEMA.md](../content/CONTENT_SCHEMA.md) · [ACCOUNTING_PLAN.md](ACCOUNTING_PLAN.md) (presedan). Datum: 2026-06-15.
+> **Vezano:** [EXERCISES_ENGINE.md](../architecture/EXERCISES_ENGINE.md) (engine spec — SVETO PRAVILO: engine se ne dira za sadržaj) ·
+> [CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md) · [ACCOUNTING_PLAN.md](./ACCOUNTING_PLAN.md) (presedan). Datum: 2026-06-15.
 
 ---
 

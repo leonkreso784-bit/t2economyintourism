@@ -1,6 +1,6 @@
 // ===== ACCOUNTING — Midterm 1 (K1, Chapters 1–6) =====
 // Izvor: Cote, "Hotel and Restaurant Accounting" (7th ed., AHLEI), Ch 1–6 + silabus FMTU.
-// Oblik po docs/content/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
+// Oblik po docs/architecture/CONTENT_SCHEMA.md. Pokreni `npm run verify` nakon izmjena.
 // NAPOMENA: ovo je NOVI K1 teorijski sadržaj (prije restrukture predmet je imao samo ~K2).
 // Kategorije (Ch1–6): intro · businessFormation · financialStatements · balanceSheet · incomeStatement · bookkeeping.
 

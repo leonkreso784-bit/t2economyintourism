@@ -53,7 +53,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Uzrok:** (1) `js/admin.js` referencirao **`window.SokratAuth`**, ali `SokratAuth` je top-level `const` = **globalni leksički binding, NIJE `window` property** → `undefined` → `computeIsAdmin()` uvijek `false` + `onChange` listener se nikad ne registrira. (Svi drugi moduli — profile/cloud-sync — zovu `SokratAuth` **golo**.) (2) nova `.admin-page` klasa nije dodana u `css/variables.css` „hide all pages" grupu (`display:none` default) → `#admin-page` sekcija se prikazivala uvijek, na dnu. (3) `<select>` bez `color-scheme:dark`.
 - **Popravak (`45489f7`+`0bc5e41`):** golo `SokratAuth` (typeof-guard) · `.admin-page` dodan u hide+active grupe · `color-scheme:dark` + tamni `option`. Regresijski test: `#admin-page` skriven na landingu.
 - **Lekcija:** `admin.spec` je provjeravao samo `isAdmin===false` (točno i dok je detekcija PUKNUTA) pa je bug prošao SVE testove. **Za auth/RLS-gated značajke (CRUD) nužna je PRAVA prijava.** Uz to: **globali deklarirani kao `const` NISU na `window`** — referenciraj ih golo (`typeof X !== 'undefined'`), ne `window.X`. [[live-login-verifies-crud]]
-  - **✅ RIJEŠENO (2026-07-08, `d57c5fd`):** Playwright SAD ima login — **storageState** obrazac (`tests/auth.setup.js` se prijavi + spremi sesiju; `authenticated` projekt je reusea). `npm run test:authed` pokriva **pozitivan admin-put** (isAdmin=true + admin vidi edit-gumbe) — točno ono što je nedostajalo. Gate-an na `TEST_ADMIN_*` secret (bez njega default suite nepromijenjen). Vidi `docs/TESTING.md §Authenticated`.
+  - **✅ RIJEŠENO (2026-07-08, `d57c5fd`):** Playwright SAD ima login — **storageState** obrazac (`tests/auth.setup.js` se prijavi + spremi sesiju; `authenticated` projekt je reusea). `npm run test:authed` pokriva **pozitivan admin-put** (isAdmin=true + admin vidi edit-gumbe) — točno ono što je nedostajalo. Gate-an na `TEST_ADMIN_*` secret (bez njega default suite nepromijenjen). Vidi `docs/workflow/TESTING.md §Authenticated`.
 
 ### BUG-017 — a11y gate skenirao samo 4 ekrana → CRITICAL axe violationi prošli na produkciju
 - Status: ✅ riješen 2026-07-05 (grana `foundation/f3d`, F3 3E.1; NIJE još deployano) · Težina: srednji (a11y, screen-reader korisnici; flashcards/quiz) · Našao: **dubinski axe audit** (svi impact-levovi, sve sekcije) pri 3E.
@@ -107,7 +107,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   pa su `generate()` metode nestale (dokaz iz baze: `statisticsExercises` 56 vježbi, 23 s `params`, **0 s `generate`**).
   (2) **Loader je u DB-modu preskakao SVE `content.scripts`** (`js/content-loader.js`), pa se nisu učitali ni `stat-lib`/
   `math-lib`; engine `js/exercises.js` bez `generate` vrati sirov objekt → razbijeno.
-- Rješenje (Opcija A, [EXERCISES_DB_FIX_PLAN.md](archive/EXERCISES_DB_FIX_PLAN.md), cigla-po-cigla, sve LIVE 2026-06-27 `801d9a6`):
+- Rješenje (Opcija A, [EXERCISES_DB_FIX_PLAN.md](../archive/EXERCISES_DB_FIX_PLAN.md), cigla-po-cigla, sve LIVE 2026-06-27 `801d9a6`):
   1. **catalog `content.codeScripts`** na 5 predmeta s vježbama (lib+exercises.js) — vježbe = KOD, uvijek iz datoteke.
   2. **`content-loader.js`** u DB-modu: study iz baze, ali `codeScripts` (vježbe+lib) i dalje iz datoteke (`filesToLoad = fromDb ? codeScripts : scripts`). Datoteka pregazi eventualni lossy DB red.
   3. **`migrate-content.js`** više ne šalje `content.exercises` u bazu.

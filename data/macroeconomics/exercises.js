@@ -2,7 +2,7 @@
 //
 // CONTENT PACK (NOT the engine): all domain data for interactive, auto-graded
 // macroeconomics exercises. The generic engine (js/exercises-core.js, js/exercises.js,
-// css/exercises.css) contains NOTHING from here — see docs/content/EXERCISES_ENGINE.md §2
+// css/exercises.css) contains NOTHING from here — see docs/architecture/EXERCISES_ENGINE.md §2
 // (schema/types) + §3 (conventions). Reusable engine proven by Accounting (41) and
 // Statistics (56); see [[accounting-exercises-engine]] / [[statistics-exercises-plan]].
 //

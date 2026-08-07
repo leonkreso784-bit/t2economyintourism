@@ -131,7 +131,7 @@ EU direktiva o autorskom pravu (2019/790, u hrvatskom Zakonu o autorskom pravu) 
 > nego rađen privatno.** Partnerstvo s dekanom nije samo politika i pristup podacima —
 > **ono otključava pravnu iznimku koju privatna osoba ili tvrtka ne dobiva.**
 
-To je jak argument **za** institucionalni put i vrijedi ga spomenuti dekanu (v. [DEAN_PITCH.md](DEAN_PITCH.md)).
+To je jak argument **za** institucionalni put i vrijedi ga spomenuti dekanu (v. [DEAN_PITCH.md](./DEAN_PITCH.md)).
 
 ---
 

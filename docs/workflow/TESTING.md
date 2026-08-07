@@ -1,7 +1,7 @@
 # Testing — QA checklista
 
 > Imamo automatske testove (Playwright + unit + validatori) — uz njih ova ručna lista.
-> Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](BUGS.md).
+> Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](../records/BUGS.md).
 
 ## Automatske provjere (uvijek prvo)
 - [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz, **+ BUG-012 čuvar: predmet s vježbama MORA imati `content.codeScripts`**). *(alias: `verify:catalog`)*

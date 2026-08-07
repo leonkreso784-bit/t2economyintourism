@@ -1,83 +1,117 @@
 # Sokrat Study — Dokumentacija
 
-Centralno mjesto za vođenje projekta. Profesionalan, progresivan rad: planiramo,
-bilježimo napredak, verzioniramo, učimo iz grešaka.
+**Ovo je jedini ulaz.** Sve ostalo je u mapama ispod, složeno po **ulozi dokumenta**, ne po temi.
 
-> **Brzi kontekst:** [`../CLAUDE.md`](../CLAUDE.md) (root) se auto-učitava svaku sesiju i sažima
-> najbitnije (stack, arhitektura, kritična pravila, TRENUTNO stanje). Ovdje su puni detalji.
-> **Brza povijest:** [HISTORY.md](HISTORY.md) (vremenska crta milestone-a, 1 red po milestone-u).
+> **Brzi kontekst za sesiju:** [`../CLAUDE.md`](../CLAUDE.md) — auto-učitava se svaki put, sažima stack, pravila i trenutno stanje.
+> **Brza povijest:** [records/HISTORY.md](./records/HISTORY.md) — jedan redak po milestone-u.
 
-## ▶ Aktivni planovi
-| Dokument | Svrha |
-|----------|-------|
-| [TEAM.md](TEAM.md) | **Tim: uloge, workflow, zaštita sustava** — Leon (platforma) + Saša (content, S-cigle); PR+CI, tvrde granice, least-privilege (ADR-023) |
-| [FOUNDATION_PLAN.md](FOUNDATION_PLAN.md) | **Platforma-first temelj** — misije/faze F0–F6, reusable podsistemi, brick-liste (ADR-013/014) |
-| [EDITOR_PLAN.md](EDITOR_PLAN.md) | **✅ ISPUNJEN (2026-07-28) → sada REFERENCA za editor-detalje, NE aktivni plan** — model sadržaja (ID+blokovi+tokeni), publish-RPC, editor, sigurnost; §12 = povijest cigli U0–U9, §12.3 = tripwiri. Preostali polish (U8.6 vizual · F8 · U8.8 · mobilni) = NEobavezno. ⚠️ Stariji „SLIJEDI" retci u njemu su povijest |
-| [EDITOR_UX.md](EDITOR_UX.md) | **Dizajn-ugovor editora (U-UX presuda 2026-07-14: smjer C „Tok")** — Studio+wizard, kvadratići, boje-tokeni s nasljeđivanjem, vizualni standard; živi izgled = `design/mockups/editor-c-tok.html` |
-| [CREATE_BACKEND_SPEC.md](CREATE_BACKEND_SPEC.md) | **✅ ISPUNJEN (F5 na produkciji 2026-08-06) → sada REFERENCA, NE aktivni plan** — osobni PRIVATNI UGC-graditelj gradiva „od nule": korisnik slaže vlastito ugniježđeno stablo (`nodes`) i u study-čvorovima gradi gradivo (`node_content`) postojećim editorom; tvrda owner-RLS, upis samo kroz RPC-ove. **F1 ✅ (§9) · F2 ✅ „Moji materijali" (§10) · F3 ✅ editor u čvoru (§11) · F4 ✅ privatne slike + E2E (§12–§13) · F5 ✅ PROD (§15, runbook je bio §14)**; odluka = ADR-024 |
-| [CRUD_PLAN.md](CRUD_PLAN.md) | **✅ ISPUNJEN → REFERENCA, NE aktivni plan** — FOUNDATION-**F4** Admin CRUD (javni katalog): brick-slijed F4.1–F4.6, ADR-021; dovršen kroz EDITOR_PLAN U-slijed. ⚠️ Ovaj „F4" **nije** CREATE_BACKEND-F4 — tablica numeriranja u `CLAUDE.md` |
-| [CATALOG_ARCHITECTURE.md](CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement≠sadržaj; ADR-022) — **✅ mehanizam implementiran (U2.5)**; stvarni MUT/MOR programi = S7 |
-| [HRV_PLAN.md](HRV_PLAN.md) | HRV program „Menadžment u Hotelijerstvu" (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅; ostatak pauziran |
+---
 
-## Temelji i referenca
-| Dokument | Svrha |
-|----------|-------|
-| [PRD.md](PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
-| [VISION.md](VISION.md) | Dugoročna full-stack vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Tehnička arhitektura, model podataka, razrada po koracima |
-| [BACKEND.md](BACKEND.md) | Backend: Supabase (auth/sync/content read-path), staza B, migracije |
-| [ROADMAP.md](ROADMAP.md) | Milestones + status (done/next) |
-| [TESTING.md](TESTING.md) | QA checklista + automatske provjere (verify, validatori, test:unit, Playwright, test:authed, CI) |
-| [MONETIZATION.md](MONETIZATION.md) | Naplata/tržište/scenariji (planiranje) |
+## Kako je ovo složeno
 
-## Sadržaj (autorstvo) — `content/`
-| Dokument | Svrha |
-|----------|-------|
-| [content/CONTENT_SCHEMA.md](content/CONTENT_SCHEMA.md) | Kanonski oblik sadržaja (flashcard/quiz/fill/learn + KaTeX konvencija) |
-| [content/CONTENT_GUIDE.md](content/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
-| [content/CONTENT_INTAKE.md](content/CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
-| [content/CONTENT_GENERATOR.md](content/CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data) uz minimalan usage (ADR-010) |
-| [content/EXERCISES_ENGINE.md](content/EXERCISES_ENGINE.md) | Reusable sustav interaktivnih vježbi (7 tipova) — engine se NE dira za sadržaj |
+| mapa | uloga | mijenja se |
+|---|---|---|
+| **`product/`** | **ŠTO** gradimo — definicija proizvoda + kriteriji prihvaćanja | rijetko, uz odluku |
+| **`architecture/`** | **KAKO** je građeno — model podataka, granice, ugovori | rijetko |
+| **`plan/`** | **ŠTO SADA** — najviše **jedan** aktivni spec + roadmap | stalno |
+| **`workflow/`** | **KAKO RADIMO** — testiranje, tim, autorstvo sadržaja | povremeno |
+| **`records/`** | **POVIJEST** — dnevnik, changelog, bugovi, odluke | stalno |
+| **`subjects/`** | stanje pojedinih predmeta | uz sadržaj |
+| **`archive/`** | ispunjeni i napušteni planovi — **referenca, ne istina** | nikad |
+| **`sokrat-ai/`** | ⚠️ **zaseban projekt**, ne dira platformu | zasebno |
 
-## Predmeti — `subjects/`
-| Dokument | Svrha |
-|----------|-------|
-| [subjects/README.md](subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe/napomene) |
-| [subjects/ACCOUNTING_PLAN.md](subjects/ACCOUNTING_PLAN.md) · [subjects/STATISTICS_PLAN.md](subjects/STATISTICS_PLAN.md) · [subjects/TRAFFIC_PLAN.md](subjects/TRAFFIC_PLAN.md) · [subjects/MATH_PLAN.md](subjects/MATH_PLAN.md) | Detaljni planovi pojedinih predmeta (✅ done) |
+### Četiri pravila (zato je ovo nastalo)
 
-## Sokrat AI (vlastiti jezični model) — `sokrat-ai/`
-> ⚠️ **POTPUNO ZASEBAN PROJEKT — NE implementira se na ovu platformu i nema veze s njom**
-> (Leonova izričita odluka 2026-07-24). Ovdje samo živi zapis. Platforma ne ovisi o njemu ni u čemu.
-> Rok prve prezentacije dekanu: **10. mjesec 2026.**
+1. **Jedan aktivni plan.** `plan/` smije imati najviše jedan spec. Ispunjen → `archive/` **isti dan**, s pečatom datuma. Prije ovog čišćenja ondje je stajalo **osam** ispunjenih planova koji su izgledali aktivno.
+2. **`product/` nije dnevnik.** Definicija bez kronologije. **Svaka mogućnost ima kriterij prihvaćanja** u obliku *„gotovo kad korisnik može ‹X›"* — nikad „test je zelen". Bez tog pravila je moguće da su svi gate-ovi zeleni, a korisnik ne može napraviti karticu.
+3. **`records/` nije izvor istine.** Povijest objašnjava **zašto**, ne **što vrijedi sad**.
+4. **Jedno numeriranje faza.** Faza ima ime, ne slovo. (Prije su postojale **tri** različite „F" osi u tri dokumenta.)
+
+**Gate:** `npm run check:docs` (dio `npm run preflight`) pada na mrtvoj poveznici, na drugom aktivnom planu, na dnevniku u `product/` i na dokumentu koji nije naveden ovdje.
+
+---
+
+## `product/` — što gradimo
 
 | Dokument | Svrha |
-|----------|-------|
-| [sokrat-ai/README.md](sokrat-ai/README.md) | **Ulazna točka** — što je, temeljne odluke, putanja do 10. mj |
-| [sokrat-ai/VISION.md](sokrat-ai/VISION.md) | Teza: nekontaminirani ljudski podaci, pozicioniranje, naša prednost |
-| [sokrat-ai/RESEARCH.md](sokrat-ai/RESEARCH.md) | 4 istraživačke oklade (A–D), jeftina metodologija, tehnička arhitektura |
-| [sokrat-ai/DATA.md](sokrat-ai/DATA.md) | Izvori (Hrčak/DABAR/hrWaC/Wikipedia), porijeklo, cjevovod podataka |
-| [sokrat-ai/LEGAL_GDPR.md](sokrat-ai/LEGAL_GDPR.md) | **GDPR + autorsko pravo + TDM iznimka** (⚠️ nije pravni savjet) |
-| [sokrat-ai/DEAN_PITCH.md](sokrat-ai/DEAN_PITCH.md) | Prezentacija dekanu: što tražimo/nudimo, plan i kontrolna lista |
+|---|---|
+| [PRD.md](./product/PRD.md) | Product Requirements — što gradimo, za koga, opseg i ne-ciljevi |
+| [VISION.md](./product/VISION.md) | Dugoročna vizija (AI tutor, UGC, dijeljenje, natjecanje) + gating-odluke |
+| [MONETIZATION.md](./product/MONETIZATION.md) | Naplata, tržište, scenariji (planiranje) |
 
-## Živi zapisnici
+## `architecture/` — kako je građeno
+
 | Dokument | Svrha |
-|----------|-------|
-| [HISTORY.md](HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
-| [CHANGELOG.md](CHANGELOG.md) | Verzije i što se mijenjalo |
-| [PROGRESS.md](PROGRESS.md) | Dnevnik rada po sesijama |
-| [DECISIONS.md](DECISIONS.md) | Arhitektonske odluke (ADR-001…023) i zašto |
-| [BUGS.md](BUGS.md) | Bugovi + lekcije naučene |
-| [BACKLOG.md](BACKLOG.md) | Parkiralište ideja |
+|---|---|
+| [ARCHITECTURE.md](./architecture/ARCHITECTURE.md) | Tehnička arhitektura, model podataka |
+| [BACKEND.md](./architecture/BACKEND.md) | Supabase: auth, sync, read-path, osobni UGC-otok, migracije |
+| [CATALOG_ARCHITECTURE.md](./architecture/CATALOG_ARCHITECTURE.md) | Identitet predmeta preko programa/fakulteta (placement ≠ sadržaj; ADR-022) |
+| [CONTENT_SCHEMA.md](./architecture/CONTENT_SCHEMA.md) | **Kanonski oblik sadržaja** (flashcard/quiz/fill/learn + KaTeX konvencija) |
+| [EXERCISES_ENGINE.md](./architecture/EXERCISES_ENGINE.md) | Sustav interaktivnih vježbi (7 tipova) — engine se NE dira za sadržaj |
 
-## Arhiva — `archive/`
+## `plan/` — što sada
+
 | Dokument | Svrha |
-|----------|-------|
-| [archive/EXERCISES_DB_FIX_PLAN.md](archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ izvedeno 2026-06-27) |
-| [archive/SONNET_REVIEW_2026-06.md](archive/SONNET_REVIEW_2026-06.md) | Vanjski review (Sonnet 4.6) — input za F1 hardening (potrošeno; prijedlozi, ne istina) |
+|---|---|
+| [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status |
 
-## Kako radimo (pravila)
-1. **Mali koraci** — svaki korak je testabilan zasebno.
-2. **Live verzija uvijek radi** — ništa se ne mergea ako ruši produkciju.
-3. **Zabilježi** — svaki korak ide u PROGRESS, svaka odluka u DECISIONS, svaki bug u BUGS.
-4. **Ne briši dok zamjena nije dokazano ispravna.**
-5. **Verzioniraj** — značajne promjene dobivaju unos u CHANGELOG.
+> Aktivnog spec-a trenutno **nema** — slijedi definicija arhitekture i UGC-a (Stage A).
+
+## `workflow/` — kako radimo
+
+| Dokument | Svrha |
+|---|---|
+| [TESTING.md](./workflow/TESTING.md) | QA checklista + automatske provjere (verify, validatori, unit, Playwright, authed, CI) |
+| [TEAM.md](./workflow/TEAM.md) | Uloge, PR-workflow, tvrde granice, least-privilege (ADR-023) |
+| [CONTENT_GUIDE.md](./workflow/CONTENT_GUIDE.md) | Kako dodati predmet/lekciju (playbook) |
+| [CONTENT_INTAKE.md](./workflow/CONTENT_INTAKE.md) | Kako slagati profesorske materijale (PDF/JPG) za točnu ekstrakciju |
+| [CONTENT_GENERATOR.md](./workflow/CONTENT_GENERATOR.md) | Generator predmeta (PDF→Sonnet→data), ADR-010 |
+
+## `records/` — povijest
+
+| Dokument | Svrha |
+|---|---|
+| [HISTORY.md](./records/HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
+| [CHANGELOG.md](./records/CHANGELOG.md) | Verzije i što se mijenjalo |
+| [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
+| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…024) i zašto |
+| [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene |
+| [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |
+
+## `subjects/` — predmeti
+
+| Dokument | Svrha |
+|---|---|
+| [subjects/README.md](./subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe) |
+| [ACCOUNTING_PLAN.md](./subjects/ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](./subjects/STATISTICS_PLAN.md) · [TRAFFIC_PLAN.md](./subjects/TRAFFIC_PLAN.md) · [MATH_PLAN.md](./subjects/MATH_PLAN.md) | Planovi pojedinih predmeta (✅ gotovi) |
+
+## `archive/` — ispunjeno i napušteno
+
+> **Referenca, ne istina.** Ovdje se gleda *kako je nešto izvedeno*, nikad *što sada vrijedi*.
+
+| Dokument | Status |
+|---|---|
+| [CREATE_BACKEND_SPEC.md](./archive/CREATE_BACKEND_SPEC.md) | Osobni UGC-graditelj — **instalacije F0–F5 isporučene** (prod 2026-08-06). ⚠️ Vizija iz §1 (kartice/kviz/fill u vlastitom gradivu) **NIJE dovršena** — v. `product/` |
+| [EDITOR_PLAN.md](./archive/EDITOR_PLAN.md) | Editor / admin CRUD — ispunjen 2026-07-28; §12 = povijest cigli U0–U9 |
+| [EDITOR_UX.md](./archive/EDITOR_UX.md) | Dizajn-ugovor editora (smjer C „Tok"); mockup `design/mockups/editor-c-tok.html` |
+| [EDITOR_F7_SPEC.md](./archive/EDITOR_F7_SPEC.md) | Kvadratić-model K1–K6 — ispunjen |
+| [EDITOR_FEEDBACK.md](./archive/EDITOR_FEEDBACK.md) | Leonovih 8 nalaza F1–F8 iz živog pregleda editora |
+| [FOUNDATION_PLAN.md](./archive/FOUNDATION_PLAN.md) | Platformski temelj F0–F6; F1–F4 isporučeni, F5/F6 nadglašeni |
+| [CRUD_PLAN.md](./archive/CRUD_PLAN.md) | Admin CRUD javnog kataloga — ispunjen kroz EDITOR_PLAN |
+| [HRV_PLAN.md](./archive/HRV_PLAN.md) | HRV program (klon-program + UI toggle, ADR-012) — cigle 1–5c ✅, ostatak pauziran |
+| [EXERCISES_DB_FIX_PLAN.md](./archive/EXERCISES_DB_FIX_PLAN.md) | BUG-012 fix plan (✅ 2026-06-27) |
+| [SONNET_REVIEW_2026-06.md](./archive/SONNET_REVIEW_2026-06.md) | Vanjski review — potrošen input |
+
+## `sokrat-ai/` — zaseban projekt
+
+> ⚠️ **NE implementira se na ovu platformu i nema veze s njom** (Leonova odluka 2026-07-24).
+> Platforma ne ovisi o njemu ni u čemu. Prva prezentacija dekanu: 10. mjesec 2026.
+
+| Dokument | Svrha |
+|---|---|
+| [sokrat-ai/README.md](./sokrat-ai/README.md) | Ulazna točka — što je, temeljne odluke, putanja |
+| [VISION.md](./sokrat-ai/VISION.md) | Teza: nekontaminirani ljudski podaci, pozicioniranje |
+| [RESEARCH.md](./sokrat-ai/RESEARCH.md) | 4 istraživačke oklade (A–D), metodologija, arhitektura |
+| [DATA.md](./sokrat-ai/DATA.md) | Izvori (Hrčak/DABAR/hrWaC/Wikipedia), cjevovod |
+| [LEGAL_GDPR.md](./sokrat-ai/LEGAL_GDPR.md) | GDPR + autorsko pravo + TDM iznimka (⚠️ nije pravni savjet) |
+| [DEAN_PITCH.md](./sokrat-ai/DEAN_PITCH.md) | Prezentacija dekanu |

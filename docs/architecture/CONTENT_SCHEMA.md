@@ -2,7 +2,7 @@
 
 > Jedini izvor istine za oblik podataka učenja. Svaki predmet, lekcija i (kasnije)
 > AI-generacija MORA slijediti ovaj spec. Ako mijenjaš oblik, prvo ažuriraj ovaj
-> dokument i zabilježi odluku u [DECISIONS.md](../DECISIONS.md).
+> dokument i zabilježi odluku u [DECISIONS.md](../records/DECISIONS.md).
 
 ## Hijerarhija
 

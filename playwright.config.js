@@ -18,7 +18,7 @@ const iphone = (width, height) => ({
 
 // Authenticated (admin) suite runs ONLY when a dedicated test-admin credential is provided
 // (locally via .env, in CI via secrets). Without it, the default suite is unchanged and
-// deterministic (no network/auth). Vidi docs/TESTING.md + [[live-login-verifies-crud]].
+// deterministic (no network/auth). Vidi docs/workflow/TESTING.md + [[live-login-verifies-crud]].
 // Prod creds (TEST_ADMIN_*) ILI staging creds (STAGING_*, U1) → authed suite se aktivira.
 // Kad su STAGING_* postavljeni, auth.setup preusmjeri prijavu/testove na staging (prod audit čist).
 const AUTHED = !!(

@@ -68,7 +68,7 @@ U trenutku kad krenemo na 5 jezika odjednom, prestajemo biti *„jedini koji je 
 i postajemo *„još jedan mali višejezični model"* — utrka protiv ljudi s 1000× više resursa.
 
 **Zato:** hrvatski prvi, savršeno. Pa engleski. Pa ostali — i to **kao znanstveni eksperiment**,
-ne kao širenje opsega (v. [RESEARCH.md](RESEARCH.md), oklada B).
+ne kao širenje opsega (v. [RESEARCH.md](./RESEARCH.md), oklada B).
 
 Analogija: Facebook je krenuo s **jednim** sveučilištem. Amazon **samo** s knjigama.
 Neograničena ambicija, brutalno ograničen prvi korak.
@@ -87,7 +87,7 @@ Naša podjela:
 **Posljedice:**
 
 1. **Prestaje utrka u veličini** — ne treba 7B da znaš sve; treba 30M koji dobro pita i baza koja pamti.
-2. **GDPR-štit** — ono što je u bazi može se **obrisati**; ono što uđe u težine **ne može** (v. [LEGAL_GDPR.md](LEGAL_GDPR.md)).
+2. **GDPR-štit** — ono što je u bazi može se **obrisati**; ono što uđe u težine **ne može** (v. [LEGAL_GDPR.md](./LEGAL_GDPR.md)).
 3. **Znanje je uvijek svježe** — nema ponovnog treniranja pri svakom novom materijalu.
 4. **Provjerljivost** — model citira izvor, pa se halucinacija vidi.
 

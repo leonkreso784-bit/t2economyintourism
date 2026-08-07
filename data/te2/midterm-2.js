@@ -4,7 +4,7 @@
 //   "Tourism and the environment" (U11), "Sustainable Tourism Development" (Dwyer, U12).
 // Granica kolokvija po silabusu (slajd "Important dates"): 2. test = jedinice 7.–12. (13.01.2026.).
 // Kategorije: pricing (U7), expenditure (U8), tsa (U9–10), environment (U11), sustainability (U12).
-// Oblik po docs/content/CONTENT_SCHEMA.md. Pri izmjeni bumpaj CONTENT_VERSION (js/content-loader.js).
+// Oblik po docs/architecture/CONTENT_SCHEMA.md. Pri izmjeni bumpaj CONTENT_VERSION (js/content-loader.js).
 
 const te2M2 = {
 

@@ -80,6 +80,6 @@ materijali → build-topics → topics.json → generate-subject (Sonnet) → dr
 - Pouka (te2/Entrepreneurship): generirani sadržaj VERIFICIRATI protiv predavanja (Opus spot-check).
 - **📏 Model sadržaja (Leon 2026-07-15): kartica = KRATKA definicija, `learn` = CIJELA skripta.**
   `answer` ≤ 200 znak (jezgra, 1–2 rečenice), nijansa ≤ 250 u `explanation`, sav detalj u `learn` —
-  puni standard + tablica granica: [`CONTENT_SCHEMA.md` §Standard duljine](CONTENT_SCHEMA.md#-standard-duljine--kartica--kratka-definicija-leon-2026-07-15).
+  puni standard + tablica granica: [`CONTENT_SCHEMA.md` §Standard duljine](../architecture/CONTENT_SCHEMA.md#-standard-duljine--kartica--kratka-definicija-leon-2026-07-15).
   Root-cause „kartice prevelike": raniji schema-prompt to nije tražio → 56% starih kartica krši (prosjek 229).
   ⚠️ **Prije sljedećeg pokretanja generatora: ugraditi ≤200 pravilo u schema-prompt u `generate-subject.js`** (inače novi predmet ponavlja grešku).

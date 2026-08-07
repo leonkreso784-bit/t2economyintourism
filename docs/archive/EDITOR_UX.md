@@ -1,12 +1,16 @@
+> 🗄 **ARHIVIRANO** (2026-08-07) — ISPUNJEN — dizajn-ugovor editora (smjer C „Tok") proveden u Studiju.
+>
+> **Referenca, ne izvor istine.** Što sada vrijedi → [docs/README.md](../README.md).
+
 # EDITOR_UX.md — dizajn-ugovor za autorski editor (U-UX faza)
 
 **Status:** v0.9 — **smjer POTVRĐEN (Leon, 2026-07-14): varijanta C „Tok"**, uz ocjenu *„za sada tek toliko OK"* →
 vizualna letvica se **dalje diže iterativno** tijekom U6–U8 (Leon presuđuje na svakoj cigli; „mršavo" = bug).
 **Živi izvor istine za izgled i ponašanje: [`design/mockups/editor-c-tok.html`](../design/mockups/editor-c-tok.html)** (interaktivan;
-QA smoke 36/36). Zahtjevi-ugovor: **[EDITOR_PLAN.md §5.1](EDITOR_PLAN.md) točke 1–8.** Varijante A (Studio) i B (Vodič) ostaju
+QA smoke 36/36). Zahtjevi-ugovor: **[EDITOR_PLAN.md §5.1](./EDITOR_PLAN.md) točke 1–8.** Varijante A (Studio) i B (Vodič) ostaju
 u `design/mockups/` kao referenca — C ih spaja.
 
-> **⚠️ RE-PLAN U8 (2026-07-20) — build-pristup:** izgradnja editora ide po **[EDITOR_PLAN.md §12.2](EDITOR_PLAN.md)**: Studio se gradi kao **nova `#editor-page` iz KOSTIJU ovog mockupa** (stablo/canvas/paneli/kvadratići) — **funkcija prva (grubo stilizirano + VIDLJIVO), a vizualni „čisto i bogato" prolaz ZADNJI** (U8.6). Pouka koja je do ovoga dovela: prva U8a-verzija bolt-ala editor na stari admin (kriva kost) → Leon „katastrofa" → od sad **kreni od strukture ciljnog dizajna, ne bolt-aj na staro, ne skrivaj funkciju**.
+> **⚠️ RE-PLAN U8 (2026-07-20) — build-pristup:** izgradnja editora ide po **[EDITOR_PLAN.md §12.2](./EDITOR_PLAN.md)**: Studio se gradi kao **nova `#editor-page` iz KOSTIJU ovog mockupa** (stablo/canvas/paneli/kvadratići) — **funkcija prva (grubo stilizirano + VIDLJIVO), a vizualni „čisto i bogato" prolaz ZADNJI** (U8.6). Pouka koja je do ovoga dovela: prva U8a-verzija bolt-ala editor na stari admin (kriva kost) → Leon „katastrofa" → od sad **kreni od strukture ciljnog dizajna, ne bolt-aj na staro, ne skrivaj funkciju**.
 
 ## 1. Temeljna filozofija (presuda)
 - **Studio = dom, Vodič = ulaz.** Puni radni prostor (stablo + canvas + inspektor) je stalno sučelje; **„＋ Nova skripta"
