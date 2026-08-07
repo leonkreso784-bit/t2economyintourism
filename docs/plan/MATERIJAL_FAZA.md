@@ -19,7 +19,8 @@ i **iz njega uči**.
 | **M2** | učenje iz vlastitog materijala | ✅ |
 | **M3a** | boja **bloka** (learn) — shema · prikazivač · CSS · editor | ✅ |
 | **M3b** | boja **kartice / pitanja / dopune** | ⬜ |
-| **M5** | **duljina kartice** — nov nalaz (Leon, živi pregled) | ⬜ |
+| **M5a** | **duljina kartice** — vođenje u editoru (upozorenje 200 · blokada 500) | ⬜ |
+| **M5b** | skratiti 25 zatečenih kartica → tek tada `maxLength` u shemi | ⬜ |
 | **M4** | sučelje prestaje obećavati | ✅ |
 
 Redoslijed nije proizvoljan: **M1 otključava autorstvo** (bez nje ostale cigle nemaju što pokazati),
@@ -151,11 +152,25 @@ standard *poštuje* (max 198/199) jer ga je dobio kao pravilo; naš stariji EN s
 **Posljedica za dizajn:** tvrdo ograničenje na 200 **srušilo bi gotovo pola kataloga** → ne dolazi u obzir
 retroaktivno. Standard mora **voditi pri pisanju**, ne odbijati postojeće.
 
-**Preporuka (Claude):** brojač uživo + upozorenje na 200 u editoru kartice (bez blokade) · **strop u shemi
-tek na velikodušnoj granici** (samo 48 kartica prelazi 500) · nalaz u `validate:content` kao **izvještaj,
-ne gate** — da se vidi trend čišćenja. Vrijedi za **oba svijeta** (katalog i osobni materijal).
+**ODLUKA (Leon 2026-08-07): tvrdi strop = 500 znakova.** Uz mekano vođenje na 200.
 
-**Otvoreno za Leona:** meko vođenje (preporuka) · meko + tvrdi strop · nešto treće.
+**⚠️ Strop se NE smije uključiti u shemi odmah.** Preko 500 je **25 jedinstvenih kartica**
+(48 s kopijama u `final`): `entrepreneurship` 28 · `traffic` 6 · `food-nutrition` 4 · `sit` 4 ·
+`ebusiness` 2 · `math` 2 · `te2` 2. Uključi li se `maxLength: 500` prije nego se srede,
+**`validate:schema` postaje crven i CI je blokiran.** Zato dva koraka:
+
+**M5a — vođenje u editoru** *(platforma, nula rizika, ide prvo)*
+- brojač uživo u editoru kartice; **upozorenje na 200** (žuto, ne blokira — to je standard)
+- **tvrda blokada spremanja na 500** → nijedna NOVA ili uređena kartica više ne može prijeći strop
+- vrijedi za **oba svijeta**: javni katalog i osobni materijal, isti modal-editor
+
+**M5b — zatezanje** *(sadržaj, ide poslije)*
+- skratiti **25 zatečenih** kartica (detalj → learn, po standardu kartice)
+- **tek tada** `maxLength: 500` u `schema/subject-content.schema.json` → strop postaje strojno provediv
+- `validate:content` dobiva izvještaj o raspodjeli duljina (brojka, ne gate) da se vidi trend
+
+Redoslijed je bitan: **M5a odmah zaustavlja rast problema**, M5b čisti zatečeno. Obrnuto bi značilo
+crven CI ili odgođenu korist.
 
 ---
 
