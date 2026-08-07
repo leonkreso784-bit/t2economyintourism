@@ -54,9 +54,11 @@
 
 | Dokument | Svrha |
 |---|---|
+| [MATERIJAL_FAZA.md](./plan/MATERIJAL_FAZA.md) | **AKTIVNI SPEC** — faza „Materijal od nule do učenja" (cigle M1–M4) |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status |
 
-> Aktivnog spec-a trenutno **nema** — slijedi definicija arhitekture i UGC-a (Stage A).
+> Definicija i kriteriji prihvaćanja te faze su u [product/UGC_SPEC.md](./product/UGC_SPEC.md) i
+> **nadživljuju** plan; `MATERIJAL_FAZA.md` je potrošan i ide u `archive/` čim faza padne.
 
 ## `workflow/` — kako radimo
 

@@ -272,7 +272,22 @@ const SokratStudio = (function () {
     refreshTopbar();
   }
 
-  function presentModes(data) {
+  /**
+   * Koji se modovi nude u canvasu.
+   *
+   * READ-ONLY: samo modovi koji STVARNO imaju sadržaj — onome tko uči ne nudimo prazan tab.
+   *
+   * EDIT (M1): kartice/kviz/dopune su prisutni čim postoji BAREM JEDNA sekcija, i onda kad su
+   * nizovi prazni. Bez toga nov materijal nema kako dobiti PRVU stavku: tab se ne nacrta →
+   * `renderPane` se ne pozove → nema gumba „＋ Dodaj" → slijepa ulica. Uređivači su cijelo
+   * vrijeme postojali i radili, samo su bili nedostupni. Vrijedi i za javni katalog: predmet
+   * bez ijedne dopune isto nije mogao dobiti prvu.
+   *
+   * `learn` je NAMJERNO izuzet iz forsiranja: `renderLearnPane` preskače kategoriju bez
+   * `learn`-a, pa bi forsiran tab dao prazan panel bez ijedne afordancije. Materijalu to ne
+   * smeta jer `addSection` uvijek sije `learn: { blocks: [] }`. Vidi M1b u planu faze.
+   */
+  function presentModes(data, isEd) {
     var m = { learn: false, cards: false, quiz: false, fill: false };
     cats(data).forEach(function (catId) {
       var c = data[catId];
@@ -282,6 +297,8 @@ const SokratStudio = (function () {
       if (Array.isArray(c.fillBlanks) && c.fillBlanks.length) m.fill = true;
       if (learnKind(c)) m.learn = true;
     });
+    // Prazan payload (nijedna sekcija) NE dobiva tabove — canvas tad nudi „＋ Nova sekcija".
+    if (isEd && cats(data).length) { m.cards = true; m.quiz = true; m.fill = true; }
     return m;
   }
 
@@ -303,7 +320,7 @@ const SokratStudio = (function () {
     }
     var isEd = editing();
     // U draft-modu prikaži i learn tab ako neka kategorija UOPĆE ima learn (za migraciju/dodavanje).
-    var m = presentModes(data);
+    var m = presentModes(data, isEd);
     var order = ['learn', 'cards', 'quiz', 'fill'].filter(function (k) { return m[k]; });
     var LABEL = { learn: '📚 Learn', cards: '🃏 ' + t('studio.cards', 'Kartice'), quiz: '❓ ' + t('studio.quiz', 'Kviz'), fill: '✍️ ' + t('studio.fill', 'Dopuni') };
     var active = (_activeMode && order.indexOf(_activeMode) >= 0) ? _activeMode : (order[0] || null);
