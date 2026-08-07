@@ -4,6 +4,38 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-025 — Osobno gradivo: osam presuda o dosegu (vježbe, dijeljenje, napredak, boje, opseg)
+**Datum:** 2026-08-07 · **Status:** ✅ ODLUČENO (Leon, odgovori na izravna pitanja) · **Dokument:** [ARCHITECTURE.md](../architecture/ARCHITECTURE.md)
+
+**Kontekst.** ADR-024 je presudio *gdje* osobno gradivo živi, ali ne i *dokle seže*. Posljedica: fazni plan je
+isporučio instalacije (baza, stablo, editor, produkcija) a da nitko nije zapisao **što korisnik mora moći
+napraviti**. Zato je bilo moguće proglasiti plan ispunjenim dok korisnik ne može napraviti nijednu karticu.
+Ove su odluke donesene prije pisanja arhitekture, upravo da se to ne ponovi.
+
+**Odluke.**
+1. **Vježbe — ODGOĐENE, i tražit će vlastito rješenje.** Vježba je danas kôd (`generate()`), a UGC ne može
+   autorirati kôd. Leon: *„morat ćemo osmislit potpuno poseban način kako ćemo to napraviti."* → **nije**
+   proširenje sadašnjeg engine-a, nego zaseban budući spec. **U sučelju se ništa ne obećava.**
+2. **Dijeljenje — privatno sad, model spreman.** Owner-RLS ostaje, ali se projektira tako da se dijeljenje
+   kasnije doda bez migracije. **Zapisana cijena:** slike su vezane na vlasnički prefiks putanje, pa primatelj
+   podijeljenog gradiva **ne bi vidio slike** — to je jedina stavka koju spremnost ne pokriva besplatno.
+3. **Napredak — isti kao za katalog** (jedna statistika, jedna sinkronizacija). **Košta ništa:** `progress` je
+   generički key-value, pa osobno gradivo koristi ključ `node:<uuid>` bez promjene sheme.
+4. **Boje — nasljeđuju se od sekcije, smiju se pregaziti.** Odsutna vrijednost znači *naslijedi*, ne *bez boje*.
+   Blok i kartica danas **nemaju** polje boje → stvarno proširenje sheme, renderera i editora.
+5. **Svjetovi se NE miješaju.** Bez kopiranja kataloga u osobno gradivo, bez veze na original.
+6. **Korisnik je BILO TKO** — ne samo student FMTU-a. Prvi ekran nakon prijave mora ravnopravno nuditi
+   „uči" i „gradi"; javni katalog je samo jedan sadržaj koji nudimo.
+7. **Opseg stabla nepoznat → projektirati da izdrži.** Pretragu i lijeno učitavanje grana **planirati, ne graditi**;
+   ograničenja zapisati kao mjerljive brojke.
+8. **Kvote — granicu zapisati sad, provesti kasnije.** Danas postoji samo 5 MB po datoteci.
+
+**Posljedica.** Sljedeći posao nije frontend redizajn nego **dovršetak osobnog gradiva**: kartice/kviz/dopune
+se ne mogu napraviti od nule (`presentModes` crta mod samo ako je niz neprazan) i iz vlastitog gradiva se
+**ne može učiti** (`initStudyPage` vuče isključivo iz kataloga).
+
+---
+
 ## ADR-024 — Osobni UGC-graditelj = ZASEBAN otok (`nodes` stablo, owner-RLS), a ne proširenje kataloga
 **Datum:** 2026-08-02 · **Status:** ✅ ODLUČENO (Leon) · **Dokument:** `docs/archive/CREATE_BACKEND_SPEC.md` v3 · **F1 izveden na STAGINGU**
 
