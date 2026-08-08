@@ -206,6 +206,55 @@ async function main() {
   }
   void leftovers;
 
+  // ── T6: ADMIN se ne može obrisati sam, i pokušaj NE SMIJE ništa promijeniti ──
+  // Bez guarda bi adminu nestale osobne slike, a `deleteUser` bi pao jer i dalje posjeduje
+  // objekte u `lesson-images` → poluobrisan račun. Zato se ne provjerava samo status 409,
+  // nego i da su korisnik I slika ostali NETAKNUTI (sve-ili-ništa).
+  const adminUser = await createThrowaway('admin');
+  const imgPath = `${adminUser.id}/probe/keep.png`;
+  try {
+    await http('/rest/v1/profiles?user_id=eq.' + adminUser.id, {
+      method: 'PATCH',
+      headers: Object.assign({ Prefer: 'return=minimal' }, svcHeaders()),
+      body: JSON.stringify({ role: 'admin' })
+    });
+    // ⚠️ PATCH koji ne pogodi NIJEDAN redak i dalje vraća 2xx. Da `handle_new_user` ne stvori
+    // profil, cijeli bi T6 tiho testirao običnog korisnika i „prolazio" bez ikakvog značenja.
+    // Zato se uloga ČITA NATRAG.
+    const back = await http(`/rest/v1/profiles?user_id=eq.${adminUser.id}&select=role`, { headers: svcHeaders() })
+      .then((x) => x.ok ? x.json() : null).catch(() => null);
+    record('priprema: test-korisnik STVARNO ima role=admin',
+      Array.isArray(back) && back.length === 1 && back[0].role === 'admin',
+      `procitano: ${JSON.stringify(back)}`);
+
+    const token = await signIn(adminUser);
+    const up = await http(`/storage/v1/object/${BUCKET}/${imgPath}`, {
+      method: 'POST',
+      headers: { apikey: ANON, Authorization: 'Bearer ' + token, 'Content-Type': 'image/png' },
+      body: PNG
+    });
+    record('priprema: adminova osobna slika uploadana', up.ok, `status ${up.status}`);
+
+    const res = await callFn(token, {});
+    record('admin → brisanje ODBIJENO (409)', res.status === 409,
+      `status ${res.status} ${JSON.stringify(res.json || {})}`);
+    record('admin i dalje postoji', await userExists(adminUser.id));
+
+    // `list` s prefiksom `<uid>` vratio bi MAPU `probe`, ne datoteku → gledamo razinu dublje,
+    // inače bi tvrdnja prolazila i da je datoteka obrisana a mapa ostala.
+    const objs = await http(`/storage/v1/object/list/${BUCKET}`, {
+      method: 'POST', headers: svcHeaders(),
+      body: JSON.stringify({ prefix: `${adminUser.id}/probe`, limit: 100 })
+    }).then((x) => x.ok ? x.json() : null).catch(() => null);
+    record('adminova slika NIJE dirnuta (sve-ili-ništa)',
+      Array.isArray(objs) && objs.some((o) => o.name === 'keep.png'),
+      `sadrzaj: ${JSON.stringify((objs || []).map((o) => o.name))}`);
+  } finally {
+    // Guard je upravo dokazao da se ovaj račun ne briše sam — pa ga čistimo service-ključem.
+    await http(`/storage/v1/object/${BUCKET}/${imgPath}`, { method: 'DELETE', headers: svcHeaders() }).catch(() => {});
+    await adminDeleteUser(adminUser.id);
+  }
+
   console.log('');
   if (failed) { console.error(`❌ ${failed} provjera palo.`); return 1; }
   console.log('✅ delete-account: korisnik se briše sam i ne ostavlja trag.');

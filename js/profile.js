@@ -280,6 +280,32 @@ function purgeLocalAccountData() {
     } catch (e) { /* private mode — nema što čistiti */ }
 }
 
+/**
+ * Pravi razlog neuspjeha Edge Functiona.
+ * `functions.invoke` na svaki ne-2xx vraća SAMO „Edge Function returned a non-2xx status code" —
+ * tijelo s razlogom visi na `error.context` (Response). Bez ovoga bi admin koji pokuša obrisati
+ * račun vidio tehničku besmislicu umjesto „administrator posjeduje slike javnog kataloga".
+ */
+async function _fnErrorReason(err) {
+    const KNOWN = {
+        admin_cannot_self_delete: pt('profile.deleteAccountAdmin',
+            'An administrator cannot delete their own account — the public catalogue images belong to it.'),
+        storage_purge_failed: pt('profile.deleteAccountStorage', 'Your images could not be removed. Nothing was deleted.'),
+        missing_token: pt('profile.deleteAccountAuth', 'You are not signed in.'),
+        unauthorized: pt('profile.deleteAccountAuth', 'You are not signed in.')
+    };
+    try {
+        const ctx = err && err.context;
+        if (ctx && typeof ctx.json === 'function') {
+            const body = await ctx.clone().json();
+            if (body && body.error && KNOWN[body.error]) return KNOWN[body.error];
+            if (body && body.detail) return String(body.detail);
+            if (body && body.error) return String(body.error);
+        }
+    } catch (e) { /* tijelo nije JSON — padni na poruku ispod */ }
+    return (err && err.message) ? err.message : String(err);
+}
+
 function _deleteStatus(msg, isErr) {
     const el = document.getElementById('profileDeleteStatus');
     if (!el) return;
@@ -321,7 +347,8 @@ async function deleteAccount(e) {
     }
     if (res && res.error) {
         if (btn) btn.disabled = false;
-        _deleteStatus(pt('profile.deleteAccountFail', 'Could not delete the account: ') + (res.error.message || res.error), true);
+        _deleteStatus(pt('profile.deleteAccountFail', 'Could not delete the account: ') +
+            await _fnErrorReason(res.error), true);
         return;
     }
 

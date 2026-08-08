@@ -464,6 +464,12 @@
     },
     'profile.deleteAccountWorking': { en: 'Deleting your account…', hr: 'Brišem tvoj račun…' },
     'profile.deleteAccountFail': { en: 'Could not delete the account: ', hr: 'Račun se nije mogao obrisati: ' },
+    'profile.deleteAccountAdmin': {
+        en: 'An administrator cannot delete their own account — the public catalogue images belong to it.',
+        hr: 'Administrator ne može obrisati vlastiti račun — na njemu vise slike javnog kataloga.'
+    },
+    'profile.deleteAccountStorage': { en: 'Your images could not be removed. Nothing was deleted.', hr: 'Tvoje slike se nisu mogle ukloniti. Ništa nije obrisano.' },
+    'profile.deleteAccountAuth': { en: 'You are not signed in.', hr: 'Nisi prijavljen.' },
     'profile.deleteAccountDone': { en: 'Your account has been deleted.', hr: 'Tvoj račun je obrisan.' },
     'profile.noActivity': { en: 'No study activity yet — open a subject and start learning!', hr: 'Još nema aktivnosti — otvori predmet i počni učiti!' },
     'profile.cardsLearned': { en: 'cards learned', hr: 'naučenih kartica' },

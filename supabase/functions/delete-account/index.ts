@@ -23,11 +23,12 @@
 //    preživi, ime autora nestane. Točno ono što GDPR traži. Ručno brisanje redaka ovdje bi
 //    značilo drugu kopiju istine o tome što se briše; kaskada je ta istina.
 //
-// 4. `lesson-images` SE NE DIRA.
+// 4. `lesson-images` SE NE DIRA, I ADMIN SE NE MOŽE OBRISATI SAM.
 //    Taj bucket drži slike JAVNOG KATALOGA i u njega piše samo admin. Kad bi se admin obrisao,
-//    povukao bi sadržaj 22 predmeta sa sobom. Zato čistimo isključivo `node-images/<uid>/`;
-//    ako korisnik i dalje posjeduje objekte drugdje, `deleteUser` će pasti i to vraćamo kao
-//    jasnu grešku umjesto da tiho uništimo katalog.
+//    povukao bi sadržaj 22 predmeta sa sobom. Zato čistimo isključivo `node-images/<uid>/`.
+//    Ali samo to nije dovoljno: adminu bi slike nestale, `deleteUser` bi pao (i dalje posjeduje
+//    `lesson-images`) i ostao bi POLUOBRISAN račun. Zato admin-guard stoji PRIJE ijednog brisanja
+//    → operacija prođe cijela ili ne promijeni ništa.
 
 import { createClient, type SupabaseClient } from 'jsr:@supabase/supabase-js@2';
 
@@ -98,7 +99,24 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const uid = user.id;
   const admin = createClient(url, serviceKey, { auth: { persistSession: false } });
 
-  // ── 2) SLIKE PRVO ── (bez ovoga `deleteUser` pada — v. napomenu 2 gore)
+  // ── 2) ADMIN SE NE MOŽE OBRISATI SAM ──
+  // Guard mora biti PRIJE brisanja slika, inače operacija nije sve-ili-ništa.
+  // Bez njega: adminu se obrišu osobne slike, pa `deleteUser` PADNE jer i dalje posjeduje
+  // objekte u `lesson-images` → ostaje POLUOBRISAN račun. To je gore od nepostojanja
+  // značajke, i pogađa točno vlasnika platforme.
+  // Zašto baš `role = 'admin'`: RLS na `lesson-images` propušta upis samo `is_admin()`,
+  // pa su administratori jedini koji uopće mogu posjedovati objekte izvan `node-images`.
+  const { data: prof, error: profErr } = await admin
+    .from('profiles').select('role').eq('user_id', uid).maybeSingle();
+  if (profErr) return json(500, { error: 'profile_lookup_failed', detail: profErr.message });
+  if (prof && prof.role === 'admin') {
+    return json(409, {
+      error: 'admin_cannot_self_delete',
+      detail: 'An administrator owns public catalogue images. Hand over the admin role first.'
+    });
+  }
+
+  // ── 3) SLIKE PRIJE KORISNIKA ── (bez ovoga `deleteUser` pada — v. napomenu 2 gore)
   let removedImages = 0;
   try {
     const paths = await listAll(admin, PERSONAL_BUCKET, uid);
@@ -112,7 +130,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json(500, { error: 'storage_purge_failed', detail: String((e as Error)?.message ?? e) });
   }
 
-  // ── 3) KORISNIK ── kaskada odnese progress, nodes, node_content(+versions), profiles
+  // ── 4) KORISNIK ── kaskada odnese progress, nodes, node_content(+versions), profiles
   const { error: delErr } = await admin.auth.admin.deleteUser(uid);
   if (delErr) {
     // Najvjerojatniji uzrok: korisnik je vlasnik objekata IZVAN `node-images` (admin i
