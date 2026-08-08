@@ -46,7 +46,7 @@ ne opseg — ništa u modelu ne pretpostavlja instituciju, smjer ni godinu.
 |---|---|---|
 | **Temelj** | data-driven katalog, hijerarhijska navigacija, Supabase read-path (anon+RLS, ADR-011), CI/CD, offline, monitoring | ✅ |
 | **Javni katalog + autorstvo** | sadržaj 22 predmeta, Studio editor za administratore, atomična i verzionirana objava | ✅ |
-| **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | **u tijeku** — [UGC_SPEC.md](./UGC_SPEC.md) |
+| **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | ✅ — svih 5 kriterija iz [UGC_SPEC.md](./UGC_SPEC.md) |
 | **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda) | ⬜ |
 | **Objava i dijeljenje + MCP** | materijal se smije podijeliti; vanjski AI gradi materijal preko korisnikovog ključa (ADR-026) | ⬜ |
 | **Natjecanje + društveno** | ljestvice, profili, statistika učenja, anti-cheat | ⬜ |

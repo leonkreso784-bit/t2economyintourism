@@ -54,6 +54,11 @@ T5 Segmentation · T6 Consumer behaviour · **T7 Product** · **T8 Price** · T9
 T11 New trends in promotion · T12 Planning · T13 Organizing & Controlling.
 
 **Podjela kolokvija (potvrdio korisnik): 2. kolokvij = T9 → kraj.**
+
+> ⚠️ **Bilješke ispod su iz lipnja 2026 i opisuju stanje TOG TRENUTKA.** „NIJE deployano" u njima
+> više ne vrijedi — **cijeli Marketing je na produkciji od 2026-06-06** (`822d788`). Ostavljene su
+> jer objašnjavaju **kako je predmet podijeljen**, što je i dalje korisno; status čitaj iz
+> [subjects/README.md](../subjects/README.md).
 - **1. kolokvij = T1–T8. ✅ GOTOVO (Sesija 20, 2026-06-05).** Dodane kategorije `product` (T7) i `price` (T8)
   u `data-marketing.js` (bilo T1,2,3,5,6). Verify 0, Playwright 36/36. Lokalni commit, NIJE deployano.
 - **2. kolokvij = T9–T13. ✅ GOTOVO (Sesija 21, 2026-06-05).** Novi sibling fajl `data-marketing-m2.js`
