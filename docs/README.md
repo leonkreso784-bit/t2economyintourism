@@ -70,12 +70,13 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [MJERA_I_ZABORAV.md](./plan/MJERA_I_ZABORAV.md) | **AKTIVNI SPEC** — vođenje duljine kartice + self-service brisanje računa |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
-> Prethodna faza („Materijal od nule do učenja") ispunjena je i deployana 2026-08-07 → plan je istog
-> dana otišao u [archive/MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md) (pravilo 1). Sve što još nije
-> u aktivnom spec-u živi u [records/BACKLOG.md](./records/BACKLOG.md).
+> **Trenutno NEMA aktivnog spec-a.** Zadnje dvije faze ispunjene su i deployane, pa su im planovi
+> istog dana otišli u arhivu (pravilo 1): [archive/MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md)
+> (2026-08-07) i [archive/MJERA_I_ZABORAV.md](./archive/MJERA_I_ZABORAV.md) (2026-08-08).
+> Sljedeća faza dobiva nov spec ovdje kad se dogovori; otvorene stavke dotad žive u
+> [records/BACKLOG.md](./records/BACKLOG.md).
 
 ## `workflow/` — kako radimo
 

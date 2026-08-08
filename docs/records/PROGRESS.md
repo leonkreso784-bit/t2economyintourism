@@ -8,7 +8,7 @@ testirano, što slijedi.
 ## 2026-08-08-b (OPUS) — **faza „Mjera i zaborav": dug prije redizajna**
 
 > Pisano po ADR-027 — **pokazuje, ne prepričava**. Isporuka: [CHANGELOG](./CHANGELOG.md) ·
-> plan i blokade: [plan/MJERA_I_ZABORAV.md](../plan/MJERA_I_ZABORAV.md).
+> plan i blokade: [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
 
 **Odluka o smjeru (Leon).** Predložio sam da **dijeljenje** preskoči frontend redizajn — jer je svaki
 osobni materijal danas slijepa ulica (`nodes` nema stupac vidljivosti), a redizajn prije dijeljenja
@@ -35,7 +35,19 @@ korisnika, a `signUp` na stagingu traži potvrdu maila (`over_email_send_rate_li
 `STAGING_SUPABASE_SERVICE_KEY` u `.env`, koji može dodati samo Leon. Nije zaobiđeno i nije prikazano
 kao gotovo.
 
-**Nije deployano** — čeka Leonov OK, zasebno za Edge Function na PROD i za push na `main`.
+**Isporučeno isti dan** (`eee6f14`, Vercel `dpl_38mP…`). Blokada iz gornjeg odlomka je nestala čim je
+Leon dodao `STAGING_SUPABASE_SERVICE_KEY` — i T4/T5 su prošli **iz prve**, pa moja bojazan oko rekurzije
+po Storageu nije bila utemeljena. **Ali su otkrili nešto što kod nije imao:** admin posjeduje
+`lesson-images`, pa bi mu `deleteUser` pao **nakon** što su osobne slike već obrisane → poluobrisan
+račun, i to točno vlasniku platforme. Guard je zato pomaknut **prije** ijednog brisanja (sve-ili-ništa),
+a T6 to i dokazuje. To je najbolji argument za inzistiranje na testu: ne zato što je našao grešku u
+onome što sam sumnjao, nego u onome što nisam.
+
+**Deploy je bio bolan i to je zapisano u CHANGELOG-u kao incident:** dashboard „Via Editor" zaključa
+**slug** kad se editor otvori, pa polje „Function name" mijenja samo prikazano ime — dva pokušaja su
+završila kao `quick-api` (s neizmijenjenim Hello-World predloškom) i `bright-function` (s ispravnim
+kodom, krivim URL-om). Pouka za idući put: **Edge Function na PROD deployati MCP-om ili CLI-jem, ne
+dashboardom.**
 
 ---
 

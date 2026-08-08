@@ -1,13 +1,14 @@
 # ROADMAP — Milestones
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
-> **Aktivni spec je [MJERA_I_ZABORAV.md](./MJERA_I_ZABORAV.md)** (Leon, 2026-08-08). Faza „Materijal od
-> nule do učenja" je **ispunjena i na produkciji od 2026-08-07** → plan je u
-> [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md), a što proizvod jest piše u
-> [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**, ne plan rada.
+> **Trenutno NEMA aktivnog spec-a.** Zadnje dvije faze su ispunjene i na produkciji →
+> [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md) (2026-08-07) i
+> [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md) (2026-08-08).
+> Što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md).
+> Ovaj dokument je **arhiva puta**, ne plan rada.
 >
 > **Važeća sekvenca (Leon, 2026-08-02, dopunjena 2026-08-08):** ~~faza „Materijal od nule do učenja"~~ ✅ →
-> **„Mjera i zaborav"** (🔥 dug prije redizajna) → **frontend redizajn** → **objava/dijeljenje + MCP**.
+> ~~**„Mjera i zaborav"**~~ ✅ → **frontend redizajn** → **objava/dijeljenje + MCP**.
 > **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
 > Doseg dijeljenja je presuđen unaprijed: **link s tajnim tokenom, bez javne biblioteke** u prvoj fazi.
 >

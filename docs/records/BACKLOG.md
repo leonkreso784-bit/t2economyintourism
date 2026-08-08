@@ -19,7 +19,7 @@ redoslijed je bitan:
   `feature/mjera-i-zaborav`, **još nije deployano**). Brojač uživo · upozorenje 200 · tvrda blokada 500 ·
   vrijedi u oba svijeta jednom promjenom (Studio nema vlastiti editor kartica). Politika = `js/card-limits.js`
   (jedna definicija za editor i validator). `validate:content` dobio raspodjelu duljina. Detalji:
-  [plan/MJERA_I_ZABORAV.md](../plan/MJERA_I_ZABORAV.md).
+  [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
 - **M5b — zatezanje** *(sadržaj, poslije)*: skratiti **25 zatečenih** kartica (detalj → learn, po standardu
   kartice: `entrepreneurship` 28 · `traffic` 6 · `food-nutrition` 4 · `sit` 4 · `ebusiness` 2 · `math` 2 ·
   `te2` 2) → **tek tada** `maxLength: 500` u `schema/subject-content.schema.json`.
@@ -54,7 +54,7 @@ ne samo da postoji) i na **frontend redizajn**, gdje se ionako presuđuje izgled
 > pa je jedini pravi posao Storage; ② Supabase **odbija obrisati vlasnika objekata u Storageu**, pa
 > „slike prije korisnika" nije redoslijed radi urednosti nego preduvjet. Nativni self-delete RPC
 > (točka ⚠️ na dnu) **ne postoji** — provjereno u dokumentaciji 2026-08-08.
-> Stanje i blokade: [plan/MJERA_I_ZABORAV.md](../plan/MJERA_I_ZABORAV.md).
+> Stanje i blokade: [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
 
 **Izvorni nalaz i dizajn-skica (2026-07-04), zadržano radi obrazloženja:**
 **Nalaz (korisnik, 2026-07-04):** app NEMA self-service brisanje računa. Postoji samo (a) „Delete cloud data" gumb

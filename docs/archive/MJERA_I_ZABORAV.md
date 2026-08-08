@@ -1,6 +1,15 @@
-# Faza „Mjera i zaborav" — aktivni plan
+# Faza „Mjera i zaborav" — ✅ ISPUNJENA (arhiva)
 
-> **Jedini aktivni spec.** Dogovoreno s Leonom 2026-08-08: prije frontend redizajna zatvaramo dvije
+> **📌 ZATVORENO 2026-08-08.** Isporučeno na produkciju u `eee6f14` (Vercel `dpl_38mP…`,
+> token `20260808055007`). Svih 5 kriterija ispunjeno; Edge Function `delete-account` ACTIVE na
+> PROD-u sa sha256 identičnim stagingu. **Ovaj dokument je povijest, ne plan rada** —
+> što je isporučeno piše u [records/CHANGELOG.md](../records/CHANGELOG.md).
+>
+> **Blokada iz §4 je RIJEŠENA:** Leon je dodao `STAGING_SUPABASE_SERVICE_KEY` u `.env` →
+> `npm run test:delete-account` prolazi **18/18**, uključujući T4/T5 (stvarno brisanje) i **T6**
+> (admin se ne može obrisati sam) — koji je nastao tek nakon što su T4/T5 proradili i otkrili rupu.
+
+> Dogovoreno s Leonom 2026-08-08: prije frontend redizajna zatvaramo dvije
 > 🔥 stavke iz [records/BACKLOG.md](../records/BACKLOG.md) — jer Leonovo vlastito pravilo glasi
 > *„sve mora savršeno raditi prije nego ga uredimo."*
 >
