@@ -5,6 +5,33 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-08 (OPUS) — **BUG-023 + ADR-027: „projekt je postao težak za održavanje"**
+
+> **Namjerno kratko** — puni opis je na po jednom mjestu: isporuka u [CHANGELOG](./CHANGELOG.md) ·
+> uzrok i pouke u [BUG-023](./BUGS.md) · odluka u [ADR-027](./DECISIONS.md). Ovo je prvi unos pisan po
+> ADR-027: dnevnik **pokazuje**, ne prepričava.
+
+**Kako je počelo.** Leon je poslao Sentry-grešku, pa nakon objašnjenja rekao: *„cijeli ovaj projekt je postao masivan i težak za održavanje iskreno."* Ta dva nalaza su se pokazala kao **isti nalaz**.
+
+**Bug je bio stvaran i iz istog dana** (M2, deployan sat vremena ranije). Reproduciran, ne pretpostavljen. Detalji: BUG-023.
+
+**Onda mjerenje umjesto osjećaja** — jer „težak za održavanje" nije dijagnoza:
+
+| kod `js/` | 11.926 redaka | **nije problem** — obična srednja aplikacija |
+|---|---|---|
+| **`docs/**`** | **11.242 retka** | **jednako cijelom kodu** |
+| `CLAUDE.md` | 26,7 KB | **12,5 KB povijesti** u sekciji naslovljenoj „TRENUTNO" |
+
+**Dijagnoza: znanje nam je stajalo u prozi umjesto u kodu i testovima.** Dokaz nije teorijski — u dva dana smo **tri puta** čistili istu vrstu kvara (A4, pred-compact revizija, duplikat povijesti), a onda je BUG-023 pokazao da rizik **zapisan u planu** ne sprječava ništa.
+
+**Učinjeno:** popravak u dva sloja (korijen + obrana u dubini, pet kopija → jedna funkcija) · `CLAUDE.md` −36 % · ADR-027 · tablica „gdje što ide" · **šesta `check:docs` provjera, negativno testirana**.
+
+**Gate:** preflight 0 · `test:responsive` **304/0/15skip** · `restore-position` 2/2 (padao prije popravka) · `check:docs` 46/240/0. **Deployano uz Leonov izričit OK**, živo verificirano.
+
+**Što NISAM napravio, a moglo bi se učiniti da jesam:** `CLAUDE.md` nije spušten na 8 KB koliko sam ciljao — stao je na 17,2 KB jer je ostatak živa referenca (komande, zamke, pravila), a rezanje radi brojke bi gubilo vrijednost.
+
+---
+
 ## 2026-08-07-d (OPUS) — **M3b: boja kartice/pitanja/dopune → kriterij 4 zatvoren** (grana `docs/stage-a`)
 
 **Test prije koda.** Šest unit-testova napisano prvo i **dokazano pada** (`B.accentFrom is not a function`), pa tek onda kod.
@@ -93,7 +120,7 @@ Ugovor: **tekst = kurirani tokeni** (kontrast kritičan), **akcent = slobodni `#
 Leonov nalaz iz živog pregleda. 5379 kartica: **pitanja 0 preko 200** (max 134), **odgovori 2487 = 46,2 %** preko 200, 928 preko 300, **48 preko 500**. Razliveno kroz sve predmete → potvrđuje da je standard **platformski** problem, ne Sašin. **Tvrdo ograničenje na 200 srušilo bi pola kataloga.** Leon odabrao strop **500**; podijeljeno u M5a (vođenje u editoru — odmah zaustavlja rast) i M5b (skratiti **25 jedinstvenih** zatečenih pa tek onda `maxLength` u shemi — inače crven CI).
 
 ### 7) Sašin brzi pregled
-Zadnji commit **2026-07-27** (11 dana). Dvije grane izvan `main`-a: `content/entrepreneurship-hr` (3) i `content/ebusiness-hr` (1). Kvaliteta dobra — opseg čist, **0 kartica preko 200** (max 198/199), Final = M1+M2+examPractice. **Ćirilica koju je skener našao NIJE njegova** — `MPС` je u `data/macroeconomics/` već na `main`-u. ⚠️ Obje grane diraju `data/catalog.js` + cache-tokene → **druga po redu će konfliktirati**. Naš dug: `check:docs` skenira ćirilicu u `.md`, ali **`data/**` nitko ne skenira**.
+Zadnji commit **2026-07-27** (11 dana). Dvije grane izvan `main`-a: `content/entrepreneurship-hr` (3) i `content/ebusiness-hr` (1). Kvaliteta dobra — opseg čist, **0 kartica preko 200** (max 198/199), Final = M1+M2+examPractice. **Ćirilica koju je skener našao NIJE njegova** — `MPS` je u `data/macroeconomics/` već na `main`-u. ⚠️ Obje grane diraju `data/catalog.js` + cache-tokene → **druga po redu će konfliktirati**. Naš dug: `check:docs` skenira ćirilicu u `.md`, ali **`data/**` nitko ne skenira**.
 
 **Tri zamke uhvaćene u izvedbi (zapamtiti):** ① `data-be-color` je **već zauzet** (boja teksta) → akcent mora biti `data-be-bcolor`. ② `JSON.stringify` nad shemom preformatira cijeli fajl (**480 izmjena umjesto 19**) → shema se mijenja **tekstualno**. ③ **Test je prošao iz krivog razloga** — `toHaveText` prolazi i na sakrivenom elementu; čekaj stvarni ishod, klikaj pravim gumbom, tvrdi `toBeVisible`.
 
@@ -639,7 +666,7 @@ Leon je uređivao čvor uživo i **objavio dvaput** (`version` 3): preimenovao s
 **Kontekst:** post-compact pregled cijelog projekta → sve zeleno; nalaz = **Saša je 2026-07-14 navečer odradio doradu po opciji B** (2 nova commita `36cdcb1`+`00a9ef1`). Leon: „napravi sve da možemo Sašin rad objaviti." Radim kao voditelj: integracija → review → gateovi → objava.
 1. **Due-diligence PR-a:** grana 7 ispred / 20 iza main (merge-base `79f17c7`). **Platformski file-ovi u diffu (index/styles/sw/manifest/legal-stranice/content-loader) = ISKLJUČIVO `npm run bump` tokeni** (ripgrep-provjera svih 7: nula ne-bump izmjena) → **nula prekršaja TEAM.md §2** (Saša ostao u content-opsegu, samo obavezni bump).
 2. **Integracija (merge, NE rebase — čuvam Sašino autorstvo/SHA):** `integ/management-hr` = main + `git merge --no-ff origin/content/management-hr` → konflikti = 10 bump-file + `subjects/README` redak. Riješeno: README ručno (LIVE 2026-07-15), bump-file-ovi `--ours` + **`npm run bump`** = svjež uniforman token **`20260715002009`** → merge-commit `fec1a35`.
-3. **Content-review (merge=produkcija → moram vidjeti):** terminologija po opciji B ✓ (KADROVIRANJE = 3. od 5 W&K funkcija · efikasnost/efektivnost) · 2 nove kat žive · **Drucker fact-fix činjenično točan i `correct`-indeksi provjereni** (otac modernog=Drucker `correct:2` · Drucker→sistemski `correct:1` · Fayol→operacijski `correct:1`). **Nalaz:** 1 ćirilični artefakt prijevoda (`Manualне` u netočnom distraktoru) → **popravljen** `d7bec06` + re-export JSON + Grep-potvrda 0 ćirilice u cijelom `management-hr`.
+3. **Content-review (merge=produkcija → moram vidjeti):** terminologija po opciji B ✓ (KADROVIRANJE = 3. od 5 W&K funkcija · efikasnost/efektivnost) · 2 nove kat žive · **Drucker fact-fix činjenično točan i `correct`-indeksi provjereni** (otac modernog=Drucker `correct:2` · Drucker→sistemski `correct:1` · Fayol→operacijski `correct:1`). **Nalaz:** 1 ćirilični artefakt prijevoda (`Manualne` u netočnom distraktoru) → **popravljen** `d7bec06` + re-export JSON + Grep-potvrda 0 ćirilice u cijelom `management-hr`.
 4. **Gateovi (integrirani rezultat):** verify 0/0 · bump:check 96=`20260715002009` · validate:content 0/0 · validate:schema 3/0 · export --check u sinku · unit 19/0 · build:css sinc.
 **Objava:** FF `main`→integ + push = produkcija (uz izričit Leonov per-push OK). PR #1 se time zatvara (Sašin head postaje predak main-a).
 **SLIJEDI: U6 strukturne ops** (nova grana s `main`, u EDITOR_UX dizajnu) · docx→tekst skripta prije Sašinog S6 · napomena Saši: ripgrep ćirilica-sken prije PR-a.

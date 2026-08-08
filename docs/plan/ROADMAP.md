@@ -2,7 +2,7 @@
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
 > **Trenutno NEMA aktivnog spec-a.** Faza „Materijal od nule do učenja" je **ispunjena i na produkciji
-> od 2026-08-07** (`main` = `ee91ef7`) → plan je u [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md),
+> od 2026-08-07** → plan je u [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md),
 > a što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**,
 > ne plan rada.
 >
