@@ -65,6 +65,29 @@ if (fs.existsSync(PLAN)) {
   }
 }
 
+// ── 2b) plan/ i product/ ne smiju proglasiti ARHIVU aktivnom (ADR-027) ──
+// Povod: `plan/ROADMAP.md` je tjednima tvrdio „trenutni rad = CREATE_BACKEND F5" i označavao
+// `CREATE_BACKEND_SPEC.md` kao **AKTIVNO** — a taj je dokument bio u `archive/`, a F5 odavno
+// na produkciji. Svaka svježa sesija bi krenula od te rečenice.
+//
+// Ovo je JEDINA semantička zastarjelost iz tog čišćenja koja se da uhvatiti strojno:
+// ako dokument koji govori „što sada" pokazuje na `archive/` i uz to viče AKTIVNO — laže.
+const AKTIVNO = /\bAKTIVN(?:O|I|A)\b/;
+// `PRODUCT` se definira niže (const → TDZ), pa se putanja ovdje računa lokalno.
+for (const dir of [PLAN, path.join(DOCS, 'product')]) {
+  if (!fs.existsSync(dir)) continue;
+  for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.md'))) {
+    const abs = path.join(dir, f);
+    fs.readFileSync(abs, 'utf8').split(/\r?\n/).forEach((line, i) => {
+      if (line.indexOf('archive/') !== -1 && AKTIVNO.test(line)) {
+        problems.push('ARHIVA PROGLAŠENA AKTIVNOM  ' + rel(abs) + ':' + (i + 1) +
+          '\n      → ' + line.trim().slice(0, 110) +
+          '\n      → dokument u archive/ je REFERENCA, ne izvor istine (ADR-027)');
+      }
+    });
+  }
+}
+
 // ── 3) product/ je DEFINICIJA, ne dnevnik ───────────────────────────
 const PRODUCT = path.join(DOCS, 'product');
 if (fs.existsSync(PRODUCT)) {

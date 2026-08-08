@@ -1,9 +1,11 @@
 // ===== SOKRAT STUDY — ANALYTICS SYSTEM =====
 
 function loadAnalytics() {
-    if (!AppState.nav.subject) return;
+    // BUG-023: nepoznat subjekt → nema što učitati, ali se ne smije rušiti.
+    const storageKey = currentStorageKey();
+    if (!storageKey) return;
 
-    const analyticsKey = subjectDataMap[AppState.nav.subject].storageKey + '-analytics';
+    const analyticsKey = storageKey + '-analytics';
     const saved = localStorage.getItem(analyticsKey);
     
     if (saved) {
@@ -32,9 +34,12 @@ function loadAnalytics() {
 }
 
 function saveAnalytics() {
-    if (!AppState.nav.subject) return;
+    // BUG-023: `null` = nema kamo pisati → tiho ne radi ništa (ovo je zvao `trackQuizAnswer`
+    // na svaki odgovor, pa je jedan nepoznat subjekt značio grešku po kliku).
+    const storageKey = currentStorageKey();
+    if (!storageKey) return;
 
-    const analyticsKey = subjectDataMap[AppState.nav.subject].storageKey + '-analytics';
+    const analyticsKey = storageKey + '-analytics';
     localStorage.setItem(analyticsKey, JSON.stringify(analytics));
 }
 

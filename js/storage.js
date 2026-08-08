@@ -13,8 +13,10 @@ function loadProgress() {
         categoryProgress: {}
     };
 
-    const storageKey = subjectDataMap[AppState.nav.subject].storageKey;
-    const saved = localStorage.getItem(storageKey);
+    // BUG-023: nepoznat subjekt (npr. materijal koji još nije registriran) → ostani na
+    // defaultima umjesto da pukneš. Napredak se ionako nema odakle učitati.
+    const storageKey = currentStorageKey();
+    const saved = storageKey ? localStorage.getItem(storageKey) : null;
     let parsed = null;
     if (saved) {
         try { parsed = JSON.parse(saved); } catch (e) { parsed = null; }  // pokvaren JSON → default
@@ -37,10 +39,11 @@ function loadProgress() {
 }
 
 function saveProgress() {
-    if (!AppState.nav.subject) return;
+    // BUG-023: `null` znači „nema kamo pisati" (nepoznat subjekt) — tiho ne radi ništa.
+    const storageKey = currentStorageKey();
+    if (!storageKey) return;
 
     progress.lastStudy = new Date().toISOString();
-    const storageKey = subjectDataMap[AppState.nav.subject].storageKey;
     localStorage.setItem(storageKey, JSON.stringify(progress));
     updateHomeStats();
 }

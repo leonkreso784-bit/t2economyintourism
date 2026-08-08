@@ -23,6 +23,19 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-023 — Povratak u vlastiti materijal otvarao praznu study-stranicu koja puca pri svakom spremanju
+- Status: ✅ riješen · Težina: **visok** za osobni materijal (katalog nedirnut) · Prijavio: **Sentry** (`JAVASCRIPT-3`), Leon proslijedio.
+- **Simptom:** `TypeError: Cannot read properties of undefined (reading 'storageKey')` u `saveAnalytics` ← `trackQuizAnswer` ← `selectAnswer`. Jedna greška **po svakom kliku na odgovor**.
+- **Reprodukcija:** uči iz osobnog materijala → zatvori karticu → vrati se unutar 24 h. Study-stranica se **prikaže prazna**, a svako spremanje napretka/analitike baca.
+- **Uzrok (dvije stvari, obje potrebne):**
+  1. **Odgođena registracija.** Katalog-subjekti su u `subjectDataMap` od učitavanja skripte. Osobni materijali su **sintetički** subjekti (`node:<uuid>`) koje `SokratMaterials` upiše u mapu **tek kad se otvori profil**. `restoreLastPosition` čita zadnju poziciju **sinkrono** i odmah navigira → `AppState.nav.subject` postoji, u mapi ga nema. Dodatno: `refresh()` odustane ako kartica profila nije montirana, pa na hladnom startu registracije **nije ni moglo biti**.
+  2. **Guard koji čuva krivu stvar.** Pet mjesta je pisalo `if (!AppState.nav.subject) return;` pa `subjectDataMap[...].storageKey`. To provjerava **postoji li id**, ne **postoji li subjekt u mapi**. Razlika godinu dana nije značila ništa jer je svaki subjekt dolazio iz kataloga.
+- **Rješenje (dva sloja):** ① **korijen** — `isSubjectOpenable()` u `navigation.js`: prije navigacije provjeri je li subjekt poznat, a za `node:` pokušaj `SokratMaterials.ensureRegistered()` (nova, **DOM-free** registracija); ako ne uspije → **ne otvaraj stranicu**. ② **obrana u dubini** — `currentSubjectMeta()`/`currentStorageKey()` u `config.js` kao **jedno mjesto istine**; svih pet čitanja ide kroz njih i na `null` **tiho ne radi ništa**.
+- **Zašto ga gate nije uhvatio:** nijedan test nije radio **reload** s node-pozicijom. Testovi su materijal uvijek otvarali **kroz profil**, gdje je registracija već obavljena — pa je jedini put koji ruši bio i jedini neispitani.
+- **LEKCIJA (dvije, i druga je teža):**
+  1. **Pomoćna funkcija za spremanje ne smije bacati.** `saveProgress`/`saveAnalytics` nemaju pravo srušiti stranicu ni za jedan ulaz; „ne znam kamo pisati" je **no-op**, ne iznimka.
+  2. **Rizik je bio ZAPISAN i svejedno isporučen.** Plan faze ([archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md), M2, „četiri ruba koja NISU pokrivena") doslovno kaže: *„`saveCurrentPosition` sprema `{subject, lesson}` → obnova gađa id koji još nije registriran"*. **Rečenica u dokumentu ne sprječava ništa — `if` u kodu ili test sprječavaju.** Kad se rub prepozna, isti čas mu treba napisati test, inače je zapis samo uredno dokumentiran propust. Ovo je izravan povod za **ADR-027**.
+
 ### BUG-022 — U vlastitom materijalu se NIJE mogla napraviti nijedna kartica, kviz ni dopuna
 - Status: ✅ riješen (`74d460a`, grana `docs/stage-a`, cigla M1) · Težina: **kritičan** za osobni materijal · Prijavio: **korisnik** (Leon, živo).
 - **Simptom:** nov materijal nudi samo tab **Learn**. Nema Kartica, Kviza ni Dopuna — dakle ni gumba „＋ Dodaj". Zaglavlje pokaže „👁 1 moda".

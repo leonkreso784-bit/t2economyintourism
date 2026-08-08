@@ -20,6 +20,22 @@
 | **`archive/`** | ispunjeni i napušteni planovi — **referenca, ne istina** | nikad |
 | **`sokrat-ai/`** | ⚠️ **zaseban projekt**, ne dira platformu | zasebno |
 
+### Gdje što ide — **jedna činjenica, jedno mjesto** (ADR-027)
+
+Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri dana usklađivali.
+
+| vrsta znanja | JEDINO mjesto | ostali |
+|---|---|---|
+| **što sustav radi** | **kod + testovi** | dokument to samo *opisuje*, nikad ne *definira* |
+| **zašto je tako** | `records/DECISIONS.md` (ADR) | ostali linkaju ADR |
+| **što vrijedi sad** | `../CLAUDE.md` + `product/` | **nikad dnevnik** |
+| **što se kad dogodilo** | `records/HISTORY.md` (redak) · `PROGRESS.md` (sesija) · `CHANGELOG.md` (isporuka) | `CLAUDE.md` ih **ne ponavlja** |
+| **što nije riješeno** | `records/BACKLOG.md` · `BUGS.md` | plan ne nosi tuđe stavke |
+
+**Duplikat se briše, ne sinkronizira.** Ako `HISTORY.md` već ima priču, nitko je ne prepričava.
+**Rub koji prepoznaš isti čas dobiva test** — zapisan a neriješen rizik je uredno dokumentiran propust
+(tako je nastao **BUG-023**).
+
 ### Četiri pravila (zato je ovo nastalo)
 
 1. **Jedan aktivni plan.** `plan/` smije imati najviše jedan spec. Ispunjen → `archive/` **isti dan**, s pečatom datuma. Prije ovog čišćenja ondje je stajalo **osam** ispunjenih planova koji su izgledali aktivno.

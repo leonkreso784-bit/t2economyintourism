@@ -216,9 +216,10 @@ function updateHomeStats() {
     document.getElementById('totalCategories').textContent = Object.keys(nav.data).length;
 
     const subtitle = document.getElementById('homeSubtitle');
-    if (subtitle && nav.subject) {
+    const meta = currentSubjectMeta();   // BUG-023: nepoznat subjekt → ostavi zatečen naslov
+    if (subtitle && meta && meta.name) {
         const guide = (typeof t === 'function') ? t('home.guideTo') : 'Your interactive guide to';
-        subtitle.textContent = `${guide} ${subjectDataMap[nav.subject].name}`;
+        subtitle.textContent = `${guide} ${meta.name}`;
     }
     
     const bestScore = progress.quizScores.length > 0 ? Math.max(...progress.quizScores) : 0;

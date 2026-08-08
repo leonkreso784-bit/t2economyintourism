@@ -4,6 +4,58 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-027 — Znanje ide u kod i testove; proza nosi samo ZAŠTO
+**Datum:** 2026-08-08 · **Status:** ✅ ODLUČENO (Leon) · **Povod:** [BUG-023](./BUGS.md) + Leonov nalaz *„cijeli projekt je postao masivan i težak za održavanje"*
+
+**Kontekst — izmjereno, ne po osjećaju.**
+
+| | |
+|---|---|
+| kod (`js/`) | 38 datoteka · **11.926 redaka** |
+| CSS | 32 · 8.048 |
+| testovi | 50 · 8.486 |
+| **dokumentacija** (`docs/**`) | 44 · **11.242 retka** |
+| `CLAUDE.md` (učitava se SVAKU sesiju) | **26,7 KB**, od čega **12,5 KB** povijesti u sekciji naslovljenoj „TRENUTNO" |
+
+**Kod nije velik.** 12.000 redaka je posve obična srednja aplikacija. **Dokumentacija je bila jednako velika
+kao cijeli kod** — i to je težina koja se osjeća.
+
+Dokaz da to nije estetika nego trošak: u dva dana smo tri puta čistili istu vrstu kvara —
+**A4** (četiri neistine u `TEAM.md`/`ROADMAP.md`/`PRD.md`), **pred-compact revizija** (jedanaest zastarjelih
+tvrdnji + osam mrtvih putanja u memoriji), i **duplikat povijesti** u `CLAUDE.md` koji je `HISTORY.md`
+ionako već imao. Nula tih sati nije otišlo u proizvod.
+
+**Presudni dokaz je BUG-023.** Rizik je bio **zapisan** u planu faze — *„`saveCurrentPosition` → obnova gađa
+id koji još nije registriran"* — pročitan, i **svejedno isporučen na produkciju**. Rečenica u dokumentu nije
+spriječila ništa. `if` u kodu ili jedan test bi spriječili.
+
+**Odluka.**
+
+1. **Znanje o PONAŠANJU ide u kod i testove.** Rub koji prepoznaš **isti čas** dobiva test ili guard.
+   „Zabilježit ćemo pa riješiti kasnije" je uredno dokumentiran propust, ne plan.
+2. **Proza nosi samo ZAŠTO** — odluke, kompromise, cijenu. *Što* sustav radi neka piše u kodu; *kako* je
+   došlo dotle u `records/`.
+3. **Jedna činjenica = jedno mjesto.** Ista cigla više se ne prepisuje u plan + CHANGELOG + PROGRESS +
+   memoriju. Jedno mjesto nosi tekst, ostala pokazuju na njega.
+4. **Duplikat se briše, ne sinkronizira.** Ako `HISTORY.md` već ima priču, `CLAUDE.md` je ne ponavlja.
+5. **`CLAUDE.md` je „što vrijedi SAD", nikad dnevnik.** Povijest u njemu je bug jednake težine kao mrtva
+   poveznica — jer se učitava svaku sesiju i tiho oblikuje svaku sljedeću odluku.
+6. **Kopiju u kodu tretiramo kao rizik.** Pet mjesta koja čitaju istu stvar na isti način moraju postati
+   jedna funkcija; BUG-023 je nastao točno u toj petostrukoj kopiji.
+
+**Posljedice.**
+- `CLAUDE.md`: **26,7 → 17,2 KB** (−36 %); cijela F0–F5 kronologija obrisana jer `HISTORY.md` ju ima.
+- Preostalih ~17 KB su **žive reference** (komande, arhitektonske zamke, kritična pravila) — dalje rezanje
+  bi gubilo vrijednost, pa se **ne** reže radi brojke.
+- `npm run check:docs` dobiva **šestu** provjeru: dokument u `plan/` ili `product/` ne smije označiti
+  dokument iz `archive/` kao „AKTIVNO/AKTIVNI". Prve četiri čuvaju strukturu, peta i šesta **istinitost**.
+- Ovo **ne** znači „manje dokumentacije". Znači: ista količina znanja, ali na mjestu gdje ne može lagati.
+
+**Cijena koju svjesno prihvaćamo.** Manje proze znači da se dio konteksta mora pročitati iz koda i testova.
+To je prihvatljivo jer kod i testovi **ne mogu zastarjeti neopaženo** — CI ih vrti; dokument nitko ne vrti.
+
+---
+
 ## ADR-026 — Zove se „materijal"; mobilno autorstvo ide preko korisnikovog AI-a, ne preko touch-editora
 **Datum:** 2026-08-07 · **Status:** ✅ ODLUČENO (Leon) · **Dopunjuje:** [ADR-025](#adr-025--osobno-gradivo-osam-presuda-o-dosegu-vježbe-dijeljenje-napredak-boje-opseg) · [ADR-024](#adr-024--osobni-ugc-graditelj--zaseban-otok-nodes-stablo-owner-rls-a-ne-proširenje-kataloga)
 

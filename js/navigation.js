@@ -14,7 +14,28 @@ function saveCurrentPosition(page, data) {
     localStorage.setItem('sokrat-last-position', JSON.stringify(position));
 }
 
-function restoreLastPosition() {
+/**
+ * BUG-023 — smijemo li UOPĆE otvoriti ovaj subjekt?
+ *
+ * Katalog-subjekti su u `subjectDataMap` od učitavanja skripte. Osobni materijali su
+ * SINTETIČKI (`node:<uuid>`) i u mapu ulaze tek kad `SokratMaterials` učita korisnikovo
+ * stablo — što na hladnom startu nije napravljeno. Zato ih ovdje treba zatražiti.
+ *
+ * `false` = ne otvaraj stranicu. Prazna study-stranica za nepostojeći subjekt gora je
+ * od landinga: izgleda kao da je gradivo nestalo, a svaka radnja na njoj puca.
+ */
+async function isSubjectOpenable(subjectId) {
+    if (typeof subjectDataMap === 'undefined' || !subjectId) return false;
+    if (subjectDataMap[subjectId]) return true;
+    // Samo materijali imaju odgođenu registraciju; sve ostalo je obrisan ili pokvaren zapis.
+    if (String(subjectId).indexOf('node:') !== 0) return false;
+    const M = (typeof window !== 'undefined') ? window.SokratMaterials : null;
+    if (!M || typeof M.ensureRegistered !== 'function') return false;
+    await M.ensureRegistered();          // tiho `false` ako nije prijavljen / nema mreže
+    return !!subjectDataMap[subjectId];
+}
+
+async function restoreLastPosition() {
     try {
         const saved = localStorage.getItem('sokrat-last-position');
         if (saved) {
@@ -23,6 +44,9 @@ function restoreLastPosition() {
 
             if (hoursSinceSave < 24 && position.page && position.page !== 'landing') {
                 if (position.page === 'study' && position.subject && position.lesson) {
+                    // BUG-023: provjeri PRIJE navigacije — `navigateTo` odmah prikaže stranicu
+                    // i postavi `AppState.nav.subject`, pa kasnije odustajanje ostavlja krš.
+                    if (!(await isSubjectOpenable(position.subject))) return;
                     AppState.nav.category = position.category || 'all';
                     // Pass the saved section into init; it switches there AFTER lazy content
                     // loads (no setTimeout race with async loading).
@@ -33,6 +57,7 @@ function restoreLastPosition() {
                     });
                     return;
                 } else if (position.page === 'lessons' && position.subject) {
+                    if (!(await isSubjectOpenable(position.subject))) return;
                     navigateTo('lessons', { subject: position.subject });
                     return;
                 }

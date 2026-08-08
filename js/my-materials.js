@@ -737,6 +737,32 @@
     }
   }
 
+  /**
+   * BUG-023 — registriraj korisnikove materijale u `subjectDataMap` BEZ dodirivanja DOM-a.
+   *
+   * `refresh()` prvo radi `const el = root(); if (!el) return;` — a na hladnom startu
+   * kartica profila NIJE montirana, pa refresh tiho odustane i ne registrira ništa.
+   * Zbog toga obnova zadnje pozicije nije imala načina doznati za `node:<uuid>` subjekt
+   * i otvarala je praznu study-stranicu.
+   *
+   * Vraća `true` ako je stablo učitano. Tiho `false` kad korisnik nije prijavljen ili
+   * mreže nema — pozivatelj tad NE otvara stranicu, umjesto da je otvori praznu.
+   */
+  async function ensureRegistered() {
+    if (!isAvailable()) return false;
+    try {
+      const res = await loadTree();
+      _rows = res.rows;
+      _tree = res.tree;
+      // `_loaded` NAMJERNO ostaje kakav jest: prvi posjet profilu i dalje pokaže skeleton,
+      // pa ova pozadinska registracija ne mijenja ponašanje kartice.
+      registerAllStudySubjects();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   /** Montiraj karticu na profilu (poziva renderProfilePage). */
   function mount() {
     const el = root();
@@ -886,6 +912,7 @@
     humanError: humanError,
     // mreža
     isAvailable: isAvailable,
+    ensureRegistered: ensureRegistered,   // BUG-023: registracija bez DOM-a (obnova pozicije)
     loadTree: loadTree,
     createNode: createNode,
     renameNode: renameNode,
