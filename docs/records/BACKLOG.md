@@ -3,6 +3,30 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥 M5 — duljina kartice: vođenje u editoru + strop 500 — 2026-08-07
+**Nalaz (Leon, živi pregled):** *„trebat ćemo poradit na ograničenju koliko jedna kartica ima teksta."*
+Nije bio kriterij faze „Materijal od nule do učenja" pa je preživio njeno zatvaranje — **odluka je već pala,
+samo izvedba čeka.**
+
+**Izmjereno prije odluke** (5379 kartica u `data/json/`): pitanja **0** preko 200 znakova (max 134) → nisu
+problem · odgovori **2487 = 46,2 %** preko 200 · 928 preko 300 · **48 preko 500** (max 736; **25 jedinstvenih**,
+ostalo su kopije u `final`). Razliveno kroz **sve** predmete → **standard je platformski problem, ne Sašin.**
+**Posljedica: tvrdo ograničenje na 200 srušilo bi gotovo pola kataloga** → ne dolazi u obzir retroaktivno.
+
+**ODLUKA (Leon 2026-08-07): tvrdi strop = 500 znakova**, uz mekano vođenje na 200. U **dva koraka**, i
+redoslijed je bitan:
+- **M5a — vođenje u editoru** *(platforma, nula rizika, IDE PRVO jer odmah zaustavlja rast)*: brojač uživo u
+  modal-editoru kartice · **upozorenje na 200** (žuto, ne blokira — to je standard) · **tvrda blokada spremanja
+  na 500**. Vrijedi za **oba svijeta** — isti modal služi javni katalog i osobni materijal.
+- **M5b — zatezanje** *(sadržaj, poslije)*: skratiti **25 zatečenih** kartica (detalj → learn, po standardu
+  kartice: `entrepreneurship` 28 · `traffic` 6 · `food-nutrition` 4 · `sit` 4 · `ebusiness` 2 · `math` 2 ·
+  `te2` 2) → **tek tada** `maxLength: 500` u `schema/subject-content.schema.json`.
+  ⚠️ **Obrnut redoslijed = `validate:schema` crven = CI blokiran.**
+- Uz to: `validate:content` dobiva izvještaj o raspodjeli duljina (brojka, ne gate) da se vidi trend.
+
+**Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
+(kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
+
 ## ➖ Akcent kartice = CIJELA kartica u boji, ne samo rub — 2026-08-07
 **Nalaz (Leon, živi pregled M3b):** *„mislio sam da cijela kartica bude crvena a ne samo rubovi ali nema veze."*
 Odgodio je izričito („nema veze"), ali je **očekivanje jasno i vrijedi ga zapisati dok je svježe**:

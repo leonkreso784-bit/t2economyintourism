@@ -1,8 +1,16 @@
-# Faza: „Materijal od nule do učenja" — aktivni plan
+# Faza: „Materijal od nule do učenja" — ✅ ISPUNJENA I NA PRODUKCIJI
 
-> **Ovo je POTROŠAN dokument.** Kad faza padne, ide u `docs/archive/` s pečatom datuma — isti dan.
-> Definicija i kriteriji prihvaćanja su u [product/UGC_SPEC.md](../product/UGC_SPEC.md) i **nadživljuju** ovaj plan.
-> Ovdje su samo **cigle, redoslijed i status**.
+> **📅 PEČAT: ispunjena i deployana 2026-08-07** (`main` = `ee91ef7`, Vercel production READY).
+> Svih **5 kriterija** iz [product/UGC_SPEC.md §2](../product/UGC_SPEC.md) ispunjeno, **Leon prošao
+> tokom uživo** i potvrdio. Ovaj dokument je od tada **referenca, ne istina** — što sada vrijedi,
+> piše u [UGC_SPEC.md](../product/UGC_SPEC.md).
+>
+> **Ostalo otvoreno iz ove faze, preseljeno u [records/BACKLOG.md](../records/BACKLOG.md):**
+> **M5a/M5b** (duljina kartice, strop 500) i Leonovo očekivanje da akcent oboji **cijelu** karticu,
+> ne samo rub. Nijedno nije bilo kriterij prihvaćanja ove faze.
+>
+> Definicija i kriteriji prihvaćanja su u [product/UGC_SPEC.md](../product/UGC_SPEC.md) i **nadživljuju**
+> ovaj plan. Ovdje su samo **cigle, redoslijed i status**.
 
 **Cilj:** korisnik na praznoj polici napravi materijal, u njemu sam složi kartice, kviz i dopune,
 i **iz njega uči**.

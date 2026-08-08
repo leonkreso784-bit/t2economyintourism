@@ -1,11 +1,15 @@
 # ROADMAP — Milestones
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
-> **Aktivni spec je [MATERIJAL_FAZA.md](./MATERIJAL_FAZA.md)**, definicija i kriteriji prihvaćanja
-> [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**, ne plan rada.
+> **Trenutno NEMA aktivnog spec-a.** Faza „Materijal od nule do učenja" je **ispunjena i na produkciji
+> od 2026-08-07** (`main` = `ee91ef7`) → plan je u [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md),
+> a što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**,
+> ne plan rada.
 >
-> **Važeća sekvenca (Leon, 2026-08-02):** dovrši **fazu „Materijal od nule do učenja"** → **frontend redizajn** →
+> **Važeća sekvenca (Leon, 2026-08-02):** ~~dovrši fazu „Materijal od nule do učenja"~~ ✅ → **frontend redizajn** →
 > **objava/dijeljenje + MCP**. **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
+> Sljedeći konkretan posao **još nije dogovoren** (Leon, 2026-08-07); otvorene stavke su u
+> [records/BACKLOG.md](../records/BACKLOG.md).
 >
 > ### ⚠️ DVA „F" NUMERIRANJA — **oba su ZATVORENA**, ne miješaj ih
 > | oznaka | gdje | značenje | status |

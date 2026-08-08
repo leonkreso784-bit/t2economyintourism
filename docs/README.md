@@ -54,11 +54,12 @@
 
 | Dokument | Svrha |
 |---|---|
-| [MATERIJAL_FAZA.md](./plan/MATERIJAL_FAZA.md) | **AKTIVNI SPEC** — faza „Materijal od nule do učenja" (cigle M1–M5) |
-| [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status |
+| [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
-> Definicija i kriteriji prihvaćanja te faze su u [product/UGC_SPEC.md](./product/UGC_SPEC.md) i
-> **nadživljuju** plan; `MATERIJAL_FAZA.md` je potrošan i ide u `archive/` čim faza padne.
+> **Trenutno NEMA aktivnog spec-a.** Faza „Materijal od nule do učenja" je ispunjena i deployana
+> 2026-08-07 → plan je istog dana otišao u [archive/MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md)
+> (pravilo 1). Sljedeća faza dobiva nov spec ovdje kad se dogovori; otvorene stavke dotad žive u
+> [records/BACKLOG.md](./records/BACKLOG.md).
 
 ## `workflow/` — kako radimo
 
@@ -94,6 +95,7 @@
 
 | Dokument | Status |
 |---|---|
+| [MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md) | Faza „Materijal od nule do učenja" — **ispunjena i na produkciji 2026-08-07**; svih 5 kriterija iz `product/UGC_SPEC.md` |
 | [CREATE_BACKEND_SPEC.md](./archive/CREATE_BACKEND_SPEC.md) | Osobni UGC-graditelj — **instalacije F0–F5 isporučene** (prod 2026-08-06). ⚠️ Vizija iz §1 (kartice/kviz/fill u vlastitom gradivu) **NIJE dovršena** — v. `product/` |
 | [EDITOR_PLAN.md](./archive/EDITOR_PLAN.md) | Editor / admin CRUD — ispunjen 2026-07-28; §12 = povijest cigli U0–U9 |
 | [EDITOR_UX.md](./archive/EDITOR_UX.md) | Dizajn-ugovor editora (smjer C „Tok"); mockup `design/mockups/editor-c-tok.html` |
