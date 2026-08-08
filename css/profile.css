@@ -223,6 +223,38 @@
 }
 
 .profile-danger-btn:hover { background: rgba(248, 113, 113, 0.2); }
+.profile-danger-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* GDPR čl. 17 — brisanje računa. Ispunjena ploha, ne obris: „obriši podatke iz oblaka" je
+   povratno, ovo nije, i ta razlika mora biti vidljiva prije klika, ne tek u dijalogu. */
+.profile-danger-sep {
+    margin: 1rem 0 0.9rem;
+    border: 0;
+    border-top: 1px solid rgba(248, 113, 113, 0.25);
+}
+.profile-danger-btn--hard {
+    background: rgba(248, 113, 113, 0.18);
+    border-color: rgba(248, 113, 113, 0.7);
+}
+.profile-danger-btn--hard:hover { background: rgba(248, 113, 113, 0.3); }
+
+.profile-delete-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(248, 113, 113, 0.25);
+}
+/* display:flex gore bi pregazio UA [hidden] { display:none } — vrati ga eksplicitno */
+.profile-delete-form[hidden] { display: none; }
+.profile-delete-form .profile-danger-btn { align-self: flex-start; }
+.profile-delete-status {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+.profile-delete-status.is-error { color: var(--danger-text, #f87171); }
 
 /* ---------- Header auth gumb (browse/lessons/study) ---------- */
 
@@ -358,6 +390,20 @@
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
 .admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
+/* M5a — brojač duljine kartice. Neutralan dok se poštuje standard; žut na 200 (upozorenje,
+   spremanje prolazi); crven preko 500 (tvrdi strop — „Spremi" je tad onemogućen). */
+.admin-edit__count {
+    align-self: flex-end;
+    font-size: 0.72rem; font-weight: 600;
+    font-variant-numeric: tabular-nums;   /* broj ne poskakuje dok se tipka */
+    color: var(--text-secondary); opacity: 0.65;
+    transition: color 0.15s ease, opacity 0.15s ease;
+}
+.admin-edit__count.is-warn { color: var(--warning-text, #fbbf24); opacity: 1; }
+.admin-edit__count.is-over { color: var(--danger-text, #f87171); opacity: 1; }
+.admin-edit__actions .cta-button:disabled {
+    opacity: 0.45; cursor: not-allowed; filter: grayscale(0.4);
+}
 /* U6d — color-polje u editoru kategorije (label + swatch u istom redu) */
 .admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
 .admin-edit__color {

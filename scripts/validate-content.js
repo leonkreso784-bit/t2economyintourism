@@ -51,8 +51,28 @@ const CAMEL = /^[a-z][a-zA-Z0-9]*$/;
 
 // Standard duljine kartice (CONTENT_SCHEMA §Standard duljine, Leon 2026-07-15): kartica = KRATKA
 // definicija, detalj ide u learn. SOFT gate — surface-a dug, NE ruši build (warnings ne mijenjaju exit).
-const CARD_ANSWER_SOFT_MAX = 200;   // jezgra definicije, cilj ≤ 200 znak
+//
+// M5a: pragovi se NE prepisuju ovdje. Editor i validator moraju govoriti isti broj — kad su bili
+// dvije kopije, jedna je neizbježno odlutala (ADR-027, povod BUG-023). Politika živi u
+// `js/card-limits.js`; učitava se istim shim-obrascem kojim je unit testovi učitavaju.
+const cardLimitsWin = {};
+new Function('window', fs.readFileSync(path.join(ROOT, 'js', 'card-limits.js'), 'utf8'))(cardLimitsWin);
+const CARD_LIMITS = cardLimitsWin.SokratCardLimits;
+const CARD_ANSWER_SOFT_MAX = CARD_LIMITS.SOFT;   // 200 — jezgra definicije
+const CARD_ANSWER_HARD_MAX = CARD_LIMITS.HARD;   // 500 — tvrdi strop editora
 const CARD_EXPL_SOFT_MAX = 250;     // nijansa/mnemonik, ne odlagalište skripte
+
+// M5a: raspodjela duljina odgovora — BROJKA, NE GATE. Retroaktivni gate na 200 srušio bi
+// 46 % kataloga, pa se trend samo mjeri; zatezanje ide kroz M5b (skratiti pa tek onda maxLength).
+const BUCKETS = [100, 200, 300, 500, Infinity];
+const bucketLabel = (i) => (i === 0 ? `≤${BUCKETS[0]}` :
+  (BUCKETS[i] === Infinity ? `>${BUCKETS[i - 1]}` : `${BUCKETS[i - 1] + 1}–${BUCKETS[i]}`));
+const newHistogram = () => BUCKETS.map(() => 0);
+function addToHistogram(hist, len) {
+  for (let i = 0; i < BUCKETS.length; i++) {
+    if (len <= BUCKETS[i]) { hist[i]++; return; }
+  }
+}
 
 // --- KaTeX currency-safety: delimiteri moraju biti uravnoteženi -------------------
 // (?<!\\) lookbehind: ignoriraj \\( \\[ itd. — dvostruka kosa crta je LaTeX prijelom
@@ -146,6 +166,8 @@ function validateCategory(subjId, lessonId, key, cat, counts) {
       // Soft standard duljine (ne ruši build): kartica = kratka definicija, detalj → learn.
       if (typeof f.answer === 'string') {
         counts.ansLenSum += f.answer.length;
+        addToHistogram(counts.ansHist, f.answer.length);
+        if (f.answer.length > CARD_ANSWER_HARD_MAX) counts.overHard.push(`${w} answer=${f.answer.length} znak · ${f.question ? f.question.slice(0, 50) : ''}`);
         if (f.answer.length > CARD_ANSWER_SOFT_MAX) counts.longAns.push(`${w} answer=${f.answer.length} znak · ${f.question ? f.question.slice(0, 50) : ''}`);
       }
       if (typeof f.explanation === 'string' && f.explanation.length > CARD_EXPL_SOFT_MAX) counts.longExpl.push(`${w} explanation=${f.explanation.length} znak`);
@@ -203,13 +225,16 @@ const onlyId = process.argv[2];
 const subjects = SOKRAT_CATALOG.subjects.filter((s) => !onlyId || s.id === onlyId);
 if (onlyId && !subjects.length) { console.error(`Nepoznat subjectId "${onlyId}".`); process.exit(2); }
 
+/** M5a: skupna raspodjela duljina preko svih provjerenih predmeta. */
+const TOTAL = { fc: 0, hist: newHistogram(), overHard: [] };
+
 console.log(`\nValidiram sadržaj: ${subjects.length} predmet(a)${onlyId ? ' (' + onlyId + ')' : ''}...\n`);
 
 for (const s of subjects) {
   const scripts = (s.content && s.content.scripts) || [];
   if (!scripts.length) { console.log(`[${s.id}] nema content.scripts (coming soon) — preskačem`); continue; }
   const win = loadWindowVars(scripts);
-  const counts = { fc: 0, qz: 0, fb: 0, ln: 0, ansLenSum: 0, longAns: [], longExpl: [] };
+  const counts = { fc: 0, qz: 0, fb: 0, ln: 0, ansLenSum: 0, longAns: [], longExpl: [], overHard: [], ansHist: newHistogram() };
   let cats = 0;
 
   for (const lesson of (s.lessons || [])) {
@@ -237,6 +262,33 @@ for (const s of subjects) {
       counts.longAns.slice(0, 40).forEach((m) => console.warn('        · ' + m));
       if (nLong > 40) console.warn(`        · … i još ${nLong - 40}`);
     }
+  }
+
+  // M5a: skupi za završnu raspodjelu + zapamti tko probija TVRDI strop (to su kartice koje
+  // M5b mora skratiti PRIJE nego `maxLength: 500` uđe u shemu — obrnut redoslijed ruši CI).
+  TOTAL.fc += counts.fc;
+  counts.ansHist.forEach((n, i) => { TOTAL.hist[i] += n; });
+  counts.overHard.forEach((m) => TOTAL.overHard.push(`[${s.id}] ${m}`));
+}
+
+// ===== M5a — raspodjela duljina odgovora (BROJKA, NE GATE) =====
+// Postoji da se vidi TREND: sprječava li vođenje u editoru daljnji rast. Nikad ne mijenja exit —
+// tvrdi gate na zatečenom katalogu srušio bi gotovo pola sadržaja (BACKLOG M5).
+if (TOTAL.fc) {
+  console.log('\n---------- duljina odgovora (kartice) ----------');
+  const width = 34;
+  TOTAL.hist.forEach((n, i) => {
+    const pct = (n / TOTAL.fc) * 100;
+    const bar = '█'.repeat(Math.round((pct / 100) * width));
+    const flag = (BUCKETS[i] === Infinity) ? '  ⟵ preko stropa ' + CARD_ANSWER_HARD_MAX : '';
+    console.log(`  ${bucketLabel(i).padStart(8)} znak  ${String(n).padStart(5)}  ${pct.toFixed(1).padStart(5)}%  ${bar}${flag}`);
+  });
+  console.log(`  ukupno ${TOTAL.fc} kartica · standard ≤${CARD_ANSWER_SOFT_MAX} · strop editora ${CARD_ANSWER_HARD_MAX}`);
+  if (TOTAL.overHard.length) {
+    console.log(`\n  ⚠ ${TOTAL.overHard.length} kartica probija TVRDI strop — M5b ih mora skratiti PRIJE`);
+    console.log(`     nego \`maxLength: ${CARD_ANSWER_HARD_MAX}\` uđe u schema/subject-content.schema.json:`);
+    TOTAL.overHard.slice(0, 25).forEach((m) => console.log('     · ' + m));
+    if (TOTAL.overHard.length > 25) console.log(`     · … i još ${TOTAL.overHard.length - 25}`);
   }
 }
 

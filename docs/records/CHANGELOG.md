@@ -26,6 +26,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ### Added
 
+#### ⏳ NIJE DEPLOYANO — faza „Mjera i zaborav" (2026-08-08, grana `feature/mjera-i-zaborav`)
+
+- **Mjera duljine kartice (M5a).** Editor kartice sad broji uživo, **žuto upozori na 200** (standard, ne
+  blokira — tvrdo bi srušilo 46 % kataloga) i **tvrdo blokira spremanje preko 500**. Vrijedi u **oba
+  svijeta** jednom promjenom, jer Studio nema vlastiti editor kartica nego kroz `data-admin-*` završi u
+  istom `#adminEditModal`. Politika živi na **jednom mjestu** (`js/card-limits.js`) i čitaju je i editor
+  i `validate:content` — dotad su 200 bile dvije nezavisne kopije (ADR-027). `validate:content` dobio
+  **raspodjelu duljina** — brojku, ne gate. Testovi: unit 12/12 (rub 500 prolazi / 501 pada) + authed
+  Playwright 4/4 vs staging, uključujući dokaz da kartica preko stropa **ne uđe** u osobni materijal.
+- **Self-service brisanje računa (GDPR čl. 17).** Do sad je `privacy.html` upućivao na mail autoru.
+  Sad: profil → dvostruka potvrda (upiši `DELETE` + danger-dijalog) → Edge Function `delete-account`
+  (`service_role` samo ondje, ADR-016) → **slike pa korisnik**, jer Supabase odbija obrisati vlasnika
+  objekata u Storageu. Ostalo nosi kaskada; `content_versions.edited_by` → `SET NULL` (audit preživi,
+  ime nestane). `lesson-images` se **ne dira** — inače bi admin sa sobom povukao katalog.
+  Deployano **na staging** (v1 ACTIVE, `verify_jwt`); T1–T3 zeleni protiv žive funkcije.
+  ⛔ **T4/T5 (stvarno brisanje) blokirani** dok `.env` ne dobije `STAGING_SUPABASE_SERVICE_KEY` — v.
+  [`plan/MJERA_I_ZABORAV.md`](../plan/MJERA_I_ZABORAV.md) §4.
+
 > ⚠️ **Sve ispod je ISPORUČENO.** Ova sekcija je zaostala kao „Unreleased" iako su joj stavke otišle na
 > produkciju u tri vala: **`b79e053`** (2026-07-27, Studio + rizik-sprint) · **`a9bf52b`** (2026-08-06,
 > osobni UGC-graditelj F1–F5) · **`ee91ef7`** (2026-08-07, faza „Materijal od nule do učenja").

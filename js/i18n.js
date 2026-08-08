@@ -72,6 +72,11 @@
     'admin.saveOk': { en: 'Flashcard saved.', hr: 'Kartica spremljena.' },
     'admin.saveErr': { en: 'Could not save.', hr: 'Spremanje nije uspjelo.' },
     'admin.emptyErr': { en: 'Question and answer must not be empty.', hr: 'Pitanje i odgovor ne smiju biti prazni.' },
+    // M5a — mjera duljine kartice ({max} popunjava SokratCardLimits.HARD, da broj ne živi u dvije kopije)
+    'admin.tooLongErr': {
+      en: 'Too long — a flashcard holds at most {max} characters. Move the detail into Learn.',
+      hr: 'Predugo — kartica prima najviše {max} znakova. Detalj prebaci u Učenje.'
+    },
     'admin.notInDb': { en: 'This subject is not in the database yet.', hr: 'Ovaj predmet još nije u bazi.' },
     // U3 — draft-mod (uredi → radna kopija → Objavi/Odbaci)
     'admin.editLesson': { en: 'Edit lesson', hr: 'Uredi lekciju' },
@@ -441,9 +446,25 @@
     'profile.syncNow': { en: 'Sync now', hr: 'Sinkroniziraj sada' },
     'profile.progressOverview': { en: 'Progress overview', hr: 'Pregled napretka' },
     'profile.privacyData': { en: 'Privacy & data', hr: 'Privatnost i podaci' },
-    'profile.deleteDesc1': { en: 'Delete all study progress stored in the cloud. Progress saved on this device stays. To delete your entire account, email ', hr: 'Obriši sav napredak pohranjen u oblaku. Napredak spremljen na ovom uređaju ostaje. Za brisanje cijelog računa pošalji e-mail na ' },
-    'profile.deleteDesc2': { en: '. See our ', hr: '. Pogledaj naša ' },
+    'profile.deleteDesc': { en: 'Delete all study progress stored in the cloud — progress saved on this device stays.', hr: 'Obriši sav napredak pohranjen u oblaku — napredak spremljen na ovom uređaju ostaje.' },
     'profile.deleteCloud': { en: 'Delete cloud data', hr: 'Obriši podatke iz oblaka' },
+    // GDPR čl. 17 — self-service brisanje računa. Do 2026-08-08 je ovdje stajalo „pošalji mail".
+    'profile.deleteAccount': { en: 'Delete account', hr: 'Obriši račun' },
+    'profile.deleteAccountDesc': {
+        en: 'Delete your account permanently. Everything goes: your progress, your materials and their images. This cannot be undone.',
+        hr: 'Trajno obriši svoj račun. Ide sve: napredak, tvoji materijali i njihove slike. To se ne može poništiti.'
+    },
+    'profile.deleteAccountType': { en: 'Type DELETE to confirm', hr: 'Upiši DELETE za potvrdu' },
+    'profile.deleteAccountGo': { en: 'Delete my account forever', hr: 'Obriši moj račun zauvijek' },
+    'profile.deleteAccountMismatch': { en: 'Type DELETE exactly to confirm.', hr: 'Upiši točno DELETE za potvrdu.' },
+    'profile.deleteAccountTitle': { en: 'Delete account permanently?', hr: 'Trajno obrisati račun?' },
+    'profile.deleteAccountConfirm': {
+        en: 'Your account, progress, materials and images will be deleted for good. This cannot be undone.',
+        hr: 'Tvoj račun, napredak, materijali i slike bit će obrisani zauvijek. To se ne može poništiti.'
+    },
+    'profile.deleteAccountWorking': { en: 'Deleting your account…', hr: 'Brišem tvoj račun…' },
+    'profile.deleteAccountFail': { en: 'Could not delete the account: ', hr: 'Račun se nije mogao obrisati: ' },
+    'profile.deleteAccountDone': { en: 'Your account has been deleted.', hr: 'Tvoj račun je obrisan.' },
     'profile.noActivity': { en: 'No study activity yet — open a subject and start learning!', hr: 'Još nema aktivnosti — otvori predmet i počni učiti!' },
     'profile.cardsLearned': { en: 'cards learned', hr: 'naučenih kartica' },
     'profile.quizzesTaken': { en: 'quizzes taken', hr: 'odrađenih kvizova' },

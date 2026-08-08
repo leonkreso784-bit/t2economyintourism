@@ -99,12 +99,24 @@ function renderProfilePage() {
 
         '  <div class="profile-card profile-card--wide profile-card--danger">' +
         '    <h3 class="profile-card-title"><i class="fas fa-triangle-exclamation"></i> ' + pt('profile.privacyData', 'Privacy & data') + '</h3>' +
-        '    <p class="profile-meta">' + pt('profile.deleteDesc1', 'Delete all study progress stored in the cloud. Progress saved on this device stays. To delete your entire account, email ') +
-        '<a href="mailto:leonkreso784@gmail.com">leonkreso784@gmail.com</a>' + pt('profile.deleteDesc2', '. See our ') +
-        '<a href="privacy.html">' + pt('footer.privacy', 'Privacy Policy') + '</a>.</p>' +
+        '    <p class="profile-meta">' + pt('profile.deleteDesc', 'Delete all study progress stored in the cloud — progress saved on this device stays.') +
+        ' <a href="privacy.html">' + pt('footer.privacy', 'Privacy Policy') + '</a>.</p>' +
         '    <div class="profile-actions">' +
         '      <button type="button" class="profile-danger-btn" id="profileDeleteCloudBtn"><i class="fas fa-trash"></i><span>' + pt('profile.deleteCloud', 'Delete cloud data') + '</span></button>' +
         '    </div>' +
+        // GDPR čl. 17 — brisanje računa je NEPOVRATNO, pa ima vlastiti odjeljak i vlastiti tijek.
+        '    <hr class="profile-danger-sep">' +
+        '    <p class="profile-meta">' + pt('profile.deleteAccountDesc', 'Delete your account permanently. Everything goes: your progress, your materials and their images. This cannot be undone.') + '</p>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="profile-danger-btn profile-danger-btn--hard" id="profileDeleteAccountBtn"><i class="fas fa-user-slash"></i><span>' + pt('profile.deleteAccount', 'Delete account') + '</span></button>' +
+        '    </div>' +
+        '    <form class="profile-delete-form" id="profileDeleteAccountForm" hidden>' +
+        '      <input type="text" id="profileDeleteConfirm" class="auth-modal__input" autocomplete="off" spellcheck="false"' +
+        '        placeholder="' + pt('profile.deleteAccountType', 'Type DELETE to confirm') + '"' +
+        '        aria-label="' + pt('profile.deleteAccountType', 'Type DELETE to confirm') + '">' +
+        '      <p class="profile-delete-status" id="profileDeleteStatus" hidden></p>' +
+        '      <button type="submit" class="profile-danger-btn profile-danger-btn--hard" id="profileDeleteAccountGo">' + pt('profile.deleteAccountGo', 'Delete my account forever') + '</button>' +
+        '    </form>' +
         '  </div>' +
 
         '</div>';
@@ -131,6 +143,12 @@ function renderProfilePage() {
         if (typeof showToast === 'function') showToast(window.t ? t('msg.progressSynced') : 'Progress synced to cloud');
     });
     document.getElementById('profileDeleteCloudBtn').addEventListener('click', deleteCloudData);
+    document.getElementById('profileDeleteAccountBtn').addEventListener('click', function () {
+        const form = document.getElementById('profileDeleteAccountForm');
+        form.hidden = !form.hidden;
+        if (!form.hidden) document.getElementById('profileDeleteConfirm').focus();
+    });
+    document.getElementById('profileDeleteAccountForm').addEventListener('submit', deleteAccount);
 }
 
 function renderProfileStats() {
@@ -227,6 +245,91 @@ async function deleteCloudData() {
     // Odjava odmah gasi sync petlju — inače bi lokalni podaci bili ponovno uploadani.
     await SokratAuth.signOut();
     if (typeof showToast === 'function') showToast(window.t ? t('msg.cloudDataDeleted') : 'Cloud data deleted.');
+    navigateTo('landing');
+}
+
+// ===== GDPR čl. 17 — self-service brisanje računa =====
+//
+// Do 2026-08-08 je ovdje pisalo „za brisanje računa pošalji mail" — na živom proizvodu s EU
+// korisnicima to nije dovoljno. Privilegirani dio (`service_role`) NIKAD ne smije u klijent
+// (ADR-016) → posao radi Edge Function `delete-account`, a ovdje je samo tijek pristanka.
+//
+// Dvostruka potvrda je namjerna i NIJE ista radnja dvaput: prvo se upiše riječ (obara slučajan
+// klik i „samo sam htio vidjeti što je ovo"), pa tek onda ide danger-dijalog.
+
+/** Riječ potvrde. NAMJERNO neprevedena — mora značiti isto na svakom jeziku sučelja. */
+const DELETE_TOKEN = 'DELETE';
+
+/**
+ * Ključevi koji PREŽIVE brisanje računa: postavke uređaja, ne podaci o osobi.
+ * Consent se čuva jer je i sam GDPR-artefakt (dokaz pristanka), a `sokrat-supabase-override`
+ * je test-prekidač — brisanje bi razvalilo staging-sesiju usred testa.
+ */
+const KEEP_LOCAL_KEYS = ['sokrat-theme', 'sokrat-ui-lang', 'sokrat-cookie-consent', 'sokrat-supabase-override'];
+
+/**
+ * Počisti SVE lokalne tragove korisnika. Allow-lista (a ne popis za brisanje) je namjerna:
+ * napredak živi pod slobodnim ključevima (`<predmet>-progress`, `node:<uuid>`, `sokrat-draft:…`),
+ * pa bi popis za brisanje neizbježno nešto propustio čim se doda nov ključ.
+ */
+function purgeLocalAccountData() {
+    try {
+        Object.keys(localStorage)
+            .filter(function (k) { return KEEP_LOCAL_KEYS.indexOf(k) === -1; })
+            .forEach(function (k) { localStorage.removeItem(k); });
+    } catch (e) { /* private mode — nema što čistiti */ }
+}
+
+function _deleteStatus(msg, isErr) {
+    const el = document.getElementById('profileDeleteStatus');
+    if (!el) return;
+    el.textContent = msg || '';
+    el.hidden = !msg;
+    el.classList.toggle('is-error', !!isErr);
+}
+
+async function deleteAccount(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
+    const client = (typeof SokratAuth !== 'undefined') ? SokratAuth.getClient() : null;
+    const user = (typeof SokratAuth !== 'undefined') ? SokratAuth.getUser() : null;
+    if (!client || !user) return;
+
+    const typed = (document.getElementById('profileDeleteConfirm').value || '').trim().toUpperCase();
+    if (typed !== DELETE_TOKEN) {
+        _deleteStatus(pt('profile.deleteAccountMismatch', 'Type DELETE exactly to confirm.').replace('DELETE', DELETE_TOKEN), true);
+        return;
+    }
+
+    const ok = await askConfirm({
+        title: pt('profile.deleteAccountTitle', 'Delete account permanently?'),
+        message: pt('profile.deleteAccountConfirm', 'Your account, progress, materials and images will be deleted for good. This cannot be undone.'),
+        confirmText: pt('profile.deleteAccount', 'Delete account'),
+        danger: true
+    });
+    if (!ok) return;
+
+    const btn = document.getElementById('profileDeleteAccountGo');
+    if (btn) btn.disabled = true;
+    _deleteStatus(pt('profile.deleteAccountWorking', 'Deleting your account…'), false);
+
+    let res;
+    try {
+        res = await client.functions.invoke('delete-account', { method: 'POST' });
+    } catch (err) {
+        res = { error: err };
+    }
+    if (res && res.error) {
+        if (btn) btn.disabled = false;
+        _deleteStatus(pt('profile.deleteAccountFail', 'Could not delete the account: ') + (res.error.message || res.error), true);
+        return;
+    }
+
+    // Račun je obrisan, ali JWT vrijedi do isteka — Supabase NE odjavljuje pri brisanju.
+    // Zato odjava ide prije čišćenja: dok sesija traje, cloud-sync bi vratio lokalni napredak.
+    try { await SokratAuth.signOut(); } catch (err) { /* sesija je ionako mrtva */ }
+    purgeLocalAccountData();
+    if (typeof showToast === 'function') showToast(pt('profile.deleteAccountDone', 'Your account has been deleted.'));
     navigateTo('landing');
 }
 

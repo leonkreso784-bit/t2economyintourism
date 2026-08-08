@@ -25,9 +25,11 @@ function _ensureEditModal() {
     '  <button type="button" class="admin-edit__close" data-admin-edit-close aria-label="Close">&times;</button>' +
     '  <h3 id="adminEditTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editCard', 'Edit flashcard') + '</h3>' +
     '  <label class="admin-edit__field"><span>' + _adminT('admin.question', 'Question') + '</span>' +
-    '    <textarea id="adminEditQ" class="admin-edit__input" rows="3"></textarea></label>' +
+    '    <textarea id="adminEditQ" class="admin-edit__input" rows="3"></textarea>' +
+    '    <span class="admin-edit__count" id="adminEditQCount" aria-live="polite"></span></label>' +
     '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
-    '    <textarea id="adminEditA" class="admin-edit__input" rows="4"></textarea></label>' +
+    '    <textarea id="adminEditA" class="admin-edit__input" rows="4"></textarea>' +
+    '    <span class="admin-edit__count" id="adminEditACount" aria-live="polite"></span></label>' +
     '  <p class="admin-edit__note" id="adminEditNote"></p>' +
     '  <p class="admin-edit__status" id="adminEditStatus" hidden></p>' +
     '  <div class="admin-edit__actions">' +
@@ -41,7 +43,50 @@ function _ensureEditModal() {
   });
   const saveBtn = document.getElementById('adminEditSave');
   if (saveBtn) saveBtn.addEventListener('click', _saveCard);
+  // M5a: brojač uživo. `input` pokriva tipkanje I paste; programsko postavljanje vrijednosti
+  // (_openCardEditor) ga NE okida, pa se ondje _refreshCardCounts zove ručno.
+  ['adminEditQ', 'adminEditA'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', _refreshCardCounts);
+  });
   return m;
+}
+
+// ===== M5a — mjera duljine kartice =====
+//
+// Politika (pragovi + klasifikacija) živi u `js/card-limits.js` i NE prepisuje se ovdje —
+// isti modul čita i `scripts/validate-content.js`. Ovaj sloj je samo prikaz + kočnica.
+//
+// Ovaj editor je JEDINI editor kartica: Studio (`js/studio.js` renderPane) emitira `data-admin-*`
+// kontrole koje hvataju delegati u `js/admin.js` i završe ovdje. Zato javni katalog i osobni
+// materijal dobivaju isto ograničenje bez ijedne druge promjene — `tests/card-limits.authed.spec.js`
+// pada ako se ta pretpostavka ikad prekrši.
+
+/** Ispiši stanje jednog brojača; vrati true ako polje blokira spremanje. */
+function _paintCount(elId, text) {
+  const L = (typeof window !== 'undefined') ? window.SokratCardLimits : null;
+  const el = document.getElementById(elId);
+  if (!L || !el) return false;
+  const m = L.measure(text);
+  el.textContent = m.len + ' / ' + L.HARD;
+  el.classList.toggle('is-warn', m.state === 'warn');
+  el.classList.toggle('is-over', m.state === 'over');
+  return m.blocked;
+}
+
+/** Osvježi oba brojača + omogući/onemogući „Spremi". Vrati true ako je spremanje blokirano. */
+function _refreshCardCounts() {
+  const qEl = document.getElementById('adminEditQ');
+  const aEl = document.getElementById('adminEditA');
+  const qOver = _paintCount('adminEditQCount', qEl ? qEl.value : '');
+  const aOver = _paintCount('adminEditACount', aEl ? aEl.value : '');
+  const blocked = qOver || aOver;
+  const saveBtn = document.getElementById('adminEditSave');
+  if (saveBtn) {
+    saveBtn.disabled = blocked;
+    saveBtn.classList.toggle('is-blocked', blocked);
+  }
+  return blocked;
 }
 
 function _editStatus(msg, isErr) {
@@ -74,6 +119,7 @@ function _openCardEditor(catId, idx) {
   }
   document.getElementById('adminEditQ').value = fc.question || '';
   document.getElementById('adminEditA').value = fc.answer || '';
+  _refreshCardCounts(); // programsko postavljanje ne okida `input` → brojači bi ostali od prošle kartice
   const note = document.getElementById('adminEditNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
@@ -96,6 +142,17 @@ function _saveCard() {
   const q = qEl.value.trim();
   const a = aEl.value.trim();
   if (!q || !a) { _editStatus(_adminT('admin.emptyErr', 'Question and answer must not be empty.'), true); return; }
+
+  // M5a: TVRDA blokada. Onemogućen gumb nije zaštita (Enter, programski klik, izgubljen listener) —
+  // jedina prava kočnica je ova, na jedinom putu koji piše op u draft.
+  const L = (typeof window !== 'undefined') ? window.SokratCardLimits : null;
+  if (L && !L.allows(q, a)) {
+    _refreshCardCounts();
+    _editStatus(_adminT('admin.tooLongErr',
+      'Too long — a flashcard holds at most {max} characters. Move the detail into Learn.')
+      .replace('{max}', String(L.HARD)), true);
+    return;
+  }
 
   const d = _adminDraft();
   const catId = _editTarget.catId;

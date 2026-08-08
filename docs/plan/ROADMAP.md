@@ -1,15 +1,15 @@
 # ROADMAP — Milestones
 
 > ## ⚠️ ČITAJ PRVO — SVE ISPOD PRVE CRTE JE POVIJESNI ZAPIS
-> **Trenutno NEMA aktivnog spec-a.** Faza „Materijal od nule do učenja" je **ispunjena i na produkciji
-> od 2026-08-07** → plan je u [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md),
-> a što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**,
-> ne plan rada.
+> **Aktivni spec je [MJERA_I_ZABORAV.md](./MJERA_I_ZABORAV.md)** (Leon, 2026-08-08). Faza „Materijal od
+> nule do učenja" je **ispunjena i na produkciji od 2026-08-07** → plan je u
+> [archive/MATERIJAL_FAZA.md](../archive/MATERIJAL_FAZA.md), a što proizvod jest piše u
+> [product/UGC_SPEC.md](../product/UGC_SPEC.md). Ovaj dokument je **arhiva puta**, ne plan rada.
 >
-> **Važeća sekvenca (Leon, 2026-08-02):** ~~dovrši fazu „Materijal od nule do učenja"~~ ✅ → **frontend redizajn** →
-> **objava/dijeljenje + MCP**. **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
-> Sljedeći konkretan posao **još nije dogovoren** (Leon, 2026-08-07); otvorene stavke su u
-> [records/BACKLOG.md](../records/BACKLOG.md).
+> **Važeća sekvenca (Leon, 2026-08-02, dopunjena 2026-08-08):** ~~faza „Materijal od nule do učenja"~~ ✅ →
+> **„Mjera i zaborav"** (🔥 dug prije redizajna) → **frontend redizajn** → **objava/dijeljenje + MCP**.
+> **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
+> Doseg dijeljenja je presuđen unaprijed: **link s tajnim tokenom, bez javne biblioteke** u prvoj fazi.
 >
 > ### ⚠️ DVA „F" NUMERIRANJA — **oba su ZATVORENA**, ne miješaj ih
 > | oznaka | gdje | značenje | status |

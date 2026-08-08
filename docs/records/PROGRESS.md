@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-08-b (OPUS) — **faza „Mjera i zaborav": dug prije redizajna**
+
+> Pisano po ADR-027 — **pokazuje, ne prepričava**. Isporuka: [CHANGELOG](./CHANGELOG.md) ·
+> plan i blokade: [plan/MJERA_I_ZABORAV.md](../plan/MJERA_I_ZABORAV.md).
+
+**Odluka o smjeru (Leon).** Predložio sam da **dijeljenje** preskoči frontend redizajn — jer je svaki
+osobni materijal danas slijepa ulica (`nodes` nema stupac vidljivosti), a redizajn prije dijeljenja
+znači crtati iste ekrane dvaput. Leon je izabrao **treće: prvo zatvoriti dva 🔥 duga**, što doslovno
+poštuje njegovo vlastito pravilo *„sve mora savršeno raditi prije nego ga uredimo."* Uz to je unaprijed
+presudio doseg dijeljenja — **link s tajnim tokenom, bez javne biblioteke** — pa se to pitanje neće
+otvarati ponovno.
+
+**Što je promijenilo izvedbu (nalazi, ne pretpostavke):**
+- Studio **nema** vlastiti editor kartica → M5a je promjena na **jednom** mjestu, ne dvije.
+- `validate:content` je već držao **vlastitu kopiju** praga 200 → politika izdvojena u `js/card-limits.js`.
+- Supabase **odbija obrisati korisnika koji posjeduje objekte u Storageu** → čišćenje slika je
+  **preduvjet**, ne higijena. Redoslijed nije stvar ukusa.
+- Brisanje iz `auth.users` **ne odjavljuje** — klijent mora odjaviti sam, prije čišćenja lokalnog
+  napretka (inače ga sync vrati).
+
+**Gdje me test uhvatio.** Prva verzija authed testa tvrdila je da dokazuje pravu kočnicu, a zapravo je
+klikala **onemogućen** gumb — koji uopće ne emitira `click`. Blokada je držala iz krivog razloga. Test
+sad zaobilazi gumb i zove `_saveCard()` izravno. Isto s Edge Functionom: „401" je moglo doći od
+platformske brane, pa test sad traži **baš** `missing_token` — inače bi zelenio na tuđoj zaštiti.
+
+**Što NIJE napravljeno.** Puni destruktivni test brisanja (T4/T5) **ne trči**: treba jednokratnog
+korisnika, a `signUp` na stagingu traži potvrdu maila (`over_email_send_rate_limit`). Odblokira ga
+`STAGING_SUPABASE_SERVICE_KEY` u `.env`, koji može dodati samo Leon. Nije zaobiđeno i nije prikazano
+kao gotovo.
+
+**Nije deployano** — čeka Leonov OK, zasebno za Edge Function na PROD i za push na `main`.
+
+---
+
 ## 2026-08-08 (OPUS) — **BUG-023 + ADR-027: „projekt je postao težak za održavanje"**
 
 > **Namjerno kratko** — puni opis je na po jednom mjestu: isporuka u [CHANGELOG](./CHANGELOG.md) ·
