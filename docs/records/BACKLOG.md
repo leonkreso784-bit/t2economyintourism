@@ -3,6 +3,23 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Akcent kartice = CIJELA kartica u boji, ne samo rub — 2026-08-07
+**Nalaz (Leon, živi pregled M3b):** *„mislio sam da cijela kartica bude crvena a ne samo rubovi ali nema veze."*
+Odgodio je izričito („nema veze"), ali je **očekivanje jasno i vrijedi ga zapisati dok je svježe**:
+boja stavke bi trebala **obojati plohu**, ne samo je obrubiti.
+
+**Zašto je izvedeno kao rub.** M3b je posudio jezik od `.lb-tint` (rub + tinta 10 %), koji je nastao za
+**learn-blokove** — ondje blok teče unutar teksta pa puna ploha ne dolazi u obzir. Kartica je **samostalan
+objekt** i podnijela bi punu boju; kviz i dopuna vjerojatno ostaju na rubu, jer su gušće složeni.
+
+**Prepreka koju treba riješiti prije izvedbe:** lice kartice je **zasićen indigo gradijent**
+(`linear-gradient(135deg, var(--primary), var(--primary-dark))`). Puna boja ondje znači **zamijeniti**
+gradijent akcentom (npr. gradijent izveden iz `--item-acc`), a ne slojevati preko njega — inače se boje
+sudaraju. To dira izgled svih 22 predmeta, pa traži Leonovu presudu o smjeru, ne samo CSS.
+
+**Veže se na:** ugovor boja [UGC_SPEC §3](../product/UGC_SPEC.md) (trebao bi reći **kako** se akcent crta,
+ne samo da postoji) i na **frontend redizajn**, gdje se ionako presuđuje izgled kartice.
+
 ## 🔥 Brisanje računa — self-service „Obriši račun" (GDPR pravo na zaborav) — 2026-07-04
 **Nalaz (korisnik, 2026-07-04):** app NEMA self-service brisanje računa. Postoji samo (a) „Delete cloud data" gumb
 (`js/profile.js:deleteCloudData` — briše `progress` retke preko anon+RLS, odjavi) i (b) tekst „za brisanje računa
