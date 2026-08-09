@@ -166,6 +166,31 @@ function primarySubjects() {
         : [];
 }
 
+/**
+ * Svi predmeti do kojih posjetitelj MOŽE doći, kroz sve programe (Leon, 2026-08-09).
+ *
+ * Landing je dotad brojao samo primarni (EN) program → pisalo je 17, a platforma ih ima 22
+ * (17 EN + 5 HR). HR predmeti su zaseban program (ADR-012, klon-program), ne prijevod u istom —
+ * pa ih `subjectsOf(PRIMARY_PROGRAM)` nije vidio.
+ *
+ * Broji se preko programa, a ne `SOKRAT_CATALOG.subjects.length`, da predmet koji nije nigdje
+ * smješten (pa mu se ne može doći) ne bi napuhao brojku. Deduplicira se po id-u jer isti predmet
+ * smije stajati u više programa (vezni predmeti 1. godine, ADR-022).
+ */
+function allReachableSubjects() {
+    if (typeof SokratCatalog === 'undefined' || typeof SOKRAT_CATALOG === 'undefined') return [];
+    const seen = Object.create(null);
+    const out = [];
+    (SOKRAT_CATALOG.faculties || []).forEach((f) => {
+        (f.programs || []).forEach((p) => {
+            SokratCatalog.subjectsOf(p.id).forEach((s) => {
+                if (s && s.id && !seen[s.id]) { seen[s.id] = true; out.push(s); }
+            });
+        });
+    });
+    return out;
+}
+
 // i18n kratice za dinamički renderirane stringove (browse/landing kartice)
 function _t(key, fallback) { return (typeof t === 'function') ? t(key) : (fallback != null ? fallback : key); }
 function _hr() { return typeof getUiLang === 'function' && getUiLang() === 'hr'; }
@@ -452,7 +477,8 @@ function initBrowse() {
 // Drži landing brojeve usklađene s catalog-om: dodavanjem predmeta broj raste sam.
 function renderLandingMeta() {
     if (typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
-    const count = primarySubjects().length;
+    // Cijela platforma, ne samo EN program — vitrina ispod i dalje prikazuje primarni program.
+    const count = allReachableSubjects().length;
     document.querySelectorAll('[data-meta="subjectCount"]').forEach((el) => {
         el.textContent = count;
     });
