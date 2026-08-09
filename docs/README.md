@@ -70,13 +70,13 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
+| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle C1–C7 |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
-> **Trenutno NEMA aktivnog spec-a.** Zadnje dvije faze ispunjene su i deployane, pa su im planovi
-> istog dana otišli u arhivu (pravilo 1): [archive/MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md)
-> (2026-08-07) i [archive/MJERA_I_ZABORAV.md](./archive/MJERA_I_ZABORAV.md) (2026-08-08).
-> Sljedeća faza dobiva nov spec ovdje kad se dogovori; otvorene stavke dotad žive u
-> [records/BACKLOG.md](./records/BACKLOG.md).
+> Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu
+> (pravilo 1): [MATERIJAL_FAZA.md](./archive/MATERIJAL_FAZA.md) (2026-08-07) i
+> [MJERA_I_ZABORAV.md](./archive/MJERA_I_ZABORAV.md) (2026-08-08) — **referenca, ne izvor istine.**
+> Otvorene stavke izvan tekućeg spec-a žive u [records/BACKLOG.md](./records/BACKLOG.md).
 
 ## `workflow/` — kako radimo
 
@@ -95,7 +95,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | [HISTORY.md](./records/HISTORY.md) | Vremenska crta milestone-a (brza orijentacija) |
 | [CHANGELOG.md](./records/CHANGELOG.md) | Verzije i što se mijenjalo |
 | [PROGRESS.md](./records/PROGRESS.md) | Dnevnik rada po sesijama |
-| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…026) i zašto |
+| [DECISIONS.md](./records/DECISIONS.md) | Arhitektonske odluke (ADR-001…028) i zašto |
 | [BUGS.md](./records/BUGS.md) | Bugovi + lekcije naučene |
 | [BACKLOG.md](./records/BACKLOG.md) | Parkiralište ideja |
 

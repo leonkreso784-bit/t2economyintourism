@@ -4,6 +4,48 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-028 — Frontend prelazi na Tailwind, ali SAMO preko CLI-ja; sadržaj ostaje bez utility-klasa
+**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„koristio bi tailwind za front end"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
+
+**Kontekst — izmjereno prije odluke, ne po dojmu.** CSS je narastao na **10.568 redaka u 32 modula**, a
+`variables.css` ima **147 redaka i ~25 tokena**. Ostalo živi izvan sustava: **62 jedinstvene hex-boje**
+(225 pojavljivanja) izvan token-datoteke · **109 `@media` blokova s 90 različitih breakpointa** ·
+**115 `!important`** (49 samo u `subject-selector.css`, 40 u `responsive/*`). Imena tih datoteka —
+`mobile-core`, `mobile-extra`, `device-sizes`, `component-improvements` — sama priznaju što su:
+slojevi zakrpa. Posljedica nije estetska nego operativna: **svaka vizualna promjena je lov kroz 32
+datoteke i 115 `!important`-a**, zbog čega i sitnica poput „akcent = cijela kartica" izgleda kao projekt.
+
+**Odluka.** Tailwind v4 kao **npm devDependency**; CLI generira **commitan** CSS.
+
+**Zašto baš tako, a ne drukčije:**
+- **Ne rješavamo disciplinom.** Skala se ne održava dogovorom — 90 breakpointa je nastalo unatoč
+  postojanju token-datoteke. Tailwind ih uklanja **po konstrukciji**, jer vlastitu skalu ne možeš izmisliti.
+- **CDN otpada bez rasprave.** `cdn.tailwindcss.com` / `@tailwindcss/browser` ubacuju kompajler u
+  preglednik, skeniraju DOM u runtimeu i rade bljesak neostiliranog sadržaja — i izravno se tuku sa
+  **Service Workerom i immutable cacheom** koje smo gradili cijelu F3 fazu. Tailwind to i sam ne
+  preporučuje za produkciju.
+- **Ne uvodi nov stroj.** `npm run build:css` **već jest** build-korak (32 modula → `styles.bundle.css`,
+  uz CI drift-gate). Tailwind CLI ima **isti oblik**: izvor → generirani bundle → commitan → drift-gate →
+  `?v=` bump (ADR-017). Ograničenje „bez build-koraka" iz `CLAUDE.md` odnosi se na **runtime i
+  frameworke**, i tako se dalje čita.
+
+**Tvrda granica — Tailwind NIKAD ne ulazi u `data/`.** Gradivo sadrži sirovi HTML s klasama. Utility-klase
+ondje značile bi da stil živi u **podatku**, pa bi svaki idući redizajn morao migrirati 22 predmeta i sve
+korisničke materijale — a i UGC-autor bi pisao stil, ne sadržaj. Sadržaj zadržava **semantičke** klase;
+Tailwind je isključivo jezik **okvira aplikacije**. Isto vrijedi za `blocks-renderer.js` kao jedinu
+sigurnosnu granicu renderiranja (ostaje netaknut kao granica, mijenja mu se samo izlazni skup klasa).
+
+**Posljedice:**
+- `styles.bundle.css` i Tailwind-izlaz **koegzistiraju** kroz cijelu tranziciju; modul se briše tek kad
+  njegova površina potpuno prijeđe. Površina je **ili cijela nova ili cijela stara** — polovična je
+  jamstvo za rat specifičnosti.
+- **Dinamički građene klase su nevidljive Tailwindu** (skenira izvor, ne runtime). Naš markup velikim
+  dijelom nastaje u JS-u, pa svako `'bg-' + boja` tiho nestaje iz izlaza. Paleta od 8 boja u editoru mora
+  ostati na **CSS varijablama**, ne na generiranim imenima klasa.
+- Redizajn **ne mijenja ponašanje**. Želja za promjenom toka ide u `BACKLOG.md`, ne u ovu fazu.
+
+---
+
 ## ADR-027 — Znanje ide u kod i testove; proza nosi samo ZAŠTO
 **Datum:** 2026-08-08 · **Status:** ✅ ODLUČENO (Leon) · **Povod:** [BUG-023](./BUGS.md) + Leonov nalaz *„cijeli projekt je postao masivan i težak za održavanje"*
 
