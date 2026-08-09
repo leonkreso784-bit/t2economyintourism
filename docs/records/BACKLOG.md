@@ -29,6 +29,20 @@ redoslijed je bitan:
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
 
+## ➖ Broj pitanja na landingu pokriva samo 17 od 22 predmeta — 2026-08-09
+**Nalaz (uz popravak broja predmeta):** landing sad točno piše **22 predmeta**, ali „**5.700+ pitanja**"
+dolazi iz `scripts/compute-stats.js` koji **namjerno broji samo primarni (EN) program** — da prijevode
+ne broji dvaput. Dok je i broj predmeta bio 17, to je bilo dosljedno; sad više nije.
+
+**Dvije opcije, obje imaju cijenu:**
+- **Ostaviti** — brojka podcjenjuje, ali nikoga ne obmanjuje. *(preporuka; „22 predmeta / 5.700 pitanja"
+  samo izgleda nespretno.)*
+- **Brojati sve** (~7.000+) — dosljedno s brojem predmeta, ali **dvaput broji isto gradivo** na dva jezika.
+
+Pravo rješenje je vjerojatno treće: brojati pitanja **po programu** i prikazivati ono koje odgovara
+jeziku sučelja. To traži da `compute-stats.js` emitira mapu po programu umjesto jednog broja — nije
+veliko, ali nije ni jednoredno. **Veže se na frontend redizajn**, gdje se ionako presuđuje što hero piše.
+
 ## ➖ Akcent kartice = CIJELA kartica u boji, ne samo rub — 2026-08-07
 **Nalaz (Leon, živi pregled M3b):** *„mislio sam da cijela kartica bude crvena a ne samo rubovi ali nema veze."*
 Odgodio je izričito („nema veze"), ali je **očekivanje jasno i vrijedi ga zapisati dok je svježe**:
