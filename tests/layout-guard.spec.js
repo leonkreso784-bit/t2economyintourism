@@ -5,7 +5,11 @@
 // Pixel-perfect toHaveScreenshot je odvojen follow-up (treba Linux baseline; vidi BACKLOG).
 const { test, expect } = require('@playwright/test');
 
-const WIDTHS = [320, 360, 390, 414, 480, 600, 720, 768, 860, 960, 1024, 1280, 1440];
+// 900/1100/1200 su dodani nakon C0 (ADR-029): ulaz u materijale je nav proširio za ~110px i nav je
+// curio kroz CIJELI pojas 861–1190px, a stari uzorak je između 860 i 960 pa 1024 i 1280 imao rupe —
+// gate je propustio i sam prag na kojem se vraća wordmark (1061). Uzorak sada gazi svaku granicu
+// medija u `css/landing.css` (860 · 900 · 1120 · 1200).
+const WIDTHS = [320, 360, 390, 414, 480, 600, 720, 768, 860, 900, 960, 1024, 1100, 1200, 1280, 1440];
 const LANGS = ['en', 'hr'];
 
 test('landing nav: no overflow and CTA never clipped across widths x languages', async ({ page }, testInfo) => {
