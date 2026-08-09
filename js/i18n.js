@@ -231,6 +231,9 @@
     'lnav.how': { en: 'How it works', hr: 'Kako funkcionira' },
     'lnav.modes': { en: 'Study modes', hr: 'Načini učenja' },
     'lnav.about': { en: 'About', hr: 'O nama' },
+    // ⚠️ Rječnik je presuđen u ADR-026: korisnikovo je „materijal", a „gradivo" = JAVNI katalog.
+    // Ne piši „Moje gradivo" — to bi značilo suprotno od onoga što stranica pokazuje.
+    'lnav.materials': { en: 'My materials', hr: 'Moji materijali' },
     'cta.start.lower': { en: 'Start studying', hr: 'Počni učiti' },
     'cta.start.title': { en: 'Start Studying', hr: 'Počni učiti' },
     'auth.signIn': { en: 'Sign in', hr: 'Prijava' },
@@ -371,6 +374,13 @@
     // „Moji materijali" (F2) — osobni UGC-graditelj
     'materials.title': { en: 'My materials', hr: 'Moji materijali' },
     'materials.desc': { en: 'Build your own study material — organise it in folders however you like. Private to you.', hr: 'Gradi vlastite materijale za učenje — složi ih na police kako god želiš. Vidljivo samo tebi.' },
+    // C0 (ADR-029) — vlastiti materijal ima vlastitu stranicu; neprijavljen posjetitelj nikad ne vidi prazan ekran.
+    // ⚠️ NE zovi ovo `materials.open` — taj ključ već postoji niže i znači „Uredi materijal"
+    // (akcija na retku stabla). Duplikat bi tiho pregazio jedan od njih.
+    'materials.openPage': { en: 'Open my materials', hr: 'Otvori moje materijale' },
+    'materials.signedOutTitle': { en: 'Build your own study material', hr: 'Gradi vlastiti materijal' },
+    'materials.signedOutDesc': { en: 'Your own cards, quizzes and notes — organised however you like, private to you, and synced across your devices. You need an account to start.', hr: 'Vlastite kartice, kvizovi i bilješke — složeni kako god želiš, vidljivi samo tebi i sinkronizirani među uređajima. Za početak treba račun.' },
+    'materials.signedOutCta': { en: 'Sign in to start', hr: 'Prijavi se za početak' },
     'materials.newFolder': { en: 'New folder', hr: 'Nova polica' },
     'materials.newStudy': { en: 'New material', hr: 'Novi materijal' },
     'materials.addFolderIn': { en: 'New folder inside', hr: 'Nova polica unutra' },

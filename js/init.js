@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLandingSubjects();     // bind showcase click → lessons
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
+    initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials
     initLearnImageModal();
     setupEventListeners();
     restoreLastPosition();

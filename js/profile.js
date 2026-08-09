@@ -76,12 +76,16 @@ function renderProfilePage() {
         '    </div>' +
         '  </div>' +
 
-        // Moji materijali (F2) — osobni privatni graditelj gradiva. Sadržaj crta
-        // SokratMaterials.mount(); kartica se skriva ako graditelj nije dostupan.
+        // Moji materijali (C0 / ADR-029) — stablo je preseljeno na VLASTITU stranicu `#materials-page`,
+        // jer je vlastiti materijal glavni proizvod, a ne pododjeljak postavki. Ovdje ostaje samo
+        // poveznica: stari put (profil → materijali) i dalje radi, a `#myMaterials` postoji SAMO
+        // na jednom mjestu u dokumentu — dva bi čvora s istim id-em razbila `mount()`.
         '  <div class="profile-card profile-card--wide">' +
         '    <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> ' + pt('materials.title', 'My materials') + '</h3>' +
         '    <p class="profile-meta">' + pt('materials.desc', 'Build your own study material — organise it in folders however you like. Private to you.') + '</p>' +
-        '    <div class="mm" id="myMaterials"></div>' +
+        '    <div class="profile-actions">' +
+        '      <button type="button" class="cta-button primary" data-goto-materials><i class="fas fa-folder-tree"></i><span>' + pt('materials.openPage', 'Open my materials') + '</span></button>' +
+        '    </div>' +
         '  </div>' +
 
         '  <div class="profile-card">' +
@@ -124,8 +128,7 @@ function renderProfilePage() {
     renderProfileStats();
     // Otkrij admin karticu samo adminu (RLS je prava zaštita; ovo je UX). Async re-check.
     if (window.SokratAdmin) SokratAdmin.refresh();
-    // Moji materijali (F2) — async učitavanje korisnikova stabla (RLS-filtrirano).
-    if (window.SokratMaterials) SokratMaterials.mount();
+    // Moji materijali se od C0 montiraju na `#materials-page` (renderMaterialsPage), ne ovdje.
 
     document.getElementById('profileSignOutBtn').addEventListener('click', function () {
         SokratAuth.signOut();

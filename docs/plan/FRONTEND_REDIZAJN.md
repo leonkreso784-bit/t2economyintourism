@@ -7,7 +7,7 @@
 > mjere, odbačene alternative i tvrde granice. Ovdje stoji samo **što se radi i kojim redom**.
 
 > ### 🔄 Preslagano 2026-08-09 (Leon: *„UGC nam postaje glavna stvar, predmeti su samo jedna stvar"*)
-> Editor i vlastito gradivo bili su **zadnji** jer su bili periferni. [ADR-029](../records/DECISIONS.md)
+> Editor i vlastiti materijal bili su **zadnji** jer su bili periferni. [ADR-029](../records/DECISIONS.md)
 > ruši tu pretpostavku, pa idu **naprijed** — a ispred svega dolazi **C0**, koji ulaz u UGC daje odmah,
 > bez ijedne linije Tailwinda.
 
@@ -29,7 +29,7 @@ popravci koji su bez tog temelja bili preskupi.
 
 Faza je gotova kad **korisnik**, ne kad je gate zelen:
 
-0. **…doći do vlastitog gradiva bez objašnjenja** — vidi ulaz odmah, iz navigacije i s landinga, bez
+0. **…doći do vlastitog materijala bez objašnjenja** — vidi ulaz odmah, iz navigacije i s landinga, bez
    ulaska u profil i bez skrolanja kroz postavke ([ADR-029](../records/DECISIONS.md)).
 1. **…proći cijeli tok na telefonu od 320 px** — landing → browse → predmet → sva četiri moda → vježbe →
    profil → editor — **bez horizontalnog scrolla i bez elementa koji strši ili je prekriven.**
@@ -54,7 +54,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 
 | # | cigla | što nestaje | gotovo kad |
 |---|---|---|---|
-| **C0** | **Ulaz u vlastito gradivo** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
+| **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | ništa | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
 | **C2** | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` (1.000) | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
@@ -63,10 +63,16 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
 | **C7** | **Gašenje** | `responsive/*` (6 datoteka, 40 `!important`), `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
 
-**C0 ide prvi i ne čeka ništa.** To nije redizajn nego popravak informacijske arhitekture: danas se
-„Moji materijali" montiraju **unutar profila** (`js/profile.js`), nemaju vlastitu stranicu ni rutu, a
-landing nav (`Subjects · How it works · Study modes · About`) glavni proizvod **ne spominje**. Dok je
-tako, nikakav novi izgled ne pomaže — korisnik do njega ne dođe.
+**C0 ide prvi i ne čeka ništa.** To nije redizajn nego popravak informacijske arhitekture: prije njega
+su se „Moji materijali" montirali **unutar profila**, bez vlastite stranice i rute, a landing nav
+(`Subjects · How it works · Study modes · About`) glavni proizvod **nije spominjao**. Dok je tako,
+nikakav novi izgled ne pomaže — korisnik do njega ne dođe.
+
+**Izvedeno u C0:** vlastita stranica `#materials-page` · ruta **`#/materials`** (`#/`-prefiks da se ne
+sudari s postojećim sidrenim linkovima landinga) koja **pobjeđuje spremljenu poziciju** · ulaz **prvi u
+landing-navu** + ikona u zaglavljima browse/lessons/study · profil zadržao **poveznicu**, ne widget
+(dva `#myMaterials` u dokumentu razbila bi `mount()`) · **odjavljen posjetitelj vidi poziv na prijavu, ne
+prazan ekran** — to je jedini razlog zašto ulaz smije stajati u navigaciji i prije prijave.
 
 **C1 nema vizualnog učinka i to je namjerno.** Ako se u njemu išta promijeni, znači da smo promijenili
 dvije stvari odjednom i ne znamo koja je pukla.

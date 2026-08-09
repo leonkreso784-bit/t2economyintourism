@@ -244,7 +244,7 @@ Ove su odluke donesene prije pisanja arhitekture, upravo da se to ne ponovi.
 8. **Kvote — granicu zapisati sad, provesti kasnije.** Danas postoji samo 5 MB po datoteci.
 
 **Posljedica.** Sljedeći posao nije frontend redizajn nego **dovršetak osobnog gradiva**: kartice/kviz/dopune
-se ne mogu napraviti od nule (`presentModes` crta mod samo ako je niz neprazan) i iz vlastitog gradiva se
+se ne mogu napraviti od nule (`presentModes` crta mod samo ako je niz neprazan) i iz vlastitog materijala se
 **ne može učiti** (`initStudyPage` vuče isključivo iz kataloga).
 
 ---

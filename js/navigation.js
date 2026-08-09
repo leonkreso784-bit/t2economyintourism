@@ -37,6 +37,11 @@ async function isSubjectOpenable(subjectId) {
 
 async function restoreLastPosition() {
     try {
+        // IZRIČITA RUTA U ADRESI POBJEĐUJE SPREMLJENU POZICIJU (C0). Obnova je asinkrona
+        // (`isSubjectOpenable` čeka mrežu), pa bi inače dvije sekunde nakon otvaranja dijeljenog
+        // linka korisnika odbacila na prošli predmet — a on je tražio točno određenu stranicu.
+        if (location.hash === MATERIALS_ROUTE) return;
+
         const saved = localStorage.getItem('sokrat-last-position');
         if (saved) {
             const position = JSON.parse(saved);
@@ -71,6 +76,7 @@ async function restoreLastPosition() {
 
 // ========== PAGE NAVIGATION ==========
 let profileReturnPage = null; // kamo vodi "back" s Profile stranice
+let materialsReturnPage = null; // kamo vodi "back" sa stranice vlastitog materijala (C0)
 
 function navigateTo(page, data = {}) {
     // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
@@ -80,11 +86,17 @@ function navigateTo(page, data = {}) {
     if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin' && AppState.nav.page !== 'editor') {
         profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
     }
+    // Isti razlog kao za profil: „back" mora vratiti odakle si došao, a ne uvijek na landing.
+    // Dolazak iz samog sebe ne prepisuje cilj (inače bi back vodio na materijale = petlja).
+    if (page === 'materials' && AppState.nav.page !== 'materials') {
+        materialsReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
+    }
     AppState.nav.page = page;
-    // Profile/Admin/Editor se NE spremaju kao "last position" (ovise o auth sesiji / admin statusu koji na reloadu još nisu spremni).
-    if (page !== 'profile' && page !== 'admin' && page !== 'editor') saveCurrentPosition(page, data);
+    // Profile/Admin/Editor/Materials se NE spremaju kao "last position" (ovise o auth sesiji / admin
+    // statusu koji na reloadu još nisu spremni — obnova bi otvorila prazan ekran; usp. BUG-023).
+    if (page !== 'profile' && page !== 'admin' && page !== 'editor' && page !== 'materials') saveCurrentPosition(page, data);
 
-    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .profile-page, .admin-page, .studio-page').forEach(p => {
+    document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .materials-page, .profile-page, .admin-page, .studio-page').forEach(p => {
         p.classList.remove('active');
     });
 
@@ -120,6 +132,13 @@ function navigateTo(page, data = {}) {
         case 'about':
             document.getElementById('about-page').classList.add('active');
             break;
+        case 'materials':
+            // C0 / ADR-029: vlastiti materijal je ravnopravno odredište. Stranica se smije otvoriti i
+            // BEZ prijave — renderPage() tada pokaže poziv na prijavu umjesto stabla.
+            if (window.SokratMaterials) SokratMaterials.renderPage();
+            document.getElementById('materials-page').classList.add('active');
+            closeSidebar();
+            break;
         case 'profile':
             if (typeof renderProfilePage === 'function') renderProfilePage();
             document.getElementById('profile-page').classList.add('active');
@@ -138,7 +157,68 @@ function navigateTo(page, data = {}) {
             break;
     }
 
+    // Adresa prati stranicu (zasad postoji jedna ruta). `replaceState` namjerno: ne trpa u povijest
+    // i ne okida `hashchange`. Bez čišćenja pri odlasku ruta bi ostala u adresi, pa bi reload s
+    // landinga vratio korisnika na materijale.
+    if (history && history.replaceState) {
+        if (page === 'materials') {
+            if (location.hash !== MATERIALS_ROUTE) history.replaceState(null, '', MATERIALS_ROUTE);
+        } else if (location.hash === MATERIALS_ROUTE) {
+            history.replaceState(null, '', location.pathname + location.search);
+        }
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ========== VLASTITO GRADIVO — ulazi i ruta (C0 / ADR-029) ==========
+
+// Ruta je namjerno `#/`-prefiksirana: landing već koristi gole sidrene linkove
+// (`#subjects`, `#how`, `#modes`, `#top`), pa bi goli `#materials` bio u istom
+// prostoru imena i sudario bi se s njima.
+const MATERIALS_ROUTE = '#/materials';
+
+/**
+ * Sve ulaze u vlastiti materijal veže JEDAN delegirani listener, jer se dio njih (gumb na profilu)
+ * renderira `innerHTML`-om nakon što bi izravno vezivanje već prošlo.
+ */
+function initMaterialsEntries() {
+    document.addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-goto-materials]');
+        if (!btn) return;
+        e.preventDefault();
+        navigateTo('materials');
+    });
+
+    const back = document.getElementById('backFromMaterials');
+    if (back) {
+        back.addEventListener('click', function () {
+            const ret = materialsReturnPage;
+            if (ret && ret.page && ret.page !== 'materials') navigateTo(ret.page, ret.data || {});
+            else navigateTo('landing');
+        });
+    }
+
+    const signIn = document.getElementById('materialsSignInBtn');
+    if (signIn) {
+        signIn.addEventListener('click', function () {
+            if (typeof SokratAuth !== 'undefined') SokratAuth.openModal();
+        });
+    }
+
+    // Stranica se mora moći otvoriti izravnim linkom.
+    if (location.hash === MATERIALS_ROUTE) navigateTo('materials');
+    window.addEventListener('hashchange', function () {
+        if (location.hash === MATERIALS_ROUTE && AppState.nav.page !== 'materials') navigateTo('materials');
+    });
+
+    // Prijava/odjava dok je stranica otvorena mora prebaciti plohu (stablo ⇄ poziv na prijavu),
+    // inače odjavljen korisnik gleda tuđe stablo do sljedeće navigacije.
+    if (typeof SokratAuth !== 'undefined') {
+        SokratAuth.onChange(function () {
+            if (AppState.nav.page === 'materials' && window.SokratMaterials) SokratMaterials.renderPage();
+        });
+    }
 }
 
 // ========== SIDEBAR ==========

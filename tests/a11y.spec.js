@@ -70,4 +70,20 @@ test.describe('a11y — no serious/critical axe violations', () => {
     if (gated.length) console.log('PROFILE violations:', JSON.stringify(gated, null, 2));
     expect(gated).toEqual([]);
   });
+
+  // C0 (ADR-029): vlastiti materijal je od sada ravnopravno odredište, pa mora ući i u a11y-gate.
+  // Skenira se ODJAVLJENO — to je ploha s pozivom na prijavu, koju vidi svaki novi posjetitelj,
+  // i jedina koja ne ovisi o test-računu. (Prije C0 gate je pokrivao 4 stranice; sad 5.)
+  test('vlastiti materijal (odjavljen)', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'a11y se skenira na jednom viewportu');
+    await page.goto('/');
+    await page.waitForFunction(() => window.navigateTo);
+    await page.evaluate(() => window.navigateTo('materials'));
+    await page.waitForSelector('#materials-page.active');
+    await page.waitForTimeout(400);
+    const results = await new AxeBuilder({ page }).analyze();
+    const gated = gateViolations(results);
+    if (gated.length) console.log('MATERIALS violations:', JSON.stringify(gated, null, 2));
+    expect(gated).toEqual([]);
+  });
 });

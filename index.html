@@ -13,11 +13,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260809230135">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260809230135">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260809230135">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260809230135">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260809230135">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260810004429">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260810004429">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260810004429">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260810004429">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260810004429">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -48,7 +48,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260809230135">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260810004429">
 
     <!-- F3 3D.2: Google Fonts učitan ASINKRONO (media=print → onload media=all) → ne blokira prvi
          paint. `display=swap` ionako renderira tekst u fallback fontu pa swapne. <noscript> fallback
@@ -77,7 +77,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260809230135">
+    <link rel="stylesheet" href="css/consent.css?v=20260810004429">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -88,8 +88,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260809230135" defer></script>
-    <script src="js/consent.js?v=20260809230135" defer></script>
+    <script src="js/monitoring.js?v=20260810004429" defer></script>
+    <script src="js/consent.js?v=20260810004429" defer></script>
 </head>
 <body>
     
@@ -107,10 +107,17 @@
         <!-- Top Navigation (fixed) -->
         <header class="landing-nav" id="top" role="banner"><!-- a11y (F3 3E.2): banner landmark (logo/lang/auth izvan <nav> bili orphani) -->
             <a class="landing-logo" href="#top" aria-label="Sokrat Study home">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260809230135" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260810004429" alt="Sokrat Study Logo" class="logo-image"></div>
                 <span class="logo-text">Sokrat Study</span>
             </a>
             <nav class="landing-nav-links" aria-label="Primary">
+                <!-- ADR-029: vlastiti materijal je GLAVNI proizvod, pa stoji PRVO i vidljivo je i
+                     neprijavljenom posjetitelju (stranica sama nosi poziv na prijavu). -->
+                <button type="button" class="nav-link-btn nav-link-btn--accent" data-goto-materials
+                        aria-label="My materials" data-i18n-aria="materials.title">
+                    <i class="fas fa-folder-tree" aria-hidden="true"></i>
+                    <span data-i18n="lnav.materials">My materials</span>
+                </button>
                 <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
                 <a href="#how" data-i18n="lnav.how">How it works</a>
                 <a href="#modes" data-i18n="lnav.modes">Study modes</a>
@@ -303,7 +310,7 @@
             <div class="footer-cols">
                 <div class="footer-brand">
                     <div class="landing-logo">
-                        <div class="logo-wrapper"><img src="assets/logo.svg?v=20260809230135" alt="Sokrat Study Logo" class="logo-image"></div>
+                        <div class="logo-wrapper"><img src="assets/logo.svg?v=20260810004429" alt="Sokrat Study Logo" class="logo-image"></div>
                         <span class="logo-text">Sokrat Study</span>
                     </div>
                     <p data-i18n="footer.tagline">Interactive exam prep for FMTU Opatija &mdash; built by students, for students.</p>
@@ -340,7 +347,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260809230135" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260810004429" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -369,11 +376,14 @@
                 <i class="fas fa-globe"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
+            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
+                <i class="fas fa-folder-tree" aria-hidden="true"></i>
+            </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
             </button>
             <div class="browse-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260809230135" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260810004429" alt="Sokrat Study" class="logo-image"></div>
             </div>
         </header>
         <main class="browse-content">
@@ -398,11 +408,14 @@
                 <i class="fas fa-globe"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
+            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
+                <i class="fas fa-folder-tree" aria-hidden="true"></i>
+            </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
             </button>
         </header>
-        
+
         <main class="lessons-content">
             <div class="lessons-intro">
                 <p id="subjectDescription">Select a lesson to start studying</p>
@@ -427,6 +440,9 @@
             <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
                 <i class="fas fa-globe"></i>
                 <span class="lang-toggle-label">EN</span>
+            </button>
+            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
+                <i class="fas fa-folder-tree" aria-hidden="true"></i>
             </button>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
@@ -999,7 +1015,7 @@
         </header>
         <main class="about-content">
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260809230135" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260810004429" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline">Created by students, for students</p>
             </div>
 
@@ -1060,6 +1076,45 @@
         </main>
     </section>
 
+    <!-- ==================== MY MATERIALS (C0 / ADR-029 — vlastiti materijal je RAVNOPRAVNO odredište) ====================
+         Prije C0 se ovo montiralo kao kartica UNUTAR profila: nije imalo stranicu, rutu ni ulaz u navigaciji,
+         pa se do glavnog proizvoda dolazilo tek kroz postavke. Sadržaj i dalje crta SokratMaterials.mount()
+         u `#myMaterials` — jedina razlika je GDJE taj čvor živi. Profil je zadržao samo poveznicu ovamo.  -->
+    <section id="materials-page" class="materials-page">
+        <header class="profile-header" role="banner"><!-- a11y: banner landmark (isti obrazac kao profil) -->
+            <button class="back-btn" id="backFromMaterials" aria-label="Go back">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </button>
+            <h1 data-i18n="materials.title">My materials</h1>
+            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
+                <i class="fas fa-user"></i>
+            </button>
+        </header>
+        <main class="profile-content">
+            <!-- Prijavljen korisnik: stablo. Klasu `.profile-card` NE mijenjamo — `mount()` traži
+                 `closest('.profile-card')` da sakrije karticu kad graditelj nije dostupan, a i izgled
+                 ostaje bajt-identičan onome iz profila (C0 ne redizajnira ništa). -->
+            <div class="profile-card profile-card--wide" id="materialsCard">
+                <p class="profile-meta" data-i18n="materials.desc">Build your own study material — organise it in folders however you like. Private to you.</p>
+                <div class="mm" id="myMaterials"></div>
+            </div>
+            <!-- Neprijavljen posjetitelj: NIKAD prazna stranica. Ovo je jedini razlog zašto ulaz smije
+                 stajati u navigaciji i prije prijave — put do vlastitog materijala mora biti vidljiv (ADR-029). -->
+            <div class="profile-card profile-card--wide" id="materialsSignedOut" hidden>
+                <h3 class="profile-card-title"><i class="fas fa-folder-tree"></i> <span data-i18n="materials.signedOutTitle">Build your own study material</span></h3>
+                <p class="profile-meta" data-i18n="materials.signedOutDesc">Your own cards, quizzes and notes — organised however you like, private to you, and synced across your devices. You need an account to start.</p>
+                <div class="profile-actions">
+                    <!-- NAMJERNO bez klase `auth-entry`: taj obrazac prepisuje `aria-label` na „Sign in",
+                         pa se pristupačno ime ne bi poklapalo s vidljivim tekstom (axe „label-in-name").
+                         Ulaz je isti — `SokratAuth.openModal()` — samo vezan izravno. -->
+                    <button type="button" class="cta-button primary" id="materialsSignInBtn">
+                        <i class="fas fa-user"></i><span data-i18n="materials.signedOutCta">Sign in to start</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </section>
+
     <!-- ==================== ADMIN PAGE (F4 CRUD — ulaz je admin-only; write RLS-zaštićen) ==================== -->
     <section id="admin-page" class="admin-page">
         <header class="profile-header" role="banner"><!-- a11y: banner landmark (kao profil) -->
@@ -1110,53 +1165,53 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260809230135"></script>
+    <script src="data/catalog.js?v=20260810004429"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260809230135"></script>
+    <script src="data/landing-stats.js?v=20260810004429"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260809230135"></script>
+    <script src="js/i18n.js?v=20260810004429"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260809230135"></script>
-    <script src="js/config.js?v=20260809230135"></script>
-    <script src="js/content-loader.js?v=20260809230135"></script>
+    <script src="js/app-state.js?v=20260810004429"></script>
+    <script src="js/config.js?v=20260810004429"></script>
+    <script src="js/content-loader.js?v=20260810004429"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260809230135"></script>
-    <script src="js/components/sokrat-toast.js?v=20260809230135"></script>
-    <script src="js/components/sokrat-modal.js?v=20260809230135"></script>
+    <script src="js/content-repo.js?v=20260810004429"></script>
+    <script src="js/components/sokrat-toast.js?v=20260810004429"></script>
+    <script src="js/components/sokrat-modal.js?v=20260810004429"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260809230135"></script>
-    <script src="js/utils.js?v=20260809230135"></script>
-    <script src="js/storage.js?v=20260809230135"></script>
-    <script src="js/analytics.js?v=20260809230135"></script>
-    <script src="js/navigation.js?v=20260809230135"></script>
-    <script src="js/math.js?v=20260809230135"></script>
-    <script src="js/blocks-renderer.js?v=20260809230135"></script>
-    <script src="js/flashcards.js?v=20260809230135"></script>
-    <script src="js/quiz.js?v=20260809230135"></script>
-    <script src="js/fill-blanks.js?v=20260809230135"></script>
-    <script src="js/learn.js?v=20260809230135"></script>
-    <script src="js/progress.js?v=20260809230135"></script>
-    <script src="js/blind-map.js?v=20260809230135"></script>
-    <script src="js/exercises-core.js?v=20260809230135"></script>
-    <script src="js/acc-kernel.js?v=20260809230135"></script>
-    <script src="js/exercises.js?v=20260809230135"></script>
-    <script src="js/auth.js?v=20260809230135"></script>
-    <script src="js/draft-store.js?v=20260809230135"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260810004429"></script>
+    <script src="js/utils.js?v=20260810004429"></script>
+    <script src="js/storage.js?v=20260810004429"></script>
+    <script src="js/analytics.js?v=20260810004429"></script>
+    <script src="js/navigation.js?v=20260810004429"></script>
+    <script src="js/math.js?v=20260810004429"></script>
+    <script src="js/blocks-renderer.js?v=20260810004429"></script>
+    <script src="js/flashcards.js?v=20260810004429"></script>
+    <script src="js/quiz.js?v=20260810004429"></script>
+    <script src="js/fill-blanks.js?v=20260810004429"></script>
+    <script src="js/learn.js?v=20260810004429"></script>
+    <script src="js/progress.js?v=20260810004429"></script>
+    <script src="js/blind-map.js?v=20260810004429"></script>
+    <script src="js/exercises-core.js?v=20260810004429"></script>
+    <script src="js/acc-kernel.js?v=20260810004429"></script>
+    <script src="js/exercises.js?v=20260810004429"></script>
+    <script src="js/auth.js?v=20260810004429"></script>
+    <script src="js/draft-store.js?v=20260810004429"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260809230135"></script>
-    <script src="js/block-editor-media.js?v=20260809230135"></script>
-    <script src="js/block-editor.js?v=20260809230135"></script>
-    <script src="js/card-limits.js?v=20260809230135"></script>
-    <script src="js/admin.js?v=20260809230135"></script>
-    <script src="js/admin-editors.js?v=20260809230135"></script>
-    <script src="js/studio.js?v=20260809230135"></script>
-    <script src="js/cloud-sync.js?v=20260809230135"></script>
+    <script src="js/node-images.js?v=20260810004429"></script>
+    <script src="js/block-editor-media.js?v=20260810004429"></script>
+    <script src="js/block-editor.js?v=20260810004429"></script>
+    <script src="js/card-limits.js?v=20260810004429"></script>
+    <script src="js/admin.js?v=20260810004429"></script>
+    <script src="js/admin-editors.js?v=20260810004429"></script>
+    <script src="js/studio.js?v=20260810004429"></script>
+    <script src="js/cloud-sync.js?v=20260810004429"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260809230135"></script>
-    <script src="js/profile.js?v=20260809230135"></script>
-    <script src="js/init.js?v=20260809230135"></script>
+    <script src="js/my-materials.js?v=20260810004429"></script>
+    <script src="js/profile.js?v=20260810004429"></script>
+    <script src="js/init.js?v=20260810004429"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260809230135" defer></script>
+    <script src="js/sw-register.js?v=20260810004429" defer></script>
 </body>
 </html>

@@ -5,6 +5,61 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-09 (OPUS) — **smjer: UGC je glavni proizvod; otvoren frontend redizajn; C0 isporučen**
+
+> Pisano po ADR-027 — **pokazuje, ne prepričava**. Odluke: [ADR-028](./DECISIONS.md) (Tailwind,
+> Next.js odbijen) i [ADR-029](./DECISIONS.md) (UGC je glavni proizvod) · plan: [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md).
+
+**Deployano uz izričit OK:** `a7f1a64..5e31c31` + `..00e134b` (ćirilica + 7. provjera u `check:docs`).
+Verificirano pravilom #7 — Vercel `dpl_CRDx…` READY, token `20260809230135`, posluženi
+`macroeconomics` JSON-ovi s **produkcije**: 0 ćiriličnih znakova. ⚠️ **Provjera Nodeom, ne `grep`-om:**
+raspon `[Ѐ-ӿ]` u Git Bashu pada na bajtove i lažno prijavi hrvatske dijakritike — prvi pokušaj javio
+„80 ćiriličnih redaka" na **čistoj** datoteci.
+
+**Redizajn: izmjereno prije prijedloga.** CSS 10.568 redaka / 32 modula, a `variables.css` 147 redaka
+(~25 tokena) · **62 hex-boje izvan tokena** (225 pojavljivanja) · **109 `@media` s 90 breakpointa** ·
+**115 `!important`**. Skala se ne održava dogovorom — 90 breakpointa nastalo je *unatoč* postojanju
+token-datoteke. Otud Tailwind, i to **samo preko CLI-ja**.
+
+**Next.js razmotren i odbijen** (ADR-028): globalne skripte fiksnog redoslijeda, vježbe kao ubrizgani
+`<script>`, SW + `?v=`, 304 testa na `window.*` → to je prepisivanje aplikacije. Jedini pravi argument
+(SSR za dijeljeni materijal) otpada jer dijeljenje ide **tajnim tokenom** — te stranice **ne smiju** biti
+javno pronalažljive.
+
+**Leonov zaokret:** *„UGC nam postaje glavna stvar, predmeti su samo jedna stvar."* Provjereno u kodu:
+**„Moji materijali" nisu bili stranica** — montirali su se kao `<div class="mm">` unutar profila, bez
+rute i bez ulaza u navigaciji; landing nav glavni proizvod **nije spominjao**. Glavni proizvod je bio
+**widget u postavkama** → ADR-029 + preslagane cigle (editor s C6 na C3).
+
+**C0 — ulaz u vlastiti materijal** (grana `feature/c0-ugc-ulaz`): `#materials-page` · ruta **`#/materials`**
+(`#/`-prefiks jer landing već koristi gole sidrene linkove) koja **pobjeđuje spremljenu poziciju** —
+obnova je asinkrona, pa bi inače korisnika sekundu nakon otvaranja linka odbacila na prošli predmet ·
+ulaz **prvi u navu** + ikona u tri zaglavlja · profil zadržao **poveznicu**, ne widget · **odjavljen
+posjetitelj dobiva poziv na prijavu, ne prazan ekran**.
+
+**⚠️ Najvažniji nalaz — ulaz je na mobitelu bio nevidljiv.** Testovi su pali na `iPhone-15Pro-393`
+jer `@media (max-width: 860px)` skriva **cijelu** `.landing-nav-links` grupu (komentar je zvao te
+linkove „sekundarni marketing-anchori"). Moj ulaz je upao u istu grupu → na **primarnom uređaju**
+nije postojao. Popravljeno: skrivaju se **anchori**, ne grupa (`a, .nav-link-btn:not(--accent)`),
+a ispod 480px ulaz postaje **ikona** (labela bi stisnula CTA u „Start studyin"). Izmjereno na
+375/393/430/860/1280 px: vidljiv svugdje, **h-overflow = 0**, CTA netaknut.
+
+**Rječnik: prekršio sam ADR-026 pa se sam ispravio.** HR labele su govorile *„Moje gradivo"* — a
+ADR-026 kaže da je **„gradivo" javni katalog**, korisnikovo je **„materijal"**. Ispravljeno u
+sučelju i u prozi; i18n je dobio komentar-branu na tom ključu.
+
+**Tri zamke koje su gate-ovi ulovili, a ne bih ih vidio čitanjem:**
+- **`typecheck` uhvatio duplikat i18n ključa** — `materials.open` već postoji i znači „Uredi materijal"
+  (akcija na retku stabla). Moj duplikat bi ga tiho pregazio → preimenovan u `materials.openPage`.
+- **Playwright uhvatio dvostruku deklaraciju.** `const MATERIALS_ROUTE` ostao je i na starom i na novom
+  mjestu nakon premještanja → `SyntaxError: Identifier already declared` **ruši cijeli `navigation.js`**,
+  pa je s njim otišao i landing (0 kartica, `renderLandingMeta is not defined`). 5 od 6 testova palo —
+  i to na tvrdnjama koje s rutom nemaju veze. **Pouka: u vanili bez modula jedna dvostruka `const`
+  ruši cijelu datoteku, ne samo svoj redak.**
+- **Gumb „Prijavi se" NAMJERNO nema klasu `auth-entry`**: taj obrazac prepisuje `aria-label` na „Sign in"
+  svima, pa se pristupačno ime ne bi poklapalo s vidljivim tekstom (axe „label-in-name"). Vezan izravno
+  na `SokratAuth.openModal()`.
+
 ## 2026-08-08-b (OPUS) — **faza „Mjera i zaborav": dug prije redizajna**
 
 > Pisano po ADR-027 — **pokazuje, ne prepričava**. Isporuka: [CHANGELOG](./CHANGELOG.md) ·

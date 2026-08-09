@@ -3,7 +3,7 @@
 **Status:** živi dokument · **Verzija PRD-a:** 0.6 · **Zadnja izmjena:** 2026-08-09
 
 ## 1. Vizija
-Sokrat Study je platforma na kojoj **svatko gradi vlastito gradivo i iz njega uči** —
+Sokrat Study je platforma na kojoj **svatko gradi vlastiti materijal i iz njega uči** —
 kartice, kvizove, dopune i skriptu — pa ga kasnije smije podijeliti i natjecati se.
 **To je proizvod.** Javni katalog (danas 22 predmeta s FMTU Opatija) je **jedan od izvora
 gradiva**, dokaz da model radi i način da netko počne bez praznog ekrana — **ali nije ono
@@ -49,7 +49,7 @@ ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoško
 | **Temelj** | data-driven katalog, hijerarhijska navigacija, Supabase read-path (anon+RLS, ADR-011), CI/CD, offline, monitoring | ✅ |
 | **Javni katalog + autorstvo** | sadržaj 22 predmeta, Studio editor za administratore, atomična i verzionirana objava | ✅ |
 | **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | ✅ — svih 5 kriterija iz [UGC_SPEC.md](./UGC_SPEC.md) |
-| **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda); vlastito gradivo dobiva **ravnopravno odredište** — stranicu i ulaz u navigaciji, a ne pododjeljak profila (ADR-029) | 🟦 |
+| **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda); vlastiti materijal dobiva **ravnopravno odredište** — stranicu i ulaz u navigaciji, a ne pododjeljak profila (ADR-029) | 🟦 |
 | **Objava i dijeljenje + MCP** | materijal se smije podijeliti; vanjski AI gradi materijal preko korisnikovog ključa (ADR-026) | ⬜ |
 | **Natjecanje + društveno** | ljestvice, profili, statistika učenja, anti-cheat | ⬜ |
 | **Monetizacija** | freemium/paywall na **funkcionalnosti**, ne na sadržaju | ⬜ |
@@ -80,7 +80,7 @@ ne kroz našu cijev — pa ni kvote troška nisu na nama.
   javnog kataloga (`profiles.role` + `is_admin()`). Sadržajni suradnik radi kroz PR, ne kroz aplikaciju.
 
 ## 8. Mjere uspjeha
-- **Pronalažljivost (ADR-029):** korisnik koji prvi put dođe **vidi put do vlastitog gradiva bez
+- **Pronalažljivost (ADR-029):** korisnik koji prvi put dođe **vidi put do vlastitog materijala bez
   objašnjenja i bez ulaska u profil**. Dok se do njega dolazi skrolanjem kroz postavke, ono nije proizvod.
 - **Osobni materijal:** korisnik bez pomoći autora napravi materijal od nule i uči iz njega
   (mjeri se po [UGC_SPEC §2](./UGC_SPEC.md), ne po zelenim testovima).

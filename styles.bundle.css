@@ -137,6 +137,7 @@ body {
 .lessons-page,
 .study-page,
 .about-page,
+.materials-page,
 .profile-page,
 .admin-page {
     display: none;
@@ -147,6 +148,7 @@ body {
 .lessons-page.active,
 .study-page.active,
 .about-page.active,
+.materials-page.active,
 .profile-page.active,
 .admin-page.active {
     display: flex;
@@ -731,6 +733,25 @@ body {
     color: var(--primary-light);
 }
 
+/* Ulaz u vlastito gradivo (C0 / ADR-029): glavni proizvod, pa stoji prvi i naglašeno —
+   ostale stavke nava su tekst, ova je „pilula" s ikonom. */
+.nav-link-btn--accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.14);
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    color: var(--primary-light);
+}
+
+.nav-link-btn--accent:hover {
+    color: var(--text-primary);
+    border-color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.24);
+}
+
 .cta-button.nav-cta {
     padding: 0.6rem 1.15rem;
     font-size: 0.9rem;
@@ -1135,9 +1156,14 @@ body {
 }
 
 /* Ispod ~860px anchor-linkovi + toggle + auth + CTA više ne stanu u jedan red → sakrij linkove
-   (sekundarni marketing-anchori; isti obrazac kao prije, samo viši prag jer 🌐 toggle troši širinu). */
+   (sekundarni marketing-anchori; isti obrazac kao prije, samo viši prag jer 🌐 toggle troši širinu).
+   ⚠️ C0/ADR-029: ulaz u vlastite materijale se NE skriva. Prije je ovdje stajalo
+   `.landing-nav-links { display: none }`, što je na mobitelu — a to je primarni uređaj — brisalo
+   ulaz u glavni proizvod. Skrivaju se ANCHORI, ne cijela grupa. */
 @media (max-width: 860px) {
-    .landing-nav-links { display: none; }
+    .landing-nav-links { gap: 0.6rem; }
+    .landing-nav-links a,
+    .landing-nav-links .nav-link-btn:not(.nav-link-btn--accent) { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -1153,6 +1179,17 @@ body {
     /* .logo-text već skriven od ≤1060px (brand = Sokrat medaljon) */
     .lang-toggle { padding: 0.4rem 0.6rem; gap: 0.3rem; }
     .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
+    /* Ulaz u materijale ostaje, ali kao IKONA — na 375px labela uz toggle, auth i CTA više ne stane
+       i stisnula bi CTA u „Start studyin". Pristupačno ime nosi `aria-label` (isti tekst kao labela),
+       pa sakrivanje spana ne ostavlja gumb bez imena. */
+    .nav-link-btn--accent span { display: none; }
+    .nav-link-btn--accent {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+    }
 }
 
 /* ==================== css/sidebar.css ==================== */
@@ -9824,6 +9861,32 @@ sokrat-modal.auth-modal > * {
 }
 
 .header-auth-btn.is-signed-in { color: var(--primary-light); }
+
+/* ---------- Ulaz u vlastito gradivo (C0 / ADR-029) ----------
+   Isti oblik kao auth-gumb da se zaglavlja ne razilaze, ali NAGLAŠEN: vlastito gradivo
+   je glavni proizvod, pa ne smije izgledati kao još jedna sekundarna ikona. */
+
+.header-materials-btn {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.14);
+    border: 1px solid rgba(99, 102, 241, 0.45);
+    border-radius: 50%;
+    color: var(--primary-light);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.header-materials-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.24);
+}
 
 /* ---------- Mobile ---------- */
 

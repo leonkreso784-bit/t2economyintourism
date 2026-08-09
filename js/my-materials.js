@@ -763,7 +763,25 @@
     }
   }
 
-  /** Montiraj karticu na profilu (poziva renderProfilePage). */
+  /**
+   * Nacrtaj stranicu `#materials-page` (C0 / ADR-029).
+   *
+   * Stranica je od C0 ravnopravno odredište i **smije se otvoriti i bez prijave** — ulaz stoji u
+   * navigaciji da posjetitelj uopće vidi da platforma služi gradnji vlastitog materijala. Zato ovdje
+   * biramo IZMEĐU DVIJE PLOHE umjesto da praznu stranicu prepustimo slučaju:
+   *   prijavljen  → stablo (`mount()`),
+   *   odjavljen   → poziv na prijavu.
+   * `mount()` sam sakrije svoju karticu kad graditelj nije dostupan, pa bi bez ovoga odjavljen
+   * posjetitelj dobio prazan ekran — a to je točno dojam koji ADR-029 uklanja.
+   */
+  function renderPage() {
+    const ok = isAvailable();
+    const signedOut = document.getElementById('materialsSignedOut');
+    if (signedOut) signedOut.hidden = ok;
+    if (ok) mount();
+  }
+
+  /** Montiraj stablo u `#myMaterials` (poziva renderPage). */
   function mount() {
     const el = root();
     if (!el) return;
@@ -894,6 +912,7 @@
   // ── Javno sučelje ──────────────────────────────────────────────────────
   const SokratMaterials = {
     // UI
+    renderPage: renderPage,   // C0: cijela stranica (bira stablo vs poziv na prijavu)
     mount: mount,
     refresh: refresh,
     startCreate: startCreate,

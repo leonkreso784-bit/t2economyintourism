@@ -130,6 +130,7 @@ body {
 .lessons-page,
 .study-page,
 .about-page,
+.materials-page,
 .profile-page,
 .admin-page {
     display: none;
@@ -140,6 +141,7 @@ body {
 .lessons-page.active,
 .study-page.active,
 .about-page.active,
+.materials-page.active,
 .profile-page.active,
 .admin-page.active {
     display: flex;
