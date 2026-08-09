@@ -119,6 +119,36 @@ for (const abs of allMd) {
   }
 }
 
+// ── 3c) ĆIRILICA U KODU I SADRŽAJU ──────────────────────────────────
+// Gate iznad gleda SAMO `.md`, pa je pola repozitorija bilo nepokriveno. Pred-compact
+// revizija 2026-08-09 ondje je našla **ćirilično `С` u `MPС`** — u ODGOVORU KARTICE
+// (`data/macroeconomics/midterm-1.js`), dakle u gradivu koje student čita, i preslikano
+// u `data/json/` i u produkcijsku bazu. Renderira se identično, ali `Ctrl+F` za „MPC"
+// ga ne nađe. Uz to tri komentara u `js/`/`tests/`.
+//
+// Zato ova provjera sweepa izvor i podatke. Nema `stripCode` izuzeća — u `.js`/`.json`
+// ćirilica nema legitiman razlog postojati; jedina iznimka je OVA datoteka, koja mora
+// navesti sam raspon (`[Ѐ-ӿ]`) i citirati popravljene primjere.
+const CODE_DIRS = ['js', 'tests', 'scripts', 'data'];
+const CODE_EXT = /\.(js|mjs|ts|json|css|html)$/;
+const CYRILLIC_ALLOWED = new Set([path.join(ROOT, 'scripts', 'check-docs.js')]);
+
+function sweepCyrillic(dir) {
+  let entries;
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return; }
+  for (const e of entries) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) { sweepCyrillic(p); continue; }
+    if (!CODE_EXT.test(e.name) || CYRILLIC_ALLOWED.has(p)) continue;
+    const hits = fs.readFileSync(p, 'utf8').match(/[Ѐ-ӿ]+/g);
+    if (!hits) continue;
+    const uniq = Array.from(new Set(hits)).slice(0, 5).map((h) => JSON.stringify(h)).join(', ');
+    problems.push('ĆIRILICA (kod)     ' + rel(p) + '  → ' + uniq +
+      '\n      → ćirilica u kodu/sadržaju je uvijek greška kopiranja (izgleda isto, nije isto)');
+  }
+}
+for (const d of CODE_DIRS) sweepCyrillic(path.join(ROOT, d));
+
 // ── 4) svaki .md pod docs/ mora biti naveden u indeksu ──────────────
 const INDEX = path.join(DOCS, 'README.md');
 if (fs.existsSync(INDEX)) {

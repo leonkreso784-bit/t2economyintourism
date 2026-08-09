@@ -15,8 +15,8 @@ ostalo su kopije u `final`). Razliveno kroz **sve** predmete → **standard je p
 
 **ODLUKA (Leon 2026-08-07): tvrdi strop = 500 znakova**, uz mekano vođenje na 200. U **dva koraka**, i
 redoslijed je bitan:
-- ~~**M5a — vođenje u editoru**~~ ✅ **IZVEDENO 2026-08-08** (faza „Mjera i zaborav", grana
-  `feature/mjera-i-zaborav`, **još nije deployano**). Brojač uživo · upozorenje 200 · tvrda blokada 500 ·
+- ~~**M5a — vođenje u editoru**~~ ✅ **NA PRODUKCIJI od 2026-08-08** (faza „Mjera i zaborav",
+  `eee6f14`). Brojač uživo · upozorenje 200 · tvrda blokada 500 ·
   vrijedi u oba svijeta jednom promjenom (Studio nema vlastiti editor kartica). Politika = `js/card-limits.js`
   (jedna definicija za editor i validator). `validate:content` dobio raspodjelu duljina. Detalji:
   [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
@@ -28,6 +28,21 @@ redoslijed je bitan:
 
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
+
+## 🔥 RUČNO ČEKA LEONA (3 stavke) — 2026-08-09
+Ništa od ovoga ne ruši produkciju; sve je zapisano da se ne izgubi kroz compact.
+
+1. **Obrisati `bright-function` i `quick-api`** iz Supabase dashboarda (PROD → Edge Functions).
+   Ostaci dvaju promašenih pokušaja deploya. `bright-function` vrti **isti** naš `delete-account` kod
+   pod nejasnim imenom; `quick-api` je Supabaseov Hello-World. Ispravna funkcija `delete-account`
+   je ACTIVE i radi. Claude nema alat za brisanje Edge Functiona.
+2. **Re-sync `macroeconomics` u bazu.** Ćirilično `С` u `MPС` popravljeno je u
+   `data/macroeconomics/midterm-1.js` i u `data/json/`, ali **produkcijska baza još ima staro**
+   (`macroeconomicsM1` + `macroeconomicsFinal`). Dual-read čita DB prvi → student i dalje vidi
+   ćirilični znak. Renderira se identično; jedina stvarna šteta je da `Ctrl+F` za „MPC" ne nalazi.
+   **Nije hitno.** Popravak = `node scripts/migrate-content.js macroeconomics` (traži `service_role`,
+   dakle Leonova ruka) ili jedan edit kroz Studio.
+3. **Odluka o broju pitanja** — v. stavku ispod.
 
 ## ➖ Broj pitanja na landingu pokriva samo 17 od 22 predmeta — 2026-08-09
 **Nalaz (uz popravak broja predmeta):** landing sad točno piše **22 predmeta**, ali „**5.700+ pitanja**"
@@ -62,13 +77,15 @@ ne samo da postoji) i na **frontend redizajn**, gdje se ionako presuđuje izgled
 
 ## ✅ Brisanje računa — self-service „Obriši račun" (GDPR pravo na zaborav) — 2026-07-04
 
-> **IZVEDENO 2026-08-08** u fazi „Mjera i zaborav" (grana `feature/mjera-i-zaborav`, **još nije
-> deployano na PROD**). Izvedba slijedi skicu ispod, uz **dvije ispravke koje je stvarnost nametnula**:
+> **NA PRODUKCIJI od 2026-08-08** (`eee6f14`; Edge Function `delete-account` ACTIVE na PROD-u).
+> Izvedba slijedi skicu ispod, uz **tri ispravke koje je stvarnost nametnula**:
 > ① kaskadno brisanje se **ne piše ručno** — svi FK-ovi prema `auth.users` su već `on delete cascade`,
 > pa je jedini pravi posao Storage; ② Supabase **odbija obrisati vlasnika objekata u Storageu**, pa
-> „slike prije korisnika" nije redoslijed radi urednosti nego preduvjet. Nativni self-delete RPC
+> „slike prije korisnika" nije redoslijed radi urednosti nego preduvjet; ③ **admin se ne može obrisati
+> sam** — posjeduje `lesson-images`, pa bi mu `deleteUser` pao **nakon** brisanja osobnih slika i ostavio
+> poluobrisan račun; guard zato stoji prije ijednog brisanja (sve-ili-ništa). Nativni self-delete RPC
 > (točka ⚠️ na dnu) **ne postoji** — provjereno u dokumentaciji 2026-08-08.
-> Stanje i blokade: [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
+> Detalji: [archive/MJERA_I_ZABORAV.md](../archive/MJERA_I_ZABORAV.md).
 
 **Izvorni nalaz i dizajn-skica (2026-07-04), zadržano radi obrazloženja:**
 **Nalaz (korisnik, 2026-07-04):** app NEMA self-service brisanje računa. Postoji samo (a) „Delete cloud data" gumb

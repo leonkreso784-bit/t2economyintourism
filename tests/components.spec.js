@@ -41,7 +41,7 @@ test('sokrat-toast: showToast() prikaže poruku (.show + tekst) pa auto-sakrije'
   await page.evaluate(() => window.showToast('Pozdrav 2D'));
 
   const toast = page.locator('#toast');
-  await expect(toast).toHaveClass(/show/);                       // prikazан
+  await expect(toast).toHaveClass(/show/);                       // prikazan
   await expect(page.locator('#toastMessage')).toHaveText('Pozdrav 2D'); // tekst ažuriran
 
   // Auto-sakrivanje nakon 2500 ms (buffer do 4 s)

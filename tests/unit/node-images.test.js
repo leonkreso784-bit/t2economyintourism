@@ -5,7 +5,7 @@
 // Testiraju se ČISTE funkcije (bez mreže): oznaka ↔ putanja · newPath · collectPaths ·
 // resolveBlock/resolveBlocks (kopija-semantika + fail-safe) · clear.
 //
-// Mrežni dio (potpisivanje, RLS) pokriva `npm run test:storage` protiv stagingа.
+// Mrežni dio (potpisivanje, RLS) pokriva `npm run test:storage` protiv staginga.
 
 const assert = require('assert');
 const fs = require('fs');

@@ -2,7 +2,7 @@
 //
 // Drugi UI-primitiv (nakon <sokrat-toast>, 2D.1). Objedinjuje overlay/dialog PONAŠANJE koje
 // je danas ad-hoc ponovljeno po appu (auth modal gradi overlay+close+ESC ručno innerHTML-om;
-// learn image-viewer isto). Pružа: prikaz/skrivanje, ESC-za-zatvoriti, klik-na-backdrop, zaključavanje
+// learn image-viewer isto). Pruža: prikaz/skrivanje, ESC-za-zatvoriti, klik-na-backdrop, zaključavanje
 // scrolla (`body.modal-open`), fokus-na-otvaranju + vraćanje fokusa, Tab-trap, i a11y atribute.
 //
 // ⚠ ODLUKE (ADR-014, kao 2D.1):

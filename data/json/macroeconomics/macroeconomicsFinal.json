@@ -853,7 +853,7 @@
       {
         "id": "putiz9",
         "question": "What is the multiplier?",
-        "answer": "\\( \\text{multiplier} = \\dfrac{1}{1 - c_1} \\)\nSince \\( 0 < c_1 < 1 \\), the multiplier is greater than 1: a one-unit rise in autonomous spending raises output by more than one unit. A higher MPC (or a lower MPС to save) makes the multiplier larger."
+        "answer": "\\( \\text{multiplier} = \\dfrac{1}{1 - c_1} \\)\nSince \\( 0 < c_1 < 1 \\), the multiplier is greater than 1: a one-unit rise in autonomous spending raises output by more than one unit. A higher MPC (or a lower MPC to save) makes the multiplier larger."
       },
       {
         "id": "t1hduh",
