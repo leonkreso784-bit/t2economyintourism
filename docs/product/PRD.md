@@ -1,14 +1,16 @@
 # PRD — Sokrat Study
 
-**Status:** živi dokument · **Verzija PRD-a:** 0.5 · **Zadnja izmjena:** 2026-08-07
+**Status:** živi dokument · **Verzija PRD-a:** 0.6 · **Zadnja izmjena:** 2026-08-09
 
 ## 1. Vizija
-Sokrat Study je platforma za učenje koja studentima pretvara nastavne materijale
-(PPT/PDF profesora) u interaktivne skripte: gradivo, flashcards, kvizove i
-fill-in-the-blank vježbe. Kreće s jednim fakultetom (FMTU Opatija), širi se na
-cijelo sveučilište i druga sveučilišta. **Zvijezda je UGC:** svatko gradi vlastito
-gradivo za sebe, a kasnije ga smije dijeliti i natjecati se. FMTU je odskočna daska,
-ne opseg — ništa u modelu ne pretpostavlja instituciju, smjer ni godinu.
+Sokrat Study je platforma na kojoj **svatko gradi vlastito gradivo i iz njega uči** —
+kartice, kvizove, dopune i skriptu — pa ga kasnije smije podijeliti i natjecati se.
+**To je proizvod.** Javni katalog (danas 22 predmeta s FMTU Opatija) je **jedan od izvora
+gradiva**, dokaz da model radi i način da netko počne bez praznog ekrana — **ali nije ono
+što platforma jest** ([ADR-029](../records/DECISIONS.md)).
+
+Ništa u modelu ne pretpostavlja instituciju, smjer ni godinu: FMTU je odskočna daska,
+ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoškolac, samouk.
 
 ## 2. Korisnici
 - **Student (primarni):** uči za kolokvije/ispite; želi brzo, mobilno, besplatno.
@@ -23,14 +25,14 @@ ne opseg — ništa u modelu ne pretpostavlja instituciju, smjer ni godinu.
 > [records/CHANGELOG.md](../records/CHANGELOG.md). Ovaj dokument opisuje **proizvod**, ne put do njega.
 > Stanje pojedinih predmeta: [subjects/README.md](../subjects/README.md).
 
+- **Vlastito gradivo (glavna površina)** — prijavljen korisnik slaže **vlastito ugniježđeno stablo polica**
+  i u materijalu gradi kartice, kviz, dopune i learn; **uči iz njega istim ekranima** kao iz kataloga, a
+  napredak mu živi u istom profilu. Privatno, bez objave na javni katalog. Definicija i kriteriji
+  prihvaćanja: [UGC_SPEC.md](./UGC_SPEC.md).
 - **Učenje iz javnog kataloga** — hijerarhija fakultet → smjer → godina → semestar → predmet → lekcija;
   modovi **Learn · Flashcards · Quiz · Fill · Exercises · Progress**, KaTeX za kvantitativne predmete.
 - **Račun i napredak** — prijava e-mailom, napredak se sinkronizira između uređaja, profil + GDPR.
 - **Autorstvo javnog sadržaja** — Studio editor za administratore; svaka objava je atomična i verzionirana.
-- **Osobni materijal** — prijavljen korisnik slaže **vlastito ugniježđeno stablo polica** i u materijalu
-  gradi kartice, kviz, dopune i learn; **uči iz njega istim ekranima** kao iz kataloga, a napredak mu
-  živi u istom profilu. Privatno, bez objave na javni katalog. Definicija i kriteriji prihvaćanja:
-  [UGC_SPEC.md](./UGC_SPEC.md).
 - **Radi bez mreže** (Service Worker), dvojezično sučelje HR/EN.
 
 > ⚠️ **Što osobni materijal NE nudi:** **vježbe.** Vježba je kôd (`generate()`), a UGC ne autorira kôd —
@@ -47,7 +49,7 @@ ne opseg — ništa u modelu ne pretpostavlja instituciju, smjer ni godinu.
 | **Temelj** | data-driven katalog, hijerarhijska navigacija, Supabase read-path (anon+RLS, ADR-011), CI/CD, offline, monitoring | ✅ |
 | **Javni katalog + autorstvo** | sadržaj 22 predmeta, Studio editor za administratore, atomična i verzionirana objava | ✅ |
 | **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | ✅ — svih 5 kriterija iz [UGC_SPEC.md](./UGC_SPEC.md) |
-| **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda) | ⬜ |
+| **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda); vlastito gradivo dobiva **ravnopravno odredište** — stranicu i ulaz u navigaciji, a ne pododjeljak profila (ADR-029) | 🟦 |
 | **Objava i dijeljenje + MCP** | materijal se smije podijeliti; vanjski AI gradi materijal preko korisnikovog ključa (ADR-026) | ⬜ |
 | **Natjecanje + društveno** | ljestvice, profili, statistika učenja, anti-cheat | ⬜ |
 | **Monetizacija** | freemium/paywall na **funkcionalnosti**, ne na sadržaju | ⬜ |
@@ -78,6 +80,8 @@ ne kroz našu cijev — pa ni kvote troška nisu na nama.
   javnog kataloga (`profiles.role` + `is_admin()`). Sadržajni suradnik radi kroz PR, ne kroz aplikaciju.
 
 ## 8. Mjere uspjeha
+- **Pronalažljivost (ADR-029):** korisnik koji prvi put dođe **vidi put do vlastitog gradiva bez
+  objašnjenja i bez ulaska u profil**. Dok se do njega dolazi skrolanjem kroz postavke, ono nije proizvod.
 - **Osobni materijal:** korisnik bez pomoći autora napravi materijal od nule i uči iz njega
   (mjeri se po [UGC_SPEC §2](./UGC_SPEC.md), ne po zelenim testovima).
 - **Dugoročno:** ~1000 MAU; katalog prestaje biti uvjet rasta jer korisnik donosi svoj sadržaj.

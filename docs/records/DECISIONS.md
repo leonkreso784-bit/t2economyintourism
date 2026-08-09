@@ -4,6 +4,32 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-029 — UGC je glavni proizvod; javni katalog je JEDAN izvor gradiva, ne srce platforme
+**Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„to nam postaje glavna stvar, predmeti su samo jedna stvar"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
+
+**Kontekst.** `PRD.md` je od početka pisao *„zvijezda je UGC"*, ali proizvod to nikad nije odražavao.
+Provjereno u kodu, ne po dojmu: **„Moji materijali" nisu stranica** — montiraju se kao `<div class="mm">`
+**unutar profila** (`js/profile.js`), nema `#materials-page`, nema rute, nema ulaza u navigaciji.
+Landing nav glasi `Subjects · How it works · Study modes · About` — **glavni proizvod nije spomenut nigdje.**
+Jedini put do njega: prijavi se → otvori profil → skrolaj. Drugim riječima, UGC je bio **widget u
+postavkama**, a katalog je zauzimao cijelu površinu.
+
+**Odluka.** UGC je **primarna površina proizvoda**. Javni katalog od 22 predmeta ostaje — ali kao
+**jedan od izvora gradiva**, ne kao ono što platforma jest. Posjetitelj mora vidjeti *„napravi svoje
+gradivo"* prije nego *„evo 22 predmeta s FMTU-a"*.
+
+**Posljedice:**
+- **„Moji materijali" postaju ravnopravno odredište** — vlastita stranica, ulaz u navigaciji i na
+  landingu, dostupna izravno, a ne kroz profil.
+- **Redoslijed redizajna se mijenja:** editor i osobni materijal idu **prije** četiriju modova učenja i
+  browsea. Prije je editor bio zadnji jer je bio periferan; ta pretpostavka više ne vrijedi.
+- **Ne mijenja se ništa sigurnosno.** [ADR-024](#) (osobni graditelj = zaseban otok, owner-RLS, upis samo
+  kroz `SECURITY DEFINER` RPC), ADR-025 (doseg) i ADR-018 (student uploada PODATKE, nikad KOD) stoje
+  netaknuti. Ovo je odluka o **istaknutosti**, ne o popuštanju granice.
+- **Ne mijenja se prioritet sadržaja.** Sadržajna staza ostaje pauzirana (ADR-018); HR nosi Saša.
+
+---
+
 ## ADR-028 — Frontend prelazi na Tailwind, ali SAMO preko CLI-ja; sadržaj ostaje bez utility-klasa
 **Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„koristio bi tailwind za front end"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
 
@@ -43,6 +69,25 @@ sigurnosnu granicu renderiranja (ostaje netaknut kao granica, mijenja mu se samo
   dijelom nastaje u JS-u, pa svako `'bg-' + boja` tiho nestaje iz izlaza. Paleta od 8 boja u editoru mora
   ostati na **CSS varijablama**, ne na generiranim imenima klasa.
 - Redizajn **ne mijenja ponašanje**. Želja za promjenom toka ide u `BACKLOG.md`, ne u ovu fazu.
+
+### Odbijeno u istom dahu: Next.js (Leon: *„možemo li koristiti next.js"*)
+
+**Ne — i nije blizu.** To nije redizajn nego **prepisivanje cijele aplikacije**: 12.716 redaka JS-a
+pisano je kao **globalne skripte fiksnog redoslijeda** (`window.AppState`, goli `const SokratAuth`);
+**vježbe su kôd** koji se ubrizgava kao `<script>` preko `codeScripts` (pouka BUG-012) i tuče se s
+bundlerom; `data/*.js` pišu u `window` uz dual-read DB→JSON→`.js`; **Service Worker i `?v=` cache-busting**
+(cijela faza F3 + ADR-017) postaju mrtvi jer Next ima vlastito hashiranje; velik dio od **304 Playwright
+testa** gađa `window.*` kroz `page.evaluate`. Ishod: mjeseci u kojima ništa nije deployabilno, da bi se
+na kraju **ponovno izveo sav rad koji danas radi** — offline, editor, cloud-sync, vježbe. Protivno
+Leonovom vlastitom pravilu *„sve mora savršeno raditi prije nego ga uredimo"*.
+
+**Argument za Next koji jest postojao i zašto ne drži:** prave rute i SSR za **dijeljeni materijal**
+(preview-kartica, indeksiranje). Ali doseg dijeljenja je presuđen kao **link s tajnim tokenom, bez javne
+biblioteke** — dakle te stranice **ne smiju** biti javno pronalažljive, pa glavni SSR-argument otpada.
+Prava ruta + token provjeren kroz RLS radi i u vanili (ADR-011).
+
+**Ako Next ikad — kao zasebna, svjesna migracija odlučena na vlastite zasluge, nikad prošvercana kroz
+redizajn.** Ovo je zapisano da se ne otvara svaku sesiju iznova.
 
 ---
 
