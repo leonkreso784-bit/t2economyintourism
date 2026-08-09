@@ -54,7 +54,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 
 | # | cigla | što nestaje | gotovo kad |
 |---|---|---|---|
-| **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
+| **C0** 🟡 | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | ništa | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
 | **C2** | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` (1.000) | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
@@ -67,6 +67,12 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 su se „Moji materijali" montirali **unutar profila**, bez vlastite stranice i rute, a landing nav
 (`Subjects · How it works · Study modes · About`) glavni proizvod **nije spominjao**. Dok je tako,
 nikakav novi izgled ne pomaže — korisnik do njega ne dođe.
+
+> **🟡 C0 je IZVEDEN, ali NIJE na produkciji.** Leonova odluka (2026-08-09): *„grana čeka."*
+> Grana `feature/c0-ugc-ulaz` (`d238a72`) je pushana, preview je READY i provjeren, `main` je
+> **netaknut** na `00e134b`. **Prije mergea obavezno ponovno pokrenuti puni `npm run test:responsive`** —
+> zadnji je pokrenut, ali rezultat **nije dočekan** prije zatvaranja sesije, pa se ne smije tvrditi da je zelen.
+> Zeleno je ovo: `preflight` = 0 · `materials-entry` + `landing` + `a11y` = **41 prošao / 0 palo / 15 skip**.
 
 **Izvedeno u C0:** vlastita stranica `#materials-page` · ruta **`#/materials`** (`#/`-prefiks da se ne
 sudari s postojećim sidrenim linkovima landinga) koja **pobjeđuje spremljenu poziciju** · ulaz **prvi u
