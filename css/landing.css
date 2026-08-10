@@ -996,24 +996,6 @@
     .landing-nav-links { gap: 1rem; }
 }
 
-/* Ulaz u materijale je IKONA sve dok nav nije stvarno širok. Labela („My materials" / „Moji
-   materijali") košta ~110px, a nav ih nema: s labelom CTA prelazi desni rub kroz CIJELI pojas
-   861–1190px (mjereno; najgore je HR na 1061px, gdje se uz to vraća i wordmark). Prag 1240px je
-   prva širina na kojoj i duži HR labeli stanu s rezervom (na 1200px je ostajalo ~12px, premalo za širi font).
-   Pilula ostaje vizualno naglašena (indigo krug) pa ulaz u glavni proizvod ne gubi težinu (ADR-029),
-   a pristupačno ime nosi `aria-label` (isti tekst kao labela) → skrivanje spana ne ostavlja gumb
-   bez imena. ⚠️ Prag ne dizati bez `tests/layout-guard.spec.js` (širine 960/1024/1200 su gate). */
-@media (max-width: 1239px) {
-    .nav-link-btn--accent span { display: none; }
-    .nav-link-btn--accent {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        justify-content: center;
-        border-radius: 50%;
-    }
-}
-
 /* Ispod ~860px anchor-linkovi + toggle + auth + CTA više ne stanu u jedan red → sakrij linkove
    (sekundarni marketing-anchori; isti obrazac kao prije, samo viši prag jer 🌐 toggle troši širinu).
    ⚠️ C0/ADR-029: ulaz u vlastite materijale se NE skriva. Prije je ovdje stajalo
@@ -1051,10 +1033,15 @@
     .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
 }
 
-/* Ulaz u materijale kao IKONA. Prag je 560px, a ne 480px kako je C0 prvotno postavio: s labelom
-   ulaz je širok 147px (EN) / 154px (HR), pa traci treba ~517px — na 481px je CTA izlazio 34px
-   izvan ekrana. Ovo je vlastiti prag jer ovisi o DULJINI LABELE, a ne o ostatku trake; držati ga
-   u bloku od 480px značilo bi da se dvije nepovezane stvari moraju mijenjati zajedno.
+/* Ulaz u materijale kao IKONA — JEDINO ovdje; ne dodavati drugi prag za istu stvar.
+   Prag je 560px, a ne 480px kako je C0 prvotno postavio: s labelom je ulaz širok 147px (EN) /
+   154px (HR), pa traci treba ~517px — na 481px je CTA izlazio 34px izvan ekrana. Vlastiti je prag
+   jer ovisi o DULJINI LABELE, a ne o ostatku trake.
+
+   ⚠️ Paralelna sesija je isti dan postavila prag na **1239px** (ulaz ostaje gola ikona sve do
+   laptopa) jer je mjerila uz sidrene linkove vidljive od 861px. Otkad su oni skriveni do 1280px
+   (blok ispod), labela stane od 561px s **24px rezerve** — izmjereno, pa je taj drugi prag uklonjen
+   kao mrtav kod. Labela je i prepoznatljivija od gole ikone, a ulaz u glavni proizvod je ADR-029.
    Pristupačno ime nosi `aria-label` (isti tekst kao labela), pa sakrivanje spana ne ostavlja
    gumb bez imena. */
 @media (max-width: 560px) {
