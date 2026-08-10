@@ -673,13 +673,10 @@ const SokratStudio = (function () {
   }
 
   function renderLearnBody(L, kind) {
-    // F4: `node-img:` oznake → potpisani URL-ovi kod POZIVATELJA (blocks-renderer.js ostaje nedirnut).
-    if (kind === 'v2' && typeof window.renderBlocks === 'function') {
-      var blocks = (window.SokratNodeImages && typeof window.SokratNodeImages.resolveBlocks === 'function')
-        ? window.SokratNodeImages.resolveBlocks(L.blocks) : L.blocks;
-      return window.renderBlocks(blocks);
-    }
-    if (kind === 'v1' && typeof window.renderBlocks === 'function') return window.renderBlocks([{ type: 'legacy-html', html: L.content }]);
+    // BUG-024: `renderContentBlocks` razriješi `node-img:` oznake prije rendera — jedan ulaz za
+    // studio, admin, block-editor i learn (prije je svaki imao svoju kopiju te odluke).
+    if (kind === 'v2' && typeof window.renderContentBlocks === 'function') return window.renderContentBlocks(L.blocks);
+    if (kind === 'v1' && typeof window.renderContentBlocks === 'function') return window.renderContentBlocks([{ type: 'legacy-html', html: L.content }]);
     return esc(String((L && L.content) || ''));
   }
 

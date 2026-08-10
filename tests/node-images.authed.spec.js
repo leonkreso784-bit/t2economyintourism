@@ -158,6 +158,76 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     }
   });
 
+  // ── BUG-024 — regresija koju je prijavio KORISNIK, ne gate ──────────────────────────────────
+  // Prethodni test dokazuje razrješavanje kad ga netko RUČNO pokrene. Točno to je bila rupa:
+  // slika se vidjela u editoru (Studio radi prefetch+resolve), a nestajala pri UČENJU, jer je
+  // `learn.js` renderirao izravno. Ovaj test ide korisnikovim putem do kraja i — presudno —
+  // ISPRAZNI cache prije učenja, pa ne može proći na ostacima uređivačke sesije.
+  test('BUG-024: slika objavljena u materijalu VIDI SE u Learnu (i pri hladnom ulasku)', async ({ page }) => {
+    await openApp(page);
+    const id = await mkNode(page, null, 'study', 'BUG-024 Learn slika');
+    let path = null;
+    try {
+      await page.evaluate((nodeId) => window.SokratAdmin.studioBridge.setNode(nodeId, 'BUG-024 Learn slika', {}), id);
+      const res = await uploadVia(page, PNG_B64);
+      expect(res.ok, 'upload je pao: ' + res.err).toBe(true);
+      path = res.src.replace(/^node-img:/, '');
+
+      // Objavi sliku istim putem kojim je objavljuje autor (draft → publish_node).
+      await page.evaluate(async ([nodeId, src]) => {
+        const b = window.SokratAdmin.studioBridge;
+        b.setNode(nodeId, 'BUG-024 Learn slika', {});
+        await b.enter();
+        const d = window.SokratDraft.get('node:' + nodeId, 'content');
+        window.SokratDraft.applyOp(d.subjectId, d.lessonId, {
+          type: 'addCategory', catId: 'sekcija-1',
+          category: { name: 'S', icon: 'fa-book', color: '#06b6d4',
+            flashcards: [], quiz: [], fillBlanks: [],
+            learn: { blocks: [{ id: 'b1', type: 'image', src: src, alt: 'probe' }] } }
+        });
+        await b.publish();
+      }, [id, res.src]);
+
+      // HLADAN ULAZ: bez ovoga bi test prošao i s bugom — potpisi iz uređivanja su još u memoriji.
+      await page.evaluate(() => window.SokratNodeImages.clear());
+
+      // `ensureRegistered`, ne `refresh`: refresh tiho odustane kad kartica materijala nije
+      // montirana (BUG-023), a ovaj test namjerno ne prolazi kroz UI stabla.
+      await page.evaluate(async (nodeId) => {
+        await window.SokratMaterials.ensureRegistered();
+        window.SokratMaterials.learnNode(nodeId);
+      }, id);
+      await page.waitForFunction((nodeId) => AppState.nav.subject === 'node:' + nodeId
+        && AppState.nav.data && Object.keys(AppState.nav.data).length > 0, id, { timeout: 20000 });
+
+      await page.click('.study-nav-btn[data-section="learn"]');
+      await expect(page.locator('#learn.section.active')).toHaveCount(1, { timeout: 10000 });
+
+      // JEZGRA: prije popravka ovdje NIJE bilo <img> (safeUrl tiho odbije `node-img:` shemu).
+      const img = page.locator('#learnContent img.lb-image, #learnContent img');
+      await expect(img, 'slika iz materijala mora postojati u Learnu').toHaveCount(1, { timeout: 10000 });
+
+      const src = await img.first().getAttribute('src');
+      expect(src, 'oznaka je stigla do DOM-a nerazriješena').not.toMatch(/^node-img:/);
+      expect(src).toContain('/object/sign/node-images/');
+      expect(src).toContain('token=');
+
+      // Potpis mora stvarno vraćati bajtove — „ima src" nije isto što i „slika se vidi".
+      const status = await page.evaluate((u) => fetch(u).then((r) => r.status).catch(() => 0), src);
+      expect(status, 'potpisani URL ne vraća sliku').toBe(200);
+
+      // Invarijanta F4 drži i nakon svega: u bazi je i dalje OZNAKA, ne potpis.
+      const stored = await page.evaluate(async (nodeId) => {
+        const r = await SokratAuth.getClient().from('node_content').select('payload').eq('node_id', nodeId).single();
+        return r.error ? null : r.data.payload['sekcija-1'].learn.blocks[0].src;
+      }, id);
+      expect(stored).toBe('node-img:' + path);
+    } finally {
+      if (path) await rmObject(page, 'node-images', path);
+      await rmNode(page, id);
+    }
+  });
+
   test('katalog-mod je NEDIRNUT: upload i dalje ide u javni lesson-images', async ({ page }) => {
     await openApp(page);
     let pubUrl = null;

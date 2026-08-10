@@ -248,6 +248,45 @@
     return html;
   }
 
+  // ── JEDINI ULAZ ZA PRIKAZ SADRŽAJA (BUG-024) ──
+  //
+  // `renderBlocks` je čist: blok → HTML, bez pojma o tome odakle blok dolazi. Ali slike osobnog
+  // materijala u podacima NISU URL nego STABILNA oznaka `node-img:<putanja>` (bucket je privatan,
+  // potpis istječe pa ne smije u payload — `js/node-images.js` §ZAŠTO). Oznaka se mora razriješiti
+  // PRI PRIKAZU, i ta se pred-obrada do BUG-024 prepisivala kod SVAKOG pozivatelja: studio, admin i
+  // block-editor su je radili, `learn.js` ju je jedini zaboravio. Zato se slika vidjela dok se
+  // uređuje, a nestajala čim se iz materijala učilo.
+  //
+  // Popravak nije „dodaj i u learn.js" — to je isti propust koji čeka petog pozivatelja. Ovdje je
+  // JEDAN ulaz koji radi oboje, pa odluka nestaje iz programerove glave (ADR-027). Besplatno je za
+  // katalog: `resolveBlocks` vraća ISTI niz kad nema što razriješiti, pa se smije zvati uvijek.
+  //
+  // Sigurnosna granica se NE pomiče: ovdje se ne gradi ni jedan znak HTML-a — `renderBlocks` se
+  // samo hrani već razriješenim podacima, kroz iste sanitizacije.
+  function renderContentBlocks(blocks) {
+    const NI = (typeof window !== 'undefined') ? window.SokratNodeImages : null;
+    const resolved = (NI && typeof NI.resolveBlocks === 'function') ? NI.resolveBlocks(blocks) : blocks;
+    warnUnresolved(resolved, NI);
+    return renderBlocks(resolved);
+  }
+
+  // Nerazriješena oznaka je TIHI kvar: `safeUrl` odbije nepoznatu shemu i slika se izostavi bez
+  // ijednog traga. Za sigurnost odlično, za primjećivanje pogubno — upravo tako je BUG-024 stigao
+  // do korisnika umjesto do gatea. Zato ga ovdje činimo bučnim. Ostaje `warn`, ne `error`: prikaz
+  // bez slike i dalje nije razlog da učenje stane (i `smoke` spec pada na console.error).
+  function warnUnresolved(blocks, NI) {
+    if (!Array.isArray(blocks) || !NI || typeof NI.isMarker !== 'function') return;
+    const stuck = [];
+    for (let i = 0; i < blocks.length; i++) {
+      const b = blocks[i];
+      if (b && b.type === 'image' && NI.isMarker(b.src)) stuck.push(b.src);
+    }
+    if (stuck.length && typeof console !== 'undefined' && console.warn) {
+      console.warn('[blocks] ' + stuck.length + ' slika ostaje nerazriješena i bit će IZOSTAVLJENA — ' +
+        'nedostaje `SokratNodeImages.prefetch(payload)` na putu učitavanja:', stuck);
+    }
+  }
+
   // ── YouTube klik-za-učitavanje (delegat; jednom). ID je već validiran pri renderu + ovdje. ──
   if (typeof document !== 'undefined' && document.addEventListener) {
     document.addEventListener('click', function (e) {
@@ -273,8 +312,10 @@
   // ── izvoz (+ interni helperi za unit-testove) ──
   if (typeof window !== 'undefined') {
     window.renderBlocks = renderBlocks;
+    window.renderContentBlocks = renderContentBlocks;   // BUG-024: JEDINI ulaz za prikaz sadržaja
     window.SokratBlocks = {
       render: renderBlocks,
+      renderContent: renderContentBlocks,
       accentFrom: accentFrom,     // M3b: jedna definicija valjanog akcenta za sve study-modove
       applyAccent: applyAccent,
       _esc: esc,

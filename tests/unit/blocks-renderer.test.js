@@ -328,5 +328,97 @@ test('M3b: akcent stavke i akcent bloka dijele ISTU provjeru (nema drifta)', fun
   });
 });
 
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// BUG-024 — `renderContentBlocks` je JEDINI ulaz za prikaz sadržaja
+//
+// Bug nije bio „learn.js ima grešku" nego „pravilo živi u glavama": pred-obradu (razrješavanje
+// `node-img:` oznaka u potpisane URL-ove) prepisivala su ČETIRI pozivatelja, a jedan ju je
+// zaboravio. Zato ovdje stoje DVA testa: da omotač radi svoj posao i — važnije — da ga se ne
+// može zaobići. Drugi je pravi gate (ADR-027: rub koji prepoznaš isti čas dobiva test).
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+
+// ── omotač: razrješava, pa renderira ──
+{
+  const MARKER = 'node-img:';
+  /** Minimalan dvojnik `SokratNodeImages` — testira se UGOVOR, ne implementacija modula. */
+  function fakeNI(signed) {
+    return {
+      isMarker: (s) => typeof s === 'string' && s.lastIndexOf(MARKER, 0) === 0,
+      resolveBlocks: (blocks) => (Array.isArray(blocks) ? blocks.map((b) => {
+        if (!b || b.type !== 'image' || typeof b.src !== 'string') return b;
+        const url = signed[b.src];
+        return url ? Object.assign({}, b, { src: url }) : b;
+      }) : blocks),
+    };
+  }
+  /** Svjež modul + uhvaćena upozorenja (dijeljeni `console` bi curio među testovima). */
+  function loadWith(NI) {
+    const w = { SokratNodeImages: NI, _warn: [] };
+    new Function('window', 'console', code)(w, { warn: function () { w._warn.push([].slice.call(arguments)); } });
+    return w;
+  }
+
+  test('izvezen je i `renderContentBlocks` (window + SokratBlocks.renderContent)', function () {
+    assert.strictEqual(typeof win.renderContentBlocks, 'function');
+    assert.strictEqual(typeof B.renderContent, 'function');
+  });
+
+  test('oznaka `node-img:` se razriješi u potpisani URL PRIJE rendera', function () {
+    const url = 'https://sb/storage/v1/object/sign/node-images/U/N/a.png?token=T';
+    const w = loadWith(fakeNI({ 'node-img:U/N/a.png': url }));
+    const out = w.renderContentBlocks([{ type: 'image', src: 'node-img:U/N/a.png', alt: 'p' }]);
+    assert.ok(out.indexOf('<img') !== -1, 'slika mora postojati: ' + out);
+    assert.ok(out.indexOf('token=T') !== -1, 'mora nositi POTPISANI url: ' + out);
+    assert.strictEqual(w._warn.length, 0, 'razriješena slika ne smije upozoravati');
+  });
+
+  test('NErazriješena oznaka se izostavi (fail-safe) ALI GLASNO — tihi kvar je propustio BUG-024', function () {
+    const w = loadWith(fakeNI({}));                       // ništa nije potpisano
+    const out = w.renderContentBlocks([{ type: 'image', src: 'node-img:U/N/a.png' }]);
+    assert.strictEqual(out.indexOf('<img'), -1, 'nepoznata shema ne smije proizvesti <img>');
+    assert.strictEqual(w._warn.length, 1, 'nerazriješena slika MORA upozoriti');
+    assert.ok(String(w._warn[0][0]).indexOf('prefetch') !== -1, 'poruka mora reći ŠTO nedostaje');
+  });
+
+  test('bez SokratNodeImages (katalog) omotač je čist prolaz — ista granica, nula upozorenja', function () {
+    const w = loadWith(undefined);
+    assert.strictEqual(w.renderContentBlocks([{ type: 'paragraph', text: 'ok' }]),
+      '<p class="lb-paragraph">ok</p>');
+    assert.strictEqual(w._warn.length, 0);
+  });
+
+  test('omotač ne slabi sanitizaciju: `javascript:` prolazi kroz isti safeUrl', function () {
+    const w = loadWith(fakeNI({}));
+    assert.strictEqual(w.renderContentBlocks([{ type: 'image', src: 'javascript:alert(1)' }]).indexOf('<img'), -1);
+  });
+
+  test('vanjski URL (javni katalog) prolazi nedirnut i bez upozorenja', function () {
+    const w = loadWith(fakeNI({}));
+    const out = w.renderContentBlocks([{ type: 'image', src: 'https://cdn.example/x.png', alt: 'a' }]);
+    assert.ok(out.indexOf('https://cdn.example/x.png') !== -1);
+    assert.strictEqual(w._warn.length, 0);
+  });
+}
+
+// ── IZVORNA BRANA: omotač se ne smije zaobići ──
+// Ovo je test koji bi BUG-024 uhvatio na dan kad je nastao. Sve dosadašnje provjere gledale su
+// PONAŠANJE rendera; nijedna nije gledala TKO ga zove — a upravo je to bila greška.
+test('nijedna datoteka osim renderera ne zove `renderBlocks(` izravno (BUG-024 gate)', function () {
+  const jsDir = path.join(__dirname, '..', '..', 'js');
+  const offenders = [];
+  fs.readdirSync(jsDir).filter((f) => f.endsWith('.js') && f !== 'blocks-renderer.js').forEach((f) => {
+    const src = fs.readFileSync(path.join(jsDir, f), 'utf8');
+    src.split('\n').forEach((line, i) => {
+      // `renderContentBlocks(` sadrži `renderBlocks(` kao podniz → traži granicu riječi ispred.
+      if (/(^|[^A-Za-z0-9_.$])(window\.)?renderBlocks\s*\(/.test(line)) {
+        offenders.push(f + ':' + (i + 1) + '  ' + line.trim());
+      }
+    });
+  });
+  assert.deepStrictEqual(offenders, [],
+    'Prikaz sadržaja ide kroz `renderContentBlocks` — inače privatne slike osobnog materijala\n' +
+    '      tiho nestanu (BUG-024). Prekršitelji:\n      ' + offenders.join('\n      '));
+});
+
 console.log('\nblocks-renderer: ' + passed + ' prošlo, ' + failed + ' palo');
 process.exit(failed ? 1 : 0);

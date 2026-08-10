@@ -442,6 +442,12 @@
   /**
    * Sadržaj materijala za učenje (`initStudyPage` ga traži preko ovog šava).
    * Prazan payload je legitimno početno stanje — materijal bez sadržaja nije greška.
+   *
+   * BUG-024: ovo je JEDINI šav kroz koji sadržaj osobnog materijala ulazi u učenje, pa se potpisi
+   * za privatne slike nabavljaju OVDJE — jednom, za sva četiri moda. Alternativa (potpisivati u
+   * trenutku prikaza) je asinkrona usred sinkronog renderiranja i zato je Learn i ostao bez slike.
+   * `prefetch` NIKAD ne baca: nedostupan Storage znači materijal bez slike, ne materijal koji se
+   * ne otvara. Potpis se namjerno NE upisuje u payload — istekao bi (invarijanta F4).
    */
   async function loadNodeContent(nodeId) {
     const client = (typeof SokratAuth !== 'undefined' && typeof SokratAuth.getClient === 'function')
@@ -449,7 +455,10 @@
     if (!client) throw new Error('auth-unavailable');
     const r = await client.from('node_content').select('payload').eq('node_id', nodeId).single();
     if (r.error) throw r.error;
-    return (r.data && r.data.payload) || {};
+    const payload = (r.data && r.data.payload) || {};
+    const NI = window.SokratNodeImages;
+    if (NI && typeof NI.prefetch === 'function') await NI.prefetch(payload);
+    return payload;
   }
 
   /** M2 — otvori materijal za UČENJE (isti study-DOM i isti modovi kao katalog). */

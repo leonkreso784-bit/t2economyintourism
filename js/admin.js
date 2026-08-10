@@ -356,10 +356,9 @@ function _renderAdminCards(holder, data) {
       total++;
       html += '<h4 class="admin-subhead">' + _adminT('admin.learn', 'Learn') + ' · ' + _adminT('admin.blocksTag', 'blokovi') + '</h4>' +
         '<div class="admin-card admin-card--learn"><div class="admin-card-body be-body">' +
-        // F4: `node-img:` oznake → potpisani URL-ovi kod pozivatelja (no-op ako oznaka nema).
-        (typeof window.renderBlocks === 'function'
-          ? window.renderBlocks(window.SokratNodeImages
-              ? window.SokratNodeImages.resolveBlocks(cat.learn.blocks) : cat.learn.blocks)
+        // BUG-024: razrješavanje `node-img:` oznaka živi u `renderContentBlocks` (jedan ulaz za sve).
+        (typeof window.renderContentBlocks === 'function'
+          ? window.renderContentBlocks(cat.learn.blocks)
           : '') +
         '</div></div>';
     }
