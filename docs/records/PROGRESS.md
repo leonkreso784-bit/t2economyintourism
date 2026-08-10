@@ -47,8 +47,11 @@ stavki. Ukupno **6 mjesta u 5 datoteka**.
 
 **Stanje:** `preflight` 0 · `check:docs` 0 · `check:final` **16/16** · puna `test:responsive`
 **270 proslo / 0 palo / 30 skip** + `test:authed` **67/67** = **337 zelenih**. Nova
-`tests/escaping.spec.js` 4/4, i **svaki od njih pada** kad se popravak makne. Tri commita na grani
-`fix/bug-024-slika-u-learnu`, **nista pushano** — uz `dc67c24` ceka **cetiri**.
+`tests/escaping.spec.js` 4/4, i **svaki od njih pada** kad se popravak makne. **🚀 DEPLOYANO** (`5843f7e..5997232`,
+ff-merge, Leonov OK *„ok"*). Verifikacija nije stala na „kod je gore": sporno pitanje je **dohvaceno s
+produkcije i provuceno kroz zivi kviz** → sve cetiri opcije se prikazuju cijele i razlucivo
+(`P(Z<z)` · `1−P(Z<z)` · `2P(Z<z)` · `z`), 0 JS gresaka. Student koji danas otvori taj kviz moze ga
+rijesiti.
 
 ⚠️ **Prvi prolaz je javio `auth-setup` „signed in but NOT admin" → 66 authed testova NIJE ni krenulo.**
 To je zapisani obrazac hladnog staginga, ali **nije proglasen flakeom bez ponavljanja** — ponovljeno
