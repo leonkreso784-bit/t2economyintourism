@@ -24,6 +24,8 @@
     "validate:schema": "node scripts/validate-json-schema.js",
     "check:final": "node scripts/check-final-drift.js",
     "check:docs": "node scripts/check-docs.js",
+    "check:functions": "node scripts/check-edge-functions.js",
+    "diff:db": "node scripts/diff-db-vs-files.js",
     "load-probe": "node scripts/load-probe.js",
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",

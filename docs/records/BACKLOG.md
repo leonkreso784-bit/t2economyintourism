@@ -39,20 +39,44 @@ redoslijed je bitan:
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
 
-## 🔥 RUČNO ČEKA LEONA (3 stavke) — 2026-08-09
-Ništa od ovoga ne ruši produkciju; sve je zapisano da se ne izgubi kroz compact.
+## 🔥 RUČNO ČEKA LEONA (3 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
+Sve tri su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
+izvesti. Nijedna ne ruši produkciju.
 
-1. **Obrisati `bright-function` i `quick-api`** iz Supabase dashboarda (PROD → Edge Functions).
-   Ostaci dvaju promašenih pokušaja deploya. `bright-function` vrti **isti** naš `delete-account` kod
-   pod nejasnim imenom; `quick-api` je Supabaseov Hello-World. Ispravna funkcija `delete-account`
-   je ACTIVE i radi. Claude nema alat za brisanje Edge Functiona.
-2. **Re-sync `macroeconomics` u bazu.** Ćirilično `С` u `MPС` popravljeno je u
-   `data/macroeconomics/midterm-1.js` i u `data/json/`, ali **produkcijska baza još ima staro**
-   (`macroeconomicsM1` + `macroeconomicsFinal`). Dual-read čita DB prvi → student i dalje vidi
-   ćirilični znak. Renderira se identično; jedina stvarna šteta je da `Ctrl+F` za „MPC" ne nalazi.
-   **Nije hitno.** Popravak = `node scripts/migrate-content.js macroeconomics` (traži `service_role`,
-   dakle Leonova ruka) ili jedan edit kroz Studio.
-3. **Odluka o broju pitanja** — v. stavku ispod.
+1. **Obrisati `bright-function` i `quick-api`** — Supabase Dashboard → Edge Functions → `<ime>` → Delete.
+   **Nalaz je ozbiljniji nego što je zapisano 2026-08-09:** `bright-function` ima **sha256 `49363e4b…`,
+   identičan `delete-account`-u** → to je **drugi, nezapisani endpoint koji nepovratno briše račun i sve
+   podatke**, aktivan na `/functions/v1/bright-function`. Sam po sebi nije rupa (identitet i ondje ide
+   isključivo iz JWT-a, `verify_jwt: true`), ali je **stara kopija destruktivnog koda**: sljedeći guard
+   koji dobije `delete-account` — kao što je `eee6f14` dodao zaštitu da se admin ne obriše sam — kopija
+   **neće dobiti**, a i dalje će raditi. Zato ovo nije kozmetika nego dug s rokom trajanja.
+   ✅ **Gate postoji:** `npm run check:functions` (bez ijednog ključa; 401 = postoji, 404 = obrisano).
+   Danas je **crven** i pokazuje obje; pozelenit će čim se obrišu, i ubuduće hvata svakog novog stranca.
+   Claude nema alat za brisanje Edge Functiona (MCP ima samo deploy/get/list).
+2. **Re-sync `macroeconomics`:** `node scripts/migrate-content.js macroeconomics`
+   (traži `service_role` → klasifikator ga blokira Claudeu; jedna Leonova naredba).
+   ✅ **Rizik je uklonjen prije radnje:** `npm run diff:db macroeconomics` pokazuje da se baza i datoteke
+   razlikuju u **točno jednom znaku** u `macroeconomicsM1` i `macroeconomicsFinal` — index 207,
+   `goodsMarket.flashcards[5].answer`, ćirilično `С` (U+0421) vs latinično `C` (U+0043), duljina ista
+   (246). **Nema živih Studio-edita koje bi upsert pregazio** → re-sync je siguran. `macroeconomicsM2` je
+   već identičan. Nakon naredbe: `npm run diff:db macroeconomics` mora biti zelen.
+3. **Uključiti Leaked Password Protection** — Dashboard → Authentication → Settings → *Leaked password
+   protection* (provjera lozinki protiv HaveIBeenPwned). Jedini je od 16 sigurnosnih advisora koji se
+   rješava **jednim prekidačem**, a tiče se korisničkih računa. Traži Management API token / dashboard —
+   `service_role` ne mijenja konfiguraciju projekta. Provjera nakon: advisori više ne smiju javljati
+   `auth_leaked_password_protection`. **Advisori inače: 0 ERROR**, sve WARN (v. §Advisori dolje).
+
+## ➖ Sigurnosni advisori na PROD-u — 0 ERROR, 16 WARN (snimljeno 2026-08-10)
+Ostavljeno svjesno, ali zapisano da se ne izgubi:
+- **`snapshot_content_version` i `handle_new_user` dostupni `anon`-u.** Oboje su **trigger-funkcije** —
+  izravan RPC poziv im nema smisla, ali su u izloženoj shemi. Popravak = `REVOKE EXECUTE … FROM anon`;
+  **ne dira trigger** (okida se pravima vlasnika tablice, ne pozivateljevim).
+  ⚠️ **`is_admin()` se NE smije revokeati `authenticated`-u** — RLS politike ga zovu kao pozivatelj, pa bi
+  gubitak EXECUTE-a slomio admin-upis. Za `anon` treba provjeriti gazi li ijedna politika nad javno
+  čitljivim tablicama kroz `is_admin()` prije nego se dira.
+- **`set_updated_at` bez fiksnog `search_path`** — standardno kaljenje (`SET search_path = ''`).
+- Ostali WARN-ovi su naši owner-scoped `SECURITY DEFINER` RPC-ovi koje `authenticated` **mora** moći zvati
+  (ADR-024: jedini put upisa) → očekivano, ne popravlja se.
 
 ## ➖ Broj pitanja na landingu pokriva samo 17 od 22 predmeta — 2026-08-09
 **Nalaz (uz popravak broja predmeta):** landing sad točno piše **22 predmeta**, ali „**5.700+ pitanja**"
