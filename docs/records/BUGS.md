@@ -17,8 +17,25 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+*Nema otvorenih bugova.*
+
+---
+
+## Riješeni / Lekcije
+
+### BUG-025 — Sadržaj sa znakom `<` se GUBIO u kvizu, learnu i dopunama (kviz-pitanje bilo neodgovorljivo)
+- Status: ✅ **riješen** (`779f26b`, grana `fix/bug-024-slika-u-learnu`) · Težina: **visok** (javni katalog **jest** pogođen) · Našao: **Claude**, pri reviziji BUG-024.
+- **Simptom (katalog, na produkciji):** u `statistics` je kviz o Z-tablici imao tri ponuđena odgovora koja su se prikazivala **skraćeno i nečitljivo** — `\(P(Z` · `\(1-P(Z` · `\(2P(Z`. **Pitanje se nije moglo riješiti**, jer se opcije nisu razlikovale u onome što student vidi. Isto pitanje je bilo krnje i u pregledu netočnih odgovora.
+- **Uzrok:** tekst stavke išao je **sirov u `innerHTML`**. Preglednik `<z)\)` pročita kao **početak taga** i pojede sve do prvog `>`. Pogođena mjesta: [quiz.js](../../js/quiz.js) (opcije + pregled netočnih), [fill-blanks.js](../../js/fill-blanks.js) (rečenica), [learn.js](../../js/learn.js) (naziv i ikona sekcije, zaglavna slika).
+- **Druga polovica istog propusta je SIGURNOSNA:** u osobnom materijalu te tekstove **tipka korisnik**. Naziv sekcije `<img src=x onerror=…>` izvršio bi se pri učenju. Danas je to self-XSS (vlastiti privatni sadržaj), ali **objava/dijeljenje je sljedeća faza** — do tada je moralo biti zatvoreno. Renderer blokova je cijelo vrijeme bio ispravan; rupa je bila u tekstu **oko** njega.
+- **Mjereno, ne pretpostavljeno:** svih **27.132** stringova iz `data/json` koji idu kroz `innerHTML` provučeno je kroz **pravi preglednik** i uspoređen `textContent` s originalom → **8 oštećenih**, sva u `statistics`. Time je i utvrđeno da escape **ništa ne kvari**: u katalogu nema nijednog namjernog HTML-taga u tim poljima (0 od 27.132), a 77 polja s `&` (`P&L`, `A&G`) prikazuje se identično i prije i poslije.
+- **Rješenje:** `blocks-renderer.js` izvozi `esc` i `safeUrl` → **jedna definicija za cijelu platformu** (ADR-027); sva četiri mjesta idu kroz nju. Ikona se ne escapa nego **provjerava** (`^fa-[a-z0-9-]+$`) jer ide u `class`, gdje bi i escapan navodnik prošao kao razdjelnik. **KaTeX ostaje netaknut:** `&lt;` se u DOM-u vrati kao tekst `<`, a `renderMath()` radi nad tekstom i trči poslije umetanja.
+- **Usput (isti propust, drugi tip bloka):** admin-pregled learna **nikad nije tipografirao KaTeX** → formula je ondje ostajala sirovi LaTeX. Popravljeno, scope-ano na read-only kartice (u `contenteditable` bi `editableToInline` KaTeX-markup pročitao natrag u model).
+- **Test:** [tests/escaping.spec.js](../../tests/escaping.spec.js) vozi **pravi put prikaza** u sva tri moda s podmetnutim podacima (ne ovisi o katalogu). Provjereno obrnuto: **sva tri testa padnu** kad se popravak makne.
+- **LEKCIJA:** *„jedan renderer = sigurnosna granica"* je bilo **točno, ali nepotpuno** — granica je pokrivala **blokove**, a polovica onoga što student čita (opcije kviza, rečenice dopuna, nazivi sekcija) do nje **nikad nije ni došla**. Druga: bug je nađen jer se BUG-024 **nije popravio na najkraći način** nego se pitalo *„gdje još ista pretpostavka može biti pogrešna"* — a nađen je **mjerenjem nad svim podacima**, ne čitanjem koda.
+
 ### BUG-024 — Slika iz osobnog materijala se NE vidi u Learn modu (vidi se u editoru)
-- Status: 🔴 **otvoren** · Težina: **visok** (osobni materijal; javni katalog NIJE pogađen) · Prijavio: **Leon**, 2026-08-10.
+- Status: ✅ **riješen** (`5f77a88`, grana `fix/bug-024-slika-u-learnu`) · Težina: **visok** (osobni materijal; javni katalog NIJE pogađen) · Prijavio: **Leon**, 2026-08-10.
 - **Simptom:** slika ubaciš u editoru, u Studiju/pregledu se vidi — a kad iz tog materijala **učiš** (Learn), slike nema. Tekst oko nje je uredan.
 - **Reprodukcija:** „Moji materijali" → otvori materijal → Uredi → ubaci sliku → Objavi → „Learn". Slika nedostaje.
 - **Uzrok (nađen, NIJE još popravljen — ostavljeno za sljedeću sesiju po Leonovoj odluci):**
@@ -34,7 +51,12 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   a `admin.js` i `block-editor.js` rade **samo resolve** i tiho se oslanjaju na to da je Studio već napunio predmemoriju potpisa.
   Znači: popravak koji u `learn.js` doda samo `resolveBlocks()` **može raditi dok se došlo preko Studija, a pasti pri izravnom
   ulasku u Learn** (npr. deep-link ili osvježena stranica). Learn treba **oba** koraka.
-- **RJEŠENJE (razrađeno 2026-08-10; tri sloja, i samo je prvi „popravak buga“):**
+- **✅ IZVEDENO (2026-08-10) — sva tri sloja, redom kako su i zapisana:**
+  1. **`prefetch` na šavu** — [my-materials.js `loadNodeContent()`](../../js/my-materials.js) sad potpiše slike prije nego ih itko pokuša prikazati; pokriva **sva četiri moda** jednim pozivom.
+  2. **`renderContentBlocks()`** u [blocks-renderer.js](../../js/blocks-renderer.js) = **jedini ulaz za prikaz** (resolve + render). Sva četiri pozivatelja (`learn` · `studio` · `admin` · `block-editor`) idu kroz njega, pa odluka **više ne živi u programerovoj glavi**. Nerazriješena oznaka sad **glasno upozorava** u konzoli.
+  3. **Testovi:** unit za omotač · **izvorna brana** (nijedna datoteka osim renderera ne smije zvati `renderBlocks(` izravno — pada s imenom datoteke i retka) · **E2E u Learnu** s ispražnjenim cacheom (hladan ulaz, inače bi test prošao i s bugom). Provjereno obrnuto: **vraćanjem buga oba testa pocrvene.**
+- **Nastavak:** ista revizija („gdje još je ista pretpostavka pogrešna?") iznijela je **BUG-025** — v. gore.
+- **RJEŠENJE (kako je bilo razrađeno prije izvedbe; tri sloja, i samo je prvi „popravak buga“):**
   1. **`prefetch` na ŠAVU, ne u rendereru.** [js/my-materials.js:446](../../js/my-materials.js#L446) `loadNodeContent()` je
      **jedino mjesto** kroz koje sadržaj osobnog materijala ulazi u učenje (vlastiti komentar: *„`initStudyPage` ga traži preko
      ovog šava"*). Već je `async`. Jedan `await SokratNodeImages.prefetch(payload)` ondje pokriva **sva četiri moda odjednom**.
@@ -52,19 +74,9 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   „istrunuo“, a draft-autosave u localStorage vratio mrtve linkove. Modul to izričito zabranjuje ([node-images.js](../../js/node-images.js) §ZAŠTO).
 - **Stari smjer (nadjačan gornjim):** Learn mora proići isti put — `prefetch(_data)` pa `resolveBlocks()` prije `renderBlocks()`. ⚠️ Potpis **istječe**, pa
   razrješavanje ide **pri prikazu**, nikad u spremljeni payload (to je invarijanta F4 i ne smije se prekršiti da bi slika „radila").
-- **⚠️ Širi nalaz — Leon: *„ne znam koliko još imamo bugova."*** Ovo je bug klase **„jedan put prikaza je zaboravio korak"**.
-  Renderer je jedan (`blocks-renderer.js`, sigurnosna granica) i to je dobro, ali **pred-obrada oko njega je prepisana na 4 mjesta**.
-  Sljedeća sesija neka ne popravi samo Learn nego provjeri **sve puteve prikaza za sve tipove blokova** (slika · KaTeX · tablica ·
-  video · legacy-html) i po mogućnosti **objedini pred-obradu na jedno mjesto** — inače će peti put opet nešto zaboraviti.
-  Test koji bi ovo uhvatio: „objavi sliku u osobnom materijalu → otvori **Learn** → `<img>` ima **potpisani** `src` koji stvarno vraća sliku"
-  (postojeći `node-images.authed.spec.js` to dokazuje **za prikaz u editoru**, ne za Learn).
-
----
-
-
----
-
-## Riješeni / Lekcije
+- **LEKCIJA (dvije):**
+  1. **Jedan renderer nije isto što i jedan put prikaza.** Renderer je bio jedan i ispravan, ali **pred-obrada oko njega bila je prepisana na četiri mjesta** — a takva se odluka ne pamti, nego se zaboravi. Popravak nije bio „dodaj i u `learn.js`" (to je peti pozivatelj koji čeka svoj red) nego **ukloniti mjesto na kojem se odluka uopće donosi**.
+  2. **Tihi fail-safe je dobar za sigurnost i loš za primjećivanje.** `safeUrl` je sliku uredno izostavio i nitko ništa nije saznao dok korisnik nije naletio. Sigurnosno ponašanje ostaje, ali **uz glasno upozorenje** — inače gate nikad ne dobije priliku pocrvenjeti.
 
 ### BUG-023 — Povratak u vlastiti materijal otvarao praznu study-stranicu koja puca pri svakom spremanju
 - Status: ✅ riješen · Težina: **visok** za osobni materijal (katalog nedirnut) · Prijavio: **Sentry** (`JAVASCRIPT-3`), Leon proslijedio.

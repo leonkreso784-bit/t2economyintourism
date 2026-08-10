@@ -103,6 +103,35 @@ test.describe('BUG-025 — sadržaj u innerHTML se prikazuje doslovno i ne izvr�
     expect(cls).toBe('fas fa-book');
   });
 
+  test('napredak: naziv/ikona/boja sekcije ne izlaze iz svojih atributa', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== 'iPhone-SE-375', 'dovoljno je jednom');
+    await openStudyWithFixture(page);
+
+    await page.evaluate(() => {
+      // Boja ide u `style`, ikona u `class` — dva atributa koja escape sam ne bi obranio.
+      window.AppState.nav.data.tema.color = 'red" onmouseover="window.__pwned=1';
+      window.AppState.nav.data.tema.icon = 'fa-book danger';
+      window.switchSection('progress');
+      window.updateCategoryButtons();
+      if (typeof window.updateCategoryBars === 'function') window.updateCategoryBars();
+    });
+
+    const btn = page.locator('.categories .category-btn').first();
+    await expect(btn).toContainText(XSS, { timeout: 10000 });   // naziv je TEKST, ne markup
+    expect(await page.locator('.categories img').count()).toBe(0);
+
+    // Ikona: nevaljan oblik → siguran default, bez pridružene tuđe klase.
+    expect(await btn.locator('i').first().getAttribute('class')).toBe('fas fa-book');
+
+    // Boja: nije čist #rrggbb → stil se izostavi umjesto da nešto proizvoljno uđe u `style`.
+    const bars = page.locator('.category-bar');
+    if (await bars.count()) {
+      const style = await bars.first().locator('i').first().getAttribute('style');
+      expect(style === null || !style.includes('onmouseover')).toBe(true);
+    }
+    expect(await page.evaluate(() => window.__pwned)).toBeUndefined();
+  });
+
   test('dopune: rečenica s `<` ostaje cijela, a praznina se i dalje crta', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'iPhone-SE-375', 'dovoljno je jednom');
     await openStudyWithFixture(page);

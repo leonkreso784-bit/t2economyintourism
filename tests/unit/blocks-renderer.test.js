@@ -400,6 +400,36 @@ test('M3b: akcent stavke i akcent bloka dijele ISTU provjeru (nema drifta)', fun
   });
 }
 
+// ── BUG-025: `esc` / `safeUrl` / `safeIcon` su javni ugovor, ne interni helperi ──
+// Escape je do BUG-025 postojao samo kao `_esc` (za testove), pa je svaki pozivatelj izvan
+// renderera imao izbor: napisati svoju kopiju ili ne escapati uopće. Biralo se ovo drugo.
+test('BUG-025: esc/safeUrl/safeIcon su izvezeni (bez toga svatko piše svoju kopiju)', function () {
+  assert.strictEqual(typeof B.esc, 'function');
+  assert.strictEqual(typeof B.safeUrl, 'function');
+  assert.strictEqual(typeof B.safeIcon, 'function');
+  assert.strictEqual(B.esc, B._esc, 'javni i interni escape moraju biti ISTA funkcija');
+});
+
+test('BUG-025: esc čuva `<` iz formule (točan slučaj koji je razbio kviz o Z-tablici)', function () {
+  assert.strictEqual(B.esc('\\(P(Z<z)\\)'), '\\(P(Z&lt;z)\\)');
+  assert.strictEqual(B.esc('P&L'), 'P&amp;L');
+  assert.strictEqual(B.esc('<img src=x onerror=alert(1)>'), '&lt;img src=x onerror=alert(1)&gt;');
+  assert.strictEqual(B.esc('a"b\'c'), 'a&quot;b&#39;c', 'navodnici moraju pasti — ide i u atribute');
+});
+
+test('BUG-025: safeIcon propušta oblik `fa-…`, sve ostalo pada na default', function () {
+  assert.strictEqual(B.safeIcon('fa-book-open'), 'fa-book-open');
+  assert.strictEqual(B.safeIcon('  fa-chart-line  '), 'fa-chart-line', 'razmaci se skidaju');
+  // Bijeg iz atributa `class` — escape ovdje NE bi pomogao (`&quot;` je i dalje razdjelnik klasa).
+  assert.strictEqual(B.safeIcon('fa-book" onload="x'), 'fa-book');
+  assert.strictEqual(B.safeIcon('fa-book danger-class'), 'fa-book', 'razmak = druga klasa');
+  assert.strictEqual(B.safeIcon('FA-BOOK'), 'fa-book', 'velika slova nisu naš oblik');
+  ['', null, undefined, 42, {}].forEach(function (bad) {
+    assert.strictEqual(B.safeIcon(bad), 'fa-book', 'ulaz: ' + JSON.stringify(bad));
+  });
+  assert.strictEqual(B.safeIcon('', 'fa-folder'), 'fa-folder', 'fallback se poštuje');
+});
+
 // ── IZVORNA BRANA: omotač se ne smije zaobići ──
 // Ovo je test koji bi BUG-024 uhvatio na dan kad je nastao. Sve dosadašnje provjere gledale su
 // PONAŠANJE rendera; nijedna nije gledala TKO ga zove — a upravo je to bila greška.

@@ -3,19 +3,13 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
-## 🔥 Objediniti PRED-OBRADU prije `renderBlocks` — 2026-08-10
+## ✅ ~~Objediniti PRED-OBRADU prije `renderBlocks`~~ — ISPUNJENO 2026-08-10
 
-**Povod:** [BUG-024](./BUGS.md) — slika iz osobnog materijala se vidi u editoru, a **nestane u Learnu**.
-Uzrok nije renderer (on je jedan i to je dobro) nego **pred-obrada oko njega, prepisana na 4 mjesta**:
-`admin.js` · `block-editor.js` · `studio.js` razrješavaju oznake privatnih slika, a `learn.js` ne.
-
-**Leon:** *„ne znam koliko još imamo bugova."* — to je prava veličina problema. Dok pred-obrada živi na
-četiri mjesta, **peti će put opet nešto zaboraviti**, i to će se vidjeti tek kad korisnik na to naleti.
-
-**Smjer:** jedna ulazna točka (npr. `SokratBlocks.render(blocks, ctx)`) koja **uvijek** radi `prefetch` +
-`resolveBlocks` pa tek onda `renderBlocks`. Uz to: prijeći **sve** puteve prikaza × **sve** tipove blokova
-(slika · KaTeX · tablica · video · legacy-html) i za svaki napisati test u **Learnu**, ne samo u editoru.
-⚠️ Invarijanta F4 ostaje: potpisani URL **istječe**, pa se razrješava **pri prikazu**, nikad u spremljeni payload.
+Zatvoreno popravkom [BUG-024](./BUGS.md) (`5f77a88`): `renderContentBlocks()` je sad **jedini ulaz za prikaz**
+sadržaja, a **izvorna brana** u `tests/unit/blocks-renderer.test.js` pada ako itko opet zove `renderBlocks(`
+izravno. Ista revizija je iznijela i [BUG-025](./BUGS.md) (`779f26b`) — tekst stavki uopće nije dolazio do
+sigurnosne granice. **Ostatak zamisli je odrađen:** prijeđeni su svi tipovi blokova (slika ✅ · KaTeX ✅ —
+admin-pregled ga nije tipografirao · tablica/video/legacy-html: bez pred-obrade po konstrukciji).
 
 ---
 

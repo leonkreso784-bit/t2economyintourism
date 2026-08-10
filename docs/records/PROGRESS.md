@@ -5,6 +5,49 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-10 (OPUS, kasnije) — **BUG-024 popravljen, i pri tome nadjen tezi BUG-025**
+
+> Leon: *„pregledaj sve detaljno … moramo se rijesiti svih problema u ovoj sesiji da mozemo dalje raditi
+> i nastaviti na c1."*
+
+**BUG-024 nije popravljen na najkraci nacin, i to je bilo presudno.** Najkrace rjesenje je bila jedna
+linija u `learn.js`. Umjesto toga su izvedena sva tri sloja iz zapisa: `prefetch` na **savu**
+(`loadNodeContent` — jedini put kojim sadrzaj materijala ulazi u ucenje, pa pokriva sva cetiri moda),
+**`renderContentBlocks()` kao jedini ulaz za prikaz**, i **izvorna brana** koja pada ako itko opet zove
+`renderBlocks(` izravno. Brana je provjerena **obrnuto**: vracanjem buga pocrveni i imenuje
+`learn.js:38`. E2E u Learnu namjerno **prazni cache potpisa** prije ulaska — s toplim cacheom bi test
+prosao i s bugom (provjereno: bez popravka pada, s popravkom prolazi).
+
+**Onda je postavljeno pitanje „gdje je jos ista pretpostavka pogresna?" — i odgovor je bio gori.**
+Umjesto citanja koda, **izmjereno**: svih 27.132 stringova iz `data/json` koji zavrsavaju u `innerHTML`
+provuceno je kroz **pravi preglednik** i `textContent` usporedjen s originalom. **8 ostecenih**, sva u
+`statistics`. Kviz o Z-tablici je imao tri ponudjena odgovora koja su se studentu prikazivala kao
+`\(P(Z`, `\(1-P(Z` i `\(2P(Z` — preglednik je `<z)\)` procitao kao **pocetak taga** i pojeo do prvog `>`.
+**To pitanje se na produkciji nije moglo rijesiti.** Uz to je ista rupa bila i sigurnosna: u osobnom
+materijalu naziv sekcije i opcije kviza **tipka korisnik**, a isli su sirovi u `innerHTML`.
+
+**Zasto je promaklo godinu dana.** Pravilo *„jedan renderer = sigurnosna granica"* bilo je tocno, ali
+**nepotpuno**: granica je pokrivala **blokove**, a polovica onoga sto student cita (opcije kviza,
+recenice dopuna, nazivi sekcija) do nje **nikad nije ni dosla**.
+
+**Isto mjerenje je i dokazalo da popravak nista ne kvari:** u tim poljima nema **nijednog** namjernog
+HTML-taga (0 od 27.132), a 77 polja s `&` (`P&L`, `A&G`) izgleda identicno prije i poslije. KaTeX ostaje
+netaknut jer `&lt;` u DOM-u opet postaje tekst `<`, a `renderMath()` trci poslije umetanja.
+
+**Usput, isti propust na trecem tipu bloka:** admin-pregled learna **nikad** nije tipografirao KaTeX →
+formula je ondje ostajala sirovi LaTeX. Popravljeno, scope-ano na read-only kartice (u `contenteditable`
+bi `editableToInline` KaTeX-markup procitao natrag u model).
+
+**Stanje:** `preflight` 0 · nova `tests/escaping.spec.js` 3/3 (i **3/3 pada** kad se popravak makne) ·
+`node-images.authed` 6/6 vs staging. Dva commita na grani `fix/bug-024-slika-u-learnu`, **nista pushano**
+— uz `dc67c24` ceka **tri** commita.
+
+**Pouka za dalje:** popravak koji ne postavi pitanje *„gdje je jos ista pretpostavka pogresna"* zatvori
+jedan slucaj i ostavi klasu. Ovdje je razlika bila jedan tihi bug u osobnom materijalu naspram jednog
+**neodgovorljivog pitanja u javnom katalogu**.
+
+---
+
 ## 2026-08-10 (OPUS) — **puna suita presudila C0: tri regresije nadene i popravljene**
 
 > Pisano po ADR-027 — **pokazuje, ne prepricava**.

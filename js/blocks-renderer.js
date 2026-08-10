@@ -38,6 +38,17 @@
     return '';                                         // nepoznata/opasna shema
   }
 
+  // ── ikona (Font Awesome) — BUG-025 ──
+  // Ikona ne ide u TEKST nego u `class`, gdje escape nije dovoljan: i escapan navodnik preglednik
+  // pročita kao razdjelnik imena klasa, pa bi autor mogao pridružiti bilo koju klasu. Zato se
+  // ikona ne escapa nego PROVJERAVA oblikom, a sve izvan oblika pada na siguran default.
+  // Izmjereno: svih 137 ikona u katalogu već odgovara ovom obliku → za katalog je promjena no-op.
+  function safeIcon(icon, fallback) {
+    const fb = fallback || 'fa-book';
+    const s = String(icon == null ? '' : icon).trim();
+    return /^fa-[a-z0-9-]+$/.test(s) ? s : fb;
+  }
+
   // ── YouTube: izvuci + validiraj 11-znakovni video-ID (iz čistog ID-a ili URL-a). ──
   function youtubeId(input) {
     const s = String(input == null ? '' : input).trim();
@@ -318,6 +329,7 @@
       renderContent: renderContentBlocks,
       esc: esc,                   // BUG-025: JEDNA definicija escapea za sve koji pišu u innerHTML
       safeUrl: safeUrl,           // BUG-025: ista provjera sheme i izvan rendera (learn.image)
+      safeIcon: safeIcon,         // BUG-025: ikona ide u `class` → PROVJERA oblika, ne escape
       accentFrom: accentFrom,     // M3b: jedna definicija valjanog akcenta za sve study-modove
       applyAccent: applyAccent,
       _esc: esc,

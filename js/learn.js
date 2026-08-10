@@ -9,6 +9,9 @@
 function lEsc(s) {
     return (window.SokratBlocks && typeof SokratBlocks.esc === 'function') ? SokratBlocks.esc(s) : '';
 }
+function lIcon(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.safeIcon === 'function') ? SokratBlocks.safeIcon(s) : 'fa-book';
+}
 
 function renderLearnContent() {
     const container = document.getElementById('learnContent');
@@ -36,12 +39,9 @@ function renderLearnContent() {
         if (!data) return;
         
         // BUG-025: naziv i ikona sekcije ulaze u `innerHTML`, a u osobnom materijalu ih tipka
-        // KORISNIK. Escape ide kroz istu jednu definiciju koju koristi renderer (ADR-027).
-        // Ikona se ne escapa nego PROVJERAVA: ide u `class`, gdje bi i escapan navodnik prošao
-        // kao razdjelnik klasa. Svih 137 ikona u katalogu već odgovara ovom obliku (izmjereno),
-        // pa je provjera besplatna za katalog i zatvara rupu za vlastiti materijal.
-        const rawIcon = data.icon || 'fa-book';
-        const icon = /^fa-[a-z0-9-]+$/.test(rawIcon) ? rawIcon : 'fa-book';
+        // KORISNIK. Oboje ide kroz jednu definiciju iz `blocks-renderer.js` (ADR-027) — naziv se
+        // escapa, ikona PROVJERAVA (ide u `class`, gdje escape nije dovoljan).
+        const icon = lIcon(data.icon);
         const name = lEsc(data.name || category);
         const flashcardsCount = data.flashcards ? data.flashcards.length : 0;
         // U7c: SAV learn ide kroz JEDAN renderer (sigurnosna granica). v2 = blokovi (escapani po tipu);

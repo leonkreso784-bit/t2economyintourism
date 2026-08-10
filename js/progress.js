@@ -1,5 +1,20 @@
 // ===== SOKRAT STUDY — PROGRESS & HOME STATS =====
 
+// BUG-025: naziv, ikona i boja sekcije ovdje ulaze u `innerHTML`, a u osobnom materijalu ih zadaje
+// KORISNIK. Sve tri idu kroz jednu definiciju iz `blocks-renderer.js` (ADR-027), svaka po svojoj
+// vrsti: tekst se escapa · ikona se PROVJERAVA (ide u `class`) · boja ide kroz `accentFrom`, isti
+// filtar `#rrggbb` koji već čuva akcente kartica/kviza/dopuna — nevaljano vrati prazno, pa se stil
+// jednostavno izostavi umjesto da nešto proizvoljno završi u `style`.
+function pEsc(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.esc === 'function') ? SokratBlocks.esc(s) : '';
+}
+function pIcon(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.safeIcon === 'function') ? SokratBlocks.safeIcon(s) : 'fa-book';
+}
+function pColor(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.accentFrom === 'function') ? SokratBlocks.accentFrom([s]) : '';
+}
+
 // ========== CATEGORY BUTTONS ==========
 function updateCategoryButtons() {
     const container = document.querySelector('.categories');
@@ -14,8 +29,8 @@ function updateCategoryButtons() {
         btn.className = 'category-btn';
         btn.dataset.category = category;
         btn.innerHTML = `
-            <i class="fas ${data.icon}"></i>
-            <span>${data.name}</span>
+            <i class="fas ${pIcon(data.icon)}"></i>
+            <span>${pEsc(data.name)}</span>
             <small>${data.flashcards ? data.flashcards.length : 0} terms</small>
         `;
         btn.addEventListener('click', () => {
@@ -187,17 +202,18 @@ function renderProgressPage() {
         const data = nav.data[category];
         const catProgress = progress.categoryProgress[category] || 0;
         
+        const color = pColor(data.color);          // '' ako nije čist #rrggbb → stil se izostavi
         const bar = document.createElement('div');
         bar.className = 'category-bar';
         bar.innerHTML = `
-            <i class="fas ${data.icon}" style="color: ${data.color}"></i>
+            <i class="fas ${pIcon(data.icon)}"${color ? ` style="color: ${color}"` : ''}></i>
             <div class="category-bar-info">
                 <span>
-                    <strong>${data.name}</strong>
+                    <strong>${pEsc(data.name)}</strong>
                     <span>${catProgress}%</span>
                 </span>
                 <div class="mini-progress">
-                    <div class="mini-fill" style="width: ${catProgress}%; background: ${data.color}"></div>
+                    <div class="mini-fill" style="width: ${catProgress}%${color ? `; background: ${color}` : ''}"></div>
                 </div>
             </div>
         `;

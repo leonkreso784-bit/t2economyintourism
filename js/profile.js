@@ -178,7 +178,9 @@ function renderProfileStats() {
 
         rows +=
             '<div class="profile-stat-row">' +
-            '  <span class="profile-stat-subject"><i class="fas ' + (meta.icon || 'fa-book') + '"></i> ' + escapeHtmlProfile(meta.shortName || meta.name) + '</span>' +
+            // BUG-025: ikona osobnog materijala dolazi iz korisnikovog retka → provjeri je (ide u
+            // `class`, gdje escape nije dovoljan). Naziv je već escapan.
+            '  <span class="profile-stat-subject"><i class="fas ' + profileIcon(meta.icon) + '"></i> ' + escapeHtmlProfile(meta.shortName || meta.name) + '</span>' +
             '  <span class="profile-stat-vals">' +
             '    <span title="' + pt('profile.tip.cards', 'Flashcards learned') + '"><i class="fas fa-clone"></i> ' + cards + '</span>' +
             '    <span title="' + pt('profile.tip.quizzes', 'Quizzes taken') + '"><i class="fas fa-question-circle"></i> ' + quizzes + (avg !== null ? ' (' + pt('profile.avg', 'avg') + ' ' + avg + '%)' : '') + '</span>' +
@@ -367,6 +369,12 @@ function escapeHtmlProfile(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
         return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
+}
+
+/** BUG-025: ikona ide u `class` → provjera oblika, ne escape. Jedna definicija (blocks-renderer). */
+function profileIcon(icon) {
+    return (window.SokratBlocks && typeof SokratBlocks.safeIcon === 'function')
+        ? SokratBlocks.safeIcon(icon) : 'fa-book';
 }
 
 document.addEventListener('DOMContentLoaded', function () {
