@@ -38,9 +38,22 @@ netaknut jer `&lt;` u DOM-u opet postaje tekst `<`, a `renderMath()` trci poslij
 formula je ondje ostajala sirovi LaTeX. Popravljeno, scope-ano na read-only kartice (u `contenteditable`
 bi `editableToInline` KaTeX-markup procitao natrag u model).
 
-**Stanje:** `preflight` 0 · nova `tests/escaping.spec.js` 3/3 (i **3/3 pada** kad se popravak makne) ·
-`node-images.authed` 6/6 vs staging. Dva commita na grani `fix/bug-024-slika-u-learnu`, **nista pushano**
-— uz `dc67c24` ceka **tri** commita.
+**Revizija se isplatila i drugi put.** Nakon prva tri mjesta (`quiz`/`fill`/`learn`) isto je pitanje
+postavljeno nad ostatkom → jos tri: **`progress.js` dvaput** (gumbi kategorija i trake napretka) i
+**`profile.js`**. Ondje se pokazalo da **escape nije dovoljan**: ikona ide u `class`, gdje `&quot;` i
+dalje razdvaja imena klasa, a boja ide u `style`. Zato `safeIcon()` **provjerava oblik**, a boja ide
+kroz **postojeci `accentFrom`** — nista novo nije izmisljeno, iskoristen je filtar koji vec cuva akcente
+stavki. Ukupno **6 mjesta u 5 datoteka**.
+
+**Stanje:** `preflight` 0 · `check:docs` 0 · `check:final` **16/16** · puna `test:responsive`
+**270 proslo / 0 palo / 30 skip** + `test:authed` **67/67** = **337 zelenih**. Nova
+`tests/escaping.spec.js` 4/4, i **svaki od njih pada** kad se popravak makne. Tri commita na grani
+`fix/bug-024-slika-u-learnu`, **nista pushano** — uz `dc67c24` ceka **cetiri**.
+
+⚠️ **Prvi prolaz je javio `auth-setup` „signed in but NOT admin" → 66 authed testova NIJE ni krenulo.**
+To je zapisani obrazac hladnog staginga, ali **nije proglasen flakeom bez ponavljanja** — ponovljeno
+odmah, **67/67**. Vrijedi i dalje: jedan pad u `auth-setup` **tiho odnese cijeli authed projekt**, pa
+brojka „270 proslo" bez te napomene izgleda bolje nego sto jest.
 
 **Pouka za dalje:** popravak koji ne postavi pitanje *„gdje je jos ista pretpostavka pogresna"* zatvori
 jedan slucaj i ostavi klasu. Ovdje je razlika bila jedan tihi bug u osobnom materijalu naspram jednog
