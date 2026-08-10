@@ -30,6 +30,10 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   - [js/studio.js:678](../../js/studio.js#L678) → `resolveBlocks` + `prefetch` na 835 ✅
   - **[js/learn.js:36](../../js/learn.js#L36) → `renderBlocks(data.learn.blocks)` IZRAVNO, bez razrješavanja ❌**
   Zato se slika vidi svugdje gdje se **uređuje**, a nestaje ondje gdje se **uči**.
+  ⚠️ **`prefetch` i `resolve` nisu upareni** — revidirano 2026-08-10: `studio.js` radi **oboje** (prefetch:835 + resolve:678),
+  a `admin.js` i `block-editor.js` rade **samo resolve** i tiho se oslanjaju na to da je Studio već napunio predmemoriju potpisa.
+  Znači: popravak koji u `learn.js` doda samo `resolveBlocks()` **može raditi dok se došlo preko Studija, a pasti pri izravnom
+  ulasku u Learn** (npr. deep-link ili osvježena stranica). Learn treba **oba** koraka.
 - **Smjer rješenja:** Learn mora proići isti put — `prefetch(_data)` pa `resolveBlocks()` prije `renderBlocks()`. ⚠️ Potpis **istječe**, pa
   razrješavanje ide **pri prikazu**, nikad u spremljeni payload (to je invarijanta F4 i ne smije se prekršiti da bi slika „radila").
 - **⚠️ Širi nalaz — Leon: *„ne znam koliko još imamo bugova."*** Ovo je bug klase **„jedan put prikaza je zaboravio korak"**.
