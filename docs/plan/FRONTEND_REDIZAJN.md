@@ -54,7 +54,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 
 | # | cigla | što nestaje | gotovo kad |
 |---|---|---|---|
-| **C0** 🟡 | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
+| **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | ništa | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
 | **C2** | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` (1.000) | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
@@ -68,23 +68,19 @@ su se „Moji materijali" montirali **unutar profila**, bez vlastite stranice i 
 (`Subjects · How it works · Study modes · About`) glavni proizvod **nije spominjao**. Dok je tako,
 nikakav novi izgled ne pomaže — korisnik do njega ne dođe.
 
-> **🟡 C0 je IZVEDEN i PROVJEREN, ali NIJE mergean ni na produkciji.** Leonova odluka (2026-08-09):
-> *„grana čeka."* Grana `feature/c0-ugc-ulaz` (`da0db80`), `main` **netaknut** na `00e134b`.
-> Puni `npm run test:responsive` je 2026-08-10 **dočekan do kraja**: **332 prošlo / 0 palo / 18 skip**
-> (17.7 min) · `preflight` = 0 · `test:authed` = **66/0** vs staging.
+> **✅ C0 je ISPUNJEN I NA PRODUKCIJI** (2026-08-10, `00e134b..0e2843a`, Leonov OK: *„mergaj."*).
+> Provjereno na živoj stranici, ne samo u CI-u: token `20260810150309` = repo · ulaz prvi u navigaciji ·
+> 3 ikone u zaglavljima · 0 JS grešaka. Puna suita prije mergea: **332 / 0 / 18 skip**.
 >
-> **Ta je suita otkrila tri regresije koje je C0 nosio, a ciljani podskup ih nije vidio** (prvi zapis
-> je tvrdio „41 prošao" — podskup NIJE uključivao ni `layout-guard` ni ijedan authed spec):
-> 1. **Nav overflow 861–1279px.** Ulaz nosi labelu (147px EN / 154px HR), pa prirodna širina trake
->    skoči na ~1040/1066px, a sidreni linkovi su se vraćali već na 861px → CTA „Start" je izlazio do
->    82px izvan ekrana. Stranica se ne skrola vodoravno → gumb **nedostupan**, ne odrezan.
-> 2. **Rupa u samom guardu.** `layout-guard` je skakao s 1024 na 1280px; prvi popravak (prag 1100)
->    je **prošao test**, a na 1200px je HR i dalje izlazio 14px van. Popis širina 13 → 19.
-> 3. **Slijepi kolosijek u Studiju.** `js/studio.js` je tvrdo vraćao na `profile`, gdje stabla više
->    nema. Node-mod sada vraća na `materials`; katalog-mod (admin) ostaje `profile`.
->
-> **Pouka za ostatak faze:** ciljani podskup testova NE dokazuje ciglu. Prije svakog mergea ide
-> **puna** suita — inače cigla nosi regresiju u sljedeću ([ADR-027](../records/DECISIONS.md)).
+> **Što je C0 naučio, a vrijedi za C1–C7:**
+> 1. **Ciljani podskup testova ne dokazuje ciglu.** Prvi zapis je tvrdio „41 prošao"; puna suita je rekla
+>    **35 palo**. Podskup nije uključivao ni `layout-guard` ni ijedan authed spec.
+> 2. **Uzorak širina u gateu je i sam moguća rupa.** Dvije neovisne sesije su istog dana popravile isti bug
+>    i **obje prošle vlastiti gate** — jednoj je falio 861px, drugoj 1200px. Sada: svaki CSS-prag + prag±1.
+> 3. **CI (Linux) mjeri font ~4px šire od Windowsa.** Rezerva ispod ~5px je crvena na CI-u iako je lokalno
+>    zelena. Traži se **mjerena** rezerva, ne „prolazi kod mene".
+> 4. **Jedna ikona u traci srušila je pojas od 400px širine** i tražila tri kruga mjerenja. C2 dira cijeli
+>    landing — planirati ga kao spor, ne brz.
 
 **Izvedeno u C0:** vlastita stranica `#materials-page` · ruta **`#/materials`** (`#/`-prefiks da se ne
 sudari s postojećim sidrenim linkovima landinga) koja **pobjeđuje spremljenu poziciju** · ulaz **prvi u

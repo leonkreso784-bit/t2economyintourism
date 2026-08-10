@@ -59,7 +59,24 @@ pa NE gazi `learn`/`block-editor`/`studio`/`auth`/`profile`/`my-materials` (23�
 tema (**0** pojava `[data-theme="light"]`) i **Vercel bez build-koraka** (`vercel.json` nema
 `buildCommand`) → Tailwind izlaz se **mora** commitati i mora pasti pod `build:css --check`.
 
-**Slijedi:** Leonova odluka — merge C0 (sad zelen) ili C1 s `main`-a. Pa **C1** (Tailwind temelj).
+**🚀 DEPLOYANO uz Leonov OK (*„mergaj."*): `00e134b..0e2843a`.** Verificirano na PRODUKCIJI (pravilo #7),
+pravim preglednikom na `www.sokratstudy.com`: token `20260810150309` **= repo** · ulaz u UGC postoji i **prvi je
+u navigaciji** · 3 ikone u zaglavljima · 22 predmeta · **0 JS grešaka**.
+
+**Tri pune suite, i sve tri su nešto rekle:** ① 35 palo → tri stvarne regresije (gore); ② 2 pala — `auth-setup`
+(„signed in but NOT admin") i `smoke` (timeout na učitavanju sadržaja); oba su **ponavljanjem prošla**, staging je
+bio hladan (1.7s odziv vs 119ms na produ) → flake, ali **nijedan nije proglašen flakeom bez ponovne provjere**;
+③ **332 / 0 / 18 skip** (22.3 min) — tek na tome je išao merge.
+
+**🐛 BUG-024 (Leonov nalaz, NIJE popravljen — ide u sljedeću sesiju):** slika iz osobnog materijala se vidi u
+editoru, a **nestane u Learnu**. Uzrok nađen: privatne slike žive kao **oznaka** (potpis istječe), a razrješavanje
+u potpisani URL rade `admin.js` · `block-editor.js` · `studio.js` — dok `learn.js:36` zove `renderBlocks()`
+**izravno**. Uz to: `prefetch` i `resolve` **nisu upareni** (samo Studio radi oboje), pa popravak koji doda samo
+`resolve` radi kad se došlo preko Studija, a pada na izravnom ulasku. Leon: *„ne znam koliko još imamo bugova"* →
+otvorena i backlog-stavka: **objediniti pred-obradu na jedno mjesto** i testirati **sve** tipove blokova u LEARNU.
+
+**Slijedi:** **C1** (Tailwind temelj, nula vizualne promjene) — ili, ako Leon odluči, prvo BUG-024 + čišćenje
+pred-obrade, jer je to klasa bugova, ne pojedinačan slučaj.
 
 ## 2026-08-10 (OPUS) — **C0: `layout-guard` pao na CI-u; nav je curio kroz 861–1190px, ne samo na 320px**
 
