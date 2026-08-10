@@ -40,7 +40,7 @@ Helper `openProfile` → **`openMaterials`** u 6 spec-ova — ime opet govori is
 
 **Provjereno:** `preflight` **0** · `layout-guard`+`landing`+`materials-entry`+`a11y` **42/0** ·
 `test:authed` **66/0** (staging) · **puna `test:responsive` 332/0/18 skip** (17.7 min, cisto pokretanje).
-Commit **`da0db80`**, lokalno. **Nista nije pushano; `main` je netaknut na `00e134b`.**
+Commit **`da0db80`** — u trenutku pisanja lokalno i nepushano. *(Kasnije istog dana: spojeno s paralelnom granom i **deployano** kao `0e2843a` — vidi kraj upisa.)*
 
 **Zamka za ubuduce:** dva Playwright runa su se preklopila ~3 min (dijele port 5050, `test-results/` i
 `storageState`). Kontaminirani run je ubijen i suita ponovljena iz cista — rezultatu se ne smije vjerovati
