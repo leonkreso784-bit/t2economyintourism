@@ -15,7 +15,7 @@ const { test, expect } = require('@playwright/test');
 
 const MODES = ['learn', 'cards', 'quiz', 'fill'];
 
-async function openProfile(page) {
+async function openMaterials(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
@@ -24,7 +24,7 @@ async function openProfile(page) {
     !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
     && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   // ⚠ Spinner dijeli selektor s praznim stanjem — čekaj da NESTANE, inače test prolazi nad učitavanjem.
   await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
@@ -59,7 +59,7 @@ async function openFreshMaterialWithSection(page, name) {
 
 test.describe('M1 — autorstvo u praznom materijalu', () => {
   test('nova sekcija nudi SVA ČETIRI moda, svaki s putem do prve stavke', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await openFreshMaterialWithSection(page, 'M1 Modovi');
     try {
       // ── JEZGRA REGRESIJE ──
@@ -86,7 +86,7 @@ test.describe('M1 — autorstvo u praznom materijalu', () => {
   });
 
   test('kartica + pitanje kviza + dopuna: dodaj kroz UI → objavi → prežive', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await openFreshMaterialWithSection(page, 'M1 Prva stavka');
     try {
       // ── KARTICA ──
@@ -202,7 +202,7 @@ async function gotoSection(page, section) {
 
 test.describe('M2 — učenje iz vlastitog materijala', () => {
   test('„Uči" otvara study-stranicu s MOJIM sadržajem (kartice, kviz, dopune, learn)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkMaterialWithContent(page, 'M2 Učenje');
     try {
       // ── JEZGRA REGRESIJE: prije M2 gumb „Uči" nije ni postojao ──
@@ -235,7 +235,7 @@ test.describe('M2 — učenje iz vlastitog materijala', () => {
   });
 
   test('napredak iz materijala živi pod ključem `node:<id>` i vidi ga sinkronizacija', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkMaterialWithContent(page, 'M2 Napredak');
     try {
       await openForStudy(page, id);
@@ -283,7 +283,7 @@ const accentOn = (page, sel) => page.evaluate((s) => {
 
 test.describe('M3b — boja kartice, pitanja i dopune', () => {
   test('kvadratić oboji karticu → objavi → boja u bazi; „⊘" je vrati na nasljeđivanje', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await openFreshMaterialWithSection(page, 'M3b Boja kartice');
     try {
       await page.click('#stCanvas .st-tab[data-mode="cards"]');
@@ -332,7 +332,7 @@ test.describe('M3b — boja kartice, pitanja i dopune', () => {
   });
 
   test('na study-ekranu: stavka bez boje NASLIJEDI sekciju, a vlastita boja je PREGAZI', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'M3b Nasljeđivanje');
     try {
       // Sekcija je zelena; kartica ima SVOJU crvenu, kviz i dopuna nemaju ništa.
@@ -390,7 +390,7 @@ test.describe('M3b — boja kartice, pitanja i dopune', () => {
   });
 
   test('NEVALJANA boja stavke pada na sekciju, ne procuri u CSS', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'M3b Nevaljana boja');
     try {
       await page.evaluate(async (nodeId) => {
@@ -426,7 +426,7 @@ test.describe('M3b — boja kartice, pitanja i dopune', () => {
 
 test.describe('M3a — boja bloka', () => {
   test('kvadratić oboji blok → objavi → boja u bazi; „⊘" je vrati na nasljeđivanje', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await openFreshMaterialWithSection(page, 'M3 Boja');
     try {
       // Nova sekcija sije `learn: { blocks: [] }` → dodaj prvi blok.

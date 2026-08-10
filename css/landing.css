@@ -1002,7 +1002,18 @@
    ⚠️ C0/ADR-029: ulaz u vlastite materijale se NE skriva. Prije je ovdje stajalo
    `.landing-nav-links { display: none }`, što je na mobitelu — a to je primarni uređaj — brisalo
    ulaz u glavni proizvod. Skrivaju se ANCHORI, ne cijela grupa. */
-@media (max-width: 860px) {
+/* Sidreni marketing-linkovi (Subjects · How it works · Study modes · About) pojavljuju se tek kad
+   traka za njih STVARNO ima mjesta. Prag je bio 860px; C0 je u traku dodao ulaz u vlastiti
+   materijal, koji iznad 480px nosi labelu (~175px, HR „Moji materijali" još širi) → prirodna širina
+   trake naraste na ~1040px (EN) / ~1066px (HR). Uz stari prag je pojas 861–1065px bio slomljen:
+   CTA „Start" je izlazio iz ekrana do 82px, a stranica se ne skrola vodoravno pa je bio NEDOSTUPAN.
+   Mjereno, ne procijenjeno — vidi `tests/layout-guard.spec.js` (BUG-015 klasa).
+   Prag je MJEREN, ne pogođen: sa sidrenim linkovima traci treba ~1188px (EN) / ~1214px (HR).
+   Prvi pokušaj od 1100px je prošao `layout-guard`, ali samo zato što taj test skače s 1024 na 1280
+   i pojas između NE GLEDA — na 1200px je HR i dalje izlazio 14px van. Zato 1280px (24px rezerve u
+   oba jezika) I proširen popis širina u testu. Ispod praga traka nosi ono što je važno:
+   brand, ulaz u materijal (ADR-029), jezik, račun i CTA. */
+@media (max-width: 1280px) {
     .landing-nav-links { gap: 0.6rem; }
     .landing-nav-links a,
     .landing-nav-links .nav-link-btn:not(.nav-link-btn--accent) { display: none; }
@@ -1021,9 +1032,15 @@
     /* .logo-text već skriven od ≤1060px (brand = Sokrat medaljon) */
     .lang-toggle { padding: 0.4rem 0.6rem; gap: 0.3rem; }
     .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
-    /* Ulaz u materijale ostaje, ali kao IKONA — na 375px labela uz toggle, auth i CTA više ne stane
-       i stisnula bi CTA u „Start studyin". Pristupačno ime nosi `aria-label` (isti tekst kao labela),
-       pa sakrivanje spana ne ostavlja gumb bez imena. */
+}
+
+/* Ulaz u materijale kao IKONA. Prag je 560px, a ne 480px kako je C0 prvotno postavio: s labelom
+   ulaz je širok 147px (EN) / 154px (HR), pa traci treba ~517px — na 481px je CTA izlazio 34px
+   izvan ekrana. Ovo je vlastiti prag jer ovisi o DULJINI LABELE, a ne o ostatku trake; držati ga
+   u bloku od 480px značilo bi da se dvije nepovezane stvari moraju mijenjati zajedno.
+   Pristupačno ime nosi `aria-label` (isti tekst kao labela), pa sakrivanje spana ne ostavlja
+   gumb bez imena. */
+@media (max-width: 560px) {
     .nav-link-btn--accent span { display: none; }
     .nav-link-btn--accent {
         width: 40px;
@@ -1032,4 +1049,23 @@
         justify-content: center;
         border-radius: 50%;
     }
+}
+
+/* NAJUŽI TELEFONI (320px = iPhone SE 1. gen, donja granica koju spec traži; prag 400px).
+   Mjereno na 320px PRIJE ovog bloka: traka je bila široka 365px → CTA „Start" je visio 45px izvan
+   ekrana. Stranica se NE skrola vodoravno (`layout-guard` test 1 prolazi), pa gumb nije bio odrezan
+   nego NEDOSTUPAN — a to je jedini put do učenja. Ulaz u materijale košta 40px + 8px razmaka, a
+   traka je imala ~3px zraka; C0 ju je time prelomio (BUG-015 klasa, zato `layout-guard` i postoji).
+
+   Štedimo na ONOME ŠTO SE PONAVLJA, ne na CTA-u: 🌐 gubi labelu (~36px) i razmaci padaju na 0.25rem
+   (4 razmaka × 4px = 16px). Zajedno ~52px > 45px koliko fali. CTA zadržava tekst.
+   Labela jezika: `aria-label`/`title` na gumbu i dalje nose ime, a icon-only na uskom je već
+   uspostavljen obrazac ovdje (auth gumb i ulaz u materijale rade isto). */
+@media (max-width: 400px) {
+    .landing-nav { padding-left: 0.7rem; padding-right: 0.7rem; gap: 0.25rem; }
+    .lang-toggle .lang-toggle-label { display: none; }
+    .lang-toggle { padding: 0.4rem 0.5rem; }
+    /* Bez ovoga je rezerva na 320px bila 1px = točno na toleranciji testa; prva promjena fonta ili
+       zaokruživanja prevalila bi je natrag u crveno. Rezerva mora biti mjerljiva, ne slučajna. */
+    .cta-button.nav-cta { padding: 0.5rem 0.7rem; }
 }

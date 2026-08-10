@@ -7,7 +7,7 @@
 // uz tvrdnju koja je najlakše promašiti: **sadržaj preživi soft-delete i povratak.**
 const { test, expect } = require('@playwright/test');
 
-async function openProfile(page) {
+async function openMaterials(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
@@ -16,7 +16,7 @@ async function openProfile(page) {
     !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
     && !!window.SokratStudio && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
 }
@@ -50,7 +50,7 @@ const publishSections = (page, id, name, sections) => page.evaluate(async ([node
 
 test.describe('F4 — puni životni ciklus osobnog gradiva', () => {
   test('napravi → ugnijezdi → uredi → objavi → obriši → VRATI (sadržaj preživi)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const folder = await mkNode(page, null, 'folder', 'F4 E2E Fakultet');
     let study = null;
     try {
@@ -102,7 +102,7 @@ test.describe('F4 — puni životni ciklus osobnog gradiva', () => {
   });
 
   test('Studio: 🗑 obriši sekciju → removeCategory u draftu; „Odbaci" je vrati', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F4 Brisanje sekcije');
     try {
       await publishSections(page, id, 'F4 Brisanje sekcije', [

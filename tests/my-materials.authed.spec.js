@@ -8,7 +8,7 @@
 const { test, expect } = require('@playwright/test');
 
 /** Otvori profil s montiranim graditeljem. */
-async function openProfile(page) {
+async function openMaterials(page) {
   // Fiksni cookie-banner legitimno prekriva dno stranice → presreo bi pointer-evente
   // na donjim redcima stabla. Isti obrazac kao auth.spec.js/components.spec.js.
   await page.addInitScript(() => {
@@ -17,7 +17,7 @@ async function openProfile(page) {
   await page.goto('/');
   await page.waitForFunction(() => !!window.SokratMaterials && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   // ⚠️ ČEKAJ da učitavanje ZAVRŠI. Spinner-stanje ima isti `.mm-state-title` kao prazno stanje,
   // pa bi tvrdnje inače prolazile NAD SPINNEROM (lažno zeleno — vidi test „učitavanje se dovrši").
@@ -50,7 +50,7 @@ test.describe('F2 — Moji materijali', () => {
   // SPINNEROM (spinner ima isti naslov-element) — dakle prolazio bi i da je učitavanje potpuno
   // slomljeno. Sada gate-a stvarni invarijant: učitavanje se DOVRŠI i UI ZRCALI podatke.
   test('učitavanje se dovrši i UI zrcali podatke (prazno stanje samo kad je stvarno prazno)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
 
     // 1) nije zaglavilo u spinneru i nije u stanju greške
     await expect(page.locator('#myMaterials .mm-spin')).toHaveCount(0);
@@ -70,7 +70,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('stablo se crta ugniježđeno; chevron otvara/zatvara; naziv je ESCAPAN', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
 
     const XSS = '<img src=x onerror="window.__pwned=1">';
     const fid = await mkNode(page, null, 'folder', 'F2 Test fakultet');
@@ -121,7 +121,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('dodaj folder → dodaj gradivo UNUTRA → preimenuj (inline unos, Enter potvrđuje)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     let fid = null;
     try {
       // 1) novi folder iz trake → inline unos → Enter
@@ -186,7 +186,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('obriši (potvrda) → podstablo nestane → „Vrati obrisano" ga vrati', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const fid = await mkNode(page, null, 'folder', 'F2 Za brisanje');
     await mkNode(page, fid, 'study', 'F2 Dijete');
     try {
@@ -214,7 +214,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('povuci ⠿: gnijezdi u folder, pa vrati na korijen; ciklus odbijen', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const A = await mkNode(page, null, 'folder', 'F2 Drag A');
     const B = await mkNode(page, null, 'folder', 'F2 Drag B');
     const S = await mkNode(page, null, 'study', 'F2 Drag gradivo');
@@ -288,7 +288,7 @@ test.describe('F2 — Moji materijali', () => {
   // ── Rubni slučajevi (lov na bugove 2026-08-04; svi su prošli iz prve — drže to tako) ──
 
   test('duboko ugnježđivanje (8 razina) ne razbija layout ni čitljivost', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     let root = null;
     try {
       let parent = null;
@@ -315,7 +315,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('naziv od 120 znakova (granica sheme) ne razbija layout', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     let id = null;
     try {
       id = await mkNode(page, null, 'folder', 'D'.repeat(120));
@@ -334,7 +334,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('brzi dvoklik na „+ Folder" ne otvara dva unosa', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const btn = page.locator('#myMaterials [data-mm-new="folder"]');
     await btn.click();
     await btn.click({ force: true });
@@ -343,7 +343,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('dvostruki Enter ne stvara duplikat čvora', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     await page.click('#myMaterials [data-mm-new="folder"]');
     await page.fill('#myMaterials [data-mm-input]', 'F2 DvaPuta');
     await page.press('#myMaterials [data-mm-input]', 'Enter');
@@ -363,7 +363,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('ispuštanje retka na SAMOG SEBE ne mijenja ništa', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const A = await mkNode(page, null, 'folder', 'F2 Self A');
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
@@ -389,7 +389,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('otvaranje drugog unosa dok je prvi otvoren ne ostavlja siroče', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     await page.click('#myMaterials [data-mm-new="folder"]');
     await page.fill('#myMaterials [data-mm-input]', 'nedovrseno');
     await page.click('#myMaterials [data-mm-new="study"]');
@@ -400,7 +400,7 @@ test.describe('F2 — Moji materijali', () => {
   });
 
   test('odustajanje od potvrde NE briše', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const fid = await mkNode(page, null, 'folder', 'F2 Ostaje');
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());

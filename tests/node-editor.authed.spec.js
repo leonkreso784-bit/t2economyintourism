@@ -6,7 +6,7 @@
 // sadržaj ostao + audit-redak zapisan + `base_version` lovi tuđu izmjenu.
 const { test, expect } = require('@playwright/test');
 
-async function openProfile(page) {
+async function openMaterials(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
@@ -15,7 +15,7 @@ async function openProfile(page) {
     !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
     && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
 }
@@ -34,7 +34,7 @@ const readContent = (page, id) => page.evaluate(async (nodeId) => {
 
 test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   test('novi study-čvor ima PRAZAN payload i može u draft-mod', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Prazan');
     try {
       // `create_node` upisuje redak s `{}` → prazno je legitimno početno stanje, ne greška.
@@ -55,7 +55,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   });
 
   test('uredi → publish_node → ponovno učitaj: sadržaj ostao + verzija + audit-redak', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Objava');
     try {
       const res = await page.evaluate(async (nodeId) => {
@@ -101,7 +101,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   });
 
   test('base_version lovi tuđu izmjenu (publish_version_conflict)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Konflikt');
     try {
       const err = await page.evaluate(async (nodeId) => {
@@ -124,7 +124,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
 
   // ── K2 — ULAZ: klik na study-čvor otvara Studio vezan na taj čvor ──
   test('K2: klik „Uredi gradivo" otvara Studio na čvoru (crumb, naslov, panel)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Ulaz');
     try {
       // pripremi sadržaj da canvas ima što nacrtati
@@ -161,8 +161,9 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
     }
   });
 
-  test('K2: „natrag" iz Studija vraća na profil (ne na katalog)', async ({ page }) => {
-    await openProfile(page);
+  // C0: odredište je stranica vlastitog materijala, ne profil — ondje stablo i živi.
+  test('K2: „natrag" iz Studija vraća na vlastiti materijal (ne na katalog)', async ({ page }) => {
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Natrag');
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
@@ -172,7 +173,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
 
       await page.click('#stBack');
-      await expect(page.locator('#profile-page')).toHaveClass(/active/, { timeout: 20000 });
+      await expect(page.locator('#materials-page')).toHaveClass(/active/, { timeout: 20000 });
       await expect(page.locator('#myMaterials .mm-bar')).toBeVisible();
     } finally {
       await rmNode(page, id);
@@ -181,7 +182,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
 
   // ── K3 — PRAZAN ČVOR: mora postojati put od `{}` do sadržaja ──
   test('K3: prazan čvor → „Uredi" → „＋ Nova sekcija" → Objavi → sadržaj u bazi', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 OdNule');
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
@@ -220,7 +221,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   });
 
   test('K3: druga sekcija dobiva NESUDARAJUĆI ključ', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Dvije');
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());
@@ -246,7 +247,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
   });
 
   test('setLesson gasi node-mod (povratak na klasični predmet ne piše u čvor)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Prebacivanje');
     try {
       const ctx = await page.evaluate(async (nodeId) => {

@@ -48,7 +48,7 @@ async function openLessonInDraftMode(page) {
   await page.waitForSelector('#adminCards .admin-cat', { timeout: 20000 });
 }
 
-async function openProfile(page) {
+async function openMaterials(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
@@ -56,7 +56,7 @@ async function openProfile(page) {
   await page.waitForFunction(() =>
     !!window.SokratMaterials && !!window.SokratAdmin && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   // ⚠ Spinner dijeli selektor s praznim stanjem — čekaj da NESTANE.
   await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
@@ -146,7 +146,7 @@ test.describe('M5a — mjera duljine kartice', () => {
   });
 
   test('osobni materijal: isto ograničenje, isti editor', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await page.evaluate(() => window.SokratMaterials.createNode(null, 'study', 'M5a Mjera'));
     try {
       await page.evaluate(() => window.SokratMaterials.refresh());

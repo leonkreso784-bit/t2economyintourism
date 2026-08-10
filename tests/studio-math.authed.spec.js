@@ -13,7 +13,7 @@ const { test, expect } = require('@playwright/test');
 
 const TEX = '\\sqrt{55}\\pm\\frac{154}{85}';
 
-async function openProfile(page) {
+async function openMaterials(page) {
   await page.addInitScript(() => {
     try { localStorage.setItem('sokrat-cookie-consent', 'denied'); } catch (e) { /* private mode */ }
   });
@@ -25,7 +25,7 @@ async function openProfile(page) {
   // lažno pao na infrastrukturi umjesto na regresiji.
   await page.waitForFunction(() => typeof window.renderMathInElement === 'function', null, { timeout: 20000 });
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
-  await page.evaluate(() => navigateTo('profile'));
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
   await page.waitForSelector('#myMaterials .mm-spin', { state: 'detached', timeout: 20000 });
 }
@@ -56,7 +56,7 @@ const publishFormula = (page, id, name, tex) => page.evaluate(async ([nodeId, nm
 
 test.describe('Studio — KaTeX u canvasu', () => {
   test('objavljena formula se u Studiju TIPOGRAFIRA (ne ostaje sirovi LaTeX)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Studio Math');
     try {
       await publishFormula(page, id, 'Studio Math', TEX);
@@ -87,7 +87,7 @@ test.describe('Studio — KaTeX u canvasu', () => {
   });
 
   test('u EDIT-modu formula ostaje uredljiva (KaTeX ne smije zagristi contenteditable)', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Studio Math Edit');
     try {
       await publishFormula(page, id, 'Studio Math Edit', TEX);
@@ -116,7 +116,7 @@ test.describe('Studio — KaTeX u canvasu', () => {
   });
 
   test('INLINE matematika: označi dio rečenice → √x u traci → math-run → tipografirano u pregledu', async ({ page }) => {
-    await openProfile(page);
+    await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'Inline Math');
     try {
       // Sekcija s običnim odlomkom — dalje sve ide kroz PRAVI editor, ne kroz opove.

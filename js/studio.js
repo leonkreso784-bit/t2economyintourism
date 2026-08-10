@@ -144,7 +144,13 @@ const SokratStudio = (function () {
       '  <aside class="st-inspector" id="stInspector">' + inspectorStub(false) + '</aside>' +
       '</div>';
 
-    byId('stBack').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('profile'); });
+    // C0: iz OSOBNOG čvora „natrag" vodi na stranicu vlastitog materijala — odande se i ušlo.
+    // Prije C0 je stablo živjelo na profilu pa je tvrdi 'profile' bio točan; sada ondje stoji samo
+    // poveznica, pa bi korisnika ostavio na slijepom kolosijeku (mrvica gore piše „Moji materijali").
+    // Katalog-mod (admin, `_node` == null) i dalje ide na profil — taj put C0 nije dirao.
+    byId('stBack').addEventListener('click', function () {
+      if (typeof navigateTo === 'function') navigateTo(_node ? 'materials' : 'profile');
+    });
     byId('stOldEditor').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('admin'); });
     // U node-modu ova dva elementa ne postoje (aside je panel čvora, ne katalog-stablo).
     var newScript = byId('stNewScript');
