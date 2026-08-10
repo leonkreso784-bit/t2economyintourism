@@ -1144,15 +1144,32 @@ body {
 /* ----- Responsive ----- */
 /* Dok je nav tijesan (nav-linkovi + 🌐 toggle + auth + CTA), brand = samo Sokrat ikona (oslobađa ~125px
    koje je zauzeo wordmark) → anchor-linkovi ostaju vidljivi umjesto da nestanu kroz cijeli tablet raspon.
-   Wordmark se vraća tek kad ima mjesta (≥1061px). */
-@media (max-width: 1060px) {
+   Wordmark se vraća tek kad ima mjesta (≥1121px — prag dignut s 1061 jer HR labeli uz ulaz u
+   materijale na 1061–1081px prelijevaju CTA preko ruba).
+   U istom pojasu razmaci ostaju suženi (prije je to vrijedilo samo do 900px, pa je HR nav curio
+   preko ruba na 901–1060px). */
+@media (max-width: 1120px) {
     .landing-nav .logo-text { display: none; }
+    .landing-nav { gap: 0.85rem; }
+    .landing-nav-links { gap: 1rem; }
 }
 
-/* Tablet band: suzi razmake da duži HR labeli + toggle + CTA stanu u jedan red bez wrapa/stezanja. */
-@media (max-width: 900px) {
-    .landing-nav { gap: 0.85rem; }
-    .landing-nav-links { gap: 1.1rem; }
+/* Ulaz u materijale je IKONA sve dok nav nije stvarno širok. Labela („My materials" / „Moji
+   materijali") košta ~110px, a nav ih nema: s labelom CTA prelazi desni rub kroz CIJELI pojas
+   861–1190px (mjereno; najgore je HR na 1061px, gdje se uz to vraća i wordmark). Prag 1240px je
+   prva širina na kojoj i duži HR labeli stanu s rezervom (na 1200px je ostajalo ~12px, premalo za širi font).
+   Pilula ostaje vizualno naglašena (indigo krug) pa ulaz u glavni proizvod ne gubi težinu (ADR-029),
+   a pristupačno ime nosi `aria-label` (isti tekst kao labela) → skrivanje spana ne ostavlja gumb
+   bez imena. ⚠️ Prag ne dizati bez `tests/layout-guard.spec.js` (širine 960/1024/1200 su gate). */
+@media (max-width: 1239px) {
+    .nav-link-btn--accent span { display: none; }
+    .nav-link-btn--accent {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+    }
 }
 
 /* Ispod ~860px anchor-linkovi + toggle + auth + CTA više ne stanu u jedan red → sakrij linkove
@@ -1187,7 +1204,7 @@ body {
    bez stezanja CTA-a (inače „Start studyin"). S dodanim toggle-om wordmark se gubi → ostaje Sokrat ikona. */
 @media (max-width: 480px) {
     .landing-nav { padding-left: 0.9rem; padding-right: 0.9rem; gap: 0.5rem; }
-    /* .logo-text već skriven od ≤1060px (brand = Sokrat medaljon) */
+    /* .logo-text već skriven od ≤1120px (brand = Sokrat medaljon) */
     .lang-toggle { padding: 0.4rem 0.6rem; gap: 0.3rem; }
     .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
 }
@@ -1220,12 +1237,16 @@ body {
    Labela jezika: `aria-label`/`title` na gumbu i dalje nose ime, a icon-only na uskom je već
    uspostavljen obrazac ovdje (auth gumb i ulaz u materijale rade isto). */
 @media (max-width: 400px) {
-    .landing-nav { padding-left: 0.7rem; padding-right: 0.7rem; gap: 0.25rem; }
-    .lang-toggle .lang-toggle-label { display: none; }
+    .landing-nav { padding-left: 0.6rem; padding-right: 0.6rem; gap: 0.25rem; }
+    /* Labela jezika pada, ali SCOPE-ANO na landing — app-headeri (`.header-lang-toggle`) je
+       zadržavaju. Ime gumba nosi `aria-label="Language / Jezik"` + `title`. */
+    .landing-nav .lang-toggle-label { display: none; }
     .lang-toggle { padding: 0.4rem 0.5rem; }
-    /* Bez ovoga je rezerva na 320px bila 1px = točno na toleranciji testa; prva promjena fonta ili
-       zaokruživanja prevalila bi je natrag u crveno. Rezerva mora biti mjerljiva, ne slučajna. */
-    .cta-button.nav-cta { padding: 0.5rem 0.7rem; }
+    /* Munja u CTA-u je UKRAS — značenje nosi tekst „Start studying" — pa pada prva.
+       Bez nje je rezerva na 320px bila 3.9px, a CI (Linux) mjeri font ~4px šire od Windowsa:
+       upravo je tako C0 pao na CI-u dok je lokalno bio zelen. Rezerva mora nadživjeti tu razliku. */
+    .cta-button.nav-cta { padding: 0.5rem 0.65rem; }
+    .cta-button.nav-cta i { display: none; }
 }
 
 /* ==================== css/sidebar.css ==================== */

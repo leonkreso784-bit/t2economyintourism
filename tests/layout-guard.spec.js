@@ -5,12 +5,14 @@
 // Pixel-perfect toHaveScreenshot je odvojen follow-up (treba Linux baseline; vidi BACKLOG).
 const { test, expect } = require('@playwright/test');
 
-// ⚠️ Uzorak širina MORA pokrivati okolinu svakog praga u css/landing.css, inače test bude zelen nad
-// rupom. Konkretno: prije C0 je popis skakao s 1024 na 1280, pa je pojas u kojem se sidreni linkovi
-// vraćaju u traku bio NEGLEDAN — na 1200px je HR CTA izlazio 14px izvan ekrana, a suita zelena.
-// Kad mijenjaš prag u CSS-u, dodaj ovdje prag i prag+1.
-const WIDTHS = [320, 360, 361, 390, 400, 401, 414, 480, 481, 600, 720, 768, 860, 960, 1024, 1100, 1200,
-                1280, 1281, 1366, 1440];
+// ⚠️ Uzorak širina MORA gaziti okolinu SVAKOG praga u css/landing.css, inače test bude zelen nad
+// rupom. Dvije neovisne sesije su na tome nasjele istog dana, svaka na svoju rupu:
+//   • popis je skakao s 1024 na 1280 → prag 1100 je PROŠAO test, a na 1200px je HR izlazio 14px van;
+//   • popis nije imao 861 → prag „ulaz = ikona do 1239px" je prošao, a na 861px je HR visio 8.8px van.
+// Zato: svaki prag iz CSS-a ide ovdje ZAJEDNO s prag+1 (granica se ponaša drukčije s obje strane).
+// Trenutni pragovi landinga: 400 · 480 · 560 · 720 · 1120 (wordmark) · 1280 (sidreni linkovi).
+const WIDTHS = [320, 360, 361, 390, 400, 401, 414, 480, 481, 560, 561, 600, 720, 721, 768, 860, 861,
+                900, 960, 1024, 1100, 1120, 1121, 1200, 1280, 1281, 1366, 1440];
 const LANGS = ['en', 'hr'];
 
 test('landing nav: no overflow and CTA never clipped across widths x languages', async ({ page }, testInfo) => {

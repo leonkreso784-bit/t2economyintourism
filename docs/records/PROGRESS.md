@@ -61,6 +61,38 @@ tema (**0** pojava `[data-theme="light"]`) i **Vercel bez build-koraka** (`verce
 
 **Slijedi:** Leonova odluka — merge C0 (sad zelen) ili C1 s `main`-a. Pa **C1** (Tailwind temelj).
 
+## 2026-08-10 (OPUS) — **C0: `layout-guard` pao na CI-u; nav je curio kroz 861–1190px, ne samo na 320px**
+
+**Simptom (CI run `31340548762`, grana `feature/c0-ugc-ulaz`):** `layout-guard.spec.js` @ **320px/en** —
+CTA desni rub **368.9px**, dopušteno 321. Ostala dva posla (authed, Lighthouse) zelena; `main` zelen.
+
+**Zašto se nije vidjelo lokalno.** Lokalno je isti rub bio **325.6px** — Font Awesome se s CDN-a ne
+učita pa su sve `<i>` ikone **širine 0**. Emulacija (`i.fas{display:inline-block;width:1.125em}`) daje
+**371.4px**, tj. 2.5px konzervativnije od CI-a — tek s njom je mjerenje bilo upotrebljivo. **Bez ikona
+lokalna mjerenja landing-nava ne znače ništa.**
+
+**Pravi opseg je bio puno veći od jedne širine.** Test uzorkuje 13 širina i **staje na prvom padu**, pa
+je prijavio samo 320px. Neprekidni sweep 320→1440 (korak 4px) pokazao je da pilula „Moji materijali"
+(~110px s labelom) probija rub kroz **cijeli pojas 861–1190px** — najgore HR na **1061px (+126.5px)**,
+točno ondje gdje se vraća wordmark. Uzorak gate-a imao je rupe 860↔960 i 1024↔1280 pa to nije vidio.
+
+**Popravak (`css/landing.css`, samo pragovi i razmaci — bez diranja markupa):**
+- ulaz u materijale je **ikona do 1239px** (prije samo ≤480px); labela se vraća na ≥1240px, prvoj širini
+  na kojoj i duži HR labeli imaju rezervu (na 1200px je ostajalo ~12px),
+- pojas suženih razmaka + skriveni wordmark dignut s **900/1060 na 1120px** (HR je curio na 901–1060),
+- ≤480px: 🌐 gubi „EN/HR" labelu (~30px; ime nosi `aria-label`), ≤400px: munja u CTA-u (ukras) i uži
+  razmaci — na 320px ostaje **~10px zraka** u pesimističnoj emulaciji.
+
+**Gate je dopunjen, ne samo kod (ADR-027):** `WIDTHS` u `layout-guard.spec.js` dobio je **900 · 1100 ·
+1200** → uzorak sada gazi svaku `@media` granicu landinga (860 · 900 · 1120 · 1240). Bez toga bi isti
+razred greške opet prošao između dvije uzorkovane širine.
+
+**Provjereno:** sweep 320→1440 × EN/HR **čist**, svih 16 širina gate-a prolazi sve četiri tvrdnje
+(page-overflow, CTA rub, CTA lijevo, tekst nije odrezan), `npm run preflight` **0 palo**.
+⚠️ Grana **nije deployana** — čeka CI i izričit OK.
+
+---
+
 ## 2026-08-09 (OPUS) — **smjer: UGC je glavni proizvod; otvoren frontend redizajn; C0 isporučen**
 
 > Pisano po ADR-027 — **pokazuje, ne prepričava**. Odluke: [ADR-028](./DECISIONS.md) (Tailwind,
