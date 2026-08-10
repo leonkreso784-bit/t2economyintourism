@@ -1,5 +1,15 @@
 // ===== SOKRAT STUDY — LEARN MODE =====
 
+/**
+ * BUG-025 — escape za sve što iz PODATAKA ide u `innerHTML`.
+ * Jedna definicija za cijelu platformu je ona iz `blocks-renderer.js` (ADR-027), koji se u
+ * `index.html` učitava prije ovog fajla. Nema li ga, prazno je jedini fail-safe ishod —
+ * sirov unos ne smije proći ni u degradiranom stanju.
+ */
+function lEsc(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.esc === 'function') ? SokratBlocks.esc(s) : '';
+}
+
 function renderLearnContent() {
     const container = document.getElementById('learnContent');
     if (!container) {
@@ -25,8 +35,14 @@ function renderLearnContent() {
         const data = content[category];
         if (!data) return;
         
-        const icon = data.icon || 'fa-book';
-        const name = data.name || category;
+        // BUG-025: naziv i ikona sekcije ulaze u `innerHTML`, a u osobnom materijalu ih tipka
+        // KORISNIK. Escape ide kroz istu jednu definiciju koju koristi renderer (ADR-027).
+        // Ikona se ne escapa nego PROVJERAVA: ide u `class`, gdje bi i escapan navodnik prošao
+        // kao razdjelnik klasa. Svih 137 ikona u katalogu već odgovara ovom obliku (izmjereno),
+        // pa je provjera besplatna za katalog i zatvara rupu za vlastiti materijal.
+        const rawIcon = data.icon || 'fa-book';
+        const icon = /^fa-[a-z0-9-]+$/.test(rawIcon) ? rawIcon : 'fa-book';
+        const name = lEsc(data.name || category);
         const flashcardsCount = data.flashcards ? data.flashcards.length : 0;
         // U7c: SAV learn ide kroz JEDAN renderer (sigurnosna granica). v2 = blokovi (escapani po tipu);
         // v1 = legacy-html blok kroz DOMPurify (allowlist pokriva naš sadržaj — legacy-html-coverage.test.js).
@@ -43,7 +59,13 @@ function renderLearnContent() {
         } else {
             learnHtml = '<p>No learn content available for this category.</p>';
         }
-        const learnImage = data.learn && data.learn.image ? data.learn.image : null;
+        // Zaglavna slika sekcije (14 kategorija u katalogu je koristi) kroz ISTU provjeru sheme
+        // kao renderer: `javascript:`/`data:text` → prazno → `<img>` se izostavi (fail-safe).
+        // Oblik markupa se NE mijenja — `enhanceLearnImages` mu poslije doda zoom-klase.
+        const rawImage = data.learn && data.learn.image ? data.learn.image : null;
+        const learnImage = rawImage && window.SokratBlocks && typeof SokratBlocks.safeUrl === 'function'
+            ? lEsc(SokratBlocks.safeUrl(rawImage, { image: true }))
+            : null;
         
         const card = document.createElement('div');
         card.className = 'learn-card';

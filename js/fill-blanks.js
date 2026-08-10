@@ -70,7 +70,11 @@ function showFillQuestion() {
 
     document.getElementById('fillCategory').textContent = q.categoryName;
     
-    const sentenceWithBlank = q.sentence.replace('_______', '<span class="blank">_______</span>');
+    // BUG-025: rečenica ide u `innerHTML` (praznina je `<span>`), pa se tekst MORA escapati —
+    // inače `<` iz formule preglednik pročita kao početak taga i pojede dio rečenice. Escape ide
+    // PRVI, pa se tek onda ubaci naš `<span>`: obrnutim redom bi escape pojeo i njega.
+    const fEsc = (window.SokratBlocks && typeof SokratBlocks.esc === 'function') ? SokratBlocks.esc : function () { return ''; };
+    const sentenceWithBlank = fEsc(q.sentence).replace('_______', '<span class="blank">_______</span>');
     document.getElementById('fillSentence').innerHTML = sentenceWithBlank;
 
     // ADR-009: render LaTeX in the sentence (a formula with a blank renders around it).

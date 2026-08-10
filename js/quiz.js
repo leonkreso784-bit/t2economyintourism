@@ -1,5 +1,21 @@
 // ===== SOKRAT STUDY — QUIZ =====
 
+/**
+ * BUG-025 — tekst stavke koji ide u `innerHTML` MORA biti escapan.
+ *
+ * Nije samo sigurnosno pitanje (u osobnom materijalu tekst tipka korisnik): u KATALOGU je već
+ * radilo štetu. `\(P(Z<z)\)` preglednik iz `innerHTML` pročita kao POČETAK TAGA (`<z…`) i pojede
+ * sve do prvog `>`, pa su tri ponuđena odgovora izgledala identično skraćeno — pitanje se nije
+ * moglo riješiti. Escape to rješava, a KaTeX ostaje netaknut: `&lt;` se u DOM-u vrati kao tekst
+ * `<`, a `renderMath()` radi nad tekstom (i trči POSLIJE umetanja).
+ *
+ * Jedna definicija za sve (ADR-027) — ista koju koristi `blocks-renderer.js`, koji se u
+ * `index.html` učitava PRIJE ovog fajla. Ako ga nema, prazno je jedini fail-safe ishod.
+ */
+function qEsc(s) {
+    return (window.SokratBlocks && typeof SokratBlocks.esc === 'function') ? SokratBlocks.esc(s) : '';
+}
+
 function startQuiz() {
     const quiz = AppState.quiz;
     const count = document.getElementById('questionCount').value;
@@ -120,7 +136,7 @@ function showQuestion() {
     optionsWithIndex.forEach((option, index) => {
         const btn = document.createElement('button');
         btn.className = 'answer-btn';
-        btn.innerHTML = `<span class="answer-letter">${letters[index]}</span><span>${option.text}</span>`;
+        btn.innerHTML = `<span class="answer-letter">${letters[index]}</span><span>${qEsc(option.text)}</span>`;
         
         if (answered) {
             // Reviewing a previously answered question
@@ -266,9 +282,9 @@ function endQuiz() {
             const div = document.createElement('div');
             div.className = 'wrong-answer-item';
             div.innerHTML = `
-                <p><strong>Question:</strong> ${item.question}</p>
-                <p class="your-answer"><strong>Your answer:</strong> ${item.yourAnswer}</p>
-                <p class="correct-answer-review"><strong>Correct answer:</strong> ${item.correctAnswer}</p>
+                <p><strong>Question:</strong> ${qEsc(item.question)}</p>
+                <p class="your-answer"><strong>Your answer:</strong> ${qEsc(item.yourAnswer)}</p>
+                <p class="correct-answer-review"><strong>Correct answer:</strong> ${qEsc(item.correctAnswer)}</p>
             `;
             wrongList.appendChild(div);
         });

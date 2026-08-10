@@ -316,6 +316,8 @@
     window.SokratBlocks = {
       render: renderBlocks,
       renderContent: renderContentBlocks,
+      esc: esc,                   // BUG-025: JEDNA definicija escapea za sve koji pišu u innerHTML
+      safeUrl: safeUrl,           // BUG-025: ista provjera sheme i izvan rendera (learn.image)
       accentFrom: accentFrom,     // M3b: jedna definicija valjanog akcenta za sve study-modove
       applyAccent: applyAccent,
       _esc: esc,

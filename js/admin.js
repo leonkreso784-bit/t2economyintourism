@@ -381,6 +381,17 @@ function _renderAdminCards(holder, data) {
     : '<p class="profile-meta">' + _adminT('admin.noContent', 'No flashcards or quiz in this lesson.') + '</p>';
 
   _mountBlockEditors(holder); // U8a-2: oživi .be-mount kontejnere (draft-mod, learn-blokovi)
+
+  // KaTeX: renderer NAMJERNO ispljune `\[tex\]` kao TEKST (ne izvršava ništa — sigurnosna granica),
+  // pa pozivatelj mora dovršiti posao. `learn.js` i `studio.js` to rade, admin nije — formula je u
+  // pregledu ostajala sirovi LaTeX. Isti propust kao BUG-024, samo drugi tip bloka: pred-obrada je
+  // bila prepisana po pozivateljima, pa ju je jedan izostavio.
+  // ⚠ SCOPE = `.admin-card--learn` (isključivo read-only kartice). U `.be-mount` editorima tekst
+  // živi u `contenteditable` i `editableToInline` bi KaTeX-markup pročitao NATRAG u model —
+  // formula-blokove ondje tipografira `typesetFormulas` iz block-editora.
+  if (typeof window.renderMath === 'function') {
+    holder.querySelectorAll('.admin-card--learn').forEach(function (el) { window.renderMath(el); });
+  }
 }
 
 window.renderAdminPage = renderAdminPage;
