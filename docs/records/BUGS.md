@@ -17,7 +17,30 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-*(trenutno nema aktivnih bugova)*
+### BUG-024 — Slika iz osobnog materijala se NE vidi u Learn modu (vidi se u editoru)
+- Status: 🔴 **otvoren** · Težina: **visok** (osobni materijal; javni katalog NIJE pogađen) · Prijavio: **Leon**, 2026-08-10.
+- **Simptom:** slika ubaciš u editoru, u Studiju/pregledu se vidi — a kad iz tog materijala **učiš** (Learn), slike nema. Tekst oko nje je uredan.
+- **Reprodukcija:** „Moji materijali" → otvori materijal → Uredi → ubaci sliku → Objavi → „Learn". Slika nedostaje.
+- **Uzrok (nađen, NIJE još popravljen — ostavljeno za sljedeću sesiju po Leonovoj odluci):**
+  Privatne slike osobnog materijala **ne žive kao URL nego kao OZNAKA** — potpisani URL istječe, pa u bazu smije samo oznaka
+  (bucket `node-images` je privatan; vidi F4 zapis u CHANGELOG-u). Svaki put prikaza mora oznaku razriješiti u potpisani URL preko
+  `window.SokratNodeImages.resolveBlocks()`. **Tri od četiri puta to rade, Četvrti ne:**
+  - [js/admin.js:361](../../js/admin.js#L361) → `resolveBlocks` ✅
+  - [js/block-editor.js:33](../../js/block-editor.js#L33) → `resolveBlock` ✅
+  - [js/studio.js:678](../../js/studio.js#L678) → `resolveBlocks` + `prefetch` na 835 ✅
+  - **[js/learn.js:36](../../js/learn.js#L36) → `renderBlocks(data.learn.blocks)` IZRAVNO, bez razrješavanja ❌**
+  Zato se slika vidi svugdje gdje se **uređuje**, a nestaje ondje gdje se **uči**.
+- **Smjer rješenja:** Learn mora proići isti put — `prefetch(_data)` pa `resolveBlocks()` prije `renderBlocks()`. ⚠️ Potpis **istječe**, pa
+  razrješavanje ide **pri prikazu**, nikad u spremljeni payload (to je invarijanta F4 i ne smije se prekršiti da bi slika „radila").
+- **⚠️ Širi nalaz — Leon: *„ne znam koliko još imamo bugova."*** Ovo je bug klase **„jedan put prikaza je zaboravio korak"**.
+  Renderer je jedan (`blocks-renderer.js`, sigurnosna granica) i to je dobro, ali **pred-obrada oko njega je prepisana na 4 mjesta**.
+  Sljedeća sesija neka ne popravi samo Learn nego provjeri **sve puteve prikaza za sve tipove blokova** (slika · KaTeX · tablica ·
+  video · legacy-html) i po mogućnosti **objedini pred-obradu na jedno mjesto** — inače će peti put opet nešto zaboraviti.
+  Test koji bi ovo uhvatio: „objavi sliku u osobnom materijalu → otvori **Learn** → `<img>` ima **potpisani** `src` koji stvarno vraća sliku"
+  (postojeći `node-images.authed.spec.js` to dokazuje **za prikaz u editoru**, ne za Learn).
+
+---
+
 
 ---
 
