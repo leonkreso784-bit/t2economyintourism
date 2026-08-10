@@ -34,7 +34,23 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
   a `admin.js` i `block-editor.js` rade **samo resolve** i tiho se oslanjaju na to da je Studio već napunio predmemoriju potpisa.
   Znači: popravak koji u `learn.js` doda samo `resolveBlocks()` **može raditi dok se došlo preko Studija, a pasti pri izravnom
   ulasku u Learn** (npr. deep-link ili osvježena stranica). Learn treba **oba** koraka.
-- **Smjer rješenja:** Learn mora proići isti put — `prefetch(_data)` pa `resolveBlocks()` prije `renderBlocks()`. ⚠️ Potpis **istječe**, pa
+- **RJEŠENJE (razrađeno 2026-08-10; tri sloja, i samo je prvi „popravak buga“):**
+  1. **`prefetch` na ŠAVU, ne u rendereru.** [js/my-materials.js:446](../../js/my-materials.js#L446) `loadNodeContent()` je
+     **jedino mjesto** kroz koje sadržaj osobnog materijala ulazi u učenje (vlastiti komentar: *„`initStudyPage` ga traži preko
+     ovog šava"*). Već je `async`. Jedan `await SokratNodeImages.prefetch(payload)` ondje pokriva **sva četiri moda odjednom**.
+     ⚠️ **Popraviti samo `learn.js` znači popraviti simptom** — kartice/kviz/dopune nose iste blokove i imale bi istu rupu.
+  2. **`resolve` kroz JEDNU funkciju, bezuvjetno.** `resolveBlocks()` vraća **isti niz** kad nema što mijenjati → za kataloški
+     sadržaj je besplatan → smije se zvati **uvijek**. Zato: jedan `renderContentBlocks()` koji radi resolve+render, i sva
+     četiri poziva idu kroz njega. Time odluka **nestaje iz programerove glave**, a to je pravi uzrok.
+  3. **Test koji pukne ako netko opet zaboravi.** (a) E2E u **Learnu**: objavi sliku → otvori Learn → `<img>` ima **potpisani**
+     `src` koji stvarno vraća bajtove. (b) **Izvorna brana:** nijedna datoteka ne smije zvati `renderBlocks(` izravno osim
+     omotača. Bug nije „`learn.js` ima grešku“ nego „pravilo živi u glavama“ (ADR-027).
+- **⚠️ Zašto se nije primijetilo:** renderer ima **fail-safe** — `safeUrl` odbije nepoznatu shemu i sliku **tiho izostavi**
+  (nikad polomljen `<img>`). Odlično za sigurnost, **grozno za primjećivanje**. Uz popravak dodati **glasno upozorenje u konzolu**
+  kad `node-img:` označa stigne do renderera nerazriješena — tihi kvar postaje bučan.
+- **🚫 Zamka koju NE smiješ uzeti kao prečac:** spremiti potpisani URL u payload. Potpis istječe (8 h) → objavljeni sadržaj bi
+  „istrunuo“, a draft-autosave u localStorage vratio mrtve linkove. Modul to izričito zabranjuje ([node-images.js](../../js/node-images.js) §ZAŠTO).
+- **Stari smjer (nadjačan gornjim):** Learn mora proići isti put — `prefetch(_data)` pa `resolveBlocks()` prije `renderBlocks()`. ⚠️ Potpis **istječe**, pa
   razrješavanje ide **pri prikazu**, nikad u spremljeni payload (to je invarijanta F4 i ne smije se prekršiti da bi slika „radila").
 - **⚠️ Širi nalaz — Leon: *„ne znam koliko još imamo bugova."*** Ovo je bug klase **„jedan put prikaza je zaboravio korak"**.
   Renderer je jedan (`blocks-renderer.js`, sigurnosna granica) i to je dobro, ali **pred-obrada oko njega je prepisana na 4 mjesta**.
