@@ -68,11 +68,23 @@ su se „Moji materijali" montirali **unutar profila**, bez vlastite stranice i 
 (`Subjects · How it works · Study modes · About`) glavni proizvod **nije spominjao**. Dok je tako,
 nikakav novi izgled ne pomaže — korisnik do njega ne dođe.
 
-> **🟡 C0 je IZVEDEN, ali NIJE na produkciji.** Leonova odluka (2026-08-09): *„grana čeka."*
-> Grana `feature/c0-ugc-ulaz` (`d238a72`) je pushana, preview je READY i provjeren, `main` je
-> **netaknut** na `00e134b`. **Prije mergea obavezno ponovno pokrenuti puni `npm run test:responsive`** —
-> zadnji je pokrenut, ali rezultat **nije dočekan** prije zatvaranja sesije, pa se ne smije tvrditi da je zelen.
-> Zeleno je ovo: `preflight` = 0 · `materials-entry` + `landing` + `a11y` = **41 prošao / 0 palo / 15 skip**.
+> **🟡 C0 je IZVEDEN i PROVJEREN, ali NIJE mergean ni na produkciji.** Leonova odluka (2026-08-09):
+> *„grana čeka."* Grana `feature/c0-ugc-ulaz` (`da0db80`), `main` **netaknut** na `00e134b`.
+> Puni `npm run test:responsive` je 2026-08-10 **dočekan do kraja**: **332 prošlo / 0 palo / 18 skip**
+> (17.7 min) · `preflight` = 0 · `test:authed` = **66/0** vs staging.
+>
+> **Ta je suita otkrila tri regresije koje je C0 nosio, a ciljani podskup ih nije vidio** (prvi zapis
+> je tvrdio „41 prošao" — podskup NIJE uključivao ni `layout-guard` ni ijedan authed spec):
+> 1. **Nav overflow 861–1279px.** Ulaz nosi labelu (147px EN / 154px HR), pa prirodna širina trake
+>    skoči na ~1040/1066px, a sidreni linkovi su se vraćali već na 861px → CTA „Start" je izlazio do
+>    82px izvan ekrana. Stranica se ne skrola vodoravno → gumb **nedostupan**, ne odrezan.
+> 2. **Rupa u samom guardu.** `layout-guard` je skakao s 1024 na 1280px; prvi popravak (prag 1100)
+>    je **prošao test**, a na 1200px je HR i dalje izlazio 14px van. Popis širina 13 → 19.
+> 3. **Slijepi kolosijek u Studiju.** `js/studio.js` je tvrdo vraćao na `profile`, gdje stabla više
+>    nema. Node-mod sada vraća na `materials`; katalog-mod (admin) ostaje `profile`.
+>
+> **Pouka za ostatak faze:** ciljani podskup testova NE dokazuje ciglu. Prije svakog mergea ide
+> **puna** suita — inače cigla nosi regresiju u sljedeću ([ADR-027](../records/DECISIONS.md)).
 
 **Izvedeno u C0:** vlastita stranica `#materials-page` · ruta **`#/materials`** (`#/`-prefiks da se ne
 sudari s postojećim sidrenim linkovima landinga) koja **pobjeđuje spremljenu poziciju** · ulaz **prvi u

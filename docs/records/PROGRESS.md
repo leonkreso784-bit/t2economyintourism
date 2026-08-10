@@ -5,6 +5,62 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-10 (OPUS) — **puna suita presudila C0: tri regresije nadene i popravljene**
+
+> Pisano po ADR-027 — **pokazuje, ne prepricava**.
+
+**Sto je zapravo bilo.** Prosla sesija je C0 ostavila kao „41 test prosao, suita pokrenuta ali rezultat
+nije docekan". Rezultat je danas stigao: **35 palo / 297 proslo / 18 preskoceno**. Podskup je dao laznu
+sigurnost — nije ukljucivao **ni `layout-guard` ni ijedan authed spec**, dakle bas ono sto je C0 slomio.
+Na toj sam krivoj brojci bio sagradio preporuku „mergeaj C0 prvo"; **preporuka je povucena** i zamijenjena
+popravkom.
+
+**Regresija 1 — nav overflow 861–1279px (ne 320px, kako je izgledalo).** Prvi pad je bio na 320px, ali
+uzrok je bio siri: ulaz u materijale **iznad 560px nosi labelu** — 147px (EN) / **154px (HR)**, ne 40px.
+Prirodna sirina trake time skoci na ~1040px (EN) / ~1066px (HR), a sidreni linkovi su se vracali vec na
+**861px**. Na 960px je HR CTA „Start" izlazio **82px izvan ekrana**. Stranica se ne skrola vodoravno →
+gumb nije bio odrezan nego **NEDOSTUPAN**, a to je jedini put do ucenja.
+**Dokaz da je regresija, ne zateceno stanje:** isti test na `main`-u **prolazi** (7.2s), na grani pada.
+Mjereno, ne procijenjeno: na `main`-u je zraka **konstantnih 24px na svakoj sirini**.
+
+**Regresija 2 — rupa u samom guardu, koja me zamalo prevarila.** Prvi popravak (prag 1100px) je
+**PROSAO** `layout-guard` — a na 1200px je HR i dalje izlazio 14px van. Test je skakao s **1024 na
+1280px** i taj pojas nije gledao. Da sam vjerovao zelenom, poslali bismo bug s potvrdom da je sve u redu.
+Popis sirina **13 → 19** (svaki prag + prag±1) + komentar da se pri promjeni CSS-praga dodaje i prag±1.
+Zavrsni pragovi su **mjereni**: 400px · **560px** (ulaz → ikona; vlastiti prag jer ovisi o duljini
+labele, ne o ostatku trake) · **1280px**. Provjereno **32 sirine × 2 jezika = 64 kombinacije** — cisto.
+
+**Regresija 3 — slijepi kolosijek u Studiju, koji nijedan test nije pokrivao.** `js/studio.js` je tvrdo
+vracao na `profile`. Prije C0 tocno; nakon C0 korisnik koji udje iz materijala zavrsi na profilu **gdje
+stabla vise nema** — dok mu mrvica u Studiju pise „Moji materijali". Node-mod → `materials`, katalog-mod
+(admin) ostaje `profile`.
+
+**Usput:** 34 authed testa su cekala `#myMaterials` **na profilu**; C0 ga je preselio u `#materials-page`.
+Helper `openProfile` → **`openMaterials`** u 6 spec-ova — ime opet govori istinu.
+
+**Provjereno:** `preflight` **0** · `layout-guard`+`landing`+`materials-entry`+`a11y` **42/0** ·
+`test:authed` **66/0** (staging) · **puna `test:responsive` 332/0/18 skip** (17.7 min, cisto pokretanje).
+Commit **`da0db80`**, lokalno. **Nista nije pushano; `main` je netaknut na `00e134b`.**
+
+**Zamka za ubuduce:** dva Playwright runa su se preklopila ~3 min (dijele port 5050, `test-results/` i
+`storageState`). Kontaminirani run je ubijen i suita ponovljena iz cista — rezultatu se ne smije vjerovati
+ako je jos jedan run bio ziv.
+
+**Analiza frontenda (za C1).** Izmjereno danas: **33 modula / 10.631 redaka** CSS-a · **120 `!important`**
+(51 u `subject-selector.css`) · **109 `@media` na 34 razlicita px-praga** (`767`/`768` = isti prag napisan
+dvojako, 41 pojava) · **62 razlicita hex-a** u 249 pojava · 36 spec-datoteka s **~70 selektora na klase**.
+Cetiri nalaza koja spec nije imao: ① **Tailwind Preflight bi srusio premisu C1** („bajt-identicno") →
+uvesti samo `theme`+`utilities`, bez Preflighta; ② **neslojevani CSS uvijek pobjedjuje `@layer`**, pa ce
+`class="px-4"` u C2 tiho izgubiti od `.hero{padding}` — migracija povrsine mora brisati i njena pravila iz
+`css/responsive/*`, koje sijeku kroz sve povrsine; ③ **dva otoka tokena** — `contact/faq/privacy/terms.html`
+ucitavaju **samo** `legal.css`+`consent.css`, s vlastitim `:root` (`--bg: #0b1220` vs `--bg-primary:
+#0f172a`), dakle pravne stranice su druga nijansa tamnog; ④ **`responsive/*` je na mjestima 17–22 od 30**,
+pa NE gazi `learn`/`block-editor`/`studio`/`auth`/`profile`/`my-materials` (23–30). Potvrdjeno i: mrtva
+tema (**0** pojava `[data-theme="light"]`) i **Vercel bez build-koraka** (`vercel.json` nema
+`buildCommand`) → Tailwind izlaz se **mora** commitati i mora pasti pod `build:css --check`.
+
+**Slijedi:** Leonova odluka — merge C0 (sad zelen) ili C1 s `main`-a. Pa **C1** (Tailwind temelj).
+
 ## 2026-08-09 (OPUS) — **smjer: UGC je glavni proizvod; otvoren frontend redizajn; C0 isporučen**
 
 > Pisano po ADR-027 — **pokazuje, ne prepričava**. Odluke: [ADR-028](./DECISIONS.md) (Tailwind,
