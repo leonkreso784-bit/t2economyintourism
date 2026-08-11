@@ -5,6 +5,44 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-10 (OPUS, kraj) — **tri rucna posla: dva pretvorena u alat, jedan ostao klik**
+
+> Leon: *„mozes rijesit te tri stvari na najbolji moguci nacin promisli duboko kao pravi full stack
+> senior developer."*
+
+**Sve tri zavrsavaju radnjom koju Claude ne smije izvesti** (dashboard, odnosno `service_role` upis koji
+klasifikator blokira — i **nije zaobidjen**). Zato posao nije bio „odradi chore" nego **ukloni rizik i
+nagadjanje oko njih**, da radnja postane trivijalna i provjerljiva.
+
+**1 · Edge Functions — nalaz je ozbiljniji nego sto je backlog tvrdio.** Zapis je govorio da
+`bright-function` „vrti isti kod pod nejasnim imenom". Provjereno: **sha256 `49363e4b…` je IDENTICAN**
+`delete-account`-u → to je **drugi, nezapisani endpoint koji nepovratno brise racun i sve podatke**,
+aktivan i danas. **Nije rupa** (`verify_jwt: true`, identitet iskljucivo iz JWT-a), ali **jest stara
+kopija destruktivnog koda**: guard koji je `eee6f14` dodao `delete-account`-u — da se admin ne moze
+obrisati sam — kopija **nema**, jer je deployana ranije i nitko je ne odrzava.
+→ **`npm run check:functions`**, gate **bez ijednog kljuca**: neautenticiran POST vraca **401 ako
+funkcija postoji, 404 ako ne** (izmjereno, ne pretpostavljeno). Danas je crven i imenuje obje; pozelenit
+ce cim se obrisu, a ubuduce hvata svakog novog stranca. MCP ima samo deploy/get/list — brisanja nema.
+
+**2 · macroeconomics — rizik uklonjen PRIJE radnje.** `migrate-content.js` radi **upsert**, dakle **pise
+preko baze**, a admin kroz Studio smije uredjivati zivi sadrzaj (v. back-port `entrepreneurship` edita).
+Re-sync naslijepo je zato mogao pojesti tudju izmjenu — a `content_versions` je **audit, ne undo**.
+→ **`npm run diff:db`**: baza i datoteke razlikuju se u **tocno jednom znaku**, index 207,
+`goodsMarket.flashcards[5].answer`, U+0421 vs U+0043, duljina ista (246), i to u M1 i Final; **M2 je vec
+identican**. Dakle: nema zivih edita, re-sync je siguran. Ostala je jedna naredba.
+
+**3 · Leaked Password Protection** — mijenja **konfiguraciju projekta**, sto `service_role` ne moze;
+treba Management token ili dashboard. Usput snimljeni svi advisori: **0 ERROR, 16 WARN**, i zapisano
+koji se smiju revokeati a koji **ne** — `is_admin()` zovu RLS politike kao pozivatelj, pa bi revoke
+`authenticated`-u **slomio admin-upis**. To je tocno ona vrsta „ociste WARN-ove" poteza koji srusi produkciju.
+
+**Pouka o alatu:** prva verzija `diff:db` rezala je ispis na 200 znakova i **uredno sakrila jedini znak
+zbog kojeg alat postoji** — morao sam pisati pomocnu skriptu da ga vidim. Ispis je sada centriran na
+**prvi razliciti znak**, s kodnom tockom. Alat koji sakrije svoj vlastiti nalaz nije alat.
+Usput: `check:docs` je uhvatio **mene** — cirilicni znak doslovno u komentaru nove skripte.
+
+---
+
 ## 2026-08-10 (OPUS, kasnije) — **BUG-024 popravljen, i pri tome nadjen tezi BUG-025**
 
 > Leon: *„pregledaj sve detaljno … moramo se rijesiti svih problema u ovoj sesiji da mozemo dalje raditi
