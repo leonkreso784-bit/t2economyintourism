@@ -25,6 +25,7 @@
     "check:final": "node scripts/check-final-drift.js",
     "check:docs": "node scripts/check-docs.js",
     "check:tailwind": "node scripts/check-tailwind.js",
+    "check:palette": "node scripts/check-palette.js",
     "check:functions": "node scripts/check-edge-functions.js",
     "css:diff": "node scripts/css-diff.js",
     "diff:db": "node scripts/diff-db-vs-files.js",
@@ -32,7 +33,7 @@
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
+    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:palette && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [

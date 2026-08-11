@@ -6,14 +6,27 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ⚠️ JEDINO MJESTO U REPOZITORIJU GDJE SE PALETA SMIJE PONOVITI KAO HEX.
+   Razlog je gore: ove četiri stranice NE učitavaju `styles.bundle.css`, pa nemaju
+   pristup ni tokenima ni mostu iz `css/variables.css` — `var(--color-brand-500)`
+   ovdje se ne bi razriješio ni u što. Vrijednosti su prepisane iz `css/tokens.css`
+   („Ponoć i menta", C2) i moraju se mijenjati ZAJEDNO s njim.
+
+   Povod: footer landinga vodi na Privacy/Terms/FAQ/Contact. Dok je aplikacija bila
+   indigo, i ove su stranice bile indigo pa se nesklad nije vidio; nakon C2 bi jedan
+   klik iz novog sučelja vodio na stari izgled. (Usput: `--bg` je i dosad bio #0b1220,
+   dakle nijansu pored aplikacijskog #0f172a — nesklad je postojao i prije, samo je
+   bio premalen da ga itko primijeti.)
+
+   Umire u C6, kad ove stranice dobiju isti tretman kao ostatak. */
 :root {
-    --bg: #0b1220;
-    --bg-card: #0f172a;
+    --bg: #0b1a1c;            /* = --color-surface-0 */
+    --bg-card: #112629;       /* = --color-surface-1 */
     --border: rgba(255, 255, 255, 0.1);
-    --text: #e2e8f0;
-    --text-dim: #94a3b8;
-    --primary: #6366f1;
-    --primary-light: #818cf8;
+    --text: #c5d8d7;          /* = --color-ink-1 */
+    --text-dim: #88a7a6;      /* = --color-ink-2  (kontrast 5.05 na najsvjetlijoj plohi) */
+    --primary: #4fc9ab;       /* = --color-brand-500 */
+    --primary-light: #7adcc4; /* = --color-brand-400 */
 }
 
 body {
