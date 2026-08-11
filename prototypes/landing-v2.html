@@ -25,17 +25,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Instrument+Sans:wght@400;500;600&display=swap">
 
 <style>
-/* ═══ TOKENI (prepisani iz css/tokens.css — prototip je samostalan) ═══ */
+/* ═══ TOKENI ═══
+   Vrijednosti postavlja prekidač na dnu (JS). Ovdje stoje samo one koje se NE mijenjaju
+   između paleta — tipografija i geometrija — da se uspoređuje točno jedna stvar: BOJA. */
 :root{
-  --surface-0:#0b1a1c; --surface-1:#112629; --surface-2:#193539; --line:#1f4247;
-  --ink-0:#e9f3f2; --ink-1:#c5d8d7; --ink-2:#88a7a6;
-  --brand-400:#7adcc4; --brand-500:#4fc9ab; --brand-600:#2fa88c; --on-brand:#0b1a1c;
-  --ok:#6bcb77; --warn:#e2b53f; --danger:#e2725f;
   --font-display:"Literata",Georgia,serif;
   --font-sans:"Instrument Sans",system-ui,-apple-system,sans-serif;
   --r-sm:.5rem; --r-md:.75rem; --r-lg:1.25rem;
-  --shadow-e1:0 4px 6px -1px rgb(3 12 13/.45),0 2px 4px -2px rgb(3 12 13/.35);
-  --shadow-e2:0 10px 15px -3px rgb(3 12 13/.5),0 4px 6px -4px rgb(3 12 13/.4);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -78,7 +74,14 @@ h1{
   font-size:clamp(2.15rem,6vw,3.5rem); line-height:1.08; font-weight:700;
   letter-spacing:-.02em; text-wrap:balance;
 }
-h1 em{font-style:normal; color:var(--brand-400)}
+/* MARKER, ne gradijentni tekst. Naglašena riječ se PODCRTAVA MARKEROM — potez koji
+   svaki student poznaje iz vlastite skripte. Nosi značenje (ovo je bit rečenice),
+   za razliku od gradijentnog naslova koji je čisti ukras i potpis generiranog landinga. */
+h1 em{
+  font-style:normal; color:var(--ink-0);
+  background:linear-gradient(to top,var(--mark) 0 58%,transparent 58%);
+  padding:0 .1em; box-decoration-break:clone; -webkit-box-decoration-break:clone;
+}
 .hero-sub{margin-top:1.1rem; font-size:clamp(1rem,2.4vw,1.125rem); color:var(--ink-2); max-width:32rem}
 
 /* ── ŽIVI PRIKAZ ── */
@@ -169,6 +172,22 @@ footer a{color:var(--ink-2); text-decoration:none}
 footer a:hover{color:var(--brand-400)}
 
 @media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+
+/* ═══ PREKIDAČ PALETA — samo u prototipu, ne ide u proizvod ═══ */
+.palbar{
+  position:fixed; left:50%; bottom:1rem; transform:translateX(-50%); z-index:50;
+  display:flex; gap:.3rem; padding:.35rem; border-radius:999px;
+  background:var(--surface-1); border:1px solid var(--line); box-shadow:var(--shadow-e2);
+  max-width:calc(100vw - 2rem); overflow-x:auto;
+}
+.palbar button{
+  font:inherit; font-size:.78rem; white-space:nowrap; cursor:pointer;
+  padding:.42rem .8rem; border-radius:999px; border:0;
+  background:none; color:var(--ink-2);
+}
+.palbar button:hover{color:var(--ink-0)}
+.palbar button[aria-pressed="true"]{background:var(--brand-500); color:var(--on-brand); font-weight:600}
+body{padding-bottom:4.5rem}
 </style>
 </head>
 <body>
@@ -272,9 +291,87 @@ footer a:hover{color:var(--brand-400)}
   </footer>
 </div>
 
+<div class="palbar" id="palbar" role="group" aria-label="Isprobaj paletu"></div>
+
 <script>
 (function(){
   'use strict';
+
+  /* ═══ PALETE ═══
+     Sve su provjerene po WCAG-u na sve tri plohe PRIJE nego su ovdje zapisane;
+     gdje je kandidat padao ispod 4.5:1 za tekst, vrijednost je potamnjena
+     (npr. u „Papir i marker" zelena 3.77 → 5.6, jantar 3.28 → 5.5).
+     Tipografija i raspored su namjerno ISTI u svima — mijenja se jedna varijabla. */
+  var PALETTES = {
+    papir: {
+      naziv:'Papir i marker',
+      v:{
+        'surface-0':'#faf9f6','surface-1':'#ffffff','surface-2':'#f0eee8','line':'#e3e0d8',
+        'ink-0':'#1b1a17','ink-1':'#45423c','ink-2':'#6f6b62',
+        'brand-400':'#5a86e4','brand-500':'#2c5fd6','brand-600':'#1f47a8','on-brand':'#ffffff',
+        'mark':'#ffd24a',
+        'ok':'#15703c','warn':'#8a5a00','danger':'#c6362c',
+        'shadow-e1':'0 1px 2px rgb(28 26 23/.06), 0 4px 12px -4px rgb(28 26 23/.10)',
+        'shadow-e2':'0 2px 4px rgb(28 26 23/.06), 0 12px 28px -8px rgb(28 26 23/.16)'
+      }
+    },
+    plavo: {
+      naziv:'Akademsko plavo',
+      v:{
+        'surface-0':'#f7f9fc','surface-1':'#ffffff','surface-2':'#edf1f7','line':'#dde4ee',
+        'ink-0':'#0e1a2b','ink-1':'#34455c','ink-2':'#5b6879',
+        'brand-400':'#4a82e8','brand-500':'#1657d0','brand-600':'#0f3f9c','on-brand':'#ffffff',
+        'mark':'#ffd24a',
+        'ok':'#10794a','warn':'#8a5800','danger':'#c0332b',
+        'shadow-e1':'0 1px 2px rgb(14 26 43/.06), 0 4px 12px -4px rgb(14 26 43/.10)',
+        'shadow-e2':'0 2px 4px rgb(14 26 43/.06), 0 12px 28px -8px rgb(14 26 43/.16)'
+      }
+    },
+    kreda: {
+      naziv:'Kreda i tabla',
+      v:{
+        'surface-0':'#1e1f1c','surface-1':'#292a26','surface-2':'#35362f','line':'#45463e',
+        'ink-0':'#f5f2e8','ink-1':'#dcd8c9','ink-2':'#a6a292',
+        'brand-400':'#f7d47c','brand-500':'#f2c14e','brand-600':'#d3a233','on-brand':'#1e1f1c',
+        'mark':'rgba(242,193,78,.30)',
+        'ok':'#8fbf6b','warn':'#e3a93c','danger':'#ee8b78',
+        'shadow-e1':'0 4px 6px -1px rgb(0 0 0/.4), 0 2px 4px -2px rgb(0 0 0/.3)',
+        'shadow-e2':'0 10px 15px -3px rgb(0 0 0/.45), 0 4px 6px -4px rgb(0 0 0/.35)'
+      }
+    },
+    menta: {
+      naziv:'Ponoć i menta (sad)',
+      v:{
+        'surface-0':'#0b1a1c','surface-1':'#112629','surface-2':'#193539','line':'#1f4247',
+        'ink-0':'#e9f3f2','ink-1':'#c5d8d7','ink-2':'#88a7a6',
+        'brand-400':'#7adcc4','brand-500':'#4fc9ab','brand-600':'#2fa88c','on-brand':'#0b1a1c',
+        'mark':'rgba(79,201,171,.30)',
+        'ok':'#6bcb77','warn':'#e2b53f','danger':'#e8836f',
+        'shadow-e1':'0 4px 6px -1px rgb(3 12 13/.45), 0 2px 4px -2px rgb(3 12 13/.35)',
+        'shadow-e2':'0 10px 15px -3px rgb(3 12 13/.5), 0 4px 6px -4px rgb(3 12 13/.4)'
+      }
+    }
+  };
+
+  var bar = document.getElementById('palbar');
+  function apply(key){
+    var p = PALETTES[key];
+    for (var k in p.v) document.documentElement.style.setProperty('--' + k, p.v[k]);
+    document.documentElement.style.colorScheme = (key === 'kreda' || key === 'menta') ? 'dark' : 'light';
+    bar.querySelectorAll('button').forEach(function(b){
+      b.setAttribute('aria-pressed', String(b.dataset.p === key));
+    });
+    try { localStorage.setItem('proto-pal', key); } catch (e) {}
+  }
+  Object.keys(PALETTES).forEach(function(key){
+    var b = document.createElement('button');
+    b.type = 'button'; b.dataset.p = key; b.textContent = PALETTES[key].naziv;
+    b.setAttribute('aria-pressed','false');
+    b.addEventListener('click', function(){ apply(key); });
+    bar.appendChild(b);
+  });
+  var saved; try { saved = localStorage.getItem('proto-pal'); } catch (e) {}
+  apply(PALETTES[saved] ? saved : 'papir');
   // Escape je obavezan i u prototipu: sve ide iz KORISNIČKOG unosa u innerHTML.
   // Isto pravilo kao SokratBlocks.esc u aplikaciji (BUG-025).
   var M = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
