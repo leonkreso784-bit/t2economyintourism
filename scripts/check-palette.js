@@ -52,6 +52,18 @@ const OLD = [
   ['#94a3b8', [148, 163, 184], 'slate-400'],
   ['#e2e8f0', [226, 232, 240], 'slate-200'],
   ['#f1f5f9', [241, 245, 249], 'slate-100'],
+
+  /* ⚠️ ZAKUCANA BIJELA I CRNA — za VIŠE TEMA fatalnije od indiga.
+     Indigo na krivoj podlozi je neusklađen; `color: rgba(255,255,255,.9)` na
+     papirnatoj temi je NEVIDLJIV. Nađeno u `learn.css`, gdje pravila pod
+     `[data-theme="dark"]` boje tekst kartica bijelim, i u `landing.css` (23×).
+     Prva verzija ovog gatea ih nije gledala jer je tražila samo staru paletu —
+     a upravo su one prag koji odlučuje smije li se svijetla tema uopće uključiti.
+     Ispravno je `var(--color-ink-0)` / `var(--color-surface-1)`, ne bijela. */
+  ['#ffffff', [255, 255, 255], 'bijela (nevidljiva na svijetlim temama)'],
+  ['#fff', null, 'bijela (nevidljiva na svijetlim temama)'],
+  ['#000000', [0, 0, 0], 'crna (nevidljiva na tamnim temama)'],
+  ['#000', null, 'crna (nevidljiva na tamnim temama)'],
 ];
 
 /* OSNOVICA — koliko ih smije ostati po datoteci. Spuštaj je, nikad ne diži.
@@ -66,10 +78,16 @@ function stripComments(css) {
 
 function countIn(css) {
   const hits = [];
-  for (const [hex, [r, g, b], label] of OLD) {
-    const reHex = new RegExp(hex, 'gi');
-    const reRgb = new RegExp('rgba?\\(\\s*' + r + '\\s*,\\s*' + g + '\\s*,\\s*' + b + '\\s*[,)]', 'gi');
-    const n = (css.match(reHex) || []).length + (css.match(reRgb) || []).length;
+  for (const [hex, rgb, label] of OLD) {
+    /* ⚠️ Negativni lookahead je OBAVEZAN: bez njega uzorak `#fff` pogađa i prva
+       četiri znaka `#ffffff`, pa se ista deklaracija broji dvaput i osnovica laže. */
+    const reHex = new RegExp(hex + '(?![0-9a-f])', 'gi');
+    let n = (css.match(reHex) || []).length;
+    if (rgb) {
+      const [r, g, b] = rgb;
+      const reRgb = new RegExp('rgba?\\(\\s*' + r + '\\s*,\\s*' + g + '\\s*,\\s*' + b + '\\s*[,)]', 'gi');
+      n += (css.match(reRgb) || []).length;
+    }
     if (n) hits.push({ label, n });
   }
   return hits;
@@ -95,7 +113,12 @@ const HTML_FILES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'con
   .map((f) => path.join(ROOT, f))
   .filter((f) => fs.existsSync(f));
 
-const files = [...walk(CSS_DIR), ...HTML_FILES].sort();
+/* `tokens.css` je SAM POPIS BOJA — u njemu hex nije dug nego definicija.
+   Da se skenira, gate bi prijavljivao `--color-white: #fff` kao prekršaj protiv
+   samog sebe, a jedini način da se „popravi" bio bi ukloniti izvor istine. */
+const SOURCE_OF_TRUTH = path.join(CSS_DIR, 'tokens.css');
+
+const files = [...walk(CSS_DIR), ...HTML_FILES].filter((f) => f !== SOURCE_OF_TRUTH).sort();
 const report = [];
 for (const abs of files) {
   const rel = path.relative(ROOT, abs).replace(/\\/g, '/');

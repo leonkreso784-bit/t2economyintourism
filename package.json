@@ -33,8 +33,9 @@
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:palette && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
-    "scaffold": "node scripts/scaffold-subject.js"
+    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:palette && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
+    "scaffold": "node scripts/scaffold-subject.js",
+    "check:contrast": "node scripts/check-contrast.js"
   },
   "keywords": [
     "sokrat-study",

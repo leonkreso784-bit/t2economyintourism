@@ -64,63 +64,76 @@
   --color-white: #fff;
   --color-black: #000;
 
-  /* ═══════════ PALETA „PONOĆ I MENTA" (C2) ═══════════
-     Odabir: docs/plan/FRONTEND_REDIZAJN.md §7.3. Pomak s indiga na cijan uz pad
-     zasićenosti podloge dovoljno je velik da se čita kao IZBOR, a ne kao zadana
-     vrijednost framework-a — a to je bila cijela dijagnoza §7.1. */
+  /* ╔══ ZADANA TEMA = „KREDA I TABLA" ══════════════════════════════════════╗
+     Topla ugljena podloga i kreda, umjesto tirkizno-crne. Ostale tri palete su
+     `[data-theme]` blokovi na dnu datoteke; ovdje su vrijednosti koje se emitiraju
+     kad atributa nema, i JEDINE koje rađaju imena utility klasa.
 
-  /* Plohe (dark, od najdublje prema izdignutoj). Podloga je tirkizno-modra, ne siva:
+     ZAŠTO JE ZADANA TAMNA, KAD JE „paper" bolja za učenje: svih ~434 zakucanih
+     boja u `css/` pretpostavljaju tamnu podlogu (v. blok o temama dolje). Dok
+     `check:palette` ne dođe na nulu, zadana mora ostati tamna.  ╚═══════════════╝ */
+
+  /* Plohe (od najdublje prema izdignutoj). Ugljen s toplim, ne plavim podtonom —
      razlika između razina gradi se PLOHOM, ne svjetlucanjem (§7.2.3). */
-  --color-surface-0: #0b1a1c;
-  --color-surface-1: #112629;
-  --color-surface-2: #193539;
+  --color-surface-0: #1e1f1c;
+  --color-surface-1: #292a26;
+  --color-surface-2: #35362f;
 
-  /* Tekst (od najjačeg prema prigušenom).
-     Kontrast na surface-0/1/2 — ink-0: 15.75/13.93/11.53 · ink-1: 12.03/10.64/8.81
-     · ink-2: 6.89/6.09/5.05. Najniža vrijednost u cijeloj skupini je 5.05, dakle
-     AA prolazi i na NAJSVJETLIJOJ plohi, gdje je najteže.
-     ⚠️ ink-2 je 88A7A6, a ne prvotno predloženi 7C9B9A — taj je na surface-2 davao
-     4.36 i padao ispod praga 4.5. Ispravljeno PRIJE nego što je zapisano u spec. */
-  --color-ink-0: #e9f3f2;
-  --color-ink-1: #c5d8d7;
-  --color-ink-2: #88a7a6;
+  /* Tekst (od najjačeg prema prigušenom). Kreda, ne bijelo — čisto bijelo na tamnom
+     titra i zamara pri dugom čitanju, a ovo je alat u kojem se čita satima.
+     Kontrast na surface-0/1/2 — ink-0: 14.79/12.90/10.90 · ink-1: 11.60/10.12/8.55
+     · ink-2: 6.47/5.64/4.77. Najniža u skupini je 4.77 → AA prolazi i na
+     najsvjetlijoj plohi, gdje je najteže. */
+  --color-ink-0: #f5f2e8;
+  --color-ink-1: #dcd8c9;
+  --color-ink-2: #a6a292;
 
-  /* Linije i razdjelnici. Nije siva nego zasićeni tamni tirkiz — inače na obojenoj
-     podlozi izgleda kao prljavština, a ne kao rub. */
-  --color-line: #1f4247;
+  /* Linije. DVIJE, jer nose različit posao i različit prag:
+     `line`        = razdjelnik između ploha. Ukrasan → WCAG mu NE propisuje kontrast
+                     (1.4.11 traži 3:1 samo za granice nužne da se komponenta prepozna).
+     `line-strong` = rub KONTROLE (polje, gumb, prekidač) → mora na 3:1, inače korisnik
+                     ne vidi gdje polje počinje.
+     Razdvojeni su nakon što je `check:contrast` pokazao da im je jedan token davao
+     jedan prag — pa je ili razdjelnik bio pretvrd, ili rub polja nevidljiv. */
+  --color-line: #45463e;
+  --color-line-strong: #8a8878;
 
-  /* Marka. 500 = nosiva, 400 = svjetlija (hover/naglasak), 600 = tamnija (pritisak).
-     Kontrast kao TEKST na surface-0/1/2:
-       brand-400  10.91 / 9.65 / 7.99
-       brand-500   8.72 / 7.71 / 6.38
-       brand-600   6.02 / 5.33 / 4.41  ← ispod 4.5 na najsvjetlijoj plohi
-     → brand-600 je za ISPUNE I PRITISNUTO STANJE (prag 3.0), ne za tekst na surface-2.
-     Za usporedbu, stari `--primary` #6366f1 na staroj podlozi davao je 4.00 — dakle
+  /* Marka. 500 = nosiva, 400 = svjetlija (hover), 600 = tamnija (pritisak).
+     Kontrast kao TEKST na surface-0/1/2: 9.87 / 8.61 / 7.27 — prolazi svugdje.
+     Za usporedbu, stari `--primary` #6366f1 na staroj podlozi davao je 4.00, dakle
      današnja produkcija PADA AA za tekst u boji marke. Redizajn to usput popravlja. */
-  --color-brand-400: #7adcc4;
-  --color-brand-500: #4fc9ab;
-  --color-brand-600: #2fa88c;
+  --color-brand-400: #f7d47c;
+  --color-brand-500: #f2c14e;
+  --color-brand-600: #d3a233;
 
   /* ⚠️ TEKST NA ISPUNI MARKE MORA BITI TAMAN, NE BIJEL.
-     Mentol je svijetla boja: #4FC9AB + bijelo = 2.04 (pada i za veliki tekst),
-     #4FC9AB + #0B1A1C = 8.72. Stari indigo je podnosio bijelo, novi ne — to je
+     Kreda-žuta je svijetla boja: #F2C14E + bijelo = 1.86 (pada i za veliki tekst),
+     #F2C14E + #1E1F1C = 9.87. Stari indigo je podnosio bijelo, ove palete ne — to je
      najvjerojatnija tiha greška pri prebacivanju gumba, pa dobiva vlastito ime
-     umjesto da se svaki put pogađa. */
-  --color-on-brand: #0b1a1c;
+     umjesto da se svaki put pogađa. U svijetlim temama je obrnuto (bijelo na plavoj),
+     što je točno razlog zašto je ovo TOKEN, a ne pravilo koje se pamti. */
+  --color-on-brand: #1e1f1c;
+
+  /* MARKER — drugi posao akcenta. `brand` nosi akciju (gumb, poveznica), `mark`
+     podvlači bitno u tekstu, kao pravi marker u skripti. Razdvojeni su jer nose
+     različito značenje (§7.2.1); u svijetlim temama marker je puna žuta, u tamnima
+     prozirna, jer bi puna na tamnom progutala tekst ispod. */
+  --color-mark: rgb(242 193 78 / 0.30);
 
   /* Statusi. Dvije neovisne provjere, obje obavezne:
-     (1) KONTRAST — `-ink` varijanta je za TEKST na tamnoj plohi, puna boja za ISPUNE
-         i OBRUBE (prag 3.0). danger 5.77/5.11/4.23 → za tekst ide danger-ink (4.91).
+     (1) KONTRAST — `-ink` varijanta je za TEKST, puna boja za ISPUNE i OBRUBE
+         (prag 3.0). danger 5.31/4.64/3.92 → za tekst ide danger-ink.
      (2) HUE-ODVOJENOST OD MARKE — ovo je alat za učenje i „točno/netočno" je najvažniji
-         signal na ekranu. Kad je marka mentol-zelena, obična zelena za „točno" stopi se
-         s gumbima. Izmjereno: #5FD68A je samo 23° od marke (preblizu), #6BCB77 je 37°.
-         Zato „točno" NIJE nastavak brand-skale nego zasebna, travnatija zelena. */
-  --color-ok: #6bcb77;         /* hue 128° — 37° od marke · 8.85/7.83/6.48 */
-  --color-ok-strong: #46b36a;  /* dublja, za ispune i trake napretka */
-  --color-warn: #e2b53f;       /* 9.26/8.19/6.78 */
-  --color-warn-ink: #efc762;   /* 11.04/9.76/8.09 */
-  --color-danger: #e2725f;     /* ispune/obrubi — 5.77/5.11/4.23 */
-  --color-danger-ink: #e8836f; /* TEKST — 6.71/5.93/4.91 */
+         signal na ekranu; ako se „točno" stopi s bojom gumba, signal je izgubljen.
+         Kad je marka bila mentol-zelena, izmjereno je da je #5FD68A samo 23° od nje
+         (preblizu) pa je „točno" pomaknuto na #6BCB77 (37°). Provjera vrijedi za
+         SVAKU novu paletu — zato je automatizirana u `npm run check:contrast`. */
+  --color-ok: #8fbf6b;         /* 7.75/6.76/5.72 */
+  --color-ok-strong: #6da34d;
+  --color-warn: #e3a93c;       /* 7.89/6.88/5.82 */
+  --color-warn-ink: #edbe63;
+  --color-danger: #e3705c;     /* ispune/obrubi */
+  --color-danger-ink: #ee8b78; /* TEKST */
 
   /* ---------- TIPOGRAFIJA ---------- */
   /* Oba fonta se već učitavaju u index.html; `display` je dosad bio gotovo neiskorišten,
@@ -180,4 +193,82 @@
      stvarno ima. Današnjih ~80 ad-hoc pragova u `css/responsive/*` umire zajedno
      s površinama koje ih koriste (C2–C7) — ovdje se NE prepisuju. */
   --breakpoint-xs: 30rem;   /* 480px */
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   TEME  —  ista imena, druge vrijednosti
+   ═════════════════════════════════════════════════════════════════════
+
+   ZAŠTO OVO RADI (izmjereno, ne pretpostavljeno): Tailwind v4 ne upisuje boju u
+   klasu nego REFERENCU — `.bg-brand-500 { background-color: var(--color-brand-500) }`.
+   Zato jedan `[data-theme]` blok koji pregazi varijablu istovremeno prebaci
+   **i sve Tailwind utilityje i svih 992 legacy `var()` poziva** kroz most u
+   `css/variables.css`. Tema je popis vrijednosti, ne druga verzija CSS-a.
+
+   `@theme static` gore = ZADANA tema (i jedina koja rađa utility klase — imena
+   dolaze odande). Blokovi ispod mijenjaju samo vrijednosti.
+
+   ⚠️ ZAŠTO JE ZADANA „chalk", A NE „paper": svih ~434 zakucanih boja u `css/`
+   (300 iz stare palete + 134 bijele/crne) pretpostavljaju TAMNU podlogu.
+   `color: rgba(255,255,255,.9)` na papiru nije neusklađeno — nevidljivo je.
+   Dok `npm run check:palette` ne dođe na nulu, svijetle teme SU ISPRAVNE ali
+   aplikacija još nije spremna za njih → birač tema se uključuje tek tada.
+   Do tada je zadana tamna, ali topla.
+
+   ⚠️ ŠTO JOŠ NE POSTOJI, A MORA PRIJE NEGO SE BIRAČ UKLJUČI:
+   `js/init.js` danas zakucava `data-theme="dark"` — vrijednost koja ne odgovara
+   nijednoj temi ispod, pa se primjenjuje ZADANA. To je namjerno sigurno stanje
+   dok traje prelazak. Ali ~13 legacy pravila u `learn.css` i `components.css`
+   selektiraju baš `[data-theme="dark"]`; čim birač postavi `data-theme="mint"`,
+   ta pravila prestaju vrijediti. Ona ionako reagiraju na SVJETLOĆU (bijeli tekst,
+   prozirni obrubi), a ne na paletu — pa se pri čišćenju tih površina (C4/C5)
+   prepisuju na tokene, a ne na drugi selektor. Do tada birača nema.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
+      Akcent je podijeljen na dva posla: `brand` nosi akciju, `mark` je marker kojim
+      se podvlači bitno. To je jedina paleta u kojoj je „šareno" doslovno alat za učenje. */
+:root[data-theme="paper"] {
+  --color-surface-0: #faf9f6;  --color-surface-1: #ffffff;  --color-surface-2: #f0eee8;
+  --color-line: #e3e0d8;      --color-line-strong: #8c887e;
+  --color-ink-0: #1b1a17;      --color-ink-1: #45423c;      --color-ink-2: #6f6b62;
+  --color-brand-400: #5a86e4;  --color-brand-500: #2c5fd6;  --color-brand-600: #1f47a8;
+  --color-on-brand: #ffffff;
+  --color-mark: #ffd24a;
+  /* potamnjeno zbog kontrasta: zelena je s 3.77 na 5.6, jantar s 3.28 na 5.5 */
+  --color-ok: #15703c;         --color-ok-strong: #0f5c30;
+  --color-warn: #8a5a00;       --color-warn-ink: #7a4f00;
+  --color-danger: #c6362c;     --color-danger-ink: #a82a22;
+  --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
+  --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
+}
+
+/* ── AKADEMSKO PLAVO (svijetlo) — hladno, mirno, „sveučilište". */
+:root[data-theme="academic"] {
+  --color-surface-0: #f7f9fc;  --color-surface-1: #ffffff;  --color-surface-2: #edf1f7;
+  --color-line: #dde4ee;      --color-line-strong: #7d8a9c;
+  --color-ink-0: #0e1a2b;      --color-ink-1: #34455c;      --color-ink-2: #5b6879;
+  --color-brand-400: #4a82e8;  --color-brand-500: #1657d0;  --color-brand-600: #0f3f9c;
+  --color-on-brand: #ffffff;
+  --color-mark: #ffd24a;
+  --color-ok: #10794a;         --color-ok-strong: #0b5e39;
+  --color-warn: #8a5800;       --color-warn-ink: #7a4d00;
+  --color-danger: #c0332b;     --color-danger-ink: #a32821;
+  --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
+  --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
+}
+
+/* ── PONOĆ I MENTA (tamno) — prva odabrana paleta; ostaje kao izbor, nije zadana. */
+:root[data-theme="mint"] {
+  --color-surface-0: #0b1a1c;  --color-surface-1: #112629;  --color-surface-2: #193539;
+  --color-line: #1f4247;      --color-line-strong: #5c8e94;
+  --color-ink-0: #e9f3f2;      --color-ink-1: #c5d8d7;      --color-ink-2: #88a7a6;
+  --color-brand-400: #7adcc4;  --color-brand-500: #4fc9ab;  --color-brand-600: #2fa88c;
+  --color-on-brand: #0b1a1c;
+  --color-mark: rgb(79 201 171 / 0.30);
+  --color-ok: #6bcb77;         --color-ok-strong: #46b36a;
+  --color-warn: #e2b53f;       --color-warn-ink: #efc762;
+  --color-danger: #e2725f;     --color-danger-ink: #e8836f;
+  --shadow-e1: 0 4px 6px -1px rgb(3 12 13 / 0.45), 0 2px 4px -2px rgb(3 12 13 / 0.35);
+  --shadow-e2: 0 10px 15px -3px rgb(3 12 13 / 0.5), 0 4px 6px -4px rgb(3 12 13 / 0.4);
 }
