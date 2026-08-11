@@ -215,10 +215,16 @@
 .pull-indicator i {
     font-size: 1.5rem;
     color: var(--primary);
-    animation: spin 1s linear infinite;
+    animation: sokratSpin 1s linear infinite;
 }
 
-@keyframes spin {
+/* ⚠ Ime je namjerno prefiksirano (C1). Zvalo se `spin`, a Tailwind ima UGRAĐEN `@keyframes spin`
+   za svoj `animate-spin`. Imena animacija su globalna i ne poznaju kaskadne slojeve, pa su se u
+   bundleu pojavljivale OBJE definicije — a pobjeđuje kasnija, dakle Tailwindova. Ona nema `from`,
+   pa bi element s početnom rotacijom krenuo s krive vrijednosti. Ostale naše animacije već su
+   prefiksirane (`mmSpin`, `studySpin`, `stpop`…); ovo je bila jedina generička.
+   Branu drži `npm run check:tailwind` (dvostruko ime u izlazu = crveno). */
+@keyframes sokratSpin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }

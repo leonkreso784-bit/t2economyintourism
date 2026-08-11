@@ -52,6 +52,19 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ### Added
 
+- **⏳ 2026-08-11 — C1: Tailwind temelj** (grana `feat/c1-tailwind-temelj`, **na produkciji NIJE** — čeka Leonov OK).
+  `tailwindcss` + `@tailwindcss/cli` **4.3.3 pinano**. CSS manifest preselio iz `styles.css` (**obrisan**) u
+  **`css/app.css`**; dizajn-tokeni u **`css/tokens.css`** (`@theme static`, 31 token, semantička imena,
+  vrijednosti namjerno današnje). Tailwindov preflight se **ne uvozi**; `--color-*`/`--shadow-*`/`--font-*`/
+  `--radius-*` obrisani do nule pa izgrađeni ispočetka → **`bg-indigo-500` i `text-slate-400` više ne postoje**.
+  Utilityji su **neuslojeni i zadnji** (uslojeni bi izgubili od `* { margin: 0 }`; uslojen legacy bi izgubio
+  od KaTeX-a — oboje izmjereno). Bundle 269 → **216 KB**.
+  Naš `@keyframes spin` preimenovan u **`sokratSpin`** — dijelio je ime s Tailwindovim ugrađenim, a imena
+  animacija su globalna i ne poznaju slojeve (pobjeđivala je njegova, bez `from`).
+  **Novo:** `npm run check:tailwind` (6 brana, u preflightu) · `npm run css:diff` (izračunati stilovi u pravom
+  Chromiumu; nije u preflightu). **Gate:** `preflight` EXIT 0 · **`css:diff` 3438 usporedbi / 0 razlika u prikazu**
+  (obrnuto provjeren: `--radius` 12→13px daje 393 razlike). Detalji i četiri nalaza: `docs/plan/FRONTEND_REDIZAJN.md` §3.
+
 > ⚠️ **Sve ispod je ISPORUČENO.** Ova sekcija je zaostala kao „Unreleased" iako su joj stavke otišle na
 > produkciju u tri vala: **`b79e053`** (2026-07-27, Studio + rizik-sprint) · **`a9bf52b`** (2026-08-06,
 > osobni UGC-graditelj F1–F5) · **`ee91ef7`** (2026-08-07, faza „Materijal od nule do učenja").

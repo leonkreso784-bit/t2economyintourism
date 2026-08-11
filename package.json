@@ -24,13 +24,15 @@
     "validate:schema": "node scripts/validate-json-schema.js",
     "check:final": "node scripts/check-final-drift.js",
     "check:docs": "node scripts/check-docs.js",
+    "check:tailwind": "node scripts/check-tailwind.js",
     "check:functions": "node scripts/check-edge-functions.js",
+    "css:diff": "node scripts/css-diff.js",
     "diff:db": "node scripts/diff-db-vs-files.js",
     "load-probe": "node scripts/load-probe.js",
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
+    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
     "scaffold": "node scripts/scaffold-subject.js"
   },
   "keywords": [
@@ -54,10 +56,12 @@
     "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "^1.60.0",
+    "@tailwindcss/cli": "4.3.3",
     "ajv": "^8.20.0",
     "axe-core": "^4.12.1",
     "dotenv": "^17.4.2",
     "pdf-parse": "^2.4.5",
+    "tailwindcss": "4.3.3",
     "typescript": "^6.0.3"
   }
 }

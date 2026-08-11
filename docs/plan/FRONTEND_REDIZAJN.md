@@ -55,7 +55,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | # | cigla | što nestaje | gotovo kad |
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
-| **C1** | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | ništa | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
+| **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
 | **C2** | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` (1.000) | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
@@ -91,6 +91,53 @@ prazan ekran** — to je jedini razlog zašto ulaz smije stajati u navigaciji i 
 **C1 nema vizualnog učinka i to je namjerno.** Ako se u njemu išta promijeni, znači da smo promijenili
 dvije stvari odjednom i ne znamo koja je pukla.
 
+> **✅ C1 JE ISPUNJEN** (2026-08-11, grana `feat/c1-tailwind-temelj`) — **tailwindcss 4.3.3, pinana točna
+> verzija** (generirani CSS se commita i čuva ga drift-gate; minorni skok bi obojio CI crveno bez ijedne
+> naše izmjene). Dokaz da se izgled nije pomaknuo: **3438 usporedbi izračunatih stilova kroz 3 širine,
+> 0 razlika** (`npm run css:diff`) — alat je obrnuto provjeren promjenom `--radius` za 1px, na što je
+> pokazao 393 razlike na 71 elementu. Bundle 269 → **216 KB** (Lightning CSS briše komentare).
+>
+> **Što je izvedeno:**
+> - **`css/app.css`** = novi CSS manifest i ulaz za Tailwind CLI; naslijedio je ulogu `styles.css`, koji je
+>   **obrisan** (dvije liste modula neizbježno se raziđu). **`css/tokens.css`** = `@theme static`, 31 token.
+> - **Preflight (Tailwindov reset) se NE uvozi** — prepisao bi naš reset i naslijeđene stilove naslova/lista.
+> - **Tokeni imaju semantička imena** (`surface`/`ink`/`brand`), a **vrijednosti su namjerno današnje**.
+>   C1 mijenja jezik, ne izgled: novi identitet mijenja samo VRIJEDNOSTI u `tokens.css` (§7).
+> - **`--color-*` · `--shadow-*` · `--font-*` · `--radius-*` obrisani do nule** pa izgrađeni ispočetka.
+>   `bg-indigo-500` i `text-slate-400` **više ne postoje** — to je glavna brana protiv klizanja natrag u
+>   zadani framework-izgled. Usput je nestala i zamka: Tailwindov `--shadow-lg` sudarao se s našim iz
+>   `variables.css`, a `rounded-xl` se generirao kao `border-radius: var(--radius-xl)` — s varijablom koja
+>   nije emitirana, dakle pravilo bez vrijednosti.
+>
+> **Tri nalaza koja mijenjaju kako se piše C2–C7:**
+> 1. **Kaskadni slojevi tuku specifičnost, a neuslojeni CSS tuče svaki sloj.** Da su utilityji otišli u
+>    `@layer utilities`, `* { margin: 0 }` iz `variables.css` tukao bi `mt-4` i svaka Tailwind klasa za
+>    razmak bila bi mrtva. Zato: **sve ostaje neuslojeno, utilityji idu na kraj.** Obrnuta varijanta
+>    (legacy u `@layer legacy`) je odbačena jer bi vendorski CSS (KaTeX, Font Awesome — zasebni `<link>`,
+>    dakle neuslojeni) počeo tući naše override-e; `css/math.css` postoji upravo zato da tematizira KaTeX.
+>    **Cijena:** legacy pravilo veće specifičnosti i dalje tuče utility → površina se migrira CIJELA, a
+>    tvrdoglavo pravilo se **briše**, nikad ne nadglašava s `!important`.
+> 2. **Tailwind skenira izvor kao TEKST i vadi kandidate iz naših imena.** Izmjereno: iz `modes-grid` →
+>    `grid`, iz `lb-table` → `table`, iz `visually-hidden` → `hidden`, a iz JavaScripta `if (!container)` →
+>    `!container` (20 redaka mrtvog CSS-a iz operatora negacije). Od 14 generiranih pravila **12 nije
+>    pogađalo nijedan element**, a 2 jesu — `hidden` i `text-danger` SU naše legacy klase, pa bi ih
+>    Tailwindova inačica (koja stoji zadnja) tiho preuzela. `.text-danger` bi prešao s `var(--danger)` na
+>    `var(--color-danger)`: danas ista boja, ali **od C2 nadalje različita, na mjestu koje nitko nije dirao.**
+>    Zato C1 završava s **nula generiranih utilityja** i eksplicitnim popisom iznimaka u `css/app.css`.
+> 3. **Sudar imena postoji i izvan klasa.** Naš `@keyframes spin` (`responsive/03`) dijeli ime s
+>    Tailwindovim ugrađenim `spin`. **Imena animacija su globalna i ne poznaju kaskadne slojeve**, pa su se
+>    u izlazu našle obje definicije — a pobjeđuje kasnija, dakle njegova, koja nema `from`. Naša je
+>    preimenovana u **`sokratSpin`** (ostale su već bile prefiksirane: `mmSpin`, `studySpin`, `stpop`…).
+>    Isti rizik nose `ping`/`pulse`/`bounce`.
+> 4. **Statička analiza i mjerenje u pregledniku hvataju različite bugove.** `css-diff` je pokazao 0 razlika
+>    baš dok su `hidden`/`text-danger` bili pregaženi — jer ti elementi nastaju tek u runtimeu i na
+>    učitanoj stranici ih nema. Isto vrijedi za `spin`: našao ga je **inventar `@keyframes` starog i novog
+>    bundlea**, ne preglednik. Obrnuto, gate ne vidi kaskadu.
+>    **Cigla nije gotova dok oba puta ne budu zelena.**
+>
+> **Nova dva alata** (oba obrnuto provjerena — svaka brana je dokazano pala kad je trebala):
+> `npm run check:tailwind` (6 provjera, **u preflightu**) · `npm run css:diff` (preglednik + port, **nije**).
+
 **Mrtva tema (C7):** `initTheme()` tvrdo postavlja `dark`, `toggleTheme()` piše `data-theme="light"`,
 ali **`[data-theme="light"]` ne postoji nigdje u CSS-u**, a `.theme-toggle` gumb ne postoji u
 `index.html` — postoji samo njegov CSS u tri datoteke i JS handler koji ništa ne veže. Briše se, ne seli.
@@ -112,9 +159,12 @@ ali **`[data-theme="light"]` ne postoji nigdje u CSS-u**, a `.theme-toggle` gumb
 
 ## 5 · Gateovi koji moraju ostati zeleni
 
-`npm run preflight` (uklj. `check:docs`, css drift, `bump:check`) · `npm run test:responsive`
-(**304 testa**, 4 iPhone profila) · `npm run test:authed` · axe **0 serious/critical** na sve četiri
-stranice · Lighthouse budžeti. Postupak i pragovi: [workflow/TESTING.md](../workflow/TESTING.md).
+`npm run preflight` (uklj. `check:docs`, css drift, `bump:check` i — od C1 — **`check:tailwind`**) ·
+`npm run test:responsive` (**304 testa**, 4 iPhone profila) · `npm run test:authed` · axe
+**0 serious/critical** na sve četiri stranice · Lighthouse budžeti.
+Uz svaku ciglu koja dira CSS ide i **`npm run css:diff`** (nije u preflightu — traži preglednik):
+u C1 dokazuje 0 razlika, u C2–C7 da se promijenila **samo** ciljana površina.
+Postupak i pragovi: [workflow/TESTING.md](../workflow/TESTING.md).
 
 **Poznata zamka:** dio Playwright-selektora gađa **klase**. Migracija površine i njeni testovi idu u
 **istom** commitu — inače suite postane zelen zato što više ništa ne nalazi.
@@ -129,3 +179,71 @@ stranice · Lighthouse budžeti. Postupak i pragovi: [workflow/TESTING.md](../wo
 | Service Worker servira stari CSS | korisnik vidi polurazbijenu stranicu do reinstalacije | `?v=` bump + `SW_VERSION` po svakoj cigli (pravilo #1) |
 | KaTeX i vendorani CSS | nisu naši, ne smiju u čišćenje | ostaju zasebne datoteke, izvan Tailwind-izlaza |
 | Editor zadnji = najdulje na dvije estetike | vizualni nesklad tjednima | prihvaćeno svjesno: regresija u editoru košta najviše, pa ide kad je postavka dokazana |
+
+---
+
+## 7 · Vizualni identitet — ulaz u C2
+
+> Leon, 2026-08-11: *„mora izgledati potpuno drukčije, profesionalnije, ljepše i bolje… moramo se
+> potruditi da ne izgleda kao da je frontend napravljen Claude Codeom."*
+> Ovo poglavlje pretvara tu rečenicu u provjerljive odluke. **Ne opisuje ukras nego pravila.**
+
+### 7.1 Dijagnoza — zašto današnji izgled čita kao strojni
+
+Nije stvar ukusa, nego mjerenja. U `css/` je **62 različite hex-boje**, a najčešće su:
+
+| boja | pojava | što je zapravo |
+|---|---|---|
+| `#6366f1` | 25× | Tailwind `indigo-500`, **zadana vrijednost** |
+| `#0f172a` | 9× | Tailwind `slate-900` |
+| `#334155` | 13× | Tailwind `slate-700` |
+| `#818cf8` | 11× | Tailwind `indigo-400` |
+
+**Nijedna od njih nije izabrana — sve su naslijeđene.** To je prvi i najjači signal: indigo-na-slate
+je zadana paleta svakog generiranog sučelja na internetu, pa je oko prepoznaje prije nego pročita ijednu riječ.
+
+Uz nju idu još četiri navike, sve prisutne:
+1. **Gradijent kao ukras, ne kao struktura** — tri `gradient-orb` mrlje s `blur(110px)` iza heroja
+   plus gradijentni tekst. Potpis generičkog landinga.
+2. **Jedan font za sve.** `Space Grotesk` se **već učitava**, a gotovo se ne koristi → nema kontrasta
+   između naslova i gradiva; sve je Inter u tri težine.
+3. **Jedna zaobljenost svugdje** (12px / 20px) → kartica predmeta, modal, gumb i polje izgledaju kao
+   ista stvar u četiri veličine.
+4. **Ikona u obojenom kvadratiću × 3 u mreži** — najprepoznatljiviji feature-grid kliše.
+
+### 7.2 Pravila koja iz toga slijede (vrijede za C2–C7)
+
+1. **Boja nosi značenje, ne raspoloženje.** Ovo je alat za učenje: boja mora kodirati **stanje**
+   (znam / ne znam / napredak) i **sekciju gradiva**. Zato paleta ostaje uska i prigušena, a **8 boja
+   sekcije su jedino stvarno šareno na ekranu** — i vide se na CIJELOJ plohi kartice (kriterij 4).
+2. **Tipografija preuzima posao koji danas radi boja.** Hijerarhija kroz veličinu, težinu i razmak,
+   nikad kroz gradijentni tekst. `Space Grotesk` dobiva svoj posao (`--font-display`), Inter nosi gradivo.
+3. **Ploha, ne svjetlucanje.** Razlika između razina gradi se plohom i razmakom; sjene su dvije
+   (`--shadow-e1/e2`) i tu prestaju. Nema glowa, nema stakla.
+4. **Gustoća poslije landinga.** Landing smije disati; sve iza njega je radna površina i mora podnijeti
+   ozbiljnu količinu informacija bez skrolanja u prazno.
+5. **Najviše jedan ukras po ekranu** — i to samo ako nosi značenje.
+
+### 7.3 ✅ Odabrana paleta — „Ponoć i menta" (Leon, 2026-08-11)
+
+Od tri predložena smjera Leon je izabrao **B · Ponoć i menta**: duboka tirkizno-modra podloga i mentol
+akcent. Pomak s indiga prema cijanu uz pad zasićenosti podloge dovoljno je velik da se čita kao izbor,
+a ne kao zadana vrijednost. Ovo su vrijednosti koje u **C2** ulaze u `css/tokens.css` — i to je,
+po dizajnu C1-a, jedina datoteka koja se pritom mijenja:
+
+| token | vrijednost | | token | vrijednost |
+|---|---|---|---|---|
+| `--color-surface-0` | `#0B1A1C` | | `--color-ink-0` | `#E9F3F2` |
+| `--color-surface-1` | `#112629` | | `--color-ink-1` | `#C5D8D7` |
+| `--color-surface-2` | `#193539` | | `--color-ink-2` | `#88A7A6` |
+| `--color-line` | `#1F4247` | | `--color-brand-500` | `#4FC9AB` |
+
+Boje sekcije (jedina zasićenost na ekranu): `#4FC9AB` · `#5AA9E6` · `#E2B53F` · `#E2725F` · `#9B8ADE` · `#3FBFA0`.
+
+**⚠️ Dvije vrijednosti su već ispravljene zbog kontrasta, prije nego što su zapisane.** Izmjereno po
+WCAG-u na sve tri plohe: na `surface-0` i `surface-1` cijela paleta prolazi AA s rezervom (najniže 5.11),
+ali na najsvjetlijoj plohi `surface-2` prvotni prijedlog pada — prigušen tekst `#7C9B9A` daje **4.36**, a
+crvena `#E2725F` **4.23**, oboje ispod praga 4.5. Zato `--color-ink-2` ide na **`#88A7A6`** (5.05), a
+crvena za TEKST na **`#E8836F`** (4.91); puna `#E2725F` ostaje za ispune i obrube, gdje vrijedi prag 3.0.
+To je isti obrazac koji već imamo (`--danger` vs `--danger-text` u `variables.css`) i razlog zašto
+`axe`/Lighthouse gate ne smije biti stvar sreće. Za usporedbu, današnji prigušeni tekst daje 5.71.

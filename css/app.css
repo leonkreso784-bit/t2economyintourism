@@ -1,0 +1,129 @@
+/* =====================================================================
+   app.css — CSS IZVOR-MANIFEST (ulaz za Tailwind CLI)  ·  cigla C1
+   =====================================================================
+
+   OVA SE DATOTEKA NE SERVIRA. Iz nje `npm run build:css` gradi `styles.bundle.css`,
+   koji index.html jedini učitava. Naslijedila je ulogu bivšeg `styles.css`
+   (isti popis, isti redoslijed) i dodala tri stvari: tokene, Tailwind utilityje i
+   popis izvora koje Tailwind smije skenirati.
+
+   ── REDOSLIJED JE UGOVOR ──────────────────────────────────────────────
+   Redoslijed @import-a = redoslijed kaskade. Ne presložuj naslijepo; komentari uz
+   pojedine module objašnjavaju zašto baš tu stoje.
+
+   ── ZAŠTO SU LEGACY MODULI NEUSLOJENI, A UTILITYJI ZADNJI ─────────────
+   Kaskadni slojevi (`@layer`) tuku specifičnost: NEUSLOJENI CSS pobjeđuje SVAKI
+   sloj, bez obzira na specifičnost. Da smo utilityje stavili u `@layer utilities`,
+   `* { margin: 0 }` iz `variables.css` (specifičnost 0) tukao bi `mt-4` — svaka
+   Tailwind klasa za razmak bila bi mrtva. Zato: sve ostaje neuslojeno, a utilityji
+   idu NA KRAJ, pa pri jednakoj specifičnosti pobjeđuju.
+
+   Odbačena alternativa — omotati legacy u `@layer legacy`: tad bi vendorski CSS
+   (KaTeX, Font Awesome; učitani zasebnim `<link>`-om, dakle neuslojeni) počeo tući
+   NAŠE override-e. Mjereno: `css/math.css` postoji upravo zato da tematizira KaTeX
+   (`.katex { font-size }`), pa bi taj modul prvi pao. Ovako se kaskada ne mijenja
+   ni za jedan piksel — što je cijeli smisao C1.
+
+   Cijena koju svjesno plaćamo: legacy pravilo VIŠE specifičnosti (`.a .b p`) i dalje
+   tuče utility. Zato se površina migrira CIJELA (spec §3) — s njom nestaje i njen
+   CSS. Ako neko pravilo preživi i tuče se s utilityjem, rješenje je OBRISATI pravilo,
+   nikad dodati `!important` (izlazni uvjet §2: nula `!important` u novom sloju).
+
+   ── TAILWIND SKENIRA SAMO ONO ŠTO JE DOLJE NAVEDENO ───────────────────
+   `source(none)` gasi automatsko otkrivanje. Bez toga bi Tailwind skenirao i `data/`,
+   a gradivo NIKAD ne smije sudjelovati u stiliziranju (ADR-028) — jedna riječ „grid"
+   u nečijoj skripti dodala bi klasu u izlaz.
+
+   Vidi i: `npm run check:tailwind` (brane oko ovog ugovora),
+   docs/plan/FRONTEND_REDIZAJN.md (što se gradi i kojim redom).
+   ===================================================================== */
+
+/* ═══ 1. TOKENI ═══ Tailwindov temelj + naša paleta. Samo varijable → 0 vizualnog učinka.
+   Preflight (Tailwindov reset) NAMJERNO NIJE uvezen: prepisao bi naš postojeći reset
+   i naslijeđene stilove naslova/lista, a C1 ne smije promijeniti nijedan piksel. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "./tokens.css";
+
+/* ═══ 2. NAŠ POSTOJEĆI CSS ═══ točno onim redom kojim se učitavao i dosad. */
+
+/* Varijable, reset i osnovni stilovi. */
+@import "./variables.css";
+
+/* Landing. */
+@import "./landing.css";
+
+/* Bočni popis predmeta. */
+@import "./sidebar.css";
+
+/* Browse (Fakultet → Program → Godina → Predmet). */
+@import "./browse.css";
+
+/* Stranice (Lekcije, Učenje, O nama). */
+@import "./pages.css";
+
+/* Komponente (zaglavlje, navigacija, glavni sadržaj). */
+@import "./components.css";
+
+/* UI-primitivi (Web Components, F2 2D). */
+@import "./sokrat-modal.css";
+@import "./sokrat-confirm.css";
+
+/* Odjeljci učenja. */
+@import "./subject-selector.css";
+@import "./home-section.css";
+@import "./flashcards-section.css";
+@import "./quiz-section.css";
+@import "./fill-blanks-section.css";
+@import "./progress-section.css";
+@import "./blind-map.css";
+@import "./exercises.css";
+
+/* Media queryji — ⚠ učitavaju se PRED learn.css i namjerno gaze module iznad.
+   Konkatenacija 01→06 = bivši responsive.css (1:1). Ne presložuj dijelove. */
+@import "./responsive/01-up-and-phone-breakpoints.css";
+@import "./responsive/02-mobile-core.css";
+@import "./responsive/03-modes-a11y-print.css";
+@import "./responsive/04-mobile-extra.css";
+@import "./responsive/05-device-sizes.css";
+@import "./responsive/06-component-improvements.css";
+
+/* Learn i editor — POSLIJE responsivea, da nadglasaju njegove konflikte. */
+@import "./learn.css";
+@import "./learn-blocks.css";
+@import "./block-editor.css";
+@import "./studio.css";
+
+/* Samostalni moduli (ne gaze ništa iznad). */
+@import "./auth.css";
+@import "./profile.css";
+@import "./my-materials.css";
+@import "./math.css";
+
+/* ═══ 3. TAILWIND UTILITYJI ═══ NEUSLOJENI i ZADNJI (obrazloženje u zaglavlju).
+   Skeniraju se samo izvori navedeni ispod — `index.html` i `js/` grade markup koji
+   `styles.bundle.css` stilizira. Pravne stranice (contact/faq/privacy/terms) NISU
+   ovdje jer NE učitavaju ovaj bundle (imaju `css/legal.css`); da ih skeniramo,
+   generirali bismo klase koje one nikad ne dobiju. `check:tailwind` čuva obje strane. */
+@import "tailwindcss/utilities.css" source(none);
+@source "../index.html";
+@source "../js";
+
+/* ── POPIS ISKLJUČENIH IMENA ──────────────────────────────────────────
+   Tailwind skenira izvor KAO TEKST, pa iz `class="modes-grid"` izvuče kandidat `grid`,
+   iz `lb-table` → `table`, iz `visually-hidden` → `hidden`. Ta imena nikad nismo napisali
+   kao Tailwind klase, ali ih on svejedno generira. Mjereno u C1: 14 pravila, od kojih
+   12 ne pogađa nijedan element (čisti šum), a 2 pogađaju — i to je gore od šuma.
+
+   `hidden` i `text-danger` SU naše postojeće klase iz `css/*.css`. Utilityji stoje zadnji,
+   pa bi Tailwindova inačica pobijedila našu: `.text-danger` bi prešao s `var(--danger)` na
+   `var(--color-danger)`. Danas su te dvije vrijednosti iste, pa se ništa ne vidi — ali čim
+   C2 promijeni paletu, boja bi se promijenila na mjestu koje nitko nije dirao.
+
+   Zato: u C1 se NE generira nijedan utility. Ime odlazi s ovog popisa tek kad ga netko
+   stvarno napiše kao Tailwind klasu na migriranoj površini. `check:tailwind` čuva pravilo
+   u oba smjera — i da se popis ne zaboravi, i da se ne pretvori u tepih pod koji se mete.
+
+   `{,!}` na početku hvata i oblik s `!` modifikatorom. Nije kozmetika: `.\!container` je
+   nastao iz JavaScripta — `if (!container || …)`. Skener ne zna da je to negacija, vidi tekst. */
+@source not inline("{,!}{block,blur,collapse,container,filter,fixed,grid,inline,italic,ordinal,resize,table}");
+@source not inline("{,!}{hidden,text-danger}");

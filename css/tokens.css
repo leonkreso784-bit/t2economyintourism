@@ -1,0 +1,120 @@
+/* =====================================================================
+   tokens.css — DIZAJN-TOKENI (Tailwind v4 `@theme`)  ·  cigla C1
+   =====================================================================
+
+   ŠTO JE OVO: jedini popis vrijednosti od kojih je sagrađen izgled. Svaki token
+   ovdje istovremeno (a) postoji kao CSS varijabla i (b) rađa Tailwind utility klasu
+   (`--color-brand-500` → `bg-brand-500`/`text-brand-500`, `--radius-lg` → `rounded-lg`).
+
+   ZAŠTO `@theme`, a ne `:root`: `:root` daje samo varijablu. `@theme` daje varijablu
+   I klasu, pa je nemoguće da se u markupu pojavi boja koja nije u ovom popisu —
+   to je mehanizam iza izlaznog uvjeta „nijedna hex-boja izvan @theme"
+   (docs/plan/FRONTEND_REDIZAJN.md §2).
+
+   ZAŠTO `static`: bez njega Tailwind emitira SAMO tokene koje je netko upotrijebio.
+   U C1 nitko još ne koristi nijedan (markup je netaknut), pa bi izlaz bio prazan i
+   kriterij „paleta postoji kao token" bio bi lažno ispunjen. `static` = emitiraj sve.
+
+   ⚠️ VRIJEDNOSTI SU U C1 NAMJERNO ISTE KAO DANAS (`css/variables.css`).
+   C1 mijenja JEZIK, ne izgled — stranica mora ostati bajt-identična. Novi vizualni
+   identitet mijenja VRIJEDNOSTI u ovoj datoteci (i ništa drugo); imena preživljavaju.
+   Zato su imena semantička (`surface`/`ink`/`brand`), a ne opisna (`indigo`/`slate`):
+   „ink-2" ostaje ime za prigušen tekst i kad prestane biti sivoplav.
+
+   ⚠️ `--color-*: initial` BRIŠE CIJELU Tailwindovu zadanu paletu. Namjerno:
+   `bg-indigo-500` i `text-slate-400` više NE POSTOJE. Bez toga bi svaka nova
+   površina mogla neprimjetno skliznuti natrag u zadani framework-izgled, a upravo
+   je taj izgled ono što mijenjamo. Posljedica: nepoznato ime boje ne padne tiho na
+   nešto slično — ne generira se uopće (i `check:tailwind` to prijavi).
+   ===================================================================== */
+
+/* ---------- ANIMACIJE: BRISANJE MORA BITI IZVAN `static` ----------
+   Tailwind uz svoj `--animate-spin` emitira i `@keyframes spin` — a mi svoj `spin` već imamo u
+   `responsive/03-modes-a11y-print.css`. Dvije definicije istog imena: pobjeđuje kasnija, dakle
+   Tailwindova, koja stoji na kraju bundlea. Naša ima `from`, njegova nema; za element bez početne
+   rotacije ishod je isti, pa se to ne bi primijetilo — dok se ne bi primijetilo. Nađeno usporedbom
+   inventara `@keyframes` starog i novog bundlea; u prikazu se NIJE vidjelo.
+   ⚠️ Unutar `@theme static` brisanje NE djeluje — `static` emitira keyframes bez obzira na `initial`.
+   Zato ovaj blok stoji zasebno i BEZ `static`. Izmjereno, ne pretpostavljeno. */
+@theme {
+  --animate-*: initial;
+}
+
+@theme static {
+  /* ---------- ČIŠĆENJE ZADANOG ----------
+     Tri namespacea brišemo do nule i gradimo ispočetka. Boje — da se markup ne može
+     vratiti na framework-paletu. Sjene i fontovi — jer im se Tailwindova zadana imena
+     (`--shadow-lg`, `--font-serif`) SUDARAJU s imenima iz `css/variables.css`. Sudar
+     danas ne škodi (neuslojeni `:root` tuče `@layer theme`), ali je zamka: čim bi legacy
+     ušao u sloj, `--shadow-lg` bi tiho pao s naše vrijednosti na Tailwindovu. Izmjereno u C1.
+
+     Radijusi se brišu iz TREĆEG razloga — polupraznog namespacea. Dok su Tailwindovi ostaci
+     stajali, `rounded-xl` se i dalje generirao kao `border-radius: var(--radius-xl)`, a ta
+     varijabla nije bila emitirana → pravilo bez vrijednosti, tiho bez zaobljenja. Izmjereno.
+     Ovako `rounded-xl` uopće ne postoji, pa promašeno ime pukne glasno. */
+  --color-*: initial;
+  --shadow-*: initial;
+  --font-*: initial;
+  --radius-*: initial;
+
+  /* Neutralne konstante koje utilityji očekuju da postoje. */
+  --color-white: #fff;
+  --color-black: #000;
+
+  /* Plohe (dark, od najdublje prema izdignutoj) — danas: bg-primary/secondary/tertiary. */
+  --color-surface-0: #0f172a;
+  --color-surface-1: #1e293b;
+  --color-surface-2: #334155;
+
+  /* Tekst (od najjačeg prema prigušenom) — danas: text-primary/secondary/muted. */
+  --color-ink-0: #f1f5f9;
+  --color-ink-1: #e2e8f0;
+  --color-ink-2: #94a3b8;
+
+  /* Linije i razdjelnici. */
+  --color-line: #334155;
+
+  /* Marka. 500 = nosiva, 400 = svjetlija (hover/naglasak), 600 = tamnija (pritisak). */
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+
+  /* Statusi. `-ink` varijanta je za TEKST na tamnoj plohi: puna boja pada ispod
+     kontrasta 4.5:1 pa se za tekst koristi svjetlija (a11y, F3 3E — v. variables.css). */
+  --color-ok: #22c55e;
+  --color-ok-strong: #10b981;
+  --color-warn: #f59e0b;
+  --color-warn-ink: #fbbf24;
+  --color-danger: #ef4444;
+  --color-danger-ink: #f87171;
+
+  /* ---------- TIPOGRAFIJA ---------- */
+  /* Oba fonta se već učitavaju u index.html; `display` je dosad bio slabo iskorišten. */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---------- RAZMACI ---------- */
+  /* Baza ostaje 0.25rem (4px) → `p-4` = 1rem, kao i inače u Tailwindu.
+     Imenovani razmaci postoje samo tamo gdje broj nije proizvoljan nego PRAVILO. */
+  --spacing: 0.25rem;
+  --spacing-touch: 2.75rem;    /* 44px — minimalna dodirna meta (WCAG 2.5.5 / iOS HIG) */
+  --spacing-touch-lg: 3rem;    /* 48px — udobna dodirna meta za primarne akcije */
+
+  /* ---------- RADIJUSI ---------- */
+  --radius-sm: 0.5rem;    /*  8px */
+  --radius-md: 0.75rem;   /* 12px — današnji `--radius` */
+  --radius-lg: 1.25rem;   /* 20px — današnji `--radius-lg` */
+  --radius-full: 9999px;
+
+  /* ---------- SJENE ---------- */
+  /* Dvije razine, ne pet: na tamnoj podlozi sjena brzo prestane nositi informaciju. */
+  --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+
+  /* ---------- PRAGOVI (breakpointi) ---------- */
+  /* JEDAN skup za cijelu aplikaciju (izlazni uvjet §2). Zadani Tailwindov skup
+     (sm/md/lg/xl/2xl) + `xs` za veliki telefon, jer 480px je prag koji naš layout
+     stvarno ima. Današnjih ~80 ad-hoc pragova u `css/responsive/*` umire zajedno
+     s površinama koje ih koriste (C2–C7) — ovdje se NE prepisuju. */
+  --breakpoint-xs: 30rem;   /* 480px */
+}

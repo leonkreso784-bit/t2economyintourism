@@ -5,6 +5,85 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-11 (OPUS) — **C1: Tailwind temelj. Nula piksela promjene, tri nalaza koja mijenjaju C2–C7**
+
+> Leon: *„radimo redizajn frontenda da bude potpuno drukčiji, profesionalniji, ljepši i bolji koristeći
+> Tailwind… moramo se potruditi da ne izgleda kao da je frontend napravljen Claude Codeom."*
+
+**Grana `feat/c1-tailwind-temelj`, NIJE deployana** (čeka OK). C1 mijenja jezik stiliziranja, ne izgled.
+
+**Izvedeno.** `tailwindcss` + `@tailwindcss/cli` **4.3.3, pinana točna verzija** (generirani CSS se
+commita i čuva ga drift-gate — minorni skok bi obojio CI crveno bez ijedne naše izmjene; lockfile
+provjereno nosi sve platformske `oxide` binarije, pa `npm ci` na Linux CI-u radi). Manifest je preselio
+iz `styles.css` u **`css/app.css`**, a `styles.css` je **obrisan** — dvije liste modula neizbježno se
+raziđu. **`css/tokens.css`** = `@theme static`, 31 token, semantička imena (`surface`/`ink`/`brand`),
+**vrijednosti namjerno današnje**. `build-css.js` sada vozi Tailwind CLI i usput čuva da nijedan
+`css/*.css` ne ispadne iz manifesta.
+
+**Dokaz da se ništa nije pomaknulo.** Diff bajtova ovdje ne dokazuje ništa — Tailwind provlači i naš CSS
+kroz Lightning CSS, koji briše komentare i normalizira zapis (269 → 216 KB). Jedino mjerodavno pitanje je
+daje li preglednik iste izračunate stilove: **`npm run css:diff`** to mjeri kroz pravi Chromium, po
+elementu, kroz tri širine. **3438 usporedbi, 0 razlika u prikazu.** Alat je obrnuto provjeren — promjena
+`--radius` s 12px na 13px pokazala je 393 razlike na 71 elementu.
+
+**Tri nalaza — svaki je promijenio odluku, ne samo zapis:**
+
+**1 · Kaskadni slojevi tuku specifičnost.** Prvi plan je bio staviti utilityje u `@layer utilities`.
+To bi ih ubilo: neuslojeni `* { margin: 0 }` iz `variables.css` tuče `.mt-4` bez obzira na specifičnost,
+jer se sloj uspoređuje PRIJE specifičnosti. Obrnuta varijanta (legacy u `@layer legacy`) je odbačena
+mjerenjem: vendorski CSS (KaTeX, Font Awesome) dolazi zasebnim `<link>`-om i ostaje neuslojen, pa bi
+počeo tući naše override-e — `css/math.css` postoji upravo zato da tematizira KaTeX. **Odluka: sve
+ostaje neuslojeno, utilityji idu na kraj.**
+
+**2 · Tailwind skenira izvor kao TEKST i vadi kandidate iz naših imena.** Iz `modes-grid` izvuče `grid`,
+iz `lb-table` → `table`, iz `visually-hidden` → `hidden`, a iz JavaScripta `if (!container || …)` →
+`!container`, što je dalo **20 redaka mrtvog CSS-a iz operatora negacije**. Od 14 generiranih pravila 12
+nije pogađalo nijedan element — **ali dva jesu**: `hidden` i `text-danger` SU naše legacy klase, a
+utilityji stoje zadnji, pa bi ih Tailwindova inačica tiho preuzela. `.text-danger` bi prešao s
+`var(--danger)` na `var(--color-danger)`: **danas ista boja, od C2 različita, na mjestu koje nitko nije
+dirao.** C1 zato završava s **nula generiranih utilityja** i eksplicitnim popisom iznimaka.
+
+**3 · Sudar imena postoji i izvan klasa — i taj je pronašao inventar, ne preglednik.** Usporedba svih
+`@keyframes` starog i novog bundlea pokazala je jedan višak: naš `spin` (`responsive/03`) dijeli ime s
+Tailwindovim ugrađenim. **Imena animacija su globalna i ne poznaju kaskadne slojeve**, pa su u izlazu bile
+obje definicije, a pobjeđuje kasnija — njegova, koja nema `from`. Preimenovan u **`sokratSpin`** (ostale
+naše animacije već su bile prefiksirane). Isti rizik nose `ping`/`pulse`/`bounce`.
+Nusnalaz: `--animate-*: initial` **ne djeluje unutar `@theme static`** — mora biti u zasebnom, ne-static
+bloku. Izmjereno na probama, ne pretpostavljeno.
+
+**4 · Statička analiza i preglednik hvataju različite bugove.** `css-diff` je pokazivao 0 razlika baš dok
+su `hidden`/`text-danger` bili pregaženi, a i dok su dva `spin`-a stajala jedan pored drugoga — ti
+elementi nastaju tek u runtimeu, na učitanoj ih stranici nema. Obrnuto, gate ne vidi kaskadu.
+**Cigla nije gotova dok oba puta ne budu zelena.**
+
+**Nova dva alata, oba obrnuto provjerena** (svaka brana dokazano padne kad treba):
+`npm run check:tailwind` — 6 provjera (dinamičke klase · sudari imena klasa · `@source` ugovor · mrtve
+klase na stranicama bez bundlea · šum · sudari animacija), **u preflightu**.
+`npm run css:diff` — traži preglednik i port, **nije**.
+
+**Provjereno i ono što se NIJE promijenilo,** jer Lightning CSS prepisuje i naš CSS: `-webkit-*` svojstva,
+`env(safe-area-inset-*)` (23), `!important` (120), `@keyframes` (13), `animation:`/`transition:`,
+`::-webkit-scrollbar`, `prefers-reduced-motion`, `@media print` — **sve identično**. Dvije stavke koje se
+jesu promijenile su objašnjene: `color-mix()` je **downlevelan** (fallback + `@supports` grana, dakle
+bolja podrška za stare preglednike), a devet `@media` blokova manje su **susjedni identični blokovi koje
+je Lightning spojio** — izmjereno da NEsusjedne ne spaja, pa je kaskadni redoslijed netaknut.
+
+**Usput uklonjene dvije tihe zamke u tokenima:** Tailwindov `--shadow-lg` sudarao se s našim iz
+`variables.css` (danas bezopasno jer neuslojeni `:root` pobjeđuje — ali zamka za C7), a `rounded-xl` se
+generirao kao `border-radius: var(--radius-xl)` s varijablom koja nije emitirana → pravilo bez
+vrijednosti. Zato su `--color-*`, `--shadow-*`, `--font-*` i `--radius-*` obrisani do nule i izgrađeni
+ispočetka. Posljedica koja je i cilj: **`bg-indigo-500` i `text-slate-400` više ne postoje**, pa se
+nijedna nova površina ne može neprimjetno vratiti u zadani framework-izgled.
+
+**Gate:** `preflight` EXIT 0 (uklj. novi `check:tailwind` 5/5) · `css:diff` 0 razlika.
+
+**Slijedi:** **C2 (landing) — ali čeka Leonovu odluku o paleti.** Dijagnoza zašto današnji izgled čita
+kao strojni (mjereno: `#6366f1` = Tailwind `indigo-500` 25×, `#0f172a` = `slate-900`, 62 hex-boje ukupno)
+i pravila koja iz nje slijede zapisani su u **`docs/plan/FRONTEND_REDIZAJN.md` §7**. Novi identitet =
+promjena vrijednosti u `css/tokens.css`; imena i sva pravila ostaju.
+
+---
+
 ## 2026-08-10 (OPUS, kraj) — **tri rucna posla: dva pretvorena u alat, jedan ostao klik**
 
 > Leon: *„mozes rijesit te tri stvari na najbolji moguci nacin promisli duboko kao pravi full stack
