@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="hr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sokrat — prototip landinga (C2)</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!--
+  ⚠️ PROTOTIP — NIJE DIO APLIKACIJE.
+  Samostalna datoteka: ne učitava styles.bundle.css, nije u katalogu, ništa ne ruši.
+  Postoji da se o IZGLEDU i TOKU odlučuje gledanjem, ne opisom. Kad odluka padne,
+  ovo se pretvara u pravi index.html + Tailwind, a datoteka se briše.
+
+  IDEJA: landing ne OPISUJE proizvod nego JEST proizvod. Jezgra Sokrata je jedna
+  mehanika — napišeš pojam i objašnjenje JEDNOM, dobiješ ČETIRI načina učenja.
+  Zato je u heroju živi prikaz: posjetitelj upiše svoju rečenicu i odmah je vidi
+  kao karticu, kvizno pitanje, dopunu i gradivo. Bez registracije, bez videa.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Literata = tipografija napravljena ZA ČITANJE NA EKRANU (Google Books). Za alat
+     za učenje to nije ukras nego izbor iz same stvari. Instrument Sans nosi sučelje. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Instrument+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ═══ TOKENI (prepisani iz css/tokens.css — prototip je samostalan) ═══ */
+:root{
+  --surface-0:#0b1a1c; --surface-1:#112629; --surface-2:#193539; --line:#1f4247;
+  --ink-0:#e9f3f2; --ink-1:#c5d8d7; --ink-2:#88a7a6;
+  --brand-400:#7adcc4; --brand-500:#4fc9ab; --brand-600:#2fa88c; --on-brand:#0b1a1c;
+  --ok:#6bcb77; --warn:#e2b53f; --danger:#e2725f;
+  --font-display:"Literata",Georgia,serif;
+  --font-sans:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --r-sm:.5rem; --r-md:.75rem; --r-lg:1.25rem;
+  --shadow-e1:0 4px 6px -1px rgb(3 12 13/.45),0 2px 4px -2px rgb(3 12 13/.35);
+  --shadow-e2:0 10px 15px -3px rgb(3 12 13/.5),0 4px 6px -4px rgb(3 12 13/.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--surface-0); color:var(--ink-1);
+  font-family:var(--font-sans); font-size:1rem; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--brand-400); outline-offset:3px; border-radius:4px}
+
+/* ── traka ── */
+.bar{
+  display:flex; align-items:center; gap:1rem;
+  padding:1rem clamp(1rem,4vw,2.5rem);
+  border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10;
+  background:color-mix(in srgb,var(--surface-0) 88%,transparent);
+  backdrop-filter:blur(8px);
+}
+.brand{display:flex; align-items:center; gap:.6rem; margin-right:auto; text-decoration:none}
+.brand-mark{width:32px; height:32px; border-radius:8px; display:block}
+.brand-name{font-family:var(--font-display); font-weight:600; font-size:1.15rem; color:var(--ink-0); letter-spacing:-.01em}
+.bar button{
+  font:inherit; font-size:.875rem; cursor:pointer; color:var(--ink-2);
+  background:none; border:1px solid transparent; padding:.45rem .7rem; border-radius:var(--r-sm);
+}
+.bar button:hover{color:var(--ink-0); background:var(--surface-1)}
+.bar .signin{border-color:var(--line); color:var(--ink-1)}
+
+/* ── stranica: uska kolona s rubnom crtom kao u bilježnici ── */
+.wrap{max-width:1120px; margin:0 auto; padding:0 clamp(1rem,4vw,2.5rem)}
+
+.hero{padding:clamp(2.5rem,7vw,5rem) 0 clamp(2rem,5vw,3.5rem)}
+.hero-lede{max-width:34rem}
+.kicker{
+  font-size:.78rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--brand-400); font-weight:600; margin-bottom:1rem;
+}
+h1{
+  font-family:var(--font-display); color:var(--ink-0);
+  font-size:clamp(2.15rem,6vw,3.5rem); line-height:1.08; font-weight:700;
+  letter-spacing:-.02em; text-wrap:balance;
+}
+h1 em{font-style:normal; color:var(--brand-400)}
+.hero-sub{margin-top:1.1rem; font-size:clamp(1rem,2.4vw,1.125rem); color:var(--ink-2); max-width:32rem}
+
+/* ── ŽIVI PRIKAZ ── */
+.demo{
+  margin-top:clamp(2rem,5vw,3rem);
+  border:1px solid var(--line); border-radius:var(--r-lg);
+  background:var(--surface-1); overflow:hidden;
+}
+.demo-head{
+  display:flex; align-items:baseline; gap:.6rem; flex-wrap:wrap;
+  padding:.9rem 1.1rem; border-bottom:1px solid var(--line); background:var(--surface-2);
+}
+.demo-head strong{font-family:var(--font-display); color:var(--ink-0); font-size:1rem; font-weight:600}
+.demo-head span{font-size:.82rem; color:var(--ink-2)}
+
+.demo-body{display:grid; grid-template-columns:1fr; gap:1px; background:var(--line)}
+@media (min-width:56rem){ .demo-body{grid-template-columns:minmax(0,20rem) minmax(0,1fr)} }
+
+.demo-in{background:var(--surface-1); padding:1.1rem}
+.demo-in label{display:block; font-size:.75rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2); margin-bottom:.4rem; font-weight:600}
+.demo-in input, .demo-in textarea{
+  width:100%; font:inherit; font-size:.95rem; color:var(--ink-0);
+  background:var(--surface-0); border:1px solid var(--line);
+  border-radius:var(--r-sm); padding:.6rem .7rem; resize:vertical;
+}
+.demo-in input:focus, .demo-in textarea:focus{outline:none; border-color:var(--brand-500)}
+.demo-in .field + .field{margin-top:.9rem}
+.demo-hint{margin-top:.9rem; font-size:.8rem; color:var(--ink-2); line-height:1.5}
+
+.demo-out{background:var(--surface-1); padding:1.1rem; display:grid; gap:.9rem; grid-template-columns:1fr}
+@media (min-width:34rem){ .demo-out{grid-template-columns:1fr 1fr} }
+
+.tile{border:1px solid var(--line); border-radius:var(--r-md); background:var(--surface-0); padding:.85rem; min-height:8.5rem; display:flex; flex-direction:column}
+.tile-tag{font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-2); font-weight:600; margin-bottom:.6rem; display:flex; align-items:center; gap:.4rem}
+.tile-tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--brand-500)}
+.tile[data-k="quiz"] .tile-tag::before{background:var(--warn)}
+.tile[data-k="fill"] .tile-tag::before{background:var(--danger)}
+.tile[data-k="learn"] .tile-tag::before{background:var(--ok)}
+
+/* kartica: JEDINI ukras na stranici — okret, jer je okret sama gesta kartice */
+.flip{perspective:800px; flex:1; cursor:pointer; background:none; border:0; padding:0; font:inherit; text-align:left}
+.flip-in{position:relative; width:100%; height:100%; min-height:5.2rem; transition:transform .5s cubic-bezier(.2,.7,.3,1); transform-style:preserve-3d}
+.flip[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.flip-f,.flip-b{position:absolute; inset:0; backface-visibility:hidden; display:flex; align-items:center; border-radius:var(--r-sm); padding:.2rem}
+.flip-b{transform:rotateY(180deg)}
+.flip-f{font-family:var(--font-display); font-size:1.05rem; font-weight:600; color:var(--ink-0)}
+.flip-b{font-size:.86rem; color:var(--ink-1); line-height:1.5; align-items:flex-start}
+.flip-hint{margin-top:.5rem; font-size:.72rem; color:var(--ink-2)}
+
+.q{font-size:.86rem; color:var(--ink-0); margin-bottom:.55rem; line-height:1.45}
+.opt{font-size:.78rem; color:var(--ink-2); padding:.32rem .5rem; border:1px solid var(--line); border-radius:6px; margin-bottom:.3rem; line-height:1.35}
+.opt.is-right{color:var(--ok); border-color:color-mix(in srgb,var(--ok) 45%,transparent); background:color-mix(in srgb,var(--ok) 10%,transparent)}
+.blank{display:inline-block; min-width:5.5rem; border-bottom:2px solid var(--danger); color:var(--danger); text-align:center}
+.learn-h{font-family:var(--font-display); font-size:.98rem; font-weight:600; color:var(--ink-0); margin-bottom:.35rem}
+.learn-p{font-size:.83rem; color:var(--ink-1); line-height:1.55}
+
+/* ── dvoje vrata ── */
+.doors{display:grid; gap:1rem; margin-top:clamp(2rem,5vw,3rem); grid-template-columns:1fr}
+@media (min-width:44rem){ .doors{grid-template-columns:1fr 1fr} }
+.door{
+  display:block; text-align:left; text-decoration:none; cursor:pointer; font:inherit;
+  border:1px solid var(--line); border-radius:var(--r-lg); padding:1.25rem 1.35rem;
+  background:var(--surface-1); transition:border-color .18s, transform .18s;
+}
+.door:hover{border-color:var(--brand-600); transform:translateY(-2px)}
+.door--primary{background:var(--brand-500); border-color:var(--brand-500)}
+.door--primary:hover{background:var(--brand-400); border-color:var(--brand-400)}
+/* ⚠️ `display:block` je OBAVEZAN: ovo su <span> unutar <button>, a button je
+   inline-formatting kontekst → bez ovoga naslov i opis se slijepe u isti redak. */
+.door-t{display:block; font-family:var(--font-display); font-size:1.25rem; font-weight:700; color:var(--ink-0); letter-spacing:-.01em; line-height:1.25}
+.door--primary .door-t{color:var(--on-brand)}
+.door-d{display:block; margin-top:.4rem; font-size:.87rem; color:var(--ink-2); line-height:1.45}
+.door--primary .door-d{color:color-mix(in srgb,var(--on-brand) 82%,transparent)}
+.door-m{display:block; margin-top:1rem; padding-top:.8rem; border-top:1px solid var(--line); font-size:.78rem; color:var(--ink-2)}
+.door--primary .door-m{color:color-mix(in srgb,var(--on-brand) 70%,transparent); border-top-color:color-mix(in srgb,var(--on-brand) 22%,transparent)}
+
+/* ── tanki red dokaza (zamjenjuje 3 marketinške sekcije) ── */
+.facts{
+  margin-top:clamp(2.5rem,6vw,4rem); border-top:1px solid var(--line);
+  padding-top:1.1rem; display:flex; flex-wrap:wrap; gap:.5rem 1.75rem;
+  font-size:.83rem; color:var(--ink-2);
+}
+.facts b{color:var(--ink-1); font-weight:600}
+
+footer{margin-top:clamp(3rem,8vw,5rem); border-top:1px solid var(--line); padding:1.5rem 0 2.5rem; font-size:.8rem; color:var(--ink-2)}
+footer nav{display:flex; flex-wrap:wrap; gap:.4rem 1.25rem; margin-bottom:.9rem}
+footer a{color:var(--ink-2); text-decoration:none}
+footer a:hover{color:var(--brand-400)}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <a class="brand" href="#"><img class="brand-mark" src="../assets/logo.svg" alt=""><span class="brand-name">Sokrat</span></a>
+  <button type="button">HR</button>
+  <button type="button" class="signin">Prijava</button>
+</header>
+
+<div class="wrap">
+  <main class="hero">
+    <div class="hero-lede">
+      <p class="kicker">Bilo koje gradivo · bilo koji jezik</p>
+      <h1>Napiši jednom.<br>Uči na <em>četiri</em> načina.</h1>
+      <p class="hero-sub">
+        Upiši pojam i objašnjenje — Sokrat od toga odmah radi kartice, kviz, dopunjavanje
+        i pregledno gradivo. Isprobaj ovdje, bez registracije.
+      </p>
+    </div>
+
+    <!-- ŽIVI PRIKAZ: ovo NIJE maketa nego stvarna pretvorba, ista koju radi aplikacija -->
+    <section class="demo" aria-label="Isprobaj: od jednog unosa do četiri načina učenja">
+      <div class="demo-head">
+        <strong>Tvoj unos</strong>
+        <span>— piši i gledaj kako se mijenja desno</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-in">
+          <div class="field">
+            <label for="pTerm">Pojam</label>
+            <input id="pTerm" type="text" value="Fotosinteza" maxlength="80" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="pDef">Objašnjenje</label>
+            <textarea id="pDef" rows="4" maxlength="300">Proces kojim biljke pomoću svjetlosti pretvaraju ugljikov dioksid i vodu u glukozu i kisik.</textarea>
+          </div>
+          <p class="demo-hint">Upiši bilo što sa svog kolegija, iz srednje škole ili s posla. Sve četiri stvari desno rade se same.</p>
+        </div>
+
+        <div class="demo-out">
+          <article class="tile" data-k="card">
+            <p class="tile-tag">Kartica</p>
+            <button type="button" class="flip" id="flipBtn" aria-pressed="false">
+              <span class="flip-in">
+                <span class="flip-f" id="cardFront">Fotosinteza</span>
+                <span class="flip-b" id="cardBack">…</span>
+              </span>
+            </button>
+            <p class="flip-hint">klikni za okret</p>
+          </article>
+
+          <article class="tile" data-k="quiz">
+            <p class="tile-tag">Kviz</p>
+            <p class="q" id="quizQ">…</p>
+            <div id="quizOpts"></div>
+          </article>
+
+          <article class="tile" data-k="fill">
+            <p class="tile-tag">Dopunjavanje</p>
+            <p class="q" id="fillQ">…</p>
+          </article>
+
+          <article class="tile" data-k="learn">
+            <p class="tile-tag">Gradivo</p>
+            <h3 class="learn-h" id="learnH">…</h3>
+            <p class="learn-p" id="learnP">…</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- JEDNA VRATA KOJA PITAJU ČIJE GRADIVO + editor odmah pokraj -->
+    <div class="doors">
+      <button type="button" class="door door--primary">
+        <span class="door-t">Kreni učiti</span>
+        <span class="door-d">Odaberi svoje gradivo ili gotovo iz kataloga.</span>
+        <span class="door-m">22 predmeta spremna · tvojih: 0</span>
+      </button>
+      <button type="button" class="door">
+        <span class="door-t">Napravi svoje</span>
+        <span class="door-d">Od bilježaka do kartica u nekoliko minuta.</span>
+        <span class="door-m">Editor · privatno dok ne podijeliš</span>
+      </button>
+    </div>
+
+    <p class="facts">
+      <span><b>Besplatno</b> i bez reklama</span>
+      <span>Radi <b>offline</b></span>
+      <span>Napredak se <b>pamti</b></span>
+      <span>Tvoje gradivo je <b>privatno</b></span>
+    </p>
+  </main>
+
+  <footer>
+    <nav>
+      <a href="#">O nama</a><a href="#">Kontakt</a><a href="#">Česta pitanja</a>
+      <a href="#">Privatnost</a><a href="#">Uvjeti</a><a href="#">Kolačići</a>
+    </nav>
+    <p>© 2026 Sokrat Study · Leon Kreso</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  // Escape je obavezan i u prototipu: sve ide iz KORISNIČKOG unosa u innerHTML.
+  // Isto pravilo kao SokratBlocks.esc u aplikaciji (BUG-025).
+  var M = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'};
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return M[c];}); }
+
+  var term = document.getElementById('pTerm');
+  var def  = document.getElementById('pDef');
+
+  // Ometači za kviz: u aplikaciji dolaze iz drugih kartica istog gradiva.
+  var DISTRACT = [
+    'Kruženje vode u prirodi — isparavanje, kondenzacija i oborine.',
+    'Razgradnja glukoze u stanici radi oslobađanja energije.',
+    'Prijenos nasljednih svojstava s roditelja na potomstvo.'
+  ];
+
+  function render(){
+    var t = term.value.trim() || 'Pojam';
+    var d = def.value.trim()  || 'Objašnjenje koje upišeš pojavit će se ovdje.';
+
+    document.getElementById('cardFront').textContent = t;
+    document.getElementById('cardBack').textContent  = d;
+
+    document.getElementById('quizQ').textContent = 'Što znači: ' + t + '?';
+    var opts = '<p class="opt is-right">' + esc(d) + '</p>';
+    for (var i=0;i<DISTRACT.length;i++) opts += '<p class="opt">' + esc(DISTRACT[i]) + '</p>';
+    document.getElementById('quizOpts').innerHTML = opts;
+
+    document.getElementById('fillQ').innerHTML =
+      '<span class="blank">?</span> — ' + esc(d);
+
+    document.getElementById('learnH').textContent = t;
+    document.getElementById('learnP').textContent = d;
+  }
+
+  term.addEventListener('input', render);
+  def.addEventListener('input', render);
+
+  var flip = document.getElementById('flipBtn');
+  flip.addEventListener('click', function(){
+    flip.setAttribute('aria-pressed', flip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
