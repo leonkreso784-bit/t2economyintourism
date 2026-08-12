@@ -130,4 +130,29 @@ Trošak prijevoda: ~$0.7–1.5/predmet → cijeli HR batch ≈ **$15–30** ukup
 - ⚖️ **Terminološka odluka za PR #1 (Leon, 2026-07-14): opcija B — HR SKRIPTE = izvor istine, NE prijevod EN-a.** Razlog: HR program predaju **drugi profesori** — ispiti prate NJIHOVE skripte (W&K okvir: 5 funkcija uklj. „kadroviranje", termin „kadrovi"). Ovo potvrđuje §5 pravilo **„HR materijali = autoritet"** i vrijedi za SVE buduće `-hr` predmete: gdje se prijevod i skripta razilaze u okviru/terminologiji/gradivu — **skripta pobjeđuje**. PR #1 objavljen 2026-07-15 (dorada gotova).
 - 🎯 **NOVI ZADATAK (Leon, 2026-07-28) — aktivirani S4+S5 za 4 KVANTITATIVNA predmeta:** **Matematika · Statistika · Makroekonomija · Računovodstvo** → HR verzije. **Razlog/naglasak: VJEŽBE moraju biti na hrvatskom** (ta 4 su jedini predmeti s vježbama). Vježbe = **S5 pravilo**: prevode se SAMO string-polja (`prompt/title/choices/explain` + `meta.lang:'en'→'hr'`); `generate()/params/answer/type` **NEDIRLJIVI** (logika/matematika bit-identična), `test:unit` mora ostati zelen. Study sadržaj (kartice/kviz/fill/learn) = normalni HR tok. Jedan predmet = jedna grana `content/<id>-hr` = jedan PR. Redoslijed po Sašinim materijalima (prijedlog: makro → stat → math → računovodstvo). **Nijedan još nema HR verziju; sva 4 imaju EN + vježbe** (`data/<id>/exercises.js`). **Nakon ova 4 → sljedeći zadatak NIJE određen** — dogovara se s Leonom kad ova 4 padnu. ⚠️ Raniji zapis *„prelazi na izgradnju mature"* je **NADGLAŠEN**: matura je izbačena iz smjera proizvoda (Leon, 2026-08-02) — v. [plan/ROADMAP.md](../plan/ROADMAP.md).
 - ✅ **DEPLOY-PERMISIJA (Leon, 2026-07-28):** Saša SMIJE sam **mergeati vlastiti PR u `main` (= deploy)** — ali TEK nakon Leonovog **izričitog approvala** (pregled + „slažem se, sve je točno"). CI zeleni = preduvjet, ne zamjena za pregled. Standard = **savršeno**. Mehanizam: `protect-main` traži 1 approval → Leon approva, Saša mergea. (Detalji §2/§3.)
+- 🛑 **STOP-NALOG + ZAVRŠNI ZADATAK (Leon, 2026-08-12) — OVO NADGLAŠAVA TEKUĆI ZADATAK GORE.**
+  Leon: *„neka prilagodi sve kako treba i da onda merga ili deploya čim to napravi i neka mi napiše poruku na Instagramu čim je gotov s time. Također mu pojasni da ništa ne radi dok frontend nije gotov."*
+
+  **① ZAVRŠI OTVORENO — dvije grane, JEDNA PO JEDNA (ne paralelno):**
+
+  | red | grana | commita | stanje |
+  |---|---|---|---|
+  | 1. | `content/entrepreneurship-hr` | 3 | znatno iza `main`-a |
+  | 2. | `content/ebusiness-hr` | 1 | znatno iza; **konfliktirat će s prvom** |
+
+  Obje diraju `data/catalog.js` i cache-tokene → prva se rebasea i mergea, pa se **tek onda** druga rebasea na novi `main`. Obrnuto = dvostruki konflikt bez potrebe.
+
+  **⚠️ `main` se 2026-08-12 pomaknuo (C1 — Tailwind temelj) pa rebase NIJE trivijalan. Tri stvari koje će iznenaditi:**
+  - **`styles.css` VIŠE NE POSTOJI** — obrisan je u C1 (manifest je sad `css/app.css`). Obje grane ga diraju bump-tokenom → rebase javlja **modify/delete** konflikt. **Rješenje: prihvatiti brisanje** (`git rm styles.css`), NE vraćati datoteku natrag.
+  - **`npm ci` prije svega ostalog** — `build:css` od C1 vrti Tailwind CLI (`@tailwindcss/cli`), kojeg u staroj instalaciji nema; bez toga gate puca s porukom koja ne izgleda kao da je o tome.
+  - **`npm run bump` ide NAKON rebasea**, nikad prije — tokeni se moraju poravnati s novim `main`-om.
+
+  `npm run preflight` je dobio nove brane (`check:tailwind`, `check:palette`, `check:contrast`). Sve moraju biti zelene; checklista §5 vrijedi nepromijenjena.
+
+  **② MERGE/DEPLOY: Leonov OK je dan UNAPRIJED, samo za te dvije grane.** Čim su CI i gateovi zeleni i §5 ispunjena — Saša mergea sam, bez čekanja na novi approval. **Iznimka od §3, vrijedi ISKLJUČIVO za `entrepreneurship-hr` i `ebusiness-hr`** — svaki budući PR opet traži Leonov izričit approval.
+
+  **③ JAVI LEONU NA INSTAGRAM** čim su obje objavljene.
+
+  **④ ZATIM STANI — ništa novo dok frontend redizajn nije gotov.** Ne otvarati nove `content/*` grane, ne započinjati nove predmete. **Zadatak S4+S5 (macro · statistika · math · računovodstvo) je time PAUZIRAN**, nije otkazan. Razlog je mehanički, ne organizacijski: redizajn (cigle C2–C7, [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)) prepisuje `index.html` i **cijeli CSS sloj** te bumpa cache-tokene na svakoj cigli — a svaki content-PR dira **te iste tokene** plus `data/catalog.js`. Paralelan rad znači da se svaki PR rebasea po nekoliko puta i svaki put nanovo prolazi puni gate. Sljedeći zadatak dogovara se s Leonom kad redizajn padne.
+
 - 📌 **BUDUĆE (nakon pune 2 god HR):** kad HR program bude **potpun (obje godine)**, **HR predmeti se dodaju u Supabase bazu** (sad su svi HR **file-served** → dual-read pada na `data/json/<id>-hr/`). Migracija HR→Supabase = **Leon/Claude** (traži `service_role`/ključeve, `scripts/migrate-content.js`), **NIJE Sašin posao** (§6). Do tada HR ostaje file-first (radi jednako studentu).

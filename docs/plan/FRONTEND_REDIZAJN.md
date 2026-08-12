@@ -339,3 +339,45 @@ Briše se kad postane pravi `index.html`.
 **⚠️ Logo je otvoren:** `assets/logo.svg` je još indigo (`#6366f1`/`#818cf8`). Jedna fiksna boja ne
 može dobro sjesti i na papir i na tamnu ploču — pravo rješenje je **inline `<symbol>` + `<use>`** u
 `index.html`, jer tek tada logo čita `var(--color-brand-500)` i prati temu. Ide zajedno s landingom.
+
+---
+
+### 7.6 ✅ SMJER IZGLEDA — Apple (Leon, 2026-08-12)
+
+> Leon: *„Apple smjer, naravno, to se podrazumijeva."*
+
+**Ovo nadglašava tipografski dio §7.4** (Literata + Instrument Sans). Paleta i četiri teme iz §7.4 **ostaju** — mijenja se smjer vrijednosti, ne arhitektura.
+
+**Što Apple zapravo radi** (pet stvari, i vrijedi ih razdvojiti jer su četiri besplatne):
+
+| | čime | cijena kod nas |
+|---|---|---|
+| 1 | **praznina** — jedna ideja po ekranu | traži **brisanje**, ne dodavanje; radi se po površini u svakoj cigli |
+| 2 | **tipografija nosi** — 56–96px naslovi, **negativan letter-spacing**, malo veličina | vrijednosti u `tokens.css` |
+| 3 | **gotovo monokromatski** — boja dolazi iz **sadržaja**, ne iz sučelja | vrijednosti u `tokens.css` |
+| 4 | **materijal umjesto boje** — vlas-crte, velika zaobljenja, jedva vidljive sjene | vrijednosti u `tokens.css` |
+| 5 | **pokret vezan uz skrol** | ~30 redaka + `prefers-reduced-motion` |
+
+**⚠️ Ono što nemamo, i to je jedini pravi rizik: Appleova stranica je ~70 % fotografija proizvoda.** Praznina oko naslova radi zato što u sredini stoji predmet. Naš proizvod je **tekst**. Preslikan raspored bez predmeta ne daje Apple nego **praznu stranicu** — tako propada svaka imitacija.
+
+**Naša zamjena za fotografiju proizvoda već postoji i bolja je od slike:** živi demo iz §7.5 (upišeš pojam → odmah ga vidiš kao karticu, kviz, dopunu i gradivo). To je naš „product shot", i s njim se može igrati.
+
+**Zato: uzimamo Appleovu DISCIPLINU, ne Appleov KOSTIM.** Ne kopiramo mutno staklo posvuda, gradijentni hero ni veliku predmetnu fotografiju koju nemamo čime napuniti.
+
+#### Posljedica 1 — tipografija: **serif u naslovima je NADGLAŠEN**
+
+Grotesk svugdje. **SF Pro se ne smije koristiti na webu** (Appleova licenca ga drži na njihovim platformama), ali `-apple-system, system-ui` u stacku **na iPhoneu i Macu razriješi se u pravi San Francisco** — legalno i za **0 KB**. Na Windowsu pada na Segoe. Zamjenski grotesk **ne smije biti Inter ni Space Grotesk** (§7.1: oba su potpis generiranog sučelja).
+
+#### Posljedica 2 — brisanje ostatka palete postaje BLOKADA SMJERA, ne dug
+
+Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**. Svijetla tema je zaključana iza `check:palette` = **0** (danas **435**), jer je `color: rgba(255,255,255,.9)` na papiru **nevidljiv**, ne samo neusklađen.
+
+**Time se mijenja prioritet:** čišćenje zakucanih boja u C3–C7 više nije „sitni dug koji usput otplaćujemo" nego **jedini put do izgleda koji je Leon izabrao**. Do nule zadana tema ostaje tamna.
+
+#### Kako se zna da smo u smjeru (mjerljivo, ne na oko)
+
+1. **0 serifnih porodica** u `styles.bundle.css`.
+2. **Nijedan `font-size` izvan skale** — svaka veličina dolazi iz `--text-*` tokena.
+3. **`check:palette` monotono pada** iz cigle u ciglu (nikad ne raste).
+4. **`check:contrast` ostaje zelen** kroz sve četiri teme.
+5. **Na landingu nema ukrasnog elementa koji ne nosi značenje** — svaki gradijent, sjena ili linija mora se moći obrazložiti rečenicom, inače se briše.

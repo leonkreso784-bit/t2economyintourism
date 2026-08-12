@@ -52,7 +52,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ### Added
 
-- **⏳ 2026-08-11 — C1: Tailwind temelj** (grana `feat/c1-tailwind-temelj`, **na produkciji NIJE** — čeka Leonov OK).
+- **🚀 2026-08-12 — C1: Tailwind temelj NA PRODUKCIJI** (`c9413a0..d4c7914`, fast-forward grane `feat/c1-tailwind-temelj`). Leonov OK: *„Može merge imaš moj OK ako tako misliš."*
+  **Zašto je išao SAM, odvojen od C2:** C1 je jedina cigla faze koja po konstrukciji ne mijenja nijedan piksel. To je jedina prilika da temelj ode na produkciju uz atributivnu grešku — ako se nešto pokvari, zna se da je temelj, a ne redizajn. Spojen s landingom, diff bi bio 17.772 redaka bundlea + prepisana stranica u istom koraku i rollback bi postao pogađanje.
+  **Verificirano na PRODUKCIJI (pravilo #7), ne samo u CI-u:** Vercel `dpl_6fgHTmk…` **READY target=production**, SHA `d4c7914` · token `20260811225040` **= repo** · **`styles.css` vraća 404** (datoteka je obrisana, produkcija to potvrđuje) · bundle 200 / **216 KB** sa živim `--color-brand-500`, `--color-surface-0`, `--color-ink-0`, `sokratSpin` · **`--color-indigo-500` više ne postoji** — Tailwindova zadana paleta je stvarno nestala, ne samo prestala biti korištena.
+  **Gate prije mergea:** `preflight` **0** · **puna `npx playwright test`: 337 prošlo / 0 palo / 30 skip** (15.7 min, uključuje authed projekt vs staging). Puna suita, ne podskup — C0 je pokazao da podskup ne dokazuje ciglu (tad: preflight zelen, suita 35 palo). Uz to iz same cigle: **`css:diff` 3438 usporedbi izračunatih stilova, 0 razlika**.
+  **Za studente nevidljivo i to je mjerilo uspjeha**, ne nedostatak.
+
+- **⏳ (izvorni zapis cigle) — C1: Tailwind temelj** (grana `feat/c1-tailwind-temelj`).
   `tailwindcss` + `@tailwindcss/cli` **4.3.3 pinano**. CSS manifest preselio iz `styles.css` (**obrisan**) u
   **`css/app.css`**; dizajn-tokeni u **`css/tokens.css`** (`@theme static`, 31 token, semantička imena,
   vrijednosti namjerno današnje). Tailwindov preflight se **ne uvozi**; `--color-*`/`--shadow-*`/`--font-*`/
