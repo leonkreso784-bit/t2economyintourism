@@ -118,7 +118,14 @@ const HTML_FILES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'con
    samog sebe, a jedini način da se „popravi" bio bi ukloniti izvor istine. */
 const SOURCE_OF_TRUTH = path.join(CSS_DIR, 'tokens.css');
 
-const files = [...walk(CSS_DIR), ...HTML_FILES].filter((f) => f !== SOURCE_OF_TRUTH).sort();
+/* `tokens.static.css` je GENERIRAN izvadak istih tih tokena (`npm run build:css`),
+   za stranice koje ne učitavaju bundle. Skenirati ga značilo bi brojati izvor
+   istine dvaput — a „popraviti" ga ne bi bilo moguće, jer ga nitko ne piše rukom. */
+const GENERATED = path.join(CSS_DIR, 'tokens.static.css');
+
+const files = [...walk(CSS_DIR), ...HTML_FILES]
+  .filter((f) => f !== SOURCE_OF_TRUTH && f !== GENERATED)
+  .sort();
 const report = [];
 for (const abs of files) {
   const rel = path.relative(ROOT, abs).replace(/\\/g, '/');

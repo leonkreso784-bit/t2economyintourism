@@ -6,27 +6,27 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ⚠️ JEDINO MJESTO U REPOZITORIJU GDJE SE PALETA SMIJE PONOVITI KAO HEX.
-   Razlog je gore: ove četiri stranice NE učitavaju `styles.bundle.css`, pa nemaju
-   pristup ni tokenima ni mostu iz `css/variables.css` — `var(--color-brand-500)`
-   ovdje se ne bi razriješio ni u što. Vrijednosti su prepisane iz `css/tokens.css`
-   („Ponoć i menta", C2) i moraju se mijenjati ZAJEDNO s njim.
+/* ⚠️ OVDJE VIŠE NEMA NIJEDNE VRIJEDNOSTI BOJE — samo most na tokene.
+   Ove četiri stranice ne učitavaju `styles.bundle.css`, pa su dotad držale
+   VLASTITU kopiju palete kao hex. Dvije kopije jedne činjenice, i razišle su se
+   prvom prilikom: aplikacija je prešla na „Kredu i tablu", a ove stranice ostale
+   mentol — jedan klik iz footera vodio je u drugu paletu.
 
-   Povod: footer landinga vodi na Privacy/Terms/FAQ/Contact. Dok je aplikacija bila
-   indigo, i ove su stranice bile indigo pa se nesklad nije vidio; nakon C2 bi jedan
-   klik iz novog sučelja vodio na stari izgled. (Usput: `--bg` je i dosad bio #0b1220,
-   dakle nijansu pored aplikacijskog #0f172a — nesklad je postojao i prije, samo je
-   bio premalen da ga itko primijeti.)
+   Sada `<link>` na **`css/tokens.static.css`** (generira ga `npm run build:css`
+   izvadkom `:root` blokova iz bundlea) donosi iste tokene i sve teme, pa je ovdje
+   ostalo samo preslikavanje starih imena. `css/tokens.css` se NE može poslužiti
+   izravno jer je `@theme static` Tailwindova direktiva koju preglednik ne razumije.
 
+   ⚠️ Redoslijed u <head> je bitan: tokens.static.css MORA doći prije ove datoteke.
    Umire u C6, kad ove stranice dobiju isti tretman kao ostatak. */
 :root {
-    --bg: #0b1a1c;            /* = --color-surface-0 */
-    --bg-card: #112629;       /* = --color-surface-1 */
-    --border: rgba(255, 255, 255, 0.1);
-    --text: #c5d8d7;          /* = --color-ink-1 */
-    --text-dim: #88a7a6;      /* = --color-ink-2  (kontrast 5.05 na najsvjetlijoj plohi) */
-    --primary: #4fc9ab;       /* = --color-brand-500 */
-    --primary-light: #7adcc4; /* = --color-brand-400 */
+    --bg: var(--color-surface-0);
+    --bg-card: var(--color-surface-1);
+    --border: var(--color-line);
+    --text: var(--color-ink-1);
+    --text-dim: var(--color-ink-2);
+    --primary: var(--color-brand-500);
+    --primary-light: var(--color-brand-400);
 }
 
 body {
@@ -45,7 +45,10 @@ body {
     justify-content: space-between;
     gap: 1rem;
     padding: 0.9rem 1.5rem;
-    background: rgba(15, 23, 42, 0.85);
+    /* Bila je zakucana `rgba(15, 23, 42, .85)` = stari slate `#0f172a` — preživjela je
+       promjenu palete jer se hex-pretragom ne vidi u `rgba()` obliku. `color-mix` drži
+       providnost, a boju uzima iz teme. */
+    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
     border-bottom: 1px solid var(--border);
 }
 
