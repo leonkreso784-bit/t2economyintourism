@@ -24,6 +24,7 @@
     "validate:schema": "node scripts/validate-json-schema.js",
     "check:final": "node scripts/check-final-drift.js",
     "check:docs": "node scripts/check-docs.js",
+    "check:lockfile": "node scripts/check-lockfile.js",
     "check:tailwind": "node scripts/check-tailwind.js",
     "check:palette": "node scripts/check-palette.js",
     "check:functions": "node scripts/check-edge-functions.js",
@@ -33,7 +34,7 @@
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:palette && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
+    "preflight": "npm run check:lockfile && npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:palette && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
     "scaffold": "node scripts/scaffold-subject.js",
     "check:contrast": "node scripts/check-contrast.js"
   },
