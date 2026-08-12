@@ -181,6 +181,45 @@ if (failed) {
   process.exit(1);
 }
 
+/* ── TVRDA ZABRANA (nije čegrtaljka): zakucan tekst na ispuni marke ───────────
+ * Povod (2026-08-12, C2): promjena palete pomaknula je marku iz tamnog indiga u
+ * svijetlu kredu, a **35 pravila** je držalo `color: white` na toj ispuni.
+ * Bijelo na indigu je bilo 4.47 (tik ispod AA); na kredi je **1.68** — nečitljivo.
+ *
+ * Zašto ovo NE hvata `check:contrast`: on dokazuje da je PALETA ispravna
+ * (`--color-on-brand` na `--color-brand-500` = 9.87), ali ne može znati koristi li
+ * je CSS. Axe to vidi, ali samo za stanja koja test zatekne — uhvatio je 2 od 35;
+ * ostala 33 su bila u `:hover`, `.active` i `.selected`, dakle nevidljiva gateu.
+ * Statička analiza i preglednik hvataju različite bugove (nalaz C1 br. 4).
+ *
+ * Ovo je TVRDA zabrana, ne osnovica: nije naslijeđeni dug nego kvar koji se rađa
+ * svaki put kad netko napiše novi gumb. C3–C7 prepisuju upravo te površine. */
+const MARKA_BG = /background[^;]*(var\(--primary\)|var\(--color-brand|var\(--primary-dark\)|var\(--primary-light\))/;
+const ZAKUCAN_TEKST = /(?<![-\w])color:\s*(?:#fff\b|#ffffff\b|white\b|#000\b|#000000\b|black\b)/i;
+
+const naIspuni = [];
+for (const abs of files) {
+  if (!abs.endsWith('.css')) continue;
+  const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
+  const css = stripComments(fs.readFileSync(abs, 'utf8'));
+  const re = /([^{}]+)\{([^{}]*)\}/g;
+  let m;
+  while ((m = re.exec(css)) !== null) {
+    if (MARKA_BG.test(m[2]) && ZAKUCAN_TEKST.test(m[2])) {
+      naIspuni.push(`${rel}  →  ${m[1].trim().replace(/\s+/g, ' ').slice(0, 60)}`);
+    }
+  }
+}
+
+if (naIspuni.length) {
+  console.log(`\n❌ ${naIspuni.length} pravilo/a stavlja ZAKUCAN tekst na ispunu marke:`);
+  naIspuni.slice(0, 20).forEach((r) => console.log('      ' + r));
+  console.log('\n   Boja teksta na marki ovisi o TEMI, ne o navici: na tamnoj marki je bijela,');
+  console.log('   na svijetloj tamna. Zato postoji token — koristi `var(--on-primary)`.');
+  console.log('   (Bijelo na kredi #f2c14e = 1.68; `--on-primary` = 9.87.)\n');
+  process.exit(1);
+}
+
 if (grand < allowedTotal) {
   console.log(`\n✅ čisto — i PALO za ${allowedTotal - grand}. Spusti branu: node scripts/check-palette.js --update\n`);
 } else if (grand === 0) {

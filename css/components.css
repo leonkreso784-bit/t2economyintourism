@@ -147,7 +147,7 @@
 
 .theme-toggle:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
     transform: rotate(20deg);
 }
 

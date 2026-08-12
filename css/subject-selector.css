@@ -274,7 +274,7 @@ div.subject-card {
 .about-link-btn:active {
     background: var(--primary);
     border-color: var(--primary);
-    color: white;
+    color: var(--on-primary);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px -5px rgba(99, 102, 241, 0.4);
 }
@@ -292,7 +292,7 @@ div.subject-card {
 [data-theme="dark"] .about-link-btn:hover,
 [data-theme="dark"] .about-link-btn:active {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 /* ===== ABOUT US SECTION ===== */
@@ -323,7 +323,7 @@ div.subject-card {
 .back-btn:hover {
     background: var(--primary);
     border-color: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .about-hero { text-align: center; margin-bottom: 3rem; }
@@ -338,7 +338,7 @@ div.subject-card {
     justify-content: center;
     margin: 0 auto 1.5rem;
     font-size: 2.5rem;
-    color: white;
+    color: var(--on-primary);
     box-shadow: 0 15px 40px -10px rgba(99, 102, 241, 0.4);
 }
 
@@ -478,7 +478,7 @@ div.subject-card {
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: white;
+    color: var(--on-primary);
     flex-shrink: 0;
 }
 

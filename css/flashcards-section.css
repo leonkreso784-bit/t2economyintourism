@@ -89,7 +89,7 @@
    se samo mijenja boja. */
 .flashcard-front {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
     box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-lg);
 }
 
@@ -171,7 +171,7 @@
 
 .control-btn.wrong {
     background: rgba(239, 68, 68, 0.1);
-    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 na tamnoj podlozi */
+    color: var(--danger-text);
     border: 2px solid var(--danger);
 }
 
@@ -194,7 +194,7 @@
 .control-btn.prev:hover,
 .control-btn.next:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .flashcard-stats {
@@ -211,4 +211,4 @@
 }
 
 .flashcard-stats .stat.correct { color: var(--success); }
-.flashcard-stats .stat.wrong { color: var(--danger-text); }   /* a11y (F3 3E): kontrast ≥4.5:1 */
+.flashcard-stats .stat.wrong { color: var(--danger-text); }

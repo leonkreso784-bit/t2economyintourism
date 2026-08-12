@@ -393,3 +393,42 @@ Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**. Svijet
 3. **`check:palette` monotono pada** iz cigle u ciglu (nikad ne raste).
 4. **`check:contrast` ostaje zelen** kroz sve četiri teme.
 5. **Na landingu nema ukrasnog elementa koji ne nosi značenje** — svaki gradijent, sjena ili linija mora se moći obrazložiti rečenicom, inače se briše.
+
+---
+
+### 7.7 ⚠️ Nalaz C2 — paleta se mijenja u tokenima, ali tekst na njoj živi u 35 pravila
+
+Prva puna suita nakon promjene palete pala je na **axe `color-contrast`**, i to je najvažnija pouka cigle:
+
+> **Promjena marke iz TAMNE u SVIJETLU izvrće što „tekst na marki" uopće znači.**
+
+| | |
+|---|---|
+| bijelo na staroj marki `#6366f1` | **4.47** — već ispod AA, ali nitko nije primijetio |
+| bijelo na novoj marki `#f2c14e` | **1.68** ⛔ |
+| bijelo na `--primary-dark` `#d3a233` | **2.34** ⛔ |
+| `--on-primary` `#1e1f1c` na marki | **9.87** ✅ |
+
+**35 pravila** držalo je `color: white` na ispuni marke — CTA gumbi, `.answer-btn.selected`,
+`.check-btn`, `.start-quiz-btn`, `.ex-btn-primary`, zaglavlja tablica u learnu. Dakle **glavni gumbi u
+svakom modu učenja**.
+
+**Zašto to nijedan postojeći gate nije uhvatio:**
+- **`check:contrast` ne može.** On dokazuje da je **paleta** ispravna (`--on-brand` na marki = 9.87), ali
+  ne zna koristi li je CSS. Ispravna paleta i pogrešna upotreba izgledaju mu jednako.
+- **axe je uhvatio 2 od 35.** Vidi samo ono što je na ekranu u trenutku mjerenja; ostala 33 su bila u
+  `:hover`, `.active` i `.selected`. **Gate je bio zelen nad 33 slomljena pravila.**
+
+To je nalaz C1 br. 4 u novom ruhu: **statička analiza i preglednik hvataju različite bugove.**
+
+**Brana:** `check:palette` je dobio **tvrdu zabranu** (ne čegrtaljku, jer nije naslijeđeni dug nego kvar
+koji se rađa svaki put kad netko napiše novi gumb): nijedno pravilo ne smije imati marku kao pozadinu i
+zakucanu bijelu/crnu kao tekst. Obrnuto provjerena.
+
+**⚠️ Za C3–C7:** te cigle prepisuju upravo te površine. Uz zabranu ide i zapamćeno pravilo —
+**tekst na ispuni marke uvijek `var(--on-primary)`**, nikad `white`, ma kako „očito" izgledalo na
+današnjoj temi.
+
+**Usput pronađeno:** tri pravila nosila su komentar *„bijelo na `--primary` je 4.22 (<4.5),
+`--primary-dark` = 5.8"*. Brojke su vrijedile za indigo; na kredi je `--primary-dark` s bijelom **2.34**.
+Komentar je dakle **dokumentirao netočan razlog za postupak koji više ne pomaže** — obrisan (ADR-027).

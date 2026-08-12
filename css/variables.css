@@ -32,7 +32,7 @@
     --secondary: var(--color-ok-strong);
     --accent: var(--color-warn);
     --danger: var(--color-danger);
-    --danger-text: var(--color-danger-ink);   /* a11y (F3 3E): svjetliji crveni za TEKST na tamnoj podlozi (outline/ghost gumbi) — puna boja kao tekst pada <4.5:1; fill/border ostaje --danger */
+    --danger-text: var(--color-danger-ink);
     --warning-text: var(--color-warn-ink);    /* isti obrazac kao --danger-text: jantar za TEKST upozorenja na tamnoj podlozi (M5a brojač na pragu 200) */
     --success: var(--color-ok);
 

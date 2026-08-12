@@ -59,7 +59,7 @@
 
 .map-diff-btn.active {
     background: linear-gradient(135deg, var(--primary), var(--secondary, var(--primary)));
-    color: white;
+    color: var(--on-primary);
     border-color: transparent;
     box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -192,7 +192,7 @@
 
 .map-submit-btn {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
 }
 
 .map-submit-btn:hover {
@@ -213,7 +213,7 @@
     color: var(--text-secondary);
 }
 
-.map-skip-btn:hover { background: var(--primary); color: white; }
+.map-skip-btn:hover { background: var(--primary); color: var(--on-primary); }
 
 /* Feedback */
 .map-feedback {

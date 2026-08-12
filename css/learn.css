@@ -36,7 +36,7 @@
     padding: 14px 18px;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     border-radius: 14px;
-    color: white;
+    color: var(--on-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,8 +121,8 @@
 #learn .filter-btn:hover,
 #learn .filter-btn.active {
     border-color: var(--primary);
-    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
-    color: white;
+    background: var(--primary-dark);
+    color: var(--on-primary);
     box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
 
@@ -166,7 +166,7 @@
 #learn .learn-card-header {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     padding: 14px 16px;
-    color: white;
+    color: var(--on-primary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -230,7 +230,7 @@
 /* Headings */
 #learn .learn-card-content h3 {
     font-size: 1.1rem;
-    color: var(--primary-light);   /* a11y (F3 3E): --primary tekst na tamnoj kartici je 3.7:1; --primary-light = 5.3:1 (border ostaje --primary, dekorativan) */
+    color: var(--primary-light);
     margin: 18px 0 10px 0;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--primary);
@@ -380,8 +380,7 @@
     gap: 6px;
 }
 
-/* a11y (F3 3E): box-naslovi = SVIJETLI tekst (zajamčen kontrast na tintanoj podlozi nad karticom),
-   a boja-signal ostaje kroz OBOJANU IKONU + lijevi rub. Obojan tekst je padao <4.5:1 na tinti nad --bg-tertiary. */
+
 #learn .tip-box h4,
 #learn .warning-box h4,
 #learn .example-box h4 { color: var(--text-primary); }
@@ -444,8 +443,8 @@
 }
 
 #learn .learn-card-content th {
-    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
-    color: white;
+    background: var(--primary-dark);
+    color: var(--on-primary);
     font-weight: 600;
 }
 
@@ -857,7 +856,7 @@ sokrat-modal.image-modal > * {
 }
 
 [data-theme="dark"] #learn .learn-card-content th {
-    background: var(--primary-dark);   /* a11y (F3 3E): kontrast bijelog teksta ≥4.5:1 */
+    background: var(--primary-dark);
 }
 
 [data-theme="dark"] #learn .learn-card-content tr:nth-child(even) {

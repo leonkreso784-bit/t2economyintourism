@@ -40,7 +40,7 @@
 
 .back-btn:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .lessons-title {
@@ -107,7 +107,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--on-primary);
     font-weight: 700;
     font-size: 1.1rem;
     flex-shrink: 0;
@@ -242,7 +242,7 @@
 
 .study-nav-btn.active {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .study-nav-btn.active span,
@@ -413,7 +413,7 @@
     justify-content: center;
     margin: 0 auto 1rem;
     font-size: 2rem;
-    color: white;
+    color: var(--on-primary);
 }
 
 .about-tagline {
@@ -496,7 +496,7 @@
 
 .email-link:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .about-card.creator {
@@ -513,7 +513,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--on-primary);
     font-size: 1.5rem;
     flex-shrink: 0;
 }
@@ -614,7 +614,7 @@ body:has(.browse-page.active) .footer {
 }
 .lang-toggle:hover {
     background: var(--primary);
-    color: #fff;
+    color: var(--on-primary);
     border-color: var(--primary);
 }
 .lang-toggle i { font-size: 0.85rem; }

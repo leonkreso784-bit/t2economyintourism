@@ -335,7 +335,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--on-primary);
   font-size: 1.25rem;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -466,7 +466,7 @@ body {
 }
 .cta-button.primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
   box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45);
   position: relative;
   overflow: hidden;
@@ -915,7 +915,7 @@ body {
   height: 36px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: #fff;
+  color: var(--on-primary);
   font-weight: 700;
   font-family: 'Space Grotesk', sans-serif;
   display: flex;
@@ -1441,7 +1441,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--on-primary);
   font-size: 1.4rem;
   flex-shrink: 0;
   background: linear-gradient(135deg, var(--primary), var(--primary-light));
@@ -1610,7 +1610,7 @@ body {
 }
 .back-btn:hover {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .lessons-title {
   flex: 1;
@@ -1667,7 +1667,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--on-primary);
   font-weight: 700;
   font-size: 1.1rem;
   flex-shrink: 0;
@@ -1786,7 +1786,7 @@ body {
 }
 .study-nav-btn.active {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .study-nav-btn.active span, .study-nav-btn.active i {
   color: white;
@@ -1928,7 +1928,7 @@ body {
   justify-content: center;
   margin: 0 auto 1rem;
   font-size: 2rem;
-  color: white;
+  color: var(--on-primary);
 }
 .about-tagline {
   color: var(--text-secondary);
@@ -2000,7 +2000,7 @@ body {
 }
 .email-link:hover {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .about-card.creator {
   display: flex;
@@ -2015,7 +2015,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: var(--on-primary);
   font-size: 1.5rem;
   flex-shrink: 0;
 }
@@ -2094,7 +2094,7 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
 }
 .lang-toggle:hover {
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
   border-color: var(--primary);
 }
 .lang-toggle i {
@@ -2210,7 +2210,7 @@ body:has(.landing-page.active) .footer, body:has(.browse-page.active) .footer {
 }
 .theme-toggle:hover {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
   transform: rotate(20deg);
 }
 .mobile-nav {
@@ -2638,7 +2638,7 @@ div.subject-card {
 .about-link-btn:hover, .about-link-btn:active {
   background: var(--primary);
   border-color: var(--primary);
-  color: white;
+  color: var(--on-primary);
   transform: translateY(-2px);
   box-shadow: 0 8px 20px -5px rgba(99, 102, 241, 0.4);
 }
@@ -2660,7 +2660,7 @@ div.subject-card {
 }
 [data-theme="dark"] .about-link-btn:hover, [data-theme="dark"] .about-link-btn:active {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 #about-us {
   padding: 1rem;
@@ -2688,7 +2688,7 @@ div.subject-card {
 .back-btn:hover {
   background: var(--primary);
   border-color: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .about-hero {
   text-align: center;
@@ -2704,7 +2704,7 @@ div.subject-card {
   justify-content: center;
   margin: 0 auto 1.5rem;
   font-size: 2.5rem;
-  color: white;
+  color: var(--on-primary);
   box-shadow: 0 15px 40px -10px rgba(99, 102, 241, 0.4);
 }
 .about-title {
@@ -2880,7 +2880,7 @@ div.subject-card {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  color: white;
+  color: var(--on-primary);
   flex-shrink: 0;
 }
 .creator-info h3 {
@@ -3045,7 +3045,7 @@ div.subject-card {
 .category-btn.active {
   border-color: var(--primary);
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
 }
 .category-btn i {
   font-size: 1.5rem;
@@ -3101,7 +3101,7 @@ div.subject-card {
 }
 .action-btn.primary {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
 }
 .action-btn.primary:hover {
   transform: translateY(-2px);
@@ -3194,7 +3194,7 @@ div.subject-card {
 }
 .flashcard-front {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
   box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-lg);
 }
 .flashcard-back {
@@ -3289,7 +3289,7 @@ div.subject-card {
 }
 .control-btn.prev:hover, .control-btn.next:hover {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .flashcard-stats {
   display: flex;
@@ -3370,7 +3370,7 @@ div.subject-card {
   width: 100%;
   padding: 1rem 2rem;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
   border: none;
   border-radius: var(--radius);
   font-family: inherit;
@@ -3417,7 +3417,7 @@ div.subject-card {
 .question-category {
   display: inline-block;
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
   font-size: 0.75rem;
@@ -3469,7 +3469,7 @@ div.subject-card {
 .answer-btn.selected {
   border-color: var(--primary);
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .answer-btn.correct {
   border-color: var(--success);
@@ -3728,7 +3728,7 @@ div.subject-card {
   width: 100%;
   padding: 1rem 1.5rem;
   background: var(--primary-dark);
-  color: white;
+  color: var(--on-primary);
   border: none;
   border-radius: var(--radius);
   font-family: inherit;
@@ -3989,7 +3989,7 @@ div.subject-card {
 }
 .map-diff-btn.active {
   background: linear-gradient(135deg, var(--primary), var(--secondary, var(--primary)));
-  color: white;
+  color: var(--on-primary);
   border-color: transparent;
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
@@ -4099,7 +4099,7 @@ div.subject-card {
 }
 .map-submit-btn {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-  color: white;
+  color: var(--on-primary);
 }
 .map-submit-btn:hover {
   transform: translateY(-2px);
@@ -4120,7 +4120,7 @@ div.subject-card {
 }
 .map-skip-btn:hover {
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
 }
 .map-feedback {
   display: none;
@@ -4284,7 +4284,7 @@ div.subject-card {
 }
 .ex-mode-btn.active {
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
 }
 .ex-modes:has(+ .ex-mode-desc) {
   margin-bottom: 0.5rem;
@@ -4435,7 +4435,7 @@ div.subject-card {
 }
 .ex-btn-primary {
   background: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
 }
 .ex-btn-primary:hover {
   background: var(--primary-dark);
@@ -4543,7 +4543,7 @@ div.subject-card {
 .ex-opt.selected {
   background: var(--primary);
   border-color: var(--primary);
-  color: #fff;
+  color: var(--on-primary);
 }
 .ex-opt.is-correct {
   border-color: var(--success);
@@ -6751,7 +6751,7 @@ div.subject-card {
   padding: 14px 18px;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   border-radius: 14px;
-  color: white;
+  color: var(--on-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6819,7 +6819,7 @@ div.subject-card {
 #learn .filter-btn:hover, #learn .filter-btn.active {
   border-color: var(--primary);
   background: var(--primary-dark);
-  color: white;
+  color: var(--on-primary);
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
 }
 #learn .filter-btn:active {
@@ -6844,7 +6844,7 @@ div.subject-card {
 #learn .learn-card-header {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   padding: 14px 16px;
-  color: white;
+  color: var(--on-primary);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7051,7 +7051,7 @@ div.subject-card {
 }
 #learn .learn-card-content th {
   background: var(--primary-dark);
-  color: white;
+  color: var(--on-primary);
   font-weight: 600;
 }
 #learn .learn-card-content tr:nth-child(even) {
