@@ -68,3 +68,4 @@ _screenshots/
 # Lokalni read-only MCP-admin spike — NE ide u repozitorij ni na produkciju.
 # Brana, ne urednost: bio je samo `untracked`, pa ga je `git add -A` uredno pokupio u staging.
 mcp-admin/
+.playwright-mcp/
