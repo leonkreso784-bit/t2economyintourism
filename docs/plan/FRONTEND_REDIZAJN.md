@@ -337,8 +337,20 @@ platformu gradimo za sve."*
 Briše se kad postane pravi `index.html`.
 
 **⚠️ Logo je otvoren:** `assets/logo.svg` je još indigo (`#6366f1`/`#818cf8`). Jedna fiksna boja ne
-može dobro sjesti i na papir i na tamnu ploču — pravo rješenje je **inline `<symbol>` + `<use>`** u
-`index.html`, jer tek tada logo čita `var(--color-brand-500)` i prati temu. Ide zajedno s landingom.
+može dobro sjesti i na papir i na tamnu ploču.
+
+> **✏️ ISPRAVAK (2026-08-12): inline `<symbol>` + `<use>` NIJE rješenje — datoteka je 45 308 bajtova.**
+> Logo je vektoriziran potraceom, dakle tisuće točaka putanje. Inline bi dodao **45 KB u `index.html`**,
+> a `index.html` se poslužuje **network-first** (SW) pa se taj teret plaća pri svakom posjetu — dok je
+> vanjski `.svg` immutable-cachiran godinu dana. Zamijenili bismo temu za mjerljivo sporije prvo učitavanje.
+>
+> **Pravo rješenje: CSS maska.** `mask-image: url(assets/logo.svg)` + `background: var(--color-brand-500)`
+> → datoteka ostaje vanjska i cachirana, a **boja dolazi iz teme**. Dvije stvari treba provjeriti prije
+> izvedbe: ① maska koristi **alfa-kanal**, pa SVG mora biti silueta — ako ima punu pozadinsku plohu,
+> maska daje pravokutnik; ② `mask` treba `-webkit-` prefiks za starije Safarije.
+>
+> **Ako ① padne, logo se ne krpa nego CRTA ISPOČETKA.** 45 KB traženih putanja za znak koji bi trebao
+> biti par stotina bajtova je sam po sebi znak da je izvor kriv — a to je dizajnerski posao, ne CSS.
 
 ---
 

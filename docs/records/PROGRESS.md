@@ -5,6 +5,55 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-12 (OPUS) — **C1 na produkciju · CI dvaput crven · paleta prestala zivjeti na dva mjesta**
+
+**`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` = `2bc9692`.**
+
+### Isporuceno
+- **C1 (Tailwind temelj) JE NA PRODUKCIJI** (`c9413a0..d4c7914`). Leonov OK: *„Moze merge imas moj OK
+  ako tako mislis.“* Isao je SAM, odvojen od C2 — to je jedina cigla koja po konstrukciji ne mijenja
+  nijedan piksel, dakle jedina prilika da temelj ode na prod uz atributivnu gresku.
+  Gate: preflight 0 + **puna suita 337/0/30 skip**. Verificirano na zivoj stranici: `styles.css` → 404,
+  `--color-indigo-500` vise ne postoji.
+- **Sasin stop-nalog** (TEAM.md §9): dovrsi dvije grane redom → mergea sam uz OK dan UNAPRIJED → javi
+  Leonu na Instagram → stani do kraja frontenda. S4+S5 pauziran. Uz upozorenje koje bi ga stajalo pola
+  dana: **`styles.css` je obrisan**, obje njegove grane ga diraju → rebase javlja modify/delete.
+- **Spec §7.6 — smjer izgleda je APPLE** (Leon: *„apple smijer naravno to se podrazumijeva“*).
+  Serif u naslovima NADGLASEN, grotesk svugdje. Iz toga slijedi da **`check:palette` 435 → 0 prestaje
+  biti sitni dug i postaje BLOKADA SMJERA** — Appleova podloga za tekst je svijetla, a svijetla tema je
+  zakljucana iza nule.
+- **`css/tokens.static.css`** (C2/3): pravne stranice vise ne drze vlastitu kopiju palete.
+
+### Sto je poslo po zlu i sto je iz toga izaslo
+**CI je pao DVAPUT, oba puta na `npm ci`, prije ijednog testa.**
+
+1. `Missing: @emnapi/wasi-threads@1.2.3` — uzrok IZVAN repozitorija:
+   `@tailwindcss/oxide-wasm32-wasi` ima `bundleDependencies`, lock biljezi zapakirani 1.2.2, a raspon je
+   `^1.2.2` → kad je upstream objavio 1.2.3, sinkronizacija je puknula. Bomba se naoruzala sama.
+   ⚠️ `npm install --package-lock-only` to NE popravlja (bajt-identican lock); popravlja `npm install`.
+2. Prvi popravak je prosao lokalno i **CI je opet pao**: lokalno npm 11 (Node 24), CI npm 10 (Node 22) —
+   razliciti razrjesivaci. npm 10 je trazio i `@emnapi/core` i `@emnapi/runtime`.
+   **Gate koji vrti drugu verziju od CI-a nije gate — daje laznu sigurnost.**
+
+**Brana: `npm run check:lockfile`, prva u preflightu.** Cita `node-version` iz `ci.yml` i vrti provjeru
+**dvaput** — lokalnim npm-om i CI-jevim (`npx npm@N`, ~3 s). **Pada zatvoreno.**
+
+### Tri greske koje sam sam napravio i uhvatio
+1. **Prva verzija `check:lockfile` padala je OTVORENO** (nepoznat izlaz = prolaz), pa je negativan test
+   TIHO PROSAO. Gate koji na nejasnocu kaze „u redu je“ gori je od nepostojeceg.
+2. **`extractTokens` je ispustio zadanu paletu** — trazio je `^:root`, a zadana je u
+   `@layer theme { :root, :host { ... } }`. Uz to je teme slozio PRIJE nje, sto bi ih pregazilo.
+   Sad ima branu koja pada glasno na oba slucaja.
+3. **Zapisani plan za logo je bio kriv.** Spec je nalagao inline `<symbol>`+`<use>`, a `assets/logo.svg`
+   je **45 308 bajtova** potrace-putanja — to bi dodalo 45 KB na `index.html`, koji ide network-first.
+   Ispravljeno u specu: CSS maska, a ako alfa-silueta ne valja, logo se crta ispocetka.
+
+### Sto slijedi
+Pravi landing u `index.html` (prototip: `prototypes/landing-v2.html`, sad u Apple-smjeru: grotesk,
+`-apple-system` stack daje pravi San Francisco na Appleovim uredajima za 0 KB) → smrt `landing.css`.
+
+---
+
 ## 2026-08-12 (OPUS) — **C2: paleta pala na zivom ekranu, pa su nastale CETIRI TEME**
 
 > Leon o „Ponoc i menta“: *„apsolutna katastrofa… crna i zelena nikoga ne motivira na ucenje.“*
