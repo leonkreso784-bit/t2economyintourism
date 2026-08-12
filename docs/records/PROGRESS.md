@@ -5,6 +5,51 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-12 (OPUS) — **C2: paleta pala na zivom ekranu, pa su nastale CETIRI TEME**
+
+> Leon o „Ponoc i menta“: *„apsolutna katastrofa… crna i zelena nikoga ne motivira na ucenje.“*
+> Zatim, nakon sto je vidio cetiri palete uzivo: *„sva cetiri mi se svidaju, mozemo li napraviti sva
+> cetiri pa korisnik onda bira.“*
+
+**Grana `feat/c2-landing` → `ed22b25`. Nista pushano. `main` = `c9413a0`, nedirnuta. Preflight exit 0.**
+
+### Sto je napravljeno
+- **Most `css/variables.css` → tokeni** (`e2418d4`). Datoteka vise ne drzi nijednu vrijednost: stara
+  imena prezivljavaju (992 `var()` poziva nedirnuto), vrijednosti dolaze iz `css/tokens.css`.
+  Dokaz dosega: **`css:diff` = 9768 razlika na 968+ elemenata** (C1 je namjerno imao 0).
+- **Cetiri teme** (`ed22b25`): zadana **„Kreda i tabla“** (tamno, toplo) + `paper`, `academic`, `mint`.
+  Radi jer **Tailwind v4 ne upisuje boju u klasu nego referencu**, pa jedan `[data-theme]` blok
+  prebaci i utilityje i legacy `var()` pozive. Izmjereno, ne pretpostavljeno.
+- **Tipografska skala** (9 stepenica) — u `css/` je bilo **96 razlicitih `font-size`** vrijednosti.
+- **Dva nova gatea u preflightu:** `check:palette` (cegrtaljka, **435**) i `check:contrast`
+  (164 provjere kroz 4 teme).
+- **Prototip landinga** `prototypes/landing-v2.html` — „landing ne opisuje proizvod, landing JEST
+  proizvod“ + prekidac paleta.
+
+### Sto je izmjereno, a nije se znalo
+- **Produkcija danas PADA WCAG AA** za tekst u boji marke: `#6366f1` na `#0f172a` = **4.00**.
+- **206 boja se krije u `rgba()` obliku** (124 indigo) — hex-revizija ih nije vidjela.
+- **Jos 134 zakucane bijele/crne.** Na tamnoj temi su neuskladjene, na svijetloj **NEVIDLJIVE**.
+- **Tekst na ispuni marke mora biti taman:** mentol + bijelo = 2.04, kreda-zuta + bijelo = 1.86.
+- **„Tocno“ se mora odmaknuti od marke:** `#5FD68A` je 23° od mentola (stapa se), `#6BCB77` je 37°.
+
+### Greske koje sam napravio i ispravio
+1. **Paletu sam ponudio iz tablice heksova** — prosla je svaki gate i pala na prvom pogledu.
+   Sada se palete biraju u prototipu, uz nepromijenjenu tipografiju i raspored.
+2. **Prvi `check:contrast` je mjerio `--color-line` na 3:1** i oborio sve cetiri teme. Provjera je bila
+   kriva, ne palete (WCAG 1.4.11 izuzima ukrasne razdjelnike). Zamalo sam „popravio“ palete i pretvorio
+   svaku hairline crtu u tvrdu prugu. Iz nalaza je ipak izasao `--color-line-strong`.
+3. **U komentare sam upisao `data-scheme` i `check:contrast` prije nego su postojali** (ADR-027:
+   proza koja opisuje zelju umjesto koda). Oboje ispravljeno — gate je napisan, atribut opisan tocno.
+4. **Cirilicno malo E (U+0435) u vlastitom komentaru** — uhvatio `check:docs`.
+
+### Sto slijedi
+Pravi landing u `index.html` (+ i18n kljucevi) → smrt `landing.css` (**63 od 435** ostatka) → logo na
+inline `<symbol>`/`<use>` da prati temu → puna suita + `css:diff` → docs.
+**Birac tema se ne ukljucuje dok `check:palette` ne dodje na nulu.**
+
+---
+
 ## 2026-08-11 (OPUS) — **C1: Tailwind temelj. Nula piksela promjene, tri nalaza koja mijenjaju C2–C7**
 
 > Leon: *„radimo redizajn frontenda da bude potpuno drukčiji, profesionalniji, ljepši i bolji koristeći

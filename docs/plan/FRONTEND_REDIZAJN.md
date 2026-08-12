@@ -224,12 +224,27 @@ Uz nju idu još četiri navike, sve prisutne:
    ozbiljnu količinu informacija bez skrolanja u prazno.
 5. **Najviše jedan ukras po ekranu** — i to samo ako nosi značenje.
 
-### 7.3 ✅ Odabrana paleta — „Ponoć i menta" (Leon, 2026-08-11)
+### 7.3 ⚠️ NADIĐENO — „Ponoć i menta" je pala na živom ekranu (2026-08-12)
 
-Od tri predložena smjera Leon je izabrao **B · Ponoć i menta**: duboka tirkizno-modra podloga i mentol
-akcent. Pomak s indiga prema cijanu uz pad zasićenosti podloge dovoljno je velik da se čita kao izbor,
-a ne kao zadana vrijednost. Ovo su vrijednosti koje u **C2** ulaze u `css/tokens.css` — i to je,
-po dizajnu C1-a, jedina datoteka koja se pritom mijenja:
+> **Ne briši ovaj odjeljak.** Ostaje kao zapis o tome KAKO je odluka pala, jer je pouka
+> skuplja od same palete. Aktualno stanje je **§7.4**.
+
+Paleta je izabrana iz tablice heksova i prošla je svaku provjeru koju smo imali — WCAG na tri
+plohe, hue-odvojenost, `css:diff`. Zatim je Leon prvi put vidio gotov ekran:
+*„apsolutna katastrofa… crna i zelena nikoga ne motivira na učenje."*
+
+**Dvije pouke, obje vrijede za svaku sljedeću vizualnu odluku:**
+
+1. **Paleta se ne bira iz tablice.** Kontrastni brojevi kažu je li nešto ČITLJIVO, ne je li
+   dobro. Sve daljnje odluke o izgledu biraju se na živom ekranu — zato prototip
+   (`prototypes/landing-v2.html`) ima prekidač koji mijenja paletu uz **nepromijenjenu
+   tipografiju i raspored**, da se uspoređuje točno jedna varijabla.
+2. **Bježanje od jednog klišea nije isto što i izbor.** Napustili smo indigo-na-slate i sletjeli
+   u „tamna podloga + jedan neon akcent" — a to je *isto tako* prepoznatljiv potpis generiranog
+   sučelja. Uz to: gotovo svi alati za učenje koji rade (Quizlet, Duolingo, Khan, Notion) su
+   **svijetli**; tamno je konvencija editora koda, ne nečega što se čita satima i uči danju.
+
+Vrijednosti koje su tada zapisane žive dalje kao tema **`mint`** — jedna od četiri, ne zadana:
 
 | token | vrijednost | | token | vrijednost |
 |---|---|---|---|---|
@@ -247,3 +262,80 @@ crvena `#E2725F` **4.23**, oboje ispod praga 4.5. Zato `--color-ink-2` ide na **
 crvena za TEKST na **`#E8836F`** (4.91); puna `#E2725F` ostaje za ispune i obrube, gdje vrijedi prag 3.0.
 To je isti obrazac koji već imamo (`--danger` vs `--danger-text` u `variables.css`) i razlog zašto
 `axe`/Lighthouse gate ne smije biti stvar sreće. Za usporedbu, današnji prigušeni tekst daje 5.71.
+
+---
+
+### 7.4 ✅ AKTUALNO — četiri teme, korisnik bira (Leon, 2026-08-12)
+
+Nakon što je vidio četiri palete uživo, Leon: *„sva četiri mi se sviđaju, možemo li napraviti sva
+četiri pa korisnik onda bira."* **Da** — i to je jeftino iz razloga koji je izmjeren, ne pretpostavljen:
+
+> **Tailwind v4 ne upisuje boju u klasu nego REFERENCU** — `.bg-brand-500 { background-color:
+> var(--color-brand-500) }`. Zato jedan `[data-theme]` blok koji pregazi varijablu prebaci
+> **istovremeno i sve Tailwind klase i svih 992 legacy `var()` poziva** kroz most u
+> `css/variables.css`. **Tema je popis vrijednosti, ne druga verzija CSS-a.**
+
+**Četiri teme** (sve u `css/tokens.css`, sve prolaze `npm run check:contrast`):
+
+| id | naziv | svjetloća | marka |
+|---|---|---|---|
+| *(zadana)* | **Kreda i tabla** | tamno, toplo | kreda-žuta `#F2C14E` |
+| `paper` | **Papir i marker** | svijetlo | plava `#2C5FD6` + marker `#FFD24A` |
+| `academic` | **Akademsko plavo** | svijetlo | plava `#1657D0` |
+| `mint` | **Ponoć i menta** | tamno | mentol `#4FC9AB` |
+
+**⛔ UVJET ZA BIRAČ — nije stvar ukusa nego ispravnosti.** Birač tema **se ne uključuje** dok
+`npm run check:palette` ne dođe na **nulu** (danas **435**). Razlog: na tamnoj podlozi je zakucana
+boja samo neusklađena, a na papirnatoj temi `color: rgba(255,255,255,.9)` je **nevidljiv**. Zato je
+zadana tema **tamna** — ništa ne puca — ali topla, a ne ona koja je pala.
+
+**Zato je i `check:palette` proširen na zakucanu bijelu/crnu** (prije ih nije gledao: tražio je samo
+staru paletu). Brojka je s 300 skočila na 435 — nije poraslo, nego se **vidjelo više**.
+
+**Dva nova tokena koja su izašla iz mjerenja:**
+- **`--color-on-brand`** — tekst na ispuni marke. Mentol + bijelo = **2.04** (pada), kreda-žuta +
+  bijelo = **1.86**; u svijetlim temama je obrnuto (bijelo na plavoj). Stari indigo je podnosio
+  bijelo, nove palete ne → to više nije pravilo koje se pamti nego token.
+- **`--color-line-strong`** — rub KONTROLE (polje, gumb), odvojen od ukrasnog razdjelnika
+  `--color-line`. Izašlo iz lažnog pozitiva `check:contrast`-a: gate je mjerio razdjelnik na 3:1 i
+  oborio sve četiri teme. **Provjera je bila kriva, ne palete** — WCAG 1.4.11 traži 3:1 samo za
+  granice nužne da se komponenta prepozna, a ukrasni razdjelnik je izuzet. Nalaz je ipak vrijedio:
+  razdjelnik i rub polja dijelili su jedan token uz jedan prag.
+
+**Tipografija (Leon je izabrao smjer „serif za naslove + grotesk za gradivo"):** **Inter + Space
+Grotesk odlaze.** Oba su na svakom popisu „zadanih" fontova generiranih sučelja — nakon promjene
+palete bili su najjači preostali potpis. Zamjena u prototipu: **Literata** (napravljena za čitanje
+na ekranu — izbor izlazi iz same stvari, jer je učenje čitanje) + **Instrument Sans**.
+
+**Gradijentni naslov je zamijenjen MARKEROM** — naglašena riječ se podvlači, kao u vlastitoj
+skripti. Nosi značenje (ovo je bit rečenice), za razliku od gradijenta koji je čisti ukras.
+
+---
+
+### 7.5 Landing — ideja koja je prošla (2026-08-12)
+
+> **Landing ne opisuje proizvod — landing JEST proizvod.**
+
+Jezgra Sokrata je jedna mehanika: **napišeš pojam i objašnjenje jednom, dobiješ četiri načina
+učenja.** Zato hero to ne tvrdi nego **pokazuje**: posjetitelj upiše svoju rečenicu i odmah je vidi
+kao karticu, kvizno pitanje, dopunu i gradivo. Bez registracije. Generirani landinzi tvrde; ovaj
+dokazuje — i objašnjava proizvod strancu u tri sekunde bez ijedne marketinške rečenice.
+
+**Ulaz je JEDAN** (Leon, 2026-08-12): *„ne znam zašto je My materials na gornjem baru — trebao bi
+biti prvi, gdje je Start studying."* → **„Kreni učiti" otvara izbornik čije gradivo** (katalog ili
+vlastito), a **editor stoji odmah pokraj**. Tko nema ništa svoje, vodi se ravno u editor.
+To **nadilazi mehanizam iz ADR-029** (dva ravnopravna ulaza u navigaciji), ali ne i njegov cilj —
+UGC ostaje glavni proizvod. **C0 nije bačen:** stranica i ruta `#/materials` koje je izgradio su
+točno ono na što izbornik pokazuje; seli se samo gumb.
+
+**Struktura: 6 sekcija → 3.** Nestaju: 4 `gradient-orb` + `grid-overlay`, gradijentni naslov,
+`hero-badge` s pulsirajućom točkom, 4 plutajuće kartice, stats bar, `section-eyebrow` iznad svakog
+naslova. **Tekst više ne spominje FMTU ni godine studija** — Leon, 2026-08-12: *„zbog UGC-a
+platformu gradimo za sve."*
+
+**Prototip:** `prototypes/landing-v2.html` (samostalan, ne učitava bundle, ne dira gateove).
+Briše se kad postane pravi `index.html`.
+
+**⚠️ Logo je otvoren:** `assets/logo.svg` je još indigo (`#6366f1`/`#818cf8`). Jedna fiksna boja ne
+može dobro sjesti i na papir i na tamnu ploču — pravo rješenje je **inline `<symbol>` + `<use>`** u
+`index.html`, jer tek tada logo čita `var(--color-brand-500)` i prati temu. Ide zajedno s landingom.
