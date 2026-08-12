@@ -285,12 +285,12 @@ Nakon što je vidio četiri palete uživo, Leon: *„sva četiri mi se sviđaju,
 | `mint` | **Ponoć i menta** | tamno | mentol `#4FC9AB` |
 
 **⛔ UVJET ZA BIRAČ — nije stvar ukusa nego ispravnosti.** Birač tema **se ne uključuje** dok
-`npm run check:palette` ne dođe na **nulu** (danas **435**). Razlog: na tamnoj podlozi je zakucana
+`npm run check:palette` ne dođe na **nulu** (trenutni broj ispisuje sam gate; osnovica je u `scripts/palette-baseline.json`). Razlog: na tamnoj podlozi je zakucana
 boja samo neusklađena, a na papirnatoj temi `color: rgba(255,255,255,.9)` je **nevidljiv**. Zato je
 zadana tema **tamna** — ništa ne puca — ali topla, a ne ona koja je pala.
 
 **Zato je i `check:palette` proširen na zakucanu bijelu/crnu** (prije ih nije gledao: tražio je samo
-staru paletu). Brojka je s 300 skočila na 435 — nije poraslo, nego se **vidjelo više**.
+staru paletu). Brojka je s 300 skočila na 435 — nije poraslo, nego se **vidjelo više**. (C2/3 ju je spustio na 433: `legal.css` je prestao držati vlastitu paletu.)
 
 **Dva nova tokena koja su izašla iz mjerenja:**
 - **`--color-on-brand`** — tekst na ispuni marke. Mentol + bijelo = **2.04** (pada), kreda-žuta +
@@ -382,7 +382,7 @@ Grotesk svugdje. **SF Pro se ne smije koristiti na webu** (Appleova licenca ga d
 
 #### Posljedica 2 — brisanje ostatka palete postaje BLOKADA SMJERA, ne dug
 
-Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**. Svijetla tema je zaključana iza `check:palette` = **0** (danas **435**), jer je `color: rgba(255,255,255,.9)` na papiru **nevidljiv**, ne samo neusklađen.
+Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**. Svijetla tema je zaključana iza `check:palette` = **0**, jer je `color: rgba(255,255,255,.9)` na papiru **nevidljiv**, ne samo neusklađen.
 
 **Time se mijenja prioritet:** čišćenje zakucanih boja u C3–C7 više nije „sitni dug koji usput otplaćujemo" nego **jedini put do izgleda koji je Leon izabrao**. Do nule zadana tema ostaje tamna.
 

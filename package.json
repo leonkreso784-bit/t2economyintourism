@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "Sokrat Study — interactive exam-prep platform for FMTU Opatija (Hospitality Management): lessons, flashcards, quizzes, fill-in-the-blank and interactive exercises across Year 1 & 2 subjects (EN + HR).",
   "main": "index.html",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "npx serve .",
     "dev": "npx serve . -l 3000",
@@ -56,15 +59,15 @@
   },
   "homepage": "https://www.sokratstudy.com",
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
-    "@lhci/cli": "^0.15.1",
-    "@playwright/test": "^1.60.0",
+    "@axe-core/playwright": "4.12.1",
+    "@lhci/cli": "0.15.1",
+    "@playwright/test": "1.60.0",
     "@tailwindcss/cli": "4.3.3",
-    "ajv": "^8.20.0",
-    "axe-core": "^4.12.1",
-    "dotenv": "^17.4.2",
-    "pdf-parse": "^2.4.5",
+    "ajv": "8.20.0",
+    "axe-core": "4.12.1",
+    "dotenv": "17.4.2",
+    "pdf-parse": "2.4.5",
     "tailwindcss": "4.3.3",
-    "typescript": "^6.0.3"
+    "typescript": "6.0.3"
   }
 }
