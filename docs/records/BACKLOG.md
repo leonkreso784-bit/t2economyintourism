@@ -53,6 +53,28 @@ izvesti. Nijedna ne ruši produkciju.
    ✅ **Gate postoji:** `npm run check:functions` (bez ijednog ključa; 401 = postoji, 404 = obrisano).
    Danas je **crven** i pokazuje obje; pozelenit će čim se obrišu, i ubuduće hvata svakog novog stranca.
    Claude nema alat za brisanje Edge Functiona (MCP ima samo deploy/get/list).
+
+   > **📅 ODGOĐENO DO C6 — svjesno, uz uvjet (Leon, 2026-08-13).** Leon: *„to u nekoj drugoj fazi, tipa
+   > kada budemo gotovi sa 75 % frontend razvoja."* **Odgoda se dala provjeriti, zato je prihvaćena:**
+   > jedini stvarni rizik čekanja je **divergencija** (da `delete-account` dobije guard koji ne stigne do
+   > kopije), a kroz C3–C7 nijedna cigla ne dira Edge Functione — mijenja se CSS oko sučelja. Rizik
+   > odgode je tijekom frontend faze **nula**.
+   > **Vezano uz C6, ne uz postotak:** C6 je *profil, auth, pravne, consent* — cigla koja ionako radi na
+   > površini brisanja računa (≈ 8. od 9 cigli ≈ 78 %, dakle Leonova brojka, ali s povodom).
+   > **⚠️ UVJET KOJI PONIŠTAVA ODGODU:** dirne li itko `supabase/functions/delete-account/` prije C6 —
+   > briše se **odmah**, jer tad divergencija prestaje biti hipotetska.
+   > **Nije otvorena rupa i to je izmjereno, ne pretpostavljeno:** gate radi **bez ijednog ključa**, pa
+   > je njegov vlastiti **401** dokaz da funkcija traži JWT; identitet i ondje ide iz `getUser()`.
+   > Pozivatelj može obrisati **samo vlastiti račun** — što može i kroz sučelje.
+   >
+   > **⚠️ PRIJE BRISANJA (nije u izvornom zapisu, dodano 2026-08-13):** provjeriti **je li ih itko ikad
+   > pozvao** (`query_logs`, read-only, minuta). Backlog je dosad govorio samo „obriši", a nula poziva
+   > pretvara pretpostavku „zaboravljena kopija" u činjenicu; ne-nula mijenja priču, a brisanje uklanja
+   > i trag. Uz to pročitati tijela obje funkcije (`get_edge_function`) — o `quick-api` znamo najmanje.
+   >
+   > **🔧 Klasa, ne slučaj:** ovo je sjedilo danima jer `check:functions` **nikad ne trči sam** (mrežni,
+   > izvan preflighta). A gate **ne treba nijedan ključ** → nema razloga da ne bude zaseban CI job
+   > (nightly ili na push na `main`). Tad bi bilo crveno u Actionsima isti dan. ~1 h posla, rješava klasu.
 2. **Re-sync `macroeconomics`:** `node scripts/migrate-content.js macroeconomics`
    (traži `service_role` → klasifikator ga blokira Claudeu; jedna Leonova naredba).
    ✅ **Rizik je uklonjen prije radnje:** `npm run diff:db macroeconomics` pokazuje da se baza i datoteke
