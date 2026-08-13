@@ -323,11 +323,15 @@
     }
 }
 
-/* ===== HIGH CONTRAST MODE ===== */
+/* ===== HIGH CONTRAST MODE =====
+   ⚠️ Fiksni `#374151` je ovdje značio da režim za VEĆI kontrast na tamnim temama daje
+   tamnosivi tekst na tamnoj podlozi — dakle radi suprotno od svog imena. Namjera je
+   „pojačaj", a najjači tekst u svakoj temi je `--text-primary`.
+   (Isti blok postoji i u `03-modes-a11y-print.css` — duplikat umire u C7.) */
 @media (prefers-contrast: high) {
     :root {
-        --border: #374151;
-        --text-secondary: #374151;
+        --border: var(--color-line-strong);
+        --text-secondary: var(--text-primary);
     }
     
     .subject-card,

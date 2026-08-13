@@ -176,6 +176,7 @@
   --bg-primary: var(--color-surface-0);
   --bg-secondary: var(--color-surface-1);
   --bg-tertiary: var(--color-surface-2);
+  --bg-card: var(--color-surface-1);
   --text-primary: var(--color-ink-0);
   --text-secondary: var(--color-ink-1);
   --text-muted: var(--color-ink-2);

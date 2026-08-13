@@ -354,7 +354,7 @@
 .admin-editbar__count {
     display: inline-block; min-width: 1.5rem; text-align: center;
     padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.8rem;
-    background: var(--primary, #6366f1); color: #fff;
+    background: var(--primary); color: var(--on-primary);
 }
 .admin-editbar__actions { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; }
 .admin-editbar .cta-button { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
@@ -368,7 +368,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-edit-btn:hover { background: var(--primary-dark, #4338ca); color: #fff; border-color: var(--primary, #6366f1); }
+.admin-edit-btn:hover { background: var(--primary-dark); color: var(--on-primary); border-color: var(--primary); }
 
 /* „Dodaj stavku" gumb (U6c strukturne operacije) — dashed, diskretan dok se ne hoverne */
 .admin-add-btn {
@@ -412,7 +412,7 @@
     width: 100%; box-sizing: border-box; resize: vertical;
     padding: 0.6rem 0.7rem; border-radius: 9px;
     border: 1px solid var(--border-color, #334155);
-    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    background: var(--bg-primary); color: var(--text-primary);
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
 .admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
@@ -434,7 +434,7 @@
 .admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
 .admin-edit__color {
     width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
-    border: 1px solid var(--border-color, #334155); background: var(--bg-primary, #0f172a);
+    border: 1px solid var(--border-color, #334155); background: var(--bg-primary);
 }
 .admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
@@ -461,7 +461,7 @@
     flex: 1 1 auto; min-width: 0; box-sizing: border-box;
     padding: 0.5rem 0.6rem; border-radius: 8px;
     border: 1px solid var(--border-color, #334155);
-    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    background: var(--bg-primary); color: var(--text-primary);
     font-size: 0.9rem; font-family: inherit;
 }
 .admin-quiz-optinput:focus { outline: none; border-color: var(--primary, #6366f1); }

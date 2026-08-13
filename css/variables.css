@@ -45,6 +45,14 @@
     --bg-secondary: var(--color-surface-1);
     --bg-tertiary: var(--color-surface-2);
 
+    /* ⚠️ `--bg-card` je do 2026-08-13 postojao SAMO u `css/legal.css`, koji aplikacija ne
+       učitava. U aplikaciji je zato uvijek gorio fallback — a fallback je bio `#0f172a`,
+       tamna škriljevac-ploha. Dok je tema bila tamna, poklapao se s podlogom i nitko ga
+       nije vidio; čim je zadana postala svijetla, kartica prijave i dijalog potvrde
+       ostali su tamne ploče s tamnim tekstom: **1.83** i **1.02**. Definicija ovdje gasi
+       oba fallbacka odjednom i drži jednu činjenicu na jednom mjestu (ADR-027). */
+    --bg-card: var(--color-surface-1);
+
     --text-primary: var(--color-ink-0);
     --text-secondary: var(--color-ink-1);
     --text-muted: var(--color-ink-2);

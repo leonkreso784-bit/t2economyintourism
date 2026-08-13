@@ -13,6 +13,33 @@ admin-pregled ga nije tipografirao · tablica/video/legacy-html: bez pred-obrade
 
 ---
 
+## 🔥 Prijavljene površine nemaju NIJEDAN vizualni gate — 2026-08-14
+**Nalaz (popravak C2, spec §7.9):** kad je zadana tema postala svijetla, Studio i „Moji materijali"
+postali su **nečitljivi** (`.st-icard` = **1.00**, doslovno ista boja teksta i plohe), a **sva tri
+postojeća gatea su šutjela**. Statičke brane su popravljene istog dana (tvrda zabrana #3), ali
+**rupa u dinamičkoj provjeri ostaje otvorena**:
+
+- **axe (`tests/a11y.spec.js`)** posjećuje `#materials-page` — ali **odjavljen**, gdje se vidi
+  poziv na prijavu, a stablo se nikad ne iscrta. Do **`#editor-page` ne dolazi nikad.**
+- Svi studio/editor testovi su **`.authed.spec.js`** i **ne vrte axe** — provjeravaju ponašanje,
+  ne izgled.
+- Posljedica: **sve iza prijave je vizualno neprovjereno.** To je površina cijelog C3 (editor,
+  materijali) i dijela C6 (profil), dakle upravo ono što slijedi.
+
+**Zašto ovo nije „dodaj još testova":** statička zabrana #3 hvata **zakucane** plohe, ali ne i
+kvar koji nastane iz **kombinacije tokena** (npr. tinta preko tinte, ili token uveden bez
+provjere — v. `--primary-light`, zabrana #2). Za to treba mjerenje u pregledniku, na prijavljenoj
+stranici.
+
+**Skica:** proširiti `test:authed` jednim spec-om koji nakon prijave otvori `#materials-page` i
+`#editor-page`, **prođe kroz sve četiri teme** (`data-theme` se postavlja iz JS-a) i pusti axe na
+`color-contrast`. Traži `TEST_ADMIN_*` iz `.env` i gađa STAGING, kao ostatak authed-suite.
+⚠️ **Prije mjerenja gurnuti animacije u krajnje stanje** (`getAnimations().finish()`) — inače se
+ponavlja lov na duha iz §7.8.
+
+**Kad:** uz **C3**, jer C3 ionako prepisuje te površine i bez ovog gatea nema kako dokazati da ih
+nije razbio. **Veže se na** [FRONTEND_REDIZAJN §7.9](../plan/FRONTEND_REDIZAJN.md).
+
 ## 🔥 M5 — duljina kartice: vođenje u editoru + strop 500 — 2026-08-07
 **Nalaz (Leon, živi pregled):** *„trebat ćemo poradit na ograničenju koliko jedna kartica ima teksta."*
 Nije bio kriterij faze „Materijal od nule do učenja" pa je preživio njeno zatvaranje — **odluka je već pala,

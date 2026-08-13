@@ -56,7 +56,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ✅ | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` 1079 → **578** | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` 1079 → **578** · **+ popravak §7.9** | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
@@ -602,3 +602,90 @@ dovršio).
 `check:contrast` mjeri samo plohe koje poznaje (`surface-0/1/2`) — tinta je bila **četvrta,
 izmišljena ploha koju nitko ne mjeri**. Sada su prozirni, pa značenje nose obrub i boja teksta
 (usput bliže Appleovoj disciplini: vlas-crta umjesto ispune).
+
+---
+
+### 7.9 ⚠️ POPRAVAK C2 — prebacivanje teme slomilo je površine koje zakucavaju TAMNU plohu (2026-08-14)
+
+**Nalaz.** C2 je zadanu temu prebacio iz tamne u svijetlu i **provjerio pet površina na ekranu**
+— landing, browse, lekcije, study, learn. To su točno one koje vidi **odjavljen** posjetitelj.
+Prijavljene površine nitko nije pogledao, a ondje je prebacivanje bilo skupo:
+
+| gdje | ploha | tekst | omjer |
+|---|---|---|---|
+| `studio` `.st-icard`, `.st-metas .st-m` | `#5f6775` | `--text-muted` | **1.00** |
+| `studio` `.st-kv` / `.st-fcard` / `.st-qz` / `.st-edit-item` | `#2f3a4a` | `--text-secondary` | **1.18** |
+| `sokrat-confirm` `.sokrat-confirm__card` | `#0f172a` | `--text-primary` | **1.02** |
+| `auth` `.auth-modal__card` | `#0f172a` | `--text-secondary` | **1.83** |
+| `pages` `.study-loading` | `#28323f` | `--text-secondary` | **1.33** |
+| `studio` `.st-topbar` | `#5b6371` | `--text-primary` | 2.89 |
+| `studio` `.st-tree`, `.st-crumb`, `.st-row:hover` | — | — | 2.07–3.98 |
+| `my-materials` `.mm-tree` | `#a6aab3` | `--text-secondary` | 4.19 |
+
+**1.00 znači doslovno istu boju.** Za usporedbu: bijelo na kredi = 1.68, i to je pokrenulo
+tvrdu zabranu #1. Pogođeni su **prijava, dijalozi potvrde, učitavanje gradiva i cijeli editor** —
+dakle svaki prijavljeni korisnik, ne rub.
+
+**Zašto to nijedan gate nije vidio — tri neovisna razloga, i svaki je sam po sebi bio razuman:**
+1. **`check:palette`** je tamne `rgba()` svrstavao u *„blago — plohe i rubovi, blijedi ali
+   ispravni"*. Za `rgba(255,255,255,.06)` na svijetloj temi to je **točno** (problijedi,
+   bezopasno). Za `rgba(30,41,59,.92)` vrijedi **obrnuto**. → **Jedna kanta je držala dva
+   suprotna kvara, a jedan je fatalan.** Isti oblik greške kao „46 od 435" u §7.4, samo obrnut:
+   ondje je agregat **precjenjivao** prepreku, ovdje ju je **sakrio**.
+2. **`check:contrast`** dokazuje da je paleta ispravna — a ovo nisu tokeni. Izvan dosega po
+   konstrukciji, i to je u redu; problem je što je postojanje tog gatea stvaralo dojam pokrivenosti.
+3. **axe** posjećuje `#materials-page`, ali **odjavljen** (stablo se nikad ne iscrta), a do
+   `#editor-page` **ne dolazi nikad** — svi studio-testovi su `.authed.spec.js`, koji ne vrte axe.
+   → **Prijavljene površine nemaju nijedan vizualni gate.**
+
+**⚠️ Šira pouka (vrijedi za C3–C7):** dok je tema bila JEDNA, `rgba(30,41,59,.92)` je bio
+**točan** — nijedan alat i nijedno oko nisu ga mogli razlikovati od ispravnog. Postao je kriv u
+trenutku kad je tema postala varijabla. **Prebacivanje teme nije promjena vrijednosti nego
+promjena UGOVORA**, i cijenu plaćaju sve površine koje su ugovor dotad smjele ignorirati.
+
+#### Što je izvedeno
+
+- **`studio.css` 81 → 1**, **`block-editor.css` 100 → 0**, **`my-materials.css` 12 → 0**
+  (ostatak stare palete po `check:palette`). Ukupno **339 → 126**, osnovica spuštena.
+- **`--st-violet` UMIROVLJEN, i to ne zbog teme.** `--on-primary` na `#8b5cf6` daje
+  4.23 / 3.91 / 4.21 → **pada AA u svih pet tema**, dakle *primary* gumbi Studija nikad nisu
+  prolazili, od U8. `check:contrast` mjeri `on-brand` isključivo na `brand-500`, pa drugi kraj
+  gradijenta nitko nije gledao. Ispune su sada **solidne** — jedini par koji gate stvarno mjeri.
+- **`--bg-card` je dobio definiciju u mostu.** Postojao je samo u `css/legal.css`, koji
+  aplikacija **ne učitava** → u aplikaciji je uvijek gorio fallback `#0f172a`. To je izvor i
+  kartice prijave (1.83) i dijaloga potvrde (1.02); jedna definicija gasi oba.
+- **Hover više ne mijenja boju ondje gdje bi smjer ovisio o temi** (`.check-btn`,
+  `.sokrat-confirm__ok.is-danger`): na svijetlim temama tekst je bijel pa hover mora potamniti,
+  na tamnima je taman pa mora posvijetliti. **Jedna fiksna boja ne može oboje — elevacija može.**
+  Izmjereno: `--on-primary` na `--danger` prolazi u sve četiri teme (5.30–5.77), a zakucano
+  bijelo, koje je ondje stajalo, palo bi na `chalk` (3.12) i `mint` (3.09).
+- **`@media (prefers-contrast: high)` je radio suprotno od imena.** Zakucavao je
+  `--border: #000` i `--text-secondary: #374151` → na tamnim temama režim za VEĆI kontrast
+  kontrast **smanjuje**. Sada tokeni. Usput obrisan `@media (prefers-color-scheme: dark)` koji je
+  gazio `--shadow` po **OS-ovom** signalu, iako temu od C2 bira korisnik.
+
+#### Nove brane (obje obrnuto provjerene)
+
+- **TVRDA ZABRANA #3 — zakucana tamna ploha.** Dva kraka: (A) pravilo s tamnom pozadinom koje ne
+  zakucava i svoj tekst; (B) modulska varijabla s fiksnom tamnom bojom (`--st-glass`). Iznimke su
+  **izričite i s razlogom** (zastori, matiranje medija, platno slijepe karte, pločice ikona) — ne
+  „popis da gate prođe". Obrnuta provjera: oba kraka pala, a kontrola (`#e0e7ff` kao zakucan
+  svijetao tekst) **nije** — što je i bila poanta, v. ispod.
+- **Zakrpana rupa u zabrani #1.** Regex je tražio `var(--primary)` sa **zatvorenom zagradom
+  odmah iza imena**, pa `var(--primary, #6366f1)` — isti token s fallbackom — nije bio pogodak.
+  `sokrat-confirm.css` je tako držao `color:#fff` na ispuni marke, a gate je javljao čisto.
+  Nakon zakrpe odmah su ispala **još dva** skrivena pravila u `profile.css`.
+
+#### ⚠️ Dvije greške u vlastitom mjerenju, obje uhvaćene istog dana
+
+1. **Prvi popis „živih kvarova" imao je dva lažna.** `.nav-btn.active` i `.back-to-subjects-btn`
+   zakucavaju **i plohu i tekst** (`#312e81` + `#e0e7ff`) → samodosljedni su i čitljivi. Moja
+   provjera „ima li zakucan svijetao tekst" bila je **regex** (`#fff|white|#fXX…`) i `#e0e7ff`
+   nije prepoznala. Sada se luminancija **računa**, kao i za plohu — **ista mjera s obje strane,
+   nula uzoraka za pamćenje.** Prijavio sam te dvije brojke prije nego što sam ih provjerio.
+2. **Obrnuta provjera je dvaput „prošla" iz krivog razloga.** Testna datoteka s `#6366f1` i
+   `color:#fff` obarala je **čegrtaljku** (nova datoteka bez osnovice), pa je gate izlazio s 1
+   prije nego što je zabrana #1 uopće došla na red. **Izlazni kod 1 nije dokaz da je pao gate koji
+   testiraš.** Ispravno: provjera unutar datoteke koja **ima rezervu** u osnovici, i čitanje
+   PORUKE, ne samo koda.
+

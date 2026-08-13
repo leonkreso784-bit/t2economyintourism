@@ -11,10 +11,10 @@ sokrat-modal.sokrat-confirm-modal > * {
 .sokrat-confirm__card {
     width: 100%;
     padding: 1.6rem 1.5rem 1.35rem;
-    background: var(--bg-card, #0f172a);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
 }
 
 .sokrat-confirm__title {
@@ -63,21 +63,29 @@ sokrat-modal.sokrat-confirm-modal > * {
 
 /* Confirm = primarni (indigo brend) */
 .sokrat-confirm__ok {
-    background: var(--primary, #6366f1);
-    color: #fff;
+    background: var(--primary);
+    color: var(--on-primary);
 }
 
 .sokrat-confirm__ok:hover {
-    background: var(--primary-light, #818cf8);
+    background: var(--primary-dark);
 }
 
-/* Danger varijanta (destruktivne akcije: reset/delete) */
+/* Danger varijanta (destruktivne akcije: reset/delete).
+   Tekst nasljeđuje `--on-primary` iz pravila iznad. Izmjereno kroz sve četiri teme:
+   5.60 / 5.30 / 5.31 / 5.77 — prolazi svugdje. Zakucano bijelo, koje je ovdje stajalo,
+   palo bi na `chalk` (3.12) i `mint` (3.09), jer je ondje crvena SVJETLIJA.
+
+   ⚠️ Hover NE mijenja boju, nego izdiže. Nema `--danger-hover` tokena, a smjer koji čuva
+   kontrast ovisi o temi: na svijetlima tekst je bijel pa hover mora potamniti, na tamnima
+   je tekst taman pa mora posvijetliti. Jedna fiksna crvena ne može oboje — elevacija može. */
 .sokrat-confirm__ok.is-danger {
-    background: #dc2626;
+    background: var(--danger);
 }
 
 .sokrat-confirm__ok.is-danger:hover {
-    background: #ef4444;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
 }
 
 .sokrat-confirm__btn:focus-visible {

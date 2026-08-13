@@ -85,17 +85,20 @@
     }
 }
 
-/* ===== DARK MODE ADJUSTMENTS FOR MOBILE ===== */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-    }
-}
+/* ===== DARK MODE ADJUSTMENTS FOR MOBILE — OBRISANO 2026-08-13 =====
+   Ovdje je `@media (prefers-color-scheme: dark)` pregazio `--shadow` fiksnom vrijednošću.
+   Imalo je smisla dok je tema bila JEDNA i dok ju je diktirao OS. Od C2 temu bira KORISNIK
+   (`data-theme`, četiri palete), pa je ovo pravilo počelo raditi po tuđem signalu: netko
+   na svijetloj temi „academic" s tamnim OS-om dobivao je sjenu ugođenu za tamnu podlogu.
+   `--shadow` ionako dolazi iz `--shadow-e1`, koji je već po temi. */
 
-/* ===== HIGH CONTRAST MODE ===== */
+/* ===== HIGH CONTRAST MODE =====
+   ⚠️ Ovdje su do 2026-08-13 stajale FIKSNE tamne vrijednosti (`--border: #000`). Na tamnim
+   temama je to značilo da režim za VEĆI kontrast kontrast SMANJUJE — crn rub na tamnoj
+   podlozi je nevidljiv. Tokeni ispod jačaju kontrast u svakoj temi, jer su i sami po temi. */
 @media (prefers-contrast: high) {
     :root {
-        --border: #000;
+        --border: var(--color-line-strong);
     }
     
     .answer-btn {

@@ -1,7 +1,10 @@
 /* ===== „Moji materijali" — osobni UGC-graditelj (F2) =====
    Stablo korisnikovih foldera/gradiva unutar profil-kartice.
    Samostalan modul (mm- prefiks) — ne gazi ništa postojeće.
-   Dizajn slijedi „čisto i bogato, dark": suptilne plohe, accent tek na interakciji. */
+   Dizajn slijedi „čisto i bogato": suptilne plohe, accent tek na interakciji.
+   ⚠️ Nekad je pisalo „…, dark" i ploha stabla bila je `rgba(15,23,42,.35)` — fiksno tamna.
+   Kad je zadana tema postala svijetla (C2), tekst se okrenuo u tamni, a ploha nije: 4.19,
+   ispod AA. Plohu drži TEMA. Brana: `npm run check:palette` (tvrda zabrana #3). */
 
 .mm {
     margin-top: 16px;
@@ -30,7 +33,7 @@
     padding: 0 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    background: var(--bg-secondary);
     color: var(--text-secondary);
     font-size: 0.9rem;
     font-weight: 600;
@@ -41,7 +44,7 @@
 .mm-add:hover {
     border-color: var(--primary);
     color: var(--text-primary);
-    background: rgba(99, 102, 241, 0.12);
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
 }
 
 .mm-add i {
@@ -56,7 +59,7 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     overflow: hidden;
-    background: rgba(15, 23, 42, 0.35);
+    background: var(--bg-secondary);
 }
 
 .mm-row {
@@ -66,7 +69,7 @@
     gap: 8px;
     min-height: 44px;                       /* touch target */
     padding: 4px 10px 4px calc(10px + var(--mm-depth) * 22px);
-    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    border-bottom: 1px solid var(--border);
     transition: background 0.18s ease;
 }
 
@@ -75,7 +78,7 @@
 }
 
 .mm-row:hover {
-    background: rgba(99, 102, 241, 0.08);
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
 }
 
 /* Ručka za povlačenje — jedini hvat za drag (klikovi ostaju netaknuti) */
@@ -109,7 +112,7 @@
 
 /* Cilj „u folder" */
 .mm-row--into {
-    background: rgba(99, 102, 241, 0.22);
+    background: color-mix(in srgb, var(--primary) 22%, transparent);
     box-shadow: inset 0 0 0 1px var(--primary);
 }
 
@@ -121,7 +124,7 @@
     display: none;
     pointer-events: none;
     background: var(--primary);
-    box-shadow: 0 0 8px rgba(99, 102, 241, 0.8);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--primary) 80%, transparent);
 }
 
 body.mm-dragging {
@@ -154,7 +157,7 @@ body.mm-dragging {
 
 .mm-twisty-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-tertiary);
 }
 
 .mm-twisty-btn i {
@@ -205,7 +208,7 @@ body.mm-dragging {
     min-width: 22px;
     padding: 1px 7px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--bg-tertiary);
     color: var(--text-muted);
     font-size: 0.72rem;
     font-weight: 700;
@@ -244,22 +247,22 @@ body.mm-dragging {
 
 .mm-act:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--bg-tertiary);
 }
 
 .mm-act--danger:hover {
     color: var(--danger-text);
-    background: rgba(239, 68, 68, 0.12);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
 }
 
 .mm-add--undo {
-    border-color: rgba(245, 158, 11, 0.45);
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
     color: var(--accent);
 }
 
 .mm-add--undo:hover {
     border-color: var(--accent);
-    background: rgba(245, 158, 11, 0.12);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .mm-add--undo i {
@@ -268,7 +271,7 @@ body.mm-dragging {
 
 /* ── Inline unos (novi čvor / preimenovanje) ────────────────────── */
 .mm-row--edit {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
 }
 
 .mm-input {

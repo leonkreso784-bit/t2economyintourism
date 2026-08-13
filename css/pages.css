@@ -157,7 +157,7 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    background: rgba(15, 23, 42, 0.85);
+    background: color-mix(in srgb, var(--bg-primary) 88%, transparent);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     color: var(--text-secondary);

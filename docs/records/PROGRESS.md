@@ -5,6 +5,54 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS) — **Popravak C2: prebacivanje teme slomilo je PRIJAVLJENE površine · zabrana #3 · rupa u zabrani #1**
+
+**Grana `feat/c2-landing`. Ništa pushano. C2 NIJE bio gotov — merge je čekao ovaj popravak.**
+
+### Kako je nađeno
+Revizija pred ulazak u C3 mjerila je površinu cigle i pri čitanju `studio.css`-a naletjela na
+obrazac: plohe su zakucane (`rgba(30,41,59,.92)`), a tekst na njima dolazi iz tokena. Kad je C2
+zadanu temu prebacio u svijetlu, **tekst se okrenuo, ploha nije.**
+
+### Što je bilo slomljeno (izmjereno, ne procijenjeno)
+`.st-icard` **1.00** — doslovno ista boja · `.st-kv` **1.18** · dijalog potvrde **1.02** ·
+kartica prijave **1.83** · učitavanje gradiva **1.33** · `.mm-tree` 4.19 · topbar 2.89.
+Dakle **prijava, dijalozi potvrde i cijeli editor**, za svakog prijavljenog korisnika.
+Bijelo na kredi (povod zabrane #1) bilo je 1.68.
+
+### Zašto nijedan gate nije pisnuo — tri neovisna razloga
+1. `check:palette` je tamne `rgba()` brojao kao „blago". To vrijedi za **bijele** rgba na
+   svijetloj temi; za tamne vrijedi **obrnuto**. Jedna kanta, dva suprotna kvara.
+2. `check:contrast` dokazuje da je PALETA ispravna — ovo nisu tokeni, dakle izvan dosega.
+3. axe posjećuje `#materials-page` **odjavljen** (stablo se ne iscrta), a `#editor-page`
+   **nikad**. → **Prijavljene površine nemaju nijedan vizualni gate.**
+
+### Isporuceno
+- **`check:palette` 339 → 126**; `block-editor` 100→0 · `studio` 81→1 · `my-materials` 12→0;
+  osnovica spuštena. Popravljeni i `auth`, `sokrat-confirm`, `pages`, `profile`, `responsive/*`.
+- **Tvrda zabrana #3** (zakucana tamna ploha) — dva kraka, izričite iznimke s razlogom.
+- **Zakrpana rupa u zabrani #1**: regex je tražio `var(--primary)` sa zatvorenom zagradom, pa
+  `var(--primary, #6366f1)` nije bio pogodak → nakon zakrpe ispala su **još 2** pravila.
+- **`--st-violet` umirovljen** — `--on-primary` na `#8b5cf6` pada AA u **svih 5 tema, od U8**.
+- **`--bg-card` dobio definiciju u mostu** — postojao je samo u `legal.css`, koji app ne učitava.
+- **`@media (prefers-contrast: high)`** je zakucanim `#000`/`#374151` na tamnim temama kontrast
+  **smanjivao**; `@media (prefers-color-scheme: dark)` gazio je `--shadow` po OS-ovom signalu.
+
+### Moje greške (obje uhvaćene istog dana, obje su sad brane)
+1. Prvi popis kvarova imao je **dva lažna** (`.nav-btn.active`, `.back-to-subjects-btn` zakucavaju
+   i tekst). Provjera „svijetlog teksta" bila je regex i promašila `#e0e7ff` → sad se luminancija
+   **računa**, ista mjera s obje strane. **Prijavio sam brojke prije nego što sam ih provjerio.**
+2. Obrnuta provjera je dvaput „prošla" iz krivog razloga — čegrtaljka je obarala testnu datoteku
+   prije nego što je ciljani gate došao na red. **Izlazni kod 1 nije dokaz da je pao gate koji
+   testiraš**; čita se PORUKA.
+
+### Pouka koja vrijedi za C3–C7
+Dok je tema bila JEDNA, `rgba(30,41,59,.92)` je bio **točan** — nijedan alat ga nije mogao
+razlikovati od ispravnog. Kriv je postao kad je tema postala varijabla.
+**Prebacivanje teme nije promjena vrijednosti nego promjena UGOVORA.**
+
+---
+
 ## 2026-08-13 (OPUS) — **C2: landing POKAZUJE umjesto da tvrdi · zadana tema postala svijetla · brojka koja je skrivala odluku**
 
 **`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` — C2 gotov, ceka Leonov OK za merge.**

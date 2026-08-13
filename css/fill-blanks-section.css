@@ -93,7 +93,11 @@
     min-height: var(--touch-target);
 }
 
-.check-btn:hover { background: #4338ca; }   /* tamnije od baze (--primary-dark) da hover ostane vidljiv */
+/* Hover NE mijenja boju nego izdiže. Prije je ovdje bio `#4338ca` — „tamnije od baze da
+   hover ostane vidljiv", što je bila istina samo dok su teme bile tamne. Tekst je
+   `var(--on-primary)`, koji se s temom OKRENE: na `chalk`/`mint` postane taman, pa bi
+   tamniji indigo dao tamno na tamnom. Fiksna boja ne može zadovoljiti oba smjera. */
+.check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
 
 .fill-feedback {
     margin-top: 1rem;

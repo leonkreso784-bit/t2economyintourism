@@ -194,7 +194,11 @@ if (failed) {
  *
  * Ovo je TVRDA zabrana, ne osnovica: nije naslijeđeni dug nego kvar koji se rađa
  * svaki put kad netko napiše novi gumb. C3–C7 prepisuju upravo te površine. */
-const MARKA_BG = /background[^;]*(var\(--primary\)|var\(--color-brand|var\(--primary-dark\)|var\(--primary-light\))/;
+/* ⚠️ Zarez je bio rupa: prvi oblik je tražio `var(--primary)` s ODMAH zatvorenom zagradom,
+ * pa `var(--primary, #6366f1)` — dakle isti token S FALLBACKOM — nije bio pogodak.
+ * `sokrat-confirm.css` je tako godinu dana držao `color:#fff` na ispuni marke, a gate je
+ * javljao čisto. Pronađeno tek kad je zabrana #3 prijavila SUSJEDNO pravilo (2026-08-13). */
+const MARKA_BG = /background[^;]*(var\(--primary\s*[,)]|var\(--color-brand|var\(--primary-dark\s*[,)]|var\(--primary-light\s*[,)])/;
 const ZAKUCAN_TEKST = /(?<![-\w])color:\s*(?:#fff\b|#ffffff\b|white\b|#000\b|#000000\b|black\b)/i;
 
 const naIspuni = [];
@@ -254,6 +258,129 @@ if (svijetliTekst.length) {
   console.log('\n   `--primary-light` (= brand-400) je varijanta za HOVER i ISPUNE; nijedan gate');
   console.log('   je ne mjeri kao tekst. Na svijetloj temi daje ~3.2 (pada AA).');
   console.log('   Za tekst koristi `var(--primary)` — njega `check:contrast` MJERI na sve tri plohe.\n');
+  process.exit(1);
+}
+
+/* ── TVRDA ZABRANA #3: ZAKUCANA TAMNA PLOHA ──────────────────────────────────
+ * Povod (2026-08-13, popravak C2): zabrane #1 i #2 love isti smjer kvara — zakucan
+ * TEKST na plohi koja se mijenja s temom. Ovo je njihov INVERZ: zakucana PLOHA
+ * ispod teksta koji dolazi iz tokena.
+ *
+ * Zašto to nitko nije vidio: `palette-breakdown` je tamne `rgba()` svrstavao u
+ * „blago — plohe i rubovi, blijedi ali ispravni". Za `rgba(255,255,255,.06)` na
+ * svijetloj temi to je točno (problijedi, bezopasno). Za `rgba(30,41,59,.92)` vrijedi
+ * OBRNUTO — to je tamna ploča, a tekst na njoj se s temom okrenuo u tamni. Izmjereno
+ * u Studiju na zadanoj temi: `.st-kv` = **1.18**, `.st-icard` = **1.00** (doslovno ista
+ * boja). Za usporedbu, bijelo na kredi = 1.68 i to je pokrenulo zabranu #1.
+ *   → Jedna kanta je držala DVA suprotna kvara, a jedan je fatalan.
+ *
+ * Zašto ne `check:contrast`: on dokazuje da je PALETA ispravna; ove vrijednosti nisu
+ * tokeni. Zašto ne axe: `#editor-page` ne posjećuje nijedan test bez prijave, a
+ * `#materials-page` posjećuje ODJAVLJEN, gdje se stablo nikad ne iscrta.
+ *
+ * DVA KRAKA, jer se tamna ploha skriva na dva mjesta:
+ *   A) pravilo s tamnom pozadinom koje NE zakucava i svoj tekst (tekst dolazi iz
+ *      tokena — bilo u istom bloku, bilo naslijeđen);
+ *   B) modulska varijabla koja drži fiksnu tamnu boju (npr. `--st-glass`) — pravilo
+ *      je onda čisto, a ploha svejedno fiksna. U temiranom sustavu tamu drži TEMA.
+ *
+ * IZNIMKE su izričite i svaka nosi RAZLOG. Zajedničko im je da tama ondje nije stil nego
+ * funkcija, i da na njima ne stoji tekst iz tokena. Popis se NE proširuje „da gate prođe":
+ * ako nova površina traži tamu, ili ovdje stoji obrazloženje, ili popravak ide u CSS. */
+const IZNIMKE = [
+  // ── zastori: zatamnjuju sadržaj ISPOD sebe → tamni su u svakoj temi, po definiciji ──
+  '.subjects-overlay',            // css/sidebar.css — iza bočne trake
+  'sokrat-modal.sokrat-modal',    // css/sokrat-modal.css — osnovni zastor
+  'sokrat-modal.auth-modal',      // css/auth.css — zastor prijave
+  'sokrat-modal.image-modal',     // css/learn.css — zastor svjetlosnog stola
+  '.sm-backdrop',
+  // ── matirane podloge za MEDIJ: slika i video se čitaju na tamnom u svakoj temi ──
+  '.image-modal-content img',     // css/learn.css — matiranje iza prozirne slike
+  '.lb-video',                    // css/learn-blocks.css — poster-ploha videa
+  // ── platno igre „slijepa karta": tamno je SADRŽAJ, ne tema; markeri, nula teksta ──
+  '.map-wrapper',
+  '.blank-map-canvas',
+  '.map-marker.incorrect',
+  // ── pločice ikona predmeta: bijeli glif živi u SUSJEDNOM pravilu (`color: white
+  //    !important`), pa ih blok-analiza ne može povezati. Nisu slomljene — stara paleta,
+  //    koju čegrtaljka i dalje broji; nestaju s C4. ──
+  '.subject-icon',
+  '.about-card-icon',
+];
+/* Pravilo koje zakuca I plohu I tekst je samodosljedno: stara paleta, ali ČITLJIVO
+ * (npr. `.nav-btn.active` = `#312e81` + `#e0e7ff`). Takvo se broji u čegrtaljci, ne ovdje.
+ * ⚠️ Prva izvedba je to gledala REGEXOM (`#fff|white|#fXX…`) i promašila `#e0e7ff` — pa je
+ * gate prijavio dva lažna kvara koja sam prenio dalje kao izmjerena. Sad se luminancija
+ * RAČUNA, kao i za plohu: ista mjera s obje strane, nula uzoraka za pamćenje. */
+function imaZakucanSvijetaoTekst(body) {
+  const re = /(?<![-\w])color:\s*([^;]+)/gi;
+  let m;
+  while ((m = re.exec(body)) !== null) {
+    const v = m[1];
+    if (/\bwhite\b/i.test(v)) return true;
+    for (const c of bojeU(v)) if (lumK(c) >= 0.5) return true;
+  }
+  return false;
+}
+
+function bojeU(tekst) {
+  const out = [];
+  const hex = /#([0-9a-f]{3}|[0-9a-f]{6})\b/gi;
+  const fn = /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)/gi;
+  let m;
+  while ((m = hex.exec(tekst)) !== null) {
+    let h = m[1];
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    out.push([parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16), 1]);
+  }
+  while ((m = fn.exec(tekst)) !== null) {
+    out.push([+m[1], +m[2], +m[3], m[4] === undefined ? 1 : +m[4]]);
+  }
+  return out;
+}
+const linK = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
+const lumK = ([r, g, b]) => 0.2126 * linK(r) + 0.7152 * linK(g) + 0.0722 * linK(b);
+/** Tamna = dovoljno tamna da povuče plohu na tamno I dovoljno neprozirna da se vidi. */
+const tamna = (c) => lumK(c) < 0.18 && c[3] >= 0.25;
+
+const tamnePlohe = [];
+for (const abs of files) {
+  if (!abs.endsWith('.css')) continue;
+  if (abs === SOURCE_OF_TRUTH || abs === GENERATED) continue;   // tokeni SMIJU biti tamni — to su teme
+  const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
+  const css = stripComments(fs.readFileSync(abs, 'utf8'));
+  const re = /([^{}]+)\{([^{}]*)\}/g;
+  let m;
+  while ((m = re.exec(css)) !== null) {
+    const sel = m[1].trim().replace(/\s+/g, ' ');
+    const body = m[2];
+    if (IZNIMKE.some((z) => sel.includes(z))) continue;
+
+    // krak A — pozadina pravila
+    for (const decl of body.split(';')) {
+      if (!/^\s*background(-color|-image)?\s*:/i.test(decl)) continue;
+      if (bojeU(decl).some(tamna) && !imaZakucanSvijetaoTekst(body)) {
+        tamnePlohe.push(`${rel}  →  ${sel.slice(0, 52)}   [ploha]`);
+        break;
+      }
+    }
+    // krak B — modulska varijabla s fiksnom tamnom bojom
+    for (const decl of body.split(';')) {
+      const v = decl.match(/^\s*(--[a-z0-9-]+)\s*:(.*)$/i);
+      if (!v) continue;
+      if (bojeU(v[2]).some(tamna)) tamnePlohe.push(`${rel}  →  ${v[1]}   [varijabla]`);
+    }
+  }
+}
+
+if (tamnePlohe.length) {
+  console.log(`\n❌ ${tamnePlohe.length} zakucanih TAMNIH ploha (tekst na njima dolazi iz tokena):`);
+  tamnePlohe.slice(0, 25).forEach((r) => console.log('      ' + r));
+  if (tamnePlohe.length > 25) console.log(`      … i još ${tamnePlohe.length - 25}`);
+  console.log('\n   Ovo je INVERZ zabrana #1/#2: ondje je bio zakucan tekst na temiranoj plohi,');
+  console.log('   ovdje je zakucana ploha ispod temiranog teksta. Tema okrene tekst, ploha ostane');
+  console.log('   → tamno na tamnom. Izmjereno u Studiju: .st-kv = 1.18, .st-icard = 1.00.');
+  console.log('   Plohu drži TEMA: `var(--bg-secondary)` / `--bg-tertiary` / `--border`.\n');
   process.exit(1);
 }
 
