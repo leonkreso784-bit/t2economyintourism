@@ -56,7 +56,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ✅ | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` 1079 → **460** | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` 1079 → **578** | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
@@ -536,7 +536,7 @@ odmah ih vidi kao karticu, kvizno pitanje, dopunu i gradivo. Bez registracije, b
 
 | mjera | prije | poslije |
 |---|---|---|
-| `css/landing.css` | 1079 | **460** |
+| `css/landing.css` | 1079 | **578** (−501; 483 redaka koda) |
 | `check:palette` | 427 | **339** (−88) |
 | `styles.bundle.css` | 224 KB | **210 KB** |
 | Google Fonts | 2 obitelji, 11 težina, 2 `preconnect` | **0** |

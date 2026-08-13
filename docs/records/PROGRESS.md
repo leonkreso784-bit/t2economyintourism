@@ -16,7 +16,7 @@ testirano, što slijedi.
   4 plutajuce kartice · stats bar · 3 `section-eyebrow` · „How it works" · „Study modes" · zavrsni CTA.
   Tekst vise **ne spominje FMTU ni godine studija**. Ulaz u vlastito gradivo **seli iz trake u VRATA**,
   uz „Kreni uciti" (Leon: *„trebao bi biti prvi, gdje je Start studying"*).
-- **Mjere:** `css/landing.css` **1079 → 460** · `check:palette` **427 → 339** · bundle **224 → 210 KB** ·
+- **Mjere:** `css/landing.css` **1079 → 578** · `check:palette` **427 → 339** · bundle **224 → 210 KB** ·
   Google Fonts **2 obitelji / 11 tezina / 2 preconnecta → 0**.
 - **Sistemski grotesk.** Inter i Space Grotesk otisli (§7.1: najjaci preostali potpis generiranog
   sucelja) → `-apple-system` daje **pravi San Francisco** na Appleu, `Segoe UI Variable Display/Text`
