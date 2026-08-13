@@ -2,36 +2,8 @@
 
 /* --- LANDING PAGE MOBILE --- */
 @media (max-width: 767px) {
-    /* Landing Features Section */
-    .landing-features {
-        display: flex !important;
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1.5rem 1rem;
-        max-width: 100%;
-    }
-    
-    .landing-features .feature-card {
-        padding: 1.25rem;
-        margin: 0;
-    }
-    
-    .landing-features .feature-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
-        margin-bottom: 0.75rem;
-    }
-    
-    .landing-features .feature-card h3 {
-        font-size: 1rem;
-        margin-bottom: 0.4rem;
-    }
-    
-    .landing-features .feature-card p {
-        font-size: 0.85rem;
-        line-height: 1.4;
-    }
+
+
     
     /* Landing Footer */
     .landing-footer {
@@ -172,10 +144,8 @@
     .stat-value {
         font-size: 1.5rem;
     }
-    
-    .stat-label {
-        font-size: 0.85rem;
-    }
+
+
 }
 
 
@@ -492,10 +462,8 @@
     .study-mobile-nav .mobile-nav-btn i {
         font-size: 1.1rem;
     }
-    
-    .landing-features .feature-card {
-        padding: 1rem;
-    }
+
+
     
     .flashcard {
         min-height: 180px;

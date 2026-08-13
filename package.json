@@ -30,6 +30,7 @@
     "check:lockfile": "node scripts/check-lockfile.js",
     "check:tailwind": "node scripts/check-tailwind.js",
     "check:palette": "node scripts/check-palette.js",
+    "palette:breakdown": "node scripts/palette-breakdown.js",
     "check:functions": "node scripts/check-edge-functions.js",
     "css:diff": "node scripts/css-diff.js",
     "diff:db": "node scripts/diff-db-vs-files.js",

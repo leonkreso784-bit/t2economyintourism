@@ -7,8 +7,14 @@
 > Što proizvod jest piše u [product/UGC_SPEC.md](../product/UGC_SPEC.md).
 > Ovaj dokument je **arhiva puta**, ne plan rada.
 >
-> **Važeća sekvenca (Leon, 2026-08-02, dopunjena 2026-08-09):** ~~faza „Materijal od nule do učenja"~~ ✅ →
-> ~~**„Mjera i zaborav"**~~ ✅ → **frontend redizajn 🟦 U TIJEKU** → **objava/dijeljenje + MCP**.
+> **Važeća sekvenca (Leon, 2026-08-02, dopunjena 2026-08-09 i 2026-08-13):** ~~faza „Materijal od nule
+> do učenja"~~ ✅ → ~~**„Mjera i zaborav"**~~ ✅ → **frontend redizajn 🟦 U TIJEKU** →
+> **MCP kao glavni put stvaranja** → **objava/dijeljenje**.
+>
+> ⚠️ **MCP je 2026-08-13 promaknut ([ADR-030](../records/DECISIONS.md)):** više nije „pomoć na
+> mobitelu" nego **primarni način na koji gradivo nastaje**, a editor postaje alat za **doradu**.
+> Zbog toga je i pomaknut ispred objave/dijeljenja. **Prvi korak MCP-a nije write-put nego PRISTUP**
+> (kako korisnikov AI dokaže tko je) — dok to nije presuđeno, ostatak nema smisla graditi.
 > **Matura = IZBAČENA.** SRS nije otkazan, samo više nije sljedeći.
 > Doseg dijeljenja je presuđen unaprijed: **link s tajnim tokenom, bez javne biblioteke** u prvoj fazi.
 >

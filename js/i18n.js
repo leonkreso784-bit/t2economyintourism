@@ -228,53 +228,81 @@
 
     // ===== Landing (chrome — marketing copy; EN = originalni tekst) =====
     'lnav.subjects': { en: 'Subjects', hr: 'Predmeti' },
-    'lnav.how': { en: 'How it works', hr: 'Kako funkcionira' },
-    'lnav.modes': { en: 'Study modes', hr: 'Načini učenja' },
-    'lnav.about': { en: 'About', hr: 'O nama' },
+    // `lnav.how` / `lnav.modes` / `lnav.about` obrisani u C2 zajedno sa sidrenim linkovima i
+    // sekcijama „How it works" / „Study modes" na koje su pokazivali. Ključ koji nitko ne
+    // čita je mrtav kod, ne rezerva (ADR-027).
     // ⚠️ Rječnik je presuđen u ADR-026: korisnikovo je „materijal", a „gradivo" = JAVNI katalog.
     // Ne piši „Moje gradivo" — to bi značilo suprotno od onoga što stranica pokazuje.
     'lnav.materials': { en: 'My materials', hr: 'Moji materijali' },
     'cta.start.lower': { en: 'Start studying', hr: 'Počni učiti' },
-    'cta.start.title': { en: 'Start Studying', hr: 'Počni učiti' },
     'auth.signIn': { en: 'Sign in', hr: 'Prijava' },
-    'hero.badge.pre': { en: 'Free exam toolkit — ', hr: 'Besplatni alat za ispite — ' },
-    'hero.badge.post': { en: ' subjects ready', hr: ' predmeta spremno' },
-    'hero.title.l1': { en: 'Study Smart.', hr: 'Uči pametno.' },
-    'hero.title.l2': { en: 'Score Higher.', hr: 'Postigni više.' },
-    'hero.subtitle.pre': { en: 'Flashcards, quizzes, and in-depth lessons across ', hr: 'Kartice, kvizovi i detaljne lekcije za ' },
-    'hero.subtitle.post': { en: ' university subjects from Year 1 & Year 2. Built for students who want results, not just notes.', hr: ' sveučilišnih predmeta 1. i 2. godine. Napravljeno za studente koji žele rezultate, a ne samo bilješke.' },
-    'hero.browse': { en: 'Browse subjects', hr: 'Pregledaj predmete' },
-    'hero.trust.free': { en: '100% free', hr: '100% besplatno' },
-    'hero.trust.noSignup': { en: 'No sign-up', hr: 'Bez registracije' },
-    'hero.trust.offline': { en: 'Works offline', hr: 'Radi offline' },
-    'stats.subjects': { en: 'Subjects', hr: 'Predmeta' },
-    'stats.questions': { en: 'Questions', hr: 'Pitanja' },
-    'stats.modes': { en: 'Study Modes', hr: 'Načina učenja' },
-    'stats.free': { en: 'Free', hr: 'Besplatno' },
-    'sec.catalog.eyebrow': { en: 'Catalog', hr: 'Katalog' },
-    'sec.catalog.title': { en: 'Everything you need to study', hr: 'Sve što ti treba za učenje' },
-    'sec.catalog.sub': { en: 'Year 1 & Year 2 of Hospitality Management at FMTU Opatija — pick a subject and start in seconds.', hr: 'Prva i druga godina smjera Hospitality Management na FMTU Opatija — odaberi predmet i počni u nekoliko sekundi.' },
-    'sec.how.eyebrow': { en: 'Simple', hr: 'Jednostavno' },
-    'sec.how.title': { en: 'How it works', hr: 'Kako funkcionira' },
-    'sec.how.sub': { en: 'Three steps from lecture notes to exam-ready.', hr: 'Tri koraka od bilježaka do spremnosti za ispit.' },
-    'how.1.t': { en: 'Pick your subject', hr: 'Odaberi predmet' },
-    'how.1.p': { en: 'Browse by faculty, program and year, then open the lesson you need.', hr: 'Pregledavaj po fakultetu, smjeru i godini, pa otvori lekciju koju trebaš.' },
-    'how.2.t': { en: 'Learn & practice', hr: 'Uči i vježbaj' },
-    'how.2.p': { en: 'Read the material, then drill it with flashcards, quizzes and fill-in-the-blanks.', hr: 'Pročitaj gradivo, pa ga uvježbaj karticama, kvizovima i dopunjavanjem praznina.' },
-    'how.3.t': { en: 'Track your progress', hr: 'Prati svoj napredak' },
-    'how.3.p': { en: "See your best scores and streaks, and focus on what you haven't mastered yet.", hr: 'Vidi najbolje rezultate i nizove te se usredotoči na ono što još nisi svladao.' },
-    'sec.modes.eyebrow': { en: '5 modes', hr: '5 načina' },
-    'sec.modes.title': { en: 'Five ways to master the material', hr: 'Pet načina da svladaš gradivo' },
-    'sec.modes.sub': { en: 'Every subject comes with all five — switch any time.', hr: 'Svaki predmet dolazi sa svih pet — prebacuj se kad god želiš.' },
-    'mode.learn.p': { en: 'Complete, organised study material by topic.', hr: 'Potpuno, organizirano gradivo po temama.' },
-    'mode.fc.p': { en: 'Flip cards to test recall and mark what you know.', hr: 'Okreći kartice da provjeriš pamćenje i označiš što znaš.' },
-    'mode.quiz.p': { en: 'Multiple-choice with instant feedback and scoring.', hr: 'Pitanja s višestrukim izborom uz trenutnu povratnu informaciju i bodovanje.' },
-    'mode.fill.t': { en: 'Fill-in-the-blank', hr: 'Dopuni prazninu' },
-    'mode.fill.p': { en: 'Type the missing term to lock in key definitions.', hr: 'Upiši pojam koji nedostaje da učvrstiš ključne definicije.' },
-    'mode.prog.p': { en: 'Scores, streaks and per-topic mastery in one place.', hr: 'Rezultati, nizovi i svladanost po temama na jednom mjestu.' },
-    'cta.title': { en: 'Ready to ace your exams?', hr: 'Spreman/na za odličan ispit?' },
-    'cta.sub': { en: "Jump into any subject — it's free and works right on your phone.", hr: 'Uskoči u bilo koji predmet — besplatno je i radi izravno na tvom mobitelu.' },
-    'footer.tagline': { en: 'Interactive exam prep for FMTU Opatija — built by students, for students.', hr: 'Interaktivna priprema za ispite za FMTU Opatija — od studenata, za studente.' },
+    // ── HERO ──────────────────────────────────────────────────────────────
+    // ⚠️ Tekst više NE spominje FMTU ni godine studija (Leon, 2026-08-12: „zbog UGC-a
+    // platformu gradimo za sve"). Naslov tvrdi jednu mehaniku, a prikaz ispod je dokazuje.
+    'hero.kicker': { en: 'Any subject · any language', hr: 'Bilo koje gradivo · bilo koji jezik' },
+    'hero.title.a': { en: 'Write it once.', hr: 'Napiši jednom.' },
+    'hero.title.b': { en: 'Learn it ', hr: 'Uči na ' },
+    'hero.title.mark': { en: 'four ways', hr: 'četiri načina' },
+    'hero.title.c': { en: '.', hr: '.' },
+    'hero.sub': {
+        en: 'Type a term and what it means — Sokrat turns it into flashcards, a quiz, fill-in-the-blanks and study material. Try it right here, no sign-up.',
+        hr: 'Upiši pojam i njegovo objašnjenje — Sokrat od toga odmah radi kartice, kviz, dopunjavanje i pregledno gradivo. Isprobaj odmah, bez registracije.'
+    },
+
+    // ── ŽIVI PRIKAZ (hero demo) ───────────────────────────────────────────
+    'demo.head': { en: 'Your input', hr: 'Tvoj unos' },
+    'demo.headSub': { en: '— type, and watch all four change', hr: '— piši i gledaj kako se sva četiri mijenjaju' },
+    'demo.term': { en: 'Term', hr: 'Pojam' },
+    'demo.def': { en: 'What it means', hr: 'Objašnjenje' },
+    // Početne vrijednosti polja: primjer mora biti razumljiv SVAKOME, pa je iz škole,
+    // a ne s fakulteta — landing više ne cilja jedan smjer.
+    'demo.termValue': { en: 'Photosynthesis', hr: 'Fotosinteza' },
+    'demo.defValue': {
+        en: 'The process by which plants use light to turn carbon dioxide and water into glucose and oxygen.',
+        hr: 'Proces kojim biljke pomoću svjetlosti pretvaraju ugljikov dioksid i vodu u glukozu i kisik.'
+    },
+    'demo.hint': {
+        en: 'Use anything — a university course, high school, or your job. All four build themselves.',
+        hr: 'Upiši bilo što — s fakulteta, iz srednje škole ili s posla. Sva četiri načina rade se sama.'
+    },
+    'demo.tile.card': { en: 'Flashcard', hr: 'Kartica' },
+    'demo.tile.quiz': { en: 'Quiz', hr: 'Kviz' },
+    'demo.tile.fill': { en: 'Fill in the blank', hr: 'Dopunjavanje' },
+    'demo.tile.learn': { en: 'Study material', hr: 'Gradivo' },
+    'demo.flipHint': { en: 'click to flip', hr: 'klikni za okret' },
+    'demo.question': { en: 'What does this mean: {term}?', hr: 'Što znači: {term}?' },
+    'demo.emptyTerm': { en: 'Your term', hr: 'Tvoj pojam' },
+    'demo.emptyDef': { en: 'What you type will show up here.', hr: 'Ono što upišeš pojavit će se ovdje.' },
+    // Ometači kviza. U aplikaciji dolaze iz drugih kartica iste lekcije; ovdje su fiksni
+    // jer je poanta pokazati OBLIK pitanja, ne generirati pravi kviz iz jedne rečenice.
+    'demo.distract.1': { en: 'The movement of water through evaporation, condensation and rainfall.', hr: 'Kruženje vode u prirodi — isparavanje, kondenzacija i oborine.' },
+    'demo.distract.2': { en: 'Breaking down glucose inside a cell to release energy.', hr: 'Razgradnja glukoze u stanici radi oslobađanja energije.' },
+    'demo.distract.3': { en: 'Passing inherited traits from parents to offspring.', hr: 'Prijenos nasljednih svojstava s roditelja na potomstvo.' },
+
+    // ── DVOJE VRATA ───────────────────────────────────────────────────────
+    'door.study.t': { en: 'Start studying', hr: 'Kreni učiti' },
+    'door.study.d': { en: 'Pick your own material, or something ready from the catalog.', hr: 'Odaberi svoje gradivo ili gotovo iz kataloga.' },
+    'door.study.m': { en: ' subjects ready', hr: ' predmeta spremno' },
+    'door.make.t': { en: 'Make your own', hr: 'Napravi svoje' },
+    'door.make.d': { en: 'From your notes to flashcards in a few minutes.', hr: 'Od bilježaka do kartica u nekoliko minuta.' },
+    'door.make.m': { en: 'Editor · private until you share it', hr: 'Editor · privatno dok ne podijeliš' },
+
+    // ── KATALOG + ČINJENICE ───────────────────────────────────────────────
+    'cat.title': { en: 'Or start from the catalog', hr: 'Ili kreni iz kataloga' },
+    'cat.sub': { en: 'Complete subjects, already written — open one and study in seconds.', hr: 'Gotovi predmeti, već napisani — otvori i uči u nekoliko sekundi.' },
+    'facts.free.b': { en: 'Free', hr: 'Besplatno' },
+    'facts.free.t': { en: ' and ad-free', hr: ' i bez reklama' },
+    'facts.offline.t': { en: 'Works ', hr: 'Radi ' },
+    'facts.offline.b': { en: 'offline', hr: 'offline' },
+    'facts.progress.t': { en: 'Progress is ', hr: 'Napredak se ' },
+    'facts.progress.b': { en: 'saved', hr: 'pamti' },
+    'facts.private.t': { en: 'Your material stays ', hr: 'Tvoje gradivo je ' },
+    'facts.private.b': { en: 'private', hr: 'privatno' },
+    // `stats.*`, `sec.*`, `how.*`, `mode.*`, `cta.title/sub` obrisani u C2: stats bar i
+    // sekcije „How it works" / „Study modes" / završni CTA više ne postoje. Sve su TVRDILE
+    // ono što živi prikaz u heroju POKAZUJE — a tri odlomka koja objašnjavaju proizvod su
+    // sama po sebi priznanje da proizvod nije razumljiv.
+    'footer.tagline': { en: 'Write your own study material, or use one that is ready. Free, for everyone.', hr: 'Napravi vlastito gradivo ili uzmi gotovo. Besplatno, za svakoga.' },
     'footer.explore': { en: 'Explore', hr: 'Istraži' },
     'footer.about': { en: 'About', hr: 'O nama' },
     'footer.aboutUs': { en: 'About us', hr: 'O nama' },
@@ -285,8 +313,8 @@
     'footer.terms': { en: 'Terms of Use', hr: 'Uvjeti korištenja' },
     'footer.cookies': { en: 'Cookie settings', hr: 'Postavke kolačića' },
     'footer.rights': { en: '© 2026 Sokrat Study · Leon Kreso. All rights reserved.', hr: '© 2026 Sokrat Study · Leon Kreso. Sva prava pridržana.' },
-    'footer.made.pre': { en: 'Made with ', hr: 'Stvoreno s ' },
-    'footer.made.post': { en: ' for students', hr: ' za studente' },
+    // `footer.made.*` obrisani u C2 — „Made with ❤️ for students" je ukras koji ne nosi
+    // značenje (izlazni uvjet §7.6.5), a i suzio je publiku na studente.
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
 
     // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
@@ -529,6 +557,15 @@
       const key = el.getAttribute('data-i18n-placeholder');
       if (key) el.setAttribute('placeholder', t(key));
     });
+    // C2 — POČETNA vrijednost polja (živi prikaz na landingu piše primjer u polje, ne u
+    // placeholder, jer se iz njega odmah crtaju sva četiri moda).
+    // ⚠️ `data-touched` je brana, ne uljepšavanje: bez nje bi prebacivanje jezika obrisalo
+    // rečenicu koju je posjetitelj upravo upisao. Prevodi se samo NETAKNUT primjer.
+    scope.querySelectorAll('[data-i18n-value]').forEach((node) => {
+      const el = /** @type {HTMLInputElement | HTMLTextAreaElement} */ (node);
+      const key = el.getAttribute('data-i18n-value');
+      if (key && el.dataset.touched !== '1') el.value = t(key);
+    });
     // a11y (F3 3E): lokaliziraj aria-label za ikone-gumbe bez vidljivog teksta (npr. flashcard prev/next).
     scope.querySelectorAll('[data-i18n-aria]').forEach((el) => {
       const key = el.getAttribute('data-i18n-aria');
@@ -540,6 +577,10 @@
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
     if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
+    // Živi prikaz crta iz JS-a (textContent), pa ga [data-i18n] ne dohvaća — mora se
+    // preiscrtati POSLIJE gornjeg bloka, da pokupi upravo prevedene primjere.
+    const heroDemo = /** @type {any} */ (window).renderHeroDemo;
+    if (typeof heroDemo === 'function') heroDemo();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.

@@ -141,7 +141,10 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Most na token (isti obrazac kao paleta): dok je ovdje stajala vlastita lista,
+       promjena `--font-sans` ne bi napravila NIŠTA — token je postojao, ali ga nitko
+       nije čitao. Jedna definicija, jedno mjesto (ADR-027). */
+    font-family: var(--font-sans);
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;

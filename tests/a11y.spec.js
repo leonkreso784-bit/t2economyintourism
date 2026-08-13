@@ -9,10 +9,28 @@ const AxeBuilder = require('@axe-core/playwright').default;
 // Gate hvata samo ozbiljne razrede; 'minor'/'moderate' su backlog (ne ruše build).
 const IMPACT_GATE = ['serious', 'critical'];
 
+// ⚠️ Ispisuj i axeove BROJKE, ne samo selektor.
+// Povod (C2, 2026-08-13): gate je javio „color-contrast na `#btnCorrect > span`" i tu stao.
+// Uzrok se onda pogađa — a dva neovisna ručna mjerenja dala su 4.80 i 5.16, dakle IZNAD
+// praga, dok je axe tvrdio suprotno. Sat vremena je otišao na razliku koju je axe cijelo
+// vrijeme znao. Boja, pozadina i omjer sad idu u ispis, pa se uzrok ČITA umjesto da se traži.
+function detalji(node) {
+  const d = (node.any || []).map((c) => c.data).find((x) => x && x.contrastRatio != null);
+  if (!d) return null;
+  return `fg ${d.fgColor} / bg ${d.bgColor} = ${d.contrastRatio} (treba ${d.expectedContrastRatio})`;
+}
+
 function gateViolations(results) {
   return results.violations
     .filter((v) => IMPACT_GATE.includes(v.impact))
-    .map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help, target: v.nodes.map((n) => n.target).flat() }));
+    .map((v) => ({
+      id: v.id,
+      impact: v.impact,
+      nodes: v.nodes.length,
+      help: v.help,
+      target: v.nodes.map((n) => n.target).flat(),
+      mjere: v.nodes.map((n) => detalji(n)).filter(Boolean)
+    }));
 }
 
 test.describe('a11y — no serious/critical axe violations', () => {
@@ -51,6 +69,13 @@ test.describe('a11y — no serious/critical axe violations', () => {
     const all = [];
     for (const sec of ['learn', 'flashcards', 'quiz', 'fill', 'progress']) {
       await page.evaluate((s) => window.switchSection(s), sec);
+      // ⚠️ NE mjeri usred prijelaza. Sekcije se pojavljuju s fade-inom, a axe uzorkuje
+      // boju ONAKVU KAKVA JE U TOM TRENUTKU: izmjereno je javljao `#1e8155` umjesto
+      // tokena `#10794a` — ista boja na ~93 % neprozirnosti, dakle 4.29 umjesto 4.80.
+      // Gate je tako prijavljivao pad koji na gotovoj stranici ne postoji, a dva ručna
+      // mjerenja (koja su čekala duže) tvrdila su suprotno. `finish()` je determinističan:
+      // ne produljuje čekanje nego animacije gura u KRAJNJE stanje.
+      await page.evaluate(() => document.getAnimations().forEach((a) => { try { a.finish(); } catch (e) { /* beskonačne */ } }));
       await page.waitForTimeout(250);
       const gated = gateViolations(await new AxeBuilder({ page }).analyze());
       if (gated.length) console.log(`STUDY/${sec} violations:`, JSON.stringify(gated, null, 2));

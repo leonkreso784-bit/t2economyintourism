@@ -1,17 +1,38 @@
 // ===== SOKRAT STUDY — INITIALIZATION =====
 
 // ========== THEME ==========
+// C2: zadana tema je „Akademsko plavo" (svijetla) — v. `css/tokens.css`.
+//
+// Prije je ovdje stajalo tvrdo `setAttribute('data-theme','dark')` uz `toggleTheme()`
+// koji je pisao `light` — temu koja u CSS-u NIJE POSTOJALA. Prekidač je dakle vodio u
+// prazno, a `dark` je bio jedini stvarni ishod. Sada su teme prave, pa i ovo mora biti.
+//
+// ⚠️ Vrijednost se PROVJERAVA prema popisu: nepoznat `data-theme` (npr. zaostali `dark`
+// iz localStoragea nekog starog posjetitelja) ne bi pogodio nijedan token-blok, ali BI
+// aktivirao 21 legacy pravilo koje selektira `[data-theme="dark"]` → bijeli tekst na
+// svijetloj podlozi. Zato se nepoznata vrijednost odbacuje, a ne propušta.
+const SOKRAT_THEMES = ['academic', 'paper', 'chalk', 'mint'];
+const SOKRAT_THEME_DEFAULT = 'academic';
+
 function initTheme() {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    localStorage.setItem('sokrat-theme', 'dark');
+    let saved = null;
+    try { saved = localStorage.getItem('sokrat-theme'); } catch (e) { /* privatni način */ }
+    const theme = SOKRAT_THEMES.indexOf(saved) >= 0 ? saved : SOKRAT_THEME_DEFAULT;
+    document.documentElement.setAttribute('data-theme', theme);
+    // `color-scheme` javlja pregledniku kakve da crta scrollbarove i zadana polja;
+    // bez toga svijetla tema dobiva tamne native kontrole i obrnuto.
+    document.documentElement.style.colorScheme = (theme === 'chalk' || theme === 'mint') ? 'dark' : 'light';
+    try { localStorage.setItem('sokrat-theme', theme); } catch (e) { /* privatni način */ }
 }
 
-function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('sokrat-theme', next);
+function setTheme(name) {
+    if (SOKRAT_THEMES.indexOf(name) < 0) return false;
+    try { localStorage.setItem('sokrat-theme', name); } catch (e) { /* privatni način */ }
+    initTheme();
+    return true;
 }
+window.setTheme = setTheme;
+window.SOKRAT_THEMES = SOKRAT_THEMES;
 
 // ========== DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
@@ -19,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLandingMeta();       // keep landing counts in sync with the catalog
     renderLandingSubjects();   // build landing subject showcase from catalog
     initLandingSubjects();     // bind showcase click → lessons
+    initHeroDemo();            // C2: živi prikaz u heroju (jedan unos → četiri moda)
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
     initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials
@@ -76,9 +98,17 @@ function setupEventListeners() {
         backFromAbout.addEventListener('click', () => navigateTo('landing'));
     }
     
-    // Theme toggles
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-        btn.addEventListener('click', toggleTheme);
+    // Birač teme. `.theme-toggle` NE POSTOJI u markupu — ostaje samo vezanje, da
+    // ga cigla koja doda gumb ne mora tražiti. `data-set-theme="paper"` na elementu
+    // bira temu izravno; bez atributa se cikliraju sve četiri.
+    document.querySelectorAll('.theme-toggle').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const want = btn.dataset.setTheme;
+            if (want) { setTheme(want); return; }
+            const now = document.documentElement.getAttribute('data-theme');
+            const i = SOKRAT_THEMES.indexOf(now);
+            setTheme(SOKRAT_THEMES[(i + 1) % SOKRAT_THEMES.length]);
+        });
     });
     
     // Study nav buttons

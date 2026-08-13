@@ -6,29 +6,34 @@
 @layer theme {
   :root, :host {
     --spacing: 0.25rem;
+    --container-xl: 36rem;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --tracking-tighter: -0.05em;
+    --tracking-tight: -0.025em;
     --color-white: #fff;
     --color-black: #000;
-    --color-surface-0: #1e1f1c;
-    --color-surface-1: #292a26;
-    --color-surface-2: #35362f;
-    --color-ink-0: #f5f2e8;
-    --color-ink-1: #dcd8c9;
-    --color-ink-2: #a6a292;
-    --color-line: #45463e;
-    --color-line-strong: #8a8878;
-    --color-brand-400: #f7d47c;
-    --color-brand-500: #f2c14e;
-    --color-brand-600: #d3a233;
-    --color-on-brand: #1e1f1c;
-    --color-mark: rgb(242 193 78 / 0.30);
-    --color-ok: #8fbf6b;
-    --color-ok-strong: #6da34d;
-    --color-warn: #e3a93c;
-    --color-warn-ink: #edbe63;
-    --color-danger: #e3705c;
-    --color-danger-ink: #ee8b78;
-    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    --color-surface-0: #f7f9fc;
+    --color-surface-1: #ffffff;
+    --color-surface-2: #edf1f7;
+    --color-ink-0: #0e1a2b;
+    --color-ink-1: #34455c;
+    --color-ink-2: #5b6879;
+    --color-line: #dde4ee;
+    --color-line-strong: #7d8a9c;
+    --color-brand-400: #4a82e8;
+    --color-brand-500: #1657d0;
+    --color-brand-600: #0f3f9c;
+    --color-on-brand: #ffffff;
+    --color-mark: #ffd24a;
+    --color-ok: #10794a;
+    --color-ok-strong: #0b5e39;
+    --color-warn: #8a5800;
+    --color-warn-ink: #7a4d00;
+    --color-danger: #c0332b;
+    --color-danger-ink: #a32821;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
     --text-xs: 0.75rem;
     --text-xs--line-height: 1.5;
     --text-sm: 0.875rem;
@@ -47,14 +52,16 @@
     --text-4xl--line-height: 1.1;
     --text-5xl: 3.75rem;
     --text-5xl--line-height: 1.05;
+    --text-6xl: 4.5rem;
+    --text-6xl--line-height: 1;
     --spacing-touch: 2.75rem;
     --spacing-touch-lg: 3rem;
     --radius-sm: 0.5rem;
     --radius-md: 0.75rem;
     --radius-lg: 1.25rem;
     --radius-full: 9999px;
-    --shadow-e1: 0 4px 6px -1px rgb(3 12 13 / 0.45), 0 2px 4px -2px rgb(3 12 13 / 0.35);
-    --shadow-e2: 0 10px 15px -3px rgb(3 12 13 / 0.5), 0 4px 6px -4px rgb(3 12 13 / 0.4);
+    --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
+    --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
     --breakpoint-xs: 30rem;
   }
 }
@@ -81,6 +88,30 @@
   --color-danger-ink: #a82a22;
   --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
   --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
+}
+
+:root[data-theme="chalk"] {
+  --color-surface-0: #1e1f1c;
+  --color-surface-1: #292a26;
+  --color-surface-2: #35362f;
+  --color-line: #45463e;
+  --color-line-strong: #8a8878;
+  --color-ink-0: #f5f2e8;
+  --color-ink-1: #dcd8c9;
+  --color-ink-2: #a6a292;
+  --color-brand-400: #f7d47c;
+  --color-brand-500: #f2c14e;
+  --color-brand-600: #d3a233;
+  --color-on-brand: #1e1f1c;
+  --color-mark: rgb(242 193 78 / 0.30);
+  --color-ok: #8fbf6b;
+  --color-ok-strong: #6da34d;
+  --color-warn: #e3a93c;
+  --color-warn-ink: #edbe63;
+  --color-danger: #e3705c;
+  --color-danger-ink: #ee8b78;
+  --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.45), 0 4px 6px -4px rgb(0 0 0 / 0.35);
 }
 
 :root[data-theme="academic"] {

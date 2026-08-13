@@ -1,1079 +1,578 @@
-/* =====================================================
-   LANDING PAGE STYLES
-   Sokrat Study - Landing page, hero section, features
-   ===================================================== */
+/* =====================================================================
+   landing.css — cigla C2
+   =====================================================================
 
-/* ===== LANDING PAGE ===== */
+   Bilo je 1079 redaka. Ostalo je ono što Tailwind-utility NE MOŽE izraziti
+   ili što crta JavaScript. Raspored, razmaci i tipografija su u markupu
+   (`index.html`) kao utilityji — to je smisao C1/C2, ne ukras.
+
+   ŠTO JE OVDJE I ZAŠTO:
+     1. traka + podnožje — ista komponenta na više mjesta, ne ponavlja se u markupu;
+     2. `.hero-mark` — marker; `box-decoration-break` nema utility;
+     3. `.demo-*` — živi prikaz; okret kartice je 3D transform s dvije plohe;
+     4. `.landing-subject-card` — crta ga `renderLandingSubjects()` iz JS-a, a
+        ADR-028 zabranjuje sastavljene klase → JS piše SEMANTIČKO ime, stil je tu;
+     5. `.door*` — nose `--color-on-brand`, što je pravilo, ne izbor (§7.7).
+
+   ⚠️ BOJA SAMO KROZ TOKENE. Nijedan hex, nijedna zakucana bijela/crna — i to nije
+   urednost nego uvjet: `check:palette` pada, a na papirnatoj temi je
+   `color: rgba(255,255,255,.9)` NEVIDLJIV, ne samo neusklađen.
+   ===================================================================== */
+
+/* ── Stranica ─────────────────────────────────────────────────────────
+   `display` postavlja `variables.css` (`.landing-page.active { display:flex }`);
+   ovdje samo smjer i visina. `overflow-x` je brana za layout-guard: prije je
+   ovdje stajao `overflow: hidden`, koji je horizontalni prelijev SAKRIO umjesto
+   spriječio — test bi bio zelen nad elementom koji strši. */
 .landing-page {
+    flex-direction: column;
     min-height: 100vh;
     min-height: 100dvh;
-    position: relative;
-    overflow: hidden;
+    overflow-x: clip;
 }
 
-/* Animated Background */
-.landing-bg {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    z-index: 0;
+/* Uska kolona, isti rub za sve tri sekcije i podnožje. */
+.landing-wrap {
+    width: 100%;
+    max-width: 70rem;               /* 1120px */
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 2.5rem);
 }
 
-.gradient-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(110px);
-    opacity: 0.45;
-    animation: float 20s ease-in-out infinite;
+.landing-main {
+    flex: 1;
+    width: 100%;
+    padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
 }
 
-.orb-1 {
-    width: 650px;
-    height: 650px;
-    background: linear-gradient(135deg, #6366f1, #a78bfa);
-    top: -200px;
-    right: -180px;
-    animation-delay: 0s;
-}
-
-.orb-2 {
-    width: 450px;
-    height: 450px;
-    background: linear-gradient(135deg, #0ea5e9, #22d3ee);
-    bottom: 10%;
-    left: -120px;
-    animation-delay: -5s;
-}
-
-.orb-3 {
-    width: 380px;
-    height: 380px;
-    background: linear-gradient(135deg, #ec4899, #f472b6);
-    bottom: -120px;
-    right: 10%;
-    animation-delay: -10s;
-}
-
-.orb-4 {
-    width: 320px;
-    height: 320px;
-    background: linear-gradient(135deg, #7c3aed, #4f46e5);
-    top: 35%;
-    left: 25%;
-    animation-delay: -7s;
-    filter: blur(130px);
-    opacity: 0.3;
-}
-
-@keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    25% { transform: translate(20px, -30px) scale(1.05); }
-    50% { transform: translate(-20px, 20px) scale(0.95); }
-    75% { transform: translate(30px, 10px) scale(1.02); }
-}
-
-.grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image: 
-        linear-gradient(rgba(99, 102, 241, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(99, 102, 241, 0.07) 1px, transparent 1px);
-    background-size: 40px 40px;
-}
-
-.landing-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, transparent 30%, rgba(15, 23, 42, 0.65) 100%);
-    pointer-events: none;
-    z-index: 1;
-}
-
-/* Landing Header */
-.landing-header {
+/* ── Traka ────────────────────────────────────────────────────────────
+   Sticky + poluprozirna: sadržaj ispod ostaje naslućen, kao materijal, a ne
+   kao ploča. `color-mix` umjesto `rgba()` — inače bi boja bila zakucana i
+   tema je ne bi mogla promijeniti. */
+.landing-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    position: relative;
-    z-index: 10;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
+    border-bottom: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .landing-logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.6rem;
+    margin-inline-end: auto;
+    text-decoration: none;
+    min-width: 0;
 }
 
-/* Logo Image Styles */
-.logo-wrapper {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    max-width: 44px;
-    max-height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.landing-logo .logo-image {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-sm);
+    display: block;
     flex-shrink: 0;
-}
-
-.logo-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.logo-image:hover {
-    transform: scale(1.05);
-}
-
-/* Keep old styles for backwards compatibility */
-.logo-icon-wrapper {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--on-primary);
-    font-size: 1.25rem;
-    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 .landing-logo .logo-text {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    white-space: nowrap; /* logo nikad u dva reda → visina trake ostaje predvidiva (= --nav-h) */
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-0);
+    white-space: nowrap;
 }
 
-/* Hero Section */
-.landing-hero {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem 1.5rem;
-    position: relative;
-    z-index: 10;
-    gap: 3rem;
+/* Ispod 480px wordmark odlazi — znak sam nosi identitet, a traka dobiva zrak
+   koji CTA-u treba (layout-guard mjeri baš to). */
+@media (max-width: 30rem) {
+    .landing-logo .logo-text { display: none; }
 }
 
-@media (min-width: 768px) {
-    .landing-hero {
-        flex-direction: row;
-        padding: 2rem 4rem;
-    }
-}
-
-.hero-content {
-    text-align: center;
-    max-width: 600px;
-}
-
-@media (min-width: 768px) {
-    .hero-content {
-        text-align: left;
-    }
-}
-
-.hero-badge {
+.landing-nav .lang-toggle,
+.landing-nav .nav-auth-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.625rem;
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    padding: 0.5rem 1.25rem;
-    border-radius: 50px;
+    gap: 0.4rem;
+    font: inherit;
     font-size: 0.875rem;
-    color: var(--primary-light);
-    margin-bottom: 1.5rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
+    line-height: 1;
+    color: var(--color-ink-2);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 0.65rem;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
-.badge-dot {
-    width: 8px;
-    height: 8px;
-    min-width: 8px;
-    background: #22c55e;
-    border-radius: 50%;
-    animation: badgePulse 2.5s ease-in-out infinite;
-    flex-shrink: 0;
+.landing-nav .nav-auth-btn { border-color: var(--color-line); color: var(--color-ink-1); }
+
+.landing-nav .lang-toggle:hover,
+.landing-nav .nav-auth-btn:hover {
+    color: var(--color-ink-0);
+    background: var(--color-surface-1);
 }
 
-@keyframes badgePulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-    50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+.landing-nav .nav-cta {
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-on-brand);   /* NIKAD `white` — §7.7, tvrda brana u check:palette */
+    background: var(--color-brand-500);
+    border: 1px solid var(--color-brand-500);
+    border-radius: var(--radius-full);
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+}
+
+.landing-nav .nav-cta:hover {
+    background: var(--color-brand-400);
+    border-color: var(--color-brand-400);
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────────
+   Veličine naslova i razmaci su utilityji u markupu; ovdje samo ono što
+   utility ne pokriva. */
+.hero-kicker {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin-bottom: 1.1rem;
 }
 
 .hero-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
+    max-width: 18ch;
+    text-wrap: balance;
 }
 
-.gradient-text {
-    background: linear-gradient(135deg, var(--primary), #8b5cf6, var(--secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+@media (min-width: 48rem) { .hero-title { max-width: 22ch; } }
+
+/* MARKER umjesto gradijentnog naslova. Podvučeno je 58% visine retka — potez
+   flomasterom preko riječi, ne ispuna. `box-decoration-break` drži potez
+   ispravnim kad se riječ prelomi u dva retka; bez njega drugi redak ostane gol. */
+.hero-mark {
+    font-style: normal;
+    color: var(--color-ink-0);
+    background: linear-gradient(to top, var(--color-mark) 0 58%, transparent 58%);
+    padding-inline: 0.08em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
 }
 
-.hero-subtitle {
-    font-size: 1.125rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 2rem;
-    max-width: 500px;
-}
-
-@media (min-width: 768px) {
-    .hero-subtitle {
-        font-size: 1.25rem;
-    }
-}
-
-/* CTA Buttons */
-.hero-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-@media (min-width: 480px) {
-    .hero-actions {
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 768px) {
-    .hero-actions {
-        justify-content: flex-start;
-    }
-}
-
-.cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2rem;
-    border-radius: var(--radius);
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    border: none;
-    min-height: var(--touch-target-large);
-}
-
-.cta-button.primary {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.45);
-    position: relative;
+/* ── Živi prikaz ──────────────────────────────────────────────────────
+   Ovo je naš „product shot": Appleova praznina radi jer u sredini stoji
+   predmet, a naš proizvod je tekst. Zato u sredini stoji sam proizvod. */
+.demo {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-1);
     overflow: hidden;
 }
 
-.cta-button.primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.cta-button.primary:hover::after { opacity: 1; }
-
-.cta-button.primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(99, 102, 241, 0.65), 0 0 60px rgba(99, 102, 241, 0.15);
-}
-
-.cta-button.secondary {
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-}
-
-.cta-button.secondary:hover {
-    background: rgba(99, 102, 241, 0.12);
-    border-color: rgba(99, 102, 241, 0.4);
-    color: var(--primary-light);
-}
-
-/* Hero Visual */
-.hero-visual {
-    position: relative;
-    width: 300px;
-    height: 300px;
-}
-
-@media (min-width: 768px) {
-    .hero-visual {
-        width: 400px;
-        height: 400px;
-    }
-}
-
-.floating-cards {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.float-card {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem 1.5rem;
+.demo-head {
     display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    animation: floatCard 6s ease-in-out infinite;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.9rem 1.1rem;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-surface-2);
 }
 
-.float-card i {
-    font-size: 1.5rem;
-}
-
-.float-card span {
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-.float-card.card-1 {
-    top: 10%;
-    left: 5%;
-    animation-delay: 0s;
-}
-.float-card.card-1 i { color: var(--primary); }
-
-.float-card.card-2 {
-    top: 5%;
-    right: 10%;
-    animation-delay: -1.5s;
-}
-.float-card.card-2 i { color: var(--secondary); }
-
-.float-card.card-3 {
-    bottom: 25%;
-    left: 0;
-    animation-delay: -3s;
-}
-.float-card.card-3 i { color: var(--accent); }
-
-.float-card.card-4 {
-    bottom: 10%;
-    right: 5%;
-    animation-delay: -4.5s;
-}
-.float-card.card-4 i { color: var(--danger); }
-
-@keyframes floatCard {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
-}
-
-/* Landing Features */
-.landing-features {
+/* 1px `gap` na obojenoj podlozi = vlas-crte između polja, bez ijednog `border`-a. */
+.demo-body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 2rem 1.5rem;
-    position: relative;
-    z-index: 10;
-    max-width: 1000px;
-    margin: 0 auto;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--color-line);
 }
 
-.landing-features .feature-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
-    padding: 1.75rem 1.5rem;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    transition: var(--transition);
+@media (min-width: 56rem) {
+    .demo-body { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); }
 }
 
-.landing-features .feature-card:hover {
-    transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(99, 102, 241, 0.3);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(99, 102, 241, 0.1);
-}
+.demo-in { background: var(--color-surface-1); padding: 1.1rem; }
+.demo-field + .demo-field { margin-top: 0.9rem; }
 
-.landing-features .feature-icon {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
-    border-radius: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.25rem;
-    font-size: 1.6rem;
-    color: var(--primary-light);
-    border: 1px solid rgba(99, 102, 241, 0.2);
-    transition: var(--transition);
-}
-
-.landing-features .feature-card:hover .feature-icon {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.28), rgba(139, 92, 246, 0.28));
-    box-shadow: 0 0 28px rgba(99, 102, 241, 0.45);
-    transform: scale(1.08) translateY(-2px);
-}
-
-.landing-features .feature-card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.landing-features .feature-card p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-}
-
-/* Hero Stats Bar */
-.hero-stats {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 1.25rem 2rem;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: var(--radius-lg);
-    width: calc(100% - 3rem);
-    max-width: 620px;
-    margin: 0 auto 1.5rem;
-    position: relative;
-    z-index: 10;
-    flex-wrap: wrap;
-}
-
-.stat-item {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
-}
-
-.stat-num {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem;
-    font-weight: 800;
-    line-height: 1;
-    background: linear-gradient(135deg, var(--primary-light), #c4b5fd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.stat-label {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 500;
-}
-
-.stat-divider {
-    width: 1px;
-    height: 2.5rem;
-    background: rgba(255, 255, 255, 0.08);
-    flex-shrink: 0;
-}
-
-@media (max-width: 480px) {
-    .hero-stats { gap: 1rem; padding: 1rem 1.25rem; }
-    .stat-num { font-size: 1.4rem; }
-    .stat-divider { height: 1.75rem; }
-}
-
-/* =====================================================
-   M0.5 LANDING REBUILD — nav, sections, showcase, modes, CTA, footer
-   ===================================================== */
-
-/* ----- Fixed top navigation ----- */
-.landing-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.7rem 1.5rem;
-    padding-top: calc(0.7rem + var(--safe-top));
-    background: rgba(15, 23, 42, 0.72);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.landing-nav .landing-logo {
-    text-decoration: none;
-}
-
-.landing-nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1.75rem;
-    margin-left: auto;
-}
-
-.landing-nav-links a,
-.nav-link-btn {
-    background: none;
-    border: none;
-    font-family: inherit;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s ease;
-    padding: 0;
-    white-space: nowrap; /* spriječi 2-redni wrap dužih (HR) labela u uskom navu */
-}
-
-.landing-nav-links a:hover,
-.nav-link-btn:hover {
-    color: var(--primary-light);
-}
-
-/* Ulaz u vlastito gradivo (C0 / ADR-029): glavni proizvod, pa stoji prvi i naglašeno —
-   ostale stavke nava su tekst, ova je „pilula" s ikonom. */
-.nav-link-btn--accent {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.4rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(99, 102, 241, 0.14);
-    border: 1px solid rgba(99, 102, 241, 0.45);
-    color: var(--primary-light);
-}
-
-.nav-link-btn--accent:hover {
-    color: var(--text-primary);
-    border-color: var(--primary-light);
-    background: rgba(99, 102, 241, 0.24);
-}
-
-.cta-button.nav-cta {
-    padding: 0.6rem 1.15rem;
-    font-size: 0.9rem;
-    min-height: 0;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
-    flex-shrink: 0;        /* primarni CTA se NIKAD ne steže ispod teksta (inače „Start studyin") */
-    white-space: nowrap;
-    width: auto;           /* nadjača .cta-button{width:100%} iz mobile-core (to je za hero, ne nav) */
-}
-
-/* Logo/brand i toggle ne smiju gubiti širinu kad je nav pretrpan → višak ide drugdje. */
-.landing-nav .landing-logo,
-.landing-nav .lang-toggle,
-.landing-nav .nav-auth-btn { flex-shrink: 0; }
-
-/* Offset hero below the fixed nav; anchor targets clear it too.
-   Vezano uz --nav-h (jedinstveni izvor) + safe-area + jastuk, umjesto magičnog broja. */
-.landing-hero {
-    padding-top: calc(var(--nav-h) + var(--safe-top) + 1.25rem);
-}
-
-.landing-section,
-.landing-cta,
-#top {
-    scroll-margin-top: calc(var(--nav-h) + var(--safe-top) + 0.5rem);
-}
-
-/* ----- Hero trust row ----- */
-.hero-trust {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-    list-style: none;
-    margin-top: 1.5rem;
-    justify-content: center;
-}
-
-@media (min-width: 768px) {
-    .hero-trust { justify-content: flex-start; }
-}
-
-.hero-trust li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.hero-trust i {
-    color: var(--success);
-    font-size: 0.8rem;
-}
-
-/* ----- Generic landing section + heading ----- */
-.landing-section {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem;
-    min-width: 0;
-}
-
-.section-head {
-    max-width: 640px;
-    margin: 0 auto 2.5rem;
-    text-align: center;
-}
-
-.section-eyebrow {
-    display: inline-block;
+.demo-field label {
+    display: block;
     font-size: 0.72rem;
-    font-weight: 700;
+    font-weight: 600;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--primary-light);
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    padding: 0.3rem 0.75rem;
-    border-radius: 50px;
-    margin-bottom: 1rem;
-}
-
-.section-head h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.6rem, 5vw, 2.4rem);
-    font-weight: 800;
-    line-height: 1.15;
-    margin-bottom: 0.75rem;
-}
-
-.section-head p {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-/* ----- Subjects showcase ----- */
-.landing-subjects {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
-    min-width: 0;
-}
-
-.landing-subject-card {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 1.1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    transition: var(--transition);
-    text-align: left;
-    font-family: inherit;
-    color: inherit;
-    min-width: 0;
-    overflow: hidden;
-}
-
-.landing-subject-card:hover,
-.landing-subject-card:focus-visible {
-    transform: translateY(-4px);
-    border-color: var(--card-accent, var(--primary));
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-    outline: none;
-}
-
-.landing-subject-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.landing-subject-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.landing-subject-info h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.15rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.landing-subject-info p {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-.landing-subject-arrow {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    transition: var(--transition);
-    flex-shrink: 0;
-}
-
-.landing-subject-card:hover .landing-subject-arrow {
-    color: var(--card-accent, var(--primary));
-    transform: translateX(4px);
-}
-
-/* ----- How it works ----- */
-.how-steps {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    min-width: 0;
-}
-
-.how-step {
-    position: relative;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: var(--radius-lg);
-    padding: 2rem 1.5rem 1.75rem;
-    text-align: center;
-}
-
-.how-step-num {
-    position: absolute;
-    top: -16px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: var(--on-primary);
-    font-weight: 700;
-    font-family: 'Space Grotesk', sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
-}
-
-.how-step-icon {
-    font-size: 1.8rem;
-    color: var(--primary-light);
-    margin: 0.5rem 0 1rem;
-}
-
-.how-step h3 {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-}
-
-.how-step p {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.55;
-}
-
-/* ----- Study modes ----- */
-.modes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1rem;
-    min-width: 0;
-}
-
-.mode-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    transition: var(--transition);
-    text-align: center;
-}
-
-.mode-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--card-accent, var(--primary));
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-}
-
-.mode-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 1.4rem;
-    color: var(--card-accent, var(--primary));
-    background: color-mix(in srgb, var(--card-accent, var(--primary)) 16%, transparent);
-    border: 1px solid color-mix(in srgb, var(--card-accent, var(--primary)) 35%, transparent);
-}
-
-.mode-card h3 {
-    font-size: 1.05rem;
+    color: var(--color-ink-2);
     margin-bottom: 0.4rem;
 }
 
-.mode-card p {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-}
-
-/* ----- Final CTA band ----- */
-.landing-cta {
-    position: relative;
-    z-index: 10;
+.demo-field input,
+.demo-field textarea {
     width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 4rem;
+    font: inherit;
+    font-size: 0.95rem;
+    color: var(--color-ink-0);
+    background: var(--color-surface-0);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.7rem;
+    resize: vertical;
 }
 
-.landing-cta-inner {
-    max-width: 640px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 3rem 2rem;
-    border-radius: 24px;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.14), rgba(139, 92, 246, 0.08));
-    border: 1px solid rgba(99, 102, 241, 0.25);
+.demo-field input:focus,
+.demo-field textarea:focus {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 1px;
+    border-color: var(--color-brand-500);
 }
 
-.landing-cta-inner h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.6rem, 5vw, 2.3rem);
-    font-weight: 800;
-    margin-bottom: 0.75rem;
+.demo-out {
+    background: var(--color-surface-1);
+    padding: 1.1rem;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: 1fr;
 }
 
-.landing-cta-inner p {
-    color: var(--text-secondary);
-    margin-bottom: 1.75rem;
+@media (min-width: 34rem) { .demo-out { grid-template-columns: 1fr 1fr; } }
+
+.demo-tile {
+    display: flex;
+    flex-direction: column;
+    min-height: 8.5rem;
+    padding: 0.85rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-0);
 }
 
-.landing-cta-inner .cta-button {
-    margin: 0 auto;
+.demo-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin-bottom: 0.6rem;
 }
 
-/* ----- Footer (structured) ----- */
-.landing-footer {
-    padding: 2.5rem 1.5rem 2rem;
-    color: var(--text-muted);
-    font-size: 0.875rem;
+/* Točka je jedina boja po pločici — nosi „koji mod", ne ukras. */
+.demo-tag::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-brand-500);
+    flex-shrink: 0;
+}
+
+.demo-tile[data-kind="quiz"] .demo-tag::before { background: var(--color-warn); }
+.demo-tile[data-kind="fill"] .demo-tag::before { background: var(--color-danger); }
+.demo-tile[data-kind="learn"] .demo-tag::before { background: var(--color-ok); }
+
+/* Okret kartice — JEDINI ukras na stranici, jer je okret sama gesta kartice. */
+.demo-flip {
+    flex: 1;
+    perspective: 800px;
+    background: none;
+    border: 0;
+    padding: 0;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+}
+
+.demo-flip-in {
     position: relative;
-    z-index: 10;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 5rem;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
-.landing-footer i {
-    color: var(--danger);
+.demo-flip[aria-pressed="true"] .demo-flip-in { transform: rotateY(180deg); }
+
+.demo-flip-f,
+.demo-flip-b {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    padding: 0.2rem;
+    border-radius: var(--radius-sm);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.demo-flip-f {
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-ink-0);
+}
+
+.demo-flip-b {
+    align-items: flex-start;
+    transform: rotateY(180deg);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--color-ink-1);
+    overflow: auto;
+}
+
+.demo-note { margin-top: 0.5rem; font-size: 0.72rem; color: var(--color-ink-2); }
+
+.demo-q { font-size: 0.86rem; line-height: 1.45; color: var(--color-ink-0); margin-bottom: 0.55rem; }
+
+.demo-opt {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--color-ink-2);
+    padding: 0.32rem 0.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.3rem;
+}
+
+.demo-opt.is-right {
+    color: var(--color-ok);
+    border-color: color-mix(in srgb, var(--color-ok) 45%, transparent);
+    background: color-mix(in srgb, var(--color-ok) 10%, transparent);
+}
+
+.demo-blank {
+    display: inline-block;
+    min-width: 5.5rem;
+    text-align: center;
+    color: var(--color-danger-ink);
+    border-bottom: 2px solid var(--color-danger);
+}
+
+.demo-learn-h {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-ink-0);
+    margin-bottom: 0.35rem;
+}
+
+.demo-learn-p { font-size: 0.83rem; line-height: 1.55; color: var(--color-ink-1); }
+
+/* ── Dvoje vrata ──────────────────────────────────────────────────────
+   Jedan ulaz koji PITA čije gradivo, i editor odmah pokraj (§7.5).
+   ⚠️ `display:block` na djeci je OBAVEZAN: to su `<span>` unutar `<button>`,
+   dakle inline kontekst — bez njega bi se naslov i opis slijepili u isti redak. */
+.doors {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 44rem) { .doors { grid-template-columns: 1fr 1fr; } }
+
+.door {
+    display: block;
+    text-align: start;
+    font: inherit;
+    cursor: pointer;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.door:hover { border-color: var(--color-brand-500); transform: translateY(-2px); }
+
+.door--primary { background: var(--color-brand-500); border-color: var(--color-brand-500); }
+.door--primary:hover { background: var(--color-brand-400); border-color: var(--color-brand-400); }
+
+.door-t {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--color-ink-0);
+}
+
+.door-d { display: block; margin-top: 0.4rem; font-size: 0.88rem; line-height: 1.45; color: var(--color-ink-2); }
+
+.door-m {
+    display: block;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.78rem;
+    color: var(--color-ink-2);
+}
+
+/* Tekst na ispuni marke ide kroz PAROVU boju te marke, nikad kroz zakucanu
+   bijelu: bijelo na kredi je 1.68 (§7.7). Ovo je pravilo, ne izbor. */
+/* ⚠️ POSTOTCI SU IZMJERENI, NE ODABRANI. Prigušivanje `color-mix`-om je u biti
+   promjena kontrasta: 72 % bijele na `#1657d0` daje **4.11** — axe je to i oborio.
+   Na 90 % je 5.43, a na 88 % ostaje udobno i u tamnim temama (tamna tinta na kredi).
+   Rub smije ostati na 22 % jer je ukrasan (WCAG 1.4.11 ne traži kontrast razdjelnika). */
+.door--primary .door-t { color: var(--color-on-brand); }
+.door--primary .door-d { color: color-mix(in srgb, var(--color-on-brand) 88%, transparent); }
+.door--primary .door-m {
+    color: color-mix(in srgb, var(--color-on-brand) 90%, transparent);
+    border-top-color: color-mix(in srgb, var(--color-on-brand) 22%, transparent);
+}
+
+/* ── Katalog ──────────────────────────────────────────────────────────
+   Kartice crta `renderLandingSubjects()`; boja predmeta dolazi kao
+   `--card-accent` u `style`, jer ADR-028 zabranjuje sastavljene klase. */
+.landing-subjects {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 34rem) { .landing-subjects { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 64rem) { .landing-subjects { grid-template-columns: repeat(3, 1fr); } }
+
+.landing-subject-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    text-align: start;
+    font: inherit;
+    cursor: pointer;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.landing-subject-card:hover {
+    border-color: var(--card-accent, var(--color-brand-500));
+    background: var(--color-surface-2);
+}
+
+.landing-subject-icon {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--color-on-brand);
+}
+
+.landing-subject-info { min-width: 0; flex: 1; }
+
+.landing-subject-info h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-ink-0);
+    margin: 0;
+}
+
+.landing-subject-info p { font-size: 0.78rem; color: var(--color-ink-2); margin: 0.15rem 0 0; }
+
+.landing-subject-arrow { font-size: 0.8rem; color: var(--color-ink-2); flex-shrink: 0; }
+.landing-subject-card:hover .landing-subject-arrow { color: var(--color-ink-0); }
+
+/* ── Red činjenica ────────────────────────────────────────────────────
+   Zamjenjuje tri marketinške sekcije i stats bar. Bez ikona: svaka bi bila
+   ukras koji ne nosi značenje (izlazni uvjet §7.6.5). */
+.landing-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 1.1rem 0 0;
+    border-top: 1px solid var(--color-line);
+    font-size: 0.83rem;
+    color: var(--color-ink-2);
+}
+
+.landing-facts b { color: var(--color-ink-1); font-weight: 600; }
+
+/* ── Podnožje ─────────────────────────────────────────────────────────── */
+.landing-footer {
+    width: 100%;
+    border-top: 1px solid var(--color-line);
+    padding-block: 2.5rem 2rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-2);
 }
 
 .footer-cols {
     display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr;
     gap: 2rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    text-align: left;
+    grid-template-columns: 1fr;
 }
 
-.footer-brand p {
-    margin-top: 0.85rem;
-    max-width: 32ch;
-    line-height: 1.55;
-}
+@media (min-width: 34rem) { .footer-cols { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 56rem) { .footer-cols { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
+
+.footer-brand .landing-logo { margin-bottom: 0.75rem; }
+.footer-brand p { max-width: 26rem; line-height: 1.55; }
 
 .footer-col {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.6rem;
+    gap: 0.5rem;
 }
 
-.footer-col h3 {   /* a11y (F3 3E.2): bio h4 (preskakao heading-razinu h2→h4); h3 = ista veličina, valjan redoslijed */
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-secondary);
-    margin-bottom: 0.25rem;
+.footer-col h3 {
+    font-size: 0.72rem;
     font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--color-ink-1);
+    margin: 0 0 0.25rem;
 }
 
 .footer-col a,
 .footer-link-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: inherit;
-    font-size: 0.9rem;
-    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--color-ink-2);
     text-decoration: none;
+    background: none;
+    border: 0;
+    padding: 0;
+    text-align: start;
     cursor: pointer;
-    transition: color 0.2s ease;
-    text-align: left;
 }
 
 .footer-col a:hover,
-.footer-link-btn:hover {
-    color: var(--primary-light);
-}
+.footer-link-btn:hover { color: var(--color-ink-0); text-decoration: underline; }
 
 .footer-bottom {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    max-width: 1000px;
-    margin: 2rem auto 0;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
     font-size: 0.8rem;
 }
 
-/* ----- Responsive ----- */
-/* Dok je nav tijesan (nav-linkovi + 🌐 toggle + auth + CTA), brand = samo Sokrat ikona (oslobađa ~125px
-   koje je zauzeo wordmark) → anchor-linkovi ostaju vidljivi umjesto da nestanu kroz cijeli tablet raspon.
-   Wordmark se vraća tek kad ima mjesta (≥1121px — prag dignut s 1061 jer HR labeli uz ulaz u
-   materijale na 1061–1081px prelijevaju CTA preko ruba).
-   U istom pojasu razmaci ostaju suženi (prije je to vrijedilo samo do 900px, pa je HR nav curio
-   preko ruba na 901–1060px). */
-@media (max-width: 1120px) {
-    .landing-nav .logo-text { display: none; }
-    .landing-nav { gap: 0.85rem; }
-    .landing-nav-links { gap: 1rem; }
-}
-
-/* Ispod ~860px anchor-linkovi + toggle + auth + CTA više ne stanu u jedan red → sakrij linkove
-   (sekundarni marketing-anchori; isti obrazac kao prije, samo viši prag jer 🌐 toggle troši širinu).
-   ⚠️ C0/ADR-029: ulaz u vlastite materijale se NE skriva. Prije je ovdje stajalo
-   `.landing-nav-links { display: none }`, što je na mobitelu — a to je primarni uređaj — brisalo
-   ulaz u glavni proizvod. Skrivaju se ANCHORI, ne cijela grupa. */
-/* Sidreni marketing-linkovi (Subjects · How it works · Study modes · About) pojavljuju se tek kad
-   traka za njih STVARNO ima mjesta. Prag je bio 860px; C0 je u traku dodao ulaz u vlastiti
-   materijal, koji iznad 480px nosi labelu (~175px, HR „Moji materijali" još širi) → prirodna širina
-   trake naraste na ~1040px (EN) / ~1066px (HR). Uz stari prag je pojas 861–1065px bio slomljen:
-   CTA „Start" je izlazio iz ekrana do 82px, a stranica se ne skrola vodoravno pa je bio NEDOSTUPAN.
-   Mjereno, ne procijenjeno — vidi `tests/layout-guard.spec.js` (BUG-015 klasa).
-   Prag je MJEREN, ne pogođen: sa sidrenim linkovima traci treba ~1188px (EN) / ~1214px (HR).
-   Prvi pokušaj od 1100px je prošao `layout-guard`, ali samo zato što taj test skače s 1024 na 1280
-   i pojas između NE GLEDA — na 1200px je HR i dalje izlazio 14px van. Zato 1280px (24px rezerve u
-   oba jezika) I proširen popis širina u testu. Ispod praga traka nosi ono što je važno:
-   brand, ulaz u materijal (ADR-029), jezik, račun i CTA. */
-@media (max-width: 1280px) {
-    .landing-nav-links { gap: 0.6rem; }
-    .landing-nav-links a,
-    .landing-nav-links .nav-link-btn:not(.nav-link-btn--accent) { display: none; }
-}
-
-@media (max-width: 720px) {
-    .landing-section { padding: 3rem 1.25rem; }
-    .footer-cols { grid-template-columns: 1fr; gap: 1.5rem; }
-    .footer-bottom { justify-content: center; text-align: center; }
-}
-
-/* Uske mobilne širine: brand (ikona+wordmark) + 🌐 toggle + auth + CTA moraju stati u JEDAN red
-   bez stezanja CTA-a (inače „Start studyin"). S dodanim toggle-om wordmark se gubi → ostaje Sokrat ikona. */
-@media (max-width: 480px) {
-    .landing-nav { padding-left: 0.9rem; padding-right: 0.9rem; gap: 0.5rem; }
-    /* .logo-text već skriven od ≤1120px (brand = Sokrat medaljon) */
-    .lang-toggle { padding: 0.4rem 0.6rem; gap: 0.3rem; }
-    .cta-button.nav-cta { padding: 0.5rem 0.85rem; font-size: 0.82rem; }
-}
-
-/* Ulaz u materijale kao IKONA — JEDINO ovdje; ne dodavati drugi prag za istu stvar.
-   Prag je 560px, a ne 480px kako je C0 prvotno postavio: s labelom je ulaz širok 147px (EN) /
-   154px (HR), pa traci treba ~517px — na 481px je CTA izlazio 34px izvan ekrana. Vlastiti je prag
-   jer ovisi o DULJINI LABELE, a ne o ostatku trake.
-
-   ⚠️ Paralelna sesija je isti dan postavila prag na **1239px** (ulaz ostaje gola ikona sve do
-   laptopa) jer je mjerila uz sidrene linkove vidljive od 861px. Otkad su oni skriveni do 1280px
-   (blok ispod), labela stane od 561px s **24px rezerve** — izmjereno, pa je taj drugi prag uklonjen
-   kao mrtav kod. Labela je i prepoznatljivija od gole ikone, a ulaz u glavni proizvod je ADR-029.
-   Pristupačno ime nosi `aria-label` (isti tekst kao labela), pa sakrivanje spana ne ostavlja
-   gumb bez imena. */
-@media (max-width: 560px) {
-    .nav-link-btn--accent span { display: none; }
-    .nav-link-btn--accent {
-        width: 40px;
-        height: 40px;
-        padding: 0;
-        justify-content: center;
-        border-radius: 50%;
-    }
-}
-
-/* NAJUŽI TELEFONI (320px = iPhone SE 1. gen, donja granica koju spec traži; prag 400px).
-   Mjereno na 320px PRIJE ovog bloka: traka je bila široka 365px → CTA „Start" je visio 45px izvan
-   ekrana. Stranica se NE skrola vodoravno (`layout-guard` test 1 prolazi), pa gumb nije bio odrezan
-   nego NEDOSTUPAN — a to je jedini put do učenja. Ulaz u materijale košta 40px + 8px razmaka, a
-   traka je imala ~3px zraka; C0 ju je time prelomio (BUG-015 klasa, zato `layout-guard` i postoji).
-
-   Štedimo na ONOME ŠTO SE PONAVLJA, ne na CTA-u: 🌐 gubi labelu (~36px) i razmaci padaju na 0.25rem
-   (4 razmaka × 4px = 16px). Zajedno ~52px > 45px koliko fali. CTA zadržava tekst.
-   Labela jezika: `aria-label`/`title` na gumbu i dalje nose ime, a icon-only na uskom je već
-   uspostavljen obrazac ovdje (auth gumb i ulaz u materijale rade isto). */
-@media (max-width: 400px) {
-    .landing-nav { padding-left: 0.6rem; padding-right: 0.6rem; gap: 0.25rem; }
-    /* Labela jezika pada, ali SCOPE-ANO na landing — app-headeri (`.header-lang-toggle`) je
-       zadržavaju. Ime gumba nosi `aria-label="Language / Jezik"` + `title`. */
-    .landing-nav .lang-toggle-label { display: none; }
-    .lang-toggle { padding: 0.4rem 0.5rem; }
-    /* Munja u CTA-u je UKRAS — značenje nosi tekst „Start studying" — pa pada prva.
-       Bez nje je rezerva na 320px bila 3.9px, a CI (Linux) mjeri font ~4px šire od Windowsa:
-       upravo je tako C0 pao na CI-u dok je lokalno bio zelen. Rezerva mora nadživjeti tu razliku. */
-    .cta-button.nav-cta { padding: 0.5rem 0.65rem; }
-    .cta-button.nav-cta i { display: none; }
+/* Pokret je vezan uz namjeru, pa se s `reduce` gasi u cijelosti. */
+@media (prefers-reduced-motion: reduce) {
+    .demo-flip-in,
+    .door,
+    .landing-subject-card { transition: none; }
 }

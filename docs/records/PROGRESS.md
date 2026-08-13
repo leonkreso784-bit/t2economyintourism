@@ -5,6 +5,77 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-13 (OPUS) — **C2: landing POKAZUJE umjesto da tvrdi · zadana tema postala svijetla · brojka koja je skrivala odluku**
+
+**`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` — C2 gotov, ceka Leonov OK za merge.**
+
+### Isporuceno
+- **Landing je prepisan.** *„Landing ne opisuje proizvod — landing JEST proizvod."* Posjetitelj upise
+  pojam i objasnjenje i **odmah ih vidi kao karticu, kvizno pitanje, dopunu i gradivo**, bez registracije.
+  Sekcija **6 → 3**. Nestali: 4 `gradient-orb` · `grid-overlay` · gradijentni naslov · `hero-badge` ·
+  4 plutajuce kartice · stats bar · 3 `section-eyebrow` · „How it works" · „Study modes" · zavrsni CTA.
+  Tekst vise **ne spominje FMTU ni godine studija**. Ulaz u vlastito gradivo **seli iz trake u VRATA**,
+  uz „Kreni uciti" (Leon: *„trebao bi biti prvi, gdje je Start studying"*).
+- **Mjere:** `css/landing.css` **1079 → 460** · `check:palette` **427 → 339** · bundle **224 → 210 KB** ·
+  Google Fonts **2 obitelji / 11 tezina / 2 preconnecta → 0**.
+- **Sistemski grotesk.** Inter i Space Grotesk otisli (§7.1: najjaci preostali potpis generiranog
+  sucelja) → `-apple-system` daje **pravi San Francisco** na Appleu, `Segoe UI Variable Display/Text`
+  na Windowsu 11. **0 preuzetih bajtova, 0 FOUT-a**; usput nestao i CSP-dug iz F3 (inline `onload`).
+- **Zadana tema je SVIJETLA — „Akademsko plavo"** (Leonov izbor izmedu cetiri, gledanjem).
+  `chalk` (bivsa zadana) i `mint` ostaju kao izbor; `initTheme()` vise ne lazira („dark" nije bio tema
+  nego jedini ishod, a `toggleTheme()` je pisao `light`, koji u CSS-u nije postojao).
+
+### Nalazi (vrijede dalje)
+1. **⚠️ BROJKA JE SKRIVALA ODLUKU — glavni nalaz cigle.** Spec je tvrdio da svijetla tema ceka
+   `check:palette` = 0, dakle **cijeli C3–C7**. Mjerenje pokazuje da su to **tri razlicita duga
+   zbrojena u jedan**: **46** je zakucan TEKST (nevidljiv na svijetlom) · 54 plohe/rubovi (blijedi,
+   ne slomljeni) · 125 stara paleta (neuskladena, ali citljiva). **Prepreka je bila 46 pravila, ne pet
+   cigli.** Dok je stajalo „435", svijetla tema je izgledala kao kraj faze; razdvojena, bila je
+   dostupna isti dan. **Cegrtaljka mora brojati po POSLJEDICI, ne po uzorku** — inace mjeri tocno,
+   a savjetuje krivo.
+2. **Dvije tamne palete zaredom pale su tek na zivom ekranu** („Ponoc i menta", pa „Kreda i tabla" —
+   Leon: *„nisam nikada vidio nesto odvratnije"*). Pouka §7.3 je bila ZAPISANA i svejedno ponovljena,
+   jer je brojka iznad izgledala kao zid.
+3. **`--primary-light` nikad nije bio boja teksta**, samo se to nije vidjelo. To je `brand-400`
+   (hover/ispune); `check:contrast` mjeri `brand-500` kao tekst na sve tri plohe, a **`brand-400`
+   ne mjeri nikad**. Na tamnom je prolazilo (svjetlije = citljivije), na svijetlom daje ~3.2 → pada AA.
+   **26 pravila** kroz 7 datoteka. **axe je uhvatio 1 od 26** — vidi samo ono sto je u tom trenutku na
+   ekranu. Isti obrazac kao §7.7. → **tvrda zabrana #2 u `check:palette`, obrnuto provjerena.**
+4. **Token bez mosta ne radi nista.** `--font-sans` je postojao od C1, ali ga `body` nije citao (drzao
+   je vlastitu listu) — promjena tokena bila bi nevidljiva bez te jedne linije.
+5. **Logo: maska je MJERENJEM nemoguca.** `assets/logo.svg` = 1 `<path>` + neproziran disk preko cijelog
+   viewBoxa → `mask-image` bi dao puni krug u boji marke. Ostaje `<img>`; dalje je **dizajnerska odluka**.
+6. **⚠️ GATE KOJI NE ISPISUJE BROJKU TJERA NA POGADANJE.** Suita je javila `color-contrast` na
+   `#btnCorrect > span` i tu stala; dva neovisna rucna mjerenja dala su **4.80** i **5.16** (iznad
+   praga), axe je tvrdio suprotno. Sat vremena je otisao na reprodukciju (viewport → `isMobile` →
+   UA + `deviceScaleFactor`) i svaki put je rucno mjerenje govorilo „cisto". **Rjesenje nije bila
+   bolja reprodukcija nego natjerati gate da kaze sto vidi** — prvi redak novog ispisa:
+   `fg #1e8155 / bg #eef1f7 = 4.29`. Token je `#10794a`; `#1e8155` je ISTA boja na **~93 %
+   neprozirnosti** → axe je uzorkovao **usred fade-ina sekcije**. Gate je prijavljivao pad kojeg na
+   gotovoj stranici nema, a jednako je mogao **propustiti pravi**.
+   **Trajno:** ① a11y-gate ispisuje `fg / bg = omjer (treba …)`; ② prije mjerenja animacije idu u
+   krajnje stanje (`getAnimations().finish()`) — determinicki, dok bi `waitForTimeout` utrku samo prorijedio.
+7. **Tinta je ploha koju nijedan gate ne mjeri.** „Znam" i „Savjet" stajali su na `rgba(34,197,94,.1)`,
+   a `check:contrast` mjeri samo `surface-0/1/2`. Sada su prozirni — znacenje nose obrub i boja teksta.
+
+### Testirano
+- `preflight` **EXIT 0** (12 brana) · `check:contrast` **5 tema / 205 provjera** · `check:tailwind` **6/6**.
+- **Puna Playwright suita na grani** (prvi prolaz je nasao 3 prava pada, svi popravljeni):
+  a11y kontrast na `.door-m` (72 % bijele na plavoj = **4.11** → 90 % = 5.43) · a11y kontrast na
+  naslovima learna (`--primary-light`) · `browse.spec` je klikao `#openStudyBtn`, koji je obrisan.
+- Testovi prepisani ZAJEDNO s povrsinom (spec §5): `landing.spec` (6 testova, ukljucujuci **XSS-branu**
+  za zivi prikaz i **branu da se brojka pitanja ne vrati**) · `materials-entry` (redoslijed u dokumentu
+  umjesto polozaja u navigaciji) · `layout-guard` (novi pragovi) · `browse.spec` (selektor).
+- Provjereno **na ekranu**, ne samo u gateu: landing · browse · lekcije · study · learn u zadanoj
+  svijetloj temi, **0 JS gresaka**.
+
+### Slijedi
+- Leonov **OK za merge** C2 → `main`.
+- **Logo** — (a) izvuci `<path>` u `logo-mark.svg` (maska radi, boja iz teme) ili (b) nacrtati ispocetka.
+- **C3** (vlastito gradivo + editor). Uz njega ide dio od 46 fatalnih: `block-editor` 9, `studio` 3.
+
+---
+
 ## 2026-08-12 (OPUS) — **C1 na produkciju · CI dvaput crven · paleta prestala zivjeti na dva mjesta**
 
 **`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` = `2bc9692`.**

@@ -174,7 +174,7 @@
 .browse-card-icon.is-year {
     font-size: 1.6rem;
     font-weight: 800;
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: var(--font-display);
 }
 
 .browse-card-headings {

@@ -9,7 +9,7 @@ test('browse drill-down renders from catalog and navigates to a subject', async 
   await page.waitForFunction(() => window.SOKRAT_CATALOG && window.enterBrowse);
 
   // Open browse from the landing CTA → faculty level
-  await page.click('#openStudyBtn');
+  await page.click('.doors .door--primary');   // C2: hero-CTA #openStudyBtn je zamijenjen VRATIMA
   await page.waitForSelector('#browse-page.active', { timeout: 5000 });
   await page.waitForSelector('.browse-card[data-browse="faculty"]');
 
@@ -83,7 +83,7 @@ test('Year 1 browse shows Business Informatics', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(() => window.SOKRAT_CATALOG && window.enterBrowse);
 
-  await page.click('#openStudyBtn');
+  await page.click('.doors .door--primary');   // C2: hero-CTA #openStudyBtn je zamijenjen VRATIMA
   await page.waitForSelector('.browse-card[data-browse="faculty"]');
   await page.click('.browse-card[data-browse="faculty"]');
   await page.waitForSelector('.browse-card[data-browse="program"]');

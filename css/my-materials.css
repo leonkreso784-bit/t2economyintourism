@@ -45,7 +45,7 @@
 }
 
 .mm-add i {
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 /* ── Stablo ─────────────────────────────────────────────────────── */
@@ -180,7 +180,7 @@ body.mm-dragging {
 }
 
 .mm-row--study .mm-icon {
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 /* Naziv */

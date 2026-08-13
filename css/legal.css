@@ -65,7 +65,7 @@ body {
 .legal-logo img { width: 34px; height: 34px; border-radius: 8px; }
 
 .legal-back {
-    color: var(--primary-light);
+    color: var(--primary);
     text-decoration: none;
     font-size: 0.92rem;
     white-space: nowrap;
@@ -92,14 +92,14 @@ main.legal {
 .legal h2 {
     font-size: 1.2rem;
     margin: 1.8rem 0 0.6rem;
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 .legal p, .legal li { color: var(--text); font-size: 0.97rem; margin-bottom: 0.7rem; }
 
 .legal ul, .legal ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
 
-.legal a { color: var(--primary-light); }
+.legal a { color: var(--primary); }
 
 .legal .legal-card {
     background: var(--bg-card);
@@ -128,7 +128,7 @@ main.legal {
 }
 
 .legal-footer a { color: var(--text-dim); text-decoration: none; }
-.legal-footer a:hover { color: var(--primary-light); }
+.legal-footer a:hover { color: var(--primary); }
 
 @media (max-width: 480px) {
     main.legal { padding: 1.8rem 1.1rem 2.2rem; }

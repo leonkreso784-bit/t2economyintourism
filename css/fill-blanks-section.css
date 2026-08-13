@@ -121,10 +121,12 @@
     margin-bottom: 1rem;
 }
 
+/* Ista promjena kao u `flashcards-section.css`: tinta je bila ploha koju nijedan gate
+   ne mjeri, pa je na svijetloj temi „Savjet" pao ispod 4.5. Značenje nose obrub i tekst. */
 .control-btn.hint {
-    background: rgba(245, 158, 11, 0.1);
+    background: transparent;
     color: var(--accent);
     border: 2px solid var(--accent);
 }
 
-.control-btn.hint:hover { background: var(--accent); color: white; }
+.control-btn.hint:hover { background: var(--accent); color: var(--on-primary); }

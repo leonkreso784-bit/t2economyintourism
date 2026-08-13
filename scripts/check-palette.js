@@ -220,6 +220,43 @@ if (naIspuni.length) {
   process.exit(1);
 }
 
+/* ── TVRDA ZABRANA #2: `--primary-light` kao boja TEKSTA ─────────────────────
+ * Povod (2026-08-13, C2): `--primary-light` = `--color-brand-400` = SVJETLIJA
+ * varijanta marke, namijenjena hoveru i ispunama. `check:contrast` mjeri `brand-500`
+ * kao tekst na sve tri plohe, ali `brand-400` NE MJERI NIKAD — pa je 26 pravila
+ * pisalo tekst bojom koju nijedan gate ne gleda.
+ *
+ * Na tamnoj podlozi je to prolazilo (svjetlije = čitljivije), pa je greška bila
+ * nevidljiva godinama. Čim je zadana tema postala svijetla, `#4a82e8` na bijelom daje
+ * **~3.2** → pada AA. axe je uhvatio 1 od 26, jer vidi samo ono što je u tom trenutku
+ * na ekranu — točno isti obrazac kao zabrana iznad.
+ *
+ * Pravilo: tekst ide na `var(--primary)`; `--primary-light` je za HOVER i ISPUNE. */
+const SVIJETLA_MARKA_TEKST = /(?:^|[;{]\s*)color:\s*var\(--(?:primary-light|color-brand-400)\)/m;
+
+const svijetliTekst = [];
+for (const abs of files) {
+  if (!abs.endsWith('.css')) continue;
+  const rel = path.relative(ROOT, abs).replace(/\\/g, '/');
+  const css = stripComments(fs.readFileSync(abs, 'utf8'));
+  const re = /([^{}]+)\{([^{}]*)\}/g;
+  let m;
+  while ((m = re.exec(css)) !== null) {
+    if (SVIJETLA_MARKA_TEKST.test(m[2])) {
+      svijetliTekst.push(`${rel}  →  ${m[1].trim().replace(/\s+/g, ' ').slice(0, 60)}`);
+    }
+  }
+}
+
+if (svijetliTekst.length) {
+  console.log(`\n❌ ${svijetliTekst.length} pravilo koristi SVJETLIJU marku kao boju teksta:`);
+  svijetliTekst.slice(0, 20).forEach((r) => console.log('      ' + r));
+  console.log('\n   `--primary-light` (= brand-400) je varijanta za HOVER i ISPUNE; nijedan gate');
+  console.log('   je ne mjeri kao tekst. Na svijetloj temi daje ~3.2 (pada AA).');
+  console.log('   Za tekst koristi `var(--primary)` — njega `check:contrast` MJERI na sve tri plohe.\n');
+  process.exit(1);
+}
+
 if (grand < allowedTotal) {
   console.log(`\n✅ čisto — i PALO za ${allowedTotal - grand}. Spusti branu: node scripts/check-palette.js --update\n`);
 } else if (grand === 0) {

@@ -15,16 +15,23 @@ test('ulaz u vlastiti materijal vidi se na landingu BEZ prijave', async ({ page 
   await page.goto('/');
   await page.waitForSelector('.landing-nav');
 
-  const entry = page.locator('.landing-nav [data-goto-materials]');
+  // ⚠️ C2 JE ULAZ PRESELIO IZ TRAKE U VRATA (Leon, 2026-08-12: „ne znam zašto je My
+  // materials na gornjem baru — trebao bi biti prvi, gdje je Start studying").
+  // Cilj ADR-029 se NIJE promijenio, samo mjesto: ulaz mora biti vidljiv bez prijave
+  // i mora stajati PRIJE kataloga. Zato tvrdnja gleda vrata, ne `.landing-nav-links`.
+  const entry = page.locator('.doors [data-goto-materials]');
   await expect(entry).toBeVisible();
 
-  // Regresijska brana: ulaz mora stajati PRIJE „Subjects" u navigaciji. Katalog je od
-  // ADR-029 jedan izvor gradiva, a ne ono što platforma jest — ako netko vrati stari
-  // poredak, ovo pada.
-  const order = await page.$$eval('.landing-nav-links > *', (els) =>
-    els.map((el) => (el.hasAttribute('data-goto-materials') ? 'materials' : (el.textContent || '').trim()))
-  );
-  expect(order[0]).toBe('materials');
+  // Regresijska brana: vrata moraju biti IZNAD katalog-sekcije u dokumentu. Katalog je
+  // jedan izvor gradiva, a ne ono što platforma jest — vrati li ih netko ispod, ovo pada.
+  const redoslijed = await page.evaluate(() => {
+    const vrata = document.querySelector('.doors [data-goto-materials]');
+    const katalog = document.getElementById('subjects');
+    if (!vrata || !katalog) return null;
+    // 4 = DOCUMENT_POSITION_FOLLOWING → katalog dolazi POSLIJE vrata.
+    return (vrata.compareDocumentPosition(katalog) & 4) === 4;
+  });
+  expect(redoslijed, 'ulaz u vlastiti materijal je pao ispod kataloga').toBe(true);
 
   expect(errors).toEqual([]);
 });
@@ -34,8 +41,8 @@ test('klik na ulaz otvara stranicu, a odjavljen posjetitelj dobiva poziv na prij
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto('/');
-  await page.waitForSelector('.landing-nav');
-  await page.click('.landing-nav [data-goto-materials]');
+  await page.waitForSelector('.doors [data-goto-materials]');   // C2: ulaz je preselio iz trake u vrata
+  await page.click('.doors [data-goto-materials]');
 
   await page.waitForSelector('#materials-page.active', { timeout: 5000 });
 

@@ -193,9 +193,7 @@
     color: #312e81;
 }
 
-[data-theme="dark"] .mobile-nav-btn.active {
-    color: #a5b4fc;
-}
+
 
 .mobile-nav-btn.active i {
     transform: scale(1.1);

@@ -230,7 +230,7 @@
 /* Headings */
 #learn .learn-card-content h3 {
     font-size: 1.1rem;
-    color: var(--primary-light);
+    color: var(--primary);
     margin: 18px 0 10px 0;
     padding-bottom: 6px;
     border-bottom: 2px solid var(--primary);
@@ -386,7 +386,7 @@
 #learn .example-box h4 { color: var(--text-primary); }
 #learn .tip-box h4 i { color: var(--secondary); }
 #learn .warning-box h4 i { color: var(--danger-text); }
-#learn .example-box h4 i { color: var(--primary-light); }
+#learn .example-box h4 i { color: var(--primary); }
 
 #learn .tip-box p,
 #learn .warning-box p,
@@ -818,50 +818,7 @@ sokrat-modal.image-modal > * {
     }
 }
 
-/* =====================================================
-   DARK MODE
-   ===================================================== */
 
-[data-theme="dark"] #learn .learn-card {
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="dark"] #learn .learn-card-content {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-[data-theme="dark"] #learn .learn-card-content p,
-[data-theme="dark"] #learn .learn-card-content li {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-[data-theme="dark"] #learn .tip-box {
-    background: rgba(16, 185, 129, 0.15);
-}
-
-[data-theme="dark"] #learn .warning-box {
-    background: rgba(239, 68, 68, 0.15);
-}
-
-[data-theme="dark"] #learn .example-box {
-    background: rgba(99, 102, 241, 0.15);
-}
-
-[data-theme="dark"] #learn .formula-box {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-[data-theme="dark"] #learn .formula-box strong {
-    color: #a5b4fc;
-}
-
-[data-theme="dark"] #learn .learn-card-content th {
-    background: var(--primary-dark);
-}
-
-[data-theme="dark"] #learn .learn-card-content tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
-}
 
 /* =====================================================
    ACCESSIBILITY

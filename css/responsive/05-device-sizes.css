@@ -4,13 +4,7 @@
 
 /* ===== EXTRA SMALL DEVICES (iPhone SE, small phones) ===== */
 @media screen and (max-width: 374px) {
-    .hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 0.9rem;
-    }
+
     
     .cta-button {
         padding: 12px 20px;
@@ -37,9 +31,7 @@
 
 /* ===== SMALL PHONES (iPhone 12 mini, small Android) ===== */
 @media screen and (min-width: 375px) and (max-width: 413px) {
-    .hero-title {
-        font-size: 2rem;
-    }
+
     
     .subject-card {
         padding: 14px;
@@ -52,9 +44,7 @@
 
 /* ===== STANDARD PHONES (iPhone 14/15, most Android) ===== */
 @media screen and (min-width: 414px) and (max-width: 479px) {
-    .hero-title {
-        font-size: 2.2rem;
-    }
+
     
     .subject-card {
         padding: 16px;
@@ -67,9 +57,7 @@
 
 /* ===== LARGE PHONES (iPhone Pro Max, Galaxy Ultra) ===== */
 @media screen and (min-width: 480px) and (max-width: 599px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
+
     
     .subjects-grid {
         gap: 16px;
@@ -86,13 +74,7 @@
 
 /* ===== SMALL TABLETS (iPad Mini, small Android tablets) ===== */
 @media screen and (min-width: 600px) and (max-width: 767px) {
-    .hero-title {
-        font-size: 2.8rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.1rem;
-    }
+
     
     .subjects-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -111,19 +93,7 @@
 
 /* ===== TABLETS (iPad, Android tablets) ===== */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
-    .hero-title {
-        font-size: 3rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.2rem;
-        max-width: 500px;
-    }
-    
-    .hero-actions {
-        flex-direction: row;
-        gap: 16px;
-    }
+
     
     .subjects-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -175,14 +145,7 @@
 
 /* ===== LARGE TABLETS & SMALL LAPTOPS ===== */
 @media screen and (min-width: 1024px) and (max-width: 1279px) {
-    .hero-title {
-        font-size: 3.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.25rem;
-        max-width: 550px;
-    }
+
     
     .subjects-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -220,14 +183,7 @@
 
 /* ===== DESKTOPS ===== */
 @media screen and (min-width: 1280px) and (max-width: 1535px) {
-    .hero-title {
-        font-size: 4rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.3rem;
-        max-width: 600px;
-    }
+
     
     .subjects-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -265,18 +221,7 @@
 
 /* ===== LARGE DESKTOPS ===== */
 @media screen and (min-width: 1536px) {
-    .hero-title {
-        font-size: 4.5rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 1.4rem;
-        max-width: 700px;
-    }
-    
-    .hero-content {
-        padding: 60px;
-    }
+
     
     .subjects-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -329,23 +274,7 @@
 
 /* ===== LANDSCAPE MODE - PHONES ===== */
 @media screen and (max-height: 500px) and (orientation: landscape) {
-    .landing-hero {
-        padding-top: 60px;
-    }
-    
-    .hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .hero-subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 12px;
-    }
-    
-    .hero-actions {
-        flex-direction: row;
-        gap: 12px;
-    }
+
     
     .cta-button {
         padding: 10px 20px;
@@ -387,10 +316,7 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-    
-    .gradient-orb {
-        animation: none !important;
-    }
+
     
     .flashcard-inner {
         transition: none !important;

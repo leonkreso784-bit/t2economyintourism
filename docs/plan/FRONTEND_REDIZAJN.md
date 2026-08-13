@@ -56,12 +56,29 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` (1.000) | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — vodi s *„napravi svoje gradivo"*, katalog je drugi po redu | `landing.css` 1079 → **460** | posjetitelj koji prvi put dođe **razumije da gradi svoje**; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
-| **C5** | **Četiri moda + vježbe** | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css`, `learn*.css`, `exercises.css`, `blind-map.css`, `math.css` | student uči u sva 4 moda; kriterij 4 vrijedi |
+| **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
+| **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
 | **C7** | **Gašenje** | `responsive/*` (6 datoteka, 40 `!important`), `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
+
+> ### ✂️ C5 JE RAZBIJEN NA DVIJE CIGLE (Leon, 2026-08-13: *„možemo razbit C5 na dvije cigle"*)
+> Bila je **2755 redaka** — najveća i najrizičnija u fazi, i jedina koja bi sama trošila trećinu
+> preostalog vremena. Rez **ne ide po veličini nego po ŠAVU**, jer bi rez na pola datoteka ostavio
+> dvije polovične površine, a spec §3 to izričito zabranjuje („površina je ili cijela nova ili
+> cijela stara").
+>
+> - **C5a = ono čime student UVJEŽBAVA.** Ta četiri moda dijele `.control-btn`, `.answer-btn` i
+>   traku sa statistikom — migriraju se zajedno ili se tuku. Nose i **najveći rizik od BUG-025**:
+>   opcije kviza i rečenice dopuna su točno onaj tekst koji nikad nije dolazio do `esc`.
+> - **C5b = ono što student ČITA.** Sve ide kroz `renderContentBlocks()` ili kroz engine vježbi —
+>   više redaka, ali mehanički ujednačenije, i s jednom tvrdom granicom (`blocks-renderer.js` i
+>   engine se **ne diraju**, mijenja se samo CSS oko njih).
+>
+> **Cijena podjele je jedan dodatni krug gateova** (puna suita + Leonov pogled). Prihvaćeno svjesno:
+> jeftinije je od povrata cigle koja je dirala sva četiri moda odjednom.
 
 **C0 ide prvi i ne čeka ništa.** To nije redizajn nego popravak informacijske arhitekture: prije njega
 su se „Moji materijali" montirali **unutar profila**, bez vlastite stranice i rute, a landing nav
@@ -279,15 +296,51 @@ Nakon što je vidio četiri palete uživo, Leon: *„sva četiri mi se sviđaju,
 
 | id | naziv | svjetloća | marka |
 |---|---|---|---|
-| *(zadana)* | **Kreda i tabla** | tamno, toplo | kreda-žuta `#F2C14E` |
+| `academic` **(ZADANA od 2026-08-13)** | **Akademsko plavo** | svijetlo | plava `#1657D0` + marker `#FFD24A` |
 | `paper` | **Papir i marker** | svijetlo | plava `#2C5FD6` + marker `#FFD24A` |
-| `academic` | **Akademsko plavo** | svijetlo | plava `#1657D0` |
+| `chalk` | **Kreda i tabla** | tamno, toplo | kreda-žuta `#F2C14E` |
 | `mint` | **Ponoć i menta** | tamno | mentol `#4FC9AB` |
 
-**⛔ UVJET ZA BIRAČ — nije stvar ukusa nego ispravnosti.** Birač tema **se ne uključuje** dok
-`npm run check:palette` ne dođe na **nulu** (trenutni broj ispisuje sam gate; osnovica je u `scripts/palette-baseline.json`). Razlog: na tamnoj podlozi je zakucana
-boja samo neusklađena, a na papirnatoj temi `color: rgba(255,255,255,.9)` je **nevidljiv**. Zato je
-zadana tema **tamna** — ništa ne puca — ali topla, a ne ona koja je pala.
+> ### ⚠️ ZADANA TEMA JE PROMIJENJENA — i razlog je važniji od izbora (2026-08-13)
+>
+> „Kreda i tabla" je bila zadana **osam sati**. Leon ju je vidio na gotovom landingu:
+> *„ona boja u frontendu je odvratna, ja nisam nikada vidio nešto odvratnije."*
+>
+> To je **druga tamna paleta zaredom** odbijena tek na živom ekranu — nakon „Ponoći i mente"
+> (§7.3). Dvije nezavisne odbijenice više nisu stvar ukusa nego **obrazac**, i pokazuju da je
+> §7.3 zapisao točnu pouku, ali ju je faza svejedno ponovila: *gotovo svi alati za učenje koji
+> rade su svijetli; tamno je konvencija editora koda, ne nečega što se čita satima i uči danju.*
+> Isto je tvrdio i §7.6 („Appleova podloga za tekst je svijetla"). **Znali smo, i svejedno
+> smo dvaput isporučili tamno** — jer je brojka ispod izgledala kao zid.
+>
+> **⛔ RANIJI UVJET ZA BIRAČ BIO JE NETOČAN, I TO JE GLAVNI NALAZ C2.**
+> Ovdje je stajalo: birač i svijetla tema čekaju `check:palette` = **0**, dakle cijeli C3–C7.
+> **`npm run palette:breakdown`** pokazuje da je taj broj **tri različita duga zbrojena u
+> jedan**, i da samo jedan blokira svijetlu podlogu:
+>
+> | | što se dogodi na svijetlom |
+> |---|---|
+> | **zakucan tekst** (`color:#fff`) | ⛔ **NEVIDLJIV** — jedino što stvarno blokira |
+> | plohe/rubovi (`rgba(255,255,255,.06)`) | blijedo, ali ispravno |
+> | stara paleta (indigo/slate) | neusklađeno, ali čitljivo |
+>
+> Pri otkriću je omjer bio **46 / 54 / 125**: prepreka je bila **46 pravila u 15 datoteka**,
+> ne pet cigli. (Trenutni brojevi ispisuje sam alat — namjerno se ne prepisuju u prozu, ADR-027;
+> `-- --list` daje svako pravilo sa selektorom i pozadinom.)
+>
+> **Agregatna brojka je skrivala odluku:** dok je stajalo „435", svijetla tema je izgledala kao
+> kraj faze; kad se razdvojila, ispalo je da je dostupna isti dan. **Pouka za svaki sljedeći
+> gate: čegrtaljka mora brojati po POSLJEDICI, ne po uzorku** — inače mjeri točno, a savjetuje
+> krivo. Zato je razlaganje ostalo u repozitoriju kao alat, a ne kao jednokratno mjerenje.
+>
+> **Provjereno na ekranu, ne u tablici:** landing · browse · lekcije · study · learn, svi u
+> zadanoj svijetloj temi, 0 JS grešaka. Jedina stvarno slomljena površina bila je **traka za
+> kolačiće** — jedini modul koji je namjerno bio „self-contained (explicit colors)", pa je kao
+> jedini ostao tamna ploča preko dna svijetle stranice. Prebačena na tokene (9 → 0).
+>
+> **Preostala fatalna se NE popravljaju u C2.** Pod zadanom (svijetlom) temom su status-boje
+> TAMNE, pa je bijeli tekst na njima ispravan; slome se tek pod `chalk`/`mint`, a birač još ne
+> postoji. To je posao C3–C7, i sad ima točan popis: **`npm run palette:breakdown -- --list`**.
 
 **Zato je i `check:palette` proširen na zakucanu bijelu/crnu** (prije ih nije gledao: tražio je samo
 staru paletu). Brojka je s 300 skočila na 435 — nije poraslo, nego se **vidjelo više**. (C2/3 ju je spustio na 433: `legal.css` je prestao držati vlastitu paletu.)
@@ -351,6 +404,20 @@ može dobro sjesti i na papir i na tamnu ploču.
 >
 > **Ako ① padne, logo se ne krpa nego CRTA ISPOČETKA.** 45 KB traženih putanja za znak koji bi trebao
 > biti par stotina bajtova je sam po sebi znak da je izvor kriv — a to je dizajnerski posao, ne CSS.
+>
+> ### ✅ ① JE IZMJERENO I PALO (2026-08-13)
+> ```
+> assets/logo.svg   1 <path> · 2 <circle> · 4812 decimalnih brojeva
+> <circle r="528" fill="url(#g)">   ← NEPROZIRAN disk preko cijelog viewBoxa
+> ```
+> Maska čita alfa-kanal, a disk je pun → `mask-image` bi dao **puni krug u boji marke**, ne znak.
+> Nema CSS-a koji to zaobilazi. **Logo time izlazi iz C2 i postaje dizajnerska odluka.**
+> Do nje ostaje `<img>`: nosi vlastitu pozadinu, pa čita na sve četiri teme — indigo je
+> off-brand, ali ništa ne lomi. Dvije mjerene opcije za Leona:
+> **(a)** izvući samo `<path>` u `assets/logo-mark.svg` → silueta, maska radi, boja dolazi iz teme
+> (datoteka ostaje vanjska i immutable-cachirana, pa 45 KB nije problem — problem je bio samo
+> *inline*); **(b)** nacrtati znak ispočetka, par stotina bajtova. **(a) mijenja izgled marke**
+> (disk nestaje, ostaje figura), pa nije Claudeova odluka.
 
 ---
 
@@ -380,11 +447,17 @@ može dobro sjesti i na papir i na tamnu ploču.
 
 Grotesk svugdje. **SF Pro se ne smije koristiti na webu** (Appleova licenca ga drži na njihovim platformama), ali `-apple-system, system-ui` u stacku **na iPhoneu i Macu razriješi se u pravi San Francisco** — legalno i za **0 KB**. Na Windowsu pada na Segoe. Zamjenski grotesk **ne smije biti Inter ni Space Grotesk** (§7.1: oba su potpis generiranog sučelja).
 
-#### Posljedica 2 — brisanje ostatka palete postaje BLOKADA SMJERA, ne dug
+#### Posljedica 2 — brisanje ostatka palete je BLOKADA SMJERA, ne dug
 
-Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**. Svijetla tema je zaključana iza `check:palette` = **0**, jer je `color: rgba(255,255,255,.9)` na papiru **nevidljiv**, ne samo neusklađen.
+Appleova karakteristična podloga za tekstualni sadržaj je **svijetla**, a `color: rgba(255,255,255,.9)`
+na papiru nije neusklađen nego **nevidljiv**. Zato čišćenje zakucanih boja u C3–C7 nije „sitni dug koji
+usput otplaćujemo" nego **put do izgleda koji je Leon izabrao**.
 
-**Time se mijenja prioritet:** čišćenje zakucanih boja u C3–C7 više nije „sitni dug koji usput otplaćujemo" nego **jedini put do izgleda koji je Leon izabrao**. Do nule zadana tema ostaje tamna.
+> **✏️ ISPRAVAK (2026-08-13): ovdje je stajalo „svijetla tema je zaključana iza `check:palette` = 0"
+> i „do nule zadana tema ostaje tamna". OBOJE JE BILO NETOČNO.**
+> Zaključana je bila iza **zakucanog TEKSTA**, a to je bio mali dio te brojke (46 od 435). Zadana tema
+> je svijetla **od C2**, a ostatak duga (plohe, stara paleta) se otplaćuje dalje kroz C3–C7 — samo više
+> ne blokira smjer. Puno obrazloženje i mjerenje: **§7.4**.
 
 #### Kako se zna da smo u smjeru (mjerljivo, ne na oko)
 
@@ -429,6 +502,103 @@ zakucanu bijelu/crnu kao tekst. Obrnuto provjerena.
 **tekst na ispuni marke uvijek `var(--on-primary)`**, nikad `white`, ma kako „očito" izgledalo na
 današnjoj temi.
 
+#### Isti obrazac, drugi token: `--primary-light` NIJE boja teksta (2026-08-13)
+
+Prelazak na svijetlu zadanu temu iznio je **drugi primjerak iste greške**, i vrijedi ga zapisati
+odvojeno jer se ne popravlja istim pravilom:
+
+> `--primary-light` = `--color-brand-400` = **svjetlija varijanta marke, za HOVER i ISPUNE.**
+> `check:contrast` mjeri `brand-500` kao tekst na sve tri plohe — **`brand-400` ne mjeri nikad.**
+
+Zato je **26 pravila** kroz 7 datoteka (`profile` 8 · `auth` 5 · `legal` 4 · `studio` 4 · `learn` 2 ·
+`my-materials` 2 · `block-editor` 1) godinama pisalo tekst bojom koju **nijedan gate ne gleda**. Na
+tamnoj podlozi je prolazilo (svjetlije = čitljivije); na svijetloj `#4a82e8` na bijelom daje **~3.2**
+→ pada AA. **axe je uhvatio 1 od 26.**
+
+**Pouka je općenitija od oba slučaja:** gate koji provjerava *neke* tokene stvara tihu pretpostavku da
+su provjereni **svi**. Sljedeći token koji dobije ulogu („`-strong`", „`-ink`", „`-400`") mora ili ući
+u `check:contrast`, ili dobiti zabranu u `check:palette`. **Tvrda zabrana #2**, obrnuto provjerena.
+
 **Usput pronađeno:** tri pravila nosila su komentar *„bijelo na `--primary` je 4.22 (<4.5),
 `--primary-dark` = 5.8"*. Brojke su vrijedile za indigo; na kredi je `--primary-dark` s bijelom **2.34**.
 Komentar je dakle **dokumentirao netočan razlog za postupak koji više ne pomaže** — obrisan (ADR-027).
+
+---
+
+### 7.8 ✅ C2 JE ISPUNJEN (2026-08-13, grana `feat/c2-landing`)
+
+**Landing više ne opisuje proizvod — pokazuje ga.** Posjetitelj upiše pojam i objašnjenje i
+odmah ih vidi kao karticu, kvizno pitanje, dopunu i gradivo. Bez registracije, bez videa.
+
+**Struktura 6 → 3 sekcije.** Nestali: 4 `gradient-orb` · `grid-overlay` · gradijentni naslov ·
+`hero-badge` · 4 plutajuće kartice · stats bar · 3 `section-eyebrow` · „How it works" ·
+„Study modes" · završni CTA. Tekst više **ne spominje FMTU ni godine studija**.
+
+| mjera | prije | poslije |
+|---|---|---|
+| `css/landing.css` | 1079 | **460** |
+| `check:palette` | 427 | **339** (−88) |
+| `styles.bundle.css` | 224 KB | **210 KB** |
+| Google Fonts | 2 obitelji, 11 težina, 2 `preconnect` | **0** |
+
+**Četiri odluke koje su promijenile više od landinga:**
+
+1. **Sistemski grotesk.** Inter i Space Grotesk su otišli (§7.1: najjači preostali potpis
+   generiranog sučelja). `-apple-system` daje **pravi San Francisco** na iPhoneu i Macu,
+   `Segoe UI Variable Display/Text` na Windowsu 11 — isti razrez po veličini koji Apple radi
+   s SF Pro Display/Text, za **0 preuzetih bajtova i 0 FOUT-a**. Usput je nestao i CSP-dug
+   iz F3 (inline `onload` na font-linku).
+   ⚠️ **Token bez mosta ne radi ništa:** `--font-sans` je postojao od C1, ali ga nitko nije
+   čitao — `body` je držao vlastitu listu. Promjena tokena bila bi nevidljiva bez te jedne linije.
+2. **Zadana tema → svijetla** (§7.4). Otključano mjerenjem, ne čekanjem.
+3. **Ulaz u vlastito gradivo seli iz trake u VRATA** (Leon: *„trebao bi biti prvi, gdje je
+   Start studying"*). ADR-029 nije nadglašen — cilj je isti, mjesto drugo; `materials-entry.spec`
+   sada čuva **redoslijed u dokumentu** (vrata iznad kataloga), a ne položaj u navigaciji.
+4. **Brojka pitanja obrisana s landinga.** Pokrivala je 17 od 22 predmeta (`compute-stats.js`
+   namjerno preskače prijevode), pa je uz „22 predmeta" bila nedosljedna. Kriterij prihvaćanja
+   **#5 ispunjen brisanjem**, ne pogađanjem — a `landing.spec` sad **pada ako se vrati**.
+
+**Katalog-traka je ZADRŽANA, protivno prototipu.** §1 zabranjuje promjenu ponašanja u ovoj fazi,
+a vitrina je živ put (kartica → lekcija) o kojem ovise tri test-datoteke. Restilizirana i
+podređena vratima. Bez nje bi „22 predmeta" bila tvrdnja; s njom je dokaz.
+
+**Sigurnost:** živi prikaz je jedino mjesto na landingu koje prima korisnički unos, pa je
+građen **bez ijednog `innerHTML`** — `textContent` + `createElement`. To je **jače od escapea**
+i ne može se pokvariti sljedećim editom koji zaboravi omotač. Brana: `landing.spec` gura
+`<img src=x onerror=…>` kroz oba polja i tvrdi da element **nije nastao**.
+
+**Čišćenje koje je izašlo iz cigle:** 30 mrtvih pravila iz `responsive/*` (elementi kojih više
+nema) + **16 pravila koja selektiraju `[data-theme="dark"]`** — nijedna se tema više tako ne
+zove, pa su postala nedostižna. Među obrisanima je bio i jedini `!important` koji je tukao
+Tailwind-skalu (`.hero-title { font-size: 2rem !important }`) i tiho zaključavao naslov na
+32px na svakom telefonu.
+
+#### Nalaz na kraju cigle: **gate koji ne ispisuje BROJKU tjera na pogađanje**
+
+Puna suita je javila `color-contrast` na `#btnCorrect > span` — i tu stala. Dva neovisna ručna
+mjerenja dala su **4.80** i **5.16**, dakle iznad praga; axe je tvrdio suprotno. Otišlo je više
+od sata na reprodukciju (isti viewport, pa `isMobile: true`, pa isti UA i `deviceScaleFactor`) —
+i svaki put je ručno mjerenje govorilo „čisto".
+
+**Rješenje nije bila bolja reprodukcija nego to da se gate NATJERA da kaže što vidi.** Čim je
+`a11y.spec.js` počeo ispisivati axeove vlastite brojke, odgovor je bio u prvom retku:
+
+```
+fg #1e8155 / bg #eef1f7 = 4.29 (treba 4.5:1)
+```
+
+Token je `#10794a`. `#1e8155` je **ista boja na ~93 % neprozirnosti** — axe je uzorkovao
+**usred fade-ina sekcije**. Gate je dakle prijavljivao pad koji na gotovoj stranici ne postoji,
+i to **mjesecima je mogao raditi obrnuto** (propustiti pravi pad koji se u tom trenutku još nije
+dovršio).
+
+**Dvije trajne promjene:**
+1. **`a11y.spec.js` ispisuje `fg / bg = omjer (treba …)`** za svaki `color-contrast` nalaz.
+   Selektor kaže GDJE, brojka kaže ZAŠTO — bez druge se prva ne da iskoristiti.
+2. **Prije mjerenja se animacije guraju u krajnje stanje** (`document.getAnimations().forEach(a => a.finish())`).
+   Determinističko, ne duže čekanje: `waitForTimeout` bi istu utrku samo učinio rjeđom.
+
+**Usput popravljeno:** „Znam" i „Savjet" stajali su na **tinti** (`rgba(34,197,94,.1)`), a
+`check:contrast` mjeri samo plohe koje poznaje (`surface-0/1/2`) — tinta je bila **četvrta,
+izmišljena ploha koju nitko ne mjeri**. Sada su prozirni, pa značenje nose obrub i boja teksta
+(usput bliže Appleovoj disciplini: vlas-crta umjesto ispune).

@@ -606,6 +606,93 @@ function initLandingSubjects() {
     });
 }
 
+// ========== HERO: ŽIVI PRIKAZ (C2) ==========
+// „Landing ne OPISUJE proizvod nego JEST proizvod": posjetitelj upiše pojam i
+// objašnjenje i ODMAH ih vidi kao karticu, kviz, dopunu i gradivo — ista pretvorba
+// koju radi aplikacija, bez registracije.
+//
+// ⚠️ SIGURNOST: ovo je jedino mjesto na landingu koje prima KORISNIČKI unos. Zato
+// ovdje nema `innerHTML` uopće — sve ide kroz `textContent` i `createElement`.
+// To je jače od escapea (BUG-025 se dogodio točno tamo gdje je escape izostao),
+// i ne može se pokvariti sljedećim editom koji zaboravi omotač.
+function initHeroDemo() {
+    const term = document.getElementById('demoTerm');
+    const def = document.getElementById('demoDef');
+    if (!term || !def || term.dataset.bound === '1') return;
+    term.dataset.bound = '1';
+
+    const front = document.getElementById('demoCardFront');
+    const back = document.getElementById('demoCardBack');
+    const quizQ = document.getElementById('demoQuizQ');
+    const quizOpts = document.getElementById('demoQuizOpts');
+    const fillQ = document.getElementById('demoFillQ');
+    const learnH = document.getElementById('demoLearnH');
+    const learnP = document.getElementById('demoLearnP');
+    const flip = document.getElementById('demoFlip');
+
+    // Ometači: u aplikaciji dolaze iz drugih kartica iste lekcije. Ovdje su fiksni i
+    // prevedeni, jer je poanta prikazati OBLIK pitanja, ne generirati pravi kviz.
+    const distractors = () => [
+        landingT('demo.distract.1', 'The movement of water through evaporation, condensation and rainfall.'),
+        landingT('demo.distract.2', 'Breaking down glucose inside a cell to release energy.'),
+        landingT('demo.distract.3', 'Passing inherited traits from parents to offspring.')
+    ];
+
+    function render() {
+        const t = term.value.trim() || landingT('demo.emptyTerm', 'Your term');
+        const d = def.value.trim() || landingT('demo.emptyDef', 'What you type will show up here.');
+
+        front.textContent = t;
+        back.textContent = d;
+        learnH.textContent = t;
+        learnP.textContent = d;
+
+        quizQ.textContent = landingT('demo.question', 'What does this mean: {term}?').replace('{term}', t);
+
+        quizOpts.textContent = '';
+        [{ text: d, right: true }].concat(distractors().map((x) => ({ text: x, right: false })))
+            .forEach((opt) => {
+                const p = document.createElement('p');
+                p.className = opt.right ? 'demo-opt is-right' : 'demo-opt';
+                p.textContent = opt.text;
+                quizOpts.appendChild(p);
+            });
+
+        // Dopuna: pojam je izvađen, objašnjenje ostaje kao trag.
+        fillQ.textContent = '';
+        const blank = document.createElement('span');
+        blank.className = 'demo-blank';
+        blank.textContent = '?';
+        fillQ.appendChild(blank);
+        fillQ.appendChild(document.createTextNode(' — ' + d));
+    }
+
+    // `touched` javlja i18n-u da polje više nije primjer nego posjetiteljev tekst —
+    // bez toga bi klik na 🌐 obrisao rečenicu koju je upravo upisao.
+    const onInput = (e) => { e.target.dataset.touched = '1'; render(); };
+    term.addEventListener('input', onInput);
+    def.addEventListener('input', onInput);
+
+    if (flip) {
+        flip.addEventListener('click', () => {
+            flip.setAttribute('aria-pressed', flip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        });
+    }
+
+    // Jezik se mijenja bez reloada → prikaz se mora prevesti zajedno s ostatkom.
+    window.renderHeroDemo = render;
+    render();
+}
+
+// Prijevod s fallbackom. ⚠️ NE zove se `pt` — to ime je već zauzeto u `js/profile.js`,
+// a oba su obična skriptna globala, pa bi zadnja učitana tiho pregazila prvu.
+// `t()` vraća SAM KLJUČ kad prijevoda nema, pa se fallback bira po tome, ne po `||`.
+function landingT(key, fallback) {
+    if (typeof window.t !== 'function') return fallback;
+    const v = window.t(key);
+    return (!v || v === key) ? fallback : v;
+}
+
 // ========== LESSONS PAGE ==========
 function renderLessonsPage(subjectId) {
     const subject = subjectDataMap[subjectId];
@@ -868,3 +955,4 @@ window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
 window.renderLandingSubjects = renderLandingSubjects;
 window.initLandingSubjects = initLandingSubjects;
+window.initHeroDemo = initHeroDemo;

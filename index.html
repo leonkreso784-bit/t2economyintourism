@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<!-- `data-theme` stoji u markupu, ne čeka JS: inače prvi paint ide u zadanoj temi, a
+     `initTheme()` je zamijeni milisekundu kasnije → vidljiv bljesak krive boje. -->
+<html lang="en" data-theme="academic">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
@@ -9,15 +11,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sokrat Study">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#6366f1">
+    <!-- Boja kroma preglednika/PWA-a. Jedina boja koju CSS-varijabla NE MOŽE nositi
+         (meta i manifest se čitaju prije stilova), pa je zakucana — ali mora pratiti
+         ZADANU temu („Akademsko plavo", `--color-surface-0`), inače mobilni Safari/Chrome
+         crta traku u boji koje na stranici više nema. Isto vrijedi za `manifest.json`. -->
+    <meta name="theme-color" content="#f7f9fc">
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260812050353">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260812050353">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260812050353">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260812050353">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260812050353">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260813021209">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260813021209">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260813021209">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260813021209">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260813021209">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -44,16 +50,16 @@
     <title>Sokrat Study — Free Exam Prep: Lessons, Flashcards & Quizzes</title>
     
     <!-- Preconnect for faster loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260812050353">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260813021209">
 
-    <!-- F3 3D.2: Google Fonts učitan ASINKRONO (media=print → onload media=all) → ne blokira prvi
-         paint. `display=swap` ionako renderira tekst u fallback fontu pa swapne. <noscript> fallback
-         drži ga render-blocking bez JS-a. (CSP-napomena za F6: inline onload → treba nonce/JS-flip.) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
+         `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
+         najjači preostali potpis generiranog sučelja. Zamjena je SISTEMSKI grotesk
+         (`--font-sans`/`--font-display` u css/tokens.css): pravi San Francisco na Appleu,
+         Segoe UI Variable na Windowsu 11, **0 preuzetih bajtova i 0 FOUT-a**.
+         Time nestaje i CSP-dug iz F3 (inline `onload` na font-linku). -->
     <!-- Font Awesome OSTAJE render-blocking (async bi bljesnuo ikone kroz cijelu app; zaseban oprezan zahvat). -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -63,7 +69,6 @@
          fallback ako CDN padne. Autorska konvencija: \( \) inline, \[ \] / $$ $$ display. -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" media="print" onload="this.media='all'">
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
     </noscript>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
@@ -77,7 +82,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260812050353">
+    <link rel="stylesheet" href="css/consent.css?v=20260813021209">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -88,256 +93,198 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260812050353" defer></script>
-    <script src="js/consent.js?v=20260812050353" defer></script>
+    <script src="js/monitoring.js?v=20260813021209" defer></script>
+    <script src="js/consent.js?v=20260813021209" defer></script>
 </head>
 <body>
     
     <!-- ==================== LANDING PAGE ==================== -->
-    <section id="landing-page" class="landing-page active">
-        <!-- Animated Background -->
-        <div class="landing-bg">
-            <div class="gradient-orb orb-1"></div>
-            <div class="gradient-orb orb-2"></div>
-            <div class="gradient-orb orb-3"></div>
-            <div class="gradient-orb orb-4"></div>
-            <div class="grid-overlay"></div>
-        </div>
+    <!-- ====================================================================
+         LANDING (cigla C2) — „landing ne OPISUJE proizvod, landing JEST proizvod".
 
-        <!-- Top Navigation (fixed) -->
-        <header class="landing-nav" id="top" role="banner"><!-- a11y (F3 3E.2): banner landmark (logo/lang/auth izvan <nav> bili orphani) -->
+         Tri sekcije umjesto šest. Nestali su: 4 `gradient-orb` + `grid-overlay`,
+         gradijentni naslov, `hero-badge`, 4 plutajuće kartice, stats bar, tri
+         `section-eyebrow`, te sekcije „How it works" i „Study modes" — sve to je
+         TVRDILO ono što živi prikaz ispod POKAZUJE u tri sekunde.
+
+         Raspored i razmaci idu Tailwind-utilityjima (prva migrirana površina,
+         spec §3); u `css/landing.css` ostaje samo ono što utility ne može izraziti
+         ili što crta JavaScript. Boje SAMO kroz tokene — nijedan hex, nijedna
+         zakucana bijela (`check:palette`).
+         ==================================================================== -->
+    <section id="landing-page" class="landing-page active">
+
+        <!-- ── Traka. Appleovski minimum: znak, jezik, prijava, jedna radnja. ──
+             Sidreni linkovi („Subjects/How it works/Study modes") su otišli zajedno
+             sa sekcijama na koje su pokazivali. -->
+        <header class="landing-nav" id="top" role="banner">
             <a class="landing-logo" href="#top" aria-label="Sokrat Study home">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260812050353" alt="Sokrat Study Logo" class="logo-image"></div>
+                <img src="assets/logo.svg?v=20260813021209" alt="" class="logo-image">
                 <span class="logo-text">Sokrat Study</span>
             </a>
-            <nav class="landing-nav-links" aria-label="Primary">
-                <!-- ADR-029: vlastiti materijal je GLAVNI proizvod, pa stoji PRVO i vidljivo je i
-                     neprijavljenom posjetitelju (stranica sama nosi poziv na prijavu). -->
-                <button type="button" class="nav-link-btn nav-link-btn--accent" data-goto-materials
-                        aria-label="My materials" data-i18n-aria="materials.title">
-                    <i class="fas fa-folder-tree" aria-hidden="true"></i>
-                    <span data-i18n="lnav.materials">My materials</span>
-                </button>
-                <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
-                <a href="#how" data-i18n="lnav.how">How it works</a>
-                <a href="#modes" data-i18n="lnav.modes">Study modes</a>
-                <button type="button" class="nav-link-btn" onclick="showAboutUs()" data-i18n="lnav.about">About</button>
-            </nav>
+
             <button type="button" class="lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
-                <i class="fas fa-globe"></i>
+                <i class="fas fa-globe" aria-hidden="true"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
             <button type="button" class="nav-auth-btn auth-entry" id="authNavBtn" hidden>
-                <i class="fas fa-user"></i>
+                <i class="fas fa-user" aria-hidden="true"></i>
                 <span class="auth-entry-label" id="authNavLabel">Sign in</span>
             </button>
-            <button type="button" class="cta-button primary nav-cta start-trigger">
-                <i class="fas fa-bolt"></i>
+            <button type="button" class="nav-cta start-trigger">
                 <span data-i18n="cta.start.lower">Start studying</span>
             </button>
         </header>
 
-        <!-- Hero Section -->
-        <main class="landing-hero">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    <span><span data-i18n="hero.badge.pre">Free exam toolkit &mdash; </span><span data-meta="subjectCount">22</span><span data-i18n="hero.badge.post"> subjects ready</span></span>
-                </div>
-                <h1 class="hero-title">
-                    <span data-i18n="hero.title.l1">Study Smart.</span><br>
-                    <span class="gradient-text" data-i18n="hero.title.l2">Score Higher.</span>
+        <main class="landing-main">
+            <div class="landing-wrap">
+
+                <!-- ══ 1 · HERO + ŽIVI PRIKAZ ══════════════════════════════ -->
+                <p class="hero-kicker" data-i18n="hero.kicker">Any subject &middot; any language</p>
+
+                <!-- MARKER, ne gradijentni tekst: naglašena riječ se podvlači kao u
+                     vlastitoj skripti. Nosi značenje (ovo je bit rečenice), za razliku
+                     od gradijenta koji je čisti ukras i potpis generiranog landinga. -->
+                <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-ink-0">
+                    <span data-i18n="hero.title.a">Write it once.</span><br>
+                    <span data-i18n="hero.title.b">Learn it </span><em class="hero-mark" data-i18n="hero.title.mark">four ways</em><span data-i18n="hero.title.c">.</span>
                 </h1>
-                <p class="hero-subtitle">
-                    <span data-i18n="hero.subtitle.pre">Flashcards, quizzes, and in-depth lessons across </span><span data-meta="subjectCount">22</span><span data-i18n="hero.subtitle.post"> university subjects from Year 1 &amp; Year 2. Built for students who want results, not just notes.</span>
+
+                <p class="hero-sub mt-5 max-w-xl text-lg text-ink-2" data-i18n="hero.sub">
+                    Type a term and what it means &mdash; Sokrat turns it into flashcards, a quiz,
+                    fill-in-the-blanks and study material. Try it right here, no sign-up.
                 </p>
-                <div class="hero-actions">
-                    <button class="cta-button primary start-trigger" id="openStudyBtn">
-                        <i class="fas fa-book-open"></i>
-                        <span data-i18n="cta.start.title">Start Studying</span>
-                        <i class="fas fa-arrow-right"></i>
+
+                <!-- ŽIVI PRIKAZ. Nije maketa: ista pretvorba koju radi aplikacija.
+                     ⚠️ Sve što odavde ide u `innerHTML` prolazi kroz `esc` (BUG-025) —
+                     ovo je JEDINO mjesto na landingu koje prima korisnički unos. -->
+                <section class="demo mt-10 md:mt-12" id="heroDemo" aria-labelledby="demoHeading">
+                    <div class="demo-head">
+                        <h2 id="demoHeading" class="text-base font-semibold text-ink-0" data-i18n="demo.head">Your input</h2>
+                        <p class="text-sm text-ink-2" data-i18n="demo.headSub">&mdash; type, and watch the four modes change</p>
+                    </div>
+
+                    <div class="demo-body">
+                        <div class="demo-in">
+                            <div class="demo-field">
+                                <label for="demoTerm" data-i18n="demo.term">Term</label>
+                                <input id="demoTerm" type="text" maxlength="80" autocomplete="off" spellcheck="false"
+                                       value="Photosynthesis" data-i18n-value="demo.termValue">
+                            </div>
+                            <div class="demo-field">
+                                <label for="demoDef" data-i18n="demo.def">What it means</label>
+                                <textarea id="demoDef" rows="4" maxlength="300" data-i18n-value="demo.defValue">The process by which plants use light to turn carbon dioxide and water into glucose and oxygen.</textarea>
+                            </div>
+                            <p class="mt-4 text-sm text-ink-2" data-i18n="demo.hint">
+                                Use anything &mdash; a university course, high school, or your job. All four build themselves.
+                            </p>
+                        </div>
+
+                        <div class="demo-out">
+                            <article class="demo-tile" data-kind="card">
+                                <p class="demo-tag" data-i18n="demo.tile.card">Flashcard</p>
+                                <button type="button" class="demo-flip" id="demoFlip" aria-pressed="false">
+                                    <span class="demo-flip-in">
+                                        <span class="demo-flip-f" id="demoCardFront">Photosynthesis</span>
+                                        <span class="demo-flip-b" id="demoCardBack"></span>
+                                    </span>
+                                </button>
+                                <p class="demo-note" data-i18n="demo.flipHint">click to flip</p>
+                            </article>
+
+                            <article class="demo-tile" data-kind="quiz">
+                                <p class="demo-tag" data-i18n="demo.tile.quiz">Quiz</p>
+                                <p class="demo-q" id="demoQuizQ"></p>
+                                <div id="demoQuizOpts"></div>
+                            </article>
+
+                            <article class="demo-tile" data-kind="fill">
+                                <p class="demo-tag" data-i18n="demo.tile.fill">Fill in the blank</p>
+                                <p class="demo-q" id="demoFillQ"></p>
+                            </article>
+
+                            <article class="demo-tile" data-kind="learn">
+                                <p class="demo-tag" data-i18n="demo.tile.learn">Study material</p>
+                                <h3 class="demo-learn-h" id="demoLearnH"></h3>
+                                <p class="demo-learn-p" id="demoLearnP"></p>
+                            </article>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ══ 2 · DVOJE VRATA ═════════════════════════════════════
+                     Leon, 2026-08-12: „ne znam zašto je My materials na gornjem baru —
+                     trebao bi biti prvi, gdje je Start studying." Ulaz u vlastito
+                     gradivo time seli iz trake OVDJE, u ravnopravna vrata. Cilj
+                     ADR-029 (UGC je glavni proizvod) ostaje; mijenja se samo mjesto. -->
+                <div class="doors mt-12 md:mt-16">
+                    <button type="button" class="door door--primary start-trigger">
+                        <span class="door-t" data-i18n="door.study.t">Start studying</span>
+                        <span class="door-d" data-i18n="door.study.d">Pick your own material, or something ready from the catalog.</span>
+                        <span class="door-m"><span data-meta="subjectCount">22</span><span data-i18n="door.study.m"> subjects ready</span></span>
                     </button>
-                    <a class="cta-button secondary" href="#subjects">
-                        <i class="fas fa-layer-group"></i>
-                        <span data-i18n="hero.browse">Browse subjects</span>
-                    </a>
+                    <button type="button" class="door" data-goto-materials>
+                        <span class="door-t" data-i18n="door.make.t">Make your own</span>
+                        <span class="door-d" data-i18n="door.make.d">From your notes to flashcards in a few minutes.</span>
+                        <span class="door-m" data-i18n="door.make.m">Editor &middot; private until you share it</span>
+                    </button>
                 </div>
-                <ul class="hero-trust">
-                    <li><i class="fas fa-check"></i> <span data-i18n="hero.trust.free">100% free</span></li>
-                    <li><i class="fas fa-check"></i> <span data-i18n="hero.trust.noSignup">No sign-up</span></li>
-                    <li><i class="fas fa-check"></i> <span data-i18n="hero.trust.offline">Works offline</span></li>
+
+                <!-- ══ 3 · KATALOG ═════════════════════════════════════════
+                     Namjerno PODREĐEN vratima: katalog je jedan izvor gradiva, ne ono
+                     što platforma jest (ADR-029). Ostaje jer je „22 predmeta" inače
+                     samo tvrdnja — ovdje se vidi. Crta ga `renderLandingSubjects()`. -->
+                <section class="landing-catalog mt-16 md:mt-24" id="subjects" aria-labelledby="catalogHeading">
+                    <h2 id="catalogHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="cat.title">Or start from the catalog</h2>
+                    <p class="mt-2 max-w-xl text-base text-ink-2" data-i18n="cat.sub">Complete subjects, already written &mdash; open one and study in seconds.</p>
+                    <div class="landing-subjects mt-8" id="landingSubjects">
+                        <!-- Rendered from data/catalog.js by renderLandingSubjects() -->
+                    </div>
+                </section>
+
+                <!-- Tanki red činjenica — zamjenjuje tri marketinške sekcije i stats bar. -->
+                <ul class="landing-facts mt-16 md:mt-24">
+                    <li><b data-i18n="facts.free.b">Free</b><span data-i18n="facts.free.t"> and ad-free</span></li>
+                    <li><span data-i18n="facts.offline.t">Works </span><b data-i18n="facts.offline.b">offline</b></li>
+                    <li><span data-i18n="facts.progress.t">Progress is </span><b data-i18n="facts.progress.b">saved</b></li>
+                    <li><span data-i18n="facts.private.t">Your material stays </span><b data-i18n="facts.private.b">private</b></li>
                 </ul>
-            </div>
-            
-            <!-- Hero Visual -->
-            <div class="hero-visual">
-                <div class="floating-cards">
-                    <div class="float-card card-1">
-                        <i class="fas fa-brain"></i>
-                        <span>Learn</span>
-                    </div>
-                    <div class="float-card card-2">
-                        <i class="fas fa-layer-group"></i>
-                        <span>Flashcards</span>
-                    </div>
-                    <div class="float-card card-3">
-                        <i class="fas fa-clipboard-check"></i>
-                        <span>Quiz</span>
-                    </div>
-                    <div class="float-card card-4">
-                        <i class="fas fa-chart-line"></i>
-                        <span>Progress</span>
-                    </div>
-                </div>
             </div>
         </main>
 
-        <!-- Stats Bar -->
-        <div class="hero-stats" role="region" aria-label="Key statistics" data-i18n-aria="a11y.heroStats">
-            <div class="stat-item">
-                <span class="stat-num" data-meta="subjectCount">22</span>
-                <span class="stat-label" data-i18n="stats.subjects">Subjects</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-num" data-meta="questionCount">400+</span>
-                <span class="stat-label" data-i18n="stats.questions">Questions</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-num">5</span>
-                <span class="stat-label" data-i18n="stats.modes">Study Modes</span>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <span class="stat-num">100%</span>
-                <span class="stat-label" data-i18n="stats.free">Free</span>
-            </div>
-        </div>
-
-        <!-- Subjects Showcase (rendered from catalog) -->
-        <section class="landing-section" id="subjects" aria-labelledby="subjects-heading">
-            <div class="section-head">
-                <span class="section-eyebrow" data-i18n="sec.catalog.eyebrow">Catalog</span>
-                <h2 id="subjects-heading" data-i18n="sec.catalog.title">Everything you need to study</h2>
-                <p data-i18n="sec.catalog.sub">Year 1 &amp; Year 2 of Hospitality Management at FMTU Opatija &mdash; pick a subject and start in seconds.</p>
-            </div>
-            <div class="landing-subjects" id="landingSubjects">
-                <!-- Rendered from data/catalog.js by renderLandingSubjects() -->
-            </div>
-        </section>
-
-        <!-- How It Works -->
-        <section class="landing-section" id="how" aria-labelledby="how-heading">
-            <div class="section-head">
-                <span class="section-eyebrow" data-i18n="sec.how.eyebrow">Simple</span>
-                <h2 id="how-heading" data-i18n="sec.how.title">How it works</h2>
-                <p data-i18n="sec.how.sub">Three steps from lecture notes to exam-ready.</p>
-            </div>
-            <div class="how-steps">
-                <div class="how-step">
-                    <div class="how-step-num">1</div>
-                    <i class="fas fa-compass how-step-icon" aria-hidden="true"></i>
-                    <h3 data-i18n="how.1.t">Pick your subject</h3>
-                    <p data-i18n="how.1.p">Browse by faculty, program and year, then open the lesson you need.</p>
-                </div>
-                <div class="how-step">
-                    <div class="how-step-num">2</div>
-                    <i class="fas fa-dumbbell how-step-icon" aria-hidden="true"></i>
-                    <h3 data-i18n="how.2.t">Learn &amp; practice</h3>
-                    <p data-i18n="how.2.p">Read the material, then drill it with flashcards, quizzes and fill-in-the-blanks.</p>
-                </div>
-                <div class="how-step">
-                    <div class="how-step-num">3</div>
-                    <i class="fas fa-chart-line how-step-icon" aria-hidden="true"></i>
-                    <h3 data-i18n="how.3.t">Track your progress</h3>
-                    <p data-i18n="how.3.p">See your best scores and streaks, and focus on what you haven't mastered yet.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Study Modes -->
-        <section class="landing-section" id="modes" aria-labelledby="modes-heading">
-            <div class="section-head">
-                <span class="section-eyebrow" data-i18n="sec.modes.eyebrow">5 modes</span>
-                <h2 id="modes-heading" data-i18n="sec.modes.title">Five ways to master the material</h2>
-                <p data-i18n="sec.modes.sub">Every subject comes with all five &mdash; switch any time.</p>
-            </div>
-            <div class="modes-grid">
-                <article class="mode-card" style="--card-accent:#6366f1">
-                    <div class="mode-icon"><i class="fas fa-book-open" aria-hidden="true"></i></div>
-                    <h3 data-i18n="nav.learn">Learn</h3>
-                    <p data-i18n="mode.learn.p">Complete, organised study material by topic.</p>
-                </article>
-                <article class="mode-card" style="--card-accent:#8b5cf6">
-                    <div class="mode-icon"><i class="fas fa-clone" aria-hidden="true"></i></div>
-                    <h3 data-i18n="nav.flashcards">Flashcards</h3>
-                    <p data-i18n="mode.fc.p">Flip cards to test recall and mark what you know.</p>
-                </article>
-                <article class="mode-card" style="--card-accent:#0ea5e9">
-                    <div class="mode-icon"><i class="fas fa-question-circle" aria-hidden="true"></i></div>
-                    <h3 data-i18n="nav.quiz">Quiz</h3>
-                    <p data-i18n="mode.quiz.p">Multiple-choice with instant feedback and scoring.</p>
-                </article>
-                <article class="mode-card" style="--card-accent:#ec4899">
-                    <div class="mode-icon"><i class="fas fa-pen" aria-hidden="true"></i></div>
-                    <h3 data-i18n="mode.fill.t">Fill-in-the-blank</h3>
-                    <p data-i18n="mode.fill.p">Type the missing term to lock in key definitions.</p>
-                </article>
-                <article class="mode-card" style="--card-accent:#22c55e">
-                    <div class="mode-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-                    <h3 data-i18n="nav.progress">Progress</h3>
-                    <p data-i18n="mode.prog.p">Scores, streaks and per-topic mastery in one place.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Final CTA -->
-        <section class="landing-cta" aria-labelledby="cta-heading">
-            <div class="landing-cta-inner">
-                <h2 id="cta-heading" data-i18n="cta.title">Ready to ace your exams?</h2>
-                <p data-i18n="cta.sub">Jump into any subject &mdash; it's free and works right on your phone.</p>
-                <button type="button" class="cta-button primary start-trigger">
-                    <i class="fas fa-bolt"></i>
-                    <span data-i18n="cta.start.lower">Start studying</span>
-                    <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- Landing Footer -->
+        <!-- ── Podnožje ── -->
         <footer class="landing-footer" role="contentinfo"><!-- a11y (F3 3E.2): ugniježđen u <section> gubi implicitni contentinfo → eksplicitno -->
-            <div class="footer-cols">
-                <div class="footer-brand">
-                    <div class="landing-logo">
-                        <div class="logo-wrapper"><img src="assets/logo.svg?v=20260812050353" alt="Sokrat Study Logo" class="logo-image"></div>
-                        <span class="logo-text">Sokrat Study</span>
+            <div class="landing-wrap">
+                <div class="footer-cols">
+                    <div class="footer-brand">
+                        <div class="landing-logo">
+                            <img src="assets/logo.svg?v=20260813021209" alt="" class="logo-image">
+                            <span class="logo-text">Sokrat Study</span>
+                        </div>
+                        <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
                     </div>
-                    <p data-i18n="footer.tagline">Interactive exam prep for FMTU Opatija &mdash; built by students, for students.</p>
+                    <nav class="footer-col" aria-label="Explore">
+                        <h3 data-i18n="footer.explore">Explore</h3>
+                        <button type="button" class="footer-link-btn start-trigger" data-i18n="cta.start.lower">Start studying</button>
+                        <button type="button" class="footer-link-btn" data-goto-materials data-i18n="lnav.materials">My materials</button>
+                        <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
+                    </nav>
+                    <nav class="footer-col" aria-label="About">
+                        <h3 data-i18n="footer.about">About</h3>
+                        <button type="button" class="footer-link-btn" onclick="showAboutUs()" data-i18n="footer.aboutUs">About us</button>
+                        <a href="contact.html" data-i18n="footer.contact">Contact</a>
+                        <a href="faq.html" data-i18n="footer.faq">FAQ</a>
+                    </nav>
+                    <nav class="footer-col" aria-label="Legal">
+                        <h3 data-i18n="footer.legal">Legal</h3>
+                        <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
+                        <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
+                        <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;" data-i18n="footer.cookies">Cookie settings</a>
+                    </nav>
                 </div>
-                <nav class="footer-col" aria-label="Explore">
-                    <h3 data-i18n="footer.explore">Explore</h3>
-                    <a href="#subjects" data-i18n="lnav.subjects">Subjects</a>
-                    <a href="#how" data-i18n="lnav.how">How it works</a>
-                    <a href="#modes" data-i18n="lnav.modes">Study modes</a>
-                    <button type="button" class="footer-link-btn start-trigger" data-i18n="cta.start.lower">Start studying</button>
-                </nav>
-                <nav class="footer-col" aria-label="About">
-                    <h3 data-i18n="footer.about">About</h3>
-                    <button type="button" class="footer-link-btn" onclick="showAboutUs()" data-i18n="footer.aboutUs">About us</button>
-                    <a href="contact.html" data-i18n="footer.contact">Contact</a>
-                    <a href="faq.html" data-i18n="footer.faq">FAQ</a>
-                </nav>
-                <nav class="footer-col" aria-label="Legal">
-                    <h3 data-i18n="footer.legal">Legal</h3>
-                    <a href="privacy.html" data-i18n="footer.privacy">Privacy Policy</a>
-                    <a href="terms.html" data-i18n="footer.terms">Terms of Use</a>
-                    <a href="#" onclick="if(window.openCookieSettings){openCookieSettings();}return false;" data-i18n="footer.cookies">Cookie settings</a>
-                </nav>
-            </div>
-            <div class="footer-bottom">
-                <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
-                <p class="footer-made"><span data-i18n="footer.made.pre">Made with </span><i class="fas fa-heart"></i><span data-i18n="footer.made.post"> for students</span></p>
+                <div class="footer-bottom">
+                    <p data-i18n="footer.rights">&copy; 2026 Sokrat Study &middot; Leon Kreso. All rights reserved.</p>
+                </div>
             </div>
         </footer>
     </section>
@@ -347,7 +294,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260812050353" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260813021209" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -383,7 +330,7 @@
                 <i class="fas fa-user"></i>
             </button>
             <div class="browse-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260812050353" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260813021209" alt="Sokrat Study" class="logo-image"></div>
             </div>
         </header>
         <main class="browse-content">
@@ -1015,7 +962,7 @@
         </header>
         <main class="about-content">
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260812050353" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260813021209" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline">Created by students, for students</p>
             </div>
 
@@ -1165,53 +1112,53 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260812050353"></script>
+    <script src="data/catalog.js?v=20260813021209"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260812050353"></script>
+    <script src="data/landing-stats.js?v=20260813021209"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260812050353"></script>
+    <script src="js/i18n.js?v=20260813021209"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260812050353"></script>
-    <script src="js/config.js?v=20260812050353"></script>
-    <script src="js/content-loader.js?v=20260812050353"></script>
+    <script src="js/app-state.js?v=20260813021209"></script>
+    <script src="js/config.js?v=20260813021209"></script>
+    <script src="js/content-loader.js?v=20260813021209"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260812050353"></script>
-    <script src="js/components/sokrat-toast.js?v=20260812050353"></script>
-    <script src="js/components/sokrat-modal.js?v=20260812050353"></script>
+    <script src="js/content-repo.js?v=20260813021209"></script>
+    <script src="js/components/sokrat-toast.js?v=20260813021209"></script>
+    <script src="js/components/sokrat-modal.js?v=20260813021209"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260812050353"></script>
-    <script src="js/utils.js?v=20260812050353"></script>
-    <script src="js/storage.js?v=20260812050353"></script>
-    <script src="js/analytics.js?v=20260812050353"></script>
-    <script src="js/navigation.js?v=20260812050353"></script>
-    <script src="js/math.js?v=20260812050353"></script>
-    <script src="js/blocks-renderer.js?v=20260812050353"></script>
-    <script src="js/flashcards.js?v=20260812050353"></script>
-    <script src="js/quiz.js?v=20260812050353"></script>
-    <script src="js/fill-blanks.js?v=20260812050353"></script>
-    <script src="js/learn.js?v=20260812050353"></script>
-    <script src="js/progress.js?v=20260812050353"></script>
-    <script src="js/blind-map.js?v=20260812050353"></script>
-    <script src="js/exercises-core.js?v=20260812050353"></script>
-    <script src="js/acc-kernel.js?v=20260812050353"></script>
-    <script src="js/exercises.js?v=20260812050353"></script>
-    <script src="js/auth.js?v=20260812050353"></script>
-    <script src="js/draft-store.js?v=20260812050353"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260813021209"></script>
+    <script src="js/utils.js?v=20260813021209"></script>
+    <script src="js/storage.js?v=20260813021209"></script>
+    <script src="js/analytics.js?v=20260813021209"></script>
+    <script src="js/navigation.js?v=20260813021209"></script>
+    <script src="js/math.js?v=20260813021209"></script>
+    <script src="js/blocks-renderer.js?v=20260813021209"></script>
+    <script src="js/flashcards.js?v=20260813021209"></script>
+    <script src="js/quiz.js?v=20260813021209"></script>
+    <script src="js/fill-blanks.js?v=20260813021209"></script>
+    <script src="js/learn.js?v=20260813021209"></script>
+    <script src="js/progress.js?v=20260813021209"></script>
+    <script src="js/blind-map.js?v=20260813021209"></script>
+    <script src="js/exercises-core.js?v=20260813021209"></script>
+    <script src="js/acc-kernel.js?v=20260813021209"></script>
+    <script src="js/exercises.js?v=20260813021209"></script>
+    <script src="js/auth.js?v=20260813021209"></script>
+    <script src="js/draft-store.js?v=20260813021209"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260812050353"></script>
-    <script src="js/block-editor-media.js?v=20260812050353"></script>
-    <script src="js/block-editor.js?v=20260812050353"></script>
-    <script src="js/card-limits.js?v=20260812050353"></script>
-    <script src="js/admin.js?v=20260812050353"></script>
-    <script src="js/admin-editors.js?v=20260812050353"></script>
-    <script src="js/studio.js?v=20260812050353"></script>
-    <script src="js/cloud-sync.js?v=20260812050353"></script>
+    <script src="js/node-images.js?v=20260813021209"></script>
+    <script src="js/block-editor-media.js?v=20260813021209"></script>
+    <script src="js/block-editor.js?v=20260813021209"></script>
+    <script src="js/card-limits.js?v=20260813021209"></script>
+    <script src="js/admin.js?v=20260813021209"></script>
+    <script src="js/admin-editors.js?v=20260813021209"></script>
+    <script src="js/studio.js?v=20260813021209"></script>
+    <script src="js/cloud-sync.js?v=20260813021209"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260812050353"></script>
-    <script src="js/profile.js?v=20260812050353"></script>
-    <script src="js/init.js?v=20260812050353"></script>
+    <script src="js/my-materials.js?v=20260813021209"></script>
+    <script src="js/profile.js?v=20260813021209"></script>
+    <script src="js/init.js?v=20260813021209"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260812050353" defer></script>
+    <script src="js/sw-register.js?v=20260813021209" defer></script>
 </body>
 </html>

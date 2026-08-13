@@ -44,10 +44,6 @@
 .te2-title { color: #4338ca !important; }
 .ent-title { color: #047857 !important; }
 
-/* Card Titles - Dark Mode */
-[data-theme="dark"] .te2-title { color: #a5b4fc !important; }
-[data-theme="dark"] .ent-title { color: #6ee7b7 !important; }
-
 /* Card Description */
 .card-desc {
     color: var(--text-secondary);
@@ -148,11 +144,6 @@ div.subject-card {
     text-align: center;
     position: relative;
     overflow: hidden;
-}
-
-[data-theme="dark"] div.subject-card {
-    background-color: #1e293b !important;
-    border-color: #475569 !important;
 }
 
 .subject-card::before {
@@ -282,18 +273,6 @@ div.subject-card {
 .about-link-btn:active { transform: scale(0.98); }
 .about-link-btn:focus { outline: none; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.3); }
 .about-link-btn:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
-
-[data-theme="dark"] .about-link-btn {
-    background: rgba(99, 102, 241, 0.15);
-    border-color: rgba(99, 102, 241, 0.4);
-    color: #a5b4fc;
-}
-
-[data-theme="dark"] .about-link-btn:hover,
-[data-theme="dark"] .about-link-btn:active {
-    background: var(--primary);
-    color: var(--on-primary);
-}
 
 /* ===== ABOUT US SECTION ===== */
 #about-us { padding: 1rem; }

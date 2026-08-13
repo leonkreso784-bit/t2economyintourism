@@ -142,7 +142,7 @@
 .be-editlist { margin: 0; padding-left: 22px; }
 .be-editlist .be-edit { display: list-item; margin: 2px -8px; }
 /* link u editoru = ne-navigabilan (uređuje se) */
-.be-edit a[data-be-link] { color: var(--primary-light); text-decoration: underline; cursor: text; }
+.be-edit a[data-be-link] { color: var(--primary); text-decoration: underline; cursor: text; }
 
 /* plutajuća tekst-traka (B/I; boja/link = U8.4b) */
 .be-toolbar {

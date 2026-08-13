@@ -50,7 +50,8 @@ ne opseg. Korisnik je **bilo tko** — student bilo kojeg fakulteta, srednjoško
 | **Javni katalog + autorstvo** | sadržaj 22 predmeta, Studio editor za administratore, atomična i verzionirana objava | ✅ |
 | **Osobni materijal** | vlastito stablo polica, autorstvo kartica/kviza/dopuna/learna, učenje iz vlastitog materijala, napredak u istom profilu | ✅ — svih 5 kriterija iz [UGC_SPEC.md](./UGC_SPEC.md) |
 | **Frontend redizajn** | sučelje se preuređuje **tek kad funkcija besprijekorno radi** (Leonova presuda); vlastiti materijal dobiva **ravnopravno odredište** — stranicu i ulaz u navigaciji, a ne pododjeljak profila (ADR-029) | 🟦 |
-| **Objava i dijeljenje + MCP** | materijal se smije podijeliti; vanjski AI gradi materijal preko korisnikovog ključa (ADR-026) | ⬜ |
+| **MCP — AI gradi gradivo** | korisnikov vlastiti AI stvara i mijenja **isključivo njegovo** gradivo; editor postaje alat za **doradu**, ne ishodište ([ADR-030](../records/DECISIONS.md)). **Gotovo kad korisnik iz svog AI-a napravi materijal i odmah iz njega uči, bez otvaranja editora.** ⚠️ Prvi korak je **PRISTUP** (kako AI dokaže tko je), ne write-put | ⬜ |
+| **Objava i dijeljenje** | materijal se smije podijeliti — **link s tajnim tokenom, bez javne biblioteke** | ⬜ |
 | **Natjecanje + društveno** | ljestvice, profili, statistika učenja, anti-cheat | ⬜ |
 | **Monetizacija** | freemium/paywall na **funkcionalnosti**, ne na sadržaju | ⬜ |
 

@@ -161,9 +161,7 @@
 
 /* ===== iOS NOTCH/DYNAMIC ISLAND SUPPORT ===== */
 @supports (padding-top: env(safe-area-inset-top)) {
-    .landing-header {
-        padding-top: calc(1rem + env(safe-area-inset-top));
-    }
+
     
     .header {
         padding-top: calc(0.75rem + env(safe-area-inset-top));
