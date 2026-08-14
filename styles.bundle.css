@@ -8012,7 +8012,7 @@ h4.lb-heading {
   color: var(--on-primary);
   box-shadow: var(--shadow);
 }
-#editor-page .st-btn.primary:hover {
+#editor-page .st-btn.primary:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: var(--shadow-lg);
 }
@@ -8021,15 +8021,13 @@ h4.lb-heading {
   color: var(--text-secondary);
   background: var(--st-sunken);
 }
-#editor-page .st-btn.ghost:hover {
+#editor-page .st-btn.ghost:hover:not(:disabled) {
   border-color: var(--primary-light);
   color: var(--text-primary);
 }
 #editor-page .st-btn:disabled {
   opacity: .45;
   cursor: not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
 }
 #editor-page .st-iconbtn {
   width: 36px;
@@ -8326,15 +8324,15 @@ h4.lb-heading {
 #editor-page .st-kv .st-body ul,#editor-page .st-kv .st-body ol {
   margin: .4em 0 .4em 1.2em;
 }
-#editor-page .st-editing {
-  color: var(--warning-text) !important;
-  background: var(--accent) !important;
+#editor-page .st-metas .st-m.st-editing {
+  color: var(--warning-text);
+  background: var(--accent);
   @supports (color: color-mix(in lab, red, red)) {
-    background: color-mix(in srgb, var(--accent) 12%, transparent) !important;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
   }
-  border-color: var(--accent) !important;
+  border-color: var(--accent);
   @supports (color: color-mix(in lab, red, red)) {
-    border-color: color-mix(in srgb, var(--accent) 35%, transparent) !important;
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   }
 }
 #editor-page .st-learn-cat {
@@ -8879,7 +8877,7 @@ h4.lb-heading {
 #editor-page .st-metas .st-m {
   transition: .15s;
 }
-#editor-page .st-metas .st-m:hover {
+#editor-page .st-metas .st-m:hover:not(.st-editing) {
   border-color: var(--primary);
   @supports (color: color-mix(in lab, red, red)) {
     border-color: color-mix(in srgb, var(--primary) 35%, transparent);

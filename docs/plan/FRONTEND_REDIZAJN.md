@@ -845,3 +845,51 @@ Uhvatila su ga dva postojeća unit-testa; **da ih nije bilo, pukao bi u pregledn
 `.lb-table-wrap` — i onaj iz v2, koji postoji od U7 — **nema `tabindex`**. Gate to nije uhvatio jer
 axe u našem a11y specu mjeri na **1280 px**, gdje tablica stane i ploha ne skrola. To je **treći
 primjerak istog obrasca u tri cigle** i zapisan je u `BACKLOG.md`, ne popravljen usput.
+
+### 7.12 🧱 C3 · treća cigla — pet `!important` bila su dva puta isti kvar (2026-08-14)
+
+Mjerenje iz §7.11 reklo je da je **cijeli** tehnički dug C3-a pet `!important` deklaracija na dva
+mjesta u `studio.css`. Očekivano je bilo pet neovisnih ostataka. Nisu — **oba mjesta su isti oblik:
+`:hover` pravilo koje ne izuzima svoju vlastitu iznimku, pa se iznimka morala braniti `!important`-om.**
+
+| mjesto | tko koga tuče | posljedica bez `!important` |
+|---|---|---|
+| `.st-btn:disabled` (1id+2r) | `.st-btn.primary:hover` (1id+3r) | onemogućen gumb se **podiže** pod mišem |
+| `.st-editing` (1id+1r) | `.st-metas .st-m` (1id+2r), a `.st-m:hover` (1id+3r) i **kasnije u datoteci** | oznaka „uređuješ (draft)" **gubi boju upozorenja** pod mišem |
+
+Nijedan nije bio hipotetski: „Spoji svoj AI" (`studio.js`) stoji `disabled` dok MCP ne postoji.
+
+**Rješenje nije izmišljeno nego posuđeno iz susjedne datoteke.** `block-editor.css` isti problem
+rješava s `.be-btn:hover:not([disabled])` i ima **0 `!important`** — dakle `studio.css` je bio
+iznimka u vlastitoj kući, a ne obrnuto. Iznimka se sad izuzima **na hover-pravilu**, pa ishod ne
+ovisi o redoslijedu u datoteci.
+
+#### Zašto je ovdje trebala NOVA brana
+
+**`css:diff` ovu promjenu ne može vidjeti** — on uspoređuje izračunate stilove u **mirnom** stanju,
+a cijela promjena živi u `:hover` i `:disabled`. Njegovih „0 razlika kroz 3210 usporedbi" dokazuje
+da se mirni izgled nije pomaknuo, i **ništa više od toga**. Zato `tests/cascade.authed.spec.js`:
+mjeri isti element prije i poslije prelaska miša.
+
+**Svaka tvrdnja ima obrnutu provjeru, jer „nije se pomaknuo" i „hover se nije registrirao" daju
+identičan rezultat.** Kontrola za onemogućen gumb je **taj isti gumb bez atributa `disabled`** —
+jedna promijenjena varijabla, pa razliku ne može objasniti ni položaj ni veličina ni stanje.
+
+#### Tri greške u vlastitom mjerenju, sve tri iste vrste
+
+1. **Mjerač je čitao nasred prijelaza.** Mirno stanje se očitavalo 60 ms nakon dodavanja razreda, a
+   `.st-m` ima `transition:.15s` → izmjeren je međukorak (`rgb(102,95,79)`) umjesto odredišta
+   (`rgb(122,77,0)`), i to je izgledalo kao kvar kaskade. **Mjerač koji ne čeka animaciju mjeri
+   animaciju, ne stil.**
+2. **Kontrola koja se ne izvrši nije kontrola.** Prvi izbor kontrole bio je `#stPublish` — on je
+   `hidden` u pregledu, pa se nije dao prijeći mišem i test je pao na infrastrukturi, ne na tvrdnji.
+3. **Brojanje uzorka umjesto posljedice, po treći put.** Nakon popravka `grep -c "!important"` i
+   dalje vraća **2** — oba pogotka su **u komentarima koji objašnjavaju zašto `!important` više
+   nema**. Isto kao „11 hex, od toga 10 u komentarima" (§7.11) i kao čegrtaljka iz §7.8.
+
+> **Najkorisniji trenutak cigle bio je pad drift-gatea.** Obrnuta provjera zahtijeva privremeno
+> vraćanje kvara i **ponovnu izgradnju bundlea**; nakon vraćanja popravka bundle je ostao na
+> pokvarenoj verziji. `build:css --check` je to uhvatio u preflightu. Bez njega bi commit sadržavao
+> **točno onaj kvar koji je cigla maloprije dokazivala** — a `css:diff` bi i dalje bio zelen, jer
+> kvar živi u hoveru. **Obrnuta provjera je radnja koja privremeno kvari repozitorij; gate koji
+> mjeri artefakt, a ne izvor, jedini je koji primijeti da čišćenje nije dovršeno.**

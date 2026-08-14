@@ -5,6 +5,40 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS, d) — **C3 treća cigla: pet `!important` · i zašto je hrpa od 22 commita sad najveći rizik**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon: *„malo sam izgubljen"* → sesija je preusmjerena s
+„dodaj sljedeću ciglu" na **„zatvori petlju i isporuči"**.
+
+**⓪ Dijagnoza koja je promijenila plan sesije.** `main` stoji na C0+C1; na grani su **22 commita**
+— cijeli C2, popravak C2, tri C3 cigle i lanac opskrbe. Leon je čitao izvještaje, ali **proizvod
+nije vidio na ekranu**, a zadnji put kad jest, bio je taman. To je i izvor osjećaja „izgubljen sam"
+i **najveći tehnički rizik u projektu upravo sad**: velika serija, teži pregled, grozna površina za
+traženje krivca nakon deploya — a među commitima su **dva popravka produkcijskih kvarova** (tablice
+koje prelijevaju ekran svakom studentu na telefonu, SRI koji sprječava tiho gašenje prijave) koja
+**leže na grani umjesto da rade**.
+
+**① Pet `!important` bila su dva puta isti kvar** — `:hover` pravilo koje ne izuzima svoju iznimku.
+Rješenje posuđeno iz `block-editor.css` (`.be-btn:hover:not([disabled])`, 0 `!important`). Sve tri
+C3 datoteke sad na nuli. Detalji i tri greške u vlastitom mjerenju: spec **§7.12**.
+
+**② Nova brana `tests/cascade.authed.spec.js`** — `css:diff` mjeri **mirno** stanje, pa ovu
+promjenu ne može vidjeti. Svaka tvrdnja s obrnutom provjerom; kontrola je **isti gumb bez
+`disabled`**. Brana obrnuto provjerena: s vraćenim kvarom pada na tvrdnjama, ne na kontrolama.
+
+**③ Pouka koju nisam očekivao:** obrnuta provjera je **radnja koja privremeno kvari repozitorij**.
+Nakon vraćanja popravka bundle je ostao na pokvarenoj verziji; uhvatio ga je `build:css --check` u
+preflightu. Bez njega bi commit nosio točno onaj kvar koji cigla dokazuje — a `css:diff` bi bio
+zelen, jer kvar živi u hoveru.
+
+**Gate:** `preflight` **EXIT 0** (13 brana) · `css:diff` **0/3210** · **`test:authed` 73/73**.
+
+**Slijedi:** vizualna revizija triju površina × četiri teme za Leona (kontaktna kopija, ne 12
+zasebnih snimaka), pa **njegov OK za merge i deploy** 22 commita. RLS-SQL namjerno **ne ulazi** u
+taj paket — nezavisan je, ide staging → njegova zasebna potvrda za prod.
+
+---
+
 ## 2026-08-14 (OPUS, c) — **C3 druga cigla: širina · kvar u rendereru koji je pogađao i studente**
 
 **Grana:** `feat/c3-vlastito-gradivo`. Leon: *„imas moji oke i mozes na jezgru c3"*.
