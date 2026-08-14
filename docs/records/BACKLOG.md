@@ -86,6 +86,44 @@ rečenica koja kaže **na što se odnosi**.
 
 ---
 
+## 🔥 Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna — 2026-08-14
+**Izmjereno** (390 × 844, otvorena lekcija, staging):
+
+| mjera | vrijednost |
+|---|---|
+| topbar | **347 px od 844** — 41 % ekrana |
+| mrvica (`.st-crumb`) | stupac **96 px širok, 326 px visok** |
+| stvarni sadržaj (`.st-canvas`) | **235 px** (28 %) |
+| `.st-btn.ghost` („Uredi") | `[335…402]` — strši **12 px** |
+| `.st-chip` („objavljeno") | `[414…497]` — **posve izvan** |
+| `.st-iconbtn` (postavke) | `[509…523]` — **posve izvan** |
+
+**Zašto se ne vidi kao skrol:** `#editor-page.studio-page.active` je `position:fixed; inset:0` uz
+`overflow:hidden` — sadržaj se ne prelije nego **odreže**. Nema skrola jer nema kamo; gumbi su
+naprosto nedostupni. Kvar stoji **od U8**, nije regresija ove faze.
+
+**⚠️ Zašto je `layout.authed.spec.js` zelen — rupa je u MOJOJ brani.** Detektor izuzima podstabla u
+`position:fixed`, uz obrazloženje *„vlastiti koordinatni sustav, ne može uzrokovati skrol dokumenta,
+a (a) to ionako mjeri"*. **Premisa ne vrijedi kad fiksna ljuska ima `overflow:hidden`:** provjera (a)
+nikad ne okine, pa je izuzeta **cijela površina Studija**. To je **treći put** da isti detektor
+griješi na isti način — izuzeće čija premisa ne vrijedi (§7.11 ①,②). **Prvi korak popravka je brana,
+ne CSS:** fiksna podstabla se moraju mjeriti prema *viewportu* (mogu biti odrezana i nedostupna),
+samo ne prema skrolu dokumenta.
+
+**Drugi, neovisan nalaz na istoj površini:** [`studio.css:90`](../../css/studio.css#L90) traži
+`.st-tree{ display:none }` ispod 680 px i **nikad nije radilo** — medijski upit ne dodaje
+specifičnost, a bazno `display:flex` (l. 96) stoji **ispod** njega pa pobjeđuje redoslijedom.
+Susjedni `.st-inspector` u istom bloku radi **samo** zato što njegovo bazno pravilo uopće ne
+deklarira `display`. ⚠️ **Ne popravljati mehanički:** Studio nema mobilni izbornik za stablo, pa bi
+„ispravno" ponašanje ostavilo telefon **bez ijednog načina da se odabere lekcija**. Slučajni kvar
+danas drži funkciju živom → traži **odluku o dizajnu** (izbornik vs. složeni raspored), ne zakrpu.
+
+**Kad:** Leon, 2026-08-14: *„jbg tako je kako je, morat ćemo to popravit kroz vrijeme"* → **ne
+blokira isporuku**. Ali kriterij prihvaćanja C3 #1 izričito imenuje editor na 320 px, pa
+**C3 se ne smije proglasiti gotovim dok ovo stoji.**
+
+---
+
 ## 🔥 Skrolabilna ploha bez `tabindex` — `.lb-table-wrap` nije dostupan tipkovnicom — 2026-08-14
 **WCAG 2.1.1:** ploha koja skrola mora biti operabilna tipkovnicom, inače korisnik koji ne rabi miš
 ne može doći do desnog dijela tablice. axe to pokriva pravilom `scrollable-region-focusable`
