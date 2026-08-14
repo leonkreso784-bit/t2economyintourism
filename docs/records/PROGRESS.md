@@ -5,6 +5,48 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS, c) — **C3 druga cigla: širina · kvar u rendereru koji je pogađao i studente**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon: *„imas moji oke i mozes na jezgru c3"*.
+⚠️ **RLS na produkciji NIJE diran** — opći OK nije uzet kao odobrenje za SQL na prod-bazi;
+migracija se piše, dokazuje na stagingu i vraća Leonu na jednu potvrdu.
+
+**① Izmjereno prije prepisivanja — duga gotovo nema.** `my-materials.css` i `block-editor.css`:
+**0 `!important`, 0 zakucanih boja**. `studio.css`: 2 pravila s `!important`, a od 11 „hex" ih je
+**10 u komentarima**. C1, popravak C2 i prva cigla C3 pojeli su dug unaprijed.
+
+**② Nalaz o samom planu.** Tablica §3 kaže da tri datoteke u C3 „nestaju", ali bundle sadrži
+**ukupno 22 Tailwind utilityja**, a `landing.css` nakon C2 **i dalje postoji na 578 redaka**.
+Obrazac faze nije „markup u utility-juhu" nego **brisanje mrtvog + spajanje na tokene**. Zapisano
+u spec §7.11 da C3 ne izmisli treći obrazac.
+
+**③ Prava rupa je ŠIRINA, ne boja.** Kriterij #1 traži **320 px** i imenuje **editor**; `320` je
+u cijeloj suiti postojao na **jednom** mjestu (CTA landinga), `responsive.spec.js` ne posjećuje
+materijale ni editor, najmanji profil je **375 px**. → **`tests/layout.authed.spec.js`**, 21 širina.
+
+**④ Detektor je bio kriv dvaput.** Prvo šum (fiksna traka, 6 elemenata × 21 širina × 2 površine).
+Zatim **tišina, koja je gora**: izuzimao je sve unutar pretka s `overflow-x:auto`, a paneli Studija
+imaju `overflow-y:auto` → **po CSS specifikaciji druga os postaje `auto`**, pa je izuzeta cijela
+unutrašnjost Studija. Dokazano obrnutom provjerom (`min-width:1200px` **nije** oborio gate).
+**Sat vremena nakon što sam istu pouku zapisao u §7.10.**
+
+**⑤ Kvar je bio u RENDERERU, ne u editoru.** Platno skrola vodoravno na 320–414 px (`469 > 320`);
+uzrok `div.lb-legacy > table` — tablice iz **v1 `legacy-html`**. `renderTable` (v2) svoje omata u
+`.lb-table-wrap`, sirovi v1 HTML ne. **Isti renderer služi studentov `learn`** → kvar na produkciji
+za svaku staru lekciju s tablicom, na svakom telefonu. Popravak `wrapLegacyTables()`.
+**Odbačeno `display:block`** — uklanja semantiku tablice; kvar rasporeda zamijenjen kvarom
+pristupačnosti koji se ne vidi. **Sporedno:** `RETURN_DOM` bez DOM-a je **bacao iznimku** →
+uhvatila dva postojeća unit-testa; bez njih bi puklo u pregledniku.
+
+**⑥ Otvoreno (BACKLOG):** `.lb-table-wrap` nema `tabindex` → skrolabilna ploha nedostupna
+tipkovnicom; axe to ne vidi jer mjeri na 1280 px. **Treći primjerak istog obrasca u tri cigle.**
+Također: jedan neponovljiv pad `a11y.authed` na materijalima — u tri kasnija prolaza zeleno,
+**zapisano kao nepotvrđeno**, ne kao riješeno.
+
+**Gate:** `preflight` **EXIT 0** · `layout.authed` + `a11y.authed` **5/5, dva uzastopna prolaza**.
+
+---
+
 ## 2026-08-14 (OPUS, b) — **Druga revizija · lanac opskrbe zatvoren · `check:cdn` · RLS-nalaz zapisan**
 
 **Grana:** `feat/c3-vlastito-gradivo`. Leon je tražio novi pregled stanja i kvalitete koda, s

@@ -86,6 +86,26 @@ rečenica koja kaže **na što se odnosi**.
 
 ---
 
+## 🔥 Skrolabilna ploha bez `tabindex` — `.lb-table-wrap` nije dostupan tipkovnicom — 2026-08-14
+**WCAG 2.1.1:** ploha koja skrola mora biti operabilna tipkovnicom, inače korisnik koji ne rabi miš
+ne može doći do desnog dijela tablice. axe to pokriva pravilom `scrollable-region-focusable`
+(**serious**). `.lb-table-wrap` — i onaj iz v2, koji postoji **od U7** — nema `tabindex="0"`.
+
+**Zašto nijedan gate nije pisnuo:** axe u `a11y.spec.js`/`a11y.authed.spec.js` mjeri na **1280 px**,
+gdje tablica stane i ploha **ne skrola** — a pravilo se okida tek kad prelijev stvarno postoji.
+Novi `layout.authed.spec.js` mjeri prave širine, ali on ne vrti axe.
+**To je treći primjerak istog obrasca u tri cigle zaredom** (§7.9 boja · §7.10 teme · §7.11 širina):
+**gate koji mjeri jedno stanje tvrdi nešto o jednom stanju.**
+
+**Popravak** nije samo `tabindex="0"` — traži i pristupačno ime (`role="region"` + `aria-label`),
+inače čitač ekrana najavi „regija" bez ičega. I treba biti **uvjetan**: `tabindex` na svaku tablicu
+koja NE skrola dodaje beskorisne zaustavne točke tipkovnice. Dakle mali runtime-prolaz, ne CSS.
+
+**Kad:** **C5b** (gradivo i vježbe) — tamo se ionako dira `learn-blocks.css` i put renderiranja.
+**Prije toga:** proširiti a11y gate barem jednom uskom širinom, inače se popravak ne može dokazati.
+
+---
+
 ## 🔥 Landing šalje 240 KB editorskog koda posjetitelju bez računa — 2026-08-14
 **Izmjereno** (profil telefona 390 px, prazan cache, nekomprimirano, lokalni server):
 dokument 66 KB · **skripte 821 KB kroz 45 zahtjeva** · stilovi 242 KB · **ukupno 1.173 KB**.

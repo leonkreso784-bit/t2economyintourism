@@ -757,3 +757,91 @@ stanje „odabrano" prestaje ovisiti **samo o boji** — što je i inače isprav
 > **Ovo je izravna potvrda skice iz BACKLOG-a** („prođe kroz sve četiri teme"). Prvi prolaz na
 > jednoj temi bio je zelen i djelovao je kao gotov posao. **Gate koji mjeri jednu temu tvrdi nešto
 > o jednoj temi** — a mi ih imamo pet.
+
+---
+
+### 7.11 🧱 C3 · druga cigla — širina je druga os iste rupe (2026-08-14)
+
+**Prije nego što se prepiše ijedan redak CSS-a, izmjereno je koliko duga u tri C3 datoteke uopće
+ima.** Odgovor je iznenadio: **gotovo nikakav.**
+
+| datoteka | redaka | `!important` | zakucane boje |
+|---|---|---|---|
+| `my-materials.css` | 361 | 0 | 0 hex · 1 rgba |
+| `block-editor.css` | 344 | 0 | **0 · 0** |
+| `studio.css` | 423 | 2 pravila (5 deklaracija) | 11 hex — **od toga 10 u komentarima**; jedina prava je `conic-gradient` na birač boje, gdje su boje SADRŽAJ |
+
+Tehnički dug C3-a je, dakle, **pet `!important` i ništa drugo**. C1 (tokeni), popravak C2 (126
+pogodaka palete) i prva cigla C3 (a11y) pojeli su ga unaprijed.
+
+**Iz toga je ispala razlika između tablice cigli i onoga što je faza stvarno uspostavila.** Tablica
+§3 kaže da u C3 „nestaju" tri datoteke. Ali mjerenje bundlea kaže da su C1 i C2 uspostavili drukčiji
+obrazac: **bundle sadrži ukupno 22 Tailwind utilityja** (`mt-*`, `text-*`, `font-*`, `tracking-*` i
+dvije semantičke boje), a `landing.css` nakon C2 **i dalje postoji, na 578 redaka**. Migracija u
+ovoj fazi nije bila „markup u utility-juhu" nego **brisanje mrtvog + spajanje na `@theme` tokene**.
+Nema razloga da C3 izmisli treći obrazac; „nestaje" u tablici valja čitati kao **„prestaje biti
+izvor istine za boje i razmake"**, kako je i ispalo za `landing.css`.
+
+#### Prava rupa nije bila boja nego ŠIRINA
+
+Kriterij prihvaćanja #1 glasi: *„…proći cijeli tok na telefonu od **320 px** … → profil → **editor**
+— bez horizontalnog scrolla i bez elementa koji strši."* Provjereno što to mjeri:
+
+- `320` se u cijeloj suiti pojavljuje na **jednom** mjestu — `layout-guard.spec.js`, koji gleda
+  isključivo CTA u landing-navigaciji;
+- `responsive.spec.js` posjećuje `/` i `study`, a **materijale i editor nikad**;
+- najmanji iPhone profil je **375 px**.
+
+**Kriterij po kojem se C3 proglašava gotovim nije imao mjerač** — isti oblik kao §7.10, samo na
+drugoj osi: ondje boja, ovdje širina. Zato druga cigla, kao i prva, počinje branom:
+**`tests/layout.authed.spec.js`** — materijali i Studio kroz **21 širinu** (svaki prag koji dira te
+površine s ±1: 374 · 640 · 680 · 767/768 · 1020 · 1024, plus kriterijskih **320**).
+
+#### Detektor je bio kriv dvaput, i drugi put gore
+
+1. **Šum.** Prva izvedba preskakala je element ako je ON `position:fixed`, ali ne i njegovu djecu →
+   izvlačna bočna traka prijavila je 6 elemenata na svakoj od 21 širine, na obje površine. **Sve je
+   bio šum.** Brana koja viče na svakom pokretanju biva oslabljena ili ignorirana.
+2. **Tišina — opasnija.** Popravak je izuzimao sve unutar pretka kojemu je `overflow-x` bio
+   `auto`/`scroll`, uz obrazloženje „sadržaj u skrolabilnom spremniku smije biti širi". **Premisa je
+   bila kriva:** `.st-canvas`, `.st-tree` i `.st-inspector` imaju `overflow-y:auto`, a po CSS
+   specifikaciji **čim je jedna os različita od `visible`, druga se računa kao `auto`** — pa je
+   filtar izuzeo cijelu unutrašnjost sva tri panela Studija. Obrnuta provjera je to dokazala:
+   `min-width:1200px` na `.st-head h1` **nije oborio gate**. Zeleno je bilo zeleno **jer nije gledalo**.
+
+> **Pouka koja se ponavlja u trećoj cigli zaredom:** obrnuta provjera nije formalnost nego jedini
+> način da se razlikuje „nema kvara" od „ne gledam". Ovdje je uhvatila razliku između te dvije
+> stvari u mojoj VLASTITOJ brani, sat vremena nakon što sam istu pouku zapisao u §7.10.
+
+Konačni detektor **mjeri umjesto da izuzima**: (a) dokument ne skrola vodoravno · (b) nijedan element
+ne strši izvan viewporta (osim podstabla u `position:fixed` — vlastiti koordinatni sustav) · (c)
+nijedan skrolabilan spremnik nema vodoravni prelijev. Namjerno skrolabilne plohe idu u
+`SMIJE_SKROLATI` **izričito i s razlogom**.
+
+#### Nalaz: kvar je bio u RENDERERU, ne u editoru
+
+Gate je pao s mjerom: **platno Studija skrola vodoravno na 320–414 px i na 681 px, `469 > 320`.**
+Sonda je našla uzrok: **`div.lb-legacy > table`** — tablice iz **v1 `legacy-html`** sadržaja. `renderTable`
+(v2) svoje tablice **već** omata u `.lb-table-wrap { overflow-x:auto }`; sirovi v1 HTML prolazi kroz
+DOMPurify i njegove tablice ostaju gole, a tablica se ne stišće ispod min-content širine (414 px).
+
+**To nije kvar editora nego renderera — dakle i studentov `learn` na svakoj staroj lekciji s
+tablicom, na svakom telefonu.** Popravak je u `js/blocks-renderer.js`: `wrapLegacyTables()` omata
+svaku tablicu u isti `.lb-table-wrap`.
+
+> **Odbačena alternativa i zašto:** `.lb-legacy table { display:block; overflow-x:auto }` je jedan
+> redak i radi — ali `display:block` **uklanja semantiku tablice** za čitače ekrana. Zamijenili
+> bismo kvar rasporeda kvarom pristupačnosti, a taj se **ne vidi na ekranu**. Isti razlog zbog kojeg
+> je §7.10 ukinuo razred umjesto da pomakne prag.
+
+**Sporedni nalaz iz istog popravka:** `RETURN_DOM` traži DOM, a unit-okruženje ga nema — prva
+izvedba je **bacala iznimku**, tj. cijeli blok se ne bi renderirao. Blok koji pukne gori je od
+neomotane tablice, pa kod sada provjeri vraćenu vrijednost i tiho se vrati na dosadašnje ponašanje.
+Uhvatila su ga dva postojeća unit-testa; **da ih nije bilo, pukao bi u pregledniku.**
+
+#### Ostaje otvoreno
+
+**Skrolabilna ploha mora biti dostupna tipkovnicom** (WCAG 2.1.1; axe `scrollable-region-focusable`).
+`.lb-table-wrap` — i onaj iz v2, koji postoji od U7 — **nema `tabindex`**. Gate to nije uhvatio jer
+axe u našem a11y specu mjeri na **1280 px**, gdje tablica stane i ploha ne skrola. To je **treći
+primjerak istog obrasca u tri cigle** i zapisan je u `BACKLOG.md`, ne popravljen usput.
