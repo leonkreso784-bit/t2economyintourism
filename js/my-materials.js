@@ -272,8 +272,18 @@
     const open = !!_expanded[n.id];
     const icon = isFolder ? (open && hasKids ? 'fa-folder-open' : 'fa-folder') : 'fa-book-open';
 
+    // ⚠️ `role="treeitem"` NIJE ukras. `<ul role="tree">` GASI implicitnu ulogu liste, pa su `<li>`
+    // bez uloge ostajali siročad: axe je javljao `aria-required-children` (critical) + `listitem`
+    // (serious), a za čitač ekrana je to značilo **stablo s nula stavki** — cijela korisnikova
+    // polica nevidljiva. Pola ARIA-e je bilo gore od nikakve: native semantika je uklonjena, a
+    // zamjena nije stavljena. Nađeno tek kad je `a11y.authed.spec.js` prvi put posjetio ovu plohu.
+    // DOM je PLOSNAT (dubina je vizualna, `--mm-depth`) → `aria-level` nosi hijerarhiju.
+    // `aria-expanded` stoji i na retku (stanje stavke) i na twisty-gumbu (stanje kontrole); oba se
+    // ispisuju iz iste varijable `open`, pa se ne mogu razići.
     return '' +
       '<li class="mm-row' + (isFolder ? ' mm-row--folder' : ' mm-row--study') + '"' +
+      ' role="treeitem" aria-level="' + (entry.depth + 1) + '"' +
+      (isFolder && hasKids ? ' aria-expanded="' + (open ? 'true' : 'false') + '"' : '') +
       ' data-mm-id="' + esc(n.id) + '" data-mm-kind="' + esc(n.kind) + '"' +
       ' style="--mm-depth:' + entry.depth + '">' +
       '  <span class="mm-grip" data-mm-drag title="' + esc(mt('materials.drag', 'Drag to move')) + '" aria-hidden="true">' +
@@ -316,7 +326,10 @@
       ? mt('materials.phStudy', 'Material name…')
       : mt('materials.phFolder', 'Folder name…');
     return '' +
-      '<li class="mm-row mm-row--edit" style="--mm-depth:' + depth + '">' +
+      // I redak u uređivanju je stavka stabla — bez uloge bi ga `aria-required-children` odbio
+      // kao nedopušteno dijete `role="tree"` (v. komentar u `rowHtml`).
+      '<li class="mm-row mm-row--edit" role="treeitem" aria-level="' + (depth + 1) + '"' +
+      ' style="--mm-depth:' + depth + '">' +
       '  <span class="mm-twisty"></span>' +
       '  <span class="mm-icon"><i class="fas ' + icon + '" aria-hidden="true"></i></span>' +
       '  <input type="text" class="mm-input" data-mm-input maxlength="120" autocomplete="off"' +

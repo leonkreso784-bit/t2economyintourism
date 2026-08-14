@@ -109,9 +109,16 @@
   transition:.15s; position:relative;
 }
 #editor-page .st-node .st-row:hover{ background:var(--st-sunken); }
+/* ⚠️ TEKST BOJE MARKE NA PLOHI TINTANOJ ISTOM MARKOM je kvar po KONSTRUKCIJI, ne po vrijednosti:
+   što je tinta jača, to je ploha bliža tekstu. Ovdje je davalo 4.03 na temi `paper`
+   (fg #2c5fd6 / bg #d5dae5) — ispravno u 4 teme, palo u petoj. Snižavanje postotka bi samo
+   pomaklo prag; ukida se cijeli razred: tekst ide na `--text-primary`, a marku nose **rub,
+   tinta i debljina** (§7.6: monokrom + jedan akcent, tipografija nosi). Ujedno stanje više ne
+   ovisi SAMO o boji. Nađeno prolazom kroz teme u `a11y.authed.spec.js` (§7.10); statičke brane
+   ga nisu mogle vidjeti — ništa nije zakucano — a `check:contrast` mjeri tokene, ne ovaj par. */
 #editor-page .st-node .st-row.active{
   background:color-mix(in srgb, var(--primary) 14%, transparent);
-  color:var(--primary); font-weight:600;
+  color:var(--text-primary); font-weight:600;
 }
 #editor-page .st-node .st-row.active::before{
   content:''; position:absolute; left:0; top:6px; bottom:6px; width:3px;

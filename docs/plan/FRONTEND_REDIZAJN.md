@@ -689,3 +689,71 @@ promjena UGOVORA**, i cijenu plaćaju sve površine koje su ugovor dotad smjele 
    testiraš.** Ispravno: provjera unutar datoteke koja **ima rezervu** u osnovici, i čitanje
    PORUKE, ne samo koda.
 
+
+---
+
+### 7.10 🧱 C3 · prva cigla — gate PRIJE migracije (2026-08-14, grana `feat/c3-vlastito-gradivo`)
+
+**Redoslijed je odluka, ne slučajnost.** C3 prepisuje `my-materials.css`, `studio.css` i
+`block-editor.css` — točno one tri površine za koje je §7.9 dokazao da ih **nijedan vizualni gate
+ne posjećuje**. Migrirati ih prije nego gate postoji značilo bi ponoviti C2: promjena bi prošla
+zeleno, a kvar bi se vidio tek na Leonovu ekranu. **Zato prva cigla C3-a nije CSS nego brana.**
+
+**Izvedeno:**
+- **`tests/a11y.authed.spec.js`** — axe na 7 prijavljenih stanja: Moji materijali sa **stablom**
+  (dosad se skeniralo samo odjavljeno stanje, gdje stabla nema) · Studio/stablo · Studio/lekcija ·
+  draft-mod · block-editor · izbornik za umetanje · **dijalog potvrde**. Svako stanje kroz
+  **svih 5 tema** (zadana + `academic`/`paper`/`chalk`/`mint`) = **35 mjerenja**.
+- **`tests/helpers/axe-gate.js`** — gate-logika izvučena iz `a11y.spec.js` u zajednički modul.
+  Druga kopija bi se razišla, a „ista provjera na dva mjesta, samo jedno održavano" je upravo
+  obrazac koji je pustio §7.9 (ADR-027).
+- **Ništa se ne objavljuje** — draft se odbacuje kroz `#stDiscard`, što usput i **jest** put do
+  dijaloga potvrde. STAGING-only, kao ostatak authed-suite.
+
+**⚠️ Gate je pao na prvom pokretanju i našao TRI kvara na produkciji, nijedan dosad vidljiv:**
+
+| kvar | težina | gdje |
+|---|---|---|
+| `aria-required-children` — `role="tree"` bez ijednog `treeitem` | **critical** | `.mm-tree` |
+| `listitem` — `<li>` bez liste-roditelja (6 čvorova) | serious | `.mm-row` |
+| `label-title-only` — `<input type="color">` samo s `title` (5 čvorova) | serious | `.st-cdot--custom` |
+
+**Prva dva su JEDAN korijenski uzrok, i on je poučan: `role="tree"` na `<ul>` GASI implicitnu
+ulogu liste.** `<li>`-jevi su time ostali bez ikakve uloge — stablo bez stavki, stavke bez stabla.
+Za čitač ekrana to znači da je **cijela korisnikova polica najavljena kao prazna**. Pola ARIA-e
+je bilo **gore od nikakve**: native semantika je uklonjena, a zamjena nije stavljena. Popravak:
+`role="treeitem"` + `aria-level` (DOM je plosnat, dubina je vizualna) + `aria-expanded` na retku.
+Treći je propust dosljednosti — susjedni gumbi u istom widgetu `aria-label` imaju od početka.
+
+**🔁 Obrnuta provjera (obavezna, i ovdje je bila nužna):** privremeno vraćena zakucana ploha
+`rgba(30,41,59,.92)` na `.st-icard` → gate **pada i imenuje pravilo s mjerom**
+(`fg #5b6879 / bg #2f394a = 2.05, treba 4.5`). Dakle brana hvata **baš onaj razred kvara zbog
+kojeg je nastala**, ne samo ono što je slučajno našla.
+
+**Pouka koja nadživljava ovu ciglu:** tri kvara nisu nastala jučer — `role="tree"` stoji od F2.
+Nisu bili nevidljivi zato što su suptilni, nego zato što **na toj plohi nije stajao nijedan
+mjerač**. Prije nego neku površinu proglasiš zdravom, provjeri **posjećuje li je išta**.
+
+#### 🎨 Četvrti nalaz — i on je opravdao prolaz kroz TEME
+
+Prvi prolaz je bio na jednoj temi i bio je zelen. Kad je gate proširen na svih 5, ispao je još
+jedan kvar — **samo na temi `paper`, i to na svim Studio-plohama odjednom**: aktivni redak u
+stablu, `fg #2c5fd6 / bg #d5dae5 = 4.03` (treba 4.5).
+
+Pravilo je glasilo `background: color-mix(… var(--primary) 14% …)` uz `color: var(--primary)` —
+dakle **tekst u boji marke na plohi tintanoj istom markom**. To je kvar **po konstrukciji, ne po
+vrijednosti**: što je tinta jača, ploha je bliža tekstu, pa razlika nestaje. Na četiri teme je
+podloga bila dovoljno svijetla da par prođe; na `paper` nije.
+
+**Zašto ga nijedna postojeća brana nije mogla vidjeti:** ništa nije zakucano (zabrane #1–#3 gledaju
+zakucane vrijednosti) · `check:contrast` mjeri **tokene međusobno**, a ovo je par „token na tinti
+istog tokena", koji u njegovoj tablici ne postoji · axe bi ga vidio, ali dosad **na tu plohu nije
+dolazio**. Trebala su se poklopiti sva tri.
+
+**Popravak ukida razred, ne pomiče prag:** tekst ide na `var(--text-primary)`, a marku nose **rub,
+tinta i debljina slova**. Snižavanje postotka bi samo odgodilo isti kvar na sljedeću temu. Usput
+stanje „odabrano" prestaje ovisiti **samo o boji** — što je i inače ispravnije.
+
+> **Ovo je izravna potvrda skice iz BACKLOG-a** („prođe kroz sve četiri teme"). Prvi prolaz na
+> jednoj temi bio je zelen i djelovao je kao gotov posao. **Gate koji mjeri jednu temu tvrdi nešto
+> o jednoj temi** — a mi ih imamo pet.

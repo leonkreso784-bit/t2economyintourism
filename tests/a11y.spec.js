@@ -3,35 +3,14 @@
 //
 // Napomena: skeniramo na JEDNOM viewportu (prvi projekt) da izbjegnemo 4× šum istih nalaza; a11y nije viewport-ovisan
 // za ono što axe provjerava (kontrast/role/labele/alt). Pokreće se kroz Playwright (`test:responsive`/CI).
+//
+// ⚠️ OVAJ SPEC POKRIVA SAMO ODJAVLJENE POVRŠINE. Prijavljene (Moji materijali sa stablom,
+// Studio, block-editor, dijalog potvrde) drži `a11y.authed.spec.js` — dosegom, ne pravilima.
+// Dok je taj spec nedostajao, tema na tamnoj plohi prošla je kroz cijelu suitu (spec §7.9).
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
-
-// Gate hvata samo ozbiljne razrede; 'minor'/'moderate' su backlog (ne ruše build).
-const IMPACT_GATE = ['serious', 'critical'];
-
-// ⚠️ Ispisuj i axeove BROJKE, ne samo selektor.
-// Povod (C2, 2026-08-13): gate je javio „color-contrast na `#btnCorrect > span`" i tu stao.
-// Uzrok se onda pogađa — a dva neovisna ručna mjerenja dala su 4.80 i 5.16, dakle IZNAD
-// praga, dok je axe tvrdio suprotno. Sat vremena je otišao na razliku koju je axe cijelo
-// vrijeme znao. Boja, pozadina i omjer sad idu u ispis, pa se uzrok ČITA umjesto da se traži.
-function detalji(node) {
-  const d = (node.any || []).map((c) => c.data).find((x) => x && x.contrastRatio != null);
-  if (!d) return null;
-  return `fg ${d.fgColor} / bg ${d.bgColor} = ${d.contrastRatio} (treba ${d.expectedContrastRatio})`;
-}
-
-function gateViolations(results) {
-  return results.violations
-    .filter((v) => IMPACT_GATE.includes(v.impact))
-    .map((v) => ({
-      id: v.id,
-      impact: v.impact,
-      nodes: v.nodes.length,
-      help: v.help,
-      target: v.nodes.map((n) => n.target).flat(),
-      mjere: v.nodes.map((n) => detalji(n)).filter(Boolean)
-    }));
-}
+// Gate-logika (razredi, ispis izmjerenih brojki) je ZAJEDNIČKA s authed gateom — ADR-027.
+const { gateViolations } = require('./helpers/axe-gate');
 
 test.describe('a11y — no serious/critical axe violations', () => {
   test('landing', async ({ page }, testInfo) => {

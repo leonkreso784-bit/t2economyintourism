@@ -5,6 +5,48 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS) — **Revizija projekta · C3 kreće GATE-om, ne CSS-om · 4 kvara na prijavljenim površinama**
+
+**Grana:** `feat/c3-vlastito-gradivo` (iz `feat/c2-landing`; C2 još čeka Leonov OK za merge).
+
+**① Revizija cijelog projekta** (Leonov zahtjev). Izmjereno, ne prepisano: `js/` 13.130 redaka /
+39 datoteka · `css/` 10.718 / 35 · `data/` 55.173 / 72 · `tests/` 9.458 / 55 · `scripts/` 5.405 / 32.
+Omjer test-koda prema aplikacijskom = **1 : 2,5**. `preflight` EXIT 0.
+**Ispravak zapisa:** checkpoint je tvrdio „ništa pushano", a `origin/feat/c2-landing` = `67b7047`
+→ **15 od 19 commita JE na originu** (feature-grana, dakle dopušteno; zapis je bio netočan).
+
+**Tri nalaza koja nisu bila u dokumentaciji** (dva zapisana u `BACKLOG.md`, treći popravljen odmah):
+- **Landing šalje 1.173 KB, od čega 241 KB (38 %) editorskog koda** posjetitelju bez računa; 38
+  sinkronih skripti. Projekt si je zadao budžet **„JS ≤ 200 KB"** i označio ga „blokada, ne
+  upozorenje" — **gate nikad nije izgrađen**, pa je stvarnost 4× iznad vlastitog praga.
+  **Isti obrazac kao §7.9: pravilo zapisano, mjerač ne postoji.**
+- **CSP je odgođen „do UGC-a", a UGC je na produkciji** — uvjet odgode je istekao sam od sebe.
+- ⚠️ **Moja greška u mjerenju, ispravljena istog sata:** prvo mjerenje je dalo FCP **2984 ms**;
+  ponovljeno toplo daje **224 ms**. Prvo je bio hladan start preglednika. **Jedno mjerenje bez
+  ponavljanja nije mjera** — ista pouka kao „landing.css 460 vs 578" od jučer.
+
+**② C3 kreće branom, ne migracijom.** Redoslijed je odluka: C3 prepisuje `my-materials.css`,
+`studio.css` i `block-editor.css` — točno površine bez ijednog vizualnog gatea. Migrirati ih prije
+gatea značilo bi ponoviti C2 (zeleno u CI-u, slomljeno na Leonovu ekranu).
+Izvedeno: **`tests/a11y.authed.spec.js`** (7 stanja × 5 tema = **35 mjerenja**) +
+**`tests/helpers/axe-gate.js`** (logika izvučena iz `a11y.spec.js`, ADR-027).
+
+**③ Gate je pao na prvom pokretanju — 4 kvara na produkciji:**
+`aria-required-children` **critical** + `listitem` serious na `.mm-tree` (jedan uzrok:
+**`role="tree"` gasi implicitnu ulogu liste**, `<li>` ostali bez uloge → za čitač ekrana je
+korisnikova polica bila **prazno stablo**) · `label-title-only` serious na `.st-cdot--custom` ·
+i **četvrti tek u prolazu kroz teme**: aktivni redak Studija = tekst marke na tinti iste marke,
+**4.03 na `paper`, ispravno u ostale 4**. Sve popravljeno; popravak #4 **ukida razred** (tekst →
+`--text-primary`) umjesto da pomiče postotak.
+
+**Provjereno:** `preflight` EXIT 0 · authed a11y **3/3** kroz 5 tema · puna suita **351 prošlo /
+0 palo / 30 skip**. Obrnuta provjera: vraćena zakucana `rgba(30,41,59,.92)` → gate pada i imenuje
+pravilo s mjerom (`2.05`). Detalji: **spec §7.10**.
+
+**Sljedeće:** migracija te tri CSS datoteke na Tailwind (jezgra C3-a) — sad iza brane.
+
+---
+
 ## 2026-08-14 (OPUS) — **Popravak C2: prebacivanje teme slomilo je PRIJAVLJENE površine · zabrana #3 · rupa u zabrani #1**
 
 **Grana `feat/c2-landing`. Ništa pushano. C2 NIJE bio gotov — merge je čekao ovaj popravak.**

@@ -13,7 +13,16 @@ admin-pregled ga nije tipografirao · tablica/video/legacy-html: bez pred-obrade
 
 ---
 
-## 🔥 Prijavljene površine nemaju NIJEDAN vizualni gate — 2026-08-14
+## ✅ ~~Prijavljene površine nemaju NIJEDAN vizualni gate~~ — ZATVORENO 2026-08-14 (C3, spec §7.10)
+**Riješeno prvom ciglom C3-a, PRIJE ijedne CSS-izmjene.** `tests/a11y.authed.spec.js` skenira
+7 prijavljenih stanja × 5 tema = **35 mjerenja**; gate-logika je zajednička s odjavljenim
+gateom (`tests/helpers/axe-gate.js`, ADR-027). **Pao je na prvom pokretanju i našao tri kvara**
+(`role="tree"` bez `treeitem` = critical · `<li>` bez liste = serious · color-input samo s
+`title` = serious), svi popravljeni. Obrnuto provjeren vraćanjem zakucane tamne plohe.
+Skica ispod je izvorni zapis duga i ostaje kao obrazloženje.
+
+<details><summary>izvorni zapis duga (2026-08-14)</summary>
+
 **Nalaz (popravak C2, spec §7.9):** kad je zadana tema postala svijetla, Studio i „Moji materijali"
 postali su **nečitljivi** (`.st-icard` = **1.00**, doslovno ista boja teksta i plohe), a **sva tri
 postojeća gatea su šutjela**. Statičke brane su popravljene istog dana (tvrda zabrana #3), ali
@@ -39,6 +48,48 @@ ponavlja lov na duha iz §7.8.
 
 **Kad:** uz **C3**, jer C3 ionako prepisuje te površine i bez ovog gatea nema kako dokazati da ih
 nije razbio. **Veže se na** [FRONTEND_REDIZAJN §7.9](../plan/FRONTEND_REDIZAJN.md).
+
+</details>
+
+---
+
+## 🔥 Landing šalje 240 KB editorskog koda posjetitelju bez računa — 2026-08-14
+**Izmjereno** (profil telefona 390 px, prazan cache, nekomprimirano, lokalni server):
+dokument 66 KB · **skripte 821 KB kroz 45 zahtjeva** · stilovi 242 KB · **ukupno 1.173 KB**.
+Od skripti je **241 KB (38 %)** editorsko/admin: `studio.js` (50) · `block-editor.js` (53) ·
+`block-editor-media.js` (30) · `admin.js` (45) · `admin-editors.js` (35) · `draft-store.js` (18) ·
+`node-images.js` (6) · `card-limits.js` (2). Još **119 KB** su modovi i vježbe, kojih na landingu
+nema. Svih 38 je **sinkrono**, bez `defer`, u `index.html`.
+
+**Zašto je ovo nalaz, a ne mišljenje:** projekt si je u ovom istom dokumentu (sekcija „Brutalan
+bar", #1) zadao budžet **„JS ≤ ~200 KB"** i označio ga 🔥 *„Blokada, ne upozorenje."* Gate nikad
+nije izgrađen, pa je stvarnost danas **4× iznad vlastitog praga**. To je **isti obrazac koji je
+proizveo §7.9**: pravilo zapisano, mjerač ne postoji. ⚠️ FCP je uredan (**224 ms** toplo) — cijena
+nije u prvom pikselu nego u **parsiranju na slabom telefonu i u 45 zahtjeva na mobilnoj mreži**.
+*(Prvo mjerenje u istoj sesiji dalo je FCP 2984 ms; to je bio hladan start preglednika, ne stranica.
+Zapisano jer je pouka: jedno mjerenje bez ponavljanja nije mjera.)*
+
+**Kad:** uz **C3** — C3 ionako prepisuje površinu tih istih datoteka, pa je odvajanje s kritičnog
+puta najjeftinije baš tada. Uz to **budžet kao gate**, da brojka nikad više ne poraste tiho.
+
+---
+
+## 🔥 CSP je odgođen „do UGC-a" — a UGC je na produkciji — 2026-08-14
+Zapis u ovom dokumentu (sekcija „Hardening v1") glasi: *„CSP + DOMPurify — tek uz UGC (Faza 6),
+ne prije (**sadržaj autorski/trustiran**)."* DOMPurify je isporučen, ali **CSP nije**, a uvjet pod
+kojim je odgoda dana **više ne vrijedi**: osobni graditelj („Moji materijali") je na produkciji,
+korisnik piše sadržaj koji renderira `blocks-renderer.js`, i sadržaj **nije više autorski**.
+Odgoda je istekla sama od sebe i nitko je nije podigao jer je stajala označena 💤.
+
+`vercel.json` danas ima `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` i
+`Permissions-Policy` — **CSP je jedina koja fali**, i jedina koja bi ograničila štetu ako escape
+negdje popusti (v. BUG-025, gdje granica **jest** popustila godinu dana neopaženo).
+⚠️ Nije trivijalno: inline `onload` na KaTeX-linku, inline `gtag` blok i tri CDN-a (cdnjs,
+jsdelivr) traže ili `nonce` ili preseljenje.
+
+**Kad:** **C6** (profil/auth/pravne/consent) — tamo se ionako dira `consent.js` i inline gtag.
+
+---
 
 ## 🔥 M5 — duljina kartice: vođenje u editoru + strop 500 — 2026-08-07
 **Nalaz (Leon, živi pregled):** *„trebat ćemo poradit na ograničenju koliko jedna kartica ima teksta."*
