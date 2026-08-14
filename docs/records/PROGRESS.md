@@ -5,6 +5,53 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS, b) — **Druga revizija · lanac opskrbe zatvoren · `check:cdn` · RLS-nalaz zapisan**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon je tražio novi pregled stanja i kvalitete koda, s
+naglaskom na **buduće** probleme. Mjereno živo, ne prepisivano iz dokumentacije.
+
+**① Izmjereno stanje.** `js/` 635 KB / 11.716 redaka / 36 datoteka · `css/` 310 KB / 9.658 / 35 ·
+bundle 217 KB · `data/*.js` 3,0 MB / 72 · `data/json/` **6,0 MB** / 66 · `index.html` 66 KB /
+**44 script-taga** (38 sinkronih) · repo 16,8 MB, **`.git` 81,7 MB**.
+
+**② Nalazi koje dokumentacija nije imala — svi provjereni u kodu, ne pretpostavljeni:**
+- **Lanac opskrbe** (riješeno u ovoj sesiji, v. ③).
+- **RLS ponovno računa `auth.uid()` po retku — 13 politika** (`nodes`, `node_content`, `progress`,
+  `profiles`, `node_content_versions`). Iz Supabaseovog **performance**-advisora, koji dotad nitko
+  nije gledao — svi raniji zapisi tiču se *security*-advisora. **Jedini nalaz koji postaje skuplji
+  što se duže čeka**, jer se cijena mjeri brojem korisnikovih redaka, a ADR-029 je UGC proglasio
+  glavnim proizvodom. Popravak = jedna zagrada po politici, ali **SQL na prod traži Leonov OK** →
+  zapisano u `BACKLOG.md`, nije dirano.
+- **`typecheck` pokriva 1.210 od 11.716 redaka (10 %)** — 6 od 36 datoteka. Komentar u
+  `tsconfig.json` kaže *„include raste modul-po-modul"*, ali `git log` pokazuje da nikad nije
+  **namjerno** proširen: rastao je samo kad bi nova datoteka slučajno bila tipizirana.
+  Netipizirane su baš najveće — i to su **tri od četiri datoteke koje C3 prepisuje.**
+- **Nema lintera** (ESLint/Prettier/Biome) nad 11.716 redaka. · **9 potpuno praznih `catch {}`**
+  (+22 s komentarom) → greška nestane, Sentry je ne vidi. · **SW cache nema strop**
+  (`sw.js:78,94` — `cache.put` bez evikcije).
+
+**③ Isporučeno: lanac opskrbe.** Detalji u `CHANGELOG.md` i `BACKLOG.md`; ovdje samo **metoda**,
+jer se ona ponavlja: hasheve sam **unakrsno provjerio protiv izdavačevih objava prije upisa**
+(SRI izračunat iz kompromitiranog preuzimanja pinao bi kompromitaciju), pa **obrnuto provjerio
+gate na sva tri načina kvara**. Nova brana `scripts/check-cdn.js` → `preflight` (13 gateova).
+
+**④ Dvije moje greške, obje ispravljene u istom prolazu:**
+- Tvrdio sam **„4 CDN skripte, 0 SRI"**. `supabase-js` **SRI je imao** — moj grep je tražio
+  `integrity=` samo u HTML-u, a ondje se postavlja kao svojstvo (`s.integrity`), ne kao atribut.
+  Ispravno je 5 bez SRI od 7. **Nalaz je time postao ozbiljniji, ne blaži**, jer je taj jedini
+  postojeći SRI bio pinan na datoteku koju **CDN generira**, a ne izdavač objavljuje.
+- Prva usporedba hasheva je vikala „RAZLIKA!" na svih 5 cdnjs datoteka. **Nije bila razlika nego
+  drugi algoritam** — cdnjs objavljuje sha512, ja sam računao sha384. Da sam stao na prvom
+  ispisu, zaključio bih da je CDN kompromitiran.
+
+**Gate:** `preflight` **EXIT 0** (13 brana) · `check:cdn:live` **7/7 protiv izdavačevih hasheva** ·
+**`test:authed` 69/69** (prijava ide kroz izmijenjeni SDK-URL; **U8.9b** dokazuje pinani MathLive).
+
+**Sljedeće:** jezgra C3 — migracija `my-materials.css` / `studio.css` / `block-editor.css` na
+Tailwind, uz proširenje `tsconfig`-a na te datoteke dok su ionako otvorene.
+
+---
+
 ## 2026-08-14 (OPUS) — **Revizija projekta · C3 kreće GATE-om, ne CSS-om · 4 kvara na prijavljenim površinama**
 
 **Grana:** `feat/c3-vlastito-gradivo` (iz `feat/c2-landing`; C2 još čeka Leonov OK za merge).

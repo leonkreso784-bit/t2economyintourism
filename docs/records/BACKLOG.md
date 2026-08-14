@@ -53,6 +53,39 @@ nije razbio. **Veže se na** [FRONTEND_REDIZAJN §7.9](../plan/FRONTEND_REDIZAJN
 
 ---
 
+## ✅ ~~Vanjske skripte bez SRI i bez pina~~ — ZATVORENO 2026-08-14 (`check:cdn`)
+
+**Nalaz je bio o PRAVILU, ne o pet nedostajućih atributa.** Projekt ima tvrdu politiku točnog
+pinanja (`save-exact=true`, `.nvmrc`, `check:lockfile`), nastalu jer je raspon `^` pustio da
+upstream objava razidje razrješenje ispod nas. Ta je politika pokrivala `package.json` — dakle
+**alat, koji nikad ne dođe do korisnika.** Šest datoteka koje se doista izvršavaju u korisnikovu
+pregledniku nije pokrivalo ništa: Font Awesome, KaTeX (CSS ×2 + JS + auto-render) i DOMPurify bez
+SRI, a MathLive s **golog `npm/mathlive`** = „uvijek najnovija". Brana je čuvala ono što ne može
+nauditi i nije čuvala ono što može. Komentar iznad MathLivea je pritom tvrdio da je uvjet
+ispunjen (*„vendorana/CDN kao KaTeX"*) — a KaTeX **jest** bio pinan; kod je kršio vlastiti
+zapisani uvjet dok je proza tvrdila suprotno, što je gore od nezapisanog duga.
+
+**Drugi, suptilniji nalaz — jedini koji je već imao SRI.** `supabase.min.js` **ne postoji u npm
+paketu**: jsDelivr ga generira vlastitim minifierom na zahtjev (dokaz: nema ga u file-listingu, a
+„minificirana" inačica je 208.196 B = **292 B veća** od objavljene 207.904 B). SRI je time bio
+pinan na **izveden artefakt tuđeg build-koraka**. Dan kad jsDelivr promijeni minifier, hash pukne
+→ `onerror` → po komentaru u `auth.js` *„auth se tiho ugasi"*, tj. **prijava umire bez poruke i
+bez ijednog crvenog gatea**. Sad se pokazuje na objavljenu `supabase.js` (manju!), čiji je sha256
+provjeren protiv jsDelivrovog listinga → hash se mijenja **samo s verzijom**.
+
+**Isporučeno:** SRI + `crossorigin` na svih 5 tagova · MathLive pinan na **0.110.0** (bajt-identično
+onome što je goli URL posluživao) · supabase preusmjeren na izdavačevu datoteku · **`npm run
+check:cdn` u preflightu** (3 lokalne provjere) + `check:cdn:live` (mrežna, 4. provjera).
+Svih 7 hasheva **unakrsno provjereno protiv izdavačevih objava** prije upisa — SRI izračunat iz
+kompromitiranog preuzimanja pinao bi kompromitaciju. Obrnuto provjereno: gate pada na svaki od
+tri načina, a provjera „izvedene datoteke" okida **i kad je SRI točan**.
+
+**Pouka (ista kao kod `check:contrast`):** *gate koji provjerava NEKE ovisnosti stvara tihu
+pretpostavku da su provjerene SVE.* Politika je postojala godinu dana; nedostajala je samo
+rečenica koja kaže **na što se odnosi**.
+
+---
+
 ## 🔥 Landing šalje 240 KB editorskog koda posjetitelju bez računa — 2026-08-14
 **Izmjereno** (profil telefona 390 px, prazan cache, nekomprimirano, lokalni server):
 dokument 66 KB · **skripte 821 KB kroz 45 zahtjeva** · stilovi 242 KB · **ukupno 1.173 KB**.
@@ -86,6 +119,13 @@ Odgoda je istekla sama od sebe i nitko je nije podigao jer je stajala označena 
 negdje popusti (v. BUG-025, gdje granica **jest** popustila godinu dana neopaženo).
 ⚠️ Nije trivijalno: inline `onload` na KaTeX-linku, inline `gtag` blok i tri CDN-a (cdnjs,
 jsdelivr) traže ili `nonce` ili preseljenje.
+
+**Ažurirano 2026-08-14:** SRI je isporučen (v. zatvorenu stavku gore), pa je **jedan od tri
+problema riješen**: `script-src` više ne mora vjerovati hostu na riječ — svih 7 podresursa je
+pinano i hash-provjereno, a `check:cdn` drži da tako ostane. Preostaju **inline `gtag` blok** i
+**inline `onload` na KaTeX-linku**. SRI i CSP se **ne zamjenjuju**: SRI kaže „ova datoteka je
+točno ta", CSP kaže „nijedna druga se ne smije učitati". Bez CSP-a injektirana `<script>` s
+posve drugog hosta i dalje prolazi.
 
 **Kad:** **C6** (profil/auth/pravne/consent) — tamo se ionako dira `consent.js` i inline gtag.
 
@@ -177,6 +217,35 @@ Ostavljeno svjesno, ali zapisano da se ne izgubi:
 - **`set_updated_at` bez fiksnog `search_path`** — standardno kaljenje (`SET search_path = ''`).
 - Ostali WARN-ovi su naši owner-scoped `SECURITY DEFINER` RPC-ovi koje `authenticated` **mora** moći zvati
   (ADR-024: jedini put upisa) → očekivano, ne popravlja se.
+
+## 🔥 RLS ponovno računa `auth.uid()` za SVAKI redak — 13 politika — 2026-08-14
+**Nalaz iz Supabaseovog PERFORMANCE-advisora**, koji dotad nitko nije pogledao — svi dosadašnji
+zapisi (§Advisori gore) tiču se **security**-advisora. Trinaest politika zove `auth.uid()`
+**po retku** umjesto `(select auth.uid())`, čime Postgres gubi mogućnost da poziv izračuna
+jednom po upitu (`initPlan`):
+
+| tablica | politike |
+|---|---|
+| `nodes` | select · insert · update · delete |
+| `node_content` | select · insert · update · delete |
+| `progress` | select · insert · update · delete |
+| `profiles` | select |
+| `node_content_versions` | select |
+
+**Zašto je to baš SAD važno:** cijena se mjeri **brojem korisnikovih redaka**, a ADR-029 je UGC
+proglasio glavnim proizvodom. Danas, s malo čvorova po korisniku, razlika je nemjerljiva —
+korisnik s 500 čvorova plaća 500 evaluacija po upitu. **Ovo je jedini nalaz u reviziji koji
+postaje SKUPLJI što se duže čeka**, i jedini koji `load-probe` ne bi otkrio, jer probe mjeri
+prazne račune.
+
+Popravak je **jedna zagrada po politici** i ne mijenja semantiku (`(select auth.uid())` vraća
+istu vrijednost). Uz to: dva **neindeksirana strana ključa** (`content_versions_edited_by`,
+`node_content_versions_edited_by`) — sitno, ali audit-tablice samo rastu, nikad se ne prazne.
+
+**Blokirano na:** SQL na PRODUKCIJI traži Leonov izričit OK (klasifikator blokira `apply_migration`).
+Migracija se piše i vrti **prvo na `sokrat-staging`**, pa tek onda na prod.
+**Provjera nakon:** advisor više ne javlja `auth_rls_initplan`; `npm run test:authed` zelen
+(politike se ne smiju promijeniti u ponašanju, samo u planu izvršavanja).
 
 ## ➖ Broj pitanja na landingu pokriva samo 17 od 22 predmeta — 2026-08-09
 **Nalaz (uz popravak broja predmeta):** landing sad točno piše **22 predmeta**, ali „**5.700+ pitanja**"
