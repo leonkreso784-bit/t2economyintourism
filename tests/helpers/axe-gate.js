@@ -39,11 +39,34 @@ function gateViolations(results) {
 // izmjereno javljao `#1e8155` umjesto tokena `#10794a` — ista boja na ~93 % neprozirnosti,
 // dakle 4.29 umjesto 4.80, tj. pad koji na gotovoj stranici ne postoji. `finish()` je
 // determinističan: ne produljuje čekanje nego animacije gura u krajnje stanje.
+// ⚠️ 2026-08-15 — ISTI KVAR SE PONOVIO, jer je popravak bio nepotpun. `finish()` se zvao
+// JEDNOM, prije čekanja od 250 ms; toast se skriva SAM, na tajmeru, pa je njegov prijelaz
+// krenuo TIJEKOM tog čekanja i axe ga je uhvatio na ~53 % neprozirnosti:
+// `#868584` na `#fdfcfb` = 3.59, prijavljeno kao serious color-contrast u Studiju.
+// Da to nije boja nego prozirnost dokazuje aritmetika: sva tri kanala daju istu alfu
+// (0.527 · 0.527 · 0.522) za `--color-ink-0` preko plohe. Prava boja daje ~14:1.
+// Zato se sad gura u krajnje stanje U PETLJI i JOŠ JEDNOM neposredno prije mjerenja.
 async function smiri(page) {
-  await page.evaluate(() => {
+  // ⚠️ Brojiti smiju SAMO animacije koje mogu završiti. Beskonačne (spinneri) `finish()`
+  // odbija — baci iznimku, `playState` ostane `running` — pa bi ih petlja čekala vječno.
+  // Prva verzija ovog popravka to nije izuzela i test je s 51 s otišao u timeout od 120 s:
+  // brana koja čeka na nešto što se po definiciji ne događa nije stroža, nego pokvarena.
+  const gurni = () => page.evaluate(() => {
+    const konacna = (a) => {
+      try { return (a.effect.getTiming().iterations || 1) !== Infinity; } catch (e) { return false; }
+    };
     document.getAnimations().forEach((a) => { try { a.finish(); } catch (e) { /* beskonačne */ } });
+    return document.getAnimations().filter((a) => a.playState === 'running' && konacna(a)).length;
   });
+
+  for (let i = 0; i < 3; i++) {
+    if (!(await gurni())) break;
+    await page.waitForTimeout(60);
+  }
   await page.waitForTimeout(250);
+  // Ključni drugi poziv: sve što je krenulo TIJEKOM gornjeg čekanja mora biti gotovo prije
+  // nego axe uzorkuje boje. Bez njega petlja gore ne pomaže — mjerenje je i dalje utrka.
+  await gurni();
 }
 
 // Skenira trenutno stanje stranice i vraća gateane prekršaje (prazno = zeleno).

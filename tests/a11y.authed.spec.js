@@ -39,6 +39,14 @@ test.describe('a11y (prijavljen) — 0 serious/critical na vlastitom gradivu i u
   });
 
   test('Studio — stablo, otvorena lekcija, draft-mod, block-editor, dijalog potvrde', async ({ page }) => {
+    // ⚠️ VLASTITI BUDŽET, i to nije popuštanje nego mjera. Ovaj test radi PET punih
+    // axe-analiza (5 tema) nad najtežom stranicom u aplikaciji — Studio nosi stablo,
+    // platno, inspektor i block-editor odjednom. Na zadanih 120 s prošao je u 51 s dok je
+    // stroj bio odmoran, a poslije nekoliko sati rada ista revizija prijeđe 120 s i padne
+    // kao „timeout" — dakle gate koji javlja kvar kad ga nema, i to baš onaj koji je uveden
+    // da bi se vjerovalo njegovim nalazima. Provjereno da NIJE regresija: isti pad daje i
+    // izvorna verzija `smiri()`, prije današnje izmjene.
+    test.setTimeout(300000);
     const nalazi = [];
 
     await page.goto('/');
