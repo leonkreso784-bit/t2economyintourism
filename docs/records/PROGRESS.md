@@ -9,8 +9,10 @@ testirano, što slijedi.
 
 > Leon: *„danas ćemo morat mergat Sašin rad jer ne može ići ovako više."*
 
-**Grana `merge/sasa-hr` (osnovana na `main` `9637f4a`), dva `--no-ff` mergea, NIJE pushana** — čeka Leonov OK
-(pravilo #2). Sašino autorstvo je **očuvano u povijesti**: mergeane su prave grane, nije prepisan sadržaj.
+**Grana `merge/sasa-hr` (osnovana na `main` `9637f4a`), dva `--no-ff` mergea → `main` `58ecec5` → NA PRODUKCIJI**
+(Leonov OK: *„Da, push na main."*). Sašino autorstvo je **očuvano u povijesti**: mergeane su prave grane, nije
+prepisan sadržaj. Usput, na Leonov OK, **`feat/c3-vlastito-gradivo` je prvi put gurnuta na origin** — 26 commita
+(C2, popravak C2, tri C3 cigle, lanac opskrbe) dotad je postojalo **samo na Leonovu disku**, bez ijedne kopije.
 
 **Zatečeno stanje.** Obje grane (`content/entrepreneurship-hr`, `content/ebusiness-hr`) granale su se s
 `b79e053` i bile **88 commita iza `main`-a**. Svaka dira **17 datoteka**, što na prvi pogled izgleda kao
@@ -41,8 +43,15 @@ suita. **`browse.spec.js` je izdržao** — Leonov popravak `388e3c5` izvodi oč
 **Stanje kataloga: 22 → 24 predmeta** (17 EN + **7 HR**). Time je Sašin STOP-nalog **ispunjen**; S4+S5
 (4 kvantitativna HR) ostaje pauziran do kraja frontend redizajna.
 
-**Slijedi:** Leonov OK za push → Vercel provjera (pravilo #7) → **pa `main` u `feat/c3-vlastito-gradivo`**
-(sudar će biti u token-datotekama i u `PROGRESS`/`CHANGELOG`; tokeni se opet rješavaju bumpom).
+**Produkcijska provjera (pravilo #7) — 12/12.** Vercel `dpl_6DzY6PxH…` READY target=production · token
+`20260815040802` = repo · `catalog.js` s produkcije daje **24 predmeta** s oba nova id-a · sva četiri JSON-a
+poslužena s **0 ćirilice** · `.js` fallback živ · **`styles.css` i dalje 404** (merge nije uskrsnuo datoteku
+koju je C1 obrisao — to je bila jedina stvarna opasnost ovog razrješenja i provjerena je izričito).
+
+**Slijedi:** **`main` → `feat/c3-vlastito-gradivo`.** Sudar je unaprijed izmjeren: **točno 11 datoteka** — 8
+token-datoteka (rješava `npm run bump`) i 3 dnevnika (`CLAUDE.md`, `CHANGELOG`, `PROGRESS`; zadrži oba unosa).
+`data/catalog.js` i `docs/subjects/README.md` **ne konfliktiraju uopće** — C3 ih ne dira. Iza toga: prepravak
+landinga po §7.13, pa Studio na telefonu.
 
 ---
 
