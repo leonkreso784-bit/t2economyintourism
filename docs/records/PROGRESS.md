@@ -5,6 +5,56 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-15 (OPUS) — **Sašine dvije zaostale grane mergeane. Šum se ne spaja, šum se regenerira**
+
+> Leon: *„danas ćemo morat mergat Sašin rad jer ne može ići ovako više."*
+
+**Grana `merge/sasa-hr` (osnovana na `main` `9637f4a`), dva `--no-ff` mergea → `main` `58ecec5` → NA PRODUKCIJI**
+(Leonov OK: *„Da, push na main."*). Sašino autorstvo je **očuvano u povijesti**: mergeane su prave grane, nije
+prepisan sadržaj. Usput, na Leonov OK, **`feat/c3-vlastito-gradivo` je prvi put gurnuta na origin** — 26 commita
+(C2, popravak C2, tri C3 cigle, lanac opskrbe) dotad je postojalo **samo na Leonovu disku**, bez ijedne kopije.
+
+**Zatečeno stanje.** Obje grane (`content/entrepreneurship-hr`, `content/ebusiness-hr`) granale su se s
+`b79e053` i bile **88 commita iza `main`-a**. Svaka dira **17 datoteka**, što na prvi pogled izgleda kao
+platformski zahvat i točno je to sprječavalo merge mjesecima.
+
+**Nalaz koji je posao pretvorio iz sata u minutu.** Od 17 datoteka po grani, **11 nose isključivo `?v=`
+cache-tokene** — a to nije procjena nego mjerenje: `git diff` s odbijenim token-redcima vraća **0 redaka**
+za `index.html`, `sw.js`, `manifest.json`, `js/content-loader.js`, `styles.css` i sve četiri pravne
+stranice, **na obje grane**. Iz toga slijedi razrješenje koje je i ispravno i trivijalno: *uzmi `main`-ovu
+stranu i regeneriraj `npm run bump`*. **Token nije sadržaj — token je izlaz alata**, pa ga se ne spaja
+nego proizvodi iznova. Ručno je spojeno točno dvoje: `data/catalog.js` (obje grane dodaju na kraj istog
+niza) i `docs/subjects/README.md` (svaka grana je tuđi redak vraćala na „⬜"). `styles.css` je obrisan u
+C1 → prihvaćeno brisanje.
+
+**Recenzija sadržaja — mjerena, ne prelistana.** Ćirilica **0** · duple kat.-id **0** · svaki `quiz.correct`
+u rasponu svojih opcija · svaki `fillBlanks` ima `answer` · struktura `final = Object.assign({}, M1, M2,
+{examPractice})` potvrđena u obje. **0 kartica preko SOFT praga 200** — ni u pitanju ni u odgovoru, u obje
+grane; `validate:content` daje 174 i 184 kartice s 93,1 % odnosno 83,2 % u pojasu 101–200. To je **stroži
+model od zatečenog kataloga**, gdje je 46,2 % kartica preko 200. Činjenična točnost vs HR skripta ostaje
+Sašina domena (ADR-020) i nije provjeravana.
+
+**Gate.** `preflight` **EXIT 0** — 10/10 (ovdje ih je 10, ne 13: `check:palette`/`check:contrast`/`check:cdn`
+žive na granama C2/C3 i još nisu na `main`-u). `verify` 0/0 s oba nova predmeta ožičena · `bump:check` 78
+tokena na `20260815040802` · `export:json --check` bez drifta · `validate:schema` čist · Playwright default
+suita. **`browse.spec.js` je izdržao** — Leonov popravak `388e3c5` izvodi očekivani broj iz
+`subjectsOf(pid, 2)`, pa dva nova HR predmeta 2. godine više ne mogu srušiti tvrdnju kao `te2-hr` svojedobno.
+
+**Stanje kataloga: 22 → 24 predmeta** (17 EN + **7 HR**). Time je Sašin STOP-nalog **ispunjen**; S4+S5
+(4 kvantitativna HR) ostaje pauziran do kraja frontend redizajna.
+
+**Produkcijska provjera (pravilo #7) — 12/12.** Vercel `dpl_6DzY6PxH…` READY target=production · token
+`20260815040802` = repo · `catalog.js` s produkcije daje **24 predmeta** s oba nova id-a · sva četiri JSON-a
+poslužena s **0 ćirilice** · `.js` fallback živ · **`styles.css` i dalje 404** (merge nije uskrsnuo datoteku
+koju je C1 obrisao — to je bila jedina stvarna opasnost ovog razrješenja i provjerena je izričito).
+
+**Slijedi:** **`main` → `feat/c3-vlastito-gradivo`.** Sudar je unaprijed izmjeren: **točno 11 datoteka** — 8
+token-datoteka (rješava `npm run bump`) i 3 dnevnika (`CLAUDE.md`, `CHANGELOG`, `PROGRESS`; zadrži oba unosa).
+`data/catalog.js` i `docs/subjects/README.md` **ne konfliktiraju uopće** — C3 ih ne dira. Iza toga: prepravak
+landinga po §7.13, pa Studio na telefonu.
+
+---
+
 ## 2026-08-14 (OPUS, e) — **Landing pao na Leonovu ekranu · nacrtan novi · MCP presuđen**
 
 **Grana:** `feat/c3-vlastito-gradivo`. Sesija je počela kao dovršetak C3, a **skrenula je u redizajn

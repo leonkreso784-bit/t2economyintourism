@@ -1,0 +1,900 @@
+{
+  "foundations": {
+    "name": "Pojam i temelji e-poslovanja",
+    "icon": "fa-network-wired",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Kako ESPRIT projekt EU-a definira elektroničko poslovanje?",
+        "answer": "Opći koncept koji obuhvaća sve oblike poslovnih transakcija ili razmjene informacija izvedenih pomoću ICT-a — među tvrtkama, s kupcima ili s javnom upravom, uključujući e-trgovanje.",
+        "explanation": "Najšira, službena definicija."
+      },
+      {
+        "question": "Mikro vs makro aspekt e-poslovanja?",
+        "answer": "MIKRO = poslovni procesi koji se odvijaju unutar i između jedinica jedne organizacije (hotel, fakultet). MAKRO = poslovni odnosi s DRUGIM poslovnim subjektima.",
+        "explanation": "Unutar organizacije vs prema van."
+      },
+      {
+        "question": "Zašto uopće implementirati ICT u poslovanju?",
+        "answer": "Poboljšanje efikasnosti rada, podizanje kvalitete proizvoda i usluga, veće zadovoljstvo korisnika, pozitivan utjecaj na poslovni rezultat te jačanje brenda.",
+        "explanation": "Pet glavnih razloga."
+      },
+      {
+        "question": "Što znači „digitalno transformirati poslovanje\"?",
+        "answer": "Pratiti digitalne trendove, ispitivati nove mogućnosti primjene ICT-a, pratiti konkurenciju i kreativno istraživati nove poslovne mogućnosti.",
+        "explanation": "Bez transformacije nema konkurentnosti (primjer: Miha na mopedu vs Toni pješice)."
+      },
+      {
+        "question": "Koja je osnovna funkcija informacijskog sustava vezana uz podatke?",
+        "answer": "Funkcija PRIKUPLJANJA podataka — prikuplja podatke na mjestima njihova nastajanja i priprema ih za unos i obradu.",
+        "explanation": "Prva u lancu obrade podataka."
+      },
+      {
+        "question": "Koje su tehničke, a koje interpretacijske razine informacije?",
+        "answer": "Tehničke: statistika i sintaksa. Interpretacijske: semantika, pragmatika i apobetika.",
+        "explanation": "Od tehničkog zapisa prema smislu i svrsi."
+      },
+      {
+        "question": "Kako Internet i web pomažu rastu tvrtke?",
+        "answer": "Kroz marketing, komunikaciju, rast, outsourcing (jeftinije obavljanje poslova), zapošljavanje (npr. LinkedIn) te online kupnju i prodaju.",
+        "explanation": "Šest područja koristi."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Definiciju e-poslovanja kao „općeg koncepta svih oblika poslovnih transakcija pomoću ICT-a\" daje:",
+        "options": [
+          "UNWTO",
+          "ESPRIT projekt EU-a",
+          "WTTC",
+          "Microsoft"
+        ],
+        "correct": 1,
+        "id": "h2raji"
+      },
+      {
+        "question": "MAKRO aspekt e-poslovanja odnosi se na:",
+        "options": [
+          "procese unutar jedne organizacije",
+          "poslovne odnose s drugim poslovnim subjektima",
+          "osobnu upotrebu interneta",
+          "programiranje"
+        ],
+        "correct": 1,
+        "id": "fmbajk"
+      },
+      {
+        "question": "Koja NIJE razlog za implementaciju ICT-a u poslovanju?",
+        "options": [
+          "poboljšanje efikasnosti",
+          "jačanje brenda",
+          "smanjenje kvalitete usluga",
+          "zadovoljstvo korisnika"
+        ],
+        "correct": 2,
+        "id": "6h152m"
+      },
+      {
+        "question": "Interpretacijske razine informacije su:",
+        "options": [
+          "statistika i sintaksa",
+          "semantika, pragmatika i apobetika",
+          "RGB i CMYK",
+          "HTTP i FTP"
+        ],
+        "correct": 1,
+        "id": "ownzvc"
+      },
+      {
+        "question": "Funkcija prikupljanja podataka obavlja se:",
+        "options": [
+          "na kraju obrade",
+          "na mjestima nastajanja podataka",
+          "samo jednom godišnje",
+          "isključivo ručno"
+        ],
+        "correct": 1,
+        "id": "pe2urp"
+      },
+      {
+        "question": "U primjeru dostave pošte konkurentniji je Miha na mopedu jer je:",
+        "options": [
+          "brže hodao",
+          "digitalno transformirao svoje poslovanje",
+          "imao više pošte",
+          "jeftiniji"
+        ],
+        "correct": 1,
+        "id": "mhji91"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Prema _______ projektu EU-a, e-poslovanje obuhvaća sve oblike poslovnih transakcija pomoću ICT-a.",
+        "answer": "ESPRIT",
+        "hint": "naziv EU projekta",
+        "id": "za6lmk"
+      },
+      {
+        "sentence": "_______ aspekt su procesi unutar i između jedinica jedne organizacije.",
+        "answer": "Mikro",
+        "hint": "unutarnji",
+        "id": "8qncsv"
+      },
+      {
+        "sentence": "Tehničke razine informacije su statistika i _______.",
+        "answer": "sintaksa",
+        "hint": "struktura zapisa",
+        "id": "trzwzj"
+      },
+      {
+        "sentence": "Da bi ostali konkurentni, poslovni subjekti moraju _______ transformirati svoje poslovanje.",
+        "answer": "digitalno",
+        "hint": "ICT preobrazba",
+        "id": "1u0yad"
+      },
+      {
+        "sentence": "Funkcija _______ podataka obavlja se na mjestima njihova nastajanja.",
+        "answer": "prikupljanja",
+        "hint": "sakupljanje",
+        "id": "tf0deb"
+      }
+    ],
+    "learn": {
+      "title": "Pojam i temelji e-poslovanja",
+      "content": "\n                <h3>Što je elektroničko poslovanje</h3>\n                <p>Prema <strong>ESPRIT projektu Europske unije</strong>: e-poslovanje je opći koncept koji obuhvaća <em>sve oblike poslovnih transakcija ili razmjene informacija</em> izvedenih korištenjem informacijske i komunikacijske tehnologije (ICT) — među tvrtkama, između tvrtki i kupaca ili između tvrtki i javne administracije, uključujući elektroničko trgovanje dobrima i uslugama.</p>\n\n                <h4>Dva aspekta</h4>\n                <div class=\"formula-box\">\n                    MIKRO — poslovni procesi UNUTAR i IZMEĐU jedinica jedne organizacije (hotel, fakultet)<br>\n                    MAKRO — poslovni odnosi s DRUGIM poslovnim subjektima\n                </div>\n\n                <h4>Zašto implementirati ICT</h4>\n                <ul>\n                    <li>Poboljšanje efikasnosti operativnog rada</li>\n                    <li>Podizanje kvalitete proizvoda i usluga</li>\n                    <li>Povećanje zadovoljstva krajnjih korisnika</li>\n                    <li>Izravan pozitivan utjecaj na obujam poslovanja i poslovni rezultat</li>\n                    <li>Jačanje brenda</li>\n                </ul>\n\n                <h4>Digitalna transformacija</h4>\n                <p>Da bi opstali i ostali konkurentni, poslovni subjekti moraju <strong>digitalno transformirati</strong> poslovanje: pratiti digitalne trendove, ispitivati nove mogućnosti primjene ICT-a, pratiti konkurenciju i kreativno istraživati nove poslovne mogućnosti.</p>\n                <p><em>Ilustracija s predavanja:</em> Miha koji poštu dostavlja mopedom konkurentniji je od Tonija koji je dostavlja pješice — jer je digitalno (tehnološki) transformirao način rada i posao obavlja brže i efikasnije.</p>\n\n                <h4>Informacijski sustav i razine informacije</h4>\n                <p>U osnovne funkcije informacijskog sustava ubraja se <strong>funkcija prikupljanja podataka</strong> — prikuplja ih na mjestima nastajanja i priprema za unos i obradu.</p>\n                <div class=\"formula-box\">\n                    TEHNIČKE razine: STATISTIKA · SINTAKSA<br>\n                    INTERPRETACIJSKE razine: SEMANTIKA · PRAGMATIKA · APOBETIKA\n                </div>\n\n                <h4>Kako Internet i web potiču rast tvrtke</h4>\n                <p>Marketing · komunikacija · rast · <strong>outsourcing</strong> (posao obavljen povoljnije uz veću učinkovitost) · zapošljavanje (npr. LinkedIn) · online kupnja i prodaja.</p>\n                <p>Internet i web poduzećima omogućuju: bolju komunikaciju, brži pristup informacijama, niže troškove, veću učinkovitost, nove poslovne mogućnosti te blisku suradnju s kupcima i dobavljačima.</p>\n            ",
+      "id": "cvqkrj"
+    },
+    "id": "vqwlev"
+  },
+  "models": {
+    "name": "Modeli i područja e-poslovanja",
+    "icon": "fa-diagram-project",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Koje tri skupine sudionika označavaju slova B, C i G?",
+        "answer": "C (Customer) = pojedinci, fizičke osobe. B (Business) = tvrtke iz privatnog sektora, pravne osobe. G (Government) = organi državne uprave i javna poduzeća.",
+        "explanation": "Iz njih se izvode svi modeli."
+      },
+      {
+        "question": "Navedi modele e-poslovanja prema sudionicima.",
+        "answer": "B2B, B2C, B2G, C2B, C2C, C2G, G2B, G2C i G2G — kombinacije poslovnih subjekata, pojedinaca i državne uprave.",
+        "explanation": "Prvo slovo = pošiljatelj, drugo = primatelj."
+      },
+      {
+        "question": "Kako se označava model između pojedinca i državne uprave?",
+        "answer": "C2G (Customer to Government) — npr. građanin podnosi zahtjev ili plaća pristojbu državnoj upravi elektronički.",
+        "explanation": "Klasično ispitno pitanje."
+      },
+      {
+        "question": "Koja su glavna područja primjene e-poslovanja?",
+        "answer": "Elektronički marketing, elektroničko trgovanje, elektroničko bankarstvo, elektroničke burze i računalni rezervacijski sustavi.",
+        "explanation": "Pet područja."
+      },
+      {
+        "question": "Što čini elektroničku infrastrukturu?",
+        "answer": "E-identitet, e-potpis i e-račun. E-račun je temeljni dokument čiji elektronički oblik ima presudnu ulogu u poslovnim odnosima.",
+        "explanation": "E-potpis se oslanja na EU uredbu eIDAS."
+      },
+      {
+        "question": "Što je interoperabilnost, a što modularnost?",
+        "answer": "Interoperabilnost — sposobnost ICT sustava i procesa da podrže protok podataka i razmjenu informacija. Modularnost — ostvarivanje pojedinih funkcionalnosti nužnih za transakcije.",
+        "explanation": "Dva načela izgradnje sustava."
+      },
+      {
+        "question": "Što je Internet stvari (IoT)?",
+        "answer": "Povezanost različitih uređaja kojima se pristupa putem mreže s udaljene lokacije, a koji međusobno komuniciraju i dijele informacije primjenom ICT-a.",
+        "explanation": "U hotelima: automatsko podešavanje temperature i rasvjete."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Model e-poslovanja između pojedinca i državne uprave označava se:",
+        "options": [
+          "B2G",
+          "C2G",
+          "G2C",
+          "C2B"
+        ],
+        "correct": 1,
+        "id": "pobzve"
+      },
+      {
+        "question": "Slovo „B\" u modelima e-poslovanja označava:",
+        "options": [
+          "banku",
+          "tvrtku (Business)",
+          "kupca",
+          "državu"
+        ],
+        "correct": 1,
+        "id": "rnnutc"
+      },
+      {
+        "question": "Što NIJE područje primjene e-poslovanja?",
+        "options": [
+          "elektroničko bankarstvo",
+          "elektroničke burze",
+          "elektronička poljoprivreda",
+          "računalni rezervacijski sustavi"
+        ],
+        "correct": 2,
+        "id": "v9kktb"
+      },
+      {
+        "question": "Elektroničku infrastrukturu čine e-identitet, e-potpis i:",
+        "options": [
+          "e-knjiga",
+          "e-račun",
+          "e-pošta",
+          "e-uprava"
+        ],
+        "correct": 1,
+        "id": "5afgt0"
+      },
+      {
+        "question": "EU uredba koja regulira e-potpis naziva se:",
+        "options": [
+          "GDPR",
+          "eIDAS",
+          "PSD2",
+          "NIS2"
+        ],
+        "correct": 1,
+        "id": "a0qsgg"
+      },
+      {
+        "question": "Sposobnost sustava da podrže protok i razmjenu podataka naziva se:",
+        "options": [
+          "modularnost",
+          "interoperabilnost",
+          "skalabilnost",
+          "kompatibilnost"
+        ],
+        "correct": 1,
+        "id": "m6we69"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Model između pojedinca i državne uprave označava se _______.",
+        "answer": "C2G",
+        "hint": "Customer to Government",
+        "id": "1a2zxc"
+      },
+      {
+        "sentence": "Elektroničku infrastrukturu čine e-identitet, e-potpis i e-_______.",
+        "answer": "račun",
+        "hint": "temeljni dokument",
+        "id": "3ads59"
+      },
+      {
+        "sentence": "EU norma koja uređuje e-potpis naziva se _______.",
+        "answer": "eIDAS",
+        "hint": "electronic IDentification",
+        "id": "nxhu0h"
+      },
+      {
+        "sentence": "_______ je sposobnost sustava da podrže protok i razmjenu podataka i znanja.",
+        "answer": "Interoperabilnost",
+        "hint": "međusobna suradnja",
+        "id": "bchj2z"
+      },
+      {
+        "sentence": "Internet _______ podrazumijeva povezanost uređaja koji komuniciraju putem mreže.",
+        "answer": "stvari",
+        "hint": "IoT",
+        "id": "z67pgm"
+      }
+    ],
+    "learn": {
+      "title": "Modeli i područja e-poslovanja",
+      "content": "\n                <h3>Sudionici i modeli</h3>\n                <p>Modeli se klasificiraju prema <strong>kriteriju sudionika u poslovnom procesu</strong>:</p>\n                <div class=\"formula-box\">\n                    C = Customer — pojedinci, fizičke osobe<br>\n                    B = Business — tvrtke iz privatnog sektora, pravne osobe<br>\n                    G = Government — organi državne uprave i javna/državna poduzeća\n                </div>\n                <p>Kombinacijom nastaju modeli: <strong>B2B · B2C · B2G · C2B · C2C · C2G · G2B · G2C · G2G</strong> (prvo slovo = tko pruža/inicira, drugo = kome). Uz njih se spominje i <strong>B2E</strong> (tvrtka prema vlastitim zaposlenicima).</p>\n\n                <h4>Područja primjene</h4>\n                <ul>\n                    <li>Elektronički marketing</li>\n                    <li>Elektroničko trgovanje</li>\n                    <li>Elektroničko bankarstvo</li>\n                    <li>Elektroničke burze</li>\n                    <li>Računalni rezervacijski sustavi</li>\n                </ul>\n\n                <h4>Elektronička infrastruktura</h4>\n                <p>Čine je <strong>e-identitet, e-potpis i e-račun</strong>. <strong>E-račun</strong> je temeljni dokument čiji elektronički oblik igra presudnu ulogu u poslovnim odnosima. <strong>E-potpis</strong> značajno povećava sigurnost i omogućuje prelazak s tradicionalnog na digitalno poslovanje uz poštivanje zakonske regulative i EU norme <strong>eIDAS</strong>.</p>\n\n                <h4>Načela izgradnje sustava</h4>\n                <ul>\n                    <li><strong>Interoperabilnost</strong> — sposobnost informacijskih i komunikacijskih sustava te poslovnih procesa da podrže protok podataka i omoguće međusobnu razmjenu informacija i znanja.</li>\n                    <li><strong>Modularnost</strong> — ostvarivanje pojedinih funkcionalnosti nužnih za provođenje transakcija tijekom razmjene podataka.</li>\n                </ul>\n\n                <h4>Internet stvari (IoT)</h4>\n                <p>Povezanost različitih uređaja kojima se može pristupati putem mreže s udaljene lokacije te koji primjenom ICT-a međusobno komuniciraju i dijele informacije. U hotelijerstvu: automatsko podešavanje sobne temperature i rasvjete.</p>\n            ",
+      "id": "eqpy4d"
+    },
+    "id": "bbdbmv"
+  },
+  "internetWeb": {
+    "name": "Internet, web i servisi",
+    "icon": "fa-globe",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Koja je razlika između Interneta i weba?",
+        "answer": "Internet je platforma — globalna računalna mreža bez vlasnika. Web je servis (usluga) unutar Interneta koji se najčešće koristi HTTP protokolom.",
+        "explanation": "Internet = mreža, web = jedan od servisa na njoj."
+      },
+      {
+        "question": "Što je protokol?",
+        "answer": "Jezik ili skup pravila po kojima računala u mreži međusobno komuniciraju. Različiti internetski servisi koriste različite protokole.",
+        "explanation": "Npr. HTTP, FTP, SMTP, POP3, IMAP."
+      },
+      {
+        "question": "Koji protokoli služe za e-poštu?",
+        "answer": "SMTP za SLANJE pošte, a POP3 i IMAP za PRIMANJE pošte.",
+        "explanation": "Prva poruka Internetom poslana je 1971."
+      },
+      {
+        "question": "Za što služe HTTP i FTP?",
+        "answer": "HTTP — protokol za prijenos hipertekstualnih dokumenata (web). FTP — protokol za daljinski prijenos datoteka.",
+        "explanation": "Web je nastao početkom 1990-ih."
+      },
+      {
+        "question": "Što je domena, a što DNS?",
+        "answer": "Domena je oznaka koju koristimo umjesto IP adrese (ljudi lakše pamte riječi). DNS (Domain Name Server) je program koji prevodi naziv domene u IP adresu.",
+        "explanation": "U Hrvatskoj domene dodjeljuje CARNET."
+      },
+      {
+        "question": "Što je URI?",
+        "answer": "Uniform Resource Identifier — jedinstvena adresa resursa u mreži. Sastoji se od naziva protokola, imena domene i putanje do dokumenta na poslužitelju.",
+        "explanation": "Npr. http://www.fthm.hr/casopis/index.html"
+      },
+      {
+        "question": "Web preglednik vs web pretraživač?",
+        "answer": "Preglednik (browser) je program koji čita i prikazuje sadržaj s weba. Pretraživač (search engine) je stroj/algoritam koji za korisnika pretražuje internetske resurse.",
+        "explanation": "Chrome = preglednik; Google = pretraživač."
+      },
+      {
+        "question": "Klijent vs poslužitelj?",
+        "answer": "Klijent je program ili računalo koje u mreži ZAHTIJEVA podatke; poslužitelj je onaj koji tražene podatke ili uslugu SADRŽI i pruža.",
+        "explanation": "Osnovni model komunikacije na mreži."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Protokol za SLANJE elektroničke pošte je:",
+        "options": [
+          "POP3",
+          "IMAP",
+          "SMTP",
+          "HTTP"
+        ],
+        "correct": 2,
+        "id": "gbpga6"
+      },
+      {
+        "question": "Program koji prevodi naziv domene u IP adresu je:",
+        "options": [
+          "FTP",
+          "DNS",
+          "HTTP",
+          "URI"
+        ],
+        "correct": 1,
+        "id": "b5eol9"
+      },
+      {
+        "question": "Internet je _____, a web je _____:",
+        "options": [
+          "servis / mreža",
+          "platforma (mreža) / servis unutar nje",
+          "program / računalo",
+          "protokol / domena"
+        ],
+        "correct": 1,
+        "id": "w4a1c8"
+      },
+      {
+        "question": "U Hrvatskoj domene dodjeljuje:",
+        "options": [
+          "Hrvatski institut za domene",
+          "Hrvatska akademska i istraživačka mreža (CARNET)",
+          "Hrvatsko društvo informatičara",
+          "Ministarstvo gospodarstva"
+        ],
+        "correct": 1,
+        "id": "j54bc0"
+      },
+      {
+        "question": "U adresi http://www.fthm.hr/casopis/index.html puno ime domene je:",
+        "options": [
+          "http",
+          "www.fthm.hr",
+          "/casopis/",
+          "index.html"
+        ],
+        "correct": 1,
+        "id": "zsgowc"
+      },
+      {
+        "question": "Program koji čita i prikazuje sadržaj s weba naziva se:",
+        "options": [
+          "web pretraživač",
+          "web preglednik",
+          "poslužitelj",
+          "protokol"
+        ],
+        "correct": 1,
+        "id": "6ajvfe"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Za slanje e-pošte koristi se _______ protokol.",
+        "answer": "SMTP",
+        "hint": "Simple Mail Transfer",
+        "id": "yhxl76"
+      },
+      {
+        "sentence": "_______ prevodi naziv domene u IP adresu.",
+        "answer": "DNS",
+        "hint": "Domain Name Server",
+        "id": "7ttwy2"
+      },
+      {
+        "sentence": "Internet je globalna računalna _______ bez vlasnika, a web servis unutar nje.",
+        "answer": "mreža",
+        "hint": "network",
+        "id": "x1jkmc"
+      },
+      {
+        "sentence": "Web se najčešće koristi _______ protokolom.",
+        "answer": "HTTP",
+        "hint": "hipertekst",
+        "id": "nxsslz"
+      },
+      {
+        "sentence": "_______ je program ili računalo koje u mreži zahtijeva podatke.",
+        "answer": "Klijent",
+        "hint": "suprotno od poslužitelja",
+        "id": "mnzbx3"
+      }
+    ],
+    "learn": {
+      "title": "Internet, web i servisi",
+      "content": "\n                <h3>Internet ≠ web</h3>\n                <p><strong>Internet</strong> je platforma — globalna računalna mreža <em>bez vlasnika</em>. <strong>Web (WWW)</strong> je jedan od servisa unutar Interneta, nastao početkom 1990-ih, koji se najčešće koristi <strong>HTTP</strong> protokolom (prijenos hipertekstualnih dokumenata).</p>\n\n                <h4>Protokoli</h4>\n                <p><strong>Protokol</strong> = jezik ili skup pravila po kojima računala u mreži međusobno komuniciraju.</p>\n                <div class=\"formula-box\">\n                    HTTP — web (hipertekstualni dokumenti)<br>\n                    FTP — daljinski prijenos datoteka<br>\n                    SMTP — SLANJE elektroničke pošte<br>\n                    POP3 / IMAP — PRIMANJE elektroničke pošte\n                </div>\n                <p>Prva poruka e-poštom poslana je Internetom davne <strong>1971.</strong> godine.</p>\n\n                <h4>Klijent i poslužitelj</h4>\n                <p><strong>Klijent</strong> = program/računalo koje u mreži <em>zahtijeva</em> podatke. <strong>Poslužitelj</strong> = program/računalo koje tražene podatke ili uslugu <em>sadrži</em>.</p>\n\n                <h4>Adresiranje na mreži</h4>\n                <ul>\n                    <li><strong>Domena</strong> — oznaka koju koristimo umjesto IP adrese (ljudi lakše pamte riječi nego brojeve); na Internetu znači područje označeno zajedničkim imenom. U Hrvatskoj ih dodjeljuje <strong>CARNET</strong> (Hrvatska akademska i istraživačka mreža).</li>\n                    <li><strong>DNS (Domain Name Server)</strong> — program koji prevodi naziv domene u IP adresu.</li>\n                    <li><strong>URI</strong> — jedinstvena adresa resursa: naziv protokola + ime domene + putanja i naziv dokumenta.</li>\n                    <li><strong>Web stranica</strong> — dokument s HTML kodom, ekstenzija <code>.htm</code> ili <code>.html</code>.</li>\n                    <li><strong>Web sjedište (web site)</strong> — skup dokumenata povezanih u cjelinu, u pravilu na jednoj domeni.</li>\n                </ul>\n\n                <h4>Preglednik vs pretraživač</h4>\n                <div class=\"formula-box\">\n                    WEB PREGLEDNIK (browser) — program koji čita sadržaj s weba: tekst, grafiku,<br>\n                    animacije, zvuk; interpretira hiperveze (npr. Chrome, Firefox)<br>\n                    WEB PRETRAŽIVAČ (search engine) — strojevi/algoritmi koji za korisnika<br>\n                    pretražuju internetske resurse (npr. Google)\n                </div>\n            ",
+      "id": "nzqih2"
+    },
+    "id": "21071b"
+  },
+  "webEvolution": {
+    "name": "Razvoj weba (Web 1.0 – 4.0)",
+    "icon": "fa-code-branch",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Što obilježava Web 1.0?",
+        "answer": "Mreža SAMO ZA ČITANJE — server side includes i CGI, nema korisnički generiranog sadržaja; ukinuta su geografska ograničenja dijeljenja informacija.",
+        "explanation": "Statične stranice."
+      },
+      {
+        "question": "Što obilježava Web 2.0?",
+        "answer": "Web za ČITANJE I PISANJE — API-ji, društvena interakcija, interoperabilnost, JavaScript i AJAX; korisnici stvaraju sadržaj (npr. YouTube).",
+        "explanation": "Doba društvenih mreža."
+      },
+      {
+        "question": "Što obilježava Web 3.0?",
+        "answer": "SEMANTIČKI web — deklarativni ontološki jezici (OWL) i ontologije iz kojih roboti izvlače zaključke iz sadržaja, umjesto pukog uparivanja ključnih riječi.",
+        "explanation": "Veže se i uz kriptoekonomiju; web pripada korisnicima, ne organizacijama."
+      },
+      {
+        "question": "Što je ontologija u kontekstu Weba 3.0?",
+        "answer": "Obrazac podataka koji predstavlja koncepte unutar neke domene i odnose između tih koncepata — omogućuje strojevima razumijevanje značenja.",
+        "explanation": "Temelj semantičkog weba."
+      },
+      {
+        "question": "Što obilježava Web 4.0?",
+        "answer": "SIMBIONTSKI web — simbioza čovjeka i stroja: virtualna i proširena stvarnost, umjetna inteligencija te sustavi koji samouče.",
+        "explanation": "Uz njega se veže i metaverzum (Mark Zuckerberg)."
+      },
+      {
+        "question": "Kako generacije preferiraju komunicirati?",
+        "answer": "Tradicionalist — WRITE ME. Boomer — CALL ME. Gen X — EMAIL ME. Millennial — TEXT ME. Gen Z — FACETIME ME.",
+        "explanation": "Svaka generacija bira drugi kanal."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Mreža „samo za čitanje\", bez korisnički generiranog sadržaja, obilježava:",
+        "options": [
+          "Web 1.0",
+          "Web 2.0",
+          "Web 3.0",
+          "Web 4.0"
+        ],
+        "correct": 0,
+        "id": "w3496d"
+      },
+      {
+        "question": "API, AJAX, JavaScript i YouTube obilježja su:",
+        "options": [
+          "Weba 1.0",
+          "Weba 2.0",
+          "Weba 3.0",
+          "Weba 4.0"
+        ],
+        "correct": 1,
+        "id": "zpavj9"
+      },
+      {
+        "question": "Semantički web s ontologijama (OWL) je:",
+        "options": [
+          "Web 1.0",
+          "Web 2.0",
+          "Web 3.0",
+          "Web 4.0"
+        ],
+        "correct": 2,
+        "id": "7a70ov"
+      },
+      {
+        "question": "Simbiontski web (simbioza čovjeka i stroja, AI, VR/AR) je:",
+        "options": [
+          "Web 1.0",
+          "Web 2.0",
+          "Web 3.0",
+          "Web 4.0"
+        ],
+        "correct": 3,
+        "id": "qs4cdb"
+      },
+      {
+        "question": "Generacija Z preferira komunikaciju:",
+        "options": [
+          "WRITE ME",
+          "CALL ME",
+          "EMAIL ME",
+          "FACETIME ME"
+        ],
+        "correct": 3,
+        "id": "j7hcrg"
+      },
+      {
+        "question": "Uz Web 3.0 najčešće se veže pojam:",
+        "options": [
+          "kriptoekonomija",
+          "telefaks",
+          "CGI skripte",
+          "analogni signal"
+        ],
+        "correct": 0,
+        "id": "f0ccpg"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Web _______ je mreža samo za čitanje, bez korisnički generiranog sadržaja.",
+        "answer": "1.0",
+        "hint": "prva generacija",
+        "id": "g855z0"
+      },
+      {
+        "sentence": "Web 2.0 je web za čitanje i _______.",
+        "answer": "pisanje",
+        "hint": "korisnici stvaraju sadržaj",
+        "id": "r4evmc"
+      },
+      {
+        "sentence": "Web 3.0 naziva se i _______ web.",
+        "answer": "semantički",
+        "hint": "razumije značenje",
+        "id": "cg1naz"
+      },
+      {
+        "sentence": "Web 4.0 je _______ web — simbioza čovjeka i stroja.",
+        "answer": "simbiontski",
+        "hint": "suživot",
+        "id": "iohof6"
+      },
+      {
+        "sentence": "Generacija X preferira komunikaciju porukom „_______ ME\".",
+        "answer": "EMAIL",
+        "hint": "elektronička pošta",
+        "id": "ji7spu"
+      }
+    ],
+    "learn": {
+      "title": "Razvoj weba (Web 1.0 – 4.0)",
+      "content": "\n                <h3>Četiri generacije weba</h3>\n                <div class=\"formula-box\">\n                    WEB 1.0 — „samo za čitanje\"<br>\n                    WEB 2.0 — „čitanje i pisanje\"<br>\n                    WEB 3.0 — „semantički\" (razumijevanje značenja)<br>\n                    WEB 4.0 — „simbiontski\" (čovjek + stroj)\n                </div>\n\n                <h4>Web 1.0</h4>\n                <p>Server side includes i CGI; mreža <strong>samo za čitanje</strong>; nije postojao sadržaj koji generira korisnik; ukinuta su geografska ograničenja dijeljenja informacija.</p>\n\n                <h4>Web 2.0</h4>\n                <p><strong>API</strong> — prilagođavanje informacija o stranicama pomoću softvera; web za <strong>čitanje i pisanje</strong>; društvena interakcija; interoperabilnost; JavaScript i AJAX; primjer: <strong>YouTube</strong>.</p>\n\n                <h4>Web 3.0</h4>\n                <p>Prisiljava programere na deklarativne <strong>ontološke programske jezike (OWL)</strong> za stvaranje ontologija koje roboti koriste da <em>izvlače zaključke</em> iz sadržaja web-mjesta, umjesto pukog uparivanja ključnih riječi (semantika / smisao). Uključuje optimizaciju unutarnjeg dijela stranica; web <strong>ne pripada organizacijama nego korisnicima</strong>; roboti za kontrolu. Uz Web 3.0 veže se <strong>kriptoekonomija</strong>.</p>\n                <p><em>Ontologija</em> = obrazac podataka koji predstavlja koncepte unutar neke domene i odnose među tim konceptima.</p>\n\n                <h4>Web 4.0</h4>\n                <p><strong>Simbiontski web</strong> — simbioza između čovjeka i stroja: virtualna i proširena stvarnost, umjetna inteligencija te sustavi koji samouče. Uz njega se veže i <strong>metaverzum</strong> (Mark Zuckerberg).</p>\n\n                <h4>Generacije i kanali komunikacije</h4>\n                <div class=\"formula-box\">\n                    Tradicionalist → WRITE ME &nbsp;|&nbsp; Boomer → CALL ME &nbsp;|&nbsp; Gen X → EMAIL ME<br>\n                    Millennial → TEXT ME &nbsp;|&nbsp; Gen Z → FACETIME ME\n                </div>\n            ",
+      "id": "93rwza"
+    },
+    "id": "rop2v0"
+  },
+  "ictHotel": {
+    "name": "ICT u hotelijerstvu",
+    "icon": "fa-hotel",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Navedi nekoliko od 10 digitalnih trendova u hotelijerstvu.",
+        "answer": "Tehnologija prepoznavanja, roboti, mobilna integracija i beacon, chatbotovi i AI, personalizacija, IoT, VR i AR, glasovno rezerviranje, beskontaktno plaćanje te veliki podaci.",
+        "explanation": "Puni popis s primjerima → sekcija Uči."
+      },
+      {
+        "question": "Kako se tehnologija prepoznavanja koristi u hotelima?",
+        "answer": "Skeniranje mrežnice i skeniranje otiska prsta — najčešće za otključavanje hotelskih soba.",
+        "explanation": "Biometrija umjesto kartice."
+      },
+      {
+        "question": "Kako se u hotelima koriste chatbotovi i IoT?",
+        "answer": "Chatbotovi i AI — npr. Hilton i IBM-ova „Connie\". IoT — Starwood hoteli automatski podešavaju temperaturu i jačinu rasvjete prema ulasku prirodne svjetlosti.",
+        "explanation": "Konkretni primjeri s predavanja."
+      },
+      {
+        "question": "Čemu služe „IN HOUSE ICT\" rješenja?",
+        "answer": "Informiraju gosta, pomažu mu u snalaženju i potiču ga na akciju/konzumaciju: web site, mobilne aplikacije, touchscreeni, interaktivna TV, iPad aplikacije, nagradne igre.",
+        "explanation": "Fokus: privući gosta da rezervira preko hotelskog web sitea."
+      },
+      {
+        "question": "Što je „New York sindrom\" kao prednost web sitea?",
+        "answer": "Kao što New York nikad ne spava, tako je i web site uvijek aktivan — „prodavač\" koji radi 24/7 i nikad ne spava.",
+        "explanation": "Stalna dostupnost prodaje."
+      },
+      {
+        "question": "Koje su faze procesa bookinga?",
+        "answer": "Dreaming (sanjarenje), Researching (istraživanje), Planning (planiranje), Booking (rezervacija), Experiencing (doživljaj) i Sharing (dijeljenje).",
+        "explanation": "ICT djeluje u svakoj fazi."
+      },
+      {
+        "question": "Što omogućuju moduli hotelskog PMS-a?",
+        "answer": "Modul rezervacija — pregled i ažuriranje statusa rezervacija, prijave/odjave gostiju i obradu plaćanja. Back office modul — pojednostavljuje i optimizira poslovne i administrativne procese.",
+        "explanation": "PMS = sustav upravljanja imovinom hotela."
+      },
+      {
+        "question": "Što je CENTRIX?",
+        "answer": "Rješenje za uredsko poslovanje — informacijski sustav za upravljanje dokumentima, kontrolu poslovnih procesa i obradu obrazaca, s podacima o organizacijskim jedinicama i djelatnicima.",
+        "explanation": "Hrvatski primjer poslovnog IS-a."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Skeniranje mrežnice i otiska prsta u hotelima najčešće služi za:",
+        "options": [
+          "plaćanje računa",
+          "otključavanje hotelskih soba",
+          "naručivanje hrane",
+          "pozivanje taksija"
+        ],
+        "correct": 1,
+        "id": "tdox8y"
+      },
+      {
+        "question": "Chatbot „Connie\" rezultat je suradnje:",
+        "options": [
+          "Marriotta i Googlea",
+          "Hiltona i IBM-a",
+          "Starwooda i Amazona",
+          "Accora i Microsofta"
+        ],
+        "correct": 1,
+        "id": "xddudd"
+      },
+      {
+        "question": "Koja NIJE faza procesa bookinga?",
+        "options": [
+          "Dreaming",
+          "Researching",
+          "Booking",
+          "Refunding"
+        ],
+        "correct": 3,
+        "id": "5mjxp1"
+      },
+      {
+        "question": "„New York sindrom\" kao prednost znači da je web site:",
+        "options": [
+          "skup za održavanje",
+          "uvijek aktivan, nikad ne spava",
+          "dostupan samo u SAD-u",
+          "namijenjen samo velikim gradovima"
+        ],
+        "correct": 1,
+        "id": "5pv7b2"
+      },
+      {
+        "question": "Modul PMS-a koji optimizira administrativne procese naziva se:",
+        "options": [
+          "modul rezervacija",
+          "back office upravljanje",
+          "housekeeping",
+          "POS modul"
+        ],
+        "correct": 1,
+        "id": "slgryi"
+      },
+      {
+        "question": "CENTRIX predstavlja rješenje za:",
+        "options": [
+          "grafički dizajn",
+          "uredsko poslovanje i upravljanje dokumentima",
+          "online oglašavanje",
+          "rezervacije zrakoplova"
+        ],
+        "correct": 1,
+        "id": "tao0od"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Hotelski chatbot nastao suradnjom Hiltona i IBM-a zove se _______.",
+        "answer": "Connie",
+        "hint": "ime robota",
+        "id": "hly5c9"
+      },
+      {
+        "sentence": "Prva faza procesa bookinga je _______ (sanjarenje).",
+        "answer": "Dreaming",
+        "hint": "maštanje o putovanju",
+        "id": "f8e8k0"
+      },
+      {
+        "sentence": "„_______ sindrom\" znači da je web site uvijek aktivan, kao grad koji nikad ne spava.",
+        "answer": "New York",
+        "hint": "američki grad",
+        "id": "89mj2y"
+      },
+      {
+        "sentence": "Modul _______ omogućuje pregled i ažuriranje statusa rezervacija te prijavu i odjavu gostiju.",
+        "answer": "rezervacija",
+        "hint": "booking modul",
+        "id": "wfw4vn"
+      },
+      {
+        "sentence": "_______ je informacijski sustav za upravljanje dokumentima i poslovnim procesima.",
+        "answer": "CENTRIX",
+        "hint": "uredsko poslovanje",
+        "id": "3l9ii5"
+      }
+    ],
+    "learn": {
+      "title": "ICT u hotelijerstvu",
+      "content": "\n                <h3>Deset digitalnih trendova</h3>\n                <ol>\n                    <li><strong>Tehnologija prepoznavanja</strong> — skeniranje mrežnice i otiska prsta (otključavanje soba)</li>\n                    <li><strong>Roboti</strong> — npr. 1A-TA tvrtke Amadeus</li>\n                    <li><strong>Mobilna integracija + beacon</strong> — slanje najrelevantnijih promotivnih poruka</li>\n                    <li><strong>Chatbotovi i AI</strong> — Hilton i IBM-ova „Connie\"</li>\n                    <li><strong>Personalizacija</strong></li>\n                    <li><strong>IoT</strong> — Starwood hoteli: automatsko podešavanje temperature i rasvjete prema prirodnoj svjetlosti</li>\n                    <li><strong>VR i AR</strong></li>\n                    <li><strong>Glasovno rezerviranje putovanja</strong></li>\n                    <li><strong>Beskontaktno plaćanje</strong></li>\n                    <li><strong>Big data</strong> — upravljanje prihodima; predviđanje razina potražnje</li>\n                </ol>\n\n                <h4>IN HOUSE ICT rješenja</h4>\n                <p>Rješenja koja gosta <strong>informiraju</strong>, pomažu mu u <strong>snalaženju</strong> i potiču ga na <strong>akciju/konzumaciju</strong>: web site, mobilne aplikacije, touchscreeni po hotelu, interaktivna TV, dijeljenje pametnih telefona, iPad aplikacije, nagradne igre.</p>\n                <p>Fokus je na <em>privlačenju</em> potencijalnih gostiju da rezerviraju smještaj putem hotelskog web sitea. Tu pomaže <strong>„New York sindrom\"</strong>: kao što grad nikad ne spava, tako je i web site uvijek aktivan „prodavač\".</p>\n\n                <h4>Proces bookinga</h4>\n                <div class=\"formula-box\">\n                    DREAMING → RESEARCHING → PLANNING → BOOKING → EXPERIENCING → SHARING\n                </div>\n                <p>Proces je kompleksan i u svakoj se fazi koristi specifična ICT tehnologija; <strong>UX i UI</strong> najsnažnije djeluju u fazama istraživanja i rezervacije.</p>\n\n                <h4>Hotelski informacijski sustavi (PMS)</h4>\n                <ul>\n                    <li><strong>Modul rezervacija</strong> — pregled i ažuriranje svih statusa rezervacija, prijava i odjava gostiju te obrada plaćanja što brže.</li>\n                    <li><strong>Back office upravljanje</strong> — pojednostavljuje, poboljšava vidljivost i optimizira poslovanje u poslovnim i administrativnim dijelovima hotela.</li>\n                </ul>\n                <p><strong>CENTRIX</strong> — rješenje za uredsko poslovanje: informacijski sustav za upravljanje dokumentima, upravljanje i kontrolu poslovnih procesa te obradu obrazaca i predmeta; sadrži informacije o organizacijskim jedinicama i djelatnicima.</p>\n            ",
+      "id": "s4asuj"
+    },
+    "id": "dy0abx"
+  },
+  "distribution": {
+    "name": "Distribucija u turizmu",
+    "icon": "fa-share-nodes",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što je turistički distribucijski sustav?",
+        "answer": "Sustav koji objašnjava kako turistički proizvod dolazi do kupca — povezuje primarne dobavljače, posrednike, digitalne platforme i krajnje kupce.",
+        "explanation": "E-poslovanje ga čini bržim, globalnim i automatiziranim."
+      },
+      {
+        "question": "Tko su primarni dobavljači u turizmu?",
+        "answer": "Oni koji stvaraju temeljni turistički proizvod: smještajni objekti (hoteli), zrakoplovne i prijevozničke tvrtke, kruzeri te atrakcije i aktivnosti.",
+        "explanation": "Početak distribucijskog lanca."
+      },
+      {
+        "question": "Razlika turoperator vs turistička agencija (u distribuciji)?",
+        "answer": "Turoperator STVARA vlastiti proizvod i kombinira usluge u paket-aranžmane (grosist). Agencija NE stvara proizvod — prodaje tuđe kao posrednik i zarađuje proviziju.",
+        "explanation": "Kreator vs posrednik."
+      },
+      {
+        "question": "Tko su wholesaleri (bedbanks)?",
+        "answer": "Veletrgovci koji kupuju usluge u velikim količinama po neto cijenama, rade B2B i rijetko prodaju izravno pojedincima; platforme su im često zaštićene lozinkom.",
+        "explanation": "Poslovanje na veliko, ne prema gostu."
+      },
+      {
+        "question": "Što je GDS (globalni distribucijski sustav)?",
+        "answer": "Globalna mreža koja povezuje dobavljače usluga s turističkim agencijama i omogućuje automatizirane rezervacije. Primjeri: Amadeus, Sabre, Travelport.",
+        "explanation": "Koriste ga zrakoplovne tvrtke, hoteli, rent-a-car."
+      },
+      {
+        "question": "Što je booking engine, a što channel manager?",
+        "answer": "Booking engine omogućuje online rezervaciju na vlastitoj stranici dobavljača (izravna prodaja, spojen na PMS). Channel manager sinkronizira cijene i raspoloživost na SVIM kanalima u stvarnom vremenu.",
+        "explanation": "Channel manager smanjuje rizik overbookinga."
+      },
+      {
+        "question": "Što su meta-tražilice?",
+        "answer": "Uspoređuju ponude više OTA-a i stranica dobavljača te prikazuju cijene jednu uz drugu, olakšavajući odluku kupcu. Primjeri: Google Hotels, Trivago, Kayak.",
+        "explanation": "Ne prodaju same — usmjeravaju na prodavatelja."
+      },
+      {
+        "question": "Jesu li komunikacijski kanali dio distribucijskog sustava?",
+        "answer": "NE. Mediji, društvene mreže, blogovi, e-pošta i telefon su marketinški i promotivni kanali. Kad ih primarni dobavljač koristi izravno, to je izravna prodaja.",
+        "explanation": "Česta ispitna zamka."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Amadeus, Sabre i Travelport primjeri su:",
+        "options": [
+          "OTA-a",
+          "GDS-a (globalnih distribucijskih sustava)",
+          "meta-tražilica",
+          "channel managera"
+        ],
+        "correct": 1,
+        "id": "j7yrfd"
+      },
+      {
+        "question": "Tko STVARA vlastiti turistički proizvod (paket-aranžman)?",
+        "options": [
+          "turistička agencija",
+          "turoperator",
+          "meta-tražilica",
+          "bedbank"
+        ],
+        "correct": 1,
+        "id": "okcpm4"
+      },
+      {
+        "question": "Sustav koji sinkronizira cijene i raspoloživost na svim kanalima je:",
+        "options": [
+          "booking engine",
+          "channel manager",
+          "GDS",
+          "PMS"
+        ],
+        "correct": 1,
+        "id": "4ubtf9"
+      },
+      {
+        "question": "Trivago i Kayak primjeri su:",
+        "options": [
+          "GDS-a",
+          "meta-tražilica",
+          "wholesalera",
+          "switch tvrtki"
+        ],
+        "correct": 1,
+        "id": "6nim1b"
+      },
+      {
+        "question": "Komunikacijski kanali (društvene mreže, blogovi) su:",
+        "options": [
+          "dio distribucijskog sustava",
+          "marketinški i promotivni kanali",
+          "vrsta GDS-a",
+          "isto što i OTA"
+        ],
+        "correct": 1,
+        "id": "c5eund"
+      },
+      {
+        "question": "Wholesaleri (bedbanks) posluju:",
+        "options": [
+          "izravno s pojedinačnim gostima",
+          "B2B, po neto cijenama i u velikim količinama",
+          "samo s državom",
+          "bez ugovora"
+        ],
+        "correct": 1,
+        "id": "r0gwmq"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ je globalna mreža koja povezuje dobavljače s agencijama (Amadeus, Sabre).",
+        "answer": "GDS",
+        "hint": "globalni distribucijski sustav",
+        "id": "5djkg1"
+      },
+      {
+        "sentence": "_______ stvara vlastiti paket-aranžman, a agencija prodaje tuđe uz proviziju.",
+        "answer": "Turoperator",
+        "hint": "organizator putovanja",
+        "id": "dml6eu"
+      },
+      {
+        "sentence": "Channel _______ sinkronizira cijene i raspoloživost na svim kanalima.",
+        "answer": "manager",
+        "hint": "upravitelj kanalima",
+        "id": "ul7u07"
+      },
+      {
+        "sentence": "Trivago i Kayak primjeri su _______-tražilica.",
+        "answer": "meta",
+        "hint": "uspoređuju ponude",
+        "id": "jk8dmw"
+      },
+      {
+        "sentence": "Komunikacijski kanali _______ su dio distribucijskog sustava.",
+        "answer": "nisu",
+        "hint": "negacija",
+        "id": "urvjx5"
+      }
+    ],
+    "learn": {
+      "title": "Distribucija u turizmu",
+      "content": "\n                <h3>Kako proizvod dolazi do gosta</h3>\n                <p><em>Napomena: ova je cjelina dopunjena iz EN kolegija — HR materijali je izravno ne obrađuju, a nužna je za razumijevanje e-poslovanja u turizmu.</em></p>\n                <p><strong>Turistički distribucijski sustav</strong> objašnjava kako turistički proizvod dolazi do kupca. Povezuje <strong>primarne dobavljače → posrednike → digitalne platforme → krajnjeg kupca</strong>. E-poslovanje taj proces čini bržim, globalnim i automatiziranim.</p>\n                <p>Ključno načelo s predavanja: <em>„Online okruženje ne mijenja sam posao, nego samo NAČIN na koji se obavlja.\"</em></p>\n\n                <h4>Dionici lanca</h4>\n                <ul>\n                    <li><strong>Primarni dobavljači</strong> — stvaraju temeljni proizvod: hoteli, zrakoplovne tvrtke, prijevoznici, kruzeri, atrakcije.</li>\n                    <li><strong>Turoperator</strong> — stvara vlastiti proizvod, kombinira usluge u paket-aranžmane; grosist.</li>\n                    <li><strong>Turistička agencija</strong> — ne stvara proizvod; prodaje tuđe kao posrednik uz proviziju.</li>\n                    <li><strong>Wholesaleri / bedbanks</strong> — kupuju na veliko po neto cijenama, B2B, rijetko prodaju pojedincima (platforme često zaštićene lozinkom).</li>\n                </ul>\n\n                <h4>Tehnologije distribucije</h4>\n                <div class=\"formula-box\">\n                    GDS — globalna mreža koja povezuje dobavljače i agencije (Amadeus · Sabre · Travelport)<br>\n                    PMS / CRS — INTERNI sustavi dobavljača (rezervacije, raspoloživost, operacije)<br>\n                    BOOKING ENGINE — online rezervacija na vlastitoj stranici (izravna prodaja)<br>\n                    CHANNEL MANAGER — sinkronizira cijene i raspoloživost na SVIM kanalima<br>\n                    META-TRAŽILICE — uspoređuju ponude (Google Hotels · Trivago · Kayak)<br>\n                    SWITCH tvrtke — elektronička poveznica između CRS sustava i GDS-a\n                </div>\n                <p><strong>PMS/CRS</strong> ne prodaju izravno kupcu — povezuju se s drugim platformama radi distribucije. <strong>Channel manager</strong> smanjuje rizik overbookinga; moderne inačice koriste AI.</p>\n\n                <h4>Što NIJE dio distribucije</h4>\n                <p><strong>Komunikacijski kanali</strong> — mediji i društvene mreže, blogovi i forumi, e-pošta i telefon — <em>nisu</em> dio distribucijskog sustava; oni su marketinški i promotivni alati. Kad ih primarni dobavljač koristi izravno prema gostu, riječ je o <strong>izravnoj prodaji</strong>.</p>\n            ",
+      "id": "5l5eip"
+    },
+    "id": "i60zct"
+  }
+}

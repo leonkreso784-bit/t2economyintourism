@@ -34,7 +34,7 @@ Faza je gotova kad **korisnik**, ne kad je gate zelen:
 1. **…proći cijeli tok na telefonu od 320 px** — landing → browse → predmet → sva četiri moda → vježbe →
    profil → editor — **bez horizontalnog scrolla i bez elementa koji strši ili je prekriven.**
 2. **…doći tipkovnicom do svake akcije** i u svakom trenutku **vidjeti gdje je fokus**.
-3. **…otvoriti bilo koji od 22 predmeta i vlastiti materijal i ne primijetiti da se išta pokvarilo** —
+3. **…otvoriti BILO KOJI predmet iz kataloga i vlastiti materijal i ne primijetiti da se išta pokvarilo** —
    napredak, boje, KaTeX, slike, tablice i vježbe izgledaju i rade kao prije.
 4. **…vidjeti boju stavke na CIJELOJ plohi kartice**, ne samo na rubu
    ([backlog: akcent = cijela kartica](../records/BACKLOG.md)). Lice kartice je danas zasićen indigo
@@ -903,14 +903,22 @@ prijavljene površine). Zapisuje se kao odluka, ne kao dojam.
 
 **Dijagnoza:** hero je tražio od posjetitelja da **radi** — upiši pojam, upiši objašnjenje — prije
 nego što mu je dan razlog da mu je stalo. To je najskuplja moguća prva interakcija. Pritom je pravi
-adut (**22 predmeta gotovog gradiva**) bio nevidljiv na ulazu.
+adut (**cijeli katalog gotovog gradiva**) bio nevidljiv na ulazu.
+
+> ⚠️ **BROJ PREDMETA SE NIKAD NE PIŠE RUKOM — ni u ovom specu, ni u markupu** (2026-08-15). Ovaj
+> odjeljak je nastao dok ih je bilo **22**; istog dana kad su Sašine dvije HR grane mergeane postalo
+> ih je **24**, i svaka rečenica koja je broj nosila u sebi odmah je bila neistinita. Isti razred
+> greške već je bio **na produkciji**: landing je pisao „17 predmeta" jer je brojao samo primarni
+> program (CHANGELOG 2026-08-09). Broj dolazi iz `allReachableSubjects()`, tekst iz
+> `data-meta="subjectCount"`. **Kriterij prihvaćanja: dodaj predmet u `catalog.js` i landing se
+> promijeni sam, bez ijedne izmjene u HTML-u ili CSS-u.**
 
 **Novi oblik** (maketa građena i presuđena okom prije ijednog retka u repou):
 
 | dio | što nosi |
 |---|---|
 | ① hero | naslov koji pokriva OBA izvora + **dvoja ravnopravna vrata** + prava kartica kao objekt |
-| ② katalog | 22 predmeta u **vlastitim bojama i ikonama** iz `catalog.js`, tražilica, filtar po programu |
+| ② katalog | **svi predmeti** (broj iz kataloga) u **vlastitim bojama i ikonama** iz `catalog.js`, tražilica, filtar po programu |
 | ③ svoje gradivo | punopravna sekcija: tri koraka + polica s gradivom koje **nije s fakulteta** |
 | ④ tvoj AI (MCP) | razgovor koji čita napredak i upisuje materijal |
 | ⑤ četiri načina | stvarna lekcija iz kataloga, **bez ijednog upisa** |
@@ -921,9 +929,11 @@ Odakle gradivo dolazi je **detalj nabave, a ne proizvod**; proizvod je pretvorba
 biti dodatak i postaje pola obećanja — što je Leon i tražio (*„ugc je skriven još uvijek… kada ju
 otvori bilo tko da vidi da može radit svoj sadržaj tu"*).
 
-**➕ 23. pločica.** Na kraju mreže predmeta stoji isprekidano „**＋ Tvoj predmet**". Mreža od 22
-izgleda **zatvoreno**, kao popis; ta jedna pločica jedina kaže da platforma nije popis — **bez ijedne
-riječi marketinga**. Jeftin element, nesrazmjeran učinak.
+**➕ POSLJEDNJA pločica** (ranije zapisana kao „23.", dok ih je bilo 22 — v. upozorenje gore).
+Na kraju mreže predmeta stoji isprekidano „**＋ Tvoj predmet**". Puna mreža izgleda **zatvoreno**,
+kao popis; ta jedna pločica jedina kaže da platforma nije popis — **bez ijedne riječi marketinga**.
+Jeftin element, nesrazmjeran učinak. Renderira se **iza posljednjeg predmeta iz kataloga**, nikad
+na fiksnoj poziciji.
 
 **Posljedica za ADR-029:** napetost koju je §7.11 ostavio otvorenom je presuđena — **UGC je
 ravnopravan od prvog ekrana, katalog je dokaz da ima sadržaja.** Zapisati kao dopunu ADR-a prije

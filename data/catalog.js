@@ -651,6 +651,70 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/te2-hr/*.json)
       }
+    },
+    {
+      id: 'entrepreneurship-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 1,
+      name: 'Poduzetnički menadžment i inovacije',
+      shortName: 'PMI',
+      icon: 'fa-rocket',
+      color: '#8b5cf6',
+      iconGradient: ['#8b5cf6', '#a78bfa'],
+      description: 'Poduzetnički menadžment i inovacije (FMTU): teorije i teoretičari poduzetništva, poduzetnik i oblici poduzetništva, poduzetnički menadžment u turizmu i ugostiteljstvu, funkcije poduzetništva, vrste i oblici te pravni oblici; potom poslovno planiranje i poslovni plan, izvori financiranja, strateško poduzetništvo i inovacije, financijski pokazatelji te poduzetništvo u EU i održivi razvoj',
+      storageKey: 'entrepreneurship-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Teorije i teoretičari poduzetništva, poduzetnik i oblici poduzetništva, poduzetnički menadžment u turizmu i ugostiteljstvu, funkcije poduzetništva, vrste i oblici te pravni oblici i poduzetnička ideja' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Poslovno planiranje i poslovni plan, izvori financiranja poduzetništva, strateško poduzetništvo i inovacije, financijski pokazatelji poslovanja te poduzetništvo u EU i održivi razvoj' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/entrepreneurship-hr/final.js MORA se učitati zadnji (Object.assign entrepreneurshipHrM1 + entrepreneurshipHrM2 + examPractice)
+        scripts: [
+          'data/entrepreneurship-hr/midterm-1.js',
+          'data/entrepreneurship-hr/midterm-2.js',
+          'data/entrepreneurship-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'entrepreneurshipHrM1',
+          'second-midterm': 'entrepreneurshipHrM2',
+          'final': 'entrepreneurshipHrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/entrepreneurship-hr/*.json)
+      }
+    },
+    {
+      id: 'ebusiness-hr',
+      programId: 'hospitality-management-hr',
+      year: 2, semester: 1,
+      name: 'E-poslovanje',
+      shortName: 'EPOS',
+      icon: 'fa-globe',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'E-poslovanje / ICT (FMTU): pojam i temelji e-poslovanja, modeli (B2B, B2C, C2G) i elektronička infrastruktura, Internet, web i servisi, razvoj weba (1.0–4.0), ICT u hotelijerstvu i distribucija u turizmu; potom kvaliteta web sitea i SEO, Google alati i analitika, online oglašavanje i društveni mediji, računalna grafika te sigurnost i platform ekonomija',
+      storageKey: 'ebusiness-hr-progress',
+      features: { blindMap: false },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Pojam i temelji e-poslovanja, modeli i područja primjene, Internet, web i servisi, razvoj weba (Web 1.0–4.0), ICT u hotelijerstvu te distribucija u turizmu' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Kvaliteta web sitea i SEO, Google alati i analitika, online oglašavanje i društveni mediji, računalna grafika i dizajn, sigurnost u e-poslovanju te poslovni modeli i platform ekonomija' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/ebusiness-hr/final.js MORA se učitati zadnji (Object.assign ebusinessHrM1 + ebusinessHrM2 + examPractice)
+        scripts: [
+          'data/ebusiness-hr/midterm-1.js',
+          'data/ebusiness-hr/midterm-2.js',
+          'data/ebusiness-hr/final.js'
+        ],
+        resolve: {
+          'first-midterm': 'ebusinessHrM1',
+          'second-midterm': 'ebusinessHrM2',
+          'final': 'ebusinessHrFinal'
+        },
+        dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/ebusiness-hr/*.json)
+      }
     }
   ]
 };
