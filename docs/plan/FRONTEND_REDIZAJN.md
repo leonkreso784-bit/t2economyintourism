@@ -893,3 +893,90 @@ jedna promijenjena varijabla, pa razliku ne može objasniti ni položaj ni veli�
 > **točno onaj kvar koji je cigla maloprije dokazivala** — a `css:diff` bi i dalje bio zelen, jer
 > kvar živi u hoveru. **Obrnuta provjera je radnja koja privremeno kvari repozitorij; gate koji
 > mjeri artefakt, a ne izvor, jedini je koji primijeti da čišćenje nije dovršeno.**
+
+### 7.13 ⚠️ LANDING — DRUGA REVIZIJA (Leon na ekranu, 2026-08-14)
+
+**C2 je isporučen i Leon ga je odbio kad ga je vidio:** *„landing mi se uopće ne sviđa… samo uđeš na
+landing i vidiš tutorial kako se rade materijali je bez veze."* To nije hir nego **treći put da odluka
+o izgledu padne na živom ekranu** nakon što je prošla sve gateove (§7.3 dvije tamne palete, §7.9
+prijavljene površine). Zapisuje se kao odluka, ne kao dojam.
+
+**Dijagnoza:** hero je tražio od posjetitelja da **radi** — upiši pojam, upiši objašnjenje — prije
+nego što mu je dan razlog da mu je stalo. To je najskuplja moguća prva interakcija. Pritom je pravi
+adut (**22 predmeta gotovog gradiva**) bio nevidljiv na ulazu.
+
+**Novi oblik** (maketa građena i presuđena okom prije ijednog retka u repou):
+
+| dio | što nosi |
+|---|---|
+| ① hero | naslov koji pokriva OBA izvora + **dvoja ravnopravna vrata** + prava kartica kao objekt |
+| ② katalog | 22 predmeta u **vlastitim bojama i ikonama** iz `catalog.js`, tražilica, filtar po programu |
+| ③ svoje gradivo | punopravna sekcija: tri koraka + polica s gradivom koje **nije s fakulteta** |
+| ④ tvoj AI (MCP) | razgovor koji čita napredak i upisuje materijal |
+| ⑤ četiri načina | stvarna lekcija iz kataloga, **bez ijednog upisa** |
+
+**Ključni pomak je u NASLOVU, ostalo slijedi iz njega.** „Nađi svoj predmet" je obećanje kataloga —
+tko nema predmet u katalogu, odmah je izvan. Novo: **„Bilo koje gradivo. Četiri načina učenja."**
+Odakle gradivo dolazi je **detalj nabave, a ne proizvod**; proizvod je pretvorba. Time UGC prestaje
+biti dodatak i postaje pola obećanja — što je Leon i tražio (*„ugc je skriven još uvijek… kada ju
+otvori bilo tko da vidi da može radit svoj sadržaj tu"*).
+
+**➕ 23. pločica.** Na kraju mreže predmeta stoji isprekidano „**＋ Tvoj predmet**". Mreža od 22
+izgleda **zatvoreno**, kao popis; ta jedna pločica jedina kaže da platforma nije popis — **bez ijedne
+riječi marketinga**. Jeftin element, nesrazmjeran učinak.
+
+**Posljedica za ADR-029:** napetost koju je §7.11 ostavio otvorenom je presuđena — **UGC je
+ravnopravan od prvog ekrana, katalog je dokaz da ima sadržaja.** Zapisati kao dopunu ADR-a prije
+nego kod krene.
+
+**✅ Usput se zatvara BACKLOG-stavka:** živi prikaz u herou je razlog zašto landing šalje **240 KB
+editorskog koda** posjetitelju bez računa. Nestankom demoa nestaje i teret.
+
+#### Boja i ikone već postoje — landing ih nikad nije pokazao
+
+Revizija je pretpostavila da treba **izmisliti** vizualni jezik za predmete. Netočno: **svih 22
+predmeta u `data/catalog.js` već ima `color` i `icon`**, a ikone su **Font Awesome imena**
+(`fa-plane`, `fa-chart-line`) — dakle monokromne, ne emoji. Isto vrijedi za **svaku sekciju** u
+lekciji. ⚠️ **Emoji koje se vide u Studiju su u RUČNO PISANIM naslovima `learn` sadržaja**
+(`<h3>📖 Definition</h3>`) — čišćenje sadržaja, ne promjena sustava. Prva procjena („odluka o
+emojima blokira CSS-posao") bila je kriva i ispravljena je isti dan.
+
+⚠️ **Vrijednosti su STARA paleta:** `#6366f1` je indigo prije C1, a `#8b5cf6` je točno onaj ljubičasti
+koji je umirovljen jer pada AA u svih pet tema. **Struktura je ispravna, vrijednosti treba preugoditi**
+— i `check:palette` ih broji.
+
+#### Pravilo za boju koje pomiruje „Apple" i „hoću boje"
+
+Apple koristi puno boje, ali kao **oznaku identiteta**, nikad kao podlogu ispod teksta:
+
+- boja živi u **zasićenoj pločici** i u tankoj traci uz karticu;
+- **ploha ostaje neutralna**, pa boja čita kao signal;
+- **tekst nikad ne sjedi na tinti** — izvor pola kontrastnih kvarova ove faze (`.st-icard` 1.00,
+  aktivni redak Studija 4.03).
+
+#### Podloga: prvi pokušaj odbačen mjerenjem oka
+
+Prva izvedba bila je **aurora od pet boja predmeta**. Renderirana i **odbačena**: ispala je generička
+duga preko cijele stranice — točno ono što ima svaki generirani hero. **Boje predmeta pripadaju
+pločicama, gdje nešto znače; u pozadini samo galame.**
+
+Ostalo je **materijal na kojem se uči**, u tri sloja: **karirani papir** (dvije skale) · **jedan**
+mekan odsjaj u boji teme · **zrno**. Zrno je sastojak koji nosi sve — bez njega je ploha plastika, s
+njim je pigment na papiru. Iznad toga plove **pravi pojmovi**, pomiješani: `Forecasting` i
+`Opportunity cost` iz kataloga, `Rimsko pravo` i `Njemački B1` **ni iz jednog našeg predmeta** — pa
+podloga priča istu priču kao stranica.
+
+#### 🔒 ZNAK JE NEPROMJENJIV (Leon, izričito)
+
+Znak je tri puta prijavljen kao premalen. Dijagnoza je bila da je `assets/logo.svg` **traceana
+fotografija biste** (45 KB krivulja) — ilustracija, koja na 32 px nužno postaje mrlja. Nacrtana je
+zamjenska silueta i **Leon ju je odbio**: *„ovaj logo je odvratan i sokrat logo je nezamjenjiv."*
+
+**Odluka: znak se NE prepravlja. Dobiva PROSTOR.** Traka 54 → **64 px**, znak 32 → **42 px**,
+wordmark 17 → 18,5 px, u herou 72 → **88 px**. Na 42 px se lice vidi.
+
+⚠️ **Posljedica koja se prihvaća svjesno:** znak zadržava **vlastiti indigo kroz sve četiri teme**.
+Prije je bojan u temu; sad nije. Na papiru i menti bit će jedina indigo stvar na stranici — to više
+nije nedosljednost nego **konstanta marke: znak definira boju marke, ne obrnuto.** Ako to ikad
+zasmeta, put je obrnut od prijašnjeg prijedloga — **teme gravitiraju prema znaku**, nikad znak prema
+temama.

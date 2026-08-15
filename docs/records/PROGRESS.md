@@ -5,6 +5,47 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-14 (OPUS, e) — **Landing pao na Leonovu ekranu · nacrtan novi · MCP presuđen**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Sesija je počela kao dovršetak C3, a **skrenula je u redizajn
+landinga** jer je Leon prvi put vidio C2 na ekranu i odbio ga.
+
+**① Vizualna revizija je opravdala sama sebe.** Kontaktna kopija (19 snimaka, 4 površine × 4 teme +
+390 px) našla je ono što gateovi ne mogu: **Studio na telefonu izbacuje dva gumba izvan ekrana**, a
+rupa je u **mojoj vlastitoj brani** — detektor izuzima podstabla u `position:fixed`, a cijeli Studio
+jest takvo podstablo. Mjere i uzrok: `BACKLOG.md`. Leon: *„jbg tako je kako je"* → ne blokira.
+
+**② Landing je odbijen i prepravljen.** *„Samo uđeš na landing i vidiš tutorial… bez veze."* Hero je
+tražio RAD prije nego što je dao razlog. Novi oblik, naslov i **23. pločica**: spec **§7.13**.
+Ključno: **UGC je ravnopravan od prvog ekrana** (dopuna ADR-029, presudio Leon).
+
+**③ Ispravio sam vlastitu krivu tvrdnju isti dan.** Rekao sam da su emoji „u podacima, u 22 predmeta"
+i da odluka o njima blokira CSS-posao. **Netočno:** svih 22 predmeta i svaka sekcija **već imaju
+`color` + `icon`, a ikone su Font Awesome**, ne emoji. Emoji su samo u ručno pisanim `learn`
+naslovima → čišćenje sadržaja, ne promjena sustava.
+
+**④ Podlogu sam odbacio nakon što sam je renderirao.** Aurora od 5 boja predmeta ispala je generička
+duga. **Boje predmeta pripadaju pločicama, gdje nešto znače.** Ostalo: karirani papir + jedan odsjaj
+u boji teme + **zrno** (bez njega je ploha plastika).
+
+**⑤ Znak: tri kruga i jedno „ne".** Nacrtao sam zamjensku siluetu jer je `logo.svg` traceana
+fotografija koja na 32 px nužno postaje mrlja. Leon: *„odvratan… sokrat logo je nezamjenjiv."*
+**Odluka: znak se ne prepravlja, dobiva prostor** (traka 64 px, znak 42 px) i **zadržava indigo kroz
+sve teme** — konstanta marke.
+
+**⑥ MCP je presuđen činjenično.** Od tri Leonova zahtjeva: *napravi i dostavi materijal* **DA** ·
+*čita napredak i ispravlja* **DA, kroz razgovor** · *prati te uživo dok odgovaraš* **NE** — u MCP-u
+**korisnikov AI zove nas, mi ne možemo zvati njega**. Uživo bi značilo da model vrtimo i plaćamo MI,
+što ADR-026 izričito odbija. Prava prepreka nije AI nego **pristup** (ADR-030 ②).
+
+**Novo u BACKLOG-u:** vježbe nemaju svoj frontend (Leon, → C5b) · `academic` i `paper` su ista tema
+(marka im je ista boja — identitet nosi AKCENT) · Studio na telefonu.
+
+**Ništa od redizajna nije u repou** — makete su u gitignored `_screenshots/`. Repo je dobio samo
+dokumentaciju i ciglu `!important`.
+
+---
+
 ## 2026-08-14 (OPUS, d) — **C3 treća cigla: pet `!important` · i zašto je hrpa od 22 commita sad najveći rizik**
 
 **Grana:** `feat/c3-vlastito-gradivo`. Leon: *„malo sam izgubljen"* → sesija je preusmjerena s

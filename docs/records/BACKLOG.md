@@ -86,6 +86,49 @@ rečenica koja kaže **na što se odnosi**.
 
 ---
 
+## 🔥 Vježbe nemaju svoj frontend — 2026-08-14
+**Leon:** *„trebat ćemo napraviti i exercises dobro u frontendu kasnije."*
+
+Engine vježbi (7 tipova) je **funkcionalno gotov i svet** — ne mijenja se za sadržaj (BUG-012,
+ADR-018). Ono što nedostaje je **prikaz**: vježbe su jedina velika površina koju redizajn dosad
+nijednom nije spomenuo — nisu u tablici cigli C0–C7 i nemaju ni jedan vizualni gate.
+
+**Pet predmeta ih ima** (`accounting` · `math` · `statistics` · `academic-writing` ·
+`macroeconomics`), dakle to nije rub nego petina kataloga.
+
+**Kad:** **C5b** (gradivo i vježbe) — ondje se ionako dira put renderiranja. **Prije toga treba
+odlučiti opseg**, jer je danas neodređen: je li to prolaz kroz tokene i razmake, ili prepravak
+interakcije (unos odgovora, provjera, koraci rješenja). ⚠️ **Granica se ne pomiče:** izgled se smije
+mijenjati, `generate()`/`answer()`/`type` **ne**.
+
+---
+
+## ➖ „Akademsko plavo" i „Papir" izgledaju isto — tema nije temperatura sivih — 2026-08-14
+**Leon:** *„akademsko plavo i papir su isti kurac."* **Izmjereno i potvrđeno:** razlikuju se u
+**18 od 21 tokena**, ali sve su razlike mikroskopske, a presudna je ova:
+
+| token | academic | paper |
+|---|---|---|
+| ploha | `#f7f9fc` | `#faf9f6` |
+| tinta | `#0e1a2b` | `#1b1a17` |
+| **marka** | `#1657d0` **plava** | `#2c5fd6` **plava** |
+
+**Marka im je ista boja.** Dijeli ih samo temperatura neutrala → to nisu dvije teme nego **jedna
+tema s klizačem za balans bijele**.
+
+**Pravilo koje iz toga slijedi:** *identitet teme nosi AKCENT, ne toplina sivih.* Prijedlog (prošao
+kroz maketu, **nije** kroz `check:contrast`): **academic** plava · **paper** **sepija** `#7a4b1f` ·
+**chalk** kredasto žuta · **mint** tirkiz.
+
+⚠️ **Zašto sepija, a ne crvena ili zelena:** crvena se sudara s `--color-danger`, zelena s
+`--color-ok`. **Znak teme ne smije značiti isto što i status.** Sepija je uz to boja koju papir
+prirodno nosi.
+
+**Prije primjene:** `check:contrast` mora presuditi (AA po temi + hue-odvojenost „točno" od marke
+≥25°). Tirkiz je najtješnji slučaj — provjeriti razmak prema `--color-ok`.
+
+---
+
 ## 🔥 Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna — 2026-08-14
 **Izmjereno** (390 × 844, otvorena lekcija, staging):
 
