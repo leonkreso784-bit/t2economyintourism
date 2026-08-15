@@ -64,6 +64,28 @@ gradivo"* prije nego *„evo 22 predmeta s FMTU-a"*.
   netaknuti. Ovo je odluka o **istaknutosti**, ne o popuštanju granice.
 - **Ne mijenja se prioritet sadržaja.** Sadržajna staza ostaje pauzirana (ADR-018); HR nosi Saša.
 
+### ➕ Dopuna 2026-08-14 — „prije" postaje „ravnopravno" (Leon, na maketi)
+
+Izvorni tekst traži da posjetitelj vidi *„napravi svoje gradivo"* **prije** *„evo 22 predmeta"*.
+Provedeno doslovno, to je dalo landing koji **skriva jedini dokaz da sadržaja uopće ima** — a Leon je
+tražio suprotno: *„trebaju biti predmeti i sve"*, pa u istoj sesiji i *„ugc je skriven još uvijek…
+kada ju otvori bilo tko da vidi da može radit svoj sadržaj tu"*. **Oba zahtjeva su točna i nisu u
+sukobu**; sukob je bio u riječi „prije".
+
+**Razrješenje:** *prije* → **ravnopravno, i to u herou**.
+
+- **Naslov pokriva OBA izvora** — odakle gradivo dolazi (katalog ili ti) je **detalj nabave, a ne
+  proizvod**; proizvod je pretvorba u četiri načina učenja. Time UGC nije dodatak nego pola obećanja.
+- **Dvoja vrata jednake težine** u herou; ni jedna nisu „sekundarna akcija".
+- **Katalog ostaje prva sekcija** — kao dokaz supstance, ne kao hijerarhija. **Vlastito gradivo je
+  puna sekcija odmah iza**, ne traka pri dnu.
+- **Mreža predmeta mora izgledati OTVORENO:** „＋ Tvoj predmet" kao zadnja pločica. Popis od 22
+  inače čita kao zatvoren katalog jednog fakulteta.
+
+⚠️ **Ovo je ublažavanje izvorne odredbe i tako se i vodi**, a ne njezino ispunjenje. Mjerilo ostaje
+Leonovo: *platforma mora biti takva da svatko tko je otvori odmah vidi da tu može raditi svoj
+sadržaj.* Detalji i mjere: spec **§7.13**.
+
 ---
 
 ## ADR-028 — Frontend prelazi na Tailwind, ali SAMO preko CLI-ja; sadržaj ostaje bez utility-klasa
