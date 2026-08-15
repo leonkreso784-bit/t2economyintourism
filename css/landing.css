@@ -273,8 +273,13 @@
     flex-shrink: 0;
     border-radius: var(--radius-sm);
     font-size: 0.9rem;
-    color: var(--color-on-brand);
+    /* Tinta se bira po LUMINANCIJI pločice (`inkForTint()`), ne po temi — ploha ispod je
+       boja predmeta i s temom se ne mijenja. Prije je ovdje stajao `--color-on-brand`,
+       token izračunat za marku: bijelo na `#f59e0b` = 2.15, ispod praga 3:1. */
+    color: var(--color-on-tint-light);
 }
+
+.landing-subject-icon[data-ink="dark"] { color: var(--color-on-tint-dark); }
 
 .landing-subject-info { min-width: 0; flex: 1; }
 

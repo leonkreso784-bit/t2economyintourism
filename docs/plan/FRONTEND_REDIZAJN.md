@@ -1001,3 +1001,56 @@ Prije je bojan u temu; sad nije. Na papiru i menti bit će jedina indigo stvar n
 nije nedosljednost nego **konstanta marke: znak definira boju marke, ne obrnuto.** Ako to ikad
 zasmeta, put je obrnut od prijašnjeg prijedloga — **teme gravitiraju prema znaku**, nikad znak prema
 temama.
+
+---
+
+### 7.14 LANDING, CIGLA A+B — obrisan demo, i kvar koji su tri gatea gledala a nijedan vidio
+
+**A · Živi prikaz je obrisan** (`4eeda13`) iz svih šest datoteka u kojima je živio: markup,
+`initHeroDemo()`+`landingT()`, 18 `demo.*` poruka, 202 retka CSS-a, poziv u `init.js`, kuka u
+`i18n.js`. Naslov sad pokriva oba izvora („Any material / Bilo koje gradivo"). Dva testa nisu
+pala nego su **obrisana odlukom**; razlika je zapisana u zaglavlju `landing.spec.js`, jer test koji
+padne znači kvar, a test koji nestane znači promjenu opsega. Umjesto njih stoji tvrdnja da hero
+**ne traži nikakav unos** — inače bi se demo vratio neopaženo.
+
+**B · Glif na pločici predmeta bio je nečitljiv na 10 od 24 predmeta.** Pločice nose boju iz
+`data/catalog.js`, a tinta na njima dolazila je iz `--color-on-brand` — tokena izračunatog za boju
+**marke**. U bočnoj traci je čak bila **zakucana bijela**. Izmjereno u zadanoj temi:
+
+| boja | predmeta | prije (bijela) | poslije |
+|---|---|---|---|
+| `#f59e0b` | 5 | **2.15** | 8.43 |
+| `#14b8a6` | 3 | **2.49** | 7.28 |
+| `#0ea5e9` | 2 | **2.77** | 6.54 |
+
+**Zašto ga NIJEDAN od tri gatea nije vidio — i to je važnije od brojke:**
+
+1. **`check:palette`** klasificira pravilo po pozadini koju vidi **u CSS-u**. Ova ploha dolazi iz
+   podatka kroz inline `style`, pa je gate vidio „nema pozadine" i `color: white` proglasio
+   bezopasnim. **Zakucana tinta na plohi obojanoj iz podatka je slijepa točka te brane.**
+2. **`check:contrast`** mjeri **tokene**, a boje predmeta nisu tokeni. Isti obrazac kao tvrda
+   zabrana #2: *gate koji provjerava NEKE tokene stvara tihu pretpostavku da su provjereni SVI.*
+3. **axe** ne mjeri Font Awesome glif — sadržaj dolazi iz `::before`, pa pravilo `color-contrast`
+   nema tekst za mjeriti.
+
+**Popravak je PRAVILO, ne ugađanje boja.** Ručno preugoditi 11 boja značilo bi da 25. predmet
+donese kvar natrag. Tinta se bira **izračunom luminancije pločice** (`inkForTint()`), iz dva
+namjerno **tema-neovisna** tokena (`--color-on-tint-dark/-light`) — neovisna jer je i ploha ispod
+njih tema-neovisna; da nisu, tema bi okrenula glif a ploha ostala (tvrda zabrana #3, obrnuto).
+
+⚠️ **Prag je prvi put bio napisan napamet i promašen za 0,013.** Sjecište dviju tinti izvodi se iz
+same definicije kontrasta: `L* = √((L_dark+0.05)(L_light+0.05)) − 0.05`. Zato `check:contrast` sad
+**preračuna prag iz tokena** i padne ako se raziđe s kodom — uz poruku koja kaže točnu vrijednost.
+
+**Dvije brane, jer hvataju različito:** `check:contrast` dokazuje da je paleta ispravna;
+**`tests/tint-ink.spec.js`** čita **izračunatu** boju glifa i **stvarnu** pozadinu u pregledniku,
+kroz sve četiri teme i na sve tri površine (landing, bočna traka, browse). Obrnuto provjerena —
+s vraćenim `color: white` pada s **2.15**, točno onom brojkom koju daje statičko mjerenje.
+
+> ⚠️ **Obrnuta provjera mi je prvi put lažno prošla** jer sam vratio samo pola popravka: bazno
+> pravilo, a ne `[data-ink="dark"]`, koje posao zapravo radi. **Obrnuta provjera mora ukloniti ono
+> što djeluje, ne ono što je najlakše vratiti.**
+
+**Otvoreno za sljedeću ciglu:** `css/subject-selector.css` nosi **22 od preostalih 126** pogodaka
+`check:palette` — isti obrazac (`color: white` + gradijenti stare palete), na još jednoj površini
+s pločicama predmeta.

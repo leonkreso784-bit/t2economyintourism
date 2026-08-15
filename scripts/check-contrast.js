@@ -160,6 +160,77 @@ for (const [name, t] of Object.entries(themes)) {
   }
 }
 
+// ── GLIF NA PLOČICI PREDMETA ────────────────────────────────────────────────────
+//
+// Ovo je JEDINA provjera u datoteci koja NIJE po temama, i to je namjerno: pločica
+// predmeta nosi boju iz `data/catalog.js`, koja se s temom ne mijenja, pa se ni tinta
+// na njoj ne smije mijenjati (v. `--color-on-tint-*` u tokens.css).
+//
+// Povod: glif je do 2026-08-15 nosio `--color-on-brand` — token izračunat za boju MARKE.
+// Nijedan gate ga nikad nije usporedio s 11 boja predmeta, a bijela na `#f59e0b` daje
+// **2.15**; tu boju nosi 5 predmeta. 10 od 24 predmeta bilo je ispod praga u ZADANOJ temi.
+// Pouka je ista kao kod tvrde zabrane #2: gate koji provjerava NEKE tokene stvara tihu
+// pretpostavku da su provjereni SVI.
+{
+  const catalogPath = path.resolve(__dirname, '..', 'data', 'catalog.js');
+  const w = {};
+  new Function('window', fs.readFileSync(catalogPath, 'utf8'))(w);
+  const subjects = ((w.SOKRAT_CATALOG || {}).subjects) || [];
+
+  const dark = parseHex(base['--color-on-tint-dark']);
+  const light = parseHex(base['--color-on-tint-light']);
+  const problems = [];
+
+  if (!dark || !light) {
+    problems.push('--color-on-tint-dark/-light nedostaju u @theme static — pločice predmeta nemaju definiranu tintu');
+  } else {
+    // (a) SJECIŠTE mora pratiti tokene. `inkForTint()` u js/navigation.js bira tintu po
+    //     pragu luminancije; taj prag je funkcija ove dvije vrijednosti i mora se PRERAČUNATI,
+    //     ne prepisati. Prva verzija praga bila je napisana napamet i promašena za 0.013.
+    //     Gate ga izvodi iz same definicije kontrasta i traži da se poklopi s kodom.
+    const krizanje = Math.sqrt((lum(dark) + 0.05) * (lum(light) + 0.05)) - 0.05;
+    const nav = fs.readFileSync(path.resolve(__dirname, '..', 'js', 'navigation.js'), 'utf8');
+    const m = nav.match(/const TINT_INK_CROSSOVER\s*=\s*([0-9.]+)\s*;/);
+    checks++;
+    if (!m) {
+      problems.push('js/navigation.js nema TINT_INK_CROSSOVER — tinta pločice se bira nepoznatim pragom');
+    } else if (Math.abs(parseFloat(m[1]) - krizanje) > 0.0005) {
+      problems.push(`TINT_INK_CROSSOVER je ${m[1]}, a iz tokena izlazi ${krizanje.toFixed(4)} — postavi ${krizanje.toFixed(4)} u js/navigation.js`);
+    }
+
+    // (b) Za svaku boju predmeta: tinta koju kod STVARNO odabere mora prelaziti 3:1.
+    //     Nije „najbolja od dvije" (to gotovo nikad ne padne s crno-bijelim parom), nego
+    //     baš odabrana — inače gate potvrđuje da čitljiv izbor postoji, ne da je napravljen.
+    const prag = m ? parseFloat(m[1]) : krizanje;
+    const seen = new Set();
+    for (const s of subjects) {
+      const boja = (Array.isArray(s.iconGradient) && s.iconGradient[0]) || s.color;
+      const rgb = parseHex(boja);
+      if (!rgb || seen.has(boja)) continue;
+      seen.add(boja);
+      checks++;
+      const odabrana = lum(rgb) > prag ? dark : light;
+      const r = ratio(rgb, odabrana);
+      if (r < UI_MIN) {
+        const ime = lum(rgb) > prag ? 'on-tint-dark' : 'on-tint-light';
+        problems.push(`boja predmeta ${boja} (npr. ${s.id}): odabrana tinta ${ime} daje ${r.toFixed(2)} < ${UI_MIN} — boju predmeta treba preugoditi`);
+      }
+    }
+  }
+
+  if (problems.length) {
+    fails += problems.length;
+    console.log('❌ glif na pločici predmeta');
+    problems.forEach((p) => console.log(`      ${p}`));
+  } else {
+    console.log(`   ${'pločice predmeta'.padEnd(12)} ✅  (${seenCount(subjects)} boja, tinta se bira izračunom)`);
+  }
+}
+
+function seenCount(subjects) {
+  return new Set(subjects.map((s) => (Array.isArray(s.iconGradient) && s.iconGradient[0]) || s.color).filter(Boolean)).size;
+}
+
 console.log(`\n   ${Object.keys(themes).length} tema · ${checks} provjera`);
 if (fails) {
   console.log(`\n❌ ${fails} pada. Popravi vrijednost u css/tokens.css — ne prag ovdje.\n`);

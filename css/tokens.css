@@ -128,6 +128,21 @@
      ploha traži #1e1f1c. Tvrda brana: `npm run check:palette`. */
   --color-on-brand: #ffffff;
 
+  /* TINTA NA PLOČICI PREDMETA — namjerno NEOVISNA O TEMI, i to je cijela poanta.
+     Pločica predmeta nosi boju iz `data/catalog.js`, koja se s temom NE mijenja (predmet
+     je isti predmet u svakoj temi). Kad bi tinta na njoj dolazila iz teme, tema bi okrenula
+     glif a ploha ostala — točno kvar iz tvrde zabrane #3, samo obrnut. Zato se ova dva
+     tokena definiraju JEDNOM i NIKAD se ne redefiniraju u `[data-theme]` blokovima.
+
+     ⚠️ Koja se od dvije koristi NE bira se okom nego IZRAČUNOM luminancije pločice
+     (`inkForTint()` u `js/navigation.js`). Povod: dotad je glif nosio `--color-on-brand`,
+     token izračunat za boju MARKE, pa je na 11 boja predmeta nitko nikad nije izmjerio.
+     Mjerenje: bijela na `#f59e0b` = **2.15** (5 predmeta), na `#14b8a6` = 2.49 (3),
+     na `#0ea5e9` = 2.77 (2) — dakle 10 od 24 predmeta ispod praga 3:1 za grafički element,
+     u ZADANOJ temi. Brana: `npm run check:contrast`, provjera „glif na pločici predmeta". */
+  --color-on-tint-dark: #14161a;
+  --color-on-tint-light: #ffffff;
+
   /* MARKER — drugi posao akcenta. `brand` nosi akciju (gumb, poveznica), `mark`
      podvlači bitno u tekstu, kao pravi marker u skripti. Razdvojeni su jer nose
      različito značenje (§7.2.1); u svijetlim temama marker je puna žuta, u tamnima
