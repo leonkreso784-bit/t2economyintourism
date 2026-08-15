@@ -39,7 +39,7 @@ Sve ostalo slijedi iz ovoga. Sustav nosi **dva odvojena sadržajna svijeta** koj
 gradivo, nema veze na original, nema zajedničkih redaka. Jedina dodirna točka je **kôd** — isti
 prikazivač, isti editor, isti draft-stroj.
 
-> **Zašto to nije slučajnost nego zaštita:** javni katalog koristi 22 predmeta i studentski „vrući put".
+> **Zašto to nije slučajnost nego zaštita:** javni katalog koristi **sve predmete iz `data/catalog.js`** (danas 24) i studentski „vrući put".
 > Da su svjetovi spojeni, svaka greška u osobnom graditelju mogla bi srušiti učenje svima.
 
 ---

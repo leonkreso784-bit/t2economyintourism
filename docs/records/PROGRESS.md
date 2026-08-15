@@ -48,10 +48,72 @@ suita. **`browse.spec.js` je izdržao** — Leonov popravak `388e3c5` izvodi oč
 poslužena s **0 ćirilice** · `.js` fallback živ · **`styles.css` i dalje 404** (merge nije uskrsnuo datoteku
 koju je C1 obrisao — to je bila jedina stvarna opasnost ovog razrješenja i provjerena je izričito).
 
-**Slijedi:** **`main` → `feat/c3-vlastito-gradivo`.** Sudar je unaprijed izmjeren: **točno 11 datoteka** — 8
-token-datoteka (rješava `npm run bump`) i 3 dnevnika (`CLAUDE.md`, `CHANGELOG`, `PROGRESS`; zadrži oba unosa).
-`data/catalog.js` i `docs/subjects/README.md` **ne konfliktiraju uopće** — C3 ih ne dira. Iza toga: prepravak
-landinga po §7.13, pa Studio na telefonu.
+**`main` → C3 grana je NAPRAVLJEN** (`ef3a63a`). Sudar je bio točno onih **11 datoteka** koje sam izmjerio
+unaprijed — 8 token-datoteka i 3 dnevnika; `data/catalog.js` i `docs/subjects/README.md` nisu konfliktirali.
+Razrješenje je isto pravilo kao kod Sašinih grana, **ali obrnuta strana**: ondje je Sašina strana bila šum
+pa je uzeta `main`-ova, ovdje je `main`-ova šum (samo bumpovi) pa je uzeta naša — C3 nosi pravi landing u
+`index.html`. ⚠️ **`git checkout --ours` NIJE korišten na `CLAUDE.md`**: uzima CIJELU našu verziju i poništio
+bi ono što se izvan sukoba već uredno spojilo. `PROGRESS`/`CHANGELOG`: obje strane dodaju unos NA VRH, pa git
+vidi jedan golem sukob umjesto dva unosa — zadržana su **oba**, poredak po datumu.
+⚠️ Skripta za razrješenje je prvo javila **„nema sukoba" nad datotekom koja ga očito ima**: datoteke su CRLF,
+pa obrazac koji traži `\n` odmah iza `=======` nikad ne pogodi (između stoji `\r`).
+
+---
+
+## 2026-08-15 (OPUS, b) — **Landing, cigle A i B · i kvar koji su tri gatea gledala a nijedan vidio**
+
+**Grana `feat/c3-vlastito-gradivo`, NIJE mergeana** (Leon: *„nemoj još mergat, to ću napraviti u sljedećoj
+sesiji"*). Commiti: `4eeda13` (A) · `fc94498` (B) · `82e384f` (a11y).
+
+**CIGLA A — odbijeni koncept je van.** Živi prikaz obrisan iz svih šest datoteka gdje je živio: markup (58),
+`initHeroDemo()`+`landingT()` (78), 18 `demo.*` poruka, 202 retka CSS-a, poziv u `init.js`, kuka u `i18n.js`.
+`landing.css` **578 → 380**. Naslov sad pokriva OBA izvora gradiva („Any material / Bilo koje gradivo") — jer
+je „Napiši jednom" bilo obećanje UGC-a kao što je „Nađi svoj predmet" obećanje kataloga, a svaka od te dvije
+verzije pola posjetitelja odmah isključi. **Dva testa obrisana ODLUKOM, nisu pala**; razlika je zapisana u
+zaglavlju `landing.spec.js`, a umjesto njih stoji tvrdnja da hero **ne traži nikakav unos**.
+
+**NOVA BRANA uz to:** `npm run verify` sad čuva **jedini ručno pisan broj predmeta u projektu** — statični
+fallback `[data-meta="subjectCount"]` u `index.html`. Već je jednom tiho ostario (pisao „8" kad ih je bilo 22),
+a jučer je 22 postalo 24. Obrnuto provjerena. ⚠️ Preskače se pod `CATALOG_PATH`: prva verzija to nije izuzela
+i **oborila je vlastiti unit-test**, jer fixture ima 2 predmeta a `index.html` je uvijek pravi.
+
+**ISPRAVAK SPECA — mjerenje je oborilo tvrdnju koju sam trebao samo prepisati.** §7.13 je pisao da brisanjem
+demoa nestaje i „240 KB editorskog koda na landingu". **Ne nestaje.** Demo je bio čisti `textContent` i nije
+dodirivao nijednu editorsku datoteku; tih **234,2 KB** učitavaju obični `<script src>` na dnu `index.html`,
+bezuvjetno. Landing i dalje šalje **654 KB u 39 datoteka** uz vlastiti budžet od 200. Pretpostavljena
+uzročnost preživjela je reviziju jer je zvučala uzročno; oborila ju je jedna naredba. BACKLOG-stavka vraćena
+u otvorene.
+
+**CIGLA B — glif na pločici predmeta bio je nečitljiv na 10 od 24 predmeta.** Krenuo sam restilizirati
+katalog-sekciju i prvo izmjerio ono što ću učiniti krupnijim. Pločice nose boju iz `data/catalog.js`, a tinta
+na njima dolazila je iz `--color-on-brand` — tokena izračunatog za boju **marke**; u `css/sidebar.css` je bila
+**zakucana bijela**. U zadanoj temi: `#f59e0b` **2.15** (5 predmeta) · `#14b8a6` 2.49 (3) · `#0ea5e9` 2.77 (2).
+Pogađa **tri površine**: landing, bočnu traku (svaka study-stranica) i Browse.
+
+**Zašto ga nijedan od tri gatea nije vidio — vrjednije od brojke:** `check:palette` klasificira po pozadini
+koju vidi **u CSS-u**, a ova dolazi iz podatka kroz inline `style` → `color: white` prošao kao „nema pozadine,
+bezopasno" · `check:contrast` mjeri **tokene**, a boje predmeta nisu tokeni · **axe** ne mjeri Font Awesome
+glif jer je sadržaj u `::before`.
+
+**Popravak je PRAVILO, ne ugađanje boja:** tinta se bira izračunom luminancije (`inkForTint()`) iz dva
+namjerno **tema-neovisna** tokena — neovisna jer je i ploha ispod njih tema-neovisna. Ručno preugoditi 11
+boja značilo bi da 25. predmet vrati kvar.
+⚠️ **Prag sam prvi put napisao napamet i promašio za 0,013.** Sjecište se izvodi iz definicije kontrasta:
+`L* = √((L_d+0.05)(L_l+0.05)) − 0.05`. Zato `check:contrast` sad **preračuna prag iz tokena** i padne uz
+poruku koja kaže točnu vrijednost. Druga brana `tests/tint-ink.spec.js` (4 teme × 3 površine) čita
+**izračunatu** boju glifa u pregledniku. ⚠️ **Prva obrnuta provjera lažno je prošla** jer sam vratio bazno
+pravilo, a ne `[data-ink="dark"]` koje posao zapravo radi.
+
+**ŠTO NIJE DOVRŠENO — i ne tvrdim da jest.** Puna suita: **370 prošlo / 1 palo**. Taj pad je bio artefakt —
+axe je uhvatio toast **usred fade-a**; da je riječ o prozirnosti a ne boji dokazuje aritmetika (alfa 0.527 ·
+0.527 · 0.522, ista na sva tri kanala). `smiri()` je taj razred kvara **već jednom popravljao, nepotpuno**.
+Popravak je napisan, ali **taj test u današnjem okruženju ne mogu dovesti do zelenog**: prelazi 120 s, pa
+300 s, a **kontrolni prolaz s izvornim helperom premašio je 10 minuta** — dakle usporenje NIJE regresija.
+Tri pokušaja su dosta; četvrti bi bio nagađanje. **Traži ponovni prolaz na odmornom stroju.**
+
+**Slijedi:** Leon mergea C3 → `main` u sljedećoj sesiji. Prije toga: ponoviti `a11y.authed` na odmornom
+stroju. Zatim cigle C i D landinga (katalog s bojama + posljednja pločica · svoje gradivo + MCP + četiri
+načina · podloga i prostor za znak), pa Studio na telefonu.
 
 ---
 

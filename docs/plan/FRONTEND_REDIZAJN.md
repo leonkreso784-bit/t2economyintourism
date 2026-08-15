@@ -56,8 +56,8 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ⚠️ | **Landing** — tehnički isporučen, **koncept ODBIJEN na Leonovu ekranu (§7.13)**. Prva izvedba je vodila živim prikazom koji traži da posjetitelj **upiše** pojam; nova vodi **naslovom koji pokriva oba izvora + dvoja ravnopravna vrata**, pa katalog s pravim bojama, pa vlastito gradivo, pa MCP. **Nije u repou** — presuđeno na maketi. | `landing.css` 1079 → **578** · **+ popravak §7.9** · **+ druga revizija (predstoji)** | posjetitelj koji prvi put dođe vidi **oboje**: da ima 22 gotova predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
-| **C3** | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
+| **C2** 🔄 | **Landing** — koncept ODBIJEN na Leonovu ekranu (§7.13), prepravak U TIJEKU (§7.14). **Cigla A ✅** živi prikaz obrisan + naslov pokriva oba izvora · **cigla B ✅** tinta na pločicama predmeta · **C i D predstoje** (katalog s bojama i posljednjom pločicom · svoje gradivo + MCP + četiri načina · podloga i prostor za znak). | `landing.css` 1079 → 578 (C2) → **380** (cigla A) · živi prikaz = 58 markup + 78 JS + 18 poruka + 202 CSS | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); ostaje Studio na telefonu. | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
@@ -554,7 +554,8 @@ odmah ih vidi kao karticu, kvizno pitanje, dopunu i gradivo. Bez registracije, b
 3. **Ulaz u vlastito gradivo seli iz trake u VRATA** (Leon: *„trebao bi biti prvi, gdje je
    Start studying"*). ADR-029 nije nadglašen — cilj je isti, mjesto drugo; `materials-entry.spec`
    sada čuva **redoslijed u dokumentu** (vrata iznad kataloga), a ne položaj u navigaciji.
-4. **Brojka pitanja obrisana s landinga.** Pokrivala je 17 od 22 predmeta (`compute-stats.js`
+4. **Brojka pitanja obrisana s landinga.** *(Brojevi u ovoj točki su mjera iz kolovoza 2026, kad ih je
+   bilo 22 — v. upozorenje u §7.13 zašto broj predmeta nikad ne ide u prozu.)* Pokrivala je 17 od 22 predmeta (`compute-stats.js`
    namjerno preskače prijevode), pa je uz „22 predmeta" bila nedosljedna. Kriterij prihvaćanja
    **#5 ispunjen brisanjem**, ne pogađanjem — a `landing.spec` sad **pada ako se vrati**.
 
@@ -777,7 +778,8 @@ pogodaka palete) i prva cigla C3 (a11y) pojeli su ga unaprijed.
 **Iz toga je ispala razlika između tablice cigli i onoga što je faza stvarno uspostavila.** Tablica
 §3 kaže da u C3 „nestaju" tri datoteke. Ali mjerenje bundlea kaže da su C1 i C2 uspostavili drukčiji
 obrazac: **bundle sadrži ukupno 22 Tailwind utilityja** (`mt-*`, `text-*`, `font-*`, `tracking-*` i
-dvije semantičke boje), a `landing.css` nakon C2 **i dalje postoji, na 578 redaka**. Migracija u
+dvije semantičke boje), a `landing.css` nakon C2 **i dalje postoji, na 578 redaka** *(mjereno
+2026-08-14; nakon cigle A iz §7.14 je 380 — obrazac stoji, brojka se mijenja)*. Migracija u
 ovoj fazi nije bila „markup u utility-juhu" nego **brisanje mrtvog + spajanje na `@theme` tokene**.
 Nema razloga da C3 izmisli treći obrazac; „nestaje" u tablici valja čitati kao **„prestaje biti
 izvor istine za boje i razmake"**, kako je i ispalo za `landing.css`.

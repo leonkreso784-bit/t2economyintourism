@@ -3,6 +3,43 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥 `a11y.authed` (Studio) nije doveden do zelenog — traži odmoran stroj — 2026-08-15
+
+Puna suita nakon landing-cigle B: **370 prošlo / 1 palo**. Pad je bio **artefakt mjerenja**, ne kvar:
+axe je uhvatio `#toastMessage` **usred fade-a** (`fg #868584 / bg #fdfcfb = 3.59`). Da je riječ o
+prozirnosti a ne o boji dokazuje aritmetika — za `--color-ink-0` preko plohe izmjerena boja daje alfu
+**0.527 · 0.527 · 0.522**, istu na sva tri kanala; toast je bio na ~53 % neprozirnosti, a prava boja
+daje ~14:1. `smiri()` je **taj razred kvara već jednom popravljao, nepotpuno** (`finish()` se zvao
+jednom, prije čekanja od 250 ms, a toast se skriva sam na tajmeru).
+
+**Popravak je napisan i commitan** (`82e384f`): animacije se guraju u krajnje stanje u petlji **i još
+jednom neposredno prije mjerenja**, uz izuzimanje **beskonačnih** animacija (spinnere `finish()` po
+definiciji odbija → prva verzija petlje ih je čekala vječno i otjerala test iz 51 s u timeout).
+
+⚠️ **Što NIJE dokazano:** test u okruženju te sesije **nije doveden do zelenog**. Prelazi 120 s, pa i
+300 s. **Kontrolni prolaz s IZVORNIM `smiri()` — bez ijedne izmjene — premašio je 10 minuta**, pa
+usporenje **nije regresija** nego iscrpljen stroj (ista datoteka je ranije istog dana trajala 2,6 min).
+Testu je zato dan vlastiti budžet od 300 s, s obrazloženjem: pet punih axe-analiza nad najtežom
+stranicom u aplikaciji.
+
+**Kad:** prvo što treba napraviti u sljedećoj sesiji, **prije mergea C3 u `main`**. Ako i na odmornom
+stroju pada — tek tada je nalaz, a ne okruženje.
+
+---
+
+## ➖ `css/subject-selector.css` — 22 od preostalih 126 pogodaka `check:palette` — 2026-08-15
+
+Isplivalo pri popravku tinte na pločicama predmeta (spec §7.14). Isti obrazac koji je ondje popravljen
+na tri površine: `color: white` + gradijenti **stare palete** (`#6366f1`, `#8b5cf6`) zakucani u CSS-u.
+Najveći pojedinačni ostatak u čegrtaljci — **22 od 126**.
+
+⚠️ **Ovdje je pozadina zapisana U CSS-u**, pa ju je `check:palette` i vidio; to je razlika u odnosu na
+pločice, gdje je ploha dolazila iz podatka kroz inline `style` i gate ju je proglasio bezopasnom.
+
+**Kad:** uz **C4** (Browse + lekcije), gdje ta datoteka ionako dolazi na red.
+
+---
+
 ## ✅ ~~Objediniti PRED-OBRADU prije `renderBlocks`~~ — ISPUNJENO 2026-08-10
 
 Zatvoreno popravkom [BUG-024](./BUGS.md) (`5f77a88`): `renderContentBlocks()` je sad **jedini ulaz za prikaz**

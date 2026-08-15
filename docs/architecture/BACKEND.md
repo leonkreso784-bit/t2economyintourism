@@ -89,7 +89,7 @@ uređivanje sadržaja kroz sučelje, **direktno preglednik→Supabase pod admin-
 
 **🆕 OSOBNI UGC-GRADITELJ = ZASEBAN OTOK (ADR-024; `CREATE_BACKEND_SPEC.md`) — na STAGINGU, PROD tek u F5:**
 Korisnik slaže **vlastito** ugniježđeno stablo i u study-čvorovima gradi gradivo **istim editorom i istim rendererom**.
-**Javni katalog, 22 predmeta, studentski vrući put i `publish_document` = NEDIRNUTI.**
+**Javni katalog (danas 24 predmeta), studentski vrući put i `publish_document` = NEDIRNUTI.**
 - **`public.nodes`** — self-referencijalno stablo (`folder` | `study`), `owner_id → auth.users`, `position`, soft-delete.
   Integritet-trigger: roditelj postoji · isti vlasnik · mora biti folder · **anti-ciklus** (rekurzivni CTE).
 - **`public.node_content`** — payload study-čvora (**isti oblik koji editor već uređuje**) + `version` (optimistic concurrency), touch-trigger.
