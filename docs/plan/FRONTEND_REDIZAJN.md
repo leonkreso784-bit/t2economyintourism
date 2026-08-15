@@ -939,8 +939,19 @@ na fiksnoj poziciji.
 ravnopravan od prvog ekrana, katalog je dokaz da ima sadržaja.** Zapisati kao dopunu ADR-a prije
 nego kod krene.
 
-**✅ Usput se zatvara BACKLOG-stavka:** živi prikaz u herou je razlog zašto landing šalje **240 KB
-editorskog koda** posjetitelju bez računa. Nestankom demoa nestaje i teret.
+**❌ ISPRAVAK (2026-08-15, izmjereno pri izvedbi): BACKLOG-stavka se NE zatvara.** Ovaj odjeljak je
+tvrdio da živi prikaz u herou nosi **240 KB editorskog koda** i da nestankom demoa nestaje i teret.
+**Netočno.** Demo je bio čisti `textContent`/`createElement` i nije dodirivao nijednu editorsku
+datoteku. Tih **234,2 KB** (`block-editor` · `studio` · `admin` · `admin-editors` ·
+`block-editor-media` · `draft-store`) učitavaju **obični `<script src>` na dnu `index.html`**,
+bezuvjetno, za svakog posjetitelja — s demoom ili bez njega. Ukupno landing šalje **654 KB u 39
+datoteka**, uz vlastiti nikad izgrađen budžet „JS ≤ 200 KB".
+
+> **Pouka koja je važnija od brojke:** pretpostavljena veza između dvije stvari u istoj rečenici
+> („demo je razlog zašto…") preživjela je reviziju jer je zvučala uzročno. Provjerila ju je tek
+> **jedna naredba** pri izvedbi. Brisanje demoa je i dalje ispravno — ali iz svog razloga, ne zbog
+> težine. **Dug ostaje otvoren i traži vlastitu ciglu** (odgoda editorskih skripti do prijave ili
+> do ulaska u editor).
 
 #### Boja i ikone već postoje — landing ih nikad nije pokazao
 

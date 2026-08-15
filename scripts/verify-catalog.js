@@ -187,6 +187,55 @@ for (const s of SOKRAT_CATALOG.subjects) {
   }
 }
 
+// 10) STATIČNI FALLBACK BROJA PREDMETA u `index.html` mora pratiti katalog.
+//
+//    Landing broj računa `renderLandingMeta()` iz `allReachableSubjects()`, pa je točan
+//    čim JS odradi. Ali `index.html` nosi i RUČNO PISAN broj — ono što posjetitelj vidi
+//    dok skripta ne stigne. To je jedini ručno pisan broj predmeta u projektu i **već je
+//    jednom tiho ostario**: pisao je „8" iz doba kad ih je stvarno bilo osam, dok ih je
+//    bilo 22 (CHANGELOG 2026-08-09). Isti dan kad su mergeane dvije HR grane 22 je
+//    postalo 24, pa se pokazalo da se na pamćenje ne može računati.
+//
+//    ⚠️ Broji se kroz PROGRAME, ne `subjects.length` — predmet koji nije nigdje smješten
+//    posjetitelju je nedostupan, pa ne smije napuhati brojku. Deduplikacija po id-u jer
+//    isti predmet smije stajati u više programa (vezni predmeti, ADR-022).
+//
+//    ⚠️ Provjera vrijedi SAMO nad pravim katalogom. `catalog-placement.test.js` vrti ovaj
+//    gate nad sintetičkim fixture-katalogom (`CATALOG_PATH`), a `index.html` je uvijek
+//    pravi — pa bi usporedba bila besmislena („fixture ima 2, HTML piše 24"). Prva verzija
+//    to nije izuzela i oborila je vlastiti unit-test; izuzetak stoji ovdje, s razlogom,
+//    jer izuzetak bez zapisanog razloga je sljedeća rupa u brani.
+if (process.env.CATALOG_PATH) {
+  ok('statični fallback broja predmeta — preskočeno (fixture-katalog, ne pravi)');
+} else {
+  const html = readFile('index.html');
+  if (!html) {
+    fail('index.html se ne može pročitati — statični broj predmeta nije provjeren');
+  } else {
+    const vidljivi = new Set();
+    for (const f of (SOKRAT_CATALOG.faculties || [])) {
+      for (const p of (f.programs || [])) {
+        for (const s of SOKRAT_CATALOG.subjects) {
+          if (!s || !s.id) continue;
+          const uProgramu = Array.isArray(s.placement)
+            ? s.placement.some((pl) => pl && pl.program === p.id)
+            : s.programId === p.id;
+          if (uProgramu) vidljivi.add(s.id);
+        }
+      }
+    }
+    const stvarno = vidljivi.size;
+    const m = html.match(/data-meta="subjectCount"[^>]*>([^<]*)</);
+    if (!m) {
+      fail('u index.html nema [data-meta="subjectCount"] — landing je ostao bez broja predmeta');
+    } else if (m[1].trim() !== String(stvarno)) {
+      fail(`statični broj predmeta u index.html je "${m[1].trim()}", a katalog ima ${stvarno} dostupnih — ispravi fallback (v. komentar uz njega)`);
+    } else {
+      ok(`statični fallback broja predmeta = ${stvarno} (usklađen s katalogom)`);
+    }
+  }
+}
+
 console.log('================ REZULTAT ================');
 console.log(`Greške: ${errors} · Upozorenja: ${warnings}`);
 if (errors === 0) {

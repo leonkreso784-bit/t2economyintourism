@@ -240,44 +240,19 @@
     // ⚠️ Tekst više NE spominje FMTU ni godine studija (Leon, 2026-08-12: „zbog UGC-a
     // platformu gradimo za sve"). Naslov tvrdi jednu mehaniku, a prikaz ispod je dokazuje.
     'hero.kicker': { en: 'Any subject · any language', hr: 'Bilo koje gradivo · bilo koji jezik' },
-    'hero.title.a': { en: 'Write it once.', hr: 'Napiši jednom.' },
+    // ⚠️ Naslov POKRIVA OBA IZVORA gradiva (spec §7.13). „Napiši jednom" je bilo obećanje
+    // UGC-a, kao što je „Nađi svoj predmet" obećanje kataloga — svaka od te dvije verzije
+    // pola posjetitelja odmah isključi. Odakle gradivo dolazi je detalj nabave; proizvod
+    // je pretvorba, i nju naslov imenuje.
+    'hero.title.a': { en: 'Any material.', hr: 'Bilo koje gradivo.' },
     'hero.title.b': { en: 'Learn it ', hr: 'Uči na ' },
     'hero.title.mark': { en: 'four ways', hr: 'četiri načina' },
     'hero.title.c': { en: '.', hr: '.' },
     'hero.sub': {
-        en: 'Type a term and what it means — Sokrat turns it into flashcards, a quiz, fill-in-the-blanks and study material. Try it right here, no sign-up.',
-        hr: 'Upiši pojam i njegovo objašnjenje — Sokrat od toga odmah radi kartice, kviz, dopunjavanje i pregledno gradivo. Isprobaj odmah, bez registracije.'
+        en: 'Take something ready from the catalog, or write your own — flashcards, a quiz, fill-in-the-blanks and study material build themselves.',
+        hr: 'Uzmi gotovo s fakulteta ili napiši svoje — kartice, kviz, dopunjavanje i gradivo nastaju sami.'
     },
 
-    // ── ŽIVI PRIKAZ (hero demo) ───────────────────────────────────────────
-    'demo.head': { en: 'Your input', hr: 'Tvoj unos' },
-    'demo.headSub': { en: '— type, and watch all four change', hr: '— piši i gledaj kako se sva četiri mijenjaju' },
-    'demo.term': { en: 'Term', hr: 'Pojam' },
-    'demo.def': { en: 'What it means', hr: 'Objašnjenje' },
-    // Početne vrijednosti polja: primjer mora biti razumljiv SVAKOME, pa je iz škole,
-    // a ne s fakulteta — landing više ne cilja jedan smjer.
-    'demo.termValue': { en: 'Photosynthesis', hr: 'Fotosinteza' },
-    'demo.defValue': {
-        en: 'The process by which plants use light to turn carbon dioxide and water into glucose and oxygen.',
-        hr: 'Proces kojim biljke pomoću svjetlosti pretvaraju ugljikov dioksid i vodu u glukozu i kisik.'
-    },
-    'demo.hint': {
-        en: 'Use anything — a university course, high school, or your job. All four build themselves.',
-        hr: 'Upiši bilo što — s fakulteta, iz srednje škole ili s posla. Sva četiri načina rade se sama.'
-    },
-    'demo.tile.card': { en: 'Flashcard', hr: 'Kartica' },
-    'demo.tile.quiz': { en: 'Quiz', hr: 'Kviz' },
-    'demo.tile.fill': { en: 'Fill in the blank', hr: 'Dopunjavanje' },
-    'demo.tile.learn': { en: 'Study material', hr: 'Gradivo' },
-    'demo.flipHint': { en: 'click to flip', hr: 'klikni za okret' },
-    'demo.question': { en: 'What does this mean: {term}?', hr: 'Što znači: {term}?' },
-    'demo.emptyTerm': { en: 'Your term', hr: 'Tvoj pojam' },
-    'demo.emptyDef': { en: 'What you type will show up here.', hr: 'Ono što upišeš pojavit će se ovdje.' },
-    // Ometači kviza. U aplikaciji dolaze iz drugih kartica iste lekcije; ovdje su fiksni
-    // jer je poanta pokazati OBLIK pitanja, ne generirati pravi kviz iz jedne rečenice.
-    'demo.distract.1': { en: 'The movement of water through evaporation, condensation and rainfall.', hr: 'Kruženje vode u prirodi — isparavanje, kondenzacija i oborine.' },
-    'demo.distract.2': { en: 'Breaking down glucose inside a cell to release energy.', hr: 'Razgradnja glukoze u stanici radi oslobađanja energije.' },
-    'demo.distract.3': { en: 'Passing inherited traits from parents to offspring.', hr: 'Prijenos nasljednih svojstava s roditelja na potomstvo.' },
 
     // ── DVOJE VRATA ───────────────────────────────────────────────────────
     'door.study.t': { en: 'Start studying', hr: 'Kreni učiti' },
@@ -577,10 +552,6 @@
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
     if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
-    // Živi prikaz crta iz JS-a (textContent), pa ga [data-i18n] ne dohvaća — mora se
-    // preiscrtati POSLIJE gornjeg bloka, da pokupi upravo prevedene primjere.
-    const heroDemo = /** @type {any} */ (window).renderHeroDemo;
-    if (typeof heroDemo === 'function') heroDemo();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.

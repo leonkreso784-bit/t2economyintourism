@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     renderLandingMeta();       // keep landing counts in sync with the catalog
     renderLandingSubjects();   // build landing subject showcase from catalog
     initLandingSubjects();     // bind showcase click → lessons
-    initHeroDemo();            // C2: živi prikaz u heroju (jedan unos → četiri moda)
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
     initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials

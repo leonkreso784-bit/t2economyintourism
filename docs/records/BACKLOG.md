@@ -206,6 +206,14 @@ Zapisano jer je pouka: jedno mjerenje bez ponavljanja nije mjera.)*
 **Kad:** uz **C3** — C3 ionako prepisuje površinu tih istih datoteka, pa je odvajanje s kritičnog
 puta najjeftinije baš tada. Uz to **budžet kao gate**, da brojka nikad više ne poraste tiho.
 
+> ⚠️ **STAVKA OSTAJE OTVORENA — 2026-08-15.** Spec §7.13 je tvrdio da se zatvara sama, jer da živi
+> prikaz u herou nosi taj teret. **Izmjereno pri brisanju demoa: ne nosi ga.** Demo je bio čisti
+> `textContent`/`createElement` i nije dodirivao nijednu editorsku datoteku; tih **234,2 KB**
+> učitavaju obični `<script src>` na dnu `index.html`, bezuvjetno, i danas ih je jednako mnogo kao
+> jučer (landing = **654 KB u 39 js-datoteka**). **Pretpostavljena uzročnost preživjela je reviziju
+> jer je zvučala uzročno; oborila ju je jedna naredba.** Ako netko ovu stavku opet pokuša zatvoriti
+> „usput", traži mjerenje prije i poslije.
+
 ---
 
 ## 🔥 CSP je odgođen „do UGC-a" — a UGC je na produkciji — 2026-08-14

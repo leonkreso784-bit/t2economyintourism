@@ -1,8 +1,14 @@
-// C2 — landing: hero sa ŽIVIM PRIKAZOM, dvoje vrata, katalog-traka, podnožje.
+// Landing: hero BEZ ŽIVOG PRIKAZA, dvoje vrata, katalog-traka, podnožje.
 //
-// Ovi testovi su prepisani zajedno s površinom (spec §5, „poznata zamka"): stari su
-// gađali `.hero-badge`, `.how-step` i `.mode-card`, kojih više nema — da su ostali,
-// suita bi pala; da su samo obrisani, ne bi ostalo ništa što čuva novu stranicu.
+// Ovi testovi se prepisuju zajedno s površinom (spec §5, „poznata zamka"): da stari
+// ostanu, suita pada; da se samo obrišu, ne ostaje ništa što čuva novu stranicu.
+//
+// ⚠️ 2026-08-15 (spec §7.13): obrisana su DVA testa koja su čuvala živi prikaz u heroju
+// („jedan unos → četiri moda" i „unos se ne tumači kao HTML"). Nisu pali — značajka je
+// UKLONJENA ODLUKOM: Leon je landing odbio kad ga je vidio, jer je tražio od posjetitelja
+// da RADI prije nego mu je dan razlog. Razlika je bitna i zato stoji zapisana: test koji
+// padne znači kvar, test koji nestane znači promjenu opsega. Umjesto njih stoji tvrdnja
+// da hero od posjetitelja NE traži ništa — inače bi se demo mogao vratiti neopaženo.
 const { test, expect } = require('@playwright/test');
 
 test('landing: nav, brojka iz kataloga i vitrina predmeta', async ({ page }) => {
@@ -15,8 +21,10 @@ test('landing: nav, brojka iz kataloga i vitrina predmeta', async ({ page }) => 
   );
 
   // BROJ i VITRINA imaju različit doseg, i to je namjerno (Leon, 2026-08-09):
-  //  • broj      = CIJELA platforma kroz sve programe (17 EN + 5 HR = 22)
+  //  • broj      = CIJELA platforma kroz sve programe (danas 17 EN + 7 HR)
   //  • vitrina   = samo primarni program; HR predmeti se dohvaćaju kroz Browse
+  // ⚠️ Brojevi u ovom komentaru su ILUSTRACIJA, ne tvrdnja — tvrdnje ispod se računaju
+  // iz kataloga. Da su zakucani, ostarili bi istog dana kad je dodan predmet.
   const counts = await page.evaluate(() => {
     const seen = {}; let total = 0;
     (SOKRAT_CATALOG.faculties || []).forEach((f) => (f.programs || []).forEach((p) => {
@@ -54,51 +62,20 @@ test('landing: nav, brojka iz kataloga i vitrina predmeta', async ({ page }) => 
   expect(errors).toEqual([]);
 });
 
-test('landing: živi prikaz pretvara JEDAN unos u ČETIRI moda', async ({ page }) => {
-  // Ovo je srž C2 („landing ne opisuje proizvod, landing JEST proizvod"). Ako demo
-  // prestane reagirati, stranica se vraća na tvrdnju — a to je točno ono što smo maknuli.
-  const errors = [];
-  page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
-
+test('landing: hero NE traži nikakav unos od posjetitelja', async ({ page }) => {
+  // Nasljednik dvaju obrisanih demo-testova. Ne čuva izgled nego ODLUKU iz §7.13:
+  // prvi ekran daje razlog, ne zadatak. Bez ovoga bi se živi prikaz mogao vratiti
+  // sljedećim editom, a nijedan drugi test to ne bi primijetio.
   await page.goto('/');
-  await page.waitForSelector('#heroDemo');
+  await page.waitForSelector('#landing-page.active');
 
-  await page.fill('#demoTerm', 'Osmoza');
-  await page.fill('#demoDef', 'Prolazak otapala kroz polupropusnu membranu.');
+  expect(await page.locator('#heroDemo').count(), 'živi prikaz se vratio u hero').toBe(0);
 
-  await expect(page.locator('#demoCardFront')).toHaveText('Osmoza');
-  await expect(page.locator('#demoCardBack')).toHaveText('Prolazak otapala kroz polupropusnu membranu.');
-  await expect(page.locator('#demoQuizQ')).toContainText('Osmoza');
-  await expect(page.locator('#demoLearnH')).toHaveText('Osmoza');
-  await expect(page.locator('#demoFillQ')).toContainText('Prolazak otapala');
-
-  // Točan odgovor mora biti označen, inače kviz ne pokazuje kviz nego popis rečenica.
-  await expect(page.locator('#demoQuizOpts .demo-opt.is-right')).toHaveCount(1);
-  await expect(page.locator('#demoQuizOpts .demo-opt')).toHaveCount(4);
-
-  // Okret kartice je jedini ukras na stranici i mora biti dostupan tipkovnici.
-  await page.click('#demoFlip');
-  await expect(page.locator('#demoFlip')).toHaveAttribute('aria-pressed', 'true');
-
-  expect(errors).toEqual([]);
-});
-
-test('landing: unos posjetitelja se NE tumači kao HTML (BUG-025)', async ({ page }) => {
-  // Demo je jedino mjesto na landingu koje prima korisnički unos. Zato je građen
-  // `textContent`/`createElement`-om, bez `innerHTML` — ovaj test čuva tu odluku.
-  await page.goto('/');
-  await page.waitForSelector('#heroDemo');
-
-  const napad = '<img src=x onerror=alert(1)>';
-  await page.fill('#demoTerm', napad);
-  await page.fill('#demoDef', '<b>podebljano</b> & "navodnici"');
-
-  // Tekst mora ostati DOSLOVAN, a ubačeni element ne smije nastati.
-  await expect(page.locator('#demoCardFront')).toHaveText(napad);
-  await expect(page.locator('#demoLearnH')).toHaveText(napad);
-  expect(await page.locator('#heroDemo img').count(), 'unos je postao pravi <img> element').toBe(0);
-  expect(await page.locator('#heroDemo b').count(), 'unos je postao pravi <b> element').toBe(0);
-  await expect(page.locator('#demoCardBack')).toHaveText('<b>podebljano</b> & "navodnici"');
+  // Šire od samog demoa: BILO KOJE polje za unos na landingu znači da smo posjetitelju
+  // opet dali posao. Tražilica kataloga je jedina dopuštena iznimka (§7.13 ② ) — kad se
+  // doda, ovdje se izuzima IMENOM, ne brisanjem tvrdnje.
+  const polja = await page.locator('#landing-page input, #landing-page textarea').count();
+  expect(polja, 'landing traži unos od posjetitelja koji još nije dobio razlog').toBe(0);
 });
 
 test('landing: dvoje vrata vode na browse i na vlastiti materijal', async ({ page }) => {
