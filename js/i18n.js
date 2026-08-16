@@ -265,6 +265,13 @@
     // ── KATALOG + ČINJENICE ───────────────────────────────────────────────
     'cat.title': { en: 'Or start from the catalog', hr: 'Ili kreni iz kataloga' },
     'cat.sub': { en: 'Complete subjects, already written — open one and study in seconds.', hr: 'Gotovi predmeti, već napisani — otvori i uči u nekoliko sekundi.' },
+    'cat.search': { en: 'Search subjects', hr: 'Traži predmet' },
+    'cat.program': { en: 'Programme', hr: 'Program' },
+    'cat.all': { en: 'All', hr: 'Svi' },
+    'cat.none': { en: 'No subject matches that.', hr: 'Nijedan predmet ne odgovara.' },
+    // ➕ posljednja pločica — jedina koja kaže da katalog nije zatvoren popis (§7.13).
+    'cat.make.t': { en: 'Your subject', hr: 'Tvoj predmet' },
+    'cat.make.d': { en: "Not on the list? Write it yourself.", hr: 'Nema ga na popisu? Napiši ga sam.' },
     'facts.free.b': { en: 'Free', hr: 'Besplatno' },
     'facts.free.t': { en: ' and ad-free', hr: ' i bez reklama' },
     'facts.offline.t': { en: 'Works ', hr: 'Radi ' },
@@ -551,6 +558,9 @@
     if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
     if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
+    // Gumbi filtra nose ime programa i riječ „Svi" → i oni se moraju precrtati na
+    // promjenu jezika, inače traka ostane na starom jeziku dok se mreža ispod prevede.
+    if (typeof window.renderCatalogPrograms === 'function') window.renderCatalogPrograms();
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();

@@ -200,12 +200,42 @@
 
                 <!-- ══ 3 · KATALOG ═════════════════════════════════════════
                      Namjerno PODREĐEN vratima: katalog je jedan izvor gradiva, ne ono
-                     što platforma jest (ADR-029). Ostaje jer je „22 predmeta" inače
-                     samo tvrdnja — ovdje se vidi. Crta ga `renderLandingSubjects()`. -->
+                     što platforma jest (ADR-029). Ostaje jer je broj predmeta inače
+                     samo tvrdnja — ovdje se vidi. Crta ga `renderLandingSubjects()`.
+
+                     ⚠️ NIJEDAN BROJ NI POPIS PROGRAMA NIJE OVDJE. Do 2026-08-16 je ovaj
+                     komentar pisao „22 predmeta" dok ih je bilo 24 — isti razred greške
+                     koji je već jednom bio NA PRODUKCIJI (landing je pisao 17). Predmeti,
+                     njihov broj i gumbi filtra dolaze iz `data/catalog.js`; dodaj program
+                     ili predmet i ova sekcija se promijeni sama, bez dodira u HTML-u.
+
+                     ⚠️ Vitrina je do danas pokazivala SAMO primarni (EN) program → vrata
+                     su pisala 24, a mreža nudila 17. Tko prebroji pločice, uhvatio bi
+                     stranicu u laži. Sad se crtaju svi, a jezik razdvaja filtar. -->
                 <section class="landing-catalog mt-16 md:mt-24" id="subjects" aria-labelledby="catalogHeading">
                     <h2 id="catalogHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="cat.title">Or start from the catalog</h2>
                     <p class="mt-2 max-w-xl text-base text-ink-2" data-i18n="cat.sub">Complete subjects, already written &mdash; open one and study in seconds.</p>
-                    <div class="landing-subjects mt-8" id="landingSubjects">
+
+                    <!-- Tražilica je JEDINO polje za unos na landingu i jedina dopuštena
+                         iznimka od pravila „hero ne traži posao" (§7.13 ②): ne stoji na
+                         prvom ekranu i ne traži ništa — alat je, ne zadatak. U
+                         `tests/landing.spec.js` je izuzeta IMENOM, tvrdnja ostaje živa. -->
+                    <div class="cat-tools mt-7">
+                        <div class="cat-search">
+                            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+                            <input type="search" id="catalogSearch" class="cat-search-input"
+                                   autocomplete="off" spellcheck="false"
+                                   data-i18n-placeholder="cat.search" placeholder="Search subjects"
+                                   data-i18n-aria="cat.search" aria-label="Search subjects">
+                        </div>
+                        <!-- Gumbi programa crta `renderCatalogPrograms()` iz kataloga. -->
+                        <div class="cat-programs" id="catalogPrograms" role="group"
+                             data-i18n-aria="cat.program" aria-label="Programme"></div>
+                    </div>
+
+                    <p class="cat-count" id="catalogCount" aria-live="polite" role="status"></p>
+
+                    <div class="landing-subjects mt-6" id="landingSubjects">
                         <!-- Rendered from data/catalog.js by renderLandingSubjects() -->
                     </div>
                 </section>

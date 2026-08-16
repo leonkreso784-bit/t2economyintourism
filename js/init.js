@@ -38,8 +38,9 @@ window.SOKRAT_THEMES = SOKRAT_THEMES;
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderLandingMeta();       // keep landing counts in sync with the catalog
+    renderCatalogPrograms();   // filter buttons, drawn FROM the catalog (never hardcoded)
     renderLandingSubjects();   // build landing subject showcase from catalog
-    initLandingSubjects();     // bind showcase click → lessons
+    initLandingSubjects();     // bind showcase click + search + programme filter
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
     initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials

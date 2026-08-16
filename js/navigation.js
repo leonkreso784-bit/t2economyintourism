@@ -607,10 +607,55 @@ function inkForTint(boja) {
 // i padne ako se raziđu. Promijeniš li tokene, gate ti kaže novu vrijednost.
 const TINT_INK_CROSSOVER = 0.1967;
 
+// Stanje filtra vitrine. Živi ovdje, a ne u `AppState`, jer ne preživljava odlazak s
+// landinga: vrati li se posjetitelj, katalog počinje otvoren — to je namjerno.
+const landingFilter = { q: '', program: '' };   // '' = svi programi
+
+/** Predmeti koje vitrina trenutno pokazuje, po filtru i tražilici. */
+function filteredLandingSubjects() {
+    const q = landingFilter.q.trim().toLowerCase();
+    const base = landingFilter.program
+        ? ((typeof SokratCatalog !== 'undefined') ? SokratCatalog.subjectsOf(landingFilter.program) : [])
+        : allReachableSubjects();
+    if (!q) return base;
+    return base.filter((s) => {
+        const polja = [s.name, s.shortName, s.description].filter(Boolean).join(' ').toLowerCase();
+        return polja.includes(q);
+    });
+}
+
+/**
+ * Gumbi filtra po programu — CRTANI IZ KATALOGA, nikad iz zakucanog popisa.
+ *
+ * Isti razlog zbog kojeg se broj predmeta ne piše rukom: doda li se treći program,
+ * ova traka ga dobije sama. Do 2026-08-16 je HR postojao u katalogu i bio nedohvatljiv
+ * s landinga, pa su vrata pisala 24 a mreža nudila 17.
+ */
+function renderCatalogPrograms() {
+    const wrap = document.getElementById('catalogPrograms');
+    if (!wrap || typeof SOKRAT_CATALOG === 'undefined') return;
+    const programi = [];
+    (SOKRAT_CATALOG.faculties || []).forEach((f) => (f.programs || []).forEach((p) => {
+        const n = (typeof SokratCatalog !== 'undefined') ? SokratCatalog.subjectsOf(p.id).length : 0;
+        if (n > 0) programi.push({ id: p.id, name: p.name, n: n });
+    }));
+    // Gumb „svi" nosi ukupan broj kroz sve programe — istu brojku koju piše i hero.
+    const svi = allReachableSubjects().length;
+    const tipke = [{ id: '', name: _t('cat.all', 'All'), n: svi }].concat(programi);
+    wrap.innerHTML = tipke.map((p) => `
+        <button type="button" class="cat-program" data-program="${browseEsc(p.id)}"
+                aria-pressed="${p.id === landingFilter.program ? 'true' : 'false'}">
+            <span class="cat-program-name">${browseEsc(p.name)}</span>
+            <span class="cat-program-n">${browseEsc(p.n)}</span>
+        </button>`).join('');
+}
+
 function renderLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
     if (!wrap || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
-    wrap.innerHTML = primarySubjects().map((s) => {
+    const lista = filteredLandingSubjects();
+
+    const kartice = lista.map((s) => {
         const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
             ? s.iconGradient : [s.color, s.color];
         const lessonCount = (s.lessons || []).length;
@@ -625,19 +670,74 @@ function renderLandingSubjects() {
                 </div>
                 <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
             </button>`;
-    }).join('');
+    });
+
+    // ➕ POSLJEDNJA PLOČICA (§7.13). Puna mreža čita kao ZATVOREN POPIS — ta jedna
+    // isprekidana pločica jedina kaže da platforma nije popis, i to bez ijedne riječi
+    // marketinga. Renderira se IZA POSLJEDNJEG predmeta, nikad na fiksnoj poziciji;
+    // zato je ovdje `push`, a ne mjesto u markupu.
+    // Ne prikazuje se dok tražilica filtrira: „nema rezultata za X" pa ponuda da
+    // napraviš svoj predmet je odgovor na pitanje koje nitko nije postavio.
+    if (!landingFilter.q.trim()) {
+        kartice.push(`
+            <button type="button" class="landing-subject-card landing-subject-card--make" data-goto-materials>
+                <div class="landing-subject-icon landing-subject-icon--make" aria-hidden="true">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="landing-subject-info">
+                    <h3 data-i18n="cat.make.t">Your subject</h3>
+                    <p data-i18n="cat.make.d">Not on the list? Write it yourself.</p>
+                </div>
+                <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+            </button>`);
+    }
+
+    wrap.innerHTML = kartice.join('');
+
+    const brojac = document.getElementById('catalogCount');
+    if (brojac) {
+        brojac.textContent = lista.length
+            ? (landingFilter.q.trim() ? _unit(lista.length, 'subject') : '')
+            : _t('cat.none', 'No subject matches that.');
+    }
+    if (typeof applyTranslations === 'function') applyTranslations(wrap);
 }
 
 // Delegirani click za showcase kartice (veže se jednom) → otvori lekcije predmeta.
 function initLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
-    if (!wrap || wrap.dataset.bound === '1') return;
-    wrap.dataset.bound = '1';
-    wrap.addEventListener('click', (e) => {
-        const card = e.target.closest('[data-landing-subject]');
-        if (!card) return;
-        navigateTo('lessons', { subject: card.dataset.landingSubject });
-    });
+    if (wrap && wrap.dataset.bound !== '1') {
+        wrap.dataset.bound = '1';
+        wrap.addEventListener('click', (e) => {
+            // ＋ pločica ide u vlastito gradivo; `data-goto-materials` hvata globalni
+            // rukovatelj, pa je ovdje samo propuštamo dalje.
+            if (e.target.closest('[data-goto-materials]')) return;
+            const card = e.target.closest('[data-landing-subject]');
+            if (!card) return;
+            navigateTo('lessons', { subject: card.dataset.landingSubject });
+        });
+    }
+
+    const trazilica = document.getElementById('catalogSearch');
+    if (trazilica && trazilica.dataset.bound !== '1') {
+        trazilica.dataset.bound = '1';
+        trazilica.addEventListener('input', () => {
+            landingFilter.q = trazilica.value || '';
+            renderLandingSubjects();
+        });
+    }
+
+    const programi = document.getElementById('catalogPrograms');
+    if (programi && programi.dataset.bound !== '1') {
+        programi.dataset.bound = '1';
+        programi.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-program]');
+            if (!btn) return;
+            landingFilter.program = btn.dataset.program || '';
+            renderCatalogPrograms();
+            renderLandingSubjects();
+        });
+    }
 }
 
 // ========== HERO: ŽIVI PRIKAZ (C2) ==========
@@ -913,4 +1013,5 @@ window.browseBack = browseBack;
 window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
 window.renderLandingSubjects = renderLandingSubjects;
+window.renderCatalogPrograms = renderCatalogPrograms;
 window.initLandingSubjects = initLandingSubjects;

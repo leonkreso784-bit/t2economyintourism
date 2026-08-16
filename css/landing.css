@@ -233,6 +233,99 @@
     border-top-color: color-mix(in srgb, var(--color-on-brand) 22%, transparent);
 }
 
+/* ── Katalog: tražilica i filtar programa ─────────────────────────────
+   Namjerno TIHI: alat, ne obrazac. Boju ne nose — jedina zasićena stvar u
+   ovoj sekciji su pločice predmeta, gdje boja nešto ZNAČI (§7.13). */
+.cat-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.9rem;
+}
+
+.cat-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 14rem;
+    min-width: 0;              /* inače `flex-basis` ne da polju da se skupi ispod 320px */
+}
+
+.cat-search > i {
+    position: absolute;
+    inset-inline-start: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--color-ink-2);
+    pointer-events: none;
+}
+
+.cat-search-input {
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--color-ink-0);
+    padding: 0.5rem 0.75rem 0.5rem 2.1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease;
+}
+
+.cat-search-input::placeholder { color: var(--color-ink-2); }
+.cat-search-input:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+/* Chromeov ugrađeni „×" na `type=search` nosi vlastitu boju koja ne poznaje temu. */
+.cat-search-input::-webkit-search-cancel-button { filter: grayscale(1) opacity(0.55); }
+
+.cat-programs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.cat-program {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: var(--color-ink-1);
+    padding: 0.42rem 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.cat-program:hover:not([aria-pressed="true"]) { border-color: var(--color-ink-2); color: var(--color-ink-0); }
+
+/* Odabrani program: ploha ostaje NEUTRALNA, mijenja se rub i težina teksta.
+   Ispuna markom tražila bi `--on-primary` i otvorila razred kvarova iz tvrde
+   zabrane #1 — a ovdje ništa ne dobiva. */
+.cat-program[aria-pressed="true"] {
+    color: var(--color-ink-0);
+    font-weight: 600;
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-2);
+}
+
+.cat-program-n {
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink-2);
+}
+
+.cat-program[aria-pressed="true"] .cat-program-n { color: var(--color-ink-1); }
+
+.cat-count {
+    min-height: 1.25rem;       /* rezerviran redak: brojka koja se pojavi ne smije poskočiti mrežu */
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+    color: var(--color-ink-2);
+}
+
 /* ── Katalog ──────────────────────────────────────────────────────────
    Kartice crta `renderLandingSubjects()`; boja predmeta dolazi kao
    `--card-accent` u `style`, jer ADR-028 zabranjuje sastavljene klase. */
@@ -295,6 +388,28 @@
 
 .landing-subject-arrow { font-size: 0.8rem; color: var(--color-ink-2); flex-shrink: 0; }
 .landing-subject-card:hover .landing-subject-arrow { color: var(--color-ink-0); }
+
+/* ➕ POSLJEDNJA PLOČICA (§7.13) — jedina koja kaže da katalog nije zatvoren popis.
+   Isprekidan rub i ploha bez ispune: čita se kao PRAZNO MJESTO koje čeka, a ne kao
+   još jedan predmet. Zato NEMA boju — boja u ovoj mreži znači „postoji gradivo". */
+.landing-subject-card--make {
+    border-style: dashed;
+    background: transparent;
+}
+
+.landing-subject-card--make:hover {
+    border-style: dashed;
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-1);
+}
+
+.landing-subject-icon--make {
+    color: var(--color-ink-2);
+    background: var(--color-surface-2);
+    border: 1px dashed var(--color-line);
+}
+
+.landing-subject-card--make:hover .landing-subject-icon--make { color: var(--color-ink-0); }
 
 /* ── Red činjenica ────────────────────────────────────────────────────
    Zamjenjuje tri marketinške sekcije i stats bar. Bez ikona: svaka bi bila
