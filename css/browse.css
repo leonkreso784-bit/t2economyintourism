@@ -164,17 +164,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--on-primary);
     font-size: 1.4rem;
     flex-shrink: 0;
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
 }
 
+/* ⚠️ Pločica NIJE uvijek marka. Fakultet/program/godina nose gradijent marke iznad, pa im
+   `--on-primary` odgovara. Kartice PREDMETA dobivaju inline gradijent iz `data/catalog.js`
+   i uz njega `data-ink`, izračunat iz luminancije te boje (`inkForTint()`). Zato se obje
+   vrijednosti navode IZRIČITO: da se navede samo „dark", predmet sa svijetlom tintom bi na
+   temi „chalk" naslijedio TAMNI `--on-primary` i glif bi nestao. Mjeri `check:contrast`. */
+.browse-card-icon[data-ink="light"] { color: var(--color-on-tint-light); }
+.browse-card-icon[data-ink="dark"]  { color: var(--color-on-tint-dark); }
+
 /* Year cards: show the year number big inside the icon tile */
 .browse-card-icon.is-year {
     font-size: 1.6rem;
     font-weight: 800;
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: var(--font-display);
 }
 
 .browse-card-headings {

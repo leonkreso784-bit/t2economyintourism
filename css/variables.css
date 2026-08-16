@@ -3,32 +3,65 @@
    Sokrat Study - CSS Variables, Reset, and Base Styles
    ===================================================== */
 
-/* ===== CSS VARIABLES ===== */
+/* ===== CSS VARIABLES =====
+   ⚠️ OVDJE VIŠE NEMA NIJEDNE VRIJEDNOSTI — SAMO MOST NA `css/tokens.css`  (cigla C2)
+
+   ZAŠTO: mjerenjem je utvrđeno da 81 % boje u platformi već ide kroz ove varijable
+   (992 `var()` poziva naspram 226 tvrdih hexova, od kojih su 39 same definicije).
+   Bile su, međutim, zakucane na Tailwindove zadane vrijednosti (#6366f1 = indigo-500,
+   #0f172a = slate-900), pa promjena `tokens.css` sama ne bi obojila ništa: novi tokeni
+   žive samo u Tailwind-utilityjima, a njih legacy CSS ne koristi.
+
+   Ovaj most to spaja: STARA IMENA ostaju (da 992 poziva prežive nedirnuta), a
+   VRIJEDNOSTI dolaze iz jedinog popisa. Posljedica je da je cijela platforma
+   prebojana jednim editom, umjesto da mjesecima stoji pola nova pola stara dok
+   C3–C7 ne stignu do svake površine.
+
+   Ova datoteka umire u C7 zajedno s posljednjom legacy površinom; do tada je
+   prevoditelj, ne izvor. NE VRAĆAJ HEX OVDJE — jedini popis je `tokens.css`.
+
+   ⚠️ `--radius-lg` NAMJERNO NEDOSTAJE: token istog imena već postoji u `tokens.css`
+   (1.25rem = 20px, identično dosadašnjem). Da je ovdje napisano
+   `--radius-lg: var(--radius-lg)`, to bi bila kružna referenca → varijabla postaje
+   nevaljana i SVAKI `var(--radius-lg)` u 18 pravila tiho ostaje bez zaobljenja.
+   Ovako ga legacy CSS čita izravno iz tokena. */
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --primary-light: #818cf8;
-    --secondary: #10b981;
-    --accent: #f59e0b;
-    --danger: #ef4444;
-    --danger-text: #f87171;   /* a11y (F3 3E): svjetliji crveni za TEKST na tamnoj podlozi (outline/ghost gumbi) — #ef4444 tekst pada kontrast <4.5:1; fill/border ostaje --danger */
-    --warning-text: #fbbf24;  /* isti obrazac kao --danger-text: jantar za TEKST upozorenja na tamnoj podlozi (M5a brojač na pragu 200) */
-    --success: #22c55e;
-    
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    
-    --text-primary: #f1f5f9;
-    --text-secondary: #e2e8f0;
-    --text-muted: #94a3b8;
-    
-    --border: #334155;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
-    
-    --radius: 12px;
-    --radius-lg: 20px;
+    --primary: var(--color-brand-500);
+    --primary-dark: var(--color-brand-600);
+    --primary-light: var(--color-brand-400);
+    --secondary: var(--color-ok-strong);
+    --accent: var(--color-warn);
+    --danger: var(--color-danger);
+    --danger-text: var(--color-danger-ink);
+    --warning-text: var(--color-warn-ink);    /* isti obrazac kao --danger-text: jantar za TEKST upozorenja na tamnoj podlozi (M5a brojač na pragu 200) */
+    --success: var(--color-ok);
+
+    /* ⚠️ Ispuna markom traži TAMAN tekst (mentol + bijelo = 2.04, pada). Stari indigo
+       je podnosio bijelo, novi ne — zato ovo ime postoji i mora se koristiti na svakom
+       gumbu koji je ispunjen bojom marke. Detalji i brojke: tokens.css. */
+    --on-primary: var(--color-on-brand);
+
+    --bg-primary: var(--color-surface-0);
+    --bg-secondary: var(--color-surface-1);
+    --bg-tertiary: var(--color-surface-2);
+
+    /* ⚠️ `--bg-card` je do 2026-08-13 postojao SAMO u `css/legal.css`, koji aplikacija ne
+       učitava. U aplikaciji je zato uvijek gorio fallback — a fallback je bio `#0f172a`,
+       tamna škriljevac-ploha. Dok je tema bila tamna, poklapao se s podlogom i nitko ga
+       nije vidio; čim je zadana postala svijetla, kartica prijave i dijalog potvrde
+       ostali su tamne ploče s tamnim tekstom: **1.83** i **1.02**. Definicija ovdje gasi
+       oba fallbacka odjednom i drži jednu činjenicu na jednom mjestu (ADR-027). */
+    --bg-card: var(--color-surface-1);
+
+    --text-primary: var(--color-ink-0);
+    --text-secondary: var(--color-ink-1);
+    --text-muted: var(--color-ink-2);
+
+    --border: var(--color-line);
+    --shadow: var(--shadow-e1);
+    --shadow-lg: var(--shadow-e2);
+
+    --radius: var(--radius-md);
     --transition: all 0.3s ease;
     
     /* Safe area insets for iPhone notch/Dynamic Island */
@@ -46,19 +79,21 @@
     --nav-h: 72px;
 }
 
-/* ===== DARK THEME ===== */
-[data-theme="dark"] {
-    --bg-primary: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-tertiary: #334155;
-    
-    --text-primary: #f1f5f9;
-    --text-secondary: #e2e8f0;
-    --text-muted: #d1d5db;
-    
-    --border: #475569;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-}
+/* ===== DARK THEME =====
+   Blok koji je ovdje stajao PONOVNO je deklarirao istih pet varijabli koje `:root`
+   već daje — `[data-theme="dark"]` je, naime, jedina tema koju aplikacija ikad
+   postavi (`initTheme()` je zakuca na 'dark' pri svakom učitavanju). Dvije od tih
+   deklaracija bile su se usput RAZIŠLE od `:root` (`--text-muted` #d1d5db umjesto
+   #94a3b8, `--border` #475569 umjesto #334155), pa je stvarna boja prigušenog teksta
+   ovisila o tome koje je pravilo netko zadnje dirao. Jedna činjenica = jedno mjesto
+   (ADR-027) → duplikat se briše, ne sinkronizira.
+
+   ⚠️ ATRIBUT `data-theme` OSTAJE i dalje se postavlja: `components.css` i `learn.css`
+   selektiraju po njemu (`[data-theme="dark"] #learn .learn-card`, …). Brisanje atributa
+   srušilo bi te površine; briše se samo ovaj popis varijabli.
+
+   Sama tema (prekidač u `init.js` koji nikamo ne vodi jer `[data-theme="light"]` ne
+   postoji) gasi se u C7, zajedno s posljednjom legacy površinom. */
 
 /* Subject item meta needs higher contrast */
 .subject-item-meta span {
@@ -114,7 +149,10 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    /* Most na token (isti obrazac kao paleta): dok je ovdje stajala vlastita lista,
+       promjena `--font-sans` ne bi napravila NIŠTA — token je postojao, ali ga nitko
+       nije čitao. Jedna definicija, jedno mjesto (ADR-027). */
+    font-family: var(--font-sans);
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;

@@ -1,5 +1,5 @@
 /* =====================================================================
-   tokens.css — DIZAJN-TOKENI (Tailwind v4 `@theme`)  ·  cigla C1
+   tokens.css — DIZAJN-TOKENI (Tailwind v4 `@theme`)  ·  C1 imena · C2 vrijednosti
    =====================================================================
 
    ŠTO JE OVO: jedini popis vrijednosti od kojih je sagrađen izgled. Svaki token
@@ -12,20 +12,22 @@
    (docs/plan/FRONTEND_REDIZAJN.md §2).
 
    ZAŠTO `static`: bez njega Tailwind emitira SAMO tokene koje je netko upotrijebio.
-   U C1 nitko još ne koristi nijedan (markup je netaknut), pa bi izlaz bio prazan i
-   kriterij „paleta postoji kao token" bio bi lažno ispunjen. `static` = emitiraj sve.
+   Dok markup još nije prebačen, izlaz bi bio prazan i kriterij „paleta postoji kao
+   token" bio bi lažno ispunjen. `static` = emitiraj sve.
 
-   ⚠️ VRIJEDNOSTI SU U C1 NAMJERNO ISTE KAO DANAS (`css/variables.css`).
-   C1 mijenja JEZIK, ne izgled — stranica mora ostati bajt-identična. Novi vizualni
-   identitet mijenja VRIJEDNOSTI u ovoj datoteci (i ništa drugo); imena preživljavaju.
-   Zato su imena semantička (`surface`/`ink`/`brand`), a ne opisna (`indigo`/`slate`):
-   „ink-2" ostaje ime za prigušen tekst i kad prestane biti sivoplav.
+   IMENA SU SEMANTIČKA, NE OPISNA (`surface`/`ink`/`brand`, ne `indigo`/`slate`) —
+   zato je C2 mogao promijeniti VRIJEDNOSTI bez ijednog preimenovanja: „ink-2" je
+   ostalo ime za prigušen tekst i kad je prestalo biti sivoplavo.
 
    ⚠️ `--color-*: initial` BRIŠE CIJELU Tailwindovu zadanu paletu. Namjerno:
    `bg-indigo-500` i `text-slate-400` više NE POSTOJE. Bez toga bi svaka nova
    površina mogla neprimjetno skliznuti natrag u zadani framework-izgled, a upravo
    je taj izgled ono što mijenjamo. Posljedica: nepoznato ime boje ne padne tiho na
    nešto slično — ne generira se uopće (i `check:tailwind` to prijavi).
+
+   ⚠️ SVAKA BOJA OVDJE JE IZMJERENA, NE ODABRANA OKOM. Kontrast po WCAG-u na sve
+   tri plohe + hue-odvojenost statusa od marke; brojke stoje uz svaki blok. Ako
+   mijenjaš vrijednost, ponovi mjerenje — inače `axe` gate postaje stvar sreće.
    ===================================================================== */
 
 /* ---------- ANIMACIJE: BRISANJE MORA BITI IZVAN `static` ----------
@@ -42,56 +44,172 @@
 
 @theme static {
   /* ---------- ČIŠĆENJE ZADANOG ----------
-     Tri namespacea brišemo do nule i gradimo ispočetka. Boje — da se markup ne može
+     Četiri namespacea brišemo do nule i gradimo ispočetka. Boje — da se markup ne može
      vratiti na framework-paletu. Sjene i fontovi — jer im se Tailwindova zadana imena
      (`--shadow-lg`, `--font-serif`) SUDARAJU s imenima iz `css/variables.css`. Sudar
      danas ne škodi (neuslojeni `:root` tuče `@layer theme`), ali je zamka: čim bi legacy
      ušao u sloj, `--shadow-lg` bi tiho pao s naše vrijednosti na Tailwindovu. Izmjereno u C1.
 
-     Radijusi se brišu iz TREĆEG razloga — polupraznog namespacea. Dok su Tailwindovi ostaci
-     stajali, `rounded-xl` se i dalje generirao kao `border-radius: var(--radius-xl)`, a ta
-     varijabla nije bila emitirana → pravilo bez vrijednosti, tiho bez zaobljenja. Izmjereno.
-     Ovako `rounded-xl` uopće ne postoji, pa promašeno ime pukne glasno. */
+     Radijusi i veličine teksta brišu se iz TREĆEG razloga — polupraznog namespacea. Dok su
+     Tailwindovi ostaci stajali, `rounded-xl` se i dalje generirao kao `border-radius: var(--radius-xl)`,
+     a ta varijabla nije bila emitirana → pravilo bez vrijednosti, tiho bez zaobljenja. Izmjereno.
+     Ovako `rounded-xl` / `text-9xl` uopće ne postoje, pa promašeno ime pukne glasno. */
   --color-*: initial;
   --shadow-*: initial;
   --font-*: initial;
   --radius-*: initial;
+  --text-*: initial;
 
   /* Neutralne konstante koje utilityji očekuju da postoje. */
   --color-white: #fff;
   --color-black: #000;
 
-  /* Plohe (dark, od najdublje prema izdignutoj) — danas: bg-primary/secondary/tertiary. */
-  --color-surface-0: #0f172a;
-  --color-surface-1: #1e293b;
-  --color-surface-2: #334155;
+  /* ╔══ ZADANA TEMA = „AKADEMSKO PLAVO" (svijetlo) ═════════════════════════╗
+     Ostale tri palete su `[data-theme]` blokovi na dnu; ovdje su vrijednosti koje
+     se emitiraju kad atributa nema, i JEDINE koje rađaju imena utility klasa.
 
-  /* Tekst (od najjačeg prema prigušenom) — danas: text-primary/secondary/muted. */
-  --color-ink-0: #f1f5f9;
-  --color-ink-1: #e2e8f0;
-  --color-ink-2: #94a3b8;
+     ZAŠTO SVIJETLO, I ZAŠTO TEK SAD (Leon, 2026-08-13, na živom ekranu):
+     „Kreda i tabla" je bila zadana i PALA je jednako kao „Ponoć i menta" prije nje —
+     dvije tamne palete zaredom, obje odbijene tek kad su se vidjele, nikad u tablici.
+     To više nije stvar ukusa nego obrazac: alat u kojem se čita satima i uči danju
+     traži svijetlu podlogu (Quizlet, Duolingo, Khan, Notion su svi svijetli), a
+     §7.6 traži Appleovu podlogu za tekst — hladno-bijelu.
 
-  /* Linije i razdjelnici. */
-  --color-line: #334155;
+     ⚠️ RANIJI ZAPIS JE TVRDIO DA SVIJETLA TEMA ČEKA `check:palette` = 0, DAKLE CIJELI
+     C3–C7. To je bilo NETOČNO, i to se pokazalo mjerenjem: od 362 ostatka samo je
+     **47** zakucan tekst koji na svijetlom postaje NEVIDLJIV. Ostalo su plohe/rubovi
+     (blijedi, ne slomljeni) i stara paleta (neusklađena, ali čitljiva). Prepreka je
+     bila 47 pravila, ne pet cigli — mjeri se `_screenshots/izmjeri-svijetlu.js`.
+     ╚══════════════════════════════════════════════════════════════════════╝ */
 
-  /* Marka. 500 = nosiva, 400 = svjetlija (hover/naglasak), 600 = tamnija (pritisak). */
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
+  /* Plohe (od najdublje prema izdignutoj). Hladno-bijela, mirna, „sveučilište" —
+     razlika između razina gradi se PLOHOM, ne svjetlucanjem (§7.2.3).
+     `surface-1` je čisto bijela jer je to plavo-siva podloga na kojoj kartica mora
+     ISKOČITI; obrnuto (bijela podloga, siva kartica) daje izblijedjelo sučelje. */
+  --color-surface-0: #f7f9fc;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #edf1f7;
 
-  /* Statusi. `-ink` varijanta je za TEKST na tamnoj plohi: puna boja pada ispod
-     kontrasta 4.5:1 pa se za tekst koristi svjetlija (a11y, F3 3E — v. variables.css). */
-  --color-ok: #22c55e;
-  --color-ok-strong: #10b981;
-  --color-warn: #f59e0b;
-  --color-warn-ink: #fbbf24;
-  --color-danger: #ef4444;
-  --color-danger-ink: #f87171;
+  /* Tekst (od najjačeg prema prigušenom). Tamno mornarsko, ne čista crna — čista
+     crna na bijelom je pretvrda za dugo čitanje, a ovo je alat u kojem se čita satima.
+     Kontrast na surface-0/1/2 provjerava `npm run check:contrast`; najniža vrijednost
+     u skupini mora proći AA i na NAJTAMNIJOJ plohi, gdje je ovdje najteže. */
+  --color-ink-0: #0e1a2b;
+  --color-ink-1: #34455c;
+  --color-ink-2: #5b6879;
 
-  /* ---------- TIPOGRAFIJA ---------- */
-  /* Oba fonta se već učitavaju u index.html; `display` je dosad bio slabo iskorišten. */
-  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Space Grotesk", "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Linije. DVIJE, jer nose različit posao i različit prag:
+     `line`        = razdjelnik između ploha. Ukrasan → WCAG mu NE propisuje kontrast
+                     (1.4.11 traži 3:1 samo za granice nužne da se komponenta prepozna).
+     `line-strong` = rub KONTROLE (polje, gumb, prekidač) → mora na 3:1, inače korisnik
+                     ne vidi gdje polje počinje.
+     Razdvojeni su nakon što je `check:contrast` pokazao da im je jedan token davao
+     jedan prag — pa je ili razdjelnik bio pretvrd, ili rub polja nevidljiv. */
+  --color-line: #dde4ee;
+  --color-line-strong: #7d8a9c;
+
+  /* Marka. 500 = nosiva, 400 = svjetlija (hover), 600 = tamnija (pritisak).
+     Za usporedbu, stari `--primary` #6366f1 na staroj podlozi davao je 4.00, dakle
+     današnja produkcija PADA AA za tekst u boji marke. Redizajn to usput popravlja.
+     Točne vrijednosti kontrasta po plohi vrti `npm run check:contrast` — ne prepisuju
+     se ovdje, jer bi kopija ostarjela pri prvoj promjeni palete (ADR-027). */
+  --color-brand-400: #4a82e8;
+  --color-brand-500: #1657d0;
+  --color-brand-600: #0f3f9c;
+
+  /* ⚠️ TEKST NA ISPUNI MARKE MORA BITI TAMAN, NE BIJEL.
+     Kreda-žuta je svijetla boja: #F2C14E + bijelo = 1.86 (pada i za veliki tekst),
+     #F2C14E + #1E1F1C = 9.87. Stari indigo je podnosio bijelo, ove palete ne — to je
+     najvjerojatnija tiha greška pri prebacivanju gumba, pa dobiva vlastito ime
+     umjesto da se svaki put pogađa. U svijetlim temama je obrnuto (bijelo na plavoj),
+     što je točno razlog zašto je ovo TOKEN, a ne pravilo koje se pamti.
+     ⚠️ Vrijednost ispod je bijela SAMO zato što je zadana marka sad tamna plava. Nijedno
+     CSS pravilo ne smije zbog toga napisati `color: white` — na temi „chalk" ista ta
+     ploha traži #1e1f1c. Tvrda brana: `npm run check:palette`. */
+  --color-on-brand: #ffffff;
+
+  /* TINTA NA PLOČICI PREDMETA — namjerno NEOVISNA O TEMI, i to je cijela poanta.
+     Pločica predmeta nosi boju iz `data/catalog.js`, koja se s temom NE mijenja (predmet
+     je isti predmet u svakoj temi). Kad bi tinta na njoj dolazila iz teme, tema bi okrenula
+     glif a ploha ostala — točno kvar iz tvrde zabrane #3, samo obrnut. Zato se ova dva
+     tokena definiraju JEDNOM i NIKAD se ne redefiniraju u `[data-theme]` blokovima.
+
+     ⚠️ Koja se od dvije koristi NE bira se okom nego IZRAČUNOM luminancije pločice
+     (`inkForTint()` u `js/navigation.js`). Povod: dotad je glif nosio `--color-on-brand`,
+     token izračunat za boju MARKE, pa je na 11 boja predmeta nitko nikad nije izmjerio.
+     Mjerenje: bijela na `#f59e0b` = **2.15** (5 predmeta), na `#14b8a6` = 2.49 (3),
+     na `#0ea5e9` = 2.77 (2) — dakle 10 od 24 predmeta ispod praga 3:1 za grafički element,
+     u ZADANOJ temi. Brana: `npm run check:contrast`, provjera „glif na pločici predmeta". */
+  --color-on-tint-dark: #14161a;
+  --color-on-tint-light: #ffffff;
+
+  /* MARKER — drugi posao akcenta. `brand` nosi akciju (gumb, poveznica), `mark`
+     podvlači bitno u tekstu, kao pravi marker u skripti. Razdvojeni su jer nose
+     različito značenje (§7.2.1); u svijetlim temama marker je puna žuta, u tamnima
+     prozirna, jer bi puna na tamnom progutala tekst ispod. */
+  --color-mark: #ffd24a;
+
+  /* Statusi. Dvije neovisne provjere, obje obavezne:
+     (1) KONTRAST — `-ink` varijanta je za TEKST, puna boja za ISPUNE i OBRUBE
+         (prag 3.0). danger 5.31/4.64/3.92 → za tekst ide danger-ink.
+     (2) HUE-ODVOJENOST OD MARKE — ovo je alat za učenje i „točno/netočno" je najvažniji
+         signal na ekranu; ako se „točno" stopi s bojom gumba, signal je izgubljen.
+         Kad je marka bila mentol-zelena, izmjereno je da je #5FD68A samo 23° od nje
+         (preblizu) pa je „točno" pomaknuto na #6BCB77 (37°). Provjera vrijedi za
+         SVAKU novu paletu — zato je automatizirana u `npm run check:contrast`. */
+  --color-ok: #10794a;
+  --color-ok-strong: #0b5e39;
+  --color-warn: #8a5800;
+  --color-warn-ink: #7a4d00;
+  --color-danger: #c0332b;     /* ispune/obrubi */
+  --color-danger-ink: #a32821; /* TEKST */
+
+  /* ---------- TIPOGRAFIJA ----------
+     SISTEMSKI GROTESK, nula preuzetih bajtova (§7.6, Apple smjer).
+
+     Inter i Space Grotesk su OTIŠLI, i to nije stvar ukusa: §7.1 ih je imenovao kao
+     najjači preostali potpis generiranog sučelja — nakon promjene palete bili su jedino
+     što je još odavalo podrijetlo. Uz to su se plaćali: dvije obitelji, 11 težina, dva
+     `preconnect`-a i blokirajući `<link>` na fonts.googleapis.com.
+
+     ⚠️ SF Pro se NE smije posluživati s weba (Appleova licenca ga drži na njihovim
+     platformama), ali `-apple-system` / `BlinkMacSystemFont` se na iPhoneu i Macu
+     razriješe u PRAVI San Francisco — legalno, i za 0 KB. Windows 11 ima vlastiti par
+     optimiziran po veličini (`Variable Display` za naslove, `Variable Text` za tijelo),
+     pa `display` i `sans` nisu ista lista: to je isti razrez koji Apple radi s SF Pro
+     Display/Text, samo dobiven besplatno.
+
+     Hijerarhiju NE nosi druga obitelj nego veličina, težina i `tracking` — jedna obitelj
+     kroz cijelo sučelje je sama po sebi Appleova disciplina (§7.6). Serif iz §7.4
+     (Literata) je time NADGLAŠEN. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  /* ---------- SKALA VELIČINA ----------
+     ⚠️ POVOD: u `css/` postoji 96 RAZLIČITIH `font-size` vrijednosti — 0.9rem 64×,
+     0.85rem 46×, 0.95rem 29×, 0.88rem 15×, 13px 15×… To nije skala nego 30 datoteka
+     koje su svaka izmislile svoju veličinu, i glavni razlog zašto sučelje djeluje
+     nesloženo iako je svaki ekran posebno dotjeran.
+
+     Ovdje ih je DEVET, s omjerom ~1.2 dolje (gdje se čita) i ~1.25 gore (gdje se gleda).
+     Vodilice su uparene s veličinom jer velik tekst traži tijesniji redak — inače
+     naslov od 48px s razmakom 1.5 pravi rupu usred heroja.
+
+     Stare vrijednosti se NE prepisuju: umiru zajedno s površinama koje ih koriste
+     (C2–C7). Do tada skala vrijedi samo za novi markup. */
+  --text-xs: 0.75rem;      --text-xs--line-height: 1.5;     /* 12px — meta, oznake */
+  --text-sm: 0.875rem;     --text-sm--line-height: 1.5;     /* 14px — sekundarni UI */
+  --text-base: 1rem;       --text-base--line-height: 1.6;   /* 16px — tijelo */
+  --text-lg: 1.125rem;     --text-lg--line-height: 1.6;     /* 18px — uvodni odlomak, gradivo */
+  --text-xl: 1.375rem;     --text-xl--line-height: 1.45;    /* 22px — naslov kartice */
+  --text-2xl: 1.75rem;     --text-2xl--line-height: 1.3;    /* 28px — h2 na telefonu */
+  --text-3xl: 2.25rem;     --text-3xl--line-height: 1.2;    /* 36px — h2 na širokom */
+  --text-4xl: 3rem;        --text-4xl--line-height: 1.1;    /* 48px — hero na telefonu */
+  --text-5xl: 3.75rem;     --text-5xl--line-height: 1.05;   /* 60px — hero na širokom */
+  --text-6xl: 4.5rem;      --text-6xl--line-height: 1;      /* 72px — SAMO landing-hero */
+  /* 6xl postoji zato što §7.6 traži 56–96px za naslov koji nosi stranicu, a 60px to na
+     širokom ekranu ne radi. Stepenica je namjerno velika: Apple nema veličinu IZMEĐU
+     „tekst" i „naslov koji je cijela poruka". Koristi se na jednom mjestu i tu prestaje. */
 
   /* ---------- RAZMACI ---------- */
   /* Baza ostaje 0.25rem (4px) → `p-4` = 1rem, kao i inače u Tailwindu.
@@ -100,16 +218,22 @@
   --spacing-touch: 2.75rem;    /* 44px — minimalna dodirna meta (WCAG 2.5.5 / iOS HIG) */
   --spacing-touch-lg: 3rem;    /* 48px — udobna dodirna meta za primarne akcije */
 
-  /* ---------- RADIJUSI ---------- */
-  --radius-sm: 0.5rem;    /*  8px */
-  --radius-md: 0.75rem;   /* 12px — današnji `--radius` */
-  --radius-lg: 1.25rem;   /* 20px — današnji `--radius-lg` */
-  --radius-full: 9999px;
+  /* ---------- RADIJUSI ----------
+     Četiri, i tu prestaju. Danas ih je sedam ad-hoc (7px, 8px, 10px, 12px, 14px, 16px
+     uz tokene), zbog čega kartica, modal, gumb i polje izgledaju kao ista stvar u
+     četiri veličine (§7.1.3). Skala mora imati vidljive stepenice, ne susjedne piksele. */
+  --radius-sm: 0.5rem;    /*  8px — polja, sitni gumbi */
+  --radius-md: 0.75rem;   /* 12px — gumbi, sitne kartice */
+  --radius-lg: 1.25rem;   /* 20px — kartice, moduli */
+  --radius-full: 9999px;  /* pilule, avatari */
 
-  /* ---------- SJENE ---------- */
-  /* Dvije razine, ne pet: na tamnoj podlozi sjena brzo prestane nositi informaciju. */
-  --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-  --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  /* ---------- SJENE ----------
+     Dvije razine, ne pet. Na svijetloj podlozi sjena radi posao koji na tamnoj ne može
+     (ondje razine nosi ploha), pa je ovdje mekša i šira umjesto tvrde.
+     ⚠️ Nisu čisto crne nego tonirane prema tinti (#0e1a2b). Čisto crna sjena na
+     plavkastoj plohi izgleda kao prljavština jer joj hue ne pripada nigdje na ekranu. */
+  --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
+  --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
 
   /* ---------- PRAGOVI (breakpointi) ---------- */
   /* JEDAN skup za cijelu aplikaciju (izlazni uvjet §2). Zadani Tailwindov skup
@@ -117,4 +241,103 @@
      stvarno ima. Današnjih ~80 ad-hoc pragova u `css/responsive/*` umire zajedno
      s površinama koje ih koriste (C2–C7) — ovdje se NE prepisuju. */
   --breakpoint-xs: 30rem;   /* 480px */
+}
+
+/* ═════════════════════════════════════════════════════════════════════
+   TEME  —  ista imena, druge vrijednosti
+   ═════════════════════════════════════════════════════════════════════
+
+   ZAŠTO OVO RADI (izmjereno, ne pretpostavljeno): Tailwind v4 ne upisuje boju u
+   klasu nego REFERENCU — `.bg-brand-500 { background-color: var(--color-brand-500) }`.
+   Zato jedan `[data-theme]` blok koji pregazi varijablu istovremeno prebaci
+   **i sve Tailwind utilityje i svih 992 legacy `var()` poziva** kroz most u
+   `css/variables.css`. Tema je popis vrijednosti, ne druga verzija CSS-a.
+
+   `@theme static` gore = ZADANA tema (i jedina koja rađa utility klase — imena
+   dolaze odande). Blokovi ispod mijenjaju samo vrijednosti.
+
+   ⚠️ ZAŠTO JE ZADANA „chalk", A NE „paper": svih ~434 zakucanih boja u `css/`
+   (300 iz stare palete + 134 bijele/crne) pretpostavljaju TAMNU podlogu.
+   `color: rgba(255,255,255,.9)` na papiru nije neusklađeno — nevidljivo je.
+   Dok `npm run check:palette` ne dođe na nulu, svijetle teme SU ISPRAVNE ali
+   aplikacija još nije spremna za njih → birač tema se uključuje tek tada.
+   Do tada je zadana tamna, ali topla.
+
+   ⚠️ ŠTO JOŠ NE POSTOJI, A MORA PRIJE NEGO SE BIRAČ UKLJUČI:
+   `js/init.js` danas zakucava `data-theme="dark"` — vrijednost koja ne odgovara
+   nijednoj temi ispod, pa se primjenjuje ZADANA. To je namjerno sigurno stanje
+   dok traje prelazak. Ali ~13 legacy pravila u `learn.css` i `components.css`
+   selektiraju baš `[data-theme="dark"]`; čim birač postavi `data-theme="mint"`,
+   ta pravila prestaju vrijediti. Ona ionako reagiraju na SVJETLOĆU (bijeli tekst,
+   prozirni obrubi), a ne na paletu — pa se pri čišćenju tih površina (C4/C5)
+   prepisuju na tokene, a ne na drugi selektor. Do tada birača nema.
+   ═════════════════════════════════════════════════════════════════════ */
+
+/* ── PAPIR I MARKER (svijetlo) — topli papir, crna tinta, plava akcija, žuti marker.
+      Akcent je podijeljen na dva posla: `brand` nosi akciju, `mark` je marker kojim
+      se podvlači bitno. To je jedina paleta u kojoj je „šareno" doslovno alat za učenje. */
+:root[data-theme="paper"] {
+  --color-surface-0: #faf9f6;  --color-surface-1: #ffffff;  --color-surface-2: #f0eee8;
+  --color-line: #e3e0d8;      --color-line-strong: #8c887e;
+  --color-ink-0: #1b1a17;      --color-ink-1: #45423c;      --color-ink-2: #6f6b62;
+  --color-brand-400: #5a86e4;  --color-brand-500: #2c5fd6;  --color-brand-600: #1f47a8;
+  --color-on-brand: #ffffff;
+  --color-mark: #ffd24a;
+  /* potamnjeno zbog kontrasta: zelena je s 3.77 na 5.6, jantar s 3.28 na 5.5 */
+  --color-ok: #15703c;         --color-ok-strong: #0f5c30;
+  --color-warn: #8a5a00;       --color-warn-ink: #7a4f00;
+  --color-danger: #c6362c;     --color-danger-ink: #a82a22;
+  --shadow-e1: 0 1px 2px rgb(28 26 23 / 0.06), 0 4px 12px -4px rgb(28 26 23 / 0.10);
+  --shadow-e2: 0 2px 4px rgb(28 26 23 / 0.06), 0 12px 28px -8px rgb(28 26 23 / 0.16);
+}
+
+/* ── KREDA I TABLA (tamno) — bivša ZADANA tema, do 2026-08-13.
+      Ne briše se: raspored, tipografija i tokeni su isti, pa je paleta samo popis
+      vrijednosti (§7.4) — držati je kao izbor ne košta ništa. Ostaje i kao zapis
+      da su DVIJE tamne palete zaredom pale tek kad su se vidjele na ekranu. */
+:root[data-theme="chalk"] {
+  --color-surface-0: #1e1f1c;  --color-surface-1: #292a26;  --color-surface-2: #35362f;
+  --color-line: #45463e;      --color-line-strong: #8a8878;
+  --color-ink-0: #f5f2e8;      --color-ink-1: #dcd8c9;      --color-ink-2: #a6a292;
+  --color-brand-400: #f7d47c;  --color-brand-500: #f2c14e;  --color-brand-600: #d3a233;
+  --color-on-brand: #1e1f1c;
+  --color-mark: rgb(242 193 78 / 0.30);
+  --color-ok: #8fbf6b;         --color-ok-strong: #6da34d;
+  --color-warn: #e3a93c;       --color-warn-ink: #edbe63;
+  --color-danger: #e3705c;     --color-danger-ink: #ee8b78;
+  --shadow-e1: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  --shadow-e2: 0 10px 15px -3px rgb(0 0 0 / 0.45), 0 4px 6px -4px rgb(0 0 0 / 0.35);
+}
+
+/* ── AKADEMSKO PLAVO (svijetlo) — ZADANA od 2026-08-13.
+      Blok postoji iako su iste vrijednosti gore u `@theme static`: bez njega
+      `data-theme="academic"` ne bi bio valjan izbor u biraču, nego samo „ništa
+      postavljeno". Izbor mora biti izreciv, ne samo odsutnost drugih. */
+:root[data-theme="academic"] {
+  --color-surface-0: #f7f9fc;  --color-surface-1: #ffffff;  --color-surface-2: #edf1f7;
+  --color-line: #dde4ee;      --color-line-strong: #7d8a9c;
+  --color-ink-0: #0e1a2b;      --color-ink-1: #34455c;      --color-ink-2: #5b6879;
+  --color-brand-400: #4a82e8;  --color-brand-500: #1657d0;  --color-brand-600: #0f3f9c;
+  --color-on-brand: #ffffff;
+  --color-mark: #ffd24a;
+  --color-ok: #10794a;         --color-ok-strong: #0b5e39;
+  --color-warn: #8a5800;       --color-warn-ink: #7a4d00;
+  --color-danger: #c0332b;     --color-danger-ink: #a32821;
+  --shadow-e1: 0 1px 2px rgb(14 26 43 / 0.06), 0 4px 12px -4px rgb(14 26 43 / 0.10);
+  --shadow-e2: 0 2px 4px rgb(14 26 43 / 0.06), 0 12px 28px -8px rgb(14 26 43 / 0.16);
+}
+
+/* ── PONOĆ I MENTA (tamno) — prva odabrana paleta; ostaje kao izbor, nije zadana. */
+:root[data-theme="mint"] {
+  --color-surface-0: #0b1a1c;  --color-surface-1: #112629;  --color-surface-2: #193539;
+  --color-line: #1f4247;      --color-line-strong: #5c8e94;
+  --color-ink-0: #e9f3f2;      --color-ink-1: #c5d8d7;      --color-ink-2: #88a7a6;
+  --color-brand-400: #7adcc4;  --color-brand-500: #4fc9ab;  --color-brand-600: #2fa88c;
+  --color-on-brand: #0b1a1c;
+  --color-mark: rgb(79 201 171 / 0.30);
+  --color-ok: #6bcb77;         --color-ok-strong: #46b36a;
+  --color-warn: #e2b53f;       --color-warn-ink: #efc762;
+  --color-danger: #e2725f;     --color-danger-ink: #e8836f;
+  --shadow-e1: 0 4px 6px -1px rgb(3 12 13 / 0.45), 0 2px 4px -2px rgb(3 12 13 / 0.35);
+  --shadow-e2: 0 10px 15px -3px rgb(3 12 13 / 0.5), 0 4px 6px -4px rgb(3 12 13 / 0.4);
 }

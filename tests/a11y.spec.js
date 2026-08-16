@@ -3,17 +3,14 @@
 //
 // Napomena: skeniramo na JEDNOM viewportu (prvi projekt) da izbjegnemo 4× šum istih nalaza; a11y nije viewport-ovisan
 // za ono što axe provjerava (kontrast/role/labele/alt). Pokreće se kroz Playwright (`test:responsive`/CI).
+//
+// ⚠️ OVAJ SPEC POKRIVA SAMO ODJAVLJENE POVRŠINE. Prijavljene (Moji materijali sa stablom,
+// Studio, block-editor, dijalog potvrde) drži `a11y.authed.spec.js` — dosegom, ne pravilima.
+// Dok je taj spec nedostajao, tema na tamnoj plohi prošla je kroz cijelu suitu (spec §7.9).
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
-
-// Gate hvata samo ozbiljne razrede; 'minor'/'moderate' su backlog (ne ruše build).
-const IMPACT_GATE = ['serious', 'critical'];
-
-function gateViolations(results) {
-  return results.violations
-    .filter((v) => IMPACT_GATE.includes(v.impact))
-    .map((v) => ({ id: v.id, impact: v.impact, nodes: v.nodes.length, help: v.help, target: v.nodes.map((n) => n.target).flat() }));
-}
+// Gate-logika (razredi, ispis izmjerenih brojki) je ZAJEDNIČKA s authed gateom — ADR-027.
+const { gateViolations } = require('./helpers/axe-gate');
 
 test.describe('a11y — no serious/critical axe violations', () => {
   test('landing', async ({ page }, testInfo) => {
@@ -51,6 +48,13 @@ test.describe('a11y — no serious/critical axe violations', () => {
     const all = [];
     for (const sec of ['learn', 'flashcards', 'quiz', 'fill', 'progress']) {
       await page.evaluate((s) => window.switchSection(s), sec);
+      // ⚠️ NE mjeri usred prijelaza. Sekcije se pojavljuju s fade-inom, a axe uzorkuje
+      // boju ONAKVU KAKVA JE U TOM TRENUTKU: izmjereno je javljao `#1e8155` umjesto
+      // tokena `#10794a` — ista boja na ~93 % neprozirnosti, dakle 4.29 umjesto 4.80.
+      // Gate je tako prijavljivao pad koji na gotovoj stranici ne postoji, a dva ručna
+      // mjerenja (koja su čekala duže) tvrdila su suprotno. `finish()` je determinističan:
+      // ne produljuje čekanje nego animacije gura u KRAJNJE stanje.
+      await page.evaluate(() => document.getAnimations().forEach((a) => { try { a.finish(); } catch (e) { /* beskonačne */ } }));
       await page.waitForTimeout(250);
       const gated = gateViolations(await new AxeBuilder({ page }).analyze());
       if (gated.length) console.log(`STUDY/${sec} violations:`, JSON.stringify(gated, null, 2));

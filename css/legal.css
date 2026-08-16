@@ -6,14 +6,27 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
+/* ⚠️ OVDJE VIŠE NEMA NIJEDNE VRIJEDNOSTI BOJE — samo most na tokene.
+   Ove četiri stranice ne učitavaju `styles.bundle.css`, pa su dotad držale
+   VLASTITU kopiju palete kao hex. Dvije kopije jedne činjenice, i razišle su se
+   prvom prilikom: aplikacija je prešla na „Kredu i tablu", a ove stranice ostale
+   mentol — jedan klik iz footera vodio je u drugu paletu.
+
+   Sada `<link>` na **`css/tokens.static.css`** (generira ga `npm run build:css`
+   izvadkom `:root` blokova iz bundlea) donosi iste tokene i sve teme, pa je ovdje
+   ostalo samo preslikavanje starih imena. `css/tokens.css` se NE može poslužiti
+   izravno jer je `@theme static` Tailwindova direktiva koju preglednik ne razumije.
+
+   ⚠️ Redoslijed u <head> je bitan: tokens.static.css MORA doći prije ove datoteke.
+   Umire u C6, kad ove stranice dobiju isti tretman kao ostatak. */
 :root {
-    --bg: #0b1220;
-    --bg-card: #0f172a;
-    --border: rgba(255, 255, 255, 0.1);
-    --text: #e2e8f0;
-    --text-dim: #94a3b8;
-    --primary: #6366f1;
-    --primary-light: #818cf8;
+    --bg: var(--color-surface-0);
+    --bg-card: var(--color-surface-1);
+    --border: var(--color-line);
+    --text: var(--color-ink-1);
+    --text-dim: var(--color-ink-2);
+    --primary: var(--color-brand-500);
+    --primary-light: var(--color-brand-400);
 }
 
 body {
@@ -32,7 +45,10 @@ body {
     justify-content: space-between;
     gap: 1rem;
     padding: 0.9rem 1.5rem;
-    background: rgba(15, 23, 42, 0.85);
+    /* Bila je zakucana `rgba(15, 23, 42, .85)` = stari slate `#0f172a` — preživjela je
+       promjenu palete jer se hex-pretragom ne vidi u `rgba()` obliku. `color-mix` drži
+       providnost, a boju uzima iz teme. */
+    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
     border-bottom: 1px solid var(--border);
 }
 
@@ -49,7 +65,7 @@ body {
 .legal-logo img { width: 34px; height: 34px; border-radius: 8px; }
 
 .legal-back {
-    color: var(--primary-light);
+    color: var(--primary);
     text-decoration: none;
     font-size: 0.92rem;
     white-space: nowrap;
@@ -76,14 +92,14 @@ main.legal {
 .legal h2 {
     font-size: 1.2rem;
     margin: 1.8rem 0 0.6rem;
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 .legal p, .legal li { color: var(--text); font-size: 0.97rem; margin-bottom: 0.7rem; }
 
 .legal ul, .legal ol { padding-left: 1.4rem; margin-bottom: 0.9rem; }
 
-.legal a { color: var(--primary-light); }
+.legal a { color: var(--primary); }
 
 .legal .legal-card {
     background: var(--bg-card);
@@ -112,7 +128,7 @@ main.legal {
 }
 
 .legal-footer a { color: var(--text-dim); text-decoration: none; }
-.legal-footer a:hover { color: var(--primary-light); }
+.legal-footer a:hover { color: var(--primary); }
 
 @media (max-width: 480px) {
     main.legal { padding: 1.8rem 1.1rem 2.2rem; }

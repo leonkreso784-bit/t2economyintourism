@@ -48,10 +48,491 @@ suita. **`browse.spec.js` je izdržao** — Leonov popravak `388e3c5` izvodi oč
 poslužena s **0 ćirilice** · `.js` fallback živ · **`styles.css` i dalje 404** (merge nije uskrsnuo datoteku
 koju je C1 obrisao — to je bila jedina stvarna opasnost ovog razrješenja i provjerena je izričito).
 
-**Slijedi:** **`main` → `feat/c3-vlastito-gradivo`.** Sudar je unaprijed izmjeren: **točno 11 datoteka** — 8
-token-datoteka (rješava `npm run bump`) i 3 dnevnika (`CLAUDE.md`, `CHANGELOG`, `PROGRESS`; zadrži oba unosa).
-`data/catalog.js` i `docs/subjects/README.md` **ne konfliktiraju uopće** — C3 ih ne dira. Iza toga: prepravak
-landinga po §7.13, pa Studio na telefonu.
+**`main` → C3 grana je NAPRAVLJEN** (`ef3a63a`). Sudar je bio točno onih **11 datoteka** koje sam izmjerio
+unaprijed — 8 token-datoteka i 3 dnevnika; `data/catalog.js` i `docs/subjects/README.md` nisu konfliktirali.
+Razrješenje je isto pravilo kao kod Sašinih grana, **ali obrnuta strana**: ondje je Sašina strana bila šum
+pa je uzeta `main`-ova, ovdje je `main`-ova šum (samo bumpovi) pa je uzeta naša — C3 nosi pravi landing u
+`index.html`. ⚠️ **`git checkout --ours` NIJE korišten na `CLAUDE.md`**: uzima CIJELU našu verziju i poništio
+bi ono što se izvan sukoba već uredno spojilo. `PROGRESS`/`CHANGELOG`: obje strane dodaju unos NA VRH, pa git
+vidi jedan golem sukob umjesto dva unosa — zadržana su **oba**, poredak po datumu.
+⚠️ Skripta za razrješenje je prvo javila **„nema sukoba" nad datotekom koja ga očito ima**: datoteke su CRLF,
+pa obrazac koji traži `\n` odmah iza `=======` nikad ne pogodi (između stoji `\r`).
+
+---
+
+## 2026-08-15 (OPUS, b) — **Landing, cigle A i B · i kvar koji su tri gatea gledala a nijedan vidio**
+
+**Grana `feat/c3-vlastito-gradivo`, NIJE mergeana** (Leon: *„nemoj još mergat, to ću napraviti u sljedećoj
+sesiji"*). Commiti: `4eeda13` (A) · `fc94498` (B) · `82e384f` (a11y).
+
+**CIGLA A — odbijeni koncept je van.** Živi prikaz obrisan iz svih šest datoteka gdje je živio: markup (58),
+`initHeroDemo()`+`landingT()` (78), 18 `demo.*` poruka, 202 retka CSS-a, poziv u `init.js`, kuka u `i18n.js`.
+`landing.css` **578 → 380**. Naslov sad pokriva OBA izvora gradiva („Any material / Bilo koje gradivo") — jer
+je „Napiši jednom" bilo obećanje UGC-a kao što je „Nađi svoj predmet" obećanje kataloga, a svaka od te dvije
+verzije pola posjetitelja odmah isključi. **Dva testa obrisana ODLUKOM, nisu pala**; razlika je zapisana u
+zaglavlju `landing.spec.js`, a umjesto njih stoji tvrdnja da hero **ne traži nikakav unos**.
+
+**NOVA BRANA uz to:** `npm run verify` sad čuva **jedini ručno pisan broj predmeta u projektu** — statični
+fallback `[data-meta="subjectCount"]` u `index.html`. Već je jednom tiho ostario (pisao „8" kad ih je bilo 22),
+a jučer je 22 postalo 24. Obrnuto provjerena. ⚠️ Preskače se pod `CATALOG_PATH`: prva verzija to nije izuzela
+i **oborila je vlastiti unit-test**, jer fixture ima 2 predmeta a `index.html` je uvijek pravi.
+
+**ISPRAVAK SPECA — mjerenje je oborilo tvrdnju koju sam trebao samo prepisati.** §7.13 je pisao da brisanjem
+demoa nestaje i „240 KB editorskog koda na landingu". **Ne nestaje.** Demo je bio čisti `textContent` i nije
+dodirivao nijednu editorsku datoteku; tih **234,2 KB** učitavaju obični `<script src>` na dnu `index.html`,
+bezuvjetno. Landing i dalje šalje **654 KB u 39 datoteka** uz vlastiti budžet od 200. Pretpostavljena
+uzročnost preživjela je reviziju jer je zvučala uzročno; oborila ju je jedna naredba. BACKLOG-stavka vraćena
+u otvorene.
+
+**CIGLA B — glif na pločici predmeta bio je nečitljiv na 10 od 24 predmeta.** Krenuo sam restilizirati
+katalog-sekciju i prvo izmjerio ono što ću učiniti krupnijim. Pločice nose boju iz `data/catalog.js`, a tinta
+na njima dolazila je iz `--color-on-brand` — tokena izračunatog za boju **marke**; u `css/sidebar.css` je bila
+**zakucana bijela**. U zadanoj temi: `#f59e0b` **2.15** (5 predmeta) · `#14b8a6` 2.49 (3) · `#0ea5e9` 2.77 (2).
+Pogađa **tri površine**: landing, bočnu traku (svaka study-stranica) i Browse.
+
+**Zašto ga nijedan od tri gatea nije vidio — vrjednije od brojke:** `check:palette` klasificira po pozadini
+koju vidi **u CSS-u**, a ova dolazi iz podatka kroz inline `style` → `color: white` prošao kao „nema pozadine,
+bezopasno" · `check:contrast` mjeri **tokene**, a boje predmeta nisu tokeni · **axe** ne mjeri Font Awesome
+glif jer je sadržaj u `::before`.
+
+**Popravak je PRAVILO, ne ugađanje boja:** tinta se bira izračunom luminancije (`inkForTint()`) iz dva
+namjerno **tema-neovisna** tokena — neovisna jer je i ploha ispod njih tema-neovisna. Ručno preugoditi 11
+boja značilo bi da 25. predmet vrati kvar.
+⚠️ **Prag sam prvi put napisao napamet i promašio za 0,013.** Sjecište se izvodi iz definicije kontrasta:
+`L* = √((L_d+0.05)(L_l+0.05)) − 0.05`. Zato `check:contrast` sad **preračuna prag iz tokena** i padne uz
+poruku koja kaže točnu vrijednost. Druga brana `tests/tint-ink.spec.js` (4 teme × 3 površine) čita
+**izračunatu** boju glifa u pregledniku. ⚠️ **Prva obrnuta provjera lažno je prošla** jer sam vratio bazno
+pravilo, a ne `[data-ink="dark"]` koje posao zapravo radi.
+
+**ŠTO NIJE DOVRŠENO — i ne tvrdim da jest.** Puna suita: **370 prošlo / 1 palo**. Taj pad je bio artefakt —
+axe je uhvatio toast **usred fade-a**; da je riječ o prozirnosti a ne boji dokazuje aritmetika (alfa 0.527 ·
+0.527 · 0.522, ista na sva tri kanala). `smiri()` je taj razred kvara **već jednom popravljao, nepotpuno**.
+Popravak je napisan, ali **taj test u današnjem okruženju ne mogu dovesti do zelenog**: prelazi 120 s, pa
+300 s, a **kontrolni prolaz s izvornim helperom premašio je 10 minuta** — dakle usporenje NIJE regresija.
+Tri pokušaja su dosta; četvrti bi bio nagađanje. **Traži ponovni prolaz na odmornom stroju.**
+
+**Slijedi:** Leon mergea C3 → `main` u sljedećoj sesiji. Prije toga: ponoviti `a11y.authed` na odmornom
+stroju. Zatim cigle C i D landinga (katalog s bojama + posljednja pločica · svoje gradivo + MCP + četiri
+načina · podloga i prostor za znak), pa Studio na telefonu.
+
+---
+
+## 2026-08-14 (OPUS, e) — **Landing pao na Leonovu ekranu · nacrtan novi · MCP presuđen**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Sesija je počela kao dovršetak C3, a **skrenula je u redizajn
+landinga** jer je Leon prvi put vidio C2 na ekranu i odbio ga.
+
+**① Vizualna revizija je opravdala sama sebe.** Kontaktna kopija (19 snimaka, 4 površine × 4 teme +
+390 px) našla je ono što gateovi ne mogu: **Studio na telefonu izbacuje dva gumba izvan ekrana**, a
+rupa je u **mojoj vlastitoj brani** — detektor izuzima podstabla u `position:fixed`, a cijeli Studio
+jest takvo podstablo. Mjere i uzrok: `BACKLOG.md`. Leon: *„jbg tako je kako je"* → ne blokira.
+
+**② Landing je odbijen i prepravljen.** *„Samo uđeš na landing i vidiš tutorial… bez veze."* Hero je
+tražio RAD prije nego što je dao razlog. Novi oblik, naslov i **23. pločica**: spec **§7.13**.
+Ključno: **UGC je ravnopravan od prvog ekrana** (dopuna ADR-029, presudio Leon).
+
+**③ Ispravio sam vlastitu krivu tvrdnju isti dan.** Rekao sam da su emoji „u podacima, u 22 predmeta"
+i da odluka o njima blokira CSS-posao. **Netočno:** svih 22 predmeta i svaka sekcija **već imaju
+`color` + `icon`, a ikone su Font Awesome**, ne emoji. Emoji su samo u ručno pisanim `learn`
+naslovima → čišćenje sadržaja, ne promjena sustava.
+
+**④ Podlogu sam odbacio nakon što sam je renderirao.** Aurora od 5 boja predmeta ispala je generička
+duga. **Boje predmeta pripadaju pločicama, gdje nešto znače.** Ostalo: karirani papir + jedan odsjaj
+u boji teme + **zrno** (bez njega je ploha plastika).
+
+**⑤ Znak: tri kruga i jedno „ne".** Nacrtao sam zamjensku siluetu jer je `logo.svg` traceana
+fotografija koja na 32 px nužno postaje mrlja. Leon: *„odvratan… sokrat logo je nezamjenjiv."*
+**Odluka: znak se ne prepravlja, dobiva prostor** (traka 64 px, znak 42 px) i **zadržava indigo kroz
+sve teme** — konstanta marke.
+
+**⑥ MCP je presuđen činjenično.** Od tri Leonova zahtjeva: *napravi i dostavi materijal* **DA** ·
+*čita napredak i ispravlja* **DA, kroz razgovor** · *prati te uživo dok odgovaraš* **NE** — u MCP-u
+**korisnikov AI zove nas, mi ne možemo zvati njega**. Uživo bi značilo da model vrtimo i plaćamo MI,
+što ADR-026 izričito odbija. Prava prepreka nije AI nego **pristup** (ADR-030 ②).
+
+**Novo u BACKLOG-u:** vježbe nemaju svoj frontend (Leon, → C5b) · `academic` i `paper` su ista tema
+(marka im je ista boja — identitet nosi AKCENT) · Studio na telefonu.
+
+**Ništa od redizajna nije u repou** — makete su u gitignored `_screenshots/`. Repo je dobio samo
+dokumentaciju i ciglu `!important`.
+
+---
+
+## 2026-08-14 (OPUS, d) — **C3 treća cigla: pet `!important` · i zašto je hrpa od 22 commita sad najveći rizik**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon: *„malo sam izgubljen"* → sesija je preusmjerena s
+„dodaj sljedeću ciglu" na **„zatvori petlju i isporuči"**.
+
+**⓪ Dijagnoza koja je promijenila plan sesije.** `main` stoji na C0+C1; na grani su **22 commita**
+— cijeli C2, popravak C2, tri C3 cigle i lanac opskrbe. Leon je čitao izvještaje, ali **proizvod
+nije vidio na ekranu**, a zadnji put kad jest, bio je taman. To je i izvor osjećaja „izgubljen sam"
+i **najveći tehnički rizik u projektu upravo sad**: velika serija, teži pregled, grozna površina za
+traženje krivca nakon deploya — a među commitima su **dva popravka produkcijskih kvarova** (tablice
+koje prelijevaju ekran svakom studentu na telefonu, SRI koji sprječava tiho gašenje prijave) koja
+**leže na grani umjesto da rade**.
+
+**① Pet `!important` bila su dva puta isti kvar** — `:hover` pravilo koje ne izuzima svoju iznimku.
+Rješenje posuđeno iz `block-editor.css` (`.be-btn:hover:not([disabled])`, 0 `!important`). Sve tri
+C3 datoteke sad na nuli. Detalji i tri greške u vlastitom mjerenju: spec **§7.12**.
+
+**② Nova brana `tests/cascade.authed.spec.js`** — `css:diff` mjeri **mirno** stanje, pa ovu
+promjenu ne može vidjeti. Svaka tvrdnja s obrnutom provjerom; kontrola je **isti gumb bez
+`disabled`**. Brana obrnuto provjerena: s vraćenim kvarom pada na tvrdnjama, ne na kontrolama.
+
+**③ Pouka koju nisam očekivao:** obrnuta provjera je **radnja koja privremeno kvari repozitorij**.
+Nakon vraćanja popravka bundle je ostao na pokvarenoj verziji; uhvatio ga je `build:css --check` u
+preflightu. Bez njega bi commit nosio točno onaj kvar koji cigla dokazuje — a `css:diff` bi bio
+zelen, jer kvar živi u hoveru.
+
+**Gate:** `preflight` **EXIT 0** (13 brana) · `css:diff` **0/3210** · **`test:authed` 73/73**.
+
+**Slijedi:** vizualna revizija triju površina × četiri teme za Leona (kontaktna kopija, ne 12
+zasebnih snimaka), pa **njegov OK za merge i deploy** 22 commita. RLS-SQL namjerno **ne ulazi** u
+taj paket — nezavisan je, ide staging → njegova zasebna potvrda za prod.
+
+---
+
+## 2026-08-14 (OPUS, c) — **C3 druga cigla: širina · kvar u rendereru koji je pogađao i studente**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon: *„imas moji oke i mozes na jezgru c3"*.
+⚠️ **RLS na produkciji NIJE diran** — opći OK nije uzet kao odobrenje za SQL na prod-bazi;
+migracija se piše, dokazuje na stagingu i vraća Leonu na jednu potvrdu.
+
+**① Izmjereno prije prepisivanja — duga gotovo nema.** `my-materials.css` i `block-editor.css`:
+**0 `!important`, 0 zakucanih boja**. `studio.css`: 2 pravila s `!important`, a od 11 „hex" ih je
+**10 u komentarima**. C1, popravak C2 i prva cigla C3 pojeli su dug unaprijed.
+
+**② Nalaz o samom planu.** Tablica §3 kaže da tri datoteke u C3 „nestaju", ali bundle sadrži
+**ukupno 22 Tailwind utilityja**, a `landing.css` nakon C2 **i dalje postoji na 578 redaka**.
+Obrazac faze nije „markup u utility-juhu" nego **brisanje mrtvog + spajanje na tokene**. Zapisano
+u spec §7.11 da C3 ne izmisli treći obrazac.
+
+**③ Prava rupa je ŠIRINA, ne boja.** Kriterij #1 traži **320 px** i imenuje **editor**; `320` je
+u cijeloj suiti postojao na **jednom** mjestu (CTA landinga), `responsive.spec.js` ne posjećuje
+materijale ni editor, najmanji profil je **375 px**. → **`tests/layout.authed.spec.js`**, 21 širina.
+
+**④ Detektor je bio kriv dvaput.** Prvo šum (fiksna traka, 6 elemenata × 21 širina × 2 površine).
+Zatim **tišina, koja je gora**: izuzimao je sve unutar pretka s `overflow-x:auto`, a paneli Studija
+imaju `overflow-y:auto` → **po CSS specifikaciji druga os postaje `auto`**, pa je izuzeta cijela
+unutrašnjost Studija. Dokazano obrnutom provjerom (`min-width:1200px` **nije** oborio gate).
+**Sat vremena nakon što sam istu pouku zapisao u §7.10.**
+
+**⑤ Kvar je bio u RENDERERU, ne u editoru.** Platno skrola vodoravno na 320–414 px (`469 > 320`);
+uzrok `div.lb-legacy > table` — tablice iz **v1 `legacy-html`**. `renderTable` (v2) svoje omata u
+`.lb-table-wrap`, sirovi v1 HTML ne. **Isti renderer služi studentov `learn`** → kvar na produkciji
+za svaku staru lekciju s tablicom, na svakom telefonu. Popravak `wrapLegacyTables()`.
+**Odbačeno `display:block`** — uklanja semantiku tablice; kvar rasporeda zamijenjen kvarom
+pristupačnosti koji se ne vidi. **Sporedno:** `RETURN_DOM` bez DOM-a je **bacao iznimku** →
+uhvatila dva postojeća unit-testa; bez njih bi puklo u pregledniku.
+
+**⑥ Otvoreno (BACKLOG):** `.lb-table-wrap` nema `tabindex` → skrolabilna ploha nedostupna
+tipkovnicom; axe to ne vidi jer mjeri na 1280 px. **Treći primjerak istog obrasca u tri cigle.**
+Također: jedan neponovljiv pad `a11y.authed` na materijalima — u tri kasnija prolaza zeleno,
+**zapisano kao nepotvrđeno**, ne kao riješeno.
+
+**Gate:** `preflight` **EXIT 0** · `layout.authed` + `a11y.authed` **5/5, dva uzastopna prolaza**.
+
+---
+
+## 2026-08-14 (OPUS, b) — **Druga revizija · lanac opskrbe zatvoren · `check:cdn` · RLS-nalaz zapisan**
+
+**Grana:** `feat/c3-vlastito-gradivo`. Leon je tražio novi pregled stanja i kvalitete koda, s
+naglaskom na **buduće** probleme. Mjereno živo, ne prepisivano iz dokumentacije.
+
+**① Izmjereno stanje.** `js/` 635 KB / 11.716 redaka / 36 datoteka · `css/` 310 KB / 9.658 / 35 ·
+bundle 217 KB · `data/*.js` 3,0 MB / 72 · `data/json/` **6,0 MB** / 66 · `index.html` 66 KB /
+**44 script-taga** (38 sinkronih) · repo 16,8 MB, **`.git` 81,7 MB**.
+
+**② Nalazi koje dokumentacija nije imala — svi provjereni u kodu, ne pretpostavljeni:**
+- **Lanac opskrbe** (riješeno u ovoj sesiji, v. ③).
+- **RLS ponovno računa `auth.uid()` po retku — 13 politika** (`nodes`, `node_content`, `progress`,
+  `profiles`, `node_content_versions`). Iz Supabaseovog **performance**-advisora, koji dotad nitko
+  nije gledao — svi raniji zapisi tiču se *security*-advisora. **Jedini nalaz koji postaje skuplji
+  što se duže čeka**, jer se cijena mjeri brojem korisnikovih redaka, a ADR-029 je UGC proglasio
+  glavnim proizvodom. Popravak = jedna zagrada po politici, ali **SQL na prod traži Leonov OK** →
+  zapisano u `BACKLOG.md`, nije dirano.
+- **`typecheck` pokriva 1.210 od 11.716 redaka (10 %)** — 6 od 36 datoteka. Komentar u
+  `tsconfig.json` kaže *„include raste modul-po-modul"*, ali `git log` pokazuje da nikad nije
+  **namjerno** proširen: rastao je samo kad bi nova datoteka slučajno bila tipizirana.
+  Netipizirane su baš najveće — i to su **tri od četiri datoteke koje C3 prepisuje.**
+- **Nema lintera** (ESLint/Prettier/Biome) nad 11.716 redaka. · **9 potpuno praznih `catch {}`**
+  (+22 s komentarom) → greška nestane, Sentry je ne vidi. · **SW cache nema strop**
+  (`sw.js:78,94` — `cache.put` bez evikcije).
+
+**③ Isporučeno: lanac opskrbe.** Detalji u `CHANGELOG.md` i `BACKLOG.md`; ovdje samo **metoda**,
+jer se ona ponavlja: hasheve sam **unakrsno provjerio protiv izdavačevih objava prije upisa**
+(SRI izračunat iz kompromitiranog preuzimanja pinao bi kompromitaciju), pa **obrnuto provjerio
+gate na sva tri načina kvara**. Nova brana `scripts/check-cdn.js` → `preflight` (13 gateova).
+
+**④ Dvije moje greške, obje ispravljene u istom prolazu:**
+- Tvrdio sam **„4 CDN skripte, 0 SRI"**. `supabase-js` **SRI je imao** — moj grep je tražio
+  `integrity=` samo u HTML-u, a ondje se postavlja kao svojstvo (`s.integrity`), ne kao atribut.
+  Ispravno je 5 bez SRI od 7. **Nalaz je time postao ozbiljniji, ne blaži**, jer je taj jedini
+  postojeći SRI bio pinan na datoteku koju **CDN generira**, a ne izdavač objavljuje.
+- Prva usporedba hasheva je vikala „RAZLIKA!" na svih 5 cdnjs datoteka. **Nije bila razlika nego
+  drugi algoritam** — cdnjs objavljuje sha512, ja sam računao sha384. Da sam stao na prvom
+  ispisu, zaključio bih da je CDN kompromitiran.
+
+**Gate:** `preflight` **EXIT 0** (13 brana) · `check:cdn:live` **7/7 protiv izdavačevih hasheva** ·
+**`test:authed` 69/69** (prijava ide kroz izmijenjeni SDK-URL; **U8.9b** dokazuje pinani MathLive).
+
+**Sljedeće:** jezgra C3 — migracija `my-materials.css` / `studio.css` / `block-editor.css` na
+Tailwind, uz proširenje `tsconfig`-a na te datoteke dok su ionako otvorene.
+
+---
+
+## 2026-08-14 (OPUS) — **Revizija projekta · C3 kreće GATE-om, ne CSS-om · 4 kvara na prijavljenim površinama**
+
+**Grana:** `feat/c3-vlastito-gradivo` (iz `feat/c2-landing`; C2 još čeka Leonov OK za merge).
+
+**① Revizija cijelog projekta** (Leonov zahtjev). Izmjereno, ne prepisano: `js/` 13.130 redaka /
+39 datoteka · `css/` 10.718 / 35 · `data/` 55.173 / 72 · `tests/` 9.458 / 55 · `scripts/` 5.405 / 32.
+Omjer test-koda prema aplikacijskom = **1 : 2,5**. `preflight` EXIT 0.
+**Ispravak zapisa:** checkpoint je tvrdio „ništa pushano", a `origin/feat/c2-landing` = `67b7047`
+→ **15 od 19 commita JE na originu** (feature-grana, dakle dopušteno; zapis je bio netočan).
+
+**Tri nalaza koja nisu bila u dokumentaciji** (dva zapisana u `BACKLOG.md`, treći popravljen odmah):
+- **Landing šalje 1.173 KB, od čega 241 KB (38 %) editorskog koda** posjetitelju bez računa; 38
+  sinkronih skripti. Projekt si je zadao budžet **„JS ≤ 200 KB"** i označio ga „blokada, ne
+  upozorenje" — **gate nikad nije izgrađen**, pa je stvarnost 4× iznad vlastitog praga.
+  **Isti obrazac kao §7.9: pravilo zapisano, mjerač ne postoji.**
+- **CSP je odgođen „do UGC-a", a UGC je na produkciji** — uvjet odgode je istekao sam od sebe.
+- ⚠️ **Moja greška u mjerenju, ispravljena istog sata:** prvo mjerenje je dalo FCP **2984 ms**;
+  ponovljeno toplo daje **224 ms**. Prvo je bio hladan start preglednika. **Jedno mjerenje bez
+  ponavljanja nije mjera** — ista pouka kao „landing.css 460 vs 578" od jučer.
+
+**② C3 kreće branom, ne migracijom.** Redoslijed je odluka: C3 prepisuje `my-materials.css`,
+`studio.css` i `block-editor.css` — točno površine bez ijednog vizualnog gatea. Migrirati ih prije
+gatea značilo bi ponoviti C2 (zeleno u CI-u, slomljeno na Leonovu ekranu).
+Izvedeno: **`tests/a11y.authed.spec.js`** (7 stanja × 5 tema = **35 mjerenja**) +
+**`tests/helpers/axe-gate.js`** (logika izvučena iz `a11y.spec.js`, ADR-027).
+
+**③ Gate je pao na prvom pokretanju — 4 kvara na produkciji:**
+`aria-required-children` **critical** + `listitem` serious na `.mm-tree` (jedan uzrok:
+**`role="tree"` gasi implicitnu ulogu liste**, `<li>` ostali bez uloge → za čitač ekrana je
+korisnikova polica bila **prazno stablo**) · `label-title-only` serious na `.st-cdot--custom` ·
+i **četvrti tek u prolazu kroz teme**: aktivni redak Studija = tekst marke na tinti iste marke,
+**4.03 na `paper`, ispravno u ostale 4**. Sve popravljeno; popravak #4 **ukida razred** (tekst →
+`--text-primary`) umjesto da pomiče postotak.
+
+**Provjereno:** `preflight` EXIT 0 · authed a11y **3/3** kroz 5 tema · puna suita **351 prošlo /
+0 palo / 30 skip**. Obrnuta provjera: vraćena zakucana `rgba(30,41,59,.92)` → gate pada i imenuje
+pravilo s mjerom (`2.05`). Detalji: **spec §7.10**.
+
+**Sljedeće:** migracija te tri CSS datoteke na Tailwind (jezgra C3-a) — sad iza brane.
+
+---
+
+## 2026-08-14 (OPUS) — **Popravak C2: prebacivanje teme slomilo je PRIJAVLJENE površine · zabrana #3 · rupa u zabrani #1**
+
+**Grana `feat/c2-landing`. Ništa pushano. C2 NIJE bio gotov — merge je čekao ovaj popravak.**
+
+### Kako je nađeno
+Revizija pred ulazak u C3 mjerila je površinu cigle i pri čitanju `studio.css`-a naletjela na
+obrazac: plohe su zakucane (`rgba(30,41,59,.92)`), a tekst na njima dolazi iz tokena. Kad je C2
+zadanu temu prebacio u svijetlu, **tekst se okrenuo, ploha nije.**
+
+### Što je bilo slomljeno (izmjereno, ne procijenjeno)
+`.st-icard` **1.00** — doslovno ista boja · `.st-kv` **1.18** · dijalog potvrde **1.02** ·
+kartica prijave **1.83** · učitavanje gradiva **1.33** · `.mm-tree` 4.19 · topbar 2.89.
+Dakle **prijava, dijalozi potvrde i cijeli editor**, za svakog prijavljenog korisnika.
+Bijelo na kredi (povod zabrane #1) bilo je 1.68.
+
+### Zašto nijedan gate nije pisnuo — tri neovisna razloga
+1. `check:palette` je tamne `rgba()` brojao kao „blago". To vrijedi za **bijele** rgba na
+   svijetloj temi; za tamne vrijedi **obrnuto**. Jedna kanta, dva suprotna kvara.
+2. `check:contrast` dokazuje da je PALETA ispravna — ovo nisu tokeni, dakle izvan dosega.
+3. axe posjećuje `#materials-page` **odjavljen** (stablo se ne iscrta), a `#editor-page`
+   **nikad**. → **Prijavljene površine nemaju nijedan vizualni gate.**
+
+### Isporuceno
+- **`check:palette` 339 → 126**; `block-editor` 100→0 · `studio` 81→1 · `my-materials` 12→0;
+  osnovica spuštena. Popravljeni i `auth`, `sokrat-confirm`, `pages`, `profile`, `responsive/*`.
+- **Tvrda zabrana #3** (zakucana tamna ploha) — dva kraka, izričite iznimke s razlogom.
+- **Zakrpana rupa u zabrani #1**: regex je tražio `var(--primary)` sa zatvorenom zagradom, pa
+  `var(--primary, #6366f1)` nije bio pogodak → nakon zakrpe ispala su **još 2** pravila.
+- **`--st-violet` umirovljen** — `--on-primary` na `#8b5cf6` pada AA u **svih 5 tema, od U8**.
+- **`--bg-card` dobio definiciju u mostu** — postojao je samo u `legal.css`, koji app ne učitava.
+- **`@media (prefers-contrast: high)`** je zakucanim `#000`/`#374151` na tamnim temama kontrast
+  **smanjivao**; `@media (prefers-color-scheme: dark)` gazio je `--shadow` po OS-ovom signalu.
+
+### Moje greške (obje uhvaćene istog dana, obje su sad brane)
+1. Prvi popis kvarova imao je **dva lažna** (`.nav-btn.active`, `.back-to-subjects-btn` zakucavaju
+   i tekst). Provjera „svijetlog teksta" bila je regex i promašila `#e0e7ff` → sad se luminancija
+   **računa**, ista mjera s obje strane. **Prijavio sam brojke prije nego što sam ih provjerio.**
+2. Obrnuta provjera je dvaput „prošla" iz krivog razloga — čegrtaljka je obarala testnu datoteku
+   prije nego što je ciljani gate došao na red. **Izlazni kod 1 nije dokaz da je pao gate koji
+   testiraš**; čita se PORUKA.
+
+### Pouka koja vrijedi za C3–C7
+Dok je tema bila JEDNA, `rgba(30,41,59,.92)` je bio **točan** — nijedan alat ga nije mogao
+razlikovati od ispravnog. Kriv je postao kad je tema postala varijabla.
+**Prebacivanje teme nije promjena vrijednosti nego promjena UGOVORA.**
+
+---
+
+## 2026-08-13 (OPUS) — **C2: landing POKAZUJE umjesto da tvrdi · zadana tema postala svijetla · brojka koja je skrivala odluku**
+
+**`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` — C2 gotov, ceka Leonov OK za merge.**
+
+### Isporuceno
+- **Landing je prepisan.** *„Landing ne opisuje proizvod — landing JEST proizvod."* Posjetitelj upise
+  pojam i objasnjenje i **odmah ih vidi kao karticu, kvizno pitanje, dopunu i gradivo**, bez registracije.
+  Sekcija **6 → 3**. Nestali: 4 `gradient-orb` · `grid-overlay` · gradijentni naslov · `hero-badge` ·
+  4 plutajuce kartice · stats bar · 3 `section-eyebrow` · „How it works" · „Study modes" · zavrsni CTA.
+  Tekst vise **ne spominje FMTU ni godine studija**. Ulaz u vlastito gradivo **seli iz trake u VRATA**,
+  uz „Kreni uciti" (Leon: *„trebao bi biti prvi, gdje je Start studying"*).
+- **Mjere:** `css/landing.css` **1079 → 578** · `check:palette` **427 → 339** · bundle **224 → 210 KB** ·
+  Google Fonts **2 obitelji / 11 tezina / 2 preconnecta → 0**.
+- **Sistemski grotesk.** Inter i Space Grotesk otisli (§7.1: najjaci preostali potpis generiranog
+  sucelja) → `-apple-system` daje **pravi San Francisco** na Appleu, `Segoe UI Variable Display/Text`
+  na Windowsu 11. **0 preuzetih bajtova, 0 FOUT-a**; usput nestao i CSP-dug iz F3 (inline `onload`).
+- **Zadana tema je SVIJETLA — „Akademsko plavo"** (Leonov izbor izmedu cetiri, gledanjem).
+  `chalk` (bivsa zadana) i `mint` ostaju kao izbor; `initTheme()` vise ne lazira („dark" nije bio tema
+  nego jedini ishod, a `toggleTheme()` je pisao `light`, koji u CSS-u nije postojao).
+
+### Nalazi (vrijede dalje)
+1. **⚠️ BROJKA JE SKRIVALA ODLUKU — glavni nalaz cigle.** Spec je tvrdio da svijetla tema ceka
+   `check:palette` = 0, dakle **cijeli C3–C7**. Mjerenje pokazuje da su to **tri razlicita duga
+   zbrojena u jedan**: **46** je zakucan TEKST (nevidljiv na svijetlom) · 54 plohe/rubovi (blijedi,
+   ne slomljeni) · 125 stara paleta (neuskladena, ali citljiva). **Prepreka je bila 46 pravila, ne pet
+   cigli.** Dok je stajalo „435", svijetla tema je izgledala kao kraj faze; razdvojena, bila je
+   dostupna isti dan. **Cegrtaljka mora brojati po POSLJEDICI, ne po uzorku** — inace mjeri tocno,
+   a savjetuje krivo.
+2. **Dvije tamne palete zaredom pale su tek na zivom ekranu** („Ponoc i menta", pa „Kreda i tabla" —
+   Leon: *„nisam nikada vidio nesto odvratnije"*). Pouka §7.3 je bila ZAPISANA i svejedno ponovljena,
+   jer je brojka iznad izgledala kao zid.
+3. **`--primary-light` nikad nije bio boja teksta**, samo se to nije vidjelo. To je `brand-400`
+   (hover/ispune); `check:contrast` mjeri `brand-500` kao tekst na sve tri plohe, a **`brand-400`
+   ne mjeri nikad**. Na tamnom je prolazilo (svjetlije = citljivije), na svijetlom daje ~3.2 → pada AA.
+   **26 pravila** kroz 7 datoteka. **axe je uhvatio 1 od 26** — vidi samo ono sto je u tom trenutku na
+   ekranu. Isti obrazac kao §7.7. → **tvrda zabrana #2 u `check:palette`, obrnuto provjerena.**
+4. **Token bez mosta ne radi nista.** `--font-sans` je postojao od C1, ali ga `body` nije citao (drzao
+   je vlastitu listu) — promjena tokena bila bi nevidljiva bez te jedne linije.
+5. **Logo: maska je MJERENJEM nemoguca.** `assets/logo.svg` = 1 `<path>` + neproziran disk preko cijelog
+   viewBoxa → `mask-image` bi dao puni krug u boji marke. Ostaje `<img>`; dalje je **dizajnerska odluka**.
+6. **⚠️ GATE KOJI NE ISPISUJE BROJKU TJERA NA POGADANJE.** Suita je javila `color-contrast` na
+   `#btnCorrect > span` i tu stala; dva neovisna rucna mjerenja dala su **4.80** i **5.16** (iznad
+   praga), axe je tvrdio suprotno. Sat vremena je otisao na reprodukciju (viewport → `isMobile` →
+   UA + `deviceScaleFactor`) i svaki put je rucno mjerenje govorilo „cisto". **Rjesenje nije bila
+   bolja reprodukcija nego natjerati gate da kaze sto vidi** — prvi redak novog ispisa:
+   `fg #1e8155 / bg #eef1f7 = 4.29`. Token je `#10794a`; `#1e8155` je ISTA boja na **~93 %
+   neprozirnosti** → axe je uzorkovao **usred fade-ina sekcije**. Gate je prijavljivao pad kojeg na
+   gotovoj stranici nema, a jednako je mogao **propustiti pravi**.
+   **Trajno:** ① a11y-gate ispisuje `fg / bg = omjer (treba …)`; ② prije mjerenja animacije idu u
+   krajnje stanje (`getAnimations().finish()`) — determinicki, dok bi `waitForTimeout` utrku samo prorijedio.
+7. **Tinta je ploha koju nijedan gate ne mjeri.** „Znam" i „Savjet" stajali su na `rgba(34,197,94,.1)`,
+   a `check:contrast` mjeri samo `surface-0/1/2`. Sada su prozirni — znacenje nose obrub i boja teksta.
+
+### Testirano
+- `preflight` **EXIT 0** (12 brana) · `check:contrast` **5 tema / 205 provjera** · `check:tailwind` **6/6**.
+- **Puna Playwright suita na grani** (prvi prolaz je nasao 3 prava pada, svi popravljeni):
+  a11y kontrast na `.door-m` (72 % bijele na plavoj = **4.11** → 90 % = 5.43) · a11y kontrast na
+  naslovima learna (`--primary-light`) · `browse.spec` je klikao `#openStudyBtn`, koji je obrisan.
+- Testovi prepisani ZAJEDNO s povrsinom (spec §5): `landing.spec` (6 testova, ukljucujuci **XSS-branu**
+  za zivi prikaz i **branu da se brojka pitanja ne vrati**) · `materials-entry` (redoslijed u dokumentu
+  umjesto polozaja u navigaciji) · `layout-guard` (novi pragovi) · `browse.spec` (selektor).
+- Provjereno **na ekranu**, ne samo u gateu: landing · browse · lekcije · study · learn u zadanoj
+  svijetloj temi, **0 JS gresaka**.
+
+### Slijedi
+- Leonov **OK za merge** C2 → `main`.
+- **Logo** — (a) izvuci `<path>` u `logo-mark.svg` (maska radi, boja iz teme) ili (b) nacrtati ispocetka.
+- **C3** (vlastito gradivo + editor). Uz njega ide dio od 46 fatalnih: `block-editor` 9, `studio` 3.
+
+---
+
+## 2026-08-12 (OPUS) — **C1 na produkciju · CI dvaput crven · paleta prestala zivjeti na dva mjesta**
+
+**`main` = `9637f4a` (produkcija). Grana `feat/c2-landing` = `2bc9692`.**
+
+### Isporuceno
+- **C1 (Tailwind temelj) JE NA PRODUKCIJI** (`c9413a0..d4c7914`). Leonov OK: *„Moze merge imas moj OK
+  ako tako mislis.“* Isao je SAM, odvojen od C2 — to je jedina cigla koja po konstrukciji ne mijenja
+  nijedan piksel, dakle jedina prilika da temelj ode na prod uz atributivnu gresku.
+  Gate: preflight 0 + **puna suita 337/0/30 skip**. Verificirano na zivoj stranici: `styles.css` → 404,
+  `--color-indigo-500` vise ne postoji.
+- **Sasin stop-nalog** (TEAM.md §9): dovrsi dvije grane redom → mergea sam uz OK dan UNAPRIJED → javi
+  Leonu na Instagram → stani do kraja frontenda. S4+S5 pauziran. Uz upozorenje koje bi ga stajalo pola
+  dana: **`styles.css` je obrisan**, obje njegove grane ga diraju → rebase javlja modify/delete.
+- **Spec §7.6 — smjer izgleda je APPLE** (Leon: *„apple smijer naravno to se podrazumijeva“*).
+  Serif u naslovima NADGLASEN, grotesk svugdje. Iz toga slijedi da **`check:palette` 435 → 0 prestaje
+  biti sitni dug i postaje BLOKADA SMJERA** — Appleova podloga za tekst je svijetla, a svijetla tema je
+  zakljucana iza nule.
+- **`css/tokens.static.css`** (C2/3): pravne stranice vise ne drze vlastitu kopiju palete.
+
+### Sto je poslo po zlu i sto je iz toga izaslo
+**CI je pao DVAPUT, oba puta na `npm ci`, prije ijednog testa.**
+
+1. `Missing: @emnapi/wasi-threads@1.2.3` — uzrok IZVAN repozitorija:
+   `@tailwindcss/oxide-wasm32-wasi` ima `bundleDependencies`, lock biljezi zapakirani 1.2.2, a raspon je
+   `^1.2.2` → kad je upstream objavio 1.2.3, sinkronizacija je puknula. Bomba se naoruzala sama.
+   ⚠️ `npm install --package-lock-only` to NE popravlja (bajt-identican lock); popravlja `npm install`.
+2. Prvi popravak je prosao lokalno i **CI je opet pao**: lokalno npm 11 (Node 24), CI npm 10 (Node 22) —
+   razliciti razrjesivaci. npm 10 je trazio i `@emnapi/core` i `@emnapi/runtime`.
+   **Gate koji vrti drugu verziju od CI-a nije gate — daje laznu sigurnost.**
+
+**Brana: `npm run check:lockfile`, prva u preflightu.** Cita `node-version` iz `ci.yml` i vrti provjeru
+**dvaput** — lokalnim npm-om i CI-jevim (`npx npm@N`, ~3 s). **Pada zatvoreno.**
+
+### Tri greske koje sam sam napravio i uhvatio
+1. **Prva verzija `check:lockfile` padala je OTVORENO** (nepoznat izlaz = prolaz), pa je negativan test
+   TIHO PROSAO. Gate koji na nejasnocu kaze „u redu je“ gori je od nepostojeceg.
+2. **`extractTokens` je ispustio zadanu paletu** — trazio je `^:root`, a zadana je u
+   `@layer theme { :root, :host { ... } }`. Uz to je teme slozio PRIJE nje, sto bi ih pregazilo.
+   Sad ima branu koja pada glasno na oba slucaja.
+3. **Zapisani plan za logo je bio kriv.** Spec je nalagao inline `<symbol>`+`<use>`, a `assets/logo.svg`
+   je **45 308 bajtova** potrace-putanja — to bi dodalo 45 KB na `index.html`, koji ide network-first.
+   Ispravljeno u specu: CSS maska, a ako alfa-silueta ne valja, logo se crta ispocetka.
+
+### Sto slijedi
+Pravi landing u `index.html` (prototip: `prototypes/landing-v2.html`, sad u Apple-smjeru: grotesk,
+`-apple-system` stack daje pravi San Francisco na Appleovim uredajima za 0 KB) → smrt `landing.css`.
+
+---
+
+## 2026-08-12 (OPUS) — **C2: paleta pala na zivom ekranu, pa su nastale CETIRI TEME**
+
+> Leon o „Ponoc i menta“: *„apsolutna katastrofa… crna i zelena nikoga ne motivira na ucenje.“*
+> Zatim, nakon sto je vidio cetiri palete uzivo: *„sva cetiri mi se svidaju, mozemo li napraviti sva
+> cetiri pa korisnik onda bira.“*
+
+**Grana `feat/c2-landing` → `ed22b25`. Nista pushano. `main` = `c9413a0`, nedirnuta. Preflight exit 0.**
+
+### Sto je napravljeno
+- **Most `css/variables.css` → tokeni** (`e2418d4`). Datoteka vise ne drzi nijednu vrijednost: stara
+  imena prezivljavaju (992 `var()` poziva nedirnuto), vrijednosti dolaze iz `css/tokens.css`.
+  Dokaz dosega: **`css:diff` = 9768 razlika na 968+ elemenata** (C1 je namjerno imao 0).
+- **Cetiri teme** (`ed22b25`): zadana **„Kreda i tabla“** (tamno, toplo) + `paper`, `academic`, `mint`.
+  Radi jer **Tailwind v4 ne upisuje boju u klasu nego referencu**, pa jedan `[data-theme]` blok
+  prebaci i utilityje i legacy `var()` pozive. Izmjereno, ne pretpostavljeno.
+- **Tipografska skala** (9 stepenica) — u `css/` je bilo **96 razlicitih `font-size`** vrijednosti.
+- **Dva nova gatea u preflightu:** `check:palette` (cegrtaljka, **435**) i `check:contrast`
+  (164 provjere kroz 4 teme).
+- **Prototip landinga** `prototypes/landing-v2.html` — „landing ne opisuje proizvod, landing JEST
+  proizvod“ + prekidac paleta.
+
+### Sto je izmjereno, a nije se znalo
+- **Produkcija danas PADA WCAG AA** za tekst u boji marke: `#6366f1` na `#0f172a` = **4.00**.
+- **206 boja se krije u `rgba()` obliku** (124 indigo) — hex-revizija ih nije vidjela.
+- **Jos 134 zakucane bijele/crne.** Na tamnoj temi su neuskladjene, na svijetloj **NEVIDLJIVE**.
+- **Tekst na ispuni marke mora biti taman:** mentol + bijelo = 2.04, kreda-zuta + bijelo = 1.86.
+- **„Tocno“ se mora odmaknuti od marke:** `#5FD68A` je 23° od mentola (stapa se), `#6BCB77` je 37°.
+
+### Greske koje sam napravio i ispravio
+1. **Paletu sam ponudio iz tablice heksova** — prosla je svaki gate i pala na prvom pogledu.
+   Sada se palete biraju u prototipu, uz nepromijenjenu tipografiju i raspored.
+2. **Prvi `check:contrast` je mjerio `--color-line` na 3:1** i oborio sve cetiri teme. Provjera je bila
+   kriva, ne palete (WCAG 1.4.11 izuzima ukrasne razdjelnike). Zamalo sam „popravio“ palete i pretvorio
+   svaku hairline crtu u tvrdu prugu. Iz nalaza je ipak izasao `--color-line-strong`.
+3. **U komentare sam upisao `data-scheme` i `check:contrast` prije nego su postojali** (ADR-027:
+   proza koja opisuje zelju umjesto koda). Oboje ispravljeno — gate je napisan, atribut opisan tocno.
+4. **Cirilicno malo E (U+0435) u vlastitom komentaru** — uhvatio `check:docs`.
+
+### Sto slijedi
+Pravi landing u `index.html` (+ i18n kljucevi) → smrt `landing.css` (**63 od 435** ostatka) → logo na
+inline `<symbol>`/`<use>` da prati temu → puna suita + `css:diff` → docs.
+**Birac tema se ne ukljucuje dok `check:palette` ne dodje na nulu.**
 
 ---
 

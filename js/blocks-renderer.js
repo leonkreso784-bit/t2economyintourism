@@ -169,9 +169,48 @@
     if (b.display === false) return '<span class="lb-formula lb-formula--inline">\\(' + tex + '\\)</span>';
     return '<div class="lb-formula">\\[' + tex + '\\]</div>';
   }
+  /**
+   * Omota svaku `<table>` u `.lb-table-wrap` — isti spremnik koji `renderTable` (v2) već koristi.
+   *
+   * ⚠️ POVOD (mjereno 2026-08-14, C3): tablice iz v1 `legacy-html` sadržaja **nisu imale nikakav
+   * spremnik sa skrolom**, a tablica se ne stišće ispod svoje min-content širine. Izmjereno u
+   * Studiju: platno `469 > 320` — dakle na svakom telefonu užem od ~469px editor se vuče
+   * postrance. **Isti put renderira `learn` studentu**, pa je to bio kvar na produkciji za svaku
+   * staru lekciju s tablicom, ne samo za editor.
+   *
+   * ⚠️ ODBAČENA ALTERNATIVA: `.lb-legacy table { display:block; overflow-x:auto }` je jednoredna i
+   * radi — ali `display:block` na tablici **uklanja njezinu semantiku** (VoiceOver/Safari prestaju
+   * najavljivati retke i stupce). Zamijenili bismo kvar rasporeda kvarom pristupačnosti, a takav
+   * se ne vidi na ekranu. Zato omot, ne prekidač prikaza.
+   *
+   * `RETURN_DOM` NE dodaje krug parsiranja: string-način DOMPurifyja interno radi točno to i na
+   * kraju čita `innerHTML`. Radimo isti jedan parse + jedan serialize, pa nema prostora za mXSS
+   * koji bi nastao dodatnim ciklusom.
+   */
+  function wrapLegacyTables(body) {
+    const tables = body.querySelectorAll('table');
+    for (let i = 0; i < tables.length; i++) {
+      const t = tables[i];
+      if (t.parentNode && t.parentNode.classList
+          && t.parentNode.classList.contains('lb-table-wrap')) continue;   // već omotana
+      const wrap = body.ownerDocument.createElement('div');
+      wrap.className = 'lb-table-wrap';
+      t.parentNode.insertBefore(wrap, t);
+      wrap.appendChild(t);
+    }
+    return body;
+  }
+
   function renderLegacyHtml(b) {
     const html = String(b.html == null ? '' : b.html);
     if (window.DOMPurify && typeof window.DOMPurify.sanitize === 'function') {
+      // `RETURN_DOM` traži DOM. Ako ga nema (Node/unit-okruženje) ili ga izvedba ne ispoštuje
+      // (starija DOMPurify inačica), NE smijemo pući — blok koji baci iznimku je gori od
+      // neomotane tablice. Tad se tiho vraćamo na string-način, tj. na dosadašnje ponašanje.
+      const dom = window.DOMPurify.sanitize(html, Object.assign({}, DOMPURIFY_CFG, { RETURN_DOM: true }));
+      if (dom && typeof dom.querySelectorAll === 'function' && typeof dom.innerHTML === 'string') {
+        return '<div class="lb-legacy">' + wrapLegacyTables(dom).innerHTML + '</div>';
+      }
       return '<div class="lb-legacy">' + window.DOMPurify.sanitize(html, DOMPURIFY_CFG) + '</div>';
     }
     // Fallback (DOMPurify još nije učitan): legacy = NAŠ povjerljiv v1 sadržaj (datoteke) →

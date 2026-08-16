@@ -130,10 +130,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    /* ⚠️ Ovdje je do 2026-08-15 stajalo ZAKUCANO `color: white` na plohi koja dolazi iz
+       `data/catalog.js`. Tvrda zabrana #1 to nije uhvatila jer traži bijelo na `var(--primary)`,
+       a ova ploha nije token nego inline gradijent iz podatka — dakle rupa u brani, ne iznimka.
+       Izmjereno: bijelo na `#f59e0b` (5 predmeta) = 2.15. Tinta se sad bira izračunom
+       luminancije (`inkForTint()`), a `check:contrast` to mjeri za svaku boju u katalogu. */
+    color: var(--color-on-tint-light);
     font-size: 1.25rem;
     flex-shrink: 0;
 }
+
+.subject-item-icon[data-ink="dark"] { color: var(--color-on-tint-dark); }
 
 .subject-item-info {
     flex: 1;

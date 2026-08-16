@@ -237,29 +237,11 @@
         font-size: 1.1rem;
     }
     
-    /* Landing page small phones */
-    .hero-title {
-        font-size: 2rem !important;
-    }
-    
-    .hero-subtitle {
-        font-size: 0.95rem;
-    }
-    
-    .hero-visual {
-        width: 250px;
-        height: 250px;
-    }
-    
-    .float-card {
-        padding: 0.75rem 1rem;
-        font-size: 0.8rem;
-    }
-    
-    .float-card i {
-        font-size: 1.1rem;
-    }
-    
+    /* Landing page small phones — C2: OBRISANO.
+       `.hero-subtitle`/`.hero-visual`/`.float-card` više ne postoje, a `.hero-title` je
+       nosio `font-size: 2rem !important` — jedini `!important` koji bi TUKAO Tailwind-skalu
+       i tiho zaključao naslov na 32px na svakom telefonu. Zato se briše, a ne nadglašava. */
+
     /* Subject cards small phones */
     .subject-card {
         padding: 1.5rem 1rem !important;
@@ -297,11 +279,6 @@
     .hero h1 {
         font-size: 1.6rem;
     }
-    
-    .hero-visual {
-        width: 280px;
-        height: 280px;
-    }
 }
 
 /* ===== iPhone 14/15/16 Pro Max & Plus (428px+) ===== */
@@ -320,11 +297,6 @@
     
     .flashcard {
         min-height: 340px;
-    }
-    
-    .hero-visual {
-        width: 320px;
-        height: 320px;
     }
 }
 

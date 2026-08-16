@@ -398,9 +398,13 @@ const SokratStudio = (function () {
         '" data-st-catcolor="' + col + '" data-st-cat="' + esc(catId) +
         '" style="--dot:' + col + '" title="' + col + '" aria-label="' + esc(t('studio.colorPick', 'Boja sekcije')) + ' ' + col + '"></button>';
     });
+    // ⚠️ `title` SAM po sebi nije oznaka polja (axe `label-title-only`, serious): prečesto se ne
+    // izgovara i nikad se ne vidi na dodir. Gumbi lijevo su `aria-label` imali od početka — ovaj
+    // jedan input nije, i to je stajalo neopaženo jer u Studio dosad nije ulazio nijedan a11y gate.
     html += '<input type="color" class="st-cdot st-cdot--custom" data-st-catcolorpick data-st-cat="' + esc(catId) +
       '" value="' + (/^#[0-9a-f]{6}$/.test(cur) ? cur : '#6366f1') +
-      '" title="' + esc(t('studio.colorCustom', 'Vlastita boja')) + '">';
+      '" title="' + esc(t('studio.colorCustom', 'Vlastita boja')) +
+      '" aria-label="' + esc(t('studio.colorCustom', 'Vlastita boja')) + '">';
     return html + '</span>';
   }
   // ---- M3b: boja-kvadratići po STAVCI (kartica/pitanje/dopuna) → updateCard/Quiz/Fill {color} ----

@@ -147,7 +147,7 @@
 
 .theme-toggle:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
     transform: rotate(20deg);
 }
 
@@ -193,9 +193,7 @@
     color: #312e81;
 }
 
-[data-theme="dark"] .mobile-nav-btn.active {
-    color: #a5b4fc;
-}
+
 
 .mobile-nav-btn.active i {
     transform: scale(1.1);

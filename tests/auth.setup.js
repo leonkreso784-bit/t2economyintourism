@@ -44,11 +44,29 @@ test('authenticate as admin', async ({ page }) => {
     const signIn = await c.auth.signInWithPassword({ email, password });
     if (signIn.error) return { ok: false, error: signIn.error.message };
     const rpc = await c.rpc('is_admin');
-    return { ok: true, isAdmin: !!(rpc && rpc.data === true), rpcError: rpc && rpc.error ? rpc.error.message : null };
+    return {
+      ok: true,
+      isAdmin: !!(rpc && rpc.data === true),
+      rpcError: rpc && rpc.error ? rpc.error.message : null,
+      // ⚠️ Dijagnostika se SKUPLJALA i bacala. Bez nje poruka „nije admin" tjera na
+      // pogađanje: ne razlikuje krivi PROJEKT (override nije primljen → app gleda prod)
+      // od krive ULOGE. Ista pouka kao `a11y.spec` u §7.8 — gate mora reći ŠTO vidi.
+      // `getClient()` ne izlaže URL, pa ga čitamo iz overridea koji setup sam postavi.
+      url: (() => { try { return (window.__SOKRAT_SUPABASE__ || {}).url || '(bez overridea → prod)'; } catch (e) { return '(nedostupno)'; } })(),
+      uid: (signIn.data && signIn.data.user && signIn.data.user.id) || null,
+      signedInAs: (signIn.data && signIn.data.user && signIn.data.user.email) || null,
+    };
   }, { email, password });
 
   expect(result.ok, 'sign-in failed: ' + (result.error || '')).toBeTruthy();
-  expect(result.isAdmin, 'signed in but NOT admin — postavi profiles.role=admin za taj account').toBeTruthy();
+  expect(
+    result.isAdmin,
+    'is_admin() = false\n'
+      + '   projekt : ' + result.url + '\n'
+      + '   prijavljen: ' + result.signedInAs + '  (uid ' + result.uid + ')\n'
+      + '   rpcError : ' + (result.rpcError || '(nema)') + '\n'
+      + '   → ako je projekt PROD, override nije primljen; ako je STAGING, provjeri profiles.role'
+  ).toBeTruthy();
 
   // Pričekaj da SDK perzistira sesiju u localStorage prije snimanja.
   await page.waitForFunction(

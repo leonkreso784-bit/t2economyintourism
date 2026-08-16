@@ -89,7 +89,7 @@
 .category-btn.active {
     border-color: var(--primary);
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
 }
 
 .category-btn i { font-size: 1.5rem; color: var(--primary); width: 40px; text-align: center; flex-shrink: 0; }
@@ -126,7 +126,7 @@
 
 .action-btn.primary {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
 }
 
 .action-btn.primary:hover {

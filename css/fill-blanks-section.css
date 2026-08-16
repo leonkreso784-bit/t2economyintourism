@@ -28,7 +28,7 @@
 .fill-category {
     display: inline-block;
     background: var(--accent);
-    color: var(--bg-primary);   /* a11y (F3 3E): tamni tekst na amber pillu — bijelo je bilo 2.1:1 */
+    color: var(--bg-primary);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -78,8 +78,8 @@
 .check-btn {
     width: 100%;
     padding: 1rem 1.5rem;
-    background: var(--primary-dark);   /* a11y (F3 3E): bijelo na --primary je 4.22:1 (<4.5); --primary-dark = 5.8:1 */
-    color: white;
+    background: var(--primary-dark);
+    color: var(--on-primary);
     border: none;
     border-radius: var(--radius);
     font-family: inherit;
@@ -93,7 +93,11 @@
     min-height: var(--touch-target);
 }
 
-.check-btn:hover { background: #4338ca; }   /* tamnije od baze (--primary-dark) da hover ostane vidljiv */
+/* Hover NE mijenja boju nego izdiže. Prije je ovdje bio `#4338ca` — „tamnije od baze da
+   hover ostane vidljiv", što je bila istina samo dok su teme bile tamne. Tekst je
+   `var(--on-primary)`, koji se s temom OKRENE: na `chalk`/`mint` postane taman, pa bi
+   tamniji indigo dao tamno na tamnom. Fiksna boja ne može zadovoljiti oba smjera. */
+.check-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
 
 .fill-feedback {
     margin-top: 1rem;
@@ -121,10 +125,12 @@
     margin-bottom: 1rem;
 }
 
+/* Ista promjena kao u `flashcards-section.css`: tinta je bila ploha koju nijedan gate
+   ne mjeri, pa je na svijetloj temi „Savjet" pao ispod 4.5. Značenje nose obrub i tekst. */
 .control-btn.hint {
-    background: rgba(245, 158, 11, 0.1);
+    background: transparent;
     color: var(--accent);
     border: 2px solid var(--accent);
 }
 
-.control-btn.hint:hover { background: var(--accent); color: white; }
+.control-btn.hint:hover { background: var(--accent); color: var(--on-primary); }

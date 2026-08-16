@@ -53,7 +53,7 @@
     width: 100%;
     padding: 1rem 2rem;
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
     border: none;
     border-radius: var(--radius);
     font-family: inherit;
@@ -102,7 +102,7 @@
 .question-category {
     display: inline-block;
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -153,7 +153,7 @@
     background: rgba(99, 102, 241, 0.1);
 }
 
-.answer-btn.selected { border-color: var(--primary); background: var(--primary); color: white; }
+.answer-btn.selected { border-color: var(--primary); background: var(--primary); color: var(--on-primary); }
 .answer-btn.correct { border-color: var(--success); background: var(--success); color: white; }
 .answer-btn.wrong { border-color: var(--danger); background: var(--danger); color: white; }
 .answer-btn.disabled { cursor: not-allowed; opacity: 0.7; }

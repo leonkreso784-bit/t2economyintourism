@@ -44,6 +44,7 @@ const NOT_IN_BUNDLE = {
   'css/tokens.css': 'tokeni — manifest ga uvozi prvi',
   'css/legal.css': 'contact/faq/privacy/terms ga učitavaju zasebno (ne uzimaju bundle)',
   'css/consent.css': 'consent banner — zaseban <link> u svakoj stranici',
+  'css/tokens.static.css': 'GENERIRAN ovim skriptom (izvadak :root iz bundlea) — nije izvor; uvoz bi ga udvostručio',
 };
 
 /** Popis svih `css/**.css` u repozitoriju (POSIX putanje, relativno na ROOT). */
@@ -121,25 +122,90 @@ function compile() {
   return { content, version };
 }
 
+/* ── drugi izlaz: samo tokeni, za stranice bez bundlea ────────────────────────
+ * `privacy/terms/faq/contact.html` NE učitavaju `styles.bundle.css` (samostalne
+ * su i brze), pa im je paleta dotad bila PREPISANA kao hex u `css/legal.css`.
+ * Dva mjesta za jednu činjenicu — i razišla su se u prvom pokušaju: aplikacija
+ * je prešla na „Kredu i tablu", a pravne stranice ostale mentol, pa je jedan
+ * klik iz footera vodio u drugu paletu. (ADR-027: duplikat se briše, ne sinkronizira.)
+ *
+ * `css/tokens.css` se NE može poslužiti izravno — `@theme static` je Tailwindova
+ * direktiva koju preglednik ne razumije. Zato se `:root` blokovi VADE IZ VEĆ
+ * PREVEDENOG bundlea: iste vrijednosti, isti build, nula prepisivanja. Usput te
+ * četiri stranice besplatno dobiju i sve teme. */
+const TOKENS_OUT = path.join(ROOT, 'css', 'tokens.static.css');
+const TOKENS_OUT_REL = 'css/tokens.static.css';
+
+function extractTokens(css, version) {
+  /* ⚠️ Vade se DVIJE vrste bloka i REDOSLIJED je bitan:
+   *   `@layer theme { :root, :host { … } }`  = ZADANA paleta (Tailwindov @theme)
+   *   `:root[data-theme="x"] { … }`          = teme, NEUSLOJENE navrh
+   * Neuslojeno tuče svaki sloj (nalaz C1), pa `@layer` omot MORA ostati — bez
+   * njega bi zadane vrijednosti dobile istu težinu kao teme i, stojeći prvo,
+   * bile pregažene… ili, stojeći zadnje, pregazile SVE teme.
+   * Prva verzija ove funkcije tražila je samo `^:root` i tiho ispustila zadanu
+   * paletu (u izlazu nije bilo ni jedne krede), a teme složila PRIJE nje. */
+  const blocks = [];
+  const re = /^(?:@layer theme\s*\{|:root[^{]*\{)/gm;
+  let m;
+  while ((m = re.exec(css)) !== null) {
+    let depth = 0;
+    for (let j = css.indexOf('{', m.index); j < css.length; j++) {
+      if (css[j] === '{') depth++;
+      else if (css[j] === '}' && --depth === 0) { blocks.push(css.slice(m.index, j + 1)); break; }
+    }
+  }
+  // Brana protiv tihog ispuštanja: bez zadane palete ili bez tema datoteka je
+  // beskorisna, a izgleda uredno. Pada glasno, ne ostavlja polovičan izlaz.
+  const spojeno = blocks.join('\n\n');
+  const problemi = [];
+  if (!/@layer theme\s*\{/.test(spojeno)) problemi.push('nema `@layer theme` — zadana paleta bi nedostajala');
+  if (!/\[data-theme=/.test(spojeno)) problemi.push('nema nijedne `[data-theme]` teme');
+  if (/@layer theme/.test(spojeno) && spojeno.indexOf('@layer theme') > spojeno.indexOf('[data-theme=')) {
+    problemi.push('zadana paleta stoji IZA tema — pregazila bi ih');
+  }
+  if (problemi.length) {
+    console.error(`❌ ${TOKENS_OUT_REL}: izvadak nije upotrebljiv.`);
+    problemi.forEach((p) => console.error('   · ' + p));
+    process.exit(1);
+  }
+  return [
+    '/* GENERIRANO — ne uređuj ručno. Izvor: css/tokens.css → npm run build:css.',
+    '   Postoji zato što privacy/terms/faq/contact.html ne učitavaju bundle, a',
+    `   paleta smije živjeti na jednom mjestu. (tailwindcss ${version})`,
+    ' */',
+    '',
+    blocks.join('\n\n'),
+    '',
+  ].join('\n');
+}
+
 function main() {
   const check = process.argv.includes('--check');
   checkManifestCoverage();
   const { content, version } = compile();
   const modules = importedModules().length;
+  const tokens = extractTokens(content, version);
 
   if (check) {
     const onDisk = fs.existsSync(OUT) ? fs.readFileSync(OUT, 'utf8').replace(/\r\n/g, '\n') : null;
-    if (onDisk === content) {
-      console.log(`✅ ${OUT_REL} u sinku s ${modules} modula + tokenima (tailwindcss ${version}).`);
+    const tokensOnDisk = fs.existsSync(TOKENS_OUT)
+      ? fs.readFileSync(TOKENS_OUT, 'utf8').replace(/\r\n/g, '\n') : null;
+    if (onDisk === content && tokensOnDisk === tokens) {
+      console.log(`✅ ${OUT_REL} + ${TOKENS_OUT_REL} u sinku s ${modules} modula + tokenima (tailwindcss ${version}).`);
       process.exit(0);
     }
-    console.error(`❌ DRIFT: ${OUT_REL} nije u sinku s izvorima. Pokreni "npm run build:css".`);
+    const koji = onDisk !== content ? OUT_REL : TOKENS_OUT_REL;
+    console.error(`❌ DRIFT: ${koji} nije u sinku s izvorima. Pokreni "npm run build:css".`);
     process.exit(1);
   }
 
   fs.writeFileSync(OUT, content);
+  fs.writeFileSync(TOKENS_OUT, tokens);
   const kb = (Buffer.byteLength(content) / 1024).toFixed(1);
+  const tkb = (Buffer.byteLength(tokens) / 1024).toFixed(1);
   console.log(`✅ ${OUT_REL} zgrađen iz ${modules} modula + tokena (${kb} KB, tailwindcss ${version}).`);
+  console.log(`✅ ${TOKENS_OUT_REL} zgrađen (${tkb} KB) — paleta za stranice bez bundlea.`);
   console.log('   ⚠️ Cache-bump: pokreni `npm run bump` (styles.bundle.css token je u index.html).');
 }
 

@@ -3,6 +3,9 @@
   "version": "2.0.0",
   "description": "Sokrat Study — interactive exam-prep platform for FMTU Opatija (Hospitality Management): lessons, flashcards, quizzes, fill-in-the-blank and interactive exercises across Year 1 & 2 subjects (EN + HR).",
   "main": "index.html",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "start": "npx serve .",
     "dev": "npx serve . -l 3000",
@@ -26,6 +29,10 @@
     "check:docs": "node scripts/check-docs.js",
     "check:lockfile": "node scripts/check-lockfile.js",
     "check:tailwind": "node scripts/check-tailwind.js",
+    "check:cdn": "node scripts/check-cdn.js",
+    "check:cdn:live": "node scripts/check-cdn.js --verify",
+    "check:palette": "node scripts/check-palette.js",
+    "palette:breakdown": "node scripts/palette-breakdown.js",
     "check:functions": "node scripts/check-edge-functions.js",
     "css:diff": "node scripts/css-diff.js",
     "diff:db": "node scripts/diff-db-vs-files.js",
@@ -33,8 +40,9 @@
     "backup": "node scripts/backup-db.js",
     "backup:verify": "node scripts/backup-db.js --verify",
     "export:json": "node scripts/export-content-json.js",
-    "preflight": "npm run check:lockfile && npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
-    "scaffold": "node scripts/scaffold-subject.js"
+    "preflight": "npm run check:lockfile && npm run verify && npm run bump:check && npm run build:css -- --check && npm run check:tailwind && npm run check:cdn && npm run check:palette && npm run check:contrast && npm run typecheck && npm run validate:schema && npm run export:json -- --check && npm run check:docs && npm run test:unit",
+    "scaffold": "node scripts/scaffold-subject.js",
+    "check:contrast": "node scripts/check-contrast.js"
   },
   "keywords": [
     "sokrat-study",
@@ -54,15 +62,15 @@
   },
   "homepage": "https://www.sokratstudy.com",
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
-    "@lhci/cli": "^0.15.1",
-    "@playwright/test": "^1.60.0",
+    "@axe-core/playwright": "4.12.1",
+    "@lhci/cli": "0.15.1",
+    "@playwright/test": "1.60.0",
     "@tailwindcss/cli": "4.3.3",
-    "ajv": "^8.20.0",
-    "axe-core": "^4.12.1",
-    "dotenv": "^17.4.2",
-    "pdf-parse": "^2.4.5",
+    "ajv": "8.20.0",
+    "axe-core": "4.12.1",
+    "dotenv": "17.4.2",
+    "pdf-parse": "2.4.5",
     "tailwindcss": "4.3.3",
-    "typescript": "^6.0.3"
+    "typescript": "6.0.3"
   }
 }

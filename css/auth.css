@@ -28,7 +28,7 @@
 }
 
 .nav-auth-btn.is-signed-in {
-    color: var(--primary-light);
+    color: var(--primary);
     border-color: rgba(99, 102, 241, 0.45);
 }
 
@@ -56,10 +56,10 @@ sokrat-modal.auth-modal > * {
     width: 100%;
     max-width: 420px;
     padding: 1.75rem 1.6rem 1.6rem;
-    background: var(--bg-card, #0f172a);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
 }
 
 .auth-modal__close {
@@ -85,7 +85,7 @@ sokrat-modal.auth-modal > * {
     color: var(--text-primary);
 }
 
-.auth-modal__title i { color: var(--primary-light); }
+.auth-modal__title i { color: var(--primary); }
 
 .auth-modal__text {
     margin: 0 0 1rem;
@@ -124,7 +124,7 @@ sokrat-modal.auth-modal > * {
 
 .auth-modal__tab.is-active {
     background: rgba(99, 102, 241, 0.18);
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 /* ---------- Forme ---------- */
@@ -155,7 +155,7 @@ sokrat-modal.auth-modal > * {
     transition: color 0.2s ease;
 }
 
-.auth-modal__link:hover { color: var(--primary-light); }
+.auth-modal__link:hover { color: var(--primary); }
 
 .auth-modal__input {
     width: 100%;
@@ -220,7 +220,7 @@ sokrat-modal.auth-modal > * {
     opacity: 0.85;
 }
 
-.auth-modal__terms a { color: var(--primary-light); }
+.auth-modal__terms a { color: var(--primary); }
 
 /* ---------- Mobile ---------- */
 

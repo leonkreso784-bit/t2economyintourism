@@ -19,8 +19,17 @@ const SOKRAT_AUTH_CONFIG = {
     // Supply-chain (risk-sprint #5): TOČAN pin (ne plutajući @2) + SRI hash računat nad
     // stvarnim bajtovima koje jsDelivr servira → mijenja li CDN sadržaj, skripta se ODBIJA
     // (browser SRI enforce). Nadogradnja verzije = svjesna: novi pin + novi hash + re-test.
-    cdnSrc: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.8/dist/umd/supabase.min.js',
-    cdnIntegrity: 'sha384-Tve8O+C6PBzsIMK/IRCwHbi8fyEzXIlIs6OfVBZHubplwYhaQF/4Mzxqgg+pp/oy'
+    //
+    // ⚠️ 2026-08-14: putanja je promijenjena `supabase.min.js` → `supabase.js`, i to NIJE kozmetika.
+    // `dist/umd/supabase.min.js` **ne postoji u npm paketu** — jsDelivr ga generira VLASTITIM
+    // minifierom na zahtjev (dokaz: v1 file-listing paketa nema tu datoteku, a „minificirana"
+    // inačica je 208196 B, dakle 292 B VEĆA od objavljene 207904 B). Time je SRI dotad bio pinan
+    // na IZVEDEN artefakt tuđeg build-koraka, a ne na izdavačeve bajtove: dan kad jsDelivr
+    // promijeni minifier, hash pukne → `onerror` → auth se TIHO ugasi (v. loadSdk niže), tj.
+    // prijava umre bez poruke i bez ijednog crvenog gatea. Sad pokazujemo na objavljenu datoteku
+    // čiji sha256 je provjeren protiv jsDelivrovog file-listinga → hash se mijenja SAMO s verzijom.
+    cdnSrc: 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.8/dist/umd/supabase.js',
+    cdnIntegrity: 'sha384-M65KxMm/JqBppck6onbmAgPVMBHrmPCf1L17Q+71EcvI9/VVI8j5cqoxQf6lj6h2'
 };
 
 // TEST-ONLY seam (U1): dopusti automatiziranim testovima (Playwright) da preusmjere Supabase

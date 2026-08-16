@@ -168,7 +168,7 @@
     padding: 0.875rem 1.5rem;
     background: transparent;
     border: 2px solid var(--danger);
-    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 */
+    color: var(--danger-text);
     border-radius: var(--radius);
     font-family: inherit;
     font-weight: 600;

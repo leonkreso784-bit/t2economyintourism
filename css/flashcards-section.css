@@ -89,7 +89,7 @@
    se samo mijenja boja. */
 .flashcard-front {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
+    color: var(--on-primary);
     box-shadow: inset 0 0 0 3px var(--item-acc, transparent), var(--shadow-lg);
 }
 
@@ -169,21 +169,34 @@
     min-height: var(--touch-target);
 }
 
+/* ⚠️ TINTA JE NEVALIDIRANA PODLOGA — zato je otišla (C2, 2026-08-13).
+   Ovdje je stajalo `background: rgba(34,197,94,.1)` uz `color: var(--success)`. Problem
+   nije bio token nego to što `check:contrast` mjeri boje na PLOHAMA koje poznaje
+   (`surface-0/1/2`), a tinta je četvrta, izmišljena ploha koju nitko ne mjeri. Na tamnoj
+   podlozi je razlika bila nevažna; na svijetloj je efektivna pozadina posvijetlila i
+   omjer pao ispod 4.5 — axe je oborio i „Znam" i „Savjet".
+
+   Rješenje NIJE tamniji tekst (na tamnim temama bi bilo obrnuto) nego **plaha koju gate
+   poznaje**: pozadina je sad `--bg-tertiary`, a značenje nose OBRUB i BOJA TEKSTA.
+   To je usput i bliže Appleovoj disciplini — vlas-crta umjesto ispune. */
 .control-btn.wrong {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--danger-text);   /* a11y (F3 3E): kontrast ≥4.5:1 na tamnoj podlozi */
+    background: transparent;
+    color: var(--danger-text);
     border: 2px solid var(--danger);
 }
 
-.control-btn.wrong:hover { background: var(--danger); color: white; }
+.control-btn.wrong:hover { background: var(--danger); color: var(--on-primary); }
 
+/* `transparent`, ne `--bg-tertiary`: na tercijarnoj plohi je zelena davala **4.80** —
+   prolazi, ali bez rezerve, pa je svaki idući pomak palete gura ispod praga. Ovako tekst
+   sjedi na plohi sekcije, koju `check:contrast` mjeri izravno u svim temama. */
 .control-btn.correct {
-    background: rgba(34, 197, 94, 0.1);
+    background: transparent;
     color: var(--success);
     border: 2px solid var(--success);
 }
 
-.control-btn.correct:hover { background: var(--success); color: white; }
+.control-btn.correct:hover { background: var(--success); color: var(--on-primary); }
 
 .control-btn.prev,
 .control-btn.next {
@@ -194,7 +207,7 @@
 .control-btn.prev:hover,
 .control-btn.next:hover {
     background: var(--primary);
-    color: white;
+    color: var(--on-primary);
 }
 
 .flashcard-stats {
@@ -211,4 +224,4 @@
 }
 
 .flashcard-stats .stat.correct { color: var(--success); }
-.flashcard-stats .stat.wrong { color: var(--danger-text); }   /* a11y (F3 3E): kontrast ≥4.5:1 */
+.flashcard-stats .stat.wrong { color: var(--danger-text); }

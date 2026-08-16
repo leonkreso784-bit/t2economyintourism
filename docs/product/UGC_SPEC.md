@@ -85,7 +85,7 @@ injekcije), jer je `js/blocks-renderer.js` sigurnosna granica.
 
 ## 5 · Granice koje ova mogućnost ne smije pomaknuti
 
-- **Javni katalog, 22 predmeta i studentski vrući put ostaju nedirnuti.**
+- **Javni katalog (danas 24 predmeta) i studentski vrući put ostaju nedirnuti.**
 - **Svaki upis ide kroz `SECURITY DEFINER` RPC s provjerom vlasništva** (`owner_id = auth.uid()`).
   `anon` nema ništa; `authenticated` ima samo `SELECT`.
 - **`js/blocks-renderer.js` ostaje jedini prikazivač** i jedina točka koja odlučuje što se ispisuje.

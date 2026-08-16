@@ -49,7 +49,7 @@ ENGINE (subject-agnostic)
   js/acc-kernel.js       — ČISTI double-entry kernel (za 'journal' tip): postEntries, isBalanced,
                            deriveEndingBalances, classifyTotals  (node-testabilno)
   js/exercises.js        — DOM/UI: initExercises(), render liste, dispatch po type-u, 3 moda, progress
-  css/exercises.css      — stilovi (import u styles.css s ?v=)
+  css/exercises.css      — stilovi (uvezen u manifest css/app.css)
 
 CONTENT PACK (po predmetu)
   data/<subject>/exercises.js  →  window.<subject>Exercises = { meta:{lang,currency,version}, exercises:[...] }
@@ -127,8 +127,8 @@ stvarnim %), `walkthrough` (prikaže `solution[]` korak-po-korak).
 
 ## 5. Pravila procesa (na SVAKU ciglu)
 1. **Additivno + iza flag-a:** dok tip/sadržaj nije gotov, app mora raditi identično za sve ostale predmete.
-2. **Cache bump:** svaka izmjena `js/*`, `css/*`, `data/*` → bump `?v=` u `index.html` (+ `@import` token u `styles.css`)
-   i `CONTENT_VERSION` u `content-loader.js`. (BUG-004 — inače deploy nevidljiv.)
+2. **Cache bump:** svaka izmjena `js/*`, `css/*`, `data/*` → **`npm run bump`** (svi `?v=` + `CONTENT_VERSION`
+   + `SW_VERSION` odjednom; ADR-017). Nakon izmjene CSS-a i **`npm run build:css`**. (BUG-004 — inače deploy nevidljiv.)
 3. **Provjere prije commita:** `npm run verify` (0 grešaka) + node testovi za core/kernel + `npm run test:responsive`
    (+ privremeni `tests/_tmp-exercises-*.spec.js`, briše se nakon).
 4. **Commit lokalno OK; deploy SAMO uz izričitu potvrdu korisnika.**

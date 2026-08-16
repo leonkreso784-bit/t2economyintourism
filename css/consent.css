@@ -1,7 +1,13 @@
 /* ===== Sokrat Study — Cookie consent banner =====
-   Self-contained component (explicit colors) so it looks identical on the app
-   AND on the legal pages, regardless of which stylesheet is loaded.
-   GDPR: shown until the visitor accepts or rejects analytics cookies. */
+   GDPR: shown until the visitor accepts or rejects analytics cookies.
+
+   ⚠️ C2 — RAZLOG ZA „self-contained (explicit colors)" JE OTPAO, I BIO JE POGREŠAN.
+   Namjera je bila da traka izgleda isto u aplikaciji i na pravnim stranicama bez obzira
+   koji je stylesheet učitan. Cijena je bila da je traka bila JEDINA površina koja NE
+   sluša temu: kad je zadana postala svijetla, ostala je tamna ploča s indigo gumbom
+   preko dna svake stranice — i to je bilo jedino vidljivo slomljeno mjesto u cijelom toku.
+   Pravo rješenje je `css/tokens.static.css` (generiran izvadak palete), koji pravne
+   stranice ionako od C2/3 učitavaju — pa tokeni postoje na OBA mjesta. */
 
 .cookie-banner {
     position: fixed;
@@ -14,11 +20,11 @@
     padding: 16px;
     display: flex;
     justify-content: center;
-    background: #11131a;
-    border-top: 1px solid rgba(255, 255, 255, 0.10);
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.45);
-    color: #e6e8ef;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--color-surface-1);
+    border-top: 1px solid var(--color-line);
+    box-shadow: var(--shadow-e2);
+    color: var(--color-ink-1);
+    font-family: var(--font-sans);
     animation: cookieSlideUp 0.28s ease-out;
 }
 
@@ -49,13 +55,13 @@
     margin: 0;
     font-size: 0.9rem;
     line-height: 1.5;
-    color: #c7cad6;
+    color: var(--color-ink-2);
 }
 
-.cookie-banner__text strong { color: #fff; }
+.cookie-banner__text strong { color: var(--color-ink-0); }
 
 .cookie-banner__text a {
-    color: #a5b4fc;
+    color: var(--color-brand-500);
     text-decoration: underline;
 }
 
@@ -70,7 +76,7 @@
     box-sizing: border-box;
     cursor: pointer;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     padding: 10px 18px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -80,18 +86,21 @@
 }
 .cookie-btn:active { transform: translateY(1px); }
 
+/* Gradijent je maknut: dva hexa iz stare palete koja nikakva tema ne može pregaziti,
+   a i sam gradijent je ukras bez značenja (§7.6.5). Tekst ide kroz `--color-on-brand`,
+   nikad `white` — tvrda brana u `check:palette`. */
 .cookie-btn--accept {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: #fff;
+    background: var(--color-brand-500);
+    color: var(--color-on-brand);
 }
-.cookie-btn--accept:hover { filter: brightness(1.08); }
+.cookie-btn--accept:hover { background: var(--color-brand-600); }
 
 .cookie-btn--reject {
     background: transparent;
-    color: #c7cad6;
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: var(--color-ink-2);
+    border: 1px solid var(--color-line-strong);
 }
-.cookie-btn--reject:hover { background: rgba(255, 255, 255, 0.06); }
+.cookie-btn--reject:hover { background: var(--color-surface-2); color: var(--color-ink-0); }
 
 /* On narrow screens stack text over full-width buttons */
 @media (max-width: 560px) {

@@ -135,7 +135,15 @@
     //    → isti `block.tex` → student render (KaTeX) NEPROMIJENJEN. Student NIKAD ne učita MathLive
     //    (lijeno, tek kad admin otvori formula-editor) = nula utjecaja na perf/bundle. Tvornička virtualna
     //    tipkovnica UGAŠENA (U8.9b = naša čista paleta). CDN padne → graceful fallback na sirovi <input>. ──
-    var MATHLIVE_SRC = 'https://cdn.jsdelivr.net/npm/mathlive';
+    // ⚠️ 2026-08-14: ovo je do danas bilo `npm/mathlive` — BEZ VERZIJE, dakle „uvijek najnovija".
+    // Komentar gore je tvrdio da je biblioteka „vendorana/CDN kao KaTeX", a KaTeX JEST pinan i
+    // MathLive nije bio: kod je kršio vlastiti zapisani uvjet dok je komentar tvrdio suprotno.
+    // Isto pravilo koje `.npmrc` (`save-exact=true`) i `check:lockfile` nameću ALATU vrijedi tim
+    // više za kod koji se izvršava u korisnikovu pregledniku. Pin je namjerno 0.110.0 = točno ono
+    // što je goli URL posluživao u trenutku zamrzavanja (bajt-identično, 843724 B), pa ponašanje
+    // ostaje nepromijenjeno. Nadogradnja = svjesna: nova verzija + novi hash + `test:authed`.
+    var MATHLIVE_SRC = 'https://cdn.jsdelivr.net/npm/mathlive@0.110.0/mathlive.min.js';
+    var MATHLIVE_SRI = 'sha384-5IN6K0kiaz8MufrTGBvPCP3oDeMjmwe+DDTvuyQLNv6gc634FpKbQfllonjHJPmy';
     var _mlState = 'idle';                                   // idle | loading | ready | failed
     var _mlPromise = null;
     function ensureMathLive() {
@@ -146,6 +154,9 @@
         _mlState = 'loading';
         var s = document.createElement('script');
         s.src = MATHLIVE_SRC; s.async = true;
+        // SRI enforce traži i `crossOrigin` na cross-origin skripti (jsDelivr šalje ACAO:*).
+        // Promijenjen bajt → onerror → `_mlState='failed'` → graceful fallback na sirovi <input>.
+        s.integrity = MATHLIVE_SRI; s.crossOrigin = 'anonymous';
         var to = setTimeout(function () { _mlState = 'failed'; reject(new Error('mathlive timeout')); }, 9000);
         s.onload = function () {
           clearTimeout(to);

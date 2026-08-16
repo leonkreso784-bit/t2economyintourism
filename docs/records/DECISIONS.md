@@ -4,6 +4,42 @@ Svaka značajna odluka: kontekst → odluka → posljedice. Najnovija na vrhu.
 
 ---
 
+## ADR-030 — AI kroz MCP je GLAVNI put stvaranja; editor je dorada, ne ishodište
+**Datum:** 2026-08-13 · **Status:** ✅ ODLUČENO (Leon) · **Vezano:** [ADR-026](#adr-026) (MCP invarijante), [ADR-029](#adr-029) (UGC je glavni proizvod), [ADR-018](#) (podatak, nikad kod)
+
+**Kontekst.** Leon, opisujući stanje za ~2 mjeseca: *„MCP za spojiti AI će biti primjećeniji i najviše
+održan da korisnika vuče na to da koristi AI MCP da se ne mora jebat s editorom; editor će korisnik
+najviše koristiti da edita svoj sadržaj koji mu je AI napravio preko MCP-a."*
+
+[ADR-026](#adr-026) je MCP već uveo, ali **kao rješenje za MOBILNO autorstvo** — editor na dodir je bio
+neupotrebljiv, pa je AI bio zaobilaznica. Ovo je šire i obrnuto: MCP postaje **primarni put stvaranja
+na svim uređajima**, a editor se iz ishodišta pretvara u alat za **doradu**.
+
+**Odluka.** **Gradivo prvenstveno nastaje kroz korisnikov AI (MCP); editor postoji da se ono
+dotjera.** Editor se time smije **pojednostaviti** — smije IZGUBITI funkcije, ne dobiti ih.
+
+**Posljedice:**
+- **MCP prestaje biti spike i postaje proizvod.** Danas je `mcp-admin/` untracked, read-only pokus
+  ([[mcp-admin-spike]]). Kao glavni put stvaranja treba write-putove, autentikaciju, validaciju i
+  upute za krajnjeg korisnika. **To je najveći neriješeni komad plana — veći od cijelog frontenda.**
+- **⚠️ PRISTUP JE PRVI PROBLEM, NE ZADNJI.** Sve se danas oslanja na JWT iz prijave u pregledniku;
+  korisnikov Claude nema preglednik. Treba osobni token ili OAuth. **Dok to nije presuđeno, ostatak
+  MCP-a nema smisla graditi** — svaki write-put ovisi o tome čijim imenom piše.
+- **⚠️ KONTROLA KVALITETE SELI S EKRANA U WRITE-PUT.** Strop duljine kartice (200 upozorenje / **500
+  tvrda blokada**) danas živi u **editoru**. Ako AI piše izravno, editor se preskače — i strop nestaje.
+  Šav srećom postoji: `js/card-limits.js` je jedna politika koju čitaju editor **i** `validate:content`;
+  MCP mora postati **treći čitatelj, nikad treća kopija** (ADR-027). Isto vrijedi za escaping i shemu.
+- **Granica opsega se postavlja UNAPRIJED, ne usput.** MCP smije stvarati i mijenjati **isključivo
+  vlastito gradivo prijavljenog korisnika**. Invarijante iz ADR-026 stoje netaknute: **nikad katalog ·
+  nikad `is_admin()` · nikad `service_role`**. Vrijedi i ADR-018: AI piše **PODATKE, nikad KOD** →
+  **vježbe ostaju izvan MCP-a** (`generate()` ne preživi serijalizaciju, BUG-012).
+- **Ne mijenja se ništa sigurnosno.** ADR-024 (osobni graditelj = zaseban otok, owner-RLS, upis samo
+  kroz `SECURITY DEFINER` RPC) i ADR-025 stoje. Ovo je odluka o **istaknutosti i redoslijedu**.
+- **Frontend se ne usporava.** C3–C7 teku dalje; ADR-030 mijenja što „polish editora" znači —
+  manje površine, ne više.
+
+---
+
 ## ADR-029 — UGC je glavni proizvod; javni katalog je JEDAN izvor gradiva, ne srce platforme
 **Datum:** 2026-08-09 · **Status:** ✅ ODLUČENO (Leon: *„to nam postaje glavna stvar, predmeti su samo jedna stvar"*) · **Plan:** [plan/FRONTEND_REDIZAJN.md](../plan/FRONTEND_REDIZAJN.md)
 
@@ -27,6 +63,28 @@ gradivo"* prije nego *„evo 22 predmeta s FMTU-a"*.
   kroz `SECURITY DEFINER` RPC), ADR-025 (doseg) i ADR-018 (student uploada PODATKE, nikad KOD) stoje
   netaknuti. Ovo je odluka o **istaknutosti**, ne o popuštanju granice.
 - **Ne mijenja se prioritet sadržaja.** Sadržajna staza ostaje pauzirana (ADR-018); HR nosi Saša.
+
+### ➕ Dopuna 2026-08-14 — „prije" postaje „ravnopravno" (Leon, na maketi)
+
+Izvorni tekst traži da posjetitelj vidi *„napravi svoje gradivo"* **prije** *„evo 22 predmeta"*.
+Provedeno doslovno, to je dalo landing koji **skriva jedini dokaz da sadržaja uopće ima** — a Leon je
+tražio suprotno: *„trebaju biti predmeti i sve"*, pa u istoj sesiji i *„ugc je skriven još uvijek…
+kada ju otvori bilo tko da vidi da može radit svoj sadržaj tu"*. **Oba zahtjeva su točna i nisu u
+sukobu**; sukob je bio u riječi „prije".
+
+**Razrješenje:** *prije* → **ravnopravno, i to u herou**.
+
+- **Naslov pokriva OBA izvora** — odakle gradivo dolazi (katalog ili ti) je **detalj nabave, a ne
+  proizvod**; proizvod je pretvorba u četiri načina učenja. Time UGC nije dodatak nego pola obećanja.
+- **Dvoja vrata jednake težine** u herou; ni jedna nisu „sekundarna akcija".
+- **Katalog ostaje prva sekcija** — kao dokaz supstance, ne kao hijerarhija. **Vlastito gradivo je
+  puna sekcija odmah iza**, ne traka pri dnu.
+- **Mreža predmeta mora izgledati OTVORENO:** „＋ Tvoj predmet" kao zadnja pločica. Popis od 22
+  inače čita kao zatvoren katalog jednog fakulteta.
+
+⚠️ **Ovo je ublažavanje izvorne odredbe i tako se i vodi**, a ne njezino ispunjenje. Mjerilo ostaje
+Leonovo: *platforma mora biti takva da svatko tko je otvori odmah vidi da tu može raditi svoj
+sadržaj.* Detalji i mjere: spec **§7.13**.
 
 ---
 

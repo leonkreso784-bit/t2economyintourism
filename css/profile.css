@@ -55,7 +55,7 @@
 
 .profile-empty-icon {
     font-size: 2rem;
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 .profile-avatar {
@@ -66,7 +66,7 @@
     justify-content: center;
     border-radius: 50%;
     background: rgba(99, 102, 241, 0.15);
-    color: var(--primary-light);
+    color: var(--primary);
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
 }
@@ -84,7 +84,7 @@
     margin: 0 0 0.9rem;
 }
 
-.profile-meta a { color: var(--primary-light); }
+.profile-meta a { color: var(--primary); }
 
 /* Email odmah ispod imena (kad postoji display_name) — bez velikog razmaka */
 .profile-meta--sub { margin-bottom: 0.25rem; }
@@ -126,7 +126,7 @@
     margin: 0 0 0.7rem;
 }
 
-.profile-card-title i { color: var(--primary-light); }
+.profile-card-title i { color: var(--primary); }
 
 .profile-actions {
     display: flex;
@@ -161,7 +161,7 @@
 .profile-total strong {
     display: block;
     font-size: 1.35rem;
-    color: var(--primary-light);
+    color: var(--primary);
 }
 
 .profile-total span {
@@ -190,7 +190,7 @@
     min-width: 0;
 }
 
-.profile-stat-subject i { color: var(--primary-light); }
+.profile-stat-subject i { color: var(--primary); }
 
 .profile-stat-vals {
     display: flex;
@@ -280,7 +280,7 @@
     background: rgba(99, 102, 241, 0.12);
 }
 
-.header-auth-btn.is-signed-in { color: var(--primary-light); }
+.header-auth-btn.is-signed-in { color: var(--primary); }
 
 /* ---------- Ulaz u vlastito gradivo (C0 / ADR-029) ----------
    Isti oblik kao auth-gumb da se zaglavlja ne razilaze, ali NAGLAŠEN: vlastito gradivo
@@ -296,7 +296,7 @@
     background: rgba(99, 102, 241, 0.14);
     border: 1px solid rgba(99, 102, 241, 0.45);
     border-radius: 50%;
-    color: var(--primary-light);
+    color: var(--primary);
     font-size: 1rem;
     cursor: pointer;
     transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
@@ -354,7 +354,7 @@
 .admin-editbar__count {
     display: inline-block; min-width: 1.5rem; text-align: center;
     padding: 0.05rem 0.5rem; border-radius: 999px; font-size: 0.8rem;
-    background: var(--primary, #6366f1); color: #fff;
+    background: var(--primary); color: var(--on-primary);
 }
 .admin-editbar__actions { display: inline-flex; gap: 0.6rem; flex-wrap: wrap; }
 .admin-editbar .cta-button { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
@@ -368,7 +368,7 @@
     display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.admin-edit-btn:hover { background: var(--primary-dark, #4338ca); color: #fff; border-color: var(--primary, #6366f1); }
+.admin-edit-btn:hover { background: var(--primary-dark); color: var(--on-primary); border-color: var(--primary); }
 
 /* „Dodaj stavku" gumb (U6c strukturne operacije) — dashed, diskretan dok se ne hoverne */
 .admin-add-btn {
@@ -412,7 +412,7 @@
     width: 100%; box-sizing: border-box; resize: vertical;
     padding: 0.6rem 0.7rem; border-radius: 9px;
     border: 1px solid var(--border-color, #334155);
-    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    background: var(--bg-primary); color: var(--text-primary);
     font-family: inherit; font-size: 0.95rem; line-height: 1.4;
 }
 .admin-edit__input:focus { outline: none; border-color: var(--primary, #6366f1); }
@@ -434,7 +434,7 @@
 .admin-edit__field--color { flex-direction: row; align-items: center; justify-content: space-between; }
 .admin-edit__color {
     width: 52px; height: 34px; padding: 2px; cursor: pointer; border-radius: 8px;
-    border: 1px solid var(--border-color, #334155); background: var(--bg-primary, #0f172a);
+    border: 1px solid var(--border-color, #334155); background: var(--bg-primary);
 }
 .admin-edit__note { font-size: 0.78rem; color: var(--text-secondary); margin: 0 0 0.5rem; }
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
@@ -461,7 +461,7 @@
     flex: 1 1 auto; min-width: 0; box-sizing: border-box;
     padding: 0.5rem 0.6rem; border-radius: 8px;
     border: 1px solid var(--border-color, #334155);
-    background: var(--bg-primary, #0f172a); color: var(--text-primary);
+    background: var(--bg-primary); color: var(--text-primary);
     font-size: 0.9rem; font-family: inherit;
 }
 .admin-quiz-optinput:focus { outline: none; border-color: var(--primary, #6366f1); }
