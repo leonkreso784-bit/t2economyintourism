@@ -3,7 +3,29 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
-## 🔥 `a11y.authed` (Studio) nije doveden do zelenog — traži odmoran stroj — 2026-08-15
+## ✅ ~~`a11y.authed` (Studio) nije doveden do zelenog~~ — POTVRĐENO OKRUŽENJE, ZATVORENO 2026-08-16
+
+**Ponovljeno na odmornom stroju: 3 prošla / 0 palo, Studio u 46,2 s** (`auth-setup` 5,7 s ·
+„Moji materijali" 5,9 s · Studio 46,2 s; ukupno 1,0 min). Isti commit, isti helper, **bez ijedne
+izmjene** — samo neopterećen stroj. Puna suita iza toga: **371 prošlo / 0 palo / 30 preskočeno**.
+
+> 📏 **NORMALA TRAJANJA (nova navika, 2026-08-16): puna suita = 23,5 min · `a11y.authed` = 1,0 min**
+> (`workers: 1`, `fullyParallel: false`, ~401 test kroz 6 projekata — sve sekvencijalno).
+> **Povod:** dnevnici su dosad bilježili KOLIKO je testova prošlo, ali nikad KOLIKO JE TRAJALO — pa
+> se jučerašnje pitanje *„je li test pokvaren ili je stroj spor?"* nije dalo odgovoriti bez punog
+> kontrolnog prolaza s izvornim kodom. **Broj bez normale ne može posvjedočiti o brzini.** Ubuduće
+> uz svaki suite-rezultat ide i vrijeme.
+
+**Time je hipoteza dokazana, a ne samo uvjerljiva:** ono što je jučer probijalo 300 s danas staje u
+46 s, dakle **usporenje NIJE bilo regresija** nego iscrpljeno okruženje. Budžet od 300 s ostaje
+(pet punih axe-analiza nad najtežom stranicom je stvarno skupo), ali sad je rezerva, ne potreba.
+
+**Pouka koja preživljava stavku:** *„test pada" i „test ne stigne završiti" su dvije različite
+tvrdnje.* Prva se rješava kodom, druga mjerenjem okoline — i razlikuju se samo kontrolnim prolazom
+s **izvornim** kodom. Da taj kontrolni prolaz nije napravljen, popravak `smiri()` bio bi proglašen
+neuspjelim i vjerojatno prepravljen još jednom, bez potrebe.
+
+<details><summary>izvorni zapis (2026-08-15)</summary>
 
 Puna suita nakon landing-cigle B: **370 prošlo / 1 palo**. Pad je bio **artefakt mjerenja**, ne kvar:
 axe je uhvatio `#toastMessage` **usred fade-a** (`fg #868584 / bg #fdfcfb = 3.59`). Da je riječ o
@@ -24,6 +46,8 @@ stranicom u aplikaciji.
 
 **Kad:** prvo što treba napraviti u sljedećoj sesiji, **prije mergea C3 u `main`**. Ako i na odmornom
 stroju pada — tek tada je nalaz, a ne okruženje.
+
+</details>
 
 ---
 
