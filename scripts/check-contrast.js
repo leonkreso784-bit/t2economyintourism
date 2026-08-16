@@ -216,6 +216,49 @@ for (const [name, t] of Object.entries(themes)) {
         problems.push(`boja predmeta ${boja} (npr. ${s.id}): odabrana tinta ${ime} daje ${r.toFixed(2)} < ${UI_MIN} — boju predmeta treba preugoditi`);
       }
     }
+
+    // (c) NIJEDNA boja predmeta ne smije nositi INDIGO ZNAKA.
+    //
+    //     Spec §7.13: znak zadržava vlastiti indigo kroz sve četiri teme — „znak definira
+    //     boju marke, ne obrnuto". Ta konstanta vrijedi samo ako je znak JEDINA stvar te
+    //     boje; do 2026-08-16 nosila su je i ČETIRI predmeta (te2, te2-hr, management,
+    //     management-hr), pa marka nije bila konstanta nego jedna od boja u mreži.
+    //
+    //     ⚠️ Zašto od ZNAKA, a ne od `--color-brand-500`: marka se PO TEMI mijenja
+    //     (academic #1657d0 plava · chalk #f2c14e zlatna), pa bi fiksna boja predmeta
+    //     bila odvojena u jednoj temi i sudarala se u drugoj. Znak je jedina nepomična
+    //     meta. Zato se indigo ČITA IZ `assets/logo.svg` — ne prepisuje se ovamo, da
+    //     pravilo prati znak ako se ikad promijeni (ADR-027: jedna činjenica, jedno mjesto).
+    //
+    //     ⚠️ Odvojenost se NE traži međusobno između predmeta: zatečena paleta ima
+    //     `#059669` (161°) i `#14b8a6` (173°) na 12° razmaka, pa bi takvo pravilo bilo
+    //     crveno od prvog dana. Brana koju zatečeno stanje ne može proći nije brana.
+    const logoPath = path.resolve(__dirname, '..', 'assets', 'logo.svg');
+    const logoHexes = [...new Set((fs.readFileSync(logoPath, 'utf8').match(/#[0-9a-fA-F]{6}/g) || []))]
+      .map((h) => h.toLowerCase())
+      .filter((h) => { const p = parseHex(h); return p && lum(p) > 0.02 && lum(p) < 0.6; }); // bijelo/crno iz znaka nisu marka
+
+    checks++;
+    if (!logoHexes.length) {
+      problems.push('assets/logo.svg nema nijednu boju marke — pravilo o odvojenosti od znaka ne može se provjeriti');
+    } else {
+      const znakHue = hue(parseHex(logoHexes[0]));
+      for (const boja of seen) {
+        const rgb = parseHex(boja);
+        if (!rgb) continue;
+        checks++;
+        const d = hueGap(rgb, parseHex(logoHexes[0]));
+        if (d < HUE_MIN) {
+          const ids = subjects
+            .filter((s) => ((Array.isArray(s.iconGradient) && s.iconGradient[0]) || s.color) === boja)
+            .map((s) => s.id);
+          problems.push(
+            `boja predmeta ${boja} je ${d.toFixed(0)}° od indiga ZNAKA (${logoHexes[0]}, ${znakHue.toFixed(0)}°) — traži se ≥ ${HUE_MIN}°. ` +
+            `Nosi je: ${ids.join(', ')}. Znak mora ostati jedina stvar te boje.`
+          );
+        }
+      }
+    }
   }
 
   if (problems.length) {
