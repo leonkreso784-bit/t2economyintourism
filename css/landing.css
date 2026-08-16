@@ -329,14 +329,31 @@
 /* ── Katalog ──────────────────────────────────────────────────────────
    Kartice crta `renderLandingSubjects()`; boja predmeta dolazi kao
    `--card-accent` u `style`, jer ADR-028 zabranjuje sastavljene klase. */
-.landing-subjects {
+.landing-subjects-grid {
     display: grid;
     gap: 0.75rem;
     grid-template-columns: 1fr;
 }
 
-@media (min-width: 34rem) { .landing-subjects { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 64rem) { .landing-subjects { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 34rem) { .landing-subjects-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 64rem) { .landing-subjects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Naslov programa — samo kad nije odabran nijedan (v. `groupedLandingSubjects()`).
+   HR program je KLON EN-a (ADR-012), pa ravna mreža stavlja „Management" uz
+   „Menadžment" i sedam takvih parova čita kao duplikati. Naslov im daje razlog.
+   Namjerno TIH: sitan, verzalan, boje pomoćnog teksta — orijentir, ne sekcija. */
+.cat-group {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin: 0 0 0.75rem;
+}
+
+/* Prvi naslov nosi razmak od trake s filtrima; svaki sljedeći odvaja grupe. */
+.landing-subjects > .cat-group + .landing-subjects-grid { margin-bottom: 1.75rem; }
+.landing-subjects > .landing-subjects-grid:last-child { margin-bottom: 0; }
 
 .landing-subject-card {
     display: flex;

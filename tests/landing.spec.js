@@ -50,8 +50,22 @@ test('landing: nav, brojka iz kataloga i vitrina predmeta', async ({ page }) => 
   expect(await page.locator('[data-meta="questionCount"]').count(),
     'brojka pitanja se vratila na landing — pokriva 17/22, v. spec kriterij #5').toBe(0);
 
-  const showcase = await page.$$eval('#landingSubjects .landing-subject-card', (e) => e.length);
-  expect(showcase).toBe(counts.primary);
+  // ⚠️ 2026-08-16 (spec §7.13 ②): vitrina je do danas pokazivala SAMO primarni program,
+  // pa su vrata pisala `total` a mreža nudila `primary` — stranica je proturječila samoj
+  // sebi. Sad se crtaju SVI, a jezik razdvaja filtar. Tvrdnja se zato mijenja s primary
+  // na total; da je samo obrisana, ništa ne bi čuvalo novu namjeru.
+  const showcase = await page.$$eval('#landingSubjects .landing-subject-card:not(.landing-subject-card--make)', (e) => e.length);
+  expect(showcase, 'vitrina se vratila na jedan program — vrata i mreža opet lažu').toBe(counts.total);
+
+  // ＋ pločica: točno jedna, i to IZA POSLJEDNJEG predmeta (§7.13). Pozicija je dio
+  // tvrdnje — na fiksnom mjestu bi čitala kao stavka popisa, a ne kao njegov kraj.
+  const plus = await page.$$eval('#landingSubjects .landing-subject-card', (sve) => {
+    const zadnji = sve[sve.length - 1];
+    return { n: sve.filter((e) => e.classList.contains('landing-subject-card--make')).length,
+             zadnja: !!(zadnji && zadnji.classList.contains('landing-subject-card--make')) };
+  });
+  expect(plus.n, '＋ pločica mora postojati točno jednom').toBe(1);
+  expect(plus.zadnja, '＋ pločica nije na kraju — čita se kao stavka popisa, ne kao njegov kraj').toBe(true);
 
   await expect(page.locator('.landing-footer .footer-cols')).toBeVisible();
 
@@ -72,10 +86,20 @@ test('landing: hero NE traži nikakav unos od posjetitelja', async ({ page }) =>
   expect(await page.locator('#heroDemo').count(), 'živi prikaz se vratio u hero').toBe(0);
 
   // Šire od samog demoa: BILO KOJE polje za unos na landingu znači da smo posjetitelju
-  // opet dali posao. Tražilica kataloga je jedina dopuštena iznimka (§7.13 ② ) — kad se
-  // doda, ovdje se izuzima IMENOM, ne brisanjem tvrdnje.
-  const polja = await page.locator('#landing-page input, #landing-page textarea').count();
+  // opet dali posao. Tražilica kataloga je jedina dopuštena iznimka (§7.13 ②) — i od
+  // 2026-08-16 je ovdje izuzeta IMENOM, kako je prošla sesija i propisala. Tvrdnja
+  // ostaje živa: doda li netko drugo polje, ovo i dalje pada.
+  const polja = await page.locator('#landing-page input:not(#catalogSearch), #landing-page textarea').count();
   expect(polja, 'landing traži unos od posjetitelja koji još nije dobio razlog').toBe(0);
+
+  // Iznimka mora biti STVARNA, ne rupa: tražilica smije postojati, ali NE u heroju.
+  // Bez ovoga bi se demo mogao vratiti pod imenom `catalogSearch` i proći.
+  const uHeroju = await page.evaluate(() => {
+    const t = document.getElementById('catalogSearch');
+    const katalog = document.querySelector('.landing-catalog');
+    return !!(t && katalog && katalog.contains(t));
+  });
+  expect(uHeroju, 'tražilica je izvan sekcije kataloga — iznimka vrijedi samo unutar nje').toBe(true);
 });
 
 test('landing: dvoje vrata vode na browse i na vlastiti materijal', async ({ page }) => {

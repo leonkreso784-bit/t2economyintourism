@@ -611,17 +611,48 @@ const TINT_INK_CROSSOVER = 0.1967;
 // landinga: vrati li se posjetitelj, katalog počinje otvoren — to je namjerno.
 const landingFilter = { q: '', program: '' };   // '' = svi programi
 
-/** Predmeti koje vitrina trenutno pokazuje, po filtru i tražilici. */
+function _pretraziv(s, q) {
+    const polja = [s.name, s.shortName, s.description].filter(Boolean).join(' ').toLowerCase();
+    return polja.includes(q);
+}
+
+/** Predmeti koje vitrina trenutno pokazuje, po filtru i tražilici (ravan popis). */
 function filteredLandingSubjects() {
     const q = landingFilter.q.trim().toLowerCase();
     const base = landingFilter.program
         ? ((typeof SokratCatalog !== 'undefined') ? SokratCatalog.subjectsOf(landingFilter.program) : [])
         : allReachableSubjects();
-    if (!q) return base;
-    return base.filter((s) => {
-        const polja = [s.name, s.shortName, s.description].filter(Boolean).join(' ').toLowerCase();
-        return polja.includes(q);
-    });
+    return q ? base.filter((s) => _pretraziv(s, q)) : base;
+}
+
+/**
+ * Isti popis, ali GRUPIRAN PO PROGRAMU — samo kad nije odabran nijedan program.
+ *
+ * ⚠️ POVOD JE NALAZ KOJI SE VIDIO TEK NA RENDERIRANOJ STRANICI, ne u brojkama.
+ * HR program je po ADR-012 KLON EN-a, pa ravna mreža od 24 stavlja „Management" i
+ * „Menadžment", „Tourism Economics" i „Ekonomika turizma" jedno do drugoga — SEDAM
+ * takvih parova. Posjetitelj tad ne vidi 24 predmeta nego 17 i sedam ponavljanja:
+ * točno po brojci, krivo po dojmu. Naslov programa parovima daje razlog.
+ *
+ * Predmet ide u PRVI program koji ga sadrži (vezni predmeti 1. godine stoje u više
+ * programa, ADR-022) — inače bi grupiranje vratilo duplikate koje dedup baš uklanja.
+ */
+function groupedLandingSubjects() {
+    const q = landingFilter.q.trim().toLowerCase();
+    if (landingFilter.program || typeof SokratCatalog === 'undefined') return null;
+
+    const uzet = Object.create(null);
+    const grupe = [];
+    (SOKRAT_CATALOG.faculties || []).forEach((f) => (f.programs || []).forEach((p) => {
+        const svoji = SokratCatalog.subjectsOf(p.id).filter((s) => {
+            if (!s || !s.id || uzet[s.id]) return false;
+            uzet[s.id] = true;
+            return true;
+        }).filter((s) => !q || _pretraziv(s, q));
+        if (svoji.length) grupe.push({ id: p.id, name: p.name, subjects: svoji });
+    }));
+    // Jedan program = nema što grupirati; naslov bi bio šum.
+    return grupe.length > 1 ? grupe : null;
 }
 
 /**
@@ -650,49 +681,62 @@ function renderCatalogPrograms() {
         </button>`).join('');
 }
 
+/** Jedna pločica predmeta. Boja i ikona dolaze iz podatka → sve kroz `browseEsc`. */
+function landingSubjectCard(s) {
+    const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
+        ? s.iconGradient : [s.color, s.color];
+    const lessonCount = (s.lessons || []).length;
+    return `
+        <button type="button" class="landing-subject-card" data-landing-subject="${browseEsc(s.id)}" style="--card-accent:${browseEsc(grad[0])}">
+            <div class="landing-subject-icon" data-ink="${inkForTint(grad[0])}" style="background:linear-gradient(135deg, ${browseEsc(grad[0])}, ${browseEsc(grad[1])});">
+                <i class="fas ${browseEsc(s.icon)}"></i>
+            </div>
+            <div class="landing-subject-info">
+                <h3>${browseEsc(s.name)}</h3>
+                <p>${_hr() ? `${browseEsc(s.year)}. godina` : `Year ${browseEsc(s.year)}`} &middot; ${_unit(lessonCount, 'lesson')}</p>
+            </div>
+            <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+        </button>`;
+}
+
+// ➕ POSLJEDNJA PLOČICA (§7.13). Puna mreža čita kao ZATVOREN POPIS — ta jedna
+// isprekidana pločica jedina kaže da platforma nije popis, i to bez ijedne riječi
+// marketinga. Ide IZA POSLJEDNJEG predmeta, nikad na fiksnu poziciju.
+function landingMakeCard() {
+    return `
+        <button type="button" class="landing-subject-card landing-subject-card--make" data-goto-materials>
+            <div class="landing-subject-icon landing-subject-icon--make" aria-hidden="true">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="landing-subject-info">
+                <h3>${browseEsc(_t('cat.make.t', 'Your subject'))}</h3>
+                <p>${browseEsc(_t('cat.make.d', 'Not on the list? Write it yourself.'))}</p>
+            </div>
+            <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
+        </button>`;
+}
+
 function renderLandingSubjects() {
     const wrap = document.getElementById('landingSubjects');
     if (!wrap || typeof SOKRAT_CATALOG === 'undefined' || !Array.isArray(SOKRAT_CATALOG.subjects)) return;
     const lista = filteredLandingSubjects();
+    const grupe = groupedLandingSubjects();
+    // ＋ pločica se ne prikazuje dok tražilica filtrira: „nema rezultata za X" pa ponuda
+    // da napraviš svoj predmet je odgovor na pitanje koje nitko nije postavio.
+    const pokaziPlus = !landingFilter.q.trim();
 
-    const kartice = lista.map((s) => {
-        const grad = (Array.isArray(s.iconGradient) && s.iconGradient.length === 2)
-            ? s.iconGradient : [s.color, s.color];
-        const lessonCount = (s.lessons || []).length;
-        return `
-            <button type="button" class="landing-subject-card" data-landing-subject="${browseEsc(s.id)}" style="--card-accent:${browseEsc(grad[0])}">
-                <div class="landing-subject-icon" data-ink="${inkForTint(grad[0])}" style="background:linear-gradient(135deg, ${browseEsc(grad[0])}, ${browseEsc(grad[1])});">
-                    <i class="fas ${browseEsc(s.icon)}"></i>
-                </div>
-                <div class="landing-subject-info">
-                    <h3>${browseEsc(s.name)}</h3>
-                    <p>${_hr() ? `${browseEsc(s.year)}. godina` : `Year ${browseEsc(s.year)}`} &middot; ${_unit(lessonCount, 'lesson')}</p>
-                </div>
-                <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
-            </button>`;
-    });
-
-    // ➕ POSLJEDNJA PLOČICA (§7.13). Puna mreža čita kao ZATVOREN POPIS — ta jedna
-    // isprekidana pločica jedina kaže da platforma nije popis, i to bez ijedne riječi
-    // marketinga. Renderira se IZA POSLJEDNJEG predmeta, nikad na fiksnoj poziciji;
-    // zato je ovdje `push`, a ne mjesto u markupu.
-    // Ne prikazuje se dok tražilica filtrira: „nema rezultata za X" pa ponuda da
-    // napraviš svoj predmet je odgovor na pitanje koje nitko nije postavio.
-    if (!landingFilter.q.trim()) {
-        kartice.push(`
-            <button type="button" class="landing-subject-card landing-subject-card--make" data-goto-materials>
-                <div class="landing-subject-icon landing-subject-icon--make" aria-hidden="true">
-                    <i class="fas fa-plus"></i>
-                </div>
-                <div class="landing-subject-info">
-                    <h3 data-i18n="cat.make.t">Your subject</h3>
-                    <p data-i18n="cat.make.d">Not on the list? Write it yourself.</p>
-                </div>
-                <i class="fas fa-arrow-right landing-subject-arrow" aria-hidden="true"></i>
-            </button>`);
+    if (grupe) {
+        wrap.innerHTML = grupe.map((g, i) => `
+            <h3 class="cat-group">${browseEsc(g.name)}</h3>
+            <div class="landing-subjects-grid">
+                ${g.subjects.map(landingSubjectCard).join('')}
+                ${(pokaziPlus && i === grupe.length - 1) ? landingMakeCard() : ''}
+            </div>`).join('');
+    } else {
+        wrap.innerHTML = `<div class="landing-subjects-grid">${
+            lista.map(landingSubjectCard).join('') + (pokaziPlus ? landingMakeCard() : '')
+        }</div>`;
     }
-
-    wrap.innerHTML = kartice.join('');
 
     const brojac = document.getElementById('catalogCount');
     if (brojac) {
@@ -700,7 +744,11 @@ function renderLandingSubjects() {
             ? (landingFilter.q.trim() ? _unit(lista.length, 'subject') : '')
             : _t('cat.none', 'No subject matches that.');
     }
-    if (typeof applyTranslations === 'function') applyTranslations(wrap);
+    // ⚠️ OVDJE SE NE SMIJE ZVATI `applyTranslations()`. Ona na kraju sama zove
+    // `renderCatalogPrograms()` i `renderLandingSubjects()` (jer liste crtane preko
+    // innerHTML ne hvataju `[data-i18n]`) → poziv odavde je IZRAVNA MEĐUSOBNA REKURZIJA
+    // i ruši stranicu s „Maximum call stack size exceeded" pri svakom tipkanju u
+    // tražilicu. Zato sav tekst ovdje ide kroz `_t()` inline, kao i ostale kartice.
 }
 
 // Delegirani click za showcase kartice (veže se jednom) → otvori lekcije predmeta.
