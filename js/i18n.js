@@ -303,6 +303,32 @@
     'own.ex3': { en: 'Anatomy', hr: 'Anatomija' },
     'own.ex4': { en: 'Driving theory', hr: 'Vozački ispit' },
     'own.cta': { en: 'Make your own material', hr: 'Napravi svoj materijal' },
+
+    // ⑤ Četiri načina. NASLOVI MODOVA NAMJERNO KORISTE `nav.*` KLJUČEVE (Learn/
+    // Flashcards/Quiz/Fill) — preimenuje li se mod, landing se mijenja s njim i ne
+    // ostaje jedini ekran sa starim imenom. Ovdje su samo OPISI.
+    'modes.title': { en: 'The four ways', hr: 'Četiri načina' },
+    'modes.sub': {
+      en: 'Every subject — from the catalog or your own — opens in all four. Nothing to set up.',
+      hr: 'Svaki predmet — iz kataloga ili tvoj — otvara se u sva četiri. Ništa se ne podešava.'
+    },
+    'modes.learn.d': { en: 'The material itself — sections, images, tables, formulas.', hr: 'Samo gradivo — sekcije, slike, tablice, formule.' },
+    'modes.cards.d': { en: 'Question on one side, answer on the other. Short by design.', hr: 'Pitanje s jedne strane, odgovor s druge. Kratko po pravilu.' },
+    'modes.quiz.d': { en: 'Multiple choice, scored, with the reason behind each answer.', hr: 'Višestruki izbor, s bodovima i obrazloženjem svakog odgovora.' },
+    'modes.fill.d': { en: 'Type the missing term. Harder than recognising it in a list.', hr: 'Upiši pojam koji nedostaje. Teže nego prepoznati ga na popisu.' },
+
+    // ⑥ MCP — ⚠️ BUDUĆE VRIJEME NAMJERNO. MCP ne postoji (ADR-030 ②: pristup nije
+    // presuđen). Kad proradi: makni `mcp.soon`, prebaci u sadašnje vrijeme.
+    'mcp.soon': { en: 'Coming soon', hr: 'Uskoro' },
+    'mcp.title': { en: 'Your own AI will write it for you', hr: 'Tvoj AI će ti ga napisati' },
+    'mcp.sub': {
+      en: 'Connect the assistant you already use. It will read a chapter, build the material, and put it on your shelf — then check how you are doing and fix what you keep missing.',
+      hr: 'Spoji asistenta kojeg već koristiš. Pročitat će poglavlje, napraviti materijal i staviti ga na tvoju policu — pa provjeriti kako ti ide i popraviti ono što stalno griješiš.'
+    },
+    'mcp.note': {
+      en: 'It will work on your own material only. The catalog stays as it is.',
+      hr: 'Radit će samo na tvom gradivu. Katalog ostaje kakav jest.'
+    },
     'facts.free.b': { en: 'Free', hr: 'Besplatno' },
     'facts.free.t': { en: ' and ad-free', hr: ' i bez reklama' },
     'facts.offline.t': { en: 'Works ', hr: 'Radi ' },
