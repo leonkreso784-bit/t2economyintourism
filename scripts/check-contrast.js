@@ -39,6 +39,26 @@ function parseHex(v) {
   if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
   return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
+/**
+ * Kao `parseHex`, ali razumije i `rgb(R G B / A)` — oblik u kojem `--color-mark`
+ * živi u temama `chalk` i `mint`. Vraća `{ rgb, a }`; alfa 1 kad je nema.
+ *
+ * ⚠️ Postoji jer je `parseHex` na taj oblik vraćao `null`, a pozivatelj je `null`
+ * tumačio kao „preskoči" — pa je token tiho ispao iz mjerenja u baš onim temama
+ * gdje je proziran. Prazan rezultat koji znači „ne mogu pročitati" ne smije se
+ * čitati kao „nema što mjeriti".
+ */
+function parseColor(v) {
+  const s = String(v == null ? '' : v).trim();
+  const hex = parseHex(s);
+  if (hex) return { rgb: hex, a: 1 };
+  const m = s.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)\s*(?:[/,]\s*([\d.]+%?)\s*)?\)$/i);
+  if (!m) return null;
+  let a = m[4] == null ? 1 : (String(m[4]).endsWith('%') ? parseFloat(m[4]) / 100 : parseFloat(m[4]));
+  if (!isFinite(a)) a = 1;
+  return { rgb: [+m[1], +m[2], +m[3]].map((n) => Math.max(0, Math.min(255, Math.round(n)))), a: Math.max(0, Math.min(1, a)) };
+}
+
 const lin = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
 const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 function ratio(a, b) { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
@@ -133,6 +153,34 @@ for (const [name, t] of Object.entries(themes)) {
   }
   sweep(AS_TEXT, TEXT_MIN, 'tekst');
   sweep(AS_UI, UI_MIN, 'UI/ispuna');
+
+  // ── TEKST NA MARKERU (`--color-mark`) ─────────────────────────────────────
+  //
+  // ⚠️ OVAJ TOKEN NIJE BIO MJEREN NI U JEDNOJ TEMI DO 2026-08-16, a nosi
+  // isticanje u HEROJU — prvu stvar koju posjetitelj pročita. Ispao je kroz
+  // rupu koju je `sweep()` izrijekom priznavao: `if (!fg) continue` preskače
+  // svaki token s alfom, i u komentaru navodi baš `--color-mark` kao primjer.
+  // U `chalk` i `mint` marker JEST alfa (`rgb(… / .30)`), pa je bio preskočen;
+  // u `academic` i `paper` je neproziran, ali nije stajao ni na jednom popisu.
+  //
+  // Peti put isti obrazac: GATE KOJI MJERI NEKE TOKENE STVARA TIHU PRETPOSTAVKU
+  // DA MJERI SVE. Zato se alfa ovdje ne preskače nego SLAŽE preko plohe teme —
+  // kompozicija je jednoznačna, a piksel koji korisnik vidi je upravo ona.
+  //
+  // Mjeri se protiv `--color-ink-0` jer `.hero-mark` baš to i radi: tekst boje
+  // ink-0 preko donjih 58 % markera.
+  const mark = parseColor(t['--color-mark']);
+  const ink0 = parseHex(t['--color-ink-0']);
+  const surf0 = parseHex(t['--color-surface-0']);
+  if (mark && ink0 && surf0) {
+    checks++;
+    const slozen = mark.a >= 1 ? mark.rgb : mark.rgb.map((v, i) => Math.round(mark.a * v + (1 - mark.a) * surf0[i]));
+    const r = ratio(slozen, ink0);
+    if (r < TEXT_MIN) {
+      problems.push(`--color-ink-0 na --color-mark: ${r.toFixed(2)} < ${TEXT_MIN}  (tekst na markeru` +
+        (mark.a < 1 ? `, alfa ${mark.a} složena preko --color-surface-0` : '') + ')');
+    }
+  }
 
   // tekst na ispuni marke
   const brand = parseHex(t['--color-brand-500']);

@@ -46,6 +46,9 @@ declare global {
     refreshAuthNav?: () => void;
     renderSubjectsSidebar?: () => void;
     renderLandingSubjects?: () => void;
+    // Gumbi filtra kataloga nose ime programa i riječ „Svi" → i oni se precrtavaju
+    // na promjenu jezika, inače traka ostane na starom jeziku dok se mreža prevede.
+    renderCatalogPrograms?: () => void;
     renderBrowse?: () => void;
     renderProfilePage?: () => void;
   }
