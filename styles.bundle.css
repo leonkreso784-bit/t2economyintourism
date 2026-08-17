@@ -633,6 +633,97 @@ body {
 .landing-subject-card--make:hover .landing-subject-icon--make {
   color: var(--color-ink-0);
 }
+.own-steps {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+}
+@media (min-width: 48rem) {
+  .own-steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+.own-steps > li {
+  position: relative;
+  padding-top: 2.25rem;
+}
+.own-step-n {
+  position: absolute;
+  top: 0;
+  inset-inline-start: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-line);
+}
+.own-steps h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-ink-0);
+  margin: 0;
+}
+.own-steps p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-ink-2);
+  margin: 0.35rem 0 0;
+}
+.own-shelf-label {
+  font-size: 0.85rem;
+  color: var(--color-ink-2);
+  margin: 0;
+}
+.own-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.own-shelf > li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  color: var(--color-ink-1);
+  padding: 0.42rem 0.75rem;
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-1);
+}
+.own-shelf > li > i {
+  font-size: 0.78rem;
+  color: var(--color-ink-2);
+}
+.own-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-on-brand);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: var(--color-brand-500);
+  transition: background 0.18s ease;
+}
+.own-cta:hover {
+  background: var(--color-brand-600);
+}
+.own-cta > i {
+  font-size: 0.8rem;
+}
 .landing-facts {
   display: flex;
   flex-wrap: wrap;
@@ -10117,6 +10208,9 @@ body.mm-dragging {
 .mt-2 {
   margin-top: calc(var(--spacing) * 2);
 }
+.mt-3 {
+  margin-top: calc(var(--spacing) * 3);
+}
 .mt-5 {
   margin-top: calc(var(--spacing) * 5);
 }
@@ -10125,6 +10219,12 @@ body.mm-dragging {
 }
 .mt-7 {
   margin-top: calc(var(--spacing) * 7);
+}
+.mt-8 {
+  margin-top: calc(var(--spacing) * 8);
+}
+.mt-10 {
+  margin-top: calc(var(--spacing) * 10);
 }
 .mt-12 {
   margin-top: calc(var(--spacing) * 12);

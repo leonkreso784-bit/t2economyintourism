@@ -272,6 +272,37 @@
     // ➕ posljednja pločica — jedina koja kaže da katalog nije zatvoren popis (§7.13).
     'cat.make.t': { en: 'Your subject', hr: 'Tvoj predmet' },
     'cat.make.d': { en: "Not on the list? Write it yourself.", hr: 'Nema ga na popisu? Napiši ga sam.' },
+
+    // ③ Svoje gradivo — puna sekcija (§7.13). Primjeri su NAMJERNO izvan fakulteta.
+    'own.title': { en: 'Or write your own', hr: 'Ili napiši svoje' },
+    'own.sub': {
+      en: 'Anything you study — a law course, a language, your driving test. If you can write it down, you can study it here.',
+      hr: 'Bilo što što učiš — kolegij prava, jezik, vozački ispit. Ako to možeš zapisati, ovdje to možeš i učiti.'
+    },
+    'own.s1.t': { en: 'Write it down', hr: 'Zapiši' },
+    'own.s1.d': {
+      en: 'Paste your notes or type them straight in. Sections, images, tables and formulas all fit.',
+      hr: 'Zalijepi bilješke ili piši izravno. Sekcije, slike, tablice i formule sve stanu.'
+    },
+    'own.s2.t': { en: 'Add cards and questions', hr: 'Dodaj kartice i pitanja' },
+    'own.s2.d': {
+      en: 'Flashcards, quiz questions and fill-in-the-blanks live next to the material they came from.',
+      hr: 'Kartice, kviz-pitanja i dopune stoje uz gradivo iz kojeg su nastali.'
+    },
+    'own.s3.t': { en: 'Study it four ways', hr: 'Uči na četiri načina' },
+    'own.s3.d': {
+      en: 'The same four modes as every subject in the catalog. Progress is saved and synced.',
+      hr: 'Ista četiri moda kao i svaki predmet u katalogu. Napredak se sprema i sinkronizira.'
+    },
+    'own.shelf': {
+      en: 'For example, a shelf that has nothing to do with any faculty:',
+      hr: 'Na primjer, polica koja nema veze ni s jednim fakultetom:'
+    },
+    'own.ex1': { en: 'Roman Law', hr: 'Rimsko pravo' },
+    'own.ex2': { en: 'German B1', hr: 'Njemački B1' },
+    'own.ex3': { en: 'Anatomy', hr: 'Anatomija' },
+    'own.ex4': { en: 'Driving theory', hr: 'Vozački ispit' },
+    'own.cta': { en: 'Make your own material', hr: 'Napravi svoj materijal' },
     'facts.free.b': { en: 'Free', hr: 'Besplatno' },
     'facts.free.t': { en: ' and ad-free', hr: ' i bez reklama' },
     'facts.offline.t': { en: 'Works ', hr: 'Radi ' },

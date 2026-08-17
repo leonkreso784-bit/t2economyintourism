@@ -428,6 +428,100 @@
 
 .landing-subject-card--make:hover .landing-subject-icon--make { color: var(--color-ink-0); }
 
+/* ── Svoje gradivo (③) ────────────────────────────────────────────────
+   Ravnopravna katalogu, ali NAMJERNO drukčijeg ritma: katalog je mreža
+   jednakih pločica, ovo je slijed. Da su obje mreže, sekcija bi izgledala
+   kao nastavak kataloga umjesto kao drugi izvor gradiva. */
+.own-steps {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: none;      /* broj je u markupu, ne generiran — čitač ga ne treba čitati */
+}
+
+@media (min-width: 48rem) { .own-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+
+.own-steps > li { position: relative; padding-top: 2.25rem; }
+
+/* Broj je krupan i BLIJED: nosi ritam, ne pažnju. Da je u boji marke, tri
+   broja bi se natjecala s pločicama predmeta iznad — a ondje boja nešto znači. */
+.own-step-n {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-line);
+}
+
+.own-steps h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-ink-0);
+    margin: 0;
+}
+
+.own-steps p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+    margin: 0.35rem 0 0;
+}
+
+.own-shelf-label { font-size: 0.85rem; color: var(--color-ink-2); margin: 0; }
+
+/* Polica primjera. Nije klikabilna i ne pretvara se da je nečija stvarna polica —
+   zato `<li>`, a ne gumbi: element koji ne radi ništa ne smije izgledati kao da radi. */
+.own-shelf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.own-shelf > li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-1);
+    padding: 0.42rem 0.75rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+}
+
+.own-shelf > li > i { font-size: 0.78rem; color: var(--color-ink-2); }
+
+.own-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    /* Tekst na ispuni marke NIKAD nije zakucan (tvrda zabrana #1): `--color-on-brand`
+       je bijel u tri teme, a taman u `chalk` i `mint` — ondje bi bijelo palo AA. */
+    color: var(--color-on-brand);
+    padding: 0.6rem 1.1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--color-brand-500);
+    transition: background 0.18s ease;
+}
+
+.own-cta:hover { background: var(--color-brand-600); }
+.own-cta > i { font-size: 0.8rem; }
+
 /* ── Red činjenica ────────────────────────────────────────────────────
    Zamjenjuje tri marketinške sekcije i stats bar. Bez ikona: svaka bi bila
    ukras koji ne nosi značenje (izlazni uvjet §7.6.5). */
