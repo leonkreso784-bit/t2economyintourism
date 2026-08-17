@@ -92,8 +92,10 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > izvršava bez ijedne provjere) i **mijenja zadanu temu svim korisnicima** (tamna → svijetla).
 >
 > **🔵 SLJEDEĆA CIGLA = N1 (stalna gornja traka).** Puna specifikacija: `docs/records/BACKLOG.md`
-> §N. Grana `feat/c3-landing-cd` = **8 commita** iznad `main`-a, cigle C+D landinga gotove
-> (spec §7.15), preflight 0, **čeka Leonov pogled prije pusha**.
+> §N. Grana `feat/c3-landing-cd` nosi gotove cigle **C+D landinga** (spec §7.15), preflight 0,
+> **nepushana — čeka Leonov pogled**. ⚠️ Broj commita se ovdje NE piše: `git rev-list --count
+> main..HEAD` ga zna točno, a rukom pisan ostari istog dana (već je jednom pisao 8 kad ih je
+> bilo 9 — isti razred greške koji je landing imao s brojem predmeta).
 
 > **Povijest NIJE ovdje.** Milestone-i: `docs/records/HISTORY.md` · dnevnik po sesijama: `PROGRESS.md` ·
 > što je isporučeno: `CHANGELOG.md` · bugovi i lekcije: `BUGS.md` · otvorene ideje: `BACKLOG.md`.
