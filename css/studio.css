@@ -47,10 +47,8 @@
   box-shadow:var(--shadow); z-index:10;
 }
 #editor-page .st-logo{ display:flex; align-items:center; gap:9px; font-weight:700; font-size:15px; }
-#editor-page .st-logo .st-dot{
-  width:30px; height:30px; border-radius:50%; background:var(--st-grad);
-  display:grid; place-items:center; font-size:15px; box-shadow:var(--st-glow);
-}
+/* `.st-dot` (kružić sa sovom) obrisan 2026-08-16 zajedno s emojijem u `studio.js` —
+   pravilo bez elementa je mrtav kod, a `check:tailwind` ga broji kao šum. */
 #editor-page .st-logo .st-ed{
   font-size:10px; font-weight:800; letter-spacing:.14em;
   background:color-mix(in srgb, var(--primary) 14%, transparent); color: var(--primary);

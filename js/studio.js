@@ -114,7 +114,9 @@ const SokratStudio = (function () {
     page.innerHTML =
       '<div class="st-topbar">' +
       '  <button class="st-iconbtn" id="stBack" aria-label="' + esc(t('common.back', 'Back')) + '">←</button>' +
-      '  <div class="st-logo"><span class="st-dot">🦉</span> Sokrat <span class="st-ed">STUDIO</span></div>' +
+      // Sova je maknuta 2026-08-16 (Leon). Znak marke je bista, ne sova — emoji je bio
+      // jedini glif u cijelom sučelju koji je tvrdio drukčiji identitet.
+      '  <div class="st-logo">Sokrat <span class="st-ed">STUDIO</span></div>' +
       '  <div class="st-crumb" id="stCrumb">' + (_node
         ? '<span class="st-c">' + esc(t('studio.myMaterials', 'Moji materijali')) + '</span>' +
           '<span class="st-sep">›</span><span class="st-c now">' + esc(_node.name) + '</span>'

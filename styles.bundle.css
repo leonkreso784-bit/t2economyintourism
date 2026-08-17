@@ -7995,16 +7995,6 @@ h4.lb-heading {
   font-weight: 700;
   font-size: 15px;
 }
-#editor-page .st-logo .st-dot {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--st-grad);
-  display: grid;
-  place-items: center;
-  font-size: 15px;
-  box-shadow: var(--st-glow);
-}
 #editor-page .st-logo .st-ed {
   font-size: 10px;
   font-weight: 800;
