@@ -81,7 +81,19 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 
 > **„F4", „U8", „K6" u starim zapisima = ZATVORENE oznake faza** (temelj F1–F6 · graditelj F0–F5 · editor U/F7/K). Sve tri serije su ispunjene i žive samo kao povijest u `docs/archive/` i `docs/plan/ROADMAP.md`. **Nova faza dobiva ime, ne slovo.**
 
-## Stanje — TRENUTNO (2026-08-15)
+## Stanje — TRENUTNO (2026-08-18)
+
+> **🔴 PRVO ŠTO TREBA NAPRAVITI:** `git push origin main`. **Merge C3 → `main` je NAPRAVLJEN
+> lokalno** (`2e9fff9`, 33 commita, stablo bajt-identično grani, preflight 0, suita 371/0)
+> **uz Leonov OK** *(„moze deploy i merg sve")* — ali klasifikator meni blokira push na
+> `main`, pa naredbu pokreće Leon. Rollback-točka: `3e67b15`. ⚠️ Taj deploy gasi **dva
+> živa kvara na produkciji** (`wrapLegacyTables` — tablice prelijevaju ekran na svakom
+> telefonu, kroz isti renderer koji služi studentov `learn` · **SRI** — 6 CDN-skripti se
+> izvršava bez ijedne provjere) i **mijenja zadanu temu svim korisnicima** (tamna → svijetla).
+>
+> **🔵 SLJEDEĆA CIGLA = N1 (stalna gornja traka).** Puna specifikacija: `docs/records/BACKLOG.md`
+> §N. Grana `feat/c3-landing-cd` = **8 commita** iznad `main`-a, cigle C+D landinga gotove
+> (spec §7.15), preflight 0, **čeka Leonov pogled prije pusha**.
 
 > **Povijest NIJE ovdje.** Milestone-i: `docs/records/HISTORY.md` · dnevnik po sesijama: `PROGRESS.md` ·
 > što je isporučeno: `CHANGELOG.md` · bugovi i lekcije: `BUGS.md` · otvorene ideje: `BACKLOG.md`.

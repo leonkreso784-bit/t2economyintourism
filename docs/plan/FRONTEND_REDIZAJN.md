@@ -56,7 +56,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** 🔄 | **Landing** — koncept ODBIJEN na Leonovu ekranu (§7.13), prepravak U TIJEKU (§7.14). **Cigla A ✅** živi prikaz obrisan + naslov pokriva oba izvora · **cigla B ✅** tinta na pločicama predmeta · **C i D predstoje** (katalog s bojama i posljednjom pločicom · svoje gradivo + MCP + četiri načina · podloga i prostor za znak). | `landing.css` 1079 → 578 (C2) → **380** (cigla A) · živi prikaz = 58 markup + 78 JS + 18 poruka + 202 CSS | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Čeka Leonov pogled i merge.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D, tri nove sekcije) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); ostaje Studio na telefonu. | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
@@ -1056,3 +1056,120 @@ s vraćenim `color: white` pada s **2.15**, točno onom brojkom koju daje stati�
 **Otvoreno za sljedeću ciglu:** `css/subject-selector.css` nosi **22 od preostalih 126** pogodaka
 `check:palette` — isti obrazac (`color: white` + gradijenti stare palete), na još jednoj površini
 s pločicama predmeta.
+
+---
+
+### 7.15 LANDING, CIGLE C i D — katalog, vlastito gradivo, četiri načina, podloga (2026-08-16)
+
+Grana `feat/c3-landing-cd`, 8 commita iznad mergeanog `main`-a. Landing sad ima šest
+dijelova: hero → dvoja vrata → **katalog** → **svoje gradivo** → **četiri načina** →
+**tvoj AI (uskoro)** → činjenice → podnožje.
+
+**⚠️ ODSTUPANJE OD §7.13, SVJESNO:** spec redom stavlja MCP kao ④ pa četiri načina kao ⑤;
+ovdje su zamijenjeni. Naslov obećava „četiri načina" u prvom retku, pa objašnjenje tog
+obećanja ne smije doći IZA sekcije o značajki koja ne postoji. Zamjena je jedan potez.
+
+**MCP je označen kao „USKORO" (Leonova odluka na izravno pitanje).** Značajka ne postoji
+(ADR-030 ②: pristup nije presuđen), pa sekcija govori u budućem vremenu, a oznaka stoji
+IZNAD naslova gdje se čita prva. U markupu i i18n-u stoji uputa što napraviti kad MCP
+proradi — *„uskoro" koje stoji mjesecima čita gore od nepostojanja sekcije.*
+
+#### Pet nalaza — nijedan nije bio na popisu posla
+
+**① Landing je proturječio sam sebi.** `renderLandingMeta()` je brojao SVE dohvatljive
+predmete (vrata: 24), a `renderLandingSubjects()` crtao SAMO primarni program (mreža: 17).
+Tko prebroji pločice, uhvati stranicu u laži.
+
+**② Popravak brojke stvorio je NOVI kvar koji brojka ne može javiti.** Kad se pojavilo
+svih 24, ravna mreža je stavila „Management" uz „Menadžment", „Tourism Economics" uz
+„Ekonomika turizma" — **sedam parova**, jer je HR program klon EN-a (ADR-012). Posjetitelj
+tad ne vidi 24 predmeta nego 17 i sedam ponavljanja: **točno po brojci, krivo po dojmu.**
+Vidjelo se **tek na renderiranoj stranici**. Riješeno tihim naslovom programa.
+
+**③ Boju ZNAKA nosila su četiri predmeta.** `#6366f1` je bio `color` za te2, te2-hr,
+management i management-hr. Spec §7.13 kaže da znak zadržava indigo kroz sve teme kao
+*konstantu marke* — a konstanta vrijedi samo ako je znak jedina stvar te boje. Uz to je
+`#8b5cf6` (umirovljen, pada AA u svih 5 tema) bio na tri, a `#2563eb` na dva unutar
+zabranjenog pojasa. **Devet predmeta dobilo je nove boje, izabrane računom.**
+
+Brana (`check:contrast`, provjera c) čita indigo **iz `assets/logo.svg`** — ne prepisuje
+ga. Dvije stvari koje brana NAMJERNO ne radi važnije su od onoga što radi:
+
+- **ne mjeri od `--color-brand-500` nego od ZNAKA** — marka se PO TEMI mijenja (`academic`
+  plava, `chalk` zlatna), pa bi fiksna boja predmeta bila odvojena u jednoj temi i
+  sudarala se u drugoj. Znak je jedina nepomična meta.
+- **ne traži MEĐUSOBNU odvojenost predmeta** — zatečena paleta ima `#059669` (161°) i
+  `#14b8a6` (173°) na 12°. **Brana koju zatečeno stanje ne može proći nije brana nego
+  crveni CI.**
+
+⚠️ **Odbačeno pravilo:** rezerva do sjecišta tinte. Štitilo bi od kvara koji se ne može
+dogoditi (`inkForTint` je deterministički), a tražilo bi promjenu boje bez kvara.
+Izmišljeno zbog elegancije, ne zbog stvarnog načina kvara.
+
+**④ Gate za ćirilicu nije skenirao `css/` ni korijenske `.html`.** Upisao sam ćirilično
+`а` (U+0430) u CSS komentar i gate je šutio — a njegov popis nastavaka **izrijekom navodi
+`.css` i `.html`**; `CODE_DIRS` te mape jednostavno nikad nije posjetio. **40 datoteka
+dvaju tipova koje popis tvrdi da pokriva.**
+
+**⑤ `--color-mark` nije bio mjeren NI U JEDNOJ temi.** Nosi isticanje u heroju — prvu
+stvar koju posjetitelj pročita. Rupa je bila **priznata u kodu**: `sweep()` ima
+`if (!fg) continue` uz komentar *„rgba/alpha (npr. `--color-mark`) — ne mjeri se ovako"*.
+U `chalk`/`mint` marker JEST alfa pa je preskočen; u `academic`/`paper` je neproziran, ali
+nije stajao ni na jednom popisu. Kvara nije bilo (7,05–12,13), ali ni pokrivenosti.
+Popravak: `parseColor()` razumije `rgb(R G B / A)`, a alfa se **slaže preko plohe teme**.
+
+> **Pouka koja se u ovoj fazi ponovila PETI put:** *gate koji pokriva NEKA mjesta stvara
+> tihu pretpostavku da pokriva SVA.* (Prije: `--primary-light`, tinta na pločicama,
+> `var(--primary, #fallback)`, ćirilica.) Uz nju druga, iz `parseColor`: **prazan rezultat
+> koji znači „ne mogu pročitati" ne smije se čitati kao „nema što mjeriti".**
+
+#### Cigla D — podloga i prostor za znak
+
+Tri sloja, sve iz tokena kroz `color-mix`, pa prati temu sama: **zrno** (~3,5 %; bez njega
+je ploha plastika) · **jedan** odsjaj u boji TEME · **karirani papir** u dvije skale
+(64 px + 16 px). Slojevi idu na `.landing-page.active`, **ne** na `::before` sa
+`z-index:-1` — taj bi pobjegao iza `body` pozadine jer `.landing-page` ne stvara kontekst
+slaganja. Provjereno u pregledniku.
+
+Znak: traka **64**, znak **42**, wordmark **18,5** — izmjereno, ne procijenjeno.
+
+**⚠️ Cigla D se nije dala izmjeriti dok se nije obrisao tuđi `!important`.**
+`responsive/06-component-improvements.css` je držao globalno
+`.logo-text { font-size: 1.6rem !important }` = 25,6 px. A `.logo-text` postoji **samo na
+dva mjesta u projektu**, oba u `index.html` i oba unutar `.landing-logo` — pravilo nije
+služilo ničemu osim da pregazi `landing.css`, datoteku koja te elemente posjeduje. Isti
+obrazac kao pet `!important` u `studio.css` (§7.12).
+
+#### Dvije MOJE greške, obje zapisane jer se razred ponavlja
+
+**Beskonačna rekurzija.** `renderLandingSubjects()` je zvao `applyTranslations()`, a ona na
+kraju zove `renderCatalogPrograms()` i `renderLandingSubjects()` → „Maximum call stack size
+exceeded" pri **svakom tipkanju u tražilicu**. Brojke su izgledale ispravno; uhvatilo se
+**tek renderiranjem stranice**.
+
+**Krivo pročitan rezultat suite.** Prijavio sam „355 prošlo / 0 palo" na temelju **repa**
+izlaza. Izolirani prolaz iste datoteke daje **16 palo / 4 prošlo** — ＋ pločica je
+naslijedila klasu `landing-subject-icon` i obarala tint-branu. Aritmetika je to
+nagovijestila (355 + 30 skip = 385, a prikuplja se **401**), ali sam brojku prvo pokušao
+**objasniti** umjesto **provjeriti**. ⚠️ **Kad se zbroj ne slaže — prvo pokreni, pa tumači.**
+
+Popravljena je BRANA, ne pločica, i to nije izvlačenje: gate provjerava da se tinta bira
+IZRAČUNOM iz boje predmeta; ＋ pločica nema boju predmeta (ploha `--color-surface-2`, glif
+`--color-ink-2`, oboje TOKENI koje `check:contrast` već mjeri kroz svih 5 tema). Šira
+pouka u testu: **selektor po klasi hvata i ono što nije iste vrste.**
+
+#### Gate na kraju cigli C+D
+
+`preflight` **EXIT 0 (13/13)** · `check:contrast` **238 provjera** (bilo 217) ·
+`check:palette` 126 (na osnovici) · `tint-ink` **20/20** · `landing`+`i18n` 28/28 ·
+`320 px`: `docW=320`, **0 prelijevanja**, 0 `pageerror` · mjereno kroz sve 4 teme.
+`css:diff` **namjerno preskočen** — dokazuje da se izgled NIJE promijenio, a ove ga cigle
+mijenjaju namjerno.
+
+#### ⛔ Što NIJE napravljeno, i zašto
+
+**Stalna gornja traka (N1) nije započeta.** Dira svih devet stranica, oba mobilna
+zaglavlja, Studio i testove; započeta pa prekinuta pred compact bila bi gori ishod od
+nezapočete. Leon je istog dana rekao *„možda nije ni vrijeme ni mjesto… moramo ići po
+strukturnom pametnom planu"* — pa je puna specifikacija u [`BACKLOG.md`](../records/BACKLOG.md)
+(stavka **N**), a zahvat je prva stvar sljedeće sesije.

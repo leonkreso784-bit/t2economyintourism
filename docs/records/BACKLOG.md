@@ -3,6 +3,100 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)
+
+Leon: *„navigacija je iskreno dosta loša… kada se uđe u editor i izađe iz njega samo se
+vrti u krug moji materijali, editor i tako u krug. Moji materijali moraju imat poseban
+odjeljak na stranici… isto kao materijali koji su s FMTU-a. Korisnik treba imati svoje
+sučelje za predmete koje uči."*
+
+**⚠️ PETLJA JE IZMJERENA, NIJE DOJAM.** [`js/studio.js:152`](../../js/studio.js#L152) —
+ljuska Studija ima **točno dva gumba**: `←` i „stari editor". `←` vodi `navigateTo(_node
+? 'materials' : 'profile')`. Iz materijala se ulazi u editor. **Dva čvora, jedan brid** —
+graf iz kojeg doslovno nema izlaza osim natrag. Isto i za admina.
+
+**Uzrok je širi od Studija: NE POSTOJI NIJEDNA GLOBALNA TRAKA.** Izmjereno:
+
+| površina | gdje živi |
+|---|---|
+| `landing-nav` | samo landing |
+| `study-nav` + `mobile-nav` (8+8 gumba) | samo study-stranica (to su MODOVI, ne navigacija aplikacije) |
+| `browse-header` · `lessons-header` · `study-header` | svaka stranica **iznova** slaže jezik, materijale, auth i znak |
+| `st-topbar` (Studio) | ništa od navedenog |
+
+Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban proizvod.
+
+### N1 · Stalna gornja traka — SLJEDEĆA CIGLA, specificirana
+- **jedan** `<header>` kao brat svih `-page` sekcija, izvan njih (danas su zaglavlja
+  UNUTAR sekcija, pa nestaju s njima — to je cijeli uzrok)
+- sadržaj: znak → landing · **Predmeti** → browse · **Moji materijali** → materials ·
+  jezik · profil/prijava
+- **Studio je dobiva jednako kao i sve ostalo** → petlja pada bez ijedne posebne iznimke
+- zaglavlja po stranici zadržavaju SAMO ono što im je vlastito (natrag, naslov, mrvice);
+  duplirani jezik/materijali/auth gumbi odlaze
+- ⚠️ **brana:** test koji tvrdi da je iz **svake** stranice (uključujući `#editor-page`)
+  dohvatljiva bar jedna druga odredišna stranica u jednom kliku. Bez toga se petlja
+  može vratiti neopaženo — kao što je i nastala.
+
+### N2 · Osobna početna — „predmeti koje učim"
+Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu. **Danas takva
+stranica ne postoji.** Ovo je mogućnost, ne kvar.
+
+### N3 · Moji materijali u prikazu kvalitete kataloga
+Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Leon traži da vlastito
+gradivo izgleda jednako dobro kao FMTU gradivo.
+
+**🔒 PRAVILO KOJE JE IZ OVOGA IZAŠLO (Leon, izričito):** *sučelje za vlastite materijale
+NIKAD ne ide na landing* — nego na posebno mjesto, eventualno profil. Landing smije imati
+**ulaz** (vrata, ＋ pločica) i **objašnjenje**, nikad **popis korisnikovih materijala**.
+Ovo sužava ADR-029: „ravnopravno u herou" vrijedi za **istaknutost ulaza**, ne za prikaz
+sadržaja.
+
+---
+
+## 🔥 A — PRIJAVA I REGISTRACIJA (Leon, 2026-08-18)
+
+Leon: *„preko potrebno da postoji mogućnost prijave s Googleom, Appleom, jer jako puno
+korisnika se zapravo tako registrira."* Uz to bogatija registracija: **student / učenik /
+profesor / vanjski korisnik**.
+
+**Brojka koja to opravdava: 5 registriranih korisnika ukupno** (mjereno na produkciji
+2026-08-16; 3 prijave u 30 dana, 1 u 7). Obavezan e-mail + lozinka je prepreka, a danas
+je to **jedini** put — `js/auth.js` ima samo `signInWithPassword`, nijedan OAuth provider.
+
+| korak | što | zašto tim redom |
+|---|---|---|
+| **A1** | **Google** | besplatno, ne dira CSS, **ne mora čekati redizajn** — najveći učinak po jedinici posla |
+| **A2** | **Sign in with ChatGPT** | OpenAI ga je pokrenuo **2026-08-02** (OAuth 2.0), Supabase je launch-partner. ⚠️ **POTVRĐENO SAMO za prijavu na Supabaseov vlastiti dashboard** — treba provjeriti nudi li se kao provider za APLIKACIJE. Ne obećavati dok se ne provjeri. |
+| **A3** | **Apple** | traži Apple Developer ~99 $/god; nije hitno bez iOS aplikacije |
+| **B** | **pitanja pri registraciji** | traži izmjenu sheme (`profiles`) → **SQL na produkciji = Leonova ruka**; dira profil → ide **s C6**, ne prije |
+
+**⛔ GODINE SE NE PITAJU (Leon presudio 2026-08-18, na moj prigovor).** Ako pitamo dob i
+netko upiše 14, mi **znamo** da je dijete — GDPR čl. 8 tad traži roditeljski pristanak
+(prag 16, države ga smiju spustiti). Kategorija „učenik" to već implicira. Time bismo
+uveli pravnu obavezu koju danas nemamo, za podatak s kojim ne bismo ništa radili.
+**Prilagodbu sadržaja bolje daje pitanje „što učiš" nego „koliko imaš godina".**
+Uloga (student/učenik/profesor/vanjski) je korisna i bezopasna — ona ostaje.
+
+---
+
+## ➖ Birač tema je bliže nego što spec tvrdi — 24 pravila, ne 126 (2026-08-18)
+
+Leon je pitao kad dolaze druge boje cijele stranice. `npm run palette:breakdown`:
+
+```
+FATALNO (tekst nevidljiv na svijetlom)   24   ← JEDINO ovo blokira birač
+plohe/rubovi (blijedo, ali ispravno)     28
+stara paleta (neusklađeno, čitljivo)     61
+```
+
+Koncentrirano: `subject-selector` 6 · `learn` 4 · `home-section` 4 · `quiz-section` 3 ·
+`profile` 2, ostatak pojedinačno. **Birač NE ČEKA C4–C7 nego 24 pravila** — posao od
+jednog popodneva, izdvojiv u vlastitu ciglu kad god. Ovo je drugi put da ista čegrtaljka
+zavara: agregatna brojka mjeri točno, a savjetuje krivo.
+
+---
+
 ## ✅ ~~`a11y.authed` (Studio) nije doveden do zelenog~~ — POTVRĐENO OKRUŽENJE, ZATVORENO 2026-08-16
 
 **Ponovljeno na odmornom stroju: 3 prošla / 0 palo, Studio u 46,2 s** (`auth-setup` 5,7 s ·
