@@ -250,6 +250,14 @@ body {
   min-height: 100dvh;
   overflow-x: clip;
 }
+.landing-page.active {
+  background-color: var(--color-surface-0);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),  radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, #1657d0 13%, transparent), transparent 68%),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 5%, transparent) 0 1px, transparent 1px 64px),  repeating-linear-gradient(to right, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px), repeating-linear-gradient(to bottom, color-mix(in srgb, #0e1a2b 2.5%, transparent) 0 1px, transparent 1px 16px);
+  @supports (color: color-mix(in lab, red, red)) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),  radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, var(--color-brand-500) 13%, transparent), transparent 68%),  repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px), repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),  repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px), repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px);
+  }
+  background-attachment: fixed, fixed, scroll, scroll, scroll, scroll;
+}
 .landing-wrap {
   width: 100%;
   max-width: 70rem;
@@ -269,7 +277,8 @@ body {
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
+  min-height: 4rem;
+  padding: 0.5rem clamp(1rem, 4vw, 2.5rem);
   border-bottom: 1px solid var(--color-line);
   background: color-mix(in srgb, #f7f9fc 85%, transparent);
   @supports (color: color-mix(in lab, red, red)) {
@@ -287,15 +296,15 @@ body {
   min-width: 0;
 }
 .landing-logo .logo-image {
-  width: 2rem;
-  height: 2rem;
+  width: 2.625rem;
+  height: 2.625rem;
   border-radius: var(--radius-sm);
   display: block;
   flex-shrink: 0;
 }
 .landing-logo .logo-text {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.156rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--color-ink-0);
@@ -812,6 +821,13 @@ body {
 }
 .footer-brand .landing-logo {
   margin-bottom: 0.75rem;
+}
+.footer-brand .landing-logo .logo-image {
+  width: 3rem;
+  height: 3rem;
+}
+.footer-brand .landing-logo .logo-text {
+  font-size: 1.375rem;
 }
 .footer-brand p {
   max-width: 26rem;
@@ -6168,9 +6184,6 @@ div.subject-card {
     max-width: 40px;
     max-height: 40px;
   }
-  .logo-text {
-    font-size: 1.25rem !important;
-  }
   .sidebar-logo .logo-wrapper {
     width: 36px;
     height: 36px;
@@ -6220,9 +6233,6 @@ div.subject-card {
     min-height: 50px;
     max-width: 50px;
     max-height: 50px;
-  }
-  .logo-text {
-    font-size: 1.6rem !important;
   }
   .logo-wrapper-large {
     width: 150px;

@@ -30,6 +30,41 @@
     overflow-x: clip;
 }
 
+/* ── PODLOGA (cigla D) ────────────────────────────────────────────────
+   Tri sloja, redom odozgo: ZRNO · jedan ODSJAJ u boji teme · KARIRANI PAPIR
+   u dvije skale. Materijal na kojem se uči, ne ukras.
+
+   ⚠️ PRVI POKUŠAJ JE ODBAČEN NAKON RENDERIRANJA (spec §7.13): bila je „aurora"
+   od pet boja predmeta i ispala je generička duga preko cijele stranice — točno
+   ono što ima svaki generirani hero. BOJE PREDMETA PRIPADAJU PLOČICAMA, gdje
+   nešto znače; u pozadini samo galame. Zato je odsjaj JEDAN i u boji TEME.
+
+   ⚠️ ZRNO NIJE OPCIONALNO. Bez njega je ploha plastika; s njim je pigment na
+   papiru. Radi se o ~3,5 % neprozirnosti — ako se čini nevidljivim, radi.
+
+   Sve tri boje idu kroz `color-mix` NAD TOKENIMA, pa podloga prati temu sama.
+   Nijedna vrijednost nije zakucana (tvrda zabrana #3: zakucana tamna ploha bi
+   na svijetloj temi dala tamno-na-tamnom). SVG zrna nema nijedan hex.
+
+   Slojevi su na `.landing-page`, ne na `::before` s `z-index: -1`: taj bi
+   pobjegao IZA `body` pozadine i nestao, jer `.landing-page` ne stvara kontekst
+   slaganja. Provjereno, ne pretpostavljeno. */
+.landing-page.active {
+    background-color: var(--color-surface-0);
+    background-image:
+        /* 1 · zrno — fractalNoise, bez ijedne boje u sebi */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),
+        /* 2 · JEDAN odsjaj, u boji teme, gore-lijevo iza heroja */
+        radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, var(--color-brand-500) 13%, transparent), transparent 68%),
+        /* 3 · papir, krupna skala (64px) */
+        repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),
+        /* 4 · papir, fina skala (16px) */
+        repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px),
+        repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px);
+    background-attachment: fixed, fixed, scroll, scroll, scroll, scroll;
+}
+
 /* Uska kolona, isti rub za sve tri sekcije i podnožje. */
 .landing-wrap {
     width: 100%;
@@ -56,7 +91,8 @@
     align-items: center;
     gap: 0.5rem;
     width: 100%;
-    padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
+    min-height: 4rem;               /* 64px — znak dobiva prostor (§7.13) */
+    padding: 0.5rem clamp(1rem, 4vw, 2.5rem);
     border-bottom: 1px solid var(--color-line);
     background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
     backdrop-filter: blur(12px);
@@ -72,9 +108,19 @@
     min-width: 0;
 }
 
+/* ⚠️ ZNAK SE NE PREPRAVLJA — DOBIVA PROSTOR (Leon, izričito: „sokrat logo je
+   nezamjenjiv"; moja zamjenska silueta je odbijena i to je bila ispravna odluka).
+   Znak je tri puta prijavljen kao premalen, a dijagnoza „treba ga precrtati" bila
+   je kriva: `logo.svg` je traceana ilustracija, koja na 32 px nužno postaje mrlja.
+   Na 42 px se lice vidi. Traka 54 → 64 px, znak 32 → 42, wordmark 17 → 18,5.
+
+   Znak pritom zadržava VLASTITI INDIGO kroz sve četiri teme — CSS ga ne preboja.
+   Na papiru i menti bit će jedina indigo stvar na stranici, i to nije nedosljednost
+   nego konstanta marke: znak definira boju marke, ne obrnuto. Od 2026-08-16 to
+   čuva `check:contrast` (nijedna boja predmeta ne smije biti unutar 25° od njega). */
 .landing-logo .logo-image {
-    width: 2rem;
-    height: 2rem;
+    width: 2.625rem;                /* 42px */
+    height: 2.625rem;
     border-radius: var(--radius-sm);
     display: block;
     flex-shrink: 0;
@@ -82,7 +128,7 @@
 
 .landing-logo .logo-text {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.156rem;            /* 18,5px */
     font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--color-ink-0);
@@ -612,6 +658,13 @@
 @media (min-width: 56rem) { .footer-cols { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
 
 .footer-brand .landing-logo { margin-bottom: 0.75rem; }
+
+/* Znak u podnožju smije biti krupniji od onog u traci — ondje je potpis, ne
+   navigacija. Do 2026-08-16 je tu veličinu davalo globalno `!important` iz
+   `responsive/06-…` (25,6 px na oba mjesta); sad je namjerna i stoji ondje gdje
+   se element i definira. */
+.footer-brand .landing-logo .logo-image { width: 3rem; height: 3rem; }
+.footer-brand .landing-logo .logo-text { font-size: 1.375rem; }
 .footer-brand p { max-width: 26rem; line-height: 1.55; }
 
 .footer-col {
