@@ -1061,7 +1061,7 @@ s pločicama predmeta.
 
 ### 7.15 LANDING, CIGLE C i D — katalog, vlastito gradivo, četiri načina, podloga (2026-08-16)
 
-Grana `feat/c3-landing-cd`, 8 commita iznad mergeanog `main`-a. Landing sad ima šest
+Grana `feat/c3-landing-cd`, iznad mergeanog `main`-a. Landing sad ima šest
 dijelova: hero → dvoja vrata → **katalog** → **svoje gradivo** → **četiri načina** →
 **tvoj AI (uskoro)** → činjenice → podnožje.
 
