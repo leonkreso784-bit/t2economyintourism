@@ -1,0 +1,37 @@
+#!/bin/sh
+# ─────────────────────────────────────────────────────────────────────────────
+# Ćirilica u PORUCI COMMITA.
+#
+# `npm run check:docs` lovi ćirilicu u `.md`, `js/`, `css/`, `data/`, `tests/`,
+# `scripts/` i korijenskim `.html` — dakle svugdje osim ondje gdje se piše najviše
+# slobodnog teksta: u porukama commita. Povod (2026-08-18): u poruci je završilo
+# `остр` (U+043E 0441 0442 0440) usred riječi „poostrena". Uhvaćeno GLEDANJEM, ne
+# gateom — a poruka commita je trajan zapis koji se poslije pretražuje.
+#
+# ⚠️ Ovo je ISTI obrazac koji je u ovoj fazi zapisan već pet puta: GATE KOJI POKRIVA
+# NEKA MJESTA STVARA TIHU PRETPOSTAVKU DA POKRIVA SVA. Zato hook, a ne rečenica u
+# BACKLOG-u — pouka BUG-023 glasi da rečenica u dokumentu ne sprječava ništa.
+#
+# AKTIVIRA SE ISTIM PREKIDAČEM kao pre-push:  git config core.hooksPath .githooks
+#
+# Zaobilazak (svjestan): git commit --no-verify
+# ─────────────────────────────────────────────────────────────────────────────
+
+MSG_FILE="$1"
+[ -f "$MSG_FILE" ] || exit 0
+
+# Komentari (`#`) se izuzimaju — ondje git sam ispisuje imena grana i putanje.
+HITS=$(sed '/^#/d' "$MSG_FILE" | grep -o '[Ѐ-ӿ]\+' | sort -u)
+
+if [ -n "$HITS" ]; then
+  echo ""
+  echo "[commit-msg] ❌ ĆIRILICA U PORUCI COMMITA — commit ODBIJEN."
+  echo "[commit-msg]    nađeno: $(echo "$HITS" | tr '\n' ' ')"
+  echo "[commit-msg]    Hrvatski i ćirilica dijele izgled slova (а/о/е/с/р…), pa se pri"
+  echo "[commit-msg]    kopiranju uvuku neprimjetno. Poruka commita je trajan zapis."
+  echo "[commit-msg]    Prepiši pogođene riječi rukom (ne kopiraj) pa ponovi commit."
+  echo ""
+  exit 1
+fi
+
+exit 0
