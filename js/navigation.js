@@ -37,10 +37,12 @@ async function isSubjectOpenable(subjectId) {
 
 async function restoreLastPosition() {
     try {
-        // IZRIČITA RUTA U ADRESI POBJEĐUJE SPREMLJENU POZICIJU (C0). Obnova je asinkrona
-        // (`isSubjectOpenable` čeka mrežu), pa bi inače dvije sekunde nakon otvaranja dijeljenog
-        // linka korisnika odbacila na prošli predmet — a on je tražio točno određenu stranicu.
-        if (location.hash === MATERIALS_ROUTE) return;
+        // IZRIČITA RUTA U ADRESI POBJEĐUJE SPREMLJENU POZICIJU (C0, prošireno u K1). Obnova je
+        // asinkrona (`isSubjectOpenable` čeka mrežu), pa bi inače dvije sekunde nakon otvaranja
+        // dijeljenog linka korisnika odbacila na prošli predmet — a on je tražio točno određenu
+        // stranicu. Do K1 je ovo vrijedilo samo za `#/materials`; sad za svaku rutu.
+        const route = parseRoute(location.hash);
+        if (route) { if (await applyRoute(route)) return; }
 
         const saved = localStorage.getItem('sokrat-last-position');
         if (saved) {
@@ -157,26 +159,189 @@ function navigateTo(page, data = {}) {
             break;
     }
 
-    // Adresa prati stranicu (zasad postoji jedna ruta). `replaceState` namjerno: ne trpa u povijest
-    // i ne okida `hashchange`. Bez čišćenja pri odlasku ruta bi ostala u adresi, pa bi reload s
-    // landinga vratio korisnika na materijale.
-    if (history && history.replaceState) {
-        if (page === 'materials') {
-            if (location.hash !== MATERIALS_ROUTE) history.replaceState(null, '', MATERIALS_ROUTE);
-        } else if (location.hash === MATERIALS_ROUTE) {
-            history.replaceState(null, '', location.pathname + location.search);
-        }
-    }
+    // K1: adresa prati stranicu. Do K1 je ovdje stajao `replaceState` za JEDNU rutu
+    // (`#/materials`), uz obrazloženje „ne trpa u povijest". To je bilo točno dok je ruta
+    // bila jedna; sad je upravo povijest ono što se gradi — bez nje „natrag" izlazi sa
+    // stranice (BUG-019/BUG-020 traže pravi nav-model, v. §8 specifikacije).
+    syncRoute(page, data);
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ========== VLASTITO GRADIVO — ulazi i ruta (C0 / ADR-029) ==========
+// ========== RUTER (K1, faza „KOSTUR" — spec §8) ==========
+//
+// Do K1 je aplikacija imala DEVET stranica i JEDNU adresu (`#/materials`). Posljedice su
+// se plaćale svaki dan: „natrag" je odvodio sa stranice, nijedan predmet ni lekcija nisu
+// se dali podijeliti, tražilice su vidjele jednu stranicu, a dijeljenje materijala —
+// faza odmah iza MCP-a (ADR-030) — nije imalo na što objesiti token.
+//
+// ⚠️ OVO NIJE NOVA ARHITEKTURA. `saveCurrentPosition()` odozgo VEĆ serijalizira
+// `{page, subject, lesson, section, category}` — potpun opis rute — samo ga piše u
+// `localStorage` umjesto u adresu. K1 je preusmjeravanje istog opisa, ne novi model.
+// Zato `saveCurrentPosition` i dalje živi: on je pamćenje („gdje sam stao", 24 h),
+// adresa je identitet („što gledam"). Kad se razilaze, ADRESA POBJEĐUJE.
+//
+// ⚠️ SVE RUTE SU `#/`-PREFIKSIRANE. Landing koristi gole sidrene linkove (`#top`,
+// `#subjects`), pa bi goli `#subjects` bio u istom prostoru imena i ruter bi otimao
+// obično skrolanje po landingu. Sve što ne počinje s `#/` ruter NE dira.
 
-// Ruta je namjerno `#/`-prefiksirana: landing već koristi gole sidrene linkove
-// (`#subjects`, `#how`, `#modes`, `#top`), pa bi goli `#materials` bio u istom
-// prostoru imena i sudario bi se s njima.
-const MATERIALS_ROUTE = '#/materials';
+const MATERIALS_ROUTE = '#/materials';   // C0 · zadržana doslovno — vanjski linkovi već postoje
+
+/**
+ * ⚠️ `profile`, `admin` i `editor` NAMJERNO NEMAJU RUTU.
+ *
+ * Njihov prikaz ovisi o auth-sesiji i admin-statusu koji na hladnom startu još nisu
+ * spremni — to je isti razlog zbog kojeg ih `saveCurrentPosition` gore ne sprema, i
+ * točno razred kvara iz BUG-023 (obnova je gađala subjekt koji još nije registriran i
+ * otvarala praznu stranicu koja puca pri svakom spremanju). Deep-link na `#/admin`
+ * pokazao bi prazan admin bilo kome tko zna adresu.
+ *
+ * Za te tri stranice adresa se ČISTI, ali kroz `pushState` — v. upozorenje u `syncRoute`.
+ * Time „natrag" iz Studija vraća na materijale, odakle se i ušlo.
+ */
+const UNROUTED_PAGES = ['profile', 'admin', 'editor'];
+
+/** Stanje aplikacije → adresa. `null` = stranica nema rutu (v. `UNROUTED_PAGES`). */
+function routeFor(page, data) {
+    const d = data || {};
+    const subject = d.subject || AppState.nav.subject;
+    const lesson = d.lesson || AppState.nav.lesson;
+    const enc = encodeURIComponent;
+
+    switch (page) {
+        case 'landing':   return '#/';
+        case 'browse':    return '#/subjects';
+        case 'about':     return '#/about';
+        case 'materials': return MATERIALS_ROUTE;
+        case 'lessons':   return subject ? '#/subject/' + enc(subject) : null;
+        case 'study': {
+            if (!subject || !lesson) return null;
+            const base = '#/subject/' + enc(subject) + '/' + enc(lesson);
+            const sec = AppState.nav.section;
+            // `home` je zadano stanje i ne piše se — inače bi svaka lekcija imala dvije
+            // adrese za isti prikaz, a dijeljeni link bi ovisio o tome je li netko dirao tabove.
+            return (sec && sec !== 'home') ? base + '/' + enc(sec) : base;
+        }
+        default:          return null;
+    }
+}
+
+/** Adresa → stanje. `null` = nije naša ruta (golo sidro, prazno, smeće). */
+function parseRoute(hash) {
+    if (!hash || hash.indexOf('#/') !== 0) return null;
+    const parts = hash.slice(2).split('/').filter(Boolean).map(function (s) {
+        try { return decodeURIComponent(s); } catch (e) { return s; }
+    });
+
+    if (parts.length === 0) return { page: 'landing', data: {} };
+    if (parts[0] === 'subjects' && parts.length === 1) return { page: 'browse', data: {} };
+    if (parts[0] === 'about' && parts.length === 1) return { page: 'about', data: {} };
+    if (parts[0] === 'materials' && parts.length === 1) return { page: 'materials', data: {} };
+
+    if (parts[0] === 'subject' && parts[1]) {
+        if (parts.length === 2) return { page: 'lessons', data: { subject: parts[1] } };
+        if (parts.length === 3 || parts.length === 4) {
+            return { page: 'study', data: { subject: parts[1], lesson: parts[2], section: parts[3] || 'home' } };
+        }
+    }
+    return null;
+}
+
+/**
+ * Upisuje adresu nakon što je `navigateTo` već prikazao stranicu.
+ *
+ * ⚠️ `pushState` NE OKIDA `hashchange` — zato ruter ne reagira na vlastiti upis i nije
+ * potrebna zastavica koja se može zaglaviti. Jedini čuvar je usporedba s trenutnom
+ * adresom, dakle idempotencija umjesto stanja.
+ */
+function syncRoute(page, data) {
+    if (!history || !history.pushState) return;
+    const want = routeFor(page, data);
+    const sad = location.hash;
+
+    if (want === null) {
+        // ⚠️ ČISTI SE `pushState`-om, NE `replaceState`-om. Prva verzija je ovdje imala
+        // `replaceState` uz obrazloženje „ne diraj povijest" — a `replaceState` **pojede
+        // unos na kojem stojiš**, dakle baš onaj s kojeg si došao. Posljedica: „natrag" iz
+        // Studija preskakao je materijale i završavao na landingu. Oborio ga je test, ne
+        // čitanje koda; komentar je tvrdio suprotno od onoga što je kod radio.
+        if (sad) history.pushState(null, '', location.pathname + location.search);
+        return;
+    }
+    if (sad === want) return;
+
+    if (want === '#/') {
+        // Prazan hash JE landing — normalizacija u `#/` samo bi potrošila jedan „natrag".
+        if (!sad) return;
+        // ⚠️ GOLO SIDRO NA LANDINGU JE PRECIZNIJA POZICIJA OD `#/` — ne gazi se.
+        // Bez ovoga `restoreLastPosition()` na hladnom startu završi u `navigateTo('landing')`
+        // i prepiše `#subjects` u `#/`, pa preglednik nema kamo skrolati: podijeljeni link na
+        // sekciju landinga tiho prestane raditi. I ovo je našla proba, ne čitanje koda.
+        if (sad.indexOf('#/') !== 0) return;
+    }
+
+    history.pushState(null, '', want);
+}
+
+/**
+ * Promjena moda unutar lekcije mijenja adresu, ali NE gura u povijest.
+ * Inače bi „natrag" prolazio kroz svaki klik na tab umjesto da napusti lekciju.
+ */
+function syncSectionRoute() {
+    if (!history || !history.replaceState) return;
+    if (AppState.nav.page !== 'study') return;
+    const want = routeFor('study', {});
+    if (want && location.hash !== want) history.replaceState(null, '', want);
+}
+
+/**
+ * Primjenjuje adresu na aplikaciju. `async` jer subjekt iz URL-a treba provjeriti.
+ *
+ * ⚠️ URL JE NEPOVJERLJIVIJI ULAZ OD `localStorage`-a, ne manje. Spremljena pozicija je
+ * bar nekad bila valjana na ovom uređaju; adresa može imenovati **tuđi ili obrisan**
+ * čvor jer ju je netko utipkao ili poslao. Zato ide kroz `isSubjectOpenable()` — isti
+ * čuvar koji je zatvorio BUG-023.
+ */
+async function applyRoute(route) {
+    if (!route) return false;
+    const d = route.data || {};
+
+    if (d.subject && !(await isSubjectOpenable(d.subject))) {
+        // Nepoznat subjekt: ostani gdje jesi i očisti adresu, umjesto prazne stranice
+        // koja izgleda kao da je gradivo nestalo (BUG-023).
+        if (history && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+        return false;
+    }
+    // Sekcija se provjerava po TIPKI KOJA POSTOJI, ne po prepisanom popisu — popis bi se
+    // razišao sa sučeljem čim neki mod dođe ili ode (ADR-027).
+    // ⚠️ Usporedbom preko `dataset`, NE sastavljanjem selektora: `d.section` dolazi iz
+    // adrese, pa bi ulazio u niz selektora — isti razred kao tekst iz podataka u `innerHTML`.
+    if (route.page === 'study' && d.section && d.section !== 'home') {
+        const modovi = Array.prototype.slice.call(document.querySelectorAll('.study-nav-btn'));
+        if (!modovi.some(function (b) { return b.dataset.section === d.section; })) d.section = 'home';
+    }
+    navigateTo(route.page, d);
+    return true;
+}
+
+/** Vezuje „natrag"/„naprijed" i ručnu izmjenu adrese. */
+function initRouter() {
+    // `popstate` = sistemska gesta natrag/naprijed (uklj. Androidov gumb).
+    window.addEventListener('popstate', function () {
+        const route = parseRoute(location.hash);
+        // Golo sidro ili prazan hash u povijesti znači „bili smo na landingu".
+        applyRoute(route || { page: 'landing', data: {} });
+    });
+
+    // `hashchange` = netko je adresu izmijenio rukom ili došao izvana. Vlastiti upisi
+    // idu kroz `pushState`/`replaceState`, koji ovo NE okidaju.
+    window.addEventListener('hashchange', function () {
+        const route = parseRoute(location.hash);
+        if (route) applyRoute(route);
+    });
+}
+
+// ========== VLASTITO GRADIVO — ulazi (C0 / ADR-029) ==========
 
 /**
  * Sve ulaze u vlastiti materijal veže JEDAN delegirani listener, jer se dio njih (gumb na profilu)
@@ -206,11 +371,9 @@ function initMaterialsEntries() {
         });
     }
 
-    // Stranica se mora moći otvoriti izravnim linkom.
-    if (location.hash === MATERIALS_ROUTE) navigateTo('materials');
-    window.addEventListener('hashchange', function () {
-        if (location.hash === MATERIALS_ROUTE && AppState.nav.page !== 'materials') navigateTo('materials');
-    });
+    // Otvaranje izravnim linkom i `hashchange` više NISU ovdje: od K1 to radi ruter za
+    // sve stranice odjednom (`initRouter` + `restoreLastPosition`). Dvije kopije istog
+    // posla razišle bi se čim ruta dobije segment.
 
     // Prijava/odjava dok je stranica otvorena mora prebaciti plohu (stablo ⇄ poziv na prijavu),
     // inače odjavljen korisnik gleda tuđe stablo do sljedeće navigacije.
@@ -1010,6 +1173,7 @@ function switchSection(section) {
     });
 
     saveCurrentPosition(AppState.nav.page, { subject: AppState.nav.subject, lesson: AppState.nav.lesson });
+    syncSectionRoute();   // K1: mod je dio adrese → dijeljen link vodi točno u taj mod
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (section === 'flashcards') {

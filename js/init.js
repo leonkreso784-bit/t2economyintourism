@@ -43,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initLandingSubjects();     // bind showcase click + search + programme filter
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
-    initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials
+    initMaterialsEntries();    // C0: ulazi u vlastiti materijal
+    initRouter();              // K1: adresa ⇄ stranica; MORA prije restoreLastPosition()
     initLearnImageModal();
     setupEventListeners();
     restoreLastPosition();
