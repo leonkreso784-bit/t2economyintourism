@@ -109,7 +109,9 @@ const PUSH = /git push origin main/;
 
 // ⚠️ Redak koji OPISUJE ovaj gate mora smjeti citirati obrazac koji gate traži — inače se
 // brana ne da dokumentirati. Ista iznimka i iz istog razloga postoji u `check-docs.js`
-// (`CYRILLIC_ALLOWED`), gdje detektor ćirilice mora navesti sam raspon `[Ѐ-ӿ]`.
+// (`CYRILLIC_ALLOWED`): detektor ćirilice mora u kodu navesti sam raspon koji lovi.
+// ⚠️ Zato ovaj komentar taj raspon NE citira — citat bi ovu datoteku pretvorio u pogodak
+// tuđeg gatea, pa bi se popravljalo proširenjem iznimke umjesto brisanjem citata.
 // Iznimka je NAMJERNO uska: samo redak koji imenuje `check:state`. Jest teoretski zaobilazak,
 // ali onaj tko ga napiše više ne griješi slučajno — a gate čuva od slučajnog, ne od namjernog.
 const SAMOOPIS = /check:state/;

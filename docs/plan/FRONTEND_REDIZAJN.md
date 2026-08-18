@@ -56,8 +56,9 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Čeka Leonov pogled i merge.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D, tri nove sekcije) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
-| **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); ostaje Studio na telefonu. | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
+| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **A+B na produkciji; C+D čekaju Leonov pogled.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D, tri nove sekcije) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
+| **K** 🔵 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1** rute · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
@@ -1171,5 +1172,98 @@ mijenjaju namjerno.
 **Stalna gornja traka (N1) nije započeta.** Dira svih devet stranica, oba mobilna
 zaglavlja, Studio i testove; započeta pa prekinuta pred compact bila bi gori ishod od
 nezapočete. Leon je istog dana rekao *„možda nije ni vrijeme ni mjesto… moramo ići po
-strukturnom pametnom planu"* — pa je puna specifikacija u [`BACKLOG.md`](../records/BACKLOG.md)
-(stavka **N**), a zahvat je prva stvar sljedeće sesije.
+strukturnom pametnom planu"* — pa je zahvat dobio **vlastitu fazu i punu specifikaciju u §8**
+ispod (nalaz iz `BACKLOG.md` §N je time razrađen, ne prepisan).
+---
+
+## 8 · FAZA „KOSTUR" — rute i jedna gornja traka (Leon, 2026-08-18)
+
+> **Ubacuje se između C3 i C4.** Presedan je **C0**: i on je bio informacijska arhitektura,
+> ne redizajn (*„Bez Tailwinda, bez redizajna"*), i također je išao **ispred** cigli koje
+> mijenjaju izgled. Razlog je isti: C4 prepisuje `browse` i `lessons` — **baš stranice čija
+> su zaglavlja duplikat.** Obrnutim redoslijedom ista se zaglavlja pišu dvaput.
+
+### 8.1 Povod — Leon na živom ekranu
+
+*„navigacija je iskreno dosta loša… kada se uđe u editor i izađe iz njega samo se vrti u
+krug moji materijali, editor i tako u krug. Moji materijali moraju imat poseban odjeljak na
+stranici… isto kao materijali koji su s FMTU-a. Korisnik treba imati svoje sučelje za
+predmete koje uči."*
+
+**Petlja je izmjerena, nije dojam.** [`studio.js:152`](../../js/studio.js#L152) — ljuska
+Studija ima **točno dva** navigacijska gumba: `←` → `navigateTo(_node ? 'materials' :
+'profile')`, i `⚙` → `admin`. Iz materijala se ulazi u editor. **Dva čvora, jedan brid.**
+
+**Uzrok je širi od Studija — ne postoji nijedna globalna traka.** Devet `-page` sekcija,
+nula zajedničkih traka; `browse-header`, `lessons-header` i `study-header` **svaka iznova**
+slažu jezik + „Moji materijali" + auth. Zaglavlja žive **UNUTAR** sekcija, pa nestaju s
+njima — to je cijeli mehanizam.
+
+### 8.2 ⚠️ NALAZ KOJI JE ODREDIO OPSEG: devet stranica, **jedna** adresa
+
+Mjereno 2026-08-18, [`navigation.js:161`](../../js/navigation.js#L161): jedina ruta u
+aplikaciji je **`#/materials`**. Landing, browse, lekcije, učenje, profil, admin i Studio
+**nemaju adresu**. Posljedice se već plaćaju: gumb „natrag" odvodi sa stranice · nijedan
+predmet ni lekcija se ne dâ podijeliti · Google vidi jednu stranicu (nema ni `sitemap.xml`
+ni `robots.txt`) · **dijeljenje materijala — faza odmah iza MCP-a (ADR-030) — nema na što
+objesiti token.**
+
+**Zašto je to ipak jeftino.** [`saveCurrentPosition()`](../../js/navigation.js#L4) već
+serijalizira `{page, subject, lesson, section, category}` — **potpun opis rute** — samo ga
+piše u `localStorage` umjesto u adresu. Komentar u `restoreLastPosition` čak spominje
+*„dijeljenog linka"*. **K1 nije nova arhitektura nego preusmjeravanje postojećeg opisa iz
+jednog spremnika u drugi.**
+
+> **⚠️ OVO NIJE NOVA ZAMISAO — PROPISANA JE DVAPUT I DVAPUT ODGOĐENA.**
+> [`BUGS.md`](../records/BUGS.md) **BUG-019**: *„svaka nova pod-stranica mora ili čuvati tuđi
+> slot ili treba **pravi navigacijski stog**. Stog (+ browser History API da i sistemska
+> back-gesta radi u SPA-u) = kandidat uz U8."* · **BUG-020**: *„Ista obitelj kao BUG-019
+> (nedostatak pravog nav-modela) — **pravi navigacijski stog** = kandidat za U8."*
+> **U8 je zatvoren, propis nije izveden.** To je točno obrazac koji **BUG-023** imenuje:
+> *„Rečenica u dokumentu ne sprječava ništa — `if` u kodu ili test sprječavaju."* Zato **K3
+> nije zadnja nego uvjet isporuke**: bez brane se petlja može vratiti neopaženo, kao što je
+> i nastala.
+
+### 8.3 Cigle
+
+| # | cigla | gotovo kad | vizualna promjena |
+|---|---|---|---|
+| **K1** | **Rute.** Svih 9 stranica dobiva adresu; `saveCurrentPosition` prestaje biti jedini zapis pozicije. History API → sistemska „natrag" gesta radi. | otvoriš `#/predmet/<id>/<lekcija>` u novoj kartici i dobiješ tu lekciju; „natrag" vraća korak, ne izlazi sa stranice | **nikakva** (kao C1) |
+| **K2** | **Jedna gornja traka.** `<header>` kao **brat** `-page` sekcija, izvan njih. Sadržaj: znak → landing · Predmeti → browse · Moji materijali → materials · jezik · profil/prijava. **Studio je dobiva jednako kao sve ostalo** → petlja pada bez ijedne posebne iznimke. Zaglavlja po stranici zadržavaju samo svoje (natrag, naslov, mrvice). | iz Studija se u jednom kliku dođe na landing, browse i materijale | da |
+| **K3** | **Brana dohvatljivosti.** Test tvrdi da je iz **svake** stranice — uključujući `#editor-page` — dohvatljiva bar jedna druga u jednom kliku. Uz nju: ruta preživi reload. | brana pada kad se traka makne (obrnuta provjera) | ne |
+| **K4** | **Moji materijali u kvaliteti kataloga** (N3). Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Ista komponenta pločice koju K2 ionako izdvaja. | vlastiti materijal izgleda jednako dobro kao FMTU gradivo | da |
+
+**N2 („osobna početna — predmeti koje učim") NIJE u ovoj fazi.** To je nova mogućnost, ne
+kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
+
+### 8.4 Tvrde granice
+
+1. **K1 ne smije promijeniti nijedan piksel.** Ako se išta pomakne, promijenili smo dvije
+   stvari odjednom i ne znamo koja je kriva (pouka C1). Dokaz: `npm run css:diff`.
+2. **URL je NEPOVJERLJIV ULAZ, više nego `localStorage`.** Svaka ruta koja imenuje subjekt
+   mora proći kroz [`isSubjectOpenable()`](../../js/navigation.js#L26) — to je popravak
+   **BUG-023**, gdje je obnova pozicije gađala `node:` id koji još nije registriran i
+   otvarala praznu study-stranicu koja puca pri svakom spremanju. Ruta iz adrese može
+   imenovati **tuđi ili obrisan** čvor, dakle rub je širi nego kod localStoragea, ne uži.
+3. **Nijedan `<script>` se ne dodaje na kritični put.** Landing već nosi 717 KB u 41
+   skripti (mjereno 2026-08-18) uz vlastiti budžet od 200 KB.
+4. **Traka poštuje `check:palette` i `check:contrast` kroz sve 4 teme** — nova površina ne
+   smije podići osnovicu čegrtaljke.
+5. **Znak je nepromjenjiv** (§7.13, Leon izričito): traka mu daje prostor, ne prepravlja ga.
+6. **Vlastiti materijali NIKAD ne idu na landing** (Leon, 2026-08-18). Traka smije nositi
+   **ulaz**; popis korisnikova gradiva ide na svoje mjesto. Ovo sužava ADR-029 na
+   *istaknutost ulaza*, ne na *prikaz sadržaja*.
+
+### 8.5 Što ide odmah iza — i zašto tim redom
+
+| faza | zašto tu | |
+|---|---|---|
+| **A1 · Google-prijava** | ne dira CSS, ne čeka redizajn, ~1 cigla. Danas [`auth.js`](../../js/auth.js) ima **samo** `signInWithPassword` — nula OAuth-a, a obavezna lozinka je jedini put | [`BACKLOG.md`](../records/BACKLOG.md) §A |
+| **C4 → C5a → C5b** | nastavak redizajna, sad na stranicama koje već imaju traku i adresu | §3 |
+| **C6** | nosi **tri** odgode koje su tu i zapisane: pitanja pri registraciji (shema → SQL = Leonova ruka) · **CSP** · brisanje `bright-function` | §3 + BACKLOG |
+| **C7** | gašenje starog CSS-a | §3 |
+| **MCP → objava/dijeljenje** | ADR-030. **Dijeljenje sad ima na što objesiti token, jer rute postoje** | ROADMAP |
+
+**Izvan faza, jer ne ovise ni o čemu i mogu se ubaciti kad god:** RLS-zagrade (13 politika;
+**jedini nalaz koji poskupljuje čekanjem**) · birač tema (**24** fatalna pravila, ne 126) ·
+JS-budžet landinga kao gate.

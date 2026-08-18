@@ -5,6 +5,13 @@
 
 ## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)
 
+> **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
+> [`FRONTEND_REDIZAJN.md` §8](../plan/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
+> K3 brana · K4 materijali), ubačena između C3 i C4.** Ovaj odjeljak ostaje kao **nalaz i
+> obrazloženje**; što se radi i kojim redom piše u specu. ⚠️ Ondje je i mjerenje koje ovdje
+> nije bilo: **devet stranica dijeli jednu jedinu adresu** (`#/materials`), pa se traka bez
+> ruta mora pisati dvaput. **N2 nije u fazi** — ulazi tek kad K1–K4 stoje.
+
 Leon: *„navigacija je iskreno dosta loša… kada se uđe u editor i izađe iz njega samo se
 vrti u krug moji materijali, editor i tako u krug. Moji materijali moraju imat poseban
 odjeljak na stranici… isto kao materijali koji su s FMTU-a. Korisnik treba imati svoje
