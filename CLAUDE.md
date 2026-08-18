@@ -84,13 +84,21 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 
 ## Stanje — TRENUTNO (2026-08-18)
 
-> **🔵 TEKUĆA FAZA = „KOSTUR" — rute i jedna gornja traka.** Puna specifikacija:
+> **🔵 TEKUĆA FAZA = „KOSTUR" — navigacija prije kozmetike.** Puna specifikacija:
 > `docs/plan/FRONTEND_REDIZAJN.md` **§8**. Ubačena **između C3 i C4** (Leon, 2026-08-18),
 > po presedanu C0-a: informacijska arhitektura prije kozmetike.
 > **✅ K1 (rute) JE GOTOV** — §8.6; devet stranica ima devet adresa, `css:diff` 0/3498.
-> **🔵 SLJEDEĆA CIGLA = K2 (jedna gornja traka)** — ona gasi petlju iz Studija; zatim
-> **K3** brana dohvatljivosti, **K4** materijali u kvaliteti kataloga. Iza faze ide
-> **A1 Google-prijava**, pa tek onda C4.
+> **✅ K2a (jedan model vraćanja) JE GOTOV** — §8.7; `goBack()` = povijest, inače
+> `roditeljOd()` koji zna OBJE hijerarhije (katalog i policu). Zatvara **BUG-026** i
+> **BUG-027** (oba s Leonova ekrana). ⚠️ **Traka NE bi popravila nijedan od njih** — zato je
+> K2 razbijen na **K2a (ponašanje)** + **K2b (traka)**, i zato je kriterij **K3 pooštren**:
+> „bar jedan klik drugamo" mjeri POSTOJANJE izlaza, pa bi oba kvara prošla tu branu.
+> **🔵 SLJEDEĆA CIGLA = K2b (jedna gornja traka)** — znak → landing, Predmeti, Moji
+> materijali, jezik, račun; ⚠️ **Studio je `position:fixed; inset:0; z-index:1200`**, dakle
+> traži TOČNO JEDNU iznimku (`inset` ispod trake), suprotno od onoga što je spec tvrdio.
+> Zatim **K3** brana dohvatljivosti, **K4** materijali u kvaliteti kataloga, **K5** editor
+> dvojezično (izmjereno: 30/54 niza Studija bez prijevoda + 53 zakucana u tri datoteke).
+> Iza faze ide **A1 Google-prijava**, pa tek onda C4.
 >
 > **Ovdje se stanje NE prepisuje.** Grana, commiti, je li pushano — to zna git:
 > `git status -sb` · `git rev-list --count main..HEAD` · `git log --oneline -1 origin/main`.

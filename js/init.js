@@ -82,21 +82,25 @@ function setupEventListeners() {
         });
     });
 
-    // Back buttons — from Lessons, return to the browse subject list (preserves
-    // the drill-down position: Subject ← Subjects ← Year ← Program ← Faculty).
+    // K2a — svi gumbi „natrag" idu kroz JEDAN model (`goBack`): povijest kad iza nas stoji
+    // naš unos, inače semantički roditelj koji zna i katalošku i osobnu hijerarhiju.
+    // Dotad je svaki gumb nosio TVRDO ožičeno odredište, pa je vraćanje iz vlastitog
+    // materijala završavalo na izboru fakulteta. ⚠️ `backToLanding` je usput ime koje LAŽE —
+    // sjedi na stranici lekcija i nikad nije vodio na landing nego na browse; zadržano je
+    // samo zato što je `id` u markupu, a mijenja ga tek cigla koja prepisuje zaglavlja (K2b).
     const backToLanding = document.getElementById('backToLanding');
     if (backToLanding) {
-        backToLanding.addEventListener('click', () => navigateTo('browse'));
+        backToLanding.addEventListener('click', () => goBack());
     }
-    
+
     const backToLessons = document.getElementById('backToLessons');
     if (backToLessons) {
-        backToLessons.addEventListener('click', () => navigateTo('lessons', { subject: AppState.nav.subject }));
+        backToLessons.addEventListener('click', () => goBack());
     }
-    
+
     const backFromAbout = document.getElementById('backFromAbout');
     if (backFromAbout) {
-        backFromAbout.addEventListener('click', () => navigateTo('landing'));
+        backFromAbout.addEventListener('click', () => goBack());
     }
     
     // Birač teme. `.theme-toggle` NE POSTOJI u markupu — ostaje samo vezanje, da

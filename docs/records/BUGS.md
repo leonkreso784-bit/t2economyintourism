@@ -23,6 +23,54 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-027 — Petlja „Moji materijali ⇄ Studio": izlazak iz editora vraća u editor
+
+**Simptom** (Leon, 2026-08-18): polica → *uredi materijal* → editor (ništa se ne dira) → „natrag" →
+polica → „natrag" → **opet editor**, i tako u krug.
+
+**Uzrok.** `materialsReturnPage` je pamtio stranicu s koje si došao i izuzimao **samo** dolazak iz
+samih materijala. Dolazak **iz editora** se pamtio, pa je „natrag" s police vraćao onamo odakle si
+upravo izašao.
+
+⚠️ **Popravak je već postojao — nije bio prenesen.** Isti izuzetak stoji **tri retka iznad**, za
+`profileReturnPage` (`!== 'admin' && !== 'editor'`), a njegov komentar se izričito poziva na
+**BUG-019** i petlju profil ⇄ admin. Materijali su dobili vlastitu stranicu u **C0**, tjednima
+kasnije — i naslijedili obrazac bez njegova izuzetka.
+
+**Popravak (K2a).** Ručna jednodubinska povijest je **obrisana** (oba `*ReturnPage`); ostaje jedan
+model — `goBack()`.
+
+**Pouka:** *popravak koji nije generaliziran je popravak koji čeka drugu priliku.* Već sedmi put u
+ovoj fazi da mehanizam pokriva NEKA mjesta i time stvori pretpostavku da pokriva SVA.
+
+**Brana:** `tests/back-model.spec.js` („petlja polica ⇄ editor je mrtva").
+
+### BUG-026 — „Natrag" iz vlastitog materijala vodi u katalog fakulteta
+
+**Simptom** (Leon, 2026-08-18, uz dva screenshota): *Moji materijali* → uđeš u materijal da učiš →
+„natrag" → **lekcijska stranica čvora** (`#/subject/node%3A…`) koja crta „Matematika / **undefined**"
+→ još jedan „natrag" → **„Choose your faculty"**. Dvije stranice na kojima korisnik nikad nije bio.
+
+**Uzrok.** Aplikacija ima **DVIJE hijerarhije** — katalog (`browse → lessons → study`) i vlastito
+gradivo (`polica → study`) — a gumbi natrag poznavali su **samo prvu**, tvrdo ožičeni na roditelja.
+Osobni materijal se uči kao **sintetički predmet** `node:<uuid>` (`registerStudySubject`), pa je
+`backToLessons` doslovno tražio lekcijsku stranicu čvora koji lekcije **nema**.
+
+**Popravak (K2a).** Jedan model vraćanja: `goBack()` koristi **povijest** kad iza nas stoji naš unos,
+inače `roditeljOd()`, koji zna **obje** hijerarhije. Uz to čuvar u `navigateTo`: `lessons` sa
+`node:` subjektom preusmjerava na policu — ruta je od **K1 dijeljiva**, pa se do te stranice može
+doći i utipkavanjem, dakle čuvar ne smije stajati u gumbu.
+
+⚠️ **Prva verzija popravka stvarala je petlju koju je trebala ukloniti:** odlazak *gore* gurao je
+unos u povijest, pa je sljedeći „natrag" imao kamo natrag — **u dijete iz kojeg smo upravo izašli**.
+Kretanje gore mora **zamijeniti** unos. Našla ga je proba u pregledniku, ne čitanje koda.
+
+**Pouka:** *čim se pojavi druga hijerarhija, tvrdo ožičen roditelj postaje laž.* Nije bilo dovoljno
+dodati UGC kao sintetički predmet — navigacija je ostala kataloška.
+
+**Brana:** `tests/back-model.spec.js` (čvor nikad na lekcijskoj stranici · hladan dolazak penje
+hijerarhiju).
+
 ### BUG-025 — Sadržaj sa znakom `<` se GUBIO u kvizu, learnu i dopunama (kviz-pitanje bilo neodgovorljivo)
 - Status: ✅ **riješen** (`779f26b` + `6b02354`, grana `fix/bug-024-slika-u-learnu`) · Težina: **visok** (javni katalog **jest** pogođen) · Našao: **Claude**, pri reviziji BUG-024.
 - **Simptom (katalog, na produkciji):** u `statistics` je kviz o Z-tablici imao tri ponuđena odgovora koja su se prikazivala **skraćeno i nečitljivo** — `\(P(Z` · `\(1-P(Z` · `\(2P(Z`. **Pitanje se nije moglo riješiti**, jer se opcije nisu razlikovale u onome što student vidi. Isto pitanje je bilo krnje i u pregledu netočnih odgovora.

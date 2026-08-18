@@ -1229,9 +1229,12 @@ jednog spremnika u drugi.**
 | # | cigla | gotovo kad | vizualna promjena |
 |---|---|---|---|
 | **K1** | **Rute.** Svih 9 stranica dobiva adresu; `saveCurrentPosition` prestaje biti jedini zapis pozicije. History API → sistemska „natrag" gesta radi. | otvoriš `#/predmet/<id>/<lekcija>` u novoj kartici i dobiješ tu lekciju; „natrag" vraća korak, ne izlazi sa stranice | **nikakva** (kao C1) |
-| **K2** | **Jedna gornja traka.** `<header>` kao **brat** `-page` sekcija, izvan njih. Sadržaj: znak → landing · Predmeti → browse · Moji materijali → materials · jezik · profil/prijava. **Studio je dobiva jednako kao sve ostalo** → petlja pada bez ijedne posebne iznimke. Zaglavlja po stranici zadržavaju samo svoje (natrag, naslov, mrvice). | iz Studija se u jednom kliku dođe na landing, browse i materijale | da |
+| **K2a** | **Jedan model vracanja.** `goBack()` = povijest kad iza nas stoji nas unos, inace **`roditeljOd()`** koji zna OBJE hijerarhije (katalog i policu). Obje rucne jednodubinske povijesti se brisu; cuvar u `navigateTo` sprjecava `node:` na lekcijskoj stranici. | „natrag" iz vlastitog materijala vraca na policu, a ne u katalog; petlja polica <-> editor je mrtva | **nikakva** |
+| **K2b** | **Jedna gornja traka.** `<header>` kao **brat** `-page` sekcija, izvan njih. Sadržaj: znak → landing · Predmeti → browse · Moji materijali → materials · jezik · profil/prijava. **Studio je dobiva jednako kao sve ostalo** → petlja pada bez ijedne posebne iznimke. Zaglavlja po stranici zadržavaju samo svoje (natrag, naslov, mrvice). | iz Studija se u jednom kliku dođe na landing, browse i materijale | da |
 | **K3** | **Brana dohvatljivosti.** Test tvrdi da je iz **svake** stranice — uključujući `#editor-page` — dohvatljiva bar jedna druga u jednom kliku. Uz nju: ruta preživi reload. | brana pada kad se traka makne (obrnuta provjera) | ne |
+| | ⚠️ **KRITERIJ POOSTREN (2026-08-18).** „Bar jedan klik drugamo" mjeri POSTOJANJE izlaza, a Leonova dva kvara imala su izlaz — vodio je na slomljenu stranicu i u petlju, pa bi **oba prosla ovu branu kako je bila napisana**. Dodaje se: izlaz mora voditi na stranicu koja ima smisla (nijedan `node:` na lekcijskoj stranici) i „natrag" nikad ne vraca onamo odakle si upravo dosao. | | |
 | **K4** | **Moji materijali u kvaliteti kataloga** (N3). Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Ista komponenta pločice koju K2 ionako izdvaja. | vlastiti materijal izgleda jednako dobro kao FMTU gradivo | da |
+| **K5** | **Editor dvojezicno** (Leon, 2026-08-18: *„platforma mora biti na hrvatskom i engleskom i trebat ce editor isto biti na eng jeziku"*). Izmjereno: **30 od 54** niza Studija nema prijevod (pada na hrvatski rezervni), `block-editor` + `block-editor-media` nose **15** zakucanih hrvatskih, `admin-editors` **38** zakucanih engleskih — editor **nije cijel ni na jednom jeziku**. Prekidac jezika je dotad dohvatljiv na **4 od 9** stranica; K2b ga donosi u Studio. | korisnik prebaci jezik i editor je CIJEO na tom jeziku | ne |
 
 **N2 („osobna početna — predmeti koje učim") NIJE u ovoj fazi.** To je nova mogućnost, ne
 kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
@@ -1344,3 +1347,50 @@ usporedbi kroz 3 širine** (granica §8.4 #1: K1 ne smije pomaknuti nijedan piks
 a u izlazu je stajalo **1 failed** — jer je naredba išla kroz `| tail`, koji vraća SVOJ
 izlazni status. Aritmetika je to odala (88 prikupljeno = 77 + 10 + **1**). **Status iza
 pipe-a ne mjeri ono što misliš da mjeri;** izlaz ide u datoteku, pa se čita.
+
+### 8.7 ✅ K2a JE ISPUNJEN — jedan model vraćanja (2026-08-18)
+
+> **Cigla K2 je razbijena na K2a (ponašanje) + K2b (traka), i to nakon mjerenja, ne iz opreza.**
+> Leon je prijavio dva kvara sa živog ekrana i **traka nijedan ne bi popravila** — ona premješta
+> kontrole, a kvarovi su bili u tome **kamo gumb vodi**. Da je traka išla prva, gumbi natrag bi se
+> pisali dvaput.
+
+**Što je Leon našao** (oba zapisana kao **BUG-026** i **BUG-027**):
+1. *Moji materijali* → uđeš u materijal da učiš → „natrag" → **lekcijska stranica čvora**
+   (`#/subject/node%3A…`, crta „Matematika / **undefined**") → „natrag" → **„Choose your faculty"**.
+2. polica → editor (ništa se ne dira) → „natrag" → polica → „natrag" → **opet editor**, u krug.
+
+**Uzrok je jedan i širi od oba: TRI paralelna modela vraćanja.** Tvrdo ožičen roditelj u svakom
+gumbu · ručna jednodubinska povijest (`profileReturnPage` / `materialsReturnPage`) · i — od K1 —
+prava povijest preglednika. Aplikacija je usput dobila **DVIJE hijerarhije** (katalog
+`browse → lessons → study`, vlastito gradivo `polica → study`), a tvrdo ožičeni gumbi poznavali su
+samo prvu. **Čim postoji druga hijerarhija, tvrdo ožičen roditelj postaje laž.**
+
+⚠️ **Drugi kvar je bio propušten prijenos, ne previd u novom kodu:** izuzetak koji ga sprječava
+stoji **tri retka iznad**, za profil, s komentarom koji se poziva na BUG-019 i petlju profil ⇄ admin.
+Materijali su dobili stranicu u C0 i naslijedili obrazac **bez** njegova izuzetka.
+
+**Izvedeno.** `goBack()` je jedini „natrag" u aplikaciji: koristi **povijest** kad iza nas stoji naš
+unos, inače **`roditeljOd()`**, koji zna obje hijerarhije. Dubina se čita iz `history.state`, ne iz
+brojača — brojač bi `popstate` dekrementirao i pri koraku **naprijed**, pa bi nakon naprijed-natrag
+lagao. Obje ručne jednodubinske povijesti su **obrisane**; dva zapisa o istoj stvari i bila su uzrok.
+Uz to čuvar u `navigateTo`: `lessons` sa `node:` subjektom vodi na policu — ruta je od K1 **dijeljiva**,
+pa čuvar ne smije stajati u gumbu.
+
+⚠️ **PRVA VERZIJA POPRAVKA STVARALA JE PETLJU KOJU JE TREBALA UKLONITI.** Odlazak *gore* gurao je unos
+u povijest, pa je sljedeći „natrag" imao kamo natrag — **u dijete iz kojeg smo upravo izašli**
+(hladan dolazak na dijeljenu lekciju: study → lessons → **study**). Kretanje gore mora **zamijeniti**
+unos, ne gurati ga. Našla ju je proba u pregledniku; čitanje koda nije.
+
+⚠️ **PROBA JE PRITOM DVA PUTA MJERILA STARU DATOTEKU.** Prvo je service worker poslužio asset
+(`stale-while-revalidate`), a nakon `npm run bump` — kad je token već bio nov — **keširani `index.html`
+i dalje je pokazivao na stari `?v=`**. Token živi *unutar* `index.html`, pa svježa provjera traži da se
+**i on** zaobiđe (`?proba=…`). *Lokalna proba može tiho mjeriti prethodnu verziju* — isti razred kao
+„status iza pipe-a ne mjeri ono što misliš".
+
+**Gate.** `tests/back-model.spec.js` **5/5** · **obrnuta provjera 3/5 pada** (izmjereno `git stash`-em
+na kodu prije K2a; preostala dva ne mjere K2a — jedno čuva rizik koji je K2a **uveo**, drugo je
+tekovina K1) · navigacijski specovi **17/17** (back-model + routes + materials-entry) · `preflight`
+**EXIT 0**. ⚠️ U zaglavlju testa je brojka obrnute provjere **ispravljena nakon mjerenja** — prvo je
+pisalo „4 od 5", napisano napamet. Isti razred greške koji cigla zatvara.
+

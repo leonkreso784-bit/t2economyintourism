@@ -77,21 +77,42 @@ async function restoreLastPosition() {
 }
 
 // ========== PAGE NAVIGATION ==========
-let profileReturnPage = null; // kamo vodi "back" s Profile stranice
-let materialsReturnPage = null; // kamo vodi "back" sa stranice vlastitog materijala (C0)
+//
+// K2a — JEDAN MODEL VRAĆANJA. Do K2a su ovdje živjela TRI paralelna: tvrdo ožičen
+// roditelj u svakom gumbu (`backToLessons` → uvijek `lessons`), ručna jednodubinska
+// povijest (`profileReturnPage`/`materialsReturnPage`) i — od K1 — prava povijest
+// preglednika. Tri modela su se neizbježno razišla, i to na dva mjesta koja je Leon
+// našao na živom ekranu:
+//
+//   ① Osobni materijal se uči kao sintetički predmet `node:<uuid>`, ali su gumbi natrag
+//      poznavali SAMO katalošku hijerarhiju (browse → lessons → study). Vraćanje iz
+//      vlastitog materijala vodilo je na lekcijsku stranicu ČVORA (koja crta prazninu,
+//      „Matematika / undefined"), pa odande na izbor fakulteta.
+//   ② `materialsReturnPage` je pamtio dolazak IZ EDITORA, pa je „natrag" s police vraćao
+//      natrag u editor — petlja materijali ⇄ Studio. Isti izuzetak POSTOJAO je za profil
+//      (komentar se izričito poziva na BUG-019 i petlju profil ⇄ admin) i nikad nije bio
+//      prenesen na materijale.
+//
+// Sada je model jedan: `goBack()` koristi POVIJEST kad iza nas stoji naš unos, a inače
+// pada na SEMANTIČKOG RODITELJA koji zna obje hijerarhije (`roditeljOd`). Ručna jednodubinska
+// povijest je obrisana — dva zapisa o istoj stvari su i bila uzrok.
+
+/**
+ * Koliko smo unosa gurnuli u povijest U OVOJ SESIJI STRANICE.
+ * Nula znači da iza nas nema NAŠEG unosa (hladan dolazak na dijeljeni link), pa bi
+ * `history.back()` izašao sa stranice — tada ide semantički roditelj.
+ * ⚠️ Broji se kroz `history.state`, ne brojačem: brojač bi `popstate` dekrementirao i pri
+ * koraku NAPRIJED, pa bi dubina lagala čim korisnik krene naprijed-natrag.
+ */
+let dubinaPovijesti = 0;
 
 function navigateTo(page, data = {}) {
-    // Profile se NE sprema kao "last position": render ovisi o auth sesiji koja na
-    // reloadu još nije spremna (CDN se tek učitava), pa bi restore završio prazan.
-    // Dolazak IZ ADMINA ne prepisuje cilj: admin je pod-stranica profila (ulaz i back idu
-    // kroz profil), pa bi "back = admin" stvorio petlju profil ⇄ admin (BUG-019).
-    if (page === 'profile' && AppState.nav.page !== 'profile' && AppState.nav.page !== 'admin' && AppState.nav.page !== 'editor') {
-        profileReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
-    }
-    // Isti razlog kao za profil: „back" mora vratiti odakle si došao, a ne uvijek na landing.
-    // Dolazak iz samog sebe ne prepisuje cilj (inače bi back vodio na materijale = petlja).
-    if (page === 'materials' && AppState.nav.page !== 'materials') {
-        materialsReturnPage = { page: AppState.nav.page, data: { subject: AppState.nav.subject, lesson: AppState.nav.lesson } };
+    // K2a — ČUVAR DVIJU HIJERARHIJA. Osobni materijal nema lekcijsku stranicu: ima točno
+    // jednu lekciju i živi u polici, ne u katalogu. Čuvar stoji OVDJE, a ne u gumbu natrag,
+    // jer je ruta od K1 dijeljiva — `#/subject/node%3A<uuid>` se da poslati i utipkati.
+    if (page === 'lessons' && data.subject && String(data.subject).indexOf('node:') === 0) {
+        page = 'materials';
+        data = {};
     }
     AppState.nav.page = page;
     // Profile/Admin/Editor/Materials se NE spremaju kao "last position" (ovise o auth sesiji / admin
@@ -164,6 +185,9 @@ function navigateTo(page, data = {}) {
     // bila jedna; sad je upravo povijest ono što se gradi — bez nje „natrag" izlazi sa
     // stranice (BUG-019/BUG-020 traže pravi nav-model, v. §8 specifikacije).
     syncRoute(page, data);
+    // Jednokratna zastavica NIKAD ne smije preziviti navigaciju: syncRoute ima rane izlaze
+    // (ista adresa, golo sidro) u kojima se ne upisuje nista, pa bi inace procurila u sljedecu.
+    zamijeniSljedeciUnos = false;
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -265,7 +289,7 @@ function syncRoute(page, data) {
         // unos na kojem stojiš**, dakle baš onaj s kojeg si došao. Posljedica: „natrag" iz
         // Studija preskakao je materijale i završavao na landingu. Oborio ga je test, ne
         // čitanje koda; komentar je tvrdio suprotno od onoga što je kod radio.
-        if (sad) history.pushState(null, '', location.pathname + location.search);
+        if (sad) gurniUnos(location.pathname + location.search);
         return;
     }
     if (sad === want) return;
@@ -280,7 +304,7 @@ function syncRoute(page, data) {
         if (sad.indexOf('#/') !== 0) return;
     }
 
-    history.pushState(null, '', want);
+    gurniUnos(want);
 }
 
 /**
@@ -292,6 +316,72 @@ function syncSectionRoute() {
     if (AppState.nav.page !== 'study') return;
     const want = routeFor('study', {});
     if (want && location.hash !== want) history.replaceState(null, '', want);
+}
+
+/**
+ * Jednokratno: sljedeći upis u adresu ZAMJENJUJE trenutni unos umjesto da gura novi.
+ * Postavlja ga samo kretanje GORE (`goBack` bez povijesti) — v. obrazloženje u `gurniUnos`.
+ */
+let zamijeniSljedeciUnos = false;
+
+/**
+ * Jedini put kojim unos ulazi u povijest — da dubina i povijest ne mogu razići.
+ *
+ * ⚠️ KRETANJE GORE ZAMJENJUJE, NE GURA. Prva verzija K2a je i za roditelja gurala unos, pa
+ * je hladan dolazak na dijeljenu lekciju davao petlju: „natrag" je vodio na predmet, a
+ * sljedeći „natrag" NAZAD U LEKCIJU — jer je odlazak gore sam sebi stvorio povratni unos.
+ * Popravak je stvarao petlju koju je trebao ukloniti; našla ga je proba u pregledniku.
+ * Zamjenom se dijete odbacuje, pa uzastopni „natrag" penje hijerarhiju do landinga, a
+ * preglednikov „natrag" uredno izlazi onamo odakle je korisnik i došao.
+ */
+function gurniUnos(url) {
+    if (zamijeniSljedeciUnos) {
+        zamijeniSljedeciUnos = false;
+        history.replaceState({ sokratDubina: dubinaPovijesti }, '', url);
+        return;
+    }
+    dubinaPovijesti += 1;
+    history.pushState({ sokratDubina: dubinaPovijesti }, '', url);
+}
+
+/**
+ * Semantički roditelj stranice — REZERVNI put, za slučaj kad iza nas nema našeg unosa
+ * (hladan dolazak na dijeljeni link). Zna OBJE hijerarhije, i to je cijela poanta:
+ * katalog ide `browse → lessons → study`, a vlastito gradivo `polica → study`, bez
+ * lekcijskog međukoraka — jer ga čvor nema.
+ */
+function roditeljOd(page, nav) {
+    const subjekt = (nav && nav.subject) ? String(nav.subject) : '';
+    const cvor = subjekt.indexOf('node:') === 0;
+
+    switch (page) {
+        case 'study':   return cvor ? { page: 'materials', data: {} } : { page: 'lessons', data: { subject: subjekt } };
+        case 'lessons': return cvor ? { page: 'materials', data: {} } : { page: 'browse', data: {} };
+        case 'admin':   return { page: 'profile', data: {} };
+        default:        return { page: 'landing', data: {} };
+    }
+}
+
+/**
+ * „Natrag" za SVE gumbe u aplikaciji. Jedan ulaz umjesto sedam tvrdo ožičenih odredišta.
+ *
+ * @param {string} [rezervni] Stranica na koju se pada kad povijesti nema. Prosljeđuju je
+ *   samo pozivatelji koji o kontekstu znaju više od `AppState`-a — Studio zna je li otvorio
+ *   osobni čvor ili katalog, a `AppState.nav.subject` mu to ne kaže.
+ */
+function goBack(rezervni) {
+    // Iza nas stoji NAŠ unos → koristi pravu povijest. Time „natrag" u aplikaciji i
+    // sistemska gesta natrag konačno govore isto; do K2a su se razilazili.
+    if (dubinaPovijesti > 0 && history && typeof history.back === 'function') {
+        history.back();
+        return;
+    }
+    // Bez povijesti idemo GORE. Kretanje gore zamjenjuje unos (v. gurniUnos) -- inace
+    // bi si samo stvorilo povratni unos i sljedeci natrag bi pao natrag u dijete.
+    zamijeniSljedeciUnos = true;
+    if (rezervni) { navigateTo(rezervni, {}); return; }
+    const r = roditeljOd(AppState.nav.page, AppState.nav);
+    navigateTo(r.page, r.data);
 }
 
 /**
@@ -327,7 +417,11 @@ async function applyRoute(route) {
 /** Vezuje „natrag"/„naprijed" i ručnu izmjenu adrese. */
 function initRouter() {
     // `popstate` = sistemska gesta natrag/naprijed (uklj. Androidov gumb).
-    window.addEventListener('popstate', function () {
+    window.addEventListener('popstate', function (e) {
+        // ⚠️ Dubina se ČITA iz unosa, ne dekrementira brojačem: `popstate` okida i pri koraku
+        // NAPRIJED, pa bi brojač nakon naprijed-natrag lagao i „natrag" bi počeo izlaziti
+        // sa stranice. Unos bez naše oznake = tuđi/početni → dubina 0.
+        dubinaPovijesti = (e && e.state && typeof e.state.sokratDubina === 'number') ? e.state.sokratDubina : 0;
         const route = parseRoute(location.hash);
         // Golo sidro ili prazan hash u povijesti znači „bili smo na landingu".
         applyRoute(route || { page: 'landing', data: {} });
@@ -357,11 +451,9 @@ function initMaterialsEntries() {
 
     const back = document.getElementById('backFromMaterials');
     if (back) {
-        back.addEventListener('click', function () {
-            const ret = materialsReturnPage;
-            if (ret && ret.page && ret.page !== 'materials') navigateTo(ret.page, ret.data || {});
-            else navigateTo('landing');
-        });
+        // K2a: ovdje je živjela petlja koju je Leon našao. `materialsReturnPage` je pamtio
+        // dolazak IZ EDITORA, pa je „natrag" s police vraćao u editor iz kojeg si upravo izašao.
+        back.addEventListener('click', function () { goBack(); });
     }
 
     const signIn = document.getElementById('materialsSignInBtn');
@@ -531,7 +623,9 @@ function browseBack() {
             renderBrowse();
             break;
         default:
-            navigateTo('landing');
+            // Vrhunska razina browsea nema svoj roditelj u drill-downu -> izlazi kroz
+            // zajednicki model (povijest, pa landing).
+            goBack();
     }
 }
 
@@ -1222,6 +1316,7 @@ window.renderSubjectsSidebar = renderSubjectsSidebar;
 window.renderBrowse = renderBrowse;
 window.enterBrowse = enterBrowse;
 window.browseBack = browseBack;
+window.goBack = goBack;   // K2a — jedini „natrag“ u aplikaciji
 window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
 window.renderLandingSubjects = renderLandingSubjects;

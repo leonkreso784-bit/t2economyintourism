@@ -150,8 +150,11 @@ const SokratStudio = (function () {
     // Prije C0 je stablo živjelo na profilu pa je tvrdi 'profile' bio točan; sada ondje stoji samo
     // poveznica, pa bi korisnika ostavio na slijepom kolosijeku (mrvica gore piše „Moji materijali").
     // Katalog-mod (admin, `_node` == null) i dalje ide na profil — taj put C0 nije dirao.
+    // K2a: rezervni put se prosljedjuje jer Studio o kontekstu zna vise od AppState-a --
+    // je li otvorio osobni cvor ili katalog. Kad iza nas stoji nas unos, odlucuje povijest.
     byId('stBack').addEventListener('click', function () {
-      if (typeof navigateTo === 'function') navigateTo(_node ? 'materials' : 'profile');
+      if (typeof goBack === 'function') goBack(_node ? 'materials' : 'profile');
+      else if (typeof navigateTo === 'function') navigateTo(_node ? 'materials' : 'profile');
     });
     byId('stOldEditor').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('admin'); });
     // U node-modu ova dva elementa ne postoje (aside je panel čvora, ne katalog-stablo).

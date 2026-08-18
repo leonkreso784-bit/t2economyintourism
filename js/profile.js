@@ -380,13 +380,9 @@ function profileIcon(icon) {
 document.addEventListener('DOMContentLoaded', function () {
     const back = document.getElementById('backFromProfile');
     if (back) {
+        // K2a: jedan model vracanja za cijelu aplikaciju (js/navigation.js).
         back.addEventListener('click', function () {
-            const ret = (typeof profileReturnPage !== 'undefined' && profileReturnPage) ? profileReturnPage : null;
-            if (ret && ret.page && ret.page !== 'profile') {
-                navigateTo(ret.page, ret.data || {});
-            } else {
-                navigateTo('landing');
-            }
+            if (typeof goBack === 'function') goBack();
         });
     }
 });

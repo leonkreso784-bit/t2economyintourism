@@ -64,8 +64,9 @@ const SokratAdmin = (function () {
   document.addEventListener('DOMContentLoaded', function () {
     init();
     const back = document.getElementById('backFromAdmin');
+    // K2a: profil je rezervni put; kad povijest postoji, ona odlucuje.
     if (back) back.addEventListener('click', function () {
-      if (typeof navigateTo === 'function') navigateTo('profile');
+      if (typeof goBack === 'function') goBack('profile');
     });
   });
 

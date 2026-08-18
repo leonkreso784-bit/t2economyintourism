@@ -5,6 +5,73 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-18 (OPUS) — **K2a: jedan model vraćanja · dva Leonova kvara imala su jedan uzrok**
+
+> Leon, sa živog ekrana: *„kada se ode na my materials, nakon toga kada se uđe u neki predmet
+> da se uči i vrati nazad odvede nas na ovu stranicu koja nema veze s vezom… kada se uđe u
+> editor… onda izađe… vraća me u isti editor i tako me vrti u krug."*
+
+### Moja prva formulacija kvara bila je kriva
+
+Opisao sam srodan slučaj s **landinga** (predmet → natrag → browse) kao da je to Leonov kvar.
+Nije bio: njegov ide iz **Mojih materijala** i završava na **lekcijskoj stranici čvora** koja
+crta prazninu. *Kad korisnik opisuje kvar, moja rekonstrukcija nije potvrda — dva su puta
+sličila, a uzrok je bio treći.*
+
+### Uzrok je jedan i širi od oba kvara
+
+**Tri paralelna modela vraćanja:** tvrdo ožičen roditelj u svakom gumbu · ručna jednodubinska
+povijest (`profileReturnPage`/`materialsReturnPage`) · prava povijest preglednika (od K1).
+Aplikacija je usput dobila **dvije hijerarhije** — katalog `browse → lessons → study` i
+vlastito gradivo `polica → study` — a tvrdo ožičeni gumbi poznavali su samo prvu.
+**Čim postoji druga hijerarhija, tvrdo ožičen roditelj postaje laž.**
+
+⚠️ **Petlja s editorom bila je PROPUŠTEN PRIJENOS, ne previd:** izuzetak koji je sprječava stoji
+**tri retka iznad**, za profil, s komentarom koji se poziva na BUG-019 i petlju profil ⇄ admin.
+Materijali su dobili stranicu u C0 i naslijedili obrazac **bez** izuzetka. Sedmi put u ovoj fazi.
+
+### Izvedeno
+
+`goBack()` = jedini „natrag": povijest kad iza nas stoji naš unos, inače `roditeljOd()`.
+Dubina se čita iz `history.state`, **ne iz brojača** — `popstate` okida i pri koraku naprijed.
+Obje ručne povijesti **obrisane**. Čuvar u `navigateTo`: `node:` nikad na lekcijskoj stranici
+(ruta je od K1 dijeljiva → čuvar ne smije stajati u gumbu). **BUG-026**, **BUG-027**.
+
+### Dvije greške koje je našla proba, ne čitanje koda
+
+1. **Prva verzija popravka stvarala je petlju koju je trebala ukloniti** — odlazak *gore* gurao
+   je unos u povijest, pa je sljedeći „natrag" padao **natrag u dijete**. Kretanje gore mora
+   **zamijeniti** unos.
+2. **Proba je dvaput mjerila staru datoteku** — prvo service worker (`stale-while-revalidate`),
+   pa **keširani `index.html` koji i nakon `npm run bump` pokazuje na stari `?v=`**. Token živi
+   *unutar* `index.html`. *Lokalna proba može tiho mjeriti prethodnu verziju.*
+
+### Plan je ispravljen na tri mjesta
+
+**K2 → K2a (ponašanje) + K2b (traka)** — traka nijedan kvar ne bi popravila · **kriterij K3
+pooštren** (mjerio je POSTOJANJE izlaza, pa bi oba Leonova kvara prošla) · **K5 dodan**
+(editor dvojezično; izmjereno **30/54** niza Studija bez prijevoda + **53** zakucana u tri
+datoteke, hrvatski i engleski na istom ekranu). Usput izmjereno: znak nije poveznica na dom
+**ni na jednoj od 9 stranica**, jezik postoji na **4/9**, a `#editor-page` je
+`position:fixed; inset:0; z-index:1200` — dakle traka **traži točno jednu iznimku**, suprotno
+od onoga što su spec, BACKLOG i memorija tvrdili **istom rečenicom na tri mjesta**.
+
+### Gate
+
+`back-model.spec.js` **5/5** · obrnuta provjera **3/5 pada** (`git stash` na kod prije K2a;
+druga dva ne mjere K2a — jedno čuva rizik koji je K2a uveo, drugo je tekovina K1) ·
+navigacijski specovi **17/17** · `preflight` **EXIT 0** · bump **82 tokena**.
+
+### Slijedi
+
+**K2b — jedna gornja traka**, u obliku presuđenom s Leonom: traka nosi znak → landing, Predmeti,
+Moji materijali, jezik, račun; **naslov i mrvica sele u vlastiti red ispod** (na 320 px kontrole
+i naslov danas dijele isti red i ne stanu), a **mrvica postaje navigacija** — `Moji materijali ›
+Matematika` naspram `Predmeti › Ekonomija › Uvod`. Otvoreno pitanje za Leona: ulaz „Moji
+materijali" u traci **na landingu** (granica §8.4 dopušta ulaz, ali ne popis).
+
+---
+
 ## 2026-08-18 (OPUS) — **Dokumenti su prestali prepisivati stanje · faza „KOSTUR" · K1: devet stranica, devet adresa**
 
 > Leon: *„Trebamo pripazit na md datoteke trenutno jer je prosla sesija pocela halucinirat
