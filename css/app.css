@@ -93,6 +93,12 @@
 @import "./block-editor.css";
 @import "./studio.css";
 
+/* Jedna gornja traka (K2b). ⚠️ MORA stajati POSLIJE landing/browse/pages/profile:
+   ondje sekcije dobivaju `min-height:100dvh`, a traka od te visine oduzima kromo.
+   Specifičnost je jednaka (0-1-0), pa odlučuje REDOSLIJED — presloži li se ovaj
+   import iznad njih, svaka stranica postane viša od ekrana za visinu trake. */
+@import "./topbar.css";
+
 /* Samostalni moduli (ne gaze ništa iznad). */
 @import "./auth.css";
 @import "./profile.css";
@@ -127,3 +133,9 @@
    nastao iz JavaScripta — `if (!container || …)`. Skener ne zna da je to negacija, vidi tekst. */
 @source not inline("{,!}{block,blur,collapse,container,filter,fixed,grid,inline,italic,ordinal,resize,table}");
 @source not inline("{,!}{hidden,text-danger}");
+
+/* K2b: `flex-wrap` je usao u kandidate iz KOMENTARA — biljeska u `js/studio.js` objasnjava
+   zasto je mrvica Studija dizala traku na 41 % telefona i pritom doslovno pise
+   `flex-wrap:wrap`. Skener ne razlikuje objasnjenje od klase; vidi tekst. Isti razred kao
+   `.\!container` iz `if (!container)` gore — samo sto je ovaj put izvor bila PROZA. */
+@source not inline("{,!}flex-wrap");

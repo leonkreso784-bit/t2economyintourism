@@ -75,11 +75,11 @@ test('BUG-019 — back iz admina NE stvara petlju profil ⇄ admin (back s profi
   await page.waitForSelector('#admin-page.active');
 
   // Back iz admina → profil (pravi klik na gumb).
-  await page.click('#backFromAdmin');
+  await page.click('#pathbarBack');   // K2b: jedan gumb natrag za cijelu aplikaciju
   await page.waitForSelector('#profile-page.active');
 
   // Back s profila → POČETNA, ne natrag u admin (prije fixa: profil ⇄ admin zauvijek).
-  await page.click('#backFromProfile');
+  await page.click('#pathbarBack');
   await page.waitForSelector('#landing-page.active');
   const res = await page.evaluate(() => ({
     landingActive: document.getElementById('landing-page').classList.contains('active'),

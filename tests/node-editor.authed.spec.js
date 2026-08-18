@@ -144,7 +144,8 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
 
       // 1) prebacio se na editor-stranicu i zna koji je čvor
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
-      await expect(page.locator('#stCrumb')).toContainText('F3 Ulaz', { timeout: 20000 });
+      // K2b: mrvica Studija je obrisana; polozaj sada nosi GLOBALNI drugi red.
+      await expect(page.locator('#crumbs')).toContainText('F3 Ulaz', { timeout: 20000 });
 
       // 2) aside je panel ČVORA, ne katalog-stablo
       await expect(page.locator('#editor-page .st-nodename')).toHaveText('F3 Ulaz');
@@ -172,7 +173,7 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
       await row.locator('[data-mm-open]').click();
       await expect(page.locator('#editor-page')).toHaveClass(/active/, { timeout: 20000 });
 
-      await page.click('#stBack');
+      await page.click('#pathbarBack');   // K2b: jedan gumb natrag
       await expect(page.locator('#materials-page')).toHaveClass(/active/, { timeout: 20000 });
       await expect(page.locator('#myMaterials .mm-bar')).toBeVisible();
     } finally {

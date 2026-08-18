@@ -112,15 +112,18 @@ const SokratStudio = (function () {
     var page = byId('editor-page');
     if (!page) return;
     page.innerHTML =
+      // ⚠️ K2b — SPAJANJE, NE SLAGANJE (Leon, 2026-08-19). Ovdje su do K2b stajali natrag,
+      // znak „Sokrat STUDIO" i mrvica. To je IDENTITET i POLOŽAJ — posao globalne trake —
+      // pa su preseljeni gore; Studiju ostaju samo RADNJE NAD DOKUMENTOM.
+      //
+      // Nije uklonjeno zbog urednosti nego zbog mjerenja: na 390×844 ova je traka bila
+      // **347 px od 844 (41 % ekrana)**, a canvas 235 px (28 %). Visinu je dizala mrvica —
+      // `.st-crumb` ima `flex-wrap:wrap` i srušila bi se u stupac **96 px širok, 326 px
+      // visok**. Traka pritom NEMA `flex-wrap`, pa je ostatak izlazio VAN ekrana: `.st-chip`
+      // [375…458] i `.st-iconbtn` [470…484] bili su nedostupni, a `overflow:hidden` ih je
+      // odrezao umjesto da ponudi skrol. Slaganje globalne trake IZNAD ove pogoršalo bi
+      // kvar; spajanje ga gasi.
       '<div class="st-topbar">' +
-      '  <button class="st-iconbtn" id="stBack" aria-label="' + esc(t('common.back', 'Back')) + '">←</button>' +
-      // Sova je maknuta 2026-08-16 (Leon). Znak marke je bista, ne sova — emoji je bio
-      // jedini glif u cijelom sučelju koji je tvrdio drukčiji identitet.
-      '  <div class="st-logo">Sokrat <span class="st-ed">STUDIO</span></div>' +
-      '  <div class="st-crumb" id="stCrumb">' + (_node
-        ? '<span class="st-c">' + esc(t('studio.myMaterials', 'Moji materijali')) + '</span>' +
-          '<span class="st-sep">›</span><span class="st-c now">' + esc(_node.name) + '</span>'
-        : '<span class="st-c">' + esc(t('studio.pickHint', 'Odaberi skriptu iz stabla')) + '</span>') + '</div>' +
       '  <div class="st-spacer"></div>' +
       '  <button class="st-btn ghost" id="stEdit" hidden><i class="fas fa-pen"></i> ' + esc(t('studio.edit', 'Uredi')) + '</button>' +
       '  <span class="st-chip" id="stDraftChip">—</span>' +
@@ -152,8 +155,12 @@ const SokratStudio = (function () {
     // Katalog-mod (admin, `_node` == null) i dalje ide na profil — taj put C0 nije dirao.
     // K2a: rezervni put se prosljedjuje jer Studio o kontekstu zna vise od AppState-a --
     // je li otvorio osobni cvor ili katalog. Kad iza nas stoji nas unos, odlucuje povijest.
-    byId('stBack').addEventListener('click', function () {
-      if (typeof goBack === 'function') goBack(_node ? 'materials' : 'profile');
+    // K2b: „natrag" je otišao u globalni drugi red, a hijerarhiju editora sada zna
+    // `roditeljOd()` preko `AppState.nav.editorNode` — pa se rezervni put više ne
+    // prosljeđuje ručno. Gumb ostaje ožičen samo ako ga neki stariji markup još nosi.
+    var back = byId('stBack');
+    if (back) back.addEventListener('click', function () {
+      if (typeof goBack === 'function') goBack();
       else if (typeof navigateTo === 'function') navigateTo(_node ? 'materials' : 'profile');
     });
     byId('stOldEditor').addEventListener('click', function () { if (typeof navigateTo === 'function') navigateTo('admin'); });
@@ -259,6 +266,10 @@ const SokratStudio = (function () {
   // ---- ODABIR SKRIPTE → CANVAS ----
   async function selectLesson(subjectId, lessonId, row) {
     _node = null;                                  // F3: odabir iz kataloga gasi node-mod
+    // K2b: i hijerarhija se mora vratiti na katalošku, inače bi mrvica i dalje tvrdila
+    // „Moji materijali" nakon što je korisnik iz čvora prešao na katalog-skriptu.
+    if (typeof AppState !== 'undefined' && AppState.nav) AppState.nav.editorNode = null;
+    if (typeof window.renderPathbar === 'function') window.renderPathbar();
     _sel = { subjectId: subjectId, lessonId: lessonId };
     _activeMode = null; // nova skripta → počni od prvog moda
     var tree = byId('stTree');
@@ -268,13 +279,11 @@ const SokratStudio = (function () {
     var canvas = byId('stCanvas');
     if (canvas) canvas.innerHTML = '<div class="st-empty"><p>' + esc(t('admin.loading', 'Učitavanje…')) + '</p></div>';
 
-    if (row && byId('stCrumb')) {
-      var parts = (row.getAttribute('data-crumb') || '').split(' › ');
-      var html = '';
-      parts.forEach(function (p, i) { html += (i ? '<span class="st-sep">›</span>' : '') + '<span class="st-c">' + esc(p) + '</span>'; });
-      html += '<span class="st-sep">›</span><span class="st-c now">' + esc(row.getAttribute('data-lname') || '') + '</span>';
-      byId('stCrumb').innerHTML = html;
-    }
+    // K2b: mrvica Studija je OBRISANA, ne preseljena. Ono što je pokazivala — koja je
+    // skripta otvorena — već stoji u naslovu canvasa (`#stCanvas .st-head h1`), pa je
+    // bila drugi zapis o istoj stvari. A bila je i najskuplji element u ljusci: sama je
+    // dizala traku na 41 % telefona (v. bilješku uz `.st-topbar`). Položaj STRANICE nosi
+    // globalni drugi red; položaj UNUTAR stranice nosi canvas.
 
     var data;
     try {
@@ -804,6 +813,11 @@ const SokratStudio = (function () {
   async function openNode(nodeId, name) {
     if (!nodeId) return;
     _node = { id: nodeId, name: name || '' };
+    // K2b: hijerarhija editora živi u stanju, ne u argumentu gumba. Do K2b je Studio
+    // jedini znao je li otvorio osobni čvor ili katalog i prosljeđivao to ručno kroz
+    // `goBack('materials'|'profile')` — pa `roditeljOd()` nije znao roditelja editora.
+    // Čim mrvicu crta ista hijerarhija, dva izvora znaju se raziĆi; ovako ih je jedan.
+    if (typeof AppState !== 'undefined' && AppState.nav) AppState.nav.editorNode = { id: nodeId, name: name || '' };
     _sel = { subjectId: 'node:' + nodeId, lessonId: 'content' };
     _data = null;
     _activeMode = null;

@@ -291,7 +291,7 @@ prirodno nosi.
 
 ---
 
-## 🔥 Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna — 2026-08-14
+## ✅ ~~Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna~~ — ZATVORENO 2026-08-19 (K2b, spec §8.8)
 **Izmjereno** (390 × 844, otvorena lekcija, staging):
 
 | mjera | vrijednost |
@@ -323,9 +323,18 @@ deklarira `display`. ⚠️ **Ne popravljati mehanički:** Studio nema mobilni i
 „ispravno" ponašanje ostavilo telefon **bez ijednog načina da se odabere lekcija**. Slučajni kvar
 danas drži funkciju živom → traži **odluku o dizajnu** (izbornik vs. složeni raspored), ne zakrpu.
 
-**Kad:** Leon, 2026-08-14: *„jbg tako je kako je, morat ćemo to popravit kroz vrijeme"* → **ne
-blokira isporuku**. Ali kriterij prihvaćanja C3 #1 izričito imenuje editor na 320 px, pa
-**C3 se ne smije proglasiti gotovim dok ovo stoji.**
+**✅ ZATVORENO K2b-om (2026-08-19), i to kao NUSPOJAVA, ne kao zaseban posao.** Leon je presudio da
+globalna traka Studija **spoji** s postojećom umjesto da se složi iznad nje: identitet i položaj
+(natrag, znak „Sokrat STUDIO“, mrvica) otišli su gore, Studiju su ostale radnje nad dokumentom.
+Izmjereno poslije, isti uređaj (390×844): `.st-topbar` **347 → 57 px**, canvas **235 → 326 px**,
+kontrola izvan ekrana **2 → 0**. ⚠️ Da je traka išla IZNAD (kako je spec dotad tvrdio), canvas bi pao
+na **~171 px** — cigla bi kvar **pogoršala**. Brana: `tests/studio-chrome.authed.spec.js`
+(obrnuta provjera **2/2 pada**).
+
+**⛔ OSTAJE OTVOREN drugi, neovisan nalaz iz istog odjeljka:** `.st-tree` je i dalje `display:flex`
+na telefonu (**354 px** nakon K2b) jer medijski upit ne dodaje specifičnost. Ne popravljati mehanički
+— Studio nema mobilni izbornik za stablo, pa bi „ispravno“ ponašanje ostavilo telefon bez ijednog
+načina da se odabere lekcija. Traži **odluku o dizajnu → K4**.
 
 ---
 

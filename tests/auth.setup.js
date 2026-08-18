@@ -30,6 +30,18 @@ test('authenticate as admin', async ({ page }) => {
     console.log('[auth.setup] STAGING mode → ' + cfg.url);
   }
 
+  // ⚠️ PRISTANAK NA KOLAČIĆE SE UPISUJE PRIJE PRVOG UČITAVANJA, i to nije zaobilaženje
+  // gatea nego vjernija simulacija. Prijavljen admin je tu odluku donio davno; svježa
+  // sesija bez nje drži banner na dnu ekrana TRAJNO, a on je `position:fixed` sa
+  // `z-index: 2147483000` — dakle presreće pokazivač nad svime što padne u donjih ~70 px.
+  // U K2b je to oborilo TRI Studio-testa čim je editor spušten za visinu globalne trake:
+  // izbornik blokova i zona ispuštanja pri povlačenju sekcije počeli su padati U banner.
+  // Sama kolizija je popravljena u kodu (`--bottom-inset`, v. js/consent.js), ali test
+  // koji je vozi kao pozadinski šum mjeri banner, a ne ono što tvrdi.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('sokrat-cookie-consent', 'granted'); } catch (e) { /* privatni način */ }
+  });
+
   await page.goto('/');
 
   // supabase-js CDN se učita async nakon DOMContentLoaded → pričekaj klijent.

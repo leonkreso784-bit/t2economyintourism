@@ -62,6 +62,24 @@
     function removeBanner() {
         var el = document.getElementById('cookieBanner');
         if (el && el.parentNode) el.parentNode.removeChild(el);
+        setBottomInset(0);
+    }
+
+    /**
+     * Objavi koliko DNA ekrana zauzima trajni namjestaj, da plutajuci izbornici znaju
+     * gdje im je stvarni rub. Banner je `position:fixed` na dnu sa `z-index: 2147483000`
+     * (namjerno iznad svega), pa svaki popup koji se otvori preko njega postaje NEKLIKABILAN
+     * — banner presretne pokazivac.
+     *
+     * ⚠️ Povod je stvaran kvar, ne opreznost: izbornik blokova (`.be-menu`) racunao je
+     * okretanje prema `window.innerHeight`, sto je tocno za VIEWPORT, ali ne i za ono sto
+     * je u njemu zauzeto. Dok je Studio pocinjao na vrhu ekrana, izbornik je slucajno padao
+     * iznad bannera; cim ga je K2b spustio za visinu trake, poceo je padati U njega.
+     * *Provjera „stane li u ekran" nije isto sto i „vidi li se".*
+     */
+    function setBottomInset(px) {
+        try { document.documentElement.style.setProperty('--bottom-inset', Math.max(0, px) + 'px'); }
+        catch (e) { /* bez CSSOM-a (stariji preglednik) — izbornik pada na staro ponasanje */ }
     }
 
     function showBanner() {
@@ -87,6 +105,7 @@
             '</div>';
 
         document.body.appendChild(banner);
+        setBottomInset(banner.getBoundingClientRect().height);
 
         document.getElementById('cookieAccept').addEventListener('click', function () {
             saveChoice('granted');

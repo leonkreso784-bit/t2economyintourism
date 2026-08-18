@@ -69,7 +69,7 @@ test('browse drill-down renders from catalog and navigates to a subject', async 
   expect(title).toContain('Tourism Economics');
 
   // Back from lessons returns to the browse subjects list (drill-down preserved)
-  await page.click('#backToLanding');
+  await page.click('#pathbarBack');   // K2b: jedan gumb natrag za cijelu aplikaciju
   await page.waitForSelector('#browse-page.active', { timeout: 5000 });
   await page.waitForSelector('.browse-card[data-browse="subject"]');
 

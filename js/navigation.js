@@ -189,6 +189,10 @@ function navigateTo(page, data = {}) {
     // (ista adresa, golo sidro) u kojima se ne upisuje nista, pa bi inace procurila u sljedecu.
     zamijeniSljedeciUnos = false;
 
+    // K2b: drugi red se crta NAKON što je stanje postavljeno — nazivi predmeta, lekcije i
+    // materijala dolaze iz istog stanja koje `navigateTo` gore tek upisuje.
+    renderPathbar();
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -358,6 +362,12 @@ function roditeljOd(page, nav) {
         case 'study':   return cvor ? { page: 'materials', data: {} } : { page: 'lessons', data: { subject: subjekt } };
         case 'lessons': return cvor ? { page: 'materials', data: {} } : { page: 'browse', data: {} };
         case 'admin':   return { page: 'profile', data: {} };
+        // K2b: editor je dosad bio JEDINA stranica čijeg roditelja ova funkcija NIJE znala —
+        // Studio ga je prosljeđivao ručno (`goBack('materials'|'profile')`). Dok je „natrag"
+        // bio jedini čitatelj, to je prolazilo; čim mrvicu crta ista hijerarhija, dva izvora
+        // znaju se raziĆi i pokazati različit put od onoga kamo gumb vodi. Zato Studio sada
+        // upisuje kontekst u `AppState.nav.editorNode`, a hijerarhija ostaje na JEDNOM mjestu.
+        case 'editor':  return (nav && nav.editorNode) ? { page: 'materials', data: {} } : { page: 'profile', data: {} };
         default:        return { page: 'landing', data: {} };
     }
 }
@@ -370,6 +380,17 @@ function roditeljOd(page, nav) {
  *   osobni čvor ili katalog, a `AppState.nav.subject` mu to ne kaže.
  */
 function goBack(rezervni) {
+    // K2b — DUBINA UNUTAR STRANICE IDE PRIJE DUBINE MEĐU STRANICAMA. Browse ima vlastiti
+    // drill-down (fakultet → smjer → godina → predmeti) koji NE stvara unose u povijesti,
+    // jer se ne mijenja stranica nego samo njezin sadržaj. Da globalni „natrag" to ne zna,
+    // s razine „predmeti" izletio bi ravno s browsea i preskočio tri razine kroz koje je
+    // korisnik upravo prošao. `browseBack()` na vrhunskoj razini vraća poziv ovamo, pa
+    // rekurzija staje.
+    if (!rezervni && AppState.nav.page === 'browse' && typeof browseState !== 'undefined'
+        && browseState.level && browseState.level !== 'faculties') {
+        browseBack();
+        return;
+    }
     // Iza nas stoji NAŠ unos → koristi pravu povijest. Time „natrag" u aplikaciji i
     // sistemska gesta natrag konačno govore isto; do K2a su se razilazili.
     if (dubinaPovijesti > 0 && history && typeof history.back === 'function') {
@@ -382,6 +403,163 @@ function goBack(rezervni) {
     if (rezervni) { navigateTo(rezervni, {}); return; }
     const r = roditeljOd(AppState.nav.page, AppState.nav);
     navigateTo(r.page, r.data);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   K2b — JEDNA GORNJA TRAKA (spec §8)
+
+   Mrvica se NE gradi iz vlastite tablice nego se PENJE kroz `roditeljOd()` —
+   istu funkciju koja pogoni „natrag". To nije ušteda koda nego jedina brana
+   protiv razilaženja: put koji mrvica pokazuje i put kojim gumb vodi ne mogu
+   se raziĆi ako su isti izraz. (Do K2b su tri paralelna modela vraćanja i
+   proizvela BUG-026 i BUG-027 — dva zapisa o istoj stvari.)
+
+   ⚠️ NIŠTA OVDJE NE IDE KROZ `innerHTML`. Nazivi materijala su KORISNIČKI
+   tekst, a mrvica je nova površina koja ga prikazuje. Umjesto da se oslanjamo
+   na escape (granica #3, BUG-025), gradimo čvorove i pišemo u `textContent` —
+   tekst tad ne može biti markup, pa nema što ni pobjeći.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/** Prijevod s rezervnim tekstom; `t()` vraća KLJUČ kad prijevoda nema. */
+function _pt(key, fb) {
+    if (typeof window.t === 'function') { const s = window.t(key); if (s && s !== key) return s; }
+    return fb;
+}
+
+/** Naziv predmeta iz karte koja pokriva OBA izvora — katalog i `node:` materijale. */
+function _nazivPredmeta(id) {
+    if (typeof subjectDataMap === 'undefined' || !id) return '';
+    const s = subjectDataMap[id];
+    return (s && s.name) ? s.name : '';
+}
+
+function _nazivLekcije(subjectId, lessonId) {
+    if (typeof subjectDataMap === 'undefined' || !subjectId || !lessonId) return '';
+    const s = subjectDataMap[subjectId];
+    if (!s || !Array.isArray(s.lessons)) return '';
+    const l = s.lessons.find((x) => x && x.id === lessonId);
+    return (l && l.name) ? l.name : '';
+}
+
+/** Kako se stranica ZOVE u mrvici. Prazan naziv znači „preskoči" (nema što pokazati). */
+function nazivStranice(page, nav) {
+    switch (page) {
+        case 'browse':    return _pt('topbar.subjects', 'Subjects');
+        case 'materials': return _pt('materials.title', 'My materials');
+        case 'profile':   return _pt('profile.title', 'My Profile');
+        case 'admin':     return _pt('admin.title', 'Admin');
+        case 'about':     return _pt('topbar.about', 'About');
+        case 'lessons':   return _nazivPredmeta(nav && nav.subject) || _pt('topbar.subject', 'Subject');
+        case 'study':     return _nazivLekcije(nav && nav.subject, nav && nav.lesson)
+                              || _nazivPredmeta(nav && nav.subject)
+                              || _pt('topbar.study', 'Study');
+        case 'editor':    return (nav && nav.editorNode && nav.editorNode.name)
+                              ? nav.editorNode.name
+                              : _pt('topbar.studio', 'Studio');
+        default:          return '';
+    }
+}
+
+/**
+ * Lanac predaka od korijena do TRENUTNE stranice. Penje se `roditeljOd()`-om i staje na
+ * landingu — landing je znak u traci, ne mrvica. Ograničeno na 8 koraka: hijerarhija je
+ * duboka najviše 3, pa je sve preko toga ciklus, a ciklus ovdje ne smije zamrznuti stranicu.
+ */
+function lanacMrvica(page, nav) {
+    const lanac = [];
+    let p = page;
+    let straza = 0;
+    while (p && p !== 'landing' && straza < 8) {
+        lanac.unshift(p);
+        const r = roditeljOd(p, nav);
+        p = r ? r.page : 'landing';
+        straza += 1;
+    }
+    return lanac;
+}
+
+/** Kamo vodi klik na mrvicu — isti opis rute koji `navigateTo` očekuje. */
+function _odredisteMrvice(page, nav) {
+    if (page === 'lessons') return { page: 'lessons', data: { subject: (nav && nav.subject) || '' } };
+    return { page: page, data: {} };
+}
+
+/**
+ * Nacrtaj drugi red. Zove se iz `navigateTo` NAKON što je stanje postavljeno, jer nazivi
+ * (predmet, lekcija, materijal) dolaze iz stanja koje `navigateTo` tek upisuje.
+ */
+function renderPathbar() {
+    const traka = document.getElementById('pathbar');
+    const spremnik = document.getElementById('crumbs');
+    if (!traka || !spremnik) return;
+
+    const nav = (typeof AppState !== 'undefined' && AppState.nav) ? AppState.nav : {};
+    const page = nav.page || 'landing';
+
+    // Landing nema položaj — nema kamo „gore". Klasa gasi i visinu (`--pathbar-h: 0`),
+    // pa sekcije ne oduzimaju prostor koji se ne crta.
+    document.body.classList.toggle('no-pathbar', page === 'landing');
+    document.body.classList.toggle('on-landing', page === 'landing');
+    if (page === 'landing') { spremnik.textContent = ''; return; }
+
+    const lanac = lanacMrvica(page, nav);
+    spremnik.textContent = '';
+
+    lanac.forEach((p, i) => {
+        const zadnji = i === lanac.length - 1;
+        const naziv = nazivStranice(p, nav);
+        if (!naziv) return;
+
+        if (i > 0) {
+            const sep = document.createElement('span');
+            sep.className = 'crumb-sep';
+            sep.setAttribute('aria-hidden', 'true');
+            sep.textContent = '›';
+            spremnik.appendChild(sep);
+        }
+
+        if (zadnji) {
+            // Gdje JESMO — nije gumb, jer nema kamo voditi.
+            const ovdje = document.createElement('span');
+            ovdje.className = 'crumb crumb-current';
+            ovdje.setAttribute('aria-current', 'page');
+            ovdje.textContent = naziv;
+            spremnik.appendChild(ovdje);
+            return;
+        }
+
+        const gumb = document.createElement('button');
+        gumb.type = 'button';
+        gumb.className = 'crumb';
+        gumb.textContent = naziv;
+        const cilj = _odredisteMrvice(p, nav);
+        gumb.addEventListener('click', () => { navigateTo(cilj.page, cilj.data); });
+        spremnik.appendChild(gumb);
+    });
+
+    // Odredište u traci se označava PREMA HIJERARHIJI, ne prema trenutnoj stranici:
+    // lekcija i učenje iz kataloga i dalje „jesu" pod Predmetima.
+    const korijen = lanac.length ? lanac[0] : '';
+    const oznaci = (id, jeli) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (jeli) el.setAttribute('aria-current', 'page');
+        else el.removeAttribute('aria-current');
+    };
+    oznaci('topbarBrowse', korijen === 'browse');
+    oznaci('topbarMaterials', korijen === 'materials');
+}
+
+/** Ožiči traku. Znak i „Predmeti" su jedina dva ulaza koja nemaju postojeću kuku. */
+function initTopbar() {
+    const dom = document.getElementById('topbarHome');
+    if (dom) dom.addEventListener('click', (e) => { e.preventDefault(); navigateTo('landing'); });
+
+    const predmeti = document.getElementById('topbarBrowse');
+    if (predmeti) predmeti.addEventListener('click', () => { navigateTo('browse'); });
+
+    const natrag = document.getElementById('pathbarBack');
+    if (natrag) natrag.addEventListener('click', () => { goBack(); });
 }
 
 /**
@@ -1180,8 +1358,9 @@ async function initStudyPage(subjectId, lessonId, targetSection) {
         AppState.nav.data = fullData;
     }
 
-    const lessonsWord = window.t ? t('breadcrumb.lessons') : 'Lessons';
-    document.getElementById('studyBreadcrumb').textContent = `${subject.shortName} > ${lessonsWord}`;
+    // K2b: `#studyBreadcrumb` je obrisan — pisao je „Predmet > Lekcije" dok je globalni
+    // drugi red već crtao `Predmeti › Predmet › Lekcija`, i to kao NAVIGACIJU, a ovaj je
+    // bio samo tekst. Naslov lekcije ostaje: to je naslov STRANICE, ne putanja.
     document.getElementById('currentLessonTitle').textContent = subject.lessons.find(l => l.id === lessonId)?.name || (window.t ? t('lesson.fallback') : 'Lesson');
 
     loadProgress();
@@ -1317,6 +1496,9 @@ window.renderBrowse = renderBrowse;
 window.enterBrowse = enterBrowse;
 window.browseBack = browseBack;
 window.goBack = goBack;   // K2a — jedini „natrag“ u aplikaciji
+window.initTopbar = initTopbar;       // K2b
+window.renderPathbar = renderPathbar; // K2b — i18n ga zove pri promjeni jezika (mrvica je prevedena)
+window.roditeljOd = roditeljOd;       // K2b — brana dohvatljivosti (K3) mjeri hijerarhiju, ne gumbe
 window.initBrowse = initBrowse;
 window.renderLandingMeta = renderLandingMeta;
 window.renderLandingSubjects = renderLandingSubjects;

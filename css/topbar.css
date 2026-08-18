@@ -1,0 +1,340 @@
+/* =====================================================================
+   topbar.css — JEDNA GORNJA TRAKA  ·  cigla K2b (faza „KOSTUR", spec §8)
+   =====================================================================
+
+   ── ZAŠTO POSTOJI ────────────────────────────────────────────────────
+   Do K2b je devet `-page` sekcija nosilo NULA zajedničkih traka. `browse-header`,
+   `lessons-header` i `study-header` svaka su iznova slagale isti trojac (jezik +
+   „Moji materijali" + račun), a zaglavlja su živjela UNUTAR sekcija — pa su
+   nestajala s njima. Posljedica: jezik dohvatljiv na 4 od 9 stranica, znak na 3 od
+   9 i nigdje kao poveznica na dom, a iz Studija se nije dalo nikamo osim natrag.
+
+   ── DVA REDA, I TO IZMJERENO ─────────────────────────────────────────
+   Traka nosi ODREDIŠTA (znak, Predmeti, Moji materijali, jezik, račun), a drugi red
+   nosi POLOŽAJ (natrag + mrvica). Razlog je mjera, ne ukus: na 320 px kontrole i
+   naslov u istom redu troše 218 px prije ijednog slova naslova. Dva reda su jedini
+   način da oboje stane, a usput je i točnije — odredišta se ne mijenjaju, položaj se
+   mijenja svakom navigacijom.
+
+   ── ZAŠTO SU VISINE KONSTANTE, A NE SADRŽAJ ──────────────────────────
+   `--topbar-h` / `--pathbar-h` su FIKSNE. Šest spremnika ima `min-height:100dvh` i
+   od njih se mora oduzeti visina kroma; da je visina sadržajna, oduzimalo bi se
+   nešto što se ne zna unaprijed. Zato traka ima zadanu visinu, a sadržaj se u nju
+   uklapa (a ne obrnuto). Na landingu nema položaja → `--pathbar-h` padne na 0.
+
+   ⚠️ SVE BOJE IDU KROZ TOKENE. Nijedan hex, nijedna `rgba()`, nijedan zakucan
+   `white` — `check:palette` drži tri tvrde zabrane oko ove površine (tekst na ispuni
+   marke · `--primary-light` nije boja teksta · zakucana tamna ploha).
+   ===================================================================== */
+
+/* ⚠️ 64px NIJE proizvoljno — to je mjera iz §7.13 koju je Leon izričito tražio.
+   Znak je TRI PUTA prijavljen kao premalen, a dijagnoza „treba ga precrtati" bila je
+   kriva: `logo.svg` je traceana ilustracija koja na 32 px nužno postaje mrlja, a na
+   42 px se lice vidi. Traka je zato 64, a ne 56. Globalna traka koja bi znak vratila
+   na 32 px poništila bi odluku donesenu na živom ekranu — pa je ovdje zapisana mjera,
+   ne samo broj. */
+:root {
+    --topbar-h: 64px;
+    --pathbar-h: 44px;
+    /* Kromo = sve što stoji IZNAD stranice. Sekcije od njega oduzimaju svoju visinu. */
+    --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+    /* Koliko DNA ekrana zauzima trajni namještaj (cookie-banner). Postavlja ga
+       `js/consent.js`; plutajući izbornici od toga računaju svoj stvarni rub, jer
+       banner ima `z-index: 2147483000` i presreće pokazivač. Zadano 0 — bez ove
+       deklaracije bi `getPropertyValue` vratio prazno na svakoj stranici bez bannera. */
+    --bottom-inset: 0px;
+}
+
+/* Landing nema položaj (nema kamo „gore") → drugi red otpada i iz visine i iz prikaza. */
+body.no-pathbar {
+    --pathbar-h: 0px;
+}
+
+/* ===== RED 1 — ODREDIŠTA ===== */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1300;               /* iznad Studija (1200) — inače bi ga puni-viewport editor prekrio */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: calc(var(--topbar-h) + var(--safe-top));
+    padding: 0 1rem;
+    padding-top: var(--safe-top);
+    padding-left: calc(1rem + var(--safe-left));
+    padding-right: calc(1rem + var(--safe-right));
+    /* Ista ploha koju je landing dobio u C2/§7.13: poluprozirna, sadržaj ispod ostaje
+       naslućen — traka čita kao materijal, ne kao ploča. `color-mix` umjesto `rgba()`
+       jer bi rgba zakucala boju i tema je ne bi mogla promijeniti. */
+    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Znak je NEPROMJENJIV (spec §7.13, Leon izričito) — traka mu daje prostor, ne dira ga.
+   Do K2b nije bio poveznica na dom ni na jednoj od devet stranica. */
+.topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* 42px — v. bilješku uz `--topbar-h`. Znak zadržava VLASTITI INDIGO kroz sve teme;
+   CSS ga ne preboja, jer znak definira boju marke, a ne obrnuto. */
+.topbar-logo .logo-image {
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: var(--radius-sm);
+    display: block;
+    flex-shrink: 0;
+}
+
+.topbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-inline-start: 0.5rem;
+    min-width: 0;
+}
+
+.topbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 40px;
+    padding: 0 0.75rem;
+    border: none;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.topbar-btn:hover:not(:disabled) {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Stranica na kojoj već jesmo ne nudi se kao odredište — boji se markom, ne ispunom,
+   jer bi ispuna tražila `--on-primary` i time novu površinu za tri tvrde zabrane. */
+.topbar-btn[aria-current="page"] {
+    color: var(--primary);
+}
+
+.topbar-spacer {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+/* Jezik: ikona + „EN"/„HR". Oznaka NE nosi `.topbar-btn-label` pa preživi usko —
+   dvoslovna je i staje svugdje, a bez nje se ne vidi KOJI je jezik uključen. */
+.topbar-lang {
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+}
+
+/* Jedina radnja landinga. Drugdje je nema — poziv „počni učiti" na stranici na kojoj
+   već učiš je šum. ⚠️ Tekst na ispuni marke IDE KROZ `--color-on-brand`, nikad `white`:
+   promjena palete pomaknula je marku u svijetlu kredu i bijelo na njoj daje 1.68
+   (§7.7, tvrda zabrana #1 u `check:palette`). */
+.topbar-cta {
+    display: none;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-on-brand);
+    background: var(--color-brand-500);
+    border: 1px solid var(--color-brand-500);
+    border-radius: var(--radius-full);
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.topbar-cta:hover {
+    background: var(--color-brand-400);
+    border-color: var(--color-brand-400);
+}
+
+body.on-landing .topbar-cta {
+    display: inline-flex;
+}
+
+/* Ulaz u vlastito gradivo NE stoji u traci landinga (Leon, 2026-08-18) — ondje su to
+   VRATA U HEROU, a dva ulaza na isti ekran natječu se međusobno. */
+body.on-landing #topbarMaterials {
+    display: none;
+}
+
+.topbar-iconbtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.topbar-iconbtn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* ===== RED 2 — POLOŽAJ (natrag + mrvica) ===== */
+
+.pathbar {
+    position: sticky;
+    top: calc(var(--topbar-h) + var(--safe-top));
+    z-index: 1290;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: var(--pathbar-h);
+    padding-left: calc(0.75rem + var(--safe-left));
+    padding-right: calc(0.75rem + var(--safe-right));
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+}
+
+body.no-pathbar .pathbar {
+    display: none;
+}
+
+.pathbar-back {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pathbar-back:hover {
+    color: var(--text-primary);
+}
+
+/* Mrvica je NAVIGACIJA, ne ukras — svaki predak osim zadnjeg je klikabilan.
+   Skrola vodoravno umjesto da se lomi u stupac: `.st-crumb` je u Studiju imao
+   `flex-wrap:wrap` i na 390 px se srušio u stupac 96 px širok i **326 px visok**,
+   što je samo po sebi dizalo traku na 41 % ekrana. */
+.crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+
+.crumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.crumb {
+    border: none;
+    background: none;
+    padding: 0.25rem 0.35rem;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.crumb:hover {
+    color: var(--text-primary);
+}
+
+/* Zadnja mrvica = gdje jesmo. Nije gumb (nema kamo voditi) pa ni ne izgleda kao gumb. */
+.crumb-current {
+    color: var(--text-primary);
+    cursor: default;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.crumb-current:hover {
+    color: var(--text-primary);
+}
+
+.crumb-sep {
+    color: var(--text-muted);
+    opacity: 0.5;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+}
+
+/* ===== SEKCIJE ODUZIMAJU KROMO ===== */
+
+.landing-page,
+.browse-page,
+.lessons-page,
+.study-page,
+.about-page,
+.profile-page,
+.materials-page,
+.admin-page {
+    min-height: calc(100dvh - var(--chrome-h));
+}
+
+/* ===== USKO ===== */
+
+/* Ispod 560 px oznake odredišta odlaze, ikone ostaju. Hamburger je ODBAČEN (Leon):
+   sakriti navigaciju iza gumba znači vratiti isti problem koji cigla rješava. */
+@media (max-width: 559px) {
+    .topbar-btn-label {
+        display: none;
+    }
+
+    .topbar-btn {
+        padding: 0 0.6rem;
+    }
+
+    .topbar-logo .logo-text {
+        display: none;
+    }
+}

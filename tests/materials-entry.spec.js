@@ -13,7 +13,7 @@ test('ulaz u vlastiti materijal vidi se na landingu BEZ prijave', async ({ page 
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto('/');
-  await page.waitForSelector('.landing-nav');
+  await page.waitForSelector('.topbar');
 
   // ⚠️ C2 JE ULAZ PRESELIO IZ TRAKE U VRATA (Leon, 2026-08-12: „ne znam zašto je My
   // materials na gornjem baru — trebao bi biti prvi, gdje je Start studying").
@@ -81,13 +81,13 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   await page.waitForFunction(() => window.enterBrowse);
 
   // landing → browse → materijali → natrag mora vratiti na BROWSE, ne na landing.
-  await page.click('.landing-nav .start-trigger');
+  await page.click('.topbar .start-trigger');   // K2b: landing dijeli globalnu traku
   await page.waitForSelector('#browse-page.active');
 
-  await page.click('#browse-page [data-goto-materials]');
+  await page.click('.topbar [data-goto-materials]');   // K2b: ulaz je u globalnoj traci, ne u zaglavlju browsea
   await page.waitForSelector('#materials-page.active');
 
-  await page.click('#backFromMaterials');
+  await page.click('#pathbarBack');   // K2b: jedan gumb natrag
   await page.waitForSelector('#browse-page.active', { timeout: 5000 });
 
   // Ostane li `#/materials` u adresi dok gledaš browse, reload bi te bacio natrag.
@@ -100,7 +100,16 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   expect(new URL(page.url()).hash).toBe('#/subjects');
 });
 
-test('ikona ulaza stoji u zaglavljima browse/lessons/study', async ({ page }) => {
+// ⚠️ TVRDNJA JE PROMIJENJENA U K2b, I TO NIJE ISTO STO I PAD.
+// Test je do K2b trazio ikonu ulaza U SVAKOM od tri zaglavlja (`#lessons-page
+// [data-goto-materials]`), jer su `browse`/`lessons`/`study` svaka nosila VLASTITU kopiju
+// istog trojca kontrola. To je bio opis kvara koji cigla uklanja, a ne svojstvo koje
+// stitimo: tri kopije se raziđu, i vec jesu — jezik je bio dohvatljiv na 4 od 9 stranica.
+//
+// Nova tvrdnja je JACA, ne slabija: ulaz mora biti dohvatljiv sa svake od tih stranica
+// (sto je ono sto korisnik treba), i mora ga nositi TOCNO JEDAN element u dokumentu
+// (sto je ono sto stara verzija nije mogla tvrditi).
+test('ulaz u materijale je dohvatljiv s browse/lessons/study — iz JEDNE trake', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(
     () => document.querySelectorAll('#landingSubjects .landing-subject-card').length > 0
@@ -108,17 +117,34 @@ test('ikona ulaza stoji u zaglavljima browse/lessons/study', async ({ page }) =>
 
   await page.click('#landingSubjects .landing-subject-card[data-landing-subject="te2"]');
   await page.waitForSelector('#lessons-page.active');
-  await expect(page.locator('#lessons-page [data-goto-materials]')).toBeVisible();
+  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
 
   await page.click('#lessons-page .lessons-grid .lesson-card');
   await page.waitForSelector('#study-page.active', { timeout: 8000 });
-  await expect(page.locator('#study-page [data-goto-materials]')).toBeVisible();
+  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
+
+  await page.evaluate(() => navigateTo('browse'));
+  await page.waitForSelector('#browse-page.active');
+  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
+
+  // Jedan ulaz U TRAJNOM KROMU, ne tri kopije po zaglavljima — inace se opet mogu raziĆi.
+  //
+  // ⚠️ Tvrdnja NAMJERNO gleda samo kromo, ne cijeli dokument. Landing ima VISE ulaza i to
+  // je Leonova odluka, ne propust: vrata u herou, ➕ plocica iza kataloga, CTA sekcije
+  // vlastitog gradiva i poveznica u podnozju. Prva verzija ove tvrdnje brojala je sve i
+  // pala na 5 — mjerila je tocno, a tvrdila krivo.
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
+  expect(await page.locator('[data-goto-materials]').count()).toBeGreaterThan(1);
+
+  // ...i klik na njega stvarno vodi u policu.
+  await page.click('.topbar [data-goto-materials]');
+  await page.waitForSelector('#materials-page.active');
 });
 
 test('u dokumentu postoji TOČNO JEDAN #myMaterials', async ({ page }) => {
   // C0 je stablo preselio s profila na vlastitu stranicu. Vrati li ga netko i na profil,
   // nastaju dva čvora s istim id-em → `mount()` crta u prvi, a korisnik gleda drugi.
   await page.goto('/');
-  await page.waitForSelector('.landing-nav');
+  await page.waitForSelector('.topbar');
   expect(await page.locator('#myMaterials').count()).toBe(1);
 });

@@ -25,7 +25,7 @@ test('landing nav: no overflow and CTA never clipped across widths x languages',
   const errors = [];
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
   await page.goto('/');
-  await page.waitForSelector('.landing-nav .nav-cta');
+  await page.waitForSelector('.topbar .topbar-cta');
 
   for (const lang of LANGS) {
     await page.evaluate((l) => window.setUiLang(l, true), lang);
@@ -38,7 +38,7 @@ test('landing nav: no overflow and CTA never clipped across widths x languages',
       expect(scrollW, `overflow @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
 
       // 2) CTA „Start" je vidljiv i NIJE odrezan (desni rub unutar viewporta, sadržaj stane u gumb).
-      const cta = await page.$('.landing-nav .nav-cta');
+      const cta = await page.$('.topbar .topbar-cta');
       const box = await cta.boundingBox();
       expect(box, `CTA bez box-a @ ${w}px / ${lang}`).not.toBeNull();
       expect(box.width, `CTA širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);

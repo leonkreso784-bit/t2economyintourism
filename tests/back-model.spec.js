@@ -36,13 +36,17 @@ const spreman = (page) => page.waitForFunction(() => window.AppState && window.S
 /** Gdje se korisnik NAŠAO — jedino što ovi testovi smiju tvrditi. */
 const gdjeSam = (page) => page.evaluate(() => ({ page: AppState.nav.page, hash: location.hash }));
 
-/** Klik na vidljiv gumb natrag; false ako ga na toj stranici nema. */
-const natrag = (page, id) => page.evaluate((el) => {
-  const b = document.getElementById(el);
+/** Klik na gumb natrag. Od K2b postoji TOCNO JEDAN, u globalnom drugom redu.
+ *  Do K2b je svaka stranica nosila vlastiti (`stBack`, `backFromMaterials`,
+ *  `backToLanding`, `backToLessons`, `backFromAdmin`...) i test je morao znati
+ *  KOJI — sto je samo po sebi bio opis kvara: sedam gumba, sedam odredista.
+ *  Sada test klika ono sto klika i korisnik. */
+const natrag = (page) => page.evaluate(() => {
+  const b = document.getElementById('pathbarBack');
   if (!b || b.offsetParent === null) return false;
   b.click();
   return true;
-}, id);
+});
 
 /** Prvi predmet iz KATALOGA — nikad zakucan, da suita ne ovisi o sadržaju. */
 const prviPredmet = (page) => page.evaluate(() => Object.keys(subjectDataMap)[0]);
@@ -69,11 +73,11 @@ test('petlja polica <-> editor je mrtva: natrag s police ne vraća u editor', as
   await page.evaluate(() => { try { navigateTo('editor'); } catch (e) { /* render nije predmet ovog testa */ } });
   expect((await gdjeSam(page)).page).toBe('editor');
 
-  await natrag(page, 'stBack');
+  await natrag(page);
   await page.waitForFunction(() => AppState.nav.page === 'materials');
 
   // A OVO je bio kvar: sljedeći „natrag" vraćao je NAZAD U EDITOR.
-  await natrag(page, 'backFromMaterials');
+  await natrag(page);
   await page.waitForFunction(() => AppState.nav.page !== 'materials');
   expect((await gdjeSam(page)).page).not.toBe('editor');
 });
@@ -86,7 +90,7 @@ test('ulaz s landinga: natrag vraća na landing, ne u katalog koji nismo vidjeli
   await page.evaluate((s) => navigateTo('lessons', { subject: s }), id);
   expect((await gdjeSam(page)).page).toBe('lessons');
 
-  await natrag(page, 'backToLanding');
+  await natrag(page);
   await page.waitForFunction(() => AppState.nav.page === 'landing');
   expect((await gdjeSam(page)).page).toBe('landing');
 });
@@ -106,14 +110,14 @@ test('hladan dolazak na dijeljenu lekciju: natrag PENJE hijerarhiju i ne pada na
   await spreman(page);
   await page.waitForFunction(() => AppState.nav.page === 'study');
 
-  await natrag(page, 'backToLessons');
+  await natrag(page);
   await page.waitForFunction(() => AppState.nav.page === 'lessons');
 
   // ⚠️ OVDJE JE PRVA VERZIJA K2a PALA: odlazak GORE je gurao unos u povijest, pa je sljedeći
   // „natrag" imao kamo natrag — u lekciju iz koje smo upravo izašli. Popravak je stvarao
   // petlju koju je trebao ukloniti; našla ga je proba u pregledniku, ne čitanje koda.
   // Zato kretanje gore ZAMJENJUJE unos, ne gura ga.
-  await natrag(page, 'backToLanding');
+  await natrag(page);
   await page.waitForFunction(() => AppState.nav.page !== 'lessons');
   expect((await gdjeSam(page)).page).toBe('browse');
 });

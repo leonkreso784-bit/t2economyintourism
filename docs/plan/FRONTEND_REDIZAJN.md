@@ -1230,7 +1230,7 @@ jednog spremnika u drugi.**
 |---|---|---|---|
 | **K1** | **Rute.** Svih 9 stranica dobiva adresu; `saveCurrentPosition` prestaje biti jedini zapis pozicije. History API → sistemska „natrag" gesta radi. | otvoriš `#/predmet/<id>/<lekcija>` u novoj kartici i dobiješ tu lekciju; „natrag" vraća korak, ne izlazi sa stranice | **nikakva** (kao C1) |
 | **K2a** | **Jedan model vracanja.** `goBack()` = povijest kad iza nas stoji nas unos, inace **`roditeljOd()`** koji zna OBJE hijerarhije (katalog i policu). Obje rucne jednodubinske povijesti se brisu; cuvar u `navigateTo` sprjecava `node:` na lekcijskoj stranici. | „natrag" iz vlastitog materijala vraca na policu, a ne u katalog; petlja polica <-> editor je mrtva | **nikakva** |
-| **K2b** | **Jedna gornja traka.** `<header>` kao **brat** `-page` sekcija, izvan njih. Sadržaj: znak → landing · Predmeti → browse · Moji materijali → materials · jezik · profil/prijava. **Studio je dobiva jednako kao sve ostalo** → petlja pada bez ijedne posebne iznimke. Zaglavlja po stranici zadržavaju samo svoje (natrag, naslov, mrvice). | iz Studija se u jednom kliku dođe na landing, browse i materijale | da |
+| **K2b** | ✅ **ISPUNJEN (2026-08-19, §8.8) — SPAJANJEM, ne slaganjem.** `<header class="topbar">` + `<div class="pathbar">` kao **braca** `-page` sekcija. Red 1 = odredista (znak -> landing, Predmeti, Moji materijali, jezik, racun), red 2 = polozaj (natrag + mrvica iz `roditeljOd()`). ⚠️ **Studio NE dobiva traku IZNAD svoje** — identitet i polozaj SELE u globalnu, Studiju ostaju radnje nad dokumentom. Izmjereno: `.st-topbar` **347 -> 57 px**, canvas **235 -> 326 px**, odrezanih kontrola **2 -> 0**. Slaganje bi canvas spustilo na ~171 px. | iz Studija se u jednom kliku dode na landing, browse i materijale | da |
 | **K3** | **Brana dohvatljivosti.** Test tvrdi da je iz **svake** stranice — uključujući `#editor-page` — dohvatljiva bar jedna druga u jednom kliku. Uz nju: ruta preživi reload. | brana pada kad se traka makne (obrnuta provjera) | ne |
 | | ⚠️ **KRITERIJ POOSTREN (2026-08-18).** „Bar jedan klik drugamo" mjeri POSTOJANJE izlaza, a Leonova dva kvara imala su izlaz — vodio je na slomljenu stranicu i u petlju, pa bi **oba prosla ovu branu kako je bila napisana**. Dodaje se: izlaz mora voditi na stranicu koja ima smisla (nijedan `node:` na lekcijskoj stranici) i „natrag" nikad ne vraca onamo odakle si upravo dosao. | | |
 | **K4** | **Moji materijali u kvaliteti kataloga** (N3). Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Ista komponenta pločice koju K2 ionako izdvaja. | vlastiti materijal izgleda jednako dobro kao FMTU gradivo | da |
@@ -1394,3 +1394,127 @@ tekovina K1) · navigacijski specovi **17/17** (back-model + routes + materials-
 **EXIT 0**. ⚠️ U zaglavlju testa je brojka obrnute provjere **ispravljena nakon mjerenja** — prvo je
 pisalo „4 od 5", napisano napamet. Isti razred greške koji cigla zatvara.
 
+
+
+### 8.8 ✅ K2b JE ISPUNJEN — jedna gornja traka, i to SPAJANJEM (2026-08-19)
+
+> **Leon je presudio „spajanje", ne „slaganje" — i to je bila odluka o kvaru, ne o ukusu.**
+> Spec je do danas tvrdio da Studio traži **točno jednu iznimku** (`inset` ispod trake),
+> dakle da globalna traka stoji **iznad** njegove. Mjerenje je pokazalo da bi ta izvedba
+> **pogoršala** kvar koji na telefonu stoji od U8.
+
+#### Prvo mjerenje, pa kod
+
+Cigla je počela ponavljanjem mjere od 2026-08-14, jer bi inače krenula od brojke stare pet
+dana. **Iste brojke** (390×844, staging, Studio s otvorenom lekcijom):
+
+| | prije K2b | poslije K2b |
+|---|---|---|
+| `.st-topbar` | **347 px — 41 % ekrana** | **57 px — 7 %** |
+| `.st-tree` | 263 px | 354 px |
+| `.st-canvas` (radna ploha) | **235 px — 28 %** | **326 px — 39 %** |
+| kontrole izvan ekrana | `.st-chip` [375…458] · `.st-iconbtn` [470…484] | **nijedna** |
+
+Visinu je dizala **mrvica**: `.st-crumb` ima `flex-wrap:wrap` pa se na 390 px srušila u
+stupac **96 px širok i 326 px visok**. Traka pritom `flex-wrap` **nema**, pa je ostatak
+izlazio van, a `overflow:hidden` ga je **odrezao umjesto ponudio skrol** — dva gumba nisu
+postojala za korisnika telefona.
+
+**Aritmetika slaganja:** 64 (globalna) + 347 (Studio) → canvas pada s 235 na **~171 px**.
+Cigla bi oduzela četvrtinu preostale radne plohe i **ne bi popravila ništa**, jer je kvar
+bio *vodoravno* odsijecanje, a nova traka je vodoravno ne dira.
+
+**Aritmetika spajanja:** Studijeva traka drži dvije različite stvari — *identitet i položaj*
+(natrag, znak „Sokrat STUDIO", mrvica) i *radnje nad dokumentom* (Uredi, chip, Odbaci,
+Objavi, ⚙). Prvo je posao globalne trake. Kad ono ode gore, Studiju ostaje pet stavki koje
+stanu u jedan red. **Cigla koja je izgledala kao rizik za taj kvar postala je njegov popravak.**
+
+#### Izvedeno
+
+`<header class="topbar">` + `<div class="pathbar">` stoje **izvan** svih `-page` sekcija, kao
+njihova braća. Red 1 nosi odredišta (znak → landing, Predmeti, Moji materijali, jezik,
+račun), red 2 nosi položaj (natrag + mrvica). Visine su **konstante** (`--topbar-h: 64px`,
+`--pathbar-h: 44px`), jer šest spremnika ima `min-height:100dvh` i od njih se mora oduzeti
+kromo — sadržajna visina ne bi se dala oduzeti unaprijed.
+
+**Mrvica se penje kroz `roditeljOd()`** — istu funkciju koja pogoni „natrag" (K2a). To nije
+ušteda koda nego jedina brana protiv razilaženja: put koji mrvica **pokazuje** i put kojim
+gumb **vodi** ne mogu se raziĆi ako su isti izraz.
+
+⚠️ **Pritom je ispao propust K2a:** `roditeljOd()` nije znao roditelja **editora** — Studio
+ga je prosljeđivao ručno (`goBack('materials' | 'profile')`). Dok je „natrag" bio jedini
+čitatelj, to je prolazilo. Sada Studio upisuje kontekst u `AppState.nav.editorNode`, a
+hijerarhija stoji na **jednom** mjestu. *Ručno proslijeđen argument je drugi zapis o istoj
+stvari, i čeka drugog čitatelja da se razotkrije.*
+
+**Mrvica ne ide kroz `innerHTML`.** Nazivi materijala su korisnički tekst, a mrvica je nova
+površina koja ga prikazuje; umjesto oslanjanja na escape (granica #3, BUG-025) grade se
+čvorovi i piše u `textContent` — tekst tad ne može biti markup.
+
+**Landing je izgubio vlastitu traku** (Leon: traka bez gumba „Moji materijali", jer su ondje
+ulaz **vrata u herou**). Mjere iz §7.13 su prenesene, ne izgubljene: **traka 64 px, znak
+42 px** — globalna traka od 56/32 px poništila bi odluku donesenu na živom ekranu.
+
+**Obrisano jer je postalo drugi zapis o istoj stvari:** trojac (jezik + materijali + račun)
+iz **tri** zaglavlja · pet gumba natrag · `#stCrumb` · `#studyBreadcrumb` · `.landing-nav`
+(6 CSS blokova) · `.st-logo`/`.st-ed`/`.st-crumb`. Načelo reza: **položaj STRANICE nosi
+globalni drugi red, položaj UNUTAR stranice nosi sama stranica** — zato browse zadržava
+dubinu drill-downa, a Studio naslov canvasa.
+
+`goBack()` je usput naučio da **dubina unutar stranice ide prije dubine među stranicama**:
+browse drill-down ne stvara unose u povijesti, pa bi globalni „natrag" s razine „predmeti"
+izletio s browsea i preskočio tri razine kroz koje je korisnik upravo prošao.
+
+#### Tri nalaza koje je našla tek regresija
+
+1. **Cookie-banner je činio izbornik blokova neklikabilnim.** `.be-menu` je računao
+   okretanje prema `window.innerHeight` — točno za *viewport*, ali ne i za ono što je u
+   njemu **zauzeto**. Banner je `position:fixed` na dnu sa `z-index: 2147483000` i
+   **presreće pokazivač**. Dok je Studio počinjao na vrhu, izbornik je slučajno padao
+   iznad njega; čim ga je K2b spustio za visinu trake, počeo je padati **u** njega.
+   Popravak: `--bottom-inset`, koji objavljuje `js/consent.js`. *„Stane li u ekran" nije
+   isto što i „vidi li se".* **Kvar je bio latentan i nije ga uveo K2b** — samo ga je otkrio.
+2. **Regex-brisanje grupiranih selektora ostavilo je dva VISJEĆA SELEKTORA** bez bloka
+   (`.landing-nav .lang-toggle,`). To je točno razred **BUG-001/BUG-002** — nedovršeno
+   pravilo proguta sljedeće. Uhvaćeno provjerom balansa vitičastih, ne okom.
+3. **Isti regex zamalo je odnio `.landing-logo`**, koji **podnožje i dalje koristi**.
+   Vraćeno iz gita i suženo na stvarno mrtvo. *Brisanje po uzorku imena briše i ono što
+   uzorak slučajno pogađa.*
+
+⚠️ **Jedna tvrdnja je PROMIJENJENA, i to nije isto što i pad.** `materials-entry.spec.js` je
+tražio ikonu ulaza **u svakom** od tri zaglavlja — to je bio opis kvara koji cigla uklanja,
+ne svojstvo koje štitimo. Nova tvrdnja je jača: ulaz mora biti dohvatljiv sa sve tri
+stranice **i** nositi ga točno jedan element u kromu. ⚠️ Prva verzija te tvrdnje brojala je
+`[data-goto-materials]` u **cijelom dokumentu** i pala na 5 — landing legitimno ima više
+ulaza (vrata, ➕ pločica, CTA, podnožje). *Mjerila je točno, a tvrdila krivo.*
+
+#### Nova brana
+
+**`tests/studio-chrome.authed.spec.js`** — Studio na 390 px: nijedna kontrola u traci nije
+odrezana · ljuska ne jede ekran (traka ≤ 96 px, ukupan kromo < 347 px, canvas ≥ 280 px).
+Pragovi su postavljeni da uhvate **povratak mrvice ili znaka**, ne sitno ugađanje.
+**Obrnuta provjera: 2/2 pada** na kodu prije K2b (`git stash`).
+
+#### Gate
+
+`preflight` **EXIT 0** · zadana suita **83 prošlo / 0 palo / 10 preskočeno** ·
+`test:authed` **74/74** · `check:palette` **126/126** (traka nije podigla osnovicu) ·
+`check:contrast` **5 tema · 238 provjera** · obrnuta provjera nove brane **2/2 pada**.
+
+⚠️ `check:tailwind` je pao jednom, i to na **prozi**: komentar u `js/studio.js` objašnjava
+zašto je mrvica dizala traku i pritom doslovno piše `flex-wrap:wrap` — skener čita izvor kao
+tekst i izvukao je kandidat `.flex-wrap`. Isti razred kao `.\!container` iz `if (!container)`,
+samo što je izvor ovaj put bilo **objašnjenje**.
+
+⚠️ **Prijava je jednom pala sa `JWT issued at future`.** Nije kod: lokalni sat je bio točan
+(< 1 s), a isti token je kroz direktan HTTP prošao (`is_admin` = `true`, 200). Sub-sekundna
+utrka između sata koji `iat` **izdaje** (GoTrue) i onoga koji ga **provjerava** (PostgREST);
+3/3 ponovljene prijave prošle. Zapisano da sljedeća sesija ne traži uzrok u vlastitom kodu.
+
+#### Što OVA cigla NIJE popravila
+
+`.st-tree` je i dalje `display:flex` na telefonu (**354 px**) iako `studio.css` traži
+`display:none` ispod 680 px — medijski upit ne dodaje specifičnost, a bazno `display:flex`
+stoji **ispod** njega. To je **zapisano kao svjesno neriješeno** u BACKLOG-u: Studio nema
+mobilni izbornik za stablo, pa bi „ispravno" ponašanje ostavilo telefon **bez ijednog načina
+da se odabere lekcija**. Traži odluku o dizajnu (K4), ne zakrpu.

@@ -51,5 +51,9 @@ declare global {
     renderCatalogPrograms?: () => void;
     renderBrowse?: () => void;
     renderProfilePage?: () => void;
+    // K2b: mrvicu crta JS u `textContent` (nikad `innerHTML`), pa je `[data-i18n]` ne
+    // dohvaća — i18n je mora precrtati kao i ostale liste građene iz kataloga.
+    renderPathbar?: () => void;
+    initTopbar?: () => void;
   }
 }

@@ -32,9 +32,14 @@
 
 /* Puni preuzimanje viewporta (app-shell osjećaj) — skriveno dok nije aktivno. */
 #editor-page.studio-page{ display:none; }
+/* ⚠️ K2b: `inset:0` je postao `inset: var(--chrome-h) 0 0 0`. Studio je puni-viewport
+   ljuska (`position:fixed`), pa bi inače PREKRIO globalnu traku — a upravo je Studio
+   bio stranica iz koje se nije dalo nikamo (spec §8.1: dva čvora, jedan brid).
+   Ovo je JEDINA promjena pozicioniranja koju cigla traži; identitet je iz ljuske
+   otišao gore, pa Studio ne dobiva iznimku u sadržaju, samo u ishodištu. */
 #editor-page.studio-page.active{
   display:flex; flex-direction:column;
-  position:fixed; inset:0; z-index:1200;
+  position:fixed; inset:var(--chrome-h) 0 0 0; z-index:1200;
   background:var(--bg-primary); color:var(--text-primary);
   overflow:hidden;
 }
@@ -46,18 +51,10 @@
   border-bottom:1px solid var(--st-line); flex-shrink:0;
   box-shadow:var(--shadow); z-index:10;
 }
-#editor-page .st-logo{ display:flex; align-items:center; gap:9px; font-weight:700; font-size:15px; }
-/* `.st-dot` (kružić sa sovom) obrisan 2026-08-16 zajedno s emojijem u `studio.js` —
-   pravilo bez elementa je mrtav kod, a `check:tailwind` ga broji kao šum. */
-#editor-page .st-logo .st-ed{
-  font-size:10px; font-weight:800; letter-spacing:.14em;
-  background:color-mix(in srgb, var(--primary) 14%, transparent); color: var(--primary);
-  border:1px solid color-mix(in srgb, var(--primary) 34%, transparent); border-radius:99px; padding:3px 8px;
-}
-#editor-page .st-crumb{ display:flex; align-items:center; gap:6px; font-size:12.5px; color:var(--text-muted); flex-wrap:wrap; }
-#editor-page .st-crumb .st-c{ background:var(--st-sunken); border:1px solid var(--st-line); border-radius:8px; padding:4px 9px; }
-#editor-page .st-crumb .st-sep{ opacity:.5; }
-#editor-page .st-crumb .st-c.now{ color:var(--text-primary); font-weight:600; background:color-mix(in srgb, var(--primary) 12%, transparent); border-color:color-mix(in srgb, var(--primary) 34%, transparent); }
+/* `.st-dot` (kružić sa sovom) obrisan 2026-08-16 zajedno s emojijem u `studio.js`;
+   `.st-logo`, `.st-ed` i `.st-crumb` obrisani u K2b zajedno s identitetom koji je
+   preselio u globalnu traku. Pravilo bez elementa je mrtav kod, a `check:tailwind`
+   ga broji kao šum. */
 #editor-page .st-spacer{ flex:1; }
 #editor-page .st-chip{
   font-size:12px; padding:5px 12px; border-radius:99px; font-weight:600;

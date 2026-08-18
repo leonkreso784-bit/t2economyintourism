@@ -5,6 +5,71 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-19 (OPUS) — **K2b: jedna gornja traka · spajanje umjesto slaganja**
+
+> Leon: *„spajanje"* — jedna riječ koja je promijenila izvedbu cigle i usput zatvorila
+> kvar star od U8.
+
+### Mjerenje je išlo PRIJE koda, i dobro je da jest
+
+Spec je tvrdio da Studio traži **točno jednu iznimku** — globalna traka **iznad** njegove
+(`inset: var(--chrome-h)`). Ponovio sam mjeru od 2026-08-14 prije ijedne izmjene i dobio
+**iste brojke**: `.st-topbar` **347 px = 41 % ekrana**, canvas **235 px = 28 %**, `.st-chip`
+i `.st-iconbtn` **posve izvan ekrana**. Aritmetika slaganja: canvas pada na **~171 px**.
+**Cigla bi pogoršala kvar koji je trebala zaobići.**
+
+Spajanje ga umjesto toga gasi: Studijeva traka držala je **dvije različite stvari** —
+identitet/položaj (natrag, znak, mrvica) i radnje nad dokumentom. Prvo je posao globalne
+trake. Poslije: **traka 57 px (7 %), canvas 326 px (39 %), nula odrezanih kontrola.**
+
+### Mrvica se penje kroz `roditeljOd()`
+
+Nije ušteda koda nego brana: put koji mrvica **pokazuje** i put kojim gumb **vodi** ne mogu
+se raziĆi ako su isti izraz. ⚠️ Pritom je ispao **propust K2a**: `roditeljOd()` nije znao
+roditelja **editora** — Studio ga je prosljeđivao ručno. Dok je „natrag" bio jedini čitatelj,
+prolazilo je. *Ručno proslijeđen argument je drugi zapis o istoj stvari i čeka drugog
+čitatelja da se razotkrije.*
+
+### Tri nalaza koje je našla tek regresija
+
+1. **Cookie-banner je činio izbornik blokova neklikabilnim.** `.be-menu` je računao okretanje
+   prema `window.innerHeight` — točno za *viewport*, ali ne za ono što je u njemu **zauzeto**;
+   banner je `z-index: 2147483000` i presreće pokazivač. Kvar je bio **latentan od prije**,
+   K2b ga je samo spustio u vidno polje. *„Stane li u ekran" nije isto što i „vidi li se".*
+2. **Regex-brisanje grupiranih selektora ostavilo je dva VISJEĆA SELEKTORA** bez bloka —
+   razred **BUG-001/002**, gdje nedovršeno pravilo proguta sljedeće.
+3. **Isti regex zamalo je odnio `.landing-logo`**, koji **podnožje i dalje koristi**.
+
+### Dvije moje greške u mjerenju, obje istog razreda
+
+- Prva verzija nove tvrdnje brojala je `[data-goto-materials]` u **cijelom dokumentu** i pala
+  na 5 — landing legitimno ima više ulaza (vrata, ➕ pločica, CTA, podnožje). **Mjerila je
+  točno, a tvrdila krivo.** Ispravljeno na „jedan u **kromu**".
+- Komentar u kojem sam objasnio kvar doslovno piše `flex-wrap:wrap` → `check:tailwind` je iz
+  **proze** izvukao kandidat `.flex-wrap`. Isti razred kao `.\!container` iz `if (!container)`.
+
+### Okruženje, ne kod
+
+Prijava je jednom pala sa **`JWT issued at future`**. Lokalni sat točan (<1 s), isti token
+kroz direktan HTTP prošao (`is_admin` = true, 200) — sub-sekundna utrka između GoTruea koji
+`iat` izdaje i PostgRESTa koji ga provjerava. 3/3 ponovljene prijave prošle. Zapisano u
+`CLAUDE.md` da sljedeća sesija ne traži uzrok u vlastitom kodu.
+
+### Gate
+
+`preflight` **EXIT 0** · zadana suita **83/0/10** · `test:authed` **74/74** ·
+nova brana `studio-chrome.authed` **3/3**, **obrnuta provjera 2/2 pada** ·
+`check:palette` **126/126** · `check:contrast` **5 tema · 238 provjera**.
+
+### Slijedi
+
+**K3** — brana dohvatljivosti s pooštrenim kriterijem. Zatim **K4** (nosi i odluku o stablu
+Studija na telefonu: `.st-tree` je 354 px, a `display:none` ispod 680 px nikad nije radio) i
+**K5** (izmjereno: **29 od 49** `studio.*` ključeva nedostaje; `block-editor.js` i
+`admin-editors.js` imaju **nula** `t()` poziva).
+
+---
+
 ## 2026-08-18 (OPUS) — **K2a: jedan model vraćanja · dva Leonova kvara imala su jedan uzrok**
 
 > Leon, sa živog ekrana: *„kada se ode na my materials, nakon toga kada se uđe u neki predmet

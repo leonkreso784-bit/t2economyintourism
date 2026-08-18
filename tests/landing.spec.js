@@ -38,7 +38,7 @@ test('landing: nav, brojka iz kataloga i vitrina predmeta', async ({ page }) => 
   expect(counts.total, 'katalog nema više programa — test bi postao bezvrijedan')
     .toBeGreaterThan(counts.primary);
 
-  await expect(page.locator('.landing-nav')).toBeVisible();
+  await expect(page.locator('.topbar')).toBeVisible();   // K2b: landing dijeli globalnu traku
 
   const metaText = await page.$eval('[data-meta="subjectCount"]', (el) => el.textContent.trim());
   expect(metaText).toBe(String(counts.total));
@@ -145,11 +145,11 @@ test('landing: nijedan ukras ne prekriva sadržaj ispod ljepljive trake', async 
   // kojeg više nema, ali je RAZLOG ostao: traka je `position: sticky`, pa prvi sadržaj
   // ispod nje mora počinjati ISPOD njenog donjeg ruba, ne pod njom.
   await page.goto('/');
-  await page.waitForSelector('.landing-nav');
+  await page.waitForSelector('.topbar');
   await page.waitForSelector('.hero-kicker');
 
   const { navBottom, kickerTop } = await page.evaluate(() => {
-    const nav = document.querySelector('.landing-nav').getBoundingClientRect();
+    const nav = document.querySelector('.topbar').getBoundingClientRect();
     const kicker = document.querySelector('.hero-kicker').getBoundingClientRect();
     return { navBottom: nav.bottom, kickerTop: kicker.top };
   });

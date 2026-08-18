@@ -438,6 +438,17 @@
     'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },
     'profile.repeatNewPass': { en: 'Repeat new password', hr: 'Ponovi novu lozinku' },
     'profile.saveNewPass': { en: 'Save new password', hr: 'Spremi novu lozinku' },
+    // Jedna gornja traka (K2b, spec §8). Do K2b je jezik bio dohvatljiv na 4 od 9
+    // stranica, pa je i sam prekidač bio dio problema koji ova cigla rješava.
+    'topbar.subjects': { en: 'Subjects', hr: 'Predmeti' },
+    'topbar.about': { en: 'About', hr: 'O nama' },
+    'topbar.subject': { en: 'Subject', hr: 'Predmet' },
+    'topbar.study': { en: 'Study', hr: 'Učenje' },
+    'topbar.studio': { en: 'Studio', hr: 'Studio' },
+    'topbar.back': { en: 'Go back', hr: 'Natrag' },
+    'topbar.main': { en: 'Main', hr: 'Glavni izbornik' },
+    'topbar.crumbs': { en: 'Breadcrumb', hr: 'Putanja' },
+
     // „Moji materijali" (F2) — osobni UGC-graditelj
     'materials.title': { en: 'My materials', hr: 'Moji materijali' },
     'materials.desc': { en: 'Build your own study material — organise it in folders however you like. Private to you.', hr: 'Gradi vlastite materijale za učenje — složi ih na police kako god želiš. Vidljivo samo tebi.' },
@@ -619,6 +630,9 @@
     // promjenu jezika, inače traka ostane na starom jeziku dok se mreža ispod prevede.
     if (typeof window.renderCatalogPrograms === 'function') window.renderCatalogPrograms();
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
+    // K2b: mrvicu crta JavaScript u `textContent` (nikad `innerHTML`), pa je `[data-i18n]`
+    // ne dohvaća — mora se precrtati kao i ostale liste iz kataloga.
+    if (typeof window.renderPathbar === 'function') window.renderPathbar();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.

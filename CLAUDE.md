@@ -66,7 +66,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 - **`npm run check:palette`** — **čegrtaljka**: koliko je u `css/` i markupu ostalo boja iz STARE palete (indigo/slate) **i zakucane bijele/crne**, u OBA oblika u kojima se kriju (hex i `rgba()`). Povod: hex-revizija je našla ~78 mjesta, a stvarni broj je pri otkriću bio **435** — boja se krije u `rgba(99, 102, 241, .12)`, što hex-pretraga ne vidi. (Trenutni broj ispisuje sam gate; osnovica je u `scripts/palette-baseline.json` — namjerno se ne prepisuje u prozu.) **Ne traži nulu** (glow-ovi ne trebaju novu boju nego brisanje, zajedno s površinama u C3–C7), nego samo da broj **nikad ne poraste**; `--update` spušta osnovicu kad cigla očisti površinu. **Nula je uvjet da se birač tema uopće smije uključiti.** ⚠️ Uz čegrtaljku nosi i **TVRDU zabranu**: nijedno pravilo ne smije staviti **zakucan tekst na ispunu marke**. Povod: promjena palete pomaknula je marku iz tamnog indiga u svijetlu kredu, a **35 pravila** je držalo `color: white` — bijelo na kredi je **1.68**, dakle nečitljivo. `check:contrast` to NE hvata (dokazuje da je paleta ispravna, ne i da je CSS koristi), a axe je uhvatio **2 od 35** jer su ostala bila u `:hover`/`.active`/`.selected`. Boja teksta na marki ovisi o TEMI → uvijek `var(--on-primary)`. ⚠️ **Regex te zabrane je imao rupu do 2026-08-14:** tražio je `var(--primary)` sa **zatvorenom zagradom odmah iza imena**, pa `var(--primary, #6366f1)` — isti token s fallbackom — nije bio pogodak; nakon zakrpe ispala su još **2** skrivena pravila. **TVRDA ZABRANA #2 (C2):** `--primary-light` (= `brand-400`) **nije boja teksta** — to je varijanta za hover/ispune, a `check:contrast` je NIKAD ne mjeri kao tekst (mjeri `brand-500`). Na tamnom je prolazila, na svijetlom daje ~3.2 → pada AA; bilo je **26 pravila**, axe je uhvatio **1**. Za tekst ide `var(--primary)`. **Općenitija pouka: gate koji provjerava NEKE tokene stvara tihu pretpostavku da su provjereni SVI** — svaki novi token s ulogom mora ili ući u `check:contrast`, ili dobiti zabranu ovdje. **TVRDA ZABRANA #3 (2026-08-14):** **zakucana TAMNA ploha** — inverz prve dvije. Ondje je zakucan TEKST na temiranoj plohi, ovdje zakucana PLOHA ispod temiranog teksta; tema okrene tekst, ploha ostane → tamno na tamnom (`.st-icard` = **1.00**, doslovno ista boja). Dva kraka (pravilo · modulska varijabla tipa `--st-glass`), iznimke **izričite i s razlogom** (zastori, matiranje medija, platno slijepe karte, pločice ikona). Povod: čegrtaljka je tamne `rgba()` brojala kao „blago", što vrijedi za **bijele** rgba na svijetloj temi, a za tamne vrijedi **obrnuto** — jedna kanta je držala **dva suprotna kvara**. ⚠️ **Provjera „ima li pravilo zakucan svijetao tekst" RAČUNA luminanciju, ne gleda uzorak** — prva izvedba je bila regex i promašila `#e0e7ff`, pa je gate prijavio dva lažna kvara.
 - **`npm run check:contrast`** — WCAG **po temi**: 164 provjere kroz sve 4 teme (tekst ≥4.5 · UI ≥3.0 · tekst na gumbu · hue-odvojenost „točno" od marke ≥25°). S jednom paletom se kontrast dao provjeriti rukom; s četiri je provjera okom prestala biti provjera. Parsira `css/tokens.css` — **ne drži kopiju vrijednosti** (kopija bi se razišla, pa bi gate čuvao paletu koje nema).
 - **`npm run css:diff`** — dokaz da se IZGLED nije promijenio: izračunati stilovi svakog elementa u pravom Chromiumu, radno stablo vs `HEAD:styles.bundle.css`, kroz 3 širine; tokeni se broje odvojeno od prikaza. Traži preglednik + port → **NIJE u preflightu**; vrti ga uz svaku ciglu koja dira CSS.
-- `npm run test:responsive` — Playwright (iPhone profili, default suite). · **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env`; CI = zaseban secret-gated job).
+- **`npm run test:responsive`** — Playwright (iPhone profili, default suite). ⚠️ **Prijava zna pasti sa `JWT issued at future` — to NIJE kod.** Lokalni sat je bio točan (<1 s), a isti token je kroz direktan HTTP prošao (`is_admin` = true, 200); riječ je o sub-sekundnoj utrci između sata koji `iat` **izdaje** (GoTrue) i onoga koji ga **provjerava** (PostgREST). 3/3 ponovljene prijave prošle. Ne tražiti uzrok u vlastitom kodu. · **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env`; CI = zaseban secret-gated job).
 - `npm run test:unit` — node unit testovi. · `npm run serve:test` — lokalni server :5050.
 - `npm run validate:content [id]` — sadržajni validator. · `npm run validate:schema [id]` — JSON Schema gate (ajv).
 - **`npm run check:final`** — provjeri da BAZNI `final` red == M1⊕M2(+examPractice) za sve migrirane predmete. Read-only anon; graceful skip na uspavanu bazu; **NIJE u preflight** (mrežno).
@@ -89,15 +89,24 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > po presedanu C0-a: informacijska arhitektura prije kozmetike.
 > **✅ K1 (rute) JE GOTOV** — §8.6; devet stranica ima devet adresa, `css:diff` 0/3498.
 > **✅ K2a (jedan model vraćanja) JE GOTOV** — §8.7; `goBack()` = povijest, inače
-> `roditeljOd()` koji zna OBJE hijerarhije (katalog i policu). Zatvara **BUG-026** i
-> **BUG-027** (oba s Leonova ekrana). ⚠️ **Traka NE bi popravila nijedan od njih** — zato je
-> K2 razbijen na **K2a (ponašanje)** + **K2b (traka)**, i zato je kriterij **K3 pooštren**:
-> „bar jedan klik drugamo" mjeri POSTOJANJE izlaza, pa bi oba kvara prošla tu branu.
-> **🔵 SLJEDEĆA CIGLA = K2b (jedna gornja traka)** — znak → landing, Predmeti, Moji
-> materijali, jezik, račun; ⚠️ **Studio je `position:fixed; inset:0; z-index:1200`**, dakle
-> traži TOČNO JEDNU iznimku (`inset` ispod trake), suprotno od onoga što je spec tvrdio.
-> Zatim **K3** brana dohvatljivosti, **K4** materijali u kvaliteti kataloga, **K5** editor
-> dvojezično (izmjereno: 30/54 niza Studija bez prijevoda + 53 zakucana u tri datoteke).
+> `roditeljOd()` koji zna OBJE hijerarhije. Zatvara **BUG-026** i **BUG-027**.
+> **✅ K2b (jedna gornja traka) JE GOTOV** — §8.8, i to **SPAJANJEM, ne slaganjem**
+> (Leon, 2026-08-19). `<header class="topbar">` + `<div class="pathbar">` stoje **izvan**
+> `-page` sekcija; red 1 = odredišta, red 2 = položaj (mrvica se penje kroz **`roditeljOd()`**,
+> pa put koji pokazuje i put kojim gumb vodi ne mogu se raziĆi). ⚠️ **Spec je do tada tvrdio
+> da Studio traži „točno jednu iznimku" (traka IZNAD njegove) — mjerenje je pokazalo da bi
+> to POGORŠALO kvar:** `.st-topbar` je bila **347 px = 41 % telefona**, canvas 235 px, dva
+> gumba **izvan ekrana**; slaganjem bi canvas pao na ~171 px. Spajanjem: **traka 57 px,
+> canvas 326 px, nula odrezanih kontrola** → usput zatvoren 🔥 nalaz „Studio na telefonu".
+> Landing je izgubio vlastitu traku (bez gumba „Moji materijali" — ondje su ulaz **vrata u
+> herou**); mjere §7.13 prenesene: **traka 64 px, znak 42 px**.
+> **🔵 SLJEDEĆA CIGLA = K3** — brana dohvatljivosti, s **pooštrenim** kriterijem: „bar jedan
+> klik drugamo" mjeri POSTOJANJE izlaza, pa bi oba Leonova kvara prošla tu branu. Zatim
+> **K4** materijali u kvaliteti kataloga (nosi i odluku o **stablu Studija na telefonu** —
+> `.st-tree` je 354 px i `display:none` ispod 680 px nikad nije radio), pa **K5** editor
+> dvojezično (izmjereno 2026-08-19: **29 od 49** `studio.*` ključeva nedostaje, a
+> `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu djelomično
+> prevedeni nego uopće nisu spojeni na i18n).
 > Iza faze ide **A1 Google-prijava**, pa tek onda C4.
 >
 > **Ovdje se stanje NE prepisuje.** Grana, commiti, je li pushano — to zna git:

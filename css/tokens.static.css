@@ -196,3 +196,10 @@
   --touch-target-large: 48px;
   --nav-h: 72px;
 }
+
+:root {
+  --topbar-h: 64px;
+  --pathbar-h: 44px;
+  --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+  --bottom-inset: 0px;
+}

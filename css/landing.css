@@ -79,25 +79,6 @@
     padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
 }
 
-/* ── Traka ────────────────────────────────────────────────────────────
-   Sticky + poluprozirna: sadržaj ispod ostaje naslućen, kao materijal, a ne
-   kao ploča. `color-mix` umjesto `rgba()` — inače bi boja bila zakucana i
-   tema je ne bi mogla promijeniti. */
-.landing-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    min-height: 4rem;               /* 64px — znak dobiva prostor (§7.13) */
-    padding: 0.5rem clamp(1rem, 4vw, 2.5rem);
-    border-bottom: 1px solid var(--color-line);
-    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
 
 .landing-logo {
     display: flex;
@@ -135,55 +116,16 @@
     white-space: nowrap;
 }
 
-/* Ispod 480px wordmark odlazi — znak sam nosi identitet, a traka dobiva zrak
-   koji CTA-u treba (layout-guard mjeri baš to). */
+/* K2b: `.landing-nav` je obrisana zajedno s vlastitom trakom landinga — traku sada nosi
+   globalni `css/topbar.css`. `.landing-logo` OSTAJE jer ga i dalje koristi podnozje
+   (`.footer-brand .landing-logo`, index.html), pa se ispod 480px skriva njegov wordmark.
+   ⚠️ Ovdje su nakon brisanja ostala DVA VISJECA SELEKTORA bez bloka
+   (`.landing-nav .lang-toggle,`) — nedovrseno pravilo proguta sljedece (BUG-001/BUG-002).
+   Zato se grupirani selektori ne brisu regexom po jednom clanu grupe. */
 @media (max-width: 30rem) {
     .landing-logo .logo-text { display: none; }
 }
 
-.landing-nav .lang-toggle,
-.landing-nav .nav-auth-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font: inherit;
-    font-size: 0.875rem;
-    line-height: 1;
-    color: var(--color-ink-2);
-    background: none;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    padding: 0.5rem 0.65rem;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.landing-nav .nav-auth-btn { border-color: var(--color-line); color: var(--color-ink-1); }
-
-.landing-nav .lang-toggle:hover,
-.landing-nav .nav-auth-btn:hover {
-    color: var(--color-ink-0);
-    background: var(--color-surface-1);
-}
-
-.landing-nav .nav-cta {
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--color-on-brand);   /* NIKAD `white` — §7.7, tvrda brana u check:palette */
-    background: var(--color-brand-500);
-    border: 1px solid var(--color-brand-500);
-    border-radius: var(--radius-full);
-    padding: 0.6rem 1.1rem;
-    cursor: pointer;
-}
-
-.landing-nav .nav-cta:hover {
-    background: var(--color-brand-400);
-    border-color: var(--color-brand-400);
-}
 
 /* ── Hero ─────────────────────────────────────────────────────────────
    Veličine naslova i razmaci su utilityji u markupu; ovdje samo ono što
