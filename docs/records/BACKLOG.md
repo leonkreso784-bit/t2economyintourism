@@ -33,7 +33,7 @@ graf iz kojeg doslovno nema izlaza osim natrag. Isto i za admina.
 
 Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban proizvod.
 
-### N1 · Stalna gornja traka — SLJEDEĆA CIGLA, specificirana
+### N1 · Stalna gornja traka — razrađena u ciglu **K2** (spec §8; K1 rute su isporučene)
 - **jedan** `<header>` kao brat svih `-page` sekcija, izvan njih (danas su zaglavlja
   UNUTAR sekcija, pa nestaju s njima — to je cijeli uzrok)
 - sadržaj: znak → landing · **Predmeti** → browse · **Moji materijali** → materials ·

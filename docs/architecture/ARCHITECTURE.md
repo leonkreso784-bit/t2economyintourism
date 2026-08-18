@@ -164,6 +164,46 @@ UI-primitivci = light-DOM Web Components (`<sokrat-toast>`, `<sokrat-modal>`, `<
 
 ---
 
+## 7b · Rute — javan ugovor, ne detalj implementacije
+
+Aplikacija je **jedan `index.html` s devet `-page` sekcija**; vidljiva je uvijek točno jedna.
+Od K1 (2026-08-18) svaka od njih ima adresu, pa je adresa **identitet stranice**:
+
+| adresa | stranica |
+|---|---|
+| `#/` | landing |
+| `#/subjects` | browse |
+| `#/subject/<predmetId>` | popis lekcija |
+| `#/subject/<predmetId>/<lekcijaId>` | učenje |
+| `#/subject/<predmetId>/<lekcijaId>/<mod>` | učenje, u tom modu |
+| `#/materials` | vlastiti materijali |
+
+**Ovo je ugovor prema van, ne interni oblik:** te adrese ljudi šalju jedni drugima, a
+**faza dijeljenja materijala vješa svoj token upravo na njih** (ADR-030). Segmenti se zato
+ne preimenuju usput; promjena traži i preusmjeravanje starog oblika.
+
+**Tri pravila koja se ne smiju izgubiti** (izvedena su, ne stilska):
+
+1. **Sve rute su `#/`-prefiksirane.** Landing koristi **gola** sidra (`#top`, `#subjects`),
+   pa bi goli `#subjects` bio u istom prostoru imena i ruter bi otimao obično skrolanje.
+   Golo sidro je uz to **preciznija** pozicija od `#/` i ruter ga ne smije pregaziti.
+2. **`profile`, `admin` i `editor` NAMJERNO nemaju adresu.** Prikaz im ovisi o auth-sesiji i
+   admin-statusu koji na hladnom startu nisu spremni — deep-link bi pokazao praznu stranicu
+   bilo kome tko zna adresu. To je razred **BUG-023**, ne propust. Za njih se hash čisti, pa
+   „natrag" vraća onamo odakle se ušlo.
+3. **Ruta iz adrese je NEPOVJERLJIV ulaz i ide kroz `isSubjectOpenable()`.** Nepovjerljiviji
+   je od `localStorage`-a, ne manje: spremljena pozicija je bar nekad bila valjana na ovom
+   uređaju, a adresu je netko mogao utipkati ili poslati — pa smije imenovati **tuđi ili
+   obrisan** čvor.
+
+**Adresa vs pamćenje.** `saveCurrentPosition()` (24 h, `localStorage`) i dalje postoji i nije
+duplikat: on pamti **gdje si stao**, adresa kaže **što gledaš**. Kad se razilaze, **adresa
+pobjeđuje** — inače bi dijeljeni link nakon dvije sekunde odbacio gosta na tvoj prošli predmet.
+
+Brana: `tests/routes.spec.js` (tvrdnje o ishodu za korisnika, ne o obliku rute).
+
+---
+
 ## 8 · Storage — dva bucketa, namjerno različita
 
 | bucket | javan | tko piše | putanja |

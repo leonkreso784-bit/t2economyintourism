@@ -5,6 +5,110 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-18 (OPUS) — **Dokumenti su prestali prepisivati stanje · faza „KOSTUR" · K1: devet stranica, devet adresa**
+
+> Leon: *„Trebamo pripazit na md datoteke trenutno jer je prosla sesija pocela halucinirat
+> zbog pre velikog rada… Trebamo definirat sljedeci zadatak i fazu te naknadne faze tako da
+> sljedece sesije mogu raditi po planu."*
+
+### Uzrok haluciniranja nije bio umor nego OBLIK ZAPISA
+
+Tri dokumenta koja svaka sesija čita prva otvarala su se **nalogom koji je već izvršen** —
+`🔴 PRVO ŠTO TREBA NAPRAVITI: git push origin main`, dok je `main == origin/main`. Uz to je
+broj commita grane bio krivo napisan u **tri** datoteke istog dana (pisalo 8, bilo 10; treću,
+`FRONTEND_REDIZAJN.md:1064`, nisam ni znao dok ju gate nije našao).
+
+**Nijedna tvrdnja nije bila greška u zaključivanju — sve su bile točne kad su pisane i
+ostarile su same od sebe.** *Zastarjela ZAPOVIJED je gora od zastarjele činjenice: činjenica
+zbunjuje, zapovijed navodi sesiju na radnju.*
+
+**Odgovor je gate, ne pravilo — i taj je odgovor došao iz `BUGS.md`.** BUG-019 i BUG-020 oba
+propisuju *„pravi navigacijski stog + History API"*, oba odgođena na **U8**, koji se zatvorio
+bez izvedbe; **nitko to nije primijetio pet tjedana** jer nijedan gate ne čita `BUGS.md`.
+To je doslovno pouka BUG-023: *rečenica u dokumentu ne sprječava ništa.*
+
+**`npm run check:state`** (preflight → **14 gateova**) **ne zabranjuje brojku nego ju
+provjerava protiv gita** — zabrana bi dokumente učinila nečitljivima. ① broj commita **žive**
+grane vs `git rev-list --count main..<grana>` (mergeane se preskaču — ondje je brojka
+povijesna i točna zauvijek) · ② zapovijed za push koja je već izvršena.
+⚠️ Gate je pri prvom pokretanju uhvatio **vlastiti opis** — brana koja se ne da dokumentirati
+je nepotpuna; iznimka je uska i imenovana (`SAMOOPIS`), po uzoru na `CYRILLIC_ALLOWED`.
+⚠️ **Memorija je izvan repozitorija pa ju gate ne doseže** — poznata rupa, ne previd.
+
+### Faza „KOSTUR" (spec §8), ubačena između C3 i C4
+
+**K1 rute → K2 jedna traka → K3 brana dohvatljivosti → K4 materijali u kvaliteti kataloga**,
+pa **A1 Google-prijava**, pa C4. Presedan je C0: informacijska arhitektura prije kozmetike.
+
+**Nalaz koji je odredio opseg (nije bio ni u jednom dokumentu):** aplikacija je imala **devet
+stranica i JEDNU adresu** (`#/materials`). Back-gumb je odvodio sa stranice, ništa se nije
+dalo podijeliti, nema `sitemap.xml`, a **dijeljenje materijala — faza odmah iza MCP-a — nije
+imalo na što objesiti token.** Zato traka bez ruta znači pisati traku dvaput.
+
+### K1 — isporučen i zatvoren gateom
+
+`#/` · `#/subjects` · `#/subject/<predmet>` · `#/subject/<predmet>/<lekcija>` · `+/<mod>` ·
+`#/materials`. Sve u `navigation.js`, **bez nove skripte** (landing već nosi 717 KB u 41
+skripti, budžet 200). **Nije bila nova arhitektura:** `saveCurrentPosition()` je već
+serijalizirao potpun opis rute, samo u `localStorage`.
+
+**Dva kvara našla je provjera u pregledniku, ne čitanje koda:**
+1. `restoreLastPosition` je gazio **golo sidro** `#subjects` u `#/` → podijeljen link na
+   sekciju landinga tiho prestane skrolati.
+2. Za stranice bez rute hash se čistio `replaceState`-om uz komentar *„povijest ostaje
+   netaknuta"* — a `replaceState` **pojede unos na kojem stojiš**, pa je „natrag" iz Studija
+   preskakao materijale. **Komentar je tvrdio suprotno od onoga što je kod radio.** Ovaj drugi
+   nije uhvatila ni dimna proba nego tek test pisan o **ishodu**, ne o mehanizmu.
+
+**Granice:** `profile`/`admin`/`editor` **namjerno bez rute** (razred BUG-023) · ruta kroz
+`isSubjectOpenable()` jer je **URL nepovjerljiviji ulaz od `localStorage`-a** · mod se
+provjerava preko `dataset`, ne sastavljanjem selektora · sve rute `#/`-prefiksirane.
+
+**Ugovor o rutama upisan je u `ARCHITECTURE.md` §7b**, ne samo u spec — spec ide u arhivu kad
+faza završi, a adrese su trajan javni ugovor na koji se vješa dijeljenje.
+
+### Gate
+
+`routes.spec.js` **6/6** · obrnuta provjera **4/6 pada** (preostala dva čuvaju rizike koje
+uvodi sam ruter → na starom kodu prolaze po definiciji) · **`css:diff` 0 razlika / 3498
+usporedbi** · regresija **88 = 78 prošlo + 10 preskočeno + 0 palo** (3,5 min) · `preflight`
+EXIT 0 · `check:docs` 48 dokumenata / 283 poveznice / 0 mrtvih.
+
+### Tri vlastite greške, sve zapisane jer se razred ponavlja
+
+1. **Prva regresija je javila „exit 0" dok je u izlazu stajalo `1 failed`** — naredba je išla
+   kroz `| tail`, koji vraća **svoj** status. Odala ju je aritmetika (88 = 77 + 10 + **1**).
+   *Status iza pipe-a ne mjeri ono što misliš.* Pad je bio pravi: `materials-entry.spec.js` je
+   tvrdio `hash === ''`, točno dok je `#/materials` bila jedina ruta. **Tvrdnja je promijenjena
+   na `#/subjects`, nije „popravljena"** — test koji padne znači kvar, test koji promijeni
+   tvrdnju znači promjenu opsega.
+2. **Ćirilica u vlastitoj poruci commita** (`остр` u „pooštrena"). `check:docs` skenira `.md` i
+   kod, ali **ne poruke commita** — **šesti put u ovoj fazi** da gate pokriva neka mjesta i
+   time stvara pretpostavku da pokriva sva. Po pouci dana nije otišlo u BACKLOG nego u
+   **`.githooks/commit-msg`**, obrnuto provjeren.
+3. U dopuni `BUGS.md` napisao sam *„nitko nije primijetio dvije godine"* — stvarno **pet
+   tjedana** — i dva **lažna sidra** (`#bug-019`). Uhvaćeno ponovnim čitanjem, ne gateom.
+   **Brojka i poveznica napisane napamet su isti razred greške koji je taj tekst zatvarao.**
+
+### Usput
+
+Leon je pogledao landing i javio *„izgleda isto"* — **gledao je produkciju, koja cigle C+D
+nema.** Izmjereno: produkcija servira **0 od 5** oznaka, grana svih 5. Grana je gurnuta
+(Vercel preview READY na `f79ac5e`); ⚠️ preview **nije** provjeren posluženim sadržajem jer ga
+štiti SSO — provjeren je lokalni server. Leon zatim: *„Oke izgleda."*
+Navigacija je i dalje loša i **to nije prigovor na C+D** — nijedna od tih cigli je ne dira;
+to je posao K2.
+
+### Slijedi
+
+**K2 — jedna gornja traka.** Izmjereno: tri zaglavlja (`browse`/`lessons`/`study`) dijele
+**četiri iste kontrole** (jezik · materijali · auth · natrag+naslov), a znak stoji **samo** u
+browse zaglavlju. Vlastito je zapravo samo `back-btn` + mrvica → to ostaje po stranici, sve
+ostalo seli u jedan `<header>` izvan `-page` sekcija. **Studio ju dobiva jednako kao sve
+ostalo** → petlja pada bez ijedne posebne iznimke.
+
+---
+
 ## 2026-08-15 (OPUS) — **Sašine dvije zaostale grane mergeane. Šum se ne spaja, šum se regenerira**
 
 > Leon: *„danas ćemo morat mergat Sašin rad jer ne može ići ovako više."*

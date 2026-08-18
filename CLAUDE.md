@@ -55,7 +55,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 ## Komande
 - `npm run verify` — integritet catalog-a. · `npm run typecheck` — tsc bez build-a (scoped).
 - **`npm run bump`** — svi `?v=` tokeni + verzije na isti timestamp; `bump:check` = CI gate.
-- **`npm run preflight`** — svi brzi deploy-gate-ovi u jednom (**check:lockfile** · verify · bump:check · css-drift · **check:tailwind** · **check:cdn** · **check:palette** · **check:contrast** · typecheck · schema · export-drift · check:docs · unit); pokreni PRIJE svakog main-pusha (i pre-push hook ga automatski vrti na main).
+- **`npm run preflight`** — svi brzi deploy-gate-ovi u jednom (**check:lockfile** · verify · bump:check · css-drift · **check:tailwind** · **check:cdn** · **check:palette** · **check:contrast** · typecheck · schema · export-drift · check:docs · **check:state** · unit); pokreni PRIJE svakog main-pusha (i pre-push hook ga automatski vrti na main).
 - **⚠️ OVISNOSTI SE PINAJU TOČNO — `^` je zabranjen.** `save-exact=true` u `.npmrc`, Node deklariran u `.nvmrc` (**22**, isto što vrti CI) i `engines`. Povod: CI je 2026-08-12 dvaput pao na `npm ci` prije ijednog testa, oba puta zato što je raspon `^` dopustio da **upstream objava promijeni razrješenje ispod nas** — ništa u commitu nije bilo krivo. Projekt nema runtime-ovisnosti, sve je alat: predvidljivost je vrjednija od automatskih zakrpa. **Nadogradnja je namjerna radnja uz pun gate, nikad nuspojava `npm install`-a.** ⚠️ **Od 2026-08-14 isto vrijedi za CDN-ovisnosti koje idu u preglednik** (`check:cdn`) — dotad je ovo pravilo pokrivalo samo alat.
 - **`npm run check:state`** — tvrdnje o stanju koje neka naredba zna bolje. **Ne zabranjuje brojku, nego ju provjerava protiv gita** (zabrana bi dokumente učinila nečitljivima). Dvije provjere: ① broj commita žive grane mora se slagati s `git rev-list --count main..<grana>` (mergeane grane se preskaču — ondje je brojka povijesna i ostaje točna) · ② **zapovijed koja je već izvršena** — `git push origin main` označen kao „🔴 PRVO ŠTO TREBA" dok je `main == origin/main`. **Povod:** tri dokumenta koja se čitaju prva otvarala su se nalogom za push koji je bio obavljen, a broj commita je istog dana bio kriv u **tri** datoteke (pisalo 8, bilo 10). *Zastarjela ZAPOVIJED je gora od zastarjele činjenice — navodi sesiju na radnju.* Pokriva `CLAUDE.md` · `docs/plan/**` · `BACKLOG.md`; `CHANGELOG`/`PROGRESS`/`HISTORY` su namjerno izvan (ondje je „33 commita" tvrdnja o prošlosti). ⚠️ **Memorija je izvan repozitorija pa ju gate ne doseže** — poznata rupa, ne previd. Pada graciozno na plitkom checkoutu.
 - **`npm run check:lockfile`** — bi li `npm ci` prošao? To je **prvi korak svakog CI joba**, a dotad nije postojao ni u jednom lokalnom gateu: razvojni stroj radi s već instaliranim `node_modules` pa lock može biti razišao, a vidi se tek kad push na `main` obori **sva tri joba u 10 s**, prije ijednog pravog testa (dogodilo se na `d4c7914`). Uzrok tad nije bio u commitu nego **izvan repozitorija** — `@tailwindcss/oxide-wasm32-wasi` ima `bundleDependencies`, pa je objava `@emnapi/wasi-threads@1.2.3` upstream razišla raspon `^1.2.2` s locka. ⚠️ **`npm install --package-lock-only` to NE popravlja** (idealno stablo ne dira disk → bajt-identičan lock); popravlja **`npm install`**. Gate **pada zatvoreno** (nepoznat izlaz = pad; samo prepoznata mrežna greška je preskok) i **vrti DVA npm-a** — lokalni i onaj koji CI koristi (čita `node-version` iz `ci.yml`). Drugi prolaz postoji jer je prvi popravak bio zelen na npm 11 i crven na npm 10: **gate koji vrti drugu verziju od CI-a daje lažnu sigurnost.** Lock se popravlja **`npx npm@10 install`** — najstariji npm u igri piše najpotpuniji lock.
@@ -84,10 +84,12 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 
 ## Stanje — TRENUTNO (2026-08-18)
 
-> **🔵 SLJEDEĆA FAZA = „KOSTUR" — rute i jedna gornja traka.** Puna specifikacija:
-> `docs/plan/FRONTEND_REDIZAJN.md` **§8**. Ubacuje se **između C3 i C4** (Leon, 2026-08-18),
-> po presedanu C0-a: informacijska arhitektura prije kozmetike. Redom: **K1 rute → K2 jedna
-> traka → K3 brana dohvatljivosti → K4 materijali u kvaliteti kataloga.** Iza nje ide
+> **🔵 TEKUĆA FAZA = „KOSTUR" — rute i jedna gornja traka.** Puna specifikacija:
+> `docs/plan/FRONTEND_REDIZAJN.md` **§8**. Ubačena **između C3 i C4** (Leon, 2026-08-18),
+> po presedanu C0-a: informacijska arhitektura prije kozmetike.
+> **✅ K1 (rute) JE GOTOV** — §8.6; devet stranica ima devet adresa, `css:diff` 0/3498.
+> **🔵 SLJEDEĆA CIGLA = K2 (jedna gornja traka)** — ona gasi petlju iz Studija; zatim
+> **K3** brana dohvatljivosti, **K4** materijali u kvaliteti kataloga. Iza faze ide
 > **A1 Google-prijava**, pa tek onda C4.
 >
 > **Ovdje se stanje NE prepisuje.** Grana, commiti, je li pushano — to zna git:
