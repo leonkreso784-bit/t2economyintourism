@@ -11,6 +11,13 @@
 //
 // Testovi gađaju ISHOD ZA KORISNIKA (što vidi, kamo ga vodi „natrag"), ne unutarnji oblik
 // rute — da preimenovanje segmenta ne obori suitu bez pravog kvara.
+//
+// ⚠️ OBRNUTA PROVJERA (ruter uklonjen): pada **4 od 6**, i to je točan ishod, ne polovičan.
+// Četiri testa tvrde NOVU MOGUĆNOST (adresa, dijeljen link, „natrag", čist hash) i bez
+// rutera moraju pasti. Preostala dva — golo sidro i izmišljen predmet — čuvaju od RIZIKA
+// KOJE UVODI SAM RUTER, pa na starom kodu prolaze po definiciji: prije K1 nije bilo ničega
+// što bi sidro pregazilo ni adresu protumačilo. Brana koja bi i njih oborila mjerila bi
+// nešto drugo nego što tvrdi.
 const { test, expect } = require('@playwright/test');
 
 /** Sve što testovi trebaju znati o stanju, na jednom mjestu. */

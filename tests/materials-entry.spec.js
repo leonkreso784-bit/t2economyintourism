@@ -91,7 +91,13 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   await page.waitForSelector('#browse-page.active', { timeout: 5000 });
 
   // Ostane li `#/materials` u adresi dok gledaš browse, reload bi te bacio natrag.
-  expect(new URL(page.url()).hash).toBe('');
+  //
+  // ⚠️ Do K1 je ovdje stajalo `toBe('')`, jer je `#/materials` bila JEDINA ruta u aplikaciji
+  // pa je „nije materials" i „nema hasha" bilo isto. Od K1 browse ima vlastitu adresu, pa
+  // prazan hash više ne bi značio ispravno stanje nego IZGUBLJENU rutu. Tvrdnja je zato
+  // pooštrena na točnu adresu — namjera (adresa opisuje ono što gledaš) ostaje ista i sad
+  // je jače ispunjena: reload na `#/subjects` vraća na browse umjesto na landing.
+  expect(new URL(page.url()).hash).toBe('#/subjects');
 });
 
 test('ikona ulaza stoji u zaglavljima browse/lessons/study', async ({ page }) => {

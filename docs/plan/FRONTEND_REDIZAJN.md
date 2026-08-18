@@ -58,7 +58,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
 | **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **A+B na produkciji; C+D čekaju Leonov pogled.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D, tri nove sekcije) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
-| **K** 🔵 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1** rute · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
+| **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
@@ -1267,3 +1267,80 @@ kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
 **Izvan faza, jer ne ovise ni o čemu i mogu se ubaciti kad god:** RLS-zagrade (13 politika;
 **jedini nalaz koji poskupljuje čekanjem**) · birač tema (**24** fatalna pravila, ne 126) ·
 JS-budžet landinga kao gate.
+### 8.6 ✅ K1 JE ISPUNJEN — devet stranica, devet adresa (2026-08-18)
+
+| adresa | stranica |
+|---|---|
+| `#/` | landing |
+| `#/subjects` | browse |
+| `#/subject/<predmet>` | lekcije |
+| `#/subject/<predmet>/<lekcija>` | učenje |
+| `#/subject/<predmet>/<lekcija>/<mod>` | učenje, točno u tom modu |
+| `#/materials` | moji materijali (C0, doslovno zadržana — vanjski linkovi postoje) |
+
+Sve živi u `js/navigation.js`, **bez nove skripte** (granica §8.4 #3: landing već nosi
+717 KB u 41 skripti). `saveCurrentPosition` OSTAJE i nije duplikat: on je **pamćenje**
+(„gdje sam stao", 24 h), adresa je **identitet** („što gledam"). Kad se razilaze,
+**adresa pobjeđuje** — pravilo je postojalo od C0 za jednu rutu, sad vrijedi za sve.
+
+#### Dva kvara koje je našla provjera u pregledniku, a čitanje koda ne bi
+
+1. **`restoreLastPosition` je gazio golo sidro.** Na hladnom startu završi u
+   `navigateTo('landing')`, koji je adresu prepisivao u `#/` — pa je `#subjects` nestao i
+   preglednik više nije imao kamo skrolati. **Podijeljen link na sekciju landinga tiho bi
+   prestao raditi.** Golo sidro je *preciznija* pozicija od `#/` i ne smije se pregaziti.
+2. **`replaceState` pojede unos na kojem stojiš.** Za stranice bez rute prva verzija je
+   čistila hash `replaceState`-om, uz komentar *„povijest ostaje netaknuta"* — a upravo je
+   nije: pojeden je unos s kojeg se došlo, pa je „natrag" iz Studija **preskakao materijale
+   i završavao na landingu**. **Komentar je tvrdio suprotno od onoga što je kod radio.**
+   Ispravno je `pushState`, uz preskok kad je hash već prazan (inače duplikati u povijesti).
+
+> **Oba su iz istog razreda kao nalaz §7.11 i §7.14: tvrdnja o ponašanju koja zvuči točno
+> dok je nitko ne izvrši.** Prvi je uhvaćen dimnom probom, drugi tek testom koji je pisan
+> nakon nje — dakle ni proba nije bila dovoljna, trebala je tvrdnja o ISHODU („natrag me
+> vraća na materijale"), ne o mehanizmu.
+
+#### Što NAMJERNO nema rutu
+
+`profile`, `admin`, `editor`. Prikaz im ovisi o auth-sesiji i admin-statusu koji na hladnom
+startu nisu spremni — isti razlog zbog kojeg ih `saveCurrentPosition` nikad nije spremao, i
+točno razred **BUG-023**. Deep-link na `#/admin` pokazao bi prazan admin bilo kome tko zna
+adresu. Za njih se hash čisti (`pushState`), pa „natrag" iz Studija vraća na materijale.
+
+⚠️ **To NE ugrožava K2/K3:** zahtjev nije „u Studio se dolazi linkom" nego „iz Studija se
+izlazi u jednom kliku". To je posao trake, ne rute.
+
+#### Brana
+
+**`tests/routes.spec.js`** — 6 tvrdnji, sve o **ishodu za korisnika** (što vidi, kamo ga
+vodi „natrag"), ne o obliku rute, da preimenovanje segmenta ne obori suitu bez pravog kvara.
+Uključuje tvrdnju da **ruta iz adrese ide kroz `isSubjectOpenable()`**: URL je
+**nepovjerljiviji ulaz od `localStorage`-a**, ne manje — spremljena pozicija je bar nekad
+bila valjana na ovom uređaju, a adresu je netko mogao utipkati ili poslati, pa smije
+imenovati tuđi ili obrisan čvor.
+
+**Obrnuta provjera: pada 4 od 6, i to je točan ishod.** Četiri testa tvrde NOVU MOGUĆNOST i
+bez rutera moraju pasti; preostala dva čuvaju od **rizika koje uvodi sam ruter** (pregaženo
+sidro, protumačena smeće-adresa), pa na starom kodu prolaze po definiciji — prije K1 nije
+bilo ničega što bi sidro pregazilo. *Brana koja bi i njih oborila mjerila bi nešto drugo
+nego što tvrdi.*
+
+#### Jedan zatečeni test je promijenio tvrdnju, i to nije isto što i pad
+
+`materials-entry.spec.js` je tvrdio `hash === ''` nakon povratka na browse — točno dok je
+`#/materials` bila **jedina** ruta, pa su „nije materials" i „nema hasha" bili isto. Od K1
+prazan hash značio bi **izgubljenu rutu**, pa je tvrdnja pooštrena na `#/subjects`. Namjera
+(adresa opisuje ono što gledaš) nepromijenjena i jače ispunjena. **Test koji padne znači
+kvar; test koji promijeni tvrdnju znači promjenu opsega** — razlika je zapisana da se ne
+čita kao prikrivanje.
+
+#### Gate
+
+`routes.spec.js` **6/6** · `materials-entry` **6/6** · **`css:diff` 0 razlika / 3498
+usporedbi kroz 3 širine** (granica §8.4 #1: K1 ne smije pomaknuti nijedan piksel) ·
+`typecheck` 0 · `preflight` EXIT 0.
+
+⚠️ **Zamka u vlastitom mjerenju, treći put ista:** prvi prolaz regresije javio je „exit 0",
+a u izlazu je stajalo **1 failed** — jer je naredba išla kroz `| tail`, koji vraća SVOJ
+izlazni status. Aritmetika je to odala (88 prikupljeno = 77 + 10 + **1**). **Status iza
+pipe-a ne mjeri ono što misliš da mjeri;** izlaz ide u datoteku, pa se čita.
