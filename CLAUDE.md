@@ -100,9 +100,15 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > canvas 326 px, nula odrezanih kontrola** → usput zatvoren 🔥 nalaz „Studio na telefonu".
 > Landing je izgubio vlastitu traku (bez gumba „Moji materijali" — ondje su ulaz **vrata u
 > herou**); mjere §7.13 prenesene: **traka 64 px, znak 42 px**.
-> **🔵 SLJEDEĆA CIGLA = K3** — brana dohvatljivosti, s **pooštrenim** kriterijem: „bar jedan
-> klik drugamo" mjeri POSTOJANJE izlaza, pa bi oba Leonova kvara prošla tu branu. Zatim
-> **K4** materijali u kvaliteti kataloga (nosi i odluku o **stablu Studija na telefonu** —
+> **✅ K3 (brana dohvatljivosti) JE GOTOV** — §8.9. Mjeri **POGODAK, ne postojanje**
+> (`elementFromPoint` na sredini kontrole), jer bi „bar jedan klik drugamo" propustio oba
+> Leonova kvara. **Cigla je odmah našla kvar: BUG-029** — na 320 px su „Predmeti" na
+> landingu **prebacivali jezik** umjesto da otvore katalog (`.topbar-nav` se stisnuo na
+> širinu 0 i gumb je ispod prekidača jezika). ⚠️ **Nijedan gate to nije mogao vidjeti:**
+> `overflow:visible` + `scrollWidth == clientWidth` = **prelijeva nema**, a najuži profil
+> je 375 px dok kriterij §2 imenuje **320**. Treći mehanizam iste obitelji u tri cigle:
+> **odrezano** (K2b) · **prekriveno** (BUG-028) · **preklopljeno** (BUG-029).
+> **🔵 SLJEDEĆA CIGLA = K4** — materijali u kvaliteti kataloga (nosi i odluku o **stablu Studija na telefonu** —
 > `.st-tree` je 354 px i `display:none` ispod 680 px nikad nije radio), pa **K5** editor
 > dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva nedostaje, a
 > `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu djelomično

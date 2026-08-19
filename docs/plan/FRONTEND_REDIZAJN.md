@@ -1235,7 +1235,7 @@ jednog spremnika u drugi.**
 | **K1** | **Rute.** Svih 9 stranica dobiva adresu; `saveCurrentPosition` prestaje biti jedini zapis pozicije. History API → sistemska „natrag" gesta radi. | otvoriš `#/predmet/<id>/<lekcija>` u novoj kartici i dobiješ tu lekciju; „natrag" vraća korak, ne izlazi sa stranice | **nikakva** (kao C1) |
 | **K2a** | **Jedan model vracanja.** `goBack()` = povijest kad iza nas stoji nas unos, inace **`roditeljOd()`** koji zna OBJE hijerarhije (katalog i policu). Obje rucne jednodubinske povijesti se brisu; cuvar u `navigateTo` sprjecava `node:` na lekcijskoj stranici. | „natrag" iz vlastitog materijala vraca na policu, a ne u katalog; petlja polica <-> editor je mrtva | **nikakva** |
 | **K2b** | ✅ **ISPUNJEN (2026-08-19, §8.8) — SPAJANJEM, ne slaganjem.** `<header class="topbar">` + `<div class="pathbar">` kao **braca** `-page` sekcija. Red 1 = odredista (znak -> landing, Predmeti, Moji materijali, jezik, racun), red 2 = polozaj (natrag + mrvica iz `roditeljOd()`). ⚠️ **Studio NE dobiva traku IZNAD svoje** — identitet i polozaj SELE u globalnu, Studiju ostaju radnje nad dokumentom. Izmjereno: `.st-topbar` **347 -> 57 px**, canvas **235 -> 326 px**, odrezanih kontrola **2 -> 0**. Slaganje bi canvas spustilo na ~171 px. | iz Studija se u jednom kliku dode na landing, browse i materijale | da |
-| **K3** | **Brana dohvatljivosti.** Test tvrdi da je iz **svake** stranice — uključujući `#editor-page` — dohvatljiva bar jedna druga u jednom kliku. Uz nju: ruta preživi reload. | brana pada kad se traka makne (obrnuta provjera) | ne |
+| **K3** | ✅ **ISPUNJEN (2026-08-19, §8.9).** Brana mjeri **POGODAK, ne postojanje**: `elementFromPoint` na sredini svake kontrole u kromu mora vratiti tu kontrolu, nijedne se dvije ne smiju sjeći, izlaz mora odvesti na stranicu koja se stvarno prikaže, a lanac „natrag" mora završiti na landingu bez ponavljanja. ⚠️ **Cigla je NAŠLA KVAR, nije samo ogradila stanje** — v. **BUG-029**. | brana pada kad se traka makne (obrnuta provjera: **1 od 4**, i to je točan ishod) | da (popravak BUG-029) |
 | | ⚠️ **KRITERIJ POOSTREN (2026-08-18).** „Bar jedan klik drugamo" mjeri POSTOJANJE izlaza, a Leonova dva kvara imala su izlaz — vodio je na slomljenu stranicu i u petlju, pa bi **oba prosla ovu branu kako je bila napisana**. Dodaje se: izlaz mora voditi na stranicu koja ima smisla (nijedan `node:` na lekcijskoj stranici) i „natrag" nikad ne vraca onamo odakle si upravo dosao. | | |
 | **K4** | **Moji materijali u kvaliteti kataloga** (N3). Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Ista komponenta pločice koju K2 ionako izdvaja. | vlastiti materijal izgleda jednako dobro kao FMTU gradivo | da |
 | **K5** | **Editor dvojezicno** (Leon, 2026-08-18: *„platforma mora biti na hrvatskom i engleskom i trebat ce editor isto biti na eng jeziku"*). **Premjereno 2026-08-19** (stara brojka „30 od 54" bila je od 2026-08-18 i vec je ostarjela): `studio.js` trazi **48** jedinstvenih `studio.*` kljuceva, rjecnik ima **20** -> **28 nedostaje** i pada na hrvatski rezervni. ⚠️ Jaci nalaz od brojke: **`block-editor.js`, `block-editor-media.js` i `admin-editors.js` imaju NULA `t()` poziva** — nisu djelomicno prevedeni nego UOPCE nisu spojeni na i18n. Editor zato nije cijel ni na jednom jeziku: `studio.js` pada na hrvatski, `admin-editors` govori engleski, i oboje se vidi na istom ekranu. ✅ Prekidac jezika je od **K2b** dohvatljiv sa svake stranice (bio je na 4 od 9). | korisnik prebaci jezik i editor je CIJEO na tom jeziku | ne |
@@ -1522,3 +1522,116 @@ utrka između sata koji `iat` **izdaje** (GoTrue) i onoga koji ga **provjerava**
 stoji **ispod** njega. To je **zapisano kao svjesno neriješeno** u BACKLOG-u: Studio nema
 mobilni izbornik za stablo, pa bi „ispravno" ponašanje ostavilo telefon **bez ijednog načina
 da se odabere lekcija**. Traži odluku o dizajnu (K4), ne zakrpu.
+
+### 8.9 ✅ K3 JE ISPUNJEN — dohvatljivost se mjeri POGOTKOM (2026-08-19)
+
+> Cigla je planirana kao **ograda oko onoga što K2b već isporučuje**. Prvo mjerenje ju je
+> pretvorilo u **popravak**: brana je pala na kodu koji je istog jutra prošao pun preflight.
+
+#### Prvo mjerenje, pa kod — i opet se isplatilo
+
+Prije nego što je napisan ijedan `expect`, sonda je prošla **9 stranica × 2 širine** u pravom
+pregledniku i pitala samo jedno: *pogodi li klik na sredinu kontrole baš tu kontrolu?*
+Odgovor je bio „ne" na jednom mjestu, i to na najvažnijem — **na landingu, na 320 px**:
+
+```
+en 320px  browse=[74…111]  lang=[90…146]   POGODAK = KRIVO → topbar-lang
+hr 320px  browse=[74…111]  lang=[104…162]  POGODAK = OK
+```
+
+Klik na „Predmeti" **nije otvarao katalog nego prebacivao jezik**. Nije izostao izlaz —
+**izvršila se kriva radnja**, što je gore od nedostupnog gumba, jer korisnik dobije povratnu
+informaciju da je nešto uspjelo. Puni opis: **BUG-029**.
+
+#### Zašto ovo nije vidio nijedan od desetak postojećih gateova
+
+| gate | zašto je bio slijep |
+|---|---|
+| detektori prelijeva | `overflow: visible`, `scrollWidth == clientWidth == 320` — **prelijeva nema** |
+| `studio-chrome.authed` | mjeri odrezanost, i to samo u **Studijevoj** traci |
+| `layout.authed` | ne posjećuje landing; mjeri vodoravni skrol dokumenta |
+| axe (5 tema × 12 stanja) | mjeri uloge i kontrast, ne geometriju |
+| Playwright profili | najuži je **375 px**, kvar živi na **320** |
+
+⚠️ **Kriterij prihvaćanja §2 imenuje 320 px od prvog dana.** Ta je širina do K3 postojala u
+**jednom jedinom testu** (CTA landinga). *Broj zapisan u kriteriju, a nemjeren nigdje, nije
+kriterij nego želja.*
+
+#### Tri mehanizma, jedno mjerenje
+
+Ovo je **treći oblik iste obitelji u tri uzastopne cigle**:
+
+| cigla | mehanizam | kako izgleda | što ga ne vidi |
+|---|---|---|---|
+| K2b | **odrezano** | `overflow:hidden` na fiksnoj ljusci | detektor prelijeva |
+| BUG-028 | **prekriveno** | fiksni banner, `z-index: 2147483000` | i prelijev i odrezanost |
+| **BUG-029** | **preklopljeno** | `flex-shrink` do širine 0 | **sva tri** |
+
+Tri različita uzroka, jedna posljedica: **kontrola koju korisnik vidi, a ne može
+upotrijebiti.** Zato brana ne broji gumbe nego pita `elementFromPoint`. *Postojanje se dade
+provjeriti selektorom; dohvatljivost samo pogotkom.*
+
+#### Izvedeno
+
+**K3a — popravak, i to u dva odvojena dijela.** *Da stane*: ispod 360 px CTA odlazi iz trake
+landinga (Leon, 2026-08-19) — ista odluka koja je odande maknula „Moje materijale", jer su
+ulaz **vrata u herou**; landing ima **tri** `.start-trigger`-a, pa se ne gubi nijedan put.
+*Da se ne može ponoviti tiho*: `.topbar-nav` dobiva `flex-shrink: 0` umjesto `min-width: 0`,
+koji je stiskanje ispod širine sadržaja izričito **dopuštao**. Odredišta nisu ono što u traci
+smije popustiti; kad ponestane mjesta, neka se traka **prelije** (to gate vidi) umjesto da se
+**preklopi** (to ne vidi nitko).
+
+⚠️ **Struktura je odmah zaradila svoje mjesto.** Čim je `flex-shrink: 0` uveden,
+`layout-guard` je pao na **560 px** (dokument 574). Nije regresija nego **isti kvar na
+drugoj širini**, dotad također skriven preklapanjem: na 560 px prestaje `max-width: 559px`
+pa iskoče **i oznake i wordmark**, `topbarHome` skoči **42 → 146 px**, a najgori slučaj
+(HR, „Predmeti") traži **632 px** — pojas **560–639 px** nikad nije stao. Popravak nije
+guranje praga nego **razdvajanje dvaju**: oznake ostaju na 560, wordmark (sam **+104 px**)
+dobiva vlastiti prag na 640. *Kad jedan prag pali dvije stvari različite cijene, mjeri ih
+odvojeno.*
+
+**K3b — brana**, četiri tvrdnje umjesto jedne, jer bi jedna propustila baš Leonove kvarove:
+
+| | tvrdnja | čuva od |
+|---|---|---|
+| ① | pogodak na sredini svake kontrole u kromu | K2b · BUG-028 · BUG-029 |
+| ② | nijedne dvije kontrole u kromu se ne sijeku | preklop koji središte preživi (na 344 px ih je 5 px) |
+| ③ | izlaz vodi na stranicu koja se **prikaže**, bez `pageerror`, nikad `node:` na lekcijskoj | BUG-023 · BUG-026 |
+| ④ | lanac „natrag" završi na landingu i **nikad ne ponovi čvor** | BUG-027 |
+
+Stranice se **nabrajaju iz aplikacije** (`section[id$="-page"]`, katalog za predmet/lekciju),
+ne iz prepisanog popisa — pa K4 i N2 ulaze pod branu same od sebe. Presedan je `applyRoute`,
+koji sekciju provjerava po **tipki koja postoji**, ne po popisu koji bi se razišao.
+
+⚠️ **Mjeri se VIDLJIVI pravokutnik, ne `getBoundingClientRect()`.** Mrvica živi u `.crumbs` s
+`overflow-x:auto`; odskrolana, njezin se rect i dalje proteže ispod susjeda. Bez presjeka s
+pretcima koji režu, brana bi prijavljivala sudare kojih nema — *a lažan nalaz je gori od
+rupe, jer se gate tad isključi.* Isti razred kao izuzeće u `layout.authed` čija premisa ne
+vrijedi (druga os s `overflow` postaje `auto` po specifikaciji).
+
+#### Gate
+
+`preflight` **EXIT 0** · zadana suita **424 prošlo / 0 palo / 42 preskočeno** (18,0 min) ·
+`test:authed` **77/77** (bilo 74 + 3 nove) · nove brane **7/7** (4 odjavljeno + 3 prijavljeno).
+
+⚠️ **Brojka prošlih je PALA s 434 na 424, i to je točan ishod, ne gubitak pokrića.** Prije je
+`reachability` išao kroz sva četiri iPhone profila, a spec sam postavlja širine — 4 testa × 3
+suvišna profila = **točno 12 ponovljenih mjerenja** koja su sad preskočena (30 → 42
+preskočenih). Aritmetika se zatvara: 436 izvršenih prije (434 + 2 pala) − 12 = 424.
+
+⚠️ **`css:diff` prijavljuje 3 razlike, i sve tri su isto pravilo** (`flex-shrink` na
+`.topbar-nav`), uz **0 pregaženih tokena**. Ali vrijedi zapisati što **NE** vidi: uzorkuje
+375 · 768 · 1280 px, a **obje nove medijske upite žive IZMEĐU** tih uzoraka (≤ 359 i
+560–639). *Alat koji uzorkuje tri širine ne može posvjedočiti o četvrtoj* — zato pojasove
+čuvaju `layout-guard` (33 širine) i `reachability` (4 širine od 320), a ne `css:diff`.
+
+**Obrnuta provjera: pada 1 od 4**, s točnom porukom
+(`320px landing · preklop: topbarBrowse × topbar-btn (21×40 px)`). Tvrdnje ③ i ④ prolaze i
+prije popravka — one čuvaju model vraćanja iz K2a/K2b, koji K3 ne mijenja. **Brana koja bi i
+njih oborila mjerila bi nešto drugo nego što tvrdi.**
+
+#### Što OVA cigla NIJE popravila
+
+Ruta **preživi reload** je iz opisa K3 ostala kod K1: `routes.spec.js` to već tvrdi hladnim
+startom na dijeljenu adresu, a `restore-position.spec.js` čuva obnovu. Duplikat bi bio drugi
+zapis o istoj stvari (ADR-027).

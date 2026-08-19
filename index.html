@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260819013638">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260819013638">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260819013638">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260819013638">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260819013638">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260819043839">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260819043839">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260819043839">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260819043839">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260819043839">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -52,7 +52,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260819013638">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260819043839">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -88,7 +88,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260819013638">
+    <link rel="stylesheet" href="css/consent.css?v=20260819043839">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -99,8 +99,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260819013638" defer></script>
-    <script src="js/consent.js?v=20260819013638" defer></script>
+    <script src="js/monitoring.js?v=20260819043839" defer></script>
+    <script src="js/consent.js?v=20260819043839" defer></script>
 </head>
 <body>
     
@@ -134,7 +134,7 @@
          landing ostaje bez popisa korisnikova gradiva. -->
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260819013638" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260819043839" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -401,7 +401,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260819013638" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260819043839" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -437,7 +437,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260819013638" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260819043839" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -1061,7 +1061,7 @@
         </header>
         <main class="about-content">
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260819013638" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260819043839" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline">Created by students, for students</p>
             </div>
 
@@ -1202,53 +1202,53 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260819013638"></script>
+    <script src="data/catalog.js?v=20260819043839"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260819013638"></script>
+    <script src="data/landing-stats.js?v=20260819043839"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260819013638"></script>
+    <script src="js/i18n.js?v=20260819043839"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260819013638"></script>
-    <script src="js/config.js?v=20260819013638"></script>
-    <script src="js/content-loader.js?v=20260819013638"></script>
+    <script src="js/app-state.js?v=20260819043839"></script>
+    <script src="js/config.js?v=20260819043839"></script>
+    <script src="js/content-loader.js?v=20260819043839"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260819013638"></script>
-    <script src="js/components/sokrat-toast.js?v=20260819013638"></script>
-    <script src="js/components/sokrat-modal.js?v=20260819013638"></script>
+    <script src="js/content-repo.js?v=20260819043839"></script>
+    <script src="js/components/sokrat-toast.js?v=20260819043839"></script>
+    <script src="js/components/sokrat-modal.js?v=20260819043839"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260819013638"></script>
-    <script src="js/utils.js?v=20260819013638"></script>
-    <script src="js/storage.js?v=20260819013638"></script>
-    <script src="js/analytics.js?v=20260819013638"></script>
-    <script src="js/navigation.js?v=20260819013638"></script>
-    <script src="js/math.js?v=20260819013638"></script>
-    <script src="js/blocks-renderer.js?v=20260819013638"></script>
-    <script src="js/flashcards.js?v=20260819013638"></script>
-    <script src="js/quiz.js?v=20260819013638"></script>
-    <script src="js/fill-blanks.js?v=20260819013638"></script>
-    <script src="js/learn.js?v=20260819013638"></script>
-    <script src="js/progress.js?v=20260819013638"></script>
-    <script src="js/blind-map.js?v=20260819013638"></script>
-    <script src="js/exercises-core.js?v=20260819013638"></script>
-    <script src="js/acc-kernel.js?v=20260819013638"></script>
-    <script src="js/exercises.js?v=20260819013638"></script>
-    <script src="js/auth.js?v=20260819013638"></script>
-    <script src="js/draft-store.js?v=20260819013638"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260819043839"></script>
+    <script src="js/utils.js?v=20260819043839"></script>
+    <script src="js/storage.js?v=20260819043839"></script>
+    <script src="js/analytics.js?v=20260819043839"></script>
+    <script src="js/navigation.js?v=20260819043839"></script>
+    <script src="js/math.js?v=20260819043839"></script>
+    <script src="js/blocks-renderer.js?v=20260819043839"></script>
+    <script src="js/flashcards.js?v=20260819043839"></script>
+    <script src="js/quiz.js?v=20260819043839"></script>
+    <script src="js/fill-blanks.js?v=20260819043839"></script>
+    <script src="js/learn.js?v=20260819043839"></script>
+    <script src="js/progress.js?v=20260819043839"></script>
+    <script src="js/blind-map.js?v=20260819043839"></script>
+    <script src="js/exercises-core.js?v=20260819043839"></script>
+    <script src="js/acc-kernel.js?v=20260819043839"></script>
+    <script src="js/exercises.js?v=20260819043839"></script>
+    <script src="js/auth.js?v=20260819043839"></script>
+    <script src="js/draft-store.js?v=20260819043839"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260819013638"></script>
-    <script src="js/block-editor-media.js?v=20260819013638"></script>
-    <script src="js/block-editor.js?v=20260819013638"></script>
-    <script src="js/card-limits.js?v=20260819013638"></script>
-    <script src="js/admin.js?v=20260819013638"></script>
-    <script src="js/admin-editors.js?v=20260819013638"></script>
-    <script src="js/studio.js?v=20260819013638"></script>
-    <script src="js/cloud-sync.js?v=20260819013638"></script>
+    <script src="js/node-images.js?v=20260819043839"></script>
+    <script src="js/block-editor-media.js?v=20260819043839"></script>
+    <script src="js/block-editor.js?v=20260819043839"></script>
+    <script src="js/card-limits.js?v=20260819043839"></script>
+    <script src="js/admin.js?v=20260819043839"></script>
+    <script src="js/admin-editors.js?v=20260819043839"></script>
+    <script src="js/studio.js?v=20260819043839"></script>
+    <script src="js/cloud-sync.js?v=20260819043839"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260819013638"></script>
-    <script src="js/profile.js?v=20260819013638"></script>
-    <script src="js/init.js?v=20260819013638"></script>
+    <script src="js/my-materials.js?v=20260819043839"></script>
+    <script src="js/profile.js?v=20260819043839"></script>
+    <script src="js/init.js?v=20260819043839"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260819013638" defer></script>
+    <script src="js/sw-register.js?v=20260819043839" defer></script>
 </body>
 </html>

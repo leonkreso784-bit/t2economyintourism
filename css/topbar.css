@@ -97,12 +97,18 @@ body.no-pathbar {
     flex-shrink: 0;
 }
 
+/* ⚠️ `flex-shrink: 0` JE BRANA, NE UGAĐANJE (K3, BUG-029). Ovdje je dotad stajalo
+   `min-width: 0`, što je izričito DOPUŠTALO stiskanje ispod širine sadržaja — i na
+   landingu se dogodilo doslovno: nav se stisnuo na **širinu 0**, a „Predmeti" (37 px)
+   isplivali ispod prekidača jezika. Klik na njih PREBACIO BI JEZIK umjesto da otvori
+   katalog. Odredišta nisu ono što u traci smije popustiti; kad ponestane mjesta, neka
+   se traka prelije (to gate VIDI) umjesto da se tiho preklopi (to ne vidi nitko). */
 .topbar-nav {
     display: flex;
     align-items: center;
     gap: 0.25rem;
     margin-inline-start: 0.5rem;
-    min-width: 0;
+    flex-shrink: 0;
 }
 
 .topbar-btn {
@@ -334,7 +340,32 @@ body.no-pathbar .pathbar {
         padding: 0 0.6rem;
     }
 
+}
+
+/* ⚠️ WORDMARK IMA VLASTITI PRAG, I TO JE MJERA — NE UKUS (K3a, drugi nalaz BUG-029).
+   Do K3 je „Sokrat Study" pored znaka izlazio na ISTOM pragu kao oznake odredišta (560).
+   Izmjereno: taj tekst nosi **+104 px** (`topbarHome` skoči 42 → 146), pa je traka u
+   najgorem slučaju (hrvatski, stranica „Predmeti") tražila **632 px** a uključivala se
+   na 560 — cijeli pojas **560–639 px** se prelijevao. Dotad se to nije vidjelo jer se
+   `.topbar-nav` stiskao na nulu i sadržaj se PREKLAPAO umjesto prelio; isti kvar kao
+   BUG-029, samo druga širina. Oznake odredišta su jeftine i funkcionalne (imenuju kamo
+   vode), pa ostaju na 560; wordmark je ukras i čeka 640. Znak (42 px slika) je vidljiv
+   uvijek — on je konstanta marke (§7.13). */
+@media (max-width: 639px) {
     .topbar-logo .logo-text {
+        display: none;
+    }
+}
+
+/* Ispod 360 px CTA odlazi iz trake (Leon, 2026-08-19). Nije ušteda piksela nego ista
+   odluka koja je odande maknula „Moje materijale": ulaz na landing su VRATA U HEROU.
+   Landing ima tri `.start-trigger`-a (traka, vrata, podnožje), pa se ovim ne gubi
+   nijedan put — gubi se onaj koji je na 320 px gurao „Predmete" pod prekidač jezika.
+   ⚠️ Mjera je izmjerena, ne odabrana: engleski „Start studying" je 126 px, hrvatski
+   „Počni učiti" 103 — razlika 23 px, a preklop je bio 21. Zato je kvar postojao SAMO
+   na engleskom, koji je zadani jezik sučelja. */
+@media (max-width: 359px) {
+    body.on-landing .topbar-cta {
         display: none;
     }
 }

@@ -23,6 +23,60 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-029 — „Predmeti" na 320 px PREBACUJU JEZIK umjesto da otvore katalog
+
+- Status: ✅ **riješen** (K3a) · Težina: **srednji** (samo ≤ 344 px i samo na engleskom — ali je to zadani jezik, a 320 px je donja granica iz kriterija prihvaćanja) · Našao: **sonda pisana PRIJE brane K3**, ne korisnik.
+
+**Simptom.** Posjetitelj na uskom telefonu (320 px) otvori landing i tapne „Predmeti".
+Katalog se ne otvori — **sučelje se prebaci na hrvatski.** Nije izostao izlaz nego se
+izvršila **kriva radnja**, što je gore od nedostupnog gumba: korisnik dobije povratnu
+informaciju da je nešto uspjelo, pa ne pokuša ponovno.
+
+**Uzrok.** `.topbar-nav` je imao `min-width: 0`, što flex-djetetu izričito **dopušta**
+stiskanje ispod širine sadržaja. Na landingu — jedinoj stranici gdje traka nosi CTA
+(`body.on-landing`) — zbroj kontrola premašuje 320 px, pa se nav stisnuo na **širinu 0**
+(`scrollWidth` 37), a gumb „Predmeti" isplivao **ispod** prekidača jezika.
+
+⚠️ **Kvar je ovisio o JEZIKU, i zato ga je bilo lako promašiti okom.** Engleski
+„Start studying" je **126 px**, hrvatski „Počni učiti" **103** — razlika 23 px, a preklop
+je bio **21**. Na hrvatskom sučelju kvara nema. Engleski je zadani.
+
+**Zašto nijedan gate nije pisnuo — i to je važnije od samog kvara.** `overflow` je
+`visible`, a `scrollWidth == clientWidth == 320`: **prelijeva doslovno nema**, pa su svi
+detektori prelijeva u pravu kad šute. Nijedna kontrola nije izvan ekrana, pa provjera
+odrezanosti prolazi. Axe mjeri uloge i kontrast, ne geometriju. A najuži Playwright profil
+je **375 px** — kvar živi na 320, širini koju kriterij prihvaćanja imenuje od prvog dana, a
+koja je do K3 postojala u **jednom jedinom testu**.
+
+**Popravak** (dva odvojena dijela, namjerno): *da stane* — ispod 360 px CTA odlazi iz trake
+landinga (ulaz su vrata u herou; landing ima tri `.start-trigger`-a). *Da se ne ponovi tiho*
+— `.topbar-nav` dobiva `flex-shrink: 0`: kad ponestane mjesta, traka se **prelije** umjesto
+da se **preklopi**, a prelijev gate vidi.
+
+**⚠️ DRUGI NALAZ — struktura je odmah odradila posao zbog kojeg postoji.** Čim je
+`flex-shrink: 0` uveden, `layout-guard` je pao na **560 px** (dokument 574 umjesto 560).
+To nije bila regresija nego **isti kvar na drugoj širini, koji je dotad također bio skriven
+preklapanjem**. Mjerenje: na 560 px prestaje `max-width: 559px`, pa odjednom iskoče **i
+oznake odredišta i wordmark** — `topbarHome` skoči **42 → 146 px**. Najgori slučaj
+(hrvatski, stranica „Predmeti") traži **632 px**, a uključivao se na 560: cijeli pojas
+**560–639 px** nikad nije stao.
+
+Popravak nije guranje jednog praga gore nego **razdvajanje dvaju**: oznake odredišta su
+jeftine i funkcionalne (imenuju kamo vode) pa ostaju na 560; **wordmark nosi +104 px i
+sam** pa dobiva vlastiti prag na 640. Znak (42 px slika) je vidljiv uvijek — konstanta
+marke. *Kad jedan prag pali dvije stvari različite cijene, mjeri ih odvojeno.*
+
+**Lekcija:** *postojanje se dade provjeriti selektorom, dohvatljivost samo pogotkom.* Ovo je
+**treći mehanizam istog kvara u tri uzastopne cigle** — K2b odrezano (`overflow:hidden`),
+BUG-028 prekriveno (fiksni banner), BUG-029 preklopljeno (`flex-shrink`) — a jedina provjera
+koja hvata sva tri je `elementFromPoint` na sredini kontrole. **Druga lekcija:** broj zapisan
+u kriteriju prihvaćanja, a nemjeren nijednim testom, nije kriterij nego želja.
+
+**Brana:** `tests/reachability.spec.js` + `tests/reachability.authed.spec.js`
+(`helpers/reach-gate.js`), 4 širine od **320** px. Obrnuta provjera: **pada 1 od 4**, s
+porukom `320px landing · preklop: topbarBrowse × topbar-btn (21×40 px)`.
+
+
 ### BUG-028 — Izbornik blokova je NEKLIKABILAN kad stoji cookie-banner (editor)
 
 - Status: ✅ **riješen** (K2b, `508b2ff`) · Težina: **srednji** (osobni materijal + admin editor; katalog nedirnut) · Našao: **`test:authed`**, pri regresiji K2b.

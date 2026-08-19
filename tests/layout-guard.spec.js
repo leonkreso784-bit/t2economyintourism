@@ -37,17 +37,43 @@ test('landing nav: no overflow and CTA never clipped across widths x languages',
       const scrollW = await page.evaluate(() => document.documentElement.scrollWidth);
       expect(scrollW, `overflow @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
 
-      // 2) CTA „Start" je vidljiv i NIJE odrezan (desni rub unutar viewporta, sadržaj stane u gumb).
+      // 2) ULAZ „počni učiti" MORA POSTOJATI — ali od K3a ne nužno u traci.
+      //
+      // ⚠️ TVRDNJA JE PROMIJENJENA, NIJE OSLABLJENA (K3a, BUG-029). Do K3 je test tražio
+      // CTA u traci na SVIM širinama, uključujući 320. To je bilo točno dok je traka na
+      // 320 px imala mjesta — a nije: `.topbar-nav` se stiskao na širinu 0 i „Predmeti"
+      // su isplivali POD prekidač jezika, pa je klik na njih prebacivao jezik. Popravak
+      // je maknuo CTA ispod 360 px, jer su ulaz na landingu **vrata u herou** (ista
+      // odluka koja je odande maknula „Moje materijale").
+      //
+      // Novi oblik je JAČI: čuva staru zaštitu ondje gdje se CTA crta, a ondje gdje se ne
+      // crta traži da ulaz i dalje postoji. Test bi propustio da smo zabunom sakrili CTA
+      // na 400 px — `expect(w).toBeLessThan(360)` to ne dopušta.
       const cta = await page.$('.topbar .topbar-cta');
-      const box = await cta.boundingBox();
-      expect(box, `CTA bez box-a @ ${w}px / ${lang}`).not.toBeNull();
-      expect(box.width, `CTA širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
-      expect(box.x + box.width, `CTA desni rub izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
-      expect(box.x, `CTA lijevi rub izvan viewporta @ ${w}px / ${lang}`).toBeGreaterThanOrEqual(-1);
+      const uTraci = cta ? await cta.isVisible() : false;
 
-      // 3) Tekst CTA-a nije „odrezan" unutar gumba (scrollWidth <= clientWidth).
-      const clipped = await cta.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
-      expect(clipped, `CTA tekst odrezan @ ${w}px / ${lang}`).toBe(false);
+      if (uTraci) {
+        const box = await cta.boundingBox();
+        expect(box, `CTA bez box-a @ ${w}px / ${lang}`).not.toBeNull();
+        expect(box.width, `CTA širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
+        expect(box.x + box.width, `CTA desni rub izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
+        expect(box.x, `CTA lijevi rub izvan viewporta @ ${w}px / ${lang}`).toBeGreaterThanOrEqual(-1);
+
+        // 3) Tekst CTA-a nije „odrezan" unutar gumba (scrollWidth <= clientWidth).
+        const clipped = await cta.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
+        expect(clipped, `CTA tekst odrezan @ ${w}px / ${lang}`).toBe(false);
+      } else {
+        // Nestati smije SAMO ondje gdje je tako odlučeno.
+        expect(w, `CTA nestao iz trake na širini na kojoj bi trebao stajati @ ${w}px / ${lang}`).toBeLessThan(360);
+
+        // …i samo ako ulaz preživi drugdje. Vrata u herou su primarni `.start-trigger`.
+        const vrata = await page.$('.doors .door--primary.start-trigger');
+        expect(vrata, `nema vrata u herou @ ${w}px / ${lang}`).not.toBeNull();
+        expect(await vrata.isVisible(), `vrata u herou nisu vidljiva @ ${w}px / ${lang}`).toBe(true);
+        const vb = await vrata.boundingBox();
+        expect(vb.width, `vrata širina 0 @ ${w}px / ${lang}`).toBeGreaterThan(0);
+        expect(vb.x + vb.width, `vrata izvan viewporta @ ${w}px / ${lang}`).toBeLessThanOrEqual(w + 1);
+      }
     }
   }
 

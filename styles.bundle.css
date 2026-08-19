@@ -8927,7 +8927,7 @@ body.no-pathbar {
   align-items: center;
   gap: 0.25rem;
   margin-inline-start: 0.5rem;
-  min-width: 0;
+  flex-shrink: 0;
 }
 .topbar-btn {
   display: flex;
@@ -9102,7 +9102,14 @@ body.no-pathbar .pathbar {
   .topbar-btn {
     padding: 0 0.6rem;
   }
+}
+@media (max-width: 639px) {
   .topbar-logo .logo-text {
+    display: none;
+  }
+}
+@media (max-width: 359px) {
+  body.on-landing .topbar-cta {
     display: none;
   }
 }

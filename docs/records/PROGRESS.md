@@ -5,6 +5,105 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-19 (OPUS, b) — **K3: brana dohvatljivosti · mjera je našla kvar koji nijedan gate nije mogao vidjeti**
+
+> Cigla je bila zamišljena kao **ograda**. Postala je **popravak**, jer je prvo mjerenje
+> palo na kodu koji je istog jutra prošao **pun preflight i cijelu suitu**.
+
+### Sonda prije brane, brana prije koda
+
+Prije nego što je napisan ijedan `expect`, prošao sam **9 stranica × 2 širine** u pravom
+pregledniku s jednim pitanjem: *pogodi li klik na sredinu kontrole baš tu kontrolu?*
+
+```
+en 320px  browse=[74…111]  lang=[90…146]   POGODAK = KRIVO → topbar-lang
+hr 320px  browse=[74…111]  lang=[104…162]  POGODAK = OK
+```
+
+Klik na „Predmeti" na landingu **prebacivao je jezik**. To je gore od nedostupnog gumba:
+korisnik dobije povratnu informaciju da je nešto uspjelo, pa ne pokuša ponovno. **BUG-029.**
+
+### Zašto ga nije vidio nijedan gate — i zašto je to važnije od kvara
+
+`overflow` je `visible`, `scrollWidth == clientWidth == 320`: **prelijeva doslovno nema**,
+pa svi detektori prelijeva s pravom šute. Nijedna kontrola nije izvan ekrana. Axe mjeri
+uloge i kontrast. A **najuži Playwright profil je 375 px** — dok kriterij prihvaćanja §2
+imenuje **320** od prvog dana, i ta je širina do danas postojala u **jednom** testu.
+*Broj zapisan u kriteriju, a nemjeren nijednim testom, nije kriterij nego želja.*
+
+Ovo je **treći mehanizam iste obitelji u tri uzastopne cigle**: K2b **odrezano**
+(`overflow:hidden`) · BUG-028 **prekriveno** (fiksni banner) · BUG-029 **preklopljeno**
+(`flex-shrink` do nule). Tri uzroka, jedna posljedica — kontrola koju korisnik vidi a ne
+može upotrijebiti — i **jedna** provjera koja hvata sva tri.
+
+### Popravak u dva dijela, namjerno odvojena
+
+*Da stane*: ispod 360 px CTA odlazi iz trake landinga (Leonova odluka) — ulaz su **vrata u
+herou**, a landing ima tri `.start-trigger`-a. *Da se ne ponovi tiho*: `.topbar-nav` dobiva
+`flex-shrink: 0` umjesto `min-width: 0`, koji je stiskanje ispod sadržaja **dopuštao**.
+Kad ponestane mjesta, traka se **prelije** (gate to vidi) umjesto da se **preklopi**.
+
+### Struktura je odmah našla drugi kvar — na 560 px
+
+Čim je `flex-shrink: 0` uveden, `layout-guard` je pao: dokument 574 px na ekranu od 560.
+To **nije bila regresija** nego isti kvar na drugoj širini, dotad također skriven
+preklapanjem. Na 560 px prestaje `max-width: 559px` i odjednom iskoče **i oznake i
+wordmark**; `topbarHome` skoči **42 → 146 px**, a najgori slučaj (HR, „Predmeti") traži
+**632 px**. Pojas **560–639 px** nikad nije stao.
+
+Popravak nije guranje praga gore nego **razdvajanje dvaju**: oznake odredišta su jeftine i
+funkcionalne (imenuju kamo vode) pa ostaju na 560, a wordmark — koji **sam nosi +104 px** —
+dobiva vlastiti prag na 640. *Kad jedan prag pali dvije stvari različite cijene, mjeri ih
+odvojeno.*
+
+### Test koji sam zamalo krivo optužio
+
+Puna suita je uz `layout-guard` srušila i `studio.authed` **K6b** (drag sekcije). Prvi
+kontrolni pokus — jedan prolaz sa stashanim izmjenama — rekao je *„tvoje je"*. **Bio je
+kriv, jer je `n=1`.** Ponavljanje: **1 od 3 prolaza na nedirnutom kodu**, **1 od 4** s
+mojima — dakle test je nestabilan sam po sebi i cigla nije uzrok.
+
+Uzrok je u konstrukciji testa: `startCatDrag` auto-scrolla **14 px po frameu**, a
+`catDropIndex` se računa iz pozicije pokazivača **u trenutku otpuštanja**. Fiksnih 1200 ms
+daju ~72 framea na 60 fps, ~24 na opterećenom stroju — pa je ishod ovisio o **brzini
+stroja**. Zamijenjeno čekanjem **stanja** (canvas došao do dna) plus **izračunatim** ciljem
+(tik ispod polovice zadnje sekcije), pa test tvrdi ono što piše. Poslije: **5/5**.
+*Fiksno čekanje mjeri vrijeme; tvrdnja treba stanje.*
+
+### Dvije stvari koje sam morao ispraviti kod sebe
+
+1. **Zatečeni `layout-guard` je promijenio tvrdnju, nije pao od kvara.** Tražio je CTA u
+   traci na svim širinama. Nova tvrdnja je **jača**: gdje se CTA crta vrijedi stara
+   zaštita, gdje se ne crta mora postojati ulaz u herou, a nestati smije **samo ispod
+   360**. *Test koji padne znači kvar; test koji promijeni tvrdnju znači promjenu opsega.*
+2. **Vlastiti komentar mi je zvučao uvjerljivo i bio netočan.** Napisao sam da ponavljanje
+   sweepa kroz četiri iPhone profila nije redundantno „jer `hasTouch` i `deviceScaleFactor`
+   mijenjaju hit-testing" — sva četiri profila imaju **iste** vrijednosti. Provjerio sam u
+   configu, ne u sjećanju. Brana se sad vrti jednom.
+
+### Gate
+
+`preflight` **EXIT 0** · zadana suita **424 prošlo / 0 palo / 42 preskočeno** (18,0 min) ·
+`test:authed` **77/77** (bilo 74 + 3 nove) · nove brane **7/7** · obrnuta provjera **1/4 pada**.
+
+⚠️ **Brojka prošlih je pala s 434 na 424 i to je TOČNO, ne gubitak pokrića:** `reachability`
+sam postavlja širine, pa se prestao ponavljati kroz tri suvišna profila — **12 mjerenja**
+manje (30 → 42 preskočena). Aritmetika se zatvara: 436 izvršenih prije (434 + 2 pala) − 12.
+
+⚠️ **`css:diff` daje 3 razlike, sve tri isto pravilo** (`flex-shrink`), 0 pregaženih tokena —
+ali vrijedi zapisati što **ne vidi**: uzorkuje 375 · 768 · 1280 px, a **obje nove medijske
+upite žive IZMEĐU** njih (≤ 359 i 560–639). *Alat koji uzorkuje tri širine ne može
+posvjedočiti o četvrtoj.*
+
+### Slijedi
+
+**K4** — materijali u kvaliteti kataloga; nosi i **odluku o dizajnu koju ne mogu donijeti
+sam**: `.st-tree` je na telefonu 354 px, a `display:none` ispod 680 px nikad nije radio;
+mehanički popravak ostavio bi telefon bez ijednog načina da se odabere lekcija. Zatim
+**K5** (editor dvojezično), pa **A1** Google-prijava.
+
+---
+
 ## 2026-08-19 (OPUS) — **K2b: jedna gornja traka · spajanje umjesto slaganja**
 
 > Leon: *„spajanje"* — jedna riječ koja je promijenila izvedbu cigle i usput zatvorila
