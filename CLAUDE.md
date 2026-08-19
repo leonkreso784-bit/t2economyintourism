@@ -108,12 +108,21 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > `overflow:visible` + `scrollWidth == clientWidth` = **prelijeva nema**, a najuži profil
 > je 375 px dok kriterij §2 imenuje **320**. Treći mehanizam iste obitelji u tri cigle:
 > **odrezano** (K2b) · **prekriveno** (BUG-028) · **preklopljeno** (BUG-029).
-> **🔵 SLJEDEĆA CIGLA = K4** — materijali u kvaliteti kataloga (nosi i odluku o **stablu Studija na telefonu** —
-> `.st-tree` je 354 px i `display:none` ispod 680 px nikad nije radio), pa **K5** editor
-> dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva nedostaje, a
-> `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu djelomično
-> prevedeni nego uopće nisu spojeni na i18n).
-> Iza faze ide **A1 Google-prijava**, pa tek onda C4.
+> **✂️ „Predmeti" su MAKNUTI iz trake** (Leon, 2026-08-19: *„najnebitniji gumb ikada"*).
+> Katalog nije izgubio ulaz — vode **vrata u herou** i **mrvica**; ključ `topbar.subjects`
+> ostaje jer imenuje mrvicu. Cijena: iz police/profila/Studija katalog je sad **dva klika**.
+> **🔵 SLJEDEĆA CIGLA = K4** — materijali u kvaliteti kataloga. ⚠️ **Blokada K4 je RAZRIJEŠENA
+> 2026-08-19:** tvrdnja „stablo se ne smije sakriti na telefonu" vrijedi samo za **katalog-mod**;
+> u **čvor-modu** panel nije navigator nego prikaz jednog materijala čije ime na istom ekranu
+> već piše dvaput → **briše se bez zamjene** (BACKLOG § „Panel čvora…"). Uz to nosi i staru
+> zamku: `.st-tree` je 354 px, a `display:none` ispod 680 px **nikad nije radio** (medijski
+> upit ne dodaje specifičnost), pa „makni na telefonu" bez toga opet ne bi napravilo ništa.
+> Zatim **K5** editor dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva
+> nedostaje, a `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu
+> djelomično prevedeni nego uopće nisu spojeni na i18n).
+> Iza faze ide **A1 Google-prijava** — koja od 2026-08-19 nosi i **prepravak dijaloga
+> prijave** (BACKLOG **A0**): današnji `#authModal` je građen za jedan put, a OAuth-gumbi su
+> primarni i idu IZNAD e-maila, pa se to radi zajedno ili se prepravlja dvaput. Pa tek onda C4.
 >
 > **Ovdje se stanje NE prepisuje.** Grana, commiti, je li pushano — to zna git:
 > `git status -sb` · `git rev-list --count main..HEAD` · `git log --oneline -1 origin/main`.

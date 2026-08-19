@@ -546,17 +546,15 @@ function renderPathbar() {
         if (jeli) el.setAttribute('aria-current', 'page');
         else el.removeAttribute('aria-current');
     };
-    oznaci('topbarBrowse', korijen === 'browse');
+    // ⚠️ „Predmeti" više NE POSTOJI u traci (Leon, 2026-08-19) — ostao je samo materijal.
+    // Korijen `browse` se i dalje vidi, ali u MRVICI, koja ga ionako imenuje.
     oznaci('topbarMaterials', korijen === 'materials');
 }
 
-/** Ožiči traku. Znak i „Predmeti" su jedina dva ulaza koja nemaju postojeću kuku. */
+/** Ožiči traku. Znak je jedini ulaz koji nema postojeću kuku. */
 function initTopbar() {
     const dom = document.getElementById('topbarHome');
     if (dom) dom.addEventListener('click', (e) => { e.preventDefault(); navigateTo('landing'); });
-
-    const predmeti = document.getElementById('topbarBrowse');
-    if (predmeti) predmeti.addEventListener('click', () => { navigateTo('browse'); });
 
     const natrag = document.getElementById('pathbarBack');
     if (natrag) natrag.addEventListener('click', () => { goBack(); });

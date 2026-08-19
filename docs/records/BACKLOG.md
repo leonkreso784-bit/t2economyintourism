@@ -78,6 +78,21 @@ je to **jedini** put — `js/auth.js` ima samo `signInWithPassword`, nijedan OAu
 | **A3** | **Apple** | traži Apple Developer ~99 $/god; nije hitno bez iOS aplikacije |
 | **B** | **pitanja pri registraciji** | traži izmjenu sheme (`profiles`) → **SQL na produkciji = Leonova ruka**; dira profil → ide **s C6**, ne prije |
 
+**🎨 A0 · DIJALOG PRIJAVE SE PREPRAVLJA ZAJEDNO S A1 (Leon, 2026-08-19, uz snimku):**
+*„kada budemo dodavali mogućnost za prijavu preko Googla, Applea i drugih pizdarija morat
+ćemo popravit gumb za sign in i sign up."* Današnji `#authModal` je građen za **jedan**
+put: dva taba („Sign in" / „Create account") pa polje e-maila i lozinke odmah ispod. Čim
+dođu OAuth-gumbi, taj oblik puca — davatelji su **primarni** put i moraju stajati **iznad**
+e-maila, s razdjelnicom („ili e-mailom"), a tabovi tad postaju šum jer Google-prijava i
+Google-registracija nisu dvije radnje nego jedna.
+
+**Zato ovo NIJE zaseban posao nego dio A1** — prvo dodavanje davatelja mora doći s novim
+rasporedom dijaloga, inače se gumbi zalijepe na oblik koji ih ne podnosi i prepravljamo
+dvaput. ⚠️ Vrijedi i granica iz C2: **tekst na ispuni marke ide kroz `--on-primary`**, a
+Google/Apple gumbi imaju **propisane** boje i logotipe (brand guidelines) — to su prve
+površine u projektu čija boja NIJE naša odluka, pa moraju ući u `check:palette` kao
+**imenovana iznimka**, ne kao tiho odstupanje.
+
 **⛔ GODINE SE NE PITAJU (Leon presudio 2026-08-18, na moj prigovor).** Ako pitamo dob i
 netko upiše 14, mi **znamo** da je dijete — GDPR čl. 8 tad traži roditeljski pristanak
 (prag 16, države ga smiju spustiti). Kategorija „učenik" to već implicira. Time bismo
@@ -335,6 +350,37 @@ na **~171 px** — cigla bi kvar **pogoršala**. Brana: `tests/studio-chrome.aut
 na telefonu (**354 px** nakon K2b) jer medijski upit ne dodaje specifičnost. Ne popravljati mehanički
 — Studio nema mobilni izbornik za stablo, pa bi „ispravno“ ponašanje ostavilo telefon bez ijednog
 načina da se odabere lekcija. Traži **odluku o dizajnu → K4**.
+
+---
+
+## 🔥 Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA — 2026-08-19 (Leon, uz snimku)
+
+Leon: *„ovo smeće u editoru koje se mora maknut na telefonu, ne kužim koja je ovo pička
+materina nepotrebna."*
+
+**Što je to točno.** [`js/studio.js:136`](../../js/studio.js#L136) — `.st-tree` u **čvor-modu**
+(`_node` postoji) crta naslov „📁 Moji materijali", karticu s **imenom materijala** i
+podnaslov „Osobni materijal — vidiš ga samo ti".
+
+**Zašto je to redundancija, a ne ukras.** Na istom ekranu telefona ime materijala piše
+**tri puta**: u globalnoj mrvici (`Moji materijali › Matematika`), u toj kartici, i u `H1`
+canvasa odmah ispod. Panel pritom troši visinu na uređaju gdje je visina najskuplja —
+mjereno u K2b, `.st-tree` je **354 px**.
+
+**⚠️ OVO RAZRJEŠAVA BLOKADU K4, I TO ISPRAVLJA MOJU RANIJU TVRDNJU.** Do sada je ovdje i u
+specu stajalo da se `.st-tree` ne smije sakriti na telefonu jer bi *„telefon ostao bez
+ijednog načina da se odabere lekcija"*. To je **točno za KATALOG-mod** (`_node == null`,
+admin bira predmet i lekciju iz stabla) i **netočno za ČVOR-mod**, gdje panel nije
+navigator nego prikaz **jednog jedinog** elementa koji je već imenovan dvaput iznad.
+*Jedna tvrdnja pokrivala je dva različita moda i zato je pola vremena bila kriva.*
+
+**Iz toga slijedi rez:** čvor-mod → panel se na telefonu **briše bez zamjene** (ništa se ne
+gubi). Katalog-mod → i dalje traži odluku o dizajnu (mobilni izbornik za stablo), ali to je
+**admin-put na telefonu**, dakle mnogo rjeđi slučaj i ne blokira K4.
+
+⚠️ Uz to: `display:none` ispod 680 px u `studio.css` **nikad nije radio** — medijski upit ne
+dodaje specifičnost, a bazno `display:flex` stoji ispod njega. Popravak mora to uzeti u
+obzir, inače „makni na telefonu" opet neće ništa napraviti.
 
 ---
 

@@ -1436,7 +1436,9 @@ stanu u jedan red. **Cigla koja je izgledala kao rizik za taj kvar postala je nj
 #### Izvedeno
 
 `<header class="topbar">` + `<div class="pathbar">` stoje **izvan** svih `-page` sekcija, kao
-njihova braća. Red 1 nosi odredišta (znak → landing, Predmeti, Moji materijali, jezik,
+njihova braća. *(⚠️ Popis odredišta ispod opisuje traku KAKVA JE BILA NA ISPORUCI K2b.
+Leon je 2026-08-19 maknuo „Predmete" — v. `BACKLOG.md` i §8.9; katalog otad vode vrata u
+herou i mrvica.)* Red 1 nosi odredišta (znak → landing, Predmeti, Moji materijali, jezik,
 račun), red 2 nosi položaj (natrag + mrvica). Visine su **konstante** (`--topbar-h: 64px`,
 `--pathbar-h: 44px`), jer šest spremnika ima `min-height:100dvh` i od njih se mora oduzeti
 kromo — sadržajna visina ne bi se dala oduzeti unaprijed.
@@ -1522,6 +1524,15 @@ utrka između sata koji `iat` **izdaje** (GoTrue) i onoga koji ga **provjerava**
 stoji **ispod** njega. To je **zapisano kao svjesno neriješeno** u BACKLOG-u: Studio nema
 mobilni izbornik za stablo, pa bi „ispravno" ponašanje ostavilo telefon **bez ijednog načina
 da se odabere lekcija**. Traži odluku o dizajnu (K4), ne zakrpu.
+
+> ⚠️ **ISPRAVAK (2026-08-19, Leon uz snimku): gornja tvrdnja pokriva DVA MODA, a vrijedi
+> samo za jedan.** U **katalog-modu** (`_node == null`) `.st-tree` jest navigator i skrivanje
+> bi doista oduzelo jedini način odabira lekcije. U **čvor-modu** — onome koji vidi svaki
+> običan korisnik — panel nije navigator nego prikaz **jednog jedinog** materijala, čije
+> ime na istom ekranu telefona već piše **dvaput** (globalna mrvica + `H1` canvasa). Ondje
+> se briše **bez zamjene**. *Jedna tvrdnja pokrivala je dva moda i zato je pola vremena bila
+> kriva* — isti razred kao izuzeće u `layout.authed` čija premisa ne vrijedi. Detalji i rez:
+> `BACKLOG.md` § „Panel čvora u Studiju je na telefonu čista redundancija".
 
 ### 8.9 ✅ K3 JE ISPUNJEN — dohvatljivost se mjeri POGOTKOM (2026-08-19)
 

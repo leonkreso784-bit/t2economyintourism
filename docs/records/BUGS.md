@@ -76,6 +76,11 @@ u kriteriju prihvaćanja, a nemjeren nijednim testom, nije kriterij nego želja.
 (`helpers/reach-gate.js`), 4 širine od **320** px. Obrnuta provjera: **pada 1 od 4**, s
 porukom `320px landing · preklop: topbarBrowse × topbar-btn (21×40 px)`.
 
+⚠️ **Ta se obrnuta provjera više NE DA reproducirati doslovno:** isti dan je Leon izbacio
+gumb „Predmeti" iz trake, pa `#topbarBrowse` više ne postoji. Poruka gore je **zapis onoga
+što je gate ispisao 2026-08-19**, ne recept za ponavljanje. Brana i dalje vrijedi — mjeri
+sve kontrole u kromu, ne tu jednu — ali sljedeća sesija neka ne traži gumb koji je obrisan.
+
 
 ### BUG-028 — Izbornik blokova je NEKLIKABILAN kad stoji cookie-banner (editor)
 
