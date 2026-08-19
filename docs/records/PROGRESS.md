@@ -50,7 +50,9 @@ sonda, ne oko. *Zapisano pravilo ne sprječava ponavljanje; sprječava ga mjeren
 
 ### Gate
 
-`preflight` **EXIT 0** · nova brana `studio-mobile.authed` **3/3** · Studio-vezani specovi
+`preflight` **EXIT 0** · **puna suita 427 prošlo / 0 palo / 42 preskočeno** (19,2 min) ·
+`test:authed` **80/80** (bilo 77 + 3 nove — aritmetika se zatvara) · nova brana
+`studio-mobile.authed` **3/3** · Studio-vezani specovi
 (`a11y` · `reachability` · `studio-chrome` · `cascade` · `studio-mobile`) **13/13**.
 **Obrnuta provjera 3/3 pada**, uz pošteno ograđivanje: dva testa padaju zbog kvara, a treći
 (stolno računalo) **mehanički** — uvodi `#stTreeAside`, pa na starijem kodu ne može proći.

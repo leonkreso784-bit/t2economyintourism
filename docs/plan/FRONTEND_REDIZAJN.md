@@ -1697,8 +1697,9 @@ sprječava ponavljanje; sprječava ga mjerenje.*
 
 #### Gate
 
-`preflight` **EXIT 0** · nova brana `studio-mobile.authed` **3/3** · `a11y.authed`,
-`reachability.authed`, `studio-chrome.authed`, `cascade.authed` **13/13 zajedno**.
+`preflight` **EXIT 0** · **puna suita 427 prošlo / 0 palo / 42 preskočeno** (19,2 min) ·
+`test:authed` **80/80** (bilo 77 + 3 nove) · nova brana `studio-mobile.authed` **3/3** ·
+`a11y.authed`, `reachability.authed`, `studio-chrome.authed`, `cascade.authed` **13/13 zajedno**.
 **Obrnuta provjera: 3/3 pada.** ⚠️ Pošteno: dva testa padaju jer je kvar bio prisutan, a
 **treći (stolno računalo) pada mehanički** — `#stTreeAside` je id koji uvodi baš ova cigla,
 pa na starijem kodu ne može proći. On čuva od regresije koju bih *ja* mogao uvesti, ne od
