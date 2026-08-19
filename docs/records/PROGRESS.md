@@ -5,6 +5,58 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-19 (OPUS, c) — **K4a: Studio na telefonu · rez ide po MODU, ne po širini**
+
+> Leon, uz snimku: *„zbog toga ne možeš ništa raditi na telefonu u editoru, apsolutno
+> ništa."* Rečenica je bila točna i **dala se izmjeriti**.
+
+### Mjera prije koda
+
+Na 390×844, prije popravka: traka 64 + putanja 44 + `.st-topbar` 57 + stablo 357–375 =
+**522–540 px, dakle 62–64 % ekrana**; za uređivanje ostaje **304–323 px**.
+Poslije: canvas **679 px**, ljuska u čvor-modu **165 px = 20 %**.
+
+### Zašto jedan `display:none` ne bi bio rješenje
+
+`.st-tree` nosi **dvije različite stvari**, a iz CSS-a se to ne vidi:
+
+- **čvor-mod** → **prikaz** jednog materijala; ime mu na istom ekranu već piše **dvaput**
+  (globalna mrvica + `H1` canvasa) → briše se **bez zamjene**
+- **katalog-mod** → **navigator**, jedini način da se odabere lekcija → **ladica** s kvakom
+  🗂️ u traci Studija, koja se sama zatvara nakon odabira
+
+Zato je `.st-tree` dobio modifikator. Time je ispravljena i tvrdnja koju sam sâm zapisao na
+tri mjesta: *„stablo se ne smije sakriti na telefonu"* vrijedi **samo za katalog-mod**.
+**Jedna tvrdnja pokrivala je dva moda i zato je pola vremena bila kriva.**
+
+### Pravilo je postojalo i nikad nije radilo — a onda sam istu grešku ponovio
+
+`@media(max-width:680px){ … .st-tree{ display:none } }` gubilo je od baznog
+`#editor-page .st-tree{ display:flex }`: **ista specifičnost**, bazno **niže u datoteci**.
+*Medijski upit ne dodaje specifičnost.*
+
+⚠️ Zatim sam kvaku ladice napisao **na isti način** — `#editor-page .st-treetoggle` u
+medijskom upitu, uz bazno `display:none` ispod — pa je gumb bio nevidljiv na **svim**
+širinama, **tri odlomka ispod vlastitog objašnjenja zašto se to događa**. Uhvatila ga je
+sonda, ne oko. *Zapisano pravilo ne sprječava ponavljanje; sprječava ga mjerenje.*
+
+### Tri ruba koja sam morao zatvoriti
+
+1. **Zatvorena ladica ne smije biti samo pomaknuta.** `transform` je ostavlja u stablu
+   pristupačnosti i u tab-redu → `visibility:hidden` sa **stepenastim** prijelazom.
+2. **`position:relative` ide na `.st-layout`**, ne na `#editor-page` — potonji je fiksni
+   puni-viewport, pa bi ladica prekrila traku s radnjama nad dokumentom.
+3. **Ladica prekriva, ne gura** — inače vraća točno onaj kvar koji uklanja.
+
+### Gate
+
+`preflight` **EXIT 0** · nova brana `studio-mobile.authed` **3/3** · Studio-vezani specovi
+(`a11y` · `reachability` · `studio-chrome` · `cascade` · `studio-mobile`) **13/13**.
+**Obrnuta provjera 3/3 pada**, uz pošteno ograđivanje: dva testa padaju zbog kvara, a treći
+(stolno računalo) **mehanički** — uvodi `#stTreeAside`, pa na starijem kodu ne može proći.
+
+---
+
 ## 2026-08-19 (OPUS, b) — **K3: brana dohvatljivosti · mjera je našla kvar koji nijedan gate nije mogao vidjeti**
 
 > Cigla je bila zamišljena kao **ograda**. Postala je **popravak**, jer je prvo mjerenje

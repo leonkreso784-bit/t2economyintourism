@@ -1646,3 +1646,60 @@ njih oborila mjerila bi nešto drugo nego što tvrdi.**
 Ruta **preživi reload** je iz opisa K3 ostala kod K1: `routes.spec.js` to već tvrdi hladnim
 startom na dijeljenu adresu, a `restore-position.spec.js` čuva obnovu. Duplikat bi bio drugi
 zapis o istoj stvari (ADR-027).
+
+### 8.10 ✅ K4a — Studio na telefonu prestaje biti neupotrebljiv (2026-08-19)
+
+> Leon, uz snimku: *„treba se toga riješiti na neki način da se ništa ne sjebe. Pa zbog toga
+> **ne možeš ništa raditi na telefonu u editoru, apsolutno ništa**."*
+
+#### Mjera prije koda
+
+| 390×844 | prije | poslije |
+|---|---|---|
+| traka + putanja + `.st-topbar` + stablo | **522–540 px = 62–64 % ekrana** | **165 px = 20 %** (čvor-mod) |
+| `.st-canvas` | **304–323 px** | **679 px** |
+
+#### Rez ide po MODU, a ne po širini — i to je cijela poanta
+
+`.st-tree` nosi **dvije različite stvari**, i to se iz CSS-a ne vidi:
+
+- **čvor-mod** → **PRIKAZ** jednog materijala. Ime mu na istom ekranu telefona već piše
+  **dvaput** (globalna mrvica + `H1` canvasa) → **briše se bez zamjene**, ništa se ne gubi.
+- **katalog-mod** → **NAVIGATOR**, jedini način da se odabere lekcija → **seli u ladicu**
+  (`position:absolute`, kvaka 🗂️ u `.st-topbar`, zatvara se sama nakon odabira).
+
+⚠️ Zato je `.st-tree` dobio modifikator (`st-tree--node` / `st-tree--catalog`): razlika
+postoji u JS-u, a CSS je do sada nije mogao vidjeti. **Jedna tvrdnja o „stablu na telefonu"
+pokrivala je oba moda i zato je pola vremena bila kriva** (v. ispravak uz §8.8).
+
+#### Zašto pravilo dosad nije radilo iako je postojalo
+
+`@media(max-width:680px){ … .st-tree{ display:none } }` i bazno
+`#editor-page .st-tree{ display:flex }` imaju **istu specifičnost** (1 id + 1 klasa), a bazno
+dolazi **niže u datoteci** — pa je pobjeđivalo. *Medijski upit ne dodaje specifičnost.* Nova
+pravila zato nose **dvije klase**, pa su jača neovisno o redoslijedu.
+
+⚠️ **Istu sam grešku ponovio u samom popravku.** Kvaka ladice je prvo napisana kao
+`#editor-page .st-treetoggle{ display:flex }` unutar medijskog upita, uz bazno
+`display:none` **ispod** njega — i gumb je bio nevidljiv na **svim** širinama, tri odlomka
+ispod objašnjenja zašto se to događa. Uhvatila ju je sonda, ne oko. *Zapisano pravilo ne
+sprječava ponavljanje; sprječava ga mjerenje.*
+
+#### Rubovi koje je popravak morao zatvoriti
+
+- **Zatvorena ladica ne smije biti samo pomaknuta.** Sam `transform` ostavlja panel u
+  **stablu pristupačnosti i u tab-redu** — čitač ekrana bi čitao zatvorenu ladicu, a
+  tipkovnica u nju ulazila naslijepo. Dodan `visibility:hidden` sa **stepenastim** prijelazom
+  (gasi se tek kad klizanje završi).
+- **`position:relative` na `.st-layout`**, ne na `#editor-page`: potonji je fiksni
+  puni-viewport, pa bi se ladica sidrila preko trake s radnjama nad dokumentom.
+- **Ladica prekriva, ne gura** — inače bi vratila točno onaj kvar koji uklanja.
+
+#### Gate
+
+`preflight` **EXIT 0** · nova brana `studio-mobile.authed` **3/3** · `a11y.authed`,
+`reachability.authed`, `studio-chrome.authed`, `cascade.authed` **13/13 zajedno**.
+**Obrnuta provjera: 3/3 pada.** ⚠️ Pošteno: dva testa padaju jer je kvar bio prisutan, a
+**treći (stolno računalo) pada mehanički** — `#stTreeAside` je id koji uvodi baš ova cigla,
+pa na starijem kodu ne može proći. On čuva od regresije koju bih *ja* mogao uvesti, ne od
+zatečenog kvara.

@@ -80,9 +80,12 @@
 #editor-page .st-iconbtn:hover{ border-color:var(--primary-light); color:var(--text-primary); }
 
 /* ==== LAYOUT 3-stupca ==== */
-#editor-page .st-layout{ display:grid; grid-template-columns:262px 1fr 250px; flex:1; min-height:0; }
+/* `position:relative` je nosač K4a-ladice: na telefonu stablo izlazi iz mreže i postaje
+   `position:absolute` panel unutar OVOG spremnika. Bez ovoga bi se sidrilo na `#editor-page`,
+   koji je fiksni puni-viewport — pa bi prekrilo i traku s radnjama nad dokumentom. */
+#editor-page .st-layout{ display:grid; grid-template-columns:262px 1fr 250px; flex:1; min-height:0; position:relative; }
 @media(max-width:1020px){ #editor-page .st-layout{ grid-template-columns:220px 1fr; } #editor-page .st-inspector{ display:none; } }
-@media(max-width:680px){ #editor-page .st-layout{ grid-template-columns:1fr; } #editor-page .st-tree{ display:none; } }
+@media(max-width:680px){ #editor-page .st-layout{ grid-template-columns:1fr; } }
 
 /* ==== STABLO ==== */
 #editor-page .st-tree{
@@ -127,6 +130,62 @@
 #editor-page .st-node .st-tw{ width:12px; font-size:9px; color:var(--text-muted); transition:.18s; flex-shrink:0; }
 #editor-page .st-node.open>.st-row .st-tw{ transform:rotate(90deg); }
 #editor-page .st-node .st-lbl{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* ==== TELEFON: STABLO PRESTAJE JESTI EKRAN (K4a) ====================================
+   IZMJERENO 2026-08-19 na 390×844, prije popravka:
+       ljuska (traka 64 + putanja 44 + st-topbar 57 + stablo 357…375) = 522…540 px
+       = **62–64 % ekrana**, a za uređivanje ostaje 304…323 px.
+   Leon: *„zbog toga ne možeš ništa raditi na telefonu u editoru, apsolutno ništa."*
+
+   ⚠️ ZAŠTO DOSAD NIJE RADILO, IAKO JE PRAVILO POSTOJALO: gore je stajalo
+   `@media(max-width:680px){ … .st-tree{ display:none } }`, ali bazno
+   `#editor-page .st-tree{ …display:flex }` ima **istu specifičnost** (1 id + 1 klasa) i
+   dolazi **NIŽE u datoteci** — pa je pobjeđivalo. *Medijski upit ne dodaje specifičnost.*
+   Zato pravila ispod nose **dvije klase** (1 id + 2 klase): jača su od baznog neovisno o
+   tome tko koga preseli pri sljedećem uređivanju datoteke.
+
+   ⚠️ I ZAŠTO SE NE RJEŠAVA JEDNIM `display:none` ZA OBOJE: panel nosi DVIJE različite
+   stvari. U čvor-modu je PRIKAZ jednog materijala čije ime na istom ekranu već piše
+   dvaput (globalna mrvica + `H1` canvasa) → briše se bez zamjene. U katalog-modu je
+   NAVIGATOR i jedini način da se odabere lekcija → seli u ladicu, ne briše se.
+   Jedna tvrdnja o „stablu na telefonu" pokrivala je dva moda i zato je pola vremena
+   bila kriva. */
+
+/* ČVOR-MOD — čista redundancija, odlazi bez zamjene. */
+@media(max-width:680px){
+  #editor-page .st-tree.st-tree--node{ display:none; }
+
+  /* KATALOG-MOD — ladica. Izlazi iz mreže (`absolute`), pa canvas dobiva punu visinu i
+     kad je otvorena; `translateX` je izvan toka, dakle ne pomiče ništa ispod sebe. */
+  #editor-page .st-tree.st-tree--catalog{
+    position:absolute; top:0; bottom:0; left:0; z-index:6;
+    width:min(320px,86vw);
+    transform:translateX(-101%);            /* -101% da rub sjene ne viri */
+    /* ⚠️ `visibility` NIJE ukras nego ispravnost: sam `transform` samo POMIČE panel, a on
+       ostaje u stablu pristupačnosti i u tab-redu — čitač ekrana bi čitao zatvorenu ladicu,
+       a tipkovnica bi u nju ulazila naslijepo. `visibility:hidden` ga vadi iz oboje, a
+       `transition` na njoj je stepenasta pa se gasi TEK kad klizanje završi. */
+    visibility:hidden;
+    transition:transform .22s ease, visibility 0s linear .22s;
+    box-shadow:var(--shadow-lg);
+  }
+  #editor-page .st-tree.st-tree--catalog.is-open{
+    transform:translateX(0);
+    visibility:visible;
+    transition:transform .22s ease, visibility 0s linear 0s;   /* pri otvaranju odmah */
+  }
+
+  /* Kvaka je vidljiva SAMO ondje gdje ladica postoji.
+     ⚠️ DVIJE KLASE, i to nije stil nego nužnost — napisao sam ovo prvi put s jednom
+     (`#editor-page .st-treetoggle`) i gumb je ostao `display:none` na SVIM širinama, jer
+     bazno pravilo ispod ima istu specifičnost i dolazi kasnije. Dakle **isti kvar koji
+     ovaj blok popravlja, ponovljen u samom popravku**, tri odlomka ispod objašnjenja zašto
+     se događa. Uhvatila ga je sonda, ne oko. */
+  #editor-page .st-iconbtn.st-treetoggle{ display:flex; }
+}
+
+/* Iznad 680 px stablo je stalni stupac → kvaka nema što otvarati. */
+#editor-page .st-treetoggle{ display:none; }
 
 /* ==== CANVAS — dot-grid podloga ==== */
 #editor-page .st-canvas{

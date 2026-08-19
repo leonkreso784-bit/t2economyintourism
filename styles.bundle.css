@@ -8009,6 +8009,7 @@ h4.lb-heading {
   grid-template-columns: 262px 1fr 250px;
   flex: 1;
   min-height: 0;
+  position: relative;
 }
 @media (max-width:1020px) {
   #editor-page .st-layout {
@@ -8021,9 +8022,6 @@ h4.lb-heading {
 @media (max-width:680px) {
   #editor-page .st-layout {
     grid-template-columns: 1fr;
-  }
-  #editor-page .st-tree {
-    display: none;
   }
 }
 #editor-page .st-tree {
@@ -8125,6 +8123,34 @@ h4.lb-heading {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+@media (max-width:680px) {
+  #editor-page .st-tree.st-tree--node {
+    display: none;
+  }
+  #editor-page .st-tree.st-tree--catalog {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 6;
+    width: min(320px,86vw);
+    transform: translateX(-101%);
+    visibility: hidden;
+    transition: transform .22s ease, visibility 0s linear .22s;
+    box-shadow: var(--shadow-lg);
+  }
+  #editor-page .st-tree.st-tree--catalog.is-open {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform .22s ease, visibility 0s linear 0s;
+  }
+  #editor-page .st-iconbtn.st-treetoggle {
+    display: flex;
+  }
+}
+#editor-page .st-treetoggle {
+  display: none;
 }
 #editor-page .st-canvas {
   overflow-y: auto;

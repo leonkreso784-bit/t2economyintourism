@@ -124,6 +124,11 @@ const SokratStudio = (function () {
       // odrezao umjesto da ponudi skrol. Slaganje globalne trake IZNAD ove pogoršalo bi
       // kvar; spajanje ga gasi.
       '<div class="st-topbar">' +
+      // K4a: na telefonu je stablo ladica, pa mu treba kvaka. Gumb se crta SAMO u
+      // katalog-modu (u čvor-modu stabla nema) i CSS ga gasi iznad 680 px.
+      (_node ? '' :
+      '  <button class="st-iconbtn st-treetoggle" id="stTreeToggle" aria-expanded="false" aria-controls="stTreeAside"' +
+      ' title="' + esc(t('studio.structure', 'Struktura')) + '" aria-label="' + esc(t('studio.structure', 'Struktura')) + '">🗂️</button>') +
       '  <div class="st-spacer"></div>' +
       '  <button class="st-btn ghost" id="stEdit" hidden><i class="fas fa-pen"></i> ' + esc(t('studio.edit', 'Uredi')) + '</button>' +
       '  <span class="st-chip" id="stDraftChip">—</span>' +
@@ -133,7 +138,10 @@ const SokratStudio = (function () {
       '</div>' +
       '<div class="st-layout">' +
       // F3: u osobnom čvoru katalog-stablo nema smisla (čvor NIJE u katalogu) → panel čvora.
-      '  <aside class="st-tree">' + (_node
+      // K4a: modifikator NIJE ukras nego nosilac razlike koja se ne vidi iz CSS-a — u
+      // čvor-modu je ovaj panel PRIKAZ jednog materijala, u katalog-modu je NAVIGATOR.
+      // Na telefonu se zato prvi briše bez zamjene, a drugi seli u ladicu.
+      '  <aside class="st-tree ' + (_node ? 'st-tree--node' : 'st-tree--catalog') + '" id="stTreeAside">' + (_node
         ? '<h3>📁 ' + esc(t('studio.myMaterials', 'Moji materijali')) + '</h3>' +
           '<div class="st-nodecard"><div class="st-nodeicon">📘</div>' +
           '<div class="st-nodename">' + esc(_node.name) + '</div>' +
@@ -170,6 +178,10 @@ const SokratStudio = (function () {
     byId('stEdit').addEventListener('click', enterEdit);
     byId('stPublish').addEventListener('click', publish);
     byId('stDiscard').addEventListener('click', discard);
+
+    // K4a: kvaka ladice (postoji samo u katalog-modu)
+    var treeToggle = byId('stTreeToggle');
+    if (treeToggle) treeToggle.addEventListener('click', function () { toggleTree(); });
 
     // stablo (delegirano) — samo u katalog-modu
     var tree = byId('stTree');
@@ -263,9 +275,26 @@ const SokratStudio = (function () {
       '<button class="st-btn primary" style="width:100%" disabled>' + esc(t('studio.aiBtn', 'Spoji svoj AI')) + '</button></div>';
   }
 
+  /**
+   * K4a — ladica stabla (samo telefon, samo katalog-mod).
+   *
+   * ⚠️ Stanje živi na SAMOM panelu (`.is-open`), ne u zasebnoj varijabli: ljuska Studija se
+   * ponovno crta pri svakom `render()`, pa bi vanjska zastavica preživjela markup koji više
+   * ne postoji i tvrdila da je otvoreno nešto čega nema.
+   */
+  function toggleTree(force) {
+    var aside = byId('stTreeAside');
+    if (!aside) return;
+    var open = (force === undefined) ? !aside.classList.contains('is-open') : !!force;
+    aside.classList.toggle('is-open', open);
+    var btn = byId('stTreeToggle');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
   // ---- ODABIR SKRIPTE → CANVAS ----
   async function selectLesson(subjectId, lessonId, row) {
     _node = null;                                  // F3: odabir iz kataloga gasi node-mod
+    toggleTree(false);                             // K4a: odabir je svrha ladice → zatvori je
     // K2b: i hijerarhija se mora vratiti na katalošku, inače bi mrvica i dalje tvrdila
     // „Moji materijali" nakon što je korisnik iz čvora prešao na katalog-skriptu.
     if (typeof AppState !== 'undefined' && AppState.nav) AppState.nav.editorNode = null;

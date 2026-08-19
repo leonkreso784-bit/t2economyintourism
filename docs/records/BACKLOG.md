@@ -353,7 +353,17 @@ načina da se odabere lekcija. Traži **odluku o dizajnu → K4**.
 
 ---
 
-## 🔥 Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA — 2026-08-19 (Leon, uz snimku)
+## ✅ ~~Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA~~ — RIJEŠENO 2026-08-19 (K4a, spec §8.10)
+
+> **Riješeno isti dan.** Leon: *„treba se toga riješiti na neki način da se ništa ne sjebe. Pa
+> zbog toga ne možeš ništa raditi na telefonu u editoru, apsolutno ništa."* Izmjereno prije
+> popravka (390×844): ljuska **522–540 px = 62–64 % ekrana**, canvas **304–323 px**. Poslije:
+> canvas **679 px**, ljuska u čvor-modu **165 px = 20 %**. Rez je išao po modu — čvor-mod je
+> panel izgubio bez zamjene, katalog-mod ga je dobio kao **ladicu** s kvakom u traci. Brana:
+> `tests/studio-mobile.authed.spec.js` (3 testa, uklj. tvrdnju da je **stolno računalo
+> nedirnuto**). Zapis ispod ostaje kao dijagnoza.
+
+## 🔥 ~~Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA~~ — 2026-08-19 (Leon, uz snimku)
 
 Leon: *„ovo smeće u editoru koje se mora maknut na telefonu, ne kužim koja je ovo pička
 materina nepotrebna."*

@@ -111,13 +111,17 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **✂️ „Predmeti" su MAKNUTI iz trake** (Leon, 2026-08-19: *„najnebitniji gumb ikada"*).
 > Katalog nije izgubio ulaz — vode **vrata u herou** i **mrvica**; ključ `topbar.subjects`
 > ostaje jer imenuje mrvicu. Cijena: iz police/profila/Studija katalog je sad **dva klika**.
-> **🔵 SLJEDEĆA CIGLA = K4** — materijali u kvaliteti kataloga. ⚠️ **Blokada K4 je RAZRIJEŠENA
-> 2026-08-19:** tvrdnja „stablo se ne smije sakriti na telefonu" vrijedi samo za **katalog-mod**;
-> u **čvor-modu** panel nije navigator nego prikaz jednog materijala čije ime na istom ekranu
-> već piše dvaput → **briše se bez zamjene** (BACKLOG § „Panel čvora…"). Uz to nosi i staru
-> zamku: `.st-tree` je 354 px, a `display:none` ispod 680 px **nikad nije radio** (medijski
-> upit ne dodaje specifičnost), pa „makni na telefonu" bez toga opet ne bi napravilo ništa.
-> Zatim **K5** editor dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva
+> **✅ K4a (Studio na telefonu) JE GOTOV** — §8.10. Povod je Leonova rečenica *„zbog toga ne
+> možeš ništa raditi na telefonu u editoru, apsolutno ništa"*, a mjera ju je potvrdila:
+> ljuska **522–540 px = 62–64 % ekrana**, canvas 304–323 px → sada canvas **679 px**, ljuska
+> **20 %**. ⚠️ **Rez ide po MODU, ne po širini:** `.st-tree` je u **čvor-modu** PRIKAZ jednog
+> materijala (ime već piše dvaput) → briše se bez zamjene; u **katalog-modu** je NAVIGATOR →
+> seli u **ladicu** (kvaka 🗂️, zatvara se nakon odabira). *Jedna tvrdnja o „stablu na
+> telefonu" pokrivala je oba moda i zato je pola vremena bila kriva.* ⚠️ `display:none` ispod
+> 680 px nikad nije radio (**medijski upit ne dodaje specifičnost**, bazno pravilo stoji
+> niže) — nova pravila nose **dvije klase**; istu grešku sam pritom **ponovio na kvaki
+> ladice** i uhvatila ju je sonda, ne oko.
+> **🔵 SLJEDEĆA CIGLA = K4 (ostatak)** — materijali u kvaliteti kataloga. Zatim **K5** editor dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva
 > nedostaje, a `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu
 > djelomično prevedeni nego uopće nisu spojeni na i18n).
 > Iza faze ide **A1 Google-prijava** — koja od 2026-08-19 nosi i **prepravak dijaloga
