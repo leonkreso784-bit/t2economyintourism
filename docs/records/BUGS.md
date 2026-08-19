@@ -23,6 +23,34 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Riješeni / Lekcije
 
+### BUG-028 — Izbornik blokova je NEKLIKABILAN kad stoji cookie-banner (editor)
+
+- Status: ✅ **riješen** (K2b, `508b2ff`) · Težina: **srednji** (osobni materijal + admin editor; katalog nedirnut) · Našao: **`test:authed`**, pri regresiji K2b.
+
+**Simptom.** U editoru se otvori ＋ izbornik za novi blok, izbornik se **vidi**, ali klik na njegove
+stavke ne radi ništa. Pogađa samo posjetitelja koji **još nije odgovorio na pitanje o kolačićima**.
+
+**Uzrok.** `.be-menu` je računao treba li se okrenuti prema gore ovako:
+`if (top + mh > window.innerHeight - 8)`. To je točno za **viewport**, ali ne i za ono što je u
+njemu **zauzeto**. Cookie-banner je `position:fixed` na dnu sa `z-index: 2147483000` (namjerno
+iznad svega, da ga ne prekrije nijedan modal) i **presreće pokazivač** nad donjih ~70 px.
+
+⚠️ **Kvar je bio LATENTAN, K2b ga nije uveo nego otkrio.** Dok je Studio počinjao na vrhu ekrana,
+izbornik je slučajno padao **iznad** bannera. Čim ga je globalna traka spustila za 108 px, počeo je
+padati **u** njega. *Slučajna geometrija je držala kvar nevidljivim, pa je izgledao kao regresija.*
+
+**Popravak.** `js/consent.js` objavljuje `--bottom-inset` (visina bannera dok stoji, 0 kad ga nema),
+a `posMenu()` od te vrijednosti računa stvarni donji rub. Rješenje je namjerno **općenito**: svako
+buduće trajno dno (traka za akcije, obavijest) samo postavi istu varijablu.
+
+**Lekcija:** *„stane li u ekran" nije isto što i „vidi li se".* Provjera prelijeva mjeri **viewport**,
+a korisnik gleda **ono što je u njemu ostalo slobodno**. Isti razred kao izuzeće u `layout.authed`
+čija premisa ne vrijedi kad fiksna ljuska ima `overflow:hidden`.
+
+**Brana:** `tests/auth.setup.js` upisuje pristanak prije prvog učitavanja (prijavljen admin ga je
+donio davno), pa authed-suita mjeri ono što tvrdi, a ne banner. Sama kolizija je popravljena u kodu.
+
+
 ### BUG-027 — Petlja „Moji materijali ⇄ Studio": izlazak iz editora vraća u editor
 
 **Simptom** (Leon, 2026-08-18): polica → *uredi materijal* → editor (ništa se ne dira) → „natrag" →

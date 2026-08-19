@@ -70,7 +70,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle C1–C7 |
+| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle **C0–C7**. ⚠️ Nosi i fazu **„KOSTUR" (K1–K5, §8)**, ubačenu između C3 i C4 (Leon, 2026-08-18): navigacija prije kozmetike, po presedanu C0-a. K1 · K2a · K2b su ispunjeni. |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu

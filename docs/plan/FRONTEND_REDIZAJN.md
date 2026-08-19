@@ -1199,6 +1199,10 @@ nula zajedničkih traka; `browse-header`, `lessons-header` i `study-header` **sv
 slažu jezik + „Moji materijali" + auth. Zaglavlja žive **UNUTAR** sekcija, pa nestaju s
 njima — to je cijeli mehanizam.
 
+> ✅ **OVAJ ODJELJAK OPISUJE STANJE PRIJE K2b** (dijagnoza koja je fazu i pokrenula).
+> Ispravljeno 2026-08-19 — v. **§8.8**: traka i mrvica sada stoje IZVAN `-page` sekcija,
+> jezik je dohvatljiv sa svake stranice, a znak je poveznica na dom.
+
 ### 8.2 ⚠️ NALAZ KOJI JE ODREDIO OPSEG: devet stranica, **jedna** adresa
 
 Mjereno 2026-08-18, [`navigation.js:161`](../../js/navigation.js#L161): jedina ruta u
@@ -1234,7 +1238,7 @@ jednog spremnika u drugi.**
 | **K3** | **Brana dohvatljivosti.** Test tvrdi da je iz **svake** stranice — uključujući `#editor-page` — dohvatljiva bar jedna druga u jednom kliku. Uz nju: ruta preživi reload. | brana pada kad se traka makne (obrnuta provjera) | ne |
 | | ⚠️ **KRITERIJ POOSTREN (2026-08-18).** „Bar jedan klik drugamo" mjeri POSTOJANJE izlaza, a Leonova dva kvara imala su izlaz — vodio je na slomljenu stranicu i u petlju, pa bi **oba prosla ovu branu kako je bila napisana**. Dodaje se: izlaz mora voditi na stranicu koja ima smisla (nijedan `node:` na lekcijskoj stranici) i „natrag" nikad ne vraca onamo odakle si upravo dosao. | | |
 | **K4** | **Moji materijali u kvaliteti kataloga** (N3). Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Ista komponenta pločice koju K2 ionako izdvaja. | vlastiti materijal izgleda jednako dobro kao FMTU gradivo | da |
-| **K5** | **Editor dvojezicno** (Leon, 2026-08-18: *„platforma mora biti na hrvatskom i engleskom i trebat ce editor isto biti na eng jeziku"*). Izmjereno: **30 od 54** niza Studija nema prijevod (pada na hrvatski rezervni), `block-editor` + `block-editor-media` nose **15** zakucanih hrvatskih, `admin-editors` **38** zakucanih engleskih — editor **nije cijel ni na jednom jeziku**. Prekidac jezika je dotad dohvatljiv na **4 od 9** stranica; K2b ga donosi u Studio. | korisnik prebaci jezik i editor je CIJEO na tom jeziku | ne |
+| **K5** | **Editor dvojezicno** (Leon, 2026-08-18: *„platforma mora biti na hrvatskom i engleskom i trebat ce editor isto biti na eng jeziku"*). **Premjereno 2026-08-19** (stara brojka „30 od 54" bila je od 2026-08-18 i vec je ostarjela): `studio.js` trazi **48** jedinstvenih `studio.*` kljuceva, rjecnik ima **20** -> **28 nedostaje** i pada na hrvatski rezervni. ⚠️ Jaci nalaz od brojke: **`block-editor.js`, `block-editor-media.js` i `admin-editors.js` imaju NULA `t()` poziva** — nisu djelomicno prevedeni nego UOPCE nisu spojeni na i18n. Editor zato nije cijel ni na jednom jeziku: `studio.js` pada na hrvatski, `admin-editors` govori engleski, i oboje se vidi na istom ekranu. ✅ Prekidac jezika je od **K2b** dohvatljiv sa svake stranice (bio je na 4 od 9). | korisnik prebaci jezik i editor je CIJEO na tom jeziku | ne |
 
 **N2 („osobna početna — predmeti koje učim") NIJE u ovoj fazi.** To je nova mogućnost, ne
 kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
@@ -1248,8 +1252,8 @@ kvar; ulazi tek kad K1–K4 stoje, jer se oslanja i na rute i na pločicu iz K4.
    **BUG-023**, gdje je obnova pozicije gađala `node:` id koji još nije registriran i
    otvarala praznu study-stranicu koja puca pri svakom spremanju. Ruta iz adrese može
    imenovati **tuđi ili obrisan** čvor, dakle rub je širi nego kod localStoragea, ne uži.
-3. **Nijedan `<script>` se ne dodaje na kritični put.** Landing već nosi 717 KB u 41
-   skripti (mjereno 2026-08-18) uz vlastiti budžet od 200 KB.
+3. **Nijedan `<script>` se ne dodaje na kritični put.** Landing već nosi **728 KiB u 41 skripti** (premjereno 2026-08-19; **38 bez `defer`**, **232 KiB = 31 %
+   editorskog koda**) uz vlastiti budžet od 200 KB.
 4. **Traka poštuje `check:palette` i `check:contrast` kroz sve 4 teme** — nova površina ne
    smije podići osnovicu čegrtaljke.
 5. **Znak je nepromjenjiv** (§7.13, Leon izričito): traka mu daje prostor, ne prepravlja ga.
@@ -1282,7 +1286,7 @@ JS-budžet landinga kao gate.
 | `#/materials` | moji materijali (C0, doslovno zadržana — vanjski linkovi postoje) |
 
 Sve živi u `js/navigation.js`, **bez nove skripte** (granica §8.4 #3: landing već nosi
-717 KB u 41 skripti). `saveCurrentPosition` OSTAJE i nije duplikat: on je **pamćenje**
+728 KiB u 41 skripti, premjereno 2026-08-19). `saveCurrentPosition` OSTAJE i nije duplikat: on je **pamćenje**
 („gdje sam stao", 24 h), adresa je **identitet** („što gledam"). Kad se razilaze,
 **adresa pobjeđuje** — pravilo je postojalo od C0 za jednu rutu, sad vrijedi za sve.
 

@@ -366,6 +366,13 @@ Od skripti je **241 KB (38 %)** editorsko/admin: `studio.js` (50) · `block-edit
 `node-images.js` (6) · `card-limits.js` (2). Još **119 KB** su modovi i vježbe, kojih na landingu
 nema. Svih 38 je **sinkrono**, bez `defer`, u `index.html`.
 
+**📏 PREMJERENO 2026-08-19 (K2b):** **728 KiB u 41 lokalnoj skripti**, od toga **232 KiB = 31 %**
+editorsko (`studio` · `block-editor` · `block-editor-media` · `admin` · `admin-editors` · `draft-store`),
+**38 bez `defer`**. ⚠️ **Brojka je NARASLA otkad je stavka otvorena** — `main` nosi 691 KiB, grana 728 KiB.
+Nijedna cigla je nije pogoršala namjerno; rasla je kao nusprodukt K1/K2a/K2b i cigli landinga.
+*Stavka bez gatea ne stoji na mjestu nego klizi* — zato je „JS-budžet landinga kao gate" u §8.5
+zapisan kao posao koji ne ovisi ni o jednoj cigli i može se ubaciti kad god.
+
 **Zašto je ovo nalaz, a ne mišljenje:** projekt si je u ovom istom dokumentu (sekcija „Brutalan
 bar", #1) zadao budžet **„JS ≤ ~200 KB"** i označio ga 🔥 *„Blokada, ne upozorenje."* Gate nikad
 nije izgrađen, pa je stvarnost danas **4× iznad vlastitog praga**. To je **isti obrazac koji je
