@@ -1,0 +1,745 @@
+// Makroekonomija (HR) — M1 (1. kolokvij)
+// Autorski sadržaj iz HR skripte (Makroekonomija, FMTU). Model: kartice <=200, detalj u learn.
+// KaTeX: \( \) / \[ \] delimiteri — NIKAD goli dolar-znak (ADR-009).
+// ⚠️ NE pokretati translate-subject.js nad ovim predmetom (ručno autorski usklađeno sa skriptom).
+
+const macroeconomicsHrM1 = {
+  "fundamentals": {
+    "name": "Temeljni pojmovi makroekonomije",
+    "icon": "fa-chart-area",
+    "color": "#f59e0b",
+    "flashcards": [
+      {
+        "question": "Što proučava ekonomija?",
+        "answer": "Način na koji društvo upotrebljava rijetke resurse za proizvodnju korisnih dobara i kako ih raspodjeljuje između različitih skupina.",
+        "explanation": "Rijetkost resursa je polazište cijele ekonomije."
+      },
+      {
+        "question": "Mikroekonomija vs makroekonomija?",
+        "answer": "Mikro analizira pojedinačne cijene, količine i tržišta te ponašanje proizvođača i potrošača. Makro proučava funkcioniranje privrede KAO CJELINE.",
+        "explanation": "Makroekonomija se temelji na mikroekonomiji — povezana su područja."
+      },
+      {
+        "question": "Čime se bavi makroekonomija?",
+        "answer": "Cjelokupnom nacionalnom proizvodnjom, zaposlenosti, cijenama i vanjskom trgovinom.",
+        "explanation": "Četiri velika područja promatranja."
+      },
+      {
+        "question": "Tko su temeljni ekonomski entiteti?",
+        "answer": "Potrošač = kućanstva (središte potrošnje, maksimiziraju korisnost, nositelji potražnje). Proizvođač = poduzeća (središte proizvodnje, maksimiziraju profit).",
+        "explanation": "Agregiranjem nastaju agregatna potražnja i agregatna ponuda."
+      },
+      {
+        "question": "Što se određuje djelovanjem agregatne ponude i potražnje?",
+        "answer": "Nacionalni output (nacionalna proizvodnja), obujam zaposlenosti i prosječne cijene.",
+        "explanation": "Tri ishoda makroekonomske ravnoteže."
+      },
+      {
+        "question": "Koji su opći ciljevi makroekonomske politike?",
+        "answer": "Visoka i rastuća razina proizvodnje, visoka zaposlenost (niska nezaposlenost), stabilnost cijena te unutrašnja i vanjska stabilnost.",
+        "explanation": "Vanjska stabilnost = međunarodna razmjena."
+      },
+      {
+        "question": "Koje su glavne makroekonomske varijable?",
+        "answer": "Bruto domaći proizvod (BDP) ili agregatni output, stopa nezaposlenosti, stopa inflacije i kamatna stopa.",
+        "explanation": "Četiri pokazatelja stanja gospodarstva."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "Makroekonomija proučava:",
+        "options": [
+          "pojedinačna tržišta i cijene",
+          "privredu kao cjelinu",
+          "samo ponašanje poduzeća",
+          "isključivo vanjsku trgovinu"
+        ],
+        "correct": 1,
+        "id": "ic3350"
+      },
+      {
+        "question": "Kućanstva su u makroekonomskom modelu:",
+        "options": [
+          "središte proizvodnje",
+          "središte potrošnje i nositelji potražnje",
+          "nositelji ponude dobara",
+          "država"
+        ],
+        "correct": 1,
+        "id": "nrg6n0"
+      },
+      {
+        "question": "Što NIJE opći cilj makroekonomske politike?",
+        "options": [
+          "stabilnost cijena",
+          "visoka zaposlenost",
+          "maksimalna inflacija",
+          "rastuća razina proizvodnje"
+        ],
+        "correct": 2,
+        "id": "u4zvrn"
+      },
+      {
+        "question": "Koja NIJE jedna od glavnih makroekonomskih varijabli?",
+        "options": [
+          "BDP",
+          "stopa nezaposlenosti",
+          "granična sklonost potrošnji",
+          "kamatna stopa"
+        ],
+        "correct": 2,
+        "id": "ox9uj6"
+      },
+      {
+        "question": "Agregiranjem potražnje kućanstava dobiva se:",
+        "options": [
+          "agregatna ponuda",
+          "agregatna potražnja",
+          "nacionalni output",
+          "stopa inflacije"
+        ],
+        "correct": 1,
+        "id": "hxg9oz"
+      },
+      {
+        "question": "Odnos mikro- i makroekonomije je:",
+        "options": [
+          "potpuno odvojena područja",
+          "makro se temelji na mikro — povezani su",
+          "mikro se temelji na makro isključivo",
+          "isto područje pod dva imena"
+        ],
+        "correct": 1,
+        "id": "pzbh9w"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ proučava funkcioniranje privrede kao cjeline.",
+        "answer": "Makroekonomija",
+        "hint": "suprotno od mikro",
+        "id": "r4l53z"
+      },
+      {
+        "sentence": "Kućanstva su središte _______, a poduzeća središte proizvodnje.",
+        "answer": "potrošnje",
+        "hint": "trošenje dohotka",
+        "id": "64ghbb"
+      },
+      {
+        "sentence": "Agregiranjem ponude poduzeća dobiva se agregatna _______.",
+        "answer": "ponuda",
+        "hint": "suprotno od potražnje",
+        "id": "g0s6mc"
+      },
+      {
+        "sentence": "Cilj makroekonomske politike je stabilnost _______.",
+        "answer": "cijena",
+        "hint": "niska inflacija",
+        "id": "yz9btl"
+      },
+      {
+        "sentence": "Ekonomija proučava upotrebu _______ resursa za proizvodnju dobara.",
+        "answer": "rijetkih",
+        "hint": "ograničenih",
+        "id": "qwwpiu"
+      }
+    ],
+    "learn": {
+      "title": "Temeljni pojmovi makroekonomije",
+      "content": "\n                <h3>Što je ekonomija</h3>\n                <p><strong>Ekonomija</strong> proučava način na koji društvo upotrebljava <em>rijetke resurse</em> za proizvodnju korisnih dobara i kako ih raspodjeljuje između različitih skupina.</p>\n                <div class=\"formula-box\">\n                    MIKROEKONOMIJA — pojedinačne cijene, količine, tržišta; ponašanje proizvođača i potrošača<br>\n                    MAKROEKONOMIJA — funkcioniranje privrede KAO CJELINE: nacionalna proizvodnja,<br>\n                    &nbsp;&nbsp;zaposlenost, cijene i vanjska trgovina\n                </div>\n                <p>Makroekonomija se <strong>temelji na mikroekonomiji</strong> — to su dva povezana ekonomska područja. <strong>Makroekonomski model</strong> polazi od analize ponašanja pojedinaca koji nastoje maksimizirati osobne ekonomske satisfakcije uz dane potrebe, želje i izvore.</p>\n\n                <h4>Temeljni ekonomski entiteti</h4>\n                <ul>\n                    <li><strong>Potrošač = kućanstva</strong> — središte potrošnje; koriste raspoloživi dohodak i žele maksimizirati korisnost; na tržištu su nositelji potražnje pa svojim dohotkom određuju <em>što će se proizvoditi</em>.</li>\n                    <li><strong>Proizvođač = poduzeća</strong> — središte proizvodnje (ponude); organiziraju proizvodnju za koju vjeruju da će maksimizirati profit po danom ulaganju.</li>\n                </ul>\n                <p>Agregiranjem potražnje kućanstava nastaje <strong>agregatna potražnja</strong>, agregiranjem ponude poduzeća <strong>agregatna ponuda</strong>. Njihovim međusobnim djelovanjem određuju se:</p>\n                <ul>\n                    <li>nacionalni output (nacionalna proizvodnja)</li>\n                    <li>obujam zaposlenosti</li>\n                    <li>prosječne cijene</li>\n                </ul>\n\n                <h4>Opći ciljevi makroekonomske politike</h4>\n                <ol>\n                    <li>Visoka i rastuća razina proizvodnje</li>\n                    <li>Visoka zaposlenost, tj. niska nezaposlenost</li>\n                    <li>Stabilnost cijena</li>\n                    <li>Unutrašnja i vanjska stabilnost — međunarodna razmjena</li>\n                </ol>\n\n                <h4>Glavne makroekonomske varijable</h4>\n                <div class=\"formula-box\">\n                    BDP (agregatni output) · STOPA NEZAPOSLENOSTI · STOPA INFLACIJE · KAMATNA STOPA\n                </div>\n            ",
+      "id": "bu7ptp"
+    },
+    "id": "6p8lfa"
+  },
+  "gdp": {
+    "name": "BDP i mjerenje outputa",
+    "icon": "fa-chart-line",
+    "color": "#6366f1",
+    "flashcards": [
+      {
+        "question": "Što je BDP?",
+        "answer": "Tržišna vrijednost svih finalnih proizvoda i usluga proizvedenih u nekoj zemlji tijekom jedne godine — najobuhvatnija mjera ukupne proizvodnje privrede.",
+        "explanation": "Engl. Gross Domestic Product (GDP)."
+      },
+      {
+        "question": "Po čemu se BDP razlikuje od BNP-a?",
+        "answer": "BDP je ZEMLJOPISNO lociran — sav output unutar granica bez obzira čija su ga poduzeća ostvarila. BNP je output činitelja u VLASNIŠTVU domaćih poduzeća, gdje god bili.",
+        "explanation": "BDP = teritorij, BNP = vlasništvo."
+      },
+      {
+        "question": "Nominalni vs realni BDP?",
+        "answer": "Nominalni se izražava u TEKUĆIM cijenama pa se mijenja i zbog količina i zbog cijena. Realni se izražava u STALNIM cijenama i mijenja se isključivo zbog obima proizvodnje.",
+        "explanation": "Realni BDP isključuje utjecaj cijena."
+      },
+      {
+        "question": "Što je potencijalni BDP?",
+        "answer": "Maksimalna količina dobara koju privreda može proizvesti pri stabilnim cijenama — proizvodnja s visokom razinom zaposlenosti.",
+        "explanation": "Granica proizvodnih mogućnosti."
+      },
+      {
+        "question": "Što je BDP jaz?",
+        "answer": "Razlika između stvarnog i potencijalnog BDP-a; nastaje jer privreda zbog poslovnih ciklusa ne posluje na granici proizvodnih mogućnosti.",
+        "explanation": "U recesiji je jaz malen, u depresiji velik."
+      },
+      {
+        "question": "Kako se dobiva realni BDP iz nominalnog?",
+        "answer": "Deflacioniranjem (kad cijene rastu) ili inflacioniranjem (kad cijene padaju) — time se BDP preračunava na stalne cijene.",
+        "explanation": "Kad cijene rastu, realna vrijednost je manja od nominalne."
+      },
+      {
+        "question": "Kako se računa BDP deflator?",
+        "answer": "Kao omjer nominalnog i realnog BDP-a pomnožen sa 100: \\( \\text{deflator} = \\frac{BDP_{nom}}{BDP_{real}} \\times 100 \\).",
+        "explanation": "Mjera opće razine cijena izvedena iz BDP-a."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "BDP mjeri output:",
+        "options": [
+          "domaćih poduzeća gdje god bila",
+          "proizveden unutar granica zemlje",
+          "samo izvoznih poduzeća",
+          "samo javnog sektora"
+        ],
+        "correct": 1,
+        "id": "bq33vz"
+      },
+      {
+        "question": "Realni BDP izražava se u:",
+        "options": [
+          "tekućim cijenama",
+          "stalnim cijenama",
+          "stranoj valuti",
+          "satima rada"
+        ],
+        "correct": 1,
+        "id": "9tse1k"
+      },
+      {
+        "question": "Potencijalni BDP pokazuje:",
+        "options": [
+          "stvarnu proizvodnju prošle godine",
+          "maksimalnu proizvodnju pri stabilnim cijenama",
+          "proizvodnju u recesiji",
+          "uvoz i izvoz"
+        ],
+        "correct": 1,
+        "id": "4hvmtv"
+      },
+      {
+        "question": "Kad cijene rastu, realna vrijednost BDP-a je:",
+        "options": [
+          "veća od nominalne",
+          "manja od nominalne",
+          "jednaka nominalnoj",
+          "nula"
+        ],
+        "correct": 1,
+        "id": "0dkr44"
+      },
+      {
+        "question": "BDP jaz je razlika između:",
+        "options": [
+          "izvoza i uvoza",
+          "stvarnog i potencijalnog BDP-a",
+          "BDP-a i BNP-a",
+          "nominalnog i realnog BDP-a"
+        ],
+        "correct": 1,
+        "id": "e3364b"
+      },
+      {
+        "question": "Output činitelja u vlasništvu domaćih poduzeća, gdje god se nalazili, je:",
+        "options": [
+          "BDP",
+          "BNP",
+          "potencijalni BDP",
+          "realni BDP"
+        ],
+        "correct": 1,
+        "id": "tt6puk"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "BDP je tržišna vrijednost svih _______ proizvoda i usluga proizvedenih u godini.",
+        "answer": "finalnih",
+        "hint": "krajnjih, ne poluproizvoda",
+        "id": "l95s2z"
+      },
+      {
+        "sentence": "_______ BDP izražava se u stalnim cijenama.",
+        "answer": "Realni",
+        "hint": "bez utjecaja cijena",
+        "id": "lbwitx"
+      },
+      {
+        "sentence": "_______ BDP pokazuje maksimalnu proizvodnju pri stabilnim cijenama.",
+        "answer": "Potencijalni",
+        "hint": "granica mogućnosti",
+        "id": "h1ymc9"
+      },
+      {
+        "sentence": "BDP je zemljopisno lociran, a _______ se veže uz vlasništvo činitelja.",
+        "answer": "BNP",
+        "hint": "bruto nacionalni proizvod",
+        "id": "v5mwkf"
+      },
+      {
+        "sentence": "Kad cijene rastu, njihov se utjecaj otklanja _______.",
+        "answer": "deflacioniranjem",
+        "hint": "suprotno od inflacioniranja",
+        "id": "7br8gb"
+      }
+    ],
+    "learn": {
+      "title": "BDP i mjerenje outputa",
+      "content": "\n                <h3>Bruto domaći proizvod (BDP)</h3>\n                <p><strong>BDP</strong> (engl. <em>Gross Domestic Product</em>) = tržišna vrijednost svih <strong>finalnih</strong> proizvoda i usluga proizvedenih u nekoj zemlji tijekom jedne godine. Najobuhvatnija je mjera ukupne proizvodnje i mjera agregatne ekonomske aktivnosti — ukupna proizvodna snaga gospodarstva.</p>\n                <div class=\"formula-box\">\n                    BDP — ZEMLJOPISNI kriterij: sav output unutar granica, bez obzira čiji je<br>\n                    BNP — VLASNIČKI kriterij: output činitelja u vlasništvu domaćih poduzeća,<br>\n                    &nbsp;&nbsp;bez obzira jesu li u zemlji ili inozemstvu\n                </div>\n\n                <h4>Vrste BDP-a</h4>\n                <ul>\n                    <li><strong>Nominalni BDP</strong> — u tekućim tržišnim cijenama; mijenja se pod utjecajem <em>i</em> obima proizvodnje <em>i</em> cijena. Dobiva se kao zbroj količina finalnih dobara pomnoženih tekućim cijenama.</li>\n                    <li><strong>Realni BDP</strong> — u stalnim tržišnim cijenama; mijenja se <em>isključivo</em> pod utjecajem obima proizvodnje.</li>\n                    <li><strong>Potencijalni BDP</strong> — maksimalna količina dobara koju privreda može proizvesti pri stabilnim cijenama (proizvodnja s visokom razinom zaposlenosti).</li>\n                </ul>\n\n                <h4>BDP jaz</h4>\n                <p>Zbog poslovnih ciklusa stvarni se BDP razlikuje od potencijalnog — privreda ne posluje na granici proizvodnih mogućnosti. U <strong>recesiji</strong> je jaz malen, u <strong>depresiji</strong> velik.</p>\n\n                <h4>Pretvorba nominalnog u realni</h4>\n                <p>Realni BDP dobiva se iz nominalnog isključivanjem utjecaja kretanja cijena — <strong>deflacioniranjem</strong> (ako su cijene rasle) ili <strong>inflacioniranjem</strong> (ako su padale); time se BDP preračunava na stalne cijene.</p>\n                <p><em>Kad cijene rastu, realna vrijednost je MANJA od nominalne; kad cijene padaju, realna je VEĆA od nominalne.</em></p>\n                <div class=\"formula-box\">\n                    \\[ \\text{BDP deflator} = \\frac{\\text{nominalni BDP}}{\\text{realni BDP}} \\times 100 \\]\n                    \\[ \\text{realni BDP} = \\frac{\\text{nominalni BDP}}{\\text{deflator}} \\times 100 \\]\n                </div>\n            ",
+      "id": "3uvmlb"
+    },
+    "id": "lbmnrh"
+  },
+  "inflationUnemployment": {
+    "name": "Inflacija, CPI i nezaposlenost",
+    "icon": "fa-arrow-trend-up",
+    "color": "#ef4444",
+    "flashcards": [
+      {
+        "question": "Što je indeks potrošačkih cijena (CPI)?",
+        "answer": "Pokazatelj opće razine cijena — mjeri prosječnu cijenu potrošnje (trošak života) kao trošak fiksne košare dobara koju kupuju tipični potrošači.",
+        "explanation": "U baznom razdoblju iznosi 100."
+      },
+      {
+        "question": "Kako se računa stopa inflacije iz CPI-ja?",
+        "answer": "Kao postotna promjena razine cijena: \\( \\pi = \\frac{CPI_t - CPI_{t-1}}{CPI_{t-1}} \\times 100 \\).",
+        "explanation": "Promjena indeksa u odnosu na prethodno razdoblje."
+      },
+      {
+        "question": "Inflacija vs deflacija?",
+        "answer": "Inflacija = trajni rast opće razine cijena. Deflacija = trajno kontinuirano smanjenje razine cijena, tj. negativna stopa inflacije.",
+        "explanation": "Stopa inflacije = stopa po kojoj cijene rastu."
+      },
+      {
+        "question": "Tko čini radnu snagu (aktivno stanovništvo)?",
+        "answer": "Zaposleni i nezaposleni koji aktivno traže posao. Studenti, umirovljenici i kućanice koji ne traže posao su IZVAN radne snage.",
+        "explanation": "Zato nisu ni zaposleni ni nezaposleni."
+      },
+      {
+        "question": "Kako se računa stopa nezaposlenosti?",
+        "answer": "Kao udio nezaposlenih u radnoj snazi: \\( u = \\frac{U}{L} \\times 100 \\), gdje je \\( L = E + U \\).",
+        "explanation": "E = zaposleni, U = nezaposleni, L = radna snaga."
+      },
+      {
+        "question": "Što je realna kamatna stopa?",
+        "answer": "Približno nominalna kamatna stopa umanjena za očekivanu inflaciju: \\( r \\approx i - \\pi^e \\).",
+        "explanation": "Fisherova aproksimacija — pokazuje stvarni prinos."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "CPI u baznom razdoblju iznosi:",
+        "options": [
+          "0",
+          "1",
+          "100",
+          "1000"
+        ],
+        "correct": 2,
+        "id": "x1w6y3"
+      },
+      {
+        "question": "Deflacija je:",
+        "options": [
+          "trajni rast cijena",
+          "negativna stopa inflacije",
+          "rast BDP-a",
+          "pad nezaposlenosti"
+        ],
+        "correct": 1,
+        "id": "29dusv"
+      },
+      {
+        "question": "Student koji ne traži posao je:",
+        "options": [
+          "zaposlen",
+          "nezaposlen",
+          "izvan radne snage",
+          "dio potencijalnog BDP-a"
+        ],
+        "correct": 2,
+        "id": "a4bk33"
+      },
+      {
+        "question": "Realna kamatna stopa približno je:",
+        "options": [
+          "nominalna + inflacija",
+          "nominalna − očekivana inflacija",
+          "inflacija − nominalna",
+          "jednaka nominalnoj"
+        ],
+        "correct": 1,
+        "id": "ryobss"
+      },
+      {
+        "question": "CPI predstavlja trošak:",
+        "options": [
+          "jedne namirnice",
+          "fiksne košare dobara tipičnog potrošača",
+          "državne potrošnje",
+          "izvoza"
+        ],
+        "correct": 1,
+        "id": "flx1k4"
+      },
+      {
+        "question": "Radnu snagu čine:",
+        "options": [
+          "svi stanovnici",
+          "zaposleni i nezaposleni koji traže posao",
+          "samo zaposleni",
+          "zaposleni i umirovljenici"
+        ],
+        "correct": 1,
+        "id": "485ljv"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "_______ je trajni rast opće razine cijena.",
+        "answer": "Inflacija",
+        "hint": "suprotno od deflacije",
+        "id": "4wiha1"
+      },
+      {
+        "sentence": "CPI u baznom razdoblju iznosi _______.",
+        "answer": "100",
+        "hint": "broj",
+        "id": "oul65k"
+      },
+      {
+        "sentence": "Radnu snagu čine zaposleni i _______ koji aktivno traže posao.",
+        "answer": "nezaposleni",
+        "hint": "bez posla",
+        "id": "5i7p2q"
+      },
+      {
+        "sentence": "Realna kamatna stopa je nominalna umanjena za očekivanu _______.",
+        "answer": "inflaciju",
+        "hint": "rast cijena",
+        "id": "p7r0b9"
+      },
+      {
+        "sentence": "_______ je trajno kontinuirano smanjenje razine cijena.",
+        "answer": "Deflacija",
+        "hint": "negativna inflacija",
+        "id": "1d36vl"
+      }
+    ],
+    "learn": {
+      "title": "Inflacija, CPI i nezaposlenost",
+      "content": "\n                <h3>Mjerenje cijena — CPI</h3>\n                <p><strong>Indeks potrošačkih cijena (CPI)</strong> koristi se za mjerenje prosječne cijene potrošnje ili troška života. Pokazatelj je opće razine cijena i predstavlja <strong>trošak fiksne košare dobara</strong> koju kupuju tipični potrošači. U <em>baznom razdoblju iznosi 100</em>, a kretanje se analizira u odnosu na tu vrijednost.</p>\n                <div class=\"formula-box\">\n                    \\[ \\pi_t = \\frac{CPI_t - CPI_{t-1}}{CPI_{t-1}} \\times 100 \\]\n                </div>\n                <ul>\n                    <li><strong>Inflacija</strong> — rast cijena; trajni rast opće razine cijena.</li>\n                    <li><strong>Stopa inflacije</strong> — stopa po kojoj cijene rastu.</li>\n                    <li><strong>Deflacija</strong> — trajno kontinuirano smanjenje razine cijena, tj. <em>negativna</em> stopa inflacije.</li>\n                </ul>\n\n                <h3>Nezaposlenost</h3>\n                <p><strong>Radnu snagu (aktivno stanovništvo)</strong> čine zaposleni i nezaposleni koji aktivno traže posao. Osobe koje ne traže posao — studenti, umirovljenici, kućanice — su <strong>izvan radne snage</strong> i nisu ni zaposlene ni nezaposlene.</p>\n                <div class=\"formula-box\">\n                    \\[ L = E + U \\qquad u = \\frac{U}{L} \\times 100 \\qquad e = \\frac{E}{L} \\times 100 \\]\n                </div>\n                <p>gdje je \\( E \\) broj zaposlenih, \\( U \\) broj nezaposlenih, \\( L \\) radna snaga, \\( u \\) stopa nezaposlenosti, \\( e \\) stopa zaposlenosti.</p>\n\n                <h4>Realna vs nominalna kamatna stopa</h4>\n                <p>Nominalna kamatna stopa je ona koju banka objavljuje; <strong>realna</strong> pokazuje stvarni prinos nakon što se oduzme gubitak kupovne moći:</p>\n                <div class=\"formula-box\">\n                    \\[ r \\approx i - \\pi^e \\]\n                </div>\n                <p>gdje je \\( i \\) nominalna stopa, a \\( \\pi^e \\) očekivana inflacija (Fisherova aproksimacija).</p>\n            ",
+      "id": "fjgur8"
+    },
+    "id": "s9vems"
+  },
+  "nationalAccounts": {
+    "name": "Nacionalno računovodstvo",
+    "icon": "fa-building-columns",
+    "color": "#14b8a6",
+    "flashcards": [
+      {
+        "question": "Što je nacionalna klasifikacija djelatnosti (NKD)?",
+        "answer": "Klasifikacija prema kojoj se razvrstavaju pravne osobe, obrti i tijela državne uprave. Propisuje je Vlada RH, a metodologiju primjene vodi Državni zavod za statistiku.",
+        "explanation": "Normativna podloga službene statistike."
+      },
+      {
+        "question": "Koje su dvije temeljne svjetske klasifikacije djelatnosti?",
+        "answer": "ISIC (klasifikacija UN-a) i NACE (klasifikacija Europske unije).",
+        "explanation": "NKD se izvodi iz NACE-a."
+      },
+      {
+        "question": "Zašto turizam nije zasebna djelatnost u klasifikaciji?",
+        "answer": "Jer se djelatnost definira prema proizvođaču i karakteristikama proizvoda — turizma nema ni kao djelatnosti ni kao sektora ni na jednoj razini klasifikacije.",
+        "explanation": "Zato se doprinos turizma mjeri satelitskom bilancom (TSA)."
+      },
+      {
+        "question": "Na kojoj se jednakosti temelji ekonomska aktivnost?",
+        "answer": "Ukupna proizvodnja = ukupna potrošnja = ukupni dohodak.",
+        "explanation": "Tri pristupa mjerenju istog BDP-a."
+      },
+      {
+        "question": "Koji sektori čine gospodarstvo?",
+        "answer": "Poduzeća, stanovništvo i vlada (država); u otvorenoj privredi dodaje se i inozemstvo.",
+        "explanation": "Osnovni sektori kružnog toka."
+      },
+      {
+        "question": "Što znači da je turizam gospodarska aktivnost?",
+        "answer": "To definira samo njegov gospodarski karakter, ali NE i njegov obuhvat u nacionalnom gospodarstvu.",
+        "explanation": "Obuhvat se ne može potpuno metodološki definirati."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "NKD u Republici Hrvatskoj propisuje:",
+        "options": [
+          "Državni zavod za statistiku",
+          "Vlada RH",
+          "Hrvatska narodna banka",
+          "Europska komisija"
+        ],
+        "correct": 1,
+        "id": "cdgvz0"
+      },
+      {
+        "question": "Klasifikacija djelatnosti Europske unije zove se:",
+        "options": [
+          "ISIC",
+          "NACE",
+          "NKD",
+          "TSA"
+        ],
+        "correct": 1,
+        "id": "y3ytv3"
+      },
+      {
+        "question": "Turizam u klasifikaciji djelatnosti:",
+        "options": [
+          "postoji kao zaseban sektor",
+          "ne postoji ni kao djelatnost ni kao sektor",
+          "postoji samo u EU klasifikaciji",
+          "zamjenjuje ugostiteljstvo"
+        ],
+        "correct": 1,
+        "id": "647w7n"
+      },
+      {
+        "question": "Ekonomska aktivnost temelji se na jednakosti:",
+        "options": [
+          "izvoz = uvoz",
+          "proizvodnja = potrošnja = dohodak",
+          "štednja = porezi",
+          "ponuda = cijena"
+        ],
+        "correct": 1,
+        "id": "uot9ql"
+      },
+      {
+        "question": "Metodologiju za primjenu NKD-a vodi:",
+        "options": [
+          "Vlada RH",
+          "Državni zavod za statistiku",
+          "Ministarstvo turizma",
+          "UN"
+        ],
+        "correct": 1,
+        "id": "8va2nt"
+      },
+      {
+        "question": "Gospodarski sektor NE čine:",
+        "options": [
+          "poduzeća",
+          "stanovništvo",
+          "vlada",
+          "sindikati"
+        ],
+        "correct": 3,
+        "id": "nhmmbw"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Klasifikacija djelatnosti Europske unije naziva se _______.",
+        "answer": "NACE",
+        "hint": "europska kratica",
+        "id": "1g35g9"
+      },
+      {
+        "sentence": "NKD propisuje _______ RH.",
+        "answer": "Vlada",
+        "hint": "izvršna vlast",
+        "id": "zrpzkb"
+      },
+      {
+        "sentence": "Ekonomska aktivnost temelji se na jednakosti proizvodnja = potrošnja = _______.",
+        "answer": "dohodak",
+        "hint": "treći pristup",
+        "id": "bwjfj8"
+      },
+      {
+        "sentence": "Turizma nema kao _______ ni na jednoj razini klasifikacije.",
+        "answer": "djelatnosti",
+        "hint": "kategorija u NKD-u",
+        "id": "161ekr"
+      },
+      {
+        "sentence": "Klasifikacija UN-a naziva se _______.",
+        "answer": "ISIC",
+        "hint": "međunarodna kratica",
+        "id": "plktoi"
+      }
+    ],
+    "learn": {
+      "title": "Nacionalno računovodstvo",
+      "content": "\n                <h3>Klasifikacija djelatnosti</h3>\n                <p>Svaka zemlja objavljuje <strong>nacionalnu klasifikaciju djelatnosti (NKD)</strong> prema kojoj se razvrstavaju pravne osobe (poduzeća), fizičke osobe (obrti) te tijela državne uprave i lokalne samouprave.</p>\n                <ul>\n                    <li><strong>NKD propisuje Vlada RH</strong>; metodologiju za primjenu vodi <strong>Državni zavod za statistiku</strong>.</li>\n                    <li><strong>ISIC</strong> — klasifikacija Ujedinjenih naroda (<em>International Standard Industrial Classification</em>).</li>\n                    <li><strong>NACE</strong> — klasifikacija Europske unije.</li>\n                </ul>\n                <p>Statističke klasifikacije nužno je na vrijeme revidirati; klasifikacija djelatnosti je <strong>normativna podloga službene statistike</strong>.</p>\n\n                <h4>Zašto turizam „ne postoji\" u klasifikaciji</h4>\n                <p>Djelatnost se definira <em>prema proizvođaču</em>, odnosno karakteristikama proizvoda. Zato <strong>turizma nema ni kao djelatnosti, ni kao sektora, ni na jednoj razini postojećih klasifikacija</strong> — ni u međunarodnim klasifikacijama nema turističke djelatnosti ni turističke potrošnje kao makroekonomske veličine reprodukcije.</p>\n                <p>Turizam <em>jest</em> gospodarska aktivnost — ali to definira samo njegov <strong>gospodarski karakter</strong>, ne i <strong>obuhvat</strong> u nacionalnom gospodarstvu. (Zato se doprinos turizma mjeri posebnim modelom — turističkom satelitskom bilancom.)</p>\n\n                <h4>Temeljna jednakost</h4>\n                <div class=\"formula-box\">\n                    UKUPNA PROIZVODNJA = UKUPNA POTROŠNJA = UKUPNI DOHODAK\n                </div>\n                <p>Ista se veličina (BDP) može mjeriti kroz proizvodnju, potrošnju ili dohodak — tri pristupa daju isti rezultat.</p>\n\n                <h4>Sektori gospodarstva</h4>\n                <p>Gospodarski sektor čine <strong>poduzeća</strong>, <strong>stanovništvo</strong> i <strong>vlada</strong>; u otvorenoj privredi pridružuje im se i <strong>inozemstvo</strong>.</p>\n            ",
+      "id": "0jxyhz"
+    },
+    "id": "6is1u9"
+  },
+  "macroModel": {
+    "name": "Makroekonomske škole i model",
+    "icon": "fa-scale-balanced",
+    "color": "#8b5cf6",
+    "flashcards": [
+      {
+        "question": "Tko je utemeljitelj klasičnog pristupa i koje je njegovo glavno djelo?",
+        "answer": "Adam Smith, otac ekonomske znanosti; djelo „Bogatstvo naroda\" iz 1776. Sljedbenici: Say, Ricardo, Malthus, Mill, Marshall, Pigou.",
+        "explanation": "„Nevidljiva ruka\" tržišta."
+      },
+      {
+        "question": "Što je temelj klasičnog pristupa?",
+        "answer": "Država ima ograničenu ulogu i ne treba se uključivati u tržišna pitanja — „nevidljiva ruka\" vodi tržište tako da pojedinci maksimiziraju društveno blagostanje.",
+        "explanation": "Cijene i plaće su fleksibilne."
+      },
+      {
+        "question": "Što kaže Sayov zakon?",
+        "answer": "Ponuda kreira vlastitu potražnju — njezino povećanje automatski povećava potražnju; ukupna kupovna moć jednaka je ukupnim dohocima i outputima.",
+        "explanation": "Nema viška ni manjka: puna zaposlenost i stabilne cijene."
+      },
+      {
+        "question": "Kako izgleda krivulja agregatne ponude kod klasičara?",
+        "answer": "Okomita je na razini pune zaposlenosti — output je uvijek jednak potencijalnom, pa makroekonomska politika ne može utjecati na output ni nezaposlenost.",
+        "explanation": "Politike mogu pomaknuti samo razinu cijena."
+      },
+      {
+        "question": "Tko je utemeljio kejnzijanski pristup i kada?",
+        "answer": "John Maynard Keynes, djelom „Opća teorija zaposlenosti, kamata i novca\" iz 1936., nakon krize 1930-ih.",
+        "explanation": "Kriza je pokazala nezaposlenost i BDP ispod potencijalnog."
+      },
+      {
+        "question": "Koja je temeljna paradigma kejnzijanskog pristupa?",
+        "answer": "Država makroekonomskom politikom treba utjecati na gospodarska kretanja i kreirati ih; plaće i cijene NISU fleksibilne pa krivulja AS nije okomita.",
+        "explanation": "Agregatna potražnja polazi od potrošnje i investicija."
+      },
+      {
+        "question": "Što ističe teorija ekonomike ponude?",
+        "answer": "Da je poticanje potražnje vodilo u inflaciju; treba poticati rast proizvodnje, prvenstveno smanjivanjem poreza, što potiče investicije i ponudu te snižava cijene.",
+        "explanation": "Odgovor na stagflaciju 1970-ih."
+      },
+      {
+        "question": "Što tvrdi teorija racionalnih očekivanja?",
+        "answer": "Da potrošači svoje ekonomske odluke donose na osnovi svih raspoloživih informacija.",
+        "explanation": "Zato sustavna politika gubi učinak."
+      }
+    ],
+    "quiz": [
+      {
+        "question": "„Bogatstvo naroda\" (1776.) napisao je:",
+        "options": [
+          "Keynes",
+          "Adam Smith",
+          "Ricardo",
+          "Pigou"
+        ],
+        "correct": 1,
+        "id": "3jdqx3"
+      },
+      {
+        "question": "Sayov zakon kaže da:",
+        "options": [
+          "potražnja kreira ponudu",
+          "ponuda kreira vlastitu potražnju",
+          "država kreira potražnju",
+          "cijene su nefleksibilne"
+        ],
+        "correct": 1,
+        "id": "f2yh1p"
+      },
+      {
+        "question": "Kod klasičara je krivulja agregatne ponude:",
+        "options": [
+          "vodoravna",
+          "okomita na razini pune zaposlenosti",
+          "negativnog nagiba",
+          "ne postoji"
+        ],
+        "correct": 1,
+        "id": "4duxtz"
+      },
+      {
+        "question": "„Opću teoriju zaposlenosti, kamata i novca\" (1936.) napisao je:",
+        "options": [
+          "Adam Smith",
+          "J. M. Keynes",
+          "Milton Friedman",
+          "David Ricardo"
+        ],
+        "correct": 1,
+        "id": "9gx1z0"
+      },
+      {
+        "question": "Prema Keynesu, država:",
+        "options": [
+          "se ne smije miješati u gospodarstvo",
+          "treba voditi makroekonomsku politiku",
+          "treba samo stabilizirati količinu novca",
+          "treba ukinuti poreze"
+        ],
+        "correct": 1,
+        "id": "e6290m"
+      },
+      {
+        "question": "Teorija koja predlaže poticanje proizvodnje smanjenjem poreza je:",
+        "options": [
+          "kejnzijanska",
+          "ekonomika ponude",
+          "klasična",
+          "teorija racionalnih očekivanja"
+        ],
+        "correct": 1,
+        "id": "3c8nso"
+      }
+    ],
+    "fillBlanks": [
+      {
+        "sentence": "Adam Smith je otac ekonomske znanosti i autor djela „_______ naroda\".",
+        "answer": "Bogatstvo",
+        "hint": "1776.",
+        "id": "kn571u"
+      },
+      {
+        "sentence": "Sayov zakon: _______ kreira vlastitu potražnju.",
+        "answer": "ponuda",
+        "hint": "strana proizvodnje",
+        "id": "9zd5nb"
+      },
+      {
+        "sentence": "Kod klasičara je krivulja agregatne ponude _______ na razini pune zaposlenosti.",
+        "answer": "okomita",
+        "hint": "vertikalna",
+        "id": "wyek8z"
+      },
+      {
+        "sentence": "Keynesovo glavno djelo objavljeno je _______. godine.",
+        "answer": "1936",
+        "hint": "nakon Velike krize",
+        "id": "kn24ed"
+      },
+      {
+        "sentence": "Teorija _______ očekivanja kaže da potrošači odlučuju na temelju svih informacija.",
+        "answer": "racionalnih",
+        "hint": "razumnih",
+        "id": "51pfod"
+      }
+    ],
+    "learn": {
+      "title": "Makroekonomske škole i model",
+      "content": "\n                <h3>Klasični pristup</h3>\n                <p><strong>Adam Smith</strong> — otac ekonomske znanosti; <em>„Bogatstvo naroda\"</em> (1776.). Sljedbenici: J. B. Say, David Ricardo, T. R. Malthus, J. S. Mill, A. Marshall, A. C. Pigou.</p>\n                <ul>\n                    <li>Država ima <strong>ograničenu ulogu</strong> i ne treba se uključivati u tržišna pitanja; <strong>„nevidljiva ruka\"</strong> vodi tržište.</li>\n                    <li><strong>Sayov zakon:</strong> ponuda kreira vlastitu potražnju — povećanje ponude automatski povećava potražnju. Ukupna kupovna moć jednaka je ukupnim dohocima i outputima → nema viška ni manjka, imamo punu zaposlenost i stabilne cijene.</li>\n                    <li>Cijene i plaće su <strong>fleksibilne</strong>, poremećaji kratkotrajni.</li>\n                    <li>Krivulja agregatne ponude je <strong>okomita</strong> na razini pune zaposlenosti; output je uvijek jednak potencijalnom.</li>\n                    <li>Makroekonomska politika <em>ne može</em> utjecati na output i nezaposlenost — fiskalna i monetarna politika pomiču samo agregatnu potražnju, dakle razinu cijena.</li>\n                    <li>U središtu je <strong>novac</strong>; država treba stabilizirati njegovu količinu, ostale politike nisu potrebne.</li>\n                </ul>\n\n                <h3>Kejnzijanski pristup</h3>\n                <p>Kriza 1930-ih pokazala je nezaposlenost i BDP znatno ispod potencijalnog. <strong>John Maynard Keynes</strong>, <em>„Opća teorija zaposlenosti, kamata i novca\"</em> (1936.).</p>\n                <ul>\n                    <li><strong>Temeljna paradigma:</strong> država makroekonomskom politikom treba utjecati na gospodarska kretanja i kreirati ih.</li>\n                    <li>Agregatna potražnja polazi od <strong>potrošnje i investicija</strong>.</li>\n                    <li>Plaće i cijene <strong>nisu fleksibilne</strong> → krivulja AS nije okomita, nego vodoravna ili pozitivnog nagiba.</li>\n                    <li>Output raste dok raste agregatna potražnja, tj. dok postoje neiskorišteni resursi; pad potražnje smanjuje BDP uz porast nezaposlenosti.</li>\n                    <li>Keynes podržava <strong>labavu fiskalnu</strong> i <strong>rigidnu monetarnu</strong> politiku.</li>\n                </ul>\n                <p>Teorija je bila dominantna do 1970-ih — tada nastupaju visoka nezaposlenost i visoka inflacija istodobno.</p>\n\n                <h3>Ostale škole</h3>\n                <div class=\"formula-box\">\n                    NEOKLASIČNA — rast počiva na čvrstoj monetarnoj politici i slobodnom tržištu<br>\n                    RACIONALNA OČEKIVANJA — odluke se donose na temelju svih raspoloživih informacija<br>\n                    EKONOMIKA PONUDE — poticati proizvodnju smanjenjem poreza (ne potražnju)<br>\n                    NOVA KEYNESIJANSKA — politika jednako radi na nezaposlenosti i inflaciji\n                </div>\n                <p>Osnovna zadaća agregatne makroekonomske analize je određivanje razine i promjene ekonomske aktivnosti cjelokupne privrede i razine cijena; instrument su joj <strong>agregatni makroekonomski modeli</strong>.</p>\n            ",
+      "id": "4bmnqa"
+    },
+    "id": "iyo9bn"
+  }
+};
+
+if (typeof window !== 'undefined') { window.macroeconomicsHrM1 = macroeconomicsHrM1; }
+if (typeof module !== 'undefined' && module.exports) { module.exports = macroeconomicsHrM1; }

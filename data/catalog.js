@@ -715,6 +715,41 @@ const SOKRAT_CATALOG = {
         },
         dataFormat: 'json' // F2 2A.4b (dual-read; study iz data/json/ebusiness-hr/*.json)
       }
+    },
+    {
+      id: 'macroeconomics-hr',
+      programId: 'hospitality-management-hr',
+      year: 1, semester: 2,
+      name: 'Makroekonomija',
+      shortName: 'MAKRO',
+      icon: 'fa-chart-area',
+      color: '#f59e0b',
+      iconGradient: ['#f59e0b', '#fbbf24'],
+      description: 'Makroekonomija (FMTU): temeljni pojmovi i ciljevi, BDP i mjerenje outputa, inflacija (CPI) i nezaposlenost, nacionalno računovodstvo (NKD) te makroekonomske škole i model; potom fiskalna politika i multiplikatori, porezi i njihovi učinci, monetarna makroekonomija i novac, otvorena ekonomija i platna bilanca te model otvorene privrede — kvantitativni predmet (KaTeX formule)',
+      storageKey: 'macroeconomics-hr-progress',
+      features: { blindMap: false, exercises: true },
+      lessons: [
+        { id: 'first-midterm', name: '1. kolokvij', description: 'Temeljni pojmovi makroekonomije, BDP i mjerenje outputa, inflacija (CPI) i nezaposlenost, nacionalno računovodstvo te makroekonomske škole i model' },
+        { id: 'second-midterm', name: '2. kolokvij', description: 'Fiskalna politika i multiplikatori, porezi i njihovi učinci, monetarna makroekonomija i novac, otvorena ekonomija i platna bilanca te model otvorene privrede' },
+        { id: 'final', name: 'Završni ispit', description: 'Sve teme (oba kolokvija) plus ispitna pitanja kroz sve teme' }
+      ],
+      content: {
+        // data/macroeconomics-hr/final.js MORA se učitati zadnji (Object.assign M1 + M2 + examPractice)
+        scripts: [
+          'data/macroeconomics-hr/midterm-1.js',
+          'data/macroeconomics-hr/midterm-2.js',
+          'data/macroeconomics-hr/final.js',
+          'data/macroeconomics-hr/exercises.js'
+        ],
+        resolve: {
+          'first-midterm': 'macroeconomicsHrM1',
+          'second-midterm': 'macroeconomicsHrM2',
+          'final': 'macroeconomicsHrFinal'
+        },
+        dataFormat: 'json', // F2 2A.4b (dual-read; study iz data/json/macroeconomics-hr/*.json)
+        codeScripts: ['data/macroeconomics-hr/exercises.js'], // KOD (generate()) -> uvijek iz datoteke, nikad iz baze (BUG-012)
+        exercises: 'macroeconomicsHrExercises'
+      }
     }
   ]
 };
