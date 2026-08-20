@@ -5,6 +5,82 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-20 (OPUS) — **CRVENI ALARM: telefon. Sesija BEZ IJEDNE izmjene koda — samo mjerenje i plan**
+
+> Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po
+> ciglu u ovoj sesiji, ovo je crveni alarm."* Pa: *„Sada nećeš ništa raditi nego ćeš
+> analizirat."* Ova sesija zato **ne dira ni jedan `.js`, `.css` ni `.html`** — samo mjeri,
+> presuđuje smjer i zapisuje ga. Puni plan: **spec §9**.
+
+### Što je izmjereno (pravi Chromium, 393 × 852, produkcija naspram grane)
+
+| mjera | produkcija | grana |
+|---|---|---|
+| `.browse-header` | **270 px** (32 % ekrana) | 102 px |
+| naziv fakulteta (65 znakova) | **14 redaka**, stupac 103 px | 3 retka |
+| naslov razine | odrezan na **34 od 205 px** → „C…" | cijel |
+| pomak kad `--safe-top` = 59 px | **0 px — ništa** | sve za 59 |
+| „Start studying" | **y = 18 px** (otok ~59) | ispod trake |
+| landing JS | — | **744,6 KiB / 41 skripta / 38 bez `defer` / 238,2 KiB (32 %) editorsko** |
+
+→ **BUG-030** (naslov) i **BUG-031** (sigurna zona), oba **otvorena**, oba na produkciji.
+
+### Nalaz koji objašnjava kako je do ovoga došlo neopaženo
+
+**Telefon kao STRANICA nikad nije bio mjerena površina.** axe mjeri na **1280 px** ·
+`css:diff` uspoređuje nas **sa samima sobom** (hvata promjenu, ne lošoću — ravnomjerno loše
+stanje mu je savršeno stabilno) · K3 i K4a mjere **kromo**, ne sadržaj. Stranica je zato
+smjela biti neupotrebljiva na 393 px uz **desetak zelenih gateova**. Isti obrazac kao §7.9
+(boja), §7.10 (teme), §7.11 (širina) — **četvrta os iste rupe.** Zato faza počinje **mjeračem
+(T0)**, ne popravkom.
+
+### Metoda koja je bila nova i ostaje
+
+`env(safe-area-inset-top)` se u Chromiumu **ne da simulirati** — ali `--safe-top` je **naša
+varijabla iznad njega**. Postavi je na 59 px i **što se ne pomakne, na pravom telefonu stoji
+ispod otoka**. Time je sigurna zona prvi put uopće izmjerena, umjesto procijenjena.
+
+### Vježbe — tvrdnja koju je mjerenje oborilo
+
+Učitao sam svih pet packova (ne grep — v. dolje): **234 vježbe, 151 (65 %) čisti PODATAK**,
+83 imaju funkciju i to **uvijek istu jednu, `generate(p)`**. Presudno: **`params` su već
+deklarirani kao podatak u svih 83** — od deset ključeva vježbe **devet je već shema**, kôd je
+samo **formula**. *Shema je od prvog dana bila deklarativna i nitko to nije primijetio.*
+**Smjer: RECEPTI** — formula seli u imenovanu, verzioniranu knjižnicu, vježba postaje **100 %
+podatak**, `BUG-012` se smije umiroviti. Odbačeni: evaluator izraza (novi jezik, 93 %) i
+sandbox za korisnički JS (ruši ADR-018; **tuđi `generate` bi odlučivao o ocjeni**).
+**Radi se TEK nakon cijelog frontenda** (Leonova odluka). Detalji: §9.5.
+
+### Dvije moje greške u mjerenju, obje istog razreda
+
+1. **Regex je slagao dvaput.** `t\(` je uhvatio `createElement('div')` i dao lažni nalaz da su
+   editorske datoteke prevedene (bile su na **nuli** `t()`); `generate` je hvatao komentare i
+   dao krive omjere. Oba puta me spasilo **stvarno učitavanje objekata u `vm`**, ne bolji
+   uzorak. *Statička pretraga nad kodom nije mjerenje koda.*
+2. **Prva hipoteza o Dynamic Islandu bila je kriva i dala se oboriti u jednoj naredbi** —
+   pretpostavio sam da `--safe-top` nije definiran pa `calc()` pada; jest definiran
+   (`css/variables.css`, i u bundleu). Uzrok je bio drugdje. *Uvjerljiv mehanizam nije dokaz.*
+
+### Odluke koje su ušle u dokumente
+
+**Leon:** ① **ništa na produkciju dok cijeli frontend ne bude riješen** · ② **broj commita
+izvan produkcije NIJE nalaz i ne spominje se** (izričita korekcija mene; povod je raniji
+deploy koji se nije trebao dogoditi) · ③ **`#topbarMaterials` van iz trake** (*„na landingu je
+i na profilu i to je DOVOLJNO"*) · ④ **korisnik bira što skida** za offline i to mu stoji u
+posebnom sučelju · ⑤ **vježbe tek nakon frontenda**.
+
+**Moje, uz obrazloženje:** **K4 se utapa u P2** (ista pločica, isti ekran — odvojeno bi se
+pisalo dvaput) · **POLICA nije nova površina nego punjenje prazne** (BACKLOG **N2** je bila
+želja bez sadržaja; skidanje je točno njezin sadržaj) · **T6 nije čišćenje nego preduvjet
+POLICE** (offline ljuska ne smije nositi editor koji offline student nikad ne otvori).
+
+### Gate
+
+`check:docs` · `check:state` · `preflight`. **Nijedan test nije trebao trčati** — nije
+promijenjen nijedan izvršni redak.
+
+---
+
 ## 2026-08-19 (OPUS, c) — **K4a: Studio na telefonu · rez ide po MODU, ne po širini**
 
 > Leon, uz snimku: *„zbog toga ne možeš ništa raditi na telefonu u editoru, apsolutno

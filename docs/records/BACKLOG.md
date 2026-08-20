@@ -3,6 +3,28 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## 🔥🔥 CRVENI ALARM — TELEFON (Leon na iPhoneu 16, 2026-08-19/20)
+
+> **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
+> [`FRONTEND_REDIZAJN.md` §9](../plan/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza
+> „POLICA" (P1–P4), obje PRIJE C4.** Ovdje ostaje samo nalaz; što se radi piše u specu.
+
+Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po ciglu,
+ovo je crveni alarm."* Izmjereno na 393 × 852: zaglavlje kataloga **270 px**, naziv fakulteta
+u **14 redaka**, naslov odrezan na **34 od 205 px**, „Start studying" na **y = 18 px** (ispod
+otoka), kromo **32 %** ekrana, cookie-banner još **24 %**. → **BUG-030**, **BUG-031**.
+
+**Zašto je svih desetak gateova zeleno:** axe mjeri na **1280 px**, `css:diff` uspoređuje nas
+sa samima sobom (drift, ne lošoća), a K3/K4a mjere **kromo, ne stranicu**. **Telefon kao
+STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0), ne popravkom.
+
+**Dvije trajne Leonove odluke iz iste sesije:**
+1. **Ništa ne ide na produkciju dok cijeli frontend ne bude riješen.**
+2. **Broj commita izvan produkcije NIJE nalaz i ne spominje se** (*„ZNAM KADA ZELIM PUSTIT
+   NESTO NA PRODUKCIJU"*; povod: raniji deploy koji se nije trebao dogoditi).
+
+---
+
 ## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)
 
 > **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
@@ -45,9 +67,16 @@ Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban p
   dohvatljiva bar jedna druga odredišna stranica u jednom kliku. Bez toga se petlja
   može vratiti neopaženo — kao što je i nastala.
 
-### N2 · Osobna početna — „predmeti koje učim"
+### N2 · Osobna početna — „predmeti koje učim" → **RAZRAĐENO 2026-08-20 kao faza „POLICA"**
 Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu. **Danas takva
 stranica ne postoji.** Ovo je mogućnost, ne kvar.
+
+> **Dobila je sadržaj koji joj je nedostajao.** Leon je 2026-08-20 tražio da korisnik **bira
+> što će skinuti** za učenje offline — a to je točno ono što N2 prikazuje. Polica time ima
+> **dvije vrste stvari: što je korisnik napisao i što je skinuo.** Ne gradi se nova površina
+> nego se puni ona koja je bila planirana i prazna. Cigle P1–P4 u
+> [`FRONTEND_REDIZAJN.md` §9.4](../plan/FRONTEND_REDIZAJN.md); **K4 se u P2 utapa** (ista
+> pločica, isti ekran — odvojeno bi se pisalo dvaput).
 
 ### N3 · Moji materijali u prikazu kvalitete kataloga
 Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Leon traži da vlastito
@@ -278,6 +307,36 @@ odlučiti opseg**, jer je danas neodređen: je li to prolaz kroz tokene i razmak
 interakcije (unos odgovora, provjera, koraci rješenja). ⚠️ **Granica se ne pomiče:** izgled se smije
 mijenjati, `generate()`/`answer()`/`type` **ne**.
 
+> ### ⚠️ 2026-08-20 — „VJEŽBE SU KÔD" JE OBORENO MJERENJEM (smjer: **RECEPTI**)
+>
+> Puni zapis: [`FRONTEND_REDIZAJN.md` §9.5](../plan/FRONTEND_REDIZAJN.md). **Radi se TEK nakon
+> cijelog frontenda** (Leon, 2026-08-20) — ovdje stoji samo da se sljedeća sesija ne vrati na
+> početak.
+>
+> Učitano svih pet packova: **234 vježbe — 151 (65 %) je čisti PODATAK**, samo **83 (35 %)**
+> ima funkciju, i to **uvijek istu jednu: `generate(p)`**. Presudno: **`params` su već
+> deklarirani kao podatak u svih 83, bez iznimke** — od deset ključeva vježbe **devet je već
+> shema**, kôd je samo **formula**. *Shema je od prvog dana bila deklarativna i nitko to nije
+> primijetio.*
+>
+> **Smjer:** formula ne briše se i ne prevodi u novi jezik nego **seli iz vježbe u imenovanu,
+> verzioniranu knjižnicu recepata** (`recipe: 'sample-sd'`). Time vježba postaje **100 %
+> podatak** → baza, JSON, `publish_document`, skidanje, MCP, editor — **bez ijedne iznimke**, a
+> **BUG-012 se smije umiroviti**. Migracija je **samoprovjerljiva**: starih 83 generatora
+> ostaju proročište (isti parametri → identičan izlaz).
+>
+> **Odbačeno i zašto:** evaluator izraza (traži da napišem i osiguram parser, a pokriva 93 %
+> umjesto 100 %) · sandbox za korisnički JS (ruši ADR-018 u korijenu; prava cijena nije sandbox
+> nego to da **tuđi `generate` odlučuje o ocjeni**).
+>
+> **Dvije stvari protiv, obje u dizajn od prvog dana:** recept je **dijeljena ovisnost** (mijenja
+> sve vježbe koje ga koriste → imenovan, verzioniran, dodaje se a ne mijenja) · **ne zna se
+> koliko ih je** (83 generatora → 20? 40?) — **to je jedina brojka koja odlučuje o cijeni** i
+> mjeri se prije obveze.
+>
+> **Pouka (treći put ista):** *agregatna brojka mjeri točno, a savjetuje krivo.* „Vježbe su kôd"
+> bilo je istinito za **7 %**, a blokiralo je odluku o svih 100 %.
+
 ---
 
 ## ➖ „Akademsko plavo" i „Papir" izgledaju isto — tema nije temperatura sivih — 2026-08-14
@@ -428,6 +487,13 @@ editorsko (`studio` · `block-editor` · `block-editor-media` · `admin` · `adm
 Nijedna cigla je nije pogoršala namjerno; rasla je kao nusprodukt K1/K2a/K2b i cigli landinga.
 *Stavka bez gatea ne stoji na mjestu nego klizi* — zato je „JS-budžet landinga kao gate" u §8.5
 zapisan kao posao koji ne ovisi ni o jednoj cigli i može se ubaciti kad god.
+
+**📏 PREMJERENO PONOVNO 2026-08-20: 744,6 KiB u 41 skripti · 38 bez `defer` · 238,2 KiB (32 %)
+editorsko u 6 datoteka.** Putanja je time **691 → 728 → 744,6** — brojka **nijednom nije pala**,
+i to bez ijedne namjerne izmjene. Budžet koji si je projekt sam zadao je 200 KB → **3,7×**.
+**Dobila je mjesto: cigla T6** ([§9.3](../plan/FRONTEND_REDIZAJN.md)), i ondje **nije čišćenje
+nego preduvjet faze „POLICA"** — offline ljuska ne smije nositi editor koji offline student
+nikad ne otvori.
 
 **Zašto je ovo nalaz, a ne mišljenje:** projekt si je u ovom istom dokumentu (sekcija „Brutalan
 bar", #1) zadao budžet **„JS ≤ ~200 KB"** i označio ga 🔥 *„Blokada, ne upozorenje."* Gate nikad

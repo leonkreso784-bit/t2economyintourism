@@ -1704,3 +1704,192 @@ sprječava ponavljanje; sprječava ga mjerenje.*
 **treći (stolno računalo) pada mehanički** — `#stTreeAside` je id koji uvodi baš ova cigla,
 pa na starijem kodu ne može proći. On čuva od regresije koju bih *ja* mogao uvesti, ne od
 zatečenog kvara.
+
+---
+
+## 9 · CRVENI ALARM — „TELEFON" i „POLICA" (Leon na iPhoneu 16, 2026-08-19/20)
+
+> **Leon je zaustavio tempo cigli:** *„puca mi kurac za cigla po ciglu u ovoj sesiji, ovo je
+> crveni alarm koji se treba rijesiti."* Uz to dvije tvrde odluke koje vrijede od sada:
+> **① ništa ne ide na produkciju dok cijeli frontend ne bude riješen** · **② broj commita
+> izvan produkcije NIJE nalaz i ne spominje se** (*„ZNAM KADA ZELIM PUSTIT NESTO NA
+> PRODUKCIJU"*; povod je raniji deploy koji se nije trebao dogoditi).
+>
+> Ova sekcija **ne poništava §8** — K1, K2a, K2b, K3 i K4a su isporučeni i stoje. Mijenja se
+> **što dolazi iza njih**: prije C4 ulaze dvije nove faze, a K4 se u jednu od njih utapa.
+
+### 9.1 Mjerenje — produkcija naspram grane, iPhone 16 (393 × 852)
+
+Mjereno u pravom Chromiumu, obje mete istim skriptom, isti dan.
+
+| mjera | **produkcija** | grana |
+|---|---|---|
+| zaglavlje kataloga (`.browse-header`) | **270 px** | 102 px |
+| naziv fakulteta (65 znakova) lomi se u | **14 redaka**, stupac 103 px | 3 retka |
+| naslov „Choose your program" | odrezan na **34 od 205 px** → „C…" | cijel |
+| pomak kad `--safe-top` = 59 px | **0 px — ništa se ne pomakne** | sve za 59 |
+| „Start studying" | **y = 18 px** (otok je ~59) | ispod trake |
+| kromo prije prvog sadržaja | 270 px = **32 %** ekrana | 210 px = **25 %** |
+| cookie-banner | **~490 px = 24 %** ekrana pri prvom posjetu | isto |
+
+⚠️ **Metoda vrijedi i ubuduće:** `env(safe-area-inset-top)` se u Chromiumu ne da simulirati,
+ali `--safe-top` je **naša varijabla iznad njega** — postavi je na 59 px i **što se ne pomakne,
+to na pravom telefonu stoji ispod otoka.** Ovo je prvi put da smo sigurnu zonu uopće izmjerili.
+
+### 9.2 Dijagnoza — nisu četiri kvara nego jedan korijen
+
+**① Naziv fakulteta.** Mrvica ispisuje **puno pravno ime** („FMTU – Fakultet za menadžment u
+turizmu i ugostiteljstvu, Opatija") u flex-dijete s `min-width: 0`, **bez `nowrap` i bez
+kraćenja**. Susjedni naslov `nowrap + ellipsis` **ima**. Oba su pravila sama po sebi ispravna —
+**kvar je u kombinaciji**: ime naraste u stupac, naslov se zbije u „C…". → **BUG-030**.
+
+**② Sigurna zona.** `viewport-fit=cover` **jest** postavljen, dakle stranica se **namjerno**
+crta ispod otoka — a `css/landing.css` spominje `env(safe-area-inset-*)` **nula puta**. Ušli
+smo u nesigurnu zonu i nismo je nadoknadili. → **BUG-031**.
+
+**③ Grana je ① popravila slučajno, ne namjerno.** 102 px umjesto 270 samo zato što je K2b
+maknuo gumbe iz tog zaglavlja. Korijen stoji netaknut, a usput je nastao **duplikat: mrvica
+gore piše „Subjects", zaglavlje ispod ponavlja fakultet** — dva naslova na jednom ekranu.
+
+#### ⚠️ Zašto je svih desetak gateova zeleno
+
+Ovo je najvažniji nalaz sekcije, jer objašnjava kako je stanje postalo ovakvo neopaženo:
+
+- **axe mjeri na 1280 px.** Telefon ne posjeti.
+- **`css:diff` uspoređuje nas sa samima sobom.** Hvata *promjenu*, ne *lošoću* — ravnomjerno
+  loše stanje mu je savršeno stabilno.
+- **K3 i K4a mjere KROMO** (trake, dohvatljivost kontrola), **ne stranicu**.
+
+Dakle stranica smije biti neupotrebljiva na 393 px, a nijedan gate to **po konstrukciji** ne
+može reći. Isti obrazac koji je projekt već zapisao tri puta (§7.9 boja · §7.10 teme · §7.11
+širina), samo na četvrtoj osi. **Telefon kao STRANICA nikad nije bio mjerena površina.**
+
+### 9.3 Faza „TELEFON" — cigle
+
+**Kriterij faze: na iPhoneu 16 aplikacija radi kako treba.**
+
+| # | cigla | gotovo kad korisnik… |
+|---|---|---|
+| **T0** | **Mjerač — prvi, i sve visi o njemu.** Brana koja mjeri **stranicu**, ne kromo: 320 / 393 / 430 px, s otokom simuliranim na 59 px. Pet tvrdnji: ① ništa interaktivno u gornjih 59 px · ② kromo ≤ 20 % ekrana · ③ nijedan tekst u flex-retku se ne lomi preko 2 retka **dok mu susjed ima kraćenje** · ④ bar jedan upotrebljiv element vidljiv bez skrola · ⑤ nijedno zaglavlje razine preko jednog retka. **Obilazi i četiri načina učenja** — Leon ih je ocijenio kao „čine se ok", pa brana to pretvara u brojku bez ijedne dodatne cigle. | …na telefonu ne naiđe ni na jedan ekran koji brana ne posjećuje; brana **crveni na zatečenom stanju** (dokazano: tvrdnje ①③⑤ padaju s izmjerenim brojkama) |
+| **T1** | **Sigurna zona kao pravilo** — svih devet stranica, obje orijentacije. Danas to poštuje 7 datoteka, landing nijedna. | …drži iPhone s otokom i nijedan gumb ni slovo ne stoji ispod njega |
+| **T2** | **Jedan naslov po ekranu.** Fakultet dobiva **kratko ime** u `catalog.js` (puno pravno ime nije mrvica); zaglavlje kataloga se **spaja s mrvicom** jer govore isto; kraćenje u flex-retku postaje pravilo, ne pojedinačna zakrpa. Ovdje izlazi i **`#topbarMaterials`** iz trake (v. 9.6). | …na 393 px pročita naziv razine u cijelosti, a zaglavlje mu ne pojede ekran |
+| **T3** | **Vertikalni budžet kroma ≤ 20 %** | …na telefonu vidi sadržaj, a ne tri trake |
+| **T4** | **Cookie-banner na telefonu** — danas 24 % ekrana | …pri prvom posjetu vidi i ponudu i stranicu |
+| **T5** | **Tipografija i prostor na telefonu** — naslov danas lomi žuti isticaj nasred fraze („four" na kraju retka, „ways" na početku sljedećeg), podnaslov je 5 redaka, prije skrola se vide **jedna** vrata | …na prvom ekranu dobije razlog, ne samo naslov |
+| **T6** | **Editor s posjetiteljeva puta.** Izmjereno: **744,6 KiB u 41 skripti, 38 bez `defer`**, od toga **238,2 KiB (32 %) editorsko** u 6 datoteka. Vlastiti budžet projekta je 200 KB → **3,7×**. Uvjetno učitavanje + budžet kao gate. | …bez računa otvori landing i ne preuzme editor koji nikad neće vidjeti |
+
+> **T6 nije čišćenje nego preduvjet faze „POLICA"** — offline ljuska ne smije nositi editor
+> koji offline student nikad ne otvori. Zato je zadnji u TELEFONU, a ne izdvojen „kad god".
+
+### 9.4 Faza „POLICA" — skini što učiš (Leon, 2026-08-20)
+
+Leon: *„ja bi stavio da korisnik moze birat sta zeli skinut od sadrzaja za ucenje i onda mu
+bude u posebnom sucelju spremljeno da moze uciti."*
+
+**Kreativna jezgra nije u mehanici nego u tome gdje to sjeda: ne gradimo novu površinu nego
+punimo onu koja je već planirana i prazna.** U `BACKLOG.md` stoji **N2 „osobna početna —
+predmeti koje učim"**, zapisana kao želja i nikad dizajnirana. Skidanje je točno njezin sadržaj.
+
+Korisnikov prostor time ima **dvije vrste stvari: što je napisao i što je skinuo**, a skidanje
+je jedna rečenica: *„stavi mi na policu i drži dostupnim bez mreže."* „Moji materijali" prestaju
+biti mapa s tuđim imenom i postaju **ono što učim** — što je usput pravi odgovor na Leonovu
+raniju primjedbu o vrtnji u krug između police i editora.
+
+| # | cigla | gotovo kad korisnik… |
+|---|---|---|
+| **P1** | **Što se skida.** Podatak: lekcije su JSON. ⚠️ Predmet s vježbama mora povući **i pack i svoju biblioteku** (`stat-lib.js`), inače se skine predmet koji offline ne radi cijel. Po predmetu: veličina, datum, „ukloni". | …vidi koliko predmet zauzima prije nego ga skine i može ga ukloniti |
+| **P2** | **Gdje živi.** Jedna polica, dva izvora (moje / skinuto), isti prikaz pločice s napretkom. **Ovdje se utapa K4** (v. 9.6). | …na jednom mjestu vidi sve što uči, bez obzira odakle je došlo |
+| **P3** | **Pravilo u SW-u.** Skinuti predmet ide **cache-first**, odvojeno od općeg stale-while-revalidate. Danas SW precachea točno 4 datoteke (`/`, `index.html`, bundle, manifest) — „editor je u offlineu" zapravo znači da `index.html` povuče sve. | …u zrakoplovnom načinu otvori skinuti predmet i on se otvori |
+| **P4** | **Napredak.** **Već radi** offline-first (`cloud-sync`, unija/max) — ne gradi se iznova, samo se dokazuje testom. | …uči offline i po povratku mreže mu se napredak spoji bez gubitka |
+
+**Kriterij faze:** korisnik u zrakoplovnom načinu otvori skinuti predmet, odradi sva četiri
+načina, i po povratku mreže se napredak spoji bez gubitka.
+
+### 9.5 Vježbe — smjer „RECEPTI" (zapisano 2026-08-20, **radi se TEK nakon frontenda**)
+
+Leon: *„ja bi excercises zavrsio nakon sta cijeli frontend popravimo i da pripremimo sve
+savrseno."* Dakle ovdje se **ne planira cigla nego se zaključava smjer**, da se sljedeća sesija
+ne vrati na početak.
+
+#### ⚠️ Tvrdnja koju je mjerenje oborilo
+
+Projekt je nosio — u memoriji i u obrazloženju ADR-018 — rečenicu *„vježbe su KÔD, nisu
+UGC-abilne."* Izmjereno učitavanjem svih pet packova:
+
+```
+234 vježbe ukupno
+  151  (65 %)  čisti PODATAK — nijedne funkcije
+   83  (35 %)  imaju točno JEDNU funkciju: generate(p)
+```
+
+A tih 83 nisu raznorodna: **67 (81 %)** je sama aritmetika nad parametrima + sastavljanje
+teksta, **4 (5 %)** ima petlju/`reduce`, **12 (14 %)** zove `StatLib` (z/t tablice,
+kombinatorika). Svaka je **čista funkcija** — primi brojeve, vrati `{prompt, fields}`. Nema
+DOM-a, stanja ni I/O, i **nema nijedne druge vrste funkcije u cijelom katalogu.**
+
+**Presudni nalaz:** randomizirana vježba ima **deset ključeva, od kojih je devet već podatak**:
+
+```
+id · lesson · chapter · type · title · prompt · difficulty · params · solution   ← PODATAK
+generate                                                                        ← KÔD
+```
+
+`params` su **već deklarirani kao podatak, u svih 83 bez ijedne iznimke**
+(`{a:{min:2,max:18,step:1}, …}`). **Shema je od prvog dana bila deklarativna i nitko to nije
+primijetio.** Jedino što je kôd je **formula**.
+
+#### Smjer: kôd se ne briše i ne prevodi — SELI iz vježbe u knjižnicu
+
+Formule su per-vježba, ali ono što računaju **nije**: „prosjek, varijanca i SD od pet brojeva"
+je **oblik zadatka**, ne svojstvo vježbe. Zato:
+
+```
+// bilo (83 puta, svaka svoju kopiju)
+{ id:'t2-sd-random', params:{…}, generate(p){ …aritmetika… } }
+
+// biva
+{ id:'t2-sd-random', params:{…}, recipe:'sample-sd' }
+```
+
+| zašto je to bolje od alternativa | |
+|---|---|
+| **Vježba postaje 100 % podatak** — ne 65 %, ne 93 % | ide u bazu, JSON, kroz `publish_document`, u skidanje, u MCP, u editor — **bez ijedne iznimke i bez drugog puta**. **BUG-012 se time smije umiroviti**: stvar koja nije preživljavala serijalizaciju više ne postoji. |
+| **Nema novog jezika** | odbačena je ideja evaluatora izraza (parser koji bih morao napisati i osigurati). Recepti su **naš obični JavaScript**, napisan i testiran **jednom**, umjesto 83 kopije aritmetike. |
+| **Pokriva 100 %, ne 93 %** | onih 12 sa `StatLib` i 4 s petljama bile su iznimka samo dok je kôd morao stati u vježbu. Recept **smije** zvati `StatLib` — on je naš. |
+| **Migracija se sama provjerava** | starih 83 generatora ostaju **proročište**: stari `generate` i novi `recipe` preko istih parametara kroz N seedova moraju dati **identičan izlaz**. Mehanički dokaz, ne pregled okom. |
+| **Za korisnika je izbornik, ne programiranje** | autor bira oblik zadatka i upiše raspone; njegov AI kroz MCP isto — **a proizvodi podatak, ne kôd**. |
+
+#### Posljedica za ADR-030 (zapisati kad se smjer izvede, ne prije)
+
+ADR-030 kaže **„vježbe izvan MCP-a"**, a taj je zid podignut **jer je vježba bila kôd**.
+Prestane li biti, zid se smije pomaknuti **bez ijednog popuštanja u ADR-018** (student i dalje
+šalje podatak, nikad kôd). To je odluka za onaj trenutak, ne za sada.
+
+#### ⚠️ Dvije stvari protiv, obje moraju u dizajn od prvog dana
+
+1. **Recept je DIJELJENA ovisnost.** Promijeniš recept — promijenio si svaku vježbu koja ga
+   koristi, uključujući tuđe. Danas je svaka vježba sama svoja, pa te vrste rizika nema.
+   Pravilo: recepti su **imenovani i verzionirani, i ne mijenjaju se nego dodaju.**
+2. **Ne zna se koliko ih ima.** 83 generatora → možda 20, možda 40 recepata. **To je jedina
+   brojka koja odlučuje o cijeni** i mjeri se grupiranjem po tome što računaju — **prije**
+   nego se itko obveže na opseg.
+
+**Ostaje netaknuto:** engine (7 tipova) se ne mijenja za sadržaj · vježbe ostaju admin-domena
+dok se recepti ne izvedu · `journal` (2 vježbe, dvojno knjigovodstvo) je najizgledniji kandidat
+da ostane iznimka.
+
+### 9.6 Odluke ove sesije koje mijenjaju zatečeni plan
+
+1. **`#topbarMaterials` izlazi iz trake** (Leon: *„taj gumb je na landingu i na profilu i to je
+   DOVOLJNO"*, pogotovo na telefonu). Ostaje **5 ulaza**: landing ×4 (vrata, `own-cta`,
+   podnožje, ＋ pločica) + profil ×1. ⚠️ **Cijena koja mora biti izrečena:** iz *unutrašnjosti*
+   aplikacije (katalog, lekcija, učenje, editor) tada nema ulaza u vlastite materijale — ide se
+   preko landinga ili profila. Isti kompromis kao kod „Predmeta".
+2. **K4 se ne radi zasebno — utapa se u P2.** „Moji materijali u kvaliteti kataloga" i „jedna
+   polica, dva izvora" su isti ekran; raditi ih odvojeno znači isti prikaz napisati dvaput.
+3. **K5 (editor dvojezično) ostaje u redu čekanja** — nije telefonski i ne blokira ništa.
+   Premjereno stanje stoji u §8.3 i nije se promijenilo.
+4. **A1+A0 (Google-prijava + prepravak dijaloga) — redoslijed još nije presuđen** (Leon:
+   *„ne znam jos, to cemo se dogovorit"*). Ne planirati ga ni prije ni poslije dok ne kaže.
+5. **Vježbe idu TEK nakon cijelog frontenda** — v. 9.5.
+

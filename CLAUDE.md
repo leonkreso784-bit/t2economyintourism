@@ -84,9 +84,43 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 
 ## Stanje — TRENUTNO (2026-08-18)
 
-> **🔵 TEKUĆA FAZA = „KOSTUR" — navigacija prije kozmetike.** Puna specifikacija:
-> `docs/plan/FRONTEND_REDIZAJN.md` **§8**. Ubačena **između C3 i C4** (Leon, 2026-08-18),
-> po presedanu C0-a: informacijska arhitektura prije kozmetike.
+> **🔴 CRVENI ALARM — TELEFON (Leon na iPhoneu 16, 2026-08-19/20). OVO JE SADA TEKUĆI POSAO.**
+> Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po ciglu."*
+> Puna specifikacija: **`docs/plan/FRONTEND_REDIZAJN.md` §9**. Prije C4 ulaze **dvije nove faze**:
+>
+> | | |
+> |---|---|
+> | **TELEFON** | **T0 mjerač** (prvi — mjeri STRANICU, ne kromo) · T1 sigurna zona · T2 jedan naslov po ekranu (**tu `#topbarMaterials` izlazi iz trake**) · T3 budžet kroma ≤20 % · T4 cookie-banner · T5 tipografija · **T6 editor s posjetiteljeva puta** |
+> | **POLICA** | P1 što se skida · P2 gdje živi (**K4 se OVDJE utapa**) · P3 SW cache-first · P4 napredak offline |
+> | **tek onda** | C4 → C5a → C5b → C6 → C7 |
+>
+> **Izmjereno na 393 × 852 (produkcija):** zaglavlje kataloga **270 px** · naziv fakulteta u
+> **14 redaka** · naslov odrezan na **34 od 205 px** · „Start studying" na **y = 18 px** dok je
+> otok 59 · kromo **32 %** ekrana · cookie-banner još **24 %** · landing **744,6 KiB u 41
+> skripti, 238 KiB editorsko**. → **BUG-030** i **BUG-031**, oba **otvorena**.
+> **⚠️ Korijen je JEDAN: telefon kao STRANICA nikad nije bio mjerena površina** — axe mjeri na
+> **1280 px**, `css:diff` uspoređuje nas **sa samima sobom** (drift, ne lošoća), a K3/K4a mjere
+> **kromo**. Zato faza počinje **mjeračem**, ne popravkom. *Sigurna zona se ipak DA izmjeriti:
+> `env()` se ne da simulirati, ali `--safe-top` je naša varijabla iznad njega — postavi je na
+> 59 px i **što se ne pomakne, stoji ispod otoka**.*
+>
+> **🔒 DVIJE TVRDE ODLUKE (Leon, 2026-08-19):** ① **ništa ne ide na produkciju dok cijeli
+> frontend ne bude riješen** · ② **broj commita izvan produkcije NIJE nalaz i NE SPOMINJE SE**
+> (*„ZNAM KADA ZELIM PUSTIT NESTO NA PRODUKCIJU"*; povod: raniji deploy koji se nije trebao
+> dogoditi). Pravilo #2 (izričit OK za `main`) time dobiva dopunu: ne samo da se ne smije
+> pushati bez OK-a, nego se na to ne smije ni **nagovarati**. [[leon-decides-deploys]]
+>
+> **🧪 VJEŽBE — smjer je zaključan, radi se TEK nakon frontenda** (§9.5). Tvrdnja *„vježbe su
+> KÔD"* je **oborena mjerenjem**: od 234 vježbe **151 (65 %) je čisti podatak**, a `params` su
+> **već deklarirani kao podatak u svih 83** koje imaju funkciju — od deset ključeva vježbe
+> **devet je već shema**, kôd je samo **formula**. Smjer: formula **seli iz vježbe u imenovanu,
+> verzioniranu knjižnicu recepata** (`recipe:'sample-sd'`) → vježba postaje **100 % podatak** i
+> **BUG-012 se smije umiroviti**. Odbačeni: evaluator izraza (novi jezik, 93 % umjesto 100 %) i
+> sandbox za korisnički JS (ruši ADR-018; tuđi `generate` bi odlučivao o **ocjeni**).
+> [[exercises-code-vs-data]]
+>
+> ⬇️ **Faza „KOSTUR" je isporučila K1 · K2a · K2b · K3 · K4a i tu STALA** — ostaje kao povijest;
+> spec **§8**. Ubačena je bila **između C3 i C4** (Leon, 2026-08-18), po presedanu C0-a.
 > **✅ K1 (rute) JE GOTOV** — §8.6; devet stranica ima devet adresa, `css:diff` 0/3498.
 > **✅ K2a (jedan model vraćanja) JE GOTOV** — §8.7; `goBack()` = povijest, inače
 > `roditeljOd()` koji zna OBJE hijerarhije. Zatvara **BUG-026** i **BUG-027**.
@@ -124,9 +158,18 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **🔵 SLJEDEĆA CIGLA = K4 (ostatak)** — materijali u kvaliteti kataloga. Zatim **K5** editor dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva
 > nedostaje, a `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu
 > djelomično prevedeni nego uopće nisu spojeni na i18n).
-> Iza faze ide **A1 Google-prijava** — koja od 2026-08-19 nosi i **prepravak dijaloga
-> prijave** (BACKLOG **A0**): današnji `#authModal` je građen za jedan put, a OAuth-gumbi su
-> primarni i idu IZNAD e-maila, pa se to radi zajedno ili se prepravlja dvaput. Pa tek onda C4.
+>
+> **⚠️ NADIĐENO 2026-08-20 — v. crveni alarm na vrhu. Sljedeća cigla je T0 (mjerač), ne K4.**
+> Mjerač nije popravak nego brana koja mjeri **stranicu** na 320/393/430 px sa **simuliranim
+> otokom**; obrnuta provjera joj je već dokazana (tri tvrdnje padaju na zatečenom stanju s
+> izmjerenim brojkama). Obilazi i **četiri načina učenja** — Leon ih je ocijenio kao *„čine se
+> ok"*, pa brana to pretvara u brojku bez ijedne dodatne cigle.
+> **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
+> pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
+> **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se
+> dogovorit"*) — ne planirati ga ni prije ni poslije ovih faza dok Leon ne kaže. Kad dođe,
+> A0 i A1 idu **zajedno**: `#authModal` je građen za jedan put, a OAuth-gumbi su primarni i
+> idu IZNAD e-maila, pa se inače prepravlja dvaput.
 >
 > **Ovdje se stanje NE prepisuje.** Grana, commiti, je li pushano — to zna git:
 > `git status -sb` · `git rev-list --count main..HEAD` · `git log --oneline -1 origin/main`.

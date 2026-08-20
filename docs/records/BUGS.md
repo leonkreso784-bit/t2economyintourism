@@ -17,7 +17,68 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-*Nema otvorenih bugova.*
+### BUG-030 — Puni naziv fakulteta ruši zaglavlje kataloga na telefonu (naslov postane „C…")
+
+- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki telefon, ulazni ekran kataloga) · Našao: **Leon na iPhoneu 16**, uz snimku.
+
+**Simptom.** Na 393 px se naziv fakulteta rasporedi u uski stupac, jedna riječ po retku, a
+naslov razine pored njega se skvrči u **„C…"**. Kontrole zaglavlja plutaju nasred tog stupca.
+
+**Izmjereno** (pravi Chromium, 393 × 852, produkcija):
+
+| | |
+|---|---|
+| `.browse-header` visina | **270 px** (32 % ekrana) |
+| mrvica („FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija", 65 znakova) | **14 redaka**, stupac **103 px** širok, **205 px** visok |
+| naslov „Choose your program" | `clientWidth` **34 px** naspram `scrollWidth` **205 px** → odrezan |
+
+**Uzrok — kombinacija, ne pravilo.** Mrvica ispisuje **puno pravno ime** fakulteta u flex-dijete
+koje ima `min-width: 0`, **bez `white-space: nowrap` i bez kraćenja**. Susjedni naslov
+kraćenje **ima** (`nowrap + ellipsis`). Svako je pravilo samo po sebi ispravno; zajedno daju
+stupac koji raste i naslov koji nestaje. **Podatak (65-znakovno pravno ime) nikad nije bio
+predviđen kao mrvica.**
+
+**Zašto ga nijedan gate nije vidio.** axe mjeri na 1280 px, gdje ime stane u jedan redak;
+`css:diff` uspoređuje nas sa samima sobom pa mu je ravnomjerno loše stanje stabilno; K3/K4a
+mjere **kromo**, ne stranicu. Detaljno: [FRONTEND_REDIZAJN §9.2](../plan/FRONTEND_REDIZAJN.md).
+
+**Rješenje (planirano, cigla T2).** Fakultet dobiva **kratko ime** u `catalog.js`; zaglavlje
+kataloga se spaja s mrvicom (danas govore isto → na grani su čak **dva naslova na istom
+ekranu**); kraćenje u flex-retku postaje **pravilo**, ne pojedinačna zakrpa.
+
+**⚠️ Grana je ovo ublažila slučajno, ne namjerno** — 102 px i 3 retka umjesto 270 i 14, samo
+zato što je K2b maknuo gumbe iz tog zaglavlja. **Korijen stoji netaknut.**
+
+**Lekcija.** *Dva ispravna CSS pravila u istom flex-retku mogu dati kvar koji nema nijedno od
+njih.* Kad jedan element krati a drugi ne, onaj koji ne krati **pojede** onoga koji krati.
+
+---
+
+### BUG-031 — Sadržaj stoji ispod Dynamic Islanda (sigurna zona nije nadoknađena)
+
+- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki iPhone s otokom) · Našao: **Leon na iPhoneu 16**.
+
+**Simptom.** Gornja traka sa znakom i gumb „Start studying" stoje **ispod** Dynamic Islanda.
+
+**Izmjereno.** `.start-trigger` je na **y = 18 px**, a otok zauzima ~59 px. Postavljanjem
+`--safe-top` na 59 px u pregledniku **na produkciji se ne pomakne NIŠTA** — svih sedam
+mjerenih elemenata ostaje na 0 px pomaka. Na grani se pomakne sve za 59.
+
+**Uzrok.** `viewport-fit=cover` **jest** postavljen — dakle stranica se **namjerno** crta ispod
+otoka — ali `css/landing.css` spominje `env(safe-area-inset-*)` **nula puta**. Ušli smo u
+nesigurnu zonu i onda je nismo nadoknadili. Na grani to slučajno radi jer je K2b donio globalnu
+traku koja `var(--safe-top)` **ima**; nijedno pravilo to ne jamči.
+
+**Rješenje (planirano, cigla T1).** Sigurna zona kao **pravilo** na svih devet stranica i u obje
+orijentacije; danas je poštuje 7 datoteka.
+
+**⚠️ Metoda mjerenja, jer je bila nova.** `env()` se u Chromiumu ne da simulirati — ali
+`--safe-top` je **naša varijabla iznad njega**. Postavi je na 59 px: **što se ne pomakne, na
+pravom telefonu stoji ispod otoka.** Prije ovoga sigurna zona nikad nije bila izmjerena.
+
+**Lekcija.** *`viewport-fit=cover` nije postavka nego obveza.* Njime se izričito prijavljuješ
+za crtanje ispod izreza — i od tog trenutka je **svaki** neispunjeni `env()` regresija, a ne
+propuštena ljepota.
 
 ---
 
