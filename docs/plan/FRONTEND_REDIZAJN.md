@@ -1893,3 +1893,163 @@ da ostane iznimka.
    *„ne znam jos, to cemo se dogovorit"*). Ne planirati ga ni prije ni poslije dok ne kaže.
 5. **Vježbe idu TEK nakon cijelog frontenda** — v. 9.5.
 
+
+### 9.7 ✅ T0 JE ISPUNJEN — telefon je od danas mjerena površina (2026-08-21)
+
+Brana: **`tests/phone.spec.js`** (odjavljen) + **`tests/phone.authed.spec.js`** (polica,
+profil, Studio), zajednička mjera u **`tests/helpers/phone-gate.js`**. Tri širine
+(**320 · 393 · 430**) × stvarne visine tih uređaja, otok simuliran na **59 px**, i
+**četiri načina učenja na pravoj lekciji** — Leon ih je ocijenio kao „čine se ok", pa je
+to sada brojka, a ne dojam. Ukupno **30 javnih + 9 prijavljenih ekrana** po prolazu;
+javni prolaz traje **2,1 min**, prijavljeni **43 s**.
+
+#### Obrnuta provjera — puštena na PRODUKCIJU prije nego je napisana ijedna tvrdnja
+
+Ovo je jedini način da se zna mjeri li brana stranicu ili sebe. Produkcija kvar dokazano
+ima; svih pet tvrdnji je ondje palo, na brojkama koje se poklapaju sa zapisom u BUGS.md:
+
+| | nalaz na produkciji |
+|---|---|
+| ① otok | `a.landing-logo` y=20…52 · `button.nav-cta` („Start studying") **y=18…53** · `button.lang-toggle` y=14…58 · `button#authNavBtn` · `button#backFromAbout` y=16…60 |
+| ② kromo | browse-dubina **31 %** · lessons 25 % · study 23 % upotrebljive visine |
+| ③ sukob | `.browse-title › #browseBreadcrumb` = **5 redaka** dok susjedni naslov krati |
+| ④ prvi ekran | 320 px landing / lessons / study: **nijedna** sadržajna kontrola dohvatljiva |
+| ⑤ zaglavlje | `h1#browseHeading` odrezan na **34 od 187 px (18 %)** → korisnik vidi „C…" |
+
+**19 od 30 ekrana produkcije ima bar jedan kvar.**
+
+#### ⚠️ NALAZ KOJI MIJENJA CIGLU T2: zapisani uzrok BUG-030 nije uzrok
+
+BUGS.md je tvrdio da mrvica bez kraćenja **pojede** susjedni naslov. Izmjereno na
+produkciji, 393 px, `.browse-header` (flex-redak, šestero djece):
+
+```
+natrag 44 + [.browse-title] + 🌐 59 + mape 44 + korisnik 44 + znak 40
+= 231 px kontrola + 80 px razmaka = 311 od 345 px raspoloživih
+→ .browse-title dobiva  34 px  (flex:1 1 0%, min-width:0)
+```
+
+**Naslov nije pojela mrvica nego pet kontrola u istom retku.** Mrvica i naslov su
+uloženi u `display:block` spremnik — kao braća u stupcu **ne mogu** utjecati na širinu
+jedno drugom. Mrvica objašnjava **visinu** (lomi se u taj 34-px stupac i digne zaglavlje
+na 224 px), a ne **uskost**.
+
+**Posljedica za T2, izrečena prije nego se počne:** kratko ime fakulteta samo po sebi
+**ne bi popravilo naslov** — pet kontrola bi i dalje pojelo redak. Grana to već mjeri
+kao 102 px upravo zato što je **K2b te kontrole odselio u globalnu traku**, što je i
+mehanički dokaz da su one bile uzrok. T2 zato mora spojiti zaglavlje s mrvicom, a ne
+samo skratiti tekst.
+
+*Pouka:* opis uzroka koji zvuči uzročno preživi reviziju. Isti razred kao „brisanjem
+demoa nestaje 240 KB editorskog koda" (§7.14) — i ondje je tvrdnja bila zapisana,
+uvjerljiva i netočna, i pala je tek kad ju je netko izmjerio umjesto pročitao.
+
+#### Što brana nalazi na GRANI (radni popis za T1–T5)
+
+| tvrdnja | grana | što to znači |
+|---|---|---|
+| ① otok | ✅ 0 | K2b-ova globalna traka poštuje `--safe-top`; produkcija ga nema |
+| ② kromo | **25 ekrana** | 320 px: browse **49 %**, lessons 45 %, study 44 %, about 21 % · 393 px: 28–31 % · 430 px: 26–28 % |
+| ③ sukob | ✅ 0 | K2b je kontrole odselio iz zaglavlja; korijen na produkciji stoji |
+| ④ prvi ekran | **15 ekrana** | na 320 px kromo 282–307 + banner 197 = **479–504 od 568 px (84–89 % ekrana)** |
+| ⑤ zaglavlje | **5 ekrana** | `span.crumb` „First Midterm" odrezan na **30 od 99 px (30 %)** |
+| prijavljeno | **4 ekrana** | polica / profil / admin / Studio na 320 px = 21 % (108 od 509 px); ostalo ✅ — K4a drži |
+
+**Kromo je na grani TRI trake u nizu** (traka 64 + putanja 44 + zaglavlje stranice
+115–140). To je T3, i sada ima brojku umjesto dojma.
+
+> ⚠️ **Brojka koju T3 mora znati unaprijed:** na iPhoneu SE (320 × 568) je upotrebljiva
+> visina **509 px**, pa je budžet od 20 % točno **102 px**. Same dvije globalne trake su
+> **108 px** (64 + 44) — dakle **stranica `about`, koja nema nikakvo zaglavlje razine,
+> probija budžet za 6 px**. To znači da T3 **nije ugađanje zaglavlja nego odluka o
+> trakama**: ispod nekog praga se putanja i traka moraju **spojiti u jedan red** (ili se
+> putanja skriva), inače je cilj nedostižan bez obzira koliko se zaglavlje stisne.
+> *Prag koji nijedna kombinacija ne može zadovoljiti nije budžet nego želja* — a to se
+> vidjelo tek kad je netko izmjerio najmanji uređaj, ne najčešći.
+
+#### ⚠️ Mjerač je i sam bio kriv — tri puta, i svaki put ga je uhvatila obrnuta provjera
+
+Ovo se zapisuje jer je metoda, ne anegdota. Svaka od tri greške izgledala je kao nalaz:
+
+1. **Bočna traka kao kromo od 100 %.** `.subjects-sidebar` je `position:fixed` preko
+   cijele visine, ali je `translateX(100%)` drži **izvan ekrana**. Mjera nije presijecala
+   s ekranom po X. → presjek + zahtjev da traka bude široka ≥ 60 % **nakon** presjeka.
+2. **Gumb zatvorenog dijaloga u otoku.** `offsetParent`-provjera fiksne elemente
+   propušta, a zatvoren `<sokrat-modal>` je `visibility:hidden`. → vidljivost se
+   **računa** (`visibility` · stvarna neprozirnost kroz pretke · `pointer-events`).
+3. **③ nije okinuo ondje gdje kvar postoji.** Tražio je sukob samo u flex-**retku**, a
+   na produkciji su mrvica i naslov u `display:block` spremniku. → sukob se traži u
+   **svakom** spremniku, ali **samo unutar kroma i zaglavlja razine** (kartica sadržaja
+   smije imati kratki naslov i troredni opis — bez tog reza brana proizvodi šum, a gate
+   koji prijavljuje šum se isključi).
+
+Sve tri je otkrilo puštanje mjerača na stanje za koje se **zna** da je pokvareno.
+*Detektor koji nije obrnuto provjeren mjeri sebe, ne stranicu.*
+
+#### ⚠️ Poznata rupa, zapisana namjerno
+
+Mjerač simulira **samo `--safe-top` i samo portret**. `--safe-bottom` / `-left` /
+`-right` i landscape (gdje izrez ide ustranu) ostaju **nemjereni**. **T1 mora proširiti
+`phone-gate.js`**, a ne pretpostaviti da zelena brana već nešto tvrdi o donjem rubu —
+projekt je taj razred greške već platio (`check:contrast`, tvrda zabrana #2: *gate koji
+provjerava NEKE tokene stvara tihu pretpostavku da su provjereni SVI*).
+
+#### ⚠️ Brana traži OSNOVICU, ne nulu — i to je odluka, ne popuštanje
+
+Prva verzija je tražila nulu i time obojila `npm run test:responsive` u crveno. Zvučalo
+je pošteno i bilo je krivo: nalazi T0-a **planom su dodijeljeni ciglama T1–T5**, pa bi
+suita bila crvena kroz **pet** cigli — a tada „je li suita zelena?" prestaje biti
+upotrebljivo pitanje i **prava regresija u ostalih 400+ testova nestane u šumu**.
+
+Projekt taj razred problema ima riješen i zapisan (`check:palette`: *„ne traži nulu nego
+samo da broj nikad ne poraste"*), pa T0 koristi isti obrazac. **`tests/phone-baseline.json`**
+drži poznate kvarove **imenovane doslovno** (javno 45, prijavljeno 4); brana pada **samo
+na kvaru kojeg ondje nema**, dakle na NOVOM. Riješeni se ispisuju glasno, jer bi
+zastarjela osnovica tiho pokrivala kvar koji se vratio. Spuštanje je izričita radnja:
+
+```
+PHONE_BASELINE_UPDATE=1 npx playwright test tests/phone.spec.js --project=iPhone-SE-375
+```
+
+**Obrnuta provjera čegrtaljke** (dvaput, s različitim upisom): makni **jedan** redak iz
+osnovice → brana pocrveni i imenuje **točno taj** ekran, ništa drugo.
+
+#### ⚠️ Brana je treperila, i uzrok nije bio u mjeri nego u ČEKANJU
+
+Vrijedi zapisati jer je protuintuitivno: **mjera je bila savršeno determinističa** — tri
+uzastopna prolaza dala su **bajt-identičnu** osnovicu — a brana je svejedno jednom pala
+pa sljedeći put prošla. Uzrok je bila **navigacija na fiksno vrijeme**: pod opterećenjem
+klik ne stigne prerenderati razinu, `browse:dubina` ostane **plići**, izmjeri se **drugi
+ekran**, i njegov nalaz nije u osnovici → lažno crveno. *Fiksno čekanje mjeri vrijeme;
+tvrdnja treba stanje* — isto što je `studio.authed` platio na drag-testu (K6b).
+
+Prelazak na čekanje-po-stanju iznio je **još dva prava kvara u brani**, oba vrijedna:
+
+1. **`#studyLoading` prijavljen kao kromo od 100 %.** Uvjet čekanja je sadržavao
+   `l.offsetParent === null` — a `.study-loading` je **`position:fixed`**, čemu je
+   `offsetParent` **uvijek `null`**, pa je uvjet prolazio odmah i mjerio se **zastor**.
+   Ista zamka koju ova datoteka na drugom mjestu već upozorava da izbjegava.
+2. **Petlja spuštanja je izlazila iz kataloga.** Hijerarhija je
+   `faculties → programs → years → subjects`, a klik **na razini `subjects`** vodi na
+   lekcijsku stranicu — brojanje klikova je mjerilo `lessons` misleći da mjeri katalog.
+   Uvjet zaustavljanja je sada **razina**, ne broj klikova.
+3. **Čekanje ne smije pretpostaviti ishod mjerenja.** Načini učenja crtaju sadržaj nakon
+   što sekcija postane aktivna, pa je „aktivna + ima visinu" bilo prerano (④ je skočila
+   15 → 21). Ispravno je čekati da se **crtanje smiri**, a **ne** da se „pojavi kontrola" —
+   potonje je baš ono što ④ mjeri, pa tvrdnja ne bi mogla pasti nikad. Nakon ispravka je
+   brojka natrag na **15, ali dobivena stanjem umjesto srećom**, i prolaz je **13 s
+   umjesto 32**.
+4. **A onda je isti kvar došao na drugom ekranu, jer popravak nije bio generaliziran.**
+   Smirivanje je isprva ugrađeno **samo u načine učenja** — i `admin` je zatim jednom
+   prijavio „nijedna dohvatljiva kontrola", a drugi put ne, jer se puni asinkrono.
+   Smirivanje sada vrijedi za **svaku** navigaciju. *Popravak koji nije generaliziran je
+   popravak koji čeka drugu priliku* (BUG-027) — osmi put u ovoj fazi da mehanizam pokrije
+   NEKA mjesta i time stvori pretpostavku da pokriva SVA.
+
+**Stabilnost nakon svega: 3/3 javno + 3/3 prijavljeno, i puna suita 439 prošlo / 0 palo.**
+
+#### Stanje suite
+
+**`npm run test:responsive` je ZELEN** (brana radi protiv osnovice, v. gore), a
+**`npm run preflight` je EXIT 0** — T0 ne dira nijedan izvršni redak aplikacije, samo
+`tests/`, pa **`npm run bump` nije bio potreban**.

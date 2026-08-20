@@ -32,11 +32,27 @@ naslov razine pored njega se skvrči u **„C…"**. Kontrole zaglavlja plutaju 
 | mrvica („FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija", 65 znakova) | **14 redaka**, stupac **103 px** širok, **205 px** visok |
 | naslov „Choose your program" | `clientWidth` **34 px** naspram `scrollWidth` **205 px** → odrezan |
 
-**Uzrok — kombinacija, ne pravilo.** Mrvica ispisuje **puno pravno ime** fakulteta u flex-dijete
-koje ima `min-width: 0`, **bez `white-space: nowrap` i bez kraćenja**. Susjedni naslov
-kraćenje **ima** (`nowrap + ellipsis`). Svako je pravilo samo po sebi ispravno; zajedno daju
-stupac koji raste i naslov koji nestaje. **Podatak (65-znakovno pravno ime) nikad nije bio
-predviđen kao mrvica.**
+**⚠️ UZROK JE ISPRAVLJEN 2026-08-21 (T0) — prvi zapis je bio kriv.** Ovdje je stajalo da
+mrvica bez kraćenja **pojede** susjedni naslov. To se ne može dogoditi: mrvica i naslov su
+uloženi u `div.browse-title`, koji ima **`display: block`** — kao braća u stupcu ne utječu
+jedno drugom na širinu. Izmjereno na produkciji, 393 px, `header.browse-header` (flex-redak,
+**šestero** djece):
+
+```
+natrag 44 + [.browse-title] + 🌐 59 + mape 44 + korisnik 44 + znak 40
+= 231 px kontrola + 80 px razmaka = 311 od 345 px raspoloživih
+→ .browse-title dobiva  34 px   (flex: 1 1 0%, min-width: 0)
+```
+
+**Uzroka su dva, u istom retku, i razdvajaju se:**
+- **naslov je uzak** jer je **pet kontrola + razmaci** pojelo 311 od 345 px — `min-width:0`
+  im to samo dopušta;
+- **zaglavlje je visoko** jer se mrvica onda lomi u taj 34-px stupac (5 redaka na 393, 14 na
+  produkcijskoj razini fakulteta sa 65-znakovnim imenom).
+
+**Posljedica za popravak (T2):** kratko ime fakulteta samo po sebi **ne bi popravilo naslov**.
+Da su kontrole uzrok, dokazuje grana: K2b ih je odselio u globalnu traku i zaglavlje je palo
+na 102 px **bez ijedne izmjene teksta**. T2 zato spaja zaglavlje s mrvicom, a ne samo krati.
 
 **Zašto ga nijedan gate nije vidio.** axe mjeri na 1280 px, gdje ime stane u jedan redak;
 `css:diff` uspoređuje nas sa samima sobom pa mu je ravnomjerno loše stanje stabilno; K3/K4a
@@ -49,8 +65,17 @@ ekranu**); kraćenje u flex-retku postaje **pravilo**, ne pojedinačna zakrpa.
 **⚠️ Grana je ovo ublažila slučajno, ne namjerno** — 102 px i 3 retka umjesto 270 i 14, samo
 zato što je K2b maknuo gumbe iz tog zaglavlja. **Korijen stoji netaknut.**
 
-**Lekcija.** *Dva ispravna CSS pravila u istom flex-retku mogu dati kvar koji nema nijedno od
-njih.* Kad jedan element krati a drugi ne, onaj koji ne krati **pojede** onoga koji krati.
+**Brana (od T0, 2026-08-21).** `tests/phone.spec.js` tvrdnje ③ i ⑤ + `helpers/phone-gate.js`.
+Obrnuto provjerene na produkciji: ③ prijavljuje `.browse-title › #browseBreadcrumb = 5 redaka,
+a susjed krati`, ⑤ prijavljuje `h1#browseHeading: odrezan na 34 od 187 px (18 %)`.
+
+**Lekcija (dvije, i druga je nastala tek pri mjerenju).**
+1. *Dva ispravna CSS pravila u istom spremniku mogu dati kvar koji nema nijedno od njih.* Ono
+   što se slobodno lomi **određuje visinu**, a ono što krati **ne određuje ništa**.
+2. *Uvjerljiv opis uzroka preživi reviziju.* Prvi zapis ovog buga bio je napisan gledanjem
+   ekrana i CSS-a, zvučao je mehanički i bio je netočan — pao je tek kad je netko izmjerio
+   širine djece umjesto da ih pročita. Isti razred kao „brisanjem demoa nestaje 240 KB
+   editorskog koda" (spec §7.14).
 
 ---
 
@@ -75,6 +100,12 @@ orijentacije; danas je poštuje 7 datoteka.
 **⚠️ Metoda mjerenja, jer je bila nova.** `env()` se u Chromiumu ne da simulirati — ali
 `--safe-top` je **naša varijabla iznad njega**. Postavi je na 59 px: **što se ne pomakne, na
 pravom telefonu stoji ispod otoka.** Prije ovoga sigurna zona nikad nije bila izmjerena.
+
+**Brana (od T0, 2026-08-21).** `tests/phone.spec.js` tvrdnja ① + `tests/phone.authed.spec.js`.
+Obrnuto provjerena na produkciji, gdje prijavljuje točno ono na što se Leon požalio:
+`a.landing-logo y=20…52` i `button.nav-cta` („Start studying") **`y=18…53`**, uz otok od 59.
+⚠️ Brana pokriva **samo `--safe-top` i samo portret** — donji/bočni rub i landscape su i dalje
+nemjereni, i **T1 mora proširiti `helpers/phone-gate.js`**, a ne se osloniti na njezino zelenilo.
 
 **Lekcija.** *`viewport-fit=cover` nije postavka nego obveza.* Njime se izričito prijavljuješ
 za crtanje ispod izreza — i od tog trenutka je **svaki** neispunjeni `env()` regresija, a ne

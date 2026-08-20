@@ -5,6 +5,99 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-21 (OPUS) — **T0: telefon je od danas mjerena površina (faza „TELEFON", spec §9.7)**
+
+Prva cigla faze je **brana, ne popravak** — jer je produkcija na 393 px bila neupotrebljiva
+uz **desetak zelenih gateova**, pa bi popravljanje prije mjerenja bilo popravljanje naslijepo.
+
+### Isporučeno
+- **`tests/helpers/phone-gate.js`** — mjera (otok · budžet kroma · sukob kraćenja ·
+  dohvatljivost bez skrola · čitljivost naslova razine).
+- **`tests/phone.spec.js`** (odjavljen: landing · browse · browse-dubina · lessons · about ·
+  study + **četiri načina učenja**) i **`tests/phone.authed.spec.js`** (polica · profil ·
+  Studio). 3 širine × stvarne visine uređaja = **30 javnih + 9 prijavljenih ekrana**.
+  Trajanje: **2,1 min** javno, **43 s** prijavljeno.
+- Nijedan `.js`, `.css` ni `.html` aplikacije nije dirnut → **bump nije bio potreban**.
+
+### Obrnuta provjera — vozila se protiv PRODUKCIJE, ne protiv izmišljenog kvara
+Svih pet tvrdnji ondje pada, na Leonovim brojkama: `button.nav-cta` („Start studying")
+**y = 18…53** uz otok 59 · `h1#browseHeading` odrezan na **34 od 187 px (18 %)** ·
+`.browse-title › #browseBreadcrumb` **5 redaka** dok susjed krati · kromo do **31 %** ·
+na 320 px **nijedna** sadržajna kontrola dohvatljiva. **19 od 30 ekrana produkcije.**
+
+### ⚠️ Nalaz koji mijenja ciglu T2 — zapisani uzrok BUG-030 nije uzrok
+Izmjereno na produkciji: `.browse-header` je flex-redak sa **šestero** djece —
+`natrag 44 + [.browse-title] + 🌐 59 + mape 44 + korisnik 44 + znak 40` = **231 px kontrola
++ 80 px razmaka = 311 od 345 px**, pa naslovu ostaje **34 px**. Mrvica i naslov su braća u
+`display:block` spremniku i **ne mogu** utjecati na širinu jedno drugom — mrvica objašnjava
+**visinu**, ne uskost. **Kratko ime fakulteta samo po sebi ne bi popravilo ništa**; da su
+kontrole uzrok, dokazuje grana, gdje je K2b odselio te kontrole i zaglavlje palo na 102 px
+**bez ijedne izmjene teksta**. BUGS.md je ispravljen.
+
+### ⚠️ Mjerač je i sam bio kriv tri puta — i svaki put ga je uhvatila obrnuta provjera
+① `.subjects-sidebar` (`translateX(100%)`, dakle IZVAN ekrana) brojana kao kromo od 100 % →
+presjek s ekranom prije mjere širine. ② Gumb zatvorenog `<sokrat-modal>` prijavljen kao
+sadržaj u otoku (`offsetParent` fiksne elemente propušta) → vidljivost se **računa**.
+③ **③ nije okinuo ondje gdje kvar postoji**, jer je tražio sukob samo u flex-**retku** →
+traži se u svakom spremniku, ali **samo u kromu i zaglavlju razine** (kartica smije imati
+kratki naslov i troredni opis; bez tog reza brana proizvodi šum). *Detektor koji nije
+obrnuto provjeren mjeri sebe, ne stranicu.*
+
+### Radni popis koji je brana proizvela (osnovica za T1–T5)
+| tvrdnja | grana |
+|---|---|
+| ① otok | **0** (K2b-ova traka poštuje `--safe-top`) |
+| ② kromo | **25 ekrana** — 320 px: browse **49 %**, lessons 45 %, study 44 %, about 21 % · 393: 28–31 % · 430: 26–28 % |
+| ③ sukob | **0** na grani, crveno na produkciji |
+| ④ prvi ekran | **15 ekrana** — na 320 px kromo + banner = **479–504 od 568 px (84–89 %)** |
+| ⑤ zaglavlje | **5 ekrana** — `span.crumb` „First Midterm" odrezan na **30 od 99 px** |
+| prijavljeno | **4 ekrana** (polica/profil/admin/Studio na 320 px = 21 %); ostalo 0 — K4a drži |
+
+### ⚠️ Brana traži OSNOVICU, ne nulu
+Prva verzija je tražila nulu i obojila `test:responsive` u crveno. Zvučalo je pošteno i bilo
+je krivo: ovi su nalazi **planom dodijeljeni ciglama T1–T5**, pa bi suita bila crvena kroz
+**pet** cigli — a tada „je li suita zelena?" prestaje biti upotrebljivo pitanje i **prava
+regresija u ostalih 400+ testova nestane u šumu**. Uzet je obrazac koji projekt već ima
+(`check:palette`): `tests/phone-baseline.json` drži poznate kvarove, brana pada **samo na
+NOVOM**, spuštanje je izričita radnja (`PHONE_BASELINE_UPDATE=1`). Riješeni se ispisuju
+glasno. **Obrnuto provjereno dvaput:** makni jedan redak iz osnovice → crveno, imenuje
+**točno taj** ekran.
+
+### ⚠️ Brana je treperila — a mjera je bila determinističa
+Tri prolaza su dala **bajt-identičnu** osnovicu, a brana je svejedno jednom pala pa prošla.
+Uzrok: **fiksno čekanje u navigaciji** — pod opterećenjem `browse:dubina` ostane plići,
+izmjeri se drugi ekran, nalaz nije u osnovici → lažno crveno. *Fiksno čekanje mjeri vrijeme;
+tvrdnja treba stanje* (isto što je `studio.authed` platio na K6b).
+Prelazak na čekanje-po-stanju iznio je **još dva prava kvara u brani**:
+① uvjet je koristio `offsetParent === null`, a `.study-loading` je `position:fixed` — čemu je
+`offsetParent` **uvijek `null`** → uvjet je prolazio odmah i mjerio se **zastor učitavanja
+kao kromo od 100 %**; ② petlja spuštanja je **izlazila iz kataloga** (klik na razini
+`subjects` vodi na lekcijsku stranicu) → uvjet je sada **razina**, ne broj klikova.
+Treće, metodološki najvažnije: **čekanje ne smije pretpostaviti ishod mjerenja** — čeka se
+da se crtanje **smiri**, a ne da se „pojavi kontrola", jer je potonje baš ono što ④ mjeri.
+Ishod: ④ natrag na **15 (stanjem, ne srećom)**, prolaz **13 s umjesto 32**.
+Četvrto i najpoučnije: **isti je kvar odmah došao na drugom ekranu**, jer je smirivanje bilo
+ugrađeno samo u načine učenja — `admin` se puni asinkrono pa je jednom prijavio „nijedna
+dohvatljiva kontrola", drugi put ne. Smirivanje sada vrijedi za **svaku** navigaciju.
+*Popravak koji nije generaliziran je popravak koji čeka drugu priliku* (BUG-027).
+**Stabilnost: 3/3 javno + 3/3 prijavljeno.**
+
+### Poznata rupa, zapisana namjerno
+Simulira se **samo `--safe-top` i samo portret**. Donji/bočni rub i landscape ostaju
+nemjereni → **T1 mora proširiti `phone-gate.js`**, a ne se osloniti na zelenilo (isti razred
+kao tvrda zabrana #2 uz `check:contrast`).
+
+### Gate
+`npm run preflight` **EXIT 0** · `phone.spec.js` **6/6** (3/3 stabilno) ·
+`phone.authed.spec.js` **7/7** (3/3 stabilno) · **puna suita `test:responsive`: 439 prošlo,
+0 palo, 60 preskočeno (23,9 min)** · puna prijavljena suita **86 prošlo** — čime je potvrđen i
+zbroj, jer je Playwright pri ranijem padu setupa ispisao „86 did not run". Bump nije bio
+potreban — dirani su samo `tests/`.
+
+**Sljedeće: T1 — sigurna zona kao pravilo (BUG-031), uz proširenje mjerača.**
+
+---
+
 ## 2026-08-20 (OPUS) — **CRVENI ALARM: telefon. Sesija BEZ IJEDNE izmjene koda — samo mjerenje i plan**
 
 > Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po

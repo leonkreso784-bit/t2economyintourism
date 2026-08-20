@@ -67,6 +67,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 - **`npm run check:contrast`** — WCAG **po temi**: 164 provjere kroz sve 4 teme (tekst ≥4.5 · UI ≥3.0 · tekst na gumbu · hue-odvojenost „točno" od marke ≥25°). S jednom paletom se kontrast dao provjeriti rukom; s četiri je provjera okom prestala biti provjera. Parsira `css/tokens.css` — **ne drži kopiju vrijednosti** (kopija bi se razišla, pa bi gate čuvao paletu koje nema).
 - **`npm run css:diff`** — dokaz da se IZGLED nije promijenio: izračunati stilovi svakog elementa u pravom Chromiumu, radno stablo vs `HEAD:styles.bundle.css`, kroz 3 širine; tokeni se broje odvojeno od prikaza. Traži preglednik + port → **NIJE u preflightu**; vrti ga uz svaku ciglu koja dira CSS.
 - **`npm run test:responsive`** — Playwright (iPhone profili, default suite). ⚠️ **Prijava zna pasti sa `JWT issued at future` — to NIJE kod.** Lokalni sat je bio točan (<1 s), a isti token je kroz direktan HTTP prošao (`is_admin` = true, 200); riječ je o sub-sekundnoj utrci između sata koji `iat` **izdaje** (GoTrue) i onoga koji ga **provjerava** (PostgREST). 3/3 ponovljene prijave prošle. Ne tražiti uzrok u vlastitom kodu. · **`npm run test:authed`** — pozitivan admin-put (storageState; traži `TEST_ADMIN_EMAIL/PASSWORD` u `.env`; CI = zaseban secret-gated job).
+- **`tests/phone.spec.js` + `phone.authed.spec.js`** (mjera: `tests/helpers/phone-gate.js`) — **T0 mjerač: jedina brana koja mjeri TELEFON KAO STRANICU.** Povod: produkcija je na 393 px bila neupotrebljiva uz **desetak zelenih gateova** — axe mjeri na 1280, `css:diff` uspoređuje nas sa samima sobom (hvata PROMJENU, ne LOŠOĆU), K3/K4a mjere KROMO. Pet tvrdnji (otok · budžet kroma · sukob kraćenja · dohvatljivost bez skrola · čitljivost naslova razine) na **320/393/430 px** + **četiri načina učenja**. ⚠️ **`env()` se ne da simulirati, ali `--safe-top` je NAŠA varijabla iznad njega** — postavi je na 59 px i **što se ne pomakne, stoji ispod otoka**; to je jedini način da se sigurna zona uopće izmjeri. Obrnuta provjera se vozi **protiv produkcije**, ne protiv izmišljenog kvara. Traži preglednik → **NIJE u preflightu** (vrti se u `test:responsive`).
 - `npm run test:unit` — node unit testovi. · `npm run serve:test` — lokalni server :5050.
 - `npm run validate:content [id]` — sadržajni validator. · `npm run validate:schema [id]` — JSON Schema gate (ajv).
 - **`npm run check:final`** — provjeri da BAZNI `final` red == M1⊕M2(+examPractice) za sve migrirane predmete. Read-only anon; graceful skip na uspavanu bazu; **NIJE u preflight** (mrežno).
@@ -159,11 +160,32 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > nedostaje, a `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu
 > djelomično prevedeni nego uopće nisu spojeni na i18n).
 >
-> **⚠️ NADIĐENO 2026-08-20 — v. crveni alarm na vrhu. Sljedeća cigla je T0 (mjerač), ne K4.**
-> Mjerač nije popravak nego brana koja mjeri **stranicu** na 320/393/430 px sa **simuliranim
-> otokom**; obrnuta provjera joj je već dokazana (tri tvrdnje padaju na zatečenom stanju s
-> izmjerenim brojkama). Obilazi i **četiri načina učenja** — Leon ih je ocijenio kao *„čine se
-> ok"*, pa brana to pretvara u brojku bez ijedne dodatne cigle.
+> **✅ T0 (MJERAČ) JE GOTOV** (2026-08-21, spec **§9.7**) — `tests/phone.spec.js` +
+> `tests/phone.authed.spec.js`, mjera u `tests/helpers/phone-gate.js`: 3 širine × stvarne
+> visine uređaja, otok simuliran na 59 px, **i četiri načina učenja na pravoj lekciji**.
+> **Obrnuto provjeren na PRODUKCIJI** prije nego je napisana ijedna tvrdnja — ondje pada svih
+> pet, na Leonovim brojkama („Start studying" `y=18…53`, naslov odrezan na **34 od 187 px**).
+> ⚠️ **Cigla je usput oborila zapisani uzrok BUG-030:** naslov nije pojela mrvica (ona je
+> `display:block` brat, ne može mu uzeti širinu) nego **pet kontrola u istom flex-retku**
+> (231 px + 80 px razmaka = 311 od 345). **Zato kratko ime fakulteta samo po sebi ne bi
+> popravilo ništa** — T2 mora spojiti zaglavlje s mrvicom. ⚠️ Brana pokriva **samo `--safe-top`
+> i samo portret**; donji/bočni rub i landscape su poznata rupa koju **T1 mora proširiti**.
+> **Brana traži OSNOVICU, ne nulu** (`tests/phone-baseline.json`, obrazac `check:palette`) —
+> jer su nalazi planom dodijeljeni ciglama T1–T5, pa bi nula držala suitu crvenom kroz **pet**
+> cigli i **prava regresija u ostalih 400+ testova nestala bi u šumu**. Pada se **samo na
+> kvaru kojeg u osnovici nema**; spuštanje = `PHONE_BASELINE_UPDATE=1 npx playwright test …`.
+> Poznato danas: ② **25 ekrana** (320 px: browse **49 %**) · ④ **15** (na 320 px kromo+banner =
+> **84–89 %**) · ⑤ **5** (`span.crumb` odrezan na 30 %) · prijavljeno **4**. ① i ③ su **0**.
+> ⚠️ **Brana je treperila, a mjera je bila determinističa** — uzrok je bilo **fiksno čekanje**
+> u navigaciji (*fiksno čekanje mjeri vrijeme, tvrdnja treba stanje*, kao K6b). Prelazak na
+> čekanje-po-stanju iznio je još dva kvara u samoj brani: `offsetParent` je **uvijek `null`
+> za `position:fixed`** (pa se mjerio zastor učitavanja kao kromo 100 %), i petlja spuštanja
+> je izlazila iz kataloga (uvjet je **razina** `subjects`, ne broj klikova). **Čekanje ne smije
+> pretpostaviti ishod mjerenja** — čeka se da se crtanje SMIRI, ne da se pojavi kontrola, jer
+> je potonje baš ono što ④ mjeri. Nakon toga **4/4 zelena prolaza, 13 s umjesto 32**.
+> `test:responsive` i `preflight` su **oba zelena**; bump nije bio potreban (dirani samo `tests/`).
+>
+> **🔵 SLJEDEĆA CIGLA = T1 (sigurna zona kao pravilo).**
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se
