@@ -156,9 +156,10 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > 680 px nikad nije radio (**medijski upit ne dodaje specifičnost**, bazno pravilo stoji
 > niže) — nova pravila nose **dvije klase**; istu grešku sam pritom **ponovio na kvaki
 > ladice** i uhvatila ju je sonda, ne oko.
-> **🔵 SLJEDEĆA CIGLA = K4 (ostatak)** — materijali u kvaliteti kataloga. Zatim **K5** editor dvojezično (premjereno 2026-08-19: **28 od 48** `studio.*` ključeva
-> nedostaje, a `block-editor.js` i `admin-editors.js` imaju **nula** `t()` poziva — nisu
-> djelomično prevedeni nego uopće nisu spojeni na i18n).
+> ~~Sljedeća cigla = K4~~ **← NADIĐENO, ne izvršavaj.** K4 se utapa u **P2** (v. niže);
+> **K5** (editor dvojezično) je u redu čekanja i ne blokira ništa — premjereno 2026-08-19:
+> **28 od 48** `studio.*` ključeva nedostaje, a `block-editor.js` i `admin-editors.js` imaju
+> **nula** `t()` poziva (nisu djelomično prevedeni nego uopće nisu spojeni na i18n).
 >
 > **✅ T0 (MJERAČ) JE GOTOV** (2026-08-21, spec **§9.7**) — `tests/phone.spec.js` +
 > `tests/phone.authed.spec.js`, mjera u `tests/helpers/phone-gate.js`: 3 širine × stvarne
