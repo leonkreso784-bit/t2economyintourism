@@ -17,7 +17,47 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-*(Nema otvorenih bugova. BUG-030 i BUG-031 su zatvoreni ciglama T2 i T1 — v. «Riješeni / Lekcije».)*
+### BUG-032 — Popis lekcija nije upotrebljiv tipkovnicom ni čitačem ekrana (`div` s klikom)
+
+- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki predmet, jedini put u lekciju) · Našao: **mjerač telefona (T4), 2026-08-22**, mjerenjem tvrdnje ④.
+
+**Simptom.** Stranica `lessons` — popis lekcija predmeta — **nema nijednu sadržajnu kontrolu**.
+Miš i prst rade; tipkovnica i čitač ekrana ne. Za korisnika koji ne pokazuje prstom, katalog
+od 24 predmeta završava na popisu lekcija.
+
+**Izmjereno** (Chromium, brana `tests/phone.spec.js`, 4 profila):
+
+```
+320 / 393 / 430 / 852 px  ·  lessons
+  interaktivnih elemenata u sadržaju: 0
+  vidljivo u prvom ekranu: p#subjectDescription, div.lesson-card, h3, p …
+```
+
+**Uzrok.** `js/navigation.js:1304` — `renderLessonsPage()` gradi karticu kao
+`document.createElement('div')` s `class="lesson-card"` i vješa `click`-slušatelja. Nema
+`role`, nema `tabindex`, nema `keydown`. Za pristupačno stablo to je **obična kutija s
+tekstom**.
+
+**⚠️ Zašto ovo nije uhvatio nijedan gate — tri neovisna razloga:**
+- **axe** ne prijavljuje `div` s `click`-slušateljem: slušatelj nije u DOM-u kao atribut i
+  nijedno WCAG pravilo se ne da automatski provjeriti bez njega. (Da je stajalo
+  `role="button"` bez `tabindex`, axe bi pao — kvar je *ispod* praga koji alat vidi.)
+- **`reachability.spec.js` (K3)** mjeri **pogodak na kontrolama koje postoje** — element koji
+  se ne kvalificira kao kontrola nema što promašiti.
+- **`css:diff`/`check:palette`** mjere izgled, a izgled je ispravan.
+
+Kvar je izašao tek kad je T0 uveo tvrdnju koja pita *„može li korisnik ovdje išta učiniti?"* —
+i onda je T4 morao razlagati zašto ④ pada, jer je zapisani uzrok („cookie-traka") bio kriv.
+
+**Rješenje (nije izvedeno — zaslužuje vlastitu ciglu):** kartica postaje `<button>` (ili
+`role="button"` + `tabindex="0"` + `keydown` na Enter/Space), s `aria-disabled` umjesto samog
+zamućenja za „uskoro". ⚠️ Pritom **`lesson.name` i `lesson.description` idu u `innerHTML` bez
+escapea** — isti redak treba i granicu iz BUG-025.
+
+**Lekcija.** *Gate koji provjerava kontrole ne vidi kvar u kojem kontrola NE POSTOJI.* Sve tri
+postojeće brane pretpostavljale su da je element kontrola i onda mjerile njegovo ponašanje;
+nijedna nije pitala postoji li uopće. Isti razred kao „telefon kao stranica nikad nije bio
+mjerena površina" — mjeri se ono što se zna imenovati.
 
 ---
 

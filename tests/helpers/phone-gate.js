@@ -25,6 +25,7 @@
 //   ⑤ ZAGLAVLJE   naslov razine je čitljiv (≤ 1 redak i nije odrezan ispod 60 %)
 //   ⑥ DONJI RUB   ništa interaktivno u donjih `rub.bottom` px — mjereno NA DNU SKROLA
 //   ⑦ BOČNI RUB   ništa interaktivno u bočnim pojasima + sadržajni spremnik ih poštuje
+//   ⑧ NAMJEŠTAJ   trajnu donju traku (promjena načina učenja) ništa ne smije prekrivati
 //
 // ── ⚠️ ZAŠTO ⑥ MJERI NA DNU SKROLA, A ⑦ ODMAH ──────────────────────────────────
 // Dok se stranica skrola, sadržaj kroz donji pojas **prolazi** — to nije kvar nego
@@ -517,6 +518,75 @@ function mjeri(page, rub, faza) {
             return !!meta && (meta === k.el || k.el.contains(meta));
         });
 
+        // ── ⑧ TRAJNI DONJI NAMJEŠTAJ (cigla T4) ───────────────────────────────────
+        // Traka pri DNU koja trajno stoji — danas točno jedna: `.study-mobile-nav`, kojom se
+        // na telefonu mijenja način učenja. Tvrdnja: **ništa je ne smije prekrivati.**
+        //
+        // ⚠️ Zašto ovo NIJE pokrivala tvrdnja ④. Ondje je dovoljna JEDNA dohvatljiva
+        // kontrola bilo gdje na ekranu — pa stranica na kojoj je cijela donja navigacija pod
+        // cookie-trakom prolazi čim ima bilo koji gumb u sadržaju. Točno se to i dogodilo:
+        // `study:quiz` i `study:learn` su prolazili, `study:home`, `study:flashcards` i
+        // `study:fill` padali, a uzrok je kod SVIH pet bio isti. *Tvrdnja koja mjeri „ima li
+        // ičega" ne može reći da je nestalo nešto određeno.*
+        //
+        // ⚠️ Mjeri se POGOTKOM, ne geometrijom (isti rez kao K3 i ④): prekrivena kontrola ima
+        // savršen pravokutnik i nikakvu upotrebljivost. Pokrivač se imenuje, jer bi inače
+        // nalaz govorio da je nešto krivo, a ne što.
+        const namjestaj = [];
+        Array.prototype.slice.call(document.querySelectorAll('body *')).forEach((el) => {
+            if (el.id === 'cookieBanner' || el.closest('#cookieBanner')) return;
+            if (getComputedStyle(el).position !== 'fixed') return;
+            if (!stvarnoVidljiv(el)) return;
+            // Ljuska stranice je i sama fiksna (Studio), ali ona SADRŽI stranicu — v. ②.
+            if (el.matches('section[id$="-page"]') || el.querySelector('section[id$="-page"]')) return;
+            const r = el.getBoundingClientRect();
+            if ((r.right - r.left) < vw * 0.6) return;   // odgurnuto ustranu = nije namještaj
+            if (r.bottom < vh - 1) return;               // ne sjedi na dnu
+            if ((r.bottom - r.top) > vh * 0.5) return;   // previsoko za namještaj
+            // Pokrivač se imenuje po najbližem PRETKU koji uopće ima ime — `elementFromPoint`
+            // vraća najdublji čvor, a „pokriva span" ne kaže ništa nikome.
+            const imePokrivaca = (x) => {
+                let p = x, n = 0;
+                while (p && n < 5 && !p.id && !(p.className && String(p.className).trim())) { p = p.parentElement; n++; }
+                return ime(p || x);
+            };
+            const mete = Array.prototype.slice.call(el.querySelectorAll(INTERAKTIVNO))
+                .filter((m) => !m.disabled && stvarnoVidljiv(m));
+            const svi = mete.length ? mete : [el];
+            const pokrivaci = [];
+            svi.forEach((m) => {
+                const b = m.getBoundingClientRect();
+                const cx = b.left + b.width / 2, cy = b.top + b.height / 2;
+                if (cy < 0 || cy > vh || cx < 0 || cx > vw) return;
+                const meta = document.elementFromPoint(cx, cy);
+                if (!meta || (meta !== m && !m.contains(meta))) pokrivaci.push(meta ? imePokrivaca(meta) : '?');
+            });
+            if (pokrivaci.length) {
+                namjestaj.push(ime(el) + ': ' + pokrivaci.length + ' od ' + svi.length
+                    + ' kontrola prekriveno · pokriva ' + pokrivaci[0]);
+            }
+
+            // ⚠️ DRUGA MJERA: GORNJI RUB. Prva mjera gađa SREDIŠTE kontrole, a *pogodak u
+            // sredinu ne dokazuje da je kontrola cijela vidljiva*. Točno se to i dogodilo:
+            // traka je jednom sjela 34 px preduboko i pokrila **gornju trećinu navigacije —
+            // dakle ikone** — a prva mjera je šutjela jer su središta gumba ostala ispod
+            // preklopa. Rub se zato uzorkuje na tri točke (lijevo/sredina/desno).
+            const rubY = r.top + 3;
+            if (rubY > 0 && rubY < vh) {
+                const tocke = [r.left + 8, (r.left + r.right) / 2, r.right - 8];
+                const prekriven = tocke.filter((x) => {
+                    if (x < 0 || x > vw) return false;
+                    const meta = document.elementFromPoint(x, rubY);
+                    return !!meta && meta !== el && !el.contains(meta);
+                });
+                if (prekriven.length) {
+                    const meta = document.elementFromPoint(tocke[1], rubY);
+                    namjestaj.push(ime(el) + ': gornji rub prekriven u ' + prekriven.length
+                        + ' od 3 točke · pokriva ' + (meta ? imePokrivaca(meta) : '?'));
+                }
+            }
+        });
+
         // ── ⑤ ZAGLAVLJE RAZINE ────────────────────────────────────────────────────
         // Samo zaglavlje AKTIVNE razine + mrvica u traci. Hero-naslov landinga NIJE tu:
         // on smije omotati (to je tipografija, cigla T5), a mrvica ne smije.
@@ -578,6 +648,7 @@ function mjeri(page, rub, faza) {
             sudari: sudari,
             upotrebljivih: upotrebljivi.length,
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
+            namjestaj: namjestaj,
             zaglavlja: zaglavlja
         };
     }, { rub: rub, faza: faza });

@@ -8848,6 +8848,7 @@ h4.lb-heading {
   --pathbar-h: 44px;
   --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
   --bottom-inset: 0px;
+  --bottom-furniture-h: 0px;
 }
 body {
   --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
@@ -9358,6 +9359,7 @@ sokrat-modal.auth-modal > * {
 .profile-content {
   width: 100%;
   padding: 1.5rem;
+  padding-bottom: max(1.5rem, var(--safe-bottom));
   max-width: 860px;
   margin: 0 auto;
 }
@@ -9637,6 +9639,7 @@ sokrat-modal.auth-modal > * {
   }
   .profile-content {
     padding: 1rem;
+    padding-bottom: max(1rem, var(--safe-bottom));
   }
   .profile-stat-vals {
     gap: 0.7rem;

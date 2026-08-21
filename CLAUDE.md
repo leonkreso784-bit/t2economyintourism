@@ -100,7 +100,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **14 redaka** · naslov odrezan na **34 od 205 px** · „Start studying" na **y = 18 px** dok je
 > otok 59 · kromo **32 %** ekrana · cookie-banner još **24 %** · landing **744,6 KiB u 41
 > skripti, 238 KiB editorsko**. → **BUG-030** i **BUG-031**, oba
-> **✅ riješena** (T2 i T1, 2026-08-21) — otvorenih bugova nema.
+> **✅ riješena** (T2 i T1, 2026-08-21). ⚠️ **BUG-032 je otvoren od 2026-08-22** (v. T4).
 > **⚠️ Korijen je JEDAN: telefon kao STRANICA nikad nije bio mjerena površina** — axe mjeri na
 > **1280 px**, `css:diff` uspoređuje nas **sa samima sobom** (drift, ne lošoća), a K3/K4a mjere
 > **kromo**. Zato faza počinje **mjeračem**, ne popravkom. *Sigurna zona se ipak DA izmjeriti:
@@ -267,10 +267,43 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > alat ispisuje **8 od 15** elemenata po širini → *kad gate ne može pokazati sve, dokazuje se
 > invarijanta, ne uzorak.*
 >
-> **🔵 SLJEDEĆA CIGLA = T4 (cookie-banner).** Svih **13** preostalih nalaza u osnovici su tvrdnja
-> ④ i **svi do jednog zbog bannera** — on je jedini preostali razlog zašto na 320 px nema
-> dohvatljive kontrole bez skrola (banner **217 px** + kromo 159 od 568). Iza toga **T5**
-> (tipografija) pa **T6** (editor s posjetiteljeva puta).
+> **✅ T4 (COOKIE-TRAKA) JE GOTOV** (2026-08-22, spec **§9.11**) — traka na 320 px **217 → 129 px**
+> (38 % → **23 %**), na učenju **105** (podignuta, pa joj sigurni rub više ne treba); 393 **195 → 129**,
+> polegnuto **103 → 73**. Osnovica javno **13 → 10**.
+> ⚠️ **MJERENJE JE OBORILO PREMISU CIGLE, a premisu je napisao T3.** Ovdje je stajalo *„svih 13 su
+> svi do jednog zbog bannera"* — **nije istina: traka je uzrok na 3 od 13.** Optužba je bila pročitana
+> iz **formata poruke** (nalaz ispisuje visinu trake kad god traka postoji, ne kad je kriva).
+> *Nalaz koji nešto imenuje nije time i optužio to.* Razlaganje: **3** traka (✅) · **4** `lessons`, gdje
+> stranica **nema nijednu kontrolu** → **BUG-032** · **4** `about`, jedna kontrola na `y ≈ 1500` →
+> pitanje dizajna · **2** `landing`, hero gura vrata ispod pregiba → **T5**.
+> ⚠️ **Kvar nije bila VISINA nego POKRIVANJE:** `.study-mobile-nav` je `z-index: 9999`, traka
+> `2147483000` → na prvom posjetu je pokrivala **svih šest gumba** za promjenu načina učenja.
+> Razdvojeno na svježoj stranici po varijanti: **samo stisnuta ④ = 0**, **samo podignuta ④ = 6**.
+> *Stiskanje ne popravlja ništa* — ostaje kao udobnost. Pravilo: `bottom: var(--bottom-furniture-h)`,
+> a vrijednost **mjeri i objavljuje `js/consent.js`** (obrnuti smjer od `--bottom-inset`; **fiksni
+> element ne vidi drugi fiksni element**). Mjeri se jer visina navigacije **ovisi o širini** (93 px na
+> 320, 97 na 393). Sigurni rub se **oduzima** za ono što je već ispod trake, inače traka nosi 34 px
+> praznine usred ekrana. Traka je usput **prvi put prevedena** (bila je jedina površina sa zakucanim
+> engleskim, a to je pravni tekst) i skraćena sa 171 na 100 znakova; gumbi ostaju **36 px**.
+> ⚠️ **Nova tvrdnja ⑧** (trajni donji namještaj nije prekriven) — obrnuta provjera je prijavila
+> **17 ekrana**, dok ih je ④ vidjela **3**. *Brana koja mjeri posljedicu vidjela je 18 % kvara.*
+> ⚠️ ⑧ ima **dvije** mjere: središte svake kontrole **i** gornji rub trake — *pogodak u sredinu
+> ne dokazuje da je kontrola cijela vidljiva* (pri preklopu od 34 px središta gumba ostaju ispod
+> pokrivača; na 393 px je mjera središta šutjela, mjera ruba prijavila 3 od 3 točke).
+> ⚠️ **Funkcionalna sonda** (jezik · prihvat · odbijanje · položaj) je uz to našla da `ResizeObserver`
+> po zadanom prati **content-box**, a visina navigacije raste **isključivo razmakom** → promatrač nije
+> okidao (`{ box: 'border-box' }`). *Promatrač koji gleda krivu kutiju je promatrač koji ne gleda.*
+> ⚠️ **Osnovica prijavljenih je pokušala progutati TUĐE STANJE:** četiri `dno` nalaza na polici koje
+> dva ponovljena prolaza **istog koda** nisu reproducirala — polica je **podatak**. Maknuti; kvar
+> riješen **svojstvom** (`.profile-content` rezervira donji rub, 16 → 34 px). **Pravilo: prije nego
+> nalaz uđe u osnovicu, ponovi mjerenje.**
+>
+> **🔵 SLJEDEĆA CIGLA = T5 (tipografija i prostor).** Sada ima brojku: vrata landinga počinju na
+> **567 od 568 px** u portretu i **425 od 393** polegnuto — dakle hero ih gura ispod pregiba, i to su
+> 2 od 10 preostalih nalaza. Iza toga **T6** (editor s posjetiteljeva puta).
+> **🔴 BUG-032 je OTVOREN** (`lessons` nije upotrebljiv tipkovnicom ni čitačem ekrana — kartica je
+> `div` s klikom): nije telefonski kvar nego **jedini put u svaku lekciju kataloga**. Zaslužuje
+> vlastitu ciglu; u istom retku treba i escape (BUG-025).
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se

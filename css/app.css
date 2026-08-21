@@ -134,6 +134,15 @@
 @source not inline("{,!}{block,blur,collapse,container,filter,fixed,grid,inline,italic,ordinal,resize,table}");
 @source not inline("{,!}{hidden,text-danger}");
 
+/* T4: `visible` je usao iz KODA, i to iz nove podvrste istog kvara. Dosad su kandidati
+   dolazili iz negacije (`if (!container)`) i iz proze (`flex-wrap`, `sticky`); ovaj put je
+   izvor **CSS VRIJEDNOST u usporedbi niza** — `cs.visibility !== 'visible'` u `js/consent.js`,
+   kojim se mjeri je li donji namjestaj stvarno vidljiv. Da je obrazac prepoznat ranije, vidjelo
+   bi se da `fixed` i `hidden` na popisu gore stoje iz ISTOG razloga: i oni su imena CSS
+   vrijednosti koje kod usporedjuje kao tekst. *Skener ne zna razliku izmedju vrijednosti i
+   klase — vidi tekst.* Nas `.visible` zivi u `responsive/03-modes-a11y-print.css`. */
+@source not inline("{,!}visible");
+
 /* K2b: `flex-wrap` je usao u kandidate iz KOMENTARA — biljeska u `js/studio.js` objasnjava
    zasto je mrvica Studija dizala traku na 41 % telefona i pritom doslovno pise
    `flex-wrap:wrap`. Skener ne razlikuje objasnjenje od klase; vidi tekst. Isti razred kao

@@ -47,7 +47,7 @@ test.beforeEach(({}, testInfo) => {
  *  (4 profila × 10 ekrana ≈ 3 min), pa se ne ponavlja po tvrdnji. */
 const NALAZI = {
     otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
-    dno: [], bocno: [], spremnik: []
+    dno: [], bocno: [], spremnik: [], namjestaj: []
 };
 let izmjerenoEkrana = 0;
 
@@ -116,6 +116,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
                 + (m.bannerPx ? ' + banner ' + m.bannerPx + ' px (' + m.bannerPct + ' %)' : '')
                 + ' od ' + m.vh + ' px');
         }
+        m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
@@ -161,6 +162,15 @@ test('④ prvi ekran: bar jedna sadržajna kontrola dohvatljiva bez skrola', asy
     // `z-index: 2147483000`, pa gumb ispod njega ima savršen pravokutnik i nikakvu
     // upotrebljivost. Zato `elementFromPoint`, kao u K3.
     protivOsnovice('prviEkran', 'NOVI ekrani na kojima se bez skrola ne da ništa napraviti');
+});
+
+test('⑧ trajni donji namještaj nije prekriven (cigla T4)', async () => {
+    // Tvrdnja ④ ovo NIJE mogla reći: ondje je dovoljna bilo koja dohvatljiva kontrola, pa
+    // je stranica na kojoj je cijela donja navigacija pod cookie-trakom prolazila čim je
+    // imala neki gumb u sadržaju (`study:quiz`, `study:learn`). Ista traka je istovremeno
+    // obarala `study:home`, `study:flashcards` i `study:fill` — jedan uzrok, pet ishoda,
+    // i nijedan nije imenovao pravu stvar. Ova tvrdnja imenuje.
+    protivOsnovice('namjestaj', 'NOVO prekriven donji namještaj (promjena načina učenja)');
 });
 
 test('⑤ zaglavlje razine je čitljivo: jedan redak i nije odrezano', async () => {

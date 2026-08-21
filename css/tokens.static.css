@@ -202,4 +202,5 @@
   --pathbar-h: 44px;
   --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
   --bottom-inset: 0px;
+  --bottom-furniture-h: 0px;
 }

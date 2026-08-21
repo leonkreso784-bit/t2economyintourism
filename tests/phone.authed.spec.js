@@ -26,7 +26,7 @@ async function spremanAdmin(page) {
 
 const NALAZI = {
     otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
-    dno: [], bocno: [], spremnik: []
+    dno: [], bocno: [], spremnik: [], namjestaj: []
 };
 let izmjerenoEkrana = 0;
 
@@ -70,6 +70,7 @@ test.beforeAll(async ({ browser }, testInfo) => {
             NALAZI.prviEkran.push(gdje(r) + ' · kromo ' + m.kromoPx + ' px'
                 + (m.bannerPx ? ' + banner ' + m.bannerPx + ' px' : '') + ' od ' + m.vh + ' px');
         }
+        m.namjestaj.forEach((x) => NALAZI.namjestaj.push(gdje(r) + ' · ' + x));
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
         r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
         r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
@@ -104,6 +105,12 @@ test('③ jedan krati, drugi se lomi — i na polici i u Studiju', async () => {
 
 test('④ prvi ekran: iz police i Studija se bez skrola da nešto napraviti', async () => {
     protivOsnovice('prviEkran', 'NOVI prijavljeni ekrani bez ijedne dohvatljive kontrole');
+});
+
+test('⑧ trajni donji namještaj nije prekriven ni iza prijave (T4)', async () => {
+    // Prijavljene stranice danas nemaju donju traku, pa je ovo tvrdnja o BUDUĆNOSTI: polica
+    // i Studio su prve kandidatkinje za donji namještaj (P2), a cookie-traka ih dočeka.
+    protivOsnovice('namjestaj', 'NOVO prekriven donji namještaj na prijavljenoj stranici');
 });
 
 test('⑤ zaglavlje razine je čitljivo i iza prijave', async () => {

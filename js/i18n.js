@@ -352,6 +352,16 @@
     'footer.terms': { en: 'Terms of Use', hr: 'Uvjeti korištenja' },
     'footer.cookies': { en: 'Cookie settings', hr: 'Postavke kolačića' },
     'footer.rights': { en: '© 2026 Sokrat Study · Leon Kreso. All rights reserved.', hr: '© 2026 Sokrat Study · Leon Kreso. Sva prava pridržana.' },
+    // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
+    // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
+    // znakova): na 320 px je stara rečenica bila PET redaka i traka je uzimala 38 % ekrana.
+    // Ono što je izostavljeno („kako bismo razumjeli kako posjetitelji koriste…") je
+    // obrazloženje koje u cijelosti stoji u Pravilima privatnosti, na koja traka vodi.
+    'cookie.text': { en: 'We use optional analytics and error-monitoring cookies. They load only if you accept.', hr: 'Koristimo neobavezne kolačiće za analitiku i praćenje grešaka. Učitavaju se samo ako prihvatiš.' },
+    'cookie.privacy': { en: 'Privacy Policy', hr: 'Pravila privatnosti' },
+    'cookie.accept': { en: 'Accept', hr: 'Prihvaćam' },
+    'cookie.reject': { en: 'Reject', hr: 'Odbijam' },
+    'cookie.label': { en: 'Cookie consent', hr: 'Pristanak na kolačiće' },
     // `footer.made.*` obrisani u C2 — „Made with ❤️ for students" je ukras koji ne nosi
     // značenje (izlazni uvjet §7.6.5), a i suzio je publiku na studente.
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },

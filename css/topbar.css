@@ -44,6 +44,13 @@
        banner ima `z-index: 2147483000` i presreće pokazivač. Zadano 0 — bez ove
        deklaracije bi `getPropertyValue` vratio prazno na svakoj stranici bez bannera. */
     --bottom-inset: 0px;
+    /* T4 · OBRNUTI SMJER OD `--bottom-inset`. Ondje traka javlja SVOJU visinu drugima;
+       ovdje njoj javljaju koliko je dno već zauzeto. Povod je izmjeren: `.study-mobile-nav`
+       je `fixed; bottom:0; z-index:9999`, a traka `z-index:2147483000` — pa je na prvom
+       posjetu cookie-traka pokrivala SVIH ŠEST gumba za promjenu načina učenja, i telefon
+       nije imao nijednu dohvatljivu kontrolu bez skrola. **Fiksni element ne vidi drugi
+       fiksni element**, pa netko mora izmjeriti i objaviti — to radi `js/consent.js`. */
+    --bottom-furniture-h: 0px;
 }
 
 /* ⚠️ `--chrome-h` SE MORA PONOVNO IZRAČUNATI NA `body` — i to nije opreznost nego ispravak.

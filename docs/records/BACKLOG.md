@@ -23,6 +23,8 @@ STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0
 2. **Broj commita izvan produkcije NIJE nalaz i ne spominje se** (*„ZNAM KADA ZELIM PUSTIT
    NESTO NA PRODUKCIJU"*; povod: raniji deploy koji se nije trebao dogoditi).
 
+**❓ OTVORENO PITANJE IZ T4 (2026-08-22) — traži ODLUKU, ne izvedbu.** Stranica `about` na **sva četiri profila** nema **nijednu** kontrolu u prvom ekranu: cijela ima **jednu** (`a.email-link`) i ona je na `y ≈ 1500`. Tvrdnja ④ phone-brane to danas broji kao kvar i to su **4 od 10** preostalih nalaza u osnovici. Dvije mogućnosti, i obje su legitimne: ① `about` je proza koja se čita, pa tvrdnja dobiva **izuzeće uz zapis zašto** · ② stranica bez ijednog izlaza je kvar, pa dobiva **ulaz** (vrata natrag na gradivo ili na vlastiti materijal). *Ne popravljati dok se ne odluči — popravak bez odluke ovdje znači izmišljanje sadržaja.*
+
 ---
 
 ## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)

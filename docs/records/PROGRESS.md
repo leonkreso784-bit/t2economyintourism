@@ -5,6 +5,78 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-22 (OPUS) — **T4: cookie-traka (spec §9.11)**
+
+Sonda prije koda, peti put zaredom — i peti put je mjerenje oborilo ono što je pisalo u planu.
+Ovaj put je oborilo **rečenicu koju sam sâm napisao u T3**: *„svih 13 preostalih nalaza su svi
+do jednog zbog cookie-bannera."*
+
+Nisu. Traka je uzrok na **3 od 13**. Rečenica je nastala tako što poruka nalaza ispisuje visinu
+trake **kad god traka postoji** — pa je optužba pročitana iz **formata poruke**, ne iz mjere.
+
+```
+svaki ekran mjeren dvaput: sa zatečenom trakom i s display:none na traci
+
+  3   320 px study:home/flashcards/fill   traka pokriva cijelu donju navigaciju   → T4
+  4   lessons (320/393/430/852)           stranica NEMA nijednu kontrolu          → BUG-032
+  4   about   (320/393/430/852)           jedna kontrola, na y ≈ 1500             → dizajn
+  2   landing (320 i 852)                 hero gura vrata ispod pregiba           → T5
+```
+
+**Kvar nije bila visina nego pokrivanje.** `.study-mobile-nav` je `z-index: 9999`, traka
+`2147483000` → na prvom posjetu je traka pokrivala **svih šest gumba** za promjenu načina
+učenja. Student koji prvi put otvori lekciju na telefonu ne može promijeniti način dok ne
+odgovori na pitanje o kolačićima.
+
+Varijante sam prvo mjerio **kumulativno** i to je sakrilo odgovor; ponovljeno na **svježoj
+stranici po varijanti**:
+
+| | traka | vrh | ④ |
+|---|---|---|---|
+| zatečeno | 217 | 351 | 0 |
+| **samo stisnuta** | 127 | 441 | **0** |
+| **samo podignuta** | 217 | 258 | **6** |
+| oboje | 127 | 348 | 6 |
+
+Navigacija počinje na 475 — stisnuta traka i dalje počinje **iznad** nje. **Stiskanje ne
+popravlja ništa.** Ostaje u cigli, ali kao udobnost.
+
+**Što je napravljeno**
+- `bottom: var(--bottom-furniture-h)`, vrijednost **mjeri i objavljuje `js/consent.js`** (isti
+  obrazac kao `--bottom-inset`, obrnut smjer). Mjeri se jer visina navigacije **ovisi o širini**
+  (93 px na 320, 97 na 393) — konstanta bi bila drugi izvor iste istine.
+- Sigurni rub se **oduzima** za ono što je već ispod trake, inače traka nosi 34 px praznine
+  usred ekrana. `max()`, nikad zbrajanje (T1).
+- Traka stisnuta: 217 → **129 px** (na učenju **105**), tekst 171 → 100 znakova, i **prvi put
+  preveden** — bila je jedina površina sa zakucanim engleskim, a to je pravni tekst.
+- Nova tvrdnja ⑧ u brani. Obrnuta provjera: sa `bottom: 0` prijavljuje **17 ekrana**, dok ih je
+  ④ vidjela **3**.
+
+**Dvije stvari koje su izašle usput, i obje su vrijedile više od same cigle**
+
+**① Osnovica prijavljenih je pokušala progutati tuđe stanje.** Pri spuštanju su se pojavila
+četiri `dno` nalaza na polici; dva ponovljena prolaza **istog koda** ih nisu reproducirala.
+Polica je **podatak** — test-račun je tada imao materijale, poslije nijedan. Da sam ih ostavio,
+osnovica bi držala **trenutno stanje tuđeg računa kao našu poznatu manu**. Maknuti su, a kvar
+riješen **pravilom** (`.profile-content` rezervira donji rub, 16 → 34 px). Pošteno: da pravilo
+uklanja **baš taj** nalaz nije dokazano — to se stanje nije dalo reproducirati.
+
+**② BUG-032.** `lessons` nema nijednu kontrolu za tipkovnicu ni čitač ekrana: kartica lekcije
+je `div` s `click`-slušateljem. To nije telefonski kvar nego **jedini put u svaku lekciju
+kataloga**. Nijedan gate ga nije mogao vidjeti — axe ne prijavljuje `div` s slušateljem, K3
+mjeri pogodak **na kontrolama koje postoje**, `css:diff` mjeri izgled. *Gate koji provjerava
+kontrole ne vidi kvar u kojem kontrola NE POSTOJI.*
+
+**Gate:** `preflight` EXIT 0 · `css:diff` **0 / 3378** · phone-brana **10/10 javno, 11/11
+prijavljeno** · `check:tailwind` pao na `.visible` (četvrti put isti razred — ovaj put ime
+**CSS vrijednosti u usporedbi niza**) pa dopisan u `@source not inline`.
+
+**Sljedeće:** **T5** (tipografija — i sad ima brojku: vrata landinga počinju na 567 od 568 px u
+portretu, 425 od 393 polegnuto), pa **T6**. Otvoreno za odluku: `about` na sva četiri profila
+nema kontrole u prvom ekranu — je li to kvar ili proza koja se čita?
+
+---
+
 ## 2026-08-21 (OPUS) — **T3: budžet kroma ≤ 20 % (spec §9.10)**
 
 Isti redoslijed kao u T0–T2: sonda prije koda. I opet je **mjerenje oborilo plan** — ovaj put

@@ -23,6 +23,15 @@
 .profile-content {
     width: 100%;
     padding: 1.5rem;
+    /* ⚠️ ZAOSTATAK T1, NAĐEN TEK U T4 — i način na koji je nađen je pouka. Osnovica
+       prijavljene brane je jednom snimila „`button.mm-act` 14 px u pojasu" na 320 px, a
+       sljedeća dva prolaza istog koda to nisu ponovila: mjeri se POLICA, a polica je
+       PODATAK — test-račun je tada imao materijale, poslije nijedan. Ovisnost o podacima
+       ne smije završiti u osnovici (upisala bi tuđe stanje kao našu poznatu manu), pa se
+       kvar rješava PRAVILOM: spremnik police i profila rezervira donji rub, i onda je
+       svejedno ima li kartica. `max()`, ne zbrajanje — na desktopu je rub 0 i razmak
+       ostaje točno 1.5rem. */
+    padding-bottom: max(1.5rem, var(--safe-bottom));
     max-width: 860px;
     margin: 0 auto;
 }
@@ -312,7 +321,8 @@
 
 @media (max-width: 640px) {
     .profile-grid { grid-template-columns: 1fr; }
-    .profile-content { padding: 1rem; }
+    /* Kratica ponovno briše sigurnu zonu — zato je longhand ovdje ponovno ispisan. */
+    .profile-content { padding: 1rem; padding-bottom: max(1rem, var(--safe-bottom)); }
     .profile-stat-vals { gap: 0.7rem; }
 }
 

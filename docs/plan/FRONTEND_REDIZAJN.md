@@ -2454,5 +2454,176 @@ Dvije klase, obje očekivane i obje provjerene drugim putem:
 #### Što je ostalo, i čije je
 
 Kromo više **ne probija budžet ni na jednom profilu**. Osnovica javno je pala **31 → 13**, i svih
-preostalih 13 su tvrdnja ④ (*„bar jedna kontrola bez skrola"*) — **svi do jednog zbog
-cookie-bannera**, dakle **T4**. Prijavljene stranice su na **0**.
+preostalih 13 su tvrdnja ④ (*„bar jedna kontrola bez skrola"*). Prijavljene stranice su na **0**.
+
+> ⚠️ **ISPRAVAK (T4, 2026-08-22): ovdje je stajalo „svi do jednog zbog cookie-bannera".**
+> Mjerenje u T4 je pokazalo da je traka uzrok na **3** ekrana, a ne na 13. Tvrdnja je bila
+> prepisana iz FORMATA PORUKE — nalaz ispisuje visinu trake kad god traka postoji, ne kad je
+> ona kriva. *Nalaz koji nešto imenuje nije time i optužio to.* Razlaganje je u §9.11.
+
+---
+
+### 9.11 T4 — cookie-traka (isporučeno 2026-08-22)
+
+**Kriterij (§9.3):** *„…pri prvom posjetu vidi i ponudu i stranicu."*
+
+#### ⚠️ Prvo mjerenje je oborilo premisu cigle, i to prije ijednog retka koda
+
+Ova sekcija je do danas tvrdila da su **svih 13** preostalih nalaza tvrdnje ④ *„svi do jednog
+zbog cookie-bannera"* (§9.10). To je **netočno**, i način na koji je nastalo vrijedi zapisati:
+poruka nalaza ispisuje visinu trake **kad god traka postoji**, a ne kad je traka **uzrok**.
+Rečenica je dakle prepisana iz formata poruke, ne iz mjerenja. *Nalaz koji imenuje nešto nije
+time i optužio to.*
+
+Izmjereno (svaki ekran dvaput: sa zatečenom trakom i s `display:none` na traci):
+
+| ekrana | zašto ④ pada | čije je |
+|---|---|---|
+| **3** — 320 px `study:home`, `study:flashcards`, `study:fill` | traka pokriva **cijelu donju navigaciju** | **T4** ✅ |
+| **4** — `lessons` na 320/393/430/852 | stranica **nema nijednu sadržajnu kontrolu**: `div.lesson-card` nosi `click`-slušatelja, a nije ni gumb ni poveznica ni `role`/`tabindex` | **BUG-032** (nova) |
+| **4** — `about` na 320/393/430/852 | stranica ima **točno jednu** kontrolu (`a.email-link`) i ona je na `y ≈ 1500` | otvoreno pitanje dizajna (§9.11.4) |
+| **2** — `landing` na 320 i 852 | prva vrata počinju na `y = 567` od 568 px (portret), odnosno `y = 425` od 393 (polegnut) — hero ih gura ispod pregiba | **T5** |
+
+Dakle: **T4 pojede 3 od 13, a ne 13 od 13.** Ostatak nije nestao nego je dobio pravo ime.
+
+#### Pravi kvar iza trake nije bila VISINA nego POKRIVANJE
+
+`.study-mobile-nav` (promjena načina učenja na telefonu) je `position: fixed; bottom: 0;
+z-index: 9999`. Cookie-traka je `z-index: 2147483000`. Na **prvom posjetu** je zato traka
+pokrivala **svih šest gumba** — dakle student koji prvi put otvori lekciju na telefonu ne može
+promijeniti način učenja **dok ne odgovori na pitanje o kolačićima**.
+
+Dvije varijante popravka razdvojene su na **svježoj stranici po varijanti** (kumulativno
+mjerenje bi ovo sakrilo — i u prvom pokušaju jest):
+
+```
+320 px, study:home              traka   vrh    ④
+  A  zatečeno                    217    351     0
+  B  SAMO stisnuta               127    441     0     ← vrh je i dalje IZNAD navigacije (475)
+  C  SAMO podignuta              217    258     6
+  D  oboje                       127    348     6
+```
+
+**Stiskanje ne popravlja ništa** — 127 px trake i dalje počinje 34 px iznad navigacije.
+Popravlja tek **podizanje**. Stiskanje ostaje u cigli, ali kao udobnost, ne kao ispravak.
+
+#### Pravilo: traka se povlači pred trajnim donjim namještajem
+
+`bottom: var(--bottom-furniture-h, 0px)`, a vrijednost **objavljuje `js/consent.js`
+mjerenjem** — isti obrazac kao `--bottom-inset`, samo u suprotnom smjeru (ondje traka javlja
+svoju visinu izbornicima, ovdje njoj javljaju koliko je dno već zauzeto).
+
+⚠️ **Zašto mjerenje, a ne konstanta.** Visina navigacije nastaje iz nekoliko pravila
+(`min-height` gumba + razmaci + sigurni rub) i **razlikuje se po širini**: izmjereno **93 px na
+320** i **97 px na 393**. Svaka konstanta upisana u CSS bila bi drugi izvor iste istine i točno
+bi jednom bila kriva. (Isti razlog zbog kojeg T3 nije smio spojiti trake „na oko".)
+
+⚠️ **Sigurni rub se ODUZIMA za ono što je već ispod trake:**
+`padding-bottom: max(12px, calc(var(--safe-bottom) - var(--bottom-furniture-h)))`. Kad traka
+sjedne iznad navigacije, ispod nje nema izreza — njega je već pojela navigacija; bez oduzimanja
+bi traka nosila **34 px prazne visine usred ekrana**. Kad namještaja nema, izraz se svede na
+staro ponašanje. **`max()`, nikad zbrajanje** — isti rez kao T1.
+
+⚠️ **Cijena koja se izriče:** `js/consent.js` sad drži `MutationObserver` nad sekcijama —
+namještaj se pojavljuje s navigacijom, pa se prati promjena klase `.active`. Promatrač živi
+**samo dok traka postoji**, dakle do prvog pristanka i nikad više.
+
+#### Nova tvrdnja ⑧ — jer ④ nije mogla reći što je slomljeno
+
+Tvrdnji ④ je dovoljna **bilo koja** dohvatljiva kontrola. Zato su `study:quiz` i `study:learn`
+**prolazili** dok im je cijela donja navigacija bila pod trakom (imali su gumb u sadržaju), a
+`study:home`/`flashcards`/`fill` padali — **jedan uzrok, pet ishoda, i nijedan nije imenovao
+pravu stvar.** Tvrdnja ⑧ mjeri imenovano: *trajnu donju traku ništa ne smije prekrivati*,
+pogotkom (`elementFromPoint`), uz imenovanje pokrivača.
+
+**Obrnuta provjera** (vraćen `bottom: 0`): ⑧ prijavljuje **17 ekrana** oblika
+`nav.mobile-nav: 6 od 6 kontrola prekriveno`, dok ih je ④ vidjela **3**. Brana koja mjeri
+posljedicu vidjela je **18 %** kvara.
+
+#### Mjere
+
+| | prije | poslije |
+|---|---|---|
+| traka na 320 px (bez donje navigacije) | 217 px = **38 %** | 129 px = **23 %** |
+| traka na 320 px **na učenju** (podignuta) | 217 px | **105 px** |
+| traka na 393 px | 195 px = 23 % | 129 px = **15 %** |
+| traka na 430 px | 174 px = 19 % | 129 px = **14 %** |
+| traka polegnuto (852 × 393) | 103 px = 26 % | 73 px = **19 %** |
+| osnovica `prviEkran` (javno) | 13 | **10** |
+| osnovica `namjestaj` | — | **0** |
+
+Tekst je pritom skraćen sa **171 na 100 znakova** i **prvi put preveden** — traka je do danas
+bila jedina površina sa zakucanim engleskim, a to je pravni tekst, ne ukras. Izostavljeno je
+obrazloženje („kako bismo razumjeli kako posjetitelji koriste…") koje u cijelosti stoji u
+Pravilima privatnosti, na koja traka vodi. Gumbi ostaju **36 px** visoki — visina se rezala na
+tekstu i razmacima, nikad na metama za prst.
+
+#### ⚠️ Usput: osnovica prijavljenih je pokušala progutati TUĐE STANJE
+
+Pri spuštanju osnovice pojavila su se **četiri nova `dno` nalaza** (`button.mm-act` 14 px u
+pojasu, 320 px, polica). Ponovljena mjera istog koda ih **nije reproducirala** — dvaput. Uzrok:
+**polica je PODATAK**, a test-račun je u tom prolazu imao materijale, a poslije nijedan (sonda
+to potvrđuje: `mm-act` = 0 i nakon 6 s čekanja, prazno stanje).
+
+Da su ostali u osnovici, upisali bismo **trenutno stanje tuđeg računa kao našu poznatu manu**.
+Zato su maknuti, a kvar je riješen **pravilom** — `.profile-content` rezervira donji rub
+(`max(1.5rem, var(--safe-bottom))`, izmjereno 16 → 34 px). To je izravna primjena pouke T1 ⑦c:
+*rezervacija ruba je SVOJSTVO spremnika, ne posljedica trenutnog sadržaja.*
+
+**Pošteno se izriče:** da pravilo uklanja baš onaj nalaz iz osnovice **nije dokazano** — to
+stanje se nije dalo reproducirati (ubačeni retci ne padnu na isto mjesto). Dokazano je da
+pravilo **vrijedi**; da je nalaz bio ovisan o podacima; i da bi njegovo upisivanje u osnovicu
+bilo pogrešno u svakom slučaju.
+
+#### ⚠️ `check:tailwind` je pao na `.visible` — četvrti put isti razred, nova podvrsta
+
+Dosad su kandidati dolazili iz **negacije u kodu** (`if (!container)` → `.\!container`) i iz
+**proze** (`flex-wrap`, `sticky`). Ovaj put izvor je **ime CSS vrijednosti u usporedbi niza**:
+`cs.visibility !== 'visible'` u novom mjeraču namještaja. Kad se obrazac imenuje, vidi se da
+`fixed` i `hidden` na popisu isključenja stoje **iz istog razloga** — i oni su vrijednosti koje
+kod uspoređuje kao tekst. *Skener ne zna razliku između vrijednosti i klase; vidi tekst.*
+
+#### ⚠️ Funkcionalna sonda je našla ono što nijedna mjera izgleda nije mogla
+
+Cigla je prepisala markup trake (`innerHTML` → DOM API) i dodala i18n — dakle točno one izmjene
+koje mogu **tiho slomiti pristanak**, a da svaka mjera piksela ostane zelena. Zato je uz mjeru
+napisana i sonda koja provjerava **ponašanje**: jezik, „Prihvaćam", „Odbijam", položaj iznad
+navigacije. Našla je dvije stvari, i razlikovati ih je bilo važnije od popravljanja.
+
+**① Prva je bila u samoj sondi.** Prebacivanje jezika nije radilo jer je sonda tražila
+`#langToggle`, a prekidač zove `toggleUiLang()`. *Kad tvrdnja padne, prvo pitanje je mjeri li
+uopće ono što misli da mjeri.*
+
+**② Druga je bila prava, ali NIJE produkcijska — i to se izriče.** Traka je sjedila **34 px
+predubok**o (objavljeno 63 px umjesto 97) i pokrivala **gornju trećinu navigacije, dakle ikone**.
+Uzrok: u sondi se `--safe-bottom` postavlja **nakon** što se navigacija pojavi, pa je objavljena
+vrijednost bila izmjerena prije nego je navigacija narasla. **Na pravom telefonu se to ne
+događa** — `env()` se razriješi pri prvom crtanju, prije ijedne navigacije.
+
+Ali je otkrilo **stvarnu rupu u mjeraču**: dodan `ResizeObserver` **nije okidao**, jer
+`ResizeObserver` po zadanom prati **content-box**, a visina navigacije raste **isključivo
+razmakom** (`padding-bottom: calc(.5rem + var(--safe-bottom))`). *Promatrač koji gleda krivu
+kutiju je promatrač koji ne gleda.* Popravak je `{ box: 'border-box' }`; realan slučaj (rotacija
+telefona) pokrivali su i dosad `resize`/`orientationchange`, pa je ovo pojas uz naramenice.
+
+**③ I dalo je bolju tvrdnju.** ⑧ je gadala **središta** kontrola, a *pogodak u sredinu ne
+dokazuje da je kontrola cijela vidljiva*: pri preklopu od 34 px središta gumba ostaju ispod
+pokrivača. Izmjereno na oba profila s vraćenim kvarom — na **393 px je mjera središta šutjela, a
+mjera gornjeg ruba prijavila `3 od 3 točke`**. Zato ⑧ sada uzorkuje i **gornji rub** namještaja.
+
+#### Stanje gateova
+
+`preflight` **EXIT 0** · `css:diff` **0 razlika / 3378 usporedbi** (očekivano: `consent.css`
+nije u bundleu, a `--safe-bottom` je u Chromiumu 0 pa `max(1.5rem, 0)` = 1.5rem) ·
+phone-brana **10/10 javno, 11/11 prijavljeno** · obrnuta provjera ⑧ **pada s 17 nalaza**.
+
+#### 9.11.4 Što ostaje, i čije je
+
+- **BUG-032** — `lessons` nema nijednu kontrolu za tipkovnicu ni čitač ekrana. **Nije samo
+  telefonski kvar**: to je jedini put u svaku lekciju kataloga. Zapisan, nije popravljen ovdje.
+- **`about` na sva četiri profila** — stranica bez ijedne kontrole u prvom ekranu. Prije
+  popravka treba **odluka**: je li to kvar (stranica bez izlaza) ili proza koja se čita?
+  Tvrdnja ④ ju danas broji kao kvar, pa ili stranica dobiva ulaz (npr. vrata natrag na
+  gradivo), ili tvrdnja dobiva izuzeće **uz zapis zašto**.
+- **`landing` na 320 i 852** — hero gura vrata ispod pregiba. To je **T5**, i sada ima brojku:
+  vrata počinju na 567 od 568 px (portret), odnosno 425 od 393 (polegnut).
