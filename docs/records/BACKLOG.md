@@ -131,6 +131,79 @@ Uloga (student/učenik/profesor/vanjski) je korisna i bezopasna — ona ostaje.
 
 ---
 
+## 🔥 Leaked password protection — **rješivo BESPLATNO; Supabase naplaćuje integraciju, ne provjeru** (2026-08-21)
+
+**Premisa je bila kriva 11 dana.** Stavka „RUČNO ČEKA LEONA" je od 10. 8. tvrdila da je ovo *„jedini
+od 16 advisora koji se rješava jednim prekidačem"*. Prekidač je **iza Pro plana** (org
+`pfbkisxynphwxdbqmmtt` = **free**), pa ga u Dashboardu nema. Advisor ga svejedno prijavljuje jer ne
+gleda plan. *Zapisano jer je pouka o klasi: „ostala je samo radnja" je tvrdnja koja se mora
+provjeriti prije nego se nekoga pošalje da tu radnju izvrši.*
+
+**Ono što Supabase naplaćuje NIJE provjera nego njihova integracija.** HaveIBeenPwned ima
+**besplatan javni API bez ključa**: `GET api.pwnedpasswords.com/range/{prvih 5 znakova SHA-1}`
+vrati ~500 sufiksa, usporedba je lokalna. **Lozinka nikad ne napusti preglednik** — odlazi pet
+heksadecimalnih znakova (k-anonimnost, ista tehnika koju Supabase koristi iznutra). `crypto.subtle`
+je ugrađen. **~30 redaka u `js/auth.js`.**
+
+⚠️ **Pošteno o dosegu:** naša izvedba je **klijentska**, kao i `minlength` — zaustavlja korisnika
+koji upiše `password123` (a to jest prava prijetnja), ali ne i onoga tko namjerno zaobiđe formu, a
+taj šteti **samo sebi**. Supabaseova je serverska i time jača. **~90 % vrijednosti za 0 €** umjesto
+100 % za ~300 €/god. Registracija ide izravno na Supabase Auth, ne kroz naš kod, pa se serverska
+provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojstvo puta.
+
+**Veže se na CSP (C6):** dodaje `api.pwnedpasswords.com` na popis vanjskih hostova.
+
+### Uz to: dvije susjedne stavke koje je isto istraživanje iznijelo
+
+1. **`minlength="8"` je obećanje preglednika, ne pravilo servera.** Forma traži 8
+   (`js/auth.js:206`), Supabaseov serverski minimum je zadanih **6** → tko pošalje zahtjev mimo
+   forme, registrira se sa šest znakova. **Popravak je besplatan i dostupan na free planu:**
+   Dashboard → Authentication → Sign In / Providers → **Minimum password length 6 → 8**.
+   ⚠️ **Polje „Password Requirements" NE dirati** — traženje velikih slova/brojki/simbola server bi
+   provodio, a **naša forma to nigdje ne piše**; bila bi to ista greška okrenuta naopako (server
+   stroži od sučelja). *Mijenja se isključivo ono što UI već obećava.*
+2. **`WeakPasswordError` se u `js/auth.js:343` krivo tretira.** Postojeći korisnik s prekratkom
+   lozinkom se **uspješno prijavi**, ali Supabase uz sesiju vrati i `error` → naš `if (error)`
+   pokaže **crvenu poruku** iako je prijava prošla. Nije zaključavanje, jest zbunjivanje.
+   **Mora se popraviti PRIJE nego se serverski minimum digne** (ili barem u istoj isporuci).
+   Koliko je pogođenih: **nemjerljivo** — duljina lozinke se ne pohranjuje, samo hash. Vjerojatno
+   nula (forma traži 8 od početka), ali „vjerojatno nula" nije mjera i tako se i vodi.
+
+---
+
+## 🧭 SELF-HOST SUPABASE — **odlučeno: ide, ali TEK POSLIJE frontenda** (Leon, 2026-08-21)
+
+Povod je bio bijes na Pro-gating (*„ja ovim supcima neću meda dat"*), ali odluka stoji i bez njega.
+Supabase je **open source** → self-host na VPS-u (~5 €/mj) otključava **sve Pro značajke**, uz
+**isti kod, istu shemu i isti `supabase-js`**. To je jedina opcija koja **ne traži prepisivanje**.
+
+**Odbačeno i zašto:** **PocketBase** (SQLite, vlastiti model pravila) i **Firebase / Cloudflare D1**
+traže da se RLS i svih 10 `SECURITY DEFINER` RPC-ova napišu ispočetka — to nije seoba nego **rewrite
+backenda**.
+
+**Što je danas vezano za Supabase** (mjera cijene seobe, da se ne procjenjuje napamet):
+
+| što | koliko |
+|---|---|
+| RLS politike | ~13, uz owner-check na svakoj tablici |
+| `SECURITY DEFINER` RPC-ovi | 10 (`publish_document`, `publish_node`, `create_node`, `move_node`, …) |
+| Edge Functions | 1 živa (`delete-account`) + 2 stranca za brisanje |
+| Storage buckets s vlasničkim prefiksom | 2 (`node-images`, `lesson-images`) |
+| Sadržaj u bazi | 51 red / 17 predmeta |
+| Naši alati koji govore Supabaseu | `check:final` · `diff:db` · `check:functions` · `test:storage` · `test:delete-account` · `backup` · `migrate-content` |
+
+**Zašto ne sada:** usred smo crvenog alarma za telefon koji je Leon sam proglasio prioritetom, i
+ništa ne ide na produkciju dok to nije gotovo. Seoba backenda bi zamrznula **jedino što korisnicima
+trenutno smeta**.
+
+**Argument koji vrijedi neovisno o bijesu — i zbog kojeg ovo nije samo osveta:** self-host gasi i
+**uspavljivanje baze nakon ~7 dana neaktivnosti**, koje nas već grize (app tad pada na datoteke,
+prijava i sync ne rade). **Cijena koja se mora izreći: postajemo sami sebi DBA** — backupi,
+nadogradnje, sigurnosne zakrpe, uptime. Za jednog autora usred redizajna to je stvarni trošak
+vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
+
+---
+
 ## ➖ Birač tema je bliže nego što spec tvrdi — 24 pravila, ne 126 (2026-08-18)
 
 Leon je pitao kad dolaze druge boje cijele stranice. `npm run palette:breakdown`:
