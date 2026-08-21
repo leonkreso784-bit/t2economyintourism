@@ -5,6 +5,58 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-21 (OPUS) — **T3: budžet kroma ≤ 20 % (spec §9.10)**
+
+Isti redoslijed kao u T0–T2: sonda prije koda. I opet je **mjerenje oborilo plan** — ovaj put
+skicu koju sam sam predložio Leonu sat ranije („spoji trake u jedan red").
+
+```
+320 px, unutar aplikacije:
+  .topbar    64 px visine  nosi 134 px sadržaja  →  146 px širine PRAZNO
+  .pathbar   44 px visine  mrvica ŽELI 377       →  dobiva 252   ⚠ kraćeno
+```
+
+Problem nije **količina** kroma nego **raspodjela**. Jedan red na 320 px ostavio bi mrvici
+**94 px** (bez znaka 244) — **manje nego danas**, i poništio bi T2. Portret i landscape imaju
+**suprotnu oskudicu**: u portretu nedostaje širina, u landscapeu visina (a širine ima 393 px
+slobodno u traci i 601 u putanji). Zato **dva pravila**, i to nije nedostatak jedinstva nego
+posljedica mjere.
+
+| | prije | poslije |
+|---|---|---|
+| 320 × 568 | 108 = 21 % | **100 = 19,6 %** |
+| 852 × 393 | 108 = 27 % | **56 = 14 %** |
+| osnovica javno / prijavljeno | 31 / 8 | **13 / 0** |
+
+**Dvije stvari koje je cigla iznijela, a nisu bile u planu:**
+
+1. **Ljepljivost je morala preseliti na omotač** — sticky se ne može zalijepiti izvan roditelja,
+   pa bi omotač od 108 px pustio traku da odskrola. **Prva provjera je lažno prošla**: `browse`
+   u portretu ima `scrollY = 0`. *Prolaz zbog kratkog sadržaja nije prolaz* — ista pouka kao
+   ⑦c u T1, i drugi put u dvije cigle. Ponovljeno gdje se skrola: 4980 / 773 / 5522 / 1118 px,
+   svaki put `top = 0`.
+2. **Sam sam uveo kvar, i našla ga je sonda** — u spojenom retku `.topbar` pokriva samo svoj
+   dio (**341 od 852 px**), pa je putanja lijevo od nje ostala **prozirna**: sadržaj bi se vidio
+   kako klizi iza mrvice. Plohu u retku sad nosi omotač. *Zbog toga je puna suita prekinuta i
+   pokrenuta iznova — CSS promijenjen u hodu učinio bi njezin rezultat opisom nijednog stabla.*
+   ⚠️ **A i taj popravak je imao cijenu od jednog piksela**: razdjelnik je prvo bio
+   `border-bottom`, a omotač u retku **nema zadanu visinu** → rub mu se dodaje (kromo 56 → 57)
+   i razilazi se s `--chrome-h`. **Uhvatila ga je osnovica brane, ne oko.** Rješenje je
+   `box-shadow: 0 1px 0`. *Rub troši visinu; razdjelnik koji to ne smije je sjena.*
+3. **`--chrome-h` nikad nije pratio `body`** — `var()` se supstituira ondje gdje je deklariran,
+   pa je vrijednost s `:root`-a bila „zapečena" i `body.no-pathbar` je nije mijenjao. Landing je
+   od `100dvh` oduzimao red koji ondje ne postoji. Kvar je **stariji od T3** i nevidljiv jer je
+   landing dulji od ekrana. Dokazano **invarijantom** (`min-height == vh − kromo`, 15/15), ne
+   pregledom.
+
+**Metodološka pouka koja se pamti:** `css:diff` je dao 225 razlika, a alat ispisuje **8 od 15**
+elemenata po širini. Umjesto da tvrdim nešto o ostatku koji ne vidim, dokazao sam **svojstvo koje
+ih sve pokriva**. *Kad gate ne može pokazati sve, dokazuje se invarijanta, ne uzorak.*
+
+**Sljedeće:** T4 — svih 13 preostalih nalaza u osnovici su tvrdnja ④ i **svi zbog cookie-bannera**.
+
+---
+
 ## 2026-08-21 (OPUS) — **Revizija stanja + `macroeconomics` re-syncan (ručna Leonova radnja)**
 
 Leon je zatražio provjeru dojma da projekt „ide nizbrdo". **Dojam nije potvrđen mjerenjem** —

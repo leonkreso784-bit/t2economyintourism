@@ -46,17 +46,42 @@
     --bottom-inset: 0px;
 }
 
+/* ⚠️ `--chrome-h` SE MORA PONOVNO IZRAČUNATI NA `body` — i to nije opreznost nego ispravak.
+   `var()` se supstituira ONDJE GDJE JE DEKLARIRAN: `--chrome-h` na `:root` je već „zapekao"
+   `--topbar-h` i `--pathbar-h` iz `:root`-a, pa ga kasniji override na `body` NE MIJENJA.
+   Posljedica je bila tiha i starija od T3: na landingu `body.no-pathbar` spušta `--pathbar-h`
+   na 0, ali je `--chrome-h` i dalje računao s 44 px → sekcije su od `100dvh` oduzimale red
+   koji ondje ne postoji. Vidjelo se ne bi jer je landing dulji od ekrana.
+   Deklaracija ostaje i na `:root` (zbog `tokens.static.css`, koji izvlači `:root` blokove za
+   pravne stranice bez bundlea). */
+body {
+    --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+}
+
 /* Landing nema položaj (nema kamo „gore") → drugi red otpada i iz visine i iz prikaza. */
 body.no-pathbar {
     --pathbar-h: 0px;
 }
 
+/* ===== OMOTAČ — NOSITELJ LJEPLJIVOSTI (T3) =====
+   Do T3 su obje trake bile `position: sticky` svaka za sebe, a `.pathbar` je svoj `top`
+   računao iz visine `.topbar`. To je radilo dok su bile JEDNA ISPOD DRUGE. Čim se u niskom
+   prozoru moraju složiti JEDNA PORED DRUGE, treba im zajednički flex-roditelj — a sticky se
+   NE MOŽE zalijepiti izvan svog roditelja, pa bi omotač visok 108 px pustio traku da mu
+   iscuri iz kutije i odskrola. Zato je ljepljivost preselila OVAMO, a trake su statične.
+   ⚠️ `z-index` je time isto ovdje: 1300 je iznad Studija (1200), inače bi ga puni-viewport
+   editor prekrio. */
+.chrome {
+    position: sticky;
+    top: 0;
+    z-index: 1300;
+    display: flex;
+    flex-direction: column;
+}
+
 /* ===== RED 1 — ODREDIŠTA ===== */
 
 .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 1300;               /* iznad Studija (1200) — inače bi ga puni-viewport editor prekrio */
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -216,9 +241,6 @@ body.on-landing .topbar-cta {
 /* ===== RED 2 — POLOŽAJ (natrag + mrvica) ===== */
 
 .pathbar {
-    position: sticky;
-    top: calc(var(--topbar-h) + var(--safe-top));
-    z-index: 1290;
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -382,5 +404,122 @@ body.no-pathbar .pathbar {
 @media (max-width: 359px) {
     body.on-landing .topbar-cta {
         display: none;
+    }
+}
+
+/* =====================================================================
+   T3 — BUDŽET KROMA ≤ 20 %. Dva pravila, jer su portret i landscape
+   suprotne oskudice. Oboje je izmjereno prije koda (spec §9.10).
+
+   ── ŠTO JE SONDA POKAZALA ──────────────────────────────────────────
+   Na 320 px, unutar aplikacije:
+
+       .topbar    64 px visine  nosi 134 px sadržaja  →  146 px širine PRAZNO
+       .pathbar   44 px visine  mrvica ŽELI 377 px    →  dobiva 252   ⚠ kraćeno
+
+   Dakle nije problem „previše kroma" nego RASPODJELA: cijeli red od 64 px
+   troši se na znak i dva ikon-gumba, dok red kojem širina TREBA gladuje.
+
+   Na 852 × 393 je obrnuto: `.topbar` ima 393 px slobodne širine, `.pathbar`
+   601 px — obje su poluprazne, a nedostaje VISINA.
+
+   ── ZAŠTO SPAJANJE NIJE ODGOVOR U PORTRETU ─────────────────────────
+   Jedan red na 320 px: znak 42 + natrag 36 + akcije 92 + razmak 32 + tri
+   zazora 24 = 226 fiksno → mrvici ostaje **94 px** umjesto 252. To bi
+   poništilo T2, koji je baš tu mrvicu vratio s 30 na 99 px. Provjereno i
+   za varijantu bez znaka: 244 px, i dalje manje nego danas. **Nijedan
+   raspored u jednom redu na 320 px ne daje mrvici širinu koju već ima.**
+   ===================================================================== */
+
+/* ① NIZAK PROZOR, ALI NE I USKI → traka se stisne na ono što joj treba.
+   64 px postoji zbog LANDINGA, gdje traka nosi znak i CTA i sama je cijela
+   navigacija (§7.13). Unutar aplikacije nosi znak i dva ikon-gumba — i tu
+   nema pravo na landingovu visinu. 56 = znak 42 + 7 zraka gore i dolje;
+   ⚠️ ZNAK OSTAJE 42 px, mijenja se samo zrak oko njega — Leonova odluka
+   („znak je tri puta prijavljen kao premalen") ostaje netaknuta.
+   Mjera: 64 + 44 = 108 od 509 = 21 % → 56 + 44 = 100 = **19,6 %**.
+   Probijanje je bilo 6 px; ovo daje 2 px zalihe, a ne dira landing. */
+@media (max-height: 700px) {
+    body:not(.on-landing) {
+        --topbar-h: 56px;
+    }
+}
+
+/* ② PROZOR NIŽI OD 520 px → JEDAN RED. Ovdje spajanje JEST odgovor, jer je
+   oskudica obrnuta: visine nema, širine ima 852 px. Redoslijed je namjerno
+   obrnut (`order: -1`) — položaj ide LIJEVO, gdje gumb „natrag" i pripada,
+   a marka i alati desno.
+   Mjera: 108 od 393 = 27 % → **64 od 393 = 16 %** (uz ① još manje).
+   ⚠️ Mrvica u najdubljoj razini traži 377, a dobiva 341 → kraćenje pada na
+   PRETKE, nikad na trenutnu razinu (pravilo T2 i dalje vrijedi jer ga nosi
+   `.crumb` vs `.crumb-current`, ne ovaj raspored). */
+@media (max-height: 519px) {
+    :root {
+        /* Putanja više ne stoji ISPOD trake → ne doprinosi visini kroma.
+           Bez ovoga bi sekcije od `100dvh` oduzimale red koji ne postoji. */
+        --pathbar-h: 0px;
+    }
+
+    .chrome {
+        flex-direction: row;
+        align-items: stretch;
+        /* Sigurna zona seli na omotač: u retku je LIJEVI rub putanja, a DESNI
+           traka, pa bi izvorna raspodjela („traka drži oba ruba") rezervirala
+           razmak na krivoj strani. */
+        padding-left: var(--safe-left);
+        padding-right: var(--safe-right);
+    }
+
+    .chrome .topbar,
+    .chrome .pathbar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .chrome .topbar {
+        flex: 0 0 auto;
+        height: calc(var(--topbar-h) + var(--safe-top));
+    }
+
+    /* Razmaknica je postojala da odvoji znak od alata u punom retku; u spojenom
+       retku bi gurala putanju izvan ekrana. */
+    .chrome .topbar-spacer {
+        display: none;
+    }
+
+    .chrome .pathbar {
+        order: -1;
+        flex: 1 1 auto;
+        min-width: 0;            /* bez ovoga flex-dijete ne popušta i mrvica prelijeva */
+        height: auto;
+        background: none;
+        border-bottom: 0;
+    }
+
+    /* ⚠️ PLOHA MORA PRESELITI NA OMOTAČ — inače je pola spojenog retka PROZIRNO.
+       U stupcu svaka traka nosi vlastitu pozadinu preko cijele širine i to je točno.
+       U retku `.topbar` postaje `flex: 0 0 auto` i pokriva samo SVOJ dio (izmjereno:
+       341 od 852 px, x = 452…793), a putanja lijevo od nje ostaje `rgba(0,0,0,0)` →
+       sadržaj bi se vidio kako klizi iza mrvice, a donji rub bi prekrivao samo desnu
+       trećinu. Kvar sam UVEO ovom ciglom i našla ga je sonda, ne oko.
+       Zato u retku plohu, zamućenje i rub nosi omotač, a traka ih se odriče. */
+    .chrome {
+        background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        /* ⚠️ SJENA, NE RUB — i to je mjera, ne stil. `.chrome` u retku nema zadanu visinu,
+           pa mu se `border-bottom` DODAJE na sadržaj: kromo je narastao 56 → 57 px i time se
+           razišao s `--chrome-h` (koji i dalje računa 56) → sekcije bi dobile piksel previše.
+           U stupcu se to ne događa jer trake imaju zadanu visinu i `box-sizing: border-box`,
+           pa je rub UNUTAR nje. `box-shadow` crta isti razdjelnik i **ne troši raspored**.
+           Uhvatila ga je osnovica brane (prijavila 56 → 57), ne oko. */
+        box-shadow: 0 1px 0 var(--border);
+    }
+
+    .chrome .topbar {
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: 0;
     }
 }

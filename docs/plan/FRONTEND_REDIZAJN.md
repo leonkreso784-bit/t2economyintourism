@@ -2332,3 +2332,127 @@ i dalje opisuje **ovo** stablo.
 > DOM drži iz radnog stabla — dakle o **obrisanom markupu** ne kaže ništa i ne može. Zato su
 > tri obrisana zaglavlja dokazana brojkom iz phone-brane (kromo 307 → 167), a ne odsutnošću
 > razlika. *Gate koji nije mogao vidjeti promjenu nije je ni odobrio.*
+
+---
+
+### 9.10 ✅ T3 JE ISPUNJEN — budžet kroma ≤ 20 %, i to DVAMA pravilima (2026-08-21)
+
+**Kriterij cigle:** *korisnik na telefonu vidi sadržaj, a ne tri trake.*
+
+| mjera | prije | poslije |
+|---|---|---|
+| 320 × 568 (portret) | 108 od 509 = **21 %** | **100 = 19,6 %** |
+| 393 × 852 (portret) | 108 od 793 = 14 % | 108 = 14 % *(nije se ni diralo — već je prolazilo)* |
+| 852 × 393 (polegnut) | 108 od 393 = **27 %** | **56 = 14 %** |
+| osnovica `phone` — javno | 31 | **13** |
+| osnovica `phone` — prijavljeno | 8 | **0** |
+
+#### ⚠️ Sonda je pokazala da problem nije KOLIČINA kroma nego RASPODJELA
+
+Mjereno prije ijedne izmjene, unutar aplikacije na 320 px:
+
+```
+.topbar    64 px visine   nosi 134 px sadržaja   →  146 px širine PRAZNO
+.pathbar   44 px visine   mrvica ŽELI 377 px     →  dobiva 252   ⚠ kraćeno
+```
+
+Cijeli red od 64 px troši se na znak i dva ikon-gumba, dok red kojem širina **treba** gladuje.
+Na 852 × 393 je obrnuto: `.topbar` ima **393 px** slobodne širine, `.pathbar` **601 px** — obje
+poluprazne, a nedostaje **visina**.
+
+**To je oborilo prvu skicu rješenja** („spoji trake u jedan red"). Jedan red na 320 px: znak 42 +
+natrag 36 + akcije 92 + razmak 32 + tri zazora 24 = **226 fiksno → mrvici ostaje 94 px** umjesto
+252. Provjereno i bez znaka: **244**, i dalje manje nego danas. **Nijedan raspored u jednom redu
+na 320 px ne daje mrvici širinu koju već ima** — spajanje bi poništilo T2, koji je baš tu mrvicu
+vratio s 30 na 99 px.
+
+> **Pravilo koje iz toga ostaje: prije nego se dvije stvari spoje, izmjeri ima li ona koja gubi
+> prostor odakle ga dati.** Portret i landscape imaju **suprotnu oskudicu**, pa jedan rez ne može
+> biti točan za oboje. *Dva pravila ovdje nisu nedostatak jedinstva nego posljedica mjerenja.*
+
+#### ① Nizak prozor → traka se stisne na ono što joj treba (`max-height: 700px`)
+
+`body:not(.on-landing) { --topbar-h: 56px }`. **64 px postoji zbog LANDINGA**, gdje traka nosi znak
+i CTA i sama je cijela navigacija (§7.13). Unutar aplikacije nosi znak i dva ikon-gumba — i nema
+pravo na landingovu visinu. 56 = **znak 42 + 7 px zraka gore i dolje**.
+
+⚠️ **Znak ostaje 42 px** — mijenja se samo zrak oko njega. Leonova odluka (*„znak je tri puta
+prijavljen kao premalen"*) je time netaknuta, i to je bio uvjet, ne sretna okolnost.
+
+#### ② Prozor niži od 520 px → JEDAN RED (`max-height: 519px`)
+
+Ovdje spajanje **jest** odgovor, jer je oskudica obrnuta. Redoslijed je namjerno obrnut
+(`order: -1`): **položaj ide lijevo**, gdje gumb „natrag" i pripada, a marka i alati desno.
+Mrvica u najdubljoj razini traži 377, dobiva **341** → kraćenje pada na **pretke**, nikad na
+trenutnu razinu (pravilo T2 vrijedi dalje jer ga nosi `.crumb` vs `.crumb-current`, ne raspored).
+
+#### ⚠️ Ljepljivost je morala preseliti — i to je bio jedini način
+
+Do T3 su obje trake bile `position: sticky` svaka za sebe, a `.pathbar` je svoj `top` računao iz
+visine `.topbar`. To radi dok su **jedna ispod druge**. Čim se moraju složiti **jedna pored
+druge**, treba im zajednički flex-roditelj — a **sticky se ne može zalijepiti izvan svog
+roditelja**: omotač visok 108 px pustio bi traku da mu iscuri iz kutije i odskrola. Zato je
+`position: sticky` + `z-index: 1300` preselio na novi `<div class="chrome">`, a trake su unutra
+statične.
+
+**Dokazano skrolom, ne čitanjem:** prva provjera je „prošla" na `browse` u portretu — gdje je
+`scrollY` bio **0**. *Prolaz zbog kratkog sadržaja nije prolaz* (ista pouka kao tvrdnja ⑦c u T1).
+Ponovljeno na stranicama koje stvarno skrolaju: landing **4980 px**, učenje **773**, na 320 px
+**5522** i **1118** — traka u sva četiri slučaja ostaje na `top = 0`.
+
+#### 🐞 Kvar koji je UVELA OVA CIGLA, i našla ga je sonda — ne oko
+
+U stupcu **svaka traka nosi vlastitu pozadinu preko cijele širine** i to je točno. U retku
+`.topbar` postaje `flex: 0 0 auto` i pokriva **samo svoj dio** — izmjereno: **341 od 852 px**
+(x = 452…793) — dok putanja lijevo od nje ostaje `rgba(0, 0, 0, 0)`. Posljedica bi bila da se
+**sadržaj vidi kako klizi iza mrvice**, a donji rub prekriva samo desnu trećinu trake.
+
+Popravak: u retku plohu, zamućenje i razdjelnik nosi **omotač**, a traka ih se odriče. Provjereno
+mjerenjem u oba načina: ploha pokriva **852 od 852** u retku i **393 od 393** u stupcu.
+
+> ⚠️ **A onda je taj popravak imao vlastitu cijenu od jednog piksela — i uhvatila ju je osnovica
+> brane, ne oko.** Razdjelnik je prvo bio `border-bottom`, a `.chrome` u retku **nema zadanu
+> visinu**, pa mu se rub **dodaje** na sadržaj: kromo je narastao **56 → 57** i **64 → 65 px**, i
+> time se **razišao s `--chrome-h`** (koji i dalje računa 56) → sekcije bi dobile piksel previše.
+> U stupcu se to ne događa jer trake **imaju** zadanu visinu uz `box-sizing: border-box`, pa je
+> rub *unutar* nje. Rješenje: **`box-shadow: 0 1px 0`** — isti razdjelnik, **nula raspored**.
+> *Rub troši visinu; razdjelnik koji to ne smije je sjena.* Invarijanta je nakon toga ponovno
+> izmjerena i drži **9/9** (3 profila × 3 stranice), a kromo je opet **točno** 56 · 64 · 123 ·
+> 159 · 167 px.
+
+> ⚠️ **Ovo je razlog zašto se puna suita PREKINULA i pokrenula iznova.** Kvar je nađen dok je
+> suita već tekla; da sam CSS promijenio u hodu, njezin rezultat ne bi opisivao nijedno stablo —
+> ni staro ni novo. *Prekid je jeftiniji od dvosmislenog zelenog.* (Ista odluka kao dvaput u T2.)
+
+#### 🐞 Usput ispravljen TIŠI I STARIJI kvar: `--chrome-h` nije pratio `body`
+
+`--chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top))` stajao je na `:root`. Ali
+**`var()` se supstituira ondje gdje je deklariran** — pa je `--chrome-h` već „zapekao" vrijednosti
+iz `:root`-a i **nijedan override na `body` ga nije mijenjao**. Posljedica je starija od T3: na
+landingu `body.no-pathbar` spušta `--pathbar-h` na 0, ali je `--chrome-h` i dalje računao s 44 px
+→ sekcije su od `100dvh` oduzimale **red koji ondje ne postoji**. Nije se vidjelo jer je landing
+dulji od ekrana.
+
+Popravak je jedna deklaracija na `body`. **Provjeren invarijantom, ne pregledom:** na 3 širine ×
+5 stranica `min-height` aktivne sekcije mora biti **točno `vh − stvarna visina omotača`** —
+15/15 OK, uključujući landscape gdje kromo pada na 56.
+
+#### ⚠️ Zašto `css:diff` ovaj put ima 225 razlika, i zašto to nije alarm
+
+Dvije klase, obje očekivane i obje provjerene drugim putem:
+
+1. **`position: sticky → static`, `top`, `z-index`** na `.topbar`/`.pathbar` — ljepljivost je
+   preselila na omotač. Vizualni ishod je identičan, što dokazuje skrol-provjera gore.
+2. **`min-height` sekcija +44 px** — to je **ispravak** iz prethodnog odjeljka. `css:diff` ne vrti
+   navigaciju, pa mu `body` ostaje `no-pathbar` sa landinga i sve sekcije izgledaju kao da putanje
+   nema; referenca je pokazivala **staru, krivu** brojku.
+
+> ⚠️ **Alat ispisuje 8 od 15 elemenata po širini**, pa se ostatak ne da pročitati iz izvještaja.
+> Umjesto nabrajanja, provjerena je **invarijanta koja ih sve pokriva** (`min-height == vh −
+> kromo`). *Kad gate ne može pokazati sve, tvrdnja se dokazuje svojstvom, ne uzorkom.*
+
+#### Što je ostalo, i čije je
+
+Kromo više **ne probija budžet ni na jednom profilu**. Osnovica javno je pala **31 → 13**, i svih
+preostalih 13 su tvrdnja ④ (*„bar jedna kontrola bez skrola"*) — **svi do jednog zbog
+cookie-bannera**, dakle **T4**. Prijavljene stranice su na **0**.

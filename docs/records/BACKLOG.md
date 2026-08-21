@@ -695,11 +695,16 @@ v. ispod.
    > **Ništa se nije commitalo ni deployalo, i to nije previd:** poravnata je **baza**, datoteke su
    > izvor istine i već su bile ispravne. Bez `npm run bump`, bez commita — produkcija ostaje
    > netaknuta.
-3. **Uključiti Leaked Password Protection** — Dashboard → Authentication → Settings → *Leaked password
-   protection* (provjera lozinki protiv HaveIBeenPwned). Jedini je od 16 sigurnosnih advisora koji se
-   rješava **jednim prekidačem**, a tiče se korisničkih računa. Traži Management API token / dashboard —
-   `service_role` ne mijenja konfiguraciju projekta. Provjera nakon: advisori više ne smiju javljati
-   `auth_leaked_password_protection`. **Advisori inače: 0 ERROR**, sve WARN (v. §Advisori dolje).
+3. ⛔ ~~**Uključiti Leaked Password Protection**~~ — **NIJE STAVKA ZA RUKU. Provjereno 2026-08-21:
+   to je Pro značajka**, a organizacija (`pfbkisxynphwxdbqmmtt`) je na **free** planu → prekidača u
+   Dashboardu **nema**. Advisor ga svejedno prijavljuje jer ne gleda plan. **Premisa je stajala
+   ovdje 11 dana i poslala bi Leona da traži kontrolu koja ne postoji.**
+   **Zamijenjena je radnjom koja JEST izvediva na free planu:** Dashboard → Authentication →
+   Sign In / Providers → **Minimum password length 6 → 8** (forma traži 8, ali `minlength` je
+   pravilo **preglednika**; serverski minimum je zadanih 6). ⚠️ Polje *Password Requirements* **ne
+   dirati**, i **prije toga popraviti `WeakPasswordError`** — v. zasebnu stavku „Leaked password
+   protection — rješivo BESPLATNO" gore, gdje stoji i HIBP izvedba u našem kodu.
+   **Advisori: 0 ERROR**, sve WARN (v. §Advisori dolje).
 
 ## ➖ Sigurnosni advisori na PROD-u — 0 ERROR, 16 WARN (snimljeno 2026-08-10)
 Ostavljeno svjesno, ali zapisano da se ne izgubi:

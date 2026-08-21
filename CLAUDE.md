@@ -242,12 +242,35 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **Promjena razine kataloga ide kroz JEDAN ulaz** (`browseNaRazinu()`) jer se dubina sada vidi
 > u traci — inače bi prikaz i mrvica opet imali dva izvora istine (K2b je to već platio).
 >
-> **🔵 SLJEDEĆA CIGLA = T3 (budžet kroma ≤ 20 %).** ⚠️ Nakon T2 je kromo **točno dvije trake:
-> 64 + 44 = 108 px**, a budžet na iPhoneu SE je **102** — dakle probijanje je palo s 29
-> postotnih bodova na **jedan**, i preostalo je točno ono što je §9.7 najavio: **T3 nije
-> ugađanje zaglavlja nego odluka o TRAKAMA** (spojiti ih u jedan red ili ispod nekog praga
-> sakriti putanju). Iza toga **T4** — cookie-banner je jedini preostali razlog zašto na 320 px
-> nema dohvatljive kontrole (banner 217 px + kromo 167 od 568).
+> **✅ T3 (BUDŽET KROMA) JE GOTOV** (2026-08-21, spec **§9.10**) — kromo **ne probija budžet ni
+> na jednom profilu**: 320 × 568 **108 → 100 px** (21 % → **19,6 %**), 852 × 393 **108 → 56**
+> (27 % → **14 %**), 393 nedirnuto (već je prolazilo). Osnovica **javno 31 → 13, prijavljeno
+> 8 → 0**. ⚠️ **Sonda je oborila skicu iz plana prije ijednog retka koda:** problem nije bio
+> **količina** kroma nego **RASPODJELA** — na 320 px `.topbar` troši 64 px visine na 134 px
+> sadržaja i ostavlja **146 px širine prazno**, dok `.pathbar` mrvici daje 252 od traženih
+> **377**. Spajanje u jedan red ostavilo bi mrvici **94 px** (bez znaka 244) → **manje nego
+> danas**, i poništilo bi T2. *Prije nego se dvije stvari spoje, izmjeri ima li ona koja gubi
+> prostor odakle ga dati.* Zato **dva pravila**: ① `max-height:700px` → izvan landinga
+> `--topbar-h: 56px` (**64 postoji zbog landinga**, gdje traka nosi CTA i sama je cijela
+> navigacija; **znak ostaje 42 px**, mijenja se samo zrak — §7.13 netaknut) · ② `max-height:519px`
+> → **jedan red**, uz `order:-1` da položaj ide lijevo. **Portret i landscape imaju suprotnu
+> oskudicu, pa jedan rez ne može biti točan za oboje.**
+> ⚠️ **Ljepljivost je preselila na novi `<div class="chrome">`** — sticky se ne može zalijepiti
+> **izvan svog roditelja**, pa bi omotač od 108 px pustio traku da odskrola; trake su unutra
+> statične. **Prva provjera je lažno prošla** (`browse` u portretu ima `scrollY = 0`) — *prolaz
+> zbog kratkog sadržaja nije prolaz*, drugi put u dvije cigle; ponovljeno na 4980/773/5522/1118 px.
+> 🐞 **Usput ispravljen stariji, tiši kvar: `--chrome-h` nikad nije pratio `body`** — `var()` se
+> supstituira **ondje gdje je deklariran**, pa je vrijednost s `:root`-a bila zapečena i
+> `body.no-pathbar` je nije mijenjao → landing je od `100dvh` oduzimao red koji ondje ne postoji.
+> Dokazano **invarijantom** (`min-height == vh − kromo`, 15/15), ne pregledom. ⚠️ `css:diff` ima
+> **225 razlika** i obje su klase očekivane (sticky preselio · `min-height` je baš taj ispravak);
+> alat ispisuje **8 od 15** elemenata po širini → *kad gate ne može pokazati sve, dokazuje se
+> invarijanta, ne uzorak.*
+>
+> **🔵 SLJEDEĆA CIGLA = T4 (cookie-banner).** Svih **13** preostalih nalaza u osnovici su tvrdnja
+> ④ i **svi do jednog zbog bannera** — on je jedini preostali razlog zašto na 320 px nema
+> dohvatljive kontrole bez skrola (banner **217 px** + kromo 159 od 568). Iza toga **T5**
+> (tipografija) pa **T6** (editor s posjetiteljeva puta).
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se

@@ -10,7 +10,7 @@
 // ⚠ CACHE: data/* su pod immutable cacheom (vercel.json). Pri izmjeni BILO KOJEG
 // data/* sadržaja bumpaj CONTENT_VERSION — inače preglednik servira stari cache.
 
-const CONTENT_VERSION = '20260821153702';
+const CONTENT_VERSION = '20260821203737';
 
 // subjectId -> true (sadržaj učitan) ; subjectId -> Promise (učitavanje u tijeku)
 const _contentLoaded = {};
