@@ -978,33 +978,12 @@ section[id$="-page"] {
   min-height: 100dvh;
   background: var(--bg-primary);
 }
-.browse-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  padding-top: calc(1rem + var(--safe-top));
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.browse-title {
-  flex: 1;
-  min-width: 0;
-}
-.browse-title h1 {
+.browse-heading {
   font-size: 1.25rem;
   font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.browse-logo .logo-wrapper {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
+  line-height: 1.25;
+  margin-bottom: 0.35rem;
+  text-wrap: balance;
 }
 .browse-content {
   padding: 1.5rem;
@@ -1254,18 +1233,6 @@ section[id$="-page"] {
   min-height: 100dvh;
   background: var(--bg-primary);
 }
-.lessons-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  padding-top: calc(1rem + var(--safe-top));
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
 .back-btn {
   width: 44px;
   height: 44px;
@@ -1283,20 +1250,6 @@ section[id$="-page"] {
 .back-btn:hover {
   background: var(--primary);
   color: var(--on-primary);
-}
-.lessons-title {
-  flex: 1;
-  min-width: 0;
-}
-.breadcrumb {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.lessons-title h1 {
-  font-size: 1.25rem;
-  font-weight: 700;
 }
 .lessons-content {
   padding: 1.5rem;
@@ -1403,29 +1356,6 @@ section[id$="-page"] {
   to {
     transform: rotate(360deg);
   }
-}
-.study-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.5rem;
-  padding-top: calc(1rem + var(--safe-top));
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.study-title {
-  flex: 1;
-  min-width: 0;
-}
-.study-title h1 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .study-nav {
   display: flex;
@@ -8960,13 +8890,6 @@ body.no-pathbar {
   display: block;
   flex-shrink: 0;
 }
-.topbar-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  margin-inline-start: 0.5rem;
-  flex-shrink: 0;
-}
 .topbar-btn {
   display: flex;
   align-items: center;
@@ -9027,9 +8950,6 @@ body.no-pathbar {
 }
 body.on-landing .topbar-cta {
   display: inline-flex;
-}
-body.on-landing #topbarMaterials {
-  display: none;
 }
 .topbar-iconbtn {
   width: 40px;
@@ -9107,7 +9027,11 @@ body.no-pathbar .pathbar {
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
-  flex-shrink: 0;
+  flex-shrink: 1;
+  min-width: 3.25rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .crumb:hover {
   color: var(--text-primary);
@@ -9118,8 +9042,8 @@ body.no-pathbar .pathbar {
   font-weight: 700;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex-shrink: 1;
-  min-width: 0;
+  flex-shrink: 0;
+  max-width: 100%;
 }
 .crumb-current:hover {
   color: var(--text-primary);

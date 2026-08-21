@@ -485,6 +485,40 @@ function _odredisteMrvice(page, nav) {
 }
 
 /**
+ * T2 — DUBINA KATALOGA U MRVICI. Do T2 je katalog u traci imao jednu jedinu mrvicu
+ * („Predmeti"), dok je pravi položaj (fakultet › smjer › godina) živio u zaglavlju
+ * stranice. Bila su to **dva prikaza istog puta na istom ekranu**, u različitoj mjeri
+ * detalja — a zaglavlje je za to trošilo 140 px, odnosno 54 % iPhonea SE zajedno s
+ * trakom i putanjom. Sada put postoji **jednom**, i to ondje gdje mu je mjesto.
+ *
+ * Vraća stavke `{ naziv, razina }`; posljednja je uvijek trenutna razina.
+ */
+function _mrviceKataloga() {
+    const korijen = { naziv: _pt('topbar.subjects', 'Subjects'), razina: 'faculties' };
+    if (typeof SokratCatalog === 'undefined' || typeof browseState === 'undefined' || !browseState) return [korijen];
+
+    const stavke = [korijen];
+    const razina = browseState.level;
+    if (razina === 'faculties') return stavke;
+
+    // ⚠️ `shortName` prije `name`: puni pravni naziv fakulteta ima 65 znakova i u mrvicu
+    // ne stane ni na jednom telefonu. Kartica fakulteta i dalje pokazuje pun naziv.
+    const f = SokratCatalog.faculties().find((x) => x.id === browseState.facultyId);
+    stavke.push({ naziv: (f && (f.shortName || f.name)) || _pt('browse.trail.faculty', 'Faculty'), razina: 'programs' });
+    if (razina === 'programs') return stavke;
+
+    const p = SokratCatalog.getProgram(browseState.programId);
+    stavke.push({ naziv: (p && p.name) || _pt('browse.trail.program', 'Program'), razina: 'years' });
+    if (razina === 'years') return stavke;
+
+    stavke.push({
+        naziv: _hr() ? (browseState.year + '. godina') : ('Year ' + browseState.year),
+        razina: 'subjects'
+    });
+    return stavke;
+}
+
+/**
  * Nacrtaj drugi red. Zove se iz `navigateTo` NAKON što je stanje postavljeno, jer nazivi
  * (predmet, lekcija, materijal) dolaze iz stanja koje `navigateTo` tek upisuje.
  */
@@ -502,12 +536,34 @@ function renderPathbar() {
     document.body.classList.toggle('on-landing', page === 'landing');
     if (page === 'landing') { spremnik.textContent = ''; return; }
 
-    const lanac = lanacMrvica(page, nav);
+    // T2 — od lanca STRANICA do lanca STAVKI. Katalog se razmotava u svoje razine, ali
+    // **samo dok smo NA njemu**: kad korisnik ode na lekciju ili u učenje, međurazine
+    // (fakultet › smjer › godina) više nisu njegov položaj nego povijest putovanja, a
+    // „Predmeti" ga i dalje vraćaju točno onamo gdje je stao (`browseState` se pamti).
+    // Bez tog reza lanac bi na učenju imao ŠEST mrvica, koje se na 320 px svedu na niz
+    // kvačica — a gate koji prijavljuje šum se isključi, kao i mrvica koju nitko ne čita.
+    const stavke = [];
+    lanacMrvica(page, nav).forEach((p) => {
+        if (p === 'browse' && page === 'browse') {
+            _mrviceKataloga().forEach((k) => {
+                stavke.push({
+                    naziv: k.naziv,
+                    klik: () => { browseNaRazinu(k.razina); }
+                });
+            });
+            return;
+        }
+        const naziv = nazivStranice(p, nav);
+        if (!naziv) return;
+        const cilj = _odredisteMrvice(p, nav);
+        stavke.push({ naziv: naziv, klik: () => { navigateTo(cilj.page, cilj.data); } });
+    });
+
     spremnik.textContent = '';
 
-    lanac.forEach((p, i) => {
-        const zadnji = i === lanac.length - 1;
-        const naziv = nazivStranice(p, nav);
+    stavke.forEach((s, i) => {
+        const zadnji = i === stavke.length - 1;
+        const naziv = s.naziv;
         if (!naziv) return;
 
         if (i > 0) {
@@ -532,23 +588,20 @@ function renderPathbar() {
         gumb.type = 'button';
         gumb.className = 'crumb';
         gumb.textContent = naziv;
-        const cilj = _odredisteMrvice(p, nav);
-        gumb.addEventListener('click', () => { navigateTo(cilj.page, cilj.data); });
+        gumb.addEventListener('click', s.klik);
         spremnik.appendChild(gumb);
     });
 
-    // Odredište u traci se označava PREMA HIJERARHIJI, ne prema trenutnoj stranici:
-    // lekcija i učenje iz kataloga i dalje „jesu" pod Predmetima.
-    const korijen = lanac.length ? lanac[0] : '';
-    const oznaci = (id, jeli) => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        if (jeli) el.setAttribute('aria-current', 'page');
-        else el.removeAttribute('aria-current');
-    };
-    // ⚠️ „Predmeti" više NE POSTOJI u traci (Leon, 2026-08-19) — ostao je samo materijal.
-    // Korijen `browse` se i dalje vidi, ali u MRVICI, koja ga ionako imenuje.
-    oznaci('topbarMaterials', korijen === 'materials');
+    // ⚠️ Mrvica se skrola vodoravno, a novi sadržaj dolazi ZDESNA — bez ovoga bi na uskom
+    // ekranu ostala prikazana lijeva strana lanca (preci), dok je trenutna razina, jedina
+    // koja odgovara na pitanje „gdje sam?", ostala izvan ekrana. Preci se doduše i stišću
+    // (v. `.crumb` u topbar.css), ali ovo je druga brana za slučaj da ni to ne dostaje.
+    spremnik.scrollLeft = spremnik.scrollWidth;
+
+    // T2: označavanje odredišta u traci je OBRISANO jer traka više nema nijedno odredište
+    // („Predmeti" su otišli 2026-08-19, „Moji materijali" u T2). `aria-current` je bio
+    // vezan uz gumbe kojih nema; položaj sada nosi isključivo mrvica, koja `aria-current`
+    // stavlja na svoju zadnju stavku.
 }
 
 /** Ožiči traku. Znak je jedini ulaz koji nema postojeću kuku. */
@@ -780,24 +833,39 @@ function enterBrowse() {
     navigateTo('browse');
 }
 
+/**
+ * T2 — JEDAN ulaz za promjenu razine kataloga: stanje, prikaz i MRVICA idu zajedno.
+ *
+ * ⚠️ Postoji jer je od T2 dubina drill-downa vidljiva u gornjoj traci. Do tada je svaka
+ * promjena razine zvala samo `renderBrowse()`, pa bi mrvica ostala na zatečenoj razini —
+ * i opet bismo imali dva prikaza istog puta koji se razilaze, što je K2b već jednom
+ * platio (dva modela vraćanja → BUG-026 i BUG-027). Ovdje su spojeni u izraz, ne u
+ * dogovor: tko mijenja razinu, mijenja je kroz ovu funkciju.
+ */
+function browseNaRazinu(razina, podaci) {
+    const p = podaci || {};
+    const s = browseState;
+    if (razina === 'faculties') {
+        browseState = { level: 'faculties', facultyId: null, programId: null, year: null };
+    } else if (razina === 'programs') {
+        browseState = { level: 'programs', facultyId: (p.facultyId != null ? p.facultyId : s.facultyId), programId: null, year: null };
+    } else if (razina === 'years') {
+        browseState = { level: 'years', facultyId: s.facultyId, programId: (p.programId != null ? p.programId : s.programId), year: null };
+    } else if (razina === 'subjects') {
+        browseState = { level: 'subjects', facultyId: s.facultyId, programId: s.programId, year: (p.year != null ? Number(p.year) : s.year) };
+    } else {
+        return;
+    }
+    renderBrowse();
+    if (typeof renderPathbar === 'function') renderPathbar();
+}
+
 // Back gumb na browse stranici: korak unatrag kroz hijerarhiju.
 function browseBack() {
     switch (browseState.level) {
-        case 'subjects':
-            browseState.level = 'years';
-            browseState.year = null;
-            renderBrowse();
-            break;
-        case 'years':
-            browseState.level = 'programs';
-            browseState.programId = null;
-            renderBrowse();
-            break;
-        case 'programs':
-            browseState.level = 'faculties';
-            browseState.facultyId = null;
-            renderBrowse();
-            break;
+        case 'subjects': browseNaRazinu('years'); break;
+        case 'years':    browseNaRazinu('programs'); break;
+        case 'programs': browseNaRazinu('faculties'); break;
         default:
             // Vrhunska razina browsea nema svoj roditelj u drill-downu -> izlazi kroz
             // zajednicki model (povijest, pa landing).
@@ -917,41 +985,35 @@ function renderBrowse() {
     if (typeof SokratCatalog === 'undefined') return;
     const grid = document.getElementById('browseGrid');
     const heading = document.getElementById('browseHeading');
-    const crumb = document.getElementById('browseBreadcrumb');
     const intro = document.getElementById('browseIntro');
     if (!grid) return;
 
-    let html = '', title = '', trail = _t('browse.trail.browse', 'Browse'), introText = '';
-    const yearLabel = (y) => _hr() ? `${y}. godina` : `Year ${y}`;
+    // T2: `trail` se više ne ispisuje na stranici — položaj nosi mrvica u traci
+    // (`_mrviceKataloga`). Varijabla je obrisana zajedno s `#browseBreadcrumb`; ostao je
+    // samo `title`, koji je UPUTA („Odaberi smjer"), i seli u sadržaj gdje se smije
+    // odskrolati.
+    let html = '', title = '', introText = '';
 
     if (browseState.level === 'programs') {
-        const f = SokratCatalog.faculties().find(x => x.id === browseState.facultyId);
         title = _t('browse.h.program', 'Choose your program');
-        trail = f ? f.name : _t('browse.trail.faculty', 'Faculty');
         introText = _t('browse.i.program', 'Select your study program.');
         html = renderProgramCards(browseState.facultyId);
     } else if (browseState.level === 'years') {
-        const p = SokratCatalog.getProgram(browseState.programId);
         title = _t('browse.h.year', 'Choose your year');
-        trail = p ? p.name : _t('browse.trail.program', 'Program');
         introText = _t('browse.i.year', 'Pick the study year you want to review.');
         html = renderYearCards(browseState.programId);
     } else if (browseState.level === 'subjects') {
-        const p = SokratCatalog.getProgram(browseState.programId);
         title = _hr() ? `Predmeti ${browseState.year}. godine` : `Year ${browseState.year} subjects`;
-        trail = p ? `${p.name} · ${yearLabel(browseState.year)}` : yearLabel(browseState.year);
         introText = '';
         html = renderSubjectCards(browseState.programId, browseState.year);
     } else {
         // 'faculties' (default / entry)
         title = _t('browse.h.faculty', 'Choose your faculty');
-        trail = _t('browse.trail.browse', 'Browse');
         introText = _t('browse.i.faculty', 'Select your faculty to find your subjects.');
         html = renderFacultyCards();
     }
 
     if (heading) heading.textContent = title;
-    if (crumb) crumb.textContent = trail;
     if (intro) intro.textContent = introText;
     grid.innerHTML = html;
 }
@@ -967,17 +1029,11 @@ function initBrowse() {
         const kind = card.dataset.browse;
         const id = card.dataset.id;
         if (kind === 'faculty') {
-            browseState.facultyId = id;
-            browseState.level = 'programs';
-            renderBrowse();
+            browseNaRazinu('programs', { facultyId: id });
         } else if (kind === 'program') {
-            browseState.programId = id;
-            browseState.level = 'years';
-            renderBrowse();
+            browseNaRazinu('years', { programId: id });
         } else if (kind === 'year') {
-            browseState.year = Number(id);
-            browseState.level = 'subjects';
-            renderBrowse();
+            browseNaRazinu('subjects', { year: Number(id) });
         } else if (kind === 'subject') {
             navigateTo('lessons', { subject: id });
             return;

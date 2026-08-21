@@ -17,6 +17,13 @@ const SOKRAT_CATALOG = {
     {
       id: 'fmtu',
       name: 'FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija',
+      // T2: KRATKO IME za mrvicu. Puno pravno ime (65 znakova) je točno, ali mrvica nije
+      // mjesto za njega — na 393 px se lomilo u stupac i dizalo zaglavlje na 224 px.
+      // ⚠️ Kratko ime samo po sebi NE POPRAVLJA ništa (T0 je izmjerio da naslov jedu
+      // KONTROLE u istom retku, ne znakovi); ono je ovdje jer je i uz spojenu mrvicu
+      // besmisleno ispisati cijeli pravni naziv na uskom ekranu. `name` OSTAJE pun —
+      // kartica fakulteta i dalje pokazuje pravo ime.
+      shortName: 'FMTU',
       programs: [
         { id: 'hospitality-management', name: 'Hospitality Management' },
         // HRVATSKI paralelni program (klon, Opcija A — vidi docs/archive/HRV_PLAN.md). Isti predmeti,

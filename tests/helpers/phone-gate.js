@@ -548,9 +548,21 @@ function mjeri(page, rub, faza) {
             // kraćenje nije izmjereno. Dakle prag razdvaja poznato loše od praznog skupa —
             // svaka vrijednost iznad 52 % daje isti ishod danas. Ako T2 ostavi legitimno
             // kraćenje ispod 60 %, prag se pomiče **uz zapis zašto**, ne prešutno.
+            //
+            // ⚠️ **T2 — PRAG SE NE MJERI PRECIMA, i to je razlika u ULOZI, ne popuštanje.**
+            // Tvrdnja ⑤ odgovara na pitanje *„znam li gdje sam?"*, a na njega odgovara
+            // TRENUTNA razina. Preci u mrvici („Predmeti › FMTU › …") su **navigacija**:
+            // oni su odgovor na „kamo mogu natrag", uvijek su izvedivi iz konteksta, i od
+            // T2 se namjerno **stišću da bi trenutna razina ostala čitava** (do T2 je bilo
+            // obrnuto — stiskala se jedina mrvica koja govori gdje si, na 30 od 99 px).
+            // Za pretke i dalje vrijedi da se ne smiju LOMITI (provjera redaka ispod) i da
+            // moraju ostati dohvatljivi — to mjeri `reachability.spec.js` pogotkom, a
+            // `min-width` u `topbar.css` im jamči širinu. Bez ovog reza brana bi kažnjavala
+            // baš pravilo koje je uvedena da nametne.
+            const predak = el.classList.contains('crumb') && !el.classList.contains('crumb-current');
             const udio = el.scrollWidth > 0 ? el.clientWidth / el.scrollWidth : 1;
             if (n > 1) zaglavlja.push(ime(el) + ': ' + n + ' redaka · „' + tekst.slice(0, 46) + '"');
-            else if (udio < 0.6 && el.clientWidth > 0) {
+            else if (!predak && udio < 0.6 && el.clientWidth > 0) {
                 zaglavlja.push(ime(el) + ': odrezan na ' + el.clientWidth + ' od ' + el.scrollWidth
                     + ' px (' + Math.round(udio * 100) + ' %) · „' + tekst.slice(0, 46) + '"');
             }

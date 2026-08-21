@@ -84,7 +84,13 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   await page.click('.topbar .start-trigger');   // K2b: landing dijeli globalnu traku
   await page.waitForSelector('#browse-page.active');
 
-  await page.click('.topbar [data-goto-materials]');   // K2b: ulaz je u globalnoj traci, ne u zaglavlju browsea
+  // ⚠️ T2: do ove cigle je ovdje stajao klik na `.topbar [data-goto-materials]`. Taj gumb
+  // je Leonovom odlukom IZAŠAO iz trake (spec §9.6), pa vozila više nema — ali svojstvo
+  // koje test čuva nije bilo vozilo nego **model vraćanja**: „natrag" vodi odakle si došao
+  // i ruta se briše iz adrese. Zato se do police dolazi istim pozivom koji je gumb ionako
+  // zvao (`navigateTo('materials')`), a scenarij (landing → browse → polica → natrag)
+  // ostaje netaknut. *Test se mijenja odlukom, ne pada.*
+  await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#materials-page.active');
 
   await page.click('#pathbarBack');   // K2b: jedan gumb natrag
@@ -100,44 +106,52 @@ test('povratak vodi odakle si došao, a ruta se briše iz adrese', async ({ page
   expect(new URL(page.url()).hash).toBe('#/subjects');
 });
 
-// ⚠️ TVRDNJA JE PROMIJENJENA U K2b, I TO NIJE ISTO STO I PAD.
-// Test je do K2b trazio ikonu ulaza U SVAKOM od tri zaglavlja (`#lessons-page
-// [data-goto-materials]`), jer su `browse`/`lessons`/`study` svaka nosila VLASTITU kopiju
-// istog trojca kontrola. To je bio opis kvara koji cigla uklanja, a ne svojstvo koje
-// stitimo: tri kopije se raziđu, i vec jesu — jezik je bio dohvatljiv na 4 od 9 stranica.
+// ⚠️ TVRDNJA JE PROMIJENJENA DVAPUT, I NIJEDNOM ZATO STO JE PALA. Ovo je zapis obje promjene,
+// jer bez njega izgleda kao da je brana s vremenom oslabila.
 //
-// Nova tvrdnja je JACA, ne slabija: ulaz mora biti dohvatljiv sa svake od tih stranica
-// (sto je ono sto korisnik treba), i mora ga nositi TOCNO JEDAN element u dokumentu
-// (sto je ono sto stara verzija nije mogla tvrditi).
-test('ulaz u materijale je dohvatljiv s browse/lessons/study — iz JEDNE trake', async ({ page }) => {
+//  • Do K2b je test trazio ikonu ulaza U SVAKOM od tri zaglavlja (`#lessons-page
+//    [data-goto-materials]`) — jer su `browse`/`lessons`/`study` nosili VLASTITU kopiju istog
+//    trojca kontrola. To je bio opis kvara koji K2b uklanja, ne svojstvo koje stitimo.
+//  • K2b je to zamijenio jacom tvrdnjom: ulaz je dohvatljiv sa svake od tih stranica i nosi
+//    ga TOCNO JEDAN element u trajnom kromu.
+//  • T2 je i tu tvrdnju ukinuo — ali ODLUKOM, ne mjerenjem: Leon je gumb maknuo iz trake
+//    (*„taj gumb je na landingu i na profilu i to je DOVOLJNO"*, spec §9.6). Cijena je
+//    IZRECENA u samom planu: iz UNUTRASNJOSTI aplikacije (katalog, lekcija, ucenje, Studio)
+//    ulaza vise nema; ide se preko landinga ili profila.
+//
+// Ono sto sada stiti ovaj test je BAS TA CIJENA — da se ne plati slucajno i nezapisano:
+// traka ne smije imati ulaz (inace se odluka tiho vraca), a landing ga mora imati vise puta
+// (inace je odluka tiho pojela jedini put do vlastitog gradiva).
+test('ulaz u materijale NIJE u traci — nose ga landing i profil (T2, spec §9.6)', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(
     () => document.querySelectorAll('#landingSubjects .landing-subject-card').length > 0
   );
 
+  // Landing: ulaza ima VISE (vrata u herou, ➕ plocica, CTA sekcije, podnozje) — Leonova
+  // odluka, ne propust. Prva verzija ove tvrdnje brojala je sve i pala na 5: mjerila je
+  // tocno, a tvrdila krivo.
+  expect(await page.locator('[data-goto-materials]').count()).toBeGreaterThan(1);
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
+
+  // Iz unutrasnjosti aplikacije traka NEMA ulaz — na sve tri stranice, jer bi povratak
+  // gumba na bilo koju od njih vratio i kvar koji je T2 mjerio (kromo od 54 % ekrana).
   await page.click('#landingSubjects .landing-subject-card[data-landing-subject="te2"]');
   await page.waitForSelector('#lessons-page.active');
-  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
 
   await page.click('#lessons-page .lessons-grid .lesson-card');
   await page.waitForSelector('#study-page.active', { timeout: 8000 });
-  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
 
   await page.evaluate(() => navigateTo('browse'));
   await page.waitForSelector('#browse-page.active');
-  await expect(page.locator('.topbar [data-goto-materials]')).toBeVisible();
+  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(0);
 
-  // Jedan ulaz U TRAJNOM KROMU, ne tri kopije po zaglavljima — inace se opet mogu raziĆi.
-  //
-  // ⚠️ Tvrdnja NAMJERNO gleda samo kromo, ne cijeli dokument. Landing ima VISE ulaza i to
-  // je Leonova odluka, ne propust: vrata u herou, ➕ plocica iza kataloga, CTA sekcije
-  // vlastitog gradiva i poveznica u podnozju. Prva verzija ove tvrdnje brojala je sve i
-  // pala na 5 — mjerila je tocno, a tvrdila krivo.
-  expect(await page.locator('.topbar [data-goto-materials]').count()).toBe(1);
-  expect(await page.locator('[data-goto-materials]').count()).toBeGreaterThan(1);
-
-  // ...i klik na njega stvarno vodi u policu.
-  await page.click('.topbar [data-goto-materials]');
+  // ...a put do police i dalje POSTOJI i vodi kamo treba — preko landinga.
+  await page.evaluate(() => navigateTo('landing'));
+  await page.waitForSelector('#landing-page.active');
+  await page.click('.doors [data-goto-materials]');
   await page.waitForSelector('#materials-page.active');
 });
 

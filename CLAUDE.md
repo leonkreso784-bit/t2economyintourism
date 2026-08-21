@@ -99,8 +99,8 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **Izmjereno na 393 × 852 (produkcija):** zaglavlje kataloga **270 px** · naziv fakulteta u
 > **14 redaka** · naslov odrezan na **34 od 205 px** · „Start studying" na **y = 18 px** dok je
 > otok 59 · kromo **32 %** ekrana · cookie-banner još **24 %** · landing **744,6 KiB u 41
-> skripti, 238 KiB editorsko**. → **BUG-030** (otvoren, ide u **T2**) i **BUG-031**
-> (**✅ riješen ciglom T1**, 2026-08-21).
+> skripti, 238 KiB editorsko**. → **BUG-030** i **BUG-031**, oba
+> **✅ riješena** (T2 i T1, 2026-08-21) — otvorenih bugova nema.
 > **⚠️ Korijen je JEDAN: telefon kao STRANICA nikad nije bio mjerena površina** — axe mjeri na
 > **1280 px**, `css:diff` uspoređuje nas **sa samima sobom** (drift, ne lošoća), a K3/K4a mjere
 > **kromo**. Zato faza počinje **mjeračem**, ne popravkom. *Sigurna zona se ipak DA izmjeriti:
@@ -216,10 +216,38 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > **landscape** (`kromo` 25→34 javno, 4→8 prijavljeno; `prviEkran` 15→20) — ništa od toga nije
 > T1 nego **T3/T4**.
 >
-> **🔵 SLJEDEĆA CIGLA = T2 (jedan naslov po ekranu).** ⚠️ Kratko ime fakulteta samo po sebi
-> **ne bi popravilo ništa** — T0 je izmjerio da naslov nisu pojeli znakovi nego **pet kontrola
-> u istom flex-retku**; T2 mora **spojiti zaglavlje razine s mrvicom**. Tu izlazi i
-> `#topbarMaterials` iz trake.
+> **✅ T2 (JEDAN NASLOV PO EKRANU) JE GOTOV** (2026-08-21, spec **§9.9**) — **BUG-030 je
+> zatvoren, i time nema nijednog otvorenog buga.** Kromo kataloga **307 → 167 px** (54 % →
+> **29 %** na 320 px, 36 % → **20 %** na 393); lekcije 286 → 167, učenje 282 → 167; trenutna
+> mrvica **30/99 → 99/99**; tvrdnja ⑤ **5 → 0**; osnovica javno **59 → 31**.
+> ⚠️ **Mjerenje je pokazalo da tri zaglavlja NISU bila ista stvar**, pa rez nije jedan:
+> lekcije i učenje su bili **čisti duplikat** zadnje mrvice → naslov je postao
+> `visually-hidden` (stranica ga mora imati za čitač ekrana, ne mora **dvaput na ekranu**);
+> katalog **nije** bio duplikat — ondje je zaglavlje nosilo dubinu (`fakultet › smjer ›
+> godina`) koju mrvica **nije pokazivala** → dubina je preselila **u mrvicu**, a uputa
+> („Odaberi smjer") **u sadržaj**, gdje se smije odskrolati. *Da je rez bio „makni zaglavlje",
+> katalog bi ostao bez ijednog prikaza dubine.* **Pravilo: IDENTITET ide u mrvicu, UPUTA u
+> sadržaj.**
+> ⚠️ **Pravi kvar iza BUG-030 bio je PRIORITET KRAĆENJA, i bio je naopak:** preci su imali
+> `flex-shrink: 0`, a `.crumb-current` `flex-shrink: 1` — stiskalo se **jedino što govori gdje
+> si**, dok su preci držali punu širinu. Sada je obrnuto (uz `min-width` na precima i pomak
+> lanca na kraj), a **brana je naučila razliku u ULOZI**: ⑤ mjeri odgovor na „gdje sam?"
+> (trenutna razina), a preci su navigacija i smiju se kratiti — ne smiju se **lomiti**, i
+> dohvatljivost im mjeri `reachability` pogotkom. To je bilo predviđeno komentarom uz prag
+> („prag se pomiče uz zapis zašto, ne prešutno"), pa je i zapisano.
+> **Traka je ostala bez ijednog odredišta** — `#topbarMaterials` je izašao (§9.6); ostaju znak,
+> jezik, prijava i CTA. Cijena je izrečena: iz unutrašnjosti aplikacije u vlastite materijale
+> se ide preko landinga ili profila (pet ulaza). `shortName: 'FMTU'` je dodan u `catalog.js`,
+> ali kao **posljedica, ne lijek**.
+> **Promjena razine kataloga ide kroz JEDAN ulaz** (`browseNaRazinu()`) jer se dubina sada vidi
+> u traci — inače bi prikaz i mrvica opet imali dva izvora istine (K2b je to već platio).
+>
+> **🔵 SLJEDEĆA CIGLA = T3 (budžet kroma ≤ 20 %).** ⚠️ Nakon T2 je kromo **točno dvije trake:
+> 64 + 44 = 108 px**, a budžet na iPhoneu SE je **102** — dakle probijanje je palo s 29
+> postotnih bodova na **jedan**, i preostalo je točno ono što je §9.7 najavio: **T3 nije
+> ugađanje zaglavlja nego odluka o TRAKAMA** (spojiti ih u jedan red ili ispod nekog praga
+> sakriti putanju). Iza toga **T4** — cookie-banner je jedini preostali razlog zašto na 320 px
+> nema dohvatljive kontrole (banner 217 px + kromo 167 od 568).
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se

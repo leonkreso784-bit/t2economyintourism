@@ -357,7 +357,6 @@
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
 
     // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
-    'browse.trail.browse': { en: 'Browse', hr: 'Pregled' },
     'browse.trail.faculty': { en: 'Faculty', hr: 'Fakultet' },
     'browse.trail.program': { en: 'Program', hr: 'Smjer' },
     'browse.h.faculty': { en: 'Choose your faculty', hr: 'Odaberi svoj fakultet' },
@@ -446,7 +445,6 @@
     'topbar.study': { en: 'Study', hr: 'Učenje' },
     'topbar.studio': { en: 'Studio', hr: 'Studio' },
     'topbar.back': { en: 'Go back', hr: 'Natrag' },
-    'topbar.main': { en: 'Main', hr: 'Glavni izbornik' },
     'topbar.crumbs': { en: 'Breadcrumb', hr: 'Putanja' },
 
     // „Moji materijali" (F2) — osobni UGC-graditelj

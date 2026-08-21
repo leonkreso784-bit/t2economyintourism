@@ -10,18 +10,8 @@
     background: var(--bg-primary);
 }
 
-.lessons-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+/* T2: `.lessons-header` je obrisan — h1 je pisao točno ono što piše zadnja mrvica
+   („Tourism Economics"), a stajao je 119 px trajno (`position: sticky`). */
 
 .back-btn {
     width: 44px;
@@ -43,22 +33,9 @@
     color: var(--on-primary);
 }
 
-.lessons-title {
-    flex: 1;
-    min-width: 0; /* dopusti stezanje ispod sadržaja (inače dug HR naslov + 🌐 toggle strši na uskom mobitelu) */
-}
-
-.breadcrumb {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.lessons-title h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-}
+/* T2: `.lessons-title`, `.lessons-title h1` i `.breadcrumb` su obrisani zajedno sa
+   zaglavljem. `.breadcrumb` je bio zadnji korisnik klase — mrvica u traci ima svoju
+   (`.crumb`), pa bi dvije klase za istu stvar bile upravo ono što ova cigla uklanja. */
 
 .lessons-content {
     padding: 1.5rem;
@@ -177,31 +154,8 @@
 
 @keyframes studySpin { to { transform: rotate(360deg); } }
 
-.study-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.study-title {
-    flex: 1;
-    min-width: 0;
-}
-
-.study-title h1 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+/* T2: `.study-header` / `.study-title` su obrisani — isti čisti duplikat kao na
+   lekcijama („First Midterm" i u zaglavlju i u mrvici), 115 px trajno. */
 
 /* Study Navigation Tabs */
 .study-nav {

@@ -5,6 +5,63 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-21 (OPUS) — **T2: jedan naslov po ekranu; BUG-030 zatvoren (spec §9.9)**
+
+Opet isti redoslijed: sonda prije koda. I opet je mjerenje promijenilo plan — **tri zaglavlja
+razine nisu bila tri iste zakrpe.**
+
+```
+browse   140 px   položaj (dubina drill-downa) + uputa („Odaberi smjer")
+lessons  119 px   h1 = doslovno ono što piše zadnja mrvica
+study    115 px   h1 = doslovno ono što piše zadnja mrvica
+```
+
+Lekcije i učenje su bili **čisti duplikat** → naslov je postao `visually-hidden`. Katalog
+**nije** bio duplikat: ondje je zaglavlje nosilo dubinu koju mrvica nije pokazivala (imala je
+samo korijen „Predmeti"), pa je dubina preselila **u mrvicu**, a uputa **u sadržaj**. Da sam
+rez izveo po tvrdnji iz plana („makni zaglavlje"), katalog bi ostao bez ijednog prikaza dubine.
+
+**Napravljeno**
+- `header.browse-header` / `.lessons-header` / `.study-header` **obrisani**, s njima i mrtvi
+  CSS (`.browse-title`, `.lessons-title`, `.study-title`, `.breadcrumb`, `.browse-logo`).
+- **Mrvica nosi dubinu kataloga** (`_mrviceKataloga()`), a svaka promjena razine ide kroz
+  **jedan ulaz** `browseNaRazinu()` — inače prikaz i mrvica opet imaju dva izvora istine.
+- **Prioritet kraćenja obrnut** u `topbar.css`: preci se stišću (uz `min-width`), trenutna
+  razina ne; `renderPathbar()` pomiče lanac na kraj.
+- `#topbarMaterials` **izašao iz trake** (Leonova odluka, §9.6); traka više nema nijedno
+  odredište, pa je obrisano i `aria-current` označavanje.
+- `shortName: 'FMTU'` u `catalog.js` — posljedica, ne lijek.
+- **Brana naučila razliku u ulozi:** ⑤ mjeri odgovor na „gdje sam?"; preci smiju biti skraćeni.
+
+**Izmjereno poslije** — kromo kataloga **307 → 167 px** (54 % → 29 % na 320, 36 % → 20 % na
+393) · lekcije 286 → 167 · učenje 282 → 167 · trenutna mrvica **30/99 → 99/99** · ⑤ **5 → 0** ·
+osnovica javno **59 → 31**.
+
+**Testirano** — `preflight` EXIT 0 · `css:diff` 6 razlika i sve na novom `.browse-heading` ·
+phone 9/9 + 10/10 · a11y 5/5 · navigacijski specovi 19/19 · puna suita **437 prošlo / 8 palo**,
+pa nakon promjene ta dva testa **`materials-entry` 24/24**.
+
+**⚠️ Osam padova bila su dva testa × četiri profila, i oba su tvrdila STARU odluku** („ulaz u
+materijale iz JEDNE trake") — točno ono što je Leon ukinuo. Promijenjeni su **odlukom**, ne
+popravljeni da budu zeleni; novi test čuva **cijenu** te odluke (traka bez ulaza na sve tri
+unutrašnje stranice, landing s više ulaza).
+
+**Pouka je o mojoj metodi:** grepao sam tko spominje `#topbarMaterials`, u tom specu vidio samo
+`.doors [data-goto-materials]` i zaključio da ne dira traku — **ispis je bio skraćen `head`-om**.
+Zatim sam ciljano vrtio specove **birane po osjećaju**, i taj nije bio među njima. *Kad cigla
+briše kontrolu, popis specova koji je moraju provjeriti nije procjena nego pretraga — a
+pretraga se ne smije čitati skraćena.*
+
+**Pouka koja vrijedi dalje.** *Kad se u nizu nešto mora stisnuti, stisne se ono što je izvedivo
+iz konteksta — ne ono što je jedini odgovor na pitanje gdje si.* Zatečeni CSS je izabrao
+obrnuto i djelovao je posve razumno.
+
+**Slijedi:** **T3** — budžet kroma. Nakon T2 je kromo točno dvije trake (64 + 44 = 108 px), a
+budžet na iPhoneu SE je 102 → probijanje je palo s 29 postotnih bodova na **jedan**, i preostala
+je **odluka o trakama**, ne ugađanje zaglavlja.
+
+---
+
 ## 2026-08-21 (OPUS) — **T1: sigurna zona kao pravilo; BUG-031 zatvoren (spec §9.8)**
 
 **Redoslijed rada je bio isti kao u T0 i to je namjerno: prvo mjeriti, pa popravljati.**

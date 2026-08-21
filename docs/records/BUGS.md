@@ -17,9 +17,15 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+*(Nema otvorenih bugova. BUG-030 i BUG-031 su zatvoreni ciglama T2 i T1 — v. «Riješeni / Lekcije».)*
+
+---
+
+## Riješeni / Lekcije
+
 ### BUG-030 — Puni naziv fakulteta ruši zaglavlje kataloga na telefonu (naslov postane „C…")
 
-- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki telefon, ulazni ekran kataloga) · Našao: **Leon na iPhoneu 16**, uz snimku.
+- Status: ✅ **riješen** (cigla T2, 2026-08-21) · Težina: **visok** (produkcija, svaki telefon, ulazni ekran kataloga) · Našao: **Leon na iPhoneu 16**, uz snimku.
 
 **Simptom.** Na 393 px se naziv fakulteta rasporedi u uski stupac, jedna riječ po retku, a
 naslov razine pored njega se skvrči u **„C…"**. Kontrole zaglavlja plutaju nasred tog stupca.
@@ -58,12 +64,27 @@ na 102 px **bez ijedne izmjene teksta**. T2 zato spaja zaglavlje s mrvicom, a ne
 `css:diff` uspoređuje nas sa samima sobom pa mu je ravnomjerno loše stanje stabilno; K3/K4a
 mjere **kromo**, ne stranicu. Detaljno: [FRONTEND_REDIZAJN §9.2](../plan/FRONTEND_REDIZAJN.md).
 
-**Rješenje (planirano, cigla T2).** Fakultet dobiva **kratko ime** u `catalog.js`; zaglavlje
-kataloga se spaja s mrvicom (danas govore isto → na grani su čak **dva naslova na istom
-ekranu**); kraćenje u flex-retku postaje **pravilo**, ne pojedinačna zakrpa.
+**Rješenje (cigla T2, isporučeno).** Zaglavlje razine je **obrisano na sve tri stranice**, ali
+ne istim rezom — jer mjerenje je pokazalo da to nisu bila tri ista kvara:
 
-**⚠️ Grana je ovo ublažila slučajno, ne namjerno** — 102 px i 3 retka umjesto 270 i 14, samo
-zato što je K2b maknuo gumbe iz tog zaglavlja. **Korijen stoji netaknut.**
+1. **Lekcije i učenje su bili čisti duplikat** (h1 je pisao doslovno ono što piše zadnja
+   mrvica). Naslov ostaje kao `visually-hidden` — stranica ga mora imati za čitač ekrana, ne
+   mora ga imati **dvaput na ekranu**. Ušteda 119 i 115 px.
+2. **Katalog nije bio duplikat**: ondje je zaglavlje nosilo dubinu (`fakultet › smjer ›
+   godina`) koju mrvica **nije pokazivala**. Zato je dubina **preselila u mrvicu**, a uputa
+   („Odaberi smjer") u **sadržaj**, gdje se smije odskrolati. Ušteda 140 px.
+3. **Pravi kvar iza simptoma bio je PRIORITET KRAĆENJA, i bio je naopak:** preci su imali
+   `flex-shrink: 0`, a `.crumb-current` `flex-shrink: 1` — stiskalo se **jedino što govori
+   gdje si** (30 od 99 px na 320), dok su preci držali punu širinu. Sada je obrnuto, uz
+   `min-width` na precima i pomak lanca na kraj.
+4. **Kratko ime fakulteta** (`shortName: 'FMTU'`) dodano je, ali kao **posljedica, ne lijek** —
+   T0 je dokazao da naslov jedu kontrole, ne znakovi.
+
+**Izmjereno poslije:** kromo kataloga **307 → 167 px** (54 % → **29 %** na 320 px, 36 % →
+**20 %** na 393) · trenutna mrvica **30/99 → 99/99** · tvrdnja ⑤ **5 ekrana → 0**.
+
+**⚠️ Grana je ovo bila ublažila slučajno, ne namjerno** — 102 px i 3 retka umjesto 270 i 14,
+samo zato što je K2b maknuo gumbe iz tog zaglavlja. Korijen je stajao netaknut do T2.
 
 **Brana (od T0, 2026-08-21).** `tests/phone.spec.js` tvrdnje ③ i ⑤ + `helpers/phone-gate.js`.
 Obrnuto provjerene na produkciji: ③ prijavljuje `.browse-title › #browseBreadcrumb = 5 redaka,
@@ -76,14 +97,11 @@ a susjed krati`, ⑤ prijavljuje `h1#browseHeading: odrezan na 34 od 187 px (18 
    ekrana i CSS-a, zvučao je mehanički i bio je netočan — pao je tek kad je netko izmjerio
    širine djece umjesto da ih pročita. Isti razred kao „brisanjem demoa nestaje 240 KB
    editorskog koda" (spec §7.14).
+3. *Preci u mrvici smiju se kratiti, trenutna razina ne smije.* Kad se u nizu nešto mora
+   stisnuti, stisne se ono što je **izvedivo iz konteksta**, a ne ono što je **jedini odgovor
+   na pitanje gdje si**. Prvi zapis tog CSS-a je izabrao obrnuto i djelovao je razumno.
 
 ---
-
-*(BUG-031 je riješen ciglom T1 — v. «Riješeni / Lekcije» niže.)*
-
----
-
-## Riješeni / Lekcije
 
 ### BUG-031 — Sadržaj stoji ispod Dynamic Islanda (sigurna zona nije nadoknađena)
 

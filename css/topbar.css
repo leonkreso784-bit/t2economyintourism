@@ -98,19 +98,17 @@ body.no-pathbar {
     flex-shrink: 0;
 }
 
-/* ⚠️ `flex-shrink: 0` JE BRANA, NE UGAĐANJE (K3, BUG-029). Ovdje je dotad stajalo
-   `min-width: 0`, što je izričito DOPUŠTALO stiskanje ispod širine sadržaja — i na
-   landingu se dogodilo doslovno: nav se stisnuo na **širinu 0**, a „Predmeti" (37 px)
-   isplivali ispod prekidača jezika. Klik na njih PREBACIO BI JEZIK umjesto da otvori
-   katalog. Odredišta nisu ono što u traci smije popustiti; kad ponestane mjesta, neka
-   se traka prelije (to gate VIDI) umjesto da se tiho preklopi (to ne vidi nitko). */
-.topbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    margin-inline-start: 0.5rem;
-    flex-shrink: 0;
-}
+/* T2: `.topbar-nav` je OBRISAN zajedno sa svojim posljednjim stanarom
+   (`#topbarMaterials`). Traka od T2 nema nijedno odredište — nosi samo znak, jezik,
+   prijavu i CTA.
+
+   ⚠️ Pouka iz K3/BUG-029 se NE briše s pravilom, jer vrijedi za svaki budući element
+   u traci: ondje je stajalo `min-width: 0`, što izričito DOPUŠTA stiskanje ispod širine
+   sadržaja — i na landingu se dogodilo doslovno: nav se stisnuo na **širinu 0**, a
+   „Predmeti" (37 px) isplivali ispod prekidača jezika, pa bi klik PREBACIO JEZIK umjesto
+   da otvori katalog. *Odredišta nisu ono što u traci smije popustiti; kad ponestane
+   mjesta, neka se traka prelije (to gate VIDI) umjesto da se tiho preklopi (to ne vidi
+   nitko).* Isto vrijedi i za mrvicu: ondje popuštaju PRECI, nikad trenutna razina. */
 
 .topbar-btn {
     display: flex;
@@ -190,11 +188,10 @@ body.on-landing .topbar-cta {
     display: inline-flex;
 }
 
-/* Ulaz u vlastito gradivo NE stoji u traci landinga (Leon, 2026-08-18) — ondje su to
-   VRATA U HEROU, a dva ulaza na isti ekran natječu se međusobno. */
-body.on-landing #topbarMaterials {
-    display: none;
-}
+/* T2: pravilo `body.on-landing #topbarMaterials { display: none }` je obrisano jer je
+   gumb obrisan. Odluka koju je nosilo i dalje vrijedi i sada je općenitija: ulaz u
+   vlastito gradivo NE stoji u traci NIGDJE (ne samo na landingu) — ondje su to VRATA U
+   HEROU, a dva ulaza na isti ekran natječu se međusobno. */
 
 .topbar-iconbtn {
     width: 40px;
@@ -275,6 +272,15 @@ body.no-pathbar .pathbar {
     display: none;
 }
 
+/* ⚠️ T2 — PRIORITET KRAĆENJA JE OBRNUT, i to je popravak istog razreda kao BUG-030.
+   Do T2 su preci imali `flex-shrink: 0`, a `.crumb-current` `flex-shrink: 1` — dakle
+   stiskala se JEDINA mrvica koja odgovara na pitanje „gdje sam?". Izmjereno na 320 px:
+   „First Midterm" je dobio **30 od 99 px** (30 %), dok su „Subjects" (63) i „Tourism
+   Economics" (129) držali punu širinu. Preci su uvijek izvedivi iz konteksta i smiju
+   se skratiti; trenutna razina ne smije.
+
+   `min-width` na precima postoji da kraćenje ne ode u besmisao (jedno slovo + „…"
+   ne kaže ništa) — ispod te mjere radije neka lanac skrola. */
 .crumb {
     border: none;
     background: none;
@@ -286,22 +292,30 @@ body.no-pathbar .pathbar {
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 3.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .crumb:hover {
     color: var(--text-primary);
 }
 
-/* Zadnja mrvica = gdje jesmo. Nije gumb (nema kamo voditi) pa ni ne izgleda kao gumb. */
+/* Zadnja mrvica = gdje jesmo. Nije gumb (nema kamo voditi) pa ni ne izgleda kao gumb.
+   ⚠️ `flex-shrink: 0` — ona se NE stišće. Preci iznad joj ustupaju prostor; ako ni to
+   ne dostaje, lanac se skrola i `renderPathbar()` ga pomakne na kraj, pa je trenutna
+   razina vidljiva u svakom slučaju. Ellipsis ostaje kao posljednja mreža za naziv koji
+   je sam po sebi dulji od cijelog retka. */
 .crumb-current {
     color: var(--text-primary);
     cursor: default;
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex-shrink: 1;
-    min-width: 0;
+    flex-shrink: 0;
+    max-width: 100%;
 }
 
 .crumb-current:hover {

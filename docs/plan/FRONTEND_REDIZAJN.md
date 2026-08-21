@@ -2201,3 +2201,134 @@ pokrenut** (81 token).
 > identično zatečenoj kratici `padding: 16px`; a phone-brana to i mjeri geometrijski (banner je
 > 197 px dok je rub 0, a 217 px tek kad se rub postavi na 34). **`check:safearea` jest doseže
 > `consent.css`** (skenira cijeli `css/`), pa jedan izvor vrijedi i ondje.
+
+### 9.9 ✅ T2 JE ISPUNJEN — jedan naslov po ekranu. BUG-030 zatvoren (2026-08-21)
+
+**Kriterij:** *na 393 px korisnik pročita naziv razine u cijelosti, a zaglavlje mu ne pojede
+ekran.* Ispunjeno na obje strane te rečenice, i to mjereno.
+
+| | prije | poslije |
+|---|---|---|
+| kromo na katalogu (320 px) | 307 px = **54 %** | 167 px = **29 %** |
+| kromo na katalogu (393 px) | 307 px = 36 % | 167 px = **20 %** |
+| kromo na lekcijama / učenju | 286 / 282 px | **167 px** |
+| trenutna mrvica na 320 px | „First Midterm" **30 od 99 px** | **99 od 99** |
+| tvrdnja ⑤ (naslov razine) | 5 ekrana | **0** |
+| osnovica, javno (ukupno) | 59 | **31** |
+
+#### Mjerenje je odredilo rez — i pokazalo da tri zaglavlja NISU ista stvar
+
+Sonda je prije ijedne izmjene ispisala što svako zaglavlje sadrži i što od toga već piše
+u mrvici:
+
+```
+browse   140 px   #browseBreadcrumb „HOSPITALITY MANAGEMENT · YEAR 1"   ← POLOŽAJ
+                  h1#browseHeading  „Year 1 subjects"                   ← UPUTA
+lessons  119 px   h1#currentSubjectTitle „Tourism Economics"            ← duplikat mrvice
+study    115 px   h1#currentLessonTitle  „First Midterm"                ← duplikat mrvice
+```
+
+**Lekcije i učenje su bili čisti duplikat** — h1 je pisao doslovno ono što piše zadnja
+mrvica. **Katalog nije**: ondje je zaglavlje nosilo dubinu drill-downa koju mrvica **nije
+pokazivala** (mrvica je imala samo korijen „Predmeti"). Dakle nisu tri iste zakrpe nego dva
+različita kvara, i rez ide po tome:
+
+- **identitet → mrvica**, i to cijeli lanac: `Predmeti › FMTU › Hospitality Management › Year 1`;
+- **uputa → sadržaj** (`h1.browse-heading` u `main`), gdje se smije odskrolati;
+- **duplikat → `visually-hidden`**: naslov stranice mora postojati za čitač ekrana, ali ne
+  mora stajati na ekranu dvaput. Id-evi su zadržani jer ih pišu `navigation.js` i četiri testa.
+
+*Da je rez išao „makni zaglavlje" bez tog razlikovanja, katalog bi ostao bez ijednog prikaza
+dubine — korisnik bi vidio samo „Predmeti" i ne bi znao u kojem je smjeru ni godini.*
+
+#### ⚠️ Pravi kvar iza BUG-030 bio je PRIORITET KRAĆENJA, i bio je postavljen naopako
+
+```css
+.crumb          { flex-shrink: 0; }   /* preci — držali su PUNU širinu */
+.crumb-current  { flex-shrink: 1; }   /* gdje jesi — JEDINI se stiskao */
+```
+
+Na 320 px je zato „First Midterm" dobio **30 od 99 px**, dok su „Subjects" (63) i „Tourism
+Economics" (129) stajali netaknuti. **Stiskalo se jedino što odgovara na pitanje „gdje sam?",
+a preci — koji su uvijek izvedivi iz konteksta — nisu popuštali ni piksel.** Isti razred kao
+sam BUG-030 (dva pravila ispravna svako za sebe, kvar tek u kombinaciji), samo unutar trake.
+
+Novo pravilo: **preci se stišću** (uz `min-width`, da kraćenje ne ode u besmisao), **trenutna
+razina se ne stišće**, a `renderPathbar()` usto pomiče lanac na kraj — pa je trenutna razina
+vidljiva i kad lanac prelijeva.
+
+#### ⚠️ Brana je morala naučiti razliku, i to je bilo izmjeriti-pa-odlučiti, ne popustiti
+
+Tvrdnja ⑤ je kraćenje ispod 60 % tretirala jednako za sve mrvice. Nakon T2 bi zato prijavila
+**pretke** — točno ono ponašanje koje cigla namjerno uvodi. Rez: ⑤ mjeri **odgovor na „gdje
+sam?"** (trenutna razina + zaglavlje razine), a preci su **navigacija** i smiju se kratiti;
+za njih i dalje vrijedi da se ne smiju **lomiti**, a dohvatljivost im mjeri `reachability`
+pogotkom. Zapisano je i u samoj brani, jer je komentar uz prag to predvidio: *„ako T2 ostavi
+legitimno kraćenje ispod 60 %, prag se pomiče uz zapis zašto, ne prešutno."*
+
+#### Traka je ostala bez ijednog odredišta — i to je druga polovica odluke
+
+`#topbarMaterials` je izašao (§9.6, Leonova odluka), pa gornji red sada nosi **samo** znak,
+jezik, prijavu i CTA. Cijena je izrečena: iz *unutrašnjosti* aplikacije u vlastite materijale
+se ide preko landinga ili profila (pet ulaza), kao i kod „Predmeta". Uz to je obrisano
+označavanje `aria-current` u traci — bilo je vezano uz gumbe kojih više nema; položaj sada
+nosi isključivo mrvica.
+
+**Kratko ime fakulteta** (`shortName: 'FMTU'`) dodano je u `catalog.js` — ali kao *posljedica*,
+ne kao lijek: T0 je dokazao da naslov jedu kontrole, ne znakovi. Puni pravni naziv ostaje u
+`name` i dalje stoji na kartici fakulteta.
+
+#### Jedan ulaz za promjenu razine kataloga
+
+Dubina drill-downa sada se vidi u traci, pa svaka promjena razine mora osvježiti **i** prikaz
+**i** mrvicu. Da se to ne bi oslanjalo na dogovor, uveden je `browseNaRazinu()` kroz koji idu
+i „natrag" i klik na karticu i klik na mrvicu. Isti obrazac kao K2b: *put koji se pokazuje i
+put kojim se ide ne mogu se raziĆi ako su isti izraz.*
+
+#### Što je ostalo, i čije je
+
+Kromo je sada **točno dvije trake: 64 + 44 = 108 px**. Na iPhoneu SE je to **21 %** uz budžet
+od 20 % — dakle **probijanje je palo s 29 postotnih bodova na jedan**, i preostalo je točno
+ono što je §9.7 najavio kao aritmetiku koju **T3 mora znati unaprijed**: dvije globalne trake
+same po sebi ne stanu u budžet, pa T3 nije ugađanje zaglavlja nego **odluka o trakama**.
+Tvrdnja ④ je pala s 20 na 13 ekrana; ostatak je **cookie-banner** (T4).
+
+#### ⚠️ Dva testa su pala — i pala su na PRAVOM mjestu
+
+Puna suita je prijavila **8 padova**, ali su to bila **dva testa × četiri profila**, oba u
+`tests/materials-entry.spec.js`, i oba su tvrdila **staru** odluku: *„ulaz u materijale je
+dohvatljiv s browse/lessons/study — iz JEDNE trake"*. Točno to je Leon ukinuo (§9.6). Testovi
+su zato **promijenjeni odlukom, ne popravljeni da budu zeleni** — po presedanu cigle A
+landinga, gdje je zapisano da je razlika **odluka**, a ne pad.
+
+Novi test čuva **baš cijenu te odluke**, da se ne plati slučajno i nezapisano: traka ne smije
+imati ulaz **ni na jednoj** od tri unutrašnje stranice (inače se odluka tiho vraća, a s njom i
+kromo), a landing ga mora imati **više puta** (inače je odluka tiho pojela jedini put do
+vlastitog gradiva). Drugi test je zadržao svoj scenarij — vozilo (klik na gumb) je zamijenjeno
+istim pozivom koji je gumb ionako zvao, jer svojstvo koje čuva nije bilo vozilo nego **model
+vraćanja**.
+
+> ⚠️ **Pouka je o mojoj metodi, ne o kodu.** Prije prepisivanja sam **grepao** tko spominje
+> `#topbarMaterials`, vidio u `materials-entry.spec.js` samo `.doors [data-goto-materials]` i
+> zaključio da taj spec ne dira traku. Ispis je bio **skraćen `head`-om** — redci 85 i 112+
+> nisu bili u njemu. Zatim sam ciljano vrtio „navigacijske" specove **koje sam sam odabrao po
+> osjećaju**, i taj spec nije bio među njima; pao je tek u punoj suiti. *Kad cigla briše
+> kontrolu, popis specova koji je moraju provjeriti nije stvar procjene nego pretrage — a
+> pretraga se ne smije čitati skraćena.* Isti razred kao brojka pročitana iz tuđeg ispisa
+> (v. napomenu o Playwrightovu `Received + N` u §9.8).
+
+#### Stanje gateova
+
+`preflight` **EXIT 0** · `css:diff` **6 razlika, sve na `.browse-heading`** (novi naslov u
+sadržaju dobio je tipografiju umjesto zadane h1 od 32 px) · phone-brana **9/9 javno, 10/10
+prijavljeno** · `a11y` 5/5 · navigacijski specovi (browse, landing, sidebar, routes,
+reachability, layout-guard) **19/19** · puna suita **437 prošlo / 8 palo**, a nakon promjene ta
+dva testa **`materials-entry` 24/24 na sva četiri profila**. ⚠️ Ostatak suite se **nije
+ponavljao, i to je izrečeno**: nakon njezina prolaza promijenjena je **isključivo**
+`tests/materials-entry.spec.js`, dakle nijedan izvršni redak aplikacije — pa onih 437 prolaza
+i dalje opisuje **ovo** stablo.
+
+> ⚠️ **Isti doseg-oprez kao u T1, sad s druge strane:** `css:diff` mijenja **samo bundle**, a
+> DOM drži iz radnog stabla — dakle o **obrisanom markupu** ne kaže ništa i ne može. Zato su
+> tri obrisana zaglavlja dokazana brojkom iz phone-brane (kromo 307 → 167), a ne odsutnošću
+> razlika. *Gate koji nije mogao vidjeti promjenu nije je ni odobrio.*
