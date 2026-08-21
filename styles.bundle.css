@@ -244,6 +244,10 @@ body {
   display: flex;
   flex-direction: column;
 }
+section[id$="-page"] {
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
 .landing-page {
   flex-direction: column;
   min-height: 100vh;
@@ -1235,6 +1239,7 @@ body {
 @media (max-width: 600px) {
   .browse-content {
     padding: 1.25rem 1rem;
+    padding-bottom: calc(1.25rem + var(--safe-bottom));
   }
   .browse-grid {
     grid-template-columns: 1fr;
@@ -1485,7 +1490,7 @@ body {
     background: var(--bg-secondary);
     border-top: 1px solid var(--border);
     padding: 0.5rem 0;
-    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(0.5rem + var(--safe-bottom));
     z-index: 9999;
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
   }
@@ -1540,7 +1545,7 @@ body {
     transform: translateX(-50%) scaleX(1);
   }
   .study-page .study-content {
-    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 1rem);
+    padding-bottom: calc(70px + var(--safe-bottom) + 1rem);
   }
 }
 .about-page {
@@ -5191,26 +5196,24 @@ div.subject-card {
     display: block;
   }
 }
-@supports (padding-top: env(safe-area-inset-top)) {
-  .header {
-    padding-top: calc(0.75rem + env(safe-area-inset-top));
+.header {
+  padding-top: calc(0.75rem + var(--safe-top));
+}
+.about-header {
+  padding-top: calc(1rem + var(--safe-top));
+}
+.mobile-nav {
+  padding-bottom: var(--safe-bottom);
+}
+.footer {
+  padding-bottom: calc(1rem + 65px + var(--safe-bottom));
+}
+@media (max-width: 767px) {
+  .main-content {
+    padding-bottom: calc(0.75rem + 70px + var(--safe-bottom));
   }
-  .about-header {
-    padding-top: calc(1rem + env(safe-area-inset-top));
-  }
-  .mobile-nav {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  .footer {
-    padding-bottom: calc(1rem + 65px + env(safe-area-inset-bottom));
-  }
-  @media (max-width: 767px) {
-    .main-content {
-      padding-bottom: calc(0.75rem + 70px + env(safe-area-inset-bottom));
-    }
-    .toast {
-      bottom: calc(70px + env(safe-area-inset-bottom) + 10px);
-    }
+  .toast {
+    bottom: calc(70px + var(--safe-bottom) + 10px);
   }
 }
 .pull-indicator {
@@ -5246,7 +5249,7 @@ div.subject-card {
 @media (max-width: 767px) {
   .landing-footer {
     padding: 1.25rem 1rem;
-    padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(1.25rem + var(--safe-bottom));
     font-size: 0.8rem;
   }
   .subjects-sidebar {
@@ -5255,7 +5258,7 @@ div.subject-card {
   }
   .sidebar-header {
     padding: 1rem;
-    padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+    padding-top: calc(1rem + var(--safe-top));
   }
   .sidebar-header h2 {
     font-size: 1.1rem;
@@ -5353,7 +5356,7 @@ div.subject-card {
   }
   .flashcards-section {
     padding: 0.75rem;
-    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + var(--safe-bottom));
   }
   .flashcards-header {
     padding: 0.75rem;
@@ -5426,7 +5429,7 @@ div.subject-card {
   }
   .quiz-section {
     padding: 0.75rem;
-    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + var(--safe-bottom));
   }
   .quiz-header {
     padding: 0.75rem;
@@ -5496,7 +5499,7 @@ div.subject-card {
   }
   .fill-section {
     padding: 0.75rem;
-    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + var(--safe-bottom));
   }
   .fill-header {
     padding: 0.75rem;
@@ -5542,7 +5545,7 @@ div.subject-card {
   }
   .analytics-section, .progress-section {
     padding: 0.75rem;
-    padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(80px + var(--safe-bottom));
   }
   .analytics-header, .progress-header {
     padding: 0.75rem;
@@ -6108,7 +6111,7 @@ div.subject-card {
 }
 @media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
   .study-content {
-    padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(60px + var(--safe-bottom));
   }
   .flashcard-wrapper {
     max-width: 70%;
@@ -6782,8 +6785,8 @@ sokrat-modal.image-modal > * {
 }
 @media (orientation: landscape) {
   #learn .learn-container {
-    padding-left: max(14px, env(safe-area-inset-left, 0px));
-    padding-right: max(14px, env(safe-area-inset-right, 0px));
+    padding-left: max(14px, var(--safe-left));
+    padding-right: max(14px, var(--safe-right));
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -8708,6 +8711,15 @@ h4.lb-heading {
   border-left: 1px solid var(--st-line);
   padding: 16px 14px;
   overflow-y: auto;
+}
+#editor-page .st-tree, #editor-page .st-canvas, #editor-page .st-inspector {
+  padding-bottom: var(--safe-bottom);
+}
+#editor-page .st-tree {
+  padding-bottom: calc(14px + var(--safe-bottom));
+}
+#editor-page .st-inspector {
+  padding-bottom: calc(16px + var(--safe-bottom));
 }
 #editor-page .st-icard {
   background: var(--st-panel);

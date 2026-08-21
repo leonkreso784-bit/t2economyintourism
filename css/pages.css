@@ -281,7 +281,7 @@
         background: var(--bg-secondary);
         border-top: 1px solid var(--border);
         padding: 0.5rem 0;
-        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(0.5rem + var(--safe-bottom));
         z-index: 9999;
         box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     }
@@ -344,7 +344,7 @@
     }
     
     .study-page .study-content {
-        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 1rem);
+        padding-bottom: calc(70px + var(--safe-bottom) + 1rem);
     }
 }
 

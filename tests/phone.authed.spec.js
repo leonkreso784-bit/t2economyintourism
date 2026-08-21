@@ -21,10 +21,13 @@ async function spremanAdmin(page) {
     await G.spreman(page);
     await page.waitForFunction(() => !!window.SokratAdmin);
     await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-    await G.postaviOtok(page);
+    await G.postaviRub(page);
 }
 
-const NALAZI = { otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [] };
+const NALAZI = {
+    otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
+    dno: [], bocno: [], spremnik: []
+};
 let izmjerenoEkrana = 0;
 
 test.beforeAll(async ({ browser }, testInfo) => {
@@ -42,11 +45,12 @@ test.beforeAll(async ({ browser }, testInfo) => {
         await page.waitForTimeout(600);
 
         for (const ekran of G.EKRANI_PRIJAVLJENI) {
-            await G.idiNa(page, ekran);
+            await G.idiNa(page, ekran, e.rub);
             if (ekran === 'editor') await page.waitForSelector('#editor-page.active');
-            await G.postaviOtok(page);
+            await G.postaviRub(page, e.rub);
             await page.waitForTimeout(400);
-            snimka.push({ e, ekran, m: await G.mjeriStranicu(page) });
+            const m = await G.mjeriStranicu(page, e.rub);
+            snimka.push({ e, ekran, m, r: await G.mjeriRubove(page, e.rub) });
         }
         await ctx.close();
     }
@@ -67,6 +71,9 @@ test.beforeAll(async ({ browser }, testInfo) => {
                 + (m.bannerPx ? ' + banner ' + m.bannerPx + ' px' : '') + ' od ' + m.vh + ' px');
         }
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
+        r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
+        r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
+        r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
     });
 
     if (G.spremiOsnovicu('prijavljeno', NALAZI)) {
@@ -103,7 +110,22 @@ test('⑤ zaglavlje razine je čitljivo i iza prijave', async () => {
     protivOsnovice('zaglavlje', 'NOVI naslovi razine koje korisnik ne može pročitati (BUG-030)');
 });
 
-test('⓪ pokrivenost: sve prijavljene stranice na sve tri širine', async () => {
+test('⑥ donji rub: polica i Studio ne guraju kontrole pod home-indikator', async () => {
+    // Studio je ovdje najizloženiji: njegova ljuska je `position:fixed` sa svojim
+    // skrolerom, pa joj `padding-bottom` na `body` NE POMAŽE — donji rub mora nadoknaditi
+    // sama. Baš zato prijavljena brana mjeri isto što i javna, a ne „valjda vrijedi i ovdje".
+    protivOsnovice('dno', 'NOVE kontrole ispod home-indikatora (BUG-031)');
+});
+
+test('⑦ bočni rub: polegnut telefon i iza prijave', async () => {
+    protivOsnovice('bocno', 'NOVE kontrole ispod bočnog izreza (BUG-031)');
+});
+
+test('⑦b spremnik prijavljenih stranica poštuje sigurnu zonu', async () => {
+    protivOsnovice('spremnik', 'NOVI spremnici sadržaja koji ulaze u sigurnu zonu (BUG-031)');
+});
+
+test('⓪ pokrivenost: sve prijavljene stranice na sva četiri profila', async () => {
     expect(izmjerenoEkrana, 'izmjerenih prijavljenih ekrana')
         .toBe(G.EKRANI.length * G.EKRANI_PRIJAVLJENI.length);
 });

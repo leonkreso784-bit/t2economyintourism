@@ -79,9 +79,15 @@ a susjed krati`, ⑤ prijavljuje `h1#browseHeading: odrezan na 34 od 187 px (18 
 
 ---
 
+*(BUG-031 je riješen ciglom T1 — v. «Riješeni / Lekcije» niže.)*
+
+---
+
+## Riješeni / Lekcije
+
 ### BUG-031 — Sadržaj stoji ispod Dynamic Islanda (sigurna zona nije nadoknađena)
 
-- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki iPhone s otokom) · Našao: **Leon na iPhoneu 16**.
+- Status: ✅ **riješen** (cigla T1, 2026-08-21) · Težina: **visok** (produkcija, svaki iPhone s otokom) · Našao: **Leon na iPhoneu 16**.
 
 **Simptom.** Gornja traka sa znakom i gumb „Start studying" stoje **ispod** Dynamic Islanda.
 
@@ -94,26 +100,51 @@ otoka — ali `css/landing.css` spominje `env(safe-area-inset-*)` **nula puta**.
 nesigurnu zonu i onda je nismo nadoknadili. Na grani to slučajno radi jer je K2b donio globalnu
 traku koja `var(--safe-top)` **ima**; nijedno pravilo to ne jamči.
 
-**Rješenje (planirano, cigla T1).** Sigurna zona kao **pravilo** na svih devet stranica i u obje
-orijentacije; danas je poštuje 7 datoteka.
+**Rješenje (cigla T1, isporučeno).** Sigurna zona ima od sada **jedan izvor i jedno pravilo**:
+
+1. **Jedan izvor** — `env(safe-area-inset-*)` smije stajati samo u `css/variables.css`; 18
+   mjesta u 5 datoteka prevedeno je na `var(--safe-*)`, a brana **`npm run check:safearea`**
+   (u preflightu) drži to tako. Razlog nije urednost: pravilo napisano golim `env()` naša
+   zamjena u pregledniku **ne dohvaća**, pa ga nijedan test ne može ni potvrditi ni oboriti.
+2. **Vodoravna os, jedno pravilo za svih devet stranica** —
+   `section[id$="-page"] { padding-left: var(--safe-left); padding-right: var(--safe-right) }`.
+   Padding ide na SEKCIJU jer se pozadina crta i ispod njega: ploha ostaje preko cijelog
+   ekrana, uvlači se samo sadržaj. Selektor je atributni (ugovor `-page` iz K1), pa deveta
+   stranica sigurnu zonu dobiva **time što postoji**.
+3. **Fiksni namještaj sam sebe uvlači** — cookie-traka i tri panela Studija; njima padding
+   predaka ne pomaže. Fiksno ide kroz **`max()`** (rub pojede razmak, traka raste 20 px
+   umjesto 34), skrolabilni sadržaj kroz **`calc()`** (zadnjoj kartici treba i zraka).
+
+**Izmjereno poslije:** ⑥ **183 → 0** · ⑦ **16 → 0** · ⑦b **16 → 0**; `css:diff` 0/3408
+(rubovi su u Chromiumu 0, pa se prikaz ne smije pomaknuti ni za piksel).
 
 **⚠️ Metoda mjerenja, jer je bila nova.** `env()` se u Chromiumu ne da simulirati — ali
 `--safe-top` je **naša varijabla iznad njega**. Postavi je na 59 px: **što se ne pomakne, na
 pravom telefonu stoji ispod otoka.** Prije ovoga sigurna zona nikad nije bila izmjerena.
 
-**Brana (od T0, 2026-08-21).** `tests/phone.spec.js` tvrdnja ① + `tests/phone.authed.spec.js`.
-Obrnuto provjerena na produkciji, gdje prijavljuje točno ono na što se Leon požalio:
-`a.landing-logo y=20…52` i `button.nav-cta` („Start studying") **`y=18…53`**, uz otok od 59.
-⚠️ Brana pokriva **samo `--safe-top` i samo portret** — donji/bočni rub i landscape su i dalje
-nemjereni, i **T1 mora proširiti `helpers/phone-gate.js`**, a ne se osloniti na njezino zelenilo.
+**Brana.** `tests/phone.spec.js` + `tests/phone.authed.spec.js`, mjera u
+`tests/helpers/phone-gate.js`. T0 je donio tvrdnju ① (gornji rub, portret) i obrnuto je
+provjerio na produkciji: `a.landing-logo y=20…52`, `button.nav-cta` („Start studying")
+**`y=18…53`**, uz otok od 59. **T1 je dodao ⑥ (donji rub, mjeren NA DNU SKROLA), ⑦ (bočni rub,
+landscape) i ⑦b/⑦c (spremnik sadržaja poštuje zonu i kad u njoj slučajno nema gumba)** te
+**četvrti profil, 852 × 393**.
 
-**Lekcija.** *`viewport-fit=cover` nije postavka nego obveza.* Njime se izričito prijavljuješ
-za crtanje ispod izreza — i od tog trenutka je **svaki** neispunjeni `env()` regresija, a ne
-propuštena ljepota.
+**Lekcija (tri, i sve tri su o mjerljivosti).**
+
+1. *`viewport-fit=cover` nije postavka nego obveza.* Njime se izričito prijavljuješ za crtanje
+   ispod izreza — od tog trenutka je svaki neispunjeni rub regresija, a ne propuštena ljepota.
+2. *Pravilo napisano golim `env()` je pravilo koje nijedan test ne može ni potvrditi ni
+   oboriti.* Dvije liste iste činjenice (`--safe-*` i `env()`) razišle su se točno onako kako
+   se dvije liste razilaze: `.mobile-nav` je ispravno pravilo iz `components.css` prepisivao
+   nemjerljivom inačicom (**90 od 183** nalaza), a `.landing-footer` je „radio" na način koji
+   se nije dao dokazati.
+3. *Prolaz zbog kratkog sadržaja nije prolaz.* Tvrdnja koja pada tek kad u pojasu stvarno
+   nešto stoji propušta ljusku koja je danas prazna — Studio je imao `padding-bottom: 0` na
+   platnu koje seže do ruba ekrana. Ispravnost mora biti **svojstvo spremnika**, ne ishod
+   trenutnog sadržaja. Prva izvedba te tvrdnje to nije bila i zato **nije mogla puknuti**;
+   otkriveno je ispisom kandidata, ne čitanjem koda.
 
 ---
-
-## Riješeni / Lekcije
 
 ### BUG-029 — „Predmeti" na 320 px PREBACUJU JEZIK umjesto da otvore katalog
 

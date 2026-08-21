@@ -1986,13 +1986,16 @@ Ovo se zapisuje jer je metoda, ne anegdota. Svaka od tri greške izgledala je ka
 Sve tri je otkrilo puštanje mjerača na stanje za koje se **zna** da je pokvareno.
 *Detektor koji nije obrnuto provjeren mjeri sebe, ne stranicu.*
 
-#### ⚠️ Poznata rupa, zapisana namjerno
+#### ⚠️ Poznata rupa, zapisana namjerno — **✅ ZATVORENA ciglom T1, v. §9.8**
 
-Mjerač simulira **samo `--safe-top` i samo portret**. `--safe-bottom` / `-left` /
-`-right` i landscape (gdje izrez ide ustranu) ostaju **nemjereni**. **T1 mora proširiti
-`phone-gate.js`**, a ne pretpostaviti da zelena brana već nešto tvrdi o donjem rubu —
+*(Zapis stoji kao povijest; nalog je izvršen i ne izvršava se ponovno.)*
+
+Mjerač je u T0 simulirao **samo `--safe-top` i samo portret**. `--safe-bottom` / `-left` /
+`-right` i landscape (gdje izrez ide ustranu) ostali su **nemjereni** — svjesno, ali kao rupa
+koju **T1 mora proširiti**, a ne pretpostaviti da zelena brana već nešto tvrdi o donjem rubu;
 projekt je taj razred greške već platio (`check:contrast`, tvrda zabrana #2: *gate koji
-provjerava NEKE tokene stvara tihu pretpostavku da su provjereni SVI*).
+provjerava NEKE tokene stvara tihu pretpostavku da su provjereni SVI*). **T1 je to i učinio:**
+⑥ donji rub, ⑦ bočni rub, ⑦b/⑦c spremnik, + četvrti profil **852 × 393**.
 
 #### ⚠️ Brana traži OSNOVICU, ne nulu — i to je odluka, ne popuštanje
 
@@ -2053,3 +2056,148 @@ Prelazak na čekanje-po-stanju iznio je **još dva prava kvara u brani**, oba vr
 **`npm run test:responsive` je ZELEN** (brana radi protiv osnovice, v. gore), a
 **`npm run preflight` je EXIT 0** — T0 ne dira nijedan izvršni redak aplikacije, samo
 `tests/`, pa **`npm run bump` nije bio potreban**.
+
+### 9.8 ✅ T1 JE ISPUNJEN — sigurna zona je od danas PRAVILO, a ne navika (2026-08-21)
+
+**Kriterij:** *korisnik drži iPhone s otokom i nijedan gumb ni slovo ne stoji ispod njega* —
+u obje orijentacije, na svih devet stranica. Ispunjeno: tvrdnje ⑥, ⑦ i ⑦b su na **nuli**.
+
+| tvrdnja | prije | poslije |
+|---|---|---|
+| ⑥ donji rub (na dnu skrola) | **183** | **0** |
+| ⑦ bočni rub (landscape) | **16** | **0** |
+| ⑦b spremnik sadržaja poštuje zonu | **16** | **0** |
+
+> ⚠️ **Sitnica koja je zamalo ušla u zapis kao brojka: Playwrightov `Received + N` NIJE broj
+> nalaza.** U toj razlici su i dva retka same strukture (`Array [` i `]`), pa je „+185"
+> zapravo **183**, a „+18" **16**. Prvo su bili prepisani doslovno; ispravljeni su tek kad je
+> popis prebrojan po elementima (90 + 40 + 40 + 10 + 3 = **183**). *Broj pročitan iz tuđeg
+> ispisa treba jednom provjeriti vlastitim brojanjem* — isti razred kao zbroj u TESTING.md koji
+> je dvaput bio kriv jer ga nitko nije zbrojio.
+
+#### ⚠️ NALAZ KOJI JE ODREDIO OBLIK CIGLE: pravilo napisano golim `env()` je nemjerljivo
+
+T0 je zapisao da `env()` u Chromiumu nije simulabilan, a da je `--safe-top` **naša**
+varijabla iznad njega. T1 je iz toga izvukao posljedicu koju T0 nije: sve što je napisano
+**izravno** s `env(safe-area-inset-*)` naša zamjena **ne dohvaća** — ostaje 0 i u pregledniku
+i u brani. Takvo pravilo nijedan test ne može ni potvrditi ni oboriti.
+
+Zatečeno stanje je imalo **dvije liste iste činjenice**: naš token (`--safe-*`, **39 mjesta u 9 datoteka**) i
+goli `env()` (**18 mjesta u 5 datoteka**). Posljedice su bile točno one koje se od dvije liste
+očekuju, i obje su izmjerene:
+
+- **`.mobile-nav`** — `css/responsive/03-modes-a11y-print.css` je unutar `@supports` bloka
+  prepisivao ispravno pravilo iz `components.css` inačicom s golim `env()`. Na uređaju radi
+  isto; **u mjeri ne postoji**, pa je brana prijavila **90 od 183** nalaza na donjem rubu koji
+  na pravom iPhoneu nisu kvar. *Detektor nije bio kriv — kôd je bio nemjerljiv.*
+- **`.landing-footer`** — imao je ISPRAVAN `padding-bottom` sa `env()`, i to je bio jedini
+  razlog zašto se činilo da podnožje sigurnu zonu poštuje. Nije se dalo dokazati.
+
+Zato T1 uvodi **`npm run check:safearea`** (u preflightu): `env(safe-area-inset-*)` smije
+stajati **samo u `css/variables.css`**, svugdje drugdje ide `var(--safe-*)`. Druga provjera
+istog gatea traži da ta četiri tokena ondje **stvarno postoje** — bez nje bi nula golih
+`env()` bila savršena ocjena i za stranicu koja sigurnu zonu uopće ne poznaje.
+
+> ⚠️ **Brana je prvo prijavila vlastiti komentar.** Skener je čitao datoteku kao goli tekst,
+> pa je pogodio objašnjenje *zašto* je goli `env()` maknut. Komentar nije pravilo: ne izvršava
+> se i ne može ništa pregaziti — a mora se smjeti napisati, inače objašnjenje ne može stajati
+> ondje gdje pripada. Rješenje je brisanje komentara **uz očuvanje brojeva redaka**. Isti
+> razred kao `check:tailwind` §šum, gdje je skener klasu izvukao iz proze: *skener vidi tekst,
+> ne pravila.*
+
+#### Što je stvarno bilo pokvareno (nakon što se oduzme nemjerljivost)
+
+| kvar | mjera | zašto ga ⑥/⑦ prije nisu vidjeli |
+|---|---|---|
+| **cookie-traka** (80 nalaza) | oba gumba **20 px** pod home-indikatorom na SVAKOJ stranici; u landscapeu „Prihvaćam" **43 px** pod bočnim izrezom | `position:fixed` — nijedan spremnik je ne može uvući, a T0 je mjerio samo gornji rub |
+| **`.browse-content`** (3) | zadnja kartica **14 px** pod indikatorom **na dnu skrola**, odakle se ne da izvući | kratica `padding:` u `@media (max-width:600px)` je BRISALA `padding-bottom: calc(2rem + var(--safe-bottom))` iz baznog pravila — i to točno na širinama gdje sigurna zona jedina postoji |
+| **bočni rub, sve stranice** (18) | kartice kataloga počinju na **24 px**, poveznice podnožja na **34**, uz sigurnu granicu od 59 | landscape nije bio profil ni u jednoj brani |
+| **`#stCanvas`** (Studio) | `padding-bottom: 0`, a ljuska seže **do ruba ekrana** | v. ⑦c niže — kvar koji se ne vidi dok sadržaj nije dovoljno dug |
+
+#### Pravilo za vodoravnu os: padding ide na SEKCIJU
+
+```css
+section[id$="-page"] { padding-left: var(--safe-left); padding-right: var(--safe-right); }
+```
+
+Jedno pravilo za svih devet stranica. Tri odbačene inačice i razlog:
+
+- **`margin` na `<main>`** — `.browse-content` ima `margin: 0 auto` za centriranje; pravilo bi
+  ga pregazilo i sadržaj bi **na desktopu skočio ulijevo**, gdje su rubovi ionako 0.
+- **`padding-inline` na `<main>`** — tražilo bi da pravilo poznaje svaki postojeći razmak
+  (16 px, 24 px, `clamp()`…), dakle popis koji se raziđe s prvim novim ekranom.
+- **`padding` na `body`** — fiksni namještaj ga ne vidi, a sekcijske pozadine bi se uvukle i
+  ispod izreza bi ostala pruga tuđe boje.
+
+Padding na sekciji radi jer se **pozadina crta i ispod paddinga**: ploha ostaje preko cijelog
+ekrana, uvlači se samo sadržaj. Selektor je **atributni, a ne popis klasa** koji u
+`variables.css` već postoji: taj popis ima osam imena i ne poznaje `#editor-page`. Adresa
+`-page` je ugovor iz K1 i po njoj već idu `reach-gate` i `phone-gate` — deveta stranica time
+dobiva sigurnu zonu **jer postoji**, a ne jer se netko sjetio dopisati je.
+
+**Donji rub NIJE ušao u to pravilo**, iako bi simetrija bila lijepa: `.study-page` nosi vlastiti
+`padding-bottom` zbog donje trake učenja, a zajedničko pravilo veće specifičnosti bi ga
+obrisalo i sadržaj bi nestao **iza** trake. Donji rub je zato **mjeren** (⑥), ne nametnut.
+
+#### ⚠️ `max()` umjesto zbrajanja — odluka koju je iznjedrila osnovica, ne ukus
+
+Prva inačica cookie-trake je pisala `padding-bottom: calc(16px + var(--safe-bottom))`. Brana je
+odmah pokazala cijenu: traka je narasla **za punih 34 px** i time gurnula **još jedan ekran**
+(393 px, način „kartice") u stanje *„bez skrola se ne da ništa"* — dakle **popravak sigurne zone
+pogoršao bi tvrdnju ④**. Sa `max(16px, var(--safe-bottom))` sigurni rub **pojede** razmak
+umjesto da mu se doda: sadržaj sjeda točno na granicu zone, traka raste 20 px umjesto 34, ispod
+indikatora i dalje nema ničega, a onaj ekran ispada iz nalaza.
+
+Pravilo koje iz toga slijedi: **fiksni namještaj → `max()`** (vertikalni prostor je skup, a
+pojas je ionako vizualno rezerviran) · **skrolabilni sadržaj → `calc()`** (zadnja kartica treba
+i zraka, ne samo da ne bude ispod indikatora).
+
+#### ⚠️ ⑦c — razlika između PRAVILA i SLUČAJA, i kvar koji je našla
+
+Tvrdnja ⑥ pada samo ako u pojasu **stvarno stoji** kontrola. Ljuska s kratkim sadržajem zato
+prolazi **slučajno**, a kvar izlazi kod korisnika čim sadržaj naraste. Studio je točno takav:
+`position:fixed; inset: var(--chrome-h) 0 0 0`, dno mu je rub ekrana, i **fiksni element ne zna
+za padding svojih predaka**. Izmjereno: `.st-canvas` = `padding-bottom: 0`, `.st-tree` = 14,
+`.st-inspector` = 16, uz rub od 34.
+
+Zato ⑦c mjeri **svojstvo** spremnika: skroler koji seže do dna ekrana mora rezervirati donji rub.
+
+> ⚠️ **Prva izvedba te tvrdnje nije mogla puknuti.** Tražila je da spremnik *trenutno* prelijeva
+> (`scrollHeight > clientHeight`) — a u testu je Studio otvoren s praznim dokumentom, pa je
+> kandidata bilo **nula**. Brana bi ostala zelena sve dok netko ne napiše dovoljno dug materijal.
+> Uvjet je maknut: rezervacija ruba je svojstvo spremnika, ne posljedica trenutnog sadržaja.
+> **Otkriveno ispisom kandidata, ne čitanjem koda** — a zatim obrnuto provjereno: s vraćenim
+> kvarom (`padding-bottom: 0`) brana imenuje `main#stCanvas`, bez njega šuti.
+
+#### Cijena koja se izriče, a ne skriva
+
+- **Cookie-traka je viša za 20 px** (197 → 217 px na 320 px ekrana, 38 % umjesto 35 %). To je
+  neizbježno: gumbi su prije bili djelomično pod indikatorom. **T4 je i dalje ta cigla.**
+- **Osnovica je narasla za landscape**: `kromo` 25 → 34 (javno) i 4 → 8 (prijavljeno),
+  `prviEkran` 15 → 20. **Nijedan od tih nalaza nije T1** — landscape je novi profil, a njegov
+  kromo (48 % na katalogu, 27 % i na goloj `about`) je posao **T3**.
+- **Nemjereno ostaje** ono što se u testu ne otvara: bočna traka predmeta i ladica stabla
+  (K4a) mjere se samo dok su zatvorene. Zapisano kao rupa, ne kao pokrivenost.
+- **Pravne stranice (`privacy`/`terms`/`faq`/`contact`) namjerno OSTAJU izvan.** One nemaju
+  `viewport-fit=cover`, dakle **nisu se ni prijavile** za crtanje ispod izreza — sustav im sam
+  ostavlja sigurni okvir. Dodati im ga „radi dosljednosti" značilo bi **stvoriti obvezu koja
+  danas ne postoji**, pa se to ne radi. (Isto vrijedi za `--safe-*`: kad rub nije 0, `max()` i
+  `calc()` u `tokens.static.css` ionako nemaju što uvlačiti jer se te stranice ne crtaju ispod.)
+
+#### Stanje gateova
+
+`check:safearea` **EXIT 0** (37 datoteka; obrnuto provjeren — ubačen goli `env()` ga obara i
+imenuje točan redak) · `css:diff` **0 razlika / 3408 usporedbi** (očekivano: rubovi su u
+Chromiumu 0, pa promjena ne smije pomaknuti nijedan piksel) · `preflight` **EXIT 0** ·
+phone-brana **9/9 javno, 10/10 prijavljeno**. Dirano je 8 CSS datoteka → **`npm run bump`
+pokrenut** (81 token).
+
+> ⚠️ **Doseg `css:diff`-a mora se izreći, jer inače tvrdi više nego što mjeri.** Ta usporedba
+> zamjenjuje **samo `styles.bundle.css`** (radno stablo vs `HEAD:styles.bundle.css`), a
+> **`css/consent.css` NIJE u bundleu** — `index.html` ga učitava vlastitim `<link>`-om. Znači
+> da promjena cookie-trake u tih 3408 usporedbi **uopće nije sudjelovala**: ista je datoteka na
+> obje strane. Da je ondje bio drift, gate bi šutio. Nedrift se za nju dokazuje drukčije, i to
+> se dade dokazati: `max(16px, var(--safe-left))` uz rub **0** daje točno `16px`, dakle
+> identično zatečenoj kratici `padding: 16px`; a phone-brana to i mjeri geometrijski (banner je
+> 197 px dok je rub 0, a 217 px tek kad se rub postavi na 34). **`check:safearea` jest doseže
+> `consent.css`** (skenira cijeli `css/`), pa jedan izvor vrijedi i ondje.

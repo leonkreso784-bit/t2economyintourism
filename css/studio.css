@@ -401,6 +401,30 @@
   background:var(--st-rail);
   border-left:1px solid var(--st-line); padding:16px 14px; overflow-y:auto;
 }
+
+/* ==== T1 · SIGURNA ZONA — DONJI RUB LJUSKE ====
+   Studio je `position:fixed; inset: var(--chrome-h) 0 0 0`, dakle dno mu je DOSLOVNO rub
+   ekrana, a fiksni element ne zna za padding svojih predaka — nijedno pravilo izvana ga
+   ne može uvući. Sva tri panela su `overflow-y:auto` i sežu do ruba: izmjereno
+   `.st-canvas` = **padding-bottom 0**, `.st-tree` = 14, `.st-inspector` = 16, uz donji
+   rub od 34 px.
+
+   ⚠️ Ovo NIJE uhvatila tvrdnja ⑥ (ništa interaktivno u donjem pojasu) — u testu je Studio
+   otvoren s praznim dokumentom, pa nijedan panel ne prelijeva i u pojasu doslovno nema
+   čega biti. Kvar bi izašao tek kod korisnika s dovoljno dugim materijalom. Zato tvrdnja
+   ⑦c mjeri SVOJSTVO spremnika, ne trenutni ishod. *Prolaz zbog kratkog sadržaja nije
+   prolaz.*
+
+   Blok stoji POSLIJE `.st-inspector` namjerno: ondje je `padding:16px 14px` kratica, a
+   kratica iznad longhanda ga briše — isti mehanizam koji je `.browse-content` stajao
+   sigurne zone u medijskom upitu. */
+#editor-page .st-tree,
+#editor-page .st-canvas,
+#editor-page .st-inspector{
+  padding-bottom: var(--safe-bottom);
+}
+#editor-page .st-tree{ padding-bottom: calc(14px + var(--safe-bottom)); }
+#editor-page .st-inspector{ padding-bottom: calc(16px + var(--safe-bottom)); }
 #editor-page .st-icard{ background:var(--st-panel); border:1px solid var(--st-line); border-radius:14px; padding:14px; margin-bottom:14px; }
 #editor-page .st-icard h3{ font-size:10.5px; text-transform:uppercase; letter-spacing:.12em; color:var(--text-muted); margin:0 0 10px; display:flex; gap:6px; align-items:center; }
 #editor-page .st-icard p{ font-size:12px; color:var(--text-muted); line-height:1.6; margin:0; }

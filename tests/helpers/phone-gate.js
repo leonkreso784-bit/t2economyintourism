@@ -17,21 +17,26 @@
 // na `<html>` tuče `:root` iz stilskog lista, pa je zamjena potpuna. Ovo je jedina
 // poznata metoda da se BUG-031 uopće izmjeri.
 //
-// ── PET TVRDNJI (spec §9.3) ──────────────────────────────────────────────────────
-//   ① OTOK        ništa interaktivno u gornjih 59 px
+// ── SEDAM TVRDNJI (spec §9.3; ⑥ i ⑦ su dodane ciglom T1) ─────────────────────────
+//   ① OTOK        ništa interaktivno u gornjih `rub.top` px
 //   ② KROMO       naše trake ≤ 20 % UPOTREBLJIVE visine
 //   ③ SUKOB       tekst se ne lomi preko 2 retka dok mu susjed u istom spremniku krati
 //   ④ PRVI EKRAN  bar jedna sadržajna kontrola DOHVATLJIVA bez skrola
 //   ⑤ ZAGLAVLJE   naslov razine je čitljiv (≤ 1 redak i nije odrezan ispod 60 %)
+//   ⑥ DONJI RUB   ništa interaktivno u donjih `rub.bottom` px — mjereno NA DNU SKROLA
+//   ⑦ BOČNI RUB   ništa interaktivno u bočnim pojasima + sadržajni spremnik ih poštuje
 //
-// ── ⚠️ ŠTO OVAJ MJERAČ NE MJERI (piše se da T1 ne pretpostavi pokrivenost) ───────
-// Simulira se **samo `--safe-top` i samo portret**. `--safe-bottom` / `--safe-left` /
-// `--safe-right` i landscape (gdje izrez ide USTRANU) ostaju nemjereni. To je namjerno
-// — T0 postoji da izmjeri kvar koji je Leon vidio — ali je i **poznata rupa, ne previd**.
-// Projekt je isti razred greške već platio: *gate koji provjerava NEKE tokene stvara
-// tihu pretpostavku da su provjereni SVI* (`check:contrast`, tvrda zabrana #2). Cigla
-// T1 („sigurna zona kao pravilo, obje orijentacije") mora proširiti OVU datoteku, a ne
-// se osloniti na to da je zelena brana već nešto rekla o donjem rubu.
+// ── ⚠️ ZAŠTO ⑥ MJERI NA DNU SKROLA, A ⑦ ODMAH ──────────────────────────────────
+// Dok se stranica skrola, sadržaj kroz donji pojas **prolazi** — to nije kvar nego
+// skrolanje. Kvar je ono što iz pojasa NE MOŽE izaći: fiksni namještaj i sam kraj
+// dokumenta. Zato se ⑥ mjeri tek kad se stranica spusti do kraja. Bočni pojas te ograde
+// nema (stranica se ne skrola vodoravno), pa je ondje **svaki** pogodak trajan.
+//
+// ── ⚠️ RUB SE POSTAVLJA PO ORIJENTACIJI, NE JEDNOM ZA SVE ───────────────────────
+// U portretu izrez uzima VRH (59) i indikator DNO (34); u landscapeu vrh je 0, a izrez
+// seli USTRANU (59 lijevo i desno, iOS ih izvještava simetrično). Zato svaki ekran nosi
+// svoj profil (`rub`), a ne jedan globalni broj — inače bi landscape mjerio otok kojeg
+// ondje nema i previdio bočni koji ondje jest.
 //
 // ⚠️ **Vidljivost se RAČUNA, ne pretpostavlja.** Prva verzija ove mjere prijavila je dva
 // nepostojeća kvara i oba su bila pouka: bočna traka `.subjects-sidebar` je
@@ -46,13 +51,25 @@
 /** Dynamic Island na iPhoneu 14 Pro i novijima. Leonov uređaj je iPhone 16. */
 const OTOK = 59;
 
+/** Stvarni rubovi iPhonea 16 (logičke točke), po orijentaciji.
+ *
+ *  ⚠️ **Profil se primjenjuje na SVE širine, i to je namjerno.** iPhone SE (320 × 568)
+ *  fizički nema ni izrez ni indikator — sve četiri vrijednosti su ondje 0. Brana ipak
+ *  mjeri kao da ih ima, jer ne provjerava UREĐAJ nego PRAVILO: „sadržaj se drži unutar
+ *  sigurne zone, kolika god ona bila". Gate koji mjeri samo uređaje koje danas znamo
+ *  prestaje vrijediti čim izađe novi. */
+const RUB_PORTRET = { top: OTOK, bottom: 34, left: 0, right: 0 };
+const RUB_LANDSCAPE = { top: 0, bottom: 21, left: OTOK, right: OTOK };
+
 /** 320 = donja granica iz kriterija prihvaćanja (spec §2) · 393 = Leonov iPhone 16
- *  · 430 = Pro Max. Visine su stvarne logičke visine tih uređaja: kromo se mjeri kao
+ *  · 430 = Pro Max · 852 × 393 = isti uređaj POLEGNUT (kriterij T1 imenuje obje
+ *  orijentacije). Visine su stvarne logičke visine tih uređaja: kromo se mjeri kao
  *  UDIO ekrana, pa bi zajednička izmišljena visina mjerila krivi postotak. */
 const EKRANI = [
-    { w: 320, h: 568, ime: 'iPhone SE' },
-    { w: 393, h: 852, ime: 'iPhone 16' },
-    { w: 430, h: 932, ime: 'iPhone 16 Pro Max' }
+    { w: 320, h: 568, ime: 'iPhone SE', rub: RUB_PORTRET },
+    { w: 393, h: 852, ime: 'iPhone 16', rub: RUB_PORTRET },
+    { w: 430, h: 932, ime: 'iPhone 16 Pro Max', rub: RUB_PORTRET },
+    { w: 852, h: 393, ime: 'iPhone 16 polegnut', rub: RUB_LANDSCAPE }
 ];
 
 /** Stranice koje vidi ODJAVLJEN posjetitelj + četiri načina učenja. */
@@ -70,11 +87,25 @@ const spreman = (page) => page.waitForFunction(
     null, { timeout: 60000 });
 
 /**
- * Postavi otok. Zove se NAKON `goto` (inline stil bi inače nestao s navigacijom) i
- * prije svakog mjerenja — jer `navigateTo` ne dira `<html>`, ali `page.goto` da.
+ * Postavi SVA ČETIRI ruba sigurne zone. Zove se NAKON `goto` (inline stil bi inače
+ * nestao s navigacijom) i prije svakog mjerenja — `navigateTo` ne dira `<html>`, ali
+ * `page.goto` da.
+ *
+ * ⚠️ **Ovo radi samo dok su `--safe-*` jedini izvor.** Pravilo napisano izravno s
+ * `env(safe-area-inset-bottom)` ova zamjena NE dohvaća — ostaje na 0 i u pregledniku i
+ * u brani, pa izgleda kao da je rub poštovan. Baš to je zateklo `landing-footer`
+ * (`css/responsive/04-mobile-extra.css`): pravilo je postojalo, bilo je napisano s
+ * golim `env()`, i zato **nemjerljivo**. Zato T1 uvodi `npm run check:safearea`, koji
+ * goli `env()` drži u jednoj jedinoj datoteci (`css/variables.css`).
  */
-const postaviOtok = (page, px = OTOK) =>
-    page.evaluate((v) => document.documentElement.style.setProperty('--safe-top', v + 'px'), px);
+const postaviRub = (page, rub = RUB_PORTRET) =>
+    page.evaluate((v) => {
+        const d = document.documentElement.style;
+        d.setProperty('--safe-top', v.top + 'px');
+        d.setProperty('--safe-bottom', v.bottom + 'px');
+        d.setProperty('--safe-left', v.left + 'px');
+        d.setProperty('--safe-right', v.right + 'px');
+    }, rub);
 
 /**
  * Otiđi na ekran. Predmet i lekcija se uzimaju IZ KATALOGA, nikad zakucani — inače
@@ -88,7 +119,7 @@ const postaviOtok = (page, px = OTOK) =>
  * crveno. *Fiksno čekanje mjeri vrijeme; tvrdnja treba stanje* — isto što je `studio.authed`
  * već platio na drag-testu (K6b, TESTING.md).
  */
-async function idiNa(page, ime) {
+async function idiNa(page, ime, rub = RUB_PORTRET) {
     if (ime === 'browse:dubina') {
         await page.evaluate(() => navigateTo('browse'));
         await page.waitForFunction(() => typeof browseState !== 'undefined' && !!browseState.level);
@@ -144,7 +175,7 @@ async function idiNa(page, ime) {
     // prijavio „nijedna dohvatljiva kontrola", a drugi put ne, jer se puni asinkrono.
     // *Popravak koji nije generaliziran je popravak koji čeka drugu priliku* (BUG-027).
     await smiriPrikaz(page, 'section[id$="-page"].active');
-    await postaviOtok(page);
+    await postaviRub(page, rub);
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 }
 
@@ -174,7 +205,7 @@ async function smiriPrikaz(page, selektor, maxMs = 6000) {
 }
 
 /** Prebaci način učenja na study-stranici (`learn`/`flashcards`/`quiz`/`fill`). */
-async function otvoriNacin(page, nacin) {
+async function otvoriNacin(page, nacin, rub = RUB_PORTRET) {
     await page.evaluate((s) => {
         const b = document.querySelector('.study-nav-btn[data-section="' + s + '"]');
         if (b) b.click();
@@ -185,15 +216,30 @@ async function otvoriNacin(page, nacin) {
         return !!el && el.classList.contains('active') && el.getBoundingClientRect().height > 0;
     }, nacin, { timeout: 15000 });
     await smiriPrikaz(page, '#' + nacin);
+    await postaviRub(page, rub);
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 }
 
 /**
- * Izmjeri STRANICU na trenutnom ekranu. Vraća sve brojke; tvrdnje su u spec-datoteci —
- * mjera i sud se namjerno ne miješaju (isti rez kao `reach-gate`).
+ * JEDINA mjera koja se izvršava u pregledniku. Dvije faze, jedan izvor.
+ *
+ * ⚠️ **Zašto jedna funkcija s fazom, a ne dvije funkcije.** Tvrdnje ①–⑤ i tvrdnje ⑥–⑦
+ * trebaju **različito stanje stranice** (potonje se mjere tek kad se stranica spusti do
+ * kraja), pa je prvi nagon bio napisati drugi `page.evaluate`. To bi značilo **drugu
+ * kopiju** `ime`/`vidljivRect`/`stvarnoVidljiv` — a `page.evaluate` ne može zatvoriti nad
+ * modulskim opsegom, pa se kopija ne da izbjeći dijeljenjem varijable. Cigla T1 je upravo
+ * dokazala što dvije liste iste činjenice rade (`--safe-*` naspram golog `env()`), pa bi
+ * bilo licemjerno istu grešku ostaviti u vlastitom mjeraču: dovoljno je da netko popravi
+ * računanje vidljivosti u jednoj kopiji i brana počne tvrditi dvije različite stvari.
+ * Faza je zato **parametar**, a helperi postoje **jednom**.
  */
-function mjeriStranicu(page, otok = OTOK) {
-    return page.evaluate((OTOK) => {
+function mjeri(page, rub, faza) {
+    // Unutrašnjost mjere barata jednim brojem za gornji rub (`OTOK`) — u landscapeu je to
+    // 0, pa tvrdnja ① ondje ispravno ne nalazi ništa, a ② mjeri udio pune visine.
+    return page.evaluate((ARG) => {
+        const R = ARG.rub;
+        const OTOK = R.top;
+        const FAZA = ARG.faza;
         const vw = window.innerWidth, vh = window.innerHeight;
 
         const ime = (el) => {
@@ -274,6 +320,91 @@ function mjeriStranicu(page, otok = OTOK) {
             }
             return false;
         };
+
+        // ══ FAZA „RUBOVI" (⑥ + ⑦ + ⑦b + ⑦c) ═════════════════════════════════════
+        // Zove se tek kad je stranica spuštena do kraja — v. `mjeriRubove`.
+        if (FAZA === 'rubovi') {
+            // Preklop veći od 1 px = kvar. Prag postoji samo zbog zaokruživanja
+            // podpiksela, ne kao dopuštenje: Appleovo pravilo ne poznaje „malo ispod izreza".
+            const PRAG = 1;
+            const opis = (k, koliko) => ime(k.el) + ' ' + Math.round(koliko) + ' px u pojasu'
+                + ' [' + Math.round(k.b.l) + ',' + Math.round(k.b.t) + '…'
+                + Math.round(k.b.r) + ',' + Math.round(k.b.b) + ']';
+
+            const dno = [], bocno = [];
+            interaktivni.forEach((k) => {
+                if (R.bottom > 0) {
+                    const u = k.b.b - (vh - R.bottom);
+                    if (u > PRAG) dno.push(opis(k, u));
+                }
+                if (R.left > 0) {
+                    const u = R.left - k.b.l;
+                    if (u > PRAG) bocno.push('lijevo · ' + opis(k, u));
+                }
+                if (R.right > 0) {
+                    const u = k.b.r - (vw - R.right);
+                    if (u > PRAG) bocno.push('desno · ' + opis(k, u));
+                }
+            });
+
+            // ⑦b — PRAVILO, a ne slučaj. Da se traži samo „nijedna kontrola nije u pojasu",
+            // stranica bez gumba uz rub prošla bi bez ijednog pravila o sigurnoj zoni, i
+            // kvar bi se vratio čim netko doda gumb. Zato se mjeri i SPREMNIK sadržaja:
+            // gdje počinje njegov *content box* (okvir + vlastiti padding).
+            const aktivnaR = document.querySelector('section[id$="-page"].active');
+            const spremnici = [];
+            if (aktivnaR) {
+                Array.prototype.slice.call(aktivnaR.children)
+                    .filter((el) => (el.tagName === 'MAIN' || el.tagName === 'FOOTER') && stvarnoVidljiv(el))
+                    .forEach((el) => spremnici.push(el));
+                Array.prototype.slice.call(aktivnaR.querySelectorAll(':scope > main > footer, :scope > main > .landing-footer'))
+                    .filter(stvarnoVidljiv).forEach((el) => spremnici.push(el));
+            }
+            const spremnik = [];
+            spremnici.forEach((el) => {
+                const cs = getComputedStyle(el);
+                const r = el.getBoundingClientRect();
+                const l = r.left + parseFloat(cs.paddingLeft || 0);
+                const d = r.right - parseFloat(cs.paddingRight || 0);
+                if (R.left > 0 && l < R.left - PRAG) {
+                    spremnik.push(ime(el) + ' počinje na ' + Math.round(l) + ' px, a sigurno je od ' + R.left);
+                }
+                if (R.right > 0 && d > vw - R.right + PRAG) {
+                    spremnik.push(ime(el) + ' završava na ' + Math.round(d) + ' px, a sigurno je do ' + (vw - R.right));
+                }
+            });
+
+            // ⑦c — UNUTARNJI SKROLER koji seže do dna ekrana. Ovo NE pokriva tvrdnja ⑥:
+            // ondje se pada samo ako u pojasu STVARNO stoji kontrola, pa ljuska s kratkim
+            // sadržajem prolazi **slučajno** i kvar se vrati čim se sadržaj produži. Studio
+            // je točno takav slučaj (`position:fixed; inset: var(--chrome-h) 0 0 0`) — dno mu
+            // je rub ekrana, a `body` mu ne može pomoći: fiksni element ne zna za padding
+            // predaka. Ispravnost je zato SVOJSTVO, ne ishod: `padding-bottom` ≥ donji rub.
+            if (R.bottom > 0 && aktivnaR) {
+                const kandidati = [aktivnaR].concat(Array.prototype.slice.call(aktivnaR.querySelectorAll('*')));
+                kandidati.forEach((el) => {
+                    const cs = getComputedStyle(el);
+                    // ⚠️ NAMJERNO se NE traži da spremnik trenutno prelijeva. Prva verzija je
+                    // tražila (`scrollHeight > clientHeight`) i time našla **nula** kandidata:
+                    // u testu je Studio otvoren s praznim dokumentom, pa nijedan panel ne
+                    // prelijeva — a `#stCanvas` ondje ima `padding-bottom: 0` i seže točno do
+                    // ruba ekrana. Provjera bi dakle bila zelena sve dok netko ne napiše dovoljno
+                    // dug materijal, pa bi kvar izašao kod KORISNIKA, ne kod nas. Rezervacija
+                    // donjeg ruba je svojstvo spremnika, ne posljedica trenutnog sadržaja.
+                    const skrola = (cs.overflowY === 'auto' || cs.overflowY === 'scroll');
+                    if (!skrola || !stvarnoVidljiv(el)) return;
+                    const r = el.getBoundingClientRect();
+                    if (r.bottom < vh - PRAG) return;              // ne dodiruje dno ekrana
+                    const pb = parseFloat(cs.paddingBottom || 0);
+                    if (pb < R.bottom - PRAG) {
+                        spremnik.push(ime(el) + ' skrola do dna ekrana, a donji razmak mu je '
+                            + Math.round(pb) + ' px (treba ' + R.bottom + ')');
+                    }
+                });
+            }
+
+            return { dno: dno, bocno: bocno, spremnik: spremnik };
+        }
 
         // ── ① OTOK ────────────────────────────────────────────────────────────────
         // Kromo SMIJE crtati podlogu ispod otoka (za to `viewport-fit=cover` i postoji);
@@ -437,7 +568,52 @@ function mjeriStranicu(page, otok = OTOK) {
             prviUpotrebljiv: upotrebljivi.length ? ime(upotrebljivi[0].el) : '—',
             zaglavlja: zaglavlja
         };
-    }, otok);
+    }, { rub: rub, faza: faza });
+}
+
+/**
+ * Izmjeri STRANICU na trenutnom ekranu (tvrdnje ①–⑤). Vraća sve brojke; sud je u
+ * spec-datoteci — mjera i sud se namjerno ne miješaju (isti rez kao `reach-gate`).
+ */
+function mjeriStranicu(page, rub = RUB_PORTRET) {
+    return mjeri(page, rub, 'stranica');
+}
+
+/**
+ * ⑥ + ⑦ — DONJI I BOČNI RUB. Odvojena **funkcija**, ali NE odvojena mjera: stanje stranice
+ * se priprema ovdje (spusti se do kraja), a mjeri ista `mjeri()` u fazi `'rubovi'` — pa
+ * `ime`/`vidljivRect`/`stvarnoVidljiv` postoje u jednom primjerku. Priprema je nužna jer se
+ * donji rub mjeri tek na dnu skrola (dok se skrola, sadržaj kroz pojas prolazi i to nije
+ * kvar), a to bi tvrdnjama ①–⑤ pomaknulo tlo pod nogama.
+ *
+ * ⚠️ **Skrol se mora ODMOTATI prije mjerenja.** `css/variables.css` ima
+ * `scroll-behavior: smooth`, pa se postavljanje `scrollTop` **animira** — prva verzija
+ * sonde je na landingu izmjerila 779 od 4946 px i mislila da je na dnu. Isti razred kao
+ * fiksno čekanje u navigaciji: *mjerila se posljedica koja još nije nastupila.*
+ */
+async function mjeriRubove(page, rub = RUB_PORTRET) {
+    await page.evaluate(() => {
+        document.documentElement.style.scrollBehavior = 'auto';
+        const svi = [document.scrollingElement || document.documentElement];
+        document.querySelectorAll('section[id$="-page"].active *').forEach((el) => {
+            const cs = getComputedStyle(el);
+            if ((cs.overflowY === 'auto' || cs.overflowY === 'scroll') && el.scrollHeight > el.clientHeight + 4) svi.push(el);
+        });
+        svi.forEach((el) => { el.style.scrollBehavior = 'auto'; el.scrollTop = el.scrollHeight; });
+    });
+    await page.waitForTimeout(220);
+    await postaviRub(page, rub);
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+
+    const nalaz = await mjeri(page, rub, 'rubovi');
+
+    // Vrati stranicu na vrh — sljedeća tvrdnja mjeri sa svog polazišta, ne s tuđeg.
+    await page.evaluate(() => {
+        const se = document.scrollingElement || document.documentElement;
+        se.scrollTop = 0;
+        document.querySelectorAll('section[id$="-page"].active *').forEach((el) => { el.scrollTop = 0; });
+    });
+    return nalaz;
 }
 
 /** Prag budžeta kroma (spec §9.3, cigla T3). Udio UPOTREBLJIVE visine, ne cijelog ekrana. */
@@ -485,7 +661,8 @@ function spremiOsnovicu(suita, nalazi) {
 }
 
 module.exports = {
-    OTOK, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI, KROMO_BUDZET_PCT,
-    spreman, postaviOtok, idiNa, otvoriNacin, mjeriStranicu,
+    OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
+    KROMO_BUDZET_PCT,
+    spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
     usporediSOsnovicom, spremiOsnovicu
 };

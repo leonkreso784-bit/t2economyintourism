@@ -43,9 +43,12 @@ test.beforeEach(({}, testInfo) => {
         'brana sama postavlja tri širine → vrti se jednom, ne po profilu');
 });
 
-/** Jedan obilazak puni ovo; pet tvrdnji ga onda samo čita. Mjerenje je skupo
- *  (3 širine × 10 ekrana ≈ 2 min), pa se ne ponavlja po tvrdnji. */
-const NALAZI = { otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [] };
+/** Jedan obilazak puni ovo; sedam tvrdnji ga onda samo čita. Mjerenje je skupo
+ *  (4 profila × 10 ekrana ≈ 3 min), pa se ne ponavlja po tvrdnji. */
+const NALAZI = {
+    otok: [], kromo: [], sukob: [], prviEkran: [], zaglavlje: [],
+    dno: [], bocno: [], spremnik: []
+};
 let izmjerenoEkrana = 0;
 
 test.beforeAll(async ({ browser }, testInfo) => {
@@ -73,18 +76,24 @@ test.beforeAll(async ({ browser }, testInfo) => {
         await page.waitForTimeout(800);
 
         for (const ekran of G.EKRANI_JAVNI) {
-            await G.idiNa(page, ekran);
-            snimka.push({ e, ekran, m: await G.mjeriStranicu(page) });
+            await G.idiNa(page, ekran, e.rub);
+            const m = await G.mjeriStranicu(page, e.rub);
+            snimka.push({ e, ekran, m, r: await G.mjeriRubove(page, e.rub) });
         }
 
         // Četiri načina učenja na PRAVOJ lekciji. Leon ih je ocijenio kao „čine se ok" —
         // brana to pretvara u brojku, bez ijedne dodatne cigle.
-        await G.idiNa(page, 'study');
-        snimka.push({ e, ekran: 'study:home', m: await G.mjeriStranicu(page) });
+        await G.idiNa(page, 'study', e.rub);
+        snimka.push({
+            e, ekran: 'study:home',
+            m: await G.mjeriStranicu(page, e.rub), r: await G.mjeriRubove(page, e.rub)
+        });
         for (const n of G.NACINI) {
-            await G.otvoriNacin(page, n);
-            await G.postaviOtok(page);
-            snimka.push({ e, ekran: 'study:' + n, m: await G.mjeriStranicu(page) });
+            await G.otvoriNacin(page, n, e.rub);
+            snimka.push({
+                e, ekran: 'study:' + n,
+                m: await G.mjeriStranicu(page, e.rub), r: await G.mjeriRubove(page, e.rub)
+            });
         }
 
         await ctx.close();
@@ -108,6 +117,9 @@ test.beforeAll(async ({ browser }, testInfo) => {
                 + ' od ' + m.vh + ' px');
         }
         m.zaglavlja.forEach((x) => NALAZI.zaglavlje.push(gdje(r) + ' · ' + x));
+        r.r.dno.forEach((x) => NALAZI.dno.push(gdje(r) + ' · ' + x));
+        r.r.bocno.forEach((x) => NALAZI.bocno.push(gdje(r) + ' · ' + x));
+        r.r.spremnik.forEach((x) => NALAZI.spremnik.push(gdje(r) + ' · ' + x));
     });
 
     if (G.spremiOsnovicu('javno', NALAZI)) {
@@ -156,6 +168,27 @@ test('⑤ zaglavlje razine je čitljivo: jedan redak i nije odrezano', async () 
     // naziv razine narastao u stupac; odrezan ispod 60 % znači da ga je netko drugi
     // pojeo. Hero-naslov landinga NIJE ovdje: on smije omotati (tipografija, T5).
     protivOsnovice('zaglavlje', 'NOVI naslovi razine koje korisnik ne može pročitati (BUG-030)');
+});
+
+test('⑥ donji rub: na dnu skrola ništa se ne krije ispod home-indikatora', async () => {
+    // Mjeri se NA DNU jer je samo ondje kvar trajan: dok se skrola, sadržaj kroz pojas
+    // prolazi i to je normalno. Ostaje ono što iz njega ne može izaći — fiksni namještaj
+    // (cookie-banner, donja traka učenja) i sam kraj dokumenta.
+    protivOsnovice('dno', 'NOVE kontrole ispod home-indikatora (BUG-031)');
+});
+
+test('⑦ bočni rub: u landscapeu ništa ne stoji ispod izreza sa strane', async () => {
+    // U portretu su bočni rubovi 0, pa ova tvrdnja govori o POLEGNUTOM telefonu — jedinoj
+    // orijentaciji koju kriterij T1 imenuje, a koju do T1 nije mjerio nitko.
+    protivOsnovice('bocno', 'NOVE kontrole ispod bočnog izreza (BUG-031)');
+});
+
+test('⑦b spremnik sadržaja poštuje sigurnu zonu i kad u njoj nema gumba', async () => {
+    // Razlika između PRAVILA i SLUČAJA. Da se traži samo „nijedna kontrola nije u
+    // pojasu", stranica koja slučajno nema gumb uz rub prošla bi bez ijednog pravila o
+    // sigurnoj zoni — i kvar bi se vratio čim netko doda gumb. Zato se mjeri i gdje
+    // počinje sam spremnik sadržaja.
+    protivOsnovice('spremnik', 'NOVI spremnici sadržaja koji ulaze u sigurnu zonu (BUG-031)');
 });
 
 test('⓪ pokrivenost: mjerač je stvarno obišao sve ekrane i sve širine', async () => {

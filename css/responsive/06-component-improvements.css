@@ -304,7 +304,7 @@
 /* ===== BETTER SPACING FOR LANDSCAPE TABLETS ===== */
 @media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
     .study-content {
-        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(60px + var(--safe-bottom));
     }
     
     .flashcard-wrapper {

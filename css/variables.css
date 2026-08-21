@@ -185,3 +185,30 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+/* ═══ T1 · SIGURNA ZONA PO VODORAVNOJ OSI — jedno pravilo za svih devet stranica ═══
+   U portretu su bočni rubovi 0 i ovo pravilo ne radi ništa. U LANDSCAPEU izrez seli
+   ustranu (iOS ga izvještava simetrično, 59 px lijevo i desno) — a ondje je do T1
+   sadržaj stajao ispod njega na svakoj stranici: kartice kataloga su počinjale na
+   24 px, poveznice podnožja na 34, oba duboko u pojasu.
+
+   ⚠️ PADDING IDE NA SEKCIJU, NE NA `<main>` — i to je jedina inačica koja radi:
+   • pozadina se crta i ispod paddinga, pa ploha ostaje preko CIJELOG ekrana (ispod
+     izreza treba boja, ne praznina), a uvlači se samo sadržaj;
+   • `margin` na `<main>` je odbačen jer `.browse-content` ima `margin: 0 auto` za
+     centriranje — pravilo bi ga pregazilo i sadržaj bi na desktopu skočio ulijevo,
+     gdje su rubovi ionako 0;
+   • `padding-inline` na `<main>` bi tražio da pravilo zna svaki postojeći razmak
+     (16 px, 24 px, `clamp()`…), dakle popis koji se raziđe s prvim novim ekranom.
+
+   ⚠️ SELEKTOR JE ATRIBUTNI, a ne popis klasa iznad — namjerno: popis iznad ima OSAM
+   imena i ne poznaje `#editor-page` (Studio ima vlastitu klasu). Adresa `-page` je
+   ugovor iz K1 i po njemu idu i `reach-gate` i `phone-gate`; vezati se na nju znači da
+   deveta stranica dobiva sigurnu zonu time što postoji, a ne time što se netko sjetio
+   dopisati je. Vodoravni rub NE dira donji: `.study-page` svoj `padding-bottom` nosi
+   zbog donje trake učenja, pa bi ga zajedničko pravilo (veće specifičnosti) obrisalo.
+   Donji rub je zato mjeren tvrdnjom ⑥, a ne nametnut jednom deklaracijom. */
+section[id$="-page"] {
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+}

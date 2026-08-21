@@ -326,6 +326,12 @@
 @media (max-width: 600px) {
     .browse-content {
         padding: 1.25rem 1rem;
+        /* ⚠️ T1: kratica iznad je do danas BRISALA `padding-bottom: calc(2rem +
+           var(--safe-bottom))` iz baznog pravila — i to točno na širinama gdje sigurna
+           zona jedina i postoji. Izmjereno: zadnja kartica kataloga je na dnu skrola
+           ulazila 14 px pod home-indikator i odande se nije dala izvući, jer je stranica
+           već bila na kraju. Pravilo je postojalo, mjesto primjene ga je poništilo. */
+        padding-bottom: calc(1.25rem + var(--safe-bottom));
     }
     .browse-grid {
         grid-template-columns: 1fr;

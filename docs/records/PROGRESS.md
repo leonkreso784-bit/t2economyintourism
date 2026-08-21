@@ -5,6 +5,52 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-21 (OPUS) — **T1: sigurna zona kao pravilo; BUG-031 zatvoren (spec §9.8)**
+
+**Redoslijed rada je bio isti kao u T0 i to je namjerno: prvo mjeriti, pa popravljati.**
+Sonda je puštena na granu **prije ijedne izmjene CSS-a** i dala je brojke koje su odredile
+opseg: donji rub **183** nalaza, bočni **16**, spremnik **16**.
+
+**Najvažniji nalaz nije bio kvar nego NEMJERLJIVOST.** Od 183 nalaza na donjem rubu njih
+**90** uopće nije bio kvar na uređaju: `.mobile-nav` ima ispravno pravilo u `components.css`
+(`padding-bottom: var(--safe-bottom)`), ali ga je `responsive/03` unutar `@supports` bloka
+prepisivao inačicom s **golim `env()`** — koja na iPhoneu radi isto, a u mjeri **ne postoji**,
+jer se `env()` u Chromiumu ne da simulirati. Iz toga je izašla nova brana
+**`npm run check:safearea`**: `env(safe-area-inset-*)` samo u `css/variables.css` (bilo je
+**18 mjesta u 5 datoteka**). *Pravilo napisano golim `env()` nijedan test ne može ni potvrditi
+ni oboriti — a takvo pravilo izgleda jednako dobro kao ispravno.*
+
+**Napravljeno**
+- **Mjerač proširen** (`tests/helpers/phone-gate.js`): tvrdnje **⑥ donji rub** (mjeren *na dnu
+  skrola*), **⑦ bočni rub**, **⑦b/⑦c spremnik**; **četvrti profil 852 × 393**; svaki ekran nosi
+  **svoj profil rubova** umjesto jednog globalnog broja.
+- **Jedan izvor**: 18 golih `env()` prevedeno na `var(--safe-*)`; `@supports (padding-top:
+  env(…))` odmotan (uvjet je ispitivao podršku koju `0px` fallback već pokriva, a pisan s
+  `var()` bio bi **uvijek istinit** — ograda koja ništa ne ograđuje).
+- **Jedno pravilo za vodoravnu os**: `section[id$="-page"] { padding-left/right: var(--safe-*) }`.
+- **Fiksni namještaj**: cookie-traka (`max()`) i tri panela Studija (`calc()`).
+- **`.browse-content`**: vraćen `padding-bottom` koji je kratica u medijskom upitu brisala.
+
+**Testirano** — `check:safearea` EXIT 0 (obrnuto provjeren: ubačen goli `env()` ga obara i
+imenuje redak) · `css:diff` **0/3408** · `preflight` **EXIT 0** · phone-brana **9/9 javno,
+10/10 prijavljeno** · puna `test:responsive` i puna prijavljena suita (brojke u CHANGELOG-u).
+`npm run bump` pokrenut (8 CSS datoteka).
+
+**Dvije pouke koje vrijede dalje**
+1. *Prolaz zbog kratkog sadržaja nije prolaz.* Prva izvedba ⑦c tražila je da spremnik trenutno
+   prelijeva — u testu je Studio prazan, pa je kandidata bilo **nula** i brana **nije mogla
+   puknuti**, dok je `#stCanvas` imao `padding-bottom: 0` uz rub ekrana. Otkriveno **ispisom
+   kandidata**, ne čitanjem koda.
+2. *Popravak jedne tvrdnje smije pogoršati drugu — i to se mora vidjeti prije nego se zapiše.*
+   Sa `calc(16px + rub)` je cookie-traka narasla 34 px i gurnula još jedan ekran u „bez skrola
+   se ne da ništa"; `max()` je istu sigurnost platio s 20 px i taj ekran vratio.
+
+**Slijedi:** **T2** — jedan naslov po ekranu. ⚠️ Kratko ime fakulteta samo po sebi ne bi
+popravilo ništa (T0 je izmjerio da naslov jedu **kontrole**, ne znakovi) → zaglavlje razine
+se **spaja s mrvicom**; tu izlazi i `#topbarMaterials` iz trake.
+
+---
+
 ## 2026-08-21 (OPUS) — **T0: telefon je od danas mjerena površina (faza „TELEFON", spec §9.7)**
 
 Prva cigla faze je **brana, ne popravak** — jer je produkcija na 393 px bila neupotrebljiva
