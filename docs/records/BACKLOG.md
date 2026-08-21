@@ -566,9 +566,10 @@ redoslijed je bitan:
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
 
-## 🔥 RUČNO ČEKA LEONA (3 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
-Sve tri su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
-izvesti. Nijedna ne ruši produkciju.
+## 🔥 RUČNO ČEKA LEONA (2 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
+Obje su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
+izvesti. Nijedna ne ruši produkciju. **Treća (re-sync `macroeconomics`) je izvršena 2026-08-21** —
+v. ispod.
 
 1. **Obrisati `bright-function` i `quick-api`** — Supabase Dashboard → Edge Functions → `<ime>` → Delete.
    **Nalaz je ozbiljniji nego što je zapisano 2026-08-09:** `bright-function` ima **sha256 `49363e4b…`,
@@ -602,13 +603,25 @@ izvesti. Nijedna ne ruši produkciju.
    > **🔧 Klasa, ne slučaj:** ovo je sjedilo danima jer `check:functions` **nikad ne trči sam** (mrežni,
    > izvan preflighta). A gate **ne treba nijedan ključ** → nema razloga da ne bude zaseban CI job
    > (nightly ili na push na `main`). Tad bi bilo crveno u Actionsima isti dan. ~1 h posla, rješava klasu.
-2. **Re-sync `macroeconomics`:** `node scripts/migrate-content.js macroeconomics`
-   (traži `service_role` → klasifikator ga blokira Claudeu; jedna Leonova naredba).
-   ✅ **Rizik je uklonjen prije radnje:** `npm run diff:db macroeconomics` pokazuje da se baza i datoteke
-   razlikuju u **točno jednom znaku** u `macroeconomicsM1` i `macroeconomicsFinal` — index 207,
-   `goodsMarket.flashcards[5].answer`, ćirilično `С` (U+0421) vs latinično `C` (U+0043), duljina ista
-   (246). **Nema živih Studio-edita koje bi upsert pregazio** → re-sync je siguran. `macroeconomicsM2` je
-   već identičan. Nakon naredbe: `npm run diff:db macroeconomics` mora biti zelen.
+2. ✅ ~~**Re-sync `macroeconomics`**~~ — **IZVRŠENO 2026-08-21** (Leon pokrenuo
+   `node scripts/migrate-content.js macroeconomics`; skripta traži `service_role`, a taj put je
+   Claudeu blokiran).
+   **Što je bilo:** baza i datoteke razlikovale su se u **točno jednom znaku** u `macroeconomicsM1` i
+   `macroeconomicsFinal` — index 207, `goodsMarket.flashcards[5].answer`, ćirilično `С` (U+0421) vs
+   latinično `C` (U+0043), duljina ista (246); `macroeconomicsM2` je već bio identičan. Oku nevidljivo,
+   ali pretraga po „MPC" tu karticu nije nalazila, a `diff:db` je trajno šumio.
+   **Rezultat:** `diff:db macroeconomics` **3/3 identično, 0 razlika** · `check:final` **16/16**
+   (`final == M1 ⊕ M2 (+examPractice)` drži i dalje).
+   > ⚠️ **Pouka o redoslijedu, ne o znaku.** `migrate-content.js` radi **upsert = piše preko baze**, a
+   > admin kroz Studio smije uređivati živi sadržaj → re-sync naslijepo može pojesti tuđu izmjenu, a
+   > `content_versions` je **audit, ne undo**. Zato je radnja imala tri koraka i samo je treći pisao:
+   > `diff:db` (dokaz da nema živih edita — razlika **ista kao 11 dana ranije**) → `--dry` (dokaz da
+   > su brojke očekivane) → prava naredba. **Provjera prije upisa je bila jeftinija od bilo kakvog
+   > oporavka poslije njega.** Isto vrijedi za svaki sljedeći re-sync bilo kojeg predmeta.
+   >
+   > **Ništa se nije commitalo ni deployalo, i to nije previd:** poravnata je **baza**, datoteke su
+   > izvor istine i već su bile ispravne. Bez `npm run bump`, bez commita — produkcija ostaje
+   > netaknuta.
 3. **Uključiti Leaked Password Protection** — Dashboard → Authentication → Settings → *Leaked password
    protection* (provjera lozinki protiv HaveIBeenPwned). Jedini je od 16 sigurnosnih advisora koji se
    rješava **jednim prekidačem**, a tiče se korisničkih računa. Traži Management API token / dashboard —

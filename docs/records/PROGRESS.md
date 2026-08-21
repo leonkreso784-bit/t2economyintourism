@@ -5,6 +5,41 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-21 (OPUS) — **Revizija stanja + `macroeconomics` re-syncan (ručna Leonova radnja)**
+
+Leon je zatražio provjeru dojma da projekt „ide nizbrdo". **Dojam nije potvrđen mjerenjem** —
+produkcija HTTP 200 (0,38 s), `preflight` EXIT 0 kroz svih 15 brana, unit 26+17+12 bez pada,
+`verify` 0/0 uz 24 predmeta, čegrtaljka palete **126/126 (ne raste)**, **nijedan otvoren bug**,
+osnovica telefona **59 → 31**. Zapisano je i **odakle dojam dolazi**, jer je legitiman:
+
+1. **Napredak je nevidljiv po Leonovoj vlastitoj odluci** — ništa ne ide na produkciju dok
+   frontend nije gotov, pa na njegovu telefonu stoji stanje od 18. 8. i tri isporučene cigle
+   (T0/T1/T2) ondje **ne postoje**. Povratna sprega je isključena namjerno; to se osjeća kao pad.
+2. **Jedina brojka koja nijednom nije pala: JS landinga** (691 → 728 → 744,6 KiB, budžet 200).
+   Kliže baš zato što **nema branu** — sve što gate čuva ili stoji ili pada. Cigla je **T6**.
+3. `check:functions` je crven, ali **to je stanje, a ne hitnost** — Leon je tu radnju sam odgodio
+   do C6 (2026-08-13) uz izmjeren rizik nula i uvjet koji ju poništava. *Prethodna formulacija ju
+   je stavila pod „stvarno čeka" i to je ispravljeno.*
+
+**Izvršena radnja (Leon pokrenuo, Claude ne smije — `service_role` upis na produkciju):**
+`node scripts/migrate-content.js macroeconomics`. U bazi je `goodsMarket.flashcards[5].answer`
+imao **ćirilično `С` (U+0421)** na 207. znaku umjesto latiničnog `C`; ista duljina, oku identično,
+ali pretraga po „MPC" karticu nije nalazila. Poslije: `diff:db` **3/3 identično**, `check:final`
+**16/16**. Bez commita i bez bumpa — poravnata je baza, datoteke su bile ispravne.
+
+> **Pouka koja se pamti nije znak nego REDOSLIJED.** `migrate-content.js` radi **upsert = piše
+> preko baze**, a Studio smije uređivati živi sadržaj → naslijepo bi mogao pojesti tuđu izmjenu,
+> a `content_versions` je **audit, ne undo**. Zato su tri koraka i **samo zadnji piše**: `diff:db`
+> (razlika **ista kao 11 dana ranije** = nema živih edita) → `--dry` (brojke očekivane) → naredba.
+> *Provjera prije upisa je jeftinija od bilo kakvog oporavka poslije njega.*
+
+**Sljedeće:** T3 (budžet kroma) — aritmetika je već presudila **da** kromo mora biti jedan red
+(polegnuti telefon: budžet **67 px**, dvije trake **108**), ali **koji red preživi je Leonova
+odluka** i čeka se. Preporuka zapisana: **putanja preživi, odredišta se povlače** — spojiti svih
+šest kontrola u jedan red bilo bi doslovno ponavljanje obrasca koji je proizveo BUG-030.
+
+---
+
 ## 2026-08-21 (OPUS) — **T2: jedan naslov po ekranu; BUG-030 zatvoren (spec §9.9)**
 
 Opet isti redoslijed: sonda prije koda. I opet je mjerenje promijenilo plan — **tri zaglavlja
