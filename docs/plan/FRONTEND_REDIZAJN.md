@@ -56,7 +56,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **A+B na produkciji; C+D čekaju Leonov pogled.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D, tri nove sekcije) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **A+B na produkciji; C+D čekaju Leonov pogled.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
@@ -2683,6 +2683,24 @@ ručno**. To je isti rez kao T2 (*identitet u mrvicu, uputa u sadržaj*), samo n
 mjere: `hero.sub` u oba jezika. Struktura landinga iz §7.13 (naslov pokriva oba izvora → dvoja
 ravnopravna vrata) **ostaje netaknuta** — oba izvora i dalje pokrivaju naslov i vrata, samo ih
 podnaslov više ne ponavlja.
+
+#### ⚠️ Odakle je kvar došao: C2 je obrisao pravilo koje je SLUČAJNO radilo pravu stvar
+
+Nađeno u reviziji pred compact, i mijenja priču o uzroku. §7.8 bilježi da je C2 obrisao *„jedini
+`!important` koji je tukao Tailwind-skalu — `.hero-title { font-size: 2rem !important }`, koji je
+tiho zaključavao naslov na 32 px na svakom telefonu"*. **Tih 32 px je točno ono na što ga T5
+sada vraća.**
+
+Brisanje je ipak bilo ispravno, i razlika je cijela poanta: staro pravilo je imalo **pravu
+vrijednost bez ijednog razloga** — `!important` bez praga, bez gornje granice, bez ikakvog
+znanja o visini ekrana; primjenjivalo se na *svakom* telefonu jednako i tuklo je skalu umjesto
+da je izrazi. Novo pravilo daje istu brojku na 320 px, ali **kao funkciju dviju osi**, s
+pragovima koji desktop ostavljaju netaknutim i s tvrdnjom koja ga čuva.
+
+*Pravilo koje slučajno pogađa točan broj nije isto što i pravilo koje zna zašto ga pogađa —
+prvo nestane pri prvom čišćenju i nitko ne primijeti da je nešto nosilo.* Ovdje se dade i
+datirati: kvar je ušao s C2 (2026-08-18 na produkciji), a **mjerena površina ga je uhvatila
+tri dana kasnije** — što je točno ono zbog čega T0 postoji.
 
 #### 🐞 Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila — oba je oborila obrnuta provjera
 

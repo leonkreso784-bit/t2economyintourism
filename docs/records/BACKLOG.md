@@ -261,8 +261,11 @@ zavara: agregatna brojka mjeri točno, a savjetuje krivo.
 „Moji materijali" 5,9 s · Studio 46,2 s; ukupno 1,0 min). Isti commit, isti helper, **bez ijedne
 izmjene** — samo neopterećen stroj. Puna suita iza toga: **371 prošlo / 0 palo / 30 preskočeno**.
 
-> 📏 **NORMALA TRAJANJA (nova navika, 2026-08-16): puna suita = 23,5 min · `a11y.authed` = 1,0 min**
-> (`workers: 1`, `fullyParallel: false`, ~401 test kroz 6 projekata — sve sekvencijalno).
+> 📏 **NORMALA TRAJANJA (nova navika, 2026-08-16; premjereno 2026-08-22): puna suita = 21,7 min ·
+> `a11y.authed` = 1,0 min** (`workers: 1`, `fullyParallel: false`, **451 test + 72 preskočena** kroz
+> 6 projekata — sve sekvencijalno). ⚠️ **Broj testova raste sa svakom ciglom** (bio je ~401 u
+> kolovozu; T0–T5 su dodali branu telefona i tvrdnju landinga), pa se uz vrijeme uvijek bilježi i
+> broj — inače „sporije nego prošli put" ne razlikuje **sporiji stroj** od **veće suite**.
 > **Povod:** dnevnici su dosad bilježili KOLIKO je testova prošlo, ali nikad KOLIKO JE TRAJALO — pa
 > se jučerašnje pitanje *„je li test pokvaren ili je stroj spor?"* nije dalo odgovoriti bez punog
 > kontrolnog prolaza s izvornim kodom. **Broj bez normale ne može posvjedočiti o brzini.** Ubuduće
