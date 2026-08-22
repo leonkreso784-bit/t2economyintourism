@@ -2613,7 +2613,7 @@ mjera gornjeg ruba prijavila `3 od 3 točke`**. Zato ⑧ sada uzorkuje i **gornj
 
 #### Stanje gateova
 
-`preflight` **EXIT 0** · `css:diff` **0 razlika / 3378 usporedbi** (očekivano: `consent.css`
+`preflight` **EXIT 0** · **puna suita 447 prošlo / 0 palo / 72 preskočeno (21,5 min)** · `css:diff` **0 razlika / 3378 usporedbi** (očekivano: `consent.css`
 nije u bundleu, a `--safe-bottom` je u Chromiumu 0 pa `max(1.5rem, 0)` = 1.5rem) ·
 phone-brana **10/10 javno, 11/11 prijavljeno** · obrnuta provjera ⑧ **pada s 17 nalaza**.
 

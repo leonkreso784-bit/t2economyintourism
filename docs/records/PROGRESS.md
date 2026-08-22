@@ -67,7 +67,8 @@ kataloga**. Nijedan gate ga nije mogao vidjeti — axe ne prijavljuje `div` s sl
 mjeri pogodak **na kontrolama koje postoje**, `css:diff` mjeri izgled. *Gate koji provjerava
 kontrole ne vidi kvar u kojem kontrola NE POSTOJI.*
 
-**Gate:** `preflight` EXIT 0 · `css:diff` **0 / 3378** · phone-brana **10/10 javno, 11/11
+**Gate:** `preflight` EXIT 0 · **puna suita 447/0/72 (21,5 min)** · `css:diff` **0 / 3378** ·
+phone-brana **10/10 javno, 11/11
 prijavljeno** · `check:tailwind` pao na `.visible` (četvrti put isti razred — ovaj put ime
 **CSS vrijednosti u usporedbi niza**) pa dopisan u `@source not inline`.
 
