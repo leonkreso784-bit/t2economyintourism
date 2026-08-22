@@ -504,3 +504,18 @@
   overflow-wrap:anywhere;                      /* dug naziv ne smije gurati layout */
 }
 #editor-page .st-nodecard .st-hint{ margin-top:6px; font-size:12px; }
+
+/* ==== ČUVAR PRISTUPA (T6) ====
+   Stranica editora ima PRAVU ADRESU, pa je svatko može utipkati. Dok se identitet ne
+   razriješi, ovo stoji iznad editora — jer je „prazan editor bilo kome tko zna adresu"
+   baš razlog zbog kojeg mu je K1 uskratio rutu (v. `js/editor-page.js`).
+   ⚠️ `display:flex` bi pregazio atribut `hidden`, pa `[hidden]` MORA imati svoje pravilo;
+   bez njega bi čuvar ostao na ekranu zauvijek, i to preko cijelog editora. */
+.ed-guard{
+  position:fixed; inset:var(--chrome-h) 0 0 0; z-index:1300;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:16px; padding:24px; text-align:center;
+  background:var(--bg-primary); color:var(--text-secondary);
+}
+.ed-guard[hidden]{ display:none; }
+.ed-guard-msg{ max-width:34ch; font-size:15px; line-height:1.5; }

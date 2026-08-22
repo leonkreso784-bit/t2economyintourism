@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!-- ====================================================================
+     STRANICA EDITORA (T6, spec §9.13)
+
+     Do T6 je editor bio deveta sekcija u `index.html`, pa je 244 KiB editorskog koda
+     stizalo SVAKOM posjetitelju — i onome bez računa, koji ga nikad neće otvoriti.
+     Ovdje je zato zasebna stranica: `index.html` je izgubio editorske skripte, a ova
+     ih nosi. „Uvjetno učitavanje" time nije mehanizam nego POSLJEDICA rasporeda.
+
+     ⚠️ SADRŽAJ SEKCIJA JE NAMJERNO PRAZAN. `#admin-page` puni `renderAdminPage()`,
+     `#editor-page` puni `renderStudioPage()` — oba iz JS-a, kao i u aplikaciji. Ova
+     datoteka je LJUSKA: traka, mrvica, čuvar pristupa i popis skripti.
+
+     ⚠️ `noindex` NIJE opreznost nego posljedica toga da editor sad ima pravu adresu.
+     Tražilica koja je indeksira nudila bi ljudima ulaz u alat u koji ne mogu ući.
+     ==================================================================== -->
+<html lang="en" data-theme="academic">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0, user-scalable=yes">
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sokrat Study">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Mora pratiti ZADANU temu, isto kao index.html i manifest.json. -->
+    <meta name="theme-color" content="#f7f9fc">
+    <meta name="format-detection" content="telephone=no">
+
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260823013201">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260823013201">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260823013201">
+    <link rel="manifest" href="manifest.json">
+
+    <title>Studio — Sokrat Study</title>
+
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="styles.bundle.css?v=20260823013201">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha384-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EpIsO/H5+EGAkPGc6rk+V8i04oW/K5xq0" crossorigin="anonymous">
+
+    <!-- KaTeX: formula se u editoru i PIŠE i PRIKAZUJE (U8.5c). MathLive (autorska
+         tipkovnica) učitava `js/block-editor-media.js` lijeno, tek na prvi klik. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" media="print" onload="this.media='all'"
+          integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css"
+              integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+    </noscript>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"
+            integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8" crossorigin="anonymous"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"
+            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+    <!-- DOMPurify: `js/blocks-renderer.js` je JEDAN renderer i ovdje crta pretpregled
+         istih blokova koje student vidi — sigurnosna granica ide s njim. -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js"
+            integrity="sha384-JEyTNhjM6R1ElGoJns4U2Ln4ofPcqzSsynQkmEc/KGy6336qAZl70tDLufbkla+3" crossorigin="anonymous"></script>
+
+    <!-- Privola je odluka o CIJELOJ stranici, ne o jednoj adresi: ista traka, isti izbor. -->
+    <link rel="stylesheet" href="css/consent.css?v=20260823013201">
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('consent', 'default', {
+            'ad_storage': 'denied', 'ad_user_data': 'denied',
+            'ad_personalization': 'denied', 'analytics_storage': 'denied',
+            'wait_for_update': 500
+        });
+    </script>
+    <script src="js/monitoring.js?v=20260823013201" defer></script>
+    <script src="js/consent.js?v=20260823013201" defer></script>
+</head>
+<body>
+
+    <!-- Ista ljuska kao u aplikaciji (K2b): `#editor-page` je `position:fixed` s
+         `inset: var(--chrome-h) 0 0 0`, pa traka mora postojati i ovdje — inače bi
+         Studio počeo od vrha ekrana i pojeo vlastiti izlaz. -->
+    <div class="chrome" id="chrome">
+    <header class="topbar" id="top" role="banner">
+        <a class="topbar-logo" href="index.html" id="topbarHome" aria-label="Sokrat Study">
+            <img src="assets/logo.svg?v=20260823013201" alt="" class="logo-image">
+            <span class="logo-text">Sokrat Study</span>
+        </a>
+        <div class="topbar-spacer"></div>
+        <div class="topbar-actions">
+            <button type="button" class="topbar-btn topbar-lang" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+                <i class="fas fa-globe" aria-hidden="true"></i>
+                <span class="lang-toggle-label">EN</span>
+            </button>
+            <button type="button" class="topbar-btn auth-entry" id="authNavBtn" hidden>
+                <i class="fas fa-user" aria-hidden="true"></i>
+                <span class="auth-entry-label topbar-btn-label" id="authNavLabel">Sign in</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="pathbar" id="pathbar">
+        <button type="button" class="pathbar-back" id="pathbarBack" aria-label="Go back" data-i18n-aria="topbar.back">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        <nav class="crumbs" id="crumbs" aria-label="Breadcrumb" data-i18n-aria="topbar.crumbs"></nav>
+    </div>
+    </div><!-- /.chrome -->
+
+    <!-- ČUVAR: stoji IZNAD editora dok se identitet ne razriješi. Ovo je jedina razlika
+         prema aplikaciji i postoji jer editor sad ima adresu koju svatko može utipkati
+         (v. `js/editor-page.js`). Prazan editor se NIKAD ne smije vidjeti. -->
+    <div class="ed-guard" id="edGuard" role="status" aria-live="polite">
+        <p class="ed-guard-msg" id="edGuardMsg" data-i18n="editor.checking">Checking your access…</p>
+        <button type="button" class="cta-button primary" id="edGuardBack" hidden data-i18n="editor.backToMaterials">Back to my materials</button>
+    </div>
+
+    <!-- Sadržaj obiju sekcija crta JS (renderAdminPage / renderStudioPage). -->
+    <section id="admin-page" class="admin-page">
+        <header class="profile-header">
+            <h1 data-i18n="admin.title">Admin</h1>
+            <div style="width: 44px;"></div>
+        </header>
+        <main class="profile-content" id="adminContent"></main>
+    </section>
+
+    <section id="editor-page" class="studio-page"></section>
+
+    <sokrat-toast class="toast" id="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMessage">Message</span>
+    </sokrat-toast>
+
+    <sokrat-confirm id="confirmDialog"></sokrat-confirm>
+
+    <!-- ==================== SKRIPTE ====================
+         Popis je IZVEDEN, ne prepisan: svaka je ovdje jer je neka editorska datoteka
+         traži (`t`, `showToast`, `askConfirm`, `SokratDraft`, `SokratAuth`, `SokratCatalog`,
+         `SokratContent`, `SokratBlocks`, `SokratNodeImages`, `AppState`, `SokratCardLimits`).
+         ⚠️ `js/navigation.js` NIJE ovdje: ruter i devet stranica pripadaju aplikaciji, a
+         editor od njega treba samo `navigateTo`/`goBack` — to prevodi `js/editor-page.js`.
+         ⚠️ `js/admin-reveal.js` MORA prije `js/admin.js` (studioBridge se veže pri parsiranju). -->
+    <script src="data/catalog.js?v=20260823013201"></script>
+    <script src="js/i18n.js?v=20260823013201"></script>
+    <script src="js/theme.js?v=20260823013201"></script>
+    <script src="js/app-state.js?v=20260823013201"></script>
+    <script src="js/config.js?v=20260823013201"></script>
+    <script src="js/content-loader.js?v=20260823013201"></script>
+    <script src="js/content-repo.js?v=20260823013201"></script>
+    <script src="js/components/sokrat-toast.js?v=20260823013201"></script>
+    <script src="js/components/sokrat-modal.js?v=20260823013201"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260823013201"></script>
+    <script src="js/utils.js?v=20260823013201"></script>
+    <script src="js/math.js?v=20260823013201"></script>
+    <script src="js/blocks-renderer.js?v=20260823013201"></script>
+    <script src="js/auth.js?v=20260823013201"></script>
+    <script src="js/draft-store.js?v=20260823013201"></script>
+    <script src="js/node-images.js?v=20260823013201"></script>
+    <script src="js/block-editor-media.js?v=20260823013201"></script>
+    <script src="js/block-editor.js?v=20260823013201"></script>
+    <script src="js/card-limits.js?v=20260823013201"></script>
+    <script src="js/admin-reveal.js?v=20260823013201"></script>
+    <script src="js/admin.js?v=20260823013201"></script>
+    <script src="js/admin-editors.js?v=20260823013201"></script>
+    <script src="js/studio.js?v=20260823013201"></script>
+    <script src="js/editor-page.js?v=20260823013201"></script>
+    <script src="js/sw-register.js?v=20260823013201" defer></script>
+</body>
+</html>

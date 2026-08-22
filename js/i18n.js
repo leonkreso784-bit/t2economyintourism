@@ -29,6 +29,18 @@
     // Admin (F4 CRUD) — vidljivo samo adminu
     'admin.title': { en: 'Admin', hr: 'Admin' },
     'admin.openStudio': { en: 'Studio editor', hr: 'Studio editor' },
+
+    // ⚠️ T6 · ČUVAR STRANICE EDITORA. Editor od T6 ima pravu adresu, pa mora umjeti
+    // REĆI zašto nekoga ne pušta — a to je prvi tekst koji posjetitelj ondje vidi.
+    // Dvojezično od prvog retka: T4 je pokazao da je zakucani engleski dug koji se
+    // plaća kasnije, i to na najgoroj mogućoj površini (ondje pravnoj, ovdje na vratima).
+    'editor.checking': { en: 'Checking your access…', hr: 'Provjeravam pristup…' },
+    'editor.backToMaterials': { en: 'Back to my materials', hr: 'Natrag na moje materijale' },
+    'editor.signInFirst': { en: 'Sign in to edit your material.', hr: 'Za uređivanje se treba prijaviti.' },
+    'editor.notYours': { en: "This material isn't available.", hr: 'Ovaj materijal nije dostupan.' },
+    'editor.loadFail': { en: "The material couldn't be loaded.", hr: 'Materijal se nije mogao učitati.' },
+    'editor.adminOnly': { en: 'Editing the catalogue is for administrators.', hr: 'Uređivanje kataloga je samo za administratora.' },
+    'editor.noAuth': { en: 'Sign-in is unavailable right now.', hr: 'Prijava trenutno nije dostupna.' },
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },

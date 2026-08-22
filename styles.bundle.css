@@ -8890,6 +8890,28 @@ h4.lb-heading {
   margin-top: 6px;
   font-size: 12px;
 }
+.ed-guard {
+  position: fixed;
+  inset: var(--chrome-h) 0 0 0;
+  z-index: 1300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+}
+.ed-guard[hidden] {
+  display: none;
+}
+.ed-guard-msg {
+  max-width: 34ch;
+  font-size: 15px;
+  line-height: 1.5;
+}
 :root {
   --topbar-h: 64px;
   --pathbar-h: 44px;

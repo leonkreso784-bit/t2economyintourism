@@ -112,6 +112,9 @@
    generirali bismo klase koje one nikad ne dobiju. `check:tailwind` čuva obje strane. */
 @import "tailwindcss/utilities.css" source(none);
 @source "../index.html";
+/* T6: stranica editora (`editor.html`) učitava OVAJ bundle, pa mora i u skeniranje —
+   `check:tailwind` od T6 traži `@source` za svaku stranicu koja bundle učitava. */
+@source "../editor.html";
 @source "../js";
 
 /* ── POPIS ISKLJUČENIH IMENA ──────────────────────────────────────────
