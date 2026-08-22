@@ -902,6 +902,49 @@ tanki blok.** Stoga **OBA trebaju izvorne PDF-ove/silabus od korisnika** (folder
 - ➖ **Studentski UGC za 3./4. godinu** — studenti uploadaju sadržaj i grade više godine (HM i/ili Menadžment u ugostiteljstvu); jezik (HR/EN) neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderacija/autorska prava ([VISION.md](../product/VISION.md) §4 gating-odluke).
 - ~~**Prioritet nakon sadržaja (korisnik):** (1) Admin CRUD → (2) AI tutor → (3) Matura prep.~~ **⚠️ NADGLAŠENO 2026-08-02 (Leon).** Admin CRUD = ✅ gotov; **matura IZBAČENA iz build-plana** (ostaje samo kao tržišna hipoteza u [MONETIZATION.md](../product/MONETIZATION.md), ne kao posao). Aktualni redoslijed: **osobni UGC-graditelj ([CREATE_BACKEND_SPEC.md](../archive/CREATE_BACKEND_SPEC.md) F0–F5) → frontend redizajn → objava/dijeljenje + MCP.** [[follow-recorded-plan-dont-reopen]]
 
+## 🔁 MATURA SE VRAĆA — kao IDEJA, ne kao plan (Leon, 2026-08-22)
+
+Gornji precrtani redak (**„matura IZBAČENA iz build-plana", 2026-08-02**) i dalje točno opisuje
+**plan**: matura nije cigla i ne ulazi u red čekanja. Ali premisa iz tog reza — *„širenje izvan
+fakulteta ide kroz UGC, srednjoškolac gradi vlastiti materijal kao i svi ostali"* — **ne pokriva
+ono što je Leon sad rekao:**
+
+> *„pripreme za maturu će se poviše bazirati na **exercises**"*
+
+I to je bitna razlika, jer **vježbu srednjoškolac ne može autorirati.** Kartice, kviz i dopunu
+može (to je podatak). Vježba je danas **kôd** — `generate()` funkcija u `data/<subj>/exercises.js`,
+koju BUG-012 drži izvan baze i JSON-a, a ADR-018 zabranjuje da korisnik uploada kôd. Dakle:
+
+**➡️ Matura ne prolazi kroz UGC. Matura prolazi kroz RECEPTE.**
+
+Time smjer „vježbe = imenovana, verzionirana knjižnica recepata" (v. `CLAUDE.md` §9.5 —
+151 od 234 vježbi je već čisti podatak, `params` su deklarirani u svih 83, kôd je samo formula)
+prestaje biti čišćenje duga i postaje **preduvjet**. Bez recepata matura znači ručno pisanje
+stotina `generate()` funkcija u `.js`, po predmetu, zauvijek.
+
+**Druga posljedica — točnost prestaje biti neugodnost i postaje odgovornost.**
+[ADR-020](./DECISIONS.md) (dvo-ključni verifier) danas stoji kao *„gradi se u fazi sadržaja, ne
+sad"*, a 18 predmeta je *„spot-checkano, NE iscrpno"*. Krivi ključ u fakultetskoj kartici je
+neugodan. **Krivi ključ u pripremi za državnu maturu je šteta** — dijete uči za ispit koji mu
+određuje upis, i vjeruje nam. Ako matura ikad krene, ADR-020 kreće **prije** nje, ne s njom.
+
+**Kalendar (Leon, 2026-08-22):** vrhunac korištenja platforme nije rujan nego **pripreme za
+maturu, otprilike 2.–5. mjesec**. To je jedini prirodni rok koji ovaj smjer ima.
+
+**Status: parkirano.** Ne planirati, ne procjenjivati, ne otvarati prije nego frontend bude
+gotov. Zabilježeno da se ne izgubi i da se zna **koji preduvjet nosi**.
+
+## 🏨 Simulacija vođenja hotela — zaseban proizvod, razrađen drugdje (2026-08-22)
+
+Poslovna igra za FMTU: student vodi virtualni hotel kroz sezonu (cijene po segmentu, RevPAR,
+kadrovi, sezonalnost), cijela generacija igra istu sezonu i natječe se. Konkurencija su plaćene
+strane licence (HOTS, Cesim, Shadow Manager).
+
+**Puni zapis: [`docs/ideas/HOTEL_SIM.md`](../ideas/HOTEL_SIM.md)** — ovdje namjerno stoji samo
+pokazivač, jer **nije Sokratova značajka nego drugi proizvod** (posuđuje primitive: seed-
+determinizam iz enginea vježbi, auth/RLS, sync napretka, i18n). Ne gradi se dok frontend nije
+gotov; služi kao materijal za prijedlog dekanu i kandidat za diplomski.
+
 ## Monetizacija (Faza 4 — tek na skali)
 - 🔥 Freemium pretplata (~2–3 €/mj): neograničeni kvizovi, exam mode, bez reklama, analitika.
 - 🔥 AI tutor kao premium ("objasni mi / ispitaj me") — koristi isti Claude pipeline.

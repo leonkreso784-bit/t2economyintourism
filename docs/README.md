@@ -17,6 +17,7 @@
 | **`workflow/`** | **KAKO RADIMO** — testiranje, tim, autorstvo sadržaja | povremeno |
 | **`records/`** | **POVIJEST** — dnevnik, changelog, bugovi, odluke | stalno |
 | **`subjects/`** | stanje pojedinih predmeta | uz sadržaj |
+| **`ideas/`** | ideje koje **nisu projekt** — parkirane dok ne sazriju | rijetko |
 | **`archive/`** | ispunjeni i napušteni planovi — **referenca, ne istina** | nikad |
 | **`sokrat-ai/`** | ⚠️ **zaseban projekt**, ne dira platformu | zasebno |
 
@@ -105,6 +106,16 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 |---|---|
 | [subjects/README.md](./subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe) |
 | [ACCOUNTING_PLAN.md](./subjects/ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](./subjects/STATISTICS_PLAN.md) · [TRAFFIC_PLAN.md](./subjects/TRAFFIC_PLAN.md) · [MATH_PLAN.md](./subjects/MATH_PLAN.md) | Planovi pojedinih predmeta (✅ gotovi) |
+
+## `ideas/` — ideje koje nisu projekt
+
+> **Nije plan i nije obećanje.** Ovdje stoji ideja koja je prevelika za jedan redak u
+> [records/BACKLOG.md](./records/BACKLOG.md), a nije zasluzila spec u `plan/`. Kad sazri →
+> spec + milestone; ako ne sazri → briše se bez žaljenja.
+
+| Dokument | Svrha |
+|---|---|
+| [ideas/HOTEL_SIM.md](./ideas/HOTEL_SIM.md) | **Simulacija vođenja hotela** — poslovna igra za FMTU (zaseban proizvod, posuđeni Sokratovi primitivi). Materijal za prijedlog dekanu + kandidat za diplomski. |
 
 ## `archive/` — ispunjeno i napušteno
 
