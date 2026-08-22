@@ -248,9 +248,15 @@
     'hero.title.b': { en: 'Learn it ', hr: 'Uči na ' },
     'hero.title.mark': { en: 'four ways', hr: 'četiri načina' },
     'hero.title.c': { en: '.', hr: '.' },
+    // ⚠️ T5 · SKRAĆENO SA 135 NA 72 ZNAKA, I TO NIJE ŠTEDNJA NEGO BRISANJE DUPLIKATA.
+    // Prva polovica („uzmi gotovo ili napiši svoje") stajala je DOSLOVNO u opisu prvih
+    // vrata ispod, a druga je nabrajala četiri načina koje naslov IMENUJE i koje sekcija
+    // niže POKAZUJE na pravoj lekciji — prvi ekran je istu stvar govorio tri puta. Ostalo
+    // je ono što nigdje drugdje ne piše: da se ne pripremaju ručno. Mjereno na 320 px:
+    // pet redaka → dva, i tek time vrata ulaze u prvi ekran (spec §9.12).
     'hero.sub': {
-        en: 'Take something ready from the catalog, or write your own — flashcards, a quiz, fill-in-the-blanks and study material build themselves.',
-        hr: 'Uzmi gotovo s fakulteta ili napiši svoje — kartice, kviz, dopunjavanje i gradivo nastaju sami.'
+        en: 'Nothing to prepare — the cards, the quiz and the blanks write themselves.',
+        hr: 'Ništa ne pripremaš — kartice, kviz i dopune nastaju sami.'
     },
 
 

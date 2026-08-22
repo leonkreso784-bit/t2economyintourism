@@ -298,9 +298,42 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > riješen **svojstvom** (`.profile-content` rezervira donji rub, 16 → 34 px). **Pravilo: prije nego
 > nalaz uđe u osnovicu, ponovi mjerenje.**
 >
-> **🔵 SLJEDEĆA CIGLA = T5 (tipografija i prostor).** Sada ima brojku: vrata landinga počinju na
-> **567 od 568 px** u portretu i **425 od 393** polegnuto — dakle hero ih gura ispod pregiba, i to su
-> 2 od 10 preostalih nalaza. Iza toga **T6** (editor s posjetiteljeva puta).
+> **✅ T5 (TIPOGRAFIJA I PROSTOR) JE GOTOV** (2026-08-22, spec **§9.12**) — vrata landinga na
+> 320 px **y = 567 → 338** (pojas do 439), polegnuto **425 → 200**; naslov 48 → **32 px** (3 → 2
+> retka), podnaslov **5 → 2 retka**. Osnovica javno **10 → 8**, i **nijedan preostali nalaz nije
+> više na landingu**.
+> ⚠️ **Korijen nije bila veličina nego to što se veličina NE MIJENJA S EKRANOM:** hero je koštao
+> **jednako 444 px na svakom telefonu** — 444 od 803 px pojasa na Pro Maxu (u redu) i **444 od
+> 316 na SE-u**. *Trošak je bio konstanta, a prostor varijabla* (isti razred kao T3, gdje problem
+> nije bila količina kroma nego raspodjela). Utility-ljestvica se mijenja **stepenasto po ŠIRINI**,
+> a telefonu nedostaje **VISINA** → polegnut telefon je po širini „desktop" i dobivao je **60 px
+> naslova na ekranu koji za cijeli hero ima 256 px**. Zato su tip i ritam heroja izašli iz markupa
+> u `landing.css` — **jedina iznimka od C1/C2**, jer `.hero-title` i `.text-4xl` imaju istu
+> specifičnost a utilityji stoje zadnji (dobiti specifičnošću je isti smjer kao `!important`, što
+> `app.css` izričito zabranjuje); pragovi na **≥768 px vraćaju TOČNO današnje tokene**.
+> ⚠️ **Prvi ekran je istu stvar govorio TRI puta** (naslov imenuje četiri načina · podnaslov ih
+> nabraja · sekcija niže ih pokazuje), a prva polovica podnaslova stajala je **doslovno u opisu
+> prvih vrata** → skraćen sa 135 na 72 znaka. **To je promjena TEKSTA na Leonovoj površini i zato
+> se izriče**; struktura iz §7.13 je netaknuta.
+> 🐞 **Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila — oba je oborila obrnuta
+> provjera:** `br{display:none}` bez podizanja stropa mjere ne mijenja **ni piksel** (*pola pravila
+> mjeri se kao mrtvo slovo*), a `white-space:nowrap` na markeru nije nosiv — frazu drži **naslov
+> sveden na stupac**, i uz to bi `nowrap` prelom pretvorio u **prelijevanje**, dakle u gori kvar.
+> **Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže da bez njega pada.**
+> ⚠️ **`css:diff` OVU ciglu ne može izmjeriti, i to je nalaz o alatu:** presreće **samo stylesheet**,
+> a HTML uzima iz radnog stabla → kad vrijednost seli iz markupa u CSS, referenca je stranica koja
+> **nikad nije postojala** (46 razlika, i na 768 i 1280 gdje se ništa nije promijenilo). Dokaz je
+> izveden **pravim A/B-om** (HEAD iz zasebnog `git worktree`-a, drugi port, obje verzije sa svojim
+> markupom i CSS-om): **0 razlika na 768 i 1280**, 22 na 375 i sve namjera. Ponovit će se u C4–C7.
+> ⚠️ **Nova tvrdnja je u `landing.spec.js`, ne u phone-brani** (specifična je za jednu površinu):
+> potez preko fraze u **jednom retku**, u **oba jezika**, i **izričito na 320 px** — jer projekti
+> suite počinju na 375, a kriterij §2 imenuje 320, pa je tvrdnja na 375 px **prošla nad kvarom**.
+>
+> **🔵 SLJEDEĆA CIGLA = T6 (editor s posjetiteljeva puta) — i to je ZADNJA cigla faze TELEFON.**
+> Izmjereno: **744,6 KiB u 41 skripti, 38 bez `defer`**, od toga **238,2 KiB (32 %) editorsko** u 6
+> datoteka; vlastiti budžet projekta je 200 KB → **3,7×**. Uvjetno učitavanje + budžet kao gate.
+> **T6 nije čišćenje nego preduvjet faze POLICA** (offline ljuska ne smije nositi editor koji
+> offline student nikad ne otvori).
 > **🔴 BUG-032 je OTVOREN** (`lessons` nije upotrebljiv tipkovnicom ni čitačem ekrana — kartica je
 > `div` s klikom): nije telefonski kvar nego **jedini put u svaku lekciju kataloga**. Zaslužuje
 > vlastitu ciglu; u istom retku treba i escape (BUG-025).

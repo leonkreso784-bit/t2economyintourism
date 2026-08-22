@@ -5,6 +5,70 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-22 (OPUS) — **T5: tipografija i prostor (spec §9.12)**
+
+Sonda prije koda, šesti put zaredom. Ovaj put mjerenje nije oborilo premisu — **potvrdilo** ju je,
+ali je promijenilo dijagnozu: problem nije bila veličina heroja nego to što je **veličina bila
+konstanta, a prostor varijabla**.
+
+```
+hero (nadnaslov -> vrh vrata) = 444 px, ISTO na svakom telefonu
+
+  430 x 932   pojas 803 px   hero 444   u redu
+  393 x 852   pojas 723 px   hero 444   u redu
+  320 x 568   pojas 316 px   hero 444   140 % pojasa
+  852 x 393   pojas 256 px   hero 361   141 % pojasa
+```
+
+Utility-ljestvica se mijenja **stepenasto po ŠIRINI**, a telefonu nedostaje **VISINA** — pa je
+polegnut telefon, koji je po širini „desktop", dobivao **60 px naslova na ekranu koji za cijeli
+hero ima 256 px**. Zato su tip i ritam heroja izašli iz markupa u `landing.css` (jedina iznimka
+od C1/C2, obrazložena: `.hero-title` i `.text-4xl` imaju istu specifičnost, a utilityji stoje
+zadnji — pravilo bi uvijek izgubilo; dobiti specifičnošću je isti smjer kao `!important`).
+
+**Rezultat:** vrata na 320 px `y = 567 → 338`, polegnuto `425 → 200`; naslov 48 → 32 px (3 → 2
+retka), podnaslov 5 → 2 retka; osnovica brane **javno 10 → 8**, i **nijedan preostali nalaz nije
+više na landingu**.
+
+**Prvi ekran je istu stvar govorio tri puta** — naslov imenuje četiri načina, podnaslov ih
+nabraja, sekcija niže ih pokazuje na pravoj lekciji; a prva polovica podnaslova stajala je
+doslovno u opisu prvih vrata. Podnaslov je skraćen sa 135 na 72 znaka. **To je promjena teksta
+na površini koju Leon pregledava i zato je izrečena, a ne skrivena u mjere.**
+
+### Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila
+
+Najkorisniji dio cigle, i oba je oborila obrnuta provjera:
+
+1. `br { display: none }` na niskom ekranu — naslov ostaje 2 retka i sa sakrivenim `<br>`-om i
+   bez njega, jer ga strop od `22ch` svejedno lomi. **Pola pravila mjeri se kao mrtvo slovo.**
+2. `white-space: nowrap` na `.hero-mark` — spec je kvar imenovao točno („potez se lomi nasred
+   fraze"), pa je `nowrap` zvučao kao njegov ispravak. S maknutim `nowrap`-om fraza ostaje
+   cijela na svim širinama i u oba jezika: drži ju **naslov sveden na stupac**. Uz to je bio
+   lošiji (fraza dulja od stupca bi se **prelila** umjesto prelomila) → obrisan.
+
+**Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže da bez njega pada.**
+
+### `css:diff` ovu ciglu ne može izmjeriti — nalaz o alatu
+
+Presreće **samo stylesheet**, a HTML uzima iz radnog stabla → kad cigla premjesti vrijednost iz
+markupa u CSS, referenca je stranica koja **nikad nije postojala**. Dokaz je zato izveden pravim
+A/B-om (HEAD iz zasebnog `git worktree`-a, drugi port, obje verzije sa svojim markupom i CSS-om):
+**0 razlika na 768 i 1280 px**, 22 na 375 i sve namjera. Ponovit će se u C4–C7 → zapisano u
+`BACKLOG.md`.
+
+### Gate
+
+`preflight` **EXIT 0** · phone-brana **8/8 javno, 11/11 prijavljeno** · A/B protiv HEAD-a **0/0
+na 768 i 1280** · obrnuta provjera nove tvrdnje pada s vraćenim naslovom od 48 px.
+
+### Što slijedi
+
+**T6** (editor s posjetiteljeva puta — 744,6 KiB u 41 skripti, 238 KiB editorsko; budžet kao
+gate) je zadnja cigla faze TELEFON. Uz to čekaju **BUG-032** (`lessons` nije upotrebljiv
+tipkovnicom ni čitačem ekrana — vlastita cigla) i **odluka o `about`** (kvar ili proza).
+
+---
+
 ## 2026-08-22 (OPUS) — **T4: cookie-traka (spec §9.11)**
 
 Sonda prije koda, peti put zaredom — i peti put je mjerenje oborilo ono što je pisalo u planu.

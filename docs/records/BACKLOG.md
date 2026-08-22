@@ -206,6 +206,38 @@ vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
 
 ---
 
+## ➖ `css:diff` mjeri samo POLA stranice — izmjereno u T5 (2026-08-22)
+
+**Što je nađeno.** `scripts/css-diff.js` presreće **stylesheet**, a HTML uzima iz **radnog
+stabla**. Dok cigla mijenja samo CSS, to je točno. Čim cigla premjesti vrijednost **iz markupa u
+CSS** (T5: dvoosna veličina heroja se utilityjem ne da napisati, jer utilityji stoje zadnji pa
+pravilo iste specifičnosti uvijek gubi), njegova „referenca" postaje stranica koja **nikad nije
+postojala**: **novi markup + stari CSS**.
+
+**Mjera.** T5 je prijavio **46 razlika**, i to na **sve tri** širine — uključujući 768 i 1280 px,
+gdje se dokazano **ništa** nije promijenilo. Izvještaj je tvrdio „naslov 32 px" — a to je gola
+`h1` bez ijedne veličine, jer referentni bundle ne poznaje pravilo koje ju daje.
+
+**Zašto to nije sitnica.** Ovo je **oblik cijele faze C4–C7**: svaka od tih cigli migrira
+površinu na utilityje, dakle **svaka mijenja markup i CSS istovremeno**. Alat koji je za C1 dao
+3438 usporedbi / 0 razlika za C4+ daje šum u kojem se prava regresija ne vidi. *Gate koji mijenja
+samo jednu polovicu stranice mjeri stranicu koja ne postoji.*
+
+**Kako se dotad dokazuje** (izvedeno u T5, radi): HEAD se posluži iz zasebnog **`git worktree`-a**
+na drugom portu, pa se izračunati stilovi uspoređuju između **dvije stvarne verzije stranice** —
+obje sa svojim markupom i svojim CSS-om. T5: **0 razlika na 768 i 1280 px**, 22 na 375 i sve do
+jedne namjera cigle.
+
+**Prijedlog (nije odlučeno):** `css:diff` dobiva `--ref <git-ref>` koji poslužuje **cijelo**
+stablo te reference (worktree ili `git archive`), a ne samo bundle; današnje ponašanje ostaje
+zadano. Cijena: sporije (dva servera) i traži čist `git worktree`. **Kriterij prihvaćanja:**
+*cigla koja premjesti vrijednost iz markupa u CSS dobije 0 razlika na širinama koje nije dirala.*
+
+⚠️ **Ne raditi usred faze TELEFON** — T6 je zadnja cigla i ne dira markup na taj način. Prirodno
+mjesto je **pred C4**, jer ondje počinje niz cigli koje bi bez toga sve morale ručno dokazivati.
+
+---
+
 ## ➖ Birač tema je bliže nego što spec tvrdi — 24 pravila, ne 126 (2026-08-18)
 
 Leon je pitao kad dolaze druge boje cijele stranice. `npm run palette:breakdown`:

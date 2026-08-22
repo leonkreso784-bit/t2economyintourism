@@ -76,7 +76,10 @@
 .landing-main {
     flex: 1;
     width: 100%;
-    padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
+    /* ⚠️ T5 · donja granica 2.5rem → 1.5rem: na 320 px je gornji zrak bio 40 px,
+       a cijeli hero je ondje morao stati u 316 px. Iznad ~570 px širine ju 7vw
+       ionako pregazi, pa se 768 ni 1280 ne pomiču (uvjet cigle). */
+    padding-block: clamp(1.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
 }
 
 
@@ -128,27 +131,86 @@
 
 
 /* ── Hero ─────────────────────────────────────────────────────────────
-   Veličine naslova i razmaci su utilityji u markupu; ovdje samo ono što
-   utility ne pokriva. */
+
+   ⚠️ T5 · TIP I RITAM HEROJA VIŠE NISU UTILITYJI U MARKUPU — i to je jedina
+   iznimka od pravila C1/C2 („veličine i razmaci su utilityji"). Razlog je
+   IZMJEREN, ne stilski: hero je do danas koštao **jednako 444 px na svakom
+   telefonu** (od vrha nadnaslova do vrha vrata). To je 444 od 803 px
+   upotrebljive visine na Pro Maxu — sasvim u redu — i **444 od 316 px na
+   iPhoneu SE, dakle 140 %**. Trošak je bio konstanta, a prostor varijabla.
+
+   ⚠️ **Utility-ljestvica se stepenasto mijenja po ŠIRINI, a ovdje oskudijeva
+   VISINA.** Polegnut telefon (852 × 393) je po širini „desktop" → dobivao je
+   `md:text-5xl` = 60 px naslova na ekranu koji za cijeli hero ima 256 px.
+   Dvoosna veličina se utilityjem ne da napisati, pa cijela stoji ovdje.
+
+   ⚠️ **Pragovi ≥ 768 px vraćaju TOČNO današnje tokene** (`--text-5xl`,
+   `--text-6xl`, `4rem`), jer T5 je cigla o TELEFONU: desktop se ne smije
+   pomaknuti ni za piksel — dokazano A/B-om protiv HEAD-a (**0 razlika na 768 i
+   1280 px**). ⚠️ `css:diff` to ovdje NE MOŽE reći: presreće samo stylesheet, a
+   markup uzima iz radnog stabla, pa mu je referenca stranica koja nikad nije
+   postojala (spec §9.12). Gornje granice
+   `clamp()`-ova su namjerno jednake današnjim vrijednostima (`3rem` = stari
+   `text-4xl`, `3rem` = stari `mt-12`), pa je prijelaz na prag bešavan. */
+
 .hero-kicker {
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-ink-2);
-    margin-bottom: 1.1rem;
+    /* Gornja granica = današnjih 1.1rem, dosegnuta na 600 px. */
+    margin-bottom: clamp(0.7rem, 0.35rem + 2vw, 1.1rem);
 }
 
 .hero-title {
     max-width: 18ch;
     text-wrap: balance;
+    /* 320 px → 32 px · 768 px → 48 px (= stari `text-4xl`, bešavno u `md:`). */
+    font-size: clamp(2rem, 1.28rem + 3.58vw, 3rem);
+    line-height: 1.1;
 }
 
-@media (min-width: 48rem) { .hero-title { max-width: 22ch; } }
+@media (min-width: 48rem) {
+    .hero-title {
+        max-width: 22ch;
+        font-size: var(--text-5xl);
+        line-height: var(--text-5xl--line-height);
+    }
+}
+
+@media (min-width: 64rem) {
+    .hero-title {
+        font-size: var(--text-6xl);
+        line-height: var(--text-6xl--line-height);
+    }
+}
+
+.hero-sub {
+    /* Bio je fiksnih 1.25rem (`mt-5`) usred heroja u kojem je SVE ostalo fluidno —
+       jedina konstanta među varijablama. Gornja granica je ista, dosegnuta na ~690 px. */
+    margin-top: clamp(0.85rem, 0.5rem + 1.75vw, 1.25rem);
+    /* 320 px → 16 px · ≥ 720 px → 18 px (= stari `text-lg`). Na 320 px je
+       18 px značilo PET redaka u stupcu od 288 px; 16 px ih daje četiri. */
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    line-height: 1.6;
+}
 
 /* MARKER umjesto gradijentnog naslova. Podvučeno je 58% visine retka — potez
    flomasterom preko riječi, ne ispuna. `box-decoration-break` drži potez
-   ispravnim kad se riječ prelomi u dva retka; bez njega drugi redak ostane gol. */
+   ispravnim kad se riječ prelomi u dva retka; bez njega drugi redak ostane gol.
+
+   ⚠️ T5 · OVDJE JE PRVO STAJAO `white-space: nowrap`, I OBRNUTA PROVJERA GA JE
+   ODBACILA. Spec je kvar imenovao točno (potez se lomio NASRED FRAZE — „four" na
+   kraju retka, „ways" na početku sljedećeg), pa je `nowrap` zvučao kao ispravak.
+   Mjerenje kaže drugo: s maknutim `nowrap`-om fraza ostaje cijela na SVIM mjerenim
+   širinama i u OBA jezika — jer ju je držao naslov sveden na stupac, ne to pravilo.
+   **Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže
+   da bez njega pada.**
+   Uz to je `nowrap` bio i LOŠIJI: fraza dulja od stupca se s njim ne bi prelomila
+   nego PRELILA — kvar gori od onog koji smo popravljali. Bez njega je najgori ishod
+   prelom, koji `box-decoration-break: clone` ionako crta ispravno.
+   Ishod čuva tvrdnja u `tests/landing.spec.js` (jedan redak, oba jezika, i 320 px). */
 .hero-mark {
     font-style: normal;
     color: var(--color-ink-0);
@@ -156,6 +218,25 @@
     padding-inline: 0.08em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+}
+
+/* ⚠️ T5 · NIZAK EKRAN JE DRUGA OSKUDICA, PA I DRUGO PRAVILO — isti rez kao T3
+   (`max-height: 519px`), i iz istog razloga: portret i polegnut telefon nemaju
+   isti manjak. Ovdje je manjak REDAK: 852 × 393 ima 784 px stupca i 256 px
+   visine, pa ga svaki prelomljeni redak košta 12 % ekrana.
+   ⚠️ `<br>` u naslovu je PORTRETNA odluka — na 784 px stupca cijeli naslov
+   stane u jedan redak, pa ondje forsirani prelom troši cijeli redak ni za što. */
+@media (max-height: 519px) {
+    /* ⚠️ `br` i `max-width` su OVDJE JEDNO PRAVILO, ne dva. Sonda je prvo pokazala da
+       sakriveni `<br>` ne mijenja ni piksel — jer strop od 22ch (455 px) naslov svejedno
+       lomi u dva retka. **Napisao sam bio pola pravila**, a pola pravila mjeri se kao mrtvo
+       slovo: tek kad padne i strop, naslov je jedan redak (79 → 40 px, vrata 263 → 223).
+       Strop je mjera ČITLJIVOSTI reda; u polegnutom telefonu red je 33 znaka, dakle unutar
+       ugodne mjere i bez stropa. */
+    .hero-title { font-size: var(--text-3xl); line-height: 1.1; max-width: none; }
+    .hero-title br { display: none; }
+    .hero-sub { margin-top: 0.75rem; font-size: 1rem; line-height: 1.5; }
+    .hero-kicker { margin-bottom: 0.5rem; }
 }
 
 /* ── Dvoje vrata ──────────────────────────────────────────────────────
@@ -166,9 +247,22 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+    /* ⚠️ T5 · bio je utility `mt-12 md:mt-16` (48/64 px). Razmak do vrata je
+       najskuplji prazan prostor stranice — on je jedino što stoji između
+       RAZLOGA i RADNJE. Gornja granica = današnjih 3rem, prag ispod vraća
+       točno `mt-16`. */
+    margin-top: clamp(1.75rem, 1rem + 3.5vw, 3rem);
 }
 
 @media (min-width: 44rem) { .doors { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 48rem) { .doors { margin-top: 4rem; } }
+
+/* Nizak ekran — obrazloženje uz `max-height` pravilo heroja gore. Stoji IZA praga
+   od 48rem jer ga na 852 × 393 mora pobijediti (ista specifičnost → redoslijed). */
+@media (max-height: 519px) {
+    .doors { margin-top: 1.25rem; }
+    .landing-main { padding-block: 1rem 1.5rem; }
+}
 
 .door {
     display: block;

@@ -16,7 +16,7 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260822002907'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260822141849'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // Minimalni precache: navigacijski shell. Ostalo se kešira runtime-om po verzioniranom URL-u

@@ -2625,5 +2625,143 @@ phone-brana **10/10 javno, 11/11 prijavljeno** · obrnuta provjera ⑧ **pada s 
   popravka treba **odluka**: je li to kvar (stranica bez izlaza) ili proza koja se čita?
   Tvrdnja ④ ju danas broji kao kvar, pa ili stranica dobiva ulaz (npr. vrata natrag na
   gradivo), ili tvrdnja dobiva izuzeće **uz zapis zašto**.
-- **`landing` na 320 i 852** — hero gura vrata ispod pregiba. To je **T5**, i sada ima brojku:
+- **`landing` na 320 i 852** — ✅ **riješeno ciglom T5** (§9.12). Brojka je bila:
   vrata počinju na 567 od 568 px (portret), odnosno 425 od 393 (polegnut).
+
+### 9.12 T5 — tipografija i prostor (isporučeno 2026-08-22)
+
+**Kriterij (§9.3):** *„…na prvom ekranu dobije razlog, ne samo naslov."*
+
+#### Mjerenje prije koda — trošak je bio konstanta, a prostor varijabla
+
+Hero (od vrha nadnaslova do vrha vrata) košta **jednako 444 px na svakom telefonu**:
+
+| profil | upotrebljivi pojas (kromo → vrh trake) | hero | ishod |
+|---|---|---|---|
+| 430 × 932 | 803 px | 444 px | u redu |
+| 393 × 852 | 723 px | 444 px | u redu |
+| **320 × 568** | **316 px** | **444 px** | **140 % pojasa** |
+| **852 × 393** | **256 px** | 361 px | **141 % pojasa** |
+
+To je **isti razred kao T3**: ondje problem nije bila količina kroma nego raspodjela, ovdje
+nije veličina heroja nego to što se **ne mijenja s ekranom**. Utility-ljestvica
+(`text-4xl md:text-5xl lg:text-6xl`) mijenja se **stepenasto po ŠIRINI**, a oskudica na
+telefonu je u **VISINI** — polegnut telefon je po širini „desktop" (852 px → `md:` prag), pa
+je dobivao **60 px naslova na ekranu koji za cijeli hero ima 256 px**.
+
+#### Zašto su tip i ritam morali izaći iz markupa — jedina iznimka od C1/C2
+
+`.hero-title` (0,1,0) i `.text-4xl` (0,1,0) imaju **istu specifičnost**, a utilityji stoje
+**na kraju** bundlea (app.css §„zašto su utilityji zadnji") → pravilo u `landing.css` bi
+uvijek izgubilo. Ostale bi dvije mogućnosti, i obje su odbačene:
+
+- **`.landing-page .hero-title`** (0,2,0) — dobiti nad utilityjem specifičnošću je isti smjer
+  kao `!important`, a `app.css` izričito propisuje obrnuto: *„ako neko pravilo tuče utility,
+  rješenje je OBRISATI pravilo"*.
+- **prag u markupu** (`text-3xl xs:text-4xl …`) — rješava portret, **ne rješava polegnut**:
+  širinski prag ne zna da je ekran nizak.
+
+Zato veličine i ritam heroja stoje u `css/landing.css`, s **pragovima koji na ≥ 768 px vraćaju
+TOČNO današnje tokene** (`--text-5xl`, `--text-6xl`, `4rem`) i **gornjim granicama `clamp()`-a
+jednakima današnjim vrijednostima** (`3rem` = stari `text-4xl`, `3rem` = stari `mt-12`) — pa je
+prijelaz bešavan, a desktop se ne pomiče ni za piksel. To je uvjet cigle, ne sretna okolnost:
+**T5 je cigla o telefonu.**
+
+Drugo pravilo je za **nizak ekran** (`max-height: 519px`, isti prag kao T3): naslov na
+`--text-3xl`, `<br>` sakriven i **strop mjere podignut** — jer u polegnutom telefonu red od 33
+znaka stane u jedan redak, a forsirani prelom ondje troši 12 % ekrana ni za što.
+
+#### ⚠️ Prvi ekran je istu stvar govorio TRI puta
+
+Naslov imenuje četiri načina · podnaslov ih **nabraja** · sekcija niže ih **pokazuje na pravoj
+lekciji**. Uz to je prva polovica podnaslova (*„uzmi gotovo iz kataloga ili napiši svoje"*)
+stajala **doslovno u opisu prvih vrata**, tri centimetra niže. Podnaslov je zato skraćen sa
+**135 na 72 znaka** — ostalo je ono što nigdje drugdje ne piše: **da se ništa ne priprema
+ručno**. To je isti rez kao T2 (*identitet u mrvicu, uputa u sadržaj*), samo na jednom ekranu.
+
+⚠️ **Ovo je promjena TEKSTA na površini koju Leon pregledava** i zato se izriče, a ne skriva u
+mjere: `hero.sub` u oba jezika. Struktura landinga iz §7.13 (naslov pokriva oba izvora → dvoja
+ravnopravna vrata) **ostaje netaknuta** — oba izvora i dalje pokrivaju naslov i vrata, samo ih
+podnaslov više ne ponavlja.
+
+#### 🐞 Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila — oba je oborila obrnuta provjera
+
+Ovo je najkorisniji dio cigle i zato stoji prije mjera:
+
+1. **`.hero-title br { display: none }` u niskom ekranu.** Sonda: naslov ostaje **2 retka i 79 px**
+   sa sakrivenim `<br>`-om i bez njega — jer ga strop od `22ch` (455 px) svejedno lomi.
+   **Napisao sam bio pola pravila**, a pola pravila mjeri se kao mrtvo slovo. Tek sa stropom
+   (`max-width: none`) naslov je **1 redak, 40 px**, a vrata **263 → 223 px**.
+2. **`white-space: nowrap` na `.hero-mark`.** Spec je kvar imenovao točno („potez se lomi nasred
+   fraze"), pa je `nowrap` zvučao kao njegov ispravak. Obrnuta provjera: **s maknutim `nowrap`-om
+   fraza ostaje cijela na svim mjerenim širinama i u oba jezika** — drži je **naslov sveden na
+   stupac**, ne to pravilo. Uz to je bio **lošiji**: fraza dulja od stupca se s njim ne bi
+   prelomila nego **prelila**, a prelom `box-decoration-break: clone` ionako crta ispravno.
+   Obrisan.
+
+**Pouka: pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže da bez
+njega pada.** Nosiva je bila **veličina**, i to je provjereno: vrati li se naslov na 48 px na
+telefonu, nova tvrdnja pada.
+
+#### ⚠️ `css:diff` ovu ciglu NE MOŽE izmjeriti — i to je nalaz o alatu, ne o cigli
+
+`css:diff` presreće **samo stylesheet**, a HTML uzima iz radnog stabla. Kad cigla premjesti
+vrijednost **iz markupa u CSS**, njegova „referenca" je stranica koja **nikad nije postojala**:
+novi markup + stari CSS. Otud izvještaj *„naslov 32 px"* — to je gola `h1` bez ijedne veličine,
+i to na **sve tri** širine (46 razlika, uključujući 768 i 1280, gdje se ništa nije promijenilo).
+
+Dokaz je zato izveden **pravim A/B-om**: HEAD je poslužen iz zasebnog `git worktree`-a na
+drugom portu, obje verzije sa **svojim** markupom i **svojim** CSS-om, pa su uspoređeni
+izračunati stilovi heroja na 375 / 768 / 1280:
+
+```
+375 × 812    22 razlike  — sve do jedne su namjera cigle (tip, ritam, vrata 479 → 290)
+768 × 1024    0 razlika
+1280 × 900    0 razlika
+```
+
+⚠️ **Ovo će se ponoviti u svakoj cigli koja seli markup na utilityje (C4–C7).** Zapisano kao
+otvorena stavka u `BACKLOG.md`: dok se `css:diff` ne nauči poslužiti i **markup** iz reference,
+cigle tog oblika dokazuju se A/B-om, a ne njegovim izlazom. *Gate koji mijenja samo jednu
+polovicu stranice mjeri stranicu koja ne postoji.*
+
+#### Mjere
+
+| | prije | poslije |
+|---|---|---|
+| vrata **320 × 568** | y = 567 (od 568) | **y = 338**, pojas do 439 |
+| vrata **393 × 852** | y = 538 | **y = 353** |
+| vrata **430 × 932** | y = 457 | **y = 362** |
+| vrata **852 × 393** | y = 425 (od 393) | **y = 200** |
+| naslov na 320 px | 48 px · 3 retka · 158 px | **32 px · 2 retka · 70 px** |
+| naslov polegnuto | 60 px · 2 retka · 126 px | **36 px · 1 redak · 40 px** |
+| podnaslov na 320 px | 18 px · **5 redaka** · 144 px | **16 px · 2 retka · 51 px** |
+| potez preko fraze | **2 retka** (320 i 393 px) | **1 redak** (sve širine, oba jezika) |
+| osnovica brane, javno | 10 | **8** |
+
+#### Nova tvrdnja — u `landing.spec.js`, ne u phone-brani
+
+Potez preko fraze mjeri se ondje gdje žive istine landinga, jer je **specifičan za jednu
+površinu**; phone-brana ostaje generička. Tvrdnja mjeri **ishod, ne mehanizam** (broj redaka i
+širinu), u **oba jezika** (hrvatsko „četiri načina" je 13 znakova naspram engleskih 9) i
+**izričito na 320 px**.
+
+⚠️ **To zadnje je našla obrnuta provjera:** projekti ove suite počinju na **375 px**, a kriterij
+prihvaćanja (§2) imenuje **320**. S namjerno pokvarenim CSS-om tvrdnja je na 375 px **prošla**.
+*Brana koja ne posjeti najuži ekran ne čuva najuži ekran* — isti razred kao BUG-029, gdje je
+najuži profil bio 375 dok je kriterij govorio 320.
+
+#### Stanje gateova
+
+`preflight` **EXIT 0** · `css:diff` **46 razlika, sve iz gornje rupe alata** · A/B protiv HEAD-a
+**0 razlika na 768 i 1280**, 22 na 375 (sve namjera) · phone-brana **8/8 javno, 11/11
+prijavljeno** · obrnuta provjera nove tvrdnje **pada s vraćenim naslovom od 48 px**.
+
+#### 9.12.1 Što ostaje, i čije je
+
+Preostalih **8** nalaza tvrdnje ④ nema više nijedan na landingu:
+
+- **4 × `lessons`** — stranica nema nijednu sadržajnu kontrolu jer je kartica lekcije `div` s
+  klikom → **BUG-032**, vlastita cigla.
+- **4 × `about`** — jedna kontrola, na `y ≈ 1500`. **Čeka Leonovu odluku** (kvar ili proza),
+  nepromijenjeno od T4.

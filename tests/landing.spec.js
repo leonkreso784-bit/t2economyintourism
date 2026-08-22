@@ -156,3 +156,64 @@ test('landing: nijedan ukras ne prekriva sadržaj ispod ljepljive trake', async 
 
   expect(kickerTop).toBeGreaterThanOrEqual(navBottom - 1);
 });
+// ⚠️ T5 · POTEZ JE GESTA PREKO CIJELE FRAZE, PA SE NE SMIJE PRELOMITI (spec §9.12).
+// Zatečeno na 320 i 393 px: „four" je stajalo na kraju retka, „ways" na početku sljedećeg —
+// a potez prelomljen nasred fraze ne označava ništa nego izgleda kao greška.
+//
+// ⚠️ OVA TVRDNJA ČUVA ISHOD, NE MEHANIZAM, i to je zapisano zato što je prva verzija
+// cigle imala krivi mehanizam. Napisao sam bio `white-space: nowrap` na `.hero-mark` jer
+// je zvučao kao ispravak — obrnuta provjera ga je odbacila: s maknutim `nowrap`-om fraza
+// ostaje cijela na svim mjerenim širinama i u oba jezika. **Drži je naslov sveden na
+// stupac (T5), ne to pravilo.** Obrnuta provjera koja NOSI: vrati li se naslov na 48 px
+// na telefonu, ova tvrdnja pada — provjereno.
+//
+// ⚠️ MJERI SE U OBA JEZIKA, jer je duljina fraze PODATAK, ne konstanta: hrvatsko
+// „četiri načina" je 13 znakova naspram engleskih 9.
+//
+// ⚠️ 320 px SE MJERI IZRIČITO, i to je našla obrnuta provjera: projekti ove suite počinju
+// na 375 px, a kriterij prihvaćanja (spec §2) imenuje 320. Brana koja ne posjeti najuži
+// ekran ne čuva najuži ekran.
+test('landing: potez preko fraze stoji u jednom retku i ne prelijeva stupac (T5)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('#landing-page.active');
+
+  const mjeri = () => {
+    const m = document.querySelector('.hero-mark');
+    const t = document.querySelector('.hero-title');
+    return {
+      tekst: m.textContent.trim(),
+      redaka: m.getClientRects().length,
+      sirina: Math.round(m.getBoundingClientRect().width),
+      stupac: Math.round(t.getBoundingClientRect().width)
+    };
+  };
+
+  const provjeri = (m, gdje) => {
+    expect(m.redaka, gdje + ': potez „' + m.tekst + '" se lomi u ' + m.redaka + ' retka').toBe(1);
+    // Druga polovica je zamka-brana: dok se fraza smije lomiti, ŠIRA od stupca ne može ni
+    // biti. Bude li — netko je vratio `nowrap` (ili drugi strop) i time zamijenio prelom
+    // PRELIJEVANJEM, što je gori kvar od onoga koji ova cigla popravlja.
+    expect(m.sirina, gdje + ': potez „' + m.tekst + '" je ' + m.sirina + ' px u stupcu od '
+      + m.stupac + ' px — netko je frazi zabranio prelom, pa sad prelijeva').toBeLessThanOrEqual(m.stupac);
+  };
+
+  const obaJezika = async (gdje) => {
+    const prvi = await page.evaluate(mjeri);
+    provjeri(prvi, gdje);
+    // Čeka se STANJE (da se tekst promijenio), ne vrijeme — pouka T0 (spec §9.7).
+    await page.evaluate(() => { toggleUiLang(); });
+    await page.waitForFunction(
+      (staro) => document.querySelector('.hero-mark').textContent.trim() !== staro, prvi.tekst);
+    const drugi = await page.evaluate(mjeri);
+    expect(drugi.tekst, gdje + ': jezik se nije stvarno prebacio — druga polovica tvrdnje bi'
+      + ' mjerila isti tekst').not.toBe(prvi.tekst);
+    provjeri(drugi, gdje);
+  };
+
+  const projekt = page.viewportSize();
+  await obaJezika('projektna širina ' + projekt.width + ' px');
+
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.waitForFunction(() => window.innerWidth === 320);
+  await obaJezika('320 px (najuži iz kriterija §2)');
+});
