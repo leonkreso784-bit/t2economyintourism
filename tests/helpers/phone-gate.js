@@ -121,7 +121,26 @@ const postaviRub = (page, rub = RUB_PORTRET) =>
  * već platio na drag-testu (K6b, TESTING.md).
  */
 async function idiNa(page, ime, rub = RUB_PORTRET) {
-    if (ime === 'browse:dubina') {
+    // Povratak IZ editora u aplikaciju mora biti izričit: ondje `navigateTo` postoji samo
+    // kao prijevod (js/editor-page.js), a `AppState.nav` ne opisuje stranicu — pa bi
+    // čekanje na `AppState.nav.page` visjelo do isteka.
+    if (ime !== 'editor' && ime !== 'admin' && page.url().includes('editor.html')) {
+        await page.goto('/');
+        await spreman(page);
+    }
+    // ⚠️ T6: editor i admin-preglednik VIŠE NISU stranice ove aplikacije nego VLASTITI
+    // DOKUMENT (`editor.html`) — 244 KiB editorskog koda otišlo je s posjetiteljeva puta.
+    // Do njih se zato ne ide `navigateTo`-om nego pravom navigacijom; a natrag u aplikaciju
+    // mora se otići izričito, jer `navigateTo` ondje postoji samo kao PRIJEVOD.
+    // ⚠️ NE VRAĆAJ SE RANO. Prva verzija je ovdje imala `return`, pa je preskakala
+    // `smiriPrikaz()` na dnu — i brana je odmah prijavila `320px admin` bez ijedne kontrole,
+    // jer se preglednik puni asinkrono. Bilješka nekoliko redaka niže to je DOSLOVNO
+    // predvidjela („popravak koji nije generaliziran čeka drugu priliku"). Zato je ovo
+    // samo prva grana lanca, a zajednički rep vrijedi i za nju.
+    if (ime === 'editor' || ime === 'admin') {
+        await page.goto(ime === 'admin' ? '/editor.html?view=admin' : '/editor.html');
+        await page.waitForSelector(ime === 'admin' ? '#admin-page.active' : '#editor-page.active', { timeout: 30000 });
+    } else if (ime === 'browse:dubina') {
         await page.evaluate(() => navigateTo('browse'));
         await page.waitForFunction(() => typeof browseState !== 'undefined' && !!browseState.level);
         // Spusti se do NAJDUBLJE razine kataloga — ondje su najduži nazivi. Hijerarhija je
@@ -176,6 +195,15 @@ async function idiNa(page, ime, rub = RUB_PORTRET) {
     // prijavio „nijedna dohvatljiva kontrola", a drugi put ne, jer se puni asinkrono.
     // *Popravak koji nije generaliziran je popravak koji čeka drugu priliku* (BUG-027).
     await smiriPrikaz(page, 'section[id$="-page"].active');
+    // ⚠️ PROLAZNA OBAVIJEST NIJE STRANICA. Nakon obnove sesije auth javi „prijavljen si" i
+    // `<sokrat-toast>` na 2,5 s sjedne preko sredine ekrana — na 320 px baš preko JEDINE
+    // omogućene kontrole admin-preglednika, pa je tvrdnja ④ prijavila „nijedna dohvatljiva
+    // kontrola" za stranicu koja je posve u redu. Zato se čeka da toast ode.
+    // ⚠️ ALI SAMO DO ROKA: ostane li vidljiv, mjeri se s njim — trajni pokrivač JEST kvar
+    // (isto načelo kao tvrdnja ⑧ iz T4), pa ga čekanje ne smije sakriti.
+    try {
+        await page.waitForFunction(() => { const t = document.getElementById('toast'); return !t || !t.classList.contains('show'); }, null, { timeout: 4000 });
+    } catch (e) { /* toast je ostao — neka mjera to i pokaže */ }
     await postaviRub(page, rub);
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 }

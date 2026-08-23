@@ -583,7 +583,26 @@ koja NE skrola dodaje beskorisne zaustavne točke tipkovnice. Dakle mali runtime
 
 ---
 
-## 🔥 Landing šalje 240 KB editorskog koda posjetitelju bez računa — 2026-08-14
+## ✅ ~~Landing šalje 240 KB editorskog koda posjetitelju bez računa~~ — ZATVORENO 2026-08-24 (T6)
+
+> **✅ ISPUNJENO ciglom T6** (spec §9.13): editor je dobio **vlastitu stranicu** (`editor.html`),
+> pa posjetitelj bez računa više ne dobiva nijednu editorsku datoteku. Mjereno: **mrežom
+> 234 → 164 KiB** (ispod zadanog budžeta od 200), **sirovo 755 → 519 KiB**, **41 → 36 skripti**,
+> editorskih datoteka na putu **7 → 0**.
+>
+> ⚠️ **Brojka „3,7× preko budžeta" iz ove stavke bila je u KRIVOJ JEDINICI** — računata je na
+> sirovim bajtovima, a budžet dolazi iz Lighthouse-postavke, koja mjeri **prenesene**. U
+> ispravnoj jedinici zatečeno stanje bilo je **1,17×**, ne 3,7×. Stavka je dakle bila **točna u
+> smjeru, kriva u mjeri**; ostavlja se zapisana jer je pouka općenita: *agregat u krivoj jedinici
+> može mjeriti točno i savjetovati krivo* (isti razred kao `palette:breakdown`).
+>
+> **Najvažnije: sada postoji GATE.** `npm run check:budget` (u preflightu) čuva **sastav**
+> (nijedna editorska datoteka na posjetiteljevu putu) **i težinu** (≤ 200 KB prijenosa). Ova je
+> stavka devet dana rasla upravo zato što ga nije bilo — *stavka bez gatea ne stoji na mjestu
+> nego klizi*, i to je zapisano niže, u njezinoj vlastitoj povijesti.
+
+<details><summary>Povijest mjerenja (zadržana — pokazuje kako je brojka rasla)</summary>
+
 **Izmjereno** (profil telefona 390 px, prazan cache, nekomprimirano, lokalni server):
 dokument 66 KB · **skripte 821 KB kroz 45 zahtjeva** · stilovi 242 KB · **ukupno 1.173 KB**.
 Od skripti je **241 KB (38 %)** editorsko/admin: `studio.js` (50) · `block-editor.js` (53) ·
@@ -615,6 +634,8 @@ Zapisano jer je pouka: jedno mjerenje bez ponavljanja nije mjera.)*
 
 **Kad:** uz **C3** — C3 ionako prepisuje površinu tih istih datoteka, pa je odvajanje s kritičnog
 puta najjeftinije baš tada. Uz to **budžet kao gate**, da brojka nikad više ne poraste tiho.
+
+</details>
 
 > ⚠️ **STAVKA OSTAJE OTVORENA — 2026-08-15.** Spec §7.13 je tvrdio da se zatvara sama, jer da živi
 > prikaz u herou nosi taj teret. **Izmjereno pri brisanju demoa: ne nosi ga.** Demo je bio čisti

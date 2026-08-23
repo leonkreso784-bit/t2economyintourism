@@ -6,6 +6,8 @@
 // napravi folder → ugnijezdi gradivo → uredi u Studiju → objavi → obriši → VRATI,
 // uz tvrdnju koja je najlakše promašiti: **sadržaj preživi soft-delete i povratak.**
 const { test, expect } = require('@playwright/test');
+// T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
 async function openMaterials(page) {
   await page.addInitScript(() => {
@@ -13,8 +15,8 @@ async function openMaterials(page) {
   });
   await page.goto('/');
   await page.waitForFunction(() =>
-    !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
-    && !!window.SokratStudio && typeof window.navigateTo === 'function');
+    !!window.SokratMaterials && !!window.SokratAdmin
+    && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('materials'));
   await page.waitForSelector('#myMaterials .mm-bar', { timeout: 20000 });
@@ -23,8 +25,13 @@ async function openMaterials(page) {
 
 const mkNode = (page, p, k, n) =>
   page.evaluate(([a, b, c]) => window.SokratMaterials.createNode(a, b, c), [p, k, n]);
-const rmNode = (page, id) =>
-  page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+// ⚠️ T6: čišćenje traži APLIKACIJU — `SokratMaterials` ne postoji na stranici editora,
+// a test ondje često i završi; bez povratka kući `finally` bi rušio umjesto da čisti.
+const rmNode = async (page, id) => {
+  await otvoriAplikaciju(page);
+  await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
+  await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+};
 const readContent = (page, id) => page.evaluate(async (nodeId) => {
   const r = await SokratAuth.getClient().from('node_content')
     .select('payload,version').eq('node_id', nodeId).single();
@@ -32,7 +39,12 @@ const readContent = (page, id) => page.evaluate(async (nodeId) => {
 }, id);
 
 /** Objavi payload kroz Studio-bridge (isti put kao gumb „Objavi"). */
-const publishSections = (page, id, name, sections) => page.evaluate(async ([nodeId, nm, secs]) => {
+// ⚠️ T6: most (`SokratAdmin.studioBridge`) postoji SAMO na `editor.html`, pa helper sam
+// otvara tu stranicu — kao što se `rmNode` sam vraća u aplikaciju. Znanje o tome gdje koja
+// polovica proizvoda živi stoji u helperu, ne u svakom testu koji ga zove.
+const publishSections = async (page, id, name, sections) => {
+  await otvoriStudio(page);
+  return page.evaluate(async ([nodeId, nm, secs]) => {
   const b = window.SokratAdmin.studioBridge;
   b.setNode(nodeId, nm, {});
   await b.enter();
@@ -46,7 +58,8 @@ const publishSections = (page, id, name, sections) => page.evaluate(async ([node
     });
   });
   await b.publish();
-}, [id, name, sections]);
+  }, [id, name, sections]);
+};
 
 test.describe('F4 — puni životni ciklus osobnog gradiva', () => {
   test('napravi → ugnijezdi → uredi → objavi → obriši → VRATI (sadržaj preživi)', async ({ page }) => {
@@ -73,7 +86,9 @@ test.describe('F4 — puni životni ciklus osobnog gradiva', () => {
       expect(afterPublish.version).toBe(2);
       expect(afterPublish.payload['sekcija-1'].learn.blocks[0].text).toBe('prvi odlomak');
 
-      // 3) OBRIŠI (soft) — nestaje iz stabla.
+      // 3) OBRIŠI (soft) — nestaje iz stabla. Natrag u aplikaciju: `SokratMaterials` je njezin.
+      await otvoriAplikaciju(page);
+      await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
       await page.evaluate((i) => window.SokratMaterials.deleteNode(i), study);
       const gone = await page.evaluate(async (s) => {
         const r = await SokratAuth.getClient().from('nodes').select('id').eq('id', s).is('deleted_at', null);

@@ -71,8 +71,11 @@ function renderProfilePage() {
         '    <h3 class="profile-card-title"><i class="fas fa-user-shield"></i> ' + pt('admin.title', 'Admin') + '</h3>' +
         '    <p class="profile-meta">' + pt('admin.desc', 'Edit study content directly. Every change is versioned and can be undone.') + '</p>' +
         '    <div class="profile-actions">' +
-        '      <button type="button" class="cta-button primary" data-studio-open><i class="fas fa-wand-magic-sparkles"></i><span>' + pt('admin.openStudio', 'Studio editor') + '</span></button>' +
-        '      <button type="button" class="cta-button secondary" data-admin-open-editor><i class="fas fa-pen-to-square"></i><span>' + pt('admin.editContent', 'Edit content') + '</span></button>' +
+        // T6: editor je VLASTITI DOKUMENT (`editor.html`), pa ulaz više nije gumb koji mijenja
+        // sekciju nego POVEZNICA. Time se ne dobiva samo ispravna semantika: poveznica se smije
+        // otvoriti u novoj kartici, kopirati i vidjeti prije klika — gumb ništa od toga ne nudi.
+        '      <a class="cta-button primary" href="editor.html"><i class="fas fa-wand-magic-sparkles"></i><span>' + pt('admin.openStudio', 'Studio editor') + '</span></a>' +
+        '      <a class="cta-button secondary" href="editor.html?view=admin"><i class="fas fa-pen-to-square"></i><span>' + pt('admin.editContent', 'Edit content') + '</span></a>' +
         '    </div>' +
         '  </div>' +
 

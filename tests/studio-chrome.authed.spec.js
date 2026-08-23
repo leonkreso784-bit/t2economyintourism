@@ -28,17 +28,14 @@
 // bi pogoršala kvar koji je trebala zaobići. Zato ovaj spec mjeri OBOJE: i da je ljuska
 // niska, i da ništa nije odrezano.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 test.use({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
 
 /** Uđi u Studio i otvori te2 skriptu (stablo je ispod 680 px skriveno → klik programski). */
-async function otvoriStudio(page) {
-    await page.goto('/');
-    await page.waitForFunction(
-        () => !!window.SokratStudio && !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-    );
-    await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-    await page.evaluate(() => navigateTo('editor'));
+async function otvoriStudioSaLekcijom(page) {  // T6: lokalni helper; sam ULAZ na stranicu nosi studio-entry
+    await otvoriStudio(page);
     await page.waitForSelector('#editor-page.active');
     await page.waitForSelector('#stTree .st-row', { state: 'attached' });
     await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach((n) => n.classList.add('open')); });
@@ -49,7 +46,7 @@ async function otvoriStudio(page) {
 }
 
 test('Studio na 390px: nijedna kontrola u traci nije odrezana', async ({ page }) => {
-    await otvoriStudio(page);
+    await otvoriStudioSaLekcijom(page);
 
     const odrezani = await page.evaluate(() => {
         const vw = window.innerWidth;
@@ -71,7 +68,7 @@ test('Studio na 390px: nijedna kontrola u traci nije odrezana', async ({ page })
 });
 
 test('Studio na 390px: ljuska ne jede ekran — traka niska, canvas ostaje za rad', async ({ page }) => {
-    await otvoriStudio(page);
+    await otvoriStudioSaLekcijom(page);
 
     const m = await page.evaluate(() => {
         const h = (sel) => {

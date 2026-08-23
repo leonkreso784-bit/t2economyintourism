@@ -47,6 +47,25 @@
     **`#admin-page` skriven na landingu (regresija BUG-018 „Admin curi na dno")**; **BUG-019 regresija — back iz admina NE stvara petlju profil ⇄ admin** (pravi klikovi na back-gumbe); F4.3b viewer — `navigateTo('admin')` renderira picker predmeta→lekcija;
     **F4.3c-1:** edit-gumbi (`.admin-edit-btn`) skriveni ne-adminu, viewer i dalje renderira kartice. *(Ovo su NEGATIVNI/odjavljeni putovi — vrte se u default suiteu.)*
 
+> **📦 T6 (2026-08-23): editor ima vlastitu adresu — `editor.html`.**
+> Znanje o tome **gdje editor živi** stoji na jednom mjestu: **`tests/helpers/studio-entry.js`**
+> (`otvoriStudio` · `otvoriCvor` · `otvoriAdminPreglednik` · `otvoriAplikaciju`) plus `idiNa()` u
+> oba mjerača (`phone-gate`, `reach-gate`). Do T6 je isti ulaz bio prepisan **sedamnaest puta**.
+> ⚠️ **Popis „tko dira editor" napravljen po selektorima bio je NEPOTPUN:** `material-authoring` i
+> `node-images` stranicu ne spominju, ali **čekaju njezine globale** (`window.SokratDraft`) — pa
+> test ne padne s porukom nego **visi do isteka od dvije minute**. *Ovisnost nije samo „tko
+> spominje" nego i „tko čeka".*
+> ⚠️ **`tests/admin.spec.js` je prepolovljen ODLUKOM, ne padom** (256 → 81 redak): pet tvrdnji
+> počivalo je na premisi *„viewer se renderira i bez admin-sesije"*, koja od T6 **ne postoji po
+> dizajnu** (do preglednika se dolazi kroz čuvara). Gdje je pokrivenost otišla, piše u zaglavlju te
+> datoteke; tvrdnja „#admin-page je skriven" zamijenjena je **jačom**: *aplikacija ga uopće nema*.
+> ⚠️ **Mjerač telefona čeka da PROLAZNA OBAVIJEST ode** prije mjerenja (toast „prijavljen si" 2,5 s
+> pokriva sredinu ekrana i na 320 px zna prekriti jedinu kontrolu), **ali samo do roka** — ostane li
+> vidljiva, mjeri se s njom, jer trajni pokrivač JEST kvar (tvrdnja ⑧ iz T4).
+>
+> **Nova brana: `npm run check:budget`** — ① nijedna editorska datoteka na posjetiteljevu putu
+> (SASTAV) · ② prijenos skripti ≤ 200 KB (TEŽINA, mjereno gzipom, kao Lighthouse). U preflightu.
+
 ## Authenticated (admin) suite — POZITIVAN admin-put (`npm run test:authed`)
 > Rješava dugogodišnju rupu: Playwright se sad MOŽE prijaviti na Supabase (storageState). Pokriva put koji je pustio
 > `window.SokratAuth` bug (BUG-018) — stari testovi provjeravali samo `isAdmin===false`. [[live-login-verifies-crud]]

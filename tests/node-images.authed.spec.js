@@ -8,6 +8,8 @@
 //
 // RLS/HTTP stranu (tuđi prefiks, anon, javni URL) pokriva `npm run test:storage`.
 const { test, expect } = require('@playwright/test');
+// T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
 // 1x1 PNG — najmanji valjani teret.
 const PNG_B64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
@@ -18,15 +20,20 @@ async function openApp(page) {
   });
   await page.goto('/');
   await page.waitForFunction(() =>
-    !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
+    !!window.SokratMaterials && !!window.SokratAdmin
     && !!window.SokratNodeImages && typeof window.renderBlocks === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
 }
 
 const mkNode = (page, p, k, n) =>
   page.evaluate(([a, b, c]) => window.SokratMaterials.createNode(a, b, c), [p, k, n]);
-const rmNode = (page, id) =>
-  page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+// ⚠️ T6: čišćenje traži APLIKACIJU — `SokratMaterials` ne postoji na stranici editora,
+// a test ondje često i završi; bez povratka kući `finally` bi rušio umjesto da čisti.
+const rmNode = async (page, id) => {
+  await otvoriAplikaciju(page);
+  await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
+  await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+};
 
 /** Upload kroz PRAVI editorski put (`__beMedia().uploadImage`) u zadanom kontekstu. */
 const uploadVia = (page, b64) => page.evaluate(async (b64s) => {
@@ -48,6 +55,8 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     const id = await mkNode(page, null, 'study', 'F4 Slika');
     let path = null;
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await page.evaluate((nodeId) => window.SokratAdmin.studioBridge.setNode(nodeId, 'F4 Slika', {}), id);
       const res = await uploadVia(page, PNG_B64);
       expect(res.ok, 'upload je pao: ' + res.err).toBe(true);
@@ -73,6 +82,8 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     const id = await mkNode(page, null, 'study', 'F4 Objava slike');
     let path = null;
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await page.evaluate((nodeId) => window.SokratAdmin.studioBridge.setNode(nodeId, 'F4 Objava slike', {}), id);
       const res = await uploadVia(page, PNG_B64);
       expect(res.ok, 'upload je pao: ' + res.err).toBe(true);
@@ -114,6 +125,8 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     const id = await mkNode(page, null, 'study', 'F4 Prikaz');
     let path = null;
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await page.evaluate((nodeId) => window.SokratAdmin.studioBridge.setNode(nodeId, 'F4 Prikaz', {}), id);
       const res = await uploadVia(page, PNG_B64);
       expect(res.ok, 'upload je pao: ' + res.err).toBe(true);
@@ -168,6 +181,8 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     const id = await mkNode(page, null, 'study', 'BUG-024 Learn slika');
     let path = null;
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       await page.evaluate((nodeId) => window.SokratAdmin.studioBridge.setNode(nodeId, 'BUG-024 Learn slika', {}), id);
       const res = await uploadVia(page, PNG_B64);
       expect(res.ok, 'upload je pao: ' + res.err).toBe(true);
@@ -188,8 +203,13 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
         await b.publish();
       }, [id, res.src]);
 
-      // HLADAN ULAZ: bez ovoga bi test prošao i s bugom — potpisi iz uređivanja su još u memoriji.
-      await page.evaluate(() => window.SokratNodeImages.clear());
+      // HLADAN ULAZ, i to JAČI nego prije: učenje živi u aplikaciji, a editor je od T6 zaseban
+      // dokument — povratak na `/` je NOV dokument, pa su potpisi iz uređivanja nestali sami,
+      // zajedno s cijelom memorijom stranice. (Dotad je isto radio `SokratNodeImages.clear()`
+      // nad istim dokumentom; sad bi taj poziv čistio cache koji više ni ne postoji.)
+      await otvoriAplikaciju(page);
+      await page.waitForFunction(() => !!window.SokratMaterials && !!window.SokratNodeImages,
+        null, { timeout: 20000 });
 
       // `ensureRegistered`, ne `refresh`: refresh tiho odustane kad kartica materijala nije
       // montirana (BUG-023), a ovaj test namjerno ne prolazi kroz UI stabla.
@@ -232,6 +252,8 @@ test.describe('F4 — privatne slike osobnog gradiva', () => {
     await openApp(page);
     let pubUrl = null;
     try {
+      // T6: bridge i Studio žive na stranici editora, ne u aplikaciji.
+      await otvoriStudio(page);
       // setLesson gasi node-mod → mora se vratiti stari put (javni bucket + public URL).
       await page.evaluate(() => window.SokratAdmin.studioBridge.setLesson('management', 'midterm-1', {}));
       const res = await uploadVia(page, PNG_B64);

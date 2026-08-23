@@ -68,18 +68,18 @@ test('③ + ④ izlaz iz Studija vodi na policu, a lanac završava na landingu',
     await page.setViewportSize({ width: 390, height: 844 });
     await spremanAdmin(page);
 
-    // Put kojim ide korisnik: polica → editor. Tek tad Studio zna da je otvorio ČVOR,
-    // pa `roditeljOd()` vrati policu umjesto profila (propust K2a zatvoren u K2b).
+    // ⚠️ T6: editor je vlastiti DOKUMENT, pa se izlaz iz njega više ne dokazuje lancem
+    // unutar aplikacije nego PRAVOM NAVIGACIJOM — klik na „natrag" mora vratiti na policu.
+    // Tvrdnja BUG-027 („izlaz vodi u profil umjesto na policu") time nije izgubljena nego
+    // se mjeri ondje gdje sada živi: u ishodu klika, a ne u `roditeljOd()`.
     await G.idiNa(page, 'materials');
-    await page.evaluate(() => {
-        AppState.nav.editorNode = { id: 'proba', name: 'Proba' };
-        navigateTo('editor');
-    });
-    await page.waitForSelector('#editor-page.active');
+    await G.idiNa(page, 'editor');
+    await page.click('#pathbarBack');
+    await page.waitForSelector('#materials-page.active', { timeout: 20000 });
 
+    // Ostatak lanca (polica → … → landing) i dalje živi u aplikaciji i mora ostati bez petlje.
     const lanac = await G.lanacNatrag(page);
-    expect(lanac[0], 'krećemo iz editora').toBe('editor');
-    expect(lanac[1], 'prvi izlaz iz editora vodi na POLICU, ne u profil (BUG-027)').toBe('materials');
+    expect(lanac[0], 'nakon izlaza iz Studija stojimo na POLICI (BUG-027)').toBe('materials');
     expect(lanac[lanac.length - 1], 'lanac: ' + lanac.join(' → ')).toBe('landing');
 
     const vidjeni = new Set();

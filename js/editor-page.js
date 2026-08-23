@@ -75,18 +75,30 @@
     // ovo DRUGI dokument: predak više nije gumb koji mijenja stanje nego PRAVA POVEZNICA.
     // Ime ide kroz `textContent`, nikad `innerHTML` — podatak iz baze u markup ulazi jednim
     // putem i taj put ne poznaje HTML (isti razred kao BUG-025).
-    function nacrtajMrvicu(ime) {
+    function nacrtajMrvicu(ime, sRoditeljem) {
         var host = byId('crumbs');
         if (!host) return;
         host.textContent = '';
 
-        var natrag = document.createElement('a');
-        natrag.className = 'crumb';
-        natrag.href = RUTA_MATERIJALI;
-        natrag.textContent = prevedi('materials.title', 'Moji materijali');
-        host.appendChild(natrag);
+        // Roditelj se crta SAMO za osobni materijal. Katalog se uređuje iz profila, a profil
+        // nema rutu (K1: UNROUTED_PAGES) → poveznica bi vodila drugamo nego što piše.
+        if (sRoditeljem) {
+            var natrag = document.createElement('a');
+            natrag.className = 'crumb';
+            natrag.href = RUTA_MATERIJALI;
+            natrag.textContent = prevedi('materials.title', 'Moji materijali');
+            host.appendChild(natrag);
+        }
 
         if (!ime) return;
+        if (!sRoditeljem) {
+            var sam = document.createElement('span');
+            sam.className = 'crumb crumb-current';
+            sam.setAttribute('aria-current', 'page');
+            sam.textContent = ime;
+            host.appendChild(sam);
+            return;
+        }
         var sep = document.createElement('span');
         sep.className = 'crumb-sep';
         sep.setAttribute('aria-hidden', 'true');
@@ -105,11 +117,6 @@
     function poruka(tekst, sPovratkom) {
         var g = byId('edGuard');
         var m = byId('edGuardMsg');
-        // Gumb natrag u drugom redu trake: u aplikaciji ga vezuje initTopbar() iz
-        // navigation.js, koji ovdje namjerno ne postoji (v. popis skripti u editor.html).
-        var natrag = byId('pathbarBack');
-        if (natrag) natrag.addEventListener('click', function () { window.goBack('materials'); });
-
         var b = byId('edGuardBack');
         if (m) m.textContent = tekst;
         if (b) b.hidden = !sPovratkom;
@@ -148,19 +155,27 @@
         }
         if (ime === null) { odbij('editor.notYours', 'Ovaj materijal nije dostupan.'); return; }
         sakrijCuvara();
-        nacrtajMrvicu(ime);
+        nacrtajMrvicu(ime, true);
         if (window.SokratStudio && typeof SokratStudio.openNode === 'function') SokratStudio.openNode(id, ime);
     }
 
-    async function otvoriKatalog() {
+    /** `?view=admin` = stari read-only preglednik (#admin-page); inače Studio. */
+    function pogled() {
+        try { return new URLSearchParams(location.search).get('view') || ''; }
+        catch (e) { return ''; }
+    }
+
+    async function otvoriKatalog(stari) {
         // Katalog smije uređivati SAMO admin. `refresh()` pita bazu (`is_admin` RPC), ne
         // pamti odgovor iz sesije — a i da laže, RLS ne bi pustio nijedan upis.
         var jesam = false;
         if (window.SokratAdmin && typeof SokratAdmin.refresh === 'function') jesam = await SokratAdmin.refresh();
         if (!jesam) { odbij('editor.adminOnly', 'Uređivanje kataloga je dostupno samo administratoru.'); return; }
         sakrijCuvara();
-        nacrtajMrvicu(prevedi('admin.openStudio', 'Studio editor'));
-        pokaziSekciju('editor');
+        // Ključevi su isti kojima je stranicu do T6 imenovala `nazivStranice()` u navigaciji —
+        // preselili su se zajedno sa stranicom umjesto da ostanu mrtvi u rječniku.
+        nacrtajMrvicu(prevedi(stari ? 'admin.title' : 'topbar.studio', stari ? 'Admin' : 'Studio'), false);
+        pokaziSekciju(stari ? 'admin' : 'editor');
     }
 
     var razrijeseno = false;
@@ -173,10 +188,17 @@
         if (!user || !client) { odbij('editor.signInFirst', 'Za uređivanje se treba prijaviti.'); return; }
         var id = nodeIdIzAdrese();
         if (id) await otvoriOsobni(client, id);
-        else await otvoriKatalog();
+        else await otvoriKatalog(pogled() === 'admin');
     }
 
     document.addEventListener('DOMContentLoaded', function () {
+        // ⚠️ Vezivanje ide OVDJE, a ne u `poruka()`: ondje je stajalo do prve sonde i radilo
+        // je samo kad čuvar ODBIJE — na uspješnom putu „natrag" nije postojao. Sidro s dva
+        // pogotka + skripta koja ne provjerava jedinstvenost = tiha greška koja u kodu
+        // izgleda točno.
+        var natrag = byId('pathbarBack');
+        if (natrag) natrag.addEventListener('click', function () { window.goBack('materials'); });
+
         var b = byId('edGuardBack');
         if (b) b.addEventListener('click', function () { location.href = RUTA_MATERIJALI; });
 

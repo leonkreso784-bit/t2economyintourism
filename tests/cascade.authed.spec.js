@@ -24,6 +24,8 @@
 // STAGING-only. Ništa se ne objavljuje — Studio se otvara u pregledu, `.st-editing` se ne dobiva
 // ulaskom u edit-mod nego dodavanjem razreda na PRAVI čip koji je aplikacija već iscrtala.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 /** Izračunati stil prije i poslije prelaska miša — jedno mjerenje, dva stanja. */
 async function podMisem(page, locator, svojstva) {
@@ -51,12 +53,7 @@ async function podMisem(page, locator, svojstva) {
 test.describe('kaskada (prijavljen) — iznimka pobjeđuje bez `!important`', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });    // inspektor se skriva ispod 1020px
-    await page.goto('/');
-    await page.waitForFunction(
-      () => !!window.SokratStudio && !!window.SokratAdmin && typeof window.navigateTo === 'function'
-    );
-    await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-    await page.evaluate(() => navigateTo('editor'));
+    await otvoriStudio(page);
     await page.waitForSelector('#editor-page.active #stTree .st-row', { timeout: 20000 });
 
     await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach((n) => n.classList.add('open')); });

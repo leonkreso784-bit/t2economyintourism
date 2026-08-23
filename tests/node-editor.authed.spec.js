@@ -5,6 +5,8 @@
 // Dokazuje ugovor faze F3: otvori study-čvor → uredi → `publish_node` → ponovno učitaj =
 // sadržaj ostao + audit-redak zapisan + `base_version` lovi tuđu izmjenu.
 const { test, expect } = require('@playwright/test');
+// T6: editor je vlastiti dokument — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio, otvoriAplikaciju } = require('./helpers/studio-entry');
 
 async function openMaterials(page) {
   await page.addInitScript(() => {
@@ -12,7 +14,7 @@ async function openMaterials(page) {
   });
   await page.goto('/');
   await page.waitForFunction(() =>
-    !!window.SokratMaterials && !!window.SokratAdmin && !!window.SokratDraft
+    !!window.SokratMaterials && !!window.SokratAdmin
     && typeof window.navigateTo === 'function');
   await page.waitForFunction(() => window.SokratMaterials.isAvailable(), null, { timeout: 20000 });
   await page.evaluate(() => navigateTo('materials'));
@@ -22,8 +24,13 @@ async function openMaterials(page) {
 
 const mkNode = (page, p, k, n) =>
   page.evaluate(([a, b, c]) => window.SokratMaterials.createNode(a, b, c), [p, k, n]);
-const rmNode = (page, id) =>
-  page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+// ⚠️ T6: čišćenje traži APLIKACIJU. `SokratMaterials` ne postoji na stranici editora, a
+// test ondje često i završi — bez povratka kući `finally` bi rušio test umjesto da čisti.
+const rmNode = async (page, id) => {
+  await otvoriAplikaciju(page);
+  await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
+  await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
+};
 
 /** Pročitaj `node_content` izravno (anon/user JWT + owner-RLS). */
 const readContent = (page, id) => page.evaluate(async (nodeId) => {
@@ -37,6 +44,8 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Prazan');
     try {
+      // T6: bridge živi na stranici editora — dotad je bio u istom dokumentu kao polica.
+      await otvoriStudio(page);
       // `create_node` upisuje redak s `{}` → prazno je legitimno početno stanje, ne greška.
       expect(await readContent(page, id)).toEqual({ payload: {}, version: 1 });
 
@@ -58,6 +67,8 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Objava');
     try {
+      // T6: bridge živi na stranici editora — dotad je bio u istom dokumentu kao polica.
+      await otvoriStudio(page);
       const res = await page.evaluate(async (nodeId) => {
         const b = window.SokratAdmin.studioBridge;
         b.setNode(nodeId, 'F3 Objava', null);
@@ -104,6 +115,8 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Konflikt');
     try {
+      // T6: bridge živi na stranici editora — dotad je bio u istom dokumentu kao polica.
+      await otvoriStudio(page);
       const err = await page.evaluate(async (nodeId) => {
         const c = SokratAuth.getClient();
         // netko drugi (drugi tab/uređaj) objavi PRIJE nas → verzija u bazi odmakne
@@ -251,6 +264,8 @@ test.describe('F3 — editor u čvoru (studioBridge → node_content)', () => {
     await openMaterials(page);
     const id = await mkNode(page, null, 'study', 'F3 Prebacivanje');
     try {
+      // T6: bridge živi na stranici editora — dotad je bio u istom dokumentu kao polica.
+      await otvoriStudio(page);
       const ctx = await page.evaluate(async (nodeId) => {
         const b = window.SokratAdmin.studioBridge;
         b.setNode(nodeId, 'F3 Prebacivanje', null);

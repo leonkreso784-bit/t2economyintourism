@@ -5,6 +5,98 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-23 (OPUS) — **T6: editor s posjetiteljeva puta (spec §9.13) — FAZA TELEFON ISPUNJENA**
+
+Leon je od tri ponuđena reza izabrao **najveći**: editor ne dobiva lijeno učitavanje nego
+**vlastitu stranicu**. Sonda prije koda, sedmi put zaredom — i sedmi put je nešto oborila.
+
+```
+posjetiteljev put        prije      poslije
+  mrežom (gzip)          234 KiB    164 KiB   <- ispod budzeta od 200
+  sirovo                 755 KiB    519 KiB
+  skripti                41         36
+  editorskih datoteka    7          0
+stranica editora         -          27 skripti / 152 KiB mrezom
+```
+
+**Najvažniji nalaz nije brojka nego JEDINICA.** Plan je tvrdio „3,7× preko budžeta"; ta je
+brojka računata na **sirovim** bajtovima, a budžet dolazi iz Lighthousea, koji mjeri **prenesene**.
+U ispravnoj jedinici zatečeno stanje bilo je **1,17×** — dakle sam izlazak editora dovoljan je da
+se uđe u budžet. *Brojka može biti točna i svejedno savjetovati krivo ako je u krivoj jedinici.*
+
+**Rez nije išao po datoteci nego kroz nju.** `admin.js` je nosio i „jesi li ti admin", što
+aplikacija treba i bez editora → `admin-reveal.js` (3,2 KiB) ostaje, `admin.js` (42,8 KiB) seli.
+`node-images.js` **ostaje** jer ga traži `blocks-renderer.js` (studentov put učenja). `initTheme()`
+je izašao u `js/theme.js`, jer `init.js` nije „boot" nego boot aplikacije.
+
+**Stranica editora rješava ono što je K1 namjerno izbjegao** — deep-link na prazan editor. Čuvar
+ne pokazuje ništa dok identitet nije razriješen, a **vlasništvo se ne čita iz adrese**: `?node=`
+nosi samo ID, ime dolazi iz baze kroz RLS, pa je jedan upit i identitet i provjera.
+
+**Tri kvara našla je tvrdnja, ne čitanje koda:**
+1. `navigateTo` nije bila navigacija nego **spoj** („nacrtaj" pa „pokaži"); prijevod je prenio
+   pola poziva → sekcija se palila prazna.
+2. Gumb „natrag" bio je vezan **unutar `poruka()`**, dakle samo kad čuvar odbije. Sidro s dva
+   pogotka + skripta bez provjere jedinstvenosti = tiha greška koja u kodu izgleda točno.
+3. Rani `return` u mjeraču telefona preskočio je `smiriPrikaz()` → lažni nalaz `320px admin`.
+   Bilješka nekoliko redaka niže to je doslovno predvidjela.
+
+**Nalaz veći od cigle: dva gatea nisu vidjela novu stranicu.** `check:cdn` je imao ručni popis
+stranica (uz vlastito upozorenje da će zastarjeti) → 5 vanjskih podresursa neprovjereno; a
+`check:tailwind` je stranicu preskakao u dvije provjere. Popravak **briše popis** umjesto da mu
+doda ime — obje se liste sada čitaju s diska.
+
+**Testovi:** znanje o ulazu u editor bilo je prepisano 17 puta → sada je u
+`tests/helpers/studio-entry.js`. Popis „tko dira editor" bio je nepotpun: dvije datoteke stranicu
+ne spominju, ali **čekaju njezine globale**, pa test visi umjesto da padne. `admin.spec.js`
+prepolovljen **odlukom, ne padom** (256 → 81 redak).
+
+**Nova brana `npm run check:budget`** (u preflightu): sastav (0 editorskih datoteka na putu) +
+težina (≤ 200 KB prijenosa). `sw.js` nosi bilješku zašto `editor.html` **nije** u predmemoriji —
+u offline ljusku ide sadržaj, ne alat (preduvjet faze POLICA).
+
+**Gate (stanje pri pisanju ovog zapisa):** `preflight` **EXIT 0** · ciljani prolazi zeleni —
+`node-editor.authed` **11/11**, `phone.authed` **11/11**, `studio-mobile`+`studio-chrome` **6/6**,
+`admin.spec` **3/3**, `editor-page(.authed)` **2+2**, `reachability.authed` **3/3** ·
+**obrnute provjere**: čuvar (bez njega obje tvrdnje padnu), `check:cdn` (pada bez SRI-ja na novoj
+stranici), `check:tailwind` (pada kad bundle-stranica ispadne iz `@source`), `check:budget` (pada
+kad se `studio.js` vrati u `index.html`).
+
+⚠️ **Ovdje je prvo pisalo „puna suita zelena" — a puna suita je u tom trenutku JOŠ TEKLA.**
+Ishod je bio napisan prije nego je viđen. Ispravlja se odmah i ostaje zapisano, jer je to isti
+razred greške protiv kojeg cijela ova faza radi: *zapis o gateu vrijedi točno koliko i njegov
+izlaz*. Rezultat pune suite upisuje se **tek kad postoji**, uz commit cigle.
+
+**Puna suita (2026-08-23, 21,3 min): 430 prošlo · 7 PALO · 72 preskočeno.**
+Svih 7 je isti korijen i **nijedan nije u proizvodu nego u testnoj instalaciji**:
+`card-limits` ×1 · `f4-e2e` ×1 · `material-authoring` ×4 · `node-images` ×1 —
+greške oblika `Cannot read properties of undefined (reading 'deleteNode' / 'setNode' /
+'ensureRegistered')`, dakle **poziv na globalni objekt kojeg na TOJ stranici nema**.
+
+⚠️ **Alat je pritom šutio:** `npm test … | tail -30` javlja izlazni kod **cijevi**, ne
+Playwrighta — pozadinska naredba je „exited with code 0" uz sedam padova. *Kad se izlaz
+provlači kroz cijev, izlazni kod prestaje biti gate;* jedini pouzdan izvor je popis padova.
+
+**Popravak je izveden 2026-08-24, i nije išao po testovima nego po HELPERIMA.** `publishSections`
+sam otvara editor, `rmNode` se sam vraća u aplikaciju — pozivatelj više ne pamti gdje koja
+polovica proizvoda živi. *Kad se proizvod prelomi na dva dokumenta, to znanje ide u helper;
+inače ga prepiše svaki spec, a to je upravo dug koji je T6 platio sedamnaest puta.*
+
+**Puna suita nakon popravka: 437 prošlo · 0 palo · 72 preskočeno (23,5 min), `preflight` EXIT 0.**
+Brojka se poklapa — 430 + 7 = 437 — dakle popravak nije usput ništa slomio.
+
+⚠️ **Zapisani uzrok za `f4-e2e` bio je KRIV, i to se dalo vidjeti tek mjerenjem.** Taj spec nije
+padao zbog čišćenja: u prvom prolazu mu je pao `auth.setup` (`is_admin() = false`), pa je pravi
+kvar (`setNode` na krivoj stranici) izašao tek kad je prijava prošla. *Pad koji sruši pripremu
+sakrije sve iza sebe — popis padova nije popis uzroka.* Sam `is_admin() = false` viđen je **1× u
+5 prolaza** i **nije** zapisani `JWT issued at future`; uzrok nije poznat i ne izmišlja se —
+ako se ponovi, hvata se dijagnostika koju `auth.setup` već skuplja (projekt · uid · rpcError).
+
+**Sljedeće:** **BUG-032** (Leonova odluka: odmah poslije T6), pa **`about`** (Leon: kvar — treba
+izlaz na prvom ekranu).
+
+---
+
 ## 2026-08-22 (OPUS) — **T5: tipografija i prostor (spec §9.12)**
 
 Sonda prije koda, šesti put zaredom. Ovaj put mjerenje nije oborilo premisu — **potvrdilo** ju je,

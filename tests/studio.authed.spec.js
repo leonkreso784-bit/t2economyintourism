@@ -6,15 +6,12 @@
 // learn v1 kategorija → „Uredi kao blokove" (sigurna migracija content→legacy-html blok) → block-editor
 // se montira → dodaj blok kroz ＋ → draft-brojač raste → Odbaci. Jedan draft/publish engine (studioBridge).
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 /** Uđi u Studio i otvori te2 skriptu iz stabla. */
 async function openStudioLesson(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratStudio && !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('editor'));
+  await otvoriStudio(page);
   await page.waitForSelector('#editor-page.active #stTree .st-row');
   // rasklopi sve čvorove pa klikni te2 lekciju
   await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach(n => n.classList.add('open')); });

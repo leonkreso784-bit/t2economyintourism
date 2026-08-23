@@ -43,6 +43,19 @@ const spreman = (page) =>
  * suita pada kad se sadržaj promijeni, a to nije kvar navigacije.
  */
 async function idiNa(page, ime) {
+    // ⚠️ T6: editor i admin-preglednik VIŠE NISU stranice ove aplikacije nego VLASTITI
+    // DOKUMENT (`editor.html`) — 244 KiB editorskog koda otišlo je s posjetiteljeva puta.
+    // Do njih se zato ne ide `navigateTo`-om nego pravom navigacijom; a natrag u aplikaciju
+    // mora se otići izričito, jer `navigateTo` ondje postoji samo kao PRIJEVOD.
+    if (ime === 'editor' || ime === 'admin') {
+        await page.goto(ime === 'admin' ? '/editor.html?view=admin' : '/editor.html');
+        await page.waitForSelector(ime === 'admin' ? '#admin-page.active' : '#editor-page.active', { timeout: 30000 });
+        return;
+    }
+    if (page.url().includes('editor.html')) {
+        await page.goto('/');
+        await spreman(page);
+    }
     await page.evaluate((p) => {
         if (p === 'lessons' || p === 'study') {
             const s = Object.keys(subjectDataMap)[0];

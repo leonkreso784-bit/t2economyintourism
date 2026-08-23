@@ -1776,7 +1776,7 @@ može reći. Isti obrazac koji je projekt već zapisao tri puta (§7.9 boja · �
 | **T3** | **Vertikalni budžet kroma ≤ 20 %** | …na telefonu vidi sadržaj, a ne tri trake |
 | **T4** | **Cookie-banner na telefonu** — danas 24 % ekrana | …pri prvom posjetu vidi i ponudu i stranicu |
 | **T5** | **Tipografija i prostor na telefonu** — naslov danas lomi žuti isticaj nasred fraze („four" na kraju retka, „ways" na početku sljedećeg), podnaslov je 5 redaka, prije skrola se vide **jedna** vrata | …na prvom ekranu dobije razlog, ne samo naslov |
-| **T6** | **Editor s posjetiteljeva puta.** Izmjereno: **744,6 KiB u 41 skripti, 38 bez `defer`**, od toga **238,2 KiB (32 %) editorsko** u 6 datoteka. Vlastiti budžet projekta je 200 KB → **3,7×**. Uvjetno učitavanje + budžet kao gate. | …bez računa otvori landing i ne preuzme editor koji nikad neće vidjeti |
+| **T6 ✅** | **Editor s posjetiteljeva puta — ISPORUČENO 2026-08-23 (§9.13): vlastita stranica, 234 → 164 KiB mrežom, 7 → 0 editorskih datoteka, `check:budget` kao brana.** Izvorna bilješka: Izmjereno: **744,6 KiB u 41 skripti, 38 bez `defer`**, od toga **238,2 KiB (32 %) editorsko** u 6 datoteka. Vlastiti budžet projekta je 200 KB → **3,7×**. Uvjetno učitavanje + budžet kao gate. | …bez računa otvori landing i ne preuzme editor koji nikad neće vidjeti |
 
 > **T6 nije čišćenje nego preduvjet faze „POLICA"** — offline ljuska ne smije nositi editor
 > koji offline student nikad ne otvori. Zato je zadnji u TELEFONU, a ne izdvojen „kad god".
@@ -2783,3 +2783,142 @@ Preostalih **8** nalaza tvrdnje ④ nema više nijedan na landingu:
   klikom → **BUG-032**, vlastita cigla.
 - **4 × `about`** — jedna kontrola, na `y ≈ 1500`. **Čeka Leonovu odluku** (kvar ili proza),
   nepromijenjeno od T4.
+
+---
+
+### 9.13 T6 — editor s posjetiteljeva puta (isporučeno 2026-08-24)
+
+> ✅ **STANJE:** puna suita **437 / 0 palo / 72 preskočeno (23,5 min)**, `preflight` EXIT 0.
+> Sedam padova iz prvog prolaza bilo je u **testnoj instalaciji**, ne u proizvodu; popravak je
+> otišao u **helpere** (`publishSections` otvara editor, `rmNode` se vraća u aplikaciju), ne u
+> pojedine testove. Brojka se poklapa: 430 + 7 = **437**.
+
+**Zadnja cigla faze TELEFON.** Leonova odluka (2026-08-22) bila je najveća od ponuđenih:
+editor ne dobiva lijeno učitavanje nego **vlastitu stranicu**.
+
+#### Isporuka, u brojkama
+
+| | prije | poslije |
+|---|---|---|
+| posjetiteljev put, mrežom (gzip) | **234 KiB** | **164 KiB** ✅ ispod budžeta od 200 |
+| posjetiteljev put, sirovo | 755 KiB | 519 KiB |
+| skripti u `index.html` | 41 | **36** |
+| editorskih datoteka na putu | 7 | **0** |
+| stranica editora | — | 27 skripti · 152 KiB mrežom (plaća ju tko u nju uđe) |
+
+#### ⚠️ Nalaz koji je promijenio mjeru: „3,7× preko budžeta" bilo je u krivoj jedinici
+
+Plan (§9.3) je T6 opisao brojkom *„744,6 KiB … vlastiti budžet 200 KB → 3,7×"*. Ta je brojka
+izmjerena na **sirovim** bajtovima, a budžet dolazi iz Lighthouse-postavke iz F1, koja mjeri
+**prenesene** bajtove — dakle komprimirane. U ispravnoj jedinici zatečeno stanje nije bilo
+3,7× nego **1,17×**, a sam izlazak editora spušta ga **ispod** budžeta.
+
+*Brojka može biti točna i svejedno savjetovati krivo ako je u krivoj jedinici* — isti razred
+greške kao `palette:breakdown` (ondje je agregat mjerio točno, a preporučivao pet cigli umjesto
+jednog popodneva). Zato `check:budget` mjeri **prijenos**, a sirovo i dalje **ispisuje**: ono
+mjeri koliko preglednik mora parsirati, ali ne odlučuje.
+
+#### Rez nije išao po datoteci nego KROZ nju
+
+Sonda je oborila pretpostavku „sedam editorskih datoteka" **prije ijednog retka koda**:
+
+- **`admin.js` se nije dao preseliti cijel.** U njemu je, uz uređivanje, živjelo i „jesi li ti
+  admin" — a to aplikacija treba i kad editora nema, jer o tome ovisi otkrivanje jedine
+  `.admin-only` kartice (`js/profile.js`). Rez je zato prošao kroz datoteku: **`js/admin-reveal.js`
+  (3,2 KiB) ostaje, `js/admin.js` (42,8 KiB) seli.**
+- **`js/node-images.js` ostaje u aplikaciji** — traži ga `js/blocks-renderer.js` (potpisani URL-ovi
+  slika u vlastitom materijalu), dakle **studentov put učenja**, ne editor.
+- **`initTheme()` je izašao iz `js/init.js`** u `js/theme.js`: `init.js` nije „boot" nego **boot
+  aplikacije** (dvanaest inicijalizatora landinga, browsea i rutera), a editoru treba tema, ne
+  aplikacija. Kopija bi se razišla pri prvoj sljedećoj temi.
+
+*Dokaz da se pri cijepanju ništa nije izgubilo bio je brojanje kodnih redaka (bez komentara)
+stare datoteke protiv zbroja dviju novih: **700 prije, 700 poslije**, s točno jednom
+namjeravanom razlikom.*
+
+#### ⚠️ Stranica editora rješava problem koji je K1 NAMJERNO izbjegao
+
+`js/navigation.js` i danas nosi obrazloženje zašto editor **nema rutu**: *„deep-link na `#/admin`
+pokazao bi prazan admin bilo kome tko zna adresu"*, jer na hladnom startu sesija još nije
+razriješena. Vlastita stranica **jest** takva adresa — pa se problem više ne izbjegava nego se
+rješava: `js/editor-page.js` ne pokazuje editor dok identitet nije poznat, a nerazriješen
+identitet vodi natrag u aplikaciju.
+
+**Vlasništvo se NE čita iz adrese.** `?node=` nosi samo ID; ime materijala dohvaća se iz baze,
+gdje ga RLS izda isključivo vlasniku — pa je **jedan upit ujedno i identitet i provjera**, a
+prazan odgovor je odgovor *„nije tvoj"*. Da ime stiže URL-om, stranica bi tuđem linku vjerovala
+na riječ i ispisala tuđi tekst u vlastito sučelje.
+
+#### 🐞 Tri kvara koja je našla TVRDNJA, ne čitanje koda
+
+1. **`navigateTo` nije bila navigacija nego SPOJ** — „nacrtaj stranicu" pa „pokaži je"
+   (`navigation.js`, crtač ide prvi). Prvi prijevod na novoj stranici uzeo je samo drugu
+   polovicu, pa se sekcija palila **prazna** — dakle točno stanje protiv kojeg čuvar postoji,
+   samo kroz druga vrata. *Prijevod koji prenese pola poziva gori je od nijednog: pozivatelj
+   misli da je uspio.*
+2. **Gumb „natrag" bio je vezan unutar `poruka()`** — dakle **samo kad čuvar odbije**. Sidro
+   `var b = byId('edGuardBack')` postoji dvaput, a skripta koja ga je tražila nije provjeravala
+   jedinstvenost. Posljedica je bila tiha: slušač postoji, ali u grani koja se na uspješnom
+   putu nikad ne izvrši. Našla ga je sonda mjerenjem *„je li `goBack` uopće pozvan"*, jer je u
+   kodu izgledao točno.
+3. **Rani `return` u mjeraču telefona** preskočio je `smiriPrikaz()`, pa je brana prijavila
+   `320px admin · nijedna dohvatljiva kontrola` za stranicu koja je posve u redu. Bilješka
+   nekoliko redaka niže to je **doslovno predvidjela**: *„popravak koji nije generaliziran je
+   popravak koji čeka drugu priliku."*
+
+#### ⚠️ Dva gatea nisu vidjela novu stranicu — i to je bio nalaz veći od cigle
+
+Preflight je bio zelen, ali:
+
+| gate | rupa |
+|---|---|
+| `check:cdn` | **ručni popis stranica** → 5 vanjskih podresursa na `editor.html` (Font Awesome, KaTeX ×2, DOMPurify) stajalo je **neprovjereno**, uz uredno *„svi vanjski podresursi pinani i pod SRI"*. Popis je pritom nosio **vlastito upozorenje** da će zastarjeti. |
+| `check:tailwind` | `BUNDLE_PAGES = ['index.html']` → stranica preskočena u dvije provjere; utility napisan ondje Tailwind **ne bi ni generirao** (`@source`). |
+
+Popravak **ne dodaje ime u popis nego briše popis**: obje se liste čitaju s diska
+(*bundle-stranica je ona koja bundle doista učitava*). **Brana koja ovisi o tome da se netko
+sjeti nije brana nego bilješka.**
+
+#### ⚠️ Prolazna obavijest nije stranica
+
+Brana telefona prijavila je novi nalaz na admin-pregledniku (320 px). Uzrok nije bila nova
+stranica nego **`<sokrat-toast>`**: nakon obnove sesije auth javi „prijavljen si", toast na
+2,5 s sjedne preko sredine ekrana, a ondje je bila **jedina omogućena** kontrola. Mjerač zato
+čeka da obavijest ode — **ali samo do roka**: ostane li vidljiva, mjeri se s njom, jer trajni
+pokrivač **jest** kvar (isto načelo kao tvrdnja ⑧ iz T4).
+
+#### Testovi: 19 datoteka, i dvije koje ni na jednom popisu nisu bile
+
+Popis „tko dira editor" napravljen je po selektorima stranice (17 datoteka). Mjerenje je našlo
+**još dvije** (`material-authoring`, `node-images`) koje stranicu ne spominju, ali **čekaju
+njezine globale** (`window.SokratDraft`) — pa test ne padne s porukom nego **visi do isteka od
+dvije minute**. *Ovisnost nije samo „tko spominje" nego i „tko čeka".*
+
+Znanje o tome **gdje editor živi** sada je na jednom mjestu: `tests/helpers/studio-entry.js`
+(+ `idiNa()` u oba mjerača). Dotad je isti ulaz bio prepisan sedamnaest puta.
+
+**`tests/admin.spec.js` je prepolovljen ODLUKOM, ne padom** (256 → 81 redak). Pet tvrdnji
+počivalo je na premisi *„viewer se renderira i bez admin-sesije"*; otkad se do preglednika
+dolazi kroz čuvara, ta premisa **ne postoji po dizajnu**. To je **strože** ponašanje: dotad je
+svatko mogao pozvati `navigateTo('admin')` iz konzole i dobiti nacrtan preglednik (upis je i
+tada branio RLS — mijenja se dubina obrane, ne granica). Gdje je pokrivenost otišla, piše u
+zaglavlju same datoteke. Tvrdnja „#admin-page je skriven" zamijenjena je **jačom**: *aplikacija
+ga uopće nema*.
+
+#### Brana koja ovo drži: `npm run check:budget`
+
+Dvije provjere, i prva postoji zato što je druga brojka: ① **nijedna editorska datoteka nije na
+posjetiteljevu putu** (tvrdnja o **sastavu**) · ② ukupni prijenos ≤ 200 KB (tvrdnja o **težini**).
+Bez ①, budžet bi se dao ispuniti i minifikacijom editora — a cigla nije bila „smanji bajtove"
+nego *„alat koji posjetitelj nikad ne otvori ne smije mu ni stići"*. U preflightu.
+
+**`sw.js` nosi bilješku zašto `editor.html` NIJE u predmemoriji**: offline ljuska je ono što
+student nosi sa sobom, a editor offline ionako ne radi (traži Supabase). Precachirati ga značilo
+bi vratiti ga svima kroz druga vrata — i to je ujedno preduvjet faze POLICA (*u ljusku ide
+SADRŽAJ, ne alat*).
+
+#### Što je time zatvoreno
+
+**Faza TELEFON je ispunjena** (T0–T6). Usput pada i BACKLOG-stavka *„landing šalje editorski kod
+posjetitelju bez računa"*, otvorena od C3 — s tom razlikom da sada ima **gate**, pa se ne može
+tiho vratiti.

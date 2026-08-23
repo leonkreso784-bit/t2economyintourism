@@ -117,7 +117,8 @@ function navigateTo(page, data = {}) {
     AppState.nav.page = page;
     // Profile/Admin/Editor/Materials se NE spremaju kao "last position" (ovise o auth sesiji / admin
     // statusu koji na reloadu još nisu spremni — obnova bi otvorila prazan ekran; usp. BUG-023).
-    if (page !== 'profile' && page !== 'admin' && page !== 'editor' && page !== 'materials') saveCurrentPosition(page, data);
+    // T6: editor i admin-preglednik više nisu stranice ove aplikacije (v. `editor.html`).
+    if (page !== 'profile' && page !== 'materials') saveCurrentPosition(page, data);
 
     document.querySelectorAll('.landing-page, .browse-page, .lessons-page, .study-page, .about-page, .materials-page, .profile-page, .admin-page, .studio-page').forEach(p => {
         p.classList.remove('active');
@@ -165,18 +166,6 @@ function navigateTo(page, data = {}) {
         case 'profile':
             if (typeof renderProfilePage === 'function') renderProfilePage();
             document.getElementById('profile-page').classList.add('active');
-            break;
-        case 'admin':
-            // F4.3b: read-only content viewer. Ulaz je admin-only (skriveni gumb); write (F4.3c) je RLS-zaštićen.
-            if (typeof renderAdminPage === 'function') renderAdminPage();
-            document.getElementById('admin-page').classList.add('active');
-            closeSidebar();
-            break;
-        case 'editor':
-            // U8: novi vizualni editor „Studio" (#editor-page). Admin-only ulaz; koegzistira sa #admin-page.
-            if (typeof renderStudioPage === 'function') renderStudioPage();
-            document.getElementById('editor-page').classList.add('active');
-            closeSidebar();
             break;
     }
 
@@ -227,7 +216,7 @@ const MATERIALS_ROUTE = '#/materials';   // C0 · zadržana doslovno — vanjski
  * Za te tri stranice adresa se ČISTI, ali kroz `pushState` — v. upozorenje u `syncRoute`.
  * Time „natrag" iz Studija vraća na materijale, odakle se i ušlo.
  */
-const UNROUTED_PAGES = ['profile', 'admin', 'editor'];
+const UNROUTED_PAGES = ['profile'];
 
 /** Stanje aplikacije → adresa. `null` = stranica nema rutu (v. `UNROUTED_PAGES`). */
 function routeFor(page, data) {
@@ -361,13 +350,11 @@ function roditeljOd(page, nav) {
     switch (page) {
         case 'study':   return cvor ? { page: 'materials', data: {} } : { page: 'lessons', data: { subject: subjekt } };
         case 'lessons': return cvor ? { page: 'materials', data: {} } : { page: 'browse', data: {} };
-        case 'admin':   return { page: 'profile', data: {} };
-        // K2b: editor je dosad bio JEDINA stranica čijeg roditelja ova funkcija NIJE znala —
-        // Studio ga je prosljeđivao ručno (`goBack('materials'|'profile')`). Dok je „natrag"
-        // bio jedini čitatelj, to je prolazilo; čim mrvicu crta ista hijerarhija, dva izvora
-        // znaju se raziĆi i pokazati različit put od onoga kamo gumb vodi. Zato Studio sada
-        // upisuje kontekst u `AppState.nav.editorNode`, a hijerarhija ostaje na JEDNOM mjestu.
-        case 'editor':  return (nav && nav.editorNode) ? { page: 'materials', data: {} } : { page: 'profile', data: {} };
+        // ⚠️ T6: editor i admin-preglednik VIŠE NISU STRANICE OVE APLIKACIJE — od tada žive
+        // na `editor.html`, pa im ovdje nema ni roditelja ni imena. Povratak iz editora nije
+        // izgubljen nego je postao ono što i jest: povijest preglednika između dva dokumenta
+        // (v. `goBack` u `js/editor-page.js`). K2b-ov nalog — hijerarhija na JEDNOM mjestu —
+        // stoji i dalje; ova je funkcija i dalje to jedno mjesto, samo za sedam stranica.
         default:        return { page: 'landing', data: {} };
     }
 }
@@ -447,15 +434,11 @@ function nazivStranice(page, nav) {
         case 'browse':    return _pt('topbar.subjects', 'Subjects');
         case 'materials': return _pt('materials.title', 'My materials');
         case 'profile':   return _pt('profile.title', 'My Profile');
-        case 'admin':     return _pt('admin.title', 'Admin');
         case 'about':     return _pt('topbar.about', 'About');
         case 'lessons':   return _nazivPredmeta(nav && nav.subject) || _pt('topbar.subject', 'Subject');
         case 'study':     return _nazivLekcije(nav && nav.subject, nav && nav.lesson)
                               || _nazivPredmeta(nav && nav.subject)
                               || _pt('topbar.study', 'Study');
-        case 'editor':    return (nav && nav.editorNode && nav.editorNode.name)
-                              ? nav.editorNode.name
-                              : _pt('topbar.studio', 'Studio');
         default:          return '';
     }
 }

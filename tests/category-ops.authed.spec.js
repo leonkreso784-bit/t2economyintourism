@@ -5,6 +5,8 @@
 // SVE ostaje u DRAFTU (nikad se ne objavljuje) → staging DB je NETAKNUT; provjeravamo da editor-ops
 // (addCategory/updateCategory/reorderCategories/removeCategory) ispravno mijenjaju working-render.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAdminPreglednik } = require('./helpers/studio-entry');
 
 // Dijeljeni prefiks (uvijek nalazi test-kategoriju bez obzira na rename); orig/renamed su distinktni.
 const PREFIX = 'U6DKAT';
@@ -13,12 +15,7 @@ const NAME2 = PREFIX + '-renamed';
 
 /** Otvori admin → te2 + prva lekcija → uđi u draft-mod (isti helper kao publish-rpc/admin-detect spec). */
 async function openLessonInDraftMode(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
   await page.evaluate(() => {
     const sel = document.getElementById('adminSubjectSel');

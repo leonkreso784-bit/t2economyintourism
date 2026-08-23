@@ -23,13 +23,15 @@
 // Popravak zato nosi dvije klase. ⚠️ Istu sam grešku ponovio u samom popravku, na kvaki
 // ladice — uhvatila ju je sonda, ne oko.
 const { test, expect } = require('@playwright/test');
+// T6: Studio je vlastiti dokument — ulaz zna helper.
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 const TELEFON = { width: 390, height: 844 };
 
+// T6: do tada je ovo bio odlazak na `/` pa `navigateTo('editor')`. Sada je Studio
+// vlastita adresa, a čuvar sam provjeri admin-status — pa je cijela priprema jedan poziv.
 async function spremanStudio(page) {
-    await page.goto('/');
-    await page.waitForFunction(() => !!window.SokratStudio && !!window.SokratAdmin && typeof window.navigateTo === 'function');
-    await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
+    await otvoriStudio(page);
 }
 
 /** Mjere ljuske — jedino što ovi testovi smiju tvrditi. */
@@ -52,9 +54,10 @@ test('čvor-mod na telefonu: panel materijala NESTAJE, canvas dobiva ekran', asy
     await page.setViewportSize(TELEFON);
     await spremanStudio(page);
 
+    // ⚠️ Čvor je i dalje LAŽAN (sadržaj nije predmet ovog testa) — mjeri se RASPORED u
+    // čvor-modu. Do T6 se mod postavljao kroz `AppState.nav.editorNode`; sada ga postavlja
+    // sam `openNode`, jer je hijerarhija editora otišla sa stranicom.
     await page.evaluate(() => {
-        AppState.nav.editorNode = { id: 'proba', name: 'Proba' };
-        navigateTo('editor');
         if (window.SokratStudio && window.SokratStudio.openNode) {
             try { window.SokratStudio.openNode('proba', 'Proba'); } catch (e) { /* sadržaj nije predmet ovog testa */ }
         }
@@ -80,8 +83,6 @@ test('čvor-mod na telefonu: panel materijala NESTAJE, canvas dobiva ekran', asy
 test('katalog-mod na telefonu: stablo je LADICA — zatvorena ne postoji, otvorena ne gura canvas', async ({ page }) => {
     await page.setViewportSize(TELEFON);
     await spremanStudio(page);
-    await page.evaluate(() => navigateTo('editor'));
-    await page.waitForSelector('#editor-page.active');
     await page.waitForSelector('#stTree .st-row', { state: 'attached' });
 
     const zatvoreno = await mjere(page);
@@ -117,8 +118,6 @@ test('stolno računalo je NEDIRNUTO: stablo je stalni stupac, kvake nema', async
     // gdje je ono glavni način rada — a nijedan drugi spec to ne mjeri.
     await page.setViewportSize({ width: 1280, height: 800 });
     await spremanStudio(page);
-    await page.evaluate(() => navigateTo('editor'));
-    await page.waitForSelector('#editor-page.active');
     await page.waitForSelector('#stTree .st-row', { state: 'attached' });
 
     const m = await mjere(page);

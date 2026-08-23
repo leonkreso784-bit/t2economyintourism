@@ -6,6 +6,8 @@
 // dodane kartice dobiju svjež stabilni id (addCard/_structAdd) → reorder-by-id radi neovisno o tome
 // imaju li stari staging-te2 payloadi id-jeve. Provjeravamo da item-ops (add/reorder/remove) mijenjaju render.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAdminPreglednik } = require('./helpers/studio-entry');
 
 const PREFIX = 'U6EITEM';
 const CAT = PREFIX + '-cat';
@@ -13,12 +15,7 @@ const A = PREFIX + '-A', B = PREFIX + '-B', C = PREFIX + '-C';
 
 /** Otvori admin → te2 + prva lekcija → uđi u draft-mod (isti helper kao category-ops/publish-rpc spec). */
 async function openLessonInDraftMode(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
   await page.evaluate(() => {
     const sel = document.getElementById('adminSubjectSel');
