@@ -813,8 +813,8 @@ sokrat-modal.image-modal > * {
 
 @media (orientation: landscape) {
     #learn .learn-container {
-        padding-left: max(14px, env(safe-area-inset-left, 0px));
-        padding-right: max(14px, env(safe-area-inset-right, 0px));
+        padding-left: max(14px, var(--safe-left));
+        padding-right: max(14px, var(--safe-right));
     }
 }
 

@@ -30,6 +30,41 @@
     overflow-x: clip;
 }
 
+/* ── PODLOGA (cigla D) ────────────────────────────────────────────────
+   Tri sloja, redom odozgo: ZRNO · jedan ODSJAJ u boji teme · KARIRANI PAPIR
+   u dvije skale. Materijal na kojem se uči, ne ukras.
+
+   ⚠️ PRVI POKUŠAJ JE ODBAČEN NAKON RENDERIRANJA (spec §7.13): bila je „aurora"
+   od pet boja predmeta i ispala je generička duga preko cijele stranice — točno
+   ono što ima svaki generirani hero. BOJE PREDMETA PRIPADAJU PLOČICAMA, gdje
+   nešto znače; u pozadini samo galame. Zato je odsjaj JEDAN i u boji TEME.
+
+   ⚠️ ZRNO NIJE OPCIONALNO. Bez njega je ploha plastika; s njim je pigment na
+   papiru. Radi se o ~3,5 % neprozirnosti — ako se čini nevidljivim, radi.
+
+   Sve tri boje idu kroz `color-mix` NAD TOKENIMA, pa podloga prati temu sama.
+   Nijedna vrijednost nije zakucana (tvrda zabrana #3: zakucana tamna ploha bi
+   na svijetloj temi dala tamno-na-tamnom). SVG zrna nema nijedan hex.
+
+   Slojevi su na `.landing-page`, ne na `::before` s `z-index: -1`: taj bi
+   pobjegao IZA `body` pozadine i nestao, jer `.landing-page` ne stvara kontekst
+   slaganja. Provjereno, ne pretpostavljeno. */
+.landing-page.active {
+    background-color: var(--color-surface-0);
+    background-image:
+        /* 1 · zrno — fractalNoise, bez ijedne boje u sebi */
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='z'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23z)' opacity='0.035'/%3E%3C/svg%3E"),
+        /* 2 · JEDAN odsjaj, u boji teme, gore-lijevo iza heroja */
+        radial-gradient(58rem 38rem at 12% -8%, color-mix(in srgb, var(--color-brand-500) 13%, transparent), transparent 68%),
+        /* 3 · papir, krupna skala (64px) */
+        repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 5%, transparent) 0 1px, transparent 1px 64px),
+        /* 4 · papir, fina skala (16px) */
+        repeating-linear-gradient(to right, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px),
+        repeating-linear-gradient(to bottom, color-mix(in srgb, var(--color-ink-0) 2.5%, transparent) 0 1px, transparent 1px 16px);
+    background-attachment: fixed, fixed, scroll, scroll, scroll, scroll;
+}
+
 /* Uska kolona, isti rub za sve tri sekcije i podnožje. */
 .landing-wrap {
     width: 100%;
@@ -41,27 +76,12 @@
 .landing-main {
     flex: 1;
     width: 100%;
-    padding-block: clamp(2.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
+    /* ⚠️ T5 · donja granica 2.5rem → 1.5rem: na 320 px je gornji zrak bio 40 px,
+       a cijeli hero je ondje morao stati u 316 px. Iznad ~570 px širine ju 7vw
+       ionako pregazi, pa se 768 ni 1280 ne pomiču (uvjet cigle). */
+    padding-block: clamp(1.5rem, 7vw, 5rem) clamp(3rem, 8vw, 5rem);
 }
 
-/* ── Traka ────────────────────────────────────────────────────────────
-   Sticky + poluprozirna: sadržaj ispod ostaje naslućen, kao materijal, a ne
-   kao ploča. `color-mix` umjesto `rgba()` — inače bi boja bila zakucana i
-   tema je ne bi mogla promijeniti. */
-.landing-nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.85rem clamp(1rem, 4vw, 2.5rem);
-    border-bottom: 1px solid var(--color-line);
-    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-}
 
 .landing-logo {
     display: flex;
@@ -72,9 +92,19 @@
     min-width: 0;
 }
 
+/* ⚠️ ZNAK SE NE PREPRAVLJA — DOBIVA PROSTOR (Leon, izričito: „sokrat logo je
+   nezamjenjiv"; moja zamjenska silueta je odbijena i to je bila ispravna odluka).
+   Znak je tri puta prijavljen kao premalen, a dijagnoza „treba ga precrtati" bila
+   je kriva: `logo.svg` je traceana ilustracija, koja na 32 px nužno postaje mrlja.
+   Na 42 px se lice vidi. Traka 54 → 64 px, znak 32 → 42, wordmark 17 → 18,5.
+
+   Znak pritom zadržava VLASTITI INDIGO kroz sve četiri teme — CSS ga ne preboja.
+   Na papiru i menti bit će jedina indigo stvar na stranici, i to nije nedosljednost
+   nego konstanta marke: znak definira boju marke, ne obrnuto. Od 2026-08-16 to
+   čuva `check:contrast` (nijedna boja predmeta ne smije biti unutar 25° od njega). */
 .landing-logo .logo-image {
-    width: 2rem;
-    height: 2rem;
+    width: 2.625rem;                /* 42px */
+    height: 2.625rem;
     border-radius: var(--radius-sm);
     display: block;
     flex-shrink: 0;
@@ -82,92 +112,177 @@
 
 .landing-logo .logo-text {
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.156rem;            /* 18,5px */
     font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--color-ink-0);
     white-space: nowrap;
 }
 
-/* Ispod 480px wordmark odlazi — znak sam nosi identitet, a traka dobiva zrak
-   koji CTA-u treba (layout-guard mjeri baš to). */
+/* K2b: `.landing-nav` je obrisana zajedno s vlastitom trakom landinga — traku sada nosi
+   globalni `css/topbar.css`. `.landing-logo` OSTAJE jer ga i dalje koristi podnozje
+   (`.footer-brand .landing-logo`, index.html), pa se ispod 480px skriva njegov wordmark.
+   ⚠️ Ovdje su nakon brisanja ostala DVA VISJECA SELEKTORA bez bloka
+   (`.landing-nav .lang-toggle,`) — nedovrseno pravilo proguta sljedece (BUG-001/BUG-002).
+   Zato se grupirani selektori ne brisu regexom po jednom clanu grupe. */
 @media (max-width: 30rem) {
     .landing-logo .logo-text { display: none; }
 }
 
-.landing-nav .lang-toggle,
-.landing-nav .nav-auth-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font: inherit;
-    font-size: 0.875rem;
-    line-height: 1;
-    color: var(--color-ink-2);
-    background: none;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    padding: 0.5rem 0.65rem;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.landing-nav .nav-auth-btn { border-color: var(--color-line); color: var(--color-ink-1); }
-
-.landing-nav .lang-toggle:hover,
-.landing-nav .nav-auth-btn:hover {
-    color: var(--color-ink-0);
-    background: var(--color-surface-1);
-}
-
-.landing-nav .nav-cta {
-    font: inherit;
-    font-size: 0.875rem;
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    color: var(--color-on-brand);   /* NIKAD `white` — §7.7, tvrda brana u check:palette */
-    background: var(--color-brand-500);
-    border: 1px solid var(--color-brand-500);
-    border-radius: var(--radius-full);
-    padding: 0.6rem 1.1rem;
-    cursor: pointer;
-}
-
-.landing-nav .nav-cta:hover {
-    background: var(--color-brand-400);
-    border-color: var(--color-brand-400);
-}
 
 /* ── Hero ─────────────────────────────────────────────────────────────
-   Veličine naslova i razmaci su utilityji u markupu; ovdje samo ono što
-   utility ne pokriva. */
+
+   ⚠️ T5 · TIP I RITAM HEROJA VIŠE NISU UTILITYJI U MARKUPU — i to je jedina
+   iznimka od pravila C1/C2 („veličine i razmaci su utilityji"). Razlog je
+   IZMJEREN, ne stilski: hero je do danas koštao **jednako 444 px na svakom
+   telefonu** (od vrha nadnaslova do vrha vrata). To je 444 od 803 px
+   upotrebljive visine na Pro Maxu — sasvim u redu — i **444 od 316 px na
+   iPhoneu SE, dakle 140 %**. Trošak je bio konstanta, a prostor varijabla.
+
+   ⚠️ **Utility-ljestvica se stepenasto mijenja po ŠIRINI, a ovdje oskudijeva
+   VISINA.** Polegnut telefon (852 × 393) je po širini „desktop" → dobivao je
+   `md:text-5xl` = 60 px naslova na ekranu koji za cijeli hero ima 256 px.
+   Dvoosna veličina se utilityjem ne da napisati, pa cijela stoji ovdje.
+
+   ⚠️ **Pragovi ≥ 768 px vraćaju TOČNO današnje tokene** (`--text-5xl`,
+   `--text-6xl`, `4rem`), jer T5 je cigla o TELEFONU: desktop se ne smije
+   pomaknuti ni za piksel — dokazano A/B-om protiv HEAD-a (**0 razlika na 768 i
+   1280 px**). ⚠️ `css:diff` to ovdje NE MOŽE reći: presreće samo stylesheet, a
+   markup uzima iz radnog stabla, pa mu je referenca stranica koja nikad nije
+   postojala (spec §9.12). Gornje granice
+   `clamp()`-ova su namjerno jednake današnjim vrijednostima (`3rem` = stari
+   `text-4xl`, `3rem` = stari `mt-12`), pa je prijelaz na prag bešavan. */
+
 .hero-kicker {
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-ink-2);
-    margin-bottom: 1.1rem;
+    /* Gornja granica = današnjih 1.1rem, dosegnuta na 600 px. */
+    margin-bottom: clamp(0.7rem, 0.35rem + 2vw, 1.1rem);
 }
 
 .hero-title {
     max-width: 18ch;
     text-wrap: balance;
+    /* 320 px → 32 px · 768 px → 48 px (= stari `text-4xl`, bešavno u `md:`). */
+    font-size: clamp(2rem, 1.28rem + 3.58vw, 3rem);
+    line-height: 1.1;
 }
 
-@media (min-width: 48rem) { .hero-title { max-width: 22ch; } }
+@media (min-width: 48rem) {
+    .hero-title {
+        max-width: 22ch;
+        font-size: var(--text-5xl);
+        line-height: var(--text-5xl--line-height);
+    }
+}
+
+@media (min-width: 64rem) {
+    .hero-title {
+        font-size: var(--text-6xl);
+        line-height: var(--text-6xl--line-height);
+    }
+}
+
+.hero-sub {
+    /* Bio je fiksnih 1.25rem (`mt-5`) usred heroja u kojem je SVE ostalo fluidno —
+       jedina konstanta među varijablama. Gornja granica je ista, dosegnuta na ~690 px. */
+    margin-top: clamp(0.85rem, 0.5rem + 1.75vw, 1.25rem);
+    /* 320 px → 16 px · ≥ 720 px → 18 px (= stari `text-lg`). Na 320 px je
+       18 px značilo PET redaka u stupcu od 288 px; 16 px ih daje četiri. */
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    line-height: 1.6;
+}
 
 /* MARKER umjesto gradijentnog naslova. Podvučeno je 58% visine retka — potez
    flomasterom preko riječi, ne ispuna. `box-decoration-break` drži potez
-   ispravnim kad se riječ prelomi u dva retka; bez njega drugi redak ostane gol. */
+   ispravnim kad se riječ prelomi u dva retka; bez njega drugi redak ostane gol.
+
+   ⚠️ T5 · OVDJE JE PRVO STAJAO `white-space: nowrap`, I OBRNUTA PROVJERA GA JE
+   ODBACILA. Spec je kvar imenovao točno (potez se lomio NASRED FRAZE — „four" na
+   kraju retka, „ways" na početku sljedećeg), pa je `nowrap` zvučao kao ispravak.
+   Mjerenje kaže drugo: s maknutim `nowrap`-om fraza ostaje cijela na SVIM mjerenim
+   širinama i u OBA jezika — jer ju je držao naslov sveden na stupac, ne to pravilo.
+   **Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže
+   da bez njega pada.**
+   Uz to je `nowrap` bio i LOŠIJI: fraza dulja od stupca se s njim ne bi prelomila
+   nego PRELILA — kvar gori od onog koji smo popravljali. Bez njega je najgori ishod
+   prelom, koji `box-decoration-break: clone` ionako crta ispravno.
+   Ishod čuva tvrdnja u `tests/landing.spec.js` (jedan redak, oba jezika, i 320 px). */
+/* ⚠️ `nowrap` JE OVDJE ISPRAVAN, IAKO GA JE T5 ODBACIO — odbacio ga je bez mjerenja.
+   Zapisano je bilo: „nowrap bi prelom pretvorio u PRELIJEVANJE, dakle u gori kvar."
+   Mjerenje (320/375/393/430 px × oba jezika) kaže suprotno: najšira varijanta („četiri
+   načina") troši **58 % stupca** — 166,9 od 288 px na najužem ekranu, dakle 121 px zalihe.
+   Prelijevanje nije moguće; fraza se uvijek pomakne u sljedeći redak kao CJELINA.
+   Pravi mehanizam kvara nije bila širina fraze nego njezin POLOŽAJ: marker stoji usred
+   naslova, pa ga prelom naslova može prepoloviti i kad sam lako stane. Na Linuxu se font
+   crta ~4 px šire → prelom naslova padne drugdje → marker preko dva retka. Lokalno se to
+   ne vidi nikad, a u CI-ju svaki put (5 padova na 4 profila).
+   Brana koja to čuva ostaje: `landing.spec.js` i dalje traži da marker NIJE širi od stupca,
+   pa ako mu netko digne tip preko zalihe, `nowrap` se prijavi sam. *Par „nowrap + tvrdnja o
+   prelijevanju" je samočuvajući; nijedno od toga dvoje samo nije.* */
 .hero-mark {
+    white-space: nowrap;
     font-style: normal;
     color: var(--color-ink-0);
     background: linear-gradient(to top, var(--color-mark) 0 58%, transparent 58%);
     padding-inline: 0.08em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
+}
+
+/* ⚠️ T5 · NIZAK EKRAN JE DRUGA OSKUDICA, PA I DRUGO PRAVILO — isti rez kao T3
+   (`max-height: 519px`), i iz istog razloga: portret i polegnut telefon nemaju
+   isti manjak. Ovdje je manjak REDAK: 852 × 393 ima 784 px stupca i 256 px
+   visine, pa ga svaki prelomljeni redak košta 12 % ekrana.
+   ⚠️ `<br>` u naslovu je PORTRETNA odluka — na 784 px stupca cijeli naslov
+   stane u jedan redak, pa ondje forsirani prelom troši cijeli redak ni za što. */
+@media (max-height: 519px) {
+    /* ⚠️ `br` i `max-width` su OVDJE JEDNO PRAVILO, ne dva. Sonda je prvo pokazala da
+       sakriveni `<br>` ne mijenja ni piksel — jer strop od 22ch (455 px) naslov svejedno
+       lomi u dva retka. **Napisao sam bio pola pravila**, a pola pravila mjeri se kao mrtvo
+       slovo: tek kad padne i strop, naslov je jedan redak (79 → 40 px, vrata 263 → 223).
+       Strop je mjera ČITLJIVOSTI reda; u polegnutom telefonu red je 33 znaka, dakle unutar
+       ugodne mjere i bez stropa. */
+    .hero-title { font-size: var(--text-3xl); line-height: 1.1; max-width: none; }
+    .hero-title br { display: none; }
+    .hero-sub { margin-top: 0.75rem; font-size: 1rem; line-height: 1.5; }
+    .hero-kicker { margin-bottom: 0.5rem; }
+}
+
+/* ⚠️ T5 JE NAPRAVIO PRAVILO ZA NIZAK EKRAN, ALI SAMO ZA POLEGNUTI (`max-height: 519px`).
+   Njegovo je načelo bilo točno — *„ljestvica se mijenja po ŠIRINI, a telefonu nedostaje
+   VISINA"* — ali je 568 px portreta ostao iznad praga i dobio puni ritam. Mjereno na
+   320 × 568 pod uvjetima brane (otok 59 px, traka privole vidljiva):
+
+       kromo 123 · pt 24 · kicker 16 (+12) · naslov 70 (+14) · podnaslov 51 (+28) · vrata 160
+       → središte prvih vrata y = 418, pojas do y = 439  ⇒  ZALIHA 21 px
+
+   Dvadeset i jedan piksel je 3,7 % ekrana. Toliko pojede već i drugi crtač fonta: na
+   Linuxu je traka privole 145 px umjesto 129, pa je ista tvrdnja ondje PADALA dok je
+   lokalno bila zelena. *Tvrdnja koja prolazi s 3,7 % rezerve ne mjeri ispravnost nego
+   sreću.*
+
+   Reže se ISKLJUČIVO PRAZAN PROSTOR — nijedno slovo, nijedna kontrola, nijedan tip:
+   četiri razmaka. Izmjereno poslije: središte **418 → 395**, zaliha **21 → 44 px** (7,7 %
+   ekrana, dvostruko više nego prije). Prag je **700 px, isti koji T3 već koristi** za `--topbar-h` — jedan
+   dogovoreni broj u kući umjesto drugog izmišljenog. `orientation: portrait` drži ovo
+   pravilo i pravilo za polegnuti telefon razdvojenima, pa se ne mogu sudariti. */
+@media (max-height: 700px) and (orientation: portrait) {
+    .landing-main { padding-block-start: 0.75rem; }
+    .hero-kicker { margin-bottom: 0.375rem; }
+    .doors { margin-top: 1rem; }
+
+    /* ⚠️ TIP SE OVDJE SMANJUJE ZATO ŠTO HERO RASTE U KORACIMA CIJELOG RETKA (+35 px),
+       a ne glatko. Sonda (letter-spacing kao zamjena za tuđi crtač fonta) pokazala je
+       da zaliha od 44 px padne na 9 već pri +0,01em i probije pri +0,02em — dakle
+       rezanje razmaka samo po sebi ne kupuje ono što treba, a treba REDAK.
+       Ovdje se ne miče nijedno slovo sadržaja, samo mjera: 32 → 28 px naslov,
+       16 → 15 px podnaslov. Iznad 700 px visine sve ostaje točno kako je bilo. */
+    .hero-title { font-size: 1.75rem; }
+    .hero-sub { margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.5; }
 }
 
 /* ── Dvoje vrata ──────────────────────────────────────────────────────
@@ -178,9 +293,22 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1rem;
+    /* ⚠️ T5 · bio je utility `mt-12 md:mt-16` (48/64 px). Razmak do vrata je
+       najskuplji prazan prostor stranice — on je jedino što stoji između
+       RAZLOGA i RADNJE. Gornja granica = današnjih 3rem, prag ispod vraća
+       točno `mt-16`. */
+    margin-top: clamp(1.75rem, 1rem + 3.5vw, 3rem);
 }
 
 @media (min-width: 44rem) { .doors { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 48rem) { .doors { margin-top: 4rem; } }
+
+/* Nizak ekran — obrazloženje uz `max-height` pravilo heroja gore. Stoji IZA praga
+   od 48rem jer ga na 852 × 393 mora pobijediti (ista specifičnost → redoslijed). */
+@media (max-height: 519px) {
+    .doors { margin-top: 1.25rem; }
+    .landing-main { padding-block: 1rem 1.5rem; }
+}
 
 .door {
     display: block;
@@ -233,17 +361,127 @@
     border-top-color: color-mix(in srgb, var(--color-on-brand) 22%, transparent);
 }
 
+/* ── Katalog: tražilica i filtar programa ─────────────────────────────
+   Namjerno TIHI: alat, ne obrazac. Boju ne nose — jedina zasićena stvar u
+   ovoj sekciji su pločice predmeta, gdje boja nešto ZNAČI (§7.13). */
+.cat-tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 0.9rem;
+}
+
+.cat-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 14rem;
+    min-width: 0;              /* inače `flex-basis` ne da polju da se skupi ispod 320px */
+}
+
+.cat-search > i {
+    position: absolute;
+    inset-inline-start: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--color-ink-2);
+    pointer-events: none;
+}
+
+.cat-search-input {
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--color-ink-0);
+    padding: 0.5rem 0.75rem 0.5rem 2.1rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease;
+}
+
+.cat-search-input::placeholder { color: var(--color-ink-2); }
+.cat-search-input:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+/* Chromeov ugrađeni „×" na `type=search` nosi vlastitu boju koja ne poznaje temu. */
+.cat-search-input::-webkit-search-cancel-button { filter: grayscale(1) opacity(0.55); }
+
+.cat-programs { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+.cat-program {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    font: inherit;
+    font-size: 0.82rem;
+    cursor: pointer;
+    color: var(--color-ink-1);
+    padding: 0.42rem 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+    transition: border-color 0.18s ease, color 0.18s ease, background 0.18s ease;
+}
+
+.cat-program:hover:not([aria-pressed="true"]) { border-color: var(--color-ink-2); color: var(--color-ink-0); }
+
+/* Odabrani program: ploha ostaje NEUTRALNA, mijenja se rub i težina teksta.
+   Ispuna markom tražila bi `--on-primary` i otvorila razred kvarova iz tvrde
+   zabrane #1 — a ovdje ništa ne dobiva. */
+.cat-program[aria-pressed="true"] {
+    color: var(--color-ink-0);
+    font-weight: 600;
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-2);
+}
+
+.cat-program-n {
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-ink-2);
+}
+
+.cat-program[aria-pressed="true"] .cat-program-n { color: var(--color-ink-1); }
+
+.cat-count {
+    min-height: 1.25rem;       /* rezerviran redak: brojka koja se pojavi ne smije poskočiti mrežu */
+    margin: 0.75rem 0 0;
+    font-size: 0.82rem;
+    color: var(--color-ink-2);
+}
+
 /* ── Katalog ──────────────────────────────────────────────────────────
    Kartice crta `renderLandingSubjects()`; boja predmeta dolazi kao
    `--card-accent` u `style`, jer ADR-028 zabranjuje sastavljene klase. */
-.landing-subjects {
+.landing-subjects-grid {
     display: grid;
     gap: 0.75rem;
     grid-template-columns: 1fr;
 }
 
-@media (min-width: 34rem) { .landing-subjects { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 64rem) { .landing-subjects { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 34rem) { .landing-subjects-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 64rem) { .landing-subjects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* Naslov programa — samo kad nije odabran nijedan (v. `groupedLandingSubjects()`).
+   HR program je KLON EN-a (ADR-012), pa ravna mreža stavlja „Management" uz
+   „Menadžment" i sedam takvih parova čita kao duplikati. Naslov im daje razlog.
+   Namjerno TIH: sitan, verzalan, boje pomoćnog teksta — orijentir, ne sekcija. */
+.cat-group {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    margin: 0 0 0.75rem;
+}
+
+/* Prvi naslov nosi razmak od trake s filtrima; svaki sljedeći odvaja grupe. */
+.landing-subjects > .cat-group + .landing-subjects-grid { margin-bottom: 1.75rem; }
+.landing-subjects > .landing-subjects-grid:last-child { margin-bottom: 0; }
 
 .landing-subject-card {
     display: flex;
@@ -296,6 +534,176 @@
 .landing-subject-arrow { font-size: 0.8rem; color: var(--color-ink-2); flex-shrink: 0; }
 .landing-subject-card:hover .landing-subject-arrow { color: var(--color-ink-0); }
 
+/* ➕ POSLJEDNJA PLOČICA (§7.13) — jedina koja kaže da katalog nije zatvoren popis.
+   Isprekidan rub i ploha bez ispune: čita se kao PRAZNO MJESTO koje čeka, a ne kao
+   još jedan predmet. Zato NEMA boju — boja u ovoj mreži znači „postoji gradivo". */
+.landing-subject-card--make {
+    border-style: dashed;
+    background: transparent;
+}
+
+.landing-subject-card--make:hover {
+    border-style: dashed;
+    border-color: var(--color-ink-0);
+    background: var(--color-surface-1);
+}
+
+.landing-subject-icon--make {
+    color: var(--color-ink-2);
+    background: var(--color-surface-2);
+    border: 1px dashed var(--color-line);
+}
+
+.landing-subject-card--make:hover .landing-subject-icon--make { color: var(--color-ink-0); }
+
+/* ── Svoje gradivo (③) ────────────────────────────────────────────────
+   Ravnopravna katalogu, ali NAMJERNO drukčijeg ritma: katalog je mreža
+   jednakih pločica, ovo je slijed. Da su obje mreže, sekcija bi izgledala
+   kao nastavak kataloga umjesto kao drugi izvor gradiva. */
+.own-steps {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: none;      /* broj je u markupu, ne generiran — čitač ga ne treba čitati */
+}
+
+@media (min-width: 48rem) { .own-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+
+.own-steps > li { position: relative; padding-top: 2.25rem; }
+
+/* Broj je krupan i BLIJED: nosi ritam, ne pažnju. Da je u boji marke, tri
+   broja bi se natjecala s pločicama predmeta iznad — a ondje boja nešto znači. */
+.own-step-n {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-line);
+}
+
+.own-steps h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-ink-0);
+    margin: 0;
+}
+
+.own-steps p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+    margin: 0.35rem 0 0;
+}
+
+.own-shelf-label { font-size: 0.85rem; color: var(--color-ink-2); margin: 0; }
+
+/* Polica primjera. Nije klikabilna i ne pretvara se da je nečija stvarna polica —
+   zato `<li>`, a ne gumbi: element koji ne radi ništa ne smije izgledati kao da radi. */
+.own-shelf {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.own-shelf > li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.85rem;
+    color: var(--color-ink-1);
+    padding: 0.42rem 0.75rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-1);
+}
+
+.own-shelf > li > i { font-size: 0.78rem; color: var(--color-ink-2); }
+
+.own-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    /* Tekst na ispuni marke NIKAD nije zakucan (tvrda zabrana #1): `--color-on-brand`
+       je bijel u tri teme, a taman u `chalk` i `mint` — ondje bi bijelo palo AA. */
+    color: var(--color-on-brand);
+    padding: 0.6rem 1.1rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    background: var(--color-brand-500);
+    transition: background 0.18s ease;
+}
+
+.own-cta:hover { background: var(--color-brand-600); }
+.own-cta > i { font-size: 0.8rem; }
+
+/* ── Četiri načina (⑤) ────────────────────────────────────────────────
+   Mreža jednakih polja, ali BEZ ruba i bez plohe: ovo nisu stavke koje se
+   otvaraju nego opis. Rub bi ih izjednačio s pločicama predmeta iznad, koje
+   JESU klikabilne — a element koji ne vodi nikamo ne smije to obećavati. */
+.modes-grid {
+    display: grid;
+    gap: 1.5rem 2rem;
+    grid-template-columns: 1fr;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 34rem) { .modes-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 64rem) { .modes-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.modes-grid > li > i {
+    display: block;
+    font-size: 1.05rem;
+    color: var(--color-brand-500);
+    margin-bottom: 0.6rem;
+}
+
+.modes-grid h3 {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-ink-0);
+    margin: 0;
+}
+
+.modes-grid p {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+    margin: 0.3rem 0 0;
+}
+
+/* ── Tvoj AI / MCP (⑥) ────────────────────────────────────────────────
+   ⚠️ Oznaka „uskoro" je NOSIVI element ove sekcije, ne ukras — značajka ne
+   postoji (ADR-030 ②). Zato stoji IZNAD naslova, gdje se čita prva, a ne
+   kao sitni dodatak sa strane koji oko preskoči. */
+.soon-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-2);
+    padding: 0.25rem 0.55rem;
+    margin: 0 0 0.75rem;
+    border: 1px dashed var(--color-line);
+    border-radius: var(--radius-sm);
+}
+
 /* ── Red činjenica ────────────────────────────────────────────────────
    Zamjenjuje tri marketinške sekcije i stats bar. Bez ikona: svaka bi bila
    ukras koji ne nosi značenje (izlazni uvjet §7.6.5). */
@@ -332,6 +740,13 @@
 @media (min-width: 56rem) { .footer-cols { grid-template-columns: 1.6fr 1fr 1fr 1fr; } }
 
 .footer-brand .landing-logo { margin-bottom: 0.75rem; }
+
+/* Znak u podnožju smije biti krupniji od onog u traci — ondje je potpis, ne
+   navigacija. Do 2026-08-16 je tu veličinu davalo globalno `!important` iz
+   `responsive/06-…` (25,6 px na oba mjesta); sad je namjerna i stoji ondje gdje
+   se element i definira. */
+.footer-brand .landing-logo .logo-image { width: 3rem; height: 3rem; }
+.footer-brand .landing-logo .logo-text { font-size: 1.375rem; }
 .footer-brand p { max-width: 26rem; line-height: 1.55; }
 
 .footer-col {

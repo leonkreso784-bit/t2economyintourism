@@ -8,7 +8,7 @@
     /* Landing Footer */
     .landing-footer {
         padding: 1.25rem 1rem;
-        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(1.25rem + var(--safe-bottom));
         font-size: 0.8rem;
     }
     
@@ -20,7 +20,7 @@
     
     .sidebar-header {
         padding: 1rem;
-        padding-top: calc(1rem + env(safe-area-inset-top, 0px));
+        padding-top: calc(1rem + var(--safe-top));
     }
     
     .sidebar-header h2 {
@@ -156,7 +156,7 @@
 @media (max-width: 767px) {
     .flashcards-section {
         padding: 0.75rem;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(80px + var(--safe-bottom));
     }
     
     .flashcards-header {
@@ -250,7 +250,7 @@
 @media (max-width: 767px) {
     .quiz-section {
         padding: 0.75rem;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(80px + var(--safe-bottom));
     }
     
     .quiz-header {
@@ -341,7 +341,7 @@
 @media (max-width: 767px) {
     .fill-section {
         padding: 0.75rem;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(80px + var(--safe-bottom));
     }
     
     .fill-header {
@@ -401,7 +401,7 @@
     .analytics-section,
     .progress-section {
         padding: 0.75rem;
-        padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(80px + var(--safe-bottom));
     }
     
     .analytics-header,

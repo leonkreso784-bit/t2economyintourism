@@ -32,8 +32,16 @@ const crypto = require('crypto');
 const ROOT = path.resolve(__dirname, '..');
 const LIVE = process.argv.includes('--verify');
 
-/** Stranice koje se poslužuju korisniku. Svaka nova mora ući ovamo, inače je brana ne gleda. */
-const PAGES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'contact.html'];
+/**
+ * Stranice koje se poslužuju korisniku — ČITAJU SE S DISKA.
+ *
+ * ⚠️ T6: ovdje je stajao ručni popis, i to uz vlastito upozorenje „svaka nova mora ući
+ * ovamo, inače je brana ne gleda". Prva nova stranica od tada (`editor.html`) to je i
+ * dokazala: pet vanjskih podresursa (Font Awesome, KaTeX ×2, DOMPurify) stajalo je
+ * NEPROVJERENO, a gate je uredno javljao „svi vanjski podresursi pinani i pod SRI".
+ * Brana koja ovisi o tome da se netko sjeti nije brana nego bilješka.
+ */
+const PAGES = fs.readdirSync(ROOT).filter((f) => f.endsWith('.html')).sort();
 
 /**
  * Vanjske skripte koje se NE pišu kao tag nego se ubacuju iz JS-a (`document.createElement`).

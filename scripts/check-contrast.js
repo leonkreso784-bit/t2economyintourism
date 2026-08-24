@@ -39,6 +39,26 @@ function parseHex(v) {
   if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
   return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
 }
+/**
+ * Kao `parseHex`, ali razumije i `rgb(R G B / A)` — oblik u kojem `--color-mark`
+ * živi u temama `chalk` i `mint`. Vraća `{ rgb, a }`; alfa 1 kad je nema.
+ *
+ * ⚠️ Postoji jer je `parseHex` na taj oblik vraćao `null`, a pozivatelj je `null`
+ * tumačio kao „preskoči" — pa je token tiho ispao iz mjerenja u baš onim temama
+ * gdje je proziran. Prazan rezultat koji znači „ne mogu pročitati" ne smije se
+ * čitati kao „nema što mjeriti".
+ */
+function parseColor(v) {
+  const s = String(v == null ? '' : v).trim();
+  const hex = parseHex(s);
+  if (hex) return { rgb: hex, a: 1 };
+  const m = s.match(/^rgba?\(\s*([\d.]+)[\s,]+([\d.]+)[\s,]+([\d.]+)\s*(?:[/,]\s*([\d.]+%?)\s*)?\)$/i);
+  if (!m) return null;
+  let a = m[4] == null ? 1 : (String(m[4]).endsWith('%') ? parseFloat(m[4]) / 100 : parseFloat(m[4]));
+  if (!isFinite(a)) a = 1;
+  return { rgb: [+m[1], +m[2], +m[3]].map((n) => Math.max(0, Math.min(255, Math.round(n)))), a: Math.max(0, Math.min(1, a)) };
+}
+
 const lin = (c) => { const s = c / 255; return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4); };
 const lum = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 function ratio(a, b) { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
@@ -134,6 +154,34 @@ for (const [name, t] of Object.entries(themes)) {
   sweep(AS_TEXT, TEXT_MIN, 'tekst');
   sweep(AS_UI, UI_MIN, 'UI/ispuna');
 
+  // ── TEKST NA MARKERU (`--color-mark`) ─────────────────────────────────────
+  //
+  // ⚠️ OVAJ TOKEN NIJE BIO MJEREN NI U JEDNOJ TEMI DO 2026-08-16, a nosi
+  // isticanje u HEROJU — prvu stvar koju posjetitelj pročita. Ispao je kroz
+  // rupu koju je `sweep()` izrijekom priznavao: `if (!fg) continue` preskače
+  // svaki token s alfom, i u komentaru navodi baš `--color-mark` kao primjer.
+  // U `chalk` i `mint` marker JEST alfa (`rgb(… / .30)`), pa je bio preskočen;
+  // u `academic` i `paper` je neproziran, ali nije stajao ni na jednom popisu.
+  //
+  // Peti put isti obrazac: GATE KOJI MJERI NEKE TOKENE STVARA TIHU PRETPOSTAVKU
+  // DA MJERI SVE. Zato se alfa ovdje ne preskače nego SLAŽE preko plohe teme —
+  // kompozicija je jednoznačna, a piksel koji korisnik vidi je upravo ona.
+  //
+  // Mjeri se protiv `--color-ink-0` jer `.hero-mark` baš to i radi: tekst boje
+  // ink-0 preko donjih 58 % markera.
+  const mark = parseColor(t['--color-mark']);
+  const ink0 = parseHex(t['--color-ink-0']);
+  const surf0 = parseHex(t['--color-surface-0']);
+  if (mark && ink0 && surf0) {
+    checks++;
+    const slozen = mark.a >= 1 ? mark.rgb : mark.rgb.map((v, i) => Math.round(mark.a * v + (1 - mark.a) * surf0[i]));
+    const r = ratio(slozen, ink0);
+    if (r < TEXT_MIN) {
+      problems.push(`--color-ink-0 na --color-mark: ${r.toFixed(2)} < ${TEXT_MIN}  (tekst na markeru` +
+        (mark.a < 1 ? `, alfa ${mark.a} složena preko --color-surface-0` : '') + ')');
+    }
+  }
+
   // tekst na ispuni marke
   const brand = parseHex(t['--color-brand-500']);
   const onBrand = parseHex(t['--color-on-brand']);
@@ -214,6 +262,49 @@ for (const [name, t] of Object.entries(themes)) {
       if (r < UI_MIN) {
         const ime = lum(rgb) > prag ? 'on-tint-dark' : 'on-tint-light';
         problems.push(`boja predmeta ${boja} (npr. ${s.id}): odabrana tinta ${ime} daje ${r.toFixed(2)} < ${UI_MIN} — boju predmeta treba preugoditi`);
+      }
+    }
+
+    // (c) NIJEDNA boja predmeta ne smije nositi INDIGO ZNAKA.
+    //
+    //     Spec §7.13: znak zadržava vlastiti indigo kroz sve četiri teme — „znak definira
+    //     boju marke, ne obrnuto". Ta konstanta vrijedi samo ako je znak JEDINA stvar te
+    //     boje; do 2026-08-16 nosila su je i ČETIRI predmeta (te2, te2-hr, management,
+    //     management-hr), pa marka nije bila konstanta nego jedna od boja u mreži.
+    //
+    //     ⚠️ Zašto od ZNAKA, a ne od `--color-brand-500`: marka se PO TEMI mijenja
+    //     (academic #1657d0 plava · chalk #f2c14e zlatna), pa bi fiksna boja predmeta
+    //     bila odvojena u jednoj temi i sudarala se u drugoj. Znak je jedina nepomična
+    //     meta. Zato se indigo ČITA IZ `assets/logo.svg` — ne prepisuje se ovamo, da
+    //     pravilo prati znak ako se ikad promijeni (ADR-027: jedna činjenica, jedno mjesto).
+    //
+    //     ⚠️ Odvojenost se NE traži međusobno između predmeta: zatečena paleta ima
+    //     `#059669` (161°) i `#14b8a6` (173°) na 12° razmaka, pa bi takvo pravilo bilo
+    //     crveno od prvog dana. Brana koju zatečeno stanje ne može proći nije brana.
+    const logoPath = path.resolve(__dirname, '..', 'assets', 'logo.svg');
+    const logoHexes = [...new Set((fs.readFileSync(logoPath, 'utf8').match(/#[0-9a-fA-F]{6}/g) || []))]
+      .map((h) => h.toLowerCase())
+      .filter((h) => { const p = parseHex(h); return p && lum(p) > 0.02 && lum(p) < 0.6; }); // bijelo/crno iz znaka nisu marka
+
+    checks++;
+    if (!logoHexes.length) {
+      problems.push('assets/logo.svg nema nijednu boju marke — pravilo o odvojenosti od znaka ne može se provjeriti');
+    } else {
+      const znakHue = hue(parseHex(logoHexes[0]));
+      for (const boja of seen) {
+        const rgb = parseHex(boja);
+        if (!rgb) continue;
+        checks++;
+        const d = hueGap(rgb, parseHex(logoHexes[0]));
+        if (d < HUE_MIN) {
+          const ids = subjects
+            .filter((s) => ((Array.isArray(s.iconGradient) && s.iconGradient[0]) || s.color) === boja)
+            .map((s) => s.id);
+          problems.push(
+            `boja predmeta ${boja} je ${d.toFixed(0)}° od indiga ZNAKA (${logoHexes[0]}, ${znakHue.toFixed(0)}°) — traži se ≥ ${HUE_MIN}°. ` +
+            `Nosi je: ${ids.join(', ')}. Znak mora ostati jedina stvar te boje.`
+          );
+        }
       }
     }
   }

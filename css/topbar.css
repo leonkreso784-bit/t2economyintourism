@@ -1,0 +1,532 @@
+/* =====================================================================
+   topbar.css — JEDNA GORNJA TRAKA  ·  cigla K2b (faza „KOSTUR", spec §8)
+   =====================================================================
+
+   ── ZAŠTO POSTOJI ────────────────────────────────────────────────────
+   Do K2b je devet `-page` sekcija nosilo NULA zajedničkih traka. `browse-header`,
+   `lessons-header` i `study-header` svaka su iznova slagale isti trojac (jezik +
+   „Moji materijali" + račun), a zaglavlja su živjela UNUTAR sekcija — pa su
+   nestajala s njima. Posljedica: jezik dohvatljiv na 4 od 9 stranica, znak na 3 od
+   9 i nigdje kao poveznica na dom, a iz Studija se nije dalo nikamo osim natrag.
+
+   ── DVA REDA, I TO IZMJERENO ─────────────────────────────────────────
+   Traka nosi ODREDIŠTA (znak, Moji materijali, jezik, račun — „Predmeti" su maknuti
+   2026-08-19, Leon: *„najnebitniji gumb ikada"*; katalog vode vrata u herou i mrvica), a drugi red
+   nosi POLOŽAJ (natrag + mrvica). Razlog je mjera, ne ukus: na 320 px kontrole i
+   naslov u istom redu troše 218 px prije ijednog slova naslova. Dva reda su jedini
+   način da oboje stane, a usput je i točnije — odredišta se ne mijenjaju, položaj se
+   mijenja svakom navigacijom.
+
+   ── ZAŠTO SU VISINE KONSTANTE, A NE SADRŽAJ ──────────────────────────
+   `--topbar-h` / `--pathbar-h` su FIKSNE. Šest spremnika ima `min-height:100dvh` i
+   od njih se mora oduzeti visina kroma; da je visina sadržajna, oduzimalo bi se
+   nešto što se ne zna unaprijed. Zato traka ima zadanu visinu, a sadržaj se u nju
+   uklapa (a ne obrnuto). Na landingu nema položaja → `--pathbar-h` padne na 0.
+
+   ⚠️ SVE BOJE IDU KROZ TOKENE. Nijedan hex, nijedna `rgba()`, nijedan zakucan
+   `white` — `check:palette` drži tri tvrde zabrane oko ove površine (tekst na ispuni
+   marke · `--primary-light` nije boja teksta · zakucana tamna ploha).
+   ===================================================================== */
+
+/* ⚠️ 64px NIJE proizvoljno — to je mjera iz §7.13 koju je Leon izričito tražio.
+   Znak je TRI PUTA prijavljen kao premalen, a dijagnoza „treba ga precrtati" bila je
+   kriva: `logo.svg` je traceana ilustracija koja na 32 px nužno postaje mrlja, a na
+   42 px se lice vidi. Traka je zato 64, a ne 56. Globalna traka koja bi znak vratila
+   na 32 px poništila bi odluku donesenu na živom ekranu — pa je ovdje zapisana mjera,
+   ne samo broj. */
+:root {
+    --topbar-h: 64px;
+    --pathbar-h: 44px;
+    /* Kromo = sve što stoji IZNAD stranice. Sekcije od njega oduzimaju svoju visinu. */
+    --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+    /* Koliko DNA ekrana zauzima trajni namještaj (cookie-banner). Postavlja ga
+       `js/consent.js`; plutajući izbornici od toga računaju svoj stvarni rub, jer
+       banner ima `z-index: 2147483000` i presreće pokazivač. Zadano 0 — bez ove
+       deklaracije bi `getPropertyValue` vratio prazno na svakoj stranici bez bannera. */
+    --bottom-inset: 0px;
+    /* T4 · OBRNUTI SMJER OD `--bottom-inset`. Ondje traka javlja SVOJU visinu drugima;
+       ovdje njoj javljaju koliko je dno već zauzeto. Povod je izmjeren: `.study-mobile-nav`
+       je `fixed; bottom:0; z-index:9999`, a traka `z-index:2147483000` — pa je na prvom
+       posjetu cookie-traka pokrivala SVIH ŠEST gumba za promjenu načina učenja, i telefon
+       nije imao nijednu dohvatljivu kontrolu bez skrola. **Fiksni element ne vidi drugi
+       fiksni element**, pa netko mora izmjeriti i objaviti — to radi `js/consent.js`. */
+    --bottom-furniture-h: 0px;
+}
+
+/* ⚠️ `--chrome-h` SE MORA PONOVNO IZRAČUNATI NA `body` — i to nije opreznost nego ispravak.
+   `var()` se supstituira ONDJE GDJE JE DEKLARIRAN: `--chrome-h` na `:root` je već „zapekao"
+   `--topbar-h` i `--pathbar-h` iz `:root`-a, pa ga kasniji override na `body` NE MIJENJA.
+   Posljedica je bila tiha i starija od T3: na landingu `body.no-pathbar` spušta `--pathbar-h`
+   na 0, ali je `--chrome-h` i dalje računao s 44 px → sekcije su od `100dvh` oduzimale red
+   koji ondje ne postoji. Vidjelo se ne bi jer je landing dulji od ekrana.
+   Deklaracija ostaje i na `:root` (zbog `tokens.static.css`, koji izvlači `:root` blokove za
+   pravne stranice bez bundlea). */
+body {
+    --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+}
+
+/* Landing nema položaj (nema kamo „gore") → drugi red otpada i iz visine i iz prikaza. */
+body.no-pathbar {
+    --pathbar-h: 0px;
+}
+
+/* ===== OMOTAČ — NOSITELJ LJEPLJIVOSTI (T3) =====
+   Do T3 su obje trake bile `position: sticky` svaka za sebe, a `.pathbar` je svoj `top`
+   računao iz visine `.topbar`. To je radilo dok su bile JEDNA ISPOD DRUGE. Čim se u niskom
+   prozoru moraju složiti JEDNA PORED DRUGE, treba im zajednički flex-roditelj — a sticky se
+   NE MOŽE zalijepiti izvan svog roditelja, pa bi omotač visok 108 px pustio traku da mu
+   iscuri iz kutije i odskrola. Zato je ljepljivost preselila OVAMO, a trake su statične.
+   ⚠️ `z-index` je time isto ovdje: 1300 je iznad Studija (1200), inače bi ga puni-viewport
+   editor prekrio. */
+.chrome {
+    position: sticky;
+    top: 0;
+    z-index: 1300;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== RED 1 — ODREDIŠTA ===== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: calc(var(--topbar-h) + var(--safe-top));
+    padding: 0 1rem;
+    padding-top: var(--safe-top);
+    padding-left: calc(1rem + var(--safe-left));
+    padding-right: calc(1rem + var(--safe-right));
+    /* Ista ploha koju je landing dobio u C2/§7.13: poluprozirna, sadržaj ispod ostaje
+       naslućen — traka čita kao materijal, ne kao ploča. `color-mix` umjesto `rgba()`
+       jer bi rgba zakucala boju i tema je ne bi mogla promijeniti. */
+    background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+
+/* Znak je NEPROMJENJIV (spec §7.13, Leon izričito) — traka mu daje prostor, ne dira ga.
+   Do K2b nije bio poveznica na dom ni na jednoj od devet stranica. */
+.topbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 1rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* 42px — v. bilješku uz `--topbar-h`. Znak zadržava VLASTITI INDIGO kroz sve teme;
+   CSS ga ne preboja, jer znak definira boju marke, a ne obrnuto. */
+.topbar-logo .logo-image {
+    width: 2.625rem;
+    height: 2.625rem;
+    border-radius: var(--radius-sm);
+    display: block;
+    flex-shrink: 0;
+}
+
+/* T2: `.topbar-nav` je OBRISAN zajedno sa svojim posljednjim stanarom
+   (`#topbarMaterials`). Traka od T2 nema nijedno odredište — nosi samo znak, jezik,
+   prijavu i CTA.
+
+   ⚠️ Pouka iz K3/BUG-029 se NE briše s pravilom, jer vrijedi za svaki budući element
+   u traci: ondje je stajalo `min-width: 0`, što izričito DOPUŠTA stiskanje ispod širine
+   sadržaja — i na landingu se dogodilo doslovno: nav se stisnuo na **širinu 0**, a
+   „Predmeti" (37 px) isplivali ispod prekidača jezika, pa bi klik PREBACIO JEZIK umjesto
+   da otvori katalog. *Odredišta nisu ono što u traci smije popustiti; kad ponestane
+   mjesta, neka se traka prelije (to gate VIDI) umjesto da se tiho preklopi (to ne vidi
+   nitko).* Isto vrijedi i za mrvicu: ondje popuštaju PRECI, nikad trenutna razina. */
+
+.topbar-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 40px;
+    padding: 0 0.75rem;
+    border: none;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.topbar-btn:hover:not(:disabled) {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Stranica na kojoj već jesmo ne nudi se kao odredište — boji se markom, ne ispunom,
+   jer bi ispuna tražila `--on-primary` i time novu površinu za tri tvrde zabrane. */
+.topbar-btn[aria-current="page"] {
+    color: var(--primary);
+}
+
+.topbar-spacer {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+/* Jezik: ikona + „EN"/„HR". Oznaka NE nosi `.topbar-btn-label` pa preživi usko —
+   dvoslovna je i staje svugdje, a bez nje se ne vidi KOJI je jezik uključen. */
+.topbar-lang {
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+}
+
+/* Jedina radnja landinga. Drugdje je nema — poziv „počni učiti" na stranici na kojoj
+   već učiš je šum. ⚠️ Tekst na ispuni marke IDE KROZ `--color-on-brand`, nikad `white`:
+   promjena palete pomaknula je marku u svijetlu kredu i bijelo na njoj daje 1.68
+   (§7.7, tvrda zabrana #1 u `check:palette`). */
+.topbar-cta {
+    display: none;
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-on-brand);
+    background: var(--color-brand-500);
+    border: 1px solid var(--color-brand-500);
+    border-radius: var(--radius-full);
+    padding: 0.6rem 1.1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.topbar-cta:hover {
+    background: var(--color-brand-400);
+    border-color: var(--color-brand-400);
+}
+
+body.on-landing .topbar-cta {
+    display: inline-flex;
+}
+
+/* T2: pravilo `body.on-landing #topbarMaterials { display: none }` je obrisano jer je
+   gumb obrisan. Odluka koju je nosilo i dalje vrijedi i sada je općenitija: ulaz u
+   vlastito gradivo NE stoji u traci NIGDJE (ne samo na landingu) — ondje su to VRATA U
+   HEROU, a dva ulaza na isti ekran natječu se međusobno. */
+
+.topbar-iconbtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius);
+    background: none;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.topbar-iconbtn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* ===== RED 2 — POLOŽAJ (natrag + mrvica) ===== */
+
+.pathbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: var(--pathbar-h);
+    padding-left: calc(0.75rem + var(--safe-left));
+    padding-right: calc(0.75rem + var(--safe-right));
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+}
+
+body.no-pathbar .pathbar {
+    display: none;
+}
+
+.pathbar-back {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.pathbar-back:hover {
+    color: var(--text-primary);
+}
+
+/* Mrvica je NAVIGACIJA, ne ukras — svaki predak osim zadnjeg je klikabilan.
+   Skrola vodoravno umjesto da se lomi u stupac: `.st-crumb` je u Studiju imao
+   `flex-wrap:wrap` i na 390 px se srušio u stupac 96 px širok i **326 px visok**,
+   što je samo po sebi dizalo traku na 41 % ekrana. */
+.crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+}
+
+.crumbs::-webkit-scrollbar {
+    display: none;
+}
+
+/* ⚠️ T2 — PRIORITET KRAĆENJA JE OBRNUT, i to je popravak istog razreda kao BUG-030.
+   Do T2 su preci imali `flex-shrink: 0`, a `.crumb-current` `flex-shrink: 1` — dakle
+   stiskala se JEDINA mrvica koja odgovara na pitanje „gdje sam?". Izmjereno na 320 px:
+   „First Midterm" je dobio **30 od 99 px** (30 %), dok su „Subjects" (63) i „Tourism
+   Economics" (129) držali punu širinu. Preci su uvijek izvedivi iz konteksta i smiju
+   se skratiti; trenutna razina ne smije.
+
+   `min-width` na precima postoji da kraćenje ne ode u besmisao (jedno slovo + „…"
+   ne kaže ništa) — ispod te mjere radije neka lanac skrola. */
+.crumb {
+    border: none;
+    background: none;
+    padding: 0.25rem 0.35rem;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 1;
+    min-width: 3.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.crumb:hover {
+    color: var(--text-primary);
+}
+
+/* Zadnja mrvica = gdje jesmo. Nije gumb (nema kamo voditi) pa ni ne izgleda kao gumb.
+   ⚠️ `flex-shrink: 0` — ona se NE stišće. Preci iznad joj ustupaju prostor; ako ni to
+   ne dostaje, lanac se skrola i `renderPathbar()` ga pomakne na kraj, pa je trenutna
+   razina vidljiva u svakom slučaju. Ellipsis ostaje kao posljednja mreža za naziv koji
+   je sam po sebi dulji od cijelog retka. */
+.crumb-current {
+    color: var(--text-primary);
+    cursor: default;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    max-width: 100%;
+}
+
+.crumb-current:hover {
+    color: var(--text-primary);
+}
+
+.crumb-sep {
+    color: var(--text-muted);
+    opacity: 0.5;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+}
+
+/* ===== SEKCIJE ODUZIMAJU KROMO ===== */
+
+.landing-page,
+.browse-page,
+.lessons-page,
+.study-page,
+.about-page,
+.profile-page,
+.materials-page,
+.admin-page {
+    min-height: calc(100dvh - var(--chrome-h));
+}
+
+/* ===== USKO ===== */
+
+/* Ispod 560 px oznake odredišta odlaze, ikone ostaju. Hamburger je ODBAČEN (Leon):
+   sakriti navigaciju iza gumba znači vratiti isti problem koji cigla rješava. */
+@media (max-width: 559px) {
+    .topbar-btn-label {
+        display: none;
+    }
+
+    .topbar-btn {
+        padding: 0 0.6rem;
+    }
+
+}
+
+/* ⚠️ WORDMARK IMA VLASTITI PRAG, I TO JE MJERA — NE UKUS (K3a, drugi nalaz BUG-029).
+   Do K3 je „Sokrat Study" pored znaka izlazio na ISTOM pragu kao oznake odredišta (560).
+   Izmjereno: taj tekst nosi **+104 px** (`topbarHome` skoči 42 → 146), pa je traka u
+   najgorem slučaju (hrvatski, stranica „Predmeti") tražila **632 px** a uključivala se
+   na 560 — cijeli pojas **560–639 px** se prelijevao. Dotad se to nije vidjelo jer se
+   `.topbar-nav` stiskao na nulu i sadržaj se PREKLAPAO umjesto prelio; isti kvar kao
+   BUG-029, samo druga širina. Oznake odredišta su jeftine i funkcionalne (imenuju kamo
+   vode), pa ostaju na 560; wordmark je ukras i čeka 640. Znak (42 px slika) je vidljiv
+   uvijek — on je konstanta marke (§7.13). */
+@media (max-width: 639px) {
+    .topbar-logo .logo-text {
+        display: none;
+    }
+}
+
+/* Ispod 360 px CTA odlazi iz trake (Leon, 2026-08-19). Nije ušteda piksela nego ista
+   odluka koja je odande maknula „Moje materijale": ulaz na landing su VRATA U HEROU.
+   Landing ima tri `.start-trigger`-a (traka, vrata, podnožje), pa se ovim ne gubi
+   nijedan put — gubi se onaj koji je na 320 px gurao „Predmete" pod prekidač jezika.
+   ⚠️ Mjera je izmjerena, ne odabrana: engleski „Start studying" je 126 px, hrvatski
+   „Počni učiti" 103 — razlika 23 px, a preklop je bio 21. Zato je kvar postojao SAMO
+   na engleskom, koji je zadani jezik sučelja. */
+@media (max-width: 359px) {
+    body.on-landing .topbar-cta {
+        display: none;
+    }
+}
+
+/* =====================================================================
+   T3 — BUDŽET KROMA ≤ 20 %. Dva pravila, jer su portret i landscape
+   suprotne oskudice. Oboje je izmjereno prije koda (spec §9.10).
+
+   ── ŠTO JE SONDA POKAZALA ──────────────────────────────────────────
+   Na 320 px, unutar aplikacije:
+
+       .topbar    64 px visine  nosi 134 px sadržaja  →  146 px širine PRAZNO
+       .pathbar   44 px visine  mrvica ŽELI 377 px    →  dobiva 252   ⚠ kraćeno
+
+   Dakle nije problem „previše kroma" nego RASPODJELA: cijeli red od 64 px
+   troši se na znak i dva ikon-gumba, dok red kojem širina TREBA gladuje.
+
+   Na 852 × 393 je obrnuto: `.topbar` ima 393 px slobodne širine, `.pathbar`
+   601 px — obje su poluprazne, a nedostaje VISINA.
+
+   ── ZAŠTO SPAJANJE NIJE ODGOVOR U PORTRETU ─────────────────────────
+   Jedan red na 320 px: znak 42 + natrag 36 + akcije 92 + razmak 32 + tri
+   zazora 24 = 226 fiksno → mrvici ostaje **94 px** umjesto 252. To bi
+   poništilo T2, koji je baš tu mrvicu vratio s 30 na 99 px. Provjereno i
+   za varijantu bez znaka: 244 px, i dalje manje nego danas. **Nijedan
+   raspored u jednom redu na 320 px ne daje mrvici širinu koju već ima.**
+   ===================================================================== */
+
+/* ① NIZAK PROZOR, ALI NE I USKI → traka se stisne na ono što joj treba.
+   64 px postoji zbog LANDINGA, gdje traka nosi znak i CTA i sama je cijela
+   navigacija (§7.13). Unutar aplikacije nosi znak i dva ikon-gumba — i tu
+   nema pravo na landingovu visinu. 56 = znak 42 + 7 zraka gore i dolje;
+   ⚠️ ZNAK OSTAJE 42 px, mijenja se samo zrak oko njega — Leonova odluka
+   („znak je tri puta prijavljen kao premalen") ostaje netaknuta.
+   Mjera: 64 + 44 = 108 od 509 = 21 % → 56 + 44 = 100 = **19,6 %**.
+   Probijanje je bilo 6 px; ovo daje 2 px zalihe, a ne dira landing. */
+@media (max-height: 700px) {
+    body:not(.on-landing) {
+        --topbar-h: 56px;
+    }
+}
+
+/* ② PROZOR NIŽI OD 520 px → JEDAN RED. Ovdje spajanje JEST odgovor, jer je
+   oskudica obrnuta: visine nema, širine ima 852 px. Redoslijed je namjerno
+   obrnut (`order: -1`) — položaj ide LIJEVO, gdje gumb „natrag" i pripada,
+   a marka i alati desno.
+   Mjera: 108 od 393 = 27 % → **64 od 393 = 16 %** (uz ① još manje).
+   ⚠️ Mrvica u najdubljoj razini traži 377, a dobiva 341 → kraćenje pada na
+   PRETKE, nikad na trenutnu razinu (pravilo T2 i dalje vrijedi jer ga nosi
+   `.crumb` vs `.crumb-current`, ne ovaj raspored). */
+@media (max-height: 519px) {
+    :root {
+        /* Putanja više ne stoji ISPOD trake → ne doprinosi visini kroma.
+           Bez ovoga bi sekcije od `100dvh` oduzimale red koji ne postoji. */
+        --pathbar-h: 0px;
+    }
+
+    .chrome {
+        flex-direction: row;
+        align-items: stretch;
+        /* Sigurna zona seli na omotač: u retku je LIJEVI rub putanja, a DESNI
+           traka, pa bi izvorna raspodjela („traka drži oba ruba") rezervirala
+           razmak na krivoj strani. */
+        padding-left: var(--safe-left);
+        padding-right: var(--safe-right);
+    }
+
+    .chrome .topbar,
+    .chrome .pathbar {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .chrome .topbar {
+        flex: 0 0 auto;
+        height: calc(var(--topbar-h) + var(--safe-top));
+    }
+
+    /* Razmaknica je postojala da odvoji znak od alata u punom retku; u spojenom
+       retku bi gurala putanju izvan ekrana. */
+    .chrome .topbar-spacer {
+        display: none;
+    }
+
+    .chrome .pathbar {
+        order: -1;
+        flex: 1 1 auto;
+        min-width: 0;            /* bez ovoga flex-dijete ne popušta i mrvica prelijeva */
+        height: auto;
+        background: none;
+        border-bottom: 0;
+    }
+
+    /* ⚠️ PLOHA MORA PRESELITI NA OMOTAČ — inače je pola spojenog retka PROZIRNO.
+       U stupcu svaka traka nosi vlastitu pozadinu preko cijele širine i to je točno.
+       U retku `.topbar` postaje `flex: 0 0 auto` i pokriva samo SVOJ dio (izmjereno:
+       341 od 852 px, x = 452…793), a putanja lijevo od nje ostaje `rgba(0,0,0,0)` →
+       sadržaj bi se vidio kako klizi iza mrvice, a donji rub bi prekrivao samo desnu
+       trećinu. Kvar sam UVEO ovom ciglom i našla ga je sonda, ne oko.
+       Zato u retku plohu, zamućenje i rub nosi omotač, a traka ih se odriče. */
+    .chrome {
+        background: color-mix(in srgb, var(--color-surface-0) 85%, transparent);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        /* ⚠️ SJENA, NE RUB — i to je mjera, ne stil. `.chrome` u retku nema zadanu visinu,
+           pa mu se `border-bottom` DODAJE na sadržaj: kromo je narastao 56 → 57 px i time se
+           razišao s `--chrome-h` (koji i dalje računa 56) → sekcije bi dobile piksel previše.
+           U stupcu se to ne događa jer trake imaju zadanu visinu i `box-sizing: border-box`,
+           pa je rub UNUTAR nje. `box-shadow` crta isti razdjelnik i **ne troši raspored**.
+           Uhvatila ga je osnovica brane (prijavila 56 → 57), ne oko. */
+        box-shadow: 0 1px 0 var(--border);
+    }
+
+    .chrome .topbar {
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-bottom: 0;
+    }
+}

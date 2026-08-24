@@ -304,7 +304,7 @@
 /* ===== BETTER SPACING FOR LANDSCAPE TABLETS ===== */
 @media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
     .study-content {
-        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(60px + var(--safe-bottom));
     }
     
     .flashcard-wrapper {
@@ -327,10 +327,14 @@
         max-height: 40px;
     }
     
-    .logo-text {
-        font-size: 1.25rem !important;
-    }
-    
+    /* ⚠️ OBRISANO 2026-08-16 (cigla D): `.logo-text { font-size: … !important }`.
+       `.logo-text` postoji SAMO na dva mjesta u cijelom projektu, oba u `index.html`
+       i oba unutar `.landing-logo` — dakle ovo globalno pravilo nije služilo ničemu
+       osim da pregazi `landing.css`, datoteku koja te elemente i posjeduje. Znak je
+       zato ostajao 25,6 px umjesto zadanih 18,5 i cigla D se nije mogla izmjeriti.
+       Isti obrazac kao pet `!important` u `studio.css` (spec §7.12): težina koja
+       vodi bitku u koju ne bi trebala ući. Veličine sad žive u `landing.css`. */
+
     .sidebar-logo .logo-wrapper {
         width: 36px;
         height: 36px;
@@ -393,10 +397,9 @@
         max-height: 50px;
     }
     
-    .logo-text {
-        font-size: 1.6rem !important;
-    }
-    
+    /* ⚠️ OBRISANO 2026-08-16 (cigla D) — v. obrazloženje uz isti obrisani blok gore.
+       Ovaj je bio onaj koji je stvarno grizao: 1,6rem = 25,6 px na svakom desktopu. */
+
     .logo-wrapper-large {
         width: 150px;
         height: 150px;

@@ -17,11 +17,368 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-*Nema otvorenih bugova.*
+_(nema otvorenih bugova — zadnji zatvoren: BUG-032, 2026-08-24)_
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-032 — Popis lekcija nije upotrebljiv tipkovnicom ni čitačem ekrana (`div` s klikom)
+
+- Status: ✅ **riješen** (2026-08-24) · Težina: **visok** (produkcija, svaki predmet, jedini put u lekciju) · Našao: **mjerač telefona (T4), 2026-08-22**, mjerenjem tvrdnje ④.
+
+**Simptom.** Stranica `lessons` — popis lekcija predmeta — **nema nijednu sadržajnu kontrolu**.
+Miš i prst rade; tipkovnica i čitač ekrana ne. Za korisnika koji ne pokazuje prstom, katalog
+od 24 predmeta završava na popisu lekcija.
+
+**Izmjereno** (Chromium, brana `tests/phone.spec.js`, 4 profila):
+
+```
+320 / 393 / 430 / 852 px  ·  lessons
+  interaktivnih elemenata u sadržaju: 0
+  vidljivo u prvom ekranu: p#subjectDescription, div.lesson-card, h3, p …
+```
+
+**Uzrok.** `js/navigation.js:1304` — `renderLessonsPage()` gradi karticu kao
+`document.createElement('div')` s `class="lesson-card"` i vješa `click`-slušatelja. Nema
+`role`, nema `tabindex`, nema `keydown`. Za pristupačno stablo to je **obična kutija s
+tekstom**.
+
+**⚠️ Zašto ovo nije uhvatio nijedan gate — tri neovisna razloga:**
+- **axe** ne prijavljuje `div` s `click`-slušateljem: slušatelj nije u DOM-u kao atribut i
+  nijedno WCAG pravilo se ne da automatski provjeriti bez njega. (Da je stajalo
+  `role="button"` bez `tabindex`, axe bi pao — kvar je *ispod* praga koji alat vidi.)
+- **`reachability.spec.js` (K3)** mjeri **pogodak na kontrolama koje postoje** — element koji
+  se ne kvalificira kao kontrola nema što promašiti.
+- **`css:diff`/`check:palette`** mjere izgled, a izgled je ispravan.
+
+Kvar je izašao tek kad je T0 uveo tvrdnju koja pita *„može li korisnik ovdje išta učiniti?"* —
+i onda je T4 morao razlagati zašto ④ pada, jer je zapisani uzrok („cookie-traka") bio kriv.
+
+**Rješenje (izvedeno 2026-08-24).** ⚠️ **Element slijedi POSLJEDICU, ne izgled:** lekcija koja
+se da otvoriti je `<a href>` — adresu joj je K1 već dao, pa je usput postala dijeljiva i
+otvoriva u novoj kartici — a lekcija „uskoro" **nije poveznica nego `<button>`**: ne vodi
+nikamo, nego objašnjava zašto. *Zapisano rješenje je predlagalo `<button>` za oboje; mjerenje
+je pokazalo da bi to jednoj od dvije vrste dalo krivu semantiku.* Klik se presreće (isti
+presedan kao logo u traci), jer `navigateTo` mora ostati jedini upisivač povijesti — inače
+`dubinaPovijesti` iz K2a prestane vrijediti.
+
+⚠️ **Escape iz BUG-025 ovdje NIJE dodan — jer nije potreban.** Tekst iz podataka ide kroz
+`textContent`, ne kroz `innerHTML`, pa se opasnost **ne može pojaviti**. To je jača obrana od
+ispravnog escapea, koji vrijedi samo dok ga se netko sjeti pozvati. (Provjereno usput: taj
+redak ionako nije bio dohvatljiv korisničkim tekstom — K2a preusmjeri `node:` s lekcijske
+stranice, pa je do `innerHTML`-a dolazio samo naš `catalog.js`.)
+
+⚠️ **Ispravan obrazac je već postojao 400 redaka iznad, u istoj datoteci:** `renderBrowsePage`
+crta `<button class="browse-card">`. Kvar nije bio nepoznavanje pravila nego **jedno mjesto
+koje ga nije slijedilo** — zato nova brana mjeri OBJE stranice kataloga, ne samo popravljenu.
+
+🐞 **Usput ispravljena tiša nedosljednost:** `routeFor()` je `subject` i `lesson` čitao prvo iz
+podataka, a `section` **isključivo iz `AppState`-a** — pa bi poveznica sagrađena s lekcijske
+stranice ponijela zadnju otvorenu sekciju (npr. `/quiz`), dakle adresu koja ne opisuje kamo
+vodi. Sada sve tri idu istim redom.
+
+**Mjereno poslije:** phone-osnovica **8 → 4 nalaza** — brana je sama javila
+`✅ RIJEŠENO (prviEkran, 4)` za sve četiri širine `lessons`. Preostala 4 su `about` (sljedeće).
+
+**Brana:** `tests/lesson-card.spec.js` — sastav · tipkovnica (Enter, ne `element.click()`, jer
+`click()` prolazi i nad `div`-om, dakle nad kvarom) · ime kontrole · **obrnuta provjera** koja
+rekonstruira stari `div` u DOM-u i traži da ista mjera padne.
+
+**⚠️ Isti kvar postoji još na JEDNOM mjestu i NIJE popravljen ovdje:** `.st-row` — stablo
+kataloga u Studiju (`js/studio.js:82`) je `div` s `data-lesson` i delegiranim klikom. To je
+editor (admin-only, `editor.html`), pa ide u `BACKLOG.md`, ne u ovu ciglu. Provjereno je i
+ostalih pet kandidata: `.ex-choice-item` / `.ex-card` su **omoti oko pravih `<button>`-a**,
+dakle lažni pogodak skenera.
+
+**Lekcija.** *Gate koji provjerava kontrole ne vidi kvar u kojem kontrola NE POSTOJI.* Sve tri
+postojeće brane pretpostavljale su da je element kontrola i onda mjerile njegovo ponašanje;
+nijedna nije pitala postoji li uopće. Isti razred kao „telefon kao stranica nikad nije bio
+mjerena površina" — mjeri se ono što se zna imenovati.
+
+**Druga lekcija, iz popravka:** *kvar u jednini je često obrazac u množini — ali tek nakon
+provjere.* Skener je našao šest kandidata; **jedan** je bio stvaran (`.st-row`), **dva** su
+bila omoti oko pravih kontrola, a **jedan** (`.browse-card`) je bio već ispravan i time dokaz
+da pravilo u kući postoji. Da sam popis prijavio bez provjere, četiri od šest bila bi lažna
+uzbuna.
+
+---
+
+### BUG-030 — Puni naziv fakulteta ruši zaglavlje kataloga na telefonu (naslov postane „C…")
+
+- Status: ✅ **riješen** (cigla T2, 2026-08-21) · Težina: **visok** (produkcija, svaki telefon, ulazni ekran kataloga) · Našao: **Leon na iPhoneu 16**, uz snimku.
+
+**Simptom.** Na 393 px se naziv fakulteta rasporedi u uski stupac, jedna riječ po retku, a
+naslov razine pored njega se skvrči u **„C…"**. Kontrole zaglavlja plutaju nasred tog stupca.
+
+**Izmjereno** (pravi Chromium, 393 × 852, produkcija):
+
+| | |
+|---|---|
+| `.browse-header` visina | **270 px** (32 % ekrana) |
+| mrvica („FMTU – Fakultet za menadžment u turizmu i ugostiteljstvu, Opatija", 65 znakova) | **14 redaka**, stupac **103 px** širok, **205 px** visok |
+| naslov „Choose your program" | `clientWidth` **34 px** naspram `scrollWidth` **205 px** → odrezan |
+
+**⚠️ UZROK JE ISPRAVLJEN 2026-08-21 (T0) — prvi zapis je bio kriv.** Ovdje je stajalo da
+mrvica bez kraćenja **pojede** susjedni naslov. To se ne može dogoditi: mrvica i naslov su
+uloženi u `div.browse-title`, koji ima **`display: block`** — kao braća u stupcu ne utječu
+jedno drugom na širinu. Izmjereno na produkciji, 393 px, `header.browse-header` (flex-redak,
+**šestero** djece):
+
+```
+natrag 44 + [.browse-title] + 🌐 59 + mape 44 + korisnik 44 + znak 40
+= 231 px kontrola + 80 px razmaka = 311 od 345 px raspoloživih
+→ .browse-title dobiva  34 px   (flex: 1 1 0%, min-width: 0)
+```
+
+**Uzroka su dva, u istom retku, i razdvajaju se:**
+- **naslov je uzak** jer je **pet kontrola + razmaci** pojelo 311 od 345 px — `min-width:0`
+  im to samo dopušta;
+- **zaglavlje je visoko** jer se mrvica onda lomi u taj 34-px stupac (5 redaka na 393, 14 na
+  produkcijskoj razini fakulteta sa 65-znakovnim imenom).
+
+**Posljedica za popravak (T2):** kratko ime fakulteta samo po sebi **ne bi popravilo naslov**.
+Da su kontrole uzrok, dokazuje grana: K2b ih je odselio u globalnu traku i zaglavlje je palo
+na 102 px **bez ijedne izmjene teksta**. T2 zato spaja zaglavlje s mrvicom, a ne samo krati.
+
+**Zašto ga nijedan gate nije vidio.** axe mjeri na 1280 px, gdje ime stane u jedan redak;
+`css:diff` uspoređuje nas sa samima sobom pa mu je ravnomjerno loše stanje stabilno; K3/K4a
+mjere **kromo**, ne stranicu. Detaljno: [FRONTEND_REDIZAJN §9.2](../plan/FRONTEND_REDIZAJN.md).
+
+**Rješenje (cigla T2, isporučeno).** Zaglavlje razine je **obrisano na sve tri stranice**, ali
+ne istim rezom — jer mjerenje je pokazalo da to nisu bila tri ista kvara:
+
+1. **Lekcije i učenje su bili čisti duplikat** (h1 je pisao doslovno ono što piše zadnja
+   mrvica). Naslov ostaje kao `visually-hidden` — stranica ga mora imati za čitač ekrana, ne
+   mora ga imati **dvaput na ekranu**. Ušteda 119 i 115 px.
+2. **Katalog nije bio duplikat**: ondje je zaglavlje nosilo dubinu (`fakultet › smjer ›
+   godina`) koju mrvica **nije pokazivala**. Zato je dubina **preselila u mrvicu**, a uputa
+   („Odaberi smjer") u **sadržaj**, gdje se smije odskrolati. Ušteda 140 px.
+3. **Pravi kvar iza simptoma bio je PRIORITET KRAĆENJA, i bio je naopak:** preci su imali
+   `flex-shrink: 0`, a `.crumb-current` `flex-shrink: 1` — stiskalo se **jedino što govori
+   gdje si** (30 od 99 px na 320), dok su preci držali punu širinu. Sada je obrnuto, uz
+   `min-width` na precima i pomak lanca na kraj.
+4. **Kratko ime fakulteta** (`shortName: 'FMTU'`) dodano je, ali kao **posljedica, ne lijek** —
+   T0 je dokazao da naslov jedu kontrole, ne znakovi.
+
+**Izmjereno poslije:** kromo kataloga **307 → 167 px** (54 % → **29 %** na 320 px, 36 % →
+**20 %** na 393) · trenutna mrvica **30/99 → 99/99** · tvrdnja ⑤ **5 ekrana → 0**.
+
+**⚠️ Grana je ovo bila ublažila slučajno, ne namjerno** — 102 px i 3 retka umjesto 270 i 14,
+samo zato što je K2b maknuo gumbe iz tog zaglavlja. Korijen je stajao netaknut do T2.
+
+**Brana (od T0, 2026-08-21).** `tests/phone.spec.js` tvrdnje ③ i ⑤ + `helpers/phone-gate.js`.
+Obrnuto provjerene na produkciji: ③ prijavljuje `.browse-title › #browseBreadcrumb = 5 redaka,
+a susjed krati`, ⑤ prijavljuje `h1#browseHeading: odrezan na 34 od 187 px (18 %)`.
+
+**Lekcija (dvije, i druga je nastala tek pri mjerenju).**
+1. *Dva ispravna CSS pravila u istom spremniku mogu dati kvar koji nema nijedno od njih.* Ono
+   što se slobodno lomi **određuje visinu**, a ono što krati **ne određuje ništa**.
+2. *Uvjerljiv opis uzroka preživi reviziju.* Prvi zapis ovog buga bio je napisan gledanjem
+   ekrana i CSS-a, zvučao je mehanički i bio je netočan — pao je tek kad je netko izmjerio
+   širine djece umjesto da ih pročita. Isti razred kao „brisanjem demoa nestaje 240 KB
+   editorskog koda" (spec §7.14).
+3. *Preci u mrvici smiju se kratiti, trenutna razina ne smije.* Kad se u nizu nešto mora
+   stisnuti, stisne se ono što je **izvedivo iz konteksta**, a ne ono što je **jedini odgovor
+   na pitanje gdje si**. Prvi zapis tog CSS-a je izabrao obrnuto i djelovao je razumno.
+
+---
+
+### BUG-031 — Sadržaj stoji ispod Dynamic Islanda (sigurna zona nije nadoknađena)
+
+- Status: ✅ **riješen** (cigla T1, 2026-08-21) · Težina: **visok** (produkcija, svaki iPhone s otokom) · Našao: **Leon na iPhoneu 16**.
+
+**Simptom.** Gornja traka sa znakom i gumb „Start studying" stoje **ispod** Dynamic Islanda.
+
+**Izmjereno.** `.start-trigger` je na **y = 18 px**, a otok zauzima ~59 px. Postavljanjem
+`--safe-top` na 59 px u pregledniku **na produkciji se ne pomakne NIŠTA** — svih sedam
+mjerenih elemenata ostaje na 0 px pomaka. Na grani se pomakne sve za 59.
+
+**Uzrok.** `viewport-fit=cover` **jest** postavljen — dakle stranica se **namjerno** crta ispod
+otoka — ali `css/landing.css` spominje `env(safe-area-inset-*)` **nula puta**. Ušli smo u
+nesigurnu zonu i onda je nismo nadoknadili. Na grani to slučajno radi jer je K2b donio globalnu
+traku koja `var(--safe-top)` **ima**; nijedno pravilo to ne jamči.
+
+**Rješenje (cigla T1, isporučeno).** Sigurna zona ima od sada **jedan izvor i jedno pravilo**:
+
+1. **Jedan izvor** — `env(safe-area-inset-*)` smije stajati samo u `css/variables.css`; 18
+   mjesta u 5 datoteka prevedeno je na `var(--safe-*)`, a brana **`npm run check:safearea`**
+   (u preflightu) drži to tako. Razlog nije urednost: pravilo napisano golim `env()` naša
+   zamjena u pregledniku **ne dohvaća**, pa ga nijedan test ne može ni potvrditi ni oboriti.
+2. **Vodoravna os, jedno pravilo za svih devet stranica** —
+   `section[id$="-page"] { padding-left: var(--safe-left); padding-right: var(--safe-right) }`.
+   Padding ide na SEKCIJU jer se pozadina crta i ispod njega: ploha ostaje preko cijelog
+   ekrana, uvlači se samo sadržaj. Selektor je atributni (ugovor `-page` iz K1), pa deveta
+   stranica sigurnu zonu dobiva **time što postoji**.
+3. **Fiksni namještaj sam sebe uvlači** — cookie-traka i tri panela Studija; njima padding
+   predaka ne pomaže. Fiksno ide kroz **`max()`** (rub pojede razmak, traka raste 20 px
+   umjesto 34), skrolabilni sadržaj kroz **`calc()`** (zadnjoj kartici treba i zraka).
+
+**Izmjereno poslije:** ⑥ **183 → 0** · ⑦ **16 → 0** · ⑦b **16 → 0**; `css:diff` 0/3408
+(rubovi su u Chromiumu 0, pa se prikaz ne smije pomaknuti ni za piksel).
+
+**⚠️ Metoda mjerenja, jer je bila nova.** `env()` se u Chromiumu ne da simulirati — ali
+`--safe-top` je **naša varijabla iznad njega**. Postavi je na 59 px: **što se ne pomakne, na
+pravom telefonu stoji ispod otoka.** Prije ovoga sigurna zona nikad nije bila izmjerena.
+
+**Brana.** `tests/phone.spec.js` + `tests/phone.authed.spec.js`, mjera u
+`tests/helpers/phone-gate.js`. T0 je donio tvrdnju ① (gornji rub, portret) i obrnuto je
+provjerio na produkciji: `a.landing-logo y=20…52`, `button.nav-cta` („Start studying")
+**`y=18…53`**, uz otok od 59. **T1 je dodao ⑥ (donji rub, mjeren NA DNU SKROLA), ⑦ (bočni rub,
+landscape) i ⑦b/⑦c (spremnik sadržaja poštuje zonu i kad u njoj slučajno nema gumba)** te
+**četvrti profil, 852 × 393**.
+
+**Lekcija (tri, i sve tri su o mjerljivosti).**
+
+1. *`viewport-fit=cover` nije postavka nego obveza.* Njime se izričito prijavljuješ za crtanje
+   ispod izreza — od tog trenutka je svaki neispunjeni rub regresija, a ne propuštena ljepota.
+2. *Pravilo napisano golim `env()` je pravilo koje nijedan test ne može ni potvrditi ni
+   oboriti.* Dvije liste iste činjenice (`--safe-*` i `env()`) razišle su se točno onako kako
+   se dvije liste razilaze: `.mobile-nav` je ispravno pravilo iz `components.css` prepisivao
+   nemjerljivom inačicom (**90 od 183** nalaza), a `.landing-footer` je „radio" na način koji
+   se nije dao dokazati.
+3. *Prolaz zbog kratkog sadržaja nije prolaz.* Tvrdnja koja pada tek kad u pojasu stvarno
+   nešto stoji propušta ljusku koja je danas prazna — Studio je imao `padding-bottom: 0` na
+   platnu koje seže do ruba ekrana. Ispravnost mora biti **svojstvo spremnika**, ne ishod
+   trenutnog sadržaja. Prva izvedba te tvrdnje to nije bila i zato **nije mogla puknuti**;
+   otkriveno je ispisom kandidata, ne čitanjem koda.
+
+---
+
+### BUG-029 — „Predmeti" na 320 px PREBACUJU JEZIK umjesto da otvore katalog
+
+- Status: ✅ **riješen** (K3a) · Težina: **srednji** (samo ≤ 344 px i samo na engleskom — ali je to zadani jezik, a 320 px je donja granica iz kriterija prihvaćanja) · Našao: **sonda pisana PRIJE brane K3**, ne korisnik.
+
+**Simptom.** Posjetitelj na uskom telefonu (320 px) otvori landing i tapne „Predmeti".
+Katalog se ne otvori — **sučelje se prebaci na hrvatski.** Nije izostao izlaz nego se
+izvršila **kriva radnja**, što je gore od nedostupnog gumba: korisnik dobije povratnu
+informaciju da je nešto uspjelo, pa ne pokuša ponovno.
+
+**Uzrok.** `.topbar-nav` je imao `min-width: 0`, što flex-djetetu izričito **dopušta**
+stiskanje ispod širine sadržaja. Na landingu — jedinoj stranici gdje traka nosi CTA
+(`body.on-landing`) — zbroj kontrola premašuje 320 px, pa se nav stisnuo na **širinu 0**
+(`scrollWidth` 37), a gumb „Predmeti" isplivao **ispod** prekidača jezika.
+
+⚠️ **Kvar je ovisio o JEZIKU, i zato ga je bilo lako promašiti okom.** Engleski
+„Start studying" je **126 px**, hrvatski „Počni učiti" **103** — razlika 23 px, a preklop
+je bio **21**. Na hrvatskom sučelju kvara nema. Engleski je zadani.
+
+**Zašto nijedan gate nije pisnuo — i to je važnije od samog kvara.** `overflow` je
+`visible`, a `scrollWidth == clientWidth == 320`: **prelijeva doslovno nema**, pa su svi
+detektori prelijeva u pravu kad šute. Nijedna kontrola nije izvan ekrana, pa provjera
+odrezanosti prolazi. Axe mjeri uloge i kontrast, ne geometriju. A najuži Playwright profil
+je **375 px** — kvar živi na 320, širini koju kriterij prihvaćanja imenuje od prvog dana, a
+koja je do K3 postojala u **jednom jedinom testu**.
+
+**Popravak** (dva odvojena dijela, namjerno): *da stane* — ispod 360 px CTA odlazi iz trake
+landinga (ulaz su vrata u herou; landing ima tri `.start-trigger`-a). *Da se ne ponovi tiho*
+— `.topbar-nav` dobiva `flex-shrink: 0`: kad ponestane mjesta, traka se **prelije** umjesto
+da se **preklopi**, a prelijev gate vidi.
+
+**⚠️ DRUGI NALAZ — struktura je odmah odradila posao zbog kojeg postoji.** Čim je
+`flex-shrink: 0` uveden, `layout-guard` je pao na **560 px** (dokument 574 umjesto 560).
+To nije bila regresija nego **isti kvar na drugoj širini, koji je dotad također bio skriven
+preklapanjem**. Mjerenje: na 560 px prestaje `max-width: 559px`, pa odjednom iskoče **i
+oznake odredišta i wordmark** — `topbarHome` skoči **42 → 146 px**. Najgori slučaj
+(hrvatski, stranica „Predmeti") traži **632 px**, a uključivao se na 560: cijeli pojas
+**560–639 px** nikad nije stao.
+
+Popravak nije guranje jednog praga gore nego **razdvajanje dvaju**: oznake odredišta su
+jeftine i funkcionalne (imenuju kamo vode) pa ostaju na 560; **wordmark nosi +104 px i
+sam** pa dobiva vlastiti prag na 640. Znak (42 px slika) je vidljiv uvijek — konstanta
+marke. *Kad jedan prag pali dvije stvari različite cijene, mjeri ih odvojeno.*
+
+**Lekcija:** *postojanje se dade provjeriti selektorom, dohvatljivost samo pogotkom.* Ovo je
+**treći mehanizam istog kvara u tri uzastopne cigle** — K2b odrezano (`overflow:hidden`),
+BUG-028 prekriveno (fiksni banner), BUG-029 preklopljeno (`flex-shrink`) — a jedina provjera
+koja hvata sva tri je `elementFromPoint` na sredini kontrole. **Druga lekcija:** broj zapisan
+u kriteriju prihvaćanja, a nemjeren nijednim testom, nije kriterij nego želja.
+
+**Brana:** `tests/reachability.spec.js` + `tests/reachability.authed.spec.js`
+(`helpers/reach-gate.js`), 4 širine od **320** px. Obrnuta provjera: **pada 1 od 4**, s
+porukom `320px landing · preklop: topbarBrowse × topbar-btn (21×40 px)`.
+
+⚠️ **Ta se obrnuta provjera više NE DA reproducirati doslovno:** isti dan je Leon izbacio
+gumb „Predmeti" iz trake, pa `#topbarBrowse` više ne postoji. Poruka gore je **zapis onoga
+što je gate ispisao 2026-08-19**, ne recept za ponavljanje. Brana i dalje vrijedi — mjeri
+sve kontrole u kromu, ne tu jednu — ali sljedeća sesija neka ne traži gumb koji je obrisan.
+
+
+### BUG-028 — Izbornik blokova je NEKLIKABILAN kad stoji cookie-banner (editor)
+
+- Status: ✅ **riješen** (K2b, `508b2ff`) · Težina: **srednji** (osobni materijal + admin editor; katalog nedirnut) · Našao: **`test:authed`**, pri regresiji K2b.
+
+**Simptom.** U editoru se otvori ＋ izbornik za novi blok, izbornik se **vidi**, ali klik na njegove
+stavke ne radi ništa. Pogađa samo posjetitelja koji **još nije odgovorio na pitanje o kolačićima**.
+
+**Uzrok.** `.be-menu` je računao treba li se okrenuti prema gore ovako:
+`if (top + mh > window.innerHeight - 8)`. To je točno za **viewport**, ali ne i za ono što je u
+njemu **zauzeto**. Cookie-banner je `position:fixed` na dnu sa `z-index: 2147483000` (namjerno
+iznad svega, da ga ne prekrije nijedan modal) i **presreće pokazivač** nad donjih ~70 px.
+
+⚠️ **Kvar je bio LATENTAN, K2b ga nije uveo nego otkrio.** Dok je Studio počinjao na vrhu ekrana,
+izbornik je slučajno padao **iznad** bannera. Čim ga je globalna traka spustila za 108 px, počeo je
+padati **u** njega. *Slučajna geometrija je držala kvar nevidljivim, pa je izgledao kao regresija.*
+
+**Popravak.** `js/consent.js` objavljuje `--bottom-inset` (visina bannera dok stoji, 0 kad ga nema),
+a `posMenu()` od te vrijednosti računa stvarni donji rub. Rješenje je namjerno **općenito**: svako
+buduće trajno dno (traka za akcije, obavijest) samo postavi istu varijablu.
+
+**Lekcija:** *„stane li u ekran" nije isto što i „vidi li se".* Provjera prelijeva mjeri **viewport**,
+a korisnik gleda **ono što je u njemu ostalo slobodno**. Isti razred kao izuzeće u `layout.authed`
+čija premisa ne vrijedi kad fiksna ljuska ima `overflow:hidden`.
+
+**Brana:** `tests/auth.setup.js` upisuje pristanak prije prvog učitavanja (prijavljen admin ga je
+donio davno), pa authed-suita mjeri ono što tvrdi, a ne banner. Sama kolizija je popravljena u kodu.
+
+
+### BUG-027 — Petlja „Moji materijali ⇄ Studio": izlazak iz editora vraća u editor
+
+**Simptom** (Leon, 2026-08-18): polica → *uredi materijal* → editor (ništa se ne dira) → „natrag" →
+polica → „natrag" → **opet editor**, i tako u krug.
+
+**Uzrok.** `materialsReturnPage` je pamtio stranicu s koje si došao i izuzimao **samo** dolazak iz
+samih materijala. Dolazak **iz editora** se pamtio, pa je „natrag" s police vraćao onamo odakle si
+upravo izašao.
+
+⚠️ **Popravak je već postojao — nije bio prenesen.** Isti izuzetak stoji **tri retka iznad**, za
+`profileReturnPage` (`!== 'admin' && !== 'editor'`), a njegov komentar se izričito poziva na
+**BUG-019** i petlju profil ⇄ admin. Materijali su dobili vlastitu stranicu u **C0**, tjednima
+kasnije — i naslijedili obrazac bez njegova izuzetka.
+
+**Popravak (K2a).** Ručna jednodubinska povijest je **obrisana** (oba `*ReturnPage`); ostaje jedan
+model — `goBack()`.
+
+**Pouka:** *popravak koji nije generaliziran je popravak koji čeka drugu priliku.* Već sedmi put u
+ovoj fazi da mehanizam pokriva NEKA mjesta i time stvori pretpostavku da pokriva SVA.
+
+**Brana:** `tests/back-model.spec.js` („petlja polica ⇄ editor je mrtva").
+
+### BUG-026 — „Natrag" iz vlastitog materijala vodi u katalog fakulteta
+
+**Simptom** (Leon, 2026-08-18, uz dva screenshota): *Moji materijali* → uđeš u materijal da učiš →
+„natrag" → **lekcijska stranica čvora** (`#/subject/node%3A…`) koja crta „Matematika / **undefined**"
+→ još jedan „natrag" → **„Choose your faculty"**. Dvije stranice na kojima korisnik nikad nije bio.
+
+**Uzrok.** Aplikacija ima **DVIJE hijerarhije** — katalog (`browse → lessons → study`) i vlastito
+gradivo (`polica → study`) — a gumbi natrag poznavali su **samo prvu**, tvrdo ožičeni na roditelja.
+Osobni materijal se uči kao **sintetički predmet** `node:<uuid>` (`registerStudySubject`), pa je
+`backToLessons` doslovno tražio lekcijsku stranicu čvora koji lekcije **nema**.
+
+**Popravak (K2a).** Jedan model vraćanja: `goBack()` koristi **povijest** kad iza nas stoji naš unos,
+inače `roditeljOd()`, koji zna **obje** hijerarhije. Uz to čuvar u `navigateTo`: `lessons` sa
+`node:` subjektom preusmjerava na policu — ruta je od **K1 dijeljiva**, pa se do te stranice može
+doći i utipkavanjem, dakle čuvar ne smije stajati u gumbu.
+
+⚠️ **Prva verzija popravka stvarala je petlju koju je trebala ukloniti:** odlazak *gore* gurao je
+unos u povijest, pa je sljedeći „natrag" imao kamo natrag — **u dijete iz kojeg smo upravo izašli**.
+Kretanje gore mora **zamijeniti** unos. Našla ga je proba u pregledniku, ne čitanje koda.
+
+**Pouka:** *čim se pojavi druga hijerarhija, tvrdo ožičen roditelj postaje laž.* Nije bilo dovoljno
+dodati UGC kao sintetički predmet — navigacija je ostala kataloška.
+
+**Brana:** `tests/back-model.spec.js` (čvor nikad na lekcijskoj stranici · hladan dolazak penje
+hijerarhiju).
 
 ### BUG-025 — Sadržaj sa znakom `<` se GUBIO u kvizu, learnu i dopunama (kviz-pitanje bilo neodgovorljivo)
 - Status: ✅ **riješen** (`779f26b` + `6b02354`, grana `fix/bug-024-slika-u-learnu`) · Težina: **visok** (javni katalog **jest** pogođen) · Našao: **Claude**, pri reviziji BUG-024.
@@ -117,6 +474,7 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Uzrok (sistemski — „navigacija"):** study-stranica je **JEDAN dijeljeni DOM** za sve lekcije (isti `#quizSetup`/`#quizGame`/`#quizResults` + globalni `AppState.quiz`). `initStudyPage()` na učitavanju nove lekcije **potpuno resetira flashcards i fill** (`initFlashcards()`/`initFill()` čiste stanje+prikaz), ali za kviz zove **SAMO `updateQuizCategories()`** (napuni dropdown) — **nikad ne resetira `AppState.quiz` ni vidljivi panel**. Kviz je bio JEDINI mod bez reseta → in-progress panel + stara pitanja procure u sljedeću lekciju.
 - **Rješenje (`fix/quiz-state-leak`):** nova `resetQuiz()` (`js/quiz.js`) čisti `AppState.quiz` + vrati panel na setup (`showQuizSetup()`); pozvana u `initStudyPage()` uz ostale resete, **pod eksplicitnim komentarom** „RESET SVIH STUDY POD-MODOVA — svaki novi mod OBAVEZNO dodaje svoj reset ovdje". Regresijski test `tests/quiz-reset.spec.js` (A→Start→B→Quiz mora biti SETUP + `questions=0`) — **dokazano PADA bez fixa** (privremeno-isključen-reset run: `setupVisible=false`). Smoke 19/0, typecheck 0, verify 0/0.
 - **Lekcija:** kod **dijeljenog DOM-a + globalnog stanja**, učitavanje novog konteksta mora **potpuno resetirati SVAKI** pod-prikaz; ad-hoc reset raspršen po mjestima znači da će se novi/zaboravljeni mod tiho „zalijepiti". Centralizirano, imenovano mjesto reseta (s komentarom-ugovorom) sprječava ponavljanje klase. Ista obitelj kao BUG-019 (nedostatak pravog nav-modela) — **pravi navigacijski stog + čist per-lekcija lifecycle = kandidat za U8** (ne krpati širenje sad). [[live-login-verifies-crud]]
+  - **📌 DOPUNA 2026-08-18:** v. dopunu uz BUG-019 gore — propis je raspoređen u fazu „KOSTUR" (K1 rute, K3 brana). **Da su dva buga propisala isto rješenje i oba ga odgodila na istu oznaku koja se u međuvremenu zatvorila, nitko nije primijetio pet tjedana** (2026-07-15 → 2026-08-18) — jer nijedan gate ne čita `BUGS.md`. **Odgoda zapisana u prozu nema rok.**
 
 ### BUG-019 — Back-navigacija: petlja profil ⇄ admin (povratak na početnu nemoguć)
 - Status: ✅ riješen 2026-07-12 + ✅ **LIVE 2026-07-13** (deployano s F4; bug NIKAD nije bio na produkciji — admin stranica je do deploya postojala samo na f4) · Težina: srednji (UX, admin tok) · Prijavio: **korisnik** (2026-07-12, živo klikanje).
@@ -124,6 +482,8 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 - **Uzrok:** app nema povijest navigacije — samo jedno-slotni `profileReturnPage` (`js/navigation.js`) koji se postavlja pri **svakom** ulasku na profil. Back iz admina ide `navigateTo('profile')` (`js/admin.js` `#backFromAdmin`) → dolazak IZ ADMINA pregazi slot u `{page:'admin'}` → back s profila vodi u admin → admin back opet na profil → beskonačna petlja, izvorni cilj (početna/study) izgubljen.
 - **Rješenje:** dolazak **iz admina** NE prepisuje `profileReturnPage` (admin je pod-stranica profila — ulaz i back idu kroz profil, pa profilov back mora preživjeti taj skok). 1 uvjet u `navigateTo()`. Regresijski test u `tests/admin.spec.js` („BUG-019", pravi klikovi na `#backFromAdmin`/`#backFromProfile`, sva 4 profila) — **dokazano PADA bez fixa** (stash-provjera). Cache `20260712180655`.
 - **Lekcija:** jedno-slotni „return" pointer se sam pojede čim se pojavi druga razina navigacije — svaka nova pod-stranica mora ili čuvati tuđi slot ili treba **pravi navigacijski stog**. Stog (+ browser History API da i sistemska back-gesta radi u SPA-u) = kandidat uz editor-UX ciglu (U8), ne krpati sad.
+  - **📌 DOPUNA 2026-08-18 — propis je RASPOREĐEN, nakon što je dvaput promašio svoj rok.** „Kandidat uz U8" nikad nije izveden, a **U8 je zatvoren**; isti propis ponovio je i BUG-020 (tri dana kasnije) i također ostao neizveden. Danas je to **faza „KOSTUR", cigla K1** ([FRONTEND_REDIZAJN.md §8](../plan/FRONTEND_REDIZAJN.md)) — s branom, jer je upravo ovo obrazac koji BUG-023 imenuje: *rečenica u dokumentu ne sprječava ništa.* Mjereno pri raspoređivanju: aplikacija je imala **devet stranica i jednu adresu** (`#/materials`), a `saveCurrentPosition` je **već serijalizirao potpun opis rute** — samo u `localStorage` umjesto u adresu.
+  - **✅ ISPORUČENO ISTI DAN (2026-08-18):** K1 je gotov (spec §8.6) — devet stranica ima devet adresa, „natrag" vraća korak, dijeljen link otvara točno tu lekciju. Brana je **`tests/routes.spec.js`**, obrnuto provjerena. **Propis je time zatvoren nakon pet tjedana i dvije promašene oznake.** ⚠️ Sistemska back-gesta radi kroz `popstate`, ali `profile`/`admin`/`editor` **namjerno nemaju adresu** — deep-link bi im pokazao praznu stranicu, što je razred ovog istog BUG-a 023.
 
 ### BUG-018 — Admin (F4.3a) se nije detektirao + „Admin" curio na dno; Playwright to NIJE uhvatio
 - Status: ✅ riješen 2026-07-06 (grana `foundation/f4` = preview; NIJE bilo na produkciji) · Težina: srednji (admin-only značajka) · Našao: **korisnik živom prijavom** („samo admin dole"), pa potvrđeno login-skriptom.

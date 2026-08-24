@@ -1,78 +1,30 @@
-// ===== SOKRAT STUDY — ADMIN (F4 Admin CRUD) =====
+// ===== SOKRAT STUDY — ADMIN CRUD (F4.3b/c) =====
 //
-// F4.3a: detekcija admina + otkrivanje admin-only UI elemenata.
+// ⚠️ T6: „jesi li ti admin" JE IZAŠLO IZ OVE DATOTEKE u `js/admin-reveal.js` — ondje piše
+// zašto. Ovdje ostaje sve što je vezano uz SAMU admin-stranicu i uređivanje, i ta se
+// datoteka na posjetiteljev put više ne učitava.
+//
+// ⚠️ TRAŽI `js/admin-reveal.js` UČITAN PRIJE SEBE (v. `window.SokratAdmin.studioBridge` na dnu).
+//
 // F4.3b: admin editor stranica (#admin-page) — read-only pregled sadržaja (predmet → lekcija → kartice).
-//        Uređivanje/spremanje dolazi u F4.3c. Sadržaj je javan (public-read) → viewer se smije renderirati
-//        svakome; ulaz je admin-only (skriveni gumb, F4.3a), a WRITE (F4.3c) je RLS-zaštićen (F4.2).
-//
-// VAŽNO: prava sigurnost je u RLS-u (F4.1 profiles/is_admin + F4.2 write-policyji) —
-// ne-admin FIZIČKI ne može pisati u bazu. .admin-only skrivanje je samo UX.
+//        Sadržaj je javan (public-read) → viewer se smije renderirati svakome; ulaz je admin-only
+//        (skriveni gumb, F4.3a), a WRITE je RLS-zaštićen (F4.2).
 
-const SokratAdmin = (function () {
-  'use strict';
-
-  let isAdminCache = false;
-
-  async function computeIsAdmin() {
-    // SokratAuth je top-level `const` (globalni leksički binding), NIJE window property → referenciraj golo (kao profile/cloud-sync).
-    const auth = (typeof SokratAuth !== 'undefined') ? SokratAuth : null;
-    if (!auth || typeof auth.getClient !== 'function') return false;
-    const client = auth.getClient();
-    const user = (typeof auth.getUser === 'function') ? auth.getUser() : null;
-    if (!client || !user) return false;                 // nema sesije → nije admin
-    try {
-      const res = await client.rpc('is_admin');
-      return !!(res && res.data === true && !res.error);
-    } catch (e) {
-      return false;                                     // mreža/RPC padne → tretiraj kao ne-admin
-    }
+// Ulaz u editor (skriveni gumb u profilu, F4.3a) → admin stranica.
+document.addEventListener('click', function (e) {
+  if (e.target.closest('[data-admin-open-editor]')) {
+    if (typeof navigateTo === 'function') navigateTo('admin');
   }
+});
 
-  // Otkrij/sakrij sve .admin-only elemente prema keširanom statusu.
-  // Inline style pobjeđuje CSS (bez potrebe za CSS pravilom); '' vraća na stylesheet default.
-  function applyVisibility() {
-    document.querySelectorAll('.admin-only').forEach(function (el) {
-      el.style.display = isAdminCache ? '' : 'none';
-    });
-    document.body.classList.toggle('sokrat-is-admin', isAdminCache);
-  }
-
-  async function refresh() {
-    isAdminCache = await computeIsAdmin();
-    applyVisibility();
-    return isAdminCache;
-  }
-
-  function isAdmin() { return isAdminCache; }
-
-  function init() {
-    // Osvježi na svaku promjenu auth-stanja (login/logout/početna sesija iz spremljenog tokena).
-    if (typeof SokratAuth !== 'undefined' && typeof SokratAuth.onChange === 'function') {
-      SokratAuth.onChange(function () { refresh(); });
-    }
-    refresh(); // početno (ako je sesija već prisutna)
-  }
-
-  // Ulaz u editor (skriveni gumb u profilu, F4.3a) → admin stranica.
-  document.addEventListener('click', function (e) {
-    if (e.target.closest('[data-admin-open-editor]')) {
-      if (typeof navigateTo === 'function') navigateTo('admin');
-    }
+// Back-gumb admin stranice → natrag na profil.
+document.addEventListener('DOMContentLoaded', function () {
+  const back = document.getElementById('backFromAdmin');
+  // K2a: profil je rezervni put; kad povijest postoji, ona odlucuje.
+  if (back) back.addEventListener('click', function () {
+    if (typeof goBack === 'function') goBack('profile');
   });
-
-  // Back-gumb admin stranice → natrag na profil.
-  document.addEventListener('DOMContentLoaded', function () {
-    init();
-    const back = document.getElementById('backFromAdmin');
-    if (back) back.addEventListener('click', function () {
-      if (typeof navigateTo === 'function') navigateTo('profile');
-    });
-  });
-
-  return { refresh: refresh, isAdmin: isAdmin, applyVisibility: applyVisibility };
-})();
-
-window.SokratAdmin = SokratAdmin;
+});
 
 // ===== F4.3b — Admin editor stranica (read-only viewer) =====
 // Renderira se iz navigateTo('admin') (navigation.js). Koristi ContentRepository (S1 šav).

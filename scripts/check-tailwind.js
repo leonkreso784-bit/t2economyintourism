@@ -30,8 +30,18 @@ const MANIFEST = path.join(ROOT, 'css', 'app.css');
 const BUNDLE = path.join(ROOT, 'styles.bundle.css');
 const CACHE = path.join(ROOT, '.cache');
 
-/** Stranice koje UČITAVAJU `styles.bundle.css` (dakle smiju koristiti utilityje). */
-const BUNDLE_PAGES = ['index.html'];
+/**
+ * Stranice koje UČITAVAJU `styles.bundle.css` (dakle smiju koristiti utilityje).
+ *
+ * ⚠️ T6: bio je ručni popis (`['index.html']`), pa je `editor.html` u provjerama #3 i #5
+ * bio nevidljiv — utility napisan ondje Tailwind ne bi ni generirao (nije u `@source`), a
+ * da ga i generira, brana bi ga prijavila kao „šum koji nitko nije napisao". Definicija je
+ * zato ČINJENIČNA: bundle-stranica je ona koja bundle doista učitava.
+ */
+const BUNDLE_PAGES = fs.readdirSync(ROOT)
+  .filter((f) => f.endsWith('.html'))
+  .filter((f) => fs.readFileSync(path.join(ROOT, f), 'utf8').includes('styles.bundle.css'))
+  .sort();
 
 /**
  * Namespacei u kojima dinamičko sastavljanje imena znači tihi gubitak stila. Uzak popis:
@@ -254,7 +264,8 @@ function checkSourceContract() {
   if (intoData.length) {
     fail('@source ugovor', '`@source` cilja `data/` — gradivo se NE skenira (ADR-028).', intoData);
   }
-  for (const must of ['../index.html', '../js']) {
+  // Svaka bundle-stranica mora biti i skenirana — inače utility u njoj tiho ne postoji.
+  for (const must of [...BUNDLE_PAGES.map((p) => '../' + p), '../js']) {
     if (!sources.includes(must)) {
       fail('@source ugovor',
         '`css/app.css` ne skenira `' + must + '`, a taj izvor gradi markup koji `styles.bundle.css` stilizira →\n' +

@@ -16,7 +16,7 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260815055218'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260824053542'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // Minimalni precache: navigacijski shell. Ostalo se kešira runtime-om po verzioniranom URL-u
@@ -25,6 +25,12 @@ const CACHE = 'sokrat-cache-' + SW_VERSION;
 // NE ignorira query → bez tokena bi precache unos bio mrtav (nikad pogođen). ADR-017 jamči da je
 // SW_VERSION identičan tokenu u HTML-u (`npm run bump` postavlja oba; `bump:check` = CI gate).
 // manifest.json se u HTML-u referencira BEZ tokena → ostaje neverzioniran.
+// ⚠️ T6: `editor.html` NAMJERNO NIJE OVDJE, i to nije previd nego cijela poanta cigle.
+// Offline ljuska je ono što student nosi sa sobom; editor je 244 KiB alata koji offline
+// ionako ne radi (traži Supabase). Precachirati ga značilo bi vratiti ga na put svakome
+// tko aplikaciju samo otvori — dakle poništiti T6 kroz druga vrata. Stranica editora se
+// keširа tek ako je netko POSJETI (navigacija se sprema na uspješan odgovor niže).
+// ⚠️ Ovo je i preduvjet faze POLICA: ondje se u ljusku dodaje SADRŽAJ, ne alat.
 const PRECACHE = ['/', '/index.html', '/styles.bundle.css?v=' + SW_VERSION, '/manifest.json'];
 
 self.addEventListener('install', (event) => {

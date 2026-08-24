@@ -7,6 +7,7 @@
   :root, :host {
     --spacing: 0.25rem;
     --container-xl: 36rem;
+    --container-2xl: 42rem;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-tighter: -0.05em;
@@ -194,4 +195,12 @@
   --touch-target: 44px;
   --touch-target-large: 48px;
   --nav-h: 72px;
+}
+
+:root {
+  --topbar-h: 64px;
+  --pathbar-h: 44px;
+  --chrome-h: calc(var(--topbar-h) + var(--pathbar-h) + var(--safe-top));
+  --bottom-inset: 0px;
+  --bottom-furniture-h: 0px;
 }

@@ -12,37 +12,20 @@
     background: var(--bg-primary);
 }
 
-/* ===== HEADER (reuses global .back-btn and .breadcrumb) ===== */
-.browse-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+/* ===== ZAGLAVLJE JE OBRISANO (T2) =====
+   `.browse-header` je bio `position: sticky` i trošio **140 px** trajno, a nosio je dvije
+   stvari koje ondje nisu trebale stajati: položaj (preselio u mrvicu, gdje sada stoji
+   cijeli lanac fakultet › smjer › godina) i uputu (preselila u sadržaj, dolje). S njim
+   su otišli `.browse-title`, `.browse-title h1` i `.browse-logo` — znak je već u K2b
+   otišao u globalnu traku, pa je ovaj bio duplikat i prije T2. */
 
-.browse-title {
-    flex: 1;
-    min-width: 0;
-}
-
-.browse-title h1 {
+/* Uputa razine („Odaberi smjer") — SADRŽAJ, ne kromo: smije se odskrolati. */
+.browse-heading {
     font-size: 1.25rem;
     font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.browse-logo .logo-wrapper {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
+    line-height: 1.25;
+    margin-bottom: 0.35rem;
+    text-wrap: balance;
 }
 
 /* ===== CONTENT ===== */
@@ -326,6 +309,12 @@
 @media (max-width: 600px) {
     .browse-content {
         padding: 1.25rem 1rem;
+        /* ⚠️ T1: kratica iznad je do danas BRISALA `padding-bottom: calc(2rem +
+           var(--safe-bottom))` iz baznog pravila — i to točno na širinama gdje sigurna
+           zona jedina i postoji. Izmjereno: zadnja kartica kataloga je na dnu skrola
+           ulazila 14 px pod home-indikator i odande se nije dala izvući, jer je stranica
+           već bila na kraju. Pravilo je postojalo, mjesto primjene ga je poništilo. */
+        padding-bottom: calc(1.25rem + var(--safe-bottom));
     }
     .browse-grid {
         grid-template-columns: 1fr;

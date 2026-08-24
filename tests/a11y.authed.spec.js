@@ -18,6 +18,8 @@
 //
 // STAGING-only, kao i ostali authed specovi. **Ništa se ne objavljuje** — draft se na kraju odbacuje.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 const { skenirajSveTeme } = require('./helpers/axe-gate');
 
 test.describe('a11y (prijavljen) — 0 serious/critical na vlastitom gradivu i u editoru', () => {
@@ -49,12 +51,7 @@ test.describe('a11y (prijavljen) — 0 serious/critical na vlastitom gradivu i u
     test.setTimeout(300000);
     const nalazi = [];
 
-    await page.goto('/');
-    await page.waitForFunction(
-      () => !!window.SokratStudio && !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-    );
-    await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-    await page.evaluate(() => navigateTo('editor'));
+    await otvoriStudio(page);
     await page.waitForSelector('#editor-page.active #stTree .st-row', { timeout: 20000 });
 
     // ① Studio sa stablom (prazan canvas) — ploha `--st-rail`/`--st-panel`.

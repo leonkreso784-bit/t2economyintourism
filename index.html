@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260815055218">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260815055218">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260815055218">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260815055218">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260815055218">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260824053542">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260824053542">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260824053542">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260824053542">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260824053542">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -52,7 +52,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260815055218">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260824053542">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -88,7 +88,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260815055218">
+    <link rel="stylesheet" href="css/consent.css?v=20260824053542">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -99,10 +99,28 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260815055218" defer></script>
-    <script src="js/consent.js?v=20260815055218" defer></script>
+    <script src="js/monitoring.js?v=20260824053542" defer></script>
+    <script src="js/consent.js?v=20260824053542" defer></script>
 </head>
-<body>
+<!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
+     `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
+     bez ove klase tvrdio suprotno od sekcije ispod sebe. Do prvog crtanja je `--pathbar-h`
+     iznosio 44 px, `navigateTo` bi klasu dodao tek kad se JS probudi, i stranica bi poskočila
+     za cijeli red: izmjereno **CLS 0.1546** uz Lighthouse prag 0.10.
+     Kvar je postao VIDLJIV tek u T3: dotad je `--chrome-h` bio zapečen na `:root` pa ga
+     `body.no-pathbar` nije ni mijenjao — vrijednost je bila kriva, ali tiha. Ispravak ju je
+     učinio točnom i time mjerljivom. *Dvije tvrdnje o istoj stvari razilaze se i kad je
+     jedna od njih CSS varijabla.* -->
+<body class="no-pathbar">
+<script>
+    /* Dijeljiva ruta (K1) znači da posjetitelj smije ući RAVNO na browse ili lekciju, gdje
+       drugi red POSTOJI. Odluka se zato mora donijeti prije prvog crtanja, a ne u `navigateTo`.
+       Inline i na vrhu `<body>`: vanjska skripta bi stigla nakon crtanja i vratila isti skok.
+       ⚠️ CSP (C6) mora pokriti OVU skriptu kao i postojeću consent-inline iznad. */
+    if (location.hash.indexOf('#/') === 0 && location.hash !== '#/') {
+        document.body.classList.remove('no-pathbar');
+    }
+</script>
     
     <!-- ==================== LANDING PAGE ==================== -->
     <!-- ====================================================================
@@ -118,29 +136,72 @@
          ili što crta JavaScript. Boje SAMO kroz tokene — nijedan hex, nijedna
          zakucana bijela (`check:palette`).
          ==================================================================== -->
-    <section id="landing-page" class="landing-page active">
+    <!-- ==================== JEDNA GORNJA TRAKA (K2b, spec §8) ====================
+         Stoji IZVAN svih `-page` sekcija, kao njihov brat — to je cijeli mehanizam.
+         Do K2b su `browse-header`, `lessons-header` i `study-header` svaka iznova
+         slagale isti trojac (jezik + materijali + račun), a živjele su UNUTAR sekcija
+         pa su nestajale s njima: jezik je bio dohvatljiv na 4 od 9 stranica, znak na
+         3 od 9 i nigdje kao poveznica na dom.
 
-        <!-- ── Traka. Appleovski minimum: znak, jezik, prijava, jedna radnja. ──
-             Sidreni linkovi („Subjects/How it works/Study modes") su otišli zajedno
-             sa sekcijama na koje su pokazivali. -->
-        <header class="landing-nav" id="top" role="banner">
-            <a class="landing-logo" href="#top" aria-label="Sokrat Study home">
-                <img src="assets/logo.svg?v=20260815055218" alt="" class="logo-image">
-                <span class="logo-text">Sokrat Study</span>
-            </a>
+         ⚠️ LANDING JE IZGUBIO VLASTITU TRAKU, i to nije previd. Dvije trake na istom
+         ekranu bile bi baš bolest koju cigla liječi. Mjere iz §7.13 (traka 64 px, znak
+         42 px) prenesene su OVAMO — nisu izgubljene.
 
-            <button type="button" class="lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
+         ⚠️ „Moji materijali" se na landingu NE prikazuje (Leon, 2026-08-18): ulaz u
+         vlastito gradivo ondje su VRATA U HEROU. Granica §8.4/6 dopušta ulaz, ali
+         landing ostaje bez popisa korisnikova gradiva. -->
+    <!-- ⚠️ T3: OBJE TRAKE SU OD SADA U JEDNOM OMOTAČU, i to nije uredništvo nego jedini
+         način da se u niskom prozoru poslože JEDNA PORED DRUGE. Sticky je preselio s
+         `.topbar` na `.chrome`: sticky element se ne može zalijepiti izvan svog roditelja,
+         pa da je omotač ostao običan blok visok 108 px, traka bi mu iscurila iz kutije i
+         odskrolala. Omotač je zato nositelj `position: sticky` i `z-index`, a trake su
+         unutar njega statične. -->
+    <div class="chrome" id="chrome">
+    <header class="topbar" id="top" role="banner">
+        <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
+            <img src="assets/logo.svg?v=20260824053542" alt="" class="logo-image">
+            <span class="logo-text">Sokrat Study</span>
+        </a>
+
+        <!-- ⚠️ TRAKA VIŠE NEMA NIJEDNO ODREDIŠTE, i to je odluka u dva koraka.
+             „Predmeti" su maknuti 2026-08-19 (Leon: *„najnebitniji gumb ikada"*), a
+             „Moji materijali" ciglom T2 (Leon: *„taj gumb je na landingu i na profilu i
+             to je DOVOLJNO"*). Nijedan ulaz nije izgubljen: katalog vode VRATA U HEROU
+             (`.start-trigger` → `enterBrowse`) i MRVICA, a vlastito gradivo ima **pet**
+             ulaza (landing ×4 — vrata, `own-cta`, podnožje, ＋ pločica — i profil ×1).
+             Ključ `topbar.subjects` OSTAJE u rječniku: on imenuje mrvicu, ne obrisani gumb.
+             ⚠️ Cijena je izrečena u specu §9.6: iz UNUTRAŠNJOSTI aplikacije (katalog,
+             lekcija, učenje, Studio) u vlastite materijale se ide preko landinga ili
+             profila — isti kompromis kao kod „Predmeta". -->
+        <div class="topbar-spacer"></div>
+
+        <div class="topbar-actions">
+            <button type="button" class="topbar-btn topbar-lang" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
                 <i class="fas fa-globe" aria-hidden="true"></i>
                 <span class="lang-toggle-label">EN</span>
             </button>
-            <button type="button" class="nav-auth-btn auth-entry" id="authNavBtn" hidden>
+            <button type="button" class="topbar-btn auth-entry" id="authNavBtn" hidden>
                 <i class="fas fa-user" aria-hidden="true"></i>
-                <span class="auth-entry-label" id="authNavLabel">Sign in</span>
+                <span class="auth-entry-label topbar-btn-label" id="authNavLabel">Sign in</span>
             </button>
-            <button type="button" class="nav-cta start-trigger">
+            <button type="button" class="topbar-cta start-trigger" id="topbarStart">
                 <span data-i18n="cta.start.lower">Start studying</span>
             </button>
-        </header>
+        </div>
+    </header>
+
+    <!-- Drugi red — POLOŽAJ (natrag + mrvica). Mrvicu crta `renderPathbar()` u
+         js/navigation.js iz ISTE funkcije `roditeljOd()` koja pogoni „natrag" (K2a).
+         Namjerno: da mrvica i gumb natrag ne mogu tvrditi različitu hijerarhiju. -->
+    <div class="pathbar" id="pathbar">
+        <button type="button" class="pathbar-back" id="pathbarBack" aria-label="Go back" data-i18n-aria="topbar.back">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        <nav class="crumbs" id="crumbs" aria-label="Breadcrumb" data-i18n-aria="topbar.crumbs"></nav>
+    </div>
+    </div><!-- /.chrome -->
+
+    <section id="landing-page" class="landing-page active">
 
         <main class="landing-main">
             <div class="landing-wrap">
@@ -151,23 +212,28 @@
                      je bez veze." Dijagnoza nije bila estetska nego redoslijedna — hero je
                      tražio od posjetitelja da RADI (upiši pojam, upiši objašnjenje) prije
                      nego mu je dan razlog da mu je stalo, a cijeli gotov katalog bio je
-                     nevidljiv na ulazu. Nestankom demoa pada i BACKLOG-stavka „landing
-                     šalje 240 KB editorskog koda posjetitelju bez računa" — nosio ju je
-                     baš on. NE VRAĆATI bez nove Leonove odluke.
+                     nevidljiv na ulazu. NE VRAĆATI bez nove Leonove odluke.
+
+                     ⚠️ OVDJE JE PRIJE STAJALA NEISTINA (ispravljeno 2026-08-16). Komentar je
+                     tvrdio da nestankom demoa pada i BACKLOG-stavka „landing šalje 240 KB
+                     editorskog koda". NE PADA: demo je bio čisti textContent i nije dodirivao
+                     nijednu editorsku datoteku. Tih ~234 KB učitavaju obični <script src> na
+                     dnu OVE datoteke, bezuvjetno, sa ili bez demoa. Stavka je otvorena i traži
+                     vlastitu ciglu. Pouka: veza koja zvuči uzročno preživi reviziju; obara je
+                     mjerenje, ne čitanje.
 
                      Naslov pokriva OBA izvora gradiva namjerno: „Nađi svoj predmet" je
                      obećanje kataloga, pa tko svoj predmet ondje nema — odmah je izvan.
                      Odakle gradivo dolazi je detalj nabave; proizvod je pretvorba. -->
                 <p class="hero-kicker" data-i18n="hero.kicker">Any subject &middot; any language</p>
 
-                <h1 class="hero-title text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter text-ink-0">
+                <h1 class="hero-title font-bold tracking-tighter text-ink-0">
                     <span data-i18n="hero.title.a">Any material.</span><br>
                     <span data-i18n="hero.title.b">Learn it </span><em class="hero-mark" data-i18n="hero.title.mark">four ways</em><span data-i18n="hero.title.c">.</span>
                 </h1>
 
-                <p class="hero-sub mt-5 max-w-xl text-lg text-ink-2" data-i18n="hero.sub">
-                    Take something ready from the catalog, or write your own &mdash; flashcards,
-                    a quiz, fill-in-the-blanks and study material build themselves.
+                <p class="hero-sub max-w-xl text-ink-2" data-i18n="hero.sub">
+                    Nothing to prepare &mdash; the cards, the quiz and the blanks write themselves.
                 </p>
 
                 <!-- ══ 2 · DVOJE VRATA ═════════════════════════════════════
@@ -175,7 +241,7 @@
                      trebao bi biti prvi, gdje je Start studying." Ulaz u vlastito
                      gradivo time seli iz trake OVDJE, u ravnopravna vrata. Cilj
                      ADR-029 (UGC je glavni proizvod) ostaje; mijenja se samo mjesto. -->
-                <div class="doors mt-12 md:mt-16">
+                <div class="doors">
                     <button type="button" class="door door--primary start-trigger">
                         <span class="door-t" data-i18n="door.study.t">Start studying</span>
                         <span class="door-d" data-i18n="door.study.d">Pick your own material, or something ready from the catalog.</span>
@@ -194,14 +260,153 @@
 
                 <!-- ══ 3 · KATALOG ═════════════════════════════════════════
                      Namjerno PODREĐEN vratima: katalog je jedan izvor gradiva, ne ono
-                     što platforma jest (ADR-029). Ostaje jer je „22 predmeta" inače
-                     samo tvrdnja — ovdje se vidi. Crta ga `renderLandingSubjects()`. -->
+                     što platforma jest (ADR-029). Ostaje jer je broj predmeta inače
+                     samo tvrdnja — ovdje se vidi. Crta ga `renderLandingSubjects()`.
+
+                     ⚠️ NIJEDAN BROJ NI POPIS PROGRAMA NIJE OVDJE. Do 2026-08-16 je ovaj
+                     komentar pisao „22 predmeta" dok ih je bilo 24 — isti razred greške
+                     koji je već jednom bio NA PRODUKCIJI (landing je pisao 17). Predmeti,
+                     njihov broj i gumbi filtra dolaze iz `data/catalog.js`; dodaj program
+                     ili predmet i ova sekcija se promijeni sama, bez dodira u HTML-u.
+
+                     ⚠️ Vitrina je do danas pokazivala SAMO primarni (EN) program → vrata
+                     su pisala 24, a mreža nudila 17. Tko prebroji pločice, uhvatio bi
+                     stranicu u laži. Sad se crtaju svi, a jezik razdvaja filtar. -->
                 <section class="landing-catalog mt-16 md:mt-24" id="subjects" aria-labelledby="catalogHeading">
                     <h2 id="catalogHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="cat.title">Or start from the catalog</h2>
                     <p class="mt-2 max-w-xl text-base text-ink-2" data-i18n="cat.sub">Complete subjects, already written &mdash; open one and study in seconds.</p>
-                    <div class="landing-subjects mt-8" id="landingSubjects">
+
+                    <!-- Tražilica je JEDINO polje za unos na landingu i jedina dopuštena
+                         iznimka od pravila „hero ne traži posao" (§7.13 ②): ne stoji na
+                         prvom ekranu i ne traži ništa — alat je, ne zadatak. U
+                         `tests/landing.spec.js` je izuzeta IMENOM, tvrdnja ostaje živa. -->
+                    <div class="cat-tools mt-7">
+                        <div class="cat-search">
+                            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+                            <input type="search" id="catalogSearch" class="cat-search-input"
+                                   autocomplete="off" spellcheck="false"
+                                   data-i18n-placeholder="cat.search" placeholder="Search subjects"
+                                   data-i18n-aria="cat.search" aria-label="Search subjects">
+                        </div>
+                        <!-- Gumbi programa crta `renderCatalogPrograms()` iz kataloga. -->
+                        <div class="cat-programs" id="catalogPrograms" role="group"
+                             data-i18n-aria="cat.program" aria-label="Programme"></div>
+                    </div>
+
+                    <p class="cat-count" id="catalogCount" aria-live="polite" role="status"></p>
+
+                    <div class="landing-subjects mt-6" id="landingSubjects">
                         <!-- Rendered from data/catalog.js by renderLandingSubjects() -->
                     </div>
+                </section>
+
+                <!-- ══ 4 · SVOJE GRADIVO ═══════════════════════════════════
+                     Puna sekcija, ravnopravna katalogu (ADR-029 dopuna 2026-08-14).
+                     Do C2 je UGC bio redak u navigaciji; Leon: „ugc je skriven još
+                     uvijek… kada ju otvori bilo tko da vidi da može radit svoj sadržaj."
+
+                     ⚠️ POLICA DOLJE JE ILUSTRACIJA, i tako je i označena. Ne pretvara
+                     se da je nečija stvarna polica i ništa se iz nje ne otvara —
+                     lažni podaci koji glume prave su cijena koju landing ne mora
+                     platiti. Primjeri su NAMJERNO izvan fakulteta (pravo, jezik,
+                     medicina, vozački): katalog iznad već dokazuje da FMTU radi, a
+                     ova sekcija mora dokazati ono što katalog ne može — da platforma
+                     nije vezana ni za jedan fakultet (CLAUDE.md: „FMTU je odskočna daska"). -->
+                <section class="landing-own mt-16 md:mt-24" aria-labelledby="ownHeading">
+                    <h2 id="ownHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="own.title">Or write your own</h2>
+                    <p class="mt-2 max-w-xl text-base text-ink-2" data-i18n="own.sub">Anything you study &mdash; a law course, a language, your driving test. If you can write it down, you can study it here.</p>
+
+                    <!-- Numeracija je opravdana jer je RIJEČ O SLIJEDU: koraci se rade
+                         ovim redom. Da nije slijed, brojevi bi bili ukras. -->
+                    <ol class="own-steps mt-8">
+                        <li>
+                            <span class="own-step-n" aria-hidden="true">1</span>
+                            <h3 data-i18n="own.s1.t">Write it down</h3>
+                            <p data-i18n="own.s1.d">Paste your notes or type them straight in. Sections, images, tables and formulas all fit.</p>
+                        </li>
+                        <li>
+                            <span class="own-step-n" aria-hidden="true">2</span>
+                            <h3 data-i18n="own.s2.t">Add cards and questions</h3>
+                            <p data-i18n="own.s2.d">Flashcards, quiz questions and fill-in-the-blanks live next to the material they came from.</p>
+                        </li>
+                        <li>
+                            <span class="own-step-n" aria-hidden="true">3</span>
+                            <h3 data-i18n="own.s3.t">Study it four ways</h3>
+                            <p data-i18n="own.s3.d">The same four modes as every subject in the catalog. Progress is saved and synced.</p>
+                        </li>
+                    </ol>
+
+                    <p class="own-shelf-label mt-10" data-i18n="own.shelf">For example, a shelf that has nothing to do with any faculty:</p>
+                    <ul class="own-shelf mt-3">
+                        <li><i class="fas fa-scale-balanced" aria-hidden="true"></i><span data-i18n="own.ex1">Roman Law</span></li>
+                        <li><i class="fas fa-language" aria-hidden="true"></i><span data-i18n="own.ex2">German B1</span></li>
+                        <li><i class="fas fa-heart-pulse" aria-hidden="true"></i><span data-i18n="own.ex3">Anatomy</span></li>
+                        <li><i class="fas fa-car" aria-hidden="true"></i><span data-i18n="own.ex4">Driving theory</span></li>
+                    </ul>
+
+                    <button type="button" class="own-cta mt-8" data-goto-materials>
+                        <span data-i18n="own.cta">Make your own material</span>
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                </section>
+
+                <!-- ══ 5 · ČETIRI NAČINA ═══════════════════════════════════
+                     Naslov obećava „četiri načina" od prvog retka; ova sekcija je
+                     jedino mjesto gdje se vidi ŠTO su. Namjerno BEZ ijednog upisa
+                     (§7.13): prethodni landing je tražio od posjetitelja da tipka i
+                     Leon ga je zato odbio. Ovdje se samo pokazuje.
+
+                     ⚠️ Ikone i nazivi modova moraju pratiti STUDY-NAVIGACIJU (nav.*
+                     ključevi) — ako se mod ikad preimenuje, landing ne smije ostati
+                     jedini ekran sa starim imenom. -->
+                <section class="landing-modes mt-16 md:mt-24" aria-labelledby="modesHeading">
+                    <h2 id="modesHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="modes.title">The four ways</h2>
+                    <p class="mt-2 max-w-xl text-base text-ink-2" data-i18n="modes.sub">Every subject &mdash; from the catalog or your own &mdash; opens in all four. Nothing to set up.</p>
+
+                    <ul class="modes-grid mt-8">
+                        <li>
+                            <i class="fas fa-book-open" aria-hidden="true"></i>
+                            <h3 data-i18n="nav.learn">Learn</h3>
+                            <p data-i18n="modes.learn.d">The material itself &mdash; sections, images, tables, formulas.</p>
+                        </li>
+                        <li>
+                            <i class="fas fa-clone" aria-hidden="true"></i>
+                            <h3 data-i18n="nav.flashcards">Flashcards</h3>
+                            <p data-i18n="modes.cards.d">Question on one side, answer on the other. Short by design.</p>
+                        </li>
+                        <li>
+                            <i class="fas fa-circle-question" aria-hidden="true"></i>
+                            <h3 data-i18n="nav.quiz">Quiz</h3>
+                            <p data-i18n="modes.quiz.d">Multiple choice, scored, with the reason behind each answer.</p>
+                        </li>
+                        <li>
+                            <i class="fas fa-pen-to-square" aria-hidden="true"></i>
+                            <h3 data-i18n="nav.fill">Fill</h3>
+                            <p data-i18n="modes.fill.d">Type the missing term. Harder than recognising it in a list.</p>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- ══ 6 · TVOJ AI (MCP) ═══════════════════════════════════
+                     ⚠️ OZNAČENO KAO „USKORO" I TO NIJE UKRAS (Leonova odluka,
+                     2026-08-16). MCP danas NE POSTOJI: `mcp-admin/` je untracked
+                     read-only pokus, a ADR-030 ② kaže da mu prvi problem — PRISTUP,
+                     kako korisnikov AI dokaže tko je bez preglednika — još nije
+                     presuđen. Gumb „Spoji svoj AI" u Studiju stoji `disabled`.
+
+                     Zato sekcija govori u BUDUĆEM vremenu i nosi vidljivu oznaku.
+                     Landing koji tvrdi mogućnost koju nitko ne može upotrijebiti je
+                     slomljeno obećanje na naslovnici — danas bezopasno jer korisnika
+                     nema, u listopadu ne.
+
+                     ⚠️ KAD MCP PROPRORADI: makni `.soon-tag`, prebaci tekst u sadašnje
+                     vrijeme i dodaj stvarnu radnju. Ne ostavljati „uskoro" da stoji
+                     mjesecima — to čita gore od nepostojanja sekcije. -->
+                <section class="landing-mcp mt-16 md:mt-24" aria-labelledby="mcpHeading">
+                    <p class="soon-tag" data-i18n="mcp.soon">Coming soon</p>
+                    <h2 id="mcpHeading" class="text-2xl md:text-3xl font-semibold tracking-tight text-ink-0" data-i18n="mcp.title">Your own AI will write it for you</h2>
+                    <p class="mt-2 max-w-2xl text-base text-ink-2" data-i18n="mcp.sub">Connect the assistant you already use. It will read a chapter, build the material, and put it on your shelf &mdash; then check how you are doing and fix what you keep missing.</p>
+                    <p class="mt-3 max-w-2xl text-sm text-ink-2" data-i18n="mcp.note">It will work on your own material only. The catalog stays as it is.</p>
                 </section>
 
                 <!-- Tanki red činjenica — zamjenjuje tri marketinške sekcije i stats bar. -->
@@ -220,7 +425,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260815055218" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260824053542" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -256,7 +461,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260815055218" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260824053542" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -273,29 +478,21 @@
 
     <!-- ==================== BROWSE PAGE (drill-down: Faculty → Program → Year → Subject) ==================== -->
     <section id="browse-page" class="browse-page">
-        <header class="browse-header" role="banner"><!-- a11y (F3 3E.2): banner landmark -->
-            <button class="back-btn" id="backFromBrowse" aria-label="Go back">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </button>
-            <div class="browse-title">
-                <span class="breadcrumb" id="browseBreadcrumb">Sokrat Study</span>
-                <h1 id="browseHeading">Choose your faculty</h1>
-            </div>
-            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
-                <i class="fas fa-globe"></i>
-                <span class="lang-toggle-label">EN</span>
-            </button>
-            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
-                <i class="fas fa-folder-tree" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
-                <i class="fas fa-user"></i>
-            </button>
-            <div class="browse-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260815055218" alt="Sokrat Study" class="logo-image"></div>
-            </div>
-        </header>
+        <!-- K2b: `role="banner"` je otisao na globalnu traku — banner smije biti JEDAN.
+             Znak je otisao onamo isto (bio je duplikat). Ostaje ono sto je browseovo:
+             dubina drill-downa i naslov razine. -->
+        <!-- T2: `header.browse-header` je OBRISAN. Nosio je dvije stvari i obje su
+             preseljene, svaka tamo gdje pripada:
+               • `#browseBreadcrumb` (fakultet › smjer › godina) = POLOŽAJ → ide u mrvicu,
+                 koja je do T2 na katalogu pokazivala samo korijen „Predmeti". Bila su to
+                 DVA prikaza istog puta na istom ekranu, u različitoj mjeri detalja.
+               • `#browseHeading` („Odaberi smjer") = UPUTA, ne naslov → ide u sadržaj,
+                 gdje se smije odskrolati. Uputa ne mora trajno trošiti ekran.
+             Mjereno prije: zaglavlje je bilo **140 px**, uz traku i putanju ukupno 307 px
+             = **54 % iPhonea SE**. Pravilo koje iz toga slijedi: IDENTITET ide u mrvicu,
+             UPUTA u sadržaj. -->
         <main class="browse-content">
+            <h1 class="browse-heading" id="browseHeading">Choose your faculty</h1>
             <p class="browse-intro" id="browseIntro"></p>
             <div class="browse-grid" id="browseGrid">
                 <!-- Cards rendered from catalog by renderBrowse() in js/navigation.js -->
@@ -305,27 +502,13 @@
 
     <!-- ==================== LESSONS PAGE ==================== -->
     <section id="lessons-page" class="lessons-page">
-        <header class="lessons-header">
-            <button class="back-btn" id="backToLanding">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="lessons-title">
-                <span class="breadcrumb">Sokrat Study</span>
-                <h1 id="currentSubjectTitle">Subject Name</h1>
-            </div>
-            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
-                <i class="fas fa-globe"></i>
-                <span class="lang-toggle-label">EN</span>
-            </button>
-            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
-                <i class="fas fa-folder-tree" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
-                <i class="fas fa-user"></i>
-            </button>
-        </header>
-
+        <!-- T2: `header.lessons-header` je OBRISAN jer je bio ČISTI duplikat — h1 je
+             pisao točno ono što piše zadnja mrvica („Tourism Economics"), a stajao je
+             **119 px**. Naslov ostaje kao `visually-hidden` h1: stranica mora imati
+             naslov za čitač ekrana, ali ga ne mora imati DVAPUT na ekranu. Id se čuva
+             jer ga pišu `navigation.js` i četiri testa. -->
         <main class="lessons-content">
+            <h1 id="currentSubjectTitle" class="visually-hidden">Subject Name</h1>
             <div class="lessons-intro">
                 <p id="subjectDescription">Select a lesson to start studying</p>
             </div>
@@ -337,26 +520,10 @@
 
     <!-- ==================== STUDY PAGE (Activities) ==================== -->
     <section id="study-page" class="study-page">
-        <!-- Study Header -->
-        <header class="study-header" role="banner"><!-- a11y (F3 3E.2): banner landmark; jedna stranica vidljiva odjednom pa nema duplikata -->
-            <button class="back-btn" id="backToLessons" aria-label="Go back to lessons">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </button>
-            <div class="study-title">
-                <span class="breadcrumb" id="studyBreadcrumb">Subject > Lesson</span>
-                <h1 id="currentLessonTitle">Lesson Name</h1>
-            </div>
-            <button type="button" class="lang-toggle header-lang-toggle" onclick="toggleUiLang()" aria-label="Language / Jezik" title="Language / Jezik">
-                <i class="fas fa-globe"></i>
-                <span class="lang-toggle-label">EN</span>
-            </button>
-            <button type="button" class="header-materials-btn" data-goto-materials aria-label="My materials" data-i18n-aria="materials.title">
-                <i class="fas fa-folder-tree" aria-hidden="true"></i>
-            </button>
-            <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
-                <i class="fas fa-user"></i>
-            </button>
-        </header>
+        <!-- T2: `header.study-header` je OBRISAN — isti čisti duplikat kao na lekcijama
+             („First Midterm" i u zaglavlju i u mrvici), **115 px**. Naslov ostaje
+             `visually-hidden`; id čuva `navigation.js` i `material-authoring.authed`. -->
+        <h1 id="currentLessonTitle" class="visually-hidden">Lesson Name</h1>
 
         <!-- Navigation Tabs -->
         <nav class="study-nav">
@@ -916,15 +1083,12 @@
     <!-- ==================== ABOUT US PAGE ==================== -->
     <section id="about-page" class="about-page">
         <header class="about-header">
-            <button class="back-btn" id="backFromAbout">
-                <i class="fas fa-arrow-left"></i>
-            </button>
             <h1>About Sokrat Study</h1>
             <div style="width: 44px;"></div>
         </header>
         <main class="about-content">
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260815055218" alt="Sokrat Study Logo" class="logo-image"></div>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260824053542" alt="Sokrat Study Logo" class="logo-image"></div>
                 <p class="about-tagline">Created by students, for students</p>
             </div>
 
@@ -973,10 +1137,7 @@
 
     <!-- ==================== PROFILE PAGE (signed-in account) ==================== -->
     <section id="profile-page" class="profile-page">
-        <header class="profile-header" role="banner"><!-- a11y (F3 3E.2): banner landmark -->
-            <button class="back-btn" id="backFromProfile" aria-label="Go back">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </button>
+        <header class="profile-header"><!-- K2b: banner je JEDAN i stoji u globalnoj traci -->
             <h1 data-i18n="profile.title">My Profile</h1>
             <div style="width: 44px;"></div>
         </header>
@@ -990,10 +1151,7 @@
          pa se do glavnog proizvoda dolazilo tek kroz postavke. Sadržaj i dalje crta SokratMaterials.mount()
          u `#myMaterials` — jedina razlika je GDJE taj čvor živi. Profil je zadržao samo poveznicu ovamo.  -->
     <section id="materials-page" class="materials-page">
-        <header class="profile-header" role="banner"><!-- a11y: banner landmark (isti obrazac kao profil) -->
-            <button class="back-btn" id="backFromMaterials" aria-label="Go back">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </button>
+        <header class="profile-header"><!-- K2b: banner je JEDAN i stoji u globalnoj traci -->
             <h1 data-i18n="materials.title">My materials</h1>
             <button type="button" class="header-auth-btn auth-entry" aria-label="Account" hidden>
                 <i class="fas fa-user"></i>
@@ -1023,24 +1181,6 @@
             </div>
         </main>
     </section>
-
-    <!-- ==================== ADMIN PAGE (F4 CRUD — ulaz je admin-only; write RLS-zaštićen) ==================== -->
-    <section id="admin-page" class="admin-page">
-        <header class="profile-header" role="banner"><!-- a11y: banner landmark (kao profil) -->
-            <button class="back-btn" id="backFromAdmin" aria-label="Go back">
-                <i class="fas fa-arrow-left" aria-hidden="true"></i>
-            </button>
-            <h1 data-i18n="admin.title">Admin</h1>
-            <div style="width: 44px;"></div>
-        </header>
-        <main class="profile-content" id="adminContent">
-            <!-- Rendered by renderAdminPage() in js/admin.js -->
-        </main>
-    </section>
-
-    <!-- ==================== STUDIO EDITOR (U8 — novi vizualni editor; admin-only ulaz) ==================== -->
-    <!-- Puni-viewport app-shell; renderira renderStudioPage() u js/studio.js. Koegzistira sa #admin-page. -->
-    <section id="editor-page" class="studio-page"></section>
 
     <!-- Learn Image Viewer Modal (F2 2D.2b — <sokrat-modal>: overlay/ESC/backdrop/scroll-lock/fokus iz komponente;
          izgled (tamni backdrop, safe-area, close X) ostaje u .image-modal* CSS-u → nulta vizualna promjena) -->
@@ -1074,53 +1214,50 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260815055218"></script>
+    <script src="data/catalog.js?v=20260824053542"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260815055218"></script>
+    <script src="data/landing-stats.js?v=20260824053542"></script>
 
     <!-- App modules (split from app.js) -->
-    <script src="js/i18n.js?v=20260815055218"></script>
+    <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
+    <script src="js/theme.js?v=20260824053542"></script>
+    <script src="js/i18n.js?v=20260824053542"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260815055218"></script>
-    <script src="js/config.js?v=20260815055218"></script>
-    <script src="js/content-loader.js?v=20260815055218"></script>
+    <script src="js/app-state.js?v=20260824053542"></script>
+    <script src="js/config.js?v=20260824053542"></script>
+    <script src="js/content-loader.js?v=20260824053542"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260815055218"></script>
-    <script src="js/components/sokrat-toast.js?v=20260815055218"></script>
-    <script src="js/components/sokrat-modal.js?v=20260815055218"></script>
+    <script src="js/content-repo.js?v=20260824053542"></script>
+    <script src="js/components/sokrat-toast.js?v=20260824053542"></script>
+    <script src="js/components/sokrat-modal.js?v=20260824053542"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260815055218"></script>
-    <script src="js/utils.js?v=20260815055218"></script>
-    <script src="js/storage.js?v=20260815055218"></script>
-    <script src="js/analytics.js?v=20260815055218"></script>
-    <script src="js/navigation.js?v=20260815055218"></script>
-    <script src="js/math.js?v=20260815055218"></script>
-    <script src="js/blocks-renderer.js?v=20260815055218"></script>
-    <script src="js/flashcards.js?v=20260815055218"></script>
-    <script src="js/quiz.js?v=20260815055218"></script>
-    <script src="js/fill-blanks.js?v=20260815055218"></script>
-    <script src="js/learn.js?v=20260815055218"></script>
-    <script src="js/progress.js?v=20260815055218"></script>
-    <script src="js/blind-map.js?v=20260815055218"></script>
-    <script src="js/exercises-core.js?v=20260815055218"></script>
-    <script src="js/acc-kernel.js?v=20260815055218"></script>
-    <script src="js/exercises.js?v=20260815055218"></script>
-    <script src="js/auth.js?v=20260815055218"></script>
-    <script src="js/draft-store.js?v=20260815055218"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260824053542"></script>
+    <script src="js/utils.js?v=20260824053542"></script>
+    <script src="js/storage.js?v=20260824053542"></script>
+    <script src="js/analytics.js?v=20260824053542"></script>
+    <script src="js/navigation.js?v=20260824053542"></script>
+    <script src="js/math.js?v=20260824053542"></script>
+    <script src="js/blocks-renderer.js?v=20260824053542"></script>
+    <script src="js/flashcards.js?v=20260824053542"></script>
+    <script src="js/quiz.js?v=20260824053542"></script>
+    <script src="js/fill-blanks.js?v=20260824053542"></script>
+    <script src="js/learn.js?v=20260824053542"></script>
+    <script src="js/progress.js?v=20260824053542"></script>
+    <script src="js/blind-map.js?v=20260824053542"></script>
+    <script src="js/exercises-core.js?v=20260824053542"></script>
+    <script src="js/acc-kernel.js?v=20260824053542"></script>
+    <script src="js/exercises.js?v=20260824053542"></script>
+    <script src="js/auth.js?v=20260824053542"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260815055218"></script>
-    <script src="js/block-editor-media.js?v=20260815055218"></script>
-    <script src="js/block-editor.js?v=20260815055218"></script>
-    <script src="js/card-limits.js?v=20260815055218"></script>
-    <script src="js/admin.js?v=20260815055218"></script>
-    <script src="js/admin-editors.js?v=20260815055218"></script>
-    <script src="js/studio.js?v=20260815055218"></script>
-    <script src="js/cloud-sync.js?v=20260815055218"></script>
+    <script src="js/node-images.js?v=20260824053542"></script>
+    <!-- T6: otkrivanje admina je izrezano iz admin.js i MORA ici prije njega (studioBridge se veze pri parsiranju). -->
+    <script src="js/admin-reveal.js?v=20260824053542"></script>
+    <script src="js/cloud-sync.js?v=20260824053542"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260815055218"></script>
-    <script src="js/profile.js?v=20260815055218"></script>
-    <script src="js/init.js?v=20260815055218"></script>
+    <script src="js/my-materials.js?v=20260824053542"></script>
+    <script src="js/profile.js?v=20260824053542"></script>
+    <script src="js/init.js?v=20260824053542"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260815055218" defer></script>
+    <script src="js/sw-register.js?v=20260824053542" defer></script>
 </body>
 </html>

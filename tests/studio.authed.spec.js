@@ -6,15 +6,12 @@
 // learn v1 kategorija → „Uredi kao blokove" (sigurna migracija content→legacy-html blok) → block-editor
 // se montira → dodaj blok kroz ＋ → draft-brojač raste → Odbaci. Jedan draft/publish engine (studioBridge).
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriStudio } = require('./helpers/studio-entry');
 
 /** Uđi u Studio i otvori te2 skriptu iz stabla. */
 async function openStudioLesson(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratStudio && !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('editor'));
+  await otvoriStudio(page);
   await page.waitForSelector('#editor-page.active #stTree .st-row');
   // rasklopi sve čvorove pa klikni te2 lekciju
   await page.evaluate(() => { document.querySelectorAll('#stTree .st-node').forEach(n => n.classList.add('open')); });
@@ -853,9 +850,33 @@ test('K6b (F7) — Studio learn: povuci-ispusti SEKCIJU (ručka ⠿) → reorder
   await page.mouse.move(gb.x + gb.width / 2, gb.y + gb.height / 2);
   await page.mouse.down();
   await page.mouse.move(gb.x + gb.width / 2, cbox.y + cbox.height - 24, { steps: 10 });  // u donju edge-zonu → auto-scroll
-  await page.waitForTimeout(700);
-  await page.mouse.move(gb.x + gb.width / 2, cbox.y + cbox.height - 24, { steps: 3 });    // ostani u zoni
-  await page.waitForTimeout(500);
+
+  // ⚠️ ČEKA SE STANJE, NE VRIJEME (popravljeno 2026-08-19 uz K3).
+  // Ovdje su stajala dva fiksna čekanja (700 + 500 ms) i test je bio NESTABILAN: izmjereno
+  // **1 prolaz od 3** na nedirnutom kodu (pa 1/4 s izmjenama K3 — dakle jednako, cigla nije
+  // bila uzrok, iako je jedan sretan prolaz to isprva sugerirao). Uzrok je u konstrukciji:
+  // `startCatDrag` scrolla **14 px po frameu**, a `catDropIndex` se računa iz pozicije
+  // pokazivača U TRENUTKU OTPUŠTANJA. Na 60 fps 1200 ms daju ~72 framea (~1000 px), na
+  // opterećenom stroju ~24 framea (~336 px) — pa je ishod ovisio o BRZINI STROJA, a ne o
+  // tome radi li preslagivanje. *Fiksno čekanje mjeri vrijeme; tvrdnja treba stanje.*
+  await page.waitForFunction(() => {
+    const c = document.getElementById('stCanvas');
+    return !!c && c.scrollTop + c.clientHeight >= c.scrollHeight - 2;   // auto-scroll došao do dna
+  }, null, { timeout: 20000 });
+
+  // Cilj je IZRAČUNAT, ne pogođen: tik ispod polovice ZADNJE druge sekcije → `catDropIndex`
+  // vrati `others.length`, dakle povučena sekcija sigurno ide na kraj. Time test tvrdi ono
+  // što piše („otišla je NIŽE"), umjesto da se nada da ju je scroll odnio dovoljno daleko.
+  const ciljY = await page.evaluate((dragged) => {
+    const c = document.getElementById('stCanvas');
+    const oth = Array.from(c.querySelectorAll('.st-learn-cat'))
+      .filter((el) => el.getAttribute('data-st-cat') !== dragged);
+    const r = oth[oth.length - 1].getBoundingClientRect();
+    const cb = c.getBoundingClientRect();
+    return Math.min(cb.bottom - 4, r.top + r.height / 2 + 4);
+  }, draggedId);
+
+  await page.mouse.move(gb.x + gb.width / 2, ciljY, { steps: 3 });
   await page.mouse.up();                                               // → reorderCategories op + re-render
 
   const after = await keys();

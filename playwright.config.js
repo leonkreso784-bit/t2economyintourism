@@ -67,7 +67,13 @@ module.exports = defineConfig({
   timeout: 120000,
   fullyParallel: false,
   workers: 1,
-  reporter: [['list']],
+  // ⚠️ U CI-ju SE DODAJE `github` REPORTER, i to nije kozmetika nego dijagnostika:
+  //    padovi tada izlaze kao `::error` → GitHub ih pokaže kao ANOTACIJE, koje se na
+  //    javnom repozitoriju čitaju BEZ prijave. Bez toga se ime palog testa da dobiti samo
+  //    iz `playwright-artifacts` (87 MB, HTTP 401 bez ključa) ili prepisivanjem s ekrana.
+  //    Povod: 2026-08-24 su dva uzastopna crvena runa stajala po jednu rundu čekanja jer
+  //    se iz javnog API-ja vidjelo SAMO „Process completed with exit code 1".
+  reporter: process.env.CI ? [['list'], ['github']] : [['list']],
   use: {
     baseURL: `http://localhost:${PORT}`,
     screenshot: 'only-on-failure',

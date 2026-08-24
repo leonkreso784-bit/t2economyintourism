@@ -17,6 +17,7 @@
 | **`workflow/`** | **KAKO RADIMO** — testiranje, tim, autorstvo sadržaja | povremeno |
 | **`records/`** | **POVIJEST** — dnevnik, changelog, bugovi, odluke | stalno |
 | **`subjects/`** | stanje pojedinih predmeta | uz sadržaj |
+| **`ideas/`** | ideje koje **nisu projekt** — parkirane dok ne sazriju | rijetko |
 | **`archive/`** | ispunjeni i napušteni planovi — **referenca, ne istina** | nikad |
 | **`sokrat-ai/`** | ⚠️ **zaseban projekt**, ne dira platformu | zasebno |
 
@@ -70,7 +71,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 
 | Dokument | Svrha |
 |---|---|
-| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle C1–C7 |
+| [FRONTEND_REDIZAJN.md](./plan/FRONTEND_REDIZAJN.md) | 🟦 **tekući spec** — prelazak frontenda na Tailwind (cijela platforma + editor), cigle **C0–C7**. ⚠️ Nosi i fazu **„KOSTUR" (K1–K5, §8)**, ubačenu između C3 i C4 (Leon, 2026-08-18): navigacija prije kozmetike, po presedanu C0-a. K1 · K2a · K2b · **K3** su ispunjeni (K3 je usput našao **BUG-029**). |
 | [ROADMAP.md](./plan/ROADMAP.md) | Milestones + status (**povijesni zapis**, ne plan rada) |
 
 > Prethodne dvije faze ispunjene su i deployane, pa su im planovi istog dana otišli u arhivu
@@ -105,6 +106,16 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 |---|---|
 | [subjects/README.md](./subjects/README.md) | **Autoritativna tablica svih predmeta** (status/brojevi/vježbe) |
 | [ACCOUNTING_PLAN.md](./subjects/ACCOUNTING_PLAN.md) · [STATISTICS_PLAN.md](./subjects/STATISTICS_PLAN.md) · [TRAFFIC_PLAN.md](./subjects/TRAFFIC_PLAN.md) · [MATH_PLAN.md](./subjects/MATH_PLAN.md) | Planovi pojedinih predmeta (✅ gotovi) |
+
+## `ideas/` — ideje koje nisu projekt
+
+> **Nije plan i nije obećanje.** Ovdje stoji ideja koja je prevelika za jedan redak u
+> [records/BACKLOG.md](./records/BACKLOG.md), a nije zasluzila spec u `plan/`. Kad sazri →
+> spec + milestone; ako ne sazri → briše se bez žaljenja.
+
+| Dokument | Svrha |
+|---|---|
+| [ideas/HOTEL_SIM.md](./ideas/HOTEL_SIM.md) | **Simulacija vođenja hotela** — poslovna igra za FMTU (zaseban proizvod, posuđeni Sokratovi primitivi). Materijal za prijedlog dekanu + kandidat za diplomski. |
 
 ## `archive/` — ispunjeno i napušteno
 

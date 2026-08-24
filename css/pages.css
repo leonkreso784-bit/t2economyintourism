@@ -10,18 +10,8 @@
     background: var(--bg-primary);
 }
 
-.lessons-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
+/* T2: `.lessons-header` je obrisan — h1 je pisao točno ono što piše zadnja mrvica
+   („Tourism Economics"), a stajao je 119 px trajno (`position: sticky`). */
 
 .back-btn {
     width: 44px;
@@ -43,22 +33,9 @@
     color: var(--on-primary);
 }
 
-.lessons-title {
-    flex: 1;
-    min-width: 0; /* dopusti stezanje ispod sadržaja (inače dug HR naslov + 🌐 toggle strši na uskom mobitelu) */
-}
-
-.breadcrumb {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.lessons-title h1 {
-    font-size: 1.25rem;
-    font-weight: 700;
-}
+/* T2: `.lessons-title`, `.lessons-title h1` i `.breadcrumb` su obrisani zajedno sa
+   zaglavljem. `.breadcrumb` je bio zadnji korisnik klase — mrvica u traci ima svoju
+   (`.crumb`), pa bi dvije klase za istu stvar bile upravo ono što ova cigla uklanja. */
 
 .lessons-content {
     padding: 1.5rem;
@@ -81,6 +58,9 @@
     gap: 1rem;
 }
 
+/* BUG-032: kartica lekcije je `<a>` (otvoriva lekcija) ili `<button>` (uskoro), a ne više
+   `<div>`. Oba nose vlastite zadane stilove preglednika, pa se ovdje izričito gase — inače
+   sidro dobije plavi podcrtan tekst, a gumb sistemski font i sredinsko poravnanje. */
 .lesson-card {
     display: flex;
     align-items: center;
@@ -91,6 +71,24 @@
     border: 2px solid var(--border);
     cursor: pointer;
     transition: var(--transition);
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Fokus je od BUG-032 jedini način da se do lekcije dođe tipkovnicom — mora se VIDJETI.
+   `:focus-visible`, ne `:focus`: mišem se prsten ne pojavljuje, tipkovnicom uvijek. */
+.lesson-card:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Bilo je inline (`card.style.opacity`) — stil iz podatka natrag u stilsku datoteku. */
+.lesson-card--soon {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .lesson-card:hover {
@@ -177,31 +175,8 @@
 
 @keyframes studySpin { to { transform: rotate(360deg); } }
 
-.study-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.study-title {
-    flex: 1;
-    min-width: 0;
-}
-
-.study-title h1 {
-    font-size: 1.1rem;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+/* T2: `.study-header` / `.study-title` su obrisani — isti čisti duplikat kao na
+   lekcijama („First Midterm" i u zaglavlju i u mrvici), 115 px trajno. */
 
 /* Study Navigation Tabs */
 .study-nav {
@@ -281,7 +256,7 @@
         background: var(--bg-secondary);
         border-top: 1px solid var(--border);
         padding: 0.5rem 0;
-        padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(0.5rem + var(--safe-bottom));
         z-index: 9999;
         box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
     }
@@ -344,7 +319,7 @@
     }
     
     .study-page .study-content {
-        padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px) + 1rem);
+        padding-bottom: calc(70px + var(--safe-bottom) + 1rem);
     }
 }
 

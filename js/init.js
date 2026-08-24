@@ -1,48 +1,16 @@
 // ===== SOKRAT STUDY — INITIALIZATION =====
 
-// ========== THEME ==========
-// C2: zadana tema je „Akademsko plavo" (svijetla) — v. `css/tokens.css`.
-//
-// Prije je ovdje stajalo tvrdo `setAttribute('data-theme','dark')` uz `toggleTheme()`
-// koji je pisao `light` — temu koja u CSS-u NIJE POSTOJALA. Prekidač je dakle vodio u
-// prazno, a `dark` je bio jedini stvarni ishod. Sada su teme prave, pa i ovo mora biti.
-//
-// ⚠️ Vrijednost se PROVJERAVA prema popisu: nepoznat `data-theme` (npr. zaostali `dark`
-// iz localStoragea nekog starog posjetitelja) ne bi pogodio nijedan token-blok, ali BI
-// aktivirao 21 legacy pravilo koje selektira `[data-theme="dark"]` → bijeli tekst na
-// svijetloj podlozi. Zato se nepoznata vrijednost odbacuje, a ne propušta.
-const SOKRAT_THEMES = ['academic', 'paper', 'chalk', 'mint'];
-const SOKRAT_THEME_DEFAULT = 'academic';
-
-function initTheme() {
-    let saved = null;
-    try { saved = localStorage.getItem('sokrat-theme'); } catch (e) { /* privatni način */ }
-    const theme = SOKRAT_THEMES.indexOf(saved) >= 0 ? saved : SOKRAT_THEME_DEFAULT;
-    document.documentElement.setAttribute('data-theme', theme);
-    // `color-scheme` javlja pregledniku kakve da crta scrollbarove i zadana polja;
-    // bez toga svijetla tema dobiva tamne native kontrole i obrnuto.
-    document.documentElement.style.colorScheme = (theme === 'chalk' || theme === 'mint') ? 'dark' : 'light';
-    try { localStorage.setItem('sokrat-theme', theme); } catch (e) { /* privatni način */ }
-}
-
-function setTheme(name) {
-    if (SOKRAT_THEMES.indexOf(name) < 0) return false;
-    try { localStorage.setItem('sokrat-theme', name); } catch (e) { /* privatni način */ }
-    initTheme();
-    return true;
-}
-window.setTheme = setTheme;
-window.SOKRAT_THEMES = SOKRAT_THEMES;
-
 // ========== DOM READY ==========
 document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
     renderLandingMeta();       // keep landing counts in sync with the catalog
+    renderCatalogPrograms();   // filter buttons, drawn FROM the catalog (never hardcoded)
     renderLandingSubjects();   // build landing subject showcase from catalog
-    initLandingSubjects();     // bind showcase click → lessons
+    initLandingSubjects();     // bind showcase click + search + programme filter
     renderSubjectsSidebar();   // build sidebar list from catalog BEFORE binding listeners
     initBrowse();              // bind delegated click handler for the browse drill-down
-    initMaterialsEntries();    // C0: ulazi u vlastiti materijal + ruta #/materials
+    initMaterialsEntries();    // C0: ulazi u vlastiti materijal
+    initTopbar();              // K2b: znak → dom, „Predmeti", natrag u drugom redu
+    initRouter();              // K1: adresa ⇄ stranica; MORA prije restoreLastPosition()
     initLearnImageModal();
     setupEventListeners();
     restoreLastPosition();
@@ -80,21 +48,25 @@ function setupEventListeners() {
         });
     });
 
-    // Back buttons — from Lessons, return to the browse subject list (preserves
-    // the drill-down position: Subject ← Subjects ← Year ← Program ← Faculty).
+    // K2a — svi gumbi „natrag" idu kroz JEDAN model (`goBack`): povijest kad iza nas stoji
+    // naš unos, inače semantički roditelj koji zna i katalošku i osobnu hijerarhiju.
+    // Dotad je svaki gumb nosio TVRDO ožičeno odredište, pa je vraćanje iz vlastitog
+    // materijala završavalo na izboru fakulteta. ⚠️ `backToLanding` je usput ime koje LAŽE —
+    // sjedi na stranici lekcija i nikad nije vodio na landing nego na browse; zadržano je
+    // samo zato što je `id` u markupu, a mijenja ga tek cigla koja prepisuje zaglavlja (K2b).
     const backToLanding = document.getElementById('backToLanding');
     if (backToLanding) {
-        backToLanding.addEventListener('click', () => navigateTo('browse'));
+        backToLanding.addEventListener('click', () => goBack());
     }
-    
+
     const backToLessons = document.getElementById('backToLessons');
     if (backToLessons) {
-        backToLessons.addEventListener('click', () => navigateTo('lessons', { subject: AppState.nav.subject }));
+        backToLessons.addEventListener('click', () => goBack());
     }
-    
+
     const backFromAbout = document.getElementById('backFromAbout');
     if (backFromAbout) {
-        backFromAbout.addEventListener('click', () => navigateTo('landing'));
+        backFromAbout.addEventListener('click', () => goBack());
     }
     
     // Birač teme. `.theme-toggle` NE POSTOJI u markupu — ostaje samo vezanje, da

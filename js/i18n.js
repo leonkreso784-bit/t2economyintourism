@@ -29,6 +29,18 @@
     // Admin (F4 CRUD) — vidljivo samo adminu
     'admin.title': { en: 'Admin', hr: 'Admin' },
     'admin.openStudio': { en: 'Studio editor', hr: 'Studio editor' },
+
+    // ⚠️ T6 · ČUVAR STRANICE EDITORA. Editor od T6 ima pravu adresu, pa mora umjeti
+    // REĆI zašto nekoga ne pušta — a to je prvi tekst koji posjetitelj ondje vidi.
+    // Dvojezično od prvog retka: T4 je pokazao da je zakucani engleski dug koji se
+    // plaća kasnije, i to na najgoroj mogućoj površini (ondje pravnoj, ovdje na vratima).
+    'editor.checking': { en: 'Checking your access…', hr: 'Provjeravam pristup…' },
+    'editor.backToMaterials': { en: 'Back to my materials', hr: 'Natrag na moje materijale' },
+    'editor.signInFirst': { en: 'Sign in to edit your material.', hr: 'Za uređivanje se treba prijaviti.' },
+    'editor.notYours': { en: "This material isn't available.", hr: 'Ovaj materijal nije dostupan.' },
+    'editor.loadFail': { en: "The material couldn't be loaded.", hr: 'Materijal se nije mogao učitati.' },
+    'editor.adminOnly': { en: 'Editing the catalogue is for administrators.', hr: 'Uređivanje kataloga je samo za administratora.' },
+    'editor.noAuth': { en: 'Sign-in is unavailable right now.', hr: 'Prijava trenutno nije dostupna.' },
     'admin.desc': { en: 'Edit study content directly. Every change is versioned and can be undone.', hr: 'Uređuj sadržaj izravno. Svaka izmjena se verzionira i može se poništiti.' },
     'admin.editContent': { en: 'Edit content', hr: 'Uredi sadržaj' },
     'admin.comingSoon': { en: 'Content editor — coming in the next step.', hr: 'Uređivač sadržaja — stiže u sljedećem koraku.' },
@@ -248,9 +260,15 @@
     'hero.title.b': { en: 'Learn it ', hr: 'Uči na ' },
     'hero.title.mark': { en: 'four ways', hr: 'četiri načina' },
     'hero.title.c': { en: '.', hr: '.' },
+    // ⚠️ T5 · SKRAĆENO SA 135 NA 72 ZNAKA, I TO NIJE ŠTEDNJA NEGO BRISANJE DUPLIKATA.
+    // Prva polovica („uzmi gotovo ili napiši svoje") stajala je DOSLOVNO u opisu prvih
+    // vrata ispod, a druga je nabrajala četiri načina koje naslov IMENUJE i koje sekcija
+    // niže POKAZUJE na pravoj lekciji — prvi ekran je istu stvar govorio tri puta. Ostalo
+    // je ono što nigdje drugdje ne piše: da se ne pripremaju ručno. Mjereno na 320 px:
+    // pet redaka → dva, i tek time vrata ulaze u prvi ekran (spec §9.12).
     'hero.sub': {
-        en: 'Take something ready from the catalog, or write your own — flashcards, a quiz, fill-in-the-blanks and study material build themselves.',
-        hr: 'Uzmi gotovo s fakulteta ili napiši svoje — kartice, kviz, dopunjavanje i gradivo nastaju sami.'
+        en: 'Nothing to prepare — the cards, the quiz and the blanks write themselves.',
+        hr: 'Ništa ne pripremaš — kartice, kviz i dopune nastaju sami.'
     },
 
 
@@ -265,6 +283,70 @@
     // ── KATALOG + ČINJENICE ───────────────────────────────────────────────
     'cat.title': { en: 'Or start from the catalog', hr: 'Ili kreni iz kataloga' },
     'cat.sub': { en: 'Complete subjects, already written — open one and study in seconds.', hr: 'Gotovi predmeti, već napisani — otvori i uči u nekoliko sekundi.' },
+    'cat.search': { en: 'Search subjects', hr: 'Traži predmet' },
+    'cat.program': { en: 'Programme', hr: 'Program' },
+    'cat.all': { en: 'All', hr: 'Svi' },
+    'cat.none': { en: 'No subject matches that.', hr: 'Nijedan predmet ne odgovara.' },
+    // ➕ posljednja pločica — jedina koja kaže da katalog nije zatvoren popis (§7.13).
+    'cat.make.t': { en: 'Your subject', hr: 'Tvoj predmet' },
+    'cat.make.d': { en: "Not on the list? Write it yourself.", hr: 'Nema ga na popisu? Napiši ga sam.' },
+
+    // ③ Svoje gradivo — puna sekcija (§7.13). Primjeri su NAMJERNO izvan fakulteta.
+    'own.title': { en: 'Or write your own', hr: 'Ili napiši svoje' },
+    'own.sub': {
+      en: 'Anything you study — a law course, a language, your driving test. If you can write it down, you can study it here.',
+      hr: 'Bilo što što učiš — kolegij prava, jezik, vozački ispit. Ako to možeš zapisati, ovdje to možeš i učiti.'
+    },
+    'own.s1.t': { en: 'Write it down', hr: 'Zapiši' },
+    'own.s1.d': {
+      en: 'Paste your notes or type them straight in. Sections, images, tables and formulas all fit.',
+      hr: 'Zalijepi bilješke ili piši izravno. Sekcije, slike, tablice i formule sve stanu.'
+    },
+    'own.s2.t': { en: 'Add cards and questions', hr: 'Dodaj kartice i pitanja' },
+    'own.s2.d': {
+      en: 'Flashcards, quiz questions and fill-in-the-blanks live next to the material they came from.',
+      hr: 'Kartice, kviz-pitanja i dopune stoje uz gradivo iz kojeg su nastali.'
+    },
+    'own.s3.t': { en: 'Study it four ways', hr: 'Uči na četiri načina' },
+    'own.s3.d': {
+      en: 'The same four modes as every subject in the catalog. Progress is saved and synced.',
+      hr: 'Ista četiri moda kao i svaki predmet u katalogu. Napredak se sprema i sinkronizira.'
+    },
+    'own.shelf': {
+      en: 'For example, a shelf that has nothing to do with any faculty:',
+      hr: 'Na primjer, polica koja nema veze ni s jednim fakultetom:'
+    },
+    'own.ex1': { en: 'Roman Law', hr: 'Rimsko pravo' },
+    'own.ex2': { en: 'German B1', hr: 'Njemački B1' },
+    'own.ex3': { en: 'Anatomy', hr: 'Anatomija' },
+    'own.ex4': { en: 'Driving theory', hr: 'Vozački ispit' },
+    'own.cta': { en: 'Make your own material', hr: 'Napravi svoj materijal' },
+
+    // ⑤ Četiri načina. NASLOVI MODOVA NAMJERNO KORISTE `nav.*` KLJUČEVE (Learn/
+    // Flashcards/Quiz/Fill) — preimenuje li se mod, landing se mijenja s njim i ne
+    // ostaje jedini ekran sa starim imenom. Ovdje su samo OPISI.
+    'modes.title': { en: 'The four ways', hr: 'Četiri načina' },
+    'modes.sub': {
+      en: 'Every subject — from the catalog or your own — opens in all four. Nothing to set up.',
+      hr: 'Svaki predmet — iz kataloga ili tvoj — otvara se u sva četiri. Ništa se ne podešava.'
+    },
+    'modes.learn.d': { en: 'The material itself — sections, images, tables, formulas.', hr: 'Samo gradivo — sekcije, slike, tablice, formule.' },
+    'modes.cards.d': { en: 'Question on one side, answer on the other. Short by design.', hr: 'Pitanje s jedne strane, odgovor s druge. Kratko po pravilu.' },
+    'modes.quiz.d': { en: 'Multiple choice, scored, with the reason behind each answer.', hr: 'Višestruki izbor, s bodovima i obrazloženjem svakog odgovora.' },
+    'modes.fill.d': { en: 'Type the missing term. Harder than recognising it in a list.', hr: 'Upiši pojam koji nedostaje. Teže nego prepoznati ga na popisu.' },
+
+    // ⑥ MCP — ⚠️ BUDUĆE VRIJEME NAMJERNO. MCP ne postoji (ADR-030 ②: pristup nije
+    // presuđen). Kad proradi: makni `mcp.soon`, prebaci u sadašnje vrijeme.
+    'mcp.soon': { en: 'Coming soon', hr: 'Uskoro' },
+    'mcp.title': { en: 'Your own AI will write it for you', hr: 'Tvoj AI će ti ga napisati' },
+    'mcp.sub': {
+      en: 'Connect the assistant you already use. It will read a chapter, build the material, and put it on your shelf — then check how you are doing and fix what you keep missing.',
+      hr: 'Spoji asistenta kojeg već koristiš. Pročitat će poglavlje, napraviti materijal i staviti ga na tvoju policu — pa provjeriti kako ti ide i popraviti ono što stalno griješiš.'
+    },
+    'mcp.note': {
+      en: 'It will work on your own material only. The catalog stays as it is.',
+      hr: 'Radit će samo na tvom gradivu. Katalog ostaje kakav jest.'
+    },
     'facts.free.b': { en: 'Free', hr: 'Besplatno' },
     'facts.free.t': { en: ' and ad-free', hr: ' i bez reklama' },
     'facts.offline.t': { en: 'Works ', hr: 'Radi ' },
@@ -288,12 +370,21 @@
     'footer.terms': { en: 'Terms of Use', hr: 'Uvjeti korištenja' },
     'footer.cookies': { en: 'Cookie settings', hr: 'Postavke kolačića' },
     'footer.rights': { en: '© 2026 Sokrat Study · Leon Kreso. All rights reserved.', hr: '© 2026 Sokrat Study · Leon Kreso. Sva prava pridržana.' },
+    // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
+    // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
+    // znakova): na 320 px je stara rečenica bila PET redaka i traka je uzimala 38 % ekrana.
+    // Ono što je izostavljeno („kako bismo razumjeli kako posjetitelji koriste…") je
+    // obrazloženje koje u cijelosti stoji u Pravilima privatnosti, na koja traka vodi.
+    'cookie.text': { en: 'We use optional analytics and error-monitoring cookies. They load only if you accept.', hr: 'Koristimo neobavezne kolačiće za analitiku i praćenje grešaka. Učitavaju se samo ako prihvatiš.' },
+    'cookie.privacy': { en: 'Privacy Policy', hr: 'Pravila privatnosti' },
+    'cookie.accept': { en: 'Accept', hr: 'Prihvaćam' },
+    'cookie.reject': { en: 'Reject', hr: 'Odbijam' },
+    'cookie.label': { en: 'Cookie consent', hr: 'Pristanak na kolačiće' },
     // `footer.made.*` obrisani u C2 — „Made with ❤️ for students" je ukras koji ne nosi
     // značenje (izlazni uvjet §7.6.5), a i suzio je publiku na studente.
     'sidebar.choose': { en: 'Choose Subject', hr: 'Odaberi predmet' },
 
     // ===== Browse drill-down (dinamički renderirano u navigation.js) =====
-    'browse.trail.browse': { en: 'Browse', hr: 'Pregled' },
     'browse.trail.faculty': { en: 'Faculty', hr: 'Fakultet' },
     'browse.trail.program': { en: 'Program', hr: 'Smjer' },
     'browse.h.faculty': { en: 'Choose your faculty', hr: 'Odaberi svoj fakultet' },
@@ -374,6 +465,16 @@
     'profile.newPassPlaceholder': { en: 'New password (min. 8 characters)', hr: 'Nova lozinka (min. 8 znakova)' },
     'profile.repeatNewPass': { en: 'Repeat new password', hr: 'Ponovi novu lozinku' },
     'profile.saveNewPass': { en: 'Save new password', hr: 'Spremi novu lozinku' },
+    // Jedna gornja traka (K2b, spec §8). Do K2b je jezik bio dohvatljiv na 4 od 9
+    // stranica, pa je i sam prekidač bio dio problema koji ova cigla rješava.
+    'topbar.subjects': { en: 'Subjects', hr: 'Predmeti' },
+    'topbar.about': { en: 'About', hr: 'O nama' },
+    'topbar.subject': { en: 'Subject', hr: 'Predmet' },
+    'topbar.study': { en: 'Study', hr: 'Učenje' },
+    'topbar.studio': { en: 'Studio', hr: 'Studio' },
+    'topbar.back': { en: 'Go back', hr: 'Natrag' },
+    'topbar.crumbs': { en: 'Breadcrumb', hr: 'Putanja' },
+
     // „Moji materijali" (F2) — osobni UGC-graditelj
     'materials.title': { en: 'My materials', hr: 'Moji materijali' },
     'materials.desc': { en: 'Build your own study material — organise it in folders however you like. Private to you.', hr: 'Gradi vlastite materijale za učenje — složi ih na police kako god želiš. Vidljivo samo tebi.' },
@@ -497,6 +598,7 @@
     'breadcrumb.lessons': { en: 'Lessons', hr: 'Lekcije' },
     'lesson.fallback': { en: 'Lesson', hr: 'Lekcija' },
     'toast.comingSoon': { en: 'Second Midterm is coming soon.', hr: 'Drugi kolokvij uskoro.' },
+    'lesson.comingSoonBadge': { en: 'coming soon', hr: 'uskoro' },
     'toast.loadError': { en: 'Could not load this subject. Please try again.', hr: 'Učitavanje predmeta nije uspjelo. Pokušaj ponovno.' },
 
     // Razno
@@ -551,7 +653,13 @@
     if (typeof window.refreshAuthNav === 'function') window.refreshAuthNav();
     // Liste renderirane iz catalog-a (innerHTML) ne hvataju [data-i18n] → re-renderiraj ih na promjenu jezika.
     if (typeof window.renderSubjectsSidebar === 'function') window.renderSubjectsSidebar();
+    // Gumbi filtra nose ime programa i riječ „Svi" → i oni se moraju precrtati na
+    // promjenu jezika, inače traka ostane na starom jeziku dok se mreža ispod prevede.
+    if (typeof window.renderCatalogPrograms === 'function') window.renderCatalogPrograms();
     if (typeof window.renderLandingSubjects === 'function') window.renderLandingSubjects();
+    // K2b: mrvicu crta JavaScript u `textContent` (nikad `innerHTML`), pa je `[data-i18n]`
+    // ne dohvaća — mora se precrtati kao i ostale liste iz kataloga.
+    if (typeof window.renderPathbar === 'function') window.renderPathbar();
     const bp = document.getElementById('browse-page');
     if (bp && bp.classList.contains('active') && typeof window.renderBrowse === 'function') window.renderBrowse();
     // Profil je renderiran innerHTML-om (ne hvata [data-i18n]) → re-renderiraj ako je otvoren.

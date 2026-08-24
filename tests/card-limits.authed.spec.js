@@ -14,6 +14,8 @@
 // Ako netko ikad napravi drugi editor kartica, ograničenje tiho nestane u pola proizvoda —
 // i tad pada test „osobni materijal", ne produkcija.
 const { test, expect } = require('@playwright/test');
+// T6: editor ima vlastitu adresu — gdje točno, zna helper (jedno mjesto, ne sedamnaest).
+const { otvoriAdminPreglednik, otvoriAplikaciju } = require('./helpers/studio-entry');
 
 const HARD = 500;
 const OVER = 'x'.repeat(HARD + 1);   // 501 — mora biti odbijeno
@@ -21,12 +23,7 @@ const EXACT = 'y'.repeat(HARD);      // 500 — mora proći (rub na jedan znak)
 
 /** Otvori admin → te2 + prva lekcija → draft-mod (isti helper kao item-ops/category-ops spec). */
 async function openLessonInDraftMode(page) {
-  await page.goto('/');
-  await page.waitForFunction(
-    () => !!window.SokratAdmin && !!window.SokratContent && typeof window.navigateTo === 'function'
-  );
-  await page.evaluate(async () => { await window.SokratAdmin.refresh(); });
-  await page.evaluate(() => navigateTo('admin'));
+  await otvoriAdminPreglednik(page);
   await page.waitForSelector('#admin-page.active #adminSubjectSel');
   await page.evaluate(() => {
     const sel = document.getElementById('adminSubjectSel');
@@ -178,6 +175,11 @@ test.describe('M5a — mjera duljine kartice', () => {
       await page.click('#adminEditSave');
       await expect(page.locator('#stCanvas .st-pane[data-pane="cards"] .st-edit-item')).toHaveCount(1);
     } finally {
+      // ⚠️ T6: klik na materijal vodi na `editor.html`, a `SokratMaterials` živi SAMO u
+      // aplikaciji — čišćenje se zato uvijek prvo vrati na njezinu stranicu. Bez toga test
+      // padne na vlastitom pospremanju, a ne na tvrdnji koju mjeri.
+      await otvoriAplikaciju(page);
+      await page.waitForFunction(() => !!window.SokratMaterials, null, { timeout: 20000 });
       await page.evaluate((i) => window.SokratMaterials.deleteNode(i).catch(() => {}), id);
     }
   });

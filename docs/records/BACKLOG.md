@@ -3,14 +3,354 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Stablo Studija ima isti kvar kao BUG-032 — `.st-row` je `div` s klikom (2026-08-24)
+
+> Nađeno skeniranjem **pri popravku BUG-032**, ne posebnim traženjem: `js/studio.js:82` crta
+> redak stabla kataloga kao `<div class="st-row" data-subj=… data-lesson=…>` s delegiranim
+> klikom. Nema `tabindex`, nema uloge → **stablo kataloga u Studiju nije upotrebljivo
+> tipkovnicom**.
+
+Zašto NIJE popravljeno zajedno s BUG-032: to je **editor** (admin-only, živi na `editor.html`
+od T6), a BUG-032 je bio na studentskom putu — svaki predmet, svaki korisnik. ADR-030 uz to
+kaže da se editor smije **pojednostaviti**, pa ovo ima smisla riješiti kad se stablo ionako
+dira (K5 je već u redu čekanja).
+
+Popravak je poznat i mali: isti obrazac kao `renderLessonsPage` — `<button>` za redak koji
+nešto otvara, `aria-expanded` za redak koji grana stablo.
+
+⚠️ **Ostalih pet kandidata iz istog skeniranja su PROVJERENI i nisu kvar:** `.browse-card` je
+već `<button>`; `.ex-choice-item` i `.ex-card` su **omoti oko pravih `<button class="ex-opt">`**;
+`.profile-card` i `.admin-quiz-optrow` su u editoru i nose kontrole unutar sebe. *Skener nađe
+obrazac, ne kvar — razlika se vidi tek čitanjem.*
+
+## 🔥 EDITOR — boja kartice i dopune (Leon, 2026-08-24; izmjereno isti dan)
+
+> Dvije Leonove primjedbe na editor, obje potvrđene mjerenjem. **Ne rade se sada** (na redu su
+> BUG-032 i `about`), ali su zapisane jer je jedna od njih **mina**: razuman prijedlog koji bi,
+> izveden doslovno, slomio postojeće gradivo.
+
+### ① Boja mijenja samo rub, a treba obojiti CIJELU karticu
+
+Boja se svugdje postavlja isto (`SokratBlocks.applyAccent` → `--item-acc`), ali je **tri moda
+troše različito**, i to nitko dosad nije primijetio jer se gleda mod po mod:
+
+| mod | što `--item-acc` zapravo radi | datoteka |
+|---|---|---|
+| kartice | `box-shadow: inset … 3px` — **samo prsten, nikakve ispune** | `css/flashcards-section.css:93` |
+| kviz | `border-left: 4px` + tinta **10 %** | `css/quiz-section.css:92` |
+| dopune | `border-left: 4px` + tinta **10 %** | `css/fill-blanks-section.css:18` |
+
+Kod kartica ispune **doslovno nema**; kod kviza i dopuna je 10 %, što se na ekranu čita kao
+„samo rub". Leonov dojam je točan opis koda, ne dojam.
+
+**Mjesto: C5a (modovi uvježbavanja)** — ta cigla ionako prepisuje baš te tri datoteke, pa bi
+raditi to sada značilo raditi dvaput. **Teški dio je već riješen:** izbor tinte po luminanciji iz
+dva tema-neovisna tokena (`--color-on-tint-dark/-light`) napravljen je za pločice landinga, s
+branom `tests/tint-ink.spec.js` — dakle puna, zasićena boja s čitljivim tekstom kroz sve 4 teme
+nije nov problem nego **postojeći alat**. ⚠️ Vrijede tvrde zabrane iz `check:palette`: tekst na
+ispuni ide kroz token, nikad `color: white`.
+
+### ② Dopune — ⛔ NE rješavati jednom podvlakom (ovo je mina)
+
+Editor danas traži **točno 7 podvlaka** (`_______`) da prepozna prazninu. Leon: nije user-friendly,
+neka bude dovoljna jedna `_`, ili neka praznina bude vidljiv element koji se povlači i u koji se
+upiše odgovor; i neka ih se može staviti više.
+
+**Prijedlog „jedna podvlaka" se NE SMIJE izvesti doslovno.** U LaTeX-u je `_` operator indeksa, a
+rečenice s dopunom renderiraju matematiku (ADR-009, `js/fill-blanks.js:80`). Izmjereno u `data/`:
+**1005 rečenica s dopunom, 5 ih sadrži KaTeX**, i jedna je ovo:
+
+```
+At the market-clearing price, quantity demanded equals quantity _______ (\(Q_d = Q_s\)).
+```
+
+`Q_d` i `Q_s` postali bi praznine → **mikroekonomija bi se raspala**. Zato: ili token koji se ne
+može sudariti s LaTeX-om, ili — bolje — **marker uopće ne živi u tekstu**.
+
+**Pravi korijen: podvlaka je format POHRANE koji je procurio u sučelje.** Editor traži od autora
+da utipka ono što baza sprema. Leonova druga ideja (označi riječ / ubaci prazninu gumbom) briše
+to pitanje: koliko je podvlaka postaje nevažno.
+
+**Više praznina po rečenici je danas blokirano na četiri mjesta**, i zadnje je odlučujuće:
+
+- `_FILL_BLANK = '_______'` — `js/admin-editors.js:508`
+- validacija odbija rečenicu bez tog niza — `js/admin-editors.js:595`
+- shema traži isti uzorak — `schema/subject-content.schema.json:66`
+- renderer radi `.replace('_______', …)` — `js/fill-blanks.js:77`; `replace` sa **stringom**
+  mijenja **samo prvo** pojavljivanje
+- ⚠️ **model podataka: `answer` je JEDAN string** (`schema:67`) — i da se sve gore popravi, nema
+  gdje spremiti drugi odgovor
+
+**Migracije nema:** izmjereno je **0 od 1005** rečenica s više praznina (jer je nemoguće), pa
+`answer` ostaje za jednu prazninu, a `answers` se doda za više. Ocjenjivanje (`normFill`,
+`js/fill-blanks.js:94`) mora tada usporediti **po praznini**, ne po rečenici.
+
+**Rez: dvije cigle, ne jedna.** ① autorstvo praznine (sučelje editora, malo) · ② više praznina
+(shema + ocjenjivanje + renderer, vlastita cigla).
+
+## 🔥🔥 CRVENI ALARM — TELEFON (Leon na iPhoneu 16, 2026-08-19/20)
+
+> **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
+> [`FRONTEND_REDIZAJN.md` §9](../plan/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza
+> „POLICA" (P1–P4), obje PRIJE C4.** Ovdje ostaje samo nalaz; što se radi piše u specu.
+
+Leon: *„cijeli frontend na produkciji je apsolutno DNO DNA… puca mi kurac za cigla po ciglu,
+ovo je crveni alarm."* Izmjereno na 393 × 852: zaglavlje kataloga **270 px**, naziv fakulteta
+u **14 redaka**, naslov odrezan na **34 od 205 px**, „Start studying" na **y = 18 px** (ispod
+otoka), kromo **32 %** ekrana, cookie-banner još **24 %**. → **BUG-030**, **BUG-031**.
+
+**Zašto je svih desetak gateova zeleno:** axe mjeri na **1280 px**, `css:diff` uspoređuje nas
+sa samima sobom (drift, ne lošoća), a K3/K4a mjere **kromo, ne stranicu**. **Telefon kao
+STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0), ne popravkom.
+
+**Dvije trajne Leonove odluke iz iste sesije:**
+1. **Ništa ne ide na produkciju dok cijeli frontend ne bude riješen.**
+2. **Broj commita izvan produkcije NIJE nalaz i ne spominje se** (*„ZNAM KADA ZELIM PUSTIT
+   NESTO NA PRODUKCIJU"*; povod: raniji deploy koji se nije trebao dogoditi).
+
+**❓ OTVORENO PITANJE IZ T4 (2026-08-22) — traži ODLUKU, ne izvedbu.** Stranica `about` na **sva četiri profila** nema **nijednu** kontrolu u prvom ekranu: cijela ima **jednu** (`a.email-link`) i ona je na `y ≈ 1500`. Tvrdnja ④ phone-brane to danas broji kao kvar i to su **4 od 10** preostalih nalaza u osnovici. Dvije mogućnosti, i obje su legitimne: ① `about` je proza koja se čita, pa tvrdnja dobiva **izuzeće uz zapis zašto** · ② stranica bez ijednog izlaza je kvar, pa dobiva **ulaz** (vrata natrag na gradivo ili na vlastiti materijal). *Ne popravljati dok se ne odluči — popravak bez odluke ovdje znači izmišljanje sadržaja.*
+
+---
+
+## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)
+
+> **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
+> [`FRONTEND_REDIZAJN.md` §8](../plan/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
+> K3 brana · K4 materijali), ubačena između C3 i C4.** Ovaj odjeljak ostaje kao **nalaz i
+> obrazloženje**; što se radi i kojim redom piše u specu. ⚠️ Ondje je i mjerenje koje ovdje
+> nije bilo: **devet stranica dijeli jednu jedinu adresu** (`#/materials`), pa se traka bez
+> ruta mora pisati dvaput. **N2 nije u fazi** — ulazi tek kad K1–K4 stoje.
+
+Leon: *„navigacija je iskreno dosta loša… kada se uđe u editor i izađe iz njega samo se
+vrti u krug moji materijali, editor i tako u krug. Moji materijali moraju imat poseban
+odjeljak na stranici… isto kao materijali koji su s FMTU-a. Korisnik treba imati svoje
+sučelje za predmete koje uči."*
+
+**⚠️ PETLJA JE IZMJERENA, NIJE DOJAM.** [`js/studio.js:152`](../../js/studio.js#L152) —
+ljuska Studija ima **točno dva gumba**: `←` i „stari editor". `←` vodi `navigateTo(_node
+? 'materials' : 'profile')`. Iz materijala se ulazi u editor. **Dva čvora, jedan brid** —
+graf iz kojeg doslovno nema izlaza osim natrag. Isto i za admina.
+
+**Uzrok je širi od Studija: NE POSTOJI NIJEDNA GLOBALNA TRAKA.** Izmjereno:
+
+| površina | gdje živi |
+|---|---|
+| `landing-nav` | samo landing |
+| `study-nav` + `mobile-nav` (8+8 gumba) | samo study-stranica (to su MODOVI, ne navigacija aplikacije) |
+| `browse-header` · `lessons-header` · `study-header` | svaka stranica **iznova** slaže jezik, materijale, auth i znak |
+| `st-topbar` (Studio) | ništa od navedenog |
+
+Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban proizvod.
+
+### N1 · Stalna gornja traka — razrađena u ciglu **K2** (spec §8; K1 rute su isporučene)
+- **jedan** `<header>` kao brat svih `-page` sekcija, izvan njih (danas su zaglavlja
+  UNUTAR sekcija, pa nestaju s njima — to je cijeli uzrok)
+- sadržaj: znak → landing · **Predmeti** → browse · **Moji materijali** → materials ·
+  jezik · profil/prijava
+- **Studio je dobiva jednako kao i sve ostalo** → petlja pada bez ijedne posebne iznimke
+- zaglavlja po stranici zadržavaju SAMO ono što im je vlastito (natrag, naslov, mrvice);
+  duplirani jezik/materijali/auth gumbi odlaze
+- ⚠️ **brana:** test koji tvrdi da je iz **svake** stranice (uključujući `#editor-page`)
+  dohvatljiva bar jedna druga odredišna stranica u jednom kliku. Bez toga se petlja
+  može vratiti neopaženo — kao što je i nastala.
+
+### N2 · Osobna početna — „predmeti koje učim" → **RAZRAĐENO 2026-08-20 kao faza „POLICA"**
+Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu. **Danas takva
+stranica ne postoji.** Ovo je mogućnost, ne kvar.
+
+> **Dobila je sadržaj koji joj je nedostajao.** Leon je 2026-08-20 tražio da korisnik **bira
+> što će skinuti** za učenje offline — a to je točno ono što N2 prikazuje. Polica time ima
+> **dvije vrste stvari: što je korisnik napisao i što je skinuo.** Ne gradi se nova površina
+> nego se puni ona koja je bila planirana i prazna. Cigle P1–P4 u
+> [`FRONTEND_REDIZAJN.md` §9.4](../plan/FRONTEND_REDIZAJN.md); **K4 se u P2 utapa** (ista
+> pločica, isti ekran — odvojeno bi se pisalo dvaput).
+
+### N3 · Moji materijali u prikazu kvalitete kataloga
+Danas je polica **stablo**, a katalog **vitrina s bojom i ikonom**. Leon traži da vlastito
+gradivo izgleda jednako dobro kao FMTU gradivo.
+
+**🔒 PRAVILO KOJE JE IZ OVOGA IZAŠLO (Leon, izričito):** *sučelje za vlastite materijale
+NIKAD ne ide na landing* — nego na posebno mjesto, eventualno profil. Landing smije imati
+**ulaz** (vrata, ＋ pločica) i **objašnjenje**, nikad **popis korisnikovih materijala**.
+Ovo sužava ADR-029: „ravnopravno u herou" vrijedi za **istaknutost ulaza**, ne za prikaz
+sadržaja.
+
+---
+
+## 🔥 A — PRIJAVA I REGISTRACIJA (Leon, 2026-08-18)
+
+Leon: *„preko potrebno da postoji mogućnost prijave s Googleom, Appleom, jer jako puno
+korisnika se zapravo tako registrira."* Uz to bogatija registracija: **student / učenik /
+profesor / vanjski korisnik**.
+
+**Brojka koja to opravdava: 5 registriranih korisnika ukupno** (mjereno na produkciji
+2026-08-16; 3 prijave u 30 dana, 1 u 7). Obavezan e-mail + lozinka je prepreka, a danas
+je to **jedini** put — `js/auth.js` ima samo `signInWithPassword`, nijedan OAuth provider.
+
+| korak | što | zašto tim redom |
+|---|---|---|
+| **A1** | **Google** | besplatno, ne dira CSS, **ne mora čekati redizajn** — najveći učinak po jedinici posla |
+| **A2** | **Sign in with ChatGPT** | OpenAI ga je pokrenuo **2026-08-02** (OAuth 2.0), Supabase je launch-partner. ⚠️ **POTVRĐENO SAMO za prijavu na Supabaseov vlastiti dashboard** — treba provjeriti nudi li se kao provider za APLIKACIJE. Ne obećavati dok se ne provjeri. |
+| **A3** | **Apple** | traži Apple Developer ~99 $/god; nije hitno bez iOS aplikacije |
+| **B** | **pitanja pri registraciji** | traži izmjenu sheme (`profiles`) → **SQL na produkciji = Leonova ruka**; dira profil → ide **s C6**, ne prije |
+
+**🎨 A0 · DIJALOG PRIJAVE SE PREPRAVLJA ZAJEDNO S A1 (Leon, 2026-08-19, uz snimku):**
+*„kada budemo dodavali mogućnost za prijavu preko Googla, Applea i drugih pizdarija morat
+ćemo popravit gumb za sign in i sign up."* Današnji `#authModal` je građen za **jedan**
+put: dva taba („Sign in" / „Create account") pa polje e-maila i lozinke odmah ispod. Čim
+dođu OAuth-gumbi, taj oblik puca — davatelji su **primarni** put i moraju stajati **iznad**
+e-maila, s razdjelnicom („ili e-mailom"), a tabovi tad postaju šum jer Google-prijava i
+Google-registracija nisu dvije radnje nego jedna.
+
+**Zato ovo NIJE zaseban posao nego dio A1** — prvo dodavanje davatelja mora doći s novim
+rasporedom dijaloga, inače se gumbi zalijepe na oblik koji ih ne podnosi i prepravljamo
+dvaput. ⚠️ Vrijedi i granica iz C2: **tekst na ispuni marke ide kroz `--on-primary`**, a
+Google/Apple gumbi imaju **propisane** boje i logotipe (brand guidelines) — to su prve
+površine u projektu čija boja NIJE naša odluka, pa moraju ući u `check:palette` kao
+**imenovana iznimka**, ne kao tiho odstupanje.
+
+**⛔ GODINE SE NE PITAJU (Leon presudio 2026-08-18, na moj prigovor).** Ako pitamo dob i
+netko upiše 14, mi **znamo** da je dijete — GDPR čl. 8 tad traži roditeljski pristanak
+(prag 16, države ga smiju spustiti). Kategorija „učenik" to već implicira. Time bismo
+uveli pravnu obavezu koju danas nemamo, za podatak s kojim ne bismo ništa radili.
+**Prilagodbu sadržaja bolje daje pitanje „što učiš" nego „koliko imaš godina".**
+Uloga (student/učenik/profesor/vanjski) je korisna i bezopasna — ona ostaje.
+
+---
+
+## 🔥 Leaked password protection — **rješivo BESPLATNO; Supabase naplaćuje integraciju, ne provjeru** (2026-08-21)
+
+**Premisa je bila kriva 11 dana.** Stavka „RUČNO ČEKA LEONA" je od 10. 8. tvrdila da je ovo *„jedini
+od 16 advisora koji se rješava jednim prekidačem"*. Prekidač je **iza Pro plana** (org
+`pfbkisxynphwxdbqmmtt` = **free**), pa ga u Dashboardu nema. Advisor ga svejedno prijavljuje jer ne
+gleda plan. *Zapisano jer je pouka o klasi: „ostala je samo radnja" je tvrdnja koja se mora
+provjeriti prije nego se nekoga pošalje da tu radnju izvrši.*
+
+**Ono što Supabase naplaćuje NIJE provjera nego njihova integracija.** HaveIBeenPwned ima
+**besplatan javni API bez ključa**: `GET api.pwnedpasswords.com/range/{prvih 5 znakova SHA-1}`
+vrati ~500 sufiksa, usporedba je lokalna. **Lozinka nikad ne napusti preglednik** — odlazi pet
+heksadecimalnih znakova (k-anonimnost, ista tehnika koju Supabase koristi iznutra). `crypto.subtle`
+je ugrađen. **~30 redaka u `js/auth.js`.**
+
+⚠️ **Pošteno o dosegu:** naša izvedba je **klijentska**, kao i `minlength` — zaustavlja korisnika
+koji upiše `password123` (a to jest prava prijetnja), ali ne i onoga tko namjerno zaobiđe formu, a
+taj šteti **samo sebi**. Supabaseova je serverska i time jača. **~90 % vrijednosti za 0 €** umjesto
+100 % za ~300 €/god. Registracija ide izravno na Supabase Auth, ne kroz naš kod, pa se serverska
+provedba **ne može** dobiti bez proxyja — to nije propust izvedbe nego svojstvo puta.
+
+**Veže se na CSP (C6):** dodaje `api.pwnedpasswords.com` na popis vanjskih hostova.
+
+### Uz to: dvije susjedne stavke koje je isto istraživanje iznijelo
+
+1. **`minlength="8"` je obećanje preglednika, ne pravilo servera.** Forma traži 8
+   (`js/auth.js:206`), Supabaseov serverski minimum je zadanih **6** → tko pošalje zahtjev mimo
+   forme, registrira se sa šest znakova. **Popravak je besplatan i dostupan na free planu:**
+   Dashboard → Authentication → Sign In / Providers → **Minimum password length 6 → 8**.
+   ⚠️ **Polje „Password Requirements" NE dirati** — traženje velikih slova/brojki/simbola server bi
+   provodio, a **naša forma to nigdje ne piše**; bila bi to ista greška okrenuta naopako (server
+   stroži od sučelja). *Mijenja se isključivo ono što UI već obećava.*
+2. **`WeakPasswordError` se u `js/auth.js:343` krivo tretira.** Postojeći korisnik s prekratkom
+   lozinkom se **uspješno prijavi**, ali Supabase uz sesiju vrati i `error` → naš `if (error)`
+   pokaže **crvenu poruku** iako je prijava prošla. Nije zaključavanje, jest zbunjivanje.
+   **Mora se popraviti PRIJE nego se serverski minimum digne** (ili barem u istoj isporuci).
+   Koliko je pogođenih: **nemjerljivo** — duljina lozinke se ne pohranjuje, samo hash. Vjerojatno
+   nula (forma traži 8 od početka), ali „vjerojatno nula" nije mjera i tako se i vodi.
+
+---
+
+## 🧭 SELF-HOST SUPABASE — **odlučeno: ide, ali TEK POSLIJE frontenda** (Leon, 2026-08-21)
+
+Povod je bio bijes na Pro-gating (*„ja ovim supcima neću meda dat"*), ali odluka stoji i bez njega.
+Supabase je **open source** → self-host na VPS-u (~5 €/mj) otključava **sve Pro značajke**, uz
+**isti kod, istu shemu i isti `supabase-js`**. To je jedina opcija koja **ne traži prepisivanje**.
+
+**Odbačeno i zašto:** **PocketBase** (SQLite, vlastiti model pravila) i **Firebase / Cloudflare D1**
+traže da se RLS i svih 10 `SECURITY DEFINER` RPC-ova napišu ispočetka — to nije seoba nego **rewrite
+backenda**.
+
+**Što je danas vezano za Supabase** (mjera cijene seobe, da se ne procjenjuje napamet):
+
+| što | koliko |
+|---|---|
+| RLS politike | ~13, uz owner-check na svakoj tablici |
+| `SECURITY DEFINER` RPC-ovi | 10 (`publish_document`, `publish_node`, `create_node`, `move_node`, …) |
+| Edge Functions | 1 živa (`delete-account`) + 2 stranca za brisanje |
+| Storage buckets s vlasničkim prefiksom | 2 (`node-images`, `lesson-images`) |
+| Sadržaj u bazi | 51 red / 17 predmeta |
+| Naši alati koji govore Supabaseu | `check:final` · `diff:db` · `check:functions` · `test:storage` · `test:delete-account` · `backup` · `migrate-content` |
+
+**Zašto ne sada:** usred smo crvenog alarma za telefon koji je Leon sam proglasio prioritetom, i
+ništa ne ide na produkciju dok to nije gotovo. Seoba backenda bi zamrznula **jedino što korisnicima
+trenutno smeta**.
+
+**Argument koji vrijedi neovisno o bijesu — i zbog kojeg ovo nije samo osveta:** self-host gasi i
+**uspavljivanje baze nakon ~7 dana neaktivnosti**, koje nas već grize (app tad pada na datoteke,
+prijava i sync ne rade). **Cijena koja se mora izreći: postajemo sami sebi DBA** — backupi,
+nadogradnje, sigurnosne zakrpe, uptime. Za jednog autora usred redizajna to je stvarni trošak
+vremena, i zato ovo čeka. Kad dođe red → **ADR**, ne usputna odluka.
+
+---
+
+## ➖ `css:diff` mjeri samo POLA stranice — izmjereno u T5 (2026-08-22)
+
+**Što je nađeno.** `scripts/css-diff.js` presreće **stylesheet**, a HTML uzima iz **radnog
+stabla**. Dok cigla mijenja samo CSS, to je točno. Čim cigla premjesti vrijednost **iz markupa u
+CSS** (T5: dvoosna veličina heroja se utilityjem ne da napisati, jer utilityji stoje zadnji pa
+pravilo iste specifičnosti uvijek gubi), njegova „referenca" postaje stranica koja **nikad nije
+postojala**: **novi markup + stari CSS**.
+
+**Mjera.** T5 je prijavio **46 razlika**, i to na **sve tri** širine — uključujući 768 i 1280 px,
+gdje se dokazano **ništa** nije promijenilo. Izvještaj je tvrdio „naslov 32 px" — a to je gola
+`h1` bez ijedne veličine, jer referentni bundle ne poznaje pravilo koje ju daje.
+
+**Zašto to nije sitnica.** Ovo je **oblik cijele faze C4–C7**: svaka od tih cigli migrira
+površinu na utilityje, dakle **svaka mijenja markup i CSS istovremeno**. Alat koji je za C1 dao
+3438 usporedbi / 0 razlika za C4+ daje šum u kojem se prava regresija ne vidi. *Gate koji mijenja
+samo jednu polovicu stranice mjeri stranicu koja ne postoji.*
+
+**Kako se dotad dokazuje** (izvedeno u T5, radi): HEAD se posluži iz zasebnog **`git worktree`-a**
+na drugom portu, pa se izračunati stilovi uspoređuju između **dvije stvarne verzije stranice** —
+obje sa svojim markupom i svojim CSS-om. T5: **0 razlika na 768 i 1280 px**, 22 na 375 i sve do
+jedne namjera cigle.
+
+**Prijedlog (nije odlučeno):** `css:diff` dobiva `--ref <git-ref>` koji poslužuje **cijelo**
+stablo te reference (worktree ili `git archive`), a ne samo bundle; današnje ponašanje ostaje
+zadano. Cijena: sporije (dva servera) i traži čist `git worktree`. **Kriterij prihvaćanja:**
+*cigla koja premjesti vrijednost iz markupa u CSS dobije 0 razlika na širinama koje nije dirala.*
+
+⚠️ **Ne raditi usred faze TELEFON** — T6 je zadnja cigla i ne dira markup na taj način. Prirodno
+mjesto je **pred C4**, jer ondje počinje niz cigli koje bi bez toga sve morale ručno dokazivati.
+
+---
+
+## ➖ Birač tema je bliže nego što spec tvrdi — 24 pravila, ne 126 (2026-08-18)
+
+Leon je pitao kad dolaze druge boje cijele stranice. `npm run palette:breakdown`:
+
+```
+FATALNO (tekst nevidljiv na svijetlom)   24   ← JEDINO ovo blokira birač
+plohe/rubovi (blijedo, ali ispravno)     28
+stara paleta (neusklađeno, čitljivo)     61
+```
+
+Koncentrirano: `subject-selector` 6 · `learn` 4 · `home-section` 4 · `quiz-section` 3 ·
+`profile` 2, ostatak pojedinačno. **Birač NE ČEKA C4–C7 nego 24 pravila** — posao od
+jednog popodneva, izdvojiv u vlastitu ciglu kad god. Ovo je drugi put da ista čegrtaljka
+zavara: agregatna brojka mjeri točno, a savjetuje krivo.
+
+---
+
 ## ✅ ~~`a11y.authed` (Studio) nije doveden do zelenog~~ — POTVRĐENO OKRUŽENJE, ZATVORENO 2026-08-16
 
 **Ponovljeno na odmornom stroju: 3 prošla / 0 palo, Studio u 46,2 s** (`auth-setup` 5,7 s ·
 „Moji materijali" 5,9 s · Studio 46,2 s; ukupno 1,0 min). Isti commit, isti helper, **bez ijedne
 izmjene** — samo neopterećen stroj. Puna suita iza toga: **371 prošlo / 0 palo / 30 preskočeno**.
 
-> 📏 **NORMALA TRAJANJA (nova navika, 2026-08-16): puna suita = 23,5 min · `a11y.authed` = 1,0 min**
-> (`workers: 1`, `fullyParallel: false`, ~401 test kroz 6 projekata — sve sekvencijalno).
+> 📏 **NORMALA TRAJANJA (nova navika, 2026-08-16; premjereno 2026-08-22): puna suita = 21,7 min ·
+> `a11y.authed` = 1,0 min** (`workers: 1`, `fullyParallel: false`, **451 test + 72 preskočena** kroz
+> 6 projekata — sve sekvencijalno). ⚠️ **Broj testova raste sa svakom ciglom** (bio je ~401 u
+> kolovozu; T0–T5 su dodali branu telefona i tvrdnju landinga), pa se uz vrijeme uvijek bilježi i
+> broj — inače „sporije nego prošli put" ne razlikuje **sporiji stroj** od **veće suite**.
 > **Povod:** dnevnici su dosad bilježili KOLIKO je testova prošlo, ali nikad KOLIKO JE TRAJALO — pa
 > se jučerašnje pitanje *„je li test pokvaren ili je stroj spor?"* nije dalo odgovoriti bez punog
 > kontrolnog prolaza s izvornim kodom. **Broj bez normale ne može posvjedočiti o brzini.** Ubuduće
@@ -162,6 +502,36 @@ odlučiti opseg**, jer je danas neodređen: je li to prolaz kroz tokene i razmak
 interakcije (unos odgovora, provjera, koraci rješenja). ⚠️ **Granica se ne pomiče:** izgled se smije
 mijenjati, `generate()`/`answer()`/`type` **ne**.
 
+> ### ⚠️ 2026-08-20 — „VJEŽBE SU KÔD" JE OBORENO MJERENJEM (smjer: **RECEPTI**)
+>
+> Puni zapis: [`FRONTEND_REDIZAJN.md` §9.5](../plan/FRONTEND_REDIZAJN.md). **Radi se TEK nakon
+> cijelog frontenda** (Leon, 2026-08-20) — ovdje stoji samo da se sljedeća sesija ne vrati na
+> početak.
+>
+> Učitano svih pet packova: **234 vježbe — 151 (65 %) je čisti PODATAK**, samo **83 (35 %)**
+> ima funkciju, i to **uvijek istu jednu: `generate(p)`**. Presudno: **`params` su već
+> deklarirani kao podatak u svih 83, bez iznimke** — od deset ključeva vježbe **devet je već
+> shema**, kôd je samo **formula**. *Shema je od prvog dana bila deklarativna i nitko to nije
+> primijetio.*
+>
+> **Smjer:** formula ne briše se i ne prevodi u novi jezik nego **seli iz vježbe u imenovanu,
+> verzioniranu knjižnicu recepata** (`recipe: 'sample-sd'`). Time vježba postaje **100 %
+> podatak** → baza, JSON, `publish_document`, skidanje, MCP, editor — **bez ijedne iznimke**, a
+> **BUG-012 se smije umiroviti**. Migracija je **samoprovjerljiva**: starih 83 generatora
+> ostaju proročište (isti parametri → identičan izlaz).
+>
+> **Odbačeno i zašto:** evaluator izraza (traži da napišem i osiguram parser, a pokriva 93 %
+> umjesto 100 %) · sandbox za korisnički JS (ruši ADR-018 u korijenu; prava cijena nije sandbox
+> nego to da **tuđi `generate` odlučuje o ocjeni**).
+>
+> **Dvije stvari protiv, obje u dizajn od prvog dana:** recept je **dijeljena ovisnost** (mijenja
+> sve vježbe koje ga koriste → imenovan, verzioniran, dodaje se a ne mijenja) · **ne zna se
+> koliko ih je** (83 generatora → 20? 40?) — **to je jedina brojka koja odlučuje o cijeni** i
+> mjeri se prije obveze.
+>
+> **Pouka (treći put ista):** *agregatna brojka mjeri točno, a savjetuje krivo.* „Vježbe su kôd"
+> bilo je istinito za **7 %**, a blokiralo je odluku o svih 100 %.
+
 ---
 
 ## ➖ „Akademsko plavo" i „Papir" izgledaju isto — tema nije temperatura sivih — 2026-08-14
@@ -190,7 +560,7 @@ prirodno nosi.
 
 ---
 
-## 🔥 Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna — 2026-08-14
+## ✅ ~~Studio na telefonu — dva gumba su IZVAN ekrana i nedostupna~~ — ZATVORENO 2026-08-19 (K2b, spec §8.8)
 **Izmjereno** (390 × 844, otvorena lekcija, staging):
 
 | mjera | vrijednost |
@@ -222,9 +592,59 @@ deklarira `display`. ⚠️ **Ne popravljati mehanički:** Studio nema mobilni i
 „ispravno" ponašanje ostavilo telefon **bez ijednog načina da se odabere lekcija**. Slučajni kvar
 danas drži funkciju živom → traži **odluku o dizajnu** (izbornik vs. složeni raspored), ne zakrpu.
 
-**Kad:** Leon, 2026-08-14: *„jbg tako je kako je, morat ćemo to popravit kroz vrijeme"* → **ne
-blokira isporuku**. Ali kriterij prihvaćanja C3 #1 izričito imenuje editor na 320 px, pa
-**C3 se ne smije proglasiti gotovim dok ovo stoji.**
+**✅ ZATVORENO K2b-om (2026-08-19), i to kao NUSPOJAVA, ne kao zaseban posao.** Leon je presudio da
+globalna traka Studija **spoji** s postojećom umjesto da se složi iznad nje: identitet i položaj
+(natrag, znak „Sokrat STUDIO“, mrvica) otišli su gore, Studiju su ostale radnje nad dokumentom.
+Izmjereno poslije, isti uređaj (390×844): `.st-topbar` **347 → 57 px**, canvas **235 → 326 px**,
+kontrola izvan ekrana **2 → 0**. ⚠️ Da je traka išla IZNAD (kako je spec dotad tvrdio), canvas bi pao
+na **~171 px** — cigla bi kvar **pogoršala**. Brana: `tests/studio-chrome.authed.spec.js`
+(obrnuta provjera **2/2 pada**).
+
+**⛔ OSTAJE OTVOREN drugi, neovisan nalaz iz istog odjeljka:** `.st-tree` je i dalje `display:flex`
+na telefonu (**354 px** nakon K2b) jer medijski upit ne dodaje specifičnost. Ne popravljati mehanički
+— Studio nema mobilni izbornik za stablo, pa bi „ispravno“ ponašanje ostavilo telefon bez ijednog
+načina da se odabere lekcija. Traži **odluku o dizajnu → K4**.
+
+---
+
+## ✅ ~~Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA~~ — RIJEŠENO 2026-08-19 (K4a, spec §8.10)
+
+> **Riješeno isti dan.** Leon: *„treba se toga riješiti na neki način da se ništa ne sjebe. Pa
+> zbog toga ne možeš ništa raditi na telefonu u editoru, apsolutno ništa."* Izmjereno prije
+> popravka (390×844): ljuska **522–540 px = 62–64 % ekrana**, canvas **304–323 px**. Poslije:
+> canvas **679 px**, ljuska u čvor-modu **165 px = 20 %**. Rez je išao po modu — čvor-mod je
+> panel izgubio bez zamjene, katalog-mod ga je dobio kao **ladicu** s kvakom u traci. Brana:
+> `tests/studio-mobile.authed.spec.js` (3 testa, uklj. tvrdnju da je **stolno računalo
+> nedirnuto**). Zapis ispod ostaje kao dijagnoza.
+
+## 🔥 ~~Panel čvora u Studiju je na telefonu ČISTA REDUNDANCIJA~~ — 2026-08-19 (Leon, uz snimku)
+
+Leon: *„ovo smeće u editoru koje se mora maknut na telefonu, ne kužim koja je ovo pička
+materina nepotrebna."*
+
+**Što je to točno.** [`js/studio.js:136`](../../js/studio.js#L136) — `.st-tree` u **čvor-modu**
+(`_node` postoji) crta naslov „📁 Moji materijali", karticu s **imenom materijala** i
+podnaslov „Osobni materijal — vidiš ga samo ti".
+
+**Zašto je to redundancija, a ne ukras.** Na istom ekranu telefona ime materijala piše
+**tri puta**: u globalnoj mrvici (`Moji materijali › Matematika`), u toj kartici, i u `H1`
+canvasa odmah ispod. Panel pritom troši visinu na uređaju gdje je visina najskuplja —
+mjereno u K2b, `.st-tree` je **354 px**.
+
+**⚠️ OVO RAZRJEŠAVA BLOKADU K4, I TO ISPRAVLJA MOJU RANIJU TVRDNJU.** Do sada je ovdje i u
+specu stajalo da se `.st-tree` ne smije sakriti na telefonu jer bi *„telefon ostao bez
+ijednog načina da se odabere lekcija"*. To je **točno za KATALOG-mod** (`_node == null`,
+admin bira predmet i lekciju iz stabla) i **netočno za ČVOR-mod**, gdje panel nije
+navigator nego prikaz **jednog jedinog** elementa koji je već imenovan dvaput iznad.
+*Jedna tvrdnja pokrivala je dva različita moda i zato je pola vremena bila kriva.*
+
+**Iz toga slijedi rez:** čvor-mod → panel se na telefonu **briše bez zamjene** (ništa se ne
+gubi). Katalog-mod → i dalje traži odluku o dizajnu (mobilni izbornik za stablo), ali to je
+**admin-put na telefonu**, dakle mnogo rjeđi slučaj i ne blokira K4.
+
+⚠️ Uz to: `display:none` ispod 680 px u `studio.css` **nikad nije radio** — medijski upit ne
+dodaje specifičnost, a bazno `display:flex` stoji ispod njega. Popravak mora to uzeti u
+obzir, inače „makni na telefonu" opet neće ništa napraviti.
 
 ---
 
@@ -248,13 +668,46 @@ koja NE skrola dodaje beskorisne zaustavne točke tipkovnice. Dakle mali runtime
 
 ---
 
-## 🔥 Landing šalje 240 KB editorskog koda posjetitelju bez računa — 2026-08-14
+## ✅ ~~Landing šalje 240 KB editorskog koda posjetitelju bez računa~~ — ZATVORENO 2026-08-24 (T6)
+
+> **✅ ISPUNJENO ciglom T6** (spec §9.13): editor je dobio **vlastitu stranicu** (`editor.html`),
+> pa posjetitelj bez računa više ne dobiva nijednu editorsku datoteku. Mjereno: **mrežom
+> 234 → 164 KiB** (ispod zadanog budžeta od 200), **sirovo 755 → 519 KiB**, **41 → 36 skripti**,
+> editorskih datoteka na putu **7 → 0**.
+>
+> ⚠️ **Brojka „3,7× preko budžeta" iz ove stavke bila je u KRIVOJ JEDINICI** — računata je na
+> sirovim bajtovima, a budžet dolazi iz Lighthouse-postavke, koja mjeri **prenesene**. U
+> ispravnoj jedinici zatečeno stanje bilo je **1,17×**, ne 3,7×. Stavka je dakle bila **točna u
+> smjeru, kriva u mjeri**; ostavlja se zapisana jer je pouka općenita: *agregat u krivoj jedinici
+> može mjeriti točno i savjetovati krivo* (isti razred kao `palette:breakdown`).
+>
+> **Najvažnije: sada postoji GATE.** `npm run check:budget` (u preflightu) čuva **sastav**
+> (nijedna editorska datoteka na posjetiteljevu putu) **i težinu** (≤ 200 KB prijenosa). Ova je
+> stavka devet dana rasla upravo zato što ga nije bilo — *stavka bez gatea ne stoji na mjestu
+> nego klizi*, i to je zapisano niže, u njezinoj vlastitoj povijesti.
+
+<details><summary>Povijest mjerenja (zadržana — pokazuje kako je brojka rasla)</summary>
+
 **Izmjereno** (profil telefona 390 px, prazan cache, nekomprimirano, lokalni server):
 dokument 66 KB · **skripte 821 KB kroz 45 zahtjeva** · stilovi 242 KB · **ukupno 1.173 KB**.
 Od skripti je **241 KB (38 %)** editorsko/admin: `studio.js` (50) · `block-editor.js` (53) ·
 `block-editor-media.js` (30) · `admin.js` (45) · `admin-editors.js` (35) · `draft-store.js` (18) ·
 `node-images.js` (6) · `card-limits.js` (2). Još **119 KB** su modovi i vježbe, kojih na landingu
 nema. Svih 38 je **sinkrono**, bez `defer`, u `index.html`.
+
+**📏 PREMJERENO 2026-08-19 (K2b):** **728 KiB u 41 lokalnoj skripti**, od toga **232 KiB = 31 %**
+editorsko (`studio` · `block-editor` · `block-editor-media` · `admin` · `admin-editors` · `draft-store`),
+**38 bez `defer`**. ⚠️ **Brojka je NARASLA otkad je stavka otvorena** — `main` nosi 691 KiB, grana 728 KiB.
+Nijedna cigla je nije pogoršala namjerno; rasla je kao nusprodukt K1/K2a/K2b i cigli landinga.
+*Stavka bez gatea ne stoji na mjestu nego klizi* — zato je „JS-budžet landinga kao gate" u §8.5
+zapisan kao posao koji ne ovisi ni o jednoj cigli i može se ubaciti kad god.
+
+**📏 PREMJERENO PONOVNO 2026-08-20: 744,6 KiB u 41 skripti · 38 bez `defer` · 238,2 KiB (32 %)
+editorsko u 6 datoteka.** Putanja je time **691 → 728 → 744,6** — brojka **nijednom nije pala**,
+i to bez ijedne namjerne izmjene. Budžet koji si je projekt sam zadao je 200 KB → **3,7×**.
+**Dobila je mjesto: cigla T6** ([§9.3](../plan/FRONTEND_REDIZAJN.md)), i ondje **nije čišćenje
+nego preduvjet faze „POLICA"** — offline ljuska ne smije nositi editor koji offline student
+nikad ne otvori.
 
 **Zašto je ovo nalaz, a ne mišljenje:** projekt si je u ovom istom dokumentu (sekcija „Brutalan
 bar", #1) zadao budžet **„JS ≤ ~200 KB"** i označio ga 🔥 *„Blokada, ne upozorenje."* Gate nikad
@@ -266,6 +719,8 @@ Zapisano jer je pouka: jedno mjerenje bez ponavljanja nije mjera.)*
 
 **Kad:** uz **C3** — C3 ionako prepisuje površinu tih istih datoteka, pa je odvajanje s kritičnog
 puta najjeftinije baš tada. Uz to **budžet kao gate**, da brojka nikad više ne poraste tiho.
+
+</details>
 
 > ⚠️ **STAVKA OSTAJE OTVORENA — 2026-08-15.** Spec §7.13 je tvrdio da se zatvara sama, jer da živi
 > prikaz u herou nosi taj teret. **Izmjereno pri brisanju demoa: ne nosi ga.** Demo je bio čisti
@@ -327,9 +782,10 @@ redoslijed je bitan:
 **Veže se na:** kartica-standard u [architecture/CONTENT_SCHEMA.md](../architecture/CONTENT_SCHEMA.md)
 (kratke definicije <200 znak., detalj → learn). [[content-model-standard]]
 
-## 🔥 RUČNO ČEKA LEONA (3 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
-Sve tri su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
-izvesti. Nijedna ne ruši produkciju.
+## 🔥 RUČNO ČEKA LEONA (2 stavke) — pripremljeno 2026-08-10, ostala je samo RADNJA
+Obje su **istražene, izmjerene i opremljene gateom**; ostao je klik/naredba koje Claude ne smije
+izvesti. Nijedna ne ruši produkciju. **Treća (re-sync `macroeconomics`) je izvršena 2026-08-21** —
+v. ispod.
 
 1. **Obrisati `bright-function` i `quick-api`** — Supabase Dashboard → Edge Functions → `<ime>` → Delete.
    **Nalaz je ozbiljniji nego što je zapisano 2026-08-09:** `bright-function` ima **sha256 `49363e4b…`,
@@ -363,18 +819,35 @@ izvesti. Nijedna ne ruši produkciju.
    > **🔧 Klasa, ne slučaj:** ovo je sjedilo danima jer `check:functions` **nikad ne trči sam** (mrežni,
    > izvan preflighta). A gate **ne treba nijedan ključ** → nema razloga da ne bude zaseban CI job
    > (nightly ili na push na `main`). Tad bi bilo crveno u Actionsima isti dan. ~1 h posla, rješava klasu.
-2. **Re-sync `macroeconomics`:** `node scripts/migrate-content.js macroeconomics`
-   (traži `service_role` → klasifikator ga blokira Claudeu; jedna Leonova naredba).
-   ✅ **Rizik je uklonjen prije radnje:** `npm run diff:db macroeconomics` pokazuje da se baza i datoteke
-   razlikuju u **točno jednom znaku** u `macroeconomicsM1` i `macroeconomicsFinal` — index 207,
-   `goodsMarket.flashcards[5].answer`, ćirilično `С` (U+0421) vs latinično `C` (U+0043), duljina ista
-   (246). **Nema živih Studio-edita koje bi upsert pregazio** → re-sync je siguran. `macroeconomicsM2` je
-   već identičan. Nakon naredbe: `npm run diff:db macroeconomics` mora biti zelen.
-3. **Uključiti Leaked Password Protection** — Dashboard → Authentication → Settings → *Leaked password
-   protection* (provjera lozinki protiv HaveIBeenPwned). Jedini je od 16 sigurnosnih advisora koji se
-   rješava **jednim prekidačem**, a tiče se korisničkih računa. Traži Management API token / dashboard —
-   `service_role` ne mijenja konfiguraciju projekta. Provjera nakon: advisori više ne smiju javljati
-   `auth_leaked_password_protection`. **Advisori inače: 0 ERROR**, sve WARN (v. §Advisori dolje).
+2. ✅ ~~**Re-sync `macroeconomics`**~~ — **IZVRŠENO 2026-08-21** (Leon pokrenuo
+   `node scripts/migrate-content.js macroeconomics`; skripta traži `service_role`, a taj put je
+   Claudeu blokiran).
+   **Što je bilo:** baza i datoteke razlikovale su se u **točno jednom znaku** u `macroeconomicsM1` i
+   `macroeconomicsFinal` — index 207, `goodsMarket.flashcards[5].answer`, ćirilično `С` (U+0421) vs
+   latinično `C` (U+0043), duljina ista (246); `macroeconomicsM2` je već bio identičan. Oku nevidljivo,
+   ali pretraga po „MPC" tu karticu nije nalazila, a `diff:db` je trajno šumio.
+   **Rezultat:** `diff:db macroeconomics` **3/3 identično, 0 razlika** · `check:final` **16/16**
+   (`final == M1 ⊕ M2 (+examPractice)` drži i dalje).
+   > ⚠️ **Pouka o redoslijedu, ne o znaku.** `migrate-content.js` radi **upsert = piše preko baze**, a
+   > admin kroz Studio smije uređivati živi sadržaj → re-sync naslijepo može pojesti tuđu izmjenu, a
+   > `content_versions` je **audit, ne undo**. Zato je radnja imala tri koraka i samo je treći pisao:
+   > `diff:db` (dokaz da nema živih edita — razlika **ista kao 11 dana ranije**) → `--dry` (dokaz da
+   > su brojke očekivane) → prava naredba. **Provjera prije upisa je bila jeftinija od bilo kakvog
+   > oporavka poslije njega.** Isto vrijedi za svaki sljedeći re-sync bilo kojeg predmeta.
+   >
+   > **Ništa se nije commitalo ni deployalo, i to nije previd:** poravnata je **baza**, datoteke su
+   > izvor istine i već su bile ispravne. Bez `npm run bump`, bez commita — produkcija ostaje
+   > netaknuta.
+3. ⛔ ~~**Uključiti Leaked Password Protection**~~ — **NIJE STAVKA ZA RUKU. Provjereno 2026-08-21:
+   to je Pro značajka**, a organizacija (`pfbkisxynphwxdbqmmtt`) je na **free** planu → prekidača u
+   Dashboardu **nema**. Advisor ga svejedno prijavljuje jer ne gleda plan. **Premisa je stajala
+   ovdje 11 dana i poslala bi Leona da traži kontrolu koja ne postoji.**
+   **Zamijenjena je radnjom koja JEST izvediva na free planu:** Dashboard → Authentication →
+   Sign In / Providers → **Minimum password length 6 → 8** (forma traži 8, ali `minlength` je
+   pravilo **preglednika**; serverski minimum je zadanih 6). ⚠️ Polje *Password Requirements* **ne
+   dirati**, i **prije toga popraviti `WeakPasswordError`** — v. zasebnu stavku „Leaked password
+   protection — rješivo BESPLATNO" gore, gdje stoji i HIBP izvedba u našem kodu.
+   **Advisori: 0 ERROR**, sve WARN (v. §Advisori dolje).
 
 ## ➖ Sigurnosni advisori na PROD-u — 0 ERROR, 16 WARN (snimljeno 2026-08-10)
 Ostavljeno svjesno, ali zapisano da se ne izgubi:
@@ -569,6 +1042,49 @@ tanki blok.** Stoga **OBA trebaju izvorne PDF-ove/silabus od korisnika** (folder
 - ➖ **3. godina HM** — doći će, timing neodlučen.
 - ➖ **Studentski UGC za 3./4. godinu** — studenti uploadaju sadržaj i grade više godine (HM i/ili Menadžment u ugostiteljstvu); jezik (HR/EN) neodlučen. Veže se na Fazu 1–2 (upload→AI→pregled→dijeljenje) + moderacija/autorska prava ([VISION.md](../product/VISION.md) §4 gating-odluke).
 - ~~**Prioritet nakon sadržaja (korisnik):** (1) Admin CRUD → (2) AI tutor → (3) Matura prep.~~ **⚠️ NADGLAŠENO 2026-08-02 (Leon).** Admin CRUD = ✅ gotov; **matura IZBAČENA iz build-plana** (ostaje samo kao tržišna hipoteza u [MONETIZATION.md](../product/MONETIZATION.md), ne kao posao). Aktualni redoslijed: **osobni UGC-graditelj ([CREATE_BACKEND_SPEC.md](../archive/CREATE_BACKEND_SPEC.md) F0–F5) → frontend redizajn → objava/dijeljenje + MCP.** [[follow-recorded-plan-dont-reopen]]
+
+## 🔁 MATURA SE VRAĆA — kao IDEJA, ne kao plan (Leon, 2026-08-22)
+
+Gornji precrtani redak (**„matura IZBAČENA iz build-plana", 2026-08-02**) i dalje točno opisuje
+**plan**: matura nije cigla i ne ulazi u red čekanja. Ali premisa iz tog reza — *„širenje izvan
+fakulteta ide kroz UGC, srednjoškolac gradi vlastiti materijal kao i svi ostali"* — **ne pokriva
+ono što je Leon sad rekao:**
+
+> *„pripreme za maturu će se poviše bazirati na **exercises**"*
+
+I to je bitna razlika, jer **vježbu srednjoškolac ne može autorirati.** Kartice, kviz i dopunu
+može (to je podatak). Vježba je danas **kôd** — `generate()` funkcija u `data/<subj>/exercises.js`,
+koju BUG-012 drži izvan baze i JSON-a, a ADR-018 zabranjuje da korisnik uploada kôd. Dakle:
+
+**➡️ Matura ne prolazi kroz UGC. Matura prolazi kroz RECEPTE.**
+
+Time smjer „vježbe = imenovana, verzionirana knjižnica recepata" (v. `CLAUDE.md` §9.5 —
+151 od 234 vježbi je već čisti podatak, `params` su deklarirani u svih 83, kôd je samo formula)
+prestaje biti čišćenje duga i postaje **preduvjet**. Bez recepata matura znači ručno pisanje
+stotina `generate()` funkcija u `.js`, po predmetu, zauvijek.
+
+**Druga posljedica — točnost prestaje biti neugodnost i postaje odgovornost.**
+[ADR-020](./DECISIONS.md) (dvo-ključni verifier) danas stoji kao *„gradi se u fazi sadržaja, ne
+sad"*, a 18 predmeta je *„spot-checkano, NE iscrpno"*. Krivi ključ u fakultetskoj kartici je
+neugodan. **Krivi ključ u pripremi za državnu maturu je šteta** — dijete uči za ispit koji mu
+određuje upis, i vjeruje nam. Ako matura ikad krene, ADR-020 kreće **prije** nje, ne s njom.
+
+**Kalendar (Leon, 2026-08-22):** vrhunac korištenja platforme nije rujan nego **pripreme za
+maturu, otprilike 2.–5. mjesec**. To je jedini prirodni rok koji ovaj smjer ima.
+
+**Status: parkirano.** Ne planirati, ne procjenjivati, ne otvarati prije nego frontend bude
+gotov. Zabilježeno da se ne izgubi i da se zna **koji preduvjet nosi**.
+
+## 🏨 Simulacija vođenja hotela — zaseban proizvod, razrađen drugdje (2026-08-22)
+
+Poslovna igra za FMTU: student vodi virtualni hotel kroz sezonu (cijene po segmentu, RevPAR,
+kadrovi, sezonalnost), cijela generacija igra istu sezonu i natječe se. Konkurencija su plaćene
+strane licence (HOTS, Cesim, Shadow Manager).
+
+**Puni zapis: [`docs/ideas/HOTEL_SIM.md`](../ideas/HOTEL_SIM.md)** — ovdje namjerno stoji samo
+pokazivač, jer **nije Sokratova značajka nego drugi proizvod** (posuđuje primitive: seed-
+determinizam iz enginea vježbi, auth/RLS, sync napretka, i18n). Ne gradi se dok frontend nije
+gotov; služi kao materijal za prijedlog dekanu i kandidat za diplomski.
 
 ## Monetizacija (Faza 4 — tek na skali)
 - 🔥 Freemium pretplata (~2–3 €/mj): neograničeni kvizovi, exam mode, bez reklama, analitika.

@@ -162,34 +162,40 @@
     }
 }
 
-/* ===== iOS NOTCH/DYNAMIC ISLAND SUPPORT ===== */
-@supports (padding-top: env(safe-area-inset-top)) {
+/* ===== iOS NOTCH/DYNAMIC ISLAND SUPPORT =====
+   T1: `@supports (padding-top: env(safe-area-inset-top))` je MAKNUT, i to nije čišćenje.
+   Uvjet je ispitivao postoji li `env()` — a otkad vrijednosti dolaze kroz `--safe-*`
+   (koji ima `0px` fallback), odsutnost te podrške već je pokrivena: blok tada računa s
+   nulom, što je točno ono što je `@supports` htio postići izostankom. Pisan s `var()`
+   uvjet bi uz to bio **uvijek istinit** (custom property se pri parsiranju ne provjerava),
+   dakle ograda koja ništa ne ograđuje — a čitala bi se kao da nešto štiti.
+   ⚠️ Pravila se NE brišu iako `.footer` i `.toast` postoje i u `02-mobile-core.css`:
+   ondje su unutar `@media (max-width: 767px)`, a ova su bezuvjetna i dolaze POSLIJE, pa
+   vrijede i na širokom ekranu. Brisanje bi promijenilo desktop (`css:diff` bi to i
+   prijavio). Duplikat je dug cigle C3, ne T1. */
+.header {
+    padding-top: calc(0.75rem + var(--safe-top));
+}
 
-    
-    .header {
-        padding-top: calc(0.75rem + env(safe-area-inset-top));
+.about-header {
+    padding-top: calc(1rem + var(--safe-top));
+}
+
+.mobile-nav {
+    padding-bottom: var(--safe-bottom);
+}
+
+.footer {
+    padding-bottom: calc(1rem + 65px + var(--safe-bottom));
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        padding-bottom: calc(0.75rem + 70px + var(--safe-bottom));
     }
-    
-    .about-header {
-        padding-top: calc(1rem + env(safe-area-inset-top));
-    }
-    
-    .mobile-nav {
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-    
-    .footer {
-        padding-bottom: calc(1rem + 65px + env(safe-area-inset-bottom));
-    }
-    
-    @media (max-width: 767px) {
-        .main-content {
-            padding-bottom: calc(0.75rem + 70px + env(safe-area-inset-bottom));
-        }
-        
-        .toast {
-            bottom: calc(70px + env(safe-area-inset-bottom) + 10px);
-        }
+
+    .toast {
+        bottom: calc(70px + var(--safe-bottom) + 10px);
     }
 }
 

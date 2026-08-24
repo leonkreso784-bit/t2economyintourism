@@ -129,8 +129,16 @@ for (const abs of allMd) {
 // Zato ova provjera sweepa izvor i podatke. Nema `stripCode` izuzeća — u `.js`/`.json`
 // ćirilica nema legitiman razlog postojati; jedina iznimka je OVA datoteka, koja mora
 // navesti sam raspon (`[Ѐ-ӿ]`) i citirati popravljene primjere.
-const CODE_DIRS = ['js', 'tests', 'scripts', 'data'];
+// ⚠️ `css` i korijenski `.html` DODANI 2026-08-16. Popis nastavaka je od početka
+// tvrdio da pokriva `.css` i `.html`, ali `CODE_DIRS` nikad nije posjetio `css/`, a
+// korijenske stranice (`index.html` i četiri pravne) ne leže ni u jednoj od mapa —
+// pa nijedna od 34 datoteke tih dvaju tipova nije bila skenirana. Nađeno kad je
+// ćirilično `а` (U+0430) upisano u komentar u `css/landing.css` i gate je šutio.
+// Isti oblik kvara četvrti put: GATE KOJI POKRIVA NEKA MJESTA STVARA TIHU
+// PRETPOSTAVKU DA POKRIVA SVA — usporedi tvrdu zabranu #2 i tintu na pločicama.
+const CODE_DIRS = ['js', 'tests', 'scripts', 'data', 'css'];
 const CODE_EXT = /\.(js|mjs|ts|json|css|html)$/;
+const ROOT_FILES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'contact.html'];
 const CYRILLIC_ALLOWED = new Set([path.join(ROOT, 'scripts', 'check-docs.js')]);
 
 function sweepCyrillic(dir) {
@@ -148,6 +156,18 @@ function sweepCyrillic(dir) {
   }
 }
 for (const d of CODE_DIRS) sweepCyrillic(path.join(ROOT, d));
+
+// Korijenske stranice ne leže ni u jednoj mapi iz `CODE_DIRS`, pa se navode poimence.
+// `sweepCyrillic` radi nad mapom, pa se ovdje ponavlja samo sama provjera.
+for (const name of ROOT_FILES) {
+  const p = path.join(ROOT, name);
+  if (!fs.existsSync(p)) continue;
+  const hits = fs.readFileSync(p, 'utf8').match(/[Ѐ-ӿ]+/g);
+  if (!hits) continue;
+  const uniq = Array.from(new Set(hits)).slice(0, 5).map((h) => JSON.stringify(h)).join(', ');
+  problems.push('ĆIRILICA (kod)     ' + rel(p) + '  → ' + uniq +
+    '\n      → ćirilica u kodu/sadržaju je uvijek greška kopiranja (izgleda isto, nije isto)');
+}
 
 // ── 4) svaki .md pod docs/ mora biti naveden u indeksu ──────────────
 const INDEX = path.join(DOCS, 'README.md');
