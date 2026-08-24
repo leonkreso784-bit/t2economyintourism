@@ -19,11 +19,11 @@
     <meta name="format-detection" content="telephone=no">
     
     <!-- Favicon & App Icons -->
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260824053542">
-    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260824053542">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260824053542">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260824053542">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260824053542">
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260825002038">
+    <link rel="icon" type="image/x-icon" href="favicon.ico?v=20260825002038">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20260825002038">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20260825002038">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20260825002038">
     <link rel="manifest" href="manifest.json">
     
     <!-- SEO & Social -->
@@ -52,7 +52,7 @@
     <!-- Preconnect for faster loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 
-    <link rel="stylesheet" href="styles.bundle.css?v=20260824053542">
+    <link rel="stylesheet" href="styles.bundle.css?v=20260825002038">
 
     <!-- C2: GOOGLE FONTS SU OTIŠLI. Inter + Space Grotesk = 2 obitelji, 11 težina, dva
          `preconnect`-a i treći poslužitelj na kritičnom putu — a §7.1 ih je imenovao kao
@@ -88,7 +88,7 @@
     <!-- Learn styles are managed in css/learn.css to avoid inline conflicts on mobile. -->
 
     <!-- Cookie consent + Google Analytics (Consent Mode v2; analytics loads only after Accept) -->
-    <link rel="stylesheet" href="css/consent.css?v=20260824053542">
+    <link rel="stylesheet" href="css/consent.css?v=20260825002038">
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -99,8 +99,8 @@
         });
     </script>
     <!-- Praćenje grešaka (Faza 2, 2E): učita se prije consent.js; consent-gated + no-op bez DSN-a. -->
-    <script src="js/monitoring.js?v=20260824053542" defer></script>
-    <script src="js/consent.js?v=20260824053542" defer></script>
+    <script src="js/monitoring.js?v=20260825002038" defer></script>
+    <script src="js/consent.js?v=20260825002038" defer></script>
 </head>
 <!-- ⚠️ `no-pathbar` STOJI U MARKUPU, NE ČEKA JS (CLS, 2026-08-24).
      `#landing-page` je u markupu već `active`, a landing NEMA drugi red trake — pa je `<body>`
@@ -159,7 +159,7 @@
     <div class="chrome" id="chrome">
     <header class="topbar" id="top" role="banner">
         <a class="topbar-logo" href="#/" id="topbarHome" aria-label="Sokrat Study">
-            <img src="assets/logo.svg?v=20260824053542" alt="" class="logo-image">
+            <img src="assets/logo.svg?v=20260825002038" alt="" class="logo-image">
             <span class="logo-text">Sokrat Study</span>
         </a>
 
@@ -425,7 +425,7 @@
                 <div class="footer-cols">
                     <div class="footer-brand">
                         <div class="landing-logo">
-                            <img src="assets/logo.svg?v=20260824053542" alt="" class="logo-image">
+                            <img src="assets/logo.svg?v=20260825002038" alt="" class="logo-image">
                             <span class="logo-text">Sokrat Study</span>
                         </div>
                         <p data-i18n="footer.tagline">Write your own study material, or use one that's ready. Free for everyone.</p>
@@ -461,7 +461,7 @@
     <aside class="subjects-sidebar" id="subjectsSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260824053542" alt="Sokrat Study" class="logo-image"></div>
+                <div class="logo-wrapper"><img src="assets/logo.svg?v=20260825002038" alt="Sokrat Study" class="logo-image"></div>
                 <span data-i18n="sidebar.choose">Choose Subject</span>
             </div>
             <button class="close-sidebar-btn" id="closeSidebar" aria-label="Close sidebar">
@@ -1082,42 +1082,63 @@
 
     <!-- ==================== ABOUT US PAGE ==================== -->
     <section id="about-page" class="about-page">
-        <header class="about-header">
-            <h1>About Sokrat Study</h1>
-            <div style="width: 44px;"></div>
-        </header>
+        <!-- ⚠️ `header.about-header` je OBRISAN — `about` je bila POSLJEDNJA stranica koja
+             je nakon K2b zadržala vlastito zaglavlje, i ono je bilo isti čisti duplikat
+             koji je T2 uklonio drugdje: mrvica piše „O nama", h1 ispod nje „O platformi
+             Sokrat Study". S njim je otišla i mrtva protuteža `<div style="width:44px">`
+             — razmak za gumb „natrag" kojeg K2b nema već pet dana (usput jedini inline
+             `style` na stranici, dakle jedna prepreka manje za CSP u C6).
+             Naslov ostaje `visually-hidden`: stranica ga MORA imati za čitač ekrana, ali
+             ga ne mora imati dvaput na ekranu. -->
         <main class="about-content">
+            <h1 class="visually-hidden" data-i18n="about.title">About Sokrat Study</h1>
             <div class="about-hero-section">
-                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260824053542" alt="Sokrat Study Logo" class="logo-image"></div>
-                <p class="about-tagline">Created by students, for students</p>
+                <div class="logo-wrapper logo-wrapper-large"><img src="assets/logo.svg?v=20260825002038" alt="Sokrat Study Logo" class="logo-image"></div>
+                <p class="about-tagline" data-i18n="about.tagline">Created by students, for students</p>
+
+                <!-- ⚠️ IZLAZ. Izmjereno prije popravka: cijela stranica imala je TOČNO JEDNU
+                     kontrolu — `mailto:` na **y = 1411 px** — dakle nijedan put natrag u
+                     proizvod ni na jednoj od četiri širine, i to jednako s cookie-trakom i
+                     bez nje. Leonova presuda: „stranica bez ijedne kontrole u prvom ekranu
+                     čita se kao slijepa ulica."
+                     Dvoja vrata, ravnopravno (ADR-029), i to na POSTOJEĆIM kukama:
+                     `.start-trigger` veže `init.js`, `[data-goto-materials]` je delegiran u
+                     `navigation.js`. Nula redaka novog JS-a i nijedan drugi izvor istine —
+                     ista odredišta i isti ključevi kao vrata na landingu. -->
+                <div class="about-actions">
+                    <button type="button" class="about-btn about-btn--primary start-trigger" data-i18n="door.study.t">Start studying</button>
+                    <button type="button" class="about-btn" data-goto-materials data-i18n="door.make.t">Make your own</button>
+                </div>
             </div>
 
             <div class="about-cards">
                 <!-- Mission -->
                 <div class="about-card">
                     <div class="about-card-icon"><i class="fas fa-bullseye"></i></div>
-                    <h2>Our Mission</h2>
-                    <p>Sokrat Study is an educational platform developed by <strong>Leon Kreso</strong>, with a simple but powerful goal: to make learning <em>easier</em>, more <em>accessible</em>, and more <em>effective</em> for students everywhere.</p>
+                    <h2 data-i18n="about.mission.h">Our Mission</h2>
+                    <p data-i18n="about.mission.p">Sokrat Study is an educational platform developed by Leon Kreso, with a simple but powerful goal: to make learning easier, more accessible, and more effective for students everywhere.</p>
                 </div>
 
                 <!-- What We Do -->
                 <div class="about-card">
                     <div class="about-card-icon"><i class="fas fa-book-reader"></i></div>
-                    <h2>What We Do</h2>
-                    <p>The platform helps learners prepare for exams by sharing high-quality study materials, summaries, and scripts across different subjects.</p>
+                    <h2 data-i18n="about.do.h">What We Do</h2>
+                    <p data-i18n="about.do.p">The platform helps learners prepare for exams by sharing high-quality study materials, summaries, and scripts across different subjects.</p>
+                    <!-- ⚠️ `data-i18n` ide na UNUTARNJI `<span>`, ne na vanjski: prijevod se
+                         postavlja `textContent`-om, pa bi na roditelju obrisao ikonu. -->
                     <div class="about-features">
-                        <span><i class="fas fa-file-alt"></i> Study Materials</span>
-                        <span><i class="fas fa-list-check"></i> Summaries</span>
-                        <span><i class="fas fa-brain"></i> Interactive Quizzes</span>
-                        <span><i class="fas fa-clone"></i> Flashcards</span>
+                        <span><i class="fas fa-file-alt"></i> <span data-i18n="about.feat.materials">Study Materials</span></span>
+                        <span><i class="fas fa-list-check"></i> <span data-i18n="about.feat.summaries">Summaries</span></span>
+                        <span><i class="fas fa-brain"></i> <span data-i18n="about.feat.quizzes">Interactive Quizzes</span></span>
+                        <span><i class="fas fa-clone"></i> <span data-i18n="about.feat.flashcards">Flashcards</span></span>
                     </div>
                 </div>
 
                 <!-- Contribute -->
                 <div class="about-card">
                     <div class="about-card-icon"><i class="fas fa-hands-helping"></i></div>
-                    <h2>Contribute</h2>
-                    <p>Students are encouraged to contribute by sending their learning materials, notes, or exam scripts.</p>
+                    <h2 data-i18n="about.contribute.h">Contribute</h2>
+                    <p data-i18n="about.contribute.p">Students are encouraged to contribute by sending their learning materials, notes, or exam scripts.</p>
                     <a href="mailto:leonkreso784@gmail.com" class="email-link">
                         <i class="fas fa-envelope"></i> leonkreso784@gmail.com
                     </a>
@@ -1128,7 +1149,7 @@
                     <div class="creator-avatar"><i class="fas fa-user-graduate"></i></div>
                     <div class="creator-info">
                         <h3>Leon Kreso</h3>
-                        <p>Developer</p>
+                        <p data-i18n="about.creator.role">Developer</p>
                     </div>
                 </div>
             </div>
@@ -1214,50 +1235,50 @@
          (Blok B): loadSubjectContent() later becomes fetch('/api/subject/...'). -->
 
     <!-- Catalog: single source of truth for subjects (must load before js/config.js) -->
-    <script src="data/catalog.js?v=20260824053542"></script>
+    <script src="data/catalog.js?v=20260825002038"></script>
     <!-- Autogeneriran landing broj pitanja (npm run stats). Eager + sitan; čita ga renderLandingMeta(). -->
-    <script src="data/landing-stats.js?v=20260824053542"></script>
+    <script src="data/landing-stats.js?v=20260825002038"></script>
 
     <!-- App modules (split from app.js) -->
     <!-- T6: tema je izrezana iz init.js jer ju treba i editor.html, koji boot aplikacije NE ucitava. -->
-    <script src="js/theme.js?v=20260824053542"></script>
-    <script src="js/i18n.js?v=20260824053542"></script>
+    <script src="js/theme.js?v=20260825002038"></script>
+    <script src="js/i18n.js?v=20260825002038"></script>
     <!-- AppState (S3, Faza 2C): namespace runtime stanja — MORA prije config.js (grupe migriraju iz njega). -->
-    <script src="js/app-state.js?v=20260824053542"></script>
-    <script src="js/config.js?v=20260824053542"></script>
-    <script src="js/content-loader.js?v=20260824053542"></script>
+    <script src="js/app-state.js?v=20260825002038"></script>
+    <script src="js/config.js?v=20260825002038"></script>
+    <script src="js/content-loader.js?v=20260825002038"></script>
     <!-- ContentRepository (S1, Faza 2): jedinstveni šav za dohvat sadržaja (nakon catalog+config+loader). -->
-    <script src="js/content-repo.js?v=20260824053542"></script>
-    <script src="js/components/sokrat-toast.js?v=20260824053542"></script>
-    <script src="js/components/sokrat-modal.js?v=20260824053542"></script>
+    <script src="js/content-repo.js?v=20260825002038"></script>
+    <script src="js/components/sokrat-toast.js?v=20260825002038"></script>
+    <script src="js/components/sokrat-modal.js?v=20260825002038"></script>
     <!-- <sokrat-confirm> (2D.3) — nakon sokrat-modal.js (gradi se na njemu). -->
-    <script src="js/components/sokrat-confirm.js?v=20260824053542"></script>
-    <script src="js/utils.js?v=20260824053542"></script>
-    <script src="js/storage.js?v=20260824053542"></script>
-    <script src="js/analytics.js?v=20260824053542"></script>
-    <script src="js/navigation.js?v=20260824053542"></script>
-    <script src="js/math.js?v=20260824053542"></script>
-    <script src="js/blocks-renderer.js?v=20260824053542"></script>
-    <script src="js/flashcards.js?v=20260824053542"></script>
-    <script src="js/quiz.js?v=20260824053542"></script>
-    <script src="js/fill-blanks.js?v=20260824053542"></script>
-    <script src="js/learn.js?v=20260824053542"></script>
-    <script src="js/progress.js?v=20260824053542"></script>
-    <script src="js/blind-map.js?v=20260824053542"></script>
-    <script src="js/exercises-core.js?v=20260824053542"></script>
-    <script src="js/acc-kernel.js?v=20260824053542"></script>
-    <script src="js/exercises.js?v=20260824053542"></script>
-    <script src="js/auth.js?v=20260824053542"></script>
+    <script src="js/components/sokrat-confirm.js?v=20260825002038"></script>
+    <script src="js/utils.js?v=20260825002038"></script>
+    <script src="js/storage.js?v=20260825002038"></script>
+    <script src="js/analytics.js?v=20260825002038"></script>
+    <script src="js/navigation.js?v=20260825002038"></script>
+    <script src="js/math.js?v=20260825002038"></script>
+    <script src="js/blocks-renderer.js?v=20260825002038"></script>
+    <script src="js/flashcards.js?v=20260825002038"></script>
+    <script src="js/quiz.js?v=20260825002038"></script>
+    <script src="js/fill-blanks.js?v=20260825002038"></script>
+    <script src="js/learn.js?v=20260825002038"></script>
+    <script src="js/progress.js?v=20260825002038"></script>
+    <script src="js/blind-map.js?v=20260825002038"></script>
+    <script src="js/exercises-core.js?v=20260825002038"></script>
+    <script src="js/acc-kernel.js?v=20260825002038"></script>
+    <script src="js/exercises.js?v=20260825002038"></script>
+    <script src="js/auth.js?v=20260825002038"></script>
     <!-- F4: privatne slike osobnog gradiva (`node-img:` oznaka ↔ potpisani URL). Prije block-editora. -->
-    <script src="js/node-images.js?v=20260824053542"></script>
+    <script src="js/node-images.js?v=20260825002038"></script>
     <!-- T6: otkrivanje admina je izrezano iz admin.js i MORA ici prije njega (studioBridge se veze pri parsiranju). -->
-    <script src="js/admin-reveal.js?v=20260824053542"></script>
-    <script src="js/cloud-sync.js?v=20260824053542"></script>
+    <script src="js/admin-reveal.js?v=20260825002038"></script>
+    <script src="js/cloud-sync.js?v=20260825002038"></script>
     <!-- „Moji materijali" (F2) — mora prije profile.js (renderProfilePage ga montira). -->
-    <script src="js/my-materials.js?v=20260824053542"></script>
-    <script src="js/profile.js?v=20260824053542"></script>
-    <script src="js/init.js?v=20260824053542"></script>
+    <script src="js/my-materials.js?v=20260825002038"></script>
+    <script src="js/profile.js?v=20260825002038"></script>
+    <script src="js/init.js?v=20260825002038"></script>
     <!-- Service Worker (F3 3A): offline app-shell; registrira se na load, fail-safe. -->
-    <script src="js/sw-register.js?v=20260824053542" defer></script>
+    <script src="js/sw-register.js?v=20260825002038" defer></script>
 </body>
 </html>

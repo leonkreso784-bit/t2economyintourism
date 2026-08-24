@@ -43,3 +43,32 @@ test('global toggle is master and persists across reload (overrides program)', a
   await page.waitForFunction(() => window.getUiLang);
   expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
 });
+
+// ⚠️ DOKUMENT MORA DEKLARIRATI JEZIK KOJIM JE STVARNO PISAN (2026-08-24).
+//
+// Do danas se pri UČITAVANJU zvao goli `applyTranslations()`, pa se tekst prevodio, a
+// `<html lang>` je ostajao `en` — atribut postavlja jedino `setUiLang`, a boot ju nije
+// zvao. Korisnik koji je jednom odabrao 🇭🇷 dobivao je hrvatski tekst pod engleskom
+// deklaracijom na SVAKOJ stranici i pri svakom posjetu, dok god ne pritisne prekidač.
+// Čitač ekrana tada hrvatske rečenice izgovara engleskim glasovima (WCAG 3.1.1).
+//
+// ⚠️ Zašto ovo nijedan gate nije vidio: axe provjerava da `lang` POSTOJI i da je VALJAN
+// jezični kod. `en` je oboje — samo nije istina. Isti razred kao tinta na pločicama
+// (cigla B): pravilo je bilo ispravno, ali ga nijedna mjera nije uspoređivala sa stanjem.
+test('`<html lang>` prati odabrani jezik — i pri OBIČNOM učitavanju, ne samo na prekidač', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => { localStorage.setItem('sokrat-ui-lang', 'hr'); });
+
+  // Obično učitavanje, bez ijednog dodira prekidača — točno put kojim dolazi povratnik.
+  await page.reload();
+  await page.waitForFunction(() => window.getUiLang);
+  expect(await page.evaluate(() => window.getUiLang())).toBe('hr');
+  expect(await page.evaluate(() => document.documentElement.lang),
+    'tekst je hrvatski, a dokument se predstavlja kao engleski').toBe('hr');
+
+  // I obrnuto, da tvrdnja ne prolazi zato što je atribut zaglavio na jednoj vrijednosti.
+  await page.evaluate(() => { localStorage.setItem('sokrat-ui-lang', 'en'); });
+  await page.reload();
+  await page.waitForFunction(() => window.getUiLang);
+  expect(await page.evaluate(() => document.documentElement.lang)).toBe('en');
+});

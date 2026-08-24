@@ -1563,18 +1563,6 @@ section[id$="-page"] {
   min-height: 100dvh;
   background: var(--bg-primary);
 }
-.about-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 1.5rem;
-  padding-top: calc(1rem + var(--safe-top));
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-}
-.about-header h1 {
-  font-size: 1.25rem;
-}
 .about-content {
   padding: 1.5rem;
   max-width: 600px;
@@ -1598,26 +1586,62 @@ section[id$="-page"] {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+  box-shadow: var(--shadow-e2);
 }
 .logo-wrapper-large:hover {
   transform: scale(1.05);
 }
-.about-icon-large {
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-light));
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-  font-size: 2rem;
-  color: var(--on-primary);
-}
 .about-tagline {
   color: var(--text-secondary);
   font-size: 1.1rem;
+}
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem;
+  justify-content: center;
+  margin-top: 1.25rem;
+}
+.about-btn {
+  flex: 1 1 12rem;
+  max-width: 18rem;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.about-btn:hover:not([disabled]) {
+  background: var(--bg-tertiary);
+}
+.about-btn--primary {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.about-btn--primary:hover:not([disabled]) {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+.about-btn:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+@media (max-height: 700px) {
+  #about-page .logo-wrapper-large {
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    min-height: 72px;
+    max-width: 72px;
+    max-height: 72px;
+    margin-bottom: 0.75rem;
+  }
 }
 .about-cards {
   display: flex;
@@ -5208,9 +5232,6 @@ div.subject-card {
 }
 .header {
   padding-top: calc(0.75rem + var(--safe-top));
-}
-.about-header {
-  padding-top: calc(1rem + var(--safe-top));
 }
 .mobile-nav {
   padding-bottom: var(--safe-bottom);

@@ -2564,7 +2564,11 @@ posljedicu vidjela je **18 %** kvara.
 | osnovica `namjestaj` | — | **0** |
 
 Tekst je pritom skraćen sa **171 na 100 znakova** i **prvi put preveden** — traka je do danas
-bila jedina površina sa zakucanim engleskim, a to je pravni tekst, ne ukras. Izostavljeno je
+bila jedina površina sa zakucanim engleskim, a to je pravni tekst, ne ukras.
+⚠️ **Ta je tvrdnja OBORENA 2026-08-24** (cigla `about`, §9.14): traka nije bila jedina nego
+samo prva nađena — cijela stranica „O nama" imala je **nula `data-i18n`**. *Pouka zapisana kao
+anegdota o jednoj površini ne broji ostale.* Otud BACKLOG-stavka za `check:i18n`.
+Izostavljeno je
 obrazloženje („kako bismo razumjeli kako posjetitelji koriste…") koje u cijelosti stoji u
 Pravilima privatnosti, na koja traka vodi. Gumbi ostaju **36 px** visoki — visina se rezala na
 tekstu i razmacima, nikad na metama za prst.
@@ -2933,3 +2937,130 @@ SADRŽAJ, ne alat*).
 **Faza TELEFON je ispunjena** (T0–T6). Usput pada i BACKLOG-stavka *„landing šalje editorski kod
 posjetitelju bez računa"*, otvorena od C3 — s tom razlikom da sada ima **gate**, pa se ne može
 tiho vratiti.
+
+---
+
+### 9.14 `about` — izlaz sa stranice (isporučeno 2026-08-24)
+
+Zadnja cigla koju je faza TELEFON ostavila za sobom, i jedina koju nije planirao spec nego
+**mjerenje**: nakon T6 su u phone-osnovici stajala još **4 nalaza, sva četiri na `about`**.
+Leon ih je 2026-08-22 presudio kao **kvar, ne prozu**: *stranica bez ijedne kontrole u prvom
+ekranu čita se kao slijepa ulica.*
+
+#### ⚠️ Mjerenje je presudu POOŠTRILO, a zapisani uzrok oborilo
+
+Sonda prije ijednog retka popravka, na 320 / 393 / 430 / 852 px, u **oba** stanja privole:
+
+```
+cijela stranica  =  1 kontrola  ·  `mailto:` na  y = 1411 px
+dohvatljivih bez skrola: 0  —  na sve četiri širine, s trakom i bez nje
+```
+
+Dakle nije bilo „nema kontrole u prvom ekranu" nego **nema kontrole, točka** — jedina je bila
+`mailto:` dva i pol ekrana niže, i vodila je IZ aplikacije, ne u nju.
+
+**Zatečeni nalaz je pritom optuživao krivoga.** Poruke u osnovici glasile su
+`320px about · kromo 159 px + banner 129 px (23 %)`, pa su se čitale kao problem KROMA i
+cookie-trake. Mjerenje s već odbijenom privolom daje **istih 0**. To je isti razred greške koji
+je T4 već platio i zapisao: *nalaz koji nešto imenuje nije time i optužio to* — format poruke
+ispisuje visinu trake kad god traka postoji, ne kad je kriva.
+
+#### ⚠️ Drugi kvar nije bio zapisan nigdje: stranica nije imala JEZIK
+
+`about` je imala **nula `data-i18n` atributa**. Cijeli tekst — misija, „Created by students, for
+students", opis platforme — bio je zakucan engleski, pa je korisnik s prekidačem na 🇭🇷 dobivao
+englesku stranicu.
+
+T4 je **isti kvar** našao na cookie-traci i zapisao pouku („zakucani engleski je dug koji se
+plaća kasnije"), ali ju je zapisao kao **anegdotu o jednoj traci**. Nitko nije prebrojao ostale
+površine, pa je druga čekala pet dana. Zato tvrdnja ③ nove brane ne mjeri prijevod nego
+**SASTAV**: svaki element koji nosi vlastiti tekst mora imati ključ, uz izričit i kratak popis
+izuzetaka (vlastito ime, e-adresa). Prijevod je ishod; sastav je svojstvo.
+
+#### Treći: zadnje preživjelo zaglavlje razine
+
+`header.about-header` bio je jedini koji je preživio K2b — i bio je isti čisti duplikat koji je
+T2 uklonio drugdje (mrvica „O nama", h1 ispod nje „O platformi Sokrat Study"). S njim je otišla
+i mrtva protuteža `<div style="width: 44px">`, razmak za gumb „natrag" kojeg K2b nema — usput
+**jedini inline `style` na stranici**, dakle jedna prepreka manje za CSP u C6. Naslov ostaje
+`visually-hidden`: stranica ga mora imati za čitač ekrana, ne mora dvaput na ekranu.
+
+#### Kako je izveden izlaz
+
+**Dvoja vrata, ravnopravno (ADR-029), na POSTOJEĆIM kukama.** `.start-trigger` veže `init.js`,
+`[data-goto-materials]` je delegiran u `navigation.js`, a tekst dolazi iz **istih ključeva** kao
+vrata na landingu (`door.study.t` / `door.make.t`). **Nula redaka novog JS-a i nijedan drugi
+izvor istine** — da su vrata dobila vlastite rukovatelje, `about` i landing bi se razišli isti
+dan kad se promijeni odredište (K2a je tu cijenu već platio).
+
+⚠️ **Slaganje je namjerno DETERMINISTIČKO, ne „lijepo".** `flex-basis: 12rem` znači da dva gumba
+traže 394 px, a `.about-content` ih na telefonu ima najviše 382 → u portretu je **stupac**, u
+polegnutom **red**, bez ijednog medijskog upita. Pri basisu od 10rem bi na 393 px preostalo
+**15 px = 4 % širine**, a projekt je već platio pouku da tvrdnja s ~4 % rezerve mjeri **sreću**,
+ne ispravnost (Linux crta ista slova ~4 px šire od Windowsa).
+
+⚠️ **Znak je opet bio KONSTANTA na varijabilnom prostoru** — točno kvar iz T5. Ljestvica veličine
+znaka mijenja se stepenasto po **ŠIRINI**, pa je 852 × 393 po širini „desktop" i dobivao je znak
+od **150 px na ekranu koji za cijeli prvi ekran ima 274 px**. Rez je `@media (max-height: 700px)`
+(isti prag koji T3 već koristi za `--topbar-h`) → 72 px. **Selektor nosi `#about-page` namjerno:
+medijski upit ne dodaje specifičnost** (K4a), a pravila u `responsive/06` gađaju golu klasu — bez
+id-a bi ovo bilo mrtvo slovo na svakom ekranu širem od 768 px, dakle točno ondje gdje treba.
+
+#### 🐞 Nalaz VEĆI od cigle: dokument nije deklarirao jezik kojim je pisan (**BUG-033**)
+
+Funkcionalna sonda (postoji jer tvrdnja ③ mjeri sastav, ne ishod) pokazala je hrvatski tekst pod
+`<html lang="en">`. Uzrok: pri **učitavanju** se zvao goli `applyTranslations()`, a atribut
+postavlja jedino `setUiLang`, koju boot nije zvao. Posljedica nije bila lokalna za `about` nego
+**globalna**: tko je jednom odabrao 🇭🇷 dobivao je hrvatski tekst pod engleskom deklaracijom na
+**svakoj stranici i pri svakom posjetu**, dok god ponovno ne pritisne prekidač. Čitač ekrana tada
+hrvatske rečenice izgovara engleskim glasovima (WCAG 3.1.1).
+
+⚠️ **Zašto to nijedan gate nije mogao vidjeti:** axe provjerava da `lang` **postoji** i da je
+**valjan** jezični kod. `en` je oboje — samo nije istina. Isti razred kao tinta na pločicama
+(cigla B): pravilo je bilo ispravno, ali ga nijedna mjera nije uspoređivala sa **stanjem**.
+Popravak je u bootu (`setUiLang(uiLang, false)`); tvrdnja je u `tests/i18n.spec.js` jer je
+činjenica app-wide, a ne o stranici `about`, i obrnuto je provjerena (`Expected "hr",
+Received "en"`).
+
+#### 🐞 Greška koju sam napravio u samoj brani, i koju je uhvatila obrnuta provjera
+
+Prva verzija helpera `otvori()` čekala je `.about-actions` — dakle **točno ono što tvrdnja ①
+mjeri**. Protiv zatečenog stanja je zbog toga padala na `TimeoutError` umjesto na „0 dohvatljivih
+kontrola": crveno **jest** bilo, ali je govorilo o brani, ne o stranici. To je doslovno pouka
+zbog koje T0 postoji — *čekanje ne smije pretpostaviti ishod mjerenja* — i ponovljena je pet
+cigli kasnije. Nakon prelaska na čekanje-da-se-crtanje-smiri obrnuta provjera govori brojkama:
+`Received: 0` za ①, `+ Received + 14` za ③.
+
+Iz istog razloga tvrdnja ② sada **tvrdi postojanje vrata prije nego ih klikne**: bez toga bi
+njihov nestanak izašao kao `page.click: Test timeout` nakon dvije minute.
+
+#### Mjere
+
+| | prije | poslije |
+|---|---|---|
+| kontrola na stranici | 1 (`mailto:`, y = 1411 px) | 3 |
+| **dohvatljivih bez skrola** | **0** na sve 4 širine × oba stanja privole | **2** na sve 4 × oba |
+| `data-i18n` na stranici | **0** | 15 |
+| inline `style` | 1 | 0 |
+| naslov | dvaput na ekranu | jednom (mrvica) + `visually-hidden` h1 |
+| `check:palette` | 126 | **125** (indigo glow → `--shadow-e2`) |
+| **phone-osnovica** | 4 | **0 — i time PRVI PUT PRAZNA** |
+
+`css:diff` prijavljuje 27 razlika i **sve do jedne sjede na `#about-page`** (te na `body`, jer je
+stranica narasla). To je odgovor na jedino pitanje koje alat ovdje može odgovoriti — *je li CSS
+procurio drugamo* — dok su same razlike na `about` neupotrebljive iz razloga koji je zapisao T5:
+alat presreće **samo stylesheet**, a HTML uzima iz radnog stabla, pa je referenca stranica koja
+nikad nije postojala (novi gumbi pod starim CSS-om = goli gumbi preglednika).
+
+#### Nova brana
+
+**`tests/about.spec.js`** — pet tvrdnji: ① izlaz bez skrola na **320 px**, u oba stanja privole ·
+② vrata stvarno vode u katalog i u vlastito gradivo · ③ nijedan tekst nije zakucan · ④ naslov
+postoji za čitač ekrana ali ne stoji dvaput (T2) · ⑤ obrnuta provjera. Vrti se na 320 px
+izričito, jer projekti suite počinju na 375 i projekt je to već dvaput platio (BUG-029, T5).
+
+#### Što je ostalo, i namjerno nije dirano
+
+Tekst stranice opisuje platformu kao mjesto koje **dijeli gotovo gradivo**, bez ijedne rečenice o
+tome da korisnik smije napraviti svoje — što se s ADR-029 („UGC je glavni proizvod") ne slaže.
+To je **Leonova površina i njegova odluka**, ne nusprodukt cigle; zapisano u `BACKLOG.md`.

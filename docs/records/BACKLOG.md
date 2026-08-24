@@ -3,6 +3,46 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Zakucan engleski nije bio JEDNA traka nego RAZRED — treba `check:i18n` (2026-08-24)
+
+> Nađeno pri cigli `about`: cijela stranica „O nama" imala je **nula `data-i18n`** atributa,
+> dakle zakucan engleski tekst od naslova do zadnje kartice. T4 je **isti kvar** našao pet dana
+> ranije na cookie-traci i zapisao pouku — ali kao **anegdotu o toj traci** („bila je jedina
+> površina sa zakucanim engleskim"). Ta rečenica je bila **neistinita u trenutku pisanja**, a
+> nitko ju nije provjerio jer je zvučala kao zaključak.
+
+**Prijedlog:** gate koji broji **nositelje teksta bez ključa** kroz sve stranice, po uzoru na
+tvrdnju ③ u `tests/about.spec.js` (ondje je izvedba već napisana i radi): element koji ima
+vlastiti tekstni čvor, a nema `data-i18n`, uz **izričit i kratak** popis izuzetaka (vlastita
+imena, e-adrese, brojevi). **Osnovica, ne nula** — obrazac `check:palette` / phone-brane, jer je
+očekivano da zatečenih pogodaka ima puno i ne smiju držati suitu crvenom.
+
+⚠️ **Zašto ovo nije nusprodukt nego zasebna cigla:** brojka je danas **nepoznata**. Prije nego se
+odluči hoće li se prevoditi ili gasiti dvojezičnost, treba je izmjeriti — ista pouka kao
+`palette:breakdown` (agregat koji mjeri točno, a savjetuje krivo).
+
+⚠️ **Nije isto što i K5** (editor dvojezično). K5 je mjeren i zna svoju brojku (28 od 48
+`studio.*` ključeva nedostaje, `block-editor.js` i `admin-editors.js` imaju **nula** `t()`
+poziva). Ovo je brana koja bi K5 uopće **našla** bez ručnog prebrojavanja.
+
+## ➖ Tekst stranice `about` ne spominje UGC — a UGC je glavni proizvod (2026-08-24)
+
+> **Leonova odluka, ne nusprodukt cigle.** Cigla `about` je stranici dala izlaz i jezik, ali
+> **tekst nije dirala** — mijenjati Leonovu prozu o vlastitom projektu nije posao brane.
+
+Stanje: stranica opisuje platformu kao mjesto koje **dijeli gotovo gradivo** („helps learners
+prepare for exams by sharing high-quality study materials, summaries, and scripts"). Nijedna
+rečenica ne kaže da korisnik smije **napraviti svoje**. To se s **ADR-029** („UGC je GLAVNI
+proizvod, javni katalog je jedan izvor gradiva") ne slaže — a od ove cigle na stranici stoje
+**dvoja ravnopravna vrata**, od kojih jedna vode u vlastito gradivo koje tekst ne spominje.
+
+Uz to, kartica „Contribute" traži da se gradivo **pošalje e-mailom** — mehanika iz vremena prije
+graditelja. Danas korisnik gradivo napravi sam, u pregledniku.
+
+**Odluka koju traži Leon:** ostaviti kako jest · dopisati rečenicu o vlastitom gradivu ·
+ili prepisati stranicu. Treće je najveće i nije hitno.
+
+
 ## ➖ Stablo Studija ima isti kvar kao BUG-032 — `.st-row` je `div` s klikom (2026-08-24)
 
 > Nađeno skeniranjem **pri popravku BUG-032**, ne posebnim traženjem: `js/studio.js:82` crta

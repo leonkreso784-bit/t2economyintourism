@@ -370,6 +370,30 @@
     'footer.terms': { en: 'Terms of Use', hr: 'Uvjeti korištenja' },
     'footer.cookies': { en: 'Cookie settings', hr: 'Postavke kolačića' },
     'footer.rights': { en: '© 2026 Sokrat Study · Leon Kreso. All rights reserved.', hr: '© 2026 Sokrat Study · Leon Kreso. Sva prava pridržana.' },
+    // ⚠️ `about.*` · DRUGA površina sa zakucanim engleskim, nađena tek 2026-08-24 —
+    // cijela stranica „O nama" imala je NULA `data-i18n` atributa. T4 je istu stvar
+    // našao na cookie-traci i zapisao pouku („zakucani engleski je dug koji se plaća
+    // kasnije"), ali je pouka bila zapisana kao ANEGDOTA o jednoj traci, pa nitko nije
+    // prebrojao ostale površine. Zato od danas postoji brana koja to broji, a ne pamti.
+    //
+    // ⚠️ Odlomak misije je izgubio inline `<strong>`/`<em>`: `applyTranslations` postavlja
+    // `textContent`, pa bi svaki `data-i18n` na odlomku s markupom taj markup pojeo.
+    // Alternativa je bila dodati `data-i18n-html` — dakle NOV innerHTML-put, i to točno
+    // ondje gdje je projekt već jednom platio granicu (BUG-025). Tri kurzivne riječi ne
+    // vrijede novog sinka; ime autora ionako stoji podebljano u kartici „Creator".
+    'about.title': { en: 'About Sokrat Study', hr: 'O platformi Sokrat Study' },
+    'about.tagline': { en: 'Created by students, for students', hr: 'Napravili studenti, za studente' },
+    'about.mission.h': { en: 'Our Mission', hr: 'Naša misija' },
+    'about.mission.p': { en: 'Sokrat Study is an educational platform developed by Leon Kreso, with a simple but powerful goal: to make learning easier, more accessible, and more effective for students everywhere.', hr: 'Sokrat Study je obrazovna platforma koju razvija Leon Kreso, s jednostavnim ali snažnim ciljem: učiniti učenje lakšim, dostupnijim i djelotvornijim za studente svugdje.' },
+    'about.do.h': { en: 'What We Do', hr: 'Što radimo' },
+    'about.do.p': { en: 'The platform helps learners prepare for exams by sharing high-quality study materials, summaries, and scripts across different subjects.', hr: 'Platforma pomaže u pripremi ispita — kvalitetnim gradivom, sažecima i skriptama iz različitih predmeta.' },
+    'about.feat.materials': { en: 'Study Materials', hr: 'Gradivo' },
+    'about.feat.summaries': { en: 'Summaries', hr: 'Sažeci' },
+    'about.feat.quizzes': { en: 'Interactive Quizzes', hr: 'Interaktivni kvizovi' },
+    'about.feat.flashcards': { en: 'Flashcards', hr: 'Kartice' },
+    'about.contribute.h': { en: 'Contribute', hr: 'Doprinesi' },
+    'about.contribute.p': { en: 'Students are encouraged to contribute by sending their learning materials, notes, or exam scripts.', hr: 'Studente potičemo da pošalju svoje gradivo, bilješke ili ispitne skripte.' },
+    'about.creator.role': { en: 'Developer', hr: 'Developer' },
     // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
     // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
     // znakova): na 320 px je stara rečenica bila PET redaka i traka je uzimala 38 % ekrana.
@@ -695,9 +719,20 @@
   }
 
   // Primijeni spremljeni jezik na prvo bojanje (da persistirani HR odmah uhvati sve [data-i18n]).
+  //
+  // ⚠️ IDE KROZ `setUiLang`, NE KROZ GOLI `applyTranslations` (2026-08-24). Do danas je
+  // ovdje stajao goli poziv, pa se tekst prevodio, ali je `<html lang>` OSTAJAO `en` —
+  // atribut se postavlja jedino u `setUiLang`, a nju boot nije zvao. Posljedica: korisnik
+  // koji je jednom odabrao 🇭🇷 dobivao je hrvatski tekst pod engleskom deklaracijom na
+  // SVAKOJ stranici i pri svakom posjetu, sve dok ponovno ne pritisne prekidač — a čitač
+  // ekrana tada hrvatske rečenice izgovara engleskim glasovima (WCAG 3.1.1).
+  // ⚠️ Nijedan gate to nije mogao vidjeti: axe provjerava da `lang` POSTOJI i da je valjan,
+  // a `en` je oboje — samo nije istina. `persist: false` jer ovo nije korisnikov izbor
+  // nego primjena već zapamćenog.
+  const primijeniSpremljeni = function () { setUiLang(uiLang, false); };
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () { applyTranslations(); });
-  } else { applyTranslations(); }
+    document.addEventListener('DOMContentLoaded', primijeniSpremljeni);
+  } else { primijeniSpremljeni(); }
 
   // Globalno
   window.t = t;

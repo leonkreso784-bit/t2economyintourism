@@ -105,15 +105,32 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > produkciji je apsolutno DNO DNA."* Isporučeno je i sve što je na toj grani čekalo — **KOSTUR
 > (K1–K4a)** i **landing C+D**, koje Leon dotad nije vidio uživo.
 >
-> **🔵 SLJEDEĆE = `about`** (Leonova odluka od 2026-08-22: kvar, ne proza — stranica bez ijedne
-> kontrole u prvom ekranu čita se kao slijepa ulica). Pada **preostala 4 od 4** nalaza
-> phone-brane. Sve ostalo niže je **RAZGOVARANO, ali NIJE PRESUĐENO** — v. „Otvoreno" ispod.
+> **✅ `about` JE GOTOV** (2026-08-24, spec **§9.14**) — **NIJE na produkciji**, stoji na grani
+> `feat/about`. Time je **phone-osnovica PRVI PUT PRAZNA** (4 → 0; svih 18 kanti). Mjerenje je
+> Leonovu presudu pooštrilo: nije bilo „nema kontrole u prvom ekranu" nego **nema kontrole,
+> točka** — jedina je bila `mailto:` na **y = 1411 px**, i vodila je IZ aplikacije. Zapisani
+> nalaz je pritom optuživao cookie-traku (ispisuje njezinu visinu kad god traka postoji), a s
+> **već odbijenom privolom mjera daje istih 0** — isti razred greške koji je T4 platio.
+> ⚠️ **Dva kvara koja nisu bila zapisana nigdje:** stranica je imala **nula `data-i18n`**
+> (korisnik s 🇭🇷 dobivao je englesku stranicu), i — nalaz **veći od cigle** — `<html lang>`
+> **nikad nije pratio spremljeni jezik pri učitavanju** (**BUG-033**; atribut postavlja samo `setUiLang`, a
+> boot je zvao goli `applyTranslations`). Posljedica je bila globalna: hrvatski tekst pod
+> `lang="en"` na svakoj stranici, pri svakom posjetu, dok korisnik ne pritisne prekidač; čitač
+> ekrana ga tada izgovara engleskim glasovima. **axe to ne vidi** — provjerava da `lang`
+> postoji i da je valjan, a `en` je oboje, samo nije istina. Brane: `tests/about.spec.js` (5
+> tvrdnji, na **320 px**) + nova tvrdnja u `tests/i18n.spec.js`.
+>
+> **🔵 SLJEDEĆE NIJE PRESUĐENO.** Spec nudi **POLICU (P1–P4)**, kojoj je T6 bio preduvjet pa je
+> više ništa ne blokira; iza nje idu **C4 → C7**. ⚠️ Prije C4 stoji jedan dug u alatu:
+> `css:diff` je **slijep za cigle koje sele vrijednost iz markupa u CSS** (presreće samo
+> stylesheet, HTML uzima iz radnog stabla) — a C4–C7 rade točno to. Sve ostalo niže je
+> **RAZGOVARANO, ali NIJE PRESUĐENO** — v. „Otvoreno" ispod.
 >
 > Puna specifikacija faze: **`docs/plan/FRONTEND_REDIZAJN.md` §9**. Ono što OSTAJE:
 >
 > | | |
 > |---|---|
-> | **TELEFON** | **T0 mjerač** (prvi — mjeri STRANICU, ne kromo) · T1 sigurna zona · T2 jedan naslov po ekranu (**tu `#topbarMaterials` izlazi iz trake**) · T3 budžet kroma ≤20 % · T4 cookie-banner · T5 tipografija · **T6 editor s posjetiteljeva puta** |
+> | ~~**TELEFON**~~ | ✅ **ISPUNJENA** (T0–T6 + `about`) — ostaje kao povijest, spec §9.7–9.14 |
 > | **POLICA** | P1 što se skida · P2 gdje živi (**K4 se OVDJE utapa**) · P3 SW cache-first · P4 napredak offline |
 > | **tek onda** | C4 → C5a → C5b → C6 → C7 |
 >
@@ -315,8 +332,10 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > a vrijednost **mjeri i objavljuje `js/consent.js`** (obrnuti smjer od `--bottom-inset`; **fiksni
 > element ne vidi drugi fiksni element**). Mjeri se jer visina navigacije **ovisi o širini** (93 px na
 > 320, 97 na 393). Sigurni rub se **oduzima** za ono što je već ispod trake, inače traka nosi 34 px
-> praznine usred ekrana. Traka je usput **prvi put prevedena** (bila je jedina površina sa zakucanim
-> engleskim, a to je pravni tekst) i skraćena sa 171 na 100 znakova; gumbi ostaju **36 px**.
+> praznine usred ekrana. Traka je usput **prvi put prevedena** (tada se činila jedinom površinom sa
+> zakucanim engleskim, a to je pravni tekst) i skraćena sa 171 na 100 znakova; gumbi ostaju **36 px**.
+> ⚠️ **Tvrdnja „jedina" je OBORENA 2026-08-24** (cigla `about`): stranica „O nama" imala je **nula**
+> `data-i18n`. *Pouka zapisana kao anegdota o jednoj površini ne broji ostale* → `check:i18n` u BACKLOG-u.
 > ⚠️ **Nova tvrdnja ⑧** (trajni donji namještaj nije prekriven) — obrnuta provjera je prijavila
 > **17 ekrana**, dok ih je ④ vidjela **3**. *Brana koja mjeri posljedicu vidjela je 18 % kvara.*
 > ⚠️ ⑧ ima **dvije** mjere: središte svake kontrole **i** gornji rub trake — *pogodak u sredinu
@@ -330,37 +349,68 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > riješen **svojstvom** (`.profile-content` rezervira donji rub, 16 → 34 px). **Pravilo: prije nego
 > nalaz uđe u osnovicu, ponovi mjerenje.**
 >
-> **✅ T5 (TIPOGRAFIJA I PROSTOR) JE GOTOV** (2026-08-22, spec **§9.12**) — vrata landinga na
-> 320 px **y = 567 → 338** (pojas do 439), polegnuto **425 → 200**; naslov 48 → **32 px** (3 → 2
-> retka), podnaslov **5 → 2 retka**. Osnovica javno **10 → 8**, i **nijedan preostali nalaz nije
-> više na landingu**.
-> ⚠️ **Korijen nije bila veličina nego to što se veličina NE MIJENJA S EKRANOM:** hero je koštao
-> **jednako 444 px na svakom telefonu** — 444 od 803 px pojasa na Pro Maxu (u redu) i **444 od
-> 316 na SE-u**. *Trošak je bio konstanta, a prostor varijabla* (isti razred kao T3, gdje problem
-> nije bila količina kroma nego raspodjela). Utility-ljestvica se mijenja **stepenasto po ŠIRINI**,
-> a telefonu nedostaje **VISINA** → polegnut telefon je po širini „desktop" i dobivao je **60 px
-> naslova na ekranu koji za cijeli hero ima 256 px**. Zato su tip i ritam heroja izašli iz markupa
-> u `landing.css` — **jedina iznimka od C1/C2**, jer `.hero-title` i `.text-4xl` imaju istu
-> specifičnost a utilityji stoje zadnji (dobiti specifičnošću je isti smjer kao `!important`, što
-> `app.css` izričito zabranjuje); pragovi na **≥768 px vraćaju TOČNO današnje tokene**.
-> ⚠️ **Prvi ekran je istu stvar govorio TRI puta** (naslov imenuje četiri načina · podnaslov ih
-> nabraja · sekcija niže ih pokazuje), a prva polovica podnaslova stajala je **doslovno u opisu
-> prvih vrata** → skraćen sa 135 na 72 znaka. **To je promjena TEKSTA na Leonovoj površini i zato
-> se izriče**; struktura iz §7.13 je netaknuta.
-> 🐞 **Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila — oba je oborila obrnuta
-> provjera:** `br{display:none}` bez podizanja stropa mjere ne mijenja **ni piksel** (*pola pravila
-> mjeri se kao mrtvo slovo*), a `white-space:nowrap` na markeru nije nosiv — frazu drži **naslov
-> sveden na stupac**, i uz to bi `nowrap` prelom pretvorio u **prelijevanje**, dakle u gori kvar.
-> **Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže da bez njega pada.**
-> ⚠️ **`css:diff` OVU ciglu ne može izmjeriti, i to je nalaz o alatu:** presreće **samo stylesheet**,
-> a HTML uzima iz radnog stabla → kad vrijednost seli iz markupa u CSS, referenca je stranica koja
-> **nikad nije postojala** (46 razlika, i na 768 i 1280 gdje se ništa nije promijenilo). Dokaz je
-> izveden **pravim A/B-om** (HEAD iz zasebnog `git worktree`-a, drugi port, obje verzije sa svojim
-> markupom i CSS-om): **0 razlika na 768 i 1280**, 22 na 375 i sve namjera. Ponovit će se u C4–C7.
-> ⚠️ **Nova tvrdnja je u `landing.spec.js`, ne u phone-brani** (specifična je za jednu površinu):
-> potez preko fraze u **jednom retku**, u **oba jezika**, i **izričito na 320 px** — jer projekti
-> suite počinju na 375, a kriterij §2 imenuje 320, pa je tvrdnja na 375 px **prošla nad kvarom**.
->
+> **✅ T5 (TIPOGRAFIJA I PROSTOR) JE GOTOV** (2026-08-22, spec **§9.12**) — vrata landinga na
+
+> 320 px **y = 567 → 338** (pojas do 439), polegnuto **425 → 200**; naslov 48 → **32 px** (3 → 2
+
+> retka), podnaslov **5 → 2 retka**. Osnovica javno **10 → 8**, i **nijedan preostali nalaz nije
+
+> više na landingu**.
+
+> ⚠️ **Korijen nije bila veličina nego to što se veličina NE MIJENJA S EKRANOM:** hero je koštao
+
+> **jednako 444 px na svakom telefonu** — 444 od 803 px pojasa na Pro Maxu (u redu) i **444 od
+
+> 316 na SE-u**. *Trošak je bio konstanta, a prostor varijabla* (isti razred kao T3, gdje problem
+
+> nije bila količina kroma nego raspodjela). Utility-ljestvica se mijenja **stepenasto po ŠIRINI**,
+
+> a telefonu nedostaje **VISINA** → polegnut telefon je po širini „desktop" i dobivao je **60 px
+
+> naslova na ekranu koji za cijeli hero ima 256 px**. Zato su tip i ritam heroja izašli iz markupa
+
+> u `landing.css` — **jedina iznimka od C1/C2**, jer `.hero-title` i `.text-4xl` imaju istu
+
+> specifičnost a utilityji stoje zadnji (dobiti specifičnošću je isti smjer kao `!important`, što
+
+> `app.css` izričito zabranjuje); pragovi na **≥768 px vraćaju TOČNO današnje tokene**.
+
+> ⚠️ **Prvi ekran je istu stvar govorio TRI puta** (naslov imenuje četiri načina · podnaslov ih
+
+> nabraja · sekcija niže ih pokazuje), a prva polovica podnaslova stajala je **doslovno u opisu
+
+> prvih vrata** → skraćen sa 135 na 72 znaka. **To je promjena TEKSTA na Leonovoj površini i zato
+
+> se izriče**; struktura iz §7.13 je netaknuta.
+
+> 🐞 **Dva pravila koja sam napisao zvučala su kao ispravak, a nisu bila — oba je oborila obrnuta
+
+> provjera:** `br{display:none}` bez podizanja stropa mjere ne mijenja **ni piksel** (*pola pravila
+
+> mjeri se kao mrtvo slovo*), a `white-space:nowrap` na markeru nije nosiv — frazu drži **naslov
+
+> sveden na stupac**, i uz to bi `nowrap` prelom pretvorio u **prelijevanje**, dakle u gori kvar.
+
+> **Pravilo koje zvuči kao ispravak nije ispravak dok obrnuta provjera ne pokaže da bez njega pada.**
+
+> ⚠️ **`css:diff` OVU ciglu ne može izmjeriti, i to je nalaz o alatu:** presreće **samo stylesheet**,
+
+> a HTML uzima iz radnog stabla → kad vrijednost seli iz markupa u CSS, referenca je stranica koja
+
+> **nikad nije postojala** (46 razlika, i na 768 i 1280 gdje se ništa nije promijenilo). Dokaz je
+
+> izveden **pravim A/B-om** (HEAD iz zasebnog `git worktree`-a, drugi port, obje verzije sa svojim
+
+> markupom i CSS-om): **0 razlika na 768 i 1280**, 22 na 375 i sve namjera. Ponovit će se u C4–C7.
+
+> ⚠️ **Nova tvrdnja je u `landing.spec.js`, ne u phone-brani** (specifična je za jednu površinu):
+
+> potez preko fraze u **jednom retku**, u **oba jezika**, i **izričito na 320 px** — jer projekti
+
+> suite počinju na 375, a kriterij §2 imenuje 320, pa je tvrdnja na 375 px **prošla nad kvarom**.
+
+>
+
 > **✅ T6 (EDITOR S POSJETITELJEVA PUTA) JE GOTOV** (2026-08-24, spec **§9.13**) — **i time je
 > faza TELEFON ISPUNJENA (T0–T6).** Puna suita **437 prošlo / 0 palo / 72 preskočeno (23,5 min)**,
 > `preflight` EXIT 0. Brojka se poklapa: 430 + 7 = **437**, dakle popravak nije usput ništa slomio.
@@ -421,9 +471,7 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > 🐞 Usput: `routeFor()` je `section` čitao samo iz `AppState`-a, pa bi poveznica sa stranice
 > lekcija ponijela zadnju otvorenu sekciju (`/quiz`). Sada sve tri vrijednosti idu istim redom.
 >
-> **`about`** (ponovljeno gore, u zaglavlju stanja): Leon je presudio da je **kvar** — stranica bez ijedne kontrole u
-> prvom ekranu čita se kao slijepa ulica → treba joj izlaz visoko (pada **preostala 4 od 4**
-> nalaza brane).
+> ~~**`about`** — Leonova presuda~~ **← ISPUNJENO 2026-08-24**, v. zaglavlje stanja i spec §9.14.
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se

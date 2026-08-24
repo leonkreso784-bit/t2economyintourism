@@ -5,6 +5,65 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-24 (OPUS, još kasnije) — **cigla `about`: phone-osnovica je prvi put PRAZNA**
+
+Leon: *„mozes krenuti svaka cast na svemu za sada polako, mirno i strpljivo."* Grana
+`feat/about`, spec **§9.14**. **Nije deployano** — čeka Leonov OK.
+
+### Kako je cigla tekla
+
+**Mjerenje prije ijednog retka koda**, na 320 / 393 / 430 / 852 px i u **oba** stanja privole.
+Sonda je pritom **prvo bila kriva, i to na način koji vrijedi zapamtiti**: prefiks zalijepljen na
+listu selektora (`'#about-page a[href], button, …'`) vrijedi **samo za prvi član liste**, pa je
+mjerila cijeli dokument i prijavila **111 kontrola** na stranici koja ih ima jednu. *Prva brojka
+koju sonda ispljune provjerava se protiv zdravog razuma, ne protiv očekivanja.*
+
+Ispravljeno, stanje je bilo gore od zapisanog: **1 kontrola ukupno** (`mailto:` na **y = 1411
+px**), **0 dohvatljivih bez skrola** na sve četiri širine, jednako s cookie-trakom i bez nje.
+Dakle zapisani nalaz — koji imenuje traku — **nije imenovao uzrok**.
+
+### Isporučeno
+
+- **Izlaz:** dvoja ravnopravna vrata (ADR-029) na **postojećim kukama** (`.start-trigger`,
+  `[data-goto-materials]`, isti ključevi kao landing) → **nula redaka novog JS-a**.
+- **T2 na zadnjoj stranici koja ga nije imala:** `header.about-header` obrisan (jedini preživjeli
+  nakon K2b), naslov → `visually-hidden`, mrtvi `<div style="width:44px">` otišao s njim.
+- **Prijevod:** 15 ključeva, stranica je bila na **nuli**.
+- **Znak:** 150 → 72 px na niskim ekranima (`max-height: 700px`, sa `#about-page` u selektoru jer
+  **medijski upit ne dodaje specifičnost** — K4a).
+- **Paleta:** indigo glow → `--shadow-e2`; osnovica **126 → 125**.
+
+### 🐞 Nalaz veći od cigle: `<html lang>` nikad nije pratio jezik pri učitavanju
+
+Funkcionalna sonda (postoji jer strukturna tvrdnja mjeri **sastav**, ne **ishod**) pokazala je
+hrvatski tekst pod `lang="en"`. Atribut postavlja jedino `setUiLang`, a boot je zvao goli
+`applyTranslations()` → svaki povratnik s odabranim 🇭🇷 dobivao je hrvatski tekst pod engleskom
+deklaracijom, **na svakoj stranici**, dok ponovno ne pritisne prekidač. **axe to ne vidi** —
+provjerava da `lang` postoji i da je valjan; `en` je oboje, samo nije istina. Popravak je jedan
+redak u bootu; tvrdnja je u `tests/i18n.spec.js` jer je činjenica app-wide.
+
+### 🐞 Greška koju sam napravio u brani, i koju je uhvatila obrnuta provjera
+
+Helper `otvori()` je čekao `.about-actions` — **točno ono što tvrdnja ① mjeri**. Protiv zatečenog
+stanja je zato padala na `TimeoutError` umjesto na brojku: crveno jest bilo, ali je govorilo o
+brani, ne o stranici. **To je doslovno pouka zbog koje T0 postoji**, ponovljena pet cigli kasnije.
+Nakon prelaska na čekanje-da-se-crtanje-smiri: `Received: 0` (①) i `+ Received + 14` (③).
+
+### Testirano
+
+`tests/about.spec.js` **6/6** · `tests/i18n.spec.js` **3/3** (nova tvrdnja obrnuto provjerena:
+`Expected "hr", Received "en"`) · phone-brana javila **✅ RIJEŠENO (prviEkran, 4)** → osnovica
+spuštena na **nulu, prvi put od postanka** · `preflight` **EXIT 0** · `build:css --check` u sinku
+· `css:diff` 27 razlika, **sve na `#about-page`**.
+
+### Što slijedi
+
+**Nije presuđeno.** Spec nudi **POLICU (P1–P4)** (T6 joj je bio preduvjet i ispunjen je), pa
+**C4 → C7**. Prije C4 stoji dug u alatu: `css:diff` je slijep za cigle koje sele vrijednost iz
+markupa u CSS, a C4–C7 rade točno to.
+
+---
+
 ## 2026-08-24 (OPUS, kasnije) — **DEPLOY: faza TELEFON + BUG-032 na produkciji**
 
 Leonov OK: *„moze merge na main"*, nakon što je preview otvorio na iPhoneu 16 i rekao
@@ -356,7 +415,8 @@ popravlja ništa.** Ostaje u cigli, ali kao udobnost.
 - Sigurni rub se **oduzima** za ono što je već ispod trake, inače traka nosi 34 px praznine
   usred ekrana. `max()`, nikad zbrajanje (T1).
 - Traka stisnuta: 217 → **129 px** (na učenju **105**), tekst 171 → 100 znakova, i **prvi put
-  preveden** — bila je jedina površina sa zakucanim engleskim, a to je pravni tekst.
+  preveden** — tada se činila jedinom površinom sa zakucanim engleskim, a to je pravni tekst.
+  (⚠️ Tvrdnja o „jedinoj" je oborena 2026-08-24: `about` je imala nula `data-i18n`.)
 - Nova tvrdnja ⑧ u brani. Obrnuta provjera: sa `bottom: 0` prijavljuje **17 ekrana**, dok ih je
   ④ vidjela **3**.
 

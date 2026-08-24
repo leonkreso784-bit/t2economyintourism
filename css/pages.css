@@ -331,19 +331,8 @@
     background: var(--bg-primary);
 }
 
-.about-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem 1.5rem;
-    padding-top: calc(1rem + var(--safe-top));
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
-}
-
-.about-header h1 {
-    font-size: 1.25rem;
-}
+/* ⚠️ `.about-header` je OBRISAN zajedno s markupom — v. komentar u `index.html`.
+   Bio je zadnje preživjelo zaglavlje razine nakon K2b i čisti duplikat mrvice. */
 
 .about-content {
     padding: 1.5rem;
@@ -371,29 +360,97 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.35);
+    /* Bio je `rgba(99, 102, 241, .35)` — indigo iz STARE palete, dakle glow koji u
+       „Akademskom plavom" svijetli bojom koje na stranici više nema. Elevacijski
+       token je i tema-svjestan i jedan pogodak `check:palette` manje. */
+    box-shadow: var(--shadow-e2);
 }
 
 .logo-wrapper-large:hover {
     transform: scale(1.05);
 }
 
-.about-icon-large {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-size: 2rem;
-    color: var(--on-primary);
-}
+/* `.about-icon-large` je obrisan 2026-08-24: nijedan `.html` ni `.js` ga ne spominje.
+   Mrtvo pravilo je preživjelo jer ga nitko nije brisao kad je markup otišao — isti
+   razlog zbog kojeg je `.about-header` doživio pet dana nakon K2b. */
 
 .about-tagline {
     color: var(--text-secondary);
     font-size: 1.1rem;
+}
+
+/* ── IZLAZ SA STRANICE (2026-08-24) ────────────────────────────────────────────
+   Vrata se slažu SAMA po raspoloživoj širini, bez ijednog medijskog upita:
+   `flex-basis: 12rem` znači da dva gumba traže 394 px, a `.about-content` ih na
+   telefonu ima najviše 382 (430 px minus padding) → u portretu je STUPAC, a u
+   polegnutom (spremnik do `max-width: 600px`) RED. To je namjerno deterministički:
+   pri basisu od 10rem bi na 393 px preostalo 15 px zaliha = 4 % širine, a projekt
+   je već platio pouku da tvrdnja s ~4 % rezerve mjeri sreću, ne ispravnost (Linux
+   crta ista slova ~4 px šire od Windowsa). */
+.about-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+
+.about-btn {
+    flex: 1 1 12rem;
+    max-width: 18rem;
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+/* `:not([disabled])` je obrazac iz C3: pravilo za `:hover` koje ne izuzima svoju
+   iznimku tjera iznimku da se brani `!important`-om. */
+.about-btn:hover:not([disabled]) {
+    background: var(--bg-tertiary);
+}
+
+.about-btn--primary {
+    background: var(--primary);
+    border-color: var(--primary);
+    /* TVRDA ZABRANA #1: tekst na ispuni marke NIKAD nije zakucan — marka je u
+       „Akademskom plavom" svijetla kreda, na kojoj bijelo daje kontrast 1.68. */
+    color: var(--on-primary);
+}
+
+.about-btn--primary:hover:not([disabled]) {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.about-btn:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ⚠️ VISINA, NE ŠIRINA (pouka T5). Ljestvica znaka mijenja se stepenasto po ŠIRINI
+   — na 852 × 393 je telefon po širini „desktop" i dobiva znak od 150 px na ekranu
+   koji za cijeli prvi ekran ima 274 px. Trošak je bio konstanta, a prostor varijabla.
+   Prag 700 px je isti onaj koji T3 već koristi za `--topbar-h`.
+   ⚠️ Selektor nosi `#about-page` NAMJERNO: medijski upit ne dodaje specifičnost
+   (K4a), a pravila u `responsive/06` gađaju golu klasu — bez id-a bi ovo bilo mrtvo
+   slovo na svakom ekranu širem od 768 px, dakle točno ondje gdje je potrebno. */
+@media (max-height: 700px) {
+    #about-page .logo-wrapper-large {
+        width: 72px;
+        height: 72px;
+        min-width: 72px;
+        min-height: 72px;
+        max-width: 72px;
+        max-height: 72px;
+        margin-bottom: 0.75rem;
+    }
 }
 
 .about-cards {

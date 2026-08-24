@@ -11,6 +11,47 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **🧱 2026-08-24 — `about` više nije slijepa ulica; usput popravljen jezik CIJELE aplikacije**
+  (grana `feat/about`, spec **§9.14**). **Phone-osnovica je time PRVI PUT PRAZNA** — 4 → 0, svih
+  18 kanti.
+
+  **Što je izmjereno prije popravka** (320 / 393 / 430 / 852 px, u oba stanja privole):
+  cijela stranica imala je **jednu jedinu kontrolu** — `mailto:` na **y = 1411 px** — dakle
+  **0 dohvatljivih bez skrola**, i to jednako s cookie-trakom i bez nje. Leonova presuda
+  („stranica bez ijedne kontrole u prvom ekranu čita se kao slijepa ulica") bila je blaža od
+  stanja: nije bilo kontrole ni ispod prvog ekrana, a jedina je vodila **iz** aplikacije.
+  ⚠️ **Zapisani nalaz je optuživao krivoga** — poruka glasi `kromo 159 px + banner 129 px`, pa
+  se čitala kao problem trake. *Nalaz koji nešto imenuje nije time i optužio to* (T4).
+
+  **Popravljeno:** dvoja ravnopravna vrata (ADR-029) na **postojećim kukama** — `.start-trigger`
+  i `[data-goto-materials]`, isti ključevi kao vrata na landingu → **nula redaka novog JS-a**;
+  zaglavlje razine obrisano (zadnje koje je preživjelo K2b, čisti duplikat mrvice) i naslov je
+  `visually-hidden`; mrtva protuteža `<div style="width:44px">` otišla s njim (**jedini inline
+  `style`** na stranici); znak se na niskim ekranima smanjuje sa 150 na 72 px.
+
+  **🐞 Dva kvara koja nisu bila zapisana nigdje:**
+  1. **Stranica nije imala jezik** — **nula `data-i18n`** atributa, dakle korisnik s 🇭🇷 dobivao
+     je englesku stranicu. T4 je isti kvar našao pet dana ranije i zapisao pouku **kao anegdotu
+     o jednoj traci** („bila je jedina površina sa zakucanim engleskim") — rečenica je bila
+     neistinita već tada. Otud BACKLOG-stavka za `check:i18n`.
+  2. **`<html lang>` nikad nije pratio spremljeni jezik pri UČITAVANJU** (**BUG-033**) — atribut postavlja
+     jedino `setUiLang`, a boot je zvao goli `applyTranslations()`. Posljedica je **globalna, ne
+     lokalna**: tko je jednom izabrao 🇭🇷 dobivao je hrvatski tekst pod `lang="en"` na svakoj
+     stranici i pri svakom posjetu, dok ponovno ne pritisne prekidač — a čitač ekrana ga tada
+     izgovara engleskim glasovima (WCAG 3.1.1). ⚠️ **axe to ne može vidjeti:** provjerava da
+     `lang` **postoji** i da je **valjan**; `en` je oboje, samo nije istina.
+
+  **Brane:** `tests/about.spec.js` (5 tvrdnji, izričito na **320 px** jer projekti suite počinju
+  na 375) + nova tvrdnja u `tests/i18n.spec.js`, obrnuto provjerena (`Expected "hr", Received
+  "en"`). ⚠️ **Prva verzija brane bila je pokvarena na način koji je projekt već platio:** helper
+  je čekao `.about-actions` — točno ono što tvrdnja ① mjeri — pa je protiv zatečenog stanja
+  padala na `TimeoutError` umjesto na brojku. *Čekanje ne smije pretpostaviti ishod mjerenja*
+  (T0). Nakon popravka crveno govori brojkama: `Received: 0` i `+ Received + 14`.
+
+  **Gateovi:** `preflight` EXIT 0 · `check:palette` **126 → 125** (indigo glow → `--shadow-e2`) ·
+  `css:diff` 27 razlika i **sve na `#about-page`** (dokaz da CSS nije procurio; same razlike su
+  neupotrebljive jer alat uzima HTML iz radnog stabla, a CSS iz `HEAD`-a — pouka T5).
+
 - **🚀 2026-08-24 — FAZA TELEFON (T0–T6) + BUG-032 + KOSTUR + landing C/D NA PRODUKCIJI**
   (`2e9fff9..82f8560`, **45 commita**, `--no-ff` merge grane `feat/c3-landing-cd`).
 Leonov OK: *„moze merge na main"*, dan nakon pregleda previewa na iPhoneu 16.

@@ -177,9 +177,10 @@
     padding-top: calc(0.75rem + var(--safe-top));
 }
 
-.about-header {
-    padding-top: calc(1rem + var(--safe-top));
-}
+/* `.about-header` je obrisan 2026-08-24 zajedno s markupom (cigla `about`, §9.14).
+   Ovo pravilo je iz T1 — sigurna zona za zaglavlje koje više ne postoji. Brišem ga
+   ODMAH, a ne „kad se ionako dira": mrtvo pravilo koje nitko ne obriše u trenutku
+   nestanka markupa je točno ono što je `.about-header` preživio pet dana nakon K2b. */
 
 .mobile-nav {
     padding-bottom: var(--safe-bottom);

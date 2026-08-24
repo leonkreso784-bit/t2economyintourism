@@ -17,11 +17,57 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-_(nema otvorenih bugova — zadnji zatvoren: BUG-032, 2026-08-24)_
+_(nema otvorenih bugova — zadnji zatvoren: BUG-033, 2026-08-24)_
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-033 — Hrvatsko sučelje se poslužuje pod `<html lang="en">` (na svakoj stranici, pri svakom posjetu)
+
+- Status: ✅ **riješen** (2026-08-24) · Težina: **srednji** (produkcija, svaka stranica, svaki
+  korisnik koji je izabrao 🇭🇷) · Našao: **funkcionalna sonda cigle `about`**, usput.
+
+**Simptom.** Korisnik jednom pritisne 🌐 i izabere hrvatski. Izbor se pamti i tekst je uredno
+hrvatski — ali `<html lang>` ostaje `en`, na **svakoj** stranici i pri **svakom** sljedećem
+posjetu, sve dok ponovno ne pritisne prekidač u toj sesiji. Čitač ekrana tada hrvatske rečenice
+izgovara **engleskim glasovima** (WCAG 3.1.1 „Language of Page"); pogađa i automatske prijevode
+te indeksiranje.
+
+**Izmjereno** (Chromium, 320 px, `localStorage['sokrat-ui-lang'] = 'hr'`, obično učitavanje):
+
+```
+tekst:  „O platformi Sokrat Study" · „Napravili studenti, za studente" · „Kreni učiti"
+html lang:  en
+```
+
+**Uzrok.** `js/i18n.js` — atribut postavlja **jedino** `setUiLang()`. Boot je na kraju modula
+zvao **goli `applyTranslations()`**, koji prevodi tekst, ali atribut ne dira. Prekidač zove
+`setUiLang`, pa je pri ručnom prebacivanju sve izgledalo ispravno — kvar se vidio **samo na
+putu kojim dolazi povratnik**, a taj put nitko nije mjerio.
+
+**⚠️ Zašto ovo nije uhvatio nijedan gate.** `tests/a11y.spec.js` vrti axe, a axe ima pravilo
+`html-has-lang` (postoji li) i `html-lang-valid` (je li valjan kod). `en` prolazi oba — **samo
+nije istina**. *Gate koji provjerava da atribut POSTOJI ne provjerava da je ISTINIT.* Isti razred
+kao tinta na pločicama predmeta (cigla B): pravilo je bilo ispravno napisano, ali ga nijedna
+mjera nije uspoređivala sa **stanjem**.
+
+Postojeći `tests/i18n.spec.js` je pritom imao **dva** testa o jeziku i oba su prolazila — jer su
+mjerila `getUiLang()` i prevedene natpise, dakle **naš vlastiti pojam jezika**, a ne ono što
+dokument kaže o sebi vanjskom svijetu.
+
+**Popravak.** Boot ide kroz `setUiLang(uiLang, false)` (`persist: false` — ovo nije korisnikov
+izbor nego primjena već zapamćenog). Jedan redak.
+
+**Brana.** Nova tvrdnja u `tests/i18n.spec.js`: `<html lang>` prati odabrani jezik **pri običnom
+učitavanju, bez ijednog dodira prekidača**, i to u oba smjera (da ne prođe zato što je atribut
+zaglavio na jednoj vrijednosti). Obrnuto provjerena protiv zatečenog koda: `Expected "hr",
+Received "en"`.
+
+**Pouka.** *Tvrdnja o vlastitom stanju nije tvrdnja o tome kako se proizvod predstavlja vani.*
+Kad postoji atribut koji nešto **objavljuje** (lang, `aria-*`, `<meta>`), mjeri se **atribut**,
+ne interna varijabla koja ga navodno postavlja.
+
 
 ### BUG-032 — Popis lekcija nije upotrebljiv tipkovnicom ni čitačem ekrana (`div` s klikom)
 
