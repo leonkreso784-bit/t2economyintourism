@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GENERIRANO — ne uređuj ručno. Izvor: stanje na disku → node scripts/check-seo.js --write
+     Namjerno BEZ <lastmod>: datum koji nitko ne održava je datum koji laže, a
+     tražilica ga tada ionako ignorira.
+     Namjerno BEZ hash-ruta (#/subject/...): fragment nije zaseban URL za tražilicu,
+     pa bi ih navesti značilo prijaviti stranice koje ne postoje. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.sokratstudy.com/contact.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sokratstudy.com/faq.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sokratstudy.com/</loc>
+  </url>
+  <url>
+    <loc>https://www.sokratstudy.com/privacy.html</loc>
+  </url>
+  <url>
+    <loc>https://www.sokratstudy.com/terms.html</loc>
+  </url>
+</urlset>

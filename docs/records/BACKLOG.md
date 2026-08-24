@@ -3,6 +3,41 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Katalog je tražilici NEVIDLJIV — hash-rute nisu URL-ovi (izmjereno 2026-08-24)
+
+> Izašlo iz Leonova pitanja o SEO-u. **Nije cigla nego arhitektonska odluka**, i namjerno stoji
+> ovdje umjesto u planu — da se ne izvede prije nego je odlučena.
+
+**Izmjereno:**
+
+| | |
+|---|---|
+| indeksabilnih stranica | **5** (`index`, privacy, terms, faq, contact) |
+| predmeta iza `#/subject/…` | **24** |
+| lekcija koje tražilica vidi | **nijedna** |
+
+K1 je devet stranica dobilo devet adresa — ali **za preglednik, ne za tražilicu**: fragment
+(`#/…`) nije zaseban URL i Google ga ne indeksira kao stranicu.
+
+**⚠️ Nagrada je manja nego što zvuči, i to je već presuđeno.** ADR-028 kaže da je glavni argument
+za SSR bio **dijeljeni materijal**, ali da je doseg dijeljenja presuđen kao **link s tajnim
+tokenom, bez javne biblioteke** — dakle korisničko gradivo **po dizajnu NIJE javno pronalažljivo**.
+SEO time može doseći samo **katalog** i marketinške stranice. Tko ovo bude vagao, neka to uzme
+u obzir prije nego procijeni isplativost.
+
+**Što bi tehnički trebalo:** `history.pushState` umjesto hasha u `navigateTo`/`parseRoute` ·
+Vercel rewrite (`/(.*) → /index.html`) · dodir u `sw.js` (navigacija je network-first, ali
+opseg se mijenja) · `sitemap.xml` bi tek tada imao što nabrajati · `Course` JSON-LD po predmetu
+(danas namjerno izostavljen, uz komentar u `index.html`).
+
+**⚠️ Otvoreno pitanje koje se ne smije preskočiti:** i s pravim adresama sadržaj crta **JS iz
+`data/*.js`**. Google to renderira, ali sporije i manje pouzdano. Pouzdan odgovor je
+**pred-renderirani HTML po lekciji**, dakle build-korak — a to je već pitanje na koje je ADR-028
+odgovorio „ne kroz redizajn, nego kao svjesna migracija na vlastite zasluge".
+
+**SEM (plaćeno oglašavanje) je odvojeno i ide POSLIJE:** odluka o budžetu, ne o kodu. Dok su
+C4–C7 i POLICA nedovršeni, plaćeni promet dolazi na gradilište.
+
 ## ➖ Zakucan engleski nije bio JEDNA traka nego RAZRED — treba `check:i18n` (2026-08-24)
 
 > Nađeno pri cigli `about`: cijela stranica „O nama" imala je **nula `data-i18n`** atributa,
@@ -25,6 +60,16 @@ odluči hoće li se prevoditi ili gasiti dvojezičnost, treba je izmjeriti — i
 `studio.*` ključeva nedostaje, `block-editor.js` i `admin-editors.js` imaju **nula** `t()`
 poziva). Ovo je brana koja bi K5 uopće **našla** bez ručnog prebrojavanja.
 
+## ✅ ~~Tekst stranice `about` ne spominje UGC~~ — RIJEŠENO ISTI DAN (2026-08-24, spec §9.15)
+
+> Leon je izabrao smjer **B — oboje ravnopravno**, i tekst je promijenjen **na četiri mjesta
+> odjednom**: `about`, `meta description`, `og:` i `twitter:`. Ispalo je da problem nije bio
+> samo na stranici — ista FMTU-only rečenica stajala je i u `<head>`-u, gdje ju je **Google
+> stvarno čitao**, a tri opisa su bila i **međusobno različita**. Brana `check:seo` od tada
+> traži da ostanu jedan tekst. Zapis ostaje jer objašnjava ZAŠTO tekst danas izgleda ovako.
+
+<details><summary>izvorni zapis</summary>
+
 ## ➖ Tekst stranice `about` ne spominje UGC — a UGC je glavni proizvod (2026-08-24)
 
 > **Leonova odluka, ne nusprodukt cigle.** Cigla `about` je stranici dala izlaz i jezik, ali
@@ -42,6 +87,8 @@ graditelja. Danas korisnik gradivo napravi sam, u pregledniku.
 **Odluka koju traži Leon:** ostaviti kako jest · dopisati rečenicu o vlastitom gradivu ·
 ili prepisati stranicu. Treće je najveće i nije hitno.
 
+
+</details>
 
 ## ➖ Stablo Studija ima isti kvar kao BUG-032 — `.st-row` je `div` s klikom (2026-08-24)
 

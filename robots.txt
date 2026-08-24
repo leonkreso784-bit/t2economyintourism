@@ -1,0 +1,17 @@
+# Sokrat Study — www.sokratstudy.com
+#
+# Sve je otvoreno za obilazak. Ovo NIJE previd:
+#
+# ⚠️ `editor.html` se NAMJERNO ne zabranjuje. Ta stranica nosi `<meta name="robots"
+#    content="noindex">`, a `Disallow` bi robotu zabranio da je uopće otvori — pa
+#    `noindex` nikad ne bi bio pročitan i stranica bi mogla ostati u indeksu. Zabrana
+#    obilaska i zabrana indeksiranja su dvije različite stvari i tuku se.
+#
+# ⚠️ Korisničko gradivo nije ovdje i neće biti: doseg dijeljenja je presuđen kao
+#    link s tajnim tokenom, bez javne biblioteke (ADR-028) — dakle te stranice po
+#    dizajnu NISU javno pronalažljive. Tražilica doseže katalog i ove stranice.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.sokratstudy.com/sitemap.xml

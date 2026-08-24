@@ -3064,3 +3064,109 @@ izričito, jer projekti suite počinju na 375 i projekt je to već dvaput platio
 Tekst stranice opisuje platformu kao mjesto koje **dijeli gotovo gradivo**, bez ijedne rečenice o
 tome da korisnik smije napraviti svoje — što se s ADR-029 („UGC je glavni proizvod") ne slaže.
 To je **Leonova površina i njegova odluka**, ne nusprodukt cigle; zapisano u `BACKLOG.md`.
+
+---
+
+### 9.15 Predstavljanje — jedna priča na tri mjesta, i SEO-temelji (isporučeno 2026-08-24)
+
+Nastavak §9.14, i to na Leonov nalaz: *„tekst koji predstavlja stranicu se definitivno mora
+promijeniti… mislim da bi trebali napravit dobar sem i seo da bude više uočljiva."*
+
+#### ⚠️ Dvije Leonove primjedbe bile su ISTA stvar
+
+Cigla `about` je popravila tekst **na stranici**. Ali isti opis živi i u `<head>`-u, i ondje je
+bio gori — ovo je `meta description` koji je Google **stvarno čitao**:
+
+> „Free interactive exam prep for **FMTU Opatija — Hospitality Management**…"
+
+Isto u `og:description` i `twitter:description`. Dakle **cijela stranica** — ne samo `about` —
+govorila je tražilicama da je skripta za jedan smjer jednog fakulteta, dok ADR-029 kaže da je
+UGC glavni proizvod. *Proizvod je otišao naprijed, a opis je ostao.* Isti kvar u četiri sloja.
+
+#### Leonova odluka o smjeru
+
+Ponuđena su tri smjera s gotovim tekstom. Izabrano:
+
+- **B — „Oboje, ravnopravno"**, koji prati ADR-029 kakav danas stoji: gotovo gradivo i vlastito,
+  u istoj rečenici, bez obećanja koje proizvod ne pokriva.
+- **Javni opis ostaje ENGLESKI** (kao dotad), iako je stvarna publika hrvatska. Zapisano kao
+  Leonova odluka, ne kao previd — hrvatski opis bi bolje pogađao hrvatske upite.
+
+#### Što je izvedeno
+
+| | prije | poslije |
+|---|---|---|
+| `<title>` / `description` / OG / Twitter | tri **različita** teksta, svi FMTU-only | jedan tekst, mehanički provjeren |
+| `og:image` | `icon-512.png` — **kvadratna ikona 512×512** | `og-cover.png`, **1200×630**, generirana |
+| `robots.txt` | **ne postoji** | postoji, imenuje sitemap |
+| `sitemap.xml` | **ne postoji** | **generiran s diska** (5 indeksabilnih stranica) |
+| JSON-LD | **0** | `EducationalOrganization`, minimalan i istinit |
+| `meta keywords` | FMTU popis | **obrisan** |
+| brana nad `<head>`-om | **nijedna** | `npm run check:seo`, u preflightu |
+
+⚠️ **`meta keywords` je OBRISAN, ne ažuriran.** Google ga ignorira od 2009., a zatečeni je
+nabrajao FMTU predmete — dakle polje koje nitko ne čita, a govori krivo. Zadržati ga značilo bi
+peto mjesto koje se mora sinkronizirati bez ijedne koristi.
+
+⚠️ **Popis stranica u sitemapu se ČITA S DISKA.** Ručni popis bi prva nova stranica pregazila —
+projekt je to pravilo već platio dvaput u T6 (`check:cdn` i `check:tailwind` nisu vidjeli
+`editor.html`). *Brana koja ovisi o tome da se netko sjeti nije brana nego bilješka.* Iz istog
+razloga `editor.html` **ne ulazi** u sitemap: skener ga izuzima jer nosi `noindex`.
+
+⚠️ **`robots.txt` NAMJERNO ne zabranjuje `editor.html`**, iako bi to zvučalo opreznije.
+`Disallow` zabranjuje **obilazak**, pa robot nikad ne pročita `noindex` — i stranica može ostati
+u indeksu. *Zabrana obilaska i zabrana indeksiranja tuku se*; brana to izričito provjerava.
+
+#### Kartica se GENERIRA, ne crta
+
+`scripts/build-og-image.js` renderira 1200 × 630 u Chromiumu koji ionako imamo za testove, a
+boje čita iz `css/tokens.static.css` i tekst iz `js/i18n.js`. Ručno nacrtana slika bila bi
+**četvrta kopija palete i peto mjesto s tekstom**, i razišla bi se prvi put kad se promijeni
+tema. ⚠️ PNG je ipak **zamrznut u trenutku generiranja** (font se ne ugrađuje → na Windowsu
+Segoe UI, na macOS-u SF), pa se **commita**: posjetitelj vidi bajtove iz repozitorija.
+Traži preglednik → **nije u preflightu**; to da je kartica ispravnih dimenzija mjeri
+`check:seo` nad **datotekom**. *Gate mjeri artefakt, ne alat koji ga radi.*
+
+#### 🐞 Dvije greške koje sam napravio, obje uhvaćene gledanjem, ne čitanjem
+
+1. **Podnožje kartice bilo je `position: absolute`** → kad se podnaslov prelomio u tri retka,
+   **prošao je kroz njega**. Apsolutni element ne sudjeluje u rasporedu, dakle ne može ni biti
+   odgurnut. *Kvar se ne bi vidio da nisam otvorio samu sliku* — kod je izgledao ispravno.
+2. **Backtick unutar template-literala.** Komentar u CSS-u je sadržavao `` ` `` i zatvorio
+   literal. Ista obitelj greške koju projekt već ima zapisanu za shell-nizove; ovdje je bila u JS-u.
+
+#### ⚠️ Mina koju je trebalo izbjeći
+
+**Nijedna nova rečenica ne smije nositi broj predmeta.** Jedini ručno pisan broj u projektu je
+statični fallback u vratima landinga i njega čuva `npm run verify` (§7.13); svaki drugi bi tiho
+ostario — landing je taj razred greške već imao **na produkciji** (pisao 17 kad ih je bilo 22).
+Zato tekst kaže „ready subjects across several programmes", a ne brojku.
+
+#### Što NIJE napravljeno, i zašto — bez toga je popis nepošten
+
+- **Prave adrese umjesto hash-ruta.** Danas je indeksabilno **5 stranica**, a 24 predmeta žive
+  iza `#/subject/…`, što tražilica ne indeksira kao zasebne stranice. To je **arhitektonska
+  odluka**, ne cigla. ⚠️ I dio te rasprave je **već presuđen**: ADR-028 kaže da je glavni
+  argument za SSR bio dijeljeni materijal, ali da je doseg dijeljenja presuđen kao **link s
+  tajnim tokenom, bez javne biblioteke** — dakle korisničko gradivo **po dizajnu nije javno
+  pronalažljivo**. SEO time može doseći samo katalog i marketinške stranice, što nagradu čini
+  bitno manjom nego što zvuči.
+- **SEM (plaćeno oglašavanje).** Odluka o budžetu, ne o kodu, i ide zadnja: frontend je
+  nedovršen (C4–C7, POLICA), pa bi plaćeni promet dolazio na gradilište.
+- **`Course` shema po predmetu.** Traži da predmet ima vlastiti URL — dakle čeka gornju odluku.
+  Namjerno izostavljena, uz komentar u `index.html`, umjesto da se doda shema koja opisuje
+  stranice koje ne postoje.
+
+#### Nova brana
+
+**`npm run check:seo`** (u preflightu, bez mreže i bez preglednika) — sedam provjera: sitemap se
+poklapa s diskom · robots imenuje sitemap i ne zabranjuje `noindex` stranicu · `<head>` ima pun
+set · duljine naslova i opisa · **`og:title` == `<title>`** i **`twitter:description` ==
+`description`** · `og:image` postoji i jest 1200×630 · JSON-LD **parsira**.
+`--write` regenerira sitemap (obrazac `check:palette --update`).
+
+Tvrdnja o „jednoj priči" postoji jer je zatečeno stanje imalo **tri različita opisa** koji su se
+pri svakoj izmjeni razilazili još malo. Provjera da JSON-LD **parsira** (a ne samo da postoji)
+postoji jer tražilica neispravan blok **tiho odbaci** — pa bi „ima ga" prolazilo i nad pokvarenim.
+Obrnuto provjerena: podmetnuti `icon-512.png`, razići `og:title` i pokvariti JSON-LD → sve tri
+padnu s točnom porukom.

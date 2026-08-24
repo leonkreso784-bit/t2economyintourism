@@ -11,6 +11,43 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **🧱 2026-08-24 — predstavljanje: jedna priča na tri mjesta + SEO-temelji**
+  (grana `feat/about`, spec **§9.15**). Leonova odluka o smjeru: **B — oboje ravnopravno**
+  (gotovo gradivo i vlastito, u istoj rečenici), javni opis **ostaje engleski**.
+
+  **Povod je bio nalaz, ne želja:** `meta description` je platformu opisivao kao
+  *„Free interactive exam prep for FMTU Opatija — Hospitality Management"*, i isto je
+  stajalo u `og:description` i `twitter:description`. Dakle **cijela stranica**, ne samo
+  `about`, govorila je tražilicama da je skripta za jedan smjer jednog fakulteta — dok
+  ADR-029 kaže da je UGC glavni proizvod. Tri opisa su uz to bila **međusobno različita**.
+
+  **Isporučeno:** jedan tekst u `<title>`/`description`/OG/Twitter i u `about` ·
+  **`og-cover.png` 1200×630** umjesto kvadratne ikone od 512 px (to je ono što se vidi kad
+  netko pošalje link) · **`robots.txt`** · **`sitemap.xml` generiran s diska** · minimalan
+  **JSON-LD** · `meta keywords` **obrisan** (Google ga ignorira od 2009., a nabrajao je FMTU
+  predmete).
+
+  **Kartica se generira, ne crta** (`npm run build:og`): boje iz `css/tokens.static.css`,
+  tekst iz `js/i18n.js` — ručno nacrtana slika bila bi četvrta kopija palete i peto mjesto
+  s tekstom. ⚠️ PNG je zamrznut u trenutku generiranja (font se ne ugrađuje) i zato se
+  **commita**.
+
+  **Nova brana `npm run check:seo`** (u preflightu, bez mreže i preglednika), 7 provjera,
+  sve obrnuto provjerene. Dvije zaslužuju spomen: **`og:title` == `<title>`** i
+  **`twitter:description` == `description`** — jer je zatečeno stanje imalo tri opisa koji
+  su se pri svakoj izmjeni razilazili još malo; i **JSON-LD mora PARSIRATI**, jer tražilica
+  neispravan blok tiho odbaci, pa bi „ima ga" prolazilo i nad pokvarenim.
+
+  ⚠️ **`robots.txt` NAMJERNO ne zabranjuje `editor.html`** iako ta stranica nosi `noindex`:
+  `Disallow` zabranjuje **obilazak**, pa robot nikad ne pročita `noindex` — i stranica može
+  ostati u indeksu. Brana to izričito provjerava.
+
+  ⚠️ **Što NIJE napravljeno:** prave adrese umjesto hash-ruta (danas je indeksabilno **5
+  stranica**, a 24 predmeta žive iza `#/`), `Course` shema po predmetu i SEM. Prvo je
+  arhitektonska odluka — i dio te rasprave je **već presuđen**: ADR-028 kaže da je doseg
+  dijeljenja **link s tajnim tokenom, bez javne biblioteke**, dakle korisničko gradivo **po
+  dizajnu nije javno pronađljivo**, pa SEO može doseći samo katalog i marketinške stranice.
+
 - **🧱 2026-08-24 — `about` više nije slijepa ulica; usput popravljen jezik CIJELE aplikacije**
   (grana `feat/about`, spec **§9.14**). **Phone-osnovica je time PRVI PUT PRAZNA** — 4 → 0, svih
   18 kanti.

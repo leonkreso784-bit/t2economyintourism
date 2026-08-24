@@ -62,6 +62,36 @@ spuštena na **nulu, prvi put od postanka** · `preflight` **EXIT 0** · `build:
 **C4 → C7**. Prije C4 stoji dug u alatu: `css:diff` je slijep za cigle koje sele vrijednost iz
 markupa u CSS, a C4–C7 rade točno to.
 
+### Nastavak iste sesije — predstavljanje i SEO-temelji (spec §9.15)
+
+Leon: *„tekst koji predstavlja stranicu se definitivno mora promijeniti… mislim da bi trebali
+napravit dobar sem i seo."* Pitao je i **iskreno mišljenje treba li se time baviti sada** —
+odgovor je bio: tekst da (to je ispravak netočnosti, ne marketing), jeftini SEO-artefakti da,
+**prave adrese i SEM ne**.
+
+⚠️ **Usput sam ispravio vlastitu ranije izrečenu tvrdnju.** Rekao sam Leonu da „pravi odgovor
+traži build-korak, što dira ADR-028". Provjereno: ta je rasprava **već vođena i presuđena** —
+ADR-028 kaže da je glavni argument za SSR bio dijeljeni materijal, ali da je doseg dijeljenja
+presuđen kao **link s tajnim tokenom, bez javne biblioteke**, pa te stranice **ne smiju** biti
+javno pronađljive. Nagrada od dubokog SEO-a je time bitno manja nego što je zvučalo.
+
+**Nalaz koji je odredio opseg:** ista FMTU-only rečenica koju je `about` upravo izgubio stajala
+je i u `meta description`, `og:description` i `twitter:description` — i sva tri su bila
+**međusobno različita**. Zato brana ne mjeri samo da opis postoji nego da je **jedan**.
+
+**Isporučeno:** jedan tekst na četiri mjesta · OG-kartica 1200×630 (bila kvadratna ikona) ·
+`robots.txt` · `sitemap.xml` **generiran s diska** · minimalan JSON-LD · `meta keywords` obrisan ·
+**`npm run check:seo`** u preflightu.
+
+🐞 **Dvije greške, obje uhvaćene gledanjem a ne čitanjem:** podnožje OG-kartice bilo je
+`position: absolute` pa je podnaslov **prošao kroz njega** (kod je izgledao ispravno — vidjelo
+se tek na slici); i backtick u komentaru **unutar template-literala**, koji je literal zatvorio.
+
+⚠️ **Greška u redoslijedu koju vrijedi zapamtiti:** mijenjao sam CSS **dok je puna suita
+radila**, pa je testirala pomični cilj. Prekinuo sam je i pokrenuo iznova nad konačnim stanjem.
+*Suita mjeri stanje diska u trenutku svakog testa, ne stanje u trenutku pokretanja.*
+
+
 ---
 
 ## 2026-08-24 (OPUS, kasnije) — **DEPLOY: faza TELEFON + BUG-032 na produkciji**

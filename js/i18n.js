@@ -381,18 +381,27 @@
     // Alternativa je bila dodati `data-i18n-html` — dakle NOV innerHTML-put, i to točno
     // ondje gdje je projekt već jednom platio granicu (BUG-025). Tri kurzivne riječi ne
     // vrijede novog sinka; ime autora ionako stoji podebljano u kartici „Creator".
+    // ⚠️ TEKST JE LEONOVA ODLUKA, ne nusprodukt cigle (2026-08-24): od tri ponuđena smjera
+    // izabran je **B — oboje ravnopravno**, koji prati ADR-029 kakav danas stoji. Zatečeni
+    // tekst je platformu opisivao kao mjesto koje **dijeli gotovo gradivo** i nije imao nijednu
+    // rečenicu o tome da korisnik smije napraviti svoje — dakle proizvod je otišao naprijed,
+    // a opis je ostao. Isti opis živi i u `<title>`/`meta`/OG u `index.html`; **jedna priča,
+    // tri mjesta** — ako se mijenja, mijenja se svugdje (brana: `tests/seo.spec.js`).
+    // ⚠ **NIJEDNA REČENICA NE SMIJE NOSITI BROJ PREDMETA.** Jedini ručno pisan broj u projektu
+    // je statični fallback u `index.html` i njega čuva `npm run verify`; svaki drugi bi tiho
+    // ostario (landing je to već jednom imao NA PRODUKCIJI — pisao 17 kad ih je bilo 22).
     'about.title': { en: 'About Sokrat Study', hr: 'O platformi Sokrat Study' },
-    'about.tagline': { en: 'Created by students, for students', hr: 'Napravili studenti, za studente' },
+    'about.tagline': { en: 'Study what is ready, or make your own', hr: 'Uči iz gotovog — ili napravi svoje' },
     'about.mission.h': { en: 'Our Mission', hr: 'Naša misija' },
-    'about.mission.p': { en: 'Sokrat Study is an educational platform developed by Leon Kreso, with a simple but powerful goal: to make learning easier, more accessible, and more effective for students everywhere.', hr: 'Sokrat Study je obrazovna platforma koju razvija Leon Kreso, s jednostavnim ali snažnim ciljem: učiniti učenje lakšim, dostupnijim i djelotvornijim za studente svugdje.' },
+    'about.mission.p': { en: 'Sokrat Study turns study material into something that asks you questions instead of just showing you answers. It is built by Leon Kreso and it is free — whether the material is already here or you write it yourself.', hr: 'Sokrat Study pretvara gradivo u nešto što te ispituje, umjesto da ti samo pokazuje odgovore. Radi ga Leon Kreso i besplatno je — svejedno je li gradivo već ovdje ili ga sam napišeš.' },
     'about.do.h': { en: 'What We Do', hr: 'Što radimo' },
-    'about.do.p': { en: 'The platform helps learners prepare for exams by sharing high-quality study materials, summaries, and scripts across different subjects.', hr: 'Platforma pomaže u pripremi ispita — kvalitetnim gradivom, sažecima i skriptama iz različitih predmeta.' },
+    'about.do.p': { en: 'Wherever the material comes from, it works the same way: read it, then practise it as flashcards, a quiz or fill-in-the-blanks. The catalogue holds ready subjects across several programmes; the editor lets you build your own from your notes.', hr: 'Svejedno odakle gradivo dolazi, radi na isti način: pročitaš ga, pa uvježbaš karticama, kvizom ili dopunama. U katalogu stoje gotovi predmeti iz nekoliko programa, a u editoru napraviš vlastite iz svojih bilježaka.' },
     'about.feat.materials': { en: 'Study Materials', hr: 'Gradivo' },
     'about.feat.summaries': { en: 'Summaries', hr: 'Sažeci' },
     'about.feat.quizzes': { en: 'Interactive Quizzes', hr: 'Interaktivni kvizovi' },
     'about.feat.flashcards': { en: 'Flashcards', hr: 'Kartice' },
     'about.contribute.h': { en: 'Contribute', hr: 'Doprinesi' },
-    'about.contribute.p': { en: 'Students are encouraged to contribute by sending their learning materials, notes, or exam scripts.', hr: 'Studente potičemo da pošalju svoje gradivo, bilješke ili ispitne skripte.' },
+    'about.contribute.p': { en: 'You no longer have to send anything to anyone — make your material right here, and it stays yours. If you would rather hand over notes, or you have found a mistake, write to me.', hr: 'Više ne moraš nikome ništa slati — gradivo napraviš ovdje i ostaje tvoje. Ako radije predaš bilješke ili si našao grešku, javi mi se.' },
     'about.creator.role': { en: 'Developer', hr: 'Developer' },
     // T4 · Cookie-traka. Do sada je bila JEDINA površina sa zakucanim engleskim tekstom —
     // a to je pravni tekst, ne ukras. ⚠️ Tekst je namjerno kraći nego prije (171 → 100
