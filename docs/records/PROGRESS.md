@@ -5,6 +5,69 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-24 (OPUS) — **T6 doveden do zelenog · BUG-032 riješen**
+
+### T6 — sedam padova nije bilo u proizvodu
+
+Puna suita **437 prošlo / 0 palo / 72 preskočeno (23,5 min)**, `preflight` EXIT 0. Brojka se
+poklapa sa zatečenom (430 + 7 = 437) → popravak nije usput ništa slomio. Commit `50e1586`.
+
+Uzrok je bio jedan: otkad editor ima vlastiti dokument, spec koji **i stvara materijal i vozi
+editor** treba DVIJE stranice. **Popravak nije išao po testovima nego po HELPERIMA** —
+`publishSections` sam otvara editor, `rmNode` se sam vraća u aplikaciju.
+
+⚠️ **Zapisani uzrok za `f4-e2e` bio je kriv.** Taj spec nije padao zbog čišćenja: u prvom
+prolazu mu je pao `auth.setup` (`is_admin() = false`), što je sakrilo pravi kvar (`setNode` na
+krivoj stranici). *Pad koji sruši pripremu sakrije sve iza sebe — popis padova nije popis
+uzroka.* Sam `is_admin() = false` viđen je **1× u 5 prolaza** i **nije** zapisani
+`JWT issued at future`; uzrok nije poznat i ne izmišlja se.
+
+### BUG-032 — katalog je bio nedostupan svakome tko ne koristi miš
+
+Kartica lekcije bila je `<div>` sa slušačem klika. **Sonda prije koda, osmi put — i opet je
+oborila zapisano rješenje.** U `BUGS.md` je stajalo „kartica postaje `<button>`"; mjerenje je
+pokazalo da bi to jednoj od dvije vrste dalo krivu semantiku:
+
+| lekcija | element | zašto |
+|---|---|---|
+| otvoriva | `<a href>` | K1 joj je već dao adresu → usput postaje dijeljiva i otvoriva u novoj kartici |
+| „uskoro" | `<button>` | ne vodi nikamo; ona **objašnjava**, a ne navigira |
+
+⚠️ **Escape iz BUG-025 nije dodan — jer nije potreban.** Tekst ide kroz `textContent`, pa se
+opasnost **ne može pojaviti**; to je jače od ispravnog escapea, koji vrijedi dok ga se netko
+sjeti pozvati. Provjereno usput da taj redak ionako nije bio dohvatljiv korisničkim tekstom —
+K2a preusmjeri `node:` s lekcijske stranice, pa je do njega dolazio samo naš `catalog.js`.
+
+⚠️ **Ispravan obrazac je stajao 400 redaka iznad, u istoj datoteci:** `renderBrowsePage` crta
+`<button class="browse-card">`. Kvar nije bio nepoznavanje pravila nego **jedno mjesto koje ga
+nije slijedilo** → nova brana mjeri **obje** stranice kataloga.
+
+**Skeniranje je našlo šest kandidata, a samo jedan je bio kvar.** `.browse-card` je već
+`<button>`; `.ex-choice-item` i `.ex-card` su **omoti oko pravih `<button class="ex-opt">`**;
+stvaran je jedino `.st-row` (stablo Studija) — zapisan u `BACKLOG.md`, ne popravljen ovdje jer
+je editor, a BUG-032 je bio studentski put. *Skener nađe obrazac, ne kvar.*
+
+🐞 Usput: `routeFor()` je `subject` i `lesson` čitao prvo iz podataka, a `section` **samo iz
+`AppState`-a** → poveznica sagrađena sa stranice lekcija ponijela bi zadnju otvorenu sekciju.
+
+**Mjereno poslije:** phone-osnovica **8 → 4**; brana je sama javila `✅ RIJEŠENO (prviEkran, 4)`
+za sve četiri širine. Preostala 4 su `about`. Nova brana `tests/lesson-card.spec.js` — 5 tvrdnji,
+uključujući **obrnutu provjeru** koja rekonstruira stari `div` u DOM-u i traži da mjera padne.
+⚠️ Tvrdnja o tipkovnici vozi **Enter**, ne `element.click()`: `click()` prolazi i nad `div`-om,
+dakle nad kvarom.
+
+### Zapisano, ne izvedeno
+
+Leonove dvije primjedbe na editor (**boja mijenja samo rub** · **dopune traže 7 podvlaka**) su
+izmjerene i upisane u `BACKLOG.md`. Ključni nalaz: prijedlog „neka jedna `_` bude dovoljna"
+**se ne smije izvesti doslovno** — `_` je u LaTeX-u indeks, a `data/microeconomics/midterm-1.js`
+ima rečenicu `… quantity _______ (\(Q_d = Q_s\))`. Od 1005 rečenica 5 nosi KaTeX. *Zapis nije
+birokracija nego označena mina.*
+
+**Sljedeće:** `about` (Leon: kvar — treba izlaz u prvom ekranu), pa faza **POLICA**.
+
+---
+
 ## 2026-08-23 (OPUS) — **T6: editor s posjetiteljeva puta (spec §9.13) — FAZA TELEFON ISPUNJENA**
 
 Leon je od tri ponuđena reza izabrao **najveći**: editor ne dobiva lijeno učitavanje nego

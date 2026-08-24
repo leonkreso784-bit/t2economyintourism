@@ -234,7 +234,7 @@ function routeFor(page, data) {
         case 'study': {
             if (!subject || !lesson) return null;
             const base = '#/subject/' + enc(subject) + '/' + enc(lesson);
-            const sec = AppState.nav.section;
+            const sec = d.section || AppState.nav.section;
             // `home` je zadano stanje i ne piše se — inače bi svaka lekcija imala dvije
             // adrese za isti prikaz, a dijeljeni link bi ovisio o tome je li netko dirao tabove.
             return (sec && sec !== 'home') ? base + '/' + enc(sec) : base;
@@ -1284,29 +1284,66 @@ function renderLessonsPage(subjectId) {
     grid.innerHTML = '';
 
     subject.lessons.forEach((lesson, index) => {
-        const card = document.createElement('div');
-        card.className = 'lesson-card';
         // Data-driven: lekcija bez mapiranja u catalog.content.resolve = coming soon.
         const isComingSoon = (typeof SokratCatalog !== 'undefined')
             ? SokratCatalog.isLessonComingSoon(subjectId, lesson.id)
             : (lesson.id === 'second-midterm');
-        card.innerHTML = `
-            <div class="lesson-number">${index + 1}</div>
-            <div class="lesson-info">
-                <h3>${lesson.name}</h3>
-                <p>${lesson.description}</p>
-            </div>
-            <i class="fas fa-chevron-right lesson-arrow"></i>
-        `;
+
+        // ── BUG-032 ───────────────────────────────────────────────────────────────────
+        // Kartica je do 2026-08-24 bila `<div>` sa slušačem klika: tipkovnica je nije mogla
+        // fokusirati, čitač ekrana ju je čitao kao običan tekst, a ovo je JEDINI put u svaku
+        // lekciju kataloga. Nijedna brana to nije vidjela jer sve traže KONTROLU — a kvar je
+        // bio u tome što kontrole nema (phone-brana je zato `lessons` prijavljivala kao ekran
+        // bez ijedne dohvatljive kontrole, tvrdnja ④).
+        //
+        // ELEMENT SLIJEDI POSLJEDICU, ne izgled: lekcija koja se DA otvoriti je `<a>` s pravom
+        // adresom (K1 joj ju je već dao, pa je i dijeljiva i otvoriva u novoj kartici), a ona
+        // koja se ne da nije poveznica nego `<button>` — ne vodi nikamo, nego objašnjava zašto.
+        // Klik se presreće, kao kod loga u traci: `navigateTo` mora ostati jedini upisivač
+        // povijesti, inače `dubinaPovijesti` (K2a) prestane vrijediti.
+        const card = document.createElement(isComingSoon ? 'button' : 'a');
+        card.className = 'lesson-card' + (isComingSoon ? ' lesson-card--soon' : '');
+        if (isComingSoon) card.type = 'button';
+        else card.href = routeFor('study', { subject: subjectId, lesson: lesson.id, section: 'home' });
+
+        // ⚠️ Tekst iz podataka ide kroz `textContent`, ne kroz `innerHTML`. Escape (BUG-025)
+        // ovdje time ne treba jer se opasnost NE MOŽE pojaviti — to je jača obrana od ispravnog
+        // escapea, koji vrijedi dok ga se netko sjeti pozvati.
+        const num = document.createElement('div');
+        num.className = 'lesson-number';
+        num.textContent = String(index + 1);
+
+        const info = document.createElement('div');
+        info.className = 'lesson-info';
+        const naslov = document.createElement('h3');
+        naslov.textContent = lesson.name || '';
+        const opis = document.createElement('p');
+        opis.textContent = lesson.description || '';
+        info.appendChild(naslov);
+        info.appendChild(opis);
+
+        // Strelica/sat su UKRAS — ime kontrole ih ne smije sadržavati.
+        const strelica = document.createElement('i');
+        strelica.className = (isComingSoon ? 'fas fa-clock' : 'fas fa-chevron-right') + ' lesson-arrow';
+        strelica.setAttribute('aria-hidden', 'true');
+
+        card.appendChild(num);
+        card.appendChild(info);
+        card.appendChild(strelica);
+
         if (isComingSoon) {
-            card.style.opacity = '0.65';
-            card.style.cursor = 'not-allowed';
-            card.querySelector('.lesson-arrow').className = 'fas fa-clock lesson-arrow';
+            // Stanje mora ući u IME kontrole: toast objašnjava tek POSLIJE klika, a odluka
+            // „vrijedi li mi ovo otvoriti" pada prije njega. Vidljivo je ionako (sat + prigušenje).
+            const oznaka = document.createElement('span');
+            oznaka.className = 'visually-hidden';
+            oznaka.textContent = ' (' + (window.t ? t('lesson.comingSoonBadge') : 'coming soon') + ')';
+            card.appendChild(oznaka);
             card.addEventListener('click', () => {
                 showToast(window.t ? t('toast.comingSoon') : 'Second Midterm is coming soon.');
             });
         } else {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                e.preventDefault();
                 navigateTo('study', { subject: subjectId, lesson: lesson.id });
             });
         }

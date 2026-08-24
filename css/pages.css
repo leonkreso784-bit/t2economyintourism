@@ -58,6 +58,9 @@
     gap: 1rem;
 }
 
+/* BUG-032: kartica lekcije je `<a>` (otvoriva lekcija) ili `<button>` (uskoro), a ne više
+   `<div>`. Oba nose vlastite zadane stilove preglednika, pa se ovdje izričito gase — inače
+   sidro dobije plavi podcrtan tekst, a gumb sistemski font i sredinsko poravnanje. */
 .lesson-card {
     display: flex;
     align-items: center;
@@ -68,6 +71,24 @@
     border: 2px solid var(--border);
     cursor: pointer;
     transition: var(--transition);
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Fokus je od BUG-032 jedini način da se do lekcije dođe tipkovnicom — mora se VIDJETI.
+   `:focus-visible`, ne `:focus`: mišem se prsten ne pojavljuje, tipkovnicom uvijek. */
+.lesson-card:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Bilo je inline (`card.style.opacity`) — stil iz podatka natrag u stilsku datoteku. */
+.lesson-card--soon {
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .lesson-card:hover {

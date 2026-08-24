@@ -17,9 +17,15 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
+_(nema otvorenih bugova — zadnji zatvoren: BUG-032, 2026-08-24)_
+
+---
+
+## Riješeni / Lekcije
+
 ### BUG-032 — Popis lekcija nije upotrebljiv tipkovnicom ni čitačem ekrana (`div` s klikom)
 
-- Status: 🔴 **otvoren** · Težina: **visok** (produkcija, svaki predmet, jedini put u lekciju) · Našao: **mjerač telefona (T4), 2026-08-22**, mjerenjem tvrdnje ④.
+- Status: ✅ **riješen** (2026-08-24) · Težina: **visok** (produkcija, svaki predmet, jedini put u lekciju) · Našao: **mjerač telefona (T4), 2026-08-22**, mjerenjem tvrdnje ④.
 
 **Simptom.** Stranica `lessons` — popis lekcija predmeta — **nema nijednu sadržajnu kontrolu**.
 Miš i prst rade; tipkovnica i čitač ekrana ne. Za korisnika koji ne pokazuje prstom, katalog
@@ -49,19 +55,54 @@ tekstom**.
 Kvar je izašao tek kad je T0 uveo tvrdnju koja pita *„može li korisnik ovdje išta učiniti?"* —
 i onda je T4 morao razlagati zašto ④ pada, jer je zapisani uzrok („cookie-traka") bio kriv.
 
-**Rješenje (nije izvedeno — zaslužuje vlastitu ciglu):** kartica postaje `<button>` (ili
-`role="button"` + `tabindex="0"` + `keydown` na Enter/Space), s `aria-disabled` umjesto samog
-zamućenja za „uskoro". ⚠️ Pritom **`lesson.name` i `lesson.description` idu u `innerHTML` bez
-escapea** — isti redak treba i granicu iz BUG-025.
+**Rješenje (izvedeno 2026-08-24).** ⚠️ **Element slijedi POSLJEDICU, ne izgled:** lekcija koja
+se da otvoriti je `<a href>` — adresu joj je K1 već dao, pa je usput postala dijeljiva i
+otvoriva u novoj kartici — a lekcija „uskoro" **nije poveznica nego `<button>`**: ne vodi
+nikamo, nego objašnjava zašto. *Zapisano rješenje je predlagalo `<button>` za oboje; mjerenje
+je pokazalo da bi to jednoj od dvije vrste dalo krivu semantiku.* Klik se presreće (isti
+presedan kao logo u traci), jer `navigateTo` mora ostati jedini upisivač povijesti — inače
+`dubinaPovijesti` iz K2a prestane vrijediti.
+
+⚠️ **Escape iz BUG-025 ovdje NIJE dodan — jer nije potreban.** Tekst iz podataka ide kroz
+`textContent`, ne kroz `innerHTML`, pa se opasnost **ne može pojaviti**. To je jača obrana od
+ispravnog escapea, koji vrijedi samo dok ga se netko sjeti pozvati. (Provjereno usput: taj
+redak ionako nije bio dohvatljiv korisničkim tekstom — K2a preusmjeri `node:` s lekcijske
+stranice, pa je do `innerHTML`-a dolazio samo naš `catalog.js`.)
+
+⚠️ **Ispravan obrazac je već postojao 400 redaka iznad, u istoj datoteci:** `renderBrowsePage`
+crta `<button class="browse-card">`. Kvar nije bio nepoznavanje pravila nego **jedno mjesto
+koje ga nije slijedilo** — zato nova brana mjeri OBJE stranice kataloga, ne samo popravljenu.
+
+🐞 **Usput ispravljena tiša nedosljednost:** `routeFor()` je `subject` i `lesson` čitao prvo iz
+podataka, a `section` **isključivo iz `AppState`-a** — pa bi poveznica sagrađena s lekcijske
+stranice ponijela zadnju otvorenu sekciju (npr. `/quiz`), dakle adresu koja ne opisuje kamo
+vodi. Sada sve tri idu istim redom.
+
+**Mjereno poslije:** phone-osnovica **8 → 4 nalaza** — brana je sama javila
+`✅ RIJEŠENO (prviEkran, 4)` za sve četiri širine `lessons`. Preostala 4 su `about` (sljedeće).
+
+**Brana:** `tests/lesson-card.spec.js` — sastav · tipkovnica (Enter, ne `element.click()`, jer
+`click()` prolazi i nad `div`-om, dakle nad kvarom) · ime kontrole · **obrnuta provjera** koja
+rekonstruira stari `div` u DOM-u i traži da ista mjera padne.
+
+**⚠️ Isti kvar postoji još na JEDNOM mjestu i NIJE popravljen ovdje:** `.st-row` — stablo
+kataloga u Studiju (`js/studio.js:82`) je `div` s `data-lesson` i delegiranim klikom. To je
+editor (admin-only, `editor.html`), pa ide u `BACKLOG.md`, ne u ovu ciglu. Provjereno je i
+ostalih pet kandidata: `.ex-choice-item` / `.ex-card` su **omoti oko pravih `<button>`-a**,
+dakle lažni pogodak skenera.
 
 **Lekcija.** *Gate koji provjerava kontrole ne vidi kvar u kojem kontrola NE POSTOJI.* Sve tri
 postojeće brane pretpostavljale su da je element kontrola i onda mjerile njegovo ponašanje;
 nijedna nije pitala postoji li uopće. Isti razred kao „telefon kao stranica nikad nije bio
 mjerena površina" — mjeri se ono što se zna imenovati.
 
----
+**Druga lekcija, iz popravka:** *kvar u jednini je često obrazac u množini — ali tek nakon
+provjere.* Skener je našao šest kandidata; **jedan** je bio stvaran (`.st-row`), **dva** su
+bila omoti oko pravih kontrola, a **jedan** (`.browse-card`) je bio već ispravan i time dokaz
+da pravilo u kući postoji. Da sam popis prijavio bez provjere, četiri od šest bila bi lažna
+uzbuna.
 
-## Riješeni / Lekcije
+---
 
 ### BUG-030 — Puni naziv fakulteta ruši zaglavlje kataloga na telefonu (naslov postane „C…")
 

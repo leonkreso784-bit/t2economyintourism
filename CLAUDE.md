@@ -380,11 +380,24 @@ Počelo na **FMTU Opatija** (smjer Hospitality Management), ali **cilj = UGC-pla
 > „tko čeka".* `tests/admin.spec.js` je prepolovljen **odlukom, ne padom** (premisa „viewer se crta
 > i bez admin-sesije" od T6 ne postoji po dizajnu).
 >
-> **🔵 SLJEDEĆE = BUG-032** (Leon, 2026-08-22: odmah poslije T6), pa **`about`**. BUG-032:
-> `lessons` nije upotrebljiv tipkovnicom ni čitačem ekrana (kartica je `div` s klikom), a to je
-> **jedini put u svaku lekciju kataloga**; u istom retku treba i escape (BUG-025). Za `about` je
-> Leon presudio da je **kvar**: stranica bez ijedne kontrole u prvom ekranu čita se kao slijepa
-> ulica → treba joj izlaz visoko (pada 4 od 8 preostalih nalaza brane).
+> **✅ BUG-032 JE RIJEŠEN** (2026-08-24) — kartica lekcije je sada prava kontrola, pa je
+> **katalog dostupan tipkovnicom i čitaču ekrana**. Phone-osnovica **8 → 4**; brana je sama
+> javila `✅ RIJEŠENO (prviEkran, 4)`. Puni zapis: `BUGS.md`.
+> ⚠️ **Element slijedi POSLJEDICU, ne izgled:** otvoriva lekcija je `<a href>` (adresu joj je
+> K1 već dao → usput je postala dijeljiva), a „uskoro" je `<button>` — ne vodi nikamo, nego
+> objašnjava zašto. *Zapisano rješenje je predlagalo `<button>` za oboje.*
+> ⚠️ **Escape iz BUG-025 nije dodan jer nije potreban:** tekst ide kroz `textContent`, pa se
+> opasnost NE MOŽE pojaviti — jače od ispravnog escapea, koji vrijedi dok ga se netko sjeti
+> pozvati. (K2a ionako nije puštao korisnički tekst do tog retka.)
+> ⚠️ **Ispravan obrazac je stajao 400 redaka iznad, u istoj datoteci** (`renderBrowsePage` crta
+> `<button class="browse-card">`) → brana `tests/lesson-card.spec.js` mjeri **obje** stranice
+> kataloga, jer popraviti jednu od para znači čekati da se par opet raziđe.
+> 🐞 Usput: `routeFor()` je `section` čitao samo iz `AppState`-a, pa bi poveznica sa stranice
+> lekcija ponijela zadnju otvorenu sekciju (`/quiz`). Sada sve tri vrijednosti idu istim redom.
+>
+> **🔵 SLJEDEĆE = `about`**: Leon je presudio da je **kvar** — stranica bez ijedne kontrole u
+> prvom ekranu čita se kao slijepa ulica → treba joj izlaz visoko (pada **preostala 4 od 4**
+> nalaza brane).
 > **K4 se NE radi zasebno** — utapa se u **P2** (ista pločica, isti ekran; odvojeno bi se
 > pisalo dvaput). **K5 ostaje u redu čekanja** i ne blokira ništa.
 > **A1 + A0: REDOSLIJED NIJE PRESUĐEN** (Leon, 2026-08-19: *„ne znam još, to ćemo se

@@ -11,6 +11,17 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **📦 2026-08-24 — BUG-032: popis lekcija je postao upotrebljiv tipkovnicom i čitačem ekrana.**
+Kartica lekcije bila je `div` sa slušačem klika — miš je radio, tipkovnica i čitač ekrana nisu,
+a to je **jedini put u svaku lekciju kataloga**. Sada: otvoriva lekcija je `<a href>` (adresa iz
+K1 → usput je postala dijeljiva i otvoriva u novoj kartici), „uskoro" je `<button>` (ne vodi
+nikamo, nego objašnjava zašto), tekst ide kroz `textContent` pa escape više ni ne treba, ikona
+je `aria-hidden`, a stanje „uskoro" se čuje **prije** klika. Fokus je vidljiv
+(`:focus-visible`). Mjereno poslije: **phone-osnovica 8 → 4**, brana sama javlja
+`✅ RIJEŠENO (prviEkran, 4)`. Nova brana: `tests/lesson-card.spec.js` (5 tvrdnji, uklj. obrnutu
+provjeru nad rekonstruiranim starim `div`-om). Usput ispravljen `routeFor()`, koji je `section`
+čitao samo iz `AppState`-a. Detalji: `BUGS.md`.
+
 - **📦 2026-08-24 — T6: editor je dobio VLASTITU STRANICU, i time sišao s posjetiteljeva puta (spec §9.13).** ✅ Puna suita **437 prošlo / 0 palo / 72 preskočeno (23,5 min)**, `preflight` EXIT 0. Kriterij: *bez računa otvoriš landing i ne preuzmeš editor koji nikad nećeš vidjeti.* Mjereno prije/poslije: posjetiteljev put **mrežom 234 → 164 KiB** (ispod zadanog budžeta od 200), **sirovo 755 → 519 KiB**, **41 → 36 skripti**, editorskih datoteka na putu **7 → 0**. Stranica editora nosi 27 skripti / 152 KiB mrežom — **plaća ju tko u nju uđe**. Time je **faza TELEFON ispunjena (T0–T6)**.
   **⚠️ „3,7× preko budžeta" bilo je u KRIVOJ JEDINICI.** Plan je brojku računao na **sirovim** bajtovima, a budžet dolazi iz Lighthousea, koji mjeri **prenesene** — dakle komprimirane. U ispravnoj jedinici zatečeno stanje nije bilo 3,7× nego **1,17×**, a sam izlazak editora spušta ga **ispod** budžeta. *Brojka može biti točna i svejedno savjetovati krivo ako je u krivoj jedinici* — isti razred kao `palette:breakdown`, gdje je agregat preporučivao pet cigli umjesto jednog popodneva. `check:budget` zato mjeri **prijenos**, a sirovo i dalje **ispisuje** (ono mjeri parsiranje, ali ne odlučuje).
   **⚠️ Rez nije išao po datoteci nego KROZ nju, i to je sonda rekla prije ijednog retka koda.** `admin.js` se **nije dao preseliti cijel**: u njemu je, uz uređivanje, živjelo i „jesi li ti admin", a to aplikacija treba i kad editora nema (o tome ovisi otkrivanje jedine `.admin-only` kartice u profilu) → **`js/admin-reveal.js` (3,2 KiB) ostaje, `js/admin.js` (42,8 KiB) seli**. **`js/node-images.js` OSTAJE** — traži ga `blocks-renderer.js`, dakle **studentov put učenja**, ne editor („sedam editorskih datoteka" bila je pretpostavka; mjera kaže šest plus jedna koja ostaje). **`initTheme()` je izašao** iz `init.js` u `js/theme.js`, jer `init.js` nije „boot" nego **boot aplikacije** (12 inicijalizatora), a editoru treba tema, ne aplikacija. Dokaz da se pri cijepanju ništa nije izgubilo: **700 kodnih redaka prije, 700 poslije**, s točno jednom namjeravanom razlikom.

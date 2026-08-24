@@ -3,6 +3,91 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ Stablo Studija ima isti kvar kao BUG-032 — `.st-row` je `div` s klikom (2026-08-24)
+
+> Nađeno skeniranjem **pri popravku BUG-032**, ne posebnim traženjem: `js/studio.js:82` crta
+> redak stabla kataloga kao `<div class="st-row" data-subj=… data-lesson=…>` s delegiranim
+> klikom. Nema `tabindex`, nema uloge → **stablo kataloga u Studiju nije upotrebljivo
+> tipkovnicom**.
+
+Zašto NIJE popravljeno zajedno s BUG-032: to je **editor** (admin-only, živi na `editor.html`
+od T6), a BUG-032 je bio na studentskom putu — svaki predmet, svaki korisnik. ADR-030 uz to
+kaže da se editor smije **pojednostaviti**, pa ovo ima smisla riješiti kad se stablo ionako
+dira (K5 je već u redu čekanja).
+
+Popravak je poznat i mali: isti obrazac kao `renderLessonsPage` — `<button>` za redak koji
+nešto otvara, `aria-expanded` za redak koji grana stablo.
+
+⚠️ **Ostalih pet kandidata iz istog skeniranja su PROVJERENI i nisu kvar:** `.browse-card` je
+već `<button>`; `.ex-choice-item` i `.ex-card` su **omoti oko pravih `<button class="ex-opt">`**;
+`.profile-card` i `.admin-quiz-optrow` su u editoru i nose kontrole unutar sebe. *Skener nađe
+obrazac, ne kvar — razlika se vidi tek čitanjem.*
+
+## 🔥 EDITOR — boja kartice i dopune (Leon, 2026-08-24; izmjereno isti dan)
+
+> Dvije Leonove primjedbe na editor, obje potvrđene mjerenjem. **Ne rade se sada** (na redu su
+> BUG-032 i `about`), ali su zapisane jer je jedna od njih **mina**: razuman prijedlog koji bi,
+> izveden doslovno, slomio postojeće gradivo.
+
+### ① Boja mijenja samo rub, a treba obojiti CIJELU karticu
+
+Boja se svugdje postavlja isto (`SokratBlocks.applyAccent` → `--item-acc`), ali je **tri moda
+troše različito**, i to nitko dosad nije primijetio jer se gleda mod po mod:
+
+| mod | što `--item-acc` zapravo radi | datoteka |
+|---|---|---|
+| kartice | `box-shadow: inset … 3px` — **samo prsten, nikakve ispune** | `css/flashcards-section.css:93` |
+| kviz | `border-left: 4px` + tinta **10 %** | `css/quiz-section.css:92` |
+| dopune | `border-left: 4px` + tinta **10 %** | `css/fill-blanks-section.css:18` |
+
+Kod kartica ispune **doslovno nema**; kod kviza i dopuna je 10 %, što se na ekranu čita kao
+„samo rub". Leonov dojam je točan opis koda, ne dojam.
+
+**Mjesto: C5a (modovi uvježbavanja)** — ta cigla ionako prepisuje baš te tri datoteke, pa bi
+raditi to sada značilo raditi dvaput. **Teški dio je već riješen:** izbor tinte po luminanciji iz
+dva tema-neovisna tokena (`--color-on-tint-dark/-light`) napravljen je za pločice landinga, s
+branom `tests/tint-ink.spec.js` — dakle puna, zasićena boja s čitljivim tekstom kroz sve 4 teme
+nije nov problem nego **postojeći alat**. ⚠️ Vrijede tvrde zabrane iz `check:palette`: tekst na
+ispuni ide kroz token, nikad `color: white`.
+
+### ② Dopune — ⛔ NE rješavati jednom podvlakom (ovo je mina)
+
+Editor danas traži **točno 7 podvlaka** (`_______`) da prepozna prazninu. Leon: nije user-friendly,
+neka bude dovoljna jedna `_`, ili neka praznina bude vidljiv element koji se povlači i u koji se
+upiše odgovor; i neka ih se može staviti više.
+
+**Prijedlog „jedna podvlaka" se NE SMIJE izvesti doslovno.** U LaTeX-u je `_` operator indeksa, a
+rečenice s dopunom renderiraju matematiku (ADR-009, `js/fill-blanks.js:80`). Izmjereno u `data/`:
+**1005 rečenica s dopunom, 5 ih sadrži KaTeX**, i jedna je ovo:
+
+```
+At the market-clearing price, quantity demanded equals quantity _______ (\(Q_d = Q_s\)).
+```
+
+`Q_d` i `Q_s` postali bi praznine → **mikroekonomija bi se raspala**. Zato: ili token koji se ne
+može sudariti s LaTeX-om, ili — bolje — **marker uopće ne živi u tekstu**.
+
+**Pravi korijen: podvlaka je format POHRANE koji je procurio u sučelje.** Editor traži od autora
+da utipka ono što baza sprema. Leonova druga ideja (označi riječ / ubaci prazninu gumbom) briše
+to pitanje: koliko je podvlaka postaje nevažno.
+
+**Više praznina po rečenici je danas blokirano na četiri mjesta**, i zadnje je odlučujuće:
+
+- `_FILL_BLANK = '_______'` — `js/admin-editors.js:508`
+- validacija odbija rečenicu bez tog niza — `js/admin-editors.js:595`
+- shema traži isti uzorak — `schema/subject-content.schema.json:66`
+- renderer radi `.replace('_______', …)` — `js/fill-blanks.js:77`; `replace` sa **stringom**
+  mijenja **samo prvo** pojavljivanje
+- ⚠️ **model podataka: `answer` je JEDAN string** (`schema:67`) — i da se sve gore popravi, nema
+  gdje spremiti drugi odgovor
+
+**Migracije nema:** izmjereno je **0 od 1005** rečenica s više praznina (jer je nemoguće), pa
+`answer` ostaje za jednu prazninu, a `answers` se doda za više. Ocjenjivanje (`normFill`,
+`js/fill-blanks.js:94`) mora tada usporediti **po praznini**, ne po rečenici.
+
+**Rez: dvije cigle, ne jedna.** ① autorstvo praznine (sučelje editora, malo) · ② više praznina
+(shema + ocjenjivanje + renderer, vlastita cigla).
+
 ## 🔥🔥 CRVENI ALARM — TELEFON (Leon na iPhoneu 16, 2026-08-19/20)
 
 > **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je

@@ -598,6 +598,7 @@
     'breadcrumb.lessons': { en: 'Lessons', hr: 'Lekcije' },
     'lesson.fallback': { en: 'Lesson', hr: 'Lekcija' },
     'toast.comingSoon': { en: 'Second Midterm is coming soon.', hr: 'Drugi kolokvij uskoro.' },
+    'lesson.comingSoonBadge': { en: 'coming soon', hr: 'uskoro' },
     'toast.loadError': { en: 'Could not load this subject. Please try again.', hr: 'Učitavanje predmeta nije uspjelo. Pokušaj ponovno.' },
 
     // Razno
