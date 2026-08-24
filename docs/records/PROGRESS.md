@@ -5,6 +5,95 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-24 (OPUS, kasnije) — **DEPLOY: faza TELEFON + BUG-032 na produkciji**
+
+Leonov OK: *„moze merge na main"*, nakon što je preview otvorio na iPhoneu 16 i rekao
+*„odlucno izgleda na mobitelu svaka cast"*. Merge `2e9fff9..82f8560`, **45 commita**, `--no-ff`.
+Stablo merge-commita je **bajt-identično** stablu grane (`main` je bio predak, 0 divergencije),
+pa gate s grane vrijedi po konstrukciji. **Rollback: `2e9fff9`.**
+
+**Verificirano posluženim sadržajem (pravilo #7), ne zelenim deployem.** Vercel
+`dpl_CHTH4bjEfDuVgjH1hmpSNsJ9621o` READY target=production, SHA = merge-commit:
+
+```
+token 20260824053542    = repo (jedini token u index.html)
+editor.html             HTTP 200     (stranica koju je T6 stvorio)
+styles.css              HTTP 404     (C1 brisanje preživjelo merge)
+editorskih datoteka     0            na posjetiteljevu putu
+lokalnih skripti        36           = koliko javlja check:budget
+body class=no-pathbar   prisutan     (CLS popravak isporučen)
+sekcije landinga        4/4
+```
+
+⚠️ **Jedna brojka je zamalo ušla u zapis kao netočnost:** naivni `grep -c '<script src'` daje
+**37**, a stvarnih skripti je **36** — 37. pogodak je **naš vlastiti komentar** koji tu frazu
+spominje. Isti razred kao pouka „komentar nije pravilo" iz `check:tailwind`. *Brojku koja se ne
+slaže s branom treba razriješiti, ne zaokružiti.*
+
+### Put od crvenog do zelenog CI-ja (tri kvara, nijedan u proizvodu)
+
+Prvi push grane oborio je CI dvaput, a lokalna suita je istog commita bila 442/0. Razlika je
+okruženje: **Windows i Linux ne crtaju isti font istom širinom (~4 px)** — dovoljno da brana
+promijeni ishod bez ijedne promjene u proizvodu.
+
+| commit | ishod | što je bilo |
+|---|---|---|
+| `0234d20` | ❌ | Lighthouse (CLS) + 5 Playwright padova |
+| `f1284e8` | ❌ | Lighthouse zelen; padova 5 → 1 |
+| `c868a36` | ❌ | isti 1 pad; dodan `github` reporter da se pad uopće **da pročitati** |
+| `0b4074a` | ✅ | sva tri posla zelena |
+| `286a050` | ✅ | popravak utrke u `auth.setup` |
+
+**Lighthouse: pao je CLS, ne performance.** Prag performancea je 50, imali smo 63 — prolazio je.
+CLS je bio **0,1546** uz dopušteno 0,10, i uzrok je bio jedan: `<body>` nije nosio `no-pathbar`
+iako je `#landing-page` u markupu već `active`. ⚠️ **Kvar je bio posljedica mog ispravka u T3** —
+dotad je `--chrome-h` bio zapečen na `:root` pa ga `body.no-pathbar` nije ni mijenjao: vrijednost
+**kriva, ali tiha**. Ispravak ju je učinio točnom i time mjerljivom. Poslije: **0,0043**, a
+performance je usput skočio **0,66 → 0,75**.
+
+**Marker landinga** se lomio preko dva retka na sva četiri profila. Popravak je `white-space:
+`nowrap`, **koji je T5 odbacio bez mjerenja** („nowrap bi prelom pretvorio u prelijevanje").
+Izmjereno: fraza troši **42–58 % stupca**, s `nowrap` ostaje u jednom retku **do 1,7×** veće
+tipografije i prelijeva tek na 1,9× — gdje je uhvati druga tvrdnja istog testa.
+
+**Osnovica phone-brane je poznat nalaz brojala kao NOV.** Uspoređivali su se doslovni stringovi,
+a u string je ugrađena izmjerena vrijednost (`banner 129 px`). *Identitet nalaza ne smije
+sadržavati njegovo mjerenje.* Sada se uspoređuje po ključu; imena kontrola ostaju netaknuta jer
+su ondje identitet. Da normalizacija radi ispravno dokazalo se odmah: **nije sakrila ništa** —
+ostao je jedan nalaz, i to nov ekran (`320px landing`).
+
+**Landing na 320 px prolazio je sa zalihom od 21 px = 3,7 % ekrana.** Rupa je bila u T5, unutar
+njegove vlastite logike: pravilo za nizak ekran stajalo je na `max-height: 519px`, što pokriva
+**samo polegnuti** telefon, pa je SE u portretu (568 px) dobio puni ritam. ⚠️ **Sonda je oborila
+i moj prvi popravak:** rezanje samih razmaka diglo je zalihu na 44, ali je već **+0,01em** širih
+slova vraćalo na 9, jer **hero raste u koracima cijelog retka (+35 px)**. Tek uz mjeru tipa
+(naslov 32→28, podnaslov 16→15) zaliha je **59 px** i vrata se ne miču ni pri 5 % širim slovima.
+Nijedno slovo sadržaja nije dirnuto; iznad 700 px visine sve je nepromijenjeno (`css:diff` 0/1120).
+
+**`auth.setup` je dvaput od sedam prolaza oborio 92 testa** koja nikad ne krenu: `is_admin() =
+false` uz **prazan `rpcError`** — poziv uspije, ali je kontekst još anoniman. Izolirano 5/5
+zeleno → utrka, ne konfiguracija. To je **drugo lice** trepćuće prijave; dotad se krivo
+pripisivalo `JWT issued at future` (koje ima grešku, pa se vidi). Sada se čeka stanje (6 × 250 ms).
+
+### Alat
+
+Padovi u CI-ju se dotad nisu dali pročitati bez ključa: anotacije su nosile samo „exit code 1", a
+izvještaj je u artefaktu od **87 MB koji traži prijavu**. Svaki pokušaj je zato stajao rundu od
+~18 min. Playwrightov `github` reporter uključen je **samo uz `process.env.CI`**.
+⚠️ Usput naučeno: **GitHubov javni API ima 60 zahtjeva/h** — provjeravanje CI-ja u petlji ostavi
+te bez očitanja baš kad ti treba.
+
+### Otvoreno (razgovarano, NIJE presuđeno)
+
+Leon je pitao za **birač tema**, **OAuth** i **self-host Supabase prije OAuth-a**; na preporuke
+nije odgovorio jer je razgovor otišao na CI. Zapisano u `CLAUDE.md` i memoriji **kao otvoreno**.
+Ostaje i **neodgovoreno pitanje koje mu dugujem**: smije li staging biti na drugom laptopu, a
+produkcija na rentanom VPS-u.
+
+**Sljedeće:** `about`.
+
+---
+
 ## 2026-08-24 (OPUS) — **T6 doveden do zelenog · BUG-032 riješen**
 
 ### T6 — sedam padova nije bilo u proizvodu

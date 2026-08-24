@@ -11,6 +11,45 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **🚀 2026-08-24 — FAZA TELEFON (T0–T6) + BUG-032 + KOSTUR + landing C/D NA PRODUKCIJI**
+  (`2e9fff9..82f8560`, **45 commita**, `--no-ff` merge grane `feat/c3-landing-cd`).
+Leonov OK: *„moze merge na main"*, dan nakon pregleda previewa na iPhoneu 16.
+
+  **Verificirano POSLUŽENIM sadržajem (pravilo #7), ne zelenim deployem.** Vercel
+`dpl_CHTH4bjEfDuVgjH1hmpSNsJ9621o` **READY target=production**, SHA `82f8560` = merge-commit:
+  - token `20260824053542` na produkciji **= repo** (jedini token u `index.html`)
+  - **`editor.html` HTTP 200** — stranica koju je T6 stvorio stvarno postoji
+  - **`styles.css` i dalje 404** — merge nije uskrsnuo datoteku koju je C1 obrisao
+  - **0 editorskih datoteka na posjetiteljevu putu** u posluženom HTML-u; **36 lokalnih**
+    skripti, točno koliko javlja `check:budget`
+  - `<body class="no-pathbar">` prisutan → CLS-popravak je stvarno isporučen
+  - sve četiri sekcije landinga (`catalog`/`own`/`modes`/`mcp`) na mjestu
+  ⚠️ Sitnica koja je zamalo ušla u zapis kao netočnost: naivni `grep -c '<script src'` daje
+  **37**, a stvarnih skripti je **36** — 37. pogodak je **naš vlastiti komentar** koji spominje
+  `<script src`. Isti razred kao pouka „komentar nije pravilo" iz `check:tailwind`.
+
+  **Vidljivo korisnicima — produkcija je do jučer na telefonu bila neupotrebljiva**, i to uz
+desetak zelenih gateova, jer nijedan nije mjerio STRANICU na telefonu (axe mjeri na 1280,
+`css:diff` uspoređuje nas sa samima sobom, K3/K4a mjere kromo). Sada:
+  - kromo kataloga **307 → 167 px** (54 % → **29 %** na 320 px) · budžet kroma se ne probija
+    ni na jednom profilu · cookie-traka **217 → 129 px** i više ne pokriva gumbe za modove
+  - sigurna zona: donji rub **183 → 0**, bočni **16 → 0**, spremnik **16 → 0**
+  - hero landinga je prestao biti konstanta: vrata na 320 px **y 567 → 338**
+  - **katalog je postao dostupan tipkovnicom i čitačem ekrana** (BUG-032) — do jučer je
+    jedini put u svaku lekciju bio `div` sa slušačem klika
+  - posjetiteljev put **mrežom 234 → 164 KiB** (budžet 200), **41 → 36 skripti**
+  - devet stranica ima devet adresa (K1) → lekcija se sada da **podijeliti linkom**
+
+  **Gate prije mergea:** `preflight` EXIT 0 (16 brana) · puna suita **442 / 0 palo / 87**
+  · CI zelen na `0b4074a` i `286a050` (sva tri posla) · `css:diff` **0/1120** na 375/768/1280.
+  **Stablo merge-commita je bajt-identično stablu grane** (`main` je bio predak, 0 divergencije),
+  pa gate s grane vrijedi po konstrukciji. **Rollback: `2e9fff9`.**
+
+  ⚠️ **Znano i NEPROMIJENJENO ovim deployem:** `check:functions` je i dalje **crven**
+  (`bright-function` i `quick-api` žive na produkciji) — Leonova ručna radnja, odgođena do C6.
+  ⚠️ GitHub je pri pushu javio **„Bypassed rule violations — changes must be made through a
+  pull request"**: na `main` stoji pravilo koje traži PR, a Leonov ga račun smije zaobići.
+
 - **🟩 2026-08-24 — CI je prvi put zelen otkad je grana narasla** (`0b4074a`, pa `286a050`).
 Tri kvara, **nijedan u proizvodu — svi u MJERI**, i sva tri nevidljiva lokalno jer Windows i
 Linux ne crtaju isti font istom širinom (~4 px).

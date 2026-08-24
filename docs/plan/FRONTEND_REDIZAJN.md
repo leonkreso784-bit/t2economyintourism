@@ -56,7 +56,7 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 |---|---|---|---|
 | **C0** ✅ | **Ulaz u vlastiti materijal** — promaknuće iz pododjeljka profila u ravnopravno odredište. **Bez Tailwinda, bez redizajna.** | ništa | korisnik dođe do svog gradiva **iz navigacije i s landinga**, izravnom rutom, bez ulaska u profil |
 | **C1** ✅ | **Temelj** — Tailwind v4 + `@theme` tokeni, `build:css` proširen, drift-gate, `?v=` bump | `styles.css` (manifest) | **stranica izgleda bajt-identično**, a paleta/razmaci/breakpointi postoje kao tokeni |
-| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **A+B na produkciji; C+D čekaju Leonov pogled.** | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
+| **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Sve četiri na produkciji od 2026-08-24** (A+B od 2026-08-18, C+D s fazom TELEFON). | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
 | **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
@@ -1708,6 +1708,17 @@ zatečenog kvara.
 ---
 
 ## 9 · CRVENI ALARM — „TELEFON" i „POLICA" (Leon na iPhoneu 16, 2026-08-19/20)
+
+> ## ✅ FAZA „TELEFON" (T0–T6) JE ISPORUČENA NA PRODUKCIJU — 2026-08-24
+> `2e9fff9..82f8560`, 45 commita, verifikacija posluženim sadržajem = zadnji **🚀** redak u
+> `docs/records/CHANGELOG.md`. **Rollback: `2e9fff9`.** Uz nju su izišli i **KOSTUR (K1–K4a)**,
+> **BUG-032** i **landing C+D**. **Faza „POLICA" (P1–P4) NIJE napravljena** i i dalje stoji.
+>
+> ⚠️ **Odluka ① niže je POTROŠENA, ne ukinuta.** Leon je 2026-08-24 sam odobrio merge
+> (*„moze merge na main"*) iako C4–C7 i POLICA nisu gotovi — obrazloženje koje je stajalo iza
+> odluke prestalo je vrijediti, jer je prepreka bio telefon, a on je riješen. **Sljedeći deploy
+> opet traži izričit OK** (pravilo #2). Odluka ② stoji netaknuta.
+
 
 > **Leon je zaustavio tempo cigli:** *„puca mi kurac za cigla po ciglu u ovoj sesiji, ovo je
 > crveni alarm koji se treba rijesiti."* Uz to dvije tvrde odluke koje vrijede od sada:
