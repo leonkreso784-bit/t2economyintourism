@@ -252,6 +252,39 @@
     .hero-kicker { margin-bottom: 0.5rem; }
 }
 
+/* ⚠️ T5 JE NAPRAVIO PRAVILO ZA NIZAK EKRAN, ALI SAMO ZA POLEGNUTI (`max-height: 519px`).
+   Njegovo je načelo bilo točno — *„ljestvica se mijenja po ŠIRINI, a telefonu nedostaje
+   VISINA"* — ali je 568 px portreta ostao iznad praga i dobio puni ritam. Mjereno na
+   320 × 568 pod uvjetima brane (otok 59 px, traka privole vidljiva):
+
+       kromo 123 · pt 24 · kicker 16 (+12) · naslov 70 (+14) · podnaslov 51 (+28) · vrata 160
+       → središte prvih vrata y = 418, pojas do y = 439  ⇒  ZALIHA 21 px
+
+   Dvadeset i jedan piksel je 3,7 % ekrana. Toliko pojede već i drugi crtač fonta: na
+   Linuxu je traka privole 145 px umjesto 129, pa je ista tvrdnja ondje PADALA dok je
+   lokalno bila zelena. *Tvrdnja koja prolazi s 3,7 % rezerve ne mjeri ispravnost nego
+   sreću.*
+
+   Reže se ISKLJUČIVO PRAZAN PROSTOR — nijedno slovo, nijedna kontrola, nijedan tip:
+   četiri razmaka. Izmjereno poslije: središte **418 → 395**, zaliha **21 → 44 px** (7,7 %
+   ekrana, dvostruko više nego prije). Prag je **700 px, isti koji T3 već koristi** za `--topbar-h` — jedan
+   dogovoreni broj u kući umjesto drugog izmišljenog. `orientation: portrait` drži ovo
+   pravilo i pravilo za polegnuti telefon razdvojenima, pa se ne mogu sudariti. */
+@media (max-height: 700px) and (orientation: portrait) {
+    .landing-main { padding-block-start: 0.75rem; }
+    .hero-kicker { margin-bottom: 0.375rem; }
+    .doors { margin-top: 1rem; }
+
+    /* ⚠️ TIP SE OVDJE SMANJUJE ZATO ŠTO HERO RASTE U KORACIMA CIJELOG RETKA (+35 px),
+       a ne glatko. Sonda (letter-spacing kao zamjena za tuđi crtač fonta) pokazala je
+       da zaliha od 44 px padne na 9 već pri +0,01em i probije pri +0,02em — dakle
+       rezanje razmaka samo po sebi ne kupuje ono što treba, a treba REDAK.
+       Ovdje se ne miče nijedno slovo sadržaja, samo mjera: 32 → 28 px naslov,
+       16 → 15 px podnaslov. Iznad 700 px visine sve ostaje točno kako je bilo. */
+    .hero-title { font-size: 1.75rem; }
+    .hero-sub { margin-top: 0.5rem; font-size: 0.9375rem; line-height: 1.5; }
+}
+
 /* ── Dvoje vrata ──────────────────────────────────────────────────────
    Jedan ulaz koji PITA čije gradivo, i editor odmah pokraj (§7.5).
    ⚠️ `display:block` na djeci je OBAVEZAN: to su `<span>` unutar `<button>`,
