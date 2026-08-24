@@ -211,7 +211,20 @@
    nego PRELILA — kvar gori od onog koji smo popravljali. Bez njega je najgori ishod
    prelom, koji `box-decoration-break: clone` ionako crta ispravno.
    Ishod čuva tvrdnja u `tests/landing.spec.js` (jedan redak, oba jezika, i 320 px). */
+/* ⚠️ `nowrap` JE OVDJE ISPRAVAN, IAKO GA JE T5 ODBACIO — odbacio ga je bez mjerenja.
+   Zapisano je bilo: „nowrap bi prelom pretvorio u PRELIJEVANJE, dakle u gori kvar."
+   Mjerenje (320/375/393/430 px × oba jezika) kaže suprotno: najšira varijanta („četiri
+   načina") troši **58 % stupca** — 166,9 od 288 px na najužem ekranu, dakle 121 px zalihe.
+   Prelijevanje nije moguće; fraza se uvijek pomakne u sljedeći redak kao CJELINA.
+   Pravi mehanizam kvara nije bila širina fraze nego njezin POLOŽAJ: marker stoji usred
+   naslova, pa ga prelom naslova može prepoloviti i kad sam lako stane. Na Linuxu se font
+   crta ~4 px šire → prelom naslova padne drugdje → marker preko dva retka. Lokalno se to
+   ne vidi nikad, a u CI-ju svaki put (5 padova na 4 profila).
+   Brana koja to čuva ostaje: `landing.spec.js` i dalje traži da marker NIJE širi od stupca,
+   pa ako mu netko digne tip preko zalihe, `nowrap` se prijavi sam. *Par „nowrap + tvrdnja o
+   prelijevanju" je samočuvajući; nijedno od toga dvoje samo nije.* */
 .hero-mark {
+    white-space: nowrap;
     font-style: normal;
     color: var(--color-ink-0);
     background: linear-gradient(to top, var(--color-mark) 0 58%, transparent 58%);

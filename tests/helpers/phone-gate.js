@@ -751,11 +751,36 @@ function ucitajOsnovicu() {
 }
 
 /** Vrati `{ novi, rijeseni }` za jednu tvrdnju jedne suite. */
+/**
+ * ⚠️ IDENTITET NALAZA NE SMIJE SADRŽAVATI NJEGOVO MJERENJE (2026-08-24).
+ * Osnovica je do danas uspoređivala DOSLOVNE stringove, a nalaz u sebi nosi izmjerene
+ * piksele: „320px about · kromo 159 px + banner 129 px (23 %) od 568 px". Linux crta font
+ * ~4 px šire (pouka iz C0) → cookie-traka prelomi tekst drugačije → „banner 145 px" → isti,
+ * odavno poznat kvar broji se kao NOV i brana padne. Lokalno zeleno, u CI-ju crveno, bez
+ * ijedne promjene u proizvodu.
+ *
+ * Zato se uspoređuje po KLJUČU: „gdje" (širina + ekran) ostaje doslovan, a u opisu iza
+ * „ · " se brojevi normaliziraju. Imena kontrola ostaju netaknuta — ondje su IDENTITET
+ * (dva različita gumba na istom ekranu moraju ostati dva nalaza).
+ *
+ * Cijena koja se izriče: promjena SAMO u brojci više ne pali branu. To je ovdje ispravno,
+ * jer sve tvrdnje ove brane imaju vlastiti prag — nalaz POSTOJI tek kad je prag probijen,
+ * pa je alarm njegova prisutnost, a ne veličina. Nov ekran ili nova kontrola i dalje
+ * dobivaju nov ključ i dalje ruše branu.
+ */
+function kljucNalaza(s) {
+    const i = String(s).indexOf(' · ');
+    if (i < 0) return String(s);
+    return String(s).slice(0, i + 3) + String(s).slice(i + 3).replace(/\d+([.,]\d+)?/g, '#');
+}
+
 function usporediSOsnovicom(suita, kljuc, nadjeno) {
     const poznati = ((ucitajOsnovicu()[suita] || {})[kljuc]) || [];
+    const poznatiKljucevi = poznati.map(kljucNalaza);
+    const nadjeniKljucevi = nadjeno.map(kljucNalaza);
     return {
-        novi: nadjeno.filter((x) => poznati.indexOf(x) === -1),
-        rijeseni: poznati.filter((x) => nadjeno.indexOf(x) === -1)
+        novi: nadjeno.filter((x) => poznatiKljucevi.indexOf(kljucNalaza(x)) === -1),
+        rijeseni: poznati.filter((x) => nadjeniKljucevi.indexOf(kljucNalaza(x)) === -1)
     };
 }
 
@@ -775,5 +800,5 @@ module.exports = {
     OTOK, RUB_PORTRET, RUB_LANDSCAPE, EKRANI, EKRANI_JAVNI, EKRANI_PRIJAVLJENI, NACINI,
     KROMO_BUDZET_PCT,
     spreman, postaviRub, idiNa, otvoriNacin, mjeriStranicu, mjeriRubove,
-    usporediSOsnovicom, spremiOsnovicu
+    usporediSOsnovicom, spremiOsnovicu, kljucNalaza
 };

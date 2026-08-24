@@ -334,6 +334,7 @@ section[id$="-page"] {
   line-height: 1.6;
 }
 .hero-mark {
+  white-space: nowrap;
   font-style: normal;
   color: var(--color-ink-0);
   background: linear-gradient(to top, var(--color-mark) 0 58%, transparent 58%);
