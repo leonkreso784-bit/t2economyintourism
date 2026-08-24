@@ -11,6 +11,35 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **🟩 2026-08-24 — CI je prvi put zelen otkad je grana narasla** (`0b4074a`, pa `286a050`).
+Tri kvara, **nijedan u proizvodu — svi u MJERI**, i sva tri nevidljiva lokalno jer Windows i
+Linux ne crtaju isti font istom širinom (~4 px).
+  - **Lighthouse: pao je CLS, ne performance** (prag performancea je 50, imali smo 63).
+    `<body>` nije nosio `no-pathbar` iako je `#landing-page` u markupu već `active` → landing je
+do prvog crtanja računao visinu s redom trake koji mu ne treba → **skok od 44 px**. Klasa je
+sada u markupu + tri retka koja je maknu za dijeljene rute (K1). **CLS 0,1546 → 0,0043**,
+performance **0,66 → 0,75**. ⚠️ Kvar je bio posljedica ispravka u T3: dotad je `--chrome-h` bio
+zapečen na `:root` pa ga `body.no-pathbar` nije ni mijenjao — vrijednost **kriva, ali tiha**.
+  - **Marker landinga se lomio preko dva retka na sva četiri profila.** Popravak je
+    `white-space: nowrap` — **koji je T5 odbacio bez mjerenja**. Izmjereno: fraza troši 42–58 %
+stupca, a s `nowrap` ostaje u jednom retku **do 1,7× veće tipografije** (prelijeva na 1,9×, gdje
+je uhvati druga tvrdnja istog testa).
+  - **Landing na 320 px prolazio je sa zalihom od 21 px = 3,7 % ekrana.** Rupa je bila u T5,
+    unutar njegove vlastite logike: pravilo za nizak ekran stajalo je na `max-height: 519px`,
+što pokriva **samo polegnuti** telefon, pa je SE u portretu (568 px) dobio puni ritam. Sonda je
+pritom oborila i prvi popravak — rezanje samih razmaka diglo je zalihu na 44, ali je već
++0,01em širih slova vraćalo na 9, jer **hero raste u koracima cijelog retka (+35 px)**. Zato je
+u isto pravilo ušla i mjera tipa (naslov 32→28, podnaslov 16→15) — **nijedno slovo sadržaja nije
+dirnuto**, iznad 700 px visine sve je nepromijenjeno. Poslije: zaliha **21 → 59 px**, i vrata se
+više ne pomiču ni pri **5 %** širim slovima. `css:diff` **0/1120** na 375/768/1280.
+  - **`auth.setup` je dvaput od sedam prolaza oborio 92 testa** koja nikad ne krenu:
+    `is_admin() = false` uz **prazan `rpcError`** — poziv uspije, ali je kontekst još anoniman.
+Izolirano 5/5 zeleno → utrka, ne konfiguracija. Sada se **čeka stanje** (6 × 250 ms) i broj
+pokušaja izlazi u poruku, pa se utrka razlikuje od stvarne uloge.
+  - **Alat:** Playwrightov `github` reporter uključen **samo u CI-ju** — dotad se ime palog testa
+    dalo dobiti jedino iz artefakta od 87 MB koji traži prijavu, pa je svaki pokušaj stajao rundu
+od ~18 min.
+
 - **📦 2026-08-24 — BUG-032: popis lekcija je postao upotrebljiv tipkovnicom i čitačem ekrana.**
 Kartica lekcije bila je `div` sa slušačem klika — miš je radio, tipkovnica i čitač ekrana nisu,
 a to je **jedini put u svaku lekciju kataloga**. Sada: otvoriva lekcija je `<a href>` (adresa iz
