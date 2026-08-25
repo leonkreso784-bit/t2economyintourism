@@ -2796,8 +2796,10 @@ Preostalih **8** nalaza tvrdnje ④ nema više nijedan na landingu:
 
 - **4 × `lessons`** — stranica nema nijednu sadržajnu kontrolu jer je kartica lekcije `div` s
   klikom → **BUG-032**, vlastita cigla.
-- **4 × `about`** — jedna kontrola, na `y ≈ 1500`. **Čeka Leonovu odluku** (kvar ili proza),
-  nepromijenjeno od T4.
+- **4 × `about`** — jedna kontrola, na `y ≈ 1500`. *(Tada je čekalo Leonovu odluku; presudio
+  je 2026-08-22 da je **kvar**, i pala su s ciglom `about` — **§9.14**. Mjerenje je ondje
+  pokazalo da kontrola nije bila na `y ≈ 1500` nego na **y = 1411**, i da je jedina na cijeloj
+  stranici.)*
 
 ---
 

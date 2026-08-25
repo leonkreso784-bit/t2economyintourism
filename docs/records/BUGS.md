@@ -17,11 +17,63 @@ Pratimo greške i učimo iz njih. Aktivne bugove gore, riješene + lekcije dolje
 
 ## Aktivni
 
-_(nema otvorenih bugova — zadnji zatvoren: BUG-033, 2026-08-24)_
+_(nema otvorenih bugova — zadnji zatvoren: BUG-034, 2026-08-24)_
 
 ---
 
 ## Riješeni / Lekcije
+
+### BUG-034 — Brana za ćirilicu nije skenirala korijen: 23 datoteke, od toga 12 sa SADRŽAJEM
+
+- Status: ✅ **riješen** (2026-08-24) · Težina: **srednji** (brana koja tvrdi da pokriva, a ne
+  pokriva) · Našao: **revizija na Leonovo pitanje** *„jesi siguran da je sve dobro zapisano"*.
+
+**Simptom.** `npm run check:docs` sadrži provjeru koja tvrdi da u kodu i sadržaju **nema
+ćiriličnih znakova** (postoji jer hrvatski i ćirilica dijele izgled slova `а о е с р`, pa
+kopiranje tiho unosi znak koji izgleda isto a nije isto — povod joj je bilo ćirilično `С` u
+**odgovoru kartice**, zbog čega pretraga po „MPC" tu karticu nije nalazila). Provjera je bila
+zelena, a **ćirilično `а` (U+0430) ležalo je u `sw.js` na produkciji.**
+
+**Uzrok.** Mape se obilaze rekurzivno (`CODE_DIRS`), ali korijenske datoteke ne leže ni u jednoj
+od njih, pa su bile nabrojane **ručno**:
+
+```js
+const ROOT_FILES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'contact.html'];
+```
+
+Prebrojano: taj popis **propušta 23 korijenske datoteke**, i to nisu sitnice —
+
+| propušteno | zašto boli |
+|---|---|
+| **12 × `data-*.js`** | **SADRŽAJ** — četiri stara sem-2 predmeta koje ADR-015 svjesno drži u korijenu. To je točno ono zbog čega provjera postoji. |
+| `sw.js` | kod koji se izvršava kod **svakog** posjetitelja; ondje je znak i bio |
+| `editor.html` | stranica koju je stvorio T6 |
+| `manifest.json`, `vercel.json`, `playwright.config.js`, … | konfiguracija |
+
+**⚠️ Ovo je TREĆI put ista greška u tri tjedna.** T6 je zatekao **ručne popise stranica** u
+`check:cdn` i `check:tailwind` i oba su propustila `editor.html`; pouka je tada zapisana kao
+*„brana koja ovisi o tome da se netko sjeti nije brana nego bilješka"*, a popravak je bio
+**BRISANJE popisa**. Ista bolest je istog dana ležala i ovdje, u trećoj brani, i nitko je nije
+potražio. *Kad se jedna brana pokaže bolesnom, pretraži ostale za istom bolešću — pouka se ne
+primjenjuje sama.*
+
+**Popravak.** Korijen se **čita s diska** (`fs.readdirSync` + filtar po nastavku), uz jednu
+izričitu iznimku: `package-lock.json` (generiran, golem, i ćirilica u njemu bila bi tuđa).
+Znak u `sw.js` ispravljen.
+
+**Obrnuta provjera.** Popravljena brana je **odmah pala na zatečenom stanju** — prijavila je
+`sw.js` s ćiriličnim znakom — i prošla tek nakon ispravka. Dakle mjera stvarno vidi kvar, a ne
+samo današnje zeleno.
+
+⚠️ **Usput, o samom ovom zapisu — pao sam na njemu DVAPUT.** `.md` provjera prije mjerenja makne
+blokove i **inline** kod, pa se ćirilica smije citirati, ali samo pod dva uvjeta koja sam oba
+prekršio: ① citat mora biti **u backtickovima** (prvi put sam ga stavio u hrvatske navodnike,
+gdje ga strip ne vidi) i ② mora stati **u jedan redak** (izraz namjerno ne prelazi redak).
+*Najsigurnije je znak uopće ne pisati nego ga imenovati kodnom točkom* — zato u ovom zapisu
+stoji `U+0430`, a ne sam znak.
+
+**Pouka.** *Gate koji nabraja ono što štiti štiti samo ono što je netko zapamtio.* Popis se
+briše, disk se čita — i to vrijedi za svaku sljedeću branu koja ima „popis datoteka" u sebi.
 
 ### BUG-033 — Hrvatsko sučelje se poslužuje pod `<html lang="en">` (na svakoj stranici, pri svakom posjetu)
 

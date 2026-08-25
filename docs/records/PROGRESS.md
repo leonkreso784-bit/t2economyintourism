@@ -91,6 +91,28 @@ se tek na slici); i backtick u komentaru **unutar template-literala**, koji je l
 radila**, pa je testirala pomični cilj. Prekinuo sam je i pokrenuo iznova nad konačnim stanjem.
 *Suita mjeri stanje diska u trenutku svakog testa, ne stanje u trenutku pokretanja.*
 
+### Revizija: „jesi siguran da je sve dobro zapisano" (Leon)
+
+Odgovor je bio **ne**. Provjera je dala **jedan pravi kvar i šest zastarjelih tvrdnji**, a
+nijednu nije prijavio gate — našle su se jer je Leon pitao.
+
+**BUG-034:** brana za ćirilicu imala je **ručni popis od pet korijenskih datoteka** i propuštala
+**23**, uključujući **12 datoteka SADRŽAJA** (`data-*.js`, ADR-015) i `sw.js`, u kojem je znak
+stvarno ležao — na produkciji. **Treći put isti oblik greške u tri tjedna** (T6 ga je zatekao u
+`check:cdn` i `check:tailwind`). Popravak: čita se disk.
+
+**Ispravljeno šest tvrdnji** — najgora je moja: popis preflight-brana u `CLAUDE.md` nije
+spominjao `check:budget`, a ja sam **baš taj redak** uređivao dodajući `check:seo`. Ostale:
+prazna phone-osnovica opisana kao „javno 4", normala trajanja suite, „čeka Leonovu odluku" za
+`about`, „21 predmet" umjesto 24, i isporuka na produkciji pod naslovom „na grani".
+
+⚠️ **Dvaput sam pritom pao na vlastitoj brani**, i oba su puta korisna: utipkao sam ćirilično
+`U+0430` u zapis O ĆIRILICI, i prelomio *citat* kvara preko dva retka (strip za inline kod namjerno
+ne prelazi redak). *Citat kvara mora stati u jedan redak, inače postaje kvar.*
+
+**Zapisano, ne popravljeno:** `TESTING.md` nabraja specove rukom, 18 od 46 nedostaje.
+
+
 
 ---
 

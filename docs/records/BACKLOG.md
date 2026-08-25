@@ -3,6 +3,27 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
+## ➖ `TESTING.md` nabraja specove rukom — 18 od 46 nedostaje (izmjereno 2026-08-24)
+
+> Nađeno revizijom na Leonovo pitanje *„jesi siguran da je sve dobro zapisano"* — dakle ne
+> gateom, nego time što je netko pitao. To je samo po sebi nalaz.
+
+`docs/workflow/TESTING.md` imenuje pojedine spec-datoteke u prozi. Prebrojano: **46 datoteka
+`tests/*.spec.js`, imenovano 28, nedostaje 18** — među njima `routes.spec.js`, `escaping.spec.js`,
+`i18n.spec.js`, `tint-ink.spec.js`, cijeli `*.authed` niz. Uz to je isti dokument tvrdio
+**„21 predmet = 17 EN + 4 HR"** dok ih je **24 = 17 + 7**.
+
+⚠️ **Ne rješava se dopisivanjem 18 imena** — to obnavlja isti dug s novim datumom. ADR-027
+kaže da proza nosi **zašto**, a inventar živi u kodu. Dvije opcije:
+
+- **Generirati** odjeljak iz `npx playwright test --list` (kao što `check:seo` generira
+  sitemap s diska), pa ga gate uspoređuje.
+- **Svesti na skupine** („brane rasporeda", „brane pristupačnosti", „authed put") i imenovati
+  samo one koje traže objašnjenje ZAŠTO postoje — ostalo prepustiti `tests/`.
+
+Preporuka je druga: popis od 46 imena nitko ne čita, a ono što se doista treba zapisati je
+zašto neka brana postoji — a to već stoji u zaglavlju svakog speca.
+
 ## ➖ Katalog je tražilici NEVIDLJIV — hash-rute nisu URL-ovi (izmjereno 2026-08-24)
 
 > Izašlo iz Leonova pitanja o SEO-u. **Nije cigla nego arhitektonska odluka**, i namjerno stoji
@@ -478,7 +499,11 @@ stroju pada — tek tada je nalaz, a ne okruženje.
 
 ---
 
-## ➖ `css/subject-selector.css` — 22 od preostalih 126 pogodaka `check:palette` — 2026-08-15
+## ➖ `css/subject-selector.css` — 22 pogotka `check:palette` — 2026-08-15
+
+> ⚠️ Naslov je do 2026-08-24 pisao „22 od preostalih **126**"; osnovica je od tada **125**
+> (cigla §9.15 zamijenila indigo glow tokenom). **Ukupan broj ovdje više ne stoji** — zna ga
+> `npm run check:palette`; brojka 22 je o OVOJ datoteci i nju gate ne prepisuje.
 
 Isplivalo pri popravku tinte na pločicama predmeta (spec §7.14). Isti obrazac koji je ondje popravljen
 na tri površine: `color: white` + gradijenti **stare palete** (`#6366f1`, `#8b5cf6`) zakucani u CSS-u.

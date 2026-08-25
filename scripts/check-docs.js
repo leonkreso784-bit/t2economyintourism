@@ -138,7 +138,25 @@ for (const abs of allMd) {
 // PRETPOSTAVKU DA POKRIVA SVA — usporedi tvrdu zabranu #2 i tintu na pločicama.
 const CODE_DIRS = ['js', 'tests', 'scripts', 'data', 'css'];
 const CODE_EXT = /\.(js|mjs|ts|json|css|html)$/;
-const ROOT_FILES = ['index.html', 'privacy.html', 'terms.html', 'faq.html', 'contact.html'];
+// ⚠️ KORIJEN SE ČITA S DISKA, NE IZ POPISA (2026-08-24). Ovdje je stajao ručni popis od
+// PET imena, i propuštao je **23 datoteke** — među njima:
+//   · `sw.js`      — kod koji ide svakom posjetitelju, i u kojem je STVARNO ležalo
+//                    ćirilično `а` (U+0430) u komentaru, prošlo kroz gate neopaženo;
+//   · `editor.html`— stranica koju je T6 stvorio, ista rupa koju su tada imali
+//                    `check:cdn` i `check:tailwind`, i ista koju su tada zatvorili
+//                    BRISANJEM popisa;
+//   · **12 × `data-*.js`** — četiri stara sem-2 predmeta koje ADR-015 svjesno drži u
+//                    korijenu. To je SADRŽAJ, dakle točno ono zbog čega ova provjera
+//                    uopće postoji (povod joj je bilo ćirilično `С` u odgovoru kartice).
+// *Brana koja ovisi o tome da se netko sjeti nije brana nego bilješka* — treći put ista
+// pouka u tri tjedna, pa je popis obrisan umjesto dopunjen.
+const ROOT_EXT = ['.js', '.html', '.json', '.txt', '.xml'];
+const ROOT_FILES = fs.readdirSync(ROOT, { withFileTypes: true })
+  .filter((e) => e.isFile() && ROOT_EXT.some((x) => e.name.endsWith(x)))
+  // `package-lock.json` je generiran i golem; ćirilica u njemu bi bila tuđa, ne naša.
+  .filter((e) => e.name !== 'package-lock.json')
+  .map((e) => e.name)
+  .sort();
 const CYRILLIC_ALLOWED = new Set([path.join(ROOT, 'scripts', 'check-docs.js')]);
 
 function sweepCyrillic(dir) {

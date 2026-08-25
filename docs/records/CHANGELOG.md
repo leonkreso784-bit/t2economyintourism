@@ -11,6 +11,38 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Ništa se nije commitalo ni bumpalo, i to nije previd:** poravnata je **baza**, a datoteke su izvor istine i već su bile ispravne (baza im je zrcalo do F4.6 flipa). Produkcija je netaknuta.
 
 ### Na grani (čeka Leonov OK za merge)
+- **🔍 2026-08-24 — revizija na Leonovo pitanje „jesi siguran da je sve dobro zapisano":
+  jedan pravi kvar (BUG-034) i šest zastarjelih tvrdnji.** Ništa od ovoga nije našao gate —
+  našlo se **zato što je netko pitao**, i to je samo po sebi nalaz.
+
+  **BUG-034 — brana za ćirilicu nije skenirala korijen.** `check:docs` tvrdi da u kodu i
+  sadržaju nema ćiriličnih znakova, a korijenske datoteke su bile nabrojane **ručno, pet imena**.
+  Propuštale su **23 datoteke**, među njima **12 × `data-*.js` (SADRŽAJ — četiri stara sem-2
+  predmeta koje ADR-015 drži u korijenu)**, `editor.html` i `sw.js` — a u `sw.js` je **stvarno
+  ležalo ćirilično slovo `U+0430`**, na produkciji, u komentaru. ⚠️ **Treći put ista greška u tri
+  tjedna:** T6 je isti ručni popis zatekao u `check:cdn` i `check:tailwind` i oba puta ga
+  **obrisao**; ovdje ga nitko nije potražio. *Kad se jedna brana pokaže bolesnom, pretraži ostale
+  za istom bolešću — pouka se ne primjenjuje sama.* Popravak: korijen se **čita s diska**.
+  Popravljena brana je **odmah pala na zatečenom stanju** i prošla tek nakon ispravka znaka.
+
+  **Šest zastarjelih tvrdnji ispravljeno:**
+  - `CLAUDE.md` — popis preflight-brana **nije spominjao `check:budget`** (u preflightu je od T6);
+    propust je moj, uređivao sam baš taj redak dodajući `check:seo`.
+  - `CLAUDE.md` — *„DANAS: javno 4, prijavljeno 0"* o phone-osnovici, koja je **prazna**; uz to
+    ostatak razmrvljene rečenice iz ranije izmjene.
+  - `CLAUDE.md` — normala trajanja suite (21,7 min / 451+72 → **19,1 min / 452+105**).
+  - spec §9.11 — *„4 × `about` čeka Leonovu odluku"*; odluka je pala i **izvršena** (§9.14).
+  - `TESTING.md` — *„21 predmet = 17 EN + 4 HR"* dok ih je **24 = 17 + 7**.
+  - `CHANGELOG` — isporuka koja je **na produkciji** stajala je pod naslovom *„Na grani (čeka
+    Leonov OK za merge)"*. Naslov je preživio vlastiti sadržaj.
+
+  **Zapisano, ne popravljeno:** `TESTING.md` nabraja spec-datoteke rukom i **18 od 46 nedostaje**
+  → `BACKLOG.md` (dopisivanje 18 imena samo obnavlja dug s novim datumom).
+
+  ⚠️ **I usput, o sebi:** pišući zapis o ćirilici **utipkao sam ćirilično `U+0430`**, i gate ga je
+  uhvatio. Zatim je pao i na *citatu* kvara — jer izraz za inline kod namjerno ne prelazi u novi
+  redak, a moj se citat prelomio. *Citat kvara mora stati u jedan redak, inače postaje kvar.*
+
 - **🧱 2026-08-24 — predstavljanje: jedna priča na tri mjesta + SEO-temelji**
   (grana `feat/about`, spec **§9.15**). Leonova odluka o smjeru: **B — oboje ravnopravno**
   (gotovo gradivo i vlastito, u istoj rečenici), javni opis **ostaje engleski**.
@@ -88,6 +120,13 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
   **Gateovi:** `preflight` EXIT 0 · `check:palette` **126 → 125** (indigo glow → `--shadow-e2`) ·
   `css:diff` 27 razlika i **sve na `#about-page`** (dokaz da CSS nije procurio; same razlike su
   neupotrebljive jer alat uzima HTML iz radnog stabla, a CSS iz `HEAD`-a — pouka T5).
+
+### ✅ DEPLOYANO 2026-08-24 — bivša grana `feat/c3-landing-cd`
+
+> ⚠️ Ovaj je unos do 2026-08-24 stajao pod naslovom **„Na grani (čeka Leonov OK za merge)"**,
+> a opisuje isporuku koja je **na produkciji**. Naslov je preživio vlastiti sadržaj — točno
+> razred greške zbog kojeg postoji `check:state` (*zastarjela ZAPOVIJED je gora od zastarjele
+> činjenice*), samo što `CHANGELOG` taj gate namjerno ne pokriva.
 
 - **🚀 2026-08-24 — FAZA TELEFON (T0–T6) + BUG-032 + KOSTUR + landing C/D NA PRODUKCIJI**
   (`2e9fff9..82f8560`, **45 commita**, `--no-ff` merge grane `feat/c3-landing-cd`).

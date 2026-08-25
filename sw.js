@@ -16,7 +16,7 @@
  * ===================================================================== */
 'use strict';
 
-const SW_VERSION = '20260825011238'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
+const SW_VERSION = '20260825014827'; // bumpan `npm run bump` (usklađen s ?v= i CONTENT_VERSION)
 const CACHE = 'sokrat-cache-' + SW_VERSION;
 
 // Minimalni precache: navigacijski shell. Ostalo se kešira runtime-om po verzioniranom URL-u
@@ -29,7 +29,7 @@ const CACHE = 'sokrat-cache-' + SW_VERSION;
 // Offline ljuska je ono što student nosi sa sobom; editor je 244 KiB alata koji offline
 // ionako ne radi (traži Supabase). Precachirati ga značilo bi vratiti ga na put svakome
 // tko aplikaciju samo otvori — dakle poništiti T6 kroz druga vrata. Stranica editora se
-// keširа tek ako je netko POSJETI (navigacija se sprema na uspješan odgovor niže).
+// kešira tek ako je netko POSJETI (navigacija se sprema na uspješan odgovor niže).
 // ⚠️ Ovo je i preduvjet faze POLICA: ondje se u ljusku dodaje SADRŽAJ, ne alat.
 const PRECACHE = ['/', '/index.html', '/styles.bundle.css?v=' + SW_VERSION, '/manifest.json'];
 

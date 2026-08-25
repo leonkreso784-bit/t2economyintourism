@@ -4,6 +4,13 @@
 > Prođi relevantni dio prije svakog deploya. Nađeš li bug → upiši ga u [BUGS.md](../records/BUGS.md).
 
 ## Automatske provjere (uvijek prvo)
+
+> ⚠️ **POPIS SPECOVA ISPOD NIJE POTPUN, i to je mjereno (2026-08-24): od 46 datoteka
+> `tests/*.spec.js` ovdje ih je imenovano 28 — 18 nedostaje.** Ne dopisuj ih naslijepo:
+> ručno održavan popis je upravo ono što je i dovelo do ovog raskoraka, a ADR-027 kaže da
+> proza nosi **zašto**, ne inventar. **Autoritativan popis je `tests/` sam** (`npx playwright
+> test --list`). Odluka što s ovim odjeljkom — generirati ga ili ga svesti na skupine — stoji
+> u `BACKLOG.md`.
 - [ ] `npm run verify` → 0 grešaka (mapiranje, datoteke, window-izvoz, **+ BUG-012 čuvar: predmet s vježbama MORA imati `content.codeScripts`**). *(alias: `verify:catalog`)*
 - [ ] `npm run validate:content [subjectId]` → 0 grešaka (shema sadržaja + quiz indeks + KaTeX currency-safe). Zaštitar generatora.
 - [ ] `npm run validate:schema [subjectId]` → 0 grešaka (STRUKTURNI JSON Schema ugovor `schema/subject-content.schema.json` nad payloadom svake lekcije; ajv, dev-dep). Nadopunjuje `validate:content` (semantiku). *(F2 2A.1)*
@@ -23,7 +30,7 @@
 - [ ] `npm run test:responsive` → pokreće Playwright (4 iPhone profila):
   - `responsive.spec.js` — Learn sekcija, 0 horizontalnog overflowa (screenshotovi u
     `test-results/learn-shots/`).
-  - `smoke.spec.js` — SVE sekcije × svih predmeta (trenutno **21** = 17 EN + 4 HR: business-informatics-hr + management-hr + sit-hr + traffic-hr): renderiranje, protok podataka
+  - `smoke.spec.js` — SVE sekcije × svih predmeta (**broj NE prepisuj ovamo** — zna ga `npm run verify`; bio je zapisan „21 = 17 EN + 4 HR" još dugo nakon što ih je bilo 24, jer se broj u prozi ne održava sam): renderiranje, protok podataka
     kroz catalog, 0 JS grešaka, 0 overflowa.
   - `katex.spec.js` — KaTeX render (learn/flashcards/quiz/fill) + currency-safety (`$NN` se ne parsira kao matematika).
   - `browse.spec.js` — drill-down navigacija (Fakultet→Smjer→Godina→Predmet) + overflow guard.
