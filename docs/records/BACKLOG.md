@@ -3,7 +3,20 @@
 > Ovdje skupljamo ideje da se ne izgube. Nije obaveza — kad ideja sazri, seli se u
 > [ROADMAP.md](../plan/ROADMAP.md) kao milestone/korak. Prioritet: 🔥 visok · ➖ srednji · 💤 nekad.
 
-## ➖ `TESTING.md` nabraja specove rukom — 18 od 46 nedostaje (izmjereno 2026-08-24)
+## ✅ RIJEŠENO 2026-08-25 — `TESTING.md` je prestao biti inventar
+
+> **Izvedena je druga opcija (skupine).** Odluku je potvrdilo mjerenje: **52 od 53 speca već
+> nosi vlastito zaglavlje**, a od 51 pojma koji je dokument imao „viška" **nijedan nije
+> postojao samo ondje** — dakle nije se imalo što izgubiti. Dokument je **41 142 → 12 988
+> znakova**. Brojka „46" iz naslova ispod bila je usput i **sama zastarjela: datoteka ih je 53**.
+> Nova brana: **7. provjera u `check:docs` — duh-datoteka** (imenovana datoteka mora postojati),
+> i ona mjeri **samo dokumente koji tvrde kako JEST** (`workflow/`, `architecture/`, `CLAUDE.md`);
+> `records/` je povijest, a `plan/`/`subjects/` imenuju hipoteze — prva verzija je to kaznila i
+> **7 od 7 njezinih nalaza bili su lažni**.
+
+<details><summary>izvorni zapis stavke</summary>
+
+### `TESTING.md` nabraja specove rukom — 18 od 46 nedostaje (izmjereno 2026-08-24)
 
 > Nađeno revizijom na Leonovo pitanje *„jesi siguran da je sve dobro zapisano"* — dakle ne
 > gateom, nego time što je netko pitao. To je samo po sebi nalaz.
@@ -23,6 +36,8 @@ kaže da proza nosi **zašto**, a inventar živi u kodu. Dvije opcije:
 
 Preporuka je druga: popis od 46 imena nitko ne čita, a ono što se doista treba zapisati je
 zašto neka brana postoji — a to već stoji u zaglavlju svakog speca.
+
+</details>
 
 ## ➖ Katalog je tražilici NEVIDLJIV — hash-rute nisu URL-ovi (izmjereno 2026-08-24)
 

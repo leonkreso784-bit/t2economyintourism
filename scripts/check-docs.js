@@ -258,6 +258,48 @@ if (fs.existsSync(CLAUDE_MD)) {
   }
 }
 
+// ── 7) DUH-DATOTEKE ───────────────────────────────────────────────
+// Mrtva poveznica (provjera 1) hvata `[tekst](put.md)`. Ovo hvata drugu polovicu istog
+// kvara: datoteku imenovanu u `backtickovima` — `tests/foo.spec.js`, `scripts/bar.js` —
+// koja je u međuvremenu preimenovana ili obrisana. Povod: `TESTING.md` je držao ručni
+// inventar specova; kad je 2026-08-25 sveden na skupine, jedina provjera koja je ostala
+// moguća jest da ono što JEST imenovano stvarno postoji. Duhova je tada bilo 0 — brana
+// čuva to stanje, umjesto da se popis održava napamet.
+//
+// ⚠️ MJERI SE SAMO ONDJE GDJE JE IMENOVANJE TVRDNJA O DISKU — `docs/workflow/`,
+// `docs/architecture/` i `CLAUDE.md`. Prva verzija je gledala SVE dokumente i odmah
+// prijavila 7 „duhova" od kojih **nijedan nije bio kvar**: `docs/records/` je povijest
+// (ondje je `css/responsive.css` točan opis onoga što je tada postojalo — isti razlog
+// zbog kojeg `check:state` namjerno preskače CHANGELOG/PROGRESS), a `docs/plan/` i
+// `docs/subjects/` imenuju **hipoteze** — `js/stat-kernel.js` ondje stoji pod naslovom
+// „zašto NE". *Brana koja kažnjava precizno pisanje o odbačenoj opciji uči ljude da
+// pišu neodređeno.*
+//
+// ⚠️ Preskaču se i uzorci s `<`, `*` i `?` (npr. `data/<subj>-hr/`) — placeholderi.
+const PATH_RE = /`((?:js|css|tests|scripts|data|schema|supabase|assets)\/[A-Za-z0-9._/-]+\.[a-z]{2,5})`/g;
+const duhovi = [];
+const TVRDI_O_DISKU = (f) => {
+  const r = rel(f);
+  return r === 'CLAUDE.md' || r.indexOf('docs/workflow/') === 0 ||
+         r.indexOf('docs/architecture/') === 0;
+};
+allMd.filter(TVRDI_O_DISKU).forEach((f) => {
+  const src = fs.readFileSync(f, 'utf8');
+  let m;
+  while ((m = PATH_RE.exec(src)) !== null) {
+    const cilj = m[1];
+    if (/[<>*?]/.test(cilj)) continue;
+    if (!fs.existsSync(path.join(ROOT, cilj))) {
+      duhovi.push(rel(f) + '  →  ' + cilj);
+    }
+  }
+});
+if (duhovi.length) {
+  const jedinstveni = Array.from(new Set(duhovi)).sort();
+  problems.push('DUH-DATOTEKA (' + jedinstveni.length + ')' +
+    jedinstveni.map((d) => '\n      • ' + d).join(''));
+}
+
 // ── izvještaj ───────────────────────────────────────────────────────
 console.log('\n=== check:docs ===');
 console.log('  .md dokumenata : ' + allMd.length);

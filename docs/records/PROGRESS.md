@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-25 (OPUS, nastavak) — **`TESTING.md`: inventar van, skupine unutra**
+
+Leon: *„ovu sesiju samo koristimo da pripremimo dokumentaciju za daljnji rad."* Sljedeći zapisani
+dug bio je `TESTING.md`, i to je **isti kvar kao BUG-034, samo u prozi**: ručno održavan popis.
+
+⚠️ **Mjeru sam morao ispraviti DVAPUT, i oba puta iz istog razloga — nije odgovarala strukturi
+koju mjeri.** Prvo sam znanje speca tražio samo u njegovoj datoteci, a `phone`/`reachability`
+ga drže **u svojim helperima** (`tests/helpers/*.js`) → 14 lažnih nalaza. Zatim je pet pojmova
+ispalo „jedinstveno" samo zbog **zapisa** (`600 px` vs `600`, `isAdmin()=false` vs
+`isAdmin() = false`). *Kad mjera i struktura ne odgovaraju jedna drugoj, dobiješ točan broj o
+krivoj stvari.*
+
+**Rezultat:** 41 142 → 12 988 znakova. Brojevi testova izbačeni iz proze (zna ih runner).
+Nova 7. provjera u `check:docs` (duh-datoteka), sužena nakon što je njezina prva verzija dala
+**7 lažnih nalaza** — `records/` je povijest, `plan/` su hipoteze.
+
+
 ## 2026-08-25 (OPUS) — **skraćivanje `CLAUDE.md`: A (stanje) + B (komande)**
 
 Leon je primijetio duljinu i **izričito tražio da se ništa ne radi dok se ne dogovori**

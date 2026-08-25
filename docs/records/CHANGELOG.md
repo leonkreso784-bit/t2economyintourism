@@ -5,6 +5,30 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-25 (OPUS) — **`TESTING.md` je prestao biti inventar (−68 %)**
+
+Nastavak istog posla: nakon `CLAUDE.md`, isti kvar u drugom dokumentu — **ručno održavan popis
+datoteka**. Zapisano je bilo *„od 46 specova imenovano 28"*; **prebrojano danas: 53 na disku,
+35 imenovanih** — dakle i sama brojka u upozorenju bila je zastarjela.
+
+**Odluka (druga od dvije zapisane opcije): SKUPINE.** Potvrdilo ju je mjerenje — **52 od 53
+speca već nosi vlastito zaglavlje** s poviješću i metodom, a od 51 pojma koji je dokument imao
+„viška" **nijedan nije postojao samo ondje**. Dokument **41 142 → 12 988 znakova**; ostalo je
+ono što je operativno (koje naredbe, čime su uvjetovane, što smije dirati koju bazu) plus
+tablica **skupina** s ulaznim točkama za čitanje.
+
+⚠️ **Brojevi testova su izbačeni iz proze** (*„ukupno `test:authed` = 89"*) — njih zna runner.
+Isti razred greške koji je taj dokument već imao s brojem predmeta („21" dok ih je bilo 24).
+
+**Nova, 7. provjera u `check:docs`: DUH-DATOTEKA** — datoteka imenovana u `backtickovima` mora
+postojati. ⚠️ **Prva verzija je gledala sve dokumente i dala 7 nalaza od kojih je 7 bilo lažnih:**
+`records/` je povijest (ondje je obrisana datoteka **točan** opis onoga što je tada postojalo),
+a `plan/`/`subjects/` imenuju hipoteze — `js/stat-kernel.js` ondje stoji pod naslovom *„zašto NE"*.
+*Brana koja kažnjava precizno pisanje o odbačenoj opciji uči ljude da pišu neodređeno.* Sužena je
+na dokumente koji tvrde **kako JEST**; obrnuto provjerena (podmetnute dvije nepostojeće datoteke
+→ pada s oba imena).
+
+
 ## 2026-08-25 (OPUS) — **`CLAUDE.md` je skraćen za 64 %, i to mjerenjem a ne škarama**
 
 Leon: *„mislim da nam je claude.md postao malo pre dug… ne radimo nista dok pametno to
