@@ -238,6 +238,26 @@ if (fs.existsSync(SCHEMA) && fs.existsSync(CS)) {
   }
 }
 
+// ── 6) CLAUDE.md ima BUDŽET ───────────────────────────────────────
+// Ta se datoteka učitava SVAKU sesiju, pa je njezina duljina trošak koji plaća svaki rad.
+// Do 2026-08-25 je narasla na **88 000 znakova**, i to ne slučajno: svaka je cigla dopisala
+// svoju pouku ovamo *i* u spec, pa je 61 % datoteke bila povijest GOTOVIH cigli — druga kopija
+// onoga što spec već ima (ADR-027: jedna činjenica = jedno mjesto).
+//
+// ⚠️ Brana NE zabranjuje pisanje nego RAST: pouka cigle ide u spec, a `CLAUDE.md` dobiva
+// najviše jedan redak s pointerom. Obrazac je posuđen od `check:palette` — osnovica se
+// **spušta svjesno** (uredi konstantu ispod i reci zašto), a nikad ne raste prijećutno.
+const CLAUDE_BUDGET = 33000; // znakova; 2026-08-25: izmjereno 31 349 nakon rezanja (bilo 87 970)
+const CLAUDE_MD = path.join(ROOT, 'CLAUDE.md');
+if (fs.existsSync(CLAUDE_MD)) {
+  const vel = fs.readFileSync(CLAUDE_MD, 'utf8').length;
+  if (vel > CLAUDE_BUDGET) {
+    problems.push('CLAUDE.md PREKO BUDŽETA   ' + vel + ' > ' + CLAUDE_BUDGET + ' znakova' +
+      '\n      → pouka cigle ide u `docs/plan/*` ili u zaglavlje skripte, ovdje ostaje POINTER.' +
+      '\n      → ako je rast opravdan, podigni CLAUDE_BUDGET u scripts/check-docs.js I zapiši zašto.');
+  }
+}
+
 // ── izvještaj ───────────────────────────────────────────────────────
 console.log('\n=== check:docs ===');
 console.log('  .md dokumenata : ' + allMd.length);

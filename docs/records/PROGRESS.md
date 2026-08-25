@@ -5,6 +5,37 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-25 (OPUS) — **skraćivanje `CLAUDE.md`: A (stanje) + B (komande)**
+
+Leon je primijetio duljinu i **izričito tražio da se ništa ne radi dok se ne dogovori**
+(*„ne radimo nista dok pametno to ne iskordiniramo i dogovorimo"*). Zato je prvo išla **analiza
+s brojkama**, pa četiri opcije, pa njegov *„super plan idemo"*.
+
+**Što je mjerenje pokazalo:** 2,8 % datoteke su pravila, 61,5 % je „Stanje", a **77 % „Stanja"
+su GOTOVE cigle**. Osam nasumično uzetih pouka iz tih blokova nađeno je u specu — **8 od 8**.
+
+⚠️ **Prva mjera pokrivenosti bila je kriva i ispravljena je prije nego što je išta obrisano.**
+Tražila je doslovan prijepis pa je davala 0 % za blokove koje spec opisuje drukčijim riječima —
+*mjera koja ne odgovara tvrdnji proizvodi lažne nalaze, i to baš ondje gdje je cijena brisanje
+znanja.* Druga mjera (pojmovi umjesto rečenica): 513 pojmova, 14 sumnjivih, svih 14 ručno
+provjereno i svih 14 lažnih.
+
+**A:** „Stanje" je zadržalo samo ono što vrijedi SAD — što je na produkciji (pointer, ne SHA),
+što je gotovo a nedeployano, što **nije presuđeno**, tvrde odluke o deployu, tri otvorena
+pitanja, i stalne činjenice. Sve pouke cigli izašle su u spec, koji ih ionako ima.
+⚠️ Zadržana su **živa ograničenja** koja su iz gotovih cigli ostala na snazi (svijetla tema,
+nepromjenjiv znak, „broj predmeta se nikad ne piše rukom", `esc` u `innerHTML`, telefon kao
+mjerena površina) — *gotova cigla i mrtvo pravilo nisu isto.*
+
+**B:** „Komande" su izgubile eseje jer **svaka brana svoj „zašto" već nosi u zaglavlju vlastite
+skripte** (1,7–2,8 KB po skripti) — provjereno po naredbi, ne napamet. Ostala je tablica:
+što tvrdi · vrti li se u preflightu · treba li mrežu ili preglednik.
+
+**Rezultat:** 591 → 323 retka, 87 970 → 31 349 znakova (**−64 %**). Gateovi: `check:docs`,
+`check:state` i `preflight` zeleni; bump nije trebao (dirani samo `.md` i jedna skripta bez
+utjecaja na isporučeni kod).
+
+
 ## 2026-08-24 (OPUS, još kasnije) — **cigla `about`: phone-osnovica je prvi put PRAZNA**
 
 Leon: *„mozes krenuti svaka cast na svemu za sada polako, mirno i strpljivo."* Grana

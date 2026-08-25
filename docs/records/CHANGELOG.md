@@ -5,6 +5,39 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-25 (OPUS) — **`CLAUDE.md` je skraćen za 64 %, i to mjerenjem a ne škarama**
+
+Leon: *„mislim da nam je claude.md postao malo pre dug… ne radimo nista dok pametno to
+ne iskordiniramo."* Izmjereno prije ijednog prijedloga, pa izvedeno po dogovorenom planu.
+
+**Nalaz koji je odredio rez:** datoteka se učitava **svaku sesiju**, a **pravila koja se
+MORAJU poštovati zauzimala su 2,8 %** od 88 000 znakova. Sekcija „Stanje" je bila **61,5 %**,
+i **77 % nje je bila povijest GOTOVIH cigli** (K1–K4a, T0–T6, C0–C3, landing) — dakle **druga
+kopija** onoga što spec §7–§9 već ima, u datoteci koja na dnu sama piše *„povijest NIJE ovdje"*
+(ADR-027).
+
+**Uvjet koji je postavljen prije brisanja: ništa se ne briše dok se ne dokaže da postoji
+drugdje.** Prva mjera je bila **kriva i to se vidjelo odmah** — tražila je doslovan prijepis
+(45-znakovnu jezgru rečenice), pa je blok koji spec opisuje **drugim riječima** dobivao 0 %.
+*Mjera mora odgovarati tvrdnji: tvrdnja nije bila „prepisano je" nego „znanje postoji drugdje".*
+Druga mjera traži **pojmove** (identifikatori, datoteke, mjere s jedinicom): od **513 pojmova**
+u „Stanju" njih **499 je odmah nađeno drugdje**, a preostalih **14 je ručno provjereno** i svih
+14 su bili lažni promašaji (razmak u `max-height: 700px`, SHA u gitu, U+0421 u CHANGELOG-u).
+
+**Isporučeno:** „Stanje" **54 134 → 10 945** znakova · „Komande" **20 553 → 6 189** (obrazloženja
+brana ostaju **u zaglavljima svojih skripti**, gdje stoje uz kod koji ih provodi) ·
+`CLAUDE.md` **87 970 → 31 349 znakova, 591 → 323 retka**.
+
+**Dvije stvari su PRESELILE, nisu obrisane:** pouka *„zeleno lokalno nije zeleno"* (jedina koja
+nije postojala nigdje drugdje) → `docs/workflow/TESTING.md`; politika točnog pinanja ovisnosti →
+**pravilo #9**, jer to nije naredba nego zabrana.
+
+**Nova, 6. provjera u `check:docs`: `CLAUDE.md` ima BUDŽET** (33 000 znakova, osnovica
+izmjerena). Ne zabranjuje pisanje nego **rast**: pouka cigle ide u spec, ovdje ostaje pointer.
+Obrazac je posuđen od `check:palette` — osnovica se spušta svjesno, nikad ne raste prešutno.
+Obrnuto provjerena (spušten prag → pada s točnom porukom).
+
+
 ### Radnje na produkcijskoj bazi (bez koda, ništa se ne deploya)
 - **🗄️ 2026-08-21 — `macroeconomics` re-syncan; ćirilični uljez u kartici ugašen.** Leon pokrenuo `node scripts/migrate-content.js macroeconomics` (skripta traži `service_role`, a taj put je Claudeu blokiran — zato ručna radnja). U bazi je `goodsMarket.flashcards[5].answer` na 207. znaku imao **ćirilično `С` (U+0421)** umjesto latiničnog `C` (U+0043) — ista duljina (246), oku identično, ali pretraga po „MPC" tu karticu **nije nalazila**, a `diff:db` je zbog toga trajno šumio. Pogađalo je `macroeconomicsM1` i `macroeconomicsFinal`; `macroeconomicsM2` je već bio ispravan. **Poslije: `diff:db macroeconomics` 3/3 identično, `check:final` 16/16.**
   ⚠️ **Zapisuje se zbog redoslijeda, ne zbog znaka.** `migrate-content.js` radi **upsert = piše PREKO baze**, a admin kroz Studio smije uređivati živi sadržaj → re-sync naslijepo može pojesti tuđu izmjenu, a `content_versions` je **audit, ne undo**. Radnja je zato imala tri koraka i **samo je zadnji pisao**: `diff:db` (dokaz da živih edita nema — razlika je bila **ista kao pri mjerenju 11 dana ranije**) → `--dry` (dokaz da su brojke očekivane: 69532 / 57633 / 138627 B) → prava naredba. *Provjera prije upisa je jeftinija od bilo kakvog oporavka poslije njega* — vrijedi za svaki sljedeći re-sync bilo kojeg predmeta.

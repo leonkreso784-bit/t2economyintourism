@@ -139,6 +139,37 @@
   3. Tek kad je zeleno i pregledano → merge u `main` (= produkcijski deploy) **uz izričitu potvrdu korisnika**.
 - **Lokalno prije pusha** (da CI ne bude crven): pokreni isti lanac ručno (`validate:content` → `verify` → `test:unit` → `npx playwright test`).
 
+
+## ⚠️ ZELENO LOKALNO NIJE ZELENO (2026-08-24)
+
+> Preseljeno iz `CLAUDE.md` 2026-08-25 (cigla B skraćivanja): ovo je **pravilo o testiranju**,
+> pa mu je mjesto ovdje, a ne u datoteci koja se učitava svaku sesiju.
+
+**Windows i Linux ne crtaju isti font istom širinom (~4 px)** — i to je dovoljno da **brana
+promijeni ishod bez ijedne promjene u proizvodu**.
+
+U jednom pushu je to naplaćeno **tri puta**:
+
+1. **Marker landinga** se lomio preko dva retka. T5 je `nowrap` odbacio **bez mjerenja**; sonda
+   je poslije pokazala da fraza troši **58 % stupca** i da prelijevanja nema do **1,9×**.
+2. **Phone-osnovica** je **poznat nalaz brojala kao nov**, jer joj je izmjerena brojka bila
+   **u imenu kante**.
+3. **Landing je na 320 px prolazio sa zalihom od 21 px = 3,7 % ekrana.**
+   *Tvrdnja koja prolazi s 3,7 % rezerve ne mjeri ispravnost nego sreću.*
+
+**Iz toga dvije trajne obveze:**
+
+- **CI je jedini sudac za mjere ovisne o crtaču** (širine, prelomi, odrezanost). Zeleno na
+  Windowsu nije dokaz.
+- **Nova tvrdnja o rasporedu traži sondu sa širim slovima** prije nego se proglasi gotovom —
+  inače mjeri font razvojnog stroja, ne pravilo.
+
+**Kako se čitaju padovi u CI-ju.** Playwright ondje vrti `github` reporter (uključen samo uz
+`process.env.CI`), pa padovi izlaze kao **anotacije**. Bez toga se ime palog testa dobiva samo
+iz artefakta od **87 MB** koji traži prijavu — a svaki pokušaj košta rundu od **~18 min**.
+⚠️ **GitHubov javni API ima 60 zahtjeva/h** — ne provjeravati CI u petlji, inače ostaneš bez
+očitanja baš kad ti treba.
+
 ## Smoke test (uvijek, ~2 min)
 - [ ] Stranica se učita bez greške u konzoli (F12 → Console).
 - [ ] Landing → "Start Studying" otvara **drill-down browse** (Fakultet→Smjer→Godina→Predmet).
