@@ -690,6 +690,11 @@ hijerarhiju).
   0 loših fill. `CONTENT_VERSION` 20260618→20260619 + bump `content-loader.js?v=20260619`. Verify 0, Playwright 36/36.
 - Lekcija: fill-blank token je **fiksnih 7 podvlaka** — bilo koji drugi broj tiho razbije render.
   Strukturni audit (`includes('_______')`) treba pokretati pri svakoj content-izmjeni; sad je dio rutinske revizije.
+- **➕ 2026-08-25 (D1): razred greške je zatvoren, ali na DVA različita mjesta** — jer postoje dva
+  puta do podatka. **Iz editora** je nemoguć: praznina se ubacuje gumbom, a ručno utipkan niz od
+  **3+ podvlake** se poravnava na 7 (jedna i dvije se ne diraju — LaTeX indeks). **Iz ručno pisane
+  `data/*.js`** i dalje je moguć, ali ga hvata `npm run validate:schema` (`pattern: "_______"`).
+  *Popravak u sučelju ne pokriva put koji sučelje zaobilazi.*
 
 ### BUG-001 — Slomljen CSS: nedovršeno pravilo `.quiz-section, .fill-section,`
 - Status: ✅ riješen · Težina: visok · Datum: 2026-06-01

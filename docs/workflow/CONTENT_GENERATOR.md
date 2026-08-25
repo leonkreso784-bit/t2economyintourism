@@ -41,6 +41,7 @@ Generator i Blok B gledaju u isti šav → ništa se ne radi dvaput.
 `data-*.js` SAMO-`window` i nove `data/<subj>/*.js` `window`+`module.exports`). Validira svaku kategoriju:
 - `name`/`icon`(fa-)/`color`(#rrggbb) obavezni
 - flashcard: `question`+`answer`; quiz: `options` 2–6 + valjan `correct` indeks; fillBlank: `_______` + `answer`
+  (od 2026-08-25 shema zna i `answers` za **više praznina** — generator ih **ne radi**, piše jednu)
 - `learn.content` neprazan HTML; `image` opcionalan (`null`/`''`/undefined = nema slike)
 - **KaTeX currency-safe:** uravnoteženi `\(`/`\)`, `\[`/`\]`, paran `$$`. **⚠ Negative-lookbehind `(?<!\\)`**
   da `\\[2pt]` (LaTeX prijelom retka u `aligned`) NE broji kao display-delimiter `\[` (ulovljen bug pri izradi).

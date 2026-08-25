@@ -179,7 +179,10 @@ ispuni ide kroz token, nikad `color: white`.
 
 ### ② Dopune — ⛔ NE rješavati jednom podvlakom (ovo je mina)
 
-Editor danas traži **točno 7 podvlaka** (`_______`) da prepozna prazninu. Leon: nije user-friendly,
+> **✅ ISPORUČENO 2026-08-25 (D1 + D2).** Nalaz ispod ostaje jer objašnjava **zašto je izvedeno
+> baš tako**, a ne kako je predloženo. Tekst je pisan dok je stanje još bilo zatečeno.
+
+Editor je do D1 tražio **točno 7 podvlaka** (`_______`) da prepozna prazninu. Leon: nije user-friendly,
 neka bude dovoljna jedna `_`, ili neka praznina bude vidljiv element koji se povlači i u koji se
 upiše odgovor; i neka ih se može staviti više.
 

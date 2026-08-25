@@ -3229,6 +3229,14 @@ Cigla koja to ne zna izgubit će sat vremena na „neobjašnjiv" crveni gate:
 - **`check:seo`** traži da `<title>`/`og:`/`twitter:` ostanu **jedan tekst** — cigla koja dira
   landing mora promijeniti **sva četiri mjesta ili nijedno**.
 
+#### ➕ Što je C5a naslijedila poslije (2026-08-25)
+
+Cigle **D1/D2** (dopune) su u `css/fill-blanks-section.css` ostavile **polje U REČENICI**
+(`.fill-blank-input`, isprekidana crta u akcentu, `is-ok`/`is-bad`). C5a to **prepisuje zajedno s
+ostatkom** — ne kao zaseban posao. Uz to ondje i dalje čeka **① boja mijenja samo rub**
+(`BACKLOG.md` §EDITOR): tinta je 10 %, kod kartica ispune **nema**, a alat za čitljiv tekst na
+punoj tinti (`--color-on-tint-*` + `tests/tint-ink.spec.js`) **već postoji**.
+
 #### Što je odlučeno, a što nije
 
 **Odlučeno:** redoslijed **POLICA (P1–P4) → C4 → C5a → C5b → C6 → C7**; K4 se utapa u P2;

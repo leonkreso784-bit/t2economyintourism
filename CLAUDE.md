@@ -159,9 +159,12 @@ generator predmeta: `docs/workflow/CONTENT_GENERATOR.md`.
 **landing C+D** · prije toga C0–C3 i sve starije. Točan SHA/token/Vercel-ref se **namjerno ne
 prepisuje** ovamo (ADR-027) — zna ih zadnji **🚀** redak CHANGELOG-a.
 
-**✅ GOTOVO, NIJE DEPLOYANO** — grana `feat/about`: cigla **`about`** (spec §9.14) i
-**PREDSTAVLJANJE + SEO-temelji** (§9.15). Time je **phone-osnovica PRVI PUT PRAZNA** — brana od
+**✅ GOTOVO, NIJE DEPLOYANO** — grana `feat/about`: cigle **`about`** (spec §9.14),
+**PREDSTAVLJANJE + SEO-temelji** (§9.15) te **D1 + D2** (dopune: praznina se ubacuje **gumbom**,
+rečenica smije imati **više praznina**). Time je **phone-osnovica PRVI PUT PRAZNA** — brana od
 tada traži **nulu**; trenutnu brojku zna `tests/phone-baseline.json`, ne ova proza.
+⚠️ **Iz D2 ostaje živo pravilo:** `answer` je obavezan i drži **prvi** odgovor i kad postoji
+`answers` — zbog **keširane stare skripte**, ne zbog urednosti sheme.
 
 **🔵 SLJEDEĆE NIJE PRESUĐENO.** Spec nudi **POLICU (P1–P4)** (T6 joj je bio preduvjet, ispunjen),
 iza nje **C4 → C5a → C5b → C6 → C7**.

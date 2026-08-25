@@ -116,6 +116,7 @@ Ovo je nastalo jer smo istu ciglu pisali u **četiri** dokumenta, pa ih onda tri
 | Dokument | Svrha |
 |---|---|
 | [ideas/HOTEL_SIM.md](./ideas/HOTEL_SIM.md) | **Simulacija vođenja hotela** — poslovna igra za FMTU (zaseban proizvod, posuđeni Sokratovi primitivi). Materijal za prijedlog dekanu + kandidat za diplomski. |
+| [ideas/MODULI.md](./ideas/MODULI.md) | **ES moduli bez build-koraka** — `js/` sloj nema nijedan `import`/`export`, pa je graf ovisnosti ručno održavan u dvije `.html` datoteke. Argument + mjere + zašto `bump` (ADR-017) ostaje netaknut. Radi se **tek nakon C7**. |
 
 ## `archive/` — ispunjeno i napušteno
 
