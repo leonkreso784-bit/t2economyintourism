@@ -215,6 +215,13 @@ to pitanje: koliko je podvlaka postaje nevažno.
 **Rez: dvije cigle, ne jedna.** ① autorstvo praznine (sučelje editora, malo) · ② više praznina
 (shema + ocjenjivanje + renderer, vlastita cigla).
 
+> **✅ ① ISPORUČENO 2026-08-25 (cigla D1)** — gumb „Ubaci prazninu" (označena riječ → praznina +
+> odgovor), tolerancija za 3+ ručno utipkane podvlake, i **odbijanje druge praznine** koja se
+> dosad dala spremiti a nije radila. Granica **3+** je namjerna: jedna i dvije podvlake su LaTeX.
+> Brana: `tests/unit/fill-blank-format.test.js` (mjeri pravu KaTeX-rečenicu iz kataloga).
+> **➖ ② (više praznina) OSTAJE** — traži `answers` u shemi, ocjenjivanje po praznini i renderer
+> koji mijenja SVA pojavljivanja.
+
 ## ✅ TELEFON JE ISPORUČEN · ➖ POLICA OSTAJE — (Leon na iPhoneu 16, 2026-08-19/20)
 
 > **STATUS 2026-08-25:** faza **„TELEFON" (T0–T6) je gotova i NA PRODUKCIJI** od 2026-08-24,

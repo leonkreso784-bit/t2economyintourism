@@ -5,6 +5,24 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-25 (OPUS) — **D1: praznina se UBACUJE, ne tipka** (editor dopuna)
+
+Editor je od autora tražio da utipka **točno 7 podvlaka** — dakle **format pohrane, prikazan kao
+uputa**. Sada u modalu stoji gumb **„Ubaci prazninu"**: označena riječ postaje praznina **i**
+ponuđeni odgovor (ako je polje odgovora prazno), bez odabira praznina ide na mjesto pokazivača.
+
+⚠️ **Leonov prijedlog „neka bude dovoljna jedna `_`" NIJE izveden doslovno, i to je glavni nalaz
+cigle.** U LaTeX-u je `_` operator indeksa, a dopune renderiraju matematiku: od **1005** rečenica
+s dopunom **5** sadrži KaTeX, a u jednoj stoji `\(Q_d = Q_s\)` → doslovno pravilo pretvorilo bi
+`Q_d`/`Q_s` u praznine. Zato se **poravnavaju samo nizovi od 3+ podvlake**; jedna i dvije se ne
+diraju. Test `tests/unit/fill-blank-format.test.js` mjeri **pravu rečenicu iz kataloga**, a
+obrnuta provjera (`/_{1,}/`) ju je uredno slomila u `Q_______d`.
+
+**Usput zatvorena tiha rupa:** druga se praznina dosad dala **spremiti**, a nije radila —
+renderer mijenja samo **prvo** pojavljivanje, a `answer` je jedan string. Sada se odbija s
+porukom. Više praznina ostaje **zasebna cigla** (traži `answers` u shemi + ocjenjivanje po praznini).
+
+
 ## 2026-08-25 (OPUS) — **plan je pripremljen za C4–C7: brojke se od sada MJERE** (`npm run css:debt`)
 
 Tablica cigli §3 nosila je *„`subject-selector.css` (**49 `!important`**)"* i *„`responsive/*`

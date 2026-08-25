@@ -121,9 +121,12 @@
     // F4.4 — fill-in-the-blank editing
     'admin.fill': { en: 'Fill blanks', hr: 'Dopune' },
     'admin.editFill': { en: 'Edit fill-in-the-blank', hr: 'Uredi dopunjavanje' },
-    'admin.sentence': { en: 'Sentence (use _______ for the blank)', hr: 'Rečenica (koristi _______ za prazninu)' },
+    'admin.sentence': { en: 'Sentence', hr: 'Rečenica' },
+    'admin.insertBlank': { en: 'Insert blank', hr: 'Ubaci prazninu' },
+    'admin.insertBlankHint': { en: 'Select a word — it becomes the blank and the answer.', hr: 'Označi riječ — postaje praznina i odgovor.' },
     'admin.fillEmptyErr': { en: 'Sentence and answer must not be empty.', hr: 'Rečenica i odgovor ne smiju biti prazni.' },
-    'admin.fillBlankErr': { en: 'The sentence must contain the blank (_______).', hr: 'Rečenica mora sadržavati prazninu (_______).' },
+    'admin.fillBlankErr': { en: 'The sentence needs a blank — select a word and press the button.', hr: 'Rečenici treba praznina — označi riječ i pritisni gumb.' },
+    'admin.fillOneBlankErr': { en: 'Only one blank per sentence for now.', hr: 'Zasad je moguća samo jedna praznina po rečenici.' },
     'admin.fillSaveOk': { en: 'Sentence saved.', hr: 'Rečenica spremljena.' },
     // F4.4 — learn editing
     'admin.learn': { en: 'Learn', hr: 'Učenje' },

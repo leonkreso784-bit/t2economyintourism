@@ -10084,6 +10084,21 @@ sokrat-modal.auth-modal > * {
   justify-content: flex-end;
   gap: 0.6rem;
 }
+.admin-edit__tools {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: -0.5rem 0 0.9rem;
+}
+.admin-edit__tool {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+}
+.admin-edit__toolhint {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
 .admin-subhead {
   margin: 1rem 0 0;
   font-size: 0.8rem;

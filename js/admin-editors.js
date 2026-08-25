@@ -507,6 +507,48 @@ function _saveQuiz() {
 
 const _FILL_BLANK = '_______'; // 7 podvlaka — mora se poklapati sa schemom (fillBlank.sentence.pattern)
 
+// ── D1 (2026-08-25): PODVLAKA JE FORMAT POHRANE I NE TRAŽI SE OD AUTORA ─────────
+// Editor je dosad tražio da autor utipka točno 7 podvlaka, dakle ono što baza sprema.
+// Sada se praznina UBACUJE GUMBOM (označi riječ → postane praznina i ponuđeni odgovor).
+//
+// ⚠️ Tolerira se samo niz od 3+ podvlake; JEDNA I DVIJE SE NE DIRAJU. Razlog nije stil nego
+// LaTeX: `_` je operator indeksa, a rečenice s dopunom renderiraju matematiku (js/fill-blanks.js).
+// Izmjereno u `data/`: 1005 rečenica s dopunom, 5 ih sadrži KaTeX — u jednoj stoji
+// `\(Q_d = Q_s\)`, koji bi po pravilu „jedna podvlaka = praznina" postao DVIJE praznine.
+
+/** Nizovi od 3+ podvlake → kanonski marker. `Q_d` i `x__y` ostaju netaknuti. */
+function _fillNormalize(text) {
+  return String(text == null ? '' : text).replace(/_{3,}/g, _FILL_BLANK);
+}
+
+/** Koliko praznina rečenica ima (nakon normalizacije). */
+function _fillCount(text) {
+  return _fillNormalize(text).split(_FILL_BLANK).length - 1;
+}
+
+/**
+ * ČISTA funkcija (bez DOM-a → testabilna): ubaci prazninu preko raspona [start, end).
+ * Vraća { text, caret, word }; `word` je označena riječ = kandidat za odgovor ('' ako nije bilo odabira).
+ */
+function _fillInsert(text, start, end) {
+  const s = String(text == null ? '' : text);
+  let a = Math.max(0, Math.min(s.length, start | 0));
+  let b = Math.max(0, Math.min(s.length, end | 0));
+  if (a > b) { const t = a; a = b; b = t; }
+  return {
+    text: s.slice(0, a) + _FILL_BLANK + s.slice(b),
+    caret: a + _FILL_BLANK.length,
+    word: s.slice(a, b).trim()
+  };
+}
+
+// Izvoz za node-test (tests/unit/fill-blank-format.test.js); u pregledniku bezopasno.
+if (typeof window !== 'undefined') {
+  window.SokratFillFormat = {
+    MARK: _FILL_BLANK, normalize: _fillNormalize, count: _fillCount, insert: _fillInsert
+  };
+}
+
 /** Fill koji se uređuje: { catId, idx }. */
 let _fillTarget = null;
 
@@ -521,8 +563,13 @@ function _ensureFillModal() {
     '<div class="admin-edit__card">' +
     '  <button type="button" class="admin-edit__close" data-admin-fill-close aria-label="Close">&times;</button>' +
     '  <h3 id="adminFillTitle" class="admin-edit__title"><i class="fas fa-pen"></i> ' + _adminT('admin.editFill', 'Edit fill-in-the-blank') + '</h3>' +
-    '  <label class="admin-edit__field"><span>' + _adminT('admin.sentence', 'Sentence (use _______ for the blank)') + '</span>' +
+    '  <label class="admin-edit__field"><span>' + _adminT('admin.sentence', 'Sentence') + '</span>' +
     '    <textarea id="adminFillS" class="admin-edit__input" rows="3"></textarea></label>' +
+    '  <div class="admin-edit__tools">' +
+    '    <button type="button" class="cta-button secondary admin-edit__tool" id="adminFillBlankBtn">' +
+    '      <i class="fas fa-square-minus"></i><span>' + _adminT('admin.insertBlank', 'Insert blank') + '</span></button>' +
+    '    <span class="admin-edit__toolhint">' + _adminT('admin.insertBlankHint', 'Select a word — it becomes the blank and the answer.') + '</span>' +
+    '  </div>' +
     '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
     '    <textarea id="adminFillA" class="admin-edit__input" rows="2"></textarea></label>' +
     '  <p class="admin-edit__note" id="adminFillNote"></p>' +
@@ -538,7 +585,26 @@ function _ensureFillModal() {
   });
   const saveBtn = document.getElementById('adminFillSave');
   if (saveBtn) saveBtn.addEventListener('click', _saveFill);
+  const blankBtn = document.getElementById('adminFillBlankBtn');
+  if (blankBtn) blankBtn.addEventListener('click', _insertFillBlank);
   return m;
+}
+
+/**
+ * Gumb „Ubaci prazninu": označena riječ → praznina, i (ako je polje odgovora prazno) postaje odgovor.
+ * Bez odabira → praznina ide na mjesto pokazivača. Textarea pamti `selectionStart` i nakon blura,
+ * pa klik na gumb ne gubi mjesto.
+ */
+function _insertFillBlank() {
+  const sEl = document.getElementById('adminFillS');
+  const aEl = document.getElementById('adminFillA');
+  if (!sEl) return;
+  const r = _fillInsert(sEl.value, sEl.selectionStart, sEl.selectionEnd);
+  sEl.value = r.text;
+  if (r.word && aEl && !aEl.value.trim()) aEl.value = r.word;
+  sEl.focus();
+  try { sEl.setSelectionRange(r.caret, r.caret); } catch (e) { /* stariji preglednik */ }
+  _fillStatus('', false);
 }
 
 function _fillStatus(msg, isErr) {
@@ -587,12 +653,17 @@ function _saveFill() {
   const aEl = document.getElementById('adminFillA');
   if (!sEl || !aEl || !_fillTarget) return;
 
-  const sentence = sEl.value.trim();
+  // D1: ručno utipkane podvlake (3+) poravnavaju se na kanonski marker — autor ih ne mora brojiti.
+  const sentence = _fillNormalize(sEl.value).trim();
   const answer = aEl.value.trim();
 
   // Validacija (odražava JSON Schemu: rečenica neprazna + sadrži prazninu; odgovor neprazan).
   if (!sentence || !answer) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
-  if (sentence.indexOf(_FILL_BLANK) === -1) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence must contain the blank (_______).'), true); return; }
+  const blanks = _fillCount(sentence);
+  if (blanks === 0) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence needs a blank — select a word and press the button.'), true); return; }
+  // Druga praznina se dosad dala SPREMITI, a nije radila: renderer mijenja samo prvo pojavljivanje,
+  // a `answer` je jedan string. Odbij odmah umjesto tiho slomljene rečenice (nastavak = zasebna cigla).
+  if (blanks > 1) { _fillStatus(_adminT('admin.fillOneBlankErr', 'Only one blank per sentence for now.'), true); return; }
 
   const d = _adminDraft();
   const catId = _fillTarget.catId;

@@ -5,6 +5,28 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-25 (OPUS, kod) — **D1: autorstvo praznine u dopunama**
+
+Prva cigla nakon dokumentacijske sesije, i namjerno kratka. Backlog je stavku sam rezao na dvoje
+(*„① autorstvo praznine (malo) · ② više praznina (vlastita cigla)"*) — izvedena je **①**.
+
+**Što je bilo:** `js/admin-editors.js` je tražio niz `_______` u rečenici i to pisao autoru kao
+uputu u oznaci polja. **Što je sada:** gumb u modalu ubacuje prazninu, označena riječ postaje i
+odgovor, a ručno utipkane podvlake (3+) se **oprašta** — poravnavaju se na kanonskih 7.
+
+⚠️ **Mina je izbjegnuta mjerenjem, ne opreznošću:** prijedlog „dovoljna jedna podvlaka" ruši
+`\(Q_d = Q_s\)` u mikroekonomiji. Granica **3+** je izabrana jer u LaTeX-u nema značenja, a
+`Q_d` i `x__y` ostaju netaknuti. Obrnuta provjera izvedena: s `/_{1,}/` test pada točno na toj
+rečenici.
+
+**Nusnalaz:** druga praznina je dosad prolazila validaciju i **tiho se lomila** u prikazu.
+Sada je odbijena porukom — bolje odbiti nego spremiti slomljeno.
+
+**Mjere:** `test:unit` 10 novih tvrdnji (ukupno zeleno) · `preflight` EXIT 0 · css + bump uredni.
+**Nije verificirano živom prijavom:** čista logika je pod testom, ožičenje gumba u DOM-u nije —
+prati obrazac postojećeg gumba „Spremi" u istom modalu.
+
+
 ## 2026-08-25 (OPUS, nastavak) — **priprema plana za C4–C7**
 
 Treći komad iste sesije. Nakon `CLAUDE.md` i `TESTING.md`, red je došao na **plan** — jer je

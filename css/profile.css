@@ -450,6 +450,10 @@
 .admin-edit__status { font-size: 0.85rem; color: var(--text-secondary); margin: 0 0 0.7rem; }
 .admin-edit__status.is-error { color: var(--danger-text, #f87171); }
 .admin-edit__actions { display: flex; justify-content: flex-end; gap: 0.6rem; }
+/* D1 — traka za autorstvo praznine (gumb umjesto tipkanja podvlaka). */
+.admin-edit__tools { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; margin: -0.5rem 0 0.9rem; }
+.admin-edit__tool { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+.admin-edit__toolhint { font-size: 0.75rem; color: var(--text-secondary); }
 
 /* ===== F4.4 Quiz editing ===== */
 /* Podnaslov tipa unutar kategorije (Flashcards / Quiz) */
