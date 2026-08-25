@@ -5,6 +5,31 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-25 (OPUS) — **plan je pripremljen za C4–C7: brojke se od sada MJERE** (`npm run css:debt`)
+
+Tablica cigli §3 nosila je *„`subject-selector.css` (**49 `!important`**)"* i *„`responsive/*`
+(6 datoteka, **40 `!important`**)"*. **Izmjereno danas: 47 i 35.** Nijedna nije bila kriva kad je
+napisana — promijenile su ih C1–C3, a proza se ne održava sama. Brojke su iz tablice **izašle**,
+a plan od danas imenuje naredbu koja ih čita s diska.
+
+**Nova naredba `npm run css:debt`** (read-only, **nije gate**): po cigli ispisuje mete, retke i
+`!important` **izvan komentara** — komentar nije pravilo, isti razlog zbog kojeg to radi i
+`check:safearea`.
+
+⚠️ **Mjerenje je promijenilo redoslijed rizika, i to je glavni nalaz:** **C5a, C5b i C6 imaju
+NULA `!important`.** Cijeli dug sjedi na tri mjesta — `subject-selector.css` (47),
+`css/responsive/*` (35), `components.css` (21). Dakle **C4 je jedina cigla kojoj je rat
+specifičnosti stvaran problem**, za C5a/C5b/C6 rizik je **paleta i markup**, a **C7 je najveći
+komad** ne zbog `!important` nego zbog **2 330 redaka** u `responsive/*`.
+Zatečeno ukupno: **8 032 retka, 106 `!important`**.
+
+**Novi odjeljak u specu, §9.16** — zatečeno stanje + tri zamke koje čekaju sljedeću ciglu:
+① dug nije ondje gdje ga tablica sugerira · ② **`css:diff` je slijep za markup→CSS seobe**
+(dok nema `--ref`, dokaz ide pravim A/B-om iz `git worktree`-a) · ③ **brane su strože nego kad
+je faza počela** (prazna phone-osnovica, `check:budget`, `check:safearea`, budžet `CLAUDE.md`-a,
+duh-datoteke, „jedan tekst" u `check:seo`).
+
+
 ## 2026-08-25 (OPUS) — **`TESTING.md` je prestao biti inventar (−68 %)**
 
 Nastavak istog posla: nakon `CLAUDE.md`, isti kvar u drugom dokumentu — **ručno održavan popis

@@ -5,6 +5,23 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-25 (OPUS, nastavak) — **priprema plana za C4–C7**
+
+Treći komad iste sesije. Nakon `CLAUDE.md` i `TESTING.md`, red je došao na **plan** — jer je
+Leon sesiju posvetio *„dokumentaciji za daljnji rad"*, a daljnji rad kreće iz te tablice.
+
+**Nalaz:** dvije brojke u tablici cigli bile su zastarjele (49→**47**, 40→**35**). Nisam ih
+prepisao nego zamijenio naredbom **`npm run css:debt`**, koja čita disk.
+
+⚠️ **Najkorisnije je bilo ono što mjerenje kaže o REDOSLIJEDU RIZIKA:** C5a/C5b/C6 imaju **nula**
+`!important`, pa im rizik nije kaskada nego paleta i markup; **C4** je jedina cigla s pravim ratom
+specifičnosti; **C7** je najveći komad zbog **2 330 redaka** u `responsive/*`, ne zbog
+`!important`. *Cigla se ne planira po imenu duga nego po njegovoj mjeri.*
+
+Uz to je u spec dodan **§9.16** s tri zamke koje bi sljedeću ciglu koštale sata vremena
+(`css:diff` slijep za markup→CSS, prazna phone-osnovica, `check:budget` na posjetiteljevu putu).
+
+
 ## 2026-08-25 (OPUS, nastavak) — **`TESTING.md`: inventar van, skupine unutra**
 
 Leon: *„ovu sesiju samo koristimo da pripremimo dokumentaciju za daljnji rad."* Sljedeći zapisani

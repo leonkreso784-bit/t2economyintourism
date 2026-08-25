@@ -93,6 +93,7 @@ emitira i `css/tokens.static.css` za stranice bez bundlea; `-- --check` = drift-
 |---|---|---|
 | `npm run css:diff` | izračunati stilovi u pravom Chromiumu, radno stablo vs `HEAD`, 3 širine | preglednik + port. ⚠️ **slijep za seobu vrijednosti iz markupa u CSS** — tada A/B iz `git worktree`-a |
 | `npm run build:og` | crta `og-cover.png` **1200×630** (boje iz tokena, tekst iz i18n) | preglednik; PNG se **commita**, dimenzije mjeri `check:seo` |
+| `npm run css:debt` | što je ostalo za C4–C7: po cigli datoteke, redci, `!important` izvan komentara | read-only, **nije gate** — plan je do 2026-08-25 te brojke nosio **ručno** i obje su ostarile |
 | `npm run palette:breakdown` | razloži ostatak palete po **POSLJEDICI** (nevidljiv tekst · blijede plohe · stara paleta) | read-only, **nije gate** |
 | `npm run check:final` | bazni `final` red == M1⊕M2(+examPractice) | mrežno (anon, read-only) |
 | `npm run diff:db [id]` | usporedi bazu s datotekama **prije re-synca** — `migrate-content.js` piše PREKO baze, a `content_versions` je audit, ne undo | mrežno |

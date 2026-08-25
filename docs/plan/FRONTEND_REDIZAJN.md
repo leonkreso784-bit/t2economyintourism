@@ -59,11 +59,11 @@ Svaka cigla je zasebna grana, zasebna provjera, zasebna Leonova potvrda za deplo
 | **C2** ✅ | **Landing** — koncept odbijen (§7.13) pa prepravljen u četiri cigle: **A** živi prikaz obrisan · **B** tinta na pločicama · **C** katalog (svih 24, tražilica, filtar, grupe, ＋ pločica) + svoje gradivo + četiri načina + MCP „uskoro" · **D** podloga i prostor za znak (§7.15). **Sve četiri na produkciji od 2026-08-24** (A+B od 2026-08-18, C+D s fazom TELEFON). | `landing.css` 1079 → 578 → **380** (A) → ~660 (C+D) → **749** (T5: tip i ritam heroja, §9.12) | posjetitelj koji prvi put dođe vidi **oboje**: da ima gotovih predmeta **i** da smije napraviti svoje; kriteriji 1, 2, 5 vrijede za tu stranicu |
 | **C3** 🔄 | **Vlastito gradivo + editor** — „Moji materijali", Studio, admin-editori. **Tri cigle gotove i na produkciji** (authed a11y-gate · širina + kvar u rendereru · `studio.css` na nuli `!important`); **ostaje Studio na telefonu** — dok stoji, C3 se ne smije proglasiti gotovim (kriterij #1 imenuje editor na 320 px). | `my-materials.css`, `studio.css`, `block-editor.css` | autor napravi materijal od nule i objavi ga |
 | **K** 🔄 | **„KOSTUR" — rute i jedna gornja traka** (§8). Ubačena između C3 i C4 (Leon, 2026-08-18) po presedanu C0-a: informacijska arhitektura prije kozmetike. **K1 ✅ rute** (§8.6) · **K2** jedna traka · **K3** brana dohvatljivosti · **K4** materijali u kvaliteti kataloga | tri duplicirana zaglavlja (`browse-`/`lessons-`/`study-header`) | iz **svake** stranice — uključujući `#editor-page` — vodi bar jedan klik drugamo, a svaka stranica ima adresu koja se da podijeliti |
-| **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css` (**49 `!important`**), `pages.css` | student dođe do bilo kojeg predmeta i lekcije |
+| **C4** | **Browse + lekcije** | `browse.css`, `subject-selector.css`, `pages.css` (**brojke: `npm run css:debt`**) | student dođe do bilo kojeg predmeta i lekcije |
 | **C5a** | **Modovi uvježbavanja** — kartice · kviz · dopune · napredak | `flashcards-`/`quiz-`/`fill-blanks-`/`progress-section.css` | student uvježbava u sva četiri moda; **kriterij 4** vrijedi |
 | **C5b** | **Gradivo + vježbe** — sve što ide kroz renderer ili engine | `learn.css`, `learn-blocks.css`, `math.css`, `exercises.css`, `blind-map.css` | student čita gradivo i rješava vježbe; KaTeX, slike i tablice nedirnuti |
 | **C6** | **Profil, auth, pravne, consent** | `profile.css`, `auth.css`, `legal.css`, `consent.css` | korisnik se prijavi, uredi profil, obriše račun |
-| **C7** | **Gašenje** | `responsive/*` (6 datoteka, 40 `!important`), `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
+| **C7** | **Gašenje** | `responsive/*`, `components.css`, `variables.css`, `styles.bundle.css`, mrtva tema | u repozitoriju nema starog CSS-a ni mrtvog koda teme |
 
 > ### ✂️ C5 JE RAZBIJEN NA DVIJE CIGLE (Leon, 2026-08-13: *„možemo razbit C5 na dvije cigle"*)
 > Bila je **2755 redaka** — najveća i najrizičnija u fazi, i jedina koja bi sama trošila trećinu
@@ -3172,3 +3172,67 @@ pri svakoj izmjeni razilazili još malo. Provjera da JSON-LD **parsira** (a ne s
 postoji jer tražilica neispravan blok **tiho odbaci** — pa bi „ima ga" prolazilo i nad pokvarenim.
 Obrnuto provjerena: podmetnuti `icon-512.png`, razići `og:title` i pokvariti JSON-LD → sve tri
 padnu s točnom porukom.
+
+---
+
+### 9.16 Priprema za ono što dolazi — zatečeno stanje i tri zamke (2026-08-25)
+
+> Sesija u kojoj je pisano ovo nije radila ni jednu ciglu proizvoda: Leon ju je posvetio
+> **dokumentaciji za daljnji rad**. Ovaj odjeljak postoji da sljedeća cigla ne počne od
+> brojki starijih od tri tjedna.
+
+#### Brojke se od danas MJERE, ne prepisuju
+
+Tablica §3 je nosila *„`subject-selector.css` (**49 `!important`**)"* i *„`responsive/*`
+(6 datoteka, **40 `!important`**)"*. Izmjereno danas: **47** i **35**. Nijedna nije bila kriva
+kad je napisana — promijenile su ih C1–C3, a proza se ne održava sama.
+
+**→ `npm run css:debt`** ispisuje po cigli: koje datoteke, koliko redaka, koliko `!important`
+(izvan komentara). Read-only, **nije gate** — brojka koja se smije mijenjati u oba smjera je
+mjera, ne tvrdnja.
+
+**Zatečeno na dan pisanja: 8 032 retka i 106 `!important`** u metama C4–C7.
+
+#### ⚠️ Zamka 1 — dug NIJE ondje gdje ga tablica sugerira
+
+Mjerenje mijenja redoslijed rizika: **C5a, C5b i C6 imaju NULA `!important`.** Cijeli taj dug
+sjedi na **tri mjesta**: `subject-selector.css` (47), `css/responsive/*` (35) i
+`components.css` (21). Dakle:
+
+- **C4 je jedina cigla kojoj je rat specifičnosti stvaran problem**;
+- za C5a/C5b/C6 rizik nije kaskada nego **paleta i markup** (`check:palette`,
+  `palette:breakdown`, tvrde zabrane iz §7.7/§7.9);
+- **C7 je najveći komad** i to ne zbog `!important` nego zbog **2 330 redaka u `responsive/*`**.
+
+*Cigla se ne planira po imenu duga nego po njegovoj mjeri.*
+
+#### ⚠️ Zamka 2 — `css:diff` je slijep za ono što C4–C7 rade
+
+Presreće **samo stylesheet**, a HTML uzima iz radnog stabla. Cigla koja seli vrijednost **iz
+markupa u CSS** (a to je definicija ovih cigli) dobiva referencu koja **nikad nije postojala**:
+novi markup + stari CSS. T5 je zbog toga vidio **46 razlika** i na širinama gdje se ništa nije
+promijenilo.
+
+**Dok alat ne dobije `--ref`, dokaz se izvodi pravim A/B-om:** `HEAD` poslužen iz zasebnog
+`git worktree`-a na drugom portu, obje verzije sa **svojim** markupom i **svojim** CSS-om.
+U T5 je to dalo **0 razlika na 768 i 1280 px**, a 22 na 375 — i sve namjera.
+
+#### ⚠️ Zamka 3 — brane su strože nego kad je faza počela
+
+Cigla koja to ne zna izgubit će sat vremena na „neobjašnjiv" crveni gate:
+
+- **phone-osnovica je PRAZNA** — brana traži **nulu**, a ne „ne gore nego jučer".
+- **`check:budget`** mjeri posjetiteljev put: **nijedna editorska datoteka** + ≤ 200 KB
+  prenesenih skripti. Novi `<script>` na `index.html` pada ovdje, ne u pregledu koda.
+- **`check:safearea`** zabranjuje goli `env()` izvan `css/variables.css`.
+- **`check:docs`** od danas ima i **budžet `CLAUDE.md`-a** i **duh-datoteke**.
+- **`check:seo`** traži da `<title>`/`og:`/`twitter:` ostanu **jedan tekst** — cigla koja dira
+  landing mora promijeniti **sva četiri mjesta ili nijedno**.
+
+#### Što je odlučeno, a što nije
+
+**Odlučeno:** redoslijed **POLICA (P1–P4) → C4 → C5a → C5b → C6 → C7**; K4 se utapa u P2;
+K5 čeka i ne blokira.
+**Nije odlučeno i ne planira se prešutno:** birač tema, OAuth (A0+A1), self-host Supabase,
+prave adrese umjesto hash-ruta, SEM. Popis s izmjerenim brojkama je u `CLAUDE.md` §Otvoreno
+i u `BACKLOG.md`.
