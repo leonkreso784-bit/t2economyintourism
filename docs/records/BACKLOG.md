@@ -211,7 +211,12 @@ to pitanje: koliko je podvlaka postaje nevažno.
 **Rez: dvije cigle, ne jedna.** ① autorstvo praznine (sučelje editora, malo) · ② više praznina
 (shema + ocjenjivanje + renderer, vlastita cigla).
 
-## 🔥🔥 CRVENI ALARM — TELEFON (Leon na iPhoneu 16, 2026-08-19/20)
+## ✅ TELEFON JE ISPORUČEN · ➖ POLICA OSTAJE — (Leon na iPhoneu 16, 2026-08-19/20)
+
+> **STATUS 2026-08-25:** faza **„TELEFON" (T0–T6) je gotova i NA PRODUKCIJI** od 2026-08-24,
+> zajedno s BUG-030/031/032; phone-osnovica je **prazna**, pa brana od tada traži **nulu**.
+> **Faza „POLICA" (P1–P4) NIJE počela** i ostaje sljedeći ponuđeni posao. Nalaz ispod ostaje
+> jer objašnjava **zašto su brane takve kakve jesu**.
 
 > **📐 RAZRAĐENO U DVIJE FAZE — radna specifikacija je
 > [`FRONTEND_REDIZAJN.md` §9](../plan/FRONTEND_REDIZAJN.md): faza „TELEFON" (T0–T6) i faza
@@ -227,7 +232,10 @@ sa samima sobom (drift, ne lošoća), a K3/K4a mjere **kromo, ne stranicu**. **T
 STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0), ne popravkom.
 
 **Dvije trajne Leonove odluke iz iste sesije:**
-1. **Ništa ne ide na produkciju dok cijeli frontend ne bude riješen.**
+1. ~~**Ništa ne ide na produkciju dok cijeli frontend ne bude riješen.**~~
+   ⚠️ **POTROŠENA 2026-08-24 — Leon je tu odluku sam promijenio** i odobrio merge iako C4–C7 i
+   POLICA nisu gotovi (*„moze merge na main"*). Obrazloženje je prestalo vrijediti: prepreka je
+   bio telefon, a on je riješen. **Potrošena, ne ukinuta — sljedeći deploy opet traži izričit OK.**
 2. **Broj commita izvan produkcije NIJE nalaz i ne spominje se** (*„ZNAM KADA ZELIM PUSTIT
    NESTO NA PRODUKCIJU"*; povod: raniji deploy koji se nije trebao dogoditi).
 
@@ -235,7 +243,12 @@ STRANICA nikad nije bio mjerena površina** — zato faza počinje mjeračem (T0
 
 ---
 
-## 🔥 N — NAVIGACIJA I OSOBNI PROSTOR (Leonov nalaz na živom ekranu, 2026-08-18)
+## ✅ NAVIGACIJA RIJEŠENA (K1–K4a) · ➖ OSOBNI PROSTOR OSTAJE — (Leon, 2026-08-18)
+
+> **STATUS 2026-08-25:** **K1–K4a su gotovi i na produkciji** — devet stranica ima devet
+> dijeljivih adresa, „natrag" ima jedan model, gornja traka je jedna, Studio je upotrebljiv na
+> telefonu. **Petlja opisana ispod više ne postoji.** Ostaje **N2 („ono što učim")**, a ono se
+> **utapa u P2** faze POLICA — ne planirati ga zasebno.
 
 > **📐 RAZRAĐENO U FAZU 2026-08-18 — radna specifikacija je
 > [`FRONTEND_REDIZAJN.md` §8](../plan/FRONTEND_REDIZAJN.md) („KOSTUR": K1 rute · K2 traka ·
@@ -1017,7 +1030,11 @@ Migracija se piše i vrti **prvo na `sokrat-staging`**, pa tek onda na prod.
 **Provjera nakon:** advisor više ne javlja `auth_rls_initplan`; `npm run test:authed` zelen
 (politike se ne smiju promijeniti u ponašanju, samo u planu izvršavanja).
 
-## ➖ Broj pitanja na landingu pokriva samo 17 od 22 predmeta — 2026-08-09
+## ➖ Broj pitanja na landingu ne pokriva sve predmete — 2026-08-09
+
+> **PREMJERENO 2026-08-25:** stavka je i dalje otvorena, ali su joj brojke ostarile — predmeta
+> je **24**, ne 22. `data/landing-stats.js` sam to i priznaje: `subjectsCounted: 17`. Dakle
+> raskorak je **veći** nego kad je stavka pisana, a ne manji.
 **Nalaz (uz popravak broja predmeta):** landing sad točno piše **22 predmeta**, ali „**5.700+ pitanja**"
 dolazi iz `scripts/compute-stats.js` koji **namjerno broji samo primarni (EN) program** — da prijevode
 ne broji dvaput. Dok je i broj predmeta bio 17, to je bilo dosljedno; sad više nije.

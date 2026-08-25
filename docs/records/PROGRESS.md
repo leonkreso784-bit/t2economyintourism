@@ -18,6 +18,21 @@ prepisao nego zamijenio naredbom **`npm run css:debt`**, koja čita disk.
 specifičnosti; **C7** je najveći komad zbog **2 330 redaka** u `responsive/*`, ne zbog
 `!important`. *Cigla se ne planira po imenu duga nego po njegovoj mjeri.*
 
+**Status-revizija `BACKLOG.md`** (iz njega se bira sljedeći posao, pa zastarjeli status navodi
+na krivu odluku): *„CRVENI ALARM — TELEFON"* stajao je kao 🔥🔥 iako je faza **na produkciji** →
+razdvojeno na **TELEFON ✅ / POLICA ➖**; *„N — navigacija"* isto, jer su K1–K4a isporučeni i
+petlja koju opisuje **više ne postoji** — ostaje N2, koji se **utapa u P2**.
+
+⚠️ **Najvažniji nalaz nije bila zastarjela činjenica nego zastarjela ODLUKA:** ondje je i dalje
+stajalo *„ništa ne ide na produkciju dok cijeli frontend ne bude riješen"*, a Leon je tu odluku
+**sam potrošio 2026-08-24** odobrivši merge. *Zastarjela zapovijed navodi sesiju na radnju* —
+zato je precrtana i objašnjena, ne obrisana.
+
+Provjereno je i **što OSTAJE otvoreno**, mjerenjem a ne pretpostavkom: `.st-row` još nije
+kontrola · `.lb-table-wrap` nema `tabindex` · `css/subject-selector.css` i dalje ima **22**
+pogotka palete · `data/landing-stats.js` broji **17** predmeta dok ih je **24** (raskorak je
+narastao, pa je i premisa te stavke osvježena).
+
 Uz to je u spec dodan **§9.16** s tri zamke koje bi sljedeću ciglu koštale sata vremena
 (`css:diff` slijep za markup→CSS, prazna phone-osnovica, `check:budget` na posjetiteljevu putu).
 
