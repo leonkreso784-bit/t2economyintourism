@@ -5,6 +5,27 @@ testirano, što slijedi.
 
 ---
 
+## 2026-08-25 (OPUS, kod) — **D2: više praznina po rečenici**
+
+Nastavak D1 i druga polovica iste Leonove primjedbe. Cigla dira **studentski vrući put**, pa je
+rez biran tako da današnji sadržaj **ne prođe ni jednom novom granom**: sve rečenice u katalogu
+imaju jednu prazninu → `inline = false` → identičan kod kao jučer. Nova grana se pali tek od druge.
+
+**Što je izvedeno:** shema (`answers`, 2+) · `js/fill-blanks.js` (jezgra: `answersOf` / `count` /
+`sentenceHtml` / `grade`, sve čiste i izvezene) · polja **u rečenici** s vlastitom `aria-label` ·
+ocjena **po praznini** (`is-ok` / `is-bad`) · editor gradi onoliko polja za odgovor koliko ima
+praznina, uz čuvanje upisanog **po indeksu** · Studio pločica pokazuje **sve** odgovore.
+
+⚠️ **Odluka koju vrijedi zapamtiti: `answer` ostaje obavezan i kad postoji `answers`.** Razlog nije
+uredna shema nego **cache** — korisnik s keširanom starom skriptom inače dobije rečenicu bez
+ijednog točnog odgovora. Stara verzija tako degradira na prvu prazninu.
+
+**Mjere:** `test:unit` 20 tvrdnji · `npx playwright test fill-multi + app-state + escaping` =
+**32 prošlo** kroz iPhone profile · `preflight` EXIT 0. Obrnute provjere izvedene za obje nove
+tvrdnje. **Nije verificirano živom prijavom:** editorska strana (polja za odgovor) ima jedinične
+testove čiste logike, ali ne i klik kroz pravi admin-login.
+
+
 ## 2026-08-25 (OPUS, kod) — **D1: autorstvo praznine u dopunama**
 
 Prva cigla nakon dokumentacijske sesije, i namjerno kratka. Backlog je stavku sam rezao na dvoje

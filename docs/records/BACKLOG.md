@@ -219,8 +219,11 @@ to pitanje: koliko je podvlaka postaje nevažno.
 > odgovor), tolerancija za 3+ ručno utipkane podvlake, i **odbijanje druge praznine** koja se
 > dosad dala spremiti a nije radila. Granica **3+** je namjerna: jedna i dvije podvlake su LaTeX.
 > Brana: `tests/unit/fill-blank-format.test.js` (mjeri pravu KaTeX-rečenicu iz kataloga).
-> **➖ ② (više praznina) OSTAJE** — traži `answers` u shemi, ocjenjivanje po praznini i renderer
-> koji mijenja SVA pojavljivanja.
+> **✅ ② ISPORUČENO 2026-08-25 (cigla D2)** — `answers` (2+) u shemi uz `answer` (koji ostaje
+> obavezan i drži prvi odgovor, radi stare keširane skripte), polja **u rečenici** od druge
+> praznine, ocjena **po praznini**, editor gradi polja za odgovor prema broju praznina.
+> Brane: `tests/unit/fill-blank-format.test.js` + `tests/fill-multi.spec.js`.
+> **Time je cijela stavka zatvorena osim ①-boje, koja ostaje u C5a.**
 
 ## ✅ TELEFON JE ISPORUČEN · ➖ POLICA OSTAJE — (Leon na iPhoneu 16, 2026-08-19/20)
 

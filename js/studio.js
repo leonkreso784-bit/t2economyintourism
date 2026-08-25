@@ -737,7 +737,11 @@ const SokratStudio = (function () {
       return '<div class="st-opt' + (ok ? ' correct' : '') + '">' + esc(o) + (ok ? '<span class="st-ok">TOČAN</span>' : '') + '</div>';
     }).join('');
   }
-  function fillBody(fb) { return '<div class="st-fsent">' + esc(fb.sentence || '') + '</div><div class="st-fans">→ ' + esc(fb.answer || '') + '</div>'; }
+  // D2: rečenica smije imati više praznina → pločica pokazuje SVE odgovore, ne samo prvi.
+  function fillBody(fb) {
+    var ans = (Array.isArray(fb.answers) && fb.answers.length) ? fb.answers.join(' · ') : (fb.answer || '');
+    return '<div class="st-fsent">' + esc(fb.sentence || '') + '</div><div class="st-fans">→ ' + esc(ans) + '</div>';
+  }
 
   var PANE_MAP = {
     cards: { arr: 'flashcards', type: 'flashcard', body: cardBody, add: 'Dodaj karticu' },

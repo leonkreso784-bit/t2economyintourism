@@ -87,9 +87,19 @@ nasumično miješaju, pa redoslijed nije bitan — bitan je točan indeks PRIJE 
 {
   sentence: "Modern marketing creates and exchanges _______.", // obavezno; _______ = praznina
   answer: "value",                                              // obavezno; provjera nije osjetljiva na velika/mala slova
+  answers: ["value", "utility"],                                // opcionalno (2+) — VIŠE praznina, redom
   hint: "Utility for customers..."                              // opcionalno
 }
 ```
+
+> **Više praznina (D2, 2026-08-25):** rečenica smije imati N markera; tada `answers` nosi odgovore
+> **redom kojim praznine stoje u rečenici**, a broj odgovora **mora** biti jednak broju praznina.
+> `answer` **ostaje obavezan i drži prvi odgovor** i u tom slučaju — namjerno, ne suvišno: stara
+> keširana skripta (immutable cache + SW) tako pokaže smislenu rečenicu umjesto da pukne.
+> Ocjenjivanje je **po praznini** (rečenica je točna samo ako su sve).
+>
+> ⚠️ **Marker se NE tipka rukom** — editor ga ubacuje gumbom. Tolerira se niz od **3+ podvlake**;
+> jedna i dvije se **ne diraju**, jer je `_` u LaTeX-u operator indeksa (`\(Q_d = Q_s\)`).
 
 ## Learn
 ```js

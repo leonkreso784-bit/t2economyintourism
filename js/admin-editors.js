@@ -572,6 +572,7 @@ function _ensureFillModal() {
     '  </div>' +
     '  <label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + '</span>' +
     '    <textarea id="adminFillA" class="admin-edit__input" rows="2"></textarea></label>' +
+    '  <div id="adminFillMore"></div>' +
     '  <p class="admin-edit__note" id="adminFillNote"></p>' +
     '  <p class="admin-edit__status" id="adminFillStatus" hidden></p>' +
     '  <div class="admin-edit__actions">' +
@@ -587,6 +588,8 @@ function _ensureFillModal() {
   if (saveBtn) saveBtn.addEventListener('click', _saveFill);
   const blankBtn = document.getElementById('adminFillBlankBtn');
   if (blankBtn) blankBtn.addEventListener('click', _insertFillBlank);
+  const sTa = document.getElementById('adminFillS');
+  if (sTa) sTa.addEventListener('input', _fillSyncAnswers);
   return m;
 }
 
@@ -604,7 +607,34 @@ function _insertFillBlank() {
   if (r.word && aEl && !aEl.value.trim()) aEl.value = r.word;
   sEl.focus();
   try { sEl.setSelectionRange(r.caret, r.caret); } catch (e) { /* stariji preglednik */ }
+  _fillSyncAnswers();
   _fillStatus('', false);
+}
+
+/**
+ * D2: broj polja za odgovor prati broj praznina u rečenici. Prvo polje je zatečeni `adminFillA`
+ * (jedna praznina = sučelje se NE mijenja), a od druge nadalje se dodaju redci. Upisane
+ * vrijednosti se čuvaju PO INDEKSU, pa ubacivanje praznine ne briše ono što je autor već napisao.
+ */
+function _fillSyncAnswers() {
+  const box = document.getElementById('adminFillMore');
+  const sEl = document.getElementById('adminFillS');
+  if (!box || !sEl) return;
+  const need = Math.max(1, _fillCount(sEl.value)) - 1; // koliko IZNAD prvog
+  const had = _fillExtraAnswers();
+  let html = '';
+  for (let i = 0; i < need; i++) {
+    html += '<label class="admin-edit__field"><span>' + _adminT('admin.answer', 'Answer') + ' ' + (i + 2) + '</span>' +
+      '<input type="text" class="admin-edit__input" data-fill-ans="' + (i + 1) + '" value="' + _adminEscape(had[i] || '') + '"></label>';
+  }
+  box.innerHTML = html;
+}
+
+/** Vrijednosti polja za 2., 3., … prazninu (bez prvog, koje je `adminFillA`). */
+function _fillExtraAnswers() {
+  const box = document.getElementById('adminFillMore');
+  if (!box) return [];
+  return Array.prototype.slice.call(box.querySelectorAll('[data-fill-ans]')).map(function (el) { return el.value; });
 }
 
 function _fillStatus(msg, isErr) {
@@ -636,7 +666,14 @@ function _openFillEditor(catId, idx) {
       (isAdd ? _adminT('admin.addFill', 'Add fill-in-the-blank') : _adminT('admin.editFill', 'Edit fill-in-the-blank'));
   }
   document.getElementById('adminFillS').value = fb.sentence || '';
-  document.getElementById('adminFillA').value = fb.answer || '';
+  // D2: `answers` (2+) je izvor kad postoji; `answer` je i dalje prvi odgovor.
+  const all = (Array.isArray(fb.answers) && fb.answers.length) ? fb.answers : [fb.answer || ''];
+  document.getElementById('adminFillA').value = all[0] || '';
+  const more = document.getElementById('adminFillMore');
+  if (more) more.innerHTML = '';
+  _fillSyncAnswers();
+  const rows = document.querySelectorAll('#adminFillMore [data-fill-ans]');
+  for (let i = 0; i < rows.length; i++) rows[i].value = all[i + 1] || '';
   const note = document.getElementById('adminFillNote');
   if (note) {
     note.textContent = (cat.name || catId) + ' · ' + _adminCtx.varName + ' — ' +
@@ -655,15 +692,21 @@ function _saveFill() {
 
   // D1: ručno utipkane podvlake (3+) poravnavaju se na kanonski marker — autor ih ne mora brojiti.
   const sentence = _fillNormalize(sEl.value).trim();
-  const answer = aEl.value.trim();
+  const all = [aEl.value.trim()].concat(_fillExtraAnswers().map(function (v) { return String(v).trim(); }));
 
-  // Validacija (odražava JSON Schemu: rečenica neprazna + sadrži prazninu; odgovor neprazan).
-  if (!sentence || !answer) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
+  // Validacija (odražava JSON Schemu: rečenica neprazna + sadrži prazninu; svaki odgovor neprazan).
+  if (!sentence || !all[0]) { _fillStatus(_adminT('admin.fillEmptyErr', 'Sentence and answer must not be empty.'), true); return; }
   const blanks = _fillCount(sentence);
   if (blanks === 0) { _fillStatus(_adminT('admin.fillBlankErr', 'The sentence needs a blank — select a word and press the button.'), true); return; }
-  // Druga praznina se dosad dala SPREMITI, a nije radila: renderer mijenja samo prvo pojavljivanje,
-  // a `answer` je jedan string. Odbij odmah umjesto tiho slomljene rečenice (nastavak = zasebna cigla).
-  if (blanks > 1) { _fillStatus(_adminT('admin.fillOneBlankErr', 'Only one blank per sentence for now.'), true); return; }
+  // D2: svaka praznina traži svoj odgovor — inače bi se rečenica spremila s prazninom koja se
+  // NE MOŽE pogoditi (ocjenjivanje ide po praznini, prazan odgovor nikad nije točan).
+  if (all.length !== blanks || all.some(function (a) { return !a; })) {
+    _fillStatus(_adminT('admin.fillAnswerCountErr', 'Every blank needs its own answer.'), true); return;
+  }
+  // `answer` OSTAJE prvi odgovor i kad ih je više: stara keširana skripta tako pokaže smislenu
+  // rečenicu umjesto da pukne. `answers` se briše (null) kad praznina opet postane jedna.
+  const answer = all[0];
+  const answers = (blanks > 1) ? all : null;
 
   const d = _adminDraft();
   const catId = _fillTarget.catId;
@@ -671,7 +714,9 @@ function _saveFill() {
   let res;
   if (_fillTarget.add) {
     res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
-      type: 'addFill', catId: catId, item: { sentence: sentence, answer: answer }
+      type: 'addFill', catId: catId,
+      item: answers ? { sentence: sentence, answer: answer, answers: answers }
+                    : { sentence: sentence, answer: answer }
     });
   } else {
     const idx = _fillTarget.idx;
@@ -681,7 +726,7 @@ function _saveFill() {
     // Patch mijenja samo sentence/answer → hint (ako postoji) ostaje netaknut.
     res = SokratDraft.applyOp(d.subjectId, d.lessonId, {
       type: 'updateFill', catId: catId, id: item.id, idx: idx,
-      patch: { sentence: sentence, answer: answer }
+      patch: { sentence: sentence, answer: answer, answers: answers } // `null` briše ključ
     });
   }
   if (!res.ok) { _fillStatus(_adminT('admin.saveErr', 'Could not save.'), true); return; }

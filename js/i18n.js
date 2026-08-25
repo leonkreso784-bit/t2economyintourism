@@ -126,7 +126,7 @@
     'admin.insertBlankHint': { en: 'Select a word — it becomes the blank and the answer.', hr: 'Označi riječ — postaje praznina i odgovor.' },
     'admin.fillEmptyErr': { en: 'Sentence and answer must not be empty.', hr: 'Rečenica i odgovor ne smiju biti prazni.' },
     'admin.fillBlankErr': { en: 'The sentence needs a blank — select a word and press the button.', hr: 'Rečenici treba praznina — označi riječ i pritisni gumb.' },
-    'admin.fillOneBlankErr': { en: 'Only one blank per sentence for now.', hr: 'Zasad je moguća samo jedna praznina po rečenici.' },
+    'admin.fillAnswerCountErr': { en: 'Every blank needs its own answer.', hr: 'Svaka praznina treba svoj odgovor.' },
     'admin.fillSaveOk': { en: 'Sentence saved.', hr: 'Rečenica spremljena.' },
     // F4.4 — learn editing
     'admin.learn': { en: 'Learn', hr: 'Učenje' },
@@ -217,6 +217,7 @@
     // Fill
     'fill.title': { en: 'Fill in the Blank', hr: 'Dopuni prazninu' },
     'fill.placeholder': { en: 'Type your answer...', hr: 'Upiši svoj odgovor...' },
+    'fill.blankLabel': { en: 'Blank', hr: 'Praznina' },
     'fill.correctAnswerLabel': { en: 'Correct answer:', hr: 'Točan odgovor:' },
     'fill.correct': { en: 'Correct!', hr: 'Točno!' },
     'fill.wrong': { en: 'Wrong!', hr: 'Netočno!' },

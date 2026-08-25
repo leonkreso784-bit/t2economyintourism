@@ -5,6 +5,27 @@ Tekuća live verzija je 2.x. Platformska pregradnja (Faza 0+) vodi prema 3.0.0.
 
 ## [Unreleased] — rad u tijeku (cilj: 3.0.0)
 
+## 2026-08-25 (OPUS) — **D2: rečenica smije imati VIŠE praznina** (učenje + editor + shema)
+
+Druga polovica Leonove primjedbe na dopune (*„i neka ih se može staviti više"*). Od **dvije**
+praznine polje se seli **u rečenicu**, na mjesto praznine; ocjena ide **po praznini**, a otkriveni
+odgovor pokazuje sve. **Jedna praznina zadržava zatečeno sučelje netaknuto** — `fill-blanks-section.css`
+ionako prepisuje C5a, pa bi redizajn sada bio rad dvaput.
+
+**Model:** `answers` (2+) uz `answer`, koji **ostaje obavezan i drži prvi odgovor**. To nije
+redundancija nego **namjerna degradacija**: stara keširana skripta (immutable cache + SW) pokaže
+smislenu rečenicu s jednom prazninom umjesto da pukne. **Migracije nema** — izmjereno 0 od 1005
+rečenica ima više praznina, jer je dosad bilo nemoguće.
+
+**Brane:** `tests/unit/fill-blank-format.test.js` (20 tvrdnji; drži i to da je **marker JEDAN** za
+editor, učenje i shemu) + novi `tests/fill-multi.spec.js` na pravom ekranu. Obje nove tvrdnje su
+obrnuto provjerene: escape samo prvog komada **pada**, i „točno ako je bilo koja praznina točna" **pada**.
+
+⚠️ **Gate koji je uhvatio nešto što nitko nije pisao kao klasu:** `check:tailwind` je prijavio
+pravilo `.static` — skener je pročitao **vrijednost u kodu** (`mode === 'plain' | 'inputs'` je
+prije bio `'static'`). Razriješeno preimenovanjem, ne iznimkom u `@source not inline(...)`.
+
+
 ## 2026-08-25 (OPUS) — **D1: praznina se UBACUJE, ne tipka** (editor dopuna)
 
 Editor je od autora tražio da utipka **točno 7 podvlaka** — dakle **format pohrane, prikazan kao

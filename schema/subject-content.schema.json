@@ -65,6 +65,7 @@
         "id":       { "type": "string", "minLength": 1 },
         "sentence": { "type": "string", "minLength": 1, "pattern": "_______" },
         "answer":   { "type": "string", "minLength": 1 },
+        "answers":  { "type": "array", "minItems": 2, "items": { "type": "string", "minLength": 1 } },
         "hint":     { "type": "string" },
         "color":    { "$ref": "#/definitions/accent" }
       }

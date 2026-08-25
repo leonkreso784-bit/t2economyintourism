@@ -52,6 +52,28 @@
     font-weight: 600;
 }
 
+/* D2 — od DVIJE praznine polje se seli U REČENICU, na mjesto praznine. Izgled prati `.blank`
+   (isprekidana crta u akcentu), pa se čita kao praznina koja se puni, ne kao obrazac.
+   ⚠️ `min-height` je `--touch-target`: polje u tekstu je i dalje meta za prst. */
+.fill-sentence .fill-blank-input {
+    display: inline-block;
+    width: 8ch;
+    min-height: var(--touch-target);
+    padding: 0.1rem 0.4rem;
+    border: 0;
+    border-bottom: 3px dashed var(--primary);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    text-align: center;
+    vertical-align: baseline;
+}
+
+.fill-sentence .fill-blank-input:focus { outline: none; border-bottom-style: solid; }
+.fill-sentence .fill-blank-input.is-ok { border-bottom-color: var(--success); }
+.fill-sentence .fill-blank-input.is-bad { border-bottom-color: var(--danger-text); }
+
 .fill-input-wrapper {
     display: flex;
     flex-direction: column;
