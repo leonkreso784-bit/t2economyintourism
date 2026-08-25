@@ -148,9 +148,13 @@ obrazac, ne kvar — razlika se vidi tek čitanjem.*
 
 ## 🔥 EDITOR — boja kartice i dopune (Leon, 2026-08-24; izmjereno isti dan)
 
-> Dvije Leonove primjedbe na editor, obje potvrđene mjerenjem. **Ne rade se sada** (na redu su
-> BUG-032 i `about`), ali su zapisane jer je jedna od njih **mina**: razuman prijedlog koji bi,
-> izveden doslovno, slomio postojeće gradivo.
+> Dvije Leonove primjedbe na editor, obje potvrđene mjerenjem; jedna od njih je **mina** —
+> razuman prijedlog koji bi, izveden doslovno, slomio postojeće gradivo.
+>
+> **🟢 ODABRANO ZA SLJEDEĆI RAD (Leon, 2026-08-25).** ⚠️ Ali samo **② (dopune)**: ① je po
+> **ovdje već zapisanoj analizi** posao cigle **C5a**, koja ionako prepisuje baš te tri
+> datoteke — raditi ga sada znači raditi ga dvaput. *Odabir zadatka ne poništava mjerenje koje
+> je taj zadatak smjestilo.* Dakle: **② se radi, ① čeka C5a.**
 
 ### ① Boja mijenja samo rub, a treba obojiti CIJELU karticu
 
