@@ -28,20 +28,27 @@ nismo bili svjesni.**
 
 ## Što je izmjereno (2026-08-25, radno stablo `feat/about`)
 
-| mjera | vrijednost |
-|---|---|
-| datoteka s `import` / `export` | **0** od 42 |
-| gole globalne funkcije | **242** |
-| različitih `window.X =` izvoza | **92** |
-| `typeof X !== 'undefined'` obrana | **132** u **30** datoteka |
-| `<script src="js/…">` u HTML-u | **34** (index) · **26** (editor) |
-| od toga **ručno duplicirano** u obje stranice | **18** |
-| unit testova koji grade lažni `window` | **11** od **16** |
-| `tsconfig.include` pokriva | **6** od **42** datoteke (14 %) |
-| `check:budget` zaliha do budžeta | **31,6 KiB** |
+| mjera | vrijednost | kako se vrti |
+|---|---|---|
+| datoteka s `import` / `export` | **0** od 42 | `grep -rlE "^\s*(import\|export)\b" js/ \| wc -l` |
+| gole globalne funkcije | **242** | `grep -rhoE "^(async )?function [A-Za-z_]" js/ \| wc -l` |
+| različitih `window.X =` izvoza | **92** | `grep -rhoE "window\.[A-Za-z_]+ *=" js/ \| sort -u \| wc -l` |
+| `typeof X !== 'undefined'` obrana | **133** u **30** datoteka | `grep -roE "typeof [A-Za-z_.]+ *[!=]== *'undefined'" js/ \| wc -l` |
+| `<script src="js/…">` u HTML-u | **34** (index) · **26** (editor) | `grep -c "script src=\"js/" index.html editor.html` |
+| od toga **ručno duplicirano** u obje stranice | **18** | `comm -12` nad ta dva popisa |
+| unit testova koji grade lažni `window` | **11** od **16** | `grep -rl "new Function('window'" tests/unit/ \| wc -l` |
+| **inline `on*=` rukovatelja u HTML-u** | **24** | `grep -oE "\son(click\|change\|input\|submit)=" index.html editor.html \| wc -l` |
+| **različitih `window.X` u Playwright specovima** | **58** | `grep -rhoE "window\.[A-Za-z_]+" tests/*.spec.js \| sort -u \| wc -l` |
+| `tsconfig.include` pokriva | **6** od **42** datoteke (14 %) | `tsconfig.json` |
+| `check:budget` zaliha do budžeta | **31,6 KiB** | `npm run check:budget` |
 
-Brojke se ponavljaju naredbama u §„Kriterij prihvaćanja"; **ne prepisivati ih rukom drugdje**
-(ADR-027) — ovaj dokument je jedino mjesto gdje stoje.
+⚠️ **Ispravak 2026-08-26: obrana je 133, ne 132** — cigla D2 je istog dana dodala izvoz
+`window.SokratFill`. Brojka je ostarjela **za jedan dan i za jedan potez**, i to je poanta:
+dokument je točno rekao *„ne prepisivati ih rukom drugdje"*, ali su i **ovdje** bile ručno
+pisane. Zato sad **svaki redak nosi naredbu koja ga vraća** — isti lijek koji je za C4–C7 dobio
+oblik `npm run css:debt`. **Skripta `module-debt.js` se NAMJERNO ne piše sada:** ovo je ideja,
+ne projekt, a graditi alat za neodobren zahvat je isti trošak unaprijed protiv kojeg dokument
+argumentira.
 
 ---
 
@@ -110,6 +117,12 @@ samo ono što nema ovisnosti. **A to točno objašnjava koji su moduli netestira
 > **Ovo je najskuplja stavka na popisu.** Ne košta nas eleganciju nego **pokrivenost testovima
 > na najrizičnijem kodu.** [js/cloud-sync.js:57](../../js/cloud-sync.js#L57) spaja korisnikov
 > napredak i **nema nijedan test.**
+>
+> ⚠️ **Ali ne prodavati seobu kao „tako dobivamo pokrivenost" (recenzija 2026-08-26).** Blokada
+> kod `cloud-sync`-a nije sintaksa nego **dizajn**: stanje i nuspojave. Isti shim može učitati i
+> `cloud-sync`; ono što ne može je **izolirati mu ovisnosti**. Moduli taj test **pojeftinjuju,
+> ne omogućuju** — pa je realan ishod obećanja *„moduli → testovi"* da dobijemo module i **i
+> dalje nijedan test**. Test se piše zato što se odluči, a ne zato što je uvoz postao ljepši.
 
 ### 6. `typecheck` ne može narasti
 
@@ -137,7 +150,17 @@ Izmjereno, ovo landing **ne treba** pri prvom crtanju:
 | **ukupno** | **47 384 B ≈ 46 KiB** |
 
 **46 KiB naprema 31,6 KiB zalihe** — dinamički `import()` bi zalihu **više nego udvostručio**,
-bez ijednog obrisanog retka. Danas ta poluga ne postoji.
+bez ijednog obrisanog retka.
+
+> **➕ Ispravak 2026-08-26 (recenzija): ta poluga POSTOJI već danas, i ne traži ovu seobu.**
+> Dinamički `import()` je **izraz**, ne modulska sintaksa — radi i **iz klasične skripte**, bez
+> `type="module"` na stranici. Dakle `js/exercises.js` (ili `my-materials`, `profile`,
+> `blind-map`) može postati modul koji se učitava **na zahtjev**, dok ostalih 41 datoteka ostaje
+> netaknuto; modul po završetku objavi svoje na `window` kao i dosad.
+>
+> **Posljedica za planiranje: najveća pojedinačna brojka u ovom dokumentu nije argument ZA
+> seobu** — ona je zaseban, mnogo jeftiniji zahvat (rizik = jedna datoteka umjesto 42). Ako se
+> od cijelog dokumenta ikad izvede samo jedna stvar, ovo ima najbolji omjer.
 
 ---
 
@@ -184,8 +207,25 @@ JS, a `bump` i `bump:check` rade **nepromijenjeni**.
 | **242 gole funkcije dobivaju `export`** | **velika** | najveći dio posla; datoteka po datoteka |
 | **Novi vodopad zahtjeva** | mala | mapa je plosnata; `modulepreload` za vrući put |
 | **SW ponašanje + prag preglednika** | **nepoznata** | dvije neprovjerene stvari (gore) |
+| **24 inline `on*=` rukovatelja u HTML-u** | **velika, i ide PRVA** | vidi ⚠️ ispod |
+| **58 `window.X` na koje se oslanjaju Playwright specovi** | srednja | testna površina se mora objaviti namjerno |
 | **`types/globals.d.ts` postaje suvišan** | negativna | **manje** koda za održavati |
 | **11 testova gubi shim** | negativna | postaju `import`, **kraći i jači** |
+
+⚠️ **Dva troška koja su u prvoj verziji nedostajala** (recenzija 2026-08-26) — oba su posljedica
+istoga: **globali danas nisu samo nered, nego i sučelje prema dvjema stranama.**
+
+1. **Inline rukovatelji u markupu.** `index.html`/`editor.html` imaju **24** atributa tipa
+   `onclick="startQuiz()"`, `onclick="toggleUiLang()"`, `onclick="setBlindMapDifficulty(…)"`.
+   Pod `type="module"` funkcije s vrha datoteke **prestaju biti na `window`**, pa svaki takav
+   gumb **tiho umre**: ništa ne pukne pri učitavanju, greška se vidi **tek na klik**. To je
+   posao koji mora biti gotov **prije prve module-datoteke** (delegirani listeneri), i mora
+   ući u red kao **prva cigla**, ne kao usputni čišćenje.
+2. **Testovi mjere kroz globale.** Playwright specovi koriste **58** različitih `window.X`
+   (`window.AppState`, `window.switchSection`, `window.showFillQuestion`…) — to im je jedina
+   opservabilnost. Seoba znači da se **testna površina objavljuje namjerno**, inače pada pola
+   paketa. ⚠️ **Ironija koju vrijedi zapisati:** dokument točno tvrdi da nam globali otežavaju
+   testiranje, a **testovi o njima trenutno ovise.**
 
 ⚠️ **Ovo se NE radi u jednom potezu.** Mora ići datoteka po datoteka, s `verify` + `test:unit`
 + `test:responsive` zelenim na svakom koraku — inače je to prepisivanje 14 649 redaka bez
