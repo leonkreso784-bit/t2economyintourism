@@ -311,13 +311,23 @@ Devet stranica, nula zajedničkih traka. Zato se svaki ekran čita kao zaseban p
   dohvatljiva bar jedna druga odredišna stranica u jednom kliku. Bez toga se petlja
   može vratiti neopaženo — kao što je i nastala.
 
-### N2 · Osobna početna — „predmeti koje učim" → **✅ ISPORUČENO 2026-08-26 (cigla P2)**
+### N2 · Osobna početna — „predmeti koje učim" → **➖ POLA ISPORUČENO (cigla P2)**
 Katalog-predmeti s napretkom **i** vlastiti materijali na jednom mjestu.
 
-> **✅ Stranica postoji od cigle P2** (grana `feat/polica`, **nije deployano**):
-> `#materials-page` nosi **dva izvora** — skinute predmete iz kataloga (pločica s imenom,
-> veličinom, stanjem učenja i pravom adresom) i vlastito gradivo ispod. Tekst ispod ostaje jer
-> objašnjava **odakle je N2 dobio sadržaj**, a ne kakvo je stanje.
+> **➖ P2 je dao MJESTO, ali ne i cijeli skup** (grana `feat/polica`, **nije deployano**).
+> `#materials-page` od P2 nosi **dva izvora** — skinute predmete iz kataloga (pločica s imenom,
+> veličinom, stanjem učenja i pravom adresom) i vlastito gradivo ispod. Sama stranica postoji
+> od **C0**; ono što do P2 nije postojalo je **kombinacija**.
+>
+> ⚠️ **ISPRAVAK ISTOG DANA — prvo je ovdje pisalo „✅ ISPORUČENO“, i to je bilo preuzetno.**
+> N2 traži **„katalog-predmeti s NAPRETKOM“**, a P2 pokazuje **skinute**. To nisu isti skupovi:
+> predmet koji učiš a nisi ga skinuo **ne pojavljuje se na polici**. Razlika je izmjerena, ne
+> nagađana: `mountShelf()` crta iz `SokratOffline.list()` (manifest skidanja), a napredak živi
+> pod `storageKey` u `localStorage` i **nitko ga ne popisuje**.
+>
+> **Što još treba da N2 bude cijel:** polica mora sastaviti **uniju** — skinuto ∪ predmeti s
+> napretkom ≠ 0. Nazivnik i dalje ne postoji (postotak se ne izmišlja), ali „Zadnje učenje…“
+> vrijedi za oba. **Nije zakazano ni u jednu ciglu**; P3/P4 su o offlineu, ne o popisu.
 > ⚠️ **Napredak se prikazuje kao „Zadnje učenje …" / „Još nedirnuto", NE kao postotak** — nema
 > iskrenog nazivnika (koliko kartica predmet „ima" ovisi o lekciji i modu).
 
